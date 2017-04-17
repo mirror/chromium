@@ -5,50 +5,31 @@
 #ifndef ScopedWindowFocusAllowedIndicator_h
 #define ScopedWindowFocusAllowedIndicator_h
 
-#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExecutionContext.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class ScopedWindowFocusAllowedIndicator final {
-    USING_FAST_MALLOC(ScopedWindowFocusAllowedIndicator);
-    WTF_MAKE_NONCOPYABLE(ScopedWindowFocusAllowedIndicator);
-public:
-    explicit ScopedWindowFocusAllowedIndicator(ExecutionContext* executionContext)
-        : m_observer(new Observer(executionContext))
-    {
-    }
-    ~ScopedWindowFocusAllowedIndicator()
-    {
-        m_observer->dispose();
-    }
+  USING_FAST_MALLOC(ScopedWindowFocusAllowedIndicator);
+  WTF_MAKE_NONCOPYABLE(ScopedWindowFocusAllowedIndicator);
 
-private:
-    class Observer final : public GarbageCollected<Observer>, public ContextLifecycleObserver {
-        USING_GARBAGE_COLLECTED_MIXIN(Observer);
-    public:
-        explicit Observer(ExecutionContext* executionContext)
-            : ContextLifecycleObserver(executionContext)
-        {
-            if (executionContext)
-                executionContext->allowWindowInteraction();
-        }
+ public:
+  explicit ScopedWindowFocusAllowedIndicator(
+      ExecutionContext* execution_context)
+      : execution_context_(execution_context) {
+    execution_context->AllowWindowInteraction();
+  }
+  ~ScopedWindowFocusAllowedIndicator() {
+    execution_context_->ConsumeWindowInteraction();
+  }
 
-        void dispose()
-        {
-            if (getExecutionContext())
-                getExecutionContext()->consumeWindowInteraction();
-        }
-    };
-
-    // In Oilpan, destructors are not allowed to touch other on-heap objects.
-    // The Observer indirection is needed to keep
-    // ScopedWindowFocusAllowedIndicator off-heap and thus allows its destructor
-    // to call getExecutionContext()->consumeWindowInteraction().
-    Persistent<Observer> m_observer;
+ private:
+  // This doesn't create a cycle because ScopedWindowFocusAllowedIndicator
+  // is used only on a machine stack.
+  Persistent<ExecutionContext> execution_context_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScopedWindowFocusAllowedIndicator_h
+#endif  // ScopedWindowFocusAllowedIndicator_h

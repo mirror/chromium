@@ -11,38 +11,36 @@
 namespace blink {
 
 // static
-ScreenScreenOrientation& ScreenScreenOrientation::from(Screen& screen)
-{
-    ScreenScreenOrientation* supplement = static_cast<ScreenScreenOrientation*>(Supplement<Screen>::from(screen, supplementName()));
-    if (!supplement) {
-        supplement = new ScreenScreenOrientation();
-        provideTo(screen, supplementName(), supplement);
-    }
-    return *supplement;
+ScreenScreenOrientation& ScreenScreenOrientation::From(Screen& screen) {
+  ScreenScreenOrientation* supplement = static_cast<ScreenScreenOrientation*>(
+      Supplement<Screen>::From(screen, SupplementName()));
+  if (!supplement) {
+    supplement = new ScreenScreenOrientation();
+    ProvideTo(screen, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
 // static
-ScreenOrientation* ScreenScreenOrientation::orientation(ScriptState* state, Screen& screen)
-{
-    ScreenScreenOrientation& self = ScreenScreenOrientation::from(screen);
-    if (!screen.frame())
-        return nullptr;
+ScreenOrientation* ScreenScreenOrientation::orientation(ScriptState* state,
+                                                        Screen& screen) {
+  ScreenScreenOrientation& self = ScreenScreenOrientation::From(screen);
+  if (!screen.GetFrame())
+    return nullptr;
 
-    if (!self.m_orientation)
-        self.m_orientation = ScreenOrientation::create(screen.frame());
+  if (!self.orientation_)
+    self.orientation_ = ScreenOrientation::Create(screen.GetFrame());
 
-    return self.m_orientation;
+  return self.orientation_;
 }
 
-const char* ScreenScreenOrientation::supplementName()
-{
-    return "ScreenScreenOrientation";
+const char* ScreenScreenOrientation::SupplementName() {
+  return "ScreenScreenOrientation";
 }
 
-DEFINE_TRACE(ScreenScreenOrientation)
-{
-    visitor->trace(m_orientation);
-    Supplement<Screen>::trace(visitor);
+DEFINE_TRACE(ScreenScreenOrientation) {
+  visitor->Trace(orientation_);
+  Supplement<Screen>::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

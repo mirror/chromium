@@ -9,13 +9,13 @@
 #include <vector>
 
 #include "chrome/browser/image_decoder.h"
-#include "components/image_fetcher/image_decoder.h"
-
-class SkBitmap;
+#include "components/image_fetcher/core/image_decoder.h"
 
 namespace suggestions {
 
-// image_fetcher::ImageDecoder Implementation.
+// image_fetcher::ImageDecoder implementation.
+// TODO(treib,markusheintz): Move this to a better place - it really has
+// nothing to do with suggestions. crbug.com/624761
 class ImageDecoderImpl : public image_fetcher::ImageDecoder {
  public:
   ImageDecoderImpl();
@@ -23,6 +23,7 @@ class ImageDecoderImpl : public image_fetcher::ImageDecoder {
 
   void DecodeImage(
       const std::string& image_data,
+      const gfx::Size& desired_image_frame_size,
       const image_fetcher::ImageDecodedCallback& callback) override;
 
  private:

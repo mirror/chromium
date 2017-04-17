@@ -5,33 +5,34 @@
 #ifndef CompositorProxiedPropertySet_h
 #define CompositorProxiedPropertySet_h
 
-#include "platform/graphics/CompositorMutableProperties.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
 #include <memory>
+#include "platform/graphics/CompositorMutableProperties.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 // Keeps track of the number of proxies bound to each property.
 class CompositorProxiedPropertySet final {
-    WTF_MAKE_NONCOPYABLE(CompositorProxiedPropertySet);
-    USING_FAST_MALLOC(CompositorProxiedPropertySet);
-public:
-    static std::unique_ptr<CompositorProxiedPropertySet> create();
-    virtual ~CompositorProxiedPropertySet();
+  WTF_MAKE_NONCOPYABLE(CompositorProxiedPropertySet);
+  USING_FAST_MALLOC(CompositorProxiedPropertySet);
 
-    bool isEmpty() const;
-    void increment(uint32_t mutableProperties);
-    void decrement(uint32_t mutableProperties);
-    uint32_t proxiedProperties() const;
+ public:
+  static std::unique_ptr<CompositorProxiedPropertySet> Create();
+  virtual ~CompositorProxiedPropertySet();
 
-private:
-    CompositorProxiedPropertySet();
+  bool IsEmpty() const;
+  void Increment(uint32_t mutable_properties);
+  void Decrement(uint32_t mutable_properties);
+  uint32_t ProxiedProperties() const;
 
-    unsigned short m_counts[CompositorMutableProperty::kNumProperties];
+ private:
+  CompositorProxiedPropertySet();
+
+  unsigned short counts_[CompositorMutableProperty::kNumProperties];
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorProxiedPropertySet_h
+#endif  // CompositorProxiedPropertySet_h

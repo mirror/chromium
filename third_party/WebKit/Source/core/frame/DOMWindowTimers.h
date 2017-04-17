@@ -33,8 +33,8 @@
 #ifndef DOMWindowTimers_h
 #define DOMWindowTimers_h
 
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -43,14 +43,30 @@ class ScriptState;
 class ScriptValue;
 
 namespace DOMWindowTimers {
-int setTimeout(ScriptState*, EventTarget&, const ScriptValue& handler, int timeout, const Vector<ScriptValue>& arguments);
-int setTimeout(ScriptState*, EventTarget&, const String& handler, int timeout, const Vector<ScriptValue>&);
-int setInterval(ScriptState*, EventTarget&, const ScriptValue& handler, int timeout, const Vector<ScriptValue>&);
-int setInterval(ScriptState*, EventTarget&, const String& handler, int timeout, const Vector<ScriptValue>&);
-void clearTimeout(EventTarget&, int timeoutId);
-void clearInterval(EventTarget&, int timeoutId);
+int setTimeout(ScriptState*,
+               EventTarget&,
+               const ScriptValue& handler,
+               int timeout,
+               const Vector<ScriptValue>& arguments);
+int setTimeout(ScriptState*,
+               EventTarget&,
+               const String& handler,
+               int timeout,
+               const Vector<ScriptValue>&);
+int setInterval(ScriptState*,
+                EventTarget&,
+                const ScriptValue& handler,
+                int timeout,
+                const Vector<ScriptValue>&);
+int setInterval(ScriptState*,
+                EventTarget&,
+                const String& handler,
+                int timeout,
+                const Vector<ScriptValue>&);
+void clearTimeout(EventTarget&, int timeout_id);
+void clearInterval(EventTarget&, int timeout_id);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMWindowTimers_h
+#endif  // DOMWindowTimers_h

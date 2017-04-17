@@ -4,6 +4,9 @@
 
 #include "device/bluetooth/dbus/bluetooth_device_client.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -51,20 +54,19 @@ std::unique_ptr<BluetoothServiceAttributeValueBlueZ> ReadAttributeValue(
           uint8_t byte;
           if (!struct_reader->PopVariantOfByte(&byte))
             return nullptr;
-          value = base::MakeUnique<base::FundamentalValue>(byte);
+          value = base::MakeUnique<base::Value>(byte);
           break;
         case 2:
           uint16_t short_val;
           if (!struct_reader->PopVariantOfUint16(&short_val))
             return nullptr;
-          value = base::MakeUnique<base::FundamentalValue>(short_val);
+          value = base::MakeUnique<base::Value>(short_val);
           break;
         case 4:
           uint32_t val;
           if (!struct_reader->PopVariantOfUint32(&val))
             return nullptr;
-          value = base::MakeUnique<base::FundamentalValue>(
-              static_cast<int32_t>(val));
+          value = base::MakeUnique<base::Value>(static_cast<int32_t>(val));
           break;
         case 8:
         // Fall through.
@@ -85,14 +87,14 @@ std::unique_ptr<BluetoothServiceAttributeValueBlueZ> ReadAttributeValue(
       std::string str;
       if (!struct_reader->PopVariantOfString(&str))
         return nullptr;
-      value = base::MakeUnique<base::StringValue>(str);
+      value = base::MakeUnique<base::Value>(str);
       break;
     }
     case bluez::BluetoothServiceAttributeValueBlueZ::BOOL: {
       bool b;
       if (!struct_reader->PopVariantOfBool(&b))
         return nullptr;
-      value = base::MakeUnique<base::FundamentalValue>(b);
+      value = base::MakeUnique<base::Value>(b);
       break;
     }
     case bluez::BluetoothServiceAttributeValueBlueZ::SEQUENCE: {
@@ -199,8 +201,13 @@ BluetoothDeviceClient::Properties::Properties(
   RegisterProperty(bluetooth_device::kModaliasProperty, &modalias);
   RegisterProperty(bluetooth_device::kRSSIProperty, &rssi);
   RegisterProperty(bluetooth_device::kTxPowerProperty, &tx_power);
+  RegisterProperty(bluetooth_device::kManufacturerDataProperty,
+                   &manufacturer_data);
+  RegisterProperty(bluetooth_device::kServiceDataProperty, &service_data);
   RegisterProperty(bluetooth_device::kServicesResolvedProperty,
                    &services_resolved);
+  RegisterProperty(bluetooth_device::kAdvertisingDataFlagsProperty,
+                   &advertising_data_flags);
 }
 
 BluetoothDeviceClient::Properties::~Properties() {}
@@ -461,16 +468,16 @@ class BluetoothDeviceClientImpl : public BluetoothDeviceClient,
   // is created. Informs observers.
   void ObjectAdded(const dbus::ObjectPath& object_path,
                    const std::string& interface_name) override {
-    FOR_EACH_OBSERVER(BluetoothDeviceClient::Observer, observers_,
-                      DeviceAdded(object_path));
+    for (auto& observer : observers_)
+      observer.DeviceAdded(object_path);
   }
 
   // Called by dbus::ObjectManager when an object with the device interface
   // is removed. Informs observers.
   void ObjectRemoved(const dbus::ObjectPath& object_path,
                      const std::string& interface_name) override {
-    FOR_EACH_OBSERVER(BluetoothDeviceClient::Observer, observers_,
-                      DeviceRemoved(object_path));
+    for (auto& observer : observers_)
+      observer.DeviceRemoved(object_path);
   }
 
   // Called by BluetoothPropertySet when a property value is changed,
@@ -478,8 +485,8 @@ class BluetoothDeviceClientImpl : public BluetoothDeviceClient,
   // call. Informs observers.
   void OnPropertyChanged(const dbus::ObjectPath& object_path,
                          const std::string& property_name) {
-    FOR_EACH_OBSERVER(BluetoothDeviceClient::Observer, observers_,
-                      DevicePropertyChanged(object_path, property_name));
+    for (auto& observer : observers_)
+      observer.DevicePropertyChanged(object_path, property_name);
   }
 
   // Called when a response for successful method call is received.

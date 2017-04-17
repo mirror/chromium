@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "net/base/net_export.h"
 #include "net/http/http_stream_factory_impl.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/connection_attempts.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/spdy/spdy_session_key.h"
@@ -20,9 +20,7 @@
 namespace net {
 
 class BidirectionalStreamImpl;
-class ClientSocketHandle;
 class HttpStream;
-class SpdySession;
 
 class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
  public:
@@ -38,8 +36,7 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
 
     // Called to resume the HttpStream creation process when necessary
     // Proxy authentication credentials are collected.
-    virtual int RestartTunnelWithProxyAuth(
-        const AuthCredentials& credentials) = 0;
+    virtual int RestartTunnelWithProxyAuth() = 0;
 
     // Called when the priority of transaction changes.
     virtual void SetPriority(RequestPriority priority) = 0;
@@ -52,7 +49,7 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
           HttpStreamRequest::Delegate* delegate,
           WebSocketHandshakeStreamBase::CreateHelper*
               websocket_handshake_stream_create_helper,
-          const BoundNetLog& net_log,
+          const NetLogWithSource& net_log,
           StreamType stream_type);
 
   ~Request() override;
@@ -60,7 +57,7 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
   // The GURL from the HttpRequestInfo the started the Request.
   const GURL& url() const { return url_; }
 
-  const BoundNetLog& net_log() const { return net_log_; }
+  const NetLogWithSource& net_log() const { return net_log_; }
 
   // Called when the |helper_| determines the appropriate |spdy_session_key|
   // for the Request. Note that this does not mean that SPDY is necessarily
@@ -70,8 +67,8 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
   bool HasSpdySessionKey() const;
 
   // Marks completion of the request. Must be called before OnStreamReady().
-  void Complete(bool was_npn_negotiated,
-                NextProto protocol_negotiated,
+  void Complete(bool was_alpn_negotiated,
+                NextProto negotiated_protocol,
                 bool using_spdy);
 
   void ResetSpdySessionKey();
@@ -116,11 +113,11 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
 
   // HttpStreamRequest methods.
 
-  int RestartTunnelWithProxyAuth(const AuthCredentials& credentials) override;
+  int RestartTunnelWithProxyAuth() override;
   void SetPriority(RequestPriority priority) override;
   LoadState GetLoadState() const override;
-  bool was_npn_negotiated() const override;
-  NextProto protocol_negotiated() const override;
+  bool was_alpn_negotiated() const override;
+  NextProto negotiated_protocol() const override;
   bool using_spdy() const override;
   const ConnectionAttempts& connection_attempts() const override;
   HttpStreamRequest::StreamType stream_type() const { return stream_type_; }
@@ -137,14 +134,14 @@ class HttpStreamFactoryImpl::Request : public HttpStreamRequest {
   WebSocketHandshakeStreamBase::CreateHelper* const
       websocket_handshake_stream_create_helper_;
   HttpStreamRequest::Delegate* const delegate_;
-  const BoundNetLog net_log_;
+  const NetLogWithSource net_log_;
 
   std::unique_ptr<const SpdySessionKey> spdy_session_key_;
 
   bool completed_;
-  bool was_npn_negotiated_;
+  bool was_alpn_negotiated_;
   // Protocol negotiated with the server.
-  NextProto protocol_negotiated_;
+  NextProto negotiated_protocol_;
   bool using_spdy_;
   ConnectionAttempts connection_attempts_;
 

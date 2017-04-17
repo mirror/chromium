@@ -10,16 +10,17 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/DefaultAudioDestinationNode.h"
@@ -27,127 +28,138 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "modules/webaudio/BaseAudioContext.h"
-#include "platform/Logging.h"
 
 namespace blink {
 
-DefaultAudioDestinationHandler::DefaultAudioDestinationHandler(AudioNode& node)
-    : AudioDestinationHandler(node, AudioDestination::hardwareSampleRate())
-    , m_numberOfInputChannels(0)
-{
-    // Node-specific default mixing rules.
-    m_channelCount = 2;
-    m_channelCountMode = Explicit;
-    m_channelInterpretation = AudioBus::Speakers;
+DefaultAudioDestinationHandler::DefaultAudioDestinationHandler(
+    AudioNode& node,
+    const WebAudioLatencyHint& latency_hint)
+    : AudioDestinationHandler(node),
+      number_of_input_channels_(0),
+      latency_hint_(latency_hint) {
+  // Node-specific default mixing rules.
+  channel_count_ = 2;
+  SetInternalChannelCountMode(kExplicit);
+  SetInternalChannelInterpretation(AudioBus::kSpeakers);
 }
 
-PassRefPtr<DefaultAudioDestinationHandler> DefaultAudioDestinationHandler::create(AudioNode& node)
-{
-    return adoptRef(new DefaultAudioDestinationHandler(node));
+PassRefPtr<DefaultAudioDestinationHandler>
+DefaultAudioDestinationHandler::Create(
+    AudioNode& node,
+    const WebAudioLatencyHint& latency_hint) {
+  return AdoptRef(new DefaultAudioDestinationHandler(node, latency_hint));
 }
 
-DefaultAudioDestinationHandler::~DefaultAudioDestinationHandler()
-{
-    ASSERT(!isInitialized());
+DefaultAudioDestinationHandler::~DefaultAudioDestinationHandler() {
+  DCHECK(!IsInitialized());
 }
 
-void DefaultAudioDestinationHandler::dispose()
-{
-    uninitialize();
-    AudioDestinationHandler::dispose();
+void DefaultAudioDestinationHandler::Dispose() {
+  Uninitialize();
+  AudioDestinationHandler::Dispose();
 }
 
-void DefaultAudioDestinationHandler::initialize()
-{
-    ASSERT(isMainThread());
-    if (isInitialized())
-        return;
+void DefaultAudioDestinationHandler::Initialize() {
+  DCHECK(IsMainThread());
+  if (IsInitialized())
+    return;
 
-    createDestination();
-    AudioHandler::initialize();
+  CreateDestination();
+  AudioHandler::Initialize();
 }
 
-void DefaultAudioDestinationHandler::uninitialize()
-{
-    ASSERT(isMainThread());
-    if (!isInitialized())
-        return;
+void DefaultAudioDestinationHandler::Uninitialize() {
+  DCHECK(IsMainThread());
+  if (!IsInitialized())
+    return;
 
-    m_destination->stop();
-    m_numberOfInputChannels = 0;
+  destination_->Stop();
+  number_of_input_channels_ = 0;
 
-    AudioHandler::uninitialize();
+  AudioHandler::Uninitialize();
 }
 
-void DefaultAudioDestinationHandler::createDestination()
-{
-    float hardwareSampleRate = AudioDestination::hardwareSampleRate();
-    VLOG(1) << ">>>> hardwareSampleRate = " << hardwareSampleRate;
-
-    m_destination = AudioDestination::create(*this, m_inputDeviceId, m_numberOfInputChannels, channelCount(), hardwareSampleRate, context()->getSecurityOrigin());
+void DefaultAudioDestinationHandler::CreateDestination() {
+  destination_ = AudioDestination::Create(*this, ChannelCount(), latency_hint_,
+                                          Context()->GetSecurityOrigin());
 }
 
-void DefaultAudioDestinationHandler::startRendering()
-{
-    ASSERT(isInitialized());
-    if (isInitialized()) {
-        ASSERT(!m_destination->isPlaying());
-        m_destination->start();
-    }
+void DefaultAudioDestinationHandler::StartRendering() {
+  DCHECK(IsInitialized());
+  if (IsInitialized()) {
+    DCHECK(!destination_->IsPlaying());
+    destination_->Start();
+  }
 }
 
-void DefaultAudioDestinationHandler::stopRendering()
-{
-    ASSERT(isInitialized());
-    if (isInitialized()) {
-        ASSERT(m_destination->isPlaying());
-        m_destination->stop();
-    }
+void DefaultAudioDestinationHandler::StopRendering() {
+  DCHECK(IsInitialized());
+  if (IsInitialized()) {
+    DCHECK(destination_->IsPlaying());
+    destination_->Stop();
+  }
 }
 
-unsigned long DefaultAudioDestinationHandler::maxChannelCount() const
-{
-    return AudioDestination::maxChannelCount();
+unsigned long DefaultAudioDestinationHandler::MaxChannelCount() const {
+  return AudioDestination::MaxChannelCount();
 }
 
-void DefaultAudioDestinationHandler::setChannelCount(unsigned long channelCount, ExceptionState& exceptionState)
-{
-    // The channelCount for the input to this node controls the actual number of channels we
-    // send to the audio hardware. It can only be set depending on the maximum number of
-    // channels supported by the hardware.
+size_t DefaultAudioDestinationHandler::CallbackBufferSize() const {
+  return destination_->CallbackBufferSize();
+}
 
-    ASSERT(isMainThread());
+void DefaultAudioDestinationHandler::SetChannelCount(
+    unsigned long channel_count,
+    ExceptionState& exception_state) {
+  // The channelCount for the input to this node controls the actual number of
+  // channels we send to the audio hardware. It can only be set depending on the
+  // maximum number of channels supported by the hardware.
 
-    if (!maxChannelCount() || channelCount > maxChannelCount()) {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            ExceptionMessages::indexOutsideRange<unsigned>("channel count", channelCount, 1, ExceptionMessages::InclusiveBound, maxChannelCount(), ExceptionMessages::InclusiveBound));
-        return;
-    }
+  DCHECK(IsMainThread());
 
-    unsigned long oldChannelCount = this->channelCount();
-    AudioHandler::setChannelCount(channelCount, exceptionState);
+  if (!MaxChannelCount() || channel_count > MaxChannelCount()) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        ExceptionMessages::IndexOutsideRange<unsigned>(
+            "channel count", channel_count, 1,
+            ExceptionMessages::kInclusiveBound, MaxChannelCount(),
+            ExceptionMessages::kInclusiveBound));
+    return;
+  }
 
-    if (!exceptionState.hadException() && this->channelCount() != oldChannelCount && isInitialized()) {
-        // Re-create destination.
-        m_destination->stop();
-        createDestination();
-        m_destination->start();
-    }
+  unsigned long old_channel_count = this->ChannelCount();
+  AudioHandler::SetChannelCount(channel_count, exception_state);
+
+  if (!exception_state.HadException() &&
+      this->ChannelCount() != old_channel_count && IsInitialized()) {
+    // Re-create destination.
+    destination_->Stop();
+    CreateDestination();
+    destination_->Start();
+  }
+}
+
+double DefaultAudioDestinationHandler::SampleRate() const {
+  return destination_ ? destination_->SampleRate() : 0;
+}
+
+int DefaultAudioDestinationHandler::FramesPerBuffer() const {
+  return destination_ ? destination_->FramesPerBuffer() : 0;
 }
 
 // ----------------------------------------------------------------
 
-DefaultAudioDestinationNode::DefaultAudioDestinationNode(BaseAudioContext& context)
-    : AudioDestinationNode(context)
-{
-    setHandler(DefaultAudioDestinationHandler::create(*this));
+DefaultAudioDestinationNode::DefaultAudioDestinationNode(
+    BaseAudioContext& context,
+    const WebAudioLatencyHint& latency_hint)
+    : AudioDestinationNode(context) {
+  SetHandler(DefaultAudioDestinationHandler::Create(*this, latency_hint));
 }
 
-DefaultAudioDestinationNode* DefaultAudioDestinationNode::create(BaseAudioContext* context)
-{
-    return new DefaultAudioDestinationNode(*context);
+DefaultAudioDestinationNode* DefaultAudioDestinationNode::Create(
+    BaseAudioContext* context,
+    const WebAudioLatencyHint& latency_hint) {
+  return new DefaultAudioDestinationNode(*context, latency_hint);
 }
 
-} // namespace blink
-
+}  // namespace blink

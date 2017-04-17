@@ -14,11 +14,21 @@ MockGamepadDataFetcher::MockGamepadDataFetcher(
 
 MockGamepadDataFetcher::~MockGamepadDataFetcher() {}
 
-void MockGamepadDataFetcher::GetGamepadData(blink::WebGamepads* pads,
-                                            bool devices_changed_hint) {
+GamepadSource MockGamepadDataFetcher::source() {
+  return GAMEPAD_SOURCE_TEST;
+}
+
+void MockGamepadDataFetcher::GetGamepadData(bool devices_changed_hint) {
   {
     base::AutoLock lock(lock_);
-    *pads = test_data_;
+
+    for (unsigned int i = 0; i < blink::WebGamepads::kItemsLengthCap; ++i) {
+      if (test_data_.items[i].connected) {
+        PadState* pad = GetPadState(i);
+        if (pad)
+          memcpy(&pad->data, &test_data_.items[i], sizeof(blink::WebGamepad));
+      }
+    }
   }
   read_data_.Signal();
 }
@@ -41,30 +51,19 @@ void MockGamepadDataFetcher::SetTestData(const blink::WebGamepads& new_data) {
   test_data_ = new_data;
 }
 
-MockGamepadSharedBuffer::MockGamepadSharedBuffer() {
-  size_t data_size = sizeof(blink::WebGamepads);
-  bool res = shared_memory_.CreateAndMapAnonymous(data_size);
-  CHECK(res);
-  blink::WebGamepads* buf = buffer();
-  memset(buf, 0, sizeof(blink::WebGamepads));
-}
-
-base::SharedMemory* MockGamepadSharedBuffer::shared_memory() {
-  return &shared_memory_;
-}
-
-blink::WebGamepads* MockGamepadSharedBuffer::buffer() {
-  void* mem = shared_memory_.memory();
-  CHECK(mem);
-  return static_cast<blink::WebGamepads*>(mem);
-}
-
-void MockGamepadSharedBuffer::WriteBegin() {}
-
-void MockGamepadSharedBuffer::WriteEnd() {}
-
 GamepadTestHelper::GamepadTestHelper() {}
 
 GamepadTestHelper::~GamepadTestHelper() {}
+
+GamepadServiceTestConstructor::GamepadServiceTestConstructor(
+    const blink::WebGamepads& test_data) {
+  data_fetcher_ = new MockGamepadDataFetcher(test_data);
+  gamepad_service_ =
+      new GamepadService(std::unique_ptr<GamepadDataFetcher>(data_fetcher_));
+}
+
+GamepadServiceTestConstructor::~GamepadServiceTestConstructor() {
+  delete gamepad_service_;
+}
 
 }  // namespace device

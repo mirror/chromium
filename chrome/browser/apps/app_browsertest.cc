@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "apps/launcher.h"
+#include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
@@ -41,7 +42,7 @@
 #include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_widget_host_view.h"
-#include "content/public/test/test_utils.h"
+#include "content/public/test/browser_test_utils.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
 #include "extensions/browser/app_window/native_app_window.h"
@@ -55,6 +56,7 @@
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "printing/features/features.h"
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 
@@ -118,22 +120,16 @@ class TabsAddedNotificationObserver
   DISALLOW_COPY_AND_ASSIGN(TabsAddedNotificationObserver);
 };
 
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 class ScopedPreviewTestingDelegate : PrintPreviewUI::TestingDelegate {
  public:
-  explicit ScopedPreviewTestingDelegate(bool auto_cancel)
-      : auto_cancel_(auto_cancel),
-        total_page_count_(1),
-        rendered_page_count_(0) {
+  ScopedPreviewTestingDelegate() {
     PrintPreviewUI::SetDelegateForTesting(this);
   }
 
   ~ScopedPreviewTestingDelegate() {
     PrintPreviewUI::SetDelegateForTesting(NULL);
   }
-
-  // PrintPreviewUI::TestingDelegate implementation.
-  bool IsAutoCancelEnabled() override { return auto_cancel_; }
 
   // PrintPreviewUI::TestingDelegate implementation.
   void DidGetPreviewPageCount(int page_count) override {
@@ -145,18 +141,18 @@ class ScopedPreviewTestingDelegate : PrintPreviewUI::TestingDelegate {
     dialog_size_ = preview_dialog->GetContainerBounds().size();
     ++rendered_page_count_;
     CHECK(rendered_page_count_ <= total_page_count_);
-    if (waiting_runner_.get() && rendered_page_count_ == total_page_count_) {
-      waiting_runner_->Quit();
+    if (rendered_page_count_ == total_page_count_ && run_loop_)  {
+      run_loop_->Quit();
     }
   }
 
   void WaitUntilPreviewIsReady() {
-    CHECK(!waiting_runner_.get());
-    if (rendered_page_count_ < total_page_count_) {
-      waiting_runner_ = new content::MessageLoopRunner;
-      waiting_runner_->Run();
-      waiting_runner_ = NULL;
-    }
+    if (rendered_page_count_ >= total_page_count_)
+      return;
+
+    base::RunLoop run_loop;
+    base::AutoReset<base::RunLoop*> auto_reset(&run_loop_, &run_loop);
+    run_loop.Run();
   }
 
   gfx::Size dialog_size() {
@@ -164,10 +160,9 @@ class ScopedPreviewTestingDelegate : PrintPreviewUI::TestingDelegate {
   }
 
  private:
-  bool auto_cancel_;
-  int total_page_count_;
-  int rendered_page_count_;
-  scoped_refptr<content::MessageLoopRunner> waiting_runner_;
+  int total_page_count_ = 1;
+  int rendered_page_count_ = 0;
+  base::RunLoop* run_loop_ = nullptr;
   gfx::Size dialog_size_;
 };
 
@@ -230,9 +225,9 @@ class PlatformAppWithFileBrowserTest: public PlatformAppBrowserTest {
       return false;
     }
 
-    AppLaunchParams params(browser()->profile(), extension,
-                           extensions::LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                           extensions::SOURCE_TEST);
+    AppLaunchParams params(
+        browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
+        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
     params.command_line = command_line;
     params.current_directory = test_data_dir_;
     OpenApplication(params);
@@ -441,18 +436,16 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
                        DisallowBackgroundPageNavigation) {
   // The test will try to open in app urls and external urls via clicking links
   // and window.open(). Only the external urls should succeed in opening tabs.
-  // TODO(lazyboy): non-external urls also succeed right now because of
-  // http://crbug.com/585570 not being fixed. Fix the test once the bug is
-  // fixed.
-  // const size_t kExpectedNumberOfTabs = 2u;
-  const size_t kExpectedNumberOfTabs = 6u;
+  const size_t kExpectedNumberOfTabs = 2u;
   TabsAddedNotificationObserver observer(kExpectedNumberOfTabs);
   ASSERT_TRUE(RunPlatformAppTest("platform_apps/background_page_navigation")) <<
       message_;
   observer.Wait();
   ASSERT_EQ(kExpectedNumberOfTabs, observer.tabs().size());
+  content::WaitForLoadStop(observer.tabs()[kExpectedNumberOfTabs - 1]);
   EXPECT_EQ(GURL(kChromiumURL),
             observer.tabs()[kExpectedNumberOfTabs - 1]->GetURL());
+  content::WaitForLoadStop(observer.tabs()[kExpectedNumberOfTabs - 2]);
   EXPECT_EQ(GURL(kChromiumURL),
             observer.tabs()[kExpectedNumberOfTabs - 2]->GetURL());
 }
@@ -611,11 +604,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath test_file;
-  ASSERT_TRUE(CopyTestDataAndGetTestFilePath(
-      test_data_dir_.AppendASCII(kTestFilePath),
-      temp_dir.path(),
-      "test.",
-      &test_file));
+  ASSERT_TRUE(
+      CopyTestDataAndGetTestFilePath(test_data_dir_.AppendASCII(kTestFilePath),
+                                     temp_dir.GetPath(), "test.", &test_file));
   ASSERT_TRUE(RunPlatformAppTestWithFile(
       "platform_apps/launch_file_with_no_extension", test_file)) << message_;
 }
@@ -627,11 +618,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath test_file;
-  ASSERT_TRUE(CopyTestDataAndGetTestFilePath(
-      test_data_dir_.AppendASCII(kTestFilePath),
-      temp_dir.path(),
-      "test.",
-      &test_file));
+  ASSERT_TRUE(
+      CopyTestDataAndGetTestFilePath(test_data_dir_.AppendASCII(kTestFilePath),
+                                     temp_dir.GetPath(), "test.", &test_file));
   ASSERT_TRUE(RunPlatformAppTestWithFile(
       "platform_apps/launch_file_with_any_extension", test_file)) << message_;
 }
@@ -738,7 +727,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest, LaunchNewFile) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   ASSERT_TRUE(RunPlatformAppTestWithFile(
       "platform_apps/launch_new_file",
-      temp_dir.path().AppendASCII("new_file.txt"))) << message_;
+      temp_dir.GetPath().AppendASCII("new_file.txt")))
+      << message_;
 }
 
 #endif  // !defined(OS_CHROMEOS)
@@ -877,9 +867,9 @@ void PlatformAppDevToolsBrowserTest::RunTestWithDevTools(
     content::WindowedNotificationObserver app_loaded_observer(
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
-    OpenApplication(AppLaunchParams(browser()->profile(), extension,
-                                    LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                                    extensions::SOURCE_TEST));
+    OpenApplication(AppLaunchParams(
+        browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
     app_loaded_observer.Wait();
     window = GetFirstAppWindow();
     ASSERT_TRUE(window);
@@ -1008,9 +998,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
   ASSERT_TRUE(should_install.seen());
 
   ExtensionTestMessageListener launched_listener("Launched", false);
-  OpenApplication(AppLaunchParams(browser()->profile(), extension,
-                                  LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                                  extensions::SOURCE_TEST));
+  OpenApplication(AppLaunchParams(
+      browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+      WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
 }
@@ -1031,9 +1021,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
   ASSERT_TRUE(extension);
 
   ExtensionTestMessageListener launched_listener("Launched", false);
-  OpenApplication(AppLaunchParams(browser()->profile(), extension,
-                                  LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                                  extensions::SOURCE_TEST));
+  OpenApplication(AppLaunchParams(
+      browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+      WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
   ASSERT_FALSE(should_not_install.seen());
@@ -1069,9 +1059,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ComponentAppBackgroundPage) {
   ASSERT_TRUE(should_install.seen());
 
   ExtensionTestMessageListener launched_listener("Launched", false);
-  OpenApplication(AppLaunchParams(browser()->profile(), extension,
-                                  LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                                  extensions::SOURCE_TEST));
+  OpenApplication(AppLaunchParams(
+      browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+      WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
 }
@@ -1094,9 +1084,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
 
   {
     ExtensionTestMessageListener launched_listener("Launched", false);
-    OpenApplication(AppLaunchParams(browser()->profile(), extension,
-                                    LAUNCH_CONTAINER_NONE, NEW_WINDOW,
-                                    extensions::SOURCE_TEST));
+    OpenApplication(AppLaunchParams(
+        browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
     ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
   }
 
@@ -1139,19 +1129,11 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, DISABLED_WebContentsHasFocus) {
                   ->HasFocus());
 }
 
-#if defined(ENABLE_PRINT_PREVIEW)
-
-#if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_MACOSX)
-#define MAYBE_WindowDotPrintShouldBringUpPrintPreview \
-    DISABLED_WindowDotPrintShouldBringUpPrintPreview
-#else
-#define MAYBE_WindowDotPrintShouldBringUpPrintPreview \
-    WindowDotPrintShouldBringUpPrintPreview
-#endif
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
-                       MAYBE_WindowDotPrintShouldBringUpPrintPreview) {
-  ScopedPreviewTestingDelegate preview_delegate(true);
+                       WindowDotPrintShouldBringUpPrintPreview) {
+  ScopedPreviewTestingDelegate preview_delegate;
   ASSERT_TRUE(RunPlatformAppTest("platform_apps/print_api")) << message_;
   preview_delegate.WaitUntilPreviewIsReady();
 }
@@ -1159,7 +1141,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
 // This test verifies that http://crbug.com/297179 is fixed.
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
                        DISABLED_ClosingWindowWhilePrintingShouldNotCrash) {
-  ScopedPreviewTestingDelegate preview_delegate(false);
+  ScopedPreviewTestingDelegate preview_delegate;
   ASSERT_TRUE(RunPlatformAppTest("platform_apps/print_api")) << message_;
   preview_delegate.WaitUntilPreviewIsReady();
   GetFirstAppWindow()->GetBaseWindow()->Close();
@@ -1181,7 +1163,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
   // areas that are too small, and ones with heights less than 191 pixels will
   // have vertical scrollers for their controls that are too small.
   gfx::Size minimum_dialog_size(410, 191);
-  ScopedPreviewTestingDelegate preview_delegate(false);
+  ScopedPreviewTestingDelegate preview_delegate;
   ASSERT_TRUE(RunPlatformAppTest("platform_apps/print_api")) << message_;
   preview_delegate.WaitUntilPreviewIsReady();
   EXPECT_GE(preview_delegate.dialog_size().width(),
@@ -1241,10 +1223,10 @@ IN_PROC_BROWSER_TEST_F(PlatformAppIncognitoBrowserTest, IncognitoComponentApp) {
   registry->AddObserver(this);
 
   OpenApplication(CreateAppLaunchParamsUserContainer(
-      incognito_profile, file_manager, NEW_FOREGROUND_TAB,
-      extensions::SOURCE_TEST));
+      incognito_profile, file_manager,
+      WindowOpenDisposition::NEW_FOREGROUND_TAB, extensions::SOURCE_TEST));
 
-  while (!ContainsKey(opener_app_ids_, file_manager->id())) {
+  while (!base::ContainsKey(opener_app_ids_, file_manager->id())) {
     content::RunAllPendingInMessageLoop();
   }
 }
@@ -1378,12 +1360,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, AppsIgnoreDefaultZoom) {
   EXPECT_EQ(0, app_host_zoom_map->GetZoomLevel(web_contents));
 }
 
-// This test will flake until we fix the underlying issue:
-// https://crbug.com/620194.
-#define MAYBE_AppWindowIframe DISABLED_AppWindowIframe
 // Sends chrome.test.sendMessage from chrome.app.window.create's callback.
 // The app window also adds an <iframe> to the page during window.onload.
-IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_AppWindowIframe) {
+IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, AppWindowIframe) {
   LoadAndLaunchPlatformApp("app_window_send_message",
                            "APP_WINDOW_CREATE_CALLBACK");
 }

@@ -119,17 +119,17 @@ void LayoutTestMessageFilter::OnClearAllDatabases() {
 }
 
 void LayoutTestMessageFilter::OnSetDatabaseQuota(int quota) {
-  quota_manager_->SetTemporaryGlobalOverrideQuota(
-      quota * storage::QuotaManager::kPerHostTemporaryPortion,
-      storage::QuotaCallback());
+  quota_manager_->SetQuotaSettings(storage::GetHardCodedSettings(quota));
 }
 
 void LayoutTestMessageFilter::OnSimulateWebNotificationClick(
-    const std::string& title, int action_index) {
+    const std::string& title,
+    int action_index,
+    const base::NullableString16& reply) {
   LayoutTestNotificationManager* manager =
       LayoutTestContentBrowserClient::Get()->GetLayoutTestNotificationManager();
   if (manager)
-    manager->SimulateClick(title, action_index);
+    manager->SimulateClick(title, action_index, reply);
 }
 
 void LayoutTestMessageFilter::OnSimulateWebNotificationClose(

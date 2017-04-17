@@ -24,7 +24,7 @@ int MappedHostResolver::Resolve(const RequestInfo& original_info,
                                 AddressList* addresses,
                                 const CompletionCallback& callback,
                                 std::unique_ptr<Request>* request,
-                                const BoundNetLog& net_log) {
+                                const NetLogWithSource& net_log) {
   RequestInfo info = original_info;
   int rv = ApplyRules(&info);
   if (rv != OK)
@@ -35,7 +35,7 @@ int MappedHostResolver::Resolve(const RequestInfo& original_info,
 
 int MappedHostResolver::ResolveFromCache(const RequestInfo& original_info,
                                          AddressList* addresses,
-                                         const BoundNetLog& net_log) {
+                                         const NetLogWithSource& net_log) {
   RequestInfo info = original_info;
   int rv = ApplyRules(&info);
   if (rv != OK)
@@ -54,6 +54,14 @@ HostCache* MappedHostResolver::GetHostCache() {
 
 std::unique_ptr<base::Value> MappedHostResolver::GetDnsConfigAsValue() const {
   return impl_->GetDnsConfigAsValue();
+}
+
+void MappedHostResolver::SetNoIPv6OnWifi(bool no_ipv6_on_wifi) {
+  impl_->SetNoIPv6OnWifi(no_ipv6_on_wifi);
+}
+
+bool MappedHostResolver::GetNoIPv6OnWifi() {
+  return impl_->GetNoIPv6OnWifi();
 }
 
 int MappedHostResolver::ApplyRules(RequestInfo* info) const {

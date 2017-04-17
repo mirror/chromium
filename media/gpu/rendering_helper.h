@@ -15,6 +15,8 @@
 
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "ui/gfx/geometry/rect.h"
@@ -24,11 +26,10 @@
 #include "ui/gl/gl_surface.h"
 
 namespace base {
-class MessageLoop;
 class WaitableEvent;
 }
 
-namespace ui {
+namespace display {
 class DisplayConfigurator;
 }
 
@@ -186,7 +187,7 @@ class RenderingHelper {
   // |texture_target|.
   void RenderTexture(uint32_t texture_target, uint32_t texture_id);
 
-  base::MessageLoop* message_loop_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   scoped_refptr<gl::GLContext> gl_context_;
   scoped_refptr<gl::GLSurface> gl_surface_;
@@ -196,7 +197,7 @@ class RenderingHelper {
   std::unique_ptr<StubOzoneDelegate> platform_window_delegate_;
 
 #if defined(OS_CHROMEOS)
-  std::unique_ptr<ui::DisplayConfigurator> display_configurator_;
+  std::unique_ptr<display::DisplayConfigurator> display_configurator_;
 #endif
 #endif
 
@@ -214,6 +215,7 @@ class RenderingHelper {
   GLuint thumbnails_texture_id_;
   gfx::Size thumbnails_fbo_size_;
   gfx::Size thumbnail_size_;
+  GLuint vertex_buffer_;
   GLuint program_;
   base::TimeDelta frame_duration_;
   base::TimeTicks scheduled_render_time_;

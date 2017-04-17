@@ -1,7 +1,4 @@
 include_rules = [
-    "+bindings",
-    "+core",
-    "+heap",
     "-modules",
     "+modules/EventModules.h",
     "+modules/EventTargetModules.h",
@@ -9,7 +6,4 @@ include_rules = [
     "+modules/crypto",
     "+modules/mediastream",
     "+modules/peerconnection",
-    "+platform",
-    "+public/platform",
-    "-web",
 ]

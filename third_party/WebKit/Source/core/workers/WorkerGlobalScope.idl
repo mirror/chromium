@@ -27,7 +27,10 @@
 // https://html.spec.whatwg.org/#the-workerglobalscope-common-interface
 
 [
+    ActiveScriptWrappable,
+    DependentLifetime,
     Exposed=Worker,
+    ImmutablePrototype,
 ] interface WorkerGlobalScope : EventTarget {
     readonly attribute WorkerGlobalScope self;
     readonly attribute WorkerLocation location;
@@ -42,6 +45,7 @@
     [RaisesException] void importScripts(DOMString... urls);
     readonly attribute WorkerNavigator navigator;
 
+
     // Console API
     // https://console.spec.whatwg.org/#console-interface
     // [Replaceable] readonly attribute Console console;
@@ -49,12 +53,19 @@
     // and is left commented here just for documentation.
 
     // CORS and RFC1918
-    // https://mikewest.github.io/cors-rfc1918/#feature-detect
+    // https://wicg.github.io/cors-rfc1918/#feature-detect
     [RuntimeEnabled=CorsRFC1918, ImplementedAs=addressSpaceForBindings] readonly attribute AddressSpace addressSpace;
 
     // Unhandled Promise Rejection Events
     attribute EventHandler onrejectionhandled;
     attribute EventHandler onunhandledrejection;
+
+    // Secure Contexts
+    // https://w3c.github.io/webappsec-secure-contexts/#dom-windoworworkerglobalscope-issecurecontext
+    [ImplementedAs=isSecureContextForBindings] readonly attribute boolean isSecureContext;
+
+    // https://html.spec.whatwg.org/#windoworworkerglobalscope-mixin
+    [Replaceable] readonly attribute DOMString origin;
 };
 
 WorkerGlobalScope implements WindowBase64;

@@ -35,12 +35,13 @@
 #include "public/platform/WebPrivatePtr.h"
 
 #if BLINK_IMPLEMENTATION
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 #endif
 
 namespace v8 {
 class Value;
-template <class T> class Local;
+template <class T>
+class Local;
 }
 
 namespace blink {
@@ -48,32 +49,31 @@ namespace blink {
 class MediaStreamTrack;
 
 class WebDOMMediaStreamTrack {
-public:
-    WebDOMMediaStreamTrack(const WebDOMMediaStreamTrack& b) { assign(b); }
-    ~WebDOMMediaStreamTrack() { reset(); }
+ public:
+  WebDOMMediaStreamTrack(const WebDOMMediaStreamTrack& b) { Assign(b); }
+  ~WebDOMMediaStreamTrack() { Reset(); }
 
-    WebDOMMediaStreamTrack& operator=(const WebDOMMediaStreamTrack& b)
-    {
-        assign(b);
-        return *this;
-    }
+  WebDOMMediaStreamTrack& operator=(const WebDOMMediaStreamTrack& b) {
+    Assign(b);
+    return *this;
+  }
 
-    bool isNull() const { return m_private.isNull(); }
+  bool IsNull() const { return private_.IsNull(); }
 
-    BLINK_EXPORT static WebDOMMediaStreamTrack fromV8Value(v8::Local<v8::Value>);
+  BLINK_EXPORT static WebDOMMediaStreamTrack FromV8Value(v8::Local<v8::Value>);
 
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT void assign(const WebDOMMediaStreamTrack&);
-    BLINK_EXPORT WebMediaStreamTrack component() const;
+  BLINK_EXPORT void Reset();
+  BLINK_EXPORT void Assign(const WebDOMMediaStreamTrack&);
+  BLINK_EXPORT WebMediaStreamTrack Component() const;
 
-private:
+ private:
 #if BLINK_IMPLEMENTATION
-    WebDOMMediaStreamTrack(MediaStreamTrack*);
+  WebDOMMediaStreamTrack(MediaStreamTrack*);
 #endif
 
-    WebPrivatePtr<MediaStreamTrack> m_private;
+  WebPrivatePtr<MediaStreamTrack> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

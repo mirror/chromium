@@ -29,30 +29,22 @@
 
 namespace blink {
 
-MediaEncryptedEvent::MediaEncryptedEvent()
-{
+MediaEncryptedEvent::MediaEncryptedEvent(
+    const AtomicString& type,
+    const MediaEncryptedEventInit& initializer)
+    : Event(type, initializer),
+      init_data_type_(initializer.initDataType()),
+      init_data_(initializer.initData()) {}
+
+MediaEncryptedEvent::~MediaEncryptedEvent() {}
+
+const AtomicString& MediaEncryptedEvent::InterfaceName() const {
+  return EventNames::MediaEncryptedEvent;
 }
 
-MediaEncryptedEvent::MediaEncryptedEvent(const AtomicString& type, const MediaEncryptedEventInit& initializer)
-    : Event(type, initializer)
-    , m_initDataType(initializer.initDataType())
-    , m_initData(initializer.initData())
-{
+DEFINE_TRACE(MediaEncryptedEvent) {
+  visitor->Trace(init_data_);
+  Event::Trace(visitor);
 }
 
-MediaEncryptedEvent::~MediaEncryptedEvent()
-{
-}
-
-const AtomicString& MediaEncryptedEvent::interfaceName() const
-{
-    return EventNames::MediaEncryptedEvent;
-}
-
-DEFINE_TRACE(MediaEncryptedEvent)
-{
-    visitor->trace(m_initData);
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

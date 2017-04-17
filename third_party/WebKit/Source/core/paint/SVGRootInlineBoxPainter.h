@@ -5,7 +5,7 @@
 #ifndef SVGRootInlineBoxPainter_h
 #define SVGRootInlineBoxPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,16 +14,18 @@ class LayoutPoint;
 class SVGRootInlineBox;
 
 class SVGRootInlineBoxPainter {
-    STACK_ALLOCATED();
-public:
-    SVGRootInlineBoxPainter(const SVGRootInlineBox& svgRootInlineBox) : m_svgRootInlineBox(svgRootInlineBox) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&);
+ public:
+  SVGRootInlineBoxPainter(const SVGRootInlineBox& svg_root_inline_box)
+      : svg_root_inline_box_(svg_root_inline_box) {}
 
-private:
-    const SVGRootInlineBox& m_svgRootInlineBox;
+  void Paint(const PaintInfo&, const LayoutPoint&);
+
+ private:
+  const SVGRootInlineBox& svg_root_inline_box_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGRootInlineBoxPainter_h
+#endif  // SVGRootInlineBoxPainter_h

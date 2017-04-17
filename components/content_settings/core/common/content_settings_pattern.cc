@@ -21,6 +21,19 @@ namespace {
 // The component supports only one scheme for simplicity.
 const char* non_port_non_domain_wildcard_scheme = NULL;
 
+// Keep it consistent with enum SchemeType in content_settings_pattern.h.
+const char* const kSchemeNames[] = {
+  "wildcard",
+  "other",
+  url::kHttpScheme,
+  url::kHttpsScheme,
+  url::kFileScheme,
+  "chrome-extension",
+};
+
+static_assert(arraysize(kSchemeNames) == ContentSettingsPattern::SCHEME_MAX,
+              "kSchemeNames should have SCHEME_MAX elements");
+
 std::string GetDefaultPort(const std::string& scheme) {
   if (scheme == url::kHttpScheme)
     return "80";
@@ -361,11 +374,12 @@ BuilderInterface* ContentSettingsPattern::CreateBuilder(
 
 // static
 ContentSettingsPattern ContentSettingsPattern::Wildcard() {
-  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder(
-      ContentSettingsPattern::CreateBuilder(true));
-  builder->WithSchemeWildcard()->WithDomainWildcard()->WithPortWildcard()->
-           WithPathWildcard();
-  return builder->Build();
+  PatternParts parts;
+  parts.is_scheme_wildcard = true;
+  parts.has_domain_wildcard = true;
+  parts.is_port_wildcard = true;
+  parts.is_path_wildcard = true;
+  return ContentSettingsPattern(parts, true);
 }
 
 // static
@@ -588,6 +602,22 @@ std::string ContentSettingsPattern::ToString() const {
     return content_settings::PatternParser::ToString(parts_);
   else
     return std::string();
+}
+
+ContentSettingsPattern::SchemeType ContentSettingsPattern::GetScheme() const {
+  if (parts_.is_scheme_wildcard)
+    return SCHEME_WILDCARD;
+
+  for (size_t i = 2; i < arraysize(kSchemeNames); ++i) {
+    if (parts_.scheme == kSchemeNames[i])
+      return static_cast<SchemeType>(i);
+  }
+  return SCHEME_OTHER;
+}
+
+bool ContentSettingsPattern::HasPath() const {
+  DCHECK_EQ(GetScheme(), SCHEME_FILE);
+  return !parts_.is_path_wildcard && !parts_.path.empty();
 }
 
 ContentSettingsPattern::Relation ContentSettingsPattern::Compare(

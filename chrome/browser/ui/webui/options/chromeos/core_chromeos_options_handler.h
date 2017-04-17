@@ -6,11 +6,12 @@
 #define CHROME_BROWSER_UI_WEBUI_OPTIONS_CHROMEOS_CORE_CHROMEOS_OPTIONS_HANDLER_H_
 
 #include <map>
+#include <memory>
+#include <string>
 
-#include "base/compiler_specific.h"
+#include "base/macros.h"
 #include "base/memory/linked_ptr.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
-#include "chrome/browser/chromeos/ui_proxy_config_service.h"
 #include "chrome/browser/ui/webui/options/core_options_handler.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -27,14 +28,14 @@ class CoreChromeOSOptionsHandler : public ::options::CoreOptionsHandler,
 
   // ::CoreOptionsHandler overrides
   void RegisterMessages() override;
-  base::Value* FetchPref(const std::string& pref_name) override;
+  std::unique_ptr<base::Value> FetchPref(const std::string& pref_name) override;
   void InitializeHandler() override;
   void ObservePref(const std::string& pref_name) override;
   void SetPref(const std::string& pref_name,
                const base::Value* value,
                const std::string& metric) override;
   void StopObservingPref(const std::string& path) override;
-  base::Value* CreateValueForPref(
+  std::unique_ptr<base::Value> CreateValueForPref(
       const std::string& pref_name,
       const std::string& controlling_pref_name) override;
 
@@ -68,7 +69,10 @@ class CoreChromeOSOptionsHandler : public ::options::CoreOptionsHandler,
 
   content::NotificationRegistrar notification_registrar_;
 
-  UIProxyConfigService proxy_config_service_;
+  // Currently selected network id.
+  std::string network_guid_;
+
+  DISALLOW_COPY_AND_ASSIGN(CoreChromeOSOptionsHandler);
 };
 
 }  // namespace options

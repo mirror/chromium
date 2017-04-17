@@ -9,49 +9,70 @@
 Polymer({
   is: 'cr-policy-pref-indicator',
 
-  behaviors: [CrPolicyIndicatorBehavior, CrPolicyPrefBehavior],
+  behaviors: [CrPolicyIndicatorBehavior],
 
   properties: {
-    /**
-     * Optional preference object associated with the indicator. Initialized to
-     * null so that computed functions will get called if this is never set.
-     * @type {?chrome.settingsPrivate.PrefObject}
-     */
-    pref: {type: Object, value: null},
-
-    /**
-     * Optional email of the user controlling the setting when the setting does
-     * not correspond to a pref (Chrome OS only). Only used when pref is null.
-     * Initialized to '' so that computed functions will get called if this is
-     * never set. TODO(stevenjb/michaelpg): Create a separate indicator for
-     * non-pref (i.e. explicitly set) indicators (see languyage_detail_page).
-     */
-    controllingUser: {type: String, value: ''},
+    iconAriaLabel: String,
 
     /**
      * Which indicator type to show (or NONE).
      * @type {CrPolicyIndicatorType}
+     * @override
      */
     indicatorType: {
       type: String,
       value: CrPolicyIndicatorType.NONE,
-      computed: 'getIndicatorType(pref.policySource, pref.policyEnforcement)',
+      computed: 'getIndicatorTypeForPref_(pref.controlledBy, pref.enforcement)',
     },
+
+    /** @override */
+    indicatorTooltip: {
+      type: String,
+      computed: 'getIndicatorTooltipForPref_(indicatorType, pref.*)',
+    },
+
+    /**
+     * Optional preference object associated with the indicator. Initialized to
+     * null so that computed functions will get called if this is never set.
+     * @type {!chrome.settingsPrivate.PrefObject|undefined}
+     */
+    pref: Object,
   },
 
   /**
-   * @param {CrPolicyIndicatorType} type
-   * @param {?chrome.settingsPrivate.PrefObject} pref
-   * @return {string} The tooltip text for |type|.
+   * @param {!chrome.settingsPrivate.ControlledBy|undefined} controlledBy
+   * @param {!chrome.settingsPrivate.Enforcement|undefined} enforcement
+   * @return {CrPolicyIndicatorType} The indicator type based on |controlledBy|
+   *     and |enforcement|.
+   */
+  getIndicatorTypeForPref_: function(controlledBy, enforcement) {
+    if (enforcement == chrome.settingsPrivate.Enforcement.RECOMMENDED)
+      return CrPolicyIndicatorType.RECOMMENDED;
+    if (enforcement == chrome.settingsPrivate.Enforcement.ENFORCED) {
+      switch (controlledBy) {
+        case chrome.settingsPrivate.ControlledBy.EXTENSION:
+          return CrPolicyIndicatorType.EXTENSION;
+        case chrome.settingsPrivate.ControlledBy.PRIMARY_USER:
+          return CrPolicyIndicatorType.PRIMARY_USER;
+        case chrome.settingsPrivate.ControlledBy.OWNER:
+          return CrPolicyIndicatorType.OWNER;
+        case chrome.settingsPrivate.ControlledBy.USER_POLICY:
+          return CrPolicyIndicatorType.USER_POLICY;
+        case chrome.settingsPrivate.ControlledBy.DEVICE_POLICY:
+          return CrPolicyIndicatorType.DEVICE_POLICY;
+      }
+    }
+    return CrPolicyIndicatorType.NONE;
+  },
+
+  /**
+   * @param {CrPolicyIndicatorType} indicatorType
+   * @return {string} The tooltip text for |indicatorType|.
    * @private
    */
-  getTooltip_: function(type, pref, controllingUser) {
-    if (type == CrPolicyIndicatorType.RECOMMENDED) {
-      if (pref && pref.value == pref.recommendedValue)
-        return this.i18n_('controlledSettingRecommendedMatches');
-      return this.i18n_('controlledSettingRecommendedDiffers');
-    }
-    var name = pref ? pref.policySourceName : controllingUser;
-    return this.getPolicyIndicatorTooltip(type, name);
-  }
+  getIndicatorTooltipForPref_: function(indicatorType) {
+    var matches = this.pref && this.pref.value == this.pref.recommendedValue;
+    return this.getIndicatorTooltip(
+        indicatorType, this.pref.controlledByName || '', matches);
+  },
 });

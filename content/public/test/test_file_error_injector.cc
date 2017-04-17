@@ -18,6 +18,10 @@
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
 
+namespace net {
+class NetLogWithSource;
+}
+
 namespace content {
 class ByteStreamReader;
 
@@ -26,22 +30,26 @@ namespace {
 // A class that performs file operations and injects errors.
 class DownloadFileWithError: public DownloadFileImpl {
  public:
-  DownloadFileWithError(std::unique_ptr<DownloadSaveInfo> save_info,
-                        const base::FilePath& default_download_directory,
-                        std::unique_ptr<ByteStreamReader> byte_stream,
-                        const net::BoundNetLog& bound_net_log,
-                        base::WeakPtr<DownloadDestinationObserver> observer,
-                        const TestFileErrorInjector::FileErrorInfo& error_info,
-                        const base::Closure& ctor_callback,
-                        const base::Closure& dtor_callback);
+  DownloadFileWithError(
+      std::unique_ptr<DownloadSaveInfo> save_info,
+      const base::FilePath& default_download_directory,
+      std::unique_ptr<ByteStreamReader> byte_stream,
+      const net::NetLogWithSource& net_log,
+      base::WeakPtr<DownloadDestinationObserver> observer,
+      const TestFileErrorInjector::FileErrorInfo& error_info,
+      const base::Closure& ctor_callback,
+      const base::Closure& dtor_callback);
 
   ~DownloadFileWithError() override;
 
-  void Initialize(const InitializeCallback& callback) override;
+  void Initialize(const InitializeCallback& callback,
+                  const DownloadItem::ReceivedSlices& received_slices) override;
 
   // DownloadFile interface.
-  DownloadInterruptReason AppendDataToFile(const char* data,
-                                           size_t data_len) override;
+  DownloadInterruptReason WriteDataToFile(int64_t offset,
+                                          const char* data,
+                                          size_t data_len) override;
+
   void RenameAndUniquify(const base::FilePath& full_path,
                          const RenameCompletionCallback& callback) override;
   void RenameAndAnnotate(const base::FilePath& full_path,
@@ -98,7 +106,7 @@ DownloadFileWithError::DownloadFileWithError(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
-    const net::BoundNetLog& bound_net_log,
+    const net::NetLogWithSource& net_log,
     base::WeakPtr<DownloadDestinationObserver> observer,
     const TestFileErrorInjector::FileErrorInfo& error_info,
     const base::Closure& ctor_callback,
@@ -106,7 +114,7 @@ DownloadFileWithError::DownloadFileWithError(
     : DownloadFileImpl(std::move(save_info),
                        default_download_directory,
                        std::move(byte_stream),
-                       bound_net_log,
+                       net_log,
                        observer),
       error_info_(error_info),
       destruction_callback_(dtor_callback) {
@@ -125,7 +133,8 @@ DownloadFileWithError::~DownloadFileWithError() {
 }
 
 void DownloadFileWithError::Initialize(
-    const InitializeCallback& callback) {
+    const InitializeCallback& callback,
+    const DownloadItem::ReceivedSlices& received_slices) {
   DownloadInterruptReason error_to_return = DOWNLOAD_INTERRUPT_REASON_NONE;
   InitializeCallback callback_to_use = callback;
 
@@ -147,14 +156,16 @@ void DownloadFileWithError::Initialize(
                                  error_to_return);
   }
 
-  DownloadFileImpl::Initialize(callback_to_use);
+  DownloadFileImpl::Initialize(callback_to_use, received_slices);
 }
 
-DownloadInterruptReason DownloadFileWithError::AppendDataToFile(
-    const char* data, size_t data_len) {
+DownloadInterruptReason DownloadFileWithError::WriteDataToFile(
+    int64_t offset,
+    const char* data,
+    size_t data_len) {
   return ShouldReturnError(
       TestFileErrorInjector::FILE_OPERATION_WRITE,
-      DownloadFileImpl::AppendDataToFile(data, data_len));
+      DownloadFileImpl::WriteDataToFile(offset, data, data_len));
 }
 
 void DownloadFileWithError::RenameAndUniquify(
@@ -252,7 +263,7 @@ class DownloadFileWithErrorFactory : public DownloadFileFactory {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_download_directory,
       std::unique_ptr<ByteStreamReader> byte_stream,
-      const net::BoundNetLog& bound_net_log,
+      const net::NetLogWithSource& net_log,
       base::WeakPtr<DownloadDestinationObserver> observer) override;
 
   bool SetError(TestFileErrorInjector::FileErrorInfo error);
@@ -282,12 +293,12 @@ DownloadFile* DownloadFileWithErrorFactory::CreateFile(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
-    const net::BoundNetLog& bound_net_log,
+    const net::NetLogWithSource& net_log,
     base::WeakPtr<DownloadDestinationObserver> observer) {
   return new DownloadFileWithError(std::move(save_info),
                                    default_download_directory,
                                    std::move(byte_stream),
-                                   bound_net_log,
+                                   net_log,
                                    observer,
                                    injected_error_,
                                    construction_callback_,

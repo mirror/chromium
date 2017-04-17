@@ -25,128 +25,145 @@
 
 #include "core/layout/LayoutMedia.h"
 
+#include "core/frame/FrameView.h"
+#include "core/frame/VisualViewport.h"
 #include "core/html/HTMLMediaElement.h"
-#include "core/html/shadow/MediaControls.h"
+#include "core/html/media/MediaControls.h"
 #include "core/layout/LayoutView.h"
+#include "core/page/Page.h"
 
 namespace blink {
 
-LayoutMedia::LayoutMedia(HTMLMediaElement* video)
-    : LayoutImage(video)
-{
-    setImageResource(LayoutImageResource::create());
+LayoutMedia::LayoutMedia(HTMLMediaElement* video) : LayoutImage(video) {
+  SetImageResource(LayoutImageResource::Create());
 }
 
-LayoutMedia::~LayoutMedia()
-{
+LayoutMedia::~LayoutMedia() {}
+
+HTMLMediaElement* LayoutMedia::MediaElement() const {
+  return ToHTMLMediaElement(GetNode());
 }
 
-HTMLMediaElement* LayoutMedia::mediaElement() const
-{
-    return toHTMLMediaElement(node());
-}
+void LayoutMedia::UpdateLayout() {
+  LayoutSize old_size = ContentBoxRect().Size();
 
-void LayoutMedia::layout()
-{
-    LayoutSize oldSize = contentBoxRect().size();
+  LayoutImage::UpdateLayout();
 
-    LayoutImage::layout();
+  LayoutRect new_rect = ContentBoxRect();
 
-    LayoutRect newRect = contentBoxRect();
+  LayoutState state(*this);
 
-    LayoutState state(*this, locationOffset());
-
-    // Iterate the children in reverse order so that the media controls are laid
-    // out before the text track container. This is to ensure that the text
-    // track rendering has an up-to-date position of the media controls for
-    // overlap checking, see LayoutVTTCue.
-#if ENABLE(ASSERT)
-    bool seenTextTrackContainer = false;
+// Iterate the children in reverse order so that the media controls are laid
+// out before the text track container. This is to ensure that the text
+// track rendering has an up-to-date position of the media controls for
+// overlap checking, see LayoutVTTCue.
+#if DCHECK_IS_ON()
+  bool seen_text_track_container = false;
+  bool seen_media_remoting_interstitial = false;
 #endif
-    for (LayoutObject* child = m_children.lastChild(); child; child = child->previousSibling()) {
-#if ENABLE(ASSERT)
-        if (child->node()->isMediaControls())
-            ASSERT(!seenTextTrackContainer);
-        else if (child->node()->isTextTrackContainer())
-            seenTextTrackContainer = true;
-        else
-            ASSERT_NOT_REACHED();
+  for (LayoutObject* child = children_.LastChild(); child;
+       child = child->PreviousSibling()) {
+#if DCHECK_IS_ON()
+    if (child->GetNode()->IsMediaControls()) {
+      DCHECK(!seen_text_track_container);
+      DCHECK(!seen_media_remoting_interstitial);
+    } else if (child->GetNode()->IsTextTrackContainer()) {
+      seen_text_track_container = true;
+      DCHECK(!seen_media_remoting_interstitial);
+    } else if (child->GetNode()->IsMediaRemotingInterstitial()) {
+      seen_media_remoting_interstitial = true;
+    } else {
+      NOTREACHED();
+    }
 #endif
 
-        if (newRect.size() == oldSize && !child->needsLayout())
-            continue;
+    // TODO(mlamouri): we miss some layouts because needsLayout returns false in
+    // some cases where we want to change the width of the controls because the
+    // visible viewport has changed for example.
+    if (new_rect.Size() == old_size && !child->NeedsLayout())
+      continue;
 
-        LayoutBox* layoutBox = toLayoutBox(child);
-        layoutBox->setLocation(newRect.location());
-        // TODO(foolip): Remove the mutableStyleRef() and depend on CSS
-        // width/height: inherit to match the media element size.
-        layoutBox->mutableStyleRef().setHeight(Length(newRect.height(), Fixed));
-        layoutBox->mutableStyleRef().setWidth(Length(newRect.width(), Fixed));
-        layoutBox->forceLayout();
+    LayoutUnit width = new_rect.Width();
+    if (child->GetNode()->IsMediaControls()) {
+      width = ComputePanelWidth(new_rect);
     }
 
-    clearNeedsLayout();
+    LayoutBox* layout_box = ToLayoutBox(child);
+    layout_box->SetLocation(new_rect.Location());
+    // TODO(foolip): Remove the mutableStyleRef() and depend on CSS
+    // width/height: inherit to match the media element size.
+    layout_box->MutableStyleRef().SetHeight(Length(new_rect.Height(), kFixed));
+    layout_box->MutableStyleRef().SetWidth(Length(width, kFixed));
 
-    // Notify our MediaControls that a layout has happened.
-    if (mediaElement() && mediaElement()->mediaControls() && newRect.width() != oldSize.width())
-        mediaElement()->mediaControls()->notifyPanelWidthChanged(newRect.width());
+    layout_box->ForceLayout();
+  }
+
+  ClearNeedsLayout();
 }
 
-bool LayoutMedia::isChildAllowed(LayoutObject* child, const ComputedStyle&) const
-{
-    // Two types of child layout objects are allowed: media controls
-    // and the text track container. Filter children by node type.
-    ASSERT(child->node());
+bool LayoutMedia::IsChildAllowed(LayoutObject* child,
+                                 const ComputedStyle& style) const {
+  // Two types of child layout objects are allowed: media controls
+  // and the text track container. Filter children by node type.
+  DCHECK(child->GetNode());
 
-    // The user agent stylesheet (mediaControls.css) has
-    // ::-webkit-media-controls { display: flex; }. If author style
-    // sets display: inline we would get an inline layoutObject as a child
-    // of replaced content, which is not supposed to be possible. This
-    // check can be removed if ::-webkit-media-controls is made
-    // internal.
-    if (child->node()->isMediaControls())
-        return child->isFlexibleBox();
-
-    if (child->node()->isTextTrackContainer())
-        return true;
-
+  // Out-of-flow positioned or floating child breaks layout hierarchy.
+  // This check can be removed if ::-webkit-media-controls is made internal.
+  if (style.HasOutOfFlowPosition() || style.IsFloating())
     return false;
+
+  // The user agent stylesheet (mediaControls.css) has
+  // ::-webkit-media-controls { display: flex; }. If author style
+  // sets display: inline we would get an inline layoutObject as a child
+  // of replaced content, which is not supposed to be possible. This
+  // check can be removed if ::-webkit-media-controls is made
+  // internal.
+  if (child->GetNode()->IsMediaControls())
+    return child->IsFlexibleBox();
+
+  if (child->GetNode()->IsTextTrackContainer() ||
+      child->GetNode()->IsMediaRemotingInterstitial())
+    return true;
+
+  return false;
 }
 
-void LayoutMedia::paintReplaced(const PaintInfo&, const LayoutPoint&) const
-{
+void LayoutMedia::PaintReplaced(const PaintInfo&, const LayoutPoint&) const {}
+
+LayoutUnit LayoutMedia::ComputePanelWidth(const LayoutRect& media_rect) const {
+  // TODO(mlamouri): we don't know if the main frame has an horizontal scrollbar
+  // if it is out of process. See https://crbug.com/662480
+  if (GetDocument().GetPage()->MainFrame()->IsRemoteFrame())
+    return media_rect.Width();
+
+  // TODO(foolip): when going fullscreen, the animation sometimes does not clear
+  // up properly and the last `absoluteXOffset` received is incorrect. This is
+  // a shortcut that we could ideally avoid. See https://crbug.com/663680
+  if (MediaElement() && MediaElement()->IsFullscreen())
+    return media_rect.Width();
+
+  Page* page = GetDocument().GetPage();
+  LocalFrame* main_frame = page->DeprecatedLocalMainFrame();
+  FrameView* page_view = main_frame ? main_frame->View() : nullptr;
+  if (!main_frame || !page_view)
+    return media_rect.Width();
+
+  if (page_view->HorizontalScrollbarMode() != kScrollbarAlwaysOff)
+    return media_rect.Width();
+
+  // On desktop, this will include scrollbars when they stay visible.
+  const LayoutUnit visible_width(page->GetVisualViewport().VisibleWidth());
+  const LayoutUnit absolute_x_offset(
+      LocalToAbsolute(
+          FloatPoint(media_rect.Location()),
+          kUseTransforms | kApplyContainerFlip | kTraverseDocumentBoundaries)
+          .X());
+  const LayoutUnit new_width = visible_width - absolute_x_offset;
+
+  if (new_width < 0)
+    return media_rect.Width();
+
+  return std::min(media_rect.Width(), visible_width - absolute_x_offset);
 }
 
-void LayoutMedia::willBeDestroyed()
-{
-    if (view())
-        view()->unregisterMediaForPositionChangeNotification(*this);
-    LayoutImage::willBeDestroyed();
-}
-
-void LayoutMedia::insertedIntoTree()
-{
-    LayoutImage::insertedIntoTree();
-
-    // Note that if we don't want them and aren't registered, then this
-    // will do nothing.
-    if (HTMLMediaElement* element = mediaElement())
-        element->updatePositionNotificationRegistration();
-}
-
-void LayoutMedia::notifyPositionMayHaveChanged(const IntRect& visibleRect)
-{
-    // Tell our element about it.
-    if (HTMLMediaElement* element = mediaElement())
-        element->notifyPositionMayHaveChanged(visibleRect);
-}
-
-void LayoutMedia::setRequestPositionUpdates(bool want)
-{
-    if (want)
-        view()->registerMediaForPositionChangeNotification(*this);
-    else
-        view()->unregisterMediaForPositionChangeNotification(*this);
-}
-
-} // namespace blink
+}  // namespace blink

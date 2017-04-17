@@ -30,9 +30,10 @@ class CTObjectsExtractorTest : public ::testing::Test {
     std::string der_test_cert(ct::GetDerEncodedX509Cert());
     test_cert_ = X509Certificate::CreateFromBytes(der_test_cert.data(),
                                                   der_test_cert.length());
+    ASSERT_TRUE(test_cert_);
 
     log_ = CTLogVerifier::Create(ct::GetTestPublicKey(), "testlog",
-                                 "https://ct.example.com", "");
+                                 "https://ct.example.com", "dns.example.com");
     ASSERT_TRUE(log_);
   }
 
@@ -44,8 +45,7 @@ class CTObjectsExtractorTest : public ::testing::Test {
     std::vector<base::StringPiece> parsed_scts;
     base::StringPiece sct_list_sp(sct_list);
     // Make sure the SCT list can be decoded properly
-    EXPECT_TRUE(DecodeSCTList(&sct_list_sp, &parsed_scts));
-
+    EXPECT_TRUE(DecodeSCTList(sct_list_sp, &parsed_scts));
     EXPECT_TRUE(DecodeSignedCertificateTimestamp(&parsed_scts[0], sct));
   }
 
@@ -130,10 +130,12 @@ TEST_F(CTObjectsExtractorTest, ExtractSCTListFromOCSPResponse) {
   scoped_refptr<X509Certificate> subject_cert =
       X509Certificate::CreateFromBytes(der_subject_cert.data(),
                                        der_subject_cert.length());
+  ASSERT_TRUE(subject_cert);
   std::string der_issuer_cert(ct::GetDerEncodedFakeOCSPResponseIssuerCert());
   scoped_refptr<X509Certificate> issuer_cert =
       X509Certificate::CreateFromBytes(der_issuer_cert.data(),
                                        der_issuer_cert.length());
+  ASSERT_TRUE(issuer_cert);
 
   std::string fake_sct_list = ct::GetFakeOCSPExtensionValue();
   ASSERT_FALSE(fake_sct_list.empty());
@@ -152,6 +154,7 @@ TEST_F(CTObjectsExtractorTest, ExtractSCTListFromOCSPResponseMatchesSerial) {
   scoped_refptr<X509Certificate> issuer_cert =
       X509Certificate::CreateFromBytes(der_issuer_cert.data(),
                                        der_issuer_cert.length());
+  ASSERT_TRUE(issuer_cert);
 
   std::string ocsp_response = ct::GetDerEncodedFakeOCSPResponse();
 
@@ -167,6 +170,7 @@ TEST_F(CTObjectsExtractorTest, ExtractSCTListFromOCSPResponseMatchesIssuer) {
   scoped_refptr<X509Certificate> subject_cert =
       X509Certificate::CreateFromBytes(der_subject_cert.data(),
                                        der_subject_cert.length());
+  ASSERT_TRUE(subject_cert);
 
   std::string ocsp_response = ct::GetDerEncodedFakeOCSPResponse();
 

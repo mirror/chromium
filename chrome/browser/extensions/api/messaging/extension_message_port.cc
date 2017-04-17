@@ -8,7 +8,7 @@
 #include "base/scoped_observer.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/interstitial_page.h"
-#include "content/public/browser/navigation_details.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
@@ -58,11 +58,12 @@ class ExtensionMessagePort::FrameTracker : public content::WebContentsObserver,
     port_->UnregisterFrame(render_frame_host);
   }
 
-  void DidNavigateAnyFrame(content::RenderFrameHost* render_frame_host,
-                           const content::LoadCommittedDetails& details,
-                           const content::FrameNavigateParams&) override {
-    if (!details.is_in_page)
-      port_->UnregisterFrame(render_frame_host);
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override {
+    if (navigation_handle->HasCommitted() &&
+        !navigation_handle->IsSameDocument()) {
+      port_->UnregisterFrame(navigation_handle->GetRenderFrameHost());
+    }
   }
 
   void DidDetachInterstitialPage() override {
@@ -91,7 +92,7 @@ class ExtensionMessagePort::FrameTracker : public content::WebContentsObserver,
 
 ExtensionMessagePort::ExtensionMessagePort(
     base::WeakPtr<MessageService> message_service,
-    int port_id,
+    const PortId& port_id,
     const std::string& extension_id,
     content::RenderProcessHost* extension_process)
     : weak_message_service_(message_service),
@@ -99,7 +100,6 @@ ExtensionMessagePort::ExtensionMessagePort(
       extension_id_(extension_id),
       browser_context_(extension_process->GetBrowserContext()),
       extension_process_(extension_process),
-      opener_tab_id_(-1),
       did_create_port_(false),
       background_host_ptr_(nullptr),
       frame_tracker_(new FrameTracker(this)) {
@@ -113,7 +113,7 @@ ExtensionMessagePort::ExtensionMessagePort(
 
 ExtensionMessagePort::ExtensionMessagePort(
     base::WeakPtr<MessageService> message_service,
-    int port_id,
+    const PortId& port_id,
     const std::string& extension_id,
     content::RenderFrameHost* rfh,
     bool include_child_frames)
@@ -122,7 +122,6 @@ ExtensionMessagePort::ExtensionMessagePort(
       extension_id_(extension_id),
       browser_context_(rfh->GetProcess()->GetBrowserContext()),
       extension_process_(nullptr),
-      opener_tab_id_(-1),
       did_create_port_(false),
       background_host_ptr_(nullptr),
       frame_tracker_(new FrameTracker(this)) {
@@ -203,10 +202,8 @@ void ExtensionMessagePort::DispatchOnConnect(
     const GURL& source_url,
     const std::string& tls_channel_id) {
   ExtensionMsg_TabConnectionInfo source;
-  if (source_tab) {
+  if (source_tab)
     source.tab.Swap(source_tab.get());
-    source.tab.GetInteger("id", &opener_tab_id_);
-  }
   source.frame_id = source_frame_id;
 
   ExtensionMsg_ExternalConnectionInfo info;
@@ -216,19 +213,19 @@ void ExtensionMessagePort::DispatchOnConnect(
   info.guest_process_id = guest_process_id;
   info.guest_render_frame_routing_id = guest_render_frame_routing_id;
 
-  SendToPort(base::WrapUnique(new ExtensionMsg_DispatchOnConnect(
-      MSG_ROUTING_NONE, port_id_, channel_name, source, info, tls_channel_id)));
+  SendToPort(base::MakeUnique<ExtensionMsg_DispatchOnConnect>(
+      MSG_ROUTING_NONE, port_id_, channel_name, source, info, tls_channel_id));
 }
 
 void ExtensionMessagePort::DispatchOnDisconnect(
     const std::string& error_message) {
-  SendToPort(base::WrapUnique(new ExtensionMsg_DispatchOnDisconnect(
-      MSG_ROUTING_NONE, port_id_, error_message)));
+  SendToPort(base::MakeUnique<ExtensionMsg_DispatchOnDisconnect>(
+      MSG_ROUTING_NONE, port_id_, error_message));
 }
 
 void ExtensionMessagePort::DispatchOnMessage(const Message& message) {
-  SendToPort(base::WrapUnique(new ExtensionMsg_DeliverMessage(
-      MSG_ROUTING_NONE, port_id_, opener_tab_id_, message)));
+  SendToPort(base::MakeUnique<ExtensionMsg_DeliverMessage>(
+      MSG_ROUTING_NONE, port_id_, message));
 }
 
 void ExtensionMessagePort::IncrementLazyKeepaliveCount() {

@@ -7,29 +7,23 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/custom/CustomElementReactionStack.h"
-#include "core/frame/FrameHost.h"
 
 namespace blink {
 
-CEReactionsScope* CEReactionsScope::s_topOfStack = nullptr;
+CEReactionsScope* CEReactionsScope::top_of_stack_ = nullptr;
 
-void CEReactionsScope::enqueueToCurrentQueue(
-    Element* element,
-    CustomElementReaction* reaction)
-{
-    if (!m_frameHost.get()) {
-        m_frameHost = element->document().frameHost();
-        m_frameHost->customElementReactionStack().push();
-    } else {
-        DCHECK_EQ(m_frameHost, element->document().frameHost());
-    }
-    m_frameHost->customElementReactionStack().enqueueToCurrentQueue(
-        element, reaction);
+void CEReactionsScope::EnqueueToCurrentQueue(Element* element,
+                                             CustomElementReaction* reaction) {
+  if (!work_to_do_) {
+    work_to_do_ = true;
+    CustomElementReactionStack::Current().Push();
+  }
+  CustomElementReactionStack::Current().EnqueueToCurrentQueue(element,
+                                                              reaction);
 }
 
-void CEReactionsScope::invokeReactions()
-{
-    m_frameHost->customElementReactionStack().popInvokingReactions();
+void CEReactionsScope::InvokeReactions() {
+  CustomElementReactionStack::Current().PopInvokingReactions();
 }
 
-} // namespace blink
+}  // namespace blink

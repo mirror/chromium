@@ -15,7 +15,6 @@
 {
   'includes': [
     '../build/crashpad.gypi',
-    '../build/crashpad_dependencies.gypi',
   ],
   'targets': [
     {
@@ -46,6 +45,8 @@
         'mac/exception_handler_server.h',
         'prune_crash_reports_thread.cc',
         'prune_crash_reports_thread.h',
+        'user_stream_data_source.cc',
+        'user_stream_data_source.h',
         'win/crash_report_exception_handler.cc',
         'win/crash_report_exception_handler.h',
       ],
@@ -66,28 +67,12 @@
       ],
 
       'conditions': [
-        ['OS=="mac"', {
-          # In an in-Chromium build with component=shared_library,
-          # crashpad_handler will depend on shared libraries such as
-          # libbase.dylib located in out/{Debug,Release} via the @rpath
-          # mechanism. When crashpad_handler is copied to its home deep inside
-          # the Chromium app bundle, it needs to have an LC_RPATH command
-          # pointing back to the directory containing these dependency
-          # libraries.
-          'variables': {
-            'component%': 'static_library',
+        ['OS=="win"',  {
+          'msvs_settings': {
+            'VCLinkerTool': {
+              'SubSystem': '2',  # /SUBSYSTEM:WINDOWS
+            },
           },
-          'conditions': [
-            ['crashpad_dependencies=="chromium" and component=="shared_library"', {
-              'xcode_settings': {
-                'LD_RUNPATH_SEARCH_PATHS': [  # -Wl,-rpath
-                  # Get back from
-                  # Chromium.app/Contents/Versions/V/Framework.framework/Helpers
-                  '@loader_path/../../../../../..',
-                ],
-              },
-            }],
-          ],
         }],
       ],
     },
@@ -95,6 +80,36 @@
   'conditions': [
     ['OS=="win"', {
       'targets': [
+        {
+          # Duplicates crashpad_handler.exe to crashpad_handler.com and makes it
+          # a console app.
+          'target_name': 'crashpad_handler_console',
+          'type': 'none',
+          'dependencies': [
+            '../third_party/mini_chromium/mini_chromium.gyp:base',
+            '../tools/tools.gyp:crashpad_tool_support',
+            'crashpad_handler',
+          ],
+          'actions': [
+            {
+              'action_name': 'copy handler exe to com',
+              'inputs': [
+                '<(PRODUCT_DIR)/crashpad_handler.exe',
+              ],
+              'outputs': [
+                '<(PRODUCT_DIR)/crashpad_handler.com',
+              ],
+              'action': [
+                'copy <(PRODUCT_DIR)\crashpad_handler.exe '
+                    '<(PRODUCT_DIR)\crashpad_handler.com >nul && '
+                'editbin -nologo -subsystem:console '
+                    '<(PRODUCT_DIR)\crashpad_handler.com >nul',
+              ],
+              'msvs_cygwin_shell': '0',
+              'quote_cmd': '0',
+            },
+          ],
+        },
         {
           'target_name': 'crashy_program',
           'type': 'executable',
@@ -111,6 +126,20 @@
           ],
         },
         {
+          'target_name': 'crashy_signal',
+          'type': 'executable',
+          'dependencies': [
+            '../client/client.gyp:crashpad_client',
+            '../third_party/mini_chromium/mini_chromium.gyp:base',
+          ],
+          'include_dirs': [
+            '..',
+          ],
+          'sources': [
+            'win/crashy_signal.cc',
+          ],
+        },
+        {
           'target_name': 'crash_other_program',
           'type': 'executable',
           'dependencies': [
@@ -121,6 +150,13 @@
           ],
           'sources': [
             'win/crash_other_program.cc',
+          ],
+        },
+        {
+          'target_name': 'fake_handler_that_crashes_at_startup',
+          'type': 'executable',
+          'sources': [
+            'win/fake_handler_that_crashes_at_startup.cc',
           ],
         },
         {

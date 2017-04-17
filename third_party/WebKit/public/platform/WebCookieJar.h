@@ -36,19 +36,25 @@
 namespace blink {
 
 class WebURL;
-struct WebCookie;
-template <typename T> class WebVector;
 
 class WebCookieJar {
-public:
-    virtual void setCookie(const WebURL&, const WebURL& firstPartyForCookies, const WebString& cookie) { }
-    virtual WebString cookies(const WebURL&, const WebURL& firstPartyForCookies) { return WebString(); }
-    virtual bool cookiesEnabled(const WebURL&, const WebURL& firstPartyForCookies) { return true; }
+ public:
+  virtual void SetCookie(const WebURL&,
+                         const WebURL& first_party_for_cookies,
+                         const WebString& cookie) {}
+  virtual WebString Cookies(const WebURL&,
+                            const WebURL& first_party_for_cookies) {
+    return WebString();
+  }
+  virtual bool CookiesEnabled(const WebURL&,
+                              const WebURL& first_party_for_cookies) {
+    return true;
+  }
 
-protected:
-    ~WebCookieJar() { }
+ protected:
+  ~WebCookieJar() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

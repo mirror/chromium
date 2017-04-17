@@ -32,19 +32,17 @@
 #define ClipboardUtilities_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Forward.h"
-#include "wtf/build_config.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/build_config.h"
 
 namespace blink {
 
 #if OS(WIN)
-PLATFORM_EXPORT void replaceNewlinesWithWindowsStyleNewlines(String&);
+PLATFORM_EXPORT void ReplaceNewlinesWithWindowsStyleNewlines(String&);
 #endif
-PLATFORM_EXPORT void replaceNBSPWithSpace(String&);
-PLATFORM_EXPORT String convertURIListToURL(const String& uriList);
-// FIXME: This should probably be implemented in the embedder rather than here.
-PLATFORM_EXPORT void validateFilename(String& name, String& extension);
+PLATFORM_EXPORT void ReplaceNBSPWithSpace(String&);
+PLATFORM_EXPORT String ConvertURIListToURL(const String& uri_list);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ClipboardUtilities_h
+#endif  // ClipboardUtilities_h

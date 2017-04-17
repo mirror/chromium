@@ -5,24 +5,30 @@
 #ifndef ConsoleTypes_h
 #define ConsoleTypes_h
 
-#include "platform/v8_inspector/public/V8ConsoleTypes.h"
-
 namespace blink {
 
 enum MessageSource {
-    XMLMessageSource,
-    JSMessageSource,
-    NetworkMessageSource,
-    ConsoleAPIMessageSource,
-    StorageMessageSource,
-    AppCacheMessageSource,
-    RenderingMessageSource,
-    SecurityMessageSource,
-    OtherMessageSource,
-    DeprecationMessageSource,
-    WorkerMessageSource
+  kXMLMessageSource,
+  kJSMessageSource,
+  kNetworkMessageSource,
+  kConsoleAPIMessageSource,
+  kStorageMessageSource,
+  kAppCacheMessageSource,
+  kRenderingMessageSource,
+  kSecurityMessageSource,
+  kOtherMessageSource,
+  kDeprecationMessageSource,
+  kWorkerMessageSource,
+  kViolationMessageSource,
+  kInterventionMessageSource
 };
 
+enum MessageLevel {
+  kVerboseMessageLevel,
+  kInfoMessageLevel,
+  kWarningMessageLevel,
+  kErrorMessageLevel
+};
 }
 
-#endif // !defined(ConsoleTypes_h)
+#endif  // !defined(ConsoleTypes_h)

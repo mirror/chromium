@@ -42,8 +42,8 @@ function setupPeerConnection(stream) {
   return new Promise(function(resolve, reject) {
     var localStream = stream;
     var remoteStream = null;
-    var localPeerConnection = new webkitRTCPeerConnection(null);
-    var remotePeerConnection = new webkitRTCPeerConnection(null);
+    var localPeerConnection = new RTCPeerConnection();
+    var remotePeerConnection = new RTCPeerConnection();
 
     function createAnswer(description) {
       remotePeerConnection.createAnswer(function(description) {
@@ -92,7 +92,7 @@ function createAndStartMediaRecorder(stream, mimeType, slice) {
       recorder.start(slice);
       console.log('Recorder started with time slice', slice);
     } else {
-      recorder.start();
+      recorder.start(0);
     }
     resolve(recorder);
   });
@@ -106,7 +106,7 @@ function createMediaRecorder(stream, mimeType) {
   });
 }
 
-// Tests that the MediaRecorder's start() function will cause the |state| to be
+// Tests that the MediaRecorder's start(0) function will cause the |state| to be
 // 'recording' and that a 'start' event is fired.
 function testStartAndRecorderState() {
   var startEventReceived = false;
@@ -120,7 +120,7 @@ function testStartAndRecorderState() {
           startEventReceived = true;
           assertEquals('recording', recorder.state);
         };
-        recorder.start();
+        recorder.start(0);
       })
       .then(function() {
         return waitFor('Make sure the start event was received',
@@ -165,14 +165,13 @@ function testStartStopAndRecorderState() {
       });
 }
 
-// Tests that when MediaRecorder's start() function is called, some data is
+// Tests that when MediaRecorder's start(0) function is called, some data is
 // made available by media recorder via dataavailable events, containing non
 // empty blob data.
-function testStartAndDataAvailable(codec) {
+function testStartAndDataAvailable(mimeType) {
   var videoSize = 0;
   var emptyBlobs = 0;
-  var timeStamps = [];
-  const mimeType = codec ? "video/webm;codecs=" + String(codec) : "";
+  var lastTimecode = NaN;
   navigator.mediaDevices.getUserMedia(DEFAULT_CONSTRAINTS)
       .then(function(stream) {
         return createAndStartMediaRecorder(stream, mimeType);
@@ -180,11 +179,14 @@ function testStartAndDataAvailable(codec) {
       .then(function(recorder) {
         // Save history of Blobs received via dataavailable.
         recorder.ondataavailable = function(event) {
-          timeStamps.push(event.timeStamp);
           if (event.data.size > 0)
             videoSize += event.data.size;
           else
             emptyBlobs += 1;
+
+          if (!isNaN(lastTimecode))
+            assertTrue(event.timecode > lastTimecode, 'timecodes');
+          lastTimecode = event.timecode;
         };
       })
       .then(function() {
@@ -207,14 +209,15 @@ function testStartAndDataAvailable(codec) {
 
 // Tests that when MediaRecorder's start(timeSlice) is called, some data
 // available events are fired containing non empty blob data.
-function testStartWithTimeSlice(codec) {
+function testStartWithTimeSlice(mimeType) {
   var videoSize = 0;
   var emptyBlobs = 0;
   var timeStamps = [];
-  const mimeType = codec ? "video/webm;codecs=" + String(codec) : "";
+  var lastTimecode = NaN;
   navigator.mediaDevices.getUserMedia(DEFAULT_CONSTRAINTS)
       .then(function(stream) {
-        return createAndStartMediaRecorder(stream, mimeType,                                       DEFAULT_TIME_SLICE);
+        return createAndStartMediaRecorder(stream, mimeType,
+                                           DEFAULT_TIME_SLICE);
       })
       .then(function(recorder) {
         recorder.ondataavailable = function(event) {
@@ -223,6 +226,10 @@ function testStartWithTimeSlice(codec) {
             videoSize += event.data.size;
           else
             emptyBlobs += 1;
+
+          if (!isNaN(lastTimecode))
+            assertTrue(event.timecode > lastTimecode, 'timecodes');
+          lastTimecode = event.timecode;
         };
       })
       .then(function() {
@@ -287,10 +294,10 @@ function testIllegalResumeThrowsDOMError() {
 }
 
 // Tests that MediaRecorder sends data blobs when resume() is called.
-function testResumeAndDataAvailable(codec) {
+function testResumeAndDataAvailable(mimeType) {
   var videoSize = 0;
   var emptyBlobs = 0;
-  const mimeType = codec ? "video/webm;codecs=" + String(codec) : "";
+  var lastTimecode = NaN;
   navigator.mediaDevices.getUserMedia(DEFAULT_CONSTRAINTS)
       .then(function(stream) {
         return createAndStartMediaRecorder(stream, mimeType);
@@ -304,6 +311,10 @@ function testResumeAndDataAvailable(codec) {
             console.log('This dataavailable event is empty', event);
             emptyBlobs += 1;
           }
+
+          if (!isNaN(lastTimecode))
+            assertTrue(event.timecode > lastTimecode, 'timecodes');
+          lastTimecode = event.timecode;
         };
         recorder.resume();
       })
@@ -413,22 +424,27 @@ function testIllegalPauseThrowsDOMError() {
 }
 
 // Tests that a remote peer connection stream can be successfully recorded.
-function testRecordRemotePeerConnection() {
+function testRecordRemotePeerConnection(mimeType) {
   var videoSize = 0;
   var timeStamps = [];
+  var lastTimecode = NaN;
   navigator.mediaDevices.getUserMedia(DEFAULT_CONSTRAINTS)
       .then(function(localStream) {
         return setupPeerConnection(localStream);
       })
       .then(function(remoteStream) {
-        return createMediaRecorder(remoteStream, DEFAULT_RECORDER_MIME_TYPE);
+        return createMediaRecorder(remoteStream, mimeType);
       })
       .then(function(recorder) {
         recorder.ondataavailable = function(event) {
           timeStamps.push(event.timeStamp);
           videoSize += event.data.size;
+
+          if (!isNaN(lastTimecode))
+            assertTrue(event.timecode > lastTimecode, 'timecodes');
+          lastTimecode = event.timecode;
         };
-        recorder.start();
+        recorder.start(0);
       })
       .then(function() {
         return waitFor('Making sure the recording has data',
@@ -494,12 +510,16 @@ function testTwoChannelAudio() {
   var dest = context.createMediaStreamDestination();
   dest.channelCount = 2;
   oscillator.connect(dest);
+  var lastTimecode = NaN;
   createMediaRecorder(dest.stream, DEFAULT_RECORDER_MIME_TYPE)
       .then(function(recorder) {
         recorder.ondataavailable = function(event) {
           audioSize += event.data.size;
+          if (!isNaN(lastTimecode))
+            assertTrue(event.timecode > lastTimecode, 'timecodes');
+          lastTimecode = event.timecode;
         };
-        recorder.start();
+        recorder.start(0);
         oscillator.start();
         context.startRendering();
       })
@@ -514,6 +534,49 @@ function testTwoChannelAudio() {
       })
       .then(function() {
         console.log('audioSize', audioSize);
+        reportTestSuccess();
+      });
+}
+
+// Tests that MediaRecorder can handle video input with alpha channel.
+function testRecordWithTransparency(mimeType) {
+  const ON_DATA_AVAILABLE_THRESHOLD = 10;
+  const NUMBER_OF_EVENTS_TO_RECORD = 5;
+
+  var canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 64;
+  var stream = canvas.captureStream();
+  assertTrue(stream, 'Error creating MediaStream');
+  assertEquals(1, stream.getVideoTracks().length);
+  assertEquals(0, stream.getAudioTracks().length);
+  var recordedEvents = 0;
+
+  function drawOnCanvas(canvas) {
+    var ctx = canvas.getContext('2d', {alpha: true});
+    ctx.fillStyle = 'green';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    requestAnimationFrame( function() { drawOnCanvas(canvas); });
+  }
+
+  createMediaRecorder(stream, mimeType)
+      .then(function(recorder) {
+        recorder.ondataavailable = function(event) {
+          if (event.data.size > ON_DATA_AVAILABLE_THRESHOLD)
+            ++recordedEvents;
+        };
+        recorder.start(0);
+        drawOnCanvas(canvas);
+      })
+      .then(function() {
+        return waitFor('Make sure the recording has data',
+            function() {
+              return recordedEvents > NUMBER_OF_EVENTS_TO_RECORD;
+            });
+      })
+      .catch(function(err) {
+        return failTest(err.toString());
+      })
+      .then(function() {
         reportTestSuccess();
       });
 }
@@ -546,7 +609,7 @@ function testAddingTrackToMediaStreamFiresErrorEvent() {
         recorder.onerror = function(event) {
           errorEventReceived = true;
         };
-        recorder.start();
+        recorder.start(0);
         // Add a new track, copy of an existing one for simplicity.
         theStream.addTrack(theStream.getTracks()[1].clone());
       })
@@ -578,7 +641,7 @@ function testRemovingTrackFromMediaStreamFiresErrorEvent() {
         recorder.onerror = function(event) {
           errorEventReceived = true;
         };
-        recorder.start();
+        recorder.start(0);
         theStream.removeTrack(theStream.getTracks()[1]);
       })
       .then(function() {

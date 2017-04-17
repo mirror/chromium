@@ -46,6 +46,136 @@ void ParamTraits<scoped_refptr<net::HttpResponseHeaders> >::Log(
   l->append("<HttpResponseHeaders>");
 }
 
+namespace {
+void GetCertSize(base::PickleSizer* s, net::X509Certificate* cert) {
+  base::Pickle temp;
+  cert->Persist(&temp);
+  s->AddBytes(temp.payload_size());
+}
+
+void WriteCert(base::Pickle* m, net::X509Certificate* cert) {
+  cert->Persist(m);
+}
+
+bool ReadCert(base::PickleIterator* iter,
+              scoped_refptr<net::X509Certificate>* cert) {
+  *cert = net::X509Certificate::CreateFromPickle(
+      iter, net::X509Certificate::PICKLETYPE_CERTIFICATE_CHAIN_V3);
+  return !!cert->get();
+}
+
+}  // namespace
+
+void ParamTraits<net::SSLInfo>::GetSize(base::PickleSizer* s,
+                                        const param_type& p) {
+  GetParamSize(s, p.is_valid());
+  if (!p.is_valid())
+    return;
+  GetCertSize(s, p.cert.get());
+  GetCertSize(s, p.unverified_cert.get());
+  GetParamSize(s, p.cert_status);
+  GetParamSize(s, p.security_bits);
+  GetParamSize(s, p.key_exchange_group);
+  GetParamSize(s, p.connection_status);
+  GetParamSize(s, p.is_issued_by_known_root);
+  GetParamSize(s, p.pkp_bypassed);
+  GetParamSize(s, p.client_cert_sent);
+  GetParamSize(s, p.channel_id_sent);
+  GetParamSize(s, p.token_binding_negotiated);
+  GetParamSize(s, p.token_binding_key_param);
+  GetParamSize(s, p.handshake_type);
+  GetParamSize(s, p.public_key_hashes);
+  GetParamSize(s, p.pinning_failure_log);
+  GetParamSize(s, p.signed_certificate_timestamps);
+  GetParamSize(s, p.ct_compliance_details_available);
+  GetParamSize(s, p.ct_ev_policy_compliance);
+  GetParamSize(s, p.ct_cert_policy_compliance);
+  GetParamSize(s, p.ocsp_result.response_status);
+  GetParamSize(s, p.ocsp_result.revocation_status);
+}
+
+void ParamTraits<net::SSLInfo>::Write(base::Pickle* m, const param_type& p) {
+  WriteParam(m, p.is_valid());
+  if (!p.is_valid())
+    return;
+  WriteCert(m, p.cert.get());
+  WriteCert(m, p.unverified_cert.get());
+  WriteParam(m, p.cert_status);
+  WriteParam(m, p.security_bits);
+  WriteParam(m, p.key_exchange_group);
+  WriteParam(m, p.connection_status);
+  WriteParam(m, p.is_issued_by_known_root);
+  WriteParam(m, p.pkp_bypassed);
+  WriteParam(m, p.client_cert_sent);
+  WriteParam(m, p.channel_id_sent);
+  WriteParam(m, p.token_binding_negotiated);
+  WriteParam(m, p.token_binding_key_param);
+  WriteParam(m, p.handshake_type);
+  WriteParam(m, p.public_key_hashes);
+  WriteParam(m, p.pinning_failure_log);
+  WriteParam(m, p.signed_certificate_timestamps);
+  WriteParam(m, p.ct_compliance_details_available);
+  WriteParam(m, p.ct_ev_policy_compliance);
+  WriteParam(m, p.ct_cert_policy_compliance);
+  WriteParam(m, p.ocsp_result.response_status);
+  WriteParam(m, p.ocsp_result.revocation_status);
+}
+
+bool ParamTraits<net::SSLInfo>::Read(const base::Pickle* m,
+                                     base::PickleIterator* iter,
+                                     param_type* r) {
+  bool is_valid = false;
+  if (!ReadParam(m, iter, &is_valid))
+    return false;
+  if (!is_valid)
+    return true;
+  return ReadCert(iter, &r->cert) &&
+         ReadCert(iter, &r->unverified_cert) &&
+         ReadParam(m, iter, &r->cert_status) &&
+         ReadParam(m, iter, &r->security_bits) &&
+         ReadParam(m, iter, &r->key_exchange_group) &&
+         ReadParam(m, iter, &r->connection_status) &&
+         ReadParam(m, iter, &r->is_issued_by_known_root) &&
+         ReadParam(m, iter, &r->pkp_bypassed) &&
+         ReadParam(m, iter, &r->client_cert_sent) &&
+         ReadParam(m, iter, &r->channel_id_sent) &&
+         ReadParam(m, iter, &r->token_binding_negotiated) &&
+         ReadParam(m, iter, &r->token_binding_key_param) &&
+         ReadParam(m, iter, &r->handshake_type) &&
+         ReadParam(m, iter, &r->public_key_hashes) &&
+         ReadParam(m, iter, &r->pinning_failure_log) &&
+         ReadParam(m, iter, &r->signed_certificate_timestamps) &&
+         ReadParam(m, iter, &r->ct_compliance_details_available) &&
+         ReadParam(m, iter, &r->ct_ev_policy_compliance) &&
+         ReadParam(m, iter, &r->ct_cert_policy_compliance) &&
+         ReadParam(m, iter, &r->ocsp_result.response_status) &&
+         ReadParam(m, iter, &r->ocsp_result.revocation_status);
+}
+
+void ParamTraits<net::SSLInfo>::Log(const param_type& p, std::string* l) {
+  l->append("<SSLInfo>");
+}
+
+void ParamTraits<net::HashValue>::GetSize(base::PickleSizer* s,
+                                          const param_type& p) {
+  GetParamSize(s, p.ToString());
+}
+
+void ParamTraits<net::HashValue>::Write(base::Pickle* m, const param_type& p) {
+  WriteParam(m, p.ToString());
+}
+
+bool ParamTraits<net::HashValue>::Read(const base::Pickle* m,
+                                       base::PickleIterator* iter,
+                                       param_type* r) {
+  std::string str;
+  return ReadParam(m, iter, &str) && r->FromString(str);
+}
+
+void ParamTraits<net::HashValue>::Log(const param_type& p, std::string* l) {
+  l->append("<HashValue>");
+}
+
 void ParamTraits<storage::DataElement>::GetSize(base::PickleSizer* s,
                                                 const param_type& p) {
   GetParamSize(s, static_cast<int>(p.type()));
@@ -145,14 +275,14 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
       if (!iter->ReadData(&data, &len))
         return false;
       r->SetToBytes(data, len);
-      break;
+      return true;
     }
     case storage::DataElement::TYPE_BYTES_DESCRIPTION: {
       uint64_t length;
       if (!ReadParam(m, iter, &length))
         return false;
       r->SetToBytesDescription(length);
-      break;
+      return true;
     }
     case storage::DataElement::TYPE_FILE: {
       base::FilePath file_path;
@@ -168,7 +298,7 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
         return false;
       r->SetToFilePathRange(file_path, offset, length,
                             expected_modification_time);
-      break;
+      return true;
     }
     case storage::DataElement::TYPE_FILE_FILESYSTEM: {
       GURL file_system_url;
@@ -184,7 +314,7 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
         return false;
       r->SetToFileSystemUrlRange(file_system_url, offset, length,
                                  expected_modification_time);
-      break;
+      return true;
     }
     case storage::DataElement::TYPE_BLOB: {
       std::string blob_uuid;
@@ -196,18 +326,18 @@ bool ParamTraits<storage::DataElement>::Read(const base::Pickle* m,
       if (!ReadParam(m, iter, &length))
         return false;
       r->SetToBlobRange(blob_uuid, offset, length);
-      break;
+      return true;
     }
     case storage::DataElement::TYPE_DISK_CACHE_ENTRY: {
       NOTREACHED() << "Can't be sent by IPC.";
-      break;
+      return false;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
       NOTREACHED();
-      break;
+      return false;
     }
   }
-  return true;
+  return false;
 }
 
 void ParamTraits<storage::DataElement>::Log(const param_type& p,
@@ -396,6 +526,7 @@ void ParamTraits<scoped_refptr<content::ResourceRequestBodyImpl>>::GetSize(
   if (p.get()) {
     GetParamSize(s, *p->elements());
     GetParamSize(s, p->identifier());
+    GetParamSize(s, p->contains_sensitive_info());
   }
 }
 
@@ -406,6 +537,7 @@ void ParamTraits<scoped_refptr<content::ResourceRequestBodyImpl>>::Write(
   if (p.get()) {
     WriteParam(m, *p->elements());
     WriteParam(m, p->identifier());
+    WriteParam(m, p->contains_sensitive_info());
   }
 }
 
@@ -424,9 +556,13 @@ bool ParamTraits<scoped_refptr<content::ResourceRequestBodyImpl>>::Read(
   int64_t identifier;
   if (!ReadParam(m, iter, &identifier))
     return false;
+  bool contains_sensitive_info;
+  if (!ReadParam(m, iter, &contains_sensitive_info))
+    return false;
   *r = new content::ResourceRequestBodyImpl;
   (*r)->swap_elements(&elements);
   (*r)->set_identifier(identifier);
+  (*r)->set_contains_sensitive_info(contains_sensitive_info);
   return true;
 }
 

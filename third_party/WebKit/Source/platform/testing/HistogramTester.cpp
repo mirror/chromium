@@ -5,22 +5,32 @@
 #include "platform/testing/HistogramTester.h"
 
 #include "base/test/histogram_tester.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-HistogramTester::HistogramTester() : m_histogramTester(wrapUnique(new base::HistogramTester)) { }
+HistogramTester::HistogramTester()
+    : histogram_tester_(WTF::WrapUnique(new base::HistogramTester)) {}
 
-HistogramTester::~HistogramTester() { }
+HistogramTester::~HistogramTester() {}
 
-void HistogramTester::expectUniqueSample(const std::string& name, base::HistogramBase::Sample sample, base::HistogramBase::Count count) const
-{
-    m_histogramTester->ExpectUniqueSample(name, sample, count);
+void HistogramTester::ExpectUniqueSample(
+    const std::string& name,
+    base::HistogramBase::Sample sample,
+    base::HistogramBase::Count count) const {
+  histogram_tester_->ExpectUniqueSample(name, sample, count);
 }
 
-void HistogramTester::expectTotalCount(const std::string& name, base::HistogramBase::Count count) const
-{
-    m_histogramTester->ExpectTotalCount(name, count);
+void HistogramTester::ExpectBucketCount(
+    const std::string& name,
+    base::HistogramBase::Sample sample,
+    base::HistogramBase::Count count) const {
+  histogram_tester_->ExpectBucketCount(name, sample, count);
 }
 
-} // namespace blink
+void HistogramTester::ExpectTotalCount(const std::string& name,
+                                       base::HistogramBase::Count count) const {
+  histogram_tester_->ExpectTotalCount(name, count);
+}
+
+}  // namespace blink

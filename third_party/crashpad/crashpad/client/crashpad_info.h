@@ -96,8 +96,17 @@ struct CrashpadInfo {
   //!     SimpleStringDictionary object. It is the caller’s responsibility to
   //!     ensure that this pointer remains valid while it is in effect for a
   //!     CrashpadInfo object.
+  //!
+  //! \sa simple_annotations()
   void set_simple_annotations(SimpleStringDictionary* simple_annotations) {
     simple_annotations_ = simple_annotations;
+  }
+
+  //! \return The simple annotations dictionary.
+  //!
+  //! \sa set_simple_annotations()
+  SimpleStringDictionary* simple_annotations() const {
+    return simple_annotations_;
   }
 
   //! \brief Enables or disables Crashpad handler processing.
@@ -164,9 +173,9 @@ struct CrashpadInfo {
   //! \brief Adds a custom stream to the minidump.
   //!
   //! The memory block referenced by \a data and \a size will added to the
-  //! minidump as separate stream with type \stream_type. The memory referred to
-  //! by \a data and \a size is owned by the caller and must remain valid while
-  //! it is in effect for the CrashpadInfo object.
+  //! minidump as separate stream with type \a stream_type. The memory referred
+  //! to by \a data and \a size is owned by the caller and must remain valid
+  //! while it is in effect for the CrashpadInfo object.
   //!
   //! Note that streams will appear in the minidump in the reverse order to
   //! which they are added.

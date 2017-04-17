@@ -13,6 +13,10 @@
 #include "build/build_config.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 
+#if defined(OS_MACOSX)
+#include "base/mac/mac_util.h"
+#endif
+
 namespace device {
 
 namespace {
@@ -21,7 +25,7 @@ namespace {
 // if nobody is using it, so use a WeakPtr and create the object when needed.
 // Since Google C++ Style (and clang's static analyzer) forbids us having
 // exit-time destructors, we use a leaky lazy instance for it.
-base::LazyInstance<base::WeakPtr<BluetoothAdapter> >::Leaky default_adapter =
+base::LazyInstance<base::WeakPtr<BluetoothAdapter>>::Leaky default_adapter =
     LAZY_INSTANCE_INITIALIZER;
 
 #if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_CHROMEOS)
@@ -31,7 +35,7 @@ typedef std::vector<BluetoothAdapterFactory::AdapterCallback>
 // List of adapter callbacks to be called once the adapter is initialized.
 // Since Google C++ Style (and clang's static analyzer) forbids us having
 // exit-time destructors we use a lazy instance for it.
-base::LazyInstance<AdapterCallbackList> adapter_callbacks =
+base::LazyInstance<AdapterCallbackList>::DestructorAtExit adapter_callbacks =
     LAZY_INSTANCE_INITIALIZER;
 
 void RunAdapterCallbacks() {
@@ -61,6 +65,25 @@ bool BluetoothAdapterFactory::IsBluetoothAdapterAvailable() {
 #else
   return false;
 #endif
+}
+
+// static
+bool BluetoothAdapterFactory::IsLowEnergyAvailable() {
+  DCHECK(IsBluetoothAdapterAvailable());
+
+  // SetAdapterForTesting() may be used to provide a test or mock adapter
+  // instance even on platforms that would otherwise not support it.
+  if (default_adapter.Get())
+    return true;
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS) || defined(OS_WIN) || \
+    defined(OS_LINUX)
+  return true;
+#elif defined(OS_MACOSX)
+  return base::mac::IsAtLeastOS10_10();
+#else
+  return false;
+#endif  // defined(OS_ANDROID) || defined(OS_CHROMEOS) || defined(OS_WIN) ||
+        // defined(OS_LINUX)
 }
 
 // static

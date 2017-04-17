@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/resources/release_callback_impl.h"
 #include "cc/resources/video_resource_updater.h"
@@ -66,6 +66,7 @@ class CC_EXPORT VideoLayerImpl : public LayerImpl {
   VideoFrameExternalResources::ResourceType frame_resource_type_;
   float frame_resource_offset_;
   float frame_resource_multiplier_;
+  uint32_t frame_bits_per_channel_;
 
   struct FrameResource {
     FrameResource(ResourceId id,

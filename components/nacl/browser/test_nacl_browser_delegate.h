@@ -17,7 +17,7 @@
 //
 // and
 //
-//   NaClBrowser::SetDelegate(NULL);   // frees the test delegate.
+//   NaClBrowser::ClearAndDeleteDelegateForTest();
 class TestNaClBrowserDelegate : public NaClBrowserDelegate {
  public:
   TestNaClBrowserDelegate();
@@ -38,8 +38,6 @@ class TestNaClBrowserDelegate : public NaClBrowserDelegate {
                              base::FilePath* file_path) override;
   void SetDebugPatterns(const std::string& debug_patterns) override;
   bool URLMatchesDebugPatterns(const GURL& manifest_url) override;
-  content::BrowserPpapiHost::OnKeepaliveCallback GetOnKeepaliveCallback()
-      override;
   bool IsNonSfiModeAllowed(const base::FilePath& profile_directory,
                            const GURL& manifest_url) override;
 

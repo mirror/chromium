@@ -19,12 +19,11 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntRect.h"
-#include "skia/ext/skia_utils_mac.h"
-#include "wtf/Noncopyable.h"
+#include "platform/graphics/paint/PaintCanvas.h"
+#include "platform/mac/GraphicsContextCanvas.h"
+#include "platform/wtf/Noncopyable.h"
 
 OBJC_CLASS NSGraphicsContext;
-
-class SkCanvas;
 
 namespace blink {
 
@@ -33,19 +32,21 @@ class GraphicsContext;
 // This class automatically saves and restores the current NSGraphicsContext for
 // functions which call out into AppKit and rely on the currentContext being set
 class PLATFORM_EXPORT LocalCurrentGraphicsContext {
-    WTF_MAKE_NONCOPYABLE(LocalCurrentGraphicsContext);
-public:
-    LocalCurrentGraphicsContext(GraphicsContext&, const IntRect& dirtyRect);
-    LocalCurrentGraphicsContext(SkCanvas*, float deviceScaleFactor, const IntRect& dirtyRect);
-    ~LocalCurrentGraphicsContext();
-    CGContextRef cgContext();
-private:
+  WTF_MAKE_NONCOPYABLE(LocalCurrentGraphicsContext);
 
-    SkCanvas* m_savedCanvas;
-    NSGraphicsContext* m_savedNSGraphicsContext;
-    bool m_didSetGraphicsContext;
-    IntRect m_inflatedDirtyRect;
-    skia::SkiaBitLocker m_skiaBitLocker;
+ public:
+  LocalCurrentGraphicsContext(GraphicsContext&, const IntRect& dirty_rect);
+  LocalCurrentGraphicsContext(PaintCanvas*,
+                              float device_scale_factor,
+                              const IntRect& dirty_rect);
+  ~LocalCurrentGraphicsContext();
+  CGContextRef CgContext();
+
+ private:
+  PaintCanvas* saved_canvas_;
+  NSGraphicsContext* saved_ns_graphics_context_;
+  bool did_set_graphics_context_;
+  IntRect inflated_dirty_rect_;
+  GraphicsContextCanvas graphics_context_canvas_;
 };
-
 }

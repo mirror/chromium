@@ -4,56 +4,50 @@
 
 #include "remoting/protocol/protocol_mock_objects.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "remoting/protocol/session_plugin.h"
 #include "remoting/protocol/video_stream.h"
+#include "remoting/signaling/signaling_address.h"
 
 namespace remoting {
 namespace protocol {
 
-MockConnectionToClientEventHandler::MockConnectionToClientEventHandler() {}
+MockAuthenticator::MockAuthenticator() {}
+MockAuthenticator::~MockAuthenticator() {}
 
+MockConnectionToClientEventHandler::MockConnectionToClientEventHandler() {}
 MockConnectionToClientEventHandler::~MockConnectionToClientEventHandler() {}
 
 MockClipboardStub::MockClipboardStub() {}
-
 MockClipboardStub::~MockClipboardStub() {}
 
 MockInputStub::MockInputStub() {}
-
 MockInputStub::~MockInputStub() {}
 
 MockHostStub::MockHostStub() {}
-
 MockHostStub::~MockHostStub() {}
 
 MockClientStub::MockClientStub() {}
-
 MockClientStub::~MockClientStub() {}
 
 MockCursorShapeStub::MockCursorShapeStub() {}
-
 MockCursorShapeStub::~MockCursorShapeStub() {}
 
 MockVideoStub::MockVideoStub() {}
-
 MockVideoStub::~MockVideoStub() {}
 
 MockSession::MockSession() {}
-
 MockSession::~MockSession() {}
 
 MockSessionManager::MockSessionManager() {}
-
 MockSessionManager::~MockSessionManager() {}
 
-MockPairingRegistryDelegate::MockPairingRegistryDelegate() {
-}
-
-MockPairingRegistryDelegate::~MockPairingRegistryDelegate() {
-}
+MockPairingRegistryDelegate::MockPairingRegistryDelegate() {}
+MockPairingRegistryDelegate::~MockPairingRegistryDelegate() {}
 
 std::unique_ptr<base::ListValue> MockPairingRegistryDelegate::LoadAll() {
   std::unique_ptr<base::ListValue> result(new base::ListValue());

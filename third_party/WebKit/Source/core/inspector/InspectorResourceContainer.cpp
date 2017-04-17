@@ -8,52 +8,48 @@
 
 namespace blink {
 
-InspectorResourceContainer::InspectorResourceContainer(InspectedFrames* inspectedFrames)
-    : m_inspectedFrames(inspectedFrames)
-{
+InspectorResourceContainer::InspectorResourceContainer(
+    InspectedFrames* inspected_frames)
+    : inspected_frames_(inspected_frames) {}
+
+InspectorResourceContainer::~InspectorResourceContainer() {}
+
+DEFINE_TRACE(InspectorResourceContainer) {
+  visitor->Trace(inspected_frames_);
 }
 
-InspectorResourceContainer::~InspectorResourceContainer()
-{
+void InspectorResourceContainer::DidCommitLoadForLocalFrame(LocalFrame* frame) {
+  if (frame != inspected_frames_->Root())
+    return;
+  style_sheet_contents_.Clear();
+  style_element_contents_.Clear();
 }
 
-DEFINE_TRACE(InspectorResourceContainer)
-{
-    visitor->trace(m_inspectedFrames);
+void InspectorResourceContainer::StoreStyleSheetContent(const String& url,
+                                                        const String& content) {
+  style_sheet_contents_.Set(url, content);
 }
 
-void InspectorResourceContainer::didCommitLoadForLocalFrame(LocalFrame* frame)
-{
-    if (frame != m_inspectedFrames->root())
-        return;
-    m_styleSheetContents.clear();
-    m_styleElementContents.clear();
+bool InspectorResourceContainer::LoadStyleSheetContent(const String& url,
+                                                       String* content) {
+  if (!style_sheet_contents_.Contains(url))
+    return false;
+  *content = style_sheet_contents_.at(url);
+  return true;
 }
 
-void InspectorResourceContainer::storeStyleSheetContent(const String& url, const String& content)
-{
-    m_styleSheetContents.set(url, content);
+void InspectorResourceContainer::StoreStyleElementContent(
+    int backend_node_id,
+    const String& content) {
+  style_element_contents_.Set(backend_node_id, content);
 }
 
-bool InspectorResourceContainer::loadStyleSheetContent(const String& url, String* content)
-{
-    if (!m_styleSheetContents.contains(url))
-        return false;
-    *content = m_styleSheetContents.get(url);
-    return true;
+bool InspectorResourceContainer::LoadStyleElementContent(int backend_node_id,
+                                                         String* content) {
+  if (!style_element_contents_.Contains(backend_node_id))
+    return false;
+  *content = style_element_contents_.at(backend_node_id);
+  return true;
 }
 
-void InspectorResourceContainer::storeStyleElementContent(int backendNodeId, const String& content)
-{
-    m_styleElementContents.set(backendNodeId, content);
-}
-
-bool InspectorResourceContainer::loadStyleElementContent(int backendNodeId, String* content)
-{
-    if (!m_styleElementContents.contains(backendNodeId))
-        return false;
-    *content = m_styleElementContents.get(backendNodeId);
-    return true;
-}
-
-} // namespace blink
+}  // namespace blink

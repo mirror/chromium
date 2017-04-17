@@ -4,9 +4,30 @@
 
 #include "chrome/common/chrome_features.h"
 
+#include "base/command_line.h"
+#include "chrome/common/chrome_switches.h"
+#include "extensions/features/features.h"
+#include "ppapi/features/features.h"
+
 namespace features {
 
 // All features in alphabetical order.
+
+#if defined(OS_ANDROID)
+const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
+    "AllowAutoplayUnmutedInWebappManifestScope",
+    base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // defined(OS_ANDROID)
+
+#if defined(OS_MACOSX)
+// Enables Javascript execution via AppleScript.
+const base::Feature kAppleScriptExecuteJavaScript{
+    "AppleScriptExecuteJavaScript", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Use the Toolkit-Views Task Manager window.
+const base::Feature kViewsTaskManager{"ViewsTaskManager",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined(OS_MACOSX)
 
 #if defined(OS_CHROMEOS)
 // Whether to handle low memory kill of ARC apps by Chrome.
@@ -14,10 +35,21 @@ const base::Feature kArcMemoryManagement{
     "ArcMemoryManagement", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
+// If enabled, the list of content suggestions on the New Tab page will contain
+// assets (e.g. books, pictures, audio) that the user downloaded for later use.
+const base::Feature kAssetDownloadSuggestionsFeature{
+    "NTPAssetDownloadSuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+// Enables auto-dismissing JavaScript dialogs.
+const base::Feature kAutoDismissingDialogs{"AutoDismissingDialogs",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 #if defined(OS_WIN) || defined(OS_MACOSX)
 // Enables automatic tab discarding, when the system is in low memory state.
 const base::Feature kAutomaticTabDiscarding{"AutomaticTabDiscarding",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 #if defined(OS_WIN) || defined(OS_LINUX)
@@ -28,30 +60,105 @@ const base::Feature kBackgroundModeAllowRestart{
     "BackgroundModeAllowRestart", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN) || defined(OS_LINUX)
 
-// Experiment to disable small cross-origin content. (http://crbug.com/608886)
-const base::Feature kBlockSmallContent{"BlockSmallPluginContent",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+// Enables the Backspace key to navigate back in the browser, as well as
+// Shift+Backspace to navigate forward.
+const base::Feature kBackspaceGoesBackFeature {
+  "BackspaceGoesBack", base::FEATURE_DISABLED_BY_DEFAULT
+};
+
+// Enables or disables whether permission prompts are automatically blocked
+// after the user has explicitly dismissed them too many times.
+const base::Feature kBlockPromptsIfDismissedOften{
+    "BlockPromptsIfDismissedOften", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables or disables whether permission prompts are automatically blocked
+// after the user has ignored them too many times.
+const base::Feature kBlockPromptsIfIgnoredOften{
+    "BlockPromptsIfIgnoredOften", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_MACOSX)
+// Enables the new bookmark app system (e.g. Add To Applications on Mac).
+const base::Feature kBookmarkApps{"BookmarkAppsMac",
+                                  base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
 
 // Fixes for browser hang bugs are deployed in a field trial in order to measure
 // their impact. See crbug.com/478209.
 const base::Feature kBrowserHangFixesExperiment{
     "BrowserHangFixesExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_MACOSX)
+// Enables or disables the browser's touch bar.
+const base::Feature kBrowserTouchBar{"BrowserTouchBar",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables or disables keyboard focus for the tab strip.
+const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined(OS_MACOSX)
+
+// Whether to trigger app banner installability checks on page load.
+const base::Feature kCheckInstallabilityForBannerOnLoad{
+    "CheckInstallabilityForBannerOnLoad", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_WIN)
+const base::Feature kCleanupToolUI{"CleanupToolUI",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+#if defined(OS_ANDROID)
+// Experiment to make Geolocation permissions in the omnibox and the default
+// search engine's search page consistent.
+const base::Feature kConsistentOmniboxGeolocation{
+    "ConsistentOmniboxGeolocation", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+#if defined(OS_ANDROID)
+// Experiment to extract structured metadata for app indexing.
+const base::Feature kCopylessPaste{"CopylessPaste",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+#if defined(OS_WIN)
+// Enables or disables desktop ios promotion, which shows a promotion to the
+// user promoting Chrome for iOS.
+const base::Feature kDesktopIOSPromotion{"DesktopIOSPromotion",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+// Experiment to display a toggle allowing users to opt-out of persisting a
+// Grant or Deny decision in a permission prompt.
+const base::Feature kDisplayPersistenceToggleInPermissionPrompts{
+    "DisplayPersistenceToggleInPermissionPrompts",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables Expect CT reporting, which sends reports for opted-in sites
 // that don't serve sufficient Certificate Transparency information.
 const base::Feature kExpectCTReporting{"ExpectCTReporting",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // An experimental fullscreen prototype that allows pages to map browser and
 // system-reserved keyboard shortcuts.
 const base::Feature kExperimentalKeyboardLockUI{
     "ExperimentalKeyboardLockUI", base::FEATURE_DISABLED_BY_DEFAULT};
 
-#if defined (OS_CHROMEOS)
-// Enables or disables the Happininess Tracking System for the device.
-const base::Feature kHappininessTrackingSystem {
-    "HappininessTrackingSystem", base::FEATURE_DISABLED_BY_DEFAULT};
+#if defined(OS_WIN)
+// Enables using GDI to print text as simply text.
+const base::Feature kGdiTextPrinting {"GdiTextPrinting",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
+
+#if defined (OS_CHROMEOS)
+// Enables or disables the Happiness Tracking System for the device.
+const base::Feature kHappinessTrackingSystem {
+    "HappinessTrackingSystem", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+// Controls whether the "improved recovery component" is used. The improved
+// recovery component is a redesigned Chrome component intended to restore
+// a broken Chrome updater in more scenarios than before.
+const base::Feature kImprovedRecoveryComponent{
+    "ImprovedRecoveryComponent", base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(GOOGLE_CHROME_BUILD) && defined(OS_LINUX) && !defined(OS_CHROMEOS)
 // Enables showing the "This computer will no longer receive Google Chrome
@@ -61,20 +168,109 @@ const base::Feature kLinuxObsoleteSystemIsEndOfTheLine{
     "LinuxObsoleteSystemIsEndOfTheLine", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+// Enables or disables the Location Settings Dialog (LSD). The LSD is an Android
+// system-level geolocation permission prompt.
+const base::Feature kLsdPermissionPrompt{"LsdPermissionPrompt",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables or disables the Material Design version of chrome://bookmarks.
+const base::Feature kMaterialDesignBookmarks{"MaterialDesignBookmarks",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+// Enabled or disabled the Material Design version of chrome://extensions.
+const base::Feature kMaterialDesignExtensions{
+    "MaterialDesignExtensions", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Sets whether dismissing the new-tab-page override bubble counts as
+// acknowledgement.
+extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
+    "AcknowledgeNtpOverrideOnDeactivate", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 // Enables or disables the Material Design version of chrome://history.
-const base::Feature kMaterialDesignHistoryFeature {
-  "MaterialDesignHistory", base::FEATURE_ENABLED_BY_DEFAULT
-};
+const base::Feature kMaterialDesignHistory{"MaterialDesignHistory",
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables or disables the Material Design version of chrome://settings.
 // Also affects chrome://help.
-const base::Feature kMaterialDesignSettingsFeature{
-    "MaterialDesignSettings", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kMaterialDesignSettings{"MaterialDesignSettings",
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+// Enables media content bitstream remoting, an optimization that can activate
+// during Cast Tab Mirroring. When kMediaRemotingEncrypted is disabled, the
+// feature will not activate for encrypted content.
+const base::Feature kMediaRemoting{"MediaRemoting",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kMediaRemotingEncrypted{"MediaRemotingEncrypted",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
+
+// Enables or disables modal permission prompts.
+const base::Feature kModalPermissionPrompts{"ModalPermissionPrompts",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_WIN)
+// Enables or disables the ModuleDatabase backend for the conflicts UI.
+const base::Feature kModuleDatabase{"ModuleDatabase",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+// Enables the use of native notification centers instead of using the Message
+// Center for displaying the toasts.
+#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+const base::Feature kNativeNotifications{"NativeNotifications",
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+// If enabled, the list of content suggestions on the New Tab page will contain
+// pages that the user downloaded for later use.
+const base::Feature kOfflinePageDownloadSuggestionsFeature{
+    "NTPOfflinePageDownloadSuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables Permissions Blacklisting via Safe Browsing.
+const base::Feature kPermissionsBlacklist{
+    "PermissionsBlacklist", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables PostScript generation instead of EMF when printing to PostScript
+// capable printers.
+#if defined(OS_WIN)
+const base::Feature kPostScriptPrinting{"PostScriptPrinting",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+#if BUILDFLAG(ENABLE_PLUGINS)
 // Prefer HTML content by hiding Flash from the list of plugins.
 // https://crbug.com/626728
 const base::Feature kPreferHtmlOverPlugins{"PreferHtmlOverPlugins",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+// Enables the pref service. See https://crbug.com/654988.
+const base::Feature kPrefService{"PrefService",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_CHROMEOS)
+// The lock screen will be preloaded so it is instantly available when the user
+// locks the Chromebook device.
+const base::Feature kPreloadLockScreen{"PreloadLockScreen",
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
+#endif
+
+// Enables the Print Scaling feature in print preview.
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+const base::Feature kPrintPdfAsImage{"PrintPdfAsImage",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kPrintScaling{"PrintScaling",
+                                  base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+// Enables or disables push subscriptions keeping Chrome running in the
+// background when closed.
+const base::Feature kPushMessagingBackgroundMode{
+    "PushMessagingBackgroundMode", base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_CHROMEOS)
 // Runtime flag that indicates whether this leak detector should be enabled in
@@ -82,6 +278,12 @@ const base::Feature kPreferHtmlOverPlugins{"PreferHtmlOverPlugins",
 const base::Feature kRuntimeMemoryLeakDetector{
     "RuntimeMemoryLeakDetector", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+// Disables Plugin Power Saver when Flash is in ALLOW mode.
+const base::Feature kRunAllFlashInAllowMode{"RunAllFlashInAllowMode",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
 
 const base::Feature kSafeSearchUrlReporting{"SafeSearchUrlReporting",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
@@ -91,26 +293,49 @@ const base::Feature kSafeSearchUrlReporting{"SafeSearchUrlReporting",
 const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Enables or disables the STH component-updater component.
-const base::Feature kSTHSetComponent{"STHSetComponent",
-                                     base::FEATURE_ENABLED_BY_DEFAULT};
-
 #if defined(SYZYASAN)
 // Enable the deferred free mechanism in the syzyasan module, which helps the
 // performance by deferring some work on the critical path to a background
 // thread.
 const base::Feature kSyzyasanDeferredFree{"SyzyasanDeferredFree",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
+                                          base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
+
+// Experiment to use grouped permission infobars which could show and handle
+// multiple permission requests.
+const base::Feature kUseGroupedPermissionInfobars{
+    "UseGroupedPermissionInfobars", base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_CHROMEOS)
 // Enables or disables the opt-in IME menu in the language settings page.
 const base::Feature kOptInImeMenu{"OptInImeMenu",
-                                  base::FEATURE_DISABLED_BY_DEFAULT};
+                                  base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Enables or disables PIN quick unlock settings integration.
+// Enables or disables PIN quick unlock.
 const base::Feature kQuickUnlockPin{"QuickUnlockPin",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
+                                    base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables or disables fingerprint quick unlock.
+const base::Feature kQuickUnlockFingerprint{"QuickUnlockFingerprint",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables or disables emoji, handwriting and voice input on opt-in IME menu.
+const base::Feature kEHVInputOnImeMenu{"EmojiHandwritingVoiceInput",
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables or disables flash component updates on Chrome OS.
+const base::Feature kCrosCompUpdates{"CrosCompUpdates",
+                                     base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
+
+bool PrefServiceEnabled() {
+  return base::FeatureList::IsEnabled(features::kPrefService) ||
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+             switches::kMusConfig) == switches::kMash;
+#else
+         false;
+#endif
+}
 
 }  // namespace features

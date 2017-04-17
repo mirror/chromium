@@ -5,7 +5,7 @@
 #ifndef RootInlineBoxPainter_h
 #define RootInlineBoxPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -15,18 +15,26 @@ class LayoutUnit;
 class RootInlineBox;
 
 class RootInlineBoxPainter {
-    STACK_ALLOCATED();
-public:
-    RootInlineBoxPainter(const RootInlineBox& rootInlineBox) : m_rootInlineBox(rootInlineBox) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&, LayoutUnit lineTop, LayoutUnit lineBottom);
+ public:
+  RootInlineBoxPainter(const RootInlineBox& root_inline_box)
+      : root_inline_box_(root_inline_box) {}
 
-private:
-    void paintEllipsisBox(const PaintInfo&, const LayoutPoint& paintOffset, LayoutUnit lineTop, LayoutUnit lineBottom) const;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             LayoutUnit line_top,
+             LayoutUnit line_bottom);
 
-    const RootInlineBox& m_rootInlineBox;
+ private:
+  void PaintEllipsisBox(const PaintInfo&,
+                        const LayoutPoint& paint_offset,
+                        LayoutUnit line_top,
+                        LayoutUnit line_bottom) const;
+
+  const RootInlineBox& root_inline_box_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RootInlineBoxPainter_h
+#endif  // RootInlineBoxPainter_h

@@ -11,6 +11,7 @@
 #include "base/rand_util.h"
 #include "base/sha1.h"
 #include "base/values.h"
+#include "components/metrics/persisted_logs_metrics_impl.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/prefs/testing_pref_service.h"
@@ -63,13 +64,17 @@ class PersistedLogsTest : public testing::Test {
 class TestPersistedLogs : public PersistedLogs {
  public:
   TestPersistedLogs(PrefService* service, size_t min_log_bytes)
-      : PersistedLogs(service, kTestPrefName, kLogCountLimit, min_log_bytes,
-                      0) {
-  }
+      : PersistedLogs(std::unique_ptr<PersistedLogsMetricsImpl>(
+                             new PersistedLogsMetricsImpl()),
+                      service,
+                      kTestPrefName,
+                      kLogCountLimit,
+                      min_log_bytes,
+                      0) {}
 
   // Stages and removes the next log, while testing it's value.
   void ExpectNextLog(const std::string& expected_log) {
-    StageLog();
+    StageNextLog();
     EXPECT_EQ(staged_log(), Compress(expected_log));
     DiscardStagedLog();
   }
@@ -84,12 +89,12 @@ class TestPersistedLogs : public PersistedLogs {
 TEST_F(PersistedLogsTest, EmptyLogList) {
   TestPersistedLogs persisted_logs(&prefs_, kLogByteLimit);
 
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
   const base::ListValue* list_value = prefs_.GetList(kTestPrefName);
   EXPECT_EQ(0U, list_value->GetSize());
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::LIST_EMPTY, result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(0U, result_persisted_logs.size());
 }
 
@@ -98,19 +103,20 @@ TEST_F(PersistedLogsTest, SingleElementLogList) {
   TestPersistedLogs persisted_logs(&prefs_, kLogByteLimit);
 
   persisted_logs.StoreLog("Hello world!");
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::RECALL_SUCCESS,
-            result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(1U, result_persisted_logs.size());
 
   // Verify that the result log matches the initial log.
-  persisted_logs.StageLog();
-  result_persisted_logs.StageLog();
+  persisted_logs.StageNextLog();
+  result_persisted_logs.StageNextLog();
   EXPECT_EQ(persisted_logs.staged_log(), result_persisted_logs.staged_log());
   EXPECT_EQ(persisted_logs.staged_log_hash(),
             result_persisted_logs.staged_log_hash());
+  EXPECT_EQ(persisted_logs.staged_log_timestamp(),
+            result_persisted_logs.staged_log_timestamp());
 }
 
 // Store a set of logs over the length limit, but smaller than the min number of
@@ -122,11 +128,10 @@ TEST_F(PersistedLogsTest, LongButTinyLogList) {
   for (size_t i = 0; i < log_count; ++i)
     persisted_logs.StoreLog("x");
 
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::RECALL_SUCCESS,
-            result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(persisted_logs.size(), result_persisted_logs.size());
 
   result_persisted_logs.ExpectNextLog("x");
@@ -159,11 +164,10 @@ TEST_F(PersistedLogsTest, LongButSmallLogList) {
     persisted_logs.StoreLog(blank_log);
   }
   persisted_logs.StoreLog(last_kept);
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::RECALL_SUCCESS,
-            result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(persisted_logs.size() - 2, result_persisted_logs.size());
 
   result_persisted_logs.ExpectNextLog(last_kept);
@@ -185,11 +189,10 @@ TEST_F(PersistedLogsTest, ShortButLargeLogList) {
   for (size_t i = 0; i < log_count; ++i) {
     persisted_logs.StoreLog(log_data);
   }
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::RECALL_SUCCESS,
-            result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(persisted_logs.size(), result_persisted_logs.size());
 }
 
@@ -214,11 +217,10 @@ TEST_F(PersistedLogsTest, LongAndLargeLogList) {
       persisted_logs.StoreLog(log_data);
   }
 
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::RECALL_SUCCESS,
-            result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(kLogCountLimit, result_persisted_logs.size());
 
   while (result_persisted_logs.size() > 1) {
@@ -236,7 +238,7 @@ TEST_F(PersistedLogsTest, Staging) {
   persisted_logs.StoreLog("one");
   EXPECT_FALSE(persisted_logs.has_staged_log());
   persisted_logs.StoreLog("two");
-  persisted_logs.StageLog();
+  persisted_logs.StageNextLog();
   EXPECT_TRUE(persisted_logs.has_staged_log());
   EXPECT_EQ(persisted_logs.staged_log(), Compress("two"));
   persisted_logs.StoreLog("three");
@@ -245,10 +247,10 @@ TEST_F(PersistedLogsTest, Staging) {
   persisted_logs.DiscardStagedLog();
   EXPECT_FALSE(persisted_logs.has_staged_log());
   EXPECT_EQ(persisted_logs.size(), 2U);
-  persisted_logs.StageLog();
+  persisted_logs.StageNextLog();
   EXPECT_EQ(persisted_logs.staged_log(), Compress("three"));
   persisted_logs.DiscardStagedLog();
-  persisted_logs.StageLog();
+  persisted_logs.StageNextLog();
   EXPECT_EQ(persisted_logs.staged_log(), Compress("one"));
   persisted_logs.DiscardStagedLog();
   EXPECT_FALSE(persisted_logs.has_staged_log());
@@ -261,14 +263,13 @@ TEST_F(PersistedLogsTest, DiscardOrder) {
   TestPersistedLogs persisted_logs(&prefs_, kLogByteLimit);
 
   persisted_logs.StoreLog("one");
-  persisted_logs.StageLog();
+  persisted_logs.StageNextLog();
   persisted_logs.StoreLog("two");
   persisted_logs.DiscardStagedLog();
-  persisted_logs.SerializeLogs();
+  persisted_logs.PersistUnsentLogs();
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
-  EXPECT_EQ(PersistedLogs::RECALL_SUCCESS,
-            result_persisted_logs.DeserializeLogs());
+  result_persisted_logs.LoadPersistedUnsentLogs();
   EXPECT_EQ(1U, result_persisted_logs.size());
   result_persisted_logs.ExpectNextLog("two");
 }
@@ -280,7 +281,7 @@ TEST_F(PersistedLogsTest, Hashes) {
 
   TestPersistedLogs persisted_logs(&prefs_, kLogByteLimit);
   persisted_logs.StoreLog(kFooText);
-  persisted_logs.StageLog();
+  persisted_logs.StageNextLog();
 
   EXPECT_EQ(Compress(kFooText), persisted_logs.staged_log());
   EXPECT_EQ(foo_hash, persisted_logs.staged_log_hash());

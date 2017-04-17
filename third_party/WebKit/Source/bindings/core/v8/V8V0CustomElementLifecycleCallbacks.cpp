@@ -30,215 +30,230 @@
 
 #include "bindings/core/v8/V8V0CustomElementLifecycleCallbacks.h"
 
+#include <memory>
 #include "bindings/core/v8/DOMDataStore.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V0CustomElementBinding.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8Element.h"
-#include "bindings/core/v8/V8HiddenValue.h"
 #include "bindings/core/v8/V8PerContextData.h"
+#include "bindings/core/v8/V8PrivateProperty.h"
 #include "core/dom/ExecutionContext.h"
-#include <memory>
 
 namespace blink {
 
-#define CALLBACK_LIST(V)                    \
-    V(created, CreatedCallback)             \
-    V(attached, AttachedCallback)           \
-    V(detached, DetachedCallback)           \
-    V(attributeChanged, AttributeChangedCallback)
+#define CALLBACK_LIST(V)        \
+  V(created, CreatedCallback)   \
+  V(attached, AttachedCallback) \
+  V(detached, DetachedCallback) \
+  V(attribute_changed, AttributeChangedCallback)
 
-V8V0CustomElementLifecycleCallbacks* V8V0CustomElementLifecycleCallbacks::create(ScriptState* scriptState, v8::Local<v8::Object> prototype, v8::MaybeLocal<v8::Function> created, v8::MaybeLocal<v8::Function> attached, v8::MaybeLocal<v8::Function> detached, v8::MaybeLocal<v8::Function> attributeChanged)
-{
-    v8::Isolate* isolate = scriptState->isolate();
-    // A given object can only be used as a Custom Element prototype
-    // once; see customElementIsInterfacePrototypeObject
-#define SET_HIDDEN_VALUE(Value, Name) \
-    ASSERT(V8HiddenValue::getHiddenValue(scriptState, prototype, V8HiddenValue::customElement##Name(isolate)).IsEmpty()); \
-    if (!Value.IsEmpty()) \
-        V8HiddenValue::setHiddenValue(scriptState, prototype, V8HiddenValue::customElement##Name(isolate), Value.ToLocalChecked());
+V8V0CustomElementLifecycleCallbacks*
+V8V0CustomElementLifecycleCallbacks::Create(
+    ScriptState* script_state,
+    v8::Local<v8::Object> prototype,
+    v8::MaybeLocal<v8::Function> created,
+    v8::MaybeLocal<v8::Function> attached,
+    v8::MaybeLocal<v8::Function> detached,
+    v8::MaybeLocal<v8::Function> attribute_changed) {
+  v8::Isolate* isolate = script_state->GetIsolate();
 
-    CALLBACK_LIST(SET_HIDDEN_VALUE)
-#undef SET_HIDDEN_VALUE
+// A given object can only be used as a Custom Element prototype
+// once; see customElementIsInterfacePrototypeObject
+#define SET_PRIVATE_PROPERTY(Maybe, Name)                          \
+  V8PrivateProperty::Symbol symbol##Name =                         \
+      V8PrivateProperty::GetCustomElementLifecycle##Name(isolate); \
+  DCHECK(!symbol##Name.HasValue(prototype));                       \
+  {                                                                \
+    v8::Local<v8::Function> function;                              \
+    if (Maybe.ToLocal(&function))                                  \
+      symbol##Name.Set(prototype, function);                       \
+  }
 
-    return new V8V0CustomElementLifecycleCallbacks(scriptState, prototype, created, attached, detached, attributeChanged);
+  CALLBACK_LIST(SET_PRIVATE_PROPERTY)
+#undef SET_PRIVATE_PROPERTY
+
+  return new V8V0CustomElementLifecycleCallbacks(
+      script_state, prototype, created, attached, detached, attribute_changed);
 }
 
-static V0CustomElementLifecycleCallbacks::CallbackType flagSet(v8::MaybeLocal<v8::Function> attached, v8::MaybeLocal<v8::Function> detached, v8::MaybeLocal<v8::Function> attributeChanged)
-{
-    // V8 Custom Elements always run created to swizzle prototypes.
-    int flags = V0CustomElementLifecycleCallbacks::CreatedCallback;
+static V0CustomElementLifecycleCallbacks::CallbackType FlagSet(
+    v8::MaybeLocal<v8::Function> attached,
+    v8::MaybeLocal<v8::Function> detached,
+    v8::MaybeLocal<v8::Function> attribute_changed) {
+  // V8 Custom Elements always run created to swizzle prototypes.
+  int flags = V0CustomElementLifecycleCallbacks::kCreatedCallback;
 
-    if (!attached.IsEmpty())
-        flags |= V0CustomElementLifecycleCallbacks::AttachedCallback;
+  if (!attached.IsEmpty())
+    flags |= V0CustomElementLifecycleCallbacks::kAttachedCallback;
 
-    if (!detached.IsEmpty())
-        flags |= V0CustomElementLifecycleCallbacks::DetachedCallback;
+  if (!detached.IsEmpty())
+    flags |= V0CustomElementLifecycleCallbacks::kDetachedCallback;
 
-    if (!attributeChanged.IsEmpty())
-        flags |= V0CustomElementLifecycleCallbacks::AttributeChangedCallback;
+  if (!attribute_changed.IsEmpty())
+    flags |= V0CustomElementLifecycleCallbacks::kAttributeChangedCallback;
 
-    return V0CustomElementLifecycleCallbacks::CallbackType(flags);
+  return V0CustomElementLifecycleCallbacks::CallbackType(flags);
 }
 
-V8V0CustomElementLifecycleCallbacks::V8V0CustomElementLifecycleCallbacks(ScriptState* scriptState, v8::Local<v8::Object> prototype, v8::MaybeLocal<v8::Function> created, v8::MaybeLocal<v8::Function> attached, v8::MaybeLocal<v8::Function> detached, v8::MaybeLocal<v8::Function> attributeChanged)
-    : V0CustomElementLifecycleCallbacks(flagSet(attached, detached, attributeChanged))
-    , ContextLifecycleObserver(scriptState->getExecutionContext())
-    , m_scriptState(scriptState)
-    , m_prototype(scriptState->isolate(), prototype)
-    , m_created(scriptState->isolate(), created)
-    , m_attached(scriptState->isolate(), attached)
-    , m_detached(scriptState->isolate(), detached)
-    , m_attributeChanged(scriptState->isolate(), attributeChanged)
-{
-    m_prototype.setPhantom();
+V8V0CustomElementLifecycleCallbacks::V8V0CustomElementLifecycleCallbacks(
+    ScriptState* script_state,
+    v8::Local<v8::Object> prototype,
+    v8::MaybeLocal<v8::Function> created,
+    v8::MaybeLocal<v8::Function> attached,
+    v8::MaybeLocal<v8::Function> detached,
+    v8::MaybeLocal<v8::Function> attribute_changed)
+    : V0CustomElementLifecycleCallbacks(
+          FlagSet(attached, detached, attribute_changed)),
+      script_state_(script_state),
+      prototype_(script_state->GetIsolate(), prototype),
+      created_(script_state->GetIsolate(), created),
+      attached_(script_state->GetIsolate(), attached),
+      detached_(script_state->GetIsolate(), detached),
+      attribute_changed_(script_state->GetIsolate(), attribute_changed) {
+  prototype_.SetPhantom();
 
-#define MAKE_WEAK(Var, _) \
-    if (!m_##Var.isEmpty()) \
-        m_##Var.setPhantom();
+#define MAKE_WEAK(Var, Ignored) \
+  if (!Var##_.IsEmpty())        \
+    Var##_.SetPhantom();
 
-    CALLBACK_LIST(MAKE_WEAK)
+  CALLBACK_LIST(MAKE_WEAK)
 #undef MAKE_WEAK
 }
 
-V8PerContextData* V8V0CustomElementLifecycleCallbacks::creationContextData()
-{
-    if (!getExecutionContext())
-        return 0;
+V8PerContextData* V8V0CustomElementLifecycleCallbacks::CreationContextData() {
+  if (!script_state_->ContextIsValid())
+    return 0;
 
-    v8::Local<v8::Context> context = m_scriptState->context();
-    if (context.IsEmpty())
-        return 0;
+  v8::Local<v8::Context> context = script_state_->GetContext();
+  if (context.IsEmpty())
+    return 0;
 
-    return V8PerContextData::from(context);
+  return V8PerContextData::From(context);
 }
 
-V8V0CustomElementLifecycleCallbacks::~V8V0CustomElementLifecycleCallbacks()
-{
+V8V0CustomElementLifecycleCallbacks::~V8V0CustomElementLifecycleCallbacks() {}
+
+bool V8V0CustomElementLifecycleCallbacks::SetBinding(
+    std::unique_ptr<V0CustomElementBinding> binding) {
+  V8PerContextData* per_context_data = CreationContextData();
+  if (!per_context_data)
+    return false;
+
+  // The context is responsible for keeping the prototype
+  // alive. This in turn keeps callbacks alive through hidden
+  // references; see CALLBACK_LIST(SET_HIDDEN_VALUE).
+  per_context_data->AddCustomElementBinding(std::move(binding));
+  return true;
 }
 
-bool V8V0CustomElementLifecycleCallbacks::setBinding(std::unique_ptr<V0CustomElementBinding> binding)
-{
-    V8PerContextData* perContextData = creationContextData();
-    if (!perContextData)
-        return false;
+void V8V0CustomElementLifecycleCallbacks::Created(Element* element) {
+  // FIXME: callbacks while paused should be queued up for execution to
+  // continue then be delivered in order rather than delivered immediately.
+  // Bug 329665 tracks similar behavior for other synchronous events.
+  if (!script_state_->ContextIsValid())
+    return;
 
-    // The context is responsible for keeping the prototype
-    // alive. This in turn keeps callbacks alive through hidden
-    // references; see CALLBACK_LIST(SET_HIDDEN_VALUE).
-    perContextData->addCustomElementBinding(std::move(binding));
-    return true;
+  element->SetV0CustomElementState(Element::kV0Upgraded);
+
+  ScriptState::Scope scope(script_state_.Get());
+  v8::Isolate* isolate = script_state_->GetIsolate();
+  v8::Local<v8::Context> context = script_state_->GetContext();
+  v8::Local<v8::Value> receiver_value =
+      ToV8(element, context->Global(), isolate);
+  if (receiver_value.IsEmpty())
+    return;
+  v8::Local<v8::Object> receiver = receiver_value.As<v8::Object>();
+
+  // Swizzle the prototype of the wrapper.
+  v8::Local<v8::Object> prototype = prototype_.NewLocal(isolate);
+  if (prototype.IsEmpty())
+    return;
+  if (!V8CallBoolean(receiver->SetPrototype(context, prototype)))
+    return;
+
+  v8::Local<v8::Function> callback = created_.NewLocal(isolate);
+  if (callback.IsEmpty())
+    return;
+
+  v8::TryCatch exception_catcher(isolate);
+  exception_catcher.SetVerbose(true);
+  V8ScriptRunner::CallFunction(callback,
+                               ExecutionContext::From(script_state_.Get()),
+                               receiver, 0, 0, isolate);
 }
 
-void V8V0CustomElementLifecycleCallbacks::created(Element* element)
-{
-    // FIXME: callbacks while paused should be queued up for execution to
-    // continue then be delivered in order rather than delivered immediately.
-    // Bug 329665 tracks similar behavior for other synchronous events.
-    if (!getExecutionContext() || getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
-
-    if (!m_scriptState->contextIsValid())
-        return;
-
-    element->setV0CustomElementState(Element::V0Upgraded);
-
-    ScriptState::Scope scope(m_scriptState.get());
-    v8::Isolate* isolate = m_scriptState->isolate();
-    v8::Local<v8::Context> context = m_scriptState->context();
-    v8::Local<v8::Value> receiverValue = toV8(element, context->Global(), isolate);
-    if (receiverValue.IsEmpty())
-        return;
-    v8::Local<v8::Object> receiver = receiverValue.As<v8::Object>();
-
-    // Swizzle the prototype of the wrapper.
-    v8::Local<v8::Object> prototype = m_prototype.newLocal(isolate);
-    if (prototype.IsEmpty())
-        return;
-    if (!v8CallBoolean(receiver->SetPrototype(context, prototype)))
-        return;
-
-    v8::Local<v8::Function> callback = m_created.newLocal(isolate);
-    if (callback.IsEmpty())
-        return;
-
-    v8::TryCatch exceptionCatcher(isolate);
-    exceptionCatcher.SetVerbose(true);
-    V8ScriptRunner::callFunction(callback, getExecutionContext(), receiver, 0, 0, isolate);
+void V8V0CustomElementLifecycleCallbacks::Attached(Element* element) {
+  Call(attached_, element);
 }
 
-void V8V0CustomElementLifecycleCallbacks::attached(Element* element)
-{
-    call(m_attached, element);
+void V8V0CustomElementLifecycleCallbacks::Detached(Element* element) {
+  Call(detached_, element);
 }
 
-void V8V0CustomElementLifecycleCallbacks::detached(Element* element)
-{
-    call(m_detached, element);
+void V8V0CustomElementLifecycleCallbacks::AttributeChanged(
+    Element* element,
+    const AtomicString& name,
+    const AtomicString& old_value,
+    const AtomicString& new_value) {
+  // FIXME: callbacks while paused should be queued up for execution to
+  // continue then be delivered in order rather than delivered immediately.
+  // Bug 329665 tracks similar behavior for other synchronous events.
+  if (!script_state_->ContextIsValid())
+    return;
+  ScriptState::Scope scope(script_state_.Get());
+  v8::Isolate* isolate = script_state_->GetIsolate();
+  v8::Local<v8::Context> context = script_state_->GetContext();
+  v8::Local<v8::Value> receiver = ToV8(element, context->Global(), isolate);
+  if (receiver.IsEmpty())
+    return;
+
+  v8::Local<v8::Function> callback = attribute_changed_.NewLocal(isolate);
+  if (callback.IsEmpty())
+    return;
+
+  v8::Local<v8::Value> argv[] = {
+      V8String(isolate, name),
+      old_value.IsNull() ? v8::Local<v8::Value>(v8::Null(isolate))
+                         : v8::Local<v8::Value>(V8String(isolate, old_value)),
+      new_value.IsNull() ? v8::Local<v8::Value>(v8::Null(isolate))
+                         : v8::Local<v8::Value>(V8String(isolate, new_value))};
+
+  v8::TryCatch exception_catcher(isolate);
+  exception_catcher.SetVerbose(true);
+  V8ScriptRunner::CallFunction(callback,
+                               ExecutionContext::From(script_state_.Get()),
+                               receiver, WTF_ARRAY_LENGTH(argv), argv, isolate);
 }
 
-void V8V0CustomElementLifecycleCallbacks::attributeChanged(Element* element, const AtomicString& name, const AtomicString& oldValue, const AtomicString& newValue)
-{
-    // FIXME: callbacks while paused should be queued up for execution to
-    // continue then be delivered in order rather than delivered immediately.
-    // Bug 329665 tracks similar behavior for other synchronous events.
-    if (!getExecutionContext() || getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
+void V8V0CustomElementLifecycleCallbacks::Call(
+    const ScopedPersistent<v8::Function>& weak_callback,
+    Element* element) {
+  // FIXME: callbacks while paused should be queued up for execution to
+  // continue then be delivered in order rather than delivered immediately.
+  // Bug 329665 tracks similar behavior for other synchronous events.
+  if (!script_state_->ContextIsValid())
+    return;
+  ScriptState::Scope scope(script_state_.Get());
+  v8::Isolate* isolate = script_state_->GetIsolate();
+  v8::Local<v8::Context> context = script_state_->GetContext();
+  v8::Local<v8::Function> callback = weak_callback.NewLocal(isolate);
+  if (callback.IsEmpty())
+    return;
 
-    if (!m_scriptState->contextIsValid())
-        return;
-    ScriptState::Scope scope(m_scriptState.get());
-    v8::Isolate* isolate = m_scriptState->isolate();
-    v8::Local<v8::Context> context = m_scriptState->context();
-    v8::Local<v8::Value> receiver = toV8(element, context->Global(), isolate);
-    if (receiver.IsEmpty())
-        return;
+  v8::Local<v8::Value> receiver = ToV8(element, context->Global(), isolate);
+  if (receiver.IsEmpty())
+    return;
 
-    v8::Local<v8::Function> callback = m_attributeChanged.newLocal(isolate);
-    if (callback.IsEmpty())
-        return;
-
-    v8::Local<v8::Value> argv[] = {
-        v8String(isolate, name),
-        oldValue.isNull() ? v8::Local<v8::Value>(v8::Null(isolate)) : v8::Local<v8::Value>(v8String(isolate, oldValue)),
-        newValue.isNull() ? v8::Local<v8::Value>(v8::Null(isolate)) : v8::Local<v8::Value>(v8String(isolate, newValue))
-    };
-
-    v8::TryCatch exceptionCatcher(isolate);
-    exceptionCatcher.SetVerbose(true);
-    V8ScriptRunner::callFunction(callback, getExecutionContext(), receiver, WTF_ARRAY_LENGTH(argv), argv, isolate);
+  v8::TryCatch exception_catcher(isolate);
+  exception_catcher.SetVerbose(true);
+  V8ScriptRunner::CallFunction(callback,
+                               ExecutionContext::From(script_state_.Get()),
+                               receiver, 0, 0, isolate);
 }
 
-void V8V0CustomElementLifecycleCallbacks::call(const ScopedPersistent<v8::Function>& weakCallback, Element* element)
-{
-    // FIXME: callbacks while paused should be queued up for execution to
-    // continue then be delivered in order rather than delivered immediately.
-    // Bug 329665 tracks similar behavior for other synchronous events.
-    if (!getExecutionContext() || getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
-
-    if (!m_scriptState->contextIsValid())
-        return;
-    ScriptState::Scope scope(m_scriptState.get());
-    v8::Isolate* isolate = m_scriptState->isolate();
-    v8::Local<v8::Context> context = m_scriptState->context();
-    v8::Local<v8::Function> callback = weakCallback.newLocal(isolate);
-    if (callback.IsEmpty())
-        return;
-
-    v8::Local<v8::Value> receiver = toV8(element, context->Global(), isolate);
-    if (receiver.IsEmpty())
-        return;
-
-    v8::TryCatch exceptionCatcher(isolate);
-    exceptionCatcher.SetVerbose(true);
-    V8ScriptRunner::callFunction(callback, getExecutionContext(), receiver, 0, 0, isolate);
+DEFINE_TRACE(V8V0CustomElementLifecycleCallbacks) {
+  V0CustomElementLifecycleCallbacks::Trace(visitor);
 }
 
-DEFINE_TRACE(V8V0CustomElementLifecycleCallbacks)
-{
-    V0CustomElementLifecycleCallbacks::trace(visitor);
-    ContextLifecycleObserver::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

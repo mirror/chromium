@@ -20,10 +20,9 @@ class NinePatchLayer;
 }
 
 namespace ui {
-class ResourceManager;
+class NinePatchResource;
 }
 
-namespace chrome {
 namespace android {
 
 class LayerTitleCache;
@@ -34,8 +33,8 @@ class TabHandleLayer : public Layer {
       LayerTitleCache* layer_title_cache);
 
   void SetProperties(int id,
-                     ui::ResourceManager::Resource* close_button_resource,
-                     ui::ResourceManager::Resource* tab_handle_resource,
+                     ui::Resource* close_button_resource,
+                     ui::NinePatchResource* tab_handle_resource,
                      bool foreground,
                      bool close_pressed,
                      float toolbar_width,
@@ -71,6 +70,5 @@ class TabHandleLayer : public Layer {
 };
 
 }  // namespace android
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_COMPOSITOR_LAYER_TAB_HANDLE_LAYER_H_

@@ -19,7 +19,9 @@
 #import "chrome/browser/ui/cocoa/extensions/browser_actions_container_view.h"
 #import "chrome/browser/ui/cocoa/extensions/extension_popup_controller.h"
 #import "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.h"
+#import "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_views_presenter.h"
 #import "chrome/browser/ui/cocoa/image_button_cell.h"
+#import "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/menu_button.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
 #include "chrome/browser/ui/extensions/extension_message_bubble_bridge.h"
@@ -27,7 +29,7 @@
 #include "chrome/browser/ui/toolbar/toolbar_action_view_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_delegate.h"
-#include "grit/theme_resources.h"
+#include "chrome/grit/theme_resources.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMNSAnimation+Duration.h"
 #include "ui/base/cocoa/appkit_utils.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
@@ -134,19 +136,12 @@ const CGFloat kBrowserActionBubbleYOffset = 3.0;
 // Handles clicks for BrowserActionButtons.
 - (BOOL)browserActionClicked:(BrowserActionButton*)button;
 
-// Updates the container's grippy cursor based on the number of hidden buttons.
-- (void)updateGrippyCursors;
-
 // Returns the associated ToolbarController.
 - (ToolbarController*)toolbarController;
 
 // Creates a message bubble with the given |delegate|.
 - (void)createMessageBubble:
     (std::unique_ptr<ToolbarActionsBarBubbleDelegate>)delegate;
-
-// Called when the window for the active bubble is closing, and sets the active
-// bubble to nil.
-- (void)bubbleWindowClosing:(NSNotification*)notification;
 
 // Sets the current focused view. Should only be used for the overflow
 // container.
@@ -248,6 +243,7 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
 
 @implementation BrowserActionsController
 
+@synthesize maxWidth = maxWidth_;
 @synthesize containerView = containerView_;
 @synthesize browser = browser_;
 @synthesize isOverflow = isOverflow_;
@@ -272,8 +268,13 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
         new ToolbarActionsBar(toolbarActionsBarBridge_.get(),
                               browser_,
                               mainBar));
+    if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+      viewsBubblePresenter_ =
+          base::MakeUnique<ToolbarActionsBarBubbleViewsPresenter>(self);
+    }
 
     containerView_ = container;
+    [containerView_ setMinWidth:toolbarActionsBar_->GetMinimumWidth()];
     [containerView_ setPostsFrameChangedNotifications:YES];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -313,7 +314,6 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
 
     buttons_.reset([[NSMutableArray alloc] init]);
     toolbarActionsBar_->CreateActions();
-    [self updateGrippyCursors];
     [container setIsOverflow:isOverflow_];
 
     focusedViewIndex_ = -1;
@@ -404,6 +404,22 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   return [self preferredSize];
 }
 
+- (void)bubbleWindowClosing:(NSNotification*)notification {
+  activeBubble_ = nil;
+  toolbarActionsBar_->OnBubbleClosed();
+}
+
+- (void)updateMaxWidth {
+  const CGFloat ownMaxWidth = toolbarActionsBar_->GetMaximumWidth();
+  containerView_.maxWidth =
+      (maxWidth_ ? std::min(maxWidth_, ownMaxWidth) : ownMaxWidth);
+}
+
+- (void)setMaxWidth:(CGFloat)maxWidth {
+  maxWidth_ = maxWidth;
+  [self updateMaxWidth];
+}
+
 - (void)addViewForAction:(ToolbarActionViewController*)action
                withIndex:(NSUInteger)index {
   NSRect buttonFrame = NSMakeRect(NSMaxX([containerView_ bounds]),
@@ -419,13 +435,12 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   [newButton setAction:@selector(browserActionClicked:)];
   [buttons_ insertObject:newButton atIndex:index];
 
+  [self updateMaxWidth];
   [[NSNotificationCenter defaultCenter]
       addObserver:self
          selector:@selector(actionButtonDragging:)
              name:kBrowserActionButtonDraggingNotification
            object:newButton];
-
-  [containerView_ setMaxDesiredWidth:toolbarActionsBar_->GetMaximumWidth()];
 }
 
 - (void)redraw {
@@ -434,32 +449,32 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
 
   std::unique_ptr<ui::NinePartImageIds> highlight;
   if (toolbarActionsBar_->is_highlighting()) {
-    if (toolbarActionsBar_->highlight_type() ==
-        ToolbarActionsModel::HIGHLIGHT_INFO)
-      highlight.reset(
-          new ui::NinePartImageIds(IMAGE_GRID(IDR_TOOLBAR_ACTION_HIGHLIGHT)));
-    else
-      highlight.reset(
-          new ui::NinePartImageIds(IMAGE_GRID(IDR_DEVELOPER_MODE_HIGHLIGHT)));
+    highlight.reset(
+        new ui::NinePartImageIds(IMAGE_GRID(IDR_DEVELOPER_MODE_HIGHLIGHT)));
   }
   [containerView_ setHighlight:std::move(highlight)];
 
-  std::vector<ToolbarActionViewController*> toolbar_actions =
+  std::vector<ToolbarActionViewController*> toolbarActions =
       toolbarActionsBar_->GetActions();
-  for (NSUInteger i = 0; i < [buttons_ count]; ++i) {
-    ToolbarActionViewController* controller =
-        [[self buttonAtIndex:i] viewController];
-    if (controller != toolbar_actions[i]) {
-      size_t j = i + 1;
-      while (true) {
-        ToolbarActionViewController* other_controller =
-            [[self buttonAtIndex:j] viewController];
-        if (other_controller == toolbar_actions[i])
-          break;
-        ++j;
-      }
-      [buttons_ exchangeObjectAtIndex:i withObjectAtIndex:j];
+  // Check that every button has an action in the referenced actions.
+  // Tracking down crbug.com/653100.
+  // TODO(devlin): Remove or relax this one the bug is fixed?
+  for (BrowserActionButton* button in buttons_.get()) {
+    CHECK(std::find(toolbarActions.begin(), toolbarActions.end(),
+                    [button viewController]) != toolbarActions.end());
+  }
+  // Reorder |buttons_| to reflect |toolbarActions|. (Ugly n^2 sort, but the
+  // data set should be tiny.)
+  for (size_t refIndex = 0; refIndex < toolbarActions.size(); ++refIndex) {
+    NSUInteger buttonIndex = refIndex;
+    ToolbarActionViewController* refAction = toolbarActions[refIndex];
+    for (; buttonIndex < [buttons_ count]; ++buttonIndex) {
+      if ([[self buttonAtIndex:buttonIndex] viewController] == refAction)
+        break;
     }
+    CHECK_LT(buttonIndex, [buttons_ count]);
+    if (buttonIndex != refIndex)
+      [buttons_ exchangeObjectAtIndex:buttonIndex withObjectAtIndex:refIndex];
   }
 
   NSUInteger startIndex = toolbarActionsBar_->GetStartIndexInBounds();
@@ -504,9 +519,8 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   [button removeFromSuperview];
   [buttons_ removeObject:button];
 
+  [self updateMaxWidth];
   [button onRemoved];
-
-  [containerView_ setMaxDesiredWidth:toolbarActionsBar_->GetMaximumWidth()];
 }
 
 - (void)removeAllViews {
@@ -536,7 +550,7 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
                       object:self];
   }
   [self redraw];
-  [self updateGrippyCursors];
+  [[containerView_ window] invalidateCursorRectsForView:containerView_];
 }
 
 - (BOOL)updateContainerVisibility {
@@ -581,11 +595,14 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
     if (NSMinX([button frameAfterAnimation]) == NSMinX(buttonFrame))
       continue;
 
-    // We set the x-origin by calculating the proper distance from the right
-    // edge in the container so that, if the container is animating, the
+    // In LTR, We set the x-origin by calculating the proper distance from the
+    // right edge in the container so that, if the container is animating, the
     // button appears stationary.
-    buttonFrame.origin.x = NSWidth([containerView_ frame]) -
-        (toolbarActionsBar_->GetPreferredSize().width() - NSMinX(buttonFrame));
+    if (!cocoa_l10n_util::ShouldDoExperimentalRTLLayout()) {
+      buttonFrame.origin.x = NSWidth([containerView_ frame]) -
+                             (toolbarActionsBar_->GetPreferredSize().width() -
+                              NSMinX(buttonFrame));
+    }
     [button setFrame:buttonFrame animate:NO];
   }
 }
@@ -618,27 +635,8 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
 }
 
 - (void)containerDragFinished:(NSNotification*)notification {
-  for (BrowserActionButton* button in buttons_.get()) {
-    NSRect buttonFrame = [button frame];
-    if (NSContainsRect([containerView_ bounds], buttonFrame))
-      continue;
-
-    CGFloat intersectionWidth =
-        NSWidth(NSIntersectionRect([containerView_ bounds], buttonFrame));
-    // Hide the button if it's not "mostly" visible. "Mostly" here equates to
-    // having three or fewer pixels hidden.
-    if (([containerView_ grippyPinned] && intersectionWidth > 0) ||
-        (intersectionWidth <= NSWidth(buttonFrame) - 3.0)) {
-      [button setAlphaValue:0.0];
-      [button removeFromSuperview];
-    }
-  }
-
-  toolbarActionsBar_->OnResizeComplete(
-      toolbarActionsBar_->IconCountToWidth([self visibleButtonCount]));
-
-  [self updateGrippyCursors];
-  [self resizeContainerToWidth:toolbarActionsBar_->GetPreferredSize().width()];
+  toolbarActionsBar_->OnResizeComplete(NSWidth(containerView_.bounds));
+  [[containerView_ window] invalidateCursorRectsForView:containerView_];
 }
 
 - (void)containerAnimationEnded:(NSNotification*)notification {
@@ -688,6 +686,9 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
       NSMakePoint(NSMidX(draggedButtonFrame),
                   NSMaxY([containerView_ bounds]) - NSMidY(draggedButtonFrame));
 
+  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
+    midPoint.x = NSWidth([containerView_ frame]) - midPoint.x;
+
   // Calculate the row index and the index in the row. We bound the latter
   // because the view can go farther right than the right-most icon in the last
   // row of the overflow menu.
@@ -727,15 +728,24 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
       NSRectFromCGRect(frameRect.ToCGRect());
   // We need to flip the y coordinate for Cocoa's view system.
   frame.origin.y = NSHeight([containerView_ frame]) - NSMaxY(frame);
+  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
+    frame.origin.x =
+        NSWidth([containerView_ frame]) - NSWidth(frame) - NSMinX(frame);
   return frame;
 }
 
 - (NSPoint)popupPointForView:(NSView*)view
                   withBounds:(NSRect)bounds {
-  // Anchor point just above the center of the bottom.
-  int y = [view isFlipped] ? NSMaxY(bounds) - kBrowserActionBubbleYOffset :
-                             kBrowserActionBubbleYOffset;
-  NSPoint anchor = NSMakePoint(NSMidX(bounds), y);
+  NSPoint anchor;
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    // Anchor to the bottom-right of the button.
+    anchor = NSMakePoint(NSMaxX(bounds), [view isFlipped] ? NSMaxY(bounds) : 0);
+  } else {
+    // Anchor point just above the center of the bottom.
+    int y = [view isFlipped] ? NSMaxY(bounds) - kBrowserActionBubbleYOffset
+                             : kBrowserActionBubbleYOffset;
+    anchor = NSMakePoint(NSMidX(bounds), y);
+  }
   // Convert the point to the container view's frame, and adjust for animation.
   NSPoint anchorInContainer =
       [containerView_ convertPoint:anchor fromView:view];
@@ -782,13 +792,6 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   return [button viewController]->ExecuteAction(true);
 }
 
-- (void)updateGrippyCursors {
-  [containerView_
-      setCanDragLeft:toolbarActionsBar_->GetIconCount() != [buttons_ count]];
-  [containerView_ setCanDragRight:[self visibleButtonCount] > 0];
-  [[containerView_ window] invalidateCursorRectsForView:containerView_];
-}
-
 - (ToolbarController*)toolbarController {
   return [[BrowserWindowController browserWindowControllerForWindow:
              browser_->window()->GetNativeWindow()] toolbarController];
@@ -815,7 +818,17 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   NSPoint anchor = [self popupPointForView:anchorView
                                 withBounds:[anchorView bounds]];
 
-  anchor = ui::ConvertPointFromWindowToScreen([containerView_ window], anchor);
+  NSWindow* parentWindow = [containerView_ window];
+  anchor = ui::ConvertPointFromWindowToScreen(parentWindow, anchor);
+  if (viewsBubblePresenter_) {
+    viewsBubblePresenter_->PresentAt(std::move(delegate), parentWindow, anchor,
+                                     anchoredToAction);
+    // No need to set |activeBubble_| as it's only used for Cocoa tests. Also,
+    // skip registering for notifications since the presenter will call
+    // -bubbleWindowClosing: directly.
+    return;
+  }
+
   activeBubble_ = [[ToolbarActionsBarBubbleMac alloc]
       initWithParentWindow:[containerView_ window]
                anchorPoint:anchor
@@ -827,11 +840,6 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
              name:NSWindowWillCloseNotification
            object:[activeBubble_ window]];
   [activeBubble_ showWindow:nil];
-}
-
-- (void)bubbleWindowClosing:(NSNotification*)notification {
-  activeBubble_ = nil;
-  toolbarActionsBar_->OnBubbleClosed();
 }
 
 - (void)setFocusedViewIndex:(NSInteger)index {

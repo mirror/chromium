@@ -6,11 +6,13 @@
 
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
+#import "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/browser.h"
@@ -18,36 +20,37 @@
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_button.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/signin/core/browser/signin_error_controller.h"
-#include "grit/theme_resources.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/signin/core/common/profile_management_switches.h"
+#include "skia/ext/skia_utils_mac.h"
 #import "ui/base/cocoa/appkit_utils.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
-#include "ui/base/nine_image_painter_factory.h"
-#include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
+#include "ui/gfx/paint_vector_icon.h"
 
 namespace {
 
-// NSButtons have a default padding of 5px. This button should have a padding
-// of 8px.
-const CGFloat kButtonExtraPadding = 8 - 5;
-const CGFloat kButtonHeight = 28;
+const SkColor kButtonHoverColor = SkColorSetARGB(20, 0, 0, 0);
+const SkColor kButtonPressedColor = SkColorSetARGB(31, 0, 0, 0);
+const SkColor kAvatarIconColor = SkColorSetRGB(0x5a, 0x5a, 0x5a);
 
-const ui::NinePartImageIds kNormalBorderImageIds =
-    IMAGE_GRID(IDR_AVATAR_NATIVE_BUTTON_NORMAL);
-const ui::NinePartImageIds kHoverBorderImageIds =
-    IMAGE_GRID(IDR_AVATAR_NATIVE_BUTTON_HOVER);
-const ui::NinePartImageIds kPressedBorderImageIds =
-    IMAGE_GRID(IDR_AVATAR_NATIVE_BUTTON_PRESSED);
-const ui::NinePartImageIds kThemedBorderImageIds =
-    IMAGE_GRID(IDR_AVATAR_THEMED_MAC_BUTTON_NORMAL);
+const CGFloat kButtonHeight = 24;
 
-NSImage* GetImageFromResourceID(int resourceId) {
-  return ui::ResourceBundle::GetSharedInstance().GetNativeImageNamed(
-      resourceId).ToNSImage();
-}
+// NSButtons have a default padding of 5px. Buttons should have a padding of
+// 6px.
+const CGFloat kButtonExtraPadding = 6 - 5;
+
+// Extra padding for the signed out avatar button.
+const CGFloat kSignedOutWidthPadding = 2;
+
+// Kern value for the avatar button title.
+const CGFloat kTitleKern = 0.25;
+
+// Upper and lower bounds for determining if the frame's theme color is a
+// "dark" theme. This value is determined by trial and error.
+const CGFloat kFrameColorDarkUpperBound = 0.33;
 
 }  // namespace
 
@@ -77,11 +80,10 @@ NSImage* GetImageFromResourceID(int resourceId) {
   // An image and no error means we are drawing the generic button, which
   // is square. Otherwise, we are displaying the profile's name and an
   // optional authentication error icon.
-  if ([self image] && !hasError_) {
-    buttonSize.width = kButtonHeight;
-  } else {
+  if ([self image] && !hasError_)
+    buttonSize.width = kButtonHeight + kSignedOutWidthPadding;
+  else
     buttonSize.width += 2 * kButtonExtraPadding;
-  }
   buttonSize.height = kButtonHeight;
   return buttonSize;
 }
@@ -94,27 +96,32 @@ NSImage* GetImageFromResourceID(int resourceId) {
 - (void)drawImage:(NSImage*)image
         withFrame:(NSRect)frame
            inView:(NSView*)controlView {
-  // The image used in the generic button case needs to be shifted down
-  // slightly to be centered correctly.
+  // The image used in the generic button case as well as the error icon both
+  // need to be shifted down slightly to be centered correctly.
   // TODO(noms): When the assets are fixed, remove this latter offset.
-  if (!hasError_)
-    frame = NSOffsetRect(frame, 0, 1);
+  frame = NSOffsetRect(frame, 0, 1);
   [super drawImage:image withFrame:frame inView:controlView];
 }
 
 - (void)drawBezelWithFrame:(NSRect)frame
                     inView:(NSView*)controlView {
-  HoverState hoverState =
-      [base::mac::ObjCCastStrict<AvatarButton>(controlView) hoverState];
-  ui::NinePartImageIds imageIds = kNormalBorderImageIds;
-  if (isThemedWindow_)
-    imageIds = kThemedBorderImageIds;
+  AvatarButton* button = base::mac::ObjCCastStrict<AvatarButton>(controlView);
+  HoverState hoverState = [button hoverState];
 
-  if (hoverState == kHoverStateMouseDown)
-    imageIds = kPressedBorderImageIds;
-  else if (hoverState == kHoverStateMouseOver)
-    imageIds = kHoverBorderImageIds;
-  ui::DrawNinePartImage(frame, imageIds, NSCompositeSourceOver, 1.0, true);
+  NSColor* backgroundColor = nil;
+  if (hoverState == kHoverStateMouseDown || [button isActive]) {
+    backgroundColor = skia::SkColorToSRGBNSColor(kButtonPressedColor);
+  } else if (hoverState == kHoverStateMouseOver) {
+    backgroundColor = skia::SkColorToSRGBNSColor(kButtonHoverColor);
+  }
+
+  if (backgroundColor) {
+    [backgroundColor set];
+    NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:frame
+                                                         xRadius:2.0f
+                                                         yRadius:2.0f];
+    [path fill];
+  }
 }
 
 - (void)drawFocusRingMaskWithFrame:(NSRect)frame inView:(NSView*)view {
@@ -143,14 +150,17 @@ NSImage* GetImageFromResourceID(int resourceId) {
 
 @interface AvatarButtonController (Private)
 - (void)updateAvatarButtonAndLayoutParent:(BOOL)layoutParent;
-- (void)updateErrorStatus:(BOOL)hasError;
+- (void)setErrorStatus:(BOOL)hasError;
 - (void)dealloc;
 - (void)themeDidChangeNotification:(NSNotification*)aNotification;
+
+// Called right after |window_| became/resigned the main window.
+- (void)mainWindowDidChangeNotification:(NSNotification*)aNotification;
 @end
 
 @implementation AvatarButtonController
 
-- (id)initWithBrowser:(Browser*)browser {
+- (id)initWithBrowser:(Browser*)browser window:(NSWindow*)window {
   if ((self = [super initWithBrowser:browser])) {
     ThemeService* themeService =
         ThemeServiceFactory::GetForProfile(browser->profile());
@@ -159,34 +169,45 @@ NSImage* GetImageFromResourceID(int resourceId) {
     AvatarButton* avatarButton =
         [[AvatarButton alloc] initWithFrame:NSZeroRect];
     button_.reset(avatarButton);
-    base::scoped_nsobject<CustomThemeButtonCell> cell(
-        [[CustomThemeButtonCell alloc] initWithThemedWindow:isThemedWindow_]);
-    [avatarButton setCell:cell.get()];
 
-    // Check if the account already has an authentication error.
-    SigninErrorController* errorController =
-        profiles::GetSigninErrorController(browser->profile());
-    hasError_ = errorController && errorController->HasError();
+    base::scoped_nsobject<NSButtonCell> cell(
+        [[CustomThemeButtonCell alloc] initWithThemedWindow:isThemedWindow_]);
+
+    [avatarButton setCell:cell.get()];
 
     [avatarButton setWantsLayer:YES];
     [self setView:avatarButton];
 
     [avatarButton setBezelStyle:NSShadowlessSquareBezelStyle];
     [avatarButton setButtonType:NSMomentaryChangeButton];
+    [[avatarButton cell] setHighlightsBy:NSNoCellMask];
     [avatarButton setBordered:YES];
 
-    [avatarButton setAutoresizingMask:NSViewMinXMargin | NSViewMinYMargin];
     [avatarButton setTarget:self];
     [avatarButton setAction:@selector(buttonClicked:)];
-    [avatarButton setRightAction:@selector(buttonRightClicked:)];
+    [avatarButton setRightAction:@selector(buttonClicked:)];
 
+    // Check if the account already has an authentication or sync error and
+    // initialize the avatar button UI.
+    hasError_ = profileObserver_->HasAvatarError();
     [self updateAvatarButtonAndLayoutParent:NO];
+
+    window_ = window;
 
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(themeDidChangeNotification:)
                    name:kBrowserThemeDidChangeNotification
                  object:nil];
+
+    [center addObserver:self
+               selector:@selector(mainWindowDidChangeNotification:)
+                   name:NSWindowDidBecomeMainNotification
+                 object:window];
+    [center addObserver:self
+               selector:@selector(mainWindowDidChangeNotification:)
+                   name:NSWindowDidResignMainNotification
+                 object:window];
   }
   return self;
 }
@@ -197,37 +218,24 @@ NSImage* GetImageFromResourceID(int resourceId) {
 }
 
 - (void)themeDidChangeNotification:(NSNotification*)aNotification {
-  // Redraw the button if the window has switched between themed and native.
   ThemeService* themeService =
       ThemeServiceFactory::GetForProfile(browser_->profile());
   BOOL updatedIsThemedWindow = !themeService->UsingSystemTheme();
-  if (isThemedWindow_ != updatedIsThemedWindow) {
-    isThemedWindow_ = updatedIsThemedWindow;
-    [[button_ cell] setIsThemedWindow:isThemedWindow_];
-    [self updateAvatarButtonAndLayoutParent:YES];
-  }
+  isThemedWindow_ = updatedIsThemedWindow;
+  [[button_ cell] setIsThemedWindow:isThemedWindow_];
+  [self updateAvatarButtonAndLayoutParent:YES];
+}
+
+- (void)mainWindowDidChangeNotification:(NSNotification*)aNotification {
+  [self updateAvatarButtonAndLayoutParent:NO];
 }
 
 - (void)updateAvatarButtonAndLayoutParent:(BOOL)layoutParent {
   // The button text has a black foreground and a white drop shadow for regular
   // windows, and a light text with a dark drop shadow for guest windows
   // which are themed with a dark background.
-  base::scoped_nsobject<NSShadow> shadow([[NSShadow alloc] init]);
-  [shadow setShadowOffset:NSMakeSize(0, -1)];
-  [shadow setShadowBlurRadius:0];
-
-  NSColor* foregroundColor;
-  if (browser_->profile()->IsGuestSession() &&
-      !ui::MaterialDesignController::IsModeMaterial()) {
-    foregroundColor = [NSColor colorWithCalibratedWhite:1.0 alpha:0.9];
-    [shadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.4]];
-  } else if (!isThemedWindow_) {
-    foregroundColor = [NSColor blackColor];
-    [shadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.7]];
-  } else {
-    foregroundColor = [NSColor blackColor];
-    [shadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.4]];
-  }
+  NSColor* foregroundColor =
+      [self isFrameColorDark] ? [NSColor whiteColor] : [NSColor blackColor];
 
   ProfileAttributesStorage& storage =
       g_browser_process->profile_manager()->GetProfileAttributesStorage();
@@ -239,7 +247,6 @@ NSImage* GetImageFromResourceID(int resourceId) {
       storage.GetNumberOfProfiles() == 1 &&
       !storage.GetAllProfilesAttributes().front()->IsAuthenticated();
 
-
   NSString* buttonTitle = base::SysUTF16ToNSString(useGenericButton ?
       base::string16() :
       profiles::GetAvatarButtonTextForProfile(browser_->profile()));
@@ -247,26 +254,22 @@ NSImage* GetImageFromResourceID(int resourceId) {
 
   AvatarButton* button =
       base::mac::ObjCCastStrict<AvatarButton>(button_);
+
   if (useGenericButton) {
-    [button setDefaultImage:GetImageFromResourceID(
-        IDR_AVATAR_NATIVE_BUTTON_AVATAR)];
-    [button setHoverImage:GetImageFromResourceID(
-        IDR_AVATAR_NATIVE_BUTTON_AVATAR_HOVER)];
-    [button setPressedImage:GetImageFromResourceID(
-        IDR_AVATAR_NATIVE_BUTTON_AVATAR_PRESSED)];
-    // This is a workaround for an issue in the HoverImageButton where the
-    // button is initially sized incorrectly unless a default image is provided.
-    // See crbug.com/298501.
-    [button setImage:GetImageFromResourceID(IDR_AVATAR_NATIVE_BUTTON_AVATAR)];
-    [button setImagePosition:NSImageOnly];
-  } else if (hasError_) {
-    [button setDefaultImage:GetImageFromResourceID(
-        IDR_ICON_PROFILES_AVATAR_BUTTON_ERROR)];
+    NSImage* avatarIcon = NSImageFromImageSkia(
+        gfx::CreateVectorIcon(kUserAccountAvatarIcon, 18, kAvatarIconColor));
+    [button setDefaultImage:avatarIcon];
     [button setHoverImage:nil];
     [button setPressedImage:nil];
-    [button setImage:GetImageFromResourceID(
-        IDR_ICON_PROFILES_AVATAR_BUTTON_ERROR)];
-    [button setImagePosition:NSImageRight];
+    [button setImagePosition:NSImageOnly];
+  } else if (hasError_) {
+    NSImage* errorIcon = NSImageFromImageSkia(
+        gfx::CreateVectorIcon(kSyncProblemIcon, 16, gfx::kGoogleRed700));
+    [button setDefaultImage:errorIcon];
+    [button setHoverImage:nil];
+    [button setPressedImage:nil];
+    [button setImage:errorIcon];
+    [button setImagePosition:NSImageLeft];
   } else {
     [button setDefaultImage:nil];
     [button setHoverImage:nil];
@@ -281,9 +284,11 @@ NSImage* GetImageFromResourceID(int resourceId) {
   base::scoped_nsobject<NSAttributedString> attributedTitle(
       [[NSAttributedString alloc]
           initWithString:buttonTitle
-              attributes:@{ NSShadowAttributeName : shadow.get(),
-                            NSForegroundColorAttributeName : foregroundColor,
-                            NSParagraphStyleAttributeName : paragraphStyle }]);
+              attributes:@{
+                NSForegroundColorAttributeName : foregroundColor,
+                NSParagraphStyleAttributeName : paragraphStyle,
+                NSKernAttributeName : [NSNumber numberWithFloat:kTitleKern]
+              }]);
   [button_ setAttributedTitle:attributedTitle];
   [button_ sizeToFit];
 
@@ -296,9 +301,46 @@ NSImage* GetImageFromResourceID(int resourceId) {
   }
 }
 
-- (void)updateErrorStatus:(BOOL)hasError {
+- (void)setErrorStatus:(BOOL)hasError {
   hasError_ = hasError;
   [self updateAvatarButtonAndLayoutParent:YES];
+}
+
+- (BOOL)isFrameColorDark {
+  const ui::ThemeProvider* themeProvider =
+      &ThemeService::GetThemeProviderForProfile(browser_->profile());
+  const int propertyId = [window_ isMainWindow]
+                             ? ThemeProperties::COLOR_FRAME
+                             : ThemeProperties::COLOR_FRAME_INACTIVE;
+  if (themeProvider && themeProvider->HasCustomColor(propertyId)) {
+    NSColor* frameColor = themeProvider->GetNSColor(propertyId);
+    frameColor =
+        [frameColor colorUsingColorSpaceName:NSCalibratedWhiteColorSpace];
+    return frameColor &&
+           [frameColor whiteComponent] < kFrameColorDarkUpperBound;
+  }
+
+  return false;
+}
+
+- (void)showAvatarBubbleAnchoredAt:(NSView*)anchor
+                          withMode:(BrowserWindow::AvatarBubbleMode)mode
+                   withServiceType:(signin::GAIAServiceType)serviceType
+                   fromAccessPoint:(signin_metrics::AccessPoint)accessPoint {
+  [super showAvatarBubbleAnchoredAt:anchor
+                           withMode:mode
+                    withServiceType:serviceType
+                    fromAccessPoint:accessPoint];
+
+  AvatarButton* button = base::mac::ObjCCastStrict<AvatarButton>(button_);
+  [button setIsActive:[[menuController_ window] isVisible]];
+}
+
+- (void)bubbleWillClose:(NSNotification*)notif {
+  AvatarButton* button = base::mac::ObjCCastStrict<AvatarButton>(button_);
+  [button setIsActive:NO];
+  [self updateAvatarButtonAndLayoutParent:NO];
+  [super bubbleWillClose:notif];
 }
 
 @end

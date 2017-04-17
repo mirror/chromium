@@ -5,15 +5,14 @@
 #ifndef SimNetwork_h
 #define SimNetwork_h
 
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLLoaderTestDelegate.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class SimRequest;
-class WebURLLoader;
 class WebURLLoaderClient;
 class WebURLResponse;
 
@@ -21,29 +20,37 @@ class WebURLResponse;
 // return, write data, and finish in a specific order in a unit test. One of
 // these must be created before using the SimRequest to issue requests.
 class SimNetwork final : public WebURLLoaderTestDelegate {
-public:
-    SimNetwork();
-    ~SimNetwork();
+ public:
+  SimNetwork();
+  ~SimNetwork();
 
-private:
-    friend class SimRequest;
+ private:
+  friend class SimRequest;
 
-    static SimNetwork& current();
+  static SimNetwork& Current();
 
-    void servePendingRequests();
-    void addRequest(SimRequest&);
-    void removeRequest(SimRequest&);
+  void ServePendingRequests();
+  void AddRequest(SimRequest&);
+  void RemoveRequest(SimRequest&);
 
-    // WebURLLoaderTestDelegate
-    void didReceiveResponse(WebURLLoaderClient*, WebURLLoader*, const WebURLResponse&) override;
-    void didReceiveData(WebURLLoaderClient*, WebURLLoader*, const char* data, int dataLength, int encodedDataLength) override;
-    void didFail(WebURLLoaderClient*, WebURLLoader*, const WebURLError&) override;
-    void didFinishLoading(WebURLLoaderClient*, WebURLLoader*, double finishTime, int64_t totalEncodedDataLength) override;
+  // WebURLLoaderTestDelegate
+  void DidReceiveResponse(WebURLLoaderClient*, const WebURLResponse&) override;
+  void DidReceiveData(WebURLLoaderClient*,
+                      const char* data,
+                      int data_length) override;
+  void DidFail(WebURLLoaderClient*,
+               const WebURLError&,
+               int64_t total_encoded_data_length,
+               int64_t total_encoded_body_length) override;
+  void DidFinishLoading(WebURLLoaderClient*,
+                        double finish_time,
+                        int64_t total_encoded_data_length,
+                        int64_t total_encoded_body_length) override;
 
-    SimRequest* m_currentRequest;
-    HashMap<String, SimRequest*> m_requests;
+  SimRequest* current_request_;
+  HashMap<String, SimRequest*> requests_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

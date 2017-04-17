@@ -33,15 +33,15 @@
 
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "modules/ModulesExport.h"
 #include "modules/filesystem/DOMFileSystemBase.h"
 #include "modules/filesystem/EntriesCallback.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -50,51 +50,60 @@ class BlobCallback;
 class FileEntry;
 class FileWriterCallback;
 
-class MODULES_EXPORT DOMFileSystem final : public DOMFileSystemBase, public ScriptWrappable, public ActiveScriptWrappable, public ActiveDOMObject {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(DOMFileSystem);
-public:
-    static DOMFileSystem* create(ExecutionContext*, const String& name, FileSystemType, const KURL& rootURL);
+class MODULES_EXPORT DOMFileSystem final
+    : public DOMFileSystemBase,
+      public ScriptWrappable,
+      public ActiveScriptWrappable<DOMFileSystem>,
+      public ContextClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(DOMFileSystem);
 
-    // Creates a new isolated file system for the given filesystemId.
-    static DOMFileSystem* createIsolatedFileSystem(ExecutionContext*, const String& filesystemId);
+ public:
+  static DOMFileSystem* Create(ExecutionContext*,
+                               const String& name,
+                               FileSystemType,
+                               const KURL& root_url);
 
-    DirectoryEntry* root() const;
+  // Creates a new isolated file system for the given filesystemId.
+  static DOMFileSystem* CreateIsolatedFileSystem(ExecutionContext*,
+                                                 const String& filesystem_id);
 
-    // DOMFileSystemBase overrides.
-    void addPendingCallbacks() override;
-    void removePendingCallbacks() override;
-    void reportError(ErrorCallbackBase*, FileError::ErrorCode) override;
+  DirectoryEntry* root() const;
 
-    static void reportError(ExecutionContext*, ErrorCallbackBase*, FileError::ErrorCode);
+  // DOMFileSystemBase overrides.
+  void AddPendingCallbacks() override;
+  void RemovePendingCallbacks() override;
+  void ReportError(ErrorCallbackBase*, FileError::ErrorCode) override;
 
-    // ActiveScriptWrappable overrides.
-    bool hasPendingActivity() const final;
+  static void ReportError(ExecutionContext*,
+                          ErrorCallbackBase*,
+                          FileError::ErrorCode);
 
-    void createWriter(const FileEntry*, FileWriterCallback*, ErrorCallbackBase*);
-    void createFile(const FileEntry*, BlobCallback*, ErrorCallbackBase*);
+  // ScriptWrappable overrides.
+  bool HasPendingActivity() const final;
 
-    // Schedule a callback. This should not cross threads (should be called on the same context thread).
-    static void scheduleCallback(ExecutionContext* executionContext, std::unique_ptr<ExecutionContextTask> task)
-    {
-        DCHECK(executionContext->isContextThread());
-        executionContext->postTask(BLINK_FROM_HERE, std::move(task), taskNameForInstrumentation());
-    }
+  void CreateWriter(const FileEntry*, FileWriterCallback*, ErrorCallbackBase*);
+  void CreateFile(const FileEntry*, BlobCallback*, ErrorCallbackBase*);
 
-    DECLARE_VIRTUAL_TRACE();
+  // Schedule a callback. This should not cross threads (should be called on the
+  // same context thread).
+  static void ScheduleCallback(ExecutionContext* execution_context,
+                               std::unique_ptr<WTF::Closure> task);
 
-private:
-    DOMFileSystem(ExecutionContext*, const String& name, FileSystemType, const KURL& rootURL);
+  DECLARE_VIRTUAL_TRACE();
 
-    static String taskNameForInstrumentation()
-    {
-        return "FileSystem";
-    }
+ private:
+  DOMFileSystem(ExecutionContext*,
+                const String& name,
+                FileSystemType,
+                const KURL& root_url);
 
-    int m_numberOfPendingCallbacks;
-    Member<DirectoryEntry> m_rootEntry;
+  static String TaskNameForInstrumentation() { return "FileSystem"; }
+
+  int number_of_pending_callbacks_;
+  Member<DirectoryEntry> root_entry_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMFileSystem_h
+#endif  // DOMFileSystem_h

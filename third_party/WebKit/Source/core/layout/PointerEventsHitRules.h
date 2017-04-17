@@ -22,29 +22,30 @@
 
 #include "core/layout/HitTestRequest.h"
 #include "core/style/ComputedStyleConstants.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PointerEventsHitRules {
-    STACK_ALLOCATED();
-public:
-    enum EHitTesting {
-        SVG_IMAGE_HITTESTING,
-        SVG_GEOMETRY_HITTESTING,
-        SVG_TEXT_HITTESTING
-    };
+  STACK_ALLOCATED();
 
-    PointerEventsHitRules(EHitTesting, const HitTestRequest&, EPointerEvents);
+ public:
+  enum EHitTesting {
+    SVG_IMAGE_HITTESTING,
+    SVG_GEOMETRY_HITTESTING,
+    SVG_TEXT_HITTESTING
+  };
 
-    unsigned requireVisible : 1;
-    unsigned requireFill : 1;
-    unsigned requireStroke : 1;
-    unsigned canHitStroke : 1;
-    unsigned canHitFill : 1;
-    unsigned canHitBoundingBox : 1;
+  PointerEventsHitRules(EHitTesting, const HitTestRequest&, EPointerEvents);
+
+  unsigned require_visible : 1;
+  unsigned require_fill : 1;
+  unsigned require_stroke : 1;
+  unsigned can_hit_stroke : 1;
+  unsigned can_hit_fill : 1;
+  unsigned can_hit_bounding_box : 1;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

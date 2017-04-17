@@ -11,26 +11,28 @@
 namespace blink {
 
 // static
-DOMException* PresentationError::take(ScriptPromiseResolver*, const WebPresentationError& error)
-{
-    ExceptionCode code = UnknownError;
-    switch (error.errorType) {
-    case WebPresentationError::ErrorTypeNoAvailableScreens:
-    case WebPresentationError::ErrorTypeNoPresentationFound:
-        code = NotFoundError;
-        break;
-    case WebPresentationError::ErrorTypeSessionRequestCancelled:
-        code = AbortError;
-        break;
-    case WebPresentationError::ErrorTypeAvailabilityNotSupported:
-        code = NotSupportedError;
-        break;
-    case WebPresentationError::ErrorTypeUnknown:
-        code = UnknownError;
-        break;
-    }
+DOMException* PresentationError::Take(const WebPresentationError& error) {
+  ExceptionCode code = kUnknownError;
+  switch (error.error_type) {
+    case WebPresentationError::kErrorTypeNoAvailableScreens:
+    case WebPresentationError::kErrorTypeNoPresentationFound:
+      code = kNotFoundError;
+      break;
+    case WebPresentationError::kErrorTypePresentationRequestCancelled:
+      code = kNotAllowedError;
+      break;
+    case WebPresentationError::kErrorTypeAvailabilityNotSupported:
+      code = kNotSupportedError;
+      break;
+    case WebPresentationError::kErrorTypePreviousStartInProgress:
+      code = kOperationError;
+      break;
+    case WebPresentationError::kErrorTypeUnknown:
+      code = kUnknownError;
+      break;
+  }
 
-    return DOMException::create(code, error.message);
+  return DOMException::Create(code, error.message);
 }
 
-} // namespace blink
+}  // namespace blink

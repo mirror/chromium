@@ -12,7 +12,7 @@
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/metrics/histogram.h"
-#include "base/metrics/sparse_histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/path_service.h"
 #include "base/profiler/scoped_tracker.h"
@@ -24,7 +24,6 @@
 #include "net/base/net_errors.h"
 #include "net/cookies/cookie_options.h"
 #include "net/http/http_status_code.h"
-#include "net/log/net_log.h"
 #include "net/url_request/url_request.h"
 
 namespace {
@@ -51,15 +50,15 @@ void ReportInvalidReferrerSend(const GURL& target_url,
 
 // Record network errors that HTTP requests complete with, including OK and
 // ABORTED.
-void RecordNetworkErrorHistograms(const net::URLRequest* request) {
+void RecordNetworkErrorHistograms(const net::URLRequest* request,
+                                  int net_error) {
   if (request->url().SchemeIs("http")) {
     UMA_HISTOGRAM_SPARSE_SLOWLY("Net.HttpRequestCompletionErrorCodes",
-                                std::abs(request->status().error()));
+                                std::abs(net_error));
 
-    if (request->load_flags() & net::LOAD_MAIN_FRAME) {
+    if (request->load_flags() & net::LOAD_MAIN_FRAME_DEPRECATED) {
       UMA_HISTOGRAM_SPARSE_SLOWLY(
-          "Net.HttpRequestCompletionErrorCodes.MainFrame",
-          std::abs(request->status().error()));
+          "Net.HttpRequestCompletionErrorCodes.MainFrame", std::abs(net_error));
     }
   }
 }
@@ -109,8 +108,9 @@ int IOSChromeNetworkDelegate::OnBeforeURLRequest(
 }
 
 void IOSChromeNetworkDelegate::OnCompleted(net::URLRequest* request,
-                                           bool started) {
-  RecordNetworkErrorHistograms(request);
+                                           bool started,
+                                           int net_error) {
+  RecordNetworkErrorHistograms(request, net_error);
 }
 
 net::NetworkDelegate::AuthRequiredResponse
@@ -129,7 +129,7 @@ bool IOSChromeNetworkDelegate::OnCanGetCookies(
   if (!cookie_settings_)
     return true;
 
-  return cookie_settings_->IsReadingCookieAllowed(
+  return cookie_settings_->IsCookieAccessAllowed(
       request.url(), request.first_party_for_cookies());
 }
 
@@ -140,7 +140,7 @@ bool IOSChromeNetworkDelegate::OnCanSetCookie(const net::URLRequest& request,
   if (!cookie_settings_)
     return true;
 
-  return cookie_settings_->IsSettingCookieAllowed(
+  return cookie_settings_->IsCookieAccessAllowed(
       request.url(), request.first_party_for_cookies());
 }
 
@@ -157,12 +157,7 @@ bool IOSChromeNetworkDelegate::OnCanEnablePrivacyMode(
   if (!cookie_settings_.get())
     return false;
 
-  bool reading_cookie_allowed =
-      cookie_settings_->IsReadingCookieAllowed(url, first_party_for_cookies);
-  bool setting_cookie_allowed =
-      cookie_settings_->IsSettingCookieAllowed(url, first_party_for_cookies);
-  bool privacy_mode = !(reading_cookie_allowed && setting_cookie_allowed);
-  return privacy_mode;
+  return !cookie_settings_->IsCookieAccessAllowed(url, first_party_for_cookies);
 }
 
 bool IOSChromeNetworkDelegate::

@@ -2,11 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import optparse
+
 from webkitpy.layout_tests.builder_list import BuilderList
 from webkitpy.layout_tests.layout_package import bot_test_expectations
 from webkitpy.tool.commands import flaky_tests
 from webkitpy.tool.commands.command_test import CommandsTest
-from webkitpy.tool.mock_tool import MockWebKitPatch, MockOptions
+from webkitpy.tool.mock_tool import MockWebKitPatch
 
 
 class FakeBotTestExpectations(object):
@@ -16,9 +18,9 @@ class FakeBotTestExpectations(object):
 
 
 class FakeBotTestExpectationsFactory(object):
-    FAILURE_MAP = {"A": "AUDIO", "C": "CRASH", "F": "TEXT", "I": "IMAGE", "O": "MISSING",
-                   "N": "NO DATA", "P": "PASS", "T": "TIMEOUT", "Y": "NOTRUN", "X": "SKIP",
-                   "Z": "IMAGE+TEXT", "K": "LEAK"}
+    FAILURE_MAP = {'A': 'AUDIO', 'C': 'CRASH', 'F': 'TEXT', 'I': 'IMAGE', 'O': 'MISSING',
+                   'N': 'NO DATA', 'P': 'PASS', 'T': 'TIMEOUT', 'Y': 'NOTRUN', 'X': 'SKIP',
+                   'Z': 'IMAGE+TEXT', 'K': 'LEAK'}
 
     def __init__(self, builders):
         self.builders = builders
@@ -55,8 +57,8 @@ class FlakyTestsTest(CommandsTest):
     @staticmethod
     def fake_builders_list():
         return BuilderList({
-            "foo-builder": {"port_name": "dummy-port", "specifiers": ['Linux', 'Release']},
-            "bar-builder": {"port_name": "dummy-port", "specifiers": ['Mac', 'Debug']},
+            'foo-builder': {'port_name': 'dummy-port', 'specifiers': ['Linux', 'Release']},
+            'bar-builder': {'port_name': 'dummy-port', 'specifiers': ['Mac', 'Debug']},
         })
 
     def test_merge_lines(self):
@@ -73,7 +75,7 @@ class FlakyTestsTest(CommandsTest):
         tool = MockWebKitPatch()
         tool.builders = self.fake_builders_list()
         command.expectations_factory = FakeBotTestExpectationsFactory
-        options = MockOptions(upload=True)
+        options = optparse.Values({'upload': True})
         expected_stdout = flaky_tests.FlakyTests.OUTPUT % (
             flaky_tests.FlakyTests.HEADER,
             '',

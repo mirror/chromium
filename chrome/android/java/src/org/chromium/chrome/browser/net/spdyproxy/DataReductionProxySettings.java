@@ -9,13 +9,20 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 
+import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.preferences.datareduction.DataReductionDataUseItem;
+import org.chromium.chrome.browser.preferences.datareduction.DataReductionPromoUtils;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -58,9 +65,16 @@ public class DataReductionProxySettings {
 
     private static final String DATA_REDUCTION_ENABLED_PREF = "BANDWIDTH_REDUCTION_PROXY_ENABLED";
 
+    private static final String DATA_REDUCTION_HAS_EVER_BEEN_ENABLED_PREF =
+            "BANDWIDTH_REDUCTION_PROXY_HAS_EVER_BEEN_ENABLED";
+
+    private static final String PARAM_PERSISTENT_MENU_ITEM_ENABLED = "persistent_menu_item_enabled";
+
     private static final String WEBLITE_HOSTNAME = "googleweblight.com";
 
     private static final String WEBLITE_QUERY_PARAM = "lite_url";
+
+    private Callback<List<DataReductionDataUseItem>> mQueryDataUsageCallback;
 
     /**
      * Returns whether the data reduction proxy is enabled.
@@ -125,14 +139,15 @@ public class DataReductionProxySettings {
         mNativeDataReductionProxySettings = nativeInit();
     }
 
-    /** Returns true if the SPDY proxy is allowed to be used. */
-    public boolean isDataReductionProxyAllowed() {
-        return nativeIsDataReductionProxyAllowed(mNativeDataReductionProxySettings);
-    }
-
     /** Returns true if the SPDY proxy promo is allowed to be shown. */
     public boolean isDataReductionProxyPromoAllowed() {
         return nativeIsDataReductionProxyPromoAllowed(mNativeDataReductionProxySettings);
+    }
+
+    /** Returns true if the snackbar promo is allowed to be shown. */
+    public boolean isSnackbarPromoAllowed(String url) {
+        return url.startsWith(UrlConstants.HTTP_URL_PREFIX) && isDataReductionProxyEnabled()
+                && isDataReductionProxyPromoAllowed();
     }
 
     /**
@@ -151,51 +166,27 @@ public class DataReductionProxySettings {
     }
 
     /**
-     * Returns true if the Data Reduction Proxy proxy can be used for the given url. This method
-     * does not take into account the proxy config or proxy retry list, so it can return true even
-     * when the proxy will not be used.
+     * Returns true if the Data Reduction Proxy menu item should be shown in the main menu.
      */
-    public boolean canUseDataReductionProxy(String url) {
-        return nativeCanUseDataReductionProxy(mNativeDataReductionProxySettings, url);
-    }
+    public boolean shouldUseDataReductionMainMenuItem() {
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.DATA_REDUCTION_MAIN_MENU)) return false;
 
-    /**
-     * Returns true if the Data Reduction Proxy's Lo-Fi mode was enabled on the last main frame
-     * request.
-     */
-    public boolean wasLoFiModeActiveOnMainFrame() {
-        return nativeWasLoFiModeActiveOnMainFrame(mNativeDataReductionProxySettings);
-    }
-
-    /**
-     * Returns true if a "Load image" context menu request has not been made since the last main
-     * frame request.
-     */
-    public boolean wasLoFiLoadImageRequestedBefore() {
-        return nativeWasLoFiLoadImageRequestedBefore(mNativeDataReductionProxySettings);
-    }
-
-    /**
-     * Records that a "Load image" context menu request has been made.
-     */
-    public void setLoFiLoadImageRequested() {
-        nativeSetLoFiLoadImageRequested(mNativeDataReductionProxySettings);
-    }
-
-    /**
-     * Counts the number of times the Lo-Fi snackbar has been shown.
-     *  */
-    public void incrementLoFiSnackbarShown() {
-        nativeIncrementLoFiSnackbarShown(mNativeDataReductionProxySettings);
-    }
-
-    /**
-     * Counts the number of requests to reload the page with images from the Lo-Fi snackbar. If the
-     * user requests the page with images a certain number of times, then Lo-Fi is disabled for the
-     * session.
-     *  */
-    public void incrementLoFiUserRequestsForImages() {
-        nativeIncrementLoFiUserRequestsForImages(mNativeDataReductionProxySettings);
+        if (ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                    ChromeFeatureList.DATA_REDUCTION_MAIN_MENU, PARAM_PERSISTENT_MENU_ITEM_ENABLED,
+                    false)) {
+            // If the Data Reduction Proxy is enabled, set the pref storing that the proxy has
+            // ever been enabled.
+            if (isDataReductionProxyEnabled()) {
+                ContextUtils.getAppSharedPreferences()
+                        .edit()
+                        .putBoolean(DATA_REDUCTION_HAS_EVER_BEEN_ENABLED_PREF, true)
+                        .apply();
+            }
+            return ContextUtils.getAppSharedPreferences().getBoolean(
+                    DATA_REDUCTION_HAS_EVER_BEEN_ENABLED_PREF, false);
+        } else {
+            return isDataReductionProxyEnabled();
+        }
     }
 
     /** Returns true if the SPDY proxy is managed by an administrator's policy. */
@@ -212,11 +203,38 @@ public class DataReductionProxySettings {
     }
 
     /**
+     * Clears all data saving statistics.
+     */
+    public void clearDataSavingStatistics() {
+        // When the data saving statistics are cleared, reset the snackbar promo that tells the user
+        // how much data they have saved using Data Saver so far.
+        DataReductionPromoUtils.saveSnackbarPromoDisplayed(0);
+        nativeClearDataSavingStatistics(mNativeDataReductionProxySettings);
+    }
+
+    /**
      * Returns aggregate original and received content lengths.
      * @return The content lengths.
      */
     public ContentLengths getContentLengths() {
         return nativeGetContentLengths(mNativeDataReductionProxySettings);
+    }
+
+    /**
+     * Returns the content length saved for the number of days shown in the history summary.
+     * @return The content length saved.
+     */
+    public long getContentLengthSavedInHistorySummary() {
+        ContentLengths length = getContentLengths();
+        return Math.max(length.getOriginal() - length.getReceived(), 0);
+    }
+
+    /**
+     * Returns the total HTTP content length saved.
+     * @return The HTTP content length saved.
+     */
+    public long getTotalHttpContentLengthSaved() {
+        return nativeGetTotalHttpContentLengthSaved(mNativeDataReductionProxySettings);
     }
 
     /**
@@ -285,7 +303,8 @@ public class DataReductionProxySettings {
         }
         String rewritten = extractUrlFromWebliteQueryParams(url);
         if (rewritten == null
-                || !TextUtils.equals(Uri.parse(rewritten).getScheme(), "http")) {
+                || !TextUtils.equals(Uri.parse(rewritten).getScheme(),
+                        UrlConstants.HTTP_SCHEME)) {
             return url;
         }
 
@@ -302,24 +321,39 @@ public class DataReductionProxySettings {
         return nativeAreLoFiPreviewsEnabled(mNativeDataReductionProxySettings);
     }
 
+    /**
+     * Queries native Data Reduction Proxy to get data use statistics. On query completion provides
+     * a list of DataReductionDataUseItem to the callback.
+     *
+     * @param numDays Number of days to get stats for.
+     * @param queryDataUsageCallback Callback to give the list of DataReductionDataUseItems on query
+     *            completion.
+     */
+    public void queryDataUsage(
+            int numDays, Callback<List<DataReductionDataUseItem>> queryDataUsageCallback) {
+        mQueryDataUsageCallback = queryDataUsageCallback;
+        nativeQueryDataUsage(mNativeDataReductionProxySettings,
+                new ArrayList<DataReductionDataUseItem>(), numDays);
+    }
+
+    @CalledByNative
+    public static void createDataUseItemAndAddToList(List<DataReductionDataUseItem> items,
+            String hostname, long dataUsed, long originalSize) {
+        items.add(new DataReductionDataUseItem(hostname, dataUsed, originalSize));
+    }
+
+    @CalledByNative
+    public void onQueryDataUsageComplete(List<DataReductionDataUseItem> items) {
+        if (mQueryDataUsageCallback != null) {
+            mQueryDataUsageCallback.onResult(items);
+        }
+        mQueryDataUsageCallback = null;
+    }
+
     private native long nativeInit();
-    private native boolean nativeIsDataReductionProxyAllowed(
-            long nativeDataReductionProxySettingsAndroid);
     private native boolean nativeIsDataReductionProxyPromoAllowed(
             long nativeDataReductionProxySettingsAndroid);
     private native boolean nativeIsDataReductionProxyEnabled(
-            long nativeDataReductionProxySettingsAndroid);
-    private native boolean nativeCanUseDataReductionProxy(
-            long nativeDataReductionProxySettingsAndroid, String url);
-    private native boolean nativeWasLoFiModeActiveOnMainFrame(
-            long nativeDataReductionProxySettingsAndroid);
-    private native boolean nativeWasLoFiLoadImageRequestedBefore(
-            long nativeDataReductionProxySettingsAndroid);
-    private native void nativeSetLoFiLoadImageRequested(
-            long nativeDataReductionProxySettingsAndroid);
-    private native void nativeIncrementLoFiSnackbarShown(
-            long nativeDataReductionProxySettingsAndroid);
-    private native void nativeIncrementLoFiUserRequestsForImages(
             long nativeDataReductionProxySettingsAndroid);
     private native boolean nativeIsDataReductionProxyManaged(
             long nativeDataReductionProxySettingsAndroid);
@@ -327,7 +361,11 @@ public class DataReductionProxySettings {
             long nativeDataReductionProxySettingsAndroid, boolean enabled);
     private native long nativeGetDataReductionLastUpdateTime(
             long nativeDataReductionProxySettingsAndroid);
+    private native void nativeClearDataSavingStatistics(
+            long nativeDataReductionProxySettingsAndroid);
     private native ContentLengths nativeGetContentLengths(
+            long nativeDataReductionProxySettingsAndroid);
+    private native long nativeGetTotalHttpContentLengthSaved(
             long nativeDataReductionProxySettingsAndroid);
     private native long[] nativeGetDailyOriginalContentLengths(
             long nativeDataReductionProxySettingsAndroid);
@@ -339,4 +377,6 @@ public class DataReductionProxySettings {
             long nativeDataReductionProxySettingsAndroid);
     private native String nativeGetHttpProxyList(long nativeDataReductionProxySettingsAndroid);
     private native String nativeGetLastBypassEvent(long nativeDataReductionProxySettingsAndroid);
+    private native void nativeQueryDataUsage(long nativeDataReductionProxySettingsAndroid,
+            List<DataReductionDataUseItem> items, int numDays);
 }

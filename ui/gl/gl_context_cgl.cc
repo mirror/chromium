@@ -12,10 +12,12 @@
 
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_gl_api_implementation.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/gpu_switching_manager.h"
@@ -90,11 +92,17 @@ GLContextCGL::GLContextCGL(GLShareGroup* share_group)
 }
 
 bool GLContextCGL::Initialize(GLSurface* compatible_surface,
-                              GpuPreference gpu_preference) {
+                              const GLContextAttribs& attribs) {
   DCHECK(compatible_surface);
 
-  gpu_preference = ui::GpuSwitchingManager::GetInstance()->AdjustGpuPreference(
-      gpu_preference);
+  // webgl_compatibility_context and disabling bind_generates_resource are not
+  // supported.
+  DCHECK(!attribs.webgl_compatibility_context &&
+         attribs.bind_generates_resource);
+
+  GpuPreference gpu_preference =
+      ui::GpuSwitchingManager::GetInstance()->AdjustGpuPreference(
+          attribs.gpu_preference);
 
   GLContextCGL* share_context = share_group() ?
       static_cast<GLContextCGL*>(share_group()->GetContext()) : nullptr;
@@ -142,8 +150,20 @@ bool GLContextCGL::Initialize(GLSurface* compatible_surface,
 
 void GLContextCGL::Destroy() {
   if (yuv_to_rgb_converter_) {
+    // If this context is not current, bind this context's API so that the YUV
+    // converter can safely destruct
+    GLContext* current_context = GetRealCurrent();
+    if (current_context != this) {
+      SetCurrentGL(GetCurrentGL());
+    }
+
     ScopedCGLSetCurrentContext(static_cast<CGLContextObj>(context_));
     yuv_to_rgb_converter_.reset();
+
+    // Rebind the current context's API if needed.
+    if (current_context && current_context != this) {
+      SetCurrentGL(current_context->GetCurrentGL());
+    }
   }
   if (discrete_pixelformat_) {
     if (base::MessageLoop::current() != nullptr) {
@@ -229,7 +249,7 @@ bool GLContextCGL::MakeCurrent(GLSurface* surface) {
   }
 
   // Set this as soon as the context is current, since we might call into GL.
-  SetRealGLApi();
+  BindGLApi();
 
   SetCurrent(surface);
   InitializeDynamicBindings();

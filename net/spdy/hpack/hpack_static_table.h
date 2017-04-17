@@ -2,11 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_SPDY_HPACK_STATIC_TABLE_H_
-#define NET_SPDY_HPACK_STATIC_TABLE_H_
+#ifndef NET_SPDY_HPACK_HPACK_STATIC_TABLE_H_
+#define NET_SPDY_HPACK_HPACK_STATIC_TABLE_H_
 
 #include <stddef.h>
 
+#include "net/base/net_export.h"
 #include "net/spdy/hpack/hpack_header_table.h"
 
 namespace net {
@@ -41,6 +42,9 @@ class NET_EXPORT_PRIVATE HpackStaticTable {
     return static_name_index_;
   }
 
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
+
  private:
   HpackHeaderTable::EntryTable static_entries_;
   HpackHeaderTable::UnorderedEntrySet static_index_;
@@ -49,4 +53,4 @@ class NET_EXPORT_PRIVATE HpackStaticTable {
 
 }  // namespace net
 
-#endif  // NET_SPDY_HPACK_STATIC_TABLE_H_
+#endif  // NET_SPDY_HPACK_HPACK_STATIC_TABLE_H_

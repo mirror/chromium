@@ -7,13 +7,16 @@
 
 #include <stddef.h>
 
-#include <set>
+#include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/keyed_service/core/keyed_service.h"
 
@@ -33,6 +36,8 @@ class OAuth2TokenService;
 class SigninManagerBase;
 
 namespace history {
+
+class WebHistoryServiceObserver;
 
 // Provides an API for querying Google servers for a signed-in user's
 // synced history visits. It is roughly analogous to HistoryService, and
@@ -94,6 +99,9 @@ class WebHistoryService : public KeyedService {
       SigninManagerBase* signin_manager,
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
   ~WebHistoryService() override;
+
+  void AddObserver(WebHistoryServiceObserver* observer);
+  void RemoveObserver(WebHistoryServiceObserver* observer);
 
   // Searches synced history for visits matching |text_query|. The timeframe to
   // search, along with other options, is specified in |options|. If
@@ -206,18 +214,23 @@ class WebHistoryService : public KeyedService {
 
   // Pending expiration requests to be canceled if not complete by profile
   // shutdown.
-  std::set<Request*> pending_expire_requests_;
+  std::map<Request*, std::unique_ptr<Request>> pending_expire_requests_;
 
   // Pending requests to be canceled if not complete by profile shutdown.
-  std::set<Request*> pending_audio_history_requests_;
+  std::map<Request*, std::unique_ptr<Request>> pending_audio_history_requests_;
 
   // Pending web and app activity queries to be canceled if not complete by
   // profile shutdown.
-  std::set<Request*> pending_web_and_app_activity_requests_;
+  std::map<Request*, std::unique_ptr<Request>>
+      pending_web_and_app_activity_requests_;
 
   // Pending queries for other forms of browsing history to be canceled if not
   // complete by profile shutdown.
-  std::set<Request*> pending_other_forms_of_browsing_history_requests_;
+  std::map<Request*, std::unique_ptr<Request>>
+      pending_other_forms_of_browsing_history_requests_;
+
+  // Observers.
+  base::ObserverList<WebHistoryServiceObserver, true> observer_list_;
 
   base::WeakPtrFactory<WebHistoryService> weak_ptr_factory_;
 

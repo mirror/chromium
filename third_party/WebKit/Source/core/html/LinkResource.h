@@ -32,60 +32,58 @@
 #define LinkResource_h
 
 #include "core/CoreExport.h"
-#include "core/fetch/FetchRequest.h"
 #include "platform/heap/Handle.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class HTMLLinkElement;
 class LocalFrame;
 
-class CORE_EXPORT LinkResource : public GarbageCollectedFinalized<LinkResource>  {
-    WTF_MAKE_NONCOPYABLE(LinkResource);
-public:
-    enum LinkResourceType {
-        Style,
-        Import,
-        Manifest,
-        Other
-    };
+class CORE_EXPORT LinkResource
+    : public GarbageCollectedFinalized<LinkResource> {
+  WTF_MAKE_NONCOPYABLE(LinkResource);
 
-    explicit LinkResource(HTMLLinkElement*);
-    virtual ~LinkResource();
+ public:
+  enum LinkResourceType { kStyle, kImport, kManifest, kOther };
 
-    bool shouldLoadResource() const;
-    LocalFrame* loadingFrame() const;
+  explicit LinkResource(HTMLLinkElement*);
+  virtual ~LinkResource();
 
-    virtual LinkResourceType type() const = 0;
-    virtual void process() = 0;
-    virtual void ownerRemoved() { }
-    virtual void ownerInserted() { }
-    virtual bool hasLoaded() const = 0;
+  bool ShouldLoadResource() const;
+  LocalFrame* LoadingFrame() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  virtual LinkResourceType GetType() const = 0;
+  virtual void Process() = 0;
+  virtual void OwnerRemoved() {}
+  virtual void OwnerInserted() {}
+  virtual bool HasLoaded() const = 0;
 
-protected:
-    Member<HTMLLinkElement> m_owner;
+  DECLARE_VIRTUAL_TRACE();
+
+ protected:
+  Member<HTMLLinkElement> owner_;
 };
 
 class LinkRequestBuilder {
-    STACK_ALLOCATED();
-public:
-    explicit LinkRequestBuilder(HTMLLinkElement* owner);
+  STACK_ALLOCATED();
 
-    bool isValid() const { return !m_url.isEmpty() && m_url.isValid(); }
-    const KURL& url() const { return m_url; }
-    const AtomicString& charset() const { return m_charset; }
-    FetchRequest build(bool lowPriority) const;
+ public:
+  explicit LinkRequestBuilder(HTMLLinkElement* owner);
 
-private:
-    Member<HTMLLinkElement> m_owner;
-    KURL m_url;
-    AtomicString m_charset;
+  bool IsValid() const { return !url_.IsEmpty() && url_.IsValid(); }
+  const KURL& Url() const { return url_; }
+  const AtomicString& Charset() const { return charset_; }
+  FetchParameters Build(bool low_priority) const;
+
+ private:
+  Member<HTMLLinkElement> owner_;
+  KURL url_;
+  AtomicString charset_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LinkResource_h
+#endif  // LinkResource_h

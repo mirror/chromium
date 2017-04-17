@@ -8,21 +8,29 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <vector>
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
+#include "chrome/browser/engagement/site_engagement_details.mojom.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "chrome/browser/engagement/site_engagement_observer.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 #include "ui/base/page_transition_types.h"
 
 namespace base {
-class DictionaryValue;
 class Clock;
+}
+
+namespace banners {
+FORWARD_DECLARE_TEST(AppBannerManagerBrowserTest,
+                     CheckOnLoadWithoutSufficientEngagement);
 }
 
 namespace content {
@@ -34,8 +42,13 @@ class HistoryService;
 }
 
 class GURL;
+class HostContentSettingsMap;
 class Profile;
 class SiteEngagementScore;
+
+#if defined(OS_ANDROID)
+class SiteEngagementServiceAndroid;
+#endif
 
 class SiteEngagementScoreProvider {
  public:
@@ -49,14 +62,19 @@ class SiteEngagementScoreProvider {
 
 // Stores and retrieves the engagement score of an origin.
 //
-// An engagement score is a positive integer that represents how much a user has
-// engaged with an origin - the higher it is, the more engagement the user has
-// had with this site recently.
+// An engagement score is a non-negative double that represents how much a user
+// has engaged with an origin - the higher it is, the more engagement the user
+// has had with this site recently.
 //
-// Positive user activity, such as visiting the origin often and adding it to
-// the homescreen, will increase the site engagement score. Negative activity,
-// such as rejecting permission prompts or not responding to notifications, will
-// decrease the site engagement score.
+// User activity such as visiting the origin often, interacting with the origin,
+// and adding it to the homescreen will increase the site engagement score. If
+// a site's score does not increase for some time, it will decay, eventually
+// reaching zero with further disuse.
+//
+// The SiteEngagementService object must be created and used on the UI thread
+// only. Engagement scores may be queried in a read-only fashion from other
+// threads using SiteEngagementService::GetScoreFromSettings, but use of this
+// method is discouraged unless it is not possible to use the UI thread.
 class SiteEngagementService : public KeyedService,
                               public history::HistoryServiceObserver,
                               public SiteEngagementScoreProvider {
@@ -65,19 +83,16 @@ class SiteEngagementService : public KeyedService,
   // the service of them.
   class Helper;
 
-  enum EngagementLevel {
-    ENGAGEMENT_LEVEL_NONE,
-    ENGAGEMENT_LEVEL_LOW,
-    ENGAGEMENT_LEVEL_MEDIUM,
-    ENGAGEMENT_LEVEL_HIGH,
-    ENGAGEMENT_LEVEL_MAX,
-  };
-
   // The name of the site engagement variation field trial.
   static const char kEngagementParams[];
 
-  // Returns the site engagement service attached to this profile. May return
-  // null if the service does not exist (e.g. the user is in incognito).
+  // Returns the site engagement service attached to this profile. The service
+  // exists in incognito mode; scores will be initialised using the score from
+  // the profile that the incognito session was created from, and will increase
+  // and decrease as usual. Engagement earned or decayed in incognito will not
+  // be persisted or reflected in the original profile.
+  //
+  // This method must be called on the UI thread.
   static SiteEngagementService* Get(Profile* profile);
 
   // Returns the maximum possible amount of engagement that a site can accrue.
@@ -86,15 +101,34 @@ class SiteEngagementService : public KeyedService,
   // Returns whether or not the site engagement service is enabled.
   static bool IsEnabled();
 
+  // Returns the score for |origin| based on |settings|. Can be called on any
+  // thread and does not cause any cleanup, decay, etc.
+  //
+  // Should only be used if you cannot create a SiteEngagementService (i.e. you
+  // cannot run on the UI thread).
+  static double GetScoreFromSettings(HostContentSettingsMap* settings,
+                                     const GURL& origin);
+
   explicit SiteEngagementService(Profile* profile);
   ~SiteEngagementService() override;
 
-  // Returns the engagement level of |url|. This is the recommended API for
-  // clients
-  EngagementLevel GetEngagementLevel(const GURL& url) const;
+  // KeyedService support:
+  void Shutdown() override;
+
+  // Returns the engagement level of |url|.
+  blink::mojom::EngagementLevel GetEngagementLevel(const GURL& url) const;
+
+  // Returns an array of engagement score details for all origins which have
+  // a score, whether due to direct engagement, or other factors that cause
+  // an engagement bonus to be applied.
+  std::vector<mojom::SiteEngagementDetails> GetAllDetails() const;
 
   // Returns a map of all stored origins and their engagement scores.
+  // TODO(703848): Migrate important sites impl off this and remove it
   std::map<GURL, double> GetScoreMap() const;
+
+  // Update the engagement score of |url| for a notification interaction.
+  void HandleNotificationInteraction(const GURL& url);
 
   // Returns whether the engagement service has enough data to make meaningful
   // decisions. Clients should avoid using engagement in their heuristic until
@@ -102,14 +136,23 @@ class SiteEngagementService : public KeyedService,
   bool IsBootstrapped() const;
 
   // Returns whether |url| has at least the given |level| of engagement.
-  bool IsEngagementAtLeast(const GURL& url, EngagementLevel level) const;
+  bool IsEngagementAtLeast(const GURL& url,
+                           blink::mojom::EngagementLevel level) const;
 
-  // Resets the engagement score |url| to |score|, clearing daily limits.
-  void ResetScoreForURL(const GURL& url, double score);
+  // Resets the base engagement for |url| to |score|, clearing daily limits. Any
+  // bonus engagement that |url| has acquired is not affected by this method, so
+  // the result of GetScore(|url|) may not be the same as |score|.
+  void ResetBaseScoreForURL(const GURL& url, double score);
 
   // Update the last time |url| was opened from an installed shortcut to be
   // clock_->Now().
   void SetLastShortcutLaunchTime(const GURL& url);
+
+  void HelperCreated(SiteEngagementService::Helper* helper);
+  void HelperDeleted(SiteEngagementService::Helper* helper);
+
+  // Returns the site engagement details for the specified |url|.
+  mojom::SiteEngagementDetails GetDetails(const GURL& url) const;
 
   // Overridden from SiteEngagementScoreProvider.
   double GetScore(const GURL& url) const override;
@@ -117,15 +160,25 @@ class SiteEngagementService : public KeyedService,
 
  private:
   friend class SiteEngagementObserver;
+  friend class SiteEngagementServiceAndroid;
+  friend class SiteEngagementServiceTest;
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, CheckHistograms);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, CleanupEngagementScores);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
+                           CleanupMovesScoreBackToNow);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
+                           CleanupMovesScoreBackToRebase);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
                            CleanupEngagementScoresProportional);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, ClearHistoryForURLs);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, GetMedianEngagement);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, GetTotalNavigationPoints);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, GetTotalUserInputPoints);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
+                           GetTotalNotificationPoints);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, RestrictedToHTTPAndHTTPS);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, LastShortcutLaunch);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, NotificationPermission);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
                            CleanupOriginsOnHistoryDeletion);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, IsBootstrapped);
@@ -133,7 +186,19 @@ class SiteEngagementService : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, Observers);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, ScoreDecayHistograms);
   FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, LastEngagementTime);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest,
+                           IncognitoEngagementService);
+  FRIEND_TEST_ALL_PREFIXES(SiteEngagementServiceTest, GetScoreFromSettings);
+  FRIEND_TEST_ALL_PREFIXES(banners::AppBannerManagerBrowserTest,
+                           CheckOnLoadWithoutSufficientEngagement);
   FRIEND_TEST_ALL_PREFIXES(AppBannerSettingsHelperTest, SiteEngagementTrigger);
+
+#if defined(OS_ANDROID)
+  // Shim class to expose the service to Java.
+  SiteEngagementServiceAndroid* GetAndroidService() const;
+  void SetAndroidService(
+      std::unique_ptr<SiteEngagementServiceAndroid> android_service);
+#endif
 
   // Only used in tests.
   SiteEngagementService(Profile* profile, std::unique_ptr<base::Clock> clock);
@@ -162,6 +227,10 @@ class SiteEngagementService : public KeyedService,
   // Records UMA metrics.
   void RecordMetrics();
 
+  // Returns true if we should record engagement for this URL. Currently,
+  // engagement is only earned for HTTP and HTTPS.
+  bool ShouldRecordEngagement(const GURL& url) const;
+
   // Get and set the last engagement time from prefs.
   base::Time GetLastEngagementTime() const;
   void SetLastEngagementTime(base::Time last_engagement_time) const;
@@ -188,6 +257,11 @@ class SiteEngagementService : public KeyedService,
   // time-on-site, based on user input.
   void HandleUserInput(content::WebContents* web_contents,
                        SiteEngagementMetrics::EngagementType type);
+
+  // Called if |url| changes to |level| engagement, and informs every Helper of
+  // the change.
+  void SendLevelChangeToHelpers(const GURL& url,
+                                blink::mojom::EngagementLevel level);
 
   // Returns true if the last engagement increasing event seen by the site
   // engagement service was sufficiently long ago that we need to reset all
@@ -224,12 +298,19 @@ class SiteEngagementService : public KeyedService,
   // The clock used to vend times.
   std::unique_ptr<base::Clock> clock_;
 
+#if defined(OS_ANDROID)
+  std::unique_ptr<SiteEngagementServiceAndroid> android_service_;
+#endif
+
   // Metrics are recorded at non-incognito browser startup, and then
   // approximately once per hour thereafter. Store the local time at which
   // metrics were previously uploaded: the first event which affects any
   // origin's engagement score after an hour has elapsed triggers the next
   // upload.
   base::Time last_metrics_time_;
+
+  // All helpers currently attached to a WebContents.
+  std::set<SiteEngagementService::Helper*> helpers_;
 
   // A list of observers. When any origin registers an engagement-increasing
   // event, each observer's OnEngagementIncreased method will be called.

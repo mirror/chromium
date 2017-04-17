@@ -35,45 +35,49 @@ class ExceptionState;
 class QualifiedName;
 
 class HTMLDialogElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLDialogElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    void close(const String& returnValue, ExceptionState&);
-    void closeDialog(const String& returnValue = String());
-    void show();
-    void showModal(ExceptionState&);
-    void removedFrom(ContainerNode*) override;
+ public:
+  DECLARE_NODE_FACTORY(HTMLDialogElement);
 
-    // NotCentered means do not center the dialog. Centered means the dialog has
-    // been centered and centeredPosition() is set. NeedsCentering means attempt
-    // to center on the next layout, then set to Centered or NotCentered.
-    enum CenteringMode { NotCentered, Centered, NeedsCentering };
-    CenteringMode getCenteringMode() const { return m_centeringMode; }
-    LayoutUnit centeredPosition() const
-    {
-        ASSERT(m_centeringMode == Centered);
-        return m_centeredPosition;
-    }
-    void setCentered(LayoutUnit centeredPosition);
-    void setNotCentered();
+  void close(const String& return_value, ExceptionState&);
+  void CloseDialog(const String& return_value = String());
+  void show();
+  void showModal(ExceptionState&);
+  void RemovedFrom(ContainerNode*) override;
 
-    String returnValue() const { return m_returnValue; }
-    void setReturnValue(const String& returnValue) { m_returnValue = returnValue; }
+  // NotCentered means do not center the dialog. Centered means the dialog has
+  // been centered and centeredPosition() is set. NeedsCentering means attempt
+  // to center on the next layout, then set to Centered or NotCentered.
+  enum CenteringMode { kNotCentered, kCentered, kNeedsCentering };
+  CenteringMode GetCenteringMode() const { return centering_mode_; }
+  LayoutUnit CenteredPosition() const {
+    DCHECK_EQ(centering_mode_, kCentered);
+    return centered_position_;
+  }
+  void SetCentered(LayoutUnit centered_position);
+  void SetNotCentered();
 
-private:
-    explicit HTMLDialogElement(Document&);
+  String returnValue() const { return return_value_; }
+  void setReturnValue(const String& return_value) {
+    return_value_ = return_value;
+  }
 
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void defaultEventHandler(Event*) override;
+ private:
+  explicit HTMLDialogElement(Document&);
 
-    void forceLayoutForCentering();
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void DefaultEventHandler(Event*) override;
 
-    CenteringMode m_centeringMode;
-    LayoutUnit m_centeredPosition;
-    String m_returnValue;
+  void ForceLayoutForCentering();
+
+  void ScheduleCloseEvent();
+
+  CenteringMode centering_mode_;
+  LayoutUnit centered_position_;
+  String return_value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLDialogElement_h
+#endif  // HTMLDialogElement_h

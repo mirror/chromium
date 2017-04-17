@@ -27,27 +27,22 @@
 
 namespace blink {
 
-GamepadList::GamepadList()
-{
+GamepadList::GamepadList() {}
+
+void GamepadList::Set(unsigned index, Gamepad* gamepad) {
+  if (index >= WebGamepads::kItemsLengthCap)
+    return;
+  items_[index] = gamepad;
 }
 
-void GamepadList::set(unsigned index, Gamepad* gamepad)
-{
-    if (index >= WebGamepads::itemsLengthCap)
-        return;
-    m_items[index] = gamepad;
+Gamepad* GamepadList::item(unsigned index) {
+  return index < length() ? items_[index].Get() : 0;
 }
 
-Gamepad* GamepadList::item(unsigned index)
-{
-    return index < length() ? m_items[index].get() : 0;
+DEFINE_TRACE(GamepadList) {
+  for (unsigned index = 0; index < WebGamepads::kItemsLengthCap; index++) {
+    visitor->Trace(items_[index]);
+  }
 }
 
-DEFINE_TRACE(GamepadList)
-{
-    for (unsigned index = 0; index < WebGamepads::itemsLengthCap; index++) {
-        visitor->trace(m_items[index]);
-    }
-}
-
-} // namespace blink
+}  // namespace blink

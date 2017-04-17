@@ -2,22 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_SPDY_HPACK_DECODER_H_
-#define NET_SPDY_HPACK_DECODER_H_
+#ifndef NET_SPDY_HPACK_HPACK_DECODER_H_
+#define NET_SPDY_HPACK_HPACK_DECODER_H_
 
 #include <stddef.h>
 #include <stdint.h>
 
 #include <map>
-#include <string>
+#include <memory>
 #include <vector>
 
 #include "base/macros.h"
-#include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
 #include "net/spdy/hpack/hpack_decoder_interface.h"
 #include "net/spdy/hpack/hpack_header_table.h"
 #include "net/spdy/hpack/hpack_input_stream.h"
+#include "net/spdy/platform/api/spdy_string.h"
+#include "net/spdy/platform/api/spdy_string_piece.h"
 #include "net/spdy/spdy_headers_handler_interface.h"
 #include "net/spdy/spdy_protocol.h"
 
@@ -37,7 +38,7 @@ class NET_EXPORT_PRIVATE HpackDecoder : public HpackDecoderInterface {
   HpackDecoder();
   ~HpackDecoder() override;
 
-  // Called upon acknowledgement of SETTINGS_HEADER_TABLE_SIZE.
+  // Called upon sending a SETTINGS_HEADER_TABLE_SIZE value.
   void ApplyHeaderTableSizeSetting(size_t size_setting) override;
 
   // If a SpdyHeadersHandlerInterface is provided, HpackDecoder will emit
@@ -77,6 +78,8 @@ class NET_EXPORT_PRIVATE HpackDecoder : public HpackDecoderInterface {
   void set_max_decode_buffer_size_bytes(
       size_t max_decode_buffer_size_bytes) override;
 
+  size_t EstimateMemoryUsage() const override;
+
  private:
   // Adds the header representation to |decoded_block_|, applying the
   // following rules:
@@ -91,54 +94,62 @@ class NET_EXPORT_PRIVATE HpackDecoder : public HpackDecoderInterface {
   // MUST be treated as malformed, as per sections 8.1.2.3. of the HTTP2
   // specification (RFC 7540).
   //
-  bool HandleHeaderRepresentation(base::StringPiece name,
-                                  base::StringPiece value);
-
-  HpackHeaderTable header_table_;
-
-  // TODO(jgraettinger): Buffer for headers data, and storage for the last-
-  // processed headers block. Both will be removed with the switch to
-  // SpdyHeadersHandlerInterface.
-  std::string headers_block_buffer_;
-  SpdyHeaderBlock decoded_block_;
-
-  // Scratch space for storing decoded literals.
-  std::string key_buffer_, value_buffer_;
-
-  // If non-NULL, handles decoded headers.
-  SpdyHeadersHandlerInterface* handler_;
-  size_t total_header_bytes_;
-
-  // Flag to keep track of having seen the header block start.
-  bool header_block_started_;
-
-  // Total bytes have been removed from headers_block_buffer_.
-  // Its value is updated during incremental decoding.
-  uint32_t total_parsed_bytes_;
-
-  // How much encoded data this decoder is willing to buffer.
-  // Defaults to 256 KB.
-  size_t max_decode_buffer_size_bytes_ = kMaxDecodeBufferSize;
+  bool HandleHeaderRepresentation(SpdyStringPiece name, SpdyStringPiece value);
 
   // Handlers for decoding HPACK opcodes and header representations
   // (or parts thereof). These methods return true on success and
   // false on error.
   bool DecodeNextOpcodeWrapper(HpackInputStream* input_stream);
   bool DecodeNextOpcode(HpackInputStream* input_stream);
-  bool DecodeAtMostTwoHeaderTableSizeUpdates(HpackInputStream* input_stream);
   bool DecodeNextHeaderTableSizeUpdate(HpackInputStream* input_stream);
   bool DecodeNextIndexedHeader(HpackInputStream* input_stream);
   bool DecodeNextLiteralHeader(HpackInputStream* input_stream,
                                bool should_index);
   bool DecodeNextName(HpackInputStream* input_stream,
-                      base::StringPiece* next_name);
+                      SpdyStringPiece* next_name);
   bool DecodeNextStringLiteral(HpackInputStream* input_stream,
                                bool is_header_key,  // As distinct from a value.
-                               base::StringPiece* output);
+                               SpdyStringPiece* output);
+
+  HpackHeaderTable header_table_;
+
+  // TODO(jgraettinger): Buffer for headers data, and storage for the last-
+  // processed headers block. Both will be removed with the switch to
+  // SpdyHeadersHandlerInterface.
+  SpdyString headers_block_buffer_;
+  SpdyHeaderBlock decoded_block_;
+
+  // Scratch space for storing decoded literals.
+  SpdyString key_buffer_, value_buffer_;
+
+  // If non-NULL, handles decoded headers.
+  SpdyHeadersHandlerInterface* handler_;
+  size_t total_header_bytes_;
+
+  // How much encoded data this decoder is willing to buffer.
+  size_t max_decode_buffer_size_bytes_ = 32 * 1024;  // 32 KB
+
+  // Total bytes have been removed from headers_block_buffer_.
+  // Its value is updated during incremental decoding.
+  uint32_t total_parsed_bytes_;
+
+  // Flag to keep track of having seen the header block start.
+  bool header_block_started_;
+
+  // Number of dynamic table size updates seen at the start; a max of two
+  // are permitted.
+  uint8_t size_updates_seen_;
+
+  // Are dynamic table size updates allowed at this point in decoding? True
+  // at the start, but not once we've seen a header entry.
+  bool size_updates_allowed_;
+
+  // Saved value of --chromium_http2_flag_add_hpack_incremental_decode.
+  bool incremental_decode_;
 
   DISALLOW_COPY_AND_ASSIGN(HpackDecoder);
 };
 
 }  // namespace net
 
-#endif  // NET_SPDY_HPACK_DECODER_H_
+#endif  // NET_SPDY_HPACK_HPACK_DECODER_H_

@@ -4,16 +4,10 @@
 
 #include "mojo/common/data_pipe_utils.h"
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
 #include <utility>
 
-#include "base/files/file_path.h"
-#include "base/files/file_util.h"
-#include "base/files/scoped_file.h"
-#include "base/message_loop/message_loop.h"
-#include "base/task_runner_util.h"
+#include "base/bind.h"
+#include "mojo/public/cpp/system/wait.h"
 
 namespace mojo {
 namespace common {
@@ -32,10 +26,7 @@ bool BlockingCopyHelper(ScopedDataPipeConsumerHandle source,
       if (bytes_written < num_bytes || result != MOJO_RESULT_OK)
         return false;
     } else if (result == MOJO_RESULT_SHOULD_WAIT) {
-      result = Wait(source.get(),
-                    MOJO_HANDLE_SIGNAL_READABLE,
-                    MOJO_DEADLINE_INDEFINITE,
-                    nullptr);
+      result = Wait(source.get(), MOJO_HANDLE_SIGNAL_READABLE);
       if (result != MOJO_RESULT_OK) {
         // If the producer handle was closed, then treat as EOF.
         return result == MOJO_RESULT_FAILED_PRECONDITION;
@@ -58,12 +49,7 @@ size_t CopyToStringHelper(
   return num_bytes;
 }
 
-size_t CopyToFileHelper(FILE* fp, const void* buffer, uint32_t num_bytes) {
-  return fwrite(buffer, 1, num_bytes, fp);
-}
-
-} // namespace
-
+}  // namespace
 
 // TODO(hansmuller): Add a max_size parameter.
 bool BlockingCopyToString(ScopedDataPipeConsumerHandle source,
@@ -94,8 +80,7 @@ bool MOJO_COMMON_EXPORT BlockingCopyFromString(
       if (it == source.end())
         return true;
     } else if (result == MOJO_RESULT_SHOULD_WAIT) {
-      result = Wait(destination.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
-                    MOJO_DEADLINE_INDEFINITE, nullptr);
+      result = Wait(destination.get(), MOJO_HANDLE_SIGNAL_WRITABLE);
       if (result != MOJO_RESULT_OK) {
         // If the consumer handle was closed, then treat as EOF.
         return result == MOJO_RESULT_FAILED_PRECONDITION;
@@ -105,26 +90,6 @@ bool MOJO_COMMON_EXPORT BlockingCopyFromString(
       return result == MOJO_RESULT_FAILED_PRECONDITION;
     }
   }
-}
-
-bool BlockingCopyToFile(ScopedDataPipeConsumerHandle source,
-                        const base::FilePath& destination) {
-  base::ScopedFILE fp(base::OpenFile(destination, "wb"));
-  if (!fp)
-    return false;
-  return BlockingCopyHelper(std::move(source),
-                            base::Bind(&CopyToFileHelper, fp.get()));
-}
-
-void CopyToFile(ScopedDataPipeConsumerHandle source,
-                const base::FilePath& destination,
-                base::TaskRunner* task_runner,
-                const base::Callback<void(bool)>& callback) {
-  base::PostTaskAndReplyWithResult(
-      task_runner,
-      FROM_HERE,
-      base::Bind(&BlockingCopyToFile, base::Passed(&source), destination),
-      callback);
 }
 
 }  // namespace common

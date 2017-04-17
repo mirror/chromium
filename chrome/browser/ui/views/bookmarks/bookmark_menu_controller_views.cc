@@ -13,7 +13,6 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/page_navigator.h"
-#include "content/public/browser/user_metrics.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/menu/menu_item_view.h"
@@ -39,8 +38,10 @@ BookmarkMenuController::BookmarkMenuController(Browser* browser,
   menu_delegate_->Init(this, NULL, node, start_child_index,
                        BookmarkMenuDelegate::HIDE_PERMANENT_FOLDERS,
                        BOOKMARK_LAUNCH_LOCATION_BAR_SUBFOLDER);
-  menu_runner_.reset(new views::MenuRunner(
-      menu_delegate_->menu(), for_drop ? views::MenuRunner::FOR_DROP : 0));
+  int run_type = views::MenuRunner::ASYNC;
+  if (for_drop)
+    run_type |= views::MenuRunner::FOR_DROP;
+  menu_runner_.reset(new views::MenuRunner(menu_delegate_->menu(), run_type));
 }
 
 void BookmarkMenuController::RunMenuAt(BookmarkBarView* bookmark_bar) {

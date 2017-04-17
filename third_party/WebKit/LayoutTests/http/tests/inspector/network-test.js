@@ -43,9 +43,13 @@ function makeXHRForJSONArguments(jsonArgs)
     makeXHR(args.method, args.url, args.async, args.user, args.password, args.headers || [], args.withCredentials, args.payload, args.type, xhrLoadedCallback);
 }
 
-function makeFetch(url, requestInitializer, callback)
+function makeFetch(url, requestInitializer)
 {
-    fetch(url, requestInitializer).then(callback).catch(callback);
+    return fetch(url, requestInitializer).then(res => {
+        // Call text(). Otherwise the backpressure mechanism may block loading.
+        res.text();
+        return res;
+    }).catch(e => e);
 }
 
 var initialize_NetworkTest = function() {
@@ -54,28 +58,28 @@ InspectorTest.preloadPanel("network");
 
 InspectorTest.recordNetwork = function()
 {
-    WebInspector.panels.network._networkLogView.setRecording(true);
+    UI.panels.network._networkLogView.setRecording(true);
 }
 
 InspectorTest.networkRequests = function()
 {
-    return WebInspector.NetworkLog.requests();
+    return NetworkLog.networkLog.requests().slice();
 }
 
 InspectorTest.dumpNetworkRequests = function()
 {
     var requests = InspectorTest.networkRequests();
-    requests.sort(function(a, b) {return a.url.localeCompare(b.url);});
+    requests.sort(function(a, b) {return a.url().localeCompare(b.url());});
     InspectorTest.addResult("resources count = " + requests.length);
     for (i = 0; i < requests.length; i++)
-        InspectorTest.addResult(requests[i].url);
+        InspectorTest.addResult(requests[i].url());
 }
 
 // |url| must be a regular expression to match request URLs.
 InspectorTest.findRequestsByURLPattern = function(urlPattern)
 {
     return InspectorTest.networkRequests().filter(function(value) {
-        return urlPattern.test(value.url)
+        return urlPattern.test(value.url());
     });
 }
 
@@ -117,7 +121,16 @@ InspectorTest.makeXHR = function(method, url, async, user, password, headers, wi
 
 InspectorTest.makeFetch = function(url, requestInitializer, callback)
 {
-    InspectorTest.invokePageFunctionAsync("makeFetch", url, requestInitializer, callback);
+    InspectorTest.callFunctionInPageAsync("makeFetch", [url, requestInitializer]).then(callback);
+}
+
+InspectorTest.clearNetworkCache = function(finishedCallback)
+{
+  // This turns cache off and then on, effectively clearning the cache.
+  var networkAgent = InspectorTest.NetworkAgent;
+  var promise = networkAgent.setCacheDisabled(true);
+  promise.then(networkAgent.setCacheDisabled.bind(networkAgent, false));
+  promise.then(finishedCallback);
 }
 
 InspectorTest.HARPropertyFormatters = {

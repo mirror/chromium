@@ -33,7 +33,7 @@ import java.util.List;
  * Dialog for moving bookmarks from one folder to another. A list of folders are shown and the
  * hierarchy of bookmark model is presented by indentation of list items. This dialog can be shown
  * in two cases. One is when user choose to move an existing bookmark to a new folder. The other is
- * when user creates a new folder/bookmark, he/she can choose which parent the new folder/bookmark
+ * when user creates a new folder/bookmark, they can choose which parent the new folder/bookmark
  * belong to.
  * <p>
  * Note this fragment will not be restarted by OS. It will be dismissed if chrome is killed in
@@ -113,8 +113,6 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BookmarkUtils.setTaskDescriptionInDocumentMode(this,
-                getString(R.string.bookmark_choose_folder));
         mModel = new BookmarkModel();
         mModel.addObserver(mBookmarkModelObserver);
         List<String> stringList = getIntent().getStringArrayListExtra(INTENT_BOOKMARKS_TO_MOVE);
@@ -152,10 +150,10 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
     }
 
     private void updateFolderList() {
-        List<BookmarkId> folderList = new ArrayList<BookmarkId>();
-        List<Integer> depthList = new ArrayList<Integer>();
+        List<BookmarkId> folderList = new ArrayList<>();
+        List<Integer> depthList = new ArrayList<>();
         mModel.getMoveDestinations(folderList, depthList, mBookmarksToMove);
-        List<FolderListEntry> entryList = new ArrayList<FolderListEntry>(folderList.size() + 3);
+        List<FolderListEntry> entryList = new ArrayList<>(folderList.size() + 3);
 
         if (!mIsCreatingFolder) {
             entryList.add(new FolderListEntry(null, 0,
@@ -265,7 +263,7 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
         private final int mBasePadding;
         private final int mPaddingIncrement;
 
-        List<FolderListEntry> mEntryList = new ArrayList<FolderListEntry>();
+        List<FolderListEntry> mEntryList = new ArrayList<>();
 
         public FolderListAdapter(Context context) {
             mBasePadding = context.getResources()
@@ -343,7 +341,7 @@ public class BookmarkFolderSelectActivity extends SynchronousInitializationActiv
                     iconId);
             // Selected entry has an end_icon, a blue check mark.
             Drawable drawableEnd = entry.mIsSelected ? ApiCompatibilityUtils.getDrawable(
-                    textView.getResources(), R.drawable.bookmark_check_blue) : null;
+                    textView.getResources(), R.drawable.ic_check_googblue_24dp) : null;
             ApiCompatibilityUtils.setCompoundDrawablesRelativeWithIntrinsicBounds(textView,
                     drawableStart, null, drawableEnd, null);
         }

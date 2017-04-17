@@ -4,7 +4,7 @@
 
 /**
  * Client used to connect to the remote ImageLoader extension. Client class runs
- * in the extension, where the client.js is included (eg. Files.app).
+ * in the extension, where the client.js is included (eg. Files app).
  * It sends remote requests using IPC to the ImageLoader class and forwards
  * its responses.
  *
@@ -60,7 +60,7 @@ ImageLoaderClient.getInstance = function() {
 ImageLoaderClient.recordBinary = function(name, value) {
   chrome.metricsPrivate.recordValue(
       { metricName: 'ImageLoader.Client.' + name,
-        type: 'histogram-linear',
+        type: chrome.metricsPrivate.MetricTypeType.HISTOGRAM_LINEAR,
         min: 1,  // According to histogram.h, this should be 1 for enums.
         max: 2,  // Maximum should be exclusive.
         buckets: 3 },  // Number of buckets: 0, 1 and overflowing 2.

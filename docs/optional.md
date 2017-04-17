@@ -63,10 +63,10 @@ opt_1 == 1; // true
 opt_1 == base::nullopt_t; // false
 ```
 
-`base::Optional<T>` has a helper function `make_optional<T&&>`:
+`base::Optional<T>` has a helper function `base::make_optional<T&&>`:
 
 ```C++
-base::Optional<int> opt = make_optional<int>(GetMagicNumber());
+base::Optional<int> opt = base::make_optional<int>(GetMagicNumber());
 ```
 
 Finally, `base::Optional<T>` is integrated with `std::hash`, using
@@ -76,7 +76,7 @@ Finally, `base::Optional<T>` is integrated with `std::hash`, using
 
 ## How is it implemented?
 
-`base::Optional<T>` is implemented using `base::AlignedMemory`. The object
+`base::Optional<T>` is implemented with a union with a `T` member. The object
 doesn't behave like a pointer and doesn't do dynamic memory allocation. In
 other words, it is guaranteed to have an object allocated when it is not empty.
 
@@ -101,7 +101,7 @@ undefined value when the expected value can't be negative.
 
 It is recommended to not use `base::Optional<T>` as a function parameter as it
 will force the callers to use `base::Optional<T>`. Instead, it is recommended to
-keep using `T*` for arguments that can be ommited, with `nullptr` representing
+keep using `T*` for arguments that can be omitted, with `nullptr` representing
 no value.
 
 Furthermore, depending on `T`, MSVC might fail to compile code using

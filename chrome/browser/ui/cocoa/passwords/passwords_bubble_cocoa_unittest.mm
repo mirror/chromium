@@ -13,12 +13,12 @@
 #include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/browser_window.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
-#include "chrome/browser/ui/cocoa/cocoa_profile_test.h"
-#include "chrome/browser/ui/cocoa/cocoa_test_helper.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
 #include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #include "chrome/browser/ui/cocoa/location_bar/manage_passwords_decoration.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_controller.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller_mock.h"
 #include "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -68,8 +68,6 @@ class ManagePasswordsBubbleCocoaTest : public CocoaProfileTest {
     ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(mock));
     autofill::PasswordForm form;
     EXPECT_CALL(*mock, GetPendingPassword()).WillOnce(ReturnRef(form));
-    std::vector<const autofill::PasswordForm*> forms;
-    EXPECT_CALL(*mock, GetCurrentForms()).WillOnce(ReturnRef(forms));
     GURL origin;
     EXPECT_CALL(*mock, GetOrigin()).WillOnce(ReturnRef(origin));
     EXPECT_CALL(*mock, GetState())
@@ -97,7 +95,7 @@ class ManagePasswordsBubbleCocoaTest : public CocoaProfileTest {
 
   ManagePasswordsUIControllerMock* UIController() {
     return static_cast<ManagePasswordsUIControllerMock*>(
-        PasswordsModelDelegateFromWebContents(test_web_contents_));
+        ManagePasswordsUIController::FromWebContents(test_web_contents_));
   }
 
   ManagePasswordsBubbleController* controller() {

@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// http://www.w3.org/TR/SVG2/pservers.html#InterfaceSVGPatternElement
+// https://svgwg.org/svg2-draft/pservers.html#InterfaceSVGPatternElement
 
 interface SVGPatternElement : SVGElement {
     [MeasureAs=SVG1DOMPaintServer] readonly attribute SVGAnimatedEnumeration patternUnits;
@@ -39,6 +39,6 @@ SVGPatternElement implements SVGFitToViewBox;
 SVGPatternElement implements SVGURIReference;
 // SVGPatternElement implements SVGUnitTypes;
 
-// TODO(foolip): The following was part of SVG 1.1:
+// TODO(foolip): The following was part of SVG 1.1. https://crbug.com/701893
 // http://www.w3.org/TR/SVG11/pservers.html#InterfaceSVGPatternElement
 SVGPatternElement implements SVGTests;

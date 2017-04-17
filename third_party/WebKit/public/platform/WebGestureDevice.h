@@ -29,11 +29,11 @@
 namespace blink {
 
 enum WebGestureDevice {
-    WebGestureDeviceUninitialized,
-    WebGestureDeviceTouchpad,
-    WebGestureDeviceTouchscreen,
+  kWebGestureDeviceUninitialized,
+  kWebGestureDeviceTouchpad,
+  kWebGestureDeviceTouchscreen,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGestureDevice_h
+#endif  // WebGestureDevice_h

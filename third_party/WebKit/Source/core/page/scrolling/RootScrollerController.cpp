@@ -6,195 +6,133 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
-#include "core/frame/TopControls.h"
-#include "core/frame/VisualViewport.h"
 #include "core/layout/LayoutBox.h"
-#include "core/page/ChromeClient.h"
+#include "core/layout/api/LayoutViewItem.h"
+#include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/page/Page.h"
-#include "core/page/scrolling/OverscrollController.h"
-#include "core/page/scrolling/ViewportScrollCallback.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
+#include "core/page/scrolling/TopDocumentRootScrollerController.h"
+#include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerScrollableArea.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/scroll/ScrollableArea.h"
 
 namespace blink {
 
+class RootFrameViewport;
+
 namespace {
 
-ScrollableArea* scrollableAreaFor(const Element& element)
-{
-    if (!element.layoutObject() || !element.layoutObject()->isBox())
-        return nullptr;
+bool FillsViewport(const Element& element) {
+  DCHECK(element.GetLayoutObject());
+  DCHECK(element.GetLayoutObject()->IsBox());
 
-    LayoutBox* box = toLayoutBox(element.layoutObject());
+  LayoutObject* layout_object = element.GetLayoutObject();
 
-    // For a FrameView, we use the layoutViewport rather than the
-    // getScrollableArea() since that could be the RootFrameViewport. The
-    // rootScroller's ScrollableArea will be swapped in as the layout viewport
-    // in RootFrameViewport so we need to ensure we get the layout viewport.
-    if (box->isDocumentElement())
-        return element.document().view()->layoutViewportScrollableArea();
+  // TODO(bokan): Broken for OOPIF. crbug.com/642378.
+  Document& top_document = element.GetDocument().TopDocument();
 
-    return static_cast<PaintInvalidationCapableScrollableArea*>(
-        box->getScrollableArea());
+  Vector<FloatQuad> quads;
+  layout_object->AbsoluteQuads(quads);
+  DCHECK_EQ(quads.size(), 1u);
+
+  if (!quads[0].IsRectilinear())
+    return false;
+
+  LayoutRect bounding_box(quads[0].BoundingBox());
+
+  return bounding_box.Location() == LayoutPoint::Zero() &&
+         bounding_box.Size() == top_document.GetLayoutViewItem().Size();
 }
 
-bool fillsViewport(const Element& element)
-{
-    DCHECK(element.layoutObject());
-    DCHECK(element.layoutObject()->isBox());
+}  // namespace
 
-    LayoutObject* layoutObject = element.layoutObject();
-
-    // TODO(bokan): Broken for OOPIF.
-    Document& topDocument = element.document().topDocument();
-
-    Vector<FloatQuad> quads;
-    layoutObject->absoluteQuads(quads);
-    DCHECK_EQ(quads.size(), 1u);
-
-    if (!quads[0].isRectilinear())
-        return false;
-
-    LayoutRect boundingBox(quads[0].boundingBox());
-
-    return boundingBox.location() == LayoutPoint::zero()
-        && boundingBox.size() == topDocument.layoutViewItem().size();
+// static
+RootScrollerController* RootScrollerController::Create(Document& document) {
+  return new RootScrollerController(document);
 }
-
-bool isValidRootScroller(const Element& element)
-{
-    if (!element.layoutObject())
-        return false;
-
-    if (!scrollableAreaFor(element))
-        return false;
-
-    if (!fillsViewport(element))
-        return false;
-
-    return true;
-}
-
-} // namespace
 
 RootScrollerController::RootScrollerController(Document& document)
-    : m_document(&document)
-{
+    : document_(&document),
+      effective_root_scroller_(&document),
+      document_has_document_element_(false) {}
+
+DEFINE_TRACE(RootScrollerController) {
+  visitor->Trace(document_);
+  visitor->Trace(root_scroller_);
+  visitor->Trace(effective_root_scroller_);
 }
 
-DEFINE_TRACE(RootScrollerController)
-{
-    visitor->trace(m_document);
-    visitor->trace(m_viewportApplyScroll);
-    visitor->trace(m_rootScroller);
-    visitor->trace(m_effectiveRootScroller);
+void RootScrollerController::Set(Element* new_root_scroller) {
+  root_scroller_ = new_root_scroller;
+  RecomputeEffectiveRootScroller();
 }
 
-void RootScrollerController::set(Element* newRootScroller)
-{
-    m_rootScroller = newRootScroller;
-    updateEffectiveRootScroller();
+Element* RootScrollerController::Get() const {
+  return root_scroller_;
 }
 
-Element* RootScrollerController::get() const
-{
-    return m_rootScroller;
+Node& RootScrollerController::EffectiveRootScroller() const {
+  DCHECK(effective_root_scroller_);
+  return *effective_root_scroller_;
 }
 
-Element* RootScrollerController::effectiveRootScroller() const
-{
-    return m_effectiveRootScroller;
+void RootScrollerController::DidUpdateLayout() {
+  RecomputeEffectiveRootScroller();
 }
 
-void RootScrollerController::didUpdateLayout()
-{
-    updateEffectiveRootScroller();
+void RootScrollerController::RecomputeEffectiveRootScroller() {
+  bool root_scroller_valid =
+      root_scroller_ && IsValidRootScroller(*root_scroller_);
+
+  Node* new_effective_root_scroller = document_;
+  if (root_scroller_valid)
+    new_effective_root_scroller = root_scroller_;
+
+  // TODO(bokan): This is a terrible hack but required because the viewport
+  // apply scroll works on Elements rather than Nodes. If we're going from
+  // !documentElement to documentElement, we can't early out even if the root
+  // scroller didn't change since the global root scroller didn't have an
+  // Element previously to put it's ViewportScrollCallback onto. We need this
+  // to kick the global root scroller to recompute itself. We can remove this
+  // if ScrollCustomization is moved to the Node rather than Element.
+  bool old_has_document_element = document_has_document_element_;
+  document_has_document_element_ = document_->documentElement();
+
+  if (old_has_document_element || !document_has_document_element_) {
+    if (effective_root_scroller_ == new_effective_root_scroller)
+      return;
+  }
+
+  effective_root_scroller_ = new_effective_root_scroller;
+
+  if (Page* page = document_->GetPage())
+    page->GlobalRootScrollerController().DidChangeRootScroller();
 }
 
-void RootScrollerController::setViewportScrollCallback(ViewportScrollCallback* callback)
-{
-    m_viewportApplyScroll = callback;
-    moveViewportApplyScroll(m_effectiveRootScroller);
+bool RootScrollerController::IsValidRootScroller(const Element& element) const {
+  if (!element.GetLayoutObject())
+    return false;
+
+  if (!RootScrollerUtil::ScrollableAreaForRootScroller(&element))
+    return false;
+
+  if (!FillsViewport(element))
+    return false;
+
+  return true;
 }
 
-void RootScrollerController::updateEffectiveRootScroller()
-{
-    bool rootScrollerValid =
-        m_rootScroller && isValidRootScroller(*m_rootScroller);
-
-    Element* newEffectiveRootScroller = rootScrollerValid
-        ? m_rootScroller.get()
-        : defaultEffectiveRootScroller();
-
-    if (m_effectiveRootScroller == newEffectiveRootScroller)
-        return;
-
-    if (moveViewportApplyScroll(newEffectiveRootScroller))
-        m_effectiveRootScroller = newEffectiveRootScroller;
+PaintLayer* RootScrollerController::RootScrollerPaintLayer() const {
+  return RootScrollerUtil::PaintLayerForRootScroller(effective_root_scroller_);
 }
 
-bool RootScrollerController::moveViewportApplyScroll(Element* target)
-{
-    if (!m_viewportApplyScroll || !target)
-        return false;
+bool RootScrollerController::ScrollsViewport(const Element& element) const {
+  if (effective_root_scroller_->IsDocumentNode())
+    return element == document_->documentElement();
 
-    ScrollableArea* targetScroller = scrollableAreaFor(*target);
-    if (!targetScroller)
-        return false;
-
-    if (m_effectiveRootScroller)
-        m_effectiveRootScroller->removeApplyScroll();
-
-    // Use disable-native-scroll since the ViewportScrollCallback needs to
-    // apply scroll actions both before (TopControls) and after (overscroll)
-    // scrolling the element so it will apply scroll to the element itself.
-    target->setApplyScroll(m_viewportApplyScroll, "disable-native-scroll");
-
-    // Ideally, scroll customization would pass the current element to scroll to
-    // the apply scroll callback but this doesn't happen today so we set it
-    // through a back door here. This is also needed by the
-    // RootViewportScrollCallback to swap the target into the layout viewport
-    // in RootFrameViewport.
-    m_viewportApplyScroll->setScroller(targetScroller);
-
-    return true;
+  return element == effective_root_scroller_.Get();
 }
 
-void RootScrollerController::didUpdateCompositing()
-{
-    FrameHost& frameHost = *m_document->frameHost();
-
-    // Let the compositor-side counterpart know about this change.
-    if (m_document->isInMainFrame())
-        frameHost.chromeClient().registerViewportLayers();
-}
-
-GraphicsLayer* RootScrollerController::rootScrollerLayer()
-{
-    if (!m_effectiveRootScroller)
-        return nullptr;
-
-    ScrollableArea* area = scrollableAreaFor(*m_effectiveRootScroller);
-
-    if (!area)
-        return nullptr;
-
-    GraphicsLayer* graphicsLayer = area->layerForScrolling();
-
-    // TODO(bokan): We should assert graphicsLayer here and
-    // RootScrollerController should do whatever needs to happen to ensure
-    // the root scroller gets composited.
-
-    return graphicsLayer;
-}
-
-Element* RootScrollerController::defaultEffectiveRootScroller()
-{
-    DCHECK(m_document);
-    return m_document->documentElement();
-}
-
-} // namespace blink
+}  // namespace blink

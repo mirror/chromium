@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -58,7 +59,7 @@ void SigninManagerBase::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kAutologinEnabled, true);
   registry->RegisterBooleanPref(prefs::kReverseAutologinEnabled, true);
   registry->RegisterListPref(prefs::kReverseAutologinRejectedEmailList,
-                             new base::ListValue);
+                             base::MakeUnique<base::ListValue>());
   registry->RegisterBooleanPref(prefs::kSigninAllowed, true);
   registry->RegisterInt64Pref(prefs::kSignedInTime,
                               base::Time().ToInternalValue());
@@ -216,6 +217,10 @@ void SigninManagerBase::SetAuthenticatedAccountId(
                                  account_id);
   client_->GetPrefs()->SetString(prefs::kGoogleServicesLastUsername,
                                  info.email);
+
+  // Commit authenticated account info immediately so that it does not get lost
+  // if Chrome crashes before the next commit interval.
+  client_->GetPrefs()->CommitPendingWrite();
 }
 
 bool SigninManagerBase::IsAuthenticated() const {
@@ -250,7 +255,6 @@ void SigninManagerBase::RemoveSigninDiagnosticsObserver(
 void SigninManagerBase::NotifyDiagnosticsObservers(
     const TimedSigninStatusField& field,
     const std::string& value) {
-  FOR_EACH_OBSERVER(SigninDiagnosticsObserver,
-                    signin_diagnostics_observers_,
-                    NotifySigninValueChanged(field, value));
+  for (auto& observer : signin_diagnostics_observers_)
+    observer.NotifySigninValueChanged(field, value);
 }

@@ -5,12 +5,15 @@
 <script src="../../http/tests/inspector/extensions-test.js"></script>
 <script src="../../http/tests/inspector/debugger-test.js"></script>
 <script type="text/javascript">
-function loadFrame(callback)
+function loadFrame()
 {
+    var callback;
+    var promise = new Promise((fulfill) => callback = fulfill);
     var iframe = document.createElement("iframe");
     iframe.src = "resources/subframe.html";
     iframe.addEventListener("load", callback);
     document.body.appendChild(iframe);
+    return promise;
 }
 
 function logMessage()
@@ -23,25 +26,26 @@ function initialize_ExtensionResourceTests()
 
 InspectorTest.clickOnURL = function()
 {
-    WebInspector.ConsolePanel.show();
-    WebInspector.ConsoleView.instance()._updateMessageList();
-    var xpathResult = document.evaluate("//a[starts-with(., 'test-script.js')]",
-                                        WebInspector.ConsoleView.instance().element, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
+    UI.viewManager.showView("console").then(() => {
+        Console.ConsoleView.instance()._updateMessageList();
+        var xpathResult = document.evaluate("//span[@class='devtools-link' and starts-with(., 'test-script.js')]",
+                                            Console.ConsoleView.instance().element, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null);
 
-    var click = document.createEvent("MouseEvent");
-    click.initMouseEvent("click", true, true);
-    xpathResult.singleNodeValue.dispatchEvent(click);
+        var click = document.createEvent("MouseEvent");
+        click.initMouseEvent("click", true, true);
+        xpathResult.singleNodeValue.dispatchEvent(click);
+    });
 }
 
 InspectorTest.waitForStyleSheetChangedEvent = function(reply)
 {
-    var originalSetTimeout = WebInspector.Throttler.prototype._setTimeout;
-    WebInspector.Throttler.prototype._setTimeout = innerSetTimeout;
-    InspectorTest.addSniffer(WebInspector.CSSModel.prototype, "_fireStyleSheetChanged", onStyleSheetChanged);
+    var originalSetTimeout = Common.Throttler.prototype._setTimeout;
+    Common.Throttler.prototype._setTimeout = innerSetTimeout;
+    InspectorTest.addSniffer(SDK.CSSModel.prototype, "_fireStyleSheetChanged", onStyleSheetChanged);
 
     function onStyleSheetChanged()
     {
-        WebInspector.Throttler.prototype._setTimeout = originalSetTimeout;
+        Common.Throttler.prototype._setTimeout = originalSetTimeout;
         reply();
     }
 
@@ -192,7 +196,7 @@ function extension_testOpenResourceHandler(nextTest)
     webInspector.panels.setOpenResourceHandler(handleOpenResource);
     webInspector.inspectedWindow.eval("logMessage()", function() {
         evaluateOnFrontend("InspectorTest.clickOnURL();");
-        evaluateOnFrontend("WebInspector.openAnchorLocationRegistry.activeHandler = 'test extension'; InspectorTest.clickOnURL();");
+        evaluateOnFrontend("Components.Linkifier._linkHandlerSetting().set('test extension'); InspectorTest.clickOnURL();");
     });
 }
 

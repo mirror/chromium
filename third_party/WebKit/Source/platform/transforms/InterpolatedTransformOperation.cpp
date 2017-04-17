@@ -34,39 +34,45 @@
 
 namespace blink {
 
-bool InterpolatedTransformOperation::operator==(const TransformOperation& o) const
-{
-    if (!isSameType(o))
-        return false;
-    const InterpolatedTransformOperation* t = static_cast<const InterpolatedTransformOperation*>(&o);
-    return progress == t->progress && from == t->from && to == t->to;
+bool InterpolatedTransformOperation::operator==(
+    const TransformOperation& o) const {
+  if (!IsSameType(o))
+    return false;
+  const InterpolatedTransformOperation* t =
+      static_cast<const InterpolatedTransformOperation*>(&o);
+  return progress == t->progress && from == t->from && to == t->to;
 }
 
-void InterpolatedTransformOperation::apply(TransformationMatrix& transform, const FloatSize& borderBoxSize) const
-{
-    TransformationMatrix fromTransform;
-    TransformationMatrix toTransform;
-    from.apply(borderBoxSize, fromTransform);
-    to.apply(borderBoxSize, toTransform);
+void InterpolatedTransformOperation::Apply(
+    TransformationMatrix& transform,
+    const FloatSize& border_box_size) const {
+  TransformationMatrix from_transform;
+  TransformationMatrix to_transform;
+  from.Apply(border_box_size, from_transform);
+  to.Apply(border_box_size, to_transform);
 
-    toTransform.blend(fromTransform, progress);
-    transform.multiply(toTransform);
+  to_transform.Blend(from_transform, progress);
+  transform.Multiply(to_transform);
 }
 
-PassRefPtr<TransformOperation> InterpolatedTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
-{
-    if (from && !from->isSameType(*this))
-        return this;
+PassRefPtr<TransformOperation> InterpolatedTransformOperation::Blend(
+    const TransformOperation* from,
+    double progress,
+    bool blend_to_identity) {
+  if (from && !from->IsSameType(*this))
+    return this;
 
-    TransformOperations thisOperations;
-    thisOperations.operations().append(this);
-    TransformOperations fromOperations;
-    if (blendToIdentity)
-        fromOperations.operations().append(IdentityTransformOperation::create());
-    else
-        fromOperations.operations().append(const_cast<TransformOperation*>(from));
-    return InterpolatedTransformOperation::create(thisOperations, fromOperations, progress);
+  TransformOperations this_operations;
+  this_operations.Operations().push_back(this);
+  TransformOperations from_operations;
+  if (blend_to_identity)
+    from_operations.Operations().push_back(
+        IdentityTransformOperation::Create());
+  else
+    from_operations.Operations().push_back(
+        const_cast<TransformOperation*>(from));
+  return InterpolatedTransformOperation::Create(this_operations,
+                                                from_operations, progress);
 }
 
-} // namespace blink
-
+}  // namespace blink

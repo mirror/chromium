@@ -17,18 +17,13 @@
 #include "content/public/common/user_agent.h"
 #include "content/public/test/test_content_client_initializer.h"
 #include "content/test/test_blink_web_unit_test_support.h"
-#include "third_party/WebKit/public/web/WebCache.h"
+#include "third_party/WebKit/public/platform/WebCache.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "url/url_util.h"
 
 #if defined(OS_WIN)
 #include "ui/display/win/dpi.h"
-#endif
-
-#if defined(OS_ANDROID)
-#include "base/android/jni_android.h"
-#include "net/android/network_library.h"
 #endif
 
 #if defined(OS_MACOSX)
@@ -38,21 +33,6 @@
 namespace content {
 
 namespace {
-
-void EnableBlinkPlatformLogChannels(const std::string& channels) {
-  if (channels.empty())
-    return;
-  base::StringTokenizer t(channels, ", ");
-  while (t.GetNext())
-    blink::enableLogChannel(t.token().c_str());
-}
-
-void ParseBlinkCommandLineArgumentsForUnitTests() {
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  EnableBlinkPlatformLogChannels(
-      command_line.GetSwitchValueASCII(switches::kBlinkPlatformLogChannels));
-}
 
 class TestEnvironment {
  public:
@@ -93,15 +73,8 @@ TestEnvironment* test_environment;
 }  // namespace
 
 void SetUpBlinkTestEnvironment() {
-  ParseBlinkCommandLineArgumentsForUnitTests();
-
-  blink::WebRuntimeFeatures::enableExperimentalFeatures(true);
-  blink::WebRuntimeFeatures::enableTestOnlyFeatures(true);
-
-#if defined(OS_ANDROID)
-  JNIEnv* env = base::android::AttachCurrentThread();
-  net::android::RegisterNetworkLibrary(env);
-#endif
+  blink::WebRuntimeFeatures::EnableExperimentalFeatures(true);
+  blink::WebRuntimeFeatures::EnableTestOnlyFeatures(true);
 
 #if defined(OS_MACOSX)
   mock_cr_app::RegisterMockCrApp();
@@ -124,7 +97,7 @@ void TearDownBlinkTestEnvironment() {
   base::RunLoop().RunUntilIdle();
 
   if (RunningOnValgrind())
-    blink::WebCache::clear();
+    blink::WebCache::Clear();
   delete test_environment;
   test_environment = NULL;
 }

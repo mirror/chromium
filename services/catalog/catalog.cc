@@ -4,134 +4,200 @@
 
 #include "services/catalog/catalog.h"
 
-#include "base/bind.h"
+#include <memory>
+#include <string>
+
+#include "base/base_paths.h"
 #include "base/files/file_path.h"
-#include "base/files/scoped_temp_dir.h"
+#include "base/files/file_util.h"
+#include "base/json/json_reader.h"
+#include "base/lazy_instance.h"
+#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
-#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "components/filesystem/directory_impl.h"
 #include "components/filesystem/lock_table.h"
 #include "components/filesystem/public/interfaces/types.mojom.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/catalog/constants.h"
+#include "services/catalog/entry_cache.h"
 #include "services/catalog/instance.h"
-#include "services/catalog/reader.h"
-#include "services/shell/public/cpp/connection.h"
-#include "services/shell/public/cpp/service_context.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/service_context.h"
 
 namespace catalog {
+
 namespace {
 
-bool IsPathNameValid(const std::string& name) {
-  if (name.empty() || name == "." || name == "..")
-    return false;
+const char kCatalogServicesKey[] = "services";
+const char kCatalogServiceEmbeddedKey[] = "embedded";
+const char kCatalogServiceExecutableKey[] = "executable";
+const char kCatalogServiceManifestKey[] = "manifest";
 
-  for (auto c : name) {
-    if (!base::IsAsciiAlpha(c) && !base::IsAsciiDigit(c) &&
-        c != '_' && c != '.')
-      return false;
+base::LazyInstance<std::unique_ptr<base::Value>>::DestructorAtExit
+    g_default_static_manifest = LAZY_INSTANCE_INITIALIZER;
+
+void LoadCatalogManifestIntoCache(const base::Value* root, EntryCache* cache) {
+  DCHECK(root);
+  const base::DictionaryValue* catalog = nullptr;
+  if (!root->GetAsDictionary(&catalog)) {
+    LOG(ERROR) << "Catalog manifest is not a dictionary value.";
+    return;
   }
-  return true;
-}
+  DCHECK(catalog);
 
-base::FilePath GetPathForApplicationName(const std::string& application_name) {
-  std::string path = application_name;
-  const bool is_mojo =
-      base::StartsWith(path, "mojo:", base::CompareCase::INSENSITIVE_ASCII);
-  const bool is_exe =
-      !is_mojo &&
-      base::StartsWith(path, "exe:", base::CompareCase::INSENSITIVE_ASCII);
-  if (!is_mojo && !is_exe)
-    return base::FilePath();
-  if (path.find('.') != std::string::npos)
-    return base::FilePath();
-  if (is_mojo)
-    path.erase(path.begin(), path.begin() + 5);
-  else
-    path.erase(path.begin(), path.begin() + 4);
-  base::TrimString(path, "/", &path);
-  size_t end_of_name = path.find('/');
-  if (end_of_name != std::string::npos)
-    path.erase(path.begin() + end_of_name, path.end());
+  const base::DictionaryValue* services = nullptr;
+  if (!catalog->GetDictionary(kCatalogServicesKey, &services)) {
+    LOG(ERROR) << "Catalog manifest \"services\" is not a dictionary value.";
+    return;
+  }
 
-  if (!IsPathNameValid(path))
-    return base::FilePath();
+  for (base::DictionaryValue::Iterator it(*services); !it.IsAtEnd();
+       it.Advance()) {
+    const base::DictionaryValue* service_entry = nullptr;
+    if (!it.value().GetAsDictionary(&service_entry)) {
+      LOG(ERROR) << "Catalog service entry for \"" << it.key()
+                 << "\" is not a dictionary value.";
+      continue;
+    }
 
-  base::FilePath base_path;
-  PathService::Get(base::DIR_EXE, &base_path);
-  // TODO(beng): this won't handle user-specific components.
-  return base_path.AppendASCII(kPackagesDirName).AppendASCII(path).
-      AppendASCII("resources");
+    bool is_embedded = false;
+    service_entry->GetBoolean(kCatalogServiceEmbeddedKey, &is_embedded);
+
+    base::FilePath executable_path;
+    std::string executable_path_string;
+    if (service_entry->GetString(kCatalogServiceExecutableKey,
+                                 &executable_path_string)) {
+      base::FilePath exe_dir;
+      CHECK(base::PathService::Get(base::DIR_EXE, &exe_dir));
+#if defined(OS_WIN)
+      executable_path_string += ".exe";
+      base::ReplaceFirstSubstringAfterOffset(
+          &executable_path_string, 0, "@EXE_DIR",
+          base::UTF16ToUTF8(exe_dir.value()));
+      executable_path =
+          base::FilePath(base::UTF8ToUTF16(executable_path_string));
+#else
+      base::ReplaceFirstSubstringAfterOffset(
+          &executable_path_string, 0, "@EXE_DIR", exe_dir.value());
+      executable_path = base::FilePath(executable_path_string);
+#endif
+    }
+
+    const base::DictionaryValue* manifest = nullptr;
+    if (!service_entry->GetDictionary(kCatalogServiceManifestKey, &manifest)) {
+      LOG(ERROR) << "Catalog entry for \"" << it.key() << "\" has an invalid "
+                 << "\"manifest\" value.";
+      continue;
+    }
+
+    DCHECK(!(is_embedded && !executable_path.empty()));
+
+    auto entry = Entry::Deserialize(*manifest);
+    if (entry) {
+      if (!executable_path.empty())
+        entry->set_path(executable_path);
+      bool added = cache->AddRootEntry(std::move(entry));
+      DCHECK(added);
+    } else {
+      LOG(ERROR) << "Failed to read manifest entry for \"" << it.key() << "\".";
+    }
+  }
 }
 
 }  // namespace
 
-Catalog::Catalog(base::SequencedWorkerPool* worker_pool,
-                 std::unique_ptr<Store> store,
-                 ManifestProvider* manifest_provider)
-    : Catalog(std::move(store)) {
-  system_reader_.reset(new Reader(worker_pool, manifest_provider));
-  ScanSystemPackageDir();
-}
+class Catalog::ServiceImpl : public service_manager::Service {
+ public:
+  explicit ServiceImpl(Catalog* catalog) : catalog_(catalog) {
+    registry_.AddInterface<mojom::Catalog>(catalog_);
+    registry_.AddInterface<filesystem::mojom::Directory>(catalog_);
+    registry_.AddInterface<service_manager::mojom::Resolver>(catalog_);
+  }
+  ~ServiceImpl() override {}
 
-Catalog::Catalog(base::SingleThreadTaskRunner* task_runner,
-                 std::unique_ptr<Store> store,
-                 ManifestProvider* manifest_provider)
-    : Catalog(std::move(store)) {
-  system_reader_.reset(new Reader(task_runner, manifest_provider));
-  ScanSystemPackageDir();
+  // service_manager::Service:
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override {
+    registry_.BindInterface(source_info.identity, interface_name,
+                            std::move(interface_pipe));
+  }
+
+ private:
+  Catalog* const catalog_;
+  service_manager::BinderRegistry registry_;
+
+  DISALLOW_COPY_AND_ASSIGN(ServiceImpl);
+};
+
+Catalog::Catalog(std::unique_ptr<base::Value> static_manifest,
+                 ManifestProvider* service_manifest_provider)
+    : service_context_(new service_manager::ServiceContext(
+          base::MakeUnique<ServiceImpl>(this),
+          service_manager::mojom::ServiceRequest(&service_))),
+      service_manifest_provider_(service_manifest_provider),
+      weak_factory_(this) {
+  if (static_manifest) {
+    LoadCatalogManifestIntoCache(static_manifest.get(), &system_cache_);
+  } else if (g_default_static_manifest.Get()) {
+    LoadCatalogManifestIntoCache(
+        g_default_static_manifest.Get().get(), &system_cache_);
+  }
 }
 
 Catalog::~Catalog() {}
 
-shell::mojom::ServicePtr Catalog::TakeService() {
+service_manager::mojom::ServicePtr Catalog::TakeService() {
   return std::move(service_);
 }
 
-Catalog::Catalog(std::unique_ptr<Store> store)
-    : store_(std::move(store)), weak_factory_(this) {
-  shell::mojom::ServiceRequest request = GetProxy(&service_);
-  shell_connection_.reset(new shell::ServiceContext(this, std::move(request)));
+// static
+void Catalog::SetDefaultCatalogManifest(
+    std::unique_ptr<base::Value> static_manifest) {
+  g_default_static_manifest.Get() = std::move(static_manifest);
 }
 
-void Catalog::ScanSystemPackageDir() {
-  base::FilePath system_package_dir;
-  PathService::Get(base::DIR_MODULE, &system_package_dir);
-  system_package_dir = system_package_dir.AppendASCII(kPackagesDirName);
-  system_reader_->Read(system_package_dir, &system_cache_,
-                       base::Bind(&Catalog::SystemPackageDirScanned,
-                                  weak_factory_.GetWeakPtr()));
+// static
+void Catalog::LoadDefaultCatalogManifest(const base::FilePath& path) {
+  std::string catalog_contents;
+  base::FilePath exe_path;
+  base::PathService::Get(base::DIR_EXE, &exe_path);
+  base::FilePath catalog_path = exe_path.Append(path);
+  bool result = base::ReadFileToString(catalog_path, &catalog_contents);
+  DCHECK(result);
+  std::unique_ptr<base::Value> manifest_value =
+      base::JSONReader::Read(catalog_contents);
+  DCHECK(manifest_value);
+  catalog::Catalog::SetDefaultCatalogManifest(std::move(manifest_value));
 }
 
-bool Catalog::OnConnect(shell::Connection* connection) {
-  connection->AddInterface<mojom::Catalog>(this);
-  connection->AddInterface<filesystem::mojom::Directory>(this);
-  connection->AddInterface<shell::mojom::Resolver>(this);
-  return true;
-}
-
-void Catalog::Create(const shell::Identity& remote_identity,
-                     shell::mojom::ResolverRequest request) {
+void Catalog::Create(const service_manager::Identity& remote_identity,
+                     service_manager::mojom::ResolverRequest request) {
   Instance* instance = GetInstanceForUserId(remote_identity.user_id());
   instance->BindResolver(std::move(request));
 }
 
-void Catalog::Create(const shell::Identity& remote_identity,
+void Catalog::Create(const service_manager::Identity& remote_identity,
                      mojom::CatalogRequest request) {
   Instance* instance = GetInstanceForUserId(remote_identity.user_id());
   instance->BindCatalog(std::move(request));
 }
 
-void Catalog::Create(const shell::Identity& remote_identity,
+void Catalog::Create(const service_manager::Identity& remote_identity,
                      filesystem::mojom::DirectoryRequest request) {
   if (!lock_table_)
     lock_table_ = new filesystem::LockTable;
-  base::FilePath resources_path =
-      GetPathForApplicationName(remote_identity.name());
-  new filesystem::DirectoryImpl(std::move(request), resources_path,
-                                scoped_refptr<filesystem::SharedTempDir>(),
-                                lock_table_);
+
+  base::FilePath resources_path;
+  base::PathService::Get(base::DIR_MODULE, &resources_path);
+  mojo::MakeStrongBinding(
+      base::MakeUnique<filesystem::DirectoryImpl>(
+          resources_path, scoped_refptr<filesystem::SharedTempDir>(),
+          lock_table_),
+      std::move(request));
 }
 
 Instance* Catalog::GetInstanceForUserId(const std::string& user_id) {
@@ -139,19 +205,10 @@ Instance* Catalog::GetInstanceForUserId(const std::string& user_id) {
   if (it != instances_.end())
     return it->second.get();
 
-  // TODO(beng): There needs to be a way to load the store from different users.
-  Instance* instance = new Instance(std::move(store_), system_reader_.get());
-  instances_[user_id] = base::WrapUnique(instance);
-  if (loaded_)
-    instance->CacheReady(&system_cache_);
-
-  return instance;
-}
-
-void Catalog::SystemPackageDirScanned() {
-  loaded_ = true;
-  for (auto& instance : instances_)
-    instance.second->CacheReady(&system_cache_);
+  auto result = instances_.insert(std::make_pair(
+      user_id,
+      base::MakeUnique<Instance>(&system_cache_, service_manifest_provider_)));
+  return result.first->second.get();
 }
 
 }  // namespace catalog

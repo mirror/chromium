@@ -1,13 +1,14 @@
 # Copyright 2014 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-from telemetry.page import cache_temperature as cache_temperature_module
-from telemetry.page import page as page_module
-from telemetry.page import shared_page_state
+
+from page_sets import page_cycler_story
 from telemetry import story
+from telemetry.page import cache_temperature as cache_temperature_module
+from telemetry.page import shared_page_state
 
 
-class IntlKoThViPage(page_module.Page):
+class IntlKoThViPage(page_cycler_story.PageCyclerStory):
 
   def __init__(self, url, page_set, cache_temperature=None):
     super(IntlKoThViPage, self).__init__(
@@ -35,8 +36,9 @@ class IntlKoThViPageSet(story.StorySet):
       # Why: #18 site in Vietnam
       'http://vietnamnet.vn/',
       # Why: #5 site in Vietnam
+      # Disabled, see crbug.com/682351.
       # pylint: disable=line-too-long
-      'http://news.zing.vn/the-gioi/ba-dam-thep-margaret-thatcher-qua-doi/a312895.html#home_noibat1',
+      #'http://news.zing.vn/the-gioi/ba-dam-thep-margaret-thatcher-qua-doi/a312895.html#home_noibat1',
       'http://kenh14.vn/home.chn',
       # Why: #5 site in Korea
       'http://www.naver.com/',

@@ -36,6 +36,7 @@ class CheckReturnValue {
       checked_ = other.checked_;
       other.checked_ = true;
     }
+    return *this;
   }
 
   ~CheckReturnValue() {
@@ -180,16 +181,15 @@ class MemoryAllocator {
     typedef MemoryAllocator<OtherT> other;
   };
 
-  MemoryAllocator() _THROW0() {
-  }
+  MemoryAllocator() {}
 
   // We can't use an explicit constructor here, as dictated by our style guide.
   // The implementation of basic_string in Visual Studio 2010 prevents this.
-  MemoryAllocator(const MemoryAllocator<T>& other) _THROW0() {  // NOLINT
+  MemoryAllocator(const MemoryAllocator<T>& other) {  // NOLINT
   }
 
-  template<class OtherT>
-  MemoryAllocator(const MemoryAllocator<OtherT>& other) _THROW0() {  // NOLINT
+  template <class OtherT>
+  MemoryAllocator(const MemoryAllocator<OtherT>& other) {  // NOLINT
   }
 
   ~MemoryAllocator() {
@@ -236,6 +236,10 @@ class MemoryAllocator {
         }
       }
     }
+    // If the above fails (e.g. because we are in a sandbox), just try the heap.
+    if (!mem && base::UncheckedMalloc(bytes, reinterpret_cast<void**>(&mem))) {
+      mem[0] = static_cast<uint8_t>(HEAP_ALLOCATION);
+    }
     return mem ? reinterpret_cast<pointer>(mem + sizeof(T)) : NULL;
   }
 
@@ -251,7 +255,7 @@ class MemoryAllocator {
     ptr->~T();
   }
 
-  size_type max_size() const _THROW0() {
+  size_type max_size() const {
     size_type count = static_cast<size_type>(-1) / sizeof(T);
     return (0 < count ? count : 1);
   }

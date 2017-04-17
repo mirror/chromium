@@ -12,36 +12,21 @@
 namespace blink {
 
 struct WebMediaKeySystemConfiguration {
-    enum class Requirement {
-        Required,
-        Optional,
-        NotAllowed,
-    };
+  enum class Requirement {
+    kRequired,
+    kOptional,
+    kNotAllowed,
+  };
 
-    // As MediaKeySystemConfiguration is a dictionary, some members may be
-    // not-present. Because requestMediaKeySystemAccess() distinguishes empty
-    // from not-present, we require a presence flag for each member.
-    bool hasInitDataTypes = false;
-    WebVector<WebEncryptedMediaInitDataType> initDataTypes;
-
-    bool hasAudioCapabilities = false;
-    WebVector<WebMediaKeySystemMediaCapability> audioCapabilities;
-
-    bool hasVideoCapabilities = false;
-    WebVector<WebMediaKeySystemMediaCapability> videoCapabilities;
-
-    // |distinctiveIdentifier| and |persistentState| are always present because
-    // they have default values.
-    Requirement distinctiveIdentifier = Requirement::Optional;
-    Requirement persistentState = Requirement::Optional;
-
-    bool hasSessionTypes = false;
-    WebVector<WebEncryptedMediaSessionType> sessionTypes;
-
-    // |label| may be not-present, but we use a null string to represent that.
-    WebString label;
+  WebString label;
+  WebVector<WebEncryptedMediaInitDataType> init_data_types;
+  WebVector<WebMediaKeySystemMediaCapability> audio_capabilities;
+  WebVector<WebMediaKeySystemMediaCapability> video_capabilities;
+  Requirement distinctive_identifier = Requirement::kOptional;
+  Requirement persistent_state = Requirement::kOptional;
+  WebVector<WebEncryptedMediaSessionType> session_types;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebMediaKeySystemConfiguration_h
+#endif  // WebMediaKeySystemConfiguration_h

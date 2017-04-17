@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_MEDIA_ROUTER_PRESENTATION_MEDIA_SINKS_OBSERVER_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "chrome/browser/media/router/media_sinks_observer.h"
@@ -34,7 +35,7 @@ class PresentationMediaSinksObserver : public MediaSinksObserver {
       MediaRouter* router,
       content::PresentationScreenAvailabilityListener* listener,
       const MediaSource& source,
-      const GURL& origin);
+      const url::Origin& origin);
   ~PresentationMediaSinksObserver() override;
 
   // MediaSinksObserver implementation.

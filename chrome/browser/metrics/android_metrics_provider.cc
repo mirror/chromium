@@ -4,7 +4,7 @@
 
 #include "chrome/browser/metrics/android_metrics_provider.h"
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/sys_info.h"
 #include "base/values.h"
 #include "chrome/browser/android/feature_utilities.h"
@@ -19,7 +19,7 @@ namespace {
 void IncrementListValue(base::ListValue* counts, int index) {
   int current_count = 0;
   counts->GetInteger(index, &current_count);
-  counts->Set(index, new base::FundamentalValue(current_count + 1));
+  counts->Set(index, new base::Value(current_count + 1));
 }
 
 // Takes an int corresponding to a Type and returns the corresponding flag.
@@ -46,10 +46,6 @@ void AndroidMetricsProvider::ProvideStabilityMetrics(
 
 void AndroidMetricsProvider::ProvideGeneralMetrics(
     metrics::ChromeUserMetricsExtension* uma_proto) {
-  UMA_HISTOGRAM_ENUMERATION(
-      "DocumentActivity.Enabled",
-      chrome::android::GetDocumentModeValue(),
-      chrome::android::RUNNING_MODE_MAX);
   UMA_HISTOGRAM_ENUMERATION(
       "CustomTabs.Visible",
       chrome::android::GetCustomTabsVisibleValue(),

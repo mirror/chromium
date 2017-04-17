@@ -41,8 +41,16 @@ void FakeExternalBeginFrameSource::AddObserver(BeginFrameObserver* obs) {
   bool observers_was_empty = observers_.empty();
   observers_.insert(obs);
   obs->OnBeginFrameSourcePausedChanged(paused_);
-  if (observers_was_empty && tick_automatically_)
+  if (observers_was_empty && tick_automatically_) {
     PostTestOnBeginFrame();
+  } else if (current_args_.IsValid()) {
+    const BeginFrameArgs& last_args = obs->LastUsedBeginFrameArgs();
+    if (!last_args.IsValid() ||
+        last_args.frame_time < current_args_.frame_time) {
+      current_args_.type = BeginFrameArgs::MISSED;
+      obs->OnBeginFrame(current_args_);
+    }
+  }
   if (client_)
     client_->OnAddObserver(obs);
 }
@@ -58,12 +66,35 @@ void FakeExternalBeginFrameSource::RemoveObserver(BeginFrameObserver* obs) {
     client_->OnRemoveObserver(obs);
 }
 
+void FakeExternalBeginFrameSource::DidFinishFrame(BeginFrameObserver* obs,
+                                                  const BeginFrameAck& ack) {
+  last_acks_[obs] = ack;
+}
+
+bool FakeExternalBeginFrameSource::IsThrottled() const {
+  return true;
+}
+
+BeginFrameArgs FakeExternalBeginFrameSource::CreateBeginFrameArgs(
+    BeginFrameArgs::CreationLocation location,
+    base::SimpleTestTickClock* now_src) {
+  return CreateBeginFrameArgsForTesting(location, source_id(),
+                                        next_begin_frame_number_++, now_src);
+}
+
+BeginFrameArgs FakeExternalBeginFrameSource::CreateBeginFrameArgs(
+    BeginFrameArgs::CreationLocation location) {
+  return CreateBeginFrameArgsForTesting(location, source_id(),
+                                        next_begin_frame_number_++);
+}
+
 void FakeExternalBeginFrameSource::TestOnBeginFrame(
     const BeginFrameArgs& args) {
   DCHECK(CalledOnValidThread());
+  current_args_ = args;
   std::set<BeginFrameObserver*> observers(observers_);
   for (auto* obs : observers)
-    obs->OnBeginFrame(args);
+    obs->OnBeginFrame(current_args_);
   if (tick_automatically_)
     PostTestOnBeginFrame();
 }
@@ -74,9 +105,10 @@ void FakeExternalBeginFrameSource::PostTestOnBeginFrame() {
                  weak_ptr_factory_.GetWeakPtr()));
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(begin_frame_task_.callback(),
-                 CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE)),
+      base::BindOnce(begin_frame_task_.callback(),
+                     CreateBeginFrameArgs(BEGINFRAME_FROM_HERE)),
       base::TimeDelta::FromMilliseconds(milliseconds_per_frame_));
+  next_begin_frame_number_++;
 }
 
 }  // namespace cc

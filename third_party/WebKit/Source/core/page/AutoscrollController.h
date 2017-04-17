@@ -27,8 +27,10 @@
 #define AutoscrollController_h
 
 #include "core/CoreExport.h"
+#include "platform/geometry/FloatSize.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Time.h"
 
 namespace blink {
 
@@ -36,62 +38,63 @@ class LocalFrame;
 class FrameView;
 class Node;
 class Page;
-class PlatformMouseEvent;
 class LayoutBox;
 class LayoutObject;
+class WebMouseEvent;
 
 enum AutoscrollType {
-    NoAutoscroll,
-    AutoscrollForDragAndDrop,
-    AutoscrollForSelection,
-#if OS(WIN)
-    AutoscrollForPanCanStop,
-    AutoscrollForPan,
-#endif
+  kNoAutoscroll,
+  kAutoscrollForDragAndDrop,
+  kAutoscrollForSelection,
+  kAutoscrollForMiddleClickCanStop,
+  kAutoscrollForMiddleClick,
 };
 
-// AutscrollController handels autoscroll and pan scroll for EventHandler.
-class CORE_EXPORT AutoscrollController final : public GarbageCollected<AutoscrollController> {
-public:
-    static AutoscrollController* create(Page&);
-    DECLARE_TRACE();
+// AutscrollController handels autoscroll and middle click autoscroll for
+// EventHandler.
+class CORE_EXPORT AutoscrollController final
+    : public GarbageCollected<AutoscrollController> {
+ public:
+  static AutoscrollController* Create(Page&);
+  DECLARE_TRACE();
 
-    static const int noPanScrollRadius = 15;
+  static const int kNoMiddleClickAutoscrollRadius = 15;
 
-    void animate(double monotonicFrameBeginTime);
-    bool autoscrollInProgress() const;
-    bool autoscrollInProgress(const LayoutBox*) const;
-    bool panScrollInProgress() const;
-    void startAutoscrollForSelection(LayoutObject*);
-    void stopAutoscroll();
-    void stopAutoscrollIfNeeded(LayoutObject*);
-    void updateAutoscrollLayoutObject();
-    void updateDragAndDrop(Node* targetNode, const IntPoint& eventPosition, double eventTime);
-#if OS(WIN)
-    void handleMouseReleaseForPanScrolling(LocalFrame*, const PlatformMouseEvent&);
-    void startPanScrolling(LayoutBox*, const IntPoint&);
-#endif
+  void Animate(double monotonic_frame_begin_time);
+  bool AutoscrollInProgress() const;
+  bool AutoscrollInProgress(const LayoutBox*) const;
+  bool MiddleClickAutoscrollInProgress() const;
+  void StartAutoscrollForSelection(LayoutObject*);
+  void StopAutoscroll();
+  void StopAutoscrollIfNeeded(LayoutObject*);
+  void UpdateAutoscrollLayoutObject();
+  void UpdateDragAndDrop(Node* target_node,
+                         const IntPoint& event_position,
+                         TimeTicks event_time);
+  void HandleMouseReleaseForMiddleClickAutoscroll(LocalFrame*,
+                                                  const WebMouseEvent&);
+  void StartMiddleClickAutoscroll(LayoutBox*, const IntPoint&);
 
-private:
-    explicit AutoscrollController(Page&);
+ private:
+  explicit AutoscrollController(Page&);
 
-    void startAutoscroll();
+  void StartAutoscroll();
 
-#if OS(WIN)
-    void updatePanScrollState(FrameView*, const IntPoint& lastKnownMousePosition);
-#endif
+  void UpdateMiddleClickAutoscrollState(
+      FrameView*,
+      const IntPoint& last_known_mouse_position);
+  FloatSize CalculateAutoscrollDelta();
 
-    Member<Page> m_page;
-    LayoutBox* m_autoscrollLayoutObject;
-    LayoutBox* m_pressedLayoutObject;
-    AutoscrollType m_autoscrollType;
-    IntPoint m_dragAndDropAutoscrollReferencePosition;
-    double m_dragAndDropAutoscrollStartTime;
-#if OS(WIN)
-    IntPoint m_panScrollStartPos;
-#endif
+  Member<Page> page_;
+  LayoutBox* autoscroll_layout_object_;
+  LayoutBox* pressed_layout_object_;
+  AutoscrollType autoscroll_type_;
+  IntPoint drag_and_drop_autoscroll_reference_position_;
+  TimeTicks drag_and_drop_autoscroll_start_time_;
+  IntPoint middle_click_autoscroll_start_pos_;
+  bool did_latch_for_middle_click_autoscroll_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AutoscrollController_h
+#endif  // AutoscrollController_h

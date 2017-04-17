@@ -11,9 +11,32 @@ Polymer({
 
   properties: {
     /** @type {!Array<!SearchEngine>} */
-    engines: {
-      type: Array,
-      value: function() { return []; }
-    }
+    engines: Array,
+
+    /** Whether column headers should be displayed */
+    hideHeaders: Boolean,
+
+    /**
+     * The scroll target that this list should use.
+     * @type {?HTMLElement}
+     */
+    scrollTarget: {
+      type: Element,
+      value: null,  // Required to populate class.
+    },
+
+    /** Used to fix scrolling glitch when list is not top most element. */
+    scrollOffset: Number,
+
+    /** @private {Object}*/
+    lastFocused_: Object,
+  },
+
+  /**
+   * Fix height of list if no scrollTarget is present.
+   * @return {string}
+   */
+  getIronListClass_: function() {
+    return this.scrollTarget ? '' : 'fixed-height-list';
   },
 });

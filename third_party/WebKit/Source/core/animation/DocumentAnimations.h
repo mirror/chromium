@@ -32,23 +32,31 @@
 #define DocumentAnimations_h
 
 #include "core/CSSPropertyNames.h"
+#include "core/dom/DocumentLifecycle.h"
+#include "platform/graphics/CompositorElementId.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
 class Document;
-class Node;
 
 class DocumentAnimations {
-public:
-    static void updateAnimationTimingForAnimationFrame(Document&);
-    static bool needsAnimationTimingUpdate(const Document&);
-    static void updateAnimationTimingIfNeeded(Document&);
-    static void updateCompositorAnimations(Document&);
+ public:
+  static void UpdateAnimationTimingForAnimationFrame(Document&);
+  static bool NeedsAnimationTimingUpdate(const Document&);
+  static void UpdateAnimationTimingIfNeeded(Document&);
 
-private:
-    DocumentAnimations() { }
+  // Updates existing animations as part of generating a new (document
+  // lifecycle) frame.
+  static void UpdateAnimations(
+      Document&,
+      DocumentLifecycle::LifecycleState required_lifecycle_state,
+      Optional<CompositorElementIdSet>&);
+
+ private:
+  DocumentAnimations() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

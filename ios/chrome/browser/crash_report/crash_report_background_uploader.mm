@@ -9,12 +9,16 @@
 #include "base/logging.h"
 #include "base/mac/scoped_block.h"
 #include "base/mac/scoped_nsobject.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/time/time.h"
 #import "breakpad/src/client/ios/BreakpadController.h"
 #include "ios/chrome/browser/experimental_flags.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 using base::UserMetricsAction;
 
@@ -65,8 +69,7 @@ NSString* CreateSessionIdentifierFromTask(NSURLSessionTask* task) {
 
 - (void)setSessionCompletionHandler:(ProceduralBlock)completionHandler {
   DCHECK(completionHandler);
-  _sessionCompletionHandler.reset(completionHandler,
-                                  base::scoped_policy::RETAIN);
+  _sessionCompletionHandler.reset(completionHandler);
   _didFinishEventsCalled = NO;
 }
 

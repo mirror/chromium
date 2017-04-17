@@ -2,31 +2,14 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//build/config/features.gni")
-import("//build/config/ui.gni")
-import("//build/util/version.gni")
-import("//remoting/remoting_enable.gni")
-import("//remoting/remoting_options.gni")
-import("//remoting/remoting_version.gni")
-import("//testing/test.gni")
-
-# TODO(nicholss): Move this and other defines to version.h.in.
-# Various remoting targets need this version definition.
-config("version") {
-  defines = [ "VERSION=$chrome_version_full" ]
-}
-
-config("enable_webrtc_remoting_client") {
-  if (!is_official_build && !is_nacl) {
-    defines = [ "ENABLE_WEBRTC_REMOTING_CLIENT=1" ]
-  }
-}
+import("//media/media_options.gni")
+import("//remoting/build/config/remoting_build.gni")
 
 group("remoting_all") {
   testonly = true
 
   deps = [
-    "//remoting:remoting_unittests",
+    ":remoting_unittests",
     "//remoting/test:chromoting_test_driver",
     "//remoting/webapp:browser_test_resources",
     "//remoting/webapp:unit_tests",
@@ -39,8 +22,7 @@ group("remoting_all") {
   if (is_win) {
     deps += [
       "//remoting:remoting_breakpad_tester",
-      "//remoting/host:remoting_console",
-      "//remoting/host:remoting_desktop",
+      "//remoting/host/win:all",
     ]
 
     if (is_chrome_branded) {
@@ -55,6 +37,10 @@ group("remoting_all") {
     ]
   }
 
+  if (is_ios) {
+    deps += [ "//remoting/client/ios:all" ]
+  }
+
   if (enable_remoting_host) {
     deps += [
       "//remoting:remoting_perftests",
@@ -67,19 +53,21 @@ group("remoting_all") {
         "//remoting/host:remoting_start_host",
         "//remoting/host/it2me:remote_assistance_host",
       ]
+
+      if (is_win) {
+        deps += [ "//remoting/host/it2me:remote_assistance_host_uiaccess" ]
+      }
     }
 
-    # The same target is called differently on Linux.
-    # TODO(sergeyu): Rename it to remoting_native_messaging_host on all
-    # platforms.
-    if (is_win) {
+    if (is_win || (!is_chromeos && !is_android && !is_ios)) {
       deps += [ "//remoting/host:remoting_native_messaging_host" ]
-    } else if (!is_chromeos && !is_android) {
-      deps += [ "//remoting/host:native_messaging_host" ]
     }
 
     if (is_linux && !is_chromeos) {
-      deps += [ "//remoting/host:remoting_dev_me2me_host" ]
+      deps += [
+        "//remoting/host/linux:remoting_dev_me2me_host",
+        "//remoting/host/linux:remoting_user_session",
+      ]
     }
   }
 
@@ -96,7 +84,6 @@ group("remoting_all") {
 }
 
 if (is_win) {
-  # GYP version: remoting/remoting_host_win.gypi:remoting_breakpad_tester
   executable("remoting_breakpad_tester") {
     deps = [
       "//base",
@@ -104,24 +91,33 @@ if (is_win) {
       "//remoting/host",
     ]
 
+    libs = []
+
     configs += [ "//build/config/compiler:wexit_time_destructors" ]
 
     sources = [
       "tools/breakpad_tester_win.cc",
     ]
+
+    if (is_win) {
+      libs += [
+        "rpcrt4.lib",
+        "wtsapi32.lib",
+      ]
+    }
   }
 }
 
-# GYP version: remoting/remoting_test.gypi:remoting_test_support
 group("test_support") {
   testonly = true
 
   deps = [
     "//base",
     "//net",
-    "//remoting/base",
+    "//remoting/base:test_support",
     "//remoting/client",
-    "//remoting/codec",
+    "//remoting/codec:decoder",
+    "//remoting/codec:encoder",
     "//remoting/protocol:test_support",
     "//remoting/resources",
     "//remoting/signaling:test_support",
@@ -130,13 +126,8 @@ group("test_support") {
     "//testing/gtest",
   ]
 
-  if (enable_configuration_policy) {
-    deps += [
-      "//components/policy:test_support",
-
-      # TODO(zijiehe): This should belong to //components/policy:test_support
-      "//components/prefs",
-    ]
+  if (!is_ios) {
+    deps += [ "//components/policy/core/browser:test_support" ]
   }
 
   if (enable_remoting_host) {
@@ -149,7 +140,7 @@ test("remoting_unittests") {
   libs = []
 
   configs += [
-    ":version",
+    "//remoting/build/config:version",
 
     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",
@@ -158,15 +149,16 @@ test("remoting_unittests") {
   deps = [
     ":test_support",
     "//base",
+    "//base/test:test_support",
     "//google_apis",
     "//remoting/base:unit_tests",
     "//remoting/client:unit_tests",
+    "//remoting/client/display:unit_tests",
     "//remoting/protocol:unit_tests",
     "//remoting/signaling:unit_tests",
     "//remoting/test:unit_tests",
     "//testing/gmock",
     "//testing/gtest",
-    "//third_party/webrtc",
   ]
 
   if (enable_remoting_host) {
@@ -178,35 +170,37 @@ test("remoting_unittests") {
   }
 
   if (enable_webrtc) {
-    deps += [ "//third_party/libjingle:libjingle_webrtc" ]
+    deps += [ "//third_party/webrtc_overrides:init_webrtc" ]
   }
 
   if (is_android) {
     deps += [ "//net/android:net_java" ]
+
+    libs += [ "android" ]
   }
 
   if (is_win) {
     defines += [ "_ALT_NO_EXCEPTIONS" ]
 
     libs += [
+      "comctl32.lib",
       "rpcrt4.lib",
       "wtsapi32.lib",
     ]
-  }
-
-  if (enable_configuration_policy) {
-    deps += [ "//components/policy:policy_component_test_support" ]
   }
 }
 
 if (enable_remoting_host) {
   test("remoting_perftests") {
+    defines = []
+    libs = []
+
     sources = [
       "test/codec_perftest.cc",
       "test/protocol_perftest.cc",
     ]
 
-    configs += [ ":version" ]
+    configs += [ "//remoting/build/config:version" ]
 
     deps = [
       ":test_support",
@@ -216,12 +210,21 @@ if (enable_remoting_host) {
       "//net:test_support",
       "//remoting/base",
       "//testing/gtest",
-      "//third_party/libjingle",
       "//third_party/webrtc/modules/desktop_capture",
+      "//third_party/webrtc_overrides",
     ]
 
     if (enable_webrtc) {
-      deps += [ "//third_party/libjingle:libjingle_webrtc" ]
+      deps += [ "//third_party/webrtc_overrides:init_webrtc" ]
+    }
+
+    if (is_win) {
+      defines += [ "_ALT_NO_EXCEPTIONS" ]
+
+      libs += [
+        "rpcrt4.lib",
+        "wtsapi32.lib",
+      ]
     }
   }
 }

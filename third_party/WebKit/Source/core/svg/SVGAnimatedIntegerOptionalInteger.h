@@ -38,33 +38,43 @@
 namespace blink {
 
 // SVG Spec: http://www.w3.org/TR/SVG11/types.html <number-optional-number>
-// Unlike other SVGAnimated* class, this class is not exposed to Javascript directly,
-// while DOM attribute and SMIL animations operate on this class.
-// From Javascript, the two SVGAnimatedIntegers |firstInteger| and |secondInteger| are used.
+// Unlike other SVGAnimated* class, this class is not exposed to Javascript
+// directly, while DOM attribute and SMIL animations operate on this class.
+// From Javascript, the two SVGAnimatedIntegers |firstInteger| and
+// |secondInteger| are used.
 // For example, see SVGFEDropShadowElement::stdDeviation{X,Y}()
-class SVGAnimatedIntegerOptionalInteger : public SVGAnimatedPropertyCommon<SVGIntegerOptionalInteger> {
-public:
-    static SVGAnimatedIntegerOptionalInteger* create(SVGElement* contextElement, const QualifiedName& attributeName, float initialFirstValue = 0, float initialSecondValue = 0)
-    {
-        return new SVGAnimatedIntegerOptionalInteger(contextElement, attributeName, initialFirstValue, initialSecondValue);
-    }
+class SVGAnimatedIntegerOptionalInteger
+    : public SVGAnimatedPropertyCommon<SVGIntegerOptionalInteger> {
+ public:
+  static SVGAnimatedIntegerOptionalInteger* Create(
+      SVGElement* context_element,
+      const QualifiedName& attribute_name,
+      float initial_first_value = 0,
+      float initial_second_value = 0) {
+    return new SVGAnimatedIntegerOptionalInteger(
+        context_element, attribute_name, initial_first_value,
+        initial_second_value);
+  }
 
-    void setAnimatedValue(SVGPropertyBase*) override;
-    bool needsSynchronizeAttribute() override;
-    void animationEnded() override;
+  void SetAnimatedValue(SVGPropertyBase*) override;
+  bool NeedsSynchronizeAttribute() override;
+  void AnimationEnded() override;
 
-    SVGAnimatedInteger* firstInteger() { return m_firstInteger.get(); }
-    SVGAnimatedInteger* secondInteger() { return m_secondInteger.get(); }
+  SVGAnimatedInteger* FirstInteger() { return first_integer_.Get(); }
+  SVGAnimatedInteger* SecondInteger() { return second_integer_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    SVGAnimatedIntegerOptionalInteger(SVGElement* contextElement, const QualifiedName& attributeName, float initialFirstValue, float initialSecondValue);
+ protected:
+  SVGAnimatedIntegerOptionalInteger(SVGElement* context_element,
+                                    const QualifiedName& attribute_name,
+                                    float initial_first_value,
+                                    float initial_second_value);
 
-    Member<SVGAnimatedInteger> m_firstInteger;
-    Member<SVGAnimatedInteger> m_secondInteger;
+  Member<SVGAnimatedInteger> first_integer_;
+  Member<SVGAnimatedInteger> second_integer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAnimatedIntegerOptionalInteger_h
+#endif  // SVGAnimatedIntegerOptionalInteger_h

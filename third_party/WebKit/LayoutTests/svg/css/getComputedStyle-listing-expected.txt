@@ -20,7 +20,6 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 -webkit-box-orient: horizontal
 -webkit-box-pack: start
 -webkit-box-reflect: none
--webkit-clip-path: none
 -webkit-font-smoothing: auto
 -webkit-highlight: none
 -webkit-hyphenate-character: auto
@@ -42,7 +41,7 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 -webkit-mask-position: 0% 0%
 -webkit-mask-position-x: 0%
 -webkit-mask-position-y: 0%
--webkit-mask-repeat: no-repeat
+-webkit-mask-repeat: repeat
 -webkit-mask-size: auto
 -webkit-print-color-adjust: economy
 -webkit-rtl-ordering: logical
@@ -58,11 +57,10 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 -webkit-text-stroke-width: 0px
 -webkit-user-drag: auto
 -webkit-user-modify: read-only
--webkit-user-select: text
 -webkit-writing-mode: horizontal-tb
 align-content: normal
-align-items: start
-align-self: start
+align-items: normal
+align-self: normal
 alignment-baseline: auto
 animation-delay: 0s
 animation-direction: normal
@@ -117,6 +115,7 @@ break-before: auto
 break-inside: auto
 buffered-rendering: auto
 caption-side: top
+caret-color: rgb(0, 0, 0)
 clear: none
 clip: auto
 clip-path: none
@@ -181,12 +180,13 @@ image-orientation: 0deg
 image-rendering: auto
 isolation: auto
 justify-content: normal
-justify-items: start
-justify-self: start
+justify-items: normal
+justify-self: normal
 left: auto
 letter-spacing: normal
 lighting-color: rgb(255, 255, 255)
 line-height: normal
+line-height-step: 0px
 list-style-image: none
 list-style-position: outside
 list-style-type: disc
@@ -205,11 +205,14 @@ max-width: none
 min-height: 0px
 min-width: 0px
 mix-blend-mode: normal
-motion-offset: 0px
-motion-path: none
-motion-rotation: auto 0deg
 object-fit: fill
 object-position: 50% 50%
+offset-anchor: auto
+offset-distance: 0px
+offset-path: none
+offset-position: auto
+offset-rotate: auto 0deg
+offset-rotation: auto 0deg
 opacity: 1
 order: 0
 orphans: 2
@@ -218,6 +221,7 @@ outline-offset: 0px
 outline-style: none
 outline-width: 0px
 overflow: visible
+overflow-anchor: auto
 overflow-wrap: normal
 overflow-x: visible
 overflow-y: visible
@@ -233,10 +237,10 @@ position: static
 r: 0px
 resize: none
 right: auto
-rotate: 0deg
+rotate: none
 rx: auto
 ry: auto
-scale: 1
+scale: none
 scroll-behavior: auto
 scroll-snap-coordinate: none
 scroll-snap-destination: 0px 0px
@@ -247,7 +251,6 @@ shape-image-threshold: 0
 shape-margin: 0px
 shape-outside: none
 shape-rendering: auto
-snap-height: 0px
 speak: normal
 stop-color: rgb(0, 0, 0)
 stop-opacity: 1
@@ -267,6 +270,7 @@ text-anchor: start
 text-decoration: none solid rgb(0, 0, 0)
 text-decoration-color: rgb(0, 0, 0)
 text-decoration-line: none
+text-decoration-skip: objects
 text-decoration-style: solid
 text-indent: 0px
 text-justify: auto
@@ -285,8 +289,9 @@ transition-delay: 0s
 transition-duration: 0s
 transition-property: all
 transition-timing-function: ease
-translate: 0px
+translate: none
 unicode-bidi: normal
+user-select: text
 vector-effect: none
 vertical-align: baseline
 visibility: visible

@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-#include "mojo/public/cpp/bindings/array.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "ui/events/devices/input_device.h"
 #include "ui/events/devices/touchscreen_device.h"
 
@@ -33,9 +33,10 @@ bool InputDeviceServer::IsRegisteredAsObserver() const {
   return manager_ != nullptr;
 }
 
-void InputDeviceServer::AddInterface(shell::Connection* connection) {
-  DCHECK(manager_);
-  connection->AddInterface<mojom::InputDeviceServer>(this);
+void InputDeviceServer::AddInterface(
+    service_manager::BinderRegistry* registry) {
+  DCHECK(IsRegisteredAsObserver());
+  registry->AddInterface<mojom::InputDeviceServer>(this);
 }
 
 void InputDeviceServer::AddObserver(
@@ -93,6 +94,12 @@ void InputDeviceServer::OnDeviceListsComplete() {
   });
 }
 
+void InputDeviceServer::OnStylusStateChanged(StylusState state) {
+  observers_.ForAllPtrs([state](mojom::InputDeviceObserverMojo* observer) {
+    observer->OnStylusStateChanged(state);
+  });
+}
+
 void InputDeviceServer::SendDeviceListsComplete(
     mojom::InputDeviceObserverMojo* observer) {
   DCHECK(manager_->AreDeviceListsComplete());
@@ -102,7 +109,7 @@ void InputDeviceServer::SendDeviceListsComplete(
       manager_->GetMouseDevices(), manager_->GetTouchpadDevices());
 }
 
-void InputDeviceServer::Create(const shell::Identity& remote_identity,
+void InputDeviceServer::Create(const service_manager::Identity& remote_identity,
                                mojom::InputDeviceServerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }

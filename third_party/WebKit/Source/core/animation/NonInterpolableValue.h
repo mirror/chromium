@@ -5,31 +5,37 @@
 #ifndef NonInterpolableValue_h
 #define NonInterpolableValue_h
 
-#include "wtf/RefCounted.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
-// Represents components of a PropertySpecificKeyframe's value that either do not change or 50% flip when interpolating with an adjacent value.
+// Represents components of a PropertySpecificKeyframe's value that either do
+// not change or 50% flip when interpolating with an adjacent value.
 class NonInterpolableValue : public RefCounted<NonInterpolableValue> {
-public:
-    virtual ~NonInterpolableValue() { }
+ public:
+  virtual ~NonInterpolableValue() {}
 
-    typedef const void* Type;
-    virtual Type getType() const = 0;
+  typedef const void* Type;
+  virtual Type GetType() const = 0;
 };
 
-// These macros provide safe downcasts of NonInterpolableValue subclasses with debug assertions.
+// These macros provide safe downcasts of NonInterpolableValue subclasses with
+// debug assertions.
 // See CSSValueInterpolationType.cpp for example usage.
 #define DECLARE_NON_INTERPOLABLE_VALUE_TYPE() \
-    static Type staticType;                   \
-    Type getType() const final { return staticType; }
+  static Type static_type_;                   \
+  Type GetType() const final { return static_type_; }
 
 #define DEFINE_NON_INTERPOLABLE_VALUE_TYPE(T) \
-    NonInterpolableValue::Type T::staticType = &T::staticType;
+  NonInterpolableValue::Type T::static_type_ = &T::static_type_;
 
-#define DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(T) \
-    DEFINE_TYPE_CASTS(T, NonInterpolableValue, value, value->getType() == T::staticType, value.getType() == T::staticType);
+#define DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(T)               \
+  inline bool Is##T(const NonInterpolableValue* value) {          \
+    return !value || value->GetType() == T::static_type_;         \
+  }                                                               \
+  DEFINE_TYPE_CASTS(T, NonInterpolableValue, value, Is##T(value), \
+                    Is##T(&value));
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NonInterpolableValue_h
+#endif  // NonInterpolableValue_h

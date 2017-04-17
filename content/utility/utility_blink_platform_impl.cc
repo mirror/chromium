@@ -4,21 +4,21 @@
 
 #include "content/utility/utility_blink_platform_impl.h"
 
-#include "content/utility/webthread_impl_for_utility_thread.h"
+#include "third_party/WebKit/public/platform/scheduler/child/webthread_base.h"
 
 namespace content {
 
 UtilityBlinkPlatformImpl::UtilityBlinkPlatformImpl()
-    : main_thread_(new WebThreadImplForUtilityThread()) {
+    : main_thread_(blink::scheduler::WebThreadBase::InitializeUtilityThread()) {
 }
 
 UtilityBlinkPlatformImpl::~UtilityBlinkPlatformImpl() {
 }
 
-blink::WebThread* UtilityBlinkPlatformImpl::currentThread() {
-  if (main_thread_->isCurrentThread())
+blink::WebThread* UtilityBlinkPlatformImpl::CurrentThread() {
+  if (main_thread_->IsCurrentThread())
     return main_thread_.get();
-  return BlinkPlatformImpl::currentThread();
+  return BlinkPlatformImpl::CurrentThread();
 }
 
 }  // namespace content

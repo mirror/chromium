@@ -40,16 +40,20 @@ class PersistentMemoryAllocatorTest : public testing::Test {
   uint32_t kAllocAlignment;
 
   struct TestObject1 {
-    int onething;
+    static constexpr uint32_t kPersistentTypeId = 1;
+    static constexpr size_t kExpectedInstanceSize = 4 + 1 + 3;
+    int32_t onething;
     char oranother;
   };
 
   struct TestObject2 {
-    int thiis;
-    long that;
+    static constexpr uint32_t kPersistentTypeId = 2;
+    static constexpr size_t kExpectedInstanceSize = 8 + 4 + 4 + 8 + 8;
+    int64_t thiis;
+    int32_t that;
     float andthe;
-    char other;
-    double thing;
+    double other;
+    char thing[8];
   };
 
   PersistentMemoryAllocatorTest() {
@@ -63,7 +67,6 @@ class PersistentMemoryAllocatorTest : public testing::Test {
     allocator_.reset(new PersistentMemoryAllocator(
         mem_segment_.get(), TEST_MEMORY_SIZE, TEST_MEMORY_PAGE,
         TEST_ID, TEST_NAME, false));
-    allocator_->CreateTrackingHistograms(allocator_->Name());
   }
 
   void TearDown() override {
@@ -90,14 +93,15 @@ class PersistentMemoryAllocatorTest : public testing::Test {
 };
 
 TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
+  allocator_->CreateTrackingHistograms(allocator_->Name());
+
   std::string base_name(TEST_NAME);
   EXPECT_EQ(TEST_ID, allocator_->Id());
   EXPECT_TRUE(allocator_->used_histogram_);
   EXPECT_EQ("UMA.PersistentAllocator." + base_name + ".UsedPct",
             allocator_->used_histogram_->histogram_name());
-  EXPECT_TRUE(allocator_->allocs_histogram_);
-  EXPECT_EQ("UMA.PersistentAllocator." + base_name + ".Allocs",
-            allocator_->allocs_histogram_->histogram_name());
+  EXPECT_EQ(PersistentMemoryAllocator::MEMORY_INITIALIZED,
+            allocator_->GetMemoryState());
 
   // Get base memory info for later comparison.
   PersistentMemoryAllocator::MemoryInfo meminfo0;
@@ -107,10 +111,12 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
 
   // Validate allocation of test object and make sure it can be referenced
   // and all metadata looks correct.
-  Reference block1 = allocator_->Allocate(sizeof(TestObject1), 1);
-  EXPECT_NE(0U, block1);
-  EXPECT_NE(nullptr, allocator_->GetAsObject<TestObject1>(block1, 1));
-  EXPECT_EQ(nullptr, allocator_->GetAsObject<TestObject2>(block1, 1));
+  TestObject1* obj1 = allocator_->New<TestObject1>();
+  ASSERT_TRUE(obj1);
+  Reference block1 = allocator_->GetAsReference(obj1);
+  ASSERT_NE(0U, block1);
+  EXPECT_NE(nullptr, allocator_->GetAsObject<TestObject1>(block1));
+  EXPECT_EQ(nullptr, allocator_->GetAsObject<TestObject2>(block1));
   EXPECT_LE(sizeof(TestObject1), allocator_->GetAllocSize(block1));
   EXPECT_GT(sizeof(TestObject1) + kAllocAlignment,
             allocator_->GetAllocSize(block1));
@@ -119,21 +125,38 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
   EXPECT_EQ(meminfo0.total, meminfo1.total);
   EXPECT_GT(meminfo0.free, meminfo1.free);
 
+  // Verify that pointers can be turned back into references and that invalid
+  // addresses return null.
+  char* memory1 = allocator_->GetAsArray<char>(block1, 1, 1);
+  ASSERT_TRUE(memory1);
+  EXPECT_EQ(block1, allocator_->GetAsReference(memory1, 0));
+  EXPECT_EQ(block1, allocator_->GetAsReference(memory1, 1));
+  EXPECT_EQ(0U, allocator_->GetAsReference(memory1, 2));
+  EXPECT_EQ(0U, allocator_->GetAsReference(memory1 + 1, 0));
+  EXPECT_EQ(0U, allocator_->GetAsReference(memory1 + 16, 0));
+  EXPECT_EQ(0U, allocator_->GetAsReference(nullptr, 0));
+  EXPECT_EQ(0U, allocator_->GetAsReference(&base_name, 0));
+
   // Ensure that the test-object can be made iterable.
   PersistentMemoryAllocator::Iterator iter1a(allocator_.get());
+  EXPECT_EQ(0U, iter1a.GetLast());
   uint32_t type;
   EXPECT_EQ(0U, iter1a.GetNext(&type));
   allocator_->MakeIterable(block1);
   EXPECT_EQ(block1, iter1a.GetNext(&type));
   EXPECT_EQ(1U, type);
+  EXPECT_EQ(block1, iter1a.GetLast());
   EXPECT_EQ(0U, iter1a.GetNext(&type));
+  EXPECT_EQ(block1, iter1a.GetLast());
 
   // Create second test-object and ensure everything is good and it cannot
   // be confused with test-object of another type.
-  Reference block2 = allocator_->Allocate(sizeof(TestObject2), 2);
-  EXPECT_NE(0U, block2);
-  EXPECT_NE(nullptr, allocator_->GetAsObject<TestObject2>(block2, 2));
-  EXPECT_EQ(nullptr, allocator_->GetAsObject<TestObject2>(block2, 1));
+  TestObject2* obj2 = allocator_->New<TestObject2>();
+  ASSERT_TRUE(obj2);
+  Reference block2 = allocator_->GetAsReference(obj2);
+  ASSERT_NE(0U, block2);
+  EXPECT_NE(nullptr, allocator_->GetAsObject<TestObject2>(block2));
+  EXPECT_EQ(nullptr, allocator_->GetAsObject<TestObject1>(block2));
   EXPECT_LE(sizeof(TestObject2), allocator_->GetAllocSize(block2));
   EXPECT_GT(sizeof(TestObject2) + kAllocAlignment,
             allocator_->GetAllocSize(block2));
@@ -143,9 +166,27 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
   EXPECT_GT(meminfo1.free, meminfo2.free);
 
   // Ensure that second test-object can also be made iterable.
-  allocator_->MakeIterable(block2);
+  allocator_->MakeIterable(obj2);
   EXPECT_EQ(block2, iter1a.GetNext(&type));
   EXPECT_EQ(2U, type);
+  EXPECT_EQ(block2, iter1a.GetLast());
+  EXPECT_EQ(0U, iter1a.GetNext(&type));
+  EXPECT_EQ(block2, iter1a.GetLast());
+
+  // Check that the iterator can be reset to the beginning.
+  iter1a.Reset();
+  EXPECT_EQ(0U, iter1a.GetLast());
+  EXPECT_EQ(block1, iter1a.GetNext(&type));
+  EXPECT_EQ(block1, iter1a.GetLast());
+  EXPECT_EQ(block2, iter1a.GetNext(&type));
+  EXPECT_EQ(block2, iter1a.GetLast());
+  EXPECT_EQ(0U, iter1a.GetNext(&type));
+
+  // Check that the iterator can be reset to an arbitrary location.
+  iter1a.Reset(block1);
+  EXPECT_EQ(block1, iter1a.GetLast());
+  EXPECT_EQ(block2, iter1a.GetNext(&type));
+  EXPECT_EQ(block2, iter1a.GetLast());
   EXPECT_EQ(0U, iter1a.GetNext(&type));
 
   // Check that iteration can begin after an arbitrary location.
@@ -164,26 +205,11 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
   EXPECT_TRUE(used_samples);
   EXPECT_EQ(1, used_samples->TotalCount());
 
-  // Check the internal histogram record of allocation requests.
-  std::unique_ptr<HistogramSamples> allocs_samples(
-      allocator_->allocs_histogram_->SnapshotSamples());
-  EXPECT_TRUE(allocs_samples);
-  EXPECT_EQ(2, allocs_samples->TotalCount());
-  EXPECT_EQ(0, allocs_samples->GetCount(0));
-  EXPECT_EQ(1, allocs_samples->GetCount(sizeof(TestObject1)));
-  EXPECT_EQ(1, allocs_samples->GetCount(sizeof(TestObject2)));
-#if !DCHECK_IS_ON()  // DCHECK builds will die at a NOTREACHED().
-  EXPECT_EQ(0U, allocator_->Allocate(TEST_MEMORY_SIZE + 1, 0));
-  allocs_samples = allocator_->allocs_histogram_->SnapshotSamples();
-  EXPECT_EQ(3, allocs_samples->TotalCount());
-  EXPECT_EQ(1, allocs_samples->GetCount(0));
-#endif
-
-  // Check that an objcet's type can be changed.
+  // Check that an object's type can be changed.
   EXPECT_EQ(2U, allocator_->GetType(block2));
-  allocator_->ChangeType(block2, 3, 2);
+  allocator_->ChangeType(block2, 3, 2, false);
   EXPECT_EQ(3U, allocator_->GetType(block2));
-  allocator_->ChangeType(block2, 2, 3);
+  allocator_->New<TestObject2>(block2, 3, false);
   EXPECT_EQ(2U, allocator_->GetType(block2));
 
   // Create second allocator (read/write) using the same memory segment.
@@ -192,16 +218,14 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
                                     TEST_MEMORY_PAGE, 0, "", false));
   EXPECT_EQ(TEST_ID, allocator2->Id());
   EXPECT_FALSE(allocator2->used_histogram_);
-  EXPECT_FALSE(allocator2->allocs_histogram_);
-  EXPECT_NE(allocator2->allocs_histogram_, allocator_->allocs_histogram_);
 
   // Ensure that iteration and access through second allocator works.
   PersistentMemoryAllocator::Iterator iter2(allocator2.get());
   EXPECT_EQ(block1, iter2.GetNext(&type));
   EXPECT_EQ(block2, iter2.GetNext(&type));
   EXPECT_EQ(0U, iter2.GetNext(&type));
-  EXPECT_NE(nullptr, allocator2->GetAsObject<TestObject1>(block1, 1));
-  EXPECT_NE(nullptr, allocator2->GetAsObject<TestObject2>(block2, 2));
+  EXPECT_NE(nullptr, allocator2->GetAsObject<TestObject1>(block1));
+  EXPECT_NE(nullptr, allocator2->GetAsObject<TestObject2>(block2));
 
   // Create a third allocator (read-only) using the same memory segment.
   std::unique_ptr<const PersistentMemoryAllocator> allocator3(
@@ -209,20 +233,34 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
                                     TEST_MEMORY_PAGE, 0, "", true));
   EXPECT_EQ(TEST_ID, allocator3->Id());
   EXPECT_FALSE(allocator3->used_histogram_);
-  EXPECT_FALSE(allocator3->allocs_histogram_);
 
   // Ensure that iteration and access through third allocator works.
   PersistentMemoryAllocator::Iterator iter3(allocator3.get());
   EXPECT_EQ(block1, iter3.GetNext(&type));
   EXPECT_EQ(block2, iter3.GetNext(&type));
   EXPECT_EQ(0U, iter3.GetNext(&type));
-  EXPECT_NE(nullptr, allocator3->GetAsObject<TestObject1>(block1, 1));
-  EXPECT_NE(nullptr, allocator3->GetAsObject<TestObject2>(block2, 2));
+  EXPECT_NE(nullptr, allocator3->GetAsObject<TestObject1>(block1));
+  EXPECT_NE(nullptr, allocator3->GetAsObject<TestObject2>(block2));
 
   // Ensure that GetNextOfType works.
   PersistentMemoryAllocator::Iterator iter1c(allocator_.get());
-  EXPECT_EQ(block2, iter1c.GetNextOfType(2));
+  EXPECT_EQ(block2, iter1c.GetNextOfType<TestObject2>());
   EXPECT_EQ(0U, iter1c.GetNextOfType(2));
+
+  // Ensure that GetNextOfObject works.
+  PersistentMemoryAllocator::Iterator iter1d(allocator_.get());
+  EXPECT_EQ(obj2, iter1d.GetNextOfObject<TestObject2>());
+  EXPECT_EQ(nullptr, iter1d.GetNextOfObject<TestObject2>());
+
+  // Ensure that deleting an object works.
+  allocator_->Delete(obj2);
+  PersistentMemoryAllocator::Iterator iter1z(allocator_.get());
+  EXPECT_EQ(nullptr, iter1z.GetNextOfObject<TestObject2>());
+
+  // Ensure that the memory state can be set.
+  allocator_->SetMemoryState(PersistentMemoryAllocator::MEMORY_DELETED);
+  EXPECT_EQ(PersistentMemoryAllocator::MEMORY_DELETED,
+            allocator_->GetMemoryState());
 }
 
 TEST_F(PersistentMemoryAllocatorTest, PageTest) {
@@ -320,12 +358,14 @@ class CounterThread : public SimpleThread {
   CounterThread(const std::string& name,
                 PersistentMemoryAllocator::Iterator* iterator,
                 Lock* lock,
-                ConditionVariable* condition)
+                ConditionVariable* condition,
+                bool* wake_up)
       : SimpleThread(name, Options()),
         iterator_(iterator),
         lock_(lock),
         condition_(condition),
-        count_(0) {}
+        count_(0),
+        wake_up_(wake_up) {}
 
   void Run() override {
     // Wait so all threads can start at approximately the same time.
@@ -333,8 +373,17 @@ class CounterThread : public SimpleThread {
     // releases the next, etc., etc.
     {
       AutoLock autolock(*lock_);
-      condition_->Wait();
-      condition_->Signal();
+
+      // Before calling Wait(), make sure that the wake up condition
+      // has not already passed.  Also, since spurious signal events
+      // are possible, check the condition in a while loop to make
+      // sure that the wake up condition is met when this thread
+      // returns from the Wait().
+      // See usage comments in src/base/synchronization/condition_variable.h.
+      while (!*wake_up_) {
+        condition_->Wait();
+        condition_->Signal();
+      }
     }
 
     uint32_t type;
@@ -350,6 +399,9 @@ class CounterThread : public SimpleThread {
   Lock* lock_;
   ConditionVariable* condition_;
   unsigned count_;
+  bool* wake_up_;
+
+  DISALLOW_COPY_AND_ASSIGN(CounterThread);
 };
 
 // Ensure that parallel iteration returns the same number of objects as
@@ -373,18 +425,27 @@ TEST_F(PersistentMemoryAllocatorTest, IteratorParallelismTest) {
   PersistentMemoryAllocator::Iterator iter(allocator_.get());
   Lock lock;
   ConditionVariable condition(&lock);
+  bool wake_up = false;
 
-  CounterThread t1("t1", &iter, &lock, &condition);
-  CounterThread t2("t2", &iter, &lock, &condition);
-  CounterThread t3("t3", &iter, &lock, &condition);
-  CounterThread t4("t4", &iter, &lock, &condition);
-  CounterThread t5("t5", &iter, &lock, &condition);
+  CounterThread t1("t1", &iter, &lock, &condition, &wake_up);
+  CounterThread t2("t2", &iter, &lock, &condition, &wake_up);
+  CounterThread t3("t3", &iter, &lock, &condition, &wake_up);
+  CounterThread t4("t4", &iter, &lock, &condition, &wake_up);
+  CounterThread t5("t5", &iter, &lock, &condition, &wake_up);
 
   t1.Start();
   t2.Start();
   t3.Start();
   t4.Start();
   t5.Start();
+
+  // Take the lock and set the wake up condition to true.  This helps to
+  // avoid a race condition where the Signal() event is called before
+  // all the threads have reached the Wait() and thus never get woken up.
+  {
+    AutoLock autolock(lock);
+    wake_up = true;
+  }
 
   // This will release all the waiting threads.
   condition.Signal();
@@ -512,7 +573,7 @@ TEST(SharedPersistentMemoryAllocatorTest, CreationTest) {
     r456 = local.Allocate(456, 456);
     r789 = local.Allocate(789, 789);
     local.MakeIterable(r123);
-    local.ChangeType(r456, 654, 456);
+    local.ChangeType(r456, 654, 456, false);
     local.MakeIterable(r789);
     local.GetMemoryInfo(&meminfo1);
     EXPECT_FALSE(local.IsFull());
@@ -581,6 +642,25 @@ TEST(SharedPersistentMemoryAllocatorTest, CreationTest) {
   shalloc3.MakeIterable(obj);
   EXPECT_EQ(obj, iter2.GetNext(&type));
   EXPECT_EQ(42U, type);
+
+  // Clear-on-change test.
+  Reference data_ref = shalloc3.Allocate(sizeof(int) * 4, 911);
+  int* data = shalloc3.GetAsArray<int>(data_ref, 911, 4);
+  ASSERT_TRUE(data);
+  data[0] = 0;
+  data[1] = 1;
+  data[2] = 2;
+  data[3] = 3;
+  ASSERT_TRUE(shalloc3.ChangeType(data_ref, 119, 911, false));
+  EXPECT_EQ(0, data[0]);
+  EXPECT_EQ(1, data[1]);
+  EXPECT_EQ(2, data[2]);
+  EXPECT_EQ(3, data[3]);
+  ASSERT_TRUE(shalloc3.ChangeType(data_ref, 191, 119, true));
+  EXPECT_EQ(0, data[0]);
+  EXPECT_EQ(0, data[1]);
+  EXPECT_EQ(0, data[2]);
+  EXPECT_EQ(0, data[3]);
 }
 
 
@@ -590,7 +670,7 @@ TEST(SharedPersistentMemoryAllocatorTest, CreationTest) {
 TEST(FilePersistentMemoryAllocatorTest, CreationTest) {
   ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("persistent_memory");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("persistent_memory");
 
   PersistentMemoryAllocator::MemoryInfo meminfo1;
   Reference r123, r456, r789;
@@ -601,7 +681,7 @@ TEST(FilePersistentMemoryAllocatorTest, CreationTest) {
     r456 = local.Allocate(456, 456);
     r789 = local.Allocate(789, 789);
     local.MakeIterable(r123);
-    local.ChangeType(r456, 654, 456);
+    local.ChangeType(r456, 654, 456, false);
     local.MakeIterable(r789);
     local.GetMemoryInfo(&meminfo1);
     EXPECT_FALSE(local.IsFull());
@@ -618,8 +698,8 @@ TEST(FilePersistentMemoryAllocatorTest, CreationTest) {
   const size_t mmlength = mmfile->length();
   EXPECT_GE(meminfo1.total, mmlength);
 
-  FilePersistentMemoryAllocator file(std::move(mmfile), 0, 0, "", true);
-  EXPECT_TRUE(file.IsReadonly());
+  FilePersistentMemoryAllocator file(std::move(mmfile), 0, 0, "", false);
+  EXPECT_FALSE(file.IsReadonly());
   EXPECT_EQ(TEST_ID, file.Id());
   EXPECT_FALSE(file.IsFull());
   EXPECT_FALSE(file.IsCorrupt());
@@ -640,12 +720,17 @@ TEST(FilePersistentMemoryAllocatorTest, CreationTest) {
   EXPECT_GE(meminfo1.free, meminfo2.free);
   EXPECT_EQ(mmlength, meminfo2.total);
   EXPECT_EQ(0U, meminfo2.free);
+
+  // There's no way of knowing if Flush actually does anything but at least
+  // verify that it runs without CHECK violations.
+  file.Flush(false);
+  file.Flush(true);
 }
 
 TEST(FilePersistentMemoryAllocatorTest, ExtendTest) {
   ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  FilePath file_path = temp_dir.path().AppendASCII("extend_test");
+  FilePath file_path = temp_dir.GetPath().AppendASCII("extend_test");
   MemoryMappedFile::Region region = {0, 16 << 10};  // 16KiB maximum size.
 
   // Start with a small but valid file of persistent data.
@@ -711,7 +796,7 @@ TEST(FilePersistentMemoryAllocatorTest, AcceptableTest) {
   char filename[100];
   for (size_t filesize = minsize; filesize > 0; --filesize) {
     strings::SafeSPrintf(filename, "memory_%d_A", filesize);
-    FilePath file_path = temp_dir.path().AppendASCII(filename);
+    FilePath file_path = temp_dir.GetPath().AppendASCII(filename);
     ASSERT_FALSE(PathExists(file_path));
     {
       File writer(file_path, File::FLAG_CREATE | File::FLAG_WRITE);
@@ -742,7 +827,8 @@ TEST(FilePersistentMemoryAllocatorTest, AcceptableTest) {
       uint32_t type_id;
       Reference ref;
       while ((ref = iter.GetNext(&type_id)) != 0) {
-        const char* data = allocator.GetAsObject<char>(ref, 0);
+        const char* data = allocator.GetAsArray<char>(
+            ref, 0, PersistentMemoryAllocator::kSizeAny);
         uint32_t type = allocator.GetType(ref);
         size_t size = allocator.GetAllocSize(ref);
         // Ensure compiler can't optimize-out above variables.
@@ -761,7 +847,7 @@ TEST(FilePersistentMemoryAllocatorTest, AcceptableTest) {
     }
 
     strings::SafeSPrintf(filename, "memory_%d_B", filesize);
-    file_path = temp_dir.path().AppendASCII(filename);
+    file_path = temp_dir.GetPath().AppendASCII(filename);
     ASSERT_FALSE(PathExists(file_path));
     {
       File writer(file_path, File::FLAG_CREATE | File::FLAG_WRITE);

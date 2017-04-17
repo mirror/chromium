@@ -8,23 +8,26 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
 #include "platform/Length.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class ComputedStyle;
 
 class LengthPropertyFunctions {
-    STATIC_ONLY(LengthPropertyFunctions);
-public:
-    static ValueRange getValueRange(CSSPropertyID);
-    static bool isZoomedLength(CSSPropertyID);
-    static bool getPixelsForKeyword(CSSPropertyID, CSSValueID, double& resultPixels);
-    static bool getInitialLength(CSSPropertyID, Length& result);
-    static bool getLength(CSSPropertyID, const ComputedStyle&, Length& result);
-    static bool setLength(CSSPropertyID, ComputedStyle&, const Length&);
+  STATIC_ONLY(LengthPropertyFunctions);
+
+ public:
+  static ValueRange GetValueRange(CSSPropertyID);
+  static bool IsZoomedLength(CSSPropertyID);
+  static bool GetPixelsForKeyword(CSSPropertyID,
+                                  CSSValueID,
+                                  double& result_pixels);
+  static bool GetInitialLength(CSSPropertyID, Length& result);
+  static bool GetLength(CSSPropertyID, const ComputedStyle&, Length& result);
+  static bool SetLength(CSSPropertyID, ComputedStyle&, const Length&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LengthPropertyFunctions_h
+#endif  // LengthPropertyFunctions_h

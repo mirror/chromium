@@ -14,7 +14,6 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/http/http_auth.h"
-#include "net/log/net_log.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -25,6 +24,7 @@ class HttpAuthHandler;
 class HttpAuthHandlerFactory;
 class HttpAuthCache;
 class HttpRequestHeaders;
+class NetLogWithSource;
 struct HttpRequestInfo;
 class SSLInfo;
 
@@ -43,36 +43,35 @@ class NET_EXPORT_PRIVATE HttpAuthController
   // value is a net error code. |OK| will be returned both in the case that
   // a token is correctly generated synchronously, as well as when no tokens
   // were necessary.
-  virtual int MaybeGenerateAuthToken(const HttpRequestInfo* request,
-                                     const CompletionCallback& callback,
-                                     const BoundNetLog& net_log);
+  int MaybeGenerateAuthToken(const HttpRequestInfo* request,
+                             const CompletionCallback& callback,
+                             const NetLogWithSource& net_log);
 
   // Adds either the proxy auth header, or the origin server auth header,
   // as specified by |target_|.
-  virtual void AddAuthorizationHeader(
-      HttpRequestHeaders* authorization_headers);
+  void AddAuthorizationHeader(HttpRequestHeaders* authorization_headers);
 
   // Checks for and handles HTTP status code 401 or 407.
   // |HandleAuthChallenge()| returns OK on success, or a network error code
   // otherwise. It may also populate |auth_info_|.
-  virtual int HandleAuthChallenge(scoped_refptr<HttpResponseHeaders> headers,
-                                  const SSLInfo& ssl_info,
-                                  bool do_not_send_server_auth,
-                                  bool establishing_tunnel,
-                                  const BoundNetLog& net_log);
+  int HandleAuthChallenge(scoped_refptr<HttpResponseHeaders> headers,
+                          const SSLInfo& ssl_info,
+                          bool do_not_send_server_auth,
+                          bool establishing_tunnel,
+                          const NetLogWithSource& net_log);
 
   // Store the supplied credentials and prepare to restart the auth.
-  virtual void ResetAuth(const AuthCredentials& credentials);
+  void ResetAuth(const AuthCredentials& credentials);
 
-  virtual bool HaveAuthHandler() const;
+  bool HaveAuthHandler() const;
 
-  virtual bool HaveAuth() const;
+  bool HaveAuth() const;
 
-  virtual scoped_refptr<AuthChallengeInfo> auth_info();
+  scoped_refptr<AuthChallengeInfo> auth_info();
 
-  virtual bool IsAuthSchemeDisabled(HttpAuth::Scheme scheme) const;
-  virtual void DisableAuthScheme(HttpAuth::Scheme scheme);
-  virtual void DisableEmbeddedIdentity();
+  bool IsAuthSchemeDisabled(HttpAuth::Scheme scheme) const;
+  void DisableAuthScheme(HttpAuth::Scheme scheme);
+  void DisableEmbeddedIdentity();
 
  private:
   // Actions for InvalidateCurrentHandler()
@@ -90,7 +89,7 @@ class NET_EXPORT_PRIVATE HttpAuthController
   // Searches the auth cache for an entry that encompasses the request's path.
   // If such an entry is found, updates |identity_| and |handler_| with the
   // cache entry's data and returns true.
-  bool SelectPreemptiveAuth(const BoundNetLog& net_log);
+  bool SelectPreemptiveAuth(const NetLogWithSource& net_log);
 
   // Invalidates the current handler.  If |action| is
   // INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS, then also invalidate
@@ -110,12 +109,12 @@ class NET_EXPORT_PRIVATE HttpAuthController
   // URLRequestHttpJob can prompt for credentials.
   void PopulateAuthChallenge();
 
-  // If |result| indicates a permanent failure, disables the current
-  // auth scheme for this controller and returns true.  Returns false
-  // otherwise.
-  bool DisableOnAuthHandlerResult(int result);
+  // Handle the result of calling GenerateAuthToken on an HttpAuthHandler. The
+  // return value of this function should be used as the return value of the
+  // GenerateAuthToken operation.
+  int HandleGenerateTokenResult(int result);
 
-  void OnIOComplete(int result);
+  void OnGenerateAuthTokenDone(int result);
 
   // Indicates if this handler is for Proxy auth or Server auth.
   HttpAuth::Target target_;

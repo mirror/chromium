@@ -10,24 +10,27 @@
 
 namespace blink {
 
-InterpolationValue SVGAngleInterpolationType::maybeConvertNeutral(const InterpolationValue&, ConversionCheckers&) const
-{
-    return InterpolationValue(InterpolableNumber::create(0));
+InterpolationValue SVGAngleInterpolationType::MaybeConvertNeutral(
+    const InterpolationValue&,
+    ConversionCheckers&) const {
+  return InterpolationValue(InterpolableNumber::Create(0));
 }
 
-InterpolationValue SVGAngleInterpolationType::maybeConvertSVGValue(const SVGPropertyBase& svgValue) const
-{
-    if (toSVGAngle(svgValue).orientType()->enumValue() != SVGMarkerOrientAngle)
-        return nullptr;
-    return InterpolationValue(InterpolableNumber::create(toSVGAngle(svgValue).value()));
+InterpolationValue SVGAngleInterpolationType::MaybeConvertSVGValue(
+    const SVGPropertyBase& svg_value) const {
+  if (ToSVGAngle(svg_value).OrientType()->EnumValue() != kSVGMarkerOrientAngle)
+    return nullptr;
+  return InterpolationValue(
+      InterpolableNumber::Create(ToSVGAngle(svg_value).Value()));
 }
 
-SVGPropertyBase* SVGAngleInterpolationType::appliedSVGValue(const InterpolableValue& interpolableValue, const NonInterpolableValue*) const
-{
-    double doubleValue = toInterpolableNumber(interpolableValue).value();
-    SVGAngle* result = SVGAngle::create();
-    result->newValueSpecifiedUnits(SVGAngle::SVG_ANGLETYPE_DEG, doubleValue);
-    return result;
+SVGPropertyBase* SVGAngleInterpolationType::AppliedSVGValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue*) const {
+  double double_value = ToInterpolableNumber(interpolable_value).Value();
+  SVGAngle* result = SVGAngle::Create();
+  result->NewValueSpecifiedUnits(SVGAngle::kSvgAngletypeDeg, double_value);
+  return result;
 }
 
-} // namespace blink
+}  // namespace blink

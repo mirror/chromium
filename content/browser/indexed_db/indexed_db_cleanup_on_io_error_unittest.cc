@@ -8,12 +8,14 @@
 #include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/indexed_db/indexed_db_backing_store.h"
 #include "content/browser/indexed_db/indexed_db_data_loss_info.h"
 #include "content/browser/indexed_db/leveldb/leveldb_database.h"
 #include "content/browser/indexed_db/leveldb/mock_leveldb_factory.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
@@ -36,19 +38,16 @@ namespace content {
 class IndexedDBFactory;
 }
 
-namespace net {
-class URLRequestContext;
-}
-
 namespace {
 
 class BustedLevelDBDatabase : public LevelDBDatabase {
  public:
-  BustedLevelDBDatabase() {}
+  BustedLevelDBDatabase()
+      : LevelDBDatabase(LevelDBDatabase::kDefaultMaxOpenIteratorsPerDatabase) {}
   static std::unique_ptr<LevelDBDatabase> Open(
       const base::FilePath& file_name,
       const LevelDBComparator* /*comparator*/) {
-    return std::unique_ptr<LevelDBDatabase>(new BustedLevelDBDatabase);
+    return base::MakeUnique<BustedLevelDBDatabase>();
   }
   leveldb::Status Get(const base::StringPiece& key,
                       std::string* value,
@@ -87,8 +86,8 @@ TEST(IndexedDBIOErrorTest, CleanUpTest) {
   const url::Origin origin(GURL("http://localhost:81"));
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
-  const base::FilePath path = temp_directory.path();
-  net::URLRequestContext* request_context = NULL;
+  const base::FilePath path = temp_directory.GetPath();
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter;
 
   BustedLevelDBFactory busted_factory;
   content::MockLevelDBFactory mock_leveldb_factory;
@@ -106,17 +105,17 @@ TEST(IndexedDBIOErrorTest, CleanUpTest) {
   leveldb::Status s;
   scoped_refptr<IndexedDBBackingStore> backing_store =
       IndexedDBBackingStore::Open(
-          factory, origin, path, request_context, &data_loss_info, &disk_full,
-          &mock_leveldb_factory, task_runner, clean_journal, &s);
+          factory, origin, path, request_context_getter, &data_loss_info,
+          &disk_full, &mock_leveldb_factory, task_runner, clean_journal, &s);
 }
 
 TEST(IndexedDBNonRecoverableIOErrorTest, NuancedCleanupTest) {
   content::IndexedDBFactory* factory = NULL;
   const url::Origin origin(GURL("http://localhost:81"));
-  net::URLRequestContext* request_context = NULL;
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter;
   base::ScopedTempDir temp_directory;
   ASSERT_TRUE(temp_directory.CreateUniqueTempDir());
-  const base::FilePath path = temp_directory.path();
+  const base::FilePath path = temp_directory.GetPath();
   content::IndexedDBDataLossInfo data_loss_info;
   bool disk_full = false;
   base::SequencedTaskRunner* task_runner = NULL;
@@ -138,8 +137,8 @@ TEST(IndexedDBNonRecoverableIOErrorTest, NuancedCleanupTest) {
                                           base::File::FILE_ERROR_NO_SPACE));
   scoped_refptr<IndexedDBBackingStore> backing_store =
       IndexedDBBackingStore::Open(
-          factory, origin, path, request_context, &data_loss_info, &disk_full,
-          &mock_leveldb_factory, task_runner, clean_journal, &s);
+          factory, origin, path, request_context_getter, &data_loss_info,
+          &disk_full, &mock_leveldb_factory, task_runner, clean_journal, &s);
   ASSERT_TRUE(s.IsIOError());
 
   busted_factory.SetOpenError(MakeIOError("some filename",
@@ -148,8 +147,8 @@ TEST(IndexedDBNonRecoverableIOErrorTest, NuancedCleanupTest) {
                                           base::File::FILE_ERROR_NO_MEMORY));
   scoped_refptr<IndexedDBBackingStore> backing_store2 =
       IndexedDBBackingStore::Open(
-          factory, origin, path, request_context, &data_loss_info, &disk_full,
-          &mock_leveldb_factory, task_runner, clean_journal, &s);
+          factory, origin, path, request_context_getter, &data_loss_info,
+          &disk_full, &mock_leveldb_factory, task_runner, clean_journal, &s);
   ASSERT_TRUE(s.IsIOError());
 
   busted_factory.SetOpenError(MakeIOError("some filename", "some message",
@@ -157,8 +156,8 @@ TEST(IndexedDBNonRecoverableIOErrorTest, NuancedCleanupTest) {
                                           base::File::FILE_ERROR_IO));
   scoped_refptr<IndexedDBBackingStore> backing_store3 =
       IndexedDBBackingStore::Open(
-          factory, origin, path, request_context, &data_loss_info, &disk_full,
-          &mock_leveldb_factory, task_runner, clean_journal, &s);
+          factory, origin, path, request_context_getter, &data_loss_info,
+          &disk_full, &mock_leveldb_factory, task_runner, clean_journal, &s);
   ASSERT_TRUE(s.IsIOError());
 
   busted_factory.SetOpenError(MakeIOError("some filename",
@@ -167,8 +166,8 @@ TEST(IndexedDBNonRecoverableIOErrorTest, NuancedCleanupTest) {
                                           base::File::FILE_ERROR_FAILED));
   scoped_refptr<IndexedDBBackingStore> backing_store4 =
       IndexedDBBackingStore::Open(
-          factory, origin, path, request_context, &data_loss_info, &disk_full,
-          &mock_leveldb_factory, task_runner, clean_journal, &s);
+          factory, origin, path, request_context_getter, &data_loss_info,
+          &disk_full, &mock_leveldb_factory, task_runner, clean_journal, &s);
   ASSERT_TRUE(s.IsIOError());
 }
 

@@ -5,8 +5,10 @@
 #ifndef CHROME_BROWSER_ANDROID_COMPOSITOR_SCENE_LAYER_TAB_LIST_SCENE_LAYER_H_
 #define CHROME_BROWSER_ANDROID_COMPOSITOR_SCENE_LAYER_TAB_LIST_SCENE_LAYER_H_
 
+#include <map>
 #include <memory>
-#include <vector>
+#include <set>
+#include <unordered_set>
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_weak_ref.h"
@@ -21,7 +23,6 @@ namespace ui {
 class ResourceManager;
 }
 
-namespace chrome {
 namespace android {
 
 class LayerTitleCache;
@@ -61,6 +62,7 @@ class TabListSceneLayer : public SceneLayer {
       jint border_resource_id,
       jint border_inner_shadow_resource_id,
       jboolean can_use_live_layer,
+      jboolean browser_controls_at_bottom,
       jint tab_background_color,
       jint back_logo_color,
       jboolean incognito,
@@ -94,14 +96,15 @@ class TabListSceneLayer : public SceneLayer {
       jboolean show_toolbar,
       jint default_theme_color,
       jint toolbar_background_color,
+      jint close_button_color,
       jboolean anonymize_toolbar,
+      jboolean show_tab_title,
       jint toolbar_textbox_resource_id,
       jint toolbar_textbox_background_color,
       jfloat toolbar_textbox_alpha,
       jfloat toolbar_alpha,
       jfloat toolbar_y_offset,
       jfloat side_border_scale,
-      jboolean attach_content,
       jboolean inset_border);
 
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject(JNIEnv* env);
@@ -111,20 +114,18 @@ class TabListSceneLayer : public SceneLayer {
   SkColor GetBackgroundColor() override;
 
  private:
-  void RemoveAllRemainingTabLayers();
-  void RemoveTabLayersInRange(unsigned start_index, unsigned end_index);
+  // The set of tint colors that were used for a frame.
+  std::unordered_set<int> used_tints_;
 
-  typedef std::vector<scoped_refptr<TabLayer>> TabLayerList;
-
-  scoped_refptr<TabLayer> GetNextLayer(bool incognito);
+  typedef std::map<int, scoped_refptr<TabLayer>> TabMap;
+  TabMap tab_map_;
+  std::set<int> visible_tabs_this_frame_;
 
   base::android::ScopedJavaGlobalRef<jobject> java_obj_;
   bool content_obscures_self_;
-  unsigned write_index_;
   ui::ResourceManager* resource_manager_;
   LayerTitleCache* layer_title_cache_;
   TabContentManager* tab_content_manager_;
-  TabLayerList layers_;
   SkColor background_color_;
 
   scoped_refptr<cc::Layer> own_tree_;
@@ -135,6 +136,5 @@ class TabListSceneLayer : public SceneLayer {
 bool RegisterTabListSceneLayer(JNIEnv* env);
 
 }  // namespace android
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_COMPOSITOR_SCENE_LAYER_TAB_LIST_SCENE_LAYER_H_

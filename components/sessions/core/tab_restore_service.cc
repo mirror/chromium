@@ -4,6 +4,8 @@
 
 #include "components/sessions/core/tab_restore_service.h"
 
+#include "base/trace_event/memory_usage_estimator.h"
+
 namespace sessions {
 
 // TimeFactory-----------------------------------------------------------------
@@ -15,70 +17,32 @@ TabRestoreService::TimeFactory::~TimeFactory() {}
 // ID of the next Entry.
 static SessionID::id_type next_entry_id = 1;
 
-TabRestoreService::Entry::Entry()
-    : id(next_entry_id++),
-      type(TAB),
-      from_last_session(false) {}
+TabRestoreService::Entry::~Entry() = default;
+TabRestoreService::Entry::Entry(Type type) : id(next_entry_id++), type(type) {}
 
-TabRestoreService::Entry::Entry(Type type)
-    : id(next_entry_id++),
-      type(type),
-      from_last_session(false) {}
-
-TabRestoreService::Entry::~Entry() {}
-
-// Tab ------------------------------------------------------------------------
-
-TabRestoreService::Tab::Tab()
-    : Entry(TAB),
-      current_navigation_index(-1),
-      browser_id(0),
-      tabstrip_index(-1),
-      pinned(false) {
+size_t TabRestoreService::Entry::EstimateMemoryUsage() const {
+  return 0;
 }
 
-TabRestoreService::Tab::Tab(const TabRestoreService::Tab& tab)
-    : Entry(tab),
-      navigations(tab.navigations),
-      current_navigation_index(tab.current_navigation_index),
-      browser_id(tab.browser_id),
-      tabstrip_index(tab.tabstrip_index),
-      pinned(tab.pinned),
-      extension_app_id(tab.extension_app_id),
-      user_agent_override(tab.user_agent_override) {
-  if (tab.platform_data)
-    platform_data = tab.platform_data->Clone();
+TabRestoreService::Tab::Tab() : Entry(TAB) {}
+TabRestoreService::Tab::~Tab() = default;
+
+size_t TabRestoreService::Tab::EstimateMemoryUsage() const {
+  using base::trace_event::EstimateMemoryUsage;
+  return
+      EstimateMemoryUsage(navigations) +
+      EstimateMemoryUsage(extension_app_id) +
+      EstimateMemoryUsage(user_agent_override);
 }
 
-TabRestoreService::Tab::~Tab() {
-}
+TabRestoreService::Window::Window() : Entry(WINDOW) {}
+TabRestoreService::Window::~Window() = default;
 
-TabRestoreService::Tab& TabRestoreService::Tab::operator=(
-    const TabRestoreService::Tab& tab) {
-  id = tab.id;
-  type = tab.type;
-  timestamp = tab.timestamp;
-  from_last_session = tab.from_last_session;
-  navigations = tab.navigations;
-  current_navigation_index = tab.current_navigation_index;
-  browser_id = tab.browser_id;
-  tabstrip_index = tab.tabstrip_index;
-  pinned = tab.pinned;
-  extension_app_id = tab.extension_app_id;
-  user_agent_override = tab.user_agent_override;
-
-  if (tab.platform_data)
-    platform_data = tab.platform_data->Clone();
-
-  return *this;
-}
-
-// Window ---------------------------------------------------------------------
-
-TabRestoreService::Window::Window() : Entry(WINDOW), selected_tab_index(-1) {
-}
-
-TabRestoreService::Window::~Window() {
+size_t TabRestoreService::Window::EstimateMemoryUsage() const {
+  using base::trace_event::EstimateMemoryUsage;
+  return
+      EstimateMemoryUsage(tabs) +
+      EstimateMemoryUsage(app_name);
 }
 
 // TabRestoreService ----------------------------------------------------------

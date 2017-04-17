@@ -14,6 +14,7 @@
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
 #include "chromeos/chromeos_export.h"
+#include "chromeos/dbus/dbus_method_call_status.h"
 #include "chromeos/login/auth/auth_attempt_state.h"
 #include "chromeos/login/auth/auth_attempt_state_resolver.h"
 #include "chromeos/login/auth/authenticator.h"
@@ -89,6 +90,11 @@ class CHROMEOS_EXPORT CryptohomeAuthenticator
     KIOSK_ACCOUNT_LOGIN = 22,         // Logged into a kiosk account.
     REMOVED_DATA_AFTER_FAILURE = 23,  // Successfully removed the user's
                                       // cryptohome after a login failure.
+    FAILED_OLD_ENCRYPTION = 24,       // Login failed, cryptohome is encrypted
+                                      // in old format.
+    FAILED_PREVIOUS_MIGRATION_INCOMPLETE = 25,  // Login failed, cryptohome is
+                                                // partially encrypted in old
+                                                // format.
   };
 
   CryptohomeAuthenticator(scoped_refptr<base::TaskRunner> task_runner,
@@ -137,6 +143,13 @@ class CHROMEOS_EXPORT CryptohomeAuthenticator
   void LoginAsKioskAccount(const AccountId& app_account_id,
                            bool use_guest_mount) override;
 
+  // Initiates login into the ARC kiosk mode account identified by
+  // |app_account_id|.
+  // Mounts a public cryptohome, which will be ephemeral if the
+  // |DeviceEphemeralUsersEnabled| policy is enabled and non-ephemeral
+  // otherwise.
+  void LoginAsArcKioskAccount(const AccountId& app_account_id) override;
+
   // These methods must be called on the UI thread, as they make DBus calls
   // and also call back to the login UI.
   void OnAuthSuccess() override;
@@ -155,6 +168,7 @@ class CHROMEOS_EXPORT CryptohomeAuthenticator
 
   void OnOffTheRecordAuthSuccess();
   void OnPasswordChangeDetected();
+  void OnOldEncryptionDetected(bool has_incomplete_migration);
 
  protected:
   ~CryptohomeAuthenticator() override;
@@ -226,6 +240,9 @@ class CHROMEOS_EXPORT CryptohomeAuthenticator
   // Handles completion of the ownership check and continues login.
   void OnOwnershipChecked(bool is_owner);
 
+  // Handles completion of cryptohome unmount.
+  void OnUnmount(DBusMethodCallStatus call_status, bool success);
+
   // Signal login completion status for cases when a new user is added via
   // an external authentication provider (i.e. GAIA extension).
   void ResolveLoginCompletionStatus();
@@ -239,8 +256,8 @@ class CHROMEOS_EXPORT CryptohomeAuthenticator
   bool ephemeral_mount_attempted_;
   bool check_key_attempted_;
 
-  // When the user has changed her password, but gives us the old one, we will
-  // be able to mount her cryptohome, but online authentication will fail.
+  // When the user has changed their password, but gives us the old one, we will
+  // be able to mount their cryptohome, but online authentication will fail.
   // This allows us to present the same behavior to the caller, regardless
   // of the order in which we receive these results.
   bool already_reported_success_;

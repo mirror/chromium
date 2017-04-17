@@ -4,6 +4,9 @@
 
 package org.chromium.base;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -20,6 +23,7 @@ import java.util.regex.Pattern;
 public class SysUtils {
     // A device reporting strictly more total memory in megabytes cannot be considered 'low-end'.
     private static final int ANDROID_LOW_MEMORY_DEVICE_THRESHOLD_MB = 512;
+    private static final int ANDROID_O_LOW_MEMORY_DEVICE_THRESHOLD_MB = 1024;
 
     private static final String TAG = "SysUtils";
 
@@ -107,6 +111,16 @@ public class SysUtils {
         sLowEndDevice = null;
     }
 
+    public static boolean hasCamera(final Context context) {
+        final PackageManager pm = context.getPackageManager();
+        // JellyBean support.
+        boolean hasCamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            hasCamera |= pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+        }
+        return hasCamera;
+    }
+
     private static boolean detectLowEndDevice() {
         assert CommandLine.isInitialized();
         if (CommandLine.getInstance().hasSwitch(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE)) {
@@ -117,6 +131,11 @@ public class SysUtils {
         }
 
         int ramSizeKB = amountOfPhysicalMemoryKB();
-        return (ramSizeKB > 0 && ramSizeKB / 1024 <= ANDROID_LOW_MEMORY_DEVICE_THRESHOLD_MB);
+        if (ramSizeKB <= 0) return false;
+
+        if (BuildInfo.isAtLeastO()) {
+            return ramSizeKB / 1024 <= ANDROID_O_LOW_MEMORY_DEVICE_THRESHOLD_MB;
+        }
+        return ramSizeKB / 1024 <= ANDROID_LOW_MEMORY_DEVICE_THRESHOLD_MB;
     }
 }

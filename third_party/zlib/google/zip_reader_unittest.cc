@@ -22,6 +22,7 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/time/time.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -121,7 +122,7 @@ class ZipReaderTest : public PlatformTest {
     PlatformTest::SetUp();
 
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    test_dir_ = temp_dir_.path();
+    test_dir_ = temp_dir_.GetPath();
 
     ASSERT_TRUE(GetTestDataDirectory(&test_data_dir_));
 
@@ -188,7 +189,7 @@ class ZipReaderTest : public PlatformTest {
 
   base::ScopedTempDir temp_dir_;
 
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 TEST_F(ZipReaderTest, Open_ValidZipFile) {

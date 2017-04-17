@@ -15,10 +15,10 @@
 #include "base/guid.h"
 #include "base/json/json_reader.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "base/stl_util.h"
+#include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
-#include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
 #include "chrome/browser/download/download_file_icon_extractor.h"
 #include "chrome/browser/download/download_service.h"
@@ -95,12 +95,9 @@ class DownloadsEventsListener : public content::NotificationObserver {
     registrar_.Remove(this,
                       extensions::NOTIFICATION_EXTENSION_DOWNLOADS_EVENT,
                       content::NotificationService::AllSources());
-    STLDeleteElements(&events_);
   }
 
-  void ClearEvents() {
-    STLDeleteElements(&events_);
-  }
+  void ClearEvents() { events_.clear(); }
 
   class Event {
    public:
@@ -188,7 +185,7 @@ class DownloadsEventsListener : public content::NotificationObserver {
           Event* new_event = new Event(
               dns->profile, dns->event_name,
               *content::Details<std::string>(details).ptr(), base::Time::Now());
-          events_.push_back(new_event);
+          events_.push_back(base::WrapUnique(new_event));
           if (waiting_ &&
               waiting_for_.get() &&
               new_event->Satisfies(*waiting_for_)) {
@@ -206,9 +203,8 @@ class DownloadsEventsListener : public content::NotificationObserver {
                const std::string& event_name,
                const std::string& json_args) {
     waiting_for_.reset(new Event(profile, event_name, json_args, base::Time()));
-    for (std::deque<Event*>::const_iterator iter = events_.begin();
-         iter != events_.end(); ++iter) {
-      if ((*iter)->Satisfies(*waiting_for_)) {
+    for (const auto& event : events_) {
+      if (event->Satisfies(*waiting_for_)) {
         return true;
       }
     }
@@ -219,10 +215,9 @@ class DownloadsEventsListener : public content::NotificationObserver {
       // Print the events that were caught since the last WaitFor() call to help
       // find the erroneous event.
       // TODO(benjhayden) Fuzzy-match and highlight the erroneous event.
-      for (std::deque<Event*>::const_iterator iter = events_.begin();
-          iter != events_.end(); ++iter) {
-        if ((*iter)->caught() > last_wait_) {
-          LOG(INFO) << "Caught " << (*iter)->Debug();
+      for (const auto& event : events_) {
+        if (event->caught() > last_wait_) {
+          LOG(INFO) << "Caught " << event->Debug();
         }
       }
       if (waiting_for_.get()) {
@@ -240,7 +235,7 @@ class DownloadsEventsListener : public content::NotificationObserver {
   base::Time last_wait_;
   std::unique_ptr<Event> waiting_for_;
   content::NotificationRegistrar registrar_;
-  std::deque<Event*> events_;
+  std::deque<std::unique_ptr<Event>> events_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadsEventsListener);
 };
@@ -325,7 +320,6 @@ class DownloadExtensionTest : public ExtensionApiTest {
     CreateAndSetDownloadsDirectory();
     current_browser()->profile()->GetPrefs()->SetBoolean(
         prefs::kPromptForDownload, false);
-    GetOnRecordManager()->RemoveAllDownloads();
     events_listener_.reset(new DownloadsEventsListener());
     // Disable file chooser for current profile.
     DownloadTestFileActivityObserver observer(current_browser()->profile());
@@ -337,7 +331,6 @@ class DownloadExtensionTest : public ExtensionApiTest {
   void GoOffTheRecord() {
     if (!incognito_browser_) {
       incognito_browser_ = CreateIncognitoBrowser();
-      GetOffRecordManager()->RemoveAllDownloads();
       // Disable file chooser for incognito profile.
       DownloadTestFileActivityObserver observer(incognito_browser_->profile());
       observer.EnableFileChooser(false);
@@ -382,7 +375,7 @@ class DownloadExtensionTest : public ExtensionApiTest {
 
   std::string GetFilename(const char* path) {
     std::string result =
-      downloads_directory_.path().AppendASCII(path).AsUTF8Unsafe();
+        downloads_directory_.GetPath().AppendASCII(path).AsUTF8Unsafe();
 #if defined(OS_WIN)
     for (std::string::size_type next = result.find("\\");
          next != std::string::npos;
@@ -439,7 +432,9 @@ class DownloadExtensionTest : public ExtensionApiTest {
           (history_info[i].state != content::DownloadItem::CANCELLED
                ? content::DOWNLOAD_INTERRUPT_REASON_NONE
                : content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED),
-          false);  // opened
+          false,    // opened
+          current,  // last_access_time
+          false, std::vector<DownloadItem::ReceivedSlice>());
       items->push_back(item);
     }
 
@@ -499,7 +494,8 @@ class DownloadExtensionTest : public ExtensionApiTest {
         CreateDownloadObserver(1));
     GURL finish_url(net::URLRequestSlowDownloadJob::kFinishDownloadUrl);
     ui_test_utils::NavigateToURLWithDisposition(
-        current_browser(), finish_url, NEW_FOREGROUND_TAB,
+        current_browser(), finish_url,
+        WindowOpenDisposition::NEW_FOREGROUND_TAB,
         ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
     observer->WaitForFinished();
     EXPECT_EQ(1u, observer->NumDownloadsSeenInState(DownloadItem::COMPLETE));
@@ -571,7 +567,7 @@ class DownloadExtensionTest : public ExtensionApiTest {
   }
 
   const base::FilePath& downloads_directory() {
-    return downloads_directory_.path();
+    return downloads_directory_.GetPath();
   }
 
   DownloadsEventsListener* events_listener() { return events_listener_.get(); }
@@ -592,8 +588,7 @@ class DownloadExtensionTest : public ExtensionApiTest {
   void CreateAndSetDownloadsDirectory() {
     ASSERT_TRUE(downloads_directory_.CreateUniqueTempDir());
     current_browser()->profile()->GetPrefs()->SetFilePath(
-        prefs::kDownloadDefaultDirectory,
-        downloads_directory_.path());
+        prefs::kDownloadDefaultDirectory, downloads_directory_.GetPath());
   }
 
   base::ScopedTempDir downloads_directory_;
@@ -708,29 +703,25 @@ class HTML5FileWriter {
     }
     // Invoke the fileapi to copy it into the sandboxed filesystem.
     bool result = false;
-    base::WaitableEvent done_event(
-        base::WaitableEvent::ResetPolicy::MANUAL,
-        base::WaitableEvent::InitialState::NOT_SIGNALED);
+    base::RunLoop run_loop;
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::Bind(&CreateFileForTestingOnIOThread,
-                   base::Unretained(context),
-                   path, temp_file,
-                   base::Unretained(&result),
-                   base::Unretained(&done_event)));
+        base::Bind(&CreateFileForTestingOnIOThread, base::Unretained(context),
+                   path, temp_file, base::Unretained(&result),
+                   run_loop.QuitClosure()));
     // Wait for that to finish.
-    done_event.Wait();
+    run_loop.Run();
     base::DeleteFile(temp_file, false);
     return result;
   }
 
  private:
   static void CopyInCompletion(bool* result,
-                               base::WaitableEvent* done_event,
+                               const base::Closure& quit_closure,
                                base::File::Error error) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     *result = error == base::File::FILE_OK;
-    done_event->Signal();
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, quit_closure);
   }
 
   static void CreateFileForTestingOnIOThread(
@@ -738,13 +729,11 @@ class HTML5FileWriter {
       const storage::FileSystemURL& path,
       const base::FilePath& temp_file,
       bool* result,
-      base::WaitableEvent* done_event) {
+      const base::Closure& quit_closure) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context->operation_runner()->CopyInForeignFile(
         temp_file, path,
-        base::Bind(&CopyInCompletion,
-                   base::Unretained(result),
-                   base::Unretained(done_event)));
+        base::Bind(&CopyInCompletion, base::Unretained(result), quit_closure));
   }
 };
 
@@ -955,10 +944,16 @@ scoped_refptr<UIThreadExtensionFunction> MockedGetFileIconFunction(
   return function;
 }
 
+// https://crbug.com/678967
+#if defined(OS_WIN)
+#define MAYBE_DownloadExtensionTest_FileIcon_Active DISABLED_DownloadExtensionTest_FileIcon_Active
+#else
+#define MAYBE_DownloadExtensionTest_FileIcon_Active DownloadExtensionTest_FileIcon_Active
+#endif
 // Test downloads.getFileIcon() on in-progress, finished, cancelled and deleted
 // download items.
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
-    DownloadExtensionTest_FileIcon_Active) {
+    MAYBE_DownloadExtensionTest_FileIcon_Active) {
   DownloadItem* download_item = CreateSlowTestDownload();
   ASSERT_TRUE(download_item);
   ASSERT_FALSE(download_item->GetTargetFilePath().empty());
@@ -1086,6 +1081,34 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result->GetAsList(&result_list));
   ASSERT_EQ(1UL, result_list->GetSize());
 }
+
+#if !defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
+                       DownloadsShowFunction) {
+  ScopedCancellingItem item(CreateSlowTestDownload());
+  ASSERT_TRUE(item.get());
+
+  RunFunction(new DownloadsShowFunction(), DownloadItemIdAsArgList(item.get()));
+}
+
+IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
+                       DownloadsShowDefaultFolderFunction) {
+  ScopedCancellingItem item(CreateSlowTestDownload());
+  ASSERT_TRUE(item.get());
+
+  RunFunction(new DownloadsShowDefaultFolderFunction(),
+              DownloadItemIdAsArgList(item.get()));
+}
+
+IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
+                       DownloadsDragFunction) {
+  ScopedCancellingItem item(CreateSlowTestDownload());
+  ASSERT_TRUE(item.get());
+
+  RunFunction(new DownloadsDragFunction(), DownloadItemIdAsArgList(item.get()));
+}
+#endif
+
 
 // Test the |filenameRegex| parameter for search().
 IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
@@ -3976,20 +3999,14 @@ IN_PROC_BROWSER_TEST_F(
                           result_id)));
 }
 
-#if defined(OS_WIN)
 // This test is very flaky on Win XP and Aura. http://crbug.com/248438
-#define MAYBE_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume \
-    DISABLED_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume
-#else
-#define MAYBE_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume \
-    DownloadExtensionTest_OnDeterminingFilename_InterruptedResume
-#endif
-
+// Also flaky on Linux. http://crbug.com/700382
+// Also flaky on Mac ASAN with PlzNavigate.
 // Test download interruption while extensions determining filename. Should not
 // re-dispatch onDeterminingFilename.
 IN_PROC_BROWSER_TEST_F(
     DownloadExtensionTest,
-    MAYBE_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume) {
+    DISABLED_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume) {
   LoadExtension("downloads_split");
   ASSERT_TRUE(StartEmbeddedTestServer());
   GoOnTheRecord();
@@ -4009,8 +4026,7 @@ IN_PROC_BROWSER_TEST_F(
     ui_test_utils::NavigateToURLWithDisposition(
         current_browser(),
         GURL(net::URLRequestSlowDownloadJob::kUnknownSizeUrl),
-        CURRENT_TAB,
-        ui_test_utils::BROWSER_TEST_NONE);
+        WindowOpenDisposition::CURRENT_TAB, ui_test_utils::BROWSER_TEST_NONE);
     observer->WaitForFinished();
     EXPECT_EQ(1u, observer->NumDownloadsSeenInState(DownloadItem::IN_PROGRESS));
     DownloadManager::DownloadVector items;
@@ -4049,7 +4065,7 @@ IN_PROC_BROWSER_TEST_F(
   ui_test_utils::NavigateToURLWithDisposition(
       current_browser(),
       GURL(net::URLRequestSlowDownloadJob::kErrorDownloadUrl),
-      NEW_BACKGROUND_TAB,
+      WindowOpenDisposition::NEW_BACKGROUND_TAB,
       ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
   // Errors caught before filename determination are delayed until after

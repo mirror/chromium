@@ -15,9 +15,11 @@
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "crypto/nss_util.h"
 #include "net/base/test_completion_callback.h"
 #include "net/http/http_response_headers.h"
+#include "net/log/net_log_source.h"
 #include "net/log/test_net_log.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/stream_socket.h"
@@ -26,6 +28,7 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/test/embedded_test_server/request_handler_util.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request.h"
@@ -178,9 +181,9 @@ class EmbeddedTestServerTest
                                               HttpStatusCode code,
                                               const HttpRequest& request) {
     request_relative_url_ = request.relative_url;
+    request_absolute_url_ = request.GetURL();
 
-    GURL absolute_url = server_->GetURL(request.relative_url);
-    if (absolute_url.path() == path) {
+    if (request_absolute_url_.path() == path) {
       std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
       http_response->set_code(code);
       http_response->set_content(content);
@@ -195,6 +198,7 @@ class EmbeddedTestServerTest
   int num_responses_received_;
   int num_responses_expected_;
   std::string request_relative_url_;
+  GURL request_absolute_url_;
   base::Thread io_thread_;
   scoped_refptr<TestURLRequestContextGetter> request_context_getter_;
   TestConnectionListener connection_listener_;
@@ -249,7 +253,8 @@ TEST_P(EmbeddedTestServerTest, RegisterRequestHandler) {
   ASSERT_TRUE(server_->Start());
 
   std::unique_ptr<URLFetcher> fetcher =
-      URLFetcher::Create(server_->GetURL("/test?q=foo"), URLFetcher::GET, this);
+      URLFetcher::Create(server_->GetURL("/test?q=foo"), URLFetcher::GET, this,
+                         TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher->SetRequestContext(request_context_getter_.get());
   fetcher->Start();
   WaitForResponses(1);
@@ -260,6 +265,7 @@ TEST_P(EmbeddedTestServerTest, RegisterRequestHandler) {
   EXPECT_EQ("text/html", GetContentTypeFromFetcher(*fetcher));
 
   EXPECT_EQ("/test?q=foo", request_relative_url_);
+  EXPECT_EQ(server_->GetURL("/test?q=foo"), request_absolute_url_);
 }
 
 TEST_P(EmbeddedTestServerTest, ServeFilesFromDirectory) {
@@ -270,7 +276,8 @@ TEST_P(EmbeddedTestServerTest, ServeFilesFromDirectory) {
   ASSERT_TRUE(server_->Start());
 
   std::unique_ptr<URLFetcher> fetcher =
-      URLFetcher::Create(server_->GetURL("/test.html"), URLFetcher::GET, this);
+      URLFetcher::Create(server_->GetURL("/test.html"), URLFetcher::GET, this,
+                         TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher->SetRequestContext(request_context_getter_.get());
   fetcher->Start();
   WaitForResponses(1);
@@ -284,8 +291,9 @@ TEST_P(EmbeddedTestServerTest, ServeFilesFromDirectory) {
 TEST_P(EmbeddedTestServerTest, DefaultNotFoundResponse) {
   ASSERT_TRUE(server_->Start());
 
-  std::unique_ptr<URLFetcher> fetcher = URLFetcher::Create(
-      server_->GetURL("/non-existent"), URLFetcher::GET, this);
+  std::unique_ptr<URLFetcher> fetcher =
+      URLFetcher::Create(server_->GetURL("/non-existent"), URLFetcher::GET,
+                         this, TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher->SetRequestContext(request_context_getter_.get());
 
   fetcher->Start();
@@ -303,7 +311,7 @@ TEST_P(EmbeddedTestServerTest, ConnectionListenerAccept) {
 
   std::unique_ptr<StreamSocket> socket =
       ClientSocketFactory::GetDefaultFactory()->CreateTransportClientSocket(
-          address_list, NULL, &net_log, NetLog::Source());
+          address_list, NULL, &net_log, NetLogSource());
   TestCompletionCallback callback;
   ASSERT_THAT(callback.GetResult(socket->Connect(callback.callback())), IsOk());
 
@@ -316,8 +324,9 @@ TEST_P(EmbeddedTestServerTest, ConnectionListenerAccept) {
 TEST_P(EmbeddedTestServerTest, ConnectionListenerRead) {
   ASSERT_TRUE(server_->Start());
 
-  std::unique_ptr<URLFetcher> fetcher = URLFetcher::Create(
-      server_->GetURL("/non-existent"), URLFetcher::GET, this);
+  std::unique_ptr<URLFetcher> fetcher =
+      URLFetcher::Create(server_->GetURL("/non-existent"), URLFetcher::GET,
+                         this, TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher->SetRequestContext(request_context_getter_.get());
 
   fetcher->Start();
@@ -351,13 +360,16 @@ TEST_P(EmbeddedTestServerTest, ConcurrentFetches) {
   ASSERT_TRUE(server_->Start());
 
   std::unique_ptr<URLFetcher> fetcher1 =
-      URLFetcher::Create(server_->GetURL("/test1"), URLFetcher::GET, this);
+      URLFetcher::Create(server_->GetURL("/test1"), URLFetcher::GET, this,
+                         TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher1->SetRequestContext(request_context_getter_.get());
   std::unique_ptr<URLFetcher> fetcher2 =
-      URLFetcher::Create(server_->GetURL("/test2"), URLFetcher::GET, this);
+      URLFetcher::Create(server_->GetURL("/test2"), URLFetcher::GET, this,
+                         TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher2->SetRequestContext(request_context_getter_.get());
   std::unique_ptr<URLFetcher> fetcher3 =
-      URLFetcher::Create(server_->GetURL("/test3"), URLFetcher::GET, this);
+      URLFetcher::Create(server_->GetURL("/test3"), URLFetcher::GET, this,
+                         TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher3->SetRequestContext(request_context_getter_.get());
 
   // Fetch the three URLs concurrently.
@@ -389,8 +401,8 @@ class CancelRequestDelegate : public TestDelegate {
   CancelRequestDelegate() {}
   ~CancelRequestDelegate() override {}
 
-  void OnResponseStarted(URLRequest* request) override {
-    TestDelegate::OnResponseStarted(request);
+  void OnResponseStarted(URLRequest* request, int net_error) override {
+    TestDelegate::OnResponseStarted(request, net_error);
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE, run_loop_.QuitClosure(), base::TimeDelta::FromSeconds(1));
   }
@@ -467,7 +479,7 @@ const CertificateValuesEntry kCertificateValuesEntry[] = {
      "Test Root CA"},
     {EmbeddedTestServer::CERT_EXPIRED, true, "127.0.0.1", "Test Root CA"},
     {EmbeddedTestServer::CERT_CHAIN_WRONG_ROOT, false, "127.0.0.1", "B CA"},
-#if !defined(OS_WIN)
+#if !defined(OS_WIN) && !defined(OS_ANDROID)
     {EmbeddedTestServer::CERT_BAD_VALIDITY, true, "Leaf Certificate",
      "Test Root CA"},
 #endif
@@ -478,9 +490,10 @@ TEST_P(EmbeddedTestServerTest, GetCertificate) {
     return;
 
   for (const auto& certEntry : kCertificateValuesEntry) {
+    SCOPED_TRACE(certEntry.server_cert);
     server_->SetSSLConfig(certEntry.server_cert);
     scoped_refptr<X509Certificate> cert = server_->GetCertificate();
-    DCHECK(cert.get());
+    ASSERT_TRUE(cert);
     EXPECT_EQ(cert->HasExpired(), certEntry.is_expired);
     EXPECT_EQ(cert->subject().common_name, certEntry.common_name);
     EXPECT_EQ(cert->issuer().common_name, certEntry.root);
@@ -555,7 +568,8 @@ class EmbeddedTestServerThreadingTestDelegate
       loop.reset(new base::MessageLoopForIO);
 
     std::unique_ptr<URLFetcher> fetcher =
-        URLFetcher::Create(server.GetURL("/test?q=foo"), URLFetcher::GET, this);
+        URLFetcher::Create(server.GetURL("/test?q=foo"), URLFetcher::GET, this,
+                           TRAFFIC_ANNOTATION_FOR_TESTS);
     fetcher->SetRequestContext(
         new TestURLRequestContextGetter(loop->task_runner()));
     fetcher->Start();

@@ -30,214 +30,295 @@
 #include "platform/heap/Heap.h"
 #include "platform/text/TabSize.h"
 #include "platform/text/TextDirection.h"
-#include "platform/text/TextPath.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/StringView.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/StringView.h"
+#include "platform/wtf/text/WTFString.h"
 
-class SkTextBlob;
+#include <SkRefCnt.h>
+#include <unicode/utf16.h>
 
 namespace blink {
 
 enum TextJustify {
-    TextJustifyAuto = 0x0,
-    TextJustifyNone = 0x1,
-    TextJustifyInterWord = 0x2,
-    TextJustifyDistribute = 0x3
+  kTextJustifyAuto = 0x0,
+  kTextJustifyNone = 0x1,
+  kTextJustifyInterWord = 0x2,
+  kTextJustifyDistribute = 0x3
 };
 
 class PLATFORM_EXPORT TextRun final {
-    DISALLOW_NEW();
-public:
-    enum ExpansionBehaviorFlags {
-        ForbidTrailingExpansion = 0 << 0,
-        AllowTrailingExpansion = 1 << 0,
-        ForbidLeadingExpansion = 0 << 1,
-        AllowLeadingExpansion = 1 << 1,
-    };
+  DISALLOW_NEW();
 
-    enum TextCodePath {
-        Auto = 0,
-        ForceSimple = 1,
-        ForceComplex = 2
-    };
+ public:
+  enum ExpansionBehaviorFlags {
+    kForbidTrailingExpansion = 0 << 0,
+    kAllowTrailingExpansion = 1 << 0,
+    kForbidLeadingExpansion = 0 << 1,
+    kAllowLeadingExpansion = 1 << 1,
+  };
 
-    typedef unsigned ExpansionBehavior;
+  enum TextCodePath { kAuto = 0, kForceSimple = 1, kForceComplex = 2 };
 
-    TextRun(const LChar* c, unsigned len, float xpos = 0, float expansion = 0, ExpansionBehavior expansionBehavior = AllowTrailingExpansion | ForbidLeadingExpansion, TextDirection direction = LTR, bool directionalOverride = false)
-        : m_charactersLength(len)
-        , m_len(len)
-        , m_xpos(xpos)
-        , m_horizontalGlyphStretch(1)
-        , m_expansion(expansion)
-        , m_expansionBehavior(expansionBehavior)
-        , m_is8Bit(true)
-        , m_allowTabs(false)
-        , m_direction(direction)
-        , m_directionalOverride(directionalOverride)
-        , m_disableSpacing(false)
-        , m_textJustify(TextJustifyAuto)
-        , m_normalizeSpace(false)
-        , m_tabSize(0)
-    {
-        m_data.characters8 = c;
+  typedef unsigned ExpansionBehavior;
+
+  TextRun(const LChar* c,
+          unsigned len,
+          float xpos = 0,
+          float expansion = 0,
+          ExpansionBehavior expansion_behavior = kAllowTrailingExpansion |
+                                                 kForbidLeadingExpansion,
+          TextDirection direction = TextDirection::kLtr,
+          bool directional_override = false)
+      : characters_length_(len),
+        len_(len),
+        xpos_(xpos),
+        horizontal_glyph_stretch_(1),
+        expansion_(expansion),
+        expansion_behavior_(expansion_behavior),
+        is8_bit_(true),
+        allow_tabs_(false),
+        direction_(static_cast<unsigned>(direction)),
+        directional_override_(directional_override),
+        disable_spacing_(false),
+        text_justify_(kTextJustifyAuto),
+        normalize_space_(false),
+        tab_size_(0) {
+    data_.characters8 = c;
+  }
+
+  TextRun(const UChar* c,
+          unsigned len,
+          float xpos = 0,
+          float expansion = 0,
+          ExpansionBehavior expansion_behavior = kAllowTrailingExpansion |
+                                                 kForbidLeadingExpansion,
+          TextDirection direction = TextDirection::kLtr,
+          bool directional_override = false)
+      : characters_length_(len),
+        len_(len),
+        xpos_(xpos),
+        horizontal_glyph_stretch_(1),
+        expansion_(expansion),
+        expansion_behavior_(expansion_behavior),
+        is8_bit_(false),
+        allow_tabs_(false),
+        direction_(static_cast<unsigned>(direction)),
+        directional_override_(directional_override),
+        disable_spacing_(false),
+        text_justify_(kTextJustifyAuto),
+        normalize_space_(false),
+        tab_size_(0) {
+    data_.characters16 = c;
+  }
+
+  TextRun(const StringView& string,
+          float xpos = 0,
+          float expansion = 0,
+          ExpansionBehavior expansion_behavior = kAllowTrailingExpansion |
+                                                 kForbidLeadingExpansion,
+          TextDirection direction = TextDirection::kLtr,
+          bool directional_override = false)
+      : characters_length_(string.length()),
+        len_(string.length()),
+        xpos_(xpos),
+        horizontal_glyph_stretch_(1),
+        expansion_(expansion),
+        expansion_behavior_(expansion_behavior),
+        allow_tabs_(false),
+        direction_(static_cast<unsigned>(direction)),
+        directional_override_(directional_override),
+        disable_spacing_(false),
+        text_justify_(kTextJustifyAuto),
+        normalize_space_(false),
+        tab_size_(0) {
+    if (!characters_length_) {
+      is8_bit_ = true;
+      data_.characters8 = 0;
+    } else if (string.Is8Bit()) {
+      data_.characters8 = string.Characters8();
+      is8_bit_ = true;
+    } else {
+      data_.characters16 = string.Characters16();
+      is8_bit_ = false;
     }
+  }
 
-    TextRun(const UChar* c, unsigned len, float xpos = 0, float expansion = 0, ExpansionBehavior expansionBehavior = AllowTrailingExpansion | ForbidLeadingExpansion, TextDirection direction = LTR, bool directionalOverride = false)
-        : m_charactersLength(len)
-        , m_len(len)
-        , m_xpos(xpos)
-        , m_horizontalGlyphStretch(1)
-        , m_expansion(expansion)
-        , m_expansionBehavior(expansionBehavior)
-        , m_is8Bit(false)
-        , m_allowTabs(false)
-        , m_direction(direction)
-        , m_directionalOverride(directionalOverride)
-        , m_disableSpacing(false)
-        , m_textJustify(TextJustifyAuto)
-        , m_normalizeSpace(false)
-        , m_tabSize(0)
-    {
-        m_data.characters16 = c;
+  TextRun SubRun(unsigned start_offset, unsigned length) const {
+    DCHECK_LT(start_offset, len_);
+
+    TextRun result = *this;
+
+    if (Is8Bit()) {
+      result.SetText(Data8(start_offset), length);
+      return result;
     }
+    result.SetText(Data16(start_offset), length);
+    return result;
+  }
 
-    TextRun(const StringView& string, float xpos = 0, float expansion = 0, ExpansionBehavior expansionBehavior = AllowTrailingExpansion | ForbidLeadingExpansion, TextDirection direction = LTR, bool directionalOverride = false)
-        : m_charactersLength(string.length())
-        , m_len(string.length())
-        , m_xpos(xpos)
-        , m_horizontalGlyphStretch(1)
-        , m_expansion(expansion)
-        , m_expansionBehavior(expansionBehavior)
-        , m_allowTabs(false)
-        , m_direction(direction)
-        , m_directionalOverride(directionalOverride)
-        , m_disableSpacing(false)
-        , m_textJustify(TextJustifyAuto)
-        , m_normalizeSpace(false)
-        , m_tabSize(0)
-    {
-        if (!m_charactersLength) {
-            m_is8Bit = true;
-            m_data.characters8 = 0;
-        } else if (string.is8Bit()) {
-            m_data.characters8 = string.characters8();
-            m_is8Bit = true;
-        } else {
-            m_data.characters16 = string.characters16();
-            m_is8Bit = false;
-        }
-    }
+  UChar operator[](unsigned i) const {
+    SECURITY_DCHECK(i < len_);
+    return Is8Bit() ? data_.characters8[i] : data_.characters16[i];
+  }
+  const LChar* Data8(unsigned i) const {
+    SECURITY_DCHECK(i < len_);
+    DCHECK(Is8Bit());
+    return &data_.characters8[i];
+  }
+  const UChar* Data16(unsigned i) const {
+    SECURITY_DCHECK(i < len_);
+    DCHECK(!Is8Bit());
+    return &data_.characters16[i];
+  }
 
-    TextRun subRun(unsigned startOffset, unsigned length) const
-    {
-        ASSERT(startOffset < m_len);
+  const LChar* Characters8() const {
+    DCHECK(Is8Bit());
+    return data_.characters8;
+  }
+  const UChar* Characters16() const {
+    DCHECK(!Is8Bit());
+    return data_.characters16;
+  }
 
-        TextRun result = *this;
+  UChar32 CodepointAt(unsigned i) const {
+    SECURITY_DCHECK(i < len_);
+    if (Is8Bit())
+      return (*this)[i];
+    UChar32 codepoint;
+    U16_GET(Characters16(), 0, i, len_, codepoint);
+    return codepoint;
+  }
 
-        if (is8Bit()) {
-            result.setText(data8(startOffset), length);
-            return result;
-        }
-        result.setText(data16(startOffset), length);
-        return result;
-    }
+  UChar32 CodepointAtAndNext(unsigned& i) const {
+    SECURITY_DCHECK(i < len_);
+    if (Is8Bit())
+      return (*this)[i++];
+    UChar32 codepoint;
+    U16_NEXT(Characters16(), i, len_, codepoint);
+    return codepoint;
+  }
 
-    UChar operator[](unsigned i) const { ASSERT_WITH_SECURITY_IMPLICATION(i < m_len); return is8Bit() ? m_data.characters8[i] :m_data.characters16[i]; }
-    const LChar* data8(unsigned i) const { ASSERT_WITH_SECURITY_IMPLICATION(i < m_len); ASSERT(is8Bit()); return &m_data.characters8[i]; }
-    const UChar* data16(unsigned i) const { ASSERT_WITH_SECURITY_IMPLICATION(i < m_len); ASSERT(!is8Bit()); return &m_data.characters16[i]; }
+  bool Is8Bit() const { return is8_bit_; }
+  unsigned length() const { return len_; }
+  unsigned CharactersLength() const { return characters_length_; }
 
-    const LChar* characters8() const { ASSERT(is8Bit()); return m_data.characters8; }
-    const UChar* characters16() const { ASSERT(!is8Bit()); return m_data.characters16; }
+  bool NormalizeSpace() const { return normalize_space_; }
+  void SetNormalizeSpace(bool normalize_space) {
+    normalize_space_ = normalize_space;
+  }
 
-    bool is8Bit() const { return m_is8Bit; }
-    unsigned length() const { return m_len; }
-    unsigned charactersLength() const { return m_charactersLength; }
+  void SetText(const LChar* c, unsigned len) {
+    data_.characters8 = c;
+    len_ = len;
+    is8_bit_ = true;
+  }
+  void SetText(const UChar* c, unsigned len) {
+    data_.characters16 = c;
+    len_ = len;
+    is8_bit_ = false;
+  }
+  void SetText(const String&);
+  void SetCharactersLength(unsigned characters_length) {
+    characters_length_ = characters_length;
+  }
 
-    bool normalizeSpace() const { return m_normalizeSpace; }
-    void setNormalizeSpace(bool normalizeSpace) { m_normalizeSpace = normalizeSpace; }
+  void SetExpansionBehavior(ExpansionBehavior behavior) {
+    expansion_behavior_ = behavior;
+  }
+  float HorizontalGlyphStretch() const { return horizontal_glyph_stretch_; }
+  void SetHorizontalGlyphStretch(float scale) {
+    horizontal_glyph_stretch_ = scale;
+  }
 
-    void setText(const LChar* c, unsigned len) { m_data.characters8 = c; m_len = len; m_is8Bit = true;}
-    void setText(const UChar* c, unsigned len) { m_data.characters16 = c; m_len = len; m_is8Bit = false;}
-    void setText(const String&);
-    void setCharactersLength(unsigned charactersLength) { m_charactersLength = charactersLength; }
+  bool AllowTabs() const { return allow_tabs_; }
+  TabSize GetTabSize() const { return tab_size_; }
+  void SetTabSize(bool, TabSize);
 
-    void setExpansionBehavior(ExpansionBehavior behavior) { m_expansionBehavior = behavior; }
-    float horizontalGlyphStretch() const { return m_horizontalGlyphStretch; }
-    void setHorizontalGlyphStretch(float scale) { m_horizontalGlyphStretch = scale; }
+  float XPos() const { return xpos_; }
+  void SetXPos(float x_pos) { xpos_ = x_pos; }
+  float Expansion() const { return expansion_; }
+  void SetExpansion(float expansion) { expansion_ = expansion; }
+  bool AllowsLeadingExpansion() const {
+    return expansion_behavior_ & kAllowLeadingExpansion;
+  }
+  bool AllowsTrailingExpansion() const {
+    return expansion_behavior_ & kAllowTrailingExpansion;
+  }
+  TextDirection Direction() const {
+    return static_cast<TextDirection>(direction_);
+  }
+  bool Rtl() const { return Direction() == TextDirection::kRtl; }
+  bool Ltr() const { return Direction() == TextDirection::kLtr; }
+  bool DirectionalOverride() const { return directional_override_; }
+  bool SpacingDisabled() const { return disable_spacing_; }
 
-    bool allowTabs() const { return m_allowTabs; }
-    TabSize getTabSize() const { return m_tabSize; }
-    void setTabSize(bool, TabSize);
+  void DisableSpacing() { disable_spacing_ = true; }
+  void SetDirection(TextDirection direction) {
+    direction_ = static_cast<unsigned>(direction);
+  }
+  void SetDirectionalOverride(bool override) {
+    directional_override_ = override;
+  }
 
-    float xPos() const { return m_xpos; }
-    void setXPos(float xPos) { m_xpos = xPos; }
-    float expansion() const { return m_expansion; }
-    bool allowsLeadingExpansion() const { return m_expansionBehavior & AllowLeadingExpansion; }
-    bool allowsTrailingExpansion() const { return m_expansionBehavior & AllowTrailingExpansion; }
-    TextDirection direction() const { return static_cast<TextDirection>(m_direction); }
-    bool rtl() const { return m_direction == RTL; }
-    bool ltr() const { return m_direction == LTR; }
-    bool directionalOverride() const { return m_directionalOverride; }
-    bool spacingDisabled() const { return m_disableSpacing; }
+  void SetTextJustify(TextJustify text_justify) {
+    text_justify_ = static_cast<unsigned>(text_justify);
+  }
+  TextJustify GetTextJustify() const {
+    return static_cast<TextJustify>(text_justify_);
+  }
 
-    void disableSpacing() { m_disableSpacing = true; }
-    void setDirection(TextDirection direction) { m_direction = direction; }
-    void setDirectionalOverride(bool override) { m_directionalOverride = override; }
+  // Up-converts to UTF-16 as needed and normalizes spaces and Unicode control
+  // characters as per the CSS Text Module Level 3 specification.
+  // https://drafts.csswg.org/css-text-3/#white-space-processing
+  std::unique_ptr<UChar[]> NormalizedUTF16(unsigned* result_length) const;
 
-    void setTextJustify(TextJustify textJustify) { m_textJustify = static_cast<unsigned>(textJustify); }
-    TextJustify getTextJustify() const { return static_cast<TextJustify>(m_textJustify); }
+ private:
+  union {
+    const LChar* characters8;
+    const UChar* characters16;
+  } data_;
+  // Marks the end of the characters buffer.  Default equals to m_len.
+  unsigned characters_length_;
+  unsigned len_;
 
-private:
-    union {
-        const LChar* characters8;
-        const UChar* characters16;
-    } m_data;
-    unsigned m_charactersLength; // Marks the end of the characters buffer. Default equals to m_len.
-    unsigned m_len;
+  // m_xpos is the x position relative to the left start of the text line, not
+  // relative to the left start of the containing block. In the case of right
+  // alignment or center alignment, left start of the text line is not the same
+  // as left start of the containing block.
+  float xpos_;
+  float horizontal_glyph_stretch_;
 
-    // m_xpos is the x position relative to the left start of the text line, not relative to the left
-    // start of the containing block. In the case of right alignment or center alignment, left start of
-    // the text line is not the same as left start of the containing block.
-    float m_xpos;
-    float m_horizontalGlyphStretch;
-
-    float m_expansion;
-    ExpansionBehavior m_expansionBehavior : 2;
-    unsigned m_is8Bit : 1;
-    unsigned m_allowTabs : 1;
-    unsigned m_direction : 1;
-    unsigned m_directionalOverride : 1; // Was this direction set by an override character.
-    unsigned m_disableSpacing : 1;
-    unsigned m_textJustify : 2;
-    unsigned m_normalizeSpace : 1;
-    TabSize m_tabSize;
+  float expansion_;
+  ExpansionBehavior expansion_behavior_ : 2;
+  unsigned is8_bit_ : 1;
+  unsigned allow_tabs_ : 1;
+  unsigned direction_ : 1;
+  // Was this direction set by an override character.
+  unsigned directional_override_ : 1;
+  unsigned disable_spacing_ : 1;
+  unsigned text_justify_ : 2;
+  unsigned normalize_space_ : 1;
+  TabSize tab_size_;
 };
 
-inline void TextRun::setTabSize(bool allow, TabSize size)
-{
-    m_allowTabs = allow;
-    m_tabSize = size;
+inline void TextRun::SetTabSize(bool allow, TabSize size) {
+  allow_tabs_ = allow;
+  tab_size_ = size;
 }
 
 // Container for parameters needed to paint TextRun.
 struct TextRunPaintInfo {
-    STACK_ALLOCATED();
-public:
-    explicit TextRunPaintInfo(const TextRun& r)
-        : run(r)
-        , from(0)
-        , to(r.length())
-        , cachedTextBlob(nullptr)
-    {
-    }
+  STACK_ALLOCATED();
 
-    const TextRun& run;
-    unsigned from;
-    unsigned to;
-    FloatRect bounds;
-    RefPtr<const SkTextBlob>* cachedTextBlob;
+ public:
+  explicit TextRunPaintInfo(const TextRun& r)
+      : run(r), from(0), to(r.length()) {}
+
+  const TextRun& run;
+  unsigned from;
+  unsigned to;
+  FloatRect bounds;
 };
 
-} // namespace blink
+}  // namespace blink
 #endif

@@ -28,151 +28,150 @@
 
 #include "modules/webdatabase/DatabaseThread.h"
 
+#include <memory>
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseTask.h"
 #include "modules/webdatabase/SQLTransactionClient.h"
 #include "modules/webdatabase/SQLTransactionCoordinator.h"
+#include "modules/webdatabase/StorageLog.h"
 #include "platform/CrossThreadFunctional.h"
-#include "platform/Logging.h"
+#include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
 DatabaseThread::DatabaseThread()
-    : m_transactionClient(wrapUnique(new SQLTransactionClient()))
-    , m_cleanupSync(nullptr)
-    , m_terminationRequested(false)
-{
-    DCHECK(isMainThread());
+    : transaction_client_(WTF::MakeUnique<SQLTransactionClient>()),
+      cleanup_sync_(nullptr),
+      termination_requested_(false) {
+  DCHECK(IsMainThread());
 }
 
-DatabaseThread::~DatabaseThread()
-{
-    ASSERT(m_openDatabaseSet.isEmpty());
-    ASSERT(!m_thread);
+DatabaseThread::~DatabaseThread() {
+  DCHECK(open_database_set_.IsEmpty());
+  DCHECK(!thread_);
 }
 
-DEFINE_TRACE(DatabaseThread)
-{
+DEFINE_TRACE(DatabaseThread) {}
+
+void DatabaseThread::Start() {
+  DCHECK(IsMainThread());
+  if (thread_)
+    return;
+  thread_ = WebThreadSupportingGC::Create("WebCore: Database");
+  thread_->PostTask(BLINK_FROM_HERE,
+                    CrossThreadBind(&DatabaseThread::SetupDatabaseThread,
+                                    WrapCrossThreadPersistent(this)));
 }
 
-void DatabaseThread::start()
-{
-    ASSERT(isMainThread());
-    if (m_thread)
-        return;
-    m_thread = WebThreadSupportingGC::create("WebCore: Database", true);
-    m_thread->postTask(BLINK_FROM_HERE, crossThreadBind(&DatabaseThread::setupDatabaseThread, wrapCrossThreadPersistent(this)));
+void DatabaseThread::SetupDatabaseThread() {
+  thread_->Initialize();
+  transaction_coordinator_ = new SQLTransactionCoordinator();
 }
 
-void DatabaseThread::setupDatabaseThread()
-{
-    m_thread->initialize();
-    m_transactionCoordinator = new SQLTransactionCoordinator();
+void DatabaseThread::Terminate() {
+  DCHECK(IsMainThread());
+  WaitableEvent sync;
+  {
+    MutexLocker lock(termination_requested_mutex_);
+    DCHECK(!termination_requested_);
+    termination_requested_ = true;
+    cleanup_sync_ = &sync;
+    STORAGE_DVLOG(1) << "DatabaseThread " << this << " was asked to terminate";
+    thread_->PostTask(BLINK_FROM_HERE,
+                      CrossThreadBind(&DatabaseThread::CleanupDatabaseThread,
+                                      WrapCrossThreadPersistent(this)));
+  }
+  sync.Wait();
+  // The WebThread destructor blocks until all the tasks of the database
+  // thread are processed. However, it shouldn't block at all because
+  // the database thread has already finished processing the cleanup task.
+  thread_.reset();
 }
 
-void DatabaseThread::terminate()
-{
-    ASSERT(isMainThread());
-    TaskSynchronizer sync;
-    {
-        MutexLocker lock(m_terminationRequestedMutex);
-        ASSERT(!m_terminationRequested);
-        m_terminationRequested = true;
-        m_cleanupSync = &sync;
-        WTF_LOG(StorageAPI, "DatabaseThread %p was asked to terminate\n", this);
-        m_thread->postTask(BLINK_FROM_HERE, crossThreadBind(&DatabaseThread::cleanupDatabaseThread, wrapCrossThreadPersistent(this)));
-    }
-    sync.waitForTaskCompletion();
-    // The WebThread destructor blocks until all the tasks of the database
-    // thread are processed. However, it shouldn't block at all because
-    // the database thread has already finished processing the cleanup task.
-    m_thread.reset();
+void DatabaseThread::CleanupDatabaseThread() {
+  DCHECK(IsDatabaseThread());
+
+  STORAGE_DVLOG(1) << "Cleaning up DatabaseThread " << this;
+
+  // Clean up the list of all pending transactions on this database thread
+  transaction_coordinator_->Shutdown();
+
+  // Close the databases that we ran transactions on. This ensures that if any
+  // transactions are still open, they are rolled back and we don't leave the
+  // database in an inconsistent or locked state.
+  if (open_database_set_.size() > 0) {
+    // As the call to close will modify the original set, we must take a copy to
+    // iterate over.
+    HashSet<CrossThreadPersistent<Database>> open_set_copy;
+    open_set_copy.Swap(open_database_set_);
+    HashSet<CrossThreadPersistent<Database>>::iterator end =
+        open_set_copy.end();
+    for (HashSet<CrossThreadPersistent<Database>>::iterator it =
+             open_set_copy.begin();
+         it != end; ++it)
+      (*it)->Close();
+  }
+  open_database_set_.Clear();
+
+  thread_->PostTask(BLINK_FROM_HERE,
+                    WTF::Bind(&DatabaseThread::CleanupDatabaseThreadCompleted,
+                              WrapCrossThreadPersistent(this)));
 }
 
-void DatabaseThread::cleanupDatabaseThread()
-{
-    DCHECK(isDatabaseThread());
-
-    WTF_LOG(StorageAPI, "Cleaning up DatabaseThread %p", this);
-
-    // Clean up the list of all pending transactions on this database thread
-    m_transactionCoordinator->shutdown();
-
-    // Close the databases that we ran transactions on. This ensures that if any transactions are still open, they are rolled back and we don't leave the database in an
-    // inconsistent or locked state.
-    if (m_openDatabaseSet.size() > 0) {
-        // As the call to close will modify the original set, we must take a copy to iterate over.
-        HashSet<CrossThreadPersistent<Database>> openSetCopy;
-        openSetCopy.swap(m_openDatabaseSet);
-        HashSet<CrossThreadPersistent<Database>>::iterator end = openSetCopy.end();
-        for (HashSet<CrossThreadPersistent<Database>>::iterator it = openSetCopy.begin(); it != end; ++it)
-            (*it)->close();
-    }
-    m_openDatabaseSet.clear();
-
-    m_thread->postTask(BLINK_FROM_HERE, WTF::bind(&DatabaseThread::cleanupDatabaseThreadCompleted, wrapCrossThreadPersistent(this)));
+void DatabaseThread::CleanupDatabaseThreadCompleted() {
+  thread_->Shutdown();
+  if (cleanup_sync_)  // Someone wanted to know when we were done cleaning up.
+    cleanup_sync_->Signal();
 }
 
-void DatabaseThread::cleanupDatabaseThreadCompleted()
-{
-    m_thread->shutdown();
-    if (m_cleanupSync) // Someone wanted to know when we were done cleaning up.
-        m_cleanupSync->taskCompleted();
+void DatabaseThread::RecordDatabaseOpen(Database* database) {
+  DCHECK(IsDatabaseThread());
+  DCHECK(database);
+  DCHECK(!open_database_set_.Contains(database));
+  MutexLocker lock(termination_requested_mutex_);
+  if (!termination_requested_)
+    open_database_set_.insert(database);
 }
 
-void DatabaseThread::recordDatabaseOpen(Database* database)
-{
-    ASSERT(isDatabaseThread());
-    ASSERT(database);
-    ASSERT(!m_openDatabaseSet.contains(database));
-    MutexLocker lock(m_terminationRequestedMutex);
-    if (!m_terminationRequested)
-        m_openDatabaseSet.add(database);
-}
-
-void DatabaseThread::recordDatabaseClosed(Database* database)
-{
-    ASSERT(isDatabaseThread());
-    ASSERT(database);
-#if ENABLE(ASSERT)
-    {
-        MutexLocker lock(m_terminationRequestedMutex);
-        ASSERT(m_terminationRequested || m_openDatabaseSet.contains(database));
-    }
+void DatabaseThread::RecordDatabaseClosed(Database* database) {
+  DCHECK(IsDatabaseThread());
+  DCHECK(database);
+#if DCHECK_IS_ON()
+  {
+    MutexLocker lock(termination_requested_mutex_);
+    DCHECK(termination_requested_ || open_database_set_.Contains(database));
+  }
 #endif
-    m_openDatabaseSet.remove(database);
+  open_database_set_.erase(database);
 }
 
-bool DatabaseThread::isDatabaseOpen(Database* database)
-{
-    ASSERT(isDatabaseThread());
-    ASSERT(database);
-    MutexLocker lock(m_terminationRequestedMutex);
-    return !m_terminationRequested && m_openDatabaseSet.contains(database);
+bool DatabaseThread::IsDatabaseOpen(Database* database) {
+  DCHECK(IsDatabaseThread());
+  DCHECK(database);
+  MutexLocker lock(termination_requested_mutex_);
+  return !termination_requested_ && open_database_set_.Contains(database);
 }
 
-bool DatabaseThread::isDatabaseThread() const
-{
-    // This function is called only from the main thread or the database
-    // thread. If we are not in the main thread, we are in the database thread.
-    return !isMainThread();
+bool DatabaseThread::IsDatabaseThread() const {
+  // This function is called only from the main thread or the database
+  // thread. If we are not in the main thread, we are in the database thread.
+  return !IsMainThread();
 }
 
-void DatabaseThread::scheduleTask(std::unique_ptr<DatabaseTask> task)
-{
-    ASSERT(m_thread);
-#if ENABLE(ASSERT)
-    {
-        MutexLocker lock(m_terminationRequestedMutex);
-        ASSERT(!m_terminationRequested);
-    }
+void DatabaseThread::ScheduleTask(std::unique_ptr<DatabaseTask> task) {
+  DCHECK(thread_);
+#if DCHECK_IS_ON()
+  {
+    MutexLocker lock(termination_requested_mutex_);
+    DCHECK(!termination_requested_);
+  }
 #endif
-    // WebThread takes ownership of the task.
-    m_thread->postTask(BLINK_FROM_HERE, crossThreadBind(&DatabaseTask::run, std::move(task)));
+  // WebThread takes ownership of the task.
+  thread_->PostTask(BLINK_FROM_HERE,
+                    CrossThreadBind(&DatabaseTask::Run, std::move(task)));
 }
 
-} // namespace blink
+}  // namespace blink

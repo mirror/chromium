@@ -3,11 +3,15 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include <string>
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "net/base/fuzzed_data_provider.h"
+#include "base/test/fuzzed_data_provider.h"
+#include "base/test/scoped_task_scheduler.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "net/http/http_request_headers.h"
 #include "net/url_request/data_protocol_handler.h"
 #include "net/url_request/url_request.h"
@@ -27,9 +31,11 @@ const size_t kMaxLengthForFuzzedRange = 32;
 class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
  public:
   URLRequestDataJobFuzzerHarness()
-      : context_(true), task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      : scoped_task_scheduler_(base::MessageLoop::current()),
+        task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        context_(true) {
     job_factory_.SetProtocolHandler(
-        "data", base::WrapUnique(new net::DataProtocolHandler()));
+        "data", base::MakeUnique<net::DataProtocolHandler>());
     context_.set_job_factory(&job_factory_);
     context_.Init();
   }
@@ -39,7 +45,7 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
   }
 
   int CreateAndReadFromDataURLRequest(const uint8_t* data, size_t size) {
-    net::FuzzedDataProvider provider(data, size);
+    base::FuzzedDataProvider provider(data, size);
     read_lengths_.clear();
 
     // Allocate an IOBuffer with fuzzed size.
@@ -53,7 +59,7 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
     // header in consistent byte addresses so the fuzzer doesn't have to work as
     // hard.
     bool use_range = provider.ConsumeBool();
-    base::StringPiece range(provider.ConsumeBytes(kMaxLengthForFuzzedRange));
+    std::string range(provider.ConsumeBytes(kMaxLengthForFuzzedRange));
 
     // Generate a sequence of reads sufficient to read the entire data URL.
     size_t simulated_bytes_read = 0;
@@ -63,10 +69,12 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
       simulated_bytes_read += read_length;
     }
 
-    // The data URL is the rest of the fuzzed data. If the URL is invalid just
+    // The data URL is the rest of the fuzzed data with "data:" prepended, to
+    // ensure that if it's a URL, it's a data URL. If the URL is invalid just
     // use a test variant, so the fuzzer has a chance to execute something.
-    base::StringPiece data_bytes(provider.ConsumeRemainingBytes());
-    GURL data_url(data_bytes);
+    std::string data_url_string =
+        std::string("data:") + provider.ConsumeRemainingBytes();
+    GURL data_url(data_url_string);
     if (!data_url.is_valid())
       data_url = GURL("data:text/html;charset=utf-8,<p>test</p>");
 
@@ -75,10 +83,9 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
     std::unique_ptr<net::URLRequest> request =
         context_.CreateRequest(data_url, net::DEFAULT_PRIORITY, this);
     if (use_range) {
-      std::string range_str = range.as_string();
-      if (!net::HttpUtil::IsValidHeaderValue(range_str))
-        range_str = "bytes=3-";
-      request->SetExtraRequestHeaderByName("Range", range_str, true);
+      if (!net::HttpUtil::IsValidHeaderValue(range))
+        range = "bytes=3-";
+      request->SetExtraRequestHeaderByName("Range", range, true);
     }
 
     // Block the thread while the request is read.
@@ -96,7 +103,7 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
   }
 
   void ReadFromRequest(net::URLRequest* request) {
-    bool sync = false;
+    int bytes_read = 0;
     do {
       // If possible, pop the next read size. If none exists, then this should
       // be the last call to Read.
@@ -107,13 +114,10 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
         read_lengths_.pop_back();
       }
 
-      int bytes_read = 0;
-      sync = request->Read(buf_.get(), read_size, &bytes_read);
-      // No more populated reads implies !bytes_read.
-      DCHECK(using_populated_read || !bytes_read);
-    } while (sync);
+      bytes_read = request->Read(buf_.get(), read_size);
+    } while (bytes_read > 0);
 
-    if (!request->status().is_io_pending())
+    if (bytes_read != net::ERR_IO_PENDING)
       QuitLoop();
   }
 
@@ -129,21 +133,23 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
   void OnSSLCertificateError(net::URLRequest* request,
                              const net::SSLInfo& ssl_info,
                              bool fatal) override {}
-  void OnResponseStarted(net::URLRequest* request) override {
-    DCHECK(!request->status().is_io_pending());
+  void OnResponseStarted(net::URLRequest* request, int net_error) override {
     DCHECK(buf_.get());
     DCHECK(read_loop_);
-    if (request->status().is_success()) {
+    DCHECK_NE(net::ERR_IO_PENDING, net_error);
+
+    if (net_error == net::OK) {
       ReadFromRequest(request);
     } else {
       QuitLoop();
     }
   }
   void OnReadCompleted(net::URLRequest* request, int bytes_read) override {
-    DCHECK(!request->status().is_io_pending());
+    DCHECK_NE(net::ERR_IO_PENDING, bytes_read);
     DCHECK(buf_.get());
     DCHECK(read_loop_);
-    if (request->status().is_success() && bytes_read > 0) {
+
+    if (bytes_read > 0) {
       ReadFromRequest(request);
     } else {
       QuitLoop();
@@ -153,11 +159,13 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
  private:
   friend struct base::DefaultSingletonTraits<URLRequestDataJobFuzzerHarness>;
 
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
   net::TestURLRequestContext context_;
   net::URLRequestJobFactoryImpl job_factory_;
   std::vector<size_t> read_lengths_;
   scoped_refptr<net::IOBuffer> buf_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   base::RunLoop* read_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(URLRequestDataJobFuzzerHarness);

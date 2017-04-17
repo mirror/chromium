@@ -5,12 +5,11 @@
 #include "media/base/media.h"
 
 #include "base/command_line.h"
-#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/media_switches.h"
-#include "media/base/yuv_convert.h"
+#include "third_party/libyuv/include/libyuv.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
@@ -23,24 +22,14 @@
 
 namespace media {
 
-// Media must only be initialized once, so use a LazyInstance to ensure this.
+// Media must only be initialized once; use a thread-safe static to do this.
 class MediaInitializer {
  public:
-  void enable_platform_decoder_support() {
-    has_platform_decoder_support_ = true;
-  }
-
-  bool has_platform_decoder_support() { return has_platform_decoder_support_; }
-
- private:
-  friend struct base::DefaultLazyInstanceTraits<MediaInitializer>;
-
   MediaInitializer() {
     TRACE_EVENT_WARMUP_CATEGORY("audio");
     TRACE_EVENT_WARMUP_CATEGORY("media");
 
-    // Perform initialization of libraries which require runtime CPU detection.
-    InitializeCPUSpecificYUVConversions();
+    libyuv::InitCpuFlags();
 
 #if !defined(MEDIA_DISABLE_FFMPEG)
     // Initialize CPU flags outside of the sandbox as this may query /proc for
@@ -58,58 +47,65 @@ class MediaInitializer {
 #endif  // !defined(MEDIA_DISABLE_FFMPEG)
   }
 
-  ~MediaInitializer() {
-    NOTREACHED() << "MediaInitializer should be leaky!";
+#if defined(OS_ANDROID)
+  void enable_platform_decoder_support() {
+    has_platform_decoder_support_ = true;
   }
 
+  bool has_platform_decoder_support() const {
+    return has_platform_decoder_support_;
+  }
+#endif  // defined(OS_ANDROID)
+
+  void enable_new_vp9_codec_string_support() {
+    has_new_vp9_codec_string_support_ = true;
+  }
+
+  bool has_new_vp9_codec_string_support() {
+    return has_new_vp9_codec_string_support_;
+  }
+
+ private:
+  ~MediaInitializer() = delete;
+
+#if defined(OS_ANDROID)
   bool has_platform_decoder_support_ = false;
+#endif  // defined(OS_ANDROID)
+
+  bool has_new_vp9_codec_string_support_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(MediaInitializer);
 };
 
-static base::LazyInstance<MediaInitializer>::Leaky g_media_library =
-    LAZY_INSTANCE_INITIALIZER;
+static MediaInitializer* GetMediaInstance() {
+  static MediaInitializer* instance = new MediaInitializer();
+  return instance;
+}
 
 void InitializeMediaLibrary() {
-  g_media_library.Get();
+  GetMediaInstance();
 }
 
 #if defined(OS_ANDROID)
 void EnablePlatformDecoderSupport() {
-  g_media_library.Pointer()->enable_platform_decoder_support();
+  GetMediaInstance()->enable_platform_decoder_support();
 }
 
 bool HasPlatformDecoderSupport() {
-  return g_media_library.Pointer()->has_platform_decoder_support();
+  return GetMediaInstance()->has_platform_decoder_support();
 }
 
 bool PlatformHasOpusSupport() {
   return base::android::BuildInfo::GetInstance()->sdk_int() >= 21;
 }
+#endif  // defined(OS_ANDROID)
 
-bool IsUnifiedMediaPipelineEnabled() {
-  // TODO(dalecurtis): This experiment is temporary and should be removed once
-  // we have enough data to support the primacy of the unified media pipeline;
-  // see http://crbug.com/533190 for details.
-  //
-  // Note: It's important to query the field trial state first, to ensure that
-  // UMA reports the correct group.
-  const std::string group_name =
-      base::FieldTrialList::FindFullName("UnifiedMediaPipelineTrial");
-  const bool disabled_via_cli =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableUnifiedMediaPipeline);
-
-  return !disabled_via_cli &&
-         !base::StartsWith(group_name, "Disabled",
-                           base::CompareCase::SENSITIVE);
+void EnableNewVp9CodecStringSupport() {
+  GetMediaInstance()->enable_new_vp9_codec_string_support();
 }
 
-bool ArePlatformDecodersAvailable() {
-  return IsUnifiedMediaPipelineEnabled()
-             ? HasPlatformDecoderSupport()
-             : MediaCodecUtil::IsMediaCodecAvailable();
+bool HasNewVp9CodecStringSupport() {
+  return GetMediaInstance()->has_new_vp9_codec_string_support();
 }
-#endif
 
 }  // namespace media

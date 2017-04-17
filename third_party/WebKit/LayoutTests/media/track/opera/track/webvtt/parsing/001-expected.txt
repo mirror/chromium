@@ -3,7 +3,7 @@ PASS WebVTT parser tests, settings-vertical.vtt
 PASS WebVTT parser tests, settings-size.vtt 
 PASS WebVTT parser tests, settings-position.vtt 
 PASS WebVTT parser tests, settings-multiple.vtt 
-PASS WebVTT parser tests, settings-line.vtt 
+FAIL WebVTT parser tests, settings-line.vtt assert_equals: line (cue 10) expected 1e+34 but got 9.999999790214768e+33
 PASS WebVTT parser tests, settings-align.vtt 
 PASS WebVTT parser tests, signature-bom.vtt 
 PASS WebVTT parser tests, signature-space.vtt 
@@ -15,7 +15,7 @@ PASS WebVTT parser tests, signature-two-boms.vtt
 PASS WebVTT parser tests, signature-lowercase.vtt 
 PASS WebVTT parser tests, signature-too-short.vtt 
 PASS WebVTT parser tests, signature-websrt.vtt 
-FAIL WebVTT parser tests, signature-formfeed.vtt assert_equals: number of cues expected (string) "error" but got (number) 0
+PASS WebVTT parser tests, signature-formfeed.vtt 
 PASS WebVTT parser tests, signature-null.vtt 
 PASS WebVTT parser tests, signature-no-newline.vtt 
 PASS WebVTT parser tests, no-signature.vtt 

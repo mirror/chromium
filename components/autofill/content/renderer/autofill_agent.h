@@ -11,9 +11,10 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/strings/string16.h"
 #include "base/time/time.h"
-#include "components/autofill/content/public/interfaces/autofill_agent.mojom.h"
-#include "components/autofill/content/public/interfaces/autofill_driver.mojom.h"
+#include "components/autofill/content/common/autofill_agent.mojom.h"
+#include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/form_cache.h"
 #include "components/autofill/content/renderer/page_click_listener.h"
 #include "content/public/renderer/render_frame_observer.h"
@@ -61,29 +62,31 @@ class AutofillAgent : public content::RenderFrameObserver,
 
   const mojom::AutofillDriverPtr& GetAutofillDriver();
 
+  const mojom::PasswordManagerDriverPtr& GetPasswordManagerDriver();
+
   // mojom::AutofillAgent:
-  void FirstUserGestureObservedInTab() override;
   void FillForm(int32_t id, const FormData& form) override;
   void PreviewForm(int32_t id, const FormData& form) override;
   void FieldTypePredictionsAvailable(
-      mojo::Array<FormDataPredictions> forms) override;
+      const std::vector<FormDataPredictions>& forms) override;
   void ClearForm() override;
   void ClearPreviewedForm() override;
-  void FillFieldWithValue(const mojo::String& value) override;
-  void PreviewFieldWithValue(const mojo::String& value) override;
-  void AcceptDataListSuggestion(const mojo::String& value) override;
-  void FillPasswordSuggestion(const mojo::String& username,
-                              const mojo::String& password) override;
-  void PreviewPasswordSuggestion(const mojo::String& username,
-                                 const mojo::String& password) override;
+  void FillFieldWithValue(const base::string16& value) override;
+  void PreviewFieldWithValue(const base::string16& value) override;
+  void AcceptDataListSuggestion(const base::string16& value) override;
+  void FillPasswordSuggestion(const base::string16& username,
+                              const base::string16& password) override;
+  void PreviewPasswordSuggestion(const base::string16& username,
+                                 const base::string16& password) override;
   void ShowInitialPasswordAccountSuggestions(
       int32_t key,
       const PasswordFormFillData& form_data) override;
 
+  void ShowNotSecureWarning(const blink::WebInputElement& element);
+
  protected:
   // blink::WebAutofillClient:
-  void didAssociateFormControls(
-      const blink::WebVector<blink::WebNode>& nodes) override;
+  void DidAssociateFormControlsDynamically() override;
 
  private:
   // Functor used as a simplified comparison function for FormData. Only
@@ -145,7 +148,7 @@ class AutofillAgent : public content::RenderFrameObserver,
 
   // content::RenderFrameObserver:
   void DidCommitProvisionalLoad(bool is_new_navigation,
-                                bool is_same_page_navigation) override;
+                                bool is_same_document_navigation) override;
   void DidFinishDocumentLoad() override;
   void WillSendSubmitEvent(const blink::WebFormElement& form) override;
   void WillSubmitForm(const blink::WebFormElement& form) override;
@@ -175,21 +178,18 @@ class AutofillAgent : public content::RenderFrameObserver,
                                  bool was_focused) override;
 
   // blink::WebAutofillClient:
-  void textFieldDidEndEditing(const blink::WebInputElement& element) override;
-  void textFieldDidChange(const blink::WebFormControlElement& element) override;
-  void textFieldDidReceiveKeyDown(
+  void TextFieldDidEndEditing(const blink::WebInputElement& element) override;
+  void TextFieldDidChange(const blink::WebFormControlElement& element) override;
+  void TextFieldDidReceiveKeyDown(
       const blink::WebInputElement& element,
       const blink::WebKeyboardEvent& event) override;
-  void setIgnoreTextChanges(bool ignore) override;
-  void openTextDataListChooser(const blink::WebInputElement& element) override;
-  void dataListOptionsChanged(const blink::WebInputElement& element) override;
-  void firstUserGestureObserved() override;
-  void ajaxSucceeded() override;
+  void OpenTextDataListChooser(const blink::WebInputElement& element) override;
+  void DataListOptionsChanged(const blink::WebInputElement& element) override;
+  void UserGestureObserved() override;
+  void AjaxSucceeded() override;
 
-  void OnPing();
-
-  // Called when a same-page navigation is detected.
-  void OnSamePageNavigationCompleted();
+  // Called when a same-document navigation is detected.
+  void OnSameDocumentNavigationCompleted();
   // Helper method which collects unowned elements (i.e., those not inside a
   // form tag) and writes them into |output|. Returns true if the process is
   // successful, and all conditions for firing events are true.
@@ -300,7 +300,7 @@ class AutofillAgent : public content::RenderFrameObserver,
 
   mojo::Binding<mojom::AutofillAgent> binding_;
 
-  mojom::AutofillDriverPtr mojo_autofill_driver_;
+  mojom::AutofillDriverPtr autofill_driver_;
 
   base::WeakPtrFactory<AutofillAgent> weak_ptr_factory_;
 

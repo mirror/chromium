@@ -9,6 +9,7 @@
 #include "base/files/file_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/extensions/extension_apitest.h"
@@ -39,7 +40,7 @@ class ContentCapabilitiesTest : public ExtensionApiTest {
     command_line->AppendSwitchASCII(
         extensions::switches::kWhitelistedExtensionID,
         crx_file::id_util::GenerateIdForPath(
-            base::MakeAbsoluteFilePath(test_extension_dir_.unpacked_path())));
+            base::MakeAbsoluteFilePath(test_extension_dir_.UnpackedPath())));
   }
 
   // Builds an extension manifest with the given content_capabilities matches
@@ -61,13 +62,13 @@ class ContentCapabilitiesTest : public ExtensionApiTest {
         "}\n",
         matches.c_str(), permissions.c_str(), extension_permissions.c_str());
     test_extension_dir_.WriteManifest(manifest);
-    return LoadExtension(test_extension_dir_.unpacked_path());
+    return LoadExtension(test_extension_dir_.UnpackedPath());
   }
 
   std::string MakeJSONList(const std::string& s0 = "",
                            const std::string& s1 = "",
                            const std::string& s2 = "") {
-    std::vector<std::string> v;
+    std::vector<base::StringPiece> v;
     if (!s0.empty())
       v.push_back(s0);
     if (!s1.empty())

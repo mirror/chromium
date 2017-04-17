@@ -7,29 +7,33 @@
 
 #include "core/workers/InProcessWorkerBase.h"
 #include "modules/ModulesExport.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class ExceptionState;
 class ExecutionContext;
-class InProcessWorkerGlobalScopeProxy;
+class InProcessWorkerMessagingProxy;
 
 class MODULES_EXPORT CompositorWorker final : public InProcessWorkerBase {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(CompositorWorker);
-public:
-    static CompositorWorker* create(ExecutionContext*, const String& url, ExceptionState&);
-    ~CompositorWorker() override;
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(CompositorWorker);
 
-    const AtomicString& interfaceName() const override;
-    InProcessWorkerGlobalScopeProxy* createInProcessWorkerGlobalScopeProxy(ExecutionContext*) override;
+ public:
+  static CompositorWorker* Create(ExecutionContext*,
+                                  const String& url,
+                                  ExceptionState&);
+  ~CompositorWorker() override;
 
-private:
-    explicit CompositorWorker(ExecutionContext*);
+  const AtomicString& InterfaceName() const override;
+  InProcessWorkerMessagingProxy* CreateInProcessWorkerMessagingProxy(
+      ExecutionContext*) override;
+
+ private:
+  explicit CompositorWorker(ExecutionContext*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorWorker_h
+#endif  // CompositorWorker_h

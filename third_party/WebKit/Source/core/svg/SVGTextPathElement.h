@@ -28,66 +28,76 @@
 namespace blink {
 
 enum SVGTextPathMethodType {
-    SVGTextPathMethodUnknown = 0,
-    SVGTextPathMethodAlign,
-    SVGTextPathMethodStretch
+  kSVGTextPathMethodUnknown = 0,
+  kSVGTextPathMethodAlign,
+  kSVGTextPathMethodStretch
 };
 
 enum SVGTextPathSpacingType {
-    SVGTextPathSpacingUnknown = 0,
-    SVGTextPathSpacingAuto,
-    SVGTextPathSpacingExact
+  kSVGTextPathSpacingUnknown = 0,
+  kSVGTextPathSpacingAuto,
+  kSVGTextPathSpacingExact
 };
 
-template<> const SVGEnumerationStringEntries& getStaticStringEntries<SVGTextPathMethodType>();
-template<> const SVGEnumerationStringEntries& getStaticStringEntries<SVGTextPathSpacingType>();
+template <>
+const SVGEnumerationStringEntries&
+GetStaticStringEntries<SVGTextPathMethodType>();
+template <>
+const SVGEnumerationStringEntries&
+GetStaticStringEntries<SVGTextPathSpacingType>();
 
 class SVGTextPathElement final : public SVGTextContentElement,
                                  public SVGURIReference {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGTextPathElement);
-public:
-    // Forward declare enumerations in the W3C naming scheme, for IDL generation.
-    enum {
-        TEXTPATH_METHODTYPE_UNKNOWN = SVGTextPathMethodUnknown,
-        TEXTPATH_METHODTYPE_ALIGN = SVGTextPathMethodAlign,
-        TEXTPATH_METHODTYPE_STRETCH = SVGTextPathMethodStretch,
-        TEXTPATH_SPACINGTYPE_UNKNOWN = SVGTextPathSpacingUnknown,
-        TEXTPATH_SPACINGTYPE_AUTO = SVGTextPathSpacingAuto,
-        TEXTPATH_SPACINGTYPE_EXACT = SVGTextPathSpacingExact
-    };
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGTextPathElement);
 
-    DECLARE_NODE_FACTORY(SVGTextPathElement);
+ public:
+  // Forward declare enumerations in the W3C naming scheme, for IDL generation.
+  enum {
+    kTextpathMethodtypeUnknown = kSVGTextPathMethodUnknown,
+    kTextpathMethodtypeAlign = kSVGTextPathMethodAlign,
+    kTextpathMethodtypeStretch = kSVGTextPathMethodStretch,
+    kTextpathSpacingtypeUnknown = kSVGTextPathSpacingUnknown,
+    kTextpathSpacingtypeAuto = kSVGTextPathSpacingAuto,
+    kTextpathSpacingtypeExact = kSVGTextPathSpacingExact
+  };
 
-    SVGAnimatedLength* startOffset() const { return m_startOffset.get(); }
-    SVGAnimatedEnumeration<SVGTextPathMethodType>* method() { return m_method.get(); }
-    SVGAnimatedEnumeration<SVGTextPathSpacingType>* spacing() { return m_spacing.get(); }
+  DECLARE_NODE_FACTORY(SVGTextPathElement);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedLength* startOffset() const { return start_offset_.Get(); }
+  SVGAnimatedEnumeration<SVGTextPathMethodType>* method() {
+    return method_.Get();
+  }
+  SVGAnimatedEnumeration<SVGTextPathSpacingType>* spacing() {
+    return spacing_.Get();
+  }
 
-private:
-    explicit SVGTextPathElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    ~SVGTextPathElement() override;
+ private:
+  explicit SVGTextPathElement(Document&);
 
-    void clearResourceReferences();
+  ~SVGTextPathElement() override;
 
-    void buildPendingResource() override;
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  void ClearResourceReferences();
 
-    void svgAttributeChanged(const QualifiedName&) override;
+  void BuildPendingResource() override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    bool selfHasRelativeLengths() const override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
 
-    Member<SVGAnimatedLength> m_startOffset;
-    Member<SVGAnimatedEnumeration<SVGTextPathMethodType>> m_method;
-    Member<SVGAnimatedEnumeration<SVGTextPathSpacingType>> m_spacing;
+  bool SelfHasRelativeLengths() const override;
+
+  Member<SVGAnimatedLength> start_offset_;
+  Member<SVGAnimatedEnumeration<SVGTextPathMethodType>> method_;
+  Member<SVGAnimatedEnumeration<SVGTextPathSpacingType>> spacing_;
+  Member<IdTargetObserver> target_id_observer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGTextPathElement_h
+#endif  // SVGTextPathElement_h

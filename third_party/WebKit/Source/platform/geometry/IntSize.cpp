@@ -4,21 +4,17 @@
 
 #include "platform/geometry/IntSize.h"
 
+#include "platform/wtf/text/WTFString.h"
 #include "ui/gfx/geometry/size.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
-IntSize::operator gfx::Size() const
-{
-    return gfx::Size(width(), height());
+IntSize::operator gfx::Size() const {
+  return gfx::Size(Width(), Height());
 }
 
-#ifndef NDEBUG
-String IntSize::toString() const
-{
-    return String::format("%dx%d", width(), height());
+String IntSize::ToString() const {
+  return String::Format("%dx%d", Width(), Height());
 }
-#endif
 
-} // namespace blink
+}  // namespace blink

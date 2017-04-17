@@ -7,7 +7,7 @@
 
 #include "base/logging.h"
 #include "mojo/public/cpp/bindings/map_traits.h"
-#include "third_party/WebKit/Source/wtf/HashMap.h"
+#include "third_party/WebKit/Source/platform/wtf/HashMap.h"
 
 namespace mojo {
 
@@ -25,7 +25,7 @@ struct MapTraits<WTF::HashMap<K, V>> {
 
   static void SetToNull(WTF::HashMap<K, V>* output) {
     // WTF::HashMap<> doesn't support null state. Set it to empty instead.
-    output->clear();
+    output->Clear();
   }
 
   static size_t GetSize(const WTF::HashMap<K, V>& input) {
@@ -46,24 +46,17 @@ struct MapTraits<WTF::HashMap<K, V>> {
   static V& GetValue(Iterator& iterator) { return iterator->value; }
   static const V& GetValue(ConstIterator& iterator) { return iterator->value; }
 
-  static bool Insert(WTF::HashMap<K, V>& input, const K& key, V&& value) {
-    if (!WTF::HashMap<K, V>::isValidKey(key)) {
-      LOG(ERROR) << "The key value is disallowed by WTF::HashMap: " << key;
+  template <typename IK, typename IV>
+  static bool Insert(WTF::HashMap<K, V>& input, IK&& key, IV&& value) {
+    if (!WTF::HashMap<K, V>::IsValidKey(key)) {
+      LOG(ERROR) << "The key value is disallowed by WTF::HashMap";
       return false;
     }
-    input.add(key, std::forward<V>(value));
-    return true;
-  }
-  static bool Insert(WTF::HashMap<K, V>& input, const K& key, const V& value) {
-    if (!WTF::HashMap<K, V>::isValidKey(key)) {
-      LOG(ERROR) << "The key value is disallowed by WTF::HashMap: " << key;
-      return false;
-    }
-    input.add(key, value);
+    input.insert(std::forward<IK>(key), std::forward<IV>(value));
     return true;
   }
 
-  static void SetToEmpty(WTF::HashMap<K, V>* output) { output->clear(); }
+  static void SetToEmpty(WTF::HashMap<K, V>* output) { output->Clear(); }
 };
 
 }  // namespace mojo

@@ -25,184 +25,158 @@
 
 #include "core/loader/HistoryItem.h"
 
-#include "core/dom/Document.h"
 #include "core/html/forms/FormController.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SecurityPolicy.h"
-#include "wtf/Assertions.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/text/CString.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/text/CString.h"
 
 namespace blink {
 
-static long long generateSequenceNumber()
-{
-    // Initialize to the current time to reduce the likelihood of generating
-    // identifiers that overlap with those from past/future browser sessions.
-    static long long next = static_cast<long long>(currentTime() * 1000000.0);
-    return ++next;
+static long long GenerateSequenceNumber() {
+  // Initialize to the current time to reduce the likelihood of generating
+  // identifiers that overlap with those from past/future browser sessions.
+  static long long next = static_cast<long long>(CurrentTime() * 1000000.0);
+  return ++next;
 }
 
 HistoryItem::HistoryItem()
-    : m_pageScaleFactor(0)
-    , m_itemSequenceNumber(generateSequenceNumber())
-    , m_documentSequenceNumber(generateSequenceNumber())
-    , m_scrollRestorationType(ScrollRestorationAuto)
-{
+    : did_save_scroll_or_scale_state_(false),
+      page_scale_factor_(0),
+      item_sequence_number_(GenerateSequenceNumber()),
+      document_sequence_number_(GenerateSequenceNumber()),
+      scroll_restoration_type_(kScrollRestorationAuto) {}
+
+HistoryItem::~HistoryItem() {}
+
+const String& HistoryItem::UrlString() const {
+  return url_string_;
 }
 
-HistoryItem::~HistoryItem()
-{
+KURL HistoryItem::Url() const {
+  return KURL(kParsedURLString, url_string_);
 }
 
-const String& HistoryItem::urlString() const
-{
-    return m_urlString;
+const Referrer& HistoryItem::GetReferrer() const {
+  return referrer_;
 }
 
-KURL HistoryItem::url() const
-{
-    return KURL(ParsedURLString, m_urlString);
+void HistoryItem::SetURLString(const String& url_string) {
+  if (url_string_ != url_string)
+    url_string_ = url_string;
 }
 
-const Referrer& HistoryItem::referrer() const
-{
-    return m_referrer;
+void HistoryItem::SetURL(const KURL& url) {
+  SetURLString(url.GetString());
 }
 
-const String& HistoryItem::target() const
-{
-    return m_target;
+void HistoryItem::SetReferrer(const Referrer& referrer) {
+  // This should be a RELEASE_ASSERT.
+  referrer_ = SecurityPolicy::GenerateReferrer(referrer.referrer_policy, Url(),
+                                               referrer.referrer);
 }
 
-void HistoryItem::setURLString(const String& urlString)
-{
-    if (m_urlString != urlString)
-        m_urlString = urlString;
+const ScrollOffset& HistoryItem::VisualViewportScrollOffset() const {
+  return visual_viewport_scroll_offset_;
 }
 
-void HistoryItem::setURL(const KURL& url)
-{
-    setURLString(url.getString());
+void HistoryItem::SetVisualViewportScrollOffset(const ScrollOffset& offset) {
+  visual_viewport_scroll_offset_ = offset;
+  SetDidSaveScrollOrScaleState(true);
 }
 
-void HistoryItem::setReferrer(const Referrer& referrer)
-{
-    // This should be a RELEASE_ASSERT.
-    m_referrer = SecurityPolicy::generateReferrer(referrer.referrerPolicy, url(), referrer.referrer);
+const ScrollOffset& HistoryItem::GetScrollOffset() const {
+  return scroll_offset_;
 }
 
-void HistoryItem::setTarget(const String& target)
-{
-    m_target = target;
+void HistoryItem::SetScrollOffset(const ScrollOffset& offset) {
+  scroll_offset_ = offset;
+  SetDidSaveScrollOrScaleState(true);
 }
 
-const FloatPoint& HistoryItem::visualViewportScrollPoint() const
-{
-    return m_visualViewportScrollPoint;
+float HistoryItem::PageScaleFactor() const {
+  return page_scale_factor_;
 }
 
-void HistoryItem::setVisualViewportScrollPoint(const FloatPoint& point)
-{
-    m_visualViewportScrollPoint = point;
+void HistoryItem::SetPageScaleFactor(float scale_factor) {
+  page_scale_factor_ = scale_factor;
+  SetDidSaveScrollOrScaleState(true);
 }
 
-const IntPoint& HistoryItem::scrollPoint() const
-{
-    return m_scrollPoint;
+void HistoryItem::SetDocumentState(const Vector<String>& state) {
+  DCHECK(!document_state_);
+  document_state_vector_ = state;
 }
 
-void HistoryItem::setScrollPoint(const IntPoint& point)
-{
-    m_scrollPoint = point;
+void HistoryItem::SetDocumentState(DocumentState* state) {
+  document_state_ = state;
 }
 
-float HistoryItem::pageScaleFactor() const
-{
-    return m_pageScaleFactor;
+const Vector<String>& HistoryItem::GetDocumentState() {
+  if (document_state_)
+    document_state_vector_ = document_state_->ToStateVector();
+  return document_state_vector_;
 }
 
-void HistoryItem::setPageScaleFactor(float scaleFactor)
-{
-    m_pageScaleFactor = scaleFactor;
+Vector<String> HistoryItem::GetReferencedFilePaths() {
+  return FormController::GetReferencedFilePaths(GetDocumentState());
 }
 
-void HistoryItem::setDocumentState(const Vector<String>& state)
-{
-    ASSERT(!m_documentState);
-    m_documentStateVector = state;
+void HistoryItem::ClearDocumentState() {
+  document_state_.Clear();
+  document_state_vector_.Clear();
 }
 
-void HistoryItem::setDocumentState(DocumentState* state)
-{
-    m_documentState = state;
+void HistoryItem::SetStateObject(PassRefPtr<SerializedScriptValue> object) {
+  state_object_ = std::move(object);
 }
 
-const Vector<String>& HistoryItem::documentState()
-{
-    if (m_documentState)
-        m_documentStateVector = m_documentState->toStateVector();
-    return m_documentStateVector;
+const AtomicString& HistoryItem::FormContentType() const {
+  return form_content_type_;
 }
 
-Vector<String> HistoryItem::getReferencedFilePaths()
-{
-    return FormController::getReferencedFilePaths(documentState());
+void HistoryItem::SetFormInfoFromRequest(const ResourceRequest& request) {
+  if (DeprecatedEqualIgnoringCase(request.HttpMethod(), "POST")) {
+    // FIXME: Eventually we have to make this smart enough to handle the case
+    // where we have a stream for the body to handle the "data interspersed with
+    // files" feature.
+    form_data_ = request.HttpBody();
+    form_content_type_ = request.HttpContentType();
+  } else {
+    form_data_ = nullptr;
+    form_content_type_ = g_null_atom;
+  }
 }
 
-void HistoryItem::clearDocumentState()
-{
-    m_documentState.clear();
-    m_documentStateVector.clear();
+void HistoryItem::SetFormData(PassRefPtr<EncodedFormData> form_data) {
+  form_data_ = std::move(form_data);
 }
 
-void HistoryItem::setStateObject(PassRefPtr<SerializedScriptValue> object)
-{
-    m_stateObject = object;
+void HistoryItem::SetFormContentType(const AtomicString& form_content_type) {
+  form_content_type_ = form_content_type;
 }
 
-const AtomicString& HistoryItem::formContentType() const
-{
-    return m_formContentType;
+EncodedFormData* HistoryItem::FormData() {
+  return form_data_.Get();
 }
 
-void HistoryItem::setFormInfoFromRequest(const ResourceRequest& request)
-{
-    if (equalIgnoringCase(request.httpMethod(), "POST")) {
-        // FIXME: Eventually we have to make this smart enough to handle the case where
-        // we have a stream for the body to handle the "data interspersed with files" feature.
-        m_formData = request.httpBody();
-        m_formContentType = request.httpContentType();
-    } else {
-        m_formData = nullptr;
-        m_formContentType = nullAtom;
-    }
+ResourceRequest HistoryItem::GenerateResourceRequest(
+    WebCachePolicy cache_policy) {
+  ResourceRequest request(url_string_);
+  request.SetHTTPReferrer(referrer_);
+  request.SetCachePolicy(cache_policy);
+  if (form_data_) {
+    request.SetHTTPMethod(HTTPNames::POST);
+    request.SetHTTPBody(form_data_);
+    request.SetHTTPContentType(form_content_type_);
+    request.AddHTTPOriginIfNeeded(referrer_.referrer);
+  }
+  return request;
 }
 
-void HistoryItem::setFormData(PassRefPtr<EncodedFormData> formData)
-{
-    m_formData = formData;
+DEFINE_TRACE(HistoryItem) {
+  visitor->Trace(document_state_);
 }
 
-void HistoryItem::setFormContentType(const AtomicString& formContentType)
-{
-    m_formContentType = formContentType;
-}
-
-EncodedFormData* HistoryItem::formData()
-{
-    return m_formData.get();
-}
-
-bool HistoryItem::isCurrentDocument(Document* doc) const
-{
-    // FIXME: We should find a better way to check if this is the current document.
-    return equalIgnoringFragmentIdentifier(url(), doc->url());
-}
-
-DEFINE_TRACE(HistoryItem)
-{
-    visitor->trace(m_documentState);
-}
-
-} // namespace blink
+}  // namespace blink

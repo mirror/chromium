@@ -8,7 +8,6 @@ import json
 
 from pylib.base import base_test_result
 
-
 def GenerateResultsDict(test_run_results):
   """Create a results dict from |test_run_results| suitable for writing to JSON.
   Args:
@@ -88,21 +87,29 @@ def GenerateResultsDict(test_run_results):
 
   all_tests = set()
   per_iteration_data = []
+  test_run_links = {}
+
   for test_run_result in test_run_results:
     iteration_data = collections.defaultdict(list)
     if isinstance(test_run_result, list):
       results_iterable = itertools.chain(*(t.GetAll() for t in test_run_result))
+      for tr in test_run_result:
+        test_run_links.update(tr.GetLinks())
+
     else:
       results_iterable = test_run_result.GetAll()
+      test_run_links.update(test_run_result.GetLinks())
 
     for r in results_iterable:
-      iteration_data[r.GetName()].append({
+      result_dict = {
           'status': status_as_string(r.GetType()),
           'elapsed_time_ms': r.GetDuration(),
-          'output_snippet': '',
+          'output_snippet': r.GetLog(),
           'losless_snippet': '',
-          'output_snippet_base64:': '',
-      })
+          'output_snippet_base64': '',
+          'links': r.GetLinks(),
+      }
+      iteration_data[r.GetName()].append(result_dict)
 
     all_tests = all_tests.union(set(iteration_data.iterkeys()))
     per_iteration_data.append(iteration_data)
@@ -113,6 +120,7 @@ def GenerateResultsDict(test_run_results):
     # TODO(jbudorick): Add support for disabled tests within base_test_result.
     'disabled_tests': [],
     'per_iteration_data': per_iteration_data,
+    'links': test_run_links,
   }
 
 

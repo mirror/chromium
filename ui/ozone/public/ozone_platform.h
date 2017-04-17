@@ -8,24 +8,31 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "ui/ozone/ozone_export.h"
+
+namespace display {
+class NativeDisplayDelegate;
+}
 
 namespace gfx {
 class Rect;
 }
 
-namespace shell {
+namespace IPC {
+class MessageFilter;
+}
+
+namespace service_manager {
+class BinderRegistry;
 class Connector;
-class Connection;
 }
 
 namespace ui {
 
 class CursorFactoryOzone;
 class InputController;
-class GpuPlatformSupport;
 class GpuPlatformSupportHost;
-class NativeDisplayDelegate;
 class OverlayManagerOzone;
 class PlatformWindow;
 class PlatformWindowDelegate;
@@ -51,19 +58,25 @@ class OZONE_EXPORT OzonePlatform {
   OzonePlatform();
   virtual ~OzonePlatform();
 
-  // Additional initalization params for the platform. Platforms must not retain
-  // a reference to this structure.
+  // Additional initialization params for the platform. Platforms must not
+  // retain a reference to this structure.
   struct InitParams {
     // Ozone may retain this pointer for later use. An Ozone platform embedder
     // must set this parameter in order for the Ozone platform implementation to
     // be able to use Mojo.
-    shell::Connector* connector = nullptr;
+    service_manager::Connector* connector = nullptr;
 
     // Setting this to true indicates that the platform implementation should
     // operate as a single process for platforms (i.e. drm) that are usually
     // split between a main and gpu specific portion.
     bool single_process = false;
   };
+
+  // Ensures the OzonePlatform instance without doing any initialization.
+  // No-op in case the instance is already created.
+  // This is useful in order call virtual methods that depend on the ozone
+  // platform selected at runtime, e.g. ::GetMessageLoopTypeForGpu.
+  static OzonePlatform* EnsureInstance();
 
   // Initializes the subsystems/resources necessary for the UI process (e.g.
   // events, etc.)
@@ -76,13 +89,13 @@ class OZONE_EXPORT OzonePlatform {
   // InitalizeForUI.
   static void InitializeForUI(const InitParams& args);
 
-  // Initializes the subsystems/resources necessary for rendering (i.e. GPU).
-  // TODO(rjkroege): Remove deprecated entry point (http://crbug.com/620934)
-  static void InitializeForGPU();
-
   // Initializes the subsystems for rendering but with additional properties
   // provided by |args| as with InitalizeForUI.
   static void InitializeForGPU(const InitParams& args);
+
+  // Deletes the instance. Does nothing if OzonePlatform has not yet been
+  // initialized.
+  static void Shutdown();
 
   static OzonePlatform* GetInstance();
 
@@ -93,31 +106,32 @@ class OZONE_EXPORT OzonePlatform {
   virtual ui::OverlayManagerOzone* GetOverlayManager() = 0;
   virtual ui::CursorFactoryOzone* GetCursorFactoryOzone() = 0;
   virtual ui::InputController* GetInputController() = 0;
-  virtual ui::GpuPlatformSupport* GetGpuPlatformSupport() = 0;
+  virtual IPC::MessageFilter* GetGpuMessageFilter();
   virtual ui::GpuPlatformSupportHost* GetGpuPlatformSupportHost() = 0;
   virtual std::unique_ptr<SystemInputInjector> CreateSystemInputInjector() = 0;
   virtual std::unique_ptr<PlatformWindow> CreatePlatformWindow(
       PlatformWindowDelegate* delegate,
       const gfx::Rect& bounds) = 0;
-  virtual std::unique_ptr<ui::NativeDisplayDelegate>
+  virtual std::unique_ptr<display::NativeDisplayDelegate>
   CreateNativeDisplayDelegate() = 0;
+
+  // Returns the message loop type required for OzonePlatform instance that
+  // will be initialized for the GPU process.
+  virtual base::MessageLoop::Type GetMessageLoopTypeForGpu();
 
   // Ozone platform implementations may also choose to expose mojo interfaces to
   // internal functionality. Embedders wishing to take advantage of ozone mojo
-  // implementations must invoke AddInterfaces with a valid shell::Connection*
-  // pointer to export all Mojo interfaces defined within Ozone.
+  // implementations must invoke AddInterfaces with a valid
+  // service_manager::BinderRegistry* pointer to export all Mojo interfaces
+  // defined within Ozone.
   //
   // A default do-nothing implementation is provided to permit platform
   // implementations to opt out of implementing any Mojo interfaces.
-  virtual void AddInterfaces(shell::Connection* connection);
+  virtual void AddInterfaces(service_manager::BinderRegistry* registry);
 
  private:
-  virtual void InitializeUI() = 0;
-  virtual void InitializeGPU() = 0;
-  virtual void InitializeUI(const InitParams& args);
-  virtual void InitializeGPU(const InitParams& args);
-
-  static void CreateInstance();
+  virtual void InitializeUI(const InitParams& params) = 0;
+  virtual void InitializeGPU(const InitParams& params) = 0;
 
   static OzonePlatform* instance_;
 

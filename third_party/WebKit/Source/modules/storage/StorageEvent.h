@@ -28,7 +28,7 @@
 
 #include "core/events/Event.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -36,40 +36,61 @@ class Storage;
 class StorageEventInit;
 
 class StorageEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static StorageEvent* create();
-    static StorageEvent* create(const AtomicString& type, const String& key, const String& oldValue, const String& newValue, const String& url, Storage* storageArea);
-    static StorageEvent* create(const AtomicString&, const StorageEventInit&);
-    ~StorageEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    const String& key() const { return m_key; }
-    const String& oldValue() const { return m_oldValue; }
-    const String& newValue() const { return m_newValue; }
-    const String& url() const { return m_url; }
-    Storage* storageArea() const { return m_storageArea.get(); }
+ public:
+  static StorageEvent* Create();
+  static StorageEvent* Create(const AtomicString& type,
+                              const String& key,
+                              const String& old_value,
+                              const String& new_value,
+                              const String& url,
+                              Storage* storage_area);
+  static StorageEvent* Create(const AtomicString&, const StorageEventInit&);
+  ~StorageEvent() override;
 
-    void initStorageEvent(const AtomicString& type, bool canBubble, bool cancelable, const String& key, const String& oldValue, const String& newValue, const String& url, Storage* storageArea);
+  const String& key() const { return key_; }
+  const String& oldValue() const { return old_value_; }
+  const String& newValue() const { return new_value_; }
+  const String& url() const { return url_; }
+  Storage* storageArea() const { return storage_area_.Get(); }
 
-    // Needed once we support init<blank>EventNS
-    // void initStorageEventNS(in DOMString namespaceURI, in DOMString typeArg, in boolean canBubbleArg, in boolean cancelableArg, in DOMString keyArg, in DOMString oldValueArg, in DOMString newValueArg, in DOMString urlArg, Storage storageAreaArg);
+  void initStorageEvent(const AtomicString& type,
+                        bool can_bubble,
+                        bool cancelable,
+                        const String& key,
+                        const String& old_value,
+                        const String& new_value,
+                        const String& url,
+                        Storage* storage_area);
 
-    const AtomicString& interfaceName() const override;
+  // Needed once we support init<blank>EventNS
+  // void initStorageEventNS(in DOMString namespaceURI, in DOMString typeArg,
+  //     in boolean canBubbleArg, in boolean cancelableArg, in DOMString keyArg,
+  //     in DOMString oldValueArg, in DOMString newValueArg,
+  //     in DOMString urlArg, Storage storageAreaArg);
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    StorageEvent();
-    StorageEvent(const AtomicString& type, const String& key, const String& oldValue, const String& newValue, const String& url, Storage* storageArea);
-    StorageEvent(const AtomicString&, const StorageEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    String m_key;
-    String m_oldValue;
-    String m_newValue;
-    String m_url;
-    Member<Storage> m_storageArea;
+ private:
+  StorageEvent();
+  StorageEvent(const AtomicString& type,
+               const String& key,
+               const String& old_value,
+               const String& new_value,
+               const String& url,
+               Storage* storage_area);
+  StorageEvent(const AtomicString&, const StorageEventInit&);
+
+  String key_;
+  String old_value_;
+  String new_value_;
+  String url_;
+  Member<Storage> storage_area_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StorageEvent_h
+#endif  // StorageEvent_h

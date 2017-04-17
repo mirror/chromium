@@ -40,24 +40,30 @@ class WebStorageNamespace;
 class WebURL;
 
 class WebStorageEventDispatcher {
-public:
-    // Dispatch a local storage event to appropiate documents.
-    BLINK_EXPORT static void dispatchLocalStorageEvent(
-            const WebString& key, const WebString& oldValue,
-            const WebString& newValue, const WebURL& origin,
-            const WebURL& pageUrl, WebStorageArea* sourceAreaInstance);
+ public:
+  // Dispatch a local storage event to appropiate documents.
+  BLINK_EXPORT static void DispatchLocalStorageEvent(
+      const WebString& key,
+      const WebString& old_value,
+      const WebString& new_value,
+      const WebURL& origin,
+      const WebURL& page_url,
+      WebStorageArea* source_area_instance);
 
-    // Dispatch a session storage event to appropiate documents.
-    BLINK_EXPORT static void dispatchSessionStorageEvent(
-            const WebString& key, const WebString& oldValue,
-            const WebString& newValue, const WebURL& origin,
-            const WebURL& pageUrl, const WebStorageNamespace&,
-            WebStorageArea* sourceAreaInstance);
+  // Dispatch a session storage event to appropiate documents.
+  BLINK_EXPORT static void DispatchSessionStorageEvent(
+      const WebString& key,
+      const WebString& old_value,
+      const WebString& new_value,
+      const WebURL& origin,
+      const WebURL& page_url,
+      const WebStorageNamespace&,
+      WebStorageArea* source_area_instance);
 
-private:
-    WebStorageEventDispatcher() { }
+ private:
+  WebStorageEventDispatcher() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebStorageEventDispatcher_h
+#endif  // WebStorageEventDispatcher_h

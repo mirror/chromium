@@ -5,11 +5,13 @@
 #ifndef CC_OUTPUT_OVERLAY_CANDIDATE_H_
 #define CC_OUTPUT_OVERLAY_CANDIDATE_H_
 
+#include <map>
 #include <vector>
 
-#include "cc/base/cc_export.h"
+#include "cc/base/resource_id.h"
+#include "cc/cc_export.h"
 #include "cc/quads/render_pass.h"
-#include "cc/resources/resource_format.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size.h"
@@ -50,8 +52,8 @@ class CC_EXPORT OverlayCandidate {
 
   // Transformation to apply to layer during composition.
   gfx::OverlayTransform transform;
-  // Format of the buffer to composite.
-  ResourceFormat format;
+  // Format of the buffer to scanout.
+  gfx::BufferFormat format;
   // Size of the resource, in pixels.
   gfx::Size resource_size_in_pixels;
   // Rect on the display to position the overlay to. Implementer must convert
@@ -70,6 +72,18 @@ class CC_EXPORT OverlayCandidate {
   bool use_output_surface_for_resource;
   // Texture resource to present in an overlay.
   unsigned resource_id;
+
+#if defined(OS_ANDROID)
+  // For candidates from StreamVideoDrawQuads, this records whether the quad is
+  // marked as being backed by a SurfaceTexture or not.  If so, it's not really
+  // promotable to an overlay.
+  bool is_backed_by_surface_texture;
+
+  // Filled in by the OverlayCandidateValidator to indicate whether this is a
+  // promotable candidate or not.
+  bool is_promotable_hint;
+#endif
+
   // Stacking order of the overlay plane relative to the main surface,
   // which is 0. Signed to allow for "underlays".
   int plane_z_order;
@@ -91,7 +105,26 @@ class CC_EXPORT OverlayCandidate {
                                   OverlayCandidate* candidate);
 };
 
-typedef std::vector<OverlayCandidate> OverlayCandidateList;
+class CC_EXPORT OverlayCandidateList : public std::vector<OverlayCandidate> {
+ public:
+  OverlayCandidateList();
+  OverlayCandidateList(const OverlayCandidateList&);
+  OverlayCandidateList(OverlayCandidateList&&);
+  ~OverlayCandidateList();
+
+  OverlayCandidateList& operator=(const OverlayCandidateList&);
+  OverlayCandidateList& operator=(OverlayCandidateList&&);
+
+  // [id] == origin of candidate's |display_rect| for all promotable resources.
+  using PromotionHintInfoMap = std::map<ResourceId, gfx::PointF>;
+
+  // For android, this provides a set of resources that could be promoted to
+  // overlay, if one backs them with a SurfaceView.
+  PromotionHintInfoMap promotion_hint_info_map_;
+
+  // Helper to insert |candidate| into |promotion_hint_info_|.
+  void AddPromotionHint(const OverlayCandidate& candidate);
+};
 
 }  // namespace cc
 

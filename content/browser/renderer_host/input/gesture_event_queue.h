@@ -18,12 +18,10 @@
 #include "content/browser/renderer_host/input/touchscreen_tap_suppression_controller.h"
 #include "content/common/content_export.h"
 #include "content/common/input/input_event_ack_state.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
-#include "ui/gfx/transform.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 
 namespace content {
 class GestureEventQueueTest;
-class InputRouter;
 class MockRenderWidgetHost;
 
 // Interface with which the GestureEventQueue can forward gesture events, and
@@ -172,6 +170,11 @@ class CONTENT_EXPORT GestureEventQueue {
   // True if two related gesture events were sent before without waiting
   // for an ACK, so the next gesture ACK should be ignored.
   bool ignore_next_ack_;
+
+  // True if compositor event queue is enabled. GestureEventQueue won't coalesce
+  // events and will forward events immediately (instead of waiting for previous
+  // ack).
+  bool allow_multiple_inflight_events_;
 
   // An object tracking the state of touchpad on the delivery of mouse events to
   // the renderer to filter mouse immediately after a touchpad fling canceling

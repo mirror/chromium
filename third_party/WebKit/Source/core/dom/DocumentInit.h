@@ -3,8 +3,10 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
  *           (C) 2006 Alexey Proskuryakov (ap@webkit.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All rights reserved.
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Apple Inc. All
+ * rights reserved.
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies)
  * Copyright (C) 2013 Google Inc. All rights reserved.
  *
@@ -44,63 +46,75 @@ class HTMLImportsController;
 class Settings;
 
 class CORE_EXPORT DocumentInit final {
-    STACK_ALLOCATED();
-public:
-    DocumentInit(const KURL& = KURL(), LocalFrame* = nullptr, Document* contextDocument = nullptr, HTMLImportsController* = nullptr);
-    DocumentInit(Document* ownerDocument, const KURL&, LocalFrame*, Document* contextDocument = nullptr, HTMLImportsController* = nullptr);
-    DocumentInit(const DocumentInit&);
-    ~DocumentInit();
+  STACK_ALLOCATED();
 
-    const KURL& url() const { return m_url; }
-    LocalFrame* frame() const { return m_frame; }
-    HTMLImportsController* importsController() const { return m_importsController; }
+ public:
+  DocumentInit(const KURL& = KURL(),
+               LocalFrame* = nullptr,
+               Document* context_document = nullptr,
+               HTMLImportsController* = nullptr);
+  DocumentInit(Document* owner_document,
+               const KURL&,
+               LocalFrame*,
+               Document* context_document = nullptr,
+               HTMLImportsController* = nullptr);
+  DocumentInit(const DocumentInit&);
+  ~DocumentInit();
 
-    bool hasSecurityContext() const { return frameForSecurityContext(); }
-    bool shouldTreatURLAsSrcdocDocument() const;
-    bool shouldSetURL() const;
-    bool isSeamlessAllowedFor(Document* child) const;
-    bool shouldReuseDefaultView() const { return m_shouldReuseDefaultView; }
-    SandboxFlags getSandboxFlags() const;
-    bool isHostedInReservedIPRange() const;
-    WebInsecureRequestPolicy getInsecureRequestPolicy() const;
-    SecurityContext::InsecureNavigationsSet* insecureNavigationsToUpgrade() const;
+  const KURL& Url() const { return url_; }
+  LocalFrame* GetFrame() const { return frame_; }
+  HTMLImportsController* ImportsController() const {
+    return imports_controller_;
+  }
 
-    Document* parent() const { return m_parent.get(); }
-    Document* owner() const { return m_owner.get(); }
-    KURL parentBaseURL() const;
-    LocalFrame* ownerFrame() const;
-    Settings* settings() const;
+  bool HasSecurityContext() const { return FrameForSecurityContext(); }
+  bool ShouldTreatURLAsSrcdocDocument() const;
+  bool ShouldSetURL() const;
+  bool IsSeamlessAllowedFor(Document* child) const;
+  bool ShouldReuseDefaultView() const { return should_reuse_default_view_; }
+  SandboxFlags GetSandboxFlags() const;
+  bool IsHostedInReservedIPRange() const;
+  WebInsecureRequestPolicy GetInsecureRequestPolicy() const;
+  SecurityContext::InsecureNavigationsSet* InsecureNavigationsToUpgrade() const;
 
-    DocumentInit& withRegistrationContext(V0CustomElementRegistrationContext*);
-    DocumentInit& withNewRegistrationContext();
-    V0CustomElementRegistrationContext* registrationContext(Document*) const;
-    Document* contextDocument() const;
+  Document* Parent() const { return parent_.Get(); }
+  Document* Owner() const { return owner_.Get(); }
+  KURL ParentBaseURL() const;
+  LocalFrame* OwnerFrame() const;
+  Settings* GetSettings() const;
 
-    static DocumentInit fromContext(Document* contextDocument, const KURL& = KURL());
+  DocumentInit& WithRegistrationContext(V0CustomElementRegistrationContext*);
+  DocumentInit& WithNewRegistrationContext();
+  V0CustomElementRegistrationContext* RegistrationContext(Document*) const;
+  Document* ContextDocument() const;
 
-private:
-    LocalFrame* frameForSecurityContext() const;
+  static DocumentInit FromContext(Document* context_document,
+                                  const KURL& = KURL());
 
-    KURL m_url;
-    Member<LocalFrame> m_frame;
-    Member<Document> m_parent;
-    Member<Document> m_owner;
-    Member<Document> m_contextDocument;
-    Member<HTMLImportsController> m_importsController;
-    Member<V0CustomElementRegistrationContext> m_registrationContext;
-    bool m_createNewRegistrationContext;
+ private:
+  LocalFrame* FrameForSecurityContext() const;
 
-    // In some rare cases, we'll re-use a LocalDOMWindow for a new Document. For example,
-    // when a script calls window.open("..."), the browser gives JavaScript a window
-    // synchronously but kicks off the load in the window asynchronously. Web sites
-    // expect that modifications that they make to the window object synchronously
-    // won't be blown away when the network load commits. To make that happen, we
-    // "securely transition" the existing LocalDOMWindow to the Document that results from
-    // the network load. See also SecurityContext::isSecureTransitionTo.
-    // FIXME: This is for DocumentWriter creation, not for one of Document.
-    bool m_shouldReuseDefaultView;
+  KURL url_;
+  Member<LocalFrame> frame_;
+  Member<Document> parent_;
+  Member<Document> owner_;
+  Member<Document> context_document_;
+  Member<HTMLImportsController> imports_controller_;
+  Member<V0CustomElementRegistrationContext> registration_context_;
+  bool create_new_registration_context_;
+
+  // In some rare cases, we'll re-use a LocalDOMWindow for a new Document. For
+  // example, when a script calls window.open("..."), the browser gives
+  // JavaScript a window synchronously but kicks off the load in the window
+  // asynchronously. Web sites expect that modifications that they make to the
+  // window object synchronously won't be blown away when the network load
+  // commits. To make that happen, we "securely transition" the existing
+  // LocalDOMWindow to the Document that results from the network load. See also
+  // SecurityContext::isSecureTransitionTo.
+  // FIXME: This is for DocumentWriter creation, not for one of Document.
+  bool should_reuse_default_view_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentInit_h
+#endif  // DocumentInit_h

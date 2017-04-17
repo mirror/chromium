@@ -8,62 +8,54 @@
 
 namespace blink {
 
-PlatformEventController::PlatformEventController(Page* page)
-    : PageVisibilityObserver(page)
-    , m_hasEventListener(false)
-    , m_isActive(false)
-    , m_timer(this, &PlatformEventController::oneShotCallback)
-{
+PlatformEventController::PlatformEventController(LocalFrame* frame)
+    : PageVisibilityObserver(frame ? frame->GetPage() : nullptr),
+      has_event_listener_(false),
+      is_active_(false),
+      timer_(TaskRunnerHelper::Get(TaskType::kUnspecedTimer, frame),
+             this,
+             &PlatformEventController::OneShotCallback) {}
+
+PlatformEventController::~PlatformEventController() {}
+
+void PlatformEventController::OneShotCallback(TimerBase* timer) {
+  DCHECK_EQ(timer, &timer_);
+  ASSERT(HasLastData());
+  ASSERT(!timer_.IsActive());
+
+  DidUpdateData();
 }
 
-PlatformEventController::~PlatformEventController()
-{
+void PlatformEventController::StartUpdating() {
+  if (is_active_)
+    return;
+
+  if (HasLastData() && !timer_.IsActive()) {
+    // Make sure to fire the data as soon as possible.
+    timer_.StartOneShot(0, BLINK_FROM_HERE);
+  }
+
+  RegisterWithDispatcher();
+  is_active_ = true;
 }
 
-void PlatformEventController::oneShotCallback(Timer<PlatformEventController>* timer)
-{
-    ASSERT_UNUSED(timer, timer == &m_timer);
-    ASSERT(hasLastData());
-    ASSERT(!m_timer.isActive());
+void PlatformEventController::StopUpdating() {
+  if (!is_active_)
+    return;
 
-    didUpdateData();
+  timer_.Stop();
+  UnregisterWithDispatcher();
+  is_active_ = false;
 }
 
-void PlatformEventController::startUpdating()
-{
-    if (m_isActive)
-        return;
+void PlatformEventController::PageVisibilityChanged() {
+  if (!has_event_listener_)
+    return;
 
-    if (hasLastData() && !m_timer.isActive()) {
-        // Make sure to fire the data as soon as possible.
-        m_timer.startOneShot(0, BLINK_FROM_HERE);
-    }
-
-    registerWithDispatcher();
-    m_isActive = true;
+  if (GetPage()->IsPageVisible())
+    StartUpdating();
+  else
+    StopUpdating();
 }
 
-void PlatformEventController::stopUpdating()
-{
-    if (!m_isActive)
-        return;
-
-    if (m_timer.isActive())
-        m_timer.stop();
-
-    unregisterWithDispatcher();
-    m_isActive = false;
-}
-
-void PlatformEventController::pageVisibilityChanged()
-{
-    if (!m_hasEventListener)
-        return;
-
-    if (page()->isPageVisible())
-        startUpdating();
-    else
-        stopUpdating();
-}
-
-} // namespace blink
+}  // namespace blink

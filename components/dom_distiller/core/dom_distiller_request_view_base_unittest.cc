@@ -6,9 +6,9 @@
 
 #include "components/dom_distiller/core/article_distillation_update.h"
 #include "components/dom_distiller/core/test_request_view_handle.h"
-#include "components/pref_registry/testing_pref_service_syncable.h"
-#include "grit/components_resources.h"
-#include "grit/components_strings.h"
+#include "components/grit/components_resources.h"
+#include "components/strings/grit/components_strings.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -21,12 +21,12 @@ namespace dom_distiller {
 class DomDistillerRequestViewTest : public testing::Test {
  protected:
   void SetUp() override {
-    pref_service_.reset(new user_prefs::TestingPrefServiceSyncable());
+    pref_service_.reset(new sync_preferences::TestingPrefServiceSyncable());
     DistilledPagePrefs::RegisterProfilePrefs(pref_service_->registry());
     distilled_page_prefs_.reset(new DistilledPagePrefs(pref_service_.get()));
   }
 
-  std::unique_ptr<user_prefs::TestingPrefServiceSyncable> pref_service_;
+  std::unique_ptr<sync_preferences::TestingPrefServiceSyncable> pref_service_;
   std::unique_ptr<DistilledPagePrefs> distilled_page_prefs_;
 };
 

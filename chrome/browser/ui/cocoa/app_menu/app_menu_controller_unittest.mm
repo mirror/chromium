@@ -2,19 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#import "chrome/browser/ui/cocoa/app_menu/app_menu_controller.h"
 #include "base/command_line.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/browser/sync/profile_sync_test_util.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_list_observer.h"
-#import "chrome/browser/ui/cocoa/app_menu/app_menu_controller.h"
-#include "chrome/browser/ui/cocoa/cocoa_profile_test.h"
-#include "chrome/browser/ui/cocoa/run_loop_testing.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
+#include "chrome/browser/ui/cocoa/test/run_loop_testing.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
 #import "chrome/browser/ui/cocoa/view_resizer_pong.h"
 #include "chrome/browser/ui/sync/browser_synced_window_delegates_getter.h"
@@ -23,22 +25,27 @@
 #include "chrome/browser/ui/toolbar/recent_tabs_sub_menu_model.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
-#include "components/sync_driver/local_device_info_provider_mock.h"
-#include "components/sync_driver/sync_client.h"
-#include "components/sync_driver/sync_prefs.h"
+#include "components/browser_sync/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service_mock.h"
+#include "components/sync/base/sync_prefs.h"
+#include "components/sync/device_info/local_device_info_provider_mock.h"
+#include "components/sync/driver/sync_client.h"
+#include "components/sync/model/fake_sync_change_processor.h"
+#include "components/sync/model/sync_error_factory_mock.h"
 #include "components/sync_sessions/fake_sync_sessions_client.h"
 #include "components/sync_sessions/sessions_sync_manager.h"
-#include "grit/theme_resources.h"
-#include "sync/api/fake_sync_change_processor.h"
-#include "sync/api/sync_error_factory_mock.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 #include "testing/platform_test.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+
+using testing::_;
+using testing::Invoke;
+using testing::Return;
 
 namespace {
 
@@ -49,42 +56,47 @@ class MockAppMenuModel : public AppMenuModel {
   MOCK_METHOD2(ExecuteCommand, void(int command_id, int event_flags));
 };
 
-class DummyRouter : public browser_sync::LocalSessionEventRouter {
+class DummyRouter : public sync_sessions::LocalSessionEventRouter {
  public:
   ~DummyRouter() override {}
   void StartRoutingTo(
-      browser_sync::LocalSessionEventHandler* handler) override {}
+      sync_sessions::LocalSessionEventHandler* handler) override {}
   void Stop() override {}
 };
 
 class AppMenuControllerTest : public CocoaProfileTest {
  public:
-  AppMenuControllerTest()
-      : local_device_(new sync_driver::LocalDeviceInfoProviderMock(
-            "AppMenuControllerTest",
-            "Test Machine",
-            "Chromium 10k",
-            "Chrome 10k",
-            sync_pb::SyncEnums_DeviceType_TYPE_LINUX,
-            "device_id")) {
+  AppMenuControllerTest() {
+    TestingProfile::TestingFactories factories;
+    factories.push_back(std::make_pair(ProfileSyncServiceFactory::GetInstance(),
+                                       BuildMockProfileSyncService));
+    AddTestingFactories(factories);
   }
 
   void SetUp() override {
     CocoaProfileTest::SetUp();
     ASSERT_TRUE(browser());
 
-    controller_.reset([[AppMenuController alloc] initWithBrowser:browser()]);
-    fake_model_.reset(new MockAppMenuModel);
+    local_device_ = base::MakeUnique<syncer::LocalDeviceInfoProviderMock>(
+        "AppMenuControllerTest", "Test Machine", "Chromium 10k", "Chrome 10k",
+        sync_pb::SyncEnums_DeviceType_TYPE_LINUX, "device_id");
 
-    sync_prefs_.reset(new sync_driver::SyncPrefs(profile()->GetPrefs()));
-    manager_.reset(new browser_sync::SessionsSyncManager(
+    controller_.reset([[AppMenuController alloc] initWithBrowser:browser()]);
+
+    fake_model_ = base::MakeUnique<MockAppMenuModel>();
+
+    sync_prefs_ = base::MakeUnique<syncer::SyncPrefs>(profile()->GetPrefs());
+
+    mock_sync_service_ = static_cast<browser_sync::ProfileSyncServiceMock*>(
+        ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile()));
+
+    manager_ = base::MakeUnique<sync_sessions::SessionsSyncManager>(
         ProfileSyncServiceFactory::GetForProfile(profile())
             ->GetSyncClient()
             ->GetSyncSessionsClient(),
-        sync_prefs_.get(), local_device_.get(),
-        std::unique_ptr<browser_sync::LocalSessionEventRouter>(
-            new DummyRouter()),
-        base::Closure(), base::Closure()));
+        sync_prefs_.get(), local_device_.get(), &dummy_router_, base::Closure(),
+        base::Closure());
+
     manager_->MergeDataAndStartSyncing(
         syncer::SESSIONS, syncer::SyncDataList(),
         std::unique_ptr<syncer::SyncChangeProcessor>(
@@ -97,15 +109,26 @@ class AppMenuControllerTest : public CocoaProfileTest {
     helper->ExportToSessionsSyncManager(manager_.get());
   }
 
-  sync_driver::OpenTabsUIDelegate* GetOpenTabsDelegate() {
-    return manager_.get();
-  }
-
   void TearDown() override {
     fake_model_.reset();
     controller_.reset();
     manager_.reset();
+    sync_prefs_.reset();
+    local_device_.reset();
     CocoaProfileTest::TearDown();
+  }
+
+  void EnableSync() {
+    EXPECT_CALL(*mock_sync_service_, IsSyncActive())
+        .WillRepeatedly(Return(true));
+    EXPECT_CALL(*mock_sync_service_,
+                IsDataTypeControllerRunning(syncer::SESSIONS))
+        .WillRepeatedly(Return(true));
+    EXPECT_CALL(*mock_sync_service_,
+                IsDataTypeControllerRunning(syncer::PROXY_TABS))
+        .WillRepeatedly(Return(true));
+    EXPECT_CALL(*mock_sync_service_, GetOpenTabsUIDelegateMock())
+        .WillRepeatedly(Return(manager_.get()));
   }
 
   AppMenuController* controller() {
@@ -117,9 +140,11 @@ class AppMenuControllerTest : public CocoaProfileTest {
   std::unique_ptr<MockAppMenuModel> fake_model_;
 
  private:
-  std::unique_ptr<sync_driver::SyncPrefs> sync_prefs_;
-  std::unique_ptr<browser_sync::SessionsSyncManager> manager_;
-  std::unique_ptr<sync_driver::LocalDeviceInfoProviderMock> local_device_;
+  std::unique_ptr<syncer::LocalDeviceInfoProviderMock> local_device_;
+  DummyRouter dummy_router_;
+  std::unique_ptr<syncer::SyncPrefs> sync_prefs_;
+  browser_sync::ProfileSyncServiceMock* mock_sync_service_ = nullptr;
+  std::unique_ptr<sync_sessions::SessionsSyncManager> manager_;
 };
 
 TEST_F(AppMenuControllerTest, Initialized) {
@@ -140,14 +165,15 @@ TEST_F(AppMenuControllerTest, DispatchSimple) {
 }
 
 TEST_F(AppMenuControllerTest, RecentTabsFavIcon) {
+  EnableSync();
+
   RecentTabsBuilderTestHelper recent_tabs_builder;
   recent_tabs_builder.AddSession();
   recent_tabs_builder.AddWindow(0);
   recent_tabs_builder.AddTab(0, 0);
   RegisterRecentTabs(&recent_tabs_builder);
 
-  RecentTabsSubMenuModel recent_tabs_sub_menu_model(
-      NULL, browser(), GetOpenTabsDelegate());
+  RecentTabsSubMenuModel recent_tabs_sub_menu_model(nullptr, browser());
   fake_model_->AddSubMenuWithStringId(
       IDC_RECENT_TABS_MENU, IDS_RECENT_TABS_MENU,
       &recent_tabs_sub_menu_model);
@@ -175,6 +201,8 @@ TEST_F(AppMenuControllerTest, RecentTabsFavIcon) {
 }
 
 TEST_F(AppMenuControllerTest, RecentTabsElideTitle) {
+  EnableSync();
+
   // Add 1 session with 1 window and 2 tabs.
   RecentTabsBuilderTestHelper recent_tabs_builder;
   recent_tabs_builder.AddSession();
@@ -187,8 +215,7 @@ TEST_F(AppMenuControllerTest, RecentTabsElideTitle) {
       base::Time::Now() - base::TimeDelta::FromMinutes(10), tab2_long_title);
   RegisterRecentTabs(&recent_tabs_builder);
 
-  RecentTabsSubMenuModel recent_tabs_sub_menu_model(
-      NULL, browser(), GetOpenTabsDelegate());
+  RecentTabsSubMenuModel recent_tabs_sub_menu_model(nullptr, browser());
   fake_model_->AddSubMenuWithStringId(
       IDC_RECENT_TABS_MENU, IDS_RECENT_TABS_MENU,
       &recent_tabs_sub_menu_model);

@@ -5,7 +5,7 @@
 #ifndef InternalsNavigatorContentUtils_h
 #define InternalsNavigatorContentUtils_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -13,11 +13,12 @@ class Document;
 class Internals;
 
 class InternalsNavigatorContentUtils {
-    STATIC_ONLY(InternalsNavigatorContentUtils);
-public:
-    static void setNavigatorContentUtilsClientMock(Internals&, Document*);
+  STATIC_ONLY(InternalsNavigatorContentUtils);
+
+ public:
+  static void setNavigatorContentUtilsClientMock(Internals&, Document*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InternalsNavigatorContentUtils_h
+#endif  // InternalsNavigatorContentUtils_h

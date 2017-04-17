@@ -2,7 +2,8 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010 Apple Inc. All rights
+ * reserved.
  *           (C) 2006 Alexey Proskuryakov (ap@nypop.com)
  * Copyright (C) 2007 Samuel Weinig (sam@webkit.org)
  *
@@ -26,7 +27,6 @@
 #include "core/html/HTMLTextAreaElement.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
@@ -39,644 +39,603 @@
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/events/BeforeTextInsertedEvent.h"
 #include "core/events/Event.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/FormData.h"
 #include "core/html/forms/FormController.h"
+#include "core/html/forms/TextControlInnerElements.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
-#include "core/html/shadow/TextControlInnerElements.h"
 #include "core/layout/LayoutTextControlMultiLine.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "platform/text/PlatformLocale.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-static const unsigned defaultRows = 2;
-static const unsigned defaultCols = 20;
+static const unsigned kDefaultRows = 2;
+static const unsigned kDefaultCols = 20;
 
-// On submission, LF characters are converted into CRLF.
-// This function returns number of characters considering this.
-static unsigned numberOfLineBreaks(const String& text)
-{
-    unsigned length = text.length();
-    unsigned count = 0;
-    for (unsigned i = 0; i < length; i++) {
-        if (text[i] == '\n')
-            count++;
+static inline unsigned ComputeLengthForAPIValue(const String& text) {
+  unsigned length = text.length();
+  unsigned crlf_count = 0;
+  for (unsigned i = 0; i < length; ++i) {
+    if (text[i] == '\r' && i + 1 < length && text[i + 1] == '\n')
+      crlf_count++;
+  }
+  return text.length() - crlf_count;
+}
+
+HTMLTextAreaElement::HTMLTextAreaElement(Document& document)
+    : TextControlElement(textareaTag, document),
+      rows_(kDefaultRows),
+      cols_(kDefaultCols),
+      wrap_(kSoftWrap),
+      is_dirty_(false),
+      is_placeholder_visible_(false) {}
+
+HTMLTextAreaElement* HTMLTextAreaElement::Create(Document& document) {
+  HTMLTextAreaElement* text_area = new HTMLTextAreaElement(document);
+  text_area->EnsureUserAgentShadowRoot();
+  return text_area;
+}
+
+void HTMLTextAreaElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
+  root.AppendChild(TextControlInnerEditorElement::Create(GetDocument()));
+}
+
+const AtomicString& HTMLTextAreaElement::FormControlType() const {
+  DEFINE_STATIC_LOCAL(const AtomicString, textarea, ("textarea"));
+  return textarea;
+}
+
+FormControlState HTMLTextAreaElement::SaveFormControlState() const {
+  return is_dirty_ ? FormControlState(value()) : FormControlState();
+}
+
+void HTMLTextAreaElement::RestoreFormControlState(
+    const FormControlState& state) {
+  setValue(state[0]);
+}
+
+void HTMLTextAreaElement::ChildrenChanged(const ChildrenChange& change) {
+  HTMLElement::ChildrenChanged(change);
+  SetLastChangeWasNotUserEdit();
+  if (is_dirty_)
+    SetInnerEditorValue(value());
+  else
+    SetNonDirtyValue(defaultValue());
+}
+
+bool HTMLTextAreaElement::IsPresentationAttribute(
+    const QualifiedName& name) const {
+  if (name == alignAttr) {
+    // Don't map 'align' attribute.  This matches what Firefox, Opera and IE do.
+    // See http://bugs.webkit.org/show_bug.cgi?id=7075
+    return false;
+  }
+
+  if (name == wrapAttr)
+    return true;
+  return TextControlElement::IsPresentationAttribute(name);
+}
+
+void HTMLTextAreaElement::CollectStyleForPresentationAttribute(
+    const QualifiedName& name,
+    const AtomicString& value,
+    MutableStylePropertySet* style) {
+  if (name == wrapAttr) {
+    if (ShouldWrapText()) {
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyWhiteSpace,
+                                              CSSValuePreWrap);
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyWordWrap,
+                                              CSSValueBreakWord);
+    } else {
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyWhiteSpace,
+                                              CSSValuePre);
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyWordWrap,
+                                              CSSValueNormal);
     }
-    return count;
+  } else {
+    TextControlElement::CollectStyleForPresentationAttribute(name, value,
+                                                             style);
+  }
 }
 
-static inline unsigned computeLengthForSubmission(const String& text)
-{
-    return text.length() + numberOfLineBreaks(text);
-}
-
-HTMLTextAreaElement::HTMLTextAreaElement(Document& document, HTMLFormElement* form)
-    : HTMLTextFormControlElement(textareaTag, document, form)
-    , m_rows(defaultRows)
-    , m_cols(defaultCols)
-    , m_wrap(SoftWrap)
-    , m_isDirty(false)
-    , m_valueIsUpToDate(true)
-    , m_isPlaceholderVisible(false)
-{
-}
-
-HTMLTextAreaElement* HTMLTextAreaElement::create(Document& document, HTMLFormElement* form)
-{
-    HTMLTextAreaElement* textArea = new HTMLTextAreaElement(document, form);
-    textArea->ensureUserAgentShadowRoot();
-    return textArea;
-}
-
-void HTMLTextAreaElement::didAddUserAgentShadowRoot(ShadowRoot& root)
-{
-    root.appendChild(TextControlInnerEditorElement::create(document()));
-}
-
-const AtomicString& HTMLTextAreaElement::formControlType() const
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, textarea, ("textarea"));
-    return textarea;
-}
-
-FormControlState HTMLTextAreaElement::saveFormControlState() const
-{
-    return m_isDirty ? FormControlState(value()) : FormControlState();
-}
-
-void HTMLTextAreaElement::restoreFormControlState(const FormControlState& state)
-{
-    setValue(state[0]);
-}
-
-void HTMLTextAreaElement::childrenChanged(const ChildrenChange& change)
-{
-    HTMLElement::childrenChanged(change);
-    setLastChangeWasNotUserEdit();
-    if (m_isDirty)
-        setInnerEditorValue(value());
+void HTMLTextAreaElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  const QualifiedName& name = params.name;
+  const AtomicString& value = params.new_value;
+  if (name == rowsAttr) {
+    unsigned rows = 0;
+    if (value.IsEmpty() || !ParseHTMLNonNegativeInteger(value, rows) ||
+        rows <= 0)
+      rows = kDefaultRows;
+    if (rows_ != rows) {
+      rows_ = rows;
+      if (GetLayoutObject())
+        GetLayoutObject()
+            ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+                LayoutInvalidationReason::kAttributeChanged);
+    }
+  } else if (name == colsAttr) {
+    unsigned cols = 0;
+    if (value.IsEmpty() || !ParseHTMLNonNegativeInteger(value, cols) ||
+        cols <= 0)
+      cols = kDefaultCols;
+    if (cols_ != cols) {
+      cols_ = cols;
+      if (LayoutObject* layout_object = this->GetLayoutObject())
+        layout_object
+            ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+                LayoutInvalidationReason::kAttributeChanged);
+    }
+  } else if (name == wrapAttr) {
+    // The virtual/physical values were a Netscape extension of HTML 3.0, now
+    // deprecated.  The soft/hard /off values are a recommendation for HTML 4
+    // extension by IE and NS 4.
+    WrapMethod wrap;
+    if (DeprecatedEqualIgnoringCase(value, "physical") ||
+        DeprecatedEqualIgnoringCase(value, "hard") ||
+        DeprecatedEqualIgnoringCase(value, "on"))
+      wrap = kHardWrap;
+    else if (DeprecatedEqualIgnoringCase(value, "off"))
+      wrap = kNoWrap;
     else
-        setNonDirtyValue(defaultValue());
-}
-
-bool HTMLTextAreaElement::isPresentationAttribute(const QualifiedName& name) const
-{
-    if (name == alignAttr) {
-        // Don't map 'align' attribute.  This matches what Firefox, Opera and IE do.
-        // See http://bugs.webkit.org/show_bug.cgi?id=7075
-        return false;
+      wrap = kSoftWrap;
+    if (wrap != wrap_) {
+      wrap_ = wrap;
+      if (LayoutObject* layout_object = this->GetLayoutObject())
+        layout_object
+            ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+                LayoutInvalidationReason::kAttributeChanged);
     }
-
-    if (name == wrapAttr)
-        return true;
-    return HTMLTextFormControlElement::isPresentationAttribute(name);
+  } else if (name == accesskeyAttr) {
+    // ignore for the moment
+  } else if (name == maxlengthAttr) {
+    UseCounter::Count(GetDocument(), UseCounter::kTextAreaMaxLength);
+    SetNeedsValidityCheck();
+  } else if (name == minlengthAttr) {
+    UseCounter::Count(GetDocument(), UseCounter::kTextAreaMinLength);
+    SetNeedsValidityCheck();
+  } else {
+    TextControlElement::ParseAttribute(params);
+  }
 }
 
-void HTMLTextAreaElement::collectStyleForPresentationAttribute(const QualifiedName& name, const AtomicString& value, MutableStylePropertySet* style)
-{
-    if (name == wrapAttr) {
-        if (shouldWrapText()) {
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyWhiteSpace, CSSValuePreWrap);
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyWordWrap, CSSValueBreakWord);
-        } else {
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyWhiteSpace, CSSValuePre);
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyWordWrap, CSSValueNormal);
-        }
-    } else {
-        HTMLTextFormControlElement::collectStyleForPresentationAttribute(name, value, style);
-    }
+LayoutObject* HTMLTextAreaElement::CreateLayoutObject(const ComputedStyle&) {
+  return new LayoutTextControlMultiLine(this);
 }
 
-void HTMLTextAreaElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == rowsAttr) {
-        unsigned rows = 0;
-        if (value.isEmpty() || !parseHTMLNonNegativeInteger(value, rows) || rows <= 0)
-            rows = defaultRows;
-        if (m_rows != rows) {
-            m_rows = rows;
-            if (layoutObject())
-                layoutObject()->setNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(LayoutInvalidationReason::AttributeChanged);
-        }
-    } else if (name == colsAttr) {
-        unsigned cols = 0;
-        if (value.isEmpty() || !parseHTMLNonNegativeInteger(value, cols) || cols <= 0)
-            cols = defaultCols;
-        if (m_cols != cols) {
-            m_cols = cols;
-            if (LayoutObject* layoutObject = this->layoutObject())
-                layoutObject->setNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(LayoutInvalidationReason::AttributeChanged);
-        }
-    } else if (name == wrapAttr) {
-        // The virtual/physical values were a Netscape extension of HTML 3.0, now deprecated.
-        // The soft/hard /off values are a recommendation for HTML 4 extension by IE and NS 4.
-        WrapMethod wrap;
-        if (equalIgnoringCase(value, "physical") || equalIgnoringCase(value, "hard") || equalIgnoringCase(value, "on"))
-            wrap = HardWrap;
-        else if (equalIgnoringCase(value, "off"))
-            wrap = NoWrap;
-        else
-            wrap = SoftWrap;
-        if (wrap != m_wrap) {
-            m_wrap = wrap;
-            if (LayoutObject* layoutObject = this->layoutObject())
-                layoutObject->setNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(LayoutInvalidationReason::AttributeChanged);
-        }
-    } else if (name == accesskeyAttr) {
-        // ignore for the moment
-    } else if (name == maxlengthAttr) {
-        UseCounter::count(document(), UseCounter::TextAreaMaxLength);
-        setNeedsValidityCheck();
-    } else if (name == minlengthAttr) {
-        UseCounter::count(document(), UseCounter::TextAreaMinLength);
-        setNeedsValidityCheck();
-    } else {
-        HTMLTextFormControlElement::parseAttribute(name, oldValue, value);
-    }
+void HTMLTextAreaElement::AppendToFormData(FormData& form_data) {
+  if (GetName().IsEmpty())
+    return;
+
+  GetDocument().UpdateStyleAndLayout();
+
+  const String& text =
+      (wrap_ == kHardWrap) ? ValueWithHardLineBreaks() : value();
+  form_data.append(GetName(), text);
+
+  const AtomicString& dirname_attr_value = FastGetAttribute(dirnameAttr);
+  if (!dirname_attr_value.IsNull())
+    form_data.append(dirname_attr_value, DirectionForFormData());
 }
 
-LayoutObject* HTMLTextAreaElement::createLayoutObject(const ComputedStyle&)
-{
-    return new LayoutTextControlMultiLine(this);
+void HTMLTextAreaElement::ResetImpl() {
+  SetNonDirtyValue(defaultValue());
 }
 
-void HTMLTextAreaElement::appendToFormData(FormData& formData)
-{
-    if (name().isEmpty())
-        return;
-
-    document().updateStyleAndLayout();
-
-    const String& text = (m_wrap == HardWrap) ? valueWithHardLineBreaks() : value();
-    formData.append(name(), text);
-
-    const AtomicString& dirnameAttrValue = fastGetAttribute(dirnameAttr);
-    if (!dirnameAttrValue.isNull())
-        formData.append(dirnameAttrValue, directionForFormData());
+bool HTMLTextAreaElement::HasCustomFocusLogic() const {
+  return true;
 }
 
-void HTMLTextAreaElement::resetImpl()
-{
-    setNonDirtyValue(defaultValue());
+bool HTMLTextAreaElement::IsKeyboardFocusable() const {
+  // If a given text area can be focused at all, then it will always be keyboard
+  // focusable.
+  return IsFocusable();
 }
 
-bool HTMLTextAreaElement::hasCustomFocusLogic() const
-{
-    return true;
+bool HTMLTextAreaElement::ShouldShowFocusRingOnMouseFocus() const {
+  return true;
 }
 
-bool HTMLTextAreaElement::isKeyboardFocusable() const
-{
-    // If a given text area can be focused at all, then it will always be keyboard focusable.
-    return isFocusable();
+void HTMLTextAreaElement::UpdateFocusAppearance(
+    SelectionBehaviorOnFocus selection_behavior) {
+  switch (selection_behavior) {
+    case SelectionBehaviorOnFocus::kReset:  // Fallthrough.
+    case SelectionBehaviorOnFocus::kRestore:
+      RestoreCachedSelection();
+      break;
+    case SelectionBehaviorOnFocus::kNone:
+      return;
+  }
+  if (GetDocument().GetFrame())
+    GetDocument().GetFrame()->Selection().RevealSelection();
 }
 
-bool HTMLTextAreaElement::shouldShowFocusRingOnMouseFocus() const
-{
-    return true;
+void HTMLTextAreaElement::DefaultEventHandler(Event* event) {
+  if (GetLayoutObject() && (event->IsMouseEvent() || event->IsDragEvent() ||
+                            event->HasInterface(EventNames::WheelEvent) ||
+                            event->type() == EventTypeNames::blur))
+    ForwardEvent(event);
+  else if (GetLayoutObject() && event->IsBeforeTextInsertedEvent())
+    HandleBeforeTextInsertedEvent(static_cast<BeforeTextInsertedEvent*>(event));
+
+  TextControlElement::DefaultEventHandler(event);
 }
 
-void HTMLTextAreaElement::updateFocusAppearance(SelectionBehaviorOnFocus selectionBehavior)
-{
-    switch (selectionBehavior) {
-    case SelectionBehaviorOnFocus::Reset: // Fallthrough.
-    case SelectionBehaviorOnFocus::Restore:
-        restoreCachedSelection();
-        break;
-    case SelectionBehaviorOnFocus::None:
-        return;
-    }
-    if (document().frame())
-        document().frame()->selection().revealSelection();
+void HTMLTextAreaElement::HandleFocusEvent(Element*, WebFocusType) {
+  if (LocalFrame* frame = GetDocument().GetFrame())
+    frame->GetSpellChecker().DidBeginEditing(this);
 }
 
-void HTMLTextAreaElement::defaultEventHandler(Event* event)
-{
-    if (layoutObject() && (event->isMouseEvent() || event->isDragEvent() || event->hasInterface(EventNames::WheelEvent) || event->type() == EventTypeNames::blur))
-        forwardEvent(event);
-    else if (layoutObject() && event->isBeforeTextInsertedEvent())
-        handleBeforeTextInsertedEvent(static_cast<BeforeTextInsertedEvent*>(event));
-
-    HTMLTextFormControlElement::defaultEventHandler(event);
-}
-
-void HTMLTextAreaElement::handleFocusEvent(Element*, WebFocusType)
-{
-    if (LocalFrame* frame = document().frame())
-        frame->spellChecker().didBeginEditing(this);
-}
-
-void HTMLTextAreaElement::subtreeHasChanged()
-{
-#if ENABLE(ASSERT)
-    // The innerEditor should have either Text nodes or a placeholder break
-    // element. If we see other nodes, it's a bug in editing code and we should
-    // fix it.
-    Element* innerEditor = innerEditorElement();
-    for (Node& node : NodeTraversal::descendantsOf(*innerEditor)) {
-        if (node.isTextNode())
-            continue;
-        ASSERT(isHTMLBRElement(node));
-        ASSERT(&node == innerEditor->lastChild());
-    }
+void HTMLTextAreaElement::SubtreeHasChanged() {
+#if DCHECK_IS_ON()
+  // The innerEditor should have either Text nodes or a placeholder break
+  // element. If we see other nodes, it's a bug in editing code and we should
+  // fix it.
+  Element* inner_editor = InnerEditorElement();
+  for (Node& node : NodeTraversal::DescendantsOf(*inner_editor)) {
+    if (node.IsTextNode())
+      continue;
+    DCHECK(isHTMLBRElement(node));
+    DCHECK_EQ(&node, inner_editor->LastChild());
+  }
 #endif
-    addPlaceholderBreakElementIfNecessary();
-    setChangedSinceLastFormControlChangeEvent(true);
-    m_valueIsUpToDate = false;
-    setNeedsValidityCheck();
-    setAutofilled(false);
-    updatePlaceholderVisibility();
+  AddPlaceholderBreakElementIfNecessary();
+  SetValueBeforeFirstUserEditIfNotSet();
+  UpdateValue();
+  CheckIfValueWasReverted(value());
+  SetNeedsValidityCheck();
+  SetAutofilled(false);
+  UpdatePlaceholderVisibility();
 
-    if (!focused())
-        return;
+  if (!IsFocused())
+    return;
 
-    // When typing in a textarea, childrenChanged is not called, so we need to force the directionality check.
-    calculateAndAdjustDirectionality();
+  // When typing in a textarea, childrenChanged is not called, so we need to
+  // force the directionality check.
+  CalculateAndAdjustDirectionality();
 
-    ASSERT(document().isActive());
-    document().frameHost()->chromeClient().didChangeValueInTextField(*this);
+  DCHECK(GetDocument().IsActive());
+  GetDocument().GetPage()->GetChromeClient().DidChangeValueInTextField(*this);
 }
 
-void HTMLTextAreaElement::handleBeforeTextInsertedEvent(BeforeTextInsertedEvent* event) const
-{
-    ASSERT(event);
-    ASSERT(layoutObject());
-    int signedMaxLength = maxLength();
-    if (signedMaxLength < 0)
-        return;
-    unsigned unsignedMaxLength = static_cast<unsigned>(signedMaxLength);
+void HTMLTextAreaElement::HandleBeforeTextInsertedEvent(
+    BeforeTextInsertedEvent* event) const {
+  DCHECK(event);
+  DCHECK(GetLayoutObject());
+  int signed_max_length = maxLength();
+  if (signed_max_length < 0)
+    return;
+  unsigned unsigned_max_length = static_cast<unsigned>(signed_max_length);
 
-    const String& currentValue = innerEditorValue();
-    unsigned currentLength = computeLengthForSubmission(currentValue);
-    if (currentLength + computeLengthForSubmission(event->text()) < unsignedMaxLength)
-        return;
+  const String& current_value = InnerEditorValue();
+  unsigned current_length = ComputeLengthForAPIValue(current_value);
+  if (current_length + ComputeLengthForAPIValue(event->GetText()) <
+      unsigned_max_length)
+    return;
 
-    // selectionLength represents the selection length of this text field to be
-    // removed by this insertion.
-    // If the text field has no focus, we don't need to take account of the
-    // selection length. The selection is the source of text drag-and-drop in
-    // that case, and nothing in the text field will be removed.
-    unsigned selectionLength = 0;
-    if (focused()) {
-        selectionLength = computeLengthForSubmission(document().frame()->selection().selectedText());
+  // selectionLength represents the selection length of this text field to be
+  // removed by this insertion.
+  // If the text field has no focus, we don't need to take account of the
+  // selection length. The selection is the source of text drag-and-drop in
+  // that case, and nothing in the text field will be removed.
+  unsigned selection_length = 0;
+  if (IsFocused()) {
+    // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
+    // needs to be audited.  See http://crbug.com/590369 for more details.
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+    selection_length = ComputeLengthForAPIValue(
+        GetDocument().GetFrame()->Selection().SelectedText());
+  }
+  DCHECK_GE(current_length, selection_length);
+  unsigned base_length = current_length - selection_length;
+  unsigned appendable_length =
+      unsigned_max_length > base_length ? unsigned_max_length - base_length : 0;
+  event->SetText(SanitizeUserInputValue(event->GetText(), appendable_length));
+}
+
+String HTMLTextAreaElement::SanitizeUserInputValue(const String& proposed_value,
+                                                   unsigned max_length) {
+  unsigned submission_length = 0;
+  unsigned i = 0;
+  for (; i < proposed_value.length(); ++i) {
+    if (proposed_value[i] == '\r' && i + 1 < proposed_value.length() &&
+        proposed_value[i + 1] == '\n')
+      continue;
+    ++submission_length;
+    if (submission_length == max_length) {
+      ++i;
+      break;
     }
-    ASSERT(currentLength >= selectionLength);
-    unsigned baseLength = currentLength - selectionLength;
-    unsigned appendableLength = unsignedMaxLength > baseLength ? unsignedMaxLength - baseLength : 0;
-    event->setText(sanitizeUserInputValue(event->text(), appendableLength));
+    if (submission_length > max_length)
+      break;
+  }
+  if (i > 0 && U16_IS_LEAD(proposed_value[i - 1]))
+    --i;
+  return proposed_value.Left(i);
 }
 
-String HTMLTextAreaElement::sanitizeUserInputValue(const String& proposedValue, unsigned maxLength)
-{
-    unsigned submissionLength = 0;
-    unsigned i = 0;
-    for (; i < proposedValue.length(); ++i) {
-        submissionLength += proposedValue[i] == '\n' ? 2 : 1;
-        if (submissionLength == maxLength) {
-            ++i;
-            break;
-        }
-        if (submissionLength > maxLength)
-            break;
-    }
-    if (i > 0 && U16_IS_LEAD(proposedValue[i - 1]))
-        --i;
-    return proposedValue.left(i);
+void HTMLTextAreaElement::UpdateValue() {
+  value_ = InnerEditorValue();
+  NotifyFormStateChanged();
+  is_dirty_ = true;
+  UpdatePlaceholderVisibility();
 }
 
-void HTMLTextAreaElement::updateValue() const
-{
-    if (m_valueIsUpToDate)
-        return;
-
-    m_value = innerEditorValue();
-    const_cast<HTMLTextAreaElement*>(this)->m_valueIsUpToDate = true;
-    const_cast<HTMLTextAreaElement*>(this)->notifyFormStateChanged();
-    m_isDirty = true;
-    const_cast<HTMLTextAreaElement*>(this)->updatePlaceholderVisibility();
+String HTMLTextAreaElement::value() const {
+  return value_;
 }
 
-String HTMLTextAreaElement::value() const
-{
-    updateValue();
-    return m_value;
+void HTMLTextAreaElement::setValue(const String& value,
+                                   TextFieldEventBehavior event_behavior,
+                                   TextControlSetValueSelection selection) {
+  SetValueCommon(value, event_behavior, selection);
+  is_dirty_ = true;
 }
 
-void HTMLTextAreaElement::setValue(const String& value, TextFieldEventBehavior eventBehavior)
-{
-    setValueCommon(value, eventBehavior);
-    m_isDirty = true;
-    if (document().focusedElement() == this)
-        document().frameHost()->chromeClient().didUpdateTextOfFocusedElementByNonUserInput();
+void HTMLTextAreaElement::SetNonDirtyValue(const String& value) {
+  SetValueCommon(value, kDispatchNoEvent,
+                 TextControlSetValueSelection::kSetSelectionToEnd);
+  is_dirty_ = false;
 }
 
-void HTMLTextAreaElement::setNonDirtyValue(const String& value)
-{
-    setValueCommon(value, DispatchNoEvent, SetSeletion);
-    m_isDirty = false;
+void HTMLTextAreaElement::SetValueCommon(
+    const String& new_value,
+    TextFieldEventBehavior event_behavior,
+    TextControlSetValueSelection selection) {
+  // Code elsewhere normalizes line endings added by the user via the keyboard
+  // or pasting.  We normalize line endings coming from JavaScript here.
+  String normalized_value = new_value.IsNull() ? "" : new_value;
+  normalized_value.Replace("\r\n", "\n");
+  normalized_value.Replace('\r', '\n');
+
+  // Return early because we don't want to trigger other side effects when the
+  // value isn't changing. This is interoperable though the specification
+  // doesn't define so.
+  // https://github.com/whatwg/html/issues/2412
+  if (normalized_value == value())
+    return;
+
+  if (event_behavior != kDispatchNoEvent)
+    SetValueBeforeFirstUserEditIfNotSet();
+  value_ = normalized_value;
+  SetInnerEditorValue(value_);
+  if (event_behavior == kDispatchNoEvent)
+    SetLastChangeWasNotUserEdit();
+  else
+    CheckIfValueWasReverted(value_);
+  UpdatePlaceholderVisibility();
+  SetNeedsStyleRecalc(
+      kSubtreeStyleChange,
+      StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
+  suggested_value_ = String();
+  SetNeedsValidityCheck();
+  if (IsFinishedParsingChildren() &&
+      selection == TextControlSetValueSelection::kSetSelectionToEnd) {
+    // Set the caret to the end of the text value except for initialize.
+    unsigned end_of_string = value_.length();
+    SetSelectionRange(end_of_string, end_of_string);
+  }
+
+  NotifyFormStateChanged();
+  switch (event_behavior) {
+    case kDispatchChangeEvent:
+      DispatchFormControlChangeEvent();
+      break;
+
+    case kDispatchInputAndChangeEvent:
+      DispatchInputEvent();
+      DispatchFormControlChangeEvent();
+      break;
+
+    case kDispatchNoEvent:
+      break;
+  }
 }
 
-void HTMLTextAreaElement::setValueCommon(const String& newValue, TextFieldEventBehavior eventBehavior, SetValueCommonOption setValueOption)
-{
-    // Code elsewhere normalizes line endings added by the user via the keyboard or pasting.
-    // We normalize line endings coming from JavaScript here.
-    String normalizedValue = newValue.isNull() ? "" : newValue;
-    normalizedValue.replace("\r\n", "\n");
-    normalizedValue.replace('\r', '\n');
+String HTMLTextAreaElement::defaultValue() const {
+  StringBuilder value;
 
-    // Return early because we don't want to trigger other side effects
-    // when the value isn't changing.
-    // FIXME: Simple early return doesn't match the Firefox ever.
-    // Remove these lines.
-    if (normalizedValue == value()) {
-        if (setValueOption == SetSeletion) {
-            setNeedsValidityCheck();
-            if (isFinishedParsingChildren()) {
-                // Set the caret to the end of the text value except for initialize.
-                unsigned endOfString = m_value.length();
-                setSelectionRange(endOfString, endOfString, SelectionHasNoDirection, NotDispatchSelectEvent, ChangeSelectionIfFocused);
-            }
-        }
-        return;
-    }
+  // Since there may be comments, ignore nodes other than text nodes.
+  for (Node* n = FirstChild(); n; n = n->nextSibling()) {
+    if (n->IsTextNode())
+      value.Append(ToText(n)->data());
+  }
 
-    m_value = normalizedValue;
-    setInnerEditorValue(m_value);
-    if (eventBehavior == DispatchNoEvent)
-        setLastChangeWasNotUserEdit();
-    updatePlaceholderVisibility();
-    setNeedsStyleRecalc(SubtreeStyleChange, StyleChangeReasonForTracing::create(StyleChangeReason::ControlValue));
-    m_suggestedValue = String();
-    setNeedsValidityCheck();
-    if (isFinishedParsingChildren()) {
-        // Set the caret to the end of the text value except for initialize.
-        unsigned endOfString = m_value.length();
-        setSelectionRange(endOfString, endOfString, SelectionHasNoDirection, NotDispatchSelectEvent, ChangeSelectionIfFocused);
-    }
-
-    notifyFormStateChanged();
-    if (eventBehavior == DispatchNoEvent) {
-        setTextAsOfLastFormControlChangeEvent(normalizedValue);
-    } else {
-        if (eventBehavior == DispatchInputAndChangeEvent)
-            dispatchFormControlInputEvent();
-        dispatchFormControlChangeEvent();
-    }
+  return value.ToString();
 }
 
-void HTMLTextAreaElement::setInnerEditorValue(const String& value)
-{
-    HTMLTextFormControlElement::setInnerEditorValue(value);
-    m_valueIsUpToDate = true;
+void HTMLTextAreaElement::setDefaultValue(const String& default_value) {
+  // To preserve comments, remove only the text nodes, then add a single text
+  // node.
+  HeapVector<Member<Node>> text_nodes;
+  for (Node* n = FirstChild(); n; n = n->nextSibling()) {
+    if (n->IsTextNode())
+      text_nodes.push_back(n);
+  }
+  for (const auto& text : text_nodes)
+    RemoveChild(text.Get(), IGNORE_EXCEPTION_FOR_TESTING);
+
+  // Normalize line endings.
+  String value = default_value;
+  value.Replace("\r\n", "\n");
+  value.Replace('\r', '\n');
+
+  InsertBefore(GetDocument().createTextNode(value), FirstChild(),
+               IGNORE_EXCEPTION_FOR_TESTING);
+
+  if (!is_dirty_)
+    SetNonDirtyValue(value);
 }
 
-String HTMLTextAreaElement::defaultValue() const
-{
-    StringBuilder value;
-
-    // Since there may be comments, ignore nodes other than text nodes.
-    for (Node* n = firstChild(); n; n = n->nextSibling()) {
-        if (n->isTextNode())
-            value.append(toText(n)->data());
-    }
-
-    return value.toString();
+String HTMLTextAreaElement::SuggestedValue() const {
+  return suggested_value_;
 }
 
-void HTMLTextAreaElement::setDefaultValue(const String& defaultValue)
-{
-    // To preserve comments, remove only the text nodes, then add a single text node.
-    HeapVector<Member<Node>> textNodes;
-    for (Node* n = firstChild(); n; n = n->nextSibling()) {
-        if (n->isTextNode())
-            textNodes.append(n);
-    }
-    size_t size = textNodes.size();
-    for (size_t i = 0; i < size; ++i)
-        removeChild(textNodes[i].get(), IGNORE_EXCEPTION);
+void HTMLTextAreaElement::SetSuggestedValue(const String& value) {
+  suggested_value_ = value;
 
-    // Normalize line endings.
-    String value = defaultValue;
-    value.replace("\r\n", "\n");
-    value.replace('\r', '\n');
-
-    insertBefore(document().createTextNode(value), firstChild(), IGNORE_EXCEPTION);
-
-    if (!m_isDirty)
-        setNonDirtyValue(value);
+  if (!value.IsNull())
+    SetInnerEditorValue(suggested_value_);
+  else
+    SetInnerEditorValue(value_);
+  UpdatePlaceholderVisibility();
+  SetNeedsStyleRecalc(
+      kSubtreeStyleChange,
+      StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
 }
 
-int HTMLTextAreaElement::maxLength() const
-{
-    int value;
-    if (!parseHTMLInteger(getAttribute(maxlengthAttr), value))
-        return -1;
-    return value >= 0 ? value : -1;
-}
-
-int HTMLTextAreaElement::minLength() const
-{
-    int value;
-    if (!parseHTMLInteger(getAttribute(minlengthAttr), value))
-        return -1;
-    return value >= 0 ? value : -1;
-}
-
-void HTMLTextAreaElement::setMaxLength(int newValue, ExceptionState& exceptionState)
-{
-    int min = minLength();
-    if (newValue < 0)
-        exceptionState.throwDOMException(IndexSizeError, "The value provided (" + String::number(newValue) + ") is not positive or 0.");
-    else if (min >= 0 && newValue < min)
-        exceptionState.throwDOMException(IndexSizeError, ExceptionMessages::indexExceedsMinimumBound("maxLength", newValue, min));
-    else
-        setIntegralAttribute(maxlengthAttr, newValue);
-}
-
-void HTMLTextAreaElement::setMinLength(int newValue, ExceptionState& exceptionState)
-{
-    int max = maxLength();
-    if (newValue < 0)
-        exceptionState.throwDOMException(IndexSizeError, "The value provided (" + String::number(newValue) + ") is not positive or 0.");
-    else if (max >= 0 && newValue > max)
-        exceptionState.throwDOMException(IndexSizeError, ExceptionMessages::indexExceedsMaximumBound("minLength", newValue, max));
-    else
-        setIntegralAttribute(minlengthAttr, newValue);
-}
-
-String HTMLTextAreaElement::suggestedValue() const
-{
-    return m_suggestedValue;
-}
-
-void HTMLTextAreaElement::setSuggestedValue(const String& value)
-{
-    m_suggestedValue = value;
-
-    if (!value.isNull())
-        setInnerEditorValue(m_suggestedValue);
-    else
-        setInnerEditorValue(m_value);
-    updatePlaceholderVisibility();
-    setNeedsStyleRecalc(SubtreeStyleChange, StyleChangeReasonForTracing::create(StyleChangeReason::ControlValue));
-}
-
-String HTMLTextAreaElement::validationMessage() const
-{
-    if (!willValidate())
-        return String();
-
-    if (customError())
-        return customValidationMessage();
-
-    if (valueMissing())
-        return locale().queryString(WebLocalizedString::ValidationValueMissing);
-
-    if (tooLong())
-        return locale().validationMessageTooLongText(computeLengthForSubmission(value()), maxLength());
-
-    if (tooShort())
-        return locale().validationMessageTooShortText(computeLengthForSubmission(value()), minLength());
-
+String HTMLTextAreaElement::validationMessage() const {
+  if (!willValidate())
     return String();
+
+  if (CustomError())
+    return CustomValidationMessage();
+
+  if (ValueMissing())
+    return GetLocale().QueryString(WebLocalizedString::kValidationValueMissing);
+
+  if (TooLong())
+    return GetLocale().ValidationMessageTooLongText(value().length(),
+                                                    maxLength());
+
+  if (TooShort())
+    return GetLocale().ValidationMessageTooShortText(value().length(),
+                                                     minLength());
+
+  return String();
 }
 
-bool HTMLTextAreaElement::valueMissing() const
-{
-    // We should not call value() for performance.
-    return willValidate() && valueMissing(nullptr);
+bool HTMLTextAreaElement::ValueMissing() const {
+  // We should not call value() for performance.
+  return willValidate() && ValueMissing(nullptr);
 }
 
-bool HTMLTextAreaElement::valueMissing(const String* value) const
-{
-    return isRequiredFormControl() && !isDisabledOrReadOnly() && (value ? *value : this->value()).isEmpty();
+bool HTMLTextAreaElement::ValueMissing(const String* value) const {
+  return IsRequiredFormControl() && !IsDisabledOrReadOnly() &&
+         (value ? *value : this->value()).IsEmpty();
 }
 
-bool HTMLTextAreaElement::tooLong() const
-{
-    // We should not call value() for performance.
-    return willValidate() && tooLong(nullptr, CheckDirtyFlag);
+bool HTMLTextAreaElement::TooLong() const {
+  // We should not call value() for performance.
+  return willValidate() && TooLong(nullptr, kCheckDirtyFlag);
 }
 
-bool HTMLTextAreaElement::tooShort() const
-{
-    // We should not call value() for performance.
-    return willValidate() && tooShort(nullptr, CheckDirtyFlag);
+bool HTMLTextAreaElement::TooShort() const {
+  // We should not call value() for performance.
+  return willValidate() && TooShort(nullptr, kCheckDirtyFlag);
 }
 
-bool HTMLTextAreaElement::tooLong(const String* value, NeedsToCheckDirtyFlag check) const
-{
-    // Return false for the default value or value set by script even if it is
-    // longer than maxLength.
-    if (check == CheckDirtyFlag && !lastChangeWasUserEdit())
-        return false;
+bool HTMLTextAreaElement::TooLong(const String* value,
+                                  NeedsToCheckDirtyFlag check) const {
+  // Return false for the default value or value set by script even if it is
+  // longer than maxLength.
+  if (check == kCheckDirtyFlag && !LastChangeWasUserEdit())
+    return false;
 
-    int max = maxLength();
-    if (max < 0)
-        return false;
-    return computeLengthForSubmission(value ? *value : this->value()) > static_cast<unsigned>(max);
+  int max = maxLength();
+  if (max < 0)
+    return false;
+  unsigned len =
+      value ? ComputeLengthForAPIValue(*value) : this->value().length();
+  return len > static_cast<unsigned>(max);
 }
 
-bool HTMLTextAreaElement::tooShort(const String* value, NeedsToCheckDirtyFlag check) const
-{
-    // Return false for the default value or value set by script even if it is
-    // shorter than minLength.
-    if (check == CheckDirtyFlag && !lastChangeWasUserEdit())
-        return false;
+bool HTMLTextAreaElement::TooShort(const String* value,
+                                   NeedsToCheckDirtyFlag check) const {
+  // Return false for the default value or value set by script even if it is
+  // shorter than minLength.
+  if (check == kCheckDirtyFlag && !LastChangeWasUserEdit())
+    return false;
 
-    int min = minLength();
-    if (min <= 0)
-        return false;
-    // An empty string is excluded from minlength check.
-    unsigned len = computeLengthForSubmission(value ? *value : this->value());
-    return len > 0 && len < static_cast<unsigned>(min);
+  int min = minLength();
+  if (min <= 0)
+    return false;
+  // An empty string is excluded from minlength check.
+  unsigned len =
+      value ? ComputeLengthForAPIValue(*value) : this->value().length();
+  return len > 0 && len < static_cast<unsigned>(min);
 }
 
-bool HTMLTextAreaElement::isValidValue(const String& candidate) const
-{
-    return !valueMissing(&candidate) && !tooLong(&candidate, IgnoreDirtyFlag) && !tooShort(&candidate, IgnoreDirtyFlag);
+bool HTMLTextAreaElement::IsValidValue(const String& candidate) const {
+  return !ValueMissing(&candidate) && !TooLong(&candidate, kIgnoreDirtyFlag) &&
+         !TooShort(&candidate, kIgnoreDirtyFlag);
 }
 
-void HTMLTextAreaElement::accessKeyAction(bool)
-{
-    focus();
+void HTMLTextAreaElement::AccessKeyAction(bool) {
+  focus();
 }
 
-void HTMLTextAreaElement::setCols(unsigned cols)
-{
-    setUnsignedIntegralAttribute(colsAttr, cols);
+void HTMLTextAreaElement::setCols(unsigned cols) {
+  SetUnsignedIntegralAttribute(colsAttr, cols ? cols : kDefaultCols);
 }
 
-void HTMLTextAreaElement::setRows(unsigned rows)
-{
-    setUnsignedIntegralAttribute(rowsAttr, rows);
+void HTMLTextAreaElement::setRows(unsigned rows) {
+  SetUnsignedIntegralAttribute(rowsAttr, rows ? rows : kDefaultRows);
 }
 
-bool HTMLTextAreaElement::matchesReadOnlyPseudoClass() const
-{
-    return isReadOnly();
+bool HTMLTextAreaElement::MatchesReadOnlyPseudoClass() const {
+  return IsReadOnly();
 }
 
-bool HTMLTextAreaElement::matchesReadWritePseudoClass() const
-{
-    return !isReadOnly();
+bool HTMLTextAreaElement::MatchesReadWritePseudoClass() const {
+  return !IsReadOnly();
 }
 
-void HTMLTextAreaElement::setPlaceholderVisibility(bool visible)
-{
-    m_isPlaceholderVisible = visible;
+void HTMLTextAreaElement::SetPlaceholderVisibility(bool visible) {
+  is_placeholder_visible_ = visible;
 }
 
-void HTMLTextAreaElement::updatePlaceholderText()
-{
-    HTMLElement* placeholder = placeholderElement();
-    const AtomicString& placeholderText = fastGetAttribute(placeholderAttr);
-    if (placeholderText.isEmpty()) {
-        if (placeholder)
-            userAgentShadowRoot()->removeChild(placeholder);
-        return;
-    }
-    if (!placeholder) {
-        HTMLDivElement* newElement = HTMLDivElement::create(document());
-        placeholder = newElement;
-        placeholder->setShadowPseudoId(AtomicString("-webkit-input-placeholder"));
-        placeholder->setAttribute(idAttr, ShadowElementNames::placeholder());
-        placeholder->setInlineStyleProperty(CSSPropertyDisplay, isPlaceholderVisible() ? CSSValueBlock : CSSValueNone, true);
-        userAgentShadowRoot()->insertBefore(placeholder, innerEditorElement());
-    }
-    placeholder->setTextContent(placeholderText);
+void HTMLTextAreaElement::UpdatePlaceholderText() {
+  HTMLElement* placeholder = PlaceholderElement();
+  const AtomicString& placeholder_text = FastGetAttribute(placeholderAttr);
+  if (placeholder_text.IsEmpty()) {
+    if (placeholder)
+      UserAgentShadowRoot()->RemoveChild(placeholder);
+    return;
+  }
+  if (!placeholder) {
+    HTMLDivElement* new_element = HTMLDivElement::Create(GetDocument());
+    placeholder = new_element;
+    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
+    placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
+    placeholder->SetInlineStyleProperty(
+        CSSPropertyDisplay,
+        IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone, true);
+    UserAgentShadowRoot()->InsertBefore(placeholder, InnerEditorElement());
+  }
+  placeholder->setTextContent(placeholder_text);
 }
 
-bool HTMLTextAreaElement::isInteractiveContent() const
-{
-    return true;
+bool HTMLTextAreaElement::IsInteractiveContent() const {
+  return true;
 }
 
-bool HTMLTextAreaElement::supportsAutofocus() const
-{
-    return true;
+bool HTMLTextAreaElement::SupportsAutofocus() const {
+  return true;
 }
 
-const AtomicString& HTMLTextAreaElement::defaultAutocapitalize() const
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
-    return sentences;
+const AtomicString& HTMLTextAreaElement::DefaultAutocapitalize() const {
+  DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
+  return sentences;
 }
 
-void HTMLTextAreaElement::copyNonAttributePropertiesFromElement(const Element& source)
-{
-    const HTMLTextAreaElement& sourceElement = static_cast<const HTMLTextAreaElement&>(source);
-    setValueCommon(sourceElement.value(), DispatchNoEvent, SetSeletion);
-    m_isDirty = sourceElement.m_isDirty;
-    HTMLTextFormControlElement::copyNonAttributePropertiesFromElement(source);
+void HTMLTextAreaElement::CopyNonAttributePropertiesFromElement(
+    const Element& source) {
+  const HTMLTextAreaElement& source_element =
+      static_cast<const HTMLTextAreaElement&>(source);
+  SetValueCommon(source_element.value(), kDispatchNoEvent,
+                 TextControlSetValueSelection::kSetSelectionToEnd);
+  is_dirty_ = source_element.is_dirty_;
+  TextControlElement::CopyNonAttributePropertiesFromElement(source);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -30,165 +30,112 @@
 
 #include "public/web/WebKit.h"
 
+#include <memory>
+
 #include "bindings/core/v8/Microtask.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/V8Initializer.h"
 #include "core/animation/AnimationClock.h"
+#include "core/layout/LayoutTheme.h"
 #include "core/page/Page.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "gin/public/v8_platform.h"
 #include "modules/ModulesInitializer.h"
 #include "platform/LayoutTestSupport.h"
-#include "platform/Logging.h"
 #include "platform/heap/Heap.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/WTF.h"
+#include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/TextEncoding.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
-#include "wtf/Assertions.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/WTF.h"
-#include "wtf/allocator/Partitions.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/TextEncoding.h"
-#include <memory>
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
 namespace {
 
 class EndOfTaskRunner : public WebThread::TaskObserver {
-public:
-    void willProcessTask() override
-    {
-        AnimationClock::notifyTaskStart();
-    }
-    void didProcessTask() override
-    {
-        Microtask::performCheckpoint(mainThreadIsolate());
-        V8Initializer::reportRejectedPromisesOnMainThread();
-    }
+ public:
+  void WillProcessTask() override { AnimationClock::NotifyTaskStart(); }
+  void DidProcessTask() override {
+    Microtask::PerformCheckpoint(MainThreadIsolate());
+    V8Initializer::ReportRejectedPromisesOnMainThread();
+  }
 };
 
-} // namespace
+}  // namespace
 
-static WebThread::TaskObserver* s_endOfTaskRunner = nullptr;
+static WebThread::TaskObserver* g_end_of_task_runner = nullptr;
 
-static ModulesInitializer& modulesInitializer()
-{
-    DEFINE_STATIC_LOCAL(std::unique_ptr<ModulesInitializer>, initializer, (wrapUnique(new ModulesInitializer)));
-    return *initializer;
+static ModulesInitializer& GetModulesInitializer() {
+  DEFINE_STATIC_LOCAL(std::unique_ptr<ModulesInitializer>, initializer,
+                      (WTF::WrapUnique(new ModulesInitializer)));
+  return *initializer;
 }
 
-void initialize(Platform* platform)
-{
-    Platform::initialize(platform);
+void Initialize(Platform* platform) {
+  Platform::Initialize(platform);
 
-    V8Initializer::initializeMainThread();
+  V8Initializer::InitializeMainThread();
 
-    modulesInitializer().initialize();
+  GetModulesInitializer().Initialize();
 
-    // currentThread is null if we are running on a thread without a message loop.
-    if (WebThread* currentThread = platform->currentThread()) {
-        DCHECK(!s_endOfTaskRunner);
-        s_endOfTaskRunner = new EndOfTaskRunner;
-        currentThread->addTaskObserver(s_endOfTaskRunner);
-    }
+  // currentThread is null if we are running on a thread without a message loop.
+  if (WebThread* current_thread = platform->CurrentThread()) {
+    DCHECK(!g_end_of_task_runner);
+    g_end_of_task_runner = new EndOfTaskRunner;
+    current_thread->AddTaskObserver(g_end_of_task_runner);
+  }
 }
 
-void shutdown()
-{
-    ThreadState::current()->cleanupMainThread();
-
-    // currentThread() is null if we are running on a thread without a message loop.
-    if (Platform::current()->currentThread()) {
-        // We don't need to (cannot) remove s_endOfTaskRunner from the current
-        // message loop, because the message loop is already destructed before
-        // the shutdown() is called.
-        delete s_endOfTaskRunner;
-        s_endOfTaskRunner = nullptr;
-    }
-
-    modulesInitializer().shutdown();
-
-    V8Initializer::shutdownMainThread();
-
-    Platform::shutdown();
-}
-
-v8::Isolate* mainThreadIsolate()
-{
-    return V8PerIsolateData::mainThreadIsolate();
+v8::Isolate* MainThreadIsolate() {
+  return V8PerIsolateData::MainThreadIsolate();
 }
 
 // TODO(tkent): The following functions to wrap LayoutTestSupport should be
 // moved to public/platform/.
 
-void setLayoutTestMode(bool value)
-{
-    LayoutTestSupport::setIsRunningLayoutTest(value);
+void SetLayoutTestMode(bool value) {
+  LayoutTestSupport::SetIsRunningLayoutTest(value);
 }
 
-bool layoutTestMode()
-{
-    return LayoutTestSupport::isRunningLayoutTest();
+bool LayoutTestMode() {
+  return LayoutTestSupport::IsRunningLayoutTest();
 }
 
-void setMockThemeEnabledForTest(bool value)
-{
-    LayoutTestSupport::setMockThemeEnabledForTest(value);
+void SetMockThemeEnabledForTest(bool value) {
+  LayoutTestSupport::SetMockThemeEnabledForTest(value);
+  LayoutTheme::GetTheme().DidChangeThemeEngine();
 }
 
-void setFontAntialiasingEnabledForTest(bool value)
-{
-    LayoutTestSupport::setFontAntialiasingEnabledForTest(value);
+void SetFontAntialiasingEnabledForTest(bool value) {
+  LayoutTestSupport::SetFontAntialiasingEnabledForTest(value);
 }
 
-bool fontAntialiasingEnabledForTest()
-{
-    return LayoutTestSupport::isFontAntialiasingEnabledForTest();
+bool FontAntialiasingEnabledForTest() {
+  return LayoutTestSupport::IsFontAntialiasingEnabledForTest();
 }
 
-void setAlwaysUseComplexTextForTest(bool value)
-{
-    LayoutTestSupport::setAlwaysUseComplexTextForTest(value);
+void ResetPluginCache(bool reload_pages) {
+  DCHECK(!reload_pages);
+  Page::RefreshPlugins();
 }
 
-bool alwaysUseComplexTextForTest()
-{
-    return LayoutTestSupport::alwaysUseComplexTextForTest();
-}
-
-void enableLogChannel(const char* name)
-{
-#if !LOG_DISABLED
-    WTFLogChannel* channel = getChannelFromName(name);
-    if (channel)
-        channel->state = WTFLogChannelOn;
-#endif // !LOG_DISABLED
-}
-
-void resetPluginCache(bool reloadPages)
-{
-    DCHECK(!reloadPages);
-    Page::refreshPlugins();
-}
-
-void decommitFreeableMemory()
-{
-    WTF::Partitions::decommitFreeableMemory();
+void DecommitFreeableMemory() {
+  WTF::Partitions::DecommitFreeableMemory();
 }
 
 void MemoryPressureNotificationToWorkerThreadIsolates(
-    v8::MemoryPressureLevel level)
-{
-    WorkerBackingThread::
-        MemoryPressureNotificationToWorkerThreadIsolates(level);
+    v8::MemoryPressureLevel level) {
+  WorkerBackingThread::MemoryPressureNotificationToWorkerThreadIsolates(level);
 }
 
-void setRAILModeOnWorkerThreadIsolates(v8::RAILMode railMode)
-{
-    WorkerBackingThread::setRAILModeOnWorkerThreadIsolates(railMode);
+void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode rail_mode) {
+  WorkerBackingThread::SetRAILModeOnWorkerThreadIsolates(rail_mode);
 }
 
-} // namespace blink
+}  // namespace blink

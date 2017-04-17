@@ -27,24 +27,22 @@
 #define DragSession_h
 
 #include "core/page/DragActions.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 struct DragSession {
-    STACK_ALLOCATED();
-    DragOperation operation;
-    bool mouseIsOverFileInput;
-    unsigned numberOfItemsToBeAccepted;
+  STACK_ALLOCATED();
+  DragOperation operation;
+  bool mouse_is_over_file_input;
+  unsigned number_of_items_to_be_accepted;
 
-    DragSession()
-        : operation(DragOperationNone)
-        , mouseIsOverFileInput(false)
-        , numberOfItemsToBeAccepted(0)
-    {
-    }
+  DragSession()
+      : operation(kDragOperationNone),
+        mouse_is_over_file_input(false),
+        number_of_items_to_be_accepted(0) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

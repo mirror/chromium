@@ -15,17 +15,25 @@
 #include "base/android/scoped_java_ref.h"
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequenced_task_runner_helpers.h"
+#include "media/base/android/android_util.h"
 #include "media/base/android/media_drm_bridge_cdm_context.h"
-#include "media/base/android/provision_fetcher.h"
+#include "media/base/android/media_drm_storage.h"
+#include "media/base/android/media_drm_storage_bridge.h"
+#include "media/base/cdm_promise.h"
 #include "media/base/cdm_promise_adapter.h"
+#include "media/base/content_decryption_module.h"
 #include "media/base/media_export.h"
-#include "media/base/media_keys.h"
 #include "media/base/player_tracker.h"
+#include "media/base/provision_fetcher.h"
 #include "media/cdm/player_tracker_impl.h"
 #include "url/gurl.h"
 
-class GURL;
+namespace base {
+class SingleThreadTaskRunner;
+}
 
 namespace media {
 
@@ -37,7 +45,8 @@ namespace media {
 // called on the |task_runner_| except for the PlayerTracker methods and
 // SetMediaCryptoReadyCB(), which can be called on any thread.
 
-class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
+class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
+                                    public PlayerTracker {
  public:
   // TODO(ddorwin): These are specific to Widevine. http://crbug.com/459400
   enum SecurityLevel {
@@ -74,6 +83,8 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
       const std::string& key_system,
       const std::string& container_mime_type);
 
+  static bool IsPersistentLicenseTypeSupported(const std::string& key_system);
+
   // Returns the list of the platform-supported key system names that
   // are not handled by Chrome explicitly.
   static std::vector<std::string> GetPlatformKeySystemNames();
@@ -83,32 +94,35 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
   // if |security_level| is SECURITY_LEVEL_DEFAULT.
   static scoped_refptr<MediaDrmBridge> Create(
       const std::string& key_system,
+      const GURL& security_origin,
       SecurityLevel security_level,
       const CreateFetcherCB& create_fetcher_cb,
+      const CreateStorageCB& create_storage_cb,
       const SessionMessageCB& session_message_cb,
       const SessionClosedCB& session_closed_cb,
-      const LegacySessionErrorCB& legacy_session_error_cb,
       const SessionKeysChangeCB& session_keys_change_cb,
       const SessionExpirationUpdateCB& session_expiration_update_cb);
 
   // Same as Create() except that no session callbacks are provided. This is
   // used when we need to use MediaDrmBridge without creating any sessions.
+  // TODO(yucliu): Pass |security_origin| here to clear per-origin certs and
+  // licenses.
   static scoped_refptr<MediaDrmBridge> CreateWithoutSessionSupport(
       const std::string& key_system,
       SecurityLevel security_level,
       const CreateFetcherCB& create_fetcher_cb);
 
-  // MediaKeys implementation.
+  // ContentDecryptionModule implementation.
   void SetServerCertificate(
       const std::vector<uint8_t>& certificate,
       std::unique_ptr<media::SimpleCdmPromise> promise) override;
   void CreateSessionAndGenerateRequest(
-      SessionType session_type,
+      CdmSessionType session_type,
       media::EmeInitDataType init_data_type,
       const std::vector<uint8_t>& init_data,
       std::unique_ptr<media::NewSessionCdmPromise> promise) override;
   void LoadSession(
-      SessionType session_type,
+      CdmSessionType session_type,
       const std::string& session_id,
       std::unique_ptr<media::NewSessionCdmPromise> promise) override;
   void UpdateSession(const std::string& session_id,
@@ -143,12 +157,6 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
   void ResolvePromiseWithSession(uint32_t promise_id,
                                  const std::string& session_id);
   void RejectPromise(uint32_t promise_id, const std::string& error_message);
-
-  // Returns a MediaCrypto object. Can only be called after |j_media_crypto_|
-  // is set.
-  // TODO(xhwang): This is only used by MediaSourcePlayer et al. Remove this
-  // method when MediaSourcePlayer is deprecated.
-  jobject GetMediaCrypto();
 
   // Registers a callback which will be called when MediaCrypto is ready.
   // Can be called on any thread. Only one callback should be registered.
@@ -195,26 +203,28 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
 
   // Session event callbacks.
 
-  // TODO(xhwang): Remove |j_legacy_destination_url| now that prefixed EME
-  // support is removed. http://crbug.com/249976
   void OnSessionMessage(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& j_media_drm,
       const base::android::JavaParamRef<jbyteArray>& j_session_id,
       jint j_message_type,
-      const base::android::JavaParamRef<jbyteArray>& j_message,
-      const base::android::JavaParamRef<jstring>& j_legacy_destination_url);
+      const base::android::JavaParamRef<jbyteArray>& j_message);
   void OnSessionClosed(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& j_media_drm,
       const base::android::JavaParamRef<jbyteArray>& j_session_id);
 
+  // Called when key statuses of session are changed. |is_key_release| is set to
+  // true when releasing keys. Some of the MediaDrm key status codes should be
+  // mapped to CDM key status differently (e.g. EXPIRE -> RELEASED).
   void OnSessionKeysChange(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& j_media_drm,
       const base::android::JavaParamRef<jbyteArray>& j_session_id,
+      // List<KeyStatus>
       const base::android::JavaParamRef<jobjectArray>& j_keys_info,
-      bool has_additional_usable_key);
+      bool has_additional_usable_key,
+      bool is_key_release);
 
   // |expiry_time_ms| is the new expiration time for the keys in the session.
   // The time is in milliseconds, relative to the Unix epoch. A time of 0
@@ -224,19 +234,6 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
       const base::android::JavaParamRef<jobject>& j_media_drm,
       const base::android::JavaParamRef<jbyteArray>& j_session_id,
       jlong expiry_time_ms);
-
-  // Called by the CDM when an error occurred in session |j_session_id|
-  // unrelated to one of the MediaKeys calls that accept a |promise|.
-  // Note:
-  // - This method is only for supporting prefixed EME API.
-  //   TODO(ddorwin): Remove it now. https://crbug.com/249976
-  // - This method will be ignored by unprefixed EME. All errors reported
-  //   in this method should probably also be reported by one of other methods.
-  void OnLegacySessionError(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& j_media_drm,
-      const base::android::JavaParamRef<jbyteArray>& j_session_id,
-      const base::android::JavaParamRef<jstring>& j_error_message);
 
   // Called by the java object when credential reset is completed.
   void OnResetDeviceCredentialsCompleted(
@@ -250,11 +247,12 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
 
   static scoped_refptr<MediaDrmBridge> CreateInternal(
       const std::string& key_system,
+      const GURL& security_origin,
       SecurityLevel security_level,
       const CreateFetcherCB& create_fetcher_cb,
+      const CreateStorageCB& create_storage_cb,
       const SessionMessageCB& session_message_cb,
       const SessionClosedCB& session_closed_cb,
-      const LegacySessionErrorCB& legacy_session_error_cb,
       const SessionKeysChangeCB& session_keys_change_cb,
       const SessionExpirationUpdateCB& session_expiration_update_cb);
 
@@ -263,11 +261,12 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
   // SECURITY_LEVEL_DEFAULT. Sessions should not be created if session callbacks
   // are null.
   MediaDrmBridge(const std::vector<uint8_t>& scheme_uuid,
+                 const GURL& security_origin,
                  SecurityLevel security_level,
                  const CreateFetcherCB& create_fetcher_cb,
+                 const CreateStorageCB& create_storage_cb,
                  const SessionMessageCB& session_message_cb,
                  const SessionClosedCB& session_closed_cb,
-                 const LegacySessionErrorCB& legacy_session_error_cb,
                  const SessionKeysChangeCB& session_keys_change_cb,
                  const SessionExpirationUpdateCB& session_expiration_update_cb);
 
@@ -277,9 +276,6 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
 
   // Get the security level of the media.
   SecurityLevel GetSecurityLevel();
-
-  // A helper method to create a JavaObjectPtr.
-  JavaObjectPtr CreateJavaObjectPtr(jobject object);
 
   // A helper method that is called when MediaCrypto is ready.
   void NotifyMediaCryptoReady(JavaObjectPtr j_media_crypto);
@@ -296,6 +292,9 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
 
   // UUID of the key system.
   std::vector<uint8_t> scheme_uuid_;
+
+  // Persistent storage for session ID map.
+  MediaDrmStorageBridge storage_;
 
   // Java MediaDrm instance.
   base::android::ScopedJavaGlobalRef<jobject> j_media_drm_;
@@ -319,7 +318,6 @@ class MEDIA_EXPORT MediaDrmBridge : public MediaKeys, public PlayerTracker {
   // Callbacks for firing session events.
   SessionMessageCB session_message_cb_;
   SessionClosedCB session_closed_cb_;
-  LegacySessionErrorCB legacy_session_error_cb_;
   SessionKeysChangeCB session_keys_change_cb_;
   SessionExpirationUpdateCB session_expiration_update_cb_;
 

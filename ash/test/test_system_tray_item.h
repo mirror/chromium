@@ -5,7 +5,7 @@
 #ifndef ASH_COMMON_SYSTEM_TRAY_TEST_TEST_SYSTEM_TRAY_ITEM_H_
 #define ASH_COMMON_SYSTEM_TRAY_TEST_TEST_SYSTEM_TRAY_ITEM_H_
 
-#include "ash/common/system/tray/system_tray_item.h"
+#include "ash/system/tray/system_tray_item.h"
 
 namespace ash {
 namespace test {
@@ -26,17 +26,14 @@ class TestSystemTrayItem : public SystemTrayItem {
   views::View* tray_view() const { return tray_view_; }
   views::View* default_view() const { return default_view_; }
   views::View* detailed_view() const { return detailed_view_; }
-  views::View* notification_view() const { return notification_view_; }
 
   // SystemTrayItem:
   views::View* CreateTrayView(LoginStatus status) override;
   views::View* CreateDefaultView(LoginStatus status) override;
   views::View* CreateDetailedView(LoginStatus status) override;
-  views::View* CreateNotificationView(LoginStatus status) override;
   void DestroyTrayView() override;
   void DestroyDefaultView() override;
   void DestroyDetailedView() override;
-  void DestroyNotificationView() override;
   void UpdateAfterLoginStatusChange(LoginStatus status) override;
 
  private:
@@ -45,7 +42,6 @@ class TestSystemTrayItem : public SystemTrayItem {
   views::View* tray_view_;
   views::View* default_view_;
   views::View* detailed_view_;
-  views::View* notification_view_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSystemTrayItem);
 };

@@ -24,20 +24,23 @@
 
 #include "core/html/ImageDocument.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include <limits>
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/RawDataDocumentParser.h"
 #include "core/events/EventListener.h"
 #include "core/events/MouseEvent.h"
-#include "core/fetch/ImageResource.h"
-#include "core/frame/FrameHost.h"
+#include "core/frame/ContentSettingsClient.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLBodyElement.h"
+#include "core/html/HTMLContentElement.h"
+#include "core/html/HTMLDivElement.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/HTMLHtmlElement.h"
 #include "core/html/HTMLImageElement.h"
@@ -45,405 +48,592 @@
 #include "core/layout/LayoutObject.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
-#include "wtf/text/StringBuilder.h"
-#include <limits>
+#include "core/loader/resource/ImageResource.h"
+#include "core/page/Page.h"
+#include "platform/HostWindow.h"
+#include "platform/wtf/text/StringBuilder.h"
 
-using namespace std;
+namespace {
+
+// The base square size is set to 10 because it rounds nicely for both the
+// minimum scale (0.1) and maximum scale (5.0).
+const int kBaseCheckerSize = 10;
+
+}  // namespace
 
 namespace blink {
 
 using namespace HTMLNames;
 
 class ImageEventListener : public EventListener {
-public:
-    static ImageEventListener* create(ImageDocument* document)
-    {
-        return new ImageEventListener(document);
-    }
-    static const ImageEventListener* cast(const EventListener* listener)
-    {
-        return listener->type() == ImageEventListenerType
-            ? static_cast<const ImageEventListener*>(listener)
-            : 0;
-    }
+ public:
+  static ImageEventListener* Create(ImageDocument* document) {
+    return new ImageEventListener(document);
+  }
+  static const ImageEventListener* Cast(const EventListener* listener) {
+    return listener->GetType() == kImageEventListenerType
+               ? static_cast<const ImageEventListener*>(listener)
+               : 0;
+  }
 
-    bool operator==(const EventListener& other) const override;
+  bool operator==(const EventListener& other) const override;
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_doc);
-        EventListener::trace(visitor);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(doc_);
+    EventListener::Trace(visitor);
+  }
 
-private:
-    ImageEventListener(ImageDocument* document)
-        : EventListener(ImageEventListenerType)
-        , m_doc(document)
-    {
-    }
+ private:
+  ImageEventListener(ImageDocument* document)
+      : EventListener(kImageEventListenerType), doc_(document) {}
 
-    virtual void handleEvent(ExecutionContext*, Event*);
+  virtual void handleEvent(ExecutionContext*, Event*);
 
-    Member<ImageDocument> m_doc;
+  Member<ImageDocument> doc_;
 };
 
 class ImageDocumentParser : public RawDataDocumentParser {
-public:
-    static ImageDocumentParser* create(ImageDocument* document)
-    {
-        return new ImageDocumentParser(document);
-    }
+ public:
+  static ImageDocumentParser* Create(ImageDocument* document) {
+    return new ImageDocumentParser(document);
+  }
 
-    ImageDocument* document() const
-    {
-        return toImageDocument(RawDataDocumentParser::document());
-    }
+  ImageDocument* GetDocument() const {
+    return ToImageDocument(RawDataDocumentParser::GetDocument());
+  }
 
-private:
-    ImageDocumentParser(ImageDocument* document)
-        : RawDataDocumentParser(document)
-    {
-    }
+ private:
+  ImageDocumentParser(ImageDocument* document)
+      : RawDataDocumentParser(document) {}
 
-    void appendBytes(const char*, size_t) override;
-    virtual void finish();
+  void AppendBytes(const char*, size_t) override;
+  virtual void Finish();
 };
 
 // --------
 
-static float pageZoomFactor(const Document* document)
-{
-    LocalFrame* frame = document->frame();
-    return frame ? frame->pageZoomFactor() : 1;
+static float PageZoomFactor(const Document* document) {
+  LocalFrame* frame = document->GetFrame();
+  return frame ? frame->PageZoomFactor() : 1;
 }
 
-static String imageTitle(const String& filename, const IntSize& size)
-{
-    StringBuilder result;
-    result.append(filename);
-    result.append(" (");
-    // FIXME: Localize numbers. Safari/OSX shows localized numbers with group
-    // separaters. For example, "1,920x1,080".
-    result.appendNumber(size.width());
-    result.append(static_cast<UChar>(0xD7)); // U+00D7 (multiplication sign)
-    result.appendNumber(size.height());
-    result.append(')');
-    return result.toString();
+static String ImageTitle(const String& filename, const IntSize& size) {
+  StringBuilder result;
+  result.Append(filename);
+  result.Append(" (");
+  // FIXME: Localize numbers. Safari/OSX shows localized numbers with group
+  // separaters. For example, "1,920x1,080".
+  result.AppendNumber(size.Width());
+  result.Append(static_cast<UChar>(0xD7));  // U+00D7 (multiplication sign)
+  result.AppendNumber(size.Height());
+  result.Append(')');
+  return result.ToString();
 }
 
-void ImageDocumentParser::appendBytes(const char* data, size_t length)
-{
-    if (!length)
-        return;
+static LayoutSize CachedImageSize(HTMLImageElement* element) {
+  DCHECK(element->CachedImage());
+  return element->CachedImage()->ImageSize(
+      LayoutObject::ShouldRespectImageOrientation(element->GetLayoutObject()),
+      1.0f);
+}
 
-    LocalFrame* frame = document()->frame();
-    Settings* settings = frame->settings();
-    if (!frame->loader().client()->allowImage(!settings || settings->imagesEnabled(), document()->url()))
-        return;
+void ImageDocumentParser::AppendBytes(const char* data, size_t length) {
+  if (!length)
+    return;
 
-    if (document()->cachedImage()) {
-        RELEASE_ASSERT(length <= std::numeric_limits<unsigned>::max());
-        document()->cachedImage()->appendData(data, length);
+  LocalFrame* frame = GetDocument()->GetFrame();
+  Settings* settings = frame->GetSettings();
+  if (!frame->GetContentSettingsClient()->AllowImage(
+          !settings || settings->GetImagesEnabled(), GetDocument()->Url()))
+    return;
+
+  if (GetDocument()->CachedImageResourceDeprecated()) {
+    CHECK_LE(length, std::numeric_limits<unsigned>::max());
+    // If decoding has already failed, there's no point in sending additional
+    // data to the ImageResource.
+    if (GetDocument()->CachedImageResourceDeprecated()->GetStatus() !=
+        ResourceStatus::kDecodeError)
+      GetDocument()->CachedImageResourceDeprecated()->AppendData(data, length);
+  }
+
+  if (!IsDetached())
+    GetDocument()->ImageUpdated();
+}
+
+void ImageDocumentParser::Finish() {
+  if (!IsStopped() && GetDocument()->ImageElement() &&
+      GetDocument()->CachedImageResourceDeprecated()) {
+    // TODO(hiroshige): Use ImageResourceContent instead of ImageResource.
+    ImageResource* cached_image =
+        GetDocument()->CachedImageResourceDeprecated();
+    DocumentLoader* loader = GetDocument()->Loader();
+    cached_image->SetResponse(loader->GetResponse());
+    cached_image->Finish(loader->GetTiming().ResponseEnd());
+
+    // Report the natural image size in the page title, regardless of zoom
+    // level.  At a zoom level of 1 the image is guaranteed to have an integer
+    // size.
+    IntSize size =
+        FlooredIntSize(CachedImageSize(GetDocument()->ImageElement()));
+    if (size.Width()) {
+      // Compute the title, we use the decoded filename of the resource, falling
+      // back on the (decoded) hostname if there is no path.
+      String file_name =
+          DecodeURLEscapeSequences(GetDocument()->Url().LastPathComponent());
+      if (file_name.IsEmpty())
+        file_name = GetDocument()->Url().Host();
+      GetDocument()->setTitle(ImageTitle(file_name, size));
+      if (IsDetached())
+        return;
     }
 
-    if (!isDetached())
-        document()->imageUpdated();
-}
+    GetDocument()->ImageUpdated();
+    GetDocument()->ImageLoaded();
+  }
 
-void ImageDocumentParser::finish()
-{
-    if (!isStopped() && document()->imageElement() && document()->cachedImage()) {
-        ImageResource* cachedImage = document()->cachedImage();
-        DocumentLoader* loader = document()->loader();
-        cachedImage->setResponse(loader->response());
-        cachedImage->finish(loader->timing().responseEnd());
-
-        // Report the natural image size in the page title, regardless of zoom level.
-        // At a zoom level of 1 the image is guaranteed to have an integer size.
-        IntSize size = flooredIntSize(cachedImage->imageSize(LayoutObject::shouldRespectImageOrientation(document()->imageElement()->layoutObject()), 1.0f));
-        if (size.width()) {
-            // Compute the title, we use the decoded filename of the resource, falling
-            // back on the (decoded) hostname if there is no path.
-            String fileName = decodeURLEscapeSequences(document()->url().lastPathComponent());
-            if (fileName.isEmpty())
-                fileName = document()->url().host();
-            document()->setTitle(imageTitle(fileName, size));
-            if (isDetached())
-                return;
-        }
-
-        document()->imageUpdated();
-    }
-
-    if (!isDetached())
-        document()->finishedParsing();
+  if (!IsDetached())
+    GetDocument()->FinishedParsing();
 }
 
 // --------
 
 ImageDocument::ImageDocument(const DocumentInit& initializer)
-    : HTMLDocument(initializer, ImageDocumentClass)
-    , m_imageElement(nullptr)
-    , m_imageSizeIsKnown(false)
-    , m_didShrinkImage(false)
-    , m_shouldShrinkImage(shouldShrinkToFit())
-    , m_shrinkToFitMode(frame()->settings()->viewportEnabled() ? Viewport : Desktop)
-{
-    setCompatibilityMode(QuirksMode);
-    lockCompatibilityMode();
-    UseCounter::count(*this, UseCounter::ImageDocument);
-    if (!isInMainFrame())
-        UseCounter::count(*this, UseCounter::ImageDocumentInFrame);
+    : HTMLDocument(initializer, kImageDocumentClass),
+      div_element_(nullptr),
+      image_element_(nullptr),
+      image_size_is_known_(false),
+      did_shrink_image_(false),
+      should_shrink_image_(ShouldShrinkToFit()),
+      image_is_loaded_(false),
+      style_checker_size_(0),
+      style_mouse_cursor_mode_(kDefault),
+      shrink_to_fit_mode_(GetFrame()->GetSettings()->GetViewportEnabled()
+                              ? kViewport
+                              : kDesktop) {
+  SetCompatibilityMode(kQuirksMode);
+  LockCompatibilityMode();
+  UseCounter::Count(*this, UseCounter::kImageDocument);
+  if (!IsInMainFrame())
+    UseCounter::Count(*this, UseCounter::kImageDocumentInFrame);
 }
 
-DocumentParser* ImageDocument::createParser()
-{
-    return ImageDocumentParser::create(this);
+DocumentParser* ImageDocument::CreateParser() {
+  return ImageDocumentParser::Create(this);
 }
 
-void ImageDocument::createDocumentStructure()
-{
-    HTMLHtmlElement* rootElement = HTMLHtmlElement::create(*this);
-    appendChild(rootElement);
-    rootElement->insertedByParser();
+void ImageDocument::CreateDocumentStructure() {
+  HTMLHtmlElement* root_element = HTMLHtmlElement::Create(*this);
+  AppendChild(root_element);
+  root_element->InsertedByParser();
 
-    if (isStopped())
-        return; // runScriptsAtDocumentElementAvailable can detach the frame.
+  if (IsStopped())
+    return;  // runScriptsAtDocumentElementAvailable can detach the frame.
 
-    HTMLHeadElement* head = HTMLHeadElement::create(*this);
-    HTMLMetaElement* meta = HTMLMetaElement::create(*this);
-    meta->setAttribute(nameAttr, "viewport");
-    meta->setAttribute(contentAttr, "width=device-width, minimum-scale=0.1");
-    head->appendChild(meta);
+  HTMLHeadElement* head = HTMLHeadElement::Create(*this);
+  HTMLMetaElement* meta = HTMLMetaElement::Create(*this);
+  meta->setAttribute(nameAttr, "viewport");
+  meta->setAttribute(contentAttr, "width=device-width, minimum-scale=0.1");
+  head->AppendChild(meta);
 
-    HTMLBodyElement* body = HTMLBodyElement::create(*this);
+  HTMLBodyElement* body = HTMLBodyElement::Create(*this);
+
+  if (ShouldShrinkToFit()) {
+    // Display the image prominently centered in the frame.
+    body->setAttribute(styleAttr, "margin: 0px; background: #0e0e0e;");
+
+    // See w3c example on how to center an element:
+    // https://www.w3.org/Style/Examples/007/center.en.html
+    div_element_ = HTMLDivElement::Create(*this);
+    div_element_->setAttribute(styleAttr,
+                               "display: flex;"
+                               "flex-direction: column;"
+                               "justify-content: center;"
+                               "align-items: center;"
+                               "min-height: min-content;"
+                               "min-width: min-content;"
+                               "height: 100%;"
+                               "width: 100%;");
+    HTMLContentElement* content = HTMLContentElement::Create(*this);
+    div_element_->AppendChild(content);
+
+    ShadowRoot& shadow_root = body->EnsureUserAgentShadowRoot();
+    shadow_root.AppendChild(div_element_);
+  } else {
     body->setAttribute(styleAttr, "margin: 0px;");
+  }
 
-    willInsertBody();
+  WillInsertBody();
 
-    m_imageElement = HTMLImageElement::create(*this);
-    m_imageElement->setAttribute(styleAttr, "-webkit-user-select: none");
-    m_imageElement->setLoadingImageDocument();
-    m_imageElement->setSrc(url().getString());
-    body->appendChild(m_imageElement.get());
-    if (loader() && m_imageElement->cachedImage())
-        m_imageElement->cachedImage()->responseReceived(loader()->response(), nullptr);
+  image_element_ = HTMLImageElement::Create(*this);
+  UpdateImageStyle();
+  image_element_->SetLoadingImageDocument();
+  image_element_->SetSrc(Url().GetString());
+  body->AppendChild(image_element_.Get());
+  if (Loader() && image_element_->CachedImageResourceForImageDocument()) {
+    image_element_->CachedImageResourceForImageDocument()->ResponseReceived(
+        Loader()->GetResponse(), nullptr);
+  }
 
-    if (shouldShrinkToFit()) {
-        // Add event listeners
-        EventListener* listener = ImageEventListener::create(this);
-        if (LocalDOMWindow* domWindow = this->domWindow())
-            domWindow->addEventListener("resize", listener, false);
-        if (m_shrinkToFitMode == Desktop)
-            m_imageElement->addEventListener("click", listener, false);
+  if (ShouldShrinkToFit()) {
+    // Add event listeners
+    EventListener* listener = ImageEventListener::Create(this);
+    if (LocalDOMWindow* dom_window = this->domWindow())
+      dom_window->addEventListener(EventTypeNames::resize, listener, false);
+
+    if (shrink_to_fit_mode_ == kDesktop) {
+      image_element_->addEventListener(EventTypeNames::click, listener, false);
+    } else if (shrink_to_fit_mode_ == kViewport) {
+      image_element_->addEventListener(EventTypeNames::touchend, listener,
+                                       false);
+      image_element_->addEventListener(EventTypeNames::touchcancel, listener,
+                                       false);
     }
+  }
 
-    rootElement->appendChild(head);
-    rootElement->appendChild(body);
+  root_element->AppendChild(head);
+  root_element->AppendChild(body);
 }
 
-float ImageDocument::scale() const
-{
-    if (!m_imageElement || m_imageElement->document() != this)
-        return 1.0f;
+float ImageDocument::Scale() const {
+  DCHECK_EQ(shrink_to_fit_mode_, kDesktop);
+  if (!image_element_ || image_element_->GetDocument() != this)
+    return 1.0f;
 
-    FrameView* view = frame()->view();
-    if (!view)
-        return 1;
+  FrameView* view = GetFrame()->View();
+  if (!view)
+    return 1.0f;
 
-    ASSERT(m_imageElement->cachedImage());
-    LayoutSize imageSize = m_imageElement->cachedImage()->imageSize(LayoutObject::shouldRespectImageOrientation(m_imageElement->layoutObject()), pageZoomFactor(this));
-    LayoutSize windowSize = LayoutSize(view->width(), view->height());
+  DCHECK(image_element_->CachedImage());
+  const float zoom = PageZoomFactor(this);
+  LayoutSize image_size = image_element_->CachedImage()->ImageSize(
+      LayoutObject::ShouldRespectImageOrientation(
+          image_element_->GetLayoutObject()),
+      zoom);
 
-    float widthScale = windowSize.width().toFloat() / imageSize.width().toFloat();
-    float heightScale = windowSize.height().toFloat() / imageSize.height().toFloat();
+  // We want to pretend the viewport is larger when the user has zoomed the
+  // page in (but not when the zoom is coming from device scale).
+  const float manual_zoom =
+      zoom / view->GetHostWindow()->WindowToViewportScalar(1.f);
+  float width_scale =
+      view->Width() * manual_zoom / image_size.Width().ToFloat();
+  float height_scale =
+      view->Height() * manual_zoom / image_size.Height().ToFloat();
 
-    return min(widthScale, heightScale);
+  return std::min(width_scale, height_scale);
 }
 
-void ImageDocument::resizeImageToFit(ScaleType type)
-{
-    if (!m_imageElement || m_imageElement->document() != this || (pageZoomFactor(this) > 1 && type == ScaleOnlyUnzoomedDocument))
+void ImageDocument::ResizeImageToFit() {
+  DCHECK_EQ(shrink_to_fit_mode_, kDesktop);
+  if (!image_element_ || image_element_->GetDocument() != this)
+    return;
+
+  LayoutSize image_size = CachedImageSize(image_element_);
+
+  const float scale = this->Scale();
+  image_element_->setWidth(static_cast<int>(image_size.Width() * scale));
+  image_element_->setHeight(static_cast<int>(image_size.Height() * scale));
+
+  UpdateImageStyle();
+}
+
+void ImageDocument::ImageClicked(int x, int y) {
+  DCHECK_EQ(shrink_to_fit_mode_, kDesktop);
+
+  if (!image_size_is_known_ || ImageFitsInWindow())
+    return;
+
+  should_shrink_image_ = !should_shrink_image_;
+
+  if (should_shrink_image_) {
+    WindowSizeChanged();
+  } else {
+    // Adjust the coordinates to account for the fact that the image was
+    // centered on the screen.
+    float image_x = x - image_element_->OffsetLeft();
+    float image_y = y - image_element_->OffsetTop();
+
+    RestoreImageSize();
+
+    UpdateStyleAndLayout();
+
+    double scale = this->Scale();
+
+    float scroll_x =
+        image_x / scale - static_cast<float>(GetFrame()->View()->Width()) / 2;
+    float scroll_y =
+        image_y / scale - static_cast<float>(GetFrame()->View()->Height()) / 2;
+
+    GetFrame()->View()->LayoutViewportScrollableArea()->SetScrollOffset(
+        ScrollOffset(scroll_x, scroll_y), kProgrammaticScroll);
+  }
+}
+
+void ImageDocument::ImageLoaded() {
+  image_is_loaded_ = true;
+
+  if (ShouldShrinkToFit()) {
+    // The checkerboard background needs to be inserted.
+    UpdateImageStyle();
+  }
+}
+
+void ImageDocument::UpdateImageStyle() {
+  StringBuilder image_style;
+  image_style.Append("-webkit-user-select: none;");
+
+  if (ShouldShrinkToFit()) {
+    if (shrink_to_fit_mode_ == kViewport)
+      image_style.Append("max-width: 100%;");
+
+    // Once the image has fully loaded, it is displayed atop a checkerboard to
+    // show transparency more faithfully.  The pattern is generated via CSS.
+    if (image_is_loaded_) {
+      int new_checker_size = kBaseCheckerSize;
+      MouseCursorMode new_cursor_mode = kDefault;
+
+      if (shrink_to_fit_mode_ == kViewport) {
+        double scale;
+
+        if (HasFinishedParsing()) {
+          // To ensure the checker pattern is visible for large images, the
+          // checker size is dynamically adjusted to account for how much the
+          // page is currently being scaled.
+          scale = GetFrame()->GetPage()->GetVisualViewport().Scale();
+        } else {
+          // The checker pattern is initialized based on how large the image is
+          // relative to the viewport.
+          int viewport_width =
+              GetFrame()->GetPage()->GetVisualViewport().Size().Width();
+          scale = viewport_width / static_cast<double>(CalculateDivWidth());
+        }
+
+        new_checker_size = std::round(std::max(1.0, new_checker_size / scale));
+      } else {
+        // In desktop mode, the user can click on the image to zoom in or out.
+        DCHECK_EQ(shrink_to_fit_mode_, kDesktop);
+        if (ImageFitsInWindow()) {
+          new_cursor_mode = kDefault;
+        } else {
+          new_cursor_mode = should_shrink_image_ ? kZoomIn : kZoomOut;
+        }
+      }
+
+      // The only things that can differ between updates are checker size and
+      // the type of cursor being displayed.
+      if (new_checker_size == style_checker_size_ &&
+          new_cursor_mode == style_mouse_cursor_mode_) {
         return;
+      }
+      style_checker_size_ = new_checker_size;
+      style_mouse_cursor_mode_ = new_cursor_mode;
 
-    ASSERT(m_imageElement->cachedImage());
-    LayoutSize imageSize = m_imageElement->cachedImage()->imageSize(LayoutObject::shouldRespectImageOrientation(m_imageElement->layoutObject()), pageZoomFactor(this));
+      image_style.Append("background-position: 0px 0px, ");
+      image_style.Append(AtomicString::Number(style_checker_size_));
+      image_style.Append("px ");
+      image_style.Append(AtomicString::Number(style_checker_size_));
+      image_style.Append("px;");
 
-    float scale = this->scale();
-    m_imageElement->setWidth(static_cast<int>(imageSize.width() * scale));
-    m_imageElement->setHeight(static_cast<int>(imageSize.height() * scale));
+      int tile_size = style_checker_size_ * 2;
+      image_style.Append("background-size: ");
+      image_style.Append(AtomicString::Number(tile_size));
+      image_style.Append("px ");
+      image_style.Append(AtomicString::Number(tile_size));
+      image_style.Append("px;");
 
-    m_imageElement->setInlineStyleProperty(CSSPropertyCursor, CSSValueZoomIn);
-}
+      // Generating the checkerboard pattern this way is not exactly cheap.
+      // If rasterization performance becomes an issue, we could look at using
+      // a cheaper shader (e.g. pre-generate a scaled tile + base64-encode +
+      // inline dataURI => single bitmap shader).
+      image_style.Append(
+          "background-image:"
+          "linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, "
+          "#eee 75%, #eee 100%),"
+          "linear-gradient(45deg, #eee 25%, white 25%, white 75%, "
+          "#eee 75%, #eee 100%);");
 
-void ImageDocument::imageClicked(int x, int y)
-{
-    ASSERT(m_shrinkToFitMode == Desktop);
-
-    if (!m_imageSizeIsKnown || imageFitsInWindow())
-        return;
-
-    m_shouldShrinkImage = !m_shouldShrinkImage;
-
-    if (m_shouldShrinkImage) {
-        windowSizeChanged(ScaleZoomedDocument);
-    } else {
-        restoreImageSize(ScaleZoomedDocument);
-
-        updateStyleAndLayout();
-
-        double scale = this->scale();
-
-        double scrollX = x / scale - static_cast<double>(frame()->view()->width()) / 2;
-        double scrollY = y / scale - static_cast<double>(frame()->view()->height()) / 2;
-
-        frame()->view()->setScrollPosition(DoublePoint(scrollX, scrollY), ProgrammaticScroll);
+      if (shrink_to_fit_mode_ == kDesktop) {
+        if (style_mouse_cursor_mode_ == kZoomIn)
+          image_style.Append("cursor: zoom-in;");
+        else if (style_mouse_cursor_mode_ == kZoomOut)
+          image_style.Append("cursor: zoom-out;");
+      }
     }
+  }
+
+  image_element_->setAttribute(styleAttr, image_style.ToAtomicString());
 }
 
-void ImageDocument::imageUpdated()
-{
-    ASSERT(m_imageElement);
+void ImageDocument::ImageUpdated() {
+  DCHECK(image_element_);
 
-    if (m_imageSizeIsKnown)
-        return;
+  if (image_size_is_known_)
+    return;
 
-    updateStyleAndLayoutTree();
-    if (!m_imageElement->cachedImage() || m_imageElement->cachedImage()->imageSize(LayoutObject::shouldRespectImageOrientation(m_imageElement->layoutObject()), pageZoomFactor(this)).isEmpty())
-        return;
+  UpdateStyleAndLayoutTree();
+  if (!image_element_->CachedImage() ||
+      image_element_->CachedImage()
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(
+                          image_element_->GetLayoutObject()),
+                      PageZoomFactor(this))
+          .IsEmpty())
+    return;
 
-    m_imageSizeIsKnown = true;
+  image_size_is_known_ = true;
 
-    if (shouldShrinkToFit()) {
-        // Force resizing of the image
-        windowSizeChanged(ScaleOnlyUnzoomedDocument);
-    }
+  if (ShouldShrinkToFit()) {
+    // Force resizing of the image
+    WindowSizeChanged();
+  }
 }
 
-void ImageDocument::restoreImageSize(ScaleType type)
-{
-    ASSERT(m_shrinkToFitMode == Desktop);
+void ImageDocument::RestoreImageSize() {
+  DCHECK_EQ(shrink_to_fit_mode_, kDesktop);
 
-    if (!m_imageElement || !m_imageSizeIsKnown || m_imageElement->document() != this || (pageZoomFactor(this) < 1 && type == ScaleOnlyUnzoomedDocument))
-        return;
+  if (!image_element_ || !image_size_is_known_ ||
+      image_element_->GetDocument() != this)
+    return;
 
-    ASSERT(m_imageElement->cachedImage());
-    LayoutSize imageSize = m_imageElement->cachedImage()->imageSize(LayoutObject::shouldRespectImageOrientation(m_imageElement->layoutObject()), 1.0f);
-    m_imageElement->setWidth(imageSize.width());
-    m_imageElement->setHeight(imageSize.height());
+  DCHECK(image_element_->CachedImage());
+  LayoutSize image_size = CachedImageSize(image_element_);
+  image_element_->setWidth(image_size.Width().ToInt());
+  image_element_->setHeight(image_size.Height().ToInt());
+  UpdateImageStyle();
 
-    if (imageFitsInWindow())
-        m_imageElement->removeInlineStyleProperty(CSSPropertyCursor);
+  did_shrink_image_ = false;
+}
+
+bool ImageDocument::ImageFitsInWindow() const {
+  DCHECK_EQ(shrink_to_fit_mode_, kDesktop);
+  return this->Scale() >= 1;
+}
+
+int ImageDocument::CalculateDivWidth() {
+  // Zooming in and out of an image being displayed within a viewport is done
+  // by changing the page scale factor of the page instead of changing the
+  // size of the image.  The size of the image is set so that:
+  // * Images wider than the viewport take the full width of the screen.
+  // * Images taller than the viewport are initially aligned with the top of
+  //   of the frame.
+  // * Images smaller in either dimension are centered along that axis.
+  LayoutSize image_size = CachedImageSize(image_element_);
+  int viewport_width =
+      GetFrame()->GetPage()->GetVisualViewport().Size().Width();
+
+  // For huge images, minimum-scale=0.1 is still too big on small screens.
+  // Set the <div> width so that the image will shrink to fit the width of the
+  // screen when the scale is minimum.
+  int max_width = std::min(image_size.Width().ToInt(), viewport_width * 10);
+  return std::max(viewport_width, max_width);
+}
+
+void ImageDocument::WindowSizeChanged() {
+  if (!image_element_ || !image_size_is_known_ ||
+      image_element_->GetDocument() != this)
+    return;
+
+  if (shrink_to_fit_mode_ == kViewport) {
+    LayoutSize image_size = CachedImageSize(image_element_);
+    int div_width = CalculateDivWidth();
+    div_element_->SetInlineStyleProperty(CSSPropertyWidth, div_width,
+                                         CSSPrimitiveValue::UnitType::kPixels);
+
+    // Explicitly set the height of the <div> containing the <img> so that it
+    // can display the full image without shrinking it, allowing a full-width
+    // reading mode for normal-width-huge-height images.
+    float viewport_aspect_ratio =
+        GetFrame()->GetPage()->GetVisualViewport().Size().AspectRatio();
+    int div_height =
+        std::max(image_size.Height().ToInt(),
+                 static_cast<int>(div_width / viewport_aspect_ratio));
+    div_element_->SetInlineStyleProperty(CSSPropertyHeight, div_height,
+                                         CSSPrimitiveValue::UnitType::kPixels);
+    return;
+  }
+
+  bool fits_in_window = ImageFitsInWindow();
+
+  // If the image has been explicitly zoomed in, restore the cursor if the image
+  // fits and set it to a zoom out cursor if the image doesn't fit
+  if (!should_shrink_image_) {
+    UpdateImageStyle();
+    return;
+  }
+
+  if (did_shrink_image_) {
+    // If the window has been resized so that the image fits, restore the image
+    // size otherwise update the restored image size.
+    if (fits_in_window)
+      RestoreImageSize();
     else
-        m_imageElement->setInlineStyleProperty(CSSPropertyCursor, CSSValueZoomOut);
-
-    m_didShrinkImage = false;
-}
-
-bool ImageDocument::imageFitsInWindow() const
-{
-    ASSERT(m_shrinkToFitMode == Desktop);
-
-    if (!m_imageElement || m_imageElement->document() != this)
-        return true;
-
-    FrameView* view = frame()->view();
-    if (!view)
-        return true;
-
-    ASSERT(m_imageElement->cachedImage());
-    LayoutSize imageSize = m_imageElement->cachedImage()->imageSize(LayoutObject::shouldRespectImageOrientation(m_imageElement->layoutObject()), pageZoomFactor(this));
-    LayoutSize windowSize = LayoutSize(view->width(), view->height());
-
-    return imageSize.width() <= windowSize.width() && imageSize.height() <= windowSize.height();
-}
-
-void ImageDocument::windowSizeChanged(ScaleType type)
-{
-    if (!m_imageElement || !m_imageSizeIsKnown || m_imageElement->document() != this)
-        return;
-
-    if (m_shrinkToFitMode == Viewport) {
-        // For huge images, minimum-scale=0.1 is still too big on small screens.
-        // Set max-width so that the image will shrink to fit the width of the screen when
-        // the scale is minimum.
-        // Don't shrink height to fit because we use width=device-width in viewport meta tag,
-        // and expect a full-width reading mode for normal-width-huge-height images.
-        int viewportWidth = frame()->host()->visualViewport().size().width();
-        m_imageElement->setInlineStyleProperty(CSSPropertyMaxWidth, viewportWidth * 10, CSSPrimitiveValue::UnitType::Pixels);
-        return;
+      ResizeImageToFit();
+  } else {
+    // If the image isn't resized but needs to be, then resize it.
+    if (!fits_in_window) {
+      ResizeImageToFit();
+      did_shrink_image_ = true;
     }
-
-    bool fitsInWindow = imageFitsInWindow();
-
-    // If the image has been explicitly zoomed in, restore the cursor if the image fits
-    // and set it to a zoom out cursor if the image doesn't fit
-    if (!m_shouldShrinkImage) {
-        if (fitsInWindow)
-            m_imageElement->removeInlineStyleProperty(CSSPropertyCursor);
-        else
-            m_imageElement->setInlineStyleProperty(CSSPropertyCursor, CSSValueZoomOut);
-        return;
-    }
-
-    if (m_didShrinkImage) {
-        // If the window has been resized so that the image fits, restore the image size
-        // otherwise update the restored image size.
-        if (fitsInWindow)
-            restoreImageSize(type);
-        else
-            resizeImageToFit(type);
-    } else {
-        // If the image isn't resized but needs to be, then resize it.
-        if (!fitsInWindow) {
-            resizeImageToFit(type);
-            m_didShrinkImage = true;
-        }
-    }
+  }
 }
 
-ImageResource* ImageDocument::cachedImage()
-{
-    if (!m_imageElement) {
-        createDocumentStructure();
-        if (isStopped()) {
-            m_imageElement = nullptr;
-            return nullptr;
-        }
+ImageResourceContent* ImageDocument::CachedImage() {
+  if (!image_element_) {
+    CreateDocumentStructure();
+    if (IsStopped()) {
+      image_element_ = nullptr;
+      return nullptr;
     }
+  }
 
-    return m_imageElement->cachedImage();
+  return image_element_->CachedImage();
 }
 
-bool ImageDocument::shouldShrinkToFit() const
-{
-    return frame()->isMainFrame();
+ImageResource* ImageDocument::CachedImageResourceDeprecated() {
+  if (!image_element_) {
+    CreateDocumentStructure();
+    if (IsStopped()) {
+      image_element_ = nullptr;
+      return nullptr;
+    }
+  }
+
+  return image_element_->CachedImageResourceForImageDocument();
 }
 
-DEFINE_TRACE(ImageDocument)
-{
-    visitor->trace(m_imageElement);
-    HTMLDocument::trace(visitor);
+bool ImageDocument::ShouldShrinkToFit() const {
+  // WebView automatically resizes to match the contents, causing an infinite
+  // loop as the contents then resize to match the window. To prevent this,
+  // disallow images from shrinking to fit for WebViews.
+  bool is_wrap_content_web_view =
+      GetPage() ? GetPage()->GetSettings().GetForceZeroLayoutHeight() : false;
+  return GetFrame()->IsMainFrame() && !is_wrap_content_web_view;
+}
+
+DEFINE_TRACE(ImageDocument) {
+  visitor->Trace(div_element_);
+  visitor->Trace(image_element_);
+  HTMLDocument::Trace(visitor);
 }
 
 // --------
 
-void ImageEventListener::handleEvent(ExecutionContext*, Event* event)
-{
-    if (event->type() == EventTypeNames::resize) {
-        m_doc->windowSizeChanged(ImageDocument::ScaleOnlyUnzoomedDocument);
-    } else if (event->type() == EventTypeNames::click && event->isMouseEvent()) {
-        MouseEvent* mouseEvent = toMouseEvent(event);
-        m_doc->imageClicked(mouseEvent->x(), mouseEvent->y());
-    }
+void ImageEventListener::handleEvent(ExecutionContext*, Event* event) {
+  if (event->type() == EventTypeNames::resize) {
+    doc_->WindowSizeChanged();
+  } else if (event->type() == EventTypeNames::click && event->IsMouseEvent()) {
+    MouseEvent* mouse_event = ToMouseEvent(event);
+    doc_->ImageClicked(mouse_event->x(), mouse_event->y());
+  } else if ((event->type() == EventTypeNames::touchend ||
+              event->type() == EventTypeNames::touchcancel) &&
+             event->IsTouchEvent()) {
+    doc_->UpdateImageStyle();
+  }
 }
 
-bool ImageEventListener::operator==(const EventListener& listener) const
-{
-    if (const ImageEventListener* imageEventListener = ImageEventListener::cast(&listener))
-        return m_doc == imageEventListener->m_doc;
-    return false;
+bool ImageEventListener::operator==(const EventListener& listener) const {
+  if (const ImageEventListener* image_event_listener =
+          ImageEventListener::Cast(&listener))
+    return doc_ == image_event_listener->doc_;
+  return false;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -6,29 +6,24 @@
 
 function test()
 {
-    WebInspector.TestTimelineLifecycleDelegate = function()
+    TestTimelineControllerClient = function()
     {
         this._hadLoadingProgress = false;
     }
 
-    WebInspector.TestTimelineLifecycleDelegate.prototype = {
-        recordingStarted: function()
-        {
-            InspectorTest.addResult("TimelineLifecycleDelegate.recordingStarted");
-        },
-
+    TestTimelineControllerClient.prototype = {
         recordingProgress: function()
         {
             if (!controller)
                 return;
-            InspectorTest.addResult("TimelineLifecycleDelegate.recordingProgress");
+            InspectorTest.addResult("TimelineControllerClient.recordingProgress");
             controller.stopRecording();
             controller = null;
         },
 
         loadingStarted: function()
         {
-            InspectorTest.addResult("TimelineLifecycleDelegate.loadingStarted");
+            InspectorTest.addResult("TimelineControllerClient.loadingStarted");
         },
 
         loadingProgress: function()
@@ -36,20 +31,25 @@ function test()
             if (this._hadLoadingProgress)
                 return;
             this._hadLoadingProgress = true;
-            InspectorTest.addResult("TimelineLifecycleDelegate.loadingProgress");
+            InspectorTest.addResult("TimelineControllerClient.loadingProgress");
+        },
+
+        processingStarted: function()
+        {
+            InspectorTest.addResult("TimelineControllerClient.processingStarted");
         },
 
         loadingComplete: function()
         {
-            InspectorTest.addResult("TimelineLifecycleDelegate.loadingComplete");
+            InspectorTest.addResult("TimelineControllerClient.loadingComplete");
             InspectorTest.completeTest();
-        },
-
-        __proto__: WebInspector.TimelineLifecycleDelegate
+        }
     };
-
-    var controller = new WebInspector.TimelineController(WebInspector.targetManager.mainTarget(), new WebInspector.TestTimelineLifecycleDelegate(), InspectorTest.createTracingModel());
-    controller.startRecording();
+    var performanceModel = new Timeline.PerformanceModel();
+    var controller = new Timeline.TimelineController(InspectorTest.tracingManager, performanceModel, new TestTimelineControllerClient());
+    controller.startRecording({}, []).then(() => {
+        InspectorTest.addResult("TimelineControllerClient.recordingStarted");
+    });
 }
 
 </script>

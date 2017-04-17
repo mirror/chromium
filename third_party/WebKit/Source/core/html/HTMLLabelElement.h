@@ -32,36 +32,34 @@ namespace blink {
 class LabelableElement;
 
 class CORE_EXPORT HTMLLabelElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLLabelElement* create(Document&);
-    LabelableElement* control() const;
-    HTMLFormElement* form() const;
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool willRespondToMouseClickEvents() override;
+ public:
+  static HTMLLabelElement* Create(Document&);
+  LabelableElement* control() const;
+  HTMLFormElement* form() const;
 
-private:
-    explicit HTMLLabelElement(Document&);
-    bool isInInteractiveContent(Node*) const;
+  bool WillRespondToMouseClickEvents() override;
 
-    bool isInteractiveContent() const override;
-    void accessKeyAction(bool sendMouseEvents) override;
+ private:
+  explicit HTMLLabelElement(Document&);
+  bool IsInInteractiveContent(Node*) const;
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  bool IsInteractiveContent() const override;
+  void AccessKeyAction(bool send_mouse_events) override;
 
-    // Overridden to update the hover/active state of the corresponding control.
-    void setActive(bool = true) override;
-    void setHovered(bool = true) override;
+  // Overridden to update the hover/active state of the corresponding control.
+  void SetActive(bool = true) override;
+  void SetHovered(bool = true) override;
 
-    // Overridden to either click() or focus() the corresponding control.
-    void defaultEventHandler(Event*) override;
+  // Overridden to either click() or focus() the corresponding control.
+  void DefaultEventHandler(Event*) override;
 
-    void focus(const FocusParams&) override;
+  void focus(const FocusParams&) override;
 
-    bool m_processingClick;
+  bool processing_click_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLLabelElement_h
+#endif  // HTMLLabelElement_h

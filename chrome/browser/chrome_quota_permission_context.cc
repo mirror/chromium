@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/permissions/permission_request.h"
+#include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/grit/generated_resources.h"
@@ -21,17 +22,17 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/theme_resources.h"
 #include "storage/common/quota/quota_types.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
+#include "chrome/browser/android/android_theme_resources.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
 #else
-#include "chrome/browser/permissions/permission_request_manager.h"
+#include "ui/vector_icons/vector_icons.h"
 #endif
 
 namespace {
@@ -55,7 +56,7 @@ class QuotaPermissionRequest : public PermissionRequest {
 
  private:
   // PermissionRequest:
-  int GetIconId() const override;
+  IconId GetIconId() const override;
   base::string16 GetMessageTextFragment() const override;
   GURL GetOrigin() const override;
   void PermissionGranted() override;
@@ -81,9 +82,13 @@ QuotaPermissionRequest::QuotaPermissionRequest(
 
 QuotaPermissionRequest::~QuotaPermissionRequest() {}
 
-int QuotaPermissionRequest::GetIconId() const {
+PermissionRequest::IconId QuotaPermissionRequest::GetIconId() const {
   // TODO(gbillock): get the proper image here
-  return IDR_INFOBAR_WARNING;
+#if defined(OS_ANDROID)
+  return IDR_ANDROID_INFOBAR_WARNING;
+#else
+  return ui::kWarningIcon;
+#endif
 }
 
 base::string16 QuotaPermissionRequest::GetMessageTextFragment() const {
@@ -249,39 +254,40 @@ void ChromeQuotaPermissionContext::RequestQuotaPermission(
     return;
   }
 
-  content::WebContents* web_contents =
-      tab_util::GetWebContentsByID(render_process_id,
-                                   params.render_view_id);
+  content::WebContents* web_contents = tab_util::GetWebContentsByFrameID(
+      render_process_id, params.render_frame_id);
   if (!web_contents) {
     // The tab may have gone away or the request may not be from a tab.
     LOG(WARNING) << "Attempt to request quota tabless renderer: "
-                 << render_process_id << "," << params.render_view_id;
+                 << render_process_id << "," << params.render_frame_id;
     DispatchCallbackOnIOThread(callback, QUOTA_PERMISSION_RESPONSE_CANCELLED);
     return;
   }
 
+  if (PermissionRequestManager::IsEnabled()) {
+    PermissionRequestManager* permission_request_manager =
+        PermissionRequestManager::FromWebContents(web_contents);
+    if (permission_request_manager) {
+      permission_request_manager->AddRequest(
+          new QuotaPermissionRequest(this, params.origin_url, callback));
+      return;
+    }
 #if defined(OS_ANDROID)
-  InfoBarService* infobar_service =
-      InfoBarService::FromWebContents(web_contents);
-  if (infobar_service) {
-    RequestQuotaInfoBarDelegate::Create(
-        infobar_service, this, params.origin_url, params.requested_size,
-        callback);
-    return;
-  }
-#else
-  PermissionRequestManager* permission_request_manager =
-      PermissionRequestManager::FromWebContents(web_contents);
-  if (permission_request_manager) {
-    permission_request_manager->AddRequest(
-        new QuotaPermissionRequest(this, params.origin_url, callback));
-    return;
-  }
+  } else {
+    InfoBarService* infobar_service =
+        InfoBarService::FromWebContents(web_contents);
+    if (infobar_service) {
+      RequestQuotaInfoBarDelegate::Create(infobar_service, this,
+                                          params.origin_url,
+                                          params.requested_size, callback);
+      return;
+    }
 #endif
+  }
 
   // The tab has no UI service for presenting the permissions request.
   LOG(WARNING) << "Attempt to request quota from a background page: "
-               << render_process_id << "," << params.render_view_id;
+               << render_process_id << "," << params.render_frame_id;
   DispatchCallbackOnIOThread(callback, QUOTA_PERMISSION_RESPONSE_CANCELLED);
 }
 

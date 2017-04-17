@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_SPDY_HPACK_OUTPUT_STREAM_H_
-#define NET_SPDY_HPACK_OUTPUT_STREAM_H_
+#ifndef NET_SPDY_HPACK_HPACK_OUTPUT_STREAM_H_
+#define NET_SPDY_HPACK_HPACK_OUTPUT_STREAM_H_
 
 #include <stddef.h>
 #include <stdint.h>
 
 #include <map>
-#include <string>
 
 #include "base/macros.h"
-#include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
 #include "net/spdy/hpack/hpack_constants.h"
+#include "net/spdy/platform/api/spdy_string.h"
+#include "net/spdy/platform/api/spdy_string_piece.h"
 
 // All section references below are to
 // http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-08
@@ -25,7 +25,7 @@ namespace net {
 // header fields.
 class NET_EXPORT_PRIVATE HpackOutputStream {
  public:
-  explicit HpackOutputStream();
+  HpackOutputStream();
   ~HpackOutputStream();
 
   // Appends the lower |bit_size| bits of |bits| to the internal buffer.
@@ -38,7 +38,7 @@ class NET_EXPORT_PRIVATE HpackOutputStream {
   void AppendPrefix(HpackPrefix prefix);
 
   // Directly appends |buffer|.
-  void AppendBytes(base::StringPiece buffer);
+  void AppendBytes(SpdyStringPiece buffer);
 
   // Appends the given integer using the representation described in
   // 6.1. If the internal buffer ends on a byte boundary, the prefix
@@ -49,15 +49,25 @@ class NET_EXPORT_PRIVATE HpackOutputStream {
   // boundary after this function is called.
   void AppendUint32(uint32_t I);
 
-  // Swaps the interal buffer with |output|.
-  void TakeString(std::string* output);
+  // Swaps the internal buffer with |output|, then resets state.
+  void TakeString(SpdyString* output);
+
+  // Gives up to |max_size| bytes of the internal buffer to |output|. Resets
+  // internal state with the overflow.
+  void BoundedTakeString(size_t max_size, SpdyString* output);
+
+  // Size in bytes of stream's internal buffer.
+  size_t size() const { return buffer_.size(); }
+
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
 
  private:
   // The internal bit buffer.
-  std::string buffer_;
+  SpdyString buffer_;
 
   // If 0, the buffer ends on a byte boundary. If non-zero, the buffer
-  // ends on the most significant nth bit. Guaranteed to be < 8.
+  // ends on the nth most significant bit. Guaranteed to be < 8.
   size_t bit_offset_;
 
   DISALLOW_COPY_AND_ASSIGN(HpackOutputStream);
@@ -65,4 +75,4 @@ class NET_EXPORT_PRIVATE HpackOutputStream {
 
 }  // namespace net
 
-#endif  // NET_SPDY_HPACK_OUTPUT_STREAM_H_
+#endif  // NET_SPDY_HPACK_HPACK_OUTPUT_STREAM_H_

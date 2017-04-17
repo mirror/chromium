@@ -18,6 +18,9 @@ Polymer({
      */
     type: String,
 
+    /** Label for a11y purposes. */
+    label: String,
+
     /**
      * The devices available to pick from.
      * @type {Array<MediaPickerEntry>}
@@ -44,14 +47,20 @@ Polymer({
     this.$.picker.hidden = devices.length == 0;
     if (devices.length > 0) {
       this.devices = devices;
-      this.$.mediaPicker.selected = defaultDevice;
+
+      // Wait for <select> to be populated.
+      this.async(function() {
+        this.$.mediaPicker.value = defaultDevice;
+      }.bind(this));
     }
   },
 
   /**
    * A handler for when an item is selected in the media picker.
+   * @private
    */
-  onMediaPickerActivate_: function(event) {
-    this.browserProxy.setDefaultCaptureDevice(this.type, event.detail.selected);
+  onChange_: function() {
+    this.browserProxy.setDefaultCaptureDevice(
+        this.type, this.$.mediaPicker.value);
   },
 });

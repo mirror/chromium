@@ -18,6 +18,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/process_type.h"
+#include "ppapi/features/features.h"
 
 MemoryGrowthTracker::MemoryGrowthTracker() {
 }
@@ -58,21 +59,22 @@ bool MemoryGrowthTracker::UpdateSample(base::ProcessId pid,
 MetricsMemoryDetails::MetricsMemoryDetails(
     const base::Closure& callback,
     MemoryGrowthTracker* memory_growth_tracker)
-    : callback_(callback), memory_growth_tracker_(memory_growth_tracker) {
-  memory_growth_tracker_ = memory_growth_tracker;
-}
+    : callback_(callback),
+      memory_growth_tracker_(memory_growth_tracker),
+      generate_histograms_(true) {}
 
 MetricsMemoryDetails::~MetricsMemoryDetails() {
 }
 
 void MetricsMemoryDetails::OnDetailsAvailable() {
-  UpdateHistograms();
+  if (generate_histograms_)
+    UpdateHistograms();
+  AnalyzeMemoryGrowth();
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback_);
 }
 
 void MetricsMemoryDetails::UpdateHistograms() {
   // Reports a set of memory metrics to UMA.
-  // Memory is measured in KB.
 
   const ProcessData& browser = *ChromeBrowser();
   size_t aggregate_memory = 0;
@@ -86,21 +88,48 @@ void MetricsMemoryDetails::UpdateHistograms() {
   int process_limit = content::RenderProcessHost::GetMaxRendererProcessCount();
   for (size_t index = 0; index < browser.processes.size(); index++) {
     int sample = static_cast<int>(browser.processes[index].working_set.priv);
+    size_t committed = browser.processes[index].committed.priv +
+                       browser.processes[index].committed.mapped +
+                       browser.processes[index].committed.image;
+    int num_open_fds = browser.processes[index].num_open_fds;
+    int open_fds_soft_limit = browser.processes[index].open_fds_soft_limit;
     aggregate_memory += sample;
     switch (browser.processes[index].process_type) {
       case content::PROCESS_TYPE_BROWSER:
         UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Browser.Large2", sample / 1024);
+        UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Browser.Committed",
+                                      committed / 1024);
+        if (num_open_fds != -1 && open_fds_soft_limit != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.Browser.OpenFDs", num_open_fds);
+          UMA_HISTOGRAM_COUNTS_10000("Memory.Browser.OpenFDsSoftLimit",
+                                     open_fds_soft_limit);
+        }
         continue;
       case content::PROCESS_TYPE_RENDERER: {
+        UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.RendererAll", sample / 1024);
+        UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.RendererAll.Committed",
+                                      committed / 1024);
+        if (num_open_fds != -1 && open_fds_soft_limit != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.RendererAll.OpenFDs",
+                                     num_open_fds);
+          UMA_HISTOGRAM_COUNTS_10000("Memory.RendererAll.OpenFDsSoftLimit",
+                                     open_fds_soft_limit);
+        }
         ProcessMemoryInformation::RendererProcessType renderer_type =
             browser.processes[index].renderer_type;
         switch (renderer_type) {
           case ProcessMemoryInformation::RENDERER_EXTENSION:
             UMA_HISTOGRAM_MEMORY_KB("Memory.Extension", sample);
+            if (num_open_fds != -1) {
+              UMA_HISTOGRAM_COUNTS_10000("Memory.Extension.OpenFDs",
+                                         num_open_fds);
+            }
             extension_count++;
             continue;
           case ProcessMemoryInformation::RENDERER_CHROME:
             UMA_HISTOGRAM_MEMORY_KB("Memory.Chrome", sample);
+            if (num_open_fds != -1)
+              UMA_HISTOGRAM_COUNTS_10000("Memory.Chrome.OpenFDs", num_open_fds);
             chrome_count++;
             continue;
           case ProcessMemoryInformation::RENDERER_UNKNOWN:
@@ -111,14 +140,11 @@ void MetricsMemoryDetails::UpdateHistograms() {
             // TODO(erikkay): Should we bother splitting out the other subtypes?
             UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Renderer.Large2",
                                           sample / 1024);
-            int diff;
-            if (memory_growth_tracker_ &&
-                memory_growth_tracker_->UpdateSample(
-                    browser.processes[index].pid, sample, &diff)) {
-              if (diff < 0)
-                UMA_HISTOGRAM_MEMORY_KB("Memory.RendererShrinkIn30Min", -diff);
-              else
-                UMA_HISTOGRAM_MEMORY_KB("Memory.RendererGrowthIn30Min", diff);
+            UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Renderer.Committed",
+                                          committed / 1024);
+            if (num_open_fds != -1) {
+              UMA_HISTOGRAM_COUNTS_10000("Memory.Renderer.OpenFDs",
+                                         num_open_fds);
             }
             renderer_count++;
             continue;
@@ -126,21 +152,34 @@ void MetricsMemoryDetails::UpdateHistograms() {
       }
       case content::PROCESS_TYPE_UTILITY:
         UMA_HISTOGRAM_MEMORY_KB("Memory.Utility", sample);
+        if (num_open_fds != -1)
+          UMA_HISTOGRAM_COUNTS_10000("Memory.Utility.OpenFDs", num_open_fds);
         other_count++;
         continue;
       case content::PROCESS_TYPE_ZYGOTE:
         UMA_HISTOGRAM_MEMORY_KB("Memory.Zygote", sample);
+        if (num_open_fds != -1)
+          UMA_HISTOGRAM_COUNTS_10000("Memory.Zygote.OpenFDs", num_open_fds);
         other_count++;
         continue;
       case content::PROCESS_TYPE_SANDBOX_HELPER:
         UMA_HISTOGRAM_MEMORY_KB("Memory.SandboxHelper", sample);
+        if (num_open_fds != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.SandboxHelper.OpenFDs",
+                                     num_open_fds);
+        }
         other_count++;
         continue;
       case content::PROCESS_TYPE_GPU:
         UMA_HISTOGRAM_MEMORY_KB("Memory.Gpu", sample);
+        if (num_open_fds != -1 && open_fds_soft_limit != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.Gpu.OpenFDs", num_open_fds);
+          UMA_HISTOGRAM_COUNTS_10000("Memory.Gpu.OpenFDsSoftLimit",
+                                     open_fds_soft_limit);
+        }
         other_count++;
         continue;
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
       case content::PROCESS_TYPE_PPAPI_PLUGIN: {
         const std::vector<base::string16>& titles =
             browser.processes[index].titles;
@@ -149,20 +188,36 @@ void MetricsMemoryDetails::UpdateHistograms() {
           UMA_HISTOGRAM_MEMORY_KB("Memory.PepperFlashPlugin", sample);
         }
         UMA_HISTOGRAM_MEMORY_KB("Memory.PepperPlugin", sample);
+        if (num_open_fds != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.PepperPlugin.OpenFDs",
+                                     num_open_fds);
+        }
         pepper_plugin_count++;
         continue;
       }
       case content::PROCESS_TYPE_PPAPI_BROKER:
         UMA_HISTOGRAM_MEMORY_KB("Memory.PepperPluginBroker", sample);
+        if (num_open_fds != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.PepperPluginBroker.OpenFDs",
+                                     num_open_fds);
+        }
         pepper_plugin_broker_count++;
         continue;
 #endif
       case PROCESS_TYPE_NACL_LOADER:
         UMA_HISTOGRAM_MEMORY_KB("Memory.NativeClient", sample);
+        if (num_open_fds != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.NativeClient.OpenFDs",
+                                     num_open_fds);
+        }
         other_count++;
         continue;
       case PROCESS_TYPE_NACL_BROKER:
         UMA_HISTOGRAM_MEMORY_KB("Memory.NativeClientBroker", sample);
+        if (num_open_fds != -1) {
+          UMA_HISTOGRAM_COUNTS_10000("Memory.NativeClientBroker.OpenFDs",
+                                     num_open_fds);
+        }
         other_count++;
         continue;
       default:
@@ -193,9 +248,6 @@ void MetricsMemoryDetails::UpdateHistograms() {
   // TODO(viettrungluu): Do we want separate counts for the other
   // (platform-specific) process types?
 
-  // TODO(rkaplow): Remove once we've verified Memory.Total2 is ok.
-  int total_sample_old = static_cast<int>(aggregate_memory / 1000);
-  UMA_HISTOGRAM_MEMORY_MB("Memory.Total", total_sample_old);
   int total_sample = static_cast<int>(aggregate_memory / 1024);
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Total2", total_sample);
 
@@ -305,3 +357,22 @@ void MetricsMemoryDetails::UpdateSwapHistograms() {
   }
 }
 #endif  // defined(OS_CHROMEOS)
+
+void MetricsMemoryDetails::AnalyzeMemoryGrowth() {
+  for (const auto& process_entry : ChromeBrowser()->processes) {
+    int sample = static_cast<int>(process_entry.working_set.priv);
+    int diff;
+
+    // UpdateSample changes state of |memory_growth_tracker_| and it should be
+    // called even if |generate_histograms_| is false.
+    if (memory_growth_tracker_ &&
+        memory_growth_tracker_->UpdateSample(process_entry.pid, sample,
+                                             &diff) &&
+        generate_histograms_) {
+      if (diff < 0)
+        UMA_HISTOGRAM_MEMORY_KB("Memory.RendererShrinkIn30Min", -diff);
+      else
+        UMA_HISTOGRAM_MEMORY_KB("Memory.RendererGrowthIn30Min", diff);
+    }
+  }
+}

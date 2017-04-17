@@ -1,8 +1,10 @@
 /*
  * Copyright (C) 2003 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2008, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2008, 2009, 2010 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2008 Eric Seidel <eric@webkit.org>
- * Copyright (C) 2009 - 2010  Torch Mobile (Beijing) Co. Ltd. All rights reserved.
+ * Copyright (C) 2009 - 2010  Torch Mobile (Beijing) Co. Ltd. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,19 +25,22 @@
 #ifndef CSSMarkup_h
 #define CSSMarkup_h
 
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 // Helper functions for converting from CSSValues to text.
 
 namespace blink {
 
-// Common serializing methods. See: http://dev.w3.org/csswg/cssom/#common-serializing-idioms
-void serializeIdentifier(const String& identifier, StringBuilder& appendTo, bool skipStartChecks = false);
-void serializeString(const String&, StringBuilder& appendTo);
-String serializeString(const String&);
-String serializeURI(const String&);
-String serializeFontFamily(const String&);
+// Common serializing methods. See:
+// http://dev.w3.org/csswg/cssom/#common-serializing-idioms
+void SerializeIdentifier(const String& identifier,
+                         StringBuilder& append_to,
+                         bool skip_start_checks = false);
+void SerializeString(const String&, StringBuilder& append_to);
+String SerializeString(const String&);
+String SerializeURI(const String&);
+String SerializeFontFamily(const String&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSMarkup_h
+#endif  // CSSMarkup_h

@@ -31,11 +31,11 @@
 #include "core/editing/EphemeralRange.h"
 #include "platform/Timer.h"
 #include "platform/text/TextChecking.h"
-#include "wtf/Deque.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -43,100 +43,95 @@ class LocalFrame;
 class SpellCheckRequester;
 class TextCheckerClient;
 
+// TODO(xiaochengh): Move this class to dedicated files.
 class SpellCheckRequest final : public TextCheckingRequest {
-public:
-    static SpellCheckRequest* create(TextCheckingTypeMask, TextCheckingProcessType, const EphemeralRange& checkingRange, const EphemeralRange& paragraphRange, int requestNumber = 0);
+ public:
+  static SpellCheckRequest* Create(const EphemeralRange& checking_range,
+                                   int request_number);
 
-    ~SpellCheckRequest() override;
-    void dispose();
+  ~SpellCheckRequest() override;
+  void Dispose();
 
-    Range* checkingRange() const { return m_checkingRange; }
-    Range* paragraphRange() const { return m_paragraphRange; }
-    Element* rootEditableElement() const { return m_rootEditableElement; }
+  Range* CheckingRange() const { return checking_range_; }
+  Element* RootEditableElement() const { return root_editable_element_; }
 
-    void setCheckerAndSequence(SpellCheckRequester*, int sequence);
+  void SetCheckerAndSequence(SpellCheckRequester*, int sequence);
 
-    const TextCheckingRequestData& data() const override;
-    bool isValid() const;
-    void didSucceed(const Vector<TextCheckingResult>&) override;
-    void didCancel() override;
+  const TextCheckingRequestData& Data() const override;
+  bool IsValid() const;
+  void DidSucceed(const Vector<TextCheckingResult>&) override;
+  void DidCancel() override;
 
-    int requestNumber() const { return m_requestNumber; }
+  int RequestNumber() const { return request_number_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    SpellCheckRequest(Range* checkingRange, Range* paragraphRange, const String&, TextCheckingTypeMask, TextCheckingProcessType, const Vector<uint32_t>& documentMarkersInRange, const Vector<unsigned>& documentMarkerOffsets, int requestNumber);
+ private:
+  SpellCheckRequest(Range* checking_range, const String&, int request_number);
 
-    Member<SpellCheckRequester> m_requester;
-    Member<Range> m_checkingRange;
-    Member<Range> m_paragraphRange;
-    Member<Element> m_rootEditableElement;
-    TextCheckingRequestData m_requestData;
-    int m_requestNumber;
+  Member<SpellCheckRequester> requester_;
+  Member<Range> checking_range_;
+  Member<Element> root_editable_element_;
+  TextCheckingRequestData request_data_;
+  int request_number_;
 };
 
-class SpellCheckRequester final : public GarbageCollectedFinalized<SpellCheckRequester> {
-    WTF_MAKE_NONCOPYABLE(SpellCheckRequester);
-public:
-    static SpellCheckRequester* create(LocalFrame& frame)
-    {
-        return new SpellCheckRequester(frame);
-    }
+class SpellCheckRequester final
+    : public GarbageCollectedFinalized<SpellCheckRequester> {
+  WTF_MAKE_NONCOPYABLE(SpellCheckRequester);
 
-    ~SpellCheckRequester();
-    DECLARE_TRACE();
+ public:
+  static SpellCheckRequester* Create(LocalFrame& frame) {
+    return new SpellCheckRequester(frame);
+  }
 
-    void requestCheckingFor(SpellCheckRequest*);
-    void cancelCheck();
+  ~SpellCheckRequester();
+  DECLARE_TRACE();
 
-    int lastRequestSequence() const
-    {
-        return m_lastRequestSequence;
-    }
+  void RequestCheckingFor(const EphemeralRange&);
+  void RequestCheckingFor(const EphemeralRange&, int request_num);
+  void CancelCheck();
 
-    int lastProcessedSequence() const
-    {
-        return m_lastProcessedSequence;
-    }
+  int LastRequestSequence() const { return last_request_sequence_; }
 
-    // Exposed for leak detector only, see comment for corresponding
-    // SpellChecker method.
-    void prepareForLeakDetection();
+  int LastProcessedSequence() const { return last_processed_sequence_; }
 
-private:
-    friend class SpellCheckRequest;
+  // Exposed for leak detector only, see comment for corresponding
+  // SpellChecker method.
+  void PrepareForLeakDetection();
 
-    explicit SpellCheckRequester(LocalFrame&);
+ private:
+  friend class SpellCheckRequest;
 
-    TextCheckerClient& client() const;
-    void timerFiredToProcessQueuedRequest(Timer<SpellCheckRequester>*);
-    void invokeRequest(SpellCheckRequest*);
-    void enqueueRequest(SpellCheckRequest*);
-    void didCheckSucceed(int sequence, const Vector<TextCheckingResult>&);
-    void didCheckCancel(int sequence);
-    void didCheck(int sequence, const Vector<TextCheckingResult>&);
+  explicit SpellCheckRequester(LocalFrame&);
 
-    void clearProcessingRequest();
+  TextCheckerClient& Client() const;
+  void TimerFiredToProcessQueuedRequest(TimerBase*);
+  void InvokeRequest(SpellCheckRequest*);
+  void EnqueueRequest(SpellCheckRequest*);
+  void DidCheckSucceed(int sequence, const Vector<TextCheckingResult>&);
+  void DidCheckCancel(int sequence);
+  void DidCheck(int sequence, const Vector<TextCheckingResult>&);
 
-    Member<LocalFrame> m_frame;
-    LocalFrame& frame() const
-    {
-        DCHECK(m_frame);
-        return *m_frame;
-    }
+  void ClearProcessingRequest();
 
-    int m_lastRequestSequence;
-    int m_lastProcessedSequence;
+  Member<LocalFrame> frame_;
+  LocalFrame& GetFrame() const {
+    DCHECK(frame_);
+    return *frame_;
+  }
 
-    Timer<SpellCheckRequester> m_timerToProcessQueuedRequest;
+  int last_request_sequence_;
+  int last_processed_sequence_;
 
-    Member<SpellCheckRequest> m_processingRequest;
+  TaskRunnerTimer<SpellCheckRequester> timer_to_process_queued_request_;
 
-    typedef HeapDeque<Member<SpellCheckRequest>> RequestQueue;
-    RequestQueue m_requestQueue;
+  Member<SpellCheckRequest> processing_request_;
+
+  typedef HeapDeque<Member<SpellCheckRequest>> RequestQueue;
+  RequestQueue request_queue_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SpellCheckRequester_h
+#endif  // SpellCheckRequester_h

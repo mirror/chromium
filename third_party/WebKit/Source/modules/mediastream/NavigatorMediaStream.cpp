@@ -17,7 +17,8 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *  USA
  */
 
 #include "modules/mediastream/NavigatorMediaStream.h"
@@ -40,36 +41,45 @@
 
 namespace blink {
 
-void NavigatorMediaStream::getUserMedia(Navigator& navigator, const MediaStreamConstraints& options, NavigatorUserMediaSuccessCallback* successCallback, NavigatorUserMediaErrorCallback* errorCallback, ExceptionState& exceptionState)
-{
-    if (!successCallback)
-        return;
+void NavigatorMediaStream::getUserMedia(
+    Navigator& navigator,
+    const MediaStreamConstraints& options,
+    NavigatorUserMediaSuccessCallback* success_callback,
+    NavigatorUserMediaErrorCallback* error_callback,
+    ExceptionState& exception_state) {
+  if (!success_callback)
+    return;
 
-    UserMediaController* userMedia = UserMediaController::from(navigator.frame());
-    if (!userMedia) {
-        exceptionState.throwDOMException(NotSupportedError, "No user media controller available; is this a detached window?");
-        return;
+  UserMediaController* user_media =
+      UserMediaController::From(navigator.GetFrame());
+  if (!user_media) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        "No user media controller available; is this a detached window?");
+    return;
+  }
+
+  MediaErrorState error_state;
+  UserMediaRequest* request = UserMediaRequest::Create(
+      navigator.GetFrame()->GetDocument(), user_media, options,
+      success_callback, error_callback, error_state);
+  if (!request) {
+    DCHECK(error_state.HadException());
+    if (error_state.CanGenerateException()) {
+      error_state.RaiseException(exception_state);
+    } else {
+      error_callback->handleEvent(error_state.CreateError());
     }
+    return;
+  }
 
-    MediaErrorState errorState;
-    UserMediaRequest* request = UserMediaRequest::create(navigator.frame()->document(), userMedia, options, successCallback, errorCallback, errorState);
-    if (!request) {
-        DCHECK(errorState.hadException());
-        if (errorState.canGenerateException()) {
-            errorState.raiseException(exceptionState);
-        } else {
-            errorCallback->handleEvent(errorState.createError());
-        }
-        return;
-    }
+  String error_message;
+  if (!request->IsSecureContextUse(error_message)) {
+    request->FailPermissionDenied(error_message);
+    return;
+  }
 
-    String errorMessage;
-    if (!request->isSecureContextUse(errorMessage)) {
-        request->failPermissionDenied(errorMessage);
-        return;
-    }
-
-    request->start();
+  request->Start();
 }
 
-} // namespace blink
+}  // namespace blink

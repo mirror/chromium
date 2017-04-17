@@ -15,41 +15,16 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkPoint.h"
 
+#if defined(OS_LINUX)
+#include "base/files/file_descriptor_watcher_posix.h"
+#endif
+
 namespace media {
-
-class MockMouseListener : public UserInputMonitor::MouseEventListener {
- public:
-  MOCK_METHOD1(OnMouseMoved, void(const SkIPoint& position));
-
-  virtual ~MockMouseListener() {}
-};
-
-#if defined(OS_LINUX) || defined(OS_WIN)
-TEST(UserInputMonitorTest, KeyPressCounter) {
-  KeyboardEventCounter counter;
-
-  EXPECT_EQ(0u, counter.GetKeyPressCount());
-
-  counter.OnKeyboardEvent(ui::ET_KEY_PRESSED, ui::VKEY_0);
-  EXPECT_EQ(1u, counter.GetKeyPressCount());
-
-  // Holding the same key without releasing it does not increase the count.
-  counter.OnKeyboardEvent(ui::ET_KEY_PRESSED, ui::VKEY_0);
-  EXPECT_EQ(1u, counter.GetKeyPressCount());
-
-  // Releasing the key does not affect the total count.
-  counter.OnKeyboardEvent(ui::ET_KEY_RELEASED, ui::VKEY_0);
-  EXPECT_EQ(1u, counter.GetKeyPressCount());
-
-  counter.OnKeyboardEvent(ui::ET_KEY_PRESSED, ui::VKEY_0);
-  counter.OnKeyboardEvent(ui::ET_KEY_RELEASED, ui::VKEY_0);
-  EXPECT_EQ(2u, counter.GetKeyPressCount());
-}
-#endif  // defined(OS_LINUX) || defined(OS_WIN)
 
 TEST(UserInputMonitorTest, CreatePlatformSpecific) {
 #if defined(OS_LINUX)
   base::MessageLoopForIO message_loop;
+  base::FileDescriptorWatcher file_descriptor_watcher(&message_loop);
 #else
   base::MessageLoopForUI message_loop;
 #endif  // defined(OS_LINUX)
@@ -64,11 +39,6 @@ TEST(UserInputMonitorTest, CreatePlatformSpecific) {
   MockMouseListener listener;
   // Ignore any callbacks.
   EXPECT_CALL(listener, OnMouseMoved(testing::_)).Times(testing::AnyNumber());
-
-#if !defined(OS_MACOSX)
-  monitor->AddMouseListener(&listener);
-  monitor->RemoveMouseListener(&listener);
-#endif  // !define(OS_MACOSX)
 
   monitor->EnableKeyPressMonitoring();
   monitor->DisableKeyPressMonitoring();

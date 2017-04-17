@@ -11,10 +11,6 @@
 
 #include "ui/accessibility/ax_node_data.h"
 
-namespace gfx {
-class Rect;
-}
-
 namespace ui {
 
 // One node in an AXTree.
@@ -37,6 +33,9 @@ class AX_EXPORT AXNode {
   // Get the child at the given index.
   AXNode* ChildAtIndex(int index) const { return children_[index]; }
 
+  // Returns true if the node has any of the text related roles.
+  bool IsTextNode() const;
+
   // Set the node's accessibility data. This may be done during initial
   // initialization or later when the node data changes.
   void SetData(const AXNodeData& src);
@@ -44,7 +43,13 @@ class AX_EXPORT AXNode {
   // Update this node's location. This is separate from SetData just because
   // changing only the location is common and should be more efficient than
   // re-copying all of the data.
-  void SetLocation(const gfx::RectF& new_location);
+  //
+  // The node's location is stored as a relative bounding box, the ID of
+  // the element it's relative to, and an optional transformation matrix.
+  // See ax_node_data.h for details.
+  void SetLocation(int offset_container_id,
+                   const gfx::RectF& location,
+                   gfx::Transform* transform);
 
   // Set the index in parent, for example if siblings were inserted or deleted.
   void SetIndexInParent(int index_in_parent);
@@ -63,7 +68,16 @@ class AX_EXPORT AXNode {
   // Return true if this object is equal to or a descendant of |ancestor|.
   bool IsDescendantOf(AXNode* ancestor);
 
+  // Gets the text offsets where new lines start either from the node's data or
+  // by computing them and caching the result.
+  std::vector<int> GetOrComputeLineStartOffsets();
+
  private:
+  // Computes the text offset where each line starts by traversing all child
+  // leaf nodes.
+  void ComputeLineStartOffsets(std::vector<int>* line_offsets,
+                               int* start_offset) const;
+
   int index_in_parent_;
   AXNode* parent_;
   std::vector<AXNode*> children_;

@@ -6,17 +6,17 @@
 
 #include <utility>
 
-#include "ash/common/display/display_info.h"
-#include "ash/common/system/system_notifier.h"
-#include "ash/display/display_manager.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
+#include "ash/system/system_notifier.h"
 #include "base/strings/utf_string_conversions.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/time_format.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/display/display.h"
+#include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
@@ -80,7 +80,7 @@ void ResolutionChangeNotificationDelegate::ButtonClick(int button_index) {
   if (has_timeout_ && button_index == 0)
     controller_->AcceptResolutionChange(true);
   else
-    controller_->RevertResolutionChange();
+    controller_->RevertResolutionChange(false /* display_was_removed */);
 }
 
 }  // namespace
@@ -93,24 +93,25 @@ const char ResolutionNotificationController::kNotificationId[] =
     "chrome://settings/display/resolution";
 
 struct ResolutionNotificationController::ResolutionChangeInfo {
-  ResolutionChangeInfo(int64_t display_id,
-                       const DisplayMode& old_resolution,
-                       const DisplayMode& new_resolution,
-                       const base::Closure& accept_callback);
+  ResolutionChangeInfo(
+      int64_t display_id,
+      const scoped_refptr<display::ManagedDisplayMode>& old_resolution,
+      const scoped_refptr<display::ManagedDisplayMode>& new_resolution,
+      const base::Closure& accept_callback);
   ~ResolutionChangeInfo();
 
   // The id of the display where the resolution change happens.
   int64_t display_id;
 
   // The resolution before the change.
-  DisplayMode old_resolution;
+  scoped_refptr<display::ManagedDisplayMode> old_resolution;
 
   // The requested resolution. Note that this may be different from
   // |current_resolution| which is the actual resolution set.
-  DisplayMode new_resolution;
+  scoped_refptr<display::ManagedDisplayMode> new_resolution;
 
   // The actual resolution after the change.
-  DisplayMode current_resolution;
+  scoped_refptr<display::ManagedDisplayMode> current_resolution;
 
   // The callback when accept is chosen.
   base::Closure accept_callback;
@@ -129,15 +130,15 @@ struct ResolutionNotificationController::ResolutionChangeInfo {
 
 ResolutionNotificationController::ResolutionChangeInfo::ResolutionChangeInfo(
     int64_t display_id,
-    const DisplayMode& old_resolution,
-    const DisplayMode& new_resolution,
+    const scoped_refptr<display::ManagedDisplayMode>& old_resolution,
+    const scoped_refptr<display::ManagedDisplayMode>& new_resolution,
     const base::Closure& accept_callback)
     : display_id(display_id),
       old_resolution(old_resolution),
       new_resolution(new_resolution),
       accept_callback(accept_callback),
       timeout_count(0) {
-  DisplayManager* display_manager = Shell::GetInstance()->display_manager();
+  display::DisplayManager* display_manager = Shell::Get()->display_manager();
   if (!display::Display::HasInternalDisplay() &&
       display_manager->num_connected_displays() == 1u) {
     timeout_count = kTimeoutInSec;
@@ -145,37 +146,68 @@ ResolutionNotificationController::ResolutionChangeInfo::ResolutionChangeInfo(
 }
 
 ResolutionNotificationController::ResolutionChangeInfo::
-    ~ResolutionChangeInfo() {}
+    ~ResolutionChangeInfo() {
+  old_resolution = nullptr;
+  new_resolution = nullptr;
+  current_resolution = nullptr;
+}
 
 ResolutionNotificationController::ResolutionNotificationController() {
-  Shell::GetInstance()->window_tree_host_manager()->AddObserver(this);
+  Shell::Get()->window_tree_host_manager()->AddObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
 }
 
 ResolutionNotificationController::~ResolutionNotificationController() {
-  Shell::GetInstance()->window_tree_host_manager()->RemoveObserver(this);
+  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
 }
 
-void ResolutionNotificationController::PrepareNotification(
+bool ResolutionNotificationController::PrepareNotificationAndSetDisplayMode(
     int64_t display_id,
-    const DisplayMode& old_resolution,
-    const DisplayMode& new_resolution,
+    const scoped_refptr<display::ManagedDisplayMode>& old_resolution,
+    const scoped_refptr<display::ManagedDisplayMode>& new_resolution,
     const base::Closure& accept_callback) {
-  DCHECK(!display::Display::IsInternalDisplayId(display_id));
+  DCHECK(old_resolution);
+  DCHECK(new_resolution);
+
+  display::DisplayManager* const display_manager =
+      Shell::Get()->display_manager();
+  if (display::Display::IsInternalDisplayId(display_id)) {
+    // We don't show notifications to confirm/revert the resolution change in
+    // the case of an internal display.
+    return display_manager->SetDisplayMode(display_id, new_resolution);
+  }
+
   // If multiple resolution changes are invoked for the same display,
   // the original resolution for the first resolution change has to be used
   // instead of the specified |old_resolution|.
-  DisplayMode original_resolution;
+  scoped_refptr<display::ManagedDisplayMode> original_resolution;
   if (change_info_ && change_info_->display_id == display_id) {
-    DCHECK(change_info_->new_resolution.size == old_resolution.size);
+    DCHECK(change_info_->new_resolution->size() == old_resolution->size());
     original_resolution = change_info_->old_resolution;
+  }
+
+  if (change_info_ && change_info_->display_id != display_id) {
+    // Preparing the notification for a new resolution change of another display
+    // before the previous one was accepted. We decided that it's safer to
+    // revert the previous resolution change since the user didn't explicitly
+    // accept it, and we have no way of knowing for sure that it worked.
+    RevertResolutionChange(false /* display_was_removed */);
   }
 
   change_info_.reset(new ResolutionChangeInfo(display_id, old_resolution,
                                               new_resolution, accept_callback));
-  if (!original_resolution.size.IsEmpty())
+  if (original_resolution && !original_resolution->size().IsEmpty())
     change_info_->old_resolution = original_resolution;
+
+  if (!display_manager->SetDisplayMode(display_id, new_resolution)) {
+    // Discard the prepared notification data since we failed to set the new
+    // resolution.
+    change_info_.reset();
+    return false;
+  }
+
+  return true;
 }
 
 bool ResolutionNotificationController::DoesNotificationTimeout() {
@@ -207,21 +239,23 @@ void ResolutionNotificationController::CreateOrUpdateNotification(
 
   data.should_make_spoken_feedback_for_popup_updates = enable_spoken_feedback;
 
-  const base::string16 display_name = base::UTF8ToUTF16(
-      Shell::GetInstance()->display_manager()->GetDisplayNameForId(
+  const base::string16 display_name =
+      base::UTF8ToUTF16(Shell::Get()->display_manager()->GetDisplayNameForId(
           change_info_->display_id));
   const base::string16 message =
-      (change_info_->new_resolution.size ==
-       change_info_->current_resolution.size)
+      (change_info_->new_resolution->size() ==
+       change_info_->current_resolution->size())
           ? l10n_util::GetStringFUTF16(
                 IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED, display_name,
-                base::UTF8ToUTF16(change_info_->new_resolution.size.ToString()))
+                base::UTF8ToUTF16(
+                    change_info_->new_resolution->size().ToString()))
           : l10n_util::GetStringFUTF16(
                 IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TO_UNSUPPORTED,
                 display_name,
-                base::UTF8ToUTF16(change_info_->new_resolution.size.ToString()),
                 base::UTF8ToUTF16(
-                    change_info_->current_resolution.size.ToString()));
+                    change_info_->new_resolution->size().ToString()),
+                base::UTF8ToUTF16(
+                    change_info_->current_resolution->size().ToString()));
 
   ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
   std::unique_ptr<Notification> notification(new Notification(
@@ -243,7 +277,7 @@ void ResolutionNotificationController::OnTimerTick() {
 
   --change_info_->timeout_count;
   if (change_info_->timeout_count == 0)
-    RevertResolutionChange();
+    RevertResolutionChange(false /* display_was_removed */);
   else
     CreateOrUpdateNotification(false);
 }
@@ -261,16 +295,26 @@ void ResolutionNotificationController::AcceptResolutionChange(
   callback.Run();
 }
 
-void ResolutionNotificationController::RevertResolutionChange() {
+void ResolutionNotificationController::RevertResolutionChange(
+    bool display_was_removed) {
   message_center::MessageCenter::Get()->RemoveNotification(kNotificationId,
                                                            false /* by_user */);
   if (!change_info_)
     return;
   int64_t display_id = change_info_->display_id;
-  DisplayMode old_resolution = change_info_->old_resolution;
+  scoped_refptr<display::ManagedDisplayMode> old_resolution =
+      change_info_->old_resolution;
   change_info_.reset();
-  Shell::GetInstance()->display_manager()->SetDisplayMode(display_id,
-                                                          old_resolution);
+  if (display_was_removed) {
+    // If display was removed then we are inside the stack of
+    // DisplayManager::UpdateDisplaysWith(), and we need to update the selected
+    // mode of this removed display without reentering again into
+    // UpdateDisplaysWith() because this can cause a crash. crbug.com/709722.
+    Shell::Get()->display_manager()->SetSelectedModeForDisplayId(
+        display_id, old_resolution);
+  } else {
+    Shell::Get()->display_manager()->SetDisplayMode(display_id, old_resolution);
+  }
 }
 
 void ResolutionNotificationController::OnDisplayAdded(
@@ -279,7 +323,7 @@ void ResolutionNotificationController::OnDisplayAdded(
 void ResolutionNotificationController::OnDisplayRemoved(
     const display::Display& old_display) {
   if (change_info_ && change_info_->display_id == old_display.id())
-    RevertResolutionChange();
+    RevertResolutionChange(true /* display_was_removed */);
 }
 
 void ResolutionNotificationController::OnDisplayMetricsChanged(
@@ -291,7 +335,7 @@ void ResolutionNotificationController::OnDisplayConfigurationChanged() {
     return;
 
   change_info_->current_resolution =
-      Shell::GetInstance()->display_manager()->GetActiveModeForDisplayId(
+      Shell::Get()->display_manager()->GetActiveModeForDisplayId(
           change_info_->display_id);
   CreateOrUpdateNotification(true);
   if (g_use_timer && change_info_->timeout_count > 0) {

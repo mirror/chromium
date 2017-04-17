@@ -14,7 +14,9 @@
 
 TEST(NotificationBuilderMacTest, TestNotificationNoButtons) {
   base::scoped_nsobject<NotificationBuilder> builder(
-      [[NotificationBuilder alloc] init]);
+      [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                         optionsLabel:@"Options"
+                                        settingsLabel:@"Settings"]);
   [builder setTitle:@"Title"];
   [builder setSubTitle:@"https://www.miguel.com"];
   [builder setContextMessage:@""];
@@ -25,6 +27,7 @@ TEST(NotificationBuilderMacTest, TestNotificationNoButtons) {
   [builder setIncognito:false];
   [builder setNotificationType:
                [NSNumber numberWithInt:NotificationCommon::NON_PERSISTENT]];
+  [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
   EXPECT_EQ("Title", base::SysNSStringToUTF8([notification title]));
@@ -42,7 +45,9 @@ TEST(NotificationBuilderMacTest, TestNotificationNoButtons) {
 
 TEST(NotificationBuilderMacTest, TestNotificationOneButton) {
   base::scoped_nsobject<NotificationBuilder> builder(
-      [[NotificationBuilder alloc] init]);
+      [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                         optionsLabel:@"Options"
+                                        settingsLabel:@"Settings"]);
   [builder setTitle:@"Title"];
   [builder setSubTitle:@"https://www.miguel.com"];
   [builder setContextMessage:@"SubTitle"];
@@ -53,6 +58,7 @@ TEST(NotificationBuilderMacTest, TestNotificationOneButton) {
   [builder
       setNotificationType:[NSNumber
                               numberWithInt:NotificationCommon::PERSISTENT]];
+  [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
 
@@ -76,7 +82,9 @@ TEST(NotificationBuilderMacTest, TestNotificationOneButton) {
 
 TEST(NotificationBuilderMacTest, TestNotificationTwoButtons) {
   base::scoped_nsobject<NotificationBuilder> builder(
-      [[NotificationBuilder alloc] init]);
+      [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                         optionsLabel:@"Options"
+                                        settingsLabel:@"Settings"]);
   [builder setTitle:@"Title"];
   [builder setSubTitle:@"https://www.miguel.com"];
   [builder setContextMessage:@"SubTitle"];
@@ -87,6 +95,7 @@ TEST(NotificationBuilderMacTest, TestNotificationTwoButtons) {
   [builder
       setNotificationType:[NSNumber
                               numberWithInt:NotificationCommon::PERSISTENT]];
+  [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
 
@@ -109,9 +118,60 @@ TEST(NotificationBuilderMacTest, TestNotificationTwoButtons) {
   EXPECT_EQ("Settings", base::SysNSStringToUTF8([buttons objectAtIndex:2]));
 }
 
+TEST(NotificationBuilderMacTest, TestNotificationExtensionNoButtons) {
+  base::scoped_nsobject<NotificationBuilder> builder(
+      [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                         optionsLabel:@"Options"
+                                        settingsLabel:@"Settings"]);
+  [builder setTitle:@"Title"];
+  [builder setSubTitle:@"https://www.miguel.com"];
+  [builder setContextMessage:@"SubTitle"];
+  [builder setNotificationId:@"notificationId"];
+  [builder setProfileId:@"profileId"];
+  [builder setIncognito:false];
+  [builder
+      setNotificationType:[NSNumber
+                              numberWithInt:NotificationCommon::EXTENSION]];
+  [builder setShowSettingsButton:false];
+
+  NSUserNotification* notification = [builder buildUserNotification];
+
+  EXPECT_FALSE(notification.hasActionButton);
+  EXPECT_EQ("Close", base::SysNSStringToUTF8([notification otherButtonTitle]));
+}
+
+TEST(NotificationBuilderMacTest, TestNotificationExtensionButtons) {
+  base::scoped_nsobject<NotificationBuilder> builder(
+      [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                         optionsLabel:@"Options"
+                                        settingsLabel:@"Settings"]);
+  [builder setTitle:@"Title"];
+  [builder setSubTitle:@"https://www.miguel.com"];
+  [builder setContextMessage:@"SubTitle"];
+  [builder setButtons:@"Button1" secondaryButton:@"Button2"];
+  [builder setNotificationId:@"notificationId"];
+  [builder setProfileId:@"profileId"];
+  [builder setIncognito:false];
+  [builder
+      setNotificationType:[NSNumber
+                              numberWithInt:NotificationCommon::EXTENSION]];
+  [builder setShowSettingsButton:false];
+
+  NSUserNotification* notification = [builder buildUserNotification];
+
+  NSArray* buttons = [notification valueForKey:@"_alternateActionButtonTitles"];
+
+  // No settings button
+  ASSERT_EQ(2u, buttons.count);
+  EXPECT_EQ("Button1", base::SysNSStringToUTF8([buttons objectAtIndex:0]));
+  EXPECT_EQ("Button2", base::SysNSStringToUTF8([buttons objectAtIndex:1]));
+}
+
 TEST(NotificationBuilderMacTest, TestUserInfo) {
   base::scoped_nsobject<NotificationBuilder> builder(
-      [[NotificationBuilder alloc] init]);
+      [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                         optionsLabel:@"Options"
+                                        settingsLabel:@"Settings"]);
   [builder setTitle:@"Title"];
   [builder setProfileId:@"Profile1"];
   [builder setOrigin:@"https://www.miguel.com"];
@@ -120,6 +180,7 @@ TEST(NotificationBuilderMacTest, TestUserInfo) {
   [builder
       setNotificationType:[NSNumber
                               numberWithInt:NotificationCommon::PERSISTENT]];
+  [builder setShowSettingsButton:true];
 
   NSUserNotification* notification = [builder buildUserNotification];
   EXPECT_EQ("Title", base::SysNSStringToUTF8([notification title]));
@@ -143,7 +204,9 @@ TEST(NotificationBuilderMacTest, TestBuildDictionary) {
   NSDictionary* notificationData;
   {
     base::scoped_nsobject<NotificationBuilder> sourceBuilder(
-        [[NotificationBuilder alloc] init]);
+        [[NotificationBuilder alloc] initWithCloseLabel:@"Close"
+                                           optionsLabel:@"Options"
+                                          settingsLabel:@"Settings"]);
     [sourceBuilder setTitle:@"Title"];
     [sourceBuilder setSubTitle:@"https://www.miguel.com"];
     [sourceBuilder setContextMessage:@"SubTitle"];
@@ -153,6 +216,7 @@ TEST(NotificationBuilderMacTest, TestBuildDictionary) {
     [sourceBuilder
         setNotificationType:
             [NSNumber numberWithInt:NotificationCommon::NON_PERSISTENT]];
+    [sourceBuilder setShowSettingsButton:true];
 
     notificationData = [sourceBuilder buildDictionary];
   }

@@ -10,59 +10,69 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/AudioProcessingEvent.h"
+#include "modules/webaudio/AudioProcessingEventInit.h"
 
 namespace blink {
 
-AudioProcessingEvent* AudioProcessingEvent::create()
-{
-    return new AudioProcessingEvent;
+AudioProcessingEvent* AudioProcessingEvent::Create() {
+  return new AudioProcessingEvent;
 }
 
-AudioProcessingEvent* AudioProcessingEvent::create(AudioBuffer* inputBuffer, AudioBuffer* outputBuffer, double playbackTime)
-{
-    return new AudioProcessingEvent(inputBuffer, outputBuffer, playbackTime);
+AudioProcessingEvent* AudioProcessingEvent::Create(AudioBuffer* input_buffer,
+                                                   AudioBuffer* output_buffer,
+                                                   double playback_time) {
+  return new AudioProcessingEvent(input_buffer, output_buffer, playback_time);
 }
 
-AudioProcessingEvent::AudioProcessingEvent()
-{
+AudioProcessingEvent* AudioProcessingEvent::Create(
+    const AtomicString& type,
+    const AudioProcessingEventInit& initializer) {
+  return new AudioProcessingEvent(type, initializer);
 }
 
-AudioProcessingEvent::AudioProcessingEvent(AudioBuffer* inputBuffer, AudioBuffer* outputBuffer, double playbackTime)
-    : Event(EventTypeNames::audioprocess, true, false)
-    , m_inputBuffer(inputBuffer)
-    , m_outputBuffer(outputBuffer)
-    , m_playbackTime(playbackTime)
-{
+AudioProcessingEvent::AudioProcessingEvent() {}
+
+AudioProcessingEvent::AudioProcessingEvent(AudioBuffer* input_buffer,
+                                           AudioBuffer* output_buffer,
+                                           double playback_time)
+    : Event(EventTypeNames::audioprocess, true, false),
+      input_buffer_(input_buffer),
+      output_buffer_(output_buffer),
+      playback_time_(playback_time) {}
+
+AudioProcessingEvent::AudioProcessingEvent(
+    const AtomicString& type,
+    const AudioProcessingEventInit& initializer)
+    : Event(type, initializer) {
+  input_buffer_ = initializer.inputBuffer();
+  output_buffer_ = initializer.outputBuffer();
+  playback_time_ = initializer.playbackTime();
 }
 
-AudioProcessingEvent::~AudioProcessingEvent()
-{
+AudioProcessingEvent::~AudioProcessingEvent() {}
+
+const AtomicString& AudioProcessingEvent::InterfaceName() const {
+  return EventNames::AudioProcessingEvent;
 }
 
-const AtomicString& AudioProcessingEvent::interfaceName() const
-{
-    return EventNames::AudioProcessingEvent;
+DEFINE_TRACE(AudioProcessingEvent) {
+  visitor->Trace(input_buffer_);
+  visitor->Trace(output_buffer_);
+  Event::Trace(visitor);
 }
 
-DEFINE_TRACE(AudioProcessingEvent)
-{
-    visitor->trace(m_inputBuffer);
-    visitor->trace(m_outputBuffer);
-    Event::trace(visitor);
-}
-
-} // namespace blink
-
+}  // namespace blink

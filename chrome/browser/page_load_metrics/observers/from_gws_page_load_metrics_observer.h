@@ -27,10 +27,13 @@ extern const char kHistogramFromGWSAbortStopBeforeCommit[];
 extern const char kHistogramFromGWSAbortCloseBeforePaint[];
 extern const char kHistogramFromGWSAbortCloseBeforeInteraction[];
 extern const char kHistogramFromGWSAbortCloseBeforeCommit[];
+extern const char kHistogramFromGWSAbortNewNavigationBeforeCommit[];
 extern const char kHistogramFromGWSAbortNewNavigationBeforePaint[];
 extern const char kHistogramFromGWSAbortNewNavigationBeforeInteraction[];
 extern const char kHistogramFromGWSAbortReloadBeforeInteraction[];
-extern const char kHistogramFromGWSAbortUnknownNavigationBeforeCommit[];
+extern const char kHistogramFromGWSForegroundDuration[];
+extern const char kHistogramFromGWSForegroundDurationAfterPaint[];
+extern const char kHistogramFromGWSForegroundDurationNoCommit[];
 
 }  // namespace internal
 
@@ -85,6 +88,9 @@ class FromGWSPageLoadMetricsLogger {
   void OnParseStop(const page_load_metrics::PageLoadTiming& timing,
                    const page_load_metrics::PageLoadExtraInfo& extra_info);
   void OnUserInput(const blink::WebInputEvent& event);
+  void FlushMetricsOnAppEnterBackground(
+      const page_load_metrics::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& extra_info);
 
   // The methods below are public only for testing.
   static bool IsGoogleSearchHostname(base::StringPiece host);
@@ -139,10 +145,14 @@ class FromGWSPageLoadMetricsObserver
   FromGWSPageLoadMetricsObserver();
 
   // page_load_metrics::PageLoadMetricsObserver implementation:
-  void OnStart(content::NavigationHandle* navigation_handle,
-               const GURL& currently_committed_url,
-               bool started_in_foreground) override;
-  void OnCommit(content::NavigationHandle* navigation_handle) override;
+  ObservePolicy OnStart(content::NavigationHandle* navigation_handle,
+                         const GURL& currently_committed_url,
+                         bool started_in_foreground) override;
+  ObservePolicy OnCommit(content::NavigationHandle* navigation_handle) override;
+
+  ObservePolicy FlushMetricsOnAppEnterBackground(
+      const page_load_metrics::PageLoadTiming& timing,
+      const page_load_metrics::PageLoadExtraInfo& extra_info) override;
 
   void OnDomContentLoadedEventStart(
       const page_load_metrics::PageLoadTiming& timing,

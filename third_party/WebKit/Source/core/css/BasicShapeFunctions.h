@@ -32,20 +32,21 @@
 
 #include "core/style/BasicShapes.h"
 #include "platform/heap/Handle.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
-class CSSBasicShapeValue;
-class CSSBasicShape;
 class CSSValue;
 class FloatPoint;
 class StyleResolverState;
 class ComputedStyle;
 
-CSSValue* valueForBasicShape(const ComputedStyle&, const BasicShape*);
-PassRefPtr<BasicShape> basicShapeForValue(const StyleResolverState&, const CSSValue&);
-FloatPoint floatPointForCenterCoordinate(const BasicShapeCenterCoordinate&, const BasicShapeCenterCoordinate&, FloatSize);
+CSSValue* ValueForBasicShape(const ComputedStyle&, const BasicShape*);
+PassRefPtr<BasicShape> BasicShapeForValue(const StyleResolverState&,
+                                          const CSSValue&);
+FloatPoint FloatPointForCenterCoordinate(const BasicShapeCenterCoordinate&,
+                                         const BasicShapeCenterCoordinate&,
+                                         FloatSize);
 
-} // namespace blink
+}  // namespace blink
 #endif

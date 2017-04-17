@@ -33,7 +33,7 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
             static_cast<aura::Window*>(nullptr), dst_root_);
       }
       ignore_result(
-          dst_root_->GetHost()->event_processor()->OnEventFromSource(event));
+          dst_root_->GetHost()->event_sink()->OnEventFromSource(event));
       return nullptr;
     } else {
       NOTREACHED() << "event type:" << event->type();
@@ -71,16 +71,16 @@ void AshWindowTreeHostUnified::RegisterMirroringHost(
     AshWindowTreeHost* mirroring_ash_host) {
   aura::Window* src_root = mirroring_ash_host->AsWindowTreeHost()->window();
   src_root->SetEventTargeter(
-      base::WrapUnique(new UnifiedEventTargeter(src_root, window())));
+      base::MakeUnique<UnifiedEventTargeter>(src_root, window()));
   DCHECK(std::find(mirroring_hosts_.begin(), mirroring_hosts_.end(),
                    mirroring_ash_host) == mirroring_hosts_.end());
   mirroring_hosts_.push_back(mirroring_ash_host);
   mirroring_ash_host->AsWindowTreeHost()->window()->AddObserver(this);
 }
 
-void AshWindowTreeHostUnified::SetBounds(const gfx::Rect& bounds) {
-  AshWindowTreeHostPlatform::SetBounds(bounds);
-  OnHostResized(bounds.size());
+void AshWindowTreeHostUnified::SetBoundsInPixels(const gfx::Rect& bounds) {
+  AshWindowTreeHostPlatform::SetBoundsInPixels(bounds);
+  OnHostResizedInPixels(bounds.size());
 }
 
 void AshWindowTreeHostUnified::SetCursorNative(gfx::NativeCursor cursor) {
@@ -95,7 +95,7 @@ void AshWindowTreeHostUnified::OnCursorVisibilityChangedNative(bool show) {
 
 void AshWindowTreeHostUnified::OnBoundsChanged(const gfx::Rect& bounds) {
   if (platform_window())
-    OnHostResized(bounds.size());
+    OnHostResizedInPixels(bounds.size());
 }
 
 void AshWindowTreeHostUnified::OnWindowDestroying(aura::Window* window) {

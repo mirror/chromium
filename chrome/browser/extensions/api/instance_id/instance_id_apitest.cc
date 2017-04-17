@@ -10,10 +10,10 @@
 #include "chrome/browser/extensions/api/instance_id/instance_id_api.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_gcm_app_handler.h"
+#include "chrome/browser/gcm/fake_gcm_profile_service.h"
+#include "chrome/browser/gcm/gcm_profile_service_factory.h"
+#include "chrome/browser/gcm/instance_id/instance_id_profile_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/services/gcm/fake_gcm_profile_service.h"
-#include "chrome/browser/services/gcm/gcm_profile_service_factory.h"
-#include "chrome/browser/services/gcm/instance_id/instance_id_profile_service_factory.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/gcm_driver/instance_id/fake_gcm_driver_for_instance_id.h"
 #include "components/version_info/version_info.h"
@@ -22,18 +22,6 @@
 using extensions::ResultCatcher;
 
 namespace extensions {
-
-namespace {
-
-std::unique_ptr<KeyedService> BuildFakeGCMProfileService(
-    content::BrowserContext* context) {
-  std::unique_ptr<gcm::FakeGCMProfileService> service(
-      new gcm::FakeGCMProfileService(Profile::FromBrowserContext(context)));
-  service->SetDriverForTesting(new instance_id::FakeGCMDriverForInstanceID());
-  return std::move(service);
-}
-
-}  // namespace
 
 class InstanceIDApiTest : public ExtensionApiTest {
  public:
@@ -51,7 +39,7 @@ InstanceIDApiTest::InstanceIDApiTest() {
 
 void InstanceIDApiTest::SetUpOnMainThread() {
   gcm::GCMProfileServiceFactory::GetInstance()->SetTestingFactory(
-      browser()->profile(), &BuildFakeGCMProfileService);
+      browser()->profile(), &gcm::FakeGCMProfileService::Build);
 
   ExtensionApiTest::SetUpOnMainThread();
 }

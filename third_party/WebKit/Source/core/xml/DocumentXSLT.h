@@ -7,48 +7,50 @@
 
 #include "core/dom/Document.h"
 #include "platform/heap/Handle.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class Document;
 class ProcessingInstruction;
 
-class DocumentXSLT final : public GarbageCollected<DocumentXSLT>, public Supplement<Document> {
-    WTF_MAKE_NONCOPYABLE(DocumentXSLT);
-    USING_GARBAGE_COLLECTED_MIXIN(DocumentXSLT);
-public:
-    Document* transformSourceDocument()
-    {
-        return m_transformSourceDocument.get();
-    }
+class DocumentXSLT final : public GarbageCollected<DocumentXSLT>,
+                           public Supplement<Document> {
+  WTF_MAKE_NONCOPYABLE(DocumentXSLT);
+  USING_GARBAGE_COLLECTED_MIXIN(DocumentXSLT);
 
-    void setTransformSourceDocument(Document* document)
-    {
-        ASSERT(document);
-        m_transformSourceDocument = document;
-    }
+ public:
+  Document* TransformSourceDocument() {
+    return transform_source_document_.Get();
+  }
 
-    static DocumentXSLT& from(Supplementable<Document>&);
-    static const char* supplementName();
+  void SetTransformSourceDocument(Document* document) {
+    DCHECK(document);
+    transform_source_document_ = document;
+  }
 
-    // The following static methods don't use any instance of DocumentXSLT.
-    // They are just using DocumentXSLT namespace.
-    static void applyXSLTransform(Document&, ProcessingInstruction*);
-    static ProcessingInstruction* findXSLStyleSheet(Document&);
-    static bool processingInstructionInsertedIntoDocument(Document&, ProcessingInstruction*);
-    static bool processingInstructionRemovedFromDocument(Document&, ProcessingInstruction*);
-    static bool sheetLoaded(Document&, ProcessingInstruction*);
-    static bool hasTransformSourceDocument(Document&);
+  static DocumentXSLT& From(Document&);
+  static const char* SupplementName();
 
-    DECLARE_VIRTUAL_TRACE();
+  // The following static methods don't use any instance of DocumentXSLT.
+  // They are just using DocumentXSLT namespace.
+  static void ApplyXSLTransform(Document&, ProcessingInstruction*);
+  static ProcessingInstruction* FindXSLStyleSheet(Document&);
+  static bool ProcessingInstructionInsertedIntoDocument(Document&,
+                                                        ProcessingInstruction*);
+  static bool ProcessingInstructionRemovedFromDocument(Document&,
+                                                       ProcessingInstruction*);
+  static bool SheetLoaded(Document&, ProcessingInstruction*);
+  static bool HasTransformSourceDocument(Document&);
 
-private:
-    DocumentXSLT();
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<Document> m_transformSourceDocument;
+ private:
+  explicit DocumentXSLT(Document&);
+
+  Member<Document> transform_source_document_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

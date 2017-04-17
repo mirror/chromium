@@ -36,16 +36,16 @@ unittestBindings.exportTests([
   },
   function testMojoModulesAreAvailable() {
     Promise.all([
-      requireAsync('mojo/public/js/connection'),
+      requireAsync('mojo/public/js/bindings'),
       requireAsync('mojo/public/js/core'),
-      requireAsync('content/public/renderer/frame_service_registry'),
+      requireAsync('content/public/renderer/frame_interfaces'),
     ]).then(test.callback(function(modules) {
-      var connection = modules[0];
+      var bindings = modules[0];
       var core = modules[1];
-      var serviceProvider = modules[2];
-      test.assertTrue(!!connection.Connection);
+      var frameInterfaces = modules[2];
+      test.assertTrue(!!bindings.Binding);
       test.assertTrue(!!core.createMessagePipe);
-      test.assertTrue(!!serviceProvider.connectToService);
+      test.assertTrue(!!frameInterfaces.getInterface);
     }));
   },
   function testTestBindings() {
@@ -55,8 +55,7 @@ unittestBindings.exportTests([
     }
     test.runWithUserGesture(increment);
     test.runWithoutUserGesture(increment);
-    test.runWithNativesEnabled(increment);
-    test.assertEq(3, counter);
+    test.assertEq(2, counter);
     test.assertFalse(test.isProcessingUserGesture());
     test.assertTrue(!!test.getApiFeatures());
     test.assertEq(0, test.getApiDefinitions().length);

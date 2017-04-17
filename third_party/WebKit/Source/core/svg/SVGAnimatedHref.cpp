@@ -11,75 +11,67 @@
 
 namespace blink {
 
-SVGAnimatedHref* SVGAnimatedHref::create(SVGElement* contextElement)
-{
-    return new SVGAnimatedHref(contextElement);
+SVGAnimatedHref* SVGAnimatedHref::Create(SVGElement* context_element) {
+  return new SVGAnimatedHref(context_element);
 }
 
-DEFINE_TRACE(SVGAnimatedHref)
-{
-    visitor->trace(m_xlinkHref);
-    SVGAnimatedString::trace(visitor);
+DEFINE_TRACE(SVGAnimatedHref) {
+  visitor->Trace(xlink_href_);
+  SVGAnimatedString::Trace(visitor);
 }
 
-SVGAnimatedHref::SVGAnimatedHref(SVGElement* contextElement)
-    : SVGAnimatedString(contextElement, SVGNames::hrefAttr, SVGString::create())
-    , m_xlinkHref(SVGAnimatedString::create(contextElement, XLinkNames::hrefAttr, SVGString::create()))
-{
+SVGAnimatedHref::SVGAnimatedHref(SVGElement* context_element)
+    : SVGAnimatedString(context_element, SVGNames::hrefAttr),
+      xlink_href_(
+          SVGAnimatedString::Create(context_element, XLinkNames::hrefAttr)) {}
+
+void SVGAnimatedHref::AddToPropertyMap(SVGElement* element) {
+  element->AddToPropertyMap(this);
+  element->AddToPropertyMap(xlink_href_);
 }
 
-void SVGAnimatedHref::addToPropertyMap(SVGElement* element)
-{
-    element->addToPropertyMap(this);
-    element->addToPropertyMap(m_xlinkHref);
+bool SVGAnimatedHref::IsKnownAttribute(const QualifiedName& attr_name) {
+  return attr_name.Matches(SVGNames::hrefAttr) ||
+         attr_name.Matches(XLinkNames::hrefAttr);
 }
 
-bool SVGAnimatedHref::isKnownAttribute(const QualifiedName& attrName)
-{
-    return attrName.matches(SVGNames::hrefAttr) || attrName.matches(XLinkNames::hrefAttr);
+SVGString* SVGAnimatedHref::CurrentValue() {
+  return BackingString()->SVGAnimatedString::CurrentValue();
 }
 
-SVGString* SVGAnimatedHref::currentValue()
-{
-    return backingString()->SVGAnimatedString::currentValue();
+const SVGString* SVGAnimatedHref::CurrentValue() const {
+  return BackingString()->SVGAnimatedString::CurrentValue();
 }
 
-const SVGString* SVGAnimatedHref::currentValue() const
-{
-    return backingString()->SVGAnimatedString::currentValue();
+String SVGAnimatedHref::baseVal() {
+  UseCounter::Count(contextElement()->GetDocument(),
+                    UseCounter::kSVGHrefBaseVal);
+  return BackingString()->SVGAnimatedString::baseVal();
 }
 
-String SVGAnimatedHref::baseVal()
-{
-    UseCounter::count(contextElement()->document(), UseCounter::SVGHrefBaseVal);
-    return backingString()->SVGAnimatedString::baseVal();
+void SVGAnimatedHref::setBaseVal(const String& value,
+                                 ExceptionState& exception_state) {
+  UseCounter::Count(contextElement()->GetDocument(),
+                    UseCounter::kSVGHrefBaseVal);
+  return BackingString()->SVGAnimatedString::setBaseVal(value, exception_state);
 }
 
-void SVGAnimatedHref::setBaseVal(const String& value, ExceptionState& exceptionState)
-{
-    UseCounter::count(contextElement()->document(), UseCounter::SVGHrefBaseVal);
-    return backingString()->SVGAnimatedString::setBaseVal(value, exceptionState);
+String SVGAnimatedHref::animVal() {
+  UseCounter::Count(contextElement()->GetDocument(),
+                    UseCounter::kSVGHrefAnimVal);
+  return BackingString()->SVGAnimatedString::animVal();
 }
 
-String SVGAnimatedHref::animVal()
-{
-    UseCounter::count(contextElement()->document(), UseCounter::SVGHrefAnimVal);
-    return backingString()->SVGAnimatedString::animVal();
+SVGAnimatedString* SVGAnimatedHref::BackingString() {
+  return UseXLink() ? xlink_href_.Get() : this;
 }
 
-SVGAnimatedString* SVGAnimatedHref::backingString()
-{
-    return useXLink() ? m_xlinkHref.get() : this;
+const SVGAnimatedString* SVGAnimatedHref::BackingString() const {
+  return UseXLink() ? xlink_href_.Get() : this;
 }
 
-const SVGAnimatedString* SVGAnimatedHref::backingString() const
-{
-    return useXLink() ? m_xlinkHref.get() : this;
+bool SVGAnimatedHref::UseXLink() const {
+  return !SVGAnimatedString::IsSpecified() && xlink_href_->IsSpecified();
 }
 
-bool SVGAnimatedHref::useXLink() const
-{
-    return !SVGAnimatedString::isSpecified() && m_xlinkHref->isSpecified();
-}
-
-} // namespace blink
+}  // namespace blink

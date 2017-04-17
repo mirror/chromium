@@ -58,8 +58,8 @@ public final class FirstRunSignInProcessor {
         SigninManager signinManager = SigninManager.get(activity.getApplicationContext());
         signinManager.onFirstRunCheckDone();
 
-        boolean firstRunFlowComplete = FirstRunStatus.getFirstRunFlowComplete(activity);
-        // We skip signin and the FRE only if
+        boolean firstRunFlowComplete = FirstRunStatus.getFirstRunFlowComplete();
+        // We skip signin and the FRE if
         // - FRE is disabled, or
         // - FRE hasn't been completed, but the user has already seen the ToS in the Setup Wizard.
         if (CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
@@ -68,17 +68,17 @@ public final class FirstRunSignInProcessor {
             return;
         }
 
-        // Skip sign in if Chrome is neither started via Chrome icon nor GSA (Google Search App).
-        if (!TextUtils.equals(activity.getIntent().getAction(), Intent.ACTION_MAIN)
-                && IntentHandler.determineExternalIntentSource(
-                           activity.getPackageName(), activity.getIntent())
-                        != ExternalAppId.GSA) {
-            return;
-        }
-
-        // Otherwise, force trigger the FRE.
+        // Force trigger the FRE if the Lightweight FRE is disabled or Chrome is started via Chrome
+        // icon or via intent from GSA. Otherwise, skip signin.
         if (!firstRunFlowComplete) {
-            requestToFireIntentAndFinish(activity);
+            if (!CommandLine.getInstance().hasSwitch(
+                        ChromeSwitches.ENABLE_LIGHTWEIGHT_FIRST_RUN_EXPERIENCE)
+                    || TextUtils.equals(activity.getIntent().getAction(), Intent.ACTION_MAIN)
+                    || IntentHandler.determineExternalIntentSource(
+                               activity.getPackageName(), activity.getIntent())
+                            == ExternalAppId.GSA) {
+                requestToFireIntentAndFinish(activity);
+            }
             return;
         }
 
@@ -129,7 +129,7 @@ public final class FirstRunSignInProcessor {
         Log.e(TAG, "Attempt to pass-through without completed FRE");
 
         // Things went wrong -- we want the user to go through the full FRE.
-        FirstRunStatus.setFirstRunFlowComplete(activity, false);
+        FirstRunStatus.setFirstRunFlowComplete(false);
         setFirstRunFlowSignInComplete(activity, false);
         setFirstRunFlowSignInAccountName(activity, null);
         setFirstRunFlowSignInSetup(activity, false);
@@ -207,7 +207,7 @@ public final class FirstRunSignInProcessor {
      * @param data Resulting FRE properties bundle
      */
     public static void finalizeFirstRunFlowState(Context context, Bundle data) {
-        FirstRunStatus.setFirstRunFlowComplete(context, true);
+        FirstRunStatus.setFirstRunFlowComplete(true);
         setFirstRunFlowSignInAccountName(context,
                     data.getString(FirstRunActivity.RESULT_SIGNIN_ACCOUNT_NAME));
         setFirstRunFlowSignInSetup(
@@ -221,7 +221,7 @@ public final class FirstRunSignInProcessor {
     public static void updateSigninManagerFirstRunCheckDone(Context context) {
         SigninManager manager = SigninManager.get(context);
         if (manager.isSignInAllowed()) return;
-        if (!FirstRunStatus.getFirstRunFlowComplete(context)) return;
+        if (!FirstRunStatus.getFirstRunFlowComplete()) return;
         if (!getFirstRunFlowSignInComplete(context)) return;
         manager.onFirstRunCheckDone();
     }

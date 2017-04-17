@@ -21,9 +21,7 @@ struct ViewHostMsg_SelectionBounds_Params;
 namespace content {
 
 class RenderWidgetHostImpl;
-class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
-class WebContents;
 
 // A class which receives updates of TextInputState from multiple sources and
 // decides what the new TextInputState is. It also notifies the observers when
@@ -38,7 +36,12 @@ class CONTENT_EXPORT TextInputManager {
     // Called when a view has called UpdateTextInputState on TextInputManager.
     // If the call has led to a change in TextInputState, |did_update_state| is
     // true. In some plaforms, we need this update even when the state has not
-    // changed (e.g., Aura for updating IME).
+    // changed (e.g., Aura for updating IME). Also note that |updated_view| is
+    // the view which has most recently received an update in TextInputState.
+    // |updated_view| should not be used to obtain any IME state since this
+    // observer method might have been called in the process of unregistering
+    // |active_view_| from TextInputManager (which in turn is a result of either
+    // destroying |active_view_| or TextInputManager).
     virtual void OnUpdateTextInputStateCalled(
         TextInputManager* text_input_manager,
         RenderWidgetHostViewBase* updated_view,
@@ -62,21 +65,70 @@ class CONTENT_EXPORT TextInputManager {
         RenderWidgetHostViewBase* updated_view) {}
   };
 
-  // This struct is used to store text selection related information for views.
-  struct TextSelection {
+  // Text selection bounds.
+  struct SelectionRegion {
+    SelectionRegion();
+    SelectionRegion(const SelectionRegion& other);
+
+    // The begining of the selection region.
+    gfx::SelectionBound anchor;
+    // The end of the selection region (caret position).
+    gfx::SelectionBound focus;
+
+    // The following variables are only used on Mac platform.
+    // The current caret bounds.
+    gfx::Rect caret_rect;
+    // The current first selection bounds.
+    gfx::Rect first_selection_rect;
+  };
+
+  // Composition range information.
+  struct CompositionRangeInfo {
+    CompositionRangeInfo();
+    CompositionRangeInfo(const CompositionRangeInfo& other);
+    ~CompositionRangeInfo();
+
+    std::vector<gfx::Rect> character_bounds;
+    gfx::Range range;
+  };
+
+  // This class is used to store text selection information for views. The text
+  // selection information includes a range around the selected (highlighted)
+  // text which is defined by an offset from the beginning of the page/frame,
+  // a range for the selection, and the text including the selection which
+  // might include several characters before and after it.
+  class TextSelection {
+   public:
     TextSelection();
     TextSelection(const TextSelection& other);
     ~TextSelection();
 
+    void SetSelection(const base::string16& text,
+                      size_t offset,
+                      const gfx::Range& range);
+
+    const base::string16& selected_text() const { return selected_text_; }
+    size_t offset() const { return offset_; }
+    const gfx::Range& range() const { return range_; }
+    const base::string16& text() const { return text_; }
+
+   private:
     // The offset of the text stored in |text| relative to the start of the web
     // page.
-    size_t offset;
+    size_t offset_;
 
-    // The current selection range relative to the start of the web page.
-    gfx::Range range;
+    // The range of the selection in the page (highlighted text).
+    gfx::Range range_;
 
-    // The text inside and around the current selection range.
-    base::string16 text;
+    // The highlighted text which is the portion of |text_| marked by |offset_|
+    // and |range_|. It will be an empty string if either |text_| or |range_|
+    // are empty of this selection information is invalid (i.e., |range_| does
+    // not cover any of |text_|.
+    base::string16 selected_text_;
+
+    // Part of the text on the page which includes the highlighted text plus
+    // possibly several characters before and after it.
+    base::string16 text_;
   };
 
   TextInputManager();
@@ -93,15 +145,20 @@ class CONTENT_EXPORT TextInputManager {
   // Users of these methods should not hold on to the pointers as they become
   // dangling if the TextInputManager or |active_view_| are destroyed.
 
-  // Returns the currently stored TextInputState. An state of nullptr can be
-  // interpreted as a ui::TextInputType of ui::TEXT_INPUT_TYPE_NONE.
+  // Returns the currently stored TextInputState for |active_view_|. A state of
+  // nullptr can be interpreted as a ui::TextInputType of
+  // ui::TEXT_INPUT_TYPE_NONE.
   const TextInputState* GetTextInputState() const;
 
-  // Returns the rect between selection bounds.
-  gfx::Rect GetSelectionBoundsRect() const;
+  // Returns the selection bounds information for |view|. If |view| == nullptr,
+  // it will return the corresponding information for |active_view_| or nullptr
+  // if there are no active views.
+  const SelectionRegion* GetSelectionRegion(
+      RenderWidgetHostViewBase* view = nullptr) const;
 
-  // Returns a vector of rects representing the character bounds.
-  const std::vector<gfx::Rect>* GetCompositionCharacterBounds() const;
+  // Returns the composition range and character bounds information for the
+  // |active_view_|. Returns nullptr If |active_view_| == nullptr.
+  const TextInputManager::CompositionRangeInfo* GetCompositionRangeInfo() const;
 
   // The following method returns the text selection state for the given |view|.
   // If |view| == nullptr, it will assume |active_view_| and return its state.
@@ -161,6 +218,7 @@ class CONTENT_EXPORT TextInputManager {
   // TextInputManager.
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
+  bool HasObserver(Observer* observer) const;
 
   RenderWidgetHostViewBase* active_view_for_testing() { return active_view_; }
   size_t GetRegisteredViewsCountForTesting();
@@ -168,26 +226,6 @@ class CONTENT_EXPORT TextInputManager {
       RenderWidgetHostViewBase* view);
 
  private:
-  // Text selection bounds.
-  struct SelectionRegion {
-    SelectionRegion();
-    SelectionRegion(const SelectionRegion& other);
-
-    // The begining of the selection region.
-    gfx::SelectionBound anchor;
-    // The end of the selection region (caret position).
-    gfx::SelectionBound focus;
-  };
-
-  // Ccomposition range information.
-  struct CompositionRangeInfo {
-    CompositionRangeInfo();
-    CompositionRangeInfo(const CompositionRangeInfo& other);
-    ~CompositionRangeInfo();
-
-    std::vector<gfx::Rect> character_bounds;
-  };
-
   // This class is used to create maps which hold specific IME state for a
   // view.
   template <class Value>

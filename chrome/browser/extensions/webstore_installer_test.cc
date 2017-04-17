@@ -37,6 +37,8 @@ using extensions::WebstoreInlineInstaller;
 using extensions::WebstoreInlineInstallerFactory;
 using extensions::WebstoreStandaloneInstaller;
 
+using net::test_server::HttpRequest;
+
 WebstoreInstallerTest::WebstoreInstallerTest(
     const std::string& webstore_domain,
     const std::string& test_data_path,
@@ -54,6 +56,9 @@ WebstoreInstallerTest::~WebstoreInstallerTest() {}
 
 void WebstoreInstallerTest::SetUpCommandLine(base::CommandLine* command_line) {
   ExtensionBrowserTest::SetUpCommandLine(command_line);
+
+  embedded_test_server()->RegisterRequestMonitor(base::Bind(
+      &WebstoreInstallerTest::ProcessServerRequest, base::Unretained(this)));
   // We start the test server now instead of in
   // SetUpInProcessBrowserTestFixture so that we can get its port number.
   ASSERT_TRUE(embedded_test_server()->Start());
@@ -85,7 +90,7 @@ void WebstoreInstallerTest::SetUpOnMainThread() {
   ASSERT_TRUE(download_directory_.CreateUniqueTempDir());
   DownloadPrefs* download_prefs = DownloadPrefs::FromBrowserContext(
       browser()->profile());
-  download_prefs->SetDownloadPath(download_directory_.path());
+  download_prefs->SetDownloadPath(download_directory_.GetPath());
 }
 
 GURL WebstoreInstallerTest::GenerateTestServerUrl(
@@ -136,6 +141,8 @@ void WebstoreInstallerTest::RunTestAsync(
   browser()->tab_strip_model()->GetActiveWebContents()->GetMainFrame()->
       ExecuteJavaScriptWithUserGestureForTests(base::UTF8ToUTF16(script));
 }
+
+void WebstoreInstallerTest::ProcessServerRequest(const HttpRequest& request) {}
 
 void WebstoreInstallerTest::AutoAcceptInstall() {
   install_auto_confirm_.reset();  // Destroy any old override first.

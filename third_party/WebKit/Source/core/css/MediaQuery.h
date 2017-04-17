@@ -29,12 +29,12 @@
 #ifndef MediaQuery_h
 #define MediaQuery_h
 
+#include <utility>
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
-#include <utility>
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 class MediaQueryExp;
@@ -42,40 +42,40 @@ class MediaQueryExp;
 using ExpressionHeapVector = HeapVector<Member<MediaQueryExp>>;
 
 class CORE_EXPORT MediaQuery : public GarbageCollectedFinalized<MediaQuery> {
-public:
-    enum RestrictorType {
-        Only, Not, None
-    };
+ public:
+  enum RestrictorType { kOnly, kNot, kNone };
 
-    static MediaQuery* create(RestrictorType, String mediaType, ExpressionHeapVector);
-    static MediaQuery* createNotAll();
+  static MediaQuery* Create(RestrictorType,
+                            String media_type,
+                            ExpressionHeapVector);
+  static MediaQuery* CreateNotAll();
 
-    ~MediaQuery();
+  ~MediaQuery();
 
-    RestrictorType restrictor() const { return m_restrictor; }
-    const ExpressionHeapVector& expressions() const { return m_expressions; }
-    const String& mediaType() const { return m_mediaType; }
-    bool operator==(const MediaQuery& other) const;
-    String cssText() const;
+  RestrictorType Restrictor() const { return restrictor_; }
+  const ExpressionHeapVector& Expressions() const { return expressions_; }
+  const String& MediaType() const { return media_type_; }
+  bool operator==(const MediaQuery& other) const;
+  String CssText() const;
 
-    MediaQuery* copy() const { return new MediaQuery(*this); }
+  MediaQuery* Copy() const { return new MediaQuery(*this); }
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    MediaQuery(RestrictorType, String mediaType, ExpressionHeapVector);
-    MediaQuery(const MediaQuery&);
+ private:
+  MediaQuery(RestrictorType, String media_type, ExpressionHeapVector);
+  MediaQuery(const MediaQuery&);
 
-    MediaQuery& operator=(const MediaQuery&) = delete;
+  MediaQuery& operator=(const MediaQuery&) = delete;
 
-    RestrictorType m_restrictor;
-    String m_mediaType;
-    ExpressionHeapVector m_expressions;
-    String m_serializationCache;
+  RestrictorType restrictor_;
+  String media_type_;
+  ExpressionHeapVector expressions_;
+  String serialization_cache_;
 
-    String serialize() const;
+  String Serialize() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

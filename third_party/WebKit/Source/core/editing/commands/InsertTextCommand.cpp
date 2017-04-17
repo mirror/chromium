@@ -36,259 +36,306 @@
 
 namespace blink {
 
-InsertTextCommand::InsertTextCommand(Document& document, const String& text, bool selectInsertedText, RebalanceType rebalanceType)
-    : CompositeEditCommand(document)
-    , m_text(text)
-    , m_selectInsertedText(selectInsertedText)
-    , m_rebalanceType(rebalanceType)
-{
+InsertTextCommand::InsertTextCommand(Document& document,
+                                     const String& text,
+                                     bool select_inserted_text,
+                                     RebalanceType rebalance_type)
+    : CompositeEditCommand(document),
+      text_(text),
+      select_inserted_text_(select_inserted_text),
+      rebalance_type_(rebalance_type) {}
+
+String InsertTextCommand::TextDataForInputEvent() const {
+  return text_;
 }
 
-String InsertTextCommand::textDataForInputEvent() const
-{
-    return m_text;
+Position InsertTextCommand::PositionInsideTextNode(
+    const Position& p,
+    EditingState* editing_state) {
+  Position pos = p;
+  if (IsTabHTMLSpanElementTextNode(pos.AnchorNode())) {
+    Text* text_node = GetDocument().CreateEditingTextNode("");
+    InsertNodeAtTabSpanPosition(text_node, pos, editing_state);
+    if (editing_state->IsAborted())
+      return Position();
+    return Position::FirstPositionInNode(text_node);
+  }
+
+  // Prepare for text input by looking at the specified position.
+  // It may be necessary to insert a text node to receive characters.
+  if (!pos.ComputeContainerNode()->IsTextNode()) {
+    Text* text_node = GetDocument().CreateEditingTextNode("");
+    InsertNodeAt(text_node, pos, editing_state);
+    if (editing_state->IsAborted())
+      return Position();
+    return Position::FirstPositionInNode(text_node);
+  }
+
+  return pos;
 }
 
-Position InsertTextCommand::positionInsideTextNode(const Position& p, EditingState* editingState)
-{
-    Position pos = p;
-    if (isTabHTMLSpanElementTextNode(pos.anchorNode())) {
-        Text* textNode = document().createEditingTextNode("");
-        insertNodeAtTabSpanPosition(textNode, pos, editingState);
-        if (editingState->isAborted())
-            return Position();
-        return Position::firstPositionInNode(textNode);
-    }
+void InsertTextCommand::SetEndingSelectionWithoutValidation(
+    const Position& start_position,
+    const Position& end_position) {
+  // We could have inserted a part of composed character sequence,
+  // so we are basically treating ending selection as a range to avoid
+  // validation. <http://bugs.webkit.org/show_bug.cgi?id=15781>
+  SetEndingSelection(SelectionInDOMTree::Builder()
+                         .Collapse(start_position)
+                         .Extend(end_position)
+                         .SetIsDirectional(EndingSelection().IsDirectional())
+                         .Build());
+}
 
-    // Prepare for text input by looking at the specified position.
-    // It may be necessary to insert a text node to receive characters.
-    if (!pos.computeContainerNode()->isTextNode()) {
-        Text* textNode = document().createEditingTextNode("");
-        insertNodeAt(textNode, pos, editingState);
-        if (editingState->isAborted())
-            return Position();
-        return Position::firstPositionInNode(textNode);
-    }
+// This avoids the expense of a full fledged delete operation, and avoids a
+// layout that typically results from text removal.
+bool InsertTextCommand::PerformTrivialReplace(const String& text,
+                                              bool select_inserted_text) {
+  if (!EndingSelection().IsRange())
+    return false;
 
+  if (text.Contains('\t') || text.Contains(' ') || text.Contains('\n'))
+    return false;
+
+  Position start = EndingSelection().Start();
+  Position end_position = ReplaceSelectedTextInNode(text);
+  if (end_position.IsNull())
+    return false;
+
+  SetEndingSelectionWithoutValidation(start, end_position);
+  if (select_inserted_text)
+    return true;
+  SetEndingSelection(SelectionInDOMTree::Builder()
+                         .Collapse(EndingSelection().end())
+                         .SetIsDirectional(EndingSelection().IsDirectional())
+                         .Build());
+  return true;
+}
+
+bool InsertTextCommand::PerformOverwrite(const String& text,
+                                         bool select_inserted_text) {
+  Position start = EndingSelection().Start();
+  if (start.IsNull() || !start.IsOffsetInAnchor() ||
+      !start.ComputeContainerNode()->IsTextNode())
+    return false;
+  Text* text_node = ToText(start.ComputeContainerNode());
+  if (!text_node)
+    return false;
+
+  unsigned count = std::min(
+      text.length(), text_node->length() - start.OffsetInContainerNode());
+  if (!count)
+    return false;
+
+  ReplaceTextInNode(text_node, start.OffsetInContainerNode(), count, text);
+
+  Position end_position =
+      Position(text_node, start.OffsetInContainerNode() + text.length());
+  SetEndingSelectionWithoutValidation(start, end_position);
+  if (select_inserted_text || EndingSelection().IsNone())
+    return true;
+  SetEndingSelection(SelectionInDOMTree::Builder()
+                         .Collapse(EndingSelection().end())
+                         .SetIsDirectional(EndingSelection().IsDirectional())
+                         .Build());
+  return true;
+}
+
+void InsertTextCommand::DoApply(EditingState* editing_state) {
+  DCHECK_EQ(text_.Find('\n'), kNotFound);
+
+  if (!EndingSelection().IsNonOrphanedCaretOrRange())
+    return;
+
+  // Delete the current selection.
+  // FIXME: This delete operation blows away the typing style.
+  if (EndingSelection().IsRange()) {
+    if (PerformTrivialReplace(text_, select_inserted_text_))
+      return;
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    bool end_of_selection_was_at_start_of_block =
+        IsStartOfBlock(EndingSelection().VisibleEnd());
+    DeleteSelection(editing_state, false, true, false, false);
+    if (editing_state->IsAborted())
+      return;
+    // deleteSelection eventually makes a new endingSelection out of a Position.
+    // If that Position doesn't have a layoutObject (e.g. it is on a <frameset>
+    // in the DOM), the VisibleSelection cannot be canonicalized to anything
+    // other than NoSelection. The rest of this function requires a real
+    // endingSelection, so bail out.
+    if (EndingSelection().IsNone())
+      return;
+    if (end_of_selection_was_at_start_of_block) {
+      if (EditingStyle* typing_style =
+              GetDocument().GetFrame()->GetEditor().TypingStyle())
+        typing_style->RemoveBlockProperties();
+    }
+  } else if (GetDocument().GetFrame()->GetEditor().IsOverwriteModeEnabled()) {
+    if (PerformOverwrite(text_, select_inserted_text_))
+      return;
+  }
+
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  Position start_position(EndingSelection().Start());
+
+  Position placeholder;
+  // We want to remove preserved newlines and brs that will collapse (and thus
+  // become unnecessary) when content is inserted just before them.
+  // FIXME: We shouldn't really have to do this, but removing placeholders is a
+  // workaround for 9661.
+  // If the caret is just before a placeholder, downstream will normalize the
+  // caret to it.
+  Position downstream(MostForwardCaretPosition(start_position));
+  if (LineBreakExistsAtPosition(downstream)) {
+    // FIXME: This doesn't handle placeholders at the end of anonymous blocks.
+    VisiblePosition caret = CreateVisiblePosition(start_position);
+    if (IsEndOfBlock(caret) && IsStartOfParagraph(caret))
+      placeholder = downstream;
+    // Don't remove the placeholder yet, otherwise the block we're inserting
+    // into would collapse before we get a chance to insert into it.  We check
+    // for a placeholder now, though, because doing so requires the creation of
+    // a VisiblePosition, and if we did that post-insertion it would force a
+    // layout.
+  }
+
+  // Insert the character at the leftmost candidate.
+  start_position = MostBackwardCaretPosition(start_position);
+
+  // It is possible for the node that contains startPosition to contain only
+  // unrendered whitespace, and so deleteInsignificantText could remove it.
+  // Save the position before the node in case that happens.
+  DCHECK(start_position.ComputeContainerNode()) << start_position;
+  Position position_before_start_node(
+      Position::InParentBeforeNode(*start_position.ComputeContainerNode()));
+  DeleteInsignificantText(start_position,
+                          MostForwardCaretPosition(start_position));
+
+  // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets()
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  if (!start_position.IsConnected())
+    start_position = position_before_start_node;
+  if (!IsVisuallyEquivalentCandidate(start_position))
+    start_position = MostForwardCaretPosition(start_position);
+
+  start_position =
+      PositionAvoidingSpecialElementBoundary(start_position, editing_state);
+  if (editing_state->IsAborted())
+    return;
+
+  Position end_position;
+
+  if (text_ == "\t" && IsRichlyEditablePosition(start_position)) {
+    end_position = InsertTab(start_position, editing_state);
+    if (editing_state->IsAborted())
+      return;
+    start_position =
+        PreviousPositionOf(end_position, PositionMoveType::kGraphemeCluster);
+    if (placeholder.IsNotNull())
+      RemovePlaceholderAt(placeholder);
+  } else {
+    // Make sure the document is set up to receive m_text
+    start_position = PositionInsideTextNode(start_position, editing_state);
+    if (editing_state->IsAborted())
+      return;
+    DCHECK(start_position.IsOffsetInAnchor()) << start_position;
+    DCHECK(start_position.ComputeContainerNode()) << start_position;
+    DCHECK(start_position.ComputeContainerNode()->IsTextNode())
+        << start_position;
+    if (placeholder.IsNotNull())
+      RemovePlaceholderAt(placeholder);
+    Text* text_node = ToText(start_position.ComputeContainerNode());
+    const unsigned offset = start_position.OffsetInContainerNode();
+
+    InsertTextIntoNode(text_node, offset, text_);
+    end_position = Position(text_node, offset + text_.length());
+
+    if (rebalance_type_ == kRebalanceLeadingAndTrailingWhitespaces) {
+      // The insertion may require adjusting adjacent whitespace, if it is
+      // present.
+      RebalanceWhitespaceAt(end_position);
+      // Rebalancing on both sides isn't necessary if we've inserted only
+      // spaces.
+      if (!text_.ContainsOnlyWhitespace())
+        RebalanceWhitespaceAt(start_position);
+    } else {
+      DCHECK_EQ(rebalance_type_, kRebalanceAllWhitespaces);
+      if (CanRebalance(start_position) && CanRebalance(end_position))
+        RebalanceWhitespaceOnTextSubstring(
+            text_node, start_position.OffsetInContainerNode(),
+            end_position.OffsetInContainerNode());
+    }
+  }
+
+  SetEndingSelectionWithoutValidation(start_position, end_position);
+
+  // Handle the case where there is a typing style.
+  if (EditingStyle* typing_style =
+          GetDocument().GetFrame()->GetEditor().TypingStyle()) {
+    typing_style->PrepareToApplyAt(end_position,
+                                   EditingStyle::kPreserveWritingDirection);
+    if (!typing_style->IsEmpty()) {
+      ApplyStyle(typing_style, editing_state);
+      if (editing_state->IsAborted())
+        return;
+    }
+  }
+
+  if (!select_inserted_text_) {
+    SelectionInDOMTree::Builder builder;
+    builder.SetAffinity(EndingSelection().Affinity());
+    builder.SetIsDirectional(EndingSelection().IsDirectional());
+    if (EndingSelection().end().IsNotNull())
+      builder.Collapse(EndingSelection().end());
+    SetEndingSelection(builder.Build());
+  }
+}
+
+Position InsertTextCommand::InsertTab(const Position& pos,
+                                      EditingState* editing_state) {
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  Position insert_pos = CreateVisiblePosition(pos).DeepEquivalent();
+  if (insert_pos.IsNull())
     return pos;
-}
 
-void InsertTextCommand::setEndingSelectionWithoutValidation(const Position& startPosition, const Position& endPosition)
-{
-    // We could have inserted a part of composed character sequence,
-    // so we are basically treating ending selection as a range to avoid validation.
-    // <http://bugs.webkit.org/show_bug.cgi?id=15781>
-    VisibleSelection forcedEndingSelection;
-    forcedEndingSelection.setWithoutValidation(startPosition, endPosition);
-    forcedEndingSelection.setIsDirectional(endingSelection().isDirectional());
-    setEndingSelection(forcedEndingSelection);
-}
+  Node* node = insert_pos.ComputeContainerNode();
+  unsigned offset = node->IsTextNode() ? insert_pos.OffsetInContainerNode() : 0;
 
-// This avoids the expense of a full fledged delete operation, and avoids a layout that typically results
-// from text removal.
-bool InsertTextCommand::performTrivialReplace(const String& text, bool selectInsertedText)
-{
-    if (!endingSelection().isRange())
-        return false;
+  // keep tabs coalesced in tab span
+  if (IsTabHTMLSpanElementTextNode(node)) {
+    Text* text_node = ToText(node);
+    InsertTextIntoNode(text_node, offset, "\t");
+    return Position(text_node, offset + 1);
+  }
 
-    if (text.contains('\t') || text.contains(' ') || text.contains('\n'))
-        return false;
+  // create new tab span
+  HTMLSpanElement* span_element = CreateTabSpanElement(GetDocument());
 
-    Position start = endingSelection().start();
-    Position endPosition = replaceSelectedTextInNode(text);
-    if (endPosition.isNull())
-        return false;
-
-    setEndingSelectionWithoutValidation(start, endPosition);
-    if (!selectInsertedText)
-        setEndingSelection(VisibleSelection(endingSelection().visibleEnd(), endingSelection().isDirectional()));
-
-    return true;
-}
-
-bool InsertTextCommand::performOverwrite(const String& text, bool selectInsertedText)
-{
-    Position start = endingSelection().start();
-    if (start.isNull() || !start.isOffsetInAnchor() || !start.computeContainerNode()->isTextNode())
-        return false;
-    Text* textNode = toText(start.computeContainerNode());
-    if (!textNode)
-        return false;
-
-    unsigned count = std::min(text.length(), textNode->length() - start.offsetInContainerNode());
-    if (!count)
-        return false;
-
-    replaceTextInNode(textNode, start.offsetInContainerNode(), count, text);
-
-    Position endPosition = Position(textNode, start.offsetInContainerNode() + text.length());
-    setEndingSelectionWithoutValidation(start, endPosition);
-    if (!selectInsertedText)
-        setEndingSelection(VisibleSelection(endingSelection().visibleEnd(), endingSelection().isDirectional()));
-
-    return true;
-}
-
-void InsertTextCommand::doApply(EditingState* editingState)
-{
-    DCHECK_EQ(m_text.find('\n'), kNotFound);
-
-    if (!endingSelection().isNonOrphanedCaretOrRange())
-        return;
-
-    // Delete the current selection.
-    // FIXME: This delete operation blows away the typing style.
-    if (endingSelection().isRange()) {
-        if (performTrivialReplace(m_text, m_selectInsertedText))
-            return;
-        bool endOfSelectionWasAtStartOfBlock = isStartOfBlock(endingSelection().visibleEnd());
-        deleteSelection(editingState, false, true, false, false);
-        if (editingState->isAborted())
-            return;
-        // deleteSelection eventually makes a new endingSelection out of a Position. If that Position doesn't have
-        // a layoutObject (e.g. it is on a <frameset> in the DOM), the VisibleSelection cannot be canonicalized to
-        // anything other than NoSelection. The rest of this function requires a real endingSelection, so bail out.
-        if (endingSelection().isNone())
-            return;
-        if (endOfSelectionWasAtStartOfBlock) {
-            if (EditingStyle* typingStyle = document().frame()->selection().typingStyle())
-                typingStyle->removeBlockProperties();
-        }
-    } else if (document().frame()->editor().isOverwriteModeEnabled()) {
-        if (performOverwrite(m_text, m_selectInsertedText))
-            return;
-    }
-
-    Position startPosition(endingSelection().start());
-
-    Position placeholder;
-    // We want to remove preserved newlines and brs that will collapse (and thus become unnecessary) when content
-    // is inserted just before them.
-    // FIXME: We shouldn't really have to do this, but removing placeholders is a workaround for 9661.
-    // If the caret is just before a placeholder, downstream will normalize the caret to it.
-    Position downstream(mostForwardCaretPosition(startPosition));
-    if (lineBreakExistsAtPosition(downstream)) {
-        // FIXME: This doesn't handle placeholders at the end of anonymous blocks.
-        VisiblePosition caret = createVisiblePosition(startPosition);
-        if (isEndOfBlock(caret) && isStartOfParagraph(caret))
-            placeholder = downstream;
-        // Don't remove the placeholder yet, otherwise the block we're inserting into would collapse before
-        // we get a chance to insert into it.  We check for a placeholder now, though, because doing so requires
-        // the creation of a VisiblePosition, and if we did that post-insertion it would force a layout.
-    }
-
-    // Insert the character at the leftmost candidate.
-    startPosition = mostBackwardCaretPosition(startPosition);
-
-    // It is possible for the node that contains startPosition to contain only unrendered whitespace,
-    // and so deleteInsignificantText could remove it.  Save the position before the node in case that happens.
-    DCHECK(startPosition.computeContainerNode()) << startPosition;
-    Position positionBeforeStartNode(Position::inParentBeforeNode(*startPosition.computeContainerNode()));
-    deleteInsignificantText(startPosition, mostForwardCaretPosition(startPosition));
-    if (!startPosition.isConnected())
-        startPosition = positionBeforeStartNode;
-    if (!isVisuallyEquivalentCandidate(startPosition))
-        startPosition = mostForwardCaretPosition(startPosition);
-
-    startPosition = positionAvoidingSpecialElementBoundary(startPosition, editingState);
-    if (editingState->isAborted())
-        return;
-
-    Position endPosition;
-
-    if (m_text == "\t" && isRichlyEditablePosition(startPosition)) {
-        endPosition = insertTab(startPosition, editingState);
-        if (editingState->isAborted())
-            return;
-        startPosition = previousPositionOf(endPosition, PositionMoveType::GraphemeCluster);
-        if (placeholder.isNotNull())
-            removePlaceholderAt(placeholder);
+  // place it
+  if (!node->IsTextNode()) {
+    InsertNodeAt(span_element, insert_pos, editing_state);
+  } else {
+    Text* text_node = ToText(node);
+    if (offset >= text_node->length()) {
+      InsertNodeAfter(span_element, text_node, editing_state);
     } else {
-        // Make sure the document is set up to receive m_text
-        startPosition = positionInsideTextNode(startPosition, editingState);
-        if (editingState->isAborted())
-            return;
-        DCHECK(startPosition.isOffsetInAnchor()) << startPosition;
-        DCHECK(startPosition.computeContainerNode()) << startPosition;
-        DCHECK(startPosition.computeContainerNode()->isTextNode()) << startPosition;
-        if (placeholder.isNotNull())
-            removePlaceholderAt(placeholder);
-        Text* textNode = toText(startPosition.computeContainerNode());
-        const unsigned offset = startPosition.offsetInContainerNode();
-
-        insertTextIntoNode(textNode, offset, m_text);
-        endPosition = Position(textNode, offset + m_text.length());
-
-        if (m_rebalanceType == RebalanceLeadingAndTrailingWhitespaces) {
-            // The insertion may require adjusting adjacent whitespace, if it is present.
-            rebalanceWhitespaceAt(endPosition);
-            // Rebalancing on both sides isn't necessary if we've inserted only spaces.
-            if (!shouldRebalanceLeadingWhitespaceFor(m_text))
-                rebalanceWhitespaceAt(startPosition);
-        } else {
-            DCHECK_EQ(m_rebalanceType, RebalanceAllWhitespaces);
-            if (canRebalance(startPosition) && canRebalance(endPosition))
-                rebalanceWhitespaceOnTextSubstring(textNode, startPosition.offsetInContainerNode(), endPosition.offsetInContainerNode());
-        }
+      // split node to make room for the span
+      // NOTE: splitTextNode uses textNode for the
+      // second node in the split, so we need to
+      // insert the span before it.
+      if (offset > 0)
+        SplitTextNode(text_node, offset);
+      InsertNodeBefore(span_element, text_node, editing_state);
     }
+  }
+  if (editing_state->IsAborted())
+    return Position();
 
-    setEndingSelectionWithoutValidation(startPosition, endPosition);
-
-    // Handle the case where there is a typing style.
-    if (EditingStyle* typingStyle = document().frame()->selection().typingStyle()) {
-        typingStyle->prepareToApplyAt(endPosition, EditingStyle::PreserveWritingDirection);
-        if (!typingStyle->isEmpty()) {
-            applyStyle(typingStyle, editingState);
-            if (editingState->isAborted())
-                return;
-        }
-    }
-
-    if (!m_selectInsertedText)
-        setEndingSelection(VisibleSelection(endingSelection().end(), endingSelection().affinity(), endingSelection().isDirectional()));
+  // return the position following the new tab
+  return Position::LastPositionInNode(span_element);
 }
 
-Position InsertTextCommand::insertTab(const Position& pos, EditingState* editingState)
-{
-    Position insertPos = createVisiblePosition(pos).deepEquivalent();
-    if (insertPos.isNull())
-        return pos;
-
-    Node* node = insertPos.computeContainerNode();
-    unsigned offset = node->isTextNode() ? insertPos.offsetInContainerNode() : 0;
-
-    // keep tabs coalesced in tab span
-    if (isTabHTMLSpanElementTextNode(node)) {
-        Text* textNode = toText(node);
-        insertTextIntoNode(textNode, offset, "\t");
-        return Position(textNode, offset + 1);
-    }
-
-    // create new tab span
-    HTMLSpanElement* spanElement = createTabSpanElement(document());
-
-    // place it
-    if (!node->isTextNode()) {
-        insertNodeAt(spanElement, insertPos, editingState);
-    } else {
-        Text* textNode = toText(node);
-        if (offset >= textNode->length()) {
-            insertNodeAfter(spanElement, textNode, editingState);
-        } else {
-            // split node to make room for the span
-            // NOTE: splitTextNode uses textNode for the
-            // second node in the split, so we need to
-            // insert the span before it.
-            if (offset > 0)
-                splitTextNode(textNode, offset);
-            insertNodeBefore(spanElement, textNode, editingState);
-        }
-    }
-    if (editingState->isAborted())
-        return Position();
-
-    // return the position following the new tab
-    return Position::lastPositionInNode(spanElement);
-}
-
-} // namespace blink
+}  // namespace blink

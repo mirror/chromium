@@ -29,6 +29,7 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/context_menu_params.h"
@@ -37,13 +38,14 @@
 #include "extensions/browser/management_policy.h"
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/extension.h"
-#include "extensions/common/feature_switch.h"
 #include "extensions/common/manifest_handlers/options_page_info.h"
 #include "extensions/common/manifest_url_handlers.h"
-#include "grit/components_scaled_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/vector_icons/vector_icons.h"
 
 namespace extensions {
 
@@ -69,35 +71,26 @@ bool MenuItemMatchesAction(ExtensionContextMenuModel::ActionType type,
   return false;
 }
 
-// Returns the id for the visibility command for the given |extension|, or -1
-// if none should be shown.
+// Returns the id for the visibility command for the given |extension|.
 int GetVisibilityStringId(
     Profile* profile,
     const Extension* extension,
     ExtensionContextMenuModel::ButtonVisibility button_visibility) {
   DCHECK(profile);
   int string_id = -1;
-  if (!FeatureSwitch::extension_action_redesign()->IsEnabled()) {
-    // Without the toolbar redesign, we only show the visibility toggle for
-    // browser actions, and only give the option to hide.
-    if (ExtensionActionManager::Get(profile)->GetBrowserAction(*extension)) {
-      string_id = IDS_EXTENSIONS_HIDE_BUTTON;
-    }
-  } else {
-    // With the redesign, we display "show" or "hide" based on the icon's
-    // visibility, and can have "transitively shown" buttons that are shown
-    // only while the button has a popup or menu visible.
-    switch (button_visibility) {
-      case (ExtensionContextMenuModel::VISIBLE):
-        string_id = IDS_EXTENSIONS_HIDE_BUTTON_IN_MENU;
-        break;
-      case (ExtensionContextMenuModel::TRANSITIVELY_VISIBLE):
-        string_id = IDS_EXTENSIONS_KEEP_BUTTON_IN_TOOLBAR;
-        break;
-      case (ExtensionContextMenuModel::OVERFLOWED):
-        string_id = IDS_EXTENSIONS_SHOW_BUTTON_IN_TOOLBAR;
-        break;
-    }
+  // We display "show" or "hide" based on the icon's visibility, and can have
+  // "transitively shown" buttons that are shown only while the button has a
+  // popup or menu visible.
+  switch (button_visibility) {
+    case (ExtensionContextMenuModel::VISIBLE):
+      string_id = IDS_EXTENSIONS_HIDE_BUTTON_IN_MENU;
+      break;
+    case (ExtensionContextMenuModel::TRANSITIVELY_VISIBLE):
+      string_id = IDS_EXTENSIONS_KEEP_BUTTON_IN_TOOLBAR;
+      break;
+    case (ExtensionContextMenuModel::OVERFLOWED):
+      string_id = IDS_EXTENSIONS_SHOW_BUTTON_IN_TOOLBAR;
+      break;
   }
   return string_id;
 }
@@ -244,7 +237,8 @@ void ExtensionContextMenuModel::ExecuteCommand(int command_id,
   switch (command_id) {
     case NAME: {
       content::OpenURLParams params(ManifestURL::GetHomepageURL(extension),
-                                    content::Referrer(), NEW_FOREGROUND_TAB,
+                                    content::Referrer(),
+                                    WindowOpenDisposition::NEW_FOREGROUND_TAB,
                                     ui::PAGE_TRANSITION_LINK, false);
       browser_->OpenURL(params);
       break;
@@ -255,11 +249,6 @@ void ExtensionContextMenuModel::ExecuteCommand(int command_id,
       break;
     case TOGGLE_VISIBILITY: {
       bool currently_visible = button_visibility_ == VISIBLE;
-      // Without the toolbar redesign turned on, action visibility refers to
-      // any action presence in the toolbar, independent of whether the action
-      // is visible or overflowed. So any action present is considered visible.
-      if (!FeatureSwitch::extension_action_redesign()->IsEnabled())
-        currently_visible = true;
       ToolbarActionsModel::Get(browser_->profile())
           ->SetActionVisibility(extension->id(), !currently_visible);
       break;
@@ -326,8 +315,8 @@ void ExtensionContextMenuModel::InitMenu(const Extension* extension,
     if (is_required_by_policy) {
       int uninstall_index = GetIndexOfCommandId(UNINSTALL);
       SetIcon(uninstall_index,
-              ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-                  IDR_OMNIBOX_HTTPS_POLICY_WARNING));
+              gfx::Image(gfx::CreateVectorIcon(ui::kBusinessIcon, 16,
+                                               gfx::kChromeIconGrey)));
     }
   }
 
@@ -335,8 +324,8 @@ void ExtensionContextMenuModel::InitMenu(const Extension* extension,
   // toolbar.
   int visibility_string_id =
       GetVisibilityStringId(profile_, extension, button_visibility);
-  if (visibility_string_id != -1)
-    AddItemWithStringId(TOGGLE_VISIBILITY, visibility_string_id);
+  DCHECK_NE(-1, visibility_string_id);
+  AddItemWithStringId(TOGGLE_VISIBILITY, visibility_string_id);
 
   if (!is_component_) {
     AddSeparator(ui::NORMAL_SEPARATOR);
@@ -378,7 +367,7 @@ ExtensionContextMenuModel::GetCurrentPageAccess(
     content::WebContents* web_contents) const {
   ScriptingPermissionsModifier modifier(profile_, extension);
   DCHECK(modifier.HasAffectedExtension());
-  if (util::AllowedScriptingOnAllUrls(extension->id(), profile_))
+  if (modifier.IsAllowedOnAllUrls())
     return PAGE_ACCESS_RUN_ON_ALL_SITES;
   if (modifier.HasGrantedHostPermission(
           GetActiveWebContents()->GetLastCommittedURL()))
@@ -428,21 +417,22 @@ void ExtensionContextMenuModel::HandlePageAccessCommand(
 
   const GURL& url = web_contents->GetLastCommittedURL();
   ScriptingPermissionsModifier modifier(profile_, extension);
+  DCHECK(modifier.HasAffectedExtension());
   switch (command_id) {
     case PAGE_ACCESS_RUN_ON_CLICK:
       if (current_access == PAGE_ACCESS_RUN_ON_ALL_SITES)
-        util::SetAllowedScriptingOnAllUrls(extension->id(), profile_, false);
+        modifier.SetAllowedOnAllUrls(false);
       if (modifier.HasGrantedHostPermission(url))
         modifier.RemoveGrantedHostPermission(url);
       break;
     case PAGE_ACCESS_RUN_ON_SITE:
       if (current_access == PAGE_ACCESS_RUN_ON_ALL_SITES)
-        util::SetAllowedScriptingOnAllUrls(extension->id(), profile_, false);
+        modifier.SetAllowedOnAllUrls(false);
       if (!modifier.HasGrantedHostPermission(url))
         modifier.GrantHostPermission(url);
       break;
     case PAGE_ACCESS_RUN_ON_ALL_SITES:
-      util::SetAllowedScriptingOnAllUrls(extension->id(), profile_, true);
+      modifier.SetAllowedOnAllUrls(true);
       break;
     default:
       NOTREACHED();

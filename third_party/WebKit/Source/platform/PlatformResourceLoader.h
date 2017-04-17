@@ -6,12 +6,12 @@
 #define PlatformResourceLoader_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-PLATFORM_EXPORT String loadResourceAsASCIIString(const char* resource);
+PLATFORM_EXPORT String LoadResourceAsASCIIString(const char* resource);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PlatformResourceLoader_h
+#endif  // PlatformResourceLoader_h

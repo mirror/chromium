@@ -7,11 +7,9 @@
 
 #include "base/macros.h"
 #include "cc/output/buffer_to_texture_target_map.h"
-#include "cc/test/test_gpu_memory_buffer_manager.h"
-#include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_task_graph_runner.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
-#include "content/test/fake_renderer_scheduler.h"
+#include "third_party/WebKit/public/platform/scheduler/test/fake_renderer_scheduler.h"
 
 namespace content {
 
@@ -22,7 +20,6 @@ class FakeCompositorDependencies : public CompositorDependencies {
 
   // CompositorDependencies implementation.
   bool IsGpuRasterizationForced() override;
-  bool IsGpuRasterizationEnabled() override;
   bool IsAsyncWorkerContextEnabled() override;
   int GetGpuRasterizationMSAASampleCount() override;
   bool IsLcdTextEnabled() override;
@@ -36,21 +33,16 @@ class FakeCompositorDependencies : public CompositorDependencies {
   GetCompositorMainThreadTaskRunner() override;
   scoped_refptr<base::SingleThreadTaskRunner>
   GetCompositorImplThreadTaskRunner() override;
-  cc::SharedBitmapManager* GetSharedBitmapManager() override;
-  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
-  scheduler::RendererScheduler* GetRendererScheduler() override;
-  std::unique_ptr<cc::BeginFrameSource> CreateExternalBeginFrameSource(
-      int routing_id) override;
-  cc::ImageSerializationProcessor* GetImageSerializationProcessor() override;
+  blink::scheduler::RendererScheduler* GetRendererScheduler() override;
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
   bool AreImageDecodeTasksEnabled() override;
   bool IsThreadedAnimationEnabled() override;
+  bool IsScrollAnimatorEnabled() override;
+  bool IsSurfaceSynchronizationEnabled() override;
 
  private:
-  cc::TestSharedBitmapManager shared_bitmap_manager_;
-  cc::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   cc::TestTaskGraphRunner task_graph_runner_;
-  FakeRendererScheduler renderer_scheduler_;
+  blink::scheduler::FakeRendererScheduler renderer_scheduler_;
   cc::BufferToTextureTargetMap buffer_to_texture_target_map_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeCompositorDependencies);

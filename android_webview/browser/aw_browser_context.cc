@@ -17,6 +17,7 @@
 #include "android_webview/common/aw_content_client.h"
 #include "base/base_paths_android.h"
 #include "base/bind.h"
+#include "base/files/file_util.h"
 #include "base/path_service.h"
 #include "components/autofill/core/common/autofill_pref_names.h"
 #include "components/metrics/metrics_service.h"
@@ -51,6 +52,8 @@ const char kAuthAndroidNegotiateAccountType[] =
 
 // Whitelist containing servers for which Integrated Authentication is enabled.
 const char kAuthServerWhitelist[] = "auth.server_whitelist";
+
+const char kWebRestrictionsAuthority[] = "web_restrictions_authority";
 
 }  // namespace prefs
 
@@ -91,9 +94,6 @@ bool OverrideBlacklistForURL(const GURL& url, bool* block, int* reason) {
 
 policy::URLBlacklistManager* CreateURLBlackListManager(
     PrefService* pref_service) {
-  policy::URLBlacklist::SegmentURLCallback segment_url_callback =
-      static_cast<policy::URLBlacklist::SegmentURLCallback>(
-          url_formatter::SegmentURL);
   base::SequencedWorkerPool* pool = BrowserThread::GetBlockingPool();
   scoped_refptr<base::SequencedTaskRunner> background_task_runner =
       pool->GetSequencedTaskRunner(pool->GetSequenceToken());
@@ -101,7 +101,7 @@ policy::URLBlacklistManager* CreateURLBlackListManager(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
 
   return new policy::URLBlacklistManager(pref_service, background_task_runner,
-                                         io_task_runner, segment_url_callback,
+                                         io_task_runner,
                                          base::Bind(OverrideBlacklistForURL));
 }
 
@@ -194,12 +194,29 @@ void AwBrowserContext::PreMainMessageLoopRun() {
   // is given a GUID, stored in this file in the app's data directory.
   const FilePath guid_file_path =
       GetPath().Append(FILE_PATH_LITERAL("metrics_guid"));
-
   AwMetricsServiceClient::GetInstance()->Initialize(
       user_pref_service_.get(),
       content::BrowserContext::GetDefaultStoragePartition(this)->
           GetURLRequestContext(),
       guid_file_path);
+
+  web_restriction_provider_.reset(
+      new web_restrictions::WebRestrictionsClient());
+  pref_change_registrar_.Add(
+      prefs::kWebRestrictionsAuthority,
+      base::Bind(&AwBrowserContext::OnWebRestrictionsAuthorityChanged,
+                 base::Unretained(this)));
+  web_restriction_provider_->SetAuthority(
+      user_pref_service_->GetString(prefs::kWebRestrictionsAuthority));
+
+  safe_browsing_ui_manager_ = new AwSafeBrowsingUIManager();
+  safe_browsing_db_manager_ =
+      new safe_browsing::RemoteSafeBrowsingDatabaseManager();
+}
+
+void AwBrowserContext::OnWebRestrictionsAuthorityChanged() {
+  web_restriction_provider_->SetAuthority(
+      user_pref_service_->GetString(prefs::kWebRestrictionsAuthority));
 }
 
 void AwBrowserContext::AddVisitedURLs(const std::vector<GURL>& urls) {
@@ -222,14 +239,6 @@ AwURLRequestContextGetter* AwBrowserContext::GetAwURLRequestContext() {
   return url_request_context_getter_.get();
 }
 
-AwMessagePortService* AwBrowserContext::GetMessagePortService() {
-  if (!message_port_service_.get()) {
-    message_port_service_.reset(
-        native_factory_->CreateAwMessagePortService());
-  }
-  return message_port_service_.get();
-}
-
 // Create user pref service
 void AwBrowserContext::InitUserPrefService() {
   user_prefs::PrefRegistrySyncable* pref_registry =
@@ -242,6 +251,8 @@ void AwBrowserContext::InitUserPrefService() {
 
   pref_registry->RegisterStringPref(prefs::kAuthServerWhitelist, std::string());
   pref_registry->RegisterStringPref(prefs::kAuthAndroidNegotiateAccountType,
+                                    std::string());
+  pref_registry->RegisterStringPref(prefs::kWebRestrictionsAuthority,
                                     std::string());
 
   metrics::MetricsService::RegisterPrefs(pref_registry);
@@ -256,6 +267,7 @@ void AwBrowserContext::InitUserPrefService() {
           policy::POLICY_LEVEL_MANDATORY)));
   pref_service_factory.set_read_error_callback(base::Bind(&HandleReadError));
   user_pref_service_ = pref_service_factory.Create(pref_registry);
+  pref_change_registrar_.Init(user_pref_service_.get());
 
   user_prefs::UserPrefs::Set(this, user_pref_service_.get());
 }
@@ -361,6 +373,30 @@ policy::URLBlacklistManager* AwBrowserContext::GetURLBlacklistManager() {
   // blacklist_manager_ is initialized.
   DCHECK(blacklist_manager_);
   return blacklist_manager_.get();
+}
+
+web_restrictions::WebRestrictionsClient*
+AwBrowserContext::GetWebRestrictionProvider() {
+  DCHECK(web_restriction_provider_);
+  return web_restriction_provider_.get();
+}
+
+AwSafeBrowsingUIManager* AwBrowserContext::GetSafeBrowsingUIManager() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  return safe_browsing_ui_manager_.get();
+}
+
+safe_browsing::RemoteSafeBrowsingDatabaseManager*
+AwBrowserContext::GetSafeBrowsingDBManager() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!safe_browsing_db_manager_started_) {
+    // V4ProtocolConfig is not used. Just create one with empty values..
+    safe_browsing::V4ProtocolConfig config("", false, "", "");
+    safe_browsing_db_manager_->StartOnIOThread(
+        url_request_context_getter_.get(), config);
+    safe_browsing_db_manager_started_ = true;
+  }
+  return safe_browsing_db_manager_.get();
 }
 
 void AwBrowserContext::RebuildTable(

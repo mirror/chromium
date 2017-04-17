@@ -7,16 +7,33 @@ cr.define('settings', function() {
   function AppearanceBrowserProxy() {}
 
   AppearanceBrowserProxy.prototype = {
+    /** @return {!Promise<number>} */
+    getDefaultZoom: assertNotReached,
+
     /**
-     * @return {!Promise<boolean>} Whether the theme may be reset.
+     * @param {string} themeId
+     * @return {!Promise<!chrome.management.ExtensionInfo>} Theme info.
      */
-    getResetThemeEnabled: assertNotReached,
+    getThemeInfo: assertNotReached,
 
-<if expr="chromeos">
+    /** @return {boolean} Whether the current profile is supervised. */
+    isSupervised: assertNotReached,
+
+// <if expr="chromeos">
     openWallpaperManager: assertNotReached,
-</if>
+// </if>
 
-    resetTheme: assertNotReached,
+    useDefaultTheme: assertNotReached,
+
+// <if expr="is_linux and not chromeos">
+    useSystemTheme: assertNotReached,
+// </if>
+
+    /**
+     * @param {string} url The url of which to check validity.
+     * @return {!Promise<boolean>}
+     */
+    validateStartupPage: assertNotReached,
   };
 
   /**
@@ -29,20 +46,46 @@ cr.define('settings', function() {
 
   AppearanceBrowserProxyImpl.prototype = {
     /** @override */
-    getResetThemeEnabled: function() {
-      return cr.sendWithPromise('getResetThemeEnabled');
+    getDefaultZoom: function() {
+      return new Promise(function(resolve) {
+        chrome.settingsPrivate.getDefaultZoom(resolve);
+      });
     },
 
-<if expr="chromeos">
+    /** @override */
+    getThemeInfo: function(themeId) {
+      return new Promise(function(resolve) {
+        chrome.management.get(themeId, resolve);
+      });
+    },
+
+    /** @override */
+    isSupervised: function() {
+      return loadTimeData.getBoolean('isSupervised');
+    },
+
+// <if expr="chromeos">
     /** @override */
     openWallpaperManager: function() {
       chrome.send('openWallpaperManager');
     },
-</if>
+// </if>
 
     /** @override */
-    resetTheme: function() {
-      chrome.send('resetTheme');
+    useDefaultTheme: function() {
+      chrome.send('useDefaultTheme');
+    },
+
+// <if expr="is_linux and not chromeos">
+    /** @override */
+    useSystemTheme: function() {
+      chrome.send('useSystemTheme');
+    },
+// </if>
+
+    /** @override */
+    validateStartupPage: function(url) {
+      return cr.sendWithPromise('validateStartupPage', url);
     },
   };
 

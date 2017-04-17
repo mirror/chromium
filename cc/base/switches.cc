@@ -11,12 +11,6 @@ namespace switches {
 
 const char kDisableThreadedAnimation[] = "disable-threaded-animation";
 
-// Disables the use of a cached picture for raster in the renderer,
-// making raster go directly from the display item list (this is the data
-// structure surfaced to tracing). This is useful for debugging to remove
-// the cached picture from the pipeline to narrow down bugs.
-const char kDisableCachedPictureRaster[] = "disable-cached-picture-raster";
-
 // Disables layer-edge anti-aliasing in the compositor.
 const char kDisableCompositedAntialiasing[] =
     "disable-composited-antialiasing";
@@ -30,11 +24,16 @@ const char kDisableMainFrameBeforeActivation[] =
 const char kEnableMainFrameBeforeActivation[] =
     "enable-main-frame-before-activation";
 
-// Percentage of the top controls need to be hidden before they will auto hide.
-const char kTopControlsHideThreshold[] = "top-controls-hide-threshold";
+// Enables defering image decodes to the image decode service.
+const char kEnableCheckerImaging[] = "enable-checker-imaging";
 
-// Percentage of the top controls need to be shown before they will auto show.
-const char kTopControlsShowThreshold[] = "top-controls-show-threshold";
+// Percentage of the browser controls need to be hidden before they will auto
+// hide.
+const char kBrowserControlsHideThreshold[] = "top-controls-hide-threshold";
+
+// Percentage of the browser controls need to be shown before they will auto
+// show.
+const char kBrowserControlsShowThreshold[] = "top-controls-show-threshold";
 
 // Re-rasters everything multiple times to simulate a much slower machine.
 // Give a scale factor to cause raster to take that many times longer to
@@ -44,16 +43,30 @@ const char kSlowDownRasterScaleFactor[] = "slow-down-raster-scale-factor";
 // Compress tile textures for GPUs supporting it.
 const char kEnableTileCompression[] = "enable-tile-compression";
 
-// Disable the BeginFrame signal from browser to renderer to schedule rendering.
-const char kDisableBeginFrameScheduling[] = "disable-begin-frame-scheduling";
+// Convert rasterization and compositing inputs to the output color space
+// before operating on them.
+const char kEnableColorCorrectRendering[] = "enable-color-correct-rendering";
 
 // Enables the GPU benchmarking extension
 const char kEnableGpuBenchmarking[] = "enable-gpu-benchmarking";
+
+// Enables multi-client Surface synchronization. In practice, this indicates
+// that LayerTreeHost expects to be given a valid LocalSurfaceId provided by
+// the parent compositor.
+const char kEnableSurfaceSynchronization[] = "enable-surface-synchronization";
 
 // Renders a border around compositor layers to help debug and study
 // layer compositing.
 const char kShowCompositedLayerBorders[] = "show-composited-layer-borders";
 const char kUIShowCompositedLayerBorders[] = "ui-show-layer-borders";
+const char kCompositedRenderPassBorders[] = "renderpass";
+const char kCompositedSurfaceBorders[] = "surface";
+const char kCompositedLayerBorders[] = "layer";
+
+// Renders a green border around GL composited texture quads to help
+// debug and study overlay support.
+const char kGlCompositedTextureQuadBorder[] =
+    "gl-composited-texture-quad-border";
 
 // Draws a heads-up-display showing Frames Per Second as well as GPU memory
 // usage. If you also use --enable-logging=stderr --vmodule="head*=1" then FPS
@@ -79,15 +92,21 @@ const char kUIShowSurfaceDamageRects[] = "ui-show-surface-damage-rects";
 const char kShowScreenSpaceRects[] = "show-screenspace-rects";
 const char kUIShowScreenSpaceRects[] = "ui-show-screenspace-rects";
 
-// Show rects in the HUD around the screen-space transformed bounds of every
-// layer's replica, when they have one.
-const char kShowReplicaScreenSpaceRects[] = "show-replica-screenspace-rects";
-const char kUIShowReplicaScreenSpaceRects[] =
-    "ui-show-replica-screenspace-rects";
-
 // Switches cc machinery to use layer lists instead of layer trees
 const char kEnableLayerLists[] = "enable-layer-lists";
 const char kUIEnableLayerLists[] = "ui-enable-layer-lists";
+
+// Visualize overdraw by color-coding elements based on if they have other
+// elements drawn underneath. This is good for showing where the UI might be
+// doing more rendering work than necessary. The colors are hinting at the
+// amount of overdraw on your screen for each pixel, as follows:
+//
+// True color: No overdraw.
+// Blue: Overdrawn once.
+// Green: Overdrawn twice.
+// Pink: Overdrawn three times.
+// Red: Overdrawn four or more times.
+const char kShowOverdrawFeedback[] = "show-overdraw-feedback";
 
 // Prevents the layer tree unit tests from timing out.
 const char kCCLayerTreeTestNoTimeout[] = "cc-layer-tree-test-no-timeout";

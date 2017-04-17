@@ -25,15 +25,6 @@ NSWindow* g_simulated_active_window_ = nil;
 }  // namespace
 
 // static
-void WidgetTest::SimulateNativeDestroy(Widget* widget) {
-  // Retain the window while closing it, otherwise the window may lose its last
-  // owner before -[NSWindow close] completes (this offends AppKit). Usually
-  // this reference will exist on an event delivered to the runloop.
-  base::scoped_nsobject<NSWindow> window([widget->GetNativeWindow() retain]);
-  [window close];
-}
-
-// static
 void WidgetTest::SimulateNativeActivate(Widget* widget) {
   NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
   if (g_simulated_active_window_) {
@@ -79,7 +70,7 @@ gfx::Size WidgetTest::GetNativeWidgetMinimumContentSize(Widget* widget) {
 }
 
 // static
-ui::EventProcessor* WidgetTest::GetEventProcessor(Widget* widget) {
+ui::EventSink* WidgetTest::GetEventSink(Widget* widget) {
   return static_cast<internal::RootView*>(widget->GetRootView());
 }
 
@@ -92,6 +83,16 @@ ui::internal::InputMethodDelegate* WidgetTest::GetInputMethodDelegateForWidget(
 // static
 bool WidgetTest::IsNativeWindowTransparent(gfx::NativeWindow window) {
   return ![window isOpaque];
+}
+
+// static
+Widget::Widgets WidgetTest::GetAllWidgets() {
+  Widget::Widgets all_widgets;
+  for (NSWindow* window : [NSApp windows]) {
+    if (Widget* widget = Widget::GetWidgetForNativeWindow(window))
+      all_widgets.insert(widget);
+  }
+  return all_widgets;
 }
 
 }  // namespace test

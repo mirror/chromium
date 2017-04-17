@@ -22,25 +22,22 @@
 // introduce any link dependency to net/websockets.
 #include "net/websockets/websocket_handshake_stream_base.h"
 
-class GURL;
-
 namespace base {
-class Value;
+namespace trace_event {
+class ProcessMemoryDump;
+}
 }
 
 namespace net {
 
-class AuthCredentials;
-class BoundNetLog;
 class BidirectionalStreamImpl;
 class HostMappingRules;
-class HostPortPair;
 class HttpAuthController;
 class HttpNetworkSession;
 class HttpResponseHeaders;
 class HttpResponseInfo;
-class HttpServerProperties;
 class HttpStream;
+class NetLogWithSource;
 class ProxyInfo;
 class SSLCertRequestInfo;
 class SSLInfo;
@@ -171,8 +168,7 @@ class NET_EXPORT_PRIVATE HttpStreamRequest {
   // will have been called.  It now becomes the delegate's responsibility
   // to collect the necessary credentials, and then call this method to
   // resume the HttpStream creation process.
-  virtual int RestartTunnelWithProxyAuth(
-      const AuthCredentials& credentials) = 0;
+  virtual int RestartTunnelWithProxyAuth() = 0;
 
   // Called when the priority of the parent transaction changes.
   virtual void SetPriority(RequestPriority priority) = 0;
@@ -180,11 +176,11 @@ class NET_EXPORT_PRIVATE HttpStreamRequest {
   // Returns the LoadState for the request.
   virtual LoadState GetLoadState() const = 0;
 
-  // Returns true if TLS/NPN was negotiated for this stream.
-  virtual bool was_npn_negotiated() const = 0;
+  // Returns true if TLS/ALPN was negotiated for this stream.
+  virtual bool was_alpn_negotiated() const = 0;
 
   // Protocol negotiated with the server.
-  virtual NextProto protocol_negotiated() const = 0;
+  virtual NextProto negotiated_protocol() const = 0;
 
   // Returns true if this stream is being fetched over SPDY.
   virtual bool using_spdy() const = 0;
@@ -212,7 +208,9 @@ class NET_EXPORT HttpStreamFactory {
       const SSLConfig& server_ssl_config,
       const SSLConfig& proxy_ssl_config,
       HttpStreamRequest::Delegate* delegate,
-      const BoundNetLog& net_log) = 0;
+      bool enable_ip_based_pooling,
+      bool enable_alternative_services,
+      const NetLogWithSource& net_log) = 0;
 
   // Request a WebSocket handshake stream.
   // Will call delegate->OnWebSocketHandshakeStreamReady on successful
@@ -224,7 +222,9 @@ class NET_EXPORT HttpStreamFactory {
       const SSLConfig& proxy_ssl_config,
       HttpStreamRequest::Delegate* delegate,
       WebSocketHandshakeStreamBase::CreateHelper* create_helper,
-      const BoundNetLog& net_log) = 0;
+      bool enable_ip_based_pooling,
+      bool enable_alternative_services,
+      const NetLogWithSource& net_log) = 0;
 
   // Request a BidirectionalStreamImpl.
   // Will call delegate->OnBidirectionalStreamImplReady on successful
@@ -235,13 +235,21 @@ class NET_EXPORT HttpStreamFactory {
       const SSLConfig& server_ssl_config,
       const SSLConfig& proxy_ssl_config,
       HttpStreamRequest::Delegate* delegate,
-      const BoundNetLog& net_log) = 0;
+      bool enable_ip_based_pooling,
+      bool enable_alternative_services,
+      const NetLogWithSource& net_log) = 0;
 
   // Requests that enough connections for |num_streams| be opened.
   virtual void PreconnectStreams(int num_streams,
                                  const HttpRequestInfo& info) = 0;
 
   virtual const HostMappingRules* GetHostMappingRules() const = 0;
+
+  // Dumps memory allocation stats. |parent_dump_absolute_name| is the name
+  // used by the parent MemoryAllocatorDump in the memory dump hierarchy.
+  virtual void DumpMemoryStats(
+      base::trace_event::ProcessMemoryDump* pmd,
+      const std::string& parent_absolute_name) const = 0;
 
  protected:
   HttpStreamFactory();

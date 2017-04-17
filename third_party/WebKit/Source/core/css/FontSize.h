@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,43 +24,56 @@
 #define FontSize_h
 
 #include "core/CSSValueKeywords.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class Document;
 
-enum ESmartMinimumForFontSize { DoNotUseSmartMinimumForFontSize, UseSmartMinimumForFontSize };
-
-class FontSize {
-    STATIC_ONLY(FontSize);
-public:
-    static float getComputedSizeFromSpecifiedSize(const Document*, float zoomFactor, bool isAbsoluteSize, float specifiedSize, ESmartMinimumForFontSize = UseSmartMinimumForFontSize);
-
-    // Given a CSS keyword in the range (xx-small to -webkit-xxx-large), this function returns
-    // values from '1' to '8'.
-    static unsigned keywordSize(CSSValueID valueID)
-    {
-        ASSERT(isValidValueID(valueID));
-        return valueID - CSSValueXxSmall + 1;
-    }
-
-    static bool isValidValueID(CSSValueID valueID)
-    {
-        return valueID >= CSSValueXxSmall && valueID <= CSSValueWebkitXxxLarge;
-    }
-
-    static CSSValueID initialValueID() { return CSSValueMedium; }
-    static unsigned initialKeywordSize() { return keywordSize(initialValueID()); }
-
-    // Given a keyword size in the range (1 to 8), this function will return
-    // the correct font size scaled relative to the user's default (4).
-    static float fontSizeForKeyword(const Document*, unsigned keyword, bool isMonospace);
-
-    // Given a font size in pixel, this function will return legacy font size between 1 and 7.
-    static int legacyFontSize(const Document*, int pixelFontSize, bool isMonospace);
+enum ApplyMinimumFontSize {
+  kDoNotApplyMinimumForFontSize,
+  kApplyMinimumForFontSize
 };
 
-} // namespace blink
+class FontSize {
+  STATIC_ONLY(FontSize);
 
-#endif // FontSize_h
+ public:
+  static float GetComputedSizeFromSpecifiedSize(
+      const Document*,
+      float zoom_factor,
+      bool is_absolute_size,
+      float specified_size,
+      ApplyMinimumFontSize = kApplyMinimumForFontSize);
+
+  // Given a CSS keyword in the range (xx-small to -webkit-xxx-large), this
+  // function returns
+  // values from '1' to '8'.
+  static unsigned KeywordSize(CSSValueID value_id) {
+    DCHECK(IsValidValueID(value_id));
+    return value_id - CSSValueXxSmall + 1;
+  }
+
+  static bool IsValidValueID(CSSValueID value_id) {
+    return value_id >= CSSValueXxSmall && value_id <= CSSValueWebkitXxxLarge;
+  }
+
+  static CSSValueID InitialValueID() { return CSSValueMedium; }
+  static unsigned InitialKeywordSize() { return KeywordSize(InitialValueID()); }
+
+  // Given a keyword size in the range (1 to 8), this function will return
+  // the correct font size scaled relative to the user's default (4).
+  static float FontSizeForKeyword(const Document*,
+                                  unsigned keyword,
+                                  bool is_monospace);
+
+  // Given a font size in pixel, this function will return legacy font size
+  // between 1 and 7.
+  static int LegacyFontSize(const Document*,
+                            int pixel_font_size,
+                            bool is_monospace);
+};
+
+}  // namespace blink
+
+#endif  // FontSize_h

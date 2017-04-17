@@ -4,122 +4,108 @@
 
 #include "core/workers/InProcessWorkerBase.h"
 
-#include "bindings/core/v8/ExceptionState.h"
-#include "core/events/MessageEvent.h"
-#include "core/fetch/ResourceFetcher.h"
-#include "core/frame/LocalDOMWindow.h"
-#include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/inspector/InspectorInstrumentation.h"
-#include "core/workers/InProcessWorkerGlobalScopeProxy.h"
-#include "core/workers/WorkerScriptLoader.h"
-#include "core/workers/WorkerThread.h"
-#include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include <memory>
+#include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptState.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/events/MessageEvent.h"
+#include "core/probe/CoreProbes.h"
+#include "core/workers/InProcessWorkerMessagingProxy.h"
+#include "core/workers/WorkerScriptLoader.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 
 namespace blink {
 
 InProcessWorkerBase::InProcessWorkerBase(ExecutionContext* context)
-    : AbstractWorker(context)
-    , ActiveScriptWrappable(this)
-    , m_contextProxy(nullptr)
-{
+    : AbstractWorker(context), context_proxy_(nullptr) {}
+
+InProcessWorkerBase::~InProcessWorkerBase() {
+  DCHECK(IsMainThread());
+  if (!context_proxy_)
+    return;
+  context_proxy_->ParentObjectDestroyed();
 }
 
-InProcessWorkerBase::~InProcessWorkerBase()
-{
-    DCHECK(isMainThread());
-    if (!m_contextProxy)
-        return;
-    m_contextProxy->workerObjectDestroyed();
+void InProcessWorkerBase::postMessage(ScriptState* script_state,
+                                      PassRefPtr<SerializedScriptValue> message,
+                                      const MessagePortArray& ports,
+                                      ExceptionState& exception_state) {
+  DCHECK(context_proxy_);
+  // Disentangle the port in preparation for sending it to the remote context.
+  MessagePortChannelArray channels = MessagePort::DisentanglePorts(
+      ExecutionContext::From(script_state), ports, exception_state);
+  if (exception_state.HadException())
+    return;
+  context_proxy_->PostMessageToWorkerGlobalScope(std::move(message),
+                                                 std::move(channels));
 }
 
-void InProcessWorkerBase::postMessage(ExecutionContext* context, PassRefPtr<SerializedScriptValue> message, const MessagePortArray& ports, ExceptionState& exceptionState)
-{
-    DCHECK(m_contextProxy);
-    // Disentangle the port in preparation for sending it to the remote context.
-    std::unique_ptr<MessagePortChannelArray> channels = MessagePort::disentanglePorts(context, ports, exceptionState);
-    if (exceptionState.hadException())
-        return;
-    m_contextProxy->postMessageToWorkerGlobalScope(message, std::move(channels));
+bool InProcessWorkerBase::Initialize(ExecutionContext* context,
+                                     const String& url,
+                                     ExceptionState& exception_state) {
+  // TODO(mkwst): Revisit the context as
+  // https://drafts.css-houdini.org/worklets/ evolves.
+  KURL script_url =
+      ResolveURL(url, exception_state, WebURLRequest::kRequestContextScript);
+  if (script_url.IsEmpty())
+    return false;
+
+  CrossOriginRequestPolicy cross_origin_request_policy =
+      script_url.ProtocolIsData() ? kAllowCrossOriginRequests
+                                  : kDenyCrossOriginRequests;
+
+  script_loader_ = WorkerScriptLoader::Create();
+  script_loader_->LoadAsynchronously(
+      *context, script_url, cross_origin_request_policy,
+      context->GetSecurityContext().AddressSpace(),
+      WTF::Bind(&InProcessWorkerBase::OnResponse, WrapPersistent(this)),
+      WTF::Bind(&InProcessWorkerBase::OnFinished, WrapPersistent(this)));
+
+  context_proxy_ = CreateInProcessWorkerMessagingProxy(context);
+
+  return true;
 }
 
-bool InProcessWorkerBase::initialize(ExecutionContext* context, const String& url, ExceptionState& exceptionState)
-{
-    suspendIfNeeded();
-
-    // TODO(mkwst): Revisit the context as https://drafts.css-houdini.org/worklets/ evolves.
-    KURL scriptURL = resolveURL(url, exceptionState, WebURLRequest::RequestContextScript);
-    if (scriptURL.isEmpty())
-        return false;
-
-    m_scriptLoader = WorkerScriptLoader::create();
-    m_scriptLoader->loadAsynchronously(
-        *context,
-        scriptURL,
-        DenyCrossOriginRequests,
-        context->securityContext().addressSpace(),
-        WTF::bind(&InProcessWorkerBase::onResponse, wrapPersistent(this)),
-        WTF::bind(&InProcessWorkerBase::onFinished, wrapPersistent(this)));
-
-    m_contextProxy = createInProcessWorkerGlobalScopeProxy(context);
-
-    return true;
+void InProcessWorkerBase::terminate() {
+  if (context_proxy_)
+    context_proxy_->TerminateGlobalScope();
 }
 
-void InProcessWorkerBase::terminate()
-{
-    if (m_contextProxy)
-        m_contextProxy->terminateWorkerGlobalScope();
+void InProcessWorkerBase::ContextDestroyed(ExecutionContext*) {
+  if (script_loader_)
+    script_loader_->Cancel();
+  terminate();
 }
 
-void InProcessWorkerBase::stop()
-{
-    terminate();
+bool InProcessWorkerBase::HasPendingActivity() const {
+  // The worker context does not exist while loading, so we must ensure that the
+  // worker object is not collected, nor are its event listeners.
+  return (context_proxy_ && context_proxy_->HasPendingActivity()) ||
+         script_loader_;
 }
 
-bool InProcessWorkerBase::hasPendingActivity() const
-{
-    // The worker context does not exist while loading, so we must ensure that the worker object is not collected, nor are its event listeners.
-    return (m_contextProxy && m_contextProxy->hasPendingActivity()) || m_scriptLoader;
+void InProcessWorkerBase::OnResponse() {
+  probe::didReceiveScriptResponse(GetExecutionContext(),
+                                  script_loader_->Identifier());
 }
 
-ContentSecurityPolicy* InProcessWorkerBase::contentSecurityPolicy()
-{
-    if (m_scriptLoader)
-        return m_scriptLoader->contentSecurityPolicy();
-    return m_contentSecurityPolicy.get();
+void InProcessWorkerBase::OnFinished() {
+  if (script_loader_->Canceled()) {
+    // Do nothing.
+  } else if (script_loader_->Failed()) {
+    DispatchEvent(Event::CreateCancelable(EventTypeNames::error));
+  } else {
+    context_proxy_->StartWorkerGlobalScope(
+        script_loader_->Url(), GetExecutionContext()->UserAgent(),
+        script_loader_->SourceText(), script_loader_->GetReferrerPolicy());
+    probe::scriptImported(GetExecutionContext(), script_loader_->Identifier(),
+                          script_loader_->SourceText());
+  }
+  script_loader_ = nullptr;
 }
 
-String InProcessWorkerBase::referrerPolicy()
-{
-    if (m_scriptLoader)
-        return m_scriptLoader->referrerPolicy();
-    return m_referrerPolicy;
+DEFINE_TRACE(InProcessWorkerBase) {
+  AbstractWorker::Trace(visitor);
 }
 
-void InProcessWorkerBase::onResponse()
-{
-    InspectorInstrumentation::didReceiveScriptResponse(getExecutionContext(), m_scriptLoader->identifier());
-}
-
-void InProcessWorkerBase::onFinished()
-{
-    if (m_scriptLoader->failed()) {
-        dispatchEvent(Event::createCancelable(EventTypeNames::error));
-    } else {
-        DCHECK(m_contextProxy);
-        m_contextProxy->startWorkerGlobalScope(m_scriptLoader->url(), getExecutionContext()->userAgent(), m_scriptLoader->script());
-        InspectorInstrumentation::scriptImported(getExecutionContext(), m_scriptLoader->identifier(), m_scriptLoader->script());
-    }
-    m_contentSecurityPolicy = m_scriptLoader->releaseContentSecurityPolicy();
-    m_referrerPolicy = m_scriptLoader->referrerPolicy();
-    m_scriptLoader = nullptr;
-}
-
-DEFINE_TRACE(InProcessWorkerBase)
-{
-    visitor->trace(m_contentSecurityPolicy);
-    AbstractWorker::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

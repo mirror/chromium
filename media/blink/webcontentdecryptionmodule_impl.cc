@@ -12,8 +12,8 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "media/base/cdm_promise.h"
+#include "media/base/content_decryption_module.h"
 #include "media/base/key_systems.h"
-#include "media/base/media_keys.h"
 #include "media/blink/cdm_result_promise.h"
 #include "media/blink/cdm_session_adapter.h"
 #include "media/blink/webcontentdecryptionmodulesession_impl.h"
@@ -21,6 +21,7 @@
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace media {
 
@@ -30,15 +31,15 @@ void WebContentDecryptionModuleImpl::Create(
     const blink::WebSecurityOrigin& security_origin,
     const CdmConfig& cdm_config,
     std::unique_ptr<blink::WebContentDecryptionModuleResult> result) {
-  DCHECK(!security_origin.isNull());
+  DCHECK(!security_origin.IsNull());
   DCHECK(!key_system.empty());
 
   // TODO(ddorwin): Guard against this in supported types check and remove this.
   // Chromium only supports ASCII key systems.
   if (!base::IsStringASCII(key_system)) {
     NOTREACHED();
-    result->completeWithError(
-        blink::WebContentDecryptionModuleExceptionNotSupportedError, 0,
+    result->CompleteWithError(
+        blink::kWebContentDecryptionModuleExceptionNotSupportedError, 0,
         "Invalid keysystem.");
     return;
   }
@@ -49,22 +50,21 @@ void WebContentDecryptionModuleImpl::Create(
           key_system_ascii)) {
     std::string message =
         "Keysystem '" + key_system_ascii + "' is not supported.";
-    result->completeWithError(
-        blink::WebContentDecryptionModuleExceptionNotSupportedError, 0,
-        blink::WebString::fromUTF8(message));
+    result->CompleteWithError(
+        blink::kWebContentDecryptionModuleExceptionNotSupportedError, 0,
+        blink::WebString::FromUTF8(message));
     return;
   }
 
   // If unique security origin, don't try to create the CDM.
-  if (security_origin.isUnique() || security_origin.toString() == "null") {
-    result->completeWithError(
-        blink::WebContentDecryptionModuleExceptionNotSupportedError, 0,
+  if (security_origin.IsUnique() || security_origin.ToString() == "null") {
+    result->CompleteWithError(
+        blink::kWebContentDecryptionModuleExceptionNotSupportedError, 0,
         "EME use is not allowed on unique origins.");
     return;
   }
 
-  GURL security_origin_as_gurl(
-      blink::WebStringToGURL(security_origin.toString()));
+  GURL security_origin_as_gurl(url::Origin(security_origin).GetURL());
 
   // CdmSessionAdapter::CreateCdm() will keep a reference to |adapter|. Then
   // if WebContentDecryptionModuleImpl is successfully created (returned in
@@ -85,11 +85,11 @@ WebContentDecryptionModuleImpl::~WebContentDecryptionModuleImpl() {
 
 // The caller owns the created session.
 blink::WebContentDecryptionModuleSession*
-WebContentDecryptionModuleImpl::createSession() {
+WebContentDecryptionModuleImpl::CreateSession() {
   return adapter_->CreateSession();
 }
 
-void WebContentDecryptionModuleImpl::setServerCertificate(
+void WebContentDecryptionModuleImpl::SetServerCertificate(
     const uint8_t* server_certificate,
     size_t server_certificate_length,
     blink::WebContentDecryptionModuleResult result) {
@@ -101,8 +101,9 @@ void WebContentDecryptionModuleImpl::setServerCertificate(
           new CdmResultPromise<>(result, std::string())));
 }
 
-CdmContext* WebContentDecryptionModuleImpl::GetCdmContext() {
-  return adapter_->GetCdmContext();
+scoped_refptr<ContentDecryptionModule>
+WebContentDecryptionModuleImpl::GetCdm() {
+  return adapter_->GetCdm();
 }
 
 }  // namespace media

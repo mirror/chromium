@@ -7,112 +7,103 @@
 
 #include "platform/geometry/FloatSize.h"
 #include "platform/geometry/IntSize.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/MathExtras.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
 class LayoutSize;
 
 class PLATFORM_EXPORT DoubleSize {
-    DISALLOW_NEW();
-public:
-    DoubleSize() : m_width(0), m_height(0) { }
-    DoubleSize(double width, double height) : m_width(width), m_height(height) { }
-    DoubleSize(const IntSize& p) : m_width(p.width()), m_height(p.height()) { }
-    DoubleSize(const FloatSize& s) : m_width(s.width()), m_height(s.height()) { }
-    explicit DoubleSize(const LayoutSize&);
+  DISALLOW_NEW();
 
-    double width() const { return m_width; }
-    double height() const { return m_height; }
+ public:
+  DoubleSize() : width_(0), height_(0) {}
+  DoubleSize(double width, double height) : width_(width), height_(height) {}
+  DoubleSize(const IntSize& p) : width_(p.Width()), height_(p.Height()) {}
+  DoubleSize(const FloatSize& s) : width_(s.Width()), height_(s.Height()) {}
+  explicit DoubleSize(const LayoutSize&);
 
-    void setWidth(double width) { m_width = width; }
-    void setHeight(double height) { m_height = height; }
+  double Width() const { return width_; }
+  double Height() const { return height_; }
 
-    bool isEmpty() const { return m_width <= 0 || m_height <= 0; }
+  void SetWidth(double width) { width_ = width; }
+  void SetHeight(double height) { height_ = height; }
 
-    bool isZero() const;
+  bool IsEmpty() const { return width_ <= 0 || height_ <= 0; }
 
-    void expand(float width, float height)
-    {
-        m_width += width;
-        m_height += height;
-    }
+  bool IsZero() const;
 
-    void scale(float widthScale, float heightScale)
-    {
-        m_width = m_width * widthScale;
-        m_height = m_height * heightScale;
-    }
+  void Expand(float width, float height) {
+    width_ += width;
+    height_ += height;
+  }
 
-    void scale(float scale)
-    {
-        this->scale(scale, scale);
-    }
+  void Scale(float width_scale, float height_scale) {
+    width_ = width_ * width_scale;
+    height_ = height_ * height_scale;
+  }
 
-#ifndef NDEBUG
-    String toString() const;
-#endif
+  void Scale(float scale) { this->Scale(scale, scale); }
 
-private:
-    double m_width, m_height;
+  String ToString() const;
+
+ private:
+  double width_, height_;
 };
 
-inline DoubleSize& operator+=(DoubleSize& a, const DoubleSize& b)
-{
-    a.setWidth(a.width() + b.width());
-    a.setHeight(a.height() + b.height());
-    return a;
+inline DoubleSize& operator+=(DoubleSize& a, const DoubleSize& b) {
+  a.SetWidth(a.Width() + b.Width());
+  a.SetHeight(a.Height() + b.Height());
+  return a;
 }
 
-inline DoubleSize& operator-=(DoubleSize& a, const DoubleSize& b)
-{
-    a.setWidth(a.width() - b.width());
-    a.setHeight(a.height() - b.height());
-    return a;
+inline DoubleSize& operator-=(DoubleSize& a, const DoubleSize& b) {
+  a.SetWidth(a.Width() - b.Width());
+  a.SetHeight(a.Height() - b.Height());
+  return a;
 }
 
-inline DoubleSize operator+(const DoubleSize& a, const DoubleSize& b)
-{
-    return DoubleSize(a.width() + b.width(), a.height() + b.height());
+inline DoubleSize operator+(const DoubleSize& a, const DoubleSize& b) {
+  return DoubleSize(a.Width() + b.Width(), a.Height() + b.Height());
 }
 
-inline DoubleSize operator-(const DoubleSize& a, const DoubleSize& b)
-{
-    return DoubleSize(a.width() - b.width(), a.height() - b.height());
+inline DoubleSize operator-(const DoubleSize& a, const DoubleSize& b) {
+  return DoubleSize(a.Width() - b.Width(), a.Height() - b.Height());
 }
 
-inline bool operator==(const DoubleSize& a, const DoubleSize& b)
-{
-    return a.width() == b.width() && a.height() == b.height();
+inline bool operator==(const DoubleSize& a, const DoubleSize& b) {
+  return a.Width() == b.Width() && a.Height() == b.Height();
 }
 
-inline bool operator!=(const DoubleSize& a, const DoubleSize& b)
-{
-    return a.width() != b.width() || a.height() != b.height();
+inline bool operator!=(const DoubleSize& a, const DoubleSize& b) {
+  return a.Width() != b.Width() || a.Height() != b.Height();
 }
 
-inline IntSize flooredIntSize(const DoubleSize& p)
-{
-    return IntSize(clampTo<int>(floor(p.width())), clampTo<int>(floor(p.height())));
+inline IntSize FlooredIntSize(const DoubleSize& p) {
+  return IntSize(clampTo<int>(floor(p.Width())),
+                 clampTo<int>(floor(p.Height())));
 }
 
-inline IntSize roundedIntSize(const DoubleSize& p)
-{
-    return IntSize(clampTo<int>(roundf(p.width())), clampTo<int>(roundf(p.height())));
+inline IntSize RoundedIntSize(const DoubleSize& p) {
+  return IntSize(clampTo<int>(roundf(p.Width())),
+                 clampTo<int>(roundf(p.Height())));
 }
 
-inline IntSize expandedIntSize(const DoubleSize& p)
-{
-    return IntSize(clampTo<int>(ceilf(p.width())), clampTo<int>(ceilf(p.height())));
+inline IntSize ExpandedIntSize(const DoubleSize& p) {
+  return IntSize(clampTo<int>(ceilf(p.Width())),
+                 clampTo<int>(ceilf(p.Height())));
 }
 
-inline FloatSize toFloatSize(const DoubleSize& p)
-{
-    return FloatSize(p.width(), p.height());
+inline FloatSize ToFloatSize(const DoubleSize& p) {
+  return FloatSize(p.Width(), p.Height());
 }
 
-} // namespace blink
+// Redeclared here to avoid ODR issues.
+// See platform/testing/GeometryPrinters.h.
+void PrintTo(const DoubleSize&, std::ostream*);
 
-#endif // DoubleSize_h
+}  // namespace blink
+
+#endif  // DoubleSize_h

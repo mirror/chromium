@@ -22,247 +22,267 @@
 #define CSSValue_h
 
 #include "core/CoreExport.h"
+#include "core/style/DataEquivalency.h"
 #include "platform/heap/Handle.h"
-#include "platform/weborigin/KURL.h"
-#include "wtf/HashMap.h"
-#include "wtf/ListHashSet.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
+class Document;
+class Length;
+
 class CORE_EXPORT CSSValue : public GarbageCollectedFinalized<CSSValue> {
-public:
-    // Override operator new to allocate CSSValue subtype objects onto
-    // a dedicated heap.
-    GC_PLUGIN_IGNORE("crbug.com/443854")
-    void* operator new(size_t size)
-    {
-        return allocateObject(size, false);
-    }
-    static void* allocateObject(size_t size, bool isEager)
-    {
-        ThreadState* state = ThreadStateFor<ThreadingTrait<CSSValue>::Affinity>::state();
-        const char typeName[] = "blink::CSSValue";
-        return ThreadHeap::allocateOnArenaIndex(state, size, isEager ? BlinkGC::EagerSweepArenaIndex : BlinkGC::CSSValueArenaIndex, GCInfoTrait<CSSValue>::index(), typeName);
-    }
+ public:
+  // Override operator new to allocate CSSValue subtype objects onto
+  // a dedicated heap.
+  GC_PLUGIN_IGNORE("crbug.com/443854")
+  void* operator new(size_t size) { return AllocateObject(size, false); }
+  static void* AllocateObject(size_t size, bool is_eager) {
+    ThreadState* state =
+        ThreadStateFor<ThreadingTrait<CSSValue>::kAffinity>::GetState();
+    const char* type_name = "blink::CSSValue";
+    return ThreadHeap::AllocateOnArenaIndex(
+        state, size,
+        is_eager ? BlinkGC::kEagerSweepArenaIndex
+                 : BlinkGC::kCSSValueArenaIndex,
+        GCInfoTrait<CSSValue>::Index(), type_name);
+  }
 
-    String cssText() const;
+  // TODO(sashab): Remove this method and move logic to the caller.
+  static CSSValue* Create(const Length& value, float zoom);
 
-    bool isPrimitiveValue() const { return m_classType == PrimitiveClass; }
-    bool isValuePair() const { return m_classType == ValuePairClass; }
-    bool isValueList() const { return m_classType >= ValueListClass; }
+  String CssText() const;
 
-    bool isBaseValueList() const { return m_classType == ValueListClass; }
+  bool IsPrimitiveValue() const { return class_type_ == kPrimitiveClass; }
+  bool IsIdentifierValue() const { return class_type_ == kIdentifierClass; }
+  bool IsValuePair() const { return class_type_ == kValuePairClass; }
+  bool IsValueList() const { return class_type_ >= kValueListClass; }
 
-    bool isBasicShapeValue() const { return m_classType >= BasicShapeCircleClass && m_classType <= BasicShapeInsetClass; }
-    bool isBasicShapeCircleValue() const { return m_classType == BasicShapeCircleClass; }
-    bool isBasicShapeEllipseValue() const { return m_classType == BasicShapeEllipseClass; }
-    bool isBasicShapePolygonValue() const { return m_classType == BasicShapePolygonClass; }
-    bool isBasicShapeInsetValue() const { return m_classType == BasicShapeInsetClass; }
+  bool IsBaseValueList() const { return class_type_ == kValueListClass; }
 
-    bool isBorderImageSliceValue() const { return m_classType == BorderImageSliceClass; }
-    bool isColorValue() const { return m_classType == ColorClass; }
-    bool isCounterValue() const { return m_classType == CounterClass; }
-    bool isCursorImageValue() const { return m_classType == CursorImageClass; }
-    bool isCrossfadeValue() const { return m_classType == CrossfadeClass; }
-    bool isPaintValue() const { return m_classType == PaintClass; }
-    bool isFontFeatureValue() const { return m_classType == FontFeatureClass; }
-    bool isFontFamilyValue() const { return m_classType == FontFamilyClass; }
-    bool isFontFaceSrcValue() const { return m_classType == FontFaceSrcClass; }
-    bool isFunctionValue() const { return m_classType == FunctionClass; }
-    bool isCustomIdentValue() const { return m_classType == CustomIdentClass; }
-    bool isImageGeneratorValue() const { return m_classType >= CrossfadeClass && m_classType <= RadialGradientClass; }
-    bool isGradientValue() const { return m_classType >= LinearGradientClass && m_classType <= RadialGradientClass; }
-    bool isImageSetValue() const { return m_classType == ImageSetClass; }
-    bool isImageValue() const { return m_classType == ImageClass; }
-    bool isImplicitInitialValue() const;
-    bool isInheritedValue() const { return m_classType == InheritedClass; }
-    bool isInitialValue() const { return m_classType == InitialClass; }
-    bool isUnsetValue() const { return m_classType == UnsetClass; }
-    bool isCSSWideKeyword() const { return m_classType >= InheritedClass && m_classType <= UnsetClass; }
-    bool isLinearGradientValue() const { return m_classType == LinearGradientClass; }
-    bool isPathValue() const { return m_classType == PathClass; }
-    bool isQuadValue() const { return m_classType == QuadClass; }
-    bool isRadialGradientValue() const { return m_classType == RadialGradientClass; }
-    bool isReflectValue() const { return m_classType == ReflectClass; }
-    bool isShadowValue() const { return m_classType == ShadowClass; }
-    bool isStringValue() const { return m_classType == StringClass; }
-    bool isURIValue() const { return m_classType == URIClass; }
-    bool isCubicBezierTimingFunctionValue() const { return m_classType == CubicBezierTimingFunctionClass; }
-    bool isStepsTimingFunctionValue() const { return m_classType == StepsTimingFunctionClass; }
-    bool isGridTemplateAreasValue() const { return m_classType == GridTemplateAreasClass; }
-    bool isContentDistributionValue() const { return m_classType == CSSContentDistributionClass; }
-    bool isUnicodeRangeValue() const { return m_classType == UnicodeRangeClass; }
-    bool isGridLineNamesValue() const { return m_classType == GridLineNamesClass; }
-    bool isCustomPropertyDeclaration() const { return m_classType == CustomPropertyDeclarationClass; }
-    bool isVariableReferenceValue() const { return m_classType == VariableReferenceClass; }
-    bool isGridAutoRepeatValue() const { return m_classType == GridAutoRepeatClass; }
-    bool isPendingSubstitutionValue() const { return m_classType == PendingSubstitutionValueClass; }
+  bool IsBasicShapeValue() const {
+    return class_type_ >= kBasicShapeCircleClass &&
+           class_type_ <= kBasicShapeInsetClass;
+  }
+  bool IsBasicShapeCircleValue() const {
+    return class_type_ == kBasicShapeCircleClass;
+  }
+  bool IsBasicShapeEllipseValue() const {
+    return class_type_ == kBasicShapeEllipseClass;
+  }
+  bool IsBasicShapePolygonValue() const {
+    return class_type_ == kBasicShapePolygonClass;
+  }
+  bool IsBasicShapeInsetValue() const {
+    return class_type_ == kBasicShapeInsetClass;
+  }
 
-    bool hasFailedOrCanceledSubresources() const;
+  bool IsBorderImageSliceValue() const {
+    return class_type_ == kBorderImageSliceClass;
+  }
+  bool IsColorValue() const { return class_type_ == kColorClass; }
+  bool IsCounterValue() const { return class_type_ == kCounterClass; }
+  bool IsCursorImageValue() const { return class_type_ == kCursorImageClass; }
+  bool IsCrossfadeValue() const { return class_type_ == kCrossfadeClass; }
+  bool IsPaintValue() const { return class_type_ == kPaintClass; }
+  bool IsFontFeatureValue() const { return class_type_ == kFontFeatureClass; }
+  bool IsFontFamilyValue() const { return class_type_ == kFontFamilyClass; }
+  bool IsFontFaceSrcValue() const { return class_type_ == kFontFaceSrcClass; }
+  bool IsFontVariationValue() const {
+    return class_type_ == kFontVariationClass;
+  }
+  bool IsFunctionValue() const { return class_type_ == kFunctionClass; }
+  bool IsCustomIdentValue() const { return class_type_ == kCustomIdentClass; }
+  bool IsImageGeneratorValue() const {
+    return class_type_ >= kCrossfadeClass && class_type_ <= kConicGradientClass;
+  }
+  bool IsGradientValue() const {
+    return class_type_ >= kLinearGradientClass &&
+           class_type_ <= kConicGradientClass;
+  }
+  bool IsImageSetValue() const { return class_type_ == kImageSetClass; }
+  bool IsImageValue() const { return class_type_ == kImageClass; }
+  bool IsInheritedValue() const { return class_type_ == kInheritedClass; }
+  bool IsInitialValue() const { return class_type_ == kInitialClass; }
+  bool IsUnsetValue() const { return class_type_ == kUnsetClass; }
+  bool IsCSSWideKeyword() const {
+    return class_type_ >= kInheritedClass && class_type_ <= kUnsetClass;
+  }
+  bool IsLinearGradientValue() const {
+    return class_type_ == kLinearGradientClass;
+  }
+  bool IsPathValue() const { return class_type_ == kPathClass; }
+  bool IsQuadValue() const { return class_type_ == kQuadClass; }
+  bool IsRadialGradientValue() const {
+    return class_type_ == kRadialGradientClass;
+  }
+  bool IsConicGradientValue() const {
+    return class_type_ == kConicGradientClass;
+  }
+  bool IsReflectValue() const { return class_type_ == kReflectClass; }
+  bool IsShadowValue() const { return class_type_ == kShadowClass; }
+  bool IsStringValue() const { return class_type_ == kStringClass; }
+  bool IsURIValue() const { return class_type_ == kURIClass; }
+  bool IsCubicBezierTimingFunctionValue() const {
+    return class_type_ == kCubicBezierTimingFunctionClass;
+  }
+  bool IsStepsTimingFunctionValue() const {
+    return class_type_ == kStepsTimingFunctionClass;
+  }
+  bool IsGridTemplateAreasValue() const {
+    return class_type_ == kGridTemplateAreasClass;
+  }
+  bool IsContentDistributionValue() const {
+    return class_type_ == kCSSContentDistributionClass;
+  }
+  bool IsUnicodeRangeValue() const { return class_type_ == kUnicodeRangeClass; }
+  bool IsGridLineNamesValue() const {
+    return class_type_ == kGridLineNamesClass;
+  }
+  bool IsCustomPropertyDeclaration() const {
+    return class_type_ == kCustomPropertyDeclarationClass;
+  }
+  bool IsVariableReferenceValue() const {
+    return class_type_ == kVariableReferenceClass;
+  }
+  bool IsGridAutoRepeatValue() const {
+    return class_type_ == kGridAutoRepeatClass;
+  }
+  bool IsPendingSubstitutionValue() const {
+    return class_type_ == kPendingSubstitutionValueClass;
+  }
 
-    bool equals(const CSSValue&) const;
+  bool HasFailedOrCanceledSubresources() const;
+  bool MayContainUrl() const;
+  void ReResolveUrl(const Document&) const;
 
-    void finalizeGarbageCollectedObject();
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { }
-    DECLARE_TRACE();
+  bool operator==(const CSSValue&) const;
 
-    // ~CSSValue should be public, because non-public ~CSSValue causes C2248
-    // error: 'blink::CSSValue::~CSSValue' : cannot access protected member
-    // declared in class 'blink::CSSValue' when compiling
-    // 'source\wtf\refcounted.h' by using msvc.
-    ~CSSValue() { }
+  void FinalizeGarbageCollectedObject();
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {}
+  DECLARE_TRACE();
 
-protected:
-    static const size_t ClassTypeBits = 6;
-    enum ClassType {
-        PrimitiveClass,
-        ColorClass,
-        CounterClass,
-        QuadClass,
-        CustomIdentClass,
-        StringClass,
-        URIClass,
-        ValuePairClass,
+  // ~CSSValue should be public, because non-public ~CSSValue causes C2248
+  // error: 'blink::CSSValue::~CSSValue' : cannot access protected member
+  // declared in class 'blink::CSSValue' when compiling
+  // 'source\wtf\refcounted.h' by using msvc.
+  ~CSSValue() {}
 
-        // Basic shape classes.
-        // TODO(sashab): Represent these as a single subclass, BasicShapeClass.
-        BasicShapeCircleClass,
-        BasicShapeEllipseClass,
-        BasicShapePolygonClass,
-        BasicShapeInsetClass,
+ protected:
+  static const size_t kClassTypeBits = 6;
+  enum ClassType {
+    kPrimitiveClass,
+    kIdentifierClass,
+    kColorClass,
+    kCounterClass,
+    kQuadClass,
+    kCustomIdentClass,
+    kStringClass,
+    kURIClass,
+    kValuePairClass,
 
-        // Image classes.
-        ImageClass,
-        CursorImageClass,
+    // Basic shape classes.
+    // TODO(sashab): Represent these as a single subclass, BasicShapeClass.
+    kBasicShapeCircleClass,
+    kBasicShapeEllipseClass,
+    kBasicShapePolygonClass,
+    kBasicShapeInsetClass,
 
-        // Image generator classes.
-        CrossfadeClass,
-        PaintClass,
-        LinearGradientClass,
-        RadialGradientClass,
+    // Image classes.
+    kImageClass,
+    kCursorImageClass,
 
-        // Timing function classes.
-        CubicBezierTimingFunctionClass,
-        StepsTimingFunctionClass,
+    // Image generator classes.
+    kCrossfadeClass,
+    kPaintClass,
+    kLinearGradientClass,
+    kRadialGradientClass,
+    kConicGradientClass,
 
-        // Other class types.
-        BorderImageSliceClass,
-        FontFeatureClass,
-        FontFaceSrcClass,
-        FontFamilyClass,
+    // Timing function classes.
+    kCubicBezierTimingFunctionClass,
+    kStepsTimingFunctionClass,
 
-        InheritedClass,
-        InitialClass,
-        UnsetClass,
+    // Other class types.
+    kBorderImageSliceClass,
+    kFontFeatureClass,
+    kFontFaceSrcClass,
+    kFontFamilyClass,
+    kFontVariationClass,
 
-        ReflectClass,
-        ShadowClass,
-        UnicodeRangeClass,
-        GridTemplateAreasClass,
-        PathClass,
-        VariableReferenceClass,
-        CustomPropertyDeclarationClass,
-        PendingSubstitutionValueClass,
+    kInheritedClass,
+    kInitialClass,
+    kUnsetClass,
 
-        CSSContentDistributionClass,
+    kReflectClass,
+    kShadowClass,
+    kUnicodeRangeClass,
+    kGridTemplateAreasClass,
+    kPathClass,
+    kVariableReferenceClass,
+    kCustomPropertyDeclarationClass,
+    kPendingSubstitutionValueClass,
 
-        // List class types must appear after ValueListClass.
-        ValueListClass,
-        FunctionClass,
-        ImageSetClass,
-        GridLineNamesClass,
-        GridAutoRepeatClass,
-        // Do not append non-list class types here.
-    };
+    kCSSContentDistributionClass,
 
-    static const size_t ValueListSeparatorBits = 2;
-    enum ValueListSeparator {
-        SpaceSeparator,
-        CommaSeparator,
-        SlashSeparator
-    };
+    // List class types must appear after ValueListClass.
+    kValueListClass,
+    kFunctionClass,
+    kImageSetClass,
+    kGridLineNamesClass,
+    kGridAutoRepeatClass,
+    // Do not append non-list class types here.
+  };
 
-    ClassType getClassType() const { return static_cast<ClassType>(m_classType); }
+  static const size_t kValueListSeparatorBits = 2;
+  enum ValueListSeparator { kSpaceSeparator, kCommaSeparator, kSlashSeparator };
 
-    explicit CSSValue(ClassType classType)
-        : m_primitiveUnitType(0)
-        , m_hasCachedCSSText(false)
-        , m_valueListSeparator(SpaceSeparator)
-        , m_classType(classType)
-    {
-    }
+  ClassType GetClassType() const { return static_cast<ClassType>(class_type_); }
 
-    // NOTE: This class is non-virtual for memory and performance reasons.
-    // Don't go making it virtual again unless you know exactly what you're doing!
+  explicit CSSValue(ClassType class_type)
+      : primitive_unit_type_(0),
+        has_cached_css_text_(false),
+        value_list_separator_(kSpaceSeparator),
+        class_type_(class_type) {}
 
-private:
-    void destroy();
+  // NOTE: This class is non-virtual for memory and performance reasons.
+  // Don't go making it virtual again unless you know exactly what you're doing!
 
-protected:
-    // The bits in this section are only used by specific subclasses but kept here
-    // to maximize struct packing.
+ protected:
+  // The bits in this section are only used by specific subclasses but kept here
+  // to maximize struct packing.
 
-    // CSSPrimitiveValue bits:
-    unsigned m_primitiveUnitType : 7; // CSSPrimitiveValue::UnitType
-    mutable unsigned m_hasCachedCSSText : 1;
+  // CSSPrimitiveValue bits:
+  unsigned primitive_unit_type_ : 7;  // CSSPrimitiveValue::UnitType
+  mutable unsigned has_cached_css_text_ : 1;
 
-    unsigned m_valueListSeparator : ValueListSeparatorBits;
+  unsigned value_list_separator_ : kValueListSeparatorBits;
 
-private:
-    unsigned m_classType : ClassTypeBits; // ClassType
+ private:
+  unsigned class_type_ : kClassTypeBits;  // ClassType
 };
 
-template<typename CSSValueType, size_t inlineCapacity>
-inline bool compareCSSValueVector(const HeapVector<Member<CSSValueType>, inlineCapacity>& firstVector, const HeapVector<Member<CSSValueType>, inlineCapacity>& secondVector)
-{
-    size_t size = firstVector.size();
-    if (size != secondVector.size())
-        return false;
+template <typename CSSValueType, size_t inlineCapacity>
+inline bool CompareCSSValueVector(
+    const HeapVector<Member<CSSValueType>, inlineCapacity>& first_vector,
+    const HeapVector<Member<CSSValueType>, inlineCapacity>& second_vector) {
+  size_t size = first_vector.size();
+  if (size != second_vector.size()) {
+    return false;
+  }
 
-    for (size_t i = 0; i < size; i++) {
-        const Member<CSSValueType>& firstPtr = firstVector[i];
-        const Member<CSSValueType>& secondPtr = secondVector[i];
-        if (firstPtr == secondPtr || (firstPtr && secondPtr && firstPtr->equals(*secondPtr)))
-            continue;
-        return false;
+  for (size_t i = 0; i < size; i++) {
+    if (!DataEquivalent(first_vector[i], second_vector[i])) {
+      return false;
     }
-    return true;
+  }
+  return true;
 }
 
-template<typename CSSValueType>
-inline bool compareCSSValuePtr(const RefPtr<CSSValueType>& first, const RefPtr<CSSValueType>& second)
-{
-    if (first == second)
-        return true;
-    if (!first || !second)
-        return false;
-    return first->equals(*second);
-}
+#define DEFINE_CSS_VALUE_TYPE_CASTS(thisType, predicate)         \
+  DEFINE_TYPE_CASTS(thisType, CSSValue, value, value->predicate, \
+                    value.predicate)
 
-template<typename CSSValueType>
-inline bool compareCSSValuePtr(const CSSValueType* first, const CSSValueType* second)
-{
-    if (first == second)
-        return true;
-    if (!first || !second)
-        return false;
-    return first->equals(*second);
-}
+}  // namespace blink
 
-template<typename CSSValueType>
-inline bool compareCSSValuePtr(const Member<CSSValueType>& first, const Member<CSSValueType>& second)
-{
-    if (first == second)
-        return true;
-    if (!first || !second)
-        return false;
-    return first->equals(*second);
-}
-
-#define DEFINE_CSS_VALUE_TYPE_CASTS(thisType, predicate) \
-    DEFINE_TYPE_CASTS(thisType, CSSValue, value, value->predicate, value.predicate)
-
-} // namespace blink
-
-#endif // CSSValue_h
+#endif  // CSSValue_h

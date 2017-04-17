@@ -67,8 +67,7 @@ EVENTS_EXPORT void ValidateEventTimeClock(base::TimeTicks* timestamp);
 // |Point| has the origin at top-left of the "root window".  The nature of
 // this "root window" and how it maps to platform-specific drawing surfaces is
 // defined in ui/aura/root_window.* and ui/aura/window_tree_host*.
-// TODO(tdresser): Return gfx::PointF here. See crbug.com/337827.
-EVENTS_EXPORT gfx::Point EventLocationFromNative(
+EVENTS_EXPORT gfx::PointF EventLocationFromNative(
     const base::NativeEvent& native_event);
 
 // Gets the location in native system coordinate space.
@@ -146,7 +145,8 @@ EVENTS_EXPORT bool GetScrollOffsets(const base::NativeEvent& native_event,
                                     float* y_offset,
                                     float* x_offset_ordinal,
                                     float* y_offset_ordinal,
-                                    int* finger_count);
+                                    int* finger_count,
+                                    EventMomentumPhase* momentum_phase);
 
 // Returns whether natural scrolling should be used for touchpad.
 EVENTS_EXPORT bool ShouldDefaultToNaturalScroll();

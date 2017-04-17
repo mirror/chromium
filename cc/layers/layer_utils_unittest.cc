@@ -11,7 +11,6 @@
 #include "cc/test/animation_test_common.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
-#include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_task_graph_runner.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
@@ -29,9 +28,7 @@ float diagonal(float width, float height) {
 class LayerUtilsGetAnimationBoundsTest : public testing::Test {
  public:
   LayerUtilsGetAnimationBoundsTest()
-      : host_impl_(&task_runner_provider_,
-                   &shared_bitmap_manager_,
-                   &task_graph_runner_),
+      : host_impl_(&task_runner_provider_, &task_graph_runner_),
         root_(CreateTwoForkTree(&host_impl_)),
         parent1_(root_->test_properties()->children[0]),
         parent2_(root_->test_properties()->children[1]),
@@ -88,7 +85,6 @@ class LayerUtilsGetAnimationBoundsTest : public testing::Test {
   }
 
   FakeImplTaskRunnerProvider task_runner_provider_;
-  TestSharedBitmapManager shared_bitmap_manager_;
   TestTaskGraphRunner task_graph_runner_;
   FakeLayerTreeHostImpl host_impl_;
   LayerImpl* root_;
@@ -255,7 +251,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest, RotateXWithPerspective) {
 
   gfx::Transform perspective;
   perspective.ApplyPerspectiveDepth(100.f);
-  parent1()->SetTransform(perspective);
+  parent1()->test_properties()->transform = perspective;
 
   gfx::Size bounds(100, 100);
   child1()->SetDrawsContent(true);
@@ -296,7 +292,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest, RotateXWithPerspectiveOnSameLayer) {
 
   gfx::Transform perspective;
   perspective.ApplyPerspectiveDepth(100.f);
-  parent1()->SetTransform(perspective);
+  parent1()->test_properties()->transform = perspective;
 
   gfx::Size bounds(100, 100);
   child1()->SetDrawsContent(true);
@@ -398,7 +394,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest,
   translate_2d_transform.Translate(80.f, 60.f);
   root()->SetBounds(gfx::Size(350, 200));
   parent2()->SetPosition(gfx::PointF(40.f, 45.f));
-  child2()->SetTransform(translate_2d_transform);
+  child2()->test_properties()->transform = translate_2d_transform;
   great_grand_child()->SetDrawsContent(true);
   great_grand_child()->SetPosition(gfx::PointF(150.f, 50.f));
   great_grand_child()->SetBounds(gfx::Size(100, 200));
@@ -427,7 +423,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest,
   translate_2d_transform.Translate(80.f, 60.f);
   root()->SetBounds(gfx::Size(350, 200));
   parent2()->SetPosition(gfx::PointF(40.f, 45.f));
-  child2()->SetTransform(translate_2d_transform);
+  child2()->test_properties()->transform = translate_2d_transform;
 
   gfx::Size bounds(100, 100);
   grand_child()->SetPosition(gfx::PointF(150.f, 50.f));
@@ -476,7 +472,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest,
 
   root()->SetBounds(gfx::Size(350, 200));
   parent2()->SetPosition(gfx::PointF(40.f, 45.f));
-  child2()->SetTransform(translate_2d_transform);
+  child2()->test_properties()->transform = translate_2d_transform;
 
   gfx::Transform perspective;
   perspective.ApplyPerspectiveDepth(100.f);
@@ -484,7 +480,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest,
   gfx::Size bounds(100.f, 100.f);
   grand_child()->SetPosition(gfx::PointF(150.f, 50.f));
   grand_child()->SetBounds(bounds);
-  grand_child()->SetTransform(perspective);
+  grand_child()->test_properties()->transform = perspective;
   grand_child()->test_properties()->transform_origin =
       gfx::Point3F(bounds.width() * 0.5f, bounds.height() * 0.5f, 0);
 
@@ -558,7 +554,7 @@ TEST_F(LayerUtilsGetAnimationBoundsTest,
 
   root()->SetBounds(gfx::Size(350, 200));
   parent2()->SetPosition(gfx::PointF(40.f, 45.f));
-  child2()->SetTransform(translate_2d_transform);
+  child2()->test_properties()->transform = translate_2d_transform;
 
   gfx::Size bounds(100.f, 100.f);
   grand_child()->SetPosition(gfx::PointF(150.f, 50.f));

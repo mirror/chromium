@@ -25,7 +25,7 @@ namespace policy_util {
 
 namespace {
 
-// This fake credential contains a random postfix which is extremly unlikely to
+// This fake credential contains a random postfix which is extremely unlikely to
 // be used by any user.
 const char kFakeCredential[] = "FAKE_CREDENTIAL_VPaJDV9x";
 
@@ -35,25 +35,24 @@ const char kFakeCredential[] = "FAKE_CREDENTIAL_VPaJDV9x";
 void RemoveFakeCredentials(
     const onc::OncValueSignature& signature,
     base::DictionaryValue* onc_object) {
-  base::DictionaryValue::Iterator it(*onc_object);
-  while (!it.IsAtEnd()) {
-    base::Value* value = NULL;
+  std::vector<std::string> entries_to_remove;
+  for (base::DictionaryValue::Iterator it(*onc_object); !it.IsAtEnd();
+       it.Advance()) {
+    base::Value* value = nullptr;
     std::string field_name = it.key();
     // We need the non-const entry to remove nested values but DictionaryValue
     // has no non-const iterator.
     onc_object->GetWithoutPathExpansion(field_name, &value);
-    // Advance before delete.
-    it.Advance();
 
     // If |value| is a dictionary, recurse.
-    base::DictionaryValue* nested_object = NULL;
+    base::DictionaryValue* nested_object = nullptr;
     if (value->GetAsDictionary(&nested_object)) {
       const onc::OncFieldSignature* field_signature =
           onc::GetFieldSignature(signature, field_name);
       if (field_signature)
         RemoveFakeCredentials(*field_signature->value_signature, nested_object);
       else
-        LOG(ERROR) << "ONC has unrecoginzed field: " << field_name;
+        LOG(ERROR) << "ONC has unrecognized field: " << field_name;
       continue;
     }
 
@@ -64,12 +63,14 @@ void RemoveFakeCredentials(
       if (string_value == kFakeCredential) {
         // The value wasn't modified by the UI, thus we remove the field to keep
         // the existing value that is stored in Shill.
-        onc_object->RemoveWithoutPathExpansion(field_name, NULL);
+        entries_to_remove.push_back(field_name);
       }
       // Otherwise, the value is set and modified by the UI, thus we keep that
       // value to overwrite whatever is stored in Shill.
     }
   }
+  for (auto field_name : entries_to_remove)
+    onc_object->RemoveWithoutPathExpansion(field_name, nullptr);
 }
 
 // Returns true if |policy| matches |actual_network|, which must be part of a
@@ -288,11 +289,11 @@ void SetShillPropertiesForGlobalPolicy(
   if (shill_dictionary.GetBooleanWithoutPathExpansion(
           shill::kAutoConnectProperty, &old_autoconnect) &&
       !old_autoconnect) {
-    // Autoconnect is already explictly disabled. No need to set it again.
+    // Autoconnect is already explicitly disabled. No need to set it again.
     return;
   }
 
-  // If autconnect is not explicitly set yet, it might automatically be enabled
+  // If autoconnect is not explicitly set yet, it might automatically be enabled
   // by Shill. To prevent that, disable it explicitly.
   shill_properties_to_update->SetBooleanWithoutPathExpansion(
       shill::kAutoConnectProperty, false);
@@ -398,10 +399,9 @@ std::unique_ptr<base::DictionaryValue> CreateShillConfiguration(
 const base::DictionaryValue* FindMatchingPolicy(
     const GuidToPolicyMap& policies,
     const base::DictionaryValue& actual_network) {
-  for (GuidToPolicyMap::const_iterator it = policies.begin();
-       it != policies.end(); ++it) {
+  for (auto it = policies.begin(); it != policies.end(); ++it) {
     if (IsPolicyMatching(*it->second, actual_network))
-      return it->second;
+      return it->second.get();
   }
   return NULL;
 }

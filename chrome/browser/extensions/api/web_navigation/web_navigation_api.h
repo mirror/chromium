@@ -27,8 +27,6 @@
 #include "extensions/browser/event_router.h"
 #include "url/gurl.h"
 
-struct RetargetingDetails;
-
 namespace extensions {
 
 // Tab contents observer that forwards navigation events to the event router.
@@ -68,8 +66,13 @@ class WebNavigationTabObserver
                            const GURL& url,
                            const content::Referrer& referrer,
                            WindowOpenDisposition disposition,
-                           ui::PageTransition transition) override;
+                           ui::PageTransition transition,
+                           bool started_from_context_menu,
+                           bool renderer_initiated) override;
   void WebContentsDestroyed() override;
+
+  // This method dispatches the already created onBeforeNavigate event.
+  void DispatchCachedOnBeforeNavigate();
 
  private:
   explicit WebNavigationTabObserver(content::WebContents* web_contents);
@@ -95,6 +98,11 @@ class WebNavigationTabObserver
   // Tracks the state of the frames we are sending events for.
   FrameNavigationState navigation_state_;
 
+  // The latest onBeforeNavigate event this frame has generated. It is stored
+  // as it might not be sent immediately, but delayed until the tab is added to
+  // the tab strip and is ready to dispatch events.
+  std::unique_ptr<Event> pending_on_before_navigate_event_;
+
   // Used for tracking registrations to redirect notifications.
   content::NotificationRegistrar registrar_;
 
@@ -109,6 +117,17 @@ class WebNavigationEventRouter : public TabStripModelObserver,
  public:
   explicit WebNavigationEventRouter(Profile* profile);
   ~WebNavigationEventRouter() override;
+
+  // Router level handler for the creation of WebContents. Stores information
+  // about the newly created WebContents. This information is later used when
+  // the WebContents for the tab is added to the tabstrip and we receive the
+  // TAB_ADDED notification.
+  void RecordNewWebContents(content::WebContents* source_web_contents,
+                            int source_render_process_id,
+                            int source_render_frame_id,
+                            GURL target_url,
+                            content::WebContents* target_web_contents,
+                            bool not_yet_in_tabstrip);
 
  private:
   // Used to cache the information about newly created WebContents objects.
@@ -140,11 +159,6 @@ class WebNavigationEventRouter : public TabStripModelObserver,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
-  // Handler for the NOTIFICATION_RETARGETING event. The method takes the
-  // details of such an event and stores them for the later
-  // NOTIFICATION_TAB_ADDED event.
-  void Retargeting(const RetargetingDetails* details);
-
   // Handler for the NOTIFICATION_TAB_ADDED event. The method takes the details
   // of such an event and creates a JSON formated extension event from it.
   void TabAdded(content::WebContents* tab);
@@ -169,16 +183,16 @@ class WebNavigationEventRouter : public TabStripModelObserver,
 };
 
 // API function that returns the state of a given frame.
-class WebNavigationGetFrameFunction : public ChromeSyncExtensionFunction {
+class WebNavigationGetFrameFunction : public UIThreadExtensionFunction {
   ~WebNavigationGetFrameFunction() override {}
-  bool RunSync() override;
+  ResponseAction Run() override;
   DECLARE_EXTENSION_FUNCTION("webNavigation.getFrame", WEBNAVIGATION_GETFRAME)
 };
 
 // API function that returns the states of all frames in a given tab.
-class WebNavigationGetAllFramesFunction : public ChromeSyncExtensionFunction {
+class WebNavigationGetAllFramesFunction : public UIThreadExtensionFunction {
   ~WebNavigationGetAllFramesFunction() override {}
-  bool RunSync() override;
+  ResponseAction Run() override;
   DECLARE_EXTENSION_FUNCTION("webNavigation.getAllFrames",
                              WEBNAVIGATION_GETALLFRAMES)
 };
@@ -200,6 +214,7 @@ class WebNavigationAPI : public BrowserContextKeyedAPI,
 
  private:
   friend class BrowserContextKeyedAPIFactory<WebNavigationAPI>;
+  friend class WebNavigationTabObserver;
 
   content::BrowserContext* browser_context_;
 
@@ -207,6 +222,7 @@ class WebNavigationAPI : public BrowserContextKeyedAPI,
   static const char* service_name() {
     return "WebNavigationAPI";
   }
+  static const bool kServiceRedirectedInIncognito = true;
   static const bool kServiceIsNULLWhileTesting = true;
 
   // Created lazily upon OnListenerAdded.

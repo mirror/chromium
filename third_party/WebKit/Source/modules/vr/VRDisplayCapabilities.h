@@ -7,37 +7,37 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class VRDisplayCapabilities final : public GarbageCollected<VRDisplayCapabilities>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    VRDisplayCapabilities();
+class VRDisplayCapabilities final
+    : public GarbageCollected<VRDisplayCapabilities>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool hasOrientation() const { return m_hasOriention; }
-    bool hasPosition() const { return m_hasPosition; }
-    bool hasExternalDisplay() const { return m_hasExternalDisplay; }
-    bool canPresent() const { return m_canPresent; }
-    unsigned maxLayers() const { return m_maxLayers; }
+ public:
+  VRDisplayCapabilities();
 
-    void setHasOrientation(bool value) { m_hasOriention = value; }
-    void setHasPosition(bool value) { m_hasPosition = value; }
-    void setHasExternalDisplay(bool value) { m_hasExternalDisplay = value; }
-    void setCanPresent(bool value) { m_canPresent = value; }
-    void setMaxLayers(unsigned value) { m_maxLayers = value; }
+  bool hasPosition() const { return has_position_; }
+  bool hasExternalDisplay() const { return has_external_display_; }
+  bool canPresent() const { return can_present_; }
+  unsigned maxLayers() const { return max_layers_; }
 
-    DECLARE_VIRTUAL_TRACE()
+  void SetHasPosition(bool value) { has_position_ = value; }
+  void SetHasExternalDisplay(bool value) { has_external_display_ = value; }
+  void SetCanPresent(bool value) { can_present_ = value; }
+  void SetMaxLayers(unsigned value) { max_layers_ = value; }
 
-private:
-    bool m_hasOriention;
-    bool m_hasPosition;
-    bool m_hasExternalDisplay;
-    bool m_canPresent;
-    unsigned m_maxLayers;
+  DECLARE_VIRTUAL_TRACE()
+
+ private:
+  bool has_position_;
+  bool has_external_display_;
+  bool can_present_;
+  unsigned max_layers_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VRDisplayCapabilities_h
+#endif  // VRDisplayCapabilities_h

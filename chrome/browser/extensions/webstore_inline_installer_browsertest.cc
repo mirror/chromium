@@ -4,9 +4,11 @@
 
 #include "chrome/browser/extensions/webstore_inline_installer.h"
 
+#include "base/json/json_reader.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/values.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -25,6 +27,8 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/permissions/permission_set.h"
+#include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/http_request.h"
 #include "url/gurl.h"
 
 using content::WebContents;
@@ -39,6 +43,9 @@ const char kNonAppDomain[] = "nonapp.com";
 const char kTestExtensionId[] = "ecglahbcnmdpdciemllbhojghbkagdje";
 const char kTestDataPath[] = "extensions/api_test/webstore_inline_install";
 const char kCrxFilename[] = "extension.crx";
+
+const char kRedirect1Domain[] = "redirect1.com";
+const char kRedirect2Domain[] = "redirect2.com";
 
 // A struct for letting us store the actual parameters that were passed to
 // the install callback.
@@ -256,6 +263,53 @@ IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest,
   RunTest(popup_contents, "runTest");
 }
 
+// Allow inline install while in browser fullscreen mode. Browser fullscreen
+// is initiated by the user using F11 (windows), ctrl+cmd+F (mac) or the green
+// maximize window button on mac. This will be allowed since it cannot be
+// initiated by an API and because of the nuance with mac windows.
+IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest,
+                       AllowInlineInstallFromFullscreenForBrowser) {
+  const GURL install_url = GenerateTestServerUrl(kAppDomain, "install.html");
+  ui_test_utils::NavigateToURL(browser(), install_url);
+  AutoAcceptInstall();
+
+  // Enter browser fullscreen mode.
+  FullscreenController* controller =
+      browser()->exclusive_access_manager()->fullscreen_controller();
+  controller->ToggleBrowserFullscreenMode();
+
+  RunTest("runTest");
+
+  // Ensure extension is installed.
+  ExtensionRegistry* registry = ExtensionRegistry::Get(profile());
+  EXPECT_TRUE(
+      registry->GenerateInstalledExtensionsSet()->Contains(kTestExtensionId));
+}
+
+// Prevent inline install while in tab fullscreen mode. Tab fullscreen is
+// initiated using the browser API.
+IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest,
+                       BlockInlineInstallFromFullscreenForTab) {
+  const GURL install_url =
+      GenerateTestServerUrl(kAppDomain, "install_from_fullscreen.html");
+  ui_test_utils::NavigateToURL(browser(), install_url);
+  AutoAcceptInstall();
+  WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  FullscreenController* controller =
+      browser()->exclusive_access_manager()->fullscreen_controller();
+
+  // Enter tab fullscreen mode.
+  controller->EnterFullscreenModeForTab(web_contents, install_url);
+
+  RunTest("runTest");
+
+  // Ensure extension is not installed.
+  ExtensionRegistry* registry = ExtensionRegistry::Get(profile());
+  EXPECT_FALSE(
+      registry->GenerateInstalledExtensionsSet()->Contains(kTestExtensionId));
+}
+
 // Ensure that inline-installing a disabled extension simply re-enables it.
 IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest,
                        ReinstallDisabledExtension) {
@@ -317,6 +371,75 @@ IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerTest, DoubleInlineInstallTest) {
   RunTest("runTest");
 }
 
+class WebstoreInlineInstallerRedirectTest : public WebstoreInlineInstallerTest {
+ public:
+  WebstoreInlineInstallerRedirectTest() : cws_request_received_(false) {}
+  ~WebstoreInlineInstallerRedirectTest() override {}
+
+  void SetUpInProcessBrowserTestFixture() override {
+    WebstoreInstallerTest::SetUpInProcessBrowserTestFixture();
+    host_resolver()->AddRule(kRedirect1Domain, "127.0.0.1");
+    host_resolver()->AddRule(kRedirect2Domain, "127.0.0.1");
+  }
+
+  void ProcessServerRequest(
+      const net::test_server::HttpRequest& request) override {
+    if (request.content.find("redirect_chain") != std::string::npos) {
+      cws_request_received_ = true;
+
+      std::unique_ptr<base::Value> contents =
+          base::JSONReader::Read(request.content);
+      ASSERT_EQ(base::Value::Type::DICTIONARY, contents->GetType());
+      cws_request_json_data_ = base::DictionaryValue::From(std::move(contents));
+    }
+  }
+
+  bool cws_request_received_;
+  std::unique_ptr<base::DictionaryValue> cws_request_json_data_;
+};
+
+// Test that an install from a page arrived at via redirects includes the
+// redirect information in the webstore request.
+IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerRedirectTest,
+                       IncludesRedirectData) {
+  // Hand craft a url that will cause the test server to issue redirects.
+  const std::vector<std::string> redirects = {kRedirect1Domain,
+                                              kRedirect2Domain};
+  net::HostPortPair host_port = embedded_test_server()->host_port_pair();
+  std::string redirect_chain;
+  for (const auto& redirect : redirects) {
+    std::string redirect_url = base::StringPrintf(
+        "http://%s:%d/server-redirect?", redirect.c_str(), host_port.port());
+    redirect_chain += redirect_url;
+  }
+  const GURL install_url =
+      GURL(redirect_chain +
+           GenerateTestServerUrl(kAppDomain, "install.html").spec());
+
+  AutoAcceptInstall();
+  ui_test_utils::NavigateToURL(browser(), install_url);
+  RunTest("runTest");
+
+  EXPECT_TRUE(cws_request_received_);
+  ASSERT_NE(nullptr, cws_request_json_data_);
+
+  base::ListValue* redirect_list = nullptr;
+  cws_request_json_data_->GetList("redirect_chain", &redirect_list);
+  ASSERT_NE(nullptr, redirect_list);
+
+  // Check that the expected domains are in the redirect list.
+  const std::vector<std::string> expected_redirect_domains = {
+      kRedirect1Domain, kRedirect2Domain, kAppDomain};
+  ASSERT_EQ(expected_redirect_domains.size(), redirect_list->GetSize());
+  int i = 0;
+  for (const auto& value : *redirect_list) {
+    std::string value_string;
+    ASSERT_TRUE(value.GetAsString(&value_string));
+    GURL redirect_url(value_string);
+    EXPECT_EQ(expected_redirect_domains[i++], redirect_url.host());
+  }
+}
+
 class WebstoreInlineInstallerListenerTest : public WebstoreInlineInstallerTest {
  public:
   WebstoreInlineInstallerListenerTest() {}
@@ -357,7 +480,8 @@ IN_PROC_BROWSER_TEST_F(WebstoreInlineInstallerListenerTest, BothListenersTest) {
   int old_tab_index = browser()->tab_strip_model()->active_index();
   ui_test_utils::NavigateToURLWithDisposition(
       browser(), GenerateTestServerUrl(kAppDomain, "both_listeners.html"),
-      NEW_FOREGROUND_TAB, ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
   DCHECK_NE(old_tab_index, browser()->tab_strip_model()->active_index());
   browser()->tab_strip_model()->CloseWebContentsAt(old_tab_index,
                                                    TabStripModel::CLOSE_NONE);

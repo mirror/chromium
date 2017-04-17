@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,17 +26,18 @@
 
 namespace blink {
 
-inline void uniteLayoutOverflowRect(LayoutRect& layoutOverflow, const LayoutRect& rect)
-{
-    LayoutUnit maxX = std::max(rect.maxX(), layoutOverflow.maxX());
-    LayoutUnit maxY = std::max(rect.maxY(), layoutOverflow.maxY());
-    LayoutUnit minX = std::min(rect.x(), layoutOverflow.x());
-    LayoutUnit minY = std::min(rect.y(), layoutOverflow.y());
-    // In case the width/height is larger than LayoutUnit can represent, fix the right/bottom edge and shift the top/left ones.
-    layoutOverflow.setWidth(maxX - minX);
-    layoutOverflow.setHeight(maxY - minY);
-    layoutOverflow.setX(maxX - layoutOverflow.width());
-    layoutOverflow.setY(maxY - layoutOverflow.height());
+inline void UniteLayoutOverflowRect(LayoutRect& layout_overflow,
+                                    const LayoutRect& rect) {
+  LayoutUnit max_x = std::max(rect.MaxX(), layout_overflow.MaxX());
+  LayoutUnit max_y = std::max(rect.MaxY(), layout_overflow.MaxY());
+  LayoutUnit min_x = std::min(rect.X(), layout_overflow.X());
+  LayoutUnit min_y = std::min(rect.Y(), layout_overflow.Y());
+  // In case the width/height is larger than LayoutUnit can represent, fix the
+  // right/bottom edge and shift the top/left ones.
+  layout_overflow.SetWidth(max_x - min_x);
+  layout_overflow.SetHeight(max_y - min_y);
+  layout_overflow.SetX(max_x - layout_overflow.Width());
+  layout_overflow.SetY(max_y - layout_overflow.Height());
 }
 
 // OverflowModel classes track content that spills out of an object.
@@ -76,42 +78,45 @@ inline void uniteLayoutOverflowRect(LayoutRect& layoutOverflow, const LayoutRect
 //
 // An overflow model object is allocated only when some of these fields have
 // non-default values in the owning object. Care should be taken to use adder
-// functions (addLayoutOverflow, addVisualOverflow, etc.) to keep this invariant.
+// functions (addLayoutOverflow, addVisualOverflow, etc.) to keep this
+// invariant.
 
 class SimpleOverflowModel {
-    WTF_MAKE_NONCOPYABLE(SimpleOverflowModel);
-    USING_FAST_MALLOC(SimpleOverflowModel);
-public:
-    SimpleOverflowModel(const LayoutRect& layoutRect, const LayoutRect& visualRect)
-        : m_layoutOverflow(layoutRect)
-        , m_visualOverflow(visualRect)
-    {
-    }
+  WTF_MAKE_NONCOPYABLE(SimpleOverflowModel);
+  USING_FAST_MALLOC(SimpleOverflowModel);
 
-    const LayoutRect& layoutOverflowRect() const { return m_layoutOverflow; }
-    void setLayoutOverflow(const LayoutRect& rect) { m_layoutOverflow = rect; }
-    void addLayoutOverflow(const LayoutRect& rect) { uniteLayoutOverflowRect(m_layoutOverflow, rect); }
+ public:
+  SimpleOverflowModel(const LayoutRect& layout_rect,
+                      const LayoutRect& visual_rect)
+      : layout_overflow_(layout_rect), visual_overflow_(visual_rect) {}
 
-    const LayoutRect& visualOverflowRect() const { return m_visualOverflow; }
-    void setVisualOverflow(const LayoutRect& rect) { m_visualOverflow = rect; }
-    void addVisualOverflow(const LayoutRect& rect) { m_visualOverflow.unite(rect); }
+  const LayoutRect& LayoutOverflowRect() const { return layout_overflow_; }
+  void SetLayoutOverflow(const LayoutRect& rect) { layout_overflow_ = rect; }
+  void AddLayoutOverflow(const LayoutRect& rect) {
+    UniteLayoutOverflowRect(layout_overflow_, rect);
+  }
 
-    void move(LayoutUnit dx, LayoutUnit dy)
-    {
-        m_layoutOverflow.move(dx, dy);
-        m_visualOverflow.move(dx, dy);
-    }
+  const LayoutRect& VisualOverflowRect() const { return visual_overflow_; }
+  void SetVisualOverflow(const LayoutRect& rect) { visual_overflow_ = rect; }
+  void AddVisualOverflow(const LayoutRect& rect) {
+    visual_overflow_.Unite(rect);
+  }
 
-private:
-    LayoutRect m_layoutOverflow;
-    LayoutRect m_visualOverflow;
+  void Move(LayoutUnit dx, LayoutUnit dy) {
+    layout_overflow_.Move(dx, dy);
+    visual_overflow_.Move(dx, dy);
+  }
+
+ private:
+  LayoutRect layout_overflow_;
+  LayoutRect visual_overflow_;
 };
 
-// BoxModelOverflow tracks overflows of a LayoutBox. It separates visual overflow
-// into self visual overflow and contents visual overflow.
+// BoxModelOverflow tracks overflows of a LayoutBox. It separates visual
+// overflow into self visual overflow and contents visual overflow.
 //
-// Self visual overflow covers all the effects of the object itself that visually
-// bleed out of the box.
+// Self visual overflow covers all the effects of the object itself that
+// visually bleed out of the box.
 //
 // Content visual overflow includes anything that would bleed out of the box and
 // would be clipped by the overflow clip ('overflow' != visible). This
@@ -135,40 +140,53 @@ private:
 // visual overflow.
 
 class BoxOverflowModel {
-public:
-    BoxOverflowModel(const LayoutRect& layoutRect, const LayoutRect& selfVisualOverflowRect)
-        : m_layoutOverflow(layoutRect)
-        , m_selfVisualOverflow(selfVisualOverflowRect)
-    {
-    }
+  WTF_MAKE_NONCOPYABLE(BoxOverflowModel);
+  USING_FAST_MALLOC(BoxOverflowModel);
 
-    const LayoutRect& layoutOverflowRect() const { return m_layoutOverflow; }
-    void setLayoutOverflow(const LayoutRect& rect) { m_layoutOverflow = rect; }
-    void addLayoutOverflow(const LayoutRect& rect) { uniteLayoutOverflowRect(m_layoutOverflow, rect); }
+ public:
+  BoxOverflowModel(const LayoutRect& layout_rect,
+                   const LayoutRect& self_visual_overflow_rect)
+      : layout_overflow_(layout_rect),
+        self_visual_overflow_(self_visual_overflow_rect) {}
 
-    const LayoutRect& selfVisualOverflowRect() const { return m_selfVisualOverflow; }
-    void addSelfVisualOverflow(const LayoutRect& rect) { m_selfVisualOverflow.unite(rect); }
+  const LayoutRect& LayoutOverflowRect() const { return layout_overflow_; }
+  void SetLayoutOverflow(const LayoutRect& rect) { layout_overflow_ = rect; }
+  void AddLayoutOverflow(const LayoutRect& rect) {
+    UniteLayoutOverflowRect(layout_overflow_, rect);
+  }
 
-    const LayoutRect& contentsVisualOverflowRect() const { return m_contentsVisualOverflow; }
-    void addContentsVisualOverflow(const LayoutRect& rect) { m_contentsVisualOverflow.unite(rect); }
+  const LayoutRect& SelfVisualOverflowRect() const {
+    return self_visual_overflow_;
+  }
+  void AddSelfVisualOverflow(const LayoutRect& rect) {
+    self_visual_overflow_.Unite(rect);
+  }
 
-    void move(LayoutUnit dx, LayoutUnit dy)
-    {
-        m_layoutOverflow.move(dx, dy);
-        m_selfVisualOverflow.move(dx, dy);
-        m_contentsVisualOverflow.move(dx, dy);
-    }
+  const LayoutRect& ContentsVisualOverflowRect() const {
+    return contents_visual_overflow_;
+  }
+  void AddContentsVisualOverflow(const LayoutRect& rect) {
+    contents_visual_overflow_.Unite(rect);
+  }
 
-    LayoutUnit layoutClientAfterEdge() const { return m_layoutClientAfterEdge; }
-    void setLayoutClientAfterEdge(LayoutUnit clientAfterEdge) { m_layoutClientAfterEdge = clientAfterEdge; }
+  void Move(LayoutUnit dx, LayoutUnit dy) {
+    layout_overflow_.Move(dx, dy);
+    self_visual_overflow_.Move(dx, dy);
+    contents_visual_overflow_.Move(dx, dy);
+  }
 
-private:
-    LayoutRect m_layoutOverflow;
-    LayoutRect m_selfVisualOverflow;
-    LayoutRect m_contentsVisualOverflow;
-    LayoutUnit m_layoutClientAfterEdge;
+  LayoutUnit LayoutClientAfterEdge() const { return layout_client_after_edge_; }
+  void SetLayoutClientAfterEdge(LayoutUnit client_after_edge) {
+    layout_client_after_edge_ = client_after_edge;
+  }
+
+ private:
+  LayoutRect layout_overflow_;
+  LayoutRect self_visual_overflow_;
+  LayoutRect contents_visual_overflow_;
+  LayoutUnit layout_client_after_edge_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OverflowModel_h
+#endif  // OverflowModel_h

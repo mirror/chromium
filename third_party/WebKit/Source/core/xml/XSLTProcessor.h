@@ -27,8 +27,8 @@
 #include "core/dom/Node.h"
 #include "core/xml/XSLStyleSheet.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/StringHash.h"
 
 #include <libxml/parserInternals.h>
 #include <libxslt/documents.h>
@@ -39,56 +39,64 @@ class LocalFrame;
 class Document;
 class DocumentFragment;
 
-class XSLTProcessor final : public GarbageCollectedFinalized<XSLTProcessor>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static XSLTProcessor* create(Document& document)
-    {
-        ASSERT(RuntimeEnabledFeatures::xsltEnabled());
-        return new XSLTProcessor(document);
-    }
-    ~XSLTProcessor();
+class XSLTProcessor final : public GarbageCollectedFinalized<XSLTProcessor>,
+                            public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    void setXSLStyleSheet(XSLStyleSheet* styleSheet) { m_stylesheet = styleSheet; }
-    bool transformToString(Node* source, String& resultMIMEType, String& resultString, String& resultEncoding);
-    Document* createDocumentFromSource(const String& source, const String& sourceEncoding, const String& sourceMIMEType, Node* sourceNode, LocalFrame*);
+ public:
+  static XSLTProcessor* Create(Document& document) {
+    DCHECK(RuntimeEnabledFeatures::xsltEnabled());
+    return new XSLTProcessor(document);
+  }
+  ~XSLTProcessor();
 
-    // DOM methods
-    void importStylesheet(Node* style)
-    {
-        m_stylesheetRootNode = style;
-    }
-    DocumentFragment* transformToFragment(Node* source, Document* ouputDoc);
-    Document* transformToDocument(Node* source);
+  void SetXSLStyleSheet(XSLStyleSheet* style_sheet) {
+    stylesheet_ = style_sheet;
+  }
+  bool TransformToString(Node* source,
+                         String& result_mime_type,
+                         String& result_string,
+                         String& result_encoding);
+  Document* CreateDocumentFromSource(const String& source,
+                                     const String& source_encoding,
+                                     const String& source_mime_type,
+                                     Node* source_node,
+                                     LocalFrame*);
 
-    void setParameter(const String& namespaceURI, const String& localName, const String& value);
-    String getParameter(const String& namespaceURI, const String& localName) const;
-    void removeParameter(const String& namespaceURI, const String& localName);
-    void clearParameters() { m_parameters.clear(); }
+  // DOM methods
+  void importStylesheet(Node* style) { stylesheet_root_node_ = style; }
+  DocumentFragment* transformToFragment(Node* source, Document* ouput_doc);
+  Document* transformToDocument(Node* source);
 
-    void reset();
+  void setParameter(const String& namespace_uri,
+                    const String& local_name,
+                    const String& value);
+  String getParameter(const String& namespace_uri,
+                      const String& local_name) const;
+  void removeParameter(const String& namespace_uri, const String& local_name);
+  void clearParameters() { parameters_.Clear(); }
 
-    static void parseErrorFunc(void* userData, xmlError*);
-    static void genericErrorFunc(void* userData, const char* msg, ...);
+  void reset();
 
-    // Only for libXSLT callbacks
-    XSLStyleSheet* xslStylesheet() const { return m_stylesheet.get(); }
+  static void ParseErrorFunc(void* user_data, xmlError*);
+  static void GenericErrorFunc(void* user_data, const char* msg, ...);
 
-    typedef HashMap<String, String> ParameterMap;
+  // Only for libXSLT callbacks
+  XSLStyleSheet* XslStylesheet() const { return stylesheet_.Get(); }
 
-    DECLARE_TRACE();
+  typedef HashMap<String, String> ParameterMap;
 
-private:
-    XSLTProcessor(Document& document)
-        : m_document(&document)
-    { }
+  DECLARE_TRACE();
 
-    Member<XSLStyleSheet> m_stylesheet;
-    Member<Node> m_stylesheetRootNode;
-    Member<Document> m_document;
-    ParameterMap m_parameters;
+ private:
+  XSLTProcessor(Document& document) : document_(&document) {}
+
+  Member<XSLStyleSheet> stylesheet_;
+  Member<Node> stylesheet_root_node_;
+  Member<Document> document_;
+  ParameterMap parameters_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XSLTProcessor_h
+#endif  // XSLTProcessor_h

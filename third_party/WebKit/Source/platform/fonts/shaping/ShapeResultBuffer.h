@@ -5,59 +5,96 @@
 #ifndef ShapeResultBuffer_h
 #define ShapeResultBuffer_h
 
+#include "platform/PlatformExport.h"
 #include "platform/fonts/shaping/ShapeResult.h"
-#include "wtf/Allocator.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 struct CharacterRange;
-class GlyphBuffer;
+class FontDescription;
+struct GlyphData;
+class ShapeResultBloberizer;
 class TextRun;
+struct TextRunPaintInfo;
 
-class ShapeResultBuffer {
-    WTF_MAKE_NONCOPYABLE(ShapeResultBuffer);
-    STACK_ALLOCATED();
-public:
-    ShapeResultBuffer()
-        : m_hasVerticalOffsets(false) { }
+class PLATFORM_EXPORT ShapeResultBuffer {
+  WTF_MAKE_NONCOPYABLE(ShapeResultBuffer);
+  STACK_ALLOCATED();
 
-    void appendResult(PassRefPtr<const ShapeResult> result)
-    {
-        m_hasVerticalOffsets |= result->hasVerticalOffsets();
-        m_results.append(result);
-    }
+ public:
+  ShapeResultBuffer() : has_vertical_offsets_(false) {}
 
-    bool hasVerticalOffsets() const { return m_hasVerticalOffsets; }
+  void AppendResult(PassRefPtr<const ShapeResult> result) {
+    has_vertical_offsets_ |= result->HasVerticalOffsets();
+    results_.push_back(result);
+  }
 
-    float fillGlyphBuffer(GlyphBuffer*, const TextRun&, unsigned from, unsigned to) const;
-    float fillGlyphBufferForTextEmphasis(GlyphBuffer*, const TextRun&,
-        const GlyphData* emphasisData, unsigned from, unsigned to) const;
-    int offsetForPosition(const TextRun&, float targetX, bool includePartialGlyphs) const;
-    CharacterRange getCharacterRange(TextDirection, float totalWidth,
-        unsigned from, unsigned to) const;
-    Vector<CharacterRange> individualCharacterRanges(TextDirection,
-        float totalWidth) const;
+  bool HasVerticalOffsets() const { return has_vertical_offsets_; }
 
-private:
-    float fillFastHorizontalGlyphBuffer(GlyphBuffer*, TextDirection) const;
+  float FillGlyphs(const TextRunPaintInfo&, ShapeResultBloberizer&) const;
+  void FillTextEmphasisGlyphs(const TextRunPaintInfo&,
+                              const GlyphData& emphasis_data,
+                              ShapeResultBloberizer&) const;
+  int OffsetForPosition(const TextRun&,
+                        float target_x,
+                        bool include_partial_glyphs) const;
+  CharacterRange GetCharacterRange(TextDirection,
+                                   float total_width,
+                                   unsigned from,
+                                   unsigned to) const;
+  Vector<CharacterRange> IndividualCharacterRanges(TextDirection,
+                                                   float total_width) const;
 
-    template<TextDirection>
-    static float fillGlyphBufferForRun(GlyphBuffer*, const ShapeResult::RunInfo*,
-        float initialAdvance, unsigned from, unsigned to, unsigned runOffset);
-    static float fillGlyphBufferForTextEmphasisRun(GlyphBuffer*, const ShapeResult::RunInfo*,
-        const TextRun&, const GlyphData*, float initialAdvance, unsigned from, unsigned to,
-        unsigned runOffset);
+  static CharacterRange GetCharacterRange(RefPtr<const ShapeResult>,
+                                          TextDirection,
+                                          float total_width,
+                                          unsigned from,
+                                          unsigned to);
 
-    static void addRunInfoRanges(const ShapeResult::RunInfo&, float offset,
-        Vector<CharacterRange>&);
+  struct RunFontData {
+    SimpleFontData* font_data_;
+    size_t glyph_count_;
+  };
 
-    // Empirically, cases where we get more than 50 ShapeResults are extremely rare.
-    Vector<RefPtr<const ShapeResult>, 64>m_results;
-    bool m_hasVerticalOffsets;
+  Vector<RunFontData> GetRunFontData() const;
+
+  GlyphData EmphasisMarkGlyphData(const FontDescription&) const;
+
+ private:
+  static CharacterRange GetCharacterRangeInternal(
+      const Vector<RefPtr<const ShapeResult>, 64>&,
+      TextDirection,
+      float total_width,
+      unsigned from,
+      unsigned to);
+
+  float FillFastHorizontalGlyphs(const TextRun&, ShapeResultBloberizer&) const;
+
+  static float FillGlyphsForResult(ShapeResultBloberizer&,
+                                   const ShapeResult&,
+                                   const TextRunPaintInfo&,
+                                   float initial_advance,
+                                   unsigned run_offset);
+  static float FillTextEmphasisGlyphsForRun(ShapeResultBloberizer&,
+                                            const ShapeResult::RunInfo*,
+                                            const TextRunPaintInfo&,
+                                            const GlyphData&,
+                                            float initial_advance,
+                                            unsigned run_offset);
+
+  static void AddRunInfoRanges(const ShapeResult::RunInfo&,
+                               float offset,
+                               Vector<CharacterRange>&);
+
+  // Empirically, cases where we get more than 50 ShapeResults are extremely
+  // rare.
+  Vector<RefPtr<const ShapeResult>, 64> results_;
+  bool has_vertical_offsets_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ShapeResultBuffer_h
+#endif  // ShapeResultBuffer_h

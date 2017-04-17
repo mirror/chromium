@@ -18,6 +18,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/navigation_controller.h"
+#include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
@@ -28,7 +29,9 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_map.h"
+#include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/constants.h"
+#include "extensions/test/background_page_watcher.cc"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_list.h"
 
@@ -142,8 +145,11 @@ class MAYBE_ExtensionCrashRecoveryTest : public ExtensionCrashRecoveryTestBase {
     for (size_t i = 0; i < index; ++i)
       ++it;
     std::string id = (*it)->id();
+    extensions::TestExtensionRegistryObserver observer(GetExtensionRegistry());
     message_center->ClickOnNotification(id);
-    WaitForExtensionLoad();
+    auto* extension = observer.WaitForExtensionLoaded();
+    extensions::BackgroundPageWatcher(GetProcessManager(), extension)
+        .WaitForOpen();
   }
 
   void CancelNotification(size_t index) override {
@@ -554,7 +560,7 @@ IN_PROC_BROWSER_TEST_F(MAYBE_ExtensionCrashRecoveryTest,
         content::Source<NavigationController>(
             &browser()->tab_strip_model()->GetActiveWebContents()->
                 GetController()));
-    chrome::Reload(browser(), CURRENT_TAB);
+    chrome::Reload(browser(), WindowOpenDisposition::CURRENT_TAB);
     observer.Wait();
   }
   // Extension should now be loaded.

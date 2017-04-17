@@ -4,7 +4,9 @@
 
 #include "modules/serviceworkers/NavigatorServiceWorker.h"
 
+#include "bindings/core/v8/ScriptState.h"
 #include "core/dom/Document.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
@@ -12,75 +14,118 @@
 
 namespace blink {
 
-NavigatorServiceWorker::NavigatorServiceWorker(Navigator& navigator)
-    : ContextLifecycleObserver(navigator.frame() ? navigator.frame()->document() : nullptr)
-{
+NavigatorServiceWorker::NavigatorServiceWorker(Navigator& navigator) {}
+
+NavigatorServiceWorker* NavigatorServiceWorker::From(Document& document) {
+  if (!document.GetFrame() || !document.GetFrame()->DomWindow())
+    return nullptr;
+  Navigator& navigator = *document.GetFrame()->DomWindow()->navigator();
+  return &From(navigator);
 }
 
-NavigatorServiceWorker* NavigatorServiceWorker::from(Document& document)
-{
-    if (!document.frame() || !document.frame()->domWindow())
-        return nullptr;
-    Navigator& navigator = *document.frame()->domWindow()->navigator();
-    return &from(navigator);
+NavigatorServiceWorker& NavigatorServiceWorker::From(Navigator& navigator) {
+  NavigatorServiceWorker* supplement = ToNavigatorServiceWorker(navigator);
+  if (!supplement) {
+    supplement = new NavigatorServiceWorker(navigator);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  if (navigator.GetFrame() && navigator.GetFrame()
+                                  ->GetSecurityContext()
+                                  ->GetSecurityOrigin()
+                                  ->CanAccessServiceWorkers()) {
+    // Ensure ServiceWorkerContainer. It can be cleared regardless of
+    // |supplement|. See comments in NavigatorServiceWorker::serviceWorker() for
+    // details.
+    supplement->serviceWorker(navigator.GetFrame(), ASSERT_NO_EXCEPTION);
+  }
+  return *supplement;
 }
 
-NavigatorServiceWorker& NavigatorServiceWorker::from(Navigator& navigator)
-{
-    NavigatorServiceWorker* supplement = toNavigatorServiceWorker(navigator);
-    if (!supplement) {
-        supplement = new NavigatorServiceWorker(navigator);
-        provideTo(navigator, supplementName(), supplement);
-        if (navigator.frame() && navigator.frame()->securityContext()->getSecurityOrigin()->canAccessServiceWorkers()) {
-            // Initialize ServiceWorkerContainer too.
-            supplement->serviceWorker(navigator.frame(), ASSERT_NO_EXCEPTION);
-        }
+NavigatorServiceWorker* NavigatorServiceWorker::ToNavigatorServiceWorker(
+    Navigator& navigator) {
+  return static_cast<NavigatorServiceWorker*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+}
+
+const char* NavigatorServiceWorker::SupplementName() {
+  return "NavigatorServiceWorker";
+}
+
+ServiceWorkerContainer* NavigatorServiceWorker::serviceWorker(
+    ScriptState* script_state,
+    Navigator& navigator,
+    ExceptionState& exception_state) {
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
+  DCHECK(!navigator.GetFrame() ||
+         execution_context->GetSecurityOrigin()->CanAccess(
+             navigator.GetFrame()->GetSecurityContext()->GetSecurityOrigin()));
+  return NavigatorServiceWorker::From(navigator).serviceWorker(
+      navigator.GetFrame(), exception_state);
+}
+
+ServiceWorkerContainer* NavigatorServiceWorker::serviceWorker(
+    ScriptState* script_state,
+    Navigator& navigator,
+    String& error_message) {
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
+  DCHECK(!navigator.GetFrame() ||
+         execution_context->GetSecurityOrigin()->CanAccess(
+             navigator.GetFrame()->GetSecurityContext()->GetSecurityOrigin()));
+  return NavigatorServiceWorker::From(navigator).serviceWorker(
+      navigator.GetFrame(), error_message);
+}
+
+ServiceWorkerContainer* NavigatorServiceWorker::serviceWorker(
+    LocalFrame* frame,
+    ExceptionState& exception_state) {
+  String error_message;
+  ServiceWorkerContainer* result = serviceWorker(frame, error_message);
+  if (!error_message.IsEmpty()) {
+    DCHECK(!result);
+    exception_state.ThrowSecurityError(error_message);
+  }
+  return result;
+}
+
+ServiceWorkerContainer* NavigatorServiceWorker::serviceWorker(
+    LocalFrame* frame,
+    String& error_message) {
+  if (frame && !frame->GetSecurityContext()
+                    ->GetSecurityOrigin()
+                    ->CanAccessServiceWorkers()) {
+    if (frame->GetSecurityContext()->IsSandboxed(kSandboxOrigin)) {
+      error_message =
+          "Service worker is disabled because the context is sandboxed and "
+          "lacks the 'allow-same-origin' flag.";
+    } else if (frame->GetSecurityContext()
+                   ->GetSecurityOrigin()
+                   ->HasSuborigin()) {
+      error_message =
+          "Service worker is disabled because the context is in a suborigin.";
+    } else {
+      error_message =
+          "Access to service workers is denied in this document origin.";
     }
-    return *supplement;
+    return nullptr;
+  }
+  if (!service_worker_ && frame) {
+    // We need to create a new ServiceWorkerContainer when the frame
+    // navigates to a new document. In practice, this happens only when the
+    // frame navigates from the initial empty page to a new same-origin page.
+    DCHECK(frame->DomWindow());
+    service_worker_ = ServiceWorkerContainer::Create(
+        frame->DomWindow()->GetExecutionContext(), this);
+  }
+  return service_worker_.Get();
 }
 
-NavigatorServiceWorker* NavigatorServiceWorker::toNavigatorServiceWorker(Navigator& navigator)
-{
-    return static_cast<NavigatorServiceWorker*>(Supplement<Navigator>::from(navigator, supplementName()));
+void NavigatorServiceWorker::ClearServiceWorker() {
+  service_worker_ = nullptr;
 }
 
-const char* NavigatorServiceWorker::supplementName()
-{
-    return "NavigatorServiceWorker";
+DEFINE_TRACE(NavigatorServiceWorker) {
+  visitor->Trace(service_worker_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-ServiceWorkerContainer* NavigatorServiceWorker::serviceWorker(ExecutionContext* executionContext, Navigator& navigator, ExceptionState& exceptionState)
-{
-    DCHECK(!navigator.frame() || executionContext->getSecurityOrigin()->canAccessCheckSuborigins(navigator.frame()->securityContext()->getSecurityOrigin()));
-    return NavigatorServiceWorker::from(navigator).serviceWorker(navigator.frame(), exceptionState);
-}
-
-ServiceWorkerContainer* NavigatorServiceWorker::serviceWorker(LocalFrame* frame, ExceptionState& exceptionState)
-{
-    if (frame && !frame->securityContext()->getSecurityOrigin()->canAccessServiceWorkers()) {
-        if (frame->securityContext()->isSandboxed(SandboxOrigin))
-            exceptionState.throwSecurityError("Service worker is disabled because the context is sandboxed and lacks the 'allow-same-origin' flag.");
-        else
-            exceptionState.throwSecurityError("Access to service workers is denied in this document origin.");
-        return nullptr;
-    }
-    if (!m_serviceWorker && frame) {
-        DCHECK(frame->domWindow());
-        m_serviceWorker = ServiceWorkerContainer::create(frame->domWindow()->getExecutionContext());
-    }
-    return m_serviceWorker.get();
-}
-
-void NavigatorServiceWorker::contextDestroyed()
-{
-    m_serviceWorker = nullptr;
-}
-
-DEFINE_TRACE(NavigatorServiceWorker)
-{
-    visitor->trace(m_serviceWorker);
-    Supplement<Navigator>::trace(visitor);
-    ContextLifecycleObserver::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

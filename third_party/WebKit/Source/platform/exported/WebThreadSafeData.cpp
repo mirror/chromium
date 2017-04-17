@@ -34,56 +34,47 @@
 
 namespace blink {
 
-WebThreadSafeData::WebThreadSafeData(const char* data, size_t length)
-{
-    m_private = RawData::create();
-    m_private->mutableData()->append(data, length);
+WebThreadSafeData::WebThreadSafeData(const char* data, size_t length) {
+  private_ = RawData::Create();
+  private_->MutableData()->Append(data, length);
 }
 
-void WebThreadSafeData::reset()
-{
-    m_private.reset();
+void WebThreadSafeData::Reset() {
+  private_.Reset();
 }
 
-void WebThreadSafeData::assign(const WebThreadSafeData& other)
-{
-    m_private = other.m_private;
+void WebThreadSafeData::Assign(const WebThreadSafeData& other) {
+  private_ = other.private_;
 }
 
-size_t WebThreadSafeData::size() const
-{
-    if (m_private.isNull())
-        return 0;
-    return m_private->length();
+size_t WebThreadSafeData::size() const {
+  if (private_.IsNull())
+    return 0;
+  return private_->length();
 }
 
-const char* WebThreadSafeData::data() const
-{
-    if (m_private.isNull())
-        return 0;
-    return m_private->data();
+const char* WebThreadSafeData::Data() const {
+  if (private_.IsNull())
+    return 0;
+  return private_->Data();
 }
 
-WebThreadSafeData::WebThreadSafeData(const PassRefPtr<RawData>& data)
-    : m_private(data)
-{
+WebThreadSafeData::WebThreadSafeData(PassRefPtr<RawData> data)
+    : private_(data) {}
+
+WebThreadSafeData::WebThreadSafeData(const WebThreadSafeData& other) {
+  private_ = other.private_;
 }
 
-WebThreadSafeData::WebThreadSafeData(const WebThreadSafeData& other)
-{
-    m_private = other.m_private;
+WebThreadSafeData& WebThreadSafeData::operator=(
+    const WebThreadSafeData& other) {
+  private_ = other.private_;
+  return *this;
 }
 
-WebThreadSafeData& WebThreadSafeData::operator=(const WebThreadSafeData& other)
-{
-    m_private = other.m_private;
-    return *this;
+WebThreadSafeData& WebThreadSafeData::operator=(PassRefPtr<RawData> data) {
+  private_ = data;
+  return *this;
 }
 
-WebThreadSafeData& WebThreadSafeData::operator=(const PassRefPtr<RawData>& data)
-{
-    m_private = data;
-    return *this;
-}
-
-} // namespace blink
+}  // namespace blink

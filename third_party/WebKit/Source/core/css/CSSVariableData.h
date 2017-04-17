@@ -8,64 +8,83 @@
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParserToken.h"
 #include "core/css/parser/CSSParserTokenRange.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CSSParserTokenRange;
+class CSSSyntaxDescriptor;
 
-class CSSVariableData : public RefCounted<CSSVariableData> {
-    WTF_MAKE_NONCOPYABLE(CSSVariableData);
-    USING_FAST_MALLOC(CSSVariableData);
-public:
-    static PassRefPtr<CSSVariableData> create(const CSSParserTokenRange& range, bool needsVariableResolution = true)
-    {
-        return adoptRef(new CSSVariableData(range, needsVariableResolution));
-    }
+class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
+  WTF_MAKE_NONCOPYABLE(CSSVariableData);
+  USING_FAST_MALLOC(CSSVariableData);
 
-    static PassRefPtr<CSSVariableData> createResolved(const Vector<CSSParserToken>& resolvedTokens, const CSSVariableData& unresolvedData)
-    {
-        return adoptRef(new CSSVariableData(resolvedTokens, unresolvedData.m_backingString));
-    }
+ public:
+  static PassRefPtr<CSSVariableData> Create(const CSSParserTokenRange& range,
+                                            bool is_animation_tainted,
+                                            bool needs_variable_resolution) {
+    return AdoptRef(new CSSVariableData(range, is_animation_tainted,
+                                        needs_variable_resolution));
+  }
 
-    CSSParserTokenRange tokenRange() { return m_tokens; }
+  static PassRefPtr<CSSVariableData> CreateResolved(
+      const Vector<CSSParserToken>& resolved_tokens,
+      const CSSVariableData& unresolved_data,
+      bool is_animation_tainted) {
+    return AdoptRef(new CSSVariableData(resolved_tokens,
+                                        unresolved_data.backing_string_,
+                                        is_animation_tainted));
+  }
 
-    const Vector<CSSParserToken>& tokens() const { return m_tokens; }
+  CSSParserTokenRange TokenRange() const { return tokens_; }
 
-    bool operator==(const CSSVariableData& other) const;
+  const Vector<CSSParserToken>& Tokens() const { return tokens_; }
 
-    bool needsVariableResolution() const { return m_needsVariableResolution; }
+  bool operator==(const CSSVariableData& other) const;
 
-    StylePropertySet* propertySet();
+  bool IsAnimationTainted() const { return is_animation_tainted_; }
 
-private:
-    CSSVariableData(const CSSParserTokenRange&, bool needsVariableResolution);
+  bool NeedsVariableResolution() const { return needs_variable_resolution_; }
 
-    // We can safely copy the tokens (which have raw pointers to substrings) because
-    // StylePropertySets contain references to CSSCustomPropertyDeclarations, which
-    // point to the unresolved CSSVariableData values that own the backing strings
-    // this will potentially reference.
-    CSSVariableData(const Vector<CSSParserToken>& resolvedTokens, String backingString)
-        : m_backingString(backingString)
-        , m_tokens(resolvedTokens)
-        , m_needsVariableResolution(false)
-        , m_cachedPropertySet(false)
-    { }
+  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&) const;
 
-    void consumeAndUpdateTokens(const CSSParserTokenRange&);
-    template<typename CharacterType> void updateTokens(const CSSParserTokenRange&);
+  StylePropertySet* PropertySet();
 
-    String m_backingString;
-    Vector<CSSParserToken> m_tokens;
-    const bool m_needsVariableResolution;
+ private:
+  CSSVariableData(const CSSParserTokenRange&,
+                  bool is_animation_tainted,
+                  bool needs_variable_resolution);
 
-    // Parsed representation for @apply
-    bool m_cachedPropertySet;
-    Persistent<StylePropertySet> m_propertySet;
+  // We can safely copy the tokens (which have raw pointers to substrings)
+  // because StylePropertySets contain references to
+  // CSSCustomPropertyDeclarations, which point to the unresolved
+  // CSSVariableData values that own the backing strings this will potentially
+  // reference.
+  CSSVariableData(const Vector<CSSParserToken>& resolved_tokens,
+                  String backing_string,
+                  bool is_animation_tainted)
+      : backing_string_(backing_string),
+        tokens_(resolved_tokens),
+        is_animation_tainted_(is_animation_tainted),
+        needs_variable_resolution_(false),
+        cached_property_set_(false) {}
+
+  void ConsumeAndUpdateTokens(const CSSParserTokenRange&);
+  template <typename CharacterType>
+  void UpdateTokens(const CSSParserTokenRange&);
+
+  String backing_string_;
+  Vector<CSSParserToken> tokens_;
+  const bool is_animation_tainted_;
+  const bool needs_variable_resolution_;
+
+  // Parsed representation for @apply
+  bool cached_property_set_;
+  Persistent<StylePropertySet> property_set_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSVariableData_h
+#endif  // CSSVariableData_h

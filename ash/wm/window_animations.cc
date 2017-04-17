@@ -9,23 +9,20 @@
 #include <utility>
 #include <vector>
 
-#include "ash/common/wm/window_animation_types.h"
-#include "ash/screen_util.h"
-#include "ash/shelf/shelf.h"
-#include "ash/shelf/shelf_layout_manager.h"
-#include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
+#include "ash/wm/window_animation_types.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace_controller.h"
-#include "base/command_line.h"
-#include "base/compiler_specific.h"
+#include "ash/wm_window.h"
+#include "base/i18n/rtl.h"
 #include "base/logging.h"
-#include "base/message_loop/message_loop.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
-#include "ui/aura/window_property.h"
+#include "ui/base/class_property.h"
 #include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_observer.h"
@@ -35,14 +32,14 @@
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
-#include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/interpolated_transform.h"
-#include "ui/views/view.h"
-#include "ui/views/widget/widget.h"
+#include "ui/gfx/transform.h"
+#include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/window_util.h"
 
 namespace ash {
 namespace {
+
 const int kLayerAnimationsForMinimizeDurationMS = 200;
 
 // Durations for the cross-fade animation, in milliseconds.
@@ -58,10 +55,6 @@ const float kWindowAnimation_ShowBrightnessGrayscale = 0.f;
 
 const float kWindowAnimation_HideOpacity = 0.f;
 const float kWindowAnimation_ShowOpacity = 1.f;
-
-// Scales for AshWindow above/below current workspace.
-const float kLayerScaleAboveSize = 1.1f;
-const float kLayerScaleBelowSize = .9f;
 
 int64_t Round64(float f) {
   return static_cast<int64_t>(f + 0.5f);
@@ -100,35 +93,35 @@ void AddLayerAnimationsForMinimize(aura::Window* window, bool show) {
   // moved while the window was minimized.
   gfx::Rect bounds = window->bounds();
   gfx::Rect target_bounds = GetMinimizeAnimationTargetBoundsInScreen(window);
-  target_bounds =
-      ScreenUtil::ConvertRectFromScreen(window->parent(), target_bounds);
+  ::wm::ConvertRectFromScreen(window->parent(), &target_bounds);
 
   float scale_x = static_cast<float>(target_bounds.width()) / bounds.width();
   float scale_y = static_cast<float>(target_bounds.height()) / bounds.height();
 
-  std::unique_ptr<ui::InterpolatedTransform> scale(new ui::InterpolatedScale(
-      gfx::Point3F(1, 1, 1), gfx::Point3F(scale_x, scale_y, 1)));
+  std::unique_ptr<ui::InterpolatedTransform> scale =
+      base::MakeUnique<ui::InterpolatedScale>(
+          gfx::Point3F(1, 1, 1), gfx::Point3F(scale_x, scale_y, 1));
 
-  std::unique_ptr<ui::InterpolatedTransform> translation(
-      new ui::InterpolatedTranslation(
+  std::unique_ptr<ui::InterpolatedTransform> translation =
+      base::MakeUnique<ui::InterpolatedTranslation>(
           gfx::PointF(), gfx::PointF(target_bounds.x() - bounds.x(),
-                                     target_bounds.y() - bounds.y())));
+                                     target_bounds.y() - bounds.y()));
 
-  scale->SetChild(translation.release());
+  scale->SetChild(std::move(translation));
   scale->SetReversed(show);
 
   base::TimeDelta duration =
       window->layer()->GetAnimator()->GetTransitionDuration();
 
-  std::unique_ptr<ui::LayerAnimationElement> transition(
+  std::unique_ptr<ui::LayerAnimationElement> transition =
       ui::LayerAnimationElement::CreateInterpolatedTransformElement(
-          scale.release(), duration));
+          std::move(scale), duration);
 
   transition->set_tween_type(show ? gfx::Tween::EASE_IN
                                   : gfx::Tween::EASE_IN_OUT);
 
   window->layer()->GetAnimator()->ScheduleAnimation(
-      new ui::LayerAnimationSequence(transition.release()));
+      new ui::LayerAnimationSequence(std::move(transition)));
 
   // When hiding a window, turn off blending until the animation is 3 / 4 done
   // to save bandwidth and reduce jank.
@@ -257,10 +250,9 @@ bool AnimateHideWindow(aura::Window* window) {
 }
 
 // Observer for a window cross-fade animation. If either the window closes or
-// the layer's animation completes or compositing is aborted due to GPU crash,
-// it deletes the layer and removes itself as an observer.
-class CrossFadeObserver : public ui::CompositorObserver,
-                          public aura::WindowObserver,
+// the layer's animation completes, it deletes the layer and removes itself as
+// an observer.
+class CrossFadeObserver : public aura::WindowObserver,
                           public ui::ImplicitAnimationObserver {
  public:
   // Observes |window| for destruction, but does not take ownership.
@@ -269,25 +261,11 @@ class CrossFadeObserver : public ui::CompositorObserver,
                     std::unique_ptr<ui::LayerTreeOwner> layer_owner)
       : window_(window), layer_owner_(std::move(layer_owner)) {
     window_->AddObserver(this);
-    layer_owner_->root()->GetCompositor()->AddObserver(this);
   }
   ~CrossFadeObserver() override {
     window_->RemoveObserver(this);
     window_ = NULL;
-    layer_owner_->root()->GetCompositor()->RemoveObserver(this);
   }
-
-  // ui::CompositorObserver overrides:
-  void OnCompositingDidCommit(ui::Compositor* compositor) override {}
-  void OnCompositingStarted(ui::Compositor* compositor,
-                            base::TimeTicks start_time) override {}
-  void OnCompositingEnded(ui::Compositor* compositor) override {}
-  void OnCompositingAborted(ui::Compositor* compositor) override {
-    // Triggers OnImplicitAnimationsCompleted() to be called and deletes us.
-    layer_owner_->root()->GetAnimator()->StopAnimating();
-  }
-  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
-  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
 
   // aura::WindowObserver overrides:
   void OnWindowDestroying(aura::Window* window) override {
@@ -410,22 +388,21 @@ std::vector<ui::LayerAnimationSequence*>
 CreateBrightnessGrayscaleAnimationSequence(float target_value,
                                            base::TimeDelta duration) {
   gfx::Tween::Type animation_type = gfx::Tween::EASE_OUT;
-  std::unique_ptr<ui::LayerAnimationSequence> brightness_sequence(
-      new ui::LayerAnimationSequence());
-  std::unique_ptr<ui::LayerAnimationSequence> grayscale_sequence(
-      new ui::LayerAnimationSequence());
+  std::unique_ptr<ui::LayerAnimationSequence> brightness_sequence =
+      base::MakeUnique<ui::LayerAnimationSequence>();
+  std::unique_ptr<ui::LayerAnimationSequence> grayscale_sequence =
+      base::MakeUnique<ui::LayerAnimationSequence>();
 
-  std::unique_ptr<ui::LayerAnimationElement> brightness_element(
+  std::unique_ptr<ui::LayerAnimationElement> brightness_element =
       ui::LayerAnimationElement::CreateBrightnessElement(target_value,
-                                                         duration));
+                                                         duration);
   brightness_element->set_tween_type(animation_type);
-  brightness_sequence->AddElement(brightness_element.release());
+  brightness_sequence->AddElement(std::move(brightness_element));
 
-  std::unique_ptr<ui::LayerAnimationElement> grayscale_element(
-      ui::LayerAnimationElement::CreateGrayscaleElement(target_value,
-                                                        duration));
+  std::unique_ptr<ui::LayerAnimationElement> grayscale_element =
+      ui::LayerAnimationElement::CreateGrayscaleElement(target_value, duration);
   grayscale_element->set_tween_type(animation_type);
-  grayscale_sequence->AddElement(grayscale_element.release());
+  grayscale_sequence->AddElement(std::move(grayscale_element));
 
   std::vector<ui::LayerAnimationSequence*> animations;
   animations.push_back(brightness_sequence.release());
@@ -434,25 +411,10 @@ CreateBrightnessGrayscaleAnimationSequence(float target_value,
   return animations;
 }
 
-// Returns scale related to the specified AshWindowScaleType.
-void SetTransformForScaleAnimation(ui::Layer* layer,
-                                   LayerScaleAnimationDirection type) {
-  const float scale = type == LAYER_SCALE_ANIMATION_ABOVE
-                          ? kLayerScaleAboveSize
-                          : kLayerScaleBelowSize;
-  gfx::Transform transform;
-  transform.Translate(-layer->bounds().width() * (scale - 1.0f) / 2,
-                      -layer->bounds().height() * (scale - 1.0f) / 2);
-  transform.Scale(scale, scale);
-  layer->SetTransform(transform);
-}
-
 gfx::Rect GetMinimizeAnimationTargetBoundsInScreen(aura::Window* window) {
-  Shelf* shelf = Shelf::ForWindow(window);
-  // Shelf is created lazily and can be NULL.
-  if (!shelf)
-    return gfx::Rect();
-  gfx::Rect item_rect = shelf->GetScreenBoundsOfItemIconForWindow(window);
+  WmWindow* wm_window = WmWindow::Get(window);
+  WmShelf* shelf = WmShelf::ForWindow(wm_window);
+  gfx::Rect item_rect = shelf->GetScreenBoundsOfItemIconForWindow(wm_window);
 
   // The launcher item is visible and has an icon.
   if (!item_rect.IsEmpty())
@@ -464,8 +426,8 @@ gfx::Rect GetMinimizeAnimationTargetBoundsInScreen(aura::Window* window) {
   // are still reported correctly and the window can be animated to the launcher
   // item's light bar.
   if (item_rect.width() != 0 || item_rect.height() != 0) {
-    if (shelf->shelf_layout_manager()->visibility_state() == SHELF_AUTO_HIDE) {
-      gfx::Rect shelf_bounds = shelf->shelf_widget()->GetWindowBoundsInScreen();
+    if (shelf->GetVisibilityState() == SHELF_AUTO_HIDE) {
+      gfx::Rect shelf_bounds = shelf->GetWindow()->GetBoundsInScreen();
       if (shelf->alignment() == SHELF_ALIGNMENT_LEFT)
         item_rect.set_x(shelf_bounds.right());
       else if (shelf->alignment() == SHELF_ALIGNMENT_RIGHT)
@@ -482,10 +444,17 @@ gfx::Rect GetMinimizeAnimationTargetBoundsInScreen(aura::Window* window) {
   gfx::Rect work_area =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window).work_area();
   int ltr_adjusted_x = base::i18n::IsRTL() ? work_area.right() : work_area.x();
-  return shelf->SelectValueForShelfAlignment(
-      gfx::Rect(ltr_adjusted_x, work_area.bottom(), 0, 0),
-      gfx::Rect(work_area.x(), work_area.y(), 0, 0),
-      gfx::Rect(work_area.right(), work_area.y(), 0, 0));
+  switch (shelf->alignment()) {
+    case SHELF_ALIGNMENT_BOTTOM:
+    case SHELF_ALIGNMENT_BOTTOM_LOCKED:
+      return gfx::Rect(ltr_adjusted_x, work_area.bottom(), 0, 0);
+    case SHELF_ALIGNMENT_LEFT:
+      return gfx::Rect(work_area.x(), work_area.y(), 0, 0);
+    case SHELF_ALIGNMENT_RIGHT:
+      return gfx::Rect(work_area.right(), work_area.y(), 0, 0);
+  }
+  NOTREACHED();
+  return gfx::Rect();
 }
 
 }  // namespace ash

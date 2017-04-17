@@ -15,6 +15,7 @@
 #include "base/threading/thread_checker.h"
 #include "cc/output/context_provider.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/ipc/common/surface_handle.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace gpu {
@@ -36,7 +37,7 @@ class InProcessContextProvider : public cc::ContextProvider {
       InProcessContextProvider* shared_context,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       gpu::ImageFactory* image_factory,
-      gfx::AcceleratedWidget window,
+      gpu::SurfaceHandle window,
       const std::string& debug_name);
 
   // Uses default attributes for creating an offscreen context.
@@ -52,9 +53,9 @@ class InProcessContextProvider : public cc::ContextProvider {
   gpu::gles2::GLES2Interface* ContextGL() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
+  cc::ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
   base::Lock* GetLock() override;
-  void DeleteCachedResources() override;
   void SetLostContextCallback(
       const LostContextCallback& lost_context_callback) override;
 
@@ -68,7 +69,7 @@ class InProcessContextProvider : public cc::ContextProvider {
       InProcessContextProvider* shared_context,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       gpu::ImageFactory* image_factory,
-      gfx::AcceleratedWidget window,
+      gpu::SurfaceHandle window,
       const std::string& debug_name);
   ~InProcessContextProvider() override;
 
@@ -77,12 +78,13 @@ class InProcessContextProvider : public cc::ContextProvider {
 
   std::unique_ptr<gpu::GLInProcessContext> context_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
+  std::unique_ptr<cc::ContextCacheController> cache_controller_;
 
   gpu::gles2::ContextCreationAttribHelper attribs_;
   InProcessContextProvider* shared_context_;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
   gpu::ImageFactory* image_factory_;
-  gfx::AcceleratedWidget window_;
+  gpu::SurfaceHandle window_;
   std::string debug_name_;
 
   base::Lock context_lock_;

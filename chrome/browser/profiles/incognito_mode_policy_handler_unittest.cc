@@ -10,7 +10,7 @@
 #include "components/policy/core/browser/configuration_policy_pref_store.h"
 #include "components/policy/core/browser/configuration_policy_pref_store_test.h"
 #include "components/policy/core/common/policy_types.h"
-#include "policy/policy_constants.h"
+#include "components/policy/policy_constants.h"
 
 namespace policy {
 
@@ -37,15 +37,14 @@ class IncognitoModePolicyHandlerTest
     if (incognito_enabled != INCOGNITO_ENABLED_UNKNOWN) {
       policy.Set(key::kIncognitoEnabled, POLICY_LEVEL_MANDATORY,
                  POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-                 base::WrapUnique(new base::FundamentalValue(
-                     incognito_enabled == INCOGNITO_ENABLED_TRUE)),
+                 base::MakeUnique<base::Value>(incognito_enabled ==
+                                               INCOGNITO_ENABLED_TRUE),
                  nullptr);
     }
     if (availability >= 0) {
       policy.Set(key::kIncognitoModeAvailability, POLICY_LEVEL_MANDATORY,
                  POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
-                 base::WrapUnique(new base::FundamentalValue(availability)),
-                 nullptr);
+                 base::MakeUnique<base::Value>(availability), nullptr);
     }
     UpdateProviderPolicy(policy);
   }
@@ -53,7 +52,7 @@ class IncognitoModePolicyHandlerTest
   void VerifyValues(IncognitoModePrefs::Availability availability) {
     const base::Value* value = NULL;
     EXPECT_TRUE(store_->GetValue(prefs::kIncognitoModeAvailability, &value));
-    EXPECT_TRUE(base::FundamentalValue(availability).Equals(value));
+    EXPECT_TRUE(base::Value(availability).Equals(value));
   }
 };
 

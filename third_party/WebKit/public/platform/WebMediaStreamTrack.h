@@ -10,16 +10,16 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef WebMediaStreamTrack_h
@@ -40,81 +40,96 @@ class WebMediaStreamSource;
 class WebString;
 
 class WebMediaStreamTrack {
-public:
-    struct Settings {
-        bool hasFrameRate()
-        {
-            return frameRate >= 0.0;
-        }
-        bool hasWidth()
-        {
-            return width >= 0;
-        }
-        bool hasHeight()
-        {
-            return height >= 0;
-        }
-        // The variables are read from
-        // MediaStreamTrack::GetSettings only.
-        double frameRate = -1.0;
-        long width = -1;
-        long height = -1;
-        WebString deviceId;
-    };
+ public:
+  enum class FacingMode { kNone, kUser, kEnvironment, kLeft, kRight };
 
-    class TrackData {
-    public:
-        TrackData() {}
-        virtual ~TrackData() {}
-        virtual void getSettings(Settings&) = 0;
-    };
+  struct Settings {
+    bool HasFrameRate() const { return frame_rate >= 0.0; }
+    bool HasWidth() const { return width >= 0; }
+    bool HasHeight() const { return height >= 0; }
+    bool HasFacingMode() const { return facing_mode != FacingMode::kNone; }
+    bool HasVideoKind() const { return !video_kind.IsNull(); }
+    bool HasFocalLengthX() const { return focal_length_x >= 0.0; }
+    bool HasFocalLengthY() const { return focal_length_y >= 0.0; }
+    bool HasDepthNear() const { return depth_near >= 0.0; }
+    bool HasDepthFar() const { return depth_far >= 0.0; }
+    // The variables are read from
+    // MediaStreamTrack::GetSettings only.
+    double frame_rate = -1.0;
+    long width = -1;
+    long height = -1;
+    WebString device_id;
+    FacingMode facing_mode = FacingMode::kNone;
+    // Media Capture Depth Stream Extensions.
+    WebString video_kind;
+    double focal_length_x = -1.0;
+    double focal_length_y = -1.0;
+    double depth_near = -1.0;
+    double depth_far = -1.0;
+  };
 
-    WebMediaStreamTrack() { }
-    WebMediaStreamTrack(const WebMediaStreamTrack& other) { assign(other); }
-    ~WebMediaStreamTrack() { reset(); }
+  class TrackData {
+   public:
+    TrackData() {}
+    virtual ~TrackData() {}
+    virtual void GetSettings(Settings&) = 0;
+  };
 
-    WebMediaStreamTrack& operator=(const WebMediaStreamTrack& other)
-    {
-        assign(other);
-        return *this;
-    }
-    BLINK_PLATFORM_EXPORT void assign(const WebMediaStreamTrack&);
+  enum class ContentHintType {
+    kNone,
+    kAudioSpeech,
+    kAudioMusic,
+    kVideoMotion,
+    kVideoDetail
+  };
 
-    BLINK_PLATFORM_EXPORT void initialize(const WebMediaStreamSource&);
-    BLINK_PLATFORM_EXPORT void initialize(const WebString& id, const WebMediaStreamSource&);
+  WebMediaStreamTrack() {}
+  WebMediaStreamTrack(const WebMediaStreamTrack& other) { Assign(other); }
+  ~WebMediaStreamTrack() { Reset(); }
 
-    BLINK_PLATFORM_EXPORT void reset();
-    bool isNull() const { return m_private.isNull(); }
+  WebMediaStreamTrack& operator=(const WebMediaStreamTrack& other) {
+    Assign(other);
+    return *this;
+  }
+  BLINK_PLATFORM_EXPORT void Assign(const WebMediaStreamTrack&);
 
-    BLINK_PLATFORM_EXPORT WebString id() const;
+  BLINK_PLATFORM_EXPORT void Initialize(const WebMediaStreamSource&);
+  BLINK_PLATFORM_EXPORT void Initialize(const WebString& id,
+                                        const WebMediaStreamSource&);
 
-    BLINK_PLATFORM_EXPORT WebMediaStreamSource source() const;
-    BLINK_PLATFORM_EXPORT bool isEnabled() const;
-    BLINK_PLATFORM_EXPORT bool isMuted() const;
+  BLINK_PLATFORM_EXPORT void Reset();
+  bool IsNull() const { return private_.IsNull(); }
 
-    // Extra data associated with this WebMediaStream.
-    // If non-null, the extra data pointer will be deleted when the object is destroyed.
-    // Setting the track data pointer will cause any existing non-null
-    // track data pointer to be deleted.
-    BLINK_PLATFORM_EXPORT TrackData* getTrackData() const;
-    BLINK_PLATFORM_EXPORT void setTrackData(TrackData*);
+  BLINK_PLATFORM_EXPORT WebString Id() const;
 
-    // The lifetime of the WebAudioSourceProvider should outlive the
-    // WebMediaStreamTrack, and clients are responsible for calling
-    // setSourceProvider(0) before the WebMediaStreamTrack is going away.
-    BLINK_PLATFORM_EXPORT void setSourceProvider(WebAudioSourceProvider*);
+  BLINK_PLATFORM_EXPORT WebMediaStreamSource Source() const;
+  BLINK_PLATFORM_EXPORT bool IsEnabled() const;
+  BLINK_PLATFORM_EXPORT bool IsMuted() const;
+  BLINK_PLATFORM_EXPORT ContentHintType ContentHint() const;
+
+  // Extra data associated with this WebMediaStream.
+  // If non-null, the extra data pointer will be deleted when the object is
+  // destroyed.  Setting the track data pointer will cause any existing non-null
+  // track data pointer to be deleted.
+  BLINK_PLATFORM_EXPORT TrackData* GetTrackData() const;
+  BLINK_PLATFORM_EXPORT void SetTrackData(TrackData*);
+
+  // The lifetime of the WebAudioSourceProvider should outlive the
+  // WebMediaStreamTrack, and clients are responsible for calling
+  // setSourceProvider(0) before the WebMediaStreamTrack is going away.
+  BLINK_PLATFORM_EXPORT void SetSourceProvider(WebAudioSourceProvider*);
 
 #if INSIDE_BLINK
-    BLINK_PLATFORM_EXPORT WebMediaStreamTrack(MediaStreamComponent*);
-    BLINK_PLATFORM_EXPORT WebMediaStreamTrack& operator=(MediaStreamComponent*);
-    BLINK_PLATFORM_EXPORT operator WTF::PassRefPtr<MediaStreamComponent>() const;
-    BLINK_PLATFORM_EXPORT operator MediaStreamComponent*() const;
+  BLINK_PLATFORM_EXPORT WebMediaStreamTrack(MediaStreamComponent*);
+  BLINK_PLATFORM_EXPORT WebMediaStreamTrack& operator=(MediaStreamComponent*);
+  BLINK_PLATFORM_EXPORT operator WTF::PassRefPtr<MediaStreamComponent>() const;
+  BLINK_PLATFORM_EXPORT operator MediaStreamComponent*() const;
 #endif
 
-private:
-    WebPrivatePtr<MediaStreamComponent> m_private;
+ private:
+  WebPrivatePtr<MediaStreamComponent> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebMediaStreamTrack_h
+#endif  // WebMediaStreamTrack_h

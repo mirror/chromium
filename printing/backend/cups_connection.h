@@ -14,11 +14,22 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "printing/backend/cups_deleters.h"
+#include "printing/backend/cups_jobs.h"
 #include "printing/backend/cups_printer.h"
 #include "printing/printing_export.h"
 #include "url/gurl.h"
 
 namespace printing {
+
+// Represents the status of a printer queue.
+struct PRINTING_EXPORT QueueStatus {
+  QueueStatus();
+  QueueStatus(const QueueStatus& other);
+  ~QueueStatus();
+
+  PrinterStatus printer_status;
+  std::vector<CupsJob> jobs;
+};
 
 // Represents a connection to a CUPS server.
 class PRINTING_EXPORT CupsConnection {
@@ -36,6 +47,13 @@ class PRINTING_EXPORT CupsConnection {
 
   // Returns a printer for |printer_name| from the connected server.
   std::unique_ptr<CupsPrinter> GetPrinter(const std::string& printer_name);
+
+  // Queries CUPS for printer queue status for |printer_ids|.  Populates |jobs|
+  // with said information with one QueueStatus per printer_id.  Returns true if
+  // all the queries were successful.  In the event of failure, |jobs| will be
+  // unchanged.
+  bool GetJobs(const std::vector<std::string>& printer_ids,
+               std::vector<QueueStatus>* jobs);
 
   std::string server_name() const;
 

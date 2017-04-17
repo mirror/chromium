@@ -8,6 +8,7 @@
 #include "base/metrics/field_trial.h"
 #include "base/strings/string_util.h"
 #include "chrome/common/extensions/extension_constants.h"
+#include "content/public/common/content_switches.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
@@ -69,15 +70,17 @@ bool CrossesExtensionProcessBoundary(
 
 bool IsIsolateExtensionsEnabled() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kIsolateExtensions)) {
+          switches::kIsolateExtensions) ||
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kSitePerProcess)) {
     return true;
   }
 
   const std::string group_name =
       base::FieldTrialList::FindFullName("SiteIsolationExtensions");
   // Use StartsWith() for more flexibility (e.g. multiple Enabled groups).
-  return base::StartsWith(group_name, "Enabled",
-                          base::CompareCase::INSENSITIVE_ASCII);
+  return !base::StartsWith(group_name, "Control",
+                           base::CompareCase::INSENSITIVE_ASCII);
 }
 
 }  // namespace extensions

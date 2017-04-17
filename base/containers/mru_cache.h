@@ -105,8 +105,6 @@ class MRUCacheBase {
   // Retrieves the contents of the given key, or end() if not found. This method
   // has the side effect of moving the requested item to the front of the
   // recency list.
-  //
-  // TODO(brettw) We may want a const version of this function in the future.
   iterator Get(const KeyType& key) {
     typename KeyIndex::iterator index_iter = index_.find(key);
     if (index_iter == index_.end())
@@ -209,10 +207,12 @@ class MRUCacheBase {
 
 // A container that does not do anything to free its data. Use this when storing
 // value types (as opposed to pointers) in the list.
-template <class KeyType, class PayloadType>
-class MRUCache : public MRUCacheBase<KeyType, PayloadType, std::less<KeyType>> {
+template <class KeyType,
+          class PayloadType,
+          class CompareType = std::less<KeyType>>
+class MRUCache : public MRUCacheBase<KeyType, PayloadType, CompareType> {
  private:
-  using ParentType = MRUCacheBase<KeyType, PayloadType, std::less<KeyType>>;
+  using ParentType = MRUCacheBase<KeyType, PayloadType, CompareType>;
 
  public:
   // See MRUCacheBase, noting the possibility of using NO_AUTO_EVICT.

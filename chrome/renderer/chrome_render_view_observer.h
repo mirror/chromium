@@ -12,17 +12,11 @@
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
-#include "content/public/common/top_controls_state.h"
+#include "content/public/common/browser_controls_state.h"
 #include "content/public/renderer/render_view_observer.h"
+#include "extensions/features/features.h"
+#include "third_party/WebKit/public/web/window_features.mojom.h"
 #include "url/gurl.h"
-
-class ContentSettingsObserver;
-class SkBitmap;
-
-namespace blink {
-class WebView;
-struct WebWindowFeatures;
-}
 
 namespace web_cache {
 class WebCacheImpl;
@@ -49,16 +43,13 @@ class ChromeRenderViewObserver : public content::RenderViewObserver {
 #if !defined(OS_ANDROID)
   void OnWebUIJavaScript(const base::string16& javascript);
 #endif
-#if defined(ENABLE_EXTENSIONS)
-  void OnSetVisuallyDeemphasized(bool deemphasized);
-#endif
 #if defined(OS_ANDROID)
-  void OnUpdateTopControlsState(content::TopControlsState constraints,
-                                content::TopControlsState current,
-                                bool animate);
+  void OnUpdateBrowserControlsState(content::BrowserControlsState constraints,
+                                    content::BrowserControlsState current,
+                                    bool animate);
 #endif
   void OnGetWebApplicationInfo();
-  void OnSetWindowFeatures(const blink::WebWindowFeatures& window_features);
+  void OnSetWindowFeatures(const blink::mojom::WindowFeatures& window_features);
 
   // Determines if a host is in the strict security host set.
   bool IsStrictSecurityHost(const std::string& host);
@@ -68,9 +59,6 @@ class ChromeRenderViewObserver : public content::RenderViewObserver {
 
   // Owned by ChromeContentRendererClient and outlive us.
   web_cache::WebCacheImpl* web_cache_impl_;
-
-  // true if webview is overlayed with grey color.
-  bool webview_visually_deemphasized_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeRenderViewObserver);
 };

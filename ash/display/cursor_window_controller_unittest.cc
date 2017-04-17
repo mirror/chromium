@@ -6,15 +6,14 @@
 
 #include "ash/display/display_util.h"
 #include "ash/display/window_tree_host_manager.h"
-#include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test/display_manager_test_api.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/display/test/display_manager_test_api.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
@@ -50,9 +49,8 @@ class CursorWindowControllerTest : public test::AshTestBase {
   }
 
   void SetCursorCompositionEnabled(bool enabled) {
-    cursor_window_controller_ = Shell::GetInstance()
-                                    ->window_tree_host_manager()
-                                    ->cursor_window_controller();
+    cursor_window_controller_ =
+        Shell::Get()->window_tree_host_manager()->cursor_window_controller();
     cursor_window_controller_->SetCursorCompositingEnabled(enabled);
   }
 
@@ -66,15 +64,12 @@ class CursorWindowControllerTest : public test::AshTestBase {
 // Test that the composited cursor moves to another display when the real cursor
 // moves to another display.
 TEST_F(CursorWindowControllerTest, MoveToDifferentDisplay) {
-  if (!SupportsMultipleDisplays())
-    return;
-
   UpdateDisplay("200x200,200x200*2/r");
 
   WindowTreeHostManager* window_tree_host_manager =
-      Shell::GetInstance()->window_tree_host_manager();
+      Shell::Get()->window_tree_host_manager();
   int64_t primary_display_id = window_tree_host_manager->GetPrimaryDisplayId();
-  int64_t secondary_display_id = ScreenUtil::GetSecondaryDisplay().id();
+  int64_t secondary_display_id = display_manager()->GetSecondaryDisplay().id();
   aura::Window* primary_root =
       window_tree_host_manager->GetRootWindowForDisplayId(primary_display_id);
   aura::Window* secondary_root =
@@ -103,7 +98,7 @@ TEST_F(CursorWindowControllerTest, MoveToDifferentDisplay) {
   // asynchronously. This is implemented in a platform specific way. Generate a
   // fake mouse move instead of waiting.
   gfx::Point new_cursor_position_in_host(20, 50);
-  secondary_root->GetHost()->ConvertPointToHost(&new_cursor_position_in_host);
+  secondary_root->GetHost()->ConvertDIPToPixels(&new_cursor_position_in_host);
   ui::test::EventGenerator secondary_generator(secondary_root);
   secondary_generator.MoveMouseToInHost(new_cursor_position_in_host);
 
@@ -123,7 +118,7 @@ TEST_F(CursorWindowControllerTest, MoveToDifferentDisplay) {
 TEST_F(CursorWindowControllerTest, VisibilityTest) {
   ASSERT_TRUE(GetCursorWindow());
   EXPECT_TRUE(GetCursorWindow()->IsVisible());
-  aura::client::CursorClient* client = Shell::GetInstance()->cursor_manager();
+  aura::client::CursorClient* client = Shell::Get()->cursor_manager();
   client->HideCursor();
   ASSERT_TRUE(GetCursorWindow());
   EXPECT_FALSE(GetCursorWindow()->IsVisible());
@@ -157,14 +152,16 @@ TEST_F(CursorWindowControllerTest, DSF) {
   UpdateDisplay("1000x500*2");
   int64_t primary_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
 
-  test::ScopedSetInternalDisplayId set_internal(primary_id);
+  display::test::ScopedSetInternalDisplayId set_internal(display_manager(),
+                                                         primary_id);
   SetCursorCompositionEnabled(true);
   ASSERT_EQ(
       2.0f,
       display::Screen::GetScreen()->GetPrimaryDisplay().device_scale_factor());
   EXPECT_TRUE(GetCursorImage().HasRepresentation(2.0f));
 
-  ASSERT_TRUE(SetDisplayUIScale(primary_id, 2.0f));
+  ASSERT_TRUE(display::test::DisplayManagerTestApi(display_manager())
+                  .SetDisplayUIScale(primary_id, 2.0f));
   ASSERT_EQ(
       1.0f,
       display::Screen::GetScreen()->GetPrimaryDisplay().device_scale_factor());

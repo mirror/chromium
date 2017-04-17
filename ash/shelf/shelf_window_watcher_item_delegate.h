@@ -5,35 +5,32 @@
 #ifndef ASH_SHELF_SHELF_WINDOW_WATCHER_ITEM_DELEGATE_H_
 #define ASH_SHELF_SHELF_WINDOW_WATCHER_ITEM_DELEGATE_H_
 
-#include "ash/common/shelf/shelf_item_delegate.h"
-#include "base/compiler_specific.h"
+#include "ash/public/cpp/shelf_item_delegate.h"
 #include "base/macros.h"
-
-namespace aura {
-class Window;
-}
 
 namespace ash {
 
-// ShelfItemDelegate for the items created by ShelfWindowWatcher.
+class WmWindow;
+
+// ShelfItemDelegate for the items created by ShelfWindowWatcher, for example:
+// The Chrome OS settings window, task manager window, and panel windows.
 class ShelfWindowWatcherItemDelegate : public ShelfItemDelegate {
  public:
-  explicit ShelfWindowWatcherItemDelegate(aura::Window* window);
+  ShelfWindowWatcherItemDelegate(ShelfID id, WmWindow* window);
   ~ShelfWindowWatcherItemDelegate() override;
 
  private:
   // ShelfItemDelegate overrides:
-  ShelfItemDelegate::PerformedAction ItemSelected(
-      const ui::Event& event) override;
-  base::string16 GetTitle() override;
-  ShelfMenuModel* CreateApplicationMenu(int event_flags) override;
-  bool IsDraggable() override;
-  bool CanPin() const override;
-  bool ShouldShowTooltip() override;
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ShelfLaunchSource source,
+                    const ItemSelectedCallback& callback) override;
+  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
   void Close() override;
 
-  // Stores a Window associated with this item. Not owned.
-  aura::Window* window_;
+  ShelfID id_;
+  // The window associated with this item. Not owned.
+  WmWindow* window_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfWindowWatcherItemDelegate);
 };

@@ -30,32 +30,39 @@ class SVGStopElement;
 
 // This class exists mostly so we can hear about gradient stop style changes
 class LayoutSVGGradientStop final : public LayoutObject {
-public:
-    explicit LayoutSVGGradientStop(SVGStopElement*);
-    ~LayoutSVGGradientStop() override;
+ public:
+  explicit LayoutSVGGradientStop(SVGStopElement*);
+  ~LayoutSVGGradientStop() override;
 
-    const char* name() const override { return "LayoutSVGGradientStop"; }
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectSVG || type == LayoutObjectSVGGradientStop || LayoutObject::isOfType(type); }
+  const char* GetName() const override { return "LayoutSVGGradientStop"; }
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectSVG || type == kLayoutObjectSVGGradientStop ||
+           LayoutObject::IsOfType(type);
+  }
 
-    void layout() override;
+  void UpdateLayout() override;
 
-    // This overrides are needed to prevent ASSERTs on <svg><stop /></svg>
-    // LayoutObject's default implementations ASSERT_NOT_REACHED()
-    // https://bugs.webkit.org/show_bug.cgi?id=20400
-    LayoutRect localOverflowRectForPaintInvalidation() const override { return LayoutRect(); }
-    FloatRect objectBoundingBox() const override { return FloatRect(); }
-    FloatRect strokeBoundingBox() const override { return FloatRect(); }
-    FloatRect paintInvalidationRectInLocalSVGCoordinates() const override { return FloatRect(); }
+  // These overrides are needed to prevent NOTREACHED on <svg><stop /></svg> in
+  // LayoutObject's default implementations.
+  LayoutRect LocalVisualRect() const override { return LayoutRect(); }
+  FloatRect ObjectBoundingBox() const override { return FloatRect(); }
+  FloatRect StrokeBoundingBox() const override { return FloatRect(); }
+  FloatRect VisualRectInLocalSVGCoordinates() const override {
+    return FloatRect();
+  }
+  FloatRect LocalBoundingBoxRectForAccessibility() const final {
+    return FloatRect();
+  }
 
-protected:
-    void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) override;
+ protected:
+  void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
 
-private:
-    SVGGradientElement* gradientElement() const;
+ private:
+  SVGGradientElement* GradientElement() const;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutSVGGradientStop, isSVGGradientStop());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutSVGGradientStop, IsSVGGradientStop());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutSVGGradientStop_h
+#endif  // LayoutSVGGradientStop_h

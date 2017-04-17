@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
@@ -26,7 +27,6 @@
 #include "chrome/browser/ui/views/tabs/window_finder.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_function_dispatcher.h"
 #include "ui/display/display.h"
@@ -40,27 +40,20 @@
 #include "ui/views/widget/widget.h"
 
 #if defined(USE_ASH)
-#include "ash/common/accelerators/accelerator_commands.h"
-#include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
-#include "ash/wm/window_state_aura.h"
-#include "ui/wm/core/coordinate_conversion.h"
+#include "ash/accelerators/accelerator_commands.h"  // nogncheck
+#include "ash/shell.h"                   // nogncheck
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"  // nogncheck
+#include "ash/wm/window_state.h"  // nogncheck
+#include "ash/wm/window_state_aura.h"  // nogncheck
+#include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
 
 #if defined(USE_AURA)
-#include "ui/aura/env.h"
-#include "ui/aura/window.h"
-#include "ui/wm/core/window_modality_controller.h"
+#include "ui/aura/env.h"  // nogncheck
+#include "ui/aura/window.h"  // nogncheck
+#include "ui/wm/core/window_modality_controller.h"  // nogncheck
 #endif
 
-#if defined(MOJO_SHELL_CLIENT)
-#include "chrome/browser/ui/views/tabs/window_finder_mus.h"
-#include "content/public/common/mojo_shell_connection.h"
-#include "services/shell/runner/common/client_util.h"
-#endif
-
-using base::UserMetricsAction;
 using content::OpenURLParams;
 using content::WebContents;
 
@@ -92,22 +85,15 @@ const int kStackedDistance = 36;
 const int kMaximizedWindowInset = 10;  // DIPs.
 
 #if defined(USE_ASH)
-void SetWindowPositionManaged(gfx::NativeWindow window, bool value) {
-  ash::wm::GetWindowState(window)->set_window_position_managed(value);
-}
-
-// Returns true if |tab_strip| browser window is docked.
-bool IsDockedOrSnapped(const TabStrip* tab_strip) {
+// Returns true if |tab_strip| browser window is snapped.
+bool IsSnapped(const TabStrip* tab_strip) {
   DCHECK(tab_strip);
   ash::wm::WindowState* window_state =
       ash::wm::GetWindowState(tab_strip->GetWidget()->GetNativeWindow());
-  return window_state->IsDocked() || window_state->IsSnapped();
+  return window_state->IsSnapped();
 }
 #else
-void SetWindowPositionManaged(gfx::NativeWindow window, bool value) {
-}
-
-bool IsDockedOrSnapped(const TabStrip* tab_strip) {
+bool IsSnapped(const TabStrip* tab_strip) {
   return false;
 }
 #endif
@@ -142,18 +128,6 @@ void OffsetX(int x_offset, std::vector<gfx::Rect>* rects) {
   for (size_t i = 0; i < rects->size(); ++i)
     (*rects)[i].set_x((*rects)[i].x() + x_offset);
 }
-
-// WidgetObserver implementation that resets the window position managed
-// property on Show.
-// We're forced to do this here since BrowserFrameAsh resets the 'window
-// position managed' property during a show and we need the property set to
-// false before WorkspaceLayoutManager sees the visibility change.
-class WindowPositionManagedUpdater : public views::WidgetObserver {
- public:
-  void OnWidgetVisibilityChanged(views::Widget* widget, bool visible) override {
-    SetWindowPositionManaged(widget->GetNativeWindow(), false);
-  }
-};
 
 // EscapeTracker installs an event monitor and runs a callback when it receives
 // the escape key.
@@ -228,17 +202,9 @@ TabDragController::TabDragController()
       is_mutating_(false),
       attach_x_(-1),
       attach_index_(-1),
+      window_finder_(base::MakeUnique<WindowFinder>()),
       weak_factory_(this) {
   instance_ = this;
-
-#if defined(MOJO_SHELL_CLIENT)
-  content::MojoShellConnection* mojo_shell_connection =
-      content::MojoShellConnection::GetForProcess();
-  if (mojo_shell_connection && shell::ShellIsRemote())
-    window_finder_.reset(new WindowFinderMus);
-  else
-#endif
-    window_finder_.reset(new WindowFinder);
 }
 
 TabDragController::~TabDragController() {
@@ -248,8 +214,8 @@ TabDragController::~TabDragController() {
     instance_ = NULL;
 
   if (move_loop_widget_) {
-    move_loop_widget_->RemoveObserver(this);
-    SetWindowPositionManaged(move_loop_widget_->GetNativeWindow(), true);
+    if (added_observer_to_move_loop_widget_)
+      move_loop_widget_->RemoveObserver(this);
   }
 
   if (source_tabstrip_)
@@ -323,10 +289,9 @@ void TabDragController::Init(
     source_tabstrip_->GetWidget()->SetCapture(source_tabstrip_);
 
 #if defined(USE_ASH)
-  if (ash::WmShell::HasInstance() &&
-      ash::WmShell::Get()
-          ->maximize_mode_controller()
-          ->IsMaximizeModeWindowManagerEnabled()) {
+  if (ash::Shell::HasInstance() && ash::Shell::Get()
+                                       ->maximize_mode_controller()
+                                       ->IsMaximizeModeWindowManagerEnabled()) {
     detach_behavior_ = NOT_DETACHABLE;
   }
 #endif
@@ -628,10 +593,6 @@ TabDragController::DragBrowserToNewTabStrip(
       browser_widget->ReleaseCapture();
     else
       target_tabstrip->GetWidget()->SetCapture(attached_tabstrip_);
-
-    // The window is going away. Since the drag is still on going we don't want
-    // that to effect the position of any windows.
-    SetWindowPositionManaged(browser_widget->GetNativeWindow(), false);
 
 #if !defined(OS_LINUX) || defined(OS_CHROMEOS)
     // EndMoveLoop is going to snap the window back to its original location.
@@ -1072,10 +1033,7 @@ void TabDragController::DetachIntoNewBrowserAndRunMoveLoop(
   AdjustBrowserAndTabBoundsForDrag(last_tabstrip_width,
                                    point_in_screen,
                                    &drag_bounds);
-  WindowPositionManagedUpdater updater;
-  dragged_widget->AddObserver(&updater);
   browser->window()->Show();
-  dragged_widget->RemoveObserver(&updater);
   dragged_widget->SetVisibilityChangedAnimationsEnabled(true);
   // Activate may trigger a focus loss, destroying us.
   {
@@ -1095,6 +1053,7 @@ void TabDragController::RunMoveLoop(const gfx::Vector2d& drag_offset) {
   move_loop_widget_ = GetAttachedBrowserWidget();
   DCHECK(move_loop_widget_);
   move_loop_widget_->AddObserver(this);
+  added_observer_to_move_loop_widget_ = true;
   is_dragging_window_ = true;
   base::WeakPtr<TabDragController> ref(weak_factory_.GetWeakPtr());
   if (can_release_capture_) {
@@ -1125,7 +1084,7 @@ void TabDragController::RunMoveLoop(const gfx::Vector2d& drag_offset) {
     return;
   if (move_loop_widget_) {
     move_loop_widget_->RemoveObserver(this);
-    move_loop_widget_ = NULL;
+    move_loop_widget_ = nullptr;
   }
   is_dragging_window_ = false;
   waiting_for_run_loop_to_exit_ = false;
@@ -1365,11 +1324,6 @@ void TabDragController::EndDragImpl(EndDragType type) {
   if (is_dragging_window_) {
     waiting_for_run_loop_to_exit_ = true;
 
-    if (type == NORMAL || (type == TAB_DESTROYED && drag_data_.size() > 1)) {
-      SetWindowPositionManaged(GetAttachedBrowserWidget()->GetNativeWindow(),
-                               true);
-    }
-
     // End the nested drag loop.
     GetAttachedBrowserWidget()->EndMoveLoop();
   }
@@ -1414,7 +1368,7 @@ void TabDragController::RevertDrag() {
       MaximizeAttachedWindow();
     if (attached_tabstrip_ == source_tabstrip_) {
       source_tabstrip_->StoppedDraggingTabs(
-          tabs, initial_tab_positions_, move_behavior_ == MOVE_VISIBILE_TABS,
+          tabs, initial_tab_positions_, move_behavior_ == MOVE_VISIBLE_TABS,
           false);
     } else {
       attached_tabstrip_->DraggedTabsDetached();
@@ -1519,7 +1473,7 @@ void TabDragController::CompleteDrag() {
 
   if (attached_tabstrip_) {
     if (is_dragging_new_browser_ || did_restore_window_) {
-      if (IsDockedOrSnapped(attached_tabstrip_)) {
+      if (IsSnapped(attached_tabstrip_)) {
         was_source_maximized_ = false;
         was_source_fullscreen_ = false;
       }
@@ -1531,7 +1485,7 @@ void TabDragController::CompleteDrag() {
     attached_tabstrip_->StoppedDraggingTabs(
         GetTabsMatchingDraggedContents(attached_tabstrip_),
         initial_tab_positions_,
-        move_behavior_ == MOVE_VISIBILE_TABS,
+        move_behavior_ == MOVE_VISIBLE_TABS,
         true);
   } else {
     // Compel the model to construct a new window for the detached
@@ -1560,6 +1514,14 @@ void TabDragController::CompleteDrag() {
 }
 
 void TabDragController::MaximizeAttachedWindow() {
+  if (move_loop_widget_ && added_observer_to_move_loop_widget_) {
+    // This function is only called when the drag is ending. At this point we
+    // don't care about any subsequent moves to the widget, so we remove the
+    // observer. If we didn't do this we could get told the widget moved and
+    // attempt to do the wrong thing.
+    move_loop_widget_->RemoveObserver(this);
+    added_observer_to_move_loop_widget_ = false;
+  }
   GetAttachedBrowserWidget()->Maximize();
 #if defined(USE_ASH)
   if (was_source_fullscreen_) {
@@ -1768,11 +1730,10 @@ Browser* TabDragController::CreateBrowserForDrag(
 
   Profile* profile =
       Profile::FromBrowserContext(drag_data_[0].contents->GetBrowserContext());
-  Browser::CreateParams create_params(Browser::TYPE_TABBED, profile);
+  Browser::CreateParams create_params(Browser::TYPE_TABBED, profile, true);
   create_params.initial_bounds = new_bounds;
   Browser* browser = new Browser(create_params);
   is_dragging_new_browser_ = true;
-  SetWindowPositionManaged(browser->window()->GetNativeWindow(), false);
   // If the window is created maximized then the bounds we supplied are ignored.
   // We need to reset them again so they are honored.
   browser->window()->SetBounds(new_bounds);

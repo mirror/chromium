@@ -6,12 +6,12 @@
 
 #include "base/bind.h"
 #include "base/location.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "google_apis/gcm/monitoring/gcm_stats_recorder.h"
 #include "google_apis/gcm/protocol/checkin.pb.h"
 #include "net/base/load_flags.h"
-#include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
 
@@ -58,10 +58,11 @@ std::string GetCheckinRequestStatusString(CheckinRequestStatus status) {
       return "RESPONSE_PARSING_FAILED";
     case ZERO_ID_OR_TOKEN:
       return "ZERO_ID_OR_TOKEN";
-    default:
+    case STATUS_COUNT:
       NOTREACHED();
-      return "UNKNOWN_STATUS";
+      break;
   }
+  return "UNKNOWN_STATUS";
 }
 
 // Records checkin status to both stats recorder and reports to UMA.
@@ -144,9 +145,40 @@ void CheckinRequest::Start() {
 
   std::string upload_data;
   CHECK(request.SerializeToString(&upload_data));
-
-  url_fetcher_ =
-      net::URLFetcher::Create(checkin_url_, net::URLFetcher::POST, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("gcm_checkin", R"(
+        semantics {
+          sender: "GCM Driver"
+          description:
+            "Chromium interacts with Google Cloud Messaging to receive push "
+            "messages for various browser features, as well as on behalf of "
+            "websites and extensions. The check-in periodically verifies the "
+            "client's validity with Google servers, and receive updates to "
+            "configuration regarding interacting with Google services."
+          trigger:
+            "Immediately after a feature creates the first Google Cloud "
+            "Messaging registration. By default, Chromium will check in with "
+            "Google Cloud Messaging every two days. Google can adjust this "
+            "interval when it deems necessary."
+          data:
+            "The profile-bound Android ID and associated secret and account "
+            "tokens. A structure containing the Chromium version, channel, and "
+            "platform of the host operating system."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "Support for interacting with Google Cloud Messaging is enabled by "
+            "default, and there is no configuration option to completely "
+            "disable it. Websites wishing to receive push messages must "
+            "acquire express permission from the user for the 'Notification' "
+            "permission."
+          policy_exception_justification:
+            "Not implemented, considered not useful."
+        })");
+  url_fetcher_ = net::URLFetcher::Create(checkin_url_, net::URLFetcher::POST,
+                                         this, traffic_annotation);
   url_fetcher_->SetRequestContext(request_context_getter_);
   url_fetcher_->SetUploadData(kRequestContentType, upload_data);
   url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
@@ -193,7 +225,7 @@ void CheckinRequest::OnURLFetchComplete(const net::URLFetcher* source) {
     CheckinRequestStatus status = response_status == net::HTTP_BAD_REQUEST ?
         HTTP_BAD_REQUEST : HTTP_UNAUTHORIZED;
     RecordCheckinStatusAndReportUMA(status, recorder_, false);
-    callback_.Run(response_proto);
+    callback_.Run(response_status, response_proto);
     return;
   }
 
@@ -224,7 +256,7 @@ void CheckinRequest::OnURLFetchComplete(const net::URLFetcher* source) {
                        backoff_entry_.failure_count());
   UMA_HISTOGRAM_TIMES("GCM.CheckinCompleteTime",
                       base::TimeTicks::Now() - request_start_time_);
-  callback_.Run(response_proto);
+  callback_.Run(response_status, response_proto);
 }
 
 }  // namespace gcm

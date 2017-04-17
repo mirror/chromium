@@ -4,13 +4,16 @@
 
 #include "chrome/test/base/chrome_test_launcher.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/command_line.h"
 #include "base/debug/leak_annotations.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
+#include "base/memory/ptr_util.h"
 #include "base/process/process_metrics.h"
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
@@ -19,6 +22,7 @@
 #include "chrome/app/chrome_main_delegate.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/install_static/test/scoped_install_details.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "components/crash/content/app/crashpad.h"
 #include "content/public/app/content_main.h"
@@ -83,9 +87,6 @@ bool ChromeTestLauncherDelegate::AdjustChildProcessCommandLine(
 
   new_command_line.AppendSwitchPath(switches::kUserDataDir, temp_data_dir);
 
-  // file:// access for ChromeOS.
-  new_command_line.AppendSwitch(switches::kAllowFileAccess);
-
   *command_line = new_command_line;
   return true;
 }
@@ -101,6 +102,11 @@ int LaunchChromeTests(int default_jobs,
                       char** argv) {
 #if defined(OS_MACOSX)
   chrome_browser_application_mac::RegisterBrowserCrApp();
+#endif
+
+#if defined(OS_WIN)
+  // Create a primordial InstallDetails instance for the test.
+  install_static::ScopedInstallDetails install_details;
 #endif
 
 #if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_WIN)

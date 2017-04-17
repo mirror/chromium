@@ -13,8 +13,6 @@ namespace blink {
 
 class ComputedStyle;
 class GraphicsContext;
-class IntRect;
-class LayoutBox;
 class LayoutRect;
 struct PaintInfo;
 class Path;
@@ -22,70 +20,128 @@ class Path;
 typedef unsigned BorderEdgeFlags;
 
 class BoxBorderPainter {
-    STACK_ALLOCATED();
-public:
-    BoxBorderPainter(const LayoutRect& borderRect, const ComputedStyle&,
-        BackgroundBleedAvoidance, bool includeLogicalLeftEdge, bool includeLogicalRightEdge);
+  STACK_ALLOCATED();
 
-    BoxBorderPainter(const ComputedStyle&, const LayoutRect& outer, const LayoutRect& inner,
-        const BorderEdge& uniformEdgeInfo);
+ public:
+  BoxBorderPainter(const LayoutRect& border_rect,
+                   const ComputedStyle&,
+                   BackgroundBleedAvoidance,
+                   bool include_logical_left_edge,
+                   bool include_logical_right_edge);
 
-    void paintBorder(const PaintInfo&, const LayoutRect& borderRect) const;
+  BoxBorderPainter(const ComputedStyle&,
+                   const LayoutRect& outer,
+                   const LayoutRect& inner,
+                   const BorderEdge& uniform_edge_info);
 
-private:
-    struct ComplexBorderInfo;
-    enum MiterType {
-        NoMiter,
-        SoftMiter, // Anti-aliased
-        HardMiter, // Not anti-aliased
-    };
+  void PaintBorder(const PaintInfo&, const LayoutRect& border_rect) const;
 
-    void computeBorderProperties();
+ private:
+  struct ComplexBorderInfo;
+  enum MiterType {
+    kNoMiter,
+    kSoftMiter,  // Anti-aliased
+    kHardMiter,  // Not anti-aliased
+  };
 
-    BorderEdgeFlags paintOpacityGroup(GraphicsContext&, const ComplexBorderInfo&, unsigned index,
-        float accumulatedOpacity) const;
-    void paintSide(GraphicsContext&, const ComplexBorderInfo&, BoxSide, unsigned alpha, BorderEdgeFlags) const;
-    void paintOneBorderSide(GraphicsContext&, const FloatRect& sideRect, BoxSide, BoxSide adjacentSide1,
-        BoxSide adjacentSide2, const Path*, bool antialias, Color, BorderEdgeFlags) const;
-    bool paintBorderFastPath(GraphicsContext&, const LayoutRect& borderRect) const;
-    void drawDoubleBorder(GraphicsContext&, const LayoutRect& borderRect) const;
+  void ComputeBorderProperties();
 
-    void drawBoxSideFromPath(GraphicsContext&, const LayoutRect&, const Path&, float thickness,
-        float drawThickness, BoxSide, Color, EBorderStyle) const;
-    void clipBorderSidePolygon(GraphicsContext&, BoxSide, MiterType miter1, MiterType miter2) const;
-    void clipBorderSideForComplexInnerPath(GraphicsContext&, BoxSide) const;
+  BorderEdgeFlags PaintOpacityGroup(GraphicsContext&,
+                                    const ComplexBorderInfo&,
+                                    unsigned index,
+                                    float accumulated_opacity) const;
+  void PaintSide(GraphicsContext&,
+                 const ComplexBorderInfo&,
+                 BoxSide,
+                 unsigned alpha,
+                 BorderEdgeFlags) const;
+  void PaintOneBorderSide(GraphicsContext&,
+                          const FloatRect& side_rect,
+                          BoxSide,
+                          BoxSide adjacent_side1,
+                          BoxSide adjacent_side2,
+                          const Path*,
+                          bool antialias,
+                          Color,
+                          BorderEdgeFlags) const;
+  bool PaintBorderFastPath(GraphicsContext&,
+                           const LayoutRect& border_rect) const;
+  void DrawDoubleBorder(GraphicsContext&, const LayoutRect& border_rect) const;
 
-    MiterType computeMiter(BoxSide, BoxSide adjacentSide, BorderEdgeFlags, bool antialias) const;
-    static bool mitersRequireClipping(MiterType miter1, MiterType miter2, EBorderStyle, bool antialias);
+  void DrawBoxSideFromPath(GraphicsContext&,
+                           const LayoutRect&,
+                           const Path&,
+                           float thickness,
+                           float draw_thickness,
+                           BoxSide,
+                           Color,
+                           EBorderStyle) const;
+  void DrawDashedDottedBoxSideFromPath(GraphicsContext&,
+                                       const LayoutRect&,
+                                       float thickness,
+                                       float draw_thickness,
+                                       Color,
+                                       EBorderStyle) const;
+  void DrawWideDottedBoxSideFromPath(GraphicsContext&,
+                                     const Path&,
+                                     float thickness) const;
+  void DrawDoubleBoxSideFromPath(GraphicsContext&,
+                                 const LayoutRect&,
+                                 const Path&,
+                                 float thickness,
+                                 float draw_thickness,
+                                 BoxSide,
+                                 Color) const;
+  void DrawRidgeGrooveBoxSideFromPath(GraphicsContext&,
+                                      const LayoutRect&,
+                                      const Path&,
+                                      float thickness,
+                                      float draw_thickness,
+                                      BoxSide,
+                                      Color,
+                                      EBorderStyle) const;
+  void ClipBorderSidePolygon(GraphicsContext&,
+                             BoxSide,
+                             MiterType miter1,
+                             MiterType miter2) const;
+  void ClipBorderSideForComplexInnerPath(GraphicsContext&, BoxSide) const;
 
-    const BorderEdge& firstEdge() const
-    {
-        ASSERT(m_visibleEdgeSet);
-        return m_edges[m_firstVisibleEdge];
-    }
+  MiterType ComputeMiter(BoxSide,
+                         BoxSide adjacent_side,
+                         BorderEdgeFlags,
+                         bool antialias) const;
+  static bool MitersRequireClipping(MiterType miter1,
+                                    MiterType miter2,
+                                    EBorderStyle,
+                                    bool antialias);
 
-    // const inputs
-    const ComputedStyle& m_style;
-    const BackgroundBleedAvoidance m_bleedAvoidance;
-    const bool m_includeLogicalLeftEdge;
-    const bool m_includeLogicalRightEdge;
+  const BorderEdge& FirstEdge() const {
+    DCHECK(visible_edge_set_);
+    return edges_[first_visible_edge_];
+  }
 
-    // computed attributes
-    FloatRoundedRect m_outer;
-    FloatRoundedRect m_inner;
-    BorderEdge m_edges[4];
+  // const inputs
+  const ComputedStyle& style_;
+  const BackgroundBleedAvoidance bleed_avoidance_;
+  const bool include_logical_left_edge_;
+  const bool include_logical_right_edge_;
 
-    unsigned m_visibleEdgeCount;
-    unsigned m_firstVisibleEdge;
-    BorderEdgeFlags m_visibleEdgeSet;
+  // computed attributes
+  FloatRoundedRect outer_;
+  FloatRoundedRect inner_;
+  BorderEdge edges_[4];
 
-    bool m_isUniformStyle;
-    bool m_isUniformWidth;
-    bool m_isUniformColor;
-    bool m_isRounded;
-    bool m_hasAlpha;
+  unsigned visible_edge_count_;
+  unsigned first_visible_edge_;
+  BorderEdgeFlags visible_edge_set_;
+
+  bool is_uniform_style_;
+  bool is_uniform_width_;
+  bool is_uniform_color_;
+  bool is_rounded_;
+  bool has_alpha_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

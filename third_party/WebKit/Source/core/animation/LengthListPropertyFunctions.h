@@ -7,21 +7,26 @@
 
 #include "core/CSSPropertyNames.h"
 #include "platform/Length.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class ComputedStyle;
 
 class LengthListPropertyFunctions {
-    STATIC_ONLY(LengthListPropertyFunctions);
-public:
-    static ValueRange getValueRange(CSSPropertyID);
-    static bool getInitialLengthList(CSSPropertyID, Vector<Length>& result);
-    static bool getLengthList(CSSPropertyID, const ComputedStyle&, Vector<Length>& result);
-    static void setLengthList(CSSPropertyID, ComputedStyle&, Vector<Length>&& lengthList);
+  STATIC_ONLY(LengthListPropertyFunctions);
+
+ public:
+  static ValueRange GetValueRange(CSSPropertyID);
+  static bool GetInitialLengthList(CSSPropertyID, Vector<Length>& result);
+  static bool GetLengthList(CSSPropertyID,
+                            const ComputedStyle&,
+                            Vector<Length>& result);
+  static void SetLengthList(CSSPropertyID,
+                            ComputedStyle&,
+                            Vector<Length>&& length_list);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LengthListPropertyFunctions_h
+#endif  // LengthListPropertyFunctions_h

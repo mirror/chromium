@@ -6,25 +6,32 @@ var sassSourceMapFactory = null;
 InspectorTest.sassSourceMapFactory = function()
 {
     if (!sassSourceMapFactory)
-        sassSourceMapFactory = new WebInspector.SASSSourceMapFactory();
+        sassSourceMapFactory = new Sass.SASSSourceMapFactory();
     return sassSourceMapFactory;
 }
 
 InspectorTest.parseSCSS = function(url, text)
 {
-    return WebInspector.SASSSupport.parseSCSS(url, text);
+    return Sass.SASSSupport.parseSCSS(url, text);
 }
 InspectorTest.parseCSS = InspectorTest.parseSCSS;
 
 InspectorTest.loadASTMapping = function(header, callback)
 {
-    var completeSourceMapURL = WebInspector.ParsedURL.completeURL(header.sourceURL, header.sourceMapURL);
-    WebInspector.TextSourceMap.load(completeSourceMapURL, header.sourceURL).then(onSourceMapLoaded);
+    var sourceMapManager = header.cssModel().sourceMapManager();
+    var sourceMap = sourceMapManager.sourceMapForClient(header);
+    if (sourceMap)  {
+        callback(sourceMap.editable() ? sourceMap : null);
+        return;
+    }
+    sourceMapManager.addEventListener(SDK.SourceMapManager.Events.SourceMapAttached, onAttached);
 
-    function onSourceMapLoaded(sourceMap)
-    {
-        InspectorTest.sassSourceMapFactory().editableSourceMap(header.cssModel().target(), sourceMap)
-            .then(map => callback(map));
+    function onAttached(event) {
+        if (event.data.client !== header)
+            return;
+        sourceMapManager.removeEventListener(SDK.SourceMapManager.Events.SourceMapAttached, onAttached);
+        var sourceMap = event.data.sourceMap;
+        callback(sourceMap.editable()? sourceMap : null);
     }
 }
 
@@ -96,7 +103,7 @@ InspectorTest.dumpASTDiff = function(diff)
         }
         ruleChanges.push(change);
     }
-    var T = WebInspector.SASSSupport.PropertyChangeType;
+    var T = Sass.SASSSupport.PropertyChangeType;
     for (var rule of changesPerRule.keys()) {
         var changes = changesPerRule.get(rule);
         var names = [];
@@ -199,7 +206,7 @@ InspectorTest.updateCSSText = function(url, newText)
 
 InspectorTest.updateSASSText = function(url, newText)
 {
-    var uiSourceCode = WebInspector.workspace.uiSourceCodeForURL(url);
+    var uiSourceCode = Workspace.workspace.uiSourceCodeForURL(url);
     uiSourceCode.addRevision(newText);
 }
 
@@ -279,7 +286,7 @@ InspectorTest.runCSSEditTests = function(header, tests)
             var edit = edits[i];
             var range = edit.oldRange;
             var line = String.sprintf("{%d, %d, %d, %d}", range.startLine, range.startColumn, range.endLine, range.endColumn);
-            line += String.sprintf(" '%s' => '%s'", (new WebInspector.Text(text)).extract(range), edit.newText);
+            line += String.sprintf(" '%s' => '%s'", (new TextUtils.Text(text)).extract(range), edit.newText);
             lines.push(line);
         }
         lines = indent(lines);
@@ -298,9 +305,9 @@ InspectorTest.createEdit = function(source, pattern, newText, matchNumber)
     }
     if (!match)
         return null;
-    var sourceRange = new WebInspector.SourceRange(match.index, match[0].length);
-    var textRange = new WebInspector.Text(source).toTextRange(sourceRange);
-    return new WebInspector.SourceEdit("", textRange, newText);
+    var sourceRange = new TextUtils.SourceRange(match.index, match[0].length);
+    var textRange = new TextUtils.Text(source).toTextRange(sourceRange);
+    return new TextUtils.SourceEdit("", textRange, newText);
 }
 
 }

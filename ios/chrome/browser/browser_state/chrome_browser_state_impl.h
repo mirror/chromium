@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_BROWSER_STATE_CHROME_BROWSER_STATE_IMPL_
-#define IOS_CHROME_BROWSER_BROWSER_STATE_CHROME_BROWSER_STATE_IMPL_
+#ifndef IOS_CHROME_BROWSER_BROWSER_STATE_CHROME_BROWSER_STATE_IMPL_H_
+#define IOS_CHROME_BROWSER_BROWSER_STATE_CHROME_BROWSER_STATE_IMPL_H_
 
 #include <memory>
 
@@ -15,7 +15,7 @@ namespace ssl_config {
 class SSLConfigServiceManager;
 }
 
-namespace syncable_prefs {
+namespace sync_preferences {
 class PrefServiceSyncable;
 }
 
@@ -44,8 +44,7 @@ class ChromeBrowserStateImpl : public ios::ChromeBrowserState {
   void ClearNetworkingHistorySince(base::Time time,
                                    const base::Closure& completion) override;
   net::URLRequestContextGetter* CreateRequestContext(
-      ProtocolHandlerMap* protocol_handlers,
-      URLRequestInterceptorScopedVector request_interceptors) override;
+      ProtocolHandlerMap* protocol_handlers) override;
   net::URLRequestContextGetter* CreateIsolatedRequestContext(
       const base::FilePath& partition_path) override;
 
@@ -80,8 +79,8 @@ class ChromeBrowserStateImpl : public ios::ChromeBrowserState {
   // Keep |prefs_| on top for destruction order because |io_data_| and others
   // store pointers to |prefs_| and shall be destructed first.
   scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry_;
-  std::unique_ptr<syncable_prefs::PrefServiceSyncable> prefs_;
-  std::unique_ptr<syncable_prefs::PrefServiceSyncable> otr_prefs_;
+  std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs_;
+  std::unique_ptr<sync_preferences::PrefServiceSyncable> otr_prefs_;
   std::unique_ptr<ChromeBrowserStateImplIOData::Handle> io_data_;
 
   std::unique_ptr<PrefProxyConfigTracker> pref_proxy_config_tracker_;
@@ -105,4 +104,4 @@ class ChromeBrowserStateImpl : public ios::ChromeBrowserState {
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserStateImpl);
 };
 
-#endif  // IOS_CHROME_BROWSER_BROWSER_STATE_CHROME_BROWSER_STATE_IMPL_
+#endif  // IOS_CHROME_BROWSER_BROWSER_STATE_CHROME_BROWSER_STATE_IMPL_H_

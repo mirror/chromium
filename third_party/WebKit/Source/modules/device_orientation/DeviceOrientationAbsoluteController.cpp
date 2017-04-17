@@ -10,65 +10,71 @@
 
 namespace blink {
 
-DeviceOrientationAbsoluteController::DeviceOrientationAbsoluteController(Document& document)
-    : DeviceOrientationController(document)
-{
+DeviceOrientationAbsoluteController::DeviceOrientationAbsoluteController(
+    Document& document)
+    : DeviceOrientationController(document) {}
+
+DeviceOrientationAbsoluteController::~DeviceOrientationAbsoluteController() {}
+
+const char* DeviceOrientationAbsoluteController::SupplementName() {
+  return "DeviceOrientationAbsoluteController";
 }
 
-DeviceOrientationAbsoluteController::~DeviceOrientationAbsoluteController()
-{
+DeviceOrientationAbsoluteController& DeviceOrientationAbsoluteController::From(
+    Document& document) {
+  DeviceOrientationAbsoluteController* controller =
+      static_cast<DeviceOrientationAbsoluteController*>(
+          Supplement<Document>::From(
+              document, DeviceOrientationAbsoluteController::SupplementName()));
+  if (!controller) {
+    controller = new DeviceOrientationAbsoluteController(document);
+    Supplement<Document>::ProvideTo(
+        document, DeviceOrientationAbsoluteController::SupplementName(),
+        controller);
+  }
+  return *controller;
 }
 
-const char* DeviceOrientationAbsoluteController::supplementName()
-{
-    return "DeviceOrientationAbsoluteController";
-}
+void DeviceOrientationAbsoluteController::DidAddEventListener(
+    LocalDOMWindow* window,
+    const AtomicString& event_type) {
+  if (event_type != EventTypeName())
+    return;
 
-DeviceOrientationAbsoluteController& DeviceOrientationAbsoluteController::from(Document& document)
-{
-    DeviceOrientationAbsoluteController* controller = static_cast<DeviceOrientationAbsoluteController*>(Supplement<Document>::from(document, DeviceOrientationAbsoluteController::supplementName()));
-    if (!controller) {
-        controller = new DeviceOrientationAbsoluteController(document);
-        Supplement<Document>::provideTo(document, DeviceOrientationAbsoluteController::supplementName(), controller);
-    }
-    return *controller;
-}
-
-void DeviceOrientationAbsoluteController::didAddEventListener(LocalDOMWindow* window, const AtomicString& eventType)
-{
-    if (eventType != eventTypeName())
+  if (GetDocument().GetFrame()) {
+    if (GetDocument().IsSecureContext()) {
+      UseCounter::Count(GetDocument().GetFrame(),
+                        UseCounter::kDeviceOrientationAbsoluteSecureOrigin);
+    } else {
+      Deprecation::CountDeprecation(
+          GetDocument().GetFrame(),
+          UseCounter::kDeviceOrientationAbsoluteInsecureOrigin);
+      // TODO: add rappor logging of insecure origins as in
+      // DeviceOrientationController.
+      if (GetDocument()
+              .GetFrame()
+              ->GetSettings()
+              ->GetStrictPowerfulFeatureRestrictions())
         return;
-
-    if (document().frame()) {
-        String errorMessage;
-        if (document().isSecureContext(errorMessage)) {
-            UseCounter::count(document().frame(), UseCounter::DeviceOrientationAbsoluteSecureOrigin);
-        } else {
-            Deprecation::countDeprecation(document().frame(), UseCounter::DeviceOrientationAbsoluteInsecureOrigin);
-            // TODO: add rappor logging of insecure origins as in DeviceOrientationController.
-            if (document().frame()->settings()->strictPowerfulFeatureRestrictions())
-                return;
-        }
     }
+  }
 
-    // TODO: add rappor url logging as in DeviceOrientationController.
+  // TODO: add rappor url logging as in DeviceOrientationController.
 
-    DeviceSingleWindowEventController::didAddEventListener(window, eventType);
+  DeviceSingleWindowEventController::DidAddEventListener(window, event_type);
 }
 
-DeviceOrientationDispatcher& DeviceOrientationAbsoluteController::dispatcherInstance() const
-{
-    return DeviceOrientationDispatcher::instance(true);
+DeviceOrientationDispatcher&
+DeviceOrientationAbsoluteController::DispatcherInstance() const {
+  return DeviceOrientationDispatcher::Instance(true);
 }
 
-const AtomicString& DeviceOrientationAbsoluteController::eventTypeName() const
-{
-    return EventTypeNames::deviceorientationabsolute;
+const AtomicString& DeviceOrientationAbsoluteController::EventTypeName() const {
+  return EventTypeNames::deviceorientationabsolute;
 }
 
-DEFINE_TRACE(DeviceOrientationAbsoluteController)
-{
-    DeviceOrientationController::trace(visitor);
+DEFINE_TRACE(DeviceOrientationAbsoluteController) {
+  DeviceOrientationController::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

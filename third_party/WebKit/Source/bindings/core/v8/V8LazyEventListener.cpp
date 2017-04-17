@@ -37,185 +37,220 @@
 #include "bindings/core/v8/V8DOMWrapper.h"
 #include "bindings/core/v8/V8Document.h"
 #include "bindings/core/v8/V8HTMLFormElement.h"
-#include "bindings/core/v8/V8HiddenValue.h"
 #include "bindings/core/v8/V8Node.h"
+#include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
 #include "core/dom/Document.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/dom/Node.h"
 #include "core/events/ErrorEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLFormElement.h"
-#include "wtf/StdLibExtras.h"
+#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 
-V8LazyEventListener::V8LazyEventListener(v8::Isolate* isolate, const AtomicString& functionName, const AtomicString& eventParameterName, const String& code, const String sourceURL, const TextPosition& position, Node* node)
-    : V8AbstractEventListener(true, DOMWrapperWorld::mainWorld(), isolate)
-    , m_functionName(functionName)
-    , m_eventParameterName(eventParameterName)
-    , m_code(code)
-    , m_sourceURL(sourceURL)
-    , m_node(node)
-    , m_position(position)
-{
+V8LazyEventListener::V8LazyEventListener(
+    v8::Isolate* isolate,
+    const AtomicString& function_name,
+    const AtomicString& event_parameter_name,
+    const String& code,
+    const String source_url,
+    const TextPosition& position,
+    Node* node)
+    : V8AbstractEventListener(true, DOMWrapperWorld::MainWorld(), isolate),
+      was_compilation_failed_(false),
+      function_name_(function_name),
+      event_parameter_name_(event_parameter_name),
+      code_(code),
+      source_url_(source_url),
+      node_(node),
+      position_(position) {}
+
+template <typename T>
+v8::Local<v8::Object> ToObjectWrapper(T* dom_object,
+                                      ScriptState* script_state) {
+  if (!dom_object)
+    return v8::Object::New(script_state->GetIsolate());
+  v8::Local<v8::Value> value =
+      ToV8(dom_object, script_state->GetContext()->Global(),
+           script_state->GetIsolate());
+  if (value.IsEmpty())
+    return v8::Object::New(script_state->GetIsolate());
+  return v8::Local<v8::Object>::New(script_state->GetIsolate(),
+                                    value.As<v8::Object>());
 }
 
-template<typename T>
-v8::Local<v8::Object> toObjectWrapper(T* domObject, ScriptState* scriptState)
-{
-    if (!domObject)
-        return v8::Object::New(scriptState->isolate());
-    v8::Local<v8::Value> value = toV8(domObject, scriptState->context()->Global(), scriptState->isolate());
-    if (value.IsEmpty())
-        return v8::Object::New(scriptState->isolate());
-    return v8::Local<v8::Object>::New(scriptState->isolate(), value.As<v8::Object>());
+v8::Local<v8::Value> V8LazyEventListener::CallListenerFunction(
+    ScriptState* script_state,
+    v8::Local<v8::Value> js_event,
+    Event* event) {
+  ASSERT(!js_event.IsEmpty());
+  v8::Local<v8::Object> listener_object =
+      GetListenerObject(ExecutionContext::From(script_state));
+  if (listener_object.IsEmpty())
+    return v8::Local<v8::Value>();
+
+  v8::Local<v8::Function> handler_function = listener_object.As<v8::Function>();
+  v8::Local<v8::Object> receiver = GetReceiverObject(script_state, event);
+  if (handler_function.IsEmpty() || receiver.IsEmpty())
+    return v8::Local<v8::Value>();
+
+  if (!ExecutionContext::From(script_state)->IsDocument())
+    return v8::Local<v8::Value>();
+
+  LocalFrame* frame =
+      ToDocument(ExecutionContext::From(script_state))->GetFrame();
+  if (!frame)
+    return v8::Local<v8::Value>();
+
+  if (!ExecutionContext::From(script_state)
+           ->CanExecuteScripts(kAboutToExecuteScript))
+    return v8::Local<v8::Value>();
+
+  v8::Local<v8::Value> parameters[1] = {js_event};
+  v8::Local<v8::Value> result;
+  if (!V8ScriptRunner::CallFunction(handler_function, frame->GetDocument(),
+                                    receiver, WTF_ARRAY_LENGTH(parameters),
+                                    parameters, script_state->GetIsolate())
+           .ToLocal(&result))
+    return v8::Local<v8::Value>();
+  return result;
 }
 
-v8::Local<v8::Value> V8LazyEventListener::callListenerFunction(ScriptState* scriptState, v8::Local<v8::Value> jsEvent, Event* event)
-{
-    ASSERT(!jsEvent.IsEmpty());
-    v8::Local<v8::Object> listenerObject = getListenerObject(scriptState->getExecutionContext());
-    if (listenerObject.IsEmpty())
-        return v8::Local<v8::Value>();
-
-    v8::Local<v8::Function> handlerFunction = listenerObject.As<v8::Function>();
-    v8::Local<v8::Object> receiver = getReceiverObject(scriptState, event);
-    if (handlerFunction.IsEmpty() || receiver.IsEmpty())
-        return v8::Local<v8::Value>();
-
-    if (!scriptState->getExecutionContext()->isDocument())
-        return v8::Local<v8::Value>();
-
-    LocalFrame* frame = toDocument(scriptState->getExecutionContext())->frame();
-    if (!frame)
-        return v8::Local<v8::Value>();
-
-    if (!frame->script().canExecuteScripts(AboutToExecuteScript))
-        return v8::Local<v8::Value>();
-
-    v8::Local<v8::Value> parameters[1] = { jsEvent };
-    v8::Local<v8::Value> result;
-    if (!V8ScriptRunner::callFunction(handlerFunction, frame->document(), receiver, WTF_ARRAY_LENGTH(parameters), parameters, scriptState->isolate()).ToLocal(&result))
-        return v8::Local<v8::Value>();
-    return result;
+static void V8LazyEventListenerToString(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  V8SetReturnValue(
+      info, V8PrivateProperty::GetLazyEventListenerToString(info.GetIsolate())
+                .GetOrUndefined(info.Holder()));
 }
 
-static void V8LazyEventListenerToString(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    v8SetReturnValue(info, V8HiddenValue::getHiddenValue(ScriptState::current(info.GetIsolate()), info.Holder(), V8HiddenValue::toStringString(info.GetIsolate())));
+v8::Local<v8::Object> V8LazyEventListener::GetListenerObjectInternal(
+    ExecutionContext* execution_context) {
+  if (!execution_context)
+    return v8::Local<v8::Object>();
+
+  // A ScriptState used by the event listener needs to be calculated based on
+  // the ExecutionContext that fired the the event listener and the world
+  // that installed the event listener.
+  v8::EscapableHandleScope handle_scope(ToIsolate(execution_context));
+  v8::Local<v8::Context> v8_context = ToV8Context(execution_context, World());
+  if (v8_context.IsEmpty())
+    return v8::Local<v8::Object>();
+  ScriptState* script_state = ScriptState::From(v8_context);
+  if (!script_state->ContextIsValid())
+    return v8::Local<v8::Object>();
+
+  if (!execution_context->IsDocument())
+    return v8::Local<v8::Object>();
+
+  if (!ToDocument(execution_context)
+           ->AllowInlineEventHandler(node_, this, source_url_, position_.line_))
+    return v8::Local<v8::Object>();
+
+  // All checks passed and it's now okay to return the function object.
+
+  // We may need to compile the same script twice or more because the compiled
+  // function object may be garbage-collected, however, we should behave as if
+  // we compile the code only once, i.e. we must not throw an error twice.
+  if (!HasExistingListenerObject() && !was_compilation_failed_)
+    CompileScript(script_state, execution_context);
+
+  return handle_scope.Escape(GetExistingListenerObject());
 }
 
-void V8LazyEventListener::prepareListenerObject(ExecutionContext* executionContext)
-{
-    if (!executionContext)
-        return;
+void V8LazyEventListener::CompileScript(ScriptState* script_state,
+                                        ExecutionContext* execution_context) {
+  DCHECK(!HasExistingListenerObject());
 
-    // A ScriptState used by the event listener needs to be calculated based on
-    // the ExecutionContext that fired the the event listener and the world
-    // that installed the event listener.
-    v8::HandleScope handleScope(toIsolate(executionContext));
-    v8::Local<v8::Context> v8Context = toV8Context(executionContext, world());
-    if (v8Context.IsEmpty())
-        return;
-    ScriptState* scriptState = ScriptState::from(v8Context);
-    if (!scriptState->contextIsValid())
-        return;
+  ScriptState::Scope scope(script_state);
 
-    if (!executionContext->isDocument())
-        return;
+  // Nodes other than the document object, when executing inline event
+  // handlers push document, form owner, and the target node on the scope chain.
+  // We do this by using 'with' statement.
+  // See fast/forms/form-action.html
+  //     fast/forms/selected-index-value.html
+  //     fast/overflow/onscroll-layer-self-destruct.html
+  HTMLFormElement* form_element = nullptr;
+  if (node_ && node_->IsHTMLElement())
+    form_element = ToHTMLElement(node_)->formOwner();
 
-    if (!toDocument(executionContext)->allowInlineEventHandler(m_node, this, m_sourceURL, m_position.m_line)) {
-        clearListenerObject();
-        return;
+  v8::Local<v8::Object> scopes[3];
+  scopes[2] = ToObjectWrapper<Node>(node_, script_state);
+  scopes[1] = ToObjectWrapper<HTMLFormElement>(form_element, script_state);
+  scopes[0] = ToObjectWrapper<Document>(node_ ? node_->ownerDocument() : 0,
+                                        script_state);
+
+  v8::Local<v8::String> parameter_name =
+      V8String(GetIsolate(), event_parameter_name_);
+  v8::ScriptOrigin origin(
+      V8String(GetIsolate(), source_url_),
+      v8::Integer::New(GetIsolate(), position_.line_.ZeroBasedInt()),
+      v8::Integer::New(GetIsolate(), position_.column_.ZeroBasedInt()),
+      v8::True(GetIsolate()));
+  v8::ScriptCompiler::Source source(V8String(GetIsolate(), code_), origin);
+
+  v8::Local<v8::Function> wrapped_function;
+  {
+    // JavaScript compilation error shouldn't be reported as a runtime
+    // exception because we're not running any program code.  Instead,
+    // it should be reported as an ErrorEvent.
+    v8::TryCatch block(GetIsolate());
+    wrapped_function = v8::ScriptCompiler::CompileFunctionInContext(
+        GetIsolate(), &source, script_state->GetContext(), 1, &parameter_name,
+        3, scopes);
+    if (block.HasCaught()) {
+      was_compilation_failed_ = true;  // Do not compile the same code twice.
+      FireErrorEvent(script_state->GetContext(), execution_context,
+                     block.Message());
+      return;
     }
+  }
 
-    if (hasExistingListenerObject())
-        return;
+  // Change the toString function on the wrapper function to avoid it
+  // returning the source for the actual wrapper function. Instead it
+  // returns source for a clean wrapper function with the event
+  // argument wrapping the event source code. The reason for this is
+  // that some web sites use toString on event functions and eval the
+  // source returned (sometimes a RegExp is applied as well) for some
+  // other use. That fails miserably if the actual wrapper source is
+  // returned.
+  v8::Local<v8::Function> to_string_function;
+  if (!v8::Function::New(script_state->GetContext(),
+                         V8LazyEventListenerToString, v8::Local<v8::Value>(), 0,
+                         v8::ConstructorBehavior::kThrow)
+           .ToLocal(&to_string_function))
+    return;
+  String to_string_string = "function " + function_name_ + "(" +
+                            event_parameter_name_ + ") {\n  " + code_ + "\n}";
+  V8PrivateProperty::GetLazyEventListenerToString(GetIsolate())
+      .Set(wrapped_function, V8String(GetIsolate(), to_string_string));
+  if (!V8CallBoolean(wrapped_function->CreateDataProperty(
+          script_state->GetContext(), V8AtomicString(GetIsolate(), "toString"),
+          to_string_function)))
+    return;
+  wrapped_function->SetName(V8String(GetIsolate(), function_name_));
 
-    ScriptState::Scope scope(scriptState);
-
-    // Nodes other than the document object, when executing inline event
-    // handlers push document, form owner, and the target node on the scope chain.
-    // We do this by using 'with' statement.
-    // See fast/forms/form-action.html
-    //     fast/forms/selected-index-value.html
-    //     fast/overflow/onscroll-layer-self-destruct.html
-    HTMLFormElement* formElement = 0;
-    if (m_node && m_node->isHTMLElement())
-        formElement = toHTMLElement(m_node)->formOwner();
-
-    v8::Local<v8::Object> scopes[3];
-
-    scopes[2] = toObjectWrapper<Node>(m_node, scriptState);
-    scopes[1] = toObjectWrapper<HTMLFormElement>(formElement, scriptState);
-    scopes[0] = toObjectWrapper<Document>(m_node ? m_node->ownerDocument() : 0, scriptState);
-
-    v8::Local<v8::String> parameterName = v8String(isolate(), m_eventParameterName);
-    v8::ScriptOrigin origin(
-        v8String(isolate(), m_sourceURL),
-        v8::Integer::New(isolate(), m_position.m_line.zeroBasedInt()),
-        v8::Integer::New(isolate(), m_position.m_column.zeroBasedInt()),
-        v8::True(isolate()),
-        v8::Local<v8::Integer>(),
-        v8::True(isolate()));
-    v8::ScriptCompiler::Source source(v8String(isolate(), m_code), origin);
-
-    v8::Local<v8::Function> wrappedFunction;
-    {
-        // JavaScript compilation error shouldn't be reported as a runtime
-        // exception because we're not running any program code.  Instead,
-        // it should be reported as an ErrorEvent.
-        v8::TryCatch block(isolate());
-        wrappedFunction = v8::ScriptCompiler::CompileFunctionInContext(isolate(), &source, v8Context, 1, &parameterName, 3, scopes);
-        if (block.HasCaught()) {
-            fireErrorEvent(v8Context, executionContext, block.Message());
-            return;
-        }
-    }
-
-    // Change the toString function on the wrapper function to avoid it
-    // returning the source for the actual wrapper function. Instead it
-    // returns source for a clean wrapper function with the event
-    // argument wrapping the event source code. The reason for this is
-    // that some web sites use toString on event functions and eval the
-    // source returned (sometimes a RegExp is applied as well) for some
-    // other use. That fails miserably if the actual wrapper source is
-    // returned.
-    v8::Local<v8::Function> toStringFunction;
-    if (!v8::Function::New(scriptState->context(), V8LazyEventListenerToString, v8::Local<v8::Value>(), 0, v8::ConstructorBehavior::kThrow).ToLocal(&toStringFunction))
-        return;
-    String toStringString = "function " + m_functionName + "(" + m_eventParameterName + ") {\n  " + m_code + "\n}";
-    V8HiddenValue::setHiddenValue(scriptState, wrappedFunction, V8HiddenValue::toStringString(isolate()), v8String(isolate(), toStringString));
-    if (!v8CallBoolean(wrappedFunction->CreateDataProperty(scriptState->context(), v8AtomicString(isolate(), "toString"), toStringFunction)))
-        return;
-    wrappedFunction->SetName(v8String(isolate(), m_functionName));
-
-    // FIXME: Remove the following comment-outs.
-    // See https://bugs.webkit.org/show_bug.cgi?id=85152 for more details.
-    //
-    // For the time being, we comment out the following code since the
-    // second parsing can happen.
-    // // Since we only parse once, there's no need to keep data used for parsing around anymore.
-    // m_functionName = String();
-    // m_code = String();
-    // m_eventParameterName = String();
-    // m_sourceURL = String();
-    setListenerObject(wrappedFunction);
+  SetListenerObject(wrapped_function);
 }
 
-void V8LazyEventListener::fireErrorEvent(v8::Local<v8::Context> v8Context, ExecutionContext* executionContext, v8::Local<v8::Message> message)
-{
-    ErrorEvent* event = ErrorEvent::create(toCoreStringWithNullCheck(message->Get()), SourceLocation::fromMessage(isolate(), message, executionContext), &world());
+void V8LazyEventListener::FireErrorEvent(v8::Local<v8::Context> v8_context,
+                                         ExecutionContext* execution_context,
+                                         v8::Local<v8::Message> message) {
+  ErrorEvent* event = ErrorEvent::Create(
+      ToCoreStringWithNullCheck(message->Get()),
+      SourceLocation::FromMessage(GetIsolate(), message, execution_context),
+      &World());
 
-    AccessControlStatus accessControlStatus = NotSharableCrossOrigin;
-    if (message->IsOpaque())
-        accessControlStatus = OpaqueResource;
-    else if (message->IsSharedCrossOrigin())
-        accessControlStatus = SharableCrossOrigin;
+  AccessControlStatus access_control_status = kNotSharableCrossOrigin;
+  if (message->IsOpaque())
+    access_control_status = kOpaqueResource;
+  else if (message->IsSharedCrossOrigin())
+    access_control_status = kSharableCrossOrigin;
 
-    executionContext->reportException(event, accessControlStatus);
+  execution_context->DispatchErrorEvent(event, access_control_status);
 }
 
-} // namespace blink
+}  // namespace blink

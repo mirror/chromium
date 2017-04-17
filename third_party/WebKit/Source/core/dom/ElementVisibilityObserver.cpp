@@ -4,73 +4,57 @@
 
 #include "core/dom/ElementVisibilityObserver.h"
 
-#include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Element.h"
-#include "core/dom/IntersectionObserver.h"
 #include "core/dom/IntersectionObserverEntry.h"
-#include "core/dom/IntersectionObserverInit.h"
-#include "wtf/Functional.h"
+#include "core/frame/LocalFrame.h"
+#include "platform/wtf/Functional.h"
 
 namespace blink {
 
-ElementVisibilityObserver* ElementVisibilityObserver::create(Element* element, Client* client)
-{
-    ElementVisibilityObserver* observer = new ElementVisibilityObserver(client);
-    observer->start(element);
-    return observer;
-}
-
-ElementVisibilityObserver::ElementVisibilityObserver(Client* client)
-    : m_client(client)
-{
-    DCHECK(m_client);
-}
+ElementVisibilityObserver::ElementVisibilityObserver(
+    Element* element,
+    std::unique_ptr<VisibilityCallback> callback)
+    : element_(element), callback_(std::move(callback)) {}
 
 ElementVisibilityObserver::~ElementVisibilityObserver() = default;
 
-void ElementVisibilityObserver::start(Element* element)
-{
-    IntersectionObserverInit options;
-    DoubleOrDoubleArray threshold;
-    threshold.setDouble(std::numeric_limits<float>::min());
-    options.setThreshold(threshold);
+void ElementVisibilityObserver::Start() {
+  DCHECK(!intersection_observer_);
 
-    DCHECK(!m_intersectionObserver);
-    m_intersectionObserver = IntersectionObserver::create(options, *this, ASSERT_NO_EXCEPTION);
-    DCHECK(m_intersectionObserver);
-    m_intersectionObserver->observe(element);
+  ExecutionContext* context = element_->GetExecutionContext();
+  DCHECK(context->IsDocument());
+  Document& document = ToDocument(*context);
+
+  intersection_observer_ = IntersectionObserver::Create(
+      Vector<Length>(), Vector<float>({std::numeric_limits<float>::min()}),
+      &document,
+      WTF::Bind(&ElementVisibilityObserver::OnVisibilityChanged,
+                WrapWeakPersistent(this)));
+  DCHECK(intersection_observer_);
+
+  intersection_observer_->observe(element_.Release());
 }
 
-void ElementVisibilityObserver::stop()
-{
-    DCHECK(m_intersectionObserver);
+void ElementVisibilityObserver::Stop() {
+  DCHECK(intersection_observer_);
 
-    m_intersectionObserver->disconnect();
-    m_intersectionObserver = nullptr;
-    // Client will no longer be called upon, release.
-    m_client = nullptr;
+  intersection_observer_->disconnect();
+  intersection_observer_ = nullptr;
 }
 
-void ElementVisibilityObserver::handleEvent(const HeapVector<Member<IntersectionObserverEntry>>& entries, IntersectionObserver&)
-{
-    if (!m_client)
-        return;
-    bool isVisible = entries.last()->intersectionRatio() > 0.f;
-    m_client->onVisibilityChanged(isVisible);
+void ElementVisibilityObserver::DeliverObservationsForTesting() {
+  intersection_observer_->Deliver();
 }
 
-ExecutionContext* ElementVisibilityObserver::getExecutionContext() const
-{
-    if (!m_client)
-        return nullptr;
-    return m_client->getElementVisibilityExecutionContext();
+DEFINE_TRACE(ElementVisibilityObserver) {
+  visitor->Trace(element_);
+  visitor->Trace(intersection_observer_);
 }
 
-DEFINE_TRACE(ElementVisibilityObserver)
-{
-    visitor->trace(m_client);
-    visitor->trace(m_intersectionObserver);
-    IntersectionObserverCallback::trace(visitor);
+void ElementVisibilityObserver::OnVisibilityChanged(
+    const HeapVector<Member<IntersectionObserverEntry>>& entries) {
+  bool is_visible = entries.back()->intersectionRatio() > 0.f;
+  (*callback_.get())(is_visible);
 }
 
-} // namespace blink
+}  // namespace blink

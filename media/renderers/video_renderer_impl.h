@@ -28,6 +28,7 @@
 #include "media/base/video_renderer_sink.h"
 #include "media/filters/decoder_stream.h"
 #include "media/filters/video_renderer_algorithm.h"
+#include "media/renderers/default_renderer_factory.h"
 #include "media/renderers/gpu_video_accelerator_factories.h"
 #include "media/video/gpu_memory_buffer_video_frame_pool.h"
 
@@ -56,7 +57,7 @@ class MEDIA_EXPORT VideoRendererImpl
       const scoped_refptr<base::SingleThreadTaskRunner>& media_task_runner,
       const scoped_refptr<base::TaskRunner>& worker_task_runner,
       VideoRendererSink* sink,
-      ScopedVector<VideoDecoder> decoders,
+      const CreateVideoDecodersCB& create_video_decoders_cb,
       bool drop_frames,
       GpuVideoAcceleratorFactories* gpu_factories,
       const scoped_refptr<MediaLog>& media_log);
@@ -70,13 +71,17 @@ class MEDIA_EXPORT VideoRendererImpl
                   const PipelineStatusCB& init_cb) override;
   void Flush(const base::Closure& callback) override;
   void StartPlayingFrom(base::TimeDelta timestamp) override;
-  void OnTimeStateChanged(bool time_progressing) override;
+  void OnTimeProgressing() override;
+  void OnTimeStopped() override;
 
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
   void SetGpuMemoryBufferVideoForTesting(
       std::unique_ptr<GpuMemoryBufferVideoFramePool> gpu_memory_buffer_pool);
   size_t frames_queued_for_testing() const {
     return algorithm_->frames_queued();
+  }
+  size_t effective_frames_queued_for_testing() const {
+    return algorithm_->effective_frames_queued();
   }
 
   // VideoRendererSink::RenderCallback implementation.
@@ -124,6 +129,7 @@ class MEDIA_EXPORT VideoRendererImpl
   bool HaveEnoughData_Locked();
   void TransitionToHaveEnough_Locked();
   void TransitionToHaveNothing();
+  void TransitionToHaveNothing_Locked();
 
   // Runs |statistics_cb_| with |frames_decoded_| and |frames_dropped_|, resets
   // them to 0.
@@ -215,20 +221,22 @@ class MEDIA_EXPORT VideoRendererImpl
   // Important detail: being in kPlaying doesn't imply that video is being
   // rendered. Rather, it means that the renderer is ready to go. The actual
   // rendering of video is controlled by time advancing via |get_time_cb_|.
+  // Video renderer can be reinitialized completely by calling Initialize again
+  // when it is in a kFlushed state with video sink stopped.
   //
-  //   kUninitialized
-  //         | Initialize()
-  //         |
-  //         V
-  //    kInitializing
-  //         | Decoders initialized
-  //         |
-  //         V            Decoders reset
-  //      kFlushed <------------------ kFlushing
-  //         | StartPlayingFrom()         ^
-  //         |                            |
-  //         |                            | Flush()
-  //         `---------> kPlaying --------'
+  //    kUninitialized
+  //  +------> | Initialize()
+  //  |        |
+  //  |        V
+  //  |   kInitializing
+  //  |        | Decoders initialized
+  //  |        |
+  //  |        V            Decoders reset
+  //  ---- kFlushed <------------------ kFlushing
+  //           | StartPlayingFrom()         ^
+  //           |                            |
+  //           |                            | Flush()
+  //           `---------> kPlaying --------'
   enum State {
     kUninitialized,
     kInitializing,
@@ -237,6 +245,12 @@ class MEDIA_EXPORT VideoRendererImpl
     kPlaying
   };
   State state_;
+
+  // TODO(servolk): Consider using DecoderFactory here instead of the
+  // CreateVideoDecodersCB.
+  CreateVideoDecodersCB create_video_decoders_cb_;
+  GpuVideoAcceleratorFactories* gpu_factories_;
+  scoped_refptr<base::TaskRunner> worker_task_runner_;
 
   // Keep track of the outstanding read on the VideoFrameStream. Flushing can
   // only complete once the read has completed.
@@ -283,6 +297,13 @@ class MEDIA_EXPORT VideoRendererImpl
   // Tracks last frame properties to detect and notify client of any changes.
   gfx::Size last_frame_natural_size_;
   bool last_frame_opaque_;
+
+  // Indicates if we've painted the first valid frame after StartPlayingFrom().
+  bool painted_first_frame_;
+
+  // Current maximum for buffered frames, increases up to a limit upon each
+  // call to OnTimeStopped() when we're in the BUFFERING_HAVE_NOTHING state.
+  size_t max_buffered_frames_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<VideoRendererImpl> weak_factory_;

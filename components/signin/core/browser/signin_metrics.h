@@ -46,7 +46,8 @@ enum ProfileSignout {
   // The credentials are being transfered to a new profile, so the old one is
   // signed out.
   TRANSFER_CREDENTIALS,
-
+  // Signed out because credentials are invalid and force-sign-in is enabled.
+  AUTHENTICATION_FAILED_WITH_FORCE_SIGNIN,
   // Keep this as the last enum.
   NUM_PROFILE_SIGNOUT_METRICS,
 };
@@ -139,6 +140,9 @@ enum class AccessPoint : int {
   ACCESS_POINT_UNKNOWN,  // This should never have been used to get signin URL.
   ACCESS_POINT_PASSWORD_BUBBLE,
   ACCESS_POINT_AUTOFILL_DROPDOWN,
+  ACCESS_POINT_NTP_CONTENT_SUGGESTIONS,
+  ACCESS_POINT_RESIGNIN_INFOBAR,
+  ACCESS_POINT_TAB_SWITCHER,
   ACCESS_POINT_MAX,  // This must be last.
 };
 

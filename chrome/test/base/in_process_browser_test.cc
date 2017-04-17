@@ -4,7 +4,6 @@
 
 #include "chrome/test/base/in_process_browser_test.h"
 
-#include "ash/common/ash_switches.h"
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -23,6 +22,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/after_startup_task_utils.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
@@ -42,6 +42,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/features.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/renderer/chrome_content_renderer_client.h"
@@ -58,6 +59,7 @@
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/display/display_switches.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -70,7 +72,7 @@
 #include "ui/base/win/atl_module.h"
 #endif
 
-#if defined(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 #include "chrome/browser/captive_portal/captive_portal_service.h"
 #endif
 
@@ -80,10 +82,15 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/input_method/input_method_configuration.h"
-#endif
+#include "chrome/browser/ui/webui/options/browser_options_handler.h"
+#endif  // defined(OS_CHROMEOS)
 
 #if defined(USE_ASH)
 #include "chrome/test/base/default_ash_event_generator_delegate.h"
+#endif
+
+#if !defined(OS_CHROMEOS) && defined(OS_LINUX)
+#include "ui/views/test/test_desktop_screen_x11.h"
 #endif
 
 namespace {
@@ -92,6 +99,10 @@ namespace {
 const char kBrowserTestType[] = "browser";
 
 }  // namespace
+
+// static
+InProcessBrowserTest::SetUpBrowserFunction*
+    InProcessBrowserTest::global_browser_set_up_function_ = nullptr;
 
 // Library used for testing accessibility.
 const base::FilePath::CharType kAXSTesting[] =
@@ -212,20 +223,24 @@ void InProcessBrowserTest::SetUp() {
   base::CreateDirectory(log_dir);
   // Disable IME extension loading to avoid many browser tests failures.
   chromeos::input_method::DisableExtensionLoading();
-  if (!command_line->HasSwitch(ash::switches::kAshHostWindowBounds)) {
+  if (!command_line->HasSwitch(switches::kHostWindowBounds)) {
     // Adjusting window location & size so that the ash desktop window fits
-    // inside the Xvfb'x defualt resolution.
-    command_line->AppendSwitchASCII(ash::switches::kAshHostWindowBounds,
+    // inside the Xvfb'x default resolution.
+    command_line->AppendSwitchASCII(switches::kHostWindowBounds,
                                     "0+0-1280x800");
   }
-#endif  // defined(OS_CHROMEOS)
+#elif defined(OS_LINUX) && defined(USE_X11)
+  DCHECK(!display::Screen::GetScreen());
+  display::Screen::SetScreenInstance(
+      views::test::TestDesktopScreenX11::GetInstance());
+#endif
 
   // Always use a mocked password storage if OS encryption is used (which is
   // when anything sensitive gets stored, including Cookies). Without this on
   // Mac, many tests will hang waiting for a user to approve KeyChain access.
   OSCryptMocker::SetUpWithSingleton();
 
-#if defined(ENABLE_CAPTIVE_PORTAL_DETECTION)
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   CaptivePortalService::set_state_for_testing(
       CaptivePortalService::DISABLED_FOR_TESTING);
 #endif
@@ -234,6 +249,18 @@ void InProcessBrowserTest::SetUp() {
       chrome_browser_net::NetErrorTabHelper::TESTING_FORCE_DISABLED);
 
   google_util::SetMockLinkDoctorBaseURLForTesting();
+
+#if defined(OS_CHROMEOS)
+  // Polymer Elements are used for quick unlock configuration in options page,
+  // which is chromeos specific feature.
+  options::BrowserOptionsHandler::DisablePolymerPreloadForTesting();
+#endif  // defined(OS_CHROMEOS)
+
+  // Use hardcoded quota settings to have a consistent testing environment.
+  const int kQuota = 5 * 1024 * 1024;
+  quota_settings_ = storage::QuotaSettings(kQuota * 5, kQuota, 0, 0);
+  ChromeContentBrowserClient::SetDefaultQuotaSettingsForTesting(
+      &quota_settings_);
 
   BrowserTestBase::SetUp();
 }
@@ -275,17 +302,17 @@ bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
     *error_message = "browser is NULL";
     return false;
   }
-  auto tab_strip = browser()->tab_strip_model();
+  auto* tab_strip = browser()->tab_strip_model();
   if (!tab_strip) {
     *error_message = "tab_strip is NULL";
     return false;
   }
-  auto web_contents = tab_strip->GetActiveWebContents();
+  auto* web_contents = tab_strip->GetActiveWebContents();
   if (!web_contents) {
     *error_message = "web_contents is NULL";
     return false;
   }
-  auto focused_frame = web_contents->GetFocusedFrame();
+  auto* focused_frame = web_contents->GetFocusedFrame();
   if (!focused_frame) {
     *error_message = "focused_frame is NULL";
     return false;
@@ -327,10 +354,10 @@ bool InProcessBrowserTest::CreateUserDataDirectory() {
   if (user_data_dir.empty()) {
     if (temp_user_data_dir_.CreateUniqueTempDir() &&
         temp_user_data_dir_.IsValid()) {
-      user_data_dir = temp_user_data_dir_.path();
+      user_data_dir = temp_user_data_dir_.GetPath();
     } else {
       LOG(ERROR) << "Could not create temporary user data directory \""
-                 << temp_user_data_dir_.path().value() << "\".";
+                 << temp_user_data_dir_.GetPath().value() << "\".";
       return false;
     }
   }
@@ -344,6 +371,7 @@ void InProcessBrowserTest::TearDown() {
 #endif
   BrowserTestBase::TearDown();
   OSCryptMocker::TearDown();
+  ChromeContentBrowserClient::SetDefaultQuotaSettingsForTesting(nullptr);
 }
 
 void InProcessBrowserTest::CloseBrowserSynchronously(Browser* browser) {
@@ -383,7 +411,7 @@ void InProcessBrowserTest::AddTabAtIndexToBrowser(
     bool check_navigation_success) {
   chrome::NavigateParams params(browser, url, transition);
   params.tabstrip_index = index;
-  params.disposition = NEW_FOREGROUND_TAB;
+  params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   chrome::Navigate(&params);
 
   if (check_navigation_success)
@@ -425,22 +453,22 @@ Browser* InProcessBrowserTest::OpenURLOffTheRecord(Profile* profile,
 // Creates a browser with a single tab (about:blank), waits for the tab to
 // finish loading and shows the browser.
 Browser* InProcessBrowserTest::CreateBrowser(Profile* profile) {
-  Browser* browser = new Browser(Browser::CreateParams(profile));
+  Browser* browser = new Browser(Browser::CreateParams(profile, true));
   AddBlankTabAndShow(browser);
   return browser;
 }
 
 Browser* InProcessBrowserTest::CreateIncognitoBrowser() {
   // Create a new browser with using the incognito profile.
-  Browser* incognito = new Browser(
-      Browser::CreateParams(browser()->profile()->GetOffTheRecordProfile()));
+  Browser* incognito = new Browser(Browser::CreateParams(
+      browser()->profile()->GetOffTheRecordProfile(), true));
   AddBlankTabAndShow(incognito);
   return incognito;
 }
 
 Browser* InProcessBrowserTest::CreateBrowserForPopup(Profile* profile) {
   Browser* browser =
-      new Browser(Browser::CreateParams(Browser::TYPE_POPUP, profile));
+      new Browser(Browser::CreateParams(Browser::TYPE_POPUP, profile, true));
   AddBlankTabAndShow(browser);
   return browser;
 }
@@ -448,9 +476,8 @@ Browser* InProcessBrowserTest::CreateBrowserForPopup(Profile* profile) {
 Browser* InProcessBrowserTest::CreateBrowserForApp(
     const std::string& app_name,
     Profile* profile) {
-  Browser* browser = new Browser(
-      Browser::CreateParams::CreateForApp(
-          app_name, false /* trusted_source */, gfx::Rect(), profile));
+  Browser* browser = new Browser(Browser::CreateParams::CreateForApp(
+      app_name, false /* trusted_source */, gfx::Rect(), profile, true));
   AddBlankTabAndShow(browser);
   return browser;
 }
@@ -534,6 +561,9 @@ void InProcessBrowserTest::RunTestOnMainThreadLoop() {
   // SetUpOnMainThread or RunTestOnMainThread so that one or all tests can
   // enable/disable the accessibility audit.
   run_accessibility_checks_for_test_case_ = false;
+
+  if (browser_ && global_browser_set_up_function_)
+    ASSERT_TRUE(global_browser_set_up_function_(browser_));
 
   SetUpOnMainThread();
 #if defined(OS_MACOSX)

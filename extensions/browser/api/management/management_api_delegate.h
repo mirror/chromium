@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_MANAGEMENT_MANAGEMENT_API_DELEGATER_H_
-#define EXTENSIONS_BROWSER_API_MANAGEMENT_MANAGEMENT_API_DELEGATER_H_
+#ifndef EXTENSIONS_BROWSER_API_MANAGEMENT_MANAGEMENT_API_DELEGATE_H_
+#define EXTENSIONS_BROWSER_API_MANAGEMENT_MANAGEMENT_API_DELEGATE_H_
 
 #include "base/callback.h"
 #include "extensions/browser/uninstall_reason.h"
@@ -24,9 +24,7 @@ class ExtensionPrefs;
 class ManagementCreateAppShortcutFunction;
 class ManagementGenerateAppForLinkFunction;
 class ManagementGetPermissionWarningsByManifestFunction;
-class ManagementSetEnabledFunction;
 class ManagementUninstallFunctionBase;
-class RequirementsChecker;
 
 // Manages the lifetime of the install prompt.
 class InstallPromptDelegate {
@@ -50,8 +48,8 @@ class ManagementAPIDelegate {
  public:
   virtual ~ManagementAPIDelegate() {}
 
-  // Launches the app |extension|. Returns true on success.
-  virtual bool LaunchAppFunctionDelegate(
+  // Launches the app |extension|.
+  virtual void LaunchAppFunctionDelegate(
       const Extension* extension,
       content::BrowserContext* context) const = 0;
 
@@ -84,10 +82,6 @@ class ManagementAPIDelegate {
       const Extension* extension,
       const base::Callback<void(bool)>& callback) const = 0;
 
-  // Returns a new RequirementsChecker.
-  virtual std::unique_ptr<RequirementsChecker> CreateRequirementsChecker()
-      const = 0;
-
   // Enables the extension identified by |extension_id|.
   virtual void EnableExtension(content::BrowserContext* context,
                                const std::string& extension_id) const = 0;
@@ -114,7 +108,8 @@ class ManagementAPIDelegate {
   // Creates an app shortcut.
   virtual bool CreateAppShortcutFunctionDelegate(
       ManagementCreateAppShortcutFunction* function,
-      const Extension* extension) const = 0;
+      const Extension* extension,
+      std::string* error) const = 0;
 
   // Forwards the call to launch_util::SetLaunchType in chrome.
   virtual void SetLaunchType(content::BrowserContext* context,
@@ -133,10 +128,9 @@ class ManagementAPIDelegate {
   virtual GURL GetIconURL(const Extension* extension,
                           int icon_size,
                           ExtensionIconSet::MatchType match,
-                          bool grayscale,
-                          bool* exists) const = 0;
+                          bool grayscale) const = 0;
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_MANAGEMENT_MANAGEMENT_API_DELEGATER_H_
+#endif  // EXTENSIONS_BROWSER_API_MANAGEMENT_MANAGEMENT_API_DELEGATE_H_

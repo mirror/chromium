@@ -10,105 +10,95 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef DOMTokenList_h
 #define DOMTokenList_h
 
-#include "bindings/core/v8/Iterable.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/SpaceSplitString.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-class Element;
 class ExceptionState;
 
 class CORE_EXPORT DOMTokenListObserver : public GarbageCollectedMixin {
-public:
-    // Called when the value property is set, even if the tokens in
-    // the set have not changed.
-    virtual void valueWasSet() = 0;
+ public:
+  // Called when the value property is set, even if the tokens in
+  // the set have not changed.
+  virtual void ValueWasSet() = 0;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
-    public ScriptWrappable, public ValueIterable<String> {
-    DEFINE_WRAPPERTYPEINFO();
-    WTF_MAKE_NONCOPYABLE(DOMTokenList);
-public:
-    static DOMTokenList* create(DOMTokenListObserver* observer = nullptr)
-    {
-        return new DOMTokenList(observer);
-    }
+                                 public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(DOMTokenList);
 
-    virtual ~DOMTokenList() { }
+ public:
+  static DOMTokenList* Create(DOMTokenListObserver* observer = nullptr) {
+    return new DOMTokenList(observer);
+  }
 
-    virtual unsigned length() const { return m_tokens.size(); }
-    virtual const AtomicString item(unsigned index) const;
+  virtual ~DOMTokenList() {}
 
-    bool contains(const AtomicString&, ExceptionState&) const;
-    virtual void add(const Vector<String>&, ExceptionState&);
-    void add(const AtomicString&, ExceptionState&);
-    virtual void remove(const Vector<String>&, ExceptionState&);
-    void remove(const AtomicString&, ExceptionState&);
-    bool toggle(const AtomicString&, ExceptionState&);
-    bool toggle(const AtomicString&, bool force, ExceptionState&);
-    bool supports(const AtomicString&, ExceptionState&);
+  virtual unsigned length() const { return tokens_.size(); }
+  virtual const AtomicString item(unsigned index) const;
 
-    virtual const AtomicString& value() const { return m_value; }
-    virtual void setValue(const AtomicString&);
+  bool contains(const AtomicString&, ExceptionState&) const;
+  virtual void add(const Vector<String>&, ExceptionState&);
+  void add(const AtomicString&, ExceptionState&);
+  virtual void remove(const Vector<String>&, ExceptionState&);
+  void remove(const AtomicString&, ExceptionState&);
+  bool toggle(const AtomicString&, ExceptionState&);
+  bool toggle(const AtomicString&, bool force, ExceptionState&);
+  bool supports(const AtomicString&, ExceptionState&);
 
-    const SpaceSplitString& tokens() const { return m_tokens; }
-    void setObserver(DOMTokenListObserver* observer) { m_observer = observer; }
+  virtual const AtomicString& value() const { return value_; }
+  virtual void setValue(const AtomicString&);
 
-    const AtomicString& toString() const { return value(); }
+  const SpaceSplitString& Tokens() const { return tokens_; }
+  void SetObserver(DOMTokenListObserver* observer) { observer_ = observer; }
 
-    virtual Element* element() { return 0; }
+  const AtomicString& toString() const { return value(); }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() {
-        visitor->trace(m_observer);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(observer_); }
 
-protected:
-    DOMTokenList(DOMTokenListObserver* observer)
-        : m_observer(observer)
-    {
-    }
+ protected:
+  DOMTokenList(DOMTokenListObserver* observer) : observer_(observer) {}
 
-    virtual void addInternal(const AtomicString&);
-    virtual bool containsInternal(const AtomicString&) const;
-    virtual void removeInternal(const AtomicString&);
+  virtual void AddInternal(const AtomicString&);
+  virtual bool ContainsInternal(const AtomicString&) const;
+  virtual void RemoveInternal(const AtomicString&);
 
-    bool validateToken(const String&, ExceptionState&) const;
-    bool validateTokens(const Vector<String>&, ExceptionState&) const;
-    virtual bool validateTokenValue(const AtomicString&, ExceptionState&) const;
-    static AtomicString addToken(const AtomicString&, const AtomicString&);
-    static AtomicString addTokens(const AtomicString&, const Vector<String>&);
-    static AtomicString removeToken(const AtomicString&, const AtomicString&);
-    static AtomicString removeTokens(const AtomicString&, const Vector<String>&);
+  bool ValidateToken(const String&, ExceptionState&) const;
+  bool ValidateTokens(const Vector<String>&, ExceptionState&) const;
+  virtual bool ValidateTokenValue(const AtomicString&, ExceptionState&) const;
+  static AtomicString AddToken(const AtomicString&, const AtomicString&);
+  static AtomicString AddTokens(const AtomicString&, const Vector<String>&);
+  static AtomicString RemoveToken(const AtomicString&, const AtomicString&);
+  static AtomicString RemoveTokens(const AtomicString&, const Vector<String>&);
 
-private:
-    IterationSource* startIteration(ScriptState*, ExceptionState&) override;
-    SpaceSplitString m_tokens;
-    AtomicString m_value;
-    WeakMember<DOMTokenListObserver> m_observer;
+ private:
+  SpaceSplitString tokens_;
+  AtomicString value_;
+  WeakMember<DOMTokenListObserver> observer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMTokenList_h
+#endif  // DOMTokenList_h

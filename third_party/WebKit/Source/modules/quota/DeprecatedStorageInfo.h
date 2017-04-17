@@ -34,43 +34,50 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/quota/DeprecatedStorageQuota.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class ExecutionContext;
+class ScriptState;
 class StorageErrorCallback;
 class StorageQuotaCallback;
 class StorageUsageCallback;
 
-class DeprecatedStorageInfo final : public GarbageCollected<DeprecatedStorageInfo>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum {
-        TEMPORARY,
-        PERSISTENT,
-    };
+class DeprecatedStorageInfo final
+    : public GarbageCollected<DeprecatedStorageInfo>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static DeprecatedStorageInfo* create()
-    {
-        return new DeprecatedStorageInfo();
-    }
+ public:
+  enum {
+    kTemporary,
+    kPersistent,
+  };
 
-    void queryUsageAndQuota(ExecutionContext*, int storageType, StorageUsageCallback*, StorageErrorCallback*);
+  static DeprecatedStorageInfo* Create() { return new DeprecatedStorageInfo(); }
 
-    void requestQuota(ExecutionContext*, int storageType, unsigned long long newQuotaInBytes, StorageQuotaCallback*, StorageErrorCallback*);
+  void queryUsageAndQuota(ScriptState*,
+                          int storage_type,
+                          StorageUsageCallback*,
+                          StorageErrorCallback*);
 
-    DECLARE_TRACE();
+  void requestQuota(ScriptState*,
+                    int storage_type,
+                    unsigned long long new_quota_in_bytes,
+                    StorageQuotaCallback*,
+                    StorageErrorCallback*);
 
-private:
-    DeprecatedStorageInfo();
+  DECLARE_TRACE();
 
-    DeprecatedStorageQuota* getStorageQuota(int storageType);
+ private:
+  DeprecatedStorageInfo();
 
-    mutable Member<DeprecatedStorageQuota> m_temporaryStorage;
-    mutable Member<DeprecatedStorageQuota> m_persistentStorage;
+  DeprecatedStorageQuota* GetStorageQuota(int storage_type);
+
+  mutable Member<DeprecatedStorageQuota> temporary_storage_;
+  mutable Member<DeprecatedStorageQuota> persistent_storage_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DeprecatedStorageInfo_h
+#endif  // DeprecatedStorageInfo_h

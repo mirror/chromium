@@ -39,6 +39,9 @@ function runTest(element, platform) {
 
     var noneOnMacAndForwardOnOthers = (platform == 'Mac') ? 'none' : 'forward';
 
+    var newElement = document.createElement(element.tagName);
+    assertDirection(noneOnMacAndForwardOnOthers, newElement, 'just creating');
+
     element.setSelectionRange(1, 2);
     assertDirection(noneOnMacAndForwardOnOthers, element, 'focusing and setting selection by setSelectionRange(1, 2)');
     testCache(noneOnMacAndForwardOnOthers, element);
@@ -77,6 +80,9 @@ function runTest(element, platform) {
     assertDirection('backward', element, 'extending selection backward by character');
     testCache('backward', element);
 
+    element.blur();
+    element.value = element.value + 'foo';
+    assertDirection(noneOnMacAndForwardOnOthers, element, 'updating value');
 }
 
 function runTestFor(platform) {

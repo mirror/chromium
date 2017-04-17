@@ -26,80 +26,85 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/html/HTMLTableCellElement.h"
 #include "core/html/HTMLTableElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutTableCol.h"
+#include <algorithm>
 
 namespace blink {
 
 using namespace HTMLNames;
 
-inline HTMLTableColElement::HTMLTableColElement(const QualifiedName& tagName, Document& document)
-    : HTMLTablePartElement(tagName, document)
-    , m_span(1)
-{
-}
+inline HTMLTableColElement::HTMLTableColElement(const QualifiedName& tag_name,
+                                                Document& document)
+    : HTMLTablePartElement(tag_name, document), span_(1) {}
 
 DEFINE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLTableColElement)
 
-bool HTMLTableColElement::isPresentationAttribute(const QualifiedName& name) const
-{
-    if (name == widthAttr)
-        return true;
-    return HTMLTablePartElement::isPresentationAttribute(name);
+bool HTMLTableColElement::IsPresentationAttribute(
+    const QualifiedName& name) const {
+  if (name == widthAttr)
+    return true;
+  return HTMLTablePartElement::IsPresentationAttribute(name);
 }
 
-void HTMLTableColElement::collectStyleForPresentationAttribute(const QualifiedName& name, const AtomicString& value, MutableStylePropertySet* style)
-{
-    if (name == widthAttr)
-        addHTMLLengthToStyle(style, CSSPropertyWidth, value);
-    else
-        HTMLTablePartElement::collectStyleForPresentationAttribute(name, value, style);
+void HTMLTableColElement::CollectStyleForPresentationAttribute(
+    const QualifiedName& name,
+    const AtomicString& value,
+    MutableStylePropertySet* style) {
+  if (name == widthAttr)
+    AddHTMLLengthToStyle(style, CSSPropertyWidth, value);
+  else
+    HTMLTablePartElement::CollectStyleForPresentationAttribute(name, value,
+                                                               style);
 }
 
-void HTMLTableColElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == spanAttr) {
-        unsigned newSpan = 0;
-        if (value.isEmpty() || !parseHTMLNonNegativeInteger(value, newSpan) || newSpan < 1) {
-            // If the value of span is not a valid non-negative integer greater than zero,
-            // set it to 1.
-            newSpan = 1;
-        }
-        m_span = newSpan;
-        if (layoutObject() && layoutObject()->isLayoutTableCol())
-            layoutObject()->updateFromElement();
-    } else if (name == widthAttr) {
-        if (!value.isEmpty()) {
-            if (layoutObject() && layoutObject()->isLayoutTableCol()) {
-                LayoutTableCol* col = toLayoutTableCol(layoutObject());
-                int newWidth = width().toInt();
-                if (newWidth != col->size().width())
-                    col->setNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(LayoutInvalidationReason::AttributeChanged);
-            }
-        }
-    } else {
-        HTMLTablePartElement::parseAttribute(name, oldValue, value);
+void HTMLTableColElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == spanAttr) {
+    unsigned new_span = 0;
+    if (params.new_value.IsEmpty() ||
+        !ParseHTMLNonNegativeInteger(params.new_value, new_span) ||
+        new_span < 1) {
+      // If the value of span is not a valid non-negative integer greater than
+      // zero, set it to 1.
+      new_span = 1;
     }
+    new_span = std::min(new_span, HTMLTableCellElement::MaxColSpan());
+    span_ = new_span;
+    if (GetLayoutObject() && GetLayoutObject()->IsLayoutTableCol())
+      GetLayoutObject()->UpdateFromElement();
+  } else if (params.name == widthAttr) {
+    if (!params.new_value.IsEmpty()) {
+      if (GetLayoutObject() && GetLayoutObject()->IsLayoutTableCol()) {
+        LayoutTableCol* col = ToLayoutTableCol(GetLayoutObject());
+        int new_width = Width().ToInt();
+        if (new_width != col->Size().Width())
+          col->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+              LayoutInvalidationReason::kAttributeChanged);
+      }
+    }
+  } else {
+    HTMLTablePartElement::ParseAttribute(params);
+  }
 }
 
-const StylePropertySet* HTMLTableColElement::additionalPresentationAttributeStyle()
-{
-    if (!hasTagName(colgroupTag))
-        return nullptr;
-    if (HTMLTableElement* table = findParentTable())
-        return table->additionalGroupStyle(false);
+const StylePropertySet*
+HTMLTableColElement::AdditionalPresentationAttributeStyle() {
+  if (!HasTagName(colgroupTag))
     return nullptr;
+  if (HTMLTableElement* table = FindParentTable())
+    return table->AdditionalGroupStyle(false);
+  return nullptr;
 }
 
-void HTMLTableColElement::setSpan(unsigned n)
-{
-    setUnsignedIntegralAttribute(spanAttr, n);
+void HTMLTableColElement::setSpan(unsigned n) {
+  SetUnsignedIntegralAttribute(spanAttr, n ? n : 1);
 }
 
-const AtomicString& HTMLTableColElement::width() const
-{
-    return getAttribute(widthAttr);
+const AtomicString& HTMLTableColElement::Width() const {
+  return getAttribute(widthAttr);
 }
 
-} // namespace blink
+}  // namespace blink

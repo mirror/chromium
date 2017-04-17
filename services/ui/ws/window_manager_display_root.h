@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 
 namespace ui {
 namespace ws {
@@ -18,10 +19,6 @@ class Display;
 class ServerWindow;
 class WindowManagerState;
 class WindowServer;
-
-namespace test {
-class WindowManagerDisplayRootTestApi;
-}
 
 // Owns the root window of a window manager for one display. Each window manager
 // has one WindowManagerDisplayRoot for each Display. The root window is
@@ -44,6 +41,7 @@ class WindowManagerDisplayRoot {
 
  private:
   friend class Display;
+  friend class WindowManagerState;
 
   WindowServer* window_server();
 
@@ -52,6 +50,7 @@ class WindowManagerDisplayRoot {
   // the root ServerWindow of the Display.
   std::unique_ptr<ServerWindow> root_;
   WindowManagerState* window_manager_state_ = nullptr;
+  cc::LocalSurfaceIdAllocator allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowManagerDisplayRoot);
 };

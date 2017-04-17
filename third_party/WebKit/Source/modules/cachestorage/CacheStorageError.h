@@ -5,9 +5,9 @@
 #ifndef CacheStorageError_h
 #define CacheStorageError_h
 
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheError.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -15,16 +15,20 @@ class DOMException;
 class ScriptPromiseResolver;
 
 class CacheStorageError {
-    STATIC_ONLY(CacheStorageError);
-public:
-    // For CallbackPromiseAdapter. Ownership of a given error is not
-    // transferred.
-    using WebType = WebServiceWorkerCacheError;
-    static DOMException* take(ScriptPromiseResolver*, WebServiceWorkerCacheError webError) { return createException(webError); }
+  STATIC_ONLY(CacheStorageError);
 
-    static DOMException* createException(WebServiceWorkerCacheError webError);
+ public:
+  // For CallbackPromiseAdapter. Ownership of a given error is not
+  // transferred.
+  using WebType = WebServiceWorkerCacheError;
+  static DOMException* Take(ScriptPromiseResolver*,
+                            WebServiceWorkerCacheError web_error) {
+    return CreateException(web_error);
+  }
+
+  static DOMException* CreateException(WebServiceWorkerCacheError web_error);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CacheStorageError_h
+#endif  // CacheStorageError_h

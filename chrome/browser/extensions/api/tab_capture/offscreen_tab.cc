@@ -8,13 +8,21 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/api/tab_capture/tab_capture_registry.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/web_contents_sizer.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
+#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/web_preferences.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
+
+#if defined(ENABLE_MEDIA_ROUTER)
+#include "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h"  // nogncheck
+#endif
 
 using content::WebContents;
 
@@ -57,15 +65,24 @@ OffscreenTab* OffscreenTabsOwner::OpenNewTab(
   if (tabs_.size() >= kMaxOffscreenTabsPerExtension)
     return nullptr;  // Maximum number of offscreen tabs reached.
 
-  tabs_.push_back(new OffscreenTab(this));
+  // OffscreenTab cannot be created with MakeUnique<OffscreenTab> since the
+  // constructor is protected. So create it separately, and then move it to
+  // |tabs_| below.
+  std::unique_ptr<OffscreenTab> offscreen_tab(new OffscreenTab(this));
+  tabs_.push_back(std::move(offscreen_tab));
   tabs_.back()->Start(start_url, initial_size, optional_presentation_id);
-  return tabs_.back();
+  return tabs_.back().get();
 }
 
 void OffscreenTabsOwner::DestroyTab(OffscreenTab* tab) {
-  const auto it = std::find(tabs_.begin(), tabs_.end(), tab);
-  if (it != tabs_.end())
-    tabs_.erase(it);
+  for (std::vector<std::unique_ptr<OffscreenTab>>::iterator iter =
+           tabs_.begin();
+       iter != tabs_.end(); ++iter) {
+    if (iter->get() == tab) {
+      tabs_.erase(iter);
+      break;
+    }
+  }
 }
 
 OffscreenTab::OffscreenTab(OffscreenTabsOwner* owner)
@@ -98,18 +115,31 @@ void OffscreenTab::Start(const GURL& start_url,
 
   // Set initial size, if specified.
   if (!initial_size.IsEmpty())
-    ResizeWebContents(offscreen_tab_web_contents_.get(), initial_size);
+    ResizeWebContents(offscreen_tab_web_contents_.get(),
+                      gfx::Rect(initial_size));
 
   // Mute audio output.  When tab capture starts, the audio will be
   // automatically unmuted, but will be captured into the MediaStream.
   offscreen_tab_web_contents_->SetAudioMuted(true);
 
-  // TODO(imcheng): If |optional_presentation_id| is not empty, register it with
-  // the PresentationRouter.  http://crbug.com/513859
+#if defined(ENABLE_MEDIA_ROUTER)
   if (!optional_presentation_id.empty()) {
-    NOTIMPLEMENTED()
-        << "Register with PresentationRouter, id=" << optional_presentation_id;
+    DVLOG(1) << " Register with ReceiverPresentationServiceDelegateImpl, "
+             << "[presentation_id]: " << optional_presentation_id;
+    // Create a ReceiverPSDImpl associated with the offscreen tab's WebContents.
+    // The new instance will set up the necessary infrastructure to allow
+    // controlling peers the ability to connect to the offscreen tab.
+    media_router::ReceiverPresentationServiceDelegateImpl::CreateForWebContents(
+        offscreen_tab_web_contents_.get(), optional_presentation_id);
+
+    if (auto* render_view_host =
+            offscreen_tab_web_contents_->GetRenderViewHost()) {
+      auto web_prefs = render_view_host->GetWebkitPreferences();
+      web_prefs.presentation_receiver = true;
+      render_view_host->UpdateWebkitPreferences(web_prefs);
+    }
   }
+#endif  // defined(ENABLE_MEDIA_ROUTER)
 
   // Navigate to the initial URL.
   content::NavigationController::LoadURLParams load_params(start_url_);
@@ -165,15 +195,13 @@ bool OffscreenTab::HandleContextMenu(const content::ContextMenuParams& params) {
   return true;
 }
 
-bool OffscreenTab::PreHandleKeyboardEvent(
+content::KeyboardEventProcessingResult OffscreenTab::PreHandleKeyboardEvent(
     WebContents* source,
-    const content::NativeWebKeyboardEvent& event,
-    bool* is_keyboard_shortcut) {
+    const content::NativeWebKeyboardEvent& event) {
   DCHECK_EQ(offscreen_tab_web_contents_.get(), source);
   // Intercept and silence all keyboard events before they can be sent to the
   // renderer.
-  *is_keyboard_shortcut = false;
-  return true;
+  return content::KeyboardEventProcessingResult::HANDLED;
 }
 
 bool OffscreenTab::PreHandleGestureEvent(WebContents* source,
@@ -195,16 +223,18 @@ bool OffscreenTab::CanDragEnter(
 }
 
 bool OffscreenTab::ShouldCreateWebContents(
-    WebContents* contents,
+    content::WebContents* web_contents,
+    content::SiteInstance* source_site_instance,
     int32_t route_id,
     int32_t main_frame_route_id,
     int32_t main_frame_widget_route_id,
-    WindowContainerType window_container_type,
+    content::mojom::WindowContainerType window_container_type,
+    const GURL& opener_url,
     const std::string& frame_name,
     const GURL& target_url,
     const std::string& partition_id,
     content::SessionStorageNamespace* session_storage_namespace) {
-  DCHECK_EQ(offscreen_tab_web_contents_.get(), contents);
+  DCHECK_EQ(offscreen_tab_web_contents_.get(), web_contents);
   // Disallow creating separate WebContentses.  The WebContents implementation
   // uses this to spawn new windows/tabs, which is also not allowed for
   // offscreen tabs.
@@ -227,7 +257,7 @@ void OffscreenTab::EnterFullscreenModeForTab(WebContents* contents,
       contents->GetRenderWidgetHostView()->GetViewBounds().size();
   if (contents->GetCapturerCount() >= 0 &&
       !contents->GetPreferredSize().IsEmpty()) {
-    ResizeWebContents(contents, contents->GetPreferredSize());
+    ResizeWebContents(contents, gfx::Rect(contents->GetPreferredSize()));
   }
 }
 
@@ -237,7 +267,7 @@ void OffscreenTab::ExitFullscreenModeForTab(WebContents* contents) {
   if (!in_fullscreen_mode())
     return;
 
-  ResizeWebContents(contents, non_fullscreen_size_);
+  ResizeWebContents(contents, gfx::Rect(non_fullscreen_size_));
   non_fullscreen_size_ = gfx::Size();
 }
 
@@ -250,8 +280,8 @@ bool OffscreenTab::IsFullscreenForTabOrPending(
 blink::WebDisplayMode OffscreenTab::GetDisplayMode(
     const WebContents* contents) const {
   DCHECK_EQ(offscreen_tab_web_contents_.get(), contents);
-  return in_fullscreen_mode() ?
-      blink::WebDisplayModeFullscreen : blink::WebDisplayModeBrowser;
+  return in_fullscreen_mode() ? blink::kWebDisplayModeFullscreen
+                              : blink::kWebDisplayModeBrowser;
 }
 
 void OffscreenTab::RequestMediaAccessPermission(

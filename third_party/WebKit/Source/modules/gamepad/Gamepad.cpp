@@ -27,39 +27,62 @@
 
 namespace blink {
 
-Gamepad::Gamepad()
-    : m_index(0)
-    , m_timestamp(0)
-{
+Gamepad::Gamepad() : index_(0), timestamp_(0), display_id_(0) {}
+
+Gamepad::~Gamepad() {}
+
+void Gamepad::SetAxes(unsigned count, const double* data) {
+  axes_.Resize(count);
+  if (count)
+    std::copy(data, data + count, axes_.begin());
 }
 
-Gamepad::~Gamepad()
-{
+void Gamepad::SetButtons(unsigned count, const WebGamepadButton* data) {
+  if (buttons_.size() != count) {
+    buttons_.Resize(count);
+    for (unsigned i = 0; i < count; ++i)
+      buttons_[i] = GamepadButton::Create();
+  }
+  for (unsigned i = 0; i < count; ++i) {
+    buttons_[i]->SetValue(data[i].value);
+    buttons_[i]->SetPressed(data[i].pressed);
+    buttons_[i]->SetTouched(data[i].touched || data[i].pressed ||
+                            (data[i].value > 0.0f));
+  }
 }
 
-void Gamepad::setAxes(unsigned count, const double* data)
-{
-    m_axes.resize(count);
-    if (count)
-        std::copy(data, data + count, m_axes.begin());
+void Gamepad::SetPose(const WebGamepadPose& pose) {
+  if (!pose.not_null) {
+    if (pose_)
+      pose_ = nullptr;
+    return;
+  }
+
+  if (!pose_)
+    pose_ = GamepadPose::Create();
+
+  pose_->SetPose(pose);
 }
 
-void Gamepad::setButtons(unsigned count, const WebGamepadButton* data)
-{
-    if (m_buttons.size() != count) {
-        m_buttons.resize(count);
-        for (unsigned i = 0; i < count; ++i)
-            m_buttons[i] = GamepadButton::create();
-    }
-    for (unsigned i = 0; i < count; ++i) {
-        m_buttons[i]->setValue(data[i].value);
-        m_buttons[i]->setPressed(data[i].pressed);
-    }
+void Gamepad::SetHand(const WebGamepadHand& hand) {
+  switch (hand) {
+    case kGamepadHandNone:
+      hand_ = "";
+      break;
+    case kGamepadHandLeft:
+      hand_ = "left";
+      break;
+    case kGamepadHandRight:
+      hand_ = "right";
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
-DEFINE_TRACE(Gamepad)
-{
-    visitor->trace(m_buttons);
+DEFINE_TRACE(Gamepad) {
+  visitor->Trace(buttons_);
+  visitor->Trace(pose_);
 }
 
-} // namespace blink
+}  // namespace blink

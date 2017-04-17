@@ -16,7 +16,7 @@ using BitmapBuffer = CArray<uint8_t>;
 
 // Struct traits to use SkBitmap for skia::mojom::Bitmap in Chrome C++ code.
 template <>
-struct StructTraits<skia::mojom::Bitmap, SkBitmap> {
+struct StructTraits<skia::mojom::BitmapDataView, SkBitmap> {
   static bool IsNull(const SkBitmap& b);
   static void SetToNull(SkBitmap* b);
   static skia::mojom::ColorType color_type(const SkBitmap& b);
@@ -24,6 +24,7 @@ struct StructTraits<skia::mojom::Bitmap, SkBitmap> {
   static skia::mojom::ColorProfileType profile_type(const SkBitmap& b);
   static uint32_t width(const SkBitmap& b);
   static uint32_t height(const SkBitmap& b);
+  static uint64_t row_bytes(const SkBitmap& b);
   static BitmapBuffer pixel_data(const SkBitmap& b);
   static bool Read(skia::mojom::BitmapDataView data, SkBitmap* b);
   static void* SetUpContext(const SkBitmap& b);

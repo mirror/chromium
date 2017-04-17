@@ -27,67 +27,61 @@
 
 namespace blink {
 
-static String ErrorCodeToString(SpeechRecognitionError::ErrorCode code)
-{
-    switch (code) {
-    case SpeechRecognitionError::ErrorCodeOther:
-        return "other";
-    case SpeechRecognitionError::ErrorCodeNoSpeech:
-        return "no-speech";
-    case SpeechRecognitionError::ErrorCodeAborted:
-        return "aborted";
-    case SpeechRecognitionError::ErrorCodeAudioCapture:
-        return "audio-capture";
-    case SpeechRecognitionError::ErrorCodeNetwork:
-        return "network";
-    case SpeechRecognitionError::ErrorCodeNotAllowed:
-        return "not-allowed";
-    case SpeechRecognitionError::ErrorCodeServiceNotAllowed:
-        return "service-not-allowed";
-    case SpeechRecognitionError::ErrorCodeBadGrammar:
-        return "bad-grammar";
-    case SpeechRecognitionError::ErrorCodeLanguageNotSupported:
-        return "language-not-supported";
-    }
+static String ErrorCodeToString(SpeechRecognitionError::ErrorCode code) {
+  switch (code) {
+    case SpeechRecognitionError::kErrorCodeOther:
+      return "other";
+    case SpeechRecognitionError::kErrorCodeNoSpeech:
+      return "no-speech";
+    case SpeechRecognitionError::kErrorCodeAborted:
+      return "aborted";
+    case SpeechRecognitionError::kErrorCodeAudioCapture:
+      return "audio-capture";
+    case SpeechRecognitionError::kErrorCodeNetwork:
+      return "network";
+    case SpeechRecognitionError::kErrorCodeNotAllowed:
+      return "not-allowed";
+    case SpeechRecognitionError::kErrorCodeServiceNotAllowed:
+      return "service-not-allowed";
+    case SpeechRecognitionError::kErrorCodeBadGrammar:
+      return "bad-grammar";
+    case SpeechRecognitionError::kErrorCodeLanguageNotSupported:
+      return "language-not-supported";
+  }
 
-    ASSERT_NOT_REACHED();
-    return String();
+  ASSERT_NOT_REACHED();
+  return String();
 }
 
-SpeechRecognitionError* SpeechRecognitionError::create(ErrorCode code, const String& message)
-{
-    return new SpeechRecognitionError(ErrorCodeToString(code), message);
+SpeechRecognitionError* SpeechRecognitionError::Create(ErrorCode code,
+                                                       const String& message) {
+  return new SpeechRecognitionError(ErrorCodeToString(code), message);
 }
 
-SpeechRecognitionError* SpeechRecognitionError::create()
-{
-    return new SpeechRecognitionError(emptyString(), emptyString());
+SpeechRecognitionError* SpeechRecognitionError::Create(
+    const AtomicString& event_name,
+    const SpeechRecognitionErrorInit& initializer) {
+  return new SpeechRecognitionError(event_name, initializer);
 }
 
-SpeechRecognitionError* SpeechRecognitionError::create(const AtomicString& eventName, const SpeechRecognitionErrorInit& initializer)
-{
-    return new SpeechRecognitionError(eventName, initializer);
+SpeechRecognitionError::SpeechRecognitionError(const String& error,
+                                               const String& message)
+    : Event(EventTypeNames::error, /*canBubble=*/false, /*cancelable=*/false),
+      error_(error),
+      message_(message) {}
+
+SpeechRecognitionError::SpeechRecognitionError(
+    const AtomicString& event_name,
+    const SpeechRecognitionErrorInit& initializer)
+    : Event(event_name, initializer) {
+  if (initializer.hasError())
+    error_ = initializer.error();
+  if (initializer.hasMessage())
+    message_ = initializer.message();
 }
 
-SpeechRecognitionError::SpeechRecognitionError(const String& error, const String& message)
-    : Event(EventTypeNames::error, /*canBubble=*/false, /*cancelable=*/false)
-    , m_error(error)
-    , m_message(message)
-{
+const AtomicString& SpeechRecognitionError::InterfaceName() const {
+  return EventNames::SpeechRecognitionError;
 }
 
-SpeechRecognitionError::SpeechRecognitionError(const AtomicString& eventName, const SpeechRecognitionErrorInit& initializer)
-    : Event(eventName, initializer)
-{
-    if (initializer.hasError())
-        m_error = initializer.error();
-    if (initializer.hasMessage())
-        m_message = initializer.message();
-}
-
-const AtomicString& SpeechRecognitionError::interfaceName() const
-{
-    return EventNames::SpeechRecognitionError;
-}
-
-} // namespace blink
+}  // namespace blink

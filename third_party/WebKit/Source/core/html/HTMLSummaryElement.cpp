@@ -20,7 +20,7 @@
 
 #include "core/html/HTMLSummaryElement.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/dom/shadow/ShadowRoot.h"
@@ -35,117 +35,112 @@ namespace blink {
 
 using namespace HTMLNames;
 
-HTMLSummaryElement* HTMLSummaryElement::create(Document& document)
-{
-    HTMLSummaryElement* summary = new HTMLSummaryElement(document);
-    summary->ensureUserAgentShadowRoot();
-    return summary;
+HTMLSummaryElement* HTMLSummaryElement::Create(Document& document) {
+  HTMLSummaryElement* summary = new HTMLSummaryElement(document);
+  summary->EnsureUserAgentShadowRoot();
+  return summary;
 }
 
 HTMLSummaryElement::HTMLSummaryElement(Document& document)
-    : HTMLElement(summaryTag, document)
-{
+    : HTMLElement(summaryTag, document) {}
+
+LayoutObject* HTMLSummaryElement::CreateLayoutObject(
+    const ComputedStyle& style) {
+  EDisplay display = style.Display();
+  if (display == EDisplay::kFlex || display == EDisplay::kInlineFlex ||
+      display == EDisplay::kGrid || display == EDisplay::kInlineGrid)
+    return LayoutObject::CreateObject(this, style);
+  return new LayoutBlockFlow(this);
 }
 
-LayoutObject* HTMLSummaryElement::createLayoutObject(const ComputedStyle&)
-{
-    return new LayoutBlockFlow(this);
+void HTMLSummaryElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
+  DetailsMarkerControl* marker_control =
+      DetailsMarkerControl::Create(GetDocument());
+  marker_control->SetIdAttribute(ShadowElementNames::DetailsMarker());
+  root.AppendChild(marker_control);
+  root.AppendChild(HTMLContentElement::Create(GetDocument()));
 }
 
-void HTMLSummaryElement::didAddUserAgentShadowRoot(ShadowRoot& root)
-{
-    DetailsMarkerControl* markerControl = DetailsMarkerControl::create(document());
-    markerControl->setIdAttribute(ShadowElementNames::detailsMarker());
-    root.appendChild(markerControl);
-    root.appendChild(HTMLContentElement::create(document()));
+HTMLDetailsElement* HTMLSummaryElement::DetailsElement() const {
+  Node* parent = parentNode();
+  if (isHTMLDetailsElement(parent))
+    return toHTMLDetailsElement(parent);
+  Element* host = OwnerShadowHost();
+  if (isHTMLDetailsElement(host))
+    return toHTMLDetailsElement(host);
+  return nullptr;
 }
 
-HTMLDetailsElement* HTMLSummaryElement::detailsElement() const
-{
-    Node* parent = parentNode();
-    if (isHTMLDetailsElement(parent))
-        return toHTMLDetailsElement(parent);
-    Element* host = shadowHost();
-    if (isHTMLDetailsElement(host))
-        return toHTMLDetailsElement(host);
-    return nullptr;
+Element* HTMLSummaryElement::MarkerControl() {
+  return EnsureUserAgentShadowRoot().GetElementById(
+      ShadowElementNames::DetailsMarker());
 }
 
-Element* HTMLSummaryElement::markerControl()
-{
-    return ensureUserAgentShadowRoot().getElementById(ShadowElementNames::detailsMarker());
+bool HTMLSummaryElement::IsMainSummary() const {
+  if (HTMLDetailsElement* details = DetailsElement())
+    return details->FindMainSummary() == this;
+
+  return false;
 }
 
-bool HTMLSummaryElement::isMainSummary() const
-{
-    if (HTMLDetailsElement* details = detailsElement())
-        return details->findMainSummary() == this;
-
+static bool IsClickableControl(Node* node) {
+  if (!node->IsElementNode())
     return false;
+  Element* element = ToElement(node);
+  if (element->IsFormControlElement())
+    return true;
+  Element* host = element->OwnerShadowHost();
+  return host && host->IsFormControlElement();
 }
 
-static bool isClickableControl(Node* node)
-{
-    if (!node->isElementNode())
-        return false;
-    Element* element = toElement(node);
-    if (element->isFormControlElement())
-        return true;
-    Element* host = element->shadowHost();
-    return host && host->isFormControlElement();
+bool HTMLSummaryElement::SupportsFocus() const {
+  return IsMainSummary();
 }
 
-bool HTMLSummaryElement::supportsFocus() const
-{
-    return isMainSummary();
-}
-
-void HTMLSummaryElement::defaultEventHandler(Event* event)
-{
-    if (isMainSummary() && layoutObject()) {
-        if (event->type() == EventTypeNames::DOMActivate && !isClickableControl(event->target()->toNode())) {
-            if (HTMLDetailsElement* details = detailsElement())
-                details->toggleOpen();
-            event->setDefaultHandled();
-            return;
-        }
-
-        if (event->isKeyboardEvent()) {
-            if (event->type() == EventTypeNames::keydown && toKeyboardEvent(event)->key() == " ") {
-                setActive(true);
-                // No setDefaultHandled() - IE dispatches a keypress in this case.
-                return;
-            }
-            if (event->type() == EventTypeNames::keypress) {
-                switch (toKeyboardEvent(event)->charCode()) {
-                case '\r':
-                    dispatchSimulatedClick(event);
-                    event->setDefaultHandled();
-                    return;
-                case ' ':
-                    // Prevent scrolling down the page.
-                    event->setDefaultHandled();
-                    return;
-                }
-            }
-            if (event->type() == EventTypeNames::keyup && toKeyboardEvent(event)->key() == " ") {
-                if (active())
-                    dispatchSimulatedClick(event);
-                event->setDefaultHandled();
-                return;
-            }
-        }
+void HTMLSummaryElement::DefaultEventHandler(Event* event) {
+  if (IsMainSummary()) {
+    if (event->type() == EventTypeNames::DOMActivate &&
+        !IsClickableControl(event->target()->ToNode())) {
+      if (HTMLDetailsElement* details = DetailsElement())
+        details->ToggleOpen();
+      event->SetDefaultHandled();
+      return;
     }
 
-    HTMLElement::defaultEventHandler(event);
+    if (event->IsKeyboardEvent()) {
+      if (event->type() == EventTypeNames::keydown &&
+          ToKeyboardEvent(event)->key() == " ") {
+        SetActive(true);
+        // No setDefaultHandled() - IE dispatches a keypress in this case.
+        return;
+      }
+      if (event->type() == EventTypeNames::keypress) {
+        switch (ToKeyboardEvent(event)->charCode()) {
+          case '\r':
+            DispatchSimulatedClick(event);
+            event->SetDefaultHandled();
+            return;
+          case ' ':
+            // Prevent scrolling down the page.
+            event->SetDefaultHandled();
+            return;
+        }
+      }
+      if (event->type() == EventTypeNames::keyup &&
+          ToKeyboardEvent(event)->key() == " ") {
+        if (IsActive())
+          DispatchSimulatedClick(event);
+        event->SetDefaultHandled();
+        return;
+      }
+    }
+  }
+
+  HTMLElement::DefaultEventHandler(event);
 }
 
-bool HTMLSummaryElement::willRespondToMouseClickEvents()
-{
-    if (isMainSummary() && layoutObject())
-        return true;
-
-    return HTMLElement::willRespondToMouseClickEvents();
+bool HTMLSummaryElement::WillRespondToMouseClickEvents() {
+  return IsMainSummary() || HTMLElement::WillRespondToMouseClickEvents();
 }
 
-} // namespace blink
+}  // namespace blink

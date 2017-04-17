@@ -99,7 +99,7 @@ const char* kMissingAppId =
     "<response protocol='3.0'>"
     " <app>"
     "  <updatecheck codebase='http://example.com/extension_1.2.3.4.crx'"
-    "               version='1.2.3.4' />"
+    "               version='1.2.3.4'/>"
     " </app>"
     "</response>";
 
@@ -108,7 +108,7 @@ const char* kInvalidCodebase =
     "<response protocol='3.0'>"
     " <app appid='12345' status='ok'>"
     "  <updatecheck codebase='example.com/extension_1.2.3.4.crx'"
-    "               version='1.2.3.4' />"
+    "               version='1.2.3.4'/>"
     " </app>"
     "</response>";
 
@@ -116,7 +116,7 @@ const char* kMissingVersion =
     "<?xml version='1.0'?>"
     "<response protocol='3.0'>"
     " <app appid='12345' status='ok'>"
-    "  <updatecheck codebase='http://example.com/extension_1.2.3.4.crx' />"
+    "  <updatecheck codebase='http://example.com/extension_1.2.3.4.crx'/>"
     " </app>"
     "</response>";
 
@@ -175,7 +175,7 @@ const char* kSimilarTagnames =
 const char* kWithDaystart =
     "<?xml version='1.0' encoding='UTF-8'?>"
     "<response protocol='3.0'>"
-    " <daystart elapsed_seconds='456' />"
+    " <daystart elapsed_seconds='456'/>"
     " <app appid='12345'>"
     "   <updatecheck status='ok'>"
     "     <urls>"
@@ -195,7 +195,7 @@ const char* kNoUpdate =
     "<?xml version='1.0' encoding='UTF-8'?>"
     "<response protocol='3.0'>"
     " <app appid='12345'>"
-    "  <updatecheck status='noupdate' />"
+    "  <updatecheck status='noupdate'/>"
     " </app>"
     "</response>";
 
@@ -204,9 +204,30 @@ const char* kTwoAppsOneError =
     "<?xml version='1.0' encoding='UTF-8'?>"
     "<response protocol='3.0'>"
     " <app appid='aaaaaaaa' status='error-unknownApplication'>"
-    "  <updatecheck status='error-unknownapplication'/>"
+    "  <updatecheck status='error-internal'/>"
     " </app>"
     " <app appid='bbbbbbbb'>"
+    "   <updatecheck status='ok'>"
+    "     <urls>"
+    "       <url codebase='http://example.com/'/>"
+    "     </urls>"
+    "     <manifest version='1.2.3.4' prodversionmin='2.0.143.0'>"
+    "       <packages>"
+    "         <package name='extension_1_2_3_4.crx'/>"
+    "       </packages>"
+    "     </manifest>"
+    "   </updatecheck>"
+    " </app>"
+    "</response>";
+
+// Includes two <app> tags, both of which set the cohort.
+const char* kTwoAppsSetCohort =
+    "<?xml version='1.0' encoding='UTF-8'?>"
+    "<response protocol='3.0'>"
+    " <app appid='aaaaaaaa' cohort='1:2q3/'>"
+    "  <updatecheck status='noupdate'/>"
+    " </app>"
+    " <app appid='bbbbbbbb' cohort='1:33z@0.33' cohortname='cname'>"
     "   <updatecheck status='ok'>"
     "     <urls>"
     "       <url codebase='http://example.com/'/>"
@@ -256,6 +277,7 @@ TEST(ComponentUpdaterUpdateResponseTest, TestParser) {
   EXPECT_TRUE(parser.errors().empty());
   EXPECT_EQ(1u, parser.results().list.size());
   const UpdateResponse::Result* firstResult = &parser.results().list[0];
+  EXPECT_STREQ("ok", firstResult->status.c_str());
   EXPECT_EQ(1u, firstResult->crx_urls.size());
   EXPECT_EQ(GURL("http://example.com/"), firstResult->crx_urls[0]);
   EXPECT_EQ(GURL("http://diff.example.com/"), firstResult->crx_diffurls[0]);
@@ -303,6 +325,7 @@ TEST(ComponentUpdaterUpdateResponseTest, TestParser) {
   EXPECT_TRUE(parser.errors().empty());
   EXPECT_FALSE(parser.results().list.empty());
   firstResult = &parser.results().list[0];
+  EXPECT_STREQ("noupdate", firstResult->status.c_str());
   EXPECT_EQ(firstResult->extension_id, "12345");
   EXPECT_EQ(firstResult->manifest.version, "");
 
@@ -312,6 +335,32 @@ TEST(ComponentUpdaterUpdateResponseTest, TestParser) {
   EXPECT_EQ(1u, parser.results().list.size());
   firstResult = &parser.results().list[0];
   EXPECT_EQ(firstResult->extension_id, "bbbbbbbb");
+  EXPECT_STREQ("ok", firstResult->status.c_str());
+  EXPECT_EQ("1.2.3.4", firstResult->manifest.version);
+
+  // Parse xml with two apps setting the cohort info.
+  EXPECT_TRUE(parser.Parse(kTwoAppsSetCohort));
+  EXPECT_TRUE(parser.errors().empty());
+  EXPECT_EQ(2u, parser.results().list.size());
+  firstResult = &parser.results().list[0];
+  EXPECT_EQ(firstResult->extension_id, "aaaaaaaa");
+  EXPECT_NE(firstResult->cohort_attrs.find("cohort"),
+            firstResult->cohort_attrs.end());
+  EXPECT_EQ(firstResult->cohort_attrs.find("cohort")->second, "1:2q3/");
+  EXPECT_EQ(firstResult->cohort_attrs.find("cohortname"),
+            firstResult->cohort_attrs.end());
+  EXPECT_EQ(firstResult->cohort_attrs.find("cohorthint"),
+            firstResult->cohort_attrs.end());
+  const UpdateResponse::Result* secondResult = &parser.results().list[1];
+  EXPECT_EQ(secondResult->extension_id, "bbbbbbbb");
+  EXPECT_NE(secondResult->cohort_attrs.find("cohort"),
+            secondResult->cohort_attrs.end());
+  EXPECT_EQ(secondResult->cohort_attrs.find("cohort")->second, "1:33z@0.33");
+  EXPECT_NE(secondResult->cohort_attrs.find("cohortname"),
+            secondResult->cohort_attrs.end());
+  EXPECT_EQ(secondResult->cohort_attrs.find("cohortname")->second, "cname");
+  EXPECT_EQ(secondResult->cohort_attrs.find("cohorthint"),
+            secondResult->cohort_attrs.end());
 }
 
 }  // namespace update_client

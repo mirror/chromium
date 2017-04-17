@@ -34,51 +34,50 @@
 #include "core/CoreExport.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class AXObject;
 
 struct DateTimeSuggestion {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    double value;
-    String localizedValue;
-    String label;
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  double value;
+  String localized_value;
+  String label;
 };
 
 struct DateTimeChooserParameters {
-    DISALLOW_NEW();
-    AtomicString type;
-    IntRect anchorRectInScreen;
-    // Locale name for which the chooser should be localized. This
-    // might be an invalid name because it comes from HTML lang
-    // attributes.
-    AtomicString locale;
-    // FIXME: Remove. Deprecated in favor of doubleValue.
-    String currentValue;
-    double doubleValue;
-    Vector<DateTimeSuggestion> suggestions;
-    double minimum;
-    double maximum;
-    double step;
-    double stepBase;
-    bool required;
-    bool isAnchorElementRTL;
+  DISALLOW_NEW();
+  AtomicString type;
+  IntRect anchor_rect_in_screen;
+  // Locale name for which the chooser should be localized. This
+  // might be an invalid name because it comes from HTML lang
+  // attributes.
+  AtomicString locale;
+  double double_value;
+  Vector<DateTimeSuggestion> suggestions;
+  double minimum;
+  double maximum;
+  double step;
+  double step_base;
+  bool required;
+  bool is_anchor_element_rtl;
 };
 
 // For pickers like color pickers and date pickers.
-class CORE_EXPORT DateTimeChooser : public GarbageCollectedFinalized<DateTimeChooser> {
-public:
-    virtual ~DateTimeChooser();
+class CORE_EXPORT DateTimeChooser
+    : public GarbageCollectedFinalized<DateTimeChooser> {
+ public:
+  virtual ~DateTimeChooser();
 
-    virtual void endChooser() = 0;
-    // Returns a root AXObject in the DateTimeChooser if it's available.
-    virtual AXObject* rootAXObject() = 0;
+  virtual void EndChooser() = 0;
+  // Returns a root AXObject in the DateTimeChooser if it's available.
+  virtual AXObject* RootAXObject() = 0;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
-} // namespace blink
-#endif // DateTimeChooser_h
+}  // namespace blink
+#endif  // DateTimeChooser_h

@@ -4,7 +4,7 @@
 
 module ui.mojom;
 
-import "services/ui/public/interfaces/display/display.mojom";
+import "ui/display/mojo/display.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 
 enum WindowManagerErrorCode {
@@ -22,7 +22,6 @@ enum ShowState {
   MAXIMIZED,
   INACTIVE,
   FULLSCREEN,
-  DOCKED,
 };
 
 const int32 kResizeBehaviorNone = 0;
@@ -41,7 +40,6 @@ struct FrameDecorationValues {
 
 struct WsDisplay {
   display.mojom.Display display;
-  bool is_primary;
   FrameDecorationValues frame_decoration_values;
 };
 
@@ -65,4 +63,5 @@ enum WindowType {
   TOOLTIP,
   BUBBLE,
   DRAG,
+  UNKNOWN,
 };

@@ -8,11 +8,10 @@
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/test/base/chrome_render_view_test.h"
 #include "chrome/test/base/ui_test_utils.h"
-#include "components/autofill/content/public/interfaces/autofill_driver.mojom.h"
+#include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/core/common/form_data.h"
 #include "components/autofill/core/common/form_field_data.h"
@@ -20,7 +19,7 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
@@ -63,15 +62,13 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
 
  private:
   // mojom::AutofillDriver:
-  void FirstUserGestureObserved() override {}
-
-  void FormsSeen(mojo::Array<FormData> forms,
+  void FormsSeen(const std::vector<FormData>& forms,
                  base::TimeTicks timestamp) override {
     // FormsSeen() could be called multiple times and sometimes even with empty
     // forms array for main frame, but we're interested in only the first time
     // call.
     if (!forms_)
-      forms_.reset(new std::vector<FormData>(forms.PassStorage()));
+      forms_.reset(new std::vector<FormData>(forms));
   }
 
   void WillSubmitForm(const FormData& form,
@@ -92,8 +89,6 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
 
   void HidePopup() override {}
 
-  void PingAck() override {}
-
   void FocusNoLongerOnForm() override {}
 
   void DidFillAutofillFormData(const FormData& form,
@@ -103,8 +98,8 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
 
   void DidEndTextFieldEditing() override {}
 
-  void SetDataList(mojo::Array<mojo::String> values,
-                   mojo::Array<mojo::String> labels) override {}
+  void SetDataList(const std::vector<base::string16>& values,
+                   const std::vector<base::string16>& labels) override {}
 
   // Records whether TextFieldDidChange() get called.
   bool called_field_change_;
@@ -131,9 +126,9 @@ class AutofillRendererTest : public ChromeRenderViewTest {
 
     // We only use the fake driver for main frame
     // because our test cases only involve the main frame.
-    shell::InterfaceProvider* remote_interfaces =
+    service_manager::InterfaceProvider* remote_interfaces =
         view_->GetMainRenderFrame()->GetRemoteInterfaces();
-    shell::InterfaceProvider::TestApi test_api(remote_interfaces);
+    service_manager::InterfaceProvider::TestApi test_api(remote_interfaces);
     test_api.SetBinderForName(
         mojom::AutofillDriver::Name_,
         base::Bind(&AutofillRendererTest::BindAutofillDriver,
@@ -177,20 +172,20 @@ TEST_F(AutofillRendererTest, SendForms) {
   expected.name = ASCIIToUTF16("firstname");
   expected.value = base::string16();
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, forms[0].fields[0]);
 
   expected.name = ASCIIToUTF16("middlename");
   expected.value = base::string16();
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, forms[0].fields[1]);
 
   expected.name = ASCIIToUTF16("lastname");
   expected.value = base::string16();
   expected.form_control_type = "text";
   expected.autocomplete_attribute = "off";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, forms[0].fields[2]);
   expected.autocomplete_attribute = std::string();  // reset
 
@@ -233,7 +228,7 @@ TEST_F(AutofillRendererTest, SendForms) {
   ASSERT_EQ(3UL, forms[0].fields.size());
 
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.name = ASCIIToUTF16("second_firstname");
   expected.value = ASCIIToUTF16("Bob");
@@ -308,13 +303,13 @@ TEST_F(AutofillRendererTest, DynamicallyAddedUnownedFormElements) {
   expected.name = ASCIIToUTF16("EMAIL_ADDRESS");
   expected.value.clear();
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, forms[0].fields[7]);
 
   expected.name = ASCIIToUTF16("PHONE_HOME_WHOLE_NUMBER");
   expected.value.clear();
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, forms[0].fields[8]);
 }
 
@@ -323,17 +318,18 @@ TEST_F(AutofillRendererTest, IgnoreNonUserGestureTextFieldChanges) {
            "  <input type='text' id='full_name'/>"
            "</form>");
 
-  blink::WebInputElement full_name =
-      GetMainFrame()->document().getElementById("full_name")
-          .to<blink::WebInputElement>();
-  while (!full_name.focused())
-    GetMainFrame()->view()->advanceFocus(false);
+  blink::WebInputElement full_name = GetMainFrame()
+                                         ->GetDocument()
+                                         .GetElementById("full_name")
+                                         .To<blink::WebInputElement>();
+  while (!full_name.Focused())
+    GetMainFrame()->View()->AdvanceFocus(false);
 
   // Not a user gesture, so no IPC message to browser.
   DisableUserGestureSimulationForAutofill();
   ASSERT_FALSE(fake_driver_.called_field_change());
-  full_name.setValue("Alice", true);
-  GetMainFrame()->autofillClient()->textFieldDidChange(full_name);
+  full_name.SetValue("Alice", true);
+  GetMainFrame()->AutofillClient()->TextFieldDidChange(full_name);
   base::RunLoop().RunUntilIdle();
   ASSERT_FALSE(fake_driver_.called_field_change());
 

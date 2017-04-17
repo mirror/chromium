@@ -4,131 +4,198 @@
 
 #include "modules/notifications/NotificationImageLoader.h"
 
+#include <memory>
 #include "core/dom/ExecutionContext.h"
-#include "core/fetch/ResourceLoaderOptions.h"
 #include "platform/Histogram.h"
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/image-decoders/ImageFrame.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceLoadPriority.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/Threading.h"
 #include "public/platform/WebURLRequest.h"
-#include "third_party/skia/include/core/SkBitmap.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/Threading.h"
-#include <memory>
+#include "public/platform/modules/notifications/WebNotificationConstants.h"
+#include "skia/ext/image_operations.h"
+
+#define NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, type_name, value, max) \
+  case NotificationImageLoader::Type::k##type_name: {                         \
+    DEFINE_THREAD_SAFE_STATIC_LOCAL(                                          \
+        CustomCountHistogram, metric##type_name##Histogram,                   \
+        new CustomCountHistogram("Notifications." #metric "." #type_name,     \
+                                 1 /* min */, max, 50 /* buckets */));        \
+    metric##type_name##Histogram.Count(value);                                \
+    break;                                                                    \
+  }
+
+#define NOTIFICATION_HISTOGRAM_COUNTS(metric, type, value, max)            \
+  switch (type) {                                                          \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, Image, value, max)      \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, Icon, value, max)       \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, Badge, value, max)      \
+    NOTIFICATION_PER_TYPE_HISTOGRAM_COUNTS(metric, ActionIcon, value, max) \
+  }
+
+namespace {
+
+// 99.9% of all images were fetched successfully in 90 seconds.
+const unsigned long kImageFetchTimeoutInMs = 90000;
+
+}  // namespace
 
 namespace blink {
 
-NotificationImageLoader::NotificationImageLoader()
-    : m_stopped(false), m_startTime(0.0)
-{
+NotificationImageLoader::NotificationImageLoader(Type type)
+    : type_(type), stopped_(false), start_time_(0.0) {}
+
+NotificationImageLoader::~NotificationImageLoader() {}
+
+// static
+SkBitmap NotificationImageLoader::ScaleDownIfNeeded(const SkBitmap& image,
+                                                    Type type) {
+  int max_width_px = 0, max_height_px = 0;
+  switch (type) {
+    case Type::kImage:
+      max_width_px = kWebNotificationMaxImageWidthPx;
+      max_height_px = kWebNotificationMaxImageHeightPx;
+      break;
+    case Type::kIcon:
+      max_width_px = kWebNotificationMaxIconSizePx;
+      max_height_px = kWebNotificationMaxIconSizePx;
+      break;
+    case Type::kBadge:
+      max_width_px = kWebNotificationMaxBadgeSizePx;
+      max_height_px = kWebNotificationMaxBadgeSizePx;
+      break;
+    case Type::kActionIcon:
+      max_width_px = kWebNotificationMaxActionIconSizePx;
+      max_height_px = kWebNotificationMaxActionIconSizePx;
+      break;
+  }
+  DCHECK_GT(max_width_px, 0);
+  DCHECK_GT(max_height_px, 0);
+  // TODO(peter): Explore doing the scaling on a background thread.
+  if (image.width() > max_width_px || image.height() > max_height_px) {
+    double scale =
+        std::min(static_cast<double>(max_width_px) / image.width(),
+                 static_cast<double>(max_height_px) / image.height());
+    double start_time = MonotonicallyIncreasingTimeMS();
+    // TODO(peter): Try using RESIZE_BETTER for large images.
+    SkBitmap scaled_image =
+        skia::ImageOperations::Resize(image, skia::ImageOperations::RESIZE_BEST,
+                                      std::lround(scale * image.width()),
+                                      std::lround(scale * image.height()));
+    NOTIFICATION_HISTOGRAM_COUNTS(LoadScaleDownTime, type,
+                                  MonotonicallyIncreasingTimeMS() - start_time,
+                                  1000 * 10 /* 10 seconds max */);
+    return scaled_image;
+  }
+  return image;
 }
 
-NotificationImageLoader::~NotificationImageLoader()
-{
+void NotificationImageLoader::Start(
+    ExecutionContext* execution_context,
+    const KURL& url,
+    std::unique_ptr<ImageCallback> image_callback) {
+  DCHECK(!stopped_);
+
+  start_time_ = MonotonicallyIncreasingTimeMS();
+  image_callback_ = std::move(image_callback);
+
+  ThreadableLoaderOptions threadable_loader_options;
+  threadable_loader_options.preflight_policy = kPreventPreflight;
+  threadable_loader_options.cross_origin_request_policy =
+      kAllowCrossOriginRequests;
+  threadable_loader_options.timeout_milliseconds = kImageFetchTimeoutInMs;
+
+  // TODO(mvanouwerkerk): Add an entry for notifications to
+  // FetchInitiatorTypeNames and use it.
+  ResourceLoaderOptions resource_loader_options;
+  resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  if (execution_context->IsWorkerGlobalScope())
+    resource_loader_options.request_initiator_context = kWorkerContext;
+
+  ResourceRequest resource_request(url);
+  resource_request.SetRequestContext(WebURLRequest::kRequestContextImage);
+  resource_request.SetPriority(kResourceLoadPriorityMedium);
+  resource_request.SetRequestorOrigin(execution_context->GetSecurityOrigin());
+
+  threadable_loader_ = ThreadableLoader::Create(*execution_context, this,
+                                                threadable_loader_options,
+                                                resource_loader_options);
+  threadable_loader_->Start(resource_request);
 }
 
-void NotificationImageLoader::start(ExecutionContext* executionContext, const KURL& url, std::unique_ptr<ImageCallback> imageCallback)
-{
-    DCHECK(!m_stopped);
+void NotificationImageLoader::Stop() {
+  if (stopped_)
+    return;
 
-    m_startTime = monotonicallyIncreasingTimeMS();
-    m_imageCallback = std::move(imageCallback);
-
-    // TODO(mvanouwerkerk): Add a timeout mechanism: crbug.com/579137.
-    ThreadableLoaderOptions threadableLoaderOptions;
-    threadableLoaderOptions.preflightPolicy = PreventPreflight;
-    threadableLoaderOptions.crossOriginRequestPolicy = AllowCrossOriginRequests;
-
-    // TODO(mvanouwerkerk): Add an entry for notifications to FetchInitiatorTypeNames and use it.
-    ResourceLoaderOptions resourceLoaderOptions;
-    resourceLoaderOptions.allowCredentials = AllowStoredCredentials;
-    if (executionContext->isWorkerGlobalScope())
-        resourceLoaderOptions.requestInitiatorContext = WorkerContext;
-
-    ResourceRequest resourceRequest(url);
-    resourceRequest.setRequestContext(WebURLRequest::RequestContextImage);
-    resourceRequest.setPriority(ResourceLoadPriorityMedium);
-    resourceRequest.setRequestorOrigin(executionContext->getSecurityOrigin());
-
-    m_threadableLoader = ThreadableLoader::create(*executionContext, this, threadableLoaderOptions, resourceLoaderOptions);
-    m_threadableLoader->start(resourceRequest);
+  stopped_ = true;
+  if (threadable_loader_) {
+    threadable_loader_->Cancel();
+    threadable_loader_ = nullptr;
+  }
 }
 
-void NotificationImageLoader::stop()
-{
-    if (m_stopped)
+void NotificationImageLoader::DidReceiveData(const char* data,
+                                             unsigned length) {
+  if (!data_)
+    data_ = SharedBuffer::Create();
+  data_->Append(data, length);
+}
+
+void NotificationImageLoader::DidFinishLoading(
+    unsigned long resource_identifier,
+    double finish_time) {
+  // If this has been stopped it is not desirable to trigger further work,
+  // there is a shutdown of some sort in progress.
+  if (stopped_)
+    return;
+
+  NOTIFICATION_HISTOGRAM_COUNTS(LoadFinishTime, type_,
+                                MonotonicallyIncreasingTimeMS() - start_time_,
+                                1000 * 60 * 60 /* 1 hour max */);
+
+  if (data_) {
+    NOTIFICATION_HISTOGRAM_COUNTS(LoadFileSize, type_, data_->size(),
+                                  10000000 /* ~10mb max */);
+
+    std::unique_ptr<ImageDecoder> decoder = ImageDecoder::Create(
+        data_, true /* dataComplete */, ImageDecoder::kAlphaPremultiplied,
+        ColorBehavior::TransformToGlobalTarget());
+    if (decoder) {
+      // The |ImageFrame*| is owned by the decoder.
+      ImageFrame* image_frame = decoder->FrameBufferAtIndex(0);
+      if (image_frame) {
+        (*image_callback_)(image_frame->Bitmap());
         return;
-
-    m_stopped = true;
-    if (m_threadableLoader) {
-        m_threadableLoader->cancel();
-        // WorkerThreadableLoader keeps a Persistent<WorkerGlobalScope> to the
-        // ExecutionContext it received in |create|. Kill it to prevent
-        // reference cycles involving a mix of GC and non-GC types that fail to
-        // clear in ThreadState::cleanup.
-        m_threadableLoader.reset();
+      }
     }
+  }
+  RunCallbackWithEmptyBitmap();
 }
 
-void NotificationImageLoader::didReceiveData(const char* data, unsigned length)
-{
-    if (!m_data)
-        m_data = SharedBuffer::create();
-    m_data->append(data, length);
+void NotificationImageLoader::DidFail(const ResourceError& error) {
+  NOTIFICATION_HISTOGRAM_COUNTS(LoadFailTime, type_,
+                                MonotonicallyIncreasingTimeMS() - start_time_,
+                                1000 * 60 * 60 /* 1 hour max */);
+
+  RunCallbackWithEmptyBitmap();
 }
 
-void NotificationImageLoader::didFinishLoading(unsigned long resourceIdentifier, double finishTime)
-{
-    // If this has been stopped it is not desirable to trigger further work,
-    // there is a shutdown of some sort in progress.
-    if (m_stopped)
-        return;
-
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram, finishedTimeHistogram, new CustomCountHistogram("Notifications.Icon.LoadFinishTime", 1, 1000 * 60 * 60 /* 1 hour max */, 50 /* buckets */));
-    finishedTimeHistogram.count(monotonicallyIncreasingTimeMS() - m_startTime);
-
-    if (m_data) {
-        DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram, fileSizeHistogram, new CustomCountHistogram("Notifications.Icon.FileSize", 1, 10000000 /* ~10mb max */, 50 /* buckets */));
-        fileSizeHistogram.count(m_data->size());
-
-        std::unique_ptr<ImageDecoder> decoder = ImageDecoder::create(ImageDecoder::determineImageType(*m_data.get()), ImageDecoder::AlphaPremultiplied, ImageDecoder::GammaAndColorProfileApplied);
-        if (decoder) {
-            decoder->setData(m_data.get(), true /* allDataReceived */);
-            // The |ImageFrame*| is owned by the decoder.
-            ImageFrame* imageFrame = decoder->frameBufferAtIndex(0);
-            if (imageFrame) {
-                (*m_imageCallback)(imageFrame->bitmap());
-                return;
-            }
-        }
-    }
-    runCallbackWithEmptyBitmap();
+void NotificationImageLoader::DidFailRedirectCheck() {
+  RunCallbackWithEmptyBitmap();
 }
 
-void NotificationImageLoader::didFail(const ResourceError& error)
-{
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram, failedTimeHistogram, new CustomCountHistogram("Notifications.Icon.LoadFailTime", 1, 1000 * 60 * 60 /* 1 hour max */, 50 /* buckets */));
-    failedTimeHistogram.count(monotonicallyIncreasingTimeMS() - m_startTime);
+void NotificationImageLoader::RunCallbackWithEmptyBitmap() {
+  // If this has been stopped it is not desirable to trigger further work,
+  // there is a shutdown of some sort in progress.
+  if (stopped_)
+    return;
 
-    runCallbackWithEmptyBitmap();
+  (*image_callback_)(SkBitmap());
 }
 
-void NotificationImageLoader::didFailRedirectCheck()
-{
-    runCallbackWithEmptyBitmap();
-}
-
-void NotificationImageLoader::runCallbackWithEmptyBitmap()
-{
-    // If this has been stopped it is not desirable to trigger further work,
-    // there is a shutdown of some sort in progress.
-    if (m_stopped)
-        return;
-
-    (*m_imageCallback)(SkBitmap());
-}
-
-} // namespace blink
+}  // namespace blink

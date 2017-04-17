@@ -4,13 +4,16 @@
 
 #include "ash/wm/window_mirror_view.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/wm/forwarding_layer_delegate.h"
-#include "ash/common/wm/window_state.h"
+#include "ash/wm/widget_finder.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
+#include "ash/wm_window.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_tree_owner.h"
+#include "ui/views/widget/widget.h"
+#include "ui/wm/core/window_util.h"
 
 namespace ash {
 namespace wm {
@@ -20,7 +23,7 @@ void EnsureAllChildrenAreVisible(ui::Layer* layer) {
   std::list<ui::Layer*> layers;
   layers.push_back(layer);
   while (!layers.empty()) {
-    for (auto child : layers.front()->children())
+    for (auto* child : layers.front()->children())
       layers.push_back(child);
     layers.front()->SetVisible(true);
     layers.pop_front();
@@ -29,57 +32,91 @@ void EnsureAllChildrenAreVisible(ui::Layer* layer) {
 
 }  // namespace
 
-WindowMirrorView::WindowMirrorView(WmWindowAura* window) : target_(window) {
+WindowMirrorView::WindowMirrorView(WmWindow* window) : target_(window) {
   DCHECK(window);
 }
-WindowMirrorView::~WindowMirrorView() {}
 
-void WindowMirrorView::Init() {
-  SetPaintToLayer(true);
-
-  layer_owner_ = ::wm::RecreateLayers(target_->aura_window(), this);
-
-  GetMirrorLayer()->parent()->Remove(GetMirrorLayer());
-  layer()->Add(GetMirrorLayer());
-
-  // Some extra work is needed when the target window is minimized.
-  if (target_->GetWindowState()->IsMinimized()) {
-    GetMirrorLayer()->SetVisible(true);
-    GetMirrorLayer()->SetOpacity(1);
-    EnsureAllChildrenAreVisible(GetMirrorLayer());
-  }
+WindowMirrorView::~WindowMirrorView() {
+  // Make sure |target_| has outlived |this|. See crbug.com/681207
+  DCHECK(target_->aura_window()->layer());
+  if (layer_owner_)
+    target_->aura_window()->ClearProperty(aura::client::kMirroringEnabledKey);
 }
 
 gfx::Size WindowMirrorView::GetPreferredSize() const {
-  return target_->GetBounds().size();
+  return GetClientAreaBounds().size();
 }
 
 void WindowMirrorView::Layout() {
+  // If |layer_owner_| hasn't been initialized (|this| isn't on screen), no-op.
+  if (!layer_owner_)
+    return;
+
   // Position at 0, 0.
   GetMirrorLayer()->SetBounds(gfx::Rect(GetMirrorLayer()->bounds().size()));
 
+  gfx::Transform transform;
+  gfx::Rect client_area_bounds = GetClientAreaBounds();
   // Scale down if necessary.
-  gfx::Transform mirror_transform;
   if (size() != target_->GetBounds().size()) {
     const float scale =
-        width() / static_cast<float>(target_->GetBounds().width());
-    mirror_transform.Scale(scale, scale);
+        width() / static_cast<float>(client_area_bounds.width());
+    transform.Scale(scale, scale);
   }
-  GetMirrorLayer()->SetTransform(mirror_transform);
+  // Reposition such that the client area is the only part visible.
+  transform.Translate(-client_area_bounds.x(), -client_area_bounds.y());
+  GetMirrorLayer()->SetTransform(transform);
 }
 
-ui::LayerDelegate* WindowMirrorView::CreateDelegate(
-    ui::LayerDelegate* delegate) {
-  if (!delegate)
-    return nullptr;
-  delegates_.push_back(
-      base::WrapUnique(new ForwardingLayerDelegate(target_, delegate)));
+bool WindowMirrorView::GetNeedsNotificationWhenVisibleBoundsChange() const {
+  return true;
+}
 
-  return delegates_.back().get();
+void WindowMirrorView::OnVisibleBoundsChanged() {
+  if (!layer_owner_ && !GetVisibleBounds().IsEmpty())
+    InitLayerOwner();
+}
+
+void WindowMirrorView::InitLayerOwner() {
+  if (!layer_owner_) {
+    target_->aura_window()->SetProperty(aura::client::kMirroringEnabledKey,
+                                        true);
+  }
+
+  layer_owner_ =
+      ::wm::MirrorLayers(target_->aura_window(), false /* sync_bounds */);
+
+  SetPaintToLayer();
+  layer()->Add(GetMirrorLayer());
+  // This causes us to clip the non-client areas of the window.
+  layer()->SetMasksToBounds(true);
+
+  // Some extra work is needed when the target window is minimized.
+  if (target_->GetWindowState()->IsMinimized()) {
+    GetMirrorLayer()->SetOpacity(1);
+    EnsureAllChildrenAreVisible(GetMirrorLayer());
+  }
+
+  Layout();
 }
 
 ui::Layer* WindowMirrorView::GetMirrorLayer() {
   return layer_owner_->root();
+}
+
+gfx::Rect WindowMirrorView::GetClientAreaBounds() const {
+  int insets = target_->aura_window()->GetProperty(aura::client::kTopViewInset);
+  if (insets > 0) {
+    gfx::Rect bounds(target_->GetBounds().size());
+    bounds.Inset(0, insets, 0, 0);
+    return bounds;
+  }
+  // The target window may not have a widget in unit tests.
+  views::Widget* widget = GetInternalWidgetForWindow(target_->aura_window());
+  if (!widget)
+    return gfx::Rect();
+  views::View* client_view = widget->client_view();
+  return client_view->ConvertRectToWidget(client_view->GetLocalBounds());
 }
 
 }  // namespace wm

@@ -5,16 +5,12 @@
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 
 #include "base/macros.h"
-#include "base/strings/stringprintf.h"
 #include "chrome/common/url_constants.h"
 #include "extensions/common/constants.h"
+#include "extensions/features/features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
-
-#if defined(ENABLE_EXTENSIONS)
-#include "chrome/browser/extensions/mock_extension_special_storage_policy.h"
-#endif
 
 namespace {
 
@@ -29,10 +25,6 @@ const GURL kOrigin2(kTestOrigin2);
 const GURL kOrigin3(kTestOrigin3);
 const GURL kOriginExt(kTestOriginExt);
 const GURL kOriginDevTools(kTestOriginDevTools);
-
-const int kExtension = BrowsingDataHelper::EXTENSION;
-const int kProtected = BrowsingDataHelper::PROTECTED_WEB;
-const int kUnprotected = BrowsingDataHelper::UNPROTECTED_WEB;
 
 class BrowsingDataHelperTest : public testing::Test {
  public:
@@ -51,28 +43,20 @@ class BrowsingDataHelperTest : public testing::Test {
             BrowsingDataHelper::IsExtensionScheme(scheme));
   }
 
-  bool Match(const GURL& origin,
-             int mask,
-             storage::SpecialStoragePolicy* policy) {
-    return BrowsingDataHelper::DoesOriginMatchMask(origin, mask, policy);
-  }
-
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowsingDataHelperTest);
 };
 
-TEST_F(BrowsingDataHelperTest, WebSafeSchemesAreWebSafe) {
+TEST_F(BrowsingDataHelperTest, WebStorageSchemesAreWebSchemes) {
   EXPECT_TRUE(IsWebScheme(url::kHttpScheme));
   EXPECT_TRUE(IsWebScheme(url::kHttpsScheme));
+  EXPECT_TRUE(IsWebScheme(url::kFileScheme));
   EXPECT_TRUE(IsWebScheme(url::kFtpScheme));
-  EXPECT_TRUE(IsWebScheme(url::kDataScheme));
-  EXPECT_TRUE(IsWebScheme("feed"));
-  EXPECT_TRUE(IsWebScheme(url::kBlobScheme));
-  EXPECT_TRUE(IsWebScheme(url::kFileSystemScheme));
-  EXPECT_FALSE(IsWebScheme("invalid-scheme-i-just-made-up"));
+  EXPECT_TRUE(IsWebScheme(url::kWsScheme));
+  EXPECT_TRUE(IsWebScheme(url::kWssScheme));
 }
 
-TEST_F(BrowsingDataHelperTest, ChromeSchemesAreNotWebSafe) {
+TEST_F(BrowsingDataHelperTest, ChromeSchemesAreNotWebSchemes) {
   EXPECT_FALSE(IsWebScheme(extensions::kExtensionScheme));
   EXPECT_FALSE(IsWebScheme(url::kAboutScheme));
   EXPECT_FALSE(IsWebScheme(content::kChromeDevToolsScheme));
@@ -82,15 +66,13 @@ TEST_F(BrowsingDataHelperTest, ChromeSchemesAreNotWebSafe) {
   EXPECT_FALSE(IsWebScheme(content::kViewSourceScheme));
 }
 
-TEST_F(BrowsingDataHelperTest, WebSafeSchemesAreNotExtensions) {
+TEST_F(BrowsingDataHelperTest, WebStorageSchemesAreNotExtensions) {
   EXPECT_FALSE(IsExtensionScheme(url::kHttpScheme));
   EXPECT_FALSE(IsExtensionScheme(url::kHttpsScheme));
+  EXPECT_FALSE(IsExtensionScheme(url::kFileScheme));
   EXPECT_FALSE(IsExtensionScheme(url::kFtpScheme));
-  EXPECT_FALSE(IsExtensionScheme(url::kDataScheme));
-  EXPECT_FALSE(IsExtensionScheme("feed"));
-  EXPECT_FALSE(IsExtensionScheme(url::kBlobScheme));
-  EXPECT_FALSE(IsExtensionScheme(url::kFileSystemScheme));
-  EXPECT_FALSE(IsExtensionScheme("invalid-scheme-i-just-made-up"));
+  EXPECT_FALSE(IsExtensionScheme(url::kWsScheme));
+  EXPECT_FALSE(IsExtensionScheme(url::kWssScheme));
 }
 
 TEST_F(BrowsingDataHelperTest, ChromeSchemesAreNotAllExtension) {
@@ -104,71 +86,21 @@ TEST_F(BrowsingDataHelperTest, ChromeSchemesAreNotAllExtension) {
   EXPECT_FALSE(IsExtensionScheme(content::kViewSourceScheme));
 }
 
-#if defined(ENABLE_EXTENSIONS)
-TEST_F(BrowsingDataHelperTest, TestMatches) {
-  scoped_refptr<MockExtensionSpecialStoragePolicy> mock_policy =
-      new MockExtensionSpecialStoragePolicy;
-  // Protect kOrigin1.
-  mock_policy->AddProtected(kOrigin1.GetOrigin());
+TEST_F(BrowsingDataHelperTest, SchemesThatCantStoreDataDontMatchAnything) {
+  EXPECT_FALSE(IsWebScheme(url::kDataScheme));
+  EXPECT_FALSE(IsExtensionScheme(url::kDataScheme));
 
-  EXPECT_FALSE(Match(kOrigin1, kUnprotected, mock_policy.get()));
-  EXPECT_TRUE(Match(kOrigin2, kUnprotected, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginExt, kUnprotected, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginDevTools, kUnprotected, mock_policy.get()));
+  EXPECT_FALSE(IsWebScheme("feed"));
+  EXPECT_FALSE(IsExtensionScheme("feed"));
 
-  EXPECT_TRUE(Match(kOrigin1, kProtected, mock_policy.get()));
-  EXPECT_FALSE(Match(kOrigin2, kProtected, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginExt, kProtected, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginDevTools, kProtected, mock_policy.get()));
+  EXPECT_FALSE(IsWebScheme(url::kBlobScheme));
+  EXPECT_FALSE(IsExtensionScheme(url::kBlobScheme));
 
-  EXPECT_FALSE(Match(kOrigin1, kExtension, mock_policy.get()));
-  EXPECT_FALSE(Match(kOrigin2, kExtension, mock_policy.get()));
-  EXPECT_TRUE(Match(kOriginExt, kExtension, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginDevTools, kExtension, mock_policy.get()));
+  EXPECT_FALSE(IsWebScheme(url::kFileSystemScheme));
+  EXPECT_FALSE(IsExtensionScheme(url::kFileSystemScheme));
 
-  EXPECT_TRUE(Match(kOrigin1, kUnprotected | kProtected, mock_policy.get()));
-  EXPECT_TRUE(Match(kOrigin2, kUnprotected | kProtected, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginExt, kUnprotected | kProtected, mock_policy.get()));
-  EXPECT_FALSE(
-      Match(kOriginDevTools, kUnprotected | kProtected, mock_policy.get()));
-
-  EXPECT_FALSE(Match(kOrigin1, kUnprotected | kExtension, mock_policy.get()));
-  EXPECT_TRUE(Match(kOrigin2, kUnprotected | kExtension, mock_policy.get()));
-  EXPECT_TRUE(Match(kOriginExt, kUnprotected | kExtension, mock_policy.get()));
-  EXPECT_FALSE(
-      Match(kOriginDevTools, kUnprotected | kExtension, mock_policy.get()));
-
-  EXPECT_TRUE(Match(kOrigin1, kProtected | kExtension, mock_policy.get()));
-  EXPECT_FALSE(Match(kOrigin2, kProtected | kExtension, mock_policy.get()));
-  EXPECT_TRUE(Match(kOriginExt, kProtected | kExtension, mock_policy.get()));
-  EXPECT_FALSE(
-      Match(kOriginDevTools, kProtected | kExtension, mock_policy.get()));
-
-  EXPECT_TRUE(Match(
-      kOrigin1, kUnprotected | kProtected | kExtension, mock_policy.get()));
-  EXPECT_TRUE(Match(
-      kOrigin2, kUnprotected | kProtected | kExtension, mock_policy.get()));
-  EXPECT_TRUE(Match(
-      kOriginExt, kUnprotected | kProtected | kExtension, mock_policy.get()));
-  EXPECT_FALSE(Match(kOriginDevTools,
-                     kUnprotected | kProtected | kExtension,
-                     mock_policy.get()));
-}
-#endif
-
-// If extensions are disabled, there is no policy.
-TEST_F(BrowsingDataHelperTest, TestNoPolicyMatches) {
-  EXPECT_FALSE(Match(kOrigin1, kExtension, nullptr));
-  EXPECT_TRUE(Match(kOrigin1, kUnprotected, nullptr));
-  EXPECT_FALSE(Match(kOrigin1, kProtected, nullptr));
-
-  EXPECT_TRUE(Match(kOriginExt, kExtension, nullptr));
-  EXPECT_FALSE(Match(kOriginExt, kUnprotected, nullptr));
-  EXPECT_FALSE(Match(kOriginExt, kProtected, nullptr));
-
-  EXPECT_FALSE(Match(kOriginDevTools, kExtension, nullptr));
-  EXPECT_FALSE(Match(kOriginDevTools, kUnprotected, nullptr));
-  EXPECT_FALSE(Match(kOriginDevTools, kProtected, nullptr));
+  EXPECT_FALSE(IsWebScheme("invalid-scheme-i-just-made-up"));
+  EXPECT_FALSE(IsExtensionScheme("invalid-scheme-i-just-made-up"));
 }
 
 }  // namespace

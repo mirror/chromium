@@ -22,31 +22,30 @@
 #define CSSInheritedValue_h
 
 #include "core/css/CSSValue.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class CSSInheritedValue : public CSSValue {
-public:
-    static CSSInheritedValue* create();
+ public:
+  static CSSInheritedValue* Create();
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSInheritedValue&) const { return true; }
+  bool Equals(const CSSInheritedValue&) const { return true; }
 
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { CSSValue::traceAfterDispatch(visitor); }
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
+    CSSValue::TraceAfterDispatch(visitor);
+  }
 
-private:
-    friend class CSSValuePool;
+ private:
+  friend class CSSValuePool;
 
-    CSSInheritedValue()
-        : CSSValue(InheritedClass)
-    {
-    }
+  CSSInheritedValue() : CSSValue(kInheritedClass) {}
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSInheritedValue, isInheritedValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSInheritedValue, IsInheritedValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSInheritedValue_h
+#endif  // CSSInheritedValue_h

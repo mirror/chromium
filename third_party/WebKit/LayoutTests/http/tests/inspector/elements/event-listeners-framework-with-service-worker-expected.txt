@@ -9,10 +9,11 @@ Context is dedicated worker: false
 Dumping listeners
 
 ======== load ========
-== normal
-[expanded] WindowRemoveevent-listeners-framework-with-service-worker.html:62
+== Raw
+[expanded] WindowRemoveevent-listeners-framework-with-service-worker.html:59
     useCapture: false
     passive: false
+    once: false
     handler: function onload(event) {
   runTest()
 }

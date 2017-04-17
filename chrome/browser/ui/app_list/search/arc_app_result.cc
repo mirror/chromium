@@ -10,7 +10,6 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_icon_loader.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/app_list/search/search_util.h"
-#include "content/public/browser/user_metrics.h"
 
 namespace {
 const char kArcAppPrefix[] = "arc://";
@@ -47,7 +46,7 @@ void ArcAppResult::ExecuteLaunchCommand(int event_flags) {
 void ArcAppResult::Open(int event_flags) {
   RecordHistogram(APP_SEARCH_RESULT);
 
-  if (!arc::LaunchApp(profile(), app_id()))
+  if (!arc::LaunchApp(profile(), app_id(), event_flags))
     return;
 
   // Manually close app_list view because focus is not changed on ARC app start,
@@ -56,9 +55,9 @@ void ArcAppResult::Open(int event_flags) {
 }
 
 std::unique_ptr<SearchResult> ArcAppResult::Duplicate() const {
-  std::unique_ptr<SearchResult> copy(
-      new ArcAppResult(profile(), app_id(), controller(),
-                       display_type() == DISPLAY_RECOMMENDATION));
+  std::unique_ptr<SearchResult> copy =
+      base::MakeUnique<ArcAppResult>(profile(), app_id(), controller(),
+                                     display_type() == DISPLAY_RECOMMENDATION);
   copy->set_title(title());
   copy->set_title_tags(title_tags());
   copy->set_relevance(relevance());

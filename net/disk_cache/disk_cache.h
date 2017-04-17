@@ -19,12 +19,18 @@
 #include "base/time/time.h"
 #include "net/base/cache_type.h"
 #include "net/base/completion_callback.h"
+#include "net/base/net_errors.h"
 #include "net/base/net_export.h"
 
 namespace base {
 class FilePath;
 class SingleThreadTaskRunner;
+
+namespace trace_event {
+class ProcessMemoryDump;
 }
+
+}  // namespace base
 
 namespace net {
 class IOBuffer;
@@ -149,8 +155,19 @@ class NET_EXPORT Backend {
   // Calculate the total size of the cache. The return value is the size in
   // bytes or a net error code. If this method returns ERR_IO_PENDING,
   // the |callback| will be invoked when the operation completes.
-  virtual int CalculateSizeOfAllEntries(
-      const CompletionCallback& callback) = 0;
+  virtual int CalculateSizeOfAllEntries(const CompletionCallback& callback) = 0;
+
+  // Calculate the size of all cache entries accessed between |initial_time| and
+  // |end_time|.
+  // The return value is the size in bytes or a net error code. The default
+  // implementation returns ERR_NOT_IMPLEMENTED and should only be overwritten
+  // if there is an efficient way for the backend to determine the size for a
+  // subset of the cache without reading the whole cache from disk.
+  // If this method returns ERR_IO_PENDING, the |callback| will be invoked when
+  // the operation completes.
+  virtual int CalculateSizeOfEntriesBetween(base::Time initial_time,
+                                            base::Time end_time,
+                                            const CompletionCallback& callback);
 
   // Returns an iterator which will enumerate all entries of the cache in an
   // undefined order.
@@ -162,6 +179,11 @@ class NET_EXPORT Backend {
   // Called whenever an external cache in the system reuses the resource
   // referred to by |key|.
   virtual void OnExternalCacheHit(const std::string& key) = 0;
+
+  // Returns the estimate of dynamically allocated memory in bytes.
+  virtual size_t DumpMemoryStats(
+      base::trace_event::ProcessMemoryDump* pmd,
+      const std::string& parent_absolute_name) const = 0;
 };
 
 // This interface represents an entry in the disk cache.

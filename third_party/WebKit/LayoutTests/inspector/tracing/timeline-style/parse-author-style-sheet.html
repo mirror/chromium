@@ -5,14 +5,14 @@
 <script src="../../tracing-test.js"></script>
 <script>
 
-function importStyle(onComplete)
+function importStyle()
 {
     var link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.type = 'text/css';
     link.href = '../resources/style.css';
-    document.head.appendChild(link);    
-    link.onload = onComplete.bind(this, null);
+    document.head.appendChild(link);
+    return new Promise((fulfill) => link.onload = fulfill);
 }
 
 function test()
@@ -21,8 +21,8 @@ function test()
 
     function processTracingEvents()
     {
-        var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.ParseAuthorStyleSheet);
-        if (record)
+        var event = InspectorTest.findTimelineEvent(TimelineModel.TimelineModel.RecordType.ParseAuthorStyleSheet);
+        if (event)
             InspectorTest.addResult("SUCCESS: found ParseAuthorStyleSheet record");
         else
             InspectorTest.addResult("FAIL: ParseAuthorStyleSheet record not found");

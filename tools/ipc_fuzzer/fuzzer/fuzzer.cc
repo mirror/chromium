@@ -12,10 +12,10 @@
 #include "base/macros.h"
 #include "base/memory/shared_memory_handle.h"
 #include "base/strings/string_util.h"
+#include "base/values.h"
 #include "build/build_config.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_message_utils.h"
-#include "ipc/ipc_switches.h"
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_sync_message.h"
 #include "tools/ipc_fuzzer/fuzzer/fuzzer.h"
@@ -505,58 +505,57 @@ struct FuzzTraits<base::ListValue> {
     if (fuzzer->ShouldGenerate())
       list_length = g_depth > 3 ? 0 : RandInRange(8);
     for (size_t index = 0; index < list_length; ++index) {
-      switch (RandInRange(8)) {
-        case base::Value::TYPE_BOOLEAN: {
+      switch (static_cast<base::Value::Type>(RandInRange(8))) {
+        case base::Value::Type::BOOLEAN: {
           bool tmp;
           p->GetBoolean(index, &tmp);
           fuzzer->FuzzBool(&tmp);
-          p->Set(index, new base::FundamentalValue(tmp));
+          p->Set(index, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_INTEGER: {
+        case base::Value::Type::INTEGER: {
           int tmp;
           p->GetInteger(index, &tmp);
           fuzzer->FuzzInt(&tmp);
-          p->Set(index, new base::FundamentalValue(tmp));
+          p->Set(index, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_DOUBLE: {
+        case base::Value::Type::DOUBLE: {
           double tmp;
           p->GetDouble(index, &tmp);
           fuzzer->FuzzDouble(&tmp);
-          p->Set(index, new base::FundamentalValue(tmp));
+          p->Set(index, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_STRING: {
+        case base::Value::Type::STRING: {
           std::string tmp;
           p->GetString(index, &tmp);
           fuzzer->FuzzString(&tmp);
-          p->Set(index, new base::StringValue(tmp));
+          p->Set(index, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_BINARY: {
+        case base::Value::Type::BINARY: {
           char tmp[200];
           size_t bin_length = RandInRange(sizeof(tmp));
           fuzzer->FuzzData(tmp, bin_length);
-          p->Set(index,
-                 base::BinaryValue::CreateWithCopiedBuffer(tmp, bin_length));
+          p->Set(index, base::Value::CreateWithCopiedBuffer(tmp, bin_length));
           break;
         }
-        case base::Value::TYPE_DICTIONARY: {
+        case base::Value::Type::DICTIONARY: {
           base::DictionaryValue* tmp = new base::DictionaryValue();
           p->GetDictionary(index, &tmp);
           FuzzParam(tmp, fuzzer);
           p->Set(index, tmp);
           break;
         }
-        case base::Value::TYPE_LIST: {
+        case base::Value::Type::LIST: {
           base::ListValue* tmp = new base::ListValue();
           p->GetList(index, &tmp);
           FuzzParam(tmp, fuzzer);
           p->Set(index, tmp);
           break;
         }
-        case base::Value::TYPE_NULL:
+        case base::Value::Type::NONE:
         default:
           break;
       }
@@ -578,96 +577,57 @@ struct FuzzTraits<base::DictionaryValue> {
     for (size_t index = 0; index < dict_length; ++index) {
       std::string property;
       fuzzer->FuzzString(&property);
-      switch (RandInRange(8)) {
-        case base::Value::TYPE_BOOLEAN: {
+      switch (static_cast<base::Value::Type>(RandInRange(8))) {
+        case base::Value::Type::BOOLEAN: {
           bool tmp;
           fuzzer->FuzzBool(&tmp);
-          p->SetWithoutPathExpansion(property, new base::FundamentalValue(tmp));
+          p->SetWithoutPathExpansion(property, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_INTEGER: {
+        case base::Value::Type::INTEGER: {
           int tmp;
           fuzzer->FuzzInt(&tmp);
-          p->SetWithoutPathExpansion(property, new base::FundamentalValue(tmp));
+          p->SetWithoutPathExpansion(property, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_DOUBLE: {
+        case base::Value::Type::DOUBLE: {
           double tmp;
           fuzzer->FuzzDouble(&tmp);
-          p->SetWithoutPathExpansion(property, new base::FundamentalValue(tmp));
+          p->SetWithoutPathExpansion(property, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_STRING: {
+        case base::Value::Type::STRING: {
           std::string tmp;
           fuzzer->FuzzString(&tmp);
-          p->SetWithoutPathExpansion(property, new base::StringValue(tmp));
+          p->SetWithoutPathExpansion(property, new base::Value(tmp));
           break;
         }
-        case base::Value::TYPE_BINARY: {
+        case base::Value::Type::BINARY: {
           char tmp[200];
           size_t bin_length = RandInRange(sizeof(tmp));
           fuzzer->FuzzData(tmp, bin_length);
           p->SetWithoutPathExpansion(
-              property,
-              base::BinaryValue::CreateWithCopiedBuffer(tmp, bin_length));
+              property, base::Value::CreateWithCopiedBuffer(tmp, bin_length));
           break;
         }
-        case base::Value::TYPE_DICTIONARY: {
+        case base::Value::Type::DICTIONARY: {
           base::DictionaryValue* tmp = new base::DictionaryValue();
           FuzzParam(tmp, fuzzer);
           p->SetWithoutPathExpansion(property, tmp);
           break;
         }
-        case base::Value::TYPE_LIST: {
+        case base::Value::Type::LIST: {
           base::ListValue* tmp = new base::ListValue();
           FuzzParam(tmp, fuzzer);
           p->SetWithoutPathExpansion(property, tmp);
           break;
         }
-        case base::Value::TYPE_NULL:
+        case base::Value::Type::NONE:
         default:
           break;
       }
     }
     --g_depth;
-    return true;
-  }
-};
-
-template <>
-struct FuzzTraits<blink::WebGamepad> {
-  static bool Fuzz(blink::WebGamepad* p, Fuzzer* fuzzer) {
-    if (!FuzzParam(&p->connected, fuzzer))
-      return false;
-    if (!FuzzParam(&p->timestamp, fuzzer))
-      return false;
-    unsigned idLength = static_cast<unsigned>(
-        RandInRange(blink::WebGamepad::idLengthCap + 1));
-    if (!FuzzParamArray(&p->id[0], idLength, fuzzer))
-      return false;
-    p->axesLength = static_cast<unsigned>(
-        RandInRange(blink::WebGamepad::axesLengthCap + 1));
-    if (!FuzzParamArray(&p->axes[0], p->axesLength, fuzzer))
-      return false;
-    p->buttonsLength = static_cast<unsigned>(
-        RandInRange(blink::WebGamepad::buttonsLengthCap + 1));
-    if (!FuzzParamArray(&p->buttons[0], p->buttonsLength, fuzzer))
-      return false;
-    unsigned mappingsLength = static_cast<unsigned>(
-      RandInRange(blink::WebGamepad::mappingLengthCap + 1));
-    if (!FuzzParamArray(&p->mapping[0], mappingsLength, fuzzer))
-      return false;
-    return true;
-  }
-};
-
-template <>
-struct FuzzTraits<blink::WebGamepadButton> {
-  static bool Fuzz(blink::WebGamepadButton* p, Fuzzer* fuzzer) {
-    if (!FuzzParam(&p->pressed, fuzzer))
-      return false;
-    if (!FuzzParam(&p->value, fuzzer))
-      return false;
     return true;
   }
 };
@@ -682,16 +642,11 @@ struct FuzzTraits<cc::CompositorFrame> {
     if (!FuzzParam(&p->metadata, fuzzer))
       return false;
 
-    switch (RandInRange(3)) {
+    switch (RandInRange(2)) {
       case 0: {
-        p->delegated_frame_data.reset(new cc::DelegatedFrameData());
-        if (!FuzzParam(p->delegated_frame_data.get(), fuzzer))
+        if (!FuzzParam(&p->resource_list, fuzzer))
           return false;
-        return true;
-      }
-      case 1: {
-        p->gl_frame_data.reset(new cc::GLFrameData());
-        if (!FuzzParam(p->gl_frame_data.get(), fuzzer))
+        if (!FuzzParam(&p->render_pass_list, fuzzer))
           return false;
         return true;
       }
@@ -699,17 +654,6 @@ struct FuzzTraits<cc::CompositorFrame> {
         // Fuzz nothing to handle the no frame case.
         return true;
     }
-  }
-};
-
-template <>
-struct FuzzTraits<cc::DelegatedFrameData> {
-  static bool Fuzz(cc::DelegatedFrameData* p, Fuzzer* fuzzer) {
-    if (!FuzzParam(&p->resource_list, fuzzer))
-      return false;
-    if (!FuzzParam(&p->render_pass_list, fuzzer))
-      return false;
-    return true;
   }
 };
 
@@ -768,121 +712,6 @@ struct FuzzTraits<cc::RenderPassList> {
       if (!FuzzParam(render_pass.get(), fuzzer))
         return false;
       p->push_back(std::move(render_pass));
-    }
-    return true;
-  }
-};
-
-template <>
-struct FuzzTraits<content::IndexedDBKey> {
-  static bool Fuzz(content::IndexedDBKey* p, Fuzzer* fuzzer) {
-    // TODO(mbarbella): Support mutation.
-    if (!fuzzer->ShouldGenerate())
-      return true;
-
-    ++g_depth;
-    blink::WebIDBKeyType web_type =
-        static_cast<blink::WebIDBKeyType>(RandInRange(7));
-    switch (web_type) {
-      case blink::WebIDBKeyTypeArray: {
-        size_t length = g_depth > 3 ? 0 : RandInRange(4);
-        std::vector<content::IndexedDBKey> array;
-        array.resize(length);
-        for (size_t i = 0; i < length; ++i) {
-            if (!FuzzParam(&array[i], fuzzer)) {
-              --g_depth;
-              return false;
-            }
-        }
-        *p = content::IndexedDBKey(array);
-        return true;
-      }
-      case blink::WebIDBKeyTypeBinary: {
-        std::string binary;
-        if (!FuzzParam(&binary, fuzzer)) {
-            --g_depth;
-            return false;
-        }
-        *p = content::IndexedDBKey(binary);
-        return true;
-      }
-      case blink::WebIDBKeyTypeString: {
-        base::string16 string;
-        if (!FuzzParam(&string, fuzzer))
-          return false;
-        *p = content::IndexedDBKey(string);
-        return true;
-      }
-      case blink::WebIDBKeyTypeDate:
-      case blink::WebIDBKeyTypeNumber: {
-        double number;
-        if (!FuzzParam(&number, fuzzer)) {
-            --g_depth;
-            return false;
-        }
-        *p = content::IndexedDBKey(number, web_type);
-        return true;
-      }
-      case blink::WebIDBKeyTypeInvalid:
-      case blink::WebIDBKeyTypeNull: {
-        *p = content::IndexedDBKey(web_type);
-        return true;
-      }
-      default: {
-          NOTREACHED();
-          --g_depth;
-          return false;
-      }
-    }
-  }
-};
-
-template <>
-struct FuzzTraits<content::IndexedDBKeyRange> {
-  static bool Fuzz(content::IndexedDBKeyRange* p, Fuzzer* fuzzer) {
-    content::IndexedDBKey lower = p->lower();
-    content::IndexedDBKey upper = p->upper();
-    bool lower_open = p->lower_open();
-    bool upper_open = p->upper_open();
-    if (!FuzzParam(&lower, fuzzer))
-      return false;
-    if (!FuzzParam(&upper, fuzzer))
-      return false;
-    if (!FuzzParam(&lower_open, fuzzer))
-      return false;
-    if (!FuzzParam(&upper_open, fuzzer))
-      return false;
-    *p = content::IndexedDBKeyRange(lower, upper, lower_open, upper_open);
-    return true;
-  }
-};
-
-template <>
-struct FuzzTraits<content::IndexedDBKeyPath> {
-  static bool Fuzz(content::IndexedDBKeyPath* p, Fuzzer* fuzzer) {
-    // TODO(mbarbella): Support mutation.
-    if (!fuzzer->ShouldGenerate())
-      return true;
-
-    switch (RandInRange(3)) {
-      case 0: {
-        std::vector<base::string16> array;
-        if (!FuzzParam(&array, fuzzer))
-          return false;
-        *p = content::IndexedDBKeyPath(array);
-        break;
-      }
-      case 1: {
-        base::string16 string;
-        if (!FuzzParam(&string, fuzzer))
-          return false;
-        *p = content::IndexedDBKeyPath(string);
-        break;
-      }
-      case 2: {
-        *p = content::IndexedDBKeyPath();
-        break;
-      }
     }
     return true;
   }
@@ -960,20 +789,14 @@ struct FuzzTraits<content::SyntheticGesturePacket> {
         gesture_params.reset(params);
         break;
       }
-      case content::SyntheticGestureParams::GestureType::POINTER_ACTION: {
-        content::SyntheticPointerActionParams::PointerActionType action_type;
-        gfx::PointF position;
-        int index;
-        if (!FuzzParam(&action_type, fuzzer))
+      case content::SyntheticGestureParams::GestureType::POINTER_ACTION_LIST: {
+        std::vector<content::SyntheticPointerActionListParams::ParamList>
+            param_list;
+        if (!FuzzParam(&param_list, fuzzer))
           return false;
-        if (!FuzzParam(&position, fuzzer))
-          return false;
-        if (!FuzzParam(&index, fuzzer))
-          return false;
-        content::SyntheticPointerActionParams* params =
-            new content::SyntheticPointerActionParams(action_type);
-        params->set_position(position);
-        params->set_index(index);
+        content::SyntheticPointerActionListParams* params =
+            new content::SyntheticPointerActionListParams();
+        params->params = param_list;
         gesture_params.reset(params);
         break;
       }
@@ -986,7 +809,7 @@ struct FuzzTraits<content::SyntheticGesturePacket> {
 template <>
 struct FuzzTraits<content::WebCursor> {
   static bool Fuzz(content::WebCursor* p, Fuzzer* fuzzer) {
-    content::WebCursor::CursorInfo info;
+    content::CursorInfo info;
     p->GetCursorInfo(&info);
 
     // |type| enum is not validated on de-serialization, so pick random value.
@@ -1341,16 +1164,7 @@ struct FuzzTraits<IPC::ChannelHandle> {
     if (!fuzzer->ShouldGenerate())
       return true;
 
-    // TODO(inferno): Add way to generate real channel handles.
-#if defined(OS_WIN)
-    HANDLE fake_handle = (HANDLE)(RandU64());
-    p->pipe = IPC::ChannelHandle::PipeHandle(fake_handle);
-    return true;
-#elif defined(OS_POSIX)
-    return
-      FuzzParam(&p->name, fuzzer) &&
-      FuzzParam(&p->socket, fuzzer);
-#endif
+    return FuzzParam(&p->mojo_handle, fuzzer);
   }
 };
 
@@ -1685,23 +1499,6 @@ struct FuzzTraits<ppapi::SocketOptionData> {
     if (!FuzzParam(&tmp, fuzzer))
       return false;
     p->SetInt32(tmp);
-    return true;
-  }
-};
-
-template <>
-struct FuzzTraits<printing::PdfRenderSettings> {
-  static bool Fuzz(printing::PdfRenderSettings* p, Fuzzer* fuzzer) {
-    gfx::Rect area = p->area();
-    int dpi = p->dpi();
-    bool autorotate = p->autorotate();
-    if (!FuzzParam(&area, fuzzer))
-      return false;
-    if (!FuzzParam(&dpi, fuzzer))
-      return false;
-    if (!FuzzParam(&autorotate, fuzzer))
-      return false;
-    *p = printing::PdfRenderSettings(area, dpi, autorotate);
     return true;
   }
 };

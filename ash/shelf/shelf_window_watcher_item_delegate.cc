@@ -4,62 +4,70 @@
 
 #include "ash/shelf/shelf_window_watcher_item_delegate.h"
 
-#include "ash/common/wm/window_state.h"
-#include "ash/shelf/shelf_util.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/shelf/shelf_controller.h"
+#include "ash/shelf/shelf_model.h"
 #include "ash/shell.h"
-#include "ash/wm/window_state_aura.h"
+#include "ash/wm/window_state.h"
+#include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window.h"
-#include "ui/views/widget/widget.h"
-#include "ui/wm/core/window_animations.h"
+#include "ui/events/event_constants.h"
 
 namespace ash {
 
-ShelfWindowWatcherItemDelegate::ShelfWindowWatcherItemDelegate(
-    aura::Window* window)
-    : window_(window) {}
+namespace {
+
+ShelfItemType GetShelfItemType(ShelfID id) {
+  ShelfModel* model = Shell::Get()->shelf_controller()->model();
+  ShelfItems::const_iterator item = model->ItemByID(id);
+  return item == model->items().end() ? TYPE_UNDEFINED : item->type;
+}
+
+}  // namespace
+
+ShelfWindowWatcherItemDelegate::ShelfWindowWatcherItemDelegate(ShelfID id,
+                                                               WmWindow* window)
+    : ShelfItemDelegate(AppLaunchId()), id_(id), window_(window) {
+  DCHECK_NE(kInvalidShelfID, id_);
+  DCHECK(window_);
+}
 
 ShelfWindowWatcherItemDelegate::~ShelfWindowWatcherItemDelegate() {}
 
-void ShelfWindowWatcherItemDelegate::Close() {
-  views::Widget::GetWidgetForNativeWindow(window_)->Close();
-}
-
-ShelfItemDelegate::PerformedAction ShelfWindowWatcherItemDelegate::ItemSelected(
-    const ui::Event& event) {
-  wm::WindowState* window_state = wm::GetWindowState(window_);
-  if (window_state->IsActive()) {
-    if (event.type() & ui::ET_KEY_RELEASED) {
-      ::wm::AnimateWindow(window_, ::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
-      return kNoAction;
-    } else {
-      window_state->Minimize();
-      return kExistingWindowMinimized;
-    }
-  } else {
-    window_state->Activate();
-    return kExistingWindowActivated;
+void ShelfWindowWatcherItemDelegate::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
+  // Move panels attached on another display to the current display.
+  if (GetShelfItemType(id_) == TYPE_APP_PANEL &&
+      window_->aura_window()->GetProperty(kPanelAttachedKey) &&
+      wm::MoveWindowToDisplay(window_->aura_window(), display_id)) {
+    window_->Activate();
+    callback.Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
+    return;
   }
+
+  if (window_->IsActive()) {
+    if (event && event->type() == ui::ET_KEY_RELEASED) {
+      window_->Animate(::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
+      callback.Run(SHELF_ACTION_NONE, base::nullopt);
+      return;
+    }
+    window_->Minimize();
+    callback.Run(SHELF_ACTION_WINDOW_MINIMIZED, base::nullopt);
+    return;
+  }
+  window_->Activate();
+  callback.Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
-base::string16 ShelfWindowWatcherItemDelegate::GetTitle() {
-  return GetShelfItemDetailsForWindow(window_)->title;
-}
+void ShelfWindowWatcherItemDelegate::ExecuteCommand(uint32_t command_id,
+                                                    int32_t event_flags) {}
 
-ShelfMenuModel* ShelfWindowWatcherItemDelegate::CreateApplicationMenu(
-    int event_flags) {
-  return nullptr;
-}
-
-bool ShelfWindowWatcherItemDelegate::IsDraggable() {
-  return true;
-}
-
-bool ShelfWindowWatcherItemDelegate::CanPin() const {
-  return true;
-}
-
-bool ShelfWindowWatcherItemDelegate::ShouldShowTooltip() {
-  return true;
+void ShelfWindowWatcherItemDelegate::Close() {
+  window_->CloseWidget();
 }
 
 }  // namespace ash

@@ -56,7 +56,7 @@ void MarkRecommendedFieldnames(const base::DictionaryValue& policy,
   for (base::ListValue::const_iterator it = recommended_value->begin();
        it != recommended_value->end(); ++it) {
     std::string entry;
-    if ((*it)->GetAsString(&entry))
+    if (it->GetAsString(&entry))
       result->SetBooleanWithoutPathExpansion(entry, true);
   }
 }
@@ -114,7 +114,7 @@ class MergeListOfDictionaries {
           continue;
 
         std::unique_ptr<base::Value> merged_value;
-        if (field.value().IsType(base::Value::TYPE_DICTIONARY)) {
+        if (field.value().IsType(base::Value::Type::DICTIONARY)) {
           DictPtrs nested_dicts;
           for (DictPtrs::const_iterator it_inner = dicts.begin();
                it_inner != dicts.end(); ++it_inner) {

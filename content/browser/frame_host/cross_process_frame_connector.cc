@@ -5,6 +5,7 @@
 #include "content/browser/frame_host/cross_process_frame_connector.h"
 
 #include "cc/surfaces/surface.h"
+#include "cc/surfaces/surface_hittest.h"
 #include "cc/surfaces/surface_manager.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -19,7 +20,8 @@
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/common/frame_messages.h"
 #include "gpu/ipc/common/gpu_messages.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/gfx/geometry/dip_util.h"
 
 namespace content {
 
@@ -27,7 +29,6 @@ CrossProcessFrameConnector::CrossProcessFrameConnector(
     RenderFrameProxyHost* frame_proxy_in_parent_renderer)
     : frame_proxy_in_parent_renderer_(frame_proxy_in_parent_renderer),
       view_(nullptr),
-      device_scale_factor_(1),
       is_scroll_bubbling_(false) {}
 
 CrossProcessFrameConnector::~CrossProcessFrameConnector() {
@@ -39,11 +40,10 @@ bool CrossProcessFrameConnector::OnMessageReceived(const IPC::Message& msg) {
   bool handled = true;
 
   IPC_BEGIN_MESSAGE_MAP(CrossProcessFrameConnector, msg)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_ForwardInputEvent, OnForwardInputEvent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_FrameRectChanged, OnFrameRectChanged)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateViewportIntersection,
+                        OnUpdateViewportIntersection)
     IPC_MESSAGE_HANDLER(FrameHostMsg_VisibilityChanged, OnVisibilityChanged)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_InitializeChildFrame,
-                        OnInitializeChildFrame)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SatisfySequence, OnSatisfySequence)
     IPC_MESSAGE_HANDLER(FrameHostMsg_RequireSequence, OnRequireSequence)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -56,7 +56,13 @@ void CrossProcessFrameConnector::set_view(
     RenderWidgetHostViewChildFrame* view) {
   // Detach ourselves from the previous |view_|.
   if (view_) {
-    if (is_scroll_bubbling_ && GetParentRenderWidgetHostView()) {
+    // The RenderWidgetHostDelegate needs to be checked because set_view() can
+    // be called during nested WebContents destruction. See
+    // https://crbug.com/644306.
+    if (is_scroll_bubbling_ && GetParentRenderWidgetHostView() &&
+        RenderWidgetHostImpl::From(
+            GetParentRenderWidgetHostView()->GetRenderWidgetHost())
+            ->delegate()) {
       RenderWidgetHostImpl::From(
           GetParentRenderWidgetHostView()->GetRenderWidgetHost())
           ->delegate()
@@ -72,7 +78,6 @@ void CrossProcessFrameConnector::set_view(
   // Attach ourselves to the new view and size it appropriately.
   if (view_) {
     view_->SetCrossProcessFrameConnector(this);
-    SetDeviceScaleFactor(device_scale_factor_);
     SetRect(child_frame_rect_);
   }
 }
@@ -83,49 +88,25 @@ void CrossProcessFrameConnector::RenderProcessGone() {
 }
 
 void CrossProcessFrameConnector::SetChildFrameSurface(
-    const cc::SurfaceId& surface_id,
-    const gfx::Size& frame_size,
-    float scale_factor,
+    const cc::SurfaceInfo& surface_info,
     const cc::SurfaceSequence& sequence) {
   frame_proxy_in_parent_renderer_->Send(new FrameMsg_SetChildFrameSurface(
-      frame_proxy_in_parent_renderer_->GetRoutingID(), surface_id, frame_size,
-      scale_factor, sequence));
+      frame_proxy_in_parent_renderer_->GetRoutingID(), surface_info, sequence));
 }
 
 void CrossProcessFrameConnector::OnSatisfySequence(
     const cc::SurfaceSequence& sequence) {
-  std::vector<uint32_t> sequences;
-  sequences.push_back(sequence.sequence);
-  cc::SurfaceManager* manager = GetSurfaceManager();
-  manager->DidSatisfySequences(sequence.client_id, &sequences);
+  GetSurfaceManager()->SatisfySequence(sequence);
 }
 
 void CrossProcessFrameConnector::OnRequireSequence(
     const cc::SurfaceId& id,
     const cc::SurfaceSequence& sequence) {
-  cc::SurfaceManager* manager = GetSurfaceManager();
-  cc::Surface* surface = manager->GetSurfaceForId(id);
-  if (!surface) {
-    LOG(ERROR) << "Attempting to require callback on nonexistent surface";
-    return;
-  }
-  surface->AddDestructionDependency(sequence);
-}
-
-void CrossProcessFrameConnector::OnInitializeChildFrame(float scale_factor) {
-  if (scale_factor != device_scale_factor_)
-    SetDeviceScaleFactor(scale_factor);
+  GetSurfaceManager()->RequireSequence(id, sequence);
 }
 
 gfx::Rect CrossProcessFrameConnector::ChildFrameRect() {
   return child_frame_rect_;
-}
-
-void CrossProcessFrameConnector::GetScreenInfo(blink::WebScreenInfo* results) {
-  auto* parent_view = GetParentRenderWidgetHostView();
-  if (parent_view) {
-    parent_view->GetScreenInfo(results);
-  }
 }
 
 void CrossProcessFrameConnector::UpdateCursor(const WebCursor& cursor) {
@@ -136,13 +117,59 @@ void CrossProcessFrameConnector::UpdateCursor(const WebCursor& cursor) {
 
 gfx::Point CrossProcessFrameConnector::TransformPointToRootCoordSpace(
     const gfx::Point& point,
-    cc::SurfaceId surface_id) {
-  gfx::Point transformed_point = point;
-  RenderWidgetHostViewBase* root_view = GetRootRenderWidgetHostView();
-  if (root_view)
-    root_view->TransformPointToLocalCoordSpace(point, surface_id,
-                                               &transformed_point);
+    const cc::SurfaceId& surface_id) {
+  gfx::Point transformed_point;
+  TransformPointToCoordSpaceForView(point, GetRootRenderWidgetHostView(),
+                                    surface_id, &transformed_point);
   return transformed_point;
+}
+
+bool CrossProcessFrameConnector::TransformPointToLocalCoordSpace(
+    const gfx::Point& point,
+    const cc::SurfaceId& original_surface,
+    const cc::SurfaceId& local_surface_id,
+    gfx::Point* transformed_point) {
+  if (original_surface == local_surface_id) {
+    *transformed_point = point;
+    return true;
+  }
+
+  // Transformations use physical pixels rather than DIP, so conversion
+  // is necessary.
+  *transformed_point =
+      gfx::ConvertPointToPixel(view_->current_surface_scale_factor(), point);
+  cc::SurfaceHittest hittest(nullptr, GetSurfaceManager());
+  if (!hittest.TransformPointToTargetSurface(original_surface, local_surface_id,
+                                             transformed_point))
+    return false;
+
+  *transformed_point = gfx::ConvertPointToDIP(
+      view_->current_surface_scale_factor(), *transformed_point);
+  return true;
+}
+
+bool CrossProcessFrameConnector::TransformPointToCoordSpaceForView(
+    const gfx::Point& point,
+    RenderWidgetHostViewBase* target_view,
+    const cc::SurfaceId& local_surface_id,
+    gfx::Point* transformed_point) {
+  RenderWidgetHostViewBase* root_view = GetRootRenderWidgetHostView();
+  if (!root_view)
+    return false;
+
+  // It is possible that neither the original surface or target surface is an
+  // ancestor of the other in the RenderWidgetHostView tree (e.g. they could
+  // be siblings). To account for this, the point is first transformed into the
+  // root coordinate space and then the root is asked to perform the conversion.
+  if (!root_view->TransformPointToLocalCoordSpace(point, local_surface_id,
+                                                  transformed_point))
+    return false;
+
+  if (target_view == root_view)
+    return true;
+
+  return root_view->TransformPointToCoordSpaceForView(
+      *transformed_point, target_view, transformed_point);
 }
 
 void CrossProcessFrameConnector::ForwardProcessAckedTouchEvent(
@@ -155,8 +182,8 @@ void CrossProcessFrameConnector::ForwardProcessAckedTouchEvent(
 
 void CrossProcessFrameConnector::BubbleScrollEvent(
     const blink::WebGestureEvent& event) {
-  DCHECK(event.type == blink::WebInputEvent::GestureScrollUpdate ||
-         event.type == blink::WebInputEvent::GestureScrollEnd);
+  DCHECK(event.GetType() == blink::WebInputEvent::kGestureScrollUpdate ||
+         event.GetType() == blink::WebInputEvent::kGestureScrollEnd);
   auto* parent_view = GetParentRenderWidgetHostView();
 
   if (!parent_view)
@@ -173,10 +200,10 @@ void CrossProcessFrameConnector::BubbleScrollEvent(
   // See https://crbug.com/626020.
   resent_gesture_event.x += offset_from_parent.x();
   resent_gesture_event.y += offset_from_parent.y();
-  if (event.type == blink::WebInputEvent::GestureScrollUpdate) {
+  if (event.GetType() == blink::WebInputEvent::kGestureScrollUpdate) {
     event_router->BubbleScrollEvent(parent_view, resent_gesture_event);
     is_scroll_bubbling_ = true;
-  } else if (event.type == blink::WebInputEvent::GestureScrollEnd &&
+  } else if (event.GetType() == blink::WebInputEvent::kGestureScrollEnd &&
              is_scroll_bubbling_) {
     event_router->BubbleScrollEvent(parent_view, resent_gesture_event);
     is_scroll_bubbling_ = false;
@@ -209,54 +236,16 @@ void CrossProcessFrameConnector::UnlockMouse() {
     root_view->UnlockMouse();
 }
 
-void CrossProcessFrameConnector::OnForwardInputEvent(
-    const blink::WebInputEvent* event) {
-  if (!view_)
-    return;
-
-  RenderFrameHostManager* manager =
-      frame_proxy_in_parent_renderer_->frame_tree_node()->render_manager();
-  RenderWidgetHostImpl* parent_widget =
-      manager->ForInnerDelegate()
-          ? manager->GetOuterRenderWidgetHostForKeyboardInput()
-          : frame_proxy_in_parent_renderer_->GetRenderViewHost()->GetWidget();
-
-  // TODO(wjmaclean): We should remove these forwarding functions, since they
-  // are directly target using RenderWidgetHostInputEventRouter. But neither
-  // pathway is currently handling gesture events, so that needs to be fixed
-  // in a subsequent CL.
-  if (blink::WebInputEvent::isKeyboardEventType(event->type)) {
-    if (!parent_widget->GetLastKeyboardEvent())
-      return;
-    NativeWebKeyboardEvent keyboard_event(
-        *parent_widget->GetLastKeyboardEvent());
-    view_->ProcessKeyboardEvent(keyboard_event);
-    return;
-  }
-
-  if (blink::WebInputEvent::isMouseEventType(event->type)) {
-    // TODO(wjmaclean): Initialize latency info correctly for OOPIFs.
-    // https://crbug.com/613628
-    ui::LatencyInfo latency_info;
-    view_->ProcessMouseEvent(*static_cast<const blink::WebMouseEvent*>(event),
-                              latency_info);
-    return;
-  }
-
-  if (event->type == blink::WebInputEvent::MouseWheel) {
-    // TODO(wjmaclean): Initialize latency info correctly for OOPIFs.
-    // https://crbug.com/613628
-    ui::LatencyInfo latency_info;
-    view_->ProcessMouseWheelEvent(
-        *static_cast<const blink::WebMouseWheelEvent*>(event), latency_info);
-    return;
-  }
-}
-
 void CrossProcessFrameConnector::OnFrameRectChanged(
     const gfx::Rect& frame_rect) {
   if (!frame_rect.size().IsEmpty())
     SetRect(frame_rect);
+}
+
+void CrossProcessFrameConnector::OnUpdateViewportIntersection(
+    const gfx::Rect& viewport_intersection) {
+  if (view_)
+    view_->UpdateViewportIntersection(viewport_intersection);
 }
 
 void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
@@ -283,16 +272,6 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
     view_->Show();
   } else if (!visible) {
     view_->Hide();
-  }
-}
-
-void CrossProcessFrameConnector::SetDeviceScaleFactor(float scale_factor) {
-  device_scale_factor_ = scale_factor;
-  // The RenderWidgetHost is null in unit tests.
-  if (view_ && view_->GetRenderWidgetHost()) {
-    RenderWidgetHostImpl* child_widget =
-        RenderWidgetHostImpl::From(view_->GetRenderWidgetHost());
-    child_widget->NotifyScreenInfoChanged();
   }
 }
 

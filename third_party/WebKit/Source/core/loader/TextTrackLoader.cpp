@@ -26,147 +26,153 @@
 #include "core/loader/TextTrackLoader.h"
 
 #include "core/dom/Document.h"
-#include "core/fetch/FetchInitiatorTypeNames.h"
-#include "core/fetch/FetchRequest.h"
-#include "core/fetch/RawResource.h"
-#include "core/fetch/ResourceFetcher.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "platform/Logging.h"
 #include "platform/SharedBuffer.h"
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
 namespace blink {
 
-TextTrackLoader::TextTrackLoader(TextTrackLoaderClient& client, Document& document)
-    : m_client(client)
-    , m_document(document)
-    , m_cueLoadTimer(this, &TextTrackLoader::cueLoadTimerFired)
-    , m_state(Idle)
-    , m_newCuesAvailable(false)
-{
+TextTrackLoader::TextTrackLoader(TextTrackLoaderClient& client,
+                                 Document& document)
+    : client_(client),
+      document_(document),
+      cue_load_timer_(TaskRunnerHelper::Get(TaskType::kNetworking, &document),
+                      this,
+                      &TextTrackLoader::CueLoadTimerFired),
+      state_(kIdle),
+      new_cues_available_(false) {}
+
+TextTrackLoader::~TextTrackLoader() {}
+
+void TextTrackLoader::CueLoadTimerFired(TimerBase* timer) {
+  DCHECK_EQ(timer, &cue_load_timer_);
+
+  if (new_cues_available_) {
+    new_cues_available_ = false;
+    client_->NewCuesAvailable(this);
+  }
+
+  if (state_ >= kFinished)
+    client_->CueLoadingCompleted(this, state_ == kFailed);
 }
 
-TextTrackLoader::~TextTrackLoader()
-{
+void TextTrackLoader::CancelLoad() {
+  ClearResource();
 }
 
-void TextTrackLoader::cueLoadTimerFired(Timer<TextTrackLoader>* timer)
-{
-    ASSERT_UNUSED(timer, timer == &m_cueLoadTimer);
+bool TextTrackLoader::RedirectReceived(Resource* resource,
+                                       const ResourceRequest& request,
+                                       const ResourceResponse&) {
+  DCHECK_EQ(this->GetResource(), resource);
+  if (resource->Options().cors_enabled == kIsCORSEnabled ||
+      GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(request.Url()))
+    return true;
 
-    if (m_newCuesAvailable) {
-        m_newCuesAvailable = false;
-        m_client->newCuesAvailable(this);
-    }
-
-    if (m_state >= Finished)
-        m_client->cueLoadingCompleted(this, m_state == Failed);
+  CorsPolicyPreventedLoad(GetDocument().GetSecurityOrigin(), request.Url());
+  if (!cue_load_timer_.IsActive())
+    cue_load_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  ClearResource();
+  return false;
 }
 
-void TextTrackLoader::cancelLoad()
-{
-    clearResource();
+void TextTrackLoader::DataReceived(Resource* resource,
+                                   const char* data,
+                                   size_t length) {
+  DCHECK_EQ(this->GetResource(), resource);
+
+  if (state_ == kFailed)
+    return;
+
+  if (!cue_parser_)
+    cue_parser_ = VTTParser::Create(this, GetDocument());
+
+  cue_parser_->ParseBytes(data, length);
 }
 
-void TextTrackLoader::dataReceived(Resource* resource, const char* data, size_t length)
-{
-    ASSERT(this->resource() == resource);
-
-    if (m_state == Failed)
-        return;
-
-    if (!m_cueParser)
-        m_cueParser = VTTParser::create(this, document());
-
-    m_cueParser->parseBytes(data, length);
+void TextTrackLoader::CorsPolicyPreventedLoad(SecurityOrigin* security_origin,
+                                              const KURL& url) {
+  String console_message(
+      "Text track from origin '" + SecurityOrigin::Create(url)->ToString() +
+      "' has been blocked from loading: Not at same origin as the document, "
+      "and parent of track element does not have a 'crossorigin' attribute. "
+      "Origin '" +
+      security_origin->ToString() + "' is therefore not allowed access.");
+  GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+      kSecurityMessageSource, kErrorMessageLevel, console_message));
+  state_ = kFailed;
 }
 
-void TextTrackLoader::corsPolicyPreventedLoad(SecurityOrigin* securityOrigin, const KURL& url)
-{
-    String consoleMessage("Text track from origin '" + SecurityOrigin::create(url)->toString() + "' has been blocked from loading: Not at same origin as the document, and parent of track element does not have a 'crossorigin' attribute. Origin '" + securityOrigin->toString() + "' is therefore not allowed access.");
-    document().addConsoleMessage(ConsoleMessage::create(SecurityMessageSource, ErrorMessageLevel, consoleMessage));
-    m_state = Failed;
+void TextTrackLoader::NotifyFinished(Resource* resource) {
+  DCHECK_EQ(this->GetResource(), resource);
+  if (state_ != kFailed)
+    state_ = resource->ErrorOccurred() ? kFailed : kFinished;
+
+  if (state_ == kFinished && cue_parser_)
+    cue_parser_->Flush();
+
+  if (!cue_load_timer_.IsActive())
+    cue_load_timer_.StartOneShot(0, BLINK_FROM_HERE);
+
+  CancelLoad();
 }
 
-void TextTrackLoader::notifyFinished(Resource* resource)
-{
-    ASSERT(this->resource() == resource);
-    if (m_state != Failed)
-        m_state = resource->errorOccurred() ? Failed : Finished;
+bool TextTrackLoader::Load(const KURL& url,
+                           CrossOriginAttributeValue cross_origin) {
+  CancelLoad();
 
-    if (m_state == Finished && m_cueParser)
-        m_cueParser->flush();
+  FetchParameters cue_fetch_params(ResourceRequest(url),
+                                   FetchInitiatorTypeNames::texttrack);
 
-    if (!m_cueLoadTimer.isActive())
-        m_cueLoadTimer.startOneShot(0, BLINK_FROM_HERE);
+  if (cross_origin != kCrossOriginAttributeNotSet) {
+    cue_fetch_params.SetCrossOriginAccessControl(
+        GetDocument().GetSecurityOrigin(), cross_origin);
+  } else if (!GetDocument().GetSecurityOrigin()->CanRequestNoSuborigin(url)) {
+    // Text track elements without 'crossorigin' set on the parent are "No
+    // CORS"; report error if not same-origin.
+    CorsPolicyPreventedLoad(GetDocument().GetSecurityOrigin(), url);
+    return false;
+  }
 
-    cancelLoad();
+  ResourceFetcher* fetcher = GetDocument().Fetcher();
+  SetResource(RawResource::FetchTextTrack(cue_fetch_params, fetcher));
+  return GetResource();
 }
 
-bool TextTrackLoader::load(const KURL& url, CrossOriginAttributeValue crossOrigin)
-{
-    cancelLoad();
+void TextTrackLoader::NewCuesParsed() {
+  if (cue_load_timer_.IsActive())
+    return;
 
-    FetchRequest cueRequest(ResourceRequest(document().completeURL(url)), FetchInitiatorTypeNames::texttrack);
-
-    if (crossOrigin != CrossOriginAttributeNotSet) {
-        cueRequest.setCrossOriginAccessControl(document().getSecurityOrigin(), crossOrigin);
-    } else if (!document().getSecurityOrigin()->canRequestNoSuborigin(url)) {
-        // Text track elements without 'crossorigin' set on the parent are "No CORS"; report error if not same-origin.
-        corsPolicyPreventedLoad(document().getSecurityOrigin(), url);
-        return false;
-    }
-
-    ResourceFetcher* fetcher = document().fetcher();
-    setResource(RawResource::fetchTextTrack(cueRequest, fetcher));
-    return resource();
+  new_cues_available_ = true;
+  cue_load_timer_.StartOneShot(0, BLINK_FROM_HERE);
 }
 
-void TextTrackLoader::newCuesParsed()
-{
-    if (m_cueLoadTimer.isActive())
-        return;
+void TextTrackLoader::FileFailedToParse() {
+  state_ = kFailed;
 
-    m_newCuesAvailable = true;
-    m_cueLoadTimer.startOneShot(0, BLINK_FROM_HERE);
+  if (!cue_load_timer_.IsActive())
+    cue_load_timer_.StartOneShot(0, BLINK_FROM_HERE);
+
+  CancelLoad();
 }
 
-void TextTrackLoader::newRegionsParsed()
-{
-    m_client->newRegionsAvailable(this);
+void TextTrackLoader::GetNewCues(
+    HeapVector<Member<TextTrackCue>>& output_cues) {
+  DCHECK(cue_parser_);
+  if (cue_parser_)
+    cue_parser_->GetNewCues(output_cues);
 }
 
-void TextTrackLoader::fileFailedToParse()
-{
-    m_state = Failed;
-
-    if (!m_cueLoadTimer.isActive())
-        m_cueLoadTimer.startOneShot(0, BLINK_FROM_HERE);
-
-    cancelLoad();
+DEFINE_TRACE(TextTrackLoader) {
+  visitor->Trace(client_);
+  visitor->Trace(cue_parser_);
+  visitor->Trace(document_);
+  ResourceOwner<RawResource>::Trace(visitor);
+  VTTParserClient::Trace(visitor);
 }
 
-void TextTrackLoader::getNewCues(HeapVector<Member<TextTrackCue>>& outputCues)
-{
-    ASSERT(m_cueParser);
-    if (m_cueParser)
-        m_cueParser->getNewCues(outputCues);
-}
-
-void TextTrackLoader::getNewRegions(HeapVector<Member<VTTRegion>>& outputRegions)
-{
-    ASSERT(m_cueParser);
-    if (m_cueParser)
-        m_cueParser->getNewRegions(outputRegions);
-}
-
-DEFINE_TRACE(TextTrackLoader)
-{
-    visitor->trace(m_client);
-    visitor->trace(m_cueParser);
-    visitor->trace(m_document);
-    ResourceOwner<RawResource>::trace(visitor);
-    VTTParserClient::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

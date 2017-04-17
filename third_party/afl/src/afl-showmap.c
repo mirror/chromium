@@ -63,7 +63,8 @@ static s32 shm_id;                    /* ID of the SHM region              */
 
 static u8  quiet_mode,                /* Hide non-essential messages?      */
            edges_only,                /* Ignore hit counts?                */
-           cmin_mode;                 /* Generate output in afl-cmin mode? */
+           cmin_mode,                 /* Generate output in afl-cmin mode? */
+           binary_mode;               /* Write output as a binary map      */
 
 static volatile u8
            stop_soon,                 /* Ctrl-C pressed?                   */
@@ -73,25 +74,35 @@ static volatile u8
 /* Classify tuple counts. Instead of mapping to individual bits, as in
    afl-fuzz.c, we map to more user-friendly numbers between 1 and 8. */
 
-#define AREP4(_sym)   (_sym), (_sym), (_sym), (_sym)
-#define AREP8(_sym)   AREP4(_sym),  AREP4(_sym)
-#define AREP16(_sym)  AREP8(_sym),  AREP8(_sym)
-#define AREP32(_sym)  AREP16(_sym), AREP16(_sym)
-#define AREP64(_sym)  AREP32(_sym), AREP32(_sym)
-#define AREP128(_sym) AREP64(_sym), AREP64(_sym)
+static const u8 count_class_human[256] = {
 
-static u8 count_class_lookup[256] = {
-
-  /* 0 - 3:       4 */ 0, 1, 2, 3,
-  /* 4 - 7:      +4 */ AREP4(4),
-  /* 8 - 15:     +8 */ AREP8(5),
-  /* 16 - 31:   +16 */ AREP16(6),
-  /* 32 - 127:  +96 */ AREP64(7), AREP32(7),
-  /* 128+:     +128 */ AREP128(8)
+  [0]           = 0,
+  [1]           = 1,
+  [2]           = 2,
+  [3]           = 3,
+  [4 ... 7]     = 4,
+  [8 ... 15]    = 5,
+  [16 ... 31]   = 6,
+  [32 ... 127]  = 7,
+  [128 ... 255] = 8
 
 };
 
-static void classify_counts(u8* mem) {
+static const u8 count_class_binary[256] = {
+
+  [0]           = 0,
+  [1]           = 1,
+  [2]           = 2,
+  [3]           = 4,
+  [4 ... 7]     = 8,
+  [8 ... 15]    = 16,
+  [16 ... 31]   = 32,
+  [32 ... 127]  = 64,
+  [128 ... 255] = 128
+
+};
+
+static void classify_counts(u8* mem, const u8* map) {
 
   u32 i = MAP_SIZE;
 
@@ -105,7 +116,7 @@ static void classify_counts(u8* mem) {
   } else {
 
     while (i--) {
-      *mem = count_class_lookup[*mem];
+      *mem = map[*mem];
       mem++;
     }
 
@@ -152,8 +163,8 @@ static void setup_shm(void) {
 static u32 write_results(void) {
 
   s32 fd;
-  FILE* f;
   u32 i, ret = 0;
+
   u8  cco = !!getenv("AFL_CMIN_CRASHES_ONLY"),
       caa = !!getenv("AFL_CMIN_ALLOW_ANY");
 
@@ -175,27 +186,40 @@ static u32 write_results(void) {
 
   }
 
-  f = fdopen(fd, "w");
 
-  if (!f) PFATAL("fdopen() failed");
+  if (binary_mode) {
 
-  for (i = 0; i < MAP_SIZE; i++) {
+    for (i = 0; i < MAP_SIZE; i++)
+      if (trace_bits[i]) ret++;
+    
+    ck_write(fd, trace_bits, MAP_SIZE, out_file);
+    close(fd);
 
-    if (!trace_bits[i]) continue;
-    ret++;
+  } else {
 
-    if (cmin_mode) {
+    FILE* f = fdopen(fd, "w");
 
-      if (child_timed_out) break;
-      if (!caa && child_crashed != cco) break;
+    if (!f) PFATAL("fdopen() failed");
 
-      fprintf(f, "%u%u\n", trace_bits[i], i);
+    for (i = 0; i < MAP_SIZE; i++) {
 
-    } else fprintf(f, "%06u:%u\n", i, trace_bits[i]);
+      if (!trace_bits[i]) continue;
+      ret++;
+
+      if (cmin_mode) {
+
+        if (child_timed_out) break;
+        if (!caa && child_crashed != cco) break;
+
+        fprintf(f, "%u%u\n", trace_bits[i], i);
+
+      } else fprintf(f, "%06u:%u\n", i, trace_bits[i]);
+
+    }
+  
+    fclose(f);
 
   }
-  
-  fclose(f);
 
   return ret;
 
@@ -297,7 +321,8 @@ static void run_target(char** argv) {
   if (*(u32*)trace_bits == EXEC_FAIL_SIG)
     FATAL("Unable to execute '%s'", argv[0]);
 
-  classify_counts(trace_bits);
+  classify_counts(trace_bits, binary_mode ?
+                  count_class_binary : count_class_human);
 
   if (!quiet_mode)
     SAYF(cRST "-- Program output ends --\n");
@@ -346,8 +371,10 @@ static void set_up_environment(void) {
                          "allocator_may_return_null=1:"
                          "msan_track_origins=0", 0);
 
-  if (getenv("AFL_LD_PRELOAD"))
-    setenv("LD_PRELOAD", getenv("AFL_LD_PRELOAD"), 1);
+  if (getenv("AFL_PRELOAD")) {
+    setenv("LD_PRELOAD", getenv("AFL_PRELOAD"), 1);
+    setenv("DYLD_INSERT_LIBRARIES", getenv("AFL_PRELOAD"), 1);
+  }
 
 }
 
@@ -587,7 +614,7 @@ int main(int argc, char** argv) {
 
   doc_path = access(DOC_PATH, F_OK) ? "docs" : DOC_PATH;
 
-  while ((opt = getopt(argc,argv,"+o:m:t:A:eqZQ")) > 0)
+  while ((opt = getopt(argc,argv,"+o:m:t:A:eqZQb")) > 0)
 
     switch (opt) {
 
@@ -682,6 +709,14 @@ int main(int argc, char** argv) {
         if (!mem_limit_given) mem_limit = MEM_LIMIT_QEMU;
 
         qemu_mode = 1;
+        break;
+
+      case 'b':
+
+        /* Secret undocumented mode. Writes output in raw binary format
+           similar to that dumped by afl-fuzz in <out_dir/queue/fuzz_bitmap. */
+
+        binary_mode = 1;
         break;
 
       default:

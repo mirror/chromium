@@ -32,7 +32,7 @@
 #include "core/html/parser/ParserSynchronizationPolicy.h"
 #include "core/loader/TextResourceDecoderBuilder.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -40,34 +40,41 @@ class Document;
 class DocumentParser;
 
 class DocumentWriter final : public GarbageCollectedFinalized<DocumentWriter> {
-    WTF_MAKE_NONCOPYABLE(DocumentWriter);
-public:
-    static DocumentWriter* create(Document*, ParserSynchronizationPolicy, const AtomicString& mimeType, const AtomicString& encoding);
+  WTF_MAKE_NONCOPYABLE(DocumentWriter);
 
-    ~DocumentWriter();
-    DECLARE_TRACE();
+ public:
+  static DocumentWriter* Create(Document*,
+                                ParserSynchronizationPolicy,
+                                const AtomicString& mime_type,
+                                const AtomicString& encoding);
 
-    void end();
+  ~DocumentWriter();
+  DECLARE_TRACE();
 
-    void addData(const char* bytes, size_t length);
+  void end();
 
-    const AtomicString& mimeType() const { return m_decoderBuilder.mimeType(); }
-    const AtomicString& encoding() const { return m_decoderBuilder.encoding(); }
+  void AddData(const char* bytes, size_t length);
 
-    // Exposed for DocumentLoader::replaceDocumentWhileExecutingJavaScriptURL.
-    void appendReplacingData(const String&);
+  const AtomicString& MimeType() const { return decoder_builder_.MimeType(); }
+  const AtomicString& Encoding() const { return decoder_builder_.Encoding(); }
 
-    void setDocumentWasLoadedAsPartOfNavigation();
+  // Exposed for DocumentLoader::replaceDocumentWhileExecutingJavaScriptURL.
+  void AppendReplacingData(const String&);
 
-private:
-    DocumentWriter(Document*, ParserSynchronizationPolicy, const AtomicString& mimeType, const AtomicString& encoding);
+  void SetDocumentWasLoadedAsPartOfNavigation();
 
-    Member<Document> m_document;
-    TextResourceDecoderBuilder m_decoderBuilder;
+ private:
+  DocumentWriter(Document*,
+                 ParserSynchronizationPolicy,
+                 const AtomicString& mime_type,
+                 const AtomicString& encoding);
 
-    Member<DocumentParser> m_parser;
+  Member<Document> document_;
+  TextResourceDecoderBuilder decoder_builder_;
+
+  Member<DocumentParser> parser_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentWriter_h
+#endif  // DocumentWriter_h

@@ -24,7 +24,14 @@ CHROMEOS_EXPORT extern const char
 CHROMEOS_EXPORT extern const char
     kAccountsPrefDeviceLocalAccountsKeyKioskAppUpdateURL[];
 CHROMEOS_EXPORT extern const char
-    kAccountsPrefDeviceLocalAccountAutoLoginId[];
+    kAccountsPrefDeviceLocalAccountsKeyArcKioskPackage[];
+CHROMEOS_EXPORT extern const char
+    kAccountsPrefDeviceLocalAccountsKeyArcKioskClass[];
+CHROMEOS_EXPORT extern const char
+    kAccountsPrefDeviceLocalAccountsKeyArcKioskAction[];
+CHROMEOS_EXPORT extern const char
+    kAccountsPrefDeviceLocalAccountsKeyArcKioskDisplayName[];
+CHROMEOS_EXPORT extern const char kAccountsPrefDeviceLocalAccountAutoLoginId[];
 CHROMEOS_EXPORT extern const char
     kAccountsPrefDeviceLocalAccountAutoLoginDelay[];
 CHROMEOS_EXPORT extern const char
@@ -38,6 +45,7 @@ CHROMEOS_EXPORT extern const char kAccountsPrefLoginScreenDomainAutoComplete[];
 CHROMEOS_EXPORT extern const char kSignedDataRoamingEnabled[];
 
 CHROMEOS_EXPORT extern const char kUpdateDisabled[];
+CHROMEOS_EXPORT extern const char kTargetVersionPrefix[];
 CHROMEOS_EXPORT extern const char kAllowedConnectionTypesForUpdate[];
 
 CHROMEOS_EXPORT extern const char kSystemTimezonePolicy[];
@@ -104,7 +112,12 @@ CHROMEOS_EXPORT extern const char kDeviceQuirksDownloadEnabled[];
 
 CHROMEOS_EXPORT extern const char kLoginVideoCaptureAllowedUrls[];
 
-CHROMEOS_EXPORT extern const char kLoginApps[];
+CHROMEOS_EXPORT extern const char kDeviceLoginScreenAppInstallList[];
+
+CHROMEOS_EXPORT extern const char kDeviceWallpaperImage[];
+
+CHROMEOS_EXPORT extern const char kDeviceLoginScreenLocales[];
+CHROMEOS_EXPORT extern const char kDeviceLoginScreenInputMethods[];
 
 }  // namespace chromeos
 

@@ -28,7 +28,10 @@ struct AXTreeUpdateState;
 // don't walk the parents and children at this time:
 //   OnNodeWillBeDeleted
 //   OnSubtreeWillBeDeleted
+//   OnNodeWillBeReparented
+//   OnSubtreeWillBeReparented
 //   OnNodeCreated
+//   OnNodeReparented
 //   OnNodeChanged
 //
 // In addition, one additional notification is fired at the end of an
@@ -46,6 +49,41 @@ class AX_EXPORT AXTreeDelegate {
                                     const AXNodeData& old_node_data,
                                     const AXNodeData& new_node_data) = 0;
 
+  // Individual callbacks for every attribute of AXNodeData that can change.
+  virtual void OnRoleChanged(AXTree* tree,
+                             AXNode* node,
+                             AXRole old_role,
+                             AXRole new_role) {}
+  virtual void OnStateChanged(AXTree* tree,
+                              AXNode* node,
+                              AXState state,
+                              bool new_value) {}
+  virtual void OnStringAttributeChanged(AXTree* tree,
+                                        AXNode* node,
+                                        AXStringAttribute attr,
+                                        const std::string& old_value,
+                                        const std::string& new_value) {}
+  virtual void OnIntAttributeChanged(AXTree* tree,
+                                     AXNode* node,
+                                     AXIntAttribute attr,
+                                     int32_t old_value,
+                                     int32_t new_value) {}
+  virtual void OnFloatAttributeChanged(AXTree* tree,
+                                       AXNode* node,
+                                       AXFloatAttribute attr,
+                                       float old_value,
+                                       float new_value) {}
+  virtual void OnBoolAttributeChanged(AXTree* tree,
+                                      AXNode* node,
+                                      AXBoolAttribute attr,
+                                      bool new_value) {}
+  virtual void OnIntListAttributeChanged(
+      AXTree* tree,
+      AXNode* node,
+      AXIntListAttribute attr,
+      const std::vector<int32_t>& old_value,
+      const std::vector<int32_t>& new_value) {}
+
   // Called when tree data changes.
   virtual void OnTreeDataChanged(AXTree* tree) = 0;
 
@@ -59,9 +97,21 @@ class AX_EXPORT AXTreeDelegate {
   // invalid state!
   virtual void OnSubtreeWillBeDeleted(AXTree* tree, AXNode* node) = 0;
 
+  // Called just before a node is deleted for reparenting. See
+  // |OnNodeWillBeDeleted| for additional information.
+  virtual void OnNodeWillBeReparented(AXTree* tree, AXNode* node) = 0;
+
+  // Called just before a subtree is deleted for reparenting. See
+  // |OnSubtreeWillBeDeleted| for additional information.
+  virtual void OnSubtreeWillBeReparented(AXTree* tree, AXNode* node) = 0;
+
   // Called immediately after a new node is created. The tree may be in
   // the middle of an update, don't walk the parents and children now.
   virtual void OnNodeCreated(AXTree* tree, AXNode* node) = 0;
+
+  // Called immediately after a node is reparented. The tree may be in the
+  // middle of an update, don't walk the parents and children now.
+  virtual void OnNodeReparented(AXTree* tree, AXNode* node) = 0;
 
   // Called when a node changes its data or children. The tree may be in
   // the middle of an update, don't walk the parents and children now.
@@ -131,12 +181,17 @@ class AX_EXPORT AXTree {
   int size() { return static_cast<int>(id_map_.size()); }
 
  private:
-  AXNode* CreateNode(AXNode* parent, int32_t id, int32_t index_in_parent);
+  AXNode* CreateNode(AXNode* parent,
+                     int32_t id,
+                     int32_t index_in_parent,
+                     AXTreeUpdateState* update_state);
 
   // This is called from within Unserialize(), it returns true on success.
   bool UpdateNode(const AXNodeData& src,
                   bool is_new_root,
                   AXTreeUpdateState* update_state);
+
+  void CallNodeChangeCallbacks(AXNode* node, const AXNodeData& new_data);
 
   void OnRootChanged();
 

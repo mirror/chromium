@@ -8,8 +8,8 @@
 #include "components/policy/core/browser/autofill_policy_handler.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_types.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
-#include "policy/policy_constants.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace policy {
@@ -28,8 +28,7 @@ TEST_F(AutofillPolicyHandlerTest, Default) {
 TEST_F(AutofillPolicyHandlerTest, Enabled) {
   PolicyMap policy;
   policy.Set(key::kAutoFillEnabled, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::FundamentalValue(true)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(true), nullptr);
   PrefValueMap prefs;
   AutofillPolicyHandler handler;
   handler.ApplyPolicySettings(policy, &prefs);
@@ -41,8 +40,8 @@ TEST_F(AutofillPolicyHandlerTest, Enabled) {
 TEST_F(AutofillPolicyHandlerTest, Disabled) {
   PolicyMap policy;
   policy.Set(key::kAutoFillEnabled, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-             POLICY_SOURCE_CLOUD,
-             base::WrapUnique(new base::FundamentalValue(false)), nullptr);
+             POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>(false),
+             nullptr);
   PrefValueMap prefs;
   AutofillPolicyHandler handler;
   handler.ApplyPolicySettings(policy, &prefs);

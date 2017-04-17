@@ -9,6 +9,7 @@
 
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/service_worker/service_worker_register_job_base.h"
@@ -17,11 +18,8 @@
 
 namespace content {
 
-class EmbeddedWorkerRegistry;
 class ServiceWorkerContextCore;
-class ServiceWorkerJobCoordinator;
 class ServiceWorkerRegistration;
-class ServiceWorkerStorage;
 
 // Handles the unregistration of a Service Worker.
 //

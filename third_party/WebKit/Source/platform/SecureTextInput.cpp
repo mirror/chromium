@@ -30,20 +30,18 @@
 
 namespace blink {
 
-void enableSecureTextInput()
-{
-    if (IsSecureEventInputEnabled())
-        return;
-    EnableSecureEventInput();
+void EnableSecureTextInput() {
+  if (IsSecureEventInputEnabled())
+    return;
+  EnableSecureEventInput();
 }
 
-void disableSecureTextInput()
-{
-    if (!IsSecureEventInputEnabled())
-        return;
-    DisableSecureEventInput();
+void DisableSecureTextInput() {
+  if (!IsSecureEventInputEnabled())
+    return;
+  DisableSecureEventInput();
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OS(MACOSX)
+#endif  // OS(MACOSX)

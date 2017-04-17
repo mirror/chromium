@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  * Portions Copyright (c) 2011 Motorola Mobility, Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,6 +27,7 @@
 
 #include "core/editing/VisiblePosition.h"
 
+#include <ostream>  // NOLINT
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
@@ -36,8 +38,7 @@
 #include "core/editing/VisibleUnits.h"
 #include "core/html/HTMLElement.h"
 #include "platform/geometry/FloatQuad.h"
-#include "wtf/text/CString.h"
-#include <ostream> // NOLINT
+#include "platform/wtf/text/CString.h"
 
 namespace blink {
 
@@ -45,147 +46,175 @@ using namespace HTMLNames;
 
 template <typename Strategy>
 VisiblePositionTemplate<Strategy>::VisiblePositionTemplate()
+#if DCHECK_IS_ON()
+    : dom_tree_version_(0),
+      style_version_(0)
+#endif
 {
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy>::VisiblePositionTemplate(const PositionWithAffinityTemplate<Strategy>& positionWithAffinity)
-    : m_positionWithAffinity(positionWithAffinity)
+VisiblePositionTemplate<Strategy>::VisiblePositionTemplate(
+    const PositionWithAffinityTemplate<Strategy>& position_with_affinity)
+    : position_with_affinity_(position_with_affinity)
+#if DCHECK_IS_ON()
+      ,
+      dom_tree_version_(position_with_affinity.GetDocument()->DomTreeVersion()),
+      style_version_(position_with_affinity.GetDocument()->StyleVersion())
+#endif
 {
-}
-
-template<typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::create(const PositionWithAffinityTemplate<Strategy>& positionWithAffinity)
-{
-    if (positionWithAffinity.isNull())
-        return VisiblePositionTemplate<Strategy>();
-    DCHECK(positionWithAffinity.position().isConnected()) << positionWithAffinity;
-    const PositionTemplate<Strategy> deepPosition = canonicalPositionOf(positionWithAffinity.position());
-    if (deepPosition.isNull())
-        return VisiblePositionTemplate<Strategy>();
-    const PositionWithAffinityTemplate<Strategy> downstreamPosition(deepPosition);
-    if (positionWithAffinity.affinity() == TextAffinity::Downstream)
-        return VisiblePositionTemplate<Strategy>(downstreamPosition);
-
-    // When not at a line wrap, make sure to end up with
-    // |TextAffinity::Downstream| affinity.
-    const PositionWithAffinityTemplate<Strategy> upstreamPosition(deepPosition, TextAffinity::Upstream);
-    if (inSameLine(downstreamPosition, upstreamPosition))
-        return VisiblePositionTemplate<Strategy>(downstreamPosition);
-    return VisiblePositionTemplate<Strategy>(upstreamPosition);
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::afterNode(Node* node)
-{
-    return create(PositionWithAffinityTemplate<Strategy>(PositionTemplate<Strategy>::afterNode(node)));
+DEFINE_TRACE(VisiblePositionTemplate<Strategy>) {
+  visitor->Trace(position_with_affinity_);
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::beforeNode(Node* node)
-{
-    return create(PositionWithAffinityTemplate<Strategy>(PositionTemplate<Strategy>::beforeNode(node)));
+VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::Create(
+    const PositionWithAffinityTemplate<Strategy>& position_with_affinity) {
+  if (position_with_affinity.IsNull())
+    return VisiblePositionTemplate<Strategy>();
+  DCHECK(position_with_affinity.IsConnected()) << position_with_affinity;
+
+  Document& document = *position_with_affinity.GetDocument();
+  DCHECK(!document.NeedsLayoutTreeUpdate());
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(
+      document.Lifecycle());
+
+  const PositionTemplate<Strategy> deep_position =
+      CanonicalPositionOf(position_with_affinity.GetPosition());
+  if (deep_position.IsNull())
+    return VisiblePositionTemplate<Strategy>();
+  const PositionWithAffinityTemplate<Strategy> downstream_position(
+      deep_position);
+  if (position_with_affinity.Affinity() == TextAffinity::kDownstream)
+    return VisiblePositionTemplate<Strategy>(downstream_position);
+
+  // When not at a line wrap, make sure to end up with
+  // |TextAffinity::Downstream| affinity.
+  const PositionWithAffinityTemplate<Strategy> upstream_position(
+      deep_position, TextAffinity::kUpstream);
+  if (InSameLine(downstream_position, upstream_position))
+    return VisiblePositionTemplate<Strategy>(downstream_position);
+  return VisiblePositionTemplate<Strategy>(upstream_position);
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::firstPositionInNode(Node* node)
-{
-    return create(PositionWithAffinityTemplate<Strategy>(PositionTemplate<Strategy>::firstPositionInNode(node)));
+VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::AfterNode(
+    Node* node) {
+  return Create(PositionWithAffinityTemplate<Strategy>(
+      PositionTemplate<Strategy>::AfterNode(node)));
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::inParentAfterNode(const Node& node)
-{
-    return create(PositionWithAffinityTemplate<Strategy>(PositionTemplate<Strategy>::inParentAfterNode(node)));
+VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::BeforeNode(
+    Node* node) {
+  return Create(PositionWithAffinityTemplate<Strategy>(
+      PositionTemplate<Strategy>::BeforeNode(node)));
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::inParentBeforeNode(const Node& node)
-{
-    return create(PositionWithAffinityTemplate<Strategy>(PositionTemplate<Strategy>::inParentBeforeNode(node)));
+VisiblePositionTemplate<Strategy>
+VisiblePositionTemplate<Strategy>::FirstPositionInNode(Node* node) {
+  return Create(PositionWithAffinityTemplate<Strategy>(
+      PositionTemplate<Strategy>::FirstPositionInNode(node)));
 }
 
 template <typename Strategy>
-VisiblePositionTemplate<Strategy> VisiblePositionTemplate<Strategy>::lastPositionInNode(Node* node)
-{
-    return create(PositionWithAffinityTemplate<Strategy>(PositionTemplate<Strategy>::lastPositionInNode(node)));
+VisiblePositionTemplate<Strategy>
+VisiblePositionTemplate<Strategy>::InParentAfterNode(const Node& node) {
+  return Create(PositionWithAffinityTemplate<Strategy>(
+      PositionTemplate<Strategy>::InParentAfterNode(node)));
 }
 
-VisiblePosition createVisiblePosition(const Position& position, TextAffinity affinity)
-{
-    return createVisiblePosition(PositionWithAffinity(position, affinity));
+template <typename Strategy>
+VisiblePositionTemplate<Strategy>
+VisiblePositionTemplate<Strategy>::InParentBeforeNode(const Node& node) {
+  return Create(PositionWithAffinityTemplate<Strategy>(
+      PositionTemplate<Strategy>::InParentBeforeNode(node)));
 }
 
-VisiblePosition createVisiblePosition(const PositionWithAffinity& positionWithAffinity)
-{
-    return VisiblePosition::create(positionWithAffinity);
+template <typename Strategy>
+VisiblePositionTemplate<Strategy>
+VisiblePositionTemplate<Strategy>::LastPositionInNode(Node* node) {
+  return Create(PositionWithAffinityTemplate<Strategy>(
+      PositionTemplate<Strategy>::LastPositionInNode(node)));
 }
 
-VisiblePositionInFlatTree createVisiblePosition(const PositionInFlatTree& position, TextAffinity affinity)
-{
-    return VisiblePositionInFlatTree::create(PositionInFlatTreeWithAffinity(position, affinity));
+VisiblePosition CreateVisiblePosition(const Position& position,
+                                      TextAffinity affinity) {
+  return VisiblePosition::Create(PositionWithAffinity(position, affinity));
 }
 
-VisiblePositionInFlatTree createVisiblePosition(const PositionInFlatTreeWithAffinity& positionWithAffinity)
-{
-    return VisiblePositionInFlatTree::create(positionWithAffinity);
+VisiblePosition CreateVisiblePosition(
+    const PositionWithAffinity& position_with_affinity) {
+  return VisiblePosition::Create(position_with_affinity);
+}
+
+VisiblePositionInFlatTree CreateVisiblePosition(
+    const PositionInFlatTree& position,
+    TextAffinity affinity) {
+  return VisiblePositionInFlatTree::Create(
+      PositionInFlatTreeWithAffinity(position, affinity));
+}
+
+VisiblePositionInFlatTree CreateVisiblePosition(
+    const PositionInFlatTreeWithAffinity& position_with_affinity) {
+  return VisiblePositionInFlatTree::Create(position_with_affinity);
 }
 
 #ifndef NDEBUG
 
-template<typename Strategy>
-void VisiblePositionTemplate<Strategy>::debugPosition(const char* msg) const
-{
-    if (isNull()) {
-        fprintf(stderr, "Position [%s]: null\n", msg);
-        return;
-    }
-    deepEquivalent().debugPosition(msg);
-}
-
-template<typename Strategy>
-void VisiblePositionTemplate<Strategy>::formatForDebugger(char* buffer, unsigned length) const
-{
-    deepEquivalent().formatForDebugger(buffer, length);
-}
-
-template<typename Strategy>
-void VisiblePositionTemplate<Strategy>::showTreeForThis() const
-{
-    deepEquivalent().showTreeForThis();
+template <typename Strategy>
+void VisiblePositionTemplate<Strategy>::ShowTreeForThis() const {
+  DeepEquivalent().ShowTreeForThis();
 }
 
 #endif
 
+template <typename Strategy>
+bool VisiblePositionTemplate<Strategy>::IsValid() const {
+#if DCHECK_IS_ON()
+  if (IsNull())
+    return true;
+  Document& document = *position_with_affinity_.GetDocument();
+  return dom_tree_version_ == document.DomTreeVersion() &&
+         style_version_ == document.StyleVersion() &&
+         !document.NeedsLayoutTreeUpdate();
+#else
+  return true;
+#endif
+}
+
 template class CORE_TEMPLATE_EXPORT VisiblePositionTemplate<EditingStrategy>;
-template class CORE_TEMPLATE_EXPORT VisiblePositionTemplate<EditingInFlatTreeStrategy>;
+template class CORE_TEMPLATE_EXPORT
+    VisiblePositionTemplate<EditingInFlatTreeStrategy>;
 
-std::ostream& operator<<(std::ostream& ostream, const VisiblePosition& position)
-{
-    return ostream << position.deepEquivalent() << '/' << position.affinity();
+std::ostream& operator<<(std::ostream& ostream,
+                         const VisiblePosition& position) {
+  return ostream << position.DeepEquivalent() << '/' << position.Affinity();
 }
 
-std::ostream& operator<<(std::ostream& ostream, const VisiblePositionInFlatTree& position)
-{
-    return ostream << position.deepEquivalent() << '/' << position.affinity();
+std::ostream& operator<<(std::ostream& ostream,
+                         const VisiblePositionInFlatTree& position) {
+  return ostream << position.DeepEquivalent() << '/' << position.Affinity();
 }
 
-} // namespace blink
+}  // namespace blink
 
 #ifndef NDEBUG
 
-void showTree(const blink::VisiblePosition* vpos)
-{
-    if (vpos) {
-        vpos->showTreeForThis();
-        return;
-    }
-    DVLOG(0) << "Cannot showTree for (nil) VisiblePosition.";
+void showTree(const blink::VisiblePosition* vpos) {
+  if (vpos) {
+    vpos->ShowTreeForThis();
+    return;
+  }
+  DVLOG(0) << "Cannot showTree for (nil) VisiblePosition.";
 }
 
-void showTree(const blink::VisiblePosition& vpos)
-{
-    vpos.showTreeForThis();
+void showTree(const blink::VisiblePosition& vpos) {
+  vpos.ShowTreeForThis();
 }
 
 #endif

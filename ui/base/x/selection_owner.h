@@ -21,6 +21,8 @@
 
 namespace ui {
 
+class XScopedEventSelector;
+
 // Owns a specific X11 selection on an X window.
 //
 // The selection owner object keeps track of which xwindow is the current
@@ -63,18 +65,24 @@ class UI_BASE_EXPORT SelectionOwner {
     IncrementalTransfer(XID window,
                         XAtom target,
                         XAtom property,
+                        std::unique_ptr<XScopedEventSelector> event_selector,
                         const scoped_refptr<base::RefCountedMemory>& data,
                         int offset,
-                        base::TimeTicks timeout,
-                        int foreign_window_manager_id);
-    IncrementalTransfer(const IncrementalTransfer& other);
+                        base::TimeTicks timeout);
     ~IncrementalTransfer();
+
+    // Move-only class.
+    IncrementalTransfer(IncrementalTransfer&&);
+    IncrementalTransfer& operator=(IncrementalTransfer&&);
 
     // Parameters from the XSelectionRequest. The data is transferred over
     // |property| on |window|.
     XID window;
     XAtom target;
     XAtom property;
+
+    // Selects events on |window|.
+    std::unique_ptr<XScopedEventSelector> event_selector;
 
     // The data to be transferred.
     scoped_refptr<base::RefCountedMemory> data;
@@ -87,9 +95,8 @@ class UI_BASE_EXPORT SelectionOwner {
     // is taking too long to notify us that we can send the next chunk.
     base::TimeTicks timeout;
 
-    // Used to unselect PropertyChangeMask on |window| when we are done with
-    // the data transfer.
-    int foreign_window_manager_id;
+   private:
+    DISALLOW_COPY_AND_ASSIGN(IncrementalTransfer);
   };
 
   // Attempts to convert the selection to |target|. If the conversion is

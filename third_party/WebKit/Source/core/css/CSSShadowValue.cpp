@@ -19,83 +19,77 @@
  */
 #include "core/css/CSSShadowValue.h"
 
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPrimitiveValue.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 // Used for text-shadow and box-shadow
 CSSShadowValue::CSSShadowValue(CSSPrimitiveValue* x,
-    CSSPrimitiveValue* y,
-    CSSPrimitiveValue* blur,
-    CSSPrimitiveValue* spread,
-    CSSPrimitiveValue* style,
-    CSSValue* color)
-    : CSSValue(ShadowClass)
-    , x(x)
-    , y(y)
-    , blur(blur)
-    , spread(spread)
-    , style(style)
-    , color(color)
-{
+                               CSSPrimitiveValue* y,
+                               CSSPrimitiveValue* blur,
+                               CSSPrimitiveValue* spread,
+                               CSSIdentifierValue* style,
+                               CSSValue* color)
+    : CSSValue(kShadowClass),
+      x(x),
+      y(y),
+      blur(blur),
+      spread(spread),
+      style(style),
+      color(color) {}
+
+String CSSShadowValue::CustomCSSText() const {
+  StringBuilder text;
+
+  if (color)
+    text.Append(color->CssText());
+  if (x) {
+    if (!text.IsEmpty())
+      text.Append(' ');
+    text.Append(x->CssText());
+  }
+  if (y) {
+    if (!text.IsEmpty())
+      text.Append(' ');
+    text.Append(y->CssText());
+  }
+  if (blur) {
+    if (!text.IsEmpty())
+      text.Append(' ');
+    text.Append(blur->CssText());
+  }
+  if (spread) {
+    if (!text.IsEmpty())
+      text.Append(' ');
+    text.Append(spread->CssText());
+  }
+  if (style) {
+    if (!text.IsEmpty())
+      text.Append(' ');
+    text.Append(style->CssText());
+  }
+
+  return text.ToString();
 }
 
-String CSSShadowValue::customCSSText() const
-{
-    StringBuilder text;
-
-    if (color)
-        text.append(color->cssText());
-    if (x) {
-        if (!text.isEmpty())
-            text.append(' ');
-        text.append(x->cssText());
-    }
-    if (y) {
-        if (!text.isEmpty())
-            text.append(' ');
-        text.append(y->cssText());
-    }
-    if (blur) {
-        if (!text.isEmpty())
-            text.append(' ');
-        text.append(blur->cssText());
-    }
-    if (spread) {
-        if (!text.isEmpty())
-            text.append(' ');
-        text.append(spread->cssText());
-    }
-    if (style) {
-        if (!text.isEmpty())
-            text.append(' ');
-        text.append(style->cssText());
-    }
-
-    return text.toString();
+bool CSSShadowValue::Equals(const CSSShadowValue& other) const {
+  return DataEquivalent(color, other.color) && DataEquivalent(x, other.x) &&
+         DataEquivalent(y, other.y) && DataEquivalent(blur, other.blur) &&
+         DataEquivalent(spread, other.spread) &&
+         DataEquivalent(style, other.style);
 }
 
-bool CSSShadowValue::equals(const CSSShadowValue& other) const
-{
-    return compareCSSValuePtr(color, other.color)
-        && compareCSSValuePtr(x, other.x)
-        && compareCSSValuePtr(y, other.y)
-        && compareCSSValuePtr(blur, other.blur)
-        && compareCSSValuePtr(spread, other.spread)
-        && compareCSSValuePtr(style, other.style);
+DEFINE_TRACE_AFTER_DISPATCH(CSSShadowValue) {
+  visitor->Trace(x);
+  visitor->Trace(y);
+  visitor->Trace(blur);
+  visitor->Trace(spread);
+  visitor->Trace(style);
+  visitor->Trace(color);
+  CSSValue::TraceAfterDispatch(visitor);
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(CSSShadowValue)
-{
-    visitor->trace(x);
-    visitor->trace(y);
-    visitor->trace(blur);
-    visitor->trace(spread);
-    visitor->trace(style);
-    visitor->trace(color);
-    CSSValue::traceAfterDispatch(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

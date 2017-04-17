@@ -5,15 +5,12 @@
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 
 #include "base/macros.h"
-#include "base/sys_info.h"
 #include "chrome/browser/chromeos/system/fake_input_device_settings.h"
+#include "chromeos/system/devicemode.h"
 #include "content/public/browser/browser_thread.h"
+#include "services/service_manager/runner/common/client_util.h"
 #include "ui/ozone/public/input_controller.h"
 #include "ui/ozone/public/ozone_platform.h"
-
-#if defined(MOJO_SHELL_CLIENT)
-#include "services/shell/runner/common/client_util.h"
-#endif
 
 namespace chromeos {
 namespace system {
@@ -23,11 +20,9 @@ namespace {
 InputDeviceSettings* g_instance = nullptr;
 
 std::unique_ptr<ui::InputController> CreateStubInputControllerIfNecessary() {
-#if defined(MOJO_SHELL_CLIENT)
-  return shell::ShellIsRemote() ? ui::CreateStubInputController() : nullptr;
-#else
-  return nullptr;
-#endif
+  return service_manager::ServiceManagerIsRemote()
+             ? ui::CreateStubInputController()
+             : nullptr;
 }
 
 // InputDeviceSettings for Linux without X11 (a.k.a. Ozone).
@@ -170,7 +165,7 @@ void InputDeviceSettingsImplOzone::SetTouchscreensEnabled(bool enabled) {
 // static
 InputDeviceSettings* InputDeviceSettings::Get() {
   if (!g_instance) {
-    if (base::SysInfo::IsRunningOnChromeOS())
+    if (IsRunningAsSystemCompositor())
       g_instance = new InputDeviceSettingsImplOzone;
     else
       g_instance = new FakeInputDeviceSettings();

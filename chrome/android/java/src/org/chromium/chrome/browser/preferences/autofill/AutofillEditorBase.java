@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.preferences.autofill;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,21 +14,24 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.payments.ui.EditorView;
-import org.chromium.chrome.browser.payments.ui.FadingEdgeScrollView;
-import org.chromium.chrome.browser.widget.DualControlLayout;
+import org.chromium.chrome.browser.widget.FadingEdgeScrollView;
 
 /** Base class for Autofill editors (e.g. credit cards and profiles). */
 public abstract class AutofillEditorBase
-        extends Fragment implements OnItemSelectedListener, TextWatcher {
+        extends Fragment implements OnItemSelectedListener, OnTouchListener, TextWatcher {
 
     /** GUID of the profile we are editing.  Empty if creating a new profile. */
     protected String mGUID;
@@ -46,10 +50,10 @@ public abstract class AutofillEditorBase
         mContext = container.getContext();
 
         // We know which profile to edit based on the GUID stuffed in
-        // our extras by AutofillPreferences.
+        // our extras by AutofillAndPaymentsPreferences.
         Bundle extras = getArguments();
         if (extras != null) {
-            mGUID = extras.getString(AutofillPreferences.AUTOFILL_GUID);
+            mGUID = extras.getString(AutofillAndPaymentsPreferences.AUTOFILL_GUID);
         }
         if (mGUID == null) {
             mGUID = "";
@@ -62,7 +66,8 @@ public abstract class AutofillEditorBase
         // Hide the top shadow on the ScrollView because the toolbar draws one.
         FadingEdgeScrollView scrollView = (FadingEdgeScrollView) inflater.inflate(
                 R.layout.autofill_editor_base, container, false);
-        scrollView.setShadowVisibility(false, true);
+        scrollView.setEdgeVisibility(
+                FadingEdgeScrollView.DRAW_NO_EDGE, FadingEdgeScrollView.DRAW_FADING_EDGE);
 
         // Inflate the editor and buttons into the "content" LinearLayout.
         LinearLayout contentLayout = (LinearLayout) scrollView.findViewById(R.id.content);
@@ -86,6 +91,18 @@ public abstract class AutofillEditorBase
         return super.onOptionsItemSelected(item);
     }
 
+    // Process touch event on spinner views so we can clear the keyboard.
+    @Override
+    @SuppressLint("ClickableViewAccessibility")
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v instanceof Spinner) {
+            InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+        return false;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -102,9 +119,6 @@ public abstract class AutofillEditorBase
 
     /** Initializes the buttons within the layout. */
     protected void initializeButtons(View layout) {
-        DualControlLayout buttonBar = (DualControlLayout) layout.findViewById(R.id.button_bar);
-        buttonBar.setAlignment(DualControlLayout.ALIGN_END);
-
         Button button = (Button) layout.findViewById(R.id.button_secondary);
         button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,8 +131,9 @@ public abstract class AutofillEditorBase
         button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    saveEntry();
-                    getActivity().finish();
+                    if (saveEntry()) {
+                        getActivity().finish();
+                    }
                 }
             });
         button.setEnabled(false);
@@ -127,8 +142,8 @@ public abstract class AutofillEditorBase
     /** Returns the ID of the layout to inflate. */
     protected abstract int getLayoutId();
 
-    /** Called when the entry should be saved. */
-    protected abstract void saveEntry();
+    /** @return True if entry could be saved and activity can be finished. */
+    protected abstract boolean saveEntry();
 
     /** Called when the entry being edited should be deleted. */
     protected void deleteEntry() {

@@ -4,7 +4,10 @@
 
 #include "core/dom/custom/CustomElementUpgradeSorter.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/StringOrDictionary.h"
+#include "bindings/core/v8/V8Binding.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -13,215 +16,201 @@
 #include "core/html/HTMLDocument.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/text/AtomicString.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/text/AtomicString.h"
-#include <memory>
 
 namespace blink {
 
 class CustomElementUpgradeSorterTest : public ::testing::Test {
-protected:
-    void SetUp() override
-    {
-        m_page = DummyPageHolder::create(IntSize(1, 1));
-    }
+ protected:
+  void SetUp() override { page_ = DummyPageHolder::Create(IntSize(1, 1)); }
 
-    void TearDown() override
-    {
-        m_page = nullptr;
-    }
+  void TearDown() override { page_ = nullptr; }
 
-    Element* createElementWithId(const char* localName, const char* id)
-    {
-        NonThrowableExceptionState noExceptions;
-        Element* element =
-            document()->createElement(localName, AtomicString(), noExceptions);
-        element->setAttribute(HTMLNames::idAttr, id);
-        return element;
-    }
+  Element* CreateElementWithId(const char* local_name, const char* id) {
+    NonThrowableExceptionState no_exceptions;
+    Element* element = GetDocument()->createElement(
+        local_name, StringOrDictionary(), no_exceptions);
+    element->setAttribute(HTMLNames::idAttr, id);
+    return element;
+  }
 
-    Document* document() { return &m_page->document(); }
+  Document* GetDocument() { return &page_->GetDocument(); }
 
-    ScriptState* scriptState()
-    {
-        return ScriptState::forMainWorld(&m_page->frame());
-    }
+  ScriptState* GetScriptState() {
+    return ToScriptStateForMainWorld(&page_->GetFrame());
+  }
 
-    ShadowRoot* attachShadowTo(Element* element)
-    {
-        NonThrowableExceptionState noExceptions;
-        ShadowRootInit shadowRootInit;
-        return
-            element->attachShadow(scriptState(), shadowRootInit, noExceptions);
-    }
+  ShadowRoot* AttachShadowTo(Element* element) {
+    NonThrowableExceptionState no_exceptions;
+    ShadowRootInit shadow_root_init;
+    shadow_root_init.setMode("open");
+    return element->attachShadow(GetScriptState(), shadow_root_init,
+                                 no_exceptions);
+  }
 
-private:
-    std::unique_ptr<DummyPageHolder> m_page;
+ private:
+  std::unique_ptr<DummyPageHolder> page_;
 };
 
-TEST_F(CustomElementUpgradeSorterTest, inOtherDocument_notInSet)
-{
-    NonThrowableExceptionState noExceptions;
-    Element* element =
-        document()->createElement("a-a", AtomicString(), noExceptions);
+TEST_F(CustomElementUpgradeSorterTest, inOtherDocument_notInSet) {
+  NonThrowableExceptionState no_exceptions;
+  Element* element =
+      GetDocument()->createElement("a-a", StringOrDictionary(), no_exceptions);
 
-    Document* otherDocument = HTMLDocument::create();
-    otherDocument->appendChild(element);
-    EXPECT_EQ(otherDocument, element->ownerDocument())
-        << "sanity: another document should have adopted an element on append";
+  Document* other_document = HTMLDocument::Create();
+  other_document->AppendChild(element);
+  EXPECT_EQ(other_document, element->ownerDocument())
+      << "sanity: another document should have adopted an element on append";
 
-    CustomElementUpgradeSorter sorter;
-    sorter.add(element);
+  CustomElementUpgradeSorter sorter;
+  sorter.Add(element);
 
-    HeapVector<Member<Element>> elements;
-    sorter.sorted(&elements, document());
-    EXPECT_EQ(0u, elements.size())
-        << "the adopted-away candidate should not have been included";
+  HeapVector<Member<Element>> elements;
+  sorter.Sorted(&elements, GetDocument());
+  EXPECT_EQ(0u, elements.size())
+      << "the adopted-away candidate should not have been included";
 }
 
-TEST_F(CustomElementUpgradeSorterTest, oneCandidate)
-{
-    NonThrowableExceptionState noExceptions;
-    Element* element =
-        document()->createElement("a-a", AtomicString(), noExceptions);
-    document()->documentElement()->appendChild(element);
+TEST_F(CustomElementUpgradeSorterTest, oneCandidate) {
+  NonThrowableExceptionState no_exceptions;
+  Element* element =
+      GetDocument()->createElement("a-a", StringOrDictionary(), no_exceptions);
+  GetDocument()->documentElement()->AppendChild(element);
 
-    CustomElementUpgradeSorter sorter;
-    sorter.add(element);
+  CustomElementUpgradeSorter sorter;
+  sorter.Add(element);
 
-    HeapVector<Member<Element>> elements;
-    sorter.sorted(&elements, document());
-    EXPECT_EQ(1u, elements.size())
-        << "exactly one candidate should be in the result set";
-    EXPECT_TRUE(elements.contains(element))
-        << "the candidate should be the element that was added";
+  HeapVector<Member<Element>> elements;
+  sorter.Sorted(&elements, GetDocument());
+  EXPECT_EQ(1u, elements.size())
+      << "exactly one candidate should be in the result set";
+  EXPECT_TRUE(elements.Contains(element))
+      << "the candidate should be the element that was added";
 }
 
-TEST_F(CustomElementUpgradeSorterTest, candidatesInDocumentOrder)
-{
-    Element* a = createElementWithId("a-a", "a");
-    Element* b = createElementWithId("a-a", "b");
-    Element* c = createElementWithId("a-a", "c");
+TEST_F(CustomElementUpgradeSorterTest, candidatesInDocumentOrder) {
+  Element* a = CreateElementWithId("a-a", "a");
+  Element* b = CreateElementWithId("a-a", "b");
+  Element* c = CreateElementWithId("a-a", "c");
 
-    document()->documentElement()->appendChild(a);
-    a->appendChild(b);
-    document()->documentElement()->appendChild(c);
+  GetDocument()->documentElement()->AppendChild(a);
+  a->AppendChild(b);
+  GetDocument()->documentElement()->AppendChild(c);
 
-    CustomElementUpgradeSorter sorter;
-    sorter.add(b);
-    sorter.add(a);
-    sorter.add(c);
+  CustomElementUpgradeSorter sorter;
+  sorter.Add(b);
+  sorter.Add(a);
+  sorter.Add(c);
 
-    HeapVector<Member<Element>> elements;
-    sorter.sorted(&elements, document());
-    EXPECT_EQ(3u, elements.size());
-    EXPECT_EQ(a, elements[0].get());
-    EXPECT_EQ(b, elements[1].get());
-    EXPECT_EQ(c, elements[2].get());
+  HeapVector<Member<Element>> elements;
+  sorter.Sorted(&elements, GetDocument());
+  EXPECT_EQ(3u, elements.size());
+  EXPECT_EQ(a, elements[0].Get());
+  EXPECT_EQ(b, elements[1].Get());
+  EXPECT_EQ(c, elements[2].Get());
 }
 
-TEST_F(CustomElementUpgradeSorterTest, sorter_ancestorInSet)
-{
-    // A*
-    // + B
-    //   + C*
-    Element* a = createElementWithId("a-a", "a");
-    Element* b = createElementWithId("a-a", "b");
-    Element* c = createElementWithId("a-a", "c");
+TEST_F(CustomElementUpgradeSorterTest, sorter_ancestorInSet) {
+  // A*
+  // + B
+  //   + C*
+  Element* a = CreateElementWithId("a-a", "a");
+  Element* b = CreateElementWithId("a-a", "b");
+  Element* c = CreateElementWithId("a-a", "c");
 
-    document()->documentElement()->appendChild(a);
-    a->appendChild(b);
-    b->appendChild(c);
+  GetDocument()->documentElement()->AppendChild(a);
+  a->AppendChild(b);
+  b->AppendChild(c);
 
-    CustomElementUpgradeSorter sort;
-    sort.add(c);
-    sort.add(a);
+  CustomElementUpgradeSorter sort;
+  sort.Add(c);
+  sort.Add(a);
 
-    HeapVector<Member<Element>> elements;
-    sort.sorted(&elements, document());
-    EXPECT_EQ(2u, elements.size());
-    EXPECT_EQ(a, elements[0].get());
-    EXPECT_EQ(c, elements[1].get());
+  HeapVector<Member<Element>> elements;
+  sort.Sorted(&elements, GetDocument());
+  EXPECT_EQ(2u, elements.size());
+  EXPECT_EQ(a, elements[0].Get());
+  EXPECT_EQ(c, elements[1].Get());
 }
 
-TEST_F(CustomElementUpgradeSorterTest, sorter_deepShallow)
-{
-    // A
-    // + B*
-    // C*
-    Element* a = createElementWithId("a-a", "a");
-    Element* b = createElementWithId("a-a", "b");
-    Element* c = createElementWithId("a-a", "c");
+TEST_F(CustomElementUpgradeSorterTest, sorter_deepShallow) {
+  // A
+  // + B*
+  // C*
+  Element* a = CreateElementWithId("a-a", "a");
+  Element* b = CreateElementWithId("a-a", "b");
+  Element* c = CreateElementWithId("a-a", "c");
 
-    document()->documentElement()->appendChild(a);
-    a->appendChild(b);
-    document()->documentElement()->appendChild(c);
+  GetDocument()->documentElement()->AppendChild(a);
+  a->AppendChild(b);
+  GetDocument()->documentElement()->AppendChild(c);
 
-    CustomElementUpgradeSorter sort;
-    sort.add(b);
-    sort.add(c);
+  CustomElementUpgradeSorter sort;
+  sort.Add(b);
+  sort.Add(c);
 
-    HeapVector<Member<Element>> elements;
-    sort.sorted(&elements, document());
-    EXPECT_EQ(2u, elements.size());
-    EXPECT_EQ(b, elements[0].get());
-    EXPECT_EQ(c, elements[1].get());
+  HeapVector<Member<Element>> elements;
+  sort.Sorted(&elements, GetDocument());
+  EXPECT_EQ(2u, elements.size());
+  EXPECT_EQ(b, elements[0].Get());
+  EXPECT_EQ(c, elements[1].Get());
 }
 
-TEST_F(CustomElementUpgradeSorterTest, sorter_shallowDeep)
-{
-    // A*
-    // B
-    // + C*
-    Element* a = createElementWithId("a-a", "a");
-    Element* b = createElementWithId("a-a", "b");
-    Element* c = createElementWithId("a-a", "c");
+TEST_F(CustomElementUpgradeSorterTest, sorter_shallowDeep) {
+  // A*
+  // B
+  // + C*
+  Element* a = CreateElementWithId("a-a", "a");
+  Element* b = CreateElementWithId("a-a", "b");
+  Element* c = CreateElementWithId("a-a", "c");
 
-    document()->documentElement()->appendChild(a);
-    document()->documentElement()->appendChild(b);
-    b->appendChild(c);
+  GetDocument()->documentElement()->AppendChild(a);
+  GetDocument()->documentElement()->AppendChild(b);
+  b->AppendChild(c);
 
-    CustomElementUpgradeSorter sort;
-    sort.add(a);
-    sort.add(c);
+  CustomElementUpgradeSorter sort;
+  sort.Add(a);
+  sort.Add(c);
 
-    HeapVector<Member<Element>> elements;
-    sort.sorted(&elements, document());
-    EXPECT_EQ(2u, elements.size());
-    EXPECT_EQ(a, elements[0].get());
-    EXPECT_EQ(c, elements[1].get());
+  HeapVector<Member<Element>> elements;
+  sort.Sorted(&elements, GetDocument());
+  EXPECT_EQ(2u, elements.size());
+  EXPECT_EQ(a, elements[0].Get());
+  EXPECT_EQ(c, elements[1].Get());
 }
 
-TEST_F(CustomElementUpgradeSorterTest, sorter_shadow)
-{
-    // A*
-    // + {ShadowRoot}
-    // | + B
-    // |   + C*
-    // + D*
-    Element* a = createElementWithId("a-a", "a");
-    Element* b = createElementWithId("a-a", "b");
-    Element* c = createElementWithId("a-a", "c");
-    Element* d = createElementWithId("a-a", "d");
+TEST_F(CustomElementUpgradeSorterTest, sorter_shadow) {
+  // A*
+  // + {ShadowRoot}
+  // | + B
+  // |   + C*
+  // + D*
+  Element* a = CreateElementWithId("a-a", "a");
+  Element* b = CreateElementWithId("a-a", "b");
+  Element* c = CreateElementWithId("a-a", "c");
+  Element* d = CreateElementWithId("a-a", "d");
 
-    document()->documentElement()->appendChild(a);
-    ShadowRoot* s = attachShadowTo(a);
-    a->appendChild(d);
+  GetDocument()->documentElement()->AppendChild(a);
+  ShadowRoot* s = AttachShadowTo(a);
+  a->AppendChild(d);
 
-    s->appendChild(b);
-    b->appendChild(c);
+  s->AppendChild(b);
+  b->AppendChild(c);
 
-    CustomElementUpgradeSorter sort;
-    sort.add(a);
-    sort.add(c);
-    sort.add(d);
+  CustomElementUpgradeSorter sort;
+  sort.Add(a);
+  sort.Add(c);
+  sort.Add(d);
 
-    HeapVector<Member<Element>> elements;
-    sort.sorted(&elements, document());
-    EXPECT_EQ(3u, elements.size());
-    EXPECT_EQ(a, elements[0].get());
-    EXPECT_EQ(c, elements[1].get());
-    EXPECT_EQ(d, elements[2].get());
+  HeapVector<Member<Element>> elements;
+  sort.Sorted(&elements, GetDocument());
+  EXPECT_EQ(3u, elements.size());
+  EXPECT_EQ(a, elements[0].Get());
+  EXPECT_EQ(c, elements[1].Get());
+  EXPECT_EQ(d, elements[2].Get());
 }
 
-} // namespace blink
+// TODO(kochi): Add test cases which uses HTML imports.
+
+}  // namespace blink

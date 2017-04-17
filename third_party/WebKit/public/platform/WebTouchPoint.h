@@ -40,36 +40,36 @@ namespace blink {
 // TODO(e_hakkinen): Replace WebTouchEvent with WebPointerEvent and remove
 // WebTouchEvent and this.
 class WebTouchPoint : public WebPointerProperties {
-public:
-    WebTouchPoint()
-        : WebPointerProperties()
-        , state(StateUndefined)
-        , radiusX(0)
-        , radiusY(0)
-        , rotationAngle(0)
-    {
-    }
+ public:
+  WebTouchPoint()
+      : WebPointerProperties(),
+        state(kStateUndefined),
+        radius_x(0),
+        radius_y(0),
+        rotation_angle(0) {}
 
-    enum State {
-        StateUndefined,
-        StateReleased,
-        StatePressed,
-        StateMoved,
-        StateStationary,
-        StateCancelled,
-    };
+  enum State {
+    kStateUndefined,
+    kStateReleased,
+    kStatePressed,
+    kStateMoved,
+    kStateStationary,
+    kStateCancelled,
+    kStateMax = kStateCancelled
+  };
 
-    State state;
+  State state;
 
-    // TODO(e_hakkinen): Move position fields to WebPointerProperties.
-    WebFloatPoint screenPosition;
-    WebFloatPoint position;
+  // TODO(mustaq): Move these coordinates to WebPointerProperties as private
+  // class members, as in WebMouseEvent.h now. crbug.com/508283
+  WebFloatPoint screen_position;
+  WebFloatPoint position;
 
-    float radiusX;
-    float radiusY;
-    float rotationAngle;
+  float radius_x;
+  float radius_y;
+  float rotation_angle;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/memory/ref_counted.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
 #import "ios/third_party/gcdwebserver/src/GCDWebServer/Core/GCDWebServer.h"
@@ -80,6 +81,11 @@ void HttpServer::InitHttpServer() {
   // Note: This block is called from an arbitrary GCD thread.
   id process_request =
       ^GCDWebServerResponse*(GCDWebServerDataRequest* request) {
+      // Relax the cross-thread access restriction to non-thread-safe RefCount.
+      // TODO(crbug.com/707010): Remove ScopedAllowCrossThreadRefCountAccess.
+      base::ScopedAllowCrossThreadRefCountAccess
+          allow_cross_thread_ref_count_access;
+
       ResponseProvider::Request provider_request =
           ResponseProviderRequestFromGCDWebServerRequest(request);
       scoped_refptr<RefCountedResponseProviderWrapper>
@@ -145,6 +151,11 @@ bool HttpServer::IsRunning() const {
   return [gcd_web_server_ isRunning];
 }
 
+NSUInteger HttpServer::GetPort() const {
+  base::AutoLock autolock(port_lock_);
+  return port_;
+}
+
 // static
 GURL HttpServer::MakeUrl(const std::string &url) {
   return HttpServer::GetSharedInstance().MakeUrlForHttpServer(url);
@@ -178,6 +189,10 @@ scoped_refptr<RefCountedResponseProviderWrapper>
     HttpServer::GetResponseProviderForRequest(
         const web::ResponseProvider::Request& request) {
   base::AutoLock autolock(provider_list_lock_);
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in HTTPServer.
+  base::ScopedAllowCrossThreadRefCountAccess
+      allow_cross_thread_ref_count_access;
   scoped_refptr<RefCountedResponseProviderWrapper> result;
   for (const auto& ref_counted_response_provider : providers_) {
     ResponseProvider* response_provider =
@@ -197,6 +212,10 @@ void HttpServer::AddResponseProvider(
   DCHECK(IsRunning()) << "Can add a response provider only when the server is "
                       << "running.";
   base::AutoLock autolock(provider_list_lock_);
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in HTTPServer.
+  base::ScopedAllowCrossThreadRefCountAccess
+      allow_cross_thread_ref_count_access;
   scoped_refptr<RefCountedResponseProviderWrapper>
       ref_counted_response_provider(
           new RefCountedResponseProviderWrapper(std::move(response_provider)));
@@ -206,6 +225,10 @@ void HttpServer::AddResponseProvider(
 void HttpServer::RemoveResponseProvider(ResponseProvider* response_provider) {
   DCHECK([NSThread isMainThread]);
   base::AutoLock autolock(provider_list_lock_);
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in HTTPServer.
+  base::ScopedAllowCrossThreadRefCountAccess
+      allow_cross_thread_ref_count_access;
   auto found_iter = providers_.end();
   for (auto it = providers_.begin(); it != providers_.end(); ++it) {
     if ((*it)->GetResponseProvider() == response_provider) {
@@ -221,17 +244,16 @@ void HttpServer::RemoveResponseProvider(ResponseProvider* response_provider) {
 void HttpServer::RemoveAllResponseProviders() {
   DCHECK([NSThread isMainThread]);
   base::AutoLock autolock(provider_list_lock_);
+  // Relax the cross-thread access restriction to non-thread-safe RefCount.
+  // The lock above protects non-thread-safe RefCount in HTTPServer.
+  base::ScopedAllowCrossThreadRefCountAccess
+      allow_cross_thread_ref_count_access;
   providers_.clear();
 }
 
 void HttpServer::SetPort(NSUInteger port) {
   base::AutoLock autolock(port_lock_);
   port_ = port;
-}
-
-NSUInteger HttpServer::GetPort() const {
-  base::AutoLock autolock(port_lock_);
-  return port_;
 }
 
 } // namespace test

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,44 +32,38 @@ namespace blink {
 class ComputedStyle;
 
 class PseudoStyleRequest {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    enum RequestType { ForRenderer, ForComputedStyle };
+ public:
+  enum RequestType { kForRenderer, kForComputedStyle };
 
-    PseudoStyleRequest(PseudoId pseudoId, LayoutScrollbar* scrollbar = 0, ScrollbarPart scrollbarPart = NoPart)
-        : pseudoId(pseudoId)
-        , type(ForRenderer)
-        , scrollbarPart(scrollbarPart)
-        , scrollbar(scrollbar)
-    {
-    }
+  PseudoStyleRequest(PseudoId pseudo_id,
+                     LayoutScrollbar* scrollbar = 0,
+                     ScrollbarPart scrollbar_part = kNoPart)
+      : pseudo_id(pseudo_id),
+        type(kForRenderer),
+        scrollbar_part(scrollbar_part),
+        scrollbar(scrollbar) {}
 
-    PseudoStyleRequest(PseudoId pseudoId, RequestType requestType)
-        : pseudoId(pseudoId)
-        , type(requestType)
-        , scrollbarPart(NoPart)
-        , scrollbar(nullptr)
-    {
-    }
+  PseudoStyleRequest(PseudoId pseudo_id, RequestType request_type)
+      : pseudo_id(pseudo_id),
+        type(request_type),
+        scrollbar_part(kNoPart),
+        scrollbar(nullptr) {}
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(scrollbar);
-    }
+  DEFINE_INLINE_TRACE() { visitor->Trace(scrollbar); }
 
-    // The spec disallows inheritance for ::backdrop.
-    bool allowsInheritance(const ComputedStyle* parentStyle) const
-    {
-        return parentStyle && pseudoId != PseudoIdBackdrop;
-    }
+  // The spec disallows inheritance for ::backdrop.
+  bool AllowsInheritance(const ComputedStyle* parent_style) const {
+    return parent_style && pseudo_id != kPseudoIdBackdrop;
+  }
 
-    PseudoId pseudoId;
-    RequestType type;
-    ScrollbarPart scrollbarPart;
-    Member<LayoutScrollbar> scrollbar;
+  PseudoId pseudo_id;
+  RequestType type;
+  ScrollbarPart scrollbar_part;
+  Member<LayoutScrollbar> scrollbar;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PseudoStyleRequest_h
+#endif  // PseudoStyleRequest_h

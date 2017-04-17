@@ -4,53 +4,42 @@
 
 #include "public/platform/WebScheduler.h"
 
-#include "public/platform/WebFrameScheduler.h"
+#include "platform/WebFrameScheduler.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/Assertions.h"
 
 namespace blink {
 
 namespace {
 
 class IdleTaskRunner : public WebThread::IdleTask {
-    USING_FAST_MALLOC(IdleTaskRunner);
-    WTF_MAKE_NONCOPYABLE(IdleTaskRunner);
+  USING_FAST_MALLOC(IdleTaskRunner);
+  WTF_MAKE_NONCOPYABLE(IdleTaskRunner);
 
-public:
-    explicit IdleTaskRunner(std::unique_ptr<WebScheduler::IdleTask> task)
-        : m_task(std::move(task))
-    {
-    }
+ public:
+  explicit IdleTaskRunner(std::unique_ptr<WebScheduler::IdleTask> task)
+      : task_(std::move(task)) {}
 
-    ~IdleTaskRunner() override
-    {
-    }
+  ~IdleTaskRunner() override {}
 
-    // WebThread::IdleTask implementation.
-    void run(double deadlineSeconds) override
-    {
-        (*m_task)(deadlineSeconds);
-    }
+  // WebThread::IdleTask implementation.
+  void Run(double deadline_seconds) override { (*task_)(deadline_seconds); }
 
-private:
-    std::unique_ptr<WebScheduler::IdleTask> m_task;
+ private:
+  std::unique_ptr<WebScheduler::IdleTask> task_;
 };
 
-} // namespace
+}  // namespace
 
-void WebScheduler::postIdleTask(const WebTraceLocation& location, std::unique_ptr<IdleTask> idleTask)
-{
-    postIdleTask(location, new IdleTaskRunner(std::move(idleTask)));
+void WebScheduler::PostIdleTask(const WebTraceLocation& location,
+                                std::unique_ptr<IdleTask> idle_task) {
+  PostIdleTask(location, new IdleTaskRunner(std::move(idle_task)));
 }
 
-void WebScheduler::postNonNestableIdleTask(const WebTraceLocation& location, std::unique_ptr<IdleTask> idleTask)
-{
-    postNonNestableIdleTask(location, new IdleTaskRunner(std::move(idleTask)));
+void WebScheduler::PostNonNestableIdleTask(
+    const WebTraceLocation& location,
+    std::unique_ptr<IdleTask> idle_task) {
+  PostNonNestableIdleTask(location, new IdleTaskRunner(std::move(idle_task)));
 }
 
-void WebScheduler::postIdleTaskAfterWakeup(const WebTraceLocation& location, std::unique_ptr<IdleTask> idleTask)
-{
-    postIdleTaskAfterWakeup(location, new IdleTaskRunner(std::move(idleTask)));
-}
-
-} // namespace blink
+}  // namespace blink

@@ -5,47 +5,46 @@
 #ifndef AnimationEffectTiming_h
 #define AnimationEffectTiming_h
 
-#include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
-#include "core/animation/AnimationEffect.h"
-#include "wtf/text/WTFString.h"
+#include "core/animation/AnimationEffectReadOnly.h"
+#include "core/animation/AnimationEffectTimingReadOnly.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 class UnrestrictedDoubleOrString;
 
-class CORE_EXPORT AnimationEffectTiming : public GarbageCollected<AnimationEffectTiming>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static AnimationEffectTiming* create(AnimationEffect* parent);
-    double delay();
-    double endDelay();
-    String fill();
-    double iterationStart();
-    double iterations();
-    void duration(UnrestrictedDoubleOrString&);
-    double playbackRate();
-    String direction();
-    String easing();
+class CORE_EXPORT AnimationEffectTiming : public AnimationEffectTimingReadOnly {
+  DEFINE_WRAPPERTYPEINFO();
 
-    void setDelay(double);
-    void setEndDelay(double);
-    void setFill(String);
-    void setIterationStart(double, ExceptionState&);
-    void setIterations(double, ExceptionState&);
-    void setDuration(const UnrestrictedDoubleOrString&, ExceptionState&);
-    void setPlaybackRate(double);
-    void setDirection(String);
-    void setEasing(String, ExceptionState&);
+ public:
+  static AnimationEffectTiming* Create(AnimationEffectReadOnly* parent);
 
-    DECLARE_TRACE();
+  void setDelay(double);
+  void setEndDelay(double);
+  void setFill(String);
+  void setIterationStart(double, ExceptionState&);
+  void setIterations(double, ExceptionState&);
+  void setDuration(const UnrestrictedDoubleOrString&, ExceptionState&);
+  void SetPlaybackRate(double);
+  void setDirection(String);
+  void setEasing(String, ExceptionState&);
 
-private:
-    Member<AnimationEffect> m_parent;
-    explicit AnimationEffectTiming(AnimationEffect*);
+  bool IsAnimationEffectTiming() const override { return true; }
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  explicit AnimationEffectTiming(AnimationEffectReadOnly*);
 };
 
-} // namespace blink
+DEFINE_TYPE_CASTS(AnimationEffectTiming,
+                  AnimationEffectTimingReadOnly,
+                  timing,
+                  timing->IsAnimationEffectTiming(),
+                  timing.IsAnimationEffectTiming());
+
+}  // namespace blink
 
 #endif

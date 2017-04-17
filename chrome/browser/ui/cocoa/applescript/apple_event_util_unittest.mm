@@ -14,10 +14,9 @@
 #include "base/mac/scoped_aedesc.h"
 #include "base/macros.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
-#import "chrome/browser/ui/cocoa/cocoa_test_helper.h"
+#import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "testing/gtest_mac.h"
 
 namespace {
@@ -254,7 +253,7 @@ TEST_F(AppleEventUtilTest, ValueToAppleEventDescriptor) {
 
   const bool all_bools[] = { true, false };
   for (bool b : all_bools) {
-    base::FundamentalValue value(b);
+    base::Value value(b);
     NSAppleEventDescriptor* descriptor =
         chrome::mac::ValueToAppleEventDescriptor(&value);
 

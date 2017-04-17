@@ -18,13 +18,21 @@ namespace ios {
 class FakeChromeIdentityService : public ChromeIdentityService {
  public:
   FakeChromeIdentityService();
-  ~FakeChromeIdentityService();
+  virtual ~FakeChromeIdentityService();
 
   // Convenience method that returns the instance of
   // |FakeChromeIdentityService| from the ChromeBrowserProvider.
   static FakeChromeIdentityService* GetInstanceFromChromeProvider();
 
   // ChromeIdentityService implementation.
+  base::scoped_nsobject<UINavigationController> NewAccountDetails(
+      ChromeIdentity* identity,
+      id<ChromeIdentityBrowserOpener> browser_opener) override;
+  base::scoped_nsobject<ChromeIdentityInteractionManager>
+  NewChromeIdentityInteractionManager(
+      ios::ChromeBrowserState* browser_state,
+      id<ChromeIdentityInteractionManagerDelegate> delegate) const override;
+
   bool IsValidIdentity(ChromeIdentity* identity) const override;
   ChromeIdentity* GetIdentityWithGaiaID(
       const std::string& gaia_id) const override;
@@ -34,12 +42,22 @@ class FakeChromeIdentityService : public ChromeIdentityService {
   void ForgetIdentity(ChromeIdentity* identity,
                       ForgetIdentityCallback callback) override;
 
-  MOCK_METHOD5(GetAccessToken,
-               void(ChromeIdentity* identity,
-                    const std::string& client_id,
-                    const std::string& client_secret,
-                    const std::set<std::string>& scopes,
-                    const ios::AccessTokenCallback& callback));
+  virtual void GetAccessToken(
+      ChromeIdentity* identity,
+      const std::string& client_id,
+      const std::string& client_secret,
+      const std::set<std::string>& scopes,
+      const ios::AccessTokenCallback& callback) override;
+
+  virtual void GetAvatarForIdentity(ChromeIdentity* identity,
+                                    GetAvatarCallback callback) override;
+
+  virtual UIImage* GetCachedAvatarForIdentity(
+      ChromeIdentity* identity) override;
+
+  virtual void GetHostedDomainForIdentity(
+      ChromeIdentity* identity,
+      GetHostedDomainCallback callback) override;
 
   MOCK_METHOD1(GetMDMDeviceStatus,
                ios::MDMDeviceStatus(NSDictionary* user_info));
@@ -49,11 +67,18 @@ class FakeChromeIdentityService : public ChromeIdentityService {
                     NSDictionary* user_info,
                     ios::MDMStatusCallback callback));
 
+  // Sets up the mock methods for integration tests.
+  void SetUpForIntegrationTests();
+
   // Adds the identities given their name.
   void AddIdentities(NSArray* identitiesNames);
 
   // Adds |identity| to the available identities.
   void AddIdentity(ChromeIdentity* identity);
+
+  // Removes |identity| from the available identities. No-op if the identity
+  // is unknown.
+  void RemoveIdentity(ChromeIdentity* identity);
 
  private:
   base::scoped_nsobject<NSMutableArray> identities_;

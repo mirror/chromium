@@ -31,24 +31,26 @@
 namespace blink {
 
 class LayoutIFrame final : public LayoutPart {
-public:
-    explicit LayoutIFrame(Element*);
+ public:
+  explicit LayoutIFrame(Element*);
 
-    const char* name() const override { return "LayoutIFrame"; }
+  const char* GetName() const override { return "LayoutIFrame"; }
 
-private:
-    bool shouldComputeSizeAsReplaced() const override;
-    bool isInlineBlockOrInlineTable() const override;
+ private:
+  bool ShouldComputeSizeAsReplaced() const override;
+  bool IsInlineBlockOrInlineTable() const override;
 
-    void layout() override;
+  void UpdateLayout() override;
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectLayoutIFrame || LayoutPart::isOfType(type); }
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectLayoutIFrame || LayoutPart::IsOfType(type);
+  }
 
-    PaintLayerType layerTypeRequired() const override;
+  PaintLayerType LayerTypeRequired() const override;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutIFrame, isLayoutIFrame());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutIFrame, IsLayoutIFrame());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutIFrame_h
+#endif  // LayoutIFrame_h

@@ -11,20 +11,22 @@
 namespace blink {
 
 class SVGNumberInterpolationType : public SVGInterpolationType {
-public:
-    SVGNumberInterpolationType(const QualifiedName& attribute)
-        : SVGInterpolationType(attribute)
-        , m_isNonNegative(NumberAttributeFunctions::isNonNegative(attribute))
-    { }
+ public:
+  SVGNumberInterpolationType(const QualifiedName& attribute)
+      : SVGInterpolationType(attribute),
+        is_non_negative_(NumberAttributeFunctions::IsNonNegative(attribute)) {}
 
-private:
-    InterpolationValue maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertSVGValue(const SVGPropertyBase& svgValue) const final;
-    SVGPropertyBase* appliedSVGValue(const InterpolableValue&, const NonInterpolableValue*) const final;
+ private:
+  InterpolationValue MaybeConvertNeutral(const InterpolationValue& underlying,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertSVGValue(
+      const SVGPropertyBase& svg_value) const final;
+  SVGPropertyBase* AppliedSVGValue(const InterpolableValue&,
+                                   const NonInterpolableValue*) const final;
 
-    bool m_isNonNegative;
+  bool is_non_negative_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGNumberInterpolationType_h
+#endif  // SVGNumberInterpolationType_h

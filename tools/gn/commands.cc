@@ -360,6 +360,7 @@ const CommandInfoMap& GetCommands() {
                                        k##cmd##_Help, \
                                        &Run##cmd);
 
+    INSERT_COMMAND(Analyze)
     INSERT_COMMAND(Args)
     INSERT_COMMAND(Check)
     INSERT_COMMAND(Clean)
@@ -514,7 +515,7 @@ void FilterAndPrintTargets(bool indent, std::vector<const Target*>* targets) {
   FilterAndPrintTargets(targets, &tmp);
   for (const auto& value : tmp) {
     std::string string;
-    value->GetAsString(&string);
+    value.GetAsString(&string);
     if (indent)
       OutputString("  ");
     OutputString(string);

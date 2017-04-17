@@ -4,33 +4,19 @@
 
 #include "chrome/browser/media/midi_permission_infobar_delegate_android.h"
 
-#include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/android/android_theme_resources.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/infobars/core/infobar.h"
-#include "grit/theme_resources.h"
-
-// static
-infobars::InfoBar* MidiPermissionInfoBarDelegateAndroid::Create(
-    InfoBarService* infobar_service,
-    const GURL& requesting_frame,
-    Profile* profile,
-    const PermissionSetCallback& callback) {
-  return infobar_service->AddInfoBar(infobar_service->CreateConfirmInfoBar(
-      std::unique_ptr<ConfirmInfoBarDelegate>(
-          new MidiPermissionInfoBarDelegateAndroid(requesting_frame, profile,
-                                                   callback))));
-}
 
 MidiPermissionInfoBarDelegateAndroid::MidiPermissionInfoBarDelegateAndroid(
     const GURL& requesting_frame,
+    bool user_gesture,
     Profile* profile,
     const PermissionSetCallback& callback)
-    : PermissionInfobarDelegate(requesting_frame,
-                                content::PermissionType::MIDI_SYSEX,
+    : PermissionInfoBarDelegate(requesting_frame,
                                 CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
+                                user_gesture,
                                 profile,
-                                callback),
-      requesting_frame_(requesting_frame) {}
+                                callback) {}
 
 MidiPermissionInfoBarDelegateAndroid::~MidiPermissionInfoBarDelegateAndroid() {}
 
@@ -40,7 +26,7 @@ MidiPermissionInfoBarDelegateAndroid::GetIdentifier() const {
 }
 
 int MidiPermissionInfoBarDelegateAndroid::GetIconId() const {
-  return IDR_INFOBAR_MIDI;
+  return IDR_ANDROID_INFOBAR_MIDI;
 }
 
 int MidiPermissionInfoBarDelegateAndroid::GetMessageResourceId() const {

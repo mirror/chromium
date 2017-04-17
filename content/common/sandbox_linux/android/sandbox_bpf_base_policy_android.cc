@@ -13,6 +13,11 @@
 
 #include "build/build_config.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
+#include "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.h"
+
+#if defined(__x86_64__)
+#include <asm/prctl.h>
+#endif
 
 using sandbox::bpf_dsl::AllOf;
 using sandbox::bpf_dsl::Allow;
@@ -33,8 +38,11 @@ namespace content {
 #define SOCK_NONBLOCK O_NONBLOCK
 #endif
 
+#define CASES SANDBOX_BPF_DSL_CASES
+
 namespace {
 
+#if !defined(__i386__)
 // Restricts the arguments to sys_socket() to AF_UNIX. Returns a BoolExpr that
 // evaluates to true if the syscall should be allowed.
 BoolExpr RestrictSocketArguments(const Arg<int>& domain,
@@ -46,11 +54,13 @@ BoolExpr RestrictSocketArguments(const Arg<int>& domain,
                      (type & ~kSockFlags) == SOCK_STREAM),
                protocol == 0);
 }
+#endif  // !defined(__i386__)
 
 }  // namespace
 
 SandboxBPFBasePolicyAndroid::SandboxBPFBasePolicyAndroid()
-    : SandboxBPFBasePolicy() {}
+    : SandboxBPFBasePolicy(),
+      pid_(getpid()) {}
 
 SandboxBPFBasePolicyAndroid::~SandboxBPFBasePolicyAndroid() {}
 
@@ -70,14 +80,22 @@ ResultExpr SandboxBPFBasePolicyAndroid::EvaluateSyscall(int sysno) const {
 #endif
 #if defined(__x86_64__) || defined(__aarch64__)
     case __NR_newfstatat:
-    case __NR_getdents64:
 #elif defined(__i386__) || defined(__arm__) || defined(__mips__)
     case __NR_fstatat64:
     case __NR_getdents:
 #endif
+    case __NR_getdents64:
     case __NR_getpriority:
     case __NR_ioctl:
+#if defined(__i386__)
+    // While mincore is on multiple arches, it is only used on Android by x86.
+    case __NR_mincore:  // https://crbug.com/701137
+#endif
     case __NR_mremap:
+#if defined(__i386__)
+    // Used on pre-N to initialize threads in ART.
+    case __NR_modify_ldt:
+#endif
     case __NR_msync:
     // File system access cannot be restricted with seccomp-bpf on Android,
     // since the JVM classloader and other Framework features require file
@@ -95,6 +113,10 @@ ResultExpr SandboxBPFBasePolicyAndroid::EvaluateSyscall(int sysno) const {
     case __NR_sched_getscheduler:
     case __NR_sched_setscheduler:
     case __NR_setpriority:
+#if defined(__i386__)
+    // Used on N+ instead of __NR_modify_ldt to initialize threads in ART.
+    case __NR_set_thread_area:
+#endif
     case __NR_set_tid_address:
     case __NR_sigaltstack:
 #if defined(__i386__) || defined(__arm__)
@@ -102,6 +124,7 @@ ResultExpr SandboxBPFBasePolicyAndroid::EvaluateSyscall(int sysno) const {
 #else
     case __NR_getrlimit:
 #endif
+    case __NR_sysinfo:  // https://crbug.com/655277
     case __NR_uname:
 
     // Permit socket operations so that renderers can connect to logd and
@@ -122,6 +145,28 @@ ResultExpr SandboxBPFBasePolicyAndroid::EvaluateSyscall(int sysno) const {
       break;
   }
 
+  // https://crbug.com/644759
+  if (sysno == __NR_rt_tgsigqueueinfo) {
+    const Arg<pid_t> tgid(0);
+    return If(tgid == pid_, Allow())
+           .Else(Error(EPERM));
+  }
+
+  // https://crbug.com/655299
+  if (sysno == __NR_clock_getres) {
+    return sandbox::RestrictClockID();
+  }
+
+#if defined(__x86_64__)
+  if (sysno == __NR_arch_prctl) {
+    const Arg<int> code(0);
+    return If(code == ARCH_SET_GS, Allow()).Else(Error(EPERM));
+  }
+#endif
+
+  // Restrict socket-related operations. On non-i386 platforms, these are
+  // individual syscalls. On i386, the socketcall syscall demultiplexes many
+  // socket operations.
 #if defined(__x86_64__) || defined(__arm__) || defined(__aarch64__) || \
       defined(__mips__)
   if (sysno == __NR_socket) {
@@ -131,18 +176,37 @@ ResultExpr SandboxBPFBasePolicyAndroid::EvaluateSyscall(int sysno) const {
     return If(RestrictSocketArguments(domain, type, protocol), Allow())
            .Else(Error(EPERM));
   }
+
+  // https://crbug.com/655300
+  if (sysno == __NR_getsockname) {
+    // Rather than blocking with SIGSYS, just return an error. This is not
+    // documented to be a valid errno, but we will use it anyways.
+    return Error(EPERM);
+  }
+
+  // https://crbug.com/682488, https://crbug.com/701137
+  if (sysno == __NR_setsockopt) {
+    // The baseline policy applies other restrictions to setsockopt.
+    const Arg<int> level(1);
+    const Arg<int> option(2);
+    return If(AllOf(level == SOL_SOCKET,
+                    AnyOf(option == SO_SNDTIMEO,
+                          option == SO_RCVTIMEO,
+                          option == SO_REUSEADDR)),
+              Allow())
+           .Else(SandboxBPFBasePolicy::EvaluateSyscall(sysno));
+  }
 #elif defined(__i386__)
   if (sysno == __NR_socketcall) {
+    // The baseline policy allows other socketcall sub-calls.
     const Arg<int> socketcall(0);
-    const Arg<int> domain(1);
-    const Arg<int> type(2);
-    const Arg<int> protocol(3);
-    return If(socketcall == SYS_CONNECT, Allow())
-           .ElseIf(AllOf(socketcall == SYS_SOCKET,
-                         RestrictSocketArguments(domain, type, protocol)),
-                   Allow())
-           .ElseIf(socketcall == SYS_GETSOCKOPT, Allow())
-           .Else(Error(EPERM));
+    return Switch(socketcall)
+        .CASES((SYS_CONNECT,
+                SYS_SOCKET,
+                SYS_SETSOCKOPT,
+                SYS_GETSOCKOPT),
+               Allow())
+        .Default(SandboxBPFBasePolicy::EvaluateSyscall(sysno));
   }
 #endif
 

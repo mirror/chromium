@@ -13,7 +13,6 @@
 #include <vector>
 
 #include "base/atomic_sequence_num.h"
-#include "base/containers/scoped_ptr_hash_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -26,8 +25,8 @@
 #include "ipc/ipc_sync_channel.h"
 #include "ipc/message_filter.h"
 #include "ipc/message_router.h"
-#include "ui/events/latency_info.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/latency/latency_info.h"
 
 namespace base {
 class WaitableEvent;
@@ -42,6 +41,20 @@ class GpuMemoryBufferManager;
 }
 
 namespace gpu {
+struct SyncToken;
+class GpuChannelHost;
+using GpuChannelEstablishedCallback =
+    base::Callback<void(scoped_refptr<GpuChannelHost>)>;
+
+class GPU_EXPORT GpuChannelEstablishFactory {
+ public:
+  virtual ~GpuChannelEstablishFactory() {}
+
+  virtual void EstablishGpuChannel(
+      const GpuChannelEstablishedCallback& callback) = 0;
+  virtual scoped_refptr<GpuChannelHost> EstablishGpuChannelSync() = 0;
+  virtual GpuMemoryBufferManager* GetGpuMemoryBufferManager() = 0;
+};
 
 class GPU_EXPORT GpuChannelHostFactory {
  public:
@@ -87,13 +100,16 @@ class GPU_EXPORT GpuChannelHost
   // Set an ordering barrier.  AsyncFlushes any pending barriers on other
   // routes. Combines multiple OrderingBarriers into a single AsyncFlush.
   // Returns the flush ID for the stream or 0 if put offset was not changed.
+  // Outputs *highest_verified_flush_id.
   uint32_t OrderingBarrier(int32_t route_id,
                            int32_t stream_id,
                            int32_t put_offset,
                            uint32_t flush_count,
                            const std::vector<ui::LatencyInfo>& latency_info,
+                           const std::vector<SyncToken>& sync_token_fences,
                            bool put_offset_changed,
-                           bool do_flush);
+                           bool do_flush,
+                           uint32_t* highest_verified_flush_id);
 
   void FlushPendingStream(int32_t stream_id);
 
@@ -123,17 +139,10 @@ class GPU_EXPORT GpuChannelHost
   // GPU process. The caller is responsible for ensuring it is closed. Returns
   // an invalid handle on failure.
   base::SharedMemoryHandle ShareToGpuProcess(
-      base::SharedMemoryHandle source_handle);
+      const base::SharedMemoryHandle& source_handle);
 
   // Reserve one unused transfer buffer ID.
   int32_t ReserveTransferBufferId();
-
-  // Returns a GPU memory buffer handle to the buffer that can be sent via
-  // IPC to the GPU process. The caller is responsible for ensuring it is
-  // closed. Returns an invalid handle on failure.
-  gfx::GpuMemoryBufferHandle ShareGpuMemoryBufferToGpuProcess(
-      const gfx::GpuMemoryBufferHandle& source_handle,
-      bool* requires_sync_point);
 
   // Reserve one unused image ID.
   int32_t ReserveImageId();
@@ -224,6 +233,7 @@ class GPU_EXPORT GpuChannelHost
     uint32_t flush_count;
     uint32_t flush_id;
     std::vector<ui::LatencyInfo> latency_info;
+    std::vector<SyncToken> sync_token_fences;
   };
 
   GpuChannelHost(GpuChannelHostFactory* factory,

@@ -9,6 +9,7 @@
 #include <memory>
 #include <set>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
@@ -20,13 +21,14 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/pref_registry/pref_registry_syncable.h"
-#include "components/syncable_prefs/pref_service_syncable.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_renderer_host.h"
 #include "net/base/request_priority.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -40,8 +42,8 @@ void AssertInterceptedIO(
     net::URLRequestJobFactory* interceptor) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   net::URLRequestContext context;
-  std::unique_ptr<net::URLRequest> request(
-      context.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr));
+  std::unique_ptr<net::URLRequest> request(context.CreateRequest(
+      url, net::DEFAULT_PRIORITY, nullptr, TRAFFIC_ANNOTATION_FOR_TESTS));
   std::unique_ptr<net::URLRequestJob> job(
       interceptor->MaybeCreateJobWithProtocolHandler(
           url.scheme(), request.get(), context.network_delegate()));
@@ -61,8 +63,8 @@ void AssertIntercepted(
 }
 
 // FakeURLRequestJobFactory returns NULL for all job creation requests and false
-// for all IsHandled*() requests. FakeURLRequestJobFactory can be chained to
-// ProtocolHandlerRegistry::JobInterceptorFactory so the result of
+// for all IsHandledProtocol() requests. FakeURLRequestJobFactory can be chained
+// to ProtocolHandlerRegistry::JobInterceptorFactory so the result of
 // MaybeCreateJobWithProtocolHandler() indicates whether the
 // ProtocolHandlerRegistry properly handled a job creation request.
 class FakeURLRequestJobFactory : public net::URLRequestJobFactory {
@@ -90,7 +92,6 @@ class FakeURLRequestJobFactory : public net::URLRequestJobFactory {
   bool IsHandledProtocol(const std::string& scheme) const override {
     return false;
   }
-  bool IsHandledURL(const GURL& url) const override { return false; }
   bool IsSafeRedirectTarget(const GURL& location) const override {
     return true;
   }
@@ -121,18 +122,21 @@ void AssertWillHandle(
   base::RunLoop().RunUntilIdle();
 }
 
-base::DictionaryValue* GetProtocolHandlerValue(std::string protocol,
-                                               std::string url) {
-  base::DictionaryValue* value = new base::DictionaryValue();
+std::unique_ptr<base::DictionaryValue> GetProtocolHandlerValue(
+    const std::string& protocol,
+    const std::string& url) {
+  auto value = base::MakeUnique<base::DictionaryValue>();
   value->SetString("protocol", protocol);
   value->SetString("url", url);
   return value;
 }
 
-base::DictionaryValue* GetProtocolHandlerValueWithDefault(std::string protocol,
-                                                          std::string url,
-                                                          bool is_default) {
-  base::DictionaryValue* value = GetProtocolHandlerValue(protocol, url);
+std::unique_ptr<base::DictionaryValue> GetProtocolHandlerValueWithDefault(
+    const std::string& protocol,
+    const std::string& url,
+    bool is_default) {
+  std::unique_ptr<base::DictionaryValue> value =
+      GetProtocolHandlerValue(protocol, url);
   value->SetBoolean("default", is_default);
   return value;
 }

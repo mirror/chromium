@@ -7,9 +7,10 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "media/base/video_decoder.h"
 #include "media/mojo/interfaces/video_decoder.mojom.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -47,33 +48,52 @@ class MojoVideoDecoder final : public VideoDecoder,
   int GetMaxDecodeRequests() const final;
 
   // mojom::VideoDecoderClient implementation.
-  void OnVideoFrameDecoded(mojom::VideoFramePtr frame) final;
+  void OnVideoFrameDecoded(
+      mojom::VideoFramePtr frame,
+      const base::Optional<base::UnguessableToken>& release_token) final;
 
  private:
-  void OnInitializeDone(bool status);
-  void OnDecodeDone(mojom::DecodeStatus status);
+  void OnInitializeDone(bool status,
+                        bool needs_bitstream_conversion,
+                        int32_t max_decode_requests);
+  void OnDecodeDone(uint64_t decode_id, DecodeStatus status);
   void OnResetDone();
 
   void BindRemoteDecoder();
-  void OnConnectionError();
 
+  void OnReleaseMailbox(const base::UnguessableToken& release_token,
+                        const gpu::SyncToken& release_sync_token);
+
+  // Cleans up callbacks and blocks future calls.
+  void Stop();
+
+  // Task runner that the decoder runs on (media thread).
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-  GpuVideoAcceleratorFactories* gpu_factories_;
 
   // Used to pass the remote decoder from the constructor (on the main thread)
   // to Initialize() (on the media thread).
   mojom::VideoDecoderPtrInfo remote_decoder_info_;
 
+  GpuVideoAcceleratorFactories* gpu_factories_ = nullptr;
+
   InitCB init_cb_;
   OutputCB output_cb_;
-  DecodeCB decode_cb_;
+  uint64_t decode_counter_ = 0;
+  std::map<uint64_t, DecodeCB> pending_decodes_;
   base::Closure reset_cb_;
 
   mojom::VideoDecoderPtr remote_decoder_;
   std::unique_ptr<MojoDecoderBufferWriter> mojo_decoder_buffer_writer_;
   bool remote_decoder_bound_ = false;
   bool has_connection_error_ = false;
-  mojo::Binding<VideoDecoderClient> binding_;
+  mojo::AssociatedBinding<VideoDecoderClient> client_binding_;
+
+  bool initialized_ = false;
+  bool needs_bitstream_conversion_ = false;
+  int32_t max_decode_requests_ = 1;
+
+  base::WeakPtr<MojoVideoDecoder> weak_this_;
+  base::WeakPtrFactory<MojoVideoDecoder> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoVideoDecoder);
 };

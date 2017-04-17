@@ -24,99 +24,70 @@
 #include "core/layout/svg/SVGResourcesCache.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/text/AtomicStringHash.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
 class Document;
-class LayoutSVGResourceContainer;
-class SubtreeLayoutScope;
-class SVGSVGElement;
 class SVGElement;
-class Element;
+class SVGSVGElement;
+class SubtreeLayoutScope;
 
-class SVGDocumentExtensions : public GarbageCollectedFinalized<SVGDocumentExtensions> {
-    WTF_MAKE_NONCOPYABLE(SVGDocumentExtensions);
-public:
-    typedef HeapHashSet<Member<Element>> SVGPendingElements;
-    explicit SVGDocumentExtensions(Document*);
-    ~SVGDocumentExtensions();
+class SVGDocumentExtensions
+    : public GarbageCollectedFinalized<SVGDocumentExtensions> {
+  WTF_MAKE_NONCOPYABLE(SVGDocumentExtensions);
 
-    void addTimeContainer(SVGSVGElement*);
-    void removeTimeContainer(SVGSVGElement*);
+ public:
+  explicit SVGDocumentExtensions(Document*);
+  ~SVGDocumentExtensions();
 
-    // Records the SVG element as having a Web Animation on an SVG attribute that needs applying.
-    void addWebAnimationsPendingSVGElement(SVGElement&);
+  void AddTimeContainer(SVGSVGElement*);
+  void RemoveTimeContainer(SVGSVGElement*);
 
-    void addResource(const AtomicString& id, LayoutSVGResourceContainer*);
-    void removeResource(const AtomicString& id);
-    LayoutSVGResourceContainer* resourceById(const AtomicString& id) const;
+  // Records the SVG element as having a Web Animation on an SVG attribute that
+  // needs applying.
+  void AddWebAnimationsPendingSVGElement(SVGElement&);
 
-    static void serviceOnAnimationFrame(Document&);
+  static void ServiceOnAnimationFrame(Document&);
 
-    void startAnimations();
-    void pauseAnimations();
-    void dispatchSVGLoadEventToOutermostSVGElements();
+  void StartAnimations();
+  void PauseAnimations();
+  void ServiceAnimations();
 
-    void reportError(const String&);
+  void DispatchSVGLoadEventToOutermostSVGElements();
 
-    SVGResourcesCache& resourcesCache() { return m_resourcesCache; }
+  SVGResourcesCache& ResourcesCache() { return resources_cache_; }
 
-    void addSVGRootWithRelativeLengthDescendents(SVGSVGElement*);
-    void removeSVGRootWithRelativeLengthDescendents(SVGSVGElement*);
-    bool isSVGRootWithRelativeLengthDescendents(SVGSVGElement*) const;
-    void invalidateSVGRootsWithRelativeLengthDescendents(SubtreeLayoutScope*);
+  void AddSVGRootWithRelativeLengthDescendents(SVGSVGElement*);
+  void RemoveSVGRootWithRelativeLengthDescendents(SVGSVGElement*);
+  bool IsSVGRootWithRelativeLengthDescendents(SVGSVGElement*) const;
+  void InvalidateSVGRootsWithRelativeLengthDescendents(SubtreeLayoutScope*);
 
-    bool zoomAndPanEnabled() const;
+  bool ZoomAndPanEnabled() const;
 
-    void startPan(const FloatPoint& start);
-    void updatePan(const FloatPoint& pos) const;
+  void StartPan(const FloatPoint& start);
+  void UpdatePan(const FloatPoint& pos) const;
 
-    static SVGSVGElement* rootElement(const Document&);
-    SVGSVGElement* rootElement() const;
+  static SVGSVGElement* rootElement(const Document&);
+  SVGSVGElement* rootElement() const;
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    Member<Document> m_document;
-    HeapHashSet<Member<SVGSVGElement>> m_timeContainers; // For SVG 1.2 support this will need to be made more general.
-    using SVGElementSet = HeapHashSet<Member<SVGElement>>;
-    SVGElementSet m_webAnimationsPendingSVGElements;
-    HashMap<AtomicString, LayoutSVGResourceContainer*> m_resources;
-    HeapHashMap<AtomicString, Member<SVGPendingElements>> m_pendingResources; // Resources that are pending.
-    HeapHashMap<AtomicString, Member<SVGPendingElements>> m_pendingResourcesForRemoval; // Resources that are pending and scheduled for removal.
-    SVGResourcesCache m_resourcesCache;
-    HeapHashSet<Member<SVGSVGElement>> m_relativeLengthSVGRoots; // Root SVG elements with relative length descendants.
-    FloatPoint m_translate;
-#if ENABLE(ASSERT)
-    bool m_inRelativeLengthSVGRootsInvalidation;
+ private:
+  Member<Document> document_;
+  HeapHashSet<Member<SVGSVGElement>> time_containers_;
+  using SVGElementSet = HeapHashSet<Member<SVGElement>>;
+  SVGElementSet web_animations_pending_svg_elements_;
+  SVGResourcesCache resources_cache_;
+  // Root SVG elements with relative length descendants.
+  HeapHashSet<Member<SVGSVGElement>> relative_length_svg_roots_;
+  FloatPoint translate_;
+#if DCHECK_IS_ON()
+  bool in_relative_length_svg_roots_invalidation_ = false;
 #endif
-
-public:
-    // This HashMap contains a list of pending resources. Pending resources, are such
-    // which are referenced by any object in the SVG document, but do NOT exist yet.
-    // For instance, dynamically build gradients / patterns / clippers...
-    void addPendingResource(const AtomicString& id, Element*);
-    bool hasPendingResource(const AtomicString& id) const;
-    bool isElementPendingResources(Element*) const;
-    bool isElementPendingResource(Element*, const AtomicString& id) const;
-    void clearHasPendingResourcesIfPossible(Element*);
-    void removeElementFromPendingResources(Element*);
-    SVGPendingElements* removePendingResource(const AtomicString& id);
-
-    void serviceAnimations();
-
-    // The following two functions are used for scheduling a pending resource to be removed.
-    void markPendingResourcesForRemoval(const AtomicString&);
-    Element* removeElementFromPendingResourcesForRemoval(const AtomicString&);
-
-private:
-    SVGPendingElements* removePendingResourceForRemoval(const AtomicString&);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

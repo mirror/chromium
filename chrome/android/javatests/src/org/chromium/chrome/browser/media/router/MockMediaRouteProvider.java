@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.media.router;
 
-import android.content.Context;
-
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.browser.media.router.cast.MediaSink;
@@ -25,7 +23,6 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
     private static final String SINK_NAME1 = "test-sink-1";
     private static final String SINK_NAME2 = "test-sink-2";
 
-    private Context mApplicationContext;
     private MediaRouteManager mManager;
 
     private final Map<String, MediaRoute> mRoutes = new HashMap<String, MediaRoute>();
@@ -46,8 +43,7 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
         public static final MockMediaRouteProvider sProvider = new MockMediaRouteProvider();
 
         @Override
-        public MediaRouteProvider create(Context applicationContext, MediaRouteManager manager) {
-            sProvider.mApplicationContext = applicationContext;
+        public MediaRouteProvider create(MediaRouteManager manager) {
             sProvider.mManager = manager;
             return sProvider;
         }
@@ -177,12 +173,7 @@ public class MockMediaRouteProvider implements MediaRouteProvider {
         if (mCloseRouteWithErrorOnSend) {
             mManager.onRouteClosedWithError(routeId, "Sending message failed. Closing the route.");
         } else {
-            // Sending a string enclosed by double quotes to behave like JSON.stringify().
-            mManager.onMessage(routeId, "\"" + "Pong: " + message + "\"");
+            mManager.onMessage(routeId, "Pong: " + message);
         }
-    }
-
-    @Override
-    public void sendBinaryMessage(String routeId, byte[] data, int nativeCallbackId) {
     }
 }

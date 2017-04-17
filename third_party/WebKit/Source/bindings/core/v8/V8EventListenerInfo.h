@@ -5,33 +5,37 @@
 #ifndef V8EventListenerInfo_h
 #define V8EventListenerInfo_h
 
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
-
-#include <v8.h>
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class V8EventListenerInfo {
-public:
-    V8EventListenerInfo(AtomicString eventType, bool useCapture, bool passive, v8::Local<v8::Object> handler, v8::MaybeLocal<v8::Function> removeFunction)
-        : eventType(eventType)
-        , useCapture(useCapture)
-        , passive(passive)
-        , handler(handler)
-        , removeFunction(removeFunction)
-    {
-    }
+ public:
+  V8EventListenerInfo(AtomicString event_type,
+                      bool use_capture,
+                      bool passive,
+                      bool once,
+                      v8::Local<v8::Object> handler,
+                      int backend_node_id)
+      : event_type(event_type),
+        use_capture(use_capture),
+        passive(passive),
+        once(once),
+        handler(handler),
+        backend_node_id(backend_node_id) {}
 
-    AtomicString eventType;
-    bool useCapture;
-    bool passive;
-    v8::Local<v8::Object> handler;
-    v8::MaybeLocal<v8::Function> removeFunction;
+  AtomicString event_type;
+  bool use_capture;
+  bool passive;
+  bool once;
+  v8::Local<v8::Object> handler;
+  int backend_node_id;
 };
 
 using V8EventListenerInfoList = Vector<V8EventListenerInfo>;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8EventListenerInfo_h
+#endif  // V8EventListenerInfo_h

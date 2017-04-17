@@ -39,6 +39,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
+#include "net/log/net_log_source.h"
 #include "net/server/http_server.h"
 #include "net/server/http_server_request_info.h"
 #include "net/server/http_server_response_info.h"
@@ -76,7 +77,7 @@ class HttpServer : public net::HttpServer::Delegate {
 
   bool Start(uint16_t port, bool allow_remote) {
     std::unique_ptr<net::ServerSocket> server_socket(
-        new net::TCPServerSocket(NULL, net::NetLog::Source()));
+        new net::TCPServerSocket(NULL, net::NetLogSource()));
     if (ListenOnIPv4(server_socket.get(), port, allow_remote) != net::OK) {
       // This will work on an IPv6-only host, but we will be IPv4-only on
       // dual-stack hosts.
@@ -170,7 +171,7 @@ void HandleRequestOnIOThread(
                                        send_response_func)));
 }
 
-base::LazyInstance<base::ThreadLocalPointer<HttpServer> >
+base::LazyInstance<base::ThreadLocalPointer<HttpServer>>::DestructorAtExit
     lazy_tls_server = LAZY_INSTANCE_INITIALIZER;
 
 void StopServerOnIOThread() {
@@ -208,7 +209,7 @@ void RunServer(uint16_t port,
   HttpRequestHandlerFunc handle_request_func =
       base::Bind(&HandleRequestOnCmdThread, &handler, whitelisted_ips);
 
-  io_thread.message_loop()->task_runner()->PostTask(
+  io_thread.task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&StartServerOnIOThread, port, allow_remote,
                  base::Bind(&HandleRequestOnIOThread, cmd_loop.task_runner(),
@@ -219,8 +220,8 @@ void RunServer(uint16_t port,
   // destroyed, which waits until all pending tasks have been completed.
   // This assumes the response is sent synchronously as part of the IO task.
   cmd_run_loop.Run();
-  io_thread.message_loop()->task_runner()->PostTask(
-      FROM_HERE, base::Bind(&StopServerOnIOThread));
+  io_thread.task_runner()->PostTask(FROM_HERE,
+                                    base::Bind(&StopServerOnIOThread));
 }
 
 }  // namespace

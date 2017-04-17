@@ -6,10 +6,16 @@
 
 namespace ntp_snippets {
 
-// Also defined in SnippetArticleViewHolder.java
-const char kStudyName[] = "NTPSnippets";
-
 const base::FilePath::CharType kDatabaseFolder[] =
     FILE_PATH_LITERAL("NTPSnippets");
+
+const char kContentSuggestionsServer[] =
+    "https://chromecontentsuggestions-pa.googleapis.com/v1/suggestions/fetch";
+const char kContentSuggestionsStagingServer[] =
+    "https://staging-chromecontentsuggestions-pa.googleapis.com/v1/suggestions/"
+    "fetch";
+const char kContentSuggestionsAlphaServer[] =
+    "https://alpha-chromecontentsuggestions-pa.sandbox.googleapis.com/v1/"
+    "suggestions/fetch";
 
 }  // namespace ntp_snippets

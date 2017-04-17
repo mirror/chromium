@@ -2,8 +2,10 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All
+ * rights reserved.
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2011 Google Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -43,129 +45,132 @@
 
 namespace blink {
 
-LayoutTreeBuilderForElement::LayoutTreeBuilderForElement(Element& element, ComputedStyle* style)
-    : LayoutTreeBuilder(element, nullptr)
-    , m_style(style)
-{
-    DCHECK(!element.isSlotOrActiveInsertionPoint());
-    if (element.isFirstLetterPseudoElement()) {
-        if (LayoutObject* nextLayoutObject = FirstLetterPseudoElement::firstLetterTextLayoutObject(element))
-            m_layoutObjectParent = nextLayoutObject->parent();
-    } else if (ContainerNode* containerNode = LayoutTreeBuilderTraversal::parent(element)) {
-        m_layoutObjectParent = containerNode->layoutObject();
-    }
+LayoutTreeBuilderForElement::LayoutTreeBuilderForElement(Element& element,
+                                                         ComputedStyle* style)
+    : LayoutTreeBuilder(element, nullptr), style_(style) {
+  DCHECK(!element.IsActiveSlotOrActiveInsertionPoint());
+  // TODO(ecobos): Move the first-letter logic inside parentLayoutObject too?
+  // It's an extra (unnecessary) check for text nodes, though.
+  if (element.IsFirstLetterPseudoElement()) {
+    if (LayoutObject* next_layout_object =
+            FirstLetterPseudoElement::FirstLetterTextLayoutObject(element))
+      layout_object_parent_ = next_layout_object->Parent();
+  } else {
+    layout_object_parent_ =
+        LayoutTreeBuilderTraversal::ParentLayoutObject(element);
+  }
 }
 
-LayoutObject* LayoutTreeBuilderForElement::nextLayoutObject() const
-{
-    DCHECK(m_layoutObjectParent);
+LayoutObject* LayoutTreeBuilderForElement::NextLayoutObject() const {
+  DCHECK(layout_object_parent_);
 
-    if (m_node->isInTopLayer())
-        return LayoutTreeBuilderTraversal::nextInTopLayer(*m_node);
+  if (node_->IsInTopLayer())
+    return LayoutTreeBuilderTraversal::NextInTopLayer(*node_);
 
-    if (m_node->isFirstLetterPseudoElement())
-        return FirstLetterPseudoElement::firstLetterTextLayoutObject(*m_node);
+  if (node_->IsFirstLetterPseudoElement())
+    return FirstLetterPseudoElement::FirstLetterTextLayoutObject(*node_);
 
-    return LayoutTreeBuilder::nextLayoutObject();
+  return LayoutTreeBuilder::NextLayoutObject();
 }
 
-LayoutObject* LayoutTreeBuilderForElement::parentLayoutObject() const
-{
-    if (m_layoutObjectParent) {
-        // FIXME: Guarding this by parentLayoutObject isn't quite right as the spec for
-        // top layer only talks about display: none ancestors so putting a <dialog> inside an
-        // <optgroup> seems like it should still work even though this check will prevent it.
-        if (m_node->isInTopLayer())
-            return m_node->document().layoutView();
-    }
+LayoutObject* LayoutTreeBuilderForElement::ParentLayoutObject() const {
+  if (layout_object_parent_) {
+    // FIXME: Guarding this by parentLayoutObject isn't quite right as the spec
+    // for top layer only talks about display: none ancestors so putting a
+    // <dialog> inside an <optgroup> seems like it should still work even though
+    // this check will prevent it.
+    if (node_->IsInTopLayer())
+      return node_->GetDocument().GetLayoutView();
+  }
 
-    return m_layoutObjectParent;
+  return layout_object_parent_;
 }
 
-bool LayoutTreeBuilderForElement::shouldCreateLayoutObject() const
-{
-    if (!m_layoutObjectParent)
-        return false;
+DISABLE_CFI_PERF
+bool LayoutTreeBuilderForElement::ShouldCreateLayoutObject() const {
+  if (!layout_object_parent_)
+    return false;
 
-    // FIXME: Should the following be in SVGElement::layoutObjectIsNeeded()?
-    if (m_node->isSVGElement()) {
-        // SVG elements only render when inside <svg>, or if the element is an <svg> itself.
-        if (!isSVGSVGElement(*m_node) && (!m_layoutObjectParent->node() || !m_layoutObjectParent->node()->isSVGElement()))
-            return false;
-        if (!toSVGElement(m_node)->isValid())
-            return false;
-    }
-
-    LayoutObject* parentLayoutObject = this->parentLayoutObject();
-    if (!parentLayoutObject)
-        return false;
-    if (!parentLayoutObject->canHaveChildren())
-        return false;
-
-    return m_node->layoutObjectIsNeeded(style());
+  LayoutObject* parent_layout_object = this->ParentLayoutObject();
+  if (!parent_layout_object)
+    return false;
+  if (!parent_layout_object->CanHaveChildren())
+    return false;
+  return node_->LayoutObjectIsNeeded(Style());
 }
 
-ComputedStyle& LayoutTreeBuilderForElement::style() const
-{
-    if (!m_style)
-        m_style = m_node->styleForLayoutObject();
-    return *m_style;
+ComputedStyle& LayoutTreeBuilderForElement::Style() const {
+  if (!style_)
+    style_ = node_->StyleForLayoutObject();
+  return *style_;
 }
 
-void LayoutTreeBuilderForElement::createLayoutObject()
-{
-    ComputedStyle& style = this->style();
+DISABLE_CFI_PERF
+void LayoutTreeBuilderForElement::CreateLayoutObject() {
+  ComputedStyle& style = this->Style();
 
-    LayoutObject* newLayoutObject = m_node->createLayoutObject(style);
-    if (!newLayoutObject)
-        return;
+  LayoutObject* new_layout_object = node_->CreateLayoutObject(style);
+  if (!new_layout_object)
+    return;
 
-    LayoutObject* parentLayoutObject = this->parentLayoutObject();
+  LayoutObject* parent_layout_object = this->ParentLayoutObject();
 
-    if (!parentLayoutObject->isChildAllowed(newLayoutObject, style)) {
-        newLayoutObject->destroy();
-        return;
-    }
+  if (!parent_layout_object->IsChildAllowed(new_layout_object, style)) {
+    new_layout_object->Destroy();
+    return;
+  }
 
-    // Make sure the LayoutObject already knows it is going to be added to a LayoutFlowThread before we set the style
-    // for the first time. Otherwise code using inLayoutFlowThread() in the styleWillChange and styleDidChange will fail.
-    newLayoutObject->setIsInsideFlowThread(parentLayoutObject->isInsideFlowThread());
+  // Make sure the LayoutObject already knows it is going to be added to a
+  // LayoutFlowThread before we set the style for the first time. Otherwise code
+  // using inLayoutFlowThread() in the styleWillChange and styleDidChange will
+  // fail.
+  new_layout_object->SetIsInsideFlowThread(
+      parent_layout_object->IsInsideFlowThread());
 
-    LayoutObject* nextLayoutObject = this->nextLayoutObject();
-    m_node->setLayoutObject(newLayoutObject);
-    newLayoutObject->setStyle(&style); // setStyle() can depend on layoutObject() already being set.
+  LayoutObject* next_layout_object = this->NextLayoutObject();
+  node_->SetLayoutObject(new_layout_object);
+  new_layout_object->SetStyle(
+      &style);  // setStyle() can depend on layoutObject() already being set.
 
-    if (Fullscreen::isActiveFullScreenElement(*m_node)) {
-        newLayoutObject = LayoutFullScreen::wrapLayoutObject(newLayoutObject, parentLayoutObject, &m_node->document());
-        if (!newLayoutObject)
-            return;
-    }
+  if (Fullscreen::IsCurrentFullScreenElement(*node_)) {
+    new_layout_object = LayoutFullScreen::WrapLayoutObject(
+        new_layout_object, parent_layout_object, &node_->GetDocument());
+    if (!new_layout_object)
+      return;
+  }
 
-    // Note: Adding newLayoutObject instead of layoutObject(). layoutObject() may be a child of newLayoutObject.
-    parentLayoutObject->addChild(newLayoutObject, nextLayoutObject);
+  // Note: Adding newLayoutObject instead of layoutObject(). layoutObject() may
+  // be a child of newLayoutObject.
+  parent_layout_object->AddChild(new_layout_object, next_layout_object);
 }
 
-void LayoutTreeBuilderForText::createLayoutObject()
-{
-    ComputedStyle& style = m_layoutObjectParent->mutableStyleRef();
+void LayoutTreeBuilderForText::CreateLayoutObject() {
+  ComputedStyle& style = *style_;
 
-    DCHECK(m_node->textLayoutObjectIsNeeded(style, *m_layoutObjectParent));
+  DCHECK(style_ == layout_object_parent_->Style() ||
+         ToElement(LayoutTreeBuilderTraversal::Parent(*node_))
+             ->HasDisplayContentsStyle());
 
-    LayoutText* newLayoutObject = m_node->createTextLayoutObject(style);
-    if (!m_layoutObjectParent->isChildAllowed(newLayoutObject, style)) {
-        newLayoutObject->destroy();
-        return;
-    }
+  DCHECK(node_->TextLayoutObjectIsNeeded(style, *layout_object_parent_));
 
-    // Make sure the LayoutObject already knows it is going to be added to a LayoutFlowThread before we set the style
-    // for the first time. Otherwise code using inLayoutFlowThread() in the styleWillChange and styleDidChange will fail.
-    newLayoutObject->setIsInsideFlowThread(m_layoutObjectParent->isInsideFlowThread());
+  LayoutText* new_layout_object = node_->CreateTextLayoutObject(style);
+  if (!layout_object_parent_->IsChildAllowed(new_layout_object, style)) {
+    new_layout_object->Destroy();
+    return;
+  }
 
-    LayoutObject* nextLayoutObject = this->nextLayoutObject();
-    m_node->setLayoutObject(newLayoutObject);
-    // Parent takes care of the animations, no need to call setAnimatableStyle.
-    newLayoutObject->setStyle(&style);
-    m_layoutObjectParent->addChild(newLayoutObject, nextLayoutObject);
+  // Make sure the LayoutObject already knows it is going to be added to a
+  // LayoutFlowThread before we set the style for the first time. Otherwise code
+  // using inLayoutFlowThread() in the styleWillChange and styleDidChange will
+  // fail.
+  new_layout_object->SetIsInsideFlowThread(
+      layout_object_parent_->IsInsideFlowThread());
+
+  LayoutObject* next_layout_object = this->NextLayoutObject();
+  node_->SetLayoutObject(new_layout_object);
+  // Parent takes care of the animations, no need to call setAnimatableStyle.
+  new_layout_object->SetStyle(&style);
+  layout_object_parent_->AddChild(new_layout_object, next_layout_object);
 }
 
-} // namespace blink
+}  // namespace blink

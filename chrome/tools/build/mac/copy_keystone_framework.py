@@ -2,21 +2,25 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import os
 import os.path
 import shutil
 import subprocess
 import sys
 
 # Usage: python copy_keystone_framework.py /path/to/input /path/to/output
+#        [DEVELOPER_DIR]
 #
 # This script copies the KeystoneRegistration.framework, removing its
 # versioned directory structure, thinning it to just x86_64, and deleting
 # the Headers directory.
 
 def Main(args):
-  if len(args) != 3:
+  if len(args) != 3 and len(args) != 4:
     print >> sys.stderr, '%s: /path/to/input /path/to/output' % (args[0],)
     return 1
+  if len(args) == 4:
+    os.environ['DEVELOPER_DIR'] = args[3]
 
   # Delete any old copies of the framework.
   output_path = os.path.join(args[2], 'KeystoneRegistration.framework')
@@ -27,7 +31,10 @@ def Main(args):
   # dotfiles and the Headers directories.
   subprocess.check_call(
       ['rsync', '-acC', '--delete',
-       '--exclude', 'Headers', '--exclude', 'PrivateHeaders',
+       # TODO(rsesek): Exclude these directories again after they are marked as
+       # optional in the code signing resource rules, otherwise the code
+       # signature is invalidated. https://crbug.com/688076
+       #'--exclude', 'Headers', '--exclude', 'PrivateHeaders',
        '--include', '*.so',
        os.path.join(args[1], 'Versions/Current/'),
        output_path])

@@ -185,10 +185,7 @@ bool TextureLayer::Update() {
   if (client_) {
     TextureMailbox mailbox;
     std::unique_ptr<SingleReleaseCallback> release_callback;
-    if (client_->PrepareTextureMailbox(
-            &mailbox,
-            &release_callback,
-            layer_tree_host()->UsingSharedMemoryResources())) {
+    if (client_->PrepareTextureMailbox(&mailbox, &release_callback)) {
       // Already within a commit, no need to do another one immediately.
       bool requires_commit = false;
       bool allow_mailbox_reuse = false;
@@ -202,6 +199,10 @@ bool TextureLayer::Update() {
   // different textures.  Such callers notify this layer that the texture has
   // changed by calling SetNeedsDisplay, so check for that here.
   return updated || !update_rect().IsEmpty();
+}
+
+bool TextureLayer::IsSnapped() {
+  return true;
 }
 
 void TextureLayer::PushPropertiesTo(LayerImpl* layer) {
@@ -258,8 +259,8 @@ std::unique_ptr<TextureLayer::TextureMailboxHolder::MainThreadReference>
 TextureLayer::TextureMailboxHolder::Create(
     const TextureMailbox& mailbox,
     std::unique_ptr<SingleReleaseCallback> release_callback) {
-  return base::WrapUnique(new MainThreadReference(
-      new TextureMailboxHolder(mailbox, std::move(release_callback))));
+  return base::MakeUnique<MainThreadReference>(
+      new TextureMailboxHolder(mailbox, std::move(release_callback)));
 }
 
 void TextureLayer::TextureMailboxHolder::Return(

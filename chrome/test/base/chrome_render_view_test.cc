@@ -11,25 +11,27 @@
 #include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/renderer/chrome_content_renderer_client.h"
-#include "chrome/renderer/spellchecker/spellcheck.h"
 #include "chrome/test/base/chrome_unit_test_suite.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
 #include "components/autofill/content/renderer/test_password_autofill_agent.h"
 #include "components/autofill/content/renderer/test_password_generation_agent.h"
+#include "components/spellcheck/renderer/spellcheck.h"
+#include "components/spellcheck/spellcheck_build_features.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/renderer/render_view.h"
+#include "extensions/features/features.h"
 #include "testing/gmock/include/gmock/gmock.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebScriptController.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/renderer/extensions/chrome_extensions_dispatcher_delegate.h"
 #include "chrome/renderer/extensions/chrome_extensions_renderer_client.h"
 #include "extensions/browser/extension_function_dispatcher.h"
@@ -79,9 +81,8 @@ class MockAutofillAgent : public AutofillAgent {
   MOCK_CONST_METHOD0(IsUserGesture, bool());
 
  private:
-  void didAssociateFormControls(
-      const blink::WebVector<blink::WebNode>& nodes) override {
-    AutofillAgent::didAssociateFormControls(nodes);
+  void DidAssociateFormControlsDynamically() override {
+    AutofillAgent::DidAssociateFormControlsDynamically();
     if (run_loop_)
       run_loop_->Quit();
   }
@@ -112,6 +113,8 @@ void ChromeRenderViewTest::SetUp() {
 
   content::RenderViewTest::SetUp();
 
+  RegisterMainFrameRemoteInterfaces();
+
   // RenderFrame doesn't expose its Agent objects, because it has no need to
   // store them directly (they're stored as RenderFrameObserver*).  So just
   // create another set.
@@ -127,7 +130,7 @@ void ChromeRenderViewTest::SetUp() {
 
 void ChromeRenderViewTest::TearDown() {
   base::RunLoop().RunUntilIdle();
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   ChromeExtensionsRendererClient* ext_client =
       ChromeExtensionsRendererClient::GetInstance();
   ext_client->GetExtensionDispatcherForTest()->OnRenderProcessShutdown();
@@ -157,17 +160,20 @@ ChromeRenderViewTest::CreateContentRendererClient() {
   return client;
 }
 
+void ChromeRenderViewTest::RegisterMainFrameRemoteInterfaces() {}
+
 void ChromeRenderViewTest::InitChromeContentRendererClient(
     ChromeContentRendererClient* client) {
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   extension_dispatcher_delegate_.reset(
       new ChromeExtensionsDispatcherDelegate());
   ChromeExtensionsRendererClient* ext_client =
       ChromeExtensionsRendererClient::GetInstance();
-  ext_client->SetExtensionDispatcherForTest(base::WrapUnique(
-      new extensions::Dispatcher(extension_dispatcher_delegate_.get())));
+  ext_client->SetExtensionDispatcherForTest(
+      base::MakeUnique<extensions::Dispatcher>(
+          extension_dispatcher_delegate_.get()));
 #endif
-#if defined(ENABLE_SPELLCHECK)
+#if BUILDFLAG(ENABLE_SPELLCHECK)
   client->SetSpellcheck(new SpellCheck());
 #endif
 }

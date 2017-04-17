@@ -31,45 +31,47 @@
 #ifndef SettingsDelegate_h
 #define SettingsDelegate_h
 
-#include "core/CoreExport.h"
-#include "wtf/Allocator.h"
 #include <memory>
+#include "core/CoreExport.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class Settings;
 
 class CORE_EXPORT SettingsDelegate {
-    DISALLOW_NEW();
-public:
-    explicit SettingsDelegate(std::unique_ptr<Settings>);
-    virtual ~SettingsDelegate();
+  DISALLOW_NEW();
 
-    Settings* settings() const { return m_settings.get(); }
+ public:
+  explicit SettingsDelegate(std::unique_ptr<Settings>);
+  virtual ~SettingsDelegate();
 
-    // We currently use an enum instead of individual invalidation
-    // functions to make generating Settings.in slightly easier.
-    enum ChangeType {
-        StyleChange,
-        ViewportDescriptionChange,
-        ViewportRuleChange,
-        DNSPrefetchingChange,
-        ImageLoadingChange,
-        TextAutosizingChange,
-        FontFamilyChange,
-        AcceleratedCompositingChange,
-        MediaQueryChange,
-        AccessibilityStateChange,
-        TextTrackKindUserPreferenceChange,
-        DOMWorldsChange,
-    };
+  Settings* GetSettings() const { return settings_.get(); }
 
-    virtual void settingsChanged(ChangeType) = 0;
+  // We currently use an enum instead of individual invalidation
+  // functions to make generating Settings.in slightly easier.
+  enum ChangeType {
+    kStyleChange,
+    kViewportDescriptionChange,
+    kViewportRuleChange,
+    kDNSPrefetchingChange,
+    kImageLoadingChange,
+    kTextAutosizingChange,
+    kFontFamilyChange,
+    kAcceleratedCompositingChange,
+    kMediaQueryChange,
+    kAccessibilityStateChange,
+    kTextTrackKindUserPreferenceChange,
+    kDOMWorldsChange,
+    kMediaControlsChange,
+  };
 
-protected:
-    std::unique_ptr<Settings> const m_settings;
+  virtual void SettingsChanged(ChangeType) = 0;
+
+ protected:
+  std::unique_ptr<Settings> const settings_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SettingsDelegate_h
+#endif  // SettingsDelegate_h

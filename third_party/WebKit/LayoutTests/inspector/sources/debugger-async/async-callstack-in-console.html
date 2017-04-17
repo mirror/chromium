@@ -42,7 +42,7 @@ function tryPostMessage(win, origin)
 
 var test = function()
 {
-    var maxAsyncCallStackDepth = 4;
+    var maxAsyncCallStackDepth = 8;
     var numberOfConsoleMessages = 5;
 
     InspectorTest.setQuiet(true);
@@ -50,7 +50,7 @@ var test = function()
 
     function step1()
     {
-        InspectorTest.DebuggerAgent.setPauseOnExceptions(WebInspector.DebuggerModel.PauseOnExceptionsState.DontPauseOnExceptions);
+        InspectorTest.DebuggerAgent.setPauseOnExceptions(SDK.DebuggerModel.PauseOnExceptionsState.DontPauseOnExceptions);
         InspectorTest.DebuggerAgent.setAsyncCallStackDepth(0);
         InspectorTest.runTestFunctionAndWaitUntilPaused(step2);
     }

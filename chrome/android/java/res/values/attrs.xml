@@ -52,9 +52,10 @@
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="ClipDrawableProgressBar">
-        <attr name="progressBarColor" format="reference|color" />
-        <attr name="backgroundColor" format="reference|color" />
+    <declare-styleable name="MaterialProgressBar">
+        <attr name="colorBackground" format="reference|color" />
+        <attr name="colorProgress" format="reference|color" />
+        <attr name="colorSecondaryProgress" format="reference|color" />
     </declare-styleable>
 
     <declare-styleable name="RadioButtonWithDescription">
@@ -67,5 +68,12 @@
              bottom spacing, so that related paragraphs of text are closer
              to each other. -->
         <attr name="noBottomSpacing" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SpinnerPreference">
+        <!-- Used to change the SpinnerPreference to display the TextView and the Spinner on the
+             same line. Devices with a smallest width of less than 360dp will still use two separate
+             lines. -->
+        <attr name="singleLine" format="boolean" />
     </declare-styleable>
 </resources>

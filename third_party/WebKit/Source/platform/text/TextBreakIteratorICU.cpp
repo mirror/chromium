@@ -21,825 +21,929 @@
 
 #include "platform/text/TextBreakIterator.h"
 
-#include "platform/text/TextBreakIteratorInternalICU.h"
-#include "wtf/Assertions.h"
-#include "wtf/HashMap.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/ThreadSpecific.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
 #include <unicode/rbbi.h>
 #include <unicode/ubrk.h>
+#include <memory>
+#include "platform/text/TextBreakIteratorInternalICU.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/ThreadSpecific.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/text/WTFString.h"
 
 using namespace WTF;
 
 namespace blink {
 
 class LineBreakIteratorPool final {
-    USING_FAST_MALLOC(LineBreakIteratorPool);
-    WTF_MAKE_NONCOPYABLE(LineBreakIteratorPool);
-public:
-    static LineBreakIteratorPool& sharedPool()
-    {
-        static WTF::ThreadSpecific<LineBreakIteratorPool>* pool = new WTF::ThreadSpecific<LineBreakIteratorPool>;
-        return **pool;
+  USING_FAST_MALLOC(LineBreakIteratorPool);
+  WTF_MAKE_NONCOPYABLE(LineBreakIteratorPool);
+
+ public:
+  static LineBreakIteratorPool& SharedPool() {
+    static WTF::ThreadSpecific<LineBreakIteratorPool>* pool =
+        new WTF::ThreadSpecific<LineBreakIteratorPool>;
+    return **pool;
+  }
+
+  static std::unique_ptr<LineBreakIteratorPool> Create() {
+    return WTF::WrapUnique(new LineBreakIteratorPool);
+  }
+
+  icu::BreakIterator* Take(const AtomicString& locale) {
+    icu::BreakIterator* iterator = 0;
+    for (size_t i = 0; i < pool_.size(); ++i) {
+      if (pool_[i].first == locale) {
+        iterator = pool_[i].second;
+        pool_.erase(i);
+        break;
+      }
     }
 
-    static std::unique_ptr<LineBreakIteratorPool> create() { return wrapUnique(new LineBreakIteratorPool); }
+    if (!iterator) {
+      UErrorCode open_status = U_ZERO_ERROR;
+      bool locale_is_empty = locale.IsEmpty();
+      iterator = icu::BreakIterator::createLineInstance(
+          locale_is_empty ? icu::Locale(CurrentTextBreakLocaleID())
+                          : icu::Locale(locale.Utf8().Data()),
+          open_status);
+      // locale comes from a web page and it can be invalid, leading ICU
+      // to fail, in which case we fall back to the default locale.
+      if (!locale_is_empty && U_FAILURE(open_status)) {
+        open_status = U_ZERO_ERROR;
+        iterator = icu::BreakIterator::createLineInstance(
+            icu::Locale(CurrentTextBreakLocaleID()), open_status);
+      }
 
-    icu::BreakIterator* take(const AtomicString& locale)
-    {
-        icu::BreakIterator* iterator = 0;
-        for (size_t i = 0; i < m_pool.size(); ++i) {
-            if (m_pool[i].first == locale) {
-                iterator = m_pool[i].second;
-                m_pool.remove(i);
-                break;
-            }
-        }
-
-        if (!iterator) {
-            UErrorCode openStatus = U_ZERO_ERROR;
-            bool localeIsEmpty = locale.isEmpty();
-            iterator = icu::BreakIterator::createLineInstance(localeIsEmpty ? icu::Locale(currentTextBreakLocaleID()) : icu::Locale(locale.utf8().data()), openStatus);
-            // locale comes from a web page and it can be invalid, leading ICU
-            // to fail, in which case we fall back to the default locale.
-            if (!localeIsEmpty && U_FAILURE(openStatus)) {
-                openStatus = U_ZERO_ERROR;
-                iterator = icu::BreakIterator::createLineInstance(icu::Locale(currentTextBreakLocaleID()), openStatus);
-            }
-
-            if (U_FAILURE(openStatus)) {
-                DLOG(ERROR) << "icu::BreakIterator construction failed with status " << openStatus;
-                return 0;
-            }
-        }
-
-        ASSERT(!m_vendedIterators.contains(iterator));
-        m_vendedIterators.set(iterator, locale);
-        return iterator;
+      if (U_FAILURE(open_status)) {
+        DLOG(ERROR) << "icu::BreakIterator construction failed with status "
+                    << open_status;
+        return 0;
+      }
     }
 
-    void put(icu::BreakIterator* iterator)
-    {
-        DCHECK(m_vendedIterators.contains(iterator));
+    DCHECK(!vended_iterators_.Contains(iterator));
+    vended_iterators_.Set(iterator, locale);
+    return iterator;
+  }
 
-        if (m_pool.size() == capacity) {
-            delete(m_pool[0].second);
-            m_pool.remove(0);
-        }
+  void Put(icu::BreakIterator* iterator) {
+    DCHECK(vended_iterators_.Contains(iterator));
 
-        m_pool.append(Entry(m_vendedIterators.take(iterator), iterator));
+    if (pool_.size() == kCapacity) {
+      delete (pool_[0].second);
+      pool_.erase(0);
     }
 
-private:
-    LineBreakIteratorPool() { }
+    pool_.push_back(Entry(vended_iterators_.Take(iterator), iterator));
+  }
 
-    static const size_t capacity = 4;
+ private:
+  LineBreakIteratorPool() {}
 
-    typedef std::pair<AtomicString, icu::BreakIterator*> Entry;
-    typedef Vector<Entry, capacity> Pool;
-    Pool m_pool;
-    HashMap<icu::BreakIterator*, AtomicString> m_vendedIterators;
+  static const size_t kCapacity = 4;
 
-    friend WTF::ThreadSpecific<LineBreakIteratorPool>::operator LineBreakIteratorPool*();
+  typedef std::pair<AtomicString, icu::BreakIterator*> Entry;
+  typedef Vector<Entry, kCapacity> Pool;
+  Pool pool_;
+  HashMap<icu::BreakIterator*, AtomicString> vended_iterators_;
+
+  friend WTF::ThreadSpecific<LineBreakIteratorPool>::
+  operator LineBreakIteratorPool*();
 };
 
-enum TextContext { NoContext, PriorContext, PrimaryContext };
+enum TextContext { kNoContext, kPriorContext, kPrimaryContext };
 
-const int textBufferCapacity = 16;
+const int kTextBufferCapacity = 16;
 
 typedef struct {
-    DISALLOW_NEW();
-    UText text;
-    UChar buffer[textBufferCapacity];
+  DISALLOW_NEW();
+  UText text;
+  UChar buffer[kTextBufferCapacity];
 } UTextWithBuffer;
 
-static inline int64_t textPinIndex(int64_t& index, int64_t limit)
-{
-    if (index < 0)
-        index = 0;
-    else if (index > limit)
-        index = limit;
-    return index;
+static inline int64_t TextPinIndex(int64_t& index, int64_t limit) {
+  if (index < 0)
+    index = 0;
+  else if (index > limit)
+    index = limit;
+  return index;
 }
 
-static inline int64_t textNativeLength(UText* text)
-{
-    return text->a + text->b;
+static inline int64_t TextNativeLength(UText* text) {
+  return text->a + text->b;
 }
 
 // Relocate pointer from source into destination as required.
-static void textFixPointer(const UText* source, UText* destination, const void*& pointer)
-{
-    if (pointer >= source->pExtra && pointer < static_cast<char*>(source->pExtra) + source->extraSize) {
-        // Pointer references source extra buffer.
-        pointer = static_cast<char*>(destination->pExtra) + (static_cast<const char*>(pointer) - static_cast<const char*>(source->pExtra));
-    } else if (pointer >= source && pointer < reinterpret_cast<const char*>(source) + source->sizeOfStruct) {
-        // Pointer references source text structure, but not source extra buffer.
-        pointer = reinterpret_cast<char*>(destination) + (static_cast<const char*>(pointer) - reinterpret_cast<const char*>(source));
-    }
+static void TextFixPointer(const UText* source,
+                           UText* destination,
+                           const void*& pointer) {
+  if (pointer >= source->pExtra &&
+      pointer < static_cast<char*>(source->pExtra) + source->extraSize) {
+    // Pointer references source extra buffer.
+    pointer = static_cast<char*>(destination->pExtra) +
+              (static_cast<const char*>(pointer) -
+               static_cast<const char*>(source->pExtra));
+  } else if (pointer >= source &&
+             pointer <
+                 reinterpret_cast<const char*>(source) + source->sizeOfStruct) {
+    // Pointer references source text structure, but not source extra buffer.
+    pointer = reinterpret_cast<char*>(destination) +
+              (static_cast<const char*>(pointer) -
+               reinterpret_cast<const char*>(source));
+  }
 }
 
-static UText* textClone(UText* destination, const UText* source, UBool deep, UErrorCode* status)
-{
-    ASSERT_UNUSED(deep, !deep);
-    if (U_FAILURE(*status))
-        return 0;
-    int32_t extraSize = source->extraSize;
-    destination = utext_setup(destination, extraSize, status);
-    if (U_FAILURE(*status))
-        return destination;
-    void* extraNew = destination->pExtra;
-    int32_t flags = destination->flags;
-    int sizeToCopy = std::min(source->sizeOfStruct, destination->sizeOfStruct);
-    memcpy(destination, source, sizeToCopy);
-    destination->pExtra = extraNew;
-    destination->flags = flags;
-    memcpy(destination->pExtra, source->pExtra, extraSize);
-    textFixPointer(source, destination, destination->context);
-    textFixPointer(source, destination, destination->p);
-    textFixPointer(source, destination, destination->q);
-    ASSERT(!destination->r);
-    const void * chunkContents = static_cast<const void*>(destination->chunkContents);
-    textFixPointer(source, destination, chunkContents);
-    destination->chunkContents = static_cast<const UChar*>(chunkContents);
-    return destination;
-}
-
-static int32_t textExtract(UText*, int64_t, int64_t, UChar*, int32_t, UErrorCode* errorCode)
-{
-    // In the present context, this text provider is used only with ICU functions
-    // that do not perform an extract operation.
-    ASSERT_NOT_REACHED();
-    *errorCode = U_UNSUPPORTED_ERROR;
+static UText* TextClone(UText* destination,
+                        const UText* source,
+                        UBool deep,
+                        UErrorCode* status) {
+  DCHECK(!deep);
+  if (U_FAILURE(*status))
     return 0;
+  int32_t extra_size = source->extraSize;
+  destination = utext_setup(destination, extra_size, status);
+  if (U_FAILURE(*status))
+    return destination;
+  void* extra_new = destination->pExtra;
+  int32_t flags = destination->flags;
+  int size_to_copy = std::min(source->sizeOfStruct, destination->sizeOfStruct);
+  memcpy(destination, source, size_to_copy);
+  destination->pExtra = extra_new;
+  destination->flags = flags;
+  memcpy(destination->pExtra, source->pExtra, extra_size);
+  TextFixPointer(source, destination, destination->context);
+  TextFixPointer(source, destination, destination->p);
+  TextFixPointer(source, destination, destination->q);
+  DCHECK(!destination->r);
+  const void* chunk_contents =
+      static_cast<const void*>(destination->chunkContents);
+  TextFixPointer(source, destination, chunk_contents);
+  destination->chunkContents = static_cast<const UChar*>(chunk_contents);
+  return destination;
 }
 
-static void textClose(UText* text)
-{
-    text->context = 0;
+static int32_t TextExtract(UText*,
+                           int64_t,
+                           int64_t,
+                           UChar*,
+                           int32_t,
+                           UErrorCode* error_code) {
+  // In the present context, this text provider is used only with ICU functions
+  // that do not perform an extract operation.
+  NOTREACHED();
+  *error_code = U_UNSUPPORTED_ERROR;
+  return 0;
 }
 
-static inline TextContext textGetContext(const UText* text, int64_t nativeIndex, UBool forward)
-{
-    if (!text->b || nativeIndex > text->b)
-        return PrimaryContext;
-    if (nativeIndex == text->b)
-        return forward ? PrimaryContext : PriorContext;
-    return PriorContext;
+static void TextClose(UText* text) {
+  text->context = 0;
 }
 
-static inline TextContext textLatin1GetCurrentContext(const UText* text)
-{
-    if (!text->chunkContents)
-        return NoContext;
-    return text->chunkContents == text->pExtra ? PrimaryContext : PriorContext;
+static inline TextContext TextGetContext(const UText* text,
+                                         int64_t native_index,
+                                         UBool forward) {
+  if (!text->b || native_index > text->b)
+    return kPrimaryContext;
+  if (native_index == text->b)
+    return forward ? kPrimaryContext : kPriorContext;
+  return kPriorContext;
 }
 
-static void textLatin1MoveInPrimaryContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(text->chunkContents == text->pExtra);
-    if (forward) {
-        ASSERT(nativeIndex >= text->b && nativeIndex < nativeLength);
-        text->chunkNativeStart = nativeIndex;
-        text->chunkNativeLimit = nativeIndex + text->extraSize / sizeof(UChar);
-        if (text->chunkNativeLimit > nativeLength)
-            text->chunkNativeLimit = nativeLength;
-    } else {
-        ASSERT(nativeIndex > text->b && nativeIndex <= nativeLength);
-        text->chunkNativeLimit = nativeIndex;
-        text->chunkNativeStart = nativeIndex - text->extraSize / sizeof(UChar);
-        if (text->chunkNativeStart < text->b)
-            text->chunkNativeStart = text->b;
+static inline TextContext TextLatin1GetCurrentContext(const UText* text) {
+  if (!text->chunkContents)
+    return kNoContext;
+  return text->chunkContents == text->pExtra ? kPrimaryContext : kPriorContext;
+}
+
+static void TextLatin1MoveInPrimaryContext(UText* text,
+                                           int64_t native_index,
+                                           int64_t native_length,
+                                           UBool forward) {
+  DCHECK_EQ(text->chunkContents, text->pExtra);
+  if (forward) {
+    DCHECK_GE(native_index, text->b);
+    DCHECK_LT(native_index, native_length);
+    text->chunkNativeStart = native_index;
+    text->chunkNativeLimit = native_index + text->extraSize / sizeof(UChar);
+    if (text->chunkNativeLimit > native_length)
+      text->chunkNativeLimit = native_length;
+  } else {
+    DCHECK_GT(native_index, text->b);
+    DCHECK_LE(native_index, native_length);
+    text->chunkNativeLimit = native_index;
+    text->chunkNativeStart = native_index - text->extraSize / sizeof(UChar);
+    if (text->chunkNativeStart < text->b)
+      text->chunkNativeStart = text->b;
+  }
+  int64_t length = text->chunkNativeLimit - text->chunkNativeStart;
+  // Ensure chunk length is well defined if computed length exceeds int32_t
+  // range.
+  DCHECK_LE(length, std::numeric_limits<int32_t>::max());
+  text->chunkLength = length <= std::numeric_limits<int32_t>::max()
+                          ? static_cast<int32_t>(length)
+                          : 0;
+  text->nativeIndexingLimit = text->chunkLength;
+  text->chunkOffset = forward ? 0 : text->chunkLength;
+  StringImpl::CopyChars(
+      const_cast<UChar*>(text->chunkContents),
+      static_cast<const LChar*>(text->p) + (text->chunkNativeStart - text->b),
+      static_cast<unsigned>(text->chunkLength));
+}
+
+static void TextLatin1SwitchToPrimaryContext(UText* text,
+                                             int64_t native_index,
+                                             int64_t native_length,
+                                             UBool forward) {
+  DCHECK(!text->chunkContents || text->chunkContents == text->q);
+  text->chunkContents = static_cast<const UChar*>(text->pExtra);
+  TextLatin1MoveInPrimaryContext(text, native_index, native_length, forward);
+}
+
+static void TextLatin1MoveInPriorContext(UText* text,
+                                         int64_t native_index,
+                                         int64_t native_length,
+                                         UBool forward) {
+  DCHECK_EQ(text->chunkContents, text->q);
+  DCHECK(forward ? native_index < text->b : native_index <= text->b);
+  DCHECK(forward ? native_index < native_length
+                 : native_index <= native_length);
+  DCHECK(forward ? native_index < native_length
+                 : native_index <= native_length);
+  text->chunkNativeStart = 0;
+  text->chunkNativeLimit = text->b;
+  text->chunkLength = text->b;
+  text->nativeIndexingLimit = text->chunkLength;
+  int64_t offset = native_index - text->chunkNativeStart;
+  // Ensure chunk offset is well defined if computed offset exceeds int32_t
+  // range or chunk length.
+  DCHECK_LE(offset, std::numeric_limits<int32_t>::max());
+  text->chunkOffset = std::min(offset <= std::numeric_limits<int32_t>::max()
+                                   ? static_cast<int32_t>(offset)
+                                   : 0,
+                               text->chunkLength);
+}
+
+static void TextLatin1SwitchToPriorContext(UText* text,
+                                           int64_t native_index,
+                                           int64_t native_length,
+                                           UBool forward) {
+  DCHECK(!text->chunkContents || text->chunkContents == text->pExtra);
+  text->chunkContents = static_cast<const UChar*>(text->q);
+  TextLatin1MoveInPriorContext(text, native_index, native_length, forward);
+}
+
+static inline bool TextInChunkOrOutOfRange(UText* text,
+                                           int64_t native_index,
+                                           int64_t native_length,
+                                           UBool forward,
+                                           UBool& is_accessible) {
+  if (forward) {
+    if (native_index >= text->chunkNativeStart &&
+        native_index < text->chunkNativeLimit) {
+      int64_t offset = native_index - text->chunkNativeStart;
+      // Ensure chunk offset is well formed if computed offset exceeds int32_t
+      // range.
+      DCHECK_LE(offset, std::numeric_limits<int32_t>::max());
+      text->chunkOffset = offset <= std::numeric_limits<int32_t>::max()
+                              ? static_cast<int32_t>(offset)
+                              : 0;
+      is_accessible = TRUE;
+      return true;
     }
-    int64_t length = text->chunkNativeLimit - text->chunkNativeStart;
-    // Ensure chunk length is well defined if computed length exceeds int32_t range.
-    ASSERT(length <= std::numeric_limits<int32_t>::max());
-    text->chunkLength = length <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(length) : 0;
-    text->nativeIndexingLimit = text->chunkLength;
-    text->chunkOffset = forward ? 0 : text->chunkLength;
-    StringImpl::copyChars(const_cast<UChar*>(text->chunkContents), static_cast<const LChar*>(text->p) + (text->chunkNativeStart - text->b), static_cast<unsigned>(text->chunkLength));
-}
-
-static void textLatin1SwitchToPrimaryContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(!text->chunkContents || text->chunkContents == text->q);
-    text->chunkContents = static_cast<const UChar*>(text->pExtra);
-    textLatin1MoveInPrimaryContext(text, nativeIndex, nativeLength, forward);
-}
-
-static void textLatin1MoveInPriorContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(text->chunkContents == text->q);
-    ASSERT(forward ? nativeIndex < text->b : nativeIndex <= text->b);
-    ASSERT_UNUSED(nativeLength, forward ? nativeIndex < nativeLength : nativeIndex <= nativeLength);
-    ASSERT_UNUSED(forward, forward ? nativeIndex < nativeLength : nativeIndex <= nativeLength);
-    text->chunkNativeStart = 0;
-    text->chunkNativeLimit = text->b;
-    text->chunkLength = text->b;
-    text->nativeIndexingLimit = text->chunkLength;
-    int64_t offset = nativeIndex - text->chunkNativeStart;
-    // Ensure chunk offset is well defined if computed offset exceeds int32_t range or chunk length.
-    ASSERT(offset <= std::numeric_limits<int32_t>::max());
-    text->chunkOffset = std::min(offset <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(offset) : 0, text->chunkLength);
-}
-
-static void textLatin1SwitchToPriorContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(!text->chunkContents || text->chunkContents == text->pExtra);
-    text->chunkContents = static_cast<const UChar*>(text->q);
-    textLatin1MoveInPriorContext(text, nativeIndex, nativeLength, forward);
-}
-
-static inline bool textInChunkOrOutOfRange(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward, UBool& isAccessible)
-{
-    if (forward) {
-        if (nativeIndex >= text->chunkNativeStart && nativeIndex < text->chunkNativeLimit) {
-            int64_t offset = nativeIndex - text->chunkNativeStart;
-            // Ensure chunk offset is well formed if computed offset exceeds int32_t range.
-            ASSERT(offset <= std::numeric_limits<int32_t>::max());
-            text->chunkOffset = offset <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(offset) : 0;
-            isAccessible = TRUE;
-            return true;
-        }
-        if (nativeIndex >= nativeLength && text->chunkNativeLimit == nativeLength) {
-            text->chunkOffset = text->chunkLength;
-            isAccessible = FALSE;
-            return true;
-        }
-    } else {
-        if (nativeIndex > text->chunkNativeStart && nativeIndex <= text->chunkNativeLimit) {
-            int64_t offset = nativeIndex - text->chunkNativeStart;
-            // Ensure chunk offset is well formed if computed offset exceeds int32_t range.
-            ASSERT(offset <= std::numeric_limits<int32_t>::max());
-            text->chunkOffset = offset <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(offset) : 0;
-            isAccessible = TRUE;
-            return true;
-        }
-        if (nativeIndex <= 0 && !text->chunkNativeStart) {
-            text->chunkOffset = 0;
-            isAccessible = FALSE;
-            return true;
-        }
+    if (native_index >= native_length &&
+        text->chunkNativeLimit == native_length) {
+      text->chunkOffset = text->chunkLength;
+      is_accessible = FALSE;
+      return true;
     }
+  } else {
+    if (native_index > text->chunkNativeStart &&
+        native_index <= text->chunkNativeLimit) {
+      int64_t offset = native_index - text->chunkNativeStart;
+      // Ensure chunk offset is well formed if computed offset exceeds int32_t
+      // range.
+      DCHECK_LE(offset, std::numeric_limits<int32_t>::max());
+      text->chunkOffset = offset <= std::numeric_limits<int32_t>::max()
+                              ? static_cast<int32_t>(offset)
+                              : 0;
+      is_accessible = TRUE;
+      return true;
+    }
+    if (native_index <= 0 && !text->chunkNativeStart) {
+      text->chunkOffset = 0;
+      is_accessible = FALSE;
+      return true;
+    }
+  }
+  return false;
+}
+
+static UBool TextLatin1Access(UText* text,
+                              int64_t native_index,
+                              UBool forward) {
+  if (!text->context)
+    return FALSE;
+  int64_t native_length = TextNativeLength(text);
+  UBool is_accessible;
+  if (TextInChunkOrOutOfRange(text, native_index, native_length, forward,
+                              is_accessible))
+    return is_accessible;
+  native_index = TextPinIndex(native_index, native_length - 1);
+  TextContext current_context = TextLatin1GetCurrentContext(text);
+  TextContext new_context = TextGetContext(text, native_index, forward);
+  DCHECK_NE(new_context, kNoContext);
+  if (new_context == current_context) {
+    if (current_context == kPrimaryContext) {
+      TextLatin1MoveInPrimaryContext(text, native_index, native_length,
+                                     forward);
+    } else {
+      TextLatin1MoveInPriorContext(text, native_index, native_length, forward);
+    }
+  } else if (new_context == kPrimaryContext) {
+    TextLatin1SwitchToPrimaryContext(text, native_index, native_length,
+                                     forward);
+  } else {
+    DCHECK_EQ(new_context, kPriorContext);
+    TextLatin1SwitchToPriorContext(text, native_index, native_length, forward);
+  }
+  return TRUE;
+}
+
+static const struct UTextFuncs kTextLatin1Funcs = {
+    sizeof(UTextFuncs), 0,           0, 0, TextClone, TextNativeLength,
+    TextLatin1Access,   TextExtract, 0, 0, 0,         0,
+    TextClose,          0,           0, 0,
+};
+
+static void TextInit(UText* text,
+                     const UTextFuncs* funcs,
+                     const void* string,
+                     unsigned length,
+                     const UChar* prior_context,
+                     int prior_context_length) {
+  text->pFuncs = funcs;
+  text->providerProperties = 1 << UTEXT_PROVIDER_STABLE_CHUNKS;
+  text->context = string;
+  text->p = string;
+  text->a = length;
+  text->q = prior_context;
+  text->b = prior_context_length;
+}
+
+static UText* TextOpenLatin1(UTextWithBuffer* ut_with_buffer,
+                             const LChar* string,
+                             unsigned length,
+                             const UChar* prior_context,
+                             int prior_context_length,
+                             UErrorCode* status) {
+  if (U_FAILURE(*status))
+    return 0;
+
+  if (!string ||
+      length > static_cast<unsigned>(std::numeric_limits<int32_t>::max())) {
+    *status = U_ILLEGAL_ARGUMENT_ERROR;
+    return 0;
+  }
+  UText* text = utext_setup(&ut_with_buffer->text,
+                            sizeof(ut_with_buffer->buffer), status);
+  if (U_FAILURE(*status)) {
+    DCHECK(!text);
+    return 0;
+  }
+  TextInit(text, &kTextLatin1Funcs, string, length, prior_context,
+           prior_context_length);
+  return text;
+}
+
+static inline TextContext TextUTF16GetCurrentContext(const UText* text) {
+  if (!text->chunkContents)
+    return kNoContext;
+  return text->chunkContents == text->p ? kPrimaryContext : kPriorContext;
+}
+
+static void TextUTF16MoveInPrimaryContext(UText* text,
+                                          int64_t native_index,
+                                          int64_t native_length,
+                                          UBool forward) {
+  DCHECK_EQ(text->chunkContents, text->p);
+  DCHECK(forward ? native_index >= text->b : native_index > text->b);
+  DCHECK(forward ? native_index < native_length
+                 : native_index <= native_length);
+  text->chunkNativeStart = text->b;
+  text->chunkNativeLimit = native_length;
+  int64_t length = text->chunkNativeLimit - text->chunkNativeStart;
+  // Ensure chunk length is well defined if computed length exceeds int32_t
+  // range.
+  DCHECK_LE(length, std::numeric_limits<int32_t>::max());
+  text->chunkLength = length <= std::numeric_limits<int32_t>::max()
+                          ? static_cast<int32_t>(length)
+                          : 0;
+  text->nativeIndexingLimit = text->chunkLength;
+  int64_t offset = native_index - text->chunkNativeStart;
+  // Ensure chunk offset is well defined if computed offset exceeds int32_t
+  // range or chunk length.
+  DCHECK_LE(offset, std::numeric_limits<int32_t>::max());
+  text->chunkOffset = std::min(offset <= std::numeric_limits<int32_t>::max()
+                                   ? static_cast<int32_t>(offset)
+                                   : 0,
+                               text->chunkLength);
+}
+
+static void TextUTF16SwitchToPrimaryContext(UText* text,
+                                            int64_t native_index,
+                                            int64_t native_length,
+                                            UBool forward) {
+  DCHECK(!text->chunkContents || text->chunkContents == text->q);
+  text->chunkContents = static_cast<const UChar*>(text->p);
+  TextUTF16MoveInPrimaryContext(text, native_index, native_length, forward);
+}
+
+static void TextUTF16MoveInPriorContext(UText* text,
+                                        int64_t native_index,
+                                        int64_t native_length,
+                                        UBool forward) {
+  DCHECK_EQ(text->chunkContents, text->q);
+  DCHECK(forward ? native_index < text->b : native_index <= text->b);
+  DCHECK(forward ? native_index < native_length
+                 : native_index <= native_length);
+  DCHECK(forward ? native_index < native_length
+                 : native_index <= native_length);
+  text->chunkNativeStart = 0;
+  text->chunkNativeLimit = text->b;
+  text->chunkLength = text->b;
+  text->nativeIndexingLimit = text->chunkLength;
+  int64_t offset = native_index - text->chunkNativeStart;
+  // Ensure chunk offset is well defined if computed offset exceeds int32_t
+  // range or chunk length.
+  DCHECK_LE(offset, std::numeric_limits<int32_t>::max());
+  text->chunkOffset = std::min(offset <= std::numeric_limits<int32_t>::max()
+                                   ? static_cast<int32_t>(offset)
+                                   : 0,
+                               text->chunkLength);
+}
+
+static void TextUTF16SwitchToPriorContext(UText* text,
+                                          int64_t native_index,
+                                          int64_t native_length,
+                                          UBool forward) {
+  DCHECK(!text->chunkContents || text->chunkContents == text->p);
+  text->chunkContents = static_cast<const UChar*>(text->q);
+  TextUTF16MoveInPriorContext(text, native_index, native_length, forward);
+}
+
+static UBool TextUTF16Access(UText* text, int64_t native_index, UBool forward) {
+  if (!text->context)
+    return FALSE;
+  int64_t native_length = TextNativeLength(text);
+  UBool is_accessible;
+  if (TextInChunkOrOutOfRange(text, native_index, native_length, forward,
+                              is_accessible))
+    return is_accessible;
+  native_index = TextPinIndex(native_index, native_length - 1);
+  TextContext current_context = TextUTF16GetCurrentContext(text);
+  TextContext new_context = TextGetContext(text, native_index, forward);
+  DCHECK_NE(new_context, kNoContext);
+  if (new_context == current_context) {
+    if (current_context == kPrimaryContext) {
+      TextUTF16MoveInPrimaryContext(text, native_index, native_length, forward);
+    } else {
+      TextUTF16MoveInPriorContext(text, native_index, native_length, forward);
+    }
+  } else if (new_context == kPrimaryContext) {
+    TextUTF16SwitchToPrimaryContext(text, native_index, native_length, forward);
+  } else {
+    DCHECK_EQ(new_context, kPriorContext);
+    TextUTF16SwitchToPriorContext(text, native_index, native_length, forward);
+  }
+  return TRUE;
+}
+
+static const struct UTextFuncs kTextUTF16Funcs = {
+    sizeof(UTextFuncs), 0,           0, 0, TextClone, TextNativeLength,
+    TextUTF16Access,    TextExtract, 0, 0, 0,         0,
+    TextClose,          0,           0, 0,
+};
+
+static UText* TextOpenUTF16(UText* text,
+                            const UChar* string,
+                            unsigned length,
+                            const UChar* prior_context,
+                            int prior_context_length,
+                            UErrorCode* status) {
+  if (U_FAILURE(*status))
+    return 0;
+
+  if (!string ||
+      length > static_cast<unsigned>(std::numeric_limits<int32_t>::max())) {
+    *status = U_ILLEGAL_ARGUMENT_ERROR;
+    return 0;
+  }
+
+  text = utext_setup(text, 0, status);
+  if (U_FAILURE(*status)) {
+    DCHECK(!text);
+    return 0;
+  }
+  TextInit(text, &kTextUTF16Funcs, string, length, prior_context,
+           prior_context_length);
+  return text;
+}
+
+static UText g_empty_text = UTEXT_INITIALIZER;
+
+static TextBreakIterator* WordBreakIterator(const LChar* string, int length) {
+  UErrorCode error_code = U_ZERO_ERROR;
+  static TextBreakIterator* break_iter = 0;
+  if (!break_iter) {
+    break_iter = icu::BreakIterator::createWordInstance(
+        icu::Locale(CurrentTextBreakLocaleID()), error_code);
+    DCHECK(U_SUCCESS(error_code))
+        << "ICU could not open a break iterator: " << u_errorName(error_code)
+        << " (" << error_code << ")";
+    if (!break_iter)
+      return 0;
+  }
+
+  UTextWithBuffer text_local;
+  text_local.text = g_empty_text;
+  text_local.text.extraSize = sizeof(text_local.buffer);
+  text_local.text.pExtra = text_local.buffer;
+
+  UErrorCode open_status = U_ZERO_ERROR;
+  UText* text = TextOpenLatin1(&text_local, string, length, 0, 0, &open_status);
+  if (U_FAILURE(open_status)) {
+    DLOG(ERROR) << "textOpenLatin1 failed with status " << open_status;
+    return 0;
+  }
+
+  UErrorCode set_text_status = U_ZERO_ERROR;
+  break_iter->setText(text, set_text_status);
+  if (U_FAILURE(set_text_status))
+    DLOG(ERROR) << "BreakIterator::seText failed with status "
+                << set_text_status;
+
+  utext_close(text);
+
+  return break_iter;
+}
+
+static void SetText16(TextBreakIterator* iter,
+                      const UChar* string,
+                      int length) {
+  UErrorCode error_code = U_ZERO_ERROR;
+  UText u_text = UTEXT_INITIALIZER;
+  utext_openUChars(&u_text, string, length, &error_code);
+  if (U_FAILURE(error_code))
+    return;
+  iter->setText(&u_text, error_code);
+}
+
+TextBreakIterator* WordBreakIterator(const UChar* string, int length) {
+  UErrorCode error_code = U_ZERO_ERROR;
+  static TextBreakIterator* break_iter = 0;
+  if (!break_iter) {
+    break_iter = icu::BreakIterator::createWordInstance(
+        icu::Locale(CurrentTextBreakLocaleID()), error_code);
+    DCHECK(U_SUCCESS(error_code))
+        << "ICU could not open a break iterator: " << u_errorName(error_code)
+        << " (" << error_code << ")";
+    if (!break_iter)
+      return 0;
+  }
+  SetText16(break_iter, string, length);
+  return break_iter;
+}
+
+TextBreakIterator* WordBreakIterator(const String& string,
+                                     int start,
+                                     int length) {
+  if (string.IsEmpty())
+    return 0;
+  if (string.Is8Bit())
+    return WordBreakIterator(string.Characters8() + start, length);
+  return WordBreakIterator(string.Characters16() + start, length);
+}
+
+TextBreakIterator* AcquireLineBreakIterator(const LChar* string,
+                                            int length,
+                                            const AtomicString& locale,
+                                            const UChar* prior_context,
+                                            unsigned prior_context_length) {
+  TextBreakIterator* iterator =
+      LineBreakIteratorPool::SharedPool().Take(locale);
+  if (!iterator)
+    return 0;
+
+  UTextWithBuffer text_local;
+  text_local.text = g_empty_text;
+  text_local.text.extraSize = sizeof(text_local.buffer);
+  text_local.text.pExtra = text_local.buffer;
+
+  UErrorCode open_status = U_ZERO_ERROR;
+  UText* text = TextOpenLatin1(&text_local, string, length, prior_context,
+                               prior_context_length, &open_status);
+  if (U_FAILURE(open_status)) {
+    DLOG(ERROR) << "textOpenLatin1 failed with status " << open_status;
+    return 0;
+  }
+
+  UErrorCode set_text_status = U_ZERO_ERROR;
+  iterator->setText(text, set_text_status);
+  if (U_FAILURE(set_text_status)) {
+    DLOG(ERROR) << "ubrk_setUText failed with status " << set_text_status;
+    return 0;
+  }
+
+  utext_close(text);
+
+  return iterator;
+}
+
+TextBreakIterator* AcquireLineBreakIterator(const UChar* string,
+                                            int length,
+                                            const AtomicString& locale,
+                                            const UChar* prior_context,
+                                            unsigned prior_context_length) {
+  TextBreakIterator* iterator =
+      LineBreakIteratorPool::SharedPool().Take(locale);
+  if (!iterator)
+    return 0;
+
+  UText text_local = UTEXT_INITIALIZER;
+
+  UErrorCode open_status = U_ZERO_ERROR;
+  UText* text = TextOpenUTF16(&text_local, string, length, prior_context,
+                              prior_context_length, &open_status);
+  if (U_FAILURE(open_status)) {
+    DLOG(ERROR) << "textOpenUTF16 failed with status " << open_status;
+    return 0;
+  }
+
+  UErrorCode set_text_status = U_ZERO_ERROR;
+  iterator->setText(text, set_text_status);
+  if (U_FAILURE(set_text_status)) {
+    DLOG(ERROR) << "ubrk_setUText failed with status " << set_text_status;
+    return 0;
+  }
+
+  utext_close(text);
+
+  return iterator;
+}
+
+void ReleaseLineBreakIterator(TextBreakIterator* iterator) {
+  DCHECK(iterator);
+  LineBreakIteratorPool::SharedPool().Put(iterator);
+}
+
+static TextBreakIterator* g_non_shared_character_break_iterator;
+
+static inline bool CompareAndSwapNonSharedCharacterBreakIterator(
+    TextBreakIterator* expected,
+    TextBreakIterator* new_value) {
+  DEFINE_STATIC_LOCAL(Mutex, non_shared_character_break_iterator_mutex, ());
+  MutexLocker locker(non_shared_character_break_iterator_mutex);
+  if (g_non_shared_character_break_iterator != expected)
     return false;
+  g_non_shared_character_break_iterator = new_value;
+  return true;
 }
 
-static UBool textLatin1Access(UText* text, int64_t nativeIndex, UBool forward)
-{
-    if (!text->context)
-        return FALSE;
-    int64_t nativeLength = textNativeLength(text);
-    UBool isAccessible;
-    if (textInChunkOrOutOfRange(text, nativeIndex, nativeLength, forward, isAccessible))
-        return isAccessible;
-    nativeIndex = textPinIndex(nativeIndex, nativeLength - 1);
-    TextContext currentContext = textLatin1GetCurrentContext(text);
-    TextContext newContext = textGetContext(text, nativeIndex, forward);
-    ASSERT(newContext != NoContext);
-    if (newContext == currentContext) {
-        if (currentContext == PrimaryContext) {
-            textLatin1MoveInPrimaryContext(text, nativeIndex, nativeLength, forward);
-        } else {
-            textLatin1MoveInPriorContext(text, nativeIndex, nativeLength, forward);
-        }
-    } else if (newContext == PrimaryContext) {
-        textLatin1SwitchToPrimaryContext(text, nativeIndex, nativeLength, forward);
-    } else {
-        ASSERT(newContext == PriorContext);
-        textLatin1SwitchToPriorContext(text, nativeIndex, nativeLength, forward);
-    }
-    return TRUE;
+NonSharedCharacterBreakIterator::NonSharedCharacterBreakIterator(
+    const String& string)
+    : is8_bit_(true), charaters8_(0), offset_(0), length_(0), iterator_(0) {
+  if (string.IsEmpty())
+    return;
+
+  is8_bit_ = string.Is8Bit();
+
+  if (is8_bit_) {
+    charaters8_ = string.Characters8();
+    offset_ = 0;
+    length_ = string.length();
+    return;
+  }
+
+  CreateIteratorForBuffer(string.Characters16(), string.length());
 }
 
-static const struct UTextFuncs textLatin1Funcs = {
-    sizeof(UTextFuncs),
-    0, 0, 0,
-    textClone,
-    textNativeLength,
-    textLatin1Access,
-    textExtract,
-    0, 0, 0, 0,
-    textClose,
-    0, 0, 0,
-};
-
-static void textInit(UText* text, const UTextFuncs* funcs, const void* string, unsigned length, const UChar* priorContext, int priorContextLength)
-{
-    text->pFuncs = funcs;
-    text->providerProperties = 1 << UTEXT_PROVIDER_STABLE_CHUNKS;
-    text->context = string;
-    text->p = string;
-    text->a = length;
-    text->q = priorContext;
-    text->b = priorContextLength;
+NonSharedCharacterBreakIterator::NonSharedCharacterBreakIterator(
+    const UChar* buffer,
+    unsigned length)
+    : is8_bit_(false), charaters8_(0), offset_(0), length_(0), iterator_(0) {
+  CreateIteratorForBuffer(buffer, length);
 }
 
-static UText* textOpenLatin1(UTextWithBuffer* utWithBuffer, const LChar* string, unsigned length, const UChar* priorContext, int priorContextLength, UErrorCode* status)
-{
-    if (U_FAILURE(*status))
-        return 0;
+void NonSharedCharacterBreakIterator::CreateIteratorForBuffer(
+    const UChar* buffer,
+    unsigned length) {
+  iterator_ = g_non_shared_character_break_iterator;
+  bool created_iterator =
+      iterator_ && CompareAndSwapNonSharedCharacterBreakIterator(iterator_, 0);
+  if (!created_iterator) {
+    UErrorCode error_code = U_ZERO_ERROR;
+    iterator_ = icu::BreakIterator::createCharacterInstance(
+        icu::Locale(CurrentTextBreakLocaleID()), error_code);
+    DCHECK(U_SUCCESS(error_code))
+        << "ICU could not open a break iterator: " << u_errorName(error_code)
+        << " (" << error_code << ")";
+  }
 
-    if (!string || length > static_cast<unsigned>(std::numeric_limits<int32_t>::max())) {
-        *status = U_ILLEGAL_ARGUMENT_ERROR;
-        return 0;
-    }
-    UText* text = utext_setup(&utWithBuffer->text, sizeof(utWithBuffer->buffer), status);
-    if (U_FAILURE(*status)) {
-        ASSERT(!text);
-        return 0;
-    }
-    textInit(text, &textLatin1Funcs, string, length, priorContext, priorContextLength);
-    return text;
+  SetText16(iterator_, buffer, length);
 }
 
-static inline TextContext textUTF16GetCurrentContext(const UText* text)
-{
-    if (!text->chunkContents)
-        return NoContext;
-    return text->chunkContents == text->p ? PrimaryContext : PriorContext;
+NonSharedCharacterBreakIterator::~NonSharedCharacterBreakIterator() {
+  if (is8_bit_)
+    return;
+  if (!CompareAndSwapNonSharedCharacterBreakIterator(0, iterator_))
+    delete iterator_;
 }
 
-static void textUTF16MoveInPrimaryContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(text->chunkContents == text->p);
-    ASSERT_UNUSED(forward, forward ? nativeIndex >= text->b : nativeIndex > text->b);
-    ASSERT_UNUSED(forward, forward ? nativeIndex < nativeLength : nativeIndex <= nativeLength);
-    text->chunkNativeStart = text->b;
-    text->chunkNativeLimit = nativeLength;
-    int64_t length = text->chunkNativeLimit - text->chunkNativeStart;
-    // Ensure chunk length is well defined if computed length exceeds int32_t range.
-    ASSERT(length <= std::numeric_limits<int32_t>::max());
-    text->chunkLength = length <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(length) : 0;
-    text->nativeIndexingLimit = text->chunkLength;
-    int64_t offset = nativeIndex - text->chunkNativeStart;
-    // Ensure chunk offset is well defined if computed offset exceeds int32_t range or chunk length.
-    ASSERT(offset <= std::numeric_limits<int32_t>::max());
-    text->chunkOffset = std::min(offset <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(offset) : 0, text->chunkLength);
+int NonSharedCharacterBreakIterator::Next() {
+  if (!is8_bit_)
+    return iterator_->next();
+
+  if (offset_ >= length_)
+    return kTextBreakDone;
+
+  offset_ += ClusterLengthStartingAt(offset_);
+  return offset_;
 }
 
-static void textUTF16SwitchToPrimaryContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(!text->chunkContents || text->chunkContents == text->q);
-    text->chunkContents = static_cast<const UChar*>(text->p);
-    textUTF16MoveInPrimaryContext(text, nativeIndex, nativeLength, forward);
+int NonSharedCharacterBreakIterator::Current() {
+  if (!is8_bit_)
+    return iterator_->current();
+  return offset_;
 }
 
-static void textUTF16MoveInPriorContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(text->chunkContents == text->q);
-    ASSERT(forward ? nativeIndex < text->b : nativeIndex <= text->b);
-    ASSERT_UNUSED(nativeLength, forward ? nativeIndex < nativeLength : nativeIndex <= nativeLength);
-    ASSERT_UNUSED(forward, forward ? nativeIndex < nativeLength : nativeIndex <= nativeLength);
-    text->chunkNativeStart = 0;
-    text->chunkNativeLimit = text->b;
-    text->chunkLength = text->b;
-    text->nativeIndexingLimit = text->chunkLength;
-    int64_t offset = nativeIndex - text->chunkNativeStart;
-    // Ensure chunk offset is well defined if computed offset exceeds int32_t range or chunk length.
-    ASSERT(offset <= std::numeric_limits<int32_t>::max());
-    text->chunkOffset = std::min(offset <= std::numeric_limits<int32_t>::max() ? static_cast<int32_t>(offset) : 0, text->chunkLength);
+bool NonSharedCharacterBreakIterator::IsBreak(int offset) const {
+  if (!is8_bit_)
+    return iterator_->isBoundary(offset);
+  return !IsLFAfterCR(offset);
 }
 
-static void textUTF16SwitchToPriorContext(UText* text, int64_t nativeIndex, int64_t nativeLength, UBool forward)
-{
-    ASSERT(!text->chunkContents || text->chunkContents == text->p);
-    text->chunkContents = static_cast<const UChar*>(text->q);
-    textUTF16MoveInPriorContext(text, nativeIndex, nativeLength, forward);
+int NonSharedCharacterBreakIterator::Preceding(int offset) const {
+  if (!is8_bit_)
+    return iterator_->preceding(offset);
+  if (offset <= 0)
+    return kTextBreakDone;
+  if (IsLFAfterCR(offset))
+    return offset - 2;
+  return offset - 1;
 }
 
-static UBool textUTF16Access(UText* text, int64_t nativeIndex, UBool forward)
-{
-    if (!text->context)
-        return FALSE;
-    int64_t nativeLength = textNativeLength(text);
-    UBool isAccessible;
-    if (textInChunkOrOutOfRange(text, nativeIndex, nativeLength, forward, isAccessible))
-        return isAccessible;
-    nativeIndex = textPinIndex(nativeIndex, nativeLength - 1);
-    TextContext currentContext = textUTF16GetCurrentContext(text);
-    TextContext newContext = textGetContext(text, nativeIndex, forward);
-    ASSERT(newContext != NoContext);
-    if (newContext == currentContext) {
-        if (currentContext == PrimaryContext) {
-            textUTF16MoveInPrimaryContext(text, nativeIndex, nativeLength, forward);
-        } else {
-            textUTF16MoveInPriorContext(text, nativeIndex, nativeLength, forward);
-        }
-    } else if (newContext == PrimaryContext) {
-        textUTF16SwitchToPrimaryContext(text, nativeIndex, nativeLength, forward);
-    } else {
-        ASSERT(newContext == PriorContext);
-        textUTF16SwitchToPriorContext(text, nativeIndex, nativeLength, forward);
-    }
-    return TRUE;
+int NonSharedCharacterBreakIterator::Following(int offset) const {
+  if (!is8_bit_)
+    return iterator_->following(offset);
+  if (static_cast<unsigned>(offset) >= length_)
+    return kTextBreakDone;
+  return offset + ClusterLengthStartingAt(offset);
 }
 
-static const struct UTextFuncs textUTF16Funcs = {
-    sizeof(UTextFuncs),
-    0, 0, 0,
-    textClone,
-    textNativeLength,
-    textUTF16Access,
-    textExtract,
-    0, 0, 0, 0,
-    textClose,
-    0, 0, 0,
-};
-
-static UText* textOpenUTF16(UText* text, const UChar* string, unsigned length, const UChar* priorContext, int priorContextLength, UErrorCode* status)
-{
-    if (U_FAILURE(*status))
-        return 0;
-
-    if (!string || length > static_cast<unsigned>(std::numeric_limits<int32_t>::max())) {
-        *status = U_ILLEGAL_ARGUMENT_ERROR;
-        return 0;
-    }
-
-    text = utext_setup(text, 0, status);
-    if (U_FAILURE(*status)) {
-        ASSERT(!text);
-        return 0;
-    }
-    textInit(text, &textUTF16Funcs, string, length, priorContext, priorContextLength);
-    return text;
-}
-
-static UText emptyText = UTEXT_INITIALIZER;
-
-static TextBreakIterator* wordBreakIterator(const LChar* string, int length)
-{
-    UErrorCode errorCode = U_ZERO_ERROR;
-    static TextBreakIterator* breakIter = 0;
-    if (!breakIter) {
-        breakIter = icu::BreakIterator::createWordInstance(icu::Locale(currentTextBreakLocaleID()), errorCode);
-        DCHECK(U_SUCCESS(errorCode)) << "ICU could not open a break iterator: " << u_errorName(errorCode) << " (" << errorCode << ")";
-        if (!breakIter)
-            return 0;
-    }
-
-    UTextWithBuffer textLocal;
-    textLocal.text = emptyText;
-    textLocal.text.extraSize = sizeof(textLocal.buffer);
-    textLocal.text.pExtra = textLocal.buffer;
-
-    UErrorCode openStatus = U_ZERO_ERROR;
-    UText* text = textOpenLatin1(&textLocal, string, length, 0, 0, &openStatus);
-    if (U_FAILURE(openStatus)) {
-        DLOG(ERROR) << "textOpenLatin1 failed with status " << openStatus;
-        return 0;
-    }
-
-    UErrorCode setTextStatus = U_ZERO_ERROR;
-    breakIter->setText(text, setTextStatus);
-    if (U_FAILURE(setTextStatus))
-        DLOG(ERROR) << "BreakIterator::seText failed with status " << setTextStatus;
-
-    utext_close(text);
-
-    return breakIter;
-}
-
-static void setText16(TextBreakIterator* iter, const UChar* string, int length)
-{
-    UErrorCode errorCode = U_ZERO_ERROR;
-    UText uText = UTEXT_INITIALIZER;
-    utext_openUChars(&uText, string, length, &errorCode);
-    if (U_FAILURE(errorCode))
-        return;
-    iter->setText(&uText, errorCode);
-}
-
-TextBreakIterator* wordBreakIterator(const UChar* string, int length)
-{
-    UErrorCode errorCode = U_ZERO_ERROR;
-    static TextBreakIterator* breakIter = 0;
-    if (!breakIter) {
-        breakIter = icu::BreakIterator::createWordInstance(icu::Locale(currentTextBreakLocaleID()), errorCode);
-        DCHECK(U_SUCCESS(errorCode)) << "ICU could not open a break iterator: " << u_errorName(errorCode) << " (" << errorCode << ")";
-        if (!breakIter)
-            return 0;
-    }
-    setText16(breakIter, string, length);
-    return breakIter;
-}
-
-TextBreakIterator* wordBreakIterator(const String& string, int start, int length)
-{
-    if (string.isEmpty())
-        return 0;
-    if (string.is8Bit())
-        return wordBreakIterator(string.characters8() + start, length);
-    return wordBreakIterator(string.characters16() + start, length);
-}
-
-TextBreakIterator* acquireLineBreakIterator(const LChar* string, int length, const AtomicString& locale, const UChar* priorContext, unsigned priorContextLength)
-{
-    TextBreakIterator* iterator = LineBreakIteratorPool::sharedPool().take(locale);
+TextBreakIterator* SentenceBreakIterator(const UChar* string, int length) {
+  UErrorCode open_status = U_ZERO_ERROR;
+  static TextBreakIterator* iterator = 0;
+  if (!iterator) {
+    iterator = icu::BreakIterator::createSentenceInstance(
+        icu::Locale(CurrentTextBreakLocaleID()), open_status);
+    DCHECK(U_SUCCESS(open_status))
+        << "ICU could not open a break iterator: " << u_errorName(open_status)
+        << " (" << open_status << ")";
     if (!iterator)
-        return 0;
+      return 0;
+  }
 
-    UTextWithBuffer textLocal;
-    textLocal.text = emptyText;
-    textLocal.text.extraSize = sizeof(textLocal.buffer);
-    textLocal.text.pExtra = textLocal.buffer;
-
-    UErrorCode openStatus = U_ZERO_ERROR;
-    UText* text = textOpenLatin1(&textLocal, string, length, priorContext, priorContextLength, &openStatus);
-    if (U_FAILURE(openStatus)) {
-        DLOG(ERROR) << "textOpenLatin1 failed with status " << openStatus;
-        return 0;
-    }
-
-    UErrorCode setTextStatus = U_ZERO_ERROR;
-    iterator->setText(text, setTextStatus);
-    if (U_FAILURE(setTextStatus)) {
-        DLOG(ERROR) << "ubrk_setUText failed with status " << setTextStatus;
-        return 0;
-    }
-
-    utext_close(text);
-
-    return iterator;
+  SetText16(iterator, string, length);
+  return iterator;
 }
 
-TextBreakIterator* acquireLineBreakIterator(const UChar* string, int length, const AtomicString& locale, const UChar* priorContext, unsigned priorContextLength)
-{
-    TextBreakIterator* iterator = LineBreakIteratorPool::sharedPool().take(locale);
+bool IsWordTextBreak(TextBreakIterator* iterator) {
+  icu::RuleBasedBreakIterator* rule_based_break_iterator =
+      static_cast<icu::RuleBasedBreakIterator*>(iterator);
+  int rule_status = rule_based_break_iterator->getRuleStatus();
+  return rule_status != UBRK_WORD_NONE;
+}
+
+static TextBreakIterator* SetUpIteratorWithRules(const char* break_rules,
+                                                 const UChar* string,
+                                                 int length) {
+  if (!string)
+    return 0;
+
+  static TextBreakIterator* iterator = 0;
+  if (!iterator) {
+    UParseError parse_status;
+    UErrorCode open_status = U_ZERO_ERROR;
+    Vector<UChar> rules;
+    String(break_rules).AppendTo(rules);
+
+    iterator = new icu::RuleBasedBreakIterator(
+        icu::UnicodeString(rules.Data(), rules.size()), parse_status,
+        open_status);
+    DCHECK(U_SUCCESS(open_status))
+        << "ICU could not open a break iterator: " << u_errorName(open_status)
+        << " (" << open_status << ")";
     if (!iterator)
-        return 0;
+      return 0;
+  }
 
-    UText textLocal = UTEXT_INITIALIZER;
-
-    UErrorCode openStatus = U_ZERO_ERROR;
-    UText* text = textOpenUTF16(&textLocal, string, length, priorContext, priorContextLength, &openStatus);
-    if (U_FAILURE(openStatus)) {
-        DLOG(ERROR) << "textOpenUTF16 failed with status " << openStatus;
-        return 0;
-    }
-
-    UErrorCode setTextStatus = U_ZERO_ERROR;
-    iterator->setText(text, setTextStatus);
-    if (U_FAILURE(setTextStatus)) {
-        DLOG(ERROR) << "ubrk_setUText failed with status " << setTextStatus;
-        return 0;
-    }
-
-    utext_close(text);
-
-    return iterator;
+  SetText16(iterator, string, length);
+  return iterator;
 }
 
-void releaseLineBreakIterator(TextBreakIterator* iterator)
-{
-    DCHECK(iterator);
-    LineBreakIteratorPool::sharedPool().put(iterator);
+TextBreakIterator* CursorMovementIterator(const UChar* string, int length) {
+  // This rule set is based on character-break iterator rules of ICU 4.0
+  // <http://source.icu-project.org/repos/icu/icu/tags/release-4-0/source/data/brkitr/char.txt>.
+  // The major differences from the original ones are listed below:
+  // * Replaced '[\p{Grapheme_Cluster_Break = SpacingMark}]' with
+  //   '[\p{General_Category = Spacing Mark} - $Extend]' for ICU 3.8 or earlier;
+  // * Removed rules that prevent a cursor from moving after prepend characters
+  //   (Bug 24342);
+  // * Added rules that prevent a cursor from moving after virama signs of Indic
+  //   languages except Tamil (Bug 15790), and;
+  // * Added rules that prevent a cursor from moving before Japanese half-width
+  //   katakara voiced marks.
+  // * Added rules for regional indicator symbols.
+  static const char* const kRules =
+      "$CR      = [\\p{Grapheme_Cluster_Break = CR}];"
+      "$LF      = [\\p{Grapheme_Cluster_Break = LF}];"
+      "$Control = [\\p{Grapheme_Cluster_Break = Control}];"
+      "$VoiceMarks = [\\uFF9E\\uFF9F];"  // Japanese half-width katakana voiced
+                                         // marks
+      "$Extend  = [\\p{Grapheme_Cluster_Break = Extend} $VoiceMarks - [\\u0E30 "
+      "\\u0E32 \\u0E45 \\u0EB0 \\u0EB2]];"
+      "$SpacingMark = [[\\p{General_Category = Spacing Mark}] - $Extend];"
+      "$L       = [\\p{Grapheme_Cluster_Break = L}];"
+      "$V       = [\\p{Grapheme_Cluster_Break = V}];"
+      "$T       = [\\p{Grapheme_Cluster_Break = T}];"
+      "$LV      = [\\p{Grapheme_Cluster_Break = LV}];"
+      "$LVT     = [\\p{Grapheme_Cluster_Break = LVT}];"
+      "$Hin0    = [\\u0905-\\u0939];"          // Devanagari Letter A,...,Ha
+      "$HinV    = \\u094D;"                    // Devanagari Sign Virama
+      "$Hin1    = [\\u0915-\\u0939];"          // Devanagari Letter Ka,...,Ha
+      "$Ben0    = [\\u0985-\\u09B9];"          // Bengali Letter A,...,Ha
+      "$BenV    = \\u09CD;"                    // Bengali Sign Virama
+      "$Ben1    = [\\u0995-\\u09B9];"          // Bengali Letter Ka,...,Ha
+      "$Pan0    = [\\u0A05-\\u0A39];"          // Gurmukhi Letter A,...,Ha
+      "$PanV    = \\u0A4D;"                    // Gurmukhi Sign Virama
+      "$Pan1    = [\\u0A15-\\u0A39];"          // Gurmukhi Letter Ka,...,Ha
+      "$Guj0    = [\\u0A85-\\u0AB9];"          // Gujarati Letter A,...,Ha
+      "$GujV    = \\u0ACD;"                    // Gujarati Sign Virama
+      "$Guj1    = [\\u0A95-\\u0AB9];"          // Gujarati Letter Ka,...,Ha
+      "$Ori0    = [\\u0B05-\\u0B39];"          // Oriya Letter A,...,Ha
+      "$OriV    = \\u0B4D;"                    // Oriya Sign Virama
+      "$Ori1    = [\\u0B15-\\u0B39];"          // Oriya Letter Ka,...,Ha
+      "$Tel0    = [\\u0C05-\\u0C39];"          // Telugu Letter A,...,Ha
+      "$TelV    = \\u0C4D;"                    // Telugu Sign Virama
+      "$Tel1    = [\\u0C14-\\u0C39];"          // Telugu Letter Ka,...,Ha
+      "$Kan0    = [\\u0C85-\\u0CB9];"          // Kannada Letter A,...,Ha
+      "$KanV    = \\u0CCD;"                    // Kannada Sign Virama
+      "$Kan1    = [\\u0C95-\\u0CB9];"          // Kannada Letter A,...,Ha
+      "$Mal0    = [\\u0D05-\\u0D39];"          // Malayalam Letter A,...,Ha
+      "$MalV    = \\u0D4D;"                    // Malayalam Sign Virama
+      "$Mal1    = [\\u0D15-\\u0D39];"          // Malayalam Letter A,...,Ha
+      "$RI      = [\\U0001F1E6-\\U0001F1FF];"  // Emoji regional indicators
+      "!!chain;"
+      "!!forward;"
+      "$CR $LF;"
+      "$L ($L | $V | $LV | $LVT);"
+      "($LV | $V) ($V | $T);"
+      "($LVT | $T) $T;"
+      "[^$Control $CR $LF] $Extend;"
+      "[^$Control $CR $LF] $SpacingMark;"
+      "$RI $RI / $RI;"
+      "$RI $RI;"
+      "$Hin0 $HinV $Hin1;"  // Devanagari Virama (forward)
+      "$Ben0 $BenV $Ben1;"  // Bengali Virama (forward)
+      "$Pan0 $PanV $Pan1;"  // Gurmukhi Virama (forward)
+      "$Guj0 $GujV $Guj1;"  // Gujarati Virama (forward)
+      "$Ori0 $OriV $Ori1;"  // Oriya Virama (forward)
+      "$Tel0 $TelV $Tel1;"  // Telugu Virama (forward)
+      "$Kan0 $KanV $Kan1;"  // Kannada Virama (forward)
+      "$Mal0 $MalV $Mal1;"  // Malayalam Virama (forward)
+      "!!reverse;"
+      "$LF $CR;"
+      "($L | $V | $LV | $LVT) $L;"
+      "($V | $T) ($LV | $V);"
+      "$T ($LVT | $T);"
+      "$Extend      [^$Control $CR $LF];"
+      "$SpacingMark [^$Control $CR $LF];"
+      "$RI $RI / $RI $RI;"
+      "$RI $RI;"
+      "$Hin1 $HinV $Hin0;"  // Devanagari Virama (backward)
+      "$Ben1 $BenV $Ben0;"  // Bengali Virama (backward)
+      "$Pan1 $PanV $Pan0;"  // Gurmukhi Virama (backward)
+      "$Guj1 $GujV $Guj0;"  // Gujarati Virama (backward)
+      "$Ori1 $OriV $Ori0;"  // Gujarati Virama (backward)
+      "$Tel1 $TelV $Tel0;"  // Telugu Virama (backward)
+      "$Kan1 $KanV $Kan0;"  // Kannada Virama (backward)
+      "$Mal1 $MalV $Mal0;"  // Malayalam Virama (backward)
+      "!!safe_reverse;"
+      "!!safe_forward;";
+
+  return SetUpIteratorWithRules(kRules, string, length);
 }
 
-static TextBreakIterator* nonSharedCharacterBreakIterator;
-
-static inline bool compareAndSwapNonSharedCharacterBreakIterator(TextBreakIterator* expected, TextBreakIterator* newValue)
-{
-    DEFINE_STATIC_LOCAL(Mutex, nonSharedCharacterBreakIteratorMutex, ());
-    MutexLocker locker(nonSharedCharacterBreakIteratorMutex);
-    if (nonSharedCharacterBreakIterator != expected)
-        return false;
-    nonSharedCharacterBreakIterator = newValue;
-    return true;
-}
-
-NonSharedCharacterBreakIterator::NonSharedCharacterBreakIterator(const String& string)
-    : m_is8Bit(true)
-    , m_charaters8(0)
-    , m_offset(0)
-    , m_length(0)
-    , m_iterator(0)
-{
-    if (string.isEmpty())
-        return;
-
-    m_is8Bit = string.is8Bit();
-
-    if (m_is8Bit) {
-        m_charaters8 = string.characters8();
-        m_offset = 0;
-        m_length = string.length();
-        return;
-    }
-
-    createIteratorForBuffer(string.characters16(), string.length());
-}
-
-NonSharedCharacterBreakIterator::NonSharedCharacterBreakIterator(const UChar* buffer, unsigned length)
-    : m_is8Bit(false)
-    , m_charaters8(0)
-    , m_offset(0)
-    , m_length(0)
-    , m_iterator(0)
-{
-    createIteratorForBuffer(buffer, length);
-}
-
-void NonSharedCharacterBreakIterator::createIteratorForBuffer(const UChar* buffer, unsigned length)
-{
-    m_iterator = nonSharedCharacterBreakIterator;
-    bool createdIterator = m_iterator && compareAndSwapNonSharedCharacterBreakIterator(m_iterator, 0);
-    if (!createdIterator) {
-        UErrorCode errorCode = U_ZERO_ERROR;
-        m_iterator = icu::BreakIterator::createCharacterInstance(icu::Locale(currentTextBreakLocaleID()), errorCode);
-        DCHECK(U_SUCCESS(errorCode)) << "ICU could not open a break iterator: " << u_errorName(errorCode) << " (" << errorCode << ")";
-    }
-
-    setText16(m_iterator, buffer, length);
-}
-
-NonSharedCharacterBreakIterator::~NonSharedCharacterBreakIterator()
-{
-    if (m_is8Bit)
-        return;
-    if (!compareAndSwapNonSharedCharacterBreakIterator(0, m_iterator))
-        delete m_iterator;
-}
-
-int NonSharedCharacterBreakIterator::next()
-{
-    if (!m_is8Bit)
-        return m_iterator->next();
-
-    if (m_offset >= m_length)
-        return TextBreakDone;
-
-    m_offset += clusterLengthStartingAt(m_offset);
-    return m_offset;
-}
-
-int NonSharedCharacterBreakIterator::current()
-{
-    if (!m_is8Bit)
-        return m_iterator->current();
-    return m_offset;
-}
-
-bool NonSharedCharacterBreakIterator::isBreak(int offset) const
-{
-    if (!m_is8Bit)
-        return m_iterator->isBoundary(offset);
-    return !isLFAfterCR(offset);
-}
-
-int NonSharedCharacterBreakIterator::preceding(int offset) const
-{
-    if (!m_is8Bit)
-        return m_iterator->preceding(offset);
-    if (offset <= 0)
-        return TextBreakDone;
-    if (isLFAfterCR(offset))
-        return offset - 2;
-    return offset - 1;
-}
-
-int NonSharedCharacterBreakIterator::following(int offset) const
-{
-    if (!m_is8Bit)
-        return m_iterator->following(offset);
-    if (static_cast<unsigned>(offset) >= m_length)
-        return TextBreakDone;
-    return offset + clusterLengthStartingAt(offset);
-}
-
-TextBreakIterator* sentenceBreakIterator(const UChar* string, int length)
-{
-    UErrorCode openStatus = U_ZERO_ERROR;
-    static TextBreakIterator* iterator = 0;
-    if (!iterator) {
-        iterator =  icu::BreakIterator::createSentenceInstance(icu::Locale(currentTextBreakLocaleID()), openStatus);
-        DCHECK(U_SUCCESS(openStatus)) << "ICU could not open a break iterator: " << u_errorName(openStatus) << " (" << openStatus << ")";
-        if (!iterator)
-            return 0;
-    }
-
-    setText16(iterator, string, length);
-    return iterator;
-}
-
-bool isWordTextBreak(TextBreakIterator* iterator)
-{
-    icu::RuleBasedBreakIterator* ruleBasedBreakIterator = static_cast<icu::RuleBasedBreakIterator*>(iterator);
-    int ruleStatus = ruleBasedBreakIterator->getRuleStatus();
-    return ruleStatus != UBRK_WORD_NONE;
-}
-
-static TextBreakIterator* setUpIteratorWithRules(const char* breakRules, const UChar* string, int length)
-{
-    if (!string)
-        return 0;
-
-    static TextBreakIterator* iterator = 0;
-    if (!iterator) {
-        UParseError parseStatus;
-        UErrorCode openStatus = U_ZERO_ERROR;
-        Vector<UChar> rules;
-        String(breakRules).appendTo(rules);
-
-        iterator = new icu::RuleBasedBreakIterator(icu::UnicodeString(rules.data(), rules.size()), parseStatus, openStatus);
-        DCHECK(U_SUCCESS(openStatus)) << "ICU could not open a break iterator: " << u_errorName(openStatus) << " (" << openStatus << ")";
-        if (!iterator)
-            return 0;
-    }
-
-    setText16(iterator, string, length);
-    return iterator;
-}
-
-TextBreakIterator* cursorMovementIterator(const UChar* string, int length)
-{
-    // This rule set is based on character-break iterator rules of ICU 4.0
-    // <http://source.icu-project.org/repos/icu/icu/tags/release-4-0/source/data/brkitr/char.txt>.
-    // The major differences from the original ones are listed below:
-    // * Replaced '[\p{Grapheme_Cluster_Break = SpacingMark}]' with '[\p{General_Category = Spacing Mark} - $Extend]' for ICU 3.8 or earlier;
-    // * Removed rules that prevent a cursor from moving after prepend characters (Bug 24342);
-    // * Added rules that prevent a cursor from moving after virama signs of Indic languages except Tamil (Bug 15790), and;
-    // * Added rules that prevent a cursor from moving before Japanese half-width katakara voiced marks.
-    // * Added rules for regional indicator symbols.
-    static const char* const kRules =
-        "$CR      = [\\p{Grapheme_Cluster_Break = CR}];"
-        "$LF      = [\\p{Grapheme_Cluster_Break = LF}];"
-        "$Control = [\\p{Grapheme_Cluster_Break = Control}];"
-        "$VoiceMarks = [\\uFF9E\\uFF9F];"  // Japanese half-width katakana voiced marks
-        "$Extend  = [\\p{Grapheme_Cluster_Break = Extend} $VoiceMarks - [\\u0E30 \\u0E32 \\u0E45 \\u0EB0 \\u0EB2]];"
-        "$SpacingMark = [[\\p{General_Category = Spacing Mark}] - $Extend];"
-        "$L       = [\\p{Grapheme_Cluster_Break = L}];"
-        "$V       = [\\p{Grapheme_Cluster_Break = V}];"
-        "$T       = [\\p{Grapheme_Cluster_Break = T}];"
-        "$LV      = [\\p{Grapheme_Cluster_Break = LV}];"
-        "$LVT     = [\\p{Grapheme_Cluster_Break = LVT}];"
-        "$Hin0    = [\\u0905-\\u0939];"    // Devanagari Letter A,...,Ha
-        "$HinV    = \\u094D;"              // Devanagari Sign Virama
-        "$Hin1    = [\\u0915-\\u0939];"    // Devanagari Letter Ka,...,Ha
-        "$Ben0    = [\\u0985-\\u09B9];"    // Bengali Letter A,...,Ha
-        "$BenV    = \\u09CD;"              // Bengali Sign Virama
-        "$Ben1    = [\\u0995-\\u09B9];"    // Bengali Letter Ka,...,Ha
-        "$Pan0    = [\\u0A05-\\u0A39];"    // Gurmukhi Letter A,...,Ha
-        "$PanV    = \\u0A4D;"              // Gurmukhi Sign Virama
-        "$Pan1    = [\\u0A15-\\u0A39];"    // Gurmukhi Letter Ka,...,Ha
-        "$Guj0    = [\\u0A85-\\u0AB9];"    // Gujarati Letter A,...,Ha
-        "$GujV    = \\u0ACD;"              // Gujarati Sign Virama
-        "$Guj1    = [\\u0A95-\\u0AB9];"    // Gujarati Letter Ka,...,Ha
-        "$Ori0    = [\\u0B05-\\u0B39];"    // Oriya Letter A,...,Ha
-        "$OriV    = \\u0B4D;"              // Oriya Sign Virama
-        "$Ori1    = [\\u0B15-\\u0B39];"    // Oriya Letter Ka,...,Ha
-        "$Tel0    = [\\u0C05-\\u0C39];"    // Telugu Letter A,...,Ha
-        "$TelV    = \\u0C4D;"              // Telugu Sign Virama
-        "$Tel1    = [\\u0C14-\\u0C39];"    // Telugu Letter Ka,...,Ha
-        "$Kan0    = [\\u0C85-\\u0CB9];"    // Kannada Letter A,...,Ha
-        "$KanV    = \\u0CCD;"              // Kannada Sign Virama
-        "$Kan1    = [\\u0C95-\\u0CB9];"    // Kannada Letter A,...,Ha
-        "$Mal0    = [\\u0D05-\\u0D39];"    // Malayalam Letter A,...,Ha
-        "$MalV    = \\u0D4D;"              // Malayalam Sign Virama
-        "$Mal1    = [\\u0D15-\\u0D39];"    // Malayalam Letter A,...,Ha
-        "$RI      = [\\U0001F1E6-\\U0001F1FF];" // Emoji regional indicators
-        "!!chain;"
-        "!!forward;"
-        "$CR $LF;"
-        "$L ($L | $V | $LV | $LVT);"
-        "($LV | $V) ($V | $T);"
-        "($LVT | $T) $T;"
-        "[^$Control $CR $LF] $Extend;"
-        "[^$Control $CR $LF] $SpacingMark;"
-        "$RI $RI / $RI;"
-        "$RI $RI;"
-        "$Hin0 $HinV $Hin1;"               // Devanagari Virama (forward)
-        "$Ben0 $BenV $Ben1;"               // Bengali Virama (forward)
-        "$Pan0 $PanV $Pan1;"               // Gurmukhi Virama (forward)
-        "$Guj0 $GujV $Guj1;"               // Gujarati Virama (forward)
-        "$Ori0 $OriV $Ori1;"               // Oriya Virama (forward)
-        "$Tel0 $TelV $Tel1;"               // Telugu Virama (forward)
-        "$Kan0 $KanV $Kan1;"               // Kannada Virama (forward)
-        "$Mal0 $MalV $Mal1;"               // Malayalam Virama (forward)
-        "!!reverse;"
-        "$LF $CR;"
-        "($L | $V | $LV | $LVT) $L;"
-        "($V | $T) ($LV | $V);"
-        "$T ($LVT | $T);"
-        "$Extend      [^$Control $CR $LF];"
-        "$SpacingMark [^$Control $CR $LF];"
-        "$RI $RI / $RI $RI;"
-        "$RI $RI;"
-        "$Hin1 $HinV $Hin0;"               // Devanagari Virama (backward)
-        "$Ben1 $BenV $Ben0;"               // Bengali Virama (backward)
-        "$Pan1 $PanV $Pan0;"               // Gurmukhi Virama (backward)
-        "$Guj1 $GujV $Guj0;"               // Gujarati Virama (backward)
-        "$Ori1 $OriV $Ori0;"               // Gujarati Virama (backward)
-        "$Tel1 $TelV $Tel0;"               // Telugu Virama (backward)
-        "$Kan1 $KanV $Kan0;"               // Kannada Virama (backward)
-        "$Mal1 $MalV $Mal0;"               // Malayalam Virama (backward)
-        "!!safe_reverse;"
-        "!!safe_forward;";
-
-    return setUpIteratorWithRules(kRules, string, length);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <vector>
+
 #include "base/strings/string16.h"
 #include "content/public/common/manifest.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
@@ -22,12 +24,16 @@ struct ShortcutInfo {
   // GENERATED_JAVA_CLASS_NAME_OVERRIDE: ShortcutSource
   enum Source {
     SOURCE_UNKNOWN = 0,
-    SOURCE_ADD_TO_HOMESCREEN = 1,
+    SOURCE_ADD_TO_HOMESCREEN_DEPRECATED = 1,
     SOURCE_APP_BANNER = 2,
     SOURCE_BOOKMARK_NAVIGATOR_WIDGET = 3,
     SOURCE_BOOKMARK_SHORTCUT_WIDGET = 4,
     SOURCE_NOTIFICATION = 5,
-    SOURCE_COUNT = 6
+    SOURCE_ADD_TO_HOMESCREEN_PWA = 6,
+    SOURCE_ADD_TO_HOMESCREEN_STANDALONE = 7,
+    SOURCE_ADD_TO_HOMESCREEN_SHORTCUT = 8,
+    SOURCE_EXTERNAL_INTENT = 9,
+    SOURCE_COUNT = 10
   };
 
   explicit ShortcutInfo(const GURL& shortcut_url);
@@ -51,7 +57,12 @@ struct ShortcutInfo {
   Source source;
   int64_t theme_color;
   int64_t background_color;
-  GURL icon_url;
+  int ideal_splash_image_size_in_px;
+  int minimum_splash_image_size_in_px;
+  GURL splash_image_url;
+  GURL best_primary_icon_url;
+  GURL best_badge_icon_url;
+  std::vector<std::string> icon_urls;
 };
 
 #endif  // CHROME_BROWSER_ANDROID_SHORTCUT_INFO_H_

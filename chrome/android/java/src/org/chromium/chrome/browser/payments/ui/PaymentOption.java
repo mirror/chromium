@@ -4,6 +4,9 @@
 
 package org.chromium.chrome.browser.payments.ui;
 
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+
 import javax.annotation.Nullable;
 
 /**
@@ -11,17 +14,18 @@ import javax.annotation.Nullable;
  * method.
  */
 public class PaymentOption implements Completable {
-    /** The placeholder value that indicates the absence of an icon for this option. */
-    public static final int NO_ICON = 0;
-
     protected boolean mIsComplete;
+    protected boolean mIsEditable;
+    protected String mEditMessage;
+    protected String mEditTitle;
     private String mId;
-    private int mIcon;
+    private Drawable mIcon;
     private String[] mLabels = {null, null, null};
     private boolean mIsValid = true;
 
     /** See {@link #PaymentOption(String, String, String, String, int)}. */
-    public PaymentOption(String id, @Nullable String label, @Nullable String sublabel, int icon) {
+    public PaymentOption(String id, @Nullable String label, @Nullable String sublabel,
+             @Nullable Drawable icon) {
         this(id, label, sublabel, null, icon);
     }
 
@@ -32,10 +36,10 @@ public class PaymentOption implements Completable {
      * @param label         The label.
      * @param sublabel      The optional sublabel.
      * @param tertiarylabel The optional tertiary label.
-     * @param icon          The drawable icon identifier or NO_ICON.
+     * @param icon          The drawable icon or null.
      */
     public PaymentOption(String id, @Nullable String label, @Nullable String sublabel,
-            @Nullable String tertiarylabel, int icon) {
+            @Nullable String tertiarylabel, @Nullable Drawable icon) {
         updateIdentifierLabelsAndIcon(id, label, sublabel, tertiarylabel, icon);
     }
 
@@ -50,6 +54,24 @@ public class PaymentOption implements Completable {
      */
     public String getIdentifier() {
         return mId;
+    }
+
+    /**
+     * The message of required edit of this option. For example, "Billing address required" or
+     * "Phone number required".
+     */
+    @Nullable
+    public String getEditMessage() {
+        return mEditMessage;
+    }
+
+    /**
+     * The title of required edit of this option. For example, "Add billing address" or "Add phone
+     * number".
+     */
+    @Nullable
+    public String getEditTitle() {
+        return mEditTitle;
     }
 
     /**
@@ -95,20 +117,49 @@ public class PaymentOption implements Completable {
      * @param label         The new label to use. Should not be null.
      * @param sublabel      The new sublabel to use. Can be null.
      * @param tertiarylabel The new tertiary label to use. Can be null.
-     * @param icon          The drawable icon identifier or NO_ICON.
+     * @param icon          The drawable icon or null.
      */
     protected void updateIdentifierLabelsAndIcon(
             String id, String label, @Nullable String sublabel, @Nullable String tertiarylabel,
-            int icon) {
+            @Nullable Drawable icon) {
         updateIdentifierAndLabels(id, label, sublabel, tertiarylabel);
         mIcon = icon;
     }
 
     /**
-     * The identifier for the drawable icon for this payment option. For example, R.drawable.pr_visa
-     * or NO_ICON.
+     * Updates the label of this option.
+     *
+     * @param label The new label to use.
      */
-    public int getDrawableIconId() {
+    protected void updateLabel(String label) {
+        mLabels[0] = label;
+    }
+
+    /**
+     * Updates the sublabel of this option.
+     *
+     * @param sublabel The new sublabel to use.
+     */
+    protected void updateSublabel(String sublabel) {
+        mLabels[1] = sublabel;
+    }
+
+    /**
+     * Updates the tertiary label of this option.
+     *
+     * @param tertiarylabel The new tertiary label to use.
+     */
+    protected void updateTertiarylabel(@Nullable String tertiarylabel) {
+        mLabels[2] = tertiarylabel;
+    }
+
+    /** @param icon The new icon to use. */
+    public void updateDrawableIcon(Drawable icon) {
+        mIcon = icon;
+    }
+
+    /** @return The drawable icon for this payment option. */
+    public Drawable getDrawableIcon() {
         return mIcon;
     }
 
@@ -123,5 +174,39 @@ public class PaymentOption implements Completable {
     /** @return True if this option is valid. */
     public boolean isValid() {
         return mIsValid;
+    }
+
+    /** @return True if this option is editable by users. */
+    public boolean isEditable() {
+        return mIsEditable;
+    }
+
+    /**
+     * Gets a preview string of this option.
+     *
+     * @param labelSeparator The string used to separate labels.
+     * @param maxLength      The expected maximum length of the preview string. The length of the
+     *                       returned string must strictly less than this value. Negative value
+     *                       indicates that the length is unlimited.
+     * @return The preview string.
+     */
+    public String getPreviewString(String labelSeparator, int maxLength) {
+        StringBuilder previewString = new StringBuilder(mLabels[0]);
+
+        if (!TextUtils.isEmpty(mLabels[1])) {
+            if (previewString.length() > 0) previewString.append(labelSeparator);
+            previewString.append(mLabels[1]);
+        }
+
+        if (!TextUtils.isEmpty(mLabels[2])) {
+            if (previewString.length() > 0) previewString.append(labelSeparator);
+            previewString.append(mLabels[2]);
+        }
+
+        if (maxLength >= 0 && previewString.length() >= maxLength) {
+            return previewString.substring(0, maxLength / 2);
+        }
+
+        return previewString.toString();
     }
 }

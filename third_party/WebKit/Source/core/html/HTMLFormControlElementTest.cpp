@@ -4,8 +4,8 @@
 
 #include "core/html/HTMLFormControlElement.h"
 
+#include "core/dom/Document.h"
 #include "core/frame/FrameView.h"
-#include "core/html/HTMLDocument.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/loader/EmptyClients.h"
@@ -16,63 +16,72 @@
 namespace blink {
 
 class HTMLFormControlElementTest : public ::testing::Test {
-protected:
-    void SetUp() override;
+ protected:
+  void SetUp() override;
 
-    DummyPageHolder& page() const { return *m_dummyPageHolder; }
-    HTMLDocument& document() const { return *m_document; }
+  DummyPageHolder& Page() const { return *dummy_page_holder_; }
+  Document& GetDocument() const { return *document_; }
 
-private:
-    std::unique_ptr<DummyPageHolder> m_dummyPageHolder;
-    Persistent<HTMLDocument> m_document;
+ private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  Persistent<Document> document_;
 };
 
-void HTMLFormControlElementTest::SetUp()
-{
-    Page::PageClients pageClients;
-    fillWithEmptyClients(pageClients);
-    m_dummyPageHolder = DummyPageHolder::create(IntSize(800, 600), &pageClients);
+void HTMLFormControlElementTest::SetUp() {
+  Page::PageClients page_clients;
+  FillWithEmptyClients(page_clients);
+  dummy_page_holder_ =
+      DummyPageHolder::Create(IntSize(800, 600), &page_clients);
 
-    m_document = toHTMLDocument(&m_dummyPageHolder->document());
-    m_document->setMimeType("text/html");
+  document_ = &dummy_page_holder_->GetDocument();
+  document_->SetMimeType("text/html");
 }
 
-TEST_F(HTMLFormControlElementTest, customValidationMessageTextDirection)
-{
-    document().documentElement()->setInnerHTML("<body><input pattern='abc' value='def' id=input></body>", ASSERT_NO_EXCEPTION);
-    document().view()->updateAllLifecyclePhases();
+TEST_F(HTMLFormControlElementTest, customValidationMessageTextDirection) {
+  GetDocument().documentElement()->setInnerHTML(
+      "<body><input pattern='abc' value='def' id=input></body>",
+      ASSERT_NO_EXCEPTION);
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
-    HTMLInputElement* input = toHTMLInputElement(document().getElementById("input"));
-    input->setCustomValidity(String::fromUTF8("\xD8\xB9\xD8\xB1\xD8\xA8\xD9\x89"));
-    input->setAttribute(HTMLNames::titleAttr, AtomicString::fromUTF8("\xD8\xB9\xD8\xB1\xD8\xA8\xD9\x89"));
+  HTMLInputElement* input =
+      toHTMLInputElement(GetDocument().GetElementById("input"));
+  input->setCustomValidity(
+      String::FromUTF8("\xD8\xB9\xD8\xB1\xD8\xA8\xD9\x89"));
+  input->setAttribute(
+      HTMLNames::titleAttr,
+      AtomicString::FromUTF8("\xD8\xB9\xD8\xB1\xD8\xA8\xD9\x89"));
 
-    String message = input->validationMessage().stripWhiteSpace();
-    String subMessage = input->validationSubMessage().stripWhiteSpace();
-    TextDirection messageDir = RTL;
-    TextDirection subMessageDir = LTR;
+  String message = input->validationMessage().StripWhiteSpace();
+  String sub_message = input->ValidationSubMessage().StripWhiteSpace();
+  TextDirection message_dir = TextDirection::kRtl;
+  TextDirection sub_message_dir = TextDirection::kLtr;
 
-    input->findCustomValidationMessageTextDirection(message, messageDir, subMessage, subMessageDir);
-    EXPECT_EQ(RTL, messageDir);
-    EXPECT_EQ(LTR, subMessageDir);
+  input->FindCustomValidationMessageTextDirection(message, message_dir,
+                                                  sub_message, sub_message_dir);
+  EXPECT_EQ(TextDirection::kRtl, message_dir);
+  EXPECT_EQ(TextDirection::kLtr, sub_message_dir);
 
-    input->layoutObject()->mutableStyleRef().setDirection(RTL);
-    input->findCustomValidationMessageTextDirection(message, messageDir, subMessage, subMessageDir);
-    EXPECT_EQ(RTL, messageDir);
-    EXPECT_EQ(LTR, subMessageDir);
+  input->GetLayoutObject()->MutableStyleRef().SetDirection(TextDirection::kRtl);
+  input->FindCustomValidationMessageTextDirection(message, message_dir,
+                                                  sub_message, sub_message_dir);
+  EXPECT_EQ(TextDirection::kRtl, message_dir);
+  EXPECT_EQ(TextDirection::kLtr, sub_message_dir);
 
-    input->setCustomValidity(String::fromUTF8("Main message."));
-    message = input->validationMessage().stripWhiteSpace();
-    subMessage = input->validationSubMessage().stripWhiteSpace();
-    input->findCustomValidationMessageTextDirection(message, messageDir, subMessage, subMessageDir);
-    EXPECT_EQ(LTR, messageDir);
-    EXPECT_EQ(LTR, subMessageDir);
+  input->setCustomValidity(String::FromUTF8("Main message."));
+  message = input->validationMessage().StripWhiteSpace();
+  sub_message = input->ValidationSubMessage().StripWhiteSpace();
+  input->FindCustomValidationMessageTextDirection(message, message_dir,
+                                                  sub_message, sub_message_dir);
+  EXPECT_EQ(TextDirection::kLtr, message_dir);
+  EXPECT_EQ(TextDirection::kLtr, sub_message_dir);
 
-    input->setCustomValidity(String());
-    message = input->validationMessage().stripWhiteSpace();
-    subMessage = input->validationSubMessage().stripWhiteSpace();
-    input->findCustomValidationMessageTextDirection(message, messageDir, subMessage, subMessageDir);
-    EXPECT_EQ(LTR, messageDir);
-    EXPECT_EQ(RTL, subMessageDir);
+  input->setCustomValidity(String());
+  message = input->validationMessage().StripWhiteSpace();
+  sub_message = input->ValidationSubMessage().StripWhiteSpace();
+  input->FindCustomValidationMessageTextDirection(message, message_dir,
+                                                  sub_message, sub_message_dir);
+  EXPECT_EQ(TextDirection::kLtr, message_dir);
+  EXPECT_EQ(TextDirection::kRtl, sub_message_dir);
 }
 
-} // namespace blink
+}  // namespace blink

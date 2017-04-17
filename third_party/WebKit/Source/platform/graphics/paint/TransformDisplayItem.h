@@ -10,46 +10,51 @@
 
 namespace blink {
 
-class PLATFORM_EXPORT BeginTransformDisplayItem final : public PairedBeginDisplayItem {
-public:
-    BeginTransformDisplayItem(const DisplayItemClient& client, const AffineTransform& transform)
-        : PairedBeginDisplayItem(client, BeginTransform, sizeof(*this))
-        , m_transform(transform) { }
+class PLATFORM_EXPORT BeginTransformDisplayItem final
+    : public PairedBeginDisplayItem {
+ public:
+  BeginTransformDisplayItem(const DisplayItemClient& client,
+                            const AffineTransform& transform)
+      : PairedBeginDisplayItem(client, kBeginTransform, sizeof(*this)),
+        transform_(transform) {}
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
 
-    const AffineTransform& transform() const { return m_transform; }
+  const AffineTransform& Transform() const { return transform_; }
 
-private:
+ private:
 #ifndef NDEBUG
-    void dumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
 #endif
-#if ENABLE(ASSERT)
-    bool equals(const DisplayItem& other) const final
-    {
-        return DisplayItem::equals(other)
-            && m_transform == static_cast<const BeginTransformDisplayItem&>(other).m_transform;
-    }
-#endif
+  bool Equals(const DisplayItem& other) const final {
+    return DisplayItem::Equals(other) &&
+           transform_ ==
+               static_cast<const BeginTransformDisplayItem&>(other).transform_;
+  }
 
-    const AffineTransform m_transform;
+  const AffineTransform transform_;
 };
 
-class PLATFORM_EXPORT EndTransformDisplayItem final : public PairedEndDisplayItem {
-public:
-    EndTransformDisplayItem(const DisplayItemClient& client)
-        : PairedEndDisplayItem(client, EndTransform, sizeof(*this)) { }
+class PLATFORM_EXPORT EndTransformDisplayItem final
+    : public PairedEndDisplayItem {
+ public:
+  EndTransformDisplayItem(const DisplayItemClient& client)
+      : PairedEndDisplayItem(client, kEndTransform, sizeof(*this)) {}
 
-    void replay(GraphicsContext&) const override;
-    void appendToWebDisplayItemList(const IntRect&, WebDisplayItemList*) const override;
+  void Replay(GraphicsContext&) const override;
+  void AppendToWebDisplayItemList(const IntRect&,
+                                  WebDisplayItemList*) const override;
 
-private:
-#if ENABLE(ASSERT)
-    bool isEndAndPairedWith(DisplayItem::Type otherType) const final { return otherType == BeginTransform; }
+ private:
+#if DCHECK_IS_ON()
+  bool IsEndAndPairedWith(DisplayItem::Type other_type) const final {
+    return other_type == kBeginTransform;
+  }
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TransformDisplayItem_h
+#endif  // TransformDisplayItem_h

@@ -5,48 +5,80 @@
 #ifndef SuspendableScriptExecutor_h
 #define SuspendableScriptExecutor_h
 
+#include "bindings/core/v8/DOMWrapperWorld.h"
 #include "core/frame/SuspendableTimer.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/SelfKeepAlive.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class LocalFrame;
 class ScriptSourceCode;
+class ScriptState;
 class WebScriptExecutionCallback;
 
-class SuspendableScriptExecutor final : public GarbageCollectedFinalized<SuspendableScriptExecutor>, public SuspendableTimer {
-    USING_GARBAGE_COLLECTED_MIXIN(SuspendableScriptExecutor);
-public:
-    static void createAndRun(LocalFrame*, int worldID, const HeapVector<ScriptSourceCode>& sources, int extensionGroup, bool userGesture, WebScriptExecutionCallback*);
-    ~SuspendableScriptExecutor() override;
+class SuspendableScriptExecutor final
+    : public GarbageCollectedFinalized<SuspendableScriptExecutor>,
+      public SuspendableTimer {
+  USING_GARBAGE_COLLECTED_MIXIN(SuspendableScriptExecutor);
 
-    void contextDestroyed() override;
+ public:
+  enum BlockingOption { kNonBlocking, kOnloadBlocking };
 
-    DECLARE_VIRTUAL_TRACE();
+  static SuspendableScriptExecutor* Create(
+      LocalFrame*,
+      RefPtr<DOMWrapperWorld>,
+      const HeapVector<ScriptSourceCode>& sources,
+      bool user_gesture,
+      WebScriptExecutionCallback*);
+  static void CreateAndRun(LocalFrame*,
+                           v8::Isolate*,
+                           v8::Local<v8::Context>,
+                           v8::Local<v8::Function>,
+                           v8::Local<v8::Value> receiver,
+                           int argc,
+                           v8::Local<v8::Value> argv[],
+                           WebScriptExecutionCallback*);
+  ~SuspendableScriptExecutor() override;
 
-private:
-    SuspendableScriptExecutor(LocalFrame*, int worldID, const HeapVector<ScriptSourceCode>& sources, int extensionGroup, bool userGesture, WebScriptExecutionCallback*);
+  void Run();
+  void RunAsync(BlockingOption);
+  void ContextDestroyed(ExecutionContext*) override;
 
-    void fired() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    void run();
-    void executeAndDestroySelf();
-    void dispose();
+  class Executor : public GarbageCollectedFinalized<Executor> {
+   public:
+    virtual ~Executor() {}
 
-    Member<LocalFrame> m_frame;
-    HeapVector<ScriptSourceCode> m_sources;
-    WebScriptExecutionCallback* m_callback;
+    virtual Vector<v8::Local<v8::Value>> Execute(LocalFrame*) = 0;
 
-    SelfKeepAlive<SuspendableScriptExecutor> m_keepAlive;
+    DEFINE_INLINE_VIRTUAL_TRACE(){};
+  };
 
-    int m_worldID;
-    int m_extensionGroup;
+ private:
+  SuspendableScriptExecutor(LocalFrame*,
+                            ScriptState*,
+                            WebScriptExecutionCallback*,
+                            Executor*);
 
-    bool m_userGesture;
+  void Fired() override;
+
+  void ExecuteAndDestroySelf();
+  void Dispose();
+
+  RefPtr<ScriptState> script_state_;
+  WebScriptExecutionCallback* callback_;
+  BlockingOption blocking_option_;
+
+  SelfKeepAlive<SuspendableScriptExecutor> keep_alive_;
+
+  Member<Executor> executor_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SuspendableScriptExecutor_h
+#endif  // SuspendableScriptExecutor_h

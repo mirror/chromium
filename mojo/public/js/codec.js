@@ -3,14 +3,17 @@
 // found in the LICENSE file.
 
 define("mojo/public/js/codec", [
-  "mojo/public/js/unicode",
   "mojo/public/js/buffer",
-], function(unicode, buffer) {
+  "mojo/public/js/interface_types",
+  "mojo/public/js/lib/interface_endpoint_handle",
+  "mojo/public/js/unicode",
+], function(buffer, types, interfaceEndpointHandle, unicode) {
 
   var kErrorUnsigned = "Passing negative value to unsigned";
   var kErrorArray = "Passing non Array for array type";
   var kErrorString = "Passing non String for string type";
   var kErrorMap = "Passing non Map for map type";
+  var InterfaceEndpointHandle = interfaceEndpointHandle.InterfaceEndpointHandle;
 
   // Memory -------------------------------------------------------------------
 
@@ -28,8 +31,9 @@ define("mojo/public/js/codec", [
 
   var kArrayHeaderSize = 8;
   var kStructHeaderSize = 8;
-  var kMessageHeaderSize = 24;
-  var kMessageWithRequestIDHeaderSize = 32;
+  var kMessageV0HeaderSize = 24;
+  var kMessageV1HeaderSize = 32;
+  var kMessageV2HeaderSize = 48;
   var kMapStructPayloadSize = 16;
 
   var kStructHeaderNumBytesOffset = 0;
@@ -303,8 +307,12 @@ define("mojo/public/js/codec", [
   };
 
   Encoder.prototype.encodeHandle = function(handle) {
-    this.handles.push(handle);
-    this.writeUint32(this.handles.length - 1);
+    if (handle) {
+      this.handles.push(handle);
+      this.writeUint32(this.handles.length - 1);
+    } else {
+      this.writeUint32(kEncodedInvalidHandleValue);
+    }
   };
 
   Encoder.prototype.encodeString = function(val) {
@@ -423,6 +431,7 @@ define("mojo/public/js/codec", [
   var kMessageNameOffset = kMessageInterfaceIdOffset + 4;
   var kMessageFlagsOffset = kMessageNameOffset + 4;
   var kMessageRequestIDOffset = kMessageFlagsOffset + 8;
+  var kMessagePayloadInterfaceIdsPointerOffset = kMessageV2HeaderSize - 8;
 
   var kMessageExpectsResponse = 1 << 0;
   var kMessageIsResponse      = 1 << 1;
@@ -448,6 +457,21 @@ define("mojo/public/js/codec", [
     return this.buffer.getUint32(kMessageFlagsOffset);
   };
 
+  Message.prototype.getInterfaceId = function() {
+    return this.buffer.getUint32(kMessageInterfaceIdOffset);
+  };
+
+  Message.prototype.getPayloadInterfaceIds = function() {
+    if (this.getHeaderVersion() < 2) {
+      return null;
+    }
+
+    var decoder = new Decoder(this.buffer, this.handles,
+        kMessagePayloadInterfaceIdsPointerOffset);
+    var payloadInterfaceIds = decoder.decodeArrayPointer(Uint32);
+    return payloadInterfaceIds;
+  };
+
   Message.prototype.isResponse = function() {
     return (this.getFlags() & kMessageIsResponse) != 0;
   };
@@ -461,17 +485,21 @@ define("mojo/public/js/codec", [
     this.buffer.setUint64(kMessageRequestIDOffset, requestID);
   };
 
+  Message.prototype.setInterfaceId = function(interfaceId) {
+    this.buffer.setUint32(kMessageInterfaceIdOffset, interfaceId);
+  };
+
 
   // MessageBuilder -----------------------------------------------------------
 
   function MessageBuilder(messageName, payloadSize) {
     // Currently, we don't compute the payload size correctly ahead of time.
     // Instead, we resize the buffer at the end.
-    var numberOfBytes = kMessageHeaderSize + payloadSize;
+    var numberOfBytes = kMessageV0HeaderSize + payloadSize;
     this.buffer = new buffer.Buffer(numberOfBytes);
     this.handles = [];
-    var encoder = this.createEncoder(kMessageHeaderSize);
-    encoder.writeUint32(kMessageHeaderSize);
+    var encoder = this.createEncoder(kMessageV0HeaderSize);
+    encoder.writeUint32(kMessageV0HeaderSize);
     encoder.writeUint32(0);  // version.
     encoder.writeUint32(0);  // interface ID.
     encoder.writeUint32(messageName);
@@ -505,11 +533,11 @@ define("mojo/public/js/codec", [
                                        requestID) {
     // Currently, we don't compute the payload size correctly ahead of time.
     // Instead, we resize the buffer at the end.
-    var numberOfBytes = kMessageWithRequestIDHeaderSize + payloadSize;
+    var numberOfBytes = kMessageV1HeaderSize + payloadSize;
     this.buffer = new buffer.Buffer(numberOfBytes);
     this.handles = [];
-    var encoder = this.createEncoder(kMessageWithRequestIDHeaderSize);
-    encoder.writeUint32(kMessageWithRequestIDHeaderSize);
+    var encoder = this.createEncoder(kMessageV1HeaderSize);
+    encoder.writeUint32(kMessageV1HeaderSize);
     encoder.writeUint32(1);  // version.
     encoder.writeUint32(0);  // interface ID.
     encoder.writeUint32(messageName);
@@ -532,10 +560,6 @@ define("mojo/public/js/codec", [
     this.payloadSize = message.buffer.byteLength - messageHeaderSize;
     var version = this.decoder.readUint32();
     var interface_id = this.decoder.readUint32();
-    if (interface_id != 0) {
-      throw new Error("Receiving non-zero interface ID. Associated interfaces " +
-                      "are not yet supported.");
-    }
     this.messageName = this.decoder.readUint32();
     this.flags = this.decoder.readUint32();
     // Skip the padding.
@@ -711,6 +735,20 @@ define("mojo/public/js/codec", [
     encoder.writeDouble(val);
   };
 
+  function Enum(cls) {
+    this.cls = cls;
+  }
+
+  Enum.prototype.encodedSize = 4;
+
+  Enum.prototype.decode = function(decoder) {
+    return decoder.readInt32();
+  };
+
+  Enum.prototype.encode = function(encoder, val) {
+    encoder.writeInt32(val);
+  };
+
   function PointerTo(cls) {
     this.cls = cls;
   }
@@ -788,33 +826,76 @@ define("mojo/public/js/codec", [
 
   NullableHandle.encode = Handle.encode;
 
-  function Interface() {
+  function Interface(cls) {
+    this.cls = cls;
   }
 
-  Interface.encodedSize = 8;
+  Interface.prototype.encodedSize = 8;
 
-  Interface.decode = function(decoder) {
-    var handle = decoder.decodeHandle();
-    // Ignore the version field for now.
-    decoder.readUint32();
-
-    return handle;
+  Interface.prototype.decode = function(decoder) {
+    var interfacePtrInfo = new types.InterfacePtrInfo(
+        decoder.decodeHandle(), decoder.readUint32());
+    var interfacePtr = new this.cls();
+    interfacePtr.ptr.bind(interfacePtrInfo);
+    return interfacePtr;
   };
 
-  Interface.encode = function(encoder, val) {
-    encoder.encodeHandle(val);
-    // Set the version field to 0 for now.
-    encoder.writeUint32(0);
+  Interface.prototype.encode = function(encoder, val) {
+    var interfacePtrInfo =
+        val ? val.ptr.passInterface() : new types.InterfacePtrInfo(null, 0);
+    encoder.encodeHandle(interfacePtrInfo.handle);
+    encoder.writeUint32(interfacePtrInfo.version);
   };
 
-  function NullableInterface() {
+  function NullableInterface(cls) {
+    Interface.call(this, cls);
   }
 
-  NullableInterface.encodedSize = Interface.encodedSize;
+  NullableInterface.prototype = Object.create(Interface.prototype);
 
-  NullableInterface.decode = Interface.decode;
+  function AssociatedInterfacePtrInfo() {
+  }
 
-  NullableInterface.encode = Interface.encode;
+  AssociatedInterfacePtrInfo.prototype.encodedSize = 8;
+
+  function NullableAssociatedInterfacePtrInfo() {
+  }
+
+  NullableAssociatedInterfacePtrInfo.encodedSize =
+      AssociatedInterfacePtrInfo.encodedSize;
+
+  function InterfaceRequest() {
+  }
+
+  InterfaceRequest.encodedSize = 4;
+
+  InterfaceRequest.decode = function(decoder) {
+    return new types.InterfaceRequest(decoder.decodeHandle());
+  };
+
+  InterfaceRequest.encode = function(encoder, val) {
+    encoder.encodeHandle(val ? val.handle : null);
+  };
+
+  function NullableInterfaceRequest() {
+  }
+
+  NullableInterfaceRequest.encodedSize = InterfaceRequest.encodedSize;
+
+  NullableInterfaceRequest.decode = InterfaceRequest.decode;
+
+  NullableInterfaceRequest.encode = InterfaceRequest.encode;
+
+  function AssociatedInterfaceRequest() {
+  }
+
+  AssociatedInterfaceRequest.encodedSize = 4;
+
+  function NullableAssociatedInterfaceRequest() {
+  }
+
+  NullableAssociatedInterfaceRequest.encodedSize =
+      AssociatedInterfaceRequest.encodedSize;
 
   function MapOf(keyClass, valueClass) {
     this.keyClass = keyClass;
@@ -848,8 +929,11 @@ define("mojo/public/js/codec", [
   exports.kMapStructPayloadSize = kMapStructPayloadSize;
   exports.kStructHeaderSize = kStructHeaderSize;
   exports.kEncodedInvalidHandleValue = kEncodedInvalidHandleValue;
-  exports.kMessageHeaderSize = kMessageHeaderSize;
-  exports.kMessageWithRequestIDHeaderSize = kMessageWithRequestIDHeaderSize;
+  exports.kMessageV0HeaderSize = kMessageV0HeaderSize;
+  exports.kMessageV1HeaderSize = kMessageV1HeaderSize;
+  exports.kMessageV2HeaderSize = kMessageV2HeaderSize;
+  exports.kMessagePayloadInterfaceIdsPointerOffset =
+      kMessagePayloadInterfaceIdsPointerOffset;
   exports.kMessageExpectsResponse = kMessageExpectsResponse;
   exports.kMessageIsResponse = kMessageIsResponse;
   exports.Int8 = Int8;
@@ -863,6 +947,7 @@ define("mojo/public/js/codec", [
   exports.Float = Float;
   exports.Double = Double;
   exports.String = String;
+  exports.Enum = Enum;
   exports.NullableString = NullableString;
   exports.PointerTo = PointerTo;
   exports.NullablePointerTo = NullablePointerTo;
@@ -873,6 +958,14 @@ define("mojo/public/js/codec", [
   exports.NullableHandle = NullableHandle;
   exports.Interface = Interface;
   exports.NullableInterface = NullableInterface;
+  exports.InterfaceRequest = InterfaceRequest;
+  exports.NullableInterfaceRequest = NullableInterfaceRequest;
+  exports.AssociatedInterfacePtrInfo = AssociatedInterfacePtrInfo;
+  exports.NullableAssociatedInterfacePtrInfo =
+      NullableAssociatedInterfacePtrInfo;
+  exports.AssociatedInterfaceRequest = AssociatedInterfaceRequest;
+  exports.NullableAssociatedInterfaceRequest =
+      NullableAssociatedInterfaceRequest;
   exports.MapOf = MapOf;
   exports.NullableMapOf = NullableMapOf;
   return exports;

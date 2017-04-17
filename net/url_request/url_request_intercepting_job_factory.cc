@@ -14,10 +14,21 @@ namespace net {
 URLRequestInterceptingJobFactory::URLRequestInterceptingJobFactory(
     std::unique_ptr<URLRequestJobFactory> job_factory,
     std::unique_ptr<URLRequestInterceptor> interceptor)
-    : job_factory_(std::move(job_factory)),
-      interceptor_(std::move(interceptor)) {}
+    : owning_(true),
+      job_factory_(job_factory.release()),
+      interceptor_(interceptor.release()) {}
 
-URLRequestInterceptingJobFactory::~URLRequestInterceptingJobFactory() {}
+URLRequestInterceptingJobFactory::URLRequestInterceptingJobFactory(
+    URLRequestJobFactory* job_factory,
+    URLRequestInterceptor* interceptor)
+    : owning_(false), job_factory_(job_factory), interceptor_(interceptor) {}
+
+URLRequestInterceptingJobFactory::~URLRequestInterceptingJobFactory() {
+  if (owning_) {
+    delete job_factory_;
+    delete interceptor_;
+  }
+}
 
 URLRequestJob* URLRequestInterceptingJobFactory::
 MaybeCreateJobWithProtocolHandler(
@@ -63,10 +74,6 @@ URLRequestJob* URLRequestInterceptingJobFactory::MaybeInterceptResponse(
 bool URLRequestInterceptingJobFactory::IsHandledProtocol(
     const std::string& scheme) const {
   return job_factory_->IsHandledProtocol(scheme);
-}
-
-bool URLRequestInterceptingJobFactory::IsHandledURL(const GURL& url) const {
-  return job_factory_->IsHandledURL(url);
 }
 
 bool URLRequestInterceptingJobFactory::IsSafeRedirectTarget(

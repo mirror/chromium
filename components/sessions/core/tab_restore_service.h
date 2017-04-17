@@ -52,8 +52,6 @@ class SESSIONS_EXPORT TabRestoreService : public KeyedService {
   };
 
   struct SESSIONS_EXPORT Entry {
-    Entry();
-    explicit Entry(Type type);
     virtual ~Entry();
 
     // Unique id for this entry. The id is guaranteed to be unique for a
@@ -61,7 +59,7 @@ class SESSIONS_EXPORT TabRestoreService : public KeyedService {
     SessionID::id_type id;
 
     // The type of the entry.
-    Type type;
+    const Type type;
 
     // The time when the window or tab was closed.
     base::Time timestamp;
@@ -69,34 +67,43 @@ class SESSIONS_EXPORT TabRestoreService : public KeyedService {
     // Is this entry from the last session? This is set to true for entries that
     // were closed during the last session, and false for entries that were
     // closed during this session.
-    bool from_last_session;
+    bool from_last_session = false;
+
+    // Estimates memory usage. By default returns 0.
+    virtual size_t EstimateMemoryUsage() const;
+
+   protected:
+    explicit Entry(Type type);
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(Entry);
   };
 
   // Represents a previously open tab.
+  // If you add a new field that can allocate memory, please also add
+  // it to the EstimatedMemoryUsage() implementation.
   struct SESSIONS_EXPORT Tab : public Entry {
     Tab();
-    Tab(const Tab& tab);
     ~Tab() override;
 
-    Tab& operator=(const Tab& tab);
-
-    bool has_browser() const { return browser_id > 0; }
+    // Entry:
+    size_t EstimateMemoryUsage() const override;
 
     // The navigations.
     std::vector<SerializedNavigationEntry> navigations;
 
     // Index of the selected navigation in navigations.
-    int current_navigation_index;
+    int current_navigation_index = -1;
 
     // The ID of the browser to which this tab belonged, so it can be restored
     // there. May be 0 (an invalid SessionID) when restoring an entire session.
-    SessionID::id_type browser_id;
+    SessionID::id_type browser_id = 0;
 
     // Index within the tab strip. May be -1 for an unknown index.
-    int tabstrip_index;
+    int tabstrip_index = -1;
 
     // True if the tab was pinned.
-    bool pinned;
+    bool pinned = false;
 
     // If non-empty gives the id of the extension for the tab.
     std::string extension_app_id;
@@ -109,21 +116,26 @@ class SESSIONS_EXPORT TabRestoreService : public KeyedService {
   };
 
   // Represents a previously open window.
+  // If you add a new field that can allocate memory, please also add
+  // it to the EstimatedMemoryUsage() implementation.
   struct SESSIONS_EXPORT Window : public Entry {
     Window();
     ~Window() override;
 
+    // Entry:
+    size_t EstimateMemoryUsage() const override;
+
     // The tabs that comprised the window, in order.
-    std::vector<Tab> tabs;
+    std::vector<std::unique_ptr<Tab>> tabs;
 
     // Index of the selected tab.
-    int selected_tab_index;
+    int selected_tab_index = -1;
 
     // If an application window, the name of the app.
     std::string app_name;
   };
 
-  typedef std::list<Entry*> Entries;
+  typedef std::list<std::unique_ptr<Entry>> Entries;
 
   ~TabRestoreService() override;
 
@@ -160,9 +172,8 @@ class SESSIONS_EXPORT TabRestoreService : public KeyedService {
   virtual std::vector<LiveTab*> RestoreMostRecentEntry(
       LiveTabContext* context) = 0;
 
-  // Removes the Tab with id |id| from the list and returns it; ownership is
-  // passed to the caller.
-  virtual Tab* RemoveTabEntryById(SessionID::id_type id) = 0;
+  // Removes the Tab with id |id| from the list and returns it.
+  virtual std::unique_ptr<Tab> RemoveTabEntryById(SessionID::id_type id) = 0;
 
   // Restores an entry by id. If there is no entry with an id matching |id|,
   // this does nothing. If |context| is NULL, this creates a new window for the
@@ -184,20 +195,16 @@ class SESSIONS_EXPORT TabRestoreService : public KeyedService {
 
   // Deletes the last session.
   virtual void DeleteLastSession() = 0;
+
+  // Returns true if we're in the process of restoring some entries.
+  virtual bool IsRestoring() const = 0;
 };
 
 // A class that is used to associate platform-specific data with
 // TabRestoreService::Tab. See LiveTab::GetPlatformSpecificTabData().
-// Subclasses of this class must be copyable by implementing the Clone() method
-// for usage by the Tab struct, which is itself copyable and assignable.
 class SESSIONS_EXPORT PlatformSpecificTabData {
  public:
   virtual ~PlatformSpecificTabData();
-
- private:
-  friend TabRestoreService::Tab;
-
-  virtual std::unique_ptr<PlatformSpecificTabData> Clone() = 0;
 };
 
 }  // namespace sessions

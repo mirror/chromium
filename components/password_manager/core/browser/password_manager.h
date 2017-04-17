@@ -5,14 +5,16 @@
 #ifndef COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PASSWORD_MANAGER_H_
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PASSWORD_MANAGER_H_
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "base/callback.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
-#include "base/stl_util.h"
+#include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
@@ -59,13 +61,14 @@ class PasswordManager : public LoginModel {
 
   // Called by a PasswordFormManager when it decides a form can be autofilled
   // on the page.
-  void Autofill(password_manager::PasswordManagerDriver* driver,
-                const autofill::PasswordForm& form_for_autofill,
-                const autofill::PasswordFormMap& best_matches,
-                const std::vector<std::unique_ptr<autofill::PasswordForm>>&
-                    federated_matches,
-                const autofill::PasswordForm& preferred_match,
-                bool wait_for_username) const;
+  void Autofill(
+      password_manager::PasswordManagerDriver* driver,
+      const autofill::PasswordForm& form_for_autofill,
+      const std::map<base::string16, const autofill::PasswordForm*>&
+          best_matches,
+      const std::vector<const autofill::PasswordForm*>& federated_matches,
+      const autofill::PasswordForm& preferred_match,
+      bool wait_for_username) const;
 
   // Called by a PasswordFormManager when a page initially loads and it decides
   // that a form can be autofilled on the page, but a menu of account options
@@ -77,16 +80,17 @@ class PasswordManager : public LoginModel {
   void ShowInitialPasswordAccountSuggestions(
       password_manager::PasswordManagerDriver* driver,
       const autofill::PasswordForm& form_for_autofill,
-      const autofill::PasswordFormMap& best_matches,
-      const std::vector<std::unique_ptr<autofill::PasswordForm>>&
-          federated_matches,
+      const std::map<base::string16, const autofill::PasswordForm*>&
+          best_matches,
       const autofill::PasswordForm& preferred_match,
       bool wait_for_username) const;
 
   // Called by a PasswordFormManager when it decides a HTTP auth dialog can be
   // autofilled.
-  void AutofillHttpAuth(const autofill::PasswordFormMap& best_matches,
-                        const autofill::PasswordForm& preferred_match) const;
+  void AutofillHttpAuth(
+      const std::map<base::string16, const autofill::PasswordForm*>&
+          best_matches,
+      const autofill::PasswordForm& preferred_match) const;
 
   // LoginModel implementation.
   void AddObserverAndDeliverCredentials(
@@ -124,7 +128,11 @@ class PasswordManager : public LoginModel {
   // When a form is submitted, we prepare to save the password but wait
   // until we decide the user has successfully logged in. This is step 1
   // of 2 (see SavePassword).
-  void ProvisionallySavePassword(const autofill::PasswordForm& form);
+  // |driver| is optional and if it's given it should be a driver that
+  // corresponds to a frame from which |form| comes from.
+  void ProvisionallySavePassword(
+      const autofill::PasswordForm& form,
+      const password_manager::PasswordManagerDriver* driver);
 
   // Should be called when the user navigates the main frame. Not called for
   // in-page navigation.
@@ -168,9 +176,25 @@ class PasswordManager : public LoginModel {
   // visible forms.
   void DropFormManagers();
 
+  // Returns true if password element is detected on the current page.
+  bool IsPasswordFieldDetectedOnPage();
+
   PasswordManagerClient* client() { return client_; }
 
+#if defined(UNIT_TEST)
+  // TODO(crbug.com/639786): Replace using this by quering the factory for
+  // mocked PasswordFormManagers.
+  const std::vector<std::unique_ptr<PasswordFormManager>>&
+  pending_login_managers() {
+    return pending_login_managers_;
+  }
+#endif
+
  private:
+  FRIEND_TEST_ALL_PREFIXES(
+      PasswordManagerTest,
+      ShouldBlockPasswordForSameOriginButDifferentSchemeTest);
+
   enum ProvisionalSaveFailure {
     SAVING_DISABLED,
     EMPTY_PASSWORD,
@@ -197,6 +221,13 @@ class PasswordManager : public LoginModel {
   // Returns true if |provisional_save_manager_| is ready for saving and
   // non-blacklisted.
   bool CanProvisionalManagerSave();
+
+  // Returns true if there already exists a provisionally saved password form
+  // from the same origin as |form|, but with a different and secure scheme.
+  // This prevents a potential attack where users can be tricked into saving
+  // unwanted credentials, see http://crbug.com/571580 for details.
+  bool ShouldBlockPasswordForSameOriginButDifferentScheme(
+      const autofill::PasswordForm& form) const;
 
   // Returns true if the user needs to be prompted before a password can be
   // saved (instead of automatically saving

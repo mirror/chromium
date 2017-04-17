@@ -13,6 +13,7 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/md5.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/value_conversions.h"
 #include "chrome/browser/browser_process.h"
@@ -385,7 +386,7 @@ void DevToolsFileHelper::AddUserConfirmedFileSystem(
                               prefs::kDevToolsFileSystemPaths);
   base::DictionaryValue* file_systems_paths_value = update.Get();
   file_systems_paths_value->SetWithoutPathExpansion(
-      file_system_path, base::Value::CreateNullValue());
+      file_system_path, base::MakeUnique<base::Value>());
 }
 
 std::vector<DevToolsFileHelper::FileSystem>
@@ -456,6 +457,8 @@ void DevToolsFileHelper::FileSystemPathsSettingChanged() {
 }
 
 void DevToolsFileHelper::FilePathsChanged(
-    const std::vector<std::string>& paths) {
-  delegate_->FilePathsChanged(paths);
+    const std::vector<std::string>& changed_paths,
+    const std::vector<std::string>& added_paths,
+    const std::vector<std::string>& removed_paths) {
+  delegate_->FilePathsChanged(changed_paths, added_paths, removed_paths);
 }

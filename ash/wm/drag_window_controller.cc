@@ -6,13 +6,11 @@
 
 #include <algorithm>
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/common/wm/forwarding_layer_delegate.h"
-#include "ash/display/window_tree_host_manager.h"
-#include "ash/screen_util.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/screen_position_client.h"
@@ -24,8 +22,10 @@
 #include "ui/compositor/layer_tree_owner.h"
 #include "ui/compositor/paint_context.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/display/display.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
+#include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow_types.h"
 #include "ui/wm/core/window_util.h"
 
@@ -33,15 +33,13 @@ namespace ash {
 
 // This keeps track of the drag window's state. It creates/destroys/updates
 // bounds and opacity based on the current bounds.
-class DragWindowController::DragWindowDetails
-    : public aura::WindowDelegate,
-      public ::wm::LayerDelegateFactory {
+class DragWindowController::DragWindowDetails : public aura::WindowDelegate {
  public:
   DragWindowDetails(const display::Display& display,
                     aura::Window* original_window)
-      : root_window_(Shell::GetInstance()
-                         ->window_tree_host_manager()
-                         ->GetRootWindowForDisplayId(display.id())) {}
+      : root_window_(ShellPort::Get()
+                         ->GetRootWindowForDisplayId(display.id())
+                         ->aura_window()) {}
 
   ~DragWindowDetails() override {
     delete drag_window_;
@@ -63,8 +61,8 @@ class DragWindowController::DragWindowDetails
     if (!drag_window_)
       CreateDragWindow(original_window, bounds_in_screen);
 
-    gfx::Rect bounds_in_root = ScreenUtil::ConvertRectFromScreen(
-        drag_window_->parent(), bounds_in_screen);
+    gfx::Rect bounds_in_root = bounds_in_screen;
+    ::wm::ConvertRectFromScreen(drag_window_->parent(), &bounds_in_root);
     drag_window_->SetBounds(bounds_in_root);
     if (root_bounds_in_screen.Contains(drag_location_in_screen)) {
       SetOpacity(original_window, 1.f);
@@ -96,7 +94,7 @@ class DragWindowController::DragWindowDetails
     drag_window_->SetProperty(aura::client::kAnimationsDisabledKey, true);
     container->AddChild(drag_window_);
     drag_window_->SetBounds(bounds_in_screen);
-    SetShadowType(drag_window_, ::wm::SHADOW_TYPE_RECTANGULAR);
+    SetShadowElevation(drag_window_, ::wm::ShadowElevation::LARGE);
 
     RecreateWindowLayers(original_window);
     layer_owner_->root()->SetVisible(true);
@@ -115,14 +113,12 @@ class DragWindowController::DragWindowDetails
 
   void RecreateWindowLayers(aura::Window* original_window) {
     DCHECK(!layer_owner_.get());
-    layer_owner_ = ::wm::RecreateLayers(original_window, this);
+    layer_owner_ = ::wm::MirrorLayers(original_window, true /* sync_bounds */);
     // Place the layer at (0, 0) of the DragWindowController's window.
     gfx::Rect layer_bounds = layer_owner_->root()->bounds();
     layer_bounds.set_origin(gfx::Point(0, 0));
     layer_owner_->root()->SetBounds(layer_bounds);
     layer_owner_->root()->SetVisible(false);
-    // Detach it from the current container.
-    layer_owner_->root()->parent()->Remove(layer_owner_->root());
   }
 
   void SetOpacity(const aura::Window* original_window, float opacity) {
@@ -130,16 +126,6 @@ class DragWindowController::DragWindowDetails
     ui::ScopedLayerAnimationSettings scoped_setter(layer->GetAnimator());
     layer->SetOpacity(opacity);
     layer_owner_->root()->SetOpacity(1.0f);
-  }
-
-  // aura::WindowDelegate:
-  ui::LayerDelegate* CreateDelegate(ui::LayerDelegate* delegate) override {
-    if (!delegate)
-      return nullptr;
-    wm::ForwardingLayerDelegate* new_delegate = new wm::ForwardingLayerDelegate(
-        WmWindowAura::Get(original_window_), delegate);
-    delegates_.push_back(base::WrapUnique(new_delegate));
-    return new_delegate;
   }
 
   // aura::WindowDelegate:
@@ -177,8 +163,6 @@ class DragWindowController::DragWindowDetails
 
   aura::Window* original_window_ = nullptr;
 
-  std::vector<std::unique_ptr<wm::ForwardingLayerDelegate>> delegates_;
-
   // The copy of window_->layer() and its descendants.
   std::unique_ptr<ui::LayerTreeOwner> layer_owner_;
 
@@ -206,7 +190,7 @@ DragWindowController::DragWindowController(aura::Window* window)
     if (current.id() == display.id())
       continue;
     drag_windows_.push_back(
-        base::WrapUnique(new DragWindowDetails(display, window_)));
+        base::MakeUnique<DragWindowDetails>(display, window_));
   }
 }
 

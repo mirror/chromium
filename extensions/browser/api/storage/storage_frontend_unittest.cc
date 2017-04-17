@@ -9,12 +9,11 @@
 #include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/test/test_browser_context.h"
-#include "content/public/test/test_browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/api/extensions_api_client.h"
 #include "extensions/browser/api/storage/settings_namespace.h"
 #include "extensions/browser/api/storage/settings_test_util.h"
@@ -22,8 +21,6 @@
 #include "extensions/browser/value_store/value_store.h"
 #include "extensions/browser/value_store/value_store_factory_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using content::BrowserThread;
 
 namespace extensions {
 
@@ -42,14 +39,12 @@ const ValueStore::WriteOptions DEFAULTS = ValueStore::DEFAULTS;
 // history, the test names are unchanged.
 class ExtensionSettingsFrontendTest : public ExtensionsTest {
  public:
-  ExtensionSettingsFrontendTest()
-      : ui_thread_(BrowserThread::UI, base::MessageLoop::current()),
-        file_thread_(BrowserThread::FILE, base::MessageLoop::current()) {}
+  ExtensionSettingsFrontendTest() = default;
 
   void SetUp() override {
     ExtensionsTest::SetUp();
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    storage_factory_ = new ValueStoreFactoryImpl(temp_dir_.path());
+    storage_factory_ = new ValueStoreFactoryImpl(temp_dir_.GetPath());
     ResetFrontend();
   }
 
@@ -71,9 +66,7 @@ class ExtensionSettingsFrontendTest : public ExtensionsTest {
   scoped_refptr<ValueStoreFactoryImpl> storage_factory_;
 
  private:
-  base::MessageLoop message_loop_;
-  content::TestBrowserThread ui_thread_;
-  content::TestBrowserThread file_thread_;
+  content::TestBrowserThreadBundle test_browser_thread_bundle_;
   ExtensionsAPIClient extensions_api_client_;
 };
 
@@ -103,7 +96,7 @@ TEST_F(ExtensionSettingsFrontendTest, SettingsPreservedAcrossReconstruction) {
   // The correctness of Get/Set/Remove/Clear is tested elsewhere so no need to
   // be too rigorous.
   {
-    base::StringValue bar("bar");
+    base::Value bar("bar");
     ValueStore::WriteResult result = storage->Set(DEFAULTS, "foo", bar);
     ASSERT_TRUE(result->status().ok());
   }
@@ -133,7 +126,7 @@ TEST_F(ExtensionSettingsFrontendTest, SettingsClearedOnUninstall) {
       util::GetStorage(extension, settings::LOCAL, frontend_.get());
 
   {
-    base::StringValue bar("bar");
+    base::Value bar("bar");
     ValueStore::WriteResult result = storage->Set(DEFAULTS, "foo", bar);
     ASSERT_TRUE(result->status().ok());
   }
@@ -160,10 +153,10 @@ TEST_F(ExtensionSettingsFrontendTest, LeveldbDatabaseDeletedFromDiskOnClear) {
       util::GetStorage(extension, settings::LOCAL, frontend_.get());
 
   {
-    base::StringValue bar("bar");
+    base::Value bar("bar");
     ValueStore::WriteResult result = storage->Set(DEFAULTS, "foo", bar);
     ASSERT_TRUE(result->status().ok());
-    EXPECT_TRUE(base::PathExists(temp_dir_.path()));
+    EXPECT_TRUE(base::PathExists(temp_dir_.GetPath()));
   }
 
   // Should need to both clear the database and delete the frontend for the
@@ -171,7 +164,7 @@ TEST_F(ExtensionSettingsFrontendTest, LeveldbDatabaseDeletedFromDiskOnClear) {
   {
     ValueStore::WriteResult result = storage->Clear();
     ASSERT_TRUE(result->status().ok());
-    EXPECT_TRUE(base::PathExists(temp_dir_.path()));
+    EXPECT_TRUE(base::PathExists(temp_dir_.GetPath()));
   }
 
   frontend_.reset();
@@ -179,7 +172,7 @@ TEST_F(ExtensionSettingsFrontendTest, LeveldbDatabaseDeletedFromDiskOnClear) {
   // TODO(kalman): Figure out why this fails, despite appearing to work.
   // Leaving this commented out rather than disabling the whole test so that the
   // deletion code paths are at least exercised.
-  //EXPECT_FALSE(base::PathExists(temp_dir_.path()));
+  // EXPECT_FALSE(base::PathExists(temp_dir_.GetPath()));
 }
 
 // Disabled (slow), http://crbug.com/322751 .

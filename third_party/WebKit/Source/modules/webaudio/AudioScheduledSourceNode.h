@@ -30,7 +30,7 @@
 #define AudioScheduledSourceNode_h
 
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "modules/webaudio/AudioSourceNode.h"
+#include "modules/webaudio/AudioNode.h"
 
 namespace blink {
 
@@ -38,110 +38,122 @@ class BaseAudioContext;
 class AudioBus;
 
 class AudioScheduledSourceHandler : public AudioHandler {
-public:
-    // These are the possible states an AudioScheduledSourceNode can be in:
-    //
-    // UNSCHEDULED_STATE - Initial playback state. Created, but not yet scheduled.
-    // SCHEDULED_STATE - Scheduled to play (via start()), but not yet playing.
-    // PLAYING_STATE - Generating sound.
-    // FINISHED_STATE - Finished generating sound.
-    //
-    // The state can only transition to the next state, except for the FINISHED_STATE which can
-    // never be changed.
-    enum PlaybackState {
-        // These must be defined with the same names and values as in the .idl file.
-        UNSCHEDULED_STATE = 0,
-        SCHEDULED_STATE = 1,
-        PLAYING_STATE = 2,
-        FINISHED_STATE = 3
-    };
+ public:
+  // These are the possible states an AudioScheduledSourceNode can be in:
+  //
+  // UNSCHEDULED_STATE - Initial playback state. Created, but not yet scheduled.
+  // SCHEDULED_STATE - Scheduled to play (via start()), but not yet playing.
+  // PLAYING_STATE - Generating sound.
+  // FINISHED_STATE - Finished generating sound.
+  //
+  // The state can only transition to the next state, except for the
+  // FINISHED_STATE which can never be changed.
+  enum PlaybackState {
+    // These must be defined with the same names and values as in the .idl file.
+    UNSCHEDULED_STATE = 0,
+    SCHEDULED_STATE = 1,
+    PLAYING_STATE = 2,
+    FINISHED_STATE = 3
+  };
 
-    AudioScheduledSourceHandler(NodeType, AudioNode&, float sampleRate);
+  AudioScheduledSourceHandler(NodeType, AudioNode&, float sample_rate);
 
-    // Scheduling.
-    void start(double when, ExceptionState&);
-    void stop(double when, ExceptionState&);
+  // Scheduling.
+  void Start(double when, ExceptionState&);
+  void Stop(double when, ExceptionState&);
 
-    PlaybackState playbackState() const
-    {
-        return static_cast<PlaybackState>(acquireLoad(&m_playbackState));
-    }
+  PlaybackState GetPlaybackState() const {
+    return static_cast<PlaybackState>(AcquireLoad(&playback_state_));
+  }
 
-    void setPlaybackState(PlaybackState newState)
-    {
-        releaseStore(&m_playbackState, newState);
-    }
+  void SetPlaybackState(PlaybackState new_state) {
+    ReleaseStore(&playback_state_, new_state);
+  }
 
-    bool isPlayingOrScheduled() const
-    {
-        PlaybackState state = playbackState();
-        return state == PLAYING_STATE || state == SCHEDULED_STATE;
-    }
+  bool IsPlayingOrScheduled() const {
+    PlaybackState state = GetPlaybackState();
+    return state == PLAYING_STATE || state == SCHEDULED_STATE;
+  }
 
-    bool hasFinished() const
-    {
-        return playbackState() == FINISHED_STATE;
-    }
+  bool HasFinished() const { return GetPlaybackState() == FINISHED_STATE; }
 
-protected:
-    // Get frame information for the current time quantum.
-    // We handle the transition into PLAYING_STATE and FINISHED_STATE here,
-    // zeroing out portions of the outputBus which are outside the range of startFrame and endFrame.
-    //
-    // Each frame time is relative to the context's currentSampleFrame().
-    // quantumFrameOffset    : Offset frame in this time quantum to start rendering.
-    // nonSilentFramesToProcess : Number of frames rendering non-silence (will be <= quantumFrameSize).
-    void updateSchedulingInfo(size_t quantumFrameSize, AudioBus* outputBus, size_t& quantumFrameOffset, size_t& nonSilentFramesToProcess);
+ protected:
+  // Get frame information for the current time quantum.
+  // We handle the transition into PLAYING_STATE and FINISHED_STATE here,
+  // zeroing out portions of the outputBus which are outside the range of
+  // startFrame and endFrame.
+  //
+  // Each frame time is relative to the context's currentSampleFrame().
+  // quantumFrameOffset    : Offset frame in this time quantum to start
+  //                         rendering.
+  // nonSilentFramesToProcess : Number of frames rendering non-silence (will be
+  //                            <= quantumFrameSize).
+  // startFrameOffset : The fractional frame offset from quantumFrameOffset
+  //                    and the actual starting time of the source. This is
+  //                    non-zero only when transitioning from the
+  //                    SCHEDULED_STATE to the PLAYING_STATE.
+  void UpdateSchedulingInfo(size_t quantum_frame_size,
+                            AudioBus* output_bus,
+                            size_t& quantum_frame_offset,
+                            size_t& non_silent_frames_to_process,
+                            double& start_frame_offset);
 
-    // Called when we have no more sound to play or the stop() time has been reached. No onEnded
-    // event is called.
-    virtual void finishWithoutOnEnded();
+  // Called when we have no more sound to play or the stop() time has been
+  // reached. No onEnded event is called.
+  virtual void FinishWithoutOnEnded();
 
-    // Like finishWithoutOnEnded(), but an onEnded (if specified) is called.
-    virtual void finish();
+  // Like finishWithoutOnEnded(), but an onEnded (if specified) is called.
+  virtual void Finish();
 
-    void notifyEnded();
+  void NotifyEnded();
 
-    // This synchronizes with process() and any other method that needs to be synchronized like
-    // setBuffer for AudioBufferSource.
-    mutable Mutex m_processLock;
+  // This synchronizes with process() and any other method that needs to be
+  // synchronized like setBuffer for AudioBufferSource.
+  mutable Mutex process_lock_;
 
-    // m_startTime is the time to start playing based on the context's timeline (0 or a time less than the context's current time means "now").
-    double m_startTime; // in seconds
+  // m_startTime is the time to start playing based on the context's timeline (0
+  // or a time less than the context's current time means "now").
+  double start_time_;  // in seconds
 
-    // m_endTime is the time to stop playing based on the context's timeline (0 or a time less than the context's current time means "now").
-    // If it hasn't been set explicitly, then the sound will not stop playing (if looping) or will stop when the end of the AudioBuffer
-    // has been reached.
-    double m_endTime; // in seconds
+  // m_endTime is the time to stop playing based on the context's timeline (0 or
+  // a time less than the context's current time means "now").  If it hasn't
+  // been set explicitly, then the sound will not stop playing (if looping) or
+  // will stop when the end of the AudioBuffer has been reached.
+  double end_time_;  // in seconds
 
-    static const double UnknownTime;
-private:
-    // This is accessed by both the main thread and audio thread.  Use the setter and getter to
-    // protect the access to this!
-    int m_playbackState;
+  static const double kUnknownTime;
+
+ private:
+  // This is accessed by both the main thread and audio thread.  Use the setter
+  // and getter to protect the access to this.
+  int playback_state_;
 };
 
-class AudioScheduledSourceNode : public AudioSourceNode, public ActiveScriptWrappable {
-    USING_GARBAGE_COLLECTED_MIXIN(AudioScheduledSourceNode);
-public:
-    void start(ExceptionState&);
-    void start(double when, ExceptionState&);
-    void stop(ExceptionState&);
-    void stop(double when, ExceptionState&);
+class AudioScheduledSourceNode
+    : public AudioNode,
+      public ActiveScriptWrappable<AudioScheduledSourceNode> {
+  USING_GARBAGE_COLLECTED_MIXIN(AudioScheduledSourceNode);
+  DEFINE_WRAPPERTYPEINFO();
 
-    EventListener* onended();
-    void setOnended(EventListener*);
+ public:
+  void start(ExceptionState&);
+  void start(double when, ExceptionState&);
+  void stop(ExceptionState&);
+  void stop(double when, ExceptionState&);
 
-    // ActiveScriptWrappable
-    bool hasPendingActivity() const final;
+  EventListener* onended();
+  void setOnended(EventListener*);
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { AudioSourceNode::trace(visitor); }
+  // ScriptWrappable:
+  bool HasPendingActivity() const final;
 
-protected:
-    explicit AudioScheduledSourceNode(BaseAudioContext&);
-    AudioScheduledSourceHandler& audioScheduledSourceHandler() const;
+  DEFINE_INLINE_VIRTUAL_TRACE() { AudioNode::Trace(visitor); }
+
+ protected:
+  explicit AudioScheduledSourceNode(BaseAudioContext&);
+  AudioScheduledSourceHandler& GetAudioScheduledSourceHandler() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioScheduledSourceNode_h
+#endif  // AudioScheduledSourceNode_h

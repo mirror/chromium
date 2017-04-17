@@ -29,41 +29,43 @@
 #define FrameData_h
 
 #include "platform/graphics/ImageOrientation.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
-#include "wtf/VectorTraits.h"
-
-class SkImage;
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/VectorTraits.h"
 
 namespace blink {
 
 struct FrameData {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    WTF_MAKE_NONCOPYABLE(FrameData);
-public:
-    FrameData();
-    ~FrameData();
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  WTF_MAKE_NONCOPYABLE(FrameData);
 
-    // Clear the cached image data on the frame, and (optionally) the metadata.
-    // Returns whether there was cached image data to clear.
-    void clear(bool clearMetadata);
+ public:
+  FrameData();
+  ~FrameData();
 
-    ImageOrientation m_orientation;
-    float m_duration;
-    bool m_haveMetadata : 1;
-    bool m_isComplete : 1;
-    bool m_hasAlpha : 1;
-    size_t m_frameBytes;
+  // Clear the cached image data on the frame, and (optionally) the metadata.
+  // Returns whether there was cached image data to clear.
+  void Clear(bool clear_metadata);
+
+  ImageOrientation orientation_;
+  float duration_;
+  bool have_metadata_ : 1;
+  bool is_complete_ : 1;
+  bool has_alpha_ : 1;
+  size_t frame_bytes_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 namespace WTF {
-template<> struct VectorTraits<blink::FrameData> : public SimpleClassVectorTraits<blink::FrameData> {
-    STATIC_ONLY(VectorTraits);
-    static const bool canInitializeWithMemset = false; // Not all FrameData members initialize to 0.
+template <>
+struct VectorTraits<blink::FrameData>
+    : public SimpleClassVectorTraits<blink::FrameData> {
+  STATIC_ONLY(VectorTraits);
+  static const bool kCanInitializeWithMemset =
+      false;  // Not all FrameData members initialize to 0.
 };
 }
 
-#endif // FrameData_h
+#endif  // FrameData_h

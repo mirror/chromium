@@ -9,6 +9,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
+#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/test/oobe_base_test.h"
 #include "chrome/browser/chromeos/login/test/oobe_screen_waiter.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -48,6 +49,7 @@ class DeviceIDTest : public OobeBaseTest,
   }
 
   void SetUpOnMainThread() override {
+    user_removal_loop_.reset(new base::RunLoop);
     OobeBaseTest::SetUpOnMainThread();
     LoadRefreshTokenToDeviceIdMap();
   }
@@ -116,15 +118,15 @@ class DeviceIDTest : public OobeBaseTest,
   void SignInOffline(const std::string& user_id, const std::string& password) {
     WaitForSigninScreen();
 
-    JS().ExecuteAsync(
-        base::StringPrintf("chrome.send('authenticateUser', ['%s', '%s'])",
-                           user_id.c_str(), password.c_str()));
+    JS().ExecuteAsync(base::StringPrintf(
+        "chrome.send('authenticateUser', ['%s', '%s', false])", user_id.c_str(),
+        password.c_str()));
     WaitForSessionStart();
   }
 
   void RemoveUser(const AccountId& account_id) {
     user_manager::UserManager::Get()->RemoveUser(account_id, this);
-    user_removal_loop_.Run();
+    user_removal_loop_->Run();
   }
 
  private:
@@ -132,7 +134,7 @@ class DeviceIDTest : public OobeBaseTest,
   void OnBeforeUserRemoved(const AccountId& account_id) override {}
 
   void OnUserRemoved(const AccountId& account_id) override {
-    user_removal_loop_.Quit();
+    user_removal_loop_->Quit();
   }
 
   base::FilePath GetRefreshTokenToDeviceIdMapFilePath() const {
@@ -165,11 +167,12 @@ class DeviceIDTest : public OobeBaseTest,
       dictionary.SetStringWithoutPathExpansion(kv.first, kv.second);
     std::string json;
     EXPECT_TRUE(base::JSONWriter::Write(dictionary, &json));
-    EXPECT_TRUE(base::WriteFile(GetRefreshTokenToDeviceIdMapFilePath(),
-                                json.c_str(), json.length()));
+    EXPECT_EQ(static_cast<int>(json.length()),
+              base::WriteFile(GetRefreshTokenToDeviceIdMapFilePath(),
+                              json.c_str(), json.length()));
   }
 
-  base::RunLoop user_removal_loop_;
+  std::unique_ptr<base::RunLoop> user_removal_loop_;
 };
 
 // Add the first user and check that device ID is consistent.

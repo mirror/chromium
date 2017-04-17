@@ -10,18 +10,17 @@
 #include "build/build_config.h"
 #include "chrome/utility/utility_message_handler.h"
 #include "ipc/ipc_platform_file.h"
+#include "printing/features/features.h"
 #include "printing/pdf_render_settings.h"
 
-#if !defined(ENABLE_PRINT_PREVIEW) && \
-    !(defined(ENABLE_BASIC_PRINTING) && defined(OS_WIN))
+#if !BUILDFLAG(ENABLE_PRINT_PREVIEW) && \
+    !(BUILDFLAG(ENABLE_BASIC_PRINTING) && defined(OS_WIN))
 #error "Windows basic printing or print preview must be enabled"
 #endif
 
 namespace printing {
 
-class PdfRenderSettings;
 struct PwgRasterSettings;
-struct PageRange;
 
 // Dispatches IPCs for printing.
 class PrintingHandler : public UtilityMessageHandler {
@@ -42,7 +41,7 @@ class PrintingHandler : public UtilityMessageHandler {
       IPC::PlatformFileForTransit output_file);
   void OnRenderPDFPagesToMetafileStop();
 #endif  // OS_WIN
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   void OnRenderPDFPagesToPWGRaster(IPC::PlatformFileForTransit pdf_transit,
                                    const PdfRenderSettings& settings,
                                    const PwgRasterSettings& bitmap_settings,
@@ -53,9 +52,10 @@ class PrintingHandler : public UtilityMessageHandler {
   int LoadPDF(base::File pdf_file);
   bool RenderPdfPageToMetafile(int page_number,
                                base::File output_file,
-                               float* scale_factor);
+                               float* scale_factor,
+                               bool postscript);
 #endif  // OS_WIN
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   bool RenderPDFPagesToPWGRaster(base::File pdf_file,
                                  const PdfRenderSettings& settings,
                                  const PwgRasterSettings& bitmap_settings,

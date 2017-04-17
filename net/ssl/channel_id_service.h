@@ -10,19 +10,17 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/task_runner.h"
 #include "base/threading/non_thread_safe.h"
-#include "base/time/time.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/ssl/channel_id_store.h"
-
-namespace base {
-class TaskRunner;
-}  // namespace base
 
 namespace crypto {
 class ECPrivateKey;
@@ -31,7 +29,6 @@ class ECPrivateKey;
 namespace net {
 
 class ChannelIDServiceJob;
-class ChannelIDServiceWorker;
 
 // A class for creating and fetching Channel IDs.
 
@@ -56,7 +53,6 @@ class NET_EXPORT ChannelIDService
     friend class ChannelIDServiceJob;
 
     void RequestStarted(ChannelIDService* service,
-                        base::TimeTicks request_start,
                         const CompletionCallback& callback,
                         std::unique_ptr<crypto::ECPrivateKey>* key,
                         ChannelIDServiceJob* job);
@@ -64,25 +60,21 @@ class NET_EXPORT ChannelIDService
     void Post(int error, std::unique_ptr<crypto::ECPrivateKey> key);
 
     ChannelIDService* service_;
-    base::TimeTicks request_start_;
     CompletionCallback callback_;
     std::unique_ptr<crypto::ECPrivateKey>* key_;
     ChannelIDServiceJob* job_;
   };
 
-  // Password used on EncryptedPrivateKeyInfo data stored in EC private_key
-  // values.  (This is not used to provide any security, but to workaround NSS
-  // being unable to import unencrypted PrivateKeyInfo for EC keys.)
-  static const char kEPKIPassword[];
-
-  // This object owns |channel_id_store|.  |task_runner| will
-  // be used to post channel ID generation worker tasks.  The tasks are
-  // safe for use with WorkerPool and SequencedWorkerPool::CONTINUE_ON_SHUTDOWN.
-  ChannelIDService(
-      ChannelIDStore* channel_id_store,
-      const scoped_refptr<base::TaskRunner>& task_runner);
+  // This object owns |channel_id_store|.
+  explicit ChannelIDService(ChannelIDStore* channel_id_store);
 
   ~ChannelIDService();
+
+  // Sets the TaskRunner to use for asynchronous operations.
+  void set_task_runner_for_testing(
+      scoped_refptr<base::TaskRunner> task_runner) {
+    task_runner_ = std::move(task_runner);
+  }
 
   // Returns the domain to be used for |host|.  The domain is the
   // "registry controlled domain", or the "ETLD + 1" where one exists, or
@@ -155,8 +147,7 @@ class NET_EXPORT ChannelIDService
   // Searches for an in-flight request for the same domain. If found,
   // attaches to the request and returns true. Returns false if no in-flight
   // request is found.
-  bool JoinToInFlightRequest(const base::TimeTicks& request_start,
-                             const std::string& domain,
+  bool JoinToInFlightRequest(const std::string& domain,
                              std::unique_ptr<crypto::ECPrivateKey>* key,
                              bool create_if_missing,
                              const CompletionCallback& callback,
@@ -166,8 +157,7 @@ class NET_EXPORT ChannelIDService
   // Returns OK if it can be found synchronously, ERR_IO_PENDING if the
   // result cannot be obtained synchronously, or a network error code on
   // failure (including failure to find a channel ID of |domain|).
-  int LookupChannelID(const base::TimeTicks& request_start,
-                      const std::string& domain,
+  int LookupChannelID(const std::string& domain,
                       std::unique_ptr<crypto::ECPrivateKey>* key,
                       bool create_if_missing,
                       const CompletionCallback& callback,
@@ -179,7 +169,7 @@ class NET_EXPORT ChannelIDService
 
   // inflight_ maps from a server to an active generation which is taking
   // place.
-  std::map<std::string, ChannelIDServiceJob*> inflight_;
+  std::map<std::string, std::unique_ptr<ChannelIDServiceJob>> inflight_;
 
   uint64_t requests_;
   uint64_t key_store_hits_;

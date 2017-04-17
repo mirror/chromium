@@ -33,25 +33,30 @@
 
 namespace blink {
 
-class WebGLShaderPrecisionFormat final : public GarbageCollected<WebGLShaderPrecisionFormat>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static WebGLShaderPrecisionFormat* create(GLint rangeMin, GLint rangeMax, GLint precision);
+class WebGLShaderPrecisionFormat final
+    : public GarbageCollected<WebGLShaderPrecisionFormat>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    GLint rangeMin() const;
-    GLint rangeMax() const;
-    GLint precision() const;
+ public:
+  static WebGLShaderPrecisionFormat* Create(GLint range_min,
+                                            GLint range_max,
+                                            GLint precision);
 
-    DEFINE_INLINE_TRACE() { }
+  GLint rangeMin() const;
+  GLint rangeMax() const;
+  GLint precision() const;
 
-private:
-    WebGLShaderPrecisionFormat(GLint rangeMin, GLint rangeMax, GLint precision);
+  DEFINE_INLINE_TRACE() {}
 
-    GLint m_rangeMin;
-    GLint m_rangeMax;
-    GLint m_precision;
+ private:
+  WebGLShaderPrecisionFormat(GLint range_min, GLint range_max, GLint precision);
+
+  GLint range_min_;
+  GLint range_max_;
+  GLint precision_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLShaderPrecisionFormat_h
+#endif  // WebGLShaderPrecisionFormat_h

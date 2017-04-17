@@ -141,8 +141,9 @@ TEST_F(UserActivityDetectorTest, Basic) {
   observer_->reset_stats();
 
   AdvanceTime(advance_delta);
-  ui::TouchEvent touch_event(ui::ET_TOUCH_PRESSED, gfx::Point(), 0,
-                             base::TimeTicks());
+  ui::TouchEvent touch_event(
+      ui::ET_TOUCH_PRESSED, gfx::Point(), base::TimeTicks(),
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0));
   OnEvent(&touch_event);
   EXPECT_FALSE(touch_event.handled());
   EXPECT_EQ(now_.ToInternalValue(),
@@ -206,6 +207,30 @@ TEST_F(UserActivityDetectorTest, IgnoreSyntheticMouseEvents) {
   EXPECT_EQ(base::TimeTicks().ToInternalValue(),
             detector_->last_activity_time().ToInternalValue());
   EXPECT_EQ(0, observer_->num_invocations());
+}
+
+// Checks that observers are notified about externally-reported user activity.
+TEST_F(UserActivityDetectorTest, HandleExternalUserActivity) {
+  detector_->HandleExternalUserActivity();
+  EXPECT_EQ(1, observer_->num_invocations());
+  observer_->reset_stats();
+
+  base::TimeDelta advance_delta = base::TimeDelta::FromMilliseconds(
+      UserActivityDetector::kNotifyIntervalMs);
+  AdvanceTime(advance_delta);
+  detector_->HandleExternalUserActivity();
+  EXPECT_EQ(1, observer_->num_invocations());
+  observer_->reset_stats();
+
+  base::TimeDelta half_advance_delta = base::TimeDelta::FromMilliseconds(
+      UserActivityDetector::kNotifyIntervalMs / 2);
+  AdvanceTime(half_advance_delta);
+  detector_->HandleExternalUserActivity();
+  EXPECT_EQ(0, observer_->num_invocations());
+
+  AdvanceTime(half_advance_delta);
+  detector_->HandleExternalUserActivity();
+  EXPECT_EQ(1, observer_->num_invocations());
 }
 
 }  // namespace ui

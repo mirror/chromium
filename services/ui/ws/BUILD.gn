@@ -4,8 +4,14 @@
 
 import("//build/config/ui.gni")
 import("//testing/test.gni")
-import("//services/shell/public/cpp/service.gni")
-import("//services/shell/public/service_manifest.gni")
+import("//services/catalog/public/tools/catalog.gni")
+import("//services/service_manager/public/cpp/service.gni")
+import("//services/service_manager/public/service_manifest.gni")
+import("//services/service_manager/public/tools/test/service_test.gni")
+
+# In external window mode, top-level windows are native platform windows i.e.
+# not children of a Chrome OS window manager's root window.
+is_external_mode = use_ozone && !is_chromeos
 
 static_library("lib") {
   sources = [
@@ -15,18 +21,23 @@ static_library("lib") {
     "access_policy_delegate.h",
     "accessibility_manager.cc",
     "accessibility_manager.h",
-    "animation_runner.cc",
-    "animation_runner.h",
-    "animation_runner_observer.h",
+    "cursor_location_manager.cc",
+    "cursor_location_manager.h",
     "default_access_policy.cc",
     "default_access_policy.h",
     "display.cc",
     "display.h",
     "display_binding.cc",
     "display_binding.h",
+    "display_client_compositor_frame_sink.cc",
+    "display_client_compositor_frame_sink.h",
     "display_manager.cc",
     "display_manager.h",
-    "display_manager_delegate.h",
+    "drag_controller.cc",
+    "drag_controller.h",
+    "drag_cursor_updater.h",
+    "drag_source.h",
+    "drag_target_connection.h",
     "event_dispatcher.cc",
     "event_dispatcher.h",
     "event_dispatcher_delegate.h",
@@ -38,36 +49,36 @@ static_library("lib") {
     "focus_controller_observer.h",
     "frame_generator.cc",
     "frame_generator.h",
+    "gpu_client.cc",
+    "gpu_client.h",
+    "gpu_host.cc",
+    "gpu_host.h",
+    "gpu_host_delegate.h",
     "modal_window_controller.cc",
     "modal_window_controller.h",
     "operation.cc",
     "operation.h",
     "platform_display.cc",
     "platform_display.h",
+    "platform_display_default.cc",
+    "platform_display_default.h",
     "platform_display_delegate.h",
     "platform_display_factory.h",
-    "platform_display_init_params.cc",
-    "platform_display_init_params.h",
-    "scheduled_animation_group.cc",
-    "scheduled_animation_group.h",
     "server_window.cc",
     "server_window.h",
+    "server_window_compositor_frame_sink_manager.cc",
+    "server_window_compositor_frame_sink_manager.h",
     "server_window_delegate.h",
     "server_window_drawn_tracker.cc",
     "server_window_drawn_tracker.h",
     "server_window_drawn_tracker_observer.h",
     "server_window_observer.h",
-    "server_window_surface.cc",
-    "server_window_surface.h",
-    "server_window_surface_manager.cc",
-    "server_window_surface_manager.h",
     "server_window_tracker.h",
-    "touch_controller.cc",
-    "touch_controller.h",
     "user_activity_monitor.cc",
     "user_activity_monitor.h",
     "user_display_manager.cc",
     "user_display_manager.h",
+    "user_display_manager_delegate.h",
     "user_id.h",
     "user_id_tracker.cc",
     "user_id_tracker.h",
@@ -101,6 +112,15 @@ static_library("lib") {
     "window_tree_host_factory.h",
   ]
 
+  deps = [
+    "//gpu/command_buffer/client",
+    "//gpu/command_buffer/client:gles2_interface",
+    "//gpu/ipc/client",
+    "//gpu/ipc/common",
+    "//services/ui/gpu",  # TODO(sad): Temporary until GPU process split.
+    "//services/ui/gpu/interfaces",
+  ]
+
   public_deps = [
     "//base",
     "//cc",
@@ -109,15 +129,13 @@ static_library("lib") {
     "//cc/surfaces:surface_id",
     "//mojo/common:common_base",
     "//mojo/public/cpp/bindings",
-    "//services/shell/public/cpp",
-    "//services/shell/public/interfaces",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/interfaces",
     "//services/tracing/public/cpp",
-    "//services/ui/clipboard:lib",
     "//services/ui/common:mus_common",
+    "//services/ui/common:server_gpu",
     "//services/ui/display",
-    "//services/ui/gles2",
     "//services/ui/public/interfaces",
-    "//services/ui/surfaces",
     "//ui/base",
     "//ui/display",
     "//ui/events",
@@ -135,6 +153,18 @@ static_library("lib") {
   if (use_ozone) {
     public_deps += [ "//ui/ozone:ozone" ]
   }
+  if (is_chromeos) {
+    public_deps += [ "//ui/chromeos/events" ]
+  }
+
+  # ui service should not depend on below components.
+  assert_no_deps = [
+    "//ash",
+    "//content/public/browser",
+    "//content/public/common",
+    "//ui/aura",
+    "//ui/views",
+  ]
 }
 
 static_library("test_interface") {
@@ -157,16 +187,36 @@ static_library("test_support") {
   sources = [
     "test_change_tracker.cc",
     "test_change_tracker.h",
+    "window_server_service_test_base.cc",
+    "window_server_service_test_base.h",
   ]
+
+  if (!is_external_mode) {
+    # WindowServerTestBase assumes an initial display (and root) is provided
+    # at startup, which is not the case on platforms running external window
+    # mode.
+    sources += [
+      "window_server_test_base.cc",
+      "window_server_test_base.h",
+    ]
+  }
 
   deps = [
     "//base",
+    "//base/test:test_config",
     "//mojo/common",
     "//mojo/public/cpp/bindings:bindings",
+    "//services/service_manager/public/cpp:service_test_support",
+    "//services/service_manager/public/cpp:sources",
     "//services/ui/common:mus_common",
     "//services/ui/public/cpp",
     "//services/ui/public/interfaces",
+    "//testing/gtest",
+    "//ui/aura",
+    "//ui/display:test_support",
     "//ui/gfx/geometry/mojo",
+    "//ui/gl",
+    "//ui/wm",
   ]
 }
 
@@ -180,19 +230,18 @@ group("tests") {
   }
 }
 
-test("mus_ws_unittests") {
+service_test("mus_ws_unittests") {
   sources = [
-    "animation_runner_unittest.cc",
+    "cursor_location_manager_unittest.cc",
     "cursor_unittest.cc",
     "display_unittest.cc",
+    "drag_controller_unittest.cc",
     "event_dispatcher_unittest.cc",
     "event_matcher_unittest.cc",
     "focus_controller_unittest.cc",
     "frame_generator_unittest.cc",
-    "scheduled_animation_group_unittest.cc",
+    "gpu_host_unittest.cc",
     "server_window_drawn_tracker_unittest.cc",
-    "server_window_surface_manager_test_api.cc",
-    "server_window_surface_manager_test_api.h",
     "test_server_window_delegate.cc",
     "test_server_window_delegate.h",
     "test_utils.cc",
@@ -202,11 +251,24 @@ test("mus_ws_unittests") {
     "user_display_manager_unittest.cc",
     "window_coordinate_conversions_unittest.cc",
     "window_finder_unittest.cc",
-    "window_manager_client_unittest.cc",
     "window_manager_state_unittest.cc",
     "window_tree_client_unittest.cc",
     "window_tree_unittest.cc",
   ]
+
+  if (!is_external_mode) {
+    # A window manager client is not needed on platforms running external
+    # window mode, since the host system is always the window manager.
+    sources += [ "window_manager_client_unittest.cc" ]
+  }
+
+  # TODO(jamescook): Run this test on non-ozone platforms. This will require
+  # initializing all the platform-specific windowing support.
+  if (use_ozone) {
+    sources += [ "platform_display_default_unittest.cc" ]
+  }
+
+  catalog = ":mus_ws_unittests_catalog"
 
   deps = [
     ":lib",
@@ -215,18 +277,21 @@ test("mus_ws_unittests") {
     "//base/test:test_config",
     "//base/test:test_support",
     "//cc:cc",
+    "//cc:test_support",
+    "//gpu/ipc/client",
     "//mojo/public/cpp/bindings:bindings",
-    "//services/shell/public/cpp:service_test_support",
-    "//services/shell/public/cpp:sources",
-    "//services/shell/public/cpp/test:run_all_shelltests",
-    "//services/shell/public/interfaces",
+    "//services/service_manager/public/cpp:service_test_support",
+    "//services/service_manager/public/cpp:sources",
+    "//services/service_manager/public/interfaces",
     "//services/ui/common:mus_common",
+    "//services/ui/common:task_runner_test_base",
+    "//services/ui/gpu:gpu",
     "//services/ui/public/cpp",
-    "//services/ui/public/cpp/tests:test_support",
     "//services/ui/public/interfaces",
-    "//services/ui/surfaces",
     "//testing/gtest",
     "//third_party/mesa:osmesa",
+    "//ui/aura",
+    "//ui/aura:test_support",
     "//ui/events",
     "//ui/gfx",
     "//ui/gfx:test_support",
@@ -234,17 +299,15 @@ test("mus_ws_unittests") {
     "//ui/gfx/geometry/mojo",
     "//ui/gl",
   ]
-
-  if (use_x11) {
-    deps += [ "//tools/xdisplaycheck" ]
-  }
-
-  data_deps = [
-    ":mus_ws_unittests_app_manifest",
-  ]
 }
 
 service_manifest("mus_ws_unittests_app_manifest") {
   name = "mus_ws_unittests_app"
   source = "mus_ws_unittests_app_manifest.json"
+}
+
+catalog("mus_ws_unittests_catalog") {
+  embedded_services = [ ":mus_ws_unittests_app_manifest" ]
+
+  standalone_services = [ "//services/ui:manifest" ]
 }

@@ -30,6 +30,7 @@
 
 #include "core/workers/SharedWorkerGlobalScope.h"
 
+#include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/LocalDOMWindow.h"
@@ -38,63 +39,70 @@
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/SharedWorkerThread.h"
 #include "core/workers/WorkerClients.h"
-#include "wtf/CurrentTime.h"
-#include <memory>
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 
-MessageEvent* createConnectEvent(MessagePort* port)
-{
-    MessageEvent* event = MessageEvent::create(new MessagePortArray(1, port), String(), String(), port);
-    event->initEvent(EventTypeNames::connect, false, false);
-    return event;
+MessageEvent* CreateConnectEvent(MessagePort* port) {
+  MessageEvent* event = MessageEvent::Create(new MessagePortArray(1, port),
+                                             String(), String(), port);
+  event->initEvent(EventTypeNames::connect, false, false);
+  return event;
 }
 
 // static
-SharedWorkerGlobalScope* SharedWorkerGlobalScope::create(const String& name, SharedWorkerThread* thread, std::unique_ptr<WorkerThreadStartupData> startupData)
-{
-    // Note: startupData is finalized on return. After the relevant parts has been
-    // passed along to the created 'context'.
-    SharedWorkerGlobalScope* context = new SharedWorkerGlobalScope(name, startupData->m_scriptURL, startupData->m_userAgent, thread, std::move(startupData->m_starterOriginPrivilegeData), startupData->m_workerClients.release());
-    context->applyContentSecurityPolicyFromVector(*startupData->m_contentSecurityPolicyHeaders);
-    context->setWorkerSettings(std::move(startupData->m_workerSettings));
-    if (!startupData->m_referrerPolicy.isNull())
-        context->parseAndSetReferrerPolicy(startupData->m_referrerPolicy);
-    context->setAddressSpace(startupData->m_addressSpace);
-    OriginTrialContext::addTokens(context, startupData->m_originTrialTokens.get());
-    return context;
+SharedWorkerGlobalScope* SharedWorkerGlobalScope::Create(
+    const String& name,
+    SharedWorkerThread* thread,
+    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+  // Note: startupData is finalized on return. After the relevant parts has been
+  // passed along to the created 'context'.
+  SharedWorkerGlobalScope* context = new SharedWorkerGlobalScope(
+      name, startup_data->script_url_, startup_data->user_agent_, thread,
+      std::move(startup_data->starter_origin_privilege_data_),
+      startup_data->worker_clients_);
+  context->ApplyContentSecurityPolicyFromVector(
+      *startup_data->content_security_policy_headers_);
+  context->SetWorkerSettings(std::move(startup_data->worker_settings_));
+  if (!startup_data->referrer_policy_.IsNull())
+    context->ParseAndSetReferrerPolicy(startup_data->referrer_policy_);
+  context->SetAddressSpace(startup_data->address_space_);
+  OriginTrialContext::AddTokens(context,
+                                startup_data->origin_trial_tokens_.get());
+  return context;
 }
 
-SharedWorkerGlobalScope::SharedWorkerGlobalScope(const String& name, const KURL& url, const String& userAgent, SharedWorkerThread* thread, std::unique_ptr<SecurityOrigin::PrivilegeData> starterOriginPrivilegeData, WorkerClients* workerClients)
-    : WorkerGlobalScope(url, userAgent, thread, monotonicallyIncreasingTime(), std::move(starterOriginPrivilegeData), workerClients)
-    , m_name(name)
-{
+SharedWorkerGlobalScope::SharedWorkerGlobalScope(
+    const String& name,
+    const KURL& url,
+    const String& user_agent,
+    SharedWorkerThread* thread,
+    std::unique_ptr<SecurityOrigin::PrivilegeData>
+        starter_origin_privilege_data,
+    WorkerClients* worker_clients)
+    : WorkerGlobalScope(url,
+                        user_agent,
+                        thread,
+                        MonotonicallyIncreasingTime(),
+                        std::move(starter_origin_privilege_data),
+                        worker_clients),
+      name_(name) {}
+
+SharedWorkerGlobalScope::~SharedWorkerGlobalScope() {}
+
+const AtomicString& SharedWorkerGlobalScope::InterfaceName() const {
+  return EventTargetNames::SharedWorkerGlobalScope;
 }
 
-SharedWorkerGlobalScope::~SharedWorkerGlobalScope()
-{
+void SharedWorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {
+  WorkerGlobalScope::ExceptionThrown(event);
+  if (WorkerThreadDebugger* debugger =
+          WorkerThreadDebugger::From(GetThread()->GetIsolate()))
+    debugger->ExceptionThrown(GetThread(), event);
 }
 
-const AtomicString& SharedWorkerGlobalScope::interfaceName() const
-{
-    return EventTargetNames::SharedWorkerGlobalScope;
+DEFINE_TRACE(SharedWorkerGlobalScope) {
+  WorkerGlobalScope::Trace(visitor);
 }
 
-SharedWorkerThread* SharedWorkerGlobalScope::thread()
-{
-    return static_cast<SharedWorkerThread*>(Base::thread());
-}
-
-void SharedWorkerGlobalScope::exceptionThrown(const String& errorMessage, std::unique_ptr<SourceLocation> location)
-{
-    WorkerGlobalScope::exceptionThrown(errorMessage, location->clone());
-    if (WorkerThreadDebugger* debugger = WorkerThreadDebugger::from(thread()->isolate()))
-        debugger->exceptionThrown(errorMessage, std::move(location));
-}
-
-DEFINE_TRACE(SharedWorkerGlobalScope)
-{
-    WorkerGlobalScope::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

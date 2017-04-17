@@ -4,12 +4,13 @@
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
 
-function produceGarbageForGCEvents(callback)
+function produceGarbageForGCEvents()
 {
     if (window.testRunner) {
         window.gc();
-        testRunner.layoutAndPaintAsyncThen(callback);
+        return new Promise((fulfill) => testRunner.layoutAndPaintAsyncThen(fulfill));
     }
+    return Promise.reject();
 }
 
 function test()
@@ -18,8 +19,8 @@ function test()
 
     function validate()
     {
-        var gcRecord = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.MajorGC) || InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.MinorGC)
-        if (gcRecord)
+        var gcEvent = InspectorTest.findTimelineEvent(TimelineModel.TimelineModel.RecordType.MajorGC) || InspectorTest.findTimelineEvent(TimelineModel.TimelineModel.RecordType.MinorGC)
+        if (gcEvent)
             InspectorTest.addResult("SUCCESS: Found expected GC event record");
         else
             InspectorTest.addResult("FAIL: GC event record wasn't found");

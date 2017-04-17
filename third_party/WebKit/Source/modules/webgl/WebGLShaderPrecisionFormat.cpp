@@ -29,31 +29,28 @@
 namespace blink {
 
 // static
-WebGLShaderPrecisionFormat* WebGLShaderPrecisionFormat::create(GLint rangeMin, GLint rangeMax, GLint precision)
-{
-    return new WebGLShaderPrecisionFormat(rangeMin, rangeMax, precision);
+WebGLShaderPrecisionFormat* WebGLShaderPrecisionFormat::Create(
+    GLint range_min,
+    GLint range_max,
+    GLint precision) {
+  return new WebGLShaderPrecisionFormat(range_min, range_max, precision);
 }
 
-GLint WebGLShaderPrecisionFormat::rangeMin() const
-{
-    return m_rangeMin;
+GLint WebGLShaderPrecisionFormat::rangeMin() const {
+  return range_min_;
 }
 
-GLint WebGLShaderPrecisionFormat::rangeMax() const
-{
-    return m_rangeMax;
+GLint WebGLShaderPrecisionFormat::rangeMax() const {
+  return range_max_;
 }
 
-GLint WebGLShaderPrecisionFormat::precision() const
-{
-    return m_precision;
+GLint WebGLShaderPrecisionFormat::precision() const {
+  return precision_;
 }
 
-WebGLShaderPrecisionFormat::WebGLShaderPrecisionFormat(GLint rangeMin, GLint rangeMax, GLint precision)
-    : m_rangeMin(rangeMin)
-    , m_rangeMax(rangeMax)
-    , m_precision(precision)
-{
-}
+WebGLShaderPrecisionFormat::WebGLShaderPrecisionFormat(GLint range_min,
+                                                       GLint range_max,
+                                                       GLint precision)
+    : range_min_(range_min), range_max_(range_max), precision_(precision) {}
 
-} // namespace blink
+}  // namespace blink

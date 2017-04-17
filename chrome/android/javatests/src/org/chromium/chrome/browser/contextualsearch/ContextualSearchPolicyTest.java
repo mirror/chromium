@@ -4,10 +4,10 @@
 
 package org.chromium.chrome.browser.contextualsearch;
 
-import android.content.Context;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
 
 import java.util.ArrayList;
@@ -30,14 +30,14 @@ public class ContextualSearchPolicyTest extends ChromeTabbedActivityTestBase {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                Context context = getActivity().getApplicationContext();
-                mPolicy = new ContextualSearchPolicy(context, null, null);
+                mPolicy = new ContextualSearchPolicy(null, null);
             }
         });
     }
 
     @SmallTest
     @Feature({"ContextualSearch"})
+    @RetryOnFailure
     public void testBestTargetLanguageFromMultiple() {
         ArrayList<String> list = new ArrayList<String>();
         list.add("br");
@@ -47,15 +47,29 @@ public class ContextualSearchPolicyTest extends ChromeTabbedActivityTestBase {
 
     @SmallTest
     @Feature({"ContextualSearch"})
+    @RetryOnFailure
     public void testBestTargetLanguageSkipsEnglish() {
+        String countryOfUx = "";
         ArrayList<String> list = new ArrayList<String>();
         list.add("en");
-        list.add("de");
-        assertEquals("de", mPolicy.bestTargetLanguage(list));
+        list.add("id");
+        assertEquals("id", mPolicy.bestTargetLanguage(list, countryOfUx));
     }
 
     @SmallTest
     @Feature({"ContextualSearch"})
+    @RetryOnFailure
+    public void testBestTargetLanguageReturnsEnglishWhenInUS() {
+        String countryOfUx = "US";
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("en");
+        list.add("id");
+        assertEquals("en", mPolicy.bestTargetLanguage(list, countryOfUx));
+    }
+
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    @RetryOnFailure
     public void testBestTargetLanguageUsesEnglishWhenOnlyChoice() {
         ArrayList<String> list = new ArrayList<String>();
         list.add("en");

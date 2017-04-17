@@ -15,14 +15,19 @@
 #include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
-#include "base/mac/scoped_nsobject.h"
 #include "ios/chrome/browser/experimental_flags.h"
+#include "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/web/public/web_thread.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/ios/uikit_util.h"
 #include "ui/gfx/scoped_cg_context_save_gstate_mac.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
 
@@ -170,7 +175,7 @@ UIImage* CaptureViewWithOption(UIView* view,
                                CaptureViewOption option) {
   UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES /* opaque */,
                                          scale);
-  if (base::ios::IsRunningOnIOS9OrLater() && option != kClientSideRendering) {
+  if (option != kClientSideRendering) {
     [view drawViewHierarchyInRect:view.bounds
                afterScreenUpdates:option == kAfterScreenUpdate];
   } else {
@@ -220,6 +225,19 @@ BOOL ImageHasAlphaChannel(UIImage* image) {
     case kCGImageAlphaOnly:
       return YES;
   }
+}
+
+UIImage* NativeReversableImage(int imageID, BOOL reversable) {
+  DCHECK(imageID);
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+  UIImage* image = rb.GetNativeImageNamed(imageID).ToUIImage();
+  return (reversable && UseRTLLayout())
+             ? [image imageFlippedForRightToLeftLayoutDirection]
+             : image;
+}
+
+UIImage* NativeImage(int imageID) {
+  return NativeReversableImage(imageID, NO);
 }
 
 UIImage* ResizeImage(UIImage* image,
@@ -454,12 +472,7 @@ UIInterfaceOrientation GetInterfaceOrientation() {
 }
 
 CGFloat CurrentKeyboardHeight(NSValue* keyboardFrameValue) {
-  CGSize keyboardSize = [keyboardFrameValue CGRectValue].size;
-  if (base::ios::IsRunningOnIOS8OrLater()) {
-    return keyboardSize.height;
-  } else {
-    return IsPortrait() ? keyboardSize.height : keyboardSize.width;
-  }
+  return [keyboardFrameValue CGRectValue].size.height;
 }
 
 UIImage* ImageWithColor(UIColor* color) {
@@ -557,17 +570,8 @@ void ApplyVisualConstraintsWithMetricsAndOptions(
     NSDictionary* subviewsDictionary,
     NSDictionary* metrics,
     NSLayoutFormatOptions options) {
-  base::scoped_nsobject<NSMutableArray> layoutConstraints(
-      [[NSMutableArray arrayWithCapacity:constraints.count * 3] retain]);
-  for (NSString* constraint in constraints) {
-    DCHECK([constraint isKindOfClass:[NSString class]]);
-    [layoutConstraints addObjectsFromArray:
-                           [NSLayoutConstraint
-                               constraintsWithVisualFormat:constraint
-                                                   options:options
-                                                   metrics:metrics
-                                                     views:subviewsDictionary]];
-  }
+  NSArray* layoutConstraints = VisualConstraintsWithMetricsAndOptions(
+      constraints, subviewsDictionary, metrics, options);
   [NSLayoutConstraint activateConstraints:layoutConstraints];
 }
 
@@ -579,6 +583,31 @@ void ApplyVisualConstraintsWithMetricsAndOptions(
     UIView* unused_parentView) {
   ApplyVisualConstraintsWithMetricsAndOptions(constraints, subviewsDictionary,
                                               metrics, options);
+}
+
+NSArray* VisualConstraintsWithMetrics(NSArray* constraints,
+                                      NSDictionary* subviewsDictionary,
+                                      NSDictionary* metrics) {
+  return VisualConstraintsWithMetricsAndOptions(constraints, subviewsDictionary,
+                                                metrics, 0);
+}
+
+NSArray* VisualConstraintsWithMetricsAndOptions(
+    NSArray* constraints,
+    NSDictionary* subviewsDictionary,
+    NSDictionary* metrics,
+    NSLayoutFormatOptions options) {
+  NSMutableArray* layoutConstraints = [NSMutableArray array];
+  for (NSString* constraint in constraints) {
+    DCHECK([constraint isKindOfClass:[NSString class]]);
+    [layoutConstraints addObjectsFromArray:
+                           [NSLayoutConstraint
+                               constraintsWithVisualFormat:constraint
+                                                   options:options
+                                                   metrics:metrics
+                                                     views:subviewsDictionary]];
+  }
+  return [layoutConstraints copy];
 }
 
 void AddSameCenterConstraints(UIView* view1, UIView* view2) {
@@ -618,13 +647,8 @@ void AddSameSizeConstraint(UIView* view1, UIView* view2) {
 }
 
 bool IsCompact(id<UITraitEnvironment> environment) {
-  if (base::ios::IsRunningOnIOS8OrLater()) {
-    return environment.traitCollection.horizontalSizeClass ==
-           UIUserInterfaceSizeClassCompact;
-  } else {
-    // Prior to iOS 8, iPad is always regular, iPhone is always compact.
-    return !IsIPadIdiom();
-  }
+  return environment.traitCollection.horizontalSizeClass ==
+         UIUserInterfaceSizeClassCompact;
 }
 
 bool IsCompact() {
@@ -652,4 +676,34 @@ UIResponder* GetFirstResponder() {
   UIResponder* firstResponder = gFirstResponder;
   gFirstResponder = nil;
   return firstResponder;
+}
+
+// On iOS10 and above, trigger a haptic vibration for the user selecting an
+// action. This is a no-op for devices that do not support it.
+void TriggerHapticFeedbackForAction() {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
+    UIImpactFeedbackGenerator* generator =
+        [[UIImpactFeedbackGenerator alloc] init];
+    [generator impactOccurred];
+  }
+}
+
+// On iOS10 and above, trigger a haptic vibration for the change in selection.
+// This is a no-op for devices that do not support it.
+void TriggerHapticFeedbackForSelectionChange() {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
+    UISelectionFeedbackGenerator* generator =
+        [[UISelectionFeedbackGenerator alloc] init];
+    [generator selectionChanged];
+  }
+}
+
+// On iOS10 and above, trigger a haptic vibration for a notification.
+// This is a no-op for devices that do not support it.
+void TriggerHapticFeedbackForNotification(UINotificationFeedbackType type) {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
+    UINotificationFeedbackGenerator* generator =
+        [[UINotificationFeedbackGenerator alloc] init];
+    [generator notificationOccurred:type];
+  }
 }

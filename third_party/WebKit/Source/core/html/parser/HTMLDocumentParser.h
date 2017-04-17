@@ -26,30 +26,29 @@
 #ifndef HTMLDocumentParser_h
 #define HTMLDocumentParser_h
 
-#include "bindings/core/v8/DocumentWriteEvaluator.h"
+#include <memory>
+#include "core/CoreExport.h"
 #include "core/dom/ParserContentPolicy.h"
 #include "core/dom/ScriptableDocumentParser.h"
-#include "core/fetch/ResourceClient.h"
-#include "core/frame/UseCounter.h"
 #include "core/html/parser/BackgroundHTMLInputStream.h"
-#include "core/html/parser/CompactHTMLToken.h"
 #include "core/html/parser/HTMLInputStream.h"
 #include "core/html/parser/HTMLParserOptions.h"
+#include "core/html/parser/HTMLParserReentryPermit.h"
+#include "core/html/parser/HTMLParserScriptRunnerHost.h"
 #include "core/html/parser/HTMLPreloadScanner.h"
-#include "core/html/parser/HTMLScriptRunnerHost.h"
 #include "core/html/parser/HTMLSourceTracker.h"
 #include "core/html/parser/HTMLToken.h"
 #include "core/html/parser/HTMLTokenizer.h"
 #include "core/html/parser/HTMLTreeBuilderSimulator.h"
 #include "core/html/parser/ParserSynchronizationPolicy.h"
+#include "core/html/parser/PreloadRequest.h"
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/html/parser/XSSAuditor.h"
 #include "core/html/parser/XSSAuditorDelegate.h"
-#include "platform/text/SegmentedString.h"
-#include "wtf/Deque.h"
-#include "wtf/WeakPtr.h"
-#include "wtf/text/TextPosition.h"
-#include <memory>
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/WeakPtr.h"
+#include "platform/wtf/text/TextPosition.h"
 
 namespace blink {
 
@@ -61,181 +60,235 @@ class DocumentFragment;
 class Element;
 class HTMLDocument;
 class HTMLParserScheduler;
+class HTMLParserScriptRunner;
+class HTMLPreloadScanner;
 class HTMLResourcePreloader;
-class HTMLScriptRunner;
 class HTMLTreeBuilder;
-class PumpSession;
+class SegmentedString;
 class TokenizedChunkQueue;
+class DocumentWriteEvaluator;
 
-class HTMLDocumentParser :  public ScriptableDocumentParser, private HTMLScriptRunnerHost {
-    USING_GARBAGE_COLLECTED_MIXIN(HTMLDocumentParser);
-public:
-    static HTMLDocumentParser* create(HTMLDocument& document, ParserSynchronizationPolicy backgroundParsingPolicy)
-    {
-        return new HTMLDocumentParser(document, backgroundParsingPolicy);
-    }
-    ~HTMLDocumentParser() override;
-    DECLARE_VIRTUAL_TRACE();
+class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
+                                       private HTMLParserScriptRunnerHost {
+  USING_GARBAGE_COLLECTED_MIXIN(HTMLDocumentParser);
+  USING_PRE_FINALIZER(HTMLDocumentParser, Dispose);
 
-    // Exposed for HTMLParserScheduler
-    void resumeParsingAfterYield();
+ public:
+  static HTMLDocumentParser* Create(
+      HTMLDocument& document,
+      ParserSynchronizationPolicy background_parsing_policy) {
+    return new HTMLDocumentParser(document, background_parsing_policy);
+  }
+  ~HTMLDocumentParser() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    static void parseDocumentFragment(const String&, DocumentFragment*, Element* contextElement, ParserContentPolicy = AllowScriptingContent);
+  // TODO(alexclarke): Remove when background parser goes away.
+  void Dispose();
 
-    HTMLTokenizer* tokenizer() const { return m_tokenizer.get(); }
+  // Exposed for HTMLParserScheduler
+  void ResumeParsingAfterYield();
 
-    TextPosition textPosition() const final;
-    bool isParsingAtLineNumber() const final;
-    OrdinalNumber lineNumber() const final;
+  static void ParseDocumentFragment(
+      const String&,
+      DocumentFragment*,
+      Element* context_element,
+      ParserContentPolicy = kAllowScriptingContent);
 
-    void suspendScheduledTasks() final;
-    void resumeScheduledTasks() final;
+  // Exposed for testing.
+  HTMLParserScriptRunnerHost* AsHTMLParserScriptRunnerHostForTesting() {
+    return this;
+  }
 
-    struct TokenizedChunk {
-        USING_FAST_MALLOC(TokenizedChunk);
-    public:
-        std::unique_ptr<CompactHTMLTokenStream> tokens;
-        PreloadRequestStream preloads;
-        ViewportDescriptionWrapper viewport;
-        XSSInfoStream xssInfos;
-        HTMLTokenizer::State tokenizerState;
-        HTMLTreeBuilderSimulator::State treeBuilderState;
-        HTMLInputCheckpoint inputCheckpoint;
-        TokenPreloadScannerCheckpoint preloadScannerCheckpoint;
-        bool startingScript;
-        // Indices into |tokens|.
-        Vector<int> likelyDocumentWriteScriptIndices;
-    };
-    void notifyPendingTokenizedChunks();
-    void didReceiveEncodingDataFromBackgroundParser(const DocumentEncodingData&);
+  HTMLTokenizer* Tokenizer() const { return tokenizer_.get(); }
 
-    void appendBytes(const char* bytes, size_t length) override;
-    void flush() final;
-    void setDecoder(std::unique_ptr<TextResourceDecoder>) final;
+  TextPosition GetTextPosition() const final;
+  bool IsParsingAtLineNumber() const final;
+  OrdinalNumber LineNumber() const final;
 
-protected:
-    void insert(const SegmentedString&) final;
-    void append(const String&) override;
-    void finish() final;
+  void SuspendScheduledTasks() final;
+  void ResumeScheduledTasks() final;
 
-    HTMLDocumentParser(HTMLDocument&, ParserSynchronizationPolicy);
-    HTMLDocumentParser(DocumentFragment*, Element* contextElement, ParserContentPolicy);
+  HTMLParserReentryPermit* ReentryPermit() { return reentry_permit_.Get(); }
 
-    HTMLTreeBuilder* treeBuilder() const { return m_treeBuilder.get(); }
+  struct TokenizedChunk {
+    USING_FAST_MALLOC(TokenizedChunk);
 
-    void forcePlaintextForTextDocument();
+   public:
+    std::unique_ptr<CompactHTMLTokenStream> tokens;
+    PreloadRequestStream preloads;
+    ViewportDescriptionWrapper viewport;
+    XSSInfoStream xss_infos;
+    HTMLTokenizer::State tokenizer_state;
+    HTMLTreeBuilderSimulator::State tree_builder_state;
+    HTMLInputCheckpoint input_checkpoint;
+    TokenPreloadScannerCheckpoint preload_scanner_checkpoint;
+    bool starting_script;
+    // Indices into |tokens|.
+    Vector<int> likely_document_write_script_indices;
+    // Index into |tokens| of the last <meta> csp tag in |tokens|. Preloads will
+    // be deferred until this token is parsed. Will be noPendingToken if there
+    // are no csp tokens.
+    int pending_csp_meta_token_index;
 
-private:
-    static HTMLDocumentParser* create(DocumentFragment* fragment, Element* contextElement, ParserContentPolicy parserContentPolicy)
-    {
-        return new HTMLDocumentParser(fragment, contextElement, parserContentPolicy);
-    }
-    HTMLDocumentParser(Document&, ParserContentPolicy, ParserSynchronizationPolicy);
+    static constexpr int kNoPendingToken = -1;
+  };
+  void NotifyPendingTokenizedChunks();
+  void DidReceiveEncodingDataFromBackgroundParser(const DocumentEncodingData&);
 
-    // DocumentParser
-    void detach() final;
-    bool hasInsertionPoint() final;
-    void prepareToStopParsing() final;
-    void stopParsing() final;
-    bool isWaitingForScripts() const final;
-    bool isExecutingScript() const final;
-    void executeScriptsWaitingForResources() final;
-    void documentElementAvailable() override;
+  void AppendBytes(const char* bytes, size_t length) override;
+  void Flush() final;
+  void SetDecoder(std::unique_ptr<TextResourceDecoder>) final;
 
-    // HTMLScriptRunnerHost
-    void notifyScriptLoaded(Resource*) final;
-    HTMLInputStream& inputStream() final { return m_input; }
-    bool hasPreloadScanner() const final { return m_preloadScanner.get() && !shouldUseThreading(); }
-    void appendCurrentInputStreamToPreloadScannerAndScan() final;
+ protected:
+  void insert(const SegmentedString&) final;
+  void Append(const String&) override;
+  void Finish() final;
 
-    void startBackgroundParser();
-    void stopBackgroundParser();
-    void validateSpeculations(std::unique_ptr<TokenizedChunk> lastChunk);
-    void discardSpeculationsAndResumeFrom(std::unique_ptr<TokenizedChunk> lastChunk, std::unique_ptr<HTMLToken>, std::unique_ptr<HTMLTokenizer>);
-    size_t processTokenizedChunkFromBackgroundParser(std::unique_ptr<TokenizedChunk>);
-    void pumpPendingSpeculations();
+  HTMLDocumentParser(HTMLDocument&, ParserSynchronizationPolicy);
+  HTMLDocumentParser(DocumentFragment*,
+                     Element* context_element,
+                     ParserContentPolicy);
 
-    bool canTakeNextToken();
-    void pumpTokenizer();
-    void pumpTokenizerIfPossible();
-    void constructTreeFromHTMLToken();
-    void constructTreeFromCompactHTMLToken(const CompactHTMLToken&);
+  HTMLTreeBuilder* TreeBuilder() const { return tree_builder_.Get(); }
 
-    void runScriptsForPausedTreeBuilder();
-    void resumeParsingAfterScriptExecution();
+  void ForcePlaintextForTextDocument();
 
-    void attemptToEnd();
-    void endIfDelayed();
-    void attemptToRunDeferredScriptsAndEnd();
-    void end();
+ private:
+  static HTMLDocumentParser* Create(DocumentFragment* fragment,
+                                    Element* context_element,
+                                    ParserContentPolicy parser_content_policy) {
+    return new HTMLDocumentParser(fragment, context_element,
+                                  parser_content_policy);
+  }
+  HTMLDocumentParser(Document&,
+                     ParserContentPolicy,
+                     ParserSynchronizationPolicy);
 
-    bool shouldUseThreading() const { return m_shouldUseThreading; }
+  // DocumentParser
+  void Detach() final;
+  bool HasInsertionPoint() final;
+  void PrepareToStopParsing() final;
+  void StopParsing() final;
+  bool IsPaused() const {
+    return IsWaitingForScripts() || is_waiting_for_stylesheets_;
+  }
+  bool IsWaitingForScripts() const final;
+  bool IsExecutingScript() const final;
+  void ExecuteScriptsWaitingForResources() final;
+  void DidAddPendingStylesheetInBody() final;
+  void DidLoadAllBodyStylesheets() final;
+  void CheckIfBodyStylesheetAdded();
+  void DocumentElementAvailable() override;
 
-    bool isParsingFragment() const;
-    bool isScheduledForResume() const;
-    bool inPumpSession() const { return m_pumpSessionNestingLevel > 0; }
-    bool shouldDelayEnd() const { return inPumpSession() || isWaitingForScripts() || isScheduledForResume() || isExecutingScript(); }
+  // HTMLParserScriptRunnerHost
+  void NotifyScriptLoaded(PendingScript*) final;
+  HTMLInputStream& InputStream() final { return input_; }
+  bool HasPreloadScanner() const final {
+    return preload_scanner_.get() && !ShouldUseThreading();
+  }
+  void AppendCurrentInputStreamToPreloadScannerAndScan() final;
 
-    std::unique_ptr<HTMLPreloadScanner> createPreloadScanner();
+  void StartBackgroundParser();
+  void StopBackgroundParser();
+  void ValidateSpeculations(std::unique_ptr<TokenizedChunk> last_chunk);
+  void DiscardSpeculationsAndResumeFrom(
+      std::unique_ptr<TokenizedChunk> last_chunk,
+      std::unique_ptr<HTMLToken>,
+      std::unique_ptr<HTMLTokenizer>);
+  size_t ProcessTokenizedChunkFromBackgroundParser(
+      std::unique_ptr<TokenizedChunk>);
+  void PumpPendingSpeculations();
 
-    int preloadInsertion(const SegmentedString& source);
-    void evaluateAndPreloadScriptForDocumentWrite(const String& source);
+  bool CanTakeNextToken();
+  void PumpTokenizer();
+  void PumpTokenizerIfPossible();
+  void ConstructTreeFromHTMLToken();
+  void ConstructTreeFromCompactHTMLToken(const CompactHTMLToken&);
 
-    // Temporary enum for the ParseHTMLOnMainThread experiment. This is used to
-    // annotate whether a given task should post a task or not on the main
-    // thread if the lookahead parser is living on the main thread.
-    enum LookaheadParserTaskSynchrony {
-        Synchronous,
-        Asynchronous,
-    };
+  void RunScriptsForPausedTreeBuilder();
+  void ResumeParsingAfterPause();
 
-    // Setting |synchronyPolicy| to Synchronous will just call the function
-    // with the given parameters. Note, this method is completely temporary
-    // as we need to maintain both threading implementations until the
-    // ParseHTMLOnMainThread experiment finishes.
-    template <typename FunctionType, typename... Ps>
-    void postTaskToLookaheadParser(LookaheadParserTaskSynchrony synchronyPolicy, FunctionType, Ps&&... parameters);
+  void AttemptToEnd();
+  void EndIfDelayed();
+  void AttemptToRunDeferredScriptsAndEnd();
+  void end();
 
-    HTMLToken& token() { return *m_token; }
+  bool ShouldUseThreading() const { return should_use_threading_; }
 
-    HTMLParserOptions m_options;
-    HTMLInputStream m_input;
+  bool IsParsingFragment() const;
+  bool IsScheduledForResume() const;
+  bool InPumpSession() const { return pump_session_nesting_level_ > 0; }
+  bool ShouldDelayEnd() const {
+    return InPumpSession() || IsPaused() || IsScheduledForResume() ||
+           IsExecutingScript();
+  }
 
-    std::unique_ptr<HTMLToken> m_token;
-    std::unique_ptr<HTMLTokenizer> m_tokenizer;
-    Member<HTMLScriptRunner> m_scriptRunner;
-    Member<HTMLTreeBuilder> m_treeBuilder;
-    std::unique_ptr<HTMLPreloadScanner> m_preloadScanner;
-    std::unique_ptr<HTMLPreloadScanner> m_insertionPreloadScanner;
-    std::unique_ptr<WebTaskRunner> m_loadingTaskRunner;
-    Member<HTMLParserScheduler> m_parserScheduler;
-    HTMLSourceTracker m_sourceTracker;
-    TextPosition m_textPosition;
-    XSSAuditor m_xssAuditor;
-    XSSAuditorDelegate m_xssAuditorDelegate;
+  std::unique_ptr<HTMLPreloadScanner> CreatePreloadScanner();
 
-    // FIXME: m_lastChunkBeforeScript, m_tokenizer, m_token, and m_input should be combined into a single state object
-    // so they can be set and cleared together and passed between threads together.
-    std::unique_ptr<TokenizedChunk> m_lastChunkBeforeScript;
-    Deque<std::unique_ptr<TokenizedChunk>> m_speculations;
-    WeakPtrFactory<HTMLDocumentParser> m_weakFactory;
-    WeakPtr<BackgroundHTMLParser> m_backgroundParser;
-    Member<HTMLResourcePreloader> m_preloader;
-    PreloadRequestStream m_queuedPreloads;
-    Vector<String> m_queuedDocumentWriteScripts;
-    RefPtr<TokenizedChunkQueue> m_tokenizedChunkQueue;
-    std::unique_ptr<DocumentWriteEvaluator> m_evaluator;
+  // Let the given HTMLPreloadScanner scan the input it has, and then preloads
+  // resources using the resulting PreloadRequests and |m_preloader|.
+  void ScanAndPreload(HTMLPreloadScanner*);
+  void FetchQueuedPreloads();
 
-    bool m_shouldUseThreading;
-    bool m_endWasDelayed;
-    bool m_haveBackgroundParser;
-    bool m_tasksWereSuspended;
-    unsigned m_pumpSessionNestingLevel;
-    unsigned m_pumpSpeculationsSessionNestingLevel;
-    bool m_isParsingAtLineNumber;
-    bool m_triedLoadingLinkHeaders;
+  void EvaluateAndPreloadScriptForDocumentWrite(const String& source);
+
+  HTMLToken& Token() { return *token_; }
+
+  HTMLParserOptions options_;
+  HTMLInputStream input_;
+  RefPtr<HTMLParserReentryPermit> reentry_permit_;
+
+  std::unique_ptr<HTMLToken> token_;
+  std::unique_ptr<HTMLTokenizer> tokenizer_;
+  Member<HTMLParserScriptRunner> script_runner_;
+  Member<HTMLTreeBuilder> tree_builder_;
+
+  std::unique_ptr<HTMLPreloadScanner> preload_scanner_;
+  // A scanner used only for input provided to the insert() method.
+  std::unique_ptr<HTMLPreloadScanner> insertion_preload_scanner_;
+
+  RefPtr<WebTaskRunner> loading_task_runner_;
+  Member<HTMLParserScheduler> parser_scheduler_;
+  HTMLSourceTracker source_tracker_;
+  TextPosition text_position_;
+  XSSAuditor xss_auditor_;
+  XSSAuditorDelegate xss_auditor_delegate_;
+
+  // FIXME: m_lastChunkBeforePause, m_tokenizer, m_token, and m_input should be
+  // combined into a single state object so they can be set and cleared together
+  // and passed between threads together.
+  std::unique_ptr<TokenizedChunk> last_chunk_before_pause_;
+  Deque<std::unique_ptr<TokenizedChunk>> speculations_;
+  WeakPtrFactory<HTMLDocumentParser> weak_factory_;
+  WeakPtr<BackgroundHTMLParser> background_parser_;
+  Member<HTMLResourcePreloader> preloader_;
+  PreloadRequestStream queued_preloads_;
+  Vector<String> queued_document_write_scripts_;
+  RefPtr<TokenizedChunkQueue> tokenized_chunk_queue_;
+  std::unique_ptr<DocumentWriteEvaluator> evaluator_;
+
+  // If this is non-null, then there is a meta CSP token somewhere in the
+  // speculation buffer. Preloads will be deferred until a token matching this
+  // pointer is parsed and the CSP policy is applied. Note that this pointer
+  // tracks the *last* meta token in the speculation buffer, so it overestimates
+  // how long to defer preloads. This is for simplicity, as the alternative
+  // would require keeping track of token positions of preload requests.
+  CompactHTMLToken* pending_csp_meta_token_;
+
+  TaskHandle resume_parsing_task_handle_;
+
+  bool should_use_threading_;
+  bool end_was_delayed_;
+  bool have_background_parser_;
+  bool tasks_were_suspended_;
+  unsigned pump_session_nesting_level_;
+  unsigned pump_speculations_session_nesting_level_;
+  bool is_parsing_at_line_number_;
+  bool tried_loading_link_headers_;
+  bool added_pending_stylesheet_in_body_;
+  bool is_waiting_for_stylesheets_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif
+#endif  // HTMLDocumentParser_h

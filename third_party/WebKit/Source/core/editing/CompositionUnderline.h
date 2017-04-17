@@ -26,34 +26,36 @@
 #ifndef CompositionUnderline_h
 #define CompositionUnderline_h
 
+#include "core/CoreExport.h"
 #include "platform/graphics/Color.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-struct CompositionUnderline {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    CompositionUnderline()
-        : startOffset(0)
-        , endOffset(0)
-        , color(Color::transparent)
-        , thick(false)
-        , backgroundColor(Color::transparent) { }
+class CORE_EXPORT CompositionUnderline {
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    CompositionUnderline(unsigned s, unsigned e, const Color& c, bool t, const Color& bc)
-        : startOffset(s)
-        , endOffset(e)
-        , color(c)
-        , thick(t)
-        , backgroundColor(bc) { }
+ public:
+  CompositionUnderline(unsigned start_offset,
+                       unsigned end_offset,
+                       const Color&,
+                       bool thick,
+                       const Color& background_color);
 
-    unsigned startOffset;
-    unsigned endOffset;
-    Color color;
-    bool thick;
-    Color backgroundColor;
+  unsigned StartOffset() const { return start_offset_; }
+  unsigned EndOffset() const { return end_offset_; }
+  const Color& GetColor() const { return color_; }
+  bool Thick() const { return thick_; }
+  const Color& BackgroundColor() const { return background_color_; }
+
+ private:
+  unsigned start_offset_;
+  unsigned end_offset_;
+  Color color_;
+  bool thick_;
+  Color background_color_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositionUnderline_h
+#endif  // CompositionUnderline_h

@@ -190,6 +190,11 @@ cvox.CommandStore.CMD_WHITELIST = {
                     msgId: 'toggle_earcons',
                     category: 'controlling_speech'},
 
+  'toggleSpeechOnOrOff': {
+    msgId: 'speech_on_off_description',
+    category: 'controlling_speech'
+  },
+
   'handleTab': {
     allowEvents: true,
     msgId: 'handle_tab_next',
@@ -339,6 +344,21 @@ cvox.CommandStore.CMD_WHITELIST = {
                          msgId: 'toggle_search_widget',
                          category: 'information'},
 
+  'undarkenScreen': {
+    msgId: 'undarken_screen',
+    category: 'help_commands'
+  },
+
+  'darkenScreen': {
+    msgId: 'darken_screen',
+    category: 'help_commands'
+  },
+
+  'toggleBrailleTable': {
+    msgId: 'toggle_braille_table',
+    category: 'help_commands'
+  },
+
   'toggleKeyboardHelp': {announce: false,
                          disallowContinuation: true,
                          msgId: 'show_power_key',
@@ -350,7 +370,8 @@ cvox.CommandStore.CMD_WHITELIST = {
            category: 'help_commands'},
   'contextMenu': {announce: false,
                   msgId: 'show_context_menu',
-                  disallowContinuation: true},
+                  disallowContinuation: true,
+                  category: 'information'},
 
   'showOptionsPage': {announce: false,
                       disallowContinuation: true,
@@ -362,6 +383,12 @@ cvox.CommandStore.CMD_WHITELIST = {
                          msgId: 'show_kb_explorer_page',
                          'disallowOOBE': true,
                          category: 'help_commands'},
+  'toggleBrailleCaptions': {announce: false,
+                            msgId: 'braille_captions',
+                            category: 'help_commands'},
+  'reportIssue': {announce: false,
+                  msgId: 'panel_menu_item_report_issue',
+                  category: 'help_commands'},
 
   'showFormsList': {announce: false,
                     disallowContinuation: true,
@@ -662,14 +689,14 @@ cvox.CommandStore.CMD_WHITELIST = {
                 announce: true,
                 msgId: 'braille_bottom',
                 category: 'braille'},
+  'viewGraphicAsBraille': {announce: true,
+                         msgId: 'view_graphic_as_braille',
+                         category: 'braille'},
 
   // Developer commands.
   'enableConsoleTts': {announce: false,
                       msgId: 'enable_tts_log',
                       category: 'developer'},
-  'toggleBrailleCaptions': {announce: false,
-                            msgId: 'braille_captions',
-                            category: 'developer'},
 
   'startHistoryRecording': {announce: false},
   'stopHistoryRecording': {announce: false},

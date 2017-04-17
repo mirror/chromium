@@ -12,7 +12,7 @@
 #import "chrome/browser/themes/theme_service.h"
 #import "chrome/browser/ui/cocoa/rect_path_utils.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
-#include "grit/theme_resources.h"
+#include "chrome/grit/theme_resources.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMNSColor+Luminance.h"
 #import "ui/base/cocoa/nsgraphics_context_additions.h"
 #import "ui/base/cocoa/nsview_additions.h"
@@ -50,8 +50,6 @@ static const NSTimeInterval kAnimationShowDuration = 0.2;
 // now so we don't suck.  -jrg
 static const NSTimeInterval kAnimationHideDuration = 0.4;
 
-static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
-
 @implementation GradientButtonCell
 
 @synthesize hoverAlpha = hoverAlpha_;
@@ -83,8 +81,7 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
 // Return YES if we are pulsing (towards another state or continuously).
 - (BOOL)pulsing {
   if ((pulseState_ == gradient_button_cell::kPulsingOn) ||
-      (pulseState_ == gradient_button_cell::kPulsingOff) ||
-      (pulseState_ == gradient_button_cell::kPulsingContinuous))
+      (pulseState_ == gradient_button_cell::kPulsingOff))
     return YES;
   return NO;
 }
@@ -112,16 +109,8 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
       return;
     }
     break;
-  case gradient_button_cell::kPulsingContinuous:
-    opacity += elapsed / kAnimationContinuousCycleDuration * pulseMultiplier_;
-    if (opacity > 1.0) {
-      opacity = 1.0;
-      pulseMultiplier_ *= -1.0;
-    } else if (opacity < 0.0) {
-      opacity = 0.0;
-      pulseMultiplier_ *= -1.0;
-    }
-    outerStrokeAlphaMult_ = opacity;
+  case gradient_button_cell::kPulsingStuckOn:
+    outerStrokeAlphaMult_ = 1.0;
     break;
   default:
     NOTREACHED() << "unknown pulse state";
@@ -147,7 +136,6 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
 // state change.
 - (void)setPulseState:(gradient_button_cell::PulseState)pstate {
   pulseState_ = pstate;
-  pulseMultiplier_ = 0.0;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   lastHoverUpdate_ = [NSDate timeIntervalSinceReferenceDate];
 
@@ -167,10 +155,9 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
                          0.0 : 1.0)];
     [self performOnePulseStep];
     break;
-  case gradient_button_cell::kPulsingContinuous:
+  case gradient_button_cell::kPulsingStuckOn:
     // Semantics of continuous pulsing are that we pulse independent
     // of mouse position.
-    pulseMultiplier_ = 1.0;
     [self performOnePulseStep];
     break;
   default:
@@ -183,19 +170,19 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (void)setIsContinuousPulsing:(BOOL)continuous {
-  if (!continuous && pulseState_ != gradient_button_cell::kPulsingContinuous)
+- (void)setPulseIsStuckOn:(BOOL)on {
+  if (!on && pulseState_ != gradient_button_cell::kPulsingStuckOn)
     return;
-  if (continuous) {
-    [self setPulseState:gradient_button_cell::kPulsingContinuous];
+  if (on) {
+    [self setPulseState:gradient_button_cell::kPulsingStuckOn];
   } else {
     [self setPulseState:(isMouseInside_ ? gradient_button_cell::kPulsedOn :
                          gradient_button_cell::kPulsedOff)];
   }
 }
 
-- (BOOL)isContinuousPulsing {
-  return (pulseState_ == gradient_button_cell::kPulsingContinuous) ?
+- (BOOL)isPulseStuckOn {
+  return (pulseState_ == gradient_button_cell::kPulsingStuckOn) ?
       YES : NO;
 }
 
@@ -204,11 +191,11 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
 // reflect our new state.
 - (void)setMouseInside:(BOOL)flag animate:(BOOL)animated {
   isMouseInside_ = flag;
-  if (pulseState_ != gradient_button_cell::kPulsingContinuous) {
+  if (pulseState_ != gradient_button_cell::kPulsingStuckOn) {
     if (animated) {
       // In Material Design, if the button is already fully on, don't pulse it
       // on again if the mouse is within its bounds.
-      if ([self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback &&
+      if ([self tag] == [self isMaterialDesignButtonType] &&
           isMouseInside_ && pulseState_ == gradient_button_cell::kPulsedOn) {
         return;
       }
@@ -290,7 +277,6 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
 - (void)sharedInit {
   shouldTheme_ = YES;
   pulseState_ = gradient_button_cell::kPulsedOff;
-  pulseMultiplier_ = 1.0;
   outerStrokeAlphaMult_ = 1.0;
   gradient_.reset([[self gradientForHoverAlpha:0.0 isThemed:NO] retain]);
 }
@@ -327,7 +313,7 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
 }
 
 - (BOOL)startTrackingAt:(NSPoint)startPoint inView:(NSView *)controlView {
-  if ([self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback) {
+  if ([self isMaterialDesignButtonType]) {
     // The user has just clicked down in the button. In Material Design, set the
     // pulsed (hover) state to off now so that if the user keeps the mouse held
     // down while dragging it out of the button's bounds, the button will draw
@@ -370,7 +356,7 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
                   defaultGradient:(NSGradient*)defaultGradient {
   // For Material Design, draw a solid rounded rect behind the button, based on
   // the hover and pressed states.
-  if ([self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback) {
+  if ([self isMaterialDesignButtonType]) {
     const CGFloat kEightPercentAlpha = 0.08;
     const CGFloat kFourPercentAlpha = 0.04;
 
@@ -517,7 +503,7 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
   NSRect drawFrame = NSZeroRect;
   NSRect innerFrame = NSZeroRect;
   CGFloat cornerRadius = 2;
-  if ([self tag] != kMaterialStandardButtonTypeWithLimitedClickFeedback) {
+  if (![self isMaterialDesignButtonType]) {
     drawFrame = NSInsetRect(cellFrame, 1.5 * kLineWidth, 1.5 * kLineWidth);
     innerFrame = NSInsetRect(cellFrame, kLineWidth, kLineWidth);
     cornerRadius = 3;
@@ -557,9 +543,13 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
     drawFrame.origin.y +=
         [self hoverBackgroundVerticalOffsetInControlView:controlView];
 
-    *returnInnerPath = [NSBezierPath bezierPathWithRoundedRect:drawFrame
-                                                       xRadius:cornerRadius
-                                                       yRadius:cornerRadius];
+    if ([self tag] == kMaterialMenuButtonTypeWithLimitedClickFeedback) {
+      *returnInnerPath = [NSBezierPath bezierPathWithRect:drawFrame];
+    } else {
+      *returnInnerPath = [NSBezierPath bezierPathWithRoundedRect:drawFrame
+                                                         xRadius:cornerRadius
+                                                         yRadius:cornerRadius];
+    }
     [*returnInnerPath setLineWidth:kLineWidth];
   }
   if (returnClipPath) {
@@ -595,15 +585,15 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
   // actually a highlight, which should be drawn if
   // |showsBorderOnlyWhileMouseInside| is true.
   BOOL hasMaterialHighlight =
-      [self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback &&
+      [self isMaterialDesignButtonType] &&
       ![self showsBorderOnlyWhileMouseInside] &&
       enabled;
   if (([self isBordered] && ![self showsBorderOnlyWhileMouseInside]) ||
-      pressed || [self isMouseInside] || [self isContinuousPulsing] ||
+      pressed || [self isMouseInside] || [self isPulseStuckOn] ||
       hasMaterialHighlight) {
     // When pulsing we want the bookmark to stand out a little more.
     BOOL showClickedGradient = pressed ||
-        (pulseState_ == gradient_button_cell::kPulsingContinuous);
+        (pulseState_ == gradient_button_cell::kPulsingStuckOn);
     BOOL showHighlightGradient = [self isHighlighted] || hasMaterialHighlight;
 
     [self drawBorderAndFillForTheme:themeProvider
@@ -709,6 +699,11 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
   return 0.0;
 }
 
+- (BOOL)isMaterialDesignButtonType {
+  return [self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback ||
+         [self tag] == kMaterialMenuButtonTypeWithLimitedClickFeedback;
+}
+
 // Overriden from NSButtonCell so we can display a nice fadeout effect for
 // button titles that overflow.
 // This method is copied in the most part from GTMFadeTruncatingTextFieldCell,
@@ -725,8 +720,7 @@ static const NSTimeInterval kAnimationContinuousCycleDuration = 0.4;
   // Empirically, Cocoa will draw an extra 2 pixels past NSWidth(cellFrame)
   // before it clips the text.
   const CGFloat kOverflowBeforeClip = 2;
-  BOOL isModeMaterial =
-      [self tag] == kMaterialStandardButtonTypeWithLimitedClickFeedback;
+  BOOL isModeMaterial = [self isMaterialDesignButtonType];
   // For Material Design we don't want to clip the text. For all other button
   // cell modes, we do.
   BOOL shouldClipTheTitle = !isModeMaterial;

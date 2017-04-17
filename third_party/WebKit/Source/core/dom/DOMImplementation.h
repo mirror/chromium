@@ -33,44 +33,52 @@ class Document;
 class DocumentInit;
 class DocumentType;
 class ExceptionState;
-class LocalFrame;
 class HTMLDocument;
-class KURL;
 class XMLDocument;
 
-class CORE_EXPORT DOMImplementation final : public GarbageCollected<DOMImplementation>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DOMImplementation* create(Document& document)
-    {
-        return new DOMImplementation(document);
-    }
+class CORE_EXPORT DOMImplementation final
+    : public GarbageCollected<DOMImplementation>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    Document& document() const { return *m_document; }
+ public:
+  static DOMImplementation* Create(Document& document) {
+    return new DOMImplementation(document);
+  }
 
-    // DOM methods & attributes for DOMImplementation
-    bool hasFeature() { return true; }
-    DocumentType* createDocumentType(const AtomicString& qualifiedName, const String& publicId, const String& systemId, ExceptionState&);
-    XMLDocument* createDocument(const AtomicString& namespaceURI, const AtomicString& qualifiedName, DocumentType*, ExceptionState&);
+  Document& GetDocument() const { return *document_; }
 
-    // From the HTMLDOMImplementation interface
-    HTMLDocument* createHTMLDocument(const String& title);
+  // DOM methods & attributes for DOMImplementation
+  bool hasFeature() { return true; }
+  DocumentType* createDocumentType(const AtomicString& qualified_name,
+                                   const String& public_id,
+                                   const String& system_id,
+                                   ExceptionState&);
+  XMLDocument* createDocument(const AtomicString& namespace_uri,
+                              const AtomicString& qualified_name,
+                              DocumentType*,
+                              ExceptionState&);
 
-    // Other methods (not part of DOM)
-    static Document* createDocument(const String& mimeType, const DocumentInit&, bool inViewSourceMode);
+  // From the HTMLDOMImplementation interface
+  HTMLDocument* createHTMLDocument(const String& title);
 
-    static bool isXMLMIMEType(const String&);
-    static bool isTextMIMEType(const String&);
-    static bool isJSONMIMEType(const String&);
+  // Other methods (not part of DOM)
+  static Document* createDocument(const String& mime_type,
+                                  const DocumentInit&,
+                                  bool in_view_source_mode);
 
-    DECLARE_TRACE();
+  static bool IsXMLMIMEType(const String&);
+  static bool IsTextMIMEType(const String&);
+  static bool IsJSONMIMEType(const String&);
 
-private:
-    explicit DOMImplementation(Document&);
+  DECLARE_TRACE();
 
-    Member<Document> m_document;
+ private:
+  explicit DOMImplementation(Document&);
+
+  Member<Document> document_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMImplementation_h
+#endif  // DOMImplementation_h

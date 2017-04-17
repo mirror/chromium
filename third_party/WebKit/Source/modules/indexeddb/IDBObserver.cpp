@@ -4,96 +4,102 @@
 
 #include "modules/indexeddb/IDBObserver.h"
 
+#include <bitset>
+
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/modules/v8/IDBObserverCallback.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/ExceptionCode.h"
 #include "modules/IndexedDBNames.h"
 #include "modules/indexeddb/IDBDatabase.h"
-#include "modules/indexeddb/IDBObserverCallback.h"
 #include "modules/indexeddb/IDBObserverChanges.h"
 #include "modules/indexeddb/IDBObserverInit.h"
 #include "modules/indexeddb/IDBTransaction.h"
-#include "modules/indexeddb/WebIDBObserverImpl.h"
 
 namespace blink {
 
-IDBObserver* IDBObserver::create(IDBObserverCallback& callback, const IDBObserverInit& options)
-{
-    return new IDBObserver(callback, options);
+IDBObserver* IDBObserver::Create(IDBObserverCallback* callback) {
+  return new IDBObserver(callback);
 }
 
-IDBObserver::IDBObserver(IDBObserverCallback& callback, const IDBObserverInit& options)
-    : m_callback(&callback)
-    , m_transaction(options.transaction())
-    , m_values(options.values())
-    , m_noRecords(options.noRecords())
-{
-    // TODO(palakj): Throw an exception if unknown operation type.
-    DCHECK_EQ(m_operationTypes.size(), static_cast<size_t>(WebIDBOperationTypeCount));
-    m_operationTypes.reset();
-    m_operationTypes[WebIDBAdd] = options.operationTypes().contains(IndexedDBNames::add);
-    m_operationTypes[WebIDBPut] = options.operationTypes().contains(IndexedDBNames::put);
-    m_operationTypes[WebIDBDelete] = options.operationTypes().contains(IndexedDBNames::kDelete);
-    m_operationTypes[WebIDBClear] = options.operationTypes().contains(IndexedDBNames::clear);
-}
+IDBObserver::IDBObserver(IDBObserverCallback* callback) : callback_(callback) {}
 
-void IDBObserver::observe(IDBDatabase* database, IDBTransaction* transaction, ExceptionState& exceptionState)
-{
-    if (transaction->isFinished() || transaction->isFinishing()) {
-        exceptionState.throwDOMException(TransactionInactiveError, IDBDatabase::transactionFinishedErrorMessage);
-        return;
+void IDBObserver::observe(IDBDatabase* database,
+                          IDBTransaction* transaction,
+                          const IDBObserverInit& options,
+                          ExceptionState& exception_state) {
+  if (!transaction->IsActive()) {
+    exception_state.ThrowDOMException(kTransactionInactiveError,
+                                      transaction->InactiveErrorMessage());
+    return;
+  }
+  if (transaction->IsVersionChange()) {
+    exception_state.ThrowDOMException(
+        kTransactionInactiveError,
+        IDBDatabase::kCannotObserveVersionChangeTransaction);
+    return;
+  }
+  if (!database->Backend()) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      IDBDatabase::kDatabaseClosedErrorMessage);
+    return;
+  }
+  if (!options.hasOperationTypes()) {
+    exception_state.ThrowTypeError(
+        "operationTypes not specified in observe options.");
+    return;
+  }
+  if (options.operationTypes().IsEmpty()) {
+    exception_state.ThrowTypeError("operationTypes must be populated.");
+    return;
+  }
+
+  std::bitset<kWebIDBOperationTypeCount> types;
+  for (const auto& operation_type : options.operationTypes()) {
+    if (operation_type == IndexedDBNames::add) {
+      types[kWebIDBAdd] = true;
+    } else if (operation_type == IndexedDBNames::put) {
+      types[kWebIDBPut] = true;
+    } else if (operation_type == IndexedDBNames::kDelete) {
+      types[kWebIDBDelete] = true;
+    } else if (operation_type == IndexedDBNames::clear) {
+      types[kWebIDBClear] = true;
+    } else {
+      exception_state.ThrowTypeError(
+          "Unknown operation type in observe options: " + operation_type);
+      return;
     }
-    if (!transaction->isActive()) {
-        exceptionState.throwDOMException(TransactionInactiveError, IDBDatabase::transactionInactiveErrorMessage);
-        return;
-    }
-    if (!database->backend()) {
-        exceptionState.throwDOMException(InvalidStateError, IDBDatabase::databaseClosedErrorMessage);
-        return;
-    }
+  }
 
-    std::unique_ptr<WebIDBObserverImpl> observer = WebIDBObserverImpl::create(this);
-    WebIDBObserverImpl* observerPtr = observer.get();
-    int32_t observerId = database->backend()->addObserver(std::move(observer), transaction->id());
-    m_observerIds.add(observerId, database);
-    observerPtr->setId(observerId);
+  int32_t observer_id =
+      database->AddObserver(this, transaction->Id(), options.transaction(),
+                            options.noRecords(), options.values(), types);
+  observer_ids_.insert(observer_id, database);
 }
 
-void IDBObserver::unobserve(IDBDatabase* database, ExceptionState& exceptionState)
-{
-    if (!database->backend()) {
-        exceptionState.throwDOMException(InvalidStateError, IDBDatabase::databaseClosedErrorMessage);
-        return;
-    }
+void IDBObserver::unobserve(IDBDatabase* database,
+                            ExceptionState& exception_state) {
+  if (!database->Backend()) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      IDBDatabase::kDatabaseClosedErrorMessage);
+    return;
+  }
 
-    Vector<int32_t> observerIdsToRemove;
-    for (const auto& it : m_observerIds) {
-        if (it.value == database)
-            observerIdsToRemove.append(it.key);
-    }
-    m_observerIds.removeAll(observerIdsToRemove);
+  Vector<int32_t> observer_ids_to_remove;
+  for (const auto& it : observer_ids_) {
+    if (it.value == database)
+      observer_ids_to_remove.push_back(it.key);
+  }
+  observer_ids_.RemoveAll(observer_ids_to_remove);
 
-    if (!observerIdsToRemove.isEmpty())
-        database->backend()->removeObservers(observerIdsToRemove);
+  if (!observer_ids_to_remove.IsEmpty())
+    database->RemoveObservers(observer_ids_to_remove);
 }
 
-void IDBObserver::removeObserver(int32_t id)
-{
-    m_observerIds.remove(id);
+DEFINE_TRACE(IDBObserver) {
+  visitor->Trace(callback_);
+  visitor->Trace(observer_ids_);
 }
 
-void IDBObserver::onChange(int32_t id, const WebVector<WebIDBObservation>& observations, const WebVector<int32_t>& observationIndex)
-{
-    auto it = m_observerIds.find(id);
-    DCHECK(it != m_observerIds.end());
-    m_callback->handleChanges(*IDBObserverChanges::create(it->value, observations, observationIndex), *this);
-}
-
-DEFINE_TRACE(IDBObserver)
-{
-    visitor->trace(m_callback);
-    visitor->trace(m_observerIds);
-}
-
-} // namespace blink
+}  // namespace blink

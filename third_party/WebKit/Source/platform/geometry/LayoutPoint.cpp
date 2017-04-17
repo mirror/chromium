@@ -4,15 +4,13 @@
 
 #include "platform/geometry/LayoutPoint.h"
 
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-#ifndef NDEBUG
-String LayoutPoint::toString() const
-{
-    return String::format("%f,%f", x().toDouble(), y().toDouble());
+String LayoutPoint::ToString() const {
+  return String::Format("%s,%s", X().ToString().Ascii().Data(),
+                        Y().ToString().Ascii().Data());
 }
-#endif
 
-} // namespace blink
+}  // namespace blink

@@ -5,41 +5,49 @@
 #ifndef NavigatorBeacon_h
 #define NavigatorBeacon_h
 
-#include "core/frame/LocalFrameLifecycleObserver.h"
 #include "core/frame/Navigator.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class Blob;
+class ScriptState;
 class ExceptionState;
-class ExecutionContext;
 class KURL;
 class ArrayBufferViewOrBlobOrStringOrFormData;
 
-class NavigatorBeacon final : public GarbageCollectedFinalized<NavigatorBeacon>, public LocalFrameLifecycleObserver, public Supplement<Navigator> {
-    USING_GARBAGE_COLLECTED_MIXIN(NavigatorBeacon);
-public:
-    static NavigatorBeacon& from(Navigator&);
-    virtual ~NavigatorBeacon();
+class NavigatorBeacon final : public GarbageCollectedFinalized<NavigatorBeacon>,
+                              public Supplement<Navigator> {
+  USING_GARBAGE_COLLECTED_MIXIN(NavigatorBeacon);
 
-    static bool sendBeacon(ExecutionContext*, Navigator&, const String&, const ArrayBufferViewOrBlobOrStringOrFormData&, ExceptionState&);
+ public:
+  static NavigatorBeacon& From(Navigator&);
+  virtual ~NavigatorBeacon();
 
-    DECLARE_VIRTUAL_TRACE();
+  static bool sendBeacon(ScriptState*,
+                         Navigator&,
+                         const String&,
+                         const ArrayBufferViewOrBlobOrStringOrFormData&,
+                         ExceptionState&);
 
-private:
-    explicit NavigatorBeacon(Navigator&);
+  DECLARE_VIRTUAL_TRACE();
 
-    static const char* supplementName();
+ private:
+  explicit NavigatorBeacon(Navigator&);
 
-    bool canSendBeacon(ExecutionContext*, const KURL&, ExceptionState&);
-    int maxAllowance() const;
-    bool beaconResult(ExecutionContext*, bool allowed, int sentBytes);
+  static const char* SupplementName();
 
-    int m_transmittedBytes;
+  bool SendBeaconImpl(ScriptState*,
+                      const String&,
+                      const ArrayBufferViewOrBlobOrStringOrFormData&,
+                      ExceptionState&);
+  bool CanSendBeacon(ExecutionContext*, const KURL&, ExceptionState&);
+  int MaxAllowance() const;
+  void AddTransmittedBytes(size_t sent_bytes);
+
+  size_t transmitted_bytes_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorBeacon_h
+#endif  // NavigatorBeacon_h

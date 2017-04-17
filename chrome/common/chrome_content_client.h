@@ -6,6 +6,7 @@
 #define CHROME_COMMON_CHROME_CONTENT_CLIENT_H_
 
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -14,8 +15,9 @@
 #include "build/build_config.h"
 #include "chrome/common/origin_trials/chrome_origin_trial_policy.h"
 #include "content/public/common/content_client.h"
+#include "ppapi/features/features.h"
 
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/public/common/pepper_plugin_info.h"
 #endif
 
@@ -26,6 +28,12 @@ std::string GetUserAgent();
 
 class ChromeContentClient : public content::ContentClient {
  public:
+#if defined(GOOGLE_CHROME_BUILD)
+  // kNotPresent is a placeholder plugin location for plugins that are not
+  // currently present in this installation of Chrome, but which can be fetched
+  // on-demand and therefore should still appear in navigator.plugins.
+  static const char kNotPresent[];
+#endif
   static const char kPDFPluginName[];
   static const char kPDFPluginPath[];
   static const char kRemotingViewerPluginPath[];
@@ -44,7 +52,7 @@ class ChromeContentClient : public content::ContentClient {
       content::PepperPluginInfo::PPP_ShutdownModuleFunc shutdown_module);
 #endif
 
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
   static void SetPDFEntryFunctions(
       content::PepperPluginInfo::GetInterfaceFunc get_interface,
       content::PepperPluginInfo::PPP_InitializeModuleFunc initialize_module,
@@ -57,7 +65,7 @@ class ChromeContentClient : public content::ContentClient {
   // plugin type. This function may return a nullptr if given an empty vector.
   // The method is only visible for testing purposes.
   static content::PepperPluginInfo* FindMostRecentPlugin(
-      const std::vector<content::PepperPluginInfo*>& plugins);
+      const std::vector<std::unique_ptr<content::PepperPluginInfo>>& plugins);
 #endif
 
   void SetActiveURL(const GURL& url) override;
@@ -65,11 +73,10 @@ class ChromeContentClient : public content::ContentClient {
   void AddPepperPlugins(
       std::vector<content::PepperPluginInfo>* plugins) override;
   void AddContentDecryptionModules(
-      std::vector<content::CdmInfo>* cdms) override;
-  void AddAdditionalSchemes(std::vector<url::SchemeWithType>* standard_schemes,
-                            std::vector<url::SchemeWithType>* referrer_schemes,
-                            std::vector<std::string>* saveable_shemes) override;
-  bool CanSendWhileSwappedOut(const IPC::Message* message) override;
+      std::vector<content::CdmInfo>* cdms,
+      std::vector<content::CdmHostFilePath>* cdm_host_file_paths) override;
+
+  void AddAdditionalSchemes(Schemes* schemes) override;
   std::string GetProduct() const override;
   std::string GetUserAgent() const override;
   base::string16 GetLocalizedString(int message_id) const override;
@@ -87,10 +94,6 @@ class ChromeContentClient : public content::ContentClient {
       int* sandbox_profile_resource_id) const override;
 #endif
 
-  void AddSecureSchemesAndOrigins(std::set<std::string>* schemes,
-                                  std::set<GURL>* origins) override;
-
-  void AddServiceWorkerSchemes(std::set<std::string>* schemes) override;
   bool AllowScriptExtensionForServiceWorker(const GURL& script_url) override;
 
   bool IsSupplementarySiteIsolationModeEnabled() override;
@@ -98,7 +101,7 @@ class ChromeContentClient : public content::ContentClient {
   content::OriginTrialPolicy* GetOriginTrialPolicy() override;
 
 #if defined(OS_ANDROID)
-  media::MediaClientAndroid* GetMediaClientAndroid() override;
+  media::MediaDrmBridgeClient* GetMediaDrmBridgeClient() override;
 #endif  // OS_ANDROID
 
  private:

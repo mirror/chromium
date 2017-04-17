@@ -16,46 +16,12 @@
 
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
+#include "components/safe_browsing_db/safe_browsing_prefs.h"
+#include "components/safe_browsing_db/v4_protocol_manager_util.h"
 
 class GURL;
 
 namespace safe_browsing {
-
-// Different types of threats that SafeBrowsing protects against.
-enum SBThreatType {
-  // No threat at all.
-  SB_THREAT_TYPE_SAFE,
-
-  // The URL is being used for phishing.
-  SB_THREAT_TYPE_URL_PHISHING,
-
-  // The URL hosts malware.
-  SB_THREAT_TYPE_URL_MALWARE,
-
-  // The URL hosts unwanted programs.
-  SB_THREAT_TYPE_URL_UNWANTED,
-
-  // The download URL is malware.
-  SB_THREAT_TYPE_BINARY_MALWARE_URL,
-
-  // Url detected by the client-side phishing model.  Note that unlike the
-  // above values, this does not correspond to a downloaded list.
-  SB_THREAT_TYPE_CLIENT_SIDE_PHISHING_URL,
-
-  // The Chrome extension or app (given by its ID) is malware.
-  SB_THREAT_TYPE_EXTENSION,
-
-  // Url detected by the client-side malware IP list. This IP list is part
-  // of the client side detection model.
-  SB_THREAT_TYPE_CLIENT_SIDE_MALWARE_URL,
-
-  // Url leads to a blacklisted resource script. Note that no warnings should be
-  // shown on this threat type, but an incident report might be sent.
-  SB_THREAT_TYPE_BLACKLISTED_RESOURCE,
-
-  // Url abuses a permission API.
-  SB_THREAT_TYPE_API_ABUSE,
-};
 
 // Metadata that indicates what kind of URL match this is.
 enum class ThreatPatternType {
@@ -76,6 +42,9 @@ struct ThreatMetadata {
   ThreatMetadata();
   ThreatMetadata(const ThreatMetadata& other);
   ~ThreatMetadata();
+
+  bool operator==(const ThreatMetadata& other) const;
+  bool operator!=(const ThreatMetadata& other) const;
 
   // Type of blacklisted page. Used on malware and UwS lists.
   // This will be NONE if it wasn't present in the reponse.
@@ -191,14 +160,6 @@ ListType GetListId(const base::StringPiece& name);
 // Maps a ListId to list name. Return false if fails.
 bool GetListName(ListType list_id, std::string* list);
 
-// Canonicalizes url as per Google Safe Browsing Specification.
-// See section 6.1 in
-// http://code.google.com/p/google-safe-browsing/wiki/Protocolv2Spec.
-void CanonicalizeUrl(const GURL& url, std::string* canonicalized_hostname,
-                     std::string* canonicalized_path,
-                     std::string* canonicalized_query);
-
-
 // Generate the set of full hashes to check for |url|.  If
 // |include_whitelist_hashes| is true we will generate additional path-prefixes
 // to match against the csd whitelist.  E.g., if the path-prefix /foo is on the
@@ -207,15 +168,43 @@ void CanonicalizeUrl(const GURL& url, std::string* canonicalized_hostname,
 void UrlToFullHashes(const GURL& url, bool include_whitelist_hashes,
                      std::vector<SBFullHash>* full_hashes);
 
-// Given a URL, returns all the hosts we need to check.  They are returned
-// in order of size (i.e. b.c is first, then a.b.c).
-void GenerateHostsToCheck(const GURL& url, std::vector<std::string>* hosts);
+struct SafeBrowsingProtocolConfig {
+  SafeBrowsingProtocolConfig();
+  SafeBrowsingProtocolConfig(const SafeBrowsingProtocolConfig& other);
+  ~SafeBrowsingProtocolConfig();
+  std::string client_name;
+  std::string url_prefix;
+  std::string backup_connect_error_url_prefix;
+  std::string backup_http_error_url_prefix;
+  std::string backup_network_error_url_prefix;
+  std::string version;
+  bool disable_auto_update;
+};
 
-// Given a URL, returns all the paths we need to check.
-void GeneratePathsToCheck(const GURL& url, std::vector<std::string>* paths);
+namespace ProtocolManagerHelper {
 
-// Given a URL, returns all the patterns we need to check.
-void GeneratePatternsToCheck(const GURL& url, std::vector<std::string>* urls);
+// returns chrome version.
+std::string Version();
+
+// Composes a URL using |prefix|, |method| (e.g.: gethash, download, report).
+// |client_name| and |version|. When not empty, |additional_query| is
+// appended to the URL with an additional "&" in the front.
+std::string ComposeUrl(const std::string& prefix,
+                       const std::string& method,
+                       const std::string& client_name,
+                       const std::string& version,
+                       const std::string& additional_query);
+
+// Similar to above function, and appends "&ext=1" at the end of URL if
+// |is_extended_reporting| is true, otherwise, appends "&ext=0".
+std::string ComposeUrl(const std::string& prefix,
+                       const std::string& method,
+                       const std::string& client_name,
+                       const std::string& version,
+                       const std::string& additional_query,
+                       ExtendedReportingLevel reporting_level);
+
+}  // namespace ProtocolManagerHelper
 
 }  // namespace safe_browsing
 

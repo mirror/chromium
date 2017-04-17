@@ -6,27 +6,29 @@
 
 #include <utility>
 
-#include "base/win/windows_version.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
-#include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/views/profiles/avatar_button_delegate.h"
 #include "chrome/browser/ui/views/profiles/profile_chooser_view.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/signin/core/common/profile_management_switches.h"
-#include "grit/theme_resources.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/label_button_border.h"
 #include "ui/views/painter.h"
+
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#endif
 
 namespace {
 
@@ -53,67 +55,13 @@ std::unique_ptr<views::Border> CreateBorder(const int normal_image_set[],
 
 }  // namespace
 
-SyncErrorController* GetSyncErrorControllerIfNeeded(Profile* profile) {
-  if (!switches::IsMaterialDesignUserMenu())
-    return nullptr;
-  ProfileSyncService* sync_service =
-      ProfileSyncServiceFactory::GetForProfile(profile);
-  return sync_service ? sync_service->sync_error_controller() : nullptr;
-}
-
-NewAvatarButton::SigninErrorObserver::SigninErrorObserver(
-    NewAvatarButton* parent_button,
-    Profile* profile)
-    : parent_button_(parent_button), profile_(profile) {
-  // Subscribe to authentication error changes so that the avatar button can
-  // update itself.  Note that guest mode profiles won't have a token service.
-  SigninErrorController* signin_error_controller =
-      profiles::GetSigninErrorController(profile_);
-  if (signin_error_controller)
-    signin_error_controller->AddObserver(this);
-}
-
-NewAvatarButton::SigninErrorObserver::~SigninErrorObserver() {
-  SigninErrorController* signin_error_controller =
-      profiles::GetSigninErrorController(profile_);
-  if (signin_error_controller)
-    signin_error_controller->RemoveObserver(this);
-}
-
-void NewAvatarButton::SigninErrorObserver::OnErrorChanged() {
-  parent_button_->OnErrorChanged();
-}
-
-NewAvatarButton::SyncErrorObserver::SyncErrorObserver(
-    NewAvatarButton* parent_button,
-    Profile* profile)
-    : parent_button_(parent_button), profile_(profile) {
-  SyncErrorController* sync_error_controller =
-      GetSyncErrorControllerIfNeeded(profile_);
-  if (sync_error_controller)
-    sync_error_controller->AddObserver(this);
-}
-
-NewAvatarButton::SyncErrorObserver::~SyncErrorObserver() {
-  SyncErrorController* sync_error_controller =
-      GetSyncErrorControllerIfNeeded(profile_);
-  if (sync_error_controller)
-    sync_error_controller->RemoveObserver(this);
-}
-
-void NewAvatarButton::SyncErrorObserver::OnErrorChanged() {
-  parent_button_->OnErrorChanged();
-}
-
 NewAvatarButton::NewAvatarButton(AvatarButtonDelegate* delegate,
                                  AvatarButtonStyle button_style,
                                  Profile* profile)
     : LabelButton(delegate, base::string16()),
-      signin_error_observer_(this, profile),
-      sync_error_observer_(this, profile),
       delegate_(delegate),
+      error_controller_(this, profile),
       profile_(profile),
-      has_error_(false),
       suppress_mouse_released_action_(false) {
   set_triggerable_event_flags(
       ui::EF_LEFT_MOUSE_BUTTON | ui::EF_RIGHT_MOUSE_BUTTON);
@@ -126,7 +74,8 @@ NewAvatarButton::NewAvatarButton(AvatarButtonDelegate* delegate,
   // is larger than this, it will be shrunk to match it.
   // TODO(noms): Calculate this constant algorithmically from the button's size.
   const int kDisplayFontHeight = 16;
-  SetFontList(GetFontList().DeriveWithHeightUpperBound(kDisplayFontHeight));
+  SetFontList(
+      label()->font_list().DeriveWithHeightUpperBound(kDisplayFontHeight));
 
   ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
   if (button_style == AvatarButtonStyle::THEMED) {
@@ -159,8 +108,7 @@ NewAvatarButton::NewAvatarButton(AvatarButtonDelegate* delegate,
 
   g_browser_process->profile_manager()->
       GetProfileAttributesStorage().AddObserver(this);
-
-  OnErrorChanged();
+  Update();
   SchedulePaint();
 }
 
@@ -193,26 +141,7 @@ void NewAvatarButton::OnGestureEvent(ui::GestureEvent* event) {
     LabelButton::OnGestureEvent(event);
 }
 
-void NewAvatarButton::OnErrorChanged() {
-  // If there is a signin error, show a warning icon.
-  const SigninErrorController* signin_error_controller =
-      profiles::GetSigninErrorController(profile_);
-  has_error_ = signin_error_controller && signin_error_controller->HasError();
-
-  // Also show a warning icon for sync errors for the material design user menu.
-  ProfileSyncService* sync_service =
-      ProfileSyncServiceFactory::GetForProfile(profile_);
-  if (switches::IsMaterialDesignUserMenu() && sync_service) {
-    SyncErrorController* sync_error_controller =
-        sync_service->sync_error_controller();
-    ProfileSyncService::Status status;
-    sync_service->QueryDetailedSyncStatus(&status);
-    has_error_ |=
-        (sync_service->HasUnrecoverableError() ||
-         status.sync_protocol_error.action == syncer::UPGRADE_CLIENT ||
-         (sync_error_controller && sync_error_controller->HasError()));
-  }
-
+void NewAvatarButton::OnAvatarErrorChanged() {
   Update();
 }
 
@@ -264,23 +193,16 @@ void NewAvatarButton::Update() {
       use_generic_button
           ? gfx::ShadowValues()
           : gfx::ShadowValues(
-                10, gfx::ShadowValue(gfx::Vector2d(), 1.0f, SK_ColorDKGRAY)));
+                10, gfx::ShadowValue(gfx::Vector2d(), 2.0f, SK_ColorDKGRAY)));
 
   // We want the button to resize if the new text is shorter.
   SetMinSize(gfx::Size());
 
   if (use_generic_button) {
     SetImage(views::Button::STATE_NORMAL, generic_avatar_);
-  } else if (has_error_) {
-    if (switches::IsMaterialDesignUserMenu()) {
-      SetImage(views::Button::STATE_NORMAL,
-               gfx::CreateVectorIcon(gfx::VectorIconId::SYNC_PROBLEM, 13,
-                                     gfx::kGoogleRed700));
-    } else {
-      SetImage(views::Button::STATE_NORMAL,
-               gfx::CreateVectorIcon(gfx::VectorIconId::WARNING, 13,
-                                     gfx::kGoogleYellow700));
-    }
+  } else if (error_controller_.HasAvatarError()) {
+    SetImage(views::Button::STATE_NORMAL,
+             gfx::CreateVectorIcon(kSyncProblemIcon, 16, gfx::kGoogleRed700));
   } else {
     SetImage(views::Button::STATE_NORMAL, gfx::ImageSkia());
   }

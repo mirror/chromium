@@ -39,69 +39,83 @@ namespace blink {
 class AssignedNodesOptions;
 
 class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLSlotElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    const HeapVector<Member<Node>>& assignedNodes();
-    const HeapVector<Member<Node>>& getDistributedNodes();
-    const HeapVector<Member<Node>> assignedNodesForBinding(const AssignedNodesOptions&);
+ public:
+  DECLARE_NODE_FACTORY(HTMLSlotElement);
 
-    Node* firstDistributedNode() const { return m_distributedNodes.isEmpty() ? nullptr : m_distributedNodes.first().get(); }
-    Node* lastDistributedNode() const { return m_distributedNodes.isEmpty() ? nullptr : m_distributedNodes.last().get(); }
+  const HeapVector<Member<Node>>& AssignedNodes();
+  const HeapVector<Member<Node>>& GetDistributedNodes();
+  const HeapVector<Member<Node>> GetDistributedNodesForBinding();
+  const HeapVector<Member<Node>> assignedNodesForBinding(
+      const AssignedNodesOptions&);
 
-    Node* distributedNodeNextTo(const Node&) const;
-    Node* distributedNodePreviousTo(const Node&) const;
+  Node* FirstDistributedNode() const {
+    DCHECK(SupportsDistribution());
+    return distributed_nodes_.IsEmpty() ? nullptr
+                                        : distributed_nodes_.front().Get();
+  }
+  Node* LastDistributedNode() const {
+    DCHECK(SupportsDistribution());
+    return distributed_nodes_.IsEmpty() ? nullptr
+                                        : distributed_nodes_.back().Get();
+  }
 
-    void appendAssignedNode(Node&);
+  Node* DistributedNodeNextTo(const Node&) const;
+  Node* DistributedNodePreviousTo(const Node&) const;
 
-    void resolveDistributedNodes();
-    void appendDistributedNode(Node&);
-    void appendDistributedNodesFrom(const HTMLSlotElement& other);
+  void AppendAssignedNode(Node&);
 
-    void updateDistributedNodesWithFallback();
+  void ResolveDistributedNodes();
+  void AppendDistributedNode(Node&);
+  void AppendDistributedNodesFrom(const HTMLSlotElement& other);
 
-    void lazyReattachDistributedNodesIfNeeded();
+  void UpdateDistributedNodesWithFallback();
 
-    void attachLayoutTree(const AttachContext& = AttachContext()) final;
-    void detachLayoutTree(const AttachContext& = AttachContext()) final;
+  void LazyReattachDistributedNodesIfNeeded();
 
-    void attributeChanged(const QualifiedName&, const AtomicString& oldValue, const AtomicString& newValue, AttributeModificationReason = ModifiedDirectly) final;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) final;
+  void DetachLayoutTree(const AttachContext& = AttachContext()) final;
 
-    short tabIndex() const override;
-    AtomicString name() const;
+  void AttributeChanged(const AttributeModificationParams&) final;
 
-    // This method can be slow because this has to traverse the children of a shadow host.
-    // This method should be used only when m_assignedNodes is dirty.
-    // e.g. To detect a slotchange event in DOM mutations.
-    bool hasAssignedNodesSlow() const;
-    bool findHostChildWithSameSlotName() const;
+  int tabIndex() const override;
+  AtomicString GetName() const;
 
-    void enqueueSlotChangeEvent();
+  // This method can be slow because this has to traverse the children of a
+  // shadow host.  This method should be used only when m_assignedNodes is
+  // dirty.  e.g. To detect a slotchange event in DOM mutations.
+  bool HasAssignedNodesSlow() const;
+  bool FindHostChildWithSameSlotName() const;
 
-    void clearDistribution();
-    void saveAndClearDistribution();
+  void ClearDistribution();
+  void SaveAndClearDistribution();
 
-    static AtomicString normalizeSlotName(const AtomicString&);
+  bool SupportsDistribution() const { return IsInV1ShadowTree(); }
+  void DidSlotChange(SlotChangeType);
+  void DispatchSlotChangeEvent();
+  void ClearSlotChangeEventEnqueued() { slotchange_event_enqueued_ = false; }
 
-    DECLARE_VIRTUAL_TRACE();
+  static AtomicString NormalizeSlotName(const AtomicString&);
 
-private:
-    HTMLSlotElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) final;
-    void removedFrom(ContainerNode*) final;
-    void willRecalcStyle(StyleRecalcChange) final;
+ private:
+  HTMLSlotElement(Document&);
 
-    void dispatchSlotChangeEvent();
+  InsertionNotificationRequest InsertedInto(ContainerNode*) final;
+  void RemovedFrom(ContainerNode*) final;
+  void WillRecalcStyle(StyleRecalcChange) final;
 
-    HeapVector<Member<Node>> m_assignedNodes;
-    HeapVector<Member<Node>> m_distributedNodes;
-    HeapVector<Member<Node>> m_oldDistributedNodes;
-    HeapHashMap<Member<const Node>, size_t> m_distributedIndices;
-    bool m_slotchangeEventEnqueued = false;
+  void EnqueueSlotChangeEvent();
+
+  HeapVector<Member<Node>> assigned_nodes_;
+  HeapVector<Member<Node>> distributed_nodes_;
+  HeapVector<Member<Node>> old_distributed_nodes_;
+  HeapHashMap<Member<const Node>, size_t> distributed_indices_;
+  bool slotchange_event_enqueued_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLSlotElement_h
+#endif  // HTMLSlotElement_h

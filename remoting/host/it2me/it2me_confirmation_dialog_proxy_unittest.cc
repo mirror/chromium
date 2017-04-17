@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -19,6 +20,10 @@ using ::testing::InvokeWithoutArgs;
 using ::testing::CreateFunctor;
 
 namespace remoting {
+
+namespace {
+const char kTestEmailAddress[] = "faux_remote_user@chromium_test.com";
+}  // namespace
 
 class StubIt2MeConfirmationDialog : public It2MeConfirmationDialog {
  public:
@@ -38,9 +43,11 @@ class StubIt2MeConfirmationDialog : public It2MeConfirmationDialog {
   MOCK_METHOD0(OnShow, void());
 
   // It2MeConfirmationDialog implementation.
-  void Show(const ResultCallback& callback) override {
+  void Show(const std::string& remote_user_email,
+            const ResultCallback& callback) override {
     EXPECT_TRUE(callback_.is_null());
     EXPECT_TRUE(task_runner_->BelongsToCurrentThread());
+    EXPECT_EQ(remote_user_email.compare(kTestEmailAddress), 0);
     callback_ = callback;
     OnShow();
   }
@@ -108,9 +115,8 @@ class It2MeConfirmationDialogProxyTest : public testing::Test {
   base::RunLoop run_loop_;
   base::Thread dialog_thread_;
 
-  // |dialog_| is owned by |dialog_proxy_| but we keep an alias for test
-  // purposes.
-  StubIt2MeConfirmationDialog* dialog_;
+  // |dialog_| is owned by |dialog_proxy_| but we keep an alias for testing.
+  StubIt2MeConfirmationDialog* dialog_ = nullptr;
   std::unique_ptr<It2MeConfirmationDialogProxy> dialog_proxy_;
 };
 
@@ -118,9 +124,11 @@ It2MeConfirmationDialogProxyTest::It2MeConfirmationDialogProxyTest()
     : dialog_thread_("test dialog thread") {
   dialog_thread_.Start();
 
-  dialog_ = new StubIt2MeConfirmationDialog(dialog_task_runner());
-  dialog_proxy_.reset(new It2MeConfirmationDialogProxy(
-      dialog_task_runner(), std::unique_ptr<It2MeConfirmationDialog>(dialog_)));
+  auto dialog =
+      base::MakeUnique<StubIt2MeConfirmationDialog>(dialog_task_runner());
+  dialog_ = dialog.get();
+  dialog_proxy_.reset(new It2MeConfirmationDialogProxy(dialog_task_runner(),
+                                                       std::move(dialog)));
 }
 
 It2MeConfirmationDialogProxyTest::~It2MeConfirmationDialogProxyTest() {}
@@ -141,7 +149,7 @@ TEST_F(It2MeConfirmationDialogProxyTest, Show) {
       .WillOnce(
           InvokeWithoutArgs(this, &It2MeConfirmationDialogProxyTest::Quit));
 
-  dialog_proxy()->Show(callback_target.MakeCallback());
+  dialog_proxy()->Show(kTestEmailAddress, callback_target.MakeCallback());
 
   Run();
 }

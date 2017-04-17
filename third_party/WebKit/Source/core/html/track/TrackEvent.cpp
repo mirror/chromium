@@ -33,61 +33,53 @@
 
 namespace blink {
 
-TrackEvent::TrackEvent()
-{
+TrackEvent::TrackEvent() {}
+
+TrackEvent::TrackEvent(const AtomicString& type,
+                       const TrackEventInit& initializer)
+    : Event(type, initializer) {
+  if (!initializer.hasTrack())
+    return;
+
+  const VideoTrackOrAudioTrackOrTextTrack& track = initializer.track();
+  if (track.isVideoTrack())
+    track_ = track.getAsVideoTrack();
+  else if (track.isAudioTrack())
+    track_ = track.getAsAudioTrack();
+  else if (track.isTextTrack())
+    track_ = track.getAsTextTrack();
+  else
+    NOTREACHED();
 }
 
-TrackEvent::TrackEvent(const AtomicString& type, const TrackEventInit& initializer)
-    : Event(type, initializer)
-{
-    if (!initializer.hasTrack())
-        return;
+TrackEvent::~TrackEvent() {}
 
-    const VideoTrackOrAudioTrackOrTextTrack& track = initializer.track();
-    if (track.isVideoTrack())
-        m_track = track.getAsVideoTrack();
-    else if (track.isAudioTrack())
-        m_track = track.getAsAudioTrack();
-    else if (track.isTextTrack())
-        m_track = track.getAsTextTrack();
-    else
-        NOTREACHED();
+const AtomicString& TrackEvent::InterfaceName() const {
+  return EventNames::TrackEvent;
 }
 
-TrackEvent::~TrackEvent()
-{
-}
+void TrackEvent::track(VideoTrackOrAudioTrackOrTextTrack& return_value) {
+  if (!track_)
+    return;
 
-const AtomicString& TrackEvent::interfaceName() const
-{
-    return EventNames::TrackEvent;
-}
-
-void TrackEvent::track(VideoTrackOrAudioTrackOrTextTrack& returnValue)
-{
-    if (!m_track)
-        return;
-
-    switch (m_track->type()) {
-    case WebMediaPlayer::TextTrack:
-        returnValue.setTextTrack(toTextTrack(m_track.get()));
-        break;
-    case WebMediaPlayer::AudioTrack:
-        returnValue.setAudioTrack(toAudioTrack(m_track.get()));
-        break;
-    case WebMediaPlayer::VideoTrack:
-        returnValue.setVideoTrack(toVideoTrack(m_track.get()));
-        break;
+  switch (track_->GetType()) {
+    case WebMediaPlayer::kTextTrack:
+      return_value.setTextTrack(ToTextTrack(track_.Get()));
+      break;
+    case WebMediaPlayer::kAudioTrack:
+      return_value.setAudioTrack(ToAudioTrack(track_.Get()));
+      break;
+    case WebMediaPlayer::kVideoTrack:
+      return_value.setVideoTrack(ToVideoTrack(track_.Get()));
+      break;
     default:
-        NOTREACHED();
-    }
+      NOTREACHED();
+  }
 }
 
-DEFINE_TRACE(TrackEvent)
-{
-    visitor->trace(m_track);
-    Event::trace(visitor);
+DEFINE_TRACE(TrackEvent) {
+  visitor->Trace(track_);
+  Event::Trace(visitor);
 }
 
-} // namespace blink
-
+}  // namespace blink

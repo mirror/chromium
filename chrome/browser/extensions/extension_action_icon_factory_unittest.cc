@@ -19,10 +19,10 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/test_extension_system.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/grit/theme_resources.h"
 #include "chrome/test/base/testing_profile.h"
-#include "content/public/test/test_browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/common/extension.h"
-#include "grit/theme_resources.h"
 #include "skia/ext/image_operations.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -37,8 +37,6 @@
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #endif
-
-using content::BrowserThread;
 
 namespace extensions {
 namespace {
@@ -88,12 +86,7 @@ class ExtensionActionIconFactoryTest
     : public testing::TestWithParam<ui::MaterialDesignController::Mode>,
       public ExtensionActionIconFactory::Observer {
  public:
-  ExtensionActionIconFactoryTest()
-      : quit_in_icon_updated_(false),
-        ui_thread_(BrowserThread::UI, &ui_loop_),
-        file_thread_(BrowserThread::FILE),
-        io_thread_(BrowserThread::IO) {
-  }
+  ExtensionActionIconFactoryTest() : quit_in_icon_updated_(false) {}
 
   ~ExtensionActionIconFactoryTest() override {}
 
@@ -103,8 +96,7 @@ class ExtensionActionIconFactoryTest
     quit_in_icon_updated_ = false;
   }
 
-  scoped_refptr<Extension> CreateExtension(const char* name,
-                                           Manifest::Location location) {
+  scoped_refptr<Extension> CreateExtension(const char* name) {
     // Create and load an extension.
     base::FilePath test_file;
     if (!PathService::Get(chrome::DIR_TEST_DATA, &test_file)) {
@@ -128,7 +120,7 @@ class ExtensionActionIconFactoryTest
       return NULL;
 
     scoped_refptr<Extension> extension =
-        Extension::Create(test_file, location, *valid_value,
+        Extension::Create(test_file, Manifest::UNPACKED, *valid_value,
                           Extension::NO_FLAGS, &error);
     EXPECT_TRUE(extension.get()) << error;
     if (extension.get())
@@ -138,8 +130,6 @@ class ExtensionActionIconFactoryTest
 
   // testing::Test overrides:
   void SetUp() override {
-    file_thread_.Start();
-    io_thread_.Start();
     profile_.reset(new TestingProfile);
     base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
     extension_service_ = static_cast<extensions::TestExtensionSystem*>(
@@ -173,11 +163,8 @@ class ExtensionActionIconFactoryTest
   TestingProfile* profile() { return profile_.get(); }
 
  private:
+  content::TestBrowserThreadBundle test_browser_thread_bundle_;
   bool quit_in_icon_updated_;
-  base::MessageLoop ui_loop_;
-  content::TestBrowserThread ui_thread_;
-  content::TestBrowserThread file_thread_;
-  content::TestBrowserThread io_thread_;
   std::unique_ptr<TestingProfile> profile_;
   ExtensionService* extension_service_;
   std::unique_ptr<ui::test::MaterialDesignControllerTestAPI>
@@ -195,8 +182,7 @@ class ExtensionActionIconFactoryTest
 INSTANTIATE_TEST_CASE_P(
     ExtensionActionIconFactoryTest_MaterialDesign,
     ExtensionActionIconFactoryTest,
-    testing::Values(ui::MaterialDesignController::NON_MATERIAL,
-                    ui::MaterialDesignController::MATERIAL_NORMAL,
+    testing::Values(ui::MaterialDesignController::MATERIAL_NORMAL,
                     ui::MaterialDesignController::MATERIAL_HYBRID));
 
 // If there is no default icon, and the icon has not been set using |SetIcon|,
@@ -204,8 +190,7 @@ INSTANTIATE_TEST_CASE_P(
 TEST_P(ExtensionActionIconFactoryTest, NoIcons) {
   // Load an extension that has browser action without default icon set in the
   // manifest and does not call |SetIcon| by default.
-  scoped_refptr<Extension> extension(CreateExtension(
-      "browser_action/no_icon", Manifest::INVALID_LOCATION));
+  scoped_refptr<Extension> extension(CreateExtension("browser_action/no_icon"));
   ASSERT_TRUE(extension.get() != NULL);
   ExtensionAction* browser_action = GetBrowserAction(*extension);
   ASSERT_TRUE(browser_action);
@@ -229,8 +214,7 @@ TEST_P(ExtensionActionIconFactoryTest, AfterSetIcon) {
   // Load an extension that has browser action without default icon set in the
   // manifest and does not call |SetIcon| by default (but has an browser action
   // icon resource).
-  scoped_refptr<Extension> extension(CreateExtension(
-      "browser_action/no_icon", Manifest::INVALID_LOCATION));
+  scoped_refptr<Extension> extension(CreateExtension("browser_action/no_icon"));
   ASSERT_TRUE(extension.get() != NULL);
   ExtensionAction* browser_action = GetBrowserAction(*extension);
   ASSERT_TRUE(browser_action);
@@ -268,27 +252,27 @@ TEST_P(ExtensionActionIconFactoryTest, DefaultIcon) {
   // Load an extension that has browser action without default icon set in the
   // manifest and does not call |SetIcon| by default (but has an browser action
   // icon resource).
-  scoped_refptr<Extension> extension(CreateExtension(
-      "browser_action/no_icon", Manifest::INVALID_LOCATION));
+  scoped_refptr<Extension> extension(CreateExtension("browser_action/no_icon"));
   ASSERT_TRUE(extension.get() != NULL);
   ExtensionAction* browser_action = GetBrowserAction(*extension);
   ASSERT_TRUE(browser_action);
   ASSERT_FALSE(browser_action->default_icon());
   ASSERT_TRUE(browser_action->GetExplicitlySetIcon(0 /*tab id*/).IsEmpty());
 
+  scoped_refptr<const Extension> extension_with_icon =
+      CreateExtension("browser_action_with_icon");
+  ASSERT_TRUE(extension_with_icon);
+
   int icon_size = ExtensionAction::ActionIconSize();
   gfx::Image default_icon =
-      EnsureImageSize(LoadIcon("browser_action/no_icon/icon.png"), icon_size);
+      EnsureImageSize(LoadIcon("browser_action_with_icon/icon.png"), icon_size);
   ASSERT_FALSE(default_icon.IsEmpty());
 
-  std::unique_ptr<ExtensionIconSet> default_icon_set(new ExtensionIconSet());
-  default_icon_set->Add(icon_size, "icon.png");
-
-  browser_action->SetDefaultIconForTest(std::move(default_icon_set));
+  browser_action = GetBrowserAction(*extension_with_icon);
   ASSERT_TRUE(browser_action->default_icon());
 
   ExtensionActionIconFactory icon_factory(
-      profile(), extension.get(), browser_action, this);
+      profile(), extension_with_icon.get(), browser_action, this);
 
   gfx::Image icon = icon_factory.GetIcon(0);
 

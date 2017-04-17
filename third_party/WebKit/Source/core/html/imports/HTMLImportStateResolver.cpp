@@ -36,46 +36,45 @@
 
 namespace blink {
 
-inline bool HTMLImportStateResolver::isBlockingFollowers(HTMLImport* import)
-{
-    if (!import->isSync())
-        return false;
-    HTMLImportChild* child = toHTMLImportChild(import);
-    if (!child->loader()->isFirstImport(child))
-        return false;
-    return !import->state().isReady();
-}
-
-inline bool HTMLImportStateResolver::shouldBlockScriptExecution() const
-{
-    // FIXME: Memoize to make this faster.
-    for (HTMLImport* ancestor = m_import; ancestor; ancestor = ancestor->parent()) {
-        for (HTMLImport* predecessor = ancestor->previous(); predecessor; predecessor = predecessor->previous()) {
-            if (isBlockingFollowers(predecessor))
-                return true;
-        }
-    }
-
-    for (HTMLImport* child = m_import->firstChild(); child; child = child->next()) {
-        if (isBlockingFollowers(child))
-            return true;
-    }
-
+inline bool HTMLImportStateResolver::IsBlockingFollowers(HTMLImport* import) {
+  if (!import->IsSync())
     return false;
+  HTMLImportChild* child = ToHTMLImportChild(import);
+  if (!child->Loader()->IsFirstImport(child))
+    return false;
+  return !import->GetState().IsReady();
 }
 
-inline bool HTMLImportStateResolver::isActive() const
-{
-    return !m_import->hasFinishedLoading();
+inline bool HTMLImportStateResolver::ShouldBlockScriptExecution() const {
+  // FIXME: Memoize to make this faster.
+  for (HTMLImport* ancestor = import_; ancestor;
+       ancestor = ancestor->Parent()) {
+    for (HTMLImport* predecessor = ancestor->Previous(); predecessor;
+         predecessor = predecessor->Previous()) {
+      if (IsBlockingFollowers(predecessor))
+        return true;
+    }
+  }
+
+  for (HTMLImport* child = import_->FirstChild(); child;
+       child = child->Next()) {
+    if (IsBlockingFollowers(child))
+      return true;
+  }
+
+  return false;
 }
 
-HTMLImportState HTMLImportStateResolver::resolve() const
-{
-    if (shouldBlockScriptExecution())
-        return HTMLImportState(HTMLImportState::BlockingScriptExecution);
-    if (isActive())
-        return HTMLImportState(HTMLImportState::Active);
-    return HTMLImportState(HTMLImportState::Ready);
+inline bool HTMLImportStateResolver::IsActive() const {
+  return !import_->HasFinishedLoading();
 }
 
-} // namespace blink
+HTMLImportState HTMLImportStateResolver::Resolve() const {
+  if (ShouldBlockScriptExecution())
+    return HTMLImportState(HTMLImportState::kBlockingScriptExecution);
+  if (IsActive())
+    return HTMLImportState(HTMLImportState::kActive);
+  return HTMLImportState(HTMLImportState::kReady);
+}
+
+}  // namespace blink

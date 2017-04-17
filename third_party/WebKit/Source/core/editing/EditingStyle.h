@@ -34,14 +34,15 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
+#include "core/CoreExport.h"
 #include "core/editing/Position.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/WritingDirection.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/TriState.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/TriState.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -57,183 +58,206 @@ class QualifiedName;
 class ComputedStyle;
 class StylePropertySet;
 
-class EditingStyle final : public GarbageCollected<EditingStyle> {
-public:
+class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
+ public:
+  enum PropertiesToInclude {
+    kAllProperties,
+    kOnlyEditingInheritableProperties,
+    kEditingPropertiesInEffect
+  };
+  enum ShouldPreserveWritingDirection {
+    kPreserveWritingDirection,
+    kDoNotPreserveWritingDirection
+  };
+  enum ShouldExtractMatchingStyle {
+    kExtractMatchingStyle,
+    kDoNotExtractMatchingStyle
+  };
+  static float no_font_delta_;
 
-    enum PropertiesToInclude { AllProperties, OnlyEditingInheritableProperties, EditingPropertiesInEffect };
-    enum ShouldPreserveWritingDirection { PreserveWritingDirection, DoNotPreserveWritingDirection };
-    enum ShouldExtractMatchingStyle { ExtractMatchingStyle, DoNotExtractMatchingStyle };
-    static float NoFontDelta;
+  static EditingStyle* Create() { return new EditingStyle(); }
 
-    static EditingStyle* create()
-    {
-        return new EditingStyle();
-    }
+  static EditingStyle* Create(ContainerNode* node,
+                              PropertiesToInclude properties_to_include =
+                                  kOnlyEditingInheritableProperties) {
+    return new EditingStyle(node, properties_to_include);
+  }
 
-    static EditingStyle* create(ContainerNode* node, PropertiesToInclude propertiesToInclude = OnlyEditingInheritableProperties)
-    {
-        return new EditingStyle(node, propertiesToInclude);
-    }
+  static EditingStyle* Create(const Position& position,
+                              PropertiesToInclude properties_to_include =
+                                  kOnlyEditingInheritableProperties) {
+    return new EditingStyle(position, properties_to_include);
+  }
 
-    static EditingStyle* create(const Position& position, PropertiesToInclude propertiesToInclude = OnlyEditingInheritableProperties)
-    {
-        return new EditingStyle(position, propertiesToInclude);
-    }
+  static EditingStyle* Create(const StylePropertySet* style) {
+    return new EditingStyle(style);
+  }
 
-    static EditingStyle* create(const StylePropertySet* style)
-    {
-        return new EditingStyle(style);
-    }
+  static EditingStyle* Create(CSSPropertyID property_id, const String& value) {
+    return new EditingStyle(property_id, value);
+  }
 
-    static EditingStyle* create(CSSPropertyID propertyID, const String& value)
-    {
-        return new EditingStyle(propertyID, value);
-    }
+  MutableStylePropertySet* Style() { return mutable_style_.Get(); }
+  bool GetTextDirection(WritingDirection&) const;
+  bool IsEmpty() const;
+  void OverrideWithStyle(const StylePropertySet*);
+  void Clear();
+  EditingStyle* Copy() const;
+  EditingStyle* ExtractAndRemoveBlockProperties();
+  EditingStyle* ExtractAndRemoveTextDirection();
+  void RemoveBlockProperties();
+  void RemoveStyleAddedByElement(Element*);
+  void RemoveStyleConflictingWithStyleOfElement(Element*);
+  void CollapseTextDecorationProperties();
+  enum ShouldIgnoreTextOnlyProperties {
+    kIgnoreTextOnlyProperties,
+    kDoNotIgnoreTextOnlyProperties
+  };
+  TriState TriStateOfStyle(EditingStyle*) const;
+  TriState TriStateOfStyle(const VisibleSelection&) const;
+  bool ConflictsWithInlineStyleOfElement(HTMLElement* element) const {
+    return ConflictsWithInlineStyleOfElement(element, 0, 0);
+  }
+  bool ConflictsWithInlineStyleOfElement(
+      HTMLElement* element,
+      EditingStyle* extracted_style,
+      Vector<CSSPropertyID>& conflicting_properties) const {
+    return ConflictsWithInlineStyleOfElement(element, extracted_style,
+                                             &conflicting_properties);
+  }
+  bool ConflictsWithImplicitStyleOfElement(
+      HTMLElement*,
+      EditingStyle* extracted_style = nullptr,
+      ShouldExtractMatchingStyle = kDoNotExtractMatchingStyle) const;
+  bool ConflictsWithImplicitStyleOfAttributes(HTMLElement*) const;
+  bool ExtractConflictingImplicitStyleOfAttributes(
+      HTMLElement*,
+      ShouldPreserveWritingDirection,
+      EditingStyle* extracted_style,
+      Vector<QualifiedName>& conflicting_attributes,
+      ShouldExtractMatchingStyle) const;
+  bool StyleIsPresentInComputedStyleOfNode(Node*) const;
 
-    MutableStylePropertySet* style() { return m_mutableStyle.get(); }
-    bool textDirection(WritingDirection&) const;
-    bool isEmpty() const;
-    void overrideWithStyle(const StylePropertySet*);
-    void clear();
-    EditingStyle* copy() const;
-    EditingStyle* extractAndRemoveBlockProperties();
-    EditingStyle* extractAndRemoveTextDirection();
-    void removeBlockProperties();
-    void removeStyleAddedByElement(Element*);
-    void removeStyleConflictingWithStyleOfElement(Element*);
-    void collapseTextDecorationProperties();
-    enum ShouldIgnoreTextOnlyProperties { IgnoreTextOnlyProperties, DoNotIgnoreTextOnlyProperties };
-    TriState triStateOfStyle(EditingStyle*) const;
-    TriState triStateOfStyle(const VisibleSelection&) const;
-    bool conflictsWithInlineStyleOfElement(HTMLElement* element) const { return conflictsWithInlineStyleOfElement(element, 0, 0); }
-    bool conflictsWithInlineStyleOfElement(HTMLElement* element, EditingStyle* extractedStyle, Vector<CSSPropertyID>& conflictingProperties) const
-    {
-        return conflictsWithInlineStyleOfElement(element, extractedStyle, &conflictingProperties);
-    }
-    bool conflictsWithImplicitStyleOfElement(HTMLElement*, EditingStyle* extractedStyle = nullptr, ShouldExtractMatchingStyle = DoNotExtractMatchingStyle) const;
-    bool conflictsWithImplicitStyleOfAttributes(HTMLElement*) const;
-    bool extractConflictingImplicitStyleOfAttributes(HTMLElement*, ShouldPreserveWritingDirection, EditingStyle* extractedStyle,
-        Vector<QualifiedName>& conflictingAttributes, ShouldExtractMatchingStyle) const;
-    bool styleIsPresentInComputedStyleOfNode(Node*) const;
+  static bool ElementIsStyledSpanOrHTMLEquivalent(const HTMLElement*);
 
-    static bool elementIsStyledSpanOrHTMLEquivalent(const HTMLElement*);
+  void PrepareToApplyAt(
+      const Position&,
+      ShouldPreserveWritingDirection = kDoNotPreserveWritingDirection);
+  void MergeTypingStyle(Document*);
+  enum CSSPropertyOverrideMode { kOverrideValues, kDoNotOverrideValues };
+  void MergeInlineStyleOfElement(HTMLElement*,
+                                 CSSPropertyOverrideMode,
+                                 PropertiesToInclude = kAllProperties);
+  void MergeInlineAndImplicitStyleOfElement(Element*,
+                                            CSSPropertyOverrideMode,
+                                            PropertiesToInclude);
+  void MergeStyleFromRules(Element*);
+  void MergeStyleFromRulesForSerialization(Element*);
+  void RemoveStyleFromRulesAndContext(Element*, ContainerNode* context);
+  void RemovePropertiesInElementDefaultStyle(Element*);
+  void AddAbsolutePositioningFromElement(const Element&);
+  void ForceInline();
+  int LegacyFontSize(Document*) const;
 
-    void prepareToApplyAt(const Position&, ShouldPreserveWritingDirection = DoNotPreserveWritingDirection);
-    void mergeTypingStyle(Document*);
-    enum CSSPropertyOverrideMode { OverrideValues, DoNotOverrideValues };
-    void mergeInlineStyleOfElement(HTMLElement*, CSSPropertyOverrideMode, PropertiesToInclude = AllProperties);
-    static EditingStyle* wrappingStyleForAnnotatedSerialization(ContainerNode* context);
-    static EditingStyle* wrappingStyleForSerialization(ContainerNode* context);
-    void mergeStyleFromRules(Element*);
-    void mergeStyleFromRulesForSerialization(Element*);
-    void removeStyleFromRulesAndContext(Element*, ContainerNode* context);
-    void removePropertiesInElementDefaultStyle(Element*);
-    void addAbsolutePositioningFromElement(const Element&);
-    void forceInline();
-    int legacyFontSize(Document*) const;
+  float FontSizeDelta() const { return font_size_delta_; }
+  bool HasFontSizeDelta() const { return font_size_delta_ != no_font_delta_; }
 
-    float fontSizeDelta() const { return m_fontSizeDelta; }
-    bool hasFontSizeDelta() const { return m_fontSizeDelta != NoFontDelta; }
+  void SetProperty(CSSPropertyID, const String& value, bool important = false);
 
-    static EditingStyle* styleAtSelectionStart(const VisibleSelection&, bool shouldUseBackgroundColorInEffect = false, MutableStylePropertySet* styleToCheck = nullptr);
-    static WritingDirection textDirectionForSelection(const VisibleSelection&, EditingStyle* typingStyle, bool& hasNestedOrMultipleEmbeddings);
-    static bool isEmbedOrIsolate(CSSValueID unicodeBidi)
-    {
-        return unicodeBidi == CSSValueIsolate || unicodeBidi == CSSValueWebkitIsolate || unicodeBidi == CSSValueEmbed;
-    }
+  DECLARE_TRACE();
 
-    DECLARE_TRACE();
+ private:
+  EditingStyle() = default;
+  EditingStyle(ContainerNode*, PropertiesToInclude);
+  EditingStyle(const Position&, PropertiesToInclude);
+  explicit EditingStyle(const StylePropertySet*);
+  EditingStyle(CSSPropertyID, const String& value);
+  void Init(Node*, PropertiesToInclude);
+  void RemoveInheritedColorsIfNeeded(const ComputedStyle*);
+  void ReplaceFontSizeByKeywordIfPossible(const ComputedStyle*,
+                                          CSSComputedStyleDeclaration*);
+  void ExtractFontSizeDelta();
+  TriState TriStateOfStyle(CSSStyleDeclaration* style_to_compare,
+                           ShouldIgnoreTextOnlyProperties) const;
+  bool ConflictsWithInlineStyleOfElement(
+      HTMLElement*,
+      EditingStyle* extracted_style,
+      Vector<CSSPropertyID>* conflicting_properties) const;
+  void MergeStyle(const StylePropertySet*, CSSPropertyOverrideMode);
 
-private:
-    EditingStyle() = default;
-    EditingStyle(ContainerNode*, PropertiesToInclude);
-    EditingStyle(const Position&, PropertiesToInclude);
-    explicit EditingStyle(const StylePropertySet*);
-    EditingStyle(CSSPropertyID, const String& value);
-    void init(Node*, PropertiesToInclude);
-    void removeTextFillAndStrokeColorsIfNeeded(const ComputedStyle*);
-    void setProperty(CSSPropertyID, const String& value, bool important = false);
-    void replaceFontSizeByKeywordIfPossible(const ComputedStyle*, CSSComputedStyleDeclaration*);
-    void extractFontSizeDelta();
-    TriState triStateOfStyle(CSSStyleDeclaration* styleToCompare, ShouldIgnoreTextOnlyProperties) const;
-    bool conflictsWithInlineStyleOfElement(HTMLElement*, EditingStyle* extractedStyle, Vector<CSSPropertyID>* conflictingProperties) const;
-    void mergeInlineAndImplicitStyleOfElement(Element*, CSSPropertyOverrideMode, PropertiesToInclude);
-    void mergeStyle(const StylePropertySet*, CSSPropertyOverrideMode);
+  Member<MutableStylePropertySet> mutable_style_;
+  bool is_monospace_font_ = false;
+  float font_size_delta_ = no_font_delta_;
+  bool is_vertical_align_ = false;
 
-    Member<MutableStylePropertySet> m_mutableStyle;
-    bool m_isMonospaceFont = false;
-    float m_fontSizeDelta = NoFontDelta;
-    bool m_isVerticalAlign = false;
-
-    friend class HTMLElementEquivalent;
-    friend class HTMLAttributeEquivalent;
+  friend class HTMLElementEquivalent;
+  friend class HTMLAttributeEquivalent;
 };
 
 class StyleChange {
-    DISALLOW_NEW();
-public:
-    StyleChange()
-        : m_applyBold(false)
-        , m_applyItalic(false)
-        , m_applyUnderline(false)
-        , m_applyLineThrough(false)
-        , m_applySubscript(false)
-        , m_applySuperscript(false)
-    { }
+  DISALLOW_NEW();
 
-    StyleChange(EditingStyle*, const Position&);
+ public:
+  StyleChange()
+      : apply_bold_(false),
+        apply_italic_(false),
+        apply_underline_(false),
+        apply_line_through_(false),
+        apply_subscript_(false),
+        apply_superscript_(false) {}
 
-    String cssStyle() const { return m_cssStyle; }
-    bool applyBold() const { return m_applyBold; }
-    bool applyItalic() const { return m_applyItalic; }
-    bool applyUnderline() const { return m_applyUnderline; }
-    bool applyLineThrough() const { return m_applyLineThrough; }
-    bool applySubscript() const { return m_applySubscript; }
-    bool applySuperscript() const { return m_applySuperscript; }
-    bool applyFontColor() const { return m_applyFontColor.length() > 0; }
-    bool applyFontFace() const { return m_applyFontFace.length() > 0; }
-    bool applyFontSize() const { return m_applyFontSize.length() > 0; }
+  StyleChange(EditingStyle*, const Position&);
 
-    String fontColor() { return m_applyFontColor; }
-    String fontFace() { return m_applyFontFace; }
-    String fontSize() { return m_applyFontSize; }
+  String CssStyle() const { return css_style_; }
+  bool ApplyBold() const { return apply_bold_; }
+  bool ApplyItalic() const { return apply_italic_; }
+  bool ApplyUnderline() const { return apply_underline_; }
+  bool ApplyLineThrough() const { return apply_line_through_; }
+  bool ApplySubscript() const { return apply_subscript_; }
+  bool ApplySuperscript() const { return apply_superscript_; }
+  bool ApplyFontColor() const { return apply_font_color_.length() > 0; }
+  bool ApplyFontFace() const { return apply_font_face_.length() > 0; }
+  bool ApplyFontSize() const { return apply_font_size_.length() > 0; }
 
-    bool operator==(const StyleChange& other)
-    {
-        return m_cssStyle == other.m_cssStyle
-            && m_applyBold == other.m_applyBold
-            && m_applyItalic == other.m_applyItalic
-            && m_applyUnderline == other.m_applyUnderline
-            && m_applyLineThrough == other.m_applyLineThrough
-            && m_applySubscript == other.m_applySubscript
-            && m_applySuperscript == other.m_applySuperscript
-            && m_applyFontColor == other.m_applyFontColor
-            && m_applyFontFace == other.m_applyFontFace
-            && m_applyFontSize == other.m_applyFontSize;
-    }
-    bool operator!=(const StyleChange& other)
-    {
-        return !(*this == other);
-    }
-private:
-    void extractTextStyles(Document*, MutableStylePropertySet*, bool isMonospaceFont);
+  String FontColor() { return apply_font_color_; }
+  String FontFace() { return apply_font_face_; }
+  String FontSize() { return apply_font_size_; }
 
-    String m_cssStyle;
-    bool m_applyBold;
-    bool m_applyItalic;
-    bool m_applyUnderline;
-    bool m_applyLineThrough;
-    bool m_applySubscript;
-    bool m_applySuperscript;
-    String m_applyFontColor;
-    String m_applyFontFace;
-    String m_applyFontSize;
+  bool operator==(const StyleChange& other) {
+    return css_style_ == other.css_style_ && apply_bold_ == other.apply_bold_ &&
+           apply_italic_ == other.apply_italic_ &&
+           apply_underline_ == other.apply_underline_ &&
+           apply_line_through_ == other.apply_line_through_ &&
+           apply_subscript_ == other.apply_subscript_ &&
+           apply_superscript_ == other.apply_superscript_ &&
+           apply_font_color_ == other.apply_font_color_ &&
+           apply_font_face_ == other.apply_font_face_ &&
+           apply_font_size_ == other.apply_font_size_;
+  }
+  bool operator!=(const StyleChange& other) { return !(*this == other); }
+
+ private:
+  void ExtractTextStyles(Document*,
+                         MutableStylePropertySet*,
+                         bool is_monospace_font);
+
+  String css_style_;
+  bool apply_bold_;
+  bool apply_italic_;
+  bool apply_underline_;
+  bool apply_line_through_;
+  bool apply_subscript_;
+  bool apply_superscript_;
+  String apply_font_color_;
+  String apply_font_face_;
+  String apply_font_size_;
 };
 
-// FIXME: Remove these functions or make them non-global to discourage using CSSStyleDeclaration directly.
-CSSValueID getIdentifierValue(CSSStyleDeclaration*, CSSPropertyID);
-CSSValueID getIdentifierValue(StylePropertySet*, CSSPropertyID);
+// FIXME: Remove these functions or make them non-global to discourage using
+// CSSStyleDeclaration directly.
+CSSValueID GetIdentifierValue(CSSStyleDeclaration*, CSSPropertyID);
+CSSValueID GetIdentifierValue(StylePropertySet*, CSSPropertyID);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EditingStyle_h
+#endif  // EditingStyle_h

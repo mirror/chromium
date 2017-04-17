@@ -6,8 +6,7 @@
 #define WebGLTimerQueryEXT_h
 
 #include "modules/webgl/WebGLContextObject.h"
-
-#include "public/platform/WebThread.h"
+#include "platform/WebTaskRunner.h"
 
 namespace gpu {
 namespace gles2 {
@@ -17,48 +16,46 @@ class GLES2Interface;
 
 namespace blink {
 
-class WebGLTimerQueryEXT : public WebGLContextObject, public WebThread::TaskObserver {
-    DEFINE_WRAPPERTYPEINFO();
+class WebGLTimerQueryEXT : public WebGLContextObject {
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    static WebGLTimerQueryEXT* create(WebGLRenderingContextBase*);
-    ~WebGLTimerQueryEXT() override;
+ public:
+  static WebGLTimerQueryEXT* Create(WebGLRenderingContextBase*);
+  ~WebGLTimerQueryEXT() override;
 
-    void setTarget(GLenum target) { m_target = target; }
+  void SetTarget(GLenum target) { target_ = target; }
 
-    GLuint object() const { return m_queryId; }
-    bool hasTarget() const { return m_target != 0; }
-    GLenum target() const { return m_target; }
+  GLuint Object() const { return query_id_; }
+  bool HasTarget() const { return target_ != 0; }
+  GLenum Target() const { return target_; }
 
-    void resetCachedResult();
-    void updateCachedResult(gpu::gles2::GLES2Interface*);
+  void ResetCachedResult();
+  void UpdateCachedResult(gpu::gles2::GLES2Interface*);
 
-    bool isQueryResultAvailable();
-    GLuint64 getQueryResult();
+  bool IsQueryResultAvailable();
+  GLuint64 GetQueryResult();
 
-protected:
-    WebGLTimerQueryEXT(WebGLRenderingContextBase*);
+ protected:
+  WebGLTimerQueryEXT(WebGLRenderingContextBase*);
 
-private:
-    bool hasObject() const override { return m_queryId != 0; }
-    void deleteObjectImpl(gpu::gles2::GLES2Interface*) override;
+ private:
+  bool HasObject() const override { return query_id_ != 0; }
+  void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
 
-    void registerTaskObserver();
-    void unregisterTaskObserver();
+  void ScheduleAllowAvailabilityUpdate();
+  void AllowAvailabilityUpdate();
 
-    // TaskObserver implementation.
-    void didProcessTask() override;
-    void willProcessTask() override { }
+  GLenum target_;
+  GLuint query_id_;
 
-    GLenum m_target;
-    GLuint m_queryId;
+  bool can_update_availability_;
+  bool query_result_available_;
+  GLuint64 query_result_;
 
-    bool m_taskObserverRegistered;
-    bool m_canUpdateAvailability;
-    bool m_queryResultAvailable;
-    GLuint64 m_queryResult;
+  RefPtr<WebTaskRunner> task_runner_;
+  TaskHandle task_handle_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLTimerQueryEXT_h
+#endif  // WebGLTimerQueryEXT_h

@@ -9,12 +9,14 @@
 #include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/stl_util.h"
+#include "base/trace_event/memory_usage_estimator.h"
 #include "net/base/completion_callback.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
-#include "net/quic/quic_server_id.h"
+#include "net/quic/core/quic_server_id.h"
 
 namespace net {
 
@@ -63,6 +65,12 @@ DiskCacheBasedQuicServerInfo::DiskCacheBasedQuicServerInfo(
           base::Bind(&DiskCacheBasedQuicServerInfo::OnIOComplete,
                      weak_factory_.GetWeakPtr(),
                      base::Owned(data_shim_));  // Ownership assigned.
+}
+
+DiskCacheBasedQuicServerInfo::~DiskCacheBasedQuicServerInfo() {
+  DCHECK(wait_for_ready_callback_.is_null());
+  if (entry_)
+    entry_->Close();
 }
 
 void DiskCacheBasedQuicServerInfo::Start() {
@@ -152,7 +160,7 @@ void DiskCacheBasedQuicServerInfo::PersistInternal() {
     new_data_ = Serialize();
   } else {
     new_data_ = pending_write_data_;
-    pending_write_data_.clear();
+    base::STLClearObject(&pending_write_data_);
   }
 
   RecordQuicServerInfoStatus(QUIC_SERVER_INFO_PERSIST);
@@ -178,10 +186,13 @@ void DiskCacheBasedQuicServerInfo::OnExternalCacheHit() {
   backend_->OnExternalCacheHit(key());
 }
 
-DiskCacheBasedQuicServerInfo::~DiskCacheBasedQuicServerInfo() {
-  DCHECK(wait_for_ready_callback_.is_null());
-  if (entry_)
-    entry_->Close();
+size_t DiskCacheBasedQuicServerInfo::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(new_data_) +
+         base::trace_event::EstimateMemoryUsage(pending_write_data_) +
+         base::trace_event::EstimateMemoryUsage(server_id_) +
+         (read_buffer_ == nullptr ? 0 : read_buffer_->size()) +
+         (write_buffer_ == nullptr ? 0 : write_buffer_->size()) +
+         base::trace_event::EstimateMemoryUsage(data_);
 }
 
 std::string DiskCacheBasedQuicServerInfo::key() const {
@@ -289,6 +300,7 @@ int DiskCacheBasedQuicServerInfo::DoReadComplete(int rv) {
   else if (rv < 0)
     RecordQuicServerInfoFailure(READ_FAILURE);
 
+  read_buffer_ = nullptr;
   state_ = WAIT_FOR_DATA_READY_DONE;
   return OK;
 }
@@ -296,6 +308,7 @@ int DiskCacheBasedQuicServerInfo::DoReadComplete(int rv) {
 int DiskCacheBasedQuicServerInfo::DoWriteComplete(int rv) {
   if (rv < 0)
     RecordQuicServerInfoFailure(WRITE_FAILURE);
+  write_buffer_ = nullptr;
   state_ = SET_DONE;
   return OK;
 }
@@ -332,14 +345,14 @@ int DiskCacheBasedQuicServerInfo::DoRead() {
     return OK;
   }
 
-  read_buffer_ = new IOBuffer(size);
+  read_buffer_ = new IOBufferWithSize(size);
   state_ = READ_COMPLETE;
   return entry_->ReadData(
       0 /* index */, 0 /* offset */, read_buffer_.get(), size, io_callback_);
 }
 
 int DiskCacheBasedQuicServerInfo::DoWrite() {
-  write_buffer_ = new IOBuffer(new_data_.size());
+  write_buffer_ = new IOBufferWithSize(new_data_.size());
   memcpy(write_buffer_->data(), new_data_.data(), new_data_.size());
   state_ = WRITE_COMPLETE;
 
@@ -390,7 +403,7 @@ int DiskCacheBasedQuicServerInfo::DoSetDone() {
   if (entry_)
     entry_->Close();
   entry_ = NULL;
-  new_data_.clear();
+  base::STLClearObject(&new_data_);
   state_ = NONE;
   return OK;
 }

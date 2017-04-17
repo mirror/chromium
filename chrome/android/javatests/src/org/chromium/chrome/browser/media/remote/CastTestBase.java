@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.media.remote;
 
 import android.app.Dialog;
 import android.graphics.Rect;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +21,7 @@ import org.chromium.chrome.browser.media.remote.RemoteVideoInfo.PlayerState;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.test.util.ClickUtils;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
 import org.chromium.content.browser.test.util.UiUtils;
@@ -138,8 +138,7 @@ public abstract class CastTestBase extends ChromeActivityTestCaseBase<ChromeActi
                 StrictMode.allowThreadDiskWrites();
             }
         });
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     @Override
@@ -313,7 +312,7 @@ public abstract class CastTestBase extends ChromeActivityTestCaseBase<ChromeActi
                 getActivity(), chromecastName, MAX_VIEW_TIME_MS, VIEW_RETRY_MS);
         assertNotNull("Test route not found", testRouteButton);
 
-        RouterTestUtils.mouseSingleClickView(getInstrumentation(), testRouteButton);
+        ClickUtils.mouseSingleClickView(getInstrumentation(), testRouteButton);
     }
 
     protected void checkDisconnected() {
@@ -358,7 +357,7 @@ public abstract class CastTestBase extends ChromeActivityTestCaseBase<ChromeActi
 
         assertNotNull("No disconnect button", disconnectButton);
 
-        RouterTestUtils.clickButton(disconnectButton);
+        ClickUtils.clickButton(disconnectButton);
     }
 
     /*
@@ -535,18 +534,25 @@ public abstract class CastTestBase extends ChromeActivityTestCaseBase<ChromeActi
         return new Rect(left, bar.top, right, bar.bottom);
     }
 
-    private Rect fullscreenButton(Rect videoRect) {
+    private Rect castButton(Rect videoRect) {
         Rect bar = controlBar(videoRect);
         int right = bar.right - BUTTON_RIGHT_MARGIN;
         int left = right - BUTTON_WIDTH;
         return new Rect(left, bar.top, right, bar.bottom);
     }
 
-    private Rect castButton(Rect videoRect) {
-        Rect fullscreenButton = fullscreenButton(videoRect);
-        int right = fullscreenButton.left - BUTTON_RIGHT_MARGIN - FULLSCREEN_BUTTON_LEFT_MARGIN;
+    private Rect fullscreenButton(Rect videoRect) {
+        Rect downloadButton = downloadButton(videoRect);
+        int right = downloadButton.left;
         int left = right - BUTTON_WIDTH;
-        return new Rect(left, fullscreenButton.top, right, fullscreenButton.bottom);
+        return new Rect(left, downloadButton.top, right, downloadButton.bottom);
+    }
+
+    private Rect downloadButton(Rect videoRect) {
+        Rect castButton = castButton(videoRect);
+        int right = castButton.right - BUTTON_RIGHT_MARGIN;
+        int left = right - BUTTON_WIDTH;
+        return new Rect(left, castButton.top, right, castButton.bottom);
     }
 
     private void tapButton(Tab tab, Rect rect) {
@@ -554,12 +560,11 @@ public abstract class CastTestBase extends ChromeActivityTestCaseBase<ChromeActi
         int clickX =
                 (int) core.getRenderCoordinates().fromLocalCssToPix(
                         ((float) (rect.left + rect.right)) / 2);
-        int clickY =
-                (int) core.getRenderCoordinates().fromLocalCssToPix(
-                        ((float) (rect.top + rect.bottom)) / 2)
+        int clickY = (int) core.getRenderCoordinates().fromLocalCssToPix(
+                             ((float) (rect.top + rect.bottom)) / 2)
                 + core.getTopControlsHeightPix();
         // Click using a virtual mouse, since a touch may result in a disambiguation pop-up.
-        RouterTestUtils.mouseSingleClickView(getInstrumentation(), tab.getView(), clickX, clickY);
+        ClickUtils.mouseSingleClickView(getInstrumentation(), tab.getView(), clickX, clickY);
     }
 
 

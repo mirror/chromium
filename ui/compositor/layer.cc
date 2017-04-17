@@ -14,23 +14,24 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/filter_operation.h"
+#include "cc/base/filter_operations.h"
 #include "cc/layers/nine_patch_layer.h"
 #include "cc/layers/picture_layer.h"
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/surface_layer.h"
 #include "cc/layers/texture_layer.h"
 #include "cc/output/copy_output_request.h"
-#include "cc/output/filter_operation.h"
-#include "cc/output/filter_operations.h"
-#include "cc/playback/display_item_list_settings.h"
 #include "cc/resources/transferable_resource.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/compositor/layer_animator.h"
+#include "ui/compositor/layer_observer.h"
 #include "ui/compositor/paint_context.h"
 #include "ui/gfx/animation/animation.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -47,6 +48,42 @@ const ui::Layer* GetRoot(const ui::Layer* layer) {
 }  // namespace
 
 namespace ui {
+
+class Layer::LayerMirror : public LayerDelegate, LayerObserver {
+ public:
+  LayerMirror(Layer* source, Layer* dest)
+      : source_(source), dest_(dest) {
+    dest->AddObserver(this);
+    dest->set_delegate(this);
+  }
+
+  ~LayerMirror() override {
+    dest_->RemoveObserver(this);
+    dest_->set_delegate(nullptr);
+  }
+
+  Layer* dest() { return dest_; }
+
+  // LayerDelegate:
+  void OnPaintLayer(const PaintContext& context) override {
+    if (auto* delegate = source_->delegate())
+      delegate->OnPaintLayer(context);
+  }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override {}
+
+  // LayerObserver:
+  void LayerDestroyed(Layer* layer) override {
+    DCHECK_EQ(dest_, layer);
+    source_->OnMirrorDestroyed(this);
+  }
+
+ private:
+  Layer* const source_;
+  Layer* const dest_;
+
+  DISALLOW_COPY_AND_ASSIGN(LayerMirror);
+};
 
 Layer::Layer()
     : type_(LAYER_TEXTURED),
@@ -67,9 +104,7 @@ Layer::Layer()
       delegate_(NULL),
       owner_(NULL),
       cc_layer_(NULL),
-      device_scale_factor_(1.0f),
-      texture_x_scale_(1.0f),
-      texture_y_scale_(1.0f) {
+      device_scale_factor_(1.0f) {
   CreateCcLayer();
 }
 
@@ -92,13 +127,14 @@ Layer::Layer(LayerType type)
       delegate_(NULL),
       owner_(NULL),
       cc_layer_(NULL),
-      device_scale_factor_(1.0f),
-      texture_x_scale_(1.0f),
-      texture_y_scale_(1.0f) {
+      device_scale_factor_(1.0f) {
   CreateCcLayer();
 }
 
 Layer::~Layer() {
+  for (auto& observer : observer_list_)
+    observer.LayerDestroyed(this);
+
   // Destroying the animator may cause observers to use the layer (and
   // indirectly the WebLayer). Destroy the animator first so that the WebLayer
   // is still around.
@@ -117,6 +153,48 @@ Layer::~Layer() {
   cc_layer_->RemoveFromParent();
   if (mailbox_release_callback_)
     mailbox_release_callback_->Run(gpu::SyncToken(), false);
+}
+
+std::unique_ptr<Layer> Layer::Clone() const {
+  auto clone = base::MakeUnique<Layer>(type_);
+
+  // Background filters.
+  clone->SetBackgroundBlur(background_blur_radius_);
+  clone->SetBackgroundZoom(zoom_, zoom_inset_);
+
+  // Filters.
+  clone->SetLayerSaturation(layer_saturation_);
+  clone->SetLayerBrightness(GetTargetBrightness());
+  clone->SetLayerGrayscale(GetTargetGrayscale());
+  clone->SetLayerInverted(layer_inverted_);
+  if (alpha_shape_)
+    clone->SetAlphaShape(base::MakeUnique<SkRegion>(*alpha_shape_));
+
+  // cc::Layer state.
+  if (surface_layer_ && surface_layer_->primary_surface_info().is_valid()) {
+    clone->SetShowPrimarySurface(surface_layer_->primary_surface_info(),
+                                 surface_layer_->surface_reference_factory());
+  } else if (type_ == LAYER_SOLID_COLOR) {
+    clone->SetColor(GetTargetColor());
+  }
+
+  clone->SetTransform(GetTargetTransform());
+  clone->SetBounds(bounds_);
+  clone->SetSubpixelPositionOffset(subpixel_position_offset_);
+  clone->SetMasksToBounds(GetMasksToBounds());
+  clone->SetOpacity(GetTargetOpacity());
+  clone->SetVisible(GetTargetVisibility());
+  clone->SetFillsBoundsOpaquely(fills_bounds_opaquely_);
+  clone->SetFillsBoundsCompletely(fills_bounds_completely_);
+  clone->set_name(name_);
+
+  return clone;
+}
+
+std::unique_ptr<Layer> Layer::Mirror() {
+  auto mirror = Clone();
+  mirrors_.emplace_back(base::MakeUnique<LayerMirror>(this, mirror.get()));
+  return mirror;
 }
 
 const Compositor* Layer::GetCompositor() const {
@@ -149,6 +227,14 @@ void Layer::ResetCompositor() {
     ResetCompositorForAnimatorsInTree(compositor_);
     compositor_ = nullptr;
   }
+}
+
+void Layer::AddObserver(LayerObserver* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void Layer::RemoveObserver(LayerObserver* observer) {
+  observer_list_.RemoveObserver(observer);
 }
 
 void Layer::Add(Layer* child) {
@@ -216,7 +302,7 @@ void Layer::SetAnimator(LayerAnimator* animator) {
 
   if (animator_) {
     if (compositor)
-      animator_->ResetCompositor(compositor);
+      animator_->DetachLayerAndTimeline(compositor);
     animator_->SetDelegate(nullptr);
   }
 
@@ -225,12 +311,12 @@ void Layer::SetAnimator(LayerAnimator* animator) {
   if (animator_) {
     animator_->SetDelegate(this);
     if (compositor)
-      animator_->SetCompositor(compositor);
+      animator_->AttachLayerAndTimeline(compositor);
   }
 }
 
 LayerAnimator* Layer::GetAnimator() {
-  if (!animator_.get())
+  if (!animator_)
     SetAnimator(LayerAnimator::CreateDefaultAnimator());
   return animator_.get();
 }
@@ -240,7 +326,7 @@ void Layer::SetTransform(const gfx::Transform& transform) {
 }
 
 gfx::Transform Layer::GetTargetTransform() const {
-  if (animator_.get() && animator_->IsAnimatingProperty(
+  if (animator_ && animator_->IsAnimatingProperty(
       LayerAnimationElement::TRANSFORM)) {
     return animator_->GetTargetTransform();
   }
@@ -257,7 +343,7 @@ void Layer::SetSubpixelPositionOffset(const gfx::Vector2dF& offset) {
 }
 
 gfx::Rect Layer::GetTargetBounds() const {
-  if (animator_.get() && animator_->IsAnimatingProperty(
+  if (animator_ && animator_->IsAnimatingProperty(
       LayerAnimationElement::BOUNDS)) {
     return animator_->GetTargetBounds();
   }
@@ -302,7 +388,7 @@ void Layer::SetLayerBrightness(float brightness) {
 }
 
 float Layer::GetTargetBrightness() const {
-  if (animator_.get() && animator_->IsAnimatingProperty(
+  if (animator_ && animator_->IsAnimatingProperty(
       LayerAnimationElement::BRIGHTNESS)) {
     return animator_->GetTargetBrightness();
   }
@@ -314,7 +400,7 @@ void Layer::SetLayerGrayscale(float grayscale) {
 }
 
 float Layer::GetTargetGrayscale() const {
-  if (animator_.get() && animator_->IsAnimatingProperty(
+  if (animator_ && animator_->IsAnimatingProperty(
       LayerAnimationElement::GRAYSCALE)) {
     return animator_->GetTargetGrayscale();
   }
@@ -403,7 +489,7 @@ void Layer::SetLayerBackgroundFilters() {
 }
 
 float Layer::GetTargetOpacity() const {
-  if (animator_.get() && animator_->IsAnimatingProperty(
+  if (animator_ && animator_->IsAnimatingProperty(
       LayerAnimationElement::OPACITY))
     return animator_->GetTargetOpacity();
   return opacity();
@@ -414,7 +500,7 @@ void Layer::SetVisible(bool visible) {
 }
 
 bool Layer::GetTargetVisibility() const {
-  if (animator_.get() && animator_->IsAnimatingProperty(
+  if (animator_ && animator_->IsAnimatingProperty(
       LayerAnimationElement::VISIBILITY))
     return animator_->GetTargetVisibility();
   return visible_;
@@ -478,7 +564,7 @@ void Layer::SetFillsBoundsCompletely(bool fills_bounds_completely) {
 
 void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
   // Finish animations being handled by cc_layer_.
-  if (animator_.get()) {
+  if (animator_) {
     animator_->StopAnimatingProperty(LayerAnimationElement::TRANSFORM);
     animator_->StopAnimatingProperty(LayerAnimationElement::OPACITY);
     animator_->SwitchToLayer(new_layer);
@@ -516,10 +602,6 @@ void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
 
   SetLayerFilters();
   SetLayerBackgroundFilters();
-}
-
-bool Layer::HasPendingThreadedAnimationsForTesting() const {
-  return animator_->HasPendingThreadedAnimationsForTesting();
 }
 
 void Layer::SwitchCCLayerForTest() {
@@ -571,41 +653,43 @@ bool Layer::TextureFlipped() const {
   return texture_layer_->flipped();
 }
 
-void Layer::SetTextureAlpha(float alpha) {
-  DCHECK(texture_layer_.get());
-  texture_layer_->SetVertexOpacity(alpha, alpha, alpha, alpha);
-}
-
-void Layer::SetTextureCrop(const gfx::RectF& crop) {
-  DCHECK(texture_layer_.get());
-  texture_crop_ = crop;
-  RecomputeDrawsContentAndUVRect();
-}
-
-void Layer::SetTextureScale(float x_scale, float y_scale) {
-  DCHECK(texture_layer_.get());
-  texture_x_scale_ = x_scale;
-  texture_y_scale_ = y_scale;
-  RecomputeDrawsContentAndUVRect();
-}
-
-void Layer::SetShowSurface(
-    const cc::SurfaceId& surface_id,
-    const cc::SurfaceLayer::SatisfyCallback& satisfy_callback,
-    const cc::SurfaceLayer::RequireCallback& require_callback,
-    gfx::Size surface_size,
-    float scale,
-    gfx::Size frame_size_in_dip) {
+void Layer::SetShowPrimarySurface(
+    const cc::SurfaceInfo& surface_info,
+    scoped_refptr<cc::SurfaceReferenceFactory> ref_factory) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
 
-  scoped_refptr<cc::SurfaceLayer> new_layer =
-      cc::SurfaceLayer::Create(satisfy_callback, require_callback);
-  new_layer->SetSurfaceId(surface_id, scale, surface_size);
-  SwitchToLayer(new_layer);
-  surface_layer_ = new_layer;
+  if (!surface_layer_) {
+    scoped_refptr<cc::SurfaceLayer> new_layer =
+        cc::SurfaceLayer::Create(ref_factory);
+    SwitchToLayer(new_layer);
+    surface_layer_ = new_layer;
+  }
 
-  frame_size_in_dip_ = frame_size_in_dip;
+  surface_layer_->SetPrimarySurfaceInfo(surface_info);
+
+  frame_size_in_dip_ = gfx::ConvertSizeToDIP(surface_info.device_scale_factor(),
+                                             surface_info.size_in_pixels());
   RecomputeDrawsContentAndUVRect();
+
+  for (const auto& mirror : mirrors_)
+    mirror->dest()->SetShowPrimarySurface(surface_info, ref_factory);
+}
+
+void Layer::SetFallbackSurface(const cc::SurfaceInfo& surface_info) {
+  DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
+  DCHECK(surface_layer_);
+
+  // TODO(fsamuel): We should compute the gutter in the display compositor.
+  surface_layer_->SetFallbackSurfaceInfo(surface_info);
+
+  for (const auto& mirror : mirrors_)
+    mirror->dest()->SetFallbackSurface(surface_info);
+}
+
+const cc::SurfaceInfo* Layer::GetFallbackSurfaceInfo() const {
+  if (surface_layer_)
+    return &surface_layer_->fallback_surface_info();
+  return nullptr;
 }
 
 void Layer::SetShowSolidColorContent() {
@@ -627,23 +711,21 @@ void Layer::SetShowSolidColorContent() {
 }
 
 void Layer::UpdateNinePatchLayerImage(const gfx::ImageSkia& image) {
-  DCHECK(type_ == LAYER_NINE_PATCH && nine_patch_layer_.get());
+  DCHECK_EQ(type_, LAYER_NINE_PATCH);
+  DCHECK(nine_patch_layer_.get());
+
   nine_patch_layer_image_ = image;
-  SkBitmap bitmap = nine_patch_layer_image_.GetRepresentation(
-      device_scale_factor_).sk_bitmap();
-  SkBitmap bitmap_copy;
-  if (bitmap.isImmutable()) {
-    bitmap_copy = bitmap;
-  } else {
-    // UIResourceBitmap requires an immutable copy of the input |bitmap|.
-    bitmap.copyTo(&bitmap_copy);
-    bitmap_copy.setImmutable();
-  }
-  nine_patch_layer_->SetBitmap(bitmap_copy);
+  // TODO(estade): we don't clean up old bitmaps in the UIResourceManager when
+  // the scale factor changes. Currently for the way NinePatchLayers are used,
+  // we don't need/want to, but we should address this in the future if it
+  // becomes an issue.
+  nine_patch_layer_->SetBitmap(
+      image.GetRepresentation(device_scale_factor_).sk_bitmap());
 }
 
 void Layer::UpdateNinePatchLayerAperture(const gfx::Rect& aperture_in_dip) {
-  DCHECK(type_ == LAYER_NINE_PATCH && nine_patch_layer_.get());
+  DCHECK_EQ(type_, LAYER_NINE_PATCH);
+  DCHECK(nine_patch_layer_.get());
   nine_patch_layer_aperture_ = aperture_in_dip;
   gfx::Rect aperture_in_pixel = ConvertRectToPixel(this, aperture_in_dip);
   nine_patch_layer_->SetAperture(aperture_in_pixel);
@@ -656,15 +738,17 @@ void Layer::UpdateNinePatchLayerBorder(const gfx::Rect& border) {
 }
 
 void Layer::UpdateNinePatchOcclusion(const gfx::Rect& occlusion) {
-  DCHECK(type_ == LAYER_NINE_PATCH && nine_patch_layer_.get());
+  DCHECK_EQ(type_, LAYER_NINE_PATCH);
+  DCHECK(nine_patch_layer_.get());
   nine_patch_layer_->SetLayerOcclusion(occlusion);
 }
 
 void Layer::SetColor(SkColor color) { GetAnimator()->SetColor(color); }
 
-SkColor Layer::GetTargetColor() {
-  if (GetAnimator()->IsAnimatingProperty(LayerAnimationElement::COLOR))
-    return GetAnimator()->GetTargetColor();
+SkColor Layer::GetTargetColor() const {
+  if (animator_ && animator_->IsAnimatingProperty(
+      LayerAnimationElement::COLOR))
+    return animator_->GetTargetColor();
   return cc_layer_->background_color();
 }
 
@@ -731,13 +815,14 @@ void Layer::SuppressPaint() {
 void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
   if (device_scale_factor_ == device_scale_factor)
     return;
-  if (animator_.get())
+  if (animator_)
     animator_->StopAnimatingProperty(LayerAnimationElement::TRANSFORM);
   device_scale_factor_ = device_scale_factor;
   RecomputeDrawsContentAndUVRect();
   RecomputePosition();
   if (nine_patch_layer_) {
-    UpdateNinePatchLayerImage(nine_patch_layer_image_);
+    if (!nine_patch_layer_image_.isNull())
+      UpdateNinePatchLayerImage(nine_patch_layer_image_);
     UpdateNinePatchLayerAperture(nine_patch_layer_aperture_);
   }
   SchedulePaint(gfx::Rect(bounds_.size()));
@@ -751,9 +836,37 @@ void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
 
 void Layer::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
   DCHECK(surface_layer_.get());
-  if (!delegate_)
-    return;
-  delegate_->OnDelegatedFrameDamage(damage_rect_in_dip);
+  if (delegate_)
+    delegate_->OnDelegatedFrameDamage(damage_rect_in_dip);
+}
+
+void Layer::SetScrollable(
+    Layer* parent_clip_layer,
+    const base::Callback<void(const gfx::ScrollOffset&)>& on_scroll) {
+  cc_layer_->SetScrollClipLayerId(parent_clip_layer->cc_layer_->id());
+  cc_layer_->set_did_scroll_callback(on_scroll);
+  cc_layer_->SetUserScrollable(true, true);
+}
+
+gfx::ScrollOffset Layer::CurrentScrollOffset() const {
+  const Compositor* compositor = GetCompositor();
+  gfx::ScrollOffset offset;
+  if (compositor &&
+      compositor->GetScrollOffsetForLayer(cc_layer_->id(), &offset))
+    return offset;
+  return cc_layer_->scroll_offset();
+}
+
+void Layer::SetScrollOffset(const gfx::ScrollOffset& offset) {
+  Compositor* compositor = GetCompositor();
+  bool scrolled_on_impl_side =
+      compositor && compositor->ScrollLayerTo(cc_layer_->id(), offset);
+
+  if (!scrolled_on_impl_side)
+    cc_layer_->SetScrollOffset(offset);
+
+  DCHECK_EQ(offset.x(), CurrentScrollOffset().x());
+  DCHECK_EQ(offset.y(), CurrentScrollOffset().y());
 }
 
 void Layer::RequestCopyOfOutput(
@@ -772,15 +885,15 @@ scoped_refptr<cc::DisplayItemList> Layer::PaintContentsToDisplayList(
   gfx::Rect invalidation(
       gfx::IntersectRects(paint_region_.bounds(), local_bounds));
   paint_region_.Clear();
-  cc::DisplayItemListSettings settings;
-  settings.use_cached_picture = false;
-  scoped_refptr<cc::DisplayItemList> display_list =
-      cc::DisplayItemList::Create(PaintableRegion(), settings);
+  auto display_list = make_scoped_refptr(new cc::DisplayItemList);
   if (delegate_) {
     delegate_->OnPaintLayer(
         PaintContext(display_list.get(), device_scale_factor_, invalidation));
   }
   display_list->Finalize();
+  // TODO(domlaskowski): Move mirror invalidation to Layer::SchedulePaint.
+  for (const auto& mirror : mirrors_)
+    mirror->dest()->SchedulePaint(invalidation);
   return display_list;
 }
 
@@ -794,8 +907,7 @@ size_t Layer::GetApproximateUnsharedMemoryUsage() const {
 
 bool Layer::PrepareTextureMailbox(
     cc::TextureMailbox* mailbox,
-    std::unique_ptr<cc::SingleReleaseCallback>* release_callback,
-    bool use_shared_memory) {
+    std::unique_ptr<cc::SingleReleaseCallback>* release_callback) {
   if (!mailbox_release_callback_)
     return false;
   *mailbox = mailbox_;
@@ -810,7 +922,9 @@ class LayerDebugInfo : public base::trace_event::ConvertableToTraceFormat {
   void AppendAsTraceFormat(std::string* out) const override {
     base::DictionaryValue dictionary;
     dictionary.SetString("layer_name", name_);
-    base::JSONWriter::Write(dictionary, out);
+    std::string tmp;
+    base::JSONWriter::Write(dictionary, &tmp);
+    out->append(tmp);
   }
 
  private:
@@ -823,6 +937,7 @@ Layer::TakeDebugInfo(cc::Layer* layer) {
 }
 
 void Layer::didUpdateMainThreadScrollingReasons() {}
+void Layer::didChangeScrollbarsHidden(bool) {}
 
 void Layer::CollectAnimators(
     std::vector<scoped_refptr<LayerAnimator>>* animators) {
@@ -881,18 +996,16 @@ void Layer::SetBoundsFromAnimation(const gfx::Rect& bounds) {
     return;
 
   base::Closure closure;
-  if (delegate_)
-    closure = delegate_->PrepareForLayerBoundsChange();
-  bool was_move = bounds_.size() == bounds.size();
+  const gfx::Rect old_bounds = bounds_;
   bounds_ = bounds;
 
   RecomputeDrawsContentAndUVRect();
   RecomputePosition();
 
-  if (!closure.is_null())
-    closure.Run();
+  if (delegate_)
+    delegate_->OnLayerBoundsChanged(old_bounds);
 
-  if (was_move) {
+  if (bounds.size() == old_bounds.size()) {
     // Don't schedule a draw if we're invisible. We'll schedule one
     // automatically when we get visible.
     if (IsDrawn())
@@ -900,6 +1013,11 @@ void Layer::SetBoundsFromAnimation(const gfx::Rect& bounds) {
   } else {
     // Always schedule a paint, even if we're invisible.
     SchedulePaint(gfx::Rect(bounds.size()));
+  }
+
+  if (sync_bounds_) {
+    for (const auto& mirror : mirrors_)
+      mirror->dest()->SetBounds(bounds);
   }
 }
 
@@ -981,6 +1099,16 @@ LayerAnimatorCollection* Layer::GetLayerAnimatorCollection() {
   return compositor ? compositor->layer_animator_collection() : NULL;
 }
 
+int Layer::GetFrameNumber() const {
+  const Compositor* compositor = GetCompositor();
+  return compositor ? compositor->activated_frame_count() : 0;
+}
+
+float Layer::GetRefreshRate() const {
+  const Compositor* compositor = GetCompositor();
+  return compositor ? compositor->refresh_rate() : 60.0;
+}
+
 cc::Layer* Layer::GetCcLayer() const {
   return cc_layer_;
 }
@@ -1019,21 +1147,9 @@ void Layer::RecomputeDrawsContentAndUVRect() {
   if (texture_layer_.get()) {
     size.SetToMin(frame_size_in_dip_);
     gfx::PointF uv_top_left(0.f, 0.f);
-    gfx::PointF uv_bottom_right(1.f, 1.f);
-    if (!texture_crop_.IsEmpty()) {
-      uv_top_left = texture_crop_.origin();
-      uv_top_left.Scale(1.f / frame_size_in_dip_.width(),
-                        1.f / frame_size_in_dip_.height());
-      uv_bottom_right = texture_crop_.bottom_right();
-      uv_bottom_right.Scale(1.f / frame_size_in_dip_.width(),
-                            1.f / frame_size_in_dip_.height());
-    }
-    float x_scale = texture_x_scale_ * static_cast<float>(size.width()) /
-                    frame_size_in_dip_.width();
-    float y_scale = texture_y_scale_ * static_cast<float>(size.height()) /
-                    frame_size_in_dip_.height();
-    uv_top_left.Scale(x_scale, y_scale);
-    uv_bottom_right.Scale(x_scale, y_scale);
+    gfx::PointF uv_bottom_right(
+      static_cast<float>(size.width()) / frame_size_in_dip_.width(),
+      static_cast<float>(size.height()) / frame_size_in_dip_.height());
     texture_layer_->SetUV(uv_top_left, uv_bottom_right);
   } else if (surface_layer_.get()) {
     size.SetToMin(frame_size_in_dip_);
@@ -1053,7 +1169,7 @@ void Layer::SetCompositorForAnimatorsInTree(Compositor* compositor) {
   if (animator_) {
     if (animator_->is_animating())
       animator_->AddToCollection(collection);
-    animator_->SetCompositor(compositor);
+    animator_->AttachLayerAndTimeline(compositor);
   }
 
   for (auto* child : children_)
@@ -1065,12 +1181,22 @@ void Layer::ResetCompositorForAnimatorsInTree(Compositor* compositor) {
   LayerAnimatorCollection* collection = compositor->layer_animator_collection();
 
   if (animator_) {
-    animator_->ResetCompositor(compositor);
+    animator_->DetachLayerAndTimeline(compositor);
     animator_->RemoveFromCollection(collection);
   }
 
   for (auto* child : children_)
     child->ResetCompositorForAnimatorsInTree(compositor);
+}
+
+void Layer::OnMirrorDestroyed(LayerMirror* mirror) {
+  const auto it = std::find_if(mirrors_.begin(), mirrors_.end(),
+      [mirror](const std::unique_ptr<LayerMirror>& mirror_ptr) {
+        return mirror_ptr.get() == mirror;
+      });
+
+  DCHECK(it != mirrors_.end());
+  mirrors_.erase(it);
 }
 
 }  // namespace ui

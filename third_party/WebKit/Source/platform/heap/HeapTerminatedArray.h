@@ -6,62 +6,62 @@
 #define HeapTerminatedArray_h
 
 #include "platform/heap/Heap.h"
-#include "wtf/TerminatedArray.h"
-#include "wtf/TerminatedArrayBuilder.h"
+#include "platform/wtf/TerminatedArray.h"
+#include "platform/wtf/TerminatedArrayBuilder.h"
 
 namespace blink {
 
-template<typename T>
+template <typename T>
 class HeapTerminatedArray : public TerminatedArray<T> {
-    DISALLOW_NEW();
-    IS_GARBAGE_COLLECTED_TYPE();
-public:
-    using TerminatedArray<T>::begin;
-    using TerminatedArray<T>::end;
+  DISALLOW_NEW();
+  IS_GARBAGE_COLLECTED_TYPE();
 
-    DEFINE_INLINE_TRACE()
-    {
-        for (typename TerminatedArray<T>::iterator it = begin(); it != end(); ++it)
-            visitor->trace(*it);
+ public:
+  using TerminatedArray<T>::begin;
+  using TerminatedArray<T>::end;
+
+  DEFINE_INLINE_TRACE() {
+    for (typename TerminatedArray<T>::iterator it = begin(); it != end(); ++it)
+      visitor->Trace(*it);
+  }
+
+ private:
+  // Allocator describes how HeapTerminatedArrayBuilder should create new
+  // instances of HeapTerminatedArray and manage their lifetimes.
+  struct Allocator final {
+    STATIC_ONLY(Allocator);
+    using PassPtr = HeapTerminatedArray*;
+    using Ptr = Member<HeapTerminatedArray>;
+
+    static PassPtr Release(Ptr& ptr) { return ptr; }
+
+    static PassPtr Create(size_t capacity) {
+      return reinterpret_cast<HeapTerminatedArray*>(
+          ThreadHeap::Allocate<HeapTerminatedArray>(
+              capacity * sizeof(T), IsEagerlyFinalizedType<T>::value));
     }
 
-private:
-    // Allocator describes how HeapTerminatedArrayBuilder should create new intances
-    // of HeapTerminatedArray and manage their lifetimes.
-    struct Allocator final {
-        STATIC_ONLY(Allocator);
-        using PassPtr = HeapTerminatedArray*;
-        using Ptr = Member<HeapTerminatedArray>;
+    static PassPtr Resize(PassPtr ptr, size_t capacity) {
+      return reinterpret_cast<HeapTerminatedArray*>(
+          ThreadHeap::Reallocate<HeapTerminatedArray>(ptr,
+                                                      capacity * sizeof(T)));
+    }
+  };
 
-        static PassPtr release(Ptr& ptr)
-        {
-            return ptr;
-        }
+  // Prohibit construction. Allocator makes HeapTerminatedArray instances for
+  // HeapTerminatedArrayBuilder by pointer casting.
+  HeapTerminatedArray();
 
-        static PassPtr create(size_t capacity)
-        {
-            return reinterpret_cast<HeapTerminatedArray*>(ThreadHeap::allocate<HeapTerminatedArray>(capacity * sizeof(T), IsEagerlyFinalizedType<T>::value));
-        }
-
-        static PassPtr resize(PassPtr ptr, size_t capacity)
-        {
-            return reinterpret_cast<HeapTerminatedArray*>(ThreadHeap::reallocate<HeapTerminatedArray>(ptr, capacity * sizeof(T)));
-        }
-    };
-
-    // Prohibit construction. Allocator makes HeapTerminatedArray instances for
-    // HeapTerminatedArrayBuilder by pointer casting.
-    HeapTerminatedArray();
-
-    template<typename U, template <typename> class> friend class WTF::TerminatedArrayBuilder;
+  template <typename U, template <typename> class>
+  friend class WTF::TerminatedArrayBuilder;
 };
 
-template<typename T>
+template <typename T>
 class TraceEagerlyTrait<HeapTerminatedArray<T>> {
-public:
-    static const bool value = TraceEagerlyTrait<T>::value;
+ public:
+  static const bool value = TraceEagerlyTrait<T>::value;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HeapTerminatedArray_h
+#endif  // HeapTerminatedArray_h

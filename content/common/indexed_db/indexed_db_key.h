@@ -15,10 +15,6 @@
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBTypes.h"
 
-namespace blink {
-class WebIDBKey;
-}
-
 namespace content {
 
 class CONTENT_EXPORT IndexedDBKey {
@@ -43,23 +39,23 @@ class CONTENT_EXPORT IndexedDBKey {
 
   blink::WebIDBKeyType type() const { return type_; }
   const std::vector<IndexedDBKey>& array() const {
-    DCHECK_EQ(type_, blink::WebIDBKeyTypeArray);
+    DCHECK_EQ(type_, blink::kWebIDBKeyTypeArray);
     return array_;
   }
   const std::string& binary() const {
-    DCHECK_EQ(type_, blink::WebIDBKeyTypeBinary);
+    DCHECK_EQ(type_, blink::kWebIDBKeyTypeBinary);
     return binary_;
   }
   const base::string16& string() const {
-    DCHECK_EQ(type_, blink::WebIDBKeyTypeString);
+    DCHECK_EQ(type_, blink::kWebIDBKeyTypeString);
     return string_;
   }
   double date() const {
-    DCHECK_EQ(type_, blink::WebIDBKeyTypeDate);
+    DCHECK_EQ(type_, blink::kWebIDBKeyTypeDate);
     return number_;
   }
   double number() const {
-    DCHECK_EQ(type_, blink::WebIDBKeyTypeNumber);
+    DCHECK_EQ(type_, blink::kWebIDBKeyTypeNumber);
     return number_;
   }
 
@@ -76,6 +72,9 @@ class CONTENT_EXPORT IndexedDBKey {
 
   size_t size_estimate_;
 };
+
+// An index id, and corresponding set of keys to insert.
+using IndexedDBIndexKeys = std::pair<int64_t, std::vector<IndexedDBKey>>;
 
 }  // namespace content
 

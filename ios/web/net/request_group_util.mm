@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/web/net/request_group_util.h"
+#import "ios/web/net/request_group_util.h"
 
-#include <Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 #include "base/base64.h"
 #include "base/logging.h"
@@ -12,6 +12,10 @@
 #include "base/strings/sys_string_conversions.h"
 #import "net/base/mac/url_conversions.h"
 #include "url/gurl.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
 // Minimum length for a request group ID. A shorter string is considered as an

@@ -5,91 +5,91 @@
 #ifndef FontVariantNumeric_h
 #define FontVariantNumeric_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class FontVariantNumeric {
-    STACK_ALLOCATED();
+  STACK_ALLOCATED();
 
-public:
+ public:
+  enum NumericFigure { kNormalFigure = 0, kLiningNums, kOldstyleNums };
 
-    enum NumericFigure {
-        NormalFigure = 0,
-        LiningNums,
-        OldstyleNums
-    };
+  enum NumericSpacing { kNormalSpacing = 0, kProportionalNums, kTabularNums };
 
-    enum NumericSpacing {
-        NormalSpacing = 0,
-        ProportionalNums,
-        TabularNums
-    };
+  enum NumericFraction {
+    kNormalFraction = 0,
+    kDiagonalFractions,
+    kStackedFractions
+  };
 
-    enum NumericFraction {
-        NormalFraction = 0,
-        DiagonalFractions,
-        StackedFractions
-    };
+  enum Ordinal { kOrdinalOff = 0, kOrdinalOn };
 
-    enum Ordinal {
-        OrdinalOff = 0,
-        OrdinalOn
-    };
+  enum SlashedZero { kSlashedZeroOff = 0, kSlashedZeroOn };
 
-    enum SlashedZero {
-        SlashedZeroOff = 0,
-        SlashedZeroOn
-    };
+  FontVariantNumeric() : fields_as_unsigned_(0) {}
 
-    FontVariantNumeric() : m_fieldsAsUnsigned(0) { }
+  static FontVariantNumeric InitializeFromUnsigned(unsigned init_value) {
+    return FontVariantNumeric(init_value);
+  }
 
-    static FontVariantNumeric initializeFromUnsigned(unsigned initValue)
-    {
-        return FontVariantNumeric(initValue);
-    }
+  void SetNumericFigure(NumericFigure figure) {
+    fields_.numeric_figure_ = figure;
+  };
+  void SetNumericSpacing(NumericSpacing spacing) {
+    fields_.numeric_spacing_ = spacing;
+  };
+  void SetNumericFraction(NumericFraction fraction) {
+    fields_.numeric_fraction_ = fraction;
+  };
+  void SetOrdinal(Ordinal ordinal) { fields_.ordinal_ = ordinal; };
+  void SetSlashedZero(SlashedZero slashed_zero) {
+    fields_.slashed_zero_ = slashed_zero;
+  };
 
-    void setNumericFigure(NumericFigure figure) { m_fields.m_numericFigure = figure; };
-    void setNumericSpacing(NumericSpacing spacing) { m_fields.m_numericSpacing = spacing; };
-    void setNumericFraction(NumericFraction fraction) { m_fields.m_numericFraction = fraction; };
-    void setOrdinal(Ordinal ordinal) { m_fields.m_ordinal = ordinal; };
-    void setSlashedZero(SlashedZero slashedZero) { m_fields.m_slashedZero = slashedZero; };
+  NumericFigure NumericFigureValue() const {
+    return static_cast<NumericFigure>(fields_.numeric_figure_);
+  }
+  NumericSpacing NumericSpacingValue() const {
+    return static_cast<NumericSpacing>(fields_.numeric_spacing_);
+  }
+  NumericFraction NumericFractionValue() const {
+    return static_cast<NumericFraction>(fields_.numeric_fraction_);
+  }
+  Ordinal OrdinalValue() const {
+    return static_cast<Ordinal>(fields_.ordinal_);
+  };
+  SlashedZero SlashedZeroValue() const {
+    return static_cast<SlashedZero>(fields_.slashed_zero_);
+  }
 
-    NumericFigure numericFigureValue() const { return static_cast<NumericFigure>(m_fields.m_numericFigure); }
-    NumericSpacing numericSpacingValue() const { return static_cast<NumericSpacing>(m_fields.m_numericSpacing); }
-    NumericFraction numericFractionValue() const { return static_cast<NumericFraction>(m_fields.m_numericFraction); }
-    Ordinal ordinalValue() const { return static_cast<Ordinal>(m_fields.m_ordinal); };
-    SlashedZero slashedZeroValue() const { return static_cast<SlashedZero>(m_fields.m_slashedZero); }
+  bool IsAllNormal() { return !fields_as_unsigned_; }
 
-    bool isAllNormal() { return !m_fieldsAsUnsigned; }
+  bool operator==(const FontVariantNumeric& other) const {
+    return fields_as_unsigned_ == other.fields_as_unsigned_;
+  }
 
-    bool operator==(const FontVariantNumeric& other) const
-    {
-        return m_fieldsAsUnsigned == other.m_fieldsAsUnsigned;
-    }
+ private:
+  FontVariantNumeric(unsigned init_value) : fields_as_unsigned_(init_value) {}
 
-private:
-    FontVariantNumeric(unsigned initValue) : m_fieldsAsUnsigned(initValue) { }
+  struct BitFields {
+    unsigned numeric_figure_ : 2;
+    unsigned numeric_spacing_ : 2;
+    unsigned numeric_fraction_ : 2;
+    unsigned ordinal_ : 1;
+    unsigned slashed_zero_ : 1;
+  };
 
-    struct BitFields {
-        unsigned m_numericFigure : 2;
-        unsigned m_numericSpacing : 2;
-        unsigned m_numericFraction : 2;
-        unsigned m_ordinal : 1;
-        unsigned m_slashedZero : 1;
-    };
+  union {
+    BitFields fields_;
+    unsigned fields_as_unsigned_;
+  };
+  static_assert(sizeof(BitFields) == sizeof(unsigned),
+                "Mapped union types must match in size.");
 
-
-    union {
-        BitFields m_fields;
-        unsigned m_fieldsAsUnsigned;
-    };
-    static_assert(sizeof(BitFields) == sizeof(unsigned), "Mapped union types must match in size.");
-
-    // Used in setVariant to store the value in m_fields.m_variantNumeric;
-    friend class FontDescription;
+  // Used in setVariant to store the value in m_fields.m_variantNumeric;
+  friend class FontDescription;
 };
-
 }
 
-#endif // FontVariantNumeric_h
+#endif  // FontVariantNumeric_h

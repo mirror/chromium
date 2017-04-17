@@ -5,9 +5,15 @@
 #include "chrome/browser/ui/views/location_bar/icon_label_bubble_view.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/test/views_test_base.h"
+
+#if defined(USE_ASH)
+#include "ui/aura/window.h"
+#endif
 
 namespace {
 
@@ -26,8 +32,8 @@ class TestIconLabelBubbleView : public IconLabelBubbleView {
     SHRINKING,
   };
 
-  TestIconLabelBubbleView(const gfx::FontList& font_list, SkColor color)
-      : IconLabelBubbleView(0, font_list, color, false), value_(0) {
+  explicit TestIconLabelBubbleView(const gfx::FontList& font_list)
+      : IconLabelBubbleView(font_list, false), value_(0) {
     GetImageView()->SetImageSize(gfx::Size(kImageSize, kImageSize));
     SetLabel(base::ASCIIToUTF16("Label"));
   }
@@ -56,11 +62,12 @@ class TestIconLabelBubbleView : public IconLabelBubbleView {
  protected:
   // IconLabelBubbleView:
   SkColor GetTextColor() const override { return kTestColor; }
-  SkColor GetBorderColor() const override { return kTestColor; }
 
-  bool ShouldShowBackground() const override {
+  bool ShouldShowLabel() const override {
     return !IsShrinking() ||
-           (width() >= MinimumWidthForImageWithBackgroundShown());
+           (width() > (image()->GetPreferredSize().width() +
+                       2 * LocationBarView::kIconInteriorPadding +
+                       2 * GetLayoutConstant(LOCATION_BAR_ELEMENT_PADDING)));
   }
 
   double WidthMultiplier() const override {
@@ -104,7 +111,7 @@ class IconLabelBubbleViewTest : public views::ViewsTestBase {
   void SetUp() override {
     views::ViewsTestBase::SetUp();
     gfx::FontList font_list;
-    view_.reset(new TestIconLabelBubbleView(font_list, kTestColor));
+    view_.reset(new TestIconLabelBubbleView(font_list));
   }
 
   void VerifyWithAnimationStep(int step) {
@@ -125,7 +132,7 @@ class IconLabelBubbleViewTest : public views::ViewsTestBase {
     minimum_size_reached_ = false;
     previous_width_ = 0;
     initial_image_x_ = GetImageBounds().x();
-    EXPECT_NE(0, initial_image_x_);
+    EXPECT_EQ(0, initial_image_x_);
   }
 
   void VerifyAnimationStep() {
@@ -147,7 +154,6 @@ class IconLabelBubbleViewTest : public views::ViewsTestBase {
         if (steady_reached_)
           EXPECT_EQ(previous_width_, width());
         EXPECT_EQ(initial_image_x_, GetImageBounds().x());
-        EXPECT_GT(GetImageBounds().x(), 0);
         EXPECT_LT(GetImageBounds().right(), width());
         EXPECT_TRUE(IsLabelVisible());
         EXPECT_GT(GetLabelBounds().x(), GetImageBounds().right());
@@ -216,3 +222,30 @@ TEST_F(IconLabelBubbleViewTest, AnimateLayout) {
   VerifyWithAnimationStep(10);
   VerifyWithAnimationStep(25);
 }
+
+#if defined(USE_ASH)
+// Verifies IconLabelBubbleView::GetPreferredSize() doesn't crash when there is
+// a widget but no compositor.
+using IconLabelBubbleViewCrashTest = views::ViewsTestBase;
+
+TEST_F(IconLabelBubbleViewCrashTest,
+       GetPreferredSizeDoesntCrashWhenNoCompositor) {
+  gfx::FontList font_list;
+  views::Widget::InitParams params =
+      CreateParams(views::Widget::InitParams::TYPE_WINDOW);
+  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  views::Widget widget;
+  widget.Init(params);
+  IconLabelBubbleView* icon_label_bubble_view =
+      new TestIconLabelBubbleView(font_list);
+  icon_label_bubble_view->SetLabel(base::ASCIIToUTF16("x"));
+  widget.GetContentsView()->AddChildView(icon_label_bubble_view);
+  aura::Window* widget_native_view = widget.GetNativeView();
+  // Remove the window from its parent. This means GetWidget() in
+  // IconLabelBubbleView will return non-null, but GetWidget()->GetCompositor()
+  // will return null.
+  ASSERT_TRUE(widget_native_view->parent());
+  widget_native_view->parent()->RemoveChild(widget_native_view);
+  static_cast<views::View*>(icon_label_bubble_view)->GetPreferredSize();
+}
+#endif

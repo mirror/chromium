@@ -25,29 +25,27 @@
 namespace blink {
 
 inline SVGFEMergeNodeElement::SVGFEMergeNodeElement(Document& document)
-    : SVGElement(SVGNames::feMergeNodeTag, document)
-    , m_in1(SVGAnimatedString::create(this, SVGNames::inAttr, SVGString::create()))
-{
-    addToPropertyMap(m_in1);
+    : SVGElement(SVGNames::feMergeNodeTag, document),
+      in1_(SVGAnimatedString::Create(this, SVGNames::inAttr)) {
+  AddToPropertyMap(in1_);
 }
 
-DEFINE_TRACE(SVGFEMergeNodeElement)
-{
-    visitor->trace(m_in1);
-    SVGElement::trace(visitor);
+DEFINE_TRACE(SVGFEMergeNodeElement) {
+  visitor->Trace(in1_);
+  SVGElement::Trace(visitor);
 }
 
 DEFINE_NODE_FACTORY(SVGFEMergeNodeElement)
 
-void SVGFEMergeNodeElement::svgAttributeChanged(const QualifiedName& attrName)
-{
-    if (attrName == SVGNames::inAttr) {
-        SVGElement::InvalidationGuard invalidationGuard(this);
-        invalidateFilterPrimitiveParent(this);
-        return;
-    }
+void SVGFEMergeNodeElement::SvgAttributeChanged(
+    const QualifiedName& attr_name) {
+  if (attr_name == SVGNames::inAttr) {
+    SVGElement::InvalidationGuard invalidation_guard(this);
+    InvalidateFilterPrimitiveParent(this);
+    return;
+  }
 
-    SVGElement::svgAttributeChanged(attrName);
+  SVGElement::SvgAttributeChanged(attr_name);
 }
 
-} // namespace blink
+}  // namespace blink

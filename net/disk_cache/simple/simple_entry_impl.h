@@ -19,7 +19,8 @@
 #include "net/disk_cache/disk_cache.h"
 #include "net/disk_cache/simple/simple_entry_format.h"
 #include "net/disk_cache/simple/simple_entry_operation.h"
-#include "net/log/net_log.h"
+#include "net/log/net_log_event_type.h"
+#include "net/log/net_log_with_source.h"
 
 namespace base {
 class TaskRunner;
@@ -28,6 +29,7 @@ class TaskRunner;
 namespace net {
 class GrowableIOBuffer;
 class IOBuffer;
+class NetLog;
 }
 
 namespace disk_cache {
@@ -119,6 +121,9 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
   bool CouldBeSparse() const override;
   void CancelSparseIO() override;
   int ReadyForSparseIO(const CompletionCallback& callback) override;
+
+  // Returns the estimate of dynamically allocated memory in bytes.
+  size_t EstimateMemoryUsage() const;
 
  private:
   class ScopedOperationRunner;
@@ -226,7 +231,7 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
       const base::TimeTicks& start_time,
       std::unique_ptr<SimpleEntryCreationResults> in_results,
       Entry** out_entry,
-      net::NetLog::EventType end_event_type);
+      net::NetLogEventType end_event_type);
 
   // Called after we've closed and written the EOF record to our entry. Until
   // this point it hasn't been safe to OpenEntry() the same entry, but from this
@@ -248,10 +253,14 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
                              std::unique_ptr<int> result);
 
   // Called after an asynchronous write completes.
+  // |buf| parameter brings back a reference to net::IOBuffer to the original
+  // thread, so that we can reduce cross thread malloc/free pair.
+  // See http://crbug.com/708644 for details.
   void WriteOperationComplete(int stream_index,
                               const CompletionCallback& completion_callback,
                               std::unique_ptr<SimpleEntryStat> entry_stat,
-                              std::unique_ptr<int> result);
+                              std::unique_ptr<int> result,
+                              net::IOBuffer* buf);
 
   void ReadSparseOperationComplete(
       const CompletionCallback& completion_callback,
@@ -275,8 +284,8 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
   // Called after validating the checksums on an entry. Passes through the
   // original result if successful, propagates the error if the checksum does
   // not validate.
-  void ChecksumOperationComplete(int stream_index,
-                                 int orig_result,
+  void ChecksumOperationComplete(int original_result,
+                                 int stream_index,
                                  const CompletionCallback& completion_callback,
                                  std::unique_ptr<int> result);
 
@@ -368,7 +377,7 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
 
   std::queue<SimpleEntryOperation> pending_operations_;
 
-  net::BoundNetLog net_log_;
+  net::NetLogWithSource net_log_;
 
   std::unique_ptr<SimpleEntryOperation> executing_operation_;
 

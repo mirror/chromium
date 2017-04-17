@@ -42,7 +42,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::CacheStorageBatchOperation)
 IPC_STRUCT_TRAITS_END()
 
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebServiceWorkerCacheError,
-                          blink::WebServiceWorkerCacheErrorLast)
+                          blink::kWebServiceWorkerCacheErrorLast)
 
 //---------------------------------------------------------------------------
 // Messages sent from the child process to the browser.
@@ -149,10 +149,6 @@ IPC_MESSAGE_CONTROL3(CacheStorageMsg_CacheStorageOpenError,
                      int /* request_id */,
                      blink::WebServiceWorkerCacheError /* reason */)
 IPC_MESSAGE_CONTROL3(CacheStorageMsg_CacheStorageDeleteError,
-                     int /* thread_id */,
-                     int /* request_id */,
-                     blink::WebServiceWorkerCacheError /* reason */)
-IPC_MESSAGE_CONTROL3(CacheStorageMsg_CacheStorageKeysError,
                      int /* thread_id */,
                      int /* request_id */,
                      blink::WebServiceWorkerCacheError /* reason */)

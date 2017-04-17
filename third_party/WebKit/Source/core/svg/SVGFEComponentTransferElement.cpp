@@ -27,60 +27,64 @@
 #include "core/svg/SVGFEFuncGElement.h"
 #include "core/svg/SVGFEFuncRElement.h"
 #include "core/svg/graphics/filters/SVGFilterBuilder.h"
-#include "platform/graphics/filters/FilterEffect.h"
+#include "platform/graphics/filters/FEComponentTransfer.h"
 
 namespace blink {
 
-inline SVGFEComponentTransferElement::SVGFEComponentTransferElement(Document& document)
-    : SVGFilterPrimitiveStandardAttributes(SVGNames::feComponentTransferTag, document)
-    , m_in1(SVGAnimatedString::create(this, SVGNames::inAttr, SVGString::create()))
-{
-    addToPropertyMap(m_in1);
+inline SVGFEComponentTransferElement::SVGFEComponentTransferElement(
+    Document& document)
+    : SVGFilterPrimitiveStandardAttributes(SVGNames::feComponentTransferTag,
+                                           document),
+      in1_(SVGAnimatedString::Create(this, SVGNames::inAttr)) {
+  AddToPropertyMap(in1_);
 }
 
-DEFINE_TRACE(SVGFEComponentTransferElement)
-{
-    visitor->trace(m_in1);
-    SVGFilterPrimitiveStandardAttributes::trace(visitor);
+DEFINE_TRACE(SVGFEComponentTransferElement) {
+  visitor->Trace(in1_);
+  SVGFilterPrimitiveStandardAttributes::Trace(visitor);
 }
 
 DEFINE_NODE_FACTORY(SVGFEComponentTransferElement)
 
-void SVGFEComponentTransferElement::svgAttributeChanged(const QualifiedName& attrName)
-{
-    if (attrName == SVGNames::inAttr) {
-        SVGElement::InvalidationGuard invalidationGuard(this);
-        invalidate();
-        return;
-    }
+void SVGFEComponentTransferElement::SvgAttributeChanged(
+    const QualifiedName& attr_name) {
+  if (attr_name == SVGNames::inAttr) {
+    SVGElement::InvalidationGuard invalidation_guard(this);
+    Invalidate();
+    return;
+  }
 
-    SVGFilterPrimitiveStandardAttributes::svgAttributeChanged(attrName);
+  SVGFilterPrimitiveStandardAttributes::SvgAttributeChanged(attr_name);
 }
 
-FilterEffect* SVGFEComponentTransferElement::build(SVGFilterBuilder* filterBuilder, Filter* filter)
-{
-    FilterEffect* input1 = filterBuilder->getEffectById(AtomicString(m_in1->currentValue()->value()));
-    ASSERT(input1);
+FilterEffect* SVGFEComponentTransferElement::Build(
+    SVGFilterBuilder* filter_builder,
+    Filter* filter) {
+  FilterEffect* input1 = filter_builder->GetEffectById(
+      AtomicString(in1_->CurrentValue()->Value()));
+  DCHECK(input1);
 
-    ComponentTransferFunction red;
-    ComponentTransferFunction green;
-    ComponentTransferFunction blue;
-    ComponentTransferFunction alpha;
+  ComponentTransferFunction red;
+  ComponentTransferFunction green;
+  ComponentTransferFunction blue;
+  ComponentTransferFunction alpha;
 
-    for (SVGElement* element = Traversal<SVGElement>::firstChild(*this); element; element = Traversal<SVGElement>::nextSibling(*element)) {
-        if (isSVGFEFuncRElement(*element))
-            red = toSVGFEFuncRElement(*element).transferFunction();
-        else if (isSVGFEFuncGElement(*element))
-            green = toSVGFEFuncGElement(*element).transferFunction();
-        else if (isSVGFEFuncBElement(*element))
-            blue = toSVGFEFuncBElement(*element).transferFunction();
-        else if (isSVGFEFuncAElement(*element))
-            alpha = toSVGFEFuncAElement(*element).transferFunction();
-    }
+  for (SVGElement* element = Traversal<SVGElement>::FirstChild(*this); element;
+       element = Traversal<SVGElement>::NextSibling(*element)) {
+    if (isSVGFEFuncRElement(*element))
+      red = toSVGFEFuncRElement(*element).TransferFunction();
+    else if (isSVGFEFuncGElement(*element))
+      green = toSVGFEFuncGElement(*element).TransferFunction();
+    else if (isSVGFEFuncBElement(*element))
+      blue = toSVGFEFuncBElement(*element).TransferFunction();
+    else if (isSVGFEFuncAElement(*element))
+      alpha = toSVGFEFuncAElement(*element).TransferFunction();
+  }
 
-    FilterEffect* effect = FEComponentTransfer::create(filter, red, green, blue, alpha);
-    effect->inputEffects().append(input1);
-    return effect;
+  FilterEffect* effect =
+      FEComponentTransfer::Create(filter, red, green, blue, alpha);
+  effect->InputEffects().push_back(input1);
+  return effect;
 }
 
-} // namespace blink
+}  // namespace blink

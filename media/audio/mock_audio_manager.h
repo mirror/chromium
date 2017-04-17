@@ -5,7 +5,9 @@
 #ifndef MEDIA_AUDIO_MOCK_AUDIO_MANAGER_H_
 #define MEDIA_AUDIO_MOCK_AUDIO_MANAGER_H_
 
+#include "base/callback.h"
 #include "base/macros.h"
+#include "base/sequenced_task_runner_helpers.h"
 #include "media/audio/audio_manager.h"
 
 namespace media {
@@ -14,8 +16,19 @@ namespace media {
 // which avoids to use the actual (system and platform dependent) AudioManager.
 // Some bots does not have input devices, thus using the actual AudioManager
 // would causing failures on classes which expect that.
-class MockAudioManager : public media::AudioManager {
+class MockAudioManager : public AudioManager {
  public:
+  class Deleter {
+   public:
+    void operator()(const MockAudioManager* instance) const;
+  };
+
+  using UniquePtr = std::unique_ptr<MockAudioManager, Deleter>;
+  using GetDeviceDescriptionsCallback =
+      base::RepeatingCallback<void(AudioDeviceDescriptions*)>;
+  using GetAssociatedOutputDeviceIDCallback =
+      base::RepeatingCallback<std::string(const std::string&)>;
+
   explicit MockAudioManager(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
@@ -27,21 +40,22 @@ class MockAudioManager : public media::AudioManager {
 
   void ShowAudioInputSettings() override;
 
-  void GetAudioInputDeviceNames(media::AudioDeviceNames* device_names) override;
+  void GetAudioInputDeviceDescriptions(
+      media::AudioDeviceDescriptions* device_descriptions) override;
 
-  void GetAudioOutputDeviceNames(
-      media::AudioDeviceNames* device_names) override;
+  void GetAudioOutputDeviceDescriptions(
+      media::AudioDeviceDescriptions* device_descriptions) override;
 
-  media::AudioOutputStream* MakeAudioOutputStream(
+  AudioOutputStream* MakeAudioOutputStream(
       const media::AudioParameters& params,
       const std::string& device_id,
       const LogCallback& log_callback) override;
 
-  media::AudioOutputStream* MakeAudioOutputStreamProxy(
+  AudioOutputStream* MakeAudioOutputStreamProxy(
       const media::AudioParameters& params,
       const std::string& device_id) override;
 
-  media::AudioInputStream* MakeAudioInputStream(
+  AudioInputStream* MakeAudioInputStream(
       const media::AudioParameters& params,
       const std::string& device_id,
       const LogCallback& log_callback) override;
@@ -60,10 +74,42 @@ class MockAudioManager : public media::AudioManager {
   std::unique_ptr<AudioLog> CreateAudioLog(
       AudioLogFactory::AudioComponent component) override;
 
+  void InitializeOutputDebugRecording(
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner) override;
+  void EnableOutputDebugRecording(
+      const base::FilePath& base_file_name) override;
+  void DisableOutputDebugRecording() override;
+
+  const char* GetName() override;
+
+  // Setters to emulate desired in-test behavior.
+  void SetInputStreamParameters(const AudioParameters& params);
+  void SetOutputStreamParameters(const AudioParameters& params);
+  void SetDefaultOutputStreamParameters(const AudioParameters& params);
+  void SetHasInputDevices(bool has_input_devices);
+  void SetHasOutputDevices(bool has_output_devices);
+  void SetInputDeviceDescriptionsCallback(
+      GetDeviceDescriptionsCallback callback);
+  void SetOutputDeviceDescriptionsCallback(
+      GetDeviceDescriptionsCallback callback);
+  void SetAssociatedOutputDeviceIDCallback(
+      GetAssociatedOutputDeviceIDCallback callback);
+
  protected:
   ~MockAudioManager() override;
 
  private:
+  friend class base::DeleteHelper<MockAudioManager>;
+
+  AudioParameters input_params_;
+  AudioParameters output_params_;
+  AudioParameters default_output_params_;
+  bool has_input_devices_ = true;
+  bool has_output_devices_ = true;
+  GetDeviceDescriptionsCallback get_input_device_descriptions_cb_;
+  GetDeviceDescriptionsCallback get_output_device_descriptions_cb_;
+  GetAssociatedOutputDeviceIDCallback get_associated_output_device_id_cb_;
+
   DISALLOW_COPY_AND_ASSIGN(MockAudioManager);
 };
 

@@ -13,33 +13,35 @@
 
 namespace blink {
 
-class MODULES_EXPORT BatteryDispatcher final : public GarbageCollectedFinalized<BatteryDispatcher>, public PlatformEventDispatcher {
-    USING_GARBAGE_COLLECTED_MIXIN(BatteryDispatcher);
-    WTF_MAKE_NONCOPYABLE(BatteryDispatcher);
-public:
-    static BatteryDispatcher& instance();
+class MODULES_EXPORT BatteryDispatcher final
+    : public GarbageCollectedFinalized<BatteryDispatcher>,
+      public PlatformEventDispatcher {
+  USING_GARBAGE_COLLECTED_MIXIN(BatteryDispatcher);
+  WTF_MAKE_NONCOPYABLE(BatteryDispatcher);
 
-    const BatteryStatus* latestData() const
-    {
-        return m_hasLatestData ? &m_batteryStatus : nullptr;
-    }
+ public:
+  static BatteryDispatcher& Instance();
 
-private:
-    BatteryDispatcher();
+  const BatteryStatus* LatestData() const {
+    return has_latest_data_ ? &battery_status_ : nullptr;
+  }
 
-    void queryNextStatus();
-    void onDidChange(device::blink::BatteryStatusPtr);
-    void updateBatteryStatus(const BatteryStatus&);
+ private:
+  BatteryDispatcher();
 
-    // Inherited from PlatformEventDispatcher.
-    void startListening() override;
-    void stopListening() override;
+  void QueryNextStatus();
+  void OnDidChange(device::mojom::blink::BatteryStatusPtr);
+  void UpdateBatteryStatus(const BatteryStatus&);
 
-    device::blink::BatteryMonitorPtr m_monitor;
-    BatteryStatus m_batteryStatus;
-    bool m_hasLatestData;
+  // Inherited from PlatformEventDispatcher.
+  void StartListening() override;
+  void StopListening() override;
+
+  device::mojom::blink::BatteryMonitorPtr monitor_;
+  BatteryStatus battery_status_;
+  bool has_latest_data_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BatteryDispatcher_h
+#endif  // BatteryDispatcher_h

@@ -39,21 +39,22 @@ namespace blink {
 class WebString;
 
 class WebDatabase {
-public:
-    BLINK_EXPORT static void updateDatabaseSize(
-        const WebSecurityOrigin&, const WebString& name, long long size);
-    BLINK_EXPORT static void updateSpaceAvailable(
-        const WebSecurityOrigin&, long long spaceAvailable);
-    BLINK_EXPORT static void resetSpaceAvailable(
-        const WebSecurityOrigin&);
+ public:
+  BLINK_EXPORT static void UpdateDatabaseSize(const WebSecurityOrigin&,
+                                              const WebString& name,
+                                              long long size);
+  BLINK_EXPORT static void UpdateSpaceAvailable(const WebSecurityOrigin&,
+                                                long long space_available);
+  BLINK_EXPORT static void ResetSpaceAvailable(const WebSecurityOrigin&);
 
-    BLINK_EXPORT static void closeDatabaseImmediately(
-        const WebSecurityOrigin&, const WebString& databaseName);
+  BLINK_EXPORT static void CloseDatabaseImmediately(
+      const WebSecurityOrigin&,
+      const WebString& database_name);
 
-private:
-    WebDatabase() { }
+ private:
+  WebDatabase() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

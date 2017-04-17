@@ -58,8 +58,8 @@ class LazySafeBrowsingDatabaseManager {
   scoped_refptr<SafeBrowsingDatabaseManager> instance_;
 };
 
-static base::LazyInstance<LazySafeBrowsingDatabaseManager> g_database_manager =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<LazySafeBrowsingDatabaseManager>::DestructorAtExit
+    g_database_manager = LAZY_INSTANCE_INITIALIZER;
 
 // Implementation of SafeBrowsingDatabaseManager::Client, the class which is
 // called back from safebrowsing queries.
@@ -304,7 +304,7 @@ void Blacklist::OnBlacklistStateReceived(const std::string& id,
     for (std::vector<std::string>::const_iterator ids_it = ids.begin();
          ids_it != ids.end();
          ++ids_it) {
-      if (!ContainsKey(blacklist_state_cache_, *ids_it)) {
+      if (!base::ContainsKey(blacklist_state_cache_, *ids_it)) {
         have_all_in_cache = false;
         break;
       }
@@ -353,7 +353,8 @@ void Blacklist::Observe(int type,
                         const content::NotificationSource& source,
                         const content::NotificationDetails& details) {
   DCHECK_EQ(chrome::NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE, type);
-  FOR_EACH_OBSERVER(Observer, observers_, OnBlacklistUpdated());
+  for (auto& observer : observers_)
+    observer.OnBlacklistUpdated();
 }
 
 }  // namespace extensions

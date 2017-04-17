@@ -39,104 +39,102 @@ namespace blink {
 
 using namespace HTMLNames;
 
-AtomicString StyleSheetCandidate::title() const
-{
-    return isElement() ? toElement(node()).fastGetAttribute(titleAttr) : nullAtom;
+AtomicString StyleSheetCandidate::Title() const {
+  return IsElement() ? ToElement(GetNode()).FastGetAttribute(titleAttr)
+                     : g_null_atom;
 }
 
-bool StyleSheetCandidate::isXSL() const
-{
-    return !node().document().isHTMLDocument() && m_type == Pi && toProcessingInstruction(node()).isXSL();
+bool StyleSheetCandidate::IsXSL() const {
+  return !GetNode().GetDocument().IsHTMLDocument() && type_ == kPi &&
+         ToProcessingInstruction(GetNode()).IsXSL();
 }
 
-bool StyleSheetCandidate::isImport() const
-{
-    return m_type == HTMLLink && toHTMLLinkElement(node()).isImport();
+bool StyleSheetCandidate::IsImport() const {
+  return type_ == kHTMLLink && toHTMLLinkElement(GetNode()).IsImport();
 }
 
-bool StyleSheetCandidate::isCSSStyle() const
-{
-    return m_type == HTMLStyle || m_type == SVGStyle;
+bool StyleSheetCandidate::IsCSSStyle() const {
+  return type_ == kHTMLStyle || type_ == kSVGStyle;
 }
 
-Document* StyleSheetCandidate::importedDocument() const
-{
-    DCHECK(isImport());
-    return toHTMLLinkElement(node()).import();
+Document* StyleSheetCandidate::ImportedDocument() const {
+  DCHECK(IsImport());
+  return toHTMLLinkElement(GetNode()).import();
 }
 
-bool StyleSheetCandidate::isAlternate() const
-{
-    if (!isElement())
-        return false;
-    return toElement(node()).getAttribute(relAttr).contains("alternate");
+bool StyleSheetCandidate::IsAlternate() const {
+  if (!IsElement())
+    return false;
+  return ToElement(GetNode()).getAttribute(relAttr).Contains("alternate");
 }
 
-bool StyleSheetCandidate::isEnabledViaScript() const
-{
-    return isHTMLLink() && toHTMLLinkElement(node()).isEnabledViaScript();
+bool StyleSheetCandidate::IsEnabledViaScript() const {
+  return IsHTMLLink() && toHTMLLinkElement(GetNode()).IsEnabledViaScript();
 }
 
-bool StyleSheetCandidate::isEnabledAndLoading() const
-{
-    return isHTMLLink() && !toHTMLLinkElement(node()).isDisabled() && toHTMLLinkElement(node()).styleSheetIsLoading();
+bool StyleSheetCandidate::IsEnabledAndLoading() const {
+  return IsHTMLLink() && !toHTMLLinkElement(GetNode()).IsDisabled() &&
+         toHTMLLinkElement(GetNode()).StyleSheetIsLoading();
 }
 
-bool StyleSheetCandidate::canBeActivated(const String& currentPreferrableName) const
-{
-    StyleSheet* sheet = this->sheet();
-    if (!sheet || sheet->disabled() || !sheet->isCSSStyleSheet())
-        return false;
+bool StyleSheetCandidate::CanBeActivated(
+    const String& current_preferrable_name) const {
+  StyleSheet* sheet = this->Sheet();
+  if (!sheet || sheet->disabled() || !sheet->IsCSSStyleSheet())
+    return false;
 
-    if (sheet->ownerNode() && sheet->ownerNode()->isInShadowTree())
-        return true;
+  if (sheet->ownerNode() && sheet->ownerNode()->IsInShadowTree()) {
+    if (IsCSSStyle())
+      return true;
+    if (IsHTMLLink() && !IsImport())
+      return !IsAlternate();
+  }
 
-    const AtomicString& title = this->title();
-    if (!isEnabledViaScript() && !title.isEmpty() && title != currentPreferrableName)
-        return false;
-    if (isAlternate() && title.isEmpty())
-        return false;
+  const AtomicString& title = this->Title();
+  if (!IsEnabledViaScript() && !title.IsEmpty() &&
+      title != current_preferrable_name)
+    return false;
+  if (IsAlternate() && title.IsEmpty())
+    return false;
 
-    return true;
+  return true;
 }
 
-StyleSheetCandidate::Type StyleSheetCandidate::typeOf(Node& node)
-{
-    if (node.getNodeType() == Node::PROCESSING_INSTRUCTION_NODE)
-        return Pi;
+StyleSheetCandidate::Type StyleSheetCandidate::TypeOf(Node& node) {
+  if (node.getNodeType() == Node::kProcessingInstructionNode)
+    return kPi;
 
-    if (node.isHTMLElement()) {
-        if (isHTMLLinkElement(node))
-            return HTMLLink;
-        if (isHTMLStyleElement(node))
-            return HTMLStyle;
+  if (node.IsHTMLElement()) {
+    if (isHTMLLinkElement(node))
+      return kHTMLLink;
+    if (isHTMLStyleElement(node))
+      return kHTMLStyle;
 
-        ASSERT_NOT_REACHED();
-        return HTMLStyle;
-    }
+    NOTREACHED();
+    return kInvalid;
+  }
 
-    if (isSVGStyleElement(node))
-        return SVGStyle;
+  if (isSVGStyleElement(node))
+    return kSVGStyle;
 
-    ASSERT_NOT_REACHED();
-    return HTMLStyle;
+  NOTREACHED();
+  return kInvalid;
 }
 
-StyleSheet* StyleSheetCandidate::sheet() const
-{
-    switch (m_type) {
-    case HTMLLink:
-        return toHTMLLinkElement(node()).sheet();
-    case HTMLStyle:
-        return toHTMLStyleElement(node()).sheet();
-    case SVGStyle:
-        return toSVGStyleElement(node()).sheet();
-    case Pi:
-        return toProcessingInstruction(node()).sheet();
-    }
-
-    ASSERT_NOT_REACHED();
-    return 0;
+StyleSheet* StyleSheetCandidate::Sheet() const {
+  switch (type_) {
+    case kHTMLLink:
+      return toHTMLLinkElement(GetNode()).sheet();
+    case kHTMLStyle:
+      return toHTMLStyleElement(GetNode()).sheet();
+    case kSVGStyle:
+      return toSVGStyleElement(GetNode()).sheet();
+    case kPi:
+      return ToProcessingInstruction(GetNode()).sheet();
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
-} // namespace blink
+}  // namespace blink

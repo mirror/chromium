@@ -10,8 +10,8 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
-#include "base/threading/worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/custom_handlers/protocol_handler_registry.h"
@@ -29,18 +29,17 @@
 #include "content/public/browser/cookie_store_factory.h"
 #include "content/public/browser/resource_context.h"
 #include "extensions/common/constants.h"
-#include "net/base/sdch_manager.h"
-#include "net/ftp/ftp_network_layer.h"
+#include "extensions/features/features.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties_impl.h"
-#include "net/sdch/sdch_owner.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
+#include "net/url_request/url_request_context_storage.h"
 #include "net/url_request/url_request_job_factory_impl.h"
 #include "storage/browser/database/database_tracker.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/common/extension.h"
 #endif
 
@@ -198,6 +197,8 @@ void OffTheRecordProfileIOData::InitializeInternal(
     content::ProtocolHandlerMap* protocol_handlers,
     content::URLRequestInterceptorScopedVector request_interceptors) const {
   net::URLRequestContext* main_context = main_request_context();
+  net::URLRequestContextStorage* main_context_storage =
+      main_request_context_storage();
 
   IOThread* const io_thread = profile_params->io_thread;
   IOThread::Globals* const io_thread_globals = io_thread->globals();
@@ -212,9 +213,8 @@ void OffTheRecordProfileIOData::InitializeInternal(
 
   main_context->set_net_log(io_thread->net_log());
 
-  main_context->set_network_delegate(chrome_network_delegate.get());
-
-  network_delegate_ = std::move(chrome_network_delegate);
+  main_context_storage->set_network_delegate(
+      std::move(chrome_network_delegate));
 
   main_context->set_host_resolver(
       io_thread_globals->host_resolver.get());
@@ -222,55 +222,39 @@ void OffTheRecordProfileIOData::InitializeInternal(
       io_thread_globals->http_auth_handler_factory.get());
   main_context->set_proxy_service(proxy_service());
 
-  main_context->set_backoff_manager(
-      io_thread_globals->url_request_backoff_manager.get());
-
   // For incognito, we use the default non-persistent HttpServerPropertiesImpl.
-  set_http_server_properties(std::unique_ptr<net::HttpServerProperties>(
-      new net::HttpServerPropertiesImpl()));
-  main_context->set_http_server_properties(http_server_properties());
+  main_context_storage->set_http_server_properties(
+      base::MakeUnique<net::HttpServerPropertiesImpl>());
 
   // For incognito, we use a non-persistent channel ID store.
-  net::ChannelIDService* channel_id_service =
-      new net::ChannelIDService(
-          new net::DefaultChannelIDStore(NULL),
-          base::WorkerPool::GetTaskRunner(true));
-  set_channel_id_service(channel_id_service);
-  main_context->set_channel_id_service(channel_id_service);
+  main_context_storage->set_channel_id_service(
+      base::MakeUnique<net::ChannelIDService>(
+          new net::DefaultChannelIDStore(nullptr)));
 
   using content::CookieStoreConfig;
-  main_cookie_store_ = CreateCookieStore(CookieStoreConfig(
+  main_context_storage->set_cookie_store(CreateCookieStore(CookieStoreConfig(
       base::FilePath(), CookieStoreConfig::EPHEMERAL_SESSION_COOKIES, NULL,
-      profile_params->cookie_monster_delegate.get()));
-  main_context->set_cookie_store(main_cookie_store_.get());
-  main_cookie_store_->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+      profile_params->cookie_monster_delegate.get())));
 
-  http_network_session_ = CreateHttpNetworkSession(*profile_params);
-  main_http_factory_ = CreateMainHttpFactory(
-      http_network_session_.get(), net::HttpCache::DefaultBackend::InMemory(0));
+  main_context->cookie_store()->SetChannelIDServiceID(
+      main_context->channel_id_service()->GetUniqueID());
 
-  main_context->set_http_transaction_factory(main_http_factory_.get());
-#if !defined(DISABLE_FTP_SUPPORT)
-  ftp_factory_.reset(
-      new net::FtpNetworkLayer(main_context->host_resolver()));
-#endif  // !defined(DISABLE_FTP_SUPPORT)
+  main_context_storage->set_http_network_session(
+      CreateHttpNetworkSession(*profile_params));
+  main_context_storage->set_http_transaction_factory(
+      CreateMainHttpFactory(main_context_storage->http_network_session(),
+                            net::HttpCache::DefaultBackend::InMemory(0)));
 
   std::unique_ptr<net::URLRequestJobFactoryImpl> main_job_factory(
       new net::URLRequestJobFactoryImpl());
 
   InstallProtocolHandlers(main_job_factory.get(), protocol_handlers);
-  main_job_factory_ = SetUpJobFactoryDefaults(
+  main_context_storage->set_job_factory(SetUpJobFactoryDefaults(
       std::move(main_job_factory), std::move(request_interceptors),
       std::move(profile_params->protocol_handler_interceptor),
-      main_context->network_delegate(), ftp_factory_.get());
-  main_context->set_job_factory(main_job_factory_.get());
+      main_context->network_delegate(), main_context->host_resolver()));
 
-  // Setup SDCH for this profile.
-  sdch_manager_.reset(new net::SdchManager);
-  sdch_policy_.reset(new net::SdchOwner(sdch_manager_.get(), main_context));
-  main_context->set_sdch_manager(sdch_manager_.get());
-
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   InitializeExtensionsRequestContext(profile_params);
 #endif
 }
@@ -291,8 +275,6 @@ void OffTheRecordProfileIOData::
   extensions_context->set_cert_transparency_verifier(
       io_thread_globals->cert_transparency_verifier.get());
 
-  extensions_context->set_backoff_manager(
-      io_thread_globals->url_request_backoff_manager.get());
   // All we care about for extensions is the cookie store. For incognito, we
   // use a non-persistent cookie store.
   content::CookieStoreConfig cookie_config;
@@ -313,7 +295,7 @@ void OffTheRecordProfileIOData::
       std::move(extensions_job_factory),
       content::URLRequestInterceptorScopedVector(),
       std::unique_ptr<ProtocolHandlerRegistry::JobInterceptorFactory>(), NULL,
-      ftp_factory_.get());
+      io_thread_globals->host_resolver.get());
   extensions_context->set_job_factory(extensions_job_factory_.get());
 }
 
@@ -335,20 +317,19 @@ net::URLRequestContext* OffTheRecordProfileIOData::InitializeAppRequestContext(
   std::unique_ptr<net::CookieStore> cookie_store =
       content::CreateCookieStore(content::CookieStoreConfig());
   std::unique_ptr<net::ChannelIDService> channel_id_service(
-      new net::ChannelIDService(new net::DefaultChannelIDStore(nullptr),
-                                base::WorkerPool::GetTaskRunner(true)));
+      new net::ChannelIDService(new net::DefaultChannelIDStore(nullptr)));
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
   context->SetCookieStore(std::move(cookie_store));
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.
   net::HttpNetworkSession::Params network_params =
-      http_network_session_->params();
+      main_request_context_storage()->http_network_session()->params();
   network_params.channel_id_service = channel_id_service.get();
   std::unique_ptr<net::HttpNetworkSession> http_network_session(
       new net::HttpNetworkSession(network_params));
 
   // Use a separate in-memory cache for the app.
-  std::unique_ptr<net::HttpCache> app_http_cache = CreateHttpFactory(
+  std::unique_ptr<net::HttpCache> app_http_cache = CreateMainHttpFactory(
       http_network_session.get(), net::HttpCache::DefaultBackend::InMemory(0));
 
   context->SetChannelIDService(std::move(channel_id_service));
@@ -361,8 +342,8 @@ net::URLRequestContext* OffTheRecordProfileIOData::InitializeAppRequestContext(
   std::unique_ptr<net::URLRequestJobFactory> top_job_factory;
   top_job_factory = SetUpJobFactoryDefaults(
       std::move(job_factory), std::move(request_interceptors),
-      std::move(protocol_handler_interceptor), main_context->network_delegate(),
-      ftp_factory_.get());
+      std::move(protocol_handler_interceptor), context->network_delegate(),
+      context->host_resolver());
   context->SetJobFactory(std::move(top_job_factory));
   return context;
 }
@@ -370,7 +351,8 @@ net::URLRequestContext* OffTheRecordProfileIOData::InitializeAppRequestContext(
 net::URLRequestContext*
 OffTheRecordProfileIOData::InitializeMediaRequestContext(
     net::URLRequestContext* original_context,
-    const StoragePartitionDescriptor& partition_descriptor) const {
+    const StoragePartitionDescriptor& partition_descriptor,
+    const char* name) const {
   NOTREACHED();
   return NULL;
 }

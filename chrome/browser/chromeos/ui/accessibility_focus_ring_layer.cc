@@ -104,9 +104,9 @@ void AccessibilityFocusRingLayer::Set(const AccessibilityFocusRing& ring) {
 
   display::Display display =
       display::Screen::GetScreen()->GetDisplayMatching(bounds);
-  aura::Window* root_window = ash::Shell::GetInstance()
-                                  ->window_tree_host_manager()
-                                  ->GetRootWindowForDisplayId(display.id());
+  aura::Window* root_window =
+      ash::Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
+          display.id());
   CreateOrUpdateLayer(root_window, "AccessibilityFocusRing", bounds);
 }
 
@@ -114,21 +114,24 @@ void AccessibilityFocusRingLayer::OnPaintLayer(
     const ui::PaintContext& context) {
   ui::PaintRecorder recorder(context, layer()->size());
 
-  SkPaint paint;
-  paint.setFlags(SkPaint::kAntiAlias_Flag);
-  paint.setStyle(SkPaint::kStroke_Style);
-  paint.setStrokeWidth(2);
+  cc::PaintFlags flags;
+  flags.setAntiAlias(true);
+  flags.setStyle(cc::PaintFlags::kStroke_Style);
+  flags.setStrokeWidth(2);
+
+  SkColor base_color =
+      has_custom_color()
+          ? custom_color()
+          : SkColorSetARGBMacro(255, kFocusRingColorRed, kFocusRingColorGreen,
+                                kFocusRingColorBlue);
 
   SkPath path;
   gfx::Vector2d offset = layer()->bounds().OffsetFromOrigin();
   const int w = kGradientWidth;
   for (int i = 0; i < w; ++i) {
-    paint.setColor(
-        SkColorSetARGBMacro(
-            255 * (w - i) * (w - i) / (w * w),
-            kFocusRingColorRed, kFocusRingColorGreen, kFocusRingColorBlue));
+    flags.setColor(SkColorSetA(base_color, 255 * (w - i) * (w - i) / (w * w)));
     path = MakePath(ring_, i, offset);
-    recorder.canvas()->DrawPath(path, paint);
+    recorder.canvas()->DrawPath(path, flags);
   }
 }
 

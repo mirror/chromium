@@ -58,6 +58,10 @@ class BaseTestServer {
       // CERT_AUTO causes the testserver to generate a test certificate issued
       // by "Testing CA" (see net/data/ssl/certificates/ocsp-test-root.pem).
       CERT_AUTO,
+      // Generate an intermediate cert issued by "Testing CA", and generate a
+      // test certificate issued by that intermediate with an AIA record for
+      // retrieving the intermediate.
+      CERT_AUTO_AIA_INTERMEDIATE,
 
       CERT_MISMATCHED_NAME,
       CERT_EXPIRED,
@@ -150,9 +154,10 @@ class BaseTestServer {
     // server. Do not change them.
     enum TLSIntolerantLevel {
       TLS_INTOLERANT_NONE = 0,
-      TLS_INTOLERANT_ALL = 1,  // Intolerant of all TLS versions.
+      TLS_INTOLERANT_ALL = 1,     // Intolerant of all TLS versions.
       TLS_INTOLERANT_TLS1_1 = 2,  // Intolerant of TLS 1.1 or higher.
       TLS_INTOLERANT_TLS1_2 = 3,  // Intolerant of TLS 1.2 or higher.
+      TLS_INTOLERANT_TLS1_3 = 4,  // Intolerant of TLS 1.3 or higher.
     };
 
     // Values which control how the server reacts in response to a ClientHello
@@ -276,6 +281,9 @@ class BaseTestServer {
     // list is empty.  Note that regardless of what protocol is negotiated, the
     // test server will continue to speak HTTP/1.1.
     std::vector<std::string> npn_protocols;
+
+    // List of supported ALPN protocols.
+    std::vector<std::string> alpn_protocols;
 
     // Whether to send a fatal alert immediately after completing the handshake.
     bool alert_after_handshake;

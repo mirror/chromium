@@ -8,9 +8,9 @@
 #include <stddef.h>
 
 #include <map>
-#include <set>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/containers/hash_tables.h"
 #include "base/strings/string16.h"
 #include "components/history/core/browser/history_types.h"
@@ -53,10 +53,6 @@ TermMatches SortMatches(const TermMatches& matches);
 // cleaned up matches.  Assumes |matches| is already sorted.
 TermMatches DeoverlapMatches(const TermMatches& sorted_matches);
 
-// Sorts and removes overlapping substring matches from |matches| and
-// returns the cleaned up matches.
-TermMatches SortAndDeoverlapMatches(const TermMatches& matches);
-
 // Extracts and returns the offsets from |matches|.  This includes both
 // the offsets corresponding to the beginning of a match and the offsets
 // corresponding to the end of a match (i.e., offset+length for that match).
@@ -73,8 +69,8 @@ TermMatches ReplaceOffsetsInTermMatches(const TermMatches& matches,
 // Convenience Types -----------------------------------------------------------
 
 typedef std::vector<base::string16> String16Vector;
-typedef std::set<base::string16> String16Set;
-typedef std::set<base::char16> Char16Set;
+typedef base::flat_set<base::string16> String16Set;
+typedef base::flat_set<base::char16> Char16Set;
 typedef std::vector<base::char16> Char16Vector;
 
 // A vector that contains the offsets at which each word starts within a string.
@@ -135,12 +131,12 @@ typedef size_t WordID;
 typedef std::map<base::string16, WordID> WordMap;
 
 // A map from character to the word_ids of words containing that character.
-typedef std::set<WordID> WordIDSet;  // An index into the WordList.
+typedef base::flat_set<WordID> WordIDSet;  // An index into the WordList.
 typedef std::map<base::char16, WordIDSet> CharWordIDMap;
 
 // A map from word (by word_id) to history items containing that word.
 typedef history::URLID HistoryID;
-typedef std::set<HistoryID> HistoryIDSet;
+typedef base::flat_set<HistoryID> HistoryIDSet;
 typedef std::vector<HistoryID> HistoryIDVector;
 typedef std::map<WordID, HistoryIDSet> WordIDHistoryMap;
 typedef std::map<HistoryID, WordIDSet> HistoryIDWordMap;
@@ -151,6 +147,9 @@ typedef std::vector<history::VisitInfo> VisitInfoVector;
 struct HistoryInfoMapValue {
   HistoryInfoMapValue();
   HistoryInfoMapValue(const HistoryInfoMapValue& other);
+  HistoryInfoMapValue(HistoryInfoMapValue&& other);
+  HistoryInfoMapValue& operator=(const HistoryInfoMapValue& other);
+  HistoryInfoMapValue& operator=(HistoryInfoMapValue&& other);
   ~HistoryInfoMapValue();
 
   // This field is always populated.
@@ -170,6 +169,9 @@ typedef base::hash_map<HistoryID, HistoryInfoMapValue> HistoryInfoMap;
 struct RowWordStarts {
   RowWordStarts();
   RowWordStarts(const RowWordStarts& other);
+  RowWordStarts(RowWordStarts&& other);
+  RowWordStarts& operator=(const RowWordStarts& other);
+  RowWordStarts& operator=(RowWordStarts&& other);
   ~RowWordStarts();
 
   // Clears both url_word_starts_ and title_word_starts_.

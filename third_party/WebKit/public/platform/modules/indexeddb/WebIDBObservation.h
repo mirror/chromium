@@ -12,12 +12,12 @@
 namespace blink {
 
 struct WebIDBObservation {
-    int64_t objectStoreId;
-    WebIDBOperationType type;
-    WebIDBKeyRange keyRange;
-    WebIDBValue value;
+  int64_t object_store_id;
+  WebIDBOperationType type;
+  WebIDBKeyRange key_range;
+  WebIDBValue value;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebIDBObservation_h
+#endif  // WebIDBObservation_h

@@ -10,32 +10,32 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef InspectorStyleSheet_h
 #define InspectorStyleSheet_h
 
+#include <memory>
 #include "core/css/CSSPropertySourceData.h"
 #include "core/css/CSSStyleDeclaration.h"
 #include "core/inspector/protocol/CSS.h"
 #include "platform/heap/Handle.h"
-#include "platform/inspector_protocol/Values.h"
-#include "wtf/HashMap.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -44,7 +44,6 @@ class CSSMediaRule;
 class CSSStyleDeclaration;
 class CSSStyleRule;
 class CSSStyleSheet;
-class Document;
 class Element;
 class ExceptionState;
 class InspectorNetworkAgent;
@@ -55,170 +54,230 @@ typedef HeapVector<Member<CSSRule>> CSSRuleVector;
 typedef Vector<unsigned> LineEndings;
 
 class InspectorStyle final : public GarbageCollectedFinalized<InspectorStyle> {
-public:
-    static InspectorStyle* create(CSSStyleDeclaration*, PassRefPtr<CSSRuleSourceData>, InspectorStyleSheetBase* parentStyleSheet);
-    ~InspectorStyle();
+ public:
+  static InspectorStyle* Create(CSSStyleDeclaration*,
+                                CSSRuleSourceData*,
+                                InspectorStyleSheetBase* parent_style_sheet);
+  ~InspectorStyle();
 
-    CSSStyleDeclaration* cssStyle() { return m_style.get(); }
-    std::unique_ptr<protocol::CSS::CSSStyle> buildObjectForStyle();
-    std::unique_ptr<protocol::Array<protocol::CSS::CSSComputedStyleProperty>> buildArrayForComputedStyle();
-    bool styleText(String* result);
-    bool textForRange(const SourceRange&, String* result);
+  CSSStyleDeclaration* CssStyle() { return style_.Get(); }
+  std::unique_ptr<protocol::CSS::CSSStyle> BuildObjectForStyle();
+  bool StyleText(String* result);
+  bool TextForRange(const SourceRange&, String* result);
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    InspectorStyle(CSSStyleDeclaration*, PassRefPtr<CSSRuleSourceData>, InspectorStyleSheetBase* parentStyleSheet);
+ private:
+  InspectorStyle(CSSStyleDeclaration*,
+                 CSSRuleSourceData*,
+                 InspectorStyleSheetBase* parent_style_sheet);
 
-    void populateAllProperties(Vector<CSSPropertySourceData>& result);
-    std::unique_ptr<protocol::CSS::CSSStyle> styleWithProperties();
-    String shorthandValue(const String& shorthandProperty);
+  void PopulateAllProperties(Vector<CSSPropertySourceData>& result);
+  std::unique_ptr<protocol::CSS::CSSStyle> StyleWithProperties();
+  String ShorthandValue(const String& shorthand_property);
 
-    Member<CSSStyleDeclaration> m_style;
-    RefPtr<CSSRuleSourceData> m_sourceData;
-    Member<InspectorStyleSheetBase> m_parentStyleSheet;
+  Member<CSSStyleDeclaration> style_;
+  Member<CSSRuleSourceData> source_data_;
+  Member<InspectorStyleSheetBase> parent_style_sheet_;
 };
 
-class InspectorStyleSheetBase : public GarbageCollectedFinalized<InspectorStyleSheetBase> {
-public:
-    class CORE_EXPORT Listener {
-    public:
-        Listener() { }
-        virtual ~Listener() { }
-        virtual void styleSheetChanged(InspectorStyleSheetBase*) = 0;
-        virtual void willReparseStyleSheet() = 0;
-        virtual void didReparseStyleSheet() = 0;
-    };
-    virtual ~InspectorStyleSheetBase() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+class InspectorStyleSheetBase
+    : public GarbageCollectedFinalized<InspectorStyleSheetBase> {
+ public:
+  class CORE_EXPORT Listener {
+   public:
+    Listener() {}
+    virtual ~Listener() {}
+    virtual void StyleSheetChanged(InspectorStyleSheetBase*) = 0;
+  };
+  virtual ~InspectorStyleSheetBase() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-    String id() { return m_id; }
+  String Id() { return id_; }
 
-    virtual bool setText(const String&, ExceptionState&) = 0;
-    virtual bool getText(String* result) = 0;
-    virtual String sourceMapURL() { return String(); }
+  virtual bool SetText(const String&, ExceptionState&) = 0;
+  virtual bool GetText(String* result) = 0;
+  virtual String SourceMapURL() { return String(); }
 
-    std::unique_ptr<protocol::CSS::CSSStyle> buildObjectForStyle(CSSStyleDeclaration*);
-    std::unique_ptr<protocol::CSS::SourceRange> buildSourceRangeObject(const SourceRange&);
-    bool lineNumberAndColumnToOffset(unsigned lineNumber, unsigned columnNumber, unsigned* offset);
-    virtual bool isInlineStyle() = 0;
+  std::unique_ptr<protocol::CSS::CSSStyle> BuildObjectForStyle(
+      CSSStyleDeclaration*);
+  std::unique_ptr<protocol::CSS::SourceRange> BuildSourceRangeObject(
+      const SourceRange&);
+  bool LineNumberAndColumnToOffset(unsigned line_number,
+                                   unsigned column_number,
+                                   unsigned* offset);
+  virtual bool IsInlineStyle() = 0;
 
-protected:
-    explicit InspectorStyleSheetBase(Listener*);
+ protected:
+  explicit InspectorStyleSheetBase(Listener*);
 
-    Listener* listener() { return m_listener; }
-    void onStyleSheetTextChanged();
-    const LineEndings* lineEndings();
+  Listener* GetListener() { return listener_; }
+  void OnStyleSheetTextChanged();
+  const LineEndings* GetLineEndings();
 
-    virtual InspectorStyle* inspectorStyle(CSSStyleDeclaration*) = 0;
+  virtual InspectorStyle* GetInspectorStyle(CSSStyleDeclaration*) = 0;
 
-private:
-    friend class InspectorStyle;
+ private:
+  friend class InspectorStyle;
 
-    String m_id;
-    Listener* m_listener;
-    std::unique_ptr<LineEndings> m_lineEndings;
+  String id_;
+  Listener* listener_;
+  std::unique_ptr<LineEndings> line_endings_;
 };
 
 class InspectorStyleSheet : public InspectorStyleSheetBase {
-public:
-    static InspectorStyleSheet* create(InspectorNetworkAgent*, CSSStyleSheet* pageStyleSheet, const String& origin, const String& documentURL, InspectorStyleSheetBase::Listener*, InspectorResourceContainer*);
+ public:
+  static InspectorStyleSheet* Create(InspectorNetworkAgent*,
+                                     CSSStyleSheet* page_style_sheet,
+                                     const String& origin,
+                                     const String& document_url,
+                                     InspectorStyleSheetBase::Listener*,
+                                     InspectorResourceContainer*);
 
-    ~InspectorStyleSheet() override;
-    DECLARE_VIRTUAL_TRACE();
+  ~InspectorStyleSheet() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    String finalURL();
-    bool setText(const String&, ExceptionState&) override;
-    bool getText(String* result) override;
-    CSSStyleRule* setRuleSelector(const SourceRange&, const String& selector, SourceRange* newRange, String* oldSelector, ExceptionState&);
-    CSSKeyframeRule* setKeyframeKey(const SourceRange&, const String& text, SourceRange* newRange, String* oldText, ExceptionState&);
-    CSSRule* setStyleText(const SourceRange&, const String& text, SourceRange* newRange, String* oldSelector, ExceptionState&);
-    CSSMediaRule* setMediaRuleText(const SourceRange&, const String& selector, SourceRange* newRange, String* oldSelector, ExceptionState&);
-    CSSStyleRule* addRule(const String& ruleText, const SourceRange& location, SourceRange* addedRange, ExceptionState&);
-    bool deleteRule(const SourceRange&, ExceptionState&);
+  String FinalURL();
+  bool SetText(const String&, ExceptionState&) override;
+  bool GetText(String* result) override;
+  CSSStyleRule* SetRuleSelector(const SourceRange&,
+                                const String& selector,
+                                SourceRange* new_range,
+                                String* old_selector,
+                                ExceptionState&);
+  CSSKeyframeRule* SetKeyframeKey(const SourceRange&,
+                                  const String& text,
+                                  SourceRange* new_range,
+                                  String* old_text,
+                                  ExceptionState&);
+  CSSRule* SetStyleText(const SourceRange&,
+                        const String& text,
+                        SourceRange* new_range,
+                        String* old_selector,
+                        ExceptionState&);
+  CSSMediaRule* SetMediaRuleText(const SourceRange&,
+                                 const String& selector,
+                                 SourceRange* new_range,
+                                 String* old_selector,
+                                 ExceptionState&);
+  CSSStyleRule* AddRule(const String& rule_text,
+                        const SourceRange& location,
+                        SourceRange* added_range,
+                        ExceptionState&);
+  bool DeleteRule(const SourceRange&, ExceptionState&);
+  std::unique_ptr<protocol::Array<String>> CollectClassNames();
+  CSSStyleSheet* PageStyleSheet() { return page_style_sheet_.Get(); }
 
-    CSSStyleSheet* pageStyleSheet() { return m_pageStyleSheet.get(); }
+  std::unique_ptr<protocol::CSS::CSSStyleSheetHeader>
+  BuildObjectForStyleSheetInfo();
+  std::unique_ptr<protocol::CSS::CSSRule> BuildObjectForRuleWithoutMedia(
+      CSSStyleRule*);
+  std::unique_ptr<protocol::CSS::RuleUsage> BuildObjectForRuleUsage(CSSRule*,
+                                                                    bool);
+  std::unique_ptr<protocol::CSS::CSSKeyframeRule> BuildObjectForKeyframeRule(
+      CSSKeyframeRule*);
+  std::unique_ptr<protocol::CSS::SelectorList> BuildObjectForSelectorList(
+      CSSStyleRule*);
 
-    std::unique_ptr<protocol::CSS::CSSStyleSheetHeader> buildObjectForStyleSheetInfo();
-    std::unique_ptr<protocol::CSS::CSSRule> buildObjectForRuleWithoutMedia(CSSStyleRule*);
-    std::unique_ptr<protocol::CSS::CSSKeyframeRule> buildObjectForKeyframeRule(CSSKeyframeRule*);
-    std::unique_ptr<protocol::CSS::SelectorList> buildObjectForSelectorList(CSSStyleRule*);
+  std::unique_ptr<protocol::CSS::SourceRange> RuleHeaderSourceRange(CSSRule*);
+  std::unique_ptr<protocol::CSS::SourceRange> MediaQueryExpValueSourceRange(
+      CSSRule*,
+      size_t media_query_index,
+      size_t media_query_exp_index);
+  bool IsInlineStyle() override { return false; }
+  const CSSRuleVector& FlatRules();
+  CSSRuleSourceData* SourceDataForRule(CSSRule*);
+  String SourceMapURL() override;
 
-    std::unique_ptr<protocol::CSS::SourceRange> ruleHeaderSourceRange(CSSRule*);
-    std::unique_ptr<protocol::CSS::SourceRange> mediaQueryExpValueSourceRange(CSSRule*, size_t mediaQueryIndex, size_t mediaQueryExpIndex);
+ protected:
+  InspectorStyle* GetInspectorStyle(CSSStyleDeclaration*) override;
 
-    bool isInlineStyle() override { return false; }
-    const CSSRuleVector& flatRules();
-    CSSRuleSourceData* sourceDataForRule(CSSRule*);
-    String sourceMapURL() override;
+ private:
+  InspectorStyleSheet(InspectorNetworkAgent*,
+                      CSSStyleSheet* page_style_sheet,
+                      const String& origin,
+                      const String& document_url,
+                      InspectorStyleSheetBase::Listener*,
+                      InspectorResourceContainer*);
+  CSSRuleSourceData* RuleSourceDataAfterSourceRange(const SourceRange&);
+  CSSRuleSourceData* FindRuleByHeaderRange(const SourceRange&);
+  CSSRuleSourceData* FindRuleByBodyRange(const SourceRange&);
+  CSSRule* RuleForSourceData(CSSRuleSourceData*);
+  CSSStyleRule* InsertCSSOMRuleInStyleSheet(CSSRule* insert_before,
+                                            const String& rule_text,
+                                            ExceptionState&);
+  CSSStyleRule* InsertCSSOMRuleInMediaRule(CSSMediaRule*,
+                                           CSSRule* insert_before,
+                                           const String& rule_text,
+                                           ExceptionState&);
+  CSSStyleRule* InsertCSSOMRuleBySourceRange(const SourceRange&,
+                                             const String& rule_text,
+                                             ExceptionState&);
+  String SourceURL();
+  void RemapSourceDataToCSSOMIfNecessary();
+  void MapSourceDataToCSSOM();
+  bool ResourceStyleSheetText(String* result);
+  bool InlineStyleSheetText(String* result);
+  bool InspectorStyleSheetText(String* result);
+  std::unique_ptr<protocol::Array<protocol::CSS::Value>> SelectorsFromSource(
+      CSSRuleSourceData*,
+      const String&);
+  String Url();
+  bool HasSourceURL();
+  bool StartsAtZero();
 
-protected:
-    InspectorStyle* inspectorStyle(CSSStyleDeclaration*) override;
+  void ReplaceText(const SourceRange&,
+                   const String& text,
+                   SourceRange* new_range,
+                   String* old_text);
+  void InnerSetText(const String& new_text, bool mark_as_locally_modified);
+  Element* OwnerStyleElement();
 
-private:
-    InspectorStyleSheet(InspectorNetworkAgent*, CSSStyleSheet* pageStyleSheet, const String& origin, const String& documentURL, InspectorStyleSheetBase::Listener*, InspectorResourceContainer*);
-    CSSRuleSourceData* ruleSourceDataAfterSourceRange(const SourceRange&);
-    CSSRuleSourceData* findRuleByHeaderRange(const SourceRange&);
-    CSSRuleSourceData* findRuleByBodyRange(const SourceRange&);
-    CSSRule* ruleForSourceData(CSSRuleSourceData*);
-    CSSStyleRule* insertCSSOMRuleInStyleSheet(CSSRule* insertBefore, const String& ruleText, ExceptionState&);
-    CSSStyleRule* insertCSSOMRuleInMediaRule(CSSMediaRule*, CSSRule* insertBefore, const String& ruleText, ExceptionState&);
-    CSSStyleRule* insertCSSOMRuleBySourceRange(const SourceRange&, const String& ruleText, ExceptionState&);
-    String sourceURL();
-    void remapSourceDataToCSSOMIfNecessary();
-    void mapSourceDataToCSSOM();
-    bool resourceStyleSheetText(String* result);
-    bool inlineStyleSheetText(String* result);
-    std::unique_ptr<protocol::Array<protocol::CSS::Value>> selectorsFromSource(CSSRuleSourceData*, const String&);
-    String url();
-    bool hasSourceURL();
-    bool startsAtZero();
-
-    void replaceText(const SourceRange&, const String& text, SourceRange* newRange, String* oldText);
-    void innerSetText(const String& newText, bool markAsLocallyModified);
-    Element* ownerStyleElement();
-
-    Member<InspectorResourceContainer> m_resourceContainer;
-    Member<InspectorNetworkAgent> m_networkAgent;
-    Member<CSSStyleSheet> m_pageStyleSheet;
-    String m_origin;
-    String m_documentURL;
-    std::unique_ptr<RuleSourceDataList> m_sourceData;
-    String m_text;
-    CSSRuleVector m_cssomFlatRules;
-    CSSRuleVector m_parsedFlatRules;
-    typedef HashMap<unsigned, unsigned, WTF::IntHash<unsigned>, WTF::UnsignedWithZeroKeyHashTraits<unsigned>> IndexMap;
-    IndexMap m_ruleToSourceData;
-    IndexMap m_sourceDataToRule;
-    String m_sourceURL;
+  Member<InspectorResourceContainer> resource_container_;
+  Member<InspectorNetworkAgent> network_agent_;
+  Member<CSSStyleSheet> page_style_sheet_;
+  String origin_;
+  String document_url_;
+  Member<CSSRuleSourceDataList> source_data_;
+  String text_;
+  CSSRuleVector cssom_flat_rules_;
+  CSSRuleVector parsed_flat_rules_;
+  typedef HashMap<unsigned,
+                  unsigned,
+                  WTF::IntHash<unsigned>,
+                  WTF::UnsignedWithZeroKeyHashTraits<unsigned>>
+      IndexMap;
+  IndexMap rule_to_source_data_;
+  IndexMap source_data_to_rule_;
+  String source_url_;
 };
 
 class InspectorStyleSheetForInlineStyle final : public InspectorStyleSheetBase {
-public:
-    static InspectorStyleSheetForInlineStyle* create(Element*, Listener*);
+ public:
+  static InspectorStyleSheetForInlineStyle* Create(Element*, Listener*);
 
-    void didModifyElementAttribute();
-    bool setText(const String&, ExceptionState&) override;
-    bool getText(String* result) override;
-    CSSStyleDeclaration* inlineStyle();
-    PassRefPtr<CSSRuleSourceData> ruleSourceData();
+  void DidModifyElementAttribute();
+  bool SetText(const String&, ExceptionState&) override;
+  bool GetText(String* result) override;
+  CSSStyleDeclaration* InlineStyle();
+  CSSRuleSourceData* RuleSourceData();
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    InspectorStyle* inspectorStyle(CSSStyleDeclaration*) override;
+ protected:
+  InspectorStyle* GetInspectorStyle(CSSStyleDeclaration*) override;
 
-    // Also accessed by friend class InspectorStyle.
-    bool isInlineStyle() override { return true; }
+  // Also accessed by friend class InspectorStyle.
+  bool IsInlineStyle() override { return true; }
 
-private:
-    InspectorStyleSheetForInlineStyle(Element*, Listener*);
-    const String& elementStyleText();
+ private:
+  InspectorStyleSheetForInlineStyle(Element*, Listener*);
+  const String& ElementStyleText();
 
-    Member<Element> m_element;
-    Member<InspectorStyle> m_inspectorStyle;
+  Member<Element> element_;
+  Member<InspectorStyle> inspector_style_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(InspectorStyleSheet_h)
+#endif  // !defined(InspectorStyleSheet_h)

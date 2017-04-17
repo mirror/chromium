@@ -34,18 +34,17 @@
 
 namespace blink {
 
-MIDIConnectionEvent::MIDIConnectionEvent(const AtomicString& type, const MIDIConnectionEventInit& initializer)
-    : Event(type, initializer)
-    , m_port(nullptr)
-{
-    if (initializer.hasPort())
-        m_port = initializer.port();
+MIDIConnectionEvent::MIDIConnectionEvent(
+    const AtomicString& type,
+    const MIDIConnectionEventInit& initializer)
+    : Event(type, initializer), port_(nullptr) {
+  if (initializer.hasPort())
+    port_ = initializer.port();
 }
 
-DEFINE_TRACE(MIDIConnectionEvent)
-{
-    visitor->trace(m_port);
-    Event::trace(visitor);
+DEFINE_TRACE(MIDIConnectionEvent) {
+  visitor->Trace(port_);
+  Event::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

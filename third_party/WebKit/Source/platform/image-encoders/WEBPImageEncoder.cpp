@@ -36,58 +36,62 @@
 
 namespace blink {
 
-static int writeOutput(const uint8_t* data, size_t size, const WebPPicture* const picture)
-{
-    static_cast<Vector<unsigned char>*>(picture->custom_ptr)->append(data, size);
-    return 1;
+static int WriteOutput(const uint8_t* data,
+                       size_t size,
+                       const WebPPicture* const picture) {
+  static_cast<Vector<unsigned char>*>(picture->custom_ptr)->Append(data, size);
+  return 1;
 }
 
-static bool encodePixels(const IntSize& imageSize, const unsigned char* pixels, int quality, Vector<unsigned char>* output)
-{
-    if (imageSize.width() <= 0 || imageSize.width() > WEBP_MAX_DIMENSION)
-        return false;
-    if (imageSize.height() <= 0 || imageSize.height() > WEBP_MAX_DIMENSION)
-        return false;
+static bool EncodePixels(const IntSize& image_size,
+                         const unsigned char* pixels,
+                         int quality,
+                         Vector<unsigned char>* output) {
+  if (image_size.Width() <= 0 || image_size.Width() > WEBP_MAX_DIMENSION)
+    return false;
+  if (image_size.Height() <= 0 || image_size.Height() > WEBP_MAX_DIMENSION)
+    return false;
 
-    WebPConfig config;
-    if (!WebPConfigInit(&config))
-        return false;
-    WebPPicture picture;
-    if (!WebPPictureInit(&picture))
-        return false;
+  WebPConfig config;
+  if (!WebPConfigInit(&config))
+    return false;
+  WebPPicture picture;
+  if (!WebPPictureInit(&picture))
+    return false;
 
-    picture.width = imageSize.width();
-    picture.height = imageSize.height();
+  picture.width = image_size.Width();
+  picture.height = image_size.Height();
 
-    bool useLosslessEncoding = (quality >= 100);
-    if (useLosslessEncoding)
-        picture.use_argb = 1;
-    if (!WebPPictureImportRGBA(&picture, pixels, picture.width * 4))
-        return false;
+  bool use_lossless_encoding = (quality >= 100);
+  if (use_lossless_encoding)
+    picture.use_argb = 1;
+  if (!WebPPictureImportRGBA(&picture, pixels, picture.width * 4))
+    return false;
 
-    picture.custom_ptr = output;
-    picture.writer = &writeOutput;
+  picture.custom_ptr = output;
+  picture.writer = &WriteOutput;
 
-    if (useLosslessEncoding) {
-        config.lossless = 1;
-        config.quality = 75;
-        config.method = 0;
-    } else {
-        config.quality = quality;
-        config.method = 3;
-    }
+  if (use_lossless_encoding) {
+    config.lossless = 1;
+    config.quality = 75;
+    config.method = 0;
+  } else {
+    config.quality = quality;
+    config.method = 3;
+  }
 
-    bool success = WebPEncode(&config, &picture);
-    WebPPictureFree(&picture);
-    return success;
+  bool success = WebPEncode(&config, &picture);
+  WebPPictureFree(&picture);
+  return success;
 }
 
-bool WEBPImageEncoder::encode(const ImageDataBuffer& imageData, int quality, Vector<unsigned char>* output)
-{
-    if (!imageData.pixels())
-        return false;
+bool WEBPImageEncoder::Encode(const ImageDataBuffer& image_data,
+                              int quality,
+                              Vector<unsigned char>* output) {
+  if (!image_data.Pixels())
+    return false;
 
-    return encodePixels(imageData.size(), imageData.pixels(), quality, output);
+  return EncodePixels(image_data.size(), image_data.Pixels(), quality, output);
 }
 
-} // namespace blink
+}  // namespace blink

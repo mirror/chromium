@@ -63,7 +63,7 @@ def _rebaseline_test(test_file, baseline_target, baseline_move_to, test_config, 
 
     actual_result_files = _get_actual_result_files(test_file, test_config)
     filesystem = test_config.filesystem
-    scm = test_config.scm
+    git = test_config.git
     layout_tests_directory = test_config.layout_tests_directory
     target_expectations_directory = filesystem.join(
         layout_tests_directory, 'platform', baseline_target, test_directory)
@@ -112,7 +112,7 @@ def _rebaseline_test(test_file, baseline_target, baseline_move_to, test_config, 
         destination_path = filesystem.join(
             target_expectations_directory, destination_file)
         filesystem.copyfile(source_path, destination_path)
-        exit_code = scm.add(destination_path, return_exit_code=True)
+        exit_code = git.add(destination_path, return_exit_code=True)
         if exit_code:
             log('    Could not update %s in SCM, exit code %d' %
                 (destination_file, exit_code))
@@ -148,7 +148,7 @@ def _move_test_baselines(test_file, extensions_to_move, source_platform, destina
         source_path = filesystem.join(source_directory, file_name)
         destination_path = filesystem.join(destination_directory, file_name)
         filesystem.copyfile(source_path, destination_path)
-        exit_code = test_config.scm.add(destination_path, return_exit_code=True)
+        exit_code = test_config.git.add(destination_path, return_exit_code=True)
         if exit_code:
             log('    Could not update %s in SCM, exit code %d' %
                 (file_name, exit_code))
@@ -168,7 +168,7 @@ def get_test_baselines(test_file, test_config):
 
         def __init__(self, host):
             super(AllPlatformsPort, self).__init__(host, 'mac')
-            self._platforms_by_directory = dict([(self._webkit_baseline_path(p), p) for p in test_config.platforms])
+            self._platforms_by_directory = dict([(self._absolute_baseline_path(p), p) for p in test_config.platforms])
 
         def baseline_search_path(self):
             return self._platforms_by_directory.keys()
@@ -199,7 +199,7 @@ def get_test_baselines(test_file, test_config):
 class RebaselineHTTPServer(BaseHTTPServer.HTTPServer):
 
     def __init__(self, httpd_port, config):
-        server_name = ""
+        server_name = ''
         BaseHTTPServer.HTTPServer.__init__(self, (server_name, httpd_port), RebaselineHTTPRequestHandler)
         self.test_config = config['test_config']
         self.results_json = config['results_json']
@@ -208,15 +208,15 @@ class RebaselineHTTPServer(BaseHTTPServer.HTTPServer):
 
 class RebaselineHTTPRequestHandler(ReflectionHandler):
     STATIC_FILE_NAMES = frozenset([
-        "index.html",
-        "loupe.js",
-        "main.js",
-        "main.css",
-        "queue.js",
-        "util.js",
+        'index.html',
+        'loupe.js',
+        'main.js',
+        'main.css',
+        'queue.js',
+        'util.js',
     ])
 
-    STATIC_FILE_DIRECTORY = os.path.join(os.path.dirname(__file__), "data", "rebaseline_server")
+    STATIC_FILE_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data', 'rebaseline_server')
 
     def results_json(self):
         self._serve_json(self.server.results_json)
@@ -234,7 +234,7 @@ class RebaselineHTTPRequestHandler(ReflectionHandler):
         test_json = self.server.results_json['tests'][test]
 
         if test_json['state'] != STATE_NEEDS_REBASELINE:
-            self.send_error(400, "Test %s is in unexpected state: %s" % (test, test_json["state"]))
+            self.send_error(400, 'Test %s is in unexpected state: %s' % (test, test_json['state']))
             return
 
         log = []

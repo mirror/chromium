@@ -12,8 +12,9 @@
 #include "build/build_config.h"
 #include "components/infobars/core/infobar.h"
 #include "components/pref_registry/pref_registry_syncable.h"
-#include "components/pref_registry/testing_pref_service_syncable.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/translate/core/browser/mock_translate_driver.h"
+#include "components/translate/core/browser/mock_translate_ranker.h"
 #include "components/translate/core/browser/translate_client.h"
 #include "components/translate/core/browser/translate_infobar_delegate.h"
 #include "components/translate/core/browser/translate_manager.h"
@@ -26,6 +27,7 @@
 using testing::Return;
 using testing::Test;
 using translate::testing::MockTranslateDriver;
+using translate::testing::MockTranslateRanker;
 
 namespace translate {
 
@@ -44,8 +46,8 @@ class MockTranslateClient : public TranslateClient {
   PrefService* GetPrefs() { return prefs_; }
 
   std::unique_ptr<TranslatePrefs> GetTranslatePrefs() {
-    return base::WrapUnique(new TranslatePrefs(prefs_, "intl.accept_languages",
-                                               preferred_languages_prefs));
+    return base::MakeUnique<TranslatePrefs>(prefs_, "intl.accept_languages",
+                                            preferred_languages_prefs);
   }
 
   MOCK_METHOD0(GetTranslateAcceptLanguages, TranslateAcceptLanguages*());
@@ -77,7 +79,7 @@ class TranslateUIDelegateTest : public ::testing::Test {
   TranslateUIDelegateTest() : ::testing::Test() {}
 
   void SetUp() override {
-    pref_service_.reset(new user_prefs::TestingPrefServiceSyncable());
+    pref_service_.reset(new sync_preferences::TestingPrefServiceSyncable());
     pref_service_->registry()->RegisterStringPref(
         "settings.language.preferred_languages", std::string());
     pref_service_->registry()->RegisterStringPref("intl.accept_languages",
@@ -85,29 +87,21 @@ class TranslateUIDelegateTest : public ::testing::Test {
     TranslatePrefs::RegisterProfilePrefs(pref_service_->registry());
 
     client_.reset(new MockTranslateClient(&driver_, pref_service_.get()));
-
-    manager_.reset(new TranslateManager(client_.get(), "hi"));
+    ranker_.reset(new MockTranslateRanker());
+    manager_.reset(new TranslateManager(client_.get(), ranker_.get(), "hi"));
     manager_->GetLanguageState().set_translation_declined(false);
 
     delegate_.reset(
         new TranslateUIDelegate(manager_->GetWeakPtr(), "ar", "fr"));
 
     ASSERT_FALSE(client_->GetTranslatePrefs()->IsTooOftenDenied("ar"));
-    base::FeatureList::ClearInstanceForTesting();
-    base::FeatureList::SetInstance(base::WrapUnique(new base::FeatureList));
   }
 
-  void TurnOnTranslate2016Q2UIFlag() {
-    base::FeatureList::ClearInstanceForTesting();
-    std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
-    feature_list->InitializeFromCommandLine(translate::kTranslateUI2016Q2.name,
-                                            std::string());
-    base::FeatureList::SetInstance(std::move(feature_list));
-  }
-
+  // Do not reorder. These are ordered for dependency on creation/destruction.
   MockTranslateDriver driver_;
+  std::unique_ptr<sync_preferences::TestingPrefServiceSyncable> pref_service_;
   std::unique_ptr<MockTranslateClient> client_;
-  std::unique_ptr<user_prefs::TestingPrefServiceSyncable> pref_service_;
+  std::unique_ptr<MockTranslateRanker> ranker_;
   std::unique_ptr<TranslateManager> manager_;
   std::unique_ptr<TranslateUIDelegate> delegate_;
 

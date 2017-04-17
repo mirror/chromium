@@ -37,154 +37,146 @@ namespace blink {
 
 // === generic helper functions to avoid excessive code duplication ===
 
-static LayoutRubyRun* lastRubyRun(const LayoutObject* ruby)
-{
-    LayoutObject* child = ruby->slowLastChild();
-    ASSERT(!child || child->isRubyRun());
-    return toLayoutRubyRun(child);
+static LayoutRubyRun* LastRubyRun(const LayoutObject* ruby) {
+  LayoutObject* child = ruby->SlowLastChild();
+  DCHECK(!child || child->IsRubyRun());
+  return ToLayoutRubyRun(child);
 }
 
-static inline LayoutRubyRun* findRubyRunParent(LayoutObject* child)
-{
-    while (child && !child->isRubyRun())
-        child = child->parent();
-    return toLayoutRubyRun(child);
+static inline LayoutRubyRun* FindRubyRunParent(LayoutObject* child) {
+  while (child && !child->IsRubyRun())
+    child = child->Parent();
+  return ToLayoutRubyRun(child);
 }
 
 // === ruby as inline object ===
 
 LayoutRubyAsInline::LayoutRubyAsInline(Element* element)
-    : LayoutInline(element)
-{
-    UseCounter::count(document(), UseCounter::RenderRuby);
+    : LayoutInline(element) {
+  UseCounter::Count(GetDocument(), UseCounter::kRenderRuby);
 }
 
-LayoutRubyAsInline::~LayoutRubyAsInline()
-{
+LayoutRubyAsInline::~LayoutRubyAsInline() {}
+
+void LayoutRubyAsInline::StyleDidChange(StyleDifference diff,
+                                        const ComputedStyle* old_style) {
+  LayoutInline::StyleDidChange(diff, old_style);
+  PropagateStyleToAnonymousChildren();
 }
 
-void LayoutRubyAsInline::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    LayoutInline::styleDidChange(diff, oldStyle);
-    propagateStyleToAnonymousChildren();
+void LayoutRubyAsInline::AddChild(LayoutObject* child,
+                                  LayoutObject* before_child) {
+  // If the child is a ruby run, just add it normally.
+  if (child->IsRubyRun()) {
+    LayoutInline::AddChild(child, before_child);
+    return;
+  }
+
+  if (before_child) {
+    // insert child into run
+    LayoutObject* run = before_child;
+    while (run && !run->IsRubyRun())
+      run = run->Parent();
+    if (run) {
+      if (before_child == run)
+        before_child = ToLayoutRubyRun(before_child)->FirstChild();
+      DCHECK(!before_child || before_child->IsDescendantOf(run));
+      run->AddChild(child, before_child);
+      return;
+    }
+    NOTREACHED();  // beforeChild should always have a run as parent!
+                   // Emergency fallback: fall through and just append.
+  }
+
+  // If the new child would be appended, try to add the child to the previous
+  // run if possible, or create a new run otherwise.
+  // (The LayoutRubyRun object will handle the details)
+  LayoutRubyRun* last_run = LastRubyRun(this);
+  if (!last_run || last_run->HasRubyText()) {
+    last_run = LayoutRubyRun::StaticCreateRubyRun(this);
+    LayoutInline::AddChild(last_run, before_child);
+  }
+  last_run->AddChild(child);
 }
 
-void LayoutRubyAsInline::addChild(LayoutObject* child, LayoutObject* beforeChild)
-{
-    // If the child is a ruby run, just add it normally.
-    if (child->isRubyRun()) {
-        LayoutInline::addChild(child, beforeChild);
-        return;
-    }
+void LayoutRubyAsInline::RemoveChild(LayoutObject* child) {
+  // If the child's parent is *this (must be a ruby run), just use the normal
+  // remove method.
+  if (child->Parent() == this) {
+    DCHECK(child->IsRubyRun());
+    LayoutInline::RemoveChild(child);
+    return;
+  }
 
-    if (beforeChild) {
-        // insert child into run
-        LayoutObject* run = beforeChild;
-        while (run && !run->isRubyRun())
-            run = run->parent();
-        if (run) {
-            if (beforeChild == run)
-                beforeChild = toLayoutRubyRun(beforeChild)->firstChild();
-            ASSERT(!beforeChild || beforeChild->isDescendantOf(run));
-            run->addChild(child, beforeChild);
-            return;
-        }
-        ASSERT_NOT_REACHED(); // beforeChild should always have a run as parent!
-        // Emergency fallback: fall through and just append.
-    }
-
-    // If the new child would be appended, try to add the child to the previous run
-    // if possible, or create a new run otherwise.
-    // (The LayoutRubyRun object will handle the details)
-    LayoutRubyRun* lastRun = lastRubyRun(this);
-    if (!lastRun || lastRun->hasRubyText()) {
-        lastRun = LayoutRubyRun::staticCreateRubyRun(this);
-        LayoutInline::addChild(lastRun, beforeChild);
-    }
-    lastRun->addChild(child);
-}
-
-void LayoutRubyAsInline::removeChild(LayoutObject* child)
-{
-    // If the child's parent is *this (must be a ruby run), just use the normal remove method.
-    if (child->parent() == this) {
-        ASSERT(child->isRubyRun());
-        LayoutInline::removeChild(child);
-        return;
-    }
-
-    // Otherwise find the containing run and remove it from there.
-    LayoutRubyRun* run = findRubyRunParent(child);
-    ASSERT(run);
-    run->removeChild(child);
+  // Otherwise find the containing run and remove it from there.
+  LayoutRubyRun* run = FindRubyRunParent(child);
+  DCHECK(run);
+  run->RemoveChild(child);
 }
 
 // === ruby as block object ===
 
 LayoutRubyAsBlock::LayoutRubyAsBlock(Element* element)
-    : LayoutBlockFlow(element)
-{
-    UseCounter::count(document(), UseCounter::RenderRuby);
+    : LayoutBlockFlow(element) {
+  UseCounter::Count(GetDocument(), UseCounter::kRenderRuby);
 }
 
-LayoutRubyAsBlock::~LayoutRubyAsBlock()
-{
+LayoutRubyAsBlock::~LayoutRubyAsBlock() {}
+
+void LayoutRubyAsBlock::StyleDidChange(StyleDifference diff,
+                                       const ComputedStyle* old_style) {
+  LayoutBlockFlow::StyleDidChange(diff, old_style);
+  PropagateStyleToAnonymousChildren();
 }
 
-void LayoutRubyAsBlock::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    LayoutBlockFlow::styleDidChange(diff, oldStyle);
-    propagateStyleToAnonymousChildren();
-}
+void LayoutRubyAsBlock::AddChild(LayoutObject* child,
+                                 LayoutObject* before_child) {
+  // If the child is a ruby run, just add it normally.
+  if (child->IsRubyRun()) {
+    LayoutBlockFlow::AddChild(child, before_child);
+    return;
+  }
 
-void LayoutRubyAsBlock::addChild(LayoutObject* child, LayoutObject* beforeChild)
-{
-    // If the child is a ruby run, just add it normally.
-    if (child->isRubyRun()) {
-        LayoutBlockFlow::addChild(child, beforeChild);
-        return;
+  if (before_child) {
+    // insert child into run
+    LayoutObject* run = before_child;
+    while (run && !run->IsRubyRun())
+      run = run->Parent();
+    if (run) {
+      if (before_child == run)
+        before_child = ToLayoutRubyRun(before_child)->FirstChild();
+      DCHECK(!before_child || before_child->IsDescendantOf(run));
+      run->AddChild(child, before_child);
+      return;
     }
+    NOTREACHED();  // beforeChild should always have a run as parent!
+                   // Emergency fallback: fall through and just append.
+  }
 
-    if (beforeChild) {
-        // insert child into run
-        LayoutObject* run = beforeChild;
-        while (run && !run->isRubyRun())
-            run = run->parent();
-        if (run) {
-            if (beforeChild == run)
-                beforeChild = toLayoutRubyRun(beforeChild)->firstChild();
-            ASSERT(!beforeChild || beforeChild->isDescendantOf(run));
-            run->addChild(child, beforeChild);
-            return;
-        }
-        ASSERT_NOT_REACHED(); // beforeChild should always have a run as parent!
-        // Emergency fallback: fall through and just append.
-    }
-
-    // If the new child would be appended, try to add the child to the previous run
-    // if possible, or create a new run otherwise.
-    // (The LayoutRubyRun object will handle the details)
-    LayoutRubyRun* lastRun = lastRubyRun(this);
-    if (!lastRun || lastRun->hasRubyText()) {
-        lastRun = LayoutRubyRun::staticCreateRubyRun(this);
-        LayoutBlockFlow::addChild(lastRun, beforeChild);
-    }
-    lastRun->addChild(child);
+  // If the new child would be appended, try to add the child to the previous
+  // run if possible, or create a new run otherwise.
+  // (The LayoutRubyRun object will handle the details)
+  LayoutRubyRun* last_run = LastRubyRun(this);
+  if (!last_run || last_run->HasRubyText()) {
+    last_run = LayoutRubyRun::StaticCreateRubyRun(this);
+    LayoutBlockFlow::AddChild(last_run, before_child);
+  }
+  last_run->AddChild(child);
 }
 
-void LayoutRubyAsBlock::removeChild(LayoutObject* child)
-{
-    // If the child's parent is *this (must be a ruby run), just use the normal remove method.
-    if (child->parent() == this) {
-        ASSERT(child->isRubyRun());
-        LayoutBlockFlow::removeChild(child);
-        return;
-    }
+void LayoutRubyAsBlock::RemoveChild(LayoutObject* child) {
+  // If the child's parent is *this (must be a ruby run), just use the normal
+  // remove method.
+  if (child->Parent() == this) {
+    DCHECK(child->IsRubyRun());
+    LayoutBlockFlow::RemoveChild(child);
+    return;
+  }
 
-    // Otherwise find the containing run and remove it from there.
-    LayoutRubyRun* run = findRubyRunParent(child);
-    ASSERT(run);
-    run->removeChild(child);
+  // Otherwise find the containing run and remove it from there.
+  LayoutRubyRun* run = FindRubyRunParent(child);
+  DCHECK(run);
+  run->RemoveChild(child);
 }
 
-} // namespace blink
+}  // namespace blink

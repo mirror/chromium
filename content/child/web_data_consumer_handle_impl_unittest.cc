@@ -35,12 +35,12 @@ class ReadDataOperationBase {
   virtual void ReadMore() = 0;
 
   static const WebDataConsumerHandle::Flags kNone =
-      WebDataConsumerHandle::FlagNone;
-  static const WebDataConsumerHandle::Result kOk = WebDataConsumerHandle::Ok;
+      WebDataConsumerHandle::kFlagNone;
+  static const WebDataConsumerHandle::Result kOk = WebDataConsumerHandle::kOk;
   static const WebDataConsumerHandle::Result kDone =
-      WebDataConsumerHandle::Done;
+      WebDataConsumerHandle::kDone;
   static const WebDataConsumerHandle::Result kShouldWait =
-      WebDataConsumerHandle::ShouldWait;
+      WebDataConsumerHandle::kShouldWait;
 };
 
 class ClientImpl final : public WebDataConsumerHandle::Client {
@@ -48,7 +48,7 @@ class ClientImpl final : public WebDataConsumerHandle::Client {
   explicit ClientImpl(ReadDataOperationBase* operation)
       : operation_(operation) {}
 
-  void didGetReadable() override {
+  void DidGetReadable() override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&ReadDataOperationBase::ReadMore,
                               base::Unretained(operation_)));
@@ -79,14 +79,14 @@ class ReadDataOperation : public ReadDataOperationBase {
   void ReadData() {
     if (!client_) {
       client_.reset(new ClientImpl(this));
-      reader_ = handle_->obtainReader(client_.get());
+      reader_ = handle_->ObtainReader(client_.get());
     }
 
     Result rv = kOk;
     size_t readSize = 0;
     while (true) {
       char buffer[16];
-      rv = reader_->read(&buffer, sizeof(buffer), kNone, &readSize);
+      rv = reader_->Read(&buffer, sizeof(buffer), kNone, &readSize);
       if (rv != kOk)
         break;
       result_.insert(result_.size(), &buffer[0], readSize);
@@ -137,21 +137,21 @@ class TwoPhaseReadDataOperation : public ReadDataOperationBase {
   void ReadData() {
     if (!client_) {
       client_.reset(new ClientImpl(this));
-      reader_ = handle_->obtainReader(client_.get());
+      reader_ = handle_->ObtainReader(client_.get());
     }
 
     Result rv;
     while (true) {
       const void* buffer = nullptr;
       size_t size;
-      rv = reader_->beginRead(&buffer, kNone, &size);
+      rv = reader_->BeginRead(&buffer, kNone, &size);
       if (rv != kOk)
         break;
       // In order to verify endRead, we read at most one byte for each time.
       size_t read_size = std::max(static_cast<size_t>(1), size);
       result_.insert(result_.size(), static_cast<const char*>(buffer),
                      read_size);
-      rv = reader_->endRead(read_size);
+      rv = reader_->EndRead(read_size);
       if (rv != kOk) {
         // Something is wrong.
         result_ = "error";
@@ -193,11 +193,14 @@ class WebDataConsumerHandleImplTest : public ::testing::Test {
     options.struct_size = sizeof(MojoCreateDataPipeOptions);
     options.flags = MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE;
     options.element_num_bytes = 1;
-    options.capacity_num_bytes = 4;
+    options.capacity_num_bytes = kDataPipeCapacity;
 
     MojoResult result = mojo::CreateDataPipe(&options, &producer_, &consumer_);
     ASSERT_EQ(MOJO_RESULT_OK, result);
   }
+
+ protected:
+  static constexpr int kDataPipeCapacity = 4;
 
   // This function can be blocked if the associated consumer doesn't consume
   // the data.
@@ -236,8 +239,8 @@ class WebDataConsumerHandleImplTest : public ::testing::Test {
 
 TEST_F(WebDataConsumerHandleImplTest, ReadData) {
   base::RunLoop run_loop;
-  auto operation = base::WrapUnique(new ReadDataOperation(
-      std::move(consumer_), &message_loop_, run_loop.QuitClosure()));
+  auto operation = base::MakeUnique<ReadDataOperation>(
+      std::move(consumer_), &message_loop_, run_loop.QuitClosure());
 
   base::Thread t("DataConsumerHandle test thread");
   ASSERT_TRUE(t.Start());
@@ -257,8 +260,8 @@ TEST_F(WebDataConsumerHandleImplTest, ReadData) {
 
 TEST_F(WebDataConsumerHandleImplTest, TwoPhaseReadData) {
   base::RunLoop run_loop;
-  auto operation = base::WrapUnique(new TwoPhaseReadDataOperation(
-      std::move(consumer_), &message_loop_, run_loop.QuitClosure()));
+  auto operation = base::MakeUnique<TwoPhaseReadDataOperation>(
+      std::move(consumer_), &message_loop_, run_loop.QuitClosure());
 
   base::Thread t("DataConsumerHandle test thread");
   ASSERT_TRUE(t.Start());
@@ -274,6 +277,36 @@ TEST_F(WebDataConsumerHandleImplTest, TwoPhaseReadData) {
   t.Stop();
 
   EXPECT_EQ(expected, operation->result());
+}
+
+TEST_F(WebDataConsumerHandleImplTest, ZeroSizeRead) {
+  ASSERT_GT(kDataPipeCapacity - 1, 0);
+  constexpr size_t data_size = kDataPipeCapacity - 1;
+  std::unique_ptr<WebDataConsumerHandleImpl> handle(
+      new WebDataConsumerHandleImpl(std::move(consumer_)));
+  std::unique_ptr<WebDataConsumerHandle::Reader> reader(
+      handle->ObtainReader(nullptr));
+
+  size_t read_size;
+  WebDataConsumerHandle::Result rv =
+      reader->Read(nullptr, 0, WebDataConsumerHandle::kFlagNone, &read_size);
+  EXPECT_EQ(WebDataConsumerHandle::Result::kShouldWait, rv);
+
+  std::string expected = ProduceData(data_size);
+  producer_.reset();
+
+  rv = reader->Read(nullptr, 0, WebDataConsumerHandle::kFlagNone, &read_size);
+  EXPECT_EQ(WebDataConsumerHandle::Result::kOk, rv);
+
+  char buffer[16];
+  rv = reader->Read(&buffer, sizeof(buffer), WebDataConsumerHandle::kFlagNone,
+                    &read_size);
+  EXPECT_EQ(WebDataConsumerHandle::Result::kOk, rv);
+  EXPECT_EQ(data_size, read_size);
+  EXPECT_EQ(expected, std::string(buffer, read_size));
+
+  rv = reader->Read(nullptr, 0, WebDataConsumerHandle::kFlagNone, &read_size);
+  EXPECT_EQ(WebDataConsumerHandle::Result::kDone, rv);
 }
 
 }  // namespace

@@ -26,19 +26,24 @@ class WorkerThreadLifecycleContext;
 // alive by wasContextDestroyedBeforeObserverCreation(). If this return true,
 // the worker thread has already been terminated before the observer is created,
 // and contextDestroyed() is never notified.
-class CORE_EXPORT WorkerThreadLifecycleObserver : public LifecycleObserver<WorkerThreadLifecycleContext, WorkerThreadLifecycleObserver> {
-protected:
-    explicit WorkerThreadLifecycleObserver(WorkerThreadLifecycleContext*);
+class CORE_EXPORT WorkerThreadLifecycleObserver
+    : public LifecycleObserver<WorkerThreadLifecycleContext,
+                               WorkerThreadLifecycleObserver> {
+ public:
+  virtual void ContextDestroyed(WorkerThreadLifecycleContext*) {}
 
-    bool wasContextDestroyedBeforeObserverCreation() const
-    {
-        return m_wasContextDestroyedBeforeObserverCreation;
-    }
+ protected:
+  explicit WorkerThreadLifecycleObserver(WorkerThreadLifecycleContext*);
+  virtual ~WorkerThreadLifecycleObserver();
 
-private:
-    const bool m_wasContextDestroyedBeforeObserverCreation;
+  bool WasContextDestroyedBeforeObserverCreation() const {
+    return was_context_destroyed_before_observer_creation_;
+  }
+
+ private:
+  const bool was_context_destroyed_before_observer_creation_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerThreadLifecycleObserver_h
+#endif  // WorkerThreadLifecycleObserver_h

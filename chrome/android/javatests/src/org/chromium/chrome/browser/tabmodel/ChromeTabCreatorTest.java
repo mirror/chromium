@@ -7,12 +7,13 @@ package org.chromium.chrome.browser.tabmodel;
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_LOW_END_DEVICE;
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE;
 
-import android.os.Environment;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
+import android.test.UiThreadTest;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
+import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
@@ -34,8 +35,7 @@ public class ChromeTabCreatorTest extends ChromeTabbedActivityTestBase  {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     @Override
@@ -101,6 +101,26 @@ public class ChromeTabCreatorTest extends ChromeTabbedActivityTestBase  {
         // Verify that the background tab is loaded.
         assertNotNull(bgTab.getView());
         ChromeTabUtils.waitForTabPageLoaded(bgTab, mTestServer.getURL(TEST_PATH));
+    }
+
+    /**
+     * Verify that the spare WebContents is used.
+     *
+     * Spare WebContents are not created on low-devices, so don't run the test.
+     */
+    @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
+    @MediumTest
+    @Feature({"Browser"})
+    @UiThreadTest
+    public void testCreateNewTabTakesSpareWebContents()
+            throws ExecutionException, InterruptedException {
+        Tab currentTab = getActivity().getActivityTab();
+        WarmupManager.getInstance().createSpareWebContents();
+        assertTrue(WarmupManager.getInstance().hasSpareWebContents());
+        getActivity().getCurrentTabCreator().createNewTab(
+                new LoadUrlParams(mTestServer.getURL(TEST_PATH)), TabLaunchType.FROM_EXTERNAL_APP,
+                currentTab);
+        assertFalse(WarmupManager.getInstance().hasSpareWebContents());
     }
 
     /**

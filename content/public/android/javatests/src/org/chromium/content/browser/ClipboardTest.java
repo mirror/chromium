@@ -7,7 +7,7 @@ package org.chromium.content.browser;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.test.suitebuilder.annotation.LargeTest;
+import android.support.test.filters.LargeTest;
 import android.text.TextUtils;
 
 import org.chromium.base.ThreadUtils;
@@ -16,6 +16,7 @@ import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_shell_apk.ContentShellActivityTestRule.RerunWithUpdatedContainerView;
 import org.chromium.content_shell_apk.ContentShellTestBase;
 
 /**

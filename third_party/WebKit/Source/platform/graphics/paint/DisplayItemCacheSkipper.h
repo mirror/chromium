@@ -7,29 +7,27 @@
 
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/PaintController.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class DisplayItemCacheSkipper final {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    WTF_MAKE_NONCOPYABLE(DisplayItemCacheSkipper);
-public:
-    DisplayItemCacheSkipper(GraphicsContext& context)
-        : m_context(context)
-    {
-        context.getPaintController().beginSkippingCache();
-    }
-    ~DisplayItemCacheSkipper()
-    {
-        m_context.getPaintController().endSkippingCache();
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  WTF_MAKE_NONCOPYABLE(DisplayItemCacheSkipper);
 
-private:
-    GraphicsContext& m_context;
+ public:
+  DisplayItemCacheSkipper(GraphicsContext& context) : context_(context) {
+    context.GetPaintController().BeginSkippingCache();
+  }
+  ~DisplayItemCacheSkipper() {
+    context_.GetPaintController().EndSkippingCache();
+  }
+
+ private:
+  GraphicsContext& context_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DisplayItemCacheSkipper_h
+#endif  // DisplayItemCacheSkipper_h

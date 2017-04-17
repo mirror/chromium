@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "components/web_restrictions/browser/web_restrictions_client.h"
-#include "content/public/browser/resource_controller.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request.h"
@@ -43,7 +42,7 @@ bool WebRestrictionsResourceThrottle::ShouldDefer(const GURL& url) {
   if (provider_->SupportsRequest() && !is_main_frame_)
     return false;
   UrlAccess access = provider_->ShouldProceed(
-      is_main_frame_, url,
+      is_main_frame_, url.spec(),
       base::Bind(&WebRestrictionsResourceThrottle::OnCheckResult,
                  weak_ptr_factory_.GetWeakPtr()));
   if (access == DISALLOW)
@@ -53,9 +52,9 @@ bool WebRestrictionsResourceThrottle::ShouldDefer(const GURL& url) {
 
 void WebRestrictionsResourceThrottle::OnCheckResult(const bool should_proceed) {
   if (should_proceed) {
-    controller()->Resume();
+    Resume();
   } else {
-    controller()->CancelWithError(net::ERR_BLOCKED_BY_ADMINISTRATOR);
+    CancelWithError(net::ERR_BLOCKED_BY_ADMINISTRATOR);
   }
 }
 

@@ -1,64 +1,64 @@
 include_rules = [
   "+apps",
   "+ash",
+  "+cc/paint",
   "+chrome/app",
   "+chrome/chrome_watcher",
-  "+chrome/grit",  # For generated headers
-  "+chrome/installer",
+  "+chrome/grit",
+  "+chrome/install_static",
+  "+chrome/installer/util",
   "+chrome_elf/blacklist",
   "+chrome_elf/chrome_elf_constants.h",
-  "+chrome_elf/create_file",
   "+chrome_elf/dll_hash",
   "+chromeos",
   "+components",
   "+content/public/browser",
-  "+content/test/net",
   "+courgette",
+  "+device/base",
+  "+device/battery",
   "+device/bluetooth",
-  "+device/core",
   "+device/geolocation",
   "+device/hid",
   "+device/media_transfer_protocol",
+  "+device/power_save_blocker",
   "+device/usb",
+  "+device/vr/features.h",
   "+extensions/browser",
   "+extensions/common",
   "+extensions/components/javascript_dialog_extensions_client",
+  "+extensions/features",
   "+extensions/grit",
   "+extensions/test",
-  "+gin",
+  "+gin/public/gin_features.h",
   "+google/cacheinvalidation",  # Sync invalidation API protobuf files.
   "+google_apis",
   "+google_update",
-  "+grit",  # TODO(thestig) Remove. For generated headers
   "+installer_util_strings",  # For generated headers
   "+jni",
+  "+mash/public/interfaces",
   "+media/audio", # For media audio hang monitor.
   "+media/base",  # For media switches
   "+media/cdm/cdm_paths.h",
   "+media/midi",  # For midi switches
   "+media/mojo",  # For mojo media services.
-  "+mojo/converters",
-  "+mojo/runner/child",
-  "+services/shell/public/cpp",
-  "+services/ui/public",
-  "+policy",  # For generated headers and source
   "+ppapi/c",  # For various types.
   "+ppapi/host",
   "+ppapi/proxy",
   "+ppapi/shared_impl",
   "+rlz",
   "+sandbox/win/src",  # The path doesn't say it, but this is the Windows sandbox.
-  "+services/shell",
+  "+services/data_decoder/public/cpp",
+  "+services/device/public/cpp/device_features.h",
+  "+services/identity/public/interfaces",
+  "+services/preferences/public/cpp",
+  "+services/preferences/public/interfaces",
+  "+services/service_manager",
+  "+services/shape_detection/public/interfaces",
+  "+services/ui/public",
   "+skia/ext",
-  "+sync/api",  # Sync API files.
-  "+sync/internal_api/public/attachments",  # Needed for tests.
-  "+sync/internal_api/public/base",
-  "+sync/protocol",  # Sync protobuf files.
-  "+sync/util",  # Sync utilities like GetSessionName.
-  "+syzygy/kasko",
+  "+third_party/boringssl/src/include",
+  "+third_party/crashpad",
   "+third_party/cros_system_api",
-  "+third_party/kasko",
-  "+win8/util",
 
   # chrome only needs switches from cc. All usage of the compositor is from
   # content. Definitely don't include generic stuff from cc/base here, if this
@@ -76,6 +76,11 @@ include_rules = [
   "+chrome/browser/ui/views/chrome_browser_main_extra_parts_views_linux.h",
   "+chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h",
 
+  # Code in chrome should not use ash::SessionStateDelegate and friends.
+  # Instead, use SessionManager/UserManager/SessionControllerClient directly
+  # since they are part of chrome.
+  "-ash/session",
+
   # Explicitly disallow using SyncMessageFilter to prevent browser from
   # sending synchronous IPC messages on non-UI threads.
   "-ipc/ipc_sync_message_filter.h",
@@ -88,6 +93,7 @@ include_rules = [
   "+third_party/leveldatabase",
   "+third_party/libxml",
   "+third_party/mozilla",     # Mozilla interface headers.
+  "+third_party/ocmock/gtest_support.h",
   "+third_party/protobuf/src/google/protobuf",
   "+third_party/re2",
   "+third_party/smhasher",
@@ -97,20 +103,31 @@ include_rules = [
   # No inclusion of WebKit from the browser, other than strictly enum/POD,
   # header-only types, and some selected common code.
   "-third_party/WebKit",
+  "+third_party/WebKit/public/platform/WebCache.h",
   "+third_party/WebKit/public/platform/WebDisplayMode.h",
   "+third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h",
+  "+third_party/WebKit/public/platform/WebGestureEvent.h",
+  "+third_party/WebKit/public/platform/WebInputEvent.h",
+  "+third_party/WebKit/public/platform/WebMouseEvent.h",
+  "+third_party/WebKit/public/platform/WebMouseWheelEvent.h",
   "+third_party/WebKit/public/platform/WebReferrerPolicy.h",
-  "+third_party/WebKit/public/platform/modules/app_banner/WebAppBannerPromptReply.h",
+  "+third_party/WebKit/public/platform/WebSecurityStyle.h",
+  "+third_party/WebKit/public/platform/modules/app_banner/app_banner.mojom.h",
+  "+third_party/WebKit/public/platform/modules/budget_service/budget_service.mojom.h",
+  "+third_party/WebKit/public/platform/modules/installation/installation.mojom.h",
+  "+third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h",
   "+third_party/WebKit/public/platform/modules/notifications/WebNotificationConstants.h",
-  "+third_party/WebKit/public/platform/modules/push_messaging/WebPushPermissionStatus.h",
-  "+third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h",
   "+third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h",
-  "+third_party/WebKit/public/web/WebCache.h",
+  "+third_party/WebKit/public/platform/modules/push_messaging/WebPushPermissionStatus.h",
+  "+third_party/WebKit/public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h",
+  "+third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h",
+  "+third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h",
+  "+third_party/WebKit/public/platform/site_engagement.mojom.h",
+  "+third_party/WebKit/public/public_features.h",
   "+third_party/WebKit/public/web/WebContextMenuData.h",
   "+third_party/WebKit/public/web/WebFindOptions.h",
-  "+third_party/WebKit/public/web/WebInputEvent.h",
   "+third_party/WebKit/public/web/WebMediaPlayerAction.h",
   "+third_party/WebKit/public/web/WebPluginAction.h",
   "+third_party/WebKit/public/web/WebTextDirection.h",
-  "+third_party/WebKit/public/web/WebWindowFeatures.h",
+  "+third_party/WebKit/public/web/window_features.mojom.h",
 ]

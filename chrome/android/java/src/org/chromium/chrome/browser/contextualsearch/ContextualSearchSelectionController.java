@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.contextualsearch;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -14,6 +15,7 @@ import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
 import java.util.regex.Matcher;
@@ -44,12 +46,12 @@ public class ContextualSearchSelectionController {
 
     private static final String CONTAINS_WORD_PATTERN = "(\\w|\\p{L}|\\p{N})+";
     // A URL is:
-    //   0-1:  schema://
+    //   1:    scheme://
     //   1+:   any word char, _ or -
     //   1+:   . followed by 1+ of any word char, _ or -
     //   0-1:  0+ of any word char or .,@?^=%&:/~#- followed by any word char or @?^-%&/~+#-
-    // TODO(twellington): expand accepted schemas? Require a schema?
-    private static final Pattern URL_PATTERN = Pattern.compile("((http|https|file)://)?"
+    // TODO(twellington): expand accepted schemes?
+    private static final Pattern URL_PATTERN = Pattern.compile("((http|https|file|ftp|ssh)://)"
             + "([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?");
 
     // Max selection length must be limited or the entire request URL can go past the 2K limit.
@@ -67,8 +69,8 @@ public class ContextualSearchSelectionController {
     private boolean mWasTapGestureDetected;
     // Reflects whether the last tap was valid and whether we still have a tap-based selection.
     private ContextualSearchTapState mLastTapState;
+    private TapSuppressionHeuristics mTapHeuristics;
     private boolean mIsWaitingForInvalidTapDetection;
-    private boolean mIsSelectionEstablished;
     private boolean mShouldHandleSelectionModification;
     private boolean mDidExpandSelection;
 
@@ -106,7 +108,7 @@ public class ContextualSearchSelectionController {
         // notification in this case.
         // See crbug.com/444114.
         @Override
-        public void onSingleTap(boolean consumed, int x, int y) {
+        public void onSingleTap(boolean consumed) {
             // We may be notified that a tap has happened even when the system consumed the event.
             // This is being used to support tapping on an existing selection to show the selection
             // handles.  We should process this tap unless we have already shown the selection
@@ -295,12 +297,6 @@ public class ContextualSearchSelectionController {
             case SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED:
                 shouldHandleSelection = mShouldHandleSelectionModification;
                 break;
-            case SelectionEventType.SELECTION_ESTABLISHED:
-                mIsSelectionEstablished = true;
-                break;
-            case SelectionEventType.SELECTION_DISSOLVED:
-                mIsSelectionEstablished = false;
-                break;
             default:
         }
 
@@ -360,28 +356,31 @@ public class ContextualSearchSelectionController {
 
     /**
      * Handles an unhandled tap gesture.
+     * @param x The x coordinate in px.
+     * @param y The y coordinate in px.
      */
     void handleShowUnhandledTapUIIfNeeded(int x, int y) {
         mWasTapGestureDetected = false;
-        // TODO(donnd): shouldn't we check == TAP here instead of LONG_PRESS?
         // TODO(donnd): refactor to avoid needing a new handler API method as suggested by Pedro.
         if (mSelectionType != SelectionType.LONG_PRESS) {
             mWasTapGestureDetected = true;
             long tapTimeNanoseconds = System.nanoTime();
             // TODO(donnd): add a policy method to get adjusted tap count.
-            ChromePreferenceManager prefs = ChromePreferenceManager.getInstance(mActivity);
+            ChromePreferenceManager prefs = ChromePreferenceManager.getInstance();
             int adjustedTapsSinceOpen = prefs.getContextualSearchTapCount()
                     - prefs.getContextualSearchTapQuickAnswerCount();
-            TapSuppressionHeuristics tapHeuristics =
+            // Explicitly destroy the old heuristics so native code can dispose data.
+            if (mTapHeuristics != null) mTapHeuristics.destroy();
+            mTapHeuristics =
                     new TapSuppressionHeuristics(this, mLastTapState, x, y, adjustedTapsSinceOpen);
             // TODO(donnd): Move to be called when the panel closes to work with states that change.
-            tapHeuristics.logConditionState();
+            mTapHeuristics.logConditionState();
             // Tell the manager what it needs in order to log metrics on whether the tap would have
             // been suppressed if each of the heuristics were satisfied.
-            mHandler.handleMetricsForWouldSuppressTap(tapHeuristics);
+            mHandler.handleMetricsForWouldSuppressTap(mTapHeuristics);
             mX = x;
             mY = y;
-            boolean shouldSuppressTap = tapHeuristics.shouldSuppressTap();
+            boolean shouldSuppressTap = mTapHeuristics.shouldSuppressTap();
             if (shouldSuppressTap) {
                 mHandler.handleSuppressedTap();
             } else {
@@ -406,11 +405,28 @@ public class ContextualSearchSelectionController {
     }
 
     /**
+     * Gets the base page ContentViewCore.
+     * Deprecated, use getBaseWebContents instead.
      * @return The Base Page's {@link ContentViewCore}, or {@code null} if there is no current tab.
      */
+    @Deprecated
     ContentViewCore getBaseContentView() {
         Tab currentTab = mActivity.getActivityTab();
         return currentTab != null ? currentTab.getContentViewCore() : null;
+    }
+
+    /**
+     * @return The Base Page's {@link WebContents}, or {@code null} if there is no current tab or
+     *         the current tab has no {@link ContentViewCore}.
+     */
+    WebContents getBaseWebContents() {
+        Tab currentTab = mActivity.getActivityTab();
+        if (currentTab == null) return null;
+
+        ContentViewCore contentViewCore = currentTab.getContentViewCore();
+        if (contentViewCore == null) return null;
+
+        return contentViewCore.getWebContents();
     }
 
     /**
@@ -425,10 +441,10 @@ public class ContextualSearchSelectionController {
         // crbug.com/508354
 
         if (selectionStartAdjust == 0 && selectionEndAdjust == 0) return;
-        ContentViewCore basePageContentView = getBaseContentView();
-        if (basePageContentView != null && basePageContentView.getWebContents() != null) {
+        WebContents basePageWebContents = getBaseWebContents();
+        if (basePageWebContents != null) {
             mDidExpandSelection = true;
-            basePageContentView.getWebContents().adjustSelectionByCharacterOffset(
+            basePageWebContents.adjustSelectionByCharacterOffset(
                     selectionStartAdjust, selectionEndAdjust);
         }
     }
@@ -510,11 +526,11 @@ public class ContextualSearchSelectionController {
     }
 
     /**
-     * @return whether the selection has been established, for testing.
+     * @return whether selection is empty, for testing.
      */
     @VisibleForTesting
-    boolean isSelectionEstablished() {
-        return mIsSelectionEstablished;
+    boolean isSelectionEmpty() {
+        return TextUtils.isEmpty(mSelectedText);
     }
 
     /**
@@ -539,6 +555,14 @@ public class ContextualSearchSelectionController {
             // TODO(pedrosimonetti): actually suppress selection once the system supports it.
             if (ContextualSearchFieldTrial.isBlacklistEnabled() && reason != BlacklistReason.NONE) {
                 isValid = false;
+            }
+
+            int minSelectionLength = ContextualSearchFieldTrial.getMinimumSelectionLength();
+            if (selection.length() < minSelectionLength) {
+                isValid = false;
+                ContextualSearchUma.logSelectionLengthSuppression(true);
+            } else if (minSelectionLength > 0) {
+                ContextualSearchUma.logSelectionLengthSuppression(false);
             }
         }
 

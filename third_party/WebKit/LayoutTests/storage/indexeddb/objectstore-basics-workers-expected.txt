@@ -96,7 +96,7 @@ PASS [Worker] store.indexNames.item(100) is null
 [Worker] Expecting exception from store.add({x: 'bar', y: self}, 'bar')
 PASS [Worker] Exception was thrown.
 PASS [Worker] code is DOMException.DATA_CLONE_ERR
-[Worker] Exception message: Failed to execute 'add' on 'IDBObjectStore': An object could not be cloned.
+[Worker] Exception message: Failed to execute 'add' on 'IDBObjectStore': #<DedicatedWorkerGlobalScope> could not be cloned.
 [Worker] Try to insert data where key path yields a Date key:
 [Worker] store.add({x: testDateB, y: 'value'}, 'key')
 [Worker] addSuccess():
@@ -128,10 +128,10 @@ PASS [Worker] event.target.result.y is "value"
 PASS [Worker] event.target.result.x is "foo"
 [Worker] store.delete('key')
 [Worker] removeSuccess():
-FAIL [Worker] event.target.result should be undefined (of type undefined). Was 1 (of type number).
+PASS [Worker] event.target.result is undefined
 [Worker] store.delete('key')
 [Worker] removeSuccessButNotThere():
-FAIL [Worker] event.target.result should be undefined (of type undefined). Was 0 (of type number).
+PASS [Worker] event.target.result is undefined
 [Worker] store = event.target.source
 [Worker] Passing an invalid key into store.get().
 [Worker] Expecting exception from store.get({})

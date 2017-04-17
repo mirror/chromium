@@ -81,10 +81,12 @@ class ExceptionHandlerServerTest : public testing::Test {
  public:
   ExceptionHandlerServerTest()
       : server_(true),
-        pipe_name_(server_.CreatePipe()),
+        pipe_name_(L"\\\\.\\pipe\\test_name"),
         server_ready_(CreateEvent(nullptr, false, false, nullptr)),
         delegate_(server_ready_.get()),
-        server_thread_(&server_, &delegate_) {}
+        server_thread_(&server_, &delegate_) {
+    server_.SetPipeName(pipe_name_);
+  }
 
   TestDelegate& delegate() { return delegate_; }
   ExceptionHandlerServer& server() { return server_; }
@@ -141,10 +143,11 @@ TEST_F(ExceptionHandlerServerTest, StopWhileConnected) {
 
 std::wstring ReadWString(FileHandle handle) {
   size_t length = 0;
-  EXPECT_TRUE(LoggingReadFile(handle, &length, sizeof(length)));
+  EXPECT_TRUE(LoggingReadFileExactly(handle, &length, sizeof(length)));
   std::wstring str(length, L'\0');
   if (length > 0) {
-    EXPECT_TRUE(LoggingReadFile(handle, &str[0], length * sizeof(str[0])));
+    EXPECT_TRUE(
+        LoggingReadFileExactly(handle, &str[0], length * sizeof(str[0])));
   }
   return str;
 }
@@ -168,10 +171,6 @@ class TestClient final : public WinChildProcess {
     std::wstring pipe_name = ReadWString(ReadPipeHandle());
     CrashpadClient client;
     if (!client.SetHandlerIPCPipe(pipe_name)) {
-      ADD_FAILURE();
-      return EXIT_FAILURE;
-    }
-    if (!client.UseHandler()) {
       ADD_FAILURE();
       return EXIT_FAILURE;
     }
@@ -204,9 +203,9 @@ TEST_F(ExceptionHandlerServerTest, MultipleConnections) {
     WriteWString(handles_2->write.get(), pipe_name());
     WriteWString(handles_3->write.get(), pipe_name());
 
-    ASSERT_EQ(L"OK", ReadWString(handles_3->read.get()));
-    ASSERT_EQ(L"OK", ReadWString(handles_2->read.get()));
-    ASSERT_EQ(L"OK", ReadWString(handles_1->read.get()));
+    ASSERT_EQ(ReadWString(handles_3->read.get()), L"OK");
+    ASSERT_EQ(ReadWString(handles_2->read.get()), L"OK");
+    ASSERT_EQ(ReadWString(handles_1->read.get()), L"OK");
   }
 }
 

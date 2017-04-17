@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-#include "ash/common/accessibility_types.h"
+#include "ash/accessibility_types.h"
 #include "base/callback.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
@@ -27,14 +27,15 @@
 #include "chromeos/network/onc/onc_utils.h"
 #include "chromeos/network/onc/onc_validator.h"
 #include "components/onc/onc_constants.h"
+#include "components/onc/onc_pref_names.h"
 #include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/external_data_fetcher.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/schema.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
+#include "components/strings/grit/components_strings.h"
 #include "crypto/sha2.h"
-#include "grit/components_strings.h"
-#include "policy/policy_constants.h"
 #include "url/gurl.h"
 
 namespace policy {
@@ -102,20 +103,20 @@ std::unique_ptr<base::Value> GetAction(const base::DictionaryValue* dict,
   if (!value || !value->GetAsString(&action))
     return std::unique_ptr<base::Value>();
   if (action == kActionSuspend) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_SUSPEND));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_SUSPEND));
   }
   if (action == kActionLogout) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_STOP_SESSION));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_STOP_SESSION));
   }
   if (action == kActionShutdown) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_SHUT_DOWN));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_SHUT_DOWN));
   }
   if (action == kActionDoNothing) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_DO_NOTHING));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_DO_NOTHING));
   }
   return std::unique_ptr<base::Value>();
 }
@@ -123,8 +124,7 @@ std::unique_ptr<base::Value> GetAction(const base::DictionaryValue* dict,
 }  // namespace
 
 ExternalDataPolicyHandler::ExternalDataPolicyHandler(const char* policy_name)
-    : TypeCheckingPolicyHandler(policy_name, base::Value::TYPE_DICTIONARY) {
-}
+    : TypeCheckingPolicyHandler(policy_name, base::Value::Type::DICTIONARY) {}
 
 ExternalDataPolicyHandler::~ExternalDataPolicyHandler() {
 }
@@ -176,18 +176,16 @@ void ExternalDataPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
 NetworkConfigurationPolicyHandler*
 NetworkConfigurationPolicyHandler::CreateForUserPolicy() {
   return new NetworkConfigurationPolicyHandler(
-      key::kOpenNetworkConfiguration,
-      onc::ONC_SOURCE_USER_POLICY,
-      prefs::kOpenNetworkConfiguration);
+      key::kOpenNetworkConfiguration, onc::ONC_SOURCE_USER_POLICY,
+      onc::prefs::kOpenNetworkConfiguration);
 }
 
 // static
 NetworkConfigurationPolicyHandler*
 NetworkConfigurationPolicyHandler::CreateForDevicePolicy() {
   return new NetworkConfigurationPolicyHandler(
-      key::kDeviceOpenNetworkConfiguration,
-      onc::ONC_SOURCE_DEVICE_POLICY,
-      prefs::kDeviceOpenNetworkConfiguration);
+      key::kDeviceOpenNetworkConfiguration, onc::ONC_SOURCE_DEVICE_POLICY,
+      onc::prefs::kDeviceOpenNetworkConfiguration);
 }
 
 NetworkConfigurationPolicyHandler::~NetworkConfigurationPolicyHandler() {}
@@ -268,7 +266,7 @@ void NetworkConfigurationPolicyHandler::PrepareForDisplaying(
   std::unique_ptr<base::Value> sanitized_config =
       SanitizeNetworkConfig(entry->value.get());
   if (!sanitized_config)
-    sanitized_config = base::Value::CreateNullValue();
+    sanitized_config = base::MakeUnique<base::Value>();
 
   policies->Set(policy_name(), entry->level, entry->scope, entry->source,
                 std::move(sanitized_config), nullptr);
@@ -278,10 +276,9 @@ NetworkConfigurationPolicyHandler::NetworkConfigurationPolicyHandler(
     const char* policy_name,
     onc::ONCSource onc_source,
     const char* pref_path)
-    : TypeCheckingPolicyHandler(policy_name, base::Value::TYPE_STRING),
+    : TypeCheckingPolicyHandler(policy_name, base::Value::Type::STRING),
       onc_source_(onc_source),
-      pref_path_(pref_path) {
-}
+      pref_path_(pref_path) {}
 
 // static
 std::unique_ptr<base::Value>
@@ -306,7 +303,7 @@ NetworkConfigurationPolicyHandler::SanitizeNetworkConfig(
 
   base::JSONWriter::WriteWithOptions(
       *toplevel_dict, base::JSONWriter::OPTIONS_PRETTY_PRINT, &json_string);
-  return base::WrapUnique(new base::StringValue(json_string));
+  return base::MakeUnique<base::Value>(json_string);
 }
 
 PinnedLauncherAppsPolicyHandler::PinnedLauncherAppsPolicyHandler()
@@ -327,10 +324,10 @@ void PinnedLauncherAppsPolicyHandler::ApplyPolicySettings(
     for (base::ListValue::const_iterator entry(policy_list->begin());
          entry != policy_list->end(); ++entry) {
       std::string id;
-      if ((*entry)->GetAsString(&id)) {
-        base::DictionaryValue* app_dict = new base::DictionaryValue();
+      if (entry->GetAsString(&id)) {
+        auto app_dict = base::MakeUnique<base::DictionaryValue>();
         app_dict->SetString(ash::launcher::kPinnedAppsPrefAppIDPath, id);
-        pinned_apps_list->Append(app_dict);
+        pinned_apps_list->Append(std::move(app_dict));
       }
     }
     prefs->SetValue(pref_path(), std::move(pinned_apps_list));

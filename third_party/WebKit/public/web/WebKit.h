@@ -31,8 +31,8 @@
 #ifndef WebKit_h
 #define WebKit_h
 
-#include "../platform/Platform.h"
-#include <v8.h>
+#include "public/platform/Platform.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -42,52 +42,39 @@ namespace blink {
 // Must be called on the thread that will be the main thread before
 // using any other public APIs. The provided Platform; must be
 // non-null and must remain valid until the current thread calls shutdown.
-BLINK_EXPORT void initialize(Platform*);
+BLINK_EXPORT void Initialize(Platform*);
 
 // Get the V8 Isolate for the main thread.
 // initialize must have been called first.
-BLINK_EXPORT v8::Isolate* mainThreadIsolate();
-
-// Once shutdown, the Platform passed to initialize will no longer
-// be accessed. No other WebKit objects should be in use when this function is
-// called. Any background threads created by WebKit are promised to be
-// terminated by the time this function returns.
-BLINK_EXPORT void shutdown();
+BLINK_EXPORT v8::Isolate* MainThreadIsolate();
 
 // Alters the rendering of content to conform to a fixed set of rules.
-BLINK_EXPORT void setLayoutTestMode(bool);
-BLINK_EXPORT bool layoutTestMode();
+BLINK_EXPORT void SetLayoutTestMode(bool);
+BLINK_EXPORT bool LayoutTestMode();
 
 // Enables or disables the use of the mock theme for layout tests. This function
 // must be called only if setLayoutTestMode(true).
-BLINK_EXPORT void setMockThemeEnabledForTest(bool);
+BLINK_EXPORT void SetMockThemeEnabledForTest(bool);
 
 // Alters the rendering of fonts for layout tests.
-BLINK_EXPORT void setFontAntialiasingEnabledForTest(bool);
-BLINK_EXPORT bool fontAntialiasingEnabledForTest();
-
-// Forces the use of the complex text path for layout tests.
-BLINK_EXPORT void setAlwaysUseComplexTextForTest(bool);
-BLINK_EXPORT bool alwaysUseComplexTextForTest();
-
-// Enables the named log channel. See WebCore/platform/Logging.h for details.
-BLINK_EXPORT void enableLogChannel(const char*);
+BLINK_EXPORT void SetFontAntialiasingEnabledForTest(bool);
+BLINK_EXPORT bool FontAntialiasingEnabledForTest();
 
 // Purge the plugin list cache. If |reloadPages| is true, any pages
 // containing plugins will be reloaded after refreshing the plugin list.
-BLINK_EXPORT void resetPluginCache(bool reloadPages = false);
+BLINK_EXPORT void ResetPluginCache(bool reload_pages = false);
 
 // The embedder should call this periodically in an attempt to balance overall
 // performance and memory usage.
-BLINK_EXPORT void decommitFreeableMemory();
+BLINK_EXPORT void DecommitFreeableMemory();
 
 // Send memory pressure notification to worker thread isolate.
 BLINK_EXPORT void MemoryPressureNotificationToWorkerThreadIsolates(
     v8::MemoryPressureLevel);
 
 // Set the RAIL performance mode on all worker thread isolates.
-BLINK_EXPORT void setRAILModeOnWorkerThreadIsolates(v8::RAILMode);
+BLINK_EXPORT void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

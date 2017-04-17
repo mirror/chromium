@@ -5,6 +5,7 @@
 #ifndef MEDIA_RENDERERS_RENDERER_IMPL_H_
 #define MEDIA_RENDERERS_RENDERER_IMPL_H_
 
+#include <list>
 #include <memory>
 #include <vector>
 
@@ -31,7 +32,7 @@ class SingleThreadTaskRunner;
 namespace media {
 
 class AudioRenderer;
-class DemuxerStreamProvider;
+class MediaResource;
 class TimeSource;
 class VideoRenderer;
 class WallClockTimeSource;
@@ -49,7 +50,7 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   ~RendererImpl() final;
 
   // Renderer implementation.
-  void Initialize(DemuxerStreamProvider* demuxer_stream_provider,
+  void Initialize(MediaResource* media_resource,
                   RendererClient* client,
                   const PipelineStatusCB& init_cb) final;
   void SetCdm(CdmContext* cdm_context,
@@ -59,10 +60,6 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   void SetPlaybackRate(double playback_rate) final;
   void SetVolume(float volume) final;
   base::TimeDelta GetMediaTime() final;
-  bool HasAudio() final;
-  bool HasVideo() final;
-
-  void RestartStreamPlayback(DemuxerStream* stream, base::TimeDelta time);
 
   // Helper functions for testing purposes. Must be called before Initialize().
   void DisableUnderflowForTesting();
@@ -81,8 +78,9 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
     STATE_UNINITIALIZED,
     STATE_INIT_PENDING_CDM,  // Initialization is waiting for the CDM to be set.
     STATE_INITIALIZING,      // Initializing audio/video renderers.
-    STATE_FLUSHING,
-    STATE_PLAYING,
+    STATE_FLUSHING,          // Flushing is in progress.
+    STATE_FLUSHED,           // After initialization or after flush completed.
+    STATE_PLAYING,           // After StartPlayingFrom has been called.
     STATE_ERROR
   };
 
@@ -100,13 +98,42 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   void OnVideoRendererInitializeDone(PipelineStatus status);
 
   // Helper functions and callbacks for Flush().
+  void FlushInternal();
   void FlushAudioRenderer();
   void OnAudioRendererFlushDone();
   void FlushVideoRenderer();
   void OnVideoRendererFlushDone();
 
-  void RestartAudioRenderer(base::TimeDelta time);
-  void RestartVideoRenderer(base::TimeDelta time);
+  // This function notifies the renderer that the status of the demuxer |stream|
+  // has been changed, the new status is |enabled| and the change occured while
+  // playback position was |time|.
+  void OnStreamStatusChanged(DemuxerStream* stream,
+                             bool enabled,
+                             base::TimeDelta time);
+
+  // Reinitialize audio/video renderer during a demuxer stream switching. The
+  // renderer must be flushed first, and when the re-init is completed the
+  // corresponding callback will be invoked to restart playback.
+  // The |stream| parameter specifies the new demuxer stream, and the |time|
+  // parameter specifies the time on media timeline where the switch occured.
+  void ReinitializeAudioRenderer(DemuxerStream* stream, base::TimeDelta time);
+  void OnAudioRendererReinitialized(DemuxerStream* stream,
+                                    base::TimeDelta time,
+                                    PipelineStatus status);
+  void ReinitializeVideoRenderer(DemuxerStream* stream, base::TimeDelta time);
+  void OnVideoRendererReinitialized(DemuxerStream* stream,
+                                    base::TimeDelta time,
+                                    PipelineStatus status);
+
+  // Restart audio/video renderer playback after a demuxer stream switch or
+  // after a demuxer stream has been disabled and re-enabled. The |stream|
+  // parameter specifies which stream needs to be restarted. The |time|
+  // parameter specifies the position on the media timeline where the playback
+  // needs to be restarted. It is necessary for demuxers with independent
+  // streams (e.g. MSE / ChunkDemuxer) to synchronize data reading between those
+  // streams.
+  void RestartAudioRenderer(DemuxerStream* stream, base::TimeDelta time);
+  void RestartVideoRenderer(DemuxerStream* stream, base::TimeDelta time);
 
   // Callback executed by filters to update statistics.
   void OnStatisticsUpdate(const PipelineStatistics& stats);
@@ -122,6 +149,7 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   //     and PausePlayback() should be called
   void OnBufferingStateChange(DemuxerStream::Type type,
                               BufferingState new_buffering_state);
+
   // Handles the buffering notifications that we might get while an audio or a
   // video stream is being restarted. In those cases we don't want to report
   // underflows immediately and instead give decoders a chance to catch up with
@@ -131,6 +159,7 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   bool HandleRestartedStreamBufferingChanges(
       DemuxerStream::Type type,
       BufferingState new_buffering_state);
+
   bool WaitingForEnoughData() const;
   void PausePlayback();
   void StartPlayback();
@@ -146,12 +175,14 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   void OnVideoNaturalSizeChange(const gfx::Size& size);
   void OnVideoOpacityChange(bool opaque);
 
+  void OnStreamRestartCompleted();
+
   State state_;
 
   // Task runner used to execute pipeline tasks.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
-  DemuxerStreamProvider* demuxer_stream_provider_;
+  MediaResource* media_resource_;
   RendererClient* client_;
 
   // Temporary callback used for Initialize() and Flush().
@@ -162,6 +193,9 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
   std::unique_ptr<RendererClientInternal> video_renderer_client_;
   std::unique_ptr<AudioRenderer> audio_renderer_;
   std::unique_ptr<VideoRenderer> video_renderer_;
+
+  DemuxerStream* current_audio_stream_;
+  DemuxerStream* current_video_stream_;
 
   // Renderer-provided time source used to control playback.
   TimeSource* time_source_;
@@ -197,6 +231,12 @@ class MEDIA_EXPORT RendererImpl : public Renderer {
 
   bool restarting_audio_ = false;
   bool restarting_video_ = false;
+
+  // Flush operations and media track status changes must be serialized to avoid
+  // interfering with each other. This list will hold a list of postponed
+  // actions that need to be completed after the current async operation is
+  // completed.
+  std::list<base::Closure> pending_actions_;
 
   base::WeakPtr<RendererImpl> weak_this_;
   base::WeakPtrFactory<RendererImpl> weak_factory_;

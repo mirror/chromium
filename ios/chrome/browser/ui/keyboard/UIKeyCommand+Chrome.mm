@@ -10,12 +10,16 @@
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 ChromeCommandBlock ChromeCommandBlockWithResponder(UIResponder* responder) {
   base::WeakNSObject<UIResponder> weakResponder(responder);
-  return [[^(NSInteger tag) {
+  return [^(NSInteger tag) {
     [weakResponder
         chromeExecuteCommand:[GenericChromeCommand commandWithTag:tag]];
-  } copy] autorelease];
+  } copy];
 }
 
 UIKeyModifierFlags Cr_UIKeyModifierNone = 0;
@@ -93,10 +97,7 @@ cr_keyCommandWithInput:(nonnull NSString*)input
       [self keyCommandWithInput:input
                   modifierFlags:modifierFlags
                          action:@selector(cr_handleKeyCommand:)];
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-  if ([keyCommand respondsToSelector:@selector(discoverabilityTitle)])
-    keyCommand.discoverabilityTitle = discoveryTitle;
-#endif
+  keyCommand.discoverabilityTitle = discoveryTitle;
   keyCommand.cr_action = action;
   return keyCommand;
 }

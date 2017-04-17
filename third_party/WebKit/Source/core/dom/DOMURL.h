@@ -32,57 +32,61 @@
 #include "core/dom/DOMURLUtils.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class Blob;
 class ExceptionState;
 class ExecutionContext;
 class URLRegistrable;
 class URLSearchParams;
 
-class DOMURL final : public GarbageCollectedFinalized<DOMURL>, public ScriptWrappable, public DOMURLUtils {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DOMURL* create(const String& url, ExceptionState& exceptionState)
-    {
-        return new DOMURL(url, blankURL(), exceptionState);
-    }
+class DOMURL final : public GarbageCollectedFinalized<DOMURL>,
+                     public ScriptWrappable,
+                     public DOMURLUtils {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static DOMURL* create(const String& url, const String& base, ExceptionState& exceptionState)
-    {
-        return new DOMURL(url, KURL(KURL(), base), exceptionState);
-    }
-    ~DOMURL();
+ public:
+  static DOMURL* Create(const String& url, ExceptionState& exception_state) {
+    return new DOMURL(url, BlankURL(), exception_state);
+  }
 
-    CORE_EXPORT static String createPublicURL(ExecutionContext*, URLRegistrable*, const String& uuid = String());
-    static void revokeObjectUUID(ExecutionContext*, const String&);
+  static DOMURL* Create(const String& url,
+                        const String& base,
+                        ExceptionState& exception_state) {
+    return new DOMURL(url, KURL(KURL(), base), exception_state);
+  }
+  ~DOMURL();
 
-    KURL url() const override { return m_url; }
-    void setURL(const KURL& url) override { m_url = url; }
+  CORE_EXPORT static String CreatePublicURL(ExecutionContext*,
+                                            URLRegistrable*,
+                                            const String& uuid = String());
+  static void RevokeObjectUUID(ExecutionContext*, const String&);
 
-    String input() const override { return m_input; }
-    void setInput(const String&) override;
+  KURL Url() const override { return url_; }
+  void SetURL(const KURL& url) override { url_ = url; }
 
-    void setSearch(const String&) override;
+  String Input() const override { return input_; }
+  void SetInput(const String&) override;
 
-    URLSearchParams* searchParams();
+  void setSearch(const String&) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  URLSearchParams* searchParams();
 
-private:
-    friend class URLSearchParams;
-    DOMURL(const String& url, const KURL& base, ExceptionState&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void update();
-    void updateSearchParams(const String&);
+ private:
+  friend class URLSearchParams;
+  DOMURL(const String& url, const KURL& base, ExceptionState&);
 
-    KURL m_url;
-    String m_input;
-    WeakMember<URLSearchParams> m_searchParams;
+  void Update();
+  void UpdateSearchParams(const String&);
+
+  KURL url_;
+  String input_;
+  WeakMember<URLSearchParams> search_params_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMURL_h
+#endif  // DOMURL_h

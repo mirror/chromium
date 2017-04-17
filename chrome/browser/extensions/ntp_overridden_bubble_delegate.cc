@@ -4,16 +4,17 @@
 
 #include "chrome/browser/extensions/ntp_overridden_bubble_delegate.h"
 
-#include "base/metrics/histogram.h"
+#include "base/feature_list.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_web_ui.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace {
@@ -106,6 +107,11 @@ bool NtpOverriddenBubbleDelegate::ShouldCloseOnDeactivate() const {
   return true;
 }
 
+bool NtpOverriddenBubbleDelegate::ShouldAcknowledgeOnDeactivate() const {
+  return base::FeatureList::IsEnabled(
+      features::kAcknowledgeNtpOverrideOnDeactivate);
+}
+
 bool NtpOverriddenBubbleDelegate::ShouldShowExtensionList() const {
   return false;
 }
@@ -131,6 +137,10 @@ void NtpOverriddenBubbleDelegate::LogAction(
 
 const char* NtpOverriddenBubbleDelegate::GetKey() {
   return "NtpOverriddenBubbleDelegate";
+}
+
+bool NtpOverriddenBubbleDelegate::SupportsPolicyIndicator() {
+  return true;
 }
 
 }  // namespace extensions

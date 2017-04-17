@@ -25,31 +25,30 @@
 
 namespace blink {
 
-template<typename T> class EventSender;
-using DetailsEventSender = EventSender<HTMLDetailsElement>;
-
 class HTMLDetailsElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLDetailsElement* create(Document&);
-    void toggleOpen();
-    ~HTMLDetailsElement() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    void dispatchPendingEvent(DetailsEventSender*);
+ public:
+  static HTMLDetailsElement* Create(Document&);
+  void ToggleOpen();
+  ~HTMLDetailsElement() override;
 
-    Element* findMainSummary() const;
+  Element* FindMainSummary() const;
 
-private:
-    explicit HTMLDetailsElement(Document&);
+ private:
+  explicit HTMLDetailsElement(Document&);
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    void didAddUserAgentShadowRoot(ShadowRoot&) override;
-    bool isInteractiveContent() const override;
+  void DispatchPendingEvent();
 
-    bool m_isOpen;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  void DidAddUserAgentShadowRoot(ShadowRoot&) override;
+  bool IsInteractiveContent() const override;
+
+  bool is_open_;
+  TaskHandle pending_event_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLDetailsElement_h
+#endif  // HTMLDetailsElement_h

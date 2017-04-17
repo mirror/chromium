@@ -13,27 +13,28 @@ namespace blink {
 class WebGL2RenderingContextBase;
 
 class WebGLSync : public WebGLSharedObject {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~WebGLSync() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    GLsync object() const { return m_object; }
+ public:
+  ~WebGLSync() override;
 
-protected:
-    WebGLSync(WebGL2RenderingContextBase*, GLsync, GLenum objectType);
+  GLsync Object() const { return object_; }
 
-    bool hasObject() const override { return m_object != nullptr; }
-    void deleteObjectImpl(gpu::gles2::GLES2Interface*) override;
+ protected:
+  WebGLSync(WebGL2RenderingContextBase*, GLsync, GLenum object_type);
 
-    GLenum objectType() const { return m_objectType; }
+  bool HasObject() const override { return object_ != nullptr; }
+  void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
 
-private:
-    bool isSync() const override { return true; }
+  GLenum ObjectType() const { return object_type_; }
 
-    GLsync m_object;
-    GLenum m_objectType;
+ private:
+  bool IsSync() const override { return true; }
+
+  GLsync object_;
+  GLenum object_type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLSync_h
+#endif  // WebGLSync_h

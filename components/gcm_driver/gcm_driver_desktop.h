@@ -29,10 +29,6 @@ class FilePath;
 class SequencedTaskRunner;
 }
 
-namespace extensions {
-class ExtensionGCMAppHandlerTest;
-}
-
 namespace net {
 class URLRequestContextGetter;
 }
@@ -46,7 +42,7 @@ class GCMDelayedTaskController;
 
 // GCMDriver implementation for desktop and Chrome OS, using GCMClient.
 class GCMDriverDesktop : public GCMDriver,
-                         public InstanceIDHandler {
+                         protected InstanceIDHandler {
  public:
   GCMDriverDesktop(
       std::unique_ptr<GCMClientFactory> gcm_client_factory,
@@ -62,6 +58,11 @@ class GCMDriverDesktop : public GCMDriver,
   ~GCMDriverDesktop() override;
 
   // GCMDriver implementation:
+  void ValidateRegistration(
+      const std::string& app_id,
+      const std::vector<std::string>& sender_ids,
+      const std::string& registration_id,
+      const ValidateRegistrationCallback& callback) override;
   void Shutdown() override;
   void OnSignedIn() override;
   void OnSignedOut() override;
@@ -115,6 +116,11 @@ class GCMDriverDesktop : public GCMDriver,
                 const std::string& scope,
                 const std::map<std::string, std::string>& options,
                 const GetTokenCallback& callback) override;
+  void ValidateToken(const std::string& app_id,
+                     const std::string& authorized_entity,
+                     const std::string& scope,
+                     const std::string& token,
+                     const ValidateTokenCallback& callback) override;
   void DeleteToken(const std::string& app_id,
                    const std::string& authorized_entity,
                    const std::string& scope,
@@ -133,6 +139,11 @@ class GCMDriverDesktop : public GCMDriver,
   struct TokenTupleComparer {
     bool operator()(const TokenTuple& a, const TokenTuple& b) const;
   };
+
+  void DoValidateRegistration(
+      std::unique_ptr<RegistrationInfo> registration_info,
+      const std::string& registration_id,
+      const ValidateRegistrationCallback& callback);
 
   //  Stops the GCM service. It can be restarted by calling EnsureStarted again.
   void Stop();
@@ -171,6 +182,7 @@ class GCMDriverDesktop : public GCMDriver,
                       const base::Time& last_token_fetch_time);
   void OnConnected(const net::IPEndPoint& ip_endpoint);
   void OnDisconnected();
+  void OnStoreReset();
 
   void GetGCMStatisticsFinished(const GCMClient::GCMStatistics& stats);
   void GetInstanceIDDataFinished(const std::string& app_id,

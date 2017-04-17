@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// TODO(nektar): Migrate entire file to Mojoq.
 // These should be kept in sync with third_party/WebKit/public/web/WebAXEnums.h
 // until the Chromium and Blink trees are merged.
 [camel_case_enum_to_string=true] namespace ui {
 
-  // For new entries to the following three enums, also add to
-  // chrome/common/extensions/api/automation.idl.
+  // For new entries to the following four enums, also add to
+  // chrome/common/extensions/api/automation.idl. This is enforced
+  // by a PRESUBMIT check.
   //
   // Explanation of the comments next to these events:
   //
@@ -36,17 +38,26 @@
     focus,
     hide,                      // Remove: http://crbug.com/392502
     hover,
+    image_frame_updated,       // Web
     invalid_status_changed,    // Implicit
     layout_complete,           // Web
+    live_region_created,       // Implicit
     live_region_changed,       // Web
     load_complete,             // Web
     location_changed,          // Web
+    media_started_playing,     // Automation
+    media_stopped_playing,     // Automation
     menu_end,                  // Native / Win
     menu_list_item_selected,   // Web
     menu_list_value_changed,   // Web
     menu_popup_end,            // Native / Win
     menu_popup_start,          // Native / Win
     menu_start,                // Native / Win
+    mouse_canceled,
+    mouse_dragged,
+    mouse_moved,
+    mouse_pressed,
+    mouse_released,
     row_collapsed,             // Web / Mac
     row_count_changed,         // Web / Mac
     row_expanded,              // Web / Mac
@@ -69,9 +80,11 @@
     abbr,
     alert_dialog,
     alert,
+    anchor,
     annotation,
     application,
     article,
+    audio,
     banner,
     blockquote,
     // TODO(nektar): Remove busy_indicator because it's used nowhere.
@@ -103,6 +116,7 @@
     div,
     document,
     embedded_object,
+    feed,
     figcaption,
     figure,
     footer,
@@ -179,6 +193,7 @@
     tab,
     table_header_container,
     table,
+    term,
     text_field,
     time,
     timer,
@@ -190,6 +205,7 @@
     tree,
     unknown,
     tooltip,
+    video,
     web_area,
     web_view,
     window
@@ -205,6 +221,7 @@
     expanded,
     focusable,
     haspopup,
+    // Grows horizontally, e.g. most toolbars and separators.
     horizontal,
     hovered,
     invisible,
@@ -219,8 +236,82 @@
     richly_editable,
     selectable,
     selected,
+    // Grows vertically, e.g. menu or combo box.
     vertical,
     visited
+  };
+
+  // An action to be taken on an accessibility node.
+  // In contrast to |AXSupportedAction|, these describe what happens to the
+  // object, e.g. "FOCUS".
+  enum AXAction {
+    blur,
+
+    // Decrement a slider or range control by one step value.
+    decrement,
+
+    // Do the default action for an object, typically this means "click".
+    do_default,
+
+    focus,
+
+    // Return the content of this image object in the image_data attribute.
+    get_image_data,
+
+    // Given a point, find the object it corresponds to and fire a
+    // |AXActionData.hit_test_event_to_fire| event on it in response.
+    hit_test,
+
+    // Increment a slider or range control by one step value.
+    increment,
+
+    // Delete any selected text in the control's text value and
+    // insert |AXActionData::value| in its place, like when typing or pasting.
+    replace_selected_text,
+
+    // Scroll any scrollable containers to make the target object visible
+    // on the screen.  Optionally pass a subfocus rect in
+    // AXActionData.target_rect.
+    scroll_to_make_visible,
+
+    // Scroll the given object to a specified point on the screen in
+    // global screen coordinates. Pass a point in AXActionData.target_point.
+    scroll_to_point,
+
+    set_accessibility_focus,
+    set_scroll_offset,
+    set_selection,
+
+    // Don't focus this node, but set it as the sequential focus navigation
+    // starting point, so that pressing Tab moves to the next element
+    // following this one, for example.
+    set_sequential_focus_navigation_starting_point,
+
+    // Replace the value of the control with AXActionData::value and
+    // reset the selection, if applicable.
+    set_value,
+
+    show_context_menu
+  };
+
+  enum AXActionFlags {
+    request_images,
+    request_inline_text_boxes
+  };
+
+  // Lists the actions that can be performed on a given node.
+  // In contrast to |AXAction|, these describe what the user can do on the
+  // object, e.g. "PRESS", not what happens to the object as a result.
+  // Only one action is supported for now.
+  enum AXSupportedAction {
+    activate,
+    check,
+    click,
+    jump,
+    open,
+    press,
+    select,
+    uncheck
   };
 
   // A change to the accessibility tree.
@@ -233,10 +324,10 @@
 
   [cpp_enum_prefix_override="ax_attr"] enum AXStringAttribute {
     access_key,
-    action,
     // Only used when invalid_state == invalid_state_other.
     aria_invalid_value,
     auto_complete,
+    chrome_channel,  // Automation only.
     container_live_relevant,
     container_live_status,
     description,
@@ -244,6 +335,9 @@
     // Only present when different from parent.
     font_family,
     html_tag,
+    image_data_url,
+    inner_html,
+    key_shortcuts,
     // Only present when different from parent.
     language,
     name,
@@ -251,12 +345,14 @@
     live_status,
     placeholder,
     role,
+    role_description,
     shortcut,
     url,
     value
   };
 
   [cpp_enum_prefix_override="ax_attr"] enum AXIntAttribute {
+    action,
     // Scrollable container attributes.
     scroll_x,
     scroll_x_min,
@@ -268,6 +364,12 @@
     // Attributes for retrieving the endpoints of a selection.
     text_sel_start,
     text_sel_end,
+
+    // aria_col* and aria_row* attributes
+    aria_col_count,
+    aria_col_index,
+    aria_row_count,
+    aria_row_index,
 
     // Table attributes.
     table_row_count,
@@ -302,6 +404,8 @@
 
     // Relationships between this element and other elements.
     activedescendant_id,
+    errormessage_id,
+    in_page_link_target_id,
     member_of_id,
     next_on_line_id,
     previous_on_line_id,
@@ -359,6 +463,9 @@
     live_atomic,
     live_busy,
 
+    // If a dialog box is marked as explicitly modal
+    modal,
+
     // ARIA readonly flag.
     aria_readonly,
 
@@ -383,10 +490,14 @@
     // Relationships between this element and other elements.
     controls_ids,
     describedby_ids,
+    details_ids,
     flowto_ids,
     labelledby_ids,
+    radio_group_ids,
 
-    // For static text. Character indices where line breaks occur.
+    // For static text. Character indices where line breaks occur. Note that
+    // this attribute is only available on Chrome OS and will be deprecated
+    // soon.
     line_breaks,
 
     // For static text. These int lists must be the same size; they represent
@@ -413,19 +524,30 @@
     // of the second character, and so on.
     character_offsets,
 
+    // Used for caching. Do not read directly. Use
+    // |AXNode::GetOrComputeLineStartOffsets|
+    // For all text fields and content editable roots: A list of the start
+    // offsets of each line inside this object.
+    cached_line_starts,
+
     // For inline text. These int lists must be the same size; they represent
     // the start and end character offset of each word within this text.
     word_starts,
     word_ends
   };
 
-  [cpp_enum_prefix_override="ax_marker_type"] enum AXMarkerType {
+  enum AXMarkerType {
+    // Assignments are ignored by the parser, but are kept here for clarity.
     spelling = 1,
     grammar = 2,
-    text_match = 4
+    spelling_grammar = 3,
+    text_match = 4,
+    spelling_text_match = 5,
+    grammar_text_match = 6,
+    spelling_grammar_text_match = 7
   };
 
-  [cpp_enum_prefix_override="ax_text_direction"] enum AXTextDirection {
+  enum AXTextDirection {
     ltr,
     rtl,
     ttb,
@@ -434,8 +556,8 @@
 
   // A Java counterpart will be generated for this enum.
   // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.ui.accessibility
-  // TODO(nektar): Fix compiler to create bit fields.
   [cpp_enum_prefix_override="ax"] enum AXTextStyle {
+    // Assignments are ignored by the parser, but are kept here for clarity.
     text_style_bold = 1,
     text_style_italic = 2,
     text_style_bold_italic = 3,
@@ -443,10 +565,17 @@
     text_style_bold_underline = 5,
     text_style_italic_underline = 6,
     text_style_bold_italic_underline = 7,
-    text_style_line_through = 8
+    text_style_line_through = 8,
+    text_style_bold_line_through = 9,
+    text_style_italic_line_through = 10,
+    text_style_bold_italic_line_through = 11,
+    text_style_underline_line_through = 12,
+    text_style_bold_underline_line_through = 13,
+    text_style_italic_underline_line_through = 14,
+    text_style_bold_italic_underline_line_through = 15
   };
 
-  [cpp_enum_prefix_override="ax_aria_current_state"] enum AXAriaCurrentState {
+  enum AXAriaCurrentState {
     false,
     true,
     page,
@@ -456,7 +585,7 @@
     time
   };
 
-  [cpp_enum_prefix_override="ax_invalid_state"] enum AXInvalidState {
+  enum AXInvalidState {
     false,
     true,
     spelling,
@@ -464,14 +593,14 @@
     other
   };
 
-  [cpp_enum_prefix_override="ax_sort_direction"] enum AXSortDirection {
+  enum AXSortDirection {
     unsorted,
     ascending,
     descending,
     other
   };
 
-  [cpp_enum_prefix_override="ax_name_from"] enum AXNameFrom {
+  enum AXNameFrom {
     uninitialized,
     attribute,
     contents,
@@ -480,12 +609,18 @@
     value
   };
 
-  [cpp_enum_prefix_override="ax_description_from"] enum AXDescriptionFrom {
-    uninitialized = 0,
+  enum AXDescriptionFrom {
+    uninitialized,
     attribute,
     contents,
     placeholder,
     related_element
+  };
+
+  enum AXEventFrom {
+    user,
+    page,
+    action
   };
 
   // Touch gestures on Chrome OS.
@@ -507,5 +642,25 @@
     swipe_up_4,
     swipe_right_4,
     swipe_down_4
+  };
+
+  enum AXTextAffinity {
+    downstream,
+    upstream
+  };
+
+  // Compares two nodes in an accessibility tree in pre-order traversal.
+  enum AXTreeOrder {
+    // Not in the same tree, or other error.
+    undefined,
+
+    // First node is before the second one.
+    before,
+
+    // Nodes are the same.
+    equal,
+
+    // First node is after the second one.
+    after
   };
 };

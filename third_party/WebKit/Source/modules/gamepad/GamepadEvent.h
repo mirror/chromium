@@ -12,36 +12,37 @@
 namespace blink {
 
 class GamepadEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static GamepadEvent* create()
-    {
-        return new GamepadEvent;
-    }
-    static GamepadEvent* create(const AtomicString& type, bool canBubble, bool cancelable, Gamepad* gamepad)
-    {
-        return new GamepadEvent(type, canBubble, cancelable, gamepad);
-    }
-    static GamepadEvent* create(const AtomicString& type, const GamepadEventInit& initializer)
-    {
-        return new GamepadEvent(type, initializer);
-    }
-    ~GamepadEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    Gamepad* getGamepad() const { return m_gamepad.get(); }
+ public:
+  static GamepadEvent* Create(const AtomicString& type,
+                              bool can_bubble,
+                              bool cancelable,
+                              Gamepad* gamepad) {
+    return new GamepadEvent(type, can_bubble, cancelable, gamepad);
+  }
+  static GamepadEvent* Create(const AtomicString& type,
+                              const GamepadEventInit& initializer) {
+    return new GamepadEvent(type, initializer);
+  }
+  ~GamepadEvent() override;
 
-    const AtomicString& interfaceName() const override;
+  Gamepad* getGamepad() const { return gamepad_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    GamepadEvent();
-    GamepadEvent(const AtomicString& type, bool canBubble, bool cancelable, Gamepad*);
-    GamepadEvent(const AtomicString&, const GamepadEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<Gamepad> m_gamepad;
+ private:
+  GamepadEvent(const AtomicString& type,
+               bool can_bubble,
+               bool cancelable,
+               Gamepad*);
+  GamepadEvent(const AtomicString&, const GamepadEventInit&);
+
+  Member<Gamepad> gamepad_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GamepadEvent_h
+#endif  // GamepadEvent_h

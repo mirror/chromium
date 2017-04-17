@@ -3,7 +3,6 @@
 <script src="../inspector-test.js"></script>
 <script src="../console-test.js"></script>
 <script>
-
 function loadScript()
 {
     var script = document.createElement('script');
@@ -14,11 +13,9 @@ function loadScript()
 
 function test()
 {
-    var mainTarget = WebInspector.targetManager.mainTarget();
-    var debuggerModel = WebInspector.DebuggerModel.fromTarget(mainTarget);
-    var message = new WebInspector.ConsoleMessage(mainTarget, WebInspector.ConsoleMessage.MessageSource.JS, WebInspector.ConsoleMessage.MessageLevel.Log, "hello?", null, " http://127.0.0.1:8000/inspector/resources/source2.js");
-    mainTarget.consoleModel.addMessage(message);
-    debuggerModel.addEventListener(WebInspector.DebuggerModel.Events.ParsedScriptSource, onScriptAdded);
+    var message = new ConsoleModel.ConsoleMessage(InspectorTest.runtimeModel, ConsoleModel.ConsoleMessage.MessageSource.JS, ConsoleModel.ConsoleMessage.MessageLevel.Info, "hello?", null, "http://127.0.0.1:8000/inspector/resources/source2.js");
+    ConsoleModel.consoleModel.addMessage(message);
+    InspectorTest.debuggerModel.addEventListener(SDK.DebuggerModel.Events.ParsedScriptSource, onScriptAdded);
 
     InspectorTest.dumpConsoleMessages();
     InspectorTest.evaluateInPage("loadScript()");
@@ -29,8 +26,9 @@ function test()
             return;
 
         InspectorTest.addResult("script was added");
-        var message = WebInspector.ConsoleView.instance()._visibleViewMessages[0];
-        message._anchorElement.click();
+        var message = Console.ConsoleView.instance()._visibleViewMessages[0];
+        var anchorElement = message.element().querySelector(".devtools-link");
+        anchorElement.click();
     }
 
     InspectorFrontendHost.openInNewTab = function()
@@ -39,11 +37,11 @@ function test()
         InspectorTest.completeTest();
     };
 
-    WebInspector.inspectorView._tabbedPane.addEventListener(WebInspector.TabbedPane.EventTypes.TabSelected, panelChanged);
+    UI.inspectorView._tabbedPane.addEventListener(UI.TabbedPane.Events.TabSelected, panelChanged);
 
     function panelChanged()
     {
-        InspectorTest.addResult("Panel " + WebInspector.inspectorView.currentPanel().name + " was opened");
+        InspectorTest.addResult("Panel " + UI.inspectorView._tabbedPane._currentTab.id + " was opened");
         InspectorTest.completeTest();
     }
 

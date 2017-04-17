@@ -28,49 +28,61 @@
 #include "platform/geometry/IntSize.h"
 #include "platform/graphics/filters/Filter.h"
 #include "platform/graphics/filters/FilterEffect.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 enum EdgeModeType {
-    EDGEMODE_UNKNOWN   = 0,
-    EDGEMODE_DUPLICATE = 1,
-    EDGEMODE_WRAP      = 2,
-    EDGEMODE_NONE      = 3
+  EDGEMODE_UNKNOWN = 0,
+  EDGEMODE_DUPLICATE = 1,
+  EDGEMODE_WRAP = 2,
+  EDGEMODE_NONE = 3
 };
 
 class PLATFORM_EXPORT FEConvolveMatrix final : public FilterEffect {
-public:
-    static FEConvolveMatrix* create(Filter*, const IntSize&,
-        float, float, const IntPoint&, EdgeModeType, bool, const Vector<float>&);
+ public:
+  static FEConvolveMatrix* Create(Filter*,
+                                  const IntSize&,
+                                  float,
+                                  float,
+                                  const IntPoint&,
+                                  EdgeModeType,
+                                  bool,
+                                  const Vector<float>&);
 
-    bool setDivisor(float);
-    bool setBias(float);
-    bool setTargetOffset(const IntPoint&);
-    bool setEdgeMode(EdgeModeType);
-    bool setPreserveAlpha(bool);
+  bool SetDivisor(float);
+  bool SetBias(float);
+  bool SetTargetOffset(const IntPoint&);
+  bool SetEdgeMode(EdgeModeType);
+  bool SetPreserveAlpha(bool);
 
-    FloatRect mapPaintRect(const FloatRect&, bool forward = true) const final;
+  TextStream& ExternalRepresentation(TextStream&, int indention) const override;
 
-    TextStream& externalRepresentation(TextStream&, int indention) const override;
+ private:
+  FEConvolveMatrix(Filter*,
+                   const IntSize&,
+                   float,
+                   float,
+                   const IntPoint&,
+                   EdgeModeType,
+                   bool,
+                   const Vector<float>&);
 
-private:
-    FEConvolveMatrix(Filter*, const IntSize&, float, float,
-        const IntPoint&, EdgeModeType, bool, const Vector<float>&);
+  FloatRect MapEffect(const FloatRect&) const final;
 
-    sk_sp<SkImageFilter> createImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 
-    bool parametersValid() const;
+  bool ParametersValid() const;
 
-    IntSize m_kernelSize;
-    float m_divisor;
-    float m_bias;
-    IntPoint m_targetOffset;
-    EdgeModeType m_edgeMode;
-    bool m_preserveAlpha;
-    Vector<float> m_kernelMatrix;
+  IntSize kernel_size_;
+  float divisor_;
+  float bias_;
+  IntPoint target_offset_;
+  EdgeModeType edge_mode_;
+  bool preserve_alpha_;
+  Vector<float> kernel_matrix_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FEConvolveMatrix_h
+#endif  // FEConvolveMatrix_h

@@ -11,24 +11,31 @@
 namespace blink {
 
 class CSSFontWeightInterpolationType : public CSSInterpolationType {
-public:
-    CSSFontWeightInterpolationType(CSSPropertyID property)
-        : CSSInterpolationType(property)
-    {
-        ASSERT(property == CSSPropertyFontWeight);
-    }
+ public:
+  CSSFontWeightInterpolationType(PropertyHandle property)
+      : CSSInterpolationType(property) {
+    DCHECK_EQ(CssProperty(), CSSPropertyFontWeight);
+  }
 
-    InterpolationValue maybeConvertUnderlyingValue(const InterpolationEnvironment&) const final;
-    void apply(const InterpolableValue&, const NonInterpolableValue*, InterpolationEnvironment&) const final;
+  InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
+      const ComputedStyle&) const final;
+  void ApplyStandardPropertyValue(const InterpolableValue&,
+                                  const NonInterpolableValue*,
+                                  StyleResolverState&) const final;
 
-private:
-    InterpolationValue createFontWeightValue(FontWeight) const;
-    InterpolationValue maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertInitial(const StyleResolverState&, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertInherit(const StyleResolverState&, ConversionCheckers&) const final;
-    InterpolationValue maybeConvertValue(const CSSValue&, const StyleResolverState&, ConversionCheckers&) const final;
+ private:
+  InterpolationValue CreateFontWeightValue(FontWeight) const;
+  InterpolationValue MaybeConvertNeutral(const InterpolationValue& underlying,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertInitial(const StyleResolverState&,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertInherit(const StyleResolverState&,
+                                         ConversionCheckers&) const final;
+  InterpolationValue MaybeConvertValue(const CSSValue&,
+                                       const StyleResolverState*,
+                                       ConversionCheckers&) const final;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSFontWeightInterpolationType_h
+#endif  // CSSFontWeightInterpolationType_h

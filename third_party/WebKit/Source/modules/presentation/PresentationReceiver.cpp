@@ -5,43 +5,120 @@
 #include "modules/presentation/PresentationReceiver.h"
 
 #include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "modules/EventTargetModules.h"
+#include "core/frame/Navigator.h"
+#include "core/frame/UseCounter.h"
+#include "modules/presentation/NavigatorPresentation.h"
+#include "modules/presentation/Presentation.h"
+#include "modules/presentation/PresentationConnection.h"
+#include "modules/presentation/PresentationConnectionList.h"
+#include "public/platform/modules/presentation/WebPresentationClient.h"
 
 namespace blink {
 
-PresentationReceiver::PresentationReceiver(LocalFrame* frame)
-    : DOMWindowProperty(frame)
-{
+PresentationReceiver::PresentationReceiver(LocalFrame* frame,
+                                           WebPresentationClient* client)
+    : ContextClient(frame) {
+  RecordOriginTypeAccess(frame->GetDocument());
+  connection_list_ = new PresentationConnectionList(frame->GetDocument());
+
+  if (client)
+    client->SetReceiver(this);
 }
 
-const AtomicString& PresentationReceiver::interfaceName() const
-{
-    return EventTargetNames::PresentationReceiver;
+// static
+PresentationReceiver* PresentationReceiver::From(Document& document) {
+  if (!document.GetFrame() || !document.GetFrame()->DomWindow())
+    return nullptr;
+  Navigator& navigator = *document.GetFrame()->DomWindow()->navigator();
+  Presentation* presentation = NavigatorPresentation::presentation(navigator);
+  if (!presentation)
+    return nullptr;
+
+  return presentation->receiver();
 }
 
-ExecutionContext* PresentationReceiver::getExecutionContext() const
-{
-    return frame() ? frame()->document() : nullptr;
+ScriptPromise PresentationReceiver::connectionList(ScriptState* script_state) {
+  if (!connection_list_property_)
+    connection_list_property_ =
+        new ConnectionListProperty(ExecutionContext::From(script_state), this,
+                                   ConnectionListProperty::kReady);
+
+  if (!connection_list_->IsEmpty() && connection_list_property_->GetState() ==
+                                          ScriptPromisePropertyBase::kPending)
+    connection_list_property_->Resolve(connection_list_);
+
+  return connection_list_property_->Promise(script_state->World());
 }
 
-ScriptPromise PresentationReceiver::getConnection(ScriptState* scriptState)
-{
-    return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(NotSupportedError, "PresentationReceiver::getConnection() is not implemented yet."));
+WebPresentationConnection* PresentationReceiver::OnReceiverConnectionAvailable(
+    const WebPresentationInfo& presentation_info) {
+  // take() will call PresentationReceiver::registerConnection()
+  // and register the connection.
+  auto connection = PresentationConnection::Take(this, presentation_info);
+
+  // receiver.connectionList property not accessed
+  if (!connection_list_property_)
+    return connection;
+
+  if (connection_list_property_->GetState() ==
+      ScriptPromisePropertyBase::kPending) {
+    connection_list_property_->Resolve(connection_list_);
+  } else if (connection_list_property_->GetState() ==
+             ScriptPromisePropertyBase::kResolved) {
+    connection_list_->DispatchConnectionAvailableEvent(connection);
+  }
+
+  return connection;
 }
 
-ScriptPromise PresentationReceiver::getConnections(ScriptState* scriptState)
-{
-    return ScriptPromise::rejectWithDOMException(scriptState, DOMException::create(NotSupportedError, "PresentationReceiver::getConnections() is not implemented yet."));
+void PresentationReceiver::DidChangeConnectionState(
+    WebPresentationConnectionState state) {
+  // TODO(zhaobin): remove or modify DCHECK when receiver supports more
+  // connection state change.
+  DCHECK(state == WebPresentationConnectionState::kTerminated);
+
+  for (auto connection : connection_list_->connections())
+    connection->DidChangeState(state, false /* shouldDispatchEvent */);
 }
 
-DEFINE_TRACE(PresentationReceiver)
-{
-    EventTargetWithInlineData::trace(visitor);
-    DOMWindowProperty::trace(visitor);
+void PresentationReceiver::TerminateConnection() {
+  if (!GetFrame())
+    return;
+
+  auto* window = GetFrame()->DomWindow();
+  if (!window || window->closed())
+    return;
+
+  window->close(GetFrame()->GetDocument());
 }
 
-} // namespace blink
+void PresentationReceiver::RegisterConnection(
+    PresentationConnection* connection) {
+  DCHECK(connection_list_);
+  connection_list_->AddConnection(connection);
+}
+
+void PresentationReceiver::RecordOriginTypeAccess(Document* document) const {
+  DCHECK(document);
+  if (document->IsSecureContext()) {
+    UseCounter::Count(document, UseCounter::kPresentationReceiverSecureOrigin);
+  } else {
+    UseCounter::Count(document,
+                      UseCounter::kPresentationReceiverInsecureOrigin);
+  }
+}
+
+DEFINE_TRACE(PresentationReceiver) {
+  visitor->Trace(connection_list_);
+  visitor->Trace(connection_list_property_);
+  ContextClient::Trace(visitor);
+}
+
+}  // namespace blink

@@ -9,16 +9,15 @@
 
 namespace blink {
 
-void ElementFullscreen::requestFullscreen(Element& element)
-{
-    Fullscreen::from(element.document()).requestFullscreen(element, Fullscreen::UnprefixedRequest);
+void ElementFullscreen::requestFullscreen(Element& element) {
+  Fullscreen::RequestFullscreen(element, Fullscreen::RequestType::kUnprefixed);
 }
 
-void ElementFullscreen::webkitRequestFullscreen(Element& element)
-{
-    if (element.isInShadowTree())
-        UseCounter::count(element.document(), UseCounter::PrefixedElementRequestFullscreenInShadow);
-    Fullscreen::from(element.document()).requestFullscreen(element, Fullscreen::PrefixedRequest);
+void ElementFullscreen::webkitRequestFullscreen(Element& element) {
+  if (element.IsInShadowTree())
+    UseCounter::Count(element.GetDocument(),
+                      UseCounter::kPrefixedElementRequestFullscreenInShadow);
+  Fullscreen::RequestFullscreen(element, Fullscreen::RequestType::kPrefixed);
 }
 
-} // namespace blink
+}  // namespace blink

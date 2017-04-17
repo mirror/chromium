@@ -32,29 +32,34 @@
 #define StorageQuotaClientImpl_h
 
 #include "modules/quota/StorageQuotaClient.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class StorageQuotaClientImpl : public GarbageCollectedFinalized<StorageQuotaClientImpl>, public StorageQuotaClient {
-    USING_GARBAGE_COLLECTED_MIXIN(StorageQuotaClientImpl);
-public:
-    static StorageQuotaClientImpl* create()
-    {
-        return new StorageQuotaClientImpl();
-    }
+class StorageQuotaClientImpl
+    : public GarbageCollectedFinalized<StorageQuotaClientImpl>,
+      public StorageQuotaClient {
+  USING_GARBAGE_COLLECTED_MIXIN(StorageQuotaClientImpl);
 
-    ~StorageQuotaClientImpl() override;
+ public:
+  static StorageQuotaClientImpl* Create() {
+    return new StorageQuotaClientImpl();
+  }
 
-    void requestQuota(ExecutionContext*, WebStorageQuotaType, unsigned long long newQuotaInBytes, StorageQuotaCallback*, StorageErrorCallback*) override;
-    ScriptPromise requestPersistentQuota(ScriptState*, unsigned long long newQuotaInBytes) override;
+  ~StorageQuotaClientImpl() override;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { StorageQuotaClient::trace(visitor); }
+  void RequestQuota(ScriptState*,
+                    WebStorageQuotaType,
+                    unsigned long long new_quota_in_bytes,
+                    StorageQuotaCallback*,
+                    StorageErrorCallback*) override;
 
-private:
-    StorageQuotaClientImpl();
+  DEFINE_INLINE_VIRTUAL_TRACE() { StorageQuotaClient::Trace(visitor); }
+
+ private:
+  StorageQuotaClientImpl();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StorageQuotaClientImpl_h
+#endif  // StorageQuotaClientImpl_h

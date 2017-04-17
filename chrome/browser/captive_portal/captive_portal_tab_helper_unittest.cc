@@ -21,16 +21,17 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/test_renderer_host.h"
+#include "content/public/test/test_utils.h"
 #include "content/public/test/web_contents_tester.h"
 #include "net/base/net_errors.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using captive_portal::CaptivePortalResult;
-using content::ResourceType;
 
 namespace {
 
+const char* const kStartUrl = "http://whatever.com/index.html";
 const char* const kHttpUrl = "http://whatever.com/";
 const char* const kHttpsUrl = "https://whatever.com/";
 
@@ -74,11 +75,13 @@ class CaptivePortalTabHelperTest : public ChromeRenderViewHostTestHarness {
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
 
-    // Load kHttpUrl. This ensures that any subsequent navigation to kHttpsUrl2
-    // will be properly registered as cross-process.
+    // Load kStartUrl. This ensures that any subsequent navigation to kHttpsUrl2
+    // will be properly registered as cross-process. It should be different than
+    // the rest of the URLs used, otherwise unit tests will clasify navigations
+    // as same document ones, which would be incorrect.
     content::WebContentsTester* web_contents_tester =
         content::WebContentsTester::For(web_contents());
-    web_contents_tester->NavigateAndCommit(GURL(kHttpUrl));
+    web_contents_tester->NavigateAndCommit(GURL(kStartUrl));
     content::RenderFrameHostTester* rfh_tester =
         content::RenderFrameHostTester::For(main_rfh());
     rfh_tester->SimulateNavigationStop();
@@ -378,6 +381,11 @@ TEST_F(CaptivePortalTabHelperTest, HttpsSubframe) {
 // but with a different error code.  Make sure the TabHelper sees the correct
 // error.
 TEST_F(CaptivePortalTabHelperTest, HttpsSubframeParallelError) {
+  if (content::IsBrowserSideNavigationEnabled() &&
+      content::AreAllSitesIsolatedForTesting()) {
+    // http://crbug.com/674734 Fix this test with PlzNavigate and Site Isolation
+    return;
+  }
   // URL used by both frames.
   GURL url = GURL(kHttpsUrl);
   content::RenderFrameHostTester* rfh_tester =
@@ -404,6 +412,11 @@ TEST_F(CaptivePortalTabHelperTest, HttpsSubframeParallelError) {
 
 // Simulates an HTTP to HTTPS redirect, which then times out.
 TEST_F(CaptivePortalTabHelperTest, HttpToHttpsRedirectTimeout) {
+  if (content::IsBrowserSideNavigationEnabled() &&
+      content::AreAllSitesIsolatedForTesting()) {
+    // http://crbug.com/674734 Fix this test with PlzNavigate and Site Isolation
+    return;
+  }
   GURL http_url(kHttpUrl);
   EXPECT_CALL(mock_reloader(), OnLoadStart(false)).Times(1);
   content::RenderFrameHostTester* rfh_tester =

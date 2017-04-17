@@ -1,8 +1,8 @@
 include_rules = [
-    "+bindings",
     "-modules",
+    "+modules/EventTargetModules.h",
     "+modules/ModulesExport.h",
     "+modules/mediasession",
-    "+platform",
+    "+mojo/public/cpp/bindings/binding.h",
+    "+url/url_constants.h",
 ]
-

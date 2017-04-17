@@ -9,5 +9,14 @@ mojom("interfaces") {
     "catalog.mojom",
   ]
 
-  use_new_wrapper_types = false
+  public_deps = [
+    ":constants",
+    "//mojo/common:common_custom_types",
+  ]
+}
+
+mojom("constants") {
+  sources = [
+    "constants.mojom",
+  ]
 }

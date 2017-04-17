@@ -10,16 +10,20 @@
 
 namespace blink {
 
-ClipPathRecorder::ClipPathRecorder(GraphicsContext& context, const DisplayItemClient& client, const Path& clipPath)
-    : m_context(context)
-    , m_client(client)
-{
-    m_context.getPaintController().createAndAppend<BeginClipPathDisplayItem>(m_client, clipPath);
+ClipPathRecorder::ClipPathRecorder(GraphicsContext& context,
+                                   const DisplayItemClient& client,
+                                   const Path& clip_path)
+    : context_(context), client_(client) {
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return;
+  context_.GetPaintController().CreateAndAppend<BeginClipPathDisplayItem>(
+      client_, clip_path);
 }
 
-ClipPathRecorder::~ClipPathRecorder()
-{
-    m_context.getPaintController().endItem<EndClipPathDisplayItem>(m_client);
+ClipPathRecorder::~ClipPathRecorder() {
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return;
+  context_.GetPaintController().EndItem<EndClipPathDisplayItem>(client_);
 }
 
-} // namespace blink
+}  // namespace blink

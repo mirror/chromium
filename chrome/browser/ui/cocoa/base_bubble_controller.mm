@@ -14,6 +14,7 @@
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
+#include "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_model_observer_bridge.h"
 #include "components/bubble/bubble_controller.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
@@ -113,7 +114,7 @@
                                                                   self));
   }
 
-  [bubble_ setArrowLocation:info_bubble::kTopRight];
+  [bubble_ setArrowLocation:info_bubble::kTopTrailing];
 }
 
 - (void)dealloc {
@@ -403,17 +404,20 @@
   NSWindow* window = [self window];
   NSPoint origin = anchor_;
 
+  BOOL isRTL = cocoa_l10n_util::ShouldDoExperimentalRTLLayout();
   switch ([bubble_ alignment]) {
     case info_bubble::kAlignArrowToAnchor: {
       NSSize offsets = NSMakeSize(info_bubble::kBubbleArrowXOffset +
                                   info_bubble::kBubbleArrowWidth / 2.0, 0);
       offsets = [[parentWindow_ contentView] convertSize:offsets toView:nil];
       switch ([bubble_ arrowLocation]) {
-        case info_bubble::kTopRight:
-          origin.x -= NSWidth([window frame]) - offsets.width;
+        case info_bubble::kTopTrailing:
+          origin.x -=
+              isRTL ? offsets.width : NSWidth([window frame]) - offsets.width;
           break;
-        case info_bubble::kTopLeft:
-          origin.x -= offsets.width;
+        case info_bubble::kTopLeading:
+          origin.x -=
+              isRTL ? NSWidth([window frame]) - offsets.width : offsets.width;
           break;
         case info_bubble::kNoArrow:
         // FALLTHROUGH.
@@ -429,17 +433,19 @@
       // edge aligns with the anchor. If the arrow is to the left then there's
       // nothing to do because the left edge is already aligned with the left
       // edge of the anchor.
-      if ([bubble_ arrowLocation] == info_bubble::kTopRight) {
+      if ([bubble_ arrowLocation] == info_bubble::kTopTrailing) {
         origin.x -= NSWidth([window frame]);
       }
       break;
 
-    case info_bubble::kAlignRightEdgeToAnchorEdge:
-      origin.x -= NSWidth([window frame]);
+    case info_bubble::kAlignTrailingEdgeToAnchorEdge:
+      if (!isRTL)
+        origin.x -= NSWidth([window frame]);
       break;
 
-    case info_bubble::kAlignLeftEdgeToAnchorEdge:
-      // Nothing to do.
+    case info_bubble::kAlignLeadingEdgeToAnchorEdge:
+      if (isRTL)
+        origin.x -= NSWidth([window frame]);
       break;
 
     default:

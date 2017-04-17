@@ -29,54 +29,26 @@
 import sys
 import unittest
 
-from webkitpy.common.system.systemhost import SystemHost
-from webkitpy.common.system.platforminfo import PlatformInfo
-from webkitpy.common.system.platforminfo_mock import MockPlatformInfo
+from webkitpy.common.system.system_host import SystemHost
+from webkitpy.common.system.platform_info_mock import MockPlatformInfo
 from webkitpy.common.system import path
 
 
 class AbspathTest(unittest.TestCase):
 
-    def platforminfo(self):
+    def platform_info(self):
         return SystemHost().platform
 
-    def test_abspath_to_uri_cygwin(self):
-        if sys.platform != 'cygwin':
-            return
-        self.assertEqual(path.abspath_to_uri(self.platforminfo(), '/cygdrive/c/foo/bar.html'),
-                         'file:///C:/foo/bar.html')
-
     def test_abspath_to_uri_unixy(self):
-        self.assertEqual(path.abspath_to_uri(MockPlatformInfo(), "/foo/bar.html"),
+        self.assertEqual(path.abspath_to_uri(MockPlatformInfo(), '/foo/bar.html'),
                          'file:///foo/bar.html')
 
     def test_abspath_to_uri_win(self):
         if sys.platform != 'win32':
             return
-        self.assertEqual(path.abspath_to_uri(self.platforminfo(), 'c:\\foo\\bar.html'),
+        self.assertEqual(path.abspath_to_uri(self.platform_info(), 'c:\\foo\\bar.html'),
                          'file:///c:/foo/bar.html')
 
     def test_abspath_to_uri_escaping_unixy(self):
         self.assertEqual(path.abspath_to_uri(MockPlatformInfo(), '/foo/bar + baz%?.html'),
                          'file:///foo/bar%20+%20baz%25%3F.html')
-
-        # Note that you can't have '?' in a filename on windows.
-    def test_abspath_to_uri_escaping_cygwin(self):
-        if sys.platform != 'cygwin':
-            return
-        self.assertEqual(path.abspath_to_uri(self.platforminfo(), '/cygdrive/c/foo/bar + baz%.html'),
-                         'file:///C:/foo/bar%20+%20baz%25.html')
-
-    def test_stop_cygpath_subprocess(self):
-        if sys.platform != 'cygwin':
-            return
-
-        # Call cygpath to ensure the subprocess is running.
-        path.cygpath("/cygdrive/c/foo.txt")
-        self.assertTrue(path._CygPath._singleton.is_running())
-
-        # Stop it.
-        path._CygPath.stop_cygpath_subprocess()
-
-        # Ensure that it is stopped.
-        self.assertFalse(path._CygPath._singleton.is_running())

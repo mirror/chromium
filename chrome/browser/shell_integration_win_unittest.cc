@@ -21,7 +21,7 @@
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths_internal.h"
-#include "chrome/installer/util/browser_distribution.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/shell_util.h"
 #include "chrome/installer/util/util_constants.h"
@@ -45,14 +45,12 @@ class ShellIntegrationWinMigrateShortcutTest : public testing::Test {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
 
     // A path to a random target.
-    base::CreateTemporaryFileInDir(temp_dir_.path(), &other_target_);
+    base::CreateTemporaryFileInDir(temp_dir_.GetPath(), &other_target_);
 
     // This doesn't need to actually have a base name of "chrome.exe".
-    base::CreateTemporaryFileInDir(temp_dir_.path(), &chrome_exe_);
+    base::CreateTemporaryFileInDir(temp_dir_.GetPath(), &chrome_exe_);
 
-    chrome_app_id_ =
-        ShellUtil::GetBrowserModelId(BrowserDistribution::GetDistribution(),
-                                     true);
+    chrome_app_id_ = ShellUtil::GetBrowserModelId(true);
 
     base::FilePath default_user_data_dir;
     chrome::GetDefaultUserDataDirectory(&default_user_data_dir);
@@ -86,10 +84,9 @@ class ShellIntegrationWinMigrateShortcutTest : public testing::Test {
   void AddTestShortcutAndResetProperties(
       base::win::ShortcutProperties* shortcut_properties) {
     ShortcutTestObject shortcut_test_object;
-    base::FilePath shortcut_path =
-        temp_dir_.path().Append(L"Shortcut " +
-                                base::IntToString16(shortcuts_.size()) +
-                                installer::kLnkExt);
+    base::FilePath shortcut_path = temp_dir_.GetPath().Append(
+        L"Shortcut " + base::IntToString16(shortcuts_.size()) +
+        installer::kLnkExt);
     shortcut_test_object.path = shortcut_path;
     shortcut_test_object.properties = *shortcut_properties;
     shortcuts_.push_back(shortcut_test_object);
@@ -265,7 +262,8 @@ TEST_F(ShellIntegrationWinMigrateShortcutTest, ClearDualModeAndAdjustAppIds) {
 
   // 9 shortcuts should have their app id updated below and shortcut 11 should
   // be migrated away from dual_mode for a total of 10 shortcuts migrated.
-  EXPECT_EQ(10, MigrateShortcutsInPathInternal(chrome_exe_, temp_dir_.path()));
+  EXPECT_EQ(10,
+            MigrateShortcutsInPathInternal(chrome_exe_, temp_dir_.GetPath()));
 
   // Shortcut 1, 3, 4, 5, 6, 7, 8, 9, and 10 should have had their app_id fixed.
   shortcuts_[1].properties.set_app_id(chrome_app_id_);
@@ -289,12 +287,12 @@ TEST_F(ShellIntegrationWinMigrateShortcutTest, ClearDualModeAndAdjustAppIds) {
   }
 
   // Make sure shortcuts are not re-migrated.
-  EXPECT_EQ(0, MigrateShortcutsInPathInternal(chrome_exe_, temp_dir_.path()));
+  EXPECT_EQ(0,
+            MigrateShortcutsInPathInternal(chrome_exe_, temp_dir_.GetPath()));
 }
 
 TEST(ShellIntegrationWinTest, GetAppModelIdForProfileTest) {
-  const base::string16 base_app_id(
-      BrowserDistribution::GetDistribution()->GetBaseAppId());
+  const base::string16 base_app_id(install_static::GetBaseAppId());
 
   // Empty profile path should get chrome::kBrowserAppID
   base::FilePath empty_path;

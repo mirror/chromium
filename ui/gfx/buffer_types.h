@@ -16,12 +16,14 @@ enum class BufferFormat {
   DXT5,
   ETC1,
   R_8,
+  RG_88,
   BGR_565,
   RGBA_4444,
   RGBX_8888,
   RGBA_8888,
   BGRX_8888,
   BGRA_8888,
+  RGBA_F16,
   YVU_420,
   YUV_420_BIPLANAR,
   UYVY_422,
@@ -39,6 +41,7 @@ enum class BufferFormat {
 enum class BufferUsage {
   GPU_READ,
   SCANOUT,
+  SCANOUT_CPU_READ_WRITE,
   GPU_READ_CPU_READ_WRITE,
   // TODO(reveman): Merge this with GPU_READ_CPU_READ_WRITE when SurfaceTexture
   // backed buffers are single buffered and support it.

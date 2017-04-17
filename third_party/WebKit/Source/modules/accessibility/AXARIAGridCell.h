@@ -36,27 +36,27 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXARIAGridCell final : public AXTableCell {
-    WTF_MAKE_NONCOPYABLE(AXARIAGridCell);
+  WTF_MAKE_NONCOPYABLE(AXARIAGridCell);
 
-private:
-    AXARIAGridCell(LayoutObject*, AXObjectCacheImpl&);
+ private:
+  AXARIAGridCell(LayoutObject*, AXObjectCacheImpl&);
 
-public:
-    static AXARIAGridCell* create(LayoutObject*, AXObjectCacheImpl&);
-    ~AXARIAGridCell() override;
+ public:
+  static AXARIAGridCell* Create(LayoutObject*, AXObjectCacheImpl&);
+  ~AXARIAGridCell() override;
 
-    // fills in the start location and row span of cell
-    void rowIndexRange(std::pair<unsigned, unsigned>& rowRange) override;
-    // fills in the start location and column span of cell
-    void columnIndexRange(std::pair<unsigned, unsigned>& columnRange) override;
-    AccessibilityRole scanToDecideHeaderRole() final;
+  // fills in the start location and row span of cell
+  void RowIndexRange(std::pair<unsigned, unsigned>& row_range) override;
+  // fills in the start location and column span of cell
+  void ColumnIndexRange(std::pair<unsigned, unsigned>& column_range) override;
+  AccessibilityRole ScanToDecideHeaderRole() final;
 
-protected:
-    bool isAriaColumnHeader() const;
-    bool isAriaRowHeader() const;
-    AXObject* parentTable() const override;
+ protected:
+  bool IsAriaColumnHeader() const;
+  bool IsAriaRowHeader() const;
+  AXObject* ParentTable() const override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXARIAGridCell_h
+#endif  // AXARIAGridCell_h

@@ -2,10 +2,12 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 2004-2005 Allan Sandfeld Jensen (kde@carewolf.com)
  * Copyright (C) 2006, 2007 Nicholas Shanks (webkit@nickshanks.com)
- * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Apple Inc. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Apple Inc.
+ * All rights reserved.
  * Copyright (C) 2007 Alexey Proskuryakov <ap@webkit.org>
  * Copyright (C) 2007, 2008 Eric Seidel <eric@webkit.org>
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (c) 2011, Code Aurora Forum. All rights reserved.
  * Copyright (C) Research In Motion Limited 2011. All rights reserved.
  * Copyright (C) 2013 Google Inc. All rights reserved.
@@ -34,104 +36,111 @@
 
 namespace blink {
 
-void CachedMatchedProperties::set(const ComputedStyle& style, const ComputedStyle& parentStyle, const MatchedPropertiesVector& properties)
-{
-    matchedProperties.appendVector(properties);
+void CachedMatchedProperties::Set(const ComputedStyle& style,
+                                  const ComputedStyle& parent_style,
+                                  const MatchedPropertiesVector& properties) {
+  matched_properties.AppendVector(properties);
 
-    // Note that we don't cache the original ComputedStyle instance. It may be further modified.
-    // The ComputedStyle in the cache is really just a holder for the substructures and never used as-is.
-    this->computedStyle = ComputedStyle::clone(style);
-    this->parentComputedStyle = ComputedStyle::clone(parentStyle);
+  // Note that we don't cache the original ComputedStyle instance. It may be
+  // further modified.  The ComputedStyle in the cache is really just a holder
+  // for the substructures and never used as-is.
+  this->computed_style = ComputedStyle::Clone(style);
+  this->parent_computed_style = ComputedStyle::Clone(parent_style);
 }
 
-void CachedMatchedProperties::clear()
-{
-    matchedProperties.clear();
-    computedStyle = nullptr;
-    parentComputedStyle = nullptr;
+void CachedMatchedProperties::Clear() {
+  matched_properties.Clear();
+  computed_style = nullptr;
+  parent_computed_style = nullptr;
 }
 
-MatchedPropertiesCache::MatchedPropertiesCache()
-{
+MatchedPropertiesCache::MatchedPropertiesCache() {}
+
+const CachedMatchedProperties* MatchedPropertiesCache::Find(
+    unsigned hash,
+    const StyleResolverState& style_resolver_state,
+    const MatchedPropertiesVector& properties) {
+  DCHECK(hash);
+
+  Cache::iterator it = cache_.Find(hash);
+  if (it == cache_.end())
+    return nullptr;
+  CachedMatchedProperties* cache_item = it->value.Get();
+  DCHECK(cache_item);
+
+  size_t size = properties.size();
+  if (size != cache_item->matched_properties.size())
+    return nullptr;
+  if (cache_item->computed_style->InsideLink() !=
+      style_resolver_state.Style()->InsideLink())
+    return nullptr;
+  for (size_t i = 0; i < size; ++i) {
+    if (properties[i] != cache_item->matched_properties[i])
+      return nullptr;
+  }
+  return cache_item;
 }
 
-const CachedMatchedProperties* MatchedPropertiesCache::find(unsigned hash, const StyleResolverState& styleResolverState, const MatchedPropertiesVector& properties)
-{
-    ASSERT(hash);
+void MatchedPropertiesCache::Add(const ComputedStyle& style,
+                                 const ComputedStyle& parent_style,
+                                 unsigned hash,
+                                 const MatchedPropertiesVector& properties) {
+  DCHECK(hash);
+  Cache::AddResult add_result = cache_.insert(hash, nullptr);
+  if (add_result.is_new_entry)
+    add_result.stored_value->value = new CachedMatchedProperties;
 
-    Cache::iterator it = m_cache.find(hash);
-    if (it == m_cache.end())
-        return nullptr;
-    CachedMatchedProperties* cacheItem = it->value.get();
-    ASSERT(cacheItem);
+  CachedMatchedProperties* cache_item = add_result.stored_value->value.Get();
+  if (!add_result.is_new_entry)
+    cache_item->Clear();
 
-    size_t size = properties.size();
-    if (size != cacheItem->matchedProperties.size())
-        return nullptr;
-    if (cacheItem->computedStyle->insideLink() != styleResolverState.style()->insideLink())
-        return nullptr;
-    for (size_t i = 0; i < size; ++i) {
-        if (properties[i] != cacheItem->matchedProperties[i])
-            return nullptr;
-    }
-    return cacheItem;
+  cache_item->Set(style, parent_style, properties);
 }
 
-void MatchedPropertiesCache::add(const ComputedStyle& style, const ComputedStyle& parentStyle, unsigned hash, const MatchedPropertiesVector& properties)
-{
-    ASSERT(hash);
-    Cache::AddResult addResult = m_cache.add(hash, nullptr);
-    if (addResult.isNewEntry)
-        addResult.storedValue->value = new CachedMatchedProperties;
-
-    CachedMatchedProperties* cacheItem = addResult.storedValue->value.get();
-    if (!addResult.isNewEntry)
-        cacheItem->clear();
-
-    cacheItem->set(style, parentStyle, properties);
+void MatchedPropertiesCache::Clear() {
+  // MatchedPropertiesCache must be cleared promptly because some
+  // destructors in the properties (e.g., ~FontFallbackList) expect that
+  // the destructors are called promptly without relying on a GC timing.
+  for (auto& cache_entry : cache_) {
+    cache_entry.value->Clear();
+  }
+  cache_.Clear();
 }
 
-void MatchedPropertiesCache::clear()
-{
-    // MatchedPropertiesCache must be cleared promptly because some
-    // destructors in the properties (e.g., ~FontFallbackList) expect that
-    // the destructors are called promptly without relying on a GC timing.
-    for (auto& cacheEntry : m_cache) {
-        cacheEntry.value->clear();
-    }
-    m_cache.clear();
+void MatchedPropertiesCache::ClearViewportDependent() {
+  Vector<unsigned, 16> to_remove;
+  for (const auto& cache_entry : cache_) {
+    CachedMatchedProperties* cache_item = cache_entry.value.Get();
+    if (cache_item->computed_style->HasViewportUnits())
+      to_remove.push_back(cache_entry.key);
+  }
+  cache_.RemoveAll(to_remove);
 }
 
-void MatchedPropertiesCache::clearViewportDependent()
-{
-    Vector<unsigned, 16> toRemove;
-    for (const auto& cacheEntry : m_cache) {
-        CachedMatchedProperties* cacheItem = cacheEntry.value.get();
-        if (cacheItem->computedStyle->hasViewportUnits())
-            toRemove.append(cacheEntry.key);
-    }
-    m_cache.removeAll(toRemove);
+bool MatchedPropertiesCache::IsCacheable(const StyleResolverState& state) {
+  const ComputedStyle& style = *state.Style();
+  const ComputedStyle& parent_style = *state.ParentStyle();
+
+  if (style.Unique() ||
+      (style.StyleType() != kPseudoIdNone && parent_style.Unique()))
+    return false;
+  if (style.Zoom() != ComputedStyle::InitialZoom())
+    return false;
+  if (style.GetWritingMode() != ComputedStyle::InitialWritingMode() ||
+      style.Direction() != ComputedStyle::InitialDirection())
+    return false;
+  // The cache assumes static knowledge about which properties are inherited.
+  // Without a flat tree parent, StyleBuilder::ApplyProperty will not
+  // SetHasExplicitlyInheritedProperties on the parent style.
+  if (!state.ParentNode() || parent_style.HasExplicitlyInheritedProperties())
+    return false;
+  if (style.HasVariableReferenceFromNonInheritedProperty())
+    return false;
+  return true;
 }
 
-bool MatchedPropertiesCache::isCacheable(const ComputedStyle& style, const ComputedStyle& parentStyle)
-{
-    if (style.unique() || (style.styleType() != PseudoIdNone && parentStyle.unique()))
-        return false;
-    if (style.zoom() != ComputedStyle::initialZoom())
-        return false;
-    if (style.getWritingMode() != ComputedStyle::initialWritingMode() || style.direction() != ComputedStyle::initialDirection())
-        return false;
-    // The cache assumes static knowledge about which properties are inherited.
-    if (parentStyle.hasExplicitlyInheritedProperties())
-        return false;
-    if (style.hasVariableReferenceFromNonInheritedProperty())
-        return false;
-    return true;
+DEFINE_TRACE(MatchedPropertiesCache) {
+  visitor->Trace(cache_);
 }
 
-DEFINE_TRACE(MatchedPropertiesCache)
-{
-    visitor->trace(m_cache);
-}
-
-} // namespace blink
+}  // namespace blink

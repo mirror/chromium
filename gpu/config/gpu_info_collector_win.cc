@@ -23,7 +23,7 @@
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/scoped_native_library.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
@@ -33,62 +33,15 @@
 #include "base/threading/thread.h"
 #include "base/threading/worker_pool.h"
 #include "base/trace_event/trace_event.h"
-#include "base/win/registry.h"
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/scoped_comptr.h"
 #include "base/win/windows_version.h"
-#include "third_party/libxml/chromium/libxml_utils.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface_egl.h"
 
 namespace gpu {
 
 namespace {
-
-// This must be kept in sync with histograms.xml.
-enum DisplayLinkInstallationStatus {
-  DISPLAY_LINK_NOT_INSTALLED,
-  DISPLAY_LINK_7_1_OR_EARLIER,
-  DISPLAY_LINK_7_2_OR_LATER,
-  DISPLAY_LINK_INSTALLATION_STATUS_MAX
-};
-
-// Returns the display link driver version or an invalid version if it is
-// not installed.
-Version DisplayLinkVersion() {
-  base::win::RegKey key;
-
-  if (key.Open(HKEY_LOCAL_MACHINE, L"SOFTWARE", KEY_READ | KEY_WOW64_64KEY))
-    return Version();
-
-  if (key.OpenKey(L"DisplayLink", KEY_READ | KEY_WOW64_64KEY))
-    return Version();
-
-  if (key.OpenKey(L"Core", KEY_READ | KEY_WOW64_64KEY))
-    return Version();
-
-  base::string16 version;
-  if (key.ReadValue(L"Version", &version))
-    return Version();
-
-  return Version(base::UTF16ToASCII(version));
-}
-
-// Returns whether Lenovo dCute is installed.
-bool IsLenovoDCuteInstalled() {
-  base::win::RegKey key;
-
-  if (key.Open(HKEY_LOCAL_MACHINE, L"SOFTWARE", KEY_READ | KEY_WOW64_64KEY))
-    return false;
-
-  if (key.OpenKey(L"Lenovo", KEY_READ | KEY_WOW64_64KEY))
-    return false;
-
-  if (key.OpenKey(L"Lenovo dCute", KEY_READ | KEY_WOW64_64KEY))
-    return false;
-
-  return true;
-}
 
 void DeviceIDToVendorAndDevice(const std::wstring& id,
                                uint32_t* vendor_id,
@@ -238,7 +191,7 @@ CollectInfoResult CollectDriverInfoD3D(const std::wstring& device_id,
   SetupDiDestroyDeviceInfoList(device_info);
   bool found = false;
   if (found_amd && found_intel) {
-    // AMD Switchable system found.
+    // Potential AMD Switchable system found.
     for (const auto& driver : drivers) {
       if (driver.device.vendor_id == 0x8086) {
         gpu_info->gpu = driver.device;
@@ -253,16 +206,22 @@ CollectInfoResult CollectDriverInfoD3D(const std::wstring& device_id,
     GetAMDVideocardInfo(gpu_info);
 
     if (!gpu_info->amd_switchable) {
-      // Some machines aren't properly detected as AMD switchable, but count
-      // them anyway.
-      gpu_info->amd_switchable = true;
-      for (const auto& driver : drivers) {
+      bool amd_is_primary = false;
+      for (size_t i = 0; i < drivers.size(); ++i) {
+        const GPUDriver& driver = drivers[i];
         if (driver.device.vendor_id == 0x1002) {
+          if (static_cast<int>(i) == primary_device)
+            amd_is_primary = true;
           gpu_info->gpu = driver.device;
         } else {
           gpu_info->secondary_gpus.push_back(driver.device);
         }
       }
+      // Some machines aren't properly detected as AMD switchable, but count
+      // them anyway. This may erroneously count machines where there are
+      // independent AMD and Intel cards and the AMD isn't hooked up to
+      // anything, but that should be rare.
+      gpu_info->amd_switchable = !amd_is_primary;
     }
     found = true;
   } else {
@@ -292,7 +251,8 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
     std::string requested_implementation_name =
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
             switches::kUseGL);
-    if (requested_implementation_name == "swiftshader") {
+    if (requested_implementation_name ==
+        gl::kGLImplementationSwiftShaderForWebGLName) {
       gpu_info->software_rendering = true;
       gpu_info->context_info_state = kCollectInfoNonFatalFailure;
       return kCollectInfoNonFatalFailure;
@@ -312,7 +272,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
   int vertex_shader_minor_version = 0;
   int pixel_shader_major_version = 0;
   int pixel_shader_minor_version = 0;
-  gpu_info->adapter_luid = 0;
   if (RE2::FullMatch(gpu_info->gl_renderer,
                      "ANGLE \\(.*\\)") &&
       RE2::PartialMatch(gpu_info->gl_renderer,
@@ -326,7 +285,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
                         " ps_(\\d+)_(\\d+)",
                         &pixel_shader_major_version,
                         &pixel_shader_minor_version)) {
-    gpu_info->can_lose_context = direct3d_version == "9";
     gpu_info->vertex_shader_version =
         base::StringPrintf("%d.%d",
                            vertex_shader_major_version,
@@ -335,15 +293,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
         base::StringPrintf("%d.%d",
                            pixel_shader_major_version,
                            pixel_shader_minor_version);
-
-    // ANGLE's EGL vendor strings are of the form:
-    // Google, Inc. (adapter LUID: 0123456789ABCDEF)
-    // The LUID is optional and identifies the GPU adapter ANGLE is using.
-    const char* egl_vendor =
-        eglQueryString(gl::GLSurfaceEGL::GetHardwareDisplay(), EGL_VENDOR);
-    RE2::PartialMatch(egl_vendor,
-                      " \\(adapter LUID: ([0-9A-Fa-f]{16})\\)",
-                      RE2::Hex(&gpu_info->adapter_luid));
 
     // DirectX diagnostics are collected asynchronously because it takes a
     // couple of seconds.
@@ -355,30 +304,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
   return kCollectInfoSuccess;
 }
 
-CollectInfoResult CollectGpuID(uint32_t* vendor_id, uint32_t* device_id) {
-  DCHECK(vendor_id && device_id);
-  *vendor_id = 0;
-  *device_id = 0;
-
-  // Taken from http://developer.nvidia.com/object/device_ids.html
-  DISPLAY_DEVICE dd;
-  dd.cb = sizeof(DISPLAY_DEVICE);
-  std::wstring id;
-  for (int i = 0; EnumDisplayDevices(NULL, i, &dd, 0); ++i) {
-    if (dd.StateFlags & DISPLAY_DEVICE_PRIMARY_DEVICE) {
-      id = dd.DeviceID;
-      break;
-    }
-  }
-
-  if (id.length() > 20) {
-    DeviceIDToVendorAndDevice(id, vendor_id, device_id);
-    if (*vendor_id != 0 && *device_id != 0)
-      return kCollectInfoSuccess;
-  }
-  return kCollectInfoNonFatalFailure;
-}
-
 CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   TRACE_EVENT0("gpu", "CollectPreliminaryGraphicsInfo");
 
@@ -388,25 +313,7 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   HMODULE nvd3d9wrap = GetModuleHandleW(L"nvd3d9wrap.dll");
   gpu_info->optimus = nvd3d9wrap != NULL;
 
-  gpu_info->lenovo_dcute = IsLenovoDCuteInstalled();
-
-  gpu_info->display_link_version = DisplayLinkVersion();
-
-  if (!gpu_info->display_link_version .IsValid()) {
-    UMA_HISTOGRAM_ENUMERATION("GPU.DisplayLinkInstallationStatus",
-                              DISPLAY_LINK_NOT_INSTALLED,
-                              DISPLAY_LINK_INSTALLATION_STATUS_MAX);
-  } else if (gpu_info->display_link_version < base::Version("7.2")) {
-    UMA_HISTOGRAM_ENUMERATION("GPU.DisplayLinkInstallationStatus",
-                              DISPLAY_LINK_7_1_OR_EARLIER,
-                              DISPLAY_LINK_INSTALLATION_STATUS_MAX);
-  } else {
-    UMA_HISTOGRAM_ENUMERATION("GPU.DisplayLinkInstallationStatus",
-                              DISPLAY_LINK_7_2_OR_LATER,
-                              DISPLAY_LINK_INSTALLATION_STATUS_MAX);
-  }
-
-  // Taken from http://developer.nvidia.com/object/device_ids.html
+  // Taken from http://www.nvidia.com/object/device_ids.html
   DISPLAY_DEVICE dd;
   dd.cb = sizeof(DISPLAY_DEVICE);
   std::wstring id;
@@ -418,8 +325,17 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   }
 
   if (id.length() <= 20) {
-    gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
-    return kCollectInfoNonFatalFailure;
+    // EnumDisplayDevices returns an empty id when called inside a remote
+    // session (unless that session happens to be attached to the console). In
+    // that case, we do not want to fail, as we should be able to grab the
+    // device/vendor ids from the D3D context, below. Therefore, only fail if
+    // the device string is not one of either the RDP mirror driver "RDPUDD
+    // Chained DD" or the citrix display driver.
+    if (wcscmp(dd.DeviceString, L"RDPUDD Chained DD") != 0 &&
+        wcscmp(dd.DeviceString, L"Citrix Systems Inc. Display Driver") != 0) {
+      gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
+      return kCollectInfoNonFatalFailure;
+    }
   }
 
   DeviceIDToVendorAndDevice(id, &gpu_info->gpu.vendor_id,

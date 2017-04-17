@@ -17,8 +17,8 @@
 #include "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.h"
 #include "chrome/browser/extensions/extension_function_test_utils.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
-#include "chrome/browser/media/webrtc_browsertest_base.h"
-#include "chrome/browser/media/webrtc_browsertest_common.h"
+#include "chrome/browser/media/webrtc/webrtc_browsertest_base.h"
+#include "chrome/browser/media/webrtc/webrtc_browsertest_common.h"
 #include "chrome/common/chrome_switches.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
@@ -161,7 +161,9 @@ IN_PROC_BROWSER_TEST_F(WebrtcEventLogApiTest, TestStartStopWebRtcEventLogging) {
   SetupPeerconnectionWithLocalStream(left_tab);
   SetupPeerconnectionWithLocalStream(right_tab);
 
-  NegotiateCall(left_tab, right_tab, "VP8");
+  SetDefaultVideoCodec(left_tab, "VP8");
+  SetDefaultVideoCodec(right_tab, "VP8");
+  NegotiateCall(left_tab, right_tab);
 
   StartDetectingVideo(left_tab, "remote-view");
   StartDetectingVideo(right_tab, "remote-view");
@@ -251,7 +253,9 @@ IN_PROC_BROWSER_TEST_F(WebrtcEventLogApiTest,
   SetupPeerconnectionWithLocalStream(left_tab);
   SetupPeerconnectionWithLocalStream(right_tab);
 
-  NegotiateCall(left_tab, right_tab, "VP8");
+  SetDefaultVideoCodec(left_tab, "VP8");
+  SetDefaultVideoCodec(right_tab, "VP8");
+  NegotiateCall(left_tab, right_tab);
 
   StartDetectingVideo(left_tab, "remote-view");
   StartDetectingVideo(right_tab, "remote-view");

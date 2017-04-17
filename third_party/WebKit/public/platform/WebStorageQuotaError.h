@@ -35,12 +35,12 @@ namespace blink {
 
 // The error code used for WebStorageQuota.
 enum WebStorageQuotaError {
-    WebStorageQuotaErrorNotSupported = 7,
-    WebStorageQuotaErrorInvalidModification = 11,
-    WebStorageQuotaErrorInvalidAccess = 13,
-    WebStorageQuotaErrorAbort = 17,
+  kWebStorageQuotaErrorNotSupported = 7,
+  kWebStorageQuotaErrorInvalidModification = 11,
+  kWebStorageQuotaErrorInvalidAccess = 13,
+  kWebStorageQuotaErrorAbort = 17,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebStorageQuotaError_h
+#endif  // WebStorageQuotaError_h

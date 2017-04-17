@@ -178,6 +178,26 @@ var availableTests = [
             }));
       }));
   },
+  function createNetworkForPolicyControlledNetwork() {
+    chrome.networkingPrivate.getProperties('stub_wifi2', callbackPass(function(
+        properties) {
+      // Sanity check to verify there is a policy defined config for the network
+      // config that will be set up in this test.
+      chrome.test.assertEq('UserPolicy', properties.Source);
+      chrome.test.assertEq('WiFi', properties.Type);
+      chrome.test.assertEq('WPA-PSK', properties.WiFi.Security);
+      chrome.test.assertEq('wifi2_PSK', properties.WiFi.SSID);
+
+      chrome.networkingPrivate.createNetwork(false /* shared */, {
+        Type: 'WiFi',
+        WiFi: {
+          SSID: 'wifi2_PSK',
+          Passphrase: 'Fake password',
+          Security: 'WPA-PSK'
+        }
+      }, callbackFail('NetworkAlreadyConfigured'));
+    }));
+  },
   function forgetNetwork() {
     var kNumNetworks = 2;
     var kTestNetworkGuid = 'stub_wifi1_guid';
@@ -206,6 +226,20 @@ var availableTests = [
                     }));
               }));
         }));
+  },
+  function forgetPolicyControlledNetwork() {
+    chrome.networkingPrivate.getProperties('stub_wifi2', callbackPass(function(
+        properties) {
+      // Sanity check to verify there is a policy defined config for the network
+      // config that will be set up in this test.
+      chrome.test.assertEq('UserPolicy', properties.Source);
+      chrome.test.assertEq('WiFi', properties.Type);
+      chrome.test.assertEq('WPA-PSK', properties.WiFi.Security);
+      chrome.test.assertEq('wifi2_PSK', properties.WiFi.SSID);
+
+      chrome.networkingPrivate.forgetNetwork(
+          'stub_wifi2', callbackFail('Error.PolicyControlled'));
+    }));
   },
   function getNetworks() {
     // Test 'type' and 'configured'.
@@ -502,6 +536,13 @@ var availableTests = [
               Country: 'us',
               Name: 'Cellular1_Provider'
             },
+            ESN: "test_esn",
+            ICCID: "test_iccid",
+            IMEI: "test_imei",
+            MDN: "test_mdn",
+            MEID: "test_meid",
+            MIN: "test_min",
+            ModelID:"test_model_id",
             NetworkTechnology: 'GSM',
             RoamingState: 'Home',
             SIMLockStatus: {LockEnabled: true, LockType: '', RetriesLeft: 3}
@@ -526,6 +567,14 @@ var availableTests = [
             Active: 'wifi2_PSK',
             Effective: 'UserPolicy',
             UserPolicy: 'My WiFi Network'
+          },
+          ProxySettings: {
+            Type: {
+              Active: 'Direct',
+              Effective: 'UserPolicy',
+              UserEditable: false,
+              UserPolicy: 'Direct'
+            }
           },
           Source: 'UserPolicy',
           Type: NetworkType.WI_FI,
@@ -703,8 +752,7 @@ var availableTests = [
     var expectedStates = [ConnectionStateType.CONNECTED];
     var listener =
         new privateHelpers.watchForStateChanges(network, expectedStates, done);
-    chrome.networkingPrivate.startConnect(network,
-                                          networkCallbackPass());
+    chrome.networkingPrivate.startConnect(network, networkCallbackPass());
   },
   function onNetworksChangedEventDisconnect() {
     var network = 'stub_wifi1_guid';
@@ -712,8 +760,7 @@ var availableTests = [
     var expectedStates = [ConnectionStateType.NOT_CONNECTED];
     var listener =
         new privateHelpers.watchForStateChanges(network, expectedStates, done);
-    chrome.networkingPrivate.startDisconnect(network,
-                                             networkCallbackPass());
+    chrome.networkingPrivate.startDisconnect(network, networkCallbackPass());
   },
   function onNetworkListChangedEvent() {
     // Connecting to wifi2 should set wifi1 to offline. Connected or Connecting
@@ -729,8 +776,7 @@ var availableTests = [
     chrome.networkingPrivate.onNetworkListChanged.addListener(
       listener.listenForChanges);
     var network = 'stub_wifi2_guid';
-    chrome.networkingPrivate.startConnect(network,
-                                          networkCallbackPass());
+    chrome.networkingPrivate.startConnect(network, networkCallbackPass());
   },
   function onDeviceStateListChangedEvent() {
     var listener = callbackPass(function() {
@@ -868,10 +914,26 @@ var availableTests = [
                 }));
           }));
     })));
-  }
+  },
+  function getGlobalPolicy() {
+    chrome.networkingPrivate.getGlobalPolicy(callbackPass(function(result) {
+      assertEq({
+        AllowOnlyPolicyNetworksToAutoconnect: true,
+        AllowOnlyPolicyNetworksToConnect: false,
+      }, result);
+    }));
+  },
 ];
 
-var testToRun = window.location.search.substring(1);
-chrome.test.runTests(availableTests.filter(function(op) {
-  return op.name == testToRun;
-}));
+chrome.test.getConfig(function(config) {
+  var args = JSON.parse(config.customArg);
+  var tests = availableTests.filter(function(op) {
+    return args.test == op.name;
+  });
+  if (tests.length !== 1) {
+    chrome.test.notifyFail('Test not found ' + args.test);
+    return;
+  }
+
+  chrome.test.runTests(tests);
+});

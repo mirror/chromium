@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "chrome/browser/extensions/extension_action_manager.h"
 #include "chrome/browser/ui/browser.h"
@@ -15,9 +16,9 @@
 #include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
-#include "chrome/browser/ui/views/location_bar/page_action_with_badge_view.h"
 #include "chrome/browser/ui/views/sync/bubble_sync_promo_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 #include "chrome/browser/ui/views/toolbar/browser_actions_container.h"
@@ -27,7 +28,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bubble/bubble_controller.h"
 #include "components/bubble/bubble_ui.h"
-#include "content/public/browser/user_metrics.h"
 #include "extensions/common/extension.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -36,7 +36,6 @@
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/layout/box_layout.h"
-#include "ui/views/layout/layout_constants.h"
 
 using extensions::Extension;
 
@@ -121,24 +120,13 @@ void ExtensionInstalledBubbleView::UpdateAnchorView() {
 
   views::View* reference_view = nullptr;
   switch (controller_->anchor_position()) {
-    case ExtensionInstalledBubble::ANCHOR_BROWSER_ACTION: {
+    case ExtensionInstalledBubble::ANCHOR_ACTION: {
       BrowserActionsContainer* container =
-          browser_view->GetToolbarView()->browser_actions();
+          browser_view->toolbar()->browser_actions();
       // Hitting this DCHECK means |ShouldShow| failed.
       DCHECK(!container->animating());
 
       reference_view = container->GetViewForId(controller_->extension()->id());
-      break;
-    }
-    case ExtensionInstalledBubble::ANCHOR_PAGE_ACTION: {
-      LocationBarView* location_bar_view = browser_view->GetLocationBarView();
-      ExtensionAction* page_action =
-          extensions::ExtensionActionManager::Get(browser()->profile())
-              ->GetPageAction(*controller_->extension());
-      location_bar_view->SetPreviewEnabledPageAction(page_action,
-                                                     true);  // preview_enabled
-      reference_view = location_bar_view->GetPageActionView(page_action);
-      DCHECK(reference_view);
       break;
     }
     case ExtensionInstalledBubble::ANCHOR_OMNIBOX: {
@@ -152,21 +140,13 @@ void ExtensionInstalledBubbleView::UpdateAnchorView() {
 
   // Default case.
   if (!reference_view || !reference_view->visible())
-    reference_view = browser_view->GetToolbarView()->app_menu_button();
+    reference_view = browser_view->toolbar()->app_menu_button();
   SetAnchorView(reference_view);
 }
 
 void ExtensionInstalledBubbleView::CloseBubble() {
-  if (controller_ && controller_->anchor_position() ==
-      ExtensionInstalledBubble::ANCHOR_PAGE_ACTION) {
-    BrowserView* browser_view =
-        BrowserView::GetBrowserViewForBrowser(browser());
-    browser_view->GetLocationBarView()->SetPreviewEnabledPageAction(
-        extensions::ExtensionActionManager::Get(browser()->profile())
-            ->GetPageAction(*controller_->extension()),
-        false);  // preview_enabled
-  }
-  controller_ = nullptr;
+  if (GetWidget()->IsClosed())
+    return;
   GetWidget()->Close();
 }
 
@@ -227,14 +207,17 @@ void ExtensionInstalledBubbleView::Init() {
   //     or a link to configure the keybinding shortcut (if one exists).
   // Extra info can include a promo for signing into sync.
 
-  std::unique_ptr<views::BoxLayout> layout(
-      new views::BoxLayout(views::BoxLayout::kVertical, 0, 0,
-                           views::kRelatedControlVerticalSpacing));
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  std::unique_ptr<views::BoxLayout> layout(new views::BoxLayout(
+      views::BoxLayout::kVertical, 0, 0,
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL)));
   layout->set_minimum_cross_axis_size(kRightColumnWidth);
   // Indent by the size of the icon.
   layout->set_inside_border_insets(gfx::Insets(
-      0, GetIconSize().width() + views::kUnrelatedControlHorizontalSpacing, 0,
-      0));
+      0,
+      GetIconSize().width() +
+          provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL),
+      0, 0));
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
   SetLayoutManager(layout.release());
@@ -323,7 +306,7 @@ void ExtensionInstalledBubbleUi::Show(BubbleReference /*bubble_reference*/) {
 
   views::BubbleDialogDelegateView::CreateBubble(bubble_view_)->Show();
   bubble_view_->GetWidget()->AddObserver(this);
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("Signin_Impression_FromExtensionInstallBubble"));
 }
 
@@ -346,10 +329,10 @@ void ExtensionInstalledBubbleUi::OnWidgetClosing(views::Widget* widget) {
 
 // Views specific implementation.
 bool ExtensionInstalledBubble::ShouldShow() {
-  if (anchor_position() == ANCHOR_BROWSER_ACTION) {
+  if (anchor_position() == ANCHOR_ACTION) {
     BrowserActionsContainer* container =
         BrowserView::GetBrowserViewForBrowser(browser())
-            ->GetToolbarView()
+            ->toolbar()
             ->browser_actions();
     return !container->animating();
   }

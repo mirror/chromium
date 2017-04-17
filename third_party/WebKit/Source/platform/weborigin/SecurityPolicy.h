@@ -32,44 +32,68 @@
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/weborigin/ReferrerPolicy.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class KURL;
 class SecurityOrigin;
 
-class PLATFORM_EXPORT SecurityPolicy {
-    STATIC_ONLY(SecurityPolicy);
-public:
-    // This must be called during initialization (before we create
-    // other threads).
-    static void init();
-
-    // True if the referrer should be omitted according to the
-    // ReferrerPolicyNoReferrerWhenDowngrade. If you intend to send a
-    // referrer header, you should use generateReferrer instead.
-    static bool shouldHideReferrer(const KURL&, const String& referrer);
-
-    // Returns the referrer modified according to the referrer policy for a
-    // navigation to a given URL. If the referrer returned is empty, the
-    // referrer header should be omitted.
-    static Referrer generateReferrer(ReferrerPolicy, const KURL&, const String& referrer);
-
-    static void addOriginAccessWhitelistEntry(const SecurityOrigin& sourceOrigin, const String& destinationProtocol, const String& destinationDomain, bool allowDestinationSubdomains);
-    static void removeOriginAccessWhitelistEntry(const SecurityOrigin& sourceOrigin, const String& destinationProtocol, const String& destinationDomain, bool allowDestinationSubdomains);
-    static void resetOriginAccessWhitelists();
-
-    static bool isAccessWhiteListed(const SecurityOrigin* activeOrigin, const SecurityOrigin* targetOrigin);
-    static bool isAccessToURLWhiteListed(const SecurityOrigin* activeOrigin, const KURL&);
-
-    static void addOriginTrustworthyWhiteList(PassRefPtr<SecurityOrigin>);
-    static bool isOriginWhiteListedTrustworthy(const SecurityOrigin&);
-
-    static bool referrerPolicyFromString(const String& policy, ReferrerPolicy* result);
+enum ReferrerPolicyLegacyKeywordsSupport {
+  kSupportReferrerPolicyLegacyKeywords,
+  kDoNotSupportReferrerPolicyLegacyKeywords,
 };
 
-} // namespace blink
+class PLATFORM_EXPORT SecurityPolicy {
+  STATIC_ONLY(SecurityPolicy);
 
-#endif // SecurityPolicy_h
+ public:
+  // This must be called during initialization (before we create
+  // other threads).
+  static void Init();
+
+  // True if the referrer should be omitted according to the
+  // ReferrerPolicyNoReferrerWhenDowngrade. If you intend to send a
+  // referrer header, you should use generateReferrer instead.
+  static bool ShouldHideReferrer(const KURL&, const KURL& referrer);
+
+  // Returns the referrer modified according to the referrer policy for a
+  // navigation to a given URL. If the referrer returned is empty, the
+  // referrer header should be omitted.
+  static Referrer GenerateReferrer(ReferrerPolicy,
+                                   const KURL&,
+                                   const String& referrer);
+
+  static void AddOriginAccessWhitelistEntry(const SecurityOrigin& source_origin,
+                                            const String& destination_protocol,
+                                            const String& destination_domain,
+                                            bool allow_destination_subdomains);
+  static void RemoveOriginAccessWhitelistEntry(
+      const SecurityOrigin& source_origin,
+      const String& destination_protocol,
+      const String& destination_domain,
+      bool allow_destination_subdomains);
+  static void ResetOriginAccessWhitelists();
+
+  static bool IsAccessWhiteListed(const SecurityOrigin* active_origin,
+                                  const SecurityOrigin* target_origin);
+  static bool IsAccessToURLWhiteListed(const SecurityOrigin* active_origin,
+                                       const KURL&);
+
+  static void AddOriginTrustworthyWhiteList(PassRefPtr<SecurityOrigin>);
+  static bool IsOriginWhiteListedTrustworthy(const SecurityOrigin&);
+  static bool IsUrlWhiteListedTrustworthy(const KURL&);
+
+  static bool ReferrerPolicyFromString(const String& policy,
+                                       ReferrerPolicyLegacyKeywordsSupport,
+                                       ReferrerPolicy* result);
+
+  static bool ReferrerPolicyFromHeaderValue(const String& header_value,
+                                            ReferrerPolicyLegacyKeywordsSupport,
+                                            ReferrerPolicy* result);
+};
+
+}  // namespace blink
+
+#endif  // SecurityPolicy_h

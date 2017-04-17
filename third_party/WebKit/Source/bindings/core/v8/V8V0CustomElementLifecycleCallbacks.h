@@ -31,13 +31,13 @@
 #ifndef V8V0CustomElementLifecycleCallbacks_h
 #define V8V0CustomElementLifecycleCallbacks_h
 
+#include <memory>
+
 #include "bindings/core/v8/ScopedPersistent.h"
 #include "bindings/core/v8/ScriptState.h"
-#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/custom/V0CustomElementLifecycleCallbacks.h"
-#include "wtf/PassRefPtr.h"
-#include <memory>
-#include <v8.h>
+#include "platform/wtf/PassRefPtr.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -45,37 +45,52 @@ class V0CustomElementLifecycleCallbacks;
 class Element;
 class V8PerContextData;
 
-class V8V0CustomElementLifecycleCallbacks final : public V0CustomElementLifecycleCallbacks, public ContextLifecycleObserver {
-    USING_GARBAGE_COLLECTED_MIXIN(V8V0CustomElementLifecycleCallbacks);
-public:
-    static V8V0CustomElementLifecycleCallbacks* create(ScriptState*, v8::Local<v8::Object> prototype, v8::MaybeLocal<v8::Function> created, v8::MaybeLocal<v8::Function> attached, v8::MaybeLocal<v8::Function> detached, v8::MaybeLocal<v8::Function> attributeChanged);
+class V8V0CustomElementLifecycleCallbacks final
+    : public V0CustomElementLifecycleCallbacks {
+ public:
+  static V8V0CustomElementLifecycleCallbacks* Create(
+      ScriptState*,
+      v8::Local<v8::Object> prototype,
+      v8::MaybeLocal<v8::Function> created,
+      v8::MaybeLocal<v8::Function> attached,
+      v8::MaybeLocal<v8::Function> detached,
+      v8::MaybeLocal<v8::Function> attribute_changed);
 
-    ~V8V0CustomElementLifecycleCallbacks() override;
+  ~V8V0CustomElementLifecycleCallbacks() override;
 
-    bool setBinding(std::unique_ptr<V0CustomElementBinding>);
+  bool SetBinding(std::unique_ptr<V0CustomElementBinding>);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    V8V0CustomElementLifecycleCallbacks(ScriptState*, v8::Local<v8::Object> prototype, v8::MaybeLocal<v8::Function> created, v8::MaybeLocal<v8::Function> attached, v8::MaybeLocal<v8::Function> detached, v8::MaybeLocal<v8::Function> attributeChanged);
+ private:
+  V8V0CustomElementLifecycleCallbacks(
+      ScriptState*,
+      v8::Local<v8::Object> prototype,
+      v8::MaybeLocal<v8::Function> created,
+      v8::MaybeLocal<v8::Function> attached,
+      v8::MaybeLocal<v8::Function> detached,
+      v8::MaybeLocal<v8::Function> attribute_changed);
 
-    void created(Element*) override;
-    void attached(Element*) override;
-    void detached(Element*) override;
-    void attributeChanged(Element*, const AtomicString& name, const AtomicString& oldValue, const AtomicString& newValue) override;
+  void Created(Element*) override;
+  void Attached(Element*) override;
+  void Detached(Element*) override;
+  void AttributeChanged(Element*,
+                        const AtomicString& name,
+                        const AtomicString& old_value,
+                        const AtomicString& new_value) override;
 
-    void call(const ScopedPersistent<v8::Function>& weakCallback, Element*);
+  void Call(const ScopedPersistent<v8::Function>& weak_callback, Element*);
 
-    V8PerContextData* creationContextData();
+  V8PerContextData* CreationContextData();
 
-    RefPtr<ScriptState> m_scriptState;
-    ScopedPersistent<v8::Object> m_prototype;
-    ScopedPersistent<v8::Function> m_created;
-    ScopedPersistent<v8::Function> m_attached;
-    ScopedPersistent<v8::Function> m_detached;
-    ScopedPersistent<v8::Function> m_attributeChanged;
+  RefPtr<ScriptState> script_state_;
+  ScopedPersistent<v8::Object> prototype_;
+  ScopedPersistent<v8::Function> created_;
+  ScopedPersistent<v8::Function> attached_;
+  ScopedPersistent<v8::Function> detached_;
+  ScopedPersistent<v8::Function> attribute_changed_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8V0CustomElementLifecycleCallbacks_h
+#endif  // V8V0CustomElementLifecycleCallbacks_h

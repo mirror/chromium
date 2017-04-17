@@ -5,32 +5,43 @@
 #ifndef StereoPanner_h
 #define StereoPanner_h
 
-#include "platform/audio/Spatializer.h"
+#include "platform/PlatformExport.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-// Common type of stereo panner as found in normal audio mixing equipment.
-// See: http://webaudio.github.io/web-audio-api/#the-stereopannernode-interface
+class AudioBus;
 
-class PLATFORM_EXPORT StereoPanner final : public Spatializer {
-public:
-    explicit StereoPanner(float sampleRate);
+// Implement the equal-power panning algorithm for mono or stereo input. See:
+// https://webaudio.github.io/web-audio-api/#Spatialzation-equal-power-panning
 
-    void panWithSampleAccurateValues(const AudioBus* inputBus, AudioBus* outputBuf, const float* panValues, size_t framesToProcess) override;
-    void panToTargetValue(const AudioBus* inputBus, AudioBus* outputBuf, float panValue, size_t framesToProcess) override;
+class PLATFORM_EXPORT StereoPanner {
+  USING_FAST_MALLOC(StereoPanner);
+  WTF_MAKE_NONCOPYABLE(StereoPanner);
 
-    void reset() override { }
+ public:
+  static std::unique_ptr<StereoPanner> Create(float sample_rate);
+  ~StereoPanner(){};
 
-    double tailTime() const override { return 0; }
-    double latencyTime() const override { return 0; }
+  void PanWithSampleAccurateValues(const AudioBus* input_bus,
+                                   AudioBus* output_bus,
+                                   const float* pan_values,
+                                   size_t frames_to_process);
+  void PanToTargetValue(const AudioBus* input_bus,
+                        AudioBus* output_bus,
+                        float pan_value,
+                        size_t frames_to_process);
 
-private:
-    bool m_isFirstRender;
-    double m_smoothingConstant;
+ private:
+  explicit StereoPanner(float sample_rate);
 
-    double m_pan;
+  bool is_first_render_;
+  double smoothing_constant_;
+
+  double pan_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StereoPanner_h
+#endif  // StereoPanner_h

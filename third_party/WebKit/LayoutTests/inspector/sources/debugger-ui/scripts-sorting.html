@@ -2,28 +2,32 @@
 <head>
 <script src="../../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../../http/tests/inspector/debugger-test.js"></script>
-<script src="../../../http/tests/inspector/workspace-test.js"></script>
+<script src="../../../http/tests/inspector/page-mock.js"></script>
 
 <script>
-function test()
+async function test()
 {
     function createNavigatorView(constructor)
     {
         var navigatorView = new constructor();
-        navigatorView.setWorkspace(InspectorTest.testWorkspace);
-        navigatorView.show(WebInspector.inspectorView.element);
+        navigatorView.show(UI.inspectorView.element);
         return navigatorView;
     }
 
-    InspectorTest.createWorkspaceWithTarget(true);
-    sourcesNavigatorView = createNavigatorView(WebInspector.SourcesNavigatorView);
-    contentScriptsNavigatorView = createNavigatorView(WebInspector.ContentScriptsNavigatorView);
+    sourcesNavigatorView = createNavigatorView(Sources.SourcesNavigatorView);
+    contentScriptsNavigatorView = createNavigatorView(Sources.ContentScriptsNavigatorView);
+
+    Bindings.NetworkProject.forTarget(InspectorTest.mainTarget)._reset();
+
+    var pageMock = new InspectorTest.PageMock('http://example.com');
+    pageMock.disableDOMCapability();
+    InspectorTest.connectToPage('mock-target-1', pageMock);
 
     var uiSourceCodes = [];
-    function addUISourceCode(url, isContentScript)
+    async function addUISourceCode(url, isContentScript)
     {
-        var contentProvider = WebInspector.StaticContentProvider.fromString(url, WebInspector.resourceTypes.Script, "");
-        var uiSourceCode = InspectorTest.testNetworkProject.addFile(contentProvider, InspectorTest.mainFrame(), isContentScript);
+        pageMock.evalScript(url, '', isContentScript);
+        var uiSourceCode = await InspectorTest.waitForUISourceCode(url);
         uiSourceCodes.push(uiSourceCode);
     }
 
@@ -54,21 +58,21 @@ function test()
         "foo/path/bar.js?file=bar/zzz.js",
         "foo/path/foo.js?file=bar/aaa.js" ];
     for (var i = 0; i < scripts.length; ++i)
-        addUISourceCode("http://foo.com/" + scripts[i]);
+        await addUISourceCode("http://foo.com/" + scripts[i]);
 
     var scripts2 = [
         "foo/path/bar.js?file=bar/zzz.js",
         "foo/path/foo.js?file=bar/aaa.js" ];
     for (var i = 0; i < scripts2.length; ++i)
-        addUISourceCode("http://bar.com/" + scripts2[i]);
-    addUISourceCode("*Non*URL*path");
+        await addUISourceCode("http://bar.com/" + scripts2[i]);
+    await addUISourceCode("*Non*URL*path");
 
     var extensions = [
         "extension-schema://extension-name/bar.js",
         "extension-schema://extension-name/folder/baz.js" ];
     for (var i = 0; i < extensions.length; ++i)
-        addUISourceCode(extensions[i], true);
-    addUISourceCode("*Another*Non*URL*path", true);
+        await addUISourceCode(extensions[i], true);
+    await addUISourceCode("*Another*Non*URL*path", true);
     dumpScriptsList();
     InspectorTest.completeTest();
 }

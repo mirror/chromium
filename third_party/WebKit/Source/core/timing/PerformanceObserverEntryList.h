@@ -7,30 +7,34 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class PerformanceEntry;
 using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 
-class PerformanceObserverEntryList : public GarbageCollectedFinalized<PerformanceObserverEntryList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    PerformanceObserverEntryList(const PerformanceEntryVector&);
+class PerformanceObserverEntryList
+    : public GarbageCollectedFinalized<PerformanceObserverEntryList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    virtual ~PerformanceObserverEntryList();
+ public:
+  PerformanceObserverEntryList(const PerformanceEntryVector&);
 
-    PerformanceEntryVector getEntries() const;
-    PerformanceEntryVector getEntriesByType(const String& entryType);
-    PerformanceEntryVector getEntriesByName(const String& name, const String& entryType);
+  virtual ~PerformanceObserverEntryList();
 
-    DECLARE_TRACE();
+  PerformanceEntryVector getEntries() const;
+  PerformanceEntryVector getEntriesByType(const String& entry_type);
+  PerformanceEntryVector getEntriesByName(const String& name,
+                                          const String& entry_type);
 
-protected:
-    PerformanceEntryVector m_performanceEntries;
+  DECLARE_TRACE();
+
+ protected:
+  PerformanceEntryVector performance_entries_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PerformanceObserverEntryList_h
+#endif  // PerformanceObserverEntryList_h

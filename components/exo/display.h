@@ -17,7 +17,7 @@
 #include "base/files/scoped_file.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gfx/native_pixmap_handle_ozone.h"
+#include "ui/gfx/native_pixmap_handle.h"
 #endif
 
 namespace gfx {
@@ -74,8 +74,9 @@ class Display {
       const gfx::Point& position);
 
   // Creates a remote shell surface for an existing surface using |container|.
-  std::unique_ptr<ShellSurface> CreateRemoteShellSurface(Surface* surface,
-                                                         int container);
+  std::unique_ptr<ShellSurface> CreateRemoteShellSurface(
+      Surface* surface,
+      int container);
 
   // Creates a sub-surface for an existing surface. The sub-surface will be
   // a child of |parent|.
@@ -89,6 +90,10 @@ class Display {
 
  private:
   NotificationSurfaceManager* const notification_surface_manager_;
+
+#if defined(USE_OZONE)
+  std::vector<gfx::BufferFormat> overlay_formats_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(Display);
 };

@@ -4,7 +4,6 @@ Tests file system project.
 Running: testFileSystems
 Adding first file system.
 Adding second file system.
-Adding file mappings.
 Adding files to file systems.
 
 UISourceCode: file:///var/www/localhost/foo.js
@@ -26,12 +25,6 @@ Dumping uiSourceCode location link texts:
  - foo.js:6
  - bar.js:6
  - baz.js:6
-UISourceCode uri to url mappings:
-    file:///var/www/localhost/foo.js -> http://localhost/foo.js
-    file:///foo/bar/baz.js -> http://www.example.com/baz.js
-UISourceCode url to uri mappings:
-    http://localhost/foo.js -> file:///var/www/localhost/foo.js
-    http://www.example.com/baz.js -> file:///foo/bar/baz.js
 After revision added:
 UISourceCode: file:///var/www/localhost/foo.js
 UISourceCode is content script: false
@@ -75,4 +68,20 @@ Dumping uiSourceCodes origin URLs:
 Dumping uiSourceCodes origin URLs:
   - file:///var/www4/html/foo.js
   - file:///var/www4/html/bar.js
+
+Running: testGitFolders
+project_1
+project_2
+
+Running: testUISourceCodeMetadata
+Initial metadata
+    content size: 6
+    modification time: 1970-01-01T00:16:40.000Z
+Changed metadata
+    content size: 15
+    modification time: 1970-01-01T00:16:41.000Z
+
+Running: testFileRename
+URL before rename: file:///var/www3/test/hello.js
+URL after rename: file:///var/www3/test/goodbye.js
 

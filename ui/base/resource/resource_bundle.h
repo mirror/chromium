@@ -10,13 +10,14 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/containers/hash_tables.h"
 #include "base/files/file_path.h"
 #include "base/files/memory_mapped_file.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
+#include "base/sequence_checker.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
 #include "build/build_config.h"
@@ -50,19 +51,15 @@ class UI_BASE_EXPORT ResourceBundle {
   static const int kMediumFontDelta = 3;
   static const int kLargeFontDelta = 8;
 
-  static constexpr const char* CUSTOM_GZIP_HEADER = "\xff\x1f\x8b";
-
   // Legacy font style mappings. TODO(tapted): Phase these out in favour of
   // client code providing their own constant with the desired font size delta.
   enum FontStyle {
     SmallFont,
-    SmallBoldFont,
     BaseFont,
     BoldFont,
     MediumFont,
     MediumBoldFont,
     LargeFont,
-    LargeBoldFont,
   };
 
   enum LoadResources {
@@ -150,6 +147,7 @@ class UI_BASE_EXPORT ResourceBundle {
   // Returns true after the global resource loader instance has been created.
   static bool HasSharedInstance();
 
+  // Initialize the ResourceBundle using data pack from given buffer.
   // Return the global resource loader instance.
   static ResourceBundle& GetSharedInstance();
 
@@ -174,19 +172,14 @@ class UI_BASE_EXPORT ResourceBundle {
                                  const base::MemoryMappedFile::Region& region,
                                  ScaleFactor scale_factor);
 
+  // Same as above but using contents of the given buffer.
+  void AddDataPackFromBuffer(base::StringPiece buffer,
+                             ScaleFactor scale_factor);
+
   // Same as AddDataPackFromPath but does not log an error if the pack fails to
   // load.
   void AddOptionalDataPackFromPath(const base::FilePath& path,
                                    ScaleFactor scale_factor);
-
-  // The same as AddDataPackFromPath() and AddOptionalDataPackFromPath(),
-  // except the data pack is flagged as containing only material design assets.
-  // TODO(tdanderson): These methods are temporary and should be removed after
-  //                   the transition to material design in the browser UI.
-  void AddMaterialDesignDataPackFromPath(const base::FilePath& path,
-                                         ScaleFactor scale_factor);
-  void AddOptionalMaterialDesignDataPackFromPath(const base::FilePath& path,
-                                                 ScaleFactor scale_factor);
 
   // Changes the locale for an already-initialized ResourceBundle, returning the
   // name of the newly-loaded locale.  Future calls to get strings will return
@@ -244,6 +237,10 @@ class UI_BASE_EXPORT ResourceBundle {
   // string if the message_id is not found.
   base::string16 GetLocalizedString(int message_id);
 
+  // Get a localized resource (for example, localized image logo) given a
+  // resource id.
+  base::RefCountedMemory* LoadLocalizedResourceBytes(int resource_id);
+
   // Returns a font list derived from the platform-specific "Base" font list.
   // The result is always cached and exists for the lifetime of the process.
   const gfx::FontList& GetFontListWithDelta(
@@ -289,12 +286,6 @@ class UI_BASE_EXPORT ResourceBundle {
   // Returns SCALE_FACTOR_100P if no resource is loaded.
   ScaleFactor GetMaxScaleFactor() const;
 
-#if defined(OS_MACOSX)
-  // Loads Material Design data packs and makes them the first items in
-  // |data_packs_|.
-  void LoadMaterialDesignResources();
-#endif
-
   // Returns true if |scale_factor| is supported by this platform.
   static bool IsScaleFactorSupported(ScaleFactor scale_factor);
 
@@ -302,12 +293,6 @@ class UI_BASE_EXPORT ResourceBundle {
   FRIEND_TEST_ALL_PREFIXES(ResourceBundleTest, DelegateGetPathForLocalePack);
   FRIEND_TEST_ALL_PREFIXES(ResourceBundleTest, DelegateGetImageNamed);
   FRIEND_TEST_ALL_PREFIXES(ResourceBundleTest, DelegateGetNativeImageNamed);
-  FRIEND_TEST_ALL_PREFIXES(ResourceBundleImageTest,
-                           CountMaterialDesignDataPacksInResourceBundle);
-  FRIEND_TEST_ALL_PREFIXES(ResourceBundleMacImageTest,
-                           CheckImageFromMaterialDesign);
-  FRIEND_TEST_ALL_PREFIXES(ChromeBrowserMainMacBrowserTest,
-                           MDResourceAccess);
 
   friend class ResourceBundleMacImageTest;
   friend class ResourceBundleImageTest;
@@ -334,23 +319,18 @@ class UI_BASE_EXPORT ResourceBundle {
   // Load the main resources.
   void LoadCommonResources();
 
-  // Loads the resource paks chrome_{100,200}_percent.pak. Also loads the
-  // resource paks chrome_material_{100,200}_percent.pak contaning top
-  // chrome material design assets if the runtime flag is enabled.
+  // Loads the resource paks chrome_{100,200}_percent.pak.
   void LoadChromeResources();
 
   // Implementation for the public methods which add a DataPack from a path. If
-  // |optional| is false, an error is logged on failure to load. Sets the
-  // member |has_only_material_design_assets_| on the created DataPack to the
-  // value of |has_only_material_assets|.
+  // |optional| is false, an error is logged on failure to load.
   void AddDataPackFromPathInternal(const base::FilePath& path,
                                    ScaleFactor scale_factor,
-                                   bool optional,
-                                   bool has_only_material_assets);
+                                   bool optional);
 
   // Inserts |data_pack| to |data_pack_| and updates |max_scale_factor_|
   // accordingly.
-  void AddDataPack(DataPack* data_pack);
+  void AddDataPack(std::unique_ptr<DataPack> data_pack);
 
   // Try to load the locale specific strings from an external data module.
   // Returns the locale that is loaded.
@@ -381,20 +361,11 @@ class UI_BASE_EXPORT ResourceBundle {
   // Fills the |bitmap| given the |resource_id| and |scale_factor|.
   // Returns false if the resource does not exist. This may fall back to
   // the data pack with SCALE_FACTOR_NONE, and when this happens,
-  // |scale_factor| will be set to SCALE_FACTOR_100P.
+  // |scale_factor| will be set to SCALE_FACTOR_NONE.
   bool LoadBitmap(int resource_id,
                   ScaleFactor* scale_factor,
                   SkBitmap* bitmap,
                   bool* fell_back_to_1x) const;
-
-  // Loads the raw bytes of a data resource nearest the scale factor
-  // |scale_factor| into |bytes|, without doing any processing or
-  // interpretation of the resource. Use ResourceHandle::SCALE_FACTOR_NONE
-  // for scale independent image resources (such as wallpaper).
-  // Returns NULL if we fail to read the resource.
-  base::StringPiece GetRawDataResourceForScaleImpl(
-      int resource_id,
-      ScaleFactor scale_factor) const;
 
   // Returns true if missing scaled resources should be visually indicated when
   // drawing the fallback (e.g., by tinting the image).
@@ -423,15 +394,12 @@ class UI_BASE_EXPORT ResourceBundle {
   // be NULL.
   Delegate* delegate_;
 
-  // Protects |images_| and font-related members.
-  std::unique_ptr<base::Lock> images_and_fonts_lock_;
-
   // Protects |locale_resources_data_|.
   std::unique_ptr<base::Lock> locale_resources_data_lock_;
 
   // Handles for data sources.
   std::unique_ptr<ResourceHandle> locale_resources_data_;
-  ScopedVector<ResourceHandle> data_packs_;
+  std::vector<std::unique_ptr<ResourceHandle>> data_packs_;
 
   // The maximum scale factor currently loaded.
   ScaleFactor max_scale_factor_;
@@ -446,7 +414,7 @@ class UI_BASE_EXPORT ResourceBundle {
   // The various font lists used, as a map from a signed size delta from the
   // platform base font size, plus style, to the FontList. Cached to avoid
   // repeated GDI creation/destruction and font derivation.
-  // Must be accessed only while holding |images_and_fonts_lock_|.
+  // Must be accessed only from UI thread.
   std::map<FontKey, gfx::FontList> font_cache_;
 
   base::FilePath overridden_pak_path_;
@@ -454,6 +422,8 @@ class UI_BASE_EXPORT ResourceBundle {
   IdToStringMap overridden_locale_strings_;
 
   bool is_test_resources_ = false;
+
+  base::SequenceChecker sequence_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(ResourceBundle);
 };

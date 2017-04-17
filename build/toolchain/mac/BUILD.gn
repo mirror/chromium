@@ -8,30 +8,19 @@
 
 import("../goma.gni")
 import("//build/config/clang/clang.gni")
-import("//build/config/ios/ios_sdk.gni")
+if (is_ios) {
+  import("//build/config/ios/ios_sdk.gni")
+}
 import("//build/config/mac/mac_sdk.gni")
 import("//build/config/mac/symbols.gni")
 
 assert(host_os == "mac")
 
 import("//build/toolchain/cc_wrapper.gni")
+import("//build/toolchain/clang_static_analyzer.gni")
 import("//build/toolchain/goma.gni")
 import("//build/toolchain/toolchain.gni")
 import("//build/toolchain/concurrent_links.gni")
-
-if (use_goma) {
-  assert(cc_wrapper == "", "Goma and cc_wrapper can't be used together.")
-  compiler_prefix = "$goma_dir/gomacc "
-} else if (cc_wrapper != "") {
-  compiler_prefix = cc_wrapper + " "
-} else {
-  compiler_prefix = ""
-}
-
-if (!use_xcode_clang) {
-  compiler_prefix =
-      compiler_prefix + rebase_path("$clang_base_path/bin/", root_build_dir)
-}
 
 declare_args() {
   # Reduce the number of tasks using the copy_bundle_data and compile_xcassets
@@ -70,37 +59,106 @@ tool_versions =
                             root_build_dir),
                 "trim scope")
 
-# Work around for unused variable warning in template https://crbug.com/395883.
-assert(tool_versions != "")
-
-# Shared toolchain definition. Invocations should set toolchain_os to set the
+# Shared toolchain definition. Invocations should set current_os to set the
 # build args in this definition.
 template("mac_toolchain") {
   toolchain(target_name) {
-    assert(defined(invoker.toolchain_cpu),
-           "mac_toolchain() must specify a \"toolchain_cpu\"")
-    assert(defined(invoker.toolchain_os),
-           "mac_toolchain() must specify a \"toolchain_os\"")
+    if (use_system_xcode) {
+      env_wrapper = ""
+    } else {
+      env_wrapper = "export DEVELOPER_DIR=$hermetic_xcode_path; "
+    }
 
-    # concurrent_links is picked up from the declare_arg().
+    # When invoking this toolchain not as the default one, these args will be
+    # passed to the build. They are ignored when this is the default toolchain.
+    assert(defined(invoker.toolchain_args),
+           "Toolchains must declare toolchain_args")
+    toolchain_args = {
+      # Populate toolchain args from the invoker.
+      forward_variables_from(invoker.toolchain_args, "*")
 
-    cc = "${compiler_prefix}clang"
-    cxx = "${compiler_prefix}clang++"
-    ld = cxx
+      # The host toolchain value computed by the default toolchain's setup
+      # needs to be passed through unchanged to all secondary toolchains to
+      # ensure that it's always the same, regardless of the values that may be
+      # set on those toolchains.
+      host_toolchain = host_toolchain
+    }
+
+    # Supports building with the version of clang shipped with Xcode when
+    # targetting iOS by not respecting clang_base_path.
+    if (toolchain_args.current_os == "ios" && use_xcode_clang) {
+      prefix = ""
+    } else {
+      prefix = rebase_path("$clang_base_path/bin/", root_build_dir)
+    }
+
+    _cc = "${prefix}clang"
+    _cxx = "${prefix}clang++"
+
+    # When the invoker has explicitly overridden use_goma or cc_wrapper in the
+    # toolchain args, use those values, otherwise default to the global one.
+    # This works because the only reasonable override that toolchains might
+    # supply for these values are to force-disable them.
+    if (defined(toolchain_args.use_goma)) {
+      toolchain_uses_goma = toolchain_args.use_goma
+    } else {
+      toolchain_uses_goma = use_goma
+    }
+    if (defined(toolchain_args.cc_wrapper)) {
+      toolchain_cc_wrapper = toolchain_args.cc_wrapper
+    } else {
+      toolchain_cc_wrapper = cc_wrapper
+    }
+
+    # Compute the compiler prefix.
+    if (toolchain_uses_goma) {
+      assert(toolchain_cc_wrapper == "",
+             "Goma and cc_wrapper can't be used together.")
+      compiler_prefix = "$goma_dir/gomacc "
+    } else if (toolchain_cc_wrapper != "") {
+      compiler_prefix = toolchain_cc_wrapper + " "
+    } else {
+      compiler_prefix = ""
+    }
+
+    cc = compiler_prefix + _cc
+    cxx = compiler_prefix + _cxx
+    ld = _cxx
+
+    if (use_clang_static_analyzer) {
+      # Static analysis isn't supported under GOMA. See crbug.com/687245
+      # for progress on this issue.
+      assert(!use_goma, "'use_clang_static_analyzer' cannot be used with GOMA.")
+
+      # Call "ccc-analyzer" or "c++-analyzer" instead of directly calling Clang.
+      # |wrapper_tool| sets the environment variables which are read by the
+      # analyzer tools.
+      analyzer_wrapper =
+          rebase_path("//build/toolchain/clang_static_analyzer_wrapper.py",
+                      root_build_dir)
+      cc = analyzer_wrapper + " --clang-cc-path=${cc} --analyzer=" +
+           rebase_path("//third_party/scan-build/src/libexec/ccc-analyzer",
+                       root_build_dir)
+      cxx = analyzer_wrapper + " --clang-cxx-path=${cxx} --analyzer=" +
+            rebase_path("//third_party/scan-build/src/libexec/c++-analyzer",
+                        root_build_dir)
+
+      ld = cxx
+    }
 
     linker_driver =
         "TOOL_VERSION=${tool_versions.linker_driver} " +
         rebase_path("//build/toolchain/mac/linker_driver.py", root_build_dir)
 
-    if (invoker.toolchain_os == "ios" && additional_toolchains != []) {
-      # For a fat build, the generation of dSYM needs to be performed after the
-      # generation of the fat binaries using "lipo". So disable the generation
-      # of the dSYM for intermediate architecture specific binaries.
-      _enable_dsyms = false
-      _save_unstripped_output = false
-    } else {
+    # On iOS, the final applications are assembled using lipo (to support fat
+    # builds). The correct flags are passed to the linker_driver.py script
+    # directly during the lipo call.
+    if (toolchain_args.current_os != "ios") {
       _enable_dsyms = enable_dsyms
       _save_unstripped_output = save_unstripped_output
+    } else {
+      _enable_dsyms = false
+      _save_unstripped_output = false
     }
 
     # Make these apply to all tools below.
@@ -115,8 +173,14 @@ template("mac_toolchain") {
     # If dSYMs are enabled, this flag will be added to the link tools.
     if (_enable_dsyms) {
       dsym_switch = " -Wcrl,dsym,{{root_out_dir}} "
-      _dsym_output =
-          "{{root_out_dir}}/{{target_output_name}}{{output_extension}}.dSYM/"
+      dsym_output_dir =
+          "{{root_out_dir}}/{{target_output_name}}{{output_extension}}.dSYM"
+      dsym_output = [
+        "$dsym_output_dir/",
+        "$dsym_output_dir/Contents/Info.plist",
+        "$dsym_output_dir/Contents/Resources/DWARF/" +
+            "{{target_output_name}}{{output_extension}}",
+      ]
     } else {
       dsym_switch = ""
     }
@@ -128,7 +192,7 @@ template("mac_toolchain") {
     tool("cc") {
       depfile = "{{output}}.d"
       precompiled_header_type = "gcc"
-      command = "$cc -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} -c {{source}} -o {{output}}"
+      command = "$env_wrapper $cc -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_c}} -c {{source}} -o {{output}}"
       depsformat = "gcc"
       description = "CC {{output}}"
       outputs = [
@@ -139,7 +203,7 @@ template("mac_toolchain") {
     tool("cxx") {
       depfile = "{{output}}.d"
       precompiled_header_type = "gcc"
-      command = "$cxx -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}} -c {{source}} -o {{output}}"
+      command = "$env_wrapper $cxx -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}} -c {{source}} -o {{output}}"
       depsformat = "gcc"
       description = "CXX {{output}}"
       outputs = [
@@ -150,7 +214,7 @@ template("mac_toolchain") {
     tool("asm") {
       # For GCC we can just use the C compiler to compile assembly.
       depfile = "{{output}}.d"
-      command = "$cc -MMD -MF $depfile {{defines}} {{include_dirs}} {{asmflags}} -c {{source}} -o {{output}}"
+      command = "$env_wrapper $cc -MMD -MF $depfile {{defines}} {{include_dirs}} {{asmflags}} -c {{source}} -o {{output}}"
       depsformat = "gcc"
       description = "ASM {{output}}"
       outputs = [
@@ -161,7 +225,7 @@ template("mac_toolchain") {
     tool("objc") {
       depfile = "{{output}}.d"
       precompiled_header_type = "gcc"
-      command = "$cc -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_objc}} -c {{source}} -o {{output}}"
+      command = "$env_wrapper $cc -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_objc}} -c {{source}} -o {{output}}"
       depsformat = "gcc"
       description = "OBJC {{output}}"
       outputs = [
@@ -172,7 +236,7 @@ template("mac_toolchain") {
     tool("objcxx") {
       depfile = "{{output}}.d"
       precompiled_header_type = "gcc"
-      command = "$cxx -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_objcc}} -c {{source}} -o {{output}}"
+      command = "$env_wrapper $cxx -MMD -MF $depfile {{defines}} {{include_dirs}} {{cflags}} {{cflags_objcc}} -c {{source}} -o {{output}}"
       depsformat = "gcc"
       description = "OBJCXX {{output}}"
       outputs = [
@@ -183,7 +247,7 @@ template("mac_toolchain") {
     tool("alink") {
       script =
           rebase_path("//build/toolchain/mac/filter_libtool.py", root_build_dir)
-      command = "rm -f {{output}} && TOOL_VERSION=${tool_versions.filter_libtool} python $script libtool -static {{arflags}} -o {{output}} {{inputs}}"
+      command = "$env_wrapper rm -f {{output}} && TOOL_VERSION=${tool_versions.filter_libtool} python $script libtool -static {{arflags}} -o {{output}} {{inputs}}"
       description = "LIBTOOL-STATIC {{output}}"
       outputs = [
         "{{output_dir}}/{{target_output_name}}{{output_extension}}",
@@ -196,6 +260,7 @@ template("mac_toolchain") {
     tool("solink") {
       dylib = "{{output_dir}}/{{target_output_name}}{{output_extension}}"  # eg "./libfoo.dylib"
       rspfile = dylib + ".rsp"
+      pool = "//build/toolchain:link_pool($default_toolchain)"
 
       # These variables are not built into GN but are helpers that implement
       # (1) linking to produce a .dylib, (2) extracting the symbols from that
@@ -220,7 +285,7 @@ template("mac_toolchain") {
       replace_command = "if ! cmp -s \"$temporary_tocname\" \"$tocname\"; then mv \"$temporary_tocname\" \"$tocname\""
       extract_toc_command = "{ otool -l \"$dylib\" | grep LC_ID_DYLIB -A 5; nm -gP \"$dylib\" | cut -f1-2 -d' ' | grep -v U\$\$; true; }"
 
-      command = "if $does_reexport_command ; then $link_command && $extract_toc_command > \"$tocname\"; else $link_command && $extract_toc_command > \"$temporary_tocname\" && $replace_command ; fi; fi"
+      command = "$env_wrapper if $does_reexport_command ; then $link_command && $extract_toc_command > \"$tocname\"; else $link_command && $extract_toc_command > \"$temporary_tocname\" && $replace_command ; fi; fi"
 
       rspfile_content = "{{inputs_newline}}"
 
@@ -249,7 +314,7 @@ template("mac_toolchain") {
       depend_output = tocname
 
       if (_enable_dsyms) {
-        outputs += [ _dsym_output ]
+        outputs += dsym_output
       }
       if (_save_unstripped_output) {
         outputs += [ _unstripped_output ]
@@ -259,8 +324,9 @@ template("mac_toolchain") {
     tool("solink_module") {
       sofile = "{{output_dir}}/{{target_output_name}}{{output_extension}}"  # eg "./libfoo.so"
       rspfile = sofile + ".rsp"
+      pool = "//build/toolchain:link_pool($default_toolchain)"
 
-      link_command = "$linker_driver $ld -bundle {{ldflags}} -o \"$sofile\" -Wl,-filelist,\"$rspfile\""
+      link_command = "$env_wrapper $linker_driver $ld -bundle {{ldflags}} -o \"$sofile\" -Wl,-filelist,\"$rspfile\""
       if (is_component_build) {
         link_command += " -Wl,-install_name,@rpath/{{target_output_name}}{{output_extension}}"
       }
@@ -283,7 +349,7 @@ template("mac_toolchain") {
       ]
 
       if (_enable_dsyms) {
-        outputs += [ _dsym_output ]
+        outputs += dsym_output
       }
       if (_save_unstripped_output) {
         outputs += [ _unstripped_output ]
@@ -293,6 +359,7 @@ template("mac_toolchain") {
     tool("link") {
       outfile = "{{output_dir}}/{{target_output_name}}{{output_extension}}"
       rspfile = "$outfile.rsp"
+      pool = "//build/toolchain:link_pool($default_toolchain)"
 
       # Note about --filelist: Apple's linker reads the file list file and
       # interprets each newline-separated chunk of text as a file name. It
@@ -302,7 +369,7 @@ template("mac_toolchain") {
       # do for command-line arguments. Thus any source names with spaces, or
       # label names with spaces (which GN bases the output paths on) will be
       # corrupted by this process. Don't use spaces for source files or labels.
-      command = "$linker_driver $ld $dsym_switch {{ldflags}} -o \"$outfile\" -Wl,-filelist,\"$rspfile\" {{solibs}} {{libs}}"
+      command = "$env_wrapper $linker_driver $ld $dsym_switch {{ldflags}} -o \"$outfile\" -Wl,-filelist,\"$rspfile\" {{solibs}} {{libs}}"
       description = "LINK $outfile"
       rspfile_content = "{{inputs_newline}}"
       outputs = [
@@ -310,7 +377,7 @@ template("mac_toolchain") {
       ]
 
       if (_enable_dsyms) {
-        outputs += [ _dsym_output ]
+        outputs += dsym_output
       }
       if (_save_unstripped_output) {
         outputs += [ _unstripped_output ]
@@ -368,54 +435,96 @@ template("mac_toolchain") {
         _sdk_name = mac_sdk_name
         _min_deployment_target = mac_deployment_target
       }
-      command = "rm -f {{output}} && " +
+      command = "$env_wrapper rm -f {{output}} && " +
                 "TOOL_VERSION=${tool_versions.compile_xcassets} " +
                 "python $_tool -p $_sdk_name -t $_min_deployment_target " +
-                "-o {{output}} {{inputs}}"
+                "-T {{bundle_product_type}} -o {{output}} {{inputs}}"
 
       description = "COMPILE_XCASSETS {{output}}"
       pool = ":bundle_pool($default_toolchain)"
-    }
-
-    toolchain_args() {
-      current_cpu = invoker.toolchain_cpu
-      current_os = invoker.toolchain_os
-
-      # These values need to be passed through unchanged.
-      host_toolchain = host_toolchain
-      target_os = target_os
-      target_cpu = target_cpu
-      is_clang = true
     }
   }
 }
 
 mac_toolchain("clang_arm") {
-  toolchain_cpu = "arm"
-  toolchain_os = "mac"
+  toolchain_args = {
+    current_cpu = "arm"
+    current_os = "mac"
+  }
 }
 
 mac_toolchain("clang_x64") {
-  toolchain_cpu = "x64"
-  toolchain_os = "mac"
+  toolchain_args = {
+    current_cpu = "x64"
+    current_os = "mac"
+  }
 }
 
-mac_toolchain("ios_clang_arm") {
-  toolchain_cpu = "arm"
-  toolchain_os = "ios"
+mac_toolchain("clang_x86") {
+  toolchain_args = {
+    current_cpu = "x86"
+    current_os = "mac"
+  }
 }
 
-mac_toolchain("ios_clang_arm64") {
-  toolchain_cpu = "arm64"
-  toolchain_os = "ios"
+mac_toolchain("clang_x86_v8_arm") {
+  toolchain_args = {
+    current_cpu = "x86"
+    v8_current_cpu = "arm"
+    current_os = "mac"
+  }
 }
 
-mac_toolchain("ios_clang_x86") {
-  toolchain_cpu = "x86"
-  toolchain_os = "ios"
+mac_toolchain("clang_x86_v8_mipsel") {
+  toolchain_args = {
+    current_cpu = "x86"
+    v8_current_cpu = "mipsel"
+    current_os = "mac"
+  }
 }
 
-mac_toolchain("ios_clang_x64") {
-  toolchain_cpu = "x64"
-  toolchain_os = "ios"
+mac_toolchain("clang_x64_v8_arm64") {
+  toolchain_args = {
+    current_cpu = "x64"
+    v8_current_cpu = "arm64"
+    current_os = "mac"
+  }
+}
+
+mac_toolchain("clang_x64_v8_mips64el") {
+  toolchain_args = {
+    current_cpu = "x64"
+    v8_current_cpu = "mips64el"
+    current_os = "mac"
+  }
+}
+
+if (is_ios) {
+  mac_toolchain("ios_clang_arm") {
+    toolchain_args = {
+      current_cpu = "arm"
+      current_os = "ios"
+    }
+  }
+
+  mac_toolchain("ios_clang_arm64") {
+    toolchain_args = {
+      current_cpu = "arm64"
+      current_os = "ios"
+    }
+  }
+
+  mac_toolchain("ios_clang_x86") {
+    toolchain_args = {
+      current_cpu = "x86"
+      current_os = "ios"
+    }
+  }
+
+  mac_toolchain("ios_clang_x64") {
+    toolchain_args = {
+      current_cpu = "x64"
+      current_os = "ios"
+    }
+  }
 }

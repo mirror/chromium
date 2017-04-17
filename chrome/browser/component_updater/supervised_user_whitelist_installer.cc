@@ -40,6 +40,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/safe_json/json_sanitizer.h"
+#include "components/update_client/update_client_errors.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace component_updater {
@@ -250,10 +251,11 @@ class SupervisedUserWhitelistComponentInstallerTraits
   // ComponentInstallerTraits overrides:
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
-  bool CanAutoUpdate() const override;
+  bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  bool OnCustomInstall(const base::DictionaryValue& manifest,
-                       const base::FilePath& install_dir) override;
+  update_client::CrxInstaller::Result OnCustomInstall(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& install_dir) override;
   void ComponentReady(const base::Version& version,
                       const base::FilePath& install_dir,
                       std::unique_ptr<base::DictionaryValue> manifest) override;
@@ -261,6 +263,7 @@ class SupervisedUserWhitelistComponentInstallerTraits
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
+  std::vector<std::string> GetMimeTypes() const override;
 
   std::string crx_id_;
   std::string name_;
@@ -277,8 +280,9 @@ bool SupervisedUserWhitelistComponentInstallerTraits::VerifyInstallation(
   return base::PathExists(GetRawWhitelistPath(manifest, install_dir));
 }
 
-bool SupervisedUserWhitelistComponentInstallerTraits::CanAutoUpdate() const {
-  return true;
+bool SupervisedUserWhitelistComponentInstallerTraits::
+    SupportsGroupPolicyEnabledComponentUpdates() const {
+  return false;
 }
 
 bool SupervisedUserWhitelistComponentInstallerTraits::
@@ -286,11 +290,16 @@ bool SupervisedUserWhitelistComponentInstallerTraits::
   return true;
 }
 
-bool SupervisedUserWhitelistComponentInstallerTraits::OnCustomInstall(
+update_client::CrxInstaller::Result
+SupervisedUserWhitelistComponentInstallerTraits::OnCustomInstall(
     const base::DictionaryValue& manifest,
     const base::FilePath& install_dir) {
   // Delete the existing sanitized whitelist.
-  return base::DeleteFile(GetSanitizedWhitelistPath(crx_id_), false);
+  const bool success =
+      base::DeleteFile(GetSanitizedWhitelistPath(crx_id_), false);
+  return update_client::CrxInstaller::Result(
+      success ? update_client::InstallError::NONE
+              : update_client::InstallError::GENERIC_ERROR);
 }
 
 void SupervisedUserWhitelistComponentInstallerTraits::ComponentReady(
@@ -324,6 +333,11 @@ update_client::InstallerAttributes
 SupervisedUserWhitelistComponentInstallerTraits::GetInstallerAttributes()
     const {
   return update_client::InstallerAttributes();
+}
+
+std::vector<std::string>
+SupervisedUserWhitelistComponentInstallerTraits::GetMimeTypes() const {
+  return std::vector<std::string>();
 }
 
 class SupervisedUserWhitelistInstallerImpl
@@ -425,7 +439,7 @@ bool SupervisedUserWhitelistInstallerImpl::UnregisterWhitelistInternal(
   base::ListValue* clients = nullptr;
   success = whitelist_dict->GetList(kClients, &clients);
 
-  const bool removed = clients->Remove(base::StringValue(client_id), nullptr);
+  const bool removed = clients->Remove(base::Value(client_id), nullptr);
 
   if (!clients->empty())
     return removed;
@@ -519,24 +533,26 @@ void SupervisedUserWhitelistInstallerImpl::RegisterWhitelist(
   DictionaryPrefUpdate update(local_state_,
                               prefs::kRegisteredSupervisedUserWhitelists);
   base::DictionaryValue* pref_dict = update.Get();
-  base::DictionaryValue* whitelist_dict = nullptr;
-  const bool newly_added =
-      !pref_dict->GetDictionaryWithoutPathExpansion(crx_id, &whitelist_dict);
+  base::DictionaryValue* whitelist_dict_weak = nullptr;
+  const bool newly_added = !pref_dict->GetDictionaryWithoutPathExpansion(
+      crx_id, &whitelist_dict_weak);
   if (newly_added) {
-    whitelist_dict = new base::DictionaryValue;
+    auto whitelist_dict = base::MakeUnique<base::DictionaryValue>();
+    whitelist_dict_weak = whitelist_dict.get();
     whitelist_dict->SetString(kName, name);
-    pref_dict->SetWithoutPathExpansion(crx_id, whitelist_dict);
+    pref_dict->SetWithoutPathExpansion(crx_id, std::move(whitelist_dict));
   }
 
   if (!client_id.empty()) {
-    base::ListValue* clients = nullptr;
-    if (!whitelist_dict->GetList(kClients, &clients)) {
+    base::ListValue* clients_weak = nullptr;
+    if (!whitelist_dict_weak->GetList(kClients, &clients_weak)) {
       DCHECK(newly_added);
-      clients = new base::ListValue;
-      whitelist_dict->Set(kClients, clients);
+      auto clients = base::MakeUnique<base::ListValue>();
+      clients_weak = clients.get();
+      whitelist_dict_weak->Set(kClients, std::move(clients));
     }
-    bool success =
-        clients->AppendIfNotPresent(new base::StringValue(client_id));
+    bool success = clients_weak->AppendIfNotPresent(
+        base::MakeUnique<base::Value>(client_id));
     DCHECK(success);
   }
 
@@ -544,7 +560,7 @@ void SupervisedUserWhitelistInstallerImpl::RegisterWhitelist(
     // Sanity-check that the stored name is equal to the name passed in.
     // In release builds this is a no-op.
     std::string stored_name;
-    DCHECK(whitelist_dict->GetString(kName, &stored_name));
+    DCHECK(whitelist_dict_weak->GetString(kName, &stored_name));
     DCHECK_EQ(stored_name, name);
     return;
   }
@@ -635,8 +651,8 @@ std::vector<uint8_t> SupervisedUserWhitelistInstaller::GetHashFromCrxId(
 void SupervisedUserWhitelistInstaller::TriggerComponentUpdate(
     OnDemandUpdater* updater,
     const std::string& crx_id) {
-  const bool result = updater->OnDemandUpdate(crx_id);
-  DCHECK(result);
+  // TODO(sorin): use a callback to check the result (crbug.com/639189).
+  updater->OnDemandUpdate(crx_id, component_updater::Callback());
 }
 
 }  // namespace component_updater

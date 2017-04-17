@@ -15,7 +15,7 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/pickle.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
@@ -34,6 +34,7 @@
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/sessions/session_service_utils.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
+#include "chrome/browser/sessions/tab_restore_service_factory.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -43,6 +44,7 @@
 #include "components/sessions/core/session_command.h"
 #include "components/sessions/core/session_constants.h"
 #include "components/sessions/core/session_types.h"
+#include "components/sessions/core/tab_restore_service.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/notification_details.h"
@@ -75,9 +77,6 @@ SessionService::SessionService(Profile* profile)
           this)),
       has_open_trackable_browsers_(false),
       move_on_new_browser_(false),
-      save_delay_in_millis_(base::TimeDelta::FromMilliseconds(2500)),
-      save_delay_in_mins_(base::TimeDelta::FromMinutes(10)),
-      save_delay_in_hrs_(base::TimeDelta::FromHours(8)),
       force_browser_not_alive_with_no_windows_(false),
       weak_factory_(this) {
   // We should never be created when incognito.
@@ -94,9 +93,6 @@ SessionService::SessionService(const base::FilePath& save_path)
           this)),
       has_open_trackable_browsers_(false),
       move_on_new_browser_(false),
-      save_delay_in_millis_(base::TimeDelta::FromMilliseconds(2500)),
-      save_delay_in_mins_(base::TimeDelta::FromMinutes(10)),
-      save_delay_in_hrs_(base::TimeDelta::FromHours(8)),
       force_browser_not_alive_with_no_windows_(false),
       weak_factory_(this) {
   Init();
@@ -352,8 +348,6 @@ void SessionService::TabClosing(WebContents* contents) {
   TabClosed(session_tab_helper->window_id(),
             session_tab_helper->session_id(),
             contents->GetClosedByUserGesture());
-  RecordSessionUpdateHistogramData(content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
-                                   &last_updated_tab_closed_time_);
 }
 
 void SessionService::SetWindowType(const SessionID& window_id,
@@ -524,8 +518,6 @@ bool SessionService::ShouldUseDelayedSave() {
 }
 
 void SessionService::OnSavedCommands() {
-  RecordSessionUpdateHistogramData(chrome::NOTIFICATION_SESSION_SERVICE_SAVED,
-                                   &last_updated_save_time_);
   content::NotificationService::current()->Notify(
       chrome::NOTIFICATION_SESSION_SERVICE_SAVED,
       content::Source<Profile>(profile()),
@@ -561,14 +553,13 @@ bool SessionService::ShouldRestoreWindowOfType(
 }
 
 void SessionService::RemoveUnusedRestoreWindows(
-    std::vector<sessions::SessionWindow*>* window_list) {
-  std::vector<sessions::SessionWindow*>::iterator i = window_list->begin();
+    std::vector<std::unique_ptr<sessions::SessionWindow>>* window_list) {
+  auto i = window_list->begin();
   while (i != window_list->end()) {
-    sessions::SessionWindow* window = *i;
+    sessions::SessionWindow* window = i->get();
     if (!ShouldRestoreWindowOfType(window->type,
                                    window->app_name.empty() ? TYPE_NORMAL :
                                                               TYPE_APP)) {
-      delete window;
       i = window_list->erase(i);
     } else {
       ++i;
@@ -588,7 +579,10 @@ bool SessionService::RestoreIfNecessary(const std::vector<GURL>& urls_to_open,
     }
     SessionStartupPref pref = StartupBrowserCreator::GetSessionStartupPref(
         *base::CommandLine::ForCurrentProcess(), profile());
-    if (pref.type == SessionStartupPref::LAST) {
+    sessions::TabRestoreService* tab_restore_service =
+        TabRestoreServiceFactory::GetForProfileIfExisting(profile());
+    if (pref.type == SessionStartupPref::LAST &&
+        (!tab_restore_service || !tab_restore_service->IsRestoring())) {
       SessionRestore::RestoreSession(
           profile(), browser,
           browser ? 0 : SessionRestore::ALWAYS_CREATE_TABBED_BROWSER,
@@ -624,8 +618,6 @@ void SessionService::Observe(int type,
             session_tab_helper->session_id(),
             web_contents->GetController().GetEntryCount());
       }
-      RecordSessionUpdateHistogramData(type,
-                                       &last_updated_nav_list_pruned_time_);
       break;
     }
 
@@ -671,11 +663,6 @@ void SessionService::Observe(int type,
           session_tab_helper->session_id(),
           navigation);
       content::Details<content::LoadCommittedDetails> changed(details);
-      if (changed->type == content::NAVIGATION_TYPE_NEW_PAGE ||
-        changed->type == content::NAVIGATION_TYPE_EXISTING_PAGE) {
-        RecordSessionUpdateHistogramData(type,
-                                         &last_updated_nav_entry_commit_time_);
-      }
       break;
     }
 
@@ -710,13 +697,13 @@ void SessionService::OnBrowserSetLastActive(Browser* browser) {
 
 void SessionService::OnGotSessionCommands(
     const sessions::GetLastSessionCallback& callback,
-    ScopedVector<sessions::SessionCommand> commands) {
-  ScopedVector<sessions::SessionWindow> valid_windows;
+    std::vector<std::unique_ptr<sessions::SessionCommand>> commands) {
+  std::vector<std::unique_ptr<sessions::SessionWindow>> valid_windows;
   SessionID::id_type active_window_id = 0;
 
-  sessions::RestoreSessionFromCommands(
-      commands, &valid_windows.get(), &active_window_id);
-  RemoveUnusedRestoreWindows(&valid_windows.get());
+  sessions::RestoreSessionFromCommands(commands, &valid_windows,
+                                       &active_window_id);
+  RemoveUnusedRestoreWindows(&valid_windows);
 
   callback.Run(std::move(valid_windows), active_window_id);
 }
@@ -968,113 +955,6 @@ bool SessionService::ShouldTrackBrowser(Browser* browser) const {
   }
   return ShouldRestoreWindowOfType(WindowTypeForBrowserType(browser->type()),
                                    browser->is_app() ? TYPE_APP : TYPE_NORMAL);
-}
-
-void SessionService::RecordSessionUpdateHistogramData(int type,
-    base::TimeTicks* last_updated_time) {
-  if (!last_updated_time->is_null()) {
-    base::TimeDelta delta = base::TimeTicks::Now() - *last_updated_time;
-    // We're interested in frequent updates periods longer than
-    // 10 minutes.
-    bool use_long_period = false;
-    if (delta >= save_delay_in_mins_) {
-      use_long_period = true;
-    }
-    switch (type) {
-      case chrome::NOTIFICATION_SESSION_SERVICE_SAVED :
-        RecordUpdatedSaveTime(delta, use_long_period);
-        break;
-      case content::NOTIFICATION_WEB_CONTENTS_DESTROYED:
-        RecordUpdatedTabClosed(delta, use_long_period);
-        break;
-      case content::NOTIFICATION_NAV_LIST_PRUNED:
-        RecordUpdatedNavListPruned(delta, use_long_period);
-        break;
-      case content::NOTIFICATION_NAV_ENTRY_COMMITTED:
-        RecordUpdatedNavEntryCommit(delta, use_long_period);
-        break;
-      default:
-        NOTREACHED() << "Bad type sent to RecordSessionUpdateHistogramData";
-        break;
-    }
-  }
-  (*last_updated_time) = base::TimeTicks::Now();
-}
-
-void SessionService::RecordUpdatedTabClosed(base::TimeDelta delta,
-                                            bool use_long_period) {
-  std::string name("SessionRestore.TabClosedPeriod");
-  UMA_HISTOGRAM_CUSTOM_TIMES(name,
-      delta,
-      // 2500ms is the default save delay.
-      save_delay_in_millis_,
-      save_delay_in_mins_,
-      50);
-  if (use_long_period) {
-    std::string long_name_("SessionRestore.TabClosedLongPeriod");
-    UMA_HISTOGRAM_CUSTOM_TIMES(long_name_,
-        delta,
-        save_delay_in_mins_,
-        save_delay_in_hrs_,
-        50);
-  }
-}
-
-void SessionService::RecordUpdatedNavListPruned(base::TimeDelta delta,
-                                                bool use_long_period) {
-  std::string name("SessionRestore.NavigationListPrunedPeriod");
-  UMA_HISTOGRAM_CUSTOM_TIMES(name,
-      delta,
-      // 2500ms is the default save delay.
-      save_delay_in_millis_,
-      save_delay_in_mins_,
-      50);
-  if (use_long_period) {
-    std::string long_name_("SessionRestore.NavigationListPrunedLongPeriod");
-    UMA_HISTOGRAM_CUSTOM_TIMES(long_name_,
-        delta,
-        save_delay_in_mins_,
-        save_delay_in_hrs_,
-        50);
-  }
-}
-
-void SessionService::RecordUpdatedNavEntryCommit(base::TimeDelta delta,
-                                                 bool use_long_period) {
-  std::string name("SessionRestore.NavEntryCommittedPeriod");
-  UMA_HISTOGRAM_CUSTOM_TIMES(name,
-      delta,
-      // 2500ms is the default save delay.
-      save_delay_in_millis_,
-      save_delay_in_mins_,
-      50);
-  if (use_long_period) {
-    std::string long_name_("SessionRestore.NavEntryCommittedLongPeriod");
-    UMA_HISTOGRAM_CUSTOM_TIMES(long_name_,
-        delta,
-        save_delay_in_mins_,
-        save_delay_in_hrs_,
-        50);
-  }
-}
-
-void SessionService::RecordUpdatedSaveTime(base::TimeDelta delta,
-                                           bool use_long_period) {
-  std::string name("SessionRestore.SavePeriod");
-  UMA_HISTOGRAM_CUSTOM_TIMES(name,
-      delta,
-      // 2500ms is the default save delay.
-      save_delay_in_millis_,
-      save_delay_in_mins_,
-      50);
-  if (use_long_period) {
-    std::string long_name_("SessionRestore.SaveLongPeriod");
-    UMA_HISTOGRAM_CUSTOM_TIMES(long_name_,
-        delta,
-        save_delay_in_mins_,
-        save_delay_in_hrs_,
-        50);
-  }
 }
 
 void SessionService::MaybeDeleteSessionOnlyData() {

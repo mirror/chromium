@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2008, 2009, 2010, 2011 Google Inc. All rights reserved.
  * Copyright (C) 2011 Igalia S.L.
  * Copyright (C) 2011 Motorola Mobility. All rights reserved.
@@ -34,34 +35,42 @@
 #include "core/editing/EditingStyle.h"
 #include "core/editing/Position.h"
 #include "core/editing/serializers/StyledMarkupAccumulator.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-template<typename Strategy>
+template <typename Strategy>
 class StyledMarkupSerializer final {
-    STACK_ALLOCATED();
-public:
-    StyledMarkupSerializer(EAbsoluteURLs, EAnnotateForInterchange, const PositionTemplate<Strategy>& start, const PositionTemplate<Strategy>& end, Node* highestNodeToBeSerialized, ConvertBlocksToInlines);
+  STACK_ALLOCATED();
 
-    String createMarkup();
+ public:
+  StyledMarkupSerializer(EAbsoluteURLs,
+                         EAnnotateForInterchange,
+                         const PositionTemplate<Strategy>& start,
+                         const PositionTemplate<Strategy>& end,
+                         Node* highest_node_to_be_serialized,
+                         ConvertBlocksToInlines);
 
-private:
-    bool shouldAnnotate() const { return m_shouldAnnotate == AnnotateForInterchange; }
+  String CreateMarkup();
 
-    const PositionTemplate<Strategy> m_start;
-    const PositionTemplate<Strategy> m_end;
-    const EAbsoluteURLs m_shouldResolveURLs;
-    const EAnnotateForInterchange m_shouldAnnotate;
-    const Member<Node> m_highestNodeToBeSerialized;
-    const ConvertBlocksToInlines m_convertBlocksToInlines;
-    Member<Node> m_lastClosed;
-    Member<EditingStyle> m_wrappingStyle;
+ private:
+  bool ShouldAnnotate() const {
+    return should_annotate_ == kAnnotateForInterchange;
+  }
+
+  const PositionTemplate<Strategy> start_;
+  const PositionTemplate<Strategy> end_;
+  const EAbsoluteURLs should_resolve_urls_;
+  const EAnnotateForInterchange should_annotate_;
+  const Member<Node> highest_node_to_be_serialized_;
+  const ConvertBlocksToInlines convert_blocks_to_inlines_;
+  Member<Node> last_closed_;
+  Member<EditingStyle> wrapping_style_;
 };
 
 extern template class StyledMarkupSerializer<EditingStrategy>;
 extern template class StyledMarkupSerializer<EditingInFlatTreeStrategy>;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyledMarkupSerializer_h
+#endif  // StyledMarkupSerializer_h

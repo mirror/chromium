@@ -39,14 +39,14 @@ namespace chromeos {
 
 namespace {
 
-const char kProxyAuthURL[] = "http://example.com/";
+const char kProxyAuthURL[] = "https://example.com/";
 const char kProxyAuthRealm[] = "realm";
 const char kProxyAuthChallenge[] = "challenge";
 const char kProxyAuthPassword1[] = "password 1";
 const char kProxyAuthPassword2[] = "password 2";
 
-const char kGAIACookieURL[] = "http://google.com/";
-const char kSAMLIdPCookieURL[] = "http://example.com/";
+const char kGAIACookieURL[] = "https://google.com/";
+const char kSAMLIdPCookieURL[] = "https://example.com/";
 const char kCookieName[] = "cookie";
 const char kCookieValue1[] = "value 1";
 const char kCookieValue2[] = "value 2";
@@ -228,23 +228,22 @@ void ProfileAuthDataTest::PopulateBrowserContext(
       GURL(kSAMLIdPCookieURL), kCookieName, cookie_value,
       kSAMLIdPCookieDomainWithWildcard, std::string(), base::Time(),
       base::Time(), base::Time(), true, false,
-      net::CookieSameSite::DEFAULT_MODE, false, net::COOKIE_PRIORITY_DEFAULT,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
       net::CookieStore::SetCookiesCallback());
   cookies->SetCookieWithDetailsAsync(
       GURL(kSAMLIdPCookieURL), kCookieName, cookie_value, std::string(),
       std::string(), base::Time(), base::Time(), base::Time(), true, false,
-      net::CookieSameSite::DEFAULT_MODE, false, net::COOKIE_PRIORITY_DEFAULT,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
       net::CookieStore::SetCookiesCallback());
   cookies->SetCookieWithDetailsAsync(
       GURL(kGAIACookieURL), kCookieName, cookie_value, std::string(),
       std::string(), base::Time(), base::Time(), base::Time(), true, false,
-      net::CookieSameSite::DEFAULT_MODE, false, net::COOKIE_PRIORITY_DEFAULT,
+      net::CookieSameSite::DEFAULT_MODE, net::COOKIE_PRIORITY_DEFAULT,
       net::CookieStore::SetCookiesCallback());
 
   GetChannelIDs(browser_context)
-      ->SetChannelID(base::WrapUnique(new net::ChannelIDStore::ChannelID(
-          kChannelIDServerIdentifier, base::Time(),
-          std::move(channel_id_key))));
+      ->SetChannelID(base::MakeUnique<net::ChannelIDStore::ChannelID>(
+          kChannelIDServerIdentifier, base::Time(), std::move(channel_id_key)));
 }
 
 net::URLRequestContext* ProfileAuthDataTest::GetRequestContext(

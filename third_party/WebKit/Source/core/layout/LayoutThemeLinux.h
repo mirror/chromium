@@ -10,11 +10,11 @@
 namespace blink {
 
 class LayoutThemeLinux final : public LayoutThemeDefault {
-public:
-    static PassRefPtr<LayoutTheme> create();
-    String extraDefaultStyleSheet() override;
+ public:
+  static PassRefPtr<LayoutTheme> Create();
+  String ExtraDefaultStyleSheet() override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutThemeLinux_h
+#endif  // LayoutThemeLinux_h

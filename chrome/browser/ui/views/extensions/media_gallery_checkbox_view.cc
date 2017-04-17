@@ -5,10 +5,8 @@
 #include "chrome/browser/ui/views/extensions/media_gallery_checkbox_view.h"
 
 #include "chrome/browser/media_galleries/media_galleries_preferences.h"
-#include "chrome/grit/generated_resources.h"
-#include "grit/theme_resources.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/views/border.h"
 #include "ui/views/context_menu_controller.h"
@@ -16,7 +14,6 @@
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
-#include "ui/views/layout/layout_constants.h"
 
 namespace {
 
@@ -33,9 +30,11 @@ MediaGalleryCheckboxView::MediaGalleryCheckboxView(
   DCHECK(button_listener != NULL);
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0));
-  SetBorder(views::Border::CreateEmptyBorder(
-      0, views::kPanelHorizMargin, trailing_vertical_space,
-      views::kPanelHorizMargin));
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  const int border_horiz_margin =
+      provider->GetDistanceMetric(DISTANCE_PANEL_CONTENT_MARGIN);
+  SetBorder(views::CreateEmptyBorder(
+      0, border_horiz_margin, trailing_vertical_space, border_horiz_margin));
   if (menu_controller)
     set_context_menu_controller(menu_controller);
 
@@ -55,8 +54,9 @@ MediaGalleryCheckboxView::MediaGalleryCheckboxView(
   secondary_text_->SetEnabledColor(kDeemphasizedTextColor);
   secondary_text_->SetElideBehavior(gfx::ELIDE_HEAD);
   secondary_text_->SetTooltipText(tooltip_text);
-  secondary_text_->SetBorder(views::Border::CreateEmptyBorder(
-      0, views::kRelatedControlSmallHorizontalSpacing, 0, 0));
+  secondary_text_->SetBorder(views::CreateEmptyBorder(
+      0, provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL),
+      0, 0));
 
   AddChildView(checkbox_);
   AddChildView(secondary_text_);

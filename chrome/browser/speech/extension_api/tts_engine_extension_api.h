@@ -13,16 +13,8 @@
 
 class Utterance;
 
-namespace base {
-class ListValue;
-}
-
 namespace content {
 class BrowserContext;
-}
-
-namespace extensions {
-class Extension;
 }
 
 namespace tts_engine_events {
@@ -49,10 +41,11 @@ class TtsExtensionEngine : public TtsEngineDelegate {
 };
 // Hidden/internal extension function used to allow TTS engine extensions
 // to send events back to the client that's calling tts.speak().
-class ExtensionTtsEngineSendTtsEventFunction : public SyncExtensionFunction {
+class ExtensionTtsEngineSendTtsEventFunction
+    : public UIThreadExtensionFunction {
  private:
   ~ExtensionTtsEngineSendTtsEventFunction() override {}
-  bool RunSync() override;
+  ResponseAction Run() override;
   DECLARE_EXTENSION_FUNCTION("ttsEngine.sendTtsEvent", TTSENGINE_SENDTTSEVENT)
 };
 

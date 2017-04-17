@@ -13,30 +13,32 @@
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
+#include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
 
 namespace app_list {
 namespace {
 
 // Duration for show/hide animation in milliseconds.
-const int kAnimationDurationMs = 200;
+constexpr int kAnimationDurationMs = 200;
 
 // The maximum shift in pixels when over-scroll happens.
-const int kMaxOverScrollShift = 48;
+constexpr int kMaxOverScrollShift = 48;
 
-ui::Layer* GetLayer(views::Widget* widget) {
+inline ui::Layer* GetLayer(views::Widget* widget) {
   return widget->GetNativeView()->layer();
 }
 
 }  // namespace
 
 AppListPresenterImpl::AppListPresenterImpl(
-    AppListPresenterDelegateFactory* factory)
-    : factory_(factory) {
-  DCHECK(factory);
+    std::unique_ptr<AppListPresenterDelegateFactory> factory)
+    : factory_(std::move(factory)) {
+  DCHECK(factory_);
 }
 
 AppListPresenterImpl::~AppListPresenterImpl() {
+  Dismiss();
   presenter_delegate_.reset();
   // Ensures app list view goes before the controller since pagination model
   // lives in the controller and app list view would access it on destruction.
@@ -56,6 +58,9 @@ void AppListPresenterImpl::Show(int64_t display_id) {
     return;
 
   is_visible_ = true;
+  if (app_list_)
+    app_list_->OnTargetVisibilityChanged(GetTargetVisibility());
+
   if (view_) {
     ScheduleAnimation();
   } else {
@@ -79,13 +84,17 @@ void AppListPresenterImpl::Dismiss() {
   DCHECK(view_);
 
   is_visible_ = false;
+  if (app_list_)
+    app_list_->OnTargetVisibilityChanged(GetTargetVisibility());
 
-  // Our widget is currently active. When the animation completes we'll hide
-  // the widget, changing activation. If a menu is shown before the animation
-  // completes then the activation change triggers the menu to close. By
-  // deactivating now we ensure there is no activation change when the
-  // animation completes and any menus stay open.
-  view_->GetWidget()->Deactivate();
+  // The dismissal may have occurred in response to the app list losing
+  // activation. Otherwise, our widget is currently active. When the animation
+  // completes we'll hide the widget, changing activation. If a menu is shown
+  // before the animation completes then the activation change triggers the menu
+  // to close. By deactivating now we ensure there is no activation change when
+  // the animation completes and any menus stay open.
+  if (view_->GetWidget()->IsActive())
+    view_->GetWidget()->Deactivate();
 
   presenter_delegate_->OnDismissed();
   ScheduleAnimation();
@@ -105,6 +114,14 @@ bool AppListPresenterImpl::IsVisible() const {
 
 bool AppListPresenterImpl::GetTargetVisibility() const {
   return is_visible_;
+}
+
+void AppListPresenterImpl::SetAppList(mojom::AppListPtr app_list) {
+  DCHECK(app_list);
+  app_list_ = std::move(app_list);
+  // Notify the app list interface of the current [target] visibility.
+  app_list_->OnTargetVisibilityChanged(GetTargetVisibility());
+  app_list_->OnVisibilityChanged(IsVisible(), GetDisplayId());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,16 +164,14 @@ void AppListPresenterImpl::ScheduleAnimation() {
   ui::Layer* layer = GetLayer(widget);
   layer->GetAnimator()->StopAnimating();
 
-  gfx::Rect target_bounds;
+  gfx::Rect target_bounds = widget->GetWindowBoundsInScreen();
   gfx::Vector2d offset = presenter_delegate_->GetVisibilityAnimationOffset(
       widget->GetNativeView()->GetRootWindow());
   if (is_visible_) {
-    target_bounds = widget->GetWindowBoundsInScreen();
     gfx::Rect start_bounds = gfx::Rect(target_bounds);
     start_bounds.Offset(offset);
     widget->SetBounds(start_bounds);
   } else {
-    target_bounds = widget->GetWindowBoundsInScreen();
     target_bounds.Offset(offset);
   }
 
@@ -167,6 +182,15 @@ void AppListPresenterImpl::ScheduleAnimation() {
 
   layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
   widget->SetBounds(target_bounds);
+}
+
+int64_t AppListPresenterImpl::GetDisplayId() {
+  views::Widget* widget = view_ ? view_->GetWidget() : nullptr;
+  if (!widget)
+    return display::kInvalidDisplayId;
+  return display::Screen::GetScreen()
+      ->GetDisplayNearestView(widget->GetNativeView())
+      .id();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -208,10 +232,17 @@ void AppListPresenterImpl::OnImplicitAnimationsCompleted() {
 // AppListPresenterImpl, views::WidgetObserver implementation:
 
 void AppListPresenterImpl::OnWidgetDestroying(views::Widget* widget) {
-  DCHECK(view_->GetWidget() == widget);
+  DCHECK_EQ(view_->GetWidget(), widget);
   if (is_visible_)
     Dismiss();
   ResetView();
+}
+
+void AppListPresenterImpl::OnWidgetVisibilityChanged(views::Widget* widget,
+                                                     bool visible) {
+  DCHECK_EQ(view_->GetWidget(), widget);
+  if (app_list_)
+    app_list_->OnVisibilityChanged(visible, GetDisplayId());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

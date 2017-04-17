@@ -5,53 +5,57 @@
 #ifndef FetchHeaderList_h
 #define FetchHeaderList_h
 
-#include "modules/ModulesExport.h"
-#include "platform/heap/Handle.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
 #include <memory>
 #include <utility>
+#include "modules/ModulesExport.h"
+#include "platform/heap/Handle.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class Header;
 
 // http://fetch.spec.whatwg.org/#terminology-headers
-class MODULES_EXPORT FetchHeaderList final : public GarbageCollectedFinalized<FetchHeaderList> {
-public:
-    typedef std::pair<String, String> Header;
-    static FetchHeaderList* create();
-    FetchHeaderList* clone();
+class MODULES_EXPORT FetchHeaderList final
+    : public GarbageCollectedFinalized<FetchHeaderList> {
+ public:
+  typedef std::pair<String, String> Header;
+  static FetchHeaderList* Create();
+  FetchHeaderList* Clone() const;
 
-    ~FetchHeaderList();
-    void append(const String&, const String&);
-    void set(const String&, const String&);
-    // FIXME: Implement parse()
-    String extractMIMEType() const;
+  ~FetchHeaderList();
+  void Append(const String&, const String&);
+  void Set(const String&, const String&);
+  // FIXME: Implement parse()
+  String ExtractMIMEType() const;
 
-    size_t size() const;
-    void remove(const String&);
-    bool get(const String&, String&) const;
-    void getAll(const String&, Vector<String>&) const;
-    bool has(const String&) const;
-    void clearList();
+  size_t size() const;
+  void Remove(const String&);
+  bool Get(const String&, String&) const;
+  void GetAll(const String&, Vector<String>&) const;
+  bool Has(const String&) const;
+  void ClearList();
 
-    bool containsNonSimpleHeader() const;
+  bool ContainsNonSimpleHeader() const;
+  void SortAndCombine();
 
-    const Vector<std::unique_ptr<Header>>& list() const { return m_headerList; }
-    const Header& entry(size_t index) const { return *(m_headerList[index].get()); }
+  const Vector<std::unique_ptr<Header>>& List() const { return header_list_; }
+  const Header& Entry(size_t index) const {
+    return *(header_list_[index].get());
+  }
 
-    static bool isValidHeaderName(const String&);
-    static bool isValidHeaderValue(const String&);
+  static bool IsValidHeaderName(const String&);
+  static bool IsValidHeaderValue(const String&);
 
-    DEFINE_INLINE_TRACE() { }
+  DEFINE_INLINE_TRACE() {}
 
-private:
-    FetchHeaderList();
-    Vector<std::unique_ptr<Header>> m_headerList;
+ private:
+  FetchHeaderList();
+  Vector<std::unique_ptr<Header>> header_list_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FetchHeaderList_h
+#endif  // FetchHeaderList_h

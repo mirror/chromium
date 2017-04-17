@@ -4,90 +4,109 @@
 
 #include "core/css/parser/CSSParserFastPaths.h"
 
-#include "core/css/CSSPrimitiveValue.h"
+#include "core/css/CSSColorValue.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-TEST(CSSParserFastPathsTest, ParseKeyword)
-{
-    CSSValue* value = CSSParserFastPaths::maybeParseValue(CSSPropertyFloat, "left", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    EXPECT_TRUE(value->isPrimitiveValue());
-    CSSPrimitiveValue* primitiveValue = toCSSPrimitiveValue(value);
-    EXPECT_TRUE(primitiveValue->isValueID());
-    EXPECT_EQ(CSSValueLeft, primitiveValue->getValueID());
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyFloat, "foo", HTMLStandardMode);
-    ASSERT_EQ(nullptr, value);
-}
-TEST(CSSParserFastPathsTest, ParseInitialAndInheritKeyword)
-{
-    CSSValue* value = CSSParserFastPaths::maybeParseValue(CSSPropertyMarginTop, "inherit", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    EXPECT_TRUE(value->isInheritedValue());
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyMarginRight, "InHeriT", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    EXPECT_TRUE(value->isInheritedValue());
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyMarginBottom, "initial", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    EXPECT_TRUE(value->isInitialValue());
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyMarginLeft, "IniTiaL", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    EXPECT_TRUE(value->isInitialValue());
-    // Fast path doesn't handle short hands.
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyMargin, "initial", HTMLStandardMode);
-    ASSERT_EQ(nullptr, value);
-}
+using namespace cssvalue;
 
-TEST(CSSParserFastPathsTest, ParseTransform)
-{
-    CSSValue* value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, "translate(5.5px, 5px)", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    ASSERT_TRUE(value->isValueList());
-    ASSERT_EQ("translate(5.5px, 5px)", value->cssText());
-
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, "translate3d(5px, 5px, 10.1px)", HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    ASSERT_TRUE(value->isValueList());
-    ASSERT_EQ("translate3d(5px, 5px, 10.1px)", value->cssText());
+TEST(CSSParserFastPathsTest, ParseKeyword) {
+  CSSValue* value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyFloat, "left", kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsIdentifierValue());
+  CSSIdentifierValue* identifier_value = ToCSSIdentifierValue(value);
+  EXPECT_EQ(CSSValueLeft, identifier_value->GetValueID());
+  value = CSSParserFastPaths::MaybeParseValue(CSSPropertyFloat, "foo",
+                                              kHTMLStandardMode);
+  ASSERT_EQ(nullptr, value);
+}
+TEST(CSSParserFastPathsTest, ParseInitialAndInheritKeyword) {
+  CSSValue* value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyMarginTop, "inherit", kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsInheritedValue());
+  value = CSSParserFastPaths::MaybeParseValue(CSSPropertyMarginRight, "InHeriT",
+                                              kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsInheritedValue());
+  value = CSSParserFastPaths::MaybeParseValue(CSSPropertyMarginBottom,
+                                              "initial", kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsInitialValue());
+  value = CSSParserFastPaths::MaybeParseValue(CSSPropertyMarginLeft, "IniTiaL",
+                                              kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsInitialValue());
+  // Fast path doesn't handle short hands.
+  value = CSSParserFastPaths::MaybeParseValue(CSSPropertyMargin, "initial",
+                                              kHTMLStandardMode);
+  ASSERT_EQ(nullptr, value);
 }
 
-TEST(CSSParserFastPathsTest, ParseComplexTransform)
-{
-    // Random whitespace is on purpose.
-    static const char* kComplexTransform =
-        "translateX(5px) "
-        "translateZ(20.5px)   "
-        "translateY(10px) "
-        "scale3d(0.5, 1, 0.7)   "
-        "matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)   ";
-    static const char* kComplexTransformNormalized =
-        "translateX(5px) "
-        "translateZ(20.5px) "
-        "translateY(10px) "
-        "scale3d(0.5, 1, 0.7) "
-        "matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)";
-    CSSValue* value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, kComplexTransform, HTMLStandardMode);
-    ASSERT_NE(nullptr, value);
-    ASSERT_TRUE(value->isValueList());
-    ASSERT_EQ(kComplexTransformNormalized, value->cssText());
+TEST(CSSParserFastPathsTest, ParseTransform) {
+  CSSValue* value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, "translate(5.5px, 5px)", kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  ASSERT_TRUE(value->IsValueList());
+  ASSERT_EQ("translate(5.5px, 5px)", value->CssText());
+
+  value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, "translate3d(5px, 5px, 10.1px)", kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  ASSERT_TRUE(value->IsValueList());
+  ASSERT_EQ("translate3d(5px, 5px, 10.1px)", value->CssText());
 }
 
-TEST(CSSParserFastPathsTest, ParseTransformNotFastPath)
-{
-    CSSValue* value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, "rotateX(1deg)", HTMLStandardMode);
-    ASSERT_EQ(nullptr, value);
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, "translateZ(1px) rotateX(1deg)", HTMLStandardMode);
-    ASSERT_EQ(nullptr, value);
+TEST(CSSParserFastPathsTest, ParseComplexTransform) {
+  // Random whitespace is on purpose.
+  static const char* kComplexTransform =
+      "translateX(5px) "
+      "translateZ(20.5px)   "
+      "translateY(10px) "
+      "scale3d(0.5, 1, 0.7)   "
+      "matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)   ";
+  static const char* kComplexTransformNormalized =
+      "translateX(5px) "
+      "translateZ(20.5px) "
+      "translateY(10px) "
+      "scale3d(0.5, 1, 0.7) "
+      "matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)";
+  CSSValue* value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, kComplexTransform, kHTMLStandardMode);
+  ASSERT_NE(nullptr, value);
+  ASSERT_TRUE(value->IsValueList());
+  ASSERT_EQ(kComplexTransformNormalized, value->CssText());
 }
 
-TEST(CSSParserFastPathsTest, ParseInvalidTransform)
-{
-    CSSValue* value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, "rotateX(1deg", HTMLStandardMode);
-    ASSERT_EQ(nullptr, value);
-    value = CSSParserFastPaths::maybeParseValue(CSSPropertyTransform, "translateZ(1px) (1px, 1px) rotateX(1deg", HTMLStandardMode);
-    ASSERT_EQ(nullptr, value);
+TEST(CSSParserFastPathsTest, ParseTransformNotFastPath) {
+  CSSValue* value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, "rotateX(1deg)", kHTMLStandardMode);
+  ASSERT_EQ(nullptr, value);
+  value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, "translateZ(1px) rotateX(1deg)", kHTMLStandardMode);
+  ASSERT_EQ(nullptr, value);
 }
 
-} // namespace blink
+TEST(CSSParserFastPathsTest, ParseInvalidTransform) {
+  CSSValue* value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, "rotateX(1deg", kHTMLStandardMode);
+  ASSERT_EQ(nullptr, value);
+  value = CSSParserFastPaths::MaybeParseValue(
+      CSSPropertyTransform, "translateZ(1px) (1px, 1px) rotateX(1deg",
+      kHTMLStandardMode);
+  ASSERT_EQ(nullptr, value);
+}
+
+TEST(CSSParserFastPathsTest, ParseColorWithLargeAlpha) {
+  CSSValue* value = CSSParserFastPaths::ParseColor("rgba(0,0,0,1893205797.13)",
+                                                   kHTMLStandardMode);
+  EXPECT_NE(nullptr, value);
+  EXPECT_TRUE(value->IsColorValue());
+  EXPECT_EQ(Color::kBlack, ToCSSColorValue(*value).Value());
+}
+
+}  // namespace blink

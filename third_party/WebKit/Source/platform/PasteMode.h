@@ -34,10 +34,10 @@
 namespace blink {
 
 enum PasteMode {
-    AllMimeTypes,
-    PlainTextOnly,
+  kAllMimeTypes,
+  kPlainTextOnly,
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

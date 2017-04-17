@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.contextualsearch;
 
+import android.net.Uri;
+
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayContentDelegate;
@@ -50,9 +52,11 @@ class ContextualSearchFakeServer
 
     private String mLoadedUrl;
     private int mLoadedUrlCount;
+    private boolean mUseInvalidLowPriorityPath;
 
     private String mSearchTermRequested;
     private boolean mShouldUseHttps;
+    private boolean mIsOnline = true;
 
     private boolean mDidEverCallContentViewCoreOnShow;
 
@@ -139,11 +143,15 @@ class ContextualSearchFakeServer
         protected final String mSearchTerm;
         private final String mDisplayText;
         private final String mAlternateTerm;
+        private final String mMid;
         private final boolean mDoPreventPreload;
         private final int mStartAdjust;
         private final int mEndAdjust;
         private final String mContextLanguage;
-
+        private final String mThumbnailUrl;
+        private final String mCaption;
+        private final String mQuickActionUri;
+        private final int mQuickActionCategory;
 
         boolean mDidStartResolution;
         boolean mDidFinishResolution;
@@ -155,15 +163,21 @@ class ContextualSearchFakeServer
          * @param searchTerm            The resolved search term.
          * @param displayText           The display text.
          * @param alternateTerm         The alternate text.
+         * @param mid                   The MID to specify a KP, or an empty string.
          * @param doPreventPreload      Whether search preload should be prevented.
          * @param startAdjust           The start adjustment of the selection.
          * @param endAdjust             The end adjustment of the selection.
          * @param contextLanguage       The language of the context determined by the server.
+         * @param thumbnailUrl          The URL of a thumbnail to display.
+         * @param caption               The caption to display.
+         * @param quickActionUri        The URI for the intent associated with the quick action.
+         * @param quickActionCategory   The category for the quick action.
          */
         FakeTapSearch(String nodeId, boolean isNetworkUnavailable, int responseCode,
-                      String searchTerm, String displayText, String alternateTerm,
-                      boolean doPreventPreload, int startAdjust, int endAdjust,
-                      String contextLanguage) {
+                String searchTerm, String displayText, String alternateTerm, String mid,
+                boolean doPreventPreload, int startAdjust, int endAdjust, String contextLanguage,
+                String thumbnailUrl, String caption, String quickActionUri,
+                int quickActionCategory) {
             super(nodeId);
 
             mIsNetworkUnavailable = isNetworkUnavailable;
@@ -171,10 +185,15 @@ class ContextualSearchFakeServer
             mSearchTerm = searchTerm;
             mDisplayText = displayText;
             mAlternateTerm = alternateTerm;
+            mMid = mid;
             mDoPreventPreload = doPreventPreload;
             mStartAdjust = startAdjust;
             mEndAdjust = endAdjust;
             mContextLanguage = contextLanguage;
+            mThumbnailUrl = thumbnailUrl;
+            mCaption = caption;
+            mQuickActionUri = quickActionUri;
+            mQuickActionCategory = quickActionCategory;
         }
 
         @Override
@@ -244,10 +263,10 @@ class ContextualSearchFakeServer
                 @Override
                 public void run() {
                     if (!mDidFinishResolution) {
-                        handleSearchTermResolutionResponse(
-                                mIsNetworkUnavailable, mResponseCode, mSearchTerm, mDisplayText,
-                                mAlternateTerm, mDoPreventPreload, mStartAdjust, mEndAdjust,
-                                mContextLanguage);
+                        handleSearchTermResolutionResponse(mIsNetworkUnavailable, mResponseCode,
+                                mSearchTerm, mDisplayText, mAlternateTerm, mMid, mDoPreventPreload,
+                                mStartAdjust, mEndAdjust, mContextLanguage, mThumbnailUrl,
+                                mCaption, mQuickActionUri, mQuickActionCategory);
 
                         mActiveFakeTapSearch = null;
                         mDidFinishResolution = true;
@@ -272,16 +291,24 @@ class ContextualSearchFakeServer
          * @param searchTerm
          * @param displayText
          * @param alternateTerm
+         * @param mid
          * @param doPreventPreload
          * @param startAdjust
          * @param endAdjust
          * @param contextLanguage
+         * @param thumbnailUrl
+         * @param caption
+         * @param quickActionUri
+         * @param quickActionCategory
          */
         FakeSlowResolveSearch(String nodeId, boolean isNetworkUnavailable, int responseCode,
-                String searchTerm, String displayText, String alternateTerm,
-                boolean doPreventPreload, int startAdjust, int endAdjust, String contextLanguage) {
+                String searchTerm, String displayText, String alternateTerm, String mid,
+                boolean doPreventPreload, int startAdjust, int endAdjust, String contextLanguage,
+                String thumbnailUrl, String caption, String quickActionUri,
+                int quickActionCategory) {
             super(nodeId, isNetworkUnavailable, responseCode, searchTerm, displayText,
-                    alternateTerm, doPreventPreload, startAdjust, endAdjust, contextLanguage);
+                    alternateTerm, mid, doPreventPreload, startAdjust, endAdjust, contextLanguage,
+                    thumbnailUrl, caption, quickActionUri, quickActionCategory);
         }
 
         @Override
@@ -334,6 +361,9 @@ class ContextualSearchFakeServer
 
         @Override
         public void loadUrl(String url, boolean shouldLoadImmediately) {
+            if (mUseInvalidLowPriorityPath && isLowPriorityUrl(url)) {
+                url = makeInvalidUrl(url);
+            }
             mLoadedUrl = url;
             mLoadedUrlCount++;
             super.loadUrl(url, shouldLoadImmediately);
@@ -349,6 +379,23 @@ class ContextualSearchFakeServer
         protected ContentViewCore createContentViewCore(ChromeActivity activity) {
             return new ContentViewCoreWrapper(activity);
         }
+
+        /**
+         * Creates an invalid version of the given URL.
+         * @param baseUrl The URL to build upon / modify.
+         * @return The same URL but with an invalid path.
+         */
+        private String makeInvalidUrl(String baseUrl) {
+            return Uri.parse(baseUrl).buildUpon().appendPath("invalid").build().toString();
+        }
+
+        /**
+         * @return Whether the given URL is a low-priority URL.
+         */
+        private boolean isLowPriorityUrl(String url) {
+            // Just check if it's set up to prefetch.
+            return url.contains("&pf=c");
+        }
     }
 
     //============================================================================================
@@ -362,7 +409,7 @@ class ContextualSearchFakeServer
         private boolean mIsVisible;
 
         ContentViewCoreWrapper(ChromeActivity activity) {
-            super(activity);
+            super(activity, "");
         }
 
         @Override
@@ -463,6 +510,14 @@ class ContextualSearchFakeServer
     }
 
     /**
+     * Sets whether the device is currently online or not.
+     */
+    @VisibleForTesting
+    void setIsOnline(boolean isOnline) {
+        mIsOnline = isOnline;
+    }
+
+    /**
      * Resets the fake server's member data.
      */
     @VisibleForTesting
@@ -470,7 +525,25 @@ class ContextualSearchFakeServer
         mLoadedUrl = null;
         mSearchTermRequested = null;
         mShouldUseHttps = false;
+        mIsOnline = true;
         mLoadedUrlCount = 0;
+        mUseInvalidLowPriorityPath = false;
+    }
+
+    /**
+     * Sets a flag to build low-priority paths that are invalid in order to test failover.
+     */
+    @VisibleForTesting
+    void setLowPriorityPathInvalid() {
+        mUseInvalidLowPriorityPath = true;
+    }
+
+    /**
+     * @return Whether the most recent loadUrl was on an invalid path.
+     */
+    @VisibleForTesting
+    boolean didAttemptLoadInvalidUrl() {
+        return mUseInvalidLowPriorityPath && mLoadedUrl.contains("invalid");
     }
 
     //============================================================================================
@@ -501,15 +574,31 @@ class ContextualSearchFakeServer
 
     @Override
     public void handleSearchTermResolutionResponse(boolean isNetworkUnavailable, int responseCode,
-            String searchTerm, String displayText, String alternateTerm, boolean doPreventPreload,
-            int selectionStartAdjust, int selectionEndAdjust, String contextLanguage) {
+            String searchTerm, String displayText, String alternateTerm, String mid,
+            boolean doPreventPreload, int selectionStartAdjust, int selectionEndAdjust,
+            String contextLanguage, String thumbnailUrl, String caption, String quickActionUri,
+            int quickActionCategory) {
         mBaseManager.handleSearchTermResolutionResponse(isNetworkUnavailable, responseCode,
-                searchTerm, displayText, alternateTerm, doPreventPreload, selectionStartAdjust,
-                selectionEndAdjust, contextLanguage);
+                searchTerm, displayText, alternateTerm, mid, doPreventPreload, selectionStartAdjust,
+                selectionEndAdjust, contextLanguage, thumbnailUrl, caption, quickActionUri,
+                quickActionCategory);
     }
 
     @Override
-    @Nullable public URL getBasePageUrl() {
+    public boolean isOnline() {
+        return mIsOnline;
+    }
+
+    @Override
+    public void stopPanelContentsNavigation() {
+        // Stub out stop() of the WebContents.
+        // Navigation of the content in the overlay may have been faked in tests,
+        // so stopping the WebContents navigation is unsafe.
+    }
+
+    @Override
+    @Nullable
+    public URL getBasePageUrl() {
         URL baseUrl = mBaseManager.getBasePageUrl();
         if (mShouldUseHttps && baseUrl != null) {
             try {
@@ -537,17 +626,21 @@ class ContextualSearchFakeServer
         registerFakeLongPressSearch(new FakeLongPressSearch("term", "Term"));
         registerFakeLongPressSearch(new FakeLongPressSearch("resolution", "Resolution"));
 
-        registerFakeTapSearch(new FakeTapSearch("search", false, 200,
-                "Search", "Search", "alternate-term", false, 0, 0, ""));
-        registerFakeTapSearch(new FakeTapSearch("term", false, 200,
-                "Term", "Term", "alternate-term", false, 0, 0, ""));
-        registerFakeTapSearch(new FakeTapSearch("resolution", false, 200,
-                "Resolution", "Resolution", "alternate-term", false, 0, 0, ""));
-        registerFakeTapSearch(new FakeTapSearch("german", false, 200,
-                "Deutsche", "Deutsche", "alternate-term", false, 0, 0, "de"));
+        registerFakeTapSearch(new FakeTapSearch(
+                "search", false, 200, "Search", "Search", "alternate-term", "", false, 0, 0, "",
+                "", "", "", QuickActionCategory.NONE));
+        registerFakeTapSearch(new FakeTapSearch(
+                "term", false, 200, "Term", "Term", "alternate-term", "", false, 0, 0, "",
+                "", "", "", QuickActionCategory.NONE));
+        registerFakeTapSearch(new FakeTapSearch("resolution", false, 200, "Resolution",
+                "Resolution", "alternate-term", "", false, 0, 0, "", "", "", "",
+                QuickActionCategory.NONE));
+        registerFakeTapSearch(new FakeTapSearch("german", false, 200, "Deutsche", "Deutsche",
+                "alternate-term", "", false, 0, 0, "de", "", "", "", QuickActionCategory.NONE));
 
         registerFakeSlowResolveSearch(new FakeSlowResolveSearch(
-                "search", false, 200, "Search", "Search", "alternate-term", false, 0, 0, ""));
+                "search", false, 200, "Search", "Search", "alternate-term", "", false, 0, 0, "",
+                "", "", "", QuickActionCategory.NONE));
     }
 
     /**

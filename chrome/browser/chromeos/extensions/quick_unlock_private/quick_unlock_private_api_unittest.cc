@@ -6,20 +6,26 @@
 
 #include "chrome/browser/chromeos/extensions/quick_unlock_private/quick_unlock_private_api.h"
 
+#include <algorithm>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_utils.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/extensions/extension_api_unittest.h"
+#include "chrome/common/pref_names.h"
 #include "chromeos/login/auth/fake_extended_authenticator.h"
 #include "extensions/browser/api_test_utils.h"
 #include "extensions/browser/extension_function_dispatcher.h"
 
 using namespace extensions;
 namespace quick_unlock_private = extensions::api::quick_unlock_private;
+using CredentialCheck = quick_unlock_private::CredentialCheck;
+using CredentialProblem = quick_unlock_private::CredentialProblem;
+using CredentialRequirements = quick_unlock_private::CredentialRequirements;
 using QuickUnlockMode = quick_unlock_private::QuickUnlockMode;
 using QuickUnlockModeList = std::vector<QuickUnlockMode>;
 using CredentialList = std::vector<std::string>;
@@ -32,15 +38,14 @@ const char* kTestUserEmailHash = "testuser@gmail.com-hash";
 const char* kValidPassword = "valid";
 const char* kInvalidPassword = "invalid";
 
-chromeos::ExtendedAuthenticator* CreateFakeAuthenticator(
-    chromeos::AuthStatusConsumer* auth_status_consumer) {
+ExtendedAuthenticator* CreateFakeAuthenticator(
+    AuthStatusConsumer* auth_status_consumer) {
   AccountId account_id = AccountId::FromUserEmail(kTestUserEmail);
-  chromeos::UserContext expected_context(account_id);
+  UserContext expected_context(account_id);
   expected_context.SetKey(Key(kValidPassword));
 
-  chromeos::ExtendedAuthenticator* authenticator =
-      new chromeos::FakeExtendedAuthenticator(auth_status_consumer,
-                                              expected_context);
+  ExtendedAuthenticator* authenticator =
+      new FakeExtendedAuthenticator(auth_status_consumer, expected_context);
   return authenticator;
 }
 
@@ -49,6 +54,15 @@ void DoNothing(const QuickUnlockModeList& modes) {}
 void FailIfCalled(const QuickUnlockModeList& modes) {
   FAIL();
 }
+
+enum ExpectedPinState {
+  PIN_GOOD = 1 << 0,
+  PIN_TOO_SHORT = 1 << 1,
+  PIN_TOO_LONG = 1 << 2,
+  PIN_WEAK_ERROR = 1 << 3,
+  PIN_WEAK_WARNING = 1 << 4,
+  PIN_CONTAINS_NONDIGIT = 1 << 5
+};
 
 }  // namespace
 
@@ -62,7 +76,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
   void SetUp() override {
     ExtensionApiUnittest::SetUp();
 
-    EnableQuickUnlockForTesting();
+    quick_unlock::EnableForTesting();
 
     // Setup a primary user.
     auto test_account = AccountId::FromUserEmail(kTestUserEmail);
@@ -93,17 +107,16 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     // Run the function.
     std::unique_ptr<base::Value> result =
         RunFunction(new QuickUnlockPrivateGetAvailableModesFunction(),
-                    base::WrapUnique(new base::ListValue()));
+                    base::MakeUnique<base::ListValue>());
 
     // Extract the results.
     QuickUnlockModeList modes;
 
     base::ListValue* list = nullptr;
     EXPECT_TRUE(result->GetAsList(&list));
-    // Consume the unique_ptr by reference so we don't take ownership.
-    for (const std::unique_ptr<base::Value>& value : (*list)) {
+    for (const base::Value& value : *list) {
       std::string mode;
-      EXPECT_TRUE(value->GetAsString(&mode));
+      EXPECT_TRUE(value.GetAsString(&mode));
       modes.push_back(quick_unlock_private::ParseQuickUnlockMode(mode));
     }
 
@@ -114,19 +127,85 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
   QuickUnlockModeList GetActiveModes() {
     std::unique_ptr<base::Value> result =
         RunFunction(new QuickUnlockPrivateGetActiveModesFunction(),
-                    base::WrapUnique(new base::ListValue()));
+                    base::MakeUnique<base::ListValue>());
 
     QuickUnlockModeList modes;
 
     base::ListValue* list = nullptr;
     EXPECT_TRUE(result->GetAsList(&list));
-    for (const std::unique_ptr<base::Value>& value : *list) {
+    for (const base::Value& value : *list) {
       std::string mode;
-      EXPECT_TRUE(value->GetAsString(&mode));
+      EXPECT_TRUE(value.GetAsString(&mode));
       modes.push_back(quick_unlock_private::ParseQuickUnlockMode(mode));
     }
 
     return modes;
+  }
+
+  // Returns true if |problem| is contained in |problems|.
+  bool HasProblem(CredentialProblem problem,
+                  const std::vector<CredentialProblem> problems) {
+    return std::find(problems.begin(), problems.end(), problem) !=
+           problems.end();
+  }
+
+  bool HasFlag(int outcome, int flag) { return (outcome & flag) != 0; }
+
+  // Helper function for checking whether |IsCredentialUsableUsingPin| will
+  // return the right message given a pin.
+  void CheckPin(int expected_outcome, const std::string& pin) {
+    CredentialCheck result = CheckCredentialUsingPin(pin);
+    const std::vector<CredentialProblem> errors(result.errors);
+    const std::vector<CredentialProblem> warnings(result.warnings);
+
+    // A pin is considered good if it emits no errors or warnings.
+    EXPECT_EQ(HasFlag(expected_outcome, PIN_GOOD),
+              errors.empty() && warnings.empty());
+    EXPECT_EQ(
+        HasFlag(expected_outcome, PIN_TOO_SHORT),
+        HasProblem(CredentialProblem::CREDENTIAL_PROBLEM_TOO_SHORT, errors));
+    EXPECT_EQ(
+        HasFlag(expected_outcome, PIN_TOO_LONG),
+        HasProblem(CredentialProblem::CREDENTIAL_PROBLEM_TOO_LONG, errors));
+    EXPECT_EQ(
+        HasFlag(expected_outcome, PIN_WEAK_WARNING),
+        HasProblem(CredentialProblem::CREDENTIAL_PROBLEM_TOO_WEAK, warnings));
+    EXPECT_EQ(
+        HasFlag(expected_outcome, PIN_WEAK_ERROR),
+        HasProblem(CredentialProblem::CREDENTIAL_PROBLEM_TOO_WEAK, errors));
+    EXPECT_EQ(
+        HasFlag(expected_outcome, PIN_CONTAINS_NONDIGIT),
+        HasProblem(CredentialProblem::CREDENTIAL_PROBLEM_CONTAINS_NONDIGIT,
+                   errors));
+  }
+
+  CredentialCheck CheckCredentialUsingPin(const std::string& pin) {
+    auto params = base::MakeUnique<base::ListValue>();
+    params->AppendString(ToString(QuickUnlockMode::QUICK_UNLOCK_MODE_PIN));
+    params->AppendString(pin);
+
+    std::unique_ptr<base::Value> result = RunFunction(
+        new QuickUnlockPrivateCheckCredentialFunction(), std::move(params));
+
+    CredentialCheck function_result;
+    EXPECT_TRUE(CredentialCheck::Populate(*result, &function_result));
+    return function_result;
+  }
+
+  void CheckGetCredentialRequirements(int expected_pin_min_length,
+                                      int expected_pin_max_length) {
+    auto params = base::MakeUnique<base::ListValue>();
+    params->AppendString(ToString(QuickUnlockMode::QUICK_UNLOCK_MODE_PIN));
+
+    std::unique_ptr<base::Value> result =
+        RunFunction(new QuickUnlockPrivateGetCredentialRequirementsFunction(),
+                    std::move(params));
+
+    CredentialRequirements function_result;
+    EXPECT_TRUE(CredentialRequirements::Populate(*result, &function_result));
+
+    EXPECT_EQ(function_result.min_length, expected_pin_min_length);
+    EXPECT_EQ(function_result.max_length, expected_pin_max_length);
   }
 
   // Wrapper for chrome.quickUnlockPrivate.setModes that automatically uses a
@@ -141,15 +220,15 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
                              const QuickUnlockModeList& modes,
                              const CredentialList& passwords) {
     // Serialize parameters.
-    auto params = base::WrapUnique(new base::ListValue());
+    auto params = base::MakeUnique<base::ListValue>();
     params->AppendString(password);
 
-    auto serialized_modes = base::WrapUnique(new base::ListValue());
+    auto serialized_modes = base::MakeUnique<base::ListValue>();
     for (QuickUnlockMode mode : modes)
       serialized_modes->AppendString(quick_unlock_private::ToString(mode));
     params->Append(std::move(serialized_modes));
 
-    auto serialized_passwords = base::WrapUnique(new base::ListValue());
+    auto serialized_passwords = base::MakeUnique<base::ListValue>();
     for (const std::string& password : passwords)
       serialized_passwords->AppendString(password);
     params->Append(std::move(serialized_passwords));
@@ -202,7 +281,7 @@ class QuickUnlockPrivateUnitTest : public ExtensionApiUnittest {
     return std::unique_ptr<base::Value>(
         api_test_utils::RunFunctionWithDelegateAndReturnSingleResult(
             func, std::move(params), profile(),
-            base::WrapUnique(new ExtensionFunctionDispatcher(profile())),
+            base::MakeUnique<ExtensionFunctionDispatcher>(profile()),
             api_test_utils::NONE));
   }
 
@@ -245,7 +324,7 @@ TEST_F(QuickUnlockPrivateUnitTest, SetModesFailsWithInvalidPassword) {
   FailIfModesChanged();
   EXPECT_FALSE(SetModesUsingPassword(
       kInvalidPassword,
-      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"11"}));
+      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"111111"}));
   EXPECT_EQ(GetActiveModes(), QuickUnlockModeList{});
 }
 
@@ -263,10 +342,10 @@ TEST_F(QuickUnlockPrivateUnitTest, ModeChangeEventOnlyRaisedWhenModesChange) {
   ExpectModesChanged(
       QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN});
   EXPECT_TRUE(SetModes(
-      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"11"}));
+      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"111111"}));
   FailIfModesChanged();
   EXPECT_TRUE(SetModes(
-      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"22"}));
+      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"222222"}));
   EXPECT_TRUE(SetModes(
       QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {""}));
 }
@@ -274,39 +353,41 @@ TEST_F(QuickUnlockPrivateUnitTest, ModeChangeEventOnlyRaisedWhenModesChange) {
 // Ensures that quick unlock can be enabled and disabled by checking the result
 // of quickUnlockPrivate.GetActiveModes and PinStorage::IsPinSet.
 TEST_F(QuickUnlockPrivateUnitTest, SetModesAndGetActiveModes) {
-  PinStorage* pin_storage = PinStorageFactory::GetForProfile(profile());
+  quick_unlock::QuickUnlockStorage* quick_unlock_storage =
+      quick_unlock::QuickUnlockFactory::GetForProfile(profile());
 
   // Update mode to PIN raises an event and updates GetActiveModes.
   ExpectModesChanged(
       QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN});
   EXPECT_TRUE(SetModes(
-      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"11"}));
+      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"111111"}));
   EXPECT_EQ(GetActiveModes(),
             QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN});
-  EXPECT_TRUE(pin_storage->IsPinSet());
+  EXPECT_TRUE(quick_unlock_storage->pin_storage()->IsPinSet());
 
   // SetModes can be used to turn off a quick unlock mode.
   ExpectModesChanged(QuickUnlockModeList{});
   EXPECT_TRUE(SetModes(QuickUnlockModeList{}, CredentialList{}));
   EXPECT_EQ(GetActiveModes(), QuickUnlockModeList{});
-  EXPECT_FALSE(pin_storage->IsPinSet());
+  EXPECT_FALSE(quick_unlock_storage->pin_storage()->IsPinSet());
 }
 
 // Verifies that enabling PIN quick unlock actually talks to the PIN subsystem.
 TEST_F(QuickUnlockPrivateUnitTest, VerifyAuthenticationAgainstPIN) {
-  PinStorage* pin_storage = PinStorageFactory::GetForProfile(profile());
+  quick_unlock::QuickUnlockStorage* quick_unlock_storage =
+      quick_unlock::QuickUnlockFactory::GetForProfile(profile());
 
   EXPECT_TRUE(SetModes(QuickUnlockModeList{}, CredentialList{}));
-  EXPECT_FALSE(pin_storage->IsPinSet());
+  EXPECT_FALSE(quick_unlock_storage->pin_storage()->IsPinSet());
 
   EXPECT_TRUE(SetModes(
-      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"11"}));
-  EXPECT_TRUE(pin_storage->IsPinSet());
+      QuickUnlockModeList{QuickUnlockMode::QUICK_UNLOCK_MODE_PIN}, {"111111"}));
+  EXPECT_TRUE(quick_unlock_storage->pin_storage()->IsPinSet());
 
-  pin_storage->MarkStrongAuth();
-  pin_storage->ResetUnlockAttemptCount();
-  EXPECT_TRUE(pin_storage->TryAuthenticatePin("11"));
-  EXPECT_FALSE(pin_storage->TryAuthenticatePin("00"));
+  quick_unlock_storage->MarkStrongAuth();
+  quick_unlock_storage->pin_storage()->ResetUnlockAttemptCount();
+  EXPECT_TRUE(quick_unlock_storage->TryAuthenticatePin("111111"));
+  EXPECT_FALSE(quick_unlock_storage->TryAuthenticatePin("000000"));
 }
 
 // Verifies that the number of modes and the number of passwords given must be
@@ -316,4 +397,97 @@ TEST_F(QuickUnlockPrivateUnitTest, ThrowErrorOnMismatchedParameterCount) {
   EXPECT_FALSE(SetModesWithError("[\"valid\", [], [\"11\"]]").empty());
 }
 
+// Validates PIN error checking in conjuction with policy-related prefs.
+TEST_F(QuickUnlockPrivateUnitTest, CheckCredentialProblemReporting) {
+  PrefService* pref_service = profile()->GetPrefs();
+
+  // Verify the pin checks work with the default preferences which are minimum
+  // length of 6, maximum length of 0 (no maximum) and no easy to guess check.
+  CheckPin(PIN_GOOD, "111112");
+  CheckPin(PIN_GOOD, "1111112");
+  CheckPin(PIN_GOOD, "1111111111111112");
+  CheckPin(PIN_WEAK_WARNING, "111111");
+  CheckPin(PIN_TOO_SHORT, "1");
+  CheckPin(PIN_TOO_SHORT, "11");
+  CheckPin(PIN_TOO_SHORT | PIN_WEAK_WARNING, "111");
+  CheckPin(PIN_TOO_SHORT | PIN_CONTAINS_NONDIGIT, "a");
+  CheckPin(PIN_CONTAINS_NONDIGIT, "aaaaab");
+  CheckPin(PIN_CONTAINS_NONDIGIT | PIN_WEAK_WARNING, "aaaaaa");
+  CheckPin(PIN_CONTAINS_NONDIGIT | PIN_WEAK_WARNING, "abcdef");
+
+  // Verify that now if the minimum length is set to 3, PINs of length 3 are
+  // accepted.
+  pref_service->SetInteger(prefs::kPinUnlockMinimumLength, 3);
+  CheckPin(PIN_WEAK_WARNING, "111");
+
+  // Verify setting a nonzero maximum length that is less than the minimum
+  // length results in the pin only accepting PINs of length minimum length.
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, 2);
+  pref_service->SetInteger(prefs::kPinUnlockMinimumLength, 4);
+  CheckPin(PIN_GOOD, "1112");
+  CheckPin(PIN_TOO_SHORT, "112");
+  CheckPin(PIN_TOO_LONG, "11112");
+
+  // Verify that now if the maximum length is set to 5, PINs longer than 5 are
+  // considered too long and cannot be used.
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, 5);
+  CheckPin(PIN_TOO_LONG | PIN_WEAK_WARNING, "111111");
+  CheckPin(PIN_TOO_LONG | PIN_WEAK_WARNING, "1111111");
+
+  // Verify that if both the minimum length and maximum length is set to 4, only
+  // 4 digit PINs can be used.
+  pref_service->SetInteger(prefs::kPinUnlockMinimumLength, 4);
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, 4);
+  CheckPin(PIN_TOO_SHORT, "122");
+  CheckPin(PIN_TOO_LONG, "12222");
+  CheckPin(PIN_GOOD, "1222");
+
+  // Set the PINs minimum/maximum lengths back to their defaults.
+  pref_service->SetInteger(prefs::kPinUnlockMinimumLength, 4);
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, 0);
+
+  // Verify that PINs that are weak are flagged as such. See
+  // IsPinDifficultEnough in quick_unlock_private_api.cc for the description of
+  // a weak pin.
+  pref_service->SetBoolean(prefs::kPinUnlockWeakPinsAllowed, false);
+  // Good.
+  CheckPin(PIN_GOOD, "1112");
+  CheckPin(PIN_GOOD, "7890");
+  CheckPin(PIN_GOOD, "0987");
+  // Same digits.
+  CheckPin(PIN_WEAK_ERROR, "1111");
+  // Increasing.
+  CheckPin(PIN_WEAK_ERROR, "0123");
+  CheckPin(PIN_WEAK_ERROR, "3456789");
+  // Decreasing.
+  CheckPin(PIN_WEAK_ERROR, "3210");
+  CheckPin(PIN_WEAK_ERROR, "987654");
+  // Too common.
+  CheckPin(PIN_WEAK_ERROR, "1212");
+
+  // Verify that if a PIN has more than one error, both are returned.
+  CheckPin(PIN_TOO_SHORT | PIN_WEAK_ERROR, "111");
+  CheckPin(PIN_TOO_SHORT | PIN_WEAK_ERROR, "234");
+}
+
+TEST_F(QuickUnlockPrivateUnitTest, GetCredentialRequirements) {
+  PrefService* pref_service = profile()->GetPrefs();
+
+  // Verify that trying out PINs under the minimum/maximum lengths will send the
+  // minimum/maximum lengths as additional information for display purposes.
+  pref_service->SetInteger(prefs::kPinUnlockMinimumLength, 6);
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, 8);
+  CheckGetCredentialRequirements(6, 8);
+
+  // Verify that by setting a maximum length to be nonzero and smaller than the
+  // minimum length, the resulting maxium length will be equal to the minimum
+  // length pref.
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, 4);
+  CheckGetCredentialRequirements(6, 6);
+
+  // Verify that the values received from policy are sanitized.
+  pref_service->SetInteger(prefs::kPinUnlockMinimumLength, -3);
+  pref_service->SetInteger(prefs::kPinUnlockMaximumLength, -3);
+  CheckGetCredentialRequirements(1, 0);
+}
 }  // namespace chromeos

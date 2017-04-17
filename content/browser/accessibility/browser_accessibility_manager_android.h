@@ -99,6 +99,7 @@ class CONTENT_EXPORT BrowserAccessibilityManagerAndroid
   jboolean IsNodeValid(JNIEnv* env,
                        const base::android::JavaParamRef<jobject>& obj,
                        jint id);
+
   void HitTest(JNIEnv* env,
                const base::android::JavaParamRef<jobject>& obj,
                jint x,
@@ -108,6 +109,9 @@ class CONTENT_EXPORT BrowserAccessibilityManagerAndroid
   jboolean IsEditableText(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,
                           jint id);
+  jboolean IsFocused(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj,
+                     jint id);
   jint GetEditableTextSelectionStart(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
@@ -154,6 +158,9 @@ class CONTENT_EXPORT BrowserAccessibilityManagerAndroid
                         const base::android::JavaParamRef<jobject>& obj,
                         jint id,
                         jboolean increment);
+  void ShowContextMenu(JNIEnv* env,
+                       const base::android::JavaParamRef<jobject>& obj,
+                       jint id);
 
   // Return the id of the next node in tree order in the direction given by
   // |forwards|, starting with |start_id|, that matches |element_type|,
@@ -215,6 +222,21 @@ class CONTENT_EXPORT BrowserAccessibilityManagerAndroid
   bool IsSlider(JNIEnv* env,
                 const base::android::JavaParamRef<jobject>& obj,
                 jint id);
+
+  // Accessibility methods to support navigation for autofill popup.
+  void OnAutofillPopupDisplayed(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
+  void OnAutofillPopupDismissed(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
+  jint GetIdForElementAfterElementHostingAutofillPopup(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
+  jboolean IsAutofillPopupNode(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      jint id);
 
   // Scrolls any scrollable container by about 80% of one page in the
   // given direction.

@@ -13,43 +13,67 @@
 namespace blink {
 
 class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
-    DEFINE_WRAPPERTYPEINFO();
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    static ExtendableMessageEvent* create();
-    static ExtendableMessageEvent* create(const AtomicString& type, const ExtendableMessageEventInit& initializer);
-    static ExtendableMessageEvent* create(const AtomicString& type, const ExtendableMessageEventInit& initializer, WaitUntilObserver*);
-    static ExtendableMessageEvent* create(PassRefPtr<SerializedScriptValue> data, const String& origin, MessagePortArray* ports, WaitUntilObserver*);
-    static ExtendableMessageEvent* create(PassRefPtr<SerializedScriptValue> data, const String& origin, MessagePortArray* ports, ServiceWorkerClient* source, WaitUntilObserver*);
-    static ExtendableMessageEvent* create(PassRefPtr<SerializedScriptValue> data, const String& origin, MessagePortArray* ports, ServiceWorker* source, WaitUntilObserver*);
+ public:
+  static ExtendableMessageEvent* Create(
+      const AtomicString& type,
+      const ExtendableMessageEventInit& initializer);
+  static ExtendableMessageEvent* Create(
+      const AtomicString& type,
+      const ExtendableMessageEventInit& initializer,
+      WaitUntilObserver*);
+  static ExtendableMessageEvent* Create(PassRefPtr<SerializedScriptValue> data,
+                                        const String& origin,
+                                        MessagePortArray* ports,
+                                        WaitUntilObserver*);
+  static ExtendableMessageEvent* Create(PassRefPtr<SerializedScriptValue> data,
+                                        const String& origin,
+                                        MessagePortArray* ports,
+                                        ServiceWorkerClient* source,
+                                        WaitUntilObserver*);
+  static ExtendableMessageEvent* Create(PassRefPtr<SerializedScriptValue> data,
+                                        const String& origin,
+                                        MessagePortArray* ports,
+                                        ServiceWorker* source,
+                                        WaitUntilObserver*);
 
-    SerializedScriptValue* serializedData() const { return m_serializedData.get(); }
-    void setSerializedData(PassRefPtr<SerializedScriptValue> serializedData) { m_serializedData = serializedData; }
-    const String& origin() const { return m_origin; }
-    const String& lastEventId() const { return m_lastEventId; }
-    MessagePortArray ports(bool& isNull) const;
-    MessagePortArray ports() const;
-    void source(ClientOrServiceWorkerOrMessagePort& result) const;
+  SerializedScriptValue* SerializedData() const {
+    return serialized_data_.Get();
+  }
+  void SetSerializedData(PassRefPtr<SerializedScriptValue> serialized_data) {
+    serialized_data_ = std::move(serialized_data);
+  }
+  const String& origin() const { return origin_; }
+  const String& lastEventId() const { return last_event_id_; }
+  MessagePortArray ports(bool& is_null) const;
+  MessagePortArray ports() const;
+  void source(ClientOrServiceWorkerOrMessagePort& result) const;
 
-    const AtomicString& interfaceName() const override;
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    ExtendableMessageEvent();
-    ExtendableMessageEvent(const AtomicString& type, const ExtendableMessageEventInit& initializer);
-    ExtendableMessageEvent(const AtomicString& type, const ExtendableMessageEventInit& initializer, WaitUntilObserver*);
-    ExtendableMessageEvent(PassRefPtr<SerializedScriptValue> data, const String& origin, MessagePortArray* ports, WaitUntilObserver*);
+ private:
+  ExtendableMessageEvent(const AtomicString& type,
+                         const ExtendableMessageEventInit& initializer);
+  ExtendableMessageEvent(const AtomicString& type,
+                         const ExtendableMessageEventInit& initializer,
+                         WaitUntilObserver*);
+  ExtendableMessageEvent(PassRefPtr<SerializedScriptValue> data,
+                         const String& origin,
+                         MessagePortArray* ports,
+                         WaitUntilObserver*);
 
-    RefPtr<SerializedScriptValue> m_serializedData;
-    String m_origin;
-    String m_lastEventId;
-    Member<ServiceWorkerClient> m_sourceAsClient;
-    Member<ServiceWorker> m_sourceAsServiceWorker;
-    Member<MessagePort> m_sourceAsMessagePort;
-    Member<MessagePortArray> m_ports;
+  RefPtr<SerializedScriptValue> serialized_data_;
+  String origin_;
+  String last_event_id_;
+  Member<ServiceWorkerClient> source_as_client_;
+  Member<ServiceWorker> source_as_service_worker_;
+  Member<MessagePort> source_as_message_port_;
+  Member<MessagePortArray> ports_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ExtendableMessageEvent_h
+#endif  // ExtendableMessageEvent_h

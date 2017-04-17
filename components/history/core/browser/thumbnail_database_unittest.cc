@@ -174,7 +174,7 @@ class ThumbnailDatabaseTest : public testing::Test {
     // Get a temporary directory for the test DB files.
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
 
-    file_name_ = temp_dir_.path().AppendASCII("TestFavicons.db");
+    file_name_ = temp_dir_.GetPath().AppendASCII("TestFavicons.db");
   }
 
   base::ScopedTempDir temp_dir_;
@@ -636,34 +636,8 @@ TEST_F(ThumbnailDatabaseTest, Version6) {
   ASSERT_TRUE(db.get() != NULL);
   VerifyTablesAndColumns(&db->db_);
 
-  EXPECT_TRUE(CheckPageHasIcon(db.get(),
-                               kPageUrl1,
-                               favicon_base::FAVICON,
-                               kIconUrl1,
-                               kLargeSize,
-                               sizeof(kBlob1),
-                               kBlob1));
-  EXPECT_TRUE(CheckPageHasIcon(db.get(),
-                               kPageUrl2,
-                               favicon_base::FAVICON,
-                               kIconUrl2,
-                               kLargeSize,
-                               sizeof(kBlob2),
-                               kBlob2));
-  EXPECT_TRUE(CheckPageHasIcon(db.get(),
-                               kPageUrl3,
-                               favicon_base::FAVICON,
-                               kIconUrl1,
-                               kLargeSize,
-                               sizeof(kBlob1),
-                               kBlob1));
-  EXPECT_TRUE(CheckPageHasIcon(db.get(),
-                               kPageUrl3,
-                               favicon_base::TOUCH_ICON,
-                               kIconUrl3,
-                               kLargeSize,
-                               sizeof(kBlob2),
-                               kBlob2));
+  // Version 6 is deprecated, the data should all be gone.
+  VerifyDatabaseEmpty(&db->db_);
 }
 
 // Test loading version 7 database.

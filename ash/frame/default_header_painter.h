@@ -9,6 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/frame/header_painter.h"
+#include "ash/public/interfaces/window_style.mojom.h"
 #include "base/compiler_specific.h"  // override
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -16,7 +17,6 @@
 #include "ui/gfx/animation/animation_delegate.h"
 
 namespace gfx {
-class ImageSkia;
 class Rect;
 class SlideAnimation;
 }
@@ -32,7 +32,8 @@ class FrameCaptionButtonContainerView;
 class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
                                         public gfx::AnimationDelegate {
  public:
-  DefaultHeaderPainter();
+  explicit DefaultHeaderPainter(
+      mojom::WindowStyle window_style = mojom::WindowStyle::DEFAULT);
   ~DefaultHeaderPainter() override;
 
   // DefaultHeaderPainter does not take ownership of any of the parameters.
@@ -55,6 +56,8 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   // Sets the active and inactive frame colors. Note the inactive frame color
   // will have some transparency added when the frame is drawn.
   void SetFrameColors(SkColor active_frame_color, SkColor inactive_frame_color);
+  SkColor GetActiveFrameColor() const;
+  SkColor GetInactiveFrameColor() const;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(DefaultHeaderPainterTest, TitleIconAlignment);
@@ -94,6 +97,7 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   // Returns whether the frame uses custom frame coloring.
   bool UsesCustomFrameColors() const;
 
+  const mojom::WindowStyle window_style_;
   views::Widget* frame_;
   views::View* view_;
   views::View* left_header_view_;  // May be NULL.

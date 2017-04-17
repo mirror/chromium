@@ -25,86 +25,71 @@
 
 #include "core/dom/DocumentParser.h"
 
+#include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParserClient.h"
 #include "core/html/parser/TextResourceDecoder.h"
-#include "wtf/Assertions.h"
-#include <memory>
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
 DocumentParser::DocumentParser(Document* document)
-    : m_state(ParsingState)
-    , m_documentWasLoadedAsPartOfNavigation(false)
-    , m_document(document)
-{
-    DCHECK(document);
+    : state_(kParsingState),
+      document_was_loaded_as_part_of_navigation_(false),
+      document_(document) {
+  DCHECK(document);
 }
 
-DocumentParser::~DocumentParser()
-{
+DocumentParser::~DocumentParser() {}
+
+DEFINE_TRACE(DocumentParser) {
+  visitor->Trace(document_);
+  visitor->Trace(clients_);
 }
 
-DEFINE_TRACE(DocumentParser)
-{
-    visitor->trace(m_document);
-    visitor->trace(m_clients);
+void DocumentParser::SetDecoder(std::unique_ptr<TextResourceDecoder>) {
+  NOTREACHED();
 }
 
-void DocumentParser::setDecoder(std::unique_ptr<TextResourceDecoder>)
-{
-    ASSERT_NOT_REACHED();
+TextResourceDecoder* DocumentParser::Decoder() {
+  return nullptr;
 }
 
-TextResourceDecoder* DocumentParser::decoder()
-{
-    return nullptr;
+void DocumentParser::PrepareToStopParsing() {
+  DCHECK_EQ(state_, kParsingState);
+  state_ = kStoppingState;
 }
 
-void DocumentParser::prepareToStopParsing()
-{
-    DCHECK_EQ(m_state, ParsingState);
-    m_state = StoppingState;
+void DocumentParser::StopParsing() {
+  state_ = kStoppedState;
+
+  // Clients may be removed while in the loop. Make a snapshot for iteration.
+  HeapVector<Member<DocumentParserClient>> clients_snapshot;
+  CopyToVector(clients_, clients_snapshot);
+
+  for (DocumentParserClient* client : clients_snapshot) {
+    if (!clients_.Contains(client))
+      continue;
+
+    client->NotifyParserStopped();
+  }
 }
 
-void DocumentParser::stopParsing()
-{
-    m_state = StoppedState;
-
-    // Clients may be removed while in the loop. Make a snapshot for iteration.
-    HeapVector<Member<DocumentParserClient>> clientsSnapshot;
-    copyToVector(m_clients, clientsSnapshot);
-
-    for (DocumentParserClient* client : clientsSnapshot) {
-        if (!m_clients.contains(client))
-            continue;
-
-        client->notifyParserStopped();
-    }
+void DocumentParser::Detach() {
+  state_ = kDetachedState;
+  document_ = nullptr;
 }
 
-void DocumentParser::detach()
-{
-    m_state = DetachedState;
-    m_document = nullptr;
+void DocumentParser::SuspendScheduledTasks() {}
+
+void DocumentParser::ResumeScheduledTasks() {}
+
+void DocumentParser::AddClient(DocumentParserClient* client) {
+  clients_.insert(client);
 }
 
-void DocumentParser::suspendScheduledTasks()
-{
+void DocumentParser::RemoveClient(DocumentParserClient* client) {
+  clients_.erase(client);
 }
 
-void DocumentParser::resumeScheduledTasks()
-{
-}
-
-void DocumentParser::addClient(DocumentParserClient* client)
-{
-    m_clients.add(client);
-}
-
-void DocumentParser::removeClient(DocumentParserClient* client)
-{
-    m_clients.remove(client);
-}
-
-} // namespace blink
+}  // namespace blink

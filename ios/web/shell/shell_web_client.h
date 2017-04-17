@@ -9,7 +9,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "ios/web/public/web_client.h"
+#import "ios/web/public/web_client.h"
 
 namespace web {
 class ShellBrowserState;
@@ -23,7 +23,7 @@ class ShellWebClient : public WebClient {
   // WebClient implementation.
   WebMainParts* CreateWebMainParts() override;
   std::string GetProduct() const override;
-  std::string GetUserAgent(bool desktop_user_agent) const override;
+  std::string GetUserAgent(UserAgentType type) const override;
   void AllowCertificateError(
       WebState* web_state,
       int cert_error,

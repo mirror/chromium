@@ -9,10 +9,11 @@
 #include <memory>
 #include <vector>
 
-#include "ash/common/shell_observer.h"
+#include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h"
+#include "chrome/browser/ui/ash/launcher/arc_app_shelf_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/aura/env_observer.h"
 #include "ui/aura/window_observer.h"
@@ -23,10 +24,6 @@ class ShelfDelegate;
 
 namespace aura {
 class Window;
-}
-
-namespace views {
-class Widget;
 }
 
 class ArcAppWindowLauncherItemController;
@@ -44,13 +41,16 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
                                  ash::ShelfDelegate* shelf_delegate);
   ~ArcAppWindowLauncherController() override;
 
-  // Returns shelf app id. Play Store app is mapped to Arc platform host app.
+  // Returns shelf app id. Play Store app is mapped to ARC platform host app.
   static std::string GetShelfAppIdFromArcAppId(const std::string& arc_app_id);
 
-  // Returns Arc app id. Arc platform host app is mapped to Play Store app.
+  // Returns ARC app id. ARC platform host app is mapped to Play Store app.
   static std::string GetArcAppIdFromShelfAppId(const std::string& shelf_app_id);
 
-  // AppWindowLauncherControllre:
+  // Returns ARC task id for the window.
+  static int GetWindowTaskId(aura::Window* window);
+
+  // AppWindowLauncherController:
   void ActiveUserChanged(const std::string& user_email) override;
   void AdditionalUserAddedToSession(Profile* profile) override;
 
@@ -58,7 +58,7 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
   void OnWindowInitialized(aura::Window* window) override;
 
   // aura::WindowObserver:
-  void OnWindowVisibilityChanging(aura::Window* window, bool visible) override;
+  void OnWindowVisibilityChanged(aura::Window* window, bool visible) override;
   void OnWindowDestroying(aura::Window* window) override;
 
   // aura::client::ActivationChangeObserver:
@@ -76,7 +76,8 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
   void OnAppRemoved(const std::string& app_id) override;
   void OnTaskCreated(int task_id,
                      const std::string& package_name,
-                     const std::string& activity) override;
+                     const std::string& activity,
+                     const std::string& intent) override;
   void OnTaskDestroyed(int task_id) override;
   void OnTaskSetActive(int32_t task_id) override;
   void OnTaskOrientationLockRequested(
@@ -85,22 +86,33 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
 
  private:
   class AppWindow;
+  class AppWindowInfo;
 
-  using TaskIdToAppWindow = std::map<int, std::unique_ptr<AppWindow>>;
-  using AppControllerMap =
-      std::map<std::string, ArcAppWindowLauncherItemController*>;
+  using TaskIdToAppWindowInfo = std::map<int, std::unique_ptr<AppWindowInfo>>;
+
+  // Maps shelf group id to controller. Shelf group id is optional parameter for
+  // the Android task. If it is not set, app id is used instead.
+  using ShelfGroupToAppControllerMap =
+      std::map<arc::ArcAppShelfId, ArcAppWindowLauncherItemController*>;
 
   void StartObserving(Profile* profile);
   void StopObserving(Profile* profile);
 
-  void RegisterApp(AppWindow* app_window);
-  void UnregisterApp(AppWindow* app_window);
+  void RegisterApp(AppWindowInfo* app_window_info);
+  void UnregisterApp(AppWindowInfo* app_window_info);
 
+  AppWindowInfo* GetAppWindowInfoForTask(int task_id);
   AppWindow* GetAppWindowForTask(int task_id);
 
-  void CheckForAppWindowWidget(aura::Window* window);
+  void AttachControllerToWindowIfNeeded(aura::Window* window);
+  void AttachControllerToWindowsIfNeeded();
+  ArcAppWindowLauncherItemController* AttachControllerToTask(
+      int taskId,
+      const AppWindowInfo& app_window_info);
 
   void SetOrientationLockForAppWindow(AppWindow* app_window);
+
+  std::vector<int> GetTaskIdsForApp(const std::string& arc_app_id) const;
 
   // AppWindowLauncherController:
   AppWindowLauncherItemController* ControllerForWindow(
@@ -109,8 +121,8 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
   // Not owned
   ash::ShelfDelegate* shelf_delegate_;
   int active_task_id_ = -1;
-  TaskIdToAppWindow task_id_to_app_window_;
-  AppControllerMap app_controller_map_;
+  TaskIdToAppWindowInfo task_id_to_app_window_info_;
+  ShelfGroupToAppControllerMap app_shelf_group_to_controller_map_;
   std::vector<aura::Window*> observed_windows_;
   Profile* observed_profile_ = nullptr;
   bool observing_shell_ = false;

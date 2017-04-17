@@ -31,27 +31,26 @@
 #include "bindings/core/v8/Microtask.h"
 
 #include "platform/ScriptForbiddenScope.h"
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-void Microtask::performCheckpoint(v8::Isolate* isolate)
-{
-    if (ScriptForbiddenScope::isScriptForbidden())
-        return;
-    v8::MicrotasksScope::PerformCheckpoint(isolate);
+void Microtask::PerformCheckpoint(v8::Isolate* isolate) {
+  if (ScriptForbiddenScope::IsScriptForbidden())
+    return;
+  v8::MicrotasksScope::PerformCheckpoint(isolate);
 }
 
-static void microtaskFunctionCallback(void* data)
-{
-    std::unique_ptr<WTF::Closure> task = wrapUnique(static_cast<WTF::Closure*>(data));
-    (*task)();
+static void MicrotaskFunctionCallback(void* data) {
+  std::unique_ptr<WTF::Closure> task =
+      WTF::WrapUnique(static_cast<WTF::Closure*>(data));
+  (*task)();
 }
 
-void Microtask::enqueueMicrotask(std::unique_ptr<WTF::Closure> callback)
-{
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    isolate->EnqueueMicrotask(&microtaskFunctionCallback, static_cast<void*>(callback.release()));
+void Microtask::EnqueueMicrotask(std::unique_ptr<WTF::Closure> callback) {
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  isolate->EnqueueMicrotask(&MicrotaskFunctionCallback,
+                            static_cast<void*>(callback.release()));
 }
 
-} // namespace blink
+}  // namespace blink

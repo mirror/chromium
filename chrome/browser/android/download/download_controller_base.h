@@ -9,6 +9,7 @@
 
 #include "base/callback.h"
 #include "content/public/browser/download_item.h"
+#include "content/public/browser/resource_request_info.h"
 #include "content/public/common/context_menu_params.h"
 #include "net/http/http_content_disposition.h"
 #include "net/http/http_request_headers.h"
@@ -35,16 +36,11 @@ struct DownloadInfo {
   GURL url;
   // The original URL before any redirection by the server for this URL.
   GURL original_url;
-  int64_t total_bytes;
   std::string content_disposition;
   std::string original_mime_type;
   std::string user_agent;
   std::string cookie;
   std::string referer;
-  bool has_user_gesture;
-
-  content::WebContents* web_contents;
-  // Default copy constructor is used for passing this struct by value.
 };
 
 // Interface to request GET downloads and send notifications for POST
@@ -58,12 +54,6 @@ class DownloadControllerBase : public content::DownloadItem::Observer {
   static void SetDownloadControllerBase(
       DownloadControllerBase* download_controller);
 
-  // Starts a new download request with Android. Should be called on the
-  // UI thread.
-  virtual void CreateGETDownload(int render_process_id, int render_view_id,
-                                 bool must_download,
-                                 const DownloadInfo& info) = 0;
-
   // Should be called when a download is started. It can be either a GET
   // request with authentication or a POST request. Notifies the embedding
   // app about the download. Should be called on the UI thread.
@@ -74,11 +64,6 @@ class DownloadControllerBase : public content::DownloadItem::Observer {
       const content::ContextMenuParams& params,
       content::WebContents* web_contents,
       bool is_link, const std::string& extra_headers) = 0;
-
-  // Called when a dangerous download item is verified or rejected.
-  virtual void DangerousDownloadValidated(content::WebContents* web_contents,
-                                          const std::string& download_guid,
-                                          bool accept) = 0;
 
   // Callback when user permission prompt finishes. Args: whether file access
   // permission is acquired.
@@ -93,9 +78,10 @@ class DownloadControllerBase : public content::DownloadItem::Observer {
   // Called by unit test to approve or disapprove file access request.
   virtual void SetApproveFileAccessRequestForTesting(bool approve) {}
 
-  // Called to set the default download file name if it cannot be resolved
-  // from url and content disposition
-  virtual void SetDefaultDownloadFileName(const std::string& file_name) {}
+  // Starts a new download request with Android DownloadManager.
+  virtual void CreateAndroidDownload(
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
+      const DownloadInfo& info) = 0;
 
  protected:
   ~DownloadControllerBase() override {}

@@ -6,78 +6,80 @@
 #define DocumentOrShadowRoot_h
 
 #include "core/dom/Document.h"
+#include "core/dom/Fullscreen.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/frame/UseCounter.h"
 
 namespace blink {
 
 class DocumentOrShadowRoot {
-public:
-    static Element* activeElement(Document& document)
-    {
-        return document.activeElement();
-    }
+ public:
+  static Element* activeElement(Document& document) {
+    return document.ActiveElement();
+  }
 
-    static Element* activeElement(ShadowRoot& shadowRoot)
-    {
-        return shadowRoot.activeElement();
-    }
+  static Element* activeElement(ShadowRoot& shadow_root) {
+    return shadow_root.ActiveElement();
+  }
 
-    static StyleSheetList* styleSheets(Document& document)
-    {
-        return &document.styleSheets();
-    }
+  static StyleSheetList* styleSheets(Document& document) {
+    return &document.StyleSheets();
+  }
 
-    static StyleSheetList* styleSheets(ShadowRoot& shadowRoot)
-    {
-        return &shadowRoot.styleSheets();
-    }
+  static StyleSheetList* styleSheets(ShadowRoot& shadow_root) {
+    return &shadow_root.StyleSheets();
+  }
 
-    static DOMSelection* getSelection(TreeScope& treeScope)
-    {
-        return treeScope.getSelection();
-    }
+  static DOMSelection* getSelection(TreeScope& tree_scope) {
+    return tree_scope.GetSelection();
+  }
 
-    static Element* elementFromPoint(TreeScope& treeScope, int x, int y)
-    {
-        return treeScope.elementFromPoint(x, y);
-    }
+  static Element* elementFromPoint(TreeScope& tree_scope, int x, int y) {
+    return tree_scope.ElementFromPoint(x, y);
+  }
 
-    static HeapVector<Member<Element>> elementsFromPoint(TreeScope& treeScope, int x, int y)
-    {
-        return treeScope.elementsFromPoint(x, y);
-    }
+  static HeapVector<Member<Element>> elementsFromPoint(TreeScope& tree_scope,
+                                                       int x,
+                                                       int y) {
+    return tree_scope.ElementsFromPoint(x, y);
+  }
 
-    static Element* pointerLockElement(Document& document)
-    {
-        UseCounter::count(document, UseCounter::DocumentPointerLockElement);
-        const Element* target = document.pointerLockElement();
-        if (!target)
-            return nullptr;
-        // For Shadow DOM V0 compatibility: We allow returning an element in V0 shadow tree,
-        // even though it leaks the Shadow DOM.
-        // TODO(kochi): Once V0 code is removed, the following V0 check is unnecessary.
-        if (target && target->isInV0ShadowTree()) {
-            UseCounter::count(document, UseCounter::DocumentPointerLockElementInV0Shadow);
-            return const_cast<Element*>(target);
-        }
-        return document.adjustedElement(*target);
+  static Element* pointerLockElement(Document& document) {
+    UseCounter::Count(document, UseCounter::kDocumentPointerLockElement);
+    const Element* target = document.PointerLockElement();
+    if (!target)
+      return nullptr;
+    // For Shadow DOM V0 compatibility: We allow returning an element in V0
+    // shadow tree, even though it leaks the Shadow DOM.
+    // TODO(kochi): Once V0 code is removed, the following V0 check is
+    // unnecessary.
+    if (target && target->IsInV0ShadowTree()) {
+      UseCounter::Count(document,
+                        UseCounter::kDocumentPointerLockElementInV0Shadow);
+      return const_cast<Element*>(target);
     }
+    return document.AdjustedElement(*target);
+  }
 
-    static Element* pointerLockElement(ShadowRoot& shadowRoot)
-    {
-        // TODO(kochi): Once V0 code is removed, the following non-V1 check is unnecessary.
-        // After V0 code is removed, we can use the same logic for Document and ShadowRoot.
-        if (!shadowRoot.isV1())
-            return nullptr;
-        UseCounter::count(shadowRoot.document(), UseCounter::ShadowRootPointerLockElement);
-        const Element* target = shadowRoot.document().pointerLockElement();
-        if (!target)
-            return nullptr;
-        return shadowRoot.adjustedElement(*target);
-    }
+  static Element* pointerLockElement(ShadowRoot& shadow_root) {
+    // TODO(kochi): Once V0 code is removed, the following non-V1 check is
+    // unnecessary.  After V0 code is removed, we can use the same logic for
+    // Document and ShadowRoot.
+    if (!shadow_root.IsV1())
+      return nullptr;
+    UseCounter::Count(shadow_root.GetDocument(),
+                      UseCounter::kShadowRootPointerLockElement);
+    const Element* target = shadow_root.GetDocument().PointerLockElement();
+    if (!target)
+      return nullptr;
+    return shadow_root.AdjustedElement(*target);
+  }
+
+  static Element* fullscreenElement(TreeScope& scope) {
+    return Fullscreen::FullscreenElementForBindingFrom(scope);
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentOrShadowRoot_h
+#endif  // DocumentOrShadowRoot_h

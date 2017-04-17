@@ -5,20 +5,26 @@
 #include "content/common/site_isolation_policy.h"
 
 #include "base/command_line.h"
-#include "base/lazy_instance.h"
-#include "content/public/common/browser_plugin_guest_mode.h"
-#include "content/public/common/browser_side_navigation_policy.h"
+#include "base/feature_list.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 
 namespace content {
 
 // static
 bool SiteIsolationPolicy::AreCrossProcessFramesPossible() {
+// Before turning this on for Android, input event routing needs to be
+// completed there, and perf regressions in https://crbug.com/690229 need to be
+// investigated.
+#if defined(OS_ANDROID)
   return UseDedicatedProcessesForAllSites() ||
          IsTopDocumentIsolationEnabled() ||
          GetContentClient()->IsSupplementarySiteIsolationModeEnabled() ||
-         BrowserPluginGuestMode::UseCrossProcessFramesForGuests();
+         base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames);
+#else
+  return true;
+#endif
 }
 
 // static
@@ -35,14 +41,6 @@ bool SiteIsolationPolicy::IsTopDocumentIsolationEnabled() {
 
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kTopDocumentIsolation);
-}
-
-// static
-bool SiteIsolationPolicy::UseSubframeNavigationEntries() {
-  // Enable the new navigation history behavior if any manner of site isolation
-  // is active.
-  // PlzNavigate: also enable the new navigation history behavior.
-  return AreCrossProcessFramesPossible() || IsBrowserSideNavigationEnabled();
 }
 
 }  // namespace content

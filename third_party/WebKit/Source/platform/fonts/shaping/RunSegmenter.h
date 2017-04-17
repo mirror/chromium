@@ -5,6 +5,8 @@
 #ifndef RunSegmenter_h
 #define RunSegmenter_h
 
+#include <unicode/uscript.h>
+#include <memory>
 #include "platform/fonts/FontOrientation.h"
 #include "platform/fonts/FontTraits.h"
 #include "platform/fonts/OrientationIterator.h"
@@ -12,10 +14,8 @@
 #include "platform/fonts/SmallCapsIterator.h"
 #include "platform/fonts/SymbolsIterator.h"
 #include "platform/fonts/UTF16TextIterator.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include <memory>
-#include <unicode/uscript.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -23,42 +23,46 @@ namespace blink {
 // OrientationIterator and SmallCapsIterator, depending on orientaton and
 // font-variant of the text run.
 class PLATFORM_EXPORT RunSegmenter {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(RunSegmenter);
-public:
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(RunSegmenter);
 
-    // Indices into the UTF-16 buffer that is passed in
-    struct RunSegmenterRange {
-        DISALLOW_NEW();
-        unsigned start;
-        unsigned end;
-        UScriptCode script;
-        OrientationIterator::RenderOrientation renderOrientation;
-        FontFallbackPriority fontFallbackPriority;
-    };
+ public:
+  // Indices into the UTF-16 buffer that is passed in
+  struct RunSegmenterRange {
+    DISALLOW_NEW();
+    unsigned start;
+    unsigned end;
+    UScriptCode script;
+    OrientationIterator::RenderOrientation render_orientation;
+    FontFallbackPriority font_fallback_priority;
+  };
 
-    RunSegmenter(const UChar* buffer, unsigned bufferSize, FontOrientation);
+  RunSegmenter(const UChar* buffer, unsigned buffer_size, FontOrientation);
 
-    bool consume(RunSegmenterRange*);
+  bool Consume(RunSegmenterRange*);
 
-private:
+  static RunSegmenterRange NullRange() {
+    return {0, 0, USCRIPT_INVALID_CODE, OrientationIterator::kOrientationKeep,
+            FontFallbackPriority::kText};
+  }
 
-    void consumeOrientationIteratorPastLastSplit();
-    void consumeScriptIteratorPastLastSplit();
-    void consumeSymbolsIteratorPastLastSplit();
+ private:
+  void ConsumeOrientationIteratorPastLastSplit();
+  void ConsumeScriptIteratorPastLastSplit();
+  void ConsumeSymbolsIteratorPastLastSplit();
 
-    unsigned m_bufferSize;
-    RunSegmenterRange m_candidateRange;
-    std::unique_ptr<ScriptRunIterator> m_scriptRunIterator;
-    std::unique_ptr<OrientationIterator> m_orientationIterator;
-    std::unique_ptr<SymbolsIterator> m_symbolsIterator;
-    unsigned m_lastSplit;
-    unsigned m_scriptRunIteratorPosition;
-    unsigned m_orientationIteratorPosition;
-    unsigned m_symbolsIteratorPosition;
-    bool m_atEnd;
+  unsigned buffer_size_;
+  RunSegmenterRange candidate_range_;
+  std::unique_ptr<ScriptRunIterator> script_run_iterator_;
+  std::unique_ptr<OrientationIterator> orientation_iterator_;
+  std::unique_ptr<SymbolsIterator> symbols_iterator_;
+  unsigned last_split_;
+  unsigned script_run_iterator_position_;
+  unsigned orientation_iterator_position_;
+  unsigned symbols_iterator_position_;
+  bool at_end_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -30,259 +30,230 @@
 
 #include "core/html/track/vtt/BufferedLineReader.h"
 
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/CharacterNames.h"
+#include "platform/wtf/text/WTFString.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/CharacterNames.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
-TEST(BufferedLineReaderTest, Constructor)
-{
+TEST(BufferedLineReaderTest, Constructor) {
+  BufferedLineReader reader;
+  ASSERT_FALSE(reader.IsAtEndOfStream());
+  String line;
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+TEST(BufferedLineReaderTest, EOSNoInput) {
+  BufferedLineReader reader;
+  String line;
+  ASSERT_FALSE(reader.GetLine(line));
+  reader.SetEndOfStream();
+  // No input observed, so still no line.
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+TEST(BufferedLineReaderTest, EOSInput) {
+  BufferedLineReader reader;
+  reader.Append("A");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "A");
+}
+
+TEST(BufferedLineReaderTest, EOSMultipleReads_1) {
+  BufferedLineReader reader;
+  reader.Append("A");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "A");
+  // No more lines returned.
+  ASSERT_FALSE(reader.GetLine(line));
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+TEST(BufferedLineReaderTest, EOSMultipleReads_2) {
+  BufferedLineReader reader;
+  reader.Append("A\n");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "A");
+  // No more lines returned.
+  ASSERT_FALSE(reader.GetLine(line));
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+TEST(BufferedLineReaderTest, LineEndingCR) {
+  BufferedLineReader reader;
+  reader.Append("X\rY");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "Y");
+}
+
+TEST(BufferedLineReaderTest, LineEndingCR_EOS) {
+  BufferedLineReader reader;
+  reader.Append("X\r");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+TEST(BufferedLineReaderTest, LineEndingLF) {
+  BufferedLineReader reader;
+  reader.Append("X\nY");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "Y");
+}
+
+TEST(BufferedLineReaderTest, LineEndingLF_EOS) {
+  BufferedLineReader reader;
+  reader.Append("X\n");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+TEST(BufferedLineReaderTest, LineEndingCRLF) {
+  BufferedLineReader reader;
+  reader.Append("X\r\nY");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "Y");
+}
+
+TEST(BufferedLineReaderTest, LineEndingCRLF_EOS) {
+  BufferedLineReader reader;
+  reader.Append("X\r\n");
+  reader.SetEndOfStream();
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_FALSE(reader.GetLine(line));
+}
+
+enum LineBreakType { kCr, kLf, kCrLf };
+
+String LineBreakString(LineBreakType type) {
+  static const char kBreakStrings[] = "\r\n";
+  return String(type == kLf ? kBreakStrings + 1 : kBreakStrings,
+                type == kCrLf ? 2 : 1);
+}
+
+String MakeTestData(const char** lines,
+                    const LineBreakType* breaks,
+                    int count) {
+  StringBuilder builder;
+  for (int i = 0; i < count; ++i) {
+    builder.Append(lines[i]);
+    builder.Append(LineBreakString(breaks[i]));
+  }
+  return builder.ToString();
+}
+
+const size_t kBlockSizes[] = {64, 32, 16, 8,  4,  2,  1,  3,
+                              5,  7,  9,  11, 13, 17, 19, 23};
+
+TEST(BufferedLineReaderTest, BufferSizes) {
+  const char* lines[] = {"aaaaaaaaaaaaaaaa", "bbbbbbbbbb", "ccccccccccccc", "",
+                         "dddddd",           "",           "eeeeeeeeee"};
+  const LineBreakType kBreaks[] = {kLf, kLf, kLf, kLf, kLf, kLf, kLf};
+  const size_t num_test_lines = WTF_ARRAY_LENGTH(lines);
+  static_assert(num_test_lines == WTF_ARRAY_LENGTH(kBreaks),
+                "number of test lines and breaks should be the same");
+  String data = MakeTestData(lines, kBreaks, num_test_lines);
+
+  for (size_t k = 0; k < WTF_ARRAY_LENGTH(kBlockSizes); ++k) {
+    size_t line_count = 0;
     BufferedLineReader reader;
-    ASSERT_FALSE(reader.isAtEndOfStream());
-    String line;
-    ASSERT_FALSE(reader.getLine(line));
-}
+    size_t block_size = kBlockSizes[k];
+    for (size_t i = 0; i < data.length(); i += block_size) {
+      reader.Append(data.Substring(i, block_size));
 
-TEST(BufferedLineReaderTest, EOSNoInput)
-{
-    BufferedLineReader reader;
-    String line;
-    ASSERT_FALSE(reader.getLine(line));
-    reader.setEndOfStream();
-    // No input observed, so still no line.
-    ASSERT_FALSE(reader.getLine(line));
-}
-
-TEST(BufferedLineReaderTest, EOSInput)
-{
-    BufferedLineReader reader;
-    reader.append("A");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "A");
-}
-
-TEST(BufferedLineReaderTest, EOSMultipleReads_1)
-{
-    BufferedLineReader reader;
-    reader.append("A");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "A");
-    // No more lines returned.
-    ASSERT_FALSE(reader.getLine(line));
-    ASSERT_FALSE(reader.getLine(line));
-}
-
-TEST(BufferedLineReaderTest, EOSMultipleReads_2)
-{
-    BufferedLineReader reader;
-    reader.append("A\n");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "A");
-    // No more lines returned.
-    ASSERT_FALSE(reader.getLine(line));
-    ASSERT_FALSE(reader.getLine(line));
-}
-
-TEST(BufferedLineReaderTest, LineEndingCR)
-{
-    BufferedLineReader reader;
-    reader.append("X\rY");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "Y");
-}
-
-TEST(BufferedLineReaderTest, LineEndingCR_EOS)
-{
-    BufferedLineReader reader;
-    reader.append("X\r");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_FALSE(reader.getLine(line));
-}
-
-TEST(BufferedLineReaderTest, LineEndingLF)
-{
-    BufferedLineReader reader;
-    reader.append("X\nY");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "Y");
-}
-
-TEST(BufferedLineReaderTest, LineEndingLF_EOS)
-{
-    BufferedLineReader reader;
-    reader.append("X\n");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_FALSE(reader.getLine(line));
-}
-
-TEST(BufferedLineReaderTest, LineEndingCRLF)
-{
-    BufferedLineReader reader;
-    reader.append("X\r\nY");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "Y");
-}
-
-TEST(BufferedLineReaderTest, LineEndingCRLF_EOS)
-{
-    BufferedLineReader reader;
-    reader.append("X\r\n");
-    reader.setEndOfStream();
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_FALSE(reader.getLine(line));
-}
-
-enum LineBreakType {
-    Cr,
-    Lf,
-    CrLf
-};
-
-String LineBreakString(LineBreakType type)
-{
-    static const char breakStrings[] = "\r\n";
-    return String(type == Lf ? breakStrings + 1 : breakStrings, type == CrLf ? 2 : 1);
-}
-
-String MakeTestData(const char** lines, const LineBreakType* breaks, int count)
-{
-    StringBuilder builder;
-    for (int i = 0; i < count; ++i) {
-        builder.append(lines[i]);
-        builder.append(LineBreakString(breaks[i]));
+      String line;
+      while (reader.GetLine(line)) {
+        ASSERT_LT(line_count, num_test_lines);
+        ASSERT_EQ(line, lines[line_count++]);
+      }
     }
-    return builder.toString();
+    ASSERT_EQ(line_count, num_test_lines);
+  }
 }
 
-const size_t blockSizes[] = { 64, 32, 16, 8, 4, 2, 1, 3, 5, 7, 9, 11, 13, 17, 19, 23 };
+TEST(BufferedLineReaderTest, BufferSizesMixedEndings) {
+  const char* lines[] = {
+      "aaaaaaaaaaaaaaaa", "bbbbbbbbbb", "ccccccccccccc",      "",
+      "dddddd",           "eeeeeeeeee", "fffffffffffffffffff"};
+  const LineBreakType kBreaks[] = {kCr, kLf, kCrLf, kCr, kLf, kCrLf, kLf};
+  const size_t num_test_lines = WTF_ARRAY_LENGTH(lines);
+  static_assert(num_test_lines == WTF_ARRAY_LENGTH(kBreaks),
+                "number of test lines and breaks should be the same");
+  String data = MakeTestData(lines, kBreaks, num_test_lines);
 
-TEST(BufferedLineReaderTest, BufferSizes)
-{
-    const char* lines[] = {
-        "aaaaaaaaaaaaaaaa",
-        "bbbbbbbbbb",
-        "ccccccccccccc",
-        "",
-        "dddddd",
-        "",
-        "eeeeeeeeee"
-    };
-    const LineBreakType breaks[] = { Lf, Lf, Lf, Lf, Lf, Lf, Lf };
-    const size_t numTestLines = WTF_ARRAY_LENGTH(lines);
-    static_assert(numTestLines == WTF_ARRAY_LENGTH(breaks), "number of test lines and breaks should be the same");
-    String data = MakeTestData(lines, breaks, numTestLines);
+  for (size_t k = 0; k < WTF_ARRAY_LENGTH(kBlockSizes); ++k) {
+    size_t line_count = 0;
+    BufferedLineReader reader;
+    size_t block_size = kBlockSizes[k];
+    for (size_t i = 0; i < data.length(); i += block_size) {
+      reader.Append(data.Substring(i, block_size));
 
-    for (size_t k = 0; k < WTF_ARRAY_LENGTH(blockSizes); ++k) {
-        size_t lineCount = 0;
-        BufferedLineReader reader;
-        size_t blockSize = blockSizes[k];
-        for (size_t i = 0; i < data.length(); i += blockSize) {
-            reader.append(data.substring(i, blockSize));
-
-            String line;
-            while (reader.getLine(line)) {
-                ASSERT_LT(lineCount, numTestLines);
-                ASSERT_EQ(line, lines[lineCount++]);
-            }
-        }
-        ASSERT_EQ(lineCount, numTestLines);
+      String line;
+      while (reader.GetLine(line)) {
+        ASSERT_LT(line_count, num_test_lines);
+        ASSERT_EQ(line, lines[line_count++]);
+      }
     }
+    ASSERT_EQ(line_count, num_test_lines);
+  }
 }
 
-TEST(BufferedLineReaderTest, BufferSizesMixedEndings)
-{
-    const char* lines[] = {
-        "aaaaaaaaaaaaaaaa",
-        "bbbbbbbbbb",
-        "ccccccccccccc",
-        "",
-        "dddddd",
-        "eeeeeeeeee",
-        "fffffffffffffffffff"
-    };
-    const LineBreakType breaks[] = { Cr, Lf, CrLf, Cr, Lf, CrLf, Lf };
-    const size_t numTestLines = WTF_ARRAY_LENGTH(lines);
-    static_assert(numTestLines == WTF_ARRAY_LENGTH(breaks), "number of test lines and breaks should be the same");
-    String data = MakeTestData(lines, breaks, numTestLines);
-
-    for (size_t k = 0; k < WTF_ARRAY_LENGTH(blockSizes); ++k) {
-        size_t lineCount = 0;
-        BufferedLineReader reader;
-        size_t blockSize = blockSizes[k];
-        for (size_t i = 0; i < data.length(); i += blockSize) {
-            reader.append(data.substring(i, blockSize));
-
-            String line;
-            while (reader.getLine(line)) {
-                ASSERT_LT(lineCount, numTestLines);
-                ASSERT_EQ(line, lines[lineCount++]);
-            }
-        }
-        ASSERT_EQ(lineCount, numTestLines);
-    }
+TEST(BufferedLineReaderTest, BufferBoundaryInCRLF_1) {
+  BufferedLineReader reader;
+  reader.Append("X\r");
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  reader.Append("\n");
+  ASSERT_FALSE(reader.GetLine(line));
 }
 
-TEST(BufferedLineReaderTest, BufferBoundaryInCRLF_1)
-{
-    BufferedLineReader reader;
-    reader.append("X\r");
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    reader.append("\n");
-    ASSERT_FALSE(reader.getLine(line));
+TEST(BufferedLineReaderTest, BufferBoundaryInCRLF_2) {
+  BufferedLineReader reader;
+  reader.Append("X\r");
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "X");
+  ASSERT_FALSE(reader.GetLine(line));
+  reader.Append("\n");
+  ASSERT_FALSE(reader.GetLine(line));
+  reader.Append("Y\n");
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line, "Y");
 }
 
-TEST(BufferedLineReaderTest, BufferBoundaryInCRLF_2)
-{
-    BufferedLineReader reader;
-    reader.append("X\r");
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "X");
-    ASSERT_FALSE(reader.getLine(line));
-    reader.append("\n");
-    ASSERT_FALSE(reader.getLine(line));
-    reader.append("Y\n");
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line, "Y");
+TEST(BufferedLineReaderTest, NormalizedNUL) {
+  BufferedLineReader reader;
+  reader.Append(String("X\0Y\n", 4));
+  String line;
+  ASSERT_TRUE(reader.GetLine(line));
+  ASSERT_EQ(line[1], kReplacementCharacter);
 }
 
-TEST(BufferedLineReaderTest, NormalizedNUL)
-{
-    BufferedLineReader reader;
-    reader.append(String("X\0Y\n", 4));
-    String line;
-    ASSERT_TRUE(reader.getLine(line));
-    ASSERT_EQ(line[1], replacementCharacter);
-}
-
-} // namespace blink
+}  // namespace blink

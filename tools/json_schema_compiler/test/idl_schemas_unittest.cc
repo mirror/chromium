@@ -69,7 +69,7 @@ TEST(IdlCompiler, Basics) {
   std::unique_ptr<base::ListValue> f5_results(Function5::Results::Create(13));
   base::Value* f5_result_int = NULL;
   ASSERT_TRUE(f5_results->Get(0, &f5_result_int));
-  EXPECT_TRUE(f5_result_int->IsType(base::Value::TYPE_INTEGER));
+  EXPECT_TRUE(f5_result_int->IsType(base::Value::Type::INTEGER));
 
   std::unique_ptr<base::ListValue> f6_results(Function6::Results::Create(a));
   base::Value* f6_result_dict = NULL;
@@ -184,7 +184,7 @@ TEST(IdlCompiler, ObjectTypes) {
 
   // Test the BarType type.
   BarType b1;
-  b1.x.reset(new base::FundamentalValue(7));
+  b1.x.reset(new base::Value(7));
   std::unique_ptr<base::DictionaryValue> serialized_bar = b1.ToValue();
   BarType b2;
   EXPECT_TRUE(BarType::Populate(*serialized_bar.get(), &b2));

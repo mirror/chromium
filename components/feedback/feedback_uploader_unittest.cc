@@ -11,16 +11,15 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "build/build_config.h"
 #include "components/feedback/feedback_uploader_chrome.h"
 #include "components/feedback/feedback_uploader_factory.h"
-#include "components/pref_registry/testing_pref_service_syncable.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/test/test_browser_context.h"
-#include "content/public/test/test_browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -37,7 +36,7 @@ const base::TimeDelta kRetryDelayForTest =
 
 std::unique_ptr<KeyedService> CreateFeedbackUploaderService(
     content::BrowserContext* context) {
-  return base::WrapUnique(new feedback::FeedbackUploaderChrome(context));
+  return base::MakeUnique<feedback::FeedbackUploaderChrome>(context);
 }
 
 }  // namespace
@@ -47,11 +46,10 @@ namespace feedback {
 class FeedbackUploaderTest : public testing::Test {
  protected:
   FeedbackUploaderTest()
-     : ui_thread_(content::BrowserThread::UI, &message_loop_),
-       context_(new content::TestBrowserContext()),
-       prefs_(new user_prefs::TestingPrefServiceSyncable()),
-       dispatched_reports_count_(0),
-       expected_reports_(0) {
+      : context_(new content::TestBrowserContext()),
+        prefs_(new sync_preferences::TestingPrefServiceSyncable()),
+        dispatched_reports_count_(0),
+        expected_reports_(0) {
     user_prefs::UserPrefs::Set(context_.get(), prefs_.get());
     FeedbackUploaderFactory::GetInstance()->SetTestingFactory(
         context_.get(), &CreateFeedbackUploaderService);
@@ -77,7 +75,7 @@ class FeedbackUploaderTest : public testing::Test {
   }
 
   void MockDispatchReport(const std::string& report_data) {
-    if (ContainsKey(dispatched_reports_, report_data)) {
+    if (base::ContainsKey(dispatched_reports_, report_data)) {
       dispatched_reports_[report_data]++;
     } else {
       dispatched_reports_[report_data] = 1;
@@ -105,9 +103,8 @@ class FeedbackUploaderTest : public testing::Test {
     run_loop_->Run();
   }
 
-  base::MessageLoop message_loop_;
+  content::TestBrowserThreadBundle test_browser_thread_bundle_;
   std::unique_ptr<base::RunLoop> run_loop_;
-  content::TestBrowserThread ui_thread_;
   std::unique_ptr<content::TestBrowserContext> context_;
   std::unique_ptr<PrefService> prefs_;
 

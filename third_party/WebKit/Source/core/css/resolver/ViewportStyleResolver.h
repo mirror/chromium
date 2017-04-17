@@ -38,37 +38,55 @@
 namespace blink {
 
 class Document;
+class DocumentStyleSheetCollection;
 class MutableStylePropertySet;
 class StyleRuleViewport;
 
-class CORE_EXPORT ViewportStyleResolver : public GarbageCollected<ViewportStyleResolver> {
-public:
-    static ViewportStyleResolver* create(Document* document)
-    {
-        return new ViewportStyleResolver(document);
-    }
+class CORE_EXPORT ViewportStyleResolver
+    : public GarbageCollected<ViewportStyleResolver> {
+ public:
+  static ViewportStyleResolver* Create(Document& document) {
+    return new ViewportStyleResolver(document);
+  }
 
-    enum Origin { UserAgentOrigin, AuthorOrigin };
+  void InitialViewportChanged();
+  void SetNeedsCollectRules();
+  bool NeedsUpdate() const { return needs_update_; }
+  void UpdateViewport(DocumentStyleSheetCollection&);
 
-    void collectViewportRules();
-    void collectViewportRules(RuleSet*, Origin);
-    void resolve();
+  void CollectViewportRulesFromAuthorSheet(const CSSStyleSheet&);
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    explicit ViewportStyleResolver(Document*);
+ private:
+  explicit ViewportStyleResolver(Document&);
 
-    void addViewportRule(StyleRuleViewport*, Origin);
+  void Reset();
+  void Resolve();
 
-    float viewportArgumentValue(CSSPropertyID) const;
-    Length viewportLengthValue(CSSPropertyID) const;
+  enum Origin { kUserAgentOrigin, kAuthorOrigin };
+  enum UpdateType { kNoUpdate, kResolve, kCollectRules };
 
-    Member<Document> m_document;
-    Member<MutableStylePropertySet> m_propertySet;
-    bool m_hasAuthorStyle;
+  void CollectViewportRulesFromUASheets();
+  void CollectViewportChildRules(const HeapVector<Member<StyleRuleBase>>&,
+                                 Origin);
+  void CollectViewportRulesFromImports(StyleSheetContents&);
+  void CollectViewportRulesFromAuthorSheetContents(StyleSheetContents&);
+  void AddViewportRule(StyleRuleViewport&, Origin);
+
+  float ViewportArgumentValue(CSSPropertyID) const;
+  Length ViewportLengthValue(CSSPropertyID);
+
+  Member<Document> document_;
+  Member<MutableStylePropertySet> property_set_;
+  Member<MediaQueryEvaluator> initial_viewport_medium_;
+  MediaQueryResultList viewport_dependent_media_query_results_;
+  MediaQueryResultList device_dependent_media_query_results_;
+  bool has_author_style_ = false;
+  bool has_viewport_units_ = false;
+  UpdateType needs_update_ = kCollectRules;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ViewportStyleResolver_h
+#endif  // ViewportStyleResolver_h

@@ -6,8 +6,8 @@
 
 #include <algorithm>
 #include <iterator>
-#include <utility>
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "courgette/assembly_program.h"
 #include "courgette/courgette.h"
@@ -163,36 +163,6 @@ bool DisassemblerElf32::ParseHeader() {
   return Good();
 }
 
-bool DisassemblerElf32::Disassemble(AssemblyProgram* target) {
-  if (!ok())
-    return false;
-
-  // The Image Base is always 0 for ELF Executables
-  target->set_image_base(0);
-
-  if (!ParseAbs32Relocs())
-    return false;
-
-  if (!ParseRel32RelocsFromSections())  // Does not sort rel32 locations.
-    return false;
-
-  PrecomputeLabels(target);
-  RemoveUnusedRel32Locations(target);
-
-  if (!ParseFile(target))
-    return false;
-
-  // Finally sort rel32 locations.
-  std::sort(rel32_locations_.begin(),
-            rel32_locations_.end(),
-            TypedRVA::IsLessThanByRVA);
-  DCHECK(rel32_locations_.empty() ||
-         rel32_locations_.back()->rva() != kUnassignedRVA);
-
-  target->DefaultAssignIndexes();
-  return true;
-}
-
 CheckBool DisassemblerElf32::IsValidTargetRVA(RVA rva) const {
   if (rva == kUnassignedRVA)
     return false;
@@ -301,7 +271,7 @@ CheckBool DisassemblerElf32::SectionName(const Elf32_Shdr& shdr,
 
 CheckBool DisassemblerElf32::RVAsToFileOffsets(
     const std::vector<RVA>& rvas,
-    std::vector<FileOffset>* file_offsets) {
+    std::vector<FileOffset>* file_offsets) const {
   file_offsets->clear();
   file_offsets->reserve(rvas.size());
   for (RVA rva : rvas) {
@@ -314,13 +284,82 @@ CheckBool DisassemblerElf32::RVAsToFileOffsets(
 }
 
 CheckBool DisassemblerElf32::RVAsToFileOffsets(
-    std::vector<std::unique_ptr<TypedRVA>>* typed_rvas) {
+    std::vector<std::unique_ptr<TypedRVA>>* typed_rvas) const {
   for (auto& typed_rva : *typed_rvas) {
     FileOffset file_offset = RVAToFileOffset(typed_rva->rva());
     if (file_offset == kNoFileOffset)
       return false;
     typed_rva->set_file_offset(file_offset);
   }
+  return true;
+}
+
+bool DisassemblerElf32::ExtractAbs32Locations() {
+  abs32_locations_.clear();
+
+  // Loop through sections for relocation sections
+  for (Elf32_Half section_id = 0; section_id < SectionHeaderCount();
+       ++section_id) {
+    const Elf32_Shdr* section_header = SectionHeader(section_id);
+
+    if (section_header->sh_type == SHT_REL) {
+      const Elf32_Rel* relocs_table =
+          reinterpret_cast<const Elf32_Rel*>(SectionBody(section_id));
+
+      int relocs_table_count =
+          section_header->sh_size / section_header->sh_entsize;
+
+      // Elf32_Word relocation_section_id = section_header->sh_info;
+
+      // Loop through relocation objects in the relocation section
+      for (int rel_id = 0; rel_id < relocs_table_count; ++rel_id) {
+        RVA rva;
+
+        // Quite a few of these conversions fail, and we simply skip
+        // them, that's okay.
+        if (RelToRVA(relocs_table[rel_id], &rva) && CheckSection(rva))
+          abs32_locations_.push_back(rva);
+      }
+    }
+  }
+
+  std::sort(abs32_locations_.begin(), abs32_locations_.end());
+  DCHECK(abs32_locations_.empty() || abs32_locations_.back() != kUnassignedRVA);
+  return true;
+}
+
+bool DisassemblerElf32::ExtractRel32Locations() {
+  rel32_locations_.clear();
+  bool found_rel32 = false;
+
+  // Loop through sections for relocation sections
+  for (Elf32_Half section_id = 0; section_id < SectionHeaderCount();
+       ++section_id) {
+    const Elf32_Shdr* section_header = SectionHeader(section_id);
+
+    // Some debug sections can have sh_type=SHT_PROGBITS but sh_addr=0.
+    if (section_header->sh_type != SHT_PROGBITS || section_header->sh_addr == 0)
+      continue;
+
+    // Heuristic: Only consider ".text" section.
+    std::string section_name;
+    if (!SectionName(*section_header, &section_name))
+      return false;
+    if (section_name != ".text")
+      continue;
+
+    found_rel32 = true;
+    if (!ParseRel32RelocsFromSection(section_header))
+      return false;
+  }
+  if (!found_rel32)
+    VLOG(1) << "Warning: Found no rel32 addresses. Missing .text section?";
+
+  std::sort(rel32_locations_.begin(), rel32_locations_.end(),
+            TypedRVA::IsLessThanByRVA);
+  DCHECK(rel32_locations_.empty() ||
+         rel32_locations_.back()->rva() != kUnassignedRVA);
+
   return true;
 }
 
@@ -350,19 +389,29 @@ void DisassemblerElf32::RemoveUnusedRel32Locations(AssemblyProgram* program) {
   rel32_locations_.resize(std::distance(rel32_locations_.begin(), tail_it));
 }
 
-CheckBool DisassemblerElf32::ParseFile(AssemblyProgram* program) {
+InstructionGenerator DisassemblerElf32::GetInstructionGenerator(
+    AssemblyProgram* program) {
+  return base::Bind(&DisassemblerElf32::ParseFile, base::Unretained(this),
+                    program);
+}
+
+CheckBool DisassemblerElf32::ParseFile(AssemblyProgram* program,
+                                       InstructionReceptor* receptor) const {
   // Walk all the bytes in the file, whether or not in a section.
   FileOffset file_offset = 0;
 
-  std::vector<FileOffset> abs_offsets;
-
   // File parsing follows file offset order, and we visit abs32 and rel32
   // locations in lockstep. Therefore we need to extract and sort file offsets
-  // of all abs32 and rel32 locations.
+  // of all abs32 and rel32 locations. For abs32, we copy the offsets to a new
+  // array.
+  std::vector<FileOffset> abs_offsets;
   if (!RVAsToFileOffsets(abs32_locations_, &abs_offsets))
     return false;
-  std::sort(abs32_locations_.begin(), abs32_locations_.end());
+  std::sort(abs_offsets.begin(), abs_offsets.end());
 
+  // For rel32, TypedRVA (rather than raw offset) is stored, so sort-by-offset
+  // is performed in place to save memory. At the end of function we will
+  // sort-by-RVA.
   if (!RVAsToFileOffsets(&rel32_locations_))
     return false;
   std::sort(rel32_locations_.begin(),
@@ -384,24 +433,21 @@ CheckBool DisassemblerElf32::ParseFile(AssemblyProgram* program) {
     if (section_header->sh_type == SHT_NOBITS)
       continue;
 
-    if (!ParseSimpleRegion(file_offset, section_header->sh_offset, program))
+    if (!ParseSimpleRegion(file_offset, section_header->sh_offset, receptor))
       return false;
 
     file_offset = section_header->sh_offset;
 
     switch (section_header->sh_type) {
       case SHT_REL:
-        if (!ParseRelocationSection(section_header, program))
+        if (!ParseRelocationSection(section_header, receptor))
           return false;
         file_offset = section_header->sh_offset + section_header->sh_size;
         break;
       case SHT_PROGBITS:
-        if (!ParseProgbitsSection(section_header,
-                                  &current_abs_offset,
-                                  end_abs_offset,
-                                  &current_rel,
-                                  end_rel,
-                                  program)) {
+        if (!ParseProgbitsSection(section_header, &current_abs_offset,
+                                  end_abs_offset, &current_rel, end_rel,
+                                  program, receptor)) {
           return false;
         }
         file_offset = section_header->sh_offset + section_header->sh_size;
@@ -432,8 +478,12 @@ CheckBool DisassemblerElf32::ParseFile(AssemblyProgram* program) {
   }
 
   // Rest of the file past the last section
-  if (!ParseSimpleRegion(file_offset, length(), program))
+  if (!ParseSimpleRegion(file_offset, length(), receptor))
     return false;
+
+  // Restore original rel32 location order and sort by RVA order.
+  std::sort(rel32_locations_.begin(), rel32_locations_.end(),
+            TypedRVA::IsLessThanByRVA);
 
   // Make certain we consume all of the relocations as expected
   return (current_abs_offset == end_abs_offset);
@@ -445,14 +495,15 @@ CheckBool DisassemblerElf32::ParseProgbitsSection(
     std::vector<FileOffset>::iterator end_abs_offset,
     std::vector<std::unique_ptr<TypedRVA>>::iterator* current_rel,
     std::vector<std::unique_ptr<TypedRVA>>::iterator end_rel,
-    AssemblyProgram* program) {
+    AssemblyProgram* program,
+    InstructionReceptor* receptor) const {
   // Walk all the bytes in the file, whether or not in a section.
   FileOffset file_offset = section_header->sh_offset;
   FileOffset section_end = section_header->sh_offset + section_header->sh_size;
 
   Elf32_Addr origin = section_header->sh_addr;
   FileOffset origin_offset = section_header->sh_offset;
-  if (!program->EmitOriginInstruction(origin))
+  if (!receptor->EmitOrigin(origin))
     return false;
 
   while (file_offset < section_end) {
@@ -479,7 +530,7 @@ CheckBool DisassemblerElf32::ParseProgbitsSection(
       next_relocation = (**current_rel)->file_offset();
 
     if (next_relocation > file_offset) {
-      if (!ParseSimpleRegion(file_offset, next_relocation, program))
+      if (!ParseSimpleRegion(file_offset, next_relocation, receptor))
         return false;
 
       file_offset = next_relocation;
@@ -493,7 +544,7 @@ CheckBool DisassemblerElf32::ParseProgbitsSection(
 
       Label* label = program->FindAbs32Label(target_rva);
       CHECK(label);
-      if (!program->EmitAbs32(label))
+      if (!receptor->EmitAbs32(label))
         return false;
       file_offset += sizeof(RVA);
       ++(*current_abs_offset);
@@ -513,7 +564,7 @@ CheckBool DisassemblerElf32::ParseProgbitsSection(
       Label* label = program->FindRel32Label(target_rva);
       CHECK(label);
 
-      if (!(**current_rel)->EmitInstruction(program, label))
+      if (!(**current_rel)->EmitInstruction(label, receptor))
         return false;
       file_offset += (**current_rel)->op_size();
       ++(*current_rel);
@@ -522,58 +573,24 @@ CheckBool DisassemblerElf32::ParseProgbitsSection(
   }
 
   // Rest of the section (if any)
-  return ParseSimpleRegion(file_offset, section_end, program);
+  return ParseSimpleRegion(file_offset, section_end, receptor);
 }
 
-CheckBool DisassemblerElf32::ParseSimpleRegion(FileOffset start_file_offset,
-                                               FileOffset end_file_offset,
-                                               AssemblyProgram* program) {
+CheckBool DisassemblerElf32::ParseSimpleRegion(
+    FileOffset start_file_offset,
+    FileOffset end_file_offset,
+    InstructionReceptor* receptor) const {
   // Callers don't guarantee start < end
   if (start_file_offset >= end_file_offset)
     return true;
 
   const size_t len = end_file_offset - start_file_offset;
 
-  if (!program->EmitBytesInstruction(FileOffsetToPointer(start_file_offset),
-                                     len)) {
+  if (!receptor->EmitMultipleBytes(FileOffsetToPointer(start_file_offset),
+                                   len)) {
     return false;
   }
 
-  return true;
-}
-
-CheckBool DisassemblerElf32::ParseAbs32Relocs() {
-  abs32_locations_.clear();
-
-  // Loop through sections for relocation sections
-  for (Elf32_Half section_id = 0; section_id < SectionHeaderCount();
-       ++section_id) {
-    const Elf32_Shdr* section_header = SectionHeader(section_id);
-
-    if (section_header->sh_type == SHT_REL) {
-      const Elf32_Rel* relocs_table =
-          reinterpret_cast<const Elf32_Rel*>(SectionBody(section_id));
-
-      int relocs_table_count = section_header->sh_size /
-                               section_header->sh_entsize;
-
-      // Elf32_Word relocation_section_id = section_header->sh_info;
-
-      // Loop through relocation objects in the relocation section
-      for (int rel_id = 0; rel_id < relocs_table_count; ++rel_id) {
-        RVA rva;
-
-        // Quite a few of these conversions fail, and we simply skip
-        // them, that's okay.
-        if (RelToRVA(relocs_table[rel_id], &rva) && CheckSection(rva))
-          abs32_locations_.push_back(rva);
-      }
-    }
-  }
-
-  std::sort(abs32_locations_.begin(), abs32_locations_.end());
-  DCHECK(abs32_locations_.empty() ||
-         abs32_locations_.back() != kUnassignedRVA);
   return true;
 }
 
@@ -597,37 +614,6 @@ CheckBool DisassemblerElf32::CheckSection(RVA rva) {
   }
 
   return false;
-}
-
-CheckBool DisassemblerElf32::ParseRel32RelocsFromSections() {
-  rel32_locations_.clear();
-  bool found_rel32 = false;
-
-  // Loop through sections for relocation sections
-  for (Elf32_Half section_id = 0; section_id < SectionHeaderCount();
-       ++section_id) {
-    const Elf32_Shdr* section_header = SectionHeader(section_id);
-
-    // Some debug sections can have sh_type=SHT_PROGBITS but sh_addr=0.
-    if (section_header->sh_type != SHT_PROGBITS ||
-        section_header->sh_addr == 0)
-      continue;
-
-    // Heuristic: Only consider ".text" section.
-    std::string section_name;
-    if (!SectionName(*section_header, &section_name))
-      return false;
-    if (section_name != ".text")
-      continue;
-
-    found_rel32 = true;
-    if (!ParseRel32RelocsFromSection(section_header))
-      return false;
-  }
-  if (!found_rel32)
-    VLOG(1) << "Warning: Found no rel32 addresses. Missing .text section?";
-
-  return true;
 }
 
 }  // namespace courgette

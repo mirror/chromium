@@ -36,114 +36,117 @@
 
 namespace blink {
 
-static String getDatabaseIdentifier(SQLTransactionBackend* transaction)
-{
-    Database* database = transaction->database();
-    ASSERT(database);
-    return database->stringIdentifier();
+static String GetDatabaseIdentifier(SQLTransactionBackend* transaction) {
+  Database* database = transaction->GetDatabase();
+  DCHECK(database);
+  return database->StringIdentifier();
 }
 
 SQLTransactionCoordinator::SQLTransactionCoordinator()
-    : m_isShuttingDown(false)
-{
+    : is_shutting_down_(false) {}
+
+DEFINE_TRACE(SQLTransactionCoordinator) {}
+
+void SQLTransactionCoordinator::ProcessPendingTransactions(
+    CoordinationInfo& info) {
+  if (info.active_write_transaction || info.pending_transactions.IsEmpty())
+    return;
+
+  SQLTransactionBackend* first_pending_transaction =
+      info.pending_transactions.front();
+  if (first_pending_transaction->IsReadOnly()) {
+    do {
+      first_pending_transaction = info.pending_transactions.TakeFirst();
+      info.active_read_transactions.insert(first_pending_transaction);
+      first_pending_transaction->LockAcquired();
+    } while (!info.pending_transactions.IsEmpty() &&
+             info.pending_transactions.front()->IsReadOnly());
+  } else if (info.active_read_transactions.IsEmpty()) {
+    info.pending_transactions.pop_front();
+    info.active_write_transaction = first_pending_transaction;
+    first_pending_transaction->LockAcquired();
+  }
 }
 
-DEFINE_TRACE(SQLTransactionCoordinator)
-{
+void SQLTransactionCoordinator::AcquireLock(
+    SQLTransactionBackend* transaction) {
+  DCHECK(!is_shutting_down_);
+
+  String db_identifier = GetDatabaseIdentifier(transaction);
+
+  CoordinationInfoHeapMap::iterator coordination_info_iterator =
+      coordination_info_map_.Find(db_identifier);
+  if (coordination_info_iterator == coordination_info_map_.end()) {
+    // No pending transactions for this DB
+    CoordinationInfo& info =
+        coordination_info_map_.insert(db_identifier, CoordinationInfo())
+            .stored_value->value;
+    info.pending_transactions.push_back(transaction);
+    ProcessPendingTransactions(info);
+  } else {
+    CoordinationInfo& info = coordination_info_iterator->value;
+    info.pending_transactions.push_back(transaction);
+    ProcessPendingTransactions(info);
+  }
 }
 
-void SQLTransactionCoordinator::processPendingTransactions(CoordinationInfo& info)
-{
-    if (info.activeWriteTransaction || info.pendingTransactions.isEmpty())
-        return;
+void SQLTransactionCoordinator::ReleaseLock(
+    SQLTransactionBackend* transaction) {
+  if (is_shutting_down_)
+    return;
 
-    SQLTransactionBackend* firstPendingTransaction = info.pendingTransactions.first();
-    if (firstPendingTransaction->isReadOnly()) {
-        do {
-            firstPendingTransaction = info.pendingTransactions.takeFirst();
-            info.activeReadTransactions.add(firstPendingTransaction);
-            firstPendingTransaction->lockAcquired();
-        } while (!info.pendingTransactions.isEmpty() && info.pendingTransactions.first()->isReadOnly());
-    } else if (info.activeReadTransactions.isEmpty()) {
-        info.pendingTransactions.removeFirst();
-        info.activeWriteTransaction = firstPendingTransaction;
-        firstPendingTransaction->lockAcquired();
-    }
+  String db_identifier = GetDatabaseIdentifier(transaction);
+
+  CoordinationInfoHeapMap::iterator coordination_info_iterator =
+      coordination_info_map_.Find(db_identifier);
+  SECURITY_DCHECK(coordination_info_iterator != coordination_info_map_.end());
+  CoordinationInfo& info = coordination_info_iterator->value;
+
+  if (transaction->IsReadOnly()) {
+    DCHECK(info.active_read_transactions.Contains(transaction));
+    info.active_read_transactions.erase(transaction);
+  } else {
+    DCHECK_EQ(info.active_write_transaction, transaction);
+    info.active_write_transaction = nullptr;
+  }
+
+  ProcessPendingTransactions(info);
 }
 
-void SQLTransactionCoordinator::acquireLock(SQLTransactionBackend* transaction)
-{
-    ASSERT(!m_isShuttingDown);
+void SQLTransactionCoordinator::Shutdown() {
+  // Prevent releaseLock() from accessing / changing the coordinationInfo
+  // while we're shutting down.
+  is_shutting_down_ = true;
 
-    String dbIdentifier = getDatabaseIdentifier(transaction);
+  // Notify all transactions in progress that the database thread is shutting
+  // down.
+  for (CoordinationInfoHeapMap::iterator coordination_info_iterator =
+           coordination_info_map_.begin();
+       coordination_info_iterator != coordination_info_map_.end();
+       ++coordination_info_iterator) {
+    CoordinationInfo& info = coordination_info_iterator->value;
 
-    CoordinationInfoHeapMap::iterator coordinationInfoIterator = m_coordinationInfoMap.find(dbIdentifier);
-    if (coordinationInfoIterator == m_coordinationInfoMap.end()) {
-        // No pending transactions for this DB
-        CoordinationInfo& info = m_coordinationInfoMap.add(dbIdentifier, CoordinationInfo()).storedValue->value;
-        info.pendingTransactions.append(transaction);
-        processPendingTransactions(info);
-    } else {
-        CoordinationInfo& info = coordinationInfoIterator->value;
-        info.pendingTransactions.append(transaction);
-        processPendingTransactions(info);
-    }
-
-}
-
-void SQLTransactionCoordinator::releaseLock(SQLTransactionBackend* transaction)
-{
-    if (m_isShuttingDown)
-        return;
-
-    String dbIdentifier = getDatabaseIdentifier(transaction);
-
-    CoordinationInfoHeapMap::iterator coordinationInfoIterator = m_coordinationInfoMap.find(dbIdentifier);
-    ASSERT_WITH_SECURITY_IMPLICATION(coordinationInfoIterator != m_coordinationInfoMap.end());
-    CoordinationInfo& info = coordinationInfoIterator->value;
-
-    if (transaction->isReadOnly()) {
-        ASSERT(info.activeReadTransactions.contains(transaction));
-        info.activeReadTransactions.remove(transaction);
-    } else {
-        ASSERT(info.activeWriteTransaction == transaction);
-        info.activeWriteTransaction = nullptr;
-    }
-
-    processPendingTransactions(info);
-}
-
-void SQLTransactionCoordinator::shutdown()
-{
-    // Prevent releaseLock() from accessing / changing the coordinationInfo
-    // while we're shutting down.
-    m_isShuttingDown = true;
-
-    // Notify all transactions in progress that the database thread is shutting down
-    for (CoordinationInfoHeapMap::iterator coordinationInfoIterator = m_coordinationInfoMap.begin();
-         coordinationInfoIterator != m_coordinationInfoMap.end(); ++coordinationInfoIterator) {
-        CoordinationInfo& info = coordinationInfoIterator->value;
-
-        // Clean up transactions that have reached "lockAcquired":
-        // Transaction phase 4 cleanup. See comment on "What happens if a
-        // transaction is interrupted?" at the top of SQLTransactionBackend.cpp.
-        if (info.activeWriteTransaction)
-            info.activeWriteTransaction->notifyDatabaseThreadIsShuttingDown();
-        for (auto& it : info.activeReadTransactions) {
-            it->notifyDatabaseThreadIsShuttingDown();
-        }
-
-        // Clean up transactions that have NOT reached "lockAcquired":
-        // Transaction phase 3 cleanup. See comment on "What happens if a
-        // transaction is interrupted?" at the top of SQLTransactionBackend.cpp.
-        while (!info.pendingTransactions.isEmpty()) {
-            SQLTransactionBackend* transaction = info.pendingTransactions.takeFirst();
-            transaction->notifyDatabaseThreadIsShuttingDown();
-        }
+    // Clean up transactions that have reached "lockAcquired":
+    // Transaction phase 4 cleanup. See comment on "What happens if a
+    // transaction is interrupted?" at the top of SQLTransactionBackend.cpp.
+    if (info.active_write_transaction)
+      info.active_write_transaction->NotifyDatabaseThreadIsShuttingDown();
+    for (auto& it : info.active_read_transactions) {
+      it->NotifyDatabaseThreadIsShuttingDown();
     }
 
-    // Clean up all pending transactions for all databases
-    m_coordinationInfoMap.clear();
+    // Clean up transactions that have NOT reached "lockAcquired":
+    // Transaction phase 3 cleanup. See comment on "What happens if a
+    // transaction is interrupted?" at the top of SQLTransactionBackend.cpp.
+    while (!info.pending_transactions.IsEmpty()) {
+      SQLTransactionBackend* transaction =
+          info.pending_transactions.TakeFirst();
+      transaction->NotifyDatabaseThreadIsShuttingDown();
+    }
+  }
+
+  // Clean up all pending transactions for all databases
+  coordination_info_map_.Clear();
 }
 
-} // namespace blink
+}  // namespace blink

@@ -26,7 +26,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/api/LayoutPartItem.h"
 #include "core/layout/svg/LayoutSVGText.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
 #include "core/layout/svg/SVGResourcesCache.h"
@@ -40,388 +40,462 @@
 namespace blink {
 
 LayoutSVGRoot::LayoutSVGRoot(SVGElement* node)
-    : LayoutReplaced(node)
-    , m_objectBoundingBoxValid(false)
-    , m_isLayoutSizeChanged(false)
-    , m_didScreenScaleFactorChange(false)
-    , m_needsBoundariesOrTransformUpdate(true)
-    , m_hasBoxDecorationBackground(false)
-    , m_hasNonIsolatedBlendingDescendants(false)
-    , m_hasNonIsolatedBlendingDescendantsDirty(false)
-{
-    SVGSVGElement* svg = toSVGSVGElement(node);
-    ASSERT(svg);
+    : LayoutReplaced(node),
+      object_bounding_box_valid_(false),
+      is_layout_size_changed_(false),
+      did_screen_scale_factor_change_(false),
+      needs_boundaries_or_transform_update_(true),
+      has_box_decoration_background_(false),
+      has_non_isolated_blending_descendants_(false),
+      has_non_isolated_blending_descendants_dirty_(false) {
+  SVGSVGElement* svg = toSVGSVGElement(node);
+  DCHECK(svg);
 
-    LayoutSize intrinsicSize(svg->intrinsicWidth(), svg->intrinsicHeight());
-    if (!svg->hasIntrinsicWidth())
-        intrinsicSize.setWidth(LayoutUnit(defaultWidth));
-    if (!svg->hasIntrinsicHeight())
-        intrinsicSize.setHeight(LayoutUnit(defaultHeight));
-    setIntrinsicSize(intrinsicSize);
+  LayoutSize intrinsic_size(svg->IntrinsicWidth(), svg->IntrinsicHeight());
+  if (!svg->HasIntrinsicWidth())
+    intrinsic_size.SetWidth(LayoutUnit(kDefaultWidth));
+  if (!svg->HasIntrinsicHeight())
+    intrinsic_size.SetHeight(LayoutUnit(kDefaultHeight));
+  SetIntrinsicSize(intrinsic_size);
 }
 
-LayoutSVGRoot::~LayoutSVGRoot()
-{
-}
+LayoutSVGRoot::~LayoutSVGRoot() {}
 
-void LayoutSVGRoot::computeIntrinsicSizingInfo(IntrinsicSizingInfo& intrinsicSizingInfo) const
-{
-    // https://www.w3.org/TR/SVG/coords.html#IntrinsicSizing
+void LayoutSVGRoot::ComputeIntrinsicSizingInfo(
+    IntrinsicSizingInfo& intrinsic_sizing_info) const {
+  // https://www.w3.org/TR/SVG/coords.html#IntrinsicSizing
 
-    SVGSVGElement* svg = toSVGSVGElement(node());
-    ASSERT(svg);
+  SVGSVGElement* svg = toSVGSVGElement(GetNode());
+  DCHECK(svg);
 
-    intrinsicSizingInfo.size = FloatSize(svg->intrinsicWidth(), svg->intrinsicHeight());
-    intrinsicSizingInfo.hasWidth = svg->hasIntrinsicWidth();
-    intrinsicSizingInfo.hasHeight = svg->hasIntrinsicHeight();
+  intrinsic_sizing_info.size =
+      FloatSize(svg->IntrinsicWidth(), svg->IntrinsicHeight());
+  intrinsic_sizing_info.has_width = svg->HasIntrinsicWidth();
+  intrinsic_sizing_info.has_height = svg->HasIntrinsicHeight();
 
-    if (!intrinsicSizingInfo.size.isEmpty()) {
-        intrinsicSizingInfo.aspectRatio = intrinsicSizingInfo.size;
-    } else {
-        FloatSize viewBoxSize = svg->viewBox()->currentValue()->value().size();
-        if (!viewBoxSize.isEmpty()) {
-            // The viewBox can only yield an intrinsic ratio, not an intrinsic size.
-            intrinsicSizingInfo.aspectRatio = viewBoxSize;
-        }
+  if (!intrinsic_sizing_info.size.IsEmpty()) {
+    intrinsic_sizing_info.aspect_ratio = intrinsic_sizing_info.size;
+  } else {
+    FloatSize view_box_size = svg->viewBox()->CurrentValue()->Value().Size();
+    if (!view_box_size.IsEmpty()) {
+      // The viewBox can only yield an intrinsic ratio, not an intrinsic size.
+      intrinsic_sizing_info.aspect_ratio = view_box_size;
     }
+  }
 
-    if (!isHorizontalWritingMode())
-        intrinsicSizingInfo.transpose();
+  if (!IsHorizontalWritingMode())
+    intrinsic_sizing_info.Transpose();
 }
 
-bool LayoutSVGRoot::isEmbeddedThroughSVGImage() const
-{
-    return SVGImage::isInSVGImage(toSVGSVGElement(node()));
+bool LayoutSVGRoot::IsEmbeddedThroughSVGImage() const {
+  return SVGImage::IsInSVGImage(toSVGSVGElement(GetNode()));
 }
 
-bool LayoutSVGRoot::isEmbeddedThroughFrameContainingSVGDocument() const
-{
-    if (!node())
-        return false;
+bool LayoutSVGRoot::IsEmbeddedThroughFrameContainingSVGDocument() const {
+  if (!GetNode())
+    return false;
 
-    LocalFrame* frame = node()->document().frame();
-    if (!frame)
-        return false;
+  LocalFrame* frame = GetNode()->GetDocument().GetFrame();
+  if (!frame)
+    return false;
 
-    // If our frame has an owner layoutObject, we're embedded through eg. object/embed/iframe,
-    // but we only negotiate if we're in an SVG document inside a embedded object (object/embed).
-    if (!frame->ownerLayoutObject() || !frame->ownerLayoutObject()->isEmbeddedObject())
-        return false;
-    return frame->document()->isSVGDocument();
+  // If our frame has an owner layoutObject, we're embedded through eg.
+  // object/embed/iframe, but we only negotiate if we're in an SVG document
+  // inside a embedded object (object/embed).
+  if (frame->OwnerLayoutItem().IsNull() ||
+      !frame->OwnerLayoutItem().IsEmbeddedObject())
+    return false;
+  return frame->GetDocument()->IsSVGDocument();
 }
 
-LayoutUnit LayoutSVGRoot::computeReplacedLogicalWidth(ShouldComputePreferred shouldComputePreferred) const
-{
-    // When we're embedded through SVGImage (border-image/background-image/<html:img>/...) we're forced to resize to a specific size.
-    if (!m_containerSize.isEmpty())
-        return LayoutUnit(m_containerSize.width());
+LayoutUnit LayoutSVGRoot::ComputeReplacedLogicalWidth(
+    ShouldComputePreferred should_compute_preferred) const {
+  // When we're embedded through SVGImage
+  // (border-image/background-image/<html:img>/...) we're forced to resize to a
+  // specific size.
+  if (!container_size_.IsEmpty())
+    return LayoutUnit(container_size_.Width());
 
-    if (isEmbeddedThroughFrameContainingSVGDocument())
-        return containingBlock()->availableLogicalWidth();
+  if (IsEmbeddedThroughFrameContainingSVGDocument())
+    return ContainingBlock()->AvailableLogicalWidth();
 
-    return LayoutReplaced::computeReplacedLogicalWidth(shouldComputePreferred);
+  return LayoutReplaced::ComputeReplacedLogicalWidth(should_compute_preferred);
 }
 
-LayoutUnit LayoutSVGRoot::computeReplacedLogicalHeight(LayoutUnit estimatedUsedWidth) const
-{
-    // When we're embedded through SVGImage (border-image/background-image/<html:img>/...) we're forced to resize to a specific size.
-    if (!m_containerSize.isEmpty())
-        return LayoutUnit(m_containerSize.height());
+LayoutUnit LayoutSVGRoot::ComputeReplacedLogicalHeight(
+    LayoutUnit estimated_used_width) const {
+  // When we're embedded through SVGImage
+  // (border-image/background-image/<html:img>/...) we're forced to resize to a
+  // specific size.
+  if (!container_size_.IsEmpty())
+    return LayoutUnit(container_size_.Height());
 
-    if (isEmbeddedThroughFrameContainingSVGDocument())
-        return containingBlock()->availableLogicalHeight(IncludeMarginBorderPadding);
+  if (IsEmbeddedThroughFrameContainingSVGDocument())
+    return ContainingBlock()->AvailableLogicalHeight(
+        kIncludeMarginBorderPadding);
 
-    return LayoutReplaced::computeReplacedLogicalHeight(estimatedUsedWidth);
+  return LayoutReplaced::ComputeReplacedLogicalHeight(estimated_used_width);
 }
 
-void LayoutSVGRoot::layout()
-{
-    ASSERT(needsLayout());
-    LayoutAnalyzer::Scope analyzer(*this);
+void LayoutSVGRoot::UpdateLayout() {
+  DCHECK(NeedsLayout());
+  LayoutAnalyzer::Scope analyzer(*this);
 
-    LayoutSize oldSize = size();
-    updateLogicalWidth();
-    updateLogicalHeight();
+  LayoutSize old_size = Size();
+  UpdateLogicalWidth();
+  UpdateLogicalHeight();
 
-    buildLocalToBorderBoxTransform();
-    // TODO(fs): Temporarily, needing a layout implies that the local transform
-    // has changed. This should be updated to be more precise and factor in the
-    // actual (relevant) changes to the computed user-space transform.
-    m_didScreenScaleFactorChange = selfNeedsLayout();
+  // The local-to-border-box transform is a function with the following as
+  // input:
+  //
+  //  * effective zoom
+  //  * contentWidth/Height
+  //  * viewBox
+  //  * border + padding
+  //  * currentTranslate
+  //  * currentScale
+  //
+  // Which means that |transformChange| will notice a change to the scale from
+  // any of these.
+  SVGTransformChange transform_change = BuildLocalToBorderBoxTransform();
 
-    SVGLayoutSupport::layoutResourcesIfNeeded(this);
+  // The scale factor from the local-to-border-box transform is all that our
+  // scale-dependent descendants care about.
+  did_screen_scale_factor_change_ =
+      transform_change == SVGTransformChange::kFull;
 
-    SVGSVGElement* svg = toSVGSVGElement(node());
-    ASSERT(svg);
-    // When hasRelativeLengths() is false, no descendants have relative lengths
-    // (hence no one is interested in viewport size changes).
-    m_isLayoutSizeChanged = svg->hasRelativeLengths() && (selfNeedsLayout() || oldSize != size());
+  SVGLayoutSupport::LayoutResourcesIfNeeded(this);
 
-    SVGLayoutSupport::layoutChildren(firstChild(), false, m_didScreenScaleFactorChange, m_isLayoutSizeChanged);
+  // selfNeedsLayout() will cover changes to one (or more) of viewBox,
+  // current{Scale,Translate}, decorations and 'overflow'.
+  const bool viewport_may_have_changed =
+      SelfNeedsLayout() || old_size != Size();
 
-    if (m_needsBoundariesOrTransformUpdate) {
-        updateCachedBoundaries();
-        m_needsBoundariesOrTransformUpdate = false;
-    }
+  // The scale of one or more of the SVG elements may have changed, content
+  // (the entire SVG) could have moved or new content may have been exposed, so
+  // mark the entire subtree as needing paint invalidation checking.
+  if (transform_change != SVGTransformChange::kNone ||
+      viewport_may_have_changed) {
+    SetMayNeedPaintInvalidationSubtree();
+    if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+      SetNeedsPaintPropertyUpdate();
+  }
 
-    m_overflow.reset();
-    addVisualEffectOverflow();
+  SVGSVGElement* svg = toSVGSVGElement(GetNode());
+  DCHECK(svg);
+  // When hasRelativeLengths() is false, no descendants have relative lengths
+  // (hence no one is interested in viewport size changes).
+  is_layout_size_changed_ =
+      viewport_may_have_changed && svg->HasRelativeLengths();
 
-    if (!shouldApplyViewportClip()) {
-        FloatRect contentPaintInvalidationRect = paintInvalidationRectInLocalSVGCoordinates();
-        contentPaintInvalidationRect = m_localToBorderBoxTransform.mapRect(contentPaintInvalidationRect);
-        addContentsVisualOverflow(enclosingLayoutRect(contentPaintInvalidationRect));
-    }
+  SVGLayoutSupport::LayoutChildren(FirstChild(), false,
+                                   did_screen_scale_factor_change_,
+                                   is_layout_size_changed_);
 
-    updateLayerTransformAfterLayout();
-    m_hasBoxDecorationBackground = isDocumentElement() ? calculateHasBoxDecorations() : hasBoxDecorationBackground();
-    invalidateBackgroundObscurationStatus();
+  if (needs_boundaries_or_transform_update_) {
+    UpdateCachedBoundaries();
+    needs_boundaries_or_transform_update_ = false;
+  }
 
-    clearNeedsLayout();
+  overflow_.reset();
+  AddVisualEffectOverflow();
+
+  if (!ShouldApplyViewportClip()) {
+    FloatRect content_visual_rect = VisualRectInLocalSVGCoordinates();
+    content_visual_rect =
+        local_to_border_box_transform_.MapRect(content_visual_rect);
+    AddContentsVisualOverflow(EnclosingLayoutRect(content_visual_rect));
+  }
+
+  UpdateLayerTransformAfterLayout();
+  has_box_decoration_background_ = IsDocumentElement()
+                                       ? StyleRef().HasBoxDecorationBackground()
+                                       : HasBoxDecorationBackground();
+  InvalidateBackgroundObscurationStatus();
+
+  ClearNeedsLayout();
 }
 
-bool LayoutSVGRoot::shouldApplyViewportClip() const
-{
-    // the outermost svg is clipped if auto, and svg document roots are always clipped
-    // When the svg is stand-alone (isDocumentElement() == true) the viewport clipping should always
-    // be applied, noting that the window scrollbars should be hidden if overflow=hidden.
-    return style()->overflowX() == OverflowHidden
-        || style()->overflowX() == OverflowAuto
-        || style()->overflowX() == OverflowScroll
-        || this->isDocumentElement();
+bool LayoutSVGRoot::ShouldApplyViewportClip() const {
+  // the outermost svg is clipped if auto, and svg document roots are always
+  // clipped. When the svg is stand-alone (isDocumentElement() == true) the
+  // viewport clipping should always be applied, noting that the window
+  // scrollbars should be hidden if overflow=hidden.
+  return Style()->OverflowX() == EOverflow::kHidden ||
+         Style()->OverflowX() == EOverflow::kAuto ||
+         Style()->OverflowX() == EOverflow::kScroll ||
+         this->IsDocumentElement();
 }
 
-LayoutRect LayoutSVGRoot::visualOverflowRect() const
-{
-    LayoutRect rect = LayoutReplaced::selfVisualOverflowRect();
-    if (!shouldApplyViewportClip())
-        rect.unite(contentsVisualOverflowRect());
-    return rect;
+LayoutRect LayoutSVGRoot::VisualOverflowRect() const {
+  LayoutRect rect = LayoutReplaced::SelfVisualOverflowRect();
+  if (!ShouldApplyViewportClip())
+    rect.Unite(ContentsVisualOverflowRect());
+  return rect;
 }
 
-void LayoutSVGRoot::paintReplaced(const PaintInfo& paintInfo, const LayoutPoint& paintOffset) const
-{
-    SVGRootPainter(*this).paint(paintInfo, paintOffset);
+LayoutRect LayoutSVGRoot::OverflowClipRect(const LayoutPoint& location,
+                                           OverlayScrollbarClipBehavior) const {
+  return LayoutRect(PixelSnappedIntRect(LayoutReplaced::OverflowClipRect(
+      location, kIgnorePlatformOverlayScrollbarSize)));
 }
 
-void LayoutSVGRoot::willBeDestroyed()
-{
-    SVGResourcesCache::clientDestroyed(this);
-    LayoutReplaced::willBeDestroyed();
+void LayoutSVGRoot::PaintReplaced(const PaintInfo& paint_info,
+                                  const LayoutPoint& paint_offset) const {
+  SVGRootPainter(*this).PaintReplaced(paint_info, paint_offset);
 }
 
-void LayoutSVGRoot::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    if (diff.needsFullLayout())
-        setNeedsBoundariesUpdate();
-    if (diff.needsPaintInvalidation()) {
-        // Box decorations may have appeared/disappeared - recompute status.
-        m_hasBoxDecorationBackground = calculateHasBoxDecorations();
-    }
-
-    LayoutReplaced::styleDidChange(diff, oldStyle);
-    SVGResourcesCache::clientStyleChanged(this, diff, styleRef());
+void LayoutSVGRoot::WillBeDestroyed() {
+  SVGResourcesCache::ClientDestroyed(this);
+  LayoutReplaced::WillBeDestroyed();
 }
 
-bool LayoutSVGRoot::isChildAllowed(LayoutObject* child, const ComputedStyle&) const
-{
-    return child->isSVG() && !(child->isSVGInline() || child->isSVGInlineText() || child->isSVGGradientStop());
+void LayoutSVGRoot::StyleDidChange(StyleDifference diff,
+                                   const ComputedStyle* old_style) {
+  if (diff.NeedsFullLayout())
+    SetNeedsBoundariesUpdate();
+  if (diff.NeedsFullPaintInvalidation()) {
+    // Box decorations may have appeared/disappeared - recompute status.
+    has_box_decoration_background_ = StyleRef().HasBoxDecorationBackground();
+  }
+
+  LayoutReplaced::StyleDidChange(diff, old_style);
+  SVGResourcesCache::ClientStyleChanged(this, diff, StyleRef());
 }
 
-void LayoutSVGRoot::addChild(LayoutObject* child, LayoutObject* beforeChild)
-{
-    LayoutReplaced::addChild(child, beforeChild);
-    SVGResourcesCache::clientWasAddedToTree(child, child->styleRef());
-
-    bool shouldIsolateDescendants = (child->isBlendingAllowed() && child->style()->hasBlendMode()) || child->hasNonIsolatedBlendingDescendants();
-    if (shouldIsolateDescendants)
-        descendantIsolationRequirementsChanged(DescendantIsolationRequired);
+bool LayoutSVGRoot::IsChildAllowed(LayoutObject* child,
+                                   const ComputedStyle&) const {
+  return child->IsSVG() && !(child->IsSVGInline() || child->IsSVGInlineText() ||
+                             child->IsSVGGradientStop());
 }
 
-void LayoutSVGRoot::removeChild(LayoutObject* child)
-{
-    SVGResourcesCache::clientWillBeRemovedFromTree(child);
-    LayoutReplaced::removeChild(child);
+void LayoutSVGRoot::AddChild(LayoutObject* child, LayoutObject* before_child) {
+  LayoutReplaced::AddChild(child, before_child);
+  SVGResourcesCache::ClientWasAddedToTree(child, child->StyleRef());
 
-    bool hadNonIsolatedDescendants = (child->isBlendingAllowed() && child->style()->hasBlendMode()) || child->hasNonIsolatedBlendingDescendants();
-    if (hadNonIsolatedDescendants)
-        descendantIsolationRequirementsChanged(DescendantIsolationNeedsUpdate);
+  bool should_isolate_descendants =
+      (child->IsBlendingAllowed() && child->Style()->HasBlendMode()) ||
+      child->HasNonIsolatedBlendingDescendants();
+  if (should_isolate_descendants)
+    DescendantIsolationRequirementsChanged(kDescendantIsolationRequired);
 }
 
-bool LayoutSVGRoot::hasNonIsolatedBlendingDescendants() const
-{
-    if (m_hasNonIsolatedBlendingDescendantsDirty) {
-        m_hasNonIsolatedBlendingDescendants = SVGLayoutSupport::computeHasNonIsolatedBlendingDescendants(this);
-        m_hasNonIsolatedBlendingDescendantsDirty = false;
-    }
-    return m_hasNonIsolatedBlendingDescendants;
+void LayoutSVGRoot::RemoveChild(LayoutObject* child) {
+  SVGResourcesCache::ClientWillBeRemovedFromTree(child);
+  LayoutReplaced::RemoveChild(child);
+
+  bool had_non_isolated_descendants =
+      (child->IsBlendingAllowed() && child->Style()->HasBlendMode()) ||
+      child->HasNonIsolatedBlendingDescendants();
+  if (had_non_isolated_descendants)
+    DescendantIsolationRequirementsChanged(kDescendantIsolationNeedsUpdate);
 }
 
-void LayoutSVGRoot::descendantIsolationRequirementsChanged(DescendantIsolationState state)
-{
-    switch (state) {
-    case DescendantIsolationRequired:
-        m_hasNonIsolatedBlendingDescendants = true;
-        m_hasNonIsolatedBlendingDescendantsDirty = false;
-        break;
-    case DescendantIsolationNeedsUpdate:
-        m_hasNonIsolatedBlendingDescendantsDirty = true;
-        break;
-    }
+bool LayoutSVGRoot::HasNonIsolatedBlendingDescendants() const {
+  if (has_non_isolated_blending_descendants_dirty_) {
+    has_non_isolated_blending_descendants_ =
+        SVGLayoutSupport::ComputeHasNonIsolatedBlendingDescendants(this);
+    has_non_isolated_blending_descendants_dirty_ = false;
+  }
+  return has_non_isolated_blending_descendants_;
 }
 
-void LayoutSVGRoot::insertedIntoTree()
-{
-    LayoutReplaced::insertedIntoTree();
-    SVGResourcesCache::clientWasAddedToTree(this, styleRef());
+void LayoutSVGRoot::DescendantIsolationRequirementsChanged(
+    DescendantIsolationState state) {
+  switch (state) {
+    case kDescendantIsolationRequired:
+      has_non_isolated_blending_descendants_ = true;
+      has_non_isolated_blending_descendants_dirty_ = false;
+      break;
+    case kDescendantIsolationNeedsUpdate:
+      has_non_isolated_blending_descendants_dirty_ = true;
+      break;
+  }
+  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+    SetNeedsPaintPropertyUpdate();
 }
 
-void LayoutSVGRoot::willBeRemovedFromTree()
-{
-    SVGResourcesCache::clientWillBeRemovedFromTree(this);
-    LayoutReplaced::willBeRemovedFromTree();
+void LayoutSVGRoot::InsertedIntoTree() {
+  LayoutReplaced::InsertedIntoTree();
+  SVGResourcesCache::ClientWasAddedToTree(this, StyleRef());
 }
 
-PositionWithAffinity LayoutSVGRoot::positionForPoint(const LayoutPoint& point)
-{
-    FloatPoint absolutePoint = FloatPoint(point);
-    absolutePoint = m_localToBorderBoxTransform.inverse().mapPoint(absolutePoint);
-    LayoutObject* closestDescendant = SVGLayoutSupport::findClosestLayoutSVGText(this, absolutePoint);
+void LayoutSVGRoot::WillBeRemovedFromTree() {
+  SVGResourcesCache::ClientWillBeRemovedFromTree(this);
+  LayoutReplaced::WillBeRemovedFromTree();
+}
 
-    if (!closestDescendant)
-        return LayoutReplaced::positionForPoint(point);
+PositionWithAffinity LayoutSVGRoot::PositionForPoint(const LayoutPoint& point) {
+  FloatPoint absolute_point = FloatPoint(point);
+  absolute_point =
+      local_to_border_box_transform_.Inverse().MapPoint(absolute_point);
+  LayoutObject* closest_descendant =
+      SVGLayoutSupport::FindClosestLayoutSVGText(this, absolute_point);
 
-    LayoutObject* layoutObject = closestDescendant;
-    AffineTransform transform = layoutObject->localToSVGParentTransform();
-    transform.translate(toLayoutSVGText(layoutObject)->location().x(), toLayoutSVGText(layoutObject)->location().y());
-    while (layoutObject) {
-        layoutObject = layoutObject->parent();
-        if (layoutObject->isSVGRoot())
-            break;
-        transform = layoutObject->localToSVGParentTransform() * transform;
-    }
+  if (!closest_descendant)
+    return LayoutReplaced::PositionForPoint(point);
 
-    absolutePoint = transform.inverse().mapPoint(absolutePoint);
+  LayoutObject* layout_object = closest_descendant;
+  AffineTransform transform = layout_object->LocalToSVGParentTransform();
+  transform.Translate(ToLayoutSVGText(layout_object)->Location().X(),
+                      ToLayoutSVGText(layout_object)->Location().Y());
+  while (layout_object) {
+    layout_object = layout_object->Parent();
+    if (layout_object->IsSVGRoot())
+      break;
+    transform = layout_object->LocalToSVGParentTransform() * transform;
+  }
 
-    return closestDescendant->positionForPoint(LayoutPoint(absolutePoint));
+  absolute_point = transform.Inverse().MapPoint(absolute_point);
+
+  return closest_descendant->PositionForPoint(LayoutPoint(absolute_point));
 }
 
 // LayoutBox methods will expect coordinates w/o any transforms in coordinates
 // relative to our borderBox origin.  This method gives us exactly that.
-void LayoutSVGRoot::buildLocalToBorderBoxTransform()
-{
-    SVGSVGElement* svg = toSVGSVGElement(node());
-    ASSERT(svg);
-    float scale = style()->effectiveZoom();
-    FloatPoint translate = svg->currentTranslate();
-    LayoutSize borderAndPadding(borderLeft() + paddingLeft(), borderTop() + paddingTop());
-    m_localToBorderBoxTransform = svg->viewBoxToViewTransform(contentWidth() / scale, contentHeight() / scale);
+SVGTransformChange LayoutSVGRoot::BuildLocalToBorderBoxTransform() {
+  SVGTransformChangeDetector change_detector(local_to_border_box_transform_);
+  SVGSVGElement* svg = toSVGSVGElement(GetNode());
+  DCHECK(svg);
+  float scale = Style()->EffectiveZoom();
+  local_to_border_box_transform_ = svg->ViewBoxToViewTransform(
+      ContentWidth() / scale, ContentHeight() / scale);
 
-    AffineTransform viewToBorderBoxTransform(scale, 0, 0, scale, borderAndPadding.width() + translate.x(), borderAndPadding.height() + translate.y());
-    viewToBorderBoxTransform.scale(svg->currentScale());
-    m_localToBorderBoxTransform.preMultiply(viewToBorderBoxTransform);
+  FloatPoint translate = svg->CurrentTranslate();
+  LayoutSize border_and_padding(BorderLeft() + PaddingLeft(),
+                                BorderTop() + PaddingTop());
+  AffineTransform view_to_border_box_transform(
+      scale, 0, 0, scale, border_and_padding.Width() + translate.X(),
+      border_and_padding.Height() + translate.Y());
+  view_to_border_box_transform.Scale(svg->currentScale());
+  local_to_border_box_transform_.PreMultiply(view_to_border_box_transform);
+  return change_detector.ComputeChange(local_to_border_box_transform_);
 }
 
-const AffineTransform& LayoutSVGRoot::localToSVGParentTransform() const
-{
-    // Slightly optimized version of m_localToParentTransform = AffineTransform::translation(x(), y()) * m_localToBorderBoxTransform;
-    m_localToParentTransform = m_localToBorderBoxTransform;
-    if (location().x())
-        m_localToParentTransform.setE(m_localToParentTransform.e() + roundToInt(location().x()));
-    if (location().y())
-        m_localToParentTransform.setF(m_localToParentTransform.f() + roundToInt(location().y()));
-    return m_localToParentTransform;
+AffineTransform LayoutSVGRoot::LocalToSVGParentTransform() const {
+  return AffineTransform::Translation(RoundToInt(Location().X()),
+                                      RoundToInt(Location().Y())) *
+         local_to_border_box_transform_;
 }
 
-LayoutRect LayoutSVGRoot::localOverflowRectForPaintInvalidation() const
-{
-    // This is an open-coded aggregate of SVGLayoutSupport::localOverflowRectForPaintInvalidation,
-    // and LayoutReplaced::localOverflowRectForPaintInvalidation.
-    // The reason for this is to optimize/minimize the paint invalidation rect when the box is not "decorated"
-    // (does not have background/border/etc., see LayoutSVGRootTest.OverflowRectMappingWithViewportClipWithoutBorder).
+LayoutRect LayoutSVGRoot::LocalVisualRect() const {
+  // This is an open-coded aggregate of SVGLayoutSupport::localVisualRect
+  // and LayoutReplaced::localVisualRect. The reason for this is to optimize/
+  // minimize the visual rect when the box is not "decorated" (does not have
+  // background/border/etc., see
+  // LayoutSVGRootTest.VisualRectMappingWithViewportClipWithoutBorder).
 
-    // Return early for any cases where we don't actually paint.
-    if (style()->visibility() != VISIBLE && !enclosingLayer()->hasVisibleContent())
-        return LayoutRect();
+  // Return early for any cases where we don't actually paint.
+  if (Style()->Visibility() != EVisibility::kVisible &&
+      !EnclosingLayer()->HasVisibleContent())
+    return LayoutRect();
 
-    // Compute the paint invalidation rect of the content of the SVG in the border-box coordinate space.
-    FloatRect contentPaintInvalidationRect = paintInvalidationRectInLocalSVGCoordinates();
-    contentPaintInvalidationRect = m_localToBorderBoxTransform.mapRect(contentPaintInvalidationRect);
+  // Compute the visual rect of the content of the SVG in the border-box
+  // coordinate space.
+  FloatRect content_visual_rect = VisualRectInLocalSVGCoordinates();
+  content_visual_rect =
+      local_to_border_box_transform_.MapRect(content_visual_rect);
 
-    // Apply initial viewport clip, overflow:visible content is added to visualOverflow
-    // but the most common case is that overflow is hidden, so always intersect.
-    contentPaintInvalidationRect.intersect(pixelSnappedBorderBoxRect());
+  // Apply initial viewport clip, overflow:visible content is added to
+  // visualOverflow but the most common case is that overflow is hidden, so
+  // always intersect.
+  content_visual_rect.Intersect(PixelSnappedBorderBoxRect());
 
-    LayoutRect paintInvalidationRect = enclosingLayoutRect(contentPaintInvalidationRect);
-    // If the box is decorated or is overflowing, extend it to include the border-box and overflow.
-    if (m_hasBoxDecorationBackground || hasOverflowModel()) {
-        // The selectionRect can project outside of the overflowRect, so take their union
-        // for paint invalidation to avoid selection painting glitches.
-        LayoutRect decoratedPaintInvalidationRect = unionRect(localSelectionRect(), visualOverflowRect());
-        paintInvalidationRect.unite(decoratedPaintInvalidationRect);
-    }
+  LayoutRect visual_rect = EnclosingLayoutRect(content_visual_rect);
+  // If the box is decorated or is overflowing, extend it to include the
+  // border-box and overflow.
+  if (has_box_decoration_background_ || HasOverflowModel()) {
+    // The selectionRect can project outside of the overflowRect, so take their
+    // union for paint invalidation to avoid selection painting glitches.
+    LayoutRect decorated_visual_rect =
+        UnionRect(LocalSelectionRect(), VisualOverflowRect());
+    visual_rect.Unite(decorated_visual_rect);
+  }
 
-    return LayoutRect(enclosingIntRect(paintInvalidationRect));
+  return LayoutRect(EnclosingIntRect(visual_rect));
 }
 
 // This method expects local CSS box coordinates.
-// Callers with local SVG viewport coordinates should first apply the localToBorderBoxTransform
-// to convert from SVG viewport coordinates to local CSS box coordinates.
-void LayoutSVGRoot::mapLocalToAncestor(const LayoutBoxModelObject* ancestor, TransformState& transformState, MapCoordinatesFlags mode) const
-{
-    LayoutReplaced::mapLocalToAncestor(ancestor, transformState, mode | ApplyContainerFlip);
+// Callers with local SVG viewport coordinates should first apply the
+// localToBorderBoxTransform to convert from SVG viewport coordinates to local
+// CSS box coordinates.
+void LayoutSVGRoot::MapLocalToAncestor(const LayoutBoxModelObject* ancestor,
+                                       TransformState& transform_state,
+                                       MapCoordinatesFlags mode) const {
+  LayoutReplaced::MapLocalToAncestor(ancestor, transform_state,
+                                     mode | kApplyContainerFlip);
 }
 
-const LayoutObject* LayoutSVGRoot::pushMappingToContainer(const LayoutBoxModelObject* ancestorToStopAt, LayoutGeometryMap& geometryMap) const
-{
-    return LayoutReplaced::pushMappingToContainer(ancestorToStopAt, geometryMap);
+const LayoutObject* LayoutSVGRoot::PushMappingToContainer(
+    const LayoutBoxModelObject* ancestor_to_stop_at,
+    LayoutGeometryMap& geometry_map) const {
+  return LayoutReplaced::PushMappingToContainer(ancestor_to_stop_at,
+                                                geometry_map);
 }
 
-void LayoutSVGRoot::updateCachedBoundaries()
-{
-    SVGLayoutSupport::computeContainerBoundingBoxes(this, m_objectBoundingBox, m_objectBoundingBoxValid, m_strokeBoundingBox, m_paintInvalidationBoundingBox);
-    SVGLayoutSupport::intersectPaintInvalidationRectWithResources(this, m_paintInvalidationBoundingBox);
+void LayoutSVGRoot::UpdateCachedBoundaries() {
+  SVGLayoutSupport::ComputeContainerBoundingBoxes(
+      this, object_bounding_box_, object_bounding_box_valid_,
+      stroke_bounding_box_, visual_rect_in_local_svg_coordinates_);
 }
 
-bool LayoutSVGRoot::nodeAtPoint(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction hitTestAction)
-{
-    LayoutPoint pointInParent = locationInContainer.point() - toLayoutSize(accumulatedOffset);
-    LayoutPoint pointInBorderBox = pointInParent - toLayoutSize(location());
+bool LayoutSVGRoot::NodeAtPoint(HitTestResult& result,
+                                const HitTestLocation& location_in_container,
+                                const LayoutPoint& accumulated_offset,
+                                HitTestAction hit_test_action) {
+  LayoutPoint point_in_parent =
+      location_in_container.Point() - ToLayoutSize(accumulated_offset);
+  LayoutPoint point_in_border_box = point_in_parent - ToLayoutSize(Location());
 
-    // Only test SVG content if the point is in our content box, or in case we
-    // don't clip to the viewport, the visual overflow rect.
-    // FIXME: This should be an intersection when rect-based hit tests are supported by nodeAtFloatPoint.
-    if (contentBoxRect().contains(pointInBorderBox) || (!shouldApplyViewportClip() && visualOverflowRect().contains(pointInBorderBox))) {
-        const AffineTransform& localToParentTransform = this->localToSVGParentTransform();
-        if (localToParentTransform.isInvertible()) {
-            FloatPoint localPoint = localToParentTransform.inverse().mapPoint(FloatPoint(pointInParent));
+  // Only test SVG content if the point is in our content box, or in case we
+  // don't clip to the viewport, the visual overflow rect.
+  // FIXME: This should be an intersection when rect-based hit tests are
+  // supported by nodeAtFloatPoint.
+  if (ContentBoxRect().Contains(point_in_border_box) ||
+      (!ShouldApplyViewportClip() &&
+       VisualOverflowRect().Contains(point_in_border_box))) {
+    const AffineTransform& local_to_parent_transform =
+        this->LocalToSVGParentTransform();
+    if (local_to_parent_transform.IsInvertible()) {
+      FloatPoint local_point = local_to_parent_transform.Inverse().MapPoint(
+          FloatPoint(point_in_parent));
 
-            for (LayoutObject* child = lastChild(); child; child = child->previousSibling()) {
-                // FIXME: nodeAtFloatPoint() doesn't handle rect-based hit tests yet.
-                if (child->nodeAtFloatPoint(result, localPoint, hitTestAction)) {
-                    updateHitTestResult(result, pointInBorderBox);
-                    if (result.addNodeToListBasedTestResult(child->node(), locationInContainer) == StopHitTesting)
-                        return true;
-                }
-            }
+      for (LayoutObject* child = LastChild(); child;
+           child = child->PreviousSibling()) {
+        // FIXME: nodeAtFloatPoint() doesn't handle rect-based hit tests yet.
+        if (child->NodeAtFloatPoint(result, local_point, hit_test_action)) {
+          UpdateHitTestResult(result, point_in_border_box);
+          if (result.AddNodeToListBasedTestResult(
+                  child->GetNode(), location_in_container) == kStopHitTesting)
+            return true;
         }
+      }
     }
+  }
 
-    // If we didn't early exit above, we've just hit the container <svg> element. Unlike SVG 1.1, 2nd Edition allows container elements to be hit.
-    if ((hitTestAction == HitTestBlockBackground || hitTestAction == HitTestChildBlockBackground) && visibleToHitTestRequest(result.hitTestRequest())) {
-        // Only return true here, if the last hit testing phase 'BlockBackground' (or 'ChildBlockBackground' - depending on context) is executed.
-        // If we'd return true in the 'Foreground' phase, hit testing would stop immediately. For SVG only trees this doesn't matter.
-        // Though when we have a <foreignObject> subtree we need to be able to detect hits on the background of a <div> element.
-        // If we'd return true here in the 'Foreground' phase, we are not able to detect these hits anymore.
-        LayoutRect boundsRect(accumulatedOffset + location(), size());
-        if (locationInContainer.intersects(boundsRect)) {
-            updateHitTestResult(result, pointInBorderBox);
-            if (result.addNodeToListBasedTestResult(node(), locationInContainer, boundsRect) == StopHitTesting)
-                return true;
-        }
+  // If we didn't early exit above, we've just hit the container <svg> element.
+  // Unlike SVG 1.1, 2nd Edition allows container elements to be hit.
+  if ((hit_test_action == kHitTestBlockBackground ||
+       hit_test_action == kHitTestChildBlockBackground) &&
+      VisibleToHitTestRequest(result.GetHitTestRequest())) {
+    // Only return true here, if the last hit testing phase 'BlockBackground'
+    // (or 'ChildBlockBackground' - depending on context) is executed.
+    // If we'd return true in the 'Foreground' phase, hit testing would stop
+    // immediately. For SVG only trees this doesn't matter.
+    // Though when we have a <foreignObject> subtree we need to be able to
+    // detect hits on the background of a <div> element.
+    // If we'd return true here in the 'Foreground' phase, we are not able to
+    // detect these hits anymore.
+    LayoutRect bounds_rect(accumulated_offset + Location(), Size());
+    if (location_in_container.Intersects(bounds_rect)) {
+      UpdateHitTestResult(result, point_in_border_box);
+      if (result.AddNodeToListBasedTestResult(GetNode(), location_in_container,
+                                              bounds_rect) == kStopHitTesting)
+        return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
-} // namespace blink
+}  // namespace blink

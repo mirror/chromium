@@ -7,6 +7,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "content/public/browser/readback_types.h"
 #include "content/public/browser/render_widget_host.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
@@ -18,8 +19,7 @@ namespace content {
 
 class RenderWidgetHostImpl;
 
-namespace devtools {
-namespace page {
+namespace protocol {
 
 class ColorPicker {
  public:
@@ -51,8 +51,7 @@ class ColorPicker {
   DISALLOW_COPY_AND_ASSIGN(ColorPicker);
 };
 
-}  // namespace page
-}  // namespace devtools
+}  // namespace protocol
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_DEVTOOLS_PROTOCOL_COLOR_PICKER_H_

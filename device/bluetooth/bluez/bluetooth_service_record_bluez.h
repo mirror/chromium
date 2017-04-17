@@ -13,10 +13,6 @@
 #include "device/bluetooth/bluetooth_export.h"
 #include "device/bluetooth/bluez/bluetooth_service_attribute_value_bluez.h"
 
-namespace base {
-class Value;
-}
-
 namespace bluez {
 
 class DEVICE_BLUETOOTH_EXPORT BluetoothServiceRecordBlueZ {
@@ -42,10 +38,14 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothServiceRecordBlueZ {
   const BluetoothServiceAttributeValueBlueZ& GetAttributeValue(
       uint16_t attribute_id) const;
 
-  // Add an an entry to this service record. If a record with the given ID
-  // already exists, it is replaced.
+  // Adds an entry to this service record. If a record with the given ID already
+  // exists, it is replaced.
   void AddRecordEntry(uint16_t id,
                       const BluetoothServiceAttributeValueBlueZ& value);
+
+  // Returns true if the given attribute ID is found in the attribute map, false
+  // otherwise.
+  bool IsAttributePresented(uint16_t id);
 
  private:
   std::map<uint16_t, BluetoothServiceAttributeValueBlueZ> attributes_;

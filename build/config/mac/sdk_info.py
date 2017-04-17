@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import argparse
 import os
 import subprocess
 import sys
@@ -51,7 +52,13 @@ def FillSDKPathAndVersion(settings, platform, xcode_version):
 
 
 if __name__ == '__main__':
-  if len(sys.argv) != 2:
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--developer_dir", required=False)
+  args, unknownargs = parser.parse_known_args()
+  if args.developer_dir:
+    os.environ['DEVELOPER_DIR'] = args.developer_dir
+
+  if len(unknownargs) != 1:
     sys.stderr.write(
         'usage: %s [iphoneos|iphonesimulator|macosx]\n' %
         os.path.basename(sys.argv[0]))
@@ -60,7 +67,7 @@ if __name__ == '__main__':
   settings = {}
   FillMachineOSBuild(settings)
   FillXcodeVersion(settings)
-  FillSDKPathAndVersion(settings, sys.argv[1], settings['xcode_version'])
+  FillSDKPathAndVersion(settings, unknownargs[0], settings['xcode_version'])
 
   for key in sorted(settings):
     print '%s="%s"' % (key, settings[key])

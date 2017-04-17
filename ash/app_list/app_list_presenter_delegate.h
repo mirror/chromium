@@ -8,17 +8,15 @@
 #include <stdint.h>
 
 #include "ash/ash_export.h"
-#include "ash/common/shell_observer.h"
-#include "ash/shelf/shelf_icon_observer.h"
-#include "base/compiler_specific.h"
+#include "ash/shelf/wm_shelf_observer.h"
+#include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "ui/app_list/presenter/app_list_presenter_delegate.h"
 #include "ui/events/event_handler.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
 
 namespace app_list {
-class ApplicationDragAndDropHost;
-class AppListPresenter;
+class AppListPresenterImpl;
 class AppListView;
 class AppListViewDelegateFactory;
 }
@@ -29,11 +27,7 @@ class LocatedEvent;
 
 namespace ash {
 
-namespace test {
-class AppListPresenterAshTestApi;
-}
-
-// Non-Mus+ash implementation of AppListPresetnerDelegate.
+// Non-Mus+ash implementation of AppListPresenterDelegate.
 // Responsible for laying out the app list UI as well as updating the Shelf
 // launch icon as the state of the app list changes. Listens to shell events
 // and touches/mouse clicks outside the app list to auto dismiss the UI or
@@ -43,10 +37,10 @@ class ASH_EXPORT AppListPresenterDelegate
       public ui::EventHandler,
       public keyboard::KeyboardControllerObserver,
       public ShellObserver,
-      public ShelfIconObserver {
+      public WmShelfObserver {
  public:
   AppListPresenterDelegate(
-      app_list::AppListPresenter* presenter,
+      app_list::AppListPresenterImpl* presenter,
       app_list::AppListViewDelegateFactory* view_delegate_factory);
   ~AppListPresenterDelegate() override;
 
@@ -70,23 +64,19 @@ class ASH_EXPORT AppListPresenterDelegate
 
   // KeyboardControllerObserver overrides:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
+  void OnKeyboardClosed() override;
 
   // ShellObserver overrides:
-  void OnShelfAlignmentChanged(WmWindow* root_window) override;
-  void OnMaximizeModeStarted() override;
-  void OnMaximizeModeEnded() override;
+  void OnOverviewModeStarting() override;
 
-  // ShelfIconObserver overrides:
+  // WmShelfObserver overrides:
   void OnShelfIconPositionsChanged() override;
 
   // Whether the app list is visible (or in the process of being shown).
   bool is_visible_ = false;
 
-  // Whether the app list should remain centered.
-  bool is_centered_ = false;
-
   // Not owned. Pointer is guaranteed to be valid while this object is alive.
-  app_list::AppListPresenter* presenter_;
+  app_list::AppListPresenterImpl* presenter_;
 
   // Not owned. Pointer is guaranteed to be valid while this object is alive.
   app_list::AppListViewDelegateFactory* view_delegate_factory_;

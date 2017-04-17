@@ -4,6 +4,7 @@
 
 #include "build/build_config.h"
 #include "media/base/media_switches.h"
+#include "ppapi/features/features.h"
 
 namespace switches {
 
@@ -21,19 +22,8 @@ const char kDisableMediaSuspend[] = "disable-media-suspend";
 const char kReportVp9AsAnUnsupportedMimeType[] =
     "report-vp9-as-an-unsupported-mime-type";
 
-#if defined(OS_ANDROID)
-// Sets the MediaSource player that uses UI thread for frame processing.
-const char kDisableMediaThreadForMediaPlayback[] =
-    "disable-media-thread-for-media-playback";
-
-// Use WebMediaPlayerAndroid instead of WebMediaPlayerImpl. This is a temporary
-// switch for holding back the new unified media pipeline.
-const char kDisableUnifiedMediaPipeline[] = "disable-unified-media-pipeline";
-
-// Sets the MediaSource player that uses the separate media thread
-const char kEnableMediaThreadForMediaPlayback[] =
-    "enable-media-thread-for-media-playback";
-#endif
+// Enable parsing of new multi-part VP9 string for webm.
+const char kEnableNewVp9CodecString[] = "enable-new-vp9-codec-string";
 
 #if defined(OS_LINUX) || defined(OS_FREEBSD) || defined(OS_SOLARIS)
 // The Alsa device to use when opening an audio input stream.
@@ -42,11 +32,6 @@ const char kAlsaInputDevice[] = "alsa-input-device";
 const char kAlsaOutputDevice[] = "alsa-output-device";
 #endif
 
-// Use GpuMemoryBuffers for Video Capture when this is an option for the device.
-// Experimental, see http://crbug.com/503835 and http://crbug.com/440843.
-const char kUseGpuMemoryBuffersForCapture[] =
-    "use-gpu-memory-buffers-for-capture";
-
 #if defined(OS_WIN)
 // Use exclusive mode audio streaming for Windows Vista and higher.
 // Leads to lower latencies for audio streams which uses the
@@ -54,9 +39,6 @@ const char kUseGpuMemoryBuffersForCapture[] =
 // See http://msdn.microsoft.com/en-us/library/windows/desktop/dd370844.aspx
 // for details.
 const char kEnableExclusiveAudio[] = "enable-exclusive-audio";
-
-// Enables H264 HW encode acceleration using Media Foundation for Windows.
-const char kEnableMFH264Encoding[] = "enable-mf-h264-encoding";
 
 // Force the use of MediaFoundation for video capture. This is only supported in
 // Windows 7 and above. Used, like |kForceDirectShowVideoCapture|, to
@@ -82,12 +64,26 @@ const char kWaveOutBuffers[] = "waveout-buffers";
 const char kUseCras[] = "use-cras";
 #endif
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
 // Use a media session for each tabs in a way that two tabs can't play on top of
 // each other. This is different from the Media Session API as it is enabling a
-// default behaviour for the browser.
+// default behaviour for the browser. The allowed values are: "" (empty),
+// |kEnableDefaultMediaSessionDuckFlash|.
 const char kEnableDefaultMediaSession[] = "enable-default-media-session";
-#endif
+#endif  // !defined(OS_ANDROID) || BUILDFLAG(ENABLE_PLUGINS)
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+// This value is used as an option for |kEnableDefaultMediaSession|. Flash will
+// be ducked when losing audio focus.
+const char kEnableDefaultMediaSessionDuckFlash[] = "duck-flash";
+#endif  // BUILDFLAG(ENABLE_PLUGINS)
+
+#if BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
+// Rather than use the renderer hosted remotely in the media service, fall back
+// to the default renderer within content_renderer. Does not change the behavior
+// of the media service.
+const char kDisableMojoRenderer[] = "disable-mojo-renderer";
+#endif  // BUILDFLAG(ENABLE_RUNTIME_MEDIA_RENDERER_SELECTION)
 
 // Use fake device for Media Stream to replace actual camera and microphone.
 const char kUseFakeDeviceForMediaStream[] = "use-fake-device-for-media-stream";
@@ -103,6 +99,11 @@ const char kUseFileForFakeVideoCapture[] = "use-file-for-fake-video-capture";
 // .wav files should work. You can pass either <path> to play the file looping
 // or <path>%noloop to stop after playing the file to completion.
 const char kUseFileForFakeAudioCapture[] = "use-file-for-fake-audio-capture";
+
+// Use fake device for accelerated decoding of JPEG. This allows, for example,
+// testing of the communication to the GPU service without requiring actual
+// accelerator hardware to be present.
+const char kUseFakeJpegDecodeAccelerator[] = "use-fake-jpeg-decode-accelerator";
 
 // Enables support for inband text tracks in media content.
 const char kEnableInbandTextTracks[] = "enable-inband-text-tracks";
@@ -129,23 +130,88 @@ const char kEnableVp9InMp4[] = "enable-vp9-in-mp4";
 // Force media player using SurfaceView instead of SurfaceTexture on Android.
 const char kForceVideoOverlays[] = "force-video-overlays";
 
+// Allows explicitly specifying MSE audio/video buffer sizes.
+// Default values are 150M for video and 12M for audio.
+const char kMSEAudioBufferSizeLimit[] = "mse-audio-buffer-size-limit";
+const char kMSEVideoBufferSizeLimit[] = "mse-video-buffer-size-limit";
+
 }  // namespace switches
 
 namespace media {
 
-#if defined(ENABLE_PLUGINS)
-// Let flash join and be controlled by media session, only valid when
-// |kEnableDefaultMediaSession| is on.
-const base::Feature kFlashJoinsMediaSession{"flash-join-media-session",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
-#endif  // defined(ENABLE_PLUGINS)
+#if defined(OS_WIN)
+// Enables video decode acceleration using the D3D11 video decoder api.
+// This is completely insecure - DO NOT USE except for testing.
+const base::Feature kD3D11VideoDecoding{"D3D11VideoDecoding",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables H264 HW encode acceleration using Media Foundation for Windows.
+const base::Feature kMediaFoundationH264Encoding{
+    "MediaFoundationH264Encoding", base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // defined(OS_WIN)
 
 // Use new audio rendering mixer.
 const base::Feature kNewAudioRenderingMixingStrategy{
     "NewAudioRenderingMixingStrategy", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Only used for disabling overlay fullscreen (aka SurfaceView) in Clank.
+const base::Feature kOverlayFullscreenVideo{"overlay-fullscreen-video",
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Let videos be resumed via remote controls (for example, the notification)
+// when in background.
+const base::Feature kResumeBackgroundVideo {
+  "resume-background-video",
+#if defined(OS_ANDROID)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
+#endif
+};
+
+// Let video track be unselected when video is playing in the background.
+const base::Feature kBackgroundVideoTrackOptimization{
+    "BackgroundVideoTrackOptimization", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Let video without audio be paused when it is playing in the background.
+const base::Feature kBackgroundVideoPauseOptimization{
+    "BackgroundVideoPauseOptimization", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Make MSE garbage collection algorithm more aggressive when we are under
+// moderate or critical memory pressure. This will relieve memory pressure by
+// releasing stale data from MSE buffers.
+const base::Feature kMemoryPressureBasedSourceBufferGC{
+    "MemoryPressureBasedSourceBufferGC", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Use shared block-based buffering for media.
 const base::Feature kUseNewMediaCache{"use-new-media-cache",
                                       base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Correct video colors based on output display?
+const base::Feature kVideoColorManagement{"video-color-management",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Inform video blitter of video color space.
+const base::Feature kVideoBlitColorAccuracy{"video-blit-color-accuracy",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Enables support for External Clear Key (ECK) key system for testing on
+// supported platforms. On platforms that do not support ECK, this feature has
+// no effect.
+const base::Feature kExternalClearKeyForTesting{
+    "external-clear-key-for-testing", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#if defined(OS_ANDROID)
+// Lock the screen orientation when a video goes fullscreen.
+const base::Feature kVideoFullscreenOrientationLock{
+    "VideoFullscreenOrientationLock", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// An experimental feature to enable persistent-license type support in MediaDrm
+// when using Encrypted Media Extensions (EME) API.
+// TODO(xhwang): Remove this after feature launch. See http://crbug.com/493521
+const base::Feature kMediaDrmPersistentLicense{
+    "MediaDrmPersistentLicense", base::FEATURE_DISABLED_BY_DEFAULT};
+
+#endif
 
 }  // namespace media

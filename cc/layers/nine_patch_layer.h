@@ -8,16 +8,13 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/ui_resource_layer.h"
 #include "cc/resources/ui_resource_client.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace cc {
-
-class LayerTreeHost;
-class ScopedUIResource;
 
 class CC_EXPORT NinePatchLayer : public UIResourceLayer {
  public:

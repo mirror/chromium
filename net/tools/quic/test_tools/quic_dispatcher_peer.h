@@ -5,10 +5,8 @@
 #ifndef NET_TOOLS_QUIC_TEST_TOOLS_QUIC_DISPATCHER_PEER_H_
 #define NET_TOOLS_QUIC_TEST_TOOLS_QUIC_DISPATCHER_PEER_H_
 
-#include "net/tools/quic/quic_dispatcher.h"
-
 #include "base/macros.h"
-#include "net/base/ip_endpoint.h"
+#include "net/tools/quic/quic_dispatcher.h"
 
 namespace net {
 
@@ -41,8 +39,21 @@ class QuicDispatcherPeer {
   // visitor's OnError() method.  Then set that record to QUIC_NO_ERROR.
   static QuicErrorCode GetAndClearLastError(QuicDispatcher* dispatcher);
 
+  static QuicBufferedPacketStore* GetBufferedPackets(
+      QuicDispatcher* dispatcher);
+
   static const QuicDispatcher::SessionMap& session_map(
       QuicDispatcher* dispatcher);
+
+  static void set_new_sessions_allowed_per_event_loop(
+      QuicDispatcher* dispatcher,
+      size_t num_session_allowed);
+
+  static void SendPublicReset(QuicDispatcher* dispatcher,
+                              const QuicSocketAddress& server_address,
+                              const QuicSocketAddress& client_address,
+                              QuicConnectionId connection_id,
+                              QuicPacketNumber rejected_packet_number);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(QuicDispatcherPeer);

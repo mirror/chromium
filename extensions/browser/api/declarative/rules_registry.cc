@@ -9,7 +9,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -332,7 +332,7 @@ void RulesRegistry::MarkReady(base::Time storage_init_time) {
 void RulesRegistry::ProcessChangedRules(const std::string& extension_id) {
   DCHECK_CURRENTLY_ON(owner_thread());
 
-  DCHECK(ContainsKey(process_changed_rules_requested_, extension_id));
+  DCHECK(base::ContainsKey(process_changed_rules_requested_, extension_id));
   process_changed_rules_requested_[extension_id] = NOT_SCHEDULED_FOR_PROCESSING;
 
   std::vector<linked_ptr<api::events::Rule>> new_rules;

@@ -12,7 +12,7 @@
 #include "base/trace_event/trace_event.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host_platform.h"
-#include "ui/events/event_processor.h"
+#include "ui/events/event_sink.h"
 #include "ui/events/null_event_targeter.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/transform.h"
@@ -33,6 +33,7 @@ AshWindowTreeHostPlatform::AshWindowTreeHostPlatform(
 
 AshWindowTreeHostPlatform::AshWindowTreeHostPlatform()
     : transformer_helper_(this) {
+  CreateCompositor();
   transformer_helper_.Init();
 }
 
@@ -43,7 +44,7 @@ void AshWindowTreeHostPlatform::ToggleFullScreen() {
 }
 
 bool AshWindowTreeHostPlatform::ConfineCursorToRootWindow() {
-  gfx::Rect confined_bounds(GetBounds().size());
+  gfx::Rect confined_bounds(GetBoundsInPixels().size());
   confined_bounds.Inset(transformer_helper_.GetHostInsets());
   platform_window()->ConfineCursorToBounds(confined_bounds);
   return true;
@@ -74,6 +75,10 @@ void AshWindowTreeHostPlatform::PrepareForShutdown() {
   // coordinates.
   window()->SetEventTargeter(
       std::unique_ptr<ui::EventTargeter>(new ui::NullEventTargeter));
+
+  // Do anything platform specific necessary before shutdown (eg. stop
+  // listening for configuration XEvents).
+  platform_window()->PrepareForShutdown();
 }
 
 void AshWindowTreeHostPlatform::SetRootTransform(
@@ -89,17 +94,17 @@ gfx::Transform AshWindowTreeHostPlatform::GetInverseRootTransform() const {
   return transformer_helper_.GetInverseTransform();
 }
 
-void AshWindowTreeHostPlatform::UpdateRootWindowSize(
-    const gfx::Size& host_size) {
-  transformer_helper_.UpdateWindowSize(host_size);
+void AshWindowTreeHostPlatform::UpdateRootWindowSizeInPixels(
+    const gfx::Size& host_size_in_pixels) {
+  transformer_helper_.UpdateWindowSize(host_size_in_pixels);
 }
 
 void AshWindowTreeHostPlatform::OnCursorVisibilityChangedNative(bool show) {
   SetTapToClickPaused(!show);
 }
 
-void AshWindowTreeHostPlatform::SetBounds(const gfx::Rect& bounds) {
-  WindowTreeHostPlatform::SetBounds(bounds);
+void AshWindowTreeHostPlatform::SetBoundsInPixels(const gfx::Rect& bounds) {
+  WindowTreeHostPlatform::SetBoundsInPixels(bounds);
   ConfineCursorToRootWindow();
 }
 
@@ -107,14 +112,13 @@ void AshWindowTreeHostPlatform::DispatchEvent(ui::Event* event) {
   TRACE_EVENT0("input", "AshWindowTreeHostPlatform::DispatchEvent");
   if (event->IsLocatedEvent())
     TranslateLocatedEvent(static_cast<ui::LocatedEvent*>(event));
-  SendEventToProcessor(event);
+  SendEventToSink(event);
 }
 
 ui::EventDispatchDetails AshWindowTreeHostPlatform::DispatchKeyEventPostIME(
     ui::KeyEvent* event) {
   input_method_handler()->SetPostIME(true);
-  ui::EventDispatchDetails details =
-      event_processor()->OnEventFromSource(event);
+  ui::EventDispatchDetails details = event_sink()->OnEventFromSource(event);
   if (!details.dispatcher_destroyed)
     input_method_handler()->SetPostIME(false);
   return details;

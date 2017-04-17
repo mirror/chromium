@@ -10,69 +10,67 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "platform/SharedBuffer.h"
 #include "platform/fonts/opentype/OpenTypeTypes.h"
+#include "platform/wtf/RefPtr.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
 struct TestTable : OpenType::TableBase {
-    OpenType::Fixed version;
-    OpenType::Int16 ascender;
+  OpenType::Fixed version;
+  OpenType::Int16 ascender;
 
-    template <typename T> const T* validateOffset(const SharedBuffer& buffer, uint16_t offset) const
-    {
-        return TableBase::validateOffset<T>(buffer, offset);
-    }
+  template <typename T>
+  const T* ValidateOffset(const SharedBuffer& buffer, uint16_t offset) const {
+    return TableBase::ValidateOffset<T>(buffer, offset);
+  }
 };
 
-TEST(OpenTypeVerticalDataTest, ValidateTableTest)
-{
-    RefPtr<SharedBuffer> buffer = SharedBuffer::create(sizeof(TestTable));
-    const TestTable* table = OpenType::validateTable<TestTable>(buffer);
-    EXPECT_TRUE(table);
+TEST(OpenTypeVerticalDataTest, ValidateTableTest) {
+  RefPtr<SharedBuffer> buffer = SharedBuffer::Create(sizeof(TestTable));
+  const TestTable* table = OpenType::ValidateTable<TestTable>(buffer);
+  EXPECT_TRUE(table);
 
-    buffer = SharedBuffer::create(sizeof(TestTable) - 1);
-    table = OpenType::validateTable<TestTable>(buffer);
-    EXPECT_FALSE(table);
+  buffer = SharedBuffer::Create(sizeof(TestTable) - 1);
+  table = OpenType::ValidateTable<TestTable>(buffer);
+  EXPECT_FALSE(table);
 
-    buffer = SharedBuffer::create(sizeof(TestTable) + 1);
-    table = OpenType::validateTable<TestTable>(buffer);
-    EXPECT_TRUE(table);
+  buffer = SharedBuffer::Create(sizeof(TestTable) + 1);
+  table = OpenType::ValidateTable<TestTable>(buffer);
+  EXPECT_TRUE(table);
 }
 
-TEST(OpenTypeVerticalDataTest, ValidateOffsetTest)
-{
-    RefPtr<SharedBuffer> buffer = SharedBuffer::create(sizeof(TestTable));
-    const TestTable* table = OpenType::validateTable<TestTable>(buffer);
-    ASSERT_TRUE(table);
+TEST(OpenTypeVerticalDataTest, ValidateOffsetTest) {
+  RefPtr<SharedBuffer> buffer = SharedBuffer::Create(sizeof(TestTable));
+  const TestTable* table = OpenType::ValidateTable<TestTable>(buffer);
+  ASSERT_TRUE(table);
 
-    // Test overflow
-    EXPECT_FALSE(table->validateOffset<uint8_t>(*buffer, 0xFFFF));
+  // Test overflow
+  EXPECT_FALSE(table->ValidateOffset<uint8_t>(*buffer, 0xFFFF));
 
-    // uint8_t is valid for all offsets
-    for (uint16_t offset = 0; offset < sizeof(TestTable); offset++)
-        EXPECT_TRUE(table->validateOffset<uint8_t>(*buffer, offset));
-    EXPECT_FALSE(table->validateOffset<uint8_t>(*buffer, sizeof(TestTable)));
-    EXPECT_FALSE(table->validateOffset<uint8_t>(*buffer, sizeof(TestTable) + 1));
+  // uint8_t is valid for all offsets
+  for (uint16_t offset = 0; offset < sizeof(TestTable); offset++)
+    EXPECT_TRUE(table->ValidateOffset<uint8_t>(*buffer, offset));
+  EXPECT_FALSE(table->ValidateOffset<uint8_t>(*buffer, sizeof(TestTable)));
+  EXPECT_FALSE(table->ValidateOffset<uint8_t>(*buffer, sizeof(TestTable) + 1));
 
-    // For uint16_t, the last byte is invalid
-    for (uint16_t offset = 0; offset < sizeof(TestTable) - 1; offset++)
-        EXPECT_TRUE(table->validateOffset<uint16_t>(*buffer, offset));
-    EXPECT_FALSE(table->validateOffset<uint16_t>(*buffer, sizeof(TestTable) - 1));
+  // For uint16_t, the last byte is invalid
+  for (uint16_t offset = 0; offset < sizeof(TestTable) - 1; offset++)
+    EXPECT_TRUE(table->ValidateOffset<uint16_t>(*buffer, offset));
+  EXPECT_FALSE(table->ValidateOffset<uint16_t>(*buffer, sizeof(TestTable) - 1));
 }
 
-} // namespace blink
+}  // namespace blink

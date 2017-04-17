@@ -22,6 +22,7 @@
 #include "media/audio/mac/audio_auhal_mac.h"
 #include "media/audio/mac/audio_input_mac.h"
 #include "media/audio/mac/audio_low_latency_input_mac.h"
+#include "media/audio/mac/scoped_audio_unit.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/channel_layout.h"
@@ -293,6 +294,156 @@ static bool GetDefaultOutputDevice(AudioDeviceID* device) {
   return GetDefaultDevice(device, false);
 }
 
+// Returns the total number of channels on a device; regardless of what the
+// device's preferred rendering layout looks like. Should only be used for the
+// channel count when a device has more than kMaxConcurrentChannels.
+static bool GetDeviceTotalChannelCount(AudioDeviceID device,
+                                       AudioObjectPropertyScope scope,
+                                       int* channels) {
+  DCHECK(AudioManager::Get()->GetTaskRunner()->BelongsToCurrentThread());
+  CHECK(channels);
+
+  // Get the stream configuration of the device in an AudioBufferList (with the
+  // buffer pointers set to nullptr) which describes the list of streams and the
+  // number of channels in each stream.
+  AudioObjectPropertyAddress pa = {kAudioDevicePropertyStreamConfiguration,
+                                   scope, kAudioObjectPropertyElementMaster};
+
+  UInt32 size;
+  OSStatus result = AudioObjectGetPropertyDataSize(device, &pa, 0, 0, &size);
+  if (result != noErr || !size)
+    return false;
+
+  std::unique_ptr<uint8_t[]> list_storage(new uint8_t[size]);
+  AudioBufferList* buffer_list =
+      reinterpret_cast<AudioBufferList*>(list_storage.get());
+
+  result = AudioObjectGetPropertyData(device, &pa, 0, 0, &size, buffer_list);
+  if (result != noErr)
+    return false;
+
+  // Determine number of channels based on the AudioBufferList.
+  // |mNumberBuffers] is the  number of interleaved channels in the buffer.
+  // If the number is 1, the buffer is noninterleaved.
+  *channels = 0;
+  for (UInt32 i = 0; i < buffer_list->mNumberBuffers; ++i)
+    *channels += buffer_list->mBuffers[i].mNumberChannels;
+
+  DVLOG(1) << (scope == kAudioDevicePropertyScopeInput ? "Input" : "Output")
+           << " total channels: " << *channels;
+  return true;
+}
+
+// Returns the channel layout for |device| as provided by the AudioUnit attached
+// to that device matching |element|. Returns true if the count could be pulled
+// from the AudioUnit successfully, false otherwise.
+static bool GetDeviceChannels(AudioDeviceID device,
+                              AUElement element,
+                              int* channels) {
+  DCHECK(AudioManager::Get()->GetTaskRunner()->BelongsToCurrentThread());
+  CHECK(channels);
+
+  // If the device has more channels than possible for layouts to express, use
+  // the total count of channels on the device; as of this writing, macOS will
+  // only return up to 8 channels in any layout. To allow WebAudio to work with
+  // > 8 channel devices, we must use the total channel count instead of the
+  // channel count of the preferred layout.
+  int total_channel_count = 0;
+  if (GetDeviceTotalChannelCount(device,
+                                 element == AUElement::OUTPUT
+                                     ? kAudioDevicePropertyScopeOutput
+                                     : kAudioDevicePropertyScopeInput,
+                                 &total_channel_count) &&
+      total_channel_count > kMaxConcurrentChannels) {
+    *channels = total_channel_count;
+    return true;
+  }
+
+  ScopedAudioUnit au(device, element);
+  if (!au.is_valid())
+    return false;
+
+  // Attempt to retrieve the channel layout from the AudioUnit.
+  //
+  // Note: We don't use kAudioDevicePropertyPreferredChannelLayout on the device
+  // because it is not available on all devices.
+  UInt32 size;
+  Boolean writable;
+  OSStatus result = AudioUnitGetPropertyInfo(
+      au.audio_unit(), kAudioUnitProperty_AudioChannelLayout,
+      kAudioUnitScope_Output, element, &size, &writable);
+  if (result != noErr) {
+    OSSTATUS_DLOG(ERROR, result)
+        << "Failed to get property info for AudioUnit channel layout.";
+    return false;
+  }
+
+  std::unique_ptr<uint8_t[]> layout_storage(new uint8_t[size]);
+  AudioChannelLayout* layout =
+      reinterpret_cast<AudioChannelLayout*>(layout_storage.get());
+
+  result = AudioUnitGetProperty(au.audio_unit(),
+                                kAudioUnitProperty_AudioChannelLayout,
+                                kAudioUnitScope_Output, element, layout, &size);
+  if (result != noErr) {
+    OSSTATUS_LOG(ERROR, result) << "Failed to get AudioUnit channel layout.";
+    return false;
+  }
+
+  // We don't want to have to know about all channel layout tags, so force OSX
+  // to give us the channel descriptions from the bitmap or tag if necessary.
+  const AudioChannelLayoutTag tag = layout->mChannelLayoutTag;
+  if (tag != kAudioChannelLayoutTag_UseChannelDescriptions) {
+    const bool is_bitmap = tag == kAudioChannelLayoutTag_UseChannelBitmap;
+    const AudioFormatPropertyID fa =
+        is_bitmap ? kAudioFormatProperty_ChannelLayoutForBitmap
+                  : kAudioFormatProperty_ChannelLayoutForTag;
+
+    if (is_bitmap) {
+      result = AudioFormatGetPropertyInfo(fa, sizeof(UInt32),
+                                          &layout->mChannelBitmap, &size);
+    } else {
+      result = AudioFormatGetPropertyInfo(fa, sizeof(AudioChannelLayoutTag),
+                                          &tag, &size);
+    }
+    if (result != noErr || !size) {
+      OSSTATUS_DLOG(ERROR, result)
+          << "Failed to get AudioFormat property info, size=" << size;
+      return false;
+    }
+
+    layout_storage.reset(new uint8_t[size]);
+    layout = reinterpret_cast<AudioChannelLayout*>(layout_storage.get());
+    if (is_bitmap) {
+      result = AudioFormatGetProperty(fa, sizeof(UInt32),
+                                      &layout->mChannelBitmap, &size, layout);
+    } else {
+      result = AudioFormatGetProperty(fa, sizeof(AudioChannelLayoutTag), &tag,
+                                      &size, layout);
+    }
+    if (result != noErr) {
+      OSSTATUS_DLOG(ERROR, result) << "Failed to get AudioFormat property.";
+      return false;
+    }
+  }
+
+  // There is no channel info for stereo, assume so for mono as well.
+  if (layout->mNumberChannelDescriptions <= 2) {
+    *channels = layout->mNumberChannelDescriptions;
+  } else {
+    *channels = 0;
+    for (UInt32 i = 0; i < layout->mNumberChannelDescriptions; ++i) {
+      if (layout->mChannelDescriptions[i].mChannelLabel !=
+          kAudioChannelLabel_Unknown)
+        (*channels)++;
+    }
+  }
+
+  DVLOG(1) << (element == AUElement::OUTPUT ? "Output" : "Input")
+           << " channels: " << *channels;
+  return true;
+}
+
 class AudioManagerMac::AudioPowerObserver : public base::PowerObserver {
  public:
   AudioPowerObserver()
@@ -384,23 +535,6 @@ AudioManagerMac::~AudioManagerMac() {
   // and IncreaseIOBufferSizeIfPossible() which both touches native Core Audio
   // APIs and they can fail and disrupt tests during shutdown.
   in_shutdown_ = true;
-  // We have seen cases where active input audio is not closed down properly
-  // at browser shutdown. AudioInputController::Close() is called but tasks
-  // in AudioInputController::DoClose() are not executed. Hence, input streams
-  // might remain even at this late state. |low_latency_input_streams_| will be
-  // modified during the call to stream->Close(), so we can't iterate over it
-  // here.  Instead iterate over a copy.
-  // TODO(henrika): figure out the real cause why streams are not closed
-  // properly by the AIC for all cases and then remove this loop.
-  auto low_latency_input_streams_copy = low_latency_input_streams_;
-  for (auto* stream : low_latency_input_streams_copy) {
-    LOG(WARNING) << "Closing existing audio input stream at destruction";
-    // Prevents active Core Audio callbacks to use possibly invalid objects
-    // in its OnData() callback.
-    stream->Stop();
-    // Avoids hitting CHECK in dtor of AudioManagerBase.
-    stream->Close();
-  }
   Shutdown();
 }
 
@@ -410,50 +544,6 @@ bool AudioManagerMac::HasAudioOutputDevices() {
 
 bool AudioManagerMac::HasAudioInputDevices() {
   return HasAudioHardware(kAudioHardwarePropertyDefaultInputDevice);
-}
-
-// static
-bool AudioManagerMac::GetDeviceChannels(AudioDeviceID device,
-                                        AudioObjectPropertyScope scope,
-                                        int* channels) {
-  DCHECK(AudioManager::Get()->GetTaskRunner()->BelongsToCurrentThread());
-  CHECK(channels);
-  const bool is_input = (scope == kAudioDevicePropertyScopeInput);
-  DVLOG(1) << "GetDeviceChannels(id=0x" << std::hex << device
-           << ", is_input=" << is_input << ")";
-
-  // Get the stream configuration of the device in an AudioBufferList (with the
-  // buffer pointers set to NULL) which describes the list of streams and the
-  // number of channels in each stream.
-  AudioObjectPropertyAddress pa;
-  pa.mSelector = kAudioDevicePropertyStreamConfiguration;
-  pa.mScope = scope;
-  pa.mElement = kAudioObjectPropertyElementMaster;
-
-  UInt32 size;
-  OSStatus result = AudioObjectGetPropertyDataSize(device, &pa, 0, 0, &size);
-  if (result != noErr || !size)
-    return false;
-
-  std::unique_ptr<uint8_t[]> list_storage(new uint8_t[size]);
-  AudioBufferList& buffer_list =
-      *reinterpret_cast<AudioBufferList*>(list_storage.get());
-
-  result = AudioObjectGetPropertyData(device, &pa, 0, 0, &size, &buffer_list);
-  if (result != noErr)
-    return false;
-
-  // Determine number of channels based on the AudioBufferList.
-  // |mNumberBuffers] is the  number of interleaved channels in the buffer.
-  // If the number is 1, the buffer is noninterleaved.
-  // TODO(henrika): add UMA stats to track utilized hardware configurations.
-  int num_channels = 0;
-  for (UInt32 i = 0; i < buffer_list.mNumberBuffers; ++i) {
-    num_channels += buffer_list.mBuffers[i].mNumberChannels;
-  }
-  *channels = num_channels;
-  DVLOG(1) << "#channels: " << *channels;
-  return true;
 }
 
 // static
@@ -510,15 +600,14 @@ AudioParameters AudioManagerMac::GetInputStreamParameters(
   AudioDeviceID device = GetAudioDeviceIdByUId(true, device_id);
   if (device == kAudioObjectUnknown) {
     DLOG(ERROR) << "Invalid device " << device_id;
-    return AudioParameters(
-        AudioParameters::AUDIO_PCM_LOW_LATENCY, CHANNEL_LAYOUT_STEREO,
-        kFallbackSampleRate, 16, ChooseBufferSize(true, kFallbackSampleRate));
+    return AudioParameters(AudioParameters::AUDIO_PCM_LOW_LATENCY,
+                           CHANNEL_LAYOUT_STEREO, kFallbackSampleRate, 16,
+                           ChooseBufferSize(true, kFallbackSampleRate));
   }
 
   int channels = 0;
   ChannelLayout channel_layout = CHANNEL_LAYOUT_STEREO;
-  if (GetDeviceChannels(device, kAudioDevicePropertyScopeInput, &channels) &&
-      channels <= 2) {
+  if (GetDeviceChannels(device, AUElement::INPUT, &channels) && channels <= 2) {
     channel_layout = GuessChannelLayout(channels);
   } else {
     DLOG(ERROR) << "Failed to get the device channels, use stereo as default "
@@ -618,6 +707,10 @@ std::string AudioManagerMac::GetAssociatedOutputDeviceID(
 
   // Failed to figure out which is the matching device, return an empty string.
   return std::string();
+}
+
+const char* AudioManagerMac::GetName() {
+  return "Mac";
 }
 
 AudioOutputStream* AudioManagerMac::MakeLinearOutputStream(
@@ -754,10 +847,8 @@ AudioParameters AudioManagerMac::GetPreferredOutputStreamParameters(
   }
 
   int hardware_channels;
-  if (!GetDeviceChannels(device, kAudioDevicePropertyScopeOutput,
-                         &hardware_channels)) {
+  if (!GetDeviceChannels(device, AUElement::OUTPUT, &hardware_channels))
     hardware_channels = 2;
-  }
 
   // Use the input channel count and channel layout if possible.  Let OSX take
   // care of remapping the channels; this lets user specified channel layouts

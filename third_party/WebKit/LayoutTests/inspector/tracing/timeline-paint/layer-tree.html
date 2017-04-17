@@ -6,7 +6,7 @@
 <script src="../../tracing-test.js"></script>
 
 <script>
-function doActions(callback)
+function doActions()
 {
     var div = document.createElement("div");
     div.id = "b4";
@@ -16,26 +16,24 @@ function doActions(callback)
     var style = document.createElement("style");
     style.textContent = ".layer { transform: translateZ(10px); opacity: 0.8; }";
     document.head.appendChild(style);
-    generateFrames(3, callback);
+    return generateFrames(3);
 }
 
 function test()
 {
-    WebInspector.panels.timeline._captureLayersAndPicturesSetting.set(true);
+    UI.panels.timeline._captureLayersAndPicturesSetting.set(true);
 
     InspectorTest.invokeAsyncWithTimeline("doActions", step1);
     function step1()
     {
         var frames = InspectorTest.timelineFrameModel().frames();
         var lastFrame = InspectorTest.timelineFrameModel().frames().peekLast();
-        var deferredLayerTree = lastFrame.layerTree;
-        deferredLayerTree.resolve(InspectorTest.safeWrap(layerTreeResolved));
+        lastFrame.layerTree.layerTreePromise().then(InspectorTest.safeWrap(layerTreeResolved))
     }
 
-    function layerTreeResolved(layerTree)
+    function layerTreeResolved(layerTreeModel)
     {
-        InspectorTest.layerTreeModel().setLayerTree(layerTree);
-        InspectorTest.dumpLayerTree();
+        InspectorTest.dumpLayerTree(undefined, layerTreeModel.contentRoot());
         InspectorTest.completeTest();
     }
 }

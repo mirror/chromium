@@ -2,21 +2,17 @@ Tests file system project mappings.
 
 
 Running: testEditingRulesInElementsPanelDoesNotAddSourceURLToOriginalFile
-Adding file system.
-Adding file system mapping.
 Dumping uiSourceCode content:
 #inspected {
     color: red;
 }
 
-Loading stylesheet with sourceURL:
-Stylesheet loaded.
 Dumping matched rules:
 [expanded] 
 element.style { ()
 
 [expanded] 
-#inspected { (foo.css:1 -> foo.css:1:1)
+#inspected { (foo.css:1 -> foo.css:1:13)
     color: red;
 
 [expanded] 
@@ -30,7 +26,7 @@ Dumping matched rules:
 element.style { ()
 
 [expanded] 
-#inspected { (foo.css:1 -> foo.css:1:1)
+#inspected { (foo.css:1 -> foo.css:1:13)
     color: green;
     : ;
 
@@ -43,5 +39,4 @@ Dumping uiSourceCode content:
     color: green;
 }
 
-All done.
 

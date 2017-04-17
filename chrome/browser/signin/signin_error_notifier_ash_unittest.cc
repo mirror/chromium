@@ -29,7 +29,6 @@
 #include "ui/message_center/notification.h"
 
 #if defined(OS_WIN)
-#include "chrome/browser/ui/ash/ash_util.h"
 #include "ui/aura/test/test_screen.h"
 #include "ui/display/screen.h"
 #endif
@@ -48,7 +47,7 @@ static const char kTestAccountId[] = "testuser@test.com";
 
 // Notification ID corresponding to kProfileSigninNotificationId +
 // kTestAccountId.
-static const std::string kNotificationId =
+static const char kNotificationId[] =
     "chrome://settings/signin/testuser@test.com";
 }
 
@@ -225,10 +224,10 @@ TEST_F(SigninErrorNotifierTest, AuthStatusEnumerateAllErrors) {
     { GoogleServiceAuthError::CAPTCHA_REQUIRED, true },
     { GoogleServiceAuthError::ACCOUNT_DELETED, true },
     { GoogleServiceAuthError::ACCOUNT_DISABLED, true },
-    { GoogleServiceAuthError::SERVICE_UNAVAILABLE, true },
+    { GoogleServiceAuthError::SERVICE_UNAVAILABLE, false },
     { GoogleServiceAuthError::TWO_FACTOR, true },
-    { GoogleServiceAuthError::REQUEST_CANCELED, true },
-    { GoogleServiceAuthError::HOSTED_NOT_ALLOWED, true },
+    { GoogleServiceAuthError::REQUEST_CANCELED, false },
+    { GoogleServiceAuthError::HOSTED_NOT_ALLOWED_DEPRECATED, false },
     { GoogleServiceAuthError::UNEXPECTED_SERVICE_RESPONSE, true },
     { GoogleServiceAuthError::SERVICE_ERROR, true },
     { GoogleServiceAuthError::WEB_LOGIN_REQUIRED, true },
@@ -237,6 +236,8 @@ TEST_F(SigninErrorNotifierTest, AuthStatusEnumerateAllErrors) {
       "table size should match number of auth error types");
 
   for (size_t i = 0; i < arraysize(table); ++i) {
+    if (GoogleServiceAuthError::IsDeprecated(table[i].error_state))
+      continue;
     FakeAuthStatusProvider provider(error_controller_);
     provider.SetAuthError(kTestAccountId,
                           GoogleServiceAuthError(table[i].error_state));

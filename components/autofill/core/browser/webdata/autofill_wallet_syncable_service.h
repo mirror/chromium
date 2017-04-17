@@ -8,10 +8,13 @@
 #include "base/macros.h"
 #include "base/supports_user_data.h"
 #include "base/threading/thread_checker.h"
-#include "sync/api/syncable_service.h"
+#include "components/autofill/core/browser/autofill_profile.h"
+#include "components/autofill/core/browser/credit_card.h"
+#include "components/sync/model/syncable_service.h"
 
 namespace autofill {
 
+class AutofillTable;
 class AutofillWebDataBackend;
 class AutofillWebDataService;
 
@@ -58,7 +61,34 @@ class AutofillWalletSyncableService
       const std::string& app_locale);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(AutofillWalletSyncableServiceTest,
+                           CopyRelevantMetadataFromDisk_KeepLocalAddresses);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillWalletSyncableServiceTest,
+      CopyRelevantMetadataFromDisk_OverwriteOtherAddresses);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillWalletSyncableServiceTest,
+      PopulateWalletCardsAndAddresses_BillingAddressIdTransfer);
+  FRIEND_TEST_ALL_PREFIXES(AutofillWalletSyncableServiceTest,
+                           CopyRelevantMetadataFromDisk_KeepUseStats);
+  FRIEND_TEST_ALL_PREFIXES(AutofillWalletSyncableServiceTest, NewWalletCard);
+
   syncer::SyncMergeResult SetSyncData(const syncer::SyncDataList& data_list);
+
+  // Populates the wallet cards and addresses from the sync data and uses the
+  // sync data to link the card to its billing address.
+  static void PopulateWalletCardsAndAddresses(
+      const syncer::SyncDataList& data_list,
+      std::vector<CreditCard>* wallet_cards,
+      std::vector<AutofillProfile>* wallet_addresses);
+
+  // Finds the copies of the same credit card from the server and on disk and
+  // overwrites the server version with the use stats saved on disk, and the
+  // billing id if it refers to a local autofill profile. The credit card's IDs
+  // do not change over time.
+  static void CopyRelevantMetadataFromDisk(
+      const AutofillTable& table,
+      std::vector<CreditCard>* cards_from_server);
 
   base::ThreadChecker thread_checker_;
 

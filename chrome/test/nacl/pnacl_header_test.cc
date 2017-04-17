@@ -30,7 +30,7 @@ void TestDispatcherHostDelegate::RequestBeginning(
     content::ResourceContext* resource_context,
     content::AppCacheService* appcache_service,
     content::ResourceType resource_type,
-    ScopedVector<content::ResourceThrottle>* throttles) {
+    std::vector<std::unique_ptr<content::ResourceThrottle>>* throttles) {
   // This checks the same condition as the one for PNaCl in
   // AppendComponentUpdaterThrottles.
   if (resource_type == content::RESOURCE_TYPE_OBJECT) {
@@ -48,8 +48,6 @@ PnaclHeaderTest::PnaclHeaderTest() : noncors_loads_(0), cors_loads_(0) {}
 PnaclHeaderTest::~PnaclHeaderTest() {}
 
 void PnaclHeaderTest::StartServer() {
-  ASSERT_TRUE(embedded_test_server()->Start());
-
   // For most requests, just serve files, but register a special test handler
   // that watches for the .pexe fetch also.
   base::FilePath test_data_dir;
@@ -57,6 +55,7 @@ void PnaclHeaderTest::StartServer() {
   embedded_test_server()->RegisterRequestHandler(
       base::Bind(&PnaclHeaderTest::WatchForPexeFetch, base::Unretained(this)));
   embedded_test_server()->ServeFilesFromDirectory(test_data_dir);
+  ASSERT_TRUE(embedded_test_server()->Start());
 }
 
 void PnaclHeaderTest::RunLoadTest(const std::string& url,
@@ -135,7 +134,8 @@ std::unique_ptr<HttpResponse> PnaclHeaderTest::WatchForPexeFetch(
   return std::move(http_response);
 }
 
-IN_PROC_BROWSER_TEST_F(PnaclHeaderTest, TestHasPnaclHeader) {
+// Flaky: http://crbug.com/711289
+IN_PROC_BROWSER_TEST_F(PnaclHeaderTest, DISABLED_TestHasPnaclHeader) {
   // Load 2 pexes, one same origin and one cross orgin.
   RunLoadTest("/nacl/pnacl_request_header/pnacl_request_header.html", 1, 1);
 }

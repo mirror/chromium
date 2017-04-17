@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  * Copyright (C) 2008, 2009, 2010, 2011 Google Inc. All rights reserved.
  * Copyright (C) 2011 Igalia S.L.
  * Copyright (C) 2011 Motorola Mobility. All rights reserved.
@@ -32,7 +33,7 @@
 #include "core/editing/EditingStyle.h"
 #include "core/editing/serializers/MarkupFormatter.h"
 #include "core/editing/serializers/TextOffset.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -41,47 +42,57 @@ class StylePropertySet;
 class Text;
 
 class StyledMarkupAccumulator final {
-    WTF_MAKE_NONCOPYABLE(StyledMarkupAccumulator);
-    STACK_ALLOCATED();
-public:
-    StyledMarkupAccumulator(EAbsoluteURLs, const TextOffset& start, const TextOffset& end, Document*, EAnnotateForInterchange, ConvertBlocksToInlines);
+  WTF_MAKE_NONCOPYABLE(StyledMarkupAccumulator);
+  STACK_ALLOCATED();
 
-    void appendEndTag(const Element&);
-    void appendInterchangeNewline();
+ public:
+  StyledMarkupAccumulator(EAbsoluteURLs,
+                          const TextOffset& start,
+                          const TextOffset& end,
+                          Document*,
+                          EAnnotateForInterchange,
+                          ConvertBlocksToInlines);
 
-    void appendText(Text&);
-    void appendTextWithInlineStyle(Text&, EditingStyle*);
+  void AppendEndTag(const Element&);
+  void AppendInterchangeNewline();
 
-    void wrapWithStyleNode(StylePropertySet*);
-    String takeResults();
+  void AppendText(Text&);
+  void AppendTextWithInlineStyle(Text&, EditingStyle*);
 
-    void pushMarkup(const String&);
+  void WrapWithStyleNode(StylePropertySet*);
+  String TakeResults();
 
-    void appendElement(const Element&);
-    void appendElement(StringBuilder&, const Element&);
-    void appendElementWithInlineStyle(const Element&, EditingStyle*);
-    void appendElementWithInlineStyle(StringBuilder&, const Element&, EditingStyle*);
-    void appendStartMarkup(Node&);
+  void PushMarkup(const String&);
 
-    bool shouldAnnotate() const;
-    bool convertBlocksToInlines() const { return m_convertBlocksToInlines == ConvertBlocksToInlines::Convert; }
+  void AppendElement(const Element&);
+  void AppendElement(StringBuilder&, const Element&);
+  void AppendElementWithInlineStyle(const Element&, EditingStyle*);
+  void AppendElementWithInlineStyle(StringBuilder&,
+                                    const Element&,
+                                    EditingStyle*);
+  void AppendStartMarkup(Node&);
 
-private:
-    String renderedText(Text&);
-    String stringValueForRange(const Text&);
+  bool ShouldAnnotate() const;
+  bool ShouldConvertBlocksToInlines() const {
+    return convert_blocks_to_inlines_ == ConvertBlocksToInlines::kConvert;
+  }
 
-    void appendEndMarkup(StringBuilder&, const Element&);
+ private:
+  String RenderedText(Text&);
+  String StringValueForRange(const Text&);
 
-    MarkupFormatter m_formatter;
-    const TextOffset m_start;
-    const TextOffset m_end;
-    const Member<Document> m_document;
-    const EAnnotateForInterchange m_shouldAnnotate;
-    StringBuilder m_result;
-    Vector<String> m_reversedPrecedingMarkup;
-    const ConvertBlocksToInlines m_convertBlocksToInlines;
+  void AppendEndMarkup(StringBuilder&, const Element&);
+
+  MarkupFormatter formatter_;
+  const TextOffset start_;
+  const TextOffset end_;
+  const Member<Document> document_;
+  const EAnnotateForInterchange should_annotate_;
+  StringBuilder result_;
+  Vector<String> reversed_preceding_markup_;
+  const ConvertBlocksToInlines convert_blocks_to_inlines_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyledMarkupAccumulator_h
+#endif  // StyledMarkupAccumulator_h

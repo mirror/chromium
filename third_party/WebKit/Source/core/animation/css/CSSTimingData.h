@@ -7,44 +7,55 @@
 
 #include "platform/animation/TimingFunction.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 struct Timing;
 
 class CSSTimingData {
-    USING_FAST_MALLOC(CSSTimingData);
-public:
-    ~CSSTimingData() { }
+  USING_FAST_MALLOC(CSSTimingData);
 
-    const Vector<double>& delayList() const { return m_delayList; }
-    const Vector<double>& durationList() const { return m_durationList; }
-    const Vector<RefPtr<TimingFunction>>& timingFunctionList() const { return m_timingFunctionList; }
+ public:
+  ~CSSTimingData() {}
 
-    Vector<double>& delayList() { return m_delayList; }
-    Vector<double>& durationList() { return m_durationList; }
-    Vector<RefPtr<TimingFunction>>& timingFunctionList() { return m_timingFunctionList; }
+  const Vector<double>& DelayList() const { return delay_list_; }
+  const Vector<double>& DurationList() const { return duration_list_; }
+  const Vector<RefPtr<TimingFunction>>& TimingFunctionList() const {
+    return timing_function_list_;
+  }
 
-    static double initialDelay() { return 0; }
-    static double initialDuration() { return 0; }
-    static PassRefPtr<TimingFunction> initialTimingFunction() { return CubicBezierTimingFunction::preset(CubicBezierTimingFunction::EaseType::EASE); }
+  Vector<double>& DelayList() { return delay_list_; }
+  Vector<double>& DurationList() { return duration_list_; }
+  Vector<RefPtr<TimingFunction>>& TimingFunctionList() {
+    return timing_function_list_;
+  }
 
-    template <class T> static const T& getRepeated(const Vector<T>& v, size_t index) { return v[index % v.size()]; }
+  static double InitialDelay() { return 0; }
+  static double InitialDuration() { return 0; }
+  static PassRefPtr<TimingFunction> InitialTimingFunction() {
+    return CubicBezierTimingFunction::Preset(
+        CubicBezierTimingFunction::EaseType::EASE);
+  }
 
-protected:
-    CSSTimingData();
-    explicit CSSTimingData(const CSSTimingData&);
+  template <class T>
+  static const T& GetRepeated(const Vector<T>& v, size_t index) {
+    return v[index % v.size()];
+  }
 
-    Timing convertToTiming(size_t index) const;
+ protected:
+  CSSTimingData();
+  explicit CSSTimingData(const CSSTimingData&);
 
-private:
-    Vector<double> m_delayList;
-    Vector<double> m_durationList;
-    Vector<RefPtr<TimingFunction>> m_timingFunctionList;
+  Timing ConvertToTiming(size_t index) const;
+
+ private:
+  Vector<double> delay_list_;
+  Vector<double> duration_list_;
+  Vector<RefPtr<TimingFunction>> timing_function_list_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSTimingData_h
+#endif  // CSSTimingData_h

@@ -9,14 +9,11 @@ GEN_INCLUDE(['settings_page_browsertest.js']);
 /**
  * @constructor
  * @extends {SettingsPageBrowserTest}
-*/
+ */
 function SettingsAdvancedPageBrowserTest() {}
 
 SettingsAdvancedPageBrowserTest.prototype = {
   __proto__: SettingsPageBrowserTest.prototype,
-
-  /** @override */
-  browsePreload: 'chrome://md-settings/advanced',
 };
 
 // Times out on debug builders and may time out on memory bots because
@@ -35,20 +32,24 @@ TEST_F('SettingsAdvancedPageBrowserTest', 'MAYBE_Load', function() {
 
   // Register mocha tests.
   suite('SettingsPage', function() {
+    suiteSetup(function() {
+      self.toggleAdvanced();
+    });
+
     test('load page', function() {
       // This will fail if there are any asserts or errors in the Settings page.
     });
 
     test('advanced pages', function() {
-      var page = self.getPage('advanced');
+      var page = self.basicPage;
       var sections = ['privacy', 'passwordsAndForms', 'languages', 'downloads',
           'reset'];
       if (cr.isChromeOS)
-        sections = sections.concat(['dateTime', 'bluetooth', 'a11y']);
+        sections = sections.concat(['dateTime', 'a11y']);
 
       for (var i = 0; i < sections.length; i++) {
         var section = self.getSection(page, sections[i]);
-        expectTrue(!!section);
+        assertTrue(!!section);
         self.verifySubpagesHidden(section);
       }
     });

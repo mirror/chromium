@@ -7,7 +7,6 @@
 # Chrome Application dir entries, sorted alphabetically.
 #
 chrome.exe: %(ChromeDir)s\
-wow_helper.exe: %(ChromeDir)s\
 #
 # Chrome version dir assembly manifest.
 # The name of this file must match the name of the version dir, so we cannot
@@ -24,8 +23,8 @@ chrome_child.dll: %(VersionDir)s\
 chrome_elf.dll: %(VersionDir)s\
 chrome_watcher.dll: %(VersionDir)s\
 d3dcompiler_47.dll: %(VersionDir)s\
+eventlog_provider.dll: %(VersionDir)s\
 ffmpeg.dll: %(VersionDir)s\
-kasko.dll: %(VersionDir)s\
 icudt.dll: %(VersionDir)s\
 icudtl.dat: %(VersionDir)s\
 libEGL.dll: %(VersionDir)s\
@@ -46,32 +45,36 @@ Extensions\*.*: %(VersionDir)s\Extensions\
 locales\*.dll: %(VersionDir)s\Locales
 locales\*.pak: %(VersionDir)s\Locales
 
+#
+# VisualElements sub-dir.
+#
+# All or none of the following files need to be present as the creation of
+# VisualElementsManifest.xml is based on the existence of
+# %(VersionDir)\VisualElements.
+Logo.png: %(VersionDir)s\VisualElements\
+LogoCanary.png: %(VersionDir)s\VisualElements\
+SmallLogo.png: %(VersionDir)s\VisualElements\
+SmallLogoCanary.png: %(VersionDir)s\VisualElements\
+
+#
+# SwiftShader sub-dir
+#
+swiftshader\libEGL.dll: %(VersionDir)s\swiftshader\
+swiftshader\libGLESv2.dll: %(VersionDir)s\swiftshader\
+
 [HIDPI]
 chrome_200_percent.pak: %(VersionDir)s\
 
 [TOUCH]
 
 [GOOGLE_CHROME]
-SecondaryTile.png: %(VersionDir)s\
 #
 # Widevine CDM sub-dir
 #
 WidevineCdm\manifest.json: %(VersionDir)s\WidevineCdm\
 WidevineCdm\_platform_specific\win_x86\widevinecdm.dll: %(VersionDir)s\WidevineCdm\_platform_specific\win_x86\
+WidevineCdm\_platform_specific\win_x86\widevinecdm.dll.sig: %(VersionDir)s\WidevineCdm\_platform_specific\win_x86\
 WidevineCdm\_platform_specific\win_x86\widevinecdmadapter.dll: %(VersionDir)s\WidevineCdm\_platform_specific\win_x86\
 WidevineCdm\_platform_specific\win_x64\widevinecdm.dll: %(VersionDir)s\WidevineCdm\_platform_specific\win_x64\
+WidevineCdm\_platform_specific\win_x64\widevinecdm.dll.sig: %(VersionDir)s\WidevineCdm\_platform_specific\win_x64\
 WidevineCdm\_platform_specific\win_x64\widevinecdmadapter.dll: %(VersionDir)s\WidevineCdm\_platform_specific\win_x64\
-#
-# Pepper Flash sub-dir.
-#
-PepperFlash\manifest.json: %(VersionDir)s\PepperFlash\
-PepperFlash\pepflashplayer.dll: %(VersionDir)s\PepperFlash\
-#
-# Win8 sub-dir.
-#
-# All or none of the following 3 files need to be present as the creation of
-# VisualElementsManifest.xml is based on the existence of
-# %(VersionDir)\VisualElements. On a similar note, no other files should be
-# packaged in this directory.
-Logo.png: %(VersionDir)s\VisualElements\
-SmallLogo.png: %(VersionDir)s\VisualElements\

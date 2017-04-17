@@ -4,11 +4,13 @@
 
 #include "ui/views/widget/widget.h"
 
+#include "base/auto_reset.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
+#include "ui/aura/window.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/default_style.h"
 #include "ui/base/default_theme_provider.h"
@@ -46,12 +48,12 @@ namespace {
 // If |view| has a layer the layer is added to |layers|. Else this recurses
 // through the children. This is used to build a list of the layers created by
 // views that are direct children of the Widgets layer.
-void BuildRootLayers(View* view, std::vector<ui::Layer*>* layers) {
+void BuildViewsWithLayers(View* view, View::Views* views) {
   if (view->layer()) {
-    layers->push_back(view->layer());
+    views->push_back(view);
   } else {
     for (int i = 0; i < view->child_count(); ++i)
-      BuildRootLayers(view->child_at(i), layers);
+      BuildViewsWithLayers(view->child_at(i), views);
   }
 }
 
@@ -141,6 +143,14 @@ Widget::InitParams::InitParams(const InitParams& other) = default;
 Widget::InitParams::~InitParams() {
 }
 
+bool Widget::InitParams::CanActivate() const {
+  if (activatable != InitParams::ACTIVATABLE_DEFAULT)
+    return activatable == InitParams::ACTIVATABLE_YES;
+  return type != InitParams::TYPE_CONTROL && type != InitParams::TYPE_POPUP &&
+         type != InitParams::TYPE_MENU && type != InitParams::TYPE_TOOLTIP &&
+         type != InitParams::TYPE_DRAG;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Widget, public:
 
@@ -163,10 +173,9 @@ Widget::Widget()
       ignore_capture_loss_(false),
       last_mouse_event_was_move_(false),
       auto_release_capture_(true),
-      root_layers_dirty_(false),
+      views_with_layers_dirty_(false),
       movement_disabled_(false),
-      observer_manager_(this) {
-}
+      observer_manager_(this) {}
 
 Widget::~Widget() {
   DestroyRootView();
@@ -309,20 +318,9 @@ void Widget::Init(const InitParams& in_params) {
   if (params.opacity == views::Widget::InitParams::INFER_OPACITY)
     params.opacity = views::Widget::InitParams::OPAQUE_WINDOW;
 
-  bool can_activate = false;
-  if (params.activatable != InitParams::ACTIVATABLE_DEFAULT) {
-    can_activate = (params.activatable == InitParams::ACTIVATABLE_YES);
-  } else if (params.type != InitParams::TYPE_CONTROL &&
-             params.type != InitParams::TYPE_POPUP &&
-             params.type != InitParams::TYPE_MENU &&
-             params.type != InitParams::TYPE_TOOLTIP &&
-             params.type != InitParams::TYPE_DRAG) {
-    can_activate = true;
-    params.activatable = InitParams::ACTIVATABLE_YES;
-  } else {
-    can_activate = false;
-    params.activatable = InitParams::ACTIVATABLE_NO;
-  }
+  bool can_activate = params.CanActivate();
+  params.activatable =
+      can_activate ? InitParams::ACTIVATABLE_YES : InitParams::ACTIVATABLE_NO;
 
   widget_delegate_ = params.delegate ?
       params.delegate : new DefaultWidgetDelegate(this);
@@ -344,7 +342,12 @@ void Widget::Init(const InitParams& in_params) {
     // NonClientView to the RootView. This will cause everything to be parented.
     non_client_view_->set_client_view(widget_delegate_->CreateClientView(this));
     non_client_view_->SetOverlayView(widget_delegate_->CreateOverlayView());
-    SetContentsView(non_client_view_);
+
+    // Bypass the Layout() that happens in Widget::SetContentsView(). Layout()
+    // will occur after setting the initial bounds below. The RootView's size is
+    // not valid until that happens.
+    root_view_->SetContentsView(non_client_view_);
+
     // Initialize the window's icon and title before setting the window's
     // initial bounds; the frame view's preferred height may depend on the
     // presence of an icon or a title.
@@ -352,6 +355,12 @@ void Widget::Init(const InitParams& in_params) {
     UpdateWindowTitle();
     non_client_view_->ResetWindowControls();
     SetInitialBounds(params.bounds);
+
+    // Perform the initial layout. This handles the case where the size might
+    // not actually change when setting the initial bounds. If it did, child
+    // views won't have a dirty Layout state, so won't do any work.
+    root_view_->Layout();
+
     if (params.show_state == ui::SHOW_STATE_MAXIMIZED) {
       Maximize();
     } else if (params.show_state == ui::SHOW_STATE_MINIMIZED) {
@@ -435,9 +444,8 @@ void Widget::NotifyNativeViewHierarchyChanged() {
 }
 
 void Widget::NotifyWillRemoveView(View* view) {
-  FOR_EACH_OBSERVER(WidgetRemovalsObserver,
-                    removals_observers_,
-                    OnWillRemoveView(this, view));
+  for (WidgetRemovalsObserver& observer : removals_observers_)
+    observer.OnWillRemoveView(this, view);
 }
 
 // Converted methods (see header) ----------------------------------------------
@@ -459,7 +467,15 @@ void Widget::SetContentsView(View* view) {
   // Do not SetContentsView() again if it is already set to the same view.
   if (view == GetContentsView())
     return;
+
   root_view_->SetContentsView(view);
+
+  // Force a layout now, since the attached hierarchy won't be ready for the
+  // containing window's bounds. Note that we call Layout directly rather than
+  // calling the widget's size changed handler, since the RootView's bounds may
+  // not have changed, which will cause the Layout not to be done otherwise.
+  root_view_->Layout();
+
   if (non_client_view_ != view) {
     // |non_client_view_| can only be non-NULL here if RequiresNonClientView()
     // was true when the widget was initialized. Creating widgets with non
@@ -553,10 +569,6 @@ void Widget::StackAtTop() {
   native_widget_->StackAtTop();
 }
 
-void Widget::StackBelow(gfx::NativeView native_view) {
-  native_widget_->StackBelow(native_view);
-}
-
 void Widget::SetShape(std::unique_ptr<SkRegion> shape) {
   native_widget_->SetShape(std::move(shape));
 }
@@ -583,14 +595,17 @@ void Widget::Close() {
     if (is_top_level() && focus_manager_.get())
       focus_manager_->SetFocusedView(NULL);
 
-    FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetClosing(this));
+    for (WidgetObserver& observer : observers_)
+      observer.OnWidgetClosing(this);
+
     native_widget_->Close();
     widget_closed_ = true;
   }
 }
 
 void Widget::CloseNow() {
-  FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetClosing(this));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetClosing(this);
   native_widget_->CloseNow();
 }
 
@@ -705,6 +720,8 @@ bool Widget::IsFullscreen() const {
 }
 
 void Widget::SetOpacity(float opacity) {
+  DCHECK(opacity >= 0.0f);
+  DCHECK(opacity <= 1.0f);
   native_widget_->SetOpacity(opacity);
 }
 
@@ -738,10 +755,6 @@ const ui::ThemeProvider* Widget::GetThemeProvider() const {
       return provider;
   }
   return default_theme_provider_.get();
-}
-
-const ui::NativeTheme* Widget::GetNativeTheme() const {
-  return native_widget_->GetNativeTheme();
 }
 
 FocusManager* Widget::GetFocusManager() {
@@ -920,11 +933,11 @@ void Widget::ReorderNativeViews() {
   native_widget_->ReorderNativeViews();
 }
 
-void Widget::UpdateRootLayers() {
+void Widget::LayerTreeChanged() {
   // Calculate the layers requires traversing the tree, and since nearly any
   // mutation of the tree can trigger this call we delay until absolutely
   // necessary.
-  root_layers_dirty_ = true;
+  views_with_layers_dirty_ = true;
 }
 
 const NativeWidget* Widget::native_widget() const {
@@ -985,10 +998,6 @@ void Widget::SynthesizeMouseMoveEvent() {
   root_view_->OnMouseMoved(mouse_event);
 }
 
-void Widget::OnRootViewLayout() {
-  native_widget_->OnRootViewLayout();
-}
-
 bool Widget::IsTranslucentWindowOpacitySupported() const {
   return native_widget_->IsTranslucentWindowOpacitySupported();
 }
@@ -1030,8 +1039,8 @@ void Widget::OnNativeWidgetActivationChanged(bool active) {
   if (!active && native_widget_initialized_)
     SaveWindowPlacement();
 
-  FOR_EACH_OBSERVER(WidgetObserver, observers_,
-                    OnWidgetActivationChanged(this, active));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetActivationChanged(this, active);
 
   if (non_client_view())
     non_client_view()->frame_view()->ActivationChanged(active);
@@ -1046,16 +1055,16 @@ void Widget::OnNativeBlur() {
 }
 
 void Widget::OnNativeWidgetVisibilityChanging(bool visible) {
-  FOR_EACH_OBSERVER(WidgetObserver, observers_,
-                    OnWidgetVisibilityChanging(this, visible));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetVisibilityChanging(this, visible);
 }
 
 void Widget::OnNativeWidgetVisibilityChanged(bool visible) {
   View* root = GetRootView();
   if (root)
     root->PropagateVisibilityNotifications(root, visible);
-  FOR_EACH_OBSERVER(WidgetObserver, observers_,
-                    OnWidgetVisibilityChanged(this, visible));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetVisibilityChanged(this, visible);
   if (GetCompositor() && root && root->layer())
     root->layer()->SetVisible(visible);
 }
@@ -1066,7 +1075,8 @@ void Widget::OnNativeWidgetCreated(bool desktop_widget) {
 
   native_widget_->InitModalType(widget_delegate_->GetModalType());
 
-  FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetCreated(this));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetCreated(this);
 }
 
 void Widget::OnNativeWidgetDestroying() {
@@ -1074,14 +1084,16 @@ void Widget::OnNativeWidgetDestroying() {
   // in case that the focused view is under this root view.
   if (GetFocusManager() && root_view_)
     GetFocusManager()->ViewRemoved(root_view_.get());
-  FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetDestroying(this));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetDestroying(this);
   if (non_client_view_)
     non_client_view_->WindowClosing();
   widget_delegate_->WindowClosing();
 }
 
 void Widget::OnNativeWidgetDestroyed() {
-  FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetDestroyed(this));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetDestroyed(this);
   widget_delegate_->DeleteDelegate();
   widget_delegate_ = NULL;
   native_widget_destroyed_ = true;
@@ -1099,9 +1111,8 @@ void Widget::OnNativeWidgetMove() {
   widget_delegate_->OnWidgetMove();
   NotifyCaretBoundsChanged(GetInputMethod());
 
-  FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetBoundsChanged(
-    this,
-    GetWindowBoundsInScreen()));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetBoundsChanged(this, GetWindowBoundsInScreen());
 }
 
 void Widget::OnNativeWidgetSizeChanged(const gfx::Size& new_size) {
@@ -1112,9 +1123,8 @@ void Widget::OnNativeWidgetSizeChanged(const gfx::Size& new_size) {
   NotifyCaretBoundsChanged(GetInputMethod());
   SaveWindowPlacementIfInitialized();
 
-  FOR_EACH_OBSERVER(WidgetObserver, observers_, OnWidgetBoundsChanged(
-    this,
-    GetWindowBoundsInScreen()));
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetBoundsChanged(this, GetWindowBoundsInScreen());
 }
 
 void Widget::OnNativeWidgetWorkspaceChanged() {}
@@ -1140,7 +1150,7 @@ void Widget::OnNativeWidgetPaint(const ui::PaintContext& context) {
   // SetInitialBounds call.
   if (!native_widget_initialized_)
     return;
-  GetRootView()->Paint(context);
+  GetRootView()->PaintFromPaintRoot(context);
 }
 
 int Widget::GetNonClientComponent(const gfx::Point& point) {
@@ -1155,7 +1165,7 @@ int Widget::GetNonClientComponent(const gfx::Point& point) {
 }
 
 void Widget::OnKeyEvent(ui::KeyEvent* event) {
-  SendEventToProcessor(event);
+  SendEventToSink(event);
   if (!event->handled() && GetFocusManager() &&
       !GetFocusManager()->OnKeyEvent(*event)) {
     event->StopPropagation();
@@ -1164,7 +1174,7 @@ void Widget::OnKeyEvent(ui::KeyEvent* event) {
 
 // TODO(tdanderson): We should not be calling the OnMouse*() functions on
 //                   RootView from anywhere in Widget. Use
-//                   SendEventToProcessor() instead. See crbug.com/348087.
+//                   SendEventToSink() instead. See crbug.com/348087.
 void Widget::OnMouseEvent(ui::MouseEvent* event) {
   View* root_view = GetRootView();
   switch (event->type()) {
@@ -1210,7 +1220,14 @@ void Widget::OnMouseEvent(ui::MouseEvent* event) {
       }
       if (root_view)
         root_view->OnMouseReleased(*event);
-      if ((event->flags() & ui::EF_IS_NON_CLIENT) == 0)
+      if ((event->flags() & ui::EF_IS_NON_CLIENT) == 0 &&
+          // If none of the "normal" buttons are pressed, this event may be from
+          // one of the newer mice that have buttons bound to browser forward
+          // back actions. Don't squelch the event and let the default handler
+          // process it.
+          (event->flags() &
+           (ui::EF_LEFT_MOUSE_BUTTON | ui::EF_MIDDLE_MOUSE_BUTTON |
+            ui::EF_RIGHT_MOUSE_BUTTON)) != 0)
         event->SetHandled();
       return;
 
@@ -1258,7 +1275,7 @@ void Widget::OnMouseCaptureLost() {
 
 void Widget::OnScrollEvent(ui::ScrollEvent* event) {
   ui::ScrollEvent event_copy(*event);
-  SendEventToProcessor(&event_copy);
+  SendEventToSink(&event_copy);
 
   // Convert unhandled ui::ET_SCROLL events into ui::ET_MOUSEWHEEL events.
   if (!event_copy.handled() && event_copy.type() == ui::ET_SCROLL) {
@@ -1271,20 +1288,11 @@ void Widget::OnGestureEvent(ui::GestureEvent* event) {
   // We explicitly do not capture here. Not capturing enables multiple widgets
   // to get tap events at the same time. Views (such as tab dragging) may
   // explicitly capture.
-  SendEventToProcessor(event);
+  SendEventToSink(event);
 }
 
 bool Widget::ExecuteCommand(int command_id) {
   return widget_delegate_->ExecuteWindowsCommand(command_id);
-}
-
-const std::vector<ui::Layer*>& Widget::GetRootLayers() {
-  if (root_layers_dirty_) {
-    root_layers_dirty_ = false;
-    root_layers_.clear();
-    BuildRootLayers(GetRootView(), &root_layers_);
-  }
-  return root_layers_;
 }
 
 bool Widget::HasHitTestMask() const {
@@ -1305,23 +1313,81 @@ const Widget* Widget::AsWidget() const {
 }
 
 bool Widget::SetInitialFocus(ui::WindowShowState show_state) {
+  FocusManager* focus_manager = GetFocusManager();
   View* v = widget_delegate_->GetInitiallyFocusedView();
   if (!focus_on_creation_ || show_state == ui::SHOW_STATE_INACTIVE ||
       show_state == ui::SHOW_STATE_MINIMIZED) {
     // If not focusing the window now, tell the focus manager which view to
     // focus when the window is restored.
-    if (v && focus_manager_.get())
-      focus_manager_->SetStoredFocusView(v);
+    if (v && focus_manager)
+      focus_manager->SetStoredFocusView(v);
     return true;
   }
-  if (v)
+  if (v) {
     v->RequestFocus();
-  return !!v;
+    // If the Widget is active (thus allowing its child Views to receive focus),
+    // but the request for focus was unsuccessful, fall back to using the first
+    // focusable View instead.
+    if (focus_manager && focus_manager->GetFocusedView() == nullptr &&
+        IsActive()) {
+      focus_manager->AdvanceFocus(false);
+    }
+  }
+  return !!focus_manager->GetFocusedView();
+}
+
+bool Widget::ShouldDescendIntoChildForEventHandling(
+    ui::Layer* root_layer,
+    gfx::NativeView child,
+    ui::Layer* child_layer,
+    const gfx::Point& location) {
+  if (widget_delegate_ &&
+      !widget_delegate_->ShouldDescendIntoChildForEventHandling(child,
+                                                                location)) {
+    return false;
+  }
+
+  const View::Views& views_with_layers = GetViewsWithLayers();
+  if (views_with_layers.empty())
+    return true;
+
+  // Don't descend into |child| if there is a view with a Layer that contains
+  // the point and is stacked above |child_layer|.
+  auto child_layer_iter = std::find(root_layer->children().begin(),
+                                    root_layer->children().end(), child_layer);
+  if (child_layer_iter == root_layer->children().end())
+    return true;
+
+  for (auto iter = views_with_layers.rbegin(); iter != views_with_layers.rend();
+       ++iter) {
+    ui::Layer* layer = (*iter)->layer();
+    DCHECK(layer);
+    if (layer->visible() && layer->bounds().Contains(location)) {
+      auto root_layer_iter = std::find(root_layer->children().begin(),
+                                       root_layer->children().end(), layer);
+      if (child_layer_iter > root_layer_iter) {
+        // |child| is on top of the remaining layers, no need to continue.
+        return true;
+      }
+
+      // Event targeting uses the visible bounds of the View, which may differ
+      // from the bounds of the layer. Verify the view hosting the layer
+      // actually contains |location|. Use GetVisibleBounds(), which is
+      // effectively what event targetting uses.
+      View* view = *iter;
+      gfx::Rect vis_bounds = view->GetVisibleBounds();
+      gfx::Point point_in_view = location;
+      View::ConvertPointToTarget(GetRootView(), view, &point_in_view);
+      if (vis_bounds.Contains(point_in_view))
+        return false;
+    }
+  }
+  return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Widget, ui::EventSource implementation:
-ui::EventProcessor* Widget::GetEventProcessor() {
+ui::EventSink* Widget::GetEventSink() {
   return root_view_.get();
 }
 
@@ -1369,6 +1435,7 @@ internal::RootView* Widget::CreateRootView() {
 }
 
 void Widget::DestroyRootView() {
+  NotifyWillRemoveView(root_view_.get());
   non_client_view_ = NULL;
   root_view_.reset();
 }
@@ -1456,7 +1523,7 @@ void Widget::SetInitialBoundsForFramelessWindow(const gfx::Rect& bounds) {
       native_widget_->CenterWindow(size);
   } else {
     // Use the supplied initial bounds.
-    SetBoundsConstrained(bounds);
+    SetBounds(bounds);
   }
 }
 
@@ -1485,6 +1552,15 @@ bool Widget::GetSavedWindowPlacement(gfx::Rect* bounds,
     return true;
   }
   return false;
+}
+
+const View::Views& Widget::GetViewsWithLayers() {
+  if (views_with_layers_dirty_) {
+    views_with_layers_dirty_ = false;
+    views_with_layers_.clear();
+    BuildViewsWithLayers(GetRootView(), &views_with_layers_);
+  }
+  return views_with_layers_;
 }
 
 namespace internal {

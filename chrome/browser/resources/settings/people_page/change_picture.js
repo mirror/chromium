@@ -35,6 +35,7 @@ Polymer({
   is: 'settings-change-picture',
 
   behaviors: [
+    settings.RouteObserverBehavior,
     I18nBehavior,
     WebUIListenerBehavior,
   ],
@@ -87,41 +88,34 @@ Polymer({
       value: function() { return []; },
     },
 
-    /**
-     * The fallback image to be selected when the user discards the Old image.
-     * This may be null if the user started with the Old image.
-     * @private {?ChangePictureImageElement}
-     */
-    fallbackImage_: Object,
-
-    /**
-     * Type of the last selected icon. This is used to jump back to the camera
-     * after the user discards a newly taken photo.
-     * @private {string}
-     */
-    lastSelectedImageType_: {
-      type: String,
-      value: '',
-    },
-
     /** @private */
     selectionTypesEnum_: {
       type: Object,
       value: ChangePictureSelectionTypes,
       readOnly: true,
     },
-
-    /** @private {!settings.ChangePictureBrowserProxy} */
-    browserProxy_: {
-      type: Object,
-      value: function() {
-        return settings.ChangePictureBrowserProxyImpl.getInstance();
-      },
-    },
   },
+
+  /** @private {?settings.ChangePictureBrowserProxy} */
+  browserProxy_: null,
+
+  /**
+   * The fallback image to be selected when the user discards the Old image.
+   * This may be null if the user started with the Old image.
+   * @private {?ChangePictureImageElement}
+   */
+  fallbackImage_: null,
+
+  /**
+   * Type of the last selected icon. This is used to jump back to the camera
+   * after the user discards a newly taken photo.
+   * @private {string}
+   */
+  lastSelectedImageType_: '',
 
   /** @override */
   attached: function() {
+    this.browserProxy_ = settings.ChangePictureBrowserProxyImpl.getInstance();
     this.addWebUIListener('default-images-changed',
                           this.receiveDefaultImages_.bind(this));
     this.addWebUIListener('selected-image-changed',
@@ -132,8 +126,25 @@ Polymer({
                           this.receiveProfileImage_.bind(this));
     this.addWebUIListener('camera-presence-changed',
                           this.receiveCameraPresence_.bind(this));
+  },
 
-    this.browserProxy_.initialize();
+
+  /** @protected */
+  currentRouteChanged: function(newRoute) {
+    if (newRoute == settings.Route.CHANGE_PICTURE) {
+      this.browserProxy_.initialize();
+
+      // This in needed because we manually clear the selectedItem_ property
+      // when navigating away. The selector element doesn't fire its upward
+      // data binding unless its selected item has changed.
+      this.selectedItem_ = this.$.selector.selectedItem;
+      // Focus the container by default so that the arrow keys work (and since
+      // we use the focus highlight to show which picture is selected).
+      this.$.container.focus();
+    } else {
+      // Ensure we deactivate the camera when we navigate away.
+      this.selectedItem_ = null;
+    }
   },
 
   /**
@@ -188,7 +199,7 @@ Polymer({
    */
   receiveProfileImage_: function(imageUrl, selected) {
     this.profileImageUrl_ = imageUrl;
-    this.$.profileImage.alt = this.i18n('profilePhoto');
+    this.$.profileImage.title = this.i18n('profilePhoto');
 
     if (!selected)
       return;
@@ -240,7 +251,7 @@ Polymer({
 
   /**
    * Handler for when accessibility-specific keys are pressed.
-   * @param {!{detail: !{key: string}}} e
+   * @param {!{detail: !{key: string, keyboardEvent: Object}}} e
    */
   onKeysPress_: function(e) {
     if (!this.selectedItem_)
@@ -267,7 +278,11 @@ Polymer({
           selector.selectPrevious();
         } while (this.selectedItem_.hidden);
 
+        if (this.selectedItem_.dataset.type != ChangePictureSelectionTypes.FILE)
+          this.selectImage_(this.selectedItem_);
+
         this.lastSelectedImageType_ = this.selectedItem_.dataset.type;
+        e.detail.keyboardEvent.preventDefault();
         break;
 
       case 'down':
@@ -278,7 +293,11 @@ Polymer({
           selector.selectNext();
         } while (this.selectedItem_.hidden);
 
+        if (this.selectedItem_.dataset.type != ChangePictureSelectionTypes.FILE)
+          this.selectImage_(this.selectedItem_);
+
         this.lastSelectedImageType_ = this.selectedItem_.dataset.type;
+        e.detail.keyboardEvent.preventDefault();
         break;
 
       case 'enter':
@@ -316,6 +335,7 @@ Polymer({
    */
   onPhotoTaken_: function(event) {
     this.browserProxy_.photoTaken(event.detail.photoDataUrl);
+    this.$.container.focus();
   },
 
   /**
@@ -372,7 +392,7 @@ Polymer({
    * @private
    */
   isCameraActive_: function(cameraPresent, selectedItem) {
-    return cameraPresent && selectedItem &&
+    return cameraPresent && !!selectedItem &&
         selectedItem.dataset.type == ChangePictureSelectionTypes.CAMERA;
   },
 
@@ -392,7 +412,7 @@ Polymer({
    * @private
    */
   isAuthorCreditShown_: function(selectedItem) {
-    return selectedItem &&
+    return !!selectedItem &&
         selectedItem.dataset.type == ChangePictureSelectionTypes.DEFAULT;
   },
 

@@ -7,7 +7,6 @@
         <script src="../../resources/testharnessreport.js"></script>
     </head>
     <body>
-        <div id="log"></div>
         <script>
             async_test(function(test)
             {
@@ -21,7 +20,7 @@
                         assert_unreached('Error: update() succeeded unexpectedly.');
                         test.done();
                     }).catch(function(error) {
-                        assert_equals(error.name, 'InvalidAccessError');
+                        assert_equals(error.name, 'TypeError');
                         test.done();
                     });
                 }

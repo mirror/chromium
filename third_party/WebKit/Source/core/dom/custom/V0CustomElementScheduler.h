@@ -34,8 +34,8 @@
 #include "core/dom/custom/V0CustomElementCallbackQueue.h"
 #include "core/dom/custom/V0CustomElementLifecycleCallbacks.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -45,24 +45,35 @@ class V0CustomElementMicrotaskStep;
 class V0CustomElementRegistrationContext;
 class HTMLImportChild;
 
-class V0CustomElementScheduler final : public GarbageCollected<V0CustomElementScheduler> {
-public:
+class V0CustomElementScheduler final
+    : public GarbageCollected<V0CustomElementScheduler> {
+ public:
+  static void ScheduleCallback(V0CustomElementLifecycleCallbacks*,
+                               Element*,
+                               V0CustomElementLifecycleCallbacks::CallbackType);
+  static void ScheduleAttributeChangedCallback(
+      V0CustomElementLifecycleCallbacks*,
+      Element*,
+      const AtomicString& name,
+      const AtomicString& old_value,
+      const AtomicString& new_value);
 
-    static void scheduleCallback(V0CustomElementLifecycleCallbacks*, Element*, V0CustomElementLifecycleCallbacks::CallbackType);
-    static void scheduleAttributeChangedCallback(V0CustomElementLifecycleCallbacks*, Element*, const AtomicString& name, const AtomicString& oldValue, const AtomicString& newValue);
+  static void ResolveOrScheduleResolution(V0CustomElementRegistrationContext*,
+                                          Element*,
+                                          const V0CustomElementDescriptor&);
+  static V0CustomElementMicrotaskImportStep* ScheduleImport(HTMLImportChild*);
 
-    static void resolveOrScheduleResolution(V0CustomElementRegistrationContext*, Element*, const V0CustomElementDescriptor&);
-    static V0CustomElementMicrotaskImportStep* scheduleImport(HTMLImportChild*);
+  static void MicrotaskDispatcherDidFinish();
+  static void CallbackDispatcherDidFinish();
 
-    static void microtaskDispatcherDidFinish();
-    static void callbackDispatcherDidFinish();
+ private:
+  V0CustomElementScheduler() {}
 
-private:
-    V0CustomElementScheduler() { }
-
-    static void enqueueMicrotaskStep(Document&, V0CustomElementMicrotaskStep*, bool importIsSync = true);
+  static void EnqueueMicrotaskStep(Document&,
+                                   V0CustomElementMicrotaskStep*,
+                                   bool import_is_sync = true);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementScheduler_h
+#endif  // V0CustomElementScheduler_h

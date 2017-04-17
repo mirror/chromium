@@ -5,13 +5,21 @@
 #include "base/observer_list.h"
 #include "base/observer_list_threadsafe.h"
 
+#include <utility>
 #include <vector>
 
+#include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "base/location.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
+#include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/threading/platform_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -22,13 +30,17 @@ class Foo {
  public:
   virtual void Observe(int x) = 0;
   virtual ~Foo() {}
+  virtual int GetValue() const { return 0; }
 };
 
 class Adder : public Foo {
  public:
   explicit Adder(int scaler) : total(0), scaler_(scaler) {}
-  void Observe(int x) override { total += x * scaler_; }
   ~Adder() override {}
+
+  void Observe(int x) override { total += x * scaler_; }
+  int GetValue() const override { return total; }
+
   int total;
 
  private:
@@ -37,51 +49,47 @@ class Adder : public Foo {
 
 class Disrupter : public Foo {
  public:
+  Disrupter(ObserverList<Foo>* list, Foo* doomed, bool remove_self)
+      : list_(list), doomed_(doomed), remove_self_(remove_self) {}
   Disrupter(ObserverList<Foo>* list, Foo* doomed)
-      : list_(list),
-        doomed_(doomed) {
-  }
+      : Disrupter(list, doomed, false) {}
+  Disrupter(ObserverList<Foo>* list, bool remove_self)
+      : Disrupter(list, nullptr, remove_self) {}
+
   ~Disrupter() override {}
-  void Observe(int x) override { list_->RemoveObserver(doomed_); }
+
+  void Observe(int x) override {
+    if (remove_self_)
+      list_->RemoveObserver(this);
+    if (doomed_)
+      list_->RemoveObserver(doomed_);
+  }
+
+  void SetDoomed(Foo* doomed) { doomed_ = doomed; }
 
  private:
   ObserverList<Foo>* list_;
   Foo* doomed_;
-};
-
-class ThreadSafeDisrupter : public Foo {
- public:
-  ThreadSafeDisrupter(ObserverListThreadSafe<Foo>* list, Foo* doomed)
-      : list_(list),
-        doomed_(doomed) {
-  }
-  ~ThreadSafeDisrupter() override {}
-  void Observe(int x) override { list_->RemoveObserver(doomed_); }
-
- private:
-  ObserverListThreadSafe<Foo>* list_;
-  Foo* doomed_;
+  bool remove_self_;
 };
 
 template <typename ObserverListType>
 class AddInObserve : public Foo {
  public:
   explicit AddInObserve(ObserverListType* observer_list)
-      : added(false),
-        observer_list(observer_list),
-        adder(1) {
-  }
+      : observer_list(observer_list), to_add_() {}
+
+  void SetToAdd(Foo* to_add) { to_add_ = to_add; }
 
   void Observe(int x) override {
-    if (!added) {
-      added = true;
-      observer_list->AddObserver(&adder);
+    if (to_add_) {
+      observer_list->AddObserver(to_add_);
+      to_add_ = nullptr;
     }
   }
 
-  bool added;
   ObserverListType* observer_list;
-  Adder adder;
+  Foo* to_add_;
 };
 
 
@@ -110,10 +118,8 @@ class AddRemoveThread : public PlatformThread::Delegate,
     loop_ = new MessageLoop();  // Fire up a message loop.
     loop_->task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(&AddRemoveThread::AddTask, weak_factory_.GetWeakPtr()));
+        base::BindOnce(&AddRemoveThread::AddTask, weak_factory_.GetWeakPtr()));
     RunLoop().Run();
-    //LOG(ERROR) << "Loop 0x" << std::hex << loop_ << " done. " <<
-    //    count_observes_ << ", " << count_addtask_;
     delete loop_;
     loop_ = reinterpret_cast<MessageLoop*>(0xdeadbeef);
     delete this;
@@ -140,7 +146,7 @@ class AddRemoveThread : public PlatformThread::Delegate,
 
     loop_->task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(&AddRemoveThread::AddTask, weak_factory_.GetWeakPtr()));
+        base::BindOnce(&AddRemoveThread::AddTask, weak_factory_.GetWeakPtr()));
   }
 
   void Quit() {
@@ -176,6 +182,8 @@ class AddRemoveThread : public PlatformThread::Delegate,
   base::WeakPtrFactory<AddRemoveThread> weak_factory_;
 };
 
+}  // namespace
+
 TEST(ObserverListTest, BasicTest) {
   ObserverList<Foo> observer_list;
   Adder a(1), b(-1), c(1), d(-1), e(-1);
@@ -187,7 +195,8 @@ TEST(ObserverListTest, BasicTest) {
   EXPECT_TRUE(observer_list.HasObserver(&a));
   EXPECT_FALSE(observer_list.HasObserver(&c));
 
-  FOR_EACH_OBSERVER(Foo, observer_list, Observe(10));
+  for (auto& observer : observer_list)
+    observer.Observe(10);
 
   observer_list.AddObserver(&evil);
   observer_list.AddObserver(&c);
@@ -196,13 +205,60 @@ TEST(ObserverListTest, BasicTest) {
   // Removing an observer not in the list should do nothing.
   observer_list.RemoveObserver(&e);
 
-  FOR_EACH_OBSERVER(Foo, observer_list, Observe(10));
+  for (auto& observer : observer_list)
+    observer.Observe(10);
 
   EXPECT_EQ(20, a.total);
   EXPECT_EQ(-20, b.total);
   EXPECT_EQ(0, c.total);
   EXPECT_EQ(-10, d.total);
   EXPECT_EQ(0, e.total);
+}
+
+TEST(ObserverListTest, DisruptSelf) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter evil(&observer_list, true);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+
+  for (auto& observer : observer_list)
+    observer.Observe(10);
+
+  observer_list.AddObserver(&evil);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& observer : observer_list)
+    observer.Observe(10);
+
+  EXPECT_EQ(20, a.total);
+  EXPECT_EQ(-20, b.total);
+  EXPECT_EQ(10, c.total);
+  EXPECT_EQ(-10, d.total);
+}
+
+TEST(ObserverListTest, DisruptBefore) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter evil(&observer_list, &b);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&evil);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& observer : observer_list)
+    observer.Observe(10);
+  for (auto& observer : observer_list)
+    observer.Observe(10);
+
+  EXPECT_EQ(20, a.total);
+  EXPECT_EQ(-10, b.total);
+  EXPECT_EQ(20, c.total);
+  EXPECT_EQ(-20, d.total);
 }
 
 TEST(ObserverListThreadSafeTest, BasicTest) {
@@ -214,7 +270,6 @@ TEST(ObserverListThreadSafeTest, BasicTest) {
   Adder b(-1);
   Adder c(1);
   Adder d(-1);
-  ThreadSafeDisrupter evil(observer_list.get(), &c);
 
   observer_list->AddObserver(&a);
   observer_list->AddObserver(&b);
@@ -222,11 +277,11 @@ TEST(ObserverListThreadSafeTest, BasicTest) {
   observer_list->Notify(FROM_HERE, &Foo::Observe, 10);
   RunLoop().RunUntilIdle();
 
-  observer_list->AddObserver(&evil);
   observer_list->AddObserver(&c);
   observer_list->AddObserver(&d);
 
   observer_list->Notify(FROM_HERE, &Foo::Observe, 10);
+  observer_list->RemoveObserver(&c);
   RunLoop().RunUntilIdle();
 
   EXPECT_EQ(20, a.total);
@@ -267,18 +322,18 @@ TEST(ObserverListThreadSafeTest, RemoveObserver) {
   EXPECT_EQ(0, b.total);
 }
 
-TEST(ObserverListThreadSafeTest, WithoutMessageLoop) {
+TEST(ObserverListThreadSafeTest, WithoutSequence) {
   scoped_refptr<ObserverListThreadSafe<Foo> > observer_list(
       new ObserverListThreadSafe<Foo>);
 
   Adder a(1), b(1), c(1);
 
-  // No MessageLoop, so these should not be added.
+  // No sequence, so these should not be added.
   observer_list->AddObserver(&a);
   observer_list->AddObserver(&b);
 
   {
-    // Add c when there's a loop.
+    // Add c when there's a sequence.
     MessageLoop loop;
     observer_list->AddObserver(&c);
 
@@ -289,10 +344,10 @@ TEST(ObserverListThreadSafeTest, WithoutMessageLoop) {
     EXPECT_EQ(0, b.total);
     EXPECT_EQ(10, c.total);
 
-    // Now add a when there's a loop.
+    // Now add a when there's a sequence.
     observer_list->AddObserver(&a);
 
-    // Remove c when there's a loop.
+    // Remove c when there's a sequence.
     observer_list->RemoveObserver(&c);
 
     // Notify again.
@@ -304,7 +359,7 @@ TEST(ObserverListThreadSafeTest, WithoutMessageLoop) {
     EXPECT_EQ(10, c.total);
   }
 
-  // Removing should always succeed with or without a loop.
+  // Removing should always succeed with or without a sequence.
   observer_list->RemoveObserver(&a);
 
   // Notifying should not fail but should also be a no-op.
@@ -429,24 +484,157 @@ TEST(ObserverListThreadSafeTest, OutlivesMessageLoop) {
   observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
 }
 
+namespace {
+
+class SequenceVerificationObserver : public Foo {
+ public:
+  explicit SequenceVerificationObserver(
+      scoped_refptr<SequencedTaskRunner> task_runner)
+      : task_runner_(std::move(task_runner)) {}
+  ~SequenceVerificationObserver() override = default;
+
+  void Observe(int x) override {
+    called_on_valid_sequence_ = task_runner_->RunsTasksOnCurrentThread();
+  }
+
+  bool called_on_valid_sequence() const { return called_on_valid_sequence_; }
+
+ private:
+  const scoped_refptr<SequencedTaskRunner> task_runner_;
+  bool called_on_valid_sequence_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(SequenceVerificationObserver);
+};
+
+}  // namespace
+
+// Verify that observers are notified on the correct sequence.
+TEST(ObserverListThreadSafeTest, NotificationOnValidSequence) {
+  test::ScopedTaskEnvironment scoped_task_environment;
+
+  auto task_runner_1 = CreateSequencedTaskRunnerWithTraits(TaskTraits());
+  auto task_runner_2 = CreateSequencedTaskRunnerWithTraits(TaskTraits());
+
+  auto observer_list = make_scoped_refptr(new ObserverListThreadSafe<Foo>());
+
+  SequenceVerificationObserver observer_1(task_runner_1);
+  SequenceVerificationObserver observer_2(task_runner_2);
+
+  task_runner_1->PostTask(
+      FROM_HERE, Bind(&ObserverListThreadSafe<Foo>::AddObserver, observer_list,
+                      Unretained(&observer_1)));
+  task_runner_2->PostTask(
+      FROM_HERE, Bind(&ObserverListThreadSafe<Foo>::AddObserver, observer_list,
+                      Unretained(&observer_2)));
+
+  TaskScheduler::GetInstance()->FlushForTesting();
+
+  observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
+
+  TaskScheduler::GetInstance()->FlushForTesting();
+
+  EXPECT_TRUE(observer_1.called_on_valid_sequence());
+  EXPECT_TRUE(observer_2.called_on_valid_sequence());
+}
+
+// Verify that when an observer is added to a NOTIFY_ALL ObserverListThreadSafe
+// from a notification, it is itself notified.
+TEST(ObserverListThreadSafeTest, AddObserverFromNotificationNotifyAll) {
+  test::ScopedTaskEnvironment scoped_task_environment;
+  auto observer_list = make_scoped_refptr(new ObserverListThreadSafe<Foo>());
+
+  Adder observer_added_from_notification(1);
+
+  AddInObserve<ObserverListThreadSafe<Foo>> initial_observer(
+      observer_list.get());
+  initial_observer.SetToAdd(&observer_added_from_notification);
+  observer_list->AddObserver(&initial_observer);
+
+  observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
+
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(1, observer_added_from_notification.GetValue());
+}
+
+namespace {
+
+class RemoveWhileNotificationIsRunningObserver : public Foo {
+ public:
+  RemoveWhileNotificationIsRunningObserver()
+      : notification_running_(WaitableEvent::ResetPolicy::AUTOMATIC,
+                              WaitableEvent::InitialState::NOT_SIGNALED),
+        barrier_(WaitableEvent::ResetPolicy::AUTOMATIC,
+                 WaitableEvent::InitialState::NOT_SIGNALED) {}
+  ~RemoveWhileNotificationIsRunningObserver() override = default;
+
+  void Observe(int x) override {
+    notification_running_.Signal();
+    barrier_.Wait();
+  }
+
+  void WaitForNotificationRunning() { notification_running_.Wait(); }
+  void Unblock() { barrier_.Signal(); }
+
+ private:
+  WaitableEvent notification_running_;
+  WaitableEvent barrier_;
+
+  DISALLOW_COPY_AND_ASSIGN(RemoveWhileNotificationIsRunningObserver);
+};
+
+}  // namespace
+
+// Verify that there is no crash when an observer is removed while it is being
+// notified.
+TEST(ObserverListThreadSafeTest, RemoveWhileNotificationIsRunning) {
+  auto observer_list = make_scoped_refptr(new ObserverListThreadSafe<Foo>());
+  RemoveWhileNotificationIsRunningObserver observer;
+
+  WaitableEvent task_running(WaitableEvent::ResetPolicy::AUTOMATIC,
+                             WaitableEvent::InitialState::NOT_SIGNALED);
+  WaitableEvent barrier(WaitableEvent::ResetPolicy::AUTOMATIC,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
+
+  // This must be after the declaration of |barrier| so that tasks posted to
+  // TaskScheduler can safely use |barrier|.
+  test::ScopedTaskEnvironment scoped_task_environment;
+
+  CreateSequencedTaskRunnerWithTraits(TaskTraits().WithBaseSyncPrimitives())
+      ->PostTask(FROM_HERE,
+                 base::Bind(&ObserverListThreadSafe<Foo>::AddObserver,
+                            observer_list, Unretained(&observer)));
+  TaskScheduler::GetInstance()->FlushForTesting();
+
+  observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
+  observer.WaitForNotificationRunning();
+  observer_list->RemoveObserver(&observer);
+
+  observer.Unblock();
+}
+
 TEST(ObserverListTest, Existing) {
   ObserverList<Foo> observer_list(ObserverList<Foo>::NOTIFY_EXISTING_ONLY);
   Adder a(1);
   AddInObserve<ObserverList<Foo> > b(&observer_list);
+  Adder c(1);
+  b.SetToAdd(&c);
 
   observer_list.AddObserver(&a);
   observer_list.AddObserver(&b);
 
-  FOR_EACH_OBSERVER(Foo, observer_list, Observe(1));
+  for (auto& observer : observer_list)
+    observer.Observe(1);
 
-  EXPECT_TRUE(b.added);
+  EXPECT_FALSE(b.to_add_);
   // B's adder should not have been notified because it was added during
   // notification.
-  EXPECT_EQ(0, b.adder.total);
+  EXPECT_EQ(0, c.total);
 
   // Notify again to make sure b's adder is notified.
-  FOR_EACH_OBSERVER(Foo, observer_list, Observe(1));
-  EXPECT_EQ(1, b.adder.total);
+  for (auto& observer : observer_list)
+    observer.Observe(1);
+  EXPECT_EQ(1, c.total);
 }
 
 // Same as above, but for ObserverListThreadSafe
@@ -456,6 +644,8 @@ TEST(ObserverListThreadSafeTest, Existing) {
       new ObserverListThreadSafe<Foo>(ObserverList<Foo>::NOTIFY_EXISTING_ONLY));
   Adder a(1);
   AddInObserve<ObserverListThreadSafe<Foo> > b(observer_list.get());
+  Adder c(1);
+  b.SetToAdd(&c);
 
   observer_list->AddObserver(&a);
   observer_list->AddObserver(&b);
@@ -463,15 +653,15 @@ TEST(ObserverListThreadSafeTest, Existing) {
   observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
   RunLoop().RunUntilIdle();
 
-  EXPECT_TRUE(b.added);
+  EXPECT_FALSE(b.to_add_);
   // B's adder should not have been notified because it was added during
   // notification.
-  EXPECT_EQ(0, b.adder.total);
+  EXPECT_EQ(0, c.total);
 
   // Notify again to make sure b's adder is notified.
   observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
   RunLoop().RunUntilIdle();
-  EXPECT_EQ(1, b.adder.total);
+  EXPECT_EQ(1, c.total);
 }
 
 class AddInClearObserve : public Foo {
@@ -501,7 +691,8 @@ TEST(ObserverListTest, ClearNotifyAll) {
 
   observer_list.AddObserver(&a);
 
-  FOR_EACH_OBSERVER(Foo, observer_list, Observe(1));
+  for (auto& observer : observer_list)
+    observer.Observe(1);
   EXPECT_TRUE(a.added());
   EXPECT_EQ(1, a.adder().total)
       << "Adder should observe once and have sum of 1.";
@@ -513,7 +704,8 @@ TEST(ObserverListTest, ClearNotifyExistingOnly) {
 
   observer_list.AddObserver(&a);
 
-  FOR_EACH_OBSERVER(Foo, observer_list, Observe(1));
+  for (auto& observer : observer_list)
+    observer.Observe(1);
   EXPECT_TRUE(a.added());
   EXPECT_EQ(0, a.adder().total)
       << "Adder should not observe, so sum should still be 0.";
@@ -536,10 +728,330 @@ TEST(ObserverListTest, IteratorOutlivesList) {
   ListDestructor a(observer_list);
   observer_list->AddObserver(&a);
 
-  FOR_EACH_OBSERVER(Foo, *observer_list, Observe(0));
+  for (auto& observer : *observer_list)
+    observer.Observe(0);
   // If this test fails, there'll be Valgrind errors when this function goes out
   // of scope.
 }
 
-}  // namespace
+TEST(ObserverListTest, BasicStdIterator) {
+  using FooList = ObserverList<Foo>;
+  FooList observer_list;
+
+  // An optimization: begin() and end() do not involve weak pointers on
+  // empty list.
+  EXPECT_FALSE(observer_list.begin().list_);
+  EXPECT_FALSE(observer_list.end().list_);
+
+  // Iterate over empty list: no effect, no crash.
+  for (auto& i : observer_list)
+    i.Observe(10);
+
+  Adder a(1), b(-1), c(1), d(-1);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (FooList::iterator i = observer_list.begin(), e = observer_list.end();
+       i != e; ++i)
+    i->Observe(1);
+
+  EXPECT_EQ(1, a.total);
+  EXPECT_EQ(-1, b.total);
+  EXPECT_EQ(1, c.total);
+  EXPECT_EQ(-1, d.total);
+
+  // Check an iteration over a 'const view' for a given container.
+  const FooList& const_list = observer_list;
+  for (FooList::const_iterator i = const_list.begin(), e = const_list.end();
+       i != e; ++i) {
+    EXPECT_EQ(1, std::abs(i->GetValue()));
+  }
+
+  for (const auto& o : const_list)
+    EXPECT_EQ(1, std::abs(o.GetValue()));
+}
+
+TEST(ObserverListTest, StdIteratorRemoveItself) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, true);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& o : observer_list)
+    o.Observe(1);
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(11, a.total);
+  EXPECT_EQ(-11, b.total);
+  EXPECT_EQ(11, c.total);
+  EXPECT_EQ(-11, d.total);
+}
+
+TEST(ObserverListTest, StdIteratorRemoveBefore) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, &b);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& o : observer_list)
+    o.Observe(1);
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(11, a.total);
+  EXPECT_EQ(-1, b.total);
+  EXPECT_EQ(11, c.total);
+  EXPECT_EQ(-11, d.total);
+}
+
+TEST(ObserverListTest, StdIteratorRemoveAfter) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, &c);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& o : observer_list)
+    o.Observe(1);
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(11, a.total);
+  EXPECT_EQ(-11, b.total);
+  EXPECT_EQ(0, c.total);
+  EXPECT_EQ(-11, d.total);
+}
+
+TEST(ObserverListTest, StdIteratorRemoveAfterFront) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, &a);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& o : observer_list)
+    o.Observe(1);
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(1, a.total);
+  EXPECT_EQ(-11, b.total);
+  EXPECT_EQ(11, c.total);
+  EXPECT_EQ(-11, d.total);
+}
+
+TEST(ObserverListTest, StdIteratorRemoveBeforeBack) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, &d);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&d);
+
+  for (auto& o : observer_list)
+    o.Observe(1);
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(11, a.total);
+  EXPECT_EQ(-11, b.total);
+  EXPECT_EQ(11, c.total);
+  EXPECT_EQ(0, d.total);
+}
+
+TEST(ObserverListTest, StdIteratorRemoveFront) {
+  using FooList = ObserverList<Foo>;
+  FooList observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, true);
+
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  bool test_disruptor = true;
+  for (FooList::iterator i = observer_list.begin(), e = observer_list.end();
+       i != e; ++i) {
+    i->Observe(1);
+    // Check that second call to i->Observe() would crash here.
+    if (test_disruptor) {
+      EXPECT_FALSE(i.GetCurrent());
+      test_disruptor = false;
+    }
+  }
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(11, a.total);
+  EXPECT_EQ(-11, b.total);
+  EXPECT_EQ(11, c.total);
+  EXPECT_EQ(-11, d.total);
+}
+
+TEST(ObserverListTest, StdIteratorRemoveBack) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, true);
+
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+  observer_list.AddObserver(&disrupter);
+
+  for (auto& o : observer_list)
+    o.Observe(1);
+
+  for (auto& o : observer_list)
+    o.Observe(10);
+
+  EXPECT_EQ(11, a.total);
+  EXPECT_EQ(-11, b.total);
+  EXPECT_EQ(11, c.total);
+  EXPECT_EQ(-11, d.total);
+}
+
+TEST(ObserverListTest, NestedLoop) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1), c(1), d(-1);
+  Disrupter disrupter(&observer_list, true);
+
+  observer_list.AddObserver(&disrupter);
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+  observer_list.AddObserver(&c);
+  observer_list.AddObserver(&d);
+
+  for (auto& o : observer_list) {
+    o.Observe(10);
+
+    for (auto& o : observer_list)
+      o.Observe(1);
+  }
+
+  EXPECT_EQ(15, a.total);
+  EXPECT_EQ(-15, b.total);
+  EXPECT_EQ(15, c.total);
+  EXPECT_EQ(-15, d.total);
+}
+
+TEST(ObserverListTest, NonCompactList) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1);
+
+  Disrupter disrupter1(&observer_list, true);
+  Disrupter disrupter2(&observer_list, true);
+
+  // Disrupt itself and another one.
+  disrupter1.SetDoomed(&disrupter2);
+
+  observer_list.AddObserver(&disrupter1);
+  observer_list.AddObserver(&disrupter2);
+  observer_list.AddObserver(&a);
+  observer_list.AddObserver(&b);
+
+  for (auto& o : observer_list) {
+    // Get the { nullptr, nullptr, &a, &b } non-compact list
+    // on the first inner pass.
+    o.Observe(10);
+
+    for (auto& o : observer_list)
+      o.Observe(1);
+  }
+
+  EXPECT_EQ(13, a.total);
+  EXPECT_EQ(-13, b.total);
+}
+
+TEST(ObserverListTest, BecomesEmptyThanNonEmpty) {
+  ObserverList<Foo> observer_list;
+  Adder a(1), b(-1);
+
+  Disrupter disrupter1(&observer_list, true);
+  Disrupter disrupter2(&observer_list, true);
+
+  // Disrupt itself and another one.
+  disrupter1.SetDoomed(&disrupter2);
+
+  observer_list.AddObserver(&disrupter1);
+  observer_list.AddObserver(&disrupter2);
+
+  bool add_observers = true;
+  for (auto& o : observer_list) {
+    // Get the { nullptr, nullptr } empty list on the first inner pass.
+    o.Observe(10);
+
+    for (auto& o : observer_list)
+      o.Observe(1);
+
+    if (add_observers) {
+      observer_list.AddObserver(&a);
+      observer_list.AddObserver(&b);
+      add_observers = false;
+    }
+  }
+
+  EXPECT_EQ(12, a.total);
+  EXPECT_EQ(-12, b.total);
+}
+
+TEST(ObserverListTest, AddObserverInTheLastObserve) {
+  using FooList = ObserverList<Foo>;
+  FooList observer_list;
+
+  AddInObserve<FooList> a(&observer_list);
+  Adder b(-1);
+
+  a.SetToAdd(&b);
+  observer_list.AddObserver(&a);
+
+  auto it = observer_list.begin();
+  while (it != observer_list.end()) {
+    auto& observer = *it;
+    // Intentionally increment the iterator before calling Observe(). The
+    // ObserverList starts with only one observer, and it == observer_list.end()
+    // should be true after the next line.
+    ++it;
+    // However, the first Observe() call will add a second observer: at this
+    // point, it != observer_list.end() should be true, and Observe() should be
+    // called on the newly added observer on the next iteration of the loop.
+    observer.Observe(10);
+  }
+
+  EXPECT_EQ(-10, b.total);
+}
+
 }  // namespace base

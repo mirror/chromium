@@ -31,6 +31,8 @@
 #ifndef WebServiceWorkerContextClient_h
 #define WebServiceWorkerContextClient_h
 
+#include <memory>
+
 #include "public/platform/WebMessagePortChannel.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
@@ -38,13 +40,12 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerEventResult.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerSkipWaitingCallbacks.h"
 #include "public/web/WebDevToolsAgentClient.h"
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
-struct WebCrossOriginServiceWorkerClient;
+struct WebPaymentAppResponse;
 struct WebServiceWorkerClientQueryOptions;
-class WebDataSource;
 class WebServiceWorkerContextProxy;
 class WebServiceWorkerNetworkProvider;
 class WebServiceWorkerProvider;
@@ -56,166 +57,253 @@ class WebString;
 // created WorkerGlobalScope. Unless otherwise noted, all methods of this class
 // are called on the worker thread.
 class WebServiceWorkerContextClient {
-public:
-    virtual ~WebServiceWorkerContextClient() { }
+ public:
+  virtual ~WebServiceWorkerContextClient() {}
 
-    // ServiceWorker specific method. Called when script accesses the
-    // the |scope| attribute of the ServiceWorkerGlobalScope. Immutable per spec.
-    virtual WebURL scope() const { return WebURL(); }
+  // ServiceWorker specific method. Called when script accesses the
+  // the |scope| attribute of the ServiceWorkerGlobalScope. Immutable per spec.
+  virtual WebURL Scope() const { return WebURL(); }
 
-    // ServiceWorker has prepared everything for script loading and is now ready for inspection.
-    virtual void workerReadyForInspection() { }
+  // ServiceWorker has prepared everything for script loading and is now ready
+  // for inspection.
+  virtual void WorkerReadyForInspection() {}
 
-    // The worker script is successfully loaded and a new thread is about to
-    // be started. Called on the main thread.
-    virtual void workerScriptLoaded() { }
+  // The worker script is successfully loaded and a new thread is about to
+  // be started. Called on the main thread.
+  virtual void WorkerScriptLoaded() {}
 
-    virtual bool hasAssociatedRegistration() { return false; }
+  virtual bool HasAssociatedRegistration() { return false; }
 
-    // A new WorkerGlobalScope is created and started to run on the
-    // worker thread.
-    // This also gives back a proxy to the client to talk to the
-    // newly created WorkerGlobalScope. The proxy is held by WorkerGlobalScope
-    // and should not be held by the caller. No proxy methods should be called
-    // after willDestroyWorkerContext() is called.
-    virtual void workerContextStarted(WebServiceWorkerContextProxy*) { }
+  // A new WorkerGlobalScope is created and started to run on the
+  // worker thread.
+  // This also gives back a proxy to the client to talk to the
+  // newly created WorkerGlobalScope. The proxy is held by WorkerGlobalScope
+  // and should not be held by the caller. No proxy methods should be called
+  // after willDestroyWorkerContext() is called.
+  virtual void WorkerContextStarted(WebServiceWorkerContextProxy*) {}
 
-    // WorkerGlobalScope is about to be destroyed. The client should clear
-    // the WebServiceWorkerGlobalScopeProxy when this is called.
-    virtual void willDestroyWorkerContext(v8::Local<v8::Context> context) { }
+  // WorkerGlobalScope is about to be destroyed. The client should clear
+  // the WebServiceWorkerGlobalScopeProxy when this is called.
+  virtual void WillDestroyWorkerContext(v8::Local<v8::Context> context) {}
 
-    // WorkerGlobalScope is destroyed and the worker is ready to be terminated.
-    virtual void workerContextDestroyed() { }
+  // WorkerGlobalScope is destroyed and the worker is ready to be terminated.
+  virtual void WorkerContextDestroyed() {}
 
-    // Starting worker context is failed. This could happen when loading
-    // worker script fails, or is asked to terminated before the context starts.
-    // This is called on the main thread.
-    virtual void workerContextFailedToStart() { }
+  // Starting worker context is failed. This could happen when loading
+  // worker script fails, or is asked to terminated before the context starts.
+  // This is called on the main thread.
+  virtual void WorkerContextFailedToStart() {}
 
-    // Called when the worker script is evaluated. |success| is true if the
-    // evaluation completed with no uncaught exception.
-    virtual void didEvaluateWorkerScript(bool success) { }
+  // Called when the worker script is evaluated. |success| is true if the
+  // evaluation completed with no uncaught exception.
+  virtual void DidEvaluateWorkerScript(bool success) {}
 
-    // Called when the worker context is initialized.
-    virtual void didInitializeWorkerContext(v8::Local<v8::Context> context) { }
+  // Called when the worker context is initialized.
+  virtual void DidInitializeWorkerContext(v8::Local<v8::Context> context) {}
 
-    // Called when the WorkerGlobalScope had an error or an exception.
-    virtual void reportException(const WebString& errorMessage, int lineNumber, int columnNumber, const WebString& sourceURL) { }
+  // Called when some API to be recorded in UseCounter is called on the worker
+  // global scope.
+  virtual void CountFeature(uint32_t feature) {}
 
-    // Called when the console message is reported.
-    virtual void reportConsoleMessage(int source, int level, const WebString& message, int lineNumber, const WebString& sourceURL) { }
+  // Called when the WorkerGlobalScope had an error or an exception.
+  virtual void ReportException(const WebString& error_message,
+                               int line_number,
+                               int column_number,
+                               const WebString& source_url) {}
 
-    // Inspector related messages.
-    virtual void sendDevToolsMessage(int sessionId, int callId, const WebString& message, const WebString& state) { }
+  // Called when the console message is reported.
+  virtual void ReportConsoleMessage(int source,
+                                    int level,
+                                    const WebString& message,
+                                    int line_number,
+                                    const WebString& source_url) {}
 
-    // Message loop for debugging.
-    virtual WebDevToolsAgentClient::WebKitClientMessageLoop* createDevToolsMessageLoop() { return nullptr; }
+  // Inspector related messages.
+  virtual void SendDevToolsMessage(int session_id,
+                                   int call_id,
+                                   const WebString& message,
+                                   const WebString& state) {}
 
-    // ServiceWorker specific method.
-    virtual void didHandleActivateEvent(int eventID, WebServiceWorkerEventResult result) { }
+  // Message loop for debugging.
+  virtual WebDevToolsAgentClient::WebKitClientMessageLoop*
+  CreateDevToolsMessageLoop() {
+    return nullptr;
+  }
 
-    // Called after ExtendableMessageEvent is handled by the ServiceWorker's
-    // script context.
-    virtual void didHandleExtendableMessageEvent(int eventID, WebServiceWorkerEventResult result) { }
+  // ServiceWorker specific method.
+  virtual void DidHandleActivateEvent(int event_id,
+                                      WebServiceWorkerEventResult result,
+                                      double event_dispatch_time) {}
 
-    // ServiceWorker specific methods. respondFetchEvent will be called after
-    // FetchEvent returns a response by the ServiceWorker's script context, and
-    // didHandleFetchEvent will be called after the end of FetchEvent's
-    // lifecycle. When no response is provided, the browser should fallback to
-    // native fetch. EventIDs are the same with the ids passed from
-    // dispatchFetchEvent respectively.
-    virtual void respondToFetchEvent(int responseID) { };
-    virtual void respondToFetchEvent(int responseID, const WebServiceWorkerResponse& response) { };
-    virtual void didHandleFetchEvent(int eventFinishID, WebServiceWorkerEventResult result) { };
+  // ServiceWorker specific method. Called after Background Fetch events
+  // (dispatched via WebServiceWorkerContextProxy) is handled by the
+  // ServiceWorker's script context.
+  virtual void DidHandleBackgroundFetchAbortEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
+  virtual void DidHandleBackgroundFetchClickEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
+  virtual void DidHandleBackgroundFetchFailEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
+  virtual void DidHandleBackgroundFetchedEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
 
-    // ServiceWorker specific method. Called after InstallEvent (dispatched
-    // via WebServiceWorkerContextProxy) is handled by the ServiceWorker's
-    // script context.
-    virtual void didHandleInstallEvent(int installEventID, WebServiceWorkerEventResult result) { }
+  // Called after ExtendableMessageEvent is handled by the ServiceWorker's
+  // script context.
+  virtual void DidHandleExtendableMessageEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
 
-    // ServiceWorker specific method. Called after NotificationClickEvent
-    // (dispatched via WebServiceWorkerContextProxy) is handled by the
-    // ServiceWorker's script context.
-    virtual void didHandleNotificationClickEvent(int eventID, WebServiceWorkerEventResult result) { }
+  // ServiceWorker specific methods. respondFetchEvent will be called after
+  // FetchEvent returns a response by the ServiceWorker's script context, and
+  // didHandleFetchEvent will be called after the end of FetchEvent's
+  // lifecycle. When no response is provided, the browser should fallback to
+  // native fetch. EventIDs are the same with the ids passed from
+  // dispatchFetchEvent respectively.
+  virtual void RespondToFetchEvent(int fetch_event_id,
+                                   double event_dispatch_time) {}
+  virtual void RespondToFetchEvent(int fetch_event_id,
+                                   const WebServiceWorkerResponse& response,
+                                   double event_dispatch_time) {}
+  virtual void RespondToPaymentRequestEvent(
+      int event_id,
+      const WebPaymentAppResponse& response,
+      double event_dispatch_time) {}
+  virtual void DidHandleFetchEvent(int fetch_event_id,
+                                   WebServiceWorkerEventResult result,
+                                   double event_dispatch_time) {}
 
-    // ServiceWorker specific method. Called after NotificationCloseEvent
-    // (dispatched via WebServiceWorkerContextProxy) is handled by the
-    // ServiceWorker's script context.
-    virtual void didHandleNotificationCloseEvent(int eventID, WebServiceWorkerEventResult result) { }
+  // ServiceWorker specific method. Called after InstallEvent (dispatched
+  // via WebServiceWorkerContextProxy) is handled by the ServiceWorker's
+  // script context.
+  virtual void DidHandleInstallEvent(int install_event_id,
+                                     WebServiceWorkerEventResult result,
+                                     double event_dispatch_time) {}
 
-    // ServiceWorker specific method. Called after PushEvent (dispatched via
-    // WebServiceWorkerContextProxy) is handled by the ServiceWorker's script
-    // context.
-    virtual void didHandlePushEvent(int pushEventID, WebServiceWorkerEventResult result) { }
+  // ServiceWorker specific method. Called after NotificationClickEvent
+  // (dispatched via WebServiceWorkerContextProxy) is handled by the
+  // ServiceWorker's script context.
+  virtual void DidHandleNotificationClickEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
 
-    // ServiceWorker specific method. Called after SyncEvent (dispatched via
-    // WebServiceWorkerContextProxy) is handled by the ServiceWorker's script
-    // context.
-    virtual void didHandleSyncEvent(int syncEventID, WebServiceWorkerEventResult result) { }
+  // ServiceWorker specific method. Called after NotificationCloseEvent
+  // (dispatched via WebServiceWorkerContextProxy) is handled by the
+  // ServiceWorker's script context.
+  virtual void DidHandleNotificationCloseEvent(
+      int event_id,
+      WebServiceWorkerEventResult result,
+      double event_dispatch_time) {}
 
-    // Ownership of the returned object is transferred to the caller.
-    // This is called on the main thread.
-    virtual WebServiceWorkerNetworkProvider* createServiceWorkerNetworkProvider(WebDataSource*) { return nullptr; }
+  // ServiceWorker specific method. Called after PushEvent (dispatched via
+  // WebServiceWorkerContextProxy) is handled by the ServiceWorker's script
+  // context.
+  virtual void DidHandlePushEvent(int push_event_id,
+                                  WebServiceWorkerEventResult result,
+                                  double event_dispatch_time) {}
 
-    // Ownership of the returned object is transferred to the caller.
-    // This is called on the main thread.
-    virtual WebServiceWorkerProvider* createServiceWorkerProvider() { return nullptr; }
+  // ServiceWorker specific method. Called after SyncEvent (dispatched via
+  // WebServiceWorkerContextProxy) is handled by the ServiceWorker's script
+  // context.
+  virtual void DidHandleSyncEvent(int sync_event_id,
+                                  WebServiceWorkerEventResult result,
+                                  double event_dispatch_time) {}
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callbacks after calling either onSuccess or onError.
-    // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
-    // passed to the WebServiceWorkerClientCallbacks implementation.
-    virtual void getClient(const WebString&, WebServiceWorkerClientCallbacks*) = 0;
+  // ServiceWorker specific method. Called after PaymentRequestEvent (dispatched
+  // via WebServiceWorkerContextProxy) is handled by the ServiceWorker's script
+  // context.
+  virtual void DidHandlePaymentRequestEvent(int payment_request_event_id,
+                                            WebServiceWorkerEventResult result,
+                                            double event_dispatch_time) {}
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callbacks after calling either onSuccess or onError.
-    // WebServiceWorkerClientsInfo and WebServiceWorkerError ownerships are
-    // passed to the WebServiceWorkerClientsCallbacks implementation.
-    virtual void getClients(const WebServiceWorkerClientQueryOptions&, WebServiceWorkerClientsCallbacks*) = 0;
+  // Ownership of the returned object is transferred to the caller.
+  // This is called on the main thread.
+  virtual WebServiceWorkerNetworkProvider*
+  CreateServiceWorkerNetworkProvider() {
+    return nullptr;
+  }
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callbacks after calling either onSuccess or onError.
-    // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
-    // passed to the WebServiceWorkerClientsCallbacks implementation.
-    virtual void openWindow(const WebURL&, WebServiceWorkerClientCallbacks*) = 0;
+  // Ownership of the returned object is transferred to the caller.
+  // This is called on the main thread.
+  virtual WebServiceWorkerProvider* CreateServiceWorkerProvider() {
+    return nullptr;
+  }
 
-    // A suggestion to cache this metadata in association with this URL.
-    virtual void setCachedMetadata(const WebURL& url, const char* data, size_t size) { }
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callbacks after calling either onSuccess or onError.
+  // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
+  // passed to the WebServiceWorkerClientCallbacks implementation.
+  virtual void GetClient(const WebString&,
+                         std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
 
-    // A suggestion to clear the cached metadata in association with this URL.
-    virtual void clearCachedMetadata(const WebURL& url) { }
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callbacks after calling either onSuccess or onError.
+  // WebServiceWorkerClientsInfo and WebServiceWorkerError ownerships are
+  // passed to the WebServiceWorkerClientsCallbacks implementation.
+  virtual void GetClients(
+      const WebServiceWorkerClientQueryOptions&,
+      std::unique_ptr<WebServiceWorkerClientsCallbacks>) = 0;
 
-    // Callee receives ownership of the passed vector.
-    // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
-    virtual void postMessageToClient(const WebString& uuid, const WebString&, WebMessagePortChannelArray*) = 0;
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callbacks after calling either onSuccess or onError.
+  // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
+  // passed to the WebServiceWorkerClientsCallbacks implementation.
+  virtual void OpenWindow(const WebURL&,
+                          std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
 
-    // Callee receives ownership of the passed vector.
-    // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
-    virtual void postMessageToCrossOriginClient(const WebCrossOriginServiceWorkerClient&, const WebString&, WebMessagePortChannelArray*) = 0;
+  // A suggestion to cache this metadata in association with this URL.
+  virtual void SetCachedMetadata(const WebURL& url,
+                                 const char* data,
+                                 size_t size) {}
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callbacks after run.
-    virtual void skipWaiting(WebServiceWorkerSkipWaitingCallbacks*) = 0;
+  // A suggestion to clear the cached metadata in association with this URL.
+  virtual void ClearCachedMetadata(const WebURL& url) {}
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callbacks after run.
-    virtual void claim(WebServiceWorkerClientsClaimCallbacks*) = 0;
+  // Callee receives ownership of the passed vector.
+  // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
+  virtual void PostMessageToClient(const WebString& uuid,
+                                   const WebString&,
+                                   WebMessagePortChannelArray) = 0;
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callback after calling either onSuccess or onError.
-    virtual void focus(const WebString& uuid, WebServiceWorkerClientCallbacks*) = 0;
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callbacks after run.
+  virtual void SkipWaiting(
+      std::unique_ptr<WebServiceWorkerSkipWaitingCallbacks>) = 0;
 
-    // Ownership of the passed callbacks is transferred to the callee, callee
-    // should delete the callbacks after calling either onSuccess or onError.
-    // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
-    // passed to the WebServiceWorkerClientsCallbacks implementation.
-    virtual void navigate(const WebString& uuid, const WebURL&, WebServiceWorkerClientCallbacks*) = 0;
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callbacks after run.
+  virtual void Claim(
+      std::unique_ptr<WebServiceWorkerClientsClaimCallbacks>) = 0;
 
-    // Called when the worker wants to register subscopes to handle via foreign
-    // fetch. Will only be called while an install event is in progress.
-    virtual void registerForeignFetchScopes(const WebVector<WebURL>& subScopes, const WebVector<WebSecurityOrigin>& origins) = 0;
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callback after calling either onSuccess or onError.
+  virtual void Focus(const WebString& uuid,
+                     std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
+
+  // Ownership of the passed callbacks is transferred to the callee, callee
+  // should delete the callbacks after calling either onSuccess or onError.
+  // WebServiceWorkerClientInfo and WebServiceWorkerError ownerships are
+  // passed to the WebServiceWorkerClientsCallbacks implementation.
+  virtual void Navigate(const WebString& uuid,
+                        const WebURL&,
+                        std::unique_ptr<WebServiceWorkerClientCallbacks>) = 0;
+
+  // Called when the worker wants to register subscopes to handle via foreign
+  // fetch. Will only be called while an install event is in progress.
+  virtual void RegisterForeignFetchScopes(
+      const WebVector<WebURL>& sub_scopes,
+      const WebVector<WebSecurityOrigin>& origins) = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebServiceWorkerContextClient_h
+#endif  // WebServiceWorkerContextClient_h

@@ -31,38 +31,41 @@
 #ifndef TextEncoder_h
 #define TextEncoder_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/DOMTypedArray.h"
+#include "core/dom/NotShared.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/TextCodec.h"
-#include "wtf/text/TextEncoding.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
+#include "platform/wtf/text/TextCodec.h"
+#include "platform/wtf/text/TextEncoding.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExecutionContext;
 class ExceptionState;
 
-class TextEncoder final : public GarbageCollectedFinalized<TextEncoder>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static TextEncoder* create(ExecutionContext*, ExceptionState&);
-    ~TextEncoder();
+class TextEncoder final : public GarbageCollectedFinalized<TextEncoder>,
+                          public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Implement the IDL
-    String encoding() const;
-    DOMUint8Array* encode(const String&);
+ public:
+  static TextEncoder* Create(ExecutionContext*, ExceptionState&);
+  ~TextEncoder();
 
-    DEFINE_INLINE_TRACE() { }
+  // Implement the IDL
+  String encoding() const;
+  NotShared<DOMUint8Array> encode(const String&);
 
-private:
-    TextEncoder(const WTF::TextEncoding&);
+  DEFINE_INLINE_TRACE() {}
 
-    WTF::TextEncoding m_encoding;
-    std::unique_ptr<WTF::TextCodec> m_codec;
+ private:
+  TextEncoder(const WTF::TextEncoding&);
+
+  WTF::TextEncoding encoding_;
+  std::unique_ptr<WTF::TextCodec> codec_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextEncoder_h
+#endif  // TextEncoder_h

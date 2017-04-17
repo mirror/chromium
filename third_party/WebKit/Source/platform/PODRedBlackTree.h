@@ -73,760 +73,723 @@
 #define PODRedBlackTree_h
 
 #include "platform/PODFreeListArena.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
 #ifndef NDEBUG
-#include "wtf/text/CString.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 #endif
 
 namespace blink {
 
 #ifndef NDEBUG
-template<class T>
+template <class T>
 struct ValueToString;
 #endif
 
-enum UninitializedTreeEnum {
-    UninitializedTree
-};
+enum UninitializedTreeEnum { kUninitializedTree };
 
-template<class T>
+template <class T>
 class PODRedBlackTree {
-    DISALLOW_NEW();
-public:
-    class Node;
+  DISALLOW_NEW();
 
-    // Visitor interface for walking all of the tree's elements.
-    class Visitor {
-    public:
-        virtual void visit(const T& data) = 0;
-    protected:
-        virtual ~Visitor() { }
-    };
+ public:
+  class Node;
 
-    // Constructs a new red-black tree without allocating an arena.
-    // isInitialized will return false in this case. initIfNeeded can be used
-    // to init the structure. This constructor is usefull for creating
-    // lazy initialized tree.
-    explicit PODRedBlackTree(UninitializedTreeEnum)
-        : m_root(0)
-        , m_needsFullOrderingComparisons(false)
+  // Visitor interface for walking all of the tree's elements.
+  class Visitor {
+   public:
+    virtual void Visit(const T& data) = 0;
+
+   protected:
+    virtual ~Visitor() {}
+  };
+
+  // Constructs a new red-black tree without allocating an arena.
+  // isInitialized will return false in this case. initIfNeeded can be used
+  // to init the structure. This constructor is usefull for creating
+  // lazy initialized tree.
+  explicit PODRedBlackTree(UninitializedTreeEnum)
+      : root_(0),
+        needs_full_ordering_comparisons_(false)
 #ifndef NDEBUG
-        , m_verboseDebugging(false)
+        ,
+        verbose_debugging_(false)
 #endif
-    {
-    }
+  {
+  }
 
-    // Constructs a new red-black tree, allocating temporary objects
-    // from a newly constructed PODFreeListArena.
-    PODRedBlackTree()
-        : m_arena(PODFreeListArena<Node>::create())
-        , m_root(0)
-        , m_needsFullOrderingComparisons(false)
+  // Constructs a new red-black tree, allocating temporary objects
+  // from a newly constructed PODFreeListArena.
+  PODRedBlackTree()
+      : arena_(PODFreeListArena<Node>::Create()),
+        root_(0),
+        needs_full_ordering_comparisons_(false)
 #ifndef NDEBUG
-        , m_verboseDebugging(false)
+        ,
+        verbose_debugging_(false)
 #endif
-    {
-    }
+  {
+  }
 
-    // Constructs a new red-black tree, allocating temporary objects
-    // from the given PODArena.
-    explicit PODRedBlackTree(PassRefPtr<PODFreeListArena<Node>> arena)
-        : m_arena(arena)
-        , m_root(0)
-        , m_needsFullOrderingComparisons(false)
+  // Constructs a new red-black tree, allocating temporary objects
+  // from the given PODArena.
+  explicit PODRedBlackTree(PassRefPtr<PODFreeListArena<Node>> arena)
+      : arena_(arena),
+        root_(0),
+        needs_full_ordering_comparisons_(false)
 #ifndef NDEBUG
-        , m_verboseDebugging(false)
+        ,
+        verbose_debugging_(false)
 #endif
-    {
+  {
+  }
+
+  virtual ~PODRedBlackTree() {}
+
+  // Clearing will delete the contents of the tree. After this call
+  // isInitialized will return false.
+  void Clear() {
+    MarkFree(root_);
+    arena_ = nullptr;
+    root_ = 0;
+  }
+
+  bool IsInitialized() const { return arena_.Get(); }
+
+  void InitIfNeeded() {
+    if (!arena_)
+      arena_ = PODFreeListArena<Node>::Create();
+  }
+
+  void InitIfNeeded(PODFreeListArena<Node>* arena) {
+    if (!arena_)
+      arena_ = arena;
+  }
+
+  void Add(const T& data) {
+    ASSERT(IsInitialized());
+    Node* node = arena_->template AllocateObject<T>(data);
+    InsertNode(node);
+  }
+
+  // Returns true if the datum was found in the tree.
+  bool Remove(const T& data) {
+    ASSERT(IsInitialized());
+    Node* node = TreeSearch(data);
+    if (node) {
+      DeleteNode(node);
+      return true;
+    }
+    return false;
+  }
+
+  bool Contains(const T& data) const {
+    ASSERT(IsInitialized());
+    return TreeSearch(data);
+  }
+
+  void VisitInorder(Visitor* visitor) const {
+    ASSERT(IsInitialized());
+    if (!root_)
+      return;
+    VisitInorderImpl(root_, visitor);
+  }
+
+  int size() const {
+    ASSERT(IsInitialized());
+    Counter counter;
+    VisitInorder(&counter);
+    return counter.Count();
+  }
+
+  // See the class documentation for an explanation of this property.
+  void SetNeedsFullOrderingComparisons(bool needs_full_ordering_comparisons) {
+    needs_full_ordering_comparisons_ = needs_full_ordering_comparisons;
+  }
+
+  virtual bool CheckInvariants() const {
+    ASSERT(IsInitialized());
+    int black_count;
+    return CheckInvariantsFromNode(root_, &black_count);
+  }
+
+#ifndef NDEBUG
+  // Dumps the tree's contents to the logging info stream for
+  // debugging purposes.
+  void Dump() const {
+    if (arena_)
+      DumpFromNode(root_, 0);
+  }
+
+  // Turns on or off verbose debugging of the tree, causing many
+  // messages to be logged during insertion and other operations in
+  // debug mode.
+  void SetVerboseDebugging(bool verbose_debugging) {
+    verbose_debugging_ = verbose_debugging;
+  }
+#endif
+
+  enum NodeColor { kRed = 1, kBlack };
+
+  // The base Node class which is stored in the tree. Nodes are only
+  // an internal concept; users of the tree deal only with the data
+  // they store in it.
+  class Node {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    WTF_MAKE_NONCOPYABLE(Node);
+
+   public:
+    // Constructor. Newly-created nodes are colored red.
+    explicit Node(const T& data)
+        : left_(0), right_(0), parent_(0), color_(kRed), data_(data) {}
+
+    virtual ~Node() {}
+
+    NodeColor GetColor() const { return color_; }
+    void SetColor(NodeColor color) { color_ = color; }
+
+    // Fetches the user data.
+    T& Data() { return data_; }
+
+    // Copies all user-level fields from the source node, but not
+    // internal fields. For example, the base implementation of this
+    // method copies the "m_data" field, but not the child or parent
+    // fields. Any augmentation information also does not need to be
+    // copied, as it will be recomputed. Subclasses must call the
+    // superclass implementation.
+    virtual void CopyFrom(Node* src) { data_ = src->Data(); }
+
+    Node* Left() const { return left_; }
+    void SetLeft(Node* node) { left_ = node; }
+
+    Node* Right() const { return right_; }
+    void SetRight(Node* node) { right_ = node; }
+
+    Node* Parent() const { return parent_; }
+    void SetParent(Node* node) { parent_ = node; }
+
+   private:
+    Node* left_;
+    Node* right_;
+    Node* parent_;
+    NodeColor color_;
+    T data_;
+  };
+
+ protected:
+  // Returns the root of the tree, which is needed by some subclasses.
+  Node* Root() const { return root_; }
+
+ private:
+  // This virtual method is the hook that subclasses should use when
+  // augmenting the red-black tree with additional per-node summary
+  // information. For example, in the case of an interval tree, this
+  // is used to compute the maximum endpoint of the subtree below the
+  // given node based on the values in the left and right children. It
+  // is guaranteed that this will be called in the correct order to
+  // properly update such summary information based only on the values
+  // in the left and right children. This method should return true if
+  // the node's summary information changed.
+  virtual bool UpdateNode(Node*) { return false; }
+
+  //----------------------------------------------------------------------
+  // Generic binary search tree operations
+  //
+
+  // Searches the tree for the given datum.
+  Node* TreeSearch(const T& data) const {
+    if (needs_full_ordering_comparisons_)
+      return TreeSearchFullComparisons(root_, data);
+
+    return TreeSearchNormal(root_, data);
+  }
+
+  // Searches the tree using the normal comparison operations,
+  // suitable for simple data types such as numbers.
+  Node* TreeSearchNormal(Node* current, const T& data) const {
+    while (current) {
+      if (current->Data() == data)
+        return current;
+      if (data < current->Data())
+        current = current->Left();
+      else
+        current = current->Right();
+    }
+    return 0;
+  }
+
+  // Searches the tree using multiple comparison operations, required
+  // for data types with more complex behavior such as intervals.
+  Node* TreeSearchFullComparisons(Node* current, const T& data) const {
+    if (!current)
+      return 0;
+    if (data < current->Data())
+      return TreeSearchFullComparisons(current->Left(), data);
+    if (current->Data() < data)
+      return TreeSearchFullComparisons(current->Right(), data);
+    if (data == current->Data())
+      return current;
+
+    // We may need to traverse both the left and right subtrees.
+    Node* result = TreeSearchFullComparisons(current->Left(), data);
+    if (!result)
+      result = TreeSearchFullComparisons(current->Right(), data);
+    return result;
+  }
+
+  void TreeInsert(Node* z) {
+    Node* y = 0;
+    Node* x = root_;
+    while (x) {
+      y = x;
+      if (z->Data() < x->Data())
+        x = x->Left();
+      else
+        x = x->Right();
+    }
+    z->SetParent(y);
+    if (!y) {
+      root_ = z;
+    } else {
+      if (z->Data() < y->Data())
+        y->SetLeft(z);
+      else
+        y->SetRight(z);
+    }
+  }
+
+  // Finds the node following the given one in sequential ordering of
+  // their data, or null if none exists.
+  Node* TreeSuccessor(Node* x) {
+    if (x->Right())
+      return TreeMinimum(x->Right());
+    Node* y = x->Parent();
+    while (y && x == y->Right()) {
+      x = y;
+      y = y->Parent();
+    }
+    return y;
+  }
+
+  // Finds the minimum element in the sub-tree rooted at the given
+  // node.
+  Node* TreeMinimum(Node* x) {
+    while (x->Left())
+      x = x->Left();
+    return x;
+  }
+
+  // Helper for maintaining the augmented red-black tree.
+  void PropagateUpdates(Node* start) {
+    bool should_continue = true;
+    while (start && should_continue) {
+      should_continue = UpdateNode(start);
+      start = start->Parent();
+    }
+  }
+
+  //----------------------------------------------------------------------
+  // Red-Black tree operations
+  //
+
+  // Left-rotates the subtree rooted at x.
+  // Returns the new root of the subtree (x's right child).
+  Node* LeftRotate(Node* x) {
+    // Set y.
+    Node* y = x->Right();
+
+    // Turn y's left subtree into x's right subtree.
+    x->SetRight(y->Left());
+    if (y->Left())
+      y->Left()->SetParent(x);
+
+    // Link x's parent to y.
+    y->SetParent(x->Parent());
+    if (!x->Parent()) {
+      root_ = y;
+    } else {
+      if (x == x->Parent()->Left())
+        x->Parent()->SetLeft(y);
+      else
+        x->Parent()->SetRight(y);
     }
 
-    virtual ~PODRedBlackTree() { }
+    // Put x on y's left.
+    y->SetLeft(x);
+    x->SetParent(y);
 
-    // Clearing will delete the contents of the tree. After this call
-    // isInitialized will return false.
-    void clear()
-    {
-        markFree(m_root);
-        m_arena = nullptr;
-        m_root = 0;
+    // Update nodes lowest to highest.
+    UpdateNode(x);
+    UpdateNode(y);
+    return y;
+  }
+
+  // Right-rotates the subtree rooted at y.
+  // Returns the new root of the subtree (y's left child).
+  Node* RightRotate(Node* y) {
+    // Set x.
+    Node* x = y->Left();
+
+    // Turn x's right subtree into y's left subtree.
+    y->SetLeft(x->Right());
+    if (x->Right())
+      x->Right()->SetParent(y);
+
+    // Link y's parent to x.
+    x->SetParent(y->Parent());
+    if (!y->Parent()) {
+      root_ = x;
+    } else {
+      if (y == y->Parent()->Left())
+        y->Parent()->SetLeft(x);
+      else
+        y->Parent()->SetRight(x);
     }
 
-    bool isInitialized() const
-    {
-        return m_arena.get();
-    }
+    // Put y on x's right.
+    x->SetRight(y);
+    y->SetParent(x);
 
-    void initIfNeeded()
-    {
-        if (!m_arena)
-            m_arena = PODFreeListArena<Node>::create();
-    }
+    // Update nodes lowest to highest.
+    UpdateNode(y);
+    UpdateNode(x);
+    return x;
+  }
 
-    void initIfNeeded(PODFreeListArena<Node>* arena)
-    {
-        if (!m_arena)
-            m_arena = arena;
-    }
+  // Inserts the given node into the tree.
+  void InsertNode(Node* x) {
+    TreeInsert(x);
+    x->SetColor(kRed);
+    UpdateNode(x);
 
-    void add(const T& data)
-    {
-        ASSERT(isInitialized());
-        Node* node = m_arena->template allocateObject<T>(data);
-        insertNode(node);
-    }
+    LogIfVerbose("  PODRedBlackTree::InsertNode");
 
-    // Returns true if the datum was found in the tree.
-    bool remove(const T& data)
-    {
-        ASSERT(isInitialized());
-        Node* node = treeSearch(data);
-        if (node) {
-            deleteNode(node);
-            return true;
+    // The node from which to start propagating updates upwards.
+    Node* update_start = x->Parent();
+
+    while (x != root_ && x->Parent()->GetColor() == kRed) {
+      if (x->Parent() == x->Parent()->Parent()->Left()) {
+        Node* y = x->Parent()->Parent()->Right();
+        if (y && y->GetColor() == kRed) {
+          // Case 1
+          LogIfVerbose("  Case 1/1");
+          x->Parent()->SetColor(kBlack);
+          y->SetColor(kBlack);
+          x->Parent()->Parent()->SetColor(kRed);
+          UpdateNode(x->Parent());
+          x = x->Parent()->Parent();
+          UpdateNode(x);
+          update_start = x->Parent();
+        } else {
+          if (x == x->Parent()->Right()) {
+            LogIfVerbose("  Case 1/2");
+            // Case 2
+            x = x->Parent();
+            LeftRotate(x);
+          }
+          // Case 3
+          LogIfVerbose("  Case 1/3");
+          x->Parent()->SetColor(kBlack);
+          x->Parent()->Parent()->SetColor(kRed);
+          Node* new_sub_tree_root = RightRotate(x->Parent()->Parent());
+          update_start = new_sub_tree_root->Parent();
         }
+      } else {
+        // Same as "then" clause with "right" and "left" exchanged.
+        Node* y = x->Parent()->Parent()->Left();
+        if (y && y->GetColor() == kRed) {
+          // Case 1
+          LogIfVerbose("  Case 2/1");
+          x->Parent()->SetColor(kBlack);
+          y->SetColor(kBlack);
+          x->Parent()->Parent()->SetColor(kRed);
+          UpdateNode(x->Parent());
+          x = x->Parent()->Parent();
+          UpdateNode(x);
+          update_start = x->Parent();
+        } else {
+          if (x == x->Parent()->Left()) {
+            // Case 2
+            LogIfVerbose("  Case 2/2");
+            x = x->Parent();
+            RightRotate(x);
+          }
+          // Case 3
+          LogIfVerbose("  Case 2/3");
+          x->Parent()->SetColor(kBlack);
+          x->Parent()->Parent()->SetColor(kRed);
+          Node* new_sub_tree_root = LeftRotate(x->Parent()->Parent());
+          update_start = new_sub_tree_root->Parent();
+        }
+      }
+    }
+
+    PropagateUpdates(update_start);
+
+    root_->SetColor(kBlack);
+  }
+
+  // Restores the red-black property to the tree after splicing out
+  // a node. Note that x may be null, which is why xParent must be
+  // supplied.
+  void DeleteFixup(Node* x, Node* x_parent) {
+    while (x != root_ && (!x || x->GetColor() == kBlack)) {
+      if (x == x_parent->Left()) {
+        // Note: the text points out that w can not be null.
+        // The reason is not obvious from simply looking at
+        // the code; it comes about from the properties of the
+        // red-black tree.
+        Node* w = x_parent->Right();
+        ASSERT(w);  // x's sibling should not be null.
+        if (w->GetColor() == kRed) {
+          // Case 1
+          w->SetColor(kBlack);
+          x_parent->SetColor(kRed);
+          LeftRotate(x_parent);
+          w = x_parent->Right();
+        }
+        if ((!w->Left() || w->Left()->GetColor() == kBlack) &&
+            (!w->Right() || w->Right()->GetColor() == kBlack)) {
+          // Case 2
+          w->SetColor(kRed);
+          x = x_parent;
+          x_parent = x->Parent();
+        } else {
+          if (!w->Right() || w->Right()->GetColor() == kBlack) {
+            // Case 3
+            w->Left()->SetColor(kBlack);
+            w->SetColor(kRed);
+            RightRotate(w);
+            w = x_parent->Right();
+          }
+          // Case 4
+          w->SetColor(x_parent->GetColor());
+          x_parent->SetColor(kBlack);
+          if (w->Right())
+            w->Right()->SetColor(kBlack);
+          LeftRotate(x_parent);
+          x = root_;
+          x_parent = x->Parent();
+        }
+      } else {
+        // Same as "then" clause with "right" and "left"
+        // exchanged.
+
+        // Note: the text points out that w can not be null.
+        // The reason is not obvious from simply looking at
+        // the code; it comes about from the properties of the
+        // red-black tree.
+        Node* w = x_parent->Left();
+        ASSERT(w);  // x's sibling should not be null.
+        if (w->GetColor() == kRed) {
+          // Case 1
+          w->SetColor(kBlack);
+          x_parent->SetColor(kRed);
+          RightRotate(x_parent);
+          w = x_parent->Left();
+        }
+        if ((!w->Right() || w->Right()->GetColor() == kBlack) &&
+            (!w->Left() || w->Left()->GetColor() == kBlack)) {
+          // Case 2
+          w->SetColor(kRed);
+          x = x_parent;
+          x_parent = x->Parent();
+        } else {
+          if (!w->Left() || w->Left()->GetColor() == kBlack) {
+            // Case 3
+            w->Right()->SetColor(kBlack);
+            w->SetColor(kRed);
+            LeftRotate(w);
+            w = x_parent->Left();
+          }
+          // Case 4
+          w->SetColor(x_parent->GetColor());
+          x_parent->SetColor(kBlack);
+          if (w->Left())
+            w->Left()->SetColor(kBlack);
+          RightRotate(x_parent);
+          x = root_;
+          x_parent = x->Parent();
+        }
+      }
+    }
+    if (x)
+      x->SetColor(kBlack);
+  }
+
+  // Deletes the given node from the tree. Note that this
+  // particular node may not actually be removed from the tree;
+  // instead, another node might be removed and its contents
+  // copied into z.
+  void DeleteNode(Node* z) {
+    // Y is the node to be unlinked from the tree.
+    Node* y;
+    if (!z->Left() || !z->Right())
+      y = z;
+    else
+      y = TreeSuccessor(z);
+
+    // Y is guaranteed to be non-null at this point.
+    Node* x;
+    if (y->Left())
+      x = y->Left();
+    else
+      x = y->Right();
+
+    // X is the child of y which might potentially replace y in
+    // the tree. X might be null at this point.
+    Node* x_parent;
+    if (x) {
+      x->SetParent(y->Parent());
+      x_parent = x->Parent();
+    } else {
+      x_parent = y->Parent();
+    }
+    if (!y->Parent()) {
+      root_ = x;
+    } else {
+      if (y == y->Parent()->Left())
+        y->Parent()->SetLeft(x);
+      else
+        y->Parent()->SetRight(x);
+    }
+    if (y != z) {
+      z->CopyFrom(y);
+      // This node has changed location in the tree and must be updated.
+      UpdateNode(z);
+      // The parent and its parents may now be out of date.
+      PropagateUpdates(z->Parent());
+    }
+
+    // If we haven't already updated starting from xParent, do so now.
+    if (x_parent && x_parent != y && x_parent != z)
+      PropagateUpdates(x_parent);
+    if (y->GetColor() == kBlack)
+      DeleteFixup(x, x_parent);
+
+    arena_->FreeObject(y);
+  }
+
+  // Visits the subtree rooted at the given node in order.
+  void VisitInorderImpl(Node* node, Visitor* visitor) const {
+    if (node->Left())
+      VisitInorderImpl(node->Left(), visitor);
+    visitor->Visit(node->Data());
+    if (node->Right())
+      VisitInorderImpl(node->Right(), visitor);
+  }
+
+  void MarkFree(Node* node) {
+    if (!node)
+      return;
+
+    if (node->Left())
+      MarkFree(node->Left());
+    if (node->Right())
+      MarkFree(node->Right());
+    arena_->FreeObject(node);
+  }
+
+  //----------------------------------------------------------------------
+  // Helper class for size()
+
+  // A Visitor which simply counts the number of visited elements.
+  class Counter final : public Visitor {
+    DISALLOW_NEW();
+    WTF_MAKE_NONCOPYABLE(Counter);
+
+   public:
+    Counter() : count_(0) {}
+
+    virtual void Visit(const T&) { ++count_; }
+    int Count() const { return count_; }
+
+   private:
+    int count_;
+  };
+
+  //----------------------------------------------------------------------
+  // Verification and debugging routines
+  //
+
+  // Returns in the "blackCount" parameter the number of black
+  // children along all paths to all leaves of the given node.
+  bool CheckInvariantsFromNode(Node* node, int* black_count) const {
+    // Base case is a leaf node.
+    if (!node) {
+      *black_count = 1;
+      return true;
+    }
+
+    // Each node is either red or black.
+    if (!(node->GetColor() == kRed || node->GetColor() == kBlack))
+      return false;
+
+    // Every leaf (or null) is black.
+
+    if (node->GetColor() == kRed) {
+      // Both of its children are black.
+      if (!((!node->Left() || node->Left()->GetColor() == kBlack)))
+        return false;
+      if (!((!node->Right() || node->Right()->GetColor() == kBlack)))
         return false;
     }
 
-    bool contains(const T& data) const
-    {
-        ASSERT(isInitialized());
-        return treeSearch(data);
-    }
-
-    void visitInorder(Visitor* visitor) const
-    {
-        ASSERT(isInitialized());
-        if (!m_root)
-            return;
-        visitInorderImpl(m_root, visitor);
-    }
-
-    int size() const
-    {
-        ASSERT(isInitialized());
-        Counter counter;
-        visitInorder(&counter);
-        return counter.count();
-    }
-
-    // See the class documentation for an explanation of this property.
-    void setNeedsFullOrderingComparisons(bool needsFullOrderingComparisons)
-    {
-        m_needsFullOrderingComparisons = needsFullOrderingComparisons;
-    }
-
-    virtual bool checkInvariants() const
-    {
-        ASSERT(isInitialized());
-        int blackCount;
-        return checkInvariantsFromNode(m_root, &blackCount);
-    }
-
-#ifndef NDEBUG
-    // Dumps the tree's contents to the logging info stream for
-    // debugging purposes.
-    void dump() const
-    {
-        if (m_arena)
-            dumpFromNode(m_root, 0);
-    }
-
-    // Turns on or off verbose debugging of the tree, causing many
-    // messages to be logged during insertion and other operations in
-    // debug mode.
-    void setVerboseDebugging(bool verboseDebugging)
-    {
-        m_verboseDebugging = verboseDebugging;
-    }
-#endif
-
-    enum NodeColor {
-        Red = 1,
-        Black
-    };
-
-    // The base Node class which is stored in the tree. Nodes are only
-    // an internal concept; users of the tree deal only with the data
-    // they store in it.
-    class Node {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-        WTF_MAKE_NONCOPYABLE(Node);
-    public:
-        // Constructor. Newly-created nodes are colored red.
-        explicit Node(const T& data)
-            : m_left(0)
-            , m_right(0)
-            , m_parent(0)
-            , m_color(Red)
-            , m_data(data)
-        {
-        }
-
-        virtual ~Node() { }
-
-        NodeColor color() const { return m_color; }
-        void setColor(NodeColor color) { m_color = color; }
-
-        // Fetches the user data.
-        T& data() { return m_data; }
-
-        // Copies all user-level fields from the source node, but not
-        // internal fields. For example, the base implementation of this
-        // method copies the "m_data" field, but not the child or parent
-        // fields. Any augmentation information also does not need to be
-        // copied, as it will be recomputed. Subclasses must call the
-        // superclass implementation.
-        virtual void copyFrom(Node* src) { m_data = src->data(); }
-
-        Node* left() const { return m_left; }
-        void setLeft(Node* node) { m_left = node; }
-
-        Node* right() const { return m_right; }
-        void setRight(Node* node) { m_right = node; }
-
-        Node* parent() const { return m_parent; }
-        void setParent(Node* node) { m_parent = node; }
-
-    private:
-        Node* m_left;
-        Node* m_right;
-        Node* m_parent;
-        NodeColor m_color;
-        T m_data;
-    };
-
-protected:
-    // Returns the root of the tree, which is needed by some subclasses.
-    Node* root() const { return m_root; }
-
-private:
-    // This virtual method is the hook that subclasses should use when
-    // augmenting the red-black tree with additional per-node summary
-    // information. For example, in the case of an interval tree, this
-    // is used to compute the maximum endpoint of the subtree below the
-    // given node based on the values in the left and right children. It
-    // is guaranteed that this will be called in the correct order to
-    // properly update such summary information based only on the values
-    // in the left and right children. This method should return true if
-    // the node's summary information changed.
-    virtual bool updateNode(Node*) { return false; }
-
-    //----------------------------------------------------------------------
-    // Generic binary search tree operations
-    //
-
-    // Searches the tree for the given datum.
-    Node* treeSearch(const T& data) const
-    {
-        if (m_needsFullOrderingComparisons)
-            return treeSearchFullComparisons(m_root, data);
-
-        return treeSearchNormal(m_root, data);
-    }
-
-    // Searches the tree using the normal comparison operations,
-    // suitable for simple data types such as numbers.
-    Node* treeSearchNormal(Node* current, const T& data) const
-    {
-        while (current) {
-            if (current->data() == data)
-                return current;
-            if (data < current->data())
-                current = current->left();
-            else
-                current = current->right();
-        }
-        return 0;
-    }
-
-    // Searches the tree using multiple comparison operations, required
-    // for data types with more complex behavior such as intervals.
-    Node* treeSearchFullComparisons(Node* current, const T& data) const
-    {
-        if (!current)
-            return 0;
-        if (data < current->data())
-            return treeSearchFullComparisons(current->left(), data);
-        if (current->data() < data)
-            return treeSearchFullComparisons(current->right(), data);
-        if (data == current->data())
-            return current;
-
-        // We may need to traverse both the left and right subtrees.
-        Node* result = treeSearchFullComparisons(current->left(), data);
-        if (!result)
-            result = treeSearchFullComparisons(current->right(), data);
-        return result;
-    }
-
-    void treeInsert(Node* z)
-    {
-        Node* y = 0;
-        Node* x = m_root;
-        while (x) {
-            y = x;
-            if (z->data() < x->data())
-                x = x->left();
-            else
-                x = x->right();
-        }
-        z->setParent(y);
-        if (!y) {
-            m_root = z;
-        } else {
-            if (z->data() < y->data())
-                y->setLeft(z);
-            else
-                y->setRight(z);
-        }
-    }
-
-    // Finds the node following the given one in sequential ordering of
-    // their data, or null if none exists.
-    Node* treeSuccessor(Node* x)
-    {
-        if (x->right())
-            return treeMinimum(x->right());
-        Node* y = x->parent();
-        while (y && x == y->right()) {
-            x = y;
-            y = y->parent();
-        }
-        return y;
-    }
-
-    // Finds the minimum element in the sub-tree rooted at the given
-    // node.
-    Node* treeMinimum(Node* x)
-    {
-        while (x->left())
-            x = x->left();
-        return x;
-    }
-
-    // Helper for maintaining the augmented red-black tree.
-    void propagateUpdates(Node* start)
-    {
-        bool shouldContinue = true;
-        while (start && shouldContinue) {
-            shouldContinue = updateNode(start);
-            start = start->parent();
-        }
-    }
-
-    //----------------------------------------------------------------------
-    // Red-Black tree operations
-    //
-
-    // Left-rotates the subtree rooted at x.
-    // Returns the new root of the subtree (x's right child).
-    Node* leftRotate(Node* x)
-    {
-        // Set y.
-        Node* y = x->right();
-
-        // Turn y's left subtree into x's right subtree.
-        x->setRight(y->left());
-        if (y->left())
-            y->left()->setParent(x);
-
-        // Link x's parent to y.
-        y->setParent(x->parent());
-        if (!x->parent()) {
-            m_root = y;
-        } else {
-            if (x == x->parent()->left())
-                x->parent()->setLeft(y);
-            else
-                x->parent()->setRight(y);
-        }
-
-        // Put x on y's left.
-        y->setLeft(x);
-        x->setParent(y);
-
-        // Update nodes lowest to highest.
-        updateNode(x);
-        updateNode(y);
-        return y;
-    }
-
-    // Right-rotates the subtree rooted at y.
-    // Returns the new root of the subtree (y's left child).
-    Node* rightRotate(Node* y)
-    {
-        // Set x.
-        Node* x = y->left();
-
-        // Turn x's right subtree into y's left subtree.
-        y->setLeft(x->right());
-        if (x->right())
-            x->right()->setParent(y);
-
-        // Link y's parent to x.
-        x->setParent(y->parent());
-        if (!y->parent()) {
-            m_root = x;
-        } else {
-            if (y == y->parent()->left())
-                y->parent()->setLeft(x);
-            else
-                y->parent()->setRight(x);
-        }
-
-        // Put y on x's right.
-        x->setRight(y);
-        y->setParent(x);
-
-        // Update nodes lowest to highest.
-        updateNode(y);
-        updateNode(x);
-        return x;
-    }
-
-    // Inserts the given node into the tree.
-    void insertNode(Node* x)
-    {
-        treeInsert(x);
-        x->setColor(Red);
-        updateNode(x);
-
-        logIfVerbose("  PODRedBlackTree::InsertNode");
-
-        // The node from which to start propagating updates upwards.
-        Node* updateStart = x->parent();
-
-        while (x != m_root && x->parent()->color() == Red) {
-            if (x->parent() == x->parent()->parent()->left()) {
-                Node* y = x->parent()->parent()->right();
-                if (y && y->color() == Red) {
-                    // Case 1
-                    logIfVerbose("  Case 1/1");
-                    x->parent()->setColor(Black);
-                    y->setColor(Black);
-                    x->parent()->parent()->setColor(Red);
-                    updateNode(x->parent());
-                    x = x->parent()->parent();
-                    updateNode(x);
-                    updateStart = x->parent();
-                } else {
-                    if (x == x->parent()->right()) {
-                        logIfVerbose("  Case 1/2");
-                        // Case 2
-                        x = x->parent();
-                        leftRotate(x);
-                    }
-                    // Case 3
-                    logIfVerbose("  Case 1/3");
-                    x->parent()->setColor(Black);
-                    x->parent()->parent()->setColor(Red);
-                    Node* newSubTreeRoot = rightRotate(x->parent()->parent());
-                    updateStart = newSubTreeRoot->parent();
-                }
-            } else {
-                // Same as "then" clause with "right" and "left" exchanged.
-                Node* y = x->parent()->parent()->left();
-                if (y && y->color() == Red) {
-                    // Case 1
-                    logIfVerbose("  Case 2/1");
-                    x->parent()->setColor(Black);
-                    y->setColor(Black);
-                    x->parent()->parent()->setColor(Red);
-                    updateNode(x->parent());
-                    x = x->parent()->parent();
-                    updateNode(x);
-                    updateStart = x->parent();
-                } else {
-                    if (x == x->parent()->left()) {
-                        // Case 2
-                        logIfVerbose("  Case 2/2");
-                        x = x->parent();
-                        rightRotate(x);
-                    }
-                    // Case 3
-                    logIfVerbose("  Case 2/3");
-                    x->parent()->setColor(Black);
-                    x->parent()->parent()->setColor(Red);
-                    Node* newSubTreeRoot = leftRotate(x->parent()->parent());
-                    updateStart = newSubTreeRoot->parent();
-                }
-            }
-        }
-
-        propagateUpdates(updateStart);
-
-        m_root->setColor(Black);
-    }
-
-    // Restores the red-black property to the tree after splicing out
-    // a node. Note that x may be null, which is why xParent must be
-    // supplied.
-    void deleteFixup(Node* x, Node* xParent)
-    {
-        while (x != m_root && (!x || x->color() == Black)) {
-            if (x == xParent->left()) {
-                // Note: the text points out that w can not be null.
-                // The reason is not obvious from simply looking at
-                // the code; it comes about from the properties of the
-                // red-black tree.
-                Node* w = xParent->right();
-                ASSERT(w); // x's sibling should not be null.
-                if (w->color() == Red) {
-                    // Case 1
-                    w->setColor(Black);
-                    xParent->setColor(Red);
-                    leftRotate(xParent);
-                    w = xParent->right();
-                }
-                if ((!w->left() || w->left()->color() == Black)
-                    && (!w->right() || w->right()->color() == Black)) {
-                    // Case 2
-                    w->setColor(Red);
-                    x = xParent;
-                    xParent = x->parent();
-                } else {
-                    if (!w->right() || w->right()->color() == Black) {
-                        // Case 3
-                        w->left()->setColor(Black);
-                        w->setColor(Red);
-                        rightRotate(w);
-                        w = xParent->right();
-                    }
-                    // Case 4
-                    w->setColor(xParent->color());
-                    xParent->setColor(Black);
-                    if (w->right())
-                        w->right()->setColor(Black);
-                    leftRotate(xParent);
-                    x = m_root;
-                    xParent = x->parent();
-                }
-            } else {
-                // Same as "then" clause with "right" and "left"
-                // exchanged.
-
-                // Note: the text points out that w can not be null.
-                // The reason is not obvious from simply looking at
-                // the code; it comes about from the properties of the
-                // red-black tree.
-                Node* w = xParent->left();
-                ASSERT(w); // x's sibling should not be null.
-                if (w->color() == Red) {
-                    // Case 1
-                    w->setColor(Black);
-                    xParent->setColor(Red);
-                    rightRotate(xParent);
-                    w = xParent->left();
-                }
-                if ((!w->right() || w->right()->color() == Black)
-                    && (!w->left() || w->left()->color() == Black)) {
-                    // Case 2
-                    w->setColor(Red);
-                    x = xParent;
-                    xParent = x->parent();
-                } else {
-                    if (!w->left() || w->left()->color() == Black) {
-                        // Case 3
-                        w->right()->setColor(Black);
-                        w->setColor(Red);
-                        leftRotate(w);
-                        w = xParent->left();
-                    }
-                    // Case 4
-                    w->setColor(xParent->color());
-                    xParent->setColor(Black);
-                    if (w->left())
-                        w->left()->setColor(Black);
-                    rightRotate(xParent);
-                    x = m_root;
-                    xParent = x->parent();
-                }
-            }
-        }
-        if (x)
-            x->setColor(Black);
-    }
-
-    // Deletes the given node from the tree. Note that this
-    // particular node may not actually be removed from the tree;
-    // instead, another node might be removed and its contents
-    // copied into z.
-    void deleteNode(Node* z)
-    {
-        // Y is the node to be unlinked from the tree.
-        Node* y;
-        if (!z->left() || !z->right())
-            y = z;
-        else
-            y = treeSuccessor(z);
-
-        // Y is guaranteed to be non-null at this point.
-        Node* x;
-        if (y->left())
-            x = y->left();
-        else
-            x = y->right();
-
-        // X is the child of y which might potentially replace y in
-        // the tree. X might be null at this point.
-        Node* xParent;
-        if (x) {
-            x->setParent(y->parent());
-            xParent = x->parent();
-        } else {
-            xParent = y->parent();
-        }
-        if (!y->parent()) {
-            m_root = x;
-        } else {
-            if (y == y->parent()->left())
-                y->parent()->setLeft(x);
-            else
-                y->parent()->setRight(x);
-        }
-        if (y != z) {
-            z->copyFrom(y);
-            // This node has changed location in the tree and must be updated.
-            updateNode(z);
-            // The parent and its parents may now be out of date.
-            propagateUpdates(z->parent());
-        }
-
-        // If we haven't already updated starting from xParent, do so now.
-        if (xParent && xParent != y && xParent != z)
-            propagateUpdates(xParent);
-        if (y->color() == Black)
-            deleteFixup(x, xParent);
-
-        m_arena->freeObject(y);
-    }
-
-    // Visits the subtree rooted at the given node in order.
-    void visitInorderImpl(Node* node, Visitor* visitor) const
-    {
-        if (node->left())
-            visitInorderImpl(node->left(), visitor);
-        visitor->visit(node->data());
-        if (node->right())
-            visitInorderImpl(node->right(), visitor);
-    }
-
-    void markFree(Node *node)
-    {
-        if (!node)
-            return;
-
-        if (node->left())
-            markFree(node->left());
-        if (node->right())
-            markFree(node->right());
-        m_arena->freeObject(node);
-    }
-
-    //----------------------------------------------------------------------
-    // Helper class for size()
-
-    // A Visitor which simply counts the number of visited elements.
-    class Counter final : public Visitor {
-        DISALLOW_NEW();
-        WTF_MAKE_NONCOPYABLE(Counter);
-    public:
-        Counter()
-            : m_count(0) { }
-
-        virtual void visit(const T&) { ++m_count; }
-        int count() const { return m_count; }
-
-    private:
-        int m_count;
-    };
-
-    //----------------------------------------------------------------------
-    // Verification and debugging routines
-    //
-
-    // Returns in the "blackCount" parameter the number of black
-    // children along all paths to all leaves of the given node.
-    bool checkInvariantsFromNode(Node* node, int* blackCount) const
-    {
-        // Base case is a leaf node.
-        if (!node) {
-            *blackCount = 1;
-            return true;
-        }
-
-        // Each node is either red or black.
-        if (!(node->color() == Red || node->color() == Black))
-            return false;
-
-        // Every leaf (or null) is black.
-
-        if (node->color() == Red) {
-            // Both of its children are black.
-            if (!((!node->left() || node->left()->color() == Black)))
-                return false;
-            if (!((!node->right() || node->right()->color() == Black)))
-                return false;
-        }
-
-        // Every simple path to a leaf node contains the same number of
-        // black nodes.
-        int leftCount = 0, rightCount = 0;
-        bool leftValid = checkInvariantsFromNode(node->left(), &leftCount);
-        bool rightValid = checkInvariantsFromNode(node->right(), &rightCount);
-        if (!leftValid || !rightValid)
-            return false;
-        *blackCount = leftCount + (node->color() == Black ? 1 : 0);
-        return leftCount == rightCount;
-    }
+    // Every simple path to a leaf node contains the same number of
+    // black nodes.
+    int left_count = 0, right_count = 0;
+    bool left_valid = CheckInvariantsFromNode(node->Left(), &left_count);
+    bool right_valid = CheckInvariantsFromNode(node->Right(), &right_count);
+    if (!left_valid || !right_valid)
+      return false;
+    *black_count = left_count + (node->GetColor() == kBlack ? 1 : 0);
+    return left_count == right_count;
+  }
 
 #ifdef NDEBUG
-    void logIfVerbose(const char*) const { }
+  void LogIfVerbose(const char*) const {}
 #else
-    void logIfVerbose(const char* output) const
-    {
-        if (m_verboseDebugging)
-            DLOG(ERROR) << output;
-    }
+  void LogIfVerbose(const char* output) const {
+    if (verbose_debugging_)
+      DLOG(ERROR) << output;
+  }
 #endif
 
 #ifndef NDEBUG
-    // Dumps the subtree rooted at the given node.
-    void dumpFromNode(Node* node, int indentation) const
-    {
-        StringBuilder builder;
-        for (int i = 0; i < indentation; i++)
-            builder.append(' ');
-        builder.append('-');
-        if (node) {
-            builder.append(' ');
-            builder.append(ValueToString<T>::string(node->data()));
-            builder.append((node->color() == Black) ? " (black)" : " (red)");
-        }
-        DLOG(ERROR) << builder.toString();
-        if (node) {
-            dumpFromNode(node->left(), indentation + 2);
-            dumpFromNode(node->right(), indentation + 2);
-        }
+  // Dumps the subtree rooted at the given node.
+  void DumpFromNode(Node* node, int indentation) const {
+    StringBuilder builder;
+    for (int i = 0; i < indentation; i++)
+      builder.Append(' ');
+    builder.Append('-');
+    if (node) {
+      builder.Append(' ');
+      builder.Append(ValueToString<T>::GetString(node->Data()));
+      builder.Append((node->GetColor() == kBlack) ? " (black)" : " (red)");
     }
+    DLOG(ERROR) << builder.ToString();
+    if (node) {
+      DumpFromNode(node->Left(), indentation + 2);
+      DumpFromNode(node->Right(), indentation + 2);
+    }
+  }
 #endif
 
-    //----------------------------------------------------------------------
-    // Data members
+  //----------------------------------------------------------------------
+  // Data members
 
-    RefPtr<PODFreeListArena<Node>> m_arena;
-    Node* m_root;
-    bool m_needsFullOrderingComparisons;
+  RefPtr<PODFreeListArena<Node>> arena_;
+  Node* root_;
+  bool needs_full_ordering_comparisons_;
 #ifndef NDEBUG
-    bool m_verboseDebugging;
+  bool verbose_debugging_;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PODRedBlackTree_h
+#endif  // PODRedBlackTree_h

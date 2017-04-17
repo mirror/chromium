@@ -6,30 +6,32 @@
 #define ImagePixelLocker_h
 
 #include "platform/heap/Heap.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkImage;
 
 namespace blink {
 
 class ImagePixelLocker final {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    WTF_MAKE_NONCOPYABLE(ImagePixelLocker);
-public:
-    ImagePixelLocker(PassRefPtr<const SkImage>, SkAlphaType, SkColorType);
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  WTF_MAKE_NONCOPYABLE(ImagePixelLocker);
 
-    const void* pixels() const { return m_pixels; }
+ public:
+  ImagePixelLocker(sk_sp<const SkImage>, SkAlphaType, SkColorType);
 
-private:
-    const RefPtr<const SkImage> m_image;
-    const void* m_pixels;
-    SkAutoMalloc m_pixelStorage;
+  const void* Pixels() const { return pixels_; }
+
+ private:
+  const sk_sp<const SkImage> image_;
+  const void* pixels_;
+  Vector<char> pixel_storage_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -76,6 +76,8 @@ chromeMocks.runtime.Port.prototype.postMessage = function(message) {};
 /** @type {chromeMocks.Event} */
 chromeMocks.runtime.onMessage = new chromeMocks.Event();
 
+/** @type {chromeMocks.Event} */
+chromeMocks.runtime.onMessageExternal = new chromeMocks.Event();
 
 /** @type {chromeMocks.Event} */
 chromeMocks.runtime.onSuspend = new chromeMocks.Event();
@@ -248,6 +250,11 @@ chromeMocks.identity;
 
 /** @constructor */
 chromeMocks.MetricsPrivate = function() {};
+
+chromeMocks.MetricsPrivate.prototype.MetricTypeType = {
+  HISTOGRAM_LOG: 'histogram-log',
+  HISTOGRAM_LINEAR: 'histogram-linear',
+};
 
 chromeMocks.MetricsPrivate.prototype.recordValue = function() {};
 

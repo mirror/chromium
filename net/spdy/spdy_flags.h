@@ -7,11 +7,16 @@
 
 #include "net/base/net_export.h"
 
+namespace net {
+
+NET_EXPORT_PRIVATE extern bool FLAGS_chromium_http2_flag_log_compressed_size;
+NET_EXPORT_PRIVATE extern bool FLAGS_chromium_http2_flag_remove_rewritelength;
 NET_EXPORT_PRIVATE extern bool
-    FLAGS_chromium_http2_flag_remove_hpack_decode_buffer_size_limit;
+    FLAGS_chromium_http2_flag_spdy_use_hpack_decoder3;
 NET_EXPORT_PRIVATE extern bool FLAGS_use_nested_spdy_framer_decoder;
-NET_EXPORT_PRIVATE extern bool FLAGS_chromium_http2_flag_enforce_max_frame_size;
 NET_EXPORT_PRIVATE extern bool
-    FLAGS_chromium_http2_flag_use_new_spdy_header_block_header_joining;
+    FLAGS_chromium_http2_flag_spdy_use_http2_frame_decoder_adapter;
+
+}  // namespace net
 
 #endif  // NET_SPDY_SPDY_FLAGS_H_

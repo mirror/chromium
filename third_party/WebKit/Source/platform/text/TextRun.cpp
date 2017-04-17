@@ -25,36 +25,81 @@
 
 #include "platform/text/TextRun.h"
 
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/Character.h"
 
 namespace blink {
 
 struct ExpectedTextRunSize {
-    DISALLOW_NEW();
-    const void* pointer;
-    int integers[2];
-    float float1;
-    float float2;
-    float float3;
-    uint32_t bitfields : 10;
-    TabSize tabSize;
+  DISALLOW_NEW();
+  const void* pointer;
+  int integers[2];
+  float float1;
+  float float2;
+  float float3;
+  uint32_t bitfields : 10;
+  TabSize tab_size;
 };
 
-static_assert(sizeof(TextRun) == sizeof(ExpectedTextRunSize), "TextRun should have expected size");
+static_assert(sizeof(TextRun) == sizeof(ExpectedTextRunSize),
+              "TextRun should have expected size");
 
-void TextRun::setText(const String& string)
-{
-    m_len = string.length();
-    if (!m_len) {
-        m_data.characters8 = 0;
-        m_is8Bit = true;
-        return;
-    }
-    m_is8Bit = string.is8Bit();
-    if (m_is8Bit)
-        m_data.characters8 = string.characters8();
-    else
-        m_data.characters16 = string.characters16();
+void TextRun::SetText(const String& string) {
+  len_ = string.length();
+  if (!len_) {
+    data_.characters8 = 0;
+    is8_bit_ = true;
+    return;
+  }
+  is8_bit_ = string.Is8Bit();
+  if (is8_bit_)
+    data_.characters8 = string.Characters8();
+  else
+    data_.characters16 = string.Characters16();
 }
 
-} // namespace blink
+std::unique_ptr<UChar[]> TextRun::NormalizedUTF16(
+    unsigned* result_length) const {
+  const UChar* source;
+  String string_for8_bit_run;
+  if (Is8Bit()) {
+    string_for8_bit_run =
+        String::Make16BitFrom8BitSource(Characters8(), length());
+    source = string_for8_bit_run.Characters16();
+  } else {
+    source = Characters16();
+  }
+
+  UChar* buffer = new UChar[len_ + 1];
+  *result_length = 0;
+
+  bool error = false;
+  unsigned position = 0;
+  while (position < len_) {
+    UChar32 character;
+    U16_NEXT(source, position, len_, character);
+    // Don't normalize tabs as they are not treated as spaces for word-end.
+    if (NormalizeSpace() &&
+        Character::IsNormalizedCanvasSpaceCharacter(character)) {
+      character = kSpaceCharacter;
+    } else if (Character::TreatAsSpace(character) &&
+               character != kNoBreakSpaceCharacter) {
+      character = kSpaceCharacter;
+    } else if (!RuntimeEnabledFeatures::
+                   renderUnicodeControlCharactersEnabled() &&
+               Character::LegacyTreatAsZeroWidthSpaceInComplexScript(
+                   character)) {
+      character = kZeroWidthSpaceCharacter;
+    } else if (Character::TreatAsZeroWidthSpaceInComplexScript(character)) {
+      character = kZeroWidthSpaceCharacter;
+    }
+
+    U16_APPEND(buffer, *result_length, len_, character, error);
+    DCHECK(!error);
+  }
+
+  DCHECK(*result_length <= len_);
+  return WrapArrayUnique(buffer);
+}
+
+}  // namespace blink

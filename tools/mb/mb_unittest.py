@@ -22,12 +22,15 @@ class FakeMBW(mb.MetaBuildWrapper):
     if win32:
       self.chromium_src_dir = 'c:\\fake_src'
       self.default_config = 'c:\\fake_src\\tools\\mb\\mb_config.pyl'
+      self.default_isolate_map = ('c:\\fake_src\\testing\\buildbot\\'
+                                  'gn_isolate_map.pyl')
       self.platform = 'win32'
       self.executable = 'c:\\python\\python.exe'
       self.sep = '\\'
     else:
       self.chromium_src_dir = '/fake_src'
       self.default_config = '/fake_src/tools/mb/mb_config.pyl'
+      self.default_isolate_map = '/fake_src/testing/buildbot/gn_isolate_map.pyl'
       self.executable = '/usr/bin/python'
       self.platform = 'linux2'
       self.sep = '/'
@@ -114,10 +117,14 @@ TEST_CONFIG = """\
       'fake_gn_debug_builder': 'gn_debug_goma',
       'fake_gyp_builder': 'gyp_debug',
       'fake_gn_args_bot': '//build/args/bots/fake_master/fake_gn_args_bot.gn',
-      'fake_multi_phase': ['gn_phase_1', 'gn_phase_2'],
+      'fake_multi_phase': { 'phase_1': 'gn_phase_1', 'phase_2': 'gn_phase_2'},
+      'fake_args_file': 'args_file_goma',
+      'fake_args_file_twice': 'args_file_twice',
     },
   },
   'configs': {
+    'args_file_goma': ['args_file', 'goma'],
+    'args_file_twice': ['args_file', 'args_file'],
     'gyp_rel_bot': ['gyp', 'rel', 'goma'],
     'gn_debug_goma': ['gn', 'debug', 'goma'],
     'gyp_debug': ['gyp', 'debug', 'fake_feature1'],
@@ -139,6 +146,9 @@ TEST_CONFIG = """\
     'goma': {
       'gn_args': 'use_goma=true',
       'gyp_defines': 'goma=1',
+    },
+    'args_file': {
+      'args_file': '//build/args/fake.gn',
     },
     'phase_1': {
       'gn_args': 'phase=1',
@@ -216,6 +226,15 @@ class UnitTest(unittest.TestCase):
     mbw = FakeMBW(win32=win32)
     mbw.files.setdefault(mbw.default_config, TEST_CONFIG)
     mbw.files.setdefault(
+      mbw.ToAbsPath('//testing/buildbot/gn_isolate_map.pyl'),
+      '''{
+        "foo_unittests": {
+          "label": "//foo:foo_unittests",
+          "type": "console_test_launcher",
+          "args": [],
+        },
+      }''')
+    mbw.files.setdefault(
         mbw.ToAbsPath('//build/args/bots/fake_master/fake_gn_args_bot.gn'),
         'is_debug = false\n')
     if files:
@@ -268,76 +287,27 @@ class UnitTest(unittest.TestCase):
     self.assertEqual(mbw.files['/fake_src/out/Debug/mb_type'], 'gyp')
 
   def test_gn_analyze(self):
-    files = {'/tmp/in.json': """{\
+    files = {'/tmp/in.json': '''{\
                "files": ["foo/foo_unittest.cc"],
-               "test_targets": ["foo_unittests", "bar_unittests"],
-               "additional_compile_targets": []
-             }"""}
+               "test_targets": ["foo_unittests"],
+               "additional_compile_targets": ["all"]
+             }''',
+             '/tmp/out.json.gn': '''{\
+               "status": "Found dependency",
+               "compile_targets": ["//foo:foo_unittests"],
+               "test_targets": ["//foo:foo_unittests"]
+             }'''}
 
     mbw = self.fake_mbw(files)
-    mbw.Call = lambda cmd, env=None, buffer_output=True: (
-        0, 'out/Default/foo_unittests\n', '')
+    mbw.Call = lambda cmd, env=None, buffer_output=True: (0, '', '')
 
     self.check(['analyze', '-c', 'gn_debug_goma', '//out/Default',
                 '/tmp/in.json', '/tmp/out.json'], mbw=mbw, ret=0)
     out = json.loads(mbw.files['/tmp/out.json'])
     self.assertEqual(out, {
       'status': 'Found dependency',
-      'compile_targets': ['foo_unittests'],
+      'compile_targets': ['foo:foo_unittests'],
       'test_targets': ['foo_unittests']
-    })
-
-  def test_gn_analyze_fails(self):
-    files = {'/tmp/in.json': """{\
-               "files": ["foo/foo_unittest.cc"],
-               "test_targets": ["foo_unittests", "bar_unittests"],
-               "additional_compile_targets": []
-             }"""}
-
-    mbw = self.fake_mbw(files)
-    mbw.Call = lambda cmd, env=None, buffer_output=True: (1, '', '')
-
-    self.check(['analyze', '-c', 'gn_debug_goma', '//out/Default',
-                '/tmp/in.json', '/tmp/out.json'], mbw=mbw, ret=1)
-
-  def test_gn_analyze_all(self):
-    files = {'/tmp/in.json': """{\
-               "files": ["foo/foo_unittest.cc"],
-               "test_targets": ["bar_unittests"],
-               "additional_compile_targets": ["all"]
-             }"""}
-    mbw = self.fake_mbw(files)
-    mbw.Call = lambda cmd, env=None, buffer_output=True: (
-        0, 'out/Default/foo_unittests\n', '')
-    self.check(['analyze', '-c', 'gn_debug_goma', '//out/Default',
-                '/tmp/in.json', '/tmp/out.json'], mbw=mbw, ret=0)
-    out = json.loads(mbw.files['/tmp/out.json'])
-    self.assertEqual(out, {
-      'status': 'Found dependency (all)',
-      'compile_targets': ['all', 'bar_unittests'],
-      'test_targets': ['bar_unittests'],
-    })
-
-  def test_gn_analyze_missing_file(self):
-    files = {'/tmp/in.json': """{\
-               "files": ["foo/foo_unittest.cc"],
-               "test_targets": ["bar_unittests"],
-               "additional_compile_targets": []
-             }"""}
-    mbw = self.fake_mbw(files)
-    mbw.cmds = [
-        (0, '', ''),
-        (1, 'The input matches no targets, configs, or files\n', ''),
-        (1, 'The input matches no targets, configs, or files\n', ''),
-    ]
-
-    self.check(['analyze', '-c', 'gn_debug_goma', '//out/Default',
-                '/tmp/in.json', '/tmp/out.json'], mbw=mbw, ret=0)
-    out = json.loads(mbw.files['/tmp/out.json'])
-    self.assertEqual(out, {
-      'status': 'No dependency',
-      'compile_targets': [],
-      'test_targets': [],
     })
 
   def test_gn_gen(self):
@@ -372,6 +342,19 @@ class UnitTest(unittest.TestCase):
         mbw.files['/fake_src/out/Debug/args.gn'],
         'import("//build/args/bots/fake_master/fake_gn_args_bot.gn")\n')
 
+  def test_gn_gen_args_file_mixins(self):
+    mbw = self.fake_mbw()
+    self.check(['gen', '-m', 'fake_master', '-b', 'fake_args_file',
+                '//out/Debug'], mbw=mbw, ret=0)
+
+    self.assertEqual(
+        mbw.files['/fake_src/out/Debug/args.gn'],
+        ('import("//build/args/fake.gn")\n'
+         'use_goma = true\n'))
+
+    mbw = self.fake_mbw()
+    self.check(['gen', '-m', 'fake_master', '-b', 'fake_args_file_twice',
+                '//out/Debug'], mbw=mbw, ret=1)
 
   def test_gn_gen_fails(self):
     mbw = self.fake_mbw()
@@ -401,6 +384,34 @@ class UnitTest(unittest.TestCase):
                   mbw.files)
     self.assertIn('/fake_src/out/Default/base_unittests.isolated.gen.json',
                   mbw.files)
+
+  def test_gn_gen_swarming_script(self):
+    files = {
+      '/tmp/swarming_targets': 'cc_perftests\n',
+      '/fake_src/testing/buildbot/gn_isolate_map.pyl': (
+          "{'cc_perftests': {"
+          "  'label': '//cc:cc_perftests',"
+          "  'type': 'script',"
+          "  'script': '/fake_src/out/Default/test_script.py',"
+          "  'args': [],"
+          "}}\n"
+      ),
+      'c:\\fake_src\out\Default\cc_perftests.exe.runtime_deps': (
+          "cc_perftests\n"
+      ),
+    }
+    mbw = self.fake_mbw(files=files, win32=True)
+    self.check(['gen',
+                '-c', 'gn_debug_goma',
+                '--swarming-targets-file', '/tmp/swarming_targets',
+                '--isolate-map-file',
+                '/fake_src/testing/buildbot/gn_isolate_map.pyl',
+                '//out/Default'], mbw=mbw, ret=0)
+    self.assertIn('c:\\fake_src\\out\\Default\\cc_perftests.isolate',
+                  mbw.files)
+    self.assertIn('c:\\fake_src\\out\\Default\\cc_perftests.isolated.gen.json',
+                  mbw.files)
+
 
   def test_gn_isolate(self):
     files = {
@@ -508,26 +519,22 @@ class UnitTest(unittest.TestCase):
 
     # Check that passing a --phase to a single-phase builder fails.
     mbw = self.check(['lookup', '-m', 'fake_master', '-b', 'fake_gn_builder',
-                      '--phase', '1'],
-                     ret=1)
+                      '--phase', 'phase_1'], ret=1)
     self.assertIn('Must not specify a build --phase', mbw.out)
 
-    # Check different ranges; 0 and 3 are out of bounds, 1 and 2 should work.
+    # Check that passing a wrong phase key to a multi-phase builder fails.
     mbw = self.check(['lookup', '-m', 'fake_master', '-b', 'fake_multi_phase',
-                      '--phase', '0'], ret=1)
-    self.assertIn('Phase 0 out of bounds', mbw.out)
+                      '--phase', 'wrong_phase'], ret=1)
+    self.assertIn('Phase wrong_phase doesn\'t exist', mbw.out)
 
+    # Check that passing a correct phase key to a multi-phase builder passes.
     mbw = self.check(['lookup', '-m', 'fake_master', '-b', 'fake_multi_phase',
-                      '--phase', '1'], ret=0)
+                      '--phase', 'phase_1'], ret=0)
     self.assertIn('phase = 1', mbw.out)
 
     mbw = self.check(['lookup', '-m', 'fake_master', '-b', 'fake_multi_phase',
-                      '--phase', '2'], ret=0)
+                      '--phase', 'phase_2'], ret=0)
     self.assertIn('phase = 2', mbw.out)
-
-    mbw = self.check(['lookup', '-m', 'fake_master', '-b', 'fake_multi_phase',
-                      '--phase', '3'], ret=1)
-    self.assertIn('Phase 3 out of bounds', mbw.out)
 
   def test_validate(self):
     mbw = self.fake_mbw()

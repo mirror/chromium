@@ -5,7 +5,7 @@
 #include "content/renderer/dom_storage/webstoragearea_impl.h"
 
 #include "base/lazy_instance.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "content/common/dom_storage/dom_storage_messages.h"
@@ -20,7 +20,7 @@ using blink::WebURL;
 namespace content {
 
 namespace {
-typedef IDMap<WebStorageAreaImpl> AreaImplMap;
+using AreaImplMap = IDMap<WebStorageAreaImpl*>;
 base::LazyInstance<AreaImplMap>::Leaky
     g_all_areas_map = LAZY_INSTANCE_INITIALIZER;
 
@@ -50,29 +50,32 @@ unsigned WebStorageAreaImpl::length() {
   return cached_area_->GetLength(connection_id_);
 }
 
-WebString WebStorageAreaImpl::key(unsigned index) {
-  return cached_area_->GetKey(connection_id_, index);
+WebString WebStorageAreaImpl::Key(unsigned index) {
+  return WebString::FromUTF16(cached_area_->GetKey(connection_id_, index));
 }
 
-WebString WebStorageAreaImpl::getItem(const WebString& key) {
-  return cached_area_->GetItem(connection_id_, key);
+WebString WebStorageAreaImpl::GetItem(const WebString& key) {
+  return WebString::FromUTF16(
+      cached_area_->GetItem(connection_id_, key.Utf16()));
 }
 
-void WebStorageAreaImpl::setItem(
-    const WebString& key, const WebString& value, const WebURL& page_url,
-    WebStorageArea::Result& result) {
-  if (!cached_area_->SetItem(connection_id_, key, value, page_url))
-    result = ResultBlockedByQuota;
+void WebStorageAreaImpl::SetItem(const WebString& key,
+                                 const WebString& value,
+                                 const WebURL& page_url,
+                                 WebStorageArea::Result& result) {
+  if (!cached_area_->SetItem(connection_id_, key.Utf16(), value.Utf16(),
+                             page_url))
+    result = kResultBlockedByQuota;
   else
-    result = ResultOK;
+    result = kResultOK;
 }
 
-void WebStorageAreaImpl::removeItem(
-    const WebString& key, const WebURL& page_url) {
-  cached_area_->RemoveItem(connection_id_, key, page_url);
+void WebStorageAreaImpl::RemoveItem(const WebString& key,
+                                    const WebURL& page_url) {
+  cached_area_->RemoveItem(connection_id_, key.Utf16(), page_url);
 }
 
-void WebStorageAreaImpl::clear(const WebURL& page_url) {
+void WebStorageAreaImpl::Clear(const WebURL& page_url) {
   cached_area_->Clear(connection_id_, page_url);
 }
 

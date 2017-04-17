@@ -127,12 +127,6 @@ int URLRequestMockDataJob::ReadRawData(IOBuffer* buf, int buf_size) {
   return bytes_read;
 }
 
-int URLRequestMockDataJob::GetResponseCode() const {
-  HttpResponseInfo info;
-  GetResponseInfoConst(&info);
-  return info.headers->response_code();
-}
-
 void URLRequestMockDataJob::ContinueWithCertificate(
     X509Certificate* client_cert,
     SSLPrivateKey* client_private_key) {
@@ -183,9 +177,9 @@ void URLRequestMockDataJob::AddUrlHandlerForHostname(
   // Add |hostname| to URLRequestFilter for HTTP and HTTPS.
   URLRequestFilter* filter = URLRequestFilter::GetInstance();
   filter->AddHostnameInterceptor("http", hostname,
-                                 base::WrapUnique(new MockJobInterceptor()));
+                                 base::MakeUnique<MockJobInterceptor>());
   filter->AddHostnameInterceptor("https", hostname,
-                                 base::WrapUnique(new MockJobInterceptor()));
+                                 base::MakeUnique<MockJobInterceptor>());
 }
 
 // static

@@ -20,16 +20,25 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+namespace blink {
+enum class WebFeaturePolicyFeature;
+}
+
 namespace base {
 class Value;
 }
 
-namespace shell {
+namespace service_manager {
 class InterfaceRegistry;
 class InterfaceProvider;
 }
 
+namespace ui {
+struct AXActionData;
+}
+
 namespace content {
+class AssociatedInterfaceProvider;
 class RenderProcessHost;
 class RenderViewHost;
 class RenderWidgetHostView;
@@ -103,13 +112,7 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   virtual const GURL& GetLastCommittedURL() = 0;
 
   // Returns the last committed origin of the frame.
-  //
-  // The origin is only available if this RenderFrameHost is current in the
-  // frame tree -- i.e., it would be visited by WebContents::ForEachFrame. In
-  // particular, this method may CHECK if called from
-  // WebContentsObserver::RenderFrameCreated, since non-current frames can be
-  // passed to that observer method.
-  virtual url::Origin GetLastCommittedOrigin() = 0;
+  virtual const url::Origin& GetLastCommittedOrigin() = 0;
 
   // Returns the associated widget's native view.
   virtual gfx::NativeView GetNativeView() = 0;
@@ -141,17 +144,9 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   virtual void ExecuteJavaScriptWithUserGestureForTests(
       const base::string16& javascript) = 0;
 
-  // Accessibility actions - these send a message to the RenderFrame
-  // to trigger an action on an accessibility object.
-  virtual void AccessibilitySetFocus(int acc_obj_id) = 0;
-  virtual void AccessibilityDoDefaultAction(int acc_obj_id) = 0;
-  virtual void AccessibilityScrollToMakeVisible(
-      int acc_obj_id, const gfx::Rect& subfocus) = 0;
-  virtual void AccessibilityShowContextMenu(int acc_obj_id) = 0;
-  virtual void AccessibilitySetSelection(int anchor_object_id,
-                                         int anchor_offset,
-                                         int focus_object_id,
-                                         int focus_offset) = 0;
+  // Send a message to the RenderFrame to trigger an action on an
+  // accessibility object.
+  virtual void AccessibilityPerformAction(const ui::AXActionData& data) = 0;
 
   // This is called when the user has committed to the given find in page
   // request (e.g. by pressing enter or by clicking on the next / previous
@@ -185,11 +180,15 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
 
   // Returns the InterfaceRegistry that this process uses to expose interfaces
   // to the application running in this frame.
-  virtual shell::InterfaceRegistry* GetInterfaceRegistry() = 0;
+  virtual service_manager::InterfaceRegistry* GetInterfaceRegistry() = 0;
 
   // Returns the InterfaceProvider that this process can use to bind
   // interfaces exposed to it by the application running in this frame.
-  virtual shell::InterfaceProvider* GetRemoteInterfaces() = 0;
+  virtual service_manager::InterfaceProvider* GetRemoteInterfaces() = 0;
+
+  // Returns the AssociatedInterfaceProvider that this process can use to access
+  // remote frame-specific Channel-associated interfaces for this frame.
+  virtual AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() = 0;
 
   // Returns the visibility state of the frame. The different visibility states
   // of a frame are defined in Blink.
@@ -210,6 +209,9 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
       const std::vector<content::FileChooserFileInfo>& files,
       FileChooserParams::Mode permissions) = 0;
 
+  // Returns true if the frame has a selection.
+  virtual bool HasSelection() = 0;
+
   // Text surrounding selection.
   typedef base::Callback<
       void(const base::string16& content, int start_offset, int end_offset)>
@@ -217,6 +219,39 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   virtual void RequestTextSurroundingSelection(
       const TextSurroundingSelectionCallback& callback,
       int max_length) = 0;
+
+  // Tell the render frame to enable a set of javascript bindings. The argument
+  // should be a combination of values from BindingsPolicy.
+  virtual void AllowBindings(int binding_flags) = 0;
+
+  // Returns a bitwise OR of bindings types that have been enabled for this
+  // RenderFrame. See BindingsPolicy for details.
+  virtual int GetEnabledBindings() const = 0;
+
+  // Causes all new requests for the root RenderFrameHost and its children to
+  // be blocked (not being started) until ResumeBlockedRequestsForFrame is
+  // called.
+  virtual void BlockRequestsForFrame() = 0;
+
+  // Resumes any blocked request for the specified root RenderFrameHost and
+  // child frame hosts.
+  virtual void ResumeBlockedRequestsForFrame() = 0;
+
+#if defined(OS_ANDROID)
+  // Returns an InterfaceProvider for Java-implemented interfaces that are
+  // scoped to this RenderFrameHost. This provides access to interfaces
+  // implemented in Java in the browser process to C++ code in the browser
+  // process.
+  virtual service_manager::InterfaceProvider* GetJavaInterfaces() = 0;
+#endif  // OS_ANDROID
+
+  // Stops and disables the hang monitor for beforeunload. This avoids flakiness
+  // in tests that need to observe beforeunload dialogs, which could fail if the
+  // timeout skips the dialog.
+  virtual void DisableBeforeUnloadHangMonitorForTesting() = 0;
+  virtual bool IsBeforeUnloadHangMonitorDisabledForTesting() = 0;
+
+  virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) = 0;
 
  private:
   // This interface should only be implemented inside content.

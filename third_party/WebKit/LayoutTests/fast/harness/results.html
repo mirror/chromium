@@ -430,6 +430,8 @@ function shouldUseTracLinks()
 
 function testLinkTarget(test)
 {
+    var virtualMatch = /virtual\/[^\/]+\/(.*)/.exec(test);
+    var devirtualTest = virtualMatch ? virtualMatch[1] : test;
     var target;
     if (shouldUseTracLinks()) {
         var revision = globalState().results.chromium_revision;
@@ -437,9 +439,9 @@ function testLinkTarget(test)
             target = 'https://crrev.com/' + revision;
         else
             target = 'https://chromium.googlesource.com/chromium/src/+/master';
-        target += '/third_party/WebKit/LayoutTests/' + test;
+        target += '/third_party/WebKit/LayoutTests/' + devirtualTest;
     } else
-        target = globalState().results.layout_tests_dir + '/' + test;
+        target = globalState().results.layout_tests_dir + '/' + devirtualTest;
     return target;
 }
 
@@ -537,13 +539,8 @@ function textResultLinks(test, prefix)
 {
     var html = resultLink(prefix, '-expected.txt', 'expected') +
         resultLink(prefix, '-actual.txt', 'actual') +
-        resultLink(prefix, '-diff.txt', 'diff');
-
-    if (globalState().results.has_pretty_patch)
-        html += resultLink(prefix, '-pretty-diff.html', 'pretty diff');
-
-    if (globalState().results.has_wdiff)
-        html += resultLink(prefix, '-wdiff.html', 'wdiff');
+        resultLink(prefix, '-diff.txt', 'diff') +
+        resultLink(prefix, '-pretty-diff.html', 'pretty diff');
 
     return html;
 }

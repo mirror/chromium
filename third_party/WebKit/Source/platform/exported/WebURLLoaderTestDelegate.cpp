@@ -11,32 +11,38 @@
 
 namespace blink {
 
-WebURLLoaderTestDelegate::WebURLLoaderTestDelegate()
-{
+WebURLLoaderTestDelegate::WebURLLoaderTestDelegate() {}
+
+WebURLLoaderTestDelegate::~WebURLLoaderTestDelegate() {}
+
+void WebURLLoaderTestDelegate::DidReceiveResponse(
+    WebURLLoaderClient* original_client,
+    const WebURLResponse& response) {
+  original_client->DidReceiveResponse(response);
 }
 
-WebURLLoaderTestDelegate::~WebURLLoaderTestDelegate()
-{
+void WebURLLoaderTestDelegate::DidReceiveData(
+    WebURLLoaderClient* original_client,
+    const char* data,
+    int data_length) {
+  original_client->DidReceiveData(data, data_length);
 }
 
-void WebURLLoaderTestDelegate::didReceiveResponse(WebURLLoaderClient* originalClient, WebURLLoader* loader, const WebURLResponse& response)
-{
-    originalClient->didReceiveResponse(loader, response);
+void WebURLLoaderTestDelegate::DidFail(WebURLLoaderClient* original_client,
+                                       const WebURLError& error,
+                                       int64_t total_encoded_data_length,
+                                       int64_t total_encoded_body_length) {
+  original_client->DidFail(error, total_encoded_data_length,
+                           total_encoded_body_length);
 }
 
-void WebURLLoaderTestDelegate::didReceiveData(WebURLLoaderClient* originalClient, WebURLLoader* loader, const char* data, int dataLength, int encodedDataLength)
-{
-    originalClient->didReceiveData(loader, data, dataLength, encodedDataLength, dataLength);
+void WebURLLoaderTestDelegate::DidFinishLoading(
+    WebURLLoaderClient* original_client,
+    double finish_time,
+    int64_t total_encoded_data_length,
+    int64_t total_encoded_body_length) {
+  original_client->DidFinishLoading(finish_time, total_encoded_data_length,
+                                    total_encoded_body_length);
 }
 
-void WebURLLoaderTestDelegate::didFail(WebURLLoaderClient* originalClient, WebURLLoader* loader, const WebURLError& error)
-{
-    originalClient->didFail(loader, error);
-}
-
-void WebURLLoaderTestDelegate::didFinishLoading(WebURLLoaderClient* originalClient, WebURLLoader* loader, double finishTime, int64_t totalEncodedDataLength)
-{
-    originalClient->didFinishLoading(loader, finishTime, totalEncodedDataLength);
-}
-
-} // namespace blink
+}  // namespace blink

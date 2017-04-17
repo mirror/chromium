@@ -7,8 +7,10 @@
 #include "base/logging.h"
 #import "base/mac/mac_util.h"
 #import "base/mac/scoped_nsobject.h"
+#import "base/mac/sdk_forward_declarations.h"
 #include "base/strings/sys_string_conversions.h"
 #include "skia/ext/skia_utils_mac.h"
+#import "ui/base/cocoa/appkit_utils.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/dragdrop/os_exchange_data_provider_mac.h"
@@ -17,9 +19,11 @@
 #include "ui/base/ime/text_input_client.h"
 #include "ui/compositor/canvas_painter.h"
 #import "ui/events/cocoa/cocoa_event_utils.h"
+#include "ui/events/event_utils.h"
 #include "ui/events/keycodes/dom/dom_code.h"
 #import "ui/events/keycodes/keyboard_code_conversion_mac.h"
 #include "ui/gfx/canvas_paint_mac.h"
+#include "ui/gfx/decorated_text.h"
 #include "ui/gfx/geometry/rect.h"
 #import "ui/gfx/mac/coordinate_conversion.h"
 #include "ui/gfx/path.h"
@@ -27,11 +31,13 @@
 #include "ui/gfx/scoped_ns_graphics_context_save_gstate_mac.h"
 #import "ui/views/cocoa/bridged_native_widget.h"
 #import "ui/views/cocoa/drag_drop_client_mac.h"
+#include "ui/views/controls/label.h"
 #include "ui/views/controls/menu/menu_config.h"
 #include "ui/views/controls/menu/menu_controller.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/native_widget_mac.h"
 #include "ui/views/widget/widget.h"
+#include "ui/views/word_lookup_client.h"
 
 using views::MenuController;
 
@@ -194,17 +200,56 @@ base::string16 AttributedSubstringForRangeHelper(
   return substring;
 }
 
-// Returns a character event corresponding to |event|. |event| must be a
-// character event itself.
-ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
-  DCHECK([event type] == NSKeyDown || [event type] == NSKeyUp);
-  DCHECK_EQ(1u, [[event characters] length]);
+NSAttributedString* GetAttributedString(
+    const gfx::DecoratedText& decorated_text) {
+  base::scoped_nsobject<NSMutableAttributedString> str(
+      [[NSMutableAttributedString alloc]
+          initWithString:base::SysUTF16ToNSString(decorated_text.text)]);
+  [str beginEditing];
 
-  // [NSEvent characters] already considers the pressed key modifiers. Hence
-  // send ui::EF_NONE as the key modifier to the KeyEvent constructor.
-  // E.g. For Alt+S, [NSEvent characters] is 'ß' and not 'S'.
-  return ui::KeyEvent([[event characters] characterAtIndex:0],
-                      ui::KeyboardCodeFromNSEvent(event), ui::EF_NONE);
+  NSValue* const line_style =
+      @(NSUnderlineStyleSingle | NSUnderlinePatternSolid);
+
+  for (const auto& attribute : decorated_text.attributes) {
+    DCHECK(!attribute.range.is_reversed());
+    DCHECK_LE(attribute.range.end(), [str length]);
+
+    NSMutableDictionary* attrs = [NSMutableDictionary dictionary];
+    NSRange range = attribute.range.ToNSRange();
+
+    if (attribute.font.GetNativeFont())
+      attrs[NSFontAttributeName] = attribute.font.GetNativeFont();
+
+    // NSFont does not have underline as an attribute. Hence handle it
+    // separately.
+    const bool underline = attribute.font.GetStyle() & gfx::Font::UNDERLINE;
+    if (underline)
+      attrs[NSUnderlineStyleAttributeName] = line_style;
+
+    if (attribute.strike)
+      attrs[NSStrikethroughStyleAttributeName] = line_style;
+
+    [str setAttributes:attrs range:range];
+  }
+
+  [str endEditing];
+  return str.autorelease();
+}
+
+ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
+  if (action == @selector(undo:))
+    return ui::TextEditCommand::UNDO;
+  if (action == @selector(redo:))
+    return ui::TextEditCommand::REDO;
+  if (action == @selector(cut:))
+    return ui::TextEditCommand::CUT;
+  if (action == @selector(copy:))
+    return ui::TextEditCommand::COPY;
+  if (action == @selector(paste:))
+    return ui::TextEditCommand::PASTE;
+  if (action == @selector(selectAll:))
+    return ui::TextEditCommand::SELECT_ALL;
+  return ui::TextEditCommand::INVALID_COMMAND;
 }
 
 }  // namespace
@@ -217,6 +262,11 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 
 // Passes |event| to the InputMethod for dispatch.
 - (void)handleKeyEvent:(ui::KeyEvent*)event;
+
+// Allows accelerators to be handled at different points in AppKit key event
+// dispatch. Checks for an unhandled event passed in to -keyDown: and passes it
+// to the Widget for processing. Returns YES if the Widget handles it.
+- (BOOL)handleUnhandledKeyDownAsKeyEvent;
 
 // Handles an NSResponder Action Message by mapping it to a corresponding text
 // editing command from ui_strings.grd and, when not being sent to a
@@ -276,7 +326,8 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
     cursorTrackingArea_.reset([[CrTrackingArea alloc]
         initWithRect:NSZeroRect
              options:NSTrackingMouseMoved | NSTrackingCursorUpdate |
-                     NSTrackingActiveInActiveApp | NSTrackingInVisibleRect
+                     NSTrackingActiveInActiveApp | NSTrackingInVisibleRect |
+                     NSTrackingMouseEnteredAndExited
                owner:self
             userInfo:nil]);
     [self addTrackingArea:cursorTrackingArea_.get()];
@@ -345,7 +396,7 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 
 - (void)updateWindowMask {
   DCHECK(![self inLiveResize]);
-  DCHECK(base::mac::IsOSMavericks());
+  DCHECK(base::mac::IsOS10_9());
   DCHECK(hostedView_);
 
   views::Widget* widget = hostedView_->GetWidget();
@@ -397,6 +448,16 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
   hostedView_->GetWidget()->GetInputMethod()->DispatchKeyEvent(event);
 }
 
+- (BOOL)handleUnhandledKeyDownAsKeyEvent {
+  if (!hasUnhandledKeyDownEvent_)
+    return NO;
+
+  ui::KeyEvent event(keyDownEvent_);
+  [self handleKeyEvent:&event];
+  hasUnhandledKeyDownEvent_ = NO;
+  return event.handled();
+}
+
 - (void)handleAction:(ui::TextEditCommand)command
              keyCode:(ui::KeyboardCode)keyCode
              domCode:(ui::DomCode)domCode
@@ -432,31 +493,65 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
     text = [text string];
 
   bool isCharacterEvent = keyDownEvent_ && [text length] == 1;
+  // Pass the character event to the View hierarchy. Cases this handles (non-
+  // exhaustive)-
+  //    - Space key press on controls. Unlike Tab and newline which have
+  //      corresponding action messages, an insertText: message is generated for
+  //      the Space key (insertText:replacementRange: when there's an active
+  //      input context).
+  //    - Menu mnemonic selection.
+  // Note we create a custom character ui::KeyEvent (and not use the
+  // ui::KeyEvent(NSEvent*) constructor) since we can't just rely on the event
+  // key code to get the actual characters from the ui::KeyEvent. This for
+  // example is necessary for menu mnemonic selection of non-latin text.
+
+  // Don't generate a key event when there is active composition text. These key
+  // down events should be consumed by the IME and not reach the Views layer.
+  // For example, on pressing Return to commit composition text, if we passed a
+  // synthetic key event to the View hierarchy, it will have the effect of
+  // performing the default action on the current dialog. We do not want this.
+
+  // Also note that a single key down event can cause multiple
+  // insertText:replacementRange: action messages. Example, on pressing Alt+e,
+  // the accent (´) character is composed via setMarkedText:. Now on pressing
+  // the character 'r', two insertText:replacementRange: action messages are
+  // generated with the text value of accent (´) and 'r' respectively. The key
+  // down event will have characters field of length 2. The first of these
+  // insertText messages won't generate a KeyEvent since there'll be active
+  // marked text. However, a KeyEvent will be generated corresponding to 'r'.
+
+  // Currently there seems to be no use case to pass non-character events routed
+  // from insertText: handlers to the View hierarchy.
+  if (isCharacterEvent && ![self hasMarkedText]) {
+    ui::KeyEvent charEvent([text characterAtIndex:0],
+                           ui::KeyboardCodeFromNSEvent(keyDownEvent_),
+                           ui::EF_NONE);
+    [self handleKeyEvent:&charEvent];
+    hasUnhandledKeyDownEvent_ = NO;
+  }
 
   // Forward the |text| to |textInputClient_| if no menu is active.
   if (textInputClient_ && ![self activeMenuController]) {
     // If a single character is inserted by keyDown's call to
     // interpretKeyEvents: then use InsertChar() to allow editing events to be
-    // merged.
-    if (isCharacterEvent)
-      textInputClient_->InsertChar(GetCharacterEventFromNSEvent(keyDownEvent_));
-    else
-      textInputClient_->InsertText(base::SysNSStringToUTF16(text));
-    return;
-  }
+    // merged. We use ui::VKEY_UNKNOWN as the key code since it's not feasible
+    // to determine the correct key code for each unicode character. Also a
+    // correct keycode is not needed in the current context. Send ui::EF_NONE as
+    // the key modifier since |text| already accounts for the pressed key
+    // modifiers.
 
-  // Only handle the case where no. of characters is 1. Cases not handled (not
-  // an exhaustive list):
-  // - |text| contains a unicode surrogate pair, i.e. a single grapheme which
-  //   requires two 16 bit characters. Currently Views menu only supports
-  //   mnemonics using a single 16 bit character, so it is ok to ignore this
-  //   case.
-  // - Programmatically created events.
-  // - Input from IME. But this case should not occur since inputContext is
-  //   nil.
-  if (isCharacterEvent) {
-    ui::KeyEvent charEvent = GetCharacterEventFromNSEvent(keyDownEvent_);
-    [self handleKeyEvent:&charEvent];
+    // Also, note we don't use |keyDownEvent_| to generate the synthetic
+    // ui::KeyEvent since for composed text, [keyDownEvent_ characters] might
+    // not be the same as |text|. This is because |keyDownEvent_| will
+    // correspond to the event that caused the composition text to be confirmed,
+    // say, Return key press.
+    if (isCharacterEvent) {
+      textInputClient_->InsertChar(ui::KeyEvent([text characterAtIndex:0],
+                                                ui::VKEY_UNKNOWN, ui::EF_NONE));
+    } else {
+      textInputClient_->InsertText(base::SysNSStringToUTF16(text));
+    }
+    hasUnhandledKeyDownEvent_ = NO;
   }
 }
 
@@ -467,12 +562,6 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)undo:(id)sender {
-  // This DCHECK is more strict than a similar check in handleAction:. It can be
-  // done here because the actors sending these actions should be calling
-  // validateUserInterfaceItem: before enabling UI that allows these messages to
-  // be sent. Checking it here would be too late to provide correct UI feedback
-  // (e.g. there will be no "beep").
-  DCHECK(textInputClient_->IsTextEditCommandEnabled(ui::TextEditCommand::UNDO));
   [self handleAction:ui::TextEditCommand::UNDO
              keyCode:ui::VKEY_Z
              domCode:ui::DomCode::US_Z
@@ -480,7 +569,6 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)redo:(id)sender {
-  DCHECK(textInputClient_->IsTextEditCommandEnabled(ui::TextEditCommand::REDO));
   [self handleAction:ui::TextEditCommand::REDO
              keyCode:ui::VKEY_Z
              domCode:ui::DomCode::US_Z
@@ -488,7 +576,6 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)cut:(id)sender {
-  DCHECK(textInputClient_->IsTextEditCommandEnabled(ui::TextEditCommand::CUT));
   [self handleAction:ui::TextEditCommand::CUT
              keyCode:ui::VKEY_X
              domCode:ui::DomCode::US_X
@@ -496,7 +583,6 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)copy:(id)sender {
-  DCHECK(textInputClient_->IsTextEditCommandEnabled(ui::TextEditCommand::COPY));
   [self handleAction:ui::TextEditCommand::COPY
              keyCode:ui::VKEY_C
              domCode:ui::DomCode::US_C
@@ -504,8 +590,6 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)paste:(id)sender {
-  DCHECK(
-      textInputClient_->IsTextEditCommandEnabled(ui::TextEditCommand::PASTE));
   [self handleAction:ui::TextEditCommand::PASTE
              keyCode:ui::VKEY_V
              domCode:ui::DomCode::US_V
@@ -513,8 +597,6 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)selectAll:(id)sender {
-  DCHECK(textInputClient_->IsTextEditCommandEnabled(
-      ui::TextEditCommand::SELECT_ALL));
   [self handleAction:ui::TextEditCommand::SELECT_ALL
              keyCode:ui::VKEY_A
              domCode:ui::DomCode::US_A
@@ -541,6 +623,11 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
   [self updateTooltipIfRequiredAt:event.location()];
 
   hostedView_->GetWidget()->OnMouseEvent(&event);
+}
+
+- (void)forceTouchEvent:(NSEvent*)theEvent {
+  if (ui::ForceClickInvokesQuickLook())
+    [self quickLookWithEvent:theEvent];
 }
 
 // NSView implementation.
@@ -594,7 +681,7 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
   // We prevent updating the window mask and clipping the border around the
   // view, during a live resize. Hence update the window mask and redraw the
   // view after resize has completed.
-  if (base::mac::IsOSMavericks()) {
+  if (base::mac::IsOS10_9()) {
     [self updateWindowMask];
     [self setNeedsDisplay:YES];
   }
@@ -621,7 +708,7 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
   // crbug.com/543671.
   if (windowMask_ && ![self inLiveResize] &&
       !IsRectInsidePath(dirtyRect, windowMask_)) {
-    DCHECK(base::mac::IsOSMavericks());
+    DCHECK(base::mac::IsOS10_9());
     gfx::ScopedNSGraphicsContextSaveGState state;
 
     // The outer rectangular path corresponding to the window.
@@ -645,9 +732,16 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
   if (hostedView_->GetWidget()->GetLayer())
     return;
 
-  gfx::CanvasSkiaPaint canvas(dirtyRect, false /* opaque */);
-  hostedView_->GetWidget()->OnNativeWidgetPaint(
-      ui::CanvasPainter(&canvas, 1.f).context());
+  // TODO(tapted): Add a NOTREACHED() here.  At the moment, low-level
+  // BridgedNativeWidget unit tests may not have a ui::Layer.
+}
+
+- (BOOL)isOpaque {
+  if (!hostedView_)
+    return NO;
+
+  ui::Layer* layer = hostedView_->GetWidget()->GetLayer();
+  return layer && layer->fills_bounds_opaquely();
 }
 
 // To maximize consistency with the Cocoa browser (mac_views_browser=0), accept
@@ -700,10 +794,28 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 
 // NSResponder implementation.
 
+- (BOOL)_wantsKeyDownForEvent:(NSEvent*)event {
+  // This is a SPI that AppKit apparently calls after |performKeyEquivalent:|
+  // returned NO. If this function returns |YES|, Cocoa sends the event to
+  // |keyDown:| instead of doing other things with it. Ctrl-tab will be sent
+  // to us instead of doing key view loop control, ctrl-left/right get handled
+  // correctly, etc.
+  // (However, there are still some keys that Cocoa swallows, e.g. the key
+  // equivalent that Cocoa uses for toggling the input language. In this case,
+  // that's actually a good thing, though -- see http://crbug.com/26115 .)
+  return YES;
+}
+
 - (void)keyDown:(NSEvent*)theEvent {
   // Convert the event into an action message, according to OSX key mappings.
   keyDownEvent_ = theEvent;
+  hasUnhandledKeyDownEvent_ = YES;
   [self interpretKeyEvents:@[ theEvent ]];
+
+  // If |keyDownEvent_| wasn't cleared during -interpretKeyEvents:, it wasn't
+  // handled. Give Widget accelerators a chance to handle it.
+  [self handleUnhandledKeyDownAsKeyEvent];
+  DCHECK(!hasUnhandledKeyDownEvent_);
   keyDownEvent_ = nil;
 }
 
@@ -716,8 +828,67 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
   if (!hostedView_)
     return;
 
-  ui::MouseWheelEvent event(theEvent);
-  hostedView_->GetWidget()->OnMouseEvent(&event);
+  ui::ScrollEvent event(theEvent);
+  hostedView_->GetWidget()->OnScrollEvent(&event);
+}
+
+// Called when we get a three-finger swipe, and they're enabled in System
+// Preferences.
+- (void)swipeWithEvent:(NSEvent*)event {
+  if (!hostedView_)
+    return;
+
+  // themblsha: In my testing all three-finger swipes send only a single event
+  // with a value of +/-1 on either axis. Diagonal swipes are not handled by
+  // AppKit.
+
+  // We need to invert deltas in order to match GestureEventDetails's
+  // directions.
+  ui::GestureEventDetails swipeDetails(ui::ET_GESTURE_SWIPE, -[event deltaX],
+                                       -[event deltaY]);
+  swipeDetails.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
+  swipeDetails.set_touch_points(3);
+
+  gfx::PointF location = ui::EventLocationFromNative(event);
+  // Note this uses the default unique_touch_event_id of 0 (Swipe events do not
+  // support -[NSEvent eventNumber]). This doesn't seem like a real omission
+  // because the three-finger swipes are instant and can't be tracked anyway.
+  ui::GestureEvent gestureEvent(location.x(), location.y(),
+                                ui::EventFlagsFromNative(event),
+                                ui::EventTimeFromNative(event), swipeDetails);
+
+  hostedView_->GetWidget()->OnGestureEvent(&gestureEvent);
+}
+
+- (void)quickLookWithEvent:(NSEvent*)theEvent {
+  if (!hostedView_)
+    return;
+
+  const gfx::Point locationInContent =
+      gfx::ToFlooredPoint(ui::EventLocationFromNative(theEvent));
+  views::View* target = hostedView_->GetEventHandlerForPoint(locationInContent);
+  if (!target)
+    return;
+
+  views::WordLookupClient* wordLookupClient = target->GetWordLookupClient();
+  if (!wordLookupClient)
+    return;
+
+  gfx::Point locationInTarget = locationInContent;
+  views::View::ConvertPointToTarget(hostedView_, target, &locationInTarget);
+  gfx::DecoratedText decoratedWord;
+  gfx::Point baselinePoint;
+  if (!wordLookupClient->GetDecoratedWordAtPoint(
+          locationInTarget, &decoratedWord, &baselinePoint)) {
+    return;
+  }
+
+  // Convert |baselinePoint| to the coordinate system of |hostedView_|.
+  views::View::ConvertPointToTarget(target, hostedView_, &baselinePoint);
+  NSPoint baselinePointAppKit = NSMakePoint(
+      baselinePoint.x(), NSHeight([self frame]) - baselinePoint.y());
+  [self showDefinitionForAttributedString:GetAttributedString(decoratedWord)
+                                  atPoint:baselinePointAppKit];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -743,8 +914,10 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 // Selection movement and scrolling.
 
 - (void)moveForward:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveLeft:sender]
-                              : [self moveRight:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_FORWARD
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveRight:(id)sender {
@@ -755,8 +928,10 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)moveBackward:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveRight:sender]
-                              : [self moveLeft:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_BACKWARD
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveLeft:(id)sender {
@@ -767,27 +942,31 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)moveUp:(id)sender {
-  [self handleAction:ui::TextEditCommand::MOVE_TO_BEGINNING_OF_LINE
+  [self handleAction:ui::TextEditCommand::MOVE_UP
              keyCode:ui::VKEY_UP
              domCode:ui::DomCode::ARROW_UP
           eventFlags:0];
 }
 
 - (void)moveDown:(id)sender {
-  [self handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE
+  [self handleAction:ui::TextEditCommand::MOVE_DOWN
              keyCode:ui::VKEY_DOWN
              domCode:ui::DomCode::ARROW_DOWN
           eventFlags:0];
 }
 
 - (void)moveWordForward:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveWordLeft:sender]
-                              : [self moveWordRight:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_WORD_FORWARD
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveWordBackward:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveWordRight:sender]
-                              : [self moveWordLeft:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_WORD_BACKWARD
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveToBeginningOfLine:(id)sender {
@@ -805,75 +984,91 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)moveToBeginningOfParagraph:(id)sender {
-  [self moveToBeginningOfLine:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_TO_BEGINNING_OF_PARAGRAPH
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveToEndOfParagraph:(id)sender {
-  [self moveToEndOfLine:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_TO_END_OF_PARAGRAPH
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveToEndOfDocument:(id)sender {
-  [self handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE
+  [self handleAction:ui::TextEditCommand::MOVE_TO_END_OF_DOCUMENT
              keyCode:ui::VKEY_END
              domCode:ui::DomCode::END
           eventFlags:ui::EF_CONTROL_DOWN];
 }
 
 - (void)moveToBeginningOfDocument:(id)sender {
-  [self handleAction:ui::TextEditCommand::MOVE_TO_BEGINNING_OF_LINE
+  [self handleAction:ui::TextEditCommand::MOVE_TO_BEGINNING_OF_DOCUMENT
              keyCode:ui::VKEY_HOME
              domCode:ui::DomCode::HOME
           eventFlags:ui::EF_CONTROL_DOWN];
 }
 
 - (void)pageDown:(id)sender {
-  [self handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE
+  // The pageDown: action message is bound to the key combination
+  // [Option+PageDown].
+  [self handleAction:ui::TextEditCommand::MOVE_PAGE_DOWN
              keyCode:ui::VKEY_NEXT
              domCode:ui::DomCode::PAGE_DOWN
-          eventFlags:0];
+          eventFlags:ui::EF_ALT_DOWN];
 }
 
 - (void)pageUp:(id)sender {
-  [self handleAction:ui::TextEditCommand::MOVE_TO_BEGINNING_OF_LINE
+  // The pageUp: action message is bound to the key combination [Option+PageUp].
+  [self handleAction:ui::TextEditCommand::MOVE_PAGE_UP
              keyCode:ui::VKEY_PRIOR
              domCode:ui::DomCode::PAGE_UP
-          eventFlags:0];
+          eventFlags:ui::EF_ALT_DOWN];
 }
 
 - (void)moveBackwardAndModifySelection:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveRightAndModifySelection:sender]
-                              : [self moveLeftAndModifySelection:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_BACKWARD_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveForwardAndModifySelection:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveLeftAndModifySelection:sender]
-                              : [self moveRightAndModifySelection:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_FORWARD_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveWordForwardAndModifySelection:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveWordLeftAndModifySelection:sender]
-                              : [self moveWordRightAndModifySelection:sender];
+  [self handleAction:ui::TextEditCommand::MOVE_WORD_FORWARD_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveWordBackwardAndModifySelection:(id)sender {
-  IsTextRTL(textInputClient_) ? [self moveWordRightAndModifySelection:sender]
-                              : [self moveWordLeftAndModifySelection:sender];
+  [self
+      handleAction:ui::TextEditCommand::MOVE_WORD_BACKWARD_AND_MODIFY_SELECTION
+           keyCode:ui::VKEY_UNKNOWN
+           domCode:ui::DomCode::NONE
+        eventFlags:0];
 }
 
 - (void)moveUpAndModifySelection:(id)sender {
-  [self handleAction:ui::TextEditCommand::
-                         MOVE_TO_BEGINNING_OF_LINE_AND_MODIFY_SELECTION
+  [self handleAction:ui::TextEditCommand::MOVE_UP_AND_MODIFY_SELECTION
              keyCode:ui::VKEY_UP
              domCode:ui::DomCode::ARROW_UP
           eventFlags:ui::EF_SHIFT_DOWN];
 }
 
 - (void)moveDownAndModifySelection:(id)sender {
-  [self
-      handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE_AND_MODIFY_SELECTION
-           keyCode:ui::VKEY_DOWN
-           domCode:ui::DomCode::ARROW_DOWN
-        eventFlags:ui::EF_SHIFT_DOWN];
+  [self handleAction:ui::TextEditCommand::MOVE_DOWN_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_DOWN
+             domCode:ui::DomCode::ARROW_DOWN
+          eventFlags:ui::EF_SHIFT_DOWN];
 }
 
 - (void)moveToBeginningOfLineAndModifySelection:(id)sender {
@@ -893,56 +1088,62 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)moveToBeginningOfParagraphAndModifySelection:(id)sender {
-  [self moveToBeginningOfLineAndModifySelection:sender];
+  [self handleAction:ui::TextEditCommand::
+                         MOVE_TO_BEGINNING_OF_PARAGRAPH_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveToEndOfParagraphAndModifySelection:(id)sender {
-  [self moveToEndOfLineAndModifySelection:sender];
+  [self handleAction:ui::TextEditCommand::
+                         MOVE_TO_END_OF_PARAGRAPH_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)moveToEndOfDocumentAndModifySelection:(id)sender {
-  [self
-      handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE_AND_MODIFY_SELECTION
-           keyCode:ui::VKEY_END
-           domCode:ui::DomCode::END
-        eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
+  [self handleAction:ui::TextEditCommand::
+                         MOVE_TO_END_OF_DOCUMENT_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_END
+             domCode:ui::DomCode::END
+          eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
 }
 
 - (void)moveToBeginningOfDocumentAndModifySelection:(id)sender {
   [self handleAction:ui::TextEditCommand::
-                         MOVE_TO_BEGINNING_OF_LINE_AND_MODIFY_SELECTION
+                         MOVE_TO_BEGINNING_OF_DOCUMENT_AND_MODIFY_SELECTION
              keyCode:ui::VKEY_HOME
              domCode:ui::DomCode::HOME
           eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
 }
 
 - (void)pageDownAndModifySelection:(id)sender {
-  [self
-      handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE_AND_MODIFY_SELECTION
-           keyCode:ui::VKEY_NEXT
-           domCode:ui::DomCode::PAGE_DOWN
-        eventFlags:ui::EF_SHIFT_DOWN];
+  [self handleAction:ui::TextEditCommand::MOVE_PAGE_DOWN_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_NEXT
+             domCode:ui::DomCode::PAGE_DOWN
+          eventFlags:ui::EF_SHIFT_DOWN];
 }
 
 - (void)pageUpAndModifySelection:(id)sender {
-  [self handleAction:ui::TextEditCommand::
-                         MOVE_TO_BEGINNING_OF_LINE_AND_MODIFY_SELECTION
+  [self handleAction:ui::TextEditCommand::MOVE_PAGE_UP_AND_MODIFY_SELECTION
              keyCode:ui::VKEY_PRIOR
              domCode:ui::DomCode::PAGE_UP
           eventFlags:ui::EF_SHIFT_DOWN];
 }
 
 - (void)moveParagraphForwardAndModifySelection:(id)sender {
-  [self
-      handleAction:ui::TextEditCommand::MOVE_TO_END_OF_LINE_AND_MODIFY_SELECTION
-           keyCode:ui::VKEY_DOWN
-           domCode:ui::DomCode::ARROW_DOWN
-        eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
+  [self handleAction:ui::TextEditCommand::
+                         MOVE_PARAGRAPH_FORWARD_AND_MODIFY_SELECTION
+             keyCode:ui::VKEY_DOWN
+             domCode:ui::DomCode::ARROW_DOWN
+          eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
 }
 
 - (void)moveParagraphBackwardAndModifySelection:(id)sender {
   [self handleAction:ui::TextEditCommand::
-                         MOVE_TO_BEGINNING_OF_LINE_AND_MODIFY_SELECTION
+                         MOVE_PARAGRAPH_BACKWARD_AND_MODIFY_SELECTION
              keyCode:ui::VKEY_UP
              domCode:ui::DomCode::ARROW_UP
           eventFlags:ui::EF_CONTROL_DOWN | ui::EF_SHIFT_DOWN];
@@ -1066,11 +1267,17 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 }
 
 - (void)deleteToBeginningOfParagraph:(id)sender {
-  [self deleteToBeginningOfLine:sender];
+  [self handleAction:ui::TextEditCommand::DELETE_TO_BEGINNING_OF_PARAGRAPH
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)deleteToEndOfParagraph:(id)sender {
-  [self deleteToEndOfLine:sender];
+  [self handleAction:ui::TextEditCommand::DELETE_TO_END_OF_PARAGRAPH
+             keyCode:ui::VKEY_UNKNOWN
+             domCode:ui::DomCode::NONE
+          eventFlags:0];
 }
 
 - (void)yank:(id)sender {
@@ -1157,15 +1364,19 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 - (void)doCommandBySelector:(SEL)selector {
   // Like the renderer, handle insert action messages as a regular key dispatch.
   // This ensures, e.g., insertTab correctly changes focus between fields.
-  if (keyDownEvent_ && [NSStringFromSelector(selector) hasPrefix:@"insert"]) {
-    ui::KeyEvent event(keyDownEvent_);
-    [self handleKeyEvent:&event];
+  if (keyDownEvent_ && [NSStringFromSelector(selector) hasPrefix:@"insert"])
+    return;  // Handle in -keyDown:.
+
+  if ([self respondsToSelector:selector]) {
+    [self performSelector:selector withObject:nil];
+    hasUnhandledKeyDownEvent_ = NO;
     return;
   }
 
-  if ([self respondsToSelector:selector])
-    [self performSelector:selector withObject:nil];
-  else
+  // For events that AppKit sends via doCommandBySelector:, first attempt to
+  // handle as a Widget accelerator. Forward along the responder chain only if
+  // the Widget doesn't handle it.
+  if (![self handleUnhandledKeyDownAsKeyEvent])
     [[self nextResponder] doCommandBySelector:selector];
 }
 
@@ -1221,15 +1432,31 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 
   if ([text isKindOfClass:[NSAttributedString class]])
     text = [text string];
+
+  textInputClient_->DeleteRange(gfx::Range(replacementRange));
   ui::CompositionText composition;
   composition.text = base::SysNSStringToUTF16(text);
   composition.selection = gfx::Range(selectedRange);
+
+  // Add a black underline with a transparent background to the composition
+  // text. TODO(karandeepb): On Cocoa textfields, the target clause of the
+  // composition has a thick underlines. The composition text also has
+  // discontinous underlines for different clauses. This is also supported in
+  // the Chrome renderer. Add code to extract underlines from |text| once our
+  // render text implementation supports thick underlines and discontinous
+  // underlines for consecutive characters. See http://crbug.com/612675.
+  composition.underlines.push_back(ui::CompositionUnderline(
+      0, [text length], SK_ColorBLACK, false, SK_ColorTRANSPARENT));
   textInputClient_->SetCompositionText(composition);
+  hasUnhandledKeyDownEvent_ = NO;
 }
 
 - (void)unmarkText {
-  if (textInputClient_)
-    textInputClient_->ConfirmCompositionText();
+  if (!textInputClient_)
+    return;
+
+  textInputClient_->ConfirmCompositionText();
+  hasUnhandledKeyDownEvent_ = NO;
 }
 
 - (NSArray*)validAttributesForMarkedText {
@@ -1239,30 +1466,25 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 // NSUserInterfaceValidations protocol implementation.
 
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
-  if (!textInputClient_)
+  ui::TextEditCommand command = GetTextEditCommandForMenuAction([item action]);
+
+  if (command == ui::TextEditCommand::INVALID_COMMAND)
     return NO;
 
-  SEL action = [item action];
+  if (textInputClient_)
+    return textInputClient_->IsTextEditCommandEnabled(command);
 
-  if (action == @selector(undo:))
-    return textInputClient_->IsTextEditCommandEnabled(
-        ui::TextEditCommand::UNDO);
-  if (action == @selector(redo:))
-    return textInputClient_->IsTextEditCommandEnabled(
-        ui::TextEditCommand::REDO);
-  if (action == @selector(cut:))
-    return textInputClient_->IsTextEditCommandEnabled(ui::TextEditCommand::CUT);
-  if (action == @selector(copy:))
-    return textInputClient_->IsTextEditCommandEnabled(
-        ui::TextEditCommand::COPY);
-  if (action == @selector(paste:))
-    return textInputClient_->IsTextEditCommandEnabled(
-        ui::TextEditCommand::PASTE);
-  if (action == @selector(selectAll:))
-    return textInputClient_->IsTextEditCommandEnabled(
-        ui::TextEditCommand::SELECT_ALL);
+  // views::Label does not implement the TextInputClient interface but still
+  // needs to intercept the Copy and Select All menu actions.
+  if (command != ui::TextEditCommand::COPY &&
+      command != ui::TextEditCommand::SELECT_ALL)
+    return NO;
 
-  return NO;
+  views::FocusManager* focus_manager =
+      hostedView_->GetWidget()->GetFocusManager();
+  return focus_manager && focus_manager->GetFocusedView() &&
+         focus_manager->GetFocusedView()->GetClassName() ==
+             views::Label::kViewClassName;
 }
 
 // NSDraggingSource protocol implementation.
@@ -1292,6 +1514,12 @@ ui::KeyEvent GetCharacterEventFromNSEvent(NSEvent* event) {
 
 - (id)accessibilityHitTest:(NSPoint)point {
   return [hostedView_->GetNativeViewAccessible() accessibilityHitTest:point];
+}
+
+- (id)accessibilityFocusedUIElement {
+  if (!hostedView_)
+    return nil;
+  return [hostedView_->GetNativeViewAccessible() accessibilityFocusedUIElement];
 }
 
 @end

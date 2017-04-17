@@ -9,40 +9,40 @@
 
 namespace blink {
 
-WorkerNavigatorPermissions::WorkerNavigatorPermissions()
-{
+WorkerNavigatorPermissions::WorkerNavigatorPermissions() {}
+
+// static
+const char* WorkerNavigatorPermissions::SupplementName() {
+  return "WorkerNavigatorPermissions";
 }
 
 // static
-const char* WorkerNavigatorPermissions::supplementName()
-{
-    return "WorkerNavigatorPermissions";
+WorkerNavigatorPermissions& WorkerNavigatorPermissions::From(
+    WorkerNavigator& worker_navigator) {
+  WorkerNavigatorPermissions* supplement =
+      static_cast<WorkerNavigatorPermissions*>(
+          Supplement<WorkerNavigator>::From(worker_navigator,
+                                            SupplementName()));
+  if (!supplement) {
+    supplement = new WorkerNavigatorPermissions();
+    ProvideTo(worker_navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
 // static
-WorkerNavigatorPermissions& WorkerNavigatorPermissions::from(WorkerNavigator& workerNavigator)
-{
-    WorkerNavigatorPermissions* supplement = static_cast<WorkerNavigatorPermissions*>(Supplement<WorkerNavigator>::from(workerNavigator, supplementName()));
-    if (!supplement) {
-        supplement = new WorkerNavigatorPermissions();
-        provideTo(workerNavigator, supplementName(), supplement);
-    }
-    return *supplement;
+Permissions* WorkerNavigatorPermissions::permissions(
+    WorkerNavigator& worker_navigator) {
+  WorkerNavigatorPermissions& self =
+      WorkerNavigatorPermissions::From(worker_navigator);
+  if (!self.permissions_)
+    self.permissions_ = new Permissions();
+  return self.permissions_;
 }
 
-// static
-Permissions* WorkerNavigatorPermissions::permissions(WorkerNavigator& workerNavigator)
-{
-    WorkerNavigatorPermissions& self = WorkerNavigatorPermissions::from(workerNavigator);
-    if (!self.m_permissions)
-        self.m_permissions = new Permissions();
-    return self.m_permissions;
+DEFINE_TRACE(WorkerNavigatorPermissions) {
+  visitor->Trace(permissions_);
+  Supplement<WorkerNavigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(WorkerNavigatorPermissions)
-{
-    visitor->trace(m_permissions);
-    Supplement<WorkerNavigator>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

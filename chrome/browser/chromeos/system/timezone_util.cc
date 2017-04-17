@@ -6,10 +6,14 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <string>
+#include <utility>
 
 #include "base/i18n/rtl.h"
+#include "base/i18n/unicodestring.h"
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -74,7 +78,7 @@ base::string16 GetExemplarCity(const icu::TimeZone& zone) {
   if (!U_FAILURE(status)) {
     city = icu::ures_getUnicodeStringByKey(zone_item.get(), "ec", &status);
     if (U_SUCCESS(status))
-      return base::string16(city.getBuffer(), city.length());
+      return base::i18n::UnicodeStringToString16(city);
   }
 
   // Fallback case in case of failure.
@@ -132,8 +136,7 @@ base::string16 GetTimezoneName(const icu::TimeZone& timezone) {
   }
   base::string16 result(l10n_util::GetStringFUTF16(
       IDS_OPTIONS_SETTINGS_TIMEZONE_DISPLAY_TEMPLATE,
-      base::ASCIIToUTF16(offset_str),
-      base::string16(name.getBuffer(), name.length()),
+      base::ASCIIToUTF16(offset_str), base::i18n::UnicodeStringToString16(name),
       GetExemplarCity(timezone)));
   base::i18n::AdjustStringForLocaleDirection(&result);
   return result;
@@ -144,19 +147,22 @@ base::string16 GetTimezoneName(const icu::TimeZone& timezone) {
 namespace chromeos {
 namespace system {
 
+base::string16 GetCurrentTimezoneName() {
+  return GetTimezoneName(
+      chromeos::system::TimezoneSettings::GetInstance()->GetTimezone());
+}
+
 // Creates a list of pairs of each timezone's ID and name.
 std::unique_ptr<base::ListValue> GetTimezoneList() {
-  const std::vector<icu::TimeZone*> &timezones =
+  const auto& timezones =
       chromeos::system::TimezoneSettings::GetInstance()->GetTimezoneList();
   std::unique_ptr<base::ListValue> timezoneList(new base::ListValue());
-  for (std::vector<icu::TimeZone*>::const_iterator iter = timezones.begin();
-       iter != timezones.end(); ++iter) {
-    const icu::TimeZone* timezone = *iter;
-    base::ListValue* option = new base::ListValue();
-    option->Append(new base::StringValue(
-        chromeos::system::TimezoneSettings::GetTimezoneID(*timezone)));
-    option->Append(new base::StringValue(GetTimezoneName(*timezone)));
-    timezoneList->Append(option);
+  for (const auto& timezone : timezones) {
+    auto option = base::MakeUnique<base::ListValue>();
+    option->AppendString(
+        chromeos::system::TimezoneSettings::GetTimezoneID(*timezone));
+    option->AppendString(GetTimezoneName(*timezone));
+    timezoneList->Append(std::move(option));
   }
   return timezoneList;
 }

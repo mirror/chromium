@@ -88,7 +88,7 @@ TEST_F(WebsiteSettingsRegistryTest, Properties) {
 
   // Register a new setting.
   registry()->Register(static_cast<ContentSettingsType>(10), "test",
-                       base::WrapUnique(new base::FundamentalValue(999)),
+                       base::MakeUnique<base::Value>(999),
                        WebsiteSettingsInfo::SYNCABLE,
                        WebsiteSettingsInfo::LOSSY,
                        WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,
@@ -102,7 +102,7 @@ TEST_F(WebsiteSettingsRegistryTest, Properties) {
   int setting;
   ASSERT_TRUE(info->initial_default_value()->GetAsInteger(&setting));
   EXPECT_EQ(999, setting);
-#if defined(OS_IOS)
+#if defined(OS_ANDROID) || defined(OS_IOS)
   EXPECT_EQ(PrefRegistry::LOSSY_PREF, info->GetPrefRegistrationFlags());
 #else
   EXPECT_EQ(PrefRegistry::LOSSY_PREF |
@@ -117,7 +117,7 @@ TEST_F(WebsiteSettingsRegistryTest, Properties) {
 
 TEST_F(WebsiteSettingsRegistryTest, Iteration) {
   registry()->Register(static_cast<ContentSettingsType>(10), "test",
-                       base::WrapUnique(new base::FundamentalValue(999)),
+                       base::MakeUnique<base::Value>(999),
                        WebsiteSettingsInfo::SYNCABLE,
                        WebsiteSettingsInfo::LOSSY,
                        WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,

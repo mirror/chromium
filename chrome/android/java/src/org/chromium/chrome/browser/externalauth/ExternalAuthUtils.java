@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.externalauth;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -20,9 +21,9 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.ChromeApplication;
-import org.chromium.chrome.browser.metrics.LaunchMetrics.SparseHistogramSample;
-import org.chromium.chrome.browser.metrics.LaunchMetrics.TimesHistogramSample;
+import org.chromium.base.metrics.CachedMetrics.SparseHistogramSample;
+import org.chromium.base.metrics.CachedMetrics.TimesHistogramSample;
+import org.chromium.chrome.browser.AppHooks;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -50,9 +51,7 @@ public class ExternalAuthUtils {
      */
     public static ExternalAuthUtils getInstance() {
         if (sInstance.get() == null) {
-            ChromeApplication application =
-                    (ChromeApplication) ContextUtils.getApplicationContext();
-            sInstance.compareAndSet(null, application.createExternalAuthUtils());
+            sInstance.compareAndSet(null, AppHooks.get().createExternalAuthUtils());
         }
         return sInstance.get();
     }
@@ -74,6 +73,8 @@ public class ExternalAuthUtils {
      * @param packageName The package name to inquire about.
      */
     @VisibleForTesting
+    // TODO(crbug.com/635567): Fix this properly.
+    @SuppressLint("WrongConstant")
     public boolean isSystemBuild(PackageManager pm, String packageName) {
         try {
             ApplicationInfo info = pm.getApplicationInfo(packageName, ApplicationInfo.FLAG_SYSTEM);
@@ -91,20 +92,18 @@ public class ExternalAuthUtils {
 
     /**
      * Returns whether the current build of Chrome is a Google-signed package.
-     *
-     * @param context the current context.
      * @return whether the currently running application is signed with Google keys.
      */
-    public boolean isChromeGoogleSigned(Context context) {
-        return isGoogleSigned(context, context.getPackageName());
+    public boolean isChromeGoogleSigned() {
+        String packageName = ContextUtils.getApplicationContext().getPackageName();
+        return isGoogleSigned(packageName);
     }
 
     /**
      * Returns whether the call is originating from a Google-signed package.
-     * @param appContext the current context.
      * @param packageName The package name to inquire about.
      */
-    public boolean isGoogleSigned(Context context, String packageName) {
+    public boolean isGoogleSigned(String packageName) {
         // This is overridden in a subclass.
         return false;
     }
@@ -128,7 +127,7 @@ public class ExternalAuthUtils {
         for (String packageName : callingPackages) {
             if (!TextUtils.isEmpty(packageToMatch) && !packageName.equals(packageToMatch)) continue;
             matchFound = true;
-            if ((shouldBeGoogleSigned && !isGoogleSigned(context, packageName))
+            if ((shouldBeGoogleSigned && !isGoogleSigned(packageName))
                     || (shouldBeSystem && !isSystemBuild(pm, packageName))) {
                 return false;
             }
@@ -163,6 +162,21 @@ public class ExternalAuthUtils {
     }
 
     /**
+     * @return Whether the current device lacks proper Google Play Services. This will return true
+     *         if the service is not authentic or it is totally missing. Return false otherwise.
+     *         Note this method returns false if the service is only temporarily disabled, such as
+     *         when it is updating.
+     */
+    public boolean isGooglePlayServicesMissing(final Context context) {
+        final int resultCode = checkGooglePlayServicesAvailable(context);
+        if (resultCode == ConnectionResult.SERVICE_MISSING
+                || resultCode == ConnectionResult.SERVICE_INVALID) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Checks whether Google Play Services can be used, applying the specified error-handling
      * policy if a user-recoverable error occurs. This method is threadsafe. If the specified
      * error-handling policy requires UI interaction, it will be run on the UI thread.
@@ -176,23 +190,35 @@ public class ExternalAuthUtils {
      */
     public boolean canUseGooglePlayServices(
             final Context context, final UserRecoverableErrorHandler errorHandler) {
+        return canUseGooglePlayServicesResultCode(context, errorHandler)
+                == ConnectionResult.SUCCESS;
+    }
+
+    /**
+     * Same as {@link #canUseGooglePlayServices(Context, UserRecoverableErrorHandler)}.
+     * @param context The current context.
+     * @param errorHandler How to handle user-recoverable errors; must be non-null.
+     * @return the result code specifying Google Play Services availability.
+     */
+    public int canUseGooglePlayServicesResultCode(
+            final Context context, final UserRecoverableErrorHandler errorHandler) {
         final int resultCode = checkGooglePlayServicesAvailable(context);
         recordConnectionResult(resultCode);
-        if (resultCode == ConnectionResult.SUCCESS) {
-            return true; // Hooray!
+        if (resultCode != ConnectionResult.SUCCESS) {
+            // resultCode is some kind of error.
+            Log.v(TAG, "Unable to use Google Play Services: %s", describeError(resultCode));
+
+            if (isUserRecoverableError(resultCode)) {
+                Runnable errorHandlerTask = new Runnable() {
+                    @Override
+                    public void run() {
+                        errorHandler.handleError(context, resultCode);
+                    }
+                };
+                ThreadUtils.runOnUiThread(errorHandlerTask);
+            }
         }
-        // resultCode is some kind of error.
-        Log.v(TAG, "Unable to use Google Play Services: %s", describeError(resultCode));
-        if (isUserRecoverableError(resultCode)) {
-            Runnable errorHandlerTask = new Runnable() {
-                @Override
-                public void run() {
-                    errorHandler.handleError(context, resultCode);
-                }
-            };
-            ThreadUtils.runOnUiThread(errorHandlerTask);
-        }
-        return false;
+        return resultCode;
     }
 
     /**
@@ -215,7 +241,7 @@ public class ExternalAuthUtils {
     public boolean canUseFirstPartyGooglePlayServices(
             Context context, UserRecoverableErrorHandler userRecoverableErrorHandler) {
         return canUseGooglePlayServices(context, userRecoverableErrorHandler)
-                && isChromeGoogleSigned(context);
+                && isChromeGoogleSigned();
     }
 
     /**
@@ -247,6 +273,18 @@ public class ExternalAuthUtils {
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
+    }
+
+    /**
+     * @param errorCode returned by {@link #checkGooglePlayServicesAvailable(Context)}.
+     * @return true if the error code indicates that an invalid version of Google Play Services is
+     *         installed.
+     */
+    public boolean isGooglePlayServicesUpdateRequiredError(int errorCode) {
+        return errorCode == ConnectionResult.SERVICE_UPDATING
+                || errorCode == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
+                || errorCode == ConnectionResult.SERVICE_DISABLED
+                || errorCode == ConnectionResult.SERVICE_MISSING;
     }
 
     /**

@@ -30,56 +30,38 @@
 
 #include "web/UserMediaClientImpl.h"
 
-#include "public/platform/WebMediaStreamTrackSourcesRequest.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebMediaDeviceChangeObserver.h"
 #include "public/web/WebMediaDevicesRequest.h"
 #include "public/web/WebUserMediaClient.h"
 #include "public/web/WebUserMediaRequest.h"
 #include "web/WebLocalFrameImpl.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
-UserMediaClientImpl::UserMediaClientImpl(WebLocalFrameImpl* webFrame)
-    : m_client(webFrame->client() ? webFrame->client()->userMediaClient() : 0)
-{
+UserMediaClientImpl::UserMediaClientImpl(WebUserMediaClient* client)
+    : client_(client) {}
+
+void UserMediaClientImpl::RequestUserMedia(UserMediaRequest* request) {
+  if (client_)
+    client_->RequestUserMedia(request);
 }
 
-void UserMediaClientImpl::requestUserMedia(UserMediaRequest* request)
-{
-    if (m_client)
-        m_client->requestUserMedia(request);
+void UserMediaClientImpl::CancelUserMediaRequest(UserMediaRequest* request) {
+  if (client_)
+    client_->CancelUserMediaRequest(WebUserMediaRequest(request));
 }
 
-void UserMediaClientImpl::cancelUserMediaRequest(UserMediaRequest* request)
-{
-    if (m_client)
-        m_client->cancelUserMediaRequest(WebUserMediaRequest(request));
+void UserMediaClientImpl::RequestMediaDevices(MediaDevicesRequest* request) {
+  if (client_)
+    client_->RequestMediaDevices(request);
 }
 
-void UserMediaClientImpl::requestMediaDevices(MediaDevicesRequest* request)
-{
-    if (m_client)
-        m_client->requestMediaDevices(request);
+void UserMediaClientImpl::SetMediaDeviceChangeObserver(MediaDevices* observer) {
+  if (client_)
+    client_->SetMediaDeviceChangeObserver(
+        WebMediaDeviceChangeObserver(observer));
 }
 
-void UserMediaClientImpl::cancelMediaDevicesRequest(MediaDevicesRequest* request)
-{
-    if (m_client)
-        m_client->cancelMediaDevicesRequest(WebMediaDevicesRequest(request));
-}
-
-void UserMediaClientImpl::requestSources(MediaStreamTrackSourcesRequest* request)
-{
-    if (m_client)
-        m_client->requestSources(request);
-}
-
-void UserMediaClientImpl::setMediaDeviceChangeObserver(MediaDevices* observer)
-{
-    if (m_client)
-        m_client->setMediaDeviceChangeObserver(WebMediaDeviceChangeObserver(observer));
-}
-
-} // namespace blink
+}  // namespace blink

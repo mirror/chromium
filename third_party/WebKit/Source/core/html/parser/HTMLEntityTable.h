@@ -26,34 +26,35 @@
 #ifndef HTMLEntityTable_h
 #define HTMLEntityTable_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 // Member order to optimize packing. There will be thousands of these objects.
 struct HTMLEntityTableEntry {
-    DISALLOW_NEW();
-    LChar lastCharacter() const;
+  DISALLOW_NEW();
+  LChar LastCharacter() const;
 
-    UChar32 firstValue;
-    UChar secondValue; // UChar since double char sequences only use BMP chars.
-    short entityOffset;
-    short length;
+  UChar32 first_value;
+  UChar second_value;  // UChar since double char sequences only use BMP chars.
+  short entity_offset;
+  short length;
 };
 
 class HTMLEntityTable {
-    STATIC_ONLY(HTMLEntityTable);
-public:
-    static const HTMLEntityTableEntry* firstEntry();
-    static const HTMLEntityTableEntry* lastEntry();
+  STATIC_ONLY(HTMLEntityTable);
 
-    static const HTMLEntityTableEntry* firstEntryStartingWith(UChar);
-    static const HTMLEntityTableEntry* lastEntryStartingWith(UChar);
+ public:
+  static const HTMLEntityTableEntry* FirstEntry();
+  static const HTMLEntityTableEntry* LastEntry();
 
-    static const LChar* entityString(const HTMLEntityTableEntry&);
+  static const HTMLEntityTableEntry* FirstEntryStartingWith(UChar);
+  static const HTMLEntityTableEntry* LastEntryStartingWith(UChar);
+
+  static const LChar* EntityString(const HTMLEntityTableEntry&);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

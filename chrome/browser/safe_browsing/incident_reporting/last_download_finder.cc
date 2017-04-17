@@ -23,16 +23,17 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "chrome/common/safe_browsing/download_protection_util.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "components/history/core/browser/download_constants.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/prefs/pref_service.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "crypto/sha2.h"
+#include "extensions/features/features.h"
 
 namespace safe_browsing {
 
@@ -73,7 +74,7 @@ bool IsBinaryDownloadForCurrentOS(
 #endif
 
 // Extensions are supported where enabled.
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   if (download_type == ClientDownloadRequest::CHROME_EXTENSION)
     return true;
 #endif
@@ -277,7 +278,7 @@ LastDownloadFinder::LastDownloadFinder(
 
 void LastDownloadFinder::SearchInProfile(Profile* profile) {
   // Do not look in OTR profiles or in profiles that do not participate in
-  // safe browsing.
+  // safe browsing extended reporting.
   if (!IncidentReportingService::IsEnabledForProfile(profile))
     return;
 

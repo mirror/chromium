@@ -7,9 +7,9 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/Element.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashTableDeletedValueType.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashTableDeletedValueType.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -30,53 +30,43 @@ namespace blink {
 // example, a definition for "my-element", "my-element" must not be
 // applied to an element <button is="my-element">.
 class CORE_EXPORT CustomElementDescriptor final {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    CustomElementDescriptor()
-    {
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    CustomElementDescriptor(
-        const AtomicString& name,
-        const AtomicString& localName)
-        : m_name(name)
-        , m_localName(localName)
-    {
-    }
+ public:
+  CustomElementDescriptor() {}
 
-    explicit CustomElementDescriptor(WTF::HashTableDeletedValueType value)
-        : m_name(value)
-    {
-    }
+  CustomElementDescriptor(const AtomicString& name,
+                          const AtomicString& local_name)
+      : name_(name), local_name_(local_name) {}
 
-    bool isHashTableDeletedValue() const
-    {
-        return m_name.isHashTableDeletedValue();
-    }
+  explicit CustomElementDescriptor(WTF::HashTableDeletedValueType value)
+      : name_(value) {}
 
-    bool operator==(const CustomElementDescriptor& other) const
-    {
-        return m_name == other.m_name && m_localName == other.m_localName;
-    }
+  bool IsHashTableDeletedValue() const {
+    return name_.IsHashTableDeletedValue();
+  }
 
-    const AtomicString& name() const { return m_name; }
-    const AtomicString& localName() const { return m_localName; }
+  bool operator==(const CustomElementDescriptor& other) const {
+    return name_ == other.name_ && local_name_ == other.local_name_;
+  }
 
-    bool matches(const Element& element) const
-    {
-        return localName() == element.localName()
-            && (isAutonomous()
-                || name() == element.getAttribute(HTMLNames::isAttr))
-            && element.namespaceURI() == HTMLNames::xhtmlNamespaceURI;
-    }
+  const AtomicString& GetName() const { return name_; }
+  const AtomicString& LocalName() const { return local_name_; }
 
-    bool isAutonomous() const { return m_name == m_localName; }
+  bool Matches(const Element& element) const {
+    return LocalName() == element.localName() &&
+           (IsAutonomous() ||
+            GetName() == element.getAttribute(HTMLNames::isAttr)) &&
+           element.namespaceURI() == HTMLNames::xhtmlNamespaceURI;
+  }
 
-private:
-    AtomicString m_name;
-    AtomicString m_localName;
+  bool IsAutonomous() const { return name_ == local_name_; }
+
+ private:
+  AtomicString name_;
+  AtomicString local_name_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CustomElementDescriptor_h
+#endif  // CustomElementDescriptor_h

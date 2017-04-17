@@ -6,6 +6,7 @@
 
 #include "components/autofill/ios/browser/autofill_driver_ios_bridge.h"
 #include "ios/web/public/browser_state.h"
+#import "ios/web/public/origin_util.h"
 #include "ios/web/public/web_state/web_state.h"
 #include "ios/web/public/web_thread.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -45,7 +46,7 @@ AutofillDriverIOS::AutofillDriverIOS(
 
 AutofillDriverIOS::~AutofillDriverIOS() {}
 
-bool AutofillDriverIOS::IsOffTheRecord() const {
+bool AutofillDriverIOS::IsIncognito() const {
   return web_state_->GetBrowserState()->IsOffTheRecord();
 }
 
@@ -80,6 +81,11 @@ void AutofillDriverIOS::SendAutofillTypePredictionsToRenderer(
 
 void AutofillDriverIOS::RendererShouldAcceptDataListSuggestion(
     const base::string16& value) {
+}
+
+void AutofillDriverIOS::DidInteractWithCreditCardForm() {
+  if (!web::IsOriginSecure(web_state_->GetLastCommittedURL()))
+    web_state_->OnCreditCardInputShownOnHttp();
 }
 
 void AutofillDriverIOS::RendererShouldClearFilledForm() {

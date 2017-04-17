@@ -34,36 +34,38 @@
 #include "core/clipboard/DataObject.h"
 #include "core/clipboard/DraggedIsolatedFileSystem.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/text/WTFString.h"
+#include "platform/heap/HeapAllocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class DOMFileSystem;
 
-class DraggedIsolatedFileSystemImpl final : public GarbageCollectedFinalized<DraggedIsolatedFileSystemImpl>, public DraggedIsolatedFileSystem, public Supplement<DataObject> {
-    USING_GARBAGE_COLLECTED_MIXIN(DraggedIsolatedFileSystemImpl);
-public:
-    static DraggedIsolatedFileSystemImpl* create(DataObject& host, const String& filesystemId)
-    {
-        return new DraggedIsolatedFileSystemImpl(host, filesystemId);
-    }
+class DraggedIsolatedFileSystemImpl final
+    : public GarbageCollectedFinalized<DraggedIsolatedFileSystemImpl>,
+      public DraggedIsolatedFileSystem,
+      public Supplement<DataObject> {
+  USING_GARBAGE_COLLECTED_MIXIN(DraggedIsolatedFileSystemImpl);
 
-    static DOMFileSystem* getDOMFileSystem(DataObject* host, ExecutionContext*);
+ public:
+  static DOMFileSystem* GetDOMFileSystem(DataObject* host,
+                                         ExecutionContext*,
+                                         const DataObjectItem&);
 
-    static const char* supplementName();
-    static DraggedIsolatedFileSystemImpl* from(DataObject*);
+  static const char* SupplementName();
+  static DraggedIsolatedFileSystemImpl* From(DataObject*);
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-    static void prepareForDataObject(DataObject*, const String& filesystemId);
+  static void PrepareForDataObject(DataObject*);
 
-private:
-    DraggedIsolatedFileSystemImpl(DataObject& host, const String& filesystemId);
+ private:
+  DraggedIsolatedFileSystemImpl() = default;
 
-    Member<DOMFileSystem> m_filesystem;
+  HeapHashMap<String, Member<DOMFileSystem>> filesystems_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DraggedIsolatedFileSystemImpl_h
+#endif  // DraggedIsolatedFileSystemImpl_h

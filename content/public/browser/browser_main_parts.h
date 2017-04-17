@@ -9,6 +9,8 @@
 
 namespace content {
 
+class ServiceManagerConnection;
+
 // This class contains different "stages" to be executed by |BrowserMain()|,
 // Each stage is represented by a single BrowserMainParts method, called from
 // the corresponding method in |BrowserMainLoop| (e.g., EarlyInitialization())
@@ -70,6 +72,9 @@ class CONTENT_EXPORT BrowserMainParts {
   // (or 0 if no error).
   virtual int PreCreateThreads();
 
+  virtual void ServiceManagerConnectionStarted(
+      ServiceManagerConnection* connection) {}
+
   // This is called just before the main message loop is run.  The
   // various browser threads have all been created at this point
   virtual void PreMainMessageLoopRun() {}
@@ -82,6 +87,9 @@ class CONTENT_EXPORT BrowserMainParts {
   // This happens after the main message loop has stopped, but before
   // threads are stopped.
   virtual void PostMainMessageLoopRun() {}
+
+  // Called when shutdown is about to begin.
+  virtual void PreShutdown() {}
 
   // Called as the very last part of shutdown, after threads have been
   // stopped and destroyed.

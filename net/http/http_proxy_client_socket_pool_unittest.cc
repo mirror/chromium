@@ -10,6 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "net/base/net_errors.h"
 #include "net/base/proxy_delegate.h"
 #include "net/base/test_completion_callback.h"
@@ -17,6 +18,7 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_proxy_client_socket.h"
 #include "net/http/http_response_headers.h"
+#include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
 #include "net/socket/socket_test_util.h"
@@ -71,7 +73,7 @@ class HttpProxyClientSocketPoolTest
                          NULL,
                          NULL,
                          session_deps_.ssl_config_service.get(),
-                         BoundNetLog().net_log()),
+                         NetLogWithSource().net_log()),
         pool_(kMaxSockets,
               kMaxSocketsPerGroup,
               &transport_socket_pool_,
@@ -180,7 +182,7 @@ class HttpProxyClientSocketPoolTest
     }
   }
 
-  void InitializeSpdySsl() { ssl_data_->SetNextProto(kProtoHTTP2); }
+  void InitializeSpdySsl() { ssl_data_->next_proto = kProtoHTTP2; }
 
   std::unique_ptr<HttpNetworkSession> CreateNetworkSession() {
     return SpdySessionDependencies::SpdyCreateSession(&session_deps_);
@@ -189,6 +191,8 @@ class HttpProxyClientSocketPoolTest
   RequestPriority GetLastTransportRequestPriority() const {
     return transport_socket_pool_.last_request_priority();
   }
+
+  const base::HistogramTester& histogram_tester() { return histogram_tester_; }
 
  private:
   SpdySessionDependencies session_deps_;
@@ -199,6 +203,8 @@ class HttpProxyClientSocketPoolTest
   SSLClientSocketPool ssl_socket_pool_;
 
   std::unique_ptr<HttpNetworkSession> session_;
+
+  base::HistogramTester histogram_tester_;
 
  protected:
   SpdyTestUtil spdy_util_;
@@ -221,7 +227,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NoTunnel) {
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
   int rv = handle_.Init("a", CreateNoTunnelParams(proxy_delegate.get()), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        CompletionCallback(), &pool_, BoundNetLog());
+                        CompletionCallback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsOk());
   EXPECT_TRUE(handle_.is_initialized());
   ASSERT_TRUE(handle_.socket());
@@ -229,6 +235,12 @@ TEST_P(HttpProxyClientSocketPoolTest, NoTunnel) {
   EXPECT_FALSE(proxy_delegate->on_before_tunnel_request_called());
   EXPECT_FALSE(proxy_delegate->on_tunnel_headers_received_called());
   EXPECT_TRUE(proxy_delegate->on_tunnel_request_completed_called());
+
+  bool is_secure_proxy = GetParam() == HTTPS || GetParam() == SPDY;
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Insecure.Success", is_secure_proxy ? 0 : 1);
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Secure.Success", is_secure_proxy ? 1 : 0);
 }
 
 // Make sure that HttpProxyConnectJob passes on its priority to its
@@ -237,7 +249,7 @@ TEST_P(HttpProxyClientSocketPoolTest, SetSocketRequestPriorityOnInit) {
   Initialize(NULL, 0, NULL, 0, NULL, 0, NULL, 0);
   EXPECT_EQ(OK, handle_.Init("a", CreateNoTunnelParams(NULL), HIGHEST,
                              ClientSocketPool::RespectLimits::ENABLED,
-                             CompletionCallback(), &pool_, BoundNetLog()));
+                             CompletionCallback(), &pool_, NetLogWithSource()));
   EXPECT_EQ(HIGHEST, GetLastTransportRequestPriority());
 }
 
@@ -258,7 +270,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NeedAuth) {
   SpdySerializedFrame req(spdy_util_.ConstructSpdyConnect(
       NULL, 0, 1, LOW, HostPortPair("www.google.com", 443)));
   SpdySerializedFrame rst(
-      spdy_util_.ConstructSpdyRstStream(1, RST_STREAM_CANCEL));
+      spdy_util_.ConstructSpdyRstStream(1, ERROR_CODE_CANCEL));
   MockWrite spdy_writes[] = {
       CreateMockWrite(req, 0, ASYNC), CreateMockWrite(rst, 2, ASYNC),
   };
@@ -277,7 +289,7 @@ TEST_P(HttpProxyClientSocketPoolTest, NeedAuth) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -326,7 +338,7 @@ TEST_P(HttpProxyClientSocketPoolTest, HaveAuth) {
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
   int rv = handle_.Init("a", CreateTunnelParams(proxy_delegate.get()), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsOk());
   EXPECT_TRUE(handle_.is_initialized());
   ASSERT_TRUE(handle_.socket());
@@ -377,7 +389,7 @@ TEST_P(HttpProxyClientSocketPoolTest, AsyncHaveAuth) {
   std::unique_ptr<TestProxyDelegate> proxy_delegate(new TestProxyDelegate());
   int rv = handle_.Init("a", CreateTunnelParams(proxy_delegate.get()), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -414,7 +426,7 @@ TEST_P(HttpProxyClientSocketPoolTest,
   EXPECT_EQ(ERR_IO_PENDING,
             handle_.Init("a", CreateTunnelParams(NULL), MEDIUM,
                          ClientSocketPool::RespectLimits::ENABLED,
-                         callback_.callback(), &pool_, BoundNetLog()));
+                         callback_.callback(), &pool_, NetLogWithSource()));
   EXPECT_EQ(MEDIUM, GetLastTransportRequestPriority());
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
@@ -430,7 +442,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TCPError) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -439,6 +451,12 @@ TEST_P(HttpProxyClientSocketPoolTest, TCPError) {
 
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
+
+  bool is_secure_proxy = GetParam() == HTTPS;
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Insecure.Error", is_secure_proxy ? 0 : 1);
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Secure.Error", is_secure_proxy ? 1 : 0);
 }
 
 TEST_P(HttpProxyClientSocketPoolTest, SSLError) {
@@ -457,7 +475,7 @@ TEST_P(HttpProxyClientSocketPoolTest, SSLError) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -467,6 +485,10 @@ TEST_P(HttpProxyClientSocketPoolTest, SSLError) {
 
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Secure.Error", 1);
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Insecure.Error", 0);
 }
 
 TEST_P(HttpProxyClientSocketPoolTest, SslClientAuth) {
@@ -485,7 +507,7 @@ TEST_P(HttpProxyClientSocketPoolTest, SslClientAuth) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -495,6 +517,10 @@ TEST_P(HttpProxyClientSocketPoolTest, SslClientAuth) {
 
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Secure.Error", 1);
+  histogram_tester().ExpectTotalCount(
+      "Net.HttpProxy.ConnectLatency.Insecure.Error", 0);
 }
 
 TEST_P(HttpProxyClientSocketPoolTest, TunnelUnexpectedClose) {
@@ -524,7 +550,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelUnexpectedClose) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -564,7 +590,7 @@ TEST_P(HttpProxyClientSocketPoolTest, Tunnel1xxResponse) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -587,7 +613,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupError) {
       spdy_util_.ConstructSpdyConnect(kAuthHeaders, kAuthHeadersSize, 1, LOW,
                                       HostPortPair("www.google.com", 443)));
   SpdySerializedFrame rst(
-      spdy_util_.ConstructSpdyRstStream(1, RST_STREAM_CANCEL));
+      spdy_util_.ConstructSpdyRstStream(1, ERROR_CODE_CANCEL));
   MockWrite spdy_writes[] = {
       CreateMockWrite(req, 0, ASYNC), CreateMockWrite(rst, 2, ASYNC),
   };
@@ -603,7 +629,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupError) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());
@@ -636,7 +662,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupRedirect) {
       spdy_util_.ConstructSpdyConnect(kAuthHeaders, kAuthHeadersSize, 1, LOW,
                                       HostPortPair("www.google.com", 443)));
   SpdySerializedFrame rst(
-      spdy_util_.ConstructSpdyRstStream(1, RST_STREAM_CANCEL));
+      spdy_util_.ConstructSpdyRstStream(1, ERROR_CODE_CANCEL));
 
   MockWrite spdy_writes[] = {
       CreateMockWrite(req, 0, ASYNC), CreateMockWrite(rst, 3, ASYNC),
@@ -648,7 +674,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupRedirect) {
   };
   const int responseHeadersSize = arraysize(responseHeaders) / 2;
   SpdySerializedFrame resp(spdy_util_.ConstructSpdyReplyError(
-      "302 Found", responseHeaders, responseHeadersSize, 1));
+      "302", responseHeaders, responseHeadersSize, 1));
   MockRead spdy_reads[] = {
       CreateMockRead(resp, 1, ASYNC), MockRead(ASYNC, 0, 2),
   };
@@ -660,7 +686,7 @@ TEST_P(HttpProxyClientSocketPoolTest, TunnelSetupRedirect) {
 
   int rv = handle_.Init("a", CreateTunnelParams(NULL), LOW,
                         ClientSocketPool::RespectLimits::ENABLED,
-                        callback_.callback(), &pool_, BoundNetLog());
+                        callback_.callback(), &pool_, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(handle_.is_initialized());
   EXPECT_FALSE(handle_.socket());

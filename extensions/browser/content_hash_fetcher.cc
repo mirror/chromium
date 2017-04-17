@@ -7,6 +7,8 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <memory>
+#include <vector>
 
 #include "base/base64.h"
 #include "base/files/file_enumerator.h"
@@ -14,14 +16,12 @@
 #include "base/json/json_reader.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/synchronization/lock.h"
-#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/version.h"
-#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/storage_partition.h"
 #include "crypto/sha2.h"
 #include "extensions/browser/computed_hashes.h"
 #include "extensions/browser/content_hash_tree.h"
@@ -31,6 +31,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/file_util.h"
 #include "net/base/load_flags.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_status.h"
@@ -195,11 +196,10 @@ ContentHashFetcherJob::ContentHashFetcherJob(
 void ContentHashFetcherJob::Start() {
   base::FilePath verified_contents_path =
       file_util::GetVerifiedContentsPath(extension_path_);
-  base::PostTaskAndReplyWithResult(
-      content::BrowserThread::GetBlockingPool(),
-      FROM_HERE,
-      base::Bind(&ContentHashFetcherJob::LoadVerifiedContents,
-                 this,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::USER_VISIBLE),
+      base::Bind(&ContentHashFetcherJob::LoadVerifiedContents, this,
                  verified_contents_path),
       base::Bind(&ContentHashFetcherJob::DoneCheckingForVerifiedContents,
                  this));
@@ -223,7 +223,7 @@ bool ContentHashFetcherJob::LoadVerifiedContents(const base::FilePath& path) {
   if (!base::PathExists(path))
     return false;
   verified_contents_.reset(new VerifiedContents(key_.data, key_.size));
-  if (!verified_contents_->InitFrom(path, false)) {
+  if (!verified_contents_->InitFrom(path)) {
     verified_contents_.reset();
     if (!base::DeleteFile(path, false))
       LOG(WARNING) << "Failed to delete " << path.value();
@@ -241,8 +241,32 @@ void ContentHashFetcherJob::DoneCheckingForVerifiedContents(bool found) {
   } else {
     VLOG(1) << "Missing verified contents for " << extension_id_
             << ", fetching...";
-    url_fetcher_ =
-        net::URLFetcher::Create(fetch_url_, net::URLFetcher::GET, this);
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("content_hash_verification_job", R"(
+          semantics {
+            sender: "Web Store Content Verification"
+            description:
+              "The request sent to retrieve the file required for content "
+              "verification for an extension from the Web Store."
+            trigger:
+              "An extension from the Web Store is missing the "
+              "verified_contents.json file required for extension content "
+              "verification."
+            data: "The extension id and extension version."
+            destination: GOOGLE_OWNED_SERVICE
+          }
+          policy {
+            cookies_allowed: false
+            setting:
+              "This feature cannot be directly disabled; it is enabled if any "
+              "extension from the webstore is installed in the browser."
+            policy_exception_justification:
+              "Not implemented, not required. If the user has extensions from "
+              "the Web Store, this feature is required to ensure the "
+              "extensions match what is distributed by the store."
+          })");
+    url_fetcher_ = net::URLFetcher::Create(fetch_url_, net::URLFetcher::GET,
+                                           this, traffic_annotation);
     url_fetcher_->SetRequestContext(request_context_);
     url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
                                net::LOAD_DO_NOT_SAVE_COOKIES |
@@ -258,8 +282,9 @@ void ContentHashFetcherJob::DoneCheckingForVerifiedContents(bool found) {
 static int WriteFileHelper(const base::FilePath& path,
                            std::unique_ptr<std::string> content) {
   base::FilePath dir = path.DirName();
-  return (base::CreateDirectoryAndGetError(dir, NULL) &&
-          base::WriteFile(path, content->data(), content->size()));
+  if (!base::CreateDirectoryAndGetError(dir, nullptr))
+    return -1;
+  return base::WriteFile(path, content->data(), content->size());
 }
 
 void ContentHashFetcherJob::OnURLFetchComplete(const net::URLFetcher* source) {
@@ -287,12 +312,12 @@ void ContentHashFetcherJob::OnURLFetchComplete(const net::URLFetcher* source) {
     base::FilePath destination =
         file_util::GetVerifiedContentsPath(extension_path_);
     size_t size = response->size();
-    base::PostTaskAndReplyWithResult(
-        content::BrowserThread::GetBlockingPool(),
-        FROM_HERE,
+    base::PostTaskWithTraitsAndReplyWithResult(
+        FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                       base::TaskPriority::USER_VISIBLE),
         base::Bind(&WriteFileHelper, destination, base::Passed(&response)),
-        base::Bind(
-            &ContentHashFetcherJob::OnVerifiedContentsWritten, this, size));
+        base::Bind(&ContentHashFetcherJob::OnVerifiedContentsWritten, this,
+                   size));
   } else {
     DoneFetchingVerifiedContents(false);
   }
@@ -352,9 +377,10 @@ bool ContentHashFetcherJob::CreateHashes(const base::FilePath& hashes_file) {
     base::FilePath verified_contents_path =
         file_util::GetVerifiedContentsPath(extension_path_);
     verified_contents_.reset(new VerifiedContents(key_.data, key_.size));
-    if (!verified_contents_->InitFrom(verified_contents_path, false))
+    if (!verified_contents_->InitFrom(verified_contents_path)) {
+      verified_contents_.reset();
       return false;
-    verified_contents_.reset();
+    }
   }
 
   base::FileEnumerator enumerator(extension_path_,
@@ -423,14 +449,14 @@ void ContentHashFetcherJob::DispatchCallback() {
 
 // ----
 
-ContentHashFetcher::ContentHashFetcher(content::BrowserContext* context,
-                                       ContentVerifierDelegate* delegate,
-                                       const FetchCallback& callback)
-    : context_(context),
+ContentHashFetcher::ContentHashFetcher(
+    net::URLRequestContextGetter* context_getter,
+    ContentVerifierDelegate* delegate,
+    const FetchCallback& callback)
+    : context_getter_(context_getter),
       delegate_(delegate),
       fetch_callback_(callback),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 ContentHashFetcher::~ContentHashFetcher() {
   for (JobMap::iterator i = jobs_.begin(); i != jobs_.end(); ++i) {
@@ -462,13 +488,11 @@ void ContentHashFetcher::DoFetch(const Extension* extension, bool force) {
   DCHECK(extension->version());
   GURL url =
       delegate_->GetSignatureFetchUrl(extension->id(), *extension->version());
-  ContentHashFetcherJob* job = new ContentHashFetcherJob(
-      content::BrowserContext::GetDefaultStoragePartition(context_)->
-          GetURLRequestContext(),
-      delegate_->GetPublicKey(), extension->id(),
-      extension->path(), url, force,
-      base::Bind(&ContentHashFetcher::JobFinished,
-                 weak_ptr_factory_.GetWeakPtr()));
+  ContentHashFetcherJob* job =
+      new ContentHashFetcherJob(context_getter_, delegate_->GetPublicKey(),
+                                extension->id(), extension->path(), url, force,
+                                base::Bind(&ContentHashFetcher::JobFinished,
+                                           weak_ptr_factory_.GetWeakPtr()));
   jobs_.insert(std::make_pair(key, job));
   job->Start();
 }

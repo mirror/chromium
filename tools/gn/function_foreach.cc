@@ -14,35 +14,36 @@ const char kForEach[] = "foreach";
 const char kForEach_HelpShort[] =
     "foreach: Iterate over a list.";
 const char kForEach_Help[] =
-    "foreach: Iterate over a list.\n"
-    "\n"
-    "  foreach(<loop_var>, <list>) {\n"
-    "    <loop contents>\n"
-    "  }\n"
-    "\n"
-    "  Executes the loop contents block over each item in the list,\n"
-    "  assigning the loop_var to each item in sequence. The loop_var will be\n"
-    "  a copy so assigning to it will not mutate the list.\n"
-    "\n"
-    "  The block does not introduce a new scope, so that variable assignments\n"
-    "  inside the loop will be visible once the loop terminates.\n"
-    "\n"
-    "  The loop variable will temporarily shadow any existing variables with\n"
-    "  the same name for the duration of the loop. After the loop terminates\n"
-    "  the loop variable will no longer be in scope, and the previous value\n"
-    "  (if any) will be restored.\n"
-    "\n"
-    "Example\n"
-    "\n"
-    "  mylist = [ \"a\", \"b\", \"c\" ]\n"
-    "  foreach(i, mylist) {\n"
-    "    print(i)\n"
-    "  }\n"
-    "\n"
-    "  Prints:\n"
-    "  a\n"
-    "  b\n"
-    "  c\n";
+    R"(foreach: Iterate over a list.
+
+    foreach(<loop_var>, <list>) {
+      <loop contents>
+    }
+
+  Executes the loop contents block over each item in the list, assigning the
+  loop_var to each item in sequence. The loop_var will be a copy so assigning
+  to it will not mutate the list.
+
+  The block does not introduce a new scope, so that variable assignments inside
+  the loop will be visible once the loop terminates.
+
+  The loop variable will temporarily shadow any existing variables with the
+  same name for the duration of the loop. After the loop terminates the loop
+  variable will no longer be in scope, and the previous value (if any) will be
+  restored.
+
+Example
+
+  mylist = [ "a", "b", "c" ]
+  foreach(i, mylist) {
+    print(i)
+  }
+
+  Prints:
+  a
+  b
+  c
+)";
 
 Value RunForEach(Scope* scope,
                  const FunctionCallNode* function,
@@ -95,7 +96,8 @@ Value RunForEach(Scope* scope,
   if (old_loop_value_ptr) {
     // Put back old value. Use the copy we made, rather than use the pointer,
     // which will probably point to the new value now in the scope.
-    scope->SetValue(loop_var, old_loop_value, old_loop_value.origin());
+    scope->SetValue(loop_var, std::move(old_loop_value),
+                    old_loop_value.origin());
   } else {
     // Loop variable was undefined before loop, delete it.
     scope->RemoveIdentifier(loop_var);

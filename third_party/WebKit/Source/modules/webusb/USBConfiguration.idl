@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// http://wicg.github.io/webusb/#configurations
+// https://wicg.github.io/webusb/#configurations
 
 [
     Constructor(USBDevice device, octet configurationValue),
     RaisesException=Constructor,
-    RuntimeEnabled=WebUSB,
+    OriginTrialEnabled=WebUSB,
 ] interface USBConfiguration {
     readonly attribute octet configurationValue;
     readonly attribute DOMString? configurationName;
-    readonly attribute sequence<USBInterface> interfaces;
+    readonly attribute FrozenArray<USBInterface> interfaces;
 };

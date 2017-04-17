@@ -33,27 +33,25 @@ namespace blink {
 using namespace HTMLNames;
 
 HTMLAudioElement::HTMLAudioElement(Document& document)
-    : HTMLMediaElement(audioTag, document)
-{
+    : HTMLMediaElement(audioTag, document) {}
+
+HTMLAudioElement* HTMLAudioElement::Create(Document& document) {
+  HTMLAudioElement* audio = new HTMLAudioElement(document);
+  audio->EnsureUserAgentShadowRoot();
+  audio->SuspendIfNeeded();
+  return audio;
 }
 
-HTMLAudioElement* HTMLAudioElement::create(Document& document)
-{
-    HTMLAudioElement* audio = new HTMLAudioElement(document);
-    audio->ensureUserAgentShadowRoot();
-    audio->suspendIfNeeded();
-    return audio;
+HTMLAudioElement* HTMLAudioElement::CreateForJSConstructor(
+    Document& document,
+    const AtomicString& src) {
+  HTMLAudioElement* audio = new HTMLAudioElement(document);
+  audio->EnsureUserAgentShadowRoot();
+  audio->setPreload(AtomicString("auto"));
+  if (!src.IsNull())
+    audio->SetSrc(src);
+  audio->SuspendIfNeeded();
+  return audio;
 }
 
-HTMLAudioElement* HTMLAudioElement::createForJSConstructor(Document& document, const AtomicString& src)
-{
-    HTMLAudioElement* audio = new HTMLAudioElement(document);
-    audio->ensureUserAgentShadowRoot();
-    audio->setPreload(AtomicString("auto"));
-    if (!src.isNull())
-        audio->setSrc(src);
-    audio->suspendIfNeeded();
-    return audio;
-}
-
-} // namespace blink
+}  // namespace blink

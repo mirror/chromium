@@ -10,11 +10,16 @@
 #include <string>
 
 #include "base/gtest_prod_util.h"
+#include "mojo/public/cpp/bindings/struct_traits.h"
 
 class GURL;
 
 namespace content_settings {
 class PatternParser;
+
+namespace mojom {
+class ContentSettingsPatternDataView;
+}
 }
 
 // A pattern used in content setting rules. See |IsValid| for a description of
@@ -51,6 +56,19 @@ class ContentSettingsPattern {
     IDENTITY = 0,
     PREDECESSOR = 1,
     DISJOINT_ORDER_PRE = 2,
+  };
+
+  // This enum is used to back an UMA histogram, the order of existing values
+  // should not be changed. New values should only append before SCHEME_MAX.
+  // Also keep it consistent with kSchemeNames in content_settings_pattern.cc.
+  enum SchemeType {
+    SCHEME_WILDCARD,
+    SCHEME_OTHER,
+    SCHEME_HTTP,
+    SCHEME_HTTPS,
+    SCHEME_FILE,
+    SCHEME_CHROMEEXTENSION,
+    SCHEME_MAX,
   };
 
   struct PatternParts {
@@ -178,6 +196,13 @@ class ContentSettingsPattern {
   // Returns a std::string representation of this pattern.
   std::string ToString() const;
 
+  // Returns scheme type of pattern.
+  ContentSettingsPattern::SchemeType GetScheme() const;
+
+  // True if this pattern has a non-empty path.  Can only be used for patterns
+  // with file: schemes.
+  bool HasPath() const;
+
   // Compares the pattern with a given |other| pattern and returns the
   // |Relation| of the two patterns.
   Relation Compare(const ContentSettingsPattern& other) const;
@@ -196,7 +221,9 @@ class ContentSettingsPattern {
 
  private:
   friend class content_settings::PatternParser;
-  friend class ContentSettingsPatternSerializer;
+  friend struct mojo::StructTraits<
+      content_settings::mojom::ContentSettingsPatternDataView,
+      ContentSettingsPattern>;
   FRIEND_TEST_ALL_PREFIXES(ContentSettingsPatternParserTest, SerializePatterns);
 
   class Builder;

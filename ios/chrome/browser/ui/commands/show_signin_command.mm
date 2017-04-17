@@ -5,15 +5,17 @@
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 
 #include "base/logging.h"
-#include "base/mac/scoped_block.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 
-@implementation ShowSigninCommand {
-  base::mac::ScopedBlock<ShowSigninCommandCompletionCallback> _callback;
-}
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
+@implementation ShowSigninCommand
 
 @synthesize operation = _operation;
-@synthesize signInSource = _signInSource;
+@synthesize signInAccessPoint = _signInAccessPoint;
+@synthesize callback = _callback;
 
 - (instancetype)initWithTag:(NSInteger)tag {
   NOTREACHED();
@@ -21,25 +23,23 @@
 }
 
 - (instancetype)initWithOperation:(AuthenticationOperation)operation
-                     signInSource:(SignInSource)signInSource
+                signInAccessPoint:(signin_metrics::AccessPoint)signInAccessPoint
                          callback:
                              (ShowSigninCommandCompletionCallback)callback {
   if ((self = [super initWithTag:IDC_SHOW_SIGNIN_IOS])) {
     _operation = operation;
-    _signInSource = signInSource;
-    _callback.reset(callback, base::scoped_policy::RETAIN);
+    _signInAccessPoint = signInAccessPoint;
+    _callback = [callback copy];
   }
   return self;
 }
 
 - (instancetype)initWithOperation:(AuthenticationOperation)operation
-                     signInSource:(SignInSource)signInSource {
-  return
-      [self initWithOperation:operation signInSource:signInSource callback:nil];
-}
-
-- (ShowSigninCommandCompletionCallback)callback {
-  return _callback.get();
+                signInAccessPoint:
+                    (signin_metrics::AccessPoint)signInAccessPoint {
+  return [self initWithOperation:operation
+               signInAccessPoint:signInAccessPoint
+                        callback:nil];
 }
 
 @end

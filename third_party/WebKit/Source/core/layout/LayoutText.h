@@ -28,9 +28,8 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/TextRunConstructor.h"
 #include "platform/LengthFunctions.h"
-#include "platform/text/TextPath.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -68,233 +67,303 @@ class InlineTextBox;
 // The previous comment applies also for painting. See e.g.
 // BlockFlowPainter::paintContents in particular the use of LineBoxListPainter.
 class CORE_EXPORT LayoutText : public LayoutObject {
-public:
-    // FIXME: If the node argument is not a Text node or the string argument is
-    // not the content of the Text node, updating text-transform property
-    // doesn't re-transform the string.
-    LayoutText(Node*, PassRefPtr<StringImpl>);
-#if ENABLE(ASSERT)
-    ~LayoutText() override;
+ public:
+  // FIXME: If the node argument is not a Text node or the string argument is
+  // not the content of the Text node, updating text-transform property
+  // doesn't re-transform the string.
+  LayoutText(Node*, PassRefPtr<StringImpl>);
+#if DCHECK_IS_ON()
+  ~LayoutText() override;
 #endif
 
-    const char* name() const override { return "LayoutText"; }
+  static LayoutText* CreateEmptyAnonymous(Document&);
 
-    virtual bool isTextFragment() const;
-    virtual bool isWordBreak() const;
+  const char* GetName() const override { return "LayoutText"; }
 
-    virtual PassRefPtr<StringImpl> originalText() const;
+  virtual bool IsTextFragment() const;
+  virtual bool IsWordBreak() const;
 
-    void extractTextBox(InlineTextBox*);
-    void attachTextBox(InlineTextBox*);
-    void removeTextBox(InlineTextBox*);
+  virtual PassRefPtr<StringImpl> OriginalText() const;
 
-    const String& text() const { return m_text; }
-    virtual unsigned textStartOffset() const { return 0; }
-    String plainText() const;
+  void ExtractTextBox(InlineTextBox*);
+  void AttachTextBox(InlineTextBox*);
+  void RemoveTextBox(InlineTextBox*);
 
-    InlineTextBox* createInlineTextBox(int start, unsigned short length);
-    void dirtyOrDeleteLineBoxesIfNeeded(bool fullLayout);
-    void dirtyLineBoxes();
+  const String& GetText() const { return text_; }
+  virtual unsigned TextStartOffset() const { return 0; }
+  String PlainText() const;
 
-    void absoluteRects(Vector<IntRect>&, const LayoutPoint& accumulatedOffset) const final;
-    void absoluteRectsForRange(Vector<IntRect>&, unsigned startOffset = 0, unsigned endOffset = INT_MAX, bool useSelectionHeight = false);
+  InlineTextBox* CreateInlineTextBox(int start, unsigned short length);
+  void DirtyOrDeleteLineBoxesIfNeeded(bool full_layout);
+  void DirtyLineBoxes();
 
-    void absoluteQuads(Vector<FloatQuad>&) const final;
-    void absoluteQuadsForRange(Vector<FloatQuad>&, unsigned startOffset = 0, unsigned endOffset = INT_MAX, bool useSelectionHeight = false);
+  void AbsoluteRects(Vector<IntRect>&,
+                     const LayoutPoint& accumulated_offset) const final;
+  void AbsoluteRectsForRange(Vector<IntRect>&,
+                             unsigned start_offset = 0,
+                             unsigned end_offset = INT_MAX,
+                             bool use_selection_height = false);
 
-    enum ClippingOption { NoClipping, ClipToEllipsis };
-    void absoluteQuads(Vector<FloatQuad>&, ClippingOption = NoClipping) const;
+  void AbsoluteQuads(Vector<FloatQuad>&,
+                     MapCoordinatesFlags mode = 0) const final;
+  void AbsoluteQuadsForRange(Vector<FloatQuad>&,
+                             unsigned start_offset = 0,
+                             unsigned end_offset = INT_MAX,
+                             bool use_selection_height = false);
+  FloatRect LocalBoundingBoxRectForAccessibility() const final;
 
-    PositionWithAffinity positionForPoint(const LayoutPoint&) override;
+  enum ClippingOption { kNoClipping, kClipToEllipsis };
+  enum LocalOrAbsoluteOption { kLocalQuads, kAbsoluteQuads };
+  void Quads(Vector<FloatQuad>&,
+             ClippingOption = kNoClipping,
+             LocalOrAbsoluteOption = kAbsoluteQuads,
+             MapCoordinatesFlags mode = 0) const;
 
-    bool is8Bit() const { return m_text.is8Bit(); }
-    const LChar* characters8() const { return m_text.impl()->characters8(); }
-    const UChar* characters16() const { return m_text.impl()->characters16(); }
-    bool hasEmptyText() const { return m_text.isEmpty(); }
-    UChar characterAt(unsigned) const;
-    UChar uncheckedCharacterAt(unsigned) const;
-    UChar operator[](unsigned i) const { return uncheckedCharacterAt(i); }
-    UChar32 codepointAt(unsigned) const;
-    unsigned textLength() const { return m_text.length(); } // non virtual implementation of length()
-    void positionLineBox(InlineBox*);
+  PositionWithAffinity PositionForPoint(const LayoutPoint&) override;
 
-    virtual float width(unsigned from, unsigned len, const Font&, LayoutUnit xPos, TextDirection, HashSet<const SimpleFontData*>* fallbackFonts = nullptr, FloatRect* glyphBounds = nullptr) const;
-    virtual float width(unsigned from, unsigned len, LayoutUnit xPos, TextDirection, bool firstLine = false, HashSet<const SimpleFontData*>* fallbackFonts = nullptr, FloatRect* glyphBounds = nullptr) const;
+  bool Is8Bit() const { return text_.Is8Bit(); }
+  const LChar* Characters8() const { return text_.Impl()->Characters8(); }
+  const UChar* Characters16() const { return text_.Impl()->Characters16(); }
+  bool HasEmptyText() const { return text_.IsEmpty(); }
+  UChar CharacterAt(unsigned) const;
+  UChar UncheckedCharacterAt(unsigned) const;
+  UChar operator[](unsigned i) const { return UncheckedCharacterAt(i); }
+  UChar32 CodepointAt(unsigned) const;
+  unsigned TextLength() const {
+    return text_.length();
+  }  // non virtual implementation of length()
+  bool ContainsOnlyWhitespace(unsigned from, unsigned len) const;
+  void PositionLineBox(InlineBox*);
 
-    float minLogicalWidth() const;
-    float maxLogicalWidth() const;
+  virtual float Width(unsigned from,
+                      unsigned len,
+                      const Font&,
+                      LayoutUnit x_pos,
+                      TextDirection,
+                      HashSet<const SimpleFontData*>* fallback_fonts = nullptr,
+                      FloatRect* glyph_bounds = nullptr) const;
+  virtual float Width(unsigned from,
+                      unsigned len,
+                      LayoutUnit x_pos,
+                      TextDirection,
+                      bool first_line = false,
+                      HashSet<const SimpleFontData*>* fallback_fonts = nullptr,
+                      FloatRect* glyph_bounds = nullptr) const;
 
-    void trimmedPrefWidths(LayoutUnit leadWidth,
-        LayoutUnit& firstLineMinWidth, bool& hasBreakableStart,
-        LayoutUnit& lastLineMinWidth, bool& hasBreakableEnd,
-        bool& hasBreakableChar, bool& hasBreak,
-        LayoutUnit& firstLineMaxWidth, LayoutUnit& lastLineMaxWidth,
-        LayoutUnit& minWidth, LayoutUnit& maxWidth, bool& stripFrontSpaces,
-        TextDirection);
+  float MinLogicalWidth() const;
+  float MaxLogicalWidth() const;
 
-    virtual LayoutRect linesBoundingBox() const;
+  void TrimmedPrefWidths(LayoutUnit lead_width,
+                         LayoutUnit& first_line_min_width,
+                         bool& has_breakable_start,
+                         LayoutUnit& last_line_min_width,
+                         bool& has_breakable_end,
+                         bool& has_breakable_char,
+                         bool& has_break,
+                         LayoutUnit& first_line_max_width,
+                         LayoutUnit& last_line_max_width,
+                         LayoutUnit& min_width,
+                         LayoutUnit& max_width,
+                         bool& strip_front_spaces,
+                         TextDirection);
 
-    // Returns the bounding box of visual overflow rects of all line boxes.
-    LayoutRect visualOverflowRect() const;
+  virtual LayoutRect LinesBoundingBox() const;
 
-    FloatPoint firstRunOrigin() const;
-    float firstRunX() const;
-    float firstRunY() const;
+  // Returns the bounding box of visual overflow rects of all line boxes.
+  LayoutRect VisualOverflowRect() const;
 
-    virtual void setText(PassRefPtr<StringImpl>, bool force = false);
-    void setTextWithOffset(PassRefPtr<StringImpl>, unsigned offset, unsigned len, bool force = false);
+  FloatPoint FirstRunOrigin() const;
+  float FirstRunX() const;
+  float FirstRunY() const;
 
-    virtual void transformText();
+  virtual void SetText(PassRefPtr<StringImpl>, bool force = false);
+  void SetTextWithOffset(PassRefPtr<StringImpl>,
+                         unsigned offset,
+                         unsigned len,
+                         bool force = false);
 
-    bool canBeSelectionLeaf() const override { return true; }
-    void setSelectionState(SelectionState) final;
-    LayoutRect localSelectionRect() const final;
-    LayoutRect localCaretRect(InlineBox*, int caretOffset, LayoutUnit* extraWidthToEndOfLine = nullptr) override;
+  // TODO(kojii): setTextInternal() is temporarily public for NGInlineNode.
+  // This will be back to protected when NGInlineNode can paint directly.
+  virtual void SetTextInternal(PassRefPtr<StringImpl>);
 
-    InlineTextBox* firstTextBox() const { return m_firstTextBox; }
-    InlineTextBox* lastTextBox() const { return m_lastTextBox; }
+  virtual void TransformText();
 
-    // True if we have inline text box children which implies rendered text (or whitespace) output.
-    bool hasTextBoxes() const { return firstTextBox(); }
+  bool CanBeSelectionLeaf() const override { return true; }
+  void SetSelectionState(SelectionState) final;
+  LayoutRect LocalSelectionRect() const final;
+  LayoutRect LocalCaretRect(
+      InlineBox*,
+      int caret_offset,
+      LayoutUnit* extra_width_to_end_of_line = nullptr) override;
 
-    int caretMinOffset() const override;
-    int caretMaxOffset() const override;
-    unsigned resolvedTextLength() const;
+  InlineTextBox* FirstTextBox() const { return first_text_box_; }
+  InlineTextBox* LastTextBox() const { return last_text_box_; }
 
-    bool containsReversedText() const { return m_containsReversedText; }
+  // True if we have inline text box children which implies rendered text (or
+  // whitespace) output.
+  bool HasTextBoxes() const { return FirstTextBox(); }
 
-    bool isSecure() const { return style()->textSecurity() != TSNONE; }
-    void momentarilyRevealLastTypedCharacter(unsigned lastTypedCharacterOffset);
+  int CaretMinOffset() const override;
+  int CaretMaxOffset() const override;
+  unsigned ResolvedTextLength() const;
 
-    bool isAllCollapsibleWhitespace() const;
-    bool isRenderedCharacter(int offsetInNode) const;
+  bool ContainsReversedText() const { return contains_reversed_text_; }
 
-    // TODO(eae): Rename and change to only handle the word measurements use
-    // case once the simple code path has been removed. crbug.com/404597
-    bool canUseSimpleFontCodePath() const { return m_canUseSimpleFontCodePath; }
+  bool IsSecure() const { return Style()->TextSecurity() != TSNONE; }
+  void MomentarilyRevealLastTypedCharacter(
+      unsigned last_typed_character_offset);
 
-    void removeAndDestroyTextBoxes();
+  bool IsAllCollapsibleWhitespace() const;
+  bool IsRenderedCharacter(int offset_in_node) const;
 
-    PassRefPtr<AbstractInlineTextBox> firstAbstractInlineTextBox();
+  void RemoveAndDestroyTextBoxes();
 
-    float hyphenWidth(const Font&, TextDirection);
+  PassRefPtr<AbstractInlineTextBox> FirstAbstractInlineTextBox();
 
-protected:
-    void willBeDestroyed() override;
+  float HyphenWidth(const Font&, TextDirection);
 
-    void styleWillChange(StyleDifference, const ComputedStyle&) final { }
-    void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) override;
+  LayoutRect DebugRect() const override;
 
-    virtual void setTextInternal(PassRefPtr<StringImpl>);
-    virtual UChar previousCharacter() const;
+  void AutosizingMultiplerChanged() {
+    known_to_have_no_overflow_and_no_fallback_fonts_ = false;
+  }
 
-    void addLayerHitTestRects(LayerHitTestRects&, const PaintLayer* currentLayer, const LayoutPoint& layerOffset, const LayoutRect& containerRect) const override;
+ protected:
+  void WillBeDestroyed() override;
 
-    virtual InlineTextBox* createTextBox(int start, unsigned short length); // Subclassed by SVG.
+  void StyleWillChange(StyleDifference, const ComputedStyle&) final {}
+  void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
 
-    void invalidateDisplayItemClients(PaintInvalidationReason) const override;
+  virtual UChar PreviousCharacter() const;
 
-private:
-    void computePreferredLogicalWidths(float leadWidth);
-    void computePreferredLogicalWidths(float leadWidth, HashSet<const SimpleFontData*>& fallbackFonts, FloatRect& glyphBounds);
+  void AddLayerHitTestRects(LayerHitTestRects&,
+                            const PaintLayer* current_layer,
+                            const LayoutPoint& layer_offset,
+                            const LayoutRect& container_rect) const override;
 
-    bool computeCanUseSimpleFontCodePath() const;
+  virtual InlineTextBox* CreateTextBox(
+      int start,
+      unsigned short length);  // Subclassed by SVG.
 
-    // Make length() private so that callers that have a LayoutText*
-    // will use the more efficient textLength() instead, while
-    // callers with a LayoutObject* can continue to use length().
-    unsigned length() const final { return textLength(); }
+  void InvalidateDisplayItemClients(PaintInvalidationReason) const override;
 
-    // See the class comment as to why we shouldn't call this function directly.
-    void paint(const PaintInfo&, const LayoutPoint&) const final { ASSERT_NOT_REACHED(); }
-    void layout() final { ASSERT_NOT_REACHED(); }
-    bool nodeAtPoint(HitTestResult&, const HitTestLocation&, const LayoutPoint&, HitTestAction) final { ASSERT_NOT_REACHED(); return false; }
+ private:
+  void ComputePreferredLogicalWidths(float lead_width);
+  void ComputePreferredLogicalWidths(
+      float lead_width,
+      HashSet<const SimpleFontData*>& fallback_fonts,
+      FloatRect& glyph_bounds);
 
-    void deleteTextBoxes();
-    bool containsOnlyWhitespace(unsigned from, unsigned len) const;
-    float widthFromFont(const Font&, int start, int len, float leadWidth, float textWidthSoFar, TextDirection, HashSet<const SimpleFontData*>* fallbackFonts, FloatRect* glyphBoundsAccumulation) const;
+  // Make length() private so that callers that have a LayoutText*
+  // will use the more efficient textLength() instead, while
+  // callers with a LayoutObject* can continue to use length().
+  unsigned length() const final { return TextLength(); }
 
-    void secureText(UChar mask);
+  // See the class comment as to why we shouldn't call this function directly.
+  void Paint(const PaintInfo&, const LayoutPoint&) const final { NOTREACHED(); }
+  void UpdateLayout() final { NOTREACHED(); }
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation&,
+                   const LayoutPoint&,
+                   HitTestAction) final {
+    NOTREACHED();
+    return false;
+  }
 
-    bool isText() const = delete; // This will catch anyone doing an unnecessary check.
+  void DeleteTextBoxes();
+  float WidthFromFont(const Font&,
+                      int start,
+                      int len,
+                      float lead_width,
+                      float text_width_so_far,
+                      TextDirection,
+                      HashSet<const SimpleFontData*>* fallback_fonts,
+                      FloatRect* glyph_bounds_accumulation) const;
 
-    LayoutRect localOverflowRectForPaintInvalidation() const override;
+  void SecureText(UChar mask);
 
-    void checkConsistency() const;
+  bool IsText() const =
+      delete;  // This will catch anyone doing an unnecessary check.
 
-    // We put the bitfield first to minimize padding on 64-bit.
-    bool m_hasBreakableChar : 1; // Whether or not we can be broken into multiple lines.
-    bool m_hasBreak : 1; // Whether or not we have a hard break (e.g., <pre> with '\n').
-    bool m_hasTab : 1; // Whether or not we have a variable width tab character (e.g., <pre> with '\t').
-    bool m_hasBreakableStart : 1;
-    bool m_hasBreakableEnd : 1;
-    bool m_hasEndWhiteSpace : 1;
-    // This bit indicates that the text run has already dirtied specific
-    // line boxes, and this hint will enable layoutInlineChildren to avoid
-    // just dirtying everything when character data is modified (e.g., appended/inserted
-    // or removed).
-    bool m_linesDirty : 1;
-    bool m_containsReversedText : 1;
-    bool m_canUseSimpleFontCodePath : 1;
-    mutable bool m_knownToHaveNoOverflowAndNoFallbackFonts : 1;
+  LayoutRect LocalVisualRect() const override;
 
-    float m_minWidth;
-    float m_maxWidth;
-    float m_firstLineMinWidth;
-    float m_lastLineLineMinWidth;
+  void CheckConsistency() const;
 
-    String m_text;
+  // We put the bitfield first to minimize padding on 64-bit.
 
-    // The line boxes associated with this object.
-    // Read the LINE BOXES OWNERSHIP section in the class header comment.
-    InlineTextBox* m_firstTextBox;
-    InlineTextBox* m_lastTextBox;
+  // Whether or not we can be broken into multiple lines.
+  bool has_breakable_char_ : 1;
+  // Whether or not we have a hard break (e.g., <pre> with '\n').
+  bool has_break_ : 1;
+  // Whether or not we have a variable width tab character (e.g., <pre> with
+  // '\t').
+  bool has_tab_ : 1;
+  bool has_breakable_start_ : 1;
+  bool has_breakable_end_ : 1;
+  bool has_end_white_space_ : 1;
+  // This bit indicates that the text run has already dirtied specific line
+  // boxes, and this hint will enable layoutInlineChildren to avoid just
+  // dirtying everything when character data is modified (e.g., appended/
+  // inserted or removed).
+  bool lines_dirty_ : 1;
+  bool contains_reversed_text_ : 1;
+  mutable bool known_to_have_no_overflow_and_no_fallback_fonts_ : 1;
+
+  float min_width_;
+  float max_width_;
+  float first_line_min_width_;
+  float last_line_line_min_width_;
+
+  String text_;
+
+  // The line boxes associated with this object.
+  // Read the LINE BOXES OWNERSHIP section in the class header comment.
+  InlineTextBox* first_text_box_;
+  InlineTextBox* last_text_box_;
 };
 
-inline UChar LayoutText::uncheckedCharacterAt(unsigned i) const
-{
-    ASSERT_WITH_SECURITY_IMPLICATION(i < textLength());
-    return is8Bit() ? characters8()[i] : characters16()[i];
+inline UChar LayoutText::UncheckedCharacterAt(unsigned i) const {
+  SECURITY_DCHECK(i < TextLength());
+  return Is8Bit() ? Characters8()[i] : Characters16()[i];
 }
 
-inline UChar LayoutText::characterAt(unsigned i) const
-{
-    if (i >= textLength())
-        return 0;
+inline UChar LayoutText::CharacterAt(unsigned i) const {
+  if (i >= TextLength())
+    return 0;
 
-    return uncheckedCharacterAt(i);
+  return UncheckedCharacterAt(i);
 }
 
-inline UChar32 LayoutText::codepointAt(unsigned i) const
-{
-    UChar32 character = characterAt(i);
-    if (!U16_IS_LEAD(character))
-        return character;
-    UChar trail = characterAt(i + 1);
-    return U16_IS_TRAIL(trail) ? U16_GET_SUPPLEMENTARY(character, trail) : character;
+inline UChar32 LayoutText::CodepointAt(unsigned i) const {
+  if (i >= TextLength())
+    return 0;
+  if (Is8Bit())
+    return Characters8()[i];
+  UChar32 c;
+  U16_GET(Characters16(), 0, i, TextLength(), c);
+  return c;
 }
 
-inline float LayoutText::hyphenWidth(const Font& font, TextDirection direction)
-{
-    const ComputedStyle& style = styleRef();
-    return font.width(constructTextRun(font, style.hyphenString().getString(), style, direction));
+inline float LayoutText::HyphenWidth(const Font& font,
+                                     TextDirection direction) {
+  const ComputedStyle& style = StyleRef();
+  return font.Width(ConstructTextRun(font, style.HyphenString().GetString(),
+                                     style, direction));
 }
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutText, isText());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutText, IsText());
 
-#if !ENABLE(ASSERT)
-inline void LayoutText::checkConsistency() const
-{
-}
+#if !DCHECK_IS_ON()
+inline void LayoutText::CheckConsistency() const {}
 #endif
 
-inline LayoutText* Text::layoutObject() const
-{
-    return toLayoutText(CharacterData::layoutObject());
+inline LayoutText* Text::GetLayoutObject() const {
+  return ToLayoutText(CharacterData::GetLayoutObject());
 }
 
-void applyTextTransform(const ComputedStyle*, String&, UChar);
+void ApplyTextTransform(const ComputedStyle*, String&, UChar);
+AtomicString LocaleForLineBreakIterator(const ComputedStyle&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutText_h
+#endif  // LayoutText_h

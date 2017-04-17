@@ -7,6 +7,7 @@
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -16,11 +17,11 @@ GURL WebSecurityOriginToGURL(const blink::WebSecurityOrigin& security_origin) {
   // origins from Blink to Chromium via DatabaseIdentifier would ignore
   // this, so we mimic that behavior here.
   // TODO(jsbell): Eliminate this. https://crbug.com/591482
-  if (security_origin.protocol().utf8() == "file" &&
-      security_origin.host().utf8() == "" && security_origin.port() == 0) {
+  if (security_origin.Protocol().Utf8() == "file" &&
+      security_origin.Host().Utf8() == "" && security_origin.Port() == 0) {
     return GURL("file:///");
   }
-  return blink::WebStringToGURL(security_origin.toString());
+  return url::Origin(security_origin).GetURL();
 }
 
 }  // namespace content

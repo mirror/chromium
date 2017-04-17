@@ -6,8 +6,10 @@ if (typeof Polymer == 'undefined') {
   Polymer = {
     dom: 'shadow',
     lazyRegister: true,
-    // TODO(dbeam): re-enable when this doesn't break things.
-    // useNativeCSSProperties: true,
+    preserveStyleIncludes: true,  // Only matters when using polymer-css-build.
+    suppressBindingNotifications: true,
+    suppressTemplateNotifications: true,
+    useNativeCSSProperties: true,
   };
 } else {
   console.error('Polymer is already defined.');

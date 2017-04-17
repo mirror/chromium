@@ -13,6 +13,7 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -31,7 +32,7 @@
 #include "content/public/common/process_type.h"
 #include "content/public/common/sandbox_type.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
-#include "ipc/ipc_switches.h"
+#include "content/public/common/service_names.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "net/base/network_change_notifier.h"
 #include "ppapi/proxy/ppapi_messages.h"
@@ -42,11 +43,13 @@
 #endif  // defined(OS_POSIX)
 
 #if defined(OS_WIN)
+#include "base/win/windows_version.h"
 #include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
 #include "content/common/sandbox_win.h"
 #include "sandbox/win/src/process_mitigations.h"
 #include "sandbox/win/src/sandbox_policy.h"
 #include "ui/display/win/dpi.h"
+#include "ui/gfx/font_render_params.h"
 #endif
 
 namespace content {
@@ -59,18 +62,12 @@ ZygoteHandle g_ppapi_zygote;
 class PpapiPluginSandboxedProcessLauncherDelegate
     : public content::SandboxedProcessLauncherDelegate {
  public:
-  PpapiPluginSandboxedProcessLauncherDelegate(bool is_broker,
-                                              const PepperPluginInfo& info,
-                                              ChildProcessHost* host)
-#if defined(OS_WIN)
-      : info_(info), is_broker_(is_broker) {
-#elif defined(OS_MACOSX) || defined(OS_ANDROID)
-      : ipc_fd_(host->TakeClientFileDescriptor()) {
-#elif defined(OS_POSIX)
-      : ipc_fd_(host->TakeClientFileDescriptor()), is_broker_(is_broker) {
-#else
-  {
+  explicit PpapiPluginSandboxedProcessLauncherDelegate(bool is_broker)
+#if (defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)) || \
+    defined(OS_WIN)
+      : is_broker_(is_broker)
 #endif
+  {
   }
 
   ~PpapiPluginSandboxedProcessLauncherDelegate() override {}
@@ -97,16 +94,12 @@ class PpapiPluginSandboxedProcessLauncherDelegate
         GetContentClient()->browser();
 
 #if !defined(NACL_WIN64)
-    if (IsWin32kRendererLockdownEnabled()) {
-      for (const auto& mime_type : info_.mime_types) {
-        if (browser_client->IsWin32kLockdownEnabledForMimeType(
-                mime_type.mime_type)) {
-          result = AddWin32kLockdownPolicy(policy, true);
-          if (result != sandbox::SBOX_ALL_OK)
-            return false;
-          break;
-        }
-      }
+    // We don't support PPAPI win32k lockdown prior to Windows 10.
+    if (base::win::GetVersion() >= base::win::VERSION_WIN10 &&
+        IsWin32kLockdownEnabled()) {
+      result = AddWin32kLockdownPolicy(policy, true);
+      if (result != sandbox::SBOX_ALL_OK)
+        return false;
     }
 #endif
     const base::string16& sid =
@@ -117,8 +110,7 @@ class PpapiPluginSandboxedProcessLauncherDelegate
     return true;
   }
 
-#elif defined(OS_POSIX)
-#if !defined(OS_MACOSX) && !defined(OS_ANDROID)
+#elif defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
   ZygoteHandle* GetZygote() override {
     const base::CommandLine& browser_command_line =
         *base::CommandLine::ForCurrentProcess();
@@ -128,9 +120,6 @@ class PpapiPluginSandboxedProcessLauncherDelegate
       return nullptr;
     return GetGenericZygote();
   }
-#endif  // !defined(OS_MACOSX) && !defined(OS_ANDROID)
-
-  base::ScopedFD TakeIpcFd() override { return std::move(ipc_fd_); }
 #endif  // OS_WIN
 
   SandboxType GetSandboxType() override {
@@ -138,12 +127,6 @@ class PpapiPluginSandboxedProcessLauncherDelegate
   }
 
  private:
-#if defined(OS_WIN)
-  const PepperPluginInfo& info_;
-#endif // OS_WIN
-#if defined(OS_POSIX)
-  base::ScopedFD ipc_fd_;
-#endif  // OS_POSIX
 #if (defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)) || \
     defined(OS_WIN)
   bool is_broker_;
@@ -318,8 +301,7 @@ PpapiPluginProcessHost::PpapiPluginProcessHost(
     const PepperPluginInfo& info,
     const base::FilePath& profile_data_directory)
     : profile_data_directory_(profile_data_directory),
-      is_broker_(false),
-      mojo_child_token_(mojo::edk::GenerateRandomToken()) {
+      is_broker_(false) {
   uint32_t base_permissions = info.permissions;
 
   // We don't have to do any whitelisting for APIs in this process host, so
@@ -330,7 +312,7 @@ PpapiPluginProcessHost::PpapiPluginProcessHost(
   permissions_ = ppapi::PpapiPermissions::GetForCommandLine(base_permissions);
 
   process_.reset(new BrowserChildProcessHostImpl(
-      PROCESS_TYPE_PPAPI_PLUGIN, this, mojo_child_token_));
+      PROCESS_TYPE_PPAPI_PLUGIN, this, mojom::kPluginServiceName));
 
   host_impl_.reset(new BrowserPpapiHostImpl(this, permissions_, info.name,
                                             info.path, profile_data_directory,
@@ -351,11 +333,9 @@ PpapiPluginProcessHost::PpapiPluginProcessHost(
     network_observer_.reset(new PluginNetworkObserver(this));
 }
 
-PpapiPluginProcessHost::PpapiPluginProcessHost()
-    : is_broker_(true),
-      mojo_child_token_(mojo::edk::GenerateRandomToken()) {
+PpapiPluginProcessHost::PpapiPluginProcessHost() : is_broker_(true) {
   process_.reset(new BrowserChildProcessHostImpl(
-      PROCESS_TYPE_PPAPI_BROKER, this, mojo_child_token_));
+      PROCESS_TYPE_PPAPI_BROKER, this, mojom::kPluginServiceName));
 
   ppapi::PpapiPermissions permissions;  // No permissions.
   // The plugin name, path and profile data directory shouldn't be needed for
@@ -375,12 +355,7 @@ bool PpapiPluginProcessHost::Init(const PepperPluginInfo& info) {
     process_->SetName(base::UTF8ToUTF16(info.name));
   }
 
-  std::string mojo_channel_token =
-      process_->GetHost()->CreateChannelMojo(mojo_child_token_);
-  if (mojo_channel_token.empty()) {
-    VLOG(1) << "Could not create pepper host channel.";
-    return false;
-  }
+  process_->GetHost()->CreateChannelMojo();
 
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -399,11 +374,12 @@ bool PpapiPluginProcessHost::Init(const PepperPluginInfo& info) {
     return false;
   }
 
-  base::CommandLine* cmd_line = new base::CommandLine(exe_path);
+  std::unique_ptr<base::CommandLine> cmd_line =
+      base::MakeUnique<base::CommandLine>(exe_path);
   cmd_line->AppendSwitchASCII(switches::kProcessType,
                               is_broker_ ? switches::kPpapiBrokerProcess
                                          : switches::kPpapiPluginProcess);
-  cmd_line->AppendSwitchASCII(switches::kMojoChannelToken, mojo_channel_token);
+  BrowserChildProcessHostImpl::CopyFeatureAndFieldTrialFlags(cmd_line.get());
 
 #if defined(OS_WIN)
   cmd_line->AppendArg(is_broker_ ? switches::kPrefetchArgumentPpapiBroker
@@ -429,7 +405,7 @@ bool PpapiPluginProcessHost::Init(const PepperPluginInfo& info) {
     cmd_line->CopySwitchesFrom(browser_command_line, kPluginForwardSwitches,
                                arraysize(kPluginForwardSwitches));
 
-    // Copy any flash args over and introduce field trials if necessary.
+    // Copy any flash args over if necessary.
     // TODO(vtl): Stop passing flash args in the command line, or windows is
     // going to explode.
     std::string existing_args =
@@ -447,6 +423,13 @@ bool PpapiPluginProcessHost::Init(const PepperPluginInfo& info) {
   cmd_line->AppendSwitchASCII(
       switches::kDeviceScaleFactor,
       base::DoubleToString(display::win::GetDPIScale()));
+  const gfx::FontRenderParams font_params =
+      gfx::GetFontRenderParams(gfx::FontRenderParamsQuery(), nullptr);
+  cmd_line->AppendSwitchASCII(switches::kPpapiAntialiasedTextEnabled,
+                              base::IntToString(font_params.antialiasing));
+  cmd_line->AppendSwitchASCII(
+      switches::kPpapiSubpixelRenderingSetting,
+      base::IntToString(font_params.subpixel_rendering));
 #endif
 
   if (!plugin_launcher.empty())
@@ -456,11 +439,8 @@ bool PpapiPluginProcessHost::Init(const PepperPluginInfo& info) {
   // we are not using a plugin launcher - having a plugin launcher means we need
   // to use another process instead of just forking the zygote.
   process_->Launch(
-      new PpapiPluginSandboxedProcessLauncherDelegate(is_broker_,
-                                                      info,
-                                                      process_->GetHost()),
-      cmd_line,
-      true);
+      base::MakeUnique<PpapiPluginSandboxedProcessLauncherDelegate>(is_broker_),
+      std::move(cmd_line), true);
   return true;
 }
 
@@ -479,7 +459,7 @@ void PpapiPluginProcessHost::RequestPluginChannel(Client* client) {
   // We can't send any sync messages from the browser because it might lead to
   // a hang. See the similar code in PluginProcessHost for more description.
   PpapiMsg_CreateChannel* msg = new PpapiMsg_CreateChannel(
-      process_id, renderer_child_id, client->OffTheRecord());
+      process_id, renderer_child_id, client->Incognito());
   msg->set_unblock(true);
   if (Send(msg)) {
     sent_requests_.push(client);
@@ -503,6 +483,8 @@ bool PpapiPluginProcessHost::OnMessageReceived(const IPC::Message& msg) {
   IPC_BEGIN_MESSAGE_MAP(PpapiPluginProcessHost, msg)
     IPC_MESSAGE_HANDLER(PpapiHostMsg_ChannelCreated,
                         OnRendererPluginChannelCreated)
+    IPC_MESSAGE_HANDLER(PpapiHostMsg_FieldTrialActivated,
+                        OnFieldTrialActivated);
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   DCHECK(handled);
@@ -520,6 +502,14 @@ void PpapiPluginProcessHost::OnChannelConnected(int32_t peer_pid) {
   for (size_t i = 0; i < pending_requests_.size(); i++)
     RequestPluginChannel(pending_requests_[i]);
   pending_requests_.clear();
+}
+
+void PpapiPluginProcessHost::OnFieldTrialActivated(
+    const std::string& trial_name) {
+  // Activate the trial in the browser process to match its state in the
+  // PPAPI process. This is done by calling FindFullName which finalizes the
+  // group and activates the trial.
+  base::FieldTrialList::FindFullName(trial_name);
 }
 
 // Called when the browser <--> plugin channel has an error. This normally

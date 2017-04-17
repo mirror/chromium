@@ -6,7 +6,34 @@
     --cr-actionable: {
       cursor: pointer;
     };
+
+    --cr-control-spacing: 18px;
+
     --cr-focused-item-color: var(--google-grey-300);
-    --cr-separator-line: 1px solid rgba(0, 0, 0, 0.06);
+
+    /* The inner icon is 20px in size. paper-icon-button has 8px padding. */
+    --cr-icon-ripple-size: 36px;
+    --cr-icon-ripple-padding: 8px;
+
+    --cr-icon-size: 20px;
+
+    --cr-icon-height-width: {
+      height: var(--cr-icon-size);
+      width: var(--cr-icon-size);
+    }
+
+    --cr-paper-icon-button-margin: {
+      /* Allow ripple to overlap the end. */
+      -webkit-margin-end: calc(var(--cr-icon-ripple-padding) * -1);
+      -webkit-margin-start: 16px;
+    }
+
+    --cr-selectable-focus: {
+      background-color: var(--cr-focused-item-color);
+      outline: none;
+    }
+    --cr-separator-height: 1px;
+    --cr-separator-line: var(--cr-separator-height) solid rgba(0, 0, 0, 0.06);
+    --paper-checkbox-ink-size: 40px;
   }
 </style>

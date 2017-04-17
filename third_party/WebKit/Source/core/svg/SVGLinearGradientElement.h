@@ -31,34 +31,35 @@ namespace blink {
 struct LinearGradientAttributes;
 
 class SVGLinearGradientElement final : public SVGGradientElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGLinearGradientElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool collectGradientAttributes(LinearGradientAttributes&);
+ public:
+  DECLARE_NODE_FACTORY(SVGLinearGradientElement);
 
-    SVGAnimatedLength* x1() const { return m_x1.get(); }
-    SVGAnimatedLength* y1() const { return m_y1.get(); }
-    SVGAnimatedLength* x2() const { return m_x2.get(); }
-    SVGAnimatedLength* y2() const { return m_y2.get(); }
+  bool CollectGradientAttributes(LinearGradientAttributes&);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedLength* x1() const { return x1_.Get(); }
+  SVGAnimatedLength* y1() const { return y1_.Get(); }
+  SVGAnimatedLength* x2() const { return x2_.Get(); }
+  SVGAnimatedLength* y2() const { return y2_.Get(); }
 
-private:
-    explicit SVGLinearGradientElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void svgAttributeChanged(const QualifiedName&) override;
+ private:
+  explicit SVGLinearGradientElement(Document&);
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    bool selfHasRelativeLengths() const override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    Member<SVGAnimatedLength> m_x1;
-    Member<SVGAnimatedLength> m_y1;
-    Member<SVGAnimatedLength> m_x2;
-    Member<SVGAnimatedLength> m_y2;
+  bool SelfHasRelativeLengths() const override;
+
+  Member<SVGAnimatedLength> x1_;
+  Member<SVGAnimatedLength> y1_;
+  Member<SVGAnimatedLength> x2_;
+  Member<SVGAnimatedLength> y2_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGLinearGradientElement_h
+#endif  // SVGLinearGradientElement_h

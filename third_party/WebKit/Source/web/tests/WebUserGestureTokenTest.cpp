@@ -30,6 +30,7 @@
 
 #include "public/web/WebUserGestureToken.h"
 
+#include "core/dom/DocumentUserGestureToken.h"
 #include "platform/UserGestureIndicator.h"
 #include "public/web/WebScopedUserGesture.h"
 #include "public/web/WebUserGestureIndicator.h"
@@ -37,43 +38,38 @@
 
 namespace blink {
 
-TEST(WebUserGestureTokenTest, Basic)
-{
-    WebUserGestureToken token;
-    EXPECT_FALSE(token.hasGestures());
-    UserGestureIndicator::clearProcessedUserGestureSinceLoad();
-    EXPECT_FALSE(UserGestureIndicator::processedUserGestureSinceLoad());
+TEST(WebUserGestureTokenTest, Basic) {
+  WebUserGestureToken token;
+  EXPECT_FALSE(token.HasGestures());
 
-    {
-        WebScopedUserGesture indicator(token);
-        EXPECT_FALSE(WebUserGestureIndicator::isProcessingUserGesture());
-    }
+  {
+    WebScopedUserGesture indicator(token);
+    EXPECT_FALSE(WebUserGestureIndicator::IsProcessingUserGesture());
+  }
 
-    {
-        UserGestureIndicator indicator(DefinitelyProcessingNewUserGesture);
-        EXPECT_TRUE(WebUserGestureIndicator::isProcessingUserGesture());
-        token = WebUserGestureIndicator::currentUserGestureToken();
-        EXPECT_TRUE(UserGestureIndicator::processedUserGestureSinceLoad());
-    }
+  {
+    UserGestureIndicator indicator(DocumentUserGestureToken::Create(
+        nullptr, UserGestureToken::kNewGesture));
+    EXPECT_TRUE(WebUserGestureIndicator::IsProcessingUserGesture());
+    token = WebUserGestureIndicator::CurrentUserGestureToken();
+  }
 
-    EXPECT_TRUE(token.hasGestures());
-    EXPECT_FALSE(WebUserGestureIndicator::isProcessingUserGesture());
+  EXPECT_TRUE(token.HasGestures());
+  EXPECT_FALSE(WebUserGestureIndicator::IsProcessingUserGesture());
 
-    {
-        WebScopedUserGesture indicator(token);
-        EXPECT_TRUE(WebUserGestureIndicator::isProcessingUserGesture());
-        WebUserGestureIndicator::consumeUserGesture();
-        EXPECT_FALSE(WebUserGestureIndicator::isProcessingUserGesture());
-    }
+  {
+    WebScopedUserGesture indicator(token);
+    EXPECT_TRUE(WebUserGestureIndicator::IsProcessingUserGesture());
+    WebUserGestureIndicator::ConsumeUserGesture();
+    EXPECT_FALSE(WebUserGestureIndicator::IsProcessingUserGesture());
+  }
 
-    EXPECT_FALSE(token.hasGestures());
+  EXPECT_FALSE(token.HasGestures());
 
-    {
-        WebScopedUserGesture indicator(token);
-        EXPECT_FALSE(WebUserGestureIndicator::isProcessingUserGesture());
-    }
-
-    EXPECT_TRUE(UserGestureIndicator::processedUserGestureSinceLoad());
+  {
+    WebScopedUserGesture indicator(token);
+    EXPECT_FALSE(WebUserGestureIndicator::IsProcessingUserGesture());
+  }
 }
 
-} // namespace blink
+}  // namespace blink

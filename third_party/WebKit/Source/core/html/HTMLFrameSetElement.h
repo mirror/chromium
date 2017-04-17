@@ -25,67 +25,71 @@
 #define HTMLFrameSetElement_h
 
 #include "core/dom/Document.h"
+#include "core/frame/LocalDOMWindow.h"
 #include "core/html/HTMLDimension.h"
 #include "core/html/HTMLElement.h"
 
 namespace blink {
 
 class HTMLFrameSetElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLFrameSetElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool hasFrameBorder() const { return m_frameborder; }
-    bool noResize() const { return m_noresize; }
+ public:
+  DECLARE_NODE_FACTORY(HTMLFrameSetElement);
 
-    size_t totalRows() const { return std::max<size_t>(1, m_rowLengths.size()); }
-    size_t totalCols() const { return std::max<size_t>(1, m_colLengths.size()); }
-    int border() const { return hasFrameBorder() ? m_border : 0; }
+  bool HasFrameBorder() const { return frameborder_; }
+  bool NoResize() const { return noresize_; }
 
-    bool hasBorderColor() const { return m_borderColorSet; }
+  size_t TotalRows() const { return std::max<size_t>(1, row_lengths_.size()); }
+  size_t TotalCols() const { return std::max<size_t>(1, col_lengths_.size()); }
+  int Border() const { return HasFrameBorder() ? border_ : 0; }
 
-    const Vector<HTMLDimension>& rowLengths() const { return m_rowLengths; }
-    const Vector<HTMLDimension>& colLengths() const { return m_colLengths; }
+  bool HasBorderColor() const { return border_color_set_; }
 
-    LocalDOMWindow* anonymousNamedGetter(const AtomicString&);
+  const Vector<HTMLDimension>& RowLengths() const { return row_lengths_; }
+  const Vector<HTMLDimension>& ColLengths() const { return col_lengths_; }
 
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(blur);
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(error);
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(focus);
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(load);
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(resize);
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(scroll);
-    DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(orientationchange);
+  LocalDOMWindow* AnonymousNamedGetter(const AtomicString&);
 
-private:
-    explicit HTMLFrameSetElement(Document&);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(blur);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(error);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(focus);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(load);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(resize);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(scroll);
+  DEFINE_WINDOW_ATTRIBUTE_EVENT_LISTENER(orientationchange);
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
+ private:
+  explicit HTMLFrameSetElement(Document&);
 
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
 
-    void defaultEventHandler(Event*) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void willRecalcStyle(StyleRecalcChange) override;
+  void DefaultEventHandler(Event*) override;
 
-    Vector<HTMLDimension> m_rowLengths;
-    Vector<HTMLDimension> m_colLengths;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void WillRecalcStyle(StyleRecalcChange) override;
 
-    int m_border;
-    bool m_borderSet;
+  Vector<HTMLDimension> row_lengths_;
+  Vector<HTMLDimension> col_lengths_;
 
-    bool m_borderColorSet;
+  int border_;
+  bool border_set_;
 
-    bool m_frameborder;
-    bool m_frameborderSet;
-    bool m_noresize;
+  bool border_color_set_;
+
+  bool frameborder_;
+  bool frameborder_set_;
+  bool noresize_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLFrameSetElement_h
+#endif  // HTMLFrameSetElement_h

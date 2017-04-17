@@ -33,47 +33,43 @@
 
 #include "core/css/FontFace.h"
 #include "core/css/FontFaceSetLoadEventInit.h"
-#include "core/dom/DOMError.h"
 #include "core/events/Event.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class FontFaceSetLoadEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static FontFaceSetLoadEvent* create()
-    {
-        return new FontFaceSetLoadEvent();
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    static FontFaceSetLoadEvent* create(const AtomicString& type, const FontFaceSetLoadEventInit& initializer)
-    {
-        return new FontFaceSetLoadEvent(type, initializer);
-    }
+ public:
+  static FontFaceSetLoadEvent* Create(
+      const AtomicString& type,
+      const FontFaceSetLoadEventInit& initializer) {
+    return new FontFaceSetLoadEvent(type, initializer);
+  }
 
-    static FontFaceSetLoadEvent* createForFontFaces(const AtomicString& type, const FontFaceArray& fontfaces = FontFaceArray())
-    {
-        return new FontFaceSetLoadEvent(type, fontfaces);
-    }
+  static FontFaceSetLoadEvent* CreateForFontFaces(
+      const AtomicString& type,
+      const FontFaceArray& fontfaces = FontFaceArray()) {
+    return new FontFaceSetLoadEvent(type, fontfaces);
+  }
 
-    ~FontFaceSetLoadEvent() override;
+  ~FontFaceSetLoadEvent() override;
 
-    FontFaceArray fontfaces() const { return m_fontfaces; }
+  FontFaceArray fontfaces() const { return fontfaces_; }
 
-    const AtomicString& interfaceName() const override;
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    FontFaceSetLoadEvent();
-    FontFaceSetLoadEvent(const AtomicString&, const FontFaceArray&);
-    FontFaceSetLoadEvent(const AtomicString&, const FontFaceSetLoadEventInit&);
+ private:
+  FontFaceSetLoadEvent(const AtomicString&, const FontFaceArray&);
+  FontFaceSetLoadEvent(const AtomicString&, const FontFaceSetLoadEventInit&);
 
-    FontFaceArray m_fontfaces;
+  FontFaceArray fontfaces_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FontFaceSetLoadEvent_h
+#endif  // FontFaceSetLoadEvent_h

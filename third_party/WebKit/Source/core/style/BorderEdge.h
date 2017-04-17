@@ -7,42 +7,48 @@
 
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/graphics/Color.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 struct BorderEdge {
-    STACK_ALLOCATED();
-public:
-    BorderEdge(int edgeWidth, const Color& edgeColor, EBorderStyle edgeStyle, bool edgeIsPresent = true);
-    BorderEdge();
+  STACK_ALLOCATED();
 
-    bool hasVisibleColorAndStyle() const;
-    bool shouldRender() const;
-    bool presentButInvisible() const;
-    bool obscuresBackgroundEdge() const;
-    bool obscuresBackground() const;
-    int usedWidth() const;
+ public:
+  BorderEdge(float edge_width,
+             const Color& edge_color,
+             EBorderStyle edge_style,
+             bool edge_is_present = true);
+  BorderEdge();
 
-    bool sharesColorWith(const BorderEdge& other) const;
+  bool HasVisibleColorAndStyle() const;
+  bool ShouldRender() const;
+  bool PresentButInvisible() const;
+  bool ObscuresBackgroundEdge() const;
+  bool ObscuresBackground() const;
+  float UsedWidth() const;
 
-    EBorderStyle borderStyle() const  { return static_cast<EBorderStyle>(style); }
+  bool SharesColorWith(const BorderEdge& other) const;
 
-    enum DoubleBorderStripe {
-        DoubleBorderStripeOuter,
-        DoubleBorderStripeInner
-    };
+  EBorderStyle BorderStyle() const { return static_cast<EBorderStyle>(style); }
 
-    int getDoubleBorderStripeWidth(DoubleBorderStripe) const;
+  enum DoubleBorderStripe {
+    kDoubleBorderStripeOuter,
+    kDoubleBorderStripeInner
+  };
 
-    int width;
-    Color color;
-    bool isPresent;
+  float GetDoubleBorderStripeWidth(DoubleBorderStripe) const;
 
-private:
-    unsigned style: 4; // EBorderStyle
+  float Width() const { return width_; }
+
+  Color color;
+  bool is_present;
+
+ private:
+  unsigned style : 4;  // EBorderStyle
+  float width_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BorderEdge_h
+#endif  // BorderEdge_h

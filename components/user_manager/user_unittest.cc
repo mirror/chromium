@@ -40,6 +40,16 @@ TEST(UserTest, DeviceLocalAccountAffiliation) {
   ScopedUser public_session_user(User::CreatePublicAccountUser(account_id));
   EXPECT_TRUE(public_session_user.IsAffiliated());
 
+  ScopedUser arc_kiosk_user(User::CreateArcKioskAppUser(account_id));
+  EXPECT_TRUE(arc_kiosk_user.IsAffiliated());
+}
+
+TEST(UserTest, UserSessionInitialized) {
+  const AccountId account_id = AccountId::FromUserEmailGaiaId(kEmail, kGaiaId);
+  std::unique_ptr<User> user(User::CreateRegularUser(account_id));
+  EXPECT_FALSE(user->profile_ever_initialized());
+  user->set_profile_ever_initialized(true);
+  EXPECT_TRUE(user->profile_ever_initialized());
 }
 
 }  // namespace user_manager

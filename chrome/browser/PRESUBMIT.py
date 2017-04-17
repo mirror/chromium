@@ -12,13 +12,37 @@ http://www.chromium.org/developers/web-development-style-guide for the rules
 checked for here.
 """
 
-
 def CheckChangeOnUpload(input_api, output_api):
   return _CommonChecks(input_api, output_api)
 
 
 def CheckChangeOnCommit(input_api, output_api):
   return _CommonChecks(input_api, output_api)
+
+def _RunHistogramChecks(input_api, output_api, histogram_name):
+  try:
+    # Setup sys.path so that we can call histrogram code
+    import sys
+    original_sys_path = sys.path
+    sys.path = sys.path + [input_api.os_path.join(
+        input_api.change.RepositoryRoot(),
+        'tools', 'metrics', 'histograms')]
+
+    results = []
+
+    import presubmit_bad_message_reasons
+    results.extend(presubmit_bad_message_reasons.PrecheckBadMessage(input_api,
+        output_api, histogram_name))
+
+    import presubmit_scheme_histograms
+    results.extend(presubmit_scheme_histograms.
+                   PrecheckShouldAllowOpenURLEnums(input_api, output_api))
+
+    return results
+  except:
+    return [output_api.PresubmitError('Could not verify histogram!')]
+  finally:
+    sys.path = original_sys_path
 
 
 def _CommonChecks(input_api, output_api):
@@ -55,12 +79,16 @@ def _CommonChecks(input_api, output_api):
     def _html_css_js_resource(p):
       return p.endswith(('.html', '.css', '.js')) and p.startswith(search_dirs)
 
-    BLACKLIST = ['chrome/browser/resources/md_downloads/crisper.js',
-                 'chrome/browser/resources/md_downloads/vulcanized.html',
-                 'chrome/browser/resources/pdf/index.html',
-                 'chrome/browser/resources/pdf/index.js']
+    def _vulcanized_resource(p):
+      return p.endswith(('vulcanized.html', 'crisper.js'))
+
+    BLACKLIST = [
+        'chrome/browser/resources/pdf/index.html',
+        'chrome/browser/resources/pdf/index.js'
+    ]
     def is_resource(maybe_resource):
       return (maybe_resource.LocalPath() not in BLACKLIST and
+          not _vulcanized_resource(maybe_resource.LocalPath()) and
           _html_css_js_resource(maybe_resource.AbsoluteLocalPath()))
 
     results.extend(resource_checker.ResourceChecker(
@@ -71,6 +99,8 @@ def _CommonChecks(input_api, output_api):
         input_api, output_api, file_filter=is_resource).RunChecks())
     results.extend(js_checker.JSChecker(
         input_api, output_api, file_filter=is_resource).RunChecks())
+    results.extend(_RunHistogramChecks(input_api, output_api,
+      "BadMessageReasonChrome"))
   finally:
     sys.path = old_path
 

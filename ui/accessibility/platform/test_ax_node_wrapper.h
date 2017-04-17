@@ -29,17 +29,16 @@ class TestAXNodeWrapper : public AXPlatformNodeDelegate {
   AXPlatformNode* ax_platform_node() { return platform_node_; }
 
   // AXPlatformNodeDelegate.
-  const AXNodeData& GetData() override;
+  const AXNodeData& GetData() const override;
   gfx::NativeWindow GetTopLevelWidget() override;
   gfx::NativeViewAccessible GetParent() override;
   int GetChildCount() override;
   gfx::NativeViewAccessible ChildAtIndex(int index) override;
-  gfx::Vector2d GetGlobalCoordinateOffset() override;
+  gfx::Rect GetScreenBoundsRect() const override;
   gfx::NativeViewAccessible HitTestSync(int x, int y) override;
   gfx::NativeViewAccessible GetFocus() override;
   gfx::AcceleratedWidget GetTargetForNativeAccessibilityEvent() override;
-  void DoDefaultAction() override;
-  bool SetStringValue(const base::string16& new_value) override;
+  bool AccessibilityPerformAction(const ui::AXActionData& data) override;
 
  private:
   TestAXNodeWrapper(AXTree* tree, AXNode* node);

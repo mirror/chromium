@@ -5,7 +5,7 @@
 #ifndef MultiColumnSetPainter_h
 #define MultiColumnSetPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,17 +14,19 @@ class LayoutPoint;
 class LayoutMultiColumnSet;
 
 class MultiColumnSetPainter {
-    STACK_ALLOCATED();
-public:
-    MultiColumnSetPainter(const LayoutMultiColumnSet& layoutMultiColumnSet) : m_layoutMultiColumnSet(layoutMultiColumnSet) { }
-    void paintObject(const PaintInfo&, const LayoutPoint& paintOffset);
+  STACK_ALLOCATED();
 
-private:
-    void paintColumnRules(const PaintInfo&, const LayoutPoint& paintOffset);
+ public:
+  MultiColumnSetPainter(const LayoutMultiColumnSet& layout_multi_column_set)
+      : layout_multi_column_set_(layout_multi_column_set) {}
+  void PaintObject(const PaintInfo&, const LayoutPoint& paint_offset);
 
-    const LayoutMultiColumnSet& m_layoutMultiColumnSet;
+ private:
+  void PaintColumnRules(const PaintInfo&, const LayoutPoint& paint_offset);
+
+  const LayoutMultiColumnSet& layout_multi_column_set_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MultiColumnSetPainter_h
+#endif  // MultiColumnSetPainter_h

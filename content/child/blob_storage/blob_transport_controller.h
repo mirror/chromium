@@ -19,13 +19,14 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/shared_memory_handle.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "ipc/ipc_platform_file.h"
 #include "storage/common/blob_storage/blob_storage_constants.h"
 
 namespace base {
 template <typename T>
-struct DefaultLazyInstanceTraits;
+struct LazyInstanceTraitsBase;
 class SingleThreadTaskRunner;
 class TaskRunner;
 }
@@ -37,7 +38,6 @@ struct BlobItemBytesResponse;
 }
 
 namespace IPC {
-class Message;
 class Sender;
 }
 
@@ -88,10 +88,7 @@ class CONTENT_EXPORT BlobTransportController {
       base::TaskRunner* file_runner,
       IPC::Sender* sender);
 
-  void OnCancel(const std::string& uuid,
-                storage::IPCBlobCreationCancelCode code);
-
-  void OnDone(const std::string& uuid);
+  void OnBlobFinalStatus(const std::string& uuid, storage::BlobStatus code);
 
   bool IsTransporting(const std::string& uuid) {
     return blob_storage_.find(uuid) != blob_storage_.end();
@@ -103,7 +100,7 @@ class CONTENT_EXPORT BlobTransportController {
   void CancelAllBlobTransfers();
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<BlobTransportController>;
+  friend struct base::LazyInstanceTraitsBase<BlobTransportController>;
   friend class BlobTransportControllerTest;
   FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, Descriptions);
   FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, Responses);
@@ -128,8 +125,8 @@ class CONTENT_EXPORT BlobTransportController {
   void OnFileWriteComplete(
       IPC::Sender* sender,
       const std::string& uuid,
-      const std::pair<std::vector<storage::BlobItemBytesResponse>,
-                      storage::IPCBlobCreationCancelCode>& result);
+      const base::Optional<std::vector<storage::BlobItemBytesResponse>>&
+          result);
 
   void StoreBlobDataForRequests(
       const std::string& uuid,

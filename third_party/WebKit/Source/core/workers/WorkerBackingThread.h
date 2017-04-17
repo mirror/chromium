@@ -5,12 +5,14 @@
 #ifndef WorkerBackingThread_h
 #define WorkerBackingThread_h
 
-#include "core/CoreExport.h"
-#include "wtf/Forward.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/ThreadingPrimitives.h"
 #include <memory>
-#include <v8.h>
+
+#include "core/CoreExport.h"
+#include "platform/heap/ThreadState.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -26,47 +28,54 @@ class WebThreadSupportingGC;
 // WorkerGlobalScope, but multiple WorkerThreads (i.e., multiple
 // WorkerGlobalScopes) can share one WorkerBackingThread.
 class CORE_EXPORT WorkerBackingThread final {
-public:
-    static std::unique_ptr<WorkerBackingThread> create(const char* name) { return wrapUnique(new WorkerBackingThread(name, false)); }
-    static std::unique_ptr<WorkerBackingThread> create(WebThread* thread) { return wrapUnique(new WorkerBackingThread(thread, false)); }
+ public:
+  static std::unique_ptr<WorkerBackingThread> Create(const char* name) {
+    return WTF::WrapUnique(new WorkerBackingThread(name, false));
+  }
+  static std::unique_ptr<WorkerBackingThread> Create(WebThread* thread) {
+    return WTF::WrapUnique(new WorkerBackingThread(thread, false));
+  }
 
-    // These are needed to suppress leak reports. See
-    // https://crbug.com/590802 and https://crbug.com/v8/1428.
-    static std::unique_ptr<WorkerBackingThread> createForTest(const char* name) { return wrapUnique(new WorkerBackingThread(name, true)); }
-    static std::unique_ptr<WorkerBackingThread> createForTest(WebThread* thread) { return wrapUnique(new WorkerBackingThread(thread, true)); }
+  // These are needed to suppress leak reports. See
+  // https://crbug.com/590802 and https://crbug.com/v8/1428.
+  static std::unique_ptr<WorkerBackingThread> CreateForTest(const char* name) {
+    return WTF::WrapUnique(new WorkerBackingThread(name, true));
+  }
+  static std::unique_ptr<WorkerBackingThread> CreateForTest(WebThread* thread) {
+    return WTF::WrapUnique(new WorkerBackingThread(thread, true));
+  }
 
-    ~WorkerBackingThread();
+  ~WorkerBackingThread();
 
-    // initialize() and shutdown() attaches and detaches Oilpan and V8 to / from
-    // the caller worker script, respectively. A worker script must not call
-    // any function after calling shutdown().
-    // They should be called from |this| thread.
-    void initialize();
-    void shutdown();
+  // initialize() and shutdown() attaches and detaches Oilpan and V8 to / from
+  // the caller worker script, respectively. A worker script must not call
+  // any function after calling shutdown().
+  // They should be called from |this| thread.
+  void Initialize();
+  void Shutdown();
 
-    WebThreadSupportingGC& backingThread()
-    {
-        DCHECK(m_backingThread);
-        return *m_backingThread;
-    }
+  WebThreadSupportingGC& BackingThread() {
+    DCHECK(backing_thread_);
+    return *backing_thread_;
+  }
 
-    v8::Isolate* isolate() { return m_isolate; }
+  v8::Isolate* GetIsolate() { return isolate_; }
 
-    static void MemoryPressureNotificationToWorkerThreadIsolates(
-        v8::MemoryPressureLevel);
+  static void MemoryPressureNotificationToWorkerThreadIsolates(
+      v8::MemoryPressureLevel);
 
-    static void setRAILModeOnWorkerThreadIsolates(v8::RAILMode);
+  static void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode);
 
-private:
-    WorkerBackingThread(const char* name, bool shouldCallGCOnShutdown);
-    WorkerBackingThread(WebThread*, bool shouldCallGCOnSHutdown);
+ private:
+  WorkerBackingThread(const char* name, bool should_call_gc_on_shutdown);
+  WorkerBackingThread(WebThread*, bool should_call_gc_on_s_hutdown);
 
-    std::unique_ptr<WebThreadSupportingGC> m_backingThread;
-    v8::Isolate* m_isolate = nullptr;
-    bool m_isOwningThread;
-    bool m_shouldCallGCOnShutdown;
+  std::unique_ptr<WebThreadSupportingGC> backing_thread_;
+  v8::Isolate* isolate_ = nullptr;
+  bool is_owning_thread_;
+  bool should_call_gc_on_shutdown_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkerBackingThread_h
+#endif  // WorkerBackingThread_h

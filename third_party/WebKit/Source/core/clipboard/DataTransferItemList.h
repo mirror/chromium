@@ -33,7 +33,7 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -44,27 +44,32 @@ class File;
 
 class ExceptionState;
 
-class DataTransferItemList final : public GarbageCollected<DataTransferItemList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DataTransferItemList* create(DataTransfer*, DataObject*);
+class DataTransferItemList final
+    : public GarbageCollected<DataTransferItemList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    size_t length() const;
-    DataTransferItem* item(unsigned long index);
-    void deleteItem(unsigned long index, ExceptionState&);
-    void clear();
-    DataTransferItem* add(const String& data, const String& type, ExceptionState&);
-    DataTransferItem* add(File*);
+ public:
+  static DataTransferItemList* Create(DataTransfer*, DataObject*);
 
-    DECLARE_TRACE();
+  size_t length() const;
+  DataTransferItem* item(unsigned long index);
+  void deleteItem(unsigned long index, ExceptionState&);
+  void clear();
+  DataTransferItem* add(const String& data,
+                        const String& type,
+                        ExceptionState&);
+  DataTransferItem* add(File*);
 
-private:
-    DataTransferItemList(DataTransfer*, DataObject*);
+  DECLARE_TRACE();
 
-    Member<DataTransfer> m_dataTransfer;
-    Member<DataObject> m_dataObject;
+ private:
+  DataTransferItemList(DataTransfer*, DataObject*);
+
+  Member<DataTransfer> data_transfer_;
+  Member<DataObject> data_object_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DataTransferItemList_h
+#endif  // DataTransferItemList_h

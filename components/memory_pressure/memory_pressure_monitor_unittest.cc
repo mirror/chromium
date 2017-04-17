@@ -5,8 +5,10 @@
 #include "components/memory_pressure/memory_pressure_monitor.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
+#include "base/task_runner.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/tracked_objects.h"
 #include "components/memory_pressure/memory_pressure_stats_collector.h"
@@ -34,10 +36,8 @@ using testing::_;
 // counting confuses gmock.
 class LenientMockTaskRunner {
  public:
-  MOCK_METHOD3(PostDelayedTask,
-               bool(const tracked_objects::Location&,
-                    const base::Closure&,
-                    base::TimeDelta));
+  MOCK_METHOD2(PostDelayedTask,
+               bool(const tracked_objects::Location&, base::TimeDelta));
 };
 using MockTaskRunner = testing::StrictMock<LenientMockTaskRunner>;
 
@@ -48,9 +48,9 @@ class TaskRunnerProxy : public base::TaskRunner {
   explicit TaskRunnerProxy(MockTaskRunner* mock) : mock_(mock) {}
   bool RunsTasksOnCurrentThread() const override { return true; }
   bool PostDelayedTask(const tracked_objects::Location& location,
-                       const base::Closure& closure,
+                       base::OnceClosure closure,
                        base::TimeDelta delta) override {
-    return mock_->PostDelayedTask(location, closure, delta);
+    return mock_->PostDelayedTask(location, delta);
   }
 
  private:
@@ -168,7 +168,7 @@ class MemoryPressureMonitorTest : public testing::Test {
   // Sets expectations for tasks scheduled via |mock_task_runner_|.
   void ExpectTaskPosted(int delay_ms) {
     base::TimeDelta delay = base::TimeDelta::FromMilliseconds(delay_ms);
-    EXPECT_CALL(mock_task_runner_, PostDelayedTask(_, _, delay))
+    EXPECT_CALL(mock_task_runner_, PostDelayedTask(_, delay))
         .WillOnce(testing::Return(true));
   }
 

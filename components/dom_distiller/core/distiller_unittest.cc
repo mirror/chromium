@@ -17,6 +17,7 @@
 #include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -101,7 +102,7 @@ struct MultipageDistillerData {
   vector<string> content;
   vector<vector<int> > image_ids;
   // The Javascript values returned by mock distiller.
-  ScopedVector<base::Value> distilled_values;
+  std::vector<std::unique_ptr<base::Value>> distilled_values;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MultipageDistillerData);
@@ -176,7 +177,7 @@ CreateMultipageDistillerDataWithoutImages(size_t pages_size) {
         CreateDistilledValueReturnedFromJS(kTitle, result->content[page_num],
                                            result->image_ids[page_num],
                                            next_page_url, prev_page_url);
-    result->distilled_values.push_back(distilled_value.release());
+    result->distilled_values.push_back(std::move(distilled_value));
   }
   return result;
 }
@@ -335,7 +336,8 @@ std::unique_ptr<DistillerPage> CreateMockDistillerPages(
       GURL url = GURL(distiller_data->page_urls[page]);
       EXPECT_CALL(*distiller_page, DistillPageImpl(url, _))
           .WillOnce(DistillerPageOnDistillationDone(
-              distiller_page, url, distiller_data->distilled_values[page]));
+              distiller_page, url,
+              distiller_data->distilled_values[page].get()));
     }
   }
   return std::unique_ptr<DistillerPage>(distiller_page);
@@ -492,7 +494,7 @@ TEST_F(DistillerTest, CheckMaxPageLimitExtraPage) {
           vector<int>(), "", distiller_data->page_urls[kMaxPagesInArticle - 2]);
 
   distiller_data->distilled_values.pop_back();
-  distiller_data->distilled_values.push_back(last_page_data.release());
+  distiller_data->distilled_values.push_back(std::move(last_page_data));
 
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));
@@ -532,7 +534,7 @@ TEST_F(DistillerTest, CheckMaxPageLimitExactLimit) {
 TEST_F(DistillerTest, SinglePageDistillationFailure) {
   base::MessageLoopForUI loop;
   // To simulate failure return a null value.
-  std::unique_ptr<base::Value> null_value = base::Value::CreateNullValue();
+  auto null_value = base::MakeUnique<base::Value>();
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));
   DistillPage(kURL, CreateMockDistillerPage(null_value.get(), GURL(kURL)));
@@ -554,7 +556,7 @@ TEST_F(DistillerTest, MultiplePagesDistillationFailure) {
       distiller_data->distilled_values.begin() + failed_page_num);
   distiller_data->distilled_values.insert(
       distiller_data->distilled_values.begin() + failed_page_num,
-      base::Value::CreateNullValue().release());
+      base::MakeUnique<base::Value>());
   // Expect only calls till the failed page number.
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));
@@ -585,7 +587,7 @@ TEST_F(DistillerTest, DistillMultiplePagesFirstEmpty) {
       distiller_data->distilled_values.begin() + empty_page_num);
   distiller_data->distilled_values.insert(
       distiller_data->distilled_values.begin() + empty_page_num,
-      distilled_value.release());
+      std::move(distilled_value));
 
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));
@@ -616,7 +618,7 @@ TEST_F(DistillerTest, DistillMultiplePagesSecondEmpty) {
       distiller_data->distilled_values.begin() + empty_page_num);
   distiller_data->distilled_values.insert(
       distiller_data->distilled_values.begin() + empty_page_num,
-      distilled_value.release());
+      std::move(distilled_value));
 
   distiller_.reset(
       new DistillerImpl(url_fetcher_factory_, DomDistillerOptions()));

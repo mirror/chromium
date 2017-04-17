@@ -4,76 +4,68 @@
 
 #include "core/css/StyleRuleKeyframe.h"
 
+#include <memory>
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParser.h"
-#include "wtf/text/StringBuilder.h"
-#include <memory>
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-StyleRuleKeyframe::StyleRuleKeyframe(std::unique_ptr<Vector<double>> keys, StylePropertySet* properties)
-: StyleRuleBase(Keyframe)
-, m_properties(properties)
-, m_keys(*keys)
-{
+StyleRuleKeyframe::StyleRuleKeyframe(std::unique_ptr<Vector<double>> keys,
+                                     StylePropertySet* properties)
+    : StyleRuleBase(kKeyframe), properties_(properties), keys_(*keys) {}
+
+String StyleRuleKeyframe::KeyText() const {
+  DCHECK(!keys_.IsEmpty());
+
+  StringBuilder key_text;
+  for (unsigned i = 0; i < keys_.size(); ++i) {
+    if (i)
+      key_text.Append(", ");
+    key_text.AppendNumber(keys_.at(i) * 100);
+    key_text.Append('%');
+  }
+
+  return key_text.ToString();
 }
 
-String StyleRuleKeyframe::keyText() const
-{
-    ASSERT(!m_keys.isEmpty());
+bool StyleRuleKeyframe::SetKeyText(const String& key_text) {
+  DCHECK(!key_text.IsNull());
 
-    StringBuilder keyText;
-    for (unsigned i = 0; i < m_keys.size(); ++i) {
-        if (i)
-            keyText.append(", ");
-        keyText.appendNumber(m_keys.at(i) * 100);
-        keyText.append('%');
-    }
+  std::unique_ptr<Vector<double>> keys =
+      CSSParser::ParseKeyframeKeyList(key_text);
+  if (!keys || keys->IsEmpty())
+    return false;
 
-    return keyText.toString();
+  keys_ = *keys;
+  return true;
 }
 
-bool StyleRuleKeyframe::setKeyText(const String& keyText)
-{
-    ASSERT(!keyText.isNull());
-
-    std::unique_ptr<Vector<double>> keys = CSSParser::parseKeyframeKeyList(keyText);
-    if (!keys || keys->isEmpty())
-        return false;
-
-    m_keys = *keys;
-    return true;
+const Vector<double>& StyleRuleKeyframe::Keys() const {
+  return keys_;
 }
 
-const Vector<double>& StyleRuleKeyframe::keys() const
-{
-    return m_keys;
+MutableStylePropertySet& StyleRuleKeyframe::MutableProperties() {
+  if (!properties_->IsMutable())
+    properties_ = properties_->MutableCopy();
+  return *ToMutableStylePropertySet(properties_.Get());
 }
 
-MutableStylePropertySet& StyleRuleKeyframe::mutableProperties()
-{
-    if (!m_properties->isMutable())
-        m_properties = m_properties->mutableCopy();
-    return *toMutableStylePropertySet(m_properties.get());
+String StyleRuleKeyframe::CssText() const {
+  StringBuilder result;
+  result.Append(KeyText());
+  result.Append(" { ");
+  String decls = properties_->AsText();
+  result.Append(decls);
+  if (!decls.IsEmpty())
+    result.Append(' ');
+  result.Append('}');
+  return result.ToString();
 }
 
-String StyleRuleKeyframe::cssText() const
-{
-    StringBuilder result;
-    result.append(keyText());
-    result.append(" { ");
-    String decls = m_properties->asText();
-    result.append(decls);
-    if (!decls.isEmpty())
-        result.append(' ');
-    result.append('}');
-    return result.toString();
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleKeyframe) {
+  visitor->Trace(properties_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleKeyframe)
-{
-    visitor->trace(m_properties);
-    StyleRuleBase::traceAfterDispatch(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

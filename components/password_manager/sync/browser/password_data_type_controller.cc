@@ -7,58 +7,54 @@
 #include "base/bind.h"
 #include "base/metrics/histogram.h"
 #include "components/password_manager/core/browser/password_store.h"
-#include "components/sync_driver/sync_client.h"
-#include "components/sync_driver/sync_service.h"
+#include "components/sync/driver/sync_client.h"
+#include "components/sync/driver/sync_service.h"
 
 namespace browser_sync {
 
 PasswordDataTypeController::PasswordDataTypeController(
-    const scoped_refptr<base::SingleThreadTaskRunner>& ui_thread,
-    const base::Closure& error_callback,
-    sync_driver::SyncClient* sync_client,
+    const base::Closure& dump_stack,
+    syncer::SyncClient* sync_client,
     const base::Closure& state_changed_callback,
     const scoped_refptr<password_manager::PasswordStore>& password_store)
-    : NonUIDataTypeController(ui_thread, error_callback, sync_client),
+    : AsyncDirectoryTypeController(syncer::PASSWORDS,
+                                   dump_stack,
+                                   sync_client,
+                                   syncer::GROUP_PASSWORD,
+                                   nullptr),
       sync_client_(sync_client),
       state_changed_callback_(state_changed_callback),
       password_store_(password_store) {}
 
-syncer::ModelType PasswordDataTypeController::type() const {
-  return syncer::PASSWORDS;
-}
-
-syncer::ModelSafeGroup PasswordDataTypeController::model_safe_group() const {
-  return syncer::GROUP_PASSWORD;
-}
-
 PasswordDataTypeController::~PasswordDataTypeController() {}
 
-bool PasswordDataTypeController::PostTaskOnBackendThread(
+bool PasswordDataTypeController::PostTaskOnModelThread(
     const tracked_objects::Location& from_here,
     const base::Closure& task) {
-  DCHECK(ui_thread()->BelongsToCurrentThread());
+  DCHECK(CalledOnValidThread());
   if (!password_store_.get())
     return false;
   return password_store_->ScheduleTask(task);
 }
 
 bool PasswordDataTypeController::StartModels() {
-  DCHECK(ui_thread()->BelongsToCurrentThread());
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(MODEL_STARTING, state());
 
   sync_client_->GetSyncService()->AddObserver(this);
 
-  OnStateChanged();
+  OnStateChanged(sync_client_->GetSyncService());
 
   return !!password_store_.get();
 }
 
 void PasswordDataTypeController::StopModels() {
-  DCHECK(ui_thread()->BelongsToCurrentThread());
+  DCHECK(CalledOnValidThread());
   sync_client_->GetSyncService()->RemoveObserver(this);
 }
 
-void PasswordDataTypeController::OnStateChanged() {
+void PasswordDataTypeController::OnStateChanged(syncer::SyncService* sync) {
+  DCHECK(CalledOnValidThread());
   state_changed_callback_.Run();
 }
 

@@ -31,6 +31,7 @@
 #include "clang/Tooling/Refactoring.h"
 #include "clang/Tooling/Tooling.h"
 #include "llvm/Support/CommandLine.h"
+#include "llvm/Support/Path.h"
 
 using clang::HeaderSearchOptions;
 using clang::tooling::CommonOptionsParser;
@@ -264,9 +265,5 @@ int main(int argc, const char* argv[]) {
       clang::tooling::newFrontendActionFactory<CompilationIndexerAction>();
   clang::tooling::ClangTool tool(options.getCompilations(),
                                  options.getSourcePathList());
-  // This clang tool does not actually produce edits, but run_tool.py expects
-  // this. So we just print an empty edit block.
-  llvm::outs() << "==== BEGIN EDITS ====\n";
-  llvm::outs() << "==== END EDITS ====\n";
   return tool.run(frontend_factory.get());
 }

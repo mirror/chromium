@@ -5,7 +5,7 @@
 #ifndef ListItemPainter_h
 #define ListItemPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,16 +14,18 @@ class LayoutListItem;
 class LayoutPoint;
 
 class ListItemPainter {
-    STACK_ALLOCATED();
-public:
-    ListItemPainter(const LayoutListItem& layoutListItem) : m_layoutListItem(layoutListItem) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint& paintOffset);
+ public:
+  ListItemPainter(const LayoutListItem& layout_list_item)
+      : layout_list_item_(layout_list_item) {}
 
-private:
-    const LayoutListItem& m_layoutListItem;
+  void Paint(const PaintInfo&, const LayoutPoint& paint_offset);
+
+ private:
+  const LayoutListItem& layout_list_item_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ListItemPainter_h
+#endif  // ListItemPainter_h

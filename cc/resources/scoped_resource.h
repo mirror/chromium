@@ -10,7 +10,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/resources/resource.h"
 
 #if DCHECK_IS_ON()
@@ -21,22 +21,18 @@ namespace cc {
 
 class CC_EXPORT ScopedResource : public Resource {
  public:
-  static std::unique_ptr<ScopedResource> Create(
-      ResourceProvider* resource_provider) {
-    return base::WrapUnique(new ScopedResource(resource_provider));
-  }
+  explicit ScopedResource(ResourceProvider* provider);
   virtual ~ScopedResource();
 
   void Allocate(const gfx::Size& size,
                 ResourceProvider::TextureHint hint,
-                ResourceFormat format);
+                ResourceFormat format,
+                const gfx::ColorSpace& color_space);
   void AllocateWithGpuMemoryBuffer(const gfx::Size& size,
                                    ResourceFormat format,
-                                   gfx::BufferUsage usage);
+                                   gfx::BufferUsage usage,
+                                   const gfx::ColorSpace& color_space);
   void Free();
-
- protected:
-  explicit ScopedResource(ResourceProvider* provider);
 
  private:
   ResourceProvider* resource_provider_;

@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "content/renderer/media/media_stream_audio_source.h"
 #include "content/renderer/media/media_stream_audio_track.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
@@ -223,10 +224,10 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
   SpeechRecognitionAudioSinkTest() {}
 
   ~SpeechRecognitionAudioSinkTest() {
-    blink_source_.reset();
-    blink_track_.reset();
+    blink_source_.Reset();
+    blink_track_.Reset();
     speech_audio_sink_.reset();
-    blink::WebHeap::collectAllGarbageForTesting();
+    blink::WebHeap::CollectAllGarbageForTesting();
   }
 
   // Initializes the producer and consumer with specified audio parameters.
@@ -255,7 +256,7 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
 
     // Prepare the track and audio source.
     PrepareBlinkTrackOfType(MEDIA_DEVICE_AUDIO_CAPTURE, &blink_track_);
-    blink_source_ = blink_track_.source();
+    blink_source_ = blink_track_.Source();
     static_cast<TestDrivenAudioSource*>(
         MediaStreamAudioSource::From(blink_source_))->SetFormat(source_params_);
 
@@ -288,16 +289,16 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
   void PrepareBlinkTrackOfType(const MediaStreamType device_type,
                                blink::WebMediaStreamTrack* blink_track) {
     blink::WebMediaStreamSource blink_source;
-    blink_source.initialize(blink::WebString::fromUTF8("dummy_source_id"),
-                            blink::WebMediaStreamSource::TypeAudio,
-                            blink::WebString::fromUTF8("dummy_source_name"),
+    blink_source.Initialize(blink::WebString::FromUTF8("dummy_source_id"),
+                            blink::WebMediaStreamSource::kTypeAudio,
+                            blink::WebString::FromUTF8("dummy_source_name"),
                             false /* remote */);
     TestDrivenAudioSource* const audio_source = new TestDrivenAudioSource();
     audio_source->SetDeviceInfo(
         StreamDeviceInfo(device_type, "Mock device", "mock_device_id"));
-    blink_source.setExtraData(audio_source);  // Takes ownership.
+    blink_source.SetExtraData(audio_source);  // Takes ownership.
 
-    blink_track->initialize(blink::WebString::fromUTF8("dummy_track"),
+    blink_track->Initialize(blink::WebString::FromUTF8("dummy_track"),
                             blink_source);
     ASSERT_TRUE(audio_source->ConnectToTrack(*blink_track));
   }
@@ -387,6 +388,8 @@ class SpeechRecognitionAudioSinkTest : public testing::Test {
   base::TimeTicks first_frame_capture_time_;
   int64_t sample_frames_captured_;
 
+  base::MessageLoop message_loop_;
+
   DISALLOW_COPY_AND_ASSIGN(SpeechRecognitionAudioSinkTest);
 };
 
@@ -404,7 +407,6 @@ TEST_F(SpeechRecognitionAudioSinkTest, CheckIsSupportedAudioTrack) {
   p[MEDIA_TAB_VIDEO_CAPTURE] = false;
   p[MEDIA_DESKTOP_VIDEO_CAPTURE] = false;
   p[MEDIA_DESKTOP_AUDIO_CAPTURE] = false;
-  p[MEDIA_DEVICE_AUDIO_OUTPUT] = false;
 
   // Ensure this test gets updated along with |content::MediaStreamType| enum.
   EXPECT_EQ(NUM_MEDIA_TYPES, p.size());

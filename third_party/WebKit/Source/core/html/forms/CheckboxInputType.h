@@ -36,20 +36,21 @@
 namespace blink {
 
 class CheckboxInputType final : public BaseCheckableInputType {
-public:
-    static InputType* create(HTMLInputElement&);
+ public:
+  static InputType* Create(HTMLInputElement&);
 
-private:
-    CheckboxInputType(HTMLInputElement& element) : BaseCheckableInputType(element) { }
-    const AtomicString& formControlType() const override;
-    bool valueMissing(const String&) const override;
-    String valueMissingText() const override;
-    void handleKeyupEvent(KeyboardEvent*) override;
-    ClickHandlingState* willDispatchClick() override;
-    void didDispatchClick(Event*, const ClickHandlingState&) override;
-    bool shouldAppearIndeterminate() const override;
+ private:
+  CheckboxInputType(HTMLInputElement& element)
+      : BaseCheckableInputType(element) {}
+  const AtomicString& FormControlType() const override;
+  bool ValueMissing(const String&) const override;
+  String ValueMissingText() const override;
+  void HandleKeyupEvent(KeyboardEvent*) override;
+  ClickHandlingState* WillDispatchClick() override;
+  void DidDispatchClick(Event*, const ClickHandlingState&) override;
+  bool ShouldAppearIndeterminate() const override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CheckboxInputType_h
+#endif  // CheckboxInputType_h

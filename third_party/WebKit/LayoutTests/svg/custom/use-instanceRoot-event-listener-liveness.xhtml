@@ -30,8 +30,7 @@ function eventHandler()
 
 function fireSimulatedMouseClickEvent(eventTarget)
 {
-    var event = document.createEvent("MouseEvents");
-    event.initMouseEvent("click", true, true, document.defaultView, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+    var event = new MouseEvent("click", { composed: true, bubbles: true });
     eventTarget.dispatchEvent(event);
 }
 

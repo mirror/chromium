@@ -30,31 +30,24 @@
 
 #include "core/css/CSSRule.h"
 #include "core/css/StyleRule.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-CSSSupportsRule::CSSSupportsRule(StyleRuleSupports* supportsRule, CSSStyleSheet* parent)
-    : CSSGroupingRule(supportsRule, parent)
-{
+CSSSupportsRule::CSSSupportsRule(StyleRuleSupports* supports_rule,
+                                 CSSStyleSheet* parent)
+    : CSSConditionRule(supports_rule, parent) {}
+
+String CSSSupportsRule::cssText() const {
+  StringBuilder result;
+
+  result.Append("@supports ");
+  result.Append(conditionText());
+  result.Append(" {\n");
+  AppendCSSTextForItems(result);
+  result.Append('}');
+
+  return result.ToString();
 }
 
-String CSSSupportsRule::cssText() const
-{
-    StringBuilder result;
-
-    result.append("@supports ");
-    result.append(conditionText());
-    result.append(" {\n");
-    appendCSSTextForItems(result);
-    result.append('}');
-
-    return result.toString();
-}
-
-String CSSSupportsRule::conditionText() const
-{
-    return toStyleRuleSupports(m_groupRule.get())->conditionText();
-}
-
-} // namespace blink
+}  // namespace blink

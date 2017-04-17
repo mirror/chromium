@@ -32,30 +32,35 @@
 #define V8EventListener_h
 
 #include "bindings/core/v8/V8AbstractEventListener.h"
-#include "wtf/PassRefPtr.h"
-#include <v8.h>
+#include "platform/wtf/PassRefPtr.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class Event;
 
-// V8EventListener is a wrapper of a JS object implements EventListener interface (has handleEvent(event) method), or a JS function
-// that can handle the event.
+// V8EventListener is a wrapper of a JS object implements EventListener
+// interface (has handleEvent(event) method), or a JS function that can handle
+// the event.
 class V8EventListener : public V8AbstractEventListener {
-public:
-    static V8EventListener* create(v8::Local<v8::Object> listener, bool isAttribute, ScriptState* scriptState)
-    {
-        V8EventListener* eventListener = new V8EventListener(isAttribute, scriptState);
-        eventListener->setListenerObject(listener);
-        return eventListener;
-    }
+ public:
+  static V8EventListener* Create(v8::Local<v8::Object> listener,
+                                 bool is_attribute,
+                                 ScriptState* script_state) {
+    V8EventListener* event_listener =
+        new V8EventListener(is_attribute, script_state);
+    event_listener->SetListenerObject(listener);
+    return event_listener;
+  }
 
-protected:
-    V8EventListener(bool isAttribute, ScriptState*);
-    v8::Local<v8::Function> getListenerFunction(ScriptState*);
-    v8::Local<v8::Value> callListenerFunction(ScriptState*, v8::Local<v8::Value>, Event*) override;
+ protected:
+  V8EventListener(bool is_attribute, ScriptState*);
+  v8::Local<v8::Function> GetListenerFunction(ScriptState*);
+  v8::Local<v8::Value> CallListenerFunction(ScriptState*,
+                                            v8::Local<v8::Value>,
+                                            Event*) override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8EventListener_h
+#endif  // V8EventListener_h

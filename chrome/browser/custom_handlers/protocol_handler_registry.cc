@@ -6,12 +6,14 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile_io_data.h"
@@ -213,14 +215,6 @@ bool ProtocolHandlerRegistry::JobInterceptorFactory::IsHandledProtocol(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return io_thread_delegate_->IsHandledProtocol(scheme) ||
       job_factory_->IsHandledProtocol(scheme);
-}
-
-bool ProtocolHandlerRegistry::JobInterceptorFactory::IsHandledURL(
-    const GURL& url) const {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return (url.is_valid() &&
-      io_thread_delegate_->IsHandledProtocol(url.scheme())) ||
-      job_factory_->IsHandledURL(url);
 }
 
 bool ProtocolHandlerRegistry::JobInterceptorFactory::IsSafeRedirectTarget(
@@ -760,11 +754,11 @@ base::Value* ProtocolHandlerRegistry::EncodeRegisteredHandlers() {
        ++i) {
     for (ProtocolHandlerList::iterator j = i->second.begin();
          j != i->second.end(); ++j) {
-      base::DictionaryValue* encoded = j->Encode();
+      std::unique_ptr<base::DictionaryValue> encoded = j->Encode();
       if (IsDefault(*j)) {
-        encoded->Set("default", new base::FundamentalValue(true));
+        encoded->Set("default", base::MakeUnique<base::Value>(true));
       }
-      protocol_handlers->Append(encoded);
+      protocol_handlers->Append(std::move(encoded));
     }
   }
   return protocol_handlers;

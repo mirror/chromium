@@ -15,8 +15,8 @@
 #define NET_HTTP_HTTP_CACHE_H_
 
 #include <list>
+#include <map>
 #include <memory>
-#include <set>
 #include <string>
 #include <unordered_map>
 
@@ -38,6 +38,9 @@ class GURL;
 
 namespace base {
 class SingleThreadTaskRunner;
+namespace trace_event {
+class ProcessMemoryDump;
+}
 }  // namespace base
 
 namespace disk_cache {
@@ -47,19 +50,10 @@ class Entry;
 
 namespace net {
 
-class CertVerifier;
-class ChannelIDService;
-class HostResolver;
-class HttpAuthHandlerFactory;
 class HttpNetworkSession;
 class HttpResponseInfo;
-class HttpServerProperties;
 class IOBuffer;
 class NetLog;
-class NetworkDelegate;
-class ProxyService;
-class SSLConfigService;
-class TransportSecurityState;
 class ViewCacheHelper;
 struct HttpRequestInfo;
 
@@ -132,17 +126,18 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory,
   //
   // The HttpCache must be destroyed before the HttpNetworkSession.
   //
-  // If |set_up_quic_server_info| is true, configures the cache to track
+  // If |is_main_cache| is true, configures the cache to track
   // information about servers supporting QUIC.
+  // TODO(zhongyi): remove |is_main_cache| when we get rid of cache split.
   HttpCache(HttpNetworkSession* session,
             std::unique_ptr<BackendFactory> backend_factory,
-            bool set_up_quic_server_info);
+            bool is_main_cache);
 
   // Initialize the cache from its component parts. |network_layer| and
   // |backend_factory| will be destroyed when the HttpCache is.
   HttpCache(std::unique_ptr<HttpTransactionFactory> network_layer,
             std::unique_ptr<BackendFactory> backend_factory,
-            bool set_up_quic_server_info);
+            bool is_main_cache);
 
   ~HttpCache() override;
 
@@ -181,7 +176,7 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory,
 
   // Get/Set the cache's clock. These are public only for testing.
   void SetClockForTesting(std::unique_ptr<base::Clock> clock) {
-    clock_.reset(clock.release());
+    clock_ = std::move(clock);
   }
   base::Clock* clock() const { return clock_.get(); }
 
@@ -197,11 +192,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory,
   // referred to by |url| and |http_method|.
   void OnExternalCacheHit(const GURL& url, const std::string& http_method);
 
-  // Causes all transactions created after this point to effectively bypass
-  // the cache lock whenever there is lock contention.
-  void BypassLockForTest() {
-    bypass_lock_for_test_ = true;
-  }
+  // Causes all transactions created after this point to simulate lock timeout
+  // and effectively bypass the cache lock whenever there is lock contention.
+  void SimulateCacheLockTimeout() { bypass_lock_for_test_ = true; }
 
   // Causes all transactions created after this point to generate a failure
   // when attempting to conditionalize a network request.
@@ -225,6 +218,11 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory,
   SetHttpNetworkTransactionFactoryForTesting(
       std::unique_ptr<HttpTransactionFactory> new_network_layer);
 
+  // Dumps memory allocation stats. |parent_dump_absolute_name| is the name
+  // used by the parent MemoryAllocatorDump in the memory dump hierarchy.
+  void DumpMemoryStats(base::trace_event::ProcessMemoryDump* pmd,
+                       const std::string& parent_absolute_name) const;
+
  private:
   // Types --------------------------------------------------------------------
 
@@ -246,24 +244,30 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory,
   friend class ViewCacheHelper;
   struct PendingOp;  // Info for an entry under construction.
 
-  typedef std::list<Transaction*> TransactionList;
-  typedef std::list<WorkItem*> WorkItemList;
+  using TransactionList = std::list<Transaction*>;
+  using TransactionSet = std::unordered_set<Transaction*>;
+  typedef std::list<std::unique_ptr<WorkItem>> WorkItemList;
 
   struct ActiveEntry {
     explicit ActiveEntry(disk_cache::Entry* entry);
     ~ActiveEntry();
+    size_t EstimateMemoryUsage() const;
+
+    // Returns true if no transactions are associated with this entry.
+    bool HasNoTransactions();
 
     disk_cache::Entry* disk_entry;
     Transaction*       writer;
-    TransactionList    readers;
+    TransactionSet readers;
     TransactionList    pending_queue;
     bool               will_process_pending_queue;
     bool               doomed;
   };
 
-  using ActiveEntriesMap = std::unordered_map<std::string, ActiveEntry*>;
+  using ActiveEntriesMap =
+      std::unordered_map<std::string, std::unique_ptr<ActiveEntry>>;
   using PendingOpsMap = std::unordered_map<std::string, PendingOp*>;
-  using ActiveEntriesSet = std::set<ActiveEntry*>;
+  using ActiveEntriesSet = std::map<ActiveEntry*, std::unique_ptr<ActiveEntry>>;
   using PlaybackCacheMap = std::unordered_map<std::string, int>;
 
   // Methods ------------------------------------------------------------------

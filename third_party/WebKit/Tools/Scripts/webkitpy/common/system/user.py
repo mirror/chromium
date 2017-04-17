@@ -38,7 +38,7 @@ import webbrowser
 
 from webkitpy.common.system.executive import Executive
 from webkitpy.common.system.filesystem import FileSystem
-from webkitpy.common.system.platforminfo import PlatformInfo
+from webkitpy.common.system.platform_info import PlatformInfo
 
 
 _log = logging.getLogger(__name__)
@@ -48,10 +48,10 @@ class User(object):
     DEFAULT_NO = 'n'
     DEFAULT_YES = 'y'
 
-    def __init__(self, platforminfo=None):
+    def __init__(self, platform_info=None):
         # We cannot get the PlatformInfo object from a SystemHost because
         # User is part of SystemHost itself.
-        self._platforminfo = platforminfo or PlatformInfo(sys, platform, FileSystem(), Executive())
+        self._platform_info = platform_info or PlatformInfo(sys, platform, FileSystem(), Executive())
 
     # FIXME: These are @classmethods because bugzilla.py doesn't have a Tool object (thus no User instance).
     @classmethod
@@ -72,10 +72,10 @@ class User(object):
         cumulated_list = []
         print list_title
         for i in range(len(subtitles)):
-            print "\n" + subtitles[i]
+            print '\n' + subtitles[i]
             for item in lists[i]:
                 item_index += 1
-                print "%2d. %s" % (item_index, item)
+                print '%2d. %s' % (item_index, item)
             cumulated_list += lists[i]
         return cls._wait_on_list_response(cumulated_list, can_choose_multiple, raw_input)
 
@@ -84,13 +84,13 @@ class User(object):
         while True:
             if can_choose_multiple:
                 response = cls.prompt(
-                    "Enter one or more numbers (comma-separated) or ranges (e.g. 3-7), or \"all\": ", raw_input=raw_input)
-                if not response.strip() or response == "all":
+                    'Enter one or more numbers (comma-separated) or ranges (e.g. 3-7), or \'all\': ', raw_input=raw_input)
+                if not response.strip() or response == 'all':
                     return list_items
 
                 try:
                     indices = []
-                    for value in re.split("\s*,\s*", response):
+                    for value in re.split(r"\s*,\s*", response):
                         parts = value.split('-')
                         if len(parts) == 2:
                             indices += range(int(parts[0]) - 1, int(parts[1]))
@@ -102,7 +102,7 @@ class User(object):
                 return [list_items[i] for i in indices]
             else:
                 try:
-                    result = int(cls.prompt("Enter a number: ", raw_input=raw_input)) - 1
+                    result = int(cls.prompt('Enter a number: ', raw_input=raw_input)) - 1
                 except ValueError:
                     continue
                 return list_items[result]
@@ -113,17 +113,17 @@ class User(object):
         i = 0
         for item in list_items:
             i += 1
-            print "%2d. %s" % (i, item)
+            print '%2d. %s' % (i, item)
         return cls._wait_on_list_response(list_items, can_choose_multiple, raw_input)
 
     def edit(self, files):
-        editor = os.environ.get("EDITOR") or "vi"
+        editor = os.environ.get('EDITOR') or 'vi'
         args = shlex.split(editor)
         # Note: Not thread safe: http://bugs.python.org/issue2320
         subprocess.call(args + files)
 
     def page(self, message):
-        pager = os.environ.get("PAGER") or "less"
+        pager = os.environ.get('PAGER') or 'less'
         try:
             # Note: Not thread safe: http://bugs.python.org/issue2320
             child_process = subprocess.Popen([pager], stdin=subprocess.PIPE)
@@ -133,9 +133,9 @@ class User(object):
 
     def confirm(self, message=None, default=DEFAULT_YES, raw_input=raw_input):
         if not message:
-            message = "Continue?"
+            message = 'Continue?'
         choice = {'y': 'Y/n', 'n': 'y/N'}[default]
-        response = raw_input("%s [%s]: " % (message, choice))
+        response = raw_input('%s [%s]: ' % (message, choice))
         if not response:
             response = default
         return response.lower() == 'y'
@@ -149,5 +149,5 @@ class User(object):
 
     def open_url(self, url):
         if not self.can_open_url():
-            _log.warn("Failed to open %s" % url)
+            _log.warning('Failed to open %s', url)
         webbrowser.open(url)

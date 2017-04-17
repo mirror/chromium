@@ -4,8 +4,8 @@
 
 #include "chrome/browser/extensions/global_shortcut_listener_chromeos.h"
 
-#include "ash/common/accelerators/accelerator_controller.h"
-#include "ash/common/wm_shell.h"
+#include "ash/accelerators/accelerator_controller.h"
+#include "ash/shell.h"
 #include "content/public/browser/browser_thread.h"
 
 using content::BrowserThread;
@@ -43,28 +43,28 @@ void GlobalShortcutListenerChromeOS::StopListening() {
 bool GlobalShortcutListenerChromeOS::RegisterAcceleratorImpl(
     const ui::Accelerator& accelerator) {
   ash::AcceleratorController* controller =
-      ash::WmShell::Get()->accelerator_controller();
+      ash::Shell::Get()->accelerator_controller();
   if (controller->IsRegistered(accelerator))
     return false;
 
   // TODO(dtseng): Support search key mapping.
-  controller->Register(accelerator, this);
+  controller->Register({accelerator}, this);
   return controller->IsRegistered(accelerator);
 }
 
 void GlobalShortcutListenerChromeOS::UnregisterAcceleratorImpl(
     const ui::Accelerator& accelerator) {
   // This code path gets called during object destruction.
-  if (!ash::WmShell::HasInstance())
+  if (!ash::Shell::HasInstance())
     return;
-  ash::WmShell::Get()->accelerator_controller()->Unregister(accelerator, this);
+  ash::Shell::Get()->accelerator_controller()->Unregister(accelerator, this);
 }
 
 bool GlobalShortcutListenerChromeOS::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
   DCHECK(is_listening_);
   ash::AcceleratorController* controller =
-      ash::WmShell::Get()->accelerator_controller();
+      ash::Shell::Get()->accelerator_controller();
   ash::AcceleratorController::AcceleratorProcessingRestriction restriction =
       controller->GetCurrentAcceleratorRestriction();
   if (restriction == ash::AcceleratorController::RESTRICTION_NONE) {

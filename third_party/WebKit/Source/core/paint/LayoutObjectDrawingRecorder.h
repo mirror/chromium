@@ -11,8 +11,8 @@
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "wtf/Allocator.h"
-#include "wtf/Optional.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -20,51 +20,84 @@ class GraphicsContext;
 
 // Convenience wrapper of DrawingRecorder for LayoutObject painters.
 class LayoutObjectDrawingRecorder final {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    static bool useCachedDrawingIfPossible(GraphicsContext& context, const LayoutObject& layoutObject, DisplayItem::Type displayItemType)
-    {
-        if (layoutObject.fullPaintInvalidationReason() == PaintInvalidationDelayedFull)
-            return false;
-        return DrawingRecorder::useCachedDrawingIfPossible(context, layoutObject, displayItemType);
-    }
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    static bool useCachedDrawingIfPossible(GraphicsContext& context, const LayoutObject& layoutObject, PaintPhase phase)
-    {
-        return useCachedDrawingIfPossible(context, layoutObject, DisplayItem::paintPhaseToDrawingType(phase));
-    }
+ public:
+  static bool UseCachedDrawingIfPossible(GraphicsContext& context,
+                                         const LayoutObject& layout_object,
+                                         DisplayItem::Type display_item_type) {
+    if (layout_object.FullPaintInvalidationReason() ==
+        kPaintInvalidationDelayedFull)
+      return false;
+    return DrawingRecorder::UseCachedDrawingIfPossible(context, layout_object,
+                                                       display_item_type);
+  }
 
-    LayoutObjectDrawingRecorder(GraphicsContext& context, const LayoutObject& layoutObject, DisplayItem::Type displayItemType, const FloatRect& clip)
-    {
-        // We may paint a delayed-invalidation object before it's actually invalidated.
-        if (layoutObject.fullPaintInvalidationReason() == PaintInvalidationDelayedFull)
-            m_cacheSkipper.emplace(context);
-        m_drawingRecorder.emplace(context, layoutObject, displayItemType, clip);
-    }
+  static bool UseCachedDrawingIfPossible(GraphicsContext& context,
+                                         const LayoutObject& layout_object,
+                                         PaintPhase phase) {
+    return UseCachedDrawingIfPossible(
+        context, layout_object, DisplayItem::PaintPhaseToDrawingType(phase));
+  }
 
-    LayoutObjectDrawingRecorder(GraphicsContext& context, const LayoutObject& layoutObject, DisplayItem::Type displayItemType, const LayoutRect& clip)
-        : LayoutObjectDrawingRecorder(context, layoutObject, displayItemType, FloatRect(clip)) { }
+  LayoutObjectDrawingRecorder(GraphicsContext& context,
+                              const LayoutObject& layout_object,
+                              DisplayItem::Type display_item_type,
+                              const FloatRect& clip) {
+    // We may paint a delayed-invalidation object before it's actually
+    // invalidated.
+    if (layout_object.FullPaintInvalidationReason() ==
+        kPaintInvalidationDelayedFull)
+      cache_skipper_.emplace(context);
+    drawing_recorder_.emplace(context, layout_object, display_item_type, clip);
+  }
 
-    LayoutObjectDrawingRecorder(GraphicsContext& context, const LayoutObject& layoutObject, PaintPhase phase, const FloatRect& clip)
-        : LayoutObjectDrawingRecorder(context, layoutObject, DisplayItem::paintPhaseToDrawingType(phase), clip) { }
+  LayoutObjectDrawingRecorder(GraphicsContext& context,
+                              const LayoutObject& layout_object,
+                              DisplayItem::Type display_item_type,
+                              const LayoutRect& clip)
+      : LayoutObjectDrawingRecorder(context,
+                                    layout_object,
+                                    display_item_type,
+                                    FloatRect(clip)) {}
 
-    LayoutObjectDrawingRecorder(GraphicsContext& context, const LayoutObject& layoutObject, PaintPhase phase, const LayoutRect& clip)
-        : LayoutObjectDrawingRecorder(context, layoutObject, DisplayItem::paintPhaseToDrawingType(phase), FloatRect(clip)) { }
+  LayoutObjectDrawingRecorder(GraphicsContext& context,
+                              const LayoutObject& layout_object,
+                              PaintPhase phase,
+                              const FloatRect& clip)
+      : LayoutObjectDrawingRecorder(context,
+                                    layout_object,
+                                    DisplayItem::PaintPhaseToDrawingType(phase),
+                                    clip) {}
 
-    LayoutObjectDrawingRecorder(GraphicsContext& context, const LayoutObject& layoutObject, PaintPhase phase, const IntRect& clip)
-        : LayoutObjectDrawingRecorder(context, layoutObject, DisplayItem::paintPhaseToDrawingType(phase), FloatRect(clip)) { }
+  LayoutObjectDrawingRecorder(GraphicsContext& context,
+                              const LayoutObject& layout_object,
+                              PaintPhase phase,
+                              const LayoutRect& clip)
+      : LayoutObjectDrawingRecorder(context,
+                                    layout_object,
+                                    DisplayItem::PaintPhaseToDrawingType(phase),
+                                    FloatRect(clip)) {}
 
-    void setKnownToBeOpaque() { ASSERT(RuntimeEnabledFeatures::slimmingPaintV2Enabled()); m_drawingRecorder->setKnownToBeOpaque(); }
+  LayoutObjectDrawingRecorder(GraphicsContext& context,
+                              const LayoutObject& layout_object,
+                              PaintPhase phase,
+                              const IntRect& clip)
+      : LayoutObjectDrawingRecorder(context,
+                                    layout_object,
+                                    DisplayItem::PaintPhaseToDrawingType(phase),
+                                    FloatRect(clip)) {}
 
-#if ENABLE(ASSERT)
-    void setUnderInvalidationCheckingMode(DrawingDisplayItem::UnderInvalidationCheckingMode mode) { m_drawingRecorder->setUnderInvalidationCheckingMode(mode); }
-#endif
+  void SetKnownToBeOpaque() {
+    DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+    drawing_recorder_->SetKnownToBeOpaque();
+  }
 
-private:
-    Optional<DisplayItemCacheSkipper> m_cacheSkipper;
-    Optional<DrawingRecorder> m_drawingRecorder;
+ private:
+  Optional<DisplayItemCacheSkipper> cache_skipper_;
+  Optional<DrawingRecorder> drawing_recorder_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutObjectDrawingRecorder_h
+#endif  // LayoutObjectDrawingRecorder_h

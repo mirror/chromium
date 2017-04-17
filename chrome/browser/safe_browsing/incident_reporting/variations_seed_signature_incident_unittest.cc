@@ -8,7 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace safe_browsing {
@@ -29,8 +29,7 @@ std::unique_ptr<Incident> MakeIncident(bool alternate) {
         "MEUCID+QmAfajh/kk4zZyv0IUisZ84sIddnjiW9yAXjFJIMFAiEAtVUHhFA/4M6Bff2Gaz"
         "L7tXVLhURxUQcpiMg9eMLWO0U=");
   }
-  return base::WrapUnique(
-      new VariationsSeedSignatureIncident(std::move(incident)));
+  return base::MakeUnique<VariationsSeedSignatureIncident>(std::move(incident));
 }
 
 }  // namespace

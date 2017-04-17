@@ -12,15 +12,17 @@ goog.provide('Background');
 goog.require('AutomationPredicate');
 goog.require('AutomationUtil');
 goog.require('BackgroundKeyboardHandler');
+goog.require('BrailleCommandHandler');
 goog.require('ChromeVoxState');
 goog.require('CommandHandler');
+goog.require('FindHandler');
 goog.require('LiveRegions');
+goog.require('MediaAutomationHandler');
 goog.require('NextEarcons');
 goog.require('Notifications');
 goog.require('Output');
 goog.require('Output.EventType');
 goog.require('PanelCommand');
-goog.require('Stubs');
 goog.require('constants');
 goog.require('cursors.Cursor');
 goog.require('cvox.BrailleKeyCommand');
@@ -35,6 +37,7 @@ var AutomationNode = chrome.automation.AutomationNode;
 var Dir = constants.Dir;
 var EventType = chrome.automation.EventType;
 var RoleType = chrome.automation.RoleType;
+var StateType = chrome.automation.StateType;
 
 /**
  * ChromeVox2 background page.
@@ -54,7 +57,7 @@ Background = function() {
 
   /**
    * A list of site substring patterns to blacklist ChromeVox Classic,
-   * putting ChromeVox into Compat mode.
+   * putting ChromeVox into classic Compat mode.
    * @type {!Set<string>}
    * @private
    */
@@ -73,12 +76,6 @@ Background = function() {
    * @private
    */
   this.currentRange_ = null;
-
-  /**
-   * @type {cursors.Range}
-   * @private
-   */
-  this.savedRange_ = null;
 
   // Manually bind all functions to |this|.
   for (var func in this) {
@@ -109,8 +106,17 @@ Background = function() {
     Object.defineProperty(cvox.ChromeVox, 'modKeyStr', {
       get: function() {
         return (this.mode == ChromeVoxMode.CLASSIC ||
-            this.mode == ChromeVoxMode.COMPAT) ?
+            this.mode == ChromeVoxMode.CLASSIC_COMPAT) ?
                 'Search+Shift' : 'Search';
+      }.bind(this)
+    });
+
+    Object.defineProperty(cvox.ChromeVox, 'typingEcho', {
+      get: function() {
+        return parseInt(localStorage['typingEcho'], 10);
+      }.bind(this),
+      set: function(v) {
+        localStorage['typingEcho'] = v;
       }.bind(this)
     });
   }
@@ -124,36 +130,57 @@ Background = function() {
     }
   });
 
+  Object.defineProperty(cvox.ChromeVox, 'typingEcho', {
+    get: function() {
+      var typingEcho = parseInt(localStorage['typingEcho'], 10) || 0;
+      return typingEcho;
+    },
+    set: function(value) {
+      localStorage['typingEcho'] = value;
+    }
+  });
+
   cvox.ExtensionBridge.addMessageListener(this.onMessage_);
 
-  /** @type {!BackgroundKeyboardHandler} */
+  /** @type {!BackgroundKeyboardHandler} @private */
   this.keyboardHandler_ = new BackgroundKeyboardHandler();
 
-  /** @type {!LiveRegions} */
+  /** @type {!LiveRegions} @private */
   this.liveRegions_ = new LiveRegions(this);
-
-  /** @type {boolean} @private */
-  this.inExcursion_ = false;
 
   /**
    * Stores the mode as computed the last time a current range was set.
    * @type {?ChromeVoxMode}
+   * @private
    */
   this.mode_ = null;
 
   chrome.accessibilityPrivate.onAccessibilityGesture.addListener(
       this.onAccessibilityGesture_);
 
-  Notifications.onStartup();
-};
+  /**
+   * Maps a non-desktop root automation node to a range position suitable for
+   *     restoration.
+   * @type {WeakMap<AutomationNode, cursors.Range>}
+   * @private
+   */
+  this.focusRecoveryMap_ = new WeakMap();
 
-/**
- * @const {string}
- */
-Background.ISSUE_URL = 'https://code.google.com/p/chromium/issues/entry?' +
-    'labels=Type-Bug,Pri-2,cvox2,OS-Chrome&' +
-    'components=UI>accessibility&' +
-    'description=';
+  chrome.automation.getDesktop(function(desktop) {
+    /** @type {string} */
+    this.chromeChannel_ = desktop.chromeChannel;
+  }.bind(this));
+
+  // Record a metric with the mode we're in on startup.
+  var useNext = localStorage['useClassic'] != 'true';
+  chrome.metricsPrivate.recordValue(
+      { metricName: 'Accessibility.CrosChromeVoxNext',
+        type: chrome.metricsPrivate.MetricTypeType.HISTOGRAM_LINEAR,
+        min: 1,  // According to histogram.h, this should be 1 for enums.
+        max: 2,  // Maximum should be exclusive.
+        buckets: 3 },  // Number of buckets: 0, 1 and overflowing 2.
+      useNext ? 1 : 0);
+};
 
 /**
  * Map from gesture names (AXGesture defined in ui/accessibility/ax_enums.idl)
@@ -191,11 +218,18 @@ Background.prototype = {
   __proto__: ChromeVoxState.prototype,
 
   /**
+   * Maps the last node with range in a given root.
+   * @type {WeakMap<AutomationNode>}
+   */
+  get focusRecoveryMap() {
+    return this.focusRecoveryMap_;
+  },
+
+  /**
    * @override
    */
   getMode: function() {
-    if (localStorage['useNext'] == 'true')
-      return ChromeVoxMode.FORCE_NEXT;
+    var useNext = localStorage['useClassic'] !== 'true';
 
     var target;
     if (!this.getCurrentRange()) {
@@ -207,23 +241,27 @@ Background.prototype = {
     }
 
     if (!target)
-      return ChromeVoxMode.CLASSIC;
-
-    var root = target.root;
-    if (root && this.isWhitelistedForCompat_(root.docUrl))
-      return ChromeVoxMode.COMPAT;
+      return useNext ? ChromeVoxMode.FORCE_NEXT : ChromeVoxMode.CLASSIC;
 
     // Closure complains, but clearly, |target| is not null.
     var topLevelRoot =
         AutomationUtil.getTopLevelRoot(/** @type {!AutomationNode} */(target));
     if (!topLevelRoot)
-      return ChromeVoxMode.COMPAT;
-    if (this.isWhitelistedForCompat_(topLevelRoot.docUrl))
-      return ChromeVoxMode.COMPAT;
-    else if (this.isWhitelistedForNext_(topLevelRoot.docUrl))
+      return useNext ? ChromeVoxMode.FORCE_NEXT :
+          ChromeVoxMode.CLASSIC_COMPAT;
+
+    var docUrl = topLevelRoot.docUrl || '';
+    var nextSite = this.isWhitelistedForNext_(docUrl);
+    var classicCompat =
+        this.isWhitelistedForClassicCompat_(docUrl);
+    if (classicCompat && !useNext)
+      return ChromeVoxMode.CLASSIC_COMPAT;
+    else if (nextSite)
       return ChromeVoxMode.NEXT;
-    else
+    else if (!useNext)
       return ChromeVoxMode.CLASSIC;
+    else
+      return ChromeVoxMode.FORCE_NEXT;
   },
 
   /**
@@ -236,31 +274,39 @@ Background.prototype = {
   onModeChanged_: function(newMode, oldMode) {
     this.keyboardHandler_.onModeChanged(newMode, oldMode);
     CommandHandler.onModeChanged(newMode, oldMode);
+    FindHandler.onModeChanged(newMode, oldMode);
+    Notifications.onModeChange(newMode, oldMode);
 
+    // The below logic handles transition between the classic engine
+    // (content script) and next engine (no content script) as well as
+    // misc states that are not handled above.
+
+    // Classic modes do not use the new focus highlight.
     if (newMode == ChromeVoxMode.CLASSIC)
       chrome.accessibilityPrivate.setFocusRing([]);
 
+    // Switch on/off content scripts.
     // note that |this.currentRange_| can *change* because the request is
     // async. Save it to ensure we're looking at the currentRange at this moment
     // in time.
     var cur = this.currentRange_;
     chrome.tabs.query({active: true,
                        lastFocusedWindow: true}, function(tabs) {
-      if (newMode === ChromeVoxMode.CLASSIC) {
+      if (newMode == ChromeVoxMode.CLASSIC) {
         // Generally, we don't want to inject classic content scripts as it is
         // done by the extension system at document load. The exception is when
         // we toggle classic on manually as part of a user command.
-        if (oldMode == ChromeVoxMode.FORCE_NEXT)
+        if (oldMode == ChromeVoxMode.FORCE_NEXT) {
           cvox.ChromeVox.injectChromeVoxIntoTabs(tabs);
+        }
       } else if (newMode === ChromeVoxMode.FORCE_NEXT) {
-        // Disable ChromeVox everywhere.
         this.disableClassicChromeVox_();
       } else {
         // If we're focused in the desktop tree, do nothing.
         if (cur && !cur.isWebRange())
           return;
 
-        // If we're entering compat mode or next mode for just one tab,
+        // If we're entering classic compat mode or next mode for just one tab,
         // disable Classic for that tab only.
         this.disableClassicChromeVox_(tabs);
       }
@@ -300,9 +346,17 @@ Background.prototype = {
     if (opt_setValue !== undefined)
       useNext = opt_setValue;
     else
-      useNext = localStorage['useNext'] != 'true';
+      useNext = localStorage['useClassic'] == 'true';
 
-    localStorage['useNext'] = useNext;
+    if (useNext) {
+      chrome.metricsPrivate.recordUserAction(
+          'Accessibility.ChromeVox.ToggleNextOn');
+    } else {
+      chrome.metricsPrivate.recordUserAction(
+          'Accessibility.ChromeVox.ToggleNextOff');
+    }
+
+    localStorage['useClassic'] = !useNext;
     if (useNext)
       this.setCurrentRangeToFocus_();
     else
@@ -331,10 +385,17 @@ Background.prototype = {
    * @override
    */
   setCurrentRange: function(newRange) {
-    if (!this.inExcursion_ && newRange)
-      this.savedRange_ = new cursors.Range(newRange.start, newRange.end);
+    // Clear anything that was frozen on the braille display whenever
+    // the user navigates.
+    cvox.ChromeVox.braille.thaw();
+
+    if (newRange && !newRange.isValid())
+      return;
 
     this.currentRange_ = newRange;
+    ChromeVoxState.observers.forEach(function(observer) {
+      observer.onCurrentRangeChanged(newRange);
+    });
     var oldMode = this.mode_;
     var newMode = this.getMode();
     if (oldMode != newMode) {
@@ -347,7 +408,7 @@ Background.prototype = {
       start.makeVisible();
 
       var root = start.root;
-      if (!root || root.role == RoleType.desktop)
+      if (!root || root.role == RoleType.DESKTOP)
         return;
 
       var position = {};
@@ -370,20 +431,10 @@ Background.prototype = {
   navigateToRange: function(range, opt_focus, opt_speechProps) {
     opt_focus = opt_focus === undefined ? true : opt_focus;
     opt_speechProps = opt_speechProps || {};
-
-    if (opt_focus) {
-      // TODO(dtseng): Figure out what it means to focus a range.
-      var actionNode = range.start.node;
-      if (actionNode.role == RoleType.inlineTextBox)
-        actionNode = actionNode.parent;
-
-      // Iframes, when focused, causes the child webArea to fire focus event.
-      // This can result in getting stuck when navigating backward.
-      if (actionNode.role != RoleType.iframe && !actionNode.state.focused &&
-          !AutomationPredicate.container(actionNode))
-        actionNode.focus();
-    }
     var prevRange = this.currentRange_;
+    if (opt_focus)
+      this.setFocusToRange_(range, prevRange);
+
     this.setCurrentRange(range);
 
     var o = new Output();
@@ -434,7 +485,15 @@ Background.prototype = {
           this.pageSel_.select();
       }
     } else {
-      range.select();
+      // Ensure we don't select the editable when we first encounter it.
+      var lca = null;
+      if (range.start.node && prevRange.start.node) {
+        lca = AutomationUtil.getLeastCommonAncestor(prevRange.start.node,
+                                                    range.start.node);
+      }
+      if (!lca || lca.state[StateType.EDITABLE] ||
+          !range.start.node.state[StateType.EDITABLE])
+        range.select();
     }
 
     o.withRichSpeechAndBraille(
@@ -493,6 +552,14 @@ Background.prototype = {
             // Cast ok since displayPosition is always defined in this case.
             /** @type {number} */ (evt.displayPosition));
         break;
+      case cvox.BrailleKeyCommand.CHORD:
+        if (!evt.brailleDots)
+          return false;
+
+        var command = BrailleCommandHandler.getCommand(evt.brailleDots);
+        if (command)
+          CommandHandler.onCommand(command);
+        break;
       default:
         return false;
     }
@@ -506,7 +573,7 @@ Background.prototype = {
    */
   shouldEnableClassicForUrl_: function(url) {
     return this.mode != ChromeVoxMode.FORCE_NEXT &&
-        !this.isBlacklistedForClassic_(url) &&
+         !this.isBlacklistedForClassic_(url) &&
         !this.isWhitelistedForNext_(url);
   },
 
@@ -515,11 +582,12 @@ Background.prototype = {
    * 1. a url is blacklisted for Classic.
    * 2. the current range is not within web content.
    * @param {string} url
+   * @return {boolean}
    */
-  isWhitelistedForCompat_: function(url) {
-    return this.isBlacklistedForClassic_(url) || (this.getCurrentRange() &&
+  isWhitelistedForClassicCompat_: function(url) {
+    return (this.isBlacklistedForClassic_(url) || (this.getCurrentRange() &&
         !this.getCurrentRange().isWebRange() &&
-        this.getCurrentRange().start.node.state.focused);
+        this.getCurrentRange().start.node.state[StateType.FOCUSED])) || false;
   },
 
   /**
@@ -547,8 +615,8 @@ Background.prototype = {
 
   /**
    * Disables classic ChromeVox in current web content.
-   * @param {Array<Tab>=} opt_tabs The tabs where ChromeVox scripts should
-   *     be disabled. If null, will disable ChromeVox everywhere.
+   * @param {Array<Tab>=} opt_tabs The tabs where ChromeVox scripts should be
+   * disabled. If null, will disable ChromeVox everywhere.
    */
   disableClassicChromeVox_: function(opt_tabs) {
     var disableChromeVoxCommand = {
@@ -586,12 +654,12 @@ Background.prototype = {
     if (!actionNodeSpan)
       return;
     var actionNode = actionNodeSpan.node;
-    if (actionNode.role === RoleType.inlineTextBox)
+    if (actionNode.role === RoleType.INLINE_TEXT_BOX)
       actionNode = actionNode.parent;
     actionNode.doDefault();
     if (selectionSpan) {
       var start = text.getSpanStart(selectionSpan);
-      var targetPosition = position - start + selectionSpan.offset;
+      var targetPosition = position - start;
       actionNode.setSelection(targetPosition, targetPosition);
     }
   },
@@ -614,7 +682,7 @@ Background.prototype = {
             target: 'next',
             isClassicEnabled: isClassicEnabled
           });
-        } else if (action == 'enableCompatForUrl') {
+        } else if (action == 'enableClassicCompatForUrl') {
           var url = msg['url'];
           this.classicBlacklist_.add(url);
           if (this.currentRange_ && this.currentRange_.start.node)
@@ -622,66 +690,22 @@ Background.prototype = {
         } else if (action == 'onCommand') {
           CommandHandler.onCommand(msg['command']);
         } else if (action == 'flushNextUtterance') {
-          Output.flushNextSpeechUtterance();
+          Output.forceModeForNextSpeechUtterance(cvox.QueueMode.FLUSH);
         }
         break;
     }
   },
 
   /**
-   * Restore the range to the last range that was *not* in the ChromeVox
-   * panel. This is used when the ChromeVox Panel closes.
-   * @param {function()=} opt_callback
-   * @private
+   * Save the current ChromeVox range.
    */
-  restoreCurrentRange_: function(opt_callback) {
-    if (this.savedRange_) {
-      var node = this.savedRange_.start.node;
-      var containingWebView = node;
-      while (containingWebView && containingWebView.role != RoleType.webView)
-        containingWebView = containingWebView.parent;
+  markCurrentRange: function() {
+    if (!this.currentRange)
+      return;
 
-      if (containingWebView) {
-        // Focusing the webView causes a focus change event which steals focus
-        // away from the saved range.
-        var saved = this.savedRange_;
-        var setSavedRange = function(e) {
-          if (e.target.root == saved.start.node.root) {
-          this.navigateToRange(saved, false);
-          opt_callback && opt_callback();
-        }
-          node.root.removeEventListener(EventType.focus, setSavedRange, true);
-        }.bind(this);
-        node.root.addEventListener(EventType.focus, setSavedRange, true);
-        containingWebView.focus();
-      }
-      this.navigateToRange(this.savedRange_);
-      this.savedRange_ = null;
-    }
-  },
-
-  /**
-   * Move ChromeVox without saving any ranges.
-   */
-  startExcursion: function() {
-    this.inExcursion_ = true;
-  },
-
-  /**
-   * Move ChromeVox back to the last saved range.
-   * @param {function()=} opt_callback Called when range has been restored.
-   */
-  endExcursion: function(opt_callback) {
-    this.inExcursion_ = false;
-    this.restoreCurrentRange_(opt_callback);
-  },
-
-  /**
-   * Move ChromeVox back to the last saved range.
-   */
-  saveExcursion: function() {
-    this.savedRange_ =
-        new cursors.Range(this.currentRange_.start, this.currentRange_.end);
+    var root = AutomationUtil.getTopLevelRoot(this.currentRange.start.node);
+    if (root)
+      this.focusRecoveryMap_.set(root, this.currentRange);
   },
 
   /**
@@ -734,6 +758,65 @@ Background.prototype = {
         this.setCurrentRange(null);
     }.bind(this));
   },
+
+  /**
+   * @param {!cursors.Range} range
+   * @param {cursors.Range} prevRange
+   * @private
+   */
+  setFocusToRange_: function(range, prevRange) {
+    var start = range.start.node;
+    var end = range.end.node;
+
+    // First, see if we've crossed a root. Remove once webview handles focus
+    // correctly.
+    if (prevRange && prevRange.start.node && start) {
+      var entered = AutomationUtil.getUniqueAncestors(
+          prevRange.start.node, start);
+      var embeddedObject = entered.find(function(f) {
+        return f.role == RoleType.EMBEDDED_OBJECT; });
+      if (embeddedObject && !embeddedObject.state[StateType.FOCUSED])
+        embeddedObject.focus();
+    }
+
+    if (start.state[StateType.FOCUSED] || end.state[StateType.FOCUSED])
+      return;
+
+    var isFocusableLinkOrControl = function(node) {
+      return node.state[StateType.FOCUSABLE] &&
+          AutomationPredicate.linkOrControl(node);
+    };
+
+    // Next, try to focus the start or end node.
+    if (!AutomationPredicate.structuralContainer(start) &&
+        start.state[StateType.FOCUSABLE]) {
+      if (!start.state[StateType.FOCUSED])
+        start.focus();
+      return;
+    } else if (!AutomationPredicate.structuralContainer(end) &&
+        end.state[StateType.FOCUSABLE]) {
+      if (!end.state[StateType.FOCUSED])
+        end.focus();
+      return;
+    }
+
+    // If a common ancestor of |start| and |end| is a link, focus that.
+    var ancestor = AutomationUtil.getLeastCommonAncestor(start, end);
+    while (ancestor && ancestor.root == start.root) {
+      if (isFocusableLinkOrControl(ancestor)) {
+        if (!ancestor.state[StateType.FOCUSED])
+          ancestor.focus();
+        return;
+      }
+      ancestor = ancestor.parent;
+    }
+
+    // If nothing is focusable, set the sequential focus navigation starting
+    // point, which ensures that the next time you press Tab, you'll reach
+    // the next or previous focusable node from |start|.
+    if (!start.state[StateType.OFFSCREEN])
+      start.setSequentialFocusNavigationStartingPoint();
+  }
 };
 
 /**

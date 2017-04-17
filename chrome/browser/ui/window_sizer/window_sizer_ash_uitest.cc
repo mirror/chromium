@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_view.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
-#include "ash/test/shelf_test_api.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -53,9 +53,9 @@ void CloseBrowser(Browser* browser) {
 }
 
 gfx::Rect GetChromeIconBoundsForRootWindow(aura::Window* root_window) {
-  ash::Shelf* shelf = ash::Shelf::ForWindow(root_window);
   const ash::ShelfView* shelf_view =
-      ash::test::ShelfTestAPI(shelf).shelf_view();
+      ash::WmShelf::ForWindow(ash::WmWindow::Get(root_window))
+          ->GetShelfViewForTesting();
   const views::ViewModel* view_model = shelf_view->view_model_for_test();
 
   EXPECT_EQ(2, view_model->view_size());
@@ -102,7 +102,7 @@ IN_PROC_BROWSER_TEST_F(WindowSizerTest,
   // Close the browser window so that clicking icon will create a new window.
   CloseBrowser(browser_list->get(0));
   EXPECT_EQ(0u, browser_list->size());
-  EXPECT_EQ(root_windows[0], ash::Shell::GetTargetRootWindow());
+  EXPECT_EQ(root_windows[0], ash::Shell::GetRootWindowForNewWindows());
 
   OpenBrowserUsingShelfOnRootWindow(root_windows[1]);
 
@@ -110,7 +110,7 @@ IN_PROC_BROWSER_TEST_F(WindowSizerTest,
   EXPECT_EQ(1u, browser_list->size());
   EXPECT_EQ(root_windows[1],
             browser_list->get(0)->window()->GetNativeWindow()->GetRootWindow());
-  EXPECT_EQ(root_windows[1], ash::Shell::GetTargetRootWindow());
+  EXPECT_EQ(root_windows[1], ash::Shell::GetRootWindowForNewWindows());
 
   // Close the browser window so that clicking icon will create a new window.
   CloseBrowser(browser_list->get(0));
@@ -122,7 +122,7 @@ IN_PROC_BROWSER_TEST_F(WindowSizerTest,
   EXPECT_EQ(1u, browser_list->size());
   EXPECT_EQ(root_windows[0],
             browser_list->get(0)->window()->GetNativeWindow()->GetRootWindow());
-  EXPECT_EQ(root_windows[0], ash::Shell::GetTargetRootWindow());
+  EXPECT_EQ(root_windows[0], ash::Shell::GetRootWindowForNewWindows());
 }
 
 namespace {
@@ -167,7 +167,7 @@ void OpenBrowserUsingContextMenuOnRootWindow(aura::Window* root_window) {
   ui_controls::SendMouseMoveNotifyWhenDone(
       chrome_icon.x(), chrome_icon.y(),
       base::Bind(&WindowSizerContextMenuTest::Step1, release_point));
-  base::MessageLoop::current()->Run();
+  base::RunLoop().Run();
 }
 
 }  // namespace
@@ -185,7 +185,7 @@ IN_PROC_BROWSER_TEST_F(WindowSizerContextMenuTest,
   BrowserList* browser_list = BrowserList::GetInstance();
 
   ASSERT_EQ(1u, browser_list->size());
-  EXPECT_EQ(root_windows[0], ash::Shell::GetTargetRootWindow());
+  EXPECT_EQ(root_windows[0], ash::Shell::GetRootWindowForNewWindows());
   CloseBrowser(browser_list->get(0));
 
   OpenBrowserUsingContextMenuOnRootWindow(root_windows[1]);
@@ -194,7 +194,7 @@ IN_PROC_BROWSER_TEST_F(WindowSizerContextMenuTest,
   ASSERT_EQ(1u, browser_list->size());
   EXPECT_EQ(root_windows[1],
             browser_list->get(0)->window()->GetNativeWindow()->GetRootWindow());
-  EXPECT_EQ(root_windows[1], ash::Shell::GetTargetRootWindow());
+  EXPECT_EQ(root_windows[1], ash::Shell::GetRootWindowForNewWindows());
 
   CloseBrowser(browser_list->get(0));
   OpenBrowserUsingContextMenuOnRootWindow(root_windows[0]);
@@ -203,5 +203,5 @@ IN_PROC_BROWSER_TEST_F(WindowSizerContextMenuTest,
   ASSERT_EQ(1u, browser_list->size());
   EXPECT_EQ(root_windows[0],
             browser_list->get(0)->window()->GetNativeWindow()->GetRootWindow());
-  EXPECT_EQ(root_windows[0], ash::Shell::GetTargetRootWindow());
+  EXPECT_EQ(root_windows[0], ash::Shell::GetRootWindowForNewWindows());
 }

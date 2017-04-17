@@ -8,8 +8,11 @@
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "chrome/test/base/testing_browser_process.h"
-#include "components/rappor/rappor_utils.h"
+#include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/test_rappor_service.h"
+#include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/test/test_utils.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
 
 namespace {
 
@@ -23,48 +26,39 @@ class CorePageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  protected:
   void RegisterObservers(page_load_metrics::PageLoadTracker* tracker) override {
-    tracker->AddObserver(base::WrapUnique(new CorePageLoadMetricsObserver()));
-  }
-
-  void AssertNoHistogramsLogged() {
-    histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded,
-                                        0);
-    histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
-    histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 0);
-    histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 0);
+    tracker->AddObserver(base::MakeUnique<CorePageLoadMetricsObserver>());
   }
 
   void SetUp() override {
     page_load_metrics::PageLoadMetricsObserverTestHarness::SetUp();
-    TestingBrowserProcess::GetGlobal()->SetRapporService(&rappor_tester_);
+    TestingBrowserProcess::GetGlobal()->SetRapporServiceImpl(&rappor_tester_);
   }
 
-  rappor::TestRapporService rappor_tester_;
+  rappor::TestRapporServiceImpl rappor_tester_;
 };
 
 TEST_F(CorePageLoadMetricsObserverTest, NoMetrics) {
-  AssertNoHistogramsLogged();
+  histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded, 0);
+  histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
+  histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 0);
+  histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 0);
 }
 
-TEST_F(CorePageLoadMetricsObserverTest, SamePageNoTriggerUntilTrueNavCommit) {
+TEST_F(CorePageLoadMetricsObserverTest,
+       SameDocumentNoTriggerUntilTrueNavCommit) {
   base::TimeDelta first_layout = base::TimeDelta::FromMilliseconds(1);
 
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_layout = first_layout;
+  timing.document_timing.first_layout = first_layout;
   PopulateRequiredTimingFields(&timing);
 
   NavigateAndCommit(GURL(kDefaultTestUrl));
   SimulateTimingUpdate(timing);
 
   NavigateAndCommit(GURL(kDefaultTestUrlAnchor));
-  // A same page navigation shouldn't trigger logging UMA for the original.
-  AssertNoHistogramsLogged();
 
-  // But we should keep the timing info and log it when we get another
-  // navigation.
   NavigateAndCommit(GURL(kDefaultTestUrl2));
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 1);
   histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 1);
@@ -77,26 +71,28 @@ TEST_F(CorePageLoadMetricsObserverTest, SingleMetricAfterCommit) {
   base::TimeDelta first_layout = base::TimeDelta::FromMilliseconds(1);
   base::TimeDelta parse_start = base::TimeDelta::FromMilliseconds(1);
   base::TimeDelta parse_stop = base::TimeDelta::FromMilliseconds(5);
-  base::TimeDelta parse_script_block_duration =
+  base::TimeDelta parse_script_load_duration =
       base::TimeDelta::FromMilliseconds(3);
+  base::TimeDelta parse_script_exec_duration =
+      base::TimeDelta::FromMilliseconds(1);
 
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_layout = first_layout;
-  timing.parse_start = parse_start;
-  timing.parse_stop = parse_stop;
-  timing.parse_blocked_on_script_load_duration = parse_script_block_duration;
+  timing.document_timing.first_layout = first_layout;
+  timing.parse_timing.parse_start = parse_start;
+  timing.parse_timing.parse_stop = parse_stop;
+  timing.parse_timing.parse_blocked_on_script_load_duration =
+      parse_script_load_duration;
+  timing.parse_timing.parse_blocked_on_script_execution_duration =
+      parse_script_exec_duration;
   PopulateRequiredTimingFields(&timing);
 
   NavigateAndCommit(GURL(kDefaultTestUrl));
   SimulateTimingUpdate(timing);
 
-  AssertNoHistogramsLogged();
-
   // Navigate again to force histogram recording.
   NavigateAndCommit(GURL(kDefaultTestUrl2));
 
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 1);
   histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 1);
@@ -107,13 +103,18 @@ TEST_F(CorePageLoadMetricsObserverTest, SingleMetricAfterCommit) {
       (parse_stop - parse_start).InMilliseconds(), 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramParseBlockedOnScriptLoad,
-      parse_script_block_duration.InMilliseconds(), 1);
+      parse_script_load_duration.InMilliseconds(), 1);
+  histogram_tester().ExpectBucketCount(
+      internal::kHistogramParseBlockedOnScriptExecution,
+      parse_script_exec_duration.InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 0);
+
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramPageTimingForegroundDuration, 1);
 }
 
 TEST_F(CorePageLoadMetricsObserverTest, MultipleMetricsAfterCommits) {
   base::TimeDelta response = base::TimeDelta::FromMilliseconds(1);
-  base::TimeDelta dom_loading = base::TimeDelta::FromMilliseconds(5);
   base::TimeDelta first_layout_1 = base::TimeDelta::FromMilliseconds(10);
   base::TimeDelta first_layout_2 = base::TimeDelta::FromMilliseconds(20);
   base::TimeDelta first_text_paint = base::TimeDelta::FromMilliseconds(30);
@@ -124,51 +125,15 @@ TEST_F(CorePageLoadMetricsObserverTest, MultipleMetricsAfterCommits) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
   timing.response_start = response;
-  timing.dom_loading = dom_loading;
-  timing.first_layout = first_layout_1;
-  timing.first_text_paint = first_text_paint;
-  timing.first_contentful_paint = first_contentful_paint;
-  timing.dom_content_loaded_event_start = dom_content;
-  timing.load_event_start = load;
+  timing.document_timing.first_layout = first_layout_1;
+  timing.paint_timing.first_text_paint = first_text_paint;
+  timing.paint_timing.first_contentful_paint = first_contentful_paint;
+  timing.document_timing.dom_content_loaded_event_start = dom_content;
+  timing.document_timing.load_event_start = load;
   PopulateRequiredTimingFields(&timing);
 
   NavigateAndCommit(GURL(kDefaultTestUrl));
   SimulateTimingUpdate(timing);
-
-  // Verify that the non-immediate FCP has not yet been logged, but the
-  // immediate FCP is logged before the next navigation.
-  histogram_tester().ExpectTotalCount(internal::kHistogramFirstContentfulPaint,
-                                      0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramFirstContentfulPaintImmediate, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramFirstContentfulPaintImmediate,
-      first_contentful_paint.InMilliseconds(), 1);
-
-  NavigateAndCommit(GURL(kDefaultTestUrl2));
-
-  page_load_metrics::PageLoadTiming timing2;
-  timing2.navigation_start = base::Time::FromDoubleT(200);
-  timing2.first_layout = first_layout_2;
-  PopulateRequiredTimingFields(&timing2);
-
-  SimulateTimingUpdate(timing2);
-
-  NavigateAndCommit(GURL(kDefaultTestUrl));
-
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 2);
-
-  histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 2);
-  histogram_tester().ExpectBucketCount(internal::kHistogramFirstLayout,
-                                       first_layout_1.InMilliseconds(), 1);
-  histogram_tester().ExpectBucketCount(internal::kHistogramFirstLayout,
-                                       first_layout_2.InMilliseconds(), 1);
-
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramDomLoadingToDomContentLoaded, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramDomLoadingToDomContentLoaded,
-      (dom_content - dom_loading).InMilliseconds(), 1);
 
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstContentfulPaint,
                                       1);
@@ -176,17 +141,28 @@ TEST_F(CorePageLoadMetricsObserverTest, MultipleMetricsAfterCommits) {
                                        first_contentful_paint.InMilliseconds(),
                                        1);
 
-  // Verify that no additional immediate metrics were logged as a result of
-  // navigation.
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramFirstContentfulPaintImmediate, 1);
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
 
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramDomLoadingToFirstContentfulPaint, 1);
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramDomLoadingToFirstContentfulPaint,
-      (first_contentful_paint - dom_loading).InMilliseconds(), 1);
+  page_load_metrics::PageLoadTiming timing2;
+  timing2.navigation_start = base::Time::FromDoubleT(200);
+  timing2.document_timing.first_layout = first_layout_2;
+  PopulateRequiredTimingFields(&timing2);
 
+  SimulateTimingUpdate(timing2);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+
+  histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 2);
+  histogram_tester().ExpectBucketCount(internal::kHistogramFirstLayout,
+                                       first_layout_1.InMilliseconds(), 1);
+  histogram_tester().ExpectBucketCount(internal::kHistogramFirstLayout,
+                                       first_layout_2.InMilliseconds(), 1);
+
+  histogram_tester().ExpectTotalCount(internal::kHistogramFirstContentfulPaint,
+                                      1);
+  histogram_tester().ExpectBucketCount(internal::kHistogramFirstContentfulPaint,
+                                       first_contentful_paint.InMilliseconds(),
+                                       1);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 1);
   histogram_tester().ExpectBucketCount(internal::kHistogramFirstTextPaint,
                                        first_text_paint.InMilliseconds(), 1);
@@ -205,7 +181,7 @@ TEST_F(CorePageLoadMetricsObserverTest, BackgroundDifferentHistogram) {
 
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_layout = first_layout;
+  timing.document_timing.first_layout = first_layout;
   PopulateRequiredTimingFields(&timing);
 
   // Simulate "Open link in new tab."
@@ -215,12 +191,10 @@ TEST_F(CorePageLoadMetricsObserverTest, BackgroundDifferentHistogram) {
 
   // Simulate switching to the tab and making another navigation.
   web_contents()->WasShown();
-  AssertNoHistogramsLogged();
 
   // Navigate again to force histogram recording.
   NavigateAndCommit(GURL(kDefaultTestUrl2));
 
-  histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramCommit, 1);
   histogram_tester().ExpectTotalCount(
       internal::kBackgroundHistogramDomContentLoaded, 0);
   histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramLoad, 0);
@@ -232,62 +206,23 @@ TEST_F(CorePageLoadMetricsObserverTest, BackgroundDifferentHistogram) {
   histogram_tester().ExpectTotalCount(
       internal::kBackgroundHistogramFirstTextPaint, 0);
 
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 0);
 }
 
-TEST_F(CorePageLoadMetricsObserverTest,
-       BackgroundCommitHistogramClockResolutionNonDeterministic) {
-  base::TimeDelta first_layout = base::TimeDelta::FromMilliseconds(1);
-
-  page_load_metrics::PageLoadTiming timing;
-  timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_layout = first_layout;
-  PopulateRequiredTimingFields(&timing);
-
-  // Start a provisional load.
-  GURL url(kDefaultTestUrl2);
-  content::RenderFrameHostTester* rfh_tester =
-      content::RenderFrameHostTester::For(main_rfh());
-  rfh_tester->SimulateNavigationStart(url);
-
-  // Background and then commit.
-  web_contents()->WasHidden();
-  rfh_tester->SimulateNavigationCommit(url);
-  SimulateTimingUpdate(timing);
-  rfh_tester->SimulateNavigationStop();
-
-  page_load_metrics::PageLoadExtraInfo info =
-      GetPageLoadExtraInfoForCommittedLoad();
-
-  // Navigate again to force histograms to be logged.
-  NavigateAndCommit(GURL(kDefaultTestUrl));
-
-  // If the system clock is low resolution PageLoadTracker's commit_time_ may
-  // be = first_background_time_.
-  if (page_load_metrics::WasStartedInForegroundOptionalEventInForeground(
-          info.time_to_commit, info)) {
-    histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramCommit,
-                                        0);
-    histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 1);
-  } else {
-    histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramCommit,
-                                        1);
-    histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 0);
-  }
-}
-
 TEST_F(CorePageLoadMetricsObserverTest, OnlyBackgroundLaterEvents) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  // Set these events at 1 microsecond so they definitely occur before we
-  // background the tab later in the test.
-  timing.response_start = base::TimeDelta::FromMicroseconds(1);
-  timing.dom_loading = base::TimeDelta::FromMicroseconds(1);
-  timing.dom_content_loaded_event_start = base::TimeDelta::FromMicroseconds(1);
+  timing.document_timing.dom_content_loaded_event_start =
+      base::TimeDelta::FromMicroseconds(1);
+  PopulateRequiredTimingFields(&timing);
+
+  // Make sure first_text_paint hasn't been set (wasn't set by
+  // PopulateRequiredTimingFields), since we want to defer setting it until
+  // after backgrounding.
+  ASSERT_FALSE(timing.paint_timing.first_text_paint);
 
   NavigateAndCommit(GURL(kDefaultTestUrl));
   SimulateTimingUpdate(timing);
@@ -295,8 +230,7 @@ TEST_F(CorePageLoadMetricsObserverTest, OnlyBackgroundLaterEvents) {
   // Background the tab, then foreground it.
   web_contents()->WasHidden();
   web_contents()->WasShown();
-  timing.first_layout = base::TimeDelta::FromSeconds(3);
-  timing.first_text_paint = base::TimeDelta::FromSeconds(4);
+  timing.paint_timing.first_text_paint = base::TimeDelta::FromSeconds(4);
   PopulateRequiredTimingFields(&timing);
   SimulateTimingUpdate(timing);
 
@@ -309,15 +243,15 @@ TEST_F(CorePageLoadMetricsObserverTest, OnlyBackgroundLaterEvents) {
   // Navigate again to force histogram recording.
   NavigateAndCommit(GURL(kDefaultTestUrl2));
 
-  histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramCommit, 0);
-
   if (page_load_metrics::WasStartedInForegroundOptionalEventInForeground(
-          timing.dom_content_loaded_event_start, info)) {
+          timing.document_timing.dom_content_loaded_event_start, info)) {
     histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded,
                                         1);
     histogram_tester().ExpectBucketCount(
         internal::kHistogramDomContentLoaded,
-        timing.dom_content_loaded_event_start.value().InMilliseconds(), 1);
+        timing.document_timing.dom_content_loaded_event_start.value()
+            .InMilliseconds(),
+        1);
     histogram_tester().ExpectTotalCount(
         internal::kBackgroundHistogramDomContentLoaded, 0);
   } else {
@@ -328,21 +262,17 @@ TEST_F(CorePageLoadMetricsObserverTest, OnlyBackgroundLaterEvents) {
   }
 
   histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramLoad, 0);
-  histogram_tester().ExpectTotalCount(internal::kBackgroundHistogramFirstLayout,
-                                      1);
-  histogram_tester().ExpectBucketCount(
-      internal::kBackgroundHistogramFirstLayout,
-      timing.first_layout.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kBackgroundHistogramFirstTextPaint, 1);
   histogram_tester().ExpectBucketCount(
       internal::kBackgroundHistogramFirstTextPaint,
-      timing.first_text_paint.value().InMilliseconds(), 1);
+      timing.paint_timing.first_text_paint.value().InMilliseconds(), 1);
 
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 1);
   histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
-  histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 0);
+
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramPageTimingForegroundDuration, 1);
 }
 
 TEST_F(CorePageLoadMetricsObserverTest, DontBackgroundQuickerLoad) {
@@ -352,7 +282,7 @@ TEST_F(CorePageLoadMetricsObserverTest, DontBackgroundQuickerLoad) {
 
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_layout = first_layout;
+  timing.document_timing.first_layout = first_layout;
   PopulateRequiredTimingFields(&timing);
 
   web_contents()->WasHidden();
@@ -364,17 +294,12 @@ TEST_F(CorePageLoadMetricsObserverTest, DontBackgroundQuickerLoad) {
   web_contents()->WasShown();
 
   // Start another provisional load
-  StartNavigation(GURL(kDefaultTestUrl2));
-  content::RenderFrameHostTester* rfh_tester =
-      content::RenderFrameHostTester::For(main_rfh());
-  rfh_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
   SimulateTimingUpdate(timing);
-  rfh_tester->SimulateNavigationStop();
 
   // Navigate again to see if the timing updated for the foregrounded load.
   NavigateAndCommit(GURL(kDefaultTestUrl));
 
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 1);
   histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 1);
@@ -384,6 +309,11 @@ TEST_F(CorePageLoadMetricsObserverTest, DontBackgroundQuickerLoad) {
 }
 
 TEST_F(CorePageLoadMetricsObserverTest, FailedProvisionalLoad) {
+  if (content::IsBrowserSideNavigationEnabled() &&
+      content::AreAllSitesIsolatedForTesting()) {
+    // http://crbug.com/674734 Fix this test with PlzNavigate and Site Isolation
+    return;
+  }
   GURL url(kDefaultTestUrl);
   content::RenderFrameHostTester* rfh_tester =
       content::RenderFrameHostTester::For(main_rfh());
@@ -391,13 +321,17 @@ TEST_F(CorePageLoadMetricsObserverTest, FailedProvisionalLoad) {
   rfh_tester->SimulateNavigationError(url, net::ERR_TIMED_OUT);
   rfh_tester->SimulateNavigationStop();
 
-  histogram_tester().ExpectTotalCount(internal::kHistogramCommit, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramDomContentLoaded, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramLoad, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstLayout, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFirstTextPaint, 0);
   histogram_tester().ExpectTotalCount(internal::kHistogramFailedProvisionalLoad,
                                       1);
+
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramPageTimingForegroundDuration, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramPageTimingForegroundDurationNoCommit, 1);
 }
 
 TEST_F(CorePageLoadMetricsObserverTest, FailedBackgroundProvisionalLoad) {
@@ -415,23 +349,6 @@ TEST_F(CorePageLoadMetricsObserverTest, FailedBackgroundProvisionalLoad) {
                                       0);
 }
 
-TEST_F(CorePageLoadMetricsObserverTest, BackgroundBeforePaint) {
-  page_load_metrics::PageLoadTiming timing;
-  timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_paint = base::TimeDelta::FromSeconds(10);
-  PopulateRequiredTimingFields(&timing);
-  NavigateAndCommit(GURL(kDefaultTestUrl));
-  // Background the tab and go for a coffee or something.
-  web_contents()->WasHidden();
-  SimulateTimingUpdate(timing);
-  // Come back and start browsing again.
-  web_contents()->WasShown();
-  // Simulate the user performaning another navigation.
-  NavigateAndCommit(GURL("https://www.example.com"));
-  histogram_tester().ExpectTotalCount(internal::kHistogramBackgroundBeforePaint,
-                                      1);
-}
-
 TEST_F(CorePageLoadMetricsObserverTest, NoRappor) {
   rappor::TestSample::Shadow* sample_obj =
       rappor_tester_.GetRecordedSampleForMetric(
@@ -442,7 +359,7 @@ TEST_F(CorePageLoadMetricsObserverTest, NoRappor) {
 TEST_F(CorePageLoadMetricsObserverTest, RapporLongPageLoad) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_contentful_paint = base::TimeDelta::FromSeconds(40);
+  timing.paint_timing.first_contentful_paint = base::TimeDelta::FromSeconds(40);
   PopulateRequiredTimingFields(&timing);
   NavigateAndCommit(GURL(kDefaultTestUrl));
   SimulateTimingUpdate(timing);
@@ -465,7 +382,7 @@ TEST_F(CorePageLoadMetricsObserverTest, RapporLongPageLoad) {
 TEST_F(CorePageLoadMetricsObserverTest, RapporQuickPageLoad) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.first_contentful_paint = base::TimeDelta::FromSeconds(1);
+  timing.paint_timing.first_contentful_paint = base::TimeDelta::FromSeconds(1);
   PopulateRequiredTimingFields(&timing);
 
   NavigateAndCommit(GURL(kDefaultTestUrl));
@@ -489,20 +406,44 @@ TEST_F(CorePageLoadMetricsObserverTest, RapporQuickPageLoad) {
 TEST_F(CorePageLoadMetricsObserverTest, Reload) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.parse_start = base::TimeDelta::FromMilliseconds(5);
-  timing.first_contentful_paint = base::TimeDelta::FromMilliseconds(10);
+  timing.parse_timing.parse_start = base::TimeDelta::FromMilliseconds(5);
+  timing.paint_timing.first_contentful_paint =
+      base::TimeDelta::FromMilliseconds(10);
   PopulateRequiredTimingFields(&timing);
 
   GURL url(kDefaultTestUrl);
   NavigateWithPageTransitionAndCommit(url, ui::PAGE_TRANSITION_RELOAD);
   SimulateTimingUpdate(timing);
-  NavigateAndCommit(url);
+
+  page_load_metrics::ExtraRequestInfo resources[] = {
+      // Cached request.
+      {true /*was_cached*/, 1024 * 20 /* raw_body_bytes */,
+       false /* data_reduction_proxy_used*/,
+       0 /* original_network_content_length */},
+      // Uncached non-proxied request.
+      {false /*was_cached*/, 1024 * 40 /* raw_body_bytes */,
+       false /* data_reduction_proxy_used*/,
+       1024 * 40 /* original_network_content_length */},
+  };
+
+  int64_t network_bytes = 0;
+  int64_t cache_bytes = 0;
+  for (const auto& request : resources) {
+    SimulateLoadedResource(request);
+    if (!request.was_cached) {
+      network_bytes += request.raw_body_bytes;
+    } else {
+      cache_bytes += request.raw_body_bytes;
+    }
+  }
+
+  NavigateToUntrackedUrl();
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeFirstContentfulPaintReload, 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramLoadTypeFirstContentfulPaintReload,
-      timing.first_contentful_paint.value().InMilliseconds(), 1);
+      timing.paint_timing.first_contentful_paint.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeFirstContentfulPaintForwardBack, 0);
   histogram_tester().ExpectTotalCount(
@@ -511,18 +452,43 @@ TEST_F(CorePageLoadMetricsObserverTest, Reload) {
       internal::kHistogramLoadTypeParseStartReload, 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramLoadTypeParseStartReload,
-      timing.parse_start.value().InMilliseconds(), 1);
+      timing.parse_timing.parse_start.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeParseStartForwardBack, 0);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeParseStartNewNavigation, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeNetworkBytesReload,
+      static_cast<int>((network_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeNetworkBytesForwardBack, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeNetworkBytesNewNavigation, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeCacheBytesReload,
+      static_cast<int>((cache_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeCacheBytesForwardBack, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeCacheBytesNewNavigation, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeTotalBytesReload,
+      static_cast<int>((network_bytes + cache_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeTotalBytesForwardBack, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeTotalBytesNewNavigation, 0);
 }
 
 TEST_F(CorePageLoadMetricsObserverTest, ForwardBack) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.parse_start = base::TimeDelta::FromMilliseconds(5);
-  timing.first_contentful_paint = base::TimeDelta::FromMilliseconds(10);
+  timing.parse_timing.parse_start = base::TimeDelta::FromMilliseconds(5);
+  timing.paint_timing.first_contentful_paint =
+      base::TimeDelta::FromMilliseconds(10);
   PopulateRequiredTimingFields(&timing);
 
   GURL url(kDefaultTestUrl);
@@ -534,7 +500,30 @@ TEST_F(CorePageLoadMetricsObserverTest, ForwardBack) {
       url, ui::PageTransitionFromInt(ui::PAGE_TRANSITION_RELOAD |
                                      ui::PAGE_TRANSITION_FORWARD_BACK));
   SimulateTimingUpdate(timing);
-  NavigateAndCommit(url);
+
+  page_load_metrics::ExtraRequestInfo resources[] = {
+      // Cached request.
+      {true /*was_cached*/, 1024 * 20 /* raw_body_bytes */,
+       false /* data_reduction_proxy_used*/,
+       0 /* original_network_content_length */},
+      // Uncached non-proxied request.
+      {false /*was_cached*/, 1024 * 40 /* raw_body_bytes */,
+       false /* data_reduction_proxy_used*/,
+       1024 * 40 /* original_network_content_length */},
+  };
+
+  int64_t network_bytes = 0;
+  int64_t cache_bytes = 0;
+  for (const auto& request : resources) {
+    SimulateLoadedResource(request);
+    if (!request.was_cached) {
+      network_bytes += request.raw_body_bytes;
+    } else {
+      cache_bytes += request.raw_body_bytes;
+    }
+  }
+
+  NavigateToUntrackedUrl();
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeFirstContentfulPaintReload, 0);
@@ -542,7 +531,7 @@ TEST_F(CorePageLoadMetricsObserverTest, ForwardBack) {
       internal::kHistogramLoadTypeFirstContentfulPaintForwardBack, 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramLoadTypeFirstContentfulPaintForwardBack,
-      timing.first_contentful_paint.value().InMilliseconds(), 1);
+      timing.paint_timing.first_contentful_paint.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeFirstContentfulPaintNewNavigation, 0);
   histogram_tester().ExpectTotalCount(
@@ -551,22 +540,70 @@ TEST_F(CorePageLoadMetricsObserverTest, ForwardBack) {
       internal::kHistogramLoadTypeParseStartForwardBack, 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramLoadTypeParseStartForwardBack,
-      timing.parse_start.value().InMilliseconds(), 1);
+      timing.parse_timing.parse_start.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeParseStartNewNavigation, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeNetworkBytesForwardBack,
+      static_cast<int>((network_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeNetworkBytesNewNavigation, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeNetworkBytesReload, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeCacheBytesForwardBack,
+      static_cast<int>((cache_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeCacheBytesNewNavigation, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeCacheBytesReload, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeTotalBytesForwardBack,
+      static_cast<int>((network_bytes + cache_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeTotalBytesNewNavigation, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeTotalBytesReload, 0);
 }
 
 TEST_F(CorePageLoadMetricsObserverTest, NewNavigation) {
   page_load_metrics::PageLoadTiming timing;
   timing.navigation_start = base::Time::FromDoubleT(1);
-  timing.parse_start = base::TimeDelta::FromMilliseconds(5);
-  timing.first_contentful_paint = base::TimeDelta::FromMilliseconds(10);
+  timing.parse_timing.parse_start = base::TimeDelta::FromMilliseconds(5);
+  timing.paint_timing.first_contentful_paint =
+      base::TimeDelta::FromMilliseconds(10);
   PopulateRequiredTimingFields(&timing);
 
   GURL url(kDefaultTestUrl);
   NavigateWithPageTransitionAndCommit(url, ui::PAGE_TRANSITION_LINK);
   SimulateTimingUpdate(timing);
-  NavigateAndCommit(url);
+
+  page_load_metrics::ExtraRequestInfo resources[] = {
+      // Cached request.
+      {true /*was_cached*/, 1024 * 20 /* raw_body_bytes */,
+       false /* data_reduction_proxy_used*/,
+       0 /* original_network_content_length */},
+      // Uncached non-proxied request.
+      {false /*was_cached*/, 1024 * 40 /* raw_body_bytes */,
+       false /* data_reduction_proxy_used*/,
+       1024 * 40 /* original_network_content_length */},
+  };
+
+  int64_t network_bytes = 0;
+  int64_t cache_bytes = 0;
+  for (auto request : resources) {
+    SimulateLoadedResource(request);
+    if (!request.was_cached) {
+      network_bytes += request.raw_body_bytes;
+    } else {
+      cache_bytes += request.raw_body_bytes;
+    }
+  }
+
+  NavigateToUntrackedUrl();
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeFirstContentfulPaintReload, 0);
@@ -576,7 +613,7 @@ TEST_F(CorePageLoadMetricsObserverTest, NewNavigation) {
       internal::kHistogramLoadTypeFirstContentfulPaintNewNavigation, 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramLoadTypeFirstContentfulPaintNewNavigation,
-      timing.first_contentful_paint.value().InMilliseconds(), 1);
+      timing.paint_timing.first_contentful_paint.value().InMilliseconds(), 1);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramLoadTypeParseStartReload, 0);
   histogram_tester().ExpectTotalCount(
@@ -585,5 +622,95 @@ TEST_F(CorePageLoadMetricsObserverTest, NewNavigation) {
       internal::kHistogramLoadTypeParseStartNewNavigation, 1);
   histogram_tester().ExpectBucketCount(
       internal::kHistogramLoadTypeParseStartNewNavigation,
-      timing.parse_start.value().InMilliseconds(), 1);
+      timing.parse_timing.parse_start.value().InMilliseconds(), 1);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeNetworkBytesNewNavigation,
+      static_cast<int>((network_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeNetworkBytesForwardBack, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeNetworkBytesReload, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeCacheBytesNewNavigation,
+      static_cast<int>((cache_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeCacheBytesForwardBack, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeCacheBytesReload, 0);
+
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramLoadTypeTotalBytesNewNavigation,
+      static_cast<int>((network_bytes + cache_bytes) / 1024), 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeTotalBytesForwardBack, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramLoadTypeTotalBytesReload, 0);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, BytesAndResourcesCounted) {
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+  histogram_tester().ExpectTotalCount(internal::kHistogramTotalBytes, 1);
+  histogram_tester().ExpectTotalCount(internal::kHistogramNetworkBytes, 1);
+  histogram_tester().ExpectTotalCount(internal::kHistogramCacheBytes, 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramTotalCompletedResources, 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramNetworkCompletedResources, 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramCacheCompletedResources, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, FirstMeaningfulPaint) {
+  page_load_metrics::PageLoadTiming timing;
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.parse_timing.parse_start = base::TimeDelta::FromMilliseconds(5);
+  timing.paint_timing.first_meaningful_paint =
+      base::TimeDelta::FromMilliseconds(10);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramFirstMeaningfulPaint, 1);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramParseStartToFirstMeaningfulPaint, 1);
+  histogram_tester().ExpectBucketCount(
+      internal::kHistogramFirstMeaningfulPaintStatus,
+      internal::FIRST_MEANINGFUL_PAINT_RECORDED, 1);
+}
+
+TEST_F(CorePageLoadMetricsObserverTest, FirstMeaningfulPaintAfterInteraction) {
+  page_load_metrics::PageLoadTiming timing;
+  timing.navigation_start = base::Time::FromDoubleT(1);
+  timing.parse_timing.parse_start = base::TimeDelta::FromMilliseconds(5);
+  timing.paint_timing.first_paint = base::TimeDelta::FromMilliseconds(10);
+  PopulateRequiredTimingFields(&timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl));
+  SimulateTimingUpdate(timing);
+
+  blink::WebMouseEvent mouse_event(blink::WebInputEvent::kMouseDown,
+                                   blink::WebInputEvent::kNoModifiers,
+                                   blink::WebInputEvent::kTimeStampForTesting);
+  SimulateInputEvent(mouse_event);
+
+  timing.paint_timing.first_meaningful_paint =
+      base::TimeDelta::FromMilliseconds(1000);
+  PopulateRequiredTimingFields(&timing);
+  SimulateTimingUpdate(timing);
+
+  NavigateAndCommit(GURL(kDefaultTestUrl2));
+
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramFirstMeaningfulPaint, 0);
+  histogram_tester().ExpectTotalCount(
+      internal::kHistogramParseStartToFirstMeaningfulPaint, 0);
+  histogram_tester().ExpectBucketCount(
+      internal::kHistogramFirstMeaningfulPaintStatus,
+      internal::FIRST_MEANINGFUL_PAINT_USER_INTERACTION_BEFORE_FMP, 1);
 }

@@ -16,6 +16,9 @@ extern NSString* const kNotificationIncognito;
 extern NSString* const kNotificationType;
 extern NSString* const kNotificationOperation;
 extern NSString* const kNotificationButtonIndex;
+extern NSString* const kNotificationHasSettingsButton;
+
+extern NSString* const kAlertXPCServiceName;
 
 }  // notification_constants
 

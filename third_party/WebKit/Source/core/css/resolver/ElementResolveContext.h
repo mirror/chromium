@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,29 +33,40 @@ class Document;
 class Element;
 class ComputedStyle;
 
-// ElementResolveContext is immutable and serves as an input to the style resolve process.
-class ElementResolveContext {
-    STACK_ALLOCATED();
-public:
-    explicit ElementResolveContext(const Document&);
+// ElementResolveContext is immutable and serves as an input to the style
+// resolve process.
+class CORE_EXPORT ElementResolveContext {
+  STACK_ALLOCATED();
 
-    explicit ElementResolveContext(Element&);
+ public:
+  explicit ElementResolveContext(const Document&);
 
-    Element* element() const { return m_element; }
-    const ContainerNode* parentNode() const { return m_parentNode; }
-    const ComputedStyle* rootElementStyle() const { return m_rootElementStyle; }
-    const ComputedStyle* parentStyle() const { return parentNode() ? parentNode()->computedStyle() : nullptr; }
-    EInsideLink elementLinkState() const { return m_elementLinkState; }
-    bool distributedToInsertionPoint() const { return m_distributedToInsertionPoint; }
+  explicit ElementResolveContext(Element&);
 
-private:
-    Member<Element> m_element;
-    Member<ContainerNode> m_parentNode;
-    const ComputedStyle* m_rootElementStyle;
-    EInsideLink m_elementLinkState;
-    bool m_distributedToInsertionPoint;
+  Element* GetElement() const { return element_; }
+  const ContainerNode* ParentNode() const { return parent_node_; }
+  const ContainerNode* LayoutParent() const { return layout_parent_; }
+  const ComputedStyle* RootElementStyle() const { return root_element_style_; }
+  const ComputedStyle* ParentStyle() const {
+    return ParentNode() ? ParentNode()->GetComputedStyle() : nullptr;
+  }
+  const ComputedStyle* LayoutParentStyle() const {
+    return LayoutParent() ? LayoutParent()->GetComputedStyle() : nullptr;
+  }
+  EInsideLink ElementLinkState() const { return element_link_state_; }
+  bool DistributedToInsertionPoint() const {
+    return distributed_to_insertion_point_;
+  }
+
+ private:
+  Member<Element> element_;
+  Member<ContainerNode> parent_node_;
+  Member<ContainerNode> layout_parent_;
+  const ComputedStyle* root_element_style_;
+  EInsideLink element_link_state_;
+  bool distributed_to_insertion_point_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ElementResolveContext_h
+#endif  // ElementResolveContext_h

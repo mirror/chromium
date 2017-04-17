@@ -13,7 +13,7 @@
 #include "components/toolbar/toolbar_model.h"
 
 namespace gfx {
-enum class VectorIconId;
+struct VectorIcon;
 }
 
 // A ToolbarModel that is backed by instance variables, which are initialized
@@ -23,28 +23,21 @@ class TestToolbarModel : public ToolbarModel {
  public:
   TestToolbarModel();
   ~TestToolbarModel() override;
-  base::string16 GetText() const override;
   base::string16 GetFormattedURL(size_t* prefix_end) const override;
   GURL GetURL() const override;
-  bool WouldPerformSearchTermReplacement(bool ignore_editing) const override;
-  security_state::SecurityStateModel::SecurityLevel GetSecurityLevel(
+  security_state::SecurityLevel GetSecurityLevel(
       bool ignore_editing) const override;
-  int GetIcon() const override;
-  gfx::VectorIconId GetVectorIcon() const override;
+  const gfx::VectorIcon& GetVectorIcon() const override;
+  base::string16 GetSecureVerboseText() const override;
   base::string16 GetEVCertName() const override;
   bool ShouldDisplayURL() const override;
 
   void set_text(const base::string16& text) { text_ = text; }
-  void set_url(const GURL& url) { url_ = url;}
-  void set_perform_search_term_replacement(
-      bool perform_search_term_replacement) {
-    perform_search_term_replacement_ = perform_search_term_replacement;
-  }
-  void set_security_level(
-      security_state::SecurityStateModel::SecurityLevel security_level) {
+  void set_url(const GURL& url) { url_ = url; }
+  void set_security_level(security_state::SecurityLevel security_level) {
     security_level_ = security_level;
   }
-  void set_icon(gfx::VectorIconId icon) { icon_ = icon; }
+  void set_icon(const gfx::VectorIcon& icon) { icon_ = &icon; }
   void set_ev_cert_name(const base::string16& ev_cert_name) {
     ev_cert_name_ = ev_cert_name;
   }
@@ -55,9 +48,8 @@ class TestToolbarModel : public ToolbarModel {
  private:
   base::string16 text_;
   GURL url_;
-  bool perform_search_term_replacement_;
-  security_state::SecurityStateModel::SecurityLevel security_level_;
-  gfx::VectorIconId icon_;
+  security_state::SecurityLevel security_level_;
+  const gfx::VectorIcon* icon_ = nullptr;
   base::string16 ev_cert_name_;
   bool should_display_url_;
 

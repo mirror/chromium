@@ -8,61 +8,63 @@
 #include "core/CoreExport.h"
 #include "core/dom/Element.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashMap.h"
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
 class Document;
 
 class CORE_EXPORT NthIndexData final : public GarbageCollected<NthIndexData> {
-    WTF_MAKE_NONCOPYABLE(NthIndexData);
-public:
-    NthIndexData(ContainerNode&);
-    NthIndexData(ContainerNode&, const QualifiedName& type);
+  WTF_MAKE_NONCOPYABLE(NthIndexData);
 
-    unsigned nthIndex(Element&) const;
-    unsigned nthLastIndex(Element&) const;
-    unsigned nthOfTypeIndex(Element&) const;
-    unsigned nthLastOfTypeIndex(Element&) const;
+ public:
+  NthIndexData(ContainerNode&);
+  NthIndexData(ContainerNode&, const QualifiedName& type);
 
-private:
-    HeapHashMap<Member<Element>, unsigned> m_elementIndexMap;
-    unsigned m_count = 0;
+  unsigned NthIndex(Element&) const;
+  unsigned NthLastIndex(Element&) const;
+  unsigned NthOfTypeIndex(Element&) const;
+  unsigned NthLastOfTypeIndex(Element&) const;
 
-    DECLARE_TRACE();
+ private:
+  HeapHashMap<Member<Element>, unsigned> element_index_map_;
+  unsigned count_ = 0;
+
+  DECLARE_TRACE();
 };
 
 class CORE_EXPORT NthIndexCache final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(NthIndexCache);
-public:
-    explicit NthIndexCache(Document&);
-    ~NthIndexCache();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(NthIndexCache);
 
-    static unsigned nthChildIndex(Element&);
-    static unsigned nthLastChildIndex(Element&);
-    static unsigned nthOfTypeIndex(Element&);
-    static unsigned nthLastOfTypeIndex(Element&);
+ public:
+  explicit NthIndexCache(Document&);
+  ~NthIndexCache();
 
-private:
-    using IndexByType = HeapHashMap<String, Member<NthIndexData>>;
-    using ParentMap = HeapHashMap<Member<Node>, Member<NthIndexData>>;
-    using ParentMapForType = HeapHashMap<Member<Node>, Member<IndexByType>>;
+  static unsigned NthChildIndex(Element&);
+  static unsigned NthLastChildIndex(Element&);
+  static unsigned NthOfTypeIndex(Element&);
+  static unsigned NthLastOfTypeIndex(Element&);
 
-    void cacheNthIndexDataForParent(Element&);
-    void cacheNthOfTypeIndexDataForParent(Element&);
-    IndexByType& ensureTypeIndexMap(ContainerNode&);
-    NthIndexData* nthTypeIndexDataForParent(Element&) const;
+ private:
+  using IndexByType = HeapHashMap<String, Member<NthIndexData>>;
+  using ParentMap = HeapHashMap<Member<Node>, Member<NthIndexData>>;
+  using ParentMapForType = HeapHashMap<Member<Node>, Member<IndexByType>>;
 
-    Member<Document> m_document;
-    Member<ParentMap> m_parentMap;
-    Member<ParentMapForType> m_parentMapForType;
+  void CacheNthIndexDataForParent(Element&);
+  void CacheNthOfTypeIndexDataForParent(Element&);
+  IndexByType& EnsureTypeIndexMap(ContainerNode&);
+  NthIndexData* NthTypeIndexDataForParent(Element&) const;
+
+  Member<Document> document_;
+  Member<ParentMap> parent_map_;
+  Member<ParentMapForType> parent_map_for_type_;
 
 #if DCHECK_IS_ON()
-    uint64_t m_domTreeVersion;
+  uint64_t dom_tree_version_;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NthIndexCache_h
+#endif  // NthIndexCache_h

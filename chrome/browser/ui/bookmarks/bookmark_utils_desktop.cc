@@ -25,16 +25,18 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_node_data.h"
+#include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/prefs/pref_service.h"
 #include "components/search/search.h"
 #include "components/url_formatter/url_formatter.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/features/features.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/dragdrop/drop_target_event.h"
 #include "ui/base/l10n/l10n_util.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/api/commands/command_service.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension_set.h"
@@ -43,7 +45,6 @@
 #if defined(TOOLKIT_VIEWS)
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 #endif
 
 #if defined(OS_WIN)
@@ -196,7 +197,7 @@ void OpenAll(gfx::NativeWindow parent,
     // When |initial_disposition| is OFF_THE_RECORD, a node which can't be
     // opened in incognito window, it is detected using |browser_context|, is
     // not opened.
-    if (initial_disposition == OFF_THE_RECORD &&
+    if (initial_disposition == WindowOpenDisposition::OFF_THE_RECORD &&
         !IsURLAllowedInIncognito(*url, browser_context))
       continue;
 
@@ -206,7 +207,7 @@ void OpenAll(gfx::NativeWindow parent,
 
     if (!opened_first_url) {
       opened_first_url = true;
-      disposition = NEW_BACKGROUND_TAB;
+      disposition = WindowOpenDisposition::NEW_BACKGROUND_TAB;
       // We opened the first URL which may have opened a new window or clobbered
       // the current page, reset the navigator just to be sure. |opened_tab| may
       // be NULL in tests.
@@ -239,10 +240,10 @@ bool ConfirmDeleteBookmarkNode(const BookmarkNode* node,
 
 void ShowBookmarkAllTabsDialog(Browser* browser) {
   Profile* profile = browser->profile();
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile);
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile);
   DCHECK(model && model->loaded());
 
-  const BookmarkNode* parent = model->GetParentForNewNodes();
+  const BookmarkNode* parent = GetParentForNewNodes(model);
   BookmarkEditor::EditDetails details =
       BookmarkEditor::EditDetails::AddFolder(parent, parent->child_count());
   GetURLsForOpenTabs(browser, &(details.urls));

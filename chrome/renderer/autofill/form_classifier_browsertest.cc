@@ -10,6 +10,8 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFormElement.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
+#include "ui/native_theme/native_theme_switches.h"
 
 namespace autofill {
 
@@ -17,15 +19,21 @@ class FormClassifierTest : public ChromeRenderViewTest {
  public:
   FormClassifierTest() {}
 
+  void SetUp() override {
+    blink::WebRuntimeFeatures::EnableOverlayScrollbars(
+        ui::IsOverlayScrollbarEnabled());
+    ChromeRenderViewTest::SetUp();
+  }
+
   void TearDown() override {
     LoadHTML("");
     ChromeRenderViewTest::TearDown();
   }
 
   bool GetGenerationField(std::string* generation_field) {
-    blink::WebDocument document = GetMainFrame()->document();
+    blink::WebDocument document = GetMainFrame()->GetDocument();
     blink::WebFormElement form =
-        document.getElementById("test_form").to<blink::WebFormElement>();
+        document.GetElementById("test_form").To<blink::WebFormElement>();
     base::string16 generation_field16;
     bool generation_availalbe =
         ClassifyFormAndFindGenerationField(form, &generation_field16);

@@ -24,7 +24,7 @@ namespace {
 
 std::unique_ptr<KeyedService> BuildPinnedTabService(
     content::BrowserContext* profile) {
-  return base::WrapUnique(new PinnedTabService(static_cast<Profile*>(profile)));
+  return base::MakeUnique<PinnedTabService>(static_cast<Profile*>(profile));
 }
 
 PinnedTabService* BuildForProfile(Profile* profile) {
@@ -57,7 +57,7 @@ TEST_F(PinnedTabServiceTest, Popup) {
   browser()->tab_strip_model()->SetTabPinned(0, true);
 
   // Create a popup.
-  Browser::CreateParams params(Browser::TYPE_POPUP, profile());
+  Browser::CreateParams params(Browser::TYPE_POPUP, profile(), true);
   std::unique_ptr<Browser> popup(
       chrome::CreateBrowserWithTestWindowForParams(&params));
 

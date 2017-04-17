@@ -16,6 +16,7 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -52,6 +53,14 @@ void ShowPrompt() {
   if (!web_contents)
     return;
 
+  // Never show the default browser prompt over the first run promos.
+  // TODO(pmonette): The whole logic that determines when to show the default
+  // browser prompt is due for a refactor. ShouldShowDefaultBrowserPrompt()
+  // should be aware of the first run promos and return false instead of
+  // counting on the early return here. See bug crbug.com/693292.
+  if (first_run::IsOnWelcomePage(web_contents))
+    return;
+
   DefaultBrowserInfoBarDelegate::Create(
       InfoBarService::FromWebContents(web_contents), browser->profile());
 }
@@ -64,10 +73,10 @@ bool ShouldShowDefaultBrowserPrompt(Profile* profile) {
   const std::string disable_version_string =
       g_browser_process->local_state()->GetString(
           prefs::kBrowserSuppressDefaultBrowserPrompt);
-  const Version disable_version(disable_version_string);
+  const base::Version disable_version(disable_version_string);
   DCHECK(disable_version_string.empty() || disable_version.IsValid());
   if (disable_version.IsValid() &&
-      disable_version == Version(version_info::GetVersionNumber())) {
+      disable_version == base::Version(version_info::GetVersionNumber())) {
     return false;
   }
 

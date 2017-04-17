@@ -40,36 +40,45 @@ class WebString;
 struct WebPoint;
 
 class WebDevToolsAgent {
-public:
-    virtual ~WebDevToolsAgent() {}
+ public:
+  virtual ~WebDevToolsAgent() {}
 
-    virtual void attach(const WebString& hostId, int sessionId) = 0;
-    virtual void reattach(const WebString& hostId, int sessionId, const WebString& savedState) = 0;
-    virtual void detach() = 0;
+  virtual void Attach(const WebString& host_id, int session_id) = 0;
+  virtual void Reattach(const WebString& host_id,
+                        int session_id,
+                        const WebString& saved_state) = 0;
+  virtual void Detach() = 0;
 
-    virtual void continueProgram() = 0;
+  virtual void ContinueProgram() = 0;
 
-    virtual void dispatchOnInspectorBackend(int sessionId, int callId, const WebString& method, const WebString& message) = 0;
+  virtual void DispatchOnInspectorBackend(int session_id,
+                                          int call_id,
+                                          const WebString& method,
+                                          const WebString& message) = 0;
 
-    virtual void inspectElementAt(int sessionId, const WebPoint&) = 0;
-    virtual void failedToRequestDevTools() = 0;
+  virtual void InspectElementAt(int session_id, const WebPoint&) = 0;
+  virtual void FailedToRequestDevTools() = 0;
 
-    // Exposed for TestRunner.
-    virtual WebString evaluateInWebInspectorOverlay(const WebString& script) = 0;
+  // Exposed for TestRunner.
+  virtual WebString EvaluateInWebInspectorOverlay(const WebString& script) = 0;
 
-    class MessageDescriptor {
-    public:
-        virtual ~MessageDescriptor() { }
-        virtual WebDevToolsAgent* agent() = 0;
-        virtual WebString message() = 0;
-        virtual WebString method() = 0;
-    };
-    // Asynchronously request debugger to pause immediately and run the command.
-    BLINK_EXPORT static void interruptAndDispatch(int sessionId, MessageDescriptor*);
-    BLINK_EXPORT static bool shouldInterruptForMethod(const WebString&);
+  // Returns true if caching is disabled for network requests issued by dev
+  // tools.
+  virtual bool CacheDisabled() = 0;
 
+  class MessageDescriptor {
+   public:
+    virtual ~MessageDescriptor() {}
+    virtual WebDevToolsAgent* Agent() = 0;
+    virtual WebString Message() = 0;
+    virtual WebString Method() = 0;
+  };
+  // Asynchronously request debugger to pause immediately and run the command.
+  BLINK_EXPORT static void InterruptAndDispatch(int session_id,
+                                                MessageDescriptor*);
+  BLINK_EXPORT static bool ShouldInterruptForMethod(const WebString&);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

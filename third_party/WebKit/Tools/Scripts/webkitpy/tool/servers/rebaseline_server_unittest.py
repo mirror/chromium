@@ -29,7 +29,7 @@
 import json
 import unittest
 
-from webkitpy.common.net import layouttestresults_unittest
+from webkitpy.common.net import layout_test_results_unittest
 from webkitpy.common.host_mock import MockHost
 from webkitpy.layout_tests.layout_package.json_results_generator import strip_json_wrapper
 from webkitpy.layout_tests.port.base import Port
@@ -206,7 +206,7 @@ class RebaselineTestTest(unittest.TestCase):
             ])
 
     def test_gather_baselines(self):
-        example_json = layouttestresults_unittest.LayoutTestResultsTest.example_full_results_json
+        example_json = layout_test_results_unittest.LayoutTestResultsTest.example_full_results_json
         results_json = json.loads(strip_json_wrapper(example_json))
         server = RebaselineServer()
         server._test_config = get_test_config()
@@ -310,7 +310,7 @@ def get_test_config(test_files=None, result_files=None):
 
     class TestMacPort(Port):
         # Abstract method path_to_apache not implemented - pylint: disable=abstract-method
-        port_name = "mac"
+        port_name = 'mac'
         FALLBACK_PATHS = {'': ['mac']}
 
     return TestConfig(

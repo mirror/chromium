@@ -43,12 +43,14 @@ void CloudPolicyCore::Connect(std::unique_ptr<CloudPolicyClient> client) {
   client_ = std::move(client);
   service_.reset(new CloudPolicyService(policy_type_, settings_entity_id_,
                                         client_.get(), store_));
-  FOR_EACH_OBSERVER(Observer, observers_, OnCoreConnected(this));
+  for (auto& observer : observers_)
+    observer.OnCoreConnected(this);
 }
 
 void CloudPolicyCore::Disconnect() {
   if (client_)
-    FOR_EACH_OBSERVER(Observer, observers_, OnCoreDisconnecting(this));
+    for (auto& observer : observers_)
+      observer.OnCoreDisconnecting(this);
   refresh_delay_.reset();
   refresh_scheduler_.reset();
   remote_commands_service_.reset();
@@ -67,7 +69,8 @@ void CloudPolicyCore::StartRemoteCommandsService(
   // Do an initial remote commands fetch immediately.
   remote_commands_service_->FetchRemoteCommands();
 
-  FOR_EACH_OBSERVER(Observer, observers_, OnRemoteCommandsServiceStarted(this));
+  for (auto& observer : observers_)
+    observer.OnRemoteCommandsServiceStarted(this);
 }
 
 void CloudPolicyCore::RefreshSoon() {
@@ -80,7 +83,8 @@ void CloudPolicyCore::StartRefreshScheduler() {
     refresh_scheduler_.reset(
         new CloudPolicyRefreshScheduler(client_.get(), store_, task_runner_));
     UpdateRefreshDelayFromPref();
-    FOR_EACH_OBSERVER(Observer, observers_, OnRefreshSchedulerStarted(this));
+    for (auto& observer : observers_)
+      observer.OnRefreshSchedulerStarted(this);
   }
 }
 
@@ -88,10 +92,9 @@ void CloudPolicyCore::TrackRefreshDelayPref(
     PrefService* pref_service,
     const std::string& refresh_pref_name) {
   refresh_delay_.reset(new IntegerPrefMember());
-  refresh_delay_->Init(
-      refresh_pref_name.c_str(), pref_service,
-      base::Bind(&CloudPolicyCore::UpdateRefreshDelayFromPref,
-                 base::Unretained(this)));
+  refresh_delay_->Init(refresh_pref_name, pref_service,
+                       base::Bind(&CloudPolicyCore::UpdateRefreshDelayFromPref,
+                                  base::Unretained(this)));
   UpdateRefreshDelayFromPref();
 }
 
@@ -105,7 +108,7 @@ void CloudPolicyCore::RemoveObserver(CloudPolicyCore::Observer* observer) {
 
 void CloudPolicyCore::UpdateRefreshDelayFromPref() {
   if (refresh_scheduler_ && refresh_delay_)
-    refresh_scheduler_->SetRefreshDelay(refresh_delay_->GetValue());
+    refresh_scheduler_->SetDesiredRefreshDelay(refresh_delay_->GetValue());
 }
 
 }  // namespace policy

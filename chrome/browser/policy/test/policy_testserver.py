@@ -295,6 +295,8 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       return (400, 'Invalid request parameter')
     if request_type == 'register':
       response = self.ProcessRegister(rmsg.register_request)
+    elif request_type == 'certificate_based_register':
+      response = self.ProcessCertBasedRegister(rmsg.register_request)
     elif request_type == 'api_authorization':
       response = self.ProcessApiAuthorization(rmsg.service_api_access_request)
     elif request_type == 'unregister':
@@ -388,12 +390,46 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     policy = self.server.GetPolicies()
     if ('managed_users' not in policy):
-      return (500, 'error in config - no managed users')
+      return (500, 'Error in config - no managed users')
     username = self.server.ResolveUser(auth)
     if ('*' not in policy['managed_users'] and
         username not in policy['managed_users']):
       return (403, 'Unmanaged')
 
+    return self.RegisterDeviceAndSendResponse(msg, username)
+
+  def ProcessCertBasedRegister(self, signed_msg):
+    """Handles a certificate based register request.
+
+    Checks the query for the cert and device identifier, registers the
+    device with the server and constructs a response.
+
+    Args:
+      msg: The CertificateBasedDeviceRegisterRequest message received from
+           the client.
+
+    Returns:
+      A tuple of HTTP status code and response data to send to the client.
+    """
+    # Unwrap the request
+    try:
+      req = self.UnwrapCertificateBasedDeviceRegistrationData(signed_msg)
+    except (Error):
+      return(400, 'Invalid request')
+
+    # TODO(drcrash): Check the certificate itself.
+    if req.certificate_type != dm.CertificateBasedDeviceRegistrationData.\
+        ENTERPRISE_ENROLLMENT_CERTIFICATE:
+      return(403, 'Invalid registration certificate type')
+
+    return self.RegisterDeviceAndSendResponse(req.device_register_request, None)
+
+  def RegisterDeviceAndSendResponse(self, msg, username):
+    """Registers a device and send a response to the client.
+
+    Checks that a device identifier was sent, registers the device
+    with the server and constructs a response.
+    """
     device_id = self.GetUniqueParam('deviceid')
     if not device_id:
       return (400, 'Missing device identifier')
@@ -409,6 +445,16 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     response.register_response.enrollment_type = token_info['enrollment_mode']
 
     return (200, response)
+
+  def UnwrapCertificateBasedDeviceRegistrationData(self, msg):
+    """Verifies the signature of |msg| and if it is valid, return the
+    certificate based device registration data. If not, throws an
+    exception.
+    """
+    # TODO(drcrash): Verify signature.
+    rdata = dm.CertificateBasedDeviceRegistrationData()
+    rdata.ParseFromString(msg.data[:len(msg.data) - msg.extra_data_bytes])
+    return rdata
 
   def ProcessApiAuthorization(self, msg):
     """Handles an API authorization request.
@@ -504,7 +550,9 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
               'google/ios/user')):
         fetch_response = response.policy_response.response.add()
         self.ProcessCloudPolicy(request, token_info, fetch_response, username)
-      elif request.policy_type == 'google/chrome/extension':
+      elif (request.policy_type in
+             ('google/chrome/extension',
+              'google/chromeos/signinextension')):
         self.ProcessCloudPolicyForExtensions(
             request, response.policy_response, token_info, username)
       else:
@@ -763,7 +811,7 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """
     # Send one PolicyFetchResponse for each extension that has
     # configuration data at the server.
-    ids = self.server.ListMatchingComponents('google/chrome/extension')
+    ids = self.server.ListMatchingComponents(request.policy_type)
     for settings_entity_id in ids:
       # Reuse the extension policy request, to trigger the same signature
       # type in the response.
@@ -773,7 +821,8 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       # Don't do key rotations for these messages.
       fetch_response.ClearField('new_public_key')
       fetch_response.ClearField('new_public_key_signature')
-      fetch_response.ClearField('new_public_key_verification_signature')
+      fetch_response.ClearField(
+          'new_public_key_verification_signature_deprecated')
 
   def ProcessCloudPolicy(self, msg, token_info, response, username=None):
     """Handles a cloud policy request. (New protocol for policy requests.)
@@ -817,7 +866,8 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if payload is None:
           self.GatherDevicePolicySettings(settings, policy.get(policy_key, {}))
           payload = settings.SerializeToString()
-      elif msg.policy_type == 'google/chrome/extension':
+      elif msg.policy_type in ('google/chrome/extension',
+                               'google/chromeos/signinextension'):
         settings = ep.ExternalPolicyData()
         payload = self.server.ReadPolicyFromDataDir(policy_key, settings)
         if payload is None:
@@ -831,17 +881,22 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       response.error_message = 'Request not allowed for the token used'
       return
 
-    # Sign with 'current_key_index', defaulting to key 0.
-    signing_key = None
-    req_key = None
-    current_key_index = policy.get('current_key_index', 0)
-    nkeys = len(self.server.keys)
-    if (msg.signature_type == dm.PolicyFetchRequest.SHA1_RSA and
-        current_key_index in range(nkeys)):
-      signing_key = self.server.keys[current_key_index]
-      if msg.public_key_version in range(1, nkeys + 1):
-        # requested key exists, use for signing and rotate.
-        req_key = self.server.keys[msg.public_key_version - 1]['private_key']
+    # Determine the current key on the client.
+    client_key_version = None
+    client_key = None
+    if msg.HasField('public_key_version'):
+      client_key_version = msg.public_key_version
+      client_key = self.server.GetKeyByVersion(client_key_version)
+      if client_key is None:
+        response.error_code = 400
+        response.error_message = 'Invalid public key version'
+        return
+
+    # Choose the key for signing the policy.
+    signing_key_version = self.server.GetKeyVersionForSigning(
+        client_key_version)
+    signing_key = self.server.GetKeyByVersion(signing_key_version)
+    assert signing_key is not None
 
     # Fill the policy data protobuf.
     policy_data = dm.PolicyData()
@@ -865,15 +920,15 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     if invalidation_name is not None:
       policy_data.invalidation_name = invalidation_name.encode('ascii')
 
-    if signing_key:
-      policy_data.public_key_version = current_key_index + 1
+    if msg.signature_type != dm.PolicyFetchRequest.NONE:
+      policy_data.public_key_version = signing_key_version
 
     if username:
       policy_data.username = username
     else:
       # If the correct |username| is unknown, rely on a manually-configured
       # username from the configuration file or use a default.
-      policy_data.username = policy.get('policy_user', 'user@example.com')
+      policy_data.username = policy.get('policy_user', 'username@example.com')
     policy_data.device_id = token_info['device_id']
 
     # Set affiliation IDs so that user was managed on the device.
@@ -885,13 +940,13 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     if user_affiliation_ids:
       policy_data.user_affiliation_ids.extend(user_affiliation_ids)
 
-    signed_data = policy_data.SerializeToString()
+    response.policy_data = policy_data.SerializeToString()
 
-    response.policy_data = signed_data
-    if signing_key:
-      response.policy_data_signature = (
-          bytes(signing_key['private_key'].hashAndSign(signed_data)))
-      if msg.public_key_version != current_key_index + 1:
+    # Sign the serialized policy data
+    if msg.signature_type == dm.PolicyFetchRequest.SHA1_RSA:
+      response.policy_data_signature = bytes(
+          signing_key['private_key'].hashAndSign(response.policy_data))
+      if msg.public_key_version != signing_key_version:
         response.new_public_key = signing_key['public_key']
 
         # Set the verification signature appropriate for the policy domain.
@@ -904,11 +959,12 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
           if verification_sig:
             assert len(verification_sig) == 256, \
                 'bad signature size: %d' % len(verification_sig)
-            response.new_public_key_verification_signature = verification_sig
+            response.new_public_key_verification_signature_deprecated = (
+                verification_sig)
 
-        if req_key:
-          response.new_public_key_signature = (
-              bytes(req_key.hashAndSign(response.new_public_key)))
+        if client_key is not None:
+          response.new_public_key_signature = bytes(
+              client_key['private_key'].hashAndSign(response.new_public_key))
 
     return (200, response.SerializeToString())
 
@@ -974,13 +1030,17 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
   """Handles requests and keeps global service state."""
 
   def __init__(self, server_address, data_dir, policy_path, client_state_file,
-               private_key_paths, server_base_url):
+               private_key_paths, rotate_keys_automatically, server_base_url):
     """Initializes the server.
 
     Args:
       server_address: Server host and port.
       policy_path: Names the file to read JSON-formatted policy from.
       private_key_paths: List of paths to read private keys from.
+      rotate_keys_automatically: Whether the keys should be rotated in a
+        round-robin fashion for each policy request (by default, either the
+        key specified in the config or the first key will be used for all
+        requests).
     """
     testserver_base.StoppableHTTPServer.__init__(self, server_address,
                                                  PolicyRequestHandler)
@@ -988,6 +1048,7 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
     self.data_dir = data_dir
     self.policy_path = policy_path
     self.client_state_file = client_state_file
+    self.rotate_keys_automatically = rotate_keys_automatically
     self.server_base_url = server_base_url
 
     self.keys = []
@@ -1066,6 +1127,48 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
         logging.error('Failed to load policies from %s' % self.policy_path)
     return policy
 
+  def GetKeyByVersion(self, key_version):
+    """Obtains the object containing key properties, given the key version.
+
+    Args:
+      key_version: Integer key version.
+
+    Returns:
+      The object containing key properties, or None if the key is not found.
+    """
+    # Convert the policy key version, which has to be positive according to the
+    # policy protocol definition, to an index in the keys list.
+    key_index = key_version - 1
+    if key_index < 0:
+      return None
+    if key_index >= len(self.keys):
+      if self.rotate_keys_automatically:
+        key_index %= len(self.keys)
+      else:
+        return None
+    return self.keys[key_index]
+
+  def GetKeyVersionForSigning(self, client_key_version):
+    """Determines the version of the key that should be used for signing policy.
+
+    Args:
+      client_key_version: Either an integer representing the current key version
+        provided by the client, or None if the client didn't provide any.
+
+    Returns:
+      An integer representing the signing key version.
+    """
+    if self.rotate_keys_automatically and client_key_version is not None:
+      # Return the incremented version, which means that the key should be
+      # rotated.
+      return client_key_version + 1
+    # Return the version that is specified by the config, defaulting to using
+    # the very first key. Note that incrementing here is done due to conversion
+    # between indices in the keys list and the key versions transmitted to the
+    # client (where the latter have to be positive according to the policy
+    # protocol definition).
+    return self.GetPolicies().get('current_key_index', 0) + 1
+
   def ResolveUser(self, auth_token):
     """Tries to resolve an auth token to the corresponding user name.
 
@@ -1110,7 +1213,8 @@ class PolicyTestServer(testserver_base.BrokenPipeHandlerMixIn,
       dm.DeviceRegisterRequest.DEVICE: [
           'google/chromeos/device',
           'google/chromeos/publicaccount',
-          'google/chrome/extension'
+          'google/chrome/extension',
+          'google/chromeos/signinextension'
       ],
       dm.DeviceRegisterRequest.ANDROID_BROWSER: [
           'google/android/user'
@@ -1330,6 +1434,7 @@ class PolicyServerRunner(testserver_base.TestServerRunner):
                               data_dir, config_file,
                               self.options.client_state_file,
                               self.options.policy_keys,
+                              self.options.rotate_keys_automatically,
                               self.options.server_base_url)
     server_data['port'] = server.server_port
     return server
@@ -1347,18 +1452,24 @@ class PolicyServerRunner(testserver_base.TestServerRunner):
                                   help='Specify a path to a PEM-encoded '
                                   'private key to use for policy signing. May '
                                   'be specified multiple times in order to '
-                                  'load multiple keys into the server. If the '
-                                  'server has multiple keys, it will rotate '
-                                  'through them in at each request in a '
-                                  'round-robin fashion. The server will '
-                                  'use a canned key if none is specified '
-                                  'on the command line. The test server will '
-                                  'also look for a verification signature file '
-                                  'in the same location: <filename>.sig and if '
-                                  'present will add the signature to the '
-                                  'policy blob as appropriate via the '
-                                  'new_public_key_verification_signature '
+                                  'load multiple keys into the server. The '
+                                  'server will use a canned key if none is '
+                                  'specified on the command line. The test '
+                                  'server will also look for a verification '
+                                  'signature file in the same location: '
+                                  '<filename>.sig and if present will add the '
+                                  'signature to the policy blob as appropriate '
+                                  'via the '
+                             'new_public_key_verification_signature_deprecated '
                                   'field.')
+    self.option_parser.add_option('--rotate-policy-keys-automatically',
+                                  action='store_true',
+                                  dest='rotate_keys_automatically',
+                                  help='If present, then the policy keys will '
+                                  'be rotated in a round-robin fashion for '
+                                  'each policy request (by default, either the '
+                                  'key specified in the config or the first '
+                                  'key will be used for all requests).')
     self.option_parser.add_option('--log-level', dest='log_level',
                                   default='WARN',
                                   help='Log level threshold to use.')

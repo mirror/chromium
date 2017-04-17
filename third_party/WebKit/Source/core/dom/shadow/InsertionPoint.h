@@ -40,82 +40,92 @@
 namespace blink {
 
 class CORE_EXPORT InsertionPoint : public HTMLElement {
-public:
-    ~InsertionPoint() override;
+ public:
+  ~InsertionPoint() override;
 
-    bool hasDistribution() const { return !m_distributedNodes.isEmpty(); }
-    void setDistributedNodes(DistributedNodes&);
-    void clearDistribution() { m_distributedNodes.clear(); }
-    bool isActive() const;
-    bool canBeActive() const;
+  bool HasDistribution() const { return !distributed_nodes_.IsEmpty(); }
+  void SetDistributedNodes(DistributedNodes&);
+  void ClearDistribution() { distributed_nodes_.Clear(); }
+  bool IsActive() const;
+  bool CanBeActive() const;
 
-    bool isShadowInsertionPoint() const;
-    bool isContentInsertionPoint() const;
+  bool IsShadowInsertionPoint() const;
+  bool IsContentInsertionPoint() const;
 
-    StaticNodeList* getDistributedNodes();
+  StaticNodeList* getDistributedNodes();
 
-    virtual bool canAffectSelector() const { return false; }
+  virtual bool CanAffectSelector() const { return false; }
 
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
-    void detachLayoutTree(const AttachContext& = AttachContext()) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void DetachLayoutTree(const AttachContext& = AttachContext()) override;
 
-    size_t distributedNodesSize() const { return m_distributedNodes.size(); }
-    Node* distributedNodeAt(size_t index)  const { return m_distributedNodes.at(index); }
-    Node* firstDistributedNode() const { return m_distributedNodes.isEmpty() ? 0 : m_distributedNodes.first(); }
-    Node* lastDistributedNode() const { return m_distributedNodes.isEmpty() ? 0 : m_distributedNodes.last(); }
-    Node* distributedNodeNextTo(const Node* node) const { return m_distributedNodes.nextTo(node); }
-    Node* distributedNodePreviousTo(const Node* node) const { return m_distributedNodes.previousTo(node); }
+  size_t DistributedNodesSize() const { return distributed_nodes_.size(); }
+  Node* DistributedNodeAt(size_t index) const {
+    return distributed_nodes_.at(index);
+  }
+  Node* FirstDistributedNode() const {
+    return distributed_nodes_.IsEmpty() ? 0 : distributed_nodes_.First();
+  }
+  Node* LastDistributedNode() const {
+    return distributed_nodes_.IsEmpty() ? 0 : distributed_nodes_.Last();
+  }
+  Node* DistributedNodeNextTo(const Node* node) const {
+    return distributed_nodes_.NextTo(node);
+  }
+  Node* DistributedNodePreviousTo(const Node* node) const {
+    return distributed_nodes_.PreviousTo(node);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    InsertionPoint(const QualifiedName&, Document&);
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    void childrenChanged(const ChildrenChange&) override;
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
-    void willRecalcStyle(StyleRecalcChange) override;
+ protected:
+  InsertionPoint(const QualifiedName&, Document&);
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  void ChildrenChanged(const ChildrenChange&) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+  void WillRecalcStyle(StyleRecalcChange) override;
 
-private:
-    bool isInsertionPoint() const = delete; // This will catch anyone doing an unnecessary check.
+ private:
+  bool IsInsertionPoint() const =
+      delete;  // This will catch anyone doing an unnecessary check.
 
-    DistributedNodes m_distributedNodes;
-    bool m_registeredWithShadowRoot;
+  DistributedNodes distributed_nodes_;
+  bool registered_with_shadow_root_;
 };
 
 typedef HeapVector<Member<InsertionPoint>, 1> DestinationInsertionPoints;
 
-DEFINE_ELEMENT_TYPE_CASTS(InsertionPoint, isInsertionPoint());
+DEFINE_ELEMENT_TYPE_CASTS(InsertionPoint, IsInsertionPoint());
 
-inline bool isActiveInsertionPoint(const Node& node)
-{
-    return node.isInsertionPoint() && toInsertionPoint(node).isActive();
+inline bool IsActiveInsertionPoint(const Node& node) {
+  return node.IsInsertionPoint() && ToInsertionPoint(node).IsActive();
 }
 
-inline bool isActiveShadowInsertionPoint(const Node& node)
-{
-    return node.isInsertionPoint() && toInsertionPoint(node).isShadowInsertionPoint();
+inline bool IsActiveShadowInsertionPoint(const Node& node) {
+  return node.IsInsertionPoint() &&
+         ToInsertionPoint(node).IsShadowInsertionPoint();
 }
 
-// TODO(hayato): The function name is confusing. This neither resolve a reprojection nor support v1 shadow trees.
-inline ElementShadow* shadowWhereNodeCanBeDistributed(const Node& node)
-{
-    Node* parent = node.parentNode();
-    if (!parent)
-        return 0;
-    if (parent->isShadowRoot() && !toShadowRoot(parent)->isYoungest())
-        return node.shadowHost()->shadow();
-    if (isActiveInsertionPoint(*parent))
-        return node.shadowHost()->shadow();
-    if (parent->isElementNode())
-        return toElement(parent)->shadow();
+inline ElementShadow* ShadowWhereNodeCanBeDistributedForV0(const Node& node) {
+  Node* parent = node.parentNode();
+  if (!parent)
     return 0;
+  if (parent->IsShadowRoot() && !ToShadowRoot(parent)->IsYoungest())
+    return node.OwnerShadowHost()->Shadow();
+  if (IsActiveInsertionPoint(*parent))
+    return node.OwnerShadowHost()->Shadow();
+  if (parent->IsElementNode())
+    return ToElement(parent)->Shadow();
+  return 0;
 }
 
-const InsertionPoint* resolveReprojection(const Node*);
+const InsertionPoint* ResolveReprojection(const Node*);
 
-void collectDestinationInsertionPoints(const Node&, HeapVector<Member<InsertionPoint>, 8>& results);
+void CollectDestinationInsertionPoints(
+    const Node&,
+    HeapVector<Member<InsertionPoint>, 8>& results);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InsertionPoint_h
+#endif  // InsertionPoint_h

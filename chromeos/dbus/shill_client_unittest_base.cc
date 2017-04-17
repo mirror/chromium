@@ -42,7 +42,7 @@ base::DictionaryValue* PopStringToStringDictionary(
         !entry_reader.PopString(&key) ||
         !entry_reader.PopString(&value))
       return NULL;
-    result->SetWithoutPathExpansion(key, new base::StringValue(value));
+    result->SetWithoutPathExpansion(key, new base::Value(value));
   }
   return result.release();
 }
@@ -74,39 +74,11 @@ void ValueMatcher::DescribeNegationTo(::std::ostream* os) const {
 }
 
 
-ShillClientUnittestBase::MockClosure::MockClosure() {}
-
-ShillClientUnittestBase::MockClosure::~MockClosure() {}
-
-base::Closure ShillClientUnittestBase::MockClosure::GetCallback() {
-  return base::Bind(&MockClosure::Run, base::Unretained(this));
-}
-
-
-ShillClientUnittestBase::MockListValueCallback::MockListValueCallback() {}
-
-ShillClientUnittestBase::MockListValueCallback::~MockListValueCallback() {}
-
-ShillClientHelper::ListValueCallback
-ShillClientUnittestBase::MockListValueCallback::GetCallback() {
-  return base::Bind(&MockListValueCallback::Run, base::Unretained(this));
-}
-
-
-ShillClientUnittestBase::MockErrorCallback::MockErrorCallback() {}
-
-ShillClientUnittestBase::MockErrorCallback::~MockErrorCallback() {}
-
 ShillClientUnittestBase::MockPropertyChangeObserver::
   MockPropertyChangeObserver() {}
 
 ShillClientUnittestBase::MockPropertyChangeObserver::
   ~MockPropertyChangeObserver() {}
-
-ShillClientHelper::ErrorCallback
-ShillClientUnittestBase::MockErrorCallback::GetCallback() {
-  return base::Bind(&MockErrorCallback::Run, base::Unretained(this));
-}
 
 
 ShillClientUnittestBase::ShillClientUnittestBase(
@@ -344,15 +316,14 @@ ShillClientUnittestBase::CreateExampleServiceProperties() {
   base::DictionaryValue* properties = new base::DictionaryValue;
   properties->SetWithoutPathExpansion(
       shill::kGuidProperty,
-      new base::StringValue("00000000-0000-0000-0000-000000000000"));
-  properties->SetWithoutPathExpansion(
-      shill::kModeProperty, new base::StringValue(shill::kModeManaged));
+      new base::Value("00000000-0000-0000-0000-000000000000"));
+  properties->SetWithoutPathExpansion(shill::kModeProperty,
+                                      new base::Value(shill::kModeManaged));
   properties->SetWithoutPathExpansion(shill::kTypeProperty,
-                                      new base::StringValue(shill::kTypeWifi));
+                                      new base::Value(shill::kTypeWifi));
   shill_property_util::SetSSID("testssid", properties);
-  properties->SetWithoutPathExpansion(
-      shill::kSecurityClassProperty,
-      new base::StringValue(shill::kSecurityPsk));
+  properties->SetWithoutPathExpansion(shill::kSecurityClassProperty,
+                                      new base::Value(shill::kSecurityPsk));
   return properties;
 }
 

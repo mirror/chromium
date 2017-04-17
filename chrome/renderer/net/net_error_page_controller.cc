@@ -20,10 +20,10 @@ NetErrorPageController::Delegate::~Delegate() {}
 // static
 void NetErrorPageController::Install(content::RenderFrame* render_frame,
                                      base::WeakPtr<Delegate> delegate) {
-  v8::Isolate* isolate = blink::mainThreadIsolate();
+  v8::Isolate* isolate = blink::MainThreadIsolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> context =
-      render_frame->GetWebFrame()->mainWorldScriptContext();
+      render_frame->GetWebFrame()->MainWorldScriptContext();
   if (context.IsEmpty())
     return;
 
@@ -43,8 +43,8 @@ bool NetErrorPageController::ShowSavedCopyButtonClick() {
   return ButtonClick(error_page::NetErrorHelperCore::SHOW_SAVED_COPY_BUTTON);
 }
 
-bool NetErrorPageController::ShowOfflinePagesButtonClick() {
-  return ButtonClick(error_page::NetErrorHelperCore::SHOW_OFFLINE_PAGES_BUTTON);
+bool NetErrorPageController::DownloadButtonClick() {
+  return ButtonClick(error_page::NetErrorHelperCore::DOWNLOAD_BUTTON);
 }
 
 bool NetErrorPageController::ReloadButtonClick() {
@@ -96,8 +96,8 @@ gin::ObjectTemplateBuilder NetErrorPageController::GetObjectTemplateBuilder(
              isolate)
       .SetMethod("showSavedCopyButtonClick",
                  &NetErrorPageController::ShowSavedCopyButtonClick)
-      .SetMethod("showOfflinePagesButtonClick",
-                 &NetErrorPageController::ShowOfflinePagesButtonClick)
+      .SetMethod("downloadButtonClick",
+                 &NetErrorPageController::DownloadButtonClick)
       .SetMethod("reloadButtonClick",
                  &NetErrorPageController::ReloadButtonClick)
       .SetMethod("detailsButtonClick",

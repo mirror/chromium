@@ -20,10 +20,12 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/json/json_file_value_serializer.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "base/values.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/web_application_info.h"
 #include "crypto/sha2.h"
@@ -116,10 +118,8 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
   }
 
   // Add the icons and linked icon information.
-  base::DictionaryValue* icons = new base::DictionaryValue();
-  root->Set(keys::kIcons, icons);
-  base::ListValue* linked_icons = new base::ListValue();
-  root->Set(keys::kLinkedAppIcons, linked_icons);
+  auto icons = base::MakeUnique<base::DictionaryValue>();
+  auto linked_icons = base::MakeUnique<base::ListValue>();
   for (const auto& icon : web_app.icons) {
     std::string size = base::StringPrintf("%i", icon.width);
     std::string icon_path = base::StringPrintf("%s/%s.png", kIconsDirName,
@@ -134,9 +134,11 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
       linked_icons->Append(std::move(linked_icon));
     }
   }
+  root->Set(keys::kIcons, std::move(icons));
+  root->Set(keys::kLinkedAppIcons, std::move(linked_icons));
 
   // Write the manifest.
-  base::FilePath manifest_path = temp_dir.path().Append(kManifestFilename);
+  base::FilePath manifest_path = temp_dir.GetPath().Append(kManifestFilename);
   JSONFileValueSerializer serializer(manifest_path);
   if (!serializer.Serialize(*root)) {
     LOG(ERROR) << "Could not serialize manifest.";
@@ -144,7 +146,7 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
   }
 
   // Write the icon files.
-  base::FilePath icons_dir = temp_dir.path().AppendASCII(kIconsDirName);
+  base::FilePath icons_dir = temp_dir.GetPath().AppendASCII(kIconsDirName);
   if (!base::CreateDirectory(icons_dir)) {
     LOG(ERROR) << "Could not create icons directory.";
     return NULL;
@@ -174,12 +176,9 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
 
   // Finally, create the extension object to represent the unpacked directory.
   std::string error;
-  scoped_refptr<Extension> extension = Extension::Create(
-      temp_dir.path(),
-      Manifest::INTERNAL,
-      *root,
-      Extension::FROM_BOOKMARK,
-      &error);
+  scoped_refptr<Extension> extension =
+      Extension::Create(temp_dir.GetPath(), Manifest::INTERNAL, *root,
+                        Extension::FROM_BOOKMARK, &error);
   if (!extension.get()) {
     LOG(ERROR) << error;
     return NULL;

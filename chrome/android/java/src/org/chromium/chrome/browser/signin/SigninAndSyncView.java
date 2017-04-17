@@ -20,9 +20,9 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.signin.AccountSigninActivity.AccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
 import org.chromium.chrome.browser.sync.ui.SyncCustomizationFragment;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
-import org.chromium.sync.signin.ChromeSigninController;
+import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.components.sync.AndroidSyncSettings;
+import org.chromium.components.sync.AndroidSyncSettings.AndroidSyncSettingsObserver;
 
 /**
  * A View that shows the user the next step they must complete to start syncing their data (eg.
@@ -113,7 +113,7 @@ public class SigninAndSyncView extends LinearLayout
 
     private void update() {
         ViewState viewState;
-        if (!ChromeSigninController.get(getContext()).isSignedIn()) {
+        if (!ChromeSigninController.get().isSignedIn()) {
             viewState = getStateForSignin();
         } else if (!AndroidSyncSettings.isMasterSyncEnabled(getContext())) {
             viewState = getStateForEnableAndroidSync();

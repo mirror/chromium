@@ -4,7 +4,7 @@
 
 package org.chromium.android_webview.test;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 import android.webkit.WebSettings;
 
 import org.chromium.android_webview.AwContents;
@@ -15,6 +15,7 @@ import org.chromium.android_webview.test.util.AwTestTouchUtils;
 import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
+import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.net.test.util.TestWebServer;
 
 import java.util.concurrent.CountDownLatch;
@@ -31,7 +32,7 @@ public class ClientOnReceivedError2Test extends AwTestBase {
     private TestWebServer mWebServer;
 
     private static final String BAD_HTML_URL =
-            "http://man.id.be.really.surprised.if.this.address.existed/a.html";
+            "http://id.be.really.surprised.if.this.address.existed/a.html";
 
     @Override
     public void setUp() throws Exception {
@@ -56,9 +57,9 @@ public class ClientOnReceivedError2Test extends AwTestBase {
     }
 
     private static class VerifyOnReceivedError2CallClient extends TestAwContentsClient {
-        private boolean mBypass = false;
-        private boolean mIsOnPageFinishedCalled = false;
-        private boolean mIsOnReceivedError2Called = false;
+        private boolean mBypass;
+        private boolean mIsOnPageFinishedCalled;
+        private boolean mIsOnReceivedError2Called;
 
         void enableBypass() {
             mBypass = true;
@@ -265,8 +266,8 @@ public class ClientOnReceivedError2Test extends AwTestBase {
         final String iframeUrl = baseUrl + "does_not_exist.html";
         final String pageHtml = CommonResources.makeHtmlPageFrom(
                 "", "<iframe src='" + iframeUrl + "' />");
-        loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(),
-                pageHtml, "text/html", false, baseUrl, "about:blank");
+        loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), pageHtml,
+                "text/html", false, baseUrl, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         TestAwContentsClient.OnReceivedError2Helper onReceivedError2Helper =
                 mContentsClient.getOnReceivedError2Helper();
@@ -291,7 +292,7 @@ public class ClientOnReceivedError2Test extends AwTestBase {
         final String pageHtml = CommonResources.makeHtmlPageFrom(
                 "", "<iframe src='" + iframeUrl + "' />");
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), pageHtml,
-                "text/html", false, baseUrl, "about:blank");
+                "text/html", false, baseUrl, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         TestAwContentsClient.OnReceivedError2Helper onReceivedError2Helper =
                 mContentsClient.getOnReceivedError2Helper();

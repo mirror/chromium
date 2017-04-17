@@ -34,40 +34,43 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class Blob;
 class DataObjectItem;
 class DataTransfer;
+class File;
+class ScriptState;
 class StringCallback;
-class ExecutionContext;
 
-class CORE_EXPORT DataTransferItem final : public GarbageCollected<DataTransferItem>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-    WTF_MAKE_NONCOPYABLE(DataTransferItem);
-public:
-    static DataTransferItem* create(DataTransfer*, DataObjectItem*);
+class CORE_EXPORT DataTransferItem final
+    : public GarbageCollected<DataTransferItem>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(DataTransferItem);
 
-    String kind() const;
-    String type() const;
+ public:
+  static DataTransferItem* Create(DataTransfer*, DataObjectItem*);
 
-    void getAsString(ExecutionContext*, StringCallback*) const;
-    Blob* getAsFile() const;
+  String kind() const;
+  String type() const;
 
-    DataTransfer* getDataTransfer() { return m_dataTransfer.get(); }
-    DataObjectItem* getDataObjectItem() { return m_item.get(); }
+  void getAsString(ScriptState*, StringCallback*) const;
+  File* getAsFile() const;
 
-    DECLARE_TRACE();
+  DataTransfer* GetDataTransfer() { return data_transfer_.Get(); }
+  DataObjectItem* GetDataObjectItem() { return item_.Get(); }
 
-private:
-    DataTransferItem(DataTransfer*, DataObjectItem*);
+  DECLARE_TRACE();
 
-    Member<DataTransfer> m_dataTransfer;
-    Member<DataObjectItem> m_item;
+ private:
+  DataTransferItem(DataTransfer*, DataObjectItem*);
+
+  Member<DataTransfer> data_transfer_;
+  Member<DataObjectItem> item_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DataTransferItem_h
+#endif  // DataTransferItem_h

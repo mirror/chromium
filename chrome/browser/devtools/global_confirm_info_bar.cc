@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/stl_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/infobars/core/infobar.h"
@@ -75,8 +76,15 @@ base::string16 GlobalConfirmInfoBar::DelegateProxy::GetButtonLabel(
 
 bool GlobalConfirmInfoBar::DelegateProxy::Accept() {
   base::WeakPtr<GlobalConfirmInfoBar> info_bar = global_info_bar_;
-  if (info_bar)
+  // Remove the current InfoBar (the one whose Accept button is being clicked)
+  // from the control of GlobalConfirmInfoBar. This InfoBar will be closed by
+  // caller of this method, and we don't need GlobalConfirmInfoBar to close it.
+  // Furthermore, letting GlobalConfirmInfoBar close the current InfoBar can
+  // cause memory corruption when InfoBar animation is disabled.
+  if (info_bar) {
+    info_bar->OnInfoBarRemoved(info_bar_, false);
     info_bar->delegate_->Accept();
+  }
   // Could be destroyed after this point.
   if (info_bar)
       info_bar->Close();
@@ -85,8 +93,11 @@ bool GlobalConfirmInfoBar::DelegateProxy::Accept() {
 
 bool GlobalConfirmInfoBar::DelegateProxy::Cancel() {
   base::WeakPtr<GlobalConfirmInfoBar> info_bar = global_info_bar_;
-  if (info_bar)
+  // See comments in GlobalConfirmInfoBar::DelegateProxy::Accept().
+  if (info_bar) {
+    info_bar->OnInfoBarRemoved(info_bar_, false);
     info_bar->delegate_->Cancel();
+  }
   // Could be destroyed after this point.
   if (info_bar)
       info_bar->Close();
@@ -116,8 +127,11 @@ bool GlobalConfirmInfoBar::DelegateProxy::EqualsDelegate(
 
 void GlobalConfirmInfoBar::DelegateProxy::InfoBarDismissed() {
   base::WeakPtr<GlobalConfirmInfoBar> info_bar = global_info_bar_;
-  if (info_bar)
+  // See comments in GlobalConfirmInfoBar::DelegateProxy::Accept().
+  if (info_bar) {
+    info_bar->OnInfoBarRemoved(info_bar_, false);
     info_bar->delegate_->InfoBarDismissed();
+  }
   // Could be destroyed after this point.
   if (info_bar)
       info_bar->Close();
@@ -146,8 +160,7 @@ GlobalConfirmInfoBar::GlobalConfirmInfoBar(
     : delegate_(std::move(delegate)),
       browser_tab_strip_tracker_(this, nullptr, nullptr),
       weak_factory_(this) {
-  browser_tab_strip_tracker_.Init(
-      BrowserTabStripTracker::InitWith::BROWSERS_IN_ACTIVE_DESKTOP);
+  browser_tab_strip_tracker_.Init();
 }
 
 GlobalConfirmInfoBar::~GlobalConfirmInfoBar() {
@@ -160,36 +173,17 @@ GlobalConfirmInfoBar::~GlobalConfirmInfoBar() {
   }
 }
 
-void GlobalConfirmInfoBar::TabInsertedAt(content::WebContents* web_contents,
+void GlobalConfirmInfoBar::TabInsertedAt(TabStripModel* tab_strip_model,
+                                         content::WebContents* web_contents,
                                          int index,
                                          bool foreground) {
-  InfoBarService* infobar_service =
-      InfoBarService::FromWebContents(web_contents);
-  // WebContents from the tab strip must have the infobar service.
-  DCHECK(infobar_service);
-  if (proxies_.find(infobar_service) != proxies_.end())
-      return;
-
-  std::unique_ptr<GlobalConfirmInfoBar::DelegateProxy> proxy(
-      new GlobalConfirmInfoBar::DelegateProxy(weak_factory_.GetWeakPtr()));
-  GlobalConfirmInfoBar::DelegateProxy* proxy_ptr = proxy.get();
-  infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
-      infobar_service->CreateConfirmInfoBar(std::move(proxy)));
-
-  proxy_ptr->info_bar_ = added_bar;
-  DCHECK(added_bar);
-  proxies_[infobar_service] = proxy_ptr;
-  infobar_service->AddObserver(this);
+  MaybeAddInfoBar(web_contents);
 }
 
 void GlobalConfirmInfoBar::TabChangedAt(content::WebContents* web_contents,
                                         int index,
                                         TabChangeType change_type) {
-  InfoBarService* infobar_service =
-      InfoBarService::FromWebContents(web_contents);
-  auto it = proxies_.find(infobar_service);
-  if (it == proxies_.end())
-    TabInsertedAt(web_contents, index, false);
+  MaybeAddInfoBar(web_contents);
 }
 
 void GlobalConfirmInfoBar::OnInfoBarRemoved(infobars::InfoBar* info_bar,
@@ -207,4 +201,24 @@ void GlobalConfirmInfoBar::OnManagerShuttingDown(
     infobars::InfoBarManager* manager) {
   manager->RemoveObserver(this);
   proxies_.erase(manager);
+}
+
+void GlobalConfirmInfoBar::MaybeAddInfoBar(content::WebContents* web_contents) {
+  InfoBarService* infobar_service =
+      InfoBarService::FromWebContents(web_contents);
+  // WebContents from the tab strip must have the infobar service.
+  DCHECK(infobar_service);
+  if (ContainsKey(proxies_, infobar_service))
+    return;
+
+  std::unique_ptr<GlobalConfirmInfoBar::DelegateProxy> proxy(
+      new GlobalConfirmInfoBar::DelegateProxy(weak_factory_.GetWeakPtr()));
+  GlobalConfirmInfoBar::DelegateProxy* proxy_ptr = proxy.get();
+  infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
+      infobar_service->CreateConfirmInfoBar(std::move(proxy)));
+
+  proxy_ptr->info_bar_ = added_bar;
+  DCHECK(added_bar);
+  proxies_[infobar_service] = proxy_ptr;
+  infobar_service->AddObserver(this);
 }

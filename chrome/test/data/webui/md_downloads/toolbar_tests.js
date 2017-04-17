@@ -7,15 +7,40 @@ suite('toolbar tests', function() {
   var toolbar;
 
   setup(function() {
+    /**
+     * @constructor
+     * @extends {downloads.ActionService}
+     */
+    function TestActionService() {
+      downloads.ActionService.call(this);
+    }
+
+    TestActionService.prototype = {
+      __proto__: downloads.ActionService.prototype,
+      loadMore: function() { /* Prevent chrome.send(). */ },
+    };
+
     toolbar = document.createElement('downloads-toolbar');
+    downloads.ActionService.instance_ = new TestActionService;
     document.body.appendChild(toolbar);
   });
 
   test('resize closes more options menu', function() {
-    MockInteractions.tap(toolbar.$$('paper-icon-button'));
-    assertTrue(toolbar.$.more.opened);
+    MockInteractions.tap(toolbar.$.moreActions);
+    assertTrue(toolbar.$.moreActionsMenu.open);
 
     window.dispatchEvent(new CustomEvent('resize'));
-    assertFalse(toolbar.$.more.opened);
+    assertFalse(toolbar.$.moreActionsMenu.open);
+  });
+
+  test('search starts spinner', function() {
+    toolbar.$.toolbar.fire('search-changed', 'a');
+    assertTrue(toolbar.spinnerActive);
+
+    // Pretend the manager got results and set this to false.
+    toolbar.spinnerActive = false;
+
+    toolbar.$.toolbar.fire('search-changed', 'a ');  // Same term plus a space.
+    assertFalse(toolbar.spinnerActive);
   });
 });

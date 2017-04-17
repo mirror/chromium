@@ -38,13 +38,13 @@
 namespace blink {
 
 struct WebPluginParams {
-    WebURL url;
-    WebString mimeType;
-    WebVector<WebString> attributeNames;
-    WebVector<WebString> attributeValues;
-    bool loadManually;
+  WebURL url;
+  WebString mime_type;
+  WebVector<WebString> attribute_names;
+  WebVector<WebString> attribute_values;
+  bool load_manually;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

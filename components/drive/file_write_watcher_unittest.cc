@@ -49,7 +49,8 @@ void WriteSomethingAfterStartWatch(const base::FilePath& path,
   EXPECT_TRUE(watch_success) << path.value();
 
   const char kDummy[] = "hello";
-  ASSERT_TRUE(base::WriteFile(path, kDummy, arraysize(kDummy)));
+  ASSERT_EQ(static_cast<int>(arraysize(kDummy)),
+            base::WriteFile(path, kDummy, arraysize(kDummy)));
 }
 
 class FileWriteWatcherTest : public testing::Test {
@@ -68,7 +69,7 @@ class FileWriteWatcherTest : public testing::Test {
   void SetUp() override { ASSERT_TRUE(temp_dir_.CreateUniqueTempDir()); }
 
   base::FilePath GetTempPath(const std::string& name) {
-    return temp_dir_.path().Append(name);
+    return temp_dir_.GetPath().Append(name);
   }
 
  private:

@@ -10,49 +10,63 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef ChannelSplitterNode_h
 #define ChannelSplitterNode_h
 
 #include "modules/webaudio/AudioNode.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class BaseAudioContext;
+class ChannelSplitterOptions;
 
 class ChannelSplitterHandler final : public AudioHandler {
-public:
-    static PassRefPtr<ChannelSplitterHandler> create(AudioNode&, float sampleRate, unsigned numberOfOutputs);
+ public:
+  static PassRefPtr<ChannelSplitterHandler> Create(AudioNode&,
+                                                   float sample_rate,
+                                                   unsigned number_of_outputs);
 
-    // AudioHandler
-    void process(size_t framesToProcess) override;
+  // AudioHandler
+  void Process(size_t frames_to_process) override;
+  void SetChannelCount(unsigned long, ExceptionState&) final;
+  void SetChannelCountMode(const String&, ExceptionState&) final;
 
-private:
-    ChannelSplitterHandler(AudioNode&, float sampleRate, unsigned numberOfOutputs);
+ private:
+  ChannelSplitterHandler(AudioNode&,
+                         float sample_rate,
+                         unsigned number_of_outputs);
 };
 
 class ChannelSplitterNode final : public AudioNode {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static ChannelSplitterNode* create(BaseAudioContext&, ExceptionState&);
-    static ChannelSplitterNode* create(BaseAudioContext&, unsigned numberOfOutputs, ExceptionState&);
+  DEFINE_WRAPPERTYPEINFO();
 
-private:
-    ChannelSplitterNode(BaseAudioContext&, unsigned numberOfOutputs);
+ public:
+  static ChannelSplitterNode* Create(BaseAudioContext&, ExceptionState&);
+  static ChannelSplitterNode* Create(BaseAudioContext&,
+                                     unsigned number_of_outputs,
+                                     ExceptionState&);
+  static ChannelSplitterNode* Create(BaseAudioContext*,
+                                     const ChannelSplitterOptions&,
+                                     ExceptionState&);
+
+ private:
+  ChannelSplitterNode(BaseAudioContext&, unsigned number_of_outputs);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ChannelSplitterNode_h
+#endif  // ChannelSplitterNode_h

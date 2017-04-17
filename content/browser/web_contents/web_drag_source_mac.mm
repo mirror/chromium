@@ -22,6 +22,8 @@
 #include "content/browser/download/drag_download_file.h"
 #include "content/browser/download/drag_download_util.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
@@ -51,38 +53,6 @@ namespace {
 // |NSURLPboardType|.
 NSString* const kNSURLTitlePboardType = @"public.url-name";
 
-// Converts a base::string16 into a FilePath. Use this method instead of
-// -[NSString fileSystemRepresentation] to prevent exceptions from being thrown.
-// See http://crbug.com/78782 for more info.
-base::FilePath FilePathFromFilename(const base::string16& filename) {
-  NSString* str = SysUTF16ToNSString(filename);
-  char buf[MAXPATHLEN];
-  if (![str getFileSystemRepresentation:buf maxLength:sizeof(buf)])
-    return base::FilePath();
-  return base::FilePath(buf);
-}
-
-// Returns a filename appropriate for the drop data
-// TODO(viettrungluu): Refactor to make it common across platforms,
-// and move it somewhere sensible.
-base::FilePath GetFileNameFromDragData(const DropData& drop_data) {
-  base::FilePath file_name(
-      FilePathFromFilename(drop_data.file_description_filename));
-
-  // Images without ALT text will only have a file extension so we need to
-  // synthesize one from the provided extension and URL.
-  if (file_name.empty()) {
-    // Retrieve the name from the URL.
-    base::string16 suggested_filename =
-        net::GetSuggestedFilename(drop_data.url, "", "", "", "", "");
-    const std::string extension = file_name.Extension();
-    file_name = FilePathFromFilename(suggested_filename);
-    file_name = file_name.ReplaceExtension(extension);
-  }
-
-  return file_name;
-}
-
 // This helper's sole task is to write out data for a promised file; the caller
 // is responsible for opening the file. It takes the drop data and an open file
 // stream.
@@ -109,6 +79,7 @@ void PromiseWriterHelper(const DropData& drop_data,
 - (id)initWithContents:(content::WebContentsImpl*)contents
                   view:(NSView*)contentsView
               dropData:(const DropData*)dropData
+             sourceRWH:(content::RenderWidgetHostImpl*)sourceRWH
                  image:(NSImage*)image
                 offset:(NSPoint)offset
             pasteboard:(NSPasteboard*)pboard
@@ -123,6 +94,7 @@ void PromiseWriterHelper(const DropData& drop_data,
     dropData_.reset(new DropData(*dropData));
     DCHECK(dropData_.get());
 
+    dragStartRWH_ = sourceRWH->GetWeakPtr();
     dragImage_.reset([image retain]);
     imageOffset_ = offset;
 
@@ -269,30 +241,48 @@ void PromiseWriterHelper(const DropData& drop_data,
         operation:(NSDragOperation)operation {
   if (!contents_ || !contentsView_)
     return;
-  contents_->SystemDragEnded();
 
-  RenderViewHostImpl* rvh = static_cast<RenderViewHostImpl*>(
-      contents_->GetRenderViewHost());
-  if (rvh) {
-    // Convert |screenPoint| to view coordinates and flip it.
-    NSPoint localPoint = NSZeroPoint;
-    if ([contentsView_ window])
-      localPoint = [self convertScreenPoint:screenPoint];
-    NSRect viewFrame = [contentsView_ frame];
-    localPoint.y = viewFrame.size.height - localPoint.y;
-    // Flip |screenPoint|.
-    NSRect screenFrame = [[[contentsView_ window] screen] frame];
-    screenPoint.y = screenFrame.size.height - screenPoint.y;
+  contents_->SystemDragEnded(dragStartRWH_.get());
 
-    // If AppKit returns a copy and move operation, mask off the move bit
-    // because WebCore does not understand what it means to do both, which
-    // results in an assertion failure/renderer crash.
-    if (operation == (NSDragOperationMove | NSDragOperationCopy))
-      operation &= ~NSDragOperationMove;
+  // Convert |screenPoint| to view coordinates and flip it.
+  NSPoint localPoint = NSZeroPoint;
+  if ([contentsView_ window])
+    localPoint = [self convertScreenPoint:screenPoint];
+  NSRect viewFrame = [contentsView_ frame];
+  localPoint.y = viewFrame.size.height - localPoint.y;
+  // Flip |screenPoint|.
+  NSRect screenFrame = [[[contentsView_ window] screen] frame];
+  screenPoint.y = screenFrame.size.height - screenPoint.y;
 
-    contents_->DragSourceEndedAt(localPoint.x, localPoint.y, screenPoint.x,
-        screenPoint.y, static_cast<blink::WebDragOperation>(operation));
+  // If AppKit returns a copy and move operation, mask off the move bit
+  // because WebCore does not understand what it means to do both, which
+  // results in an assertion failure/renderer crash.
+  if (operation == (NSDragOperationMove | NSDragOperationCopy))
+    operation &= ~NSDragOperationMove;
+
+  // |localPoint| and |screenPoint| are in the root coordinate space, for
+  // non-root RenderWidgetHosts they need to be transformed.
+  gfx::Point transformedPoint = gfx::Point(localPoint.x, localPoint.y);
+  gfx::Point transformedScreenPoint = gfx::Point(screenPoint.x, screenPoint.y);
+  if (dragStartRWH_ && contents_->GetRenderWidgetHostView()) {
+    content::RenderWidgetHostViewBase* contentsViewBase =
+        static_cast<content::RenderWidgetHostViewBase*>(
+            contents_->GetRenderWidgetHostView());
+    content::RenderWidgetHostViewBase* dragStartViewBase =
+        static_cast<content::RenderWidgetHostViewBase*>(
+            dragStartRWH_->GetView());
+    contentsViewBase->TransformPointToCoordSpaceForView(
+        gfx::Point(localPoint.x, localPoint.y), dragStartViewBase,
+        &transformedPoint);
+    contentsViewBase->TransformPointToCoordSpaceForView(
+        gfx::Point(screenPoint.x, screenPoint.y), dragStartViewBase,
+        &transformedScreenPoint);
   }
+
+  contents_->DragSourceEndedAt(
+      transformedPoint.x(), transformedPoint.y(), transformedScreenPoint.x(),
+      transformedScreenPoint.y(),
+      static_cast<blink::WebDragOperation>(operation), dragStartRWH_.get());
 
   // Make sure the pasteboard owner isn't us.
   [pasteboard_ declareTypes:[NSArray array] owner:nil];
@@ -367,8 +357,12 @@ void PromiseWriterHelper(const DropData& drop_data,
   if (!dropData_->file_contents.empty() ||
       !dropData_->download_metadata.empty()) {
     if (dropData_->download_metadata.empty()) {
-      downloadFileName_ = GetFileNameFromDragData(*dropData_);
-      net::GetMimeTypeFromExtension(downloadFileName_.Extension(), &mimeType);
+      base::Optional<base::FilePath> suggestedFilename =
+          dropData_->GetSafeFilenameForImageFileContents();
+      if (suggestedFilename) {
+        downloadFileName_ = std::move(*suggestedFilename);
+        net::GetMimeTypeFromExtension(downloadFileName_.Extension(), &mimeType);
+      }
     } else {
       base::string16 mimeType16;
       base::FilePath fileName;

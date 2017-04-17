@@ -24,6 +24,7 @@
 #include "components/os_crypt/os_crypt_mocker.h"
 #include "components/password_manager/core/browser/login_database.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
+#include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/password_store_origin_unittest.h"
 #include "content/public/test/test_browser_thread.h"
@@ -73,11 +74,12 @@ void Noop() {}
 class MockPasswordStoreConsumer : public PasswordStoreConsumer {
  public:
   MOCK_METHOD1(OnGetPasswordStoreResultsConstRef,
-               void(const std::vector<PasswordForm*>&));
+               void(const std::vector<std::unique_ptr<PasswordForm>>&));
 
   // GMock cannot mock methods with move-only args.
-  void OnGetPasswordStoreResults(ScopedVector<PasswordForm> results) override {
-    OnGetPasswordStoreResultsConstRef(results.get());
+  void OnGetPasswordStoreResults(
+      std::vector<std::unique_ptr<PasswordForm>> results) override {
+    OnGetPasswordStoreResultsConstRef(results);
   }
 };
 
@@ -114,7 +116,7 @@ class SlowToInitLoginDatabase : public password_manager::LoginDatabase {
 // TODO(stuartmorgan): This is current order-dependent; ideally it shouldn't
 // matter if |forms| and |expectations| are scrambled.
 void CheckFormsAgainstExpectations(
-    const std::vector<PasswordForm*>& forms,
+    const std::vector<std::unique_ptr<PasswordForm>>& forms,
     const std::vector<PasswordFormData*>& expectations,
 
     const char* forms_label,
@@ -127,7 +129,7 @@ void CheckFormsAgainstExpectations(
   for (unsigned int i = 0; i < expectations.size(); ++i) {
     SCOPED_TRACE(testing::Message() << forms_label << " in test " << test_number
                                     << ", item " << i);
-    PasswordForm* form = forms[i];
+    PasswordForm* form = forms[i].get();
     PasswordFormData* expectation = expectations[i];
     EXPECT_EQ(expectation->scheme, form->scheme);
     EXPECT_EQ(std::string(expectation->signon_realm), form->signon_realm);
@@ -234,7 +236,7 @@ void PasswordStoreMacTestDelegate::ClosePasswordStore() {
 }
 
 base::FilePath PasswordStoreMacTestDelegate::test_login_db_file_path() const {
-  return db_dir_.path().Append(FILE_PATH_LITERAL("login.db"));
+  return db_dir_.GetPath().Append(FILE_PATH_LITERAL("login.db"));
 }
 
 }  // namespace
@@ -495,7 +497,7 @@ TEST_F(PasswordStoreMacInternalsTest, TestKeychainSearch) {
         CreatePasswordFormFromDataForTesting(test_data[i].data);
 
     // Check matches treating the form as a fill target.
-    ScopedVector<autofill::PasswordForm> matching_items =
+    std::vector<std::unique_ptr<PasswordForm>> matching_items =
         keychain_adapter.PasswordsFillingForm(query_form->signon_realm,
                                               query_form->scheme);
     EXPECT_EQ(test_data[i].expected_fill_matches, matching_items.size());
@@ -512,8 +514,6 @@ TEST_F(PasswordStoreMacInternalsTest, TestKeychainSearch) {
         internal_keychain_helpers::ExtractPasswordsMergeableWithForm(
             *keychain_, item_form_pairs, *query_form);
     EXPECT_EQ(test_data[i].expected_merge_matches, matching_items.size());
-    STLDeleteContainerPairSecondPointers(item_form_pairs.begin(),
-                                         item_form_pairs.end());
     for (std::vector<SecKeychainItemRef>::iterator i = keychain_items.begin();
          i != keychain_items.end(); ++i) {
       keychain_->Free(*i);
@@ -577,27 +577,27 @@ TEST_F(PasswordStoreMacInternalsTest, TestKeychainExactSearch) {
 
     // Make sure that the matching isn't looser than it should be by checking
     // that slightly altered forms don't match.
-    ScopedVector<autofill::PasswordForm> modified_forms;
+    std::vector<std::unique_ptr<PasswordForm>> modified_forms;
 
-    modified_forms.push_back(new PasswordForm(*base_form));
+    modified_forms.push_back(base::MakeUnique<PasswordForm>(*base_form));
     modified_forms.back()->username_value = ASCIIToUTF16("wrong_user");
 
-    modified_forms.push_back(new PasswordForm(*base_form));
-    SetPasswordFormPath(modified_forms.back(), "elsewhere.html");
+    modified_forms.push_back(base::MakeUnique<PasswordForm>(*base_form));
+    SetPasswordFormPath(modified_forms.back().get(), "elsewhere.html");
 
-    modified_forms.push_back(new PasswordForm(*base_form));
+    modified_forms.push_back(base::MakeUnique<PasswordForm>(*base_form));
     modified_forms.back()->scheme = PasswordForm::SCHEME_OTHER;
 
-    modified_forms.push_back(new PasswordForm(*base_form));
-    SetPasswordFormPort(modified_forms.back(), "1234");
+    modified_forms.push_back(base::MakeUnique<PasswordForm>(*base_form));
+    SetPasswordFormPort(modified_forms.back().get(), "1234");
 
-    modified_forms.push_back(new PasswordForm(*base_form));
+    modified_forms.push_back(base::MakeUnique<PasswordForm>(*base_form));
     modified_forms.back()->blacklisted_by_user = true;
 
     if (base_form->scheme == PasswordForm::SCHEME_BASIC ||
         base_form->scheme == PasswordForm::SCHEME_DIGEST) {
-      modified_forms.push_back(new PasswordForm(*base_form));
-      SetPasswordFormRealm(modified_forms.back(), "incorrect");
+      modified_forms.push_back(base::MakeUnique<PasswordForm>(*base_form));
+      SetPasswordFormRealm(modified_forms.back().get(), "incorrect");
     }
 
     for (unsigned int j = 0; j < modified_forms.size(); ++j) {
@@ -1070,31 +1070,28 @@ TEST_F(PasswordStoreMacInternalsTest, TestFormMerge) {
   test_data[MERGE_OUTPUT][current_test].push_back(&merged_android);
 
   for (unsigned int test_case = 0; test_case <= current_test; ++test_case) {
-    ScopedVector<autofill::PasswordForm> keychain_forms;
+    std::vector<std::unique_ptr<PasswordForm>> keychain_forms;
     for (std::vector<PasswordFormData*>::iterator i =
              test_data[KEYCHAIN_INPUT][test_case].begin();
          i != test_data[KEYCHAIN_INPUT][test_case].end(); ++i) {
-      keychain_forms.push_back(
-          CreatePasswordFormFromDataForTesting(*(*i)).release());
+      keychain_forms.push_back(CreatePasswordFormFromDataForTesting(*(*i)));
     }
-    ScopedVector<autofill::PasswordForm> database_forms;
+    std::vector<std::unique_ptr<PasswordForm>> database_forms;
     for (std::vector<PasswordFormData*>::iterator i =
              test_data[DATABASE_INPUT][test_case].begin();
          i != test_data[DATABASE_INPUT][test_case].end(); ++i) {
-      database_forms.push_back(
-          CreatePasswordFormFromDataForTesting(*(*i)).release());
+      database_forms.push_back(CreatePasswordFormFromDataForTesting(*(*i)));
     }
 
-    ScopedVector<autofill::PasswordForm> merged_forms;
+    std::vector<std::unique_ptr<PasswordForm>> merged_forms;
     internal_keychain_helpers::MergePasswordForms(
         &keychain_forms, &database_forms, &merged_forms);
 
-    CHECK_FORMS(keychain_forms.get(), test_data[KEYCHAIN_OUTPUT][test_case],
+    CHECK_FORMS(keychain_forms, test_data[KEYCHAIN_OUTPUT][test_case],
                 test_case);
-    CHECK_FORMS(database_forms.get(), test_data[DATABASE_OUTPUT][test_case],
+    CHECK_FORMS(database_forms, test_data[DATABASE_OUTPUT][test_case],
                 test_case);
-    CHECK_FORMS(merged_forms.get(), test_data[MERGE_OUTPUT][test_case],
-                test_case);
+    CHECK_FORMS(merged_forms, test_data[MERGE_OUTPUT][test_case], test_case);
   }
 }
 
@@ -1118,12 +1115,11 @@ TEST_F(PasswordStoreMacInternalsTest, TestPasswordBulkLookup) {
        "http://some.domain.com/path.html", "http://some.domain.com/action.cgi",
        L"submit", L"username", L"password", NULL, NULL, true, 1212121212},
   };
-  ScopedVector<autofill::PasswordForm> database_forms;
-  for (unsigned int i = 0; i < arraysize(db_data); ++i) {
-    database_forms.push_back(
-        CreatePasswordFormFromDataForTesting(db_data[i]).release());
+  std::vector<std::unique_ptr<PasswordForm>> database_forms;
+  for (const PasswordFormData& form_data : db_data) {
+    database_forms.push_back(CreatePasswordFormFromDataForTesting(form_data));
   }
-  ScopedVector<autofill::PasswordForm> merged_forms;
+  std::vector<std::unique_ptr<PasswordForm>> merged_forms;
   internal_keychain_helpers::GetPasswordsForForms(*keychain_, &database_forms,
                                                   &merged_forms);
   EXPECT_EQ(2U, database_forms.size());
@@ -1145,12 +1141,11 @@ TEST_F(PasswordStoreMacInternalsTest, TestBlacklistedFiltering) {
        L"username", L"password", L"joe_user", L"non_empty_password", true,
        1240000000},
   };
-  ScopedVector<autofill::PasswordForm> database_forms;
-  for (unsigned int i = 0; i < arraysize(db_data); ++i) {
-    database_forms.push_back(
-        CreatePasswordFormFromDataForTesting(db_data[i]).release());
+  std::vector<std::unique_ptr<PasswordForm>> database_forms;
+  for (const PasswordFormData& form_data : db_data) {
+    database_forms.push_back(CreatePasswordFormFromDataForTesting(form_data));
   }
-  ScopedVector<autofill::PasswordForm> merged_forms;
+  std::vector<std::unique_ptr<PasswordForm>> merged_forms;
   internal_keychain_helpers::GetPasswordsForForms(*keychain_, &database_forms,
                                                   &merged_forms);
   EXPECT_EQ(2U, database_forms.size());
@@ -1243,11 +1238,11 @@ TEST_F(PasswordStoreMacInternalsTest, TestPasswordGetAll) {
     owned_keychain_adapter.AddPassword(*form);
   }
 
-  ScopedVector<autofill::PasswordForm> all_passwords =
+  std::vector<std::unique_ptr<PasswordForm>> all_passwords =
       keychain_adapter.GetAllPasswordFormPasswords();
   EXPECT_EQ(9 + arraysize(owned_password_data), all_passwords.size());
 
-  ScopedVector<autofill::PasswordForm> owned_passwords =
+  std::vector<std::unique_ptr<PasswordForm>> owned_passwords =
       owned_keychain_adapter.GetAllPasswordFormPasswords();
   EXPECT_EQ(arraysize(owned_password_data), owned_passwords.size());
 }
@@ -1365,7 +1360,7 @@ class PasswordStoreMacTest : public testing::Test {
   }
 
   base::FilePath test_login_db_file_path() const {
-    return db_dir_.path().Append(FILE_PATH_LITERAL("login.db"));
+    return db_dir_.GetPath().Append(FILE_PATH_LITERAL("login.db"));
   }
 
   password_manager::LoginDatabase* login_db() const {
@@ -1487,26 +1482,26 @@ TEST_F(PasswordStoreMacTest, TestStoreUpdate) {
 
   MacKeychainPasswordFormAdapter keychain_adapter(keychain());
   for (unsigned int i = 0; i < arraysize(updates); ++i) {
+    SCOPED_TRACE(testing::Message("iteration ") << i);
     std::unique_ptr<PasswordForm> query_form =
         CreatePasswordFormFromDataForTesting(updates[i].form_data);
 
-    ScopedVector<autofill::PasswordForm> matching_items =
+    std::vector<std::unique_ptr<PasswordForm>> matching_items =
         keychain_adapter.PasswordsFillingForm(query_form->signon_realm,
                                               query_form->scheme);
     if (updates[i].password) {
-      EXPECT_GT(matching_items.size(), 0U) << "iteration " << i;
+      EXPECT_GT(matching_items.size(), 0U);
       if (matching_items.size() >= 1)
         EXPECT_EQ(ASCIIToUTF16(updates[i].password),
-                  matching_items[0]->password_value)
-            << "iteration " << i;
+                  matching_items[0]->password_value);
     } else {
-      EXPECT_EQ(0U, matching_items.size()) << "iteration " << i;
+      EXPECT_EQ(0U, matching_items.size());
     }
 
+    std::vector<std::unique_ptr<PasswordForm>> matching_db_items;
     EXPECT_TRUE(login_db()->GetLogins(PasswordStore::FormDigest(*query_form),
-                                      &matching_items));
-    EXPECT_EQ(updates[i].password ? 1U : 0U, matching_items.size())
-        << "iteration " << i;
+                                      &matching_db_items));
+    EXPECT_EQ(updates[i].password ? 1U : 0U, matching_db_items.size());
   }
 }
 
@@ -1571,20 +1566,24 @@ TEST_F(PasswordStoreMacTest, TestDBKeychainAssociation) {
   FinishAsyncProcessing();
 
   // No trace of www.facebook.com.
-  ScopedVector<autofill::PasswordForm> matching_items =
+  std::vector<std::unique_ptr<PasswordForm>> matching_items =
       owned_keychain_adapter.PasswordsFillingForm(www_form->signon_realm,
                                                   www_form->scheme);
   EXPECT_EQ(0u, matching_items.size());
+
+  std::vector<std::unique_ptr<PasswordForm>> matching_db_items;
   EXPECT_TRUE(login_db()->GetLogins(PasswordStore::FormDigest(*www_form),
-                                    &matching_items));
-  EXPECT_EQ(0u, matching_items.size());
+                                    &matching_db_items));
+  EXPECT_EQ(0u, matching_db_items.size());
+
   // No trace of m.facebook.com.
   matching_items = owned_keychain_adapter.PasswordsFillingForm(
       m_form.signon_realm, m_form.scheme);
   EXPECT_EQ(0u, matching_items.size());
+
   EXPECT_TRUE(login_db()->GetLogins(PasswordStore::FormDigest(m_form),
-                                    &matching_items));
-  EXPECT_EQ(0u, matching_items.size());
+                                    &matching_db_items));
+  EXPECT_EQ(0u, matching_db_items.size());
 }
 
 namespace {
@@ -1686,7 +1685,7 @@ void CheckRemoveLoginsBetween(PasswordStoreMacTest* test, bool check_created) {
   // Check the keychain content.
   MacKeychainPasswordFormAdapter owned_keychain_adapter(test->keychain());
   owned_keychain_adapter.SetFindsOnlyOwnedItems(false);
-  ScopedVector<PasswordForm> matching_items(
+  std::vector<std::unique_ptr<PasswordForm>> matching_items(
       owned_keychain_adapter.PasswordsFillingForm(form_facebook->signon_realm,
                                                   form_facebook->scheme));
   EXPECT_EQ(1u, matching_items.size());
@@ -1787,15 +1786,16 @@ TEST_F(PasswordStoreMacTest, TestDisableAutoSignInForOrigins) {
   EXPECT_CALL(observer, OnLoginsChanged(GetAddChangeList(*form_google)));
   observer.WaitAndVerify(this);
 
-  ScopedVector<autofill::PasswordForm> forms;
+  std::vector<std::unique_ptr<PasswordForm>> forms;
   EXPECT_TRUE(login_db()->GetAutoSignInLogins(&forms));
   EXPECT_EQ(2u, forms.size());
   EXPECT_FALSE(forms[0]->skip_zero_click);
   EXPECT_FALSE(forms[1]->skip_zero_click);
 
   store()->DisableAutoSignInForOrigins(
-    base::Bind(&GURL::operator==, base::Unretained(&form_google->origin)),
-    base::Closure());
+      base::Bind(static_cast<bool (*)(const GURL&, const GURL&)>(operator==),
+                 form_google->origin),
+      base::Closure());
   FinishAsyncProcessing();
 
   EXPECT_TRUE(login_db()->GetAutoSignInLogins(&forms));
@@ -1856,7 +1856,7 @@ TEST_F(PasswordStoreMacTest, TestRemoveLoginsMultiProfile) {
   store_->AddLogin(*www_form);
   FinishAsyncProcessing();
 
-  ScopedVector<PasswordForm> matching_items;
+  std::vector<std::unique_ptr<PasswordForm>> matching_items;
   EXPECT_TRUE(login_db()->GetLogins(PasswordStore::FormDigest(*www_form),
                                     &matching_items));
   EXPECT_EQ(1u, matching_items.size());
@@ -1871,16 +1871,18 @@ TEST_F(PasswordStoreMacTest, TestRemoveLoginsMultiProfile) {
   EXPECT_EQ(0u, matching_items.size());
 
   // Check the first facebook form is still there.
-  matching_items = owned_keychain_adapter.PasswordsFillingForm(
+  std::vector<std::unique_ptr<PasswordForm>> matching_keychain_items;
+  matching_keychain_items = owned_keychain_adapter.PasswordsFillingForm(
       www_form->signon_realm, www_form->scheme);
-  ASSERT_EQ(1u, matching_items.size());
-  EXPECT_EQ(ASCIIToUTF16("joe_user"), matching_items[0]->username_value);
+  ASSERT_EQ(1u, matching_keychain_items.size());
+  EXPECT_EQ(ASCIIToUTF16("joe_user"),
+            matching_keychain_items[0]->username_value);
 
   // Check the third-party password is still there.
   owned_keychain_adapter.SetFindsOnlyOwnedItems(false);
-  matching_items = owned_keychain_adapter.PasswordsFillingForm(
+  matching_keychain_items = owned_keychain_adapter.PasswordsFillingForm(
       "http://some.domain.com/insecure.html", PasswordForm::SCHEME_HTML);
-  ASSERT_EQ(1u, matching_items.size());
+  ASSERT_EQ(1u, matching_keychain_items.size());
 }
 
 // Add a facebook form to the store but not to the keychain. The form is to be
@@ -1922,7 +1924,7 @@ TEST_F(PasswordStoreMacTest, SilentlyRemoveOrphanedForm) {
   EXPECT_CALL(consumer, OnGetPasswordStoreResultsConstRef(IsEmpty()));
   store_->GetLogins(PasswordStore::FormDigest(m_form), &consumer);
   base::RunLoop().Run();
-  ScopedVector<autofill::PasswordForm> all_forms;
+  std::vector<std::unique_ptr<PasswordForm>> all_forms;
   EXPECT_TRUE(login_db()->GetAutofillableLogins(&all_forms));
   EXPECT_EQ(1u, all_forms.size());
   ::testing::Mock::VerifyAndClearExpectations(&mock_observer);
@@ -1995,12 +1997,12 @@ TEST_F(PasswordStoreMacTest, ImportFromKeychain) {
 
   ASSERT_TRUE(base::PostTaskAndReplyWithResult(
       thread_->task_runner().get(), FROM_HERE,
-      base::Bind(&PasswordStoreMac::ImportFromKeychain, store()),
+      base::Bind(&PasswordStoreMac::ImportFromKeychain, login_db(), keychain()),
       base::Bind(&CheckMigrationResult, PasswordStoreMac::MIGRATION_OK)));
   FinishAsyncProcessing();
 
   // The password should be stored in the database by now.
-  ScopedVector<PasswordForm> matching_items;
+  std::vector<std::unique_ptr<PasswordForm>> matching_items;
   EXPECT_TRUE(
       login_db()->GetLogins(PasswordStore::FormDigest(form1), &matching_items));
   ASSERT_EQ(1u, matching_items.size());
@@ -2036,11 +2038,11 @@ TEST_F(PasswordStoreMacTest, ImportFederatedFromLockedKeychain) {
   FinishAsyncProcessing();
   ASSERT_TRUE(base::PostTaskAndReplyWithResult(
       thread_->task_runner().get(), FROM_HERE,
-      base::Bind(&PasswordStoreMac::ImportFromKeychain, store()),
+      base::Bind(&PasswordStoreMac::ImportFromKeychain, login_db(), keychain()),
       base::Bind(&CheckMigrationResult, PasswordStoreMac::MIGRATION_OK)));
   FinishAsyncProcessing();
 
-  ScopedVector<PasswordForm> matching_items;
+  std::vector<std::unique_ptr<PasswordForm>> matching_items;
   EXPECT_TRUE(
       login_db()->GetLogins(PasswordStore::FormDigest(form1), &matching_items));
   ASSERT_EQ(1u, matching_items.size());
@@ -2068,23 +2070,43 @@ TEST_F(PasswordStoreMacTest, ImportFromLockedKeychainError) {
   keychain()->set_locked(true);
   ASSERT_TRUE(base::PostTaskAndReplyWithResult(
       thread_->task_runner().get(), FROM_HERE,
-      base::Bind(&PasswordStoreMac::ImportFromKeychain, store()),
-      base::Bind(&CheckMigrationResult, PasswordStoreMac::KEYCHAIN_BLOCKED)));
+      base::Bind(&PasswordStoreMac::ImportFromKeychain, login_db(), keychain()),
+      base::Bind(&CheckMigrationResult, PasswordStoreMac::MIGRATION_PARTIAL)));
   FinishAsyncProcessing();
 
-  ScopedVector<PasswordForm> matching_items;
+  std::vector<std::unique_ptr<PasswordForm>> matching_items;
   EXPECT_TRUE(
       login_db()->GetLogins(PasswordStore::FormDigest(form1), &matching_items));
-  ASSERT_EQ(1u, matching_items.size());
-  EXPECT_EQ(base::string16(), matching_items[0]->password_value);
+  EXPECT_EQ(0u, matching_items.size());
 
   histogram_tester_->ExpectUniqueSample(
       "PasswordManager.KeychainMigration.NumPasswordsOnFailure", 1, 1);
   histogram_tester_->ExpectUniqueSample(
       "PasswordManager.KeychainMigration.NumFailedPasswords", 1, 1);
-  histogram_tester_->ExpectUniqueSample(
-      "PasswordManager.KeychainMigration.NumChromeOwnedInaccessiblePasswords",
-      2, 1);
   // Don't test the encryption key access.
   histogram_tester_.reset();
+}
+
+// Delete the Chrome-owned password from the Keychain.
+TEST_F(PasswordStoreMacTest, CleanUpKeychain) {
+  MockAppleKeychain::KeychainTestData data1 = { kSecAuthenticationTypeHTMLForm,
+     "some.domain.com", kSecProtocolTypeHTTP, NULL, 0, NULL, "20020601171500Z",
+     "joe_user", "sekrit", false};
+  keychain()->AddTestItem(data1);
+
+  MacKeychainPasswordFormAdapter keychain_adapter(keychain());
+  PasswordFormData data2 = { PasswordForm::SCHEME_HTML, "http://web.site.com/",
+      "http://web.site.com/path/to/page.html", NULL, NULL, NULL, NULL,
+      L"anonymous", L"knock-knock", false, 0 };
+  keychain_adapter.AddPassword(*CreatePasswordFormFromDataForTesting(data2));
+  std::vector<std::unique_ptr<PasswordForm>> passwords =
+      keychain_adapter.GetAllPasswordFormPasswords();
+  EXPECT_EQ(2u, passwords.size());
+
+  // Delete everyhting but only the Chrome-owned item should be affected.
+  PasswordStoreMac::CleanUpKeychain(keychain(), passwords);
+  passwords = keychain_adapter.GetAllPasswordFormPasswords();
+  ASSERT_EQ(1u, passwords.size());
+  EXPECT_EQ("http://some.domain.com/", passwords[0]->signon_realm);
+  EXPECT_EQ(ASCIIToUTF16("sekrit"), passwords[0]->password_value);
 }

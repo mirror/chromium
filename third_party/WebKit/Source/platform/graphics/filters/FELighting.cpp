@@ -36,70 +36,92 @@
 
 namespace blink {
 
-FELighting::FELighting(Filter* filter, LightingType lightingType, const Color& lightingColor, float surfaceScale,
-    float diffuseConstant, float specularConstant, float specularExponent,
-    PassRefPtr<LightSource> lightSource)
-    : FilterEffect(filter)
-    , m_lightingType(lightingType)
-    , m_lightSource(lightSource)
-    , m_lightingColor(lightingColor)
-    , m_surfaceScale(surfaceScale)
-    , m_diffuseConstant(std::max(diffuseConstant, 0.0f))
-    , m_specularConstant(std::max(specularConstant, 0.0f))
-    , m_specularExponent(clampTo(specularExponent, 1.0f, 128.0f))
-{
-}
+FELighting::FELighting(Filter* filter,
+                       LightingType lighting_type,
+                       const Color& lighting_color,
+                       float surface_scale,
+                       float diffuse_constant,
+                       float specular_constant,
+                       float specular_exponent,
+                       PassRefPtr<LightSource> light_source)
+    : FilterEffect(filter),
+      lighting_type_(lighting_type),
+      light_source_(std::move(light_source)),
+      lighting_color_(lighting_color),
+      surface_scale_(surface_scale),
+      diffuse_constant_(std::max(diffuse_constant, 0.0f)),
+      specular_constant_(std::max(specular_constant, 0.0f)),
+      specular_exponent_(clampTo(specular_exponent, 1.0f, 128.0f)) {}
 
-FloatRect FELighting::mapPaintRect(const FloatRect& rect, bool) const
-{
-    FloatRect result = rect;
-    // The areas affected need to be a pixel bigger to accommodate the Sobel kernel.
-    result.inflate(1);
-    return result;
-}
+sk_sp<SkImageFilter> FELighting::CreateImageFilter() {
+  if (!light_source_)
+    return CreateTransparentBlack();
 
-sk_sp<SkImageFilter> FELighting::createImageFilter()
-{
-    if (!m_lightSource)
-        return createTransparentBlack();
-
-    SkImageFilter::CropRect rect = getCropRect();
-    Color lightColor = adaptColorToOperatingColorSpace(m_lightingColor);
-    sk_sp<SkImageFilter> input(SkiaImageFilterBuilder::build(inputEffect(0), operatingColorSpace()));
-    switch (m_lightSource->type()) {
+  SkImageFilter::CropRect rect = GetCropRect();
+  Color light_color = AdaptColorToOperatingColorSpace(lighting_color_);
+  sk_sp<SkImageFilter> input(
+      SkiaImageFilterBuilder::Build(InputEffect(0), OperatingColorSpace()));
+  switch (light_source_->GetType()) {
     case LS_DISTANT: {
-        DistantLightSource* distantLightSource = static_cast<DistantLightSource*>(m_lightSource.get());
-        float azimuthRad = deg2rad(distantLightSource->azimuth());
-        float elevationRad = deg2rad(distantLightSource->elevation());
-        const SkPoint3 direction = SkPoint3::Make(cosf(azimuthRad) * cosf(elevationRad), sinf(azimuthRad) * cosf(elevationRad), sinf(elevationRad));
-        if (m_specularConstant > 0)
-            return SkLightingImageFilter::MakeDistantLitSpecular(direction, lightColor.rgb(), m_surfaceScale, m_specularConstant, m_specularExponent, std::move(input), &rect);
-        return SkLightingImageFilter::MakeDistantLitDiffuse(direction, lightColor.rgb(), m_surfaceScale, m_diffuseConstant, std::move(input), &rect);
+      DistantLightSource* distant_light_source =
+          static_cast<DistantLightSource*>(light_source_.Get());
+      float azimuth_rad = deg2rad(distant_light_source->Azimuth());
+      float elevation_rad = deg2rad(distant_light_source->Elevation());
+      const SkPoint3 direction = SkPoint3::Make(
+          cosf(azimuth_rad) * cosf(elevation_rad),
+          sinf(azimuth_rad) * cosf(elevation_rad), sinf(elevation_rad));
+      if (specular_constant_ > 0)
+        return SkLightingImageFilter::MakeDistantLitSpecular(
+            direction, light_color.Rgb(), surface_scale_, specular_constant_,
+            specular_exponent_, std::move(input), &rect);
+      return SkLightingImageFilter::MakeDistantLitDiffuse(
+          direction, light_color.Rgb(), surface_scale_, diffuse_constant_,
+          std::move(input), &rect);
     }
     case LS_POINT: {
-        PointLightSource* pointLightSource = static_cast<PointLightSource*>(m_lightSource.get());
-        const FloatPoint3D position = pointLightSource->position();
-        const SkPoint3 skPosition = SkPoint3::Make(position.x(), position.y(), position.z());
-        if (m_specularConstant > 0)
-            return SkLightingImageFilter::MakePointLitSpecular(skPosition, lightColor.rgb(), m_surfaceScale, m_specularConstant, m_specularExponent, std::move(input), &rect);
-        return SkLightingImageFilter::MakePointLitDiffuse(skPosition, lightColor.rgb(), m_surfaceScale, m_diffuseConstant, std::move(input), &rect);
+      PointLightSource* point_light_source =
+          static_cast<PointLightSource*>(light_source_.Get());
+      const FloatPoint3D position = point_light_source->GetPosition();
+      const SkPoint3 sk_position =
+          SkPoint3::Make(position.X(), position.Y(), position.Z());
+      if (specular_constant_ > 0)
+        return SkLightingImageFilter::MakePointLitSpecular(
+            sk_position, light_color.Rgb(), surface_scale_, specular_constant_,
+            specular_exponent_, std::move(input), &rect);
+      return SkLightingImageFilter::MakePointLitDiffuse(
+          sk_position, light_color.Rgb(), surface_scale_, diffuse_constant_,
+          std::move(input), &rect);
     }
     case LS_SPOT: {
-        SpotLightSource* spotLightSource = static_cast<SpotLightSource*>(m_lightSource.get());
-        const SkPoint3 location = SkPoint3::Make(spotLightSource->position().x(), spotLightSource->position().y(), spotLightSource->position().z());
-        const SkPoint3 target = SkPoint3::Make(spotLightSource->direction().x(), spotLightSource->direction().y(), spotLightSource->direction().z());
-        float specularExponent = spotLightSource->specularExponent();
-        float limitingConeAngle = spotLightSource->limitingConeAngle();
-        if (!limitingConeAngle || limitingConeAngle > 90 || limitingConeAngle < -90)
-            limitingConeAngle = 90;
-        if (m_specularConstant > 0)
-            return SkLightingImageFilter::MakeSpotLitSpecular(location, target, specularExponent, limitingConeAngle, lightColor.rgb(), m_surfaceScale, m_specularConstant, m_specularExponent, std::move(input), &rect);
-        return SkLightingImageFilter::MakeSpotLitDiffuse(location, target, specularExponent, limitingConeAngle, lightColor.rgb(), m_surfaceScale, m_diffuseConstant, std::move(input), &rect);
+      SpotLightSource* spot_light_source =
+          static_cast<SpotLightSource*>(light_source_.Get());
+      const SkPoint3 location =
+          SkPoint3::Make(spot_light_source->GetPosition().X(),
+                         spot_light_source->GetPosition().Y(),
+                         spot_light_source->GetPosition().Z());
+      const SkPoint3 target =
+          SkPoint3::Make(spot_light_source->Direction().X(),
+                         spot_light_source->Direction().Y(),
+                         spot_light_source->Direction().Z());
+      float specular_exponent = spot_light_source->SpecularExponent();
+      float limiting_cone_angle = spot_light_source->LimitingConeAngle();
+      if (!limiting_cone_angle || limiting_cone_angle > 90 ||
+          limiting_cone_angle < -90)
+        limiting_cone_angle = 90;
+      if (specular_constant_ > 0)
+        return SkLightingImageFilter::MakeSpotLitSpecular(
+            location, target, specular_exponent, limiting_cone_angle,
+            light_color.Rgb(), surface_scale_, specular_constant_,
+            specular_exponent_, std::move(input), &rect);
+      return SkLightingImageFilter::MakeSpotLitDiffuse(
+          location, target, specular_exponent, limiting_cone_angle,
+          light_color.Rgb(), surface_scale_, diffuse_constant_,
+          std::move(input), &rect);
     }
     default:
-        ASSERT_NOT_REACHED();
-        return nullptr;
-    }
+      NOTREACHED();
+      return nullptr;
+  }
 }
 
-} // namespace blink
+}  // namespace blink

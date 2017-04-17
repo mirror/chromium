@@ -10,12 +10,12 @@
 #import "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
 #import "base/test/ios/wait_util.h"
+#include "ios/web/public/test/fakes/test_browser_state.h"
+#import "ios/web/public/test/fakes/test_web_client.h"
 #import "ios/web/public/test/js_test_util.h"
-#include "ios/web/public/test/test_browser_state.h"
-#import "ios/web/public/test/test_web_client.h"
 #include "ios/web/public/test/web_test.h"
 #import "ios/web/public/web_view_creation_util.h"
-#include "testing/gtest_mac.h"
+#import "testing/gtest_mac.h"
 
 namespace web {
 namespace {
@@ -26,19 +26,17 @@ typedef WebTest PageScriptUtilTest;
 // Tests that WKWebView early page script is a valid script that injects global
 // __gCrWeb object.
 TEST_F(PageScriptUtilTest, WKWebViewEarlyPageScript) {
-  base::scoped_nsobject<WKWebView> web_view(
-      CreateWKWebView(CGRectZero, GetBrowserState()));
-  EvaluateJavaScript(web_view, GetEarlyPageScript());
-  EXPECT_NSEQ(@"object", EvaluateJavaScript(web_view, @"typeof __gCrWeb"));
+  WKWebView* web_view = BuildWKWebView(CGRectZero, GetBrowserState());
+  ExecuteJavaScript(web_view, GetEarlyPageScript(GetBrowserState()));
+  EXPECT_NSEQ(@"object", ExecuteJavaScript(web_view, @"typeof __gCrWeb"));
 }
 
 // Tests that embedder's WKWebView script is included into early script.
 TEST_F(PageScriptUtilTest, WKEmbedderScript) {
   GetWebClient()->SetEarlyPageScript(@"__gCrEmbedder = {};");
-  base::scoped_nsobject<WKWebView> web_view(
-      CreateWKWebView(CGRectZero, GetBrowserState()));
-  EvaluateJavaScript(web_view, GetEarlyPageScript());
-  EXPECT_NSEQ(@"object", EvaluateJavaScript(web_view, @"typeof __gCrEmbedder"));
+  WKWebView* web_view = BuildWKWebView(CGRectZero, GetBrowserState());
+  ExecuteJavaScript(web_view, GetEarlyPageScript(GetBrowserState()));
+  EXPECT_NSEQ(@"object", ExecuteJavaScript(web_view, @"typeof __gCrEmbedder"));
 }
 
 }  // namespace

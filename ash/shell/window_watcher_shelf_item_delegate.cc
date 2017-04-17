@@ -14,42 +14,30 @@ namespace shell {
 WindowWatcherShelfItemDelegate::WindowWatcherShelfItemDelegate(
     ShelfID id,
     WindowWatcher* watcher)
-    : id_(id), watcher_(watcher) {
-  DCHECK_GT(id_, 0);
+    : ShelfItemDelegate(AppLaunchId()), id_(id), watcher_(watcher) {
+  DCHECK_NE(id_, kInvalidShelfID);
   DCHECK(watcher_);
 }
 
 WindowWatcherShelfItemDelegate::~WindowWatcherShelfItemDelegate() {}
 
-ShelfItemDelegate::PerformedAction WindowWatcherShelfItemDelegate::ItemSelected(
-    const ui::Event& event) {
+void WindowWatcherShelfItemDelegate::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
   aura::Window* window = watcher_->GetWindowByID(id_);
   if (window->type() == ui::wm::WINDOW_TYPE_PANEL)
-    wm::MoveWindowToEventRoot(window, event);
+    wm::MoveWindowToDisplay(window, display_id);
   window->Show();
   wm::ActivateWindow(window);
-  return kExistingWindowActivated;
+  callback.Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
-base::string16 WindowWatcherShelfItemDelegate::GetTitle() {
-  return watcher_->GetWindowByID(id_)->title();
-}
-
-ShelfMenuModel* WindowWatcherShelfItemDelegate::CreateApplicationMenu(
-    int event_flags) {
-  return nullptr;
-}
-
-bool WindowWatcherShelfItemDelegate::IsDraggable() {
-  return true;
-}
-
-bool WindowWatcherShelfItemDelegate::CanPin() const {
-  return true;
-}
-
-bool WindowWatcherShelfItemDelegate::ShouldShowTooltip() {
-  return true;
+void WindowWatcherShelfItemDelegate::ExecuteCommand(uint32_t command_id,
+                                                    int32_t event_flags) {
+  // This delegate does not support showing an application menu.
+  NOTIMPLEMENTED();
 }
 
 void WindowWatcherShelfItemDelegate::Close() {}

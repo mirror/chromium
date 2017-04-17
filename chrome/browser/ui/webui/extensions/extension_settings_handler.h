@@ -6,12 +6,11 @@
 #define CHROME_BROWSER_UI_WEBUI_EXTENSIONS_EXTENSION_SETTINGS_HANDLER_H_
 
 #include "base/macros.h"
-#include "content/public/browser/navigation_controller.h"
+#include "content/public/browser/reload_type.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui_message_handler.h"
 
 class ExtensionService;
-class GURL;
 
 namespace content {
 class WebUIDataSource;
@@ -38,9 +37,8 @@ class ExtensionSettingsHandler : public content::WebUIMessageHandler,
 
  private:
   // WebContentsObserver implementation.
-  void DidStartNavigationToPendingEntry(
-      const GURL& url,
-      content::NavigationController::ReloadType reload_type) override;
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   // WebUIMessageHandler implementation.
   void RegisterMessages() override;

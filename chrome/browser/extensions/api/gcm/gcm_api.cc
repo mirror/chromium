@@ -12,12 +12,12 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "chrome/browser/gcm/gcm_profile_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/services/gcm/gcm_profile_service_factory.h"
 #include "chrome/common/extensions/api/gcm.h"
 #include "components/gcm_driver/common/gcm_messages.h"
 #include "components/gcm_driver/gcm_driver.h"
@@ -128,7 +128,7 @@ bool GcmRegisterFunction::DoWork() {
 void GcmRegisterFunction::CompleteFunctionWithResult(
     const std::string& registration_id,
     gcm::GCMClient::Result result) {
-  SetResult(base::MakeUnique<base::StringValue>(registration_id));
+  SetResult(base::MakeUnique<base::Value>(registration_id));
   SetError(GcmResultToError(result));
   SendResponse(gcm::GCMClient::SUCCESS == result);
 }
@@ -182,7 +182,7 @@ bool GcmSendFunction::DoWork() {
 void GcmSendFunction::CompleteFunctionWithResult(
     const std::string& message_id,
     gcm::GCMClient::Result result) {
-  SetResult(base::MakeUnique<base::StringValue>(message_id));
+  SetResult(base::MakeUnique<base::Value>(message_id));
   SetError(GcmResultToError(result));
   SendResponse(gcm::GCMClient::SUCCESS == result);
 }

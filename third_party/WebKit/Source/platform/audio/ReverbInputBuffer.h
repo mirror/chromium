@@ -31,39 +31,44 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/audio/AudioArray.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-// ReverbInputBuffer is used to buffer input samples for deferred processing by the background threads.
+// ReverbInputBuffer is used to buffer input samples for deferred processing by
+// the background threads.
 class PLATFORM_EXPORT ReverbInputBuffer {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(ReverbInputBuffer);
-public:
-    ReverbInputBuffer(size_t length);
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(ReverbInputBuffer);
 
-    // The realtime audio thread keeps writing samples here.
-    // The assumption is that the buffer's length is evenly divisible by numberOfFrames (for nearly all cases this will be fine).
-    // FIXME: remove numberOfFrames restriction...
-    void write(const float* sourceP, size_t numberOfFrames);
+ public:
+  ReverbInputBuffer(size_t length);
 
-    // Background threads can call this to check if there's anything to read...
-    size_t writeIndex() const { return m_writeIndex; }
+  // The realtime audio thread keeps writing samples here.
+  // The assumption is that the buffer's length is evenly divisible by
+  // numberOfFrames (for nearly all cases this will be fine).
+  // FIXME: remove numberOfFrames restriction...
+  void Write(const float* source_p, size_t number_of_frames);
 
-    // The individual background threads read here (and hope that they can keep up with the buffer writing).
-    // readIndex is updated with the next readIndex to read from...
-    // The assumption is that the buffer's length is evenly divisible by numberOfFrames.
-    // FIXME: remove numberOfFrames restriction...
-    float* directReadFrom(int* readIndex, size_t numberOfFrames);
+  // Background threads can call this to check if there's anything to read...
+  size_t WriteIndex() const { return write_index_; }
 
-    void reset();
+  // The individual background threads read here (and hope that they can keep up
+  // with the buffer writing).
+  // readIndex is updated with the next readIndex to read from...
+  // The assumption is that the buffer's length is evenly divisible by
+  // numberOfFrames.
+  // FIXME: remove numberOfFrames restriction...
+  float* DirectReadFrom(int* read_index, size_t number_of_frames);
 
-private:
-    AudioFloatArray m_buffer;
-    size_t m_writeIndex;
+  void Reset();
+
+ private:
+  AudioFloatArray buffer_;
+  size_t write_index_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ReverbInputBuffer_h
+#endif  // ReverbInputBuffer_h

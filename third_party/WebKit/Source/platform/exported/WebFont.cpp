@@ -9,7 +9,7 @@
 #include "platform/fonts/FontDescription.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "platform/graphics/paint/SkPictureBuilder.h"
+#include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/text/TextRun.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebFloatRect.h"
@@ -19,102 +19,106 @@
 
 namespace blink {
 
-WebFont* WebFont::create(const WebFontDescription& description)
-{
-    return new WebFont(description);
+WebFont* WebFont::Create(const WebFontDescription& description) {
+  return new WebFont(description);
 }
 
 class WebFont::Impl final {
-public:
-    explicit Impl(const WebFontDescription& description)
-        : m_font(description)
-    {
-        m_font.update(nullptr);
-    }
+ public:
+  explicit Impl(const WebFontDescription& description) : font_(description) {
+    font_.Update(nullptr);
+  }
 
-    const Font& getFont() const { return m_font; }
+  const Font& GetFont() const { return font_; }
 
-private:
-    Font m_font;
+ private:
+  Font font_;
 };
 
 WebFont::WebFont(const WebFontDescription& description)
-    : m_private(new Impl(description))
-{
+    : private_(new Impl(description)) {}
+
+WebFont::~WebFont() {}
+
+WebFontDescription WebFont::GetFontDescription() const {
+  return WebFontDescription(private_->GetFont().GetFontDescription());
 }
 
-WebFont::~WebFont()
-{
+static inline const SimpleFontData* GetFontData(const Font& font) {
+  const SimpleFontData* font_data = font.PrimaryFont();
+  DCHECK(font_data);
+  return font_data;
 }
 
-WebFontDescription WebFont::getFontDescription() const
-{
-    return WebFontDescription(m_private->getFont().getFontDescription());
+int WebFont::Ascent() const {
+  const SimpleFontData* font_data = GetFontData(private_->GetFont());
+  return font_data ? font_data->GetFontMetrics().Ascent() : 0;
 }
 
-int WebFont::ascent() const
-{
-    return m_private->getFont().getFontMetrics().ascent();
+int WebFont::Descent() const {
+  const SimpleFontData* font_data = GetFontData(private_->GetFont());
+  return font_data ? font_data->GetFontMetrics().Descent() : 0;
 }
 
-int WebFont::descent() const
-{
-    return m_private->getFont().getFontMetrics().descent();
+int WebFont::Height() const {
+  const SimpleFontData* font_data = GetFontData(private_->GetFont());
+  return font_data ? font_data->GetFontMetrics().Height() : 0;
 }
 
-int WebFont::height() const
-{
-    return m_private->getFont().getFontMetrics().height();
+int WebFont::LineSpacing() const {
+  const SimpleFontData* font_data = GetFontData(private_->GetFont());
+  return font_data ? font_data->GetFontMetrics().LineSpacing() : 0;
 }
 
-int WebFont::lineSpacing() const
-{
-    return m_private->getFont().getFontMetrics().lineSpacing();
+float WebFont::XHeight() const {
+  const SimpleFontData* font_data = private_->GetFont().PrimaryFont();
+  DCHECK(font_data);
+  return font_data ? font_data->GetFontMetrics().XHeight() : 0;
 }
 
-float WebFont::xHeight() const
-{
-    return m_private->getFont().getFontMetrics().xHeight();
+void WebFont::DrawText(WebCanvas* canvas,
+                       const WebTextRun& run,
+                       const WebFloatPoint& left_baseline,
+                       WebColor color,
+                       const WebRect& clip) const {
+  FontCachePurgePreventer font_cache_purge_preventer;
+  FloatRect text_clip_rect(clip);
+  TextRun text_run(run);
+  TextRunPaintInfo run_info(text_run);
+  run_info.bounds = text_clip_rect;
+
+  IntRect int_rect(clip);
+  PaintRecordBuilder builder(int_rect);
+  GraphicsContext& context = builder.Context();
+
+  {
+    DrawingRecorder drawing_recorder(context, builder, DisplayItem::kWebFont,
+                                     int_rect);
+    context.Save();
+    context.SetFillColor(color);
+    context.Clip(text_clip_rect);
+    context.DrawText(private_->GetFont(), run_info, left_baseline);
+    context.Restore();
+  }
+
+  builder.EndRecording(*canvas);
 }
 
-void WebFont::drawText(WebCanvas* canvas, const WebTextRun& run,
-    const WebFloatPoint& leftBaseline, WebColor color, const WebRect& clip) const
-{
-    FontCachePurgePreventer fontCachePurgePreventer;
-    FloatRect textClipRect(clip);
-    TextRun textRun(run);
-    TextRunPaintInfo runInfo(textRun);
-    runInfo.bounds = textClipRect;
-
-    IntRect intRect(clip);
-    SkPictureBuilder pictureBuilder(intRect);
-    GraphicsContext& context = pictureBuilder.context();
-
-    {
-        DrawingRecorder drawingRecorder(context, pictureBuilder, DisplayItem::WebFont, intRect);
-        context.save();
-        context.setFillColor(color);
-        context.clip(textClipRect);
-        context.drawText(m_private->getFont(), runInfo, leftBaseline);
-        context.restore();
-    }
-
-    pictureBuilder.endRecording()->playback(canvas);
+int WebFont::CalculateWidth(const WebTextRun& run) const {
+  return private_->GetFont().Width(run, 0);
 }
 
-int WebFont::calculateWidth(const WebTextRun& run) const
-{
-    return m_private->getFont().width(run, 0);
+int WebFont::OffsetForPosition(const WebTextRun& run, float position) const {
+  return private_->GetFont().OffsetForPosition(run, position, true);
 }
 
-int WebFont::offsetForPosition(const WebTextRun& run, float position) const
-{
-    return m_private->getFont().offsetForPosition(run, position, true);
+WebFloatRect WebFont::SelectionRectForText(const WebTextRun& run,
+                                           const WebFloatPoint& left_baseline,
+                                           int height,
+                                           int from,
+                                           int to) const {
+  return private_->GetFont().SelectionRectForText(run, left_baseline, height,
+                                                  from, to);
 }
 
-WebFloatRect WebFont::selectionRectForText(const WebTextRun& run, const WebFloatPoint& leftBaseline, int height, int from, int to) const
-{
-    return m_private->getFont().selectionRectForText(run, leftBaseline, height, from, to);
-}
-
-} // namespace blink
+}  // namespace blink

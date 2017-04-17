@@ -14,40 +14,48 @@ namespace blink {
 
 class WebGamepads;
 
-class GamepadDispatcher final : public GarbageCollectedFinalized<GamepadDispatcher>, public PlatformEventDispatcher, public WebGamepadListener {
-    USING_GARBAGE_COLLECTED_MIXIN(GamepadDispatcher);
-public:
-    static GamepadDispatcher& instance();
-    ~GamepadDispatcher() override;
+class GamepadDispatcher final
+    : public GarbageCollectedFinalized<GamepadDispatcher>,
+      public PlatformEventDispatcher,
+      public WebGamepadListener {
+  USING_GARBAGE_COLLECTED_MIXIN(GamepadDispatcher);
 
-    void sampleGamepads(WebGamepads&);
+ public:
+  static GamepadDispatcher& Instance();
+  ~GamepadDispatcher() override;
 
-    struct ConnectionChange {
-        DISALLOW_NEW();
-        WebGamepad pad;
-        unsigned index;
-    };
+  void SampleGamepads(WebGamepads&);
 
-    const ConnectionChange& latestConnectionChange() const { return m_latestChange; }
+  struct ConnectionChange {
+    DISALLOW_NEW();
+    WebGamepad pad;
+    unsigned index;
+  };
 
-    DECLARE_VIRTUAL_TRACE();
+  const ConnectionChange& LatestConnectionChange() const {
+    return latest_change_;
+  }
 
-private:
-    GamepadDispatcher();
+  DECLARE_VIRTUAL_TRACE();
 
-    // WebGamepadListener
-    void didConnectGamepad(unsigned index, const WebGamepad&) override;
-    void didDisconnectGamepad(unsigned index, const WebGamepad&) override;
+ private:
+  GamepadDispatcher();
 
-    // PlatformEventDispatcher
-    void startListening() override;
-    void stopListening() override;
+  // WebGamepadListener
+  void DidConnectGamepad(unsigned index, const WebGamepad&) override;
+  void DidDisconnectGamepad(unsigned index, const WebGamepad&) override;
 
-    void dispatchDidConnectOrDisconnectGamepad(unsigned index, const WebGamepad&, bool connected);
+  // PlatformEventDispatcher
+  void StartListening() override;
+  void StopListening() override;
 
-    ConnectionChange m_latestChange;
+  void DispatchDidConnectOrDisconnectGamepad(unsigned index,
+                                             const WebGamepad&,
+                                             bool connected);
+
+  ConnectionChange latest_change_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

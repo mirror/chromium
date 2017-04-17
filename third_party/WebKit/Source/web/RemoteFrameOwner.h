@@ -16,55 +16,93 @@ namespace blink {
 // 1. Allows the local frame's loader to retrieve sandbox flags associated with
 //    its owner element in another process.
 // 2. Trigger a load event on its owner element once it finishes a load.
-class RemoteFrameOwner final : public GarbageCollectedFinalized<RemoteFrameOwner>, public FrameOwner {
-    USING_GARBAGE_COLLECTED_MIXIN(RemoteFrameOwner);
-public:
-    static RemoteFrameOwner* create(SandboxFlags flags, const WebFrameOwnerProperties& frameOwnerProperties)
-    {
-        return new RemoteFrameOwner(flags, frameOwnerProperties);
-    }
+class RemoteFrameOwner final
+    : public GarbageCollectedFinalized<RemoteFrameOwner>,
+      public FrameOwner {
+  USING_GARBAGE_COLLECTED_MIXIN(RemoteFrameOwner);
 
-    // FrameOwner overrides:
-    void setContentFrame(Frame&) override;
-    void clearContentFrame() override;
-    SandboxFlags getSandboxFlags() const override { return m_sandboxFlags; }
-    void setSandboxFlags(SandboxFlags flags) { m_sandboxFlags = flags; }
-    void dispatchLoad() override;
-    // TODO(dcheng): Implement.
-    void renderFallbackContent() override { }
-    ScrollbarMode scrollingMode() const override { return m_scrolling; }
-    int marginWidth() const override { return m_marginWidth; }
-    int marginHeight() const override { return m_marginHeight; }
-    bool allowFullscreen() const override { return m_allowFullscreen; }
-    const WebVector<WebPermissionType>& delegatedPermissions() const override { return m_delegatedPermissions; }
+ public:
+  static RemoteFrameOwner* Create(
+      SandboxFlags flags,
+      const WebFrameOwnerProperties& frame_owner_properties) {
+    return new RemoteFrameOwner(flags, frame_owner_properties);
+  }
 
-    void setScrollingMode(WebFrameOwnerProperties::ScrollingMode);
-    void setMarginWidth(int marginWidth) { m_marginWidth = marginWidth; }
-    void setMarginHeight(int marginHeight) { m_marginHeight = marginHeight; }
-    void setAllowFullscreen(bool allowFullscreen) { m_allowFullscreen = allowFullscreen; }
-    void setDelegatedpermissions(const WebVector<WebPermissionType>& delegatedPermissions) { m_delegatedPermissions = delegatedPermissions; }
+  // FrameOwner overrides:
+  Frame* ContentFrame() const override { return frame_.Get(); }
+  void SetContentFrame(Frame&) override;
+  void ClearContentFrame() override;
+  SandboxFlags GetSandboxFlags() const override { return sandbox_flags_; }
+  void SetSandboxFlags(SandboxFlags flags) { sandbox_flags_ = flags; }
+  void DispatchLoad() override;
+  // TODO(dcheng): Implement.
+  bool CanRenderFallbackContent() const override { return false; }
+  void RenderFallbackContent() override {}
 
-    DECLARE_VIRTUAL_TRACE();
+  AtomicString BrowsingContextContainerName() const override {
+    return browsing_context_container_name_;
+  }
+  ScrollbarMode ScrollingMode() const override { return scrolling_; }
+  int MarginWidth() const override { return margin_width_; }
+  int MarginHeight() const override { return margin_height_; }
+  bool AllowFullscreen() const override { return allow_fullscreen_; }
+  bool AllowPaymentRequest() const override { return allow_payment_request_; }
+  bool IsDisplayNone() const override { return is_display_none_; }
+  AtomicString Csp() const override { return csp_; }
+  const WebVector<WebFeaturePolicyFeature>& AllowedFeatures() const override {
+    return allowed_features_;
+  }
 
-private:
-    RemoteFrameOwner(SandboxFlags, const WebFrameOwnerProperties&);
+  void SetBrowsingContextContainerName(const WebString& name) {
+    browsing_context_container_name_ = name;
+  }
+  void SetScrollingMode(WebFrameOwnerProperties::ScrollingMode);
+  void SetMarginWidth(int margin_width) { margin_width_ = margin_width; }
+  void SetMarginHeight(int margin_height) { margin_height_ = margin_height; }
+  void SetAllowFullscreen(bool allow_fullscreen) {
+    allow_fullscreen_ = allow_fullscreen;
+  }
+  void SetAllowPaymentRequest(bool allow_payment_request) {
+    allow_payment_request_ = allow_payment_request;
+  }
+  void SetIsDisplayNone(bool is_display_none) {
+    is_display_none_ = is_display_none;
+  }
+  void SetCsp(const WebString& csp) { csp_ = csp; }
+  void SetAllowedFeatures(
+      const WebVector<WebFeaturePolicyFeature>& allowed_features) {
+    allowed_features_ = allowed_features;
+  }
 
-    // Intentionally private to prevent redundant checks when the type is
-    // already HTMLFrameOwnerElement.
-    bool isLocal() const override { return false; }
-    bool isRemote() const override { return true; }
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<Frame> m_frame;
-    SandboxFlags m_sandboxFlags;
-    ScrollbarMode m_scrolling;
-    int m_marginWidth;
-    int m_marginHeight;
-    bool m_allowFullscreen;
-    WebVector<WebPermissionType> m_delegatedPermissions;
+ private:
+  RemoteFrameOwner(SandboxFlags, const WebFrameOwnerProperties&);
+
+  // Intentionally private to prevent redundant checks when the type is
+  // already HTMLFrameOwnerElement.
+  bool IsLocal() const override { return false; }
+  bool IsRemote() const override { return true; }
+
+  Member<Frame> frame_;
+  SandboxFlags sandbox_flags_;
+  AtomicString browsing_context_container_name_;
+  ScrollbarMode scrolling_;
+  int margin_width_;
+  int margin_height_;
+  bool allow_fullscreen_;
+  bool allow_payment_request_;
+  bool is_display_none_;
+  WebString csp_;
+  WebVector<WebFeaturePolicyFeature> allowed_features_;
 };
 
-DEFINE_TYPE_CASTS(RemoteFrameOwner, FrameOwner, owner, owner->isRemote(), owner.isRemote());
+DEFINE_TYPE_CASTS(RemoteFrameOwner,
+                  FrameOwner,
+                  owner,
+                  owner->IsRemote(),
+                  owner.IsRemote());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RemoteFrameOwner_h
+#endif  // RemoteFrameOwner_h

@@ -8,44 +8,44 @@
 
 namespace blink {
 
-void WebContentDecryptionModuleResult::complete()
-{
-    m_impl->complete();
-    reset();
+void WebContentDecryptionModuleResult::Complete() {
+  impl_->Complete();
+  Reset();
 }
 
-void WebContentDecryptionModuleResult::completeWithContentDecryptionModule(WebContentDecryptionModule* cdm)
-{
-    m_impl->completeWithContentDecryptionModule(cdm);
-    reset();
+void WebContentDecryptionModuleResult::CompleteWithContentDecryptionModule(
+    WebContentDecryptionModule* cdm) {
+  impl_->CompleteWithContentDecryptionModule(cdm);
+  Reset();
 }
 
-void WebContentDecryptionModuleResult::completeWithSession(SessionStatus status)
-{
-    m_impl->completeWithSession(status);
-    reset();
+void WebContentDecryptionModuleResult::CompleteWithSession(
+    SessionStatus status) {
+  impl_->CompleteWithSession(status);
+  Reset();
 }
 
-void WebContentDecryptionModuleResult::completeWithError(WebContentDecryptionModuleException exception, unsigned long systemCode, const WebString& errorMessage)
-{
-    m_impl->completeWithError(exception, systemCode, errorMessage);
-    reset();
+void WebContentDecryptionModuleResult::CompleteWithError(
+    WebContentDecryptionModuleException exception,
+    unsigned long system_code,
+    const WebString& error_message) {
+  impl_->CompleteWithError(exception, system_code, error_message);
+  Reset();
 }
 
-WebContentDecryptionModuleResult::WebContentDecryptionModuleResult(ContentDecryptionModuleResult* impl)
-    : m_impl(impl)
-{
-    ASSERT(m_impl.get());
+WebContentDecryptionModuleResult::WebContentDecryptionModuleResult(
+    ContentDecryptionModuleResult* impl)
+    : impl_(impl) {
+  DCHECK(impl_.Get());
 }
 
-void WebContentDecryptionModuleResult::reset()
-{
-    m_impl.reset();
+void WebContentDecryptionModuleResult::Reset() {
+  impl_.Reset();
 }
 
-void WebContentDecryptionModuleResult::assign(const WebContentDecryptionModuleResult& o)
-{
-    m_impl = o.m_impl;
+void WebContentDecryptionModuleResult::Assign(
+    const WebContentDecryptionModuleResult& o) {
+  impl_ = o.impl_;
 }
 
-} // namespace blink
+}  // namespace blink

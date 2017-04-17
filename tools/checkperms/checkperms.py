@@ -182,8 +182,6 @@ IGNORED_PATHS = (
       '__init__.py',
   'out/',
   # TODO(maruel): Fix these.
-  'third_party/bintrees/',
-  'third_party/closure_linter/',
   'third_party/devscripts/licensecheck.pl.vanilla',
   'third_party/hyphen/',
   'third_party/lcov-1.9/contrib/galaxy/conglomerate_functions.pl',
@@ -194,7 +192,6 @@ IGNORED_PATHS = (
   'third_party/libxml/src/ltmain.sh',
   'third_party/mesa/',
   'third_party/protobuf/',
-  'third_party/python_gflags/gflags.py',
   'third_party/sqlite/',
   'third_party/talloc/script/mksyms.sh',
   'third_party/tcmalloc/',

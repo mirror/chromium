@@ -38,9 +38,6 @@ class ConfiguratorImpl {
   // Delay in seconds to every subsequent update check. 0 means don't check.
   int NextCheckDelay() const;
 
-  // Delay in seconds from each task step. Used to smooth out CPU/IO usage.
-  int StepDelay() const;
-
   // Minimum delta time in seconds before an on-demand check is allowed for the
   // same component.
   int OnDemandDelay() const;
@@ -76,14 +73,17 @@ class ConfiguratorImpl {
   net::URLRequestContextGetter* RequestContext() const;
 
   // True means that this client can handle delta updates.
-  bool DeltasEnabled() const;
+  bool EnabledDeltas() const;
+
+  // True is the component updates are enabled.
+  bool EnabledComponentUpdates() const;
 
   // True means that the background downloader can be used for downloading
   // non on-demand components.
-  bool UseBackgroundDownloader() const;
+  bool EnabledBackgroundDownloader() const;
 
   // True if signing of update checks is enabled.
-  bool UseCupSigning() const;
+  bool EnabledCupSigning() const;
 
  private:
   net::URLRequestContextGetter* url_request_getter_;

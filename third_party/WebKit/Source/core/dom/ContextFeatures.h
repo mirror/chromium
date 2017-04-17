@@ -38,70 +38,78 @@ class ContextFeaturesClient;
 class Document;
 class Page;
 
-class ContextFeatures final : public GarbageCollectedFinalized<ContextFeatures>, public Supplement<Page> {
-    USING_GARBAGE_COLLECTED_MIXIN(ContextFeatures);
-public:
-    enum FeatureType {
-        PagePopup = 0,
-        MutationEvents,
-        FeatureTypeSize // Should be the last entry.
-    };
+class ContextFeatures final : public GarbageCollectedFinalized<ContextFeatures>,
+                              public Supplement<Page> {
+  USING_GARBAGE_COLLECTED_MIXIN(ContextFeatures);
 
-    static const char* supplementName();
-    static ContextFeatures& defaultSwitch();
-    static ContextFeatures* create(std::unique_ptr<ContextFeaturesClient>);
+ public:
+  enum FeatureType {
+    kPagePopup = 0,
+    kMutationEvents,
+    kFeatureTypeSize  // Should be the last entry.
+  };
 
-    static bool pagePopupEnabled(Document*);
-    static bool mutationEventsEnabled(Document*);
+  static const char* SupplementName();
+  static ContextFeatures& DefaultSwitch();
+  static ContextFeatures* Create(std::unique_ptr<ContextFeaturesClient>);
 
-    bool isEnabled(Document*, FeatureType, bool) const;
-    void urlDidChange(Document*);
+  static bool PagePopupEnabled(Document*);
+  static bool MutationEventsEnabled(Document*);
 
-private:
-    explicit ContextFeatures(std::unique_ptr<ContextFeaturesClient> client)
-        : m_client(std::move(client))
-    { }
+  bool IsEnabled(Document*, FeatureType, bool) const;
+  void UrlDidChange(Document*);
 
-    std::unique_ptr<ContextFeaturesClient> m_client;
+ private:
+  explicit ContextFeatures(std::unique_ptr<ContextFeaturesClient> client)
+      : client_(std::move(client)) {}
+
+  std::unique_ptr<ContextFeaturesClient> client_;
 };
 
 class ContextFeaturesClient {
-    USING_FAST_MALLOC(ContextFeaturesClient);
-public:
-    static std::unique_ptr<ContextFeaturesClient> empty();
+  USING_FAST_MALLOC(ContextFeaturesClient);
 
-    virtual ~ContextFeaturesClient() { }
-    virtual bool isEnabled(Document*, ContextFeatures::FeatureType, bool defaultValue) { return defaultValue; }
-    virtual void urlDidChange(Document*) { }
+ public:
+  static std::unique_ptr<ContextFeaturesClient> Empty();
+
+  virtual ~ContextFeaturesClient() {}
+  virtual bool IsEnabled(Document*,
+                         ContextFeatures::FeatureType,
+                         bool default_value) {
+    return default_value;
+  }
+  virtual void UrlDidChange(Document*) {}
 };
 
-CORE_EXPORT void provideContextFeaturesTo(Page&, std::unique_ptr<ContextFeaturesClient>);
-void provideContextFeaturesToDocumentFrom(Document&, Page&);
+CORE_EXPORT void ProvideContextFeaturesTo(
+    Page&,
+    std::unique_ptr<ContextFeaturesClient>);
+void ProvideContextFeaturesToDocumentFrom(Document&, Page&);
 
-inline ContextFeatures* ContextFeatures::create(std::unique_ptr<ContextFeaturesClient> client)
-{
-    return new ContextFeatures(std::move(client));
+inline ContextFeatures* ContextFeatures::Create(
+    std::unique_ptr<ContextFeaturesClient> client) {
+  return new ContextFeatures(std::move(client));
 }
 
-inline bool ContextFeatures::isEnabled(Document* document, FeatureType type, bool defaultValue) const
-{
-    if (!m_client)
-        return defaultValue;
-    return m_client->isEnabled(document, type, defaultValue);
+inline bool ContextFeatures::IsEnabled(Document* document,
+                                       FeatureType type,
+                                       bool default_value) const {
+  if (!client_)
+    return default_value;
+  return client_->IsEnabled(document, type, default_value);
 }
 
-inline void ContextFeatures::urlDidChange(Document* document)
-{
-    // FIXME: The original code, commented out below, is obviously
-    // wrong, but the seemingly correct fix of negating the test to
-    // the more logical 'if (!m_client)' crashes the renderer.
-    // See issue 294180
-    //
-    // if (m_client)
-    //     return;
-    // m_client->urlDidChange(document);
+inline void ContextFeatures::UrlDidChange(Document* document) {
+  // FIXME: The original code, commented out below, is obviously
+  // wrong, but the seemingly correct fix of negating the test to
+  // the more logical 'if (!m_client)' crashes the renderer.
+  // See issue 294180
+  //
+  // if (m_client)
+  //     return;
+  // m_client->urlDidChange(document);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ContextFeatures_h
+#endif  // ContextFeatures_h

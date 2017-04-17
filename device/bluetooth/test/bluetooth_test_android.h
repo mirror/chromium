@@ -12,8 +12,6 @@
 
 namespace device {
 
-class BluetoothAdapterAndroid;
-
 // Android implementation of BluetoothTestBase.
 class BluetoothTestAndroid : public BluetoothTestBase {
  public:
@@ -31,6 +29,7 @@ class BluetoothTestAndroid : public BluetoothTestBase {
   void InitWithFakeAdapter() override;
   bool DenyPermission() override;
   BluetoothDevice* SimulateLowEnergyDevice(int device_ordinal) override;
+  void RememberDeviceForSubsequentAction(BluetoothDevice* device) override;
   void SimulateGattConnection(BluetoothDevice* device) override;
   void SimulateGattConnectionError(BluetoothDevice* device,
                                    BluetoothDevice::ConnectErrorCode) override;
@@ -49,6 +48,11 @@ class BluetoothTestAndroid : public BluetoothTestBase {
   void SimulateGattNotifySessionStarted(
       BluetoothRemoteGattCharacteristic* characteristic) override;
   void SimulateGattNotifySessionStartError(
+      BluetoothRemoteGattCharacteristic* characteristic,
+      BluetoothRemoteGattService::GattErrorCode error_code) override;
+  void SimulateGattNotifySessionStopped(
+      BluetoothRemoteGattCharacteristic* characteristic) override;
+  void SimulateGattNotifySessionStopError(
       BluetoothRemoteGattCharacteristic* characteristic,
       BluetoothRemoteGattService::GattErrorCode error_code) override;
   void SimulateGattCharacteristicSetNotifyWillFailSynchronouslyOnce(
@@ -156,6 +160,11 @@ class BluetoothTestAndroid : public BluetoothTestBase {
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& caller,
       const bool powered);
+
+  // Posts a task to be run on the current message loop.
+  void PostTaskFromJava(JNIEnv* env,
+                        const base::android::JavaParamRef<jobject>& caller,
+                        const base::android::JavaParamRef<jobject>& runnable);
 
   base::android::ScopedJavaGlobalRef<jobject> j_fake_bluetooth_adapter_;
 

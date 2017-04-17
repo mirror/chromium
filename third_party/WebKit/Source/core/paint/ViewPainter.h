@@ -5,27 +5,27 @@
 #ifndef ViewPainter_h
 #define ViewPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class LayoutPoint;
 struct PaintInfo;
-class LayoutBox;
 class LayoutView;
 
 class ViewPainter {
-    STACK_ALLOCATED();
-public:
-    ViewPainter(const LayoutView& layoutView) : m_layoutView(layoutView) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint& paintOffset);
-    void paintBoxDecorationBackground(const PaintInfo&);
+ public:
+  ViewPainter(const LayoutView& layout_view) : layout_view_(layout_view) {}
 
-private:
-    const LayoutView& m_layoutView;
+  void Paint(const PaintInfo&, const LayoutPoint& paint_offset);
+  void PaintBoxDecorationBackground(const PaintInfo&);
+
+ private:
+  const LayoutView& layout_view_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ViewPainter_h
+#endif  // ViewPainter_h

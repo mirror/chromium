@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_CONTENT_SCRIPT_MANAGER_H
-#define EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_CONTENT_SCRIPT_MANAGER_H
+#ifndef EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_CONTENT_SCRIPT_MANAGER_H_
+#define EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_CONTENT_SCRIPT_MANAGER_H_
 
 #include <map>
 #include <set>
@@ -19,12 +19,10 @@ struct HostID;
 
 namespace content {
 class BrowserContext;
-class RenderViewHost;
-class WebContents;
+class RenderFrameHost;
 }
 
 namespace extensions {
-class UserScript;
 
 // WebViewContentScriptManager manages the content scripts that each webview
 // guest adds and removes programmatically.
@@ -41,10 +39,10 @@ class WebViewContentScriptManager : public base::SupportsUserData::Data,
   // Adds content scripts for the WebView specified by
   // |embedder_process_id| and |view_instance_id|.
   void AddContentScripts(int embedder_process_id,
-                         content::RenderViewHost* render_view_host,
+                         content::RenderFrameHost* render_frame_host,
                          int view_instance_id,
                          const HostID& host_id,
-                         const std::set<UserScript>& user_scripts);
+                         std::unique_ptr<UserScriptList> user_scripts);
 
   // Removes all content scripts for the WebView identified by
   // |embedder_process_id| and |view_instance_id|.
@@ -73,7 +71,7 @@ class WebViewContentScriptManager : public base::SupportsUserData::Data,
 
  private:
   using GuestMapKey = std::pair<int, int>;
-  using ContentScriptMap = std::map<std::string, extensions::UserScript>;
+  using ContentScriptMap = std::map<std::string, UserScriptIDPair>;
   using GuestContentScriptMap = std::map<GuestMapKey, ContentScriptMap>;
 
   // UserScriptLoader::Observer implementation:
@@ -107,4 +105,4 @@ class WebViewContentScriptManager : public base::SupportsUserData::Data,
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_CONTENT_SCRIPT_MANAGER_H
+#endif  // EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_CONTENT_SCRIPT_MANAGER_H_

@@ -13,23 +13,34 @@ namespace blink {
 // options. An application requests AddEventListenerOptions and the user
 // agent may change ('resolve') these settings (based on settings or policies)
 // and the result and the reasons why changes occurred are stored in this class.
-class CORE_EXPORT AddEventListenerOptionsResolved : public AddEventListenerOptions {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+class CORE_EXPORT AddEventListenerOptionsResolved
+    : public AddEventListenerOptions {
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-public:
-    AddEventListenerOptionsResolved();
-    AddEventListenerOptionsResolved(const AddEventListenerOptions&);
-    virtual ~AddEventListenerOptionsResolved();
+ public:
+  AddEventListenerOptionsResolved();
+  AddEventListenerOptionsResolved(const AddEventListenerOptions&);
+  virtual ~AddEventListenerOptionsResolved();
 
-    void setPassiveForcedForDocumentTarget(bool forced) { m_passiveForcedForDocumentTarget = forced; }
-    bool passiveForcedForDocumentTarget() const { return m_passiveForcedForDocumentTarget; }
+  void SetPassiveForcedForDocumentTarget(bool forced) {
+    passive_forced_for_document_target_ = forced;
+  }
+  bool PassiveForcedForDocumentTarget() const {
+    return passive_forced_for_document_target_;
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  // Set whether passive was specified when the options were
+  // created by callee.
+  void SetPassiveSpecified(bool specified) { passive_specified_ = specified; }
+  bool PassiveSpecified() const { return passive_specified_; }
 
-private:
-    bool m_passiveForcedForDocumentTarget;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  bool passive_forced_for_document_target_;
+  bool passive_specified_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AddEventListenerOptionsResolved_h
+#endif  // AddEventListenerOptionsResolved_h

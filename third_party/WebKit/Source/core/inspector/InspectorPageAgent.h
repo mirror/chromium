@@ -31,135 +31,190 @@
 #ifndef InspectorPageAgent_h
 #define InspectorPageAgent_h
 
-
 #include "core/CoreExport.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/Page.h"
 #include "core/page/ChromeClient.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
+
+namespace probe {
+class RecalculateStyle;
+class UpdateLayout;
+}
 
 class Resource;
 class Document;
 class DocumentLoader;
 class InspectedFrames;
-class InspectorCSSAgent;
 class InspectorResourceContentLoader;
 class KURL;
 class LocalFrame;
 class SharedBuffer;
-class TextResourceDecoder;
-class V8InspectorSession;
 
 using blink::protocol::Maybe;
 
-class CORE_EXPORT InspectorPageAgent final : public InspectorBaseAgent<protocol::Page::Metainfo> {
-    WTF_MAKE_NONCOPYABLE(InspectorPageAgent);
-public:
-    class Client {
-    public:
-        virtual ~Client() { }
-        virtual void pageLayoutInvalidated(bool resized) { }
-        virtual void setPausedInDebuggerMessage(const String&) { }
-        virtual void waitForCreateWindow(LocalFrame*) { }
-    };
+class CORE_EXPORT InspectorPageAgent final
+    : public InspectorBaseAgent<protocol::Page::Metainfo> {
+  WTF_MAKE_NONCOPYABLE(InspectorPageAgent);
 
-    enum ResourceType {
-        DocumentResource,
-        StylesheetResource,
-        ImageResource,
-        FontResource,
-        MediaResource,
-        ScriptResource,
-        TextTrackResource,
-        XHRResource,
-        FetchResource,
-        EventSourceResource,
-        WebSocketResource,
-        ManifestResource,
-        OtherResource
-    };
+ public:
+  class Client {
+   public:
+    virtual ~Client() {}
+    virtual void PageLayoutInvalidated(bool resized) {}
+    virtual void ConfigureOverlay(bool suspended, const String& message) {}
+    virtual void WaitForCreateWindow(LocalFrame*) {}
+  };
 
-    static InspectorPageAgent* create(InspectedFrames*, Client*, InspectorResourceContentLoader*, V8InspectorSession*);
+  enum ResourceType {
+    kDocumentResource,
+    kStylesheetResource,
+    kImageResource,
+    kFontResource,
+    kMediaResource,
+    kScriptResource,
+    kTextTrackResource,
+    kXHRResource,
+    kFetchResource,
+    kEventSourceResource,
+    kWebSocketResource,
+    kManifestResource,
+    kOtherResource
+  };
 
-    static HeapVector<Member<Document>> importsForFrame(LocalFrame*);
-    static bool cachedResourceContent(Resource*, String* result, bool* base64Encoded);
-    static bool sharedBufferContent(PassRefPtr<SharedBuffer>, const String& mimeType, const String& textEncodingName, String* result, bool* base64Encoded);
+  static InspectorPageAgent* Create(InspectedFrames*,
+                                    Client*,
+                                    InspectorResourceContentLoader*,
+                                    v8_inspector::V8InspectorSession*);
 
-    static PassRefPtr<SharedBuffer> resourceData(LocalFrame*, const KURL&, String* textEncodingName);
-    static Resource* cachedResource(LocalFrame*, const KURL&);
-    static String resourceTypeJson(ResourceType);
-    static ResourceType cachedResourceType(const Resource&);
-    static String cachedResourceTypeJson(const Resource&);
+  static HeapVector<Member<Document>> ImportsForFrame(LocalFrame*);
+  static bool CachedResourceContent(Resource*,
+                                    String* result,
+                                    bool* base64_encoded);
+  static bool SharedBufferContent(PassRefPtr<const SharedBuffer>,
+                                  const String& mime_type,
+                                  const String& text_encoding_name,
+                                  String* result,
+                                  bool* base64_encoded);
 
-    // Page API for frontend
-    void enable(ErrorString*) override;
-    void disable(ErrorString*) override;
-    void addScriptToEvaluateOnLoad(ErrorString*, const String& scriptSource, String* identifier) override;
-    void removeScriptToEvaluateOnLoad(ErrorString*, const String& identifier) override;
-    void setAutoAttachToCreatedPages(ErrorString*, bool autoAttach) override;
-    void reload(ErrorString*, const Maybe<bool>& bypassCache, const Maybe<String>& scriptToEvaluateOnLoad) override;
-    void navigate(ErrorString*, const String& url, String* frameId) override;
-    void getResourceTree(ErrorString*, std::unique_ptr<protocol::Page::FrameResourceTree>* frameTree) override;
-    void getResourceContent(ErrorString*, const String& frameId, const String& url, std::unique_ptr<GetResourceContentCallback>) override;
-    void searchInResource(ErrorString*, const String& frameId, const String& url, const String& query, const Maybe<bool>& caseSensitive, const Maybe<bool>& isRegex, std::unique_ptr<SearchInResourceCallback>) override;
-    void setDocumentContent(ErrorString*, const String& frameId, const String& html) override;
-    void startScreencast(ErrorString*, const Maybe<String>& format, const Maybe<int>& quality, const Maybe<int>& maxWidth, const Maybe<int>& maxHeight, const Maybe<int>& everyNthFrame) override;
-    void stopScreencast(ErrorString*) override;
-    void setOverlayMessage(ErrorString*, const Maybe<String>& message) override;
-    void setBlockedEventsWarningThreshold(ErrorString*, double threshold) override;
+  static Resource* CachedResource(LocalFrame*, const KURL&);
+  static String ResourceTypeJson(ResourceType);
+  static ResourceType CachedResourceType(const Resource&);
+  static String CachedResourceTypeJson(const Resource&);
 
-    // InspectorInstrumentation API
-    void didClearDocumentOfWindowObject(LocalFrame*);
-    void domContentLoadedEventFired(LocalFrame*);
-    void loadEventFired(LocalFrame*);
-    void didCommitLoad(LocalFrame*, DocumentLoader*);
-    void frameAttachedToParent(LocalFrame*);
-    void frameDetachedFromParent(LocalFrame*);
-    void frameStartedLoading(LocalFrame*);
-    void frameStoppedLoading(LocalFrame*);
-    void frameScheduledNavigation(LocalFrame*, double delay);
-    void frameClearedScheduledNavigation(LocalFrame*);
-    void willRunJavaScriptDialog(const String& message, ChromeClient::DialogType);
-    void didRunJavaScriptDialog(bool result);
-    void didUpdateLayout();
-    void didResizeMainFrame();
-    void didRecalculateStyle();
-    void windowCreated(LocalFrame*);
+  // Page API for frontend
+  protocol::Response enable() override;
+  protocol::Response disable() override;
+  protocol::Response addScriptToEvaluateOnLoad(const String& script_source,
+                                               String* identifier) override;
+  protocol::Response removeScriptToEvaluateOnLoad(
+      const String& identifier) override;
+  protocol::Response setAutoAttachToCreatedPages(bool) override;
+  protocol::Response reload(Maybe<bool> bypass_cache,
+                            Maybe<String> script_to_evaluate_on_load) override;
+  protocol::Response navigate(const String& url,
+                              Maybe<String> referrer,
+                              String* frame_id) override;
+  protocol::Response stopLoading() override;
+  protocol::Response getResourceTree(
+      std::unique_ptr<protocol::Page::FrameResourceTree>* frame_tree) override;
+  void getResourceContent(const String& frame_id,
+                          const String& url,
+                          std::unique_ptr<GetResourceContentCallback>) override;
+  void searchInResource(const String& frame_id,
+                        const String& url,
+                        const String& query,
+                        Maybe<bool> case_sensitive,
+                        Maybe<bool> is_regex,
+                        std::unique_ptr<SearchInResourceCallback>) override;
+  protocol::Response setDocumentContent(const String& frame_id,
+                                        const String& html) override;
+  protocol::Response startScreencast(Maybe<String> format,
+                                     Maybe<int> quality,
+                                     Maybe<int> max_width,
+                                     Maybe<int> max_height,
+                                     Maybe<int> every_nth_frame) override;
+  protocol::Response stopScreencast() override;
+  protocol::Response configureOverlay(Maybe<bool> suspended,
+                                      Maybe<String> message) override;
+  protocol::Response getLayoutMetrics(
+      std::unique_ptr<protocol::Page::LayoutViewport>*,
+      std::unique_ptr<protocol::Page::VisualViewport>*,
+      std::unique_ptr<protocol::DOM::Rect>*) override;
 
-    // Inspector Controller API
-    void restore() override;
-    bool screencastEnabled();
+  // InspectorInstrumentation API
+  void DidClearDocumentOfWindowObject(LocalFrame*);
+  void DomContentLoadedEventFired(LocalFrame*);
+  void LoadEventFired(LocalFrame*);
+  void DidCommitLoad(LocalFrame*, DocumentLoader*);
+  void FrameAttachedToParent(LocalFrame*);
+  void FrameDetachedFromParent(LocalFrame*);
+  void FrameStartedLoading(LocalFrame*, FrameLoadType);
+  void FrameStoppedLoading(LocalFrame*);
+  void FrameScheduledNavigation(LocalFrame*, double delay);
+  void FrameClearedScheduledNavigation(LocalFrame*);
+  void WillRunJavaScriptDialog(const String& message, ChromeClient::DialogType);
+  void DidRunJavaScriptDialog(bool result);
+  void DidResizeMainFrame();
+  void DidChangeViewport();
+  void Will(const probe::UpdateLayout&);
+  void Did(const probe::UpdateLayout&);
+  void Will(const probe::RecalculateStyle&);
+  void Did(const probe::RecalculateStyle&);
+  void WindowCreated(LocalFrame*);
 
-    DECLARE_VIRTUAL_TRACE();
+  // Inspector Controller API
+  void Restore() override;
+  bool ScreencastEnabled();
 
-private:
-    InspectorPageAgent(InspectedFrames*, Client*, InspectorResourceContentLoader*, V8InspectorSession*);
+  DECLARE_VIRTUAL_TRACE();
 
-    void finishReload();
-    void getResourceContentAfterResourcesContentLoaded(const String& frameId, const String& url, std::unique_ptr<GetResourceContentCallback>);
-    void searchContentAfterResourcesContentLoaded(const String& frameId, const String& url, const String& query, bool caseSensitive, bool isRegex, std::unique_ptr<SearchInResourceCallback>);
+ private:
+  InspectorPageAgent(InspectedFrames*,
+                     Client*,
+                     InspectorResourceContentLoader*,
+                     v8_inspector::V8InspectorSession*);
 
-    static bool dataContent(const char* data, unsigned size, const String& textEncodingName, bool withBase64Encode, String* result);
+  void FinishReload();
+  void GetResourceContentAfterResourcesContentLoaded(
+      const String& frame_id,
+      const String& url,
+      std::unique_ptr<GetResourceContentCallback>);
+  void SearchContentAfterResourcesContentLoaded(
+      const String& frame_id,
+      const String& url,
+      const String& query,
+      bool case_sensitive,
+      bool is_regex,
+      std::unique_ptr<SearchInResourceCallback>);
 
-    std::unique_ptr<protocol::Page::Frame> buildObjectForFrame(LocalFrame*);
-    std::unique_ptr<protocol::Page::FrameResourceTree> buildObjectForFrameTree(LocalFrame*);
-    Member<InspectedFrames> m_inspectedFrames;
-    V8InspectorSession* m_v8Session;
-    Client* m_client;
-    long m_lastScriptIdentifier;
-    String m_pendingScriptToEvaluateOnLoadOnce;
-    String m_scriptToEvaluateOnLoadOnce;
-    bool m_enabled;
-    bool m_reloading;
-    Member<InspectorResourceContentLoader> m_inspectorResourceContentLoader;
-    int m_resourceContentLoaderClientId;
+  static bool DataContent(const char* data,
+                          unsigned size,
+                          const String& text_encoding_name,
+                          bool with_base64_encode,
+                          String* result);
+
+  void PageLayoutInvalidated(bool resized);
+
+  std::unique_ptr<protocol::Page::Frame> BuildObjectForFrame(LocalFrame*);
+  std::unique_ptr<protocol::Page::FrameResourceTree> BuildObjectForFrameTree(
+      LocalFrame*);
+  Member<InspectedFrames> inspected_frames_;
+  v8_inspector::V8InspectorSession* v8_session_;
+  Client* client_;
+  long last_script_identifier_;
+  String pending_script_to_evaluate_on_load_once_;
+  String script_to_evaluate_on_load_once_;
+  bool enabled_;
+  bool reloading_;
+  Member<InspectorResourceContentLoader> inspector_resource_content_loader_;
+  int resource_content_loader_client_id_;
 };
 
+}  // namespace blink
 
-} // namespace blink
-
-
-#endif // !defined(InspectorPagerAgent_h)
+#endif  // !defined(InspectorPagerAgent_h)

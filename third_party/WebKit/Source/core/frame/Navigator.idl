@@ -19,8 +19,7 @@
 
 // https://html.spec.whatwg.org/#the-navigator-object
 
-[
-] interface Navigator {
+interface Navigator {
     // objects implementing this interface also implement the interfaces given below
 
     // TODO(foolip): vendorSub should be on NavigatorID.
@@ -33,8 +32,8 @@
     [MeasureAs=NavigatorVendor] readonly attribute DOMString vendor;
 };
 
-Navigator implements NavigatorCPU;
+Navigator implements NavigatorConcurrentHardware;
+Navigator implements NavigatorCookies;
 Navigator implements NavigatorID;
 Navigator implements NavigatorLanguage;
 Navigator implements NavigatorOnLine;
-Navigator implements NavigatorStorageUtils;

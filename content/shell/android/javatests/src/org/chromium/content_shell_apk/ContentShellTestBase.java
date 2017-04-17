@@ -4,67 +4,55 @@
 
 package org.chromium.content_shell_apk;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
-
-import android.content.ComponentName;
+import android.app.Instrumentation;
 import android.content.Intent;
-import android.net.Uri;
-import android.text.TextUtils;
-import android.view.ViewGroup;
 
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseActivityInstrumentationTestCase;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.test.util.CallbackHelper;
-import org.chromium.content.browser.test.util.Criteria;
-import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell.Shell;
+import org.chromium.content_shell_apk.ContentShellActivityTestRule.RerunWithUpdatedContainerView;
+import org.chromium.content_shell_apk.ContentShellTestCommon.TestCommonCallback;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.lang.reflect.AnnotatedElement;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Base test class for all ContentShell based tests.
  */
 @CommandLineFlags.Add(ContentSwitches.ENABLE_TEST_INTENTS)
-public class ContentShellTestBase
-        extends BaseActivityInstrumentationTestCase<ContentShellActivity> {
-    /** The maximum time the waitForActiveShellToBeDoneLoading method will wait. */
-    private static final long WAIT_FOR_ACTIVE_SHELL_LOADING_TIMEOUT = scaleTimeout(10000);
+public class ContentShellTestBase extends BaseActivityInstrumentationTestCase<ContentShellActivity>
+        implements TestCommonCallback<ContentShellActivity> {
+    protected static final long WAIT_PAGE_LOADING_TIMEOUT_SECONDS =
+            ContentShellTestCommon.WAIT_PAGE_LOADING_TIMEOUT_SECONDS;
 
-    protected static final long WAIT_PAGE_LOADING_TIMEOUT_SECONDS = scaleTimeout(15);
+    private ContentShellTestCommon mDelegate;
 
     public ContentShellTestBase() {
         super(ContentShellActivity.class);
+        mDelegate = new ContentShellTestCommon(this);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    protected void setUp() throws Exception {
+        super.setUp();
+        mDelegate.assertScreenIsOn();
     }
 
     /**
      * Starts the ContentShell activity and loads the given URL.
      * The URL can be null, in which case will default to ContentShellActivity.DEFAULT_SHELL_URL.
      */
-    protected ContentShellActivity launchContentShellWithUrl(String url) {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (url != null) intent.setData(Uri.parse(url));
-        intent.setComponent(new ComponentName(getInstrumentation().getTargetContext(),
-                ContentShellActivity.class));
-        setActivityIntent(intent);
-        return getActivity();
+    public ContentShellActivity launchContentShellWithUrl(String url) {
+        return mDelegate.launchContentShellWithUrl(url);
     }
 
     // TODO(cjhopman): These functions are inconsistent with launchContentShell***. Should be
@@ -74,28 +62,23 @@ public class ContentShellTestBase
      * Starts the content shell activity with the provided test url.
      * The url is synchronously loaded.
      * @param url Test url to load.
-     * @throws InterruptedException
      */
-    protected void startActivityWithTestUrl(String url) throws InterruptedException {
-        launchContentShellWithUrl(UrlUtils.getIsolatedTestFileUrl(url));
-        assertNotNull(getActivity());
-        waitForActiveShellToBeDoneLoading();
-        assertEquals(UrlUtils.getIsolatedTestFileUrl(url),
-                getContentViewCore().getWebContents().getUrl());
+    public void startActivityWithTestUrl(String url) {
+        mDelegate.launchContentShellWithUrlSync(url);
     }
 
     /**
      * Returns the current ContentViewCore or null if there is no ContentView.
      */
-    protected ContentViewCore getContentViewCore() {
-        return getActivity().getActiveShell().getContentViewCore();
+    public ContentViewCore getContentViewCore() {
+        return mDelegate.getContentViewCore();
     }
 
     /**
      * Returns the WebContents of this Shell.
      */
-    protected WebContents getWebContents() {
-        return getActivity().getActiveShell().getWebContents();
+    public WebContents getWebContents() {
+        return mDelegate.getWebContents();
     }
 
     /**
@@ -103,35 +86,9 @@ public class ContentShellTestBase
      * WAIT_FOR_ACTIVE_SHELL_LOADING_TIMEOUT milliseconds and it shouldn't be used for long
      * loading pages. Instead it should be used more for test initialization. The proper way
      * to wait is to use a TestCallbackHelperContainer after the initial load is completed.
-     * @throws InterruptedException
      */
-    protected void waitForActiveShellToBeDoneLoading() throws InterruptedException {
-        final ContentShellActivity activity = getActivity();
-
-        // Wait for the Content Shell to be initialized.
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                Shell shell = activity.getActiveShell();
-                // There are two cases here that need to be accounted for.
-                // The first is that we've just created a Shell and it isn't
-                // loading because it has no URL set yet.  The second is that
-                // we've set a URL and it actually is loading.
-                if (shell == null) {
-                    updateFailureReason("Shell is null.");
-                    return false;
-                }
-                if (TextUtils.isEmpty(shell.getContentViewCore().getWebContents().getUrl())) {
-                    updateFailureReason("Shell's URL is empty or null.");
-                    return false;
-                }
-                if (!shell.getContentViewCore().getWebContents().isReady()) {
-                    updateFailureReason("Shell's view is not ready.");
-                    return false;
-                }
-                return true;
-            }
-        }, WAIT_FOR_ACTIVE_SHELL_LOADING_TIMEOUT, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
+    public void waitForActiveShellToBeDoneLoading() {
+        mDelegate.waitForActiveShellToBeDoneLoading();
     }
 
     /**
@@ -139,24 +96,11 @@ public class ContentShellTestBase
      * @param url The URL to create the new {@link Shell} with.
      * @return A new instance of a {@link Shell}.
      * @throws ExecutionException
-     * @throws InterruptedException
      */
-    protected Shell loadNewShell(final String url) throws ExecutionException, InterruptedException {
-        Shell shell = ThreadUtils.runOnUiThreadBlocking(new Callable<Shell>() {
-            @Override
-            public Shell call() {
-                getActivity().getShellManager().launchShell(url);
-                return getActivity().getActiveShell();
-            }
-        });
-
-        assertNotNull("Unable to create shell.", shell);
-        assertEquals("Active shell unexpected.", shell, getActivity().getActiveShell());
-
-        waitForActiveShellToBeDoneLoading();
-
-        return shell;
+    public Shell loadNewShell(String url) throws ExecutionException {
+        return mDelegate.loadNewShell(url);
     }
+
     /**
      * Loads a URL in the specified content view.
      *
@@ -164,18 +108,10 @@ public class ContentShellTestBase
      * @param callbackHelperContainer The callback helper container used to monitor progress.
      * @param params The URL params to use.
      */
-    protected void loadUrl(
-            final NavigationController navigationController,
-            TestCallbackHelperContainer callbackHelperContainer,
-            final LoadUrlParams params) throws Throwable {
-        handleBlockingCallbackAction(
-                callbackHelperContainer.getOnPageFinishedHelper(),
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        navigationController.loadUrl(params);
-                    }
-                });
+    public void loadUrl(NavigationController navigationController,
+            TestCallbackHelperContainer callbackHelperContainer, LoadUrlParams params)
+            throws Throwable {
+        mDelegate.loadUrl(navigationController, callbackHelperContainer, params);
     }
 
     /**
@@ -185,12 +121,9 @@ public class ContentShellTestBase
      * @param callbackHelper The callback helper that will be blocked on.
      * @param action The action to be performed on the UI thread.
      */
-    protected void handleBlockingCallbackAction(
-            CallbackHelper callbackHelper, Runnable action) throws Throwable {
-        int currentCallCount = callbackHelper.getCallCount();
-        runTestOnUiThread(action);
-        callbackHelper.waitForCallback(
-                currentCallCount, 1, WAIT_PAGE_LOADING_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+    public void handleBlockingCallbackAction(CallbackHelper callbackHelper, Runnable action)
+            throws Throwable {
+        mDelegate.handleBlockingCallbackAction(callbackHelper, action);
     }
 
     // TODO(aelias): This method needs to be removed once http://crbug.com/179511 is fixed.
@@ -199,15 +132,8 @@ public class ContentShellTestBase
      * Waits till the ContentViewCore receives the expected page scale factor
      * from the compositor and asserts that this happens.
      */
-    protected void assertWaitForPageScaleFactorMatch(float expectedScale)
-            throws InterruptedException {
-        CriteriaHelper.pollInstrumentationThread(
-                Criteria.equals(expectedScale, new Callable<Float>() {
-                    @Override
-                    public Float call() {
-                        return getContentViewCore().getScale();
-                    }
-                }));
+    public void assertWaitForPageScaleFactorMatch(float expectedScale) {
+        mDelegate.assertWaitForPageScaleFactorMatch(expectedScale);
     }
 
     /**
@@ -215,19 +141,11 @@ public class ContentShellTestBase
      * {@link ContentView}.
      */
     @SuppressWarnings("javadoc")
-    protected void replaceContainerView() throws Throwable {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-                @Override
-            public void run() {
-                ContentView cv = ContentView.createContentView(getActivity(), getContentViewCore());
-                ((ViewGroup) getContentViewCore().getContainerView().getParent()).addView(cv);
-                getContentViewCore().setContainerView(cv);
-                getContentViewCore().setContainerViewInternals(cv);
-                cv.requestFocus();
-            }
-        });
+    public void replaceContainerView() throws Throwable {
+        mDelegate.replaceContainerView();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void runTest() throws Throwable {
         super.runTest();
@@ -243,15 +161,48 @@ public class ContentShellTestBase
         }
     }
 
-    /**
-     * Annotation for tests that should be executed a second time after replacing
-     * the ContentViewCore's container view (see {@link #runTest()}).
-     *
-     * <p>Please note that {@link #setUp()} is only invoked once before both runs,
-     * and that any state changes produced by the first run are visible to the second run.
-     */
-    @Target(ElementType.METHOD)
-    @Retention(RetentionPolicy.RUNTIME)
-    public @interface RerunWithUpdatedContainerView {
+    @SuppressWarnings("deprecation")
+    @Override
+    public ContentShellActivity getActivityForTestCommon() {
+        return getActivity();
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public Instrumentation getInstrumentationForTestCommon() {
+        return getInstrumentation();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public ContentShellActivity launchActivityWithIntentForTestCommon(Intent intent) {
+        setActivityIntent(intent);
+        return getActivity();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void runOnUiThreadForTestCommon(Runnable runnable) throws Throwable {
+        runTestOnUiThread(runnable);
+    }
+
+    @Override
+    public ContentViewCore getContentViewCoreForTestCommon() {
+        return getContentViewCore();
+    }
+
+    @Override
+    public WebContents getWebContentsForTestCommon() {
+        return getWebContents();
+    }
+
+    @Override
+    public void waitForActiveShellToBeDoneLoadingForTestCommon() {
+        waitForActiveShellToBeDoneLoading();
+    }
+
+    @Override
+    public ContentShellActivity launchContentShellWithUrlForTestCommon(String url) {
+        return launchContentShellWithUrl(url);
     }
 }

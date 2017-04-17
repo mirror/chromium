@@ -6,43 +6,41 @@
 #define V0CustomElementMicrotaskDispatcher_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class V0CustomElementCallbackQueue;
 
-class V0CustomElementMicrotaskDispatcher final : public GarbageCollected<V0CustomElementMicrotaskDispatcher> {
-    WTF_MAKE_NONCOPYABLE(V0CustomElementMicrotaskDispatcher);
-public:
-    static V0CustomElementMicrotaskDispatcher& instance();
+class V0CustomElementMicrotaskDispatcher final
+    : public GarbageCollected<V0CustomElementMicrotaskDispatcher> {
+  WTF_MAKE_NONCOPYABLE(V0CustomElementMicrotaskDispatcher);
 
-    void enqueue(V0CustomElementCallbackQueue*);
+ public:
+  static V0CustomElementMicrotaskDispatcher& Instance();
 
-    bool elementQueueIsEmpty() { return m_elements.isEmpty(); }
+  void Enqueue(V0CustomElementCallbackQueue*);
 
-    DECLARE_TRACE();
+  bool ElementQueueIsEmpty() { return elements_.IsEmpty(); }
 
-private:
-    V0CustomElementMicrotaskDispatcher();
+  DECLARE_TRACE();
 
-    void ensureMicrotaskScheduledForElementQueue();
-    void ensureMicrotaskScheduled();
+ private:
+  V0CustomElementMicrotaskDispatcher();
 
-    static void dispatch();
-    void doDispatch();
+  void EnsureMicrotaskScheduledForElementQueue();
+  void EnsureMicrotaskScheduled();
 
-    bool m_hasScheduledMicrotask;
-    enum {
-        Quiescent,
-        Resolving,
-        DispatchingCallbacks
-    } m_phase;
+  static void Dispatch();
+  void DoDispatch();
 
-    HeapVector<Member<V0CustomElementCallbackQueue>> m_elements;
+  bool has_scheduled_microtask_;
+  enum { kQuiescent, kResolving, kDispatchingCallbacks } phase_;
+
+  HeapVector<Member<V0CustomElementCallbackQueue>> elements_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementMicrotaskDispatcher_h
+#endif  // V0CustomElementMicrotaskDispatcher_h

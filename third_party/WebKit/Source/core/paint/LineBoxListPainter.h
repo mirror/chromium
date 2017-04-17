@@ -6,7 +6,7 @@
 #define LineBoxListPainter_h
 
 #include "core/style/ComputedStyleConstants.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -16,18 +16,22 @@ class LayoutBoxModelObject;
 class LineBoxList;
 
 class LineBoxListPainter {
-    STACK_ALLOCATED();
-public:
-    LineBoxListPainter(const LineBoxList& lineBoxList) : m_lineBoxList(lineBoxList) { }
+  STACK_ALLOCATED();
 
-    void paint(const LayoutBoxModelObject&, const PaintInfo&, const LayoutPoint&) const;
+ public:
+  LineBoxListPainter(const LineBoxList& line_box_list)
+      : line_box_list_(line_box_list) {}
 
-    void invalidateLineBoxPaintOffsets(const PaintInfo&) const;
+  void Paint(const LayoutBoxModelObject&,
+             const PaintInfo&,
+             const LayoutPoint&) const;
 
-private:
-    const LineBoxList& m_lineBoxList;
+  void InvalidateLineBoxPaintOffsets(const PaintInfo&) const;
+
+ private:
+  const LineBoxList& line_box_list_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineBoxListPainter_h
+#endif  // LineBoxListPainter_h

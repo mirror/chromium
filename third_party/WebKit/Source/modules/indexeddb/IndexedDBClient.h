@@ -33,7 +33,7 @@
 #include "modules/ModulesExport.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -41,25 +41,31 @@ class ExecutionContext;
 class LocalFrame;
 class WorkerClients;
 
-class MODULES_EXPORT IndexedDBClient : public GarbageCollectedFinalized<IndexedDBClient>, public Supplement<LocalFrame>, public Supplement<WorkerClients> {
-    USING_GARBAGE_COLLECTED_MIXIN(IndexedDBClient);
-    WTF_MAKE_NONCOPYABLE(IndexedDBClient);
-public:
-    IndexedDBClient();
-    virtual ~IndexedDBClient() {}
+class MODULES_EXPORT IndexedDBClient
+    : public GarbageCollectedFinalized<IndexedDBClient>,
+      public Supplement<LocalFrame>,
+      public Supplement<WorkerClients> {
+  USING_GARBAGE_COLLECTED_MIXIN(IndexedDBClient);
+  WTF_MAKE_NONCOPYABLE(IndexedDBClient);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  explicit IndexedDBClient(LocalFrame&);
+  explicit IndexedDBClient(WorkerClients&);
+  virtual ~IndexedDBClient() {}
 
-    virtual bool allowIndexedDB(ExecutionContext*, const String& name) = 0;
+  DECLARE_VIRTUAL_TRACE();
 
-    static IndexedDBClient* from(ExecutionContext*);
-    static const char* supplementName();
+  virtual bool AllowIndexedDB(ExecutionContext*, const String& name) = 0;
+
+  static IndexedDBClient* From(ExecutionContext*);
+  static const char* SupplementName();
 };
 
-MODULES_EXPORT void provideIndexedDBClientTo(LocalFrame&, IndexedDBClient*);
+MODULES_EXPORT void ProvideIndexedDBClientTo(LocalFrame&, IndexedDBClient*);
 
-MODULES_EXPORT void provideIndexedDBClientToWorker(WorkerClients*, IndexedDBClient*);
+MODULES_EXPORT void ProvideIndexedDBClientToWorker(WorkerClients*,
+                                                   IndexedDBClient*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IndexedDBClient_h
+#endif  // IndexedDBClient_h

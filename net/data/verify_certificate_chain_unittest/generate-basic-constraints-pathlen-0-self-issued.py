@@ -9,7 +9,7 @@ against the path length."""
 
 import common
 
-# Self-signed root certificate (part of trust store).
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate with pathlen 0
@@ -28,8 +28,11 @@ intermediate2.get_extensions().set_property('basicConstraints',
 target = common.create_end_entity_certificate('Target', intermediate2)
 
 chain = [target, intermediate2, intermediate1]
-trusted = [root]
+trusted = common.TrustAnchor(root, constrained=False)
 time = common.DEFAULT_TIME
+key_purpose = common.DEFAULT_KEY_PURPOSE
 verify_result = True
+errors = None
 
-common.write_test_file(__doc__, chain, trusted, time, verify_result)
+common.write_test_file(__doc__, chain, trusted, time, key_purpose,
+                       verify_result, errors)

@@ -6,9 +6,11 @@
 
 #include <stdint.h>
 
+#include <algorithm>
+
 #include "ash/shell.h"
 #include "ash/wm/window_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -25,7 +27,12 @@
 #include "ui/views/controls/glow_hover_controller.h"
 
 namespace {
+
 const int64_t kActivationDelayMS = 200;
+
+inline float Clamp(float value, float low, float high) {
+  return std::min(high, std::max(value, low));
+}
 }
 
 // static
@@ -69,7 +76,7 @@ TabScrubber::TabScrubber()
       activation_delay_(kActivationDelayMS),
       use_default_activation_delay_(true),
       weak_ptr_factory_(this) {
-  ash::Shell::GetInstance()->AddPreTargetHandler(this);
+  ash::Shell::Get()->AddPreTargetHandler(this);
   registrar_.Add(
       this,
       chrome::NOTIFICATION_BROWSER_CLOSED,
@@ -261,7 +268,7 @@ void TabScrubber::FinishScrub(bool activate) {
       int distance =
           std::abs(
               highlighted_tab_ - browser_->tab_strip_model()->active_index());
-      UMA_HISTOGRAM_CUSTOM_COUNTS("Tabs.ScrubDistance", distance, 0, 20, 21);
+      UMA_HISTOGRAM_CUSTOM_COUNTS("Tabs.ScrubDistance", distance, 1, 20, 21);
       browser_->tab_strip_model()->ActivateTabAt(highlighted_tab_, true);
     }
     tab_strip->RemoveObserver(this);
@@ -306,7 +313,12 @@ void TabScrubber::UpdateSwipeX(float x_offset) {
   DCHECK(tab_strip_);
   DCHECK(scrubbing_);
 
-  swipe_x_ += x_offset;
+  // Make the swipe speed inversely proportional with the number or tabs:
+  // Each added tab introduces a reduction of 2% in |x_offset|, with a value of
+  // one fourth of |x_offset| as the minimum (i.e. we need 38 tabs to reach
+  // that minimum reduction).
+  swipe_x_ += Clamp(x_offset - (tab_strip_->tab_count() * 0.02f * x_offset),
+                    0.25f * x_offset, x_offset);
 
   // In an RTL layout, everything is mirrored, i.e. the index of the first tab
   // (with the smallest X mirrored co-ordinates) is actually the index of the

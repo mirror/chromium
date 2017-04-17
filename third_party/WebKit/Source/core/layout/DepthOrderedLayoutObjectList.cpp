@@ -10,45 +10,73 @@
 
 namespace blink {
 
-void DepthOrderedLayoutObjectList::add(LayoutObject& object)
-{
-    ASSERT(!object.frameView()->isInPerformLayout());
-    m_objects.add(&object);
-    m_orderedObjects.clear();
+struct DepthOrderedLayoutObjectListData {
+  // LayoutObjects sorted by depth (deepest first). This structure is only
+  // populated at the beginning of enumerations. See ordered().
+  Vector<DepthOrderedLayoutObjectList::LayoutObjectWithDepth> ordered_objects_;
+
+  // Outside of layout, LayoutObjects can be added and removed as needed such
+  // as when style was changed or destroyed. They're kept in this hashset to
+  // keep those operations fast.
+  HashSet<LayoutObject*> objects_;
+};
+
+DepthOrderedLayoutObjectList::DepthOrderedLayoutObjectList()
+    : data_(new DepthOrderedLayoutObjectListData) {}
+
+DepthOrderedLayoutObjectList::~DepthOrderedLayoutObjectList() {
+  delete data_;
 }
 
-void DepthOrderedLayoutObjectList::remove(LayoutObject& object)
-{
-    auto it = m_objects.find(&object);
-    if (it == m_objects.end())
-        return;
-    ASSERT(!object.frameView()->isInPerformLayout());
-    m_objects.remove(it);
-    m_orderedObjects.clear();
+int DepthOrderedLayoutObjectList::size() const {
+  return data_->objects_.size();
 }
 
-void DepthOrderedLayoutObjectList::clear()
-{
-    m_objects.clear();
-    m_orderedObjects.clear();
+bool DepthOrderedLayoutObjectList::IsEmpty() const {
+  return data_->objects_.IsEmpty();
 }
 
-unsigned DepthOrderedLayoutObjectList::LayoutObjectWithDepth::determineDepth(LayoutObject* object)
-{
-    unsigned depth = 1;
-    for (LayoutObject* parent = object->parent(); parent; parent = parent->parent())
-        ++depth;
-    return depth;
+void DepthOrderedLayoutObjectList::Add(LayoutObject& object) {
+  DCHECK(!object.GetFrameView()->IsInPerformLayout());
+  data_->objects_.insert(&object);
+  data_->ordered_objects_.Clear();
 }
 
-const Vector<DepthOrderedLayoutObjectList::LayoutObjectWithDepth>& DepthOrderedLayoutObjectList::ordered()
-{
-    if (m_objects.isEmpty() || !m_orderedObjects.isEmpty())
-        return m_orderedObjects;
-
-    copyToVector(m_objects, m_orderedObjects);
-    std::sort(m_orderedObjects.begin(), m_orderedObjects.end());
-    return m_orderedObjects;
+void DepthOrderedLayoutObjectList::Remove(LayoutObject& object) {
+  auto it = data_->objects_.Find(&object);
+  if (it == data_->objects_.end())
+    return;
+  DCHECK(!object.GetFrameView()->IsInPerformLayout());
+  data_->objects_.erase(it);
+  data_->ordered_objects_.Clear();
 }
 
-} // namespace blink
+void DepthOrderedLayoutObjectList::Clear() {
+  data_->objects_.Clear();
+  data_->ordered_objects_.Clear();
+}
+
+unsigned DepthOrderedLayoutObjectList::LayoutObjectWithDepth::DetermineDepth(
+    LayoutObject* object) {
+  unsigned depth = 1;
+  for (LayoutObject* parent = object->Parent(); parent;
+       parent = parent->Parent())
+    ++depth;
+  return depth;
+}
+
+const HashSet<LayoutObject*>& DepthOrderedLayoutObjectList::Unordered() const {
+  return data_->objects_;
+}
+
+const Vector<DepthOrderedLayoutObjectList::LayoutObjectWithDepth>&
+DepthOrderedLayoutObjectList::Ordered() {
+  if (data_->objects_.IsEmpty() || !data_->ordered_objects_.IsEmpty())
+    return data_->ordered_objects_;
+
+  CopyToVector(data_->objects_, data_->ordered_objects_);
+  std::sort(data_->ordered_objects_.begin(), data_->ordered_objects_.end());
+  return data_->ordered_objects_;
+}
+
+}  // namespace blink

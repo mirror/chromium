@@ -17,7 +17,7 @@
 #include "chrome/browser/chromeos/policy/cloud_external_data_manager_base.h"
 #include "chrome/browser/chromeos/policy/cloud_external_data_manager_base_test_util.h"
 #include "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h"
-#include "chrome/browser/chromeos/policy/user_cloud_policy_manager_factory_chromeos.h"
+#include "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -28,9 +28,9 @@
 #include "components/policy/core/common/external_data_fetcher.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_service.h"
+#include "components/policy/policy_constants.h"
 #include "content/public/test/test_utils.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
-#include "policy/policy_constants.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -62,7 +62,7 @@ IN_PROC_BROWSER_TEST_F(UserCloudExternalDataManagerTest, FetchExternalData) {
       test::ConstructExternalDataReference(url.spec(), external_data);
 #if defined(OS_CHROMEOS)
   UserCloudPolicyManagerChromeOS* policy_manager =
-      UserCloudPolicyManagerFactoryChromeOS::GetForProfile(
+      UserPolicyManagerFactoryChromeOS::GetCloudPolicyManagerForProfile(
           browser()->profile());
 #else
   UserCloudPolicyManager* policy_manager =

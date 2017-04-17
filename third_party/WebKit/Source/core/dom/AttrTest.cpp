@@ -11,72 +11,55 @@
 namespace blink {
 
 class AttrTest : public ::testing::Test {
-protected:
-    void SetUp() override;
+ protected:
+  void SetUp() override;
 
-    Attr* createAttribute();
-    const AtomicString& value() const { return m_value; }
+  Attr* CreateAttribute();
+  const AtomicString& Value() const { return value_; }
 
-private:
-    Persistent<Document> m_document;
-    AtomicString m_value;
+ private:
+  Persistent<Document> document_;
+  AtomicString value_;
 };
 
-void AttrTest::SetUp()
-{
-    m_document = Document::create();
-    m_value = "value";
+void AttrTest::SetUp() {
+  document_ = Document::Create();
+  value_ = "value";
 }
 
-Attr* AttrTest::createAttribute()
-{
-    return m_document->createAttribute("name", ASSERT_NO_EXCEPTION);
+Attr* AttrTest::CreateAttribute() {
+  return document_->createAttribute("name", ASSERT_NO_EXCEPTION);
 }
 
-TEST_F(AttrTest, InitialValueState)
-{
-    Attr* attr = createAttribute();
-    EXPECT_EQ(emptyAtom, attr->value());
-    EXPECT_EQ(emptyString(), attr->toNode()->nodeValue());
-    EXPECT_EQ(String(), attr->textContent());
+TEST_F(AttrTest, InitialValueState) {
+  Attr* attr = CreateAttribute();
+  EXPECT_EQ(g_empty_atom, attr->value());
+  EXPECT_EQ(g_empty_string, attr->ToNode()->nodeValue());
+  EXPECT_EQ(g_empty_string, attr->textContent());
 }
 
-TEST_F(AttrTest, SetValue)
-{
-    Attr* attr = createAttribute();
-    attr->setValue(value());
-    EXPECT_EQ(value(), attr->value());
-    EXPECT_EQ(value(), attr->toNode()->nodeValue());
-    // Node::textContent() always returns String() for Attr.
-    EXPECT_EQ(String(), attr->textContent());
+TEST_F(AttrTest, SetValue) {
+  Attr* attr = CreateAttribute();
+  attr->setValue(Value());
+  EXPECT_EQ(Value(), attr->value());
+  EXPECT_EQ(Value(), attr->ToNode()->nodeValue());
+  EXPECT_EQ(Value(), attr->textContent());
 }
 
-TEST_F(AttrTest, SetNodeValue)
-{
-    Attr* attr = createAttribute();
-    attr->toNode()->setNodeValue(value());
-    EXPECT_EQ(value(), attr->value());
-    EXPECT_EQ(value(), attr->toNode()->nodeValue());
-    // Node::textContent() always returns String() for Attr.
-    EXPECT_EQ(String(), attr->textContent());
+TEST_F(AttrTest, SetNodeValue) {
+  Attr* attr = CreateAttribute();
+  attr->ToNode()->setNodeValue(Value());
+  EXPECT_EQ(Value(), attr->value());
+  EXPECT_EQ(Value(), attr->ToNode()->nodeValue());
+  EXPECT_EQ(Value(), attr->textContent());
 }
 
-TEST_F(AttrTest, SetTextContent)
-{
-    Attr* attr = createAttribute();
-    // Node::setTextContent() does nothing for Attr.
-    attr->setTextContent(value());
-    EXPECT_EQ(emptyAtom, attr->value());
-    EXPECT_EQ(emptyString(), attr->toNode()->nodeValue());
-    EXPECT_EQ(String(), attr->textContent());
+TEST_F(AttrTest, SetTextContent) {
+  Attr* attr = CreateAttribute();
+  attr->setTextContent(Value());
+  EXPECT_EQ(Value(), attr->value());
+  EXPECT_EQ(Value(), attr->ToNode()->nodeValue());
+  EXPECT_EQ(Value(), attr->textContent());
 }
 
-TEST_F(AttrTest, LengthOfContents)
-{
-    Attr* attr = createAttribute();
-    EXPECT_EQ(0u, attr->lengthOfContents());
-    attr->setValue(value());
-    EXPECT_EQ(0u, attr->lengthOfContents());
-}
-
-} // namespace blink
+}  // namespace blink

@@ -111,6 +111,10 @@ extern const char kBundleResourcesDir[];
 extern const char kBundleResourcesDir_HelpShort[];
 extern const char kBundleResourcesDir_Help[];
 
+extern const char kBundleDepsFilter[];
+extern const char kBundleDepsFilter_HelpShort[];
+extern const char kBundleDepsFilter_Help[];
+
 extern const char kBundleExecutableDir[];
 extern const char kBundleExecutableDir_HelpShort[];
 extern const char kBundleExecutableDir_Help[];
@@ -234,6 +238,10 @@ extern const char kOutputs_Help[];
 extern const char kPrecompiledHeader[];
 extern const char kPrecompiledHeader_HelpShort[];
 extern const char kPrecompiledHeader_Help[];
+
+extern const char kPrecompiledHeaderType[];
+extern const char kPrecompiledHeaderType_HelpShort[];
+extern const char kPrecompiledHeaderType_Help[];
 
 extern const char kPrecompiledSource[];
 extern const char kPrecompiledSource_HelpShort[];

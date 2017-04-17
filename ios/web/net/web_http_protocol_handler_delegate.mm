@@ -2,14 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/web/net/web_http_protocol_handler_delegate.h"
+#import "ios/web/net/web_http_protocol_handler_delegate.h"
 
 #import <Foundation/Foundation.h>
 
+#import "base/strings/sys_string_conversions.h"
 #import "ios/web/public/url_scheme_util.h"
-#include "ios/web/public/web_client.h"
+#import "ios/web/public/web_client.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
 
@@ -19,7 +24,7 @@ bool IsAppSpecificScheme(NSURL* url) {
     return false;
   // Use the GURL implementation, but with a scheme-only URL to avoid
   // unnecessary parsing in GURL construction.
-  GURL gurl([[scheme stringByAppendingString:@":"] UTF8String]);
+  GURL gurl(base::SysNSStringToUTF8([scheme stringByAppendingString:@":"]));
   return web::GetWebClient()->IsAppSpecificURL(gurl);
 }
 

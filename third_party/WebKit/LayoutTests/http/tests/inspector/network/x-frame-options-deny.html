@@ -11,15 +11,15 @@ function loadIFrameWithDownload()
 
 function test()
 {
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "responseReceived", responseReceived);
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "loadingFailed", loadingFailed);
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "loadingFinished", loadingFinished);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "responseReceived", responseReceived);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "loadingFailed", loadingFailed);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "loadingFinished", loadingFinished);
     InspectorTest.evaluateInPage("loadIFrameWithDownload()");
 
     function responseReceived(requestId, time, resourceType, response)
     {
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/x-frame-options-deny\.cgi/.exec(request.url)) {
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/x-frame-options-deny\.cgi/.exec(request.url())) {
             InspectorTest.addResult("Received response for x-frame-options-deny.cgi");
             InspectorTest.addResult("SUCCESS");
             InspectorTest.completeTest();
@@ -28,16 +28,18 @@ function test()
 
     function loadingFinished(requestId, finishTime)
     {
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/x-frame-options-deny\.cgi/.exec(request.url))
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/x-frame-options-deny\.cgi/.exec(request.url()))
             InspectorTest.completeTest();
     }
 
     function loadingFailed(requestId, time, localizedDescription, canceled)
     {
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/x-frame-options-deny\.cgi/.exec(request.url))
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/x-frame-options-deny\.cgi/.exec(request.url())) {
+            InspectorTest.addResult("TODO(mkwst): This started failing when we moved XFO to the browser.");
             InspectorTest.completeTest();
+        }
     }
 }
 </script>

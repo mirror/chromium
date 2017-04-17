@@ -7,30 +7,27 @@
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
-#include "platform/TraceEvent.h"
 #include "platform/graphics/CompositorMutation.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
 
-CustomCompositorAnimationManager::CustomCompositorAnimationManager()
-{
+CustomCompositorAnimationManager::CustomCompositorAnimationManager() {}
+
+CustomCompositorAnimationManager::~CustomCompositorAnimationManager() {}
+
+void CustomCompositorAnimationManager::ApplyMutations(
+    CompositorMutations* mutations) {
+  TRACE_EVENT0("compositor-worker",
+               "CustomCompositorAnimationManager::applyMutations");
+  for (const auto& entry : mutations->map) {
+    int element_id = entry.key;
+    const CompositorMutation& mutation = *entry.value;
+    Node* node = DOMNodeIds::NodeForId(element_id);
+    if (!node || !node->IsElementNode())
+      continue;
+    ToElement(node)->UpdateFromCompositorMutation(mutation);
+  }
 }
 
-CustomCompositorAnimationManager::~CustomCompositorAnimationManager()
-{
-}
-
-void CustomCompositorAnimationManager::applyMutations(CompositorMutations* mutations)
-{
-    TRACE_EVENT0("compositor-worker", "CustomCompositorAnimationManager::applyMutations");
-    for (const auto& entry : mutations->map) {
-        int elementId = entry.key;
-        const CompositorMutation& mutation = *entry.value;
-        Node* node = DOMNodeIds::nodeForId(elementId);
-        if (!node || !node->isElementNode())
-            continue;
-        toElement(node)->updateFromCompositorMutation(mutation);
-    }
-}
-
-} // namespace blink
+}  // namespace blink

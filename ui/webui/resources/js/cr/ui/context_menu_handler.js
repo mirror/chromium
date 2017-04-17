@@ -15,6 +15,7 @@ cr.define('cr.ui', function() {
    * @implements {EventListener}
    */
   function ContextMenuHandler() {
+    /** @private {!EventTracker} */
     this.showingEvents_ = new EventTracker();
   }
 
@@ -48,7 +49,7 @@ cr.define('cr.ui', function() {
 
       // When the menu is shown we steal a lot of events.
       var doc = menu.ownerDocument;
-      var win = doc.defaultView;
+      var win = /** @type {!Window} */ (doc.defaultView);
       this.showingEvents_.add(doc, 'keydown', this, true);
       this.showingEvents_.add(doc, 'mousedown', this, true);
       this.showingEvents_.add(doc, 'touchstart', this, true);
@@ -113,8 +114,8 @@ cr.define('cr.ui', function() {
       // to detect this.
       if (this.keyIsDown_) {
         var rect = element.getRectForContextMenu ?
-                       element.getRectForContextMenu() :
-                       element.getBoundingClientRect();
+            element.getRectForContextMenu() :
+            element.getBoundingClientRect();
         var offset = Math.min(rect.width, rect.height) / 2;
         x = rect.left + offset;
         y = rect.top + offset;
@@ -153,12 +154,13 @@ cr.define('cr.ui', function() {
         case 'mousedown':
           if (!this.menu.contains(e.target)) {
             this.hideMenu();
-            if(e.button == 0 /* Left click */) {
+            if (e.button == 0 /* Left button */ && (cr.isLinux || cr.isMac)) {
+              // Emulate Mac and Linux, which swallow native 'mousedown' events
+              // that close menus.
               e.preventDefault();
               e.stopPropagation();
             }
-          }
-          else
+          } else
             e.preventDefault();
           break;
 
@@ -173,7 +175,7 @@ cr.define('cr.ui', function() {
             e.stopPropagation();
             e.preventDefault();
 
-          // If the menu is visible we let it handle all the keyboard events.
+            // If the menu is visible we let it handle all the keyboard events.
           } else if (this.menu) {
             this.menu.handleKeyDown(e);
             e.preventDefault();
@@ -182,10 +184,10 @@ cr.define('cr.ui', function() {
           break;
 
         case 'activate':
-          var hideDelayed = e.target instanceof cr.ui.MenuItem &&
-              e.target.checkable;
-          this.hideMenu(hideDelayed ? cr.ui.HideType.DELAYED :
-                                      cr.ui.HideType.INSTANT);
+          var hideDelayed =
+              e.target instanceof cr.ui.MenuItem && e.target.checkable;
+          this.hideMenu(
+              hideDelayed ? cr.ui.HideType.DELAYED : cr.ui.HideType.INSTANT);
           break;
 
         case 'focus':
@@ -220,7 +222,8 @@ cr.define('cr.ui', function() {
      */
     addContextMenuProperty: function(elementOrClass) {
       var target = typeof elementOrClass == 'function' ?
-          elementOrClass.prototype : elementOrClass;
+          elementOrClass.prototype :
+          elementOrClass;
 
       target.__defineGetter__('contextMenu', function() {
         return this.contextMenu_;

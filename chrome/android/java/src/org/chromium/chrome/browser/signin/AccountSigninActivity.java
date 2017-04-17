@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.signin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class AccountSigninActivity extends AppCompatActivity
 
     @IntDef({SigninAccessPoint.SETTINGS, SigninAccessPoint.BOOKMARK_MANAGER,
             SigninAccessPoint.RECENT_TABS, SigninAccessPoint.SIGNIN_PROMO,
-            SigninAccessPoint.NTP_LINK, SigninAccessPoint.AUTOFILL_DROPDOWN})
+            SigninAccessPoint.NTP_CONTENT_SUGGESTIONS, SigninAccessPoint.AUTOFILL_DROPDOWN})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AccessPoint {}
     @AccessPoint private int mAccessPoint;
@@ -97,14 +98,13 @@ public class AccountSigninActivity extends AppCompatActivity
                 || mAccessPoint == SigninAccessPoint.RECENT_TABS
                 || mAccessPoint == SigninAccessPoint.SETTINGS
                 || mAccessPoint == SigninAccessPoint.SIGNIN_PROMO
+                || mAccessPoint == SigninAccessPoint.NTP_CONTENT_SUGGESTIONS
                 || mAccessPoint == SigninAccessPoint.AUTOFILL_DROPDOWN
                 : "invalid access point: " + mAccessPoint;
 
         mView = (AccountSigninView) LayoutInflater.from(this).inflate(
                 R.layout.account_signin_view, null);
-        mView.init(getProfileDataCache());
-        mView.setListener(this);
-        mView.setDelegate(this);
+        mView.init(getProfileDataCache(), this, this);
 
         if (getAccessPoint() == SigninAccessPoint.BOOKMARK_MANAGER
                 || getAccessPoint() == SigninAccessPoint.RECENT_TABS) {
@@ -189,8 +189,17 @@ public class AccountSigninActivity extends AppCompatActivity
             case SigninAccessPoint.SIGNIN_PROMO:
                 RecordUserAction.record("Signin_Signin_FromSigninPromo");
                 break;
+            case SigninAccessPoint.NTP_CONTENT_SUGGESTIONS:
+                RecordUserAction.record("Signin_Signin_FromNTPContentSuggestions");
+                break;
             default:
                 assert false : "Invalid access point.";
         }
+    }
+
+    // AccountSigninView.Delegate implementation.
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 }

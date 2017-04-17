@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "components/webcrypto/crypto_data.h"
 #include "components/webcrypto/status.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace webcrypto {
 
@@ -67,7 +68,7 @@ class SymKey : public Key {
 class AsymKey : public Key {
  public:
   // After construction the |pkey| should NOT be mutated.
-  AsymKey(crypto::ScopedEVP_PKEY pkey,
+  AsymKey(bssl::UniquePtr<EVP_PKEY> pkey,
           const std::vector<uint8_t>& serialized_key_data)
       : Key(CryptoData(serialized_key_data)), pkey_(std::move(pkey)) {}
 
@@ -77,25 +78,25 @@ class AsymKey : public Key {
   EVP_PKEY* pkey() { return pkey_.get(); }
 
  private:
-  crypto::ScopedEVP_PKEY pkey_;
+  bssl::UniquePtr<EVP_PKEY> pkey_;
 
   DISALLOW_COPY_AND_ASSIGN(AsymKey);
 };
 
 Key* GetKey(const blink::WebCryptoKey& key) {
-  return reinterpret_cast<Key*>(key.handle());
+  return reinterpret_cast<Key*>(key.Handle());
 }
 
 }  // namespace
 
 const std::vector<uint8_t>& GetSymmetricKeyData(
     const blink::WebCryptoKey& key) {
-  DCHECK_EQ(blink::WebCryptoKeyTypeSecret, key.type());
+  DCHECK_EQ(blink::kWebCryptoKeyTypeSecret, key.GetType());
   return GetKey(key)->AsSymKey()->raw_key_data();
 }
 
 EVP_PKEY* GetEVP_PKEY(const blink::WebCryptoKey& key) {
-  DCHECK_NE(blink::WebCryptoKeyTypeSecret, key.type());
+  DCHECK_NE(blink::kWebCryptoKeyTypeSecret, key.GetType());
   return GetKey(key)->AsAsymKey()->pkey();
 }
 
@@ -110,7 +111,7 @@ blink::WebCryptoKeyHandle* CreateSymmetricKeyHandle(
 }
 
 blink::WebCryptoKeyHandle* CreateAsymmetricKeyHandle(
-    crypto::ScopedEVP_PKEY pkey,
+    bssl::UniquePtr<EVP_PKEY> pkey,
     const std::vector<uint8_t>& serialized_key_data) {
   return new AsymKey(std::move(pkey), serialized_key_data);
 }

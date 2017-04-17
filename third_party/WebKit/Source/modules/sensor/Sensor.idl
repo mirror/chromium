@@ -3,25 +3,20 @@
 // found in the LICENSE file.
 
 // Specification at:
-// https://w3c.github.io/sensors/#sensor0
-
-enum SensorState {
-  "idle",
-  "activating",
-  "active",
-  "errored"
-};
+// https://w3c.github.io/sensors/#the-sensor-interface
 
 [
+    ActiveScriptWrappable,
+    DependentLifetime,
     RuntimeEnabled=Sensor,
 ] interface Sensor : EventTarget {
-    readonly attribute SensorState state;
-    readonly attribute SensorReading? reading;
+    [MeasureAs=GenericSensorActivated] readonly attribute boolean activated;
+    [CallWith=ScriptState] readonly attribute DOMHighResTimeStamp? timestamp;
 
-    [CallWith=ScriptState, RaisesException] void start();
-    [CallWith=ScriptState, RaisesException] void stop();
+    [MeasureAs=GenericSensorStart] void start();
+    [MeasureAs=GenericSensorStop] void stop();
 
-    attribute EventHandler onerror;
-    attribute EventHandler onchange;
-    attribute EventHandler onstatechange;
+    [MeasureAs=GenericSensorOnError] attribute EventHandler onerror;
+    [MeasureAs=GenericSensorOnChange] attribute EventHandler onchange;
+    [MeasureAs=GenericSensorOnActivate] attribute EventHandler onactivate;
 };

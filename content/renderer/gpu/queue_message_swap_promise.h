@@ -27,8 +27,9 @@ class QueueMessageSwapPromise : public cc::SwapPromise {
   ~QueueMessageSwapPromise() override;
 
   void DidActivate() override;
-  void DidSwap(cc::CompositorFrameMetadata* metadata) override;
-  void DidNotSwap(DidNotSwapReason reason) override;
+  void WillSwap(cc::CompositorFrameMetadata* metadata) override;
+  void DidSwap() override;
+  DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override;
 
   int64_t TraceId() const override;
 

@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <set>
 
 #include "base/memory/ptr_util.h"
 #include "sql/connection.h"
@@ -24,6 +25,21 @@ enum LoginTableColumns {
   COLUMN_DATE,
 };
 
+// Iterates through all rows of s constructing a stats vector.
+std::vector<InteractionsStats> StatementToInteractionsStats(sql::Statement* s) {
+  std::vector<InteractionsStats> results;
+  while (s->Step()) {
+    results.push_back(InteractionsStats());
+    results.back().origin_domain = GURL(s->ColumnString(COLUMN_ORIGIN_DOMAIN));
+    results.back().username_value = s->ColumnString16(COLUMN_USERNAME);
+    results.back().dismissal_count = s->ColumnInt(COLUMN_DISMISSALS);
+    results.back().update_time =
+        base::Time::FromInternalValue(s->ColumnInt64(COLUMN_DATE));
+  }
+
+  return results;
+}
+
 }  // namespace
 
 InteractionsStats::InteractionsStats() = default;
@@ -35,15 +51,14 @@ bool operator==(const InteractionsStats& lhs, const InteractionsStats& rhs) {
          lhs.update_time == rhs.update_time;
 }
 
-InteractionsStats* FindStatsByUsername(
-    const std::vector<std::unique_ptr<InteractionsStats>>& stats,
+const InteractionsStats* FindStatsByUsername(
+    const std::vector<InteractionsStats>& stats,
     const base::string16& username) {
-  auto it = std::find_if(
-      stats.begin(), stats.end(),
-      [&username](const std::unique_ptr<InteractionsStats>& element) {
-        return username == element->username_value;
-      });
-  return it == stats.end() ? nullptr : it->get();
+  auto it = std::find_if(stats.begin(), stats.end(),
+                         [&username](const InteractionsStats& element) {
+                           return username == element.username_value;
+                         });
+  return it == stats.end() ? nullptr : &*it;
 }
 
 StatisticsTable::StatisticsTable() : db_(nullptr) {
@@ -106,36 +121,73 @@ bool StatisticsTable::RemoveRow(const GURL& domain) {
   return s.Run();
 }
 
-std::vector<std::unique_ptr<InteractionsStats>> StatisticsTable::GetRows(
-    const GURL& domain) {
+std::vector<InteractionsStats> StatisticsTable::GetAllRows() {
+  static constexpr char query[] =
+      "SELECT origin_domain, username_value, "
+      "dismissal_count, update_time FROM stats";
+  sql::Statement s(db_->GetCachedStatement(SQL_FROM_HERE, query));
+  return StatementToInteractionsStats(&s);
+}
+
+std::vector<InteractionsStats> StatisticsTable::GetRows(const GURL& domain) {
   if (!domain.is_valid())
-    return std::vector<std::unique_ptr<InteractionsStats>>();
+    return std::vector<InteractionsStats>();
   const char query[] =
       "SELECT origin_domain, username_value, "
       "dismissal_count, update_time FROM stats WHERE origin_domain == ?";
   sql::Statement s(db_->GetCachedStatement(SQL_FROM_HERE, query));
   s.BindString(0, domain.spec());
-  std::vector<std::unique_ptr<InteractionsStats>> result;
-  while (s.Step()) {
-    result.push_back(base::WrapUnique(new InteractionsStats));
-    result.back()->origin_domain = GURL(s.ColumnString(COLUMN_ORIGIN_DOMAIN));
-    result.back()->username_value = s.ColumnString16(COLUMN_USERNAME);
-    result.back()->dismissal_count = s.ColumnInt(COLUMN_DISMISSALS);
-    result.back()->update_time =
-        base::Time::FromInternalValue(s.ColumnInt64(COLUMN_DATE));
-  }
-  return result;
+  return StatementToInteractionsStats(&s);
 }
 
-bool StatisticsTable::RemoveStatsBetween(base::Time delete_begin,
-                                         base::Time delete_end) {
-  sql::Statement s(db_->GetCachedStatement(
-      SQL_FROM_HERE,
-      "DELETE FROM stats WHERE update_time >= ? AND update_time < ?"));
-  s.BindInt64(0, delete_begin.ToInternalValue());
-  s.BindInt64(1, delete_end.is_null() ? std::numeric_limits<int64_t>::max()
-                                      : delete_end.ToInternalValue());
-  return s.Run();
+bool StatisticsTable::RemoveStatsByOriginAndTime(
+    const base::Callback<bool(const GURL&)>& origin_filter,
+    base::Time delete_begin,
+    base::Time delete_end) {
+  if (delete_end.is_null())
+    delete_end = base::Time::Max();
+
+  // All origins.
+  if (origin_filter.is_null()) {
+    sql::Statement delete_statement(db_->GetCachedStatement(
+        SQL_FROM_HERE,
+        "DELETE FROM stats WHERE update_time >= ? AND update_time < ?"));
+    delete_statement.BindInt64(0, delete_begin.ToInternalValue());
+    delete_statement.BindInt64(1, delete_end.ToInternalValue());
+
+    return delete_statement.Run();
+  }
+
+  // Origin filtering.
+  sql::Statement select_statement(
+      db_->GetCachedStatement(SQL_FROM_HERE,
+                              "SELECT origin_domain FROM stats "
+                              "WHERE update_time >= ? AND update_time < ?"));
+  select_statement.BindInt64(0, delete_begin.ToInternalValue());
+  select_statement.BindInt64(1, delete_end.ToInternalValue());
+
+  std::set<std::string> origins;
+  while (select_statement.Step()) {
+    if (!origin_filter.Run(GURL(select_statement.ColumnString(0))))
+      continue;
+
+    origins.insert(select_statement.ColumnString(0));
+  }
+
+  bool success = true;
+
+  for (const std::string& origin : origins) {
+    sql::Statement origin_delete_statement(db_->GetCachedStatement(
+        SQL_FROM_HERE,
+        "DELETE FROM stats "
+        "WHERE origin_domain = ? AND update_time >= ? AND update_time < ?"));
+    origin_delete_statement.BindString(0, origin);
+    origin_delete_statement.BindInt64(1, delete_begin.ToInternalValue());
+    origin_delete_statement.BindInt64(2, delete_end.ToInternalValue());
+    success = success && origin_delete_statement.Run();
+  }
+
+  return success;
 }
 
 }  // namespace password_manager

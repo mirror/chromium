@@ -51,8 +51,8 @@ void CPPClass::AddStructB(JNIEnv* env,
                           const JavaParamRef<jobject>& caller,
                           const JavaParamRef<jobject>& structb) {
   long key = Java_InnerStructB_getKey(env, structb);
-  std::string value = ConvertJavaStringToUTF8(
-      env, Java_InnerStructB_getValue(env, structb).obj());
+  std::string value =
+      ConvertJavaStringToUTF8(env, Java_InnerStructB_getValue(env, structb));
   map_[key] = value;
 }
 
@@ -117,7 +117,7 @@ int main() {
 
   // This is how you call a java method from C++. Note that you must have
   // obtained the jobject somehow.
-  jobject my_java_object = NULL;
+  ScopedJavaLocalRef<jobject> my_java_object;
   int bar = base::android::Java_SampleForTests_javaMethod(
       env, my_java_object, 1, 2);
 
@@ -127,14 +127,16 @@ int main() {
     // Creates a "struct" that will then be used by the java side.
     ScopedJavaLocalRef<jobject> struct_a =
         base::android::Java_InnerStructA_create(
-            env, 0, 1, ConvertUTF8ToJavaString(env, "test").obj());
-    base::android::Java_SampleForTests_addStructA(
-        env, my_java_object, struct_a.obj());
+            env, 0, 1, ConvertUTF8ToJavaString(env, "test"));
+    base::android::Java_SampleForTests_addStructA(env, my_java_object,
+                                                  struct_a);
   }
   base::android::Java_SampleForTests_iterateAndDoSomething(env, my_java_object);
   base::android::Java_SampleForTests_packagePrivateJavaMethod(env,
                                                               my_java_object);
   base::android::Java_SampleForTests_methodThatThrowsException(env,
                                                                my_java_object);
+  base::android::Java_SampleForTests_javaMethodWithAnnotatedParam(
+      env, my_java_object, 42);
   return 0;
 }

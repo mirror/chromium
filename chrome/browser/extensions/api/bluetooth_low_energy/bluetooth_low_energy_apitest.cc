@@ -7,8 +7,6 @@
 #include <memory>
 #include <utility>
 
-#include "chrome/browser/extensions/api/bluetooth_low_energy/bluetooth_low_energy_api.h"
-#include "chrome/browser/extensions/api/bluetooth_low_energy/bluetooth_low_energy_event_router.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "device/bluetooth/test/mock_bluetooth_adapter.h"
 #include "device/bluetooth/test/mock_bluetooth_device.h"
@@ -17,6 +15,8 @@
 #include "device/bluetooth/test/mock_bluetooth_gatt_descriptor.h"
 #include "device/bluetooth/test/mock_bluetooth_gatt_notify_session.h"
 #include "device/bluetooth/test/mock_bluetooth_gatt_service.h"
+#include "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.h"
+#include "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_event_router.h"
 #include "extensions/common/test_util.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
@@ -652,10 +652,10 @@ IN_PROC_BROWSER_TEST_F(BluetoothLowEnergyApiTest, CharacteristicValueChanged) {
 
   BluetoothGattNotifySession* session0 =
       new testing::NiceMock<MockBluetoothGattNotifySession>(
-          kTestCharacteristicId0);
+          chrc0_->GetWeakPtr());
   BluetoothGattNotifySession* session1 =
       new testing::NiceMock<MockBluetoothGattNotifySession>(
-          kTestCharacteristicId2);
+          chrc2_->GetWeakPtr());
 
   EXPECT_CALL(*chrc0_, StartNotifySession(_, _))
       .Times(1)
@@ -700,15 +700,15 @@ IN_PROC_BROWSER_TEST_F(BluetoothLowEnergyApiTest, ReadCharacteristicValue) {
   event_router()->GattCharacteristicAdded(mock_adapter_, chrc0_.get());
 
   EXPECT_CALL(*mock_adapter_, GetDevice(_))
-      .Times(3)
+      .Times(4)
       .WillRepeatedly(Return(device0_.get()));
 
   EXPECT_CALL(*device0_, GetGattService(kTestServiceId0))
-      .Times(3)
+      .Times(4)
       .WillRepeatedly(Return(service0_.get()));
 
   EXPECT_CALL(*service0_, GetCharacteristic(kTestCharacteristicId0))
-      .Times(3)
+      .Times(4)
       .WillRepeatedly(Return(chrc0_.get()));
 
   std::vector<uint8_t> value;
@@ -1144,10 +1144,11 @@ IN_PROC_BROWSER_TEST_F(BluetoothLowEnergyApiTest, GattConnection) {
       .WillRepeatedly(Return(device0_.get()));
   EXPECT_CALL(*mock_adapter_, GetDevice(kTestLeDeviceAddress1))
       .WillRepeatedly(Return(device1_.get()));
-  static_assert(BluetoothDevice::NUM_CONNECT_ERROR_CODES == 15,
+  static_assert(
+      BluetoothDevice::NUM_CONNECT_ERROR_CODES == 8,
       "Update required if the number of BluetoothDevice enums changes.");
   EXPECT_CALL(*device0_, CreateGattConnection(_, _))
-      .Times(16)
+      .Times(9)
       .WillOnce(InvokeCallbackArgument<1>(BluetoothDevice::ERROR_FAILED))
       .WillOnce(InvokeCallbackArgument<1>(BluetoothDevice::ERROR_INPROGRESS))
       .WillOnce(InvokeCallbackArgument<1>(BluetoothDevice::ERROR_AUTH_FAILED))
@@ -1156,20 +1157,6 @@ IN_PROC_BROWSER_TEST_F(BluetoothLowEnergyApiTest, GattConnection) {
       .WillOnce(InvokeCallbackArgument<1>(BluetoothDevice::ERROR_AUTH_TIMEOUT))
       .WillOnce(
           InvokeCallbackArgument<1>(BluetoothDevice::ERROR_UNSUPPORTED_DEVICE))
-      .WillOnce(InvokeCallbackArgument<1>(
-          BluetoothDevice::ERROR_ATTRIBUTE_LENGTH_INVALID))
-      .WillOnce(InvokeCallbackArgument<1>(
-          BluetoothDevice::ERROR_CONNECTION_CONGESTED))
-      .WillOnce(InvokeCallbackArgument<1>(
-          BluetoothDevice::ERROR_INSUFFICIENT_ENCRYPTION))
-      .WillOnce(
-          InvokeCallbackArgument<1>(BluetoothDevice::ERROR_OFFSET_INVALID))
-      .WillOnce(InvokeCallbackArgument<1>(
-          BluetoothDevice::ERROR_READ_NOT_PERMITTED))
-      .WillOnce(InvokeCallbackArgument<1>(
-          BluetoothDevice::ERROR_REQUEST_NOT_SUPPORTED))
-      .WillOnce(InvokeCallbackArgument<1>(
-          BluetoothDevice::ERROR_WRITE_NOT_PERMITTED))
       .WillOnce(InvokeCallbackWithScopedPtrArg<0, BluetoothGattConnection>(
           CreateGattConnection(mock_adapter_, kTestLeDeviceAddress0,
                                true /* expect_disconnect */)))
@@ -1282,10 +1269,10 @@ IN_PROC_BROWSER_TEST_F(BluetoothLowEnergyApiTest, StartStopNotifications) {
 
   BluetoothGattNotifySession* session0 =
       new testing::NiceMock<MockBluetoothGattNotifySession>(
-          kTestCharacteristicId0);
+          chrc0_->GetWeakPtr());
   MockBluetoothGattNotifySession* session1 =
       new testing::NiceMock<MockBluetoothGattNotifySession>(
-          kTestCharacteristicId1);
+          chrc1_->GetWeakPtr());
 
   EXPECT_CALL(*session1, Stop(_))
       .Times(1)

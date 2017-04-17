@@ -6,46 +6,36 @@
 
 namespace blink {
 
-RelatedEvent::~RelatedEvent()
-{
+RelatedEvent::~RelatedEvent() {}
+
+RelatedEvent* RelatedEvent::Create(const AtomicString& type,
+                                   bool can_bubble,
+                                   bool cancelable,
+                                   EventTarget* related_target) {
+  return new RelatedEvent(type, can_bubble, cancelable, related_target);
 }
 
-RelatedEvent* RelatedEvent::create()
-{
-    return new RelatedEvent;
+RelatedEvent* RelatedEvent::Create(const AtomicString& type,
+                                   const RelatedEventInit& initializer) {
+  return new RelatedEvent(type, initializer);
 }
 
-RelatedEvent* RelatedEvent::create(const AtomicString& type, bool canBubble, bool cancelable, EventTarget* relatedTarget)
-{
-    return new RelatedEvent(type, canBubble, cancelable, relatedTarget);
+RelatedEvent::RelatedEvent(const AtomicString& type,
+                           bool can_bubble,
+                           bool cancelable,
+                           EventTarget* related_target)
+    : Event(type, can_bubble, cancelable), related_target_(related_target) {}
+
+RelatedEvent::RelatedEvent(const AtomicString& event_type,
+                           const RelatedEventInit& initializer)
+    : Event(event_type, initializer) {
+  if (initializer.hasRelatedTarget())
+    related_target_ = initializer.relatedTarget();
 }
 
-RelatedEvent* RelatedEvent::create(const AtomicString& type, const RelatedEventInit& initializer)
-{
-    return new RelatedEvent(type, initializer);
+DEFINE_TRACE(RelatedEvent) {
+  visitor->Trace(related_target_);
+  Event::Trace(visitor);
 }
 
-RelatedEvent::RelatedEvent()
-{
-}
-
-RelatedEvent::RelatedEvent(const AtomicString& type, bool canBubble, bool cancelable, EventTarget* relatedTarget)
-    : Event(type, canBubble, cancelable)
-    , m_relatedTarget(relatedTarget)
-{
-}
-
-RelatedEvent::RelatedEvent(const AtomicString& eventType, const RelatedEventInit& initializer)
-    : Event(eventType, initializer)
-{
-    if (initializer.hasRelatedTarget())
-        m_relatedTarget = initializer.relatedTarget();
-}
-
-DEFINE_TRACE(RelatedEvent)
-{
-    visitor->trace(m_relatedTarget);
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

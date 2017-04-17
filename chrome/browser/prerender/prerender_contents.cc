@@ -11,6 +11,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/process/process_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -23,14 +24,15 @@
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/prerender/prerender_resource_throttle.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/task_management/web_contents_tags.h"
+#include "chrome/browser/task_manager/web_contents_tags.h"
 #include "chrome/browser/ui/tab_helpers.h"
 #include "chrome/browser/ui/web_contents_sizer.h"
 #include "chrome/common/prerender_messages.h"
-#include "chrome/common/render_messages.h"
+#include "chrome/common/prerender_types.h"
 #include "components/history/core/browser/history_types.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -41,15 +43,15 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/frame_navigate_params.h"
+#include "net/http/http_response_headers.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 #include "ui/base/page_transition_types.h"
-#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/size.h"
 
 using content::BrowserThread;
-using content::DownloadItem;
 using content::OpenURLParams;
 using content::RenderViewHost;
 using content::ResourceRedirectDetails;
-using content::ResourceType;
 using content::SessionStorageNamespace;
 using content::WebContents;
 
@@ -57,11 +59,26 @@ namespace prerender {
 
 namespace {
 
+// Valid HTTP methods for both prefetch and prerendering.
+const char* const kValidHttpMethods[] = {
+    "GET", "HEAD",
+};
+
+// Additional valid HTTP methods for prerendering.
+const char* const kValidHttpMethodsForPrerendering[] = {
+    "OPTIONS", "POST", "TRACE",
+};
+
 void ResumeThrottles(
-    std::vector<base::WeakPtr<PrerenderResourceThrottle> > throttles) {
+    std::vector<base::WeakPtr<PrerenderResourceThrottle>> throttles,
+    std::vector<base::WeakPtr<PrerenderResourceThrottle>> idle_resources) {
+  for (auto resource : idle_resources) {
+    if (resource)
+      resource->ResetResourcePriority();
+  }
   for (size_t i = 0; i < throttles.size(); i++) {
     if (throttles[i])
-      throttles[i]->Resume();
+      throttles[i]->ResumeHandler();
   }
 }
 
@@ -101,7 +118,7 @@ class PrerenderContents::WebContentsDelegateImpl
     return NULL;
   }
 
-  bool ShouldTransferNavigation() override {
+  bool ShouldTransferNavigation(bool is_main_frame_navigation) override {
     // Cancel the prerender if the navigation attempts to transfer to a
     // different process.  Examples include server redirects to privileged pages
     // or cross-site subframe navigations in --site-per-process.
@@ -122,11 +139,13 @@ class PrerenderContents::WebContentsDelegateImpl
   }
 
   bool ShouldCreateWebContents(
-      WebContents* web_contents,
+      content::WebContents* web_contents,
+      content::SiteInstance* source_site_instance,
       int32_t route_id,
       int32_t main_frame_route_id,
       int32_t main_frame_widget_route_id,
-      WindowContainerType window_container_type,
+      content::mojom::WindowContainerType window_container_type,
+      const GURL& opener_url,
       const std::string& frame_name,
       const GURL& target_url,
       const std::string& partition_id,
@@ -168,26 +187,14 @@ class PrerenderContents::WebContentsDelegateImpl
   gfx::Size GetSizeForNewRenderView(WebContents* web_contents) const override {
     // Have to set the size of the RenderView on initialization to be sure it is
     // set before the RenderView is hidden on all platforms (esp. Android).
-    return prerender_contents_->size_;
+    return prerender_contents_->bounds_.size();
   }
 
  private:
   PrerenderContents* prerender_contents_;
 };
 
-void PrerenderContents::Observer::OnPrerenderStopLoading(
-    PrerenderContents* contents) {
-}
-
-void PrerenderContents::Observer::OnPrerenderDomContentLoaded(
-    PrerenderContents* contents) {
-}
-
-PrerenderContents::Observer::Observer() {
-}
-
-PrerenderContents::Observer::~Observer() {
-}
+PrerenderContents::Observer::~Observer() {}
 
 PrerenderContents::PrerenderContents(
     PrerenderManager* prerender_manager,
@@ -195,8 +202,10 @@ PrerenderContents::PrerenderContents(
     const GURL& url,
     const content::Referrer& referrer,
     Origin origin)
-    : prerendering_has_started_(false),
+    : prerender_mode_(FULL_PRERENDER),
+      prerendering_has_started_(false),
       session_storage_namespace_id_(-1),
+      prerender_canceler_binding_(this),
       prerender_manager_(prerender_manager),
       prerender_url_(url),
       referrer_(referrer),
@@ -208,12 +217,39 @@ PrerenderContents::PrerenderContents(
       child_id_(-1),
       route_id_(-1),
       origin_(origin),
-      network_bytes_(0) {
+      network_bytes_(0),
+      weak_factory_(this) {
   DCHECK(prerender_manager);
 }
 
 bool PrerenderContents::Init() {
   return AddAliasURL(prerender_url_);
+}
+
+void PrerenderContents::SetPrerenderMode(PrerenderMode mode) {
+  DCHECK(!prerendering_has_started_);
+  prerender_mode_ = mode;
+}
+
+bool PrerenderContents::IsValidHttpMethod(const std::string& method) {
+  DCHECK_NE(prerender_mode(), NO_PRERENDER);
+  // |method| has been canonicalized to upper case at this point so we can just
+  // compare them.
+  DCHECK_EQ(method, base::ToUpperASCII(method));
+  for (auto* valid_method : kValidHttpMethods) {
+    if (method == valid_method)
+      return true;
+  }
+
+  if (prerender_mode() == PREFETCH_ONLY)
+    return false;
+
+  for (auto* valid_method : kValidHttpMethodsForPrerendering) {
+    if (method == valid_method)
+      return true;
+  }
+
+  return false;
 }
 
 // static
@@ -226,34 +262,28 @@ PrerenderContents* PrerenderContents::FromWebContents(
     content::WebContents* web_contents) {
   if (!web_contents)
     return NULL;
-  PrerenderManager* prerender_manager = PrerenderManagerFactory::GetForProfile(
-      Profile::FromBrowserContext(web_contents->GetBrowserContext()));
+  PrerenderManager* prerender_manager =
+      PrerenderManagerFactory::GetForBrowserContext(
+          web_contents->GetBrowserContext());
   if (!prerender_manager)
     return NULL;
   return prerender_manager->GetPrerenderContents(web_contents);
 }
 
 void PrerenderContents::StartPrerendering(
-    const gfx::Size& size,
+    const gfx::Rect& bounds,
     SessionStorageNamespace* session_storage_namespace) {
   DCHECK(profile_);
-  DCHECK(!size.IsEmpty());
+  DCHECK(!bounds.IsEmpty());
   DCHECK(!prerendering_has_started_);
   DCHECK(!prerender_contents_);
-  DCHECK(size_.IsEmpty());
   DCHECK_EQ(1U, alias_urls_.size());
 
   session_storage_namespace_id_ = session_storage_namespace->id();
-  size_ = size;
+  bounds_ = bounds;
 
   DCHECK(load_start_time_.is_null());
   load_start_time_ = base::TimeTicks::Now();
-
-  // Everything after this point sets up the WebContents object and associated
-  // RenderView for the prerender page. Don't do this for members of the
-  // control group.
-  if (prerender_manager_->IsControlGroup())
-    return;
 
   prerendering_has_started_ = true;
 
@@ -263,13 +293,13 @@ void PrerenderContents::StartPrerendering(
 
   // Tag the prerender contents with the task manager specific prerender tag, so
   // that it shows up in the task manager.
-  task_management::WebContentsTags::CreateForPrerenderContents(
+  task_manager::WebContentsTags::CreateForPrerenderContents(
       prerender_contents_.get());
 
   web_contents_delegate_.reset(new WebContentsDelegateImpl(this));
   prerender_contents_.get()->SetDelegate(web_contents_delegate_.get());
   // Set the size of the prerender WebContents.
-  ResizeWebContents(prerender_contents_.get(), size_);
+  ResizeWebContents(prerender_contents_.get(), bounds_);
 
   // TODO(davidben): This logic assumes each prerender has at most one
   // route. https://crbug.com/440544
@@ -347,8 +377,7 @@ PrerenderContents::~PrerenderContents() {
 
   prerender_manager_->RecordFinalStatus(origin(), final_status());
 
-  bool used = final_status() == FINAL_STATUS_USED ||
-              final_status() == FINAL_STATUS_WOULD_HAVE_BEEN_USED;
+  bool used = final_status() == FINAL_STATUS_USED;
   prerender_manager_->RecordNetworkBytes(origin(), used, network_bytes_);
 
   // Broadcast the removal of aliases.
@@ -429,34 +458,25 @@ WebContents* PrerenderContents::CreateWebContents(
 
 void PrerenderContents::NotifyPrerenderStart() {
   DCHECK_EQ(FINAL_STATUS_MAX, final_status_);
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnPrerenderStart(this));
+  for (Observer& observer : observer_list_)
+    observer.OnPrerenderStart(this);
 }
 
 void PrerenderContents::NotifyPrerenderStopLoading() {
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnPrerenderStopLoading(this));
+  for (Observer& observer : observer_list_)
+    observer.OnPrerenderStopLoading(this);
 }
 
 void PrerenderContents::NotifyPrerenderDomContentLoaded() {
-  FOR_EACH_OBSERVER(Observer, observer_list_,
-                    OnPrerenderDomContentLoaded(this));
+  for (Observer& observer : observer_list_)
+    observer.OnPrerenderDomContentLoaded(this);
 }
 
 void PrerenderContents::NotifyPrerenderStop() {
   DCHECK_NE(FINAL_STATUS_MAX, final_status_);
-  FOR_EACH_OBSERVER(Observer, observer_list_, OnPrerenderStop(this));
+  for (Observer& observer : observer_list_)
+    observer.OnPrerenderStop(this);
   observer_list_.Clear();
-}
-
-bool PrerenderContents::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  // The following messages we do want to consume.
-  IPC_BEGIN_MESSAGE_MAP(PrerenderContents, message)
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_CancelPrerenderForPrinting,
-                        OnCancelPrerenderForPrinting)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
 }
 
 bool PrerenderContents::CheckURL(const GURL& url) {
@@ -464,7 +484,8 @@ bool PrerenderContents::CheckURL(const GURL& url) {
     Destroy(FINAL_STATUS_UNSUPPORTED_SCHEME);
     return false;
   }
-  if (prerender_manager_->HasRecentlyBeenNavigatedTo(origin(), url)) {
+  if (origin() != ORIGIN_OFFLINE &&
+      prerender_manager_->HasRecentlyBeenNavigatedTo(origin(), url)) {
     Destroy(FINAL_STATUS_RECENTLY_VISITED);
     return false;
   }
@@ -502,17 +523,26 @@ bool PrerenderContents::Matches(
 }
 
 void PrerenderContents::RenderProcessGone(base::TerminationStatus status) {
+  if (status == base::TERMINATION_STATUS_STILL_RUNNING) {
+    // The renderer process is being killed because of the browser/test
+    // shutdown, before the termination notification is received.
+    Destroy(FINAL_STATUS_APP_TERMINATING);
+  }
   Destroy(FINAL_STATUS_RENDERER_CRASHED);
 }
 
 void PrerenderContents::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {
+  render_frame_host->GetInterfaceRegistry()->AddInterface(
+      base::Bind(&PrerenderContents::OnPrerenderCancelerRequest,
+                 weak_factory_.GetWeakPtr()));
+
   // When a new RenderFrame is created for a prerendering WebContents, tell the
   // new RenderFrame it's being used for prerendering before any navigations
   // occur.  Note that this is always triggered before the first navigation, so
   // there's no need to send the message just after the WebContents is created.
   render_frame_host->Send(new PrerenderMsg_SetIsPrerendering(
-      render_frame_host->GetRoutingID(), true));
+      render_frame_host->GetRoutingID(), prerender_mode_));
 }
 
 void PrerenderContents::DidStopLoading() {
@@ -526,23 +556,23 @@ void PrerenderContents::DocumentLoadedInFrame(
     NotifyPrerenderDomContentLoaded();
 }
 
-void PrerenderContents::DidStartProvisionalLoadForFrame(
-    content::RenderFrameHost* render_frame_host,
-    const GURL& validated_url,
-    bool is_error_page,
-    bool is_iframe_srcdoc) {
-  if (!render_frame_host->GetParent()) {
-    if (!CheckURL(validated_url))
-      return;
-
-    // Usually, this event fires if the user clicks or enters a new URL.
-    // Neither of these can happen in the case of an invisible prerender.
-    // So the cause is: Some JavaScript caused a new URL to be loaded.  In that
-    // case, the spinner would start again in the browser, so we must reset
-    // has_stopped_loading_ so that the spinner won't be stopped.
-    has_stopped_loading_ = false;
-    has_finished_loading_ = false;
+void PrerenderContents::DidStartNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument()) {
+    return;
   }
+
+  if (!CheckURL(navigation_handle->GetURL()))
+    return;
+
+  // Usually, this event fires if the user clicks or enters a new URL.
+  // Neither of these can happen in the case of an invisible prerender.
+  // So the cause is: Some JavaScript caused a new URL to be loaded.  In that
+  // case, the spinner would start again in the browser, so we must reset
+  // has_stopped_loading_ so that the spinner won't be stopped.
+  has_stopped_loading_ = false;
+  has_finished_loading_ = false;
 }
 
 void PrerenderContents::DidFinishLoad(
@@ -552,9 +582,36 @@ void PrerenderContents::DidFinishLoad(
     has_finished_loading_ = true;
 }
 
-void PrerenderContents::DidNavigateMainFrame(
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
+void PrerenderContents::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame() ||
+      !navigation_handle->HasCommitted() ||
+      navigation_handle->IsErrorPage()) {
+    return;
+  }
+
+  if (navigation_handle->GetResponseHeaders() &&
+      navigation_handle->GetResponseHeaders()->response_code() >= 400) {
+    // Maintain same behavior as old navigation API when the URL is unreachable
+    // and leads to an error page. While there will be a subsequent navigation
+    // that has navigation_handle->IsErrorPage(), it'll be too late to wait for
+    // it as the renderer side will consider this prerender complete. This
+    // object would therefore have been destructed already and so instead look
+    // for the error response code now.
+    // Also maintain same final status code that previous navigation API
+    // returned, which was reached because the URL for the error page was
+    // kUnreachableWebDataURL and that was interpreted as unsupported scheme.
+    Destroy(FINAL_STATUS_UNSUPPORTED_SCHEME);
+    return;
+  }
+
+  // Prevent ORIGIN_OFFLINE prerenders from being destroyed on location.href
+  // change, since the history is never merged for offline prerenders. Also
+  // avoid adding aliases as they may potentially mark other valid requests to
+  // offline as duplicate.
+  if (origin() == ORIGIN_OFFLINE)
+    return;
+
   // If the prerender made a second navigation entry, abort the prerender. This
   // avoids having to correctly implement a complex history merging case (this
   // interacts with location.replace) and correctly synchronize with the
@@ -568,19 +625,18 @@ void PrerenderContents::DidNavigateMainFrame(
     return;
   }
 
-  // Add each redirect as an alias. |params.url| is included in
-  // |params.redirects|.
+  // Add each redirect as an alias. |navigation_handle->GetURL()| is included in
+  // |navigation_handle->GetRedirectChain()|.
   //
   // TODO(davidben): We do not correctly patch up history for renderer-initated
   // navigations which add history entries. http://crbug.com/305660.
-  for (size_t i = 0; i < params.redirects.size(); i++) {
-    if (!AddAliasURL(params.redirects[i]))
+  for (const auto& redirect : navigation_handle->GetRedirectChain()) {
+    if (!AddAliasURL(redirect))
       return;
   }
 }
 
 void PrerenderContents::DidGetRedirectForResourceRequest(
-    content::RenderFrameHost* render_frame_host,
     const content::ResourceRedirectDetails& details) {
   // DidGetRedirectForResourceRequest can come for any resource on a page.  If
   // it's a redirect on the top-level resource, the name needs to be remembered
@@ -603,7 +659,7 @@ void PrerenderContents::Destroy(FinalStatus final_status) {
   prerender_manager_->AddToHistory(this);
   prerender_manager_->MoveEntryToPendingDelete(this, final_status);
 
-  if (!prerender_manager_->IsControlGroup() && prerendering_has_started())
+  if (prerendering_has_started())
     NotifyPrerenderStop();
 }
 
@@ -651,7 +707,7 @@ std::unique_ptr<WebContents> PrerenderContents::ReleasePrerenderContents() {
 
   // Clear the task manager tag we added earlier to our
   // WebContents since it's no longer a prerender contents.
-  task_management::WebContentsTags::ClearTag(prerender_contents_.get());
+  task_manager::WebContentsTags::ClearTag(prerender_contents_.get());
 
   return std::move(prerender_contents_);
 }
@@ -700,20 +756,26 @@ void PrerenderContents::PrepareForUse() {
 
   if (prerender_contents_.get()) {
     prerender_contents_->SendToAllFrames(
-        new PrerenderMsg_SetIsPrerendering(MSG_ROUTING_NONE, false));
+        new PrerenderMsg_SetIsPrerendering(MSG_ROUTING_NONE, NO_PRERENDER));
   }
 
   NotifyPrerenderStop();
 
   BrowserThread::PostTask(
-      BrowserThread::IO,
-      FROM_HERE,
-      base::Bind(&ResumeThrottles, resource_throttles_));
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&ResumeThrottles, resource_throttles_, idle_resources_));
   resource_throttles_.clear();
+  idle_resources_.clear();
 }
 
-void PrerenderContents::OnCancelPrerenderForPrinting() {
+void PrerenderContents::CancelPrerenderForPrinting() {
   Destroy(FINAL_STATUS_WINDOW_PRINT);
+}
+
+void PrerenderContents::OnPrerenderCancelerRequest(
+    chrome::mojom::PrerenderCancelerRequest request) {
+  if (!prerender_canceler_binding_.is_bound())
+    prerender_canceler_binding_.Bind(std::move(request));
 }
 
 void PrerenderContents::AddResourceThrottle(
@@ -721,8 +783,15 @@ void PrerenderContents::AddResourceThrottle(
   resource_throttles_.push_back(throttle);
 }
 
+void PrerenderContents::AddIdleResource(
+    const base::WeakPtr<PrerenderResourceThrottle>& throttle) {
+  idle_resources_.push_back(throttle);
+}
+
 void PrerenderContents::AddNetworkBytes(int64_t bytes) {
   network_bytes_ += bytes;
+  for (Observer& observer : observer_list_)
+    observer.OnPrerenderNetworkBytesChanged(this);
 }
 
 }  // namespace prerender

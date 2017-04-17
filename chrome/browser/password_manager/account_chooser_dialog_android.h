@@ -11,16 +11,11 @@
 
 #include "base/android/jni_android.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "chrome/browser/ui/passwords/manage_passwords_state.h"
 #include "content/public/browser/web_contents_observer.h"
 
 namespace content {
 class WebContents;
-}
-
-namespace password_manager {
-struct CredentialInfo;
 }
 
 // Native counterpart for the android dialog which allows users to select
@@ -29,8 +24,7 @@ class AccountChooserDialogAndroid : public content::WebContentsObserver {
  public:
   AccountChooserDialogAndroid(
       content::WebContents* web_contents,
-      ScopedVector<autofill::PasswordForm> local_credentials,
-      ScopedVector<autofill::PasswordForm> federated_credentials,
+      std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials,
       const GURL& origin,
       const ManagePasswordsState::CredentialsCallback& callback);
 
@@ -47,7 +41,6 @@ class AccountChooserDialogAndroid : public content::WebContentsObserver {
   void OnCredentialClicked(JNIEnv* env,
                            const base::android::JavaParamRef<jobject>& obj,
                            jint credential_item,
-                           jint credential_type,
                            jboolean sign_button_clicked);
 
   // Opens new tab with page which explains the Smart Lock branding.
@@ -61,11 +54,8 @@ class AccountChooserDialogAndroid : public content::WebContentsObserver {
  private:
   void OnDialogCancel();
 
-  const std::vector<const autofill::PasswordForm*>& local_credentials_forms()
-      const;
-
-  const std::vector<const autofill::PasswordForm*>&
-  federated_credentials_forms() const;
+  const std::vector<std::unique_ptr<autofill::PasswordForm>>&
+  local_credentials_forms() const;
 
   void ChooseCredential(size_t index,
                         password_manager::CredentialType type,

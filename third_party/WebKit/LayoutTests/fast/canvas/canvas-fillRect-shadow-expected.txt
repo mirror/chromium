@@ -1,73 +1,20 @@
-Ensure correct behavior of canvas with fillRect shadow
-
-On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
-
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is 255
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is 255
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is 255
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is 255
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is around 76
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is around 76
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is around 76
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is around 76
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 25
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 25
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 25
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 25
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 10
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 10
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 10
-PASS d[0] is 255
-PASS d[1] is 0
-PASS d[2] is 0
-PASS d[3] is smaller than 10
-PASS successfullyParsed is true
-
-TEST COMPLETE
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 4 duplicate test names: "testBlurryShadow 1", "testBlurryShadow 2", "testBlurryShadow 3", "testBlurryShadow 4"
+PASS testSolidShadow 1 
+PASS testSolidShadow 2 
+PASS testSolidShadow 3 
+PASS testSolidShadow 4 
+PASS testSolidAlphaShadow 1 
+PASS testSolidAlphaShadow 2 
+PASS testSolidAlphaShadow 3 
+PASS testSolidAlphaShadow 4 
+PASS testBlurryShadow 1 
+PASS testBlurryShadow 2 
+PASS testBlurryShadow 3 
+PASS testBlurryShadow 4 
+PASS testBlurryShadow 1 
+PASS testBlurryShadow 2 
+PASS testBlurryShadow 3 
+PASS testBlurryShadow 4 
+Harness: the test ran to completion.
 

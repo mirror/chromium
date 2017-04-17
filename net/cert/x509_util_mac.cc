@@ -4,8 +4,14 @@
 
 #include "net/cert/x509_util_mac.h"
 
+#include <CommonCrypto/CommonDigest.h>
+
 #include "base/logging.h"
+#include "base/mac/mac_util.h"
+#include "base/strings/sys_string_conversions.h"
+#include "net/cert/x509_certificate.h"
 #include "third_party/apple_apsl/cssmapplePriv.h"
+#include "third_party/boringssl/src/include/openssl/pool.h"
 
 namespace net {
 
@@ -49,38 +55,218 @@ OSStatus CreatePolicy(const CSSM_OID* policy_oid,
 
 }  // namespace
 
+bool IsValidSecCertificate(SecCertificateRef cert_handle) {
+  const CSSM_X509_NAME* sanity_check = NULL;
+  OSStatus status = SecCertificateGetSubject(cert_handle, &sanity_check);
+  return status == noErr && sanity_check;
+}
+
+base::ScopedCFTypeRef<SecCertificateRef> CreateSecCertificateFromBytes(
+    const uint8_t* data,
+    size_t length) {
+  CSSM_DATA cert_data;
+  cert_data.Data = const_cast<uint8_t*>(data);
+  cert_data.Length = length;
+
+  base::ScopedCFTypeRef<SecCertificateRef> cert_handle;
+  OSStatus status = SecCertificateCreateFromData(&cert_data, CSSM_CERT_X_509v3,
+                                                 CSSM_CERT_ENCODING_DER,
+                                                 cert_handle.InitializeInto());
+  if (status != noErr)
+    return base::ScopedCFTypeRef<SecCertificateRef>();
+  if (!IsValidSecCertificate(cert_handle.get()))
+    return base::ScopedCFTypeRef<SecCertificateRef>();
+  return cert_handle;
+}
+
+base::ScopedCFTypeRef<SecCertificateRef>
+CreateSecCertificateFromX509Certificate(const X509Certificate* cert) {
+#if BUILDFLAG(USE_BYTE_CERTS)
+  return CreateSecCertificateFromBytes(
+      CRYPTO_BUFFER_data(cert->os_cert_handle()),
+      CRYPTO_BUFFER_len(cert->os_cert_handle()));
+#else
+  return base::ScopedCFTypeRef<SecCertificateRef>(
+      reinterpret_cast<SecCertificateRef>(
+          const_cast<void*>(CFRetain(cert->os_cert_handle()))));
+#endif
+}
+
+base::ScopedCFTypeRef<CFMutableArrayRef>
+CreateSecCertificateArrayForX509Certificate(X509Certificate* cert) {
+  base::ScopedCFTypeRef<CFMutableArrayRef> cert_list(
+      CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks));
+  if (!cert_list)
+    return base::ScopedCFTypeRef<CFMutableArrayRef>();
+#if BUILDFLAG(USE_BYTE_CERTS)
+  std::string bytes;
+  base::ScopedCFTypeRef<SecCertificateRef> sec_cert(
+      CreateSecCertificateFromBytes(CRYPTO_BUFFER_data(cert->os_cert_handle()),
+                                    CRYPTO_BUFFER_len(cert->os_cert_handle())));
+  if (!sec_cert)
+    return base::ScopedCFTypeRef<CFMutableArrayRef>();
+  CFArrayAppendValue(cert_list, sec_cert);
+  for (X509Certificate::OSCertHandle intermediate :
+       cert->GetIntermediateCertificates()) {
+    base::ScopedCFTypeRef<SecCertificateRef> sec_cert(
+        CreateSecCertificateFromBytes(CRYPTO_BUFFER_data(intermediate),
+                                      CRYPTO_BUFFER_len(intermediate)));
+    if (!sec_cert)
+      return base::ScopedCFTypeRef<CFMutableArrayRef>();
+    CFArrayAppendValue(cert_list, sec_cert);
+  }
+#else
+  X509Certificate::OSCertHandles intermediate_ca_certs =
+      cert->GetIntermediateCertificates();
+  CFArrayAppendValue(cert_list, cert->os_cert_handle());
+  for (size_t i = 0; i < intermediate_ca_certs.size(); ++i)
+    CFArrayAppendValue(cert_list, intermediate_ca_certs[i]);
+#endif
+  return cert_list;
+}
+
+scoped_refptr<X509Certificate> CreateX509CertificateFromSecCertificate(
+    SecCertificateRef sec_cert,
+    const std::vector<SecCertificateRef>& sec_chain) {
+#if BUILDFLAG(USE_BYTE_CERTS)
+  CSSM_DATA der_data;
+  if (!sec_cert || SecCertificateGetData(sec_cert, &der_data) != noErr)
+    return nullptr;
+  bssl::UniquePtr<CRYPTO_BUFFER> cert_handle(
+      X509Certificate::CreateOSCertHandleFromBytes(
+          reinterpret_cast<const char*>(der_data.Data), der_data.Length));
+  if (!cert_handle)
+    return nullptr;
+  std::vector<bssl::UniquePtr<CRYPTO_BUFFER>> intermediates;
+  X509Certificate::OSCertHandles intermediates_raw;
+  for (const SecCertificateRef& sec_intermediate : sec_chain) {
+    if (!sec_intermediate ||
+        SecCertificateGetData(sec_intermediate, &der_data) != noErr) {
+      return nullptr;
+    }
+    bssl::UniquePtr<CRYPTO_BUFFER> intermediate_cert_handle(
+        X509Certificate::CreateOSCertHandleFromBytes(
+            reinterpret_cast<const char*>(der_data.Data), der_data.Length));
+    if (!intermediate_cert_handle)
+      return nullptr;
+    intermediates_raw.push_back(intermediate_cert_handle.get());
+    intermediates.push_back(std::move(intermediate_cert_handle));
+  }
+  scoped_refptr<X509Certificate> result(
+      X509Certificate::CreateFromHandle(cert_handle.get(), intermediates_raw));
+  return result;
+#else
+  return X509Certificate::CreateFromHandle(sec_cert, sec_chain);
+#endif
+}
+
+bool IsSelfSigned(SecCertificateRef cert_handle) {
+  CSSMCachedCertificate cached_cert;
+  OSStatus status = cached_cert.Init(cert_handle);
+  if (status != noErr)
+    return false;
+
+  CSSMFieldValue subject;
+  status = cached_cert.GetField(&CSSMOID_X509V1SubjectNameStd, &subject);
+  if (status != CSSM_OK || !subject.field())
+    return false;
+
+  CSSMFieldValue issuer;
+  status = cached_cert.GetField(&CSSMOID_X509V1IssuerNameStd, &issuer);
+  if (status != CSSM_OK || !issuer.field())
+    return false;
+
+  if (subject.field()->Length != issuer.field()->Length ||
+      memcmp(subject.field()->Data, issuer.field()->Data,
+             issuer.field()->Length) != 0) {
+    return false;
+  }
+
+  CSSM_CL_HANDLE cl_handle = CSSM_INVALID_HANDLE;
+  status = SecCertificateGetCLHandle(cert_handle, &cl_handle);
+  if (status)
+    return false;
+  CSSM_DATA cert_data;
+  status = SecCertificateGetData(cert_handle, &cert_data);
+  if (status)
+    return false;
+
+  if (CSSM_CL_CertVerify(cl_handle, 0, &cert_data, &cert_data, NULL, 0))
+    return false;
+  return true;
+}
+
+SHA256HashValue CalculateFingerprint256(SecCertificateRef cert) {
+  SHA256HashValue sha256;
+  memset(sha256.data, 0, sizeof(sha256.data));
+
+  CSSM_DATA cert_data;
+  OSStatus status = SecCertificateGetData(cert, &cert_data);
+  if (status)
+    return sha256;
+
+  DCHECK(cert_data.Data);
+  DCHECK_NE(cert_data.Length, 0U);
+
+  CC_SHA256(cert_data.Data, cert_data.Length, sha256.data);
+
+  return sha256;
+}
 
 OSStatus CreateSSLClientPolicy(SecPolicyRef* policy) {
-  CSSM_APPLE_TP_SSL_OPTIONS tp_ssl_options;
-  memset(&tp_ssl_options, 0, sizeof(tp_ssl_options));
-  tp_ssl_options.Version = CSSM_APPLE_TP_SSL_OPTS_VERSION;
-  tp_ssl_options.Flags |= CSSM_APPLE_TP_SSL_CLIENT;
-
-  return CreatePolicy(&CSSMOID_APPLE_TP_SSL, &tp_ssl_options,
-                      sizeof(tp_ssl_options), policy);
+  *policy = SecPolicyCreateSSL(false /* server */, nullptr);
+  return *policy ? noErr : errSecNoPolicyModule;
 }
 
 OSStatus CreateSSLServerPolicy(const std::string& hostname,
                                SecPolicyRef* policy) {
-  CSSM_APPLE_TP_SSL_OPTIONS tp_ssl_options;
-  memset(&tp_ssl_options, 0, sizeof(tp_ssl_options));
-  tp_ssl_options.Version = CSSM_APPLE_TP_SSL_OPTS_VERSION;
+  base::ScopedCFTypeRef<CFStringRef> hostname_cfstring;
   if (!hostname.empty()) {
-    tp_ssl_options.ServerName = hostname.data();
-    tp_ssl_options.ServerNameLen = hostname.size();
+    hostname_cfstring.reset(base::SysUTF8ToCFStringRef(hostname));
+    if (!hostname_cfstring)
+      return errSecNoPolicyModule;
   }
 
-  return CreatePolicy(&CSSMOID_APPLE_TP_SSL, &tp_ssl_options,
-                      sizeof(tp_ssl_options), policy);
+  *policy = SecPolicyCreateSSL(true /* server */, hostname_cfstring.get());
+  return *policy ? noErr : errSecNoPolicyModule;
 }
 
 OSStatus CreateBasicX509Policy(SecPolicyRef* policy) {
-  return CreatePolicy(&CSSMOID_APPLE_X509_BASIC, NULL, 0, policy);
+  *policy = SecPolicyCreateBasicX509();
+  return *policy ? noErr : errSecNoPolicyModule;
 }
 
 OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
-                                  bool enable_ev_checking,
                                   CFMutableArrayRef policies) {
+  if (base::mac::IsAtLeastOS10_12()) {
+// SecPolicyCreateRevocation is only on 10.9 or newer. This pragma stops
+// clang from complaining about it.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    // On Sierra, it's not possible to disable network revocation checking
+    // without also breaking AIA. If revocation checking isn't explicitly
+    // enabled, just don't add a revocation policy.
+    if (!enable_revocation_checking)
+      return noErr;
+
+    // If revocation checking is requested, enable checking and require positive
+    // results. Note that this will fail if there are certs with no
+    // CRLDistributionPoints or OCSP AIA urls, which differs from the behavior
+    // of |enable_revocation_checking| on pre-10.12. There does not appear to be
+    // a way around this, but it shouldn't matter much in practice since
+    // revocation checking is generally used with EV certs, where it is expected
+    // that all certs include revocation mechanisms.
+    SecPolicyRef revocation_policy =
+        SecPolicyCreateRevocation(kSecRevocationUseAnyAvailableMethod |
+                                  kSecRevocationRequirePositiveResponse);
+
+    if (!revocation_policy)
+      return errSecNoPolicyModule;
+    CFArrayAppendValue(policies, revocation_policy);
+    CFRelease(revocation_policy);
+#pragma clang diagnostic pop
+    return noErr;
+  }
   OSStatus status = noErr;
 
   // In order to bypass the system revocation checking settings, the
@@ -92,7 +278,7 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
   // OCSP policy to perform the online checking, and if it doesn't believe
   // that the leaf is EV, then the default CRL policy will effectively no-op.
   // This behaviour is used to implement EV-only revocation checking.
-  if (enable_ev_checking || enable_revocation_checking) {
+  if (enable_revocation_checking) {
     CSSM_APPLE_TP_CRL_OPTIONS tp_crl_options;
     memset(&tp_crl_options, 0, sizeof(tp_crl_options));
     tp_crl_options.Version = CSSM_APPLE_TP_CRL_OPTS_VERSION;
@@ -100,8 +286,9 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
     // online revocation checking. Note that, as of OS X 10.7.2, the system
     // will set force this flag on according to system policies, so
     // online revocation checks cannot be completely disabled.
-    if (enable_revocation_checking)
-      tp_crl_options.CrlFlags = CSSM_TP_ACTION_FETCH_CRL_FROM_NET;
+    // Starting with OS X 10.12, if a CRL policy is added without the
+    // FETCH_CRL_FROM_NET flag, AIA fetching is disabled.
+    tp_crl_options.CrlFlags = CSSM_TP_ACTION_FETCH_CRL_FROM_NET;
 
     SecPolicyRef crl_policy;
     status = CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_CRL, &tp_crl_options,
@@ -113,42 +300,38 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
   }
 
   // If revocation checking is explicitly enabled, then add an OCSP policy
-  // and allow network access. If both revocation checking and EV checking
-  // are disabled, then the added OCSP policy will be prevented from
+  // and allow network access. If both revocation checking is
+  // disabled, then the added OCSP policy will be prevented from
   // accessing the network. This is done because the TP will force an OCSP
-  // policy to be present when it believes the certificate is EV. If network
-  // fetching was not explicitly disabled, then it would be as if
-  // enable_ev_checking was always set to true.
-  if (enable_revocation_checking || !enable_ev_checking) {
-    CSSM_APPLE_TP_OCSP_OPTIONS tp_ocsp_options;
-    memset(&tp_ocsp_options, 0, sizeof(tp_ocsp_options));
-    tp_ocsp_options.Version = CSSM_APPLE_TP_OCSP_OPTS_VERSION;
+  // policy to be present when it believes the certificate is EV.
+  CSSM_APPLE_TP_OCSP_OPTIONS tp_ocsp_options;
+  memset(&tp_ocsp_options, 0, sizeof(tp_ocsp_options));
+  tp_ocsp_options.Version = CSSM_APPLE_TP_OCSP_OPTS_VERSION;
 
-    if (enable_revocation_checking) {
-      // The default for the OCSP policy is to fetch responses via the network,
-      // unlike the CRL policy default. The policy is further modified to
-      // prefer OCSP over CRLs, if both are specified on the certificate. This
-      // is because an OCSP response is both sufficient and typically
-      // significantly smaller than the CRL counterpart.
-      tp_ocsp_options.Flags = CSSM_TP_ACTION_OCSP_SUFFICIENT;
-    } else {
-      // Effectively disable OCSP checking by making it impossible to get an
-      // OCSP response. Even if the Apple TP forces OCSP, no checking will
-      // be able to succeed. If this happens, the Apple TP will report an error
-      // that OCSP was unavailable, but this will be handled and suppressed in
-      // X509Certificate::Verify().
-      tp_ocsp_options.Flags = CSSM_TP_ACTION_OCSP_DISABLE_NET |
-                              CSSM_TP_ACTION_OCSP_CACHE_READ_DISABLE;
-    }
-
-    SecPolicyRef ocsp_policy;
-    status = CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_OCSP, &tp_ocsp_options,
-                          sizeof(tp_ocsp_options), &ocsp_policy);
-    if (status)
-      return status;
-    CFArrayAppendValue(policies, ocsp_policy);
-    CFRelease(ocsp_policy);
+  if (enable_revocation_checking) {
+    // The default for the OCSP policy is to fetch responses via the network,
+    // unlike the CRL policy default. The policy is further modified to
+    // prefer OCSP over CRLs, if both are specified on the certificate. This
+    // is because an OCSP response is both sufficient and typically
+    // significantly smaller than the CRL counterpart.
+    tp_ocsp_options.Flags = CSSM_TP_ACTION_OCSP_SUFFICIENT;
+  } else {
+    // Effectively disable OCSP checking by making it impossible to get an
+    // OCSP response. Even if the Apple TP forces OCSP, no checking will
+    // be able to succeed. If this happens, the Apple TP will report an error
+    // that OCSP was unavailable, but this will be handled and suppressed in
+    // X509Certificate::Verify().
+    tp_ocsp_options.Flags = CSSM_TP_ACTION_OCSP_DISABLE_NET |
+                            CSSM_TP_ACTION_OCSP_CACHE_READ_DISABLE;
   }
+
+  SecPolicyRef ocsp_policy;
+  status = CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_OCSP, &tp_ocsp_options,
+                        sizeof(tp_ocsp_options), &ocsp_policy);
+  if (status)
+    return status;
+  CFArrayAppendValue(policies, ocsp_policy);
+  CFRelease(ocsp_policy);
 
   return status;
 }

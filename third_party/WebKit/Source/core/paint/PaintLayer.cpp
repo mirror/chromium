@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Apple Inc. All rights
+ * reserved.
  *
  * Portions are Copyright (C) 1998 Netscape Communications Corporation.
  *
@@ -24,7 +25,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *
  * Alternatively, the contents of this file may be used under the terms
  * of either the Mozilla Public License Version 1.1, found at
@@ -48,2886 +49,3262 @@
 #include "core/css/PseudoStyleRequest.h"
 #include "core/dom/Document.h"
 #include "core/dom/shadow/ShadowRoot.h"
-#include "core/frame/DeprecatedScheduleStyleRecalcDuringLayout.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
-#include "core/html/HTMLFrameElement.h"
+#include "core/layout/FragmentainerIterator.h"
 #include "core/layout/HitTestRequest.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/HitTestingTransformState.h"
 #include "core/layout/LayoutFlowThread.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutPart.h"
-#include "core/layout/LayoutReplica.h"
 #include "core/layout/LayoutTreeAsText.h"
 #include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
+#include "core/page/scrolling/StickyPositionScrollingConstraints.h"
 #include "core/paint/BoxReflectionUtils.h"
 #include "core/paint/FilterEffectBuilder.h"
-#include "core/paint/PaintTiming.h"
+#include "core/paint/ObjectPaintInvalidator.h"
 #include "platform/LengthFunctions.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/TraceEvent.h"
 #include "platform/geometry/FloatPoint3D.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/TransformState.h"
+#include "platform/graphics/CompositorFilterOperations.h"
 #include "platform/graphics/filters/Filter.h"
-#include "platform/graphics/filters/SourceGraphic.h"
-#include "platform/transforms/ScaleTransformOperation.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include "platform/transforms/TranslateTransformOperation.h"
-#include "public/platform/Platform.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/StdLibExtras.h"
-#include "wtf/allocator/Partitions.h"
-#include "wtf/text/CString.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/CString.h"
 
 namespace blink {
 
 namespace {
 
-static CompositingQueryMode gCompositingQueryMode =
-    CompositingQueriesAreOnlyAllowedInCertainDocumentLifecyclePhases;
+static CompositingQueryMode g_compositing_query_mode =
+    kCompositingQueriesAreOnlyAllowedInCertainDocumentLifecyclePhases;
 
 struct SameSizeAsPaintLayer : DisplayItemClient {
-    int bitFields;
-    void* pointers[10];
-    LayoutUnit layoutUnits[4];
+  int bit_fields;
+  void* pointers[11];
+  LayoutUnit layout_units[4];
+  IntSize size;
+  Persistent<PaintLayerScrollableArea> scrollable_area;
+  struct {
     IntSize size;
-    Persistent<PaintLayerScrollableArea> scrollableArea;
-    struct {
-        IntRect rect;
-        void* pointers[2];
-    } ancestorCompositingInputs;
-    struct {
-        IntSize size;
-        void* pointer;
-        LayoutRect rect;
-    } previousPaintStatus;
+    void* pointer;
+    LayoutRect rect;
+  } previous_paint_status;
 };
 
-static_assert(sizeof(PaintLayer) == sizeof(SameSizeAsPaintLayer), "PaintLayer should stay small");
+static_assert(sizeof(PaintLayer) == sizeof(SameSizeAsPaintLayer),
+              "PaintLayer should stay small");
 
-} // namespace
+bool IsReferenceClipPath(const ClipPathOperation* clip_operation) {
+  return clip_operation &&
+         clip_operation->GetType() == ClipPathOperation::REFERENCE;
+}
+
+}  // namespace
 
 using namespace HTMLNames;
 
 PaintLayerRareData::PaintLayerRareData()
-    : enclosingPaginationLayer(nullptr)
-    , potentialCompositingReasonsFromStyle(CompositingReasonNone)
-    , compositingReasons(CompositingReasonNone)
-    , squashingDisallowedReasons(SquashingDisallowedReasonsNone)
-    , groupedMapping(nullptr)
-{
-}
+    : enclosing_pagination_layer(nullptr),
+      potential_compositing_reasons_from_style(kCompositingReasonNone),
+      compositing_reasons(kCompositingReasonNone),
+      squashing_disallowed_reasons(kSquashingDisallowedReasonsNone),
+      grouped_mapping(nullptr) {}
 
-PaintLayerRareData::~PaintLayerRareData()
-{
-}
+PaintLayerRareData::~PaintLayerRareData() {}
 
-PaintLayer::PaintLayer(LayoutBoxModelObject* layoutObject)
-    : m_hasSelfPaintingLayerDescendant(false)
-    , m_hasSelfPaintingLayerDescendantDirty(false)
-    , m_isRootLayer(layoutObject->isLayoutView())
-    , m_visibleContentStatusDirty(true)
-    , m_hasVisibleContent(false)
-    , m_visibleDescendantStatusDirty(false)
-    , m_hasVisibleDescendant(false)
-#if ENABLE(ASSERT)
-    , m_needsPositionUpdate(true)
+PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
+    : has_self_painting_layer_descendant_(false),
+      has_self_painting_layer_descendant_dirty_(false),
+      is_root_layer_(layout_object.IsLayoutView()),
+      has_visible_content_(false),
+      needs_descendant_dependent_flags_update_(true),
+      has_visible_descendant_(false),
+#if DCHECK_IS_ON()
+      needs_position_update_(true),
 #endif
-    , m_3DTransformedDescendantStatusDirty(true)
-    , m_has3DTransformedDescendant(false)
-    , m_containsDirtyOverlayScrollbars(false)
-    , m_needsAncestorDependentCompositingInputsUpdate(true)
-    , m_needsDescendantDependentCompositingInputsUpdate(true)
-    , m_childNeedsCompositingInputsUpdate(true)
-    , m_hasCompositingDescendant(false)
-    , m_isAllScrollingContentComposited(false)
-    , m_shouldIsolateCompositedDescendants(false)
-    , m_lostGroupedMapping(false)
-    , m_needsRepaint(false)
-    , m_previousPaintResult(PaintLayerPainter::FullyPainted)
-    , m_needsPaintPhaseDescendantOutlines(false)
-    , m_needsPaintPhaseFloat(false)
-    , m_needsPaintPhaseDescendantBlockBackgrounds(false)
-    , m_hasDescendantWithClipPath(false)
-    , m_hasNonIsolatedDescendantWithBlendMode(false)
-    , m_hasAncestorWithClipPath(false)
-    , m_layoutObject(layoutObject)
-    , m_parent(0)
-    , m_previous(0)
-    , m_next(0)
-    , m_first(0)
-    , m_last(0)
-    , m_staticInlinePosition(0)
-    , m_staticBlockPosition(0)
-    , m_ancestorOverflowLayer(nullptr)
-{
-    updateStackingNode();
+      has3d_transformed_descendant_(false),
+      contains_dirty_overlay_scrollbars_(false),
+      needs_ancestor_dependent_compositing_inputs_update_(true),
+      child_needs_compositing_inputs_update_(true),
+      has_compositing_descendant_(false),
+      is_all_scrolling_content_composited_(false),
+      should_isolate_composited_descendants_(false),
+      lost_grouped_mapping_(false),
+      needs_repaint_(false),
+      previous_paint_result_(kFullyPainted),
+      needs_paint_phase_descendant_outlines_(false),
+      previous_paint_phase_descendant_outlines_was_empty_(false),
+      needs_paint_phase_float_(false),
+      previous_paint_phase_float_was_empty_(false),
+      needs_paint_phase_descendant_block_backgrounds_(false),
+      previous_paint_phase_descendant_block_backgrounds_was_empty_(false),
+      has_descendant_with_clip_path_(false),
+      has_non_isolated_descendant_with_blend_mode_(false),
+      has_ancestor_with_clip_path_(false),
+      self_painting_status_changed_(false),
+      layout_object_(layout_object),
+      parent_(0),
+      previous_(0),
+      next_(0),
+      first_(0),
+      last_(0),
+      static_inline_position_(0),
+      static_block_position_(0),
+      ancestor_overflow_layer_(nullptr) {
+  UpdateStackingNode();
 
-    m_isSelfPaintingLayer = shouldBeSelfPaintingLayer();
+  is_self_painting_layer_ = ShouldBeSelfPaintingLayer();
 
-    if (!layoutObject->slowFirstChild() && layoutObject->style()) {
-        m_visibleContentStatusDirty = false;
-        m_hasVisibleContent = layoutObject->style()->visibility() == VISIBLE;
+  UpdateScrollableArea();
+}
+
+PaintLayer::~PaintLayer() {
+  if (rare_data_ && rare_data_->resource_info) {
+    const ComputedStyle& style = GetLayoutObject().StyleRef();
+    if (style.HasFilter())
+      style.Filter().RemoveClient(rare_data_->resource_info);
+    if (IsReferenceClipPath(style.ClipPath())) {
+      ToReferenceClipPathOperation(style.ClipPath())
+          ->RemoveClient(rare_data_->resource_info);
     }
+    rare_data_->resource_info->ClearLayer();
+  }
+  if (GetLayoutObject().GetFrame()) {
+    if (ScrollingCoordinator* scrolling_coordinator = GetScrollingCoordinator())
+      scrolling_coordinator->WillDestroyLayer(this);
+  }
 
-    updateScrollableArea();
-}
-
-PaintLayer::~PaintLayer()
-{
-    if (m_rareData && m_rareData->filterInfo)
-        m_rareData->filterInfo->clearLayer();
-    if (layoutObject()->frame() && layoutObject()->frame()->page()) {
-        if (ScrollingCoordinator* scrollingCoordinator = layoutObject()->frame()->page()->scrollingCoordinator())
-            scrollingCoordinator->willDestroyLayer(this);
-    }
-
-    if (groupedMapping()) {
-        DisableCompositingQueryAsserts disabler;
-        setGroupedMapping(0, InvalidateLayerAndRemoveFromMapping);
-    }
-
-    // Child layers will be deleted by their corresponding layout objects, so
-    // we don't need to delete them ourselves.
-
-    clearCompositedLayerMapping(true);
-
-    if (m_scrollableArea)
-        m_scrollableArea->dispose();
-}
-
-String PaintLayer::debugName() const
-{
-    if (isReflection())
-        return layoutObject()->parent()->debugName() + " (reflection)";
-    return layoutObject()->debugName();
-}
-
-LayoutRect PaintLayer::visualRect() const
-{
-    return m_layoutObject->visualRect();
-}
-
-PaintLayerCompositor* PaintLayer::compositor() const
-{
-    if (!layoutObject()->view())
-        return 0;
-    return layoutObject()->view()->compositor();
-}
-
-void PaintLayer::contentChanged(ContentChangeType changeType)
-{
-    // updateLayerCompositingState will query compositingReasons for accelerated overflow scrolling.
-    // This is tripped by LayoutTests/compositing/content-changed-chicken-egg.html
+  if (GroupedMapping()) {
     DisableCompositingQueryAsserts disabler;
+    SetGroupedMapping(0, kInvalidateLayerAndRemoveFromMapping);
+  }
 
-    if (changeType == CanvasChanged)
-        compositor()->setNeedsCompositingUpdate(CompositingUpdateAfterCompositingInputChange);
+  // Child layers will be deleted by their corresponding layout objects, so
+  // we don't need to delete them ourselves.
 
-    if (changeType == CanvasContextChanged) {
-        compositor()->setNeedsCompositingUpdate(CompositingUpdateAfterCompositingInputChange);
+  ClearCompositedLayerMapping(true);
 
-        // Although we're missing test coverage, we need to call
-        // GraphicsLayer::setContentsToPlatformLayer with the new platform
-        // layer for this canvas.
-        // See http://crbug.com/349195
-        if (hasCompositedLayerMapping())
-            compositedLayerMapping()->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateSubtree);
-    }
-
-    if (CompositedLayerMapping* compositedLayerMapping = this->compositedLayerMapping())
-        compositedLayerMapping->contentChanged(changeType);
+  if (scrollable_area_)
+    scrollable_area_->Dispose();
 }
 
-bool PaintLayer::paintsWithFilters() const
-{
-    if (!layoutObject()->hasFilterInducingProperty())
-        return false;
-
-    // https://code.google.com/p/chromium/issues/detail?id=343759
-    DisableCompositingQueryAsserts disabler;
-    return !compositedLayerMapping() || compositingState() != PaintsIntoOwnBacking;
+String PaintLayer::DebugName() const {
+  return GetLayoutObject().DebugName();
 }
 
-bool PaintLayer::paintsWithBackdropFilters() const
-{
-    if (!layoutObject()->hasBackdropFilter())
-        return false;
-
-    // https://code.google.com/p/chromium/issues/detail?id=343759
-    DisableCompositingQueryAsserts disabler;
-    return !compositedLayerMapping() || compositingState() != PaintsIntoOwnBacking;
+LayoutRect PaintLayer::VisualRect() const {
+  return layout_object_.VisualRect();
 }
 
-LayoutSize PaintLayer::subpixelAccumulation() const
-{
-    return m_rareData ? m_rareData->subpixelAccumulation : LayoutSize();
-}
-
-void PaintLayer::setSubpixelAccumulation(const LayoutSize& size)
-{
-    if (m_rareData || !size.isZero())
-        ensureRareData().subpixelAccumulation = size;
-}
-
-void PaintLayer::updateLayerPositionsAfterLayout()
-{
-    TRACE_EVENT0("blink,benchmark", "PaintLayer::updateLayerPositionsAfterLayout");
-
-    clipper().clearClipRectsIncludingDescendants();
-    updateLayerPositionRecursive();
-
-    {
-        // FIXME: Remove incremental compositing updates after fixing the chicken/egg issues
-        // https://code.google.com/p/chromium/issues/detail?id=343756
-        DisableCompositingQueryAsserts disabler;
-        updatePaginationRecursive(enclosingPaginationLayer());
-    }
-}
-
-void PaintLayer::updateLayerPositionRecursive()
-{
-    updateLayerPosition();
-
-    if (m_rareData && m_rareData->reflectionInfo)
-        m_rareData->reflectionInfo->reflection()->layout();
-
-    // FIXME(400589): We would like to do this in PaintLayerScrollableArea::updateAfterLayout,
-    // but it depends on the size computed by updateLayerPosition.
-    if (m_scrollableArea) {
-        if (ScrollAnimatorBase* scrollAnimator = m_scrollableArea->existingScrollAnimator())
-            scrollAnimator->updateAfterLayout();
-    }
-
-    // FIXME: We should be able to remove this call because we don't care about
-    // any descendant-dependent flags, but code somewhere else is reading these
-    // flags and depending on us to update them.
-    updateDescendantDependentFlags();
-
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling())
-        child->updateLayerPositionRecursive();
-}
-
-void PaintLayer::updateHasSelfPaintingLayerDescendant() const
-{
-    ASSERT(m_hasSelfPaintingLayerDescendantDirty);
-
-    m_hasSelfPaintingLayerDescendant = false;
-
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling()) {
-        if (child->isSelfPaintingLayer() || child->hasSelfPaintingLayerDescendant()) {
-            m_hasSelfPaintingLayerDescendant = true;
-            break;
-        }
-    }
-
-    m_hasSelfPaintingLayerDescendantDirty = false;
-}
-
-void PaintLayer::dirtyAncestorChainHasSelfPaintingLayerDescendantStatus()
-{
-    for (PaintLayer* layer = this; layer; layer = layer->parent()) {
-        layer->m_hasSelfPaintingLayerDescendantDirty = true;
-        // If we have reached a self-painting layer, we know our parent should have a self-painting descendant
-        // in this case, there is no need to dirty our ancestors further.
-        if (layer->isSelfPaintingLayer()) {
-            ASSERT(!parent() || parent()->m_hasSelfPaintingLayerDescendantDirty || parent()->m_hasSelfPaintingLayerDescendant);
-            break;
-        }
-    }
-}
-
-bool PaintLayer::scrollsWithViewport() const
-{
-    return (layoutObject()->style()->position() == FixedPosition && layoutObject()->containerForFixedPosition() == layoutObject()->view())
-        || (layoutObject()->style()->position() == StickyPosition && !ancestorScrollingLayer());
-}
-
-bool PaintLayer::scrollsWithRespectTo(const PaintLayer* other) const
-{
-    if (scrollsWithViewport() != other->scrollsWithViewport())
-        return true;
-    return ancestorScrollingLayer() != other->ancestorScrollingLayer();
-}
-
-void PaintLayer::updateLayerPositionsAfterOverflowScroll(const DoubleSize& scrollDelta)
-{
-    clipper().clearClipRectsIncludingDescendants();
-    updateLayerPositionsAfterScrollRecursive(scrollDelta, isPaintInvalidationContainer());
-}
-
-void PaintLayer::updateLayerPositionsAfterScrollRecursive(const DoubleSize& scrollDelta, bool paintInvalidationContainerWasScrolled)
-{
-    updateLayerPosition();
-    if (paintInvalidationContainerWasScrolled && !isPaintInvalidationContainer()) {
-        // Paint invalidation rects are in the coordinate space of the paint invalidation container.
-        // If it has scrolled, the rect must be adjusted. Note that it is not safe to reset it to
-        // the current bounds rect, as the LayoutObject may have moved since the last invalidation.
-        // FIXME(416535): Ideally, pending invalidations of scrolling content should be stored in
-        // the coordinate space of the scrolling content layer, so that they need no adjustment.
-        m_layoutObject->adjustPreviousPaintInvalidationForScrollIfNeeded(scrollDelta);
-    }
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling()) {
-        child->updateLayerPositionsAfterScrollRecursive(scrollDelta,
-            paintInvalidationContainerWasScrolled && !child->isPaintInvalidationContainer());
-    }
-}
-
-void PaintLayer::updateTransformationMatrix()
-{
-    if (TransformationMatrix* transform = this->transform()) {
-        LayoutBox* box = layoutBox();
-        ASSERT(box);
-        transform->makeIdentity();
-        box->style()->applyTransform(*transform, LayoutSize(box->pixelSnappedSize()), ComputedStyle::IncludeTransformOrigin, ComputedStyle::IncludeMotionPath, ComputedStyle::IncludeIndependentTransformProperties);
-        makeMatrixRenderable(*transform, compositor()->hasAcceleratedCompositing());
-    }
-}
-
-void PaintLayer::updateTransform(const ComputedStyle* oldStyle, const ComputedStyle& newStyle)
-{
-    if (oldStyle && newStyle.transformDataEquivalent(*oldStyle))
-        return;
-
-    // hasTransform() on the layoutObject is also true when there is transform-style: preserve-3d or perspective set,
-    // so check style too.
-    bool hasTransform = layoutObject()->hasTransformRelatedProperty() && newStyle.hasTransform();
-    bool had3DTransform = has3DTransform();
-
-    bool hadTransform = transform();
-    if (hasTransform != hadTransform) {
-        if (hasTransform)
-            ensureRareData().transform = TransformationMatrix::create();
-        else
-            m_rareData->transform.reset();
-
-        // PaintLayers with transforms act as clip rects roots, so clear the cached clip rects here.
-        clipper().clearClipRectsIncludingDescendants();
-    } else if (hasTransform) {
-        clipper().clearClipRectsIncludingDescendants(AbsoluteClipRects);
-    }
-
-    updateTransformationMatrix();
-
-    if (had3DTransform != has3DTransform())
-        dirty3DTransformedDescendantStatus();
-
-    if (FrameView* frameView = layoutObject()->document().view())
-        frameView->setNeedsUpdateWidgetGeometries();
-}
-
-static PaintLayer* enclosingLayerForContainingBlock(PaintLayer* layer)
-{
-    if (LayoutObject* containingBlock = layer->layoutObject()->containingBlock())
-        return containingBlock->enclosingLayer();
+PaintLayerCompositor* PaintLayer::Compositor() const {
+  if (!GetLayoutObject().View())
     return 0;
+  return GetLayoutObject().View()->Compositor();
 }
 
-static const PaintLayer* enclosingLayerForContainingBlock(const PaintLayer* layer)
-{
-    if (const LayoutObject* containingBlock = layer->layoutObject()->containingBlock())
-        return containingBlock->enclosingLayer();
-    return 0;
+void PaintLayer::ContentChanged(ContentChangeType change_type) {
+  // updateLayerCompositingState will query compositingReasons for accelerated
+  // overflow scrolling.  This is tripped by
+  // LayoutTests/compositing/content-changed-chicken-egg.html
+  DisableCompositingQueryAsserts disabler;
+
+  if (change_type == kCanvasChanged)
+    Compositor()->SetNeedsCompositingUpdate(
+        kCompositingUpdateAfterCompositingInputChange);
+
+  if (change_type == kCanvasContextChanged) {
+    Compositor()->SetNeedsCompositingUpdate(
+        kCompositingUpdateAfterCompositingInputChange);
+
+    // Although we're missing test coverage, we need to call
+    // GraphicsLayer::setContentsToPlatformLayer with the new platform
+    // layer for this canvas.
+    // See http://crbug.com/349195
+    if (HasCompositedLayerMapping())
+      GetCompositedLayerMapping()->SetNeedsGraphicsLayerUpdate(
+          kGraphicsLayerUpdateSubtree);
+  }
+
+  if (CompositedLayerMapping* composited_layer_mapping =
+          this->GetCompositedLayerMapping())
+    composited_layer_mapping->ContentChanged(change_type);
 }
 
-PaintLayer* PaintLayer::renderingContextRoot()
-{
-    PaintLayer* renderingContext = 0;
+bool PaintLayer::PaintsWithFilters() const {
+  if (!GetLayoutObject().HasFilterInducingProperty())
+    return false;
 
-    if (shouldPreserve3D())
-        renderingContext = this;
-
-    for (PaintLayer* current = enclosingLayerForContainingBlock(this); current && current->shouldPreserve3D(); current = enclosingLayerForContainingBlock(current))
-        renderingContext = current;
-
-    return renderingContext;
+  // https://code.google.com/p/chromium/issues/detail?id=343759
+  DisableCompositingQueryAsserts disabler;
+  return !GetCompositedLayerMapping() ||
+         GetCompositingState() != kPaintsIntoOwnBacking;
 }
 
-const PaintLayer* PaintLayer::renderingContextRoot() const
-{
-    const PaintLayer* renderingContext = 0;
+bool PaintLayer::PaintsWithBackdropFilters() const {
+  if (!GetLayoutObject().HasBackdropFilter())
+    return false;
 
-    if (shouldPreserve3D())
-        renderingContext = this;
-
-    for (const PaintLayer* current = enclosingLayerForContainingBlock(this); current && current->shouldPreserve3D(); current = enclosingLayerForContainingBlock(current))
-        renderingContext = current;
-
-    return renderingContext;
+  // https://code.google.com/p/chromium/issues/detail?id=343759
+  DisableCompositingQueryAsserts disabler;
+  return !GetCompositedLayerMapping() ||
+         GetCompositingState() != kPaintsIntoOwnBacking;
 }
 
-TransformationMatrix PaintLayer::currentTransform() const
-{
-    if (TransformationMatrix* transform = this->transform())
-        return *transform;
-    return TransformationMatrix();
+LayoutSize PaintLayer::SubpixelAccumulation() const {
+  return rare_data_ ? rare_data_->subpixel_accumulation : LayoutSize();
 }
 
-TransformationMatrix PaintLayer::renderableTransform(GlobalPaintFlags globalPaintFlags) const
-{
-    TransformationMatrix* transform = this->transform();
-    if (!transform)
-        return TransformationMatrix();
+void PaintLayer::SetSubpixelAccumulation(const LayoutSize& size) {
+  if (rare_data_ || !size.IsZero())
+    EnsureRareData().subpixel_accumulation = size;
+}
 
-    if (globalPaintFlags & GlobalPaintFlattenCompositingLayers) {
-        TransformationMatrix matrix = *transform;
-        makeMatrixRenderable(matrix, false /* flatten 3d */);
-        return matrix;
+void PaintLayer::UpdateLayerPositionsAfterLayout() {
+  TRACE_EVENT0("blink,benchmark",
+               "PaintLayer::updateLayerPositionsAfterLayout");
+
+  Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .ClearClipRectsIncludingDescendants();
+  UpdateLayerPositionRecursive();
+
+  {
+    // FIXME: Remove incremental compositing updates after fixing the
+    // chicken/egg issues, https://crbug.com/343756
+    DisableCompositingQueryAsserts disabler;
+    UpdatePaginationRecursive(EnclosingPaginationLayer());
+  }
+}
+
+void PaintLayer::UpdateLayerPositionRecursive() {
+  UpdateLayerPosition();
+
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->UpdateLayerPositionRecursive();
+}
+
+void PaintLayer::UpdateHasSelfPaintingLayerDescendant() const {
+  DCHECK(has_self_painting_layer_descendant_dirty_);
+
+  has_self_painting_layer_descendant_ = false;
+
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling()) {
+    if (child->IsSelfPaintingLayer() ||
+        child->HasSelfPaintingLayerDescendant()) {
+      has_self_painting_layer_descendant_ = true;
+      break;
     }
+  }
 
+  has_self_painting_layer_descendant_dirty_ = false;
+}
+
+void PaintLayer::DirtyAncestorChainHasSelfPaintingLayerDescendantStatus() {
+  for (PaintLayer* layer = this; layer; layer = layer->Parent()) {
+    layer->has_self_painting_layer_descendant_dirty_ = true;
+    // If we have reached a self-painting layer, we know our parent should have
+    // a self-painting descendant in this case, there is no need to dirty our
+    // ancestors further.
+    if (layer->IsSelfPaintingLayer()) {
+      DCHECK(!Parent() || Parent()->has_self_painting_layer_descendant_dirty_ ||
+             Parent()->has_self_painting_layer_descendant_);
+      break;
+    }
+  }
+}
+
+bool PaintLayer::SticksToScroller() const {
+  return GetLayoutObject().Style()->GetPosition() == EPosition::kSticky &&
+         AncestorOverflowLayer()
+             ->GetScrollableArea()
+             ->GetStickyConstraintsMap()
+             .at(const_cast<PaintLayer*>(this))
+             .GetAnchorEdges();
+}
+
+bool PaintLayer::FixedToViewport() const {
+  if (GetLayoutObject().Style()->GetPosition() != EPosition::kFixed)
+    return false;
+
+  // TODO(pdr): This approach of calculating the nearest scroll node is O(n).
+  // An option for improving this is to cache the nearest scroll node in
+  // the local border box properties.
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    const auto* view_border_box_properties =
+        GetLayoutObject().View()->LocalBorderBoxProperties();
+    const ScrollPaintPropertyNode* ancestor_target_scroll_node;
+    ancestor_target_scroll_node =
+        view_border_box_properties->Transform()->FindEnclosingScrollNode();
+
+    const auto* transform =
+        GetLayoutObject().LocalBorderBoxProperties()->Transform();
+    return transform->FindEnclosingScrollNode() == ancestor_target_scroll_node;
+  }
+
+  return GetLayoutObject().ContainerForFixedPosition() ==
+         GetLayoutObject().View();
+}
+
+bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
+  if (FixedToViewport() != other->FixedToViewport())
+    return true;
+  // If either element sticks we cannot trivially determine that the layers do
+  // not scroll with respect to each other.
+  if (SticksToScroller() || other->SticksToScroller())
+    return true;
+  return AncestorScrollingLayer() != other->AncestorScrollingLayer();
+}
+
+void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
+  Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .ClearClipRectsIncludingDescendants();
+  UpdateLayerPositionRecursive();
+}
+
+void PaintLayer::UpdateTransformationMatrix() {
+  if (TransformationMatrix* transform = this->Transform()) {
+    LayoutBox* box = GetLayoutBox();
+    DCHECK(box);
+    transform->MakeIdentity();
+    box->Style()->ApplyTransform(
+        *transform, box->Size(), ComputedStyle::kIncludeTransformOrigin,
+        ComputedStyle::kIncludeMotionPath,
+        ComputedStyle::kIncludeIndependentTransformProperties);
+    MakeMatrixRenderable(*transform, Compositor()->HasAcceleratedCompositing());
+  }
+}
+
+void PaintLayer::UpdateTransform(const ComputedStyle* old_style,
+                                 const ComputedStyle& new_style) {
+  // It's possible for the old and new style transform data to be equivalent
+  // while hasTransform() differs, as it checks a number of conditions aside
+  // from just the matrix, including but not limited to animation state.
+  if (old_style && old_style->HasTransform() == new_style.HasTransform() &&
+      new_style.TransformDataEquivalent(*old_style)) {
+    return;
+  }
+
+  // hasTransform() on the layoutObject is also true when there is
+  // transform-style: preserve-3d or perspective set, so check style too.
+  bool has_transform = GetLayoutObject().HasTransformRelatedProperty() &&
+                       new_style.HasTransform();
+  bool had3d_transform = Has3DTransform();
+
+  bool had_transform = Transform();
+  if (has_transform != had_transform) {
+    if (has_transform)
+      EnsureRareData().transform = TransformationMatrix::Create();
+    else
+      rare_data_->transform.reset();
+
+    // PaintLayers with transforms act as clip rects roots, so clear the cached
+    // clip rects here.
+    Clipper(PaintLayer::kDoNotUseGeometryMapper)
+        .ClearClipRectsIncludingDescendants();
+  } else if (has_transform) {
+    Clipper(PaintLayer::kDoNotUseGeometryMapper)
+        .ClearClipRectsIncludingDescendants(kAbsoluteClipRects);
+  }
+
+  UpdateTransformationMatrix();
+
+  if (had3d_transform != Has3DTransform())
+    MarkAncestorChainForDescendantDependentFlagsUpdate();
+
+  if (FrameView* frame_view = GetLayoutObject().GetDocument().View())
+    frame_view->SetNeedsUpdateGeometries();
+}
+
+static PaintLayer* EnclosingLayerForContainingBlock(PaintLayer* layer) {
+  if (LayoutObject* containing_block =
+          layer->GetLayoutObject().ContainingBlock())
+    return containing_block->EnclosingLayer();
+  return 0;
+}
+
+static const PaintLayer* EnclosingLayerForContainingBlock(
+    const PaintLayer* layer) {
+  if (const LayoutObject* containing_block =
+          layer->GetLayoutObject().ContainingBlock())
+    return containing_block->EnclosingLayer();
+  return 0;
+}
+
+PaintLayer* PaintLayer::RenderingContextRoot() {
+  PaintLayer* rendering_context = 0;
+
+  if (ShouldPreserve3D())
+    rendering_context = this;
+
+  for (PaintLayer* current = EnclosingLayerForContainingBlock(this);
+       current && current->ShouldPreserve3D();
+       current = EnclosingLayerForContainingBlock(current))
+    rendering_context = current;
+
+  return rendering_context;
+}
+
+const PaintLayer* PaintLayer::RenderingContextRoot() const {
+  const PaintLayer* rendering_context = 0;
+
+  if (ShouldPreserve3D())
+    rendering_context = this;
+
+  for (const PaintLayer* current = EnclosingLayerForContainingBlock(this);
+       current && current->ShouldPreserve3D();
+       current = EnclosingLayerForContainingBlock(current))
+    rendering_context = current;
+
+  return rendering_context;
+}
+
+TransformationMatrix PaintLayer::CurrentTransform() const {
+  if (TransformationMatrix* transform = this->Transform())
     return *transform;
+  return TransformationMatrix();
 }
 
-void PaintLayer::convertFromFlowThreadToVisualBoundingBoxInAncestor(const PaintLayer* ancestorLayer, LayoutRect& rect) const
-{
-    PaintLayer* paginationLayer = enclosingPaginationLayer();
-    ASSERT(paginationLayer);
-    LayoutFlowThread* flowThread = toLayoutFlowThread(paginationLayer->layoutObject());
+TransformationMatrix PaintLayer::RenderableTransform(
+    GlobalPaintFlags global_paint_flags) const {
+  TransformationMatrix* transform = this->Transform();
+  if (!transform)
+    return TransformationMatrix();
 
-    // First make the flow thread rectangle relative to the flow thread, not to |layer|.
-    LayoutPoint offsetWithinPaginationLayer;
-    convertToLayerCoords(paginationLayer, offsetWithinPaginationLayer);
-    rect.moveBy(offsetWithinPaginationLayer);
+  if (global_paint_flags & kGlobalPaintFlattenCompositingLayers) {
+    TransformationMatrix matrix = *transform;
+    MakeMatrixRenderable(matrix, false /* flatten 3d */);
+    return matrix;
+  }
 
-    // Then make the rectangle visual, relative to the fragmentation context. Split our box up into
-    // the actual fragment boxes that layout in the columns/pages and unite those together to get
-    // our true bounding box.
-    rect = flowThread->fragmentsBoundingBox(rect);
-
-    // Finally, make the visual rectangle relative to |ancestorLayer|.
-    if (ancestorLayer->enclosingPaginationLayer() != paginationLayer) {
-        rect.moveBy(paginationLayer->visualOffsetFromAncestor(ancestorLayer));
-        return;
-    }
-    // The ancestor layer is inside the same pagination layer as |layer|, so we need to subtract
-    // the visual distance from the ancestor layer to the pagination layer.
-    rect.moveBy(-ancestorLayer->visualOffsetFromAncestor(paginationLayer));
+  return *transform;
 }
 
-void PaintLayer::updatePaginationRecursive(bool needsPaginationUpdate)
-{
-    if (m_rareData)
-        m_rareData->enclosingPaginationLayer = nullptr;
+void PaintLayer::ConvertFromFlowThreadToVisualBoundingBoxInAncestor(
+    const PaintLayer* ancestor_layer,
+    LayoutRect& rect) const {
+  PaintLayer* pagination_layer = EnclosingPaginationLayer();
+  DCHECK(pagination_layer);
+  LayoutFlowThread& flow_thread =
+      ToLayoutFlowThread(pagination_layer->GetLayoutObject());
 
-    if (layoutObject()->isLayoutFlowThread())
-        needsPaginationUpdate = true;
+  // First make the flow thread rectangle relative to the flow thread, not to
+  // |layer|.
+  LayoutPoint offset_within_pagination_layer;
+  ConvertToLayerCoords(pagination_layer, offset_within_pagination_layer);
+  rect.MoveBy(offset_within_pagination_layer);
 
-    if (needsPaginationUpdate) {
-        // Each paginated layer has to paint on its own. There is no recurring into child layers. Each
-        // layer has to be checked individually and genuinely know if it is going to have to split
-        // itself up when painting only its contents (and not any other descendant layers). We track an
-        // enclosingPaginationLayer instead of using a simple bit, since we want to be able to get back
-        // to that layer easily.
-        if (LayoutFlowThread* containingFlowThread = layoutObject()->flowThreadContainingBlock())
-            ensureRareData().enclosingPaginationLayer = containingFlowThread->layer();
-    }
+  // Then make the rectangle visual, relative to the fragmentation context.
+  // Split our box up into the actual fragment boxes that layout in the
+  // columns/pages and unite those together to get our true bounding box.
+  rect = flow_thread.FragmentsBoundingBox(rect);
 
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling())
-        child->updatePaginationRecursive(needsPaginationUpdate);
+  // Finally, make the visual rectangle relative to |ancestorLayer|.
+  if (ancestor_layer->EnclosingPaginationLayer() != pagination_layer) {
+    rect.MoveBy(pagination_layer->VisualOffsetFromAncestor(ancestor_layer));
+    return;
+  }
+  // The ancestor layer is inside the same pagination layer as |layer|, so we
+  // need to subtract the visual distance from the ancestor layer to the
+  // pagination layer.
+  rect.MoveBy(-ancestor_layer->VisualOffsetFromAncestor(pagination_layer));
 }
 
-void PaintLayer::clearPaginationRecursive()
-{
-    if (m_rareData)
-        m_rareData->enclosingPaginationLayer = nullptr;
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling())
-        child->clearPaginationRecursive();
+void PaintLayer::UpdatePaginationRecursive(bool needs_pagination_update) {
+  if (rare_data_)
+    rare_data_->enclosing_pagination_layer = nullptr;
+
+  if (GetLayoutObject().IsLayoutFlowThread())
+    needs_pagination_update = true;
+
+  if (needs_pagination_update) {
+    // Each paginated layer has to paint on its own. There is no recurring into
+    // child layers. Each layer has to be checked individually and genuinely
+    // know if it is going to have to split itself up when painting only its
+    // contents (and not any other descendant layers). We track an
+    // enclosingPaginationLayer instead of using a simple bit, since we want to
+    // be able to get back to that layer easily.
+    if (LayoutFlowThread* containing_flow_thread =
+            GetLayoutObject().FlowThreadContainingBlock())
+      EnsureRareData().enclosing_pagination_layer =
+          containing_flow_thread->Layer();
+  }
+
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->UpdatePaginationRecursive(needs_pagination_update);
 }
 
-void PaintLayer::mapPointInPaintInvalidationContainerToBacking(const LayoutBoxModelObject& paintInvalidationContainer, FloatPoint& point)
-{
-    PaintLayer* paintInvalidationLayer = paintInvalidationContainer.layer();
-    if (!paintInvalidationLayer->groupedMapping()) {
-        point.move(paintInvalidationLayer->compositedLayerMapping()->contentOffsetInCompositingLayer());
-        return;
-    }
-
-    LayoutBoxModelObject* transformedAncestor = paintInvalidationLayer->enclosingTransformedAncestor()->layoutObject();
-    if (!transformedAncestor)
-        return;
-
-    // |paintInvalidationContainer| may have a local 2D transform on it, so take that into account when mapping into the space of the
-    // transformed ancestor.
-    point = paintInvalidationContainer.localToAncestorPoint(point, transformedAncestor);
-
-    point.moveBy(-paintInvalidationLayer->groupedMapping()->squashingOffsetFromTransformedAncestor());
+void PaintLayer::ClearPaginationRecursive() {
+  if (rare_data_)
+    rare_data_->enclosing_pagination_layer = nullptr;
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->ClearPaginationRecursive();
 }
 
-void PaintLayer::mapRectInPaintInvalidationContainerToBacking(const LayoutBoxModelObject& paintInvalidationContainer, LayoutRect& rect)
-{
-    PaintLayer* paintInvalidationLayer = paintInvalidationContainer.layer();
-    if (!paintInvalidationLayer->groupedMapping()) {
-        rect.move(paintInvalidationLayer->compositedLayerMapping()->contentOffsetInCompositingLayer());
-        return;
-    }
+void PaintLayer::MapPointInPaintInvalidationContainerToBacking(
+    const LayoutBoxModelObject& paint_invalidation_container,
+    FloatPoint& point) {
+  // TODO(chrishtr): this should be
+  // PaintLayer*  transformedAncestorPaintLayer =
+  //    paintInvalidationLayer->enclosingTransformedAncestor();
+  // if (!transformedAncestorPaintLayer)
+  //  return;
+  PaintLayer* paint_invalidation_layer = paint_invalidation_container.Layer();
+  if (!paint_invalidation_layer->GroupedMapping())
+    return;
 
-    LayoutBoxModelObject* transformedAncestor = paintInvalidationLayer->enclosingTransformedAncestor()->layoutObject();
-    if (!transformedAncestor)
-        return;
+  LayoutBoxModelObject& transformed_ancestor =
+      paint_invalidation_layer->EnclosingTransformedAncestor()
+          ->GetLayoutObject();
 
-    // |paintInvalidationContainer| may have a local 2D transform on it, so take that into account when mapping into the space of the
-    // transformed ancestor.
-    rect = LayoutRect(paintInvalidationContainer.localToAncestorQuad(FloatRect(rect), transformedAncestor).boundingBox());
+  // |paintInvalidationContainer| may have a local 2D transform on it, so take
+  // that into account when mapping into the space of the transformed ancestor.
+  point = paint_invalidation_container.LocalToAncestorPoint(
+      point, &transformed_ancestor);
 
-    rect.moveBy(-paintInvalidationLayer->groupedMapping()->squashingOffsetFromTransformedAncestor());
+  point.MoveBy(-paint_invalidation_layer->GroupedMapping()
+                    ->SquashingOffsetFromTransformedAncestor());
 }
 
-void PaintLayer::mapRectToPaintInvalidationBacking(const LayoutObject& layoutObject, const LayoutBoxModelObject& paintInvalidationContainer, LayoutRect& rect)
-{
-    if (!paintInvalidationContainer.layer()->groupedMapping()) {
-        layoutObject.mapToVisualRectInAncestorSpace(&paintInvalidationContainer, rect);
-        return;
-    }
+void PaintLayer::MapRectInPaintInvalidationContainerToBacking(
+    const LayoutBoxModelObject& paint_invalidation_container,
+    LayoutRect& rect) {
+  // TODO(chrishtr): this should be
+  // PaintLayer*  transformedAncestorPaintLayer =
+  //    paintInvalidationLayer->enclosingTransformedAncestor();
+  // if (!transformedAncestorPaintLayer)
+  //  return;
+  PaintLayer* paint_invalidation_layer = paint_invalidation_container.Layer();
+  if (!paint_invalidation_layer->GroupedMapping())
+    return;
 
-    // This code adjusts the paint invalidation rectangle to be in the space of the transformed ancestor of the grouped (i.e. squashed)
-    // layer. This is because all layers that squash together need to issue paint invalidations w.r.t. a single container that is
-    // an ancestor of all of them, in order to properly take into account any local transforms etc.
-    // FIXME: remove this special-case code that works around the paint invalidation code structure.
-    layoutObject.mapToVisualRectInAncestorSpace(&paintInvalidationContainer, rect);
+  LayoutBoxModelObject& transformed_ancestor =
+      paint_invalidation_layer->EnclosingTransformedAncestor()
+          ->GetLayoutObject();
 
-    mapRectInPaintInvalidationContainerToBacking(paintInvalidationContainer, rect);
+  // |paintInvalidationContainer| may have a local 2D transform on it, so take
+  // that into account when mapping into the space of the transformed ancestor.
+  rect = LayoutRect(
+      paint_invalidation_container
+          .LocalToAncestorQuad(FloatRect(rect), &transformed_ancestor)
+          .BoundingBox());
+
+  rect.MoveBy(-paint_invalidation_layer->GroupedMapping()
+                   ->SquashingOffsetFromTransformedAncestor());
 }
 
-void PaintLayer::dirtyVisibleContentStatus()
-{
-    compositor()->setNeedsUpdateDescendantDependentFlags();
-    m_visibleContentStatusDirty = true;
-    if (parent())
-        parent()->dirtyAncestorChainVisibleDescendantStatus();
-    // Non-self-painting layers paint into their ancestor layer, and count as part of the "visible contents" of the parent, so we need to dirty it.
-    if (!isSelfPaintingLayer())
-        parent()->dirtyVisibleContentStatus();
+void PaintLayer::MapRectToPaintInvalidationBacking(
+    const LayoutObject& layout_object,
+    const LayoutBoxModelObject& paint_invalidation_container,
+    LayoutRect& rect) {
+  if (!paint_invalidation_container.Layer()->GroupedMapping()) {
+    layout_object.MapToVisualRectInAncestorSpace(&paint_invalidation_container,
+                                                 rect);
+    return;
+  }
+
+  // This code adjusts the visual rect to be in the space of the transformed
+  // ancestor of the grouped (i.e. squashed) layer. This is because all layers
+  // that squash together need to issue paint invalidations w.r.t. a single
+  // container that is an ancestor of all of them, in order to properly take
+  // into account any local transforms etc.
+  // FIXME: remove this special-case code that works around the paint
+  // invalidation code structure.
+  layout_object.MapToVisualRectInAncestorSpace(&paint_invalidation_container,
+                                               rect);
+
+  MapRectInPaintInvalidationContainerToBacking(paint_invalidation_container,
+                                               rect);
 }
 
-void PaintLayer::potentiallyDirtyVisibleContentStatus(EVisibility visibility)
-{
-    if (m_visibleContentStatusDirty)
-        return;
-    if (hasVisibleContent() == (visibility == VISIBLE))
-        return;
-    dirtyVisibleContentStatus();
+void PaintLayer::DirtyVisibleContentStatus() {
+  MarkAncestorChainForDescendantDependentFlagsUpdate();
+  // Non-self-painting layers paint into their ancestor layer, and count as part
+  // of the "visible contents" of the parent, so we need to dirty it.
+  if (!IsSelfPaintingLayer())
+    Parent()->DirtyVisibleContentStatus();
 }
 
-void PaintLayer::dirtyAncestorChainVisibleDescendantStatus()
-{
-    compositor()->setNeedsUpdateDescendantDependentFlags();
+void PaintLayer::MarkAncestorChainForDescendantDependentFlagsUpdate() {
+  for (PaintLayer* layer = this; layer; layer = layer->Parent()) {
+    if (layer->needs_descendant_dependent_flags_update_)
+      break;
+    layer->needs_descendant_dependent_flags_update_ = true;
 
-    for (PaintLayer* layer = this; layer; layer = layer->parent()) {
-        if (layer->m_visibleDescendantStatusDirty)
-            break;
-        layer->m_visibleDescendantStatusDirty = true;
-    }
+    if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+      layer->GetLayoutObject().SetNeedsPaintPropertyUpdate();
+  }
 }
 
 // FIXME: this is quite brute-force. We could be more efficient if we were to
-// track state and update it as appropriate as changes are made in the layout tree.
-void PaintLayer::updateScrollingStateAfterCompositingChange()
-{
-    TRACE_EVENT0("blink", "PaintLayer::updateScrollingStateAfterCompositingChange");
-    m_isAllScrollingContentComposited = true;
-    for (LayoutObject* r = layoutObject()->slowFirstChild(); r; r = r->nextSibling()) {
-        if (!r->hasLayer()) {
-            m_isAllScrollingContentComposited = false;
-            return;
-        }
+// track state and update it as appropriate as changes are made in the layout
+// tree.
+void PaintLayer::UpdateScrollingStateAfterCompositingChange() {
+  TRACE_EVENT0("blink",
+               "PaintLayer::updateScrollingStateAfterCompositingChange");
+  is_all_scrolling_content_composited_ = true;
+  for (LayoutObject* r = GetLayoutObject().SlowFirstChild(); r;
+       r = r->NextSibling()) {
+    if (!r->HasLayer()) {
+      is_all_scrolling_content_composited_ = false;
+      return;
     }
+  }
 
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling()) {
-        if (child->compositingState() == NotComposited) {
-            m_isAllScrollingContentComposited = false;
-            return;
-        } else if (!child->stackingNode()->isStackingContext()) {
-            // If the child is composited, but not a stacking context, it may paint
-            // negative z-index descendants into an ancestor's GraphicsLayer.
-            m_isAllScrollingContentComposited = false;
-            return;
-        }
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling()) {
+    if (child->GetCompositingState() == kNotComposited) {
+      is_all_scrolling_content_composited_ = false;
+      return;
+    } else if (!child->StackingNode()->IsStackingContext()) {
+      // If the child is composited, but not a stacking context, it may paint
+      // negative z-index descendants into an ancestor's GraphicsLayer.
+      is_all_scrolling_content_composited_ = false;
+      return;
     }
+  }
 }
 
-void PaintLayer::updateDescendantDependentFlags()
-{
-    if (m_visibleDescendantStatusDirty) {
-        m_hasVisibleDescendant = false;
+void PaintLayer::UpdateDescendantDependentFlags() {
+  if (needs_descendant_dependent_flags_update_) {
+    bool old_has_non_isolated_descendant_with_blend_mode =
+        has_non_isolated_descendant_with_blend_mode_;
+    has_visible_descendant_ = false;
+    has_non_isolated_descendant_with_blend_mode_ = false;
+    has_descendant_with_clip_path_ = false;
 
-        for (PaintLayer* child = firstChild(); child; child = child->nextSibling()) {
-            child->updateDescendantDependentFlags();
+    for (PaintLayer* child = FirstChild(); child;
+         child = child->NextSibling()) {
+      child->UpdateDescendantDependentFlags();
 
-            if (child->m_hasVisibleContent || child->m_hasVisibleDescendant) {
-                m_hasVisibleDescendant = true;
-                break;
-            }
-        }
+      if (child->has_visible_content_ || child->has_visible_descendant_)
+        has_visible_descendant_ = true;
 
-        m_visibleDescendantStatusDirty = false;
+      has_non_isolated_descendant_with_blend_mode_ |=
+          (!child->StackingNode()->IsStackingContext() &&
+           child->HasNonIsolatedDescendantWithBlendMode()) ||
+          child->GetLayoutObject().StyleRef().HasBlendMode();
+
+      has_descendant_with_clip_path_ |= child->HasDescendantWithClipPath() ||
+                                        child->GetLayoutObject().HasClipPath();
     }
 
-    if (m_visibleContentStatusDirty) {
-        bool previouslyHasVisibleContent = m_hasVisibleContent;
-        if (layoutObject()->style()->visibility() == VISIBLE) {
-            m_hasVisibleContent = true;
-        } else {
-            // layer may be hidden but still have some visible content, check for this
-            m_hasVisibleContent = false;
-            LayoutObject* r = layoutObject()->slowFirstChild();
-            while (r) {
-                if (r->style()->visibility() == VISIBLE && (!r->hasLayer() || !r->enclosingLayer()->isSelfPaintingLayer())) {
-                    m_hasVisibleContent = true;
-                    break;
-                }
-                LayoutObject* layoutObjectFirstChild = r->slowFirstChild();
-                if (layoutObjectFirstChild && (!r->hasLayer() || !r->enclosingLayer()->isSelfPaintingLayer())) {
-                    r = layoutObjectFirstChild;
-                } else if (r->nextSibling()) {
-                    r = r->nextSibling();
-                } else {
-                    do {
-                        r = r->parent();
-                        if (r == layoutObject())
-                            r = 0;
-                    } while (r && !r->nextSibling());
-                    if (r)
-                        r = r->nextSibling();
-                }
-            }
-        }
-        m_visibleContentStatusDirty = false;
+    if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() &&
+        old_has_non_isolated_descendant_with_blend_mode !=
+            static_cast<bool>(has_non_isolated_descendant_with_blend_mode_))
+      GetLayoutObject().SetNeedsPaintPropertyUpdate();
+    needs_descendant_dependent_flags_update_ = false;
+  }
 
-        if (hasVisibleContent() != previouslyHasVisibleContent) {
-            setNeedsCompositingInputsUpdate();
-            // We need to tell m_layoutObject to recheck its rect because we
-            // pretend that invisible LayoutObjects have 0x0 rects. Changing
-            // visibility therefore changes our rect and we need to visit
-            // this LayoutObject during the invalidateTreeIfNeeded walk.
-            m_layoutObject->setMayNeedPaintInvalidation();
-        }
+  bool previously_has_visible_content = has_visible_content_;
+  if (GetLayoutObject().Style()->Visibility() == EVisibility::kVisible) {
+    has_visible_content_ = true;
+  } else {
+    // layer may be hidden but still have some visible content, check for this
+    has_visible_content_ = false;
+    LayoutObject* r = GetLayoutObject().SlowFirstChild();
+    while (r) {
+      if (r->Style()->Visibility() == EVisibility::kVisible &&
+          (!r->HasLayer() || !r->EnclosingLayer()->IsSelfPaintingLayer())) {
+        has_visible_content_ = true;
+        break;
+      }
+      LayoutObject* layout_object_first_child = r->SlowFirstChild();
+      if (layout_object_first_child &&
+          (!r->HasLayer() || !r->EnclosingLayer()->IsSelfPaintingLayer())) {
+        r = layout_object_first_child;
+      } else if (r->NextSibling()) {
+        r = r->NextSibling();
+      } else {
+        do {
+          r = r->Parent();
+          if (r == &GetLayoutObject())
+            r = 0;
+        } while (r && !r->NextSibling());
+        if (r)
+          r = r->NextSibling();
+      }
     }
+  }
+
+  if (HasVisibleContent() != previously_has_visible_content) {
+    SetNeedsCompositingInputsUpdateInternal();
+    // We need to tell m_layoutObject to recheck its rect because we
+    // pretend that invisible LayoutObjects have 0x0 rects. Changing
+    // visibility therefore changes our rect and we need to visit
+    // this LayoutObject during the invalidateTreeIfNeeded walk.
+    layout_object_.SetMayNeedPaintInvalidation();
+  }
+
+  Update3DTransformedDescendantStatus();
 }
 
-void PaintLayer::dirty3DTransformedDescendantStatus()
-{
-    PaintLayerStackingNode* stackingNode = m_stackingNode->ancestorStackingContextNode();
-    if (!stackingNode)
-        return;
+void PaintLayer::Update3DTransformedDescendantStatus() {
+  has3d_transformed_descendant_ = false;
 
-    stackingNode->layer()->m_3DTransformedDescendantStatusDirty = true;
+  stacking_node_->UpdateZOrderLists();
 
-    // This propagates up through preserve-3d hierarchies to the enclosing flattening layer.
-    // Note that preserves3D() creates stacking context, so we can just run up the stacking containers.
-    while (stackingNode && stackingNode->layer()->preserves3D()) {
-        stackingNode->layer()->m_3DTransformedDescendantStatusDirty = true;
-        stackingNode = stackingNode->ancestorStackingContextNode();
+  // Transformed or preserve-3d descendants can only be in the z-order lists,
+  // not in the normal flow list, so we only need to check those.
+  PaintLayerStackingNodeIterator iterator(
+      *stacking_node_.get(), kPositiveZOrderChildren | kNegativeZOrderChildren);
+  while (PaintLayerStackingNode* node = iterator.Next()) {
+    const PaintLayer& child_layer = *node->Layer();
+    bool child_has3d = false;
+    // If the child lives in a 3d hierarchy, then the layer at the root of
+    // that hierarchy needs the m_has3DTransformedDescendant set.
+    if (child_layer.Preserves3D() && (child_layer.Has3DTransform() ||
+                                      child_layer.Has3DTransformedDescendant()))
+      child_has3d = true;
+    else if (child_layer.Has3DTransform())
+      child_has3d = true;
+
+    if (child_has3d) {
+      has3d_transformed_descendant_ = true;
+      break;
     }
+  }
 }
 
-// Return true if this layer or any preserve-3d descendants have 3d.
-bool PaintLayer::update3DTransformedDescendantStatus()
-{
-    if (m_3DTransformedDescendantStatusDirty) {
-        m_has3DTransformedDescendant = false;
+void PaintLayer::UpdateLayerPosition() {
+  LayoutPoint local_point;
 
-        m_stackingNode->updateZOrderLists();
+  bool did_resize = false;
+  if (GetLayoutObject().IsInline() && GetLayoutObject().IsLayoutInline()) {
+    LayoutInline& inline_flow = ToLayoutInline(GetLayoutObject());
+    IntRect line_box = EnclosingIntRect(inline_flow.LinesBoundingBox());
+    size_ = line_box.Size();
+  } else if (LayoutBox* box = GetLayoutBox()) {
+    IntSize new_size = PixelSnappedIntSize(box->Size(), box->Location());
+    did_resize = new_size != size_;
+    size_ = new_size;
+    local_point.MoveBy(box->PhysicalLocation());
+  }
 
-        // Transformed or preserve-3d descendants can only be in the z-order lists, not
-        // in the normal flow list, so we only need to check those.
-        PaintLayerStackingNodeIterator iterator(*m_stackingNode.get(), PositiveZOrderChildren | NegativeZOrderChildren);
-        while (PaintLayerStackingNode* node = iterator.next())
-            m_has3DTransformedDescendant |= node->layer()->update3DTransformedDescendantStatus();
-
-        m_3DTransformedDescendantStatusDirty = false;
+  if (!GetLayoutObject().IsOutOfFlowPositioned() &&
+      !GetLayoutObject().IsColumnSpanAll()) {
+    // We must adjust our position by walking up the layout tree looking for the
+    // nearest enclosing object with a layer.
+    LayoutObject* curr = GetLayoutObject().Container();
+    while (curr && !curr->HasLayer()) {
+      if (curr->IsBox() && !curr->IsTableRow()) {
+        // Rows and cells share the same coordinate space (that of the section).
+        // Omit them when computing our xpos/ypos.
+        local_point.MoveBy(ToLayoutBox(curr)->PhysicalLocation());
+      }
+      curr = curr->Container();
     }
-
-    // If we live in a 3d hierarchy, then the layer at the root of that hierarchy needs
-    // the m_has3DTransformedDescendant set.
-    if (preserves3D())
-        return has3DTransform() || m_has3DTransformedDescendant;
-
-    return has3DTransform();
-}
-
-void PaintLayer::updateLayerPosition()
-{
-    LayoutPoint localPoint;
-
-    if (layoutObject()->isInline() && layoutObject()->isLayoutInline()) {
-        LayoutInline* inlineFlow = toLayoutInline(layoutObject());
-        IntRect lineBox = enclosingIntRect(inlineFlow->linesBoundingBox());
-        m_size = lineBox.size();
-    } else if (LayoutBox* box = layoutBox()) {
-        m_size = pixelSnappedIntSize(box->size(), box->location());
-        localPoint.moveBy(box->topLeftLocation());
+    if (curr && curr->IsTableRow()) {
+      // Put ourselves into the row coordinate space.
+      local_point.MoveBy(-ToLayoutBox(curr)->PhysicalLocation());
     }
+  }
 
-    if (!layoutObject()->isOutOfFlowPositioned() && !layoutObject()->isColumnSpanAll() && layoutObject()->parent()) {
-        // We must adjust our position by walking up the layout tree looking for the
-        // nearest enclosing object with a layer.
-        LayoutObject* curr = layoutObject()->parent();
-        while (curr && !curr->hasLayer()) {
-            if (curr->isBox() && !curr->isTableRow()) {
-                // Rows and cells share the same coordinate space (that of the section).
-                // Omit them when computing our xpos/ypos.
-                localPoint.moveBy(toLayoutBox(curr)->topLeftLocation());
-            }
-            curr = curr->parent();
-        }
-        if (curr->isBox() && curr->isTableRow()) {
-            // Put ourselves into the row coordinate space.
-            localPoint.moveBy(-toLayoutBox(curr)->topLeftLocation());
-        }
+  if (PaintLayer* containing_layer = this->ContainingLayer()) {
+    if (containing_layer->GetLayoutObject().HasOverflowClip()) {
+      // Subtract our container's scroll offset.
+      IntSize offset =
+          containing_layer->GetLayoutBox()->ScrolledContentOffset();
+      local_point -= offset;
+    } else if (GetLayoutObject().IsAbsolutePositioned() &&
+               containing_layer->GetLayoutObject().IsInFlowPositioned() &&
+               containing_layer->GetLayoutObject().IsLayoutInline()) {
+      // Adjust offset for absolute under in-flow positioned inline.
+      LayoutSize offset =
+          ToLayoutInline(containing_layer->GetLayoutObject())
+              .OffsetForInFlowPositionedInline(ToLayoutBox(GetLayoutObject()));
+      local_point += offset;
     }
+  }
 
-    // Subtract our parent's scroll offset.
-    if (PaintLayer* containingLayer = layoutObject()->isOutOfFlowPositioned() ? containingLayerForOutOfFlowPositioned() : nullptr) {
-        // For positioned layers, we subtract out the enclosing positioned layer's scroll offset.
-        if (containingLayer->layoutObject()->hasOverflowClip()) {
-            IntSize offset = containingLayer->layoutBox()->scrolledContentOffset();
-            localPoint -= offset;
-        }
+  if (GetLayoutObject().IsInFlowPositioned()) {
+    LayoutSize new_offset = GetLayoutObject().OffsetForInFlowPosition();
+    if (rare_data_ || !new_offset.IsZero())
+      EnsureRareData().offset_for_in_flow_position = new_offset;
+    local_point.Move(new_offset);
+  } else if (rare_data_) {
+    rare_data_->offset_for_in_flow_position = LayoutSize();
+  }
 
-        if (containingLayer->layoutObject()->isInFlowPositioned() && containingLayer->layoutObject()->isLayoutInline()) {
-            LayoutSize offset = toLayoutInline(containingLayer->layoutObject())->offsetForInFlowPositionedInline(*toLayoutBox(layoutObject()));
-            localPoint += offset;
-        }
-    } else if (parent() && parent()->layoutObject()->hasOverflowClip()) {
-        IntSize scrollOffset = parent()->layoutBox()->scrolledContentOffset();
-        localPoint -= scrollOffset;
-    }
+  location_ = local_point;
 
-    if (layoutObject()->isInFlowPositioned()) {
-        LayoutSize newOffset = layoutObject()->offsetForInFlowPosition();
-        if (m_rareData || !newOffset.isZero())
-            ensureRareData().offsetForInFlowPosition = newOffset;
-        localPoint.move(newOffset);
-    } else if (m_rareData) {
-        m_rareData->offsetForInFlowPosition = LayoutSize();
-    }
+  if (scrollable_area_ && did_resize)
+    scrollable_area_->VisibleSizeChanged();
 
-    if (m_location != localPoint) {
-        setNeedsRepaint();
-    }
-    m_location = localPoint;
-
-#if ENABLE(ASSERT)
-    m_needsPositionUpdate = false;
+#if DCHECK_IS_ON()
+  needs_position_update_ = false;
 #endif
 }
 
-TransformationMatrix PaintLayer::perspectiveTransform() const
-{
-    if (!layoutObject()->hasTransformRelatedProperty())
-        return TransformationMatrix();
+TransformationMatrix PaintLayer::PerspectiveTransform() const {
+  if (!GetLayoutObject().HasTransformRelatedProperty())
+    return TransformationMatrix();
 
-    const ComputedStyle& style = layoutObject()->styleRef();
-    if (!style.hasPerspective())
-        return TransformationMatrix();
+  const ComputedStyle& style = GetLayoutObject().StyleRef();
+  if (!style.HasPerspective())
+    return TransformationMatrix();
 
-    TransformationMatrix t;
-    t.applyPerspective(style.perspective());
-    return t;
+  TransformationMatrix t;
+  t.ApplyPerspective(style.Perspective());
+  return t;
 }
 
-FloatPoint PaintLayer::perspectiveOrigin() const
-{
-    if (!layoutObject()->hasTransformRelatedProperty())
-        return FloatPoint();
+FloatPoint PaintLayer::PerspectiveOrigin() const {
+  if (!GetLayoutObject().HasTransformRelatedProperty())
+    return FloatPoint();
 
-    const LayoutRect borderBox = toLayoutBox(layoutObject())->borderBoxRect();
-    const ComputedStyle& style = layoutObject()->styleRef();
+  const LayoutRect border_box = ToLayoutBox(GetLayoutObject()).BorderBoxRect();
+  const ComputedStyle& style = GetLayoutObject().StyleRef();
 
-    return FloatPoint(floatValueForLength(style.perspectiveOriginX(), borderBox.width().toFloat()), floatValueForLength(style.perspectiveOriginY(), borderBox.height().toFloat()));
+  return FloatPoint(FloatValueForLength(style.PerspectiveOriginX(),
+                                        border_box.Width().ToFloat()),
+                    FloatValueForLength(style.PerspectiveOriginY(),
+                                        border_box.Height().ToFloat()));
 }
 
-PaintLayer* PaintLayer::containingLayerForOutOfFlowPositioned(const PaintLayer* ancestor, bool* skippedAncestor) const
-{
-    ASSERT(!ancestor || skippedAncestor); // If we have specified an ancestor, surely the caller needs to know whether we skipped it.
-    if (skippedAncestor)
-        *skippedAncestor = false;
-    if (layoutObject()->style()->position() == FixedPosition) {
-        PaintLayer* curr = parent();
-        while (curr && !curr->layoutObject()->canContainFixedPositionObjects()) {
-            if (skippedAncestor && curr == ancestor)
-                *skippedAncestor = true;
-            curr = curr->parent();
-        }
+PaintLayer* PaintLayer::ContainingLayer(const PaintLayer* ancestor,
+                                        bool* skipped_ancestor) const {
+  // If we have specified an ancestor, surely the caller needs to know whether
+  // we skipped it.
+  DCHECK(!ancestor || skipped_ancestor);
+  if (skipped_ancestor)
+    *skipped_ancestor = false;
 
-        return curr;
+  LayoutObject& layout_object = this->GetLayoutObject();
+  if (layout_object.IsOutOfFlowPositioned()) {
+    auto can_contain_this_layer =
+        layout_object.IsFixedPositioned()
+            ? &LayoutObject::CanContainFixedPositionObjects
+            : &LayoutObject::CanContainAbsolutePositionObjects;
+
+    PaintLayer* curr = Parent();
+    while (curr && !((&curr->GetLayoutObject())->*can_contain_this_layer)()) {
+      if (skipped_ancestor && curr == ancestor)
+        *skipped_ancestor = true;
+      curr = curr->Parent();
     }
-
-    PaintLayer* curr = parent();
-    while (curr && !curr->layoutObject()->canContainAbsolutePositionObjects()) {
-        if (skippedAncestor && curr == ancestor)
-            *skippedAncestor = true;
-        curr = curr->parent();
-    }
-
     return curr;
+  }
+
+  // If the parent layer is not a block, there might be floating objects
+  // between this layer (included) and parent layer which need to escape the
+  // inline parent to find the actual containing layer through the containing
+  // block chain.
+  // Column span need to find the containing layer through its containing block.
+  if ((!Parent() || Parent()->GetLayoutObject().IsLayoutBlock()) &&
+      !layout_object.IsColumnSpanAll())
+    return Parent();
+
+  // This is a universal approach to find containing layer, but is slower than
+  // the earlier code.
+  Optional<LayoutObject::AncestorSkipInfo> skip_info;
+  if (skipped_ancestor)
+    skip_info.emplace(&ancestor->GetLayoutObject());
+  auto* object = &layout_object;
+  while (auto* container =
+             object->Container(skipped_ancestor ? &*skip_info : nullptr)) {
+    if (skipped_ancestor && skip_info->AncestorSkipped())
+      *skipped_ancestor = true;
+    if (container->HasLayer())
+      return ToLayoutBoxModelObject(container)->Layer();
+    object = container;
+  }
+  return nullptr;
 }
 
-PaintLayer* PaintLayer::enclosingTransformedAncestor() const
-{
-    PaintLayer* curr = parent();
-    while (curr && !curr->isRootLayer() && !curr->transform())
-        curr = curr->parent();
+PaintLayer* PaintLayer::EnclosingTransformedAncestor() const {
+  PaintLayer* curr = Parent();
+  while (curr && !curr->IsRootLayer() && !curr->Transform())
+    curr = curr->Parent();
 
-    return curr;
+  return curr;
 }
 
-LayoutPoint PaintLayer::computeOffsetFromTransformedAncestor() const
-{
-    TransformState transformState(TransformState::ApplyTransformDirection, FloatPoint());
-    layoutObject()->mapLocalToAncestor(transformAncestor() ? transformAncestor()->layoutObject() : nullptr, transformState, 0);
-    transformState.flatten();
-    return LayoutPoint(transformState.lastPlanarPoint());
+LayoutPoint PaintLayer::ComputeOffsetFromTransformedAncestor() const {
+  TransformState transform_state(TransformState::kApplyTransformDirection,
+                                 FloatPoint());
+  GetLayoutObject().MapLocalToAncestor(
+      TransformAncestor() ? &TransformAncestor()->GetLayoutObject() : nullptr,
+      transform_state, 0);
+  transform_state.Flatten();
+  return LayoutPoint(transform_state.LastPlanarPoint());
 }
 
-PaintLayer* PaintLayer::compositingContainer() const
-{
-    if (!stackingNode()->isStacked())
-        return parent();
-    if (PaintLayerStackingNode* ancestorStackingNode = stackingNode()->ancestorStackingContextNode())
-        return ancestorStackingNode->layer();
-    return nullptr;
+PaintLayer* PaintLayer::CompositingContainer() const {
+  if (!StackingNode()->IsStacked())
+    return IsSelfPaintingLayer() ? Parent() : ContainingLayer();
+  if (PaintLayerStackingNode* ancestor_stacking_node =
+          StackingNode()->AncestorStackingContextNode())
+    return ancestor_stacking_node->Layer();
+  return nullptr;
 }
 
-bool PaintLayer::isPaintInvalidationContainer() const
-{
-    return compositingState() == PaintsIntoOwnBacking || compositingState() == PaintsIntoGroupedBacking;
+bool PaintLayer::IsPaintInvalidationContainer() const {
+  return GetCompositingState() == kPaintsIntoOwnBacking ||
+         GetCompositingState() == kPaintsIntoGroupedBacking;
 }
 
-// Note: enclosingCompositingLayer does not include squashed layers. Compositing stacking children of squashed layers
-// receive graphics layers that are parented to the compositing ancestor of the squashed layer.
-PaintLayer* PaintLayer::enclosingLayerWithCompositedLayerMapping(IncludeSelfOrNot includeSelf) const
-{
-    ASSERT(isAllowedToQueryCompositingState());
+// Note: enclosingCompositingLayer does not include squashed layers. Compositing
+// stacking children of squashed layers receive graphics layers that are
+// parented to the compositing ancestor of the squashed layer.
+PaintLayer* PaintLayer::EnclosingLayerWithCompositedLayerMapping(
+    IncludeSelfOrNot include_self) const {
+  DCHECK(IsAllowedToQueryCompositingState());
 
-    if ((includeSelf == IncludeSelf) && compositingState() != NotComposited && compositingState() != PaintsIntoGroupedBacking)
-        return const_cast<PaintLayer*>(this);
+  if ((include_self == kIncludeSelf) &&
+      GetCompositingState() != kNotComposited &&
+      GetCompositingState() != kPaintsIntoGroupedBacking)
+    return const_cast<PaintLayer*>(this);
 
-    for (PaintLayer* curr = compositingContainer(); curr; curr = curr->compositingContainer()) {
-        if (curr->compositingState() != NotComposited && curr->compositingState() != PaintsIntoGroupedBacking)
-            return curr;
-    }
+  for (PaintLayer* curr = CompositingContainer(); curr;
+       curr = curr->CompositingContainer()) {
+    if (curr->GetCompositingState() != kNotComposited &&
+        curr->GetCompositingState() != kPaintsIntoGroupedBacking)
+      return curr;
+  }
 
-    return nullptr;
+  return nullptr;
 }
 
 // Return the enclosingCompositedLayerForPaintInvalidation for the given Layer
 // including crossing frame boundaries.
-PaintLayer* PaintLayer::enclosingLayerForPaintInvalidationCrossingFrameBoundaries() const
-{
-    const PaintLayer* layer = this;
-    PaintLayer* compositedLayer = 0;
-    while (!compositedLayer) {
-        compositedLayer = layer->enclosingLayerForPaintInvalidation();
-        if (!compositedLayer) {
-            RELEASE_ASSERT(layer->layoutObject()->frame());
-            LayoutObject* owner = layer->layoutObject()->frame()->ownerLayoutObject();
-            if (!owner)
-                break;
-            layer = owner->enclosingLayer();
-        }
+PaintLayer*
+PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const {
+  const PaintLayer* layer = this;
+  PaintLayer* composited_layer = 0;
+  while (!composited_layer) {
+    composited_layer = layer->EnclosingLayerForPaintInvalidation();
+    if (!composited_layer) {
+      CHECK(layer->GetLayoutObject().GetFrame());
+      LayoutItem owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutItem();
+      if (owner.IsNull())
+        break;
+      layer = owner.EnclosingLayer();
     }
-    return compositedLayer;
+  }
+  return composited_layer;
 }
 
-PaintLayer* PaintLayer::enclosingLayerForPaintInvalidation() const
-{
-    ASSERT(isAllowedToQueryCompositingState());
+PaintLayer* PaintLayer::EnclosingLayerForPaintInvalidation() const {
+  DCHECK(IsAllowedToQueryCompositingState());
 
-    if (isPaintInvalidationContainer())
-        return const_cast<PaintLayer*>(this);
+  if (IsPaintInvalidationContainer())
+    return const_cast<PaintLayer*>(this);
 
-    for (PaintLayer* curr = compositingContainer(); curr; curr = curr->compositingContainer()) {
-        if (curr->isPaintInvalidationContainer())
-            return curr;
+  for (PaintLayer* curr = CompositingContainer(); curr;
+       curr = curr->CompositingContainer()) {
+    if (curr->IsPaintInvalidationContainer())
+      return curr;
+  }
+
+  return nullptr;
+}
+
+void PaintLayer::SetNeedsCompositingInputsUpdate() {
+  SetNeedsCompositingInputsUpdateInternal();
+
+  // TODO(chrishtr): These are a bit of a heavy hammer, because not all
+  // things which require compositing inputs update require a descendant-
+  // dependent flags udpate. Reduce call sites after SPv2 launch allows
+  /// removal of CompositingInputsUpdater.
+  MarkAncestorChainForDescendantDependentFlagsUpdate();
+}
+
+void PaintLayer::SetNeedsCompositingInputsUpdateInternal() {
+  needs_ancestor_dependent_compositing_inputs_update_ = true;
+
+  for (PaintLayer* current = this;
+       current && !current->child_needs_compositing_inputs_update_;
+       current = current->Parent())
+    current->child_needs_compositing_inputs_update_ = true;
+
+  Compositor()->SetNeedsCompositingUpdate(
+      kCompositingUpdateAfterCompositingInputChange);
+}
+
+void PaintLayer::UpdateAncestorDependentCompositingInputs(
+    const AncestorDependentCompositingInputs& compositing_inputs,
+    bool has_ancestor_with_clip_path) {
+  ancestor_dependent_compositing_inputs_ =
+      WTF::MakeUnique<AncestorDependentCompositingInputs>(compositing_inputs);
+  has_ancestor_with_clip_path_ = has_ancestor_with_clip_path;
+  needs_ancestor_dependent_compositing_inputs_update_ = false;
+}
+
+void PaintLayer::DidUpdateCompositingInputs() {
+  DCHECK(!NeedsCompositingInputsUpdate());
+  child_needs_compositing_inputs_update_ = false;
+  if (scrollable_area_)
+    scrollable_area_->UpdateNeedsCompositedScrolling();
+}
+
+bool PaintLayer::HasNonIsolatedDescendantWithBlendMode() const {
+  if (has_non_isolated_descendant_with_blend_mode_)
+    return true;
+  if (GetLayoutObject().IsSVGRoot())
+    return ToLayoutSVGRoot(GetLayoutObject())
+        .HasNonIsolatedBlendingDescendants();
+  return false;
+}
+
+void PaintLayer::SetCompositingReasons(CompositingReasons reasons,
+                                       CompositingReasons mask) {
+  CompositingReasons old_reasons =
+      rare_data_ ? rare_data_->compositing_reasons : kCompositingReasonNone;
+  if ((old_reasons & mask) == (reasons & mask))
+    return;
+  CompositingReasons new_reasons = (reasons & mask) | (old_reasons & ~mask);
+  if (rare_data_ || new_reasons != kCompositingReasonNone)
+    EnsureRareData().compositing_reasons = new_reasons;
+}
+
+void PaintLayer::SetSquashingDisallowedReasons(
+    SquashingDisallowedReasons reasons) {
+  SquashingDisallowedReasons old_reasons =
+      rare_data_ ? rare_data_->squashing_disallowed_reasons
+                 : kSquashingDisallowedReasonsNone;
+  if (old_reasons == reasons)
+    return;
+  if (rare_data_ || reasons != kSquashingDisallowedReasonsNone)
+    EnsureRareData().squashing_disallowed_reasons = reasons;
+}
+
+void PaintLayer::SetHasCompositingDescendant(bool has_compositing_descendant) {
+  if (has_compositing_descendant_ ==
+      static_cast<unsigned>(has_compositing_descendant))
+    return;
+
+  has_compositing_descendant_ = has_compositing_descendant;
+
+  if (HasCompositedLayerMapping())
+    GetCompositedLayerMapping()->SetNeedsGraphicsLayerUpdate(
+        kGraphicsLayerUpdateLocal);
+}
+
+void PaintLayer::SetShouldIsolateCompositedDescendants(
+    bool should_isolate_composited_descendants) {
+  if (should_isolate_composited_descendants_ ==
+      static_cast<unsigned>(should_isolate_composited_descendants))
+    return;
+
+  should_isolate_composited_descendants_ =
+      should_isolate_composited_descendants;
+
+  if (HasCompositedLayerMapping())
+    GetCompositedLayerMapping()->SetNeedsGraphicsLayerUpdate(
+        kGraphicsLayerUpdateLocal);
+}
+
+bool PaintLayer::HasAncestorWithFilterThatMovesPixels() const {
+  for (const PaintLayer* curr = this; curr; curr = curr->Parent()) {
+    if (curr->HasFilterThatMovesPixels())
+      return true;
+  }
+  return false;
+}
+
+static void ExpandClipRectForDescendants(
+    LayoutRect& clip_rect,
+    const PaintLayer* layer,
+    const PaintLayer* root_layer,
+    PaintLayer::TransparencyClipBoxBehavior transparency_behavior,
+    const LayoutSize& sub_pixel_accumulation,
+    GlobalPaintFlags global_paint_flags) {
+  // If we have a mask, then the clip is limited to the border box area (and
+  // there is no need to examine child layers).
+  if (!layer->GetLayoutObject().HasMask()) {
+    // Note: we don't have to walk z-order lists since transparent elements
+    // always establish a stacking container. This means we can just walk the
+    // layer tree directly.
+    for (PaintLayer* curr = layer->FirstChild(); curr;
+         curr = curr->NextSibling())
+      clip_rect.Unite(PaintLayer::TransparencyClipBox(
+          curr, root_layer, transparency_behavior,
+          PaintLayer::kDescendantsOfTransparencyClipBox, sub_pixel_accumulation,
+          global_paint_flags));
+  }
+}
+
+LayoutRect PaintLayer::TransparencyClipBox(
+    const PaintLayer* layer,
+    const PaintLayer* root_layer,
+    TransparencyClipBoxBehavior transparency_behavior,
+    TransparencyClipBoxMode transparency_mode,
+    const LayoutSize& sub_pixel_accumulation,
+    GlobalPaintFlags global_paint_flags) {
+  // FIXME: Although this function completely ignores CSS-imposed clipping, we
+  // did already intersect with the paintDirtyRect, and that should cut down on
+  // the amount we have to paint.  Still it would be better to respect clips.
+
+  if (root_layer != layer &&
+      ((transparency_behavior == kPaintingTransparencyClipBox &&
+        layer->PaintsWithTransform(global_paint_flags)) ||
+       (transparency_behavior == kHitTestingTransparencyClipBox &&
+        layer->HasTransformRelatedProperty()))) {
+    // The best we can do here is to use enclosed bounding boxes to establish a
+    // "fuzzy" enough clip to encompass the transformed layer and all of its
+    // children.
+    const PaintLayer* pagination_layer =
+        transparency_mode == kDescendantsOfTransparencyClipBox
+            ? layer->EnclosingPaginationLayer()
+            : 0;
+    const PaintLayer* root_layer_for_transform =
+        pagination_layer ? pagination_layer : root_layer;
+    LayoutPoint delta;
+    layer->ConvertToLayerCoords(root_layer_for_transform, delta);
+
+    delta.Move(sub_pixel_accumulation);
+    IntPoint pixel_snapped_delta = RoundedIntPoint(delta);
+    TransformationMatrix transform;
+    transform.Translate(pixel_snapped_delta.X(), pixel_snapped_delta.Y());
+    if (layer->Transform())
+      transform = transform * *layer->Transform();
+
+    // We don't use fragment boxes when collecting a transformed layer's
+    // bounding box, since it always paints unfragmented.
+    LayoutRect clip_rect = layer->PhysicalBoundingBox(LayoutPoint());
+    ExpandClipRectForDescendants(clip_rect, layer, layer, transparency_behavior,
+                                 sub_pixel_accumulation, global_paint_flags);
+    LayoutRect result = EnclosingLayoutRect(
+        transform.MapRect(layer->MapRectForFilter(FloatRect(clip_rect))));
+    if (!pagination_layer)
+      return result;
+
+    // We have to break up the transformed extent across our columns.
+    // Split our box up into the actual fragment boxes that layout in the
+    // columns/pages and unite those together to get our true bounding box.
+    LayoutFlowThread& enclosing_flow_thread =
+        ToLayoutFlowThread(pagination_layer->GetLayoutObject());
+    result = enclosing_flow_thread.FragmentsBoundingBox(result);
+
+    LayoutPoint root_layer_delta;
+    pagination_layer->ConvertToLayerCoords(root_layer, root_layer_delta);
+    result.MoveBy(root_layer_delta);
+    return result;
+  }
+
+  LayoutRect clip_rect = layer->ShouldFragmentCompositedBounds(root_layer)
+                             ? layer->FragmentsBoundingBox(root_layer)
+                             : layer->PhysicalBoundingBox(root_layer);
+  ExpandClipRectForDescendants(clip_rect, layer, root_layer,
+                               transparency_behavior, sub_pixel_accumulation,
+                               global_paint_flags);
+
+  // Convert clipRect into local coordinates for mapLayerRectForFilter(), and
+  // convert back after.
+  LayoutPoint delta;
+  layer->ConvertToLayerCoords(root_layer, delta);
+  clip_rect.MoveBy(-delta);
+  clip_rect = layer->MapLayoutRectForFilter(clip_rect);
+  clip_rect.MoveBy(delta);
+
+  clip_rect.Move(sub_pixel_accumulation);
+  return clip_rect;
+}
+
+LayoutRect PaintLayer::PaintingExtent(const PaintLayer* root_layer,
+                                      const LayoutSize& sub_pixel_accumulation,
+                                      GlobalPaintFlags global_paint_flags) {
+  return TransparencyClipBox(this, root_layer, kPaintingTransparencyClipBox,
+                             kRootOfTransparencyClipBox, sub_pixel_accumulation,
+                             global_paint_flags);
+}
+
+void* PaintLayer::operator new(size_t sz) {
+  return PartitionAlloc(WTF::Partitions::LayoutPartition(), sz,
+                        WTF_HEAP_PROFILER_TYPE_NAME(PaintLayer));
+}
+
+void PaintLayer::operator delete(void* ptr) {
+  WTF::PartitionFree(ptr);
+}
+
+void PaintLayer::AddChild(PaintLayer* child, PaintLayer* before_child) {
+  PaintLayer* prev_sibling =
+      before_child ? before_child->PreviousSibling() : LastChild();
+  if (prev_sibling) {
+    child->SetPreviousSibling(prev_sibling);
+    prev_sibling->SetNextSibling(child);
+    DCHECK(prev_sibling != child);
+  } else {
+    SetFirstChild(child);
+  }
+
+  if (before_child) {
+    before_child->SetPreviousSibling(child);
+    child->SetNextSibling(before_child);
+    DCHECK(before_child != child);
+  } else {
+    SetLastChild(child);
+  }
+
+  child->parent_ = this;
+
+  // The ancestor overflow layer is calculated during compositing inputs update
+  // and should not be set yet.
+  CHECK(!child->AncestorOverflowLayer());
+
+  SetNeedsCompositingInputsUpdate();
+
+  if (!child->StackingNode()->IsStacked() &&
+      !GetLayoutObject().DocumentBeingDestroyed())
+    Compositor()->SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+
+  if (child->StackingNode()->IsStacked() || child->FirstChild()) {
+    // Dirty the z-order list in which we are contained. The
+    // ancestorStackingContextNode() can be null in the case where we're
+    // building up generated content layers. This is ok, since the lists will
+    // start off dirty in that case anyway.
+    child->StackingNode()->DirtyStackingContextZOrderLists();
+  }
+
+  // Non-self-painting children paint into this layer, so the visible contents
+  // status of this layer is affected.
+  if (!child->IsSelfPaintingLayer())
+    DirtyVisibleContentStatus();
+
+  MarkAncestorChainForDescendantDependentFlagsUpdate();
+  DirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
+
+  child->SetNeedsRepaint();
+}
+
+PaintLayer* PaintLayer::RemoveChild(PaintLayer* old_child) {
+  if (old_child->PreviousSibling())
+    old_child->PreviousSibling()->SetNextSibling(old_child->NextSibling());
+  if (old_child->NextSibling())
+    old_child->NextSibling()->SetPreviousSibling(old_child->PreviousSibling());
+
+  if (first_ == old_child)
+    first_ = old_child->NextSibling();
+  if (last_ == old_child)
+    last_ = old_child->PreviousSibling();
+
+  if (!old_child->StackingNode()->IsStacked() &&
+      !GetLayoutObject().DocumentBeingDestroyed())
+    Compositor()->SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+
+  if (old_child->StackingNode()->IsStacked() || old_child->FirstChild()) {
+    // Dirty the z-order list in which we are contained.  When called via the
+    // reattachment process in removeOnlyThisLayer, the layer may already be
+    // disconnected from the main layer tree, so we need to null-check the
+    // |stackingContext| value.
+    old_child->StackingNode()->DirtyStackingContextZOrderLists();
+  }
+
+  if (GetLayoutObject().Style()->Visibility() != EVisibility::kVisible)
+    DirtyVisibleContentStatus();
+
+  old_child->SetPreviousSibling(0);
+  old_child->SetNextSibling(0);
+  old_child->parent_ = 0;
+
+  // Remove any ancestor overflow layers which descended into the removed child.
+  if (old_child->AncestorOverflowLayer())
+    old_child->RemoveAncestorOverflowLayer(old_child->AncestorOverflowLayer());
+
+  DirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
+
+  if (old_child->has_visible_content_ || old_child->has_visible_descendant_)
+    MarkAncestorChainForDescendantDependentFlagsUpdate();
+
+  if (old_child->EnclosingPaginationLayer())
+    old_child->ClearPaginationRecursive();
+
+  SetNeedsRepaint();
+
+  return old_child;
+}
+
+void PaintLayer::RemoveOnlyThisLayerAfterStyleChange() {
+  if (!parent_)
+    return;
+
+  bool did_set_paint_invalidation = false;
+  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    DisableCompositingQueryAsserts
+        disabler;  // We need the current compositing status.
+    if (IsPaintInvalidationContainer()) {
+      // Our children will be reparented and contained by a new paint
+      // invalidation container, so need paint invalidation. CompositingUpdate
+      // can't see this layer (which has been removed) so won't do this for us.
+      DisablePaintInvalidationStateAsserts disabler;
+      ObjectPaintInvalidator(GetLayoutObject())
+          .InvalidatePaintIncludingNonCompositingDescendants();
+      GetLayoutObject()
+          .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+      did_set_paint_invalidation = true;
     }
+  }
 
-    return nullptr;
+  if (!did_set_paint_invalidation && IsSelfPaintingLayer()) {
+    if (PaintLayer* enclosing_self_painting_layer =
+            parent_->EnclosingSelfPaintingLayer())
+      enclosing_self_painting_layer->MergeNeedsPaintPhaseFlagsFrom(*this);
+  }
+
+  Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .ClearClipRectsIncludingDescendants();
+
+  PaintLayer* next_sib = NextSibling();
+
+  // Now walk our kids and reattach them to our parent.
+  PaintLayer* current = first_;
+  while (current) {
+    PaintLayer* next = current->NextSibling();
+    RemoveChild(current);
+    parent_->AddChild(current, next_sib);
+
+    // FIXME: We should call a specialized version of this function.
+    current->UpdateLayerPositionsAfterLayout();
+    current = next;
+  }
+
+  // Remove us from the parent.
+  parent_->RemoveChild(this);
+  layout_object_.DestroyLayer();
 }
 
-void PaintLayer::setNeedsCompositingInputsUpdate()
-{
-    m_needsAncestorDependentCompositingInputsUpdate = true;
-    m_needsDescendantDependentCompositingInputsUpdate = true;
+void PaintLayer::InsertOnlyThisLayerAfterStyleChange() {
+  if (!parent_ && GetLayoutObject().Parent()) {
+    // We need to connect ourselves when our layoutObject() has a parent.
+    // Find our enclosingLayer and add ourselves.
+    PaintLayer* parent_layer = GetLayoutObject().Parent()->EnclosingLayer();
+    DCHECK(parent_layer);
+    PaintLayer* before_child = GetLayoutObject().Parent()->FindNextLayer(
+        parent_layer, &GetLayoutObject());
+    parent_layer->AddChild(this, before_child);
+  }
 
-    for (PaintLayer* current = this; current && !current->m_childNeedsCompositingInputsUpdate; current = current->parent())
-        current->m_childNeedsCompositingInputsUpdate = true;
+  // Remove all descendant layers from the hierarchy and add them to the new
+  // position.
+  for (LayoutObject* curr = GetLayoutObject().SlowFirstChild(); curr;
+       curr = curr->NextSibling())
+    curr->MoveLayers(parent_, this);
 
-    compositor()->setNeedsCompositingUpdate(CompositingUpdateAfterCompositingInputChange);
-}
-
-void PaintLayer::updateAncestorDependentCompositingInputs(const AncestorDependentCompositingInputs& compositingInputs, const RareAncestorDependentCompositingInputs& rareCompositingInputs, bool hasAncestorWithClipPath)
-{
-    m_ancestorDependentCompositingInputs = compositingInputs;
-    if (rareCompositingInputs.isDefault())
-        m_rareAncestorDependentCompositingInputs.reset();
-    else
-        m_rareAncestorDependentCompositingInputs = wrapUnique(new RareAncestorDependentCompositingInputs(rareCompositingInputs));
-    m_hasAncestorWithClipPath = hasAncestorWithClipPath;
-    m_needsAncestorDependentCompositingInputsUpdate = false;
-}
-
-void PaintLayer::updateDescendantDependentCompositingInputs(bool hasDescendantWithClipPath, bool hasNonIsolatedDescendantWithBlendMode)
-{
-    m_hasDescendantWithClipPath = hasDescendantWithClipPath;
-    m_hasNonIsolatedDescendantWithBlendMode = hasNonIsolatedDescendantWithBlendMode;
-    m_needsDescendantDependentCompositingInputsUpdate = false;
-}
-
-void PaintLayer::didUpdateCompositingInputs()
-{
-    ASSERT(!needsCompositingInputsUpdate());
-    m_childNeedsCompositingInputsUpdate = false;
-    if (m_scrollableArea)
-        m_scrollableArea->updateNeedsCompositedScrolling();
-}
-
-bool PaintLayer::hasNonIsolatedDescendantWithBlendMode() const
-{
-    ASSERT(!m_needsDescendantDependentCompositingInputsUpdate);
-    if (m_hasNonIsolatedDescendantWithBlendMode)
-        return true;
-    if (layoutObject()->isSVGRoot())
-        return toLayoutSVGRoot(layoutObject())->hasNonIsolatedBlendingDescendants();
-    return false;
-}
-
-void PaintLayer::setCompositingReasons(CompositingReasons reasons, CompositingReasons mask)
-{
-    CompositingReasons oldReasons = m_rareData ? m_rareData->compositingReasons : CompositingReasonNone;
-    if ((oldReasons & mask) == (reasons & mask))
-        return;
-    CompositingReasons newReasons = (reasons & mask) | (oldReasons & ~mask);
-    if (m_rareData || newReasons != CompositingReasonNone)
-        ensureRareData().compositingReasons = newReasons;
-}
-
-void PaintLayer::setSquashingDisallowedReasons(SquashingDisallowedReasons reasons)
-{
-    SquashingDisallowedReasons oldReasons = m_rareData ? m_rareData->squashingDisallowedReasons : SquashingDisallowedReasonsNone;
-    if (oldReasons == reasons)
-        return;
-    if (m_rareData || reasons != SquashingDisallowedReasonsNone)
-        ensureRareData().squashingDisallowedReasons = reasons;
-}
-
-void PaintLayer::setHasCompositingDescendant(bool hasCompositingDescendant)
-{
-    if (m_hasCompositingDescendant == static_cast<unsigned>(hasCompositingDescendant))
-        return;
-
-    m_hasCompositingDescendant = hasCompositingDescendant;
-
-    if (hasCompositedLayerMapping())
-        compositedLayerMapping()->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateLocal);
-}
-
-void PaintLayer::setShouldIsolateCompositedDescendants(bool shouldIsolateCompositedDescendants)
-{
-    if (m_shouldIsolateCompositedDescendants == static_cast<unsigned>(shouldIsolateCompositedDescendants))
-        return;
-
-    m_shouldIsolateCompositedDescendants = shouldIsolateCompositedDescendants;
-
-    if (hasCompositedLayerMapping())
-        compositedLayerMapping()->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateLocal);
-}
-
-bool PaintLayer::hasAncestorWithFilterThatMovesPixels() const
-{
-    for (const PaintLayer* curr = this; curr; curr = curr->parent()) {
-        if (curr->hasFilterThatMovesPixels())
-            return true;
+  // If the previous paint invalidation container is not a stacking context and
+  // this object is stacked content, creating this layer may cause this object
+  // and its descendants to change paint invalidation container.
+  bool did_set_paint_invalidation = false;
+  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
+      !GetLayoutObject().IsLayoutView() && GetLayoutObject().IsRooted() &&
+      GetLayoutObject().StyleRef().IsStacked()) {
+    const LayoutBoxModelObject& previous_paint_invalidation_container =
+        GetLayoutObject().Parent()->ContainerForPaintInvalidation();
+    if (!previous_paint_invalidation_container.StyleRef().IsStackingContext()) {
+      ObjectPaintInvalidator(GetLayoutObject())
+          .InvalidatePaintIncludingNonSelfPaintingLayerDescendants(
+              previous_paint_invalidation_container);
+      // Set needsRepaint along the original compositingContainer chain.
+      GetLayoutObject().Parent()->EnclosingLayer()->SetNeedsRepaint();
+      did_set_paint_invalidation = true;
     }
-    return false;
-}
+  }
 
-static void expandClipRectForDescendantsAndReflection(LayoutRect& clipRect, const PaintLayer* layer, const PaintLayer* rootLayer,
-    PaintLayer::TransparencyClipBoxBehavior transparencyBehavior, const LayoutSize& subPixelAccumulation, GlobalPaintFlags globalPaintFlags)
-{
-    // If we have a mask, then the clip is limited to the border box area (and there is
-    // no need to examine child layers).
-    if (!layer->layoutObject()->hasMask()) {
-        // Note: we don't have to walk z-order lists since transparent elements always establish
-        // a stacking container. This means we can just walk the layer tree directly.
-        for (PaintLayer* curr = layer->firstChild(); curr; curr = curr->nextSibling()) {
-            if (!layer->reflectionInfo() || layer->reflectionInfo()->reflectionLayer() != curr)
-                clipRect.unite(PaintLayer::transparencyClipBox(curr, rootLayer, transparencyBehavior, PaintLayer::DescendantsOfTransparencyClipBox, subPixelAccumulation, globalPaintFlags));
-        }
-    }
+  if (!did_set_paint_invalidation && IsSelfPaintingLayer() && parent_) {
+    if (PaintLayer* enclosing_self_painting_layer =
+            parent_->EnclosingSelfPaintingLayer())
+      MergeNeedsPaintPhaseFlagsFrom(*enclosing_self_painting_layer);
+  }
 
-    // If we have a reflection, then we need to account for that when we push the clip.  Reflect our entire
-    // current transparencyClipBox to catch all child layers.
-    // FIXME: Accelerated compositing will eventually want to do something smart here to avoid incorporating this
-    // size into the parent layer.
-    if (layer->layoutObject()->hasReflection()) {
-        LayoutPoint delta;
-        layer->convertToLayerCoords(rootLayer, delta);
-        clipRect.move(-delta.x(), -delta.y());
-        clipRect.unite(layer->layoutBox()->reflectedRect(clipRect));
-        clipRect.moveBy(delta);
-    }
-}
-
-LayoutRect PaintLayer::transparencyClipBox(const PaintLayer* layer, const PaintLayer* rootLayer, TransparencyClipBoxBehavior transparencyBehavior,
-    TransparencyClipBoxMode transparencyMode, const LayoutSize& subPixelAccumulation, GlobalPaintFlags globalPaintFlags)
-{
-    // FIXME: Although this function completely ignores CSS-imposed clipping, we did already intersect with the
-    // paintDirtyRect, and that should cut down on the amount we have to paint.  Still it
-    // would be better to respect clips.
-
-    if (rootLayer != layer && ((transparencyBehavior == PaintingTransparencyClipBox && layer->paintsWithTransform(globalPaintFlags))
-        || (transparencyBehavior == HitTestingTransparencyClipBox && layer->hasTransformRelatedProperty()))) {
-        // The best we can do here is to use enclosed bounding boxes to establish a "fuzzy" enough clip to encompass
-        // the transformed layer and all of its children.
-        const PaintLayer* paginationLayer = transparencyMode == DescendantsOfTransparencyClipBox ? layer->enclosingPaginationLayer() : 0;
-        const PaintLayer* rootLayerForTransform = paginationLayer ? paginationLayer : rootLayer;
-        LayoutPoint delta;
-        layer->convertToLayerCoords(rootLayerForTransform, delta);
-
-        delta.move(subPixelAccumulation);
-        IntPoint pixelSnappedDelta = roundedIntPoint(delta);
-        TransformationMatrix transform;
-        transform.translate(pixelSnappedDelta.x(), pixelSnappedDelta.y());
-        if (layer->transform())
-            transform = transform * *layer->transform();
-
-        // We don't use fragment boxes when collecting a transformed layer's bounding box, since it always
-        // paints unfragmented.
-        LayoutRect clipRect = layer->physicalBoundingBox(LayoutPoint());
-        expandClipRectForDescendantsAndReflection(clipRect, layer, layer, transparencyBehavior, subPixelAccumulation, globalPaintFlags);
-        LayoutRect result = enclosingLayoutRect(transform.mapRect(layer->mapRectForFilter(FloatRect(clipRect))));
-        if (!paginationLayer)
-            return result;
-
-        // We have to break up the transformed extent across our columns.
-        // Split our box up into the actual fragment boxes that layout in the columns/pages and unite those together to
-        // get our true bounding box.
-        LayoutFlowThread* enclosingFlowThread = toLayoutFlowThread(paginationLayer->layoutObject());
-        result = enclosingFlowThread->fragmentsBoundingBox(result);
-
-        LayoutPoint rootLayerDelta;
-        paginationLayer->convertToLayerCoords(rootLayer, rootLayerDelta);
-        result.moveBy(rootLayerDelta);
-        return result;
-    }
-
-    LayoutRect clipRect = layer->shouldFragmentCompositedBounds(rootLayer) ? layer->fragmentsBoundingBox(rootLayer) : layer->physicalBoundingBox(rootLayer);
-    expandClipRectForDescendantsAndReflection(clipRect, layer, rootLayer, transparencyBehavior, subPixelAccumulation, globalPaintFlags);
-    clipRect = layer->mapLayoutRectForFilter(clipRect);
-    clipRect.move(subPixelAccumulation);
-    return clipRect;
-}
-
-LayoutRect PaintLayer::paintingExtent(const PaintLayer* rootLayer, const LayoutSize& subPixelAccumulation, GlobalPaintFlags globalPaintFlags)
-{
-    return transparencyClipBox(this, rootLayer, PaintingTransparencyClipBox, RootOfTransparencyClipBox, subPixelAccumulation, globalPaintFlags);
-}
-
-void* PaintLayer::operator new(size_t sz)
-{
-    return partitionAlloc(WTF::Partitions::layoutPartition(), sz, WTF_HEAP_PROFILER_TYPE_NAME(PaintLayer));
-}
-
-void PaintLayer::operator delete(void* ptr)
-{
-    partitionFree(ptr);
-}
-
-void PaintLayer::addChild(PaintLayer* child, PaintLayer* beforeChild)
-{
-    PaintLayer* prevSibling = beforeChild ? beforeChild->previousSibling() : lastChild();
-    if (prevSibling) {
-        child->setPreviousSibling(prevSibling);
-        prevSibling->setNextSibling(child);
-        ASSERT(prevSibling != child);
-    } else {
-        setFirstChild(child);
-    }
-
-    if (beforeChild) {
-        beforeChild->setPreviousSibling(child);
-        child->setNextSibling(beforeChild);
-        ASSERT(beforeChild != child);
-    } else {
-        setLastChild(child);
-    }
-
-    child->m_parent = this;
-
-    // The ancestor overflow layer is calculated during compositing inputs update and should not be set yet.
-    ASSERT(!child->ancestorOverflowLayer());
-
-    setNeedsCompositingInputsUpdate();
-
-    if (!child->stackingNode()->isStacked() && !layoutObject()->documentBeingDestroyed())
-        compositor()->setNeedsCompositingUpdate(CompositingUpdateRebuildTree);
-
-    if (child->stackingNode()->isStacked() || child->firstChild()) {
-        // Dirty the z-order list in which we are contained. The ancestorStackingContextNode() can be null in the
-        // case where we're building up generated content layers. This is ok, since the lists will start
-        // off dirty in that case anyway.
-        child->stackingNode()->dirtyStackingContextZOrderLists();
-    }
-
-    // Non-self-painting children paint into this layer, so the visible contents status of this layer is affected.
-    if (!child->isSelfPaintingLayer())
-        dirtyVisibleContentStatus();
-
-    dirtyAncestorChainVisibleDescendantStatus();
-    dirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
-
-    child->setNeedsRepaint();
-
-    child->updateDescendantDependentFlags();
-}
-
-PaintLayer* PaintLayer::removeChild(PaintLayer* oldChild)
-{
-    if (oldChild->previousSibling())
-        oldChild->previousSibling()->setNextSibling(oldChild->nextSibling());
-    if (oldChild->nextSibling())
-        oldChild->nextSibling()->setPreviousSibling(oldChild->previousSibling());
-
-    if (m_first == oldChild)
-        m_first = oldChild->nextSibling();
-    if (m_last == oldChild)
-        m_last = oldChild->previousSibling();
-
-    if (!oldChild->stackingNode()->isStacked() && !layoutObject()->documentBeingDestroyed())
-        compositor()->setNeedsCompositingUpdate(CompositingUpdateRebuildTree);
-
-    if (oldChild->stackingNode()->isStacked() || oldChild->firstChild()) {
-        // Dirty the z-order list in which we are contained.  When called via the
-        // reattachment process in removeOnlyThisLayer, the layer may already be disconnected
-        // from the main layer tree, so we need to null-check the
-        // |stackingContext| value.
-        oldChild->stackingNode()->dirtyStackingContextZOrderLists();
-    }
-
-    if (layoutObject()->style()->visibility() != VISIBLE)
-        dirtyVisibleContentStatus();
-
-    oldChild->setPreviousSibling(0);
-    oldChild->setNextSibling(0);
-    oldChild->m_parent = 0;
-
-    // Remove any ancestor overflow layers which descended into the removed child.
-    if (oldChild->ancestorOverflowLayer())
-        oldChild->removeAncestorOverflowLayer(oldChild->ancestorOverflowLayer());
-
-    dirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
-
-    oldChild->updateDescendantDependentFlags();
-
-    if (oldChild->m_hasVisibleContent || oldChild->m_hasVisibleDescendant)
-        dirtyAncestorChainVisibleDescendantStatus();
-
-    if (oldChild->enclosingPaginationLayer())
-        oldChild->clearPaginationRecursive();
-
-    setNeedsRepaint();
-
-    return oldChild;
-}
-
-void PaintLayer::removeOnlyThisLayerAfterStyleChange()
-{
-    if (!m_parent)
-        return;
-
-    bool didSetPaintInvalidation = false;
-    if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
-        DisableCompositingQueryAsserts disabler; // We need the current compositing status.
-        if (isPaintInvalidationContainer()) {
-            // Our children will be reparented and contained by a new paint invalidation container,
-            // so need paint invalidation. CompositingUpdate can't see this layer (which has been
-            // removed) so won't do this for us.
-            DisablePaintInvalidationStateAsserts disabler;
-            layoutObject()->invalidatePaintIncludingNonCompositingDescendants();
-            layoutObject()->setShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
-            didSetPaintInvalidation = true;
-        }
-    }
-
-    if (!didSetPaintInvalidation && isSelfPaintingLayer()) {
-        if (PaintLayer* enclosingSelfPaintingLayer = m_parent->enclosingSelfPaintingLayer())
-            enclosingSelfPaintingLayer->mergeNeedsPaintPhaseFlagsFrom(*this);
-    }
-
-    clipper().clearClipRectsIncludingDescendants();
-
-    PaintLayer* nextSib = nextSibling();
-
-    // Remove the child reflection layer before moving other child layers.
-    // The reflection layer should not be moved to the parent.
-    if (PaintLayerReflectionInfo* reflectionInfo = this->reflectionInfo())
-        removeChild(reflectionInfo->reflectionLayer());
-
-    // Now walk our kids and reattach them to our parent.
-    PaintLayer* current = m_first;
-    while (current) {
-        PaintLayer* next = current->nextSibling();
-        removeChild(current);
-        m_parent->addChild(current, nextSib);
-
-        // FIXME: We should call a specialized version of this function.
-        current->updateLayerPositionsAfterLayout();
-        current = next;
-    }
-
-    // Remove us from the parent.
-    m_parent->removeChild(this);
-    m_layoutObject->destroyLayer();
-}
-
-void PaintLayer::insertOnlyThisLayerAfterStyleChange()
-{
-    if (!m_parent && layoutObject()->parent()) {
-        // We need to connect ourselves when our layoutObject() has a parent.
-        // Find our enclosingLayer and add ourselves.
-        PaintLayer* parentLayer = layoutObject()->parent()->enclosingLayer();
-        ASSERT(parentLayer);
-        PaintLayer* beforeChild = !parentLayer->reflectionInfo() || parentLayer->reflectionInfo()->reflectionLayer() != this ? layoutObject()->parent()->findNextLayer(parentLayer, layoutObject()) : 0;
-        parentLayer->addChild(this, beforeChild);
-    }
-
-    // Remove all descendant layers from the hierarchy and add them to the new position.
-    for (LayoutObject* curr = layoutObject()->slowFirstChild(); curr; curr = curr->nextSibling())
-        curr->moveLayers(m_parent, this);
-
-    // If the previous paint invalidation container is not a stacking context and this object is
-    // stacked content, creating this layer may cause this object and its descendants to change
-    // paint invalidation container.
-    bool didSetPaintInvalidation = false;
-    if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled() && !layoutObject()->isLayoutView() && layoutObject()->isRooted() && layoutObject()->styleRef().isStacked()) {
-        const LayoutBoxModelObject& previousPaintInvalidationContainer = layoutObject()->parent()->containerForPaintInvalidation();
-        if (!previousPaintInvalidationContainer.styleRef().isStackingContext()) {
-            layoutObject()->invalidatePaintIncludingNonSelfPaintingLayerDescendants(previousPaintInvalidationContainer);
-            // Set needsRepaint along the original compositingContainer chain.
-            layoutObject()->parent()->enclosingLayer()->setNeedsRepaint();
-            didSetPaintInvalidation = true;
-        }
-    }
-
-    if (!didSetPaintInvalidation && isSelfPaintingLayer() && m_parent) {
-        if (PaintLayer* enclosingSelfPaintingLayer = m_parent->enclosingSelfPaintingLayer())
-            mergeNeedsPaintPhaseFlagsFrom(*enclosingSelfPaintingLayer);
-    }
-
-    // Clear out all the clip rects.
-    clipper().clearClipRectsIncludingDescendants();
+  // Clear out all the clip rects.
+  Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .ClearClipRectsIncludingDescendants();
 }
 
 // Returns the layer reached on the walk up towards the ancestor.
-static inline const PaintLayer* accumulateOffsetTowardsAncestor(const PaintLayer* layer, const PaintLayer* ancestorLayer, LayoutPoint& location)
-{
-    ASSERT(ancestorLayer != layer);
+static inline const PaintLayer* AccumulateOffsetTowardsAncestor(
+    const PaintLayer* layer,
+    const PaintLayer* ancestor_layer,
+    LayoutPoint& location) {
+  DCHECK(ancestor_layer != layer);
 
-    const LayoutBoxModelObject* layoutObject = layer->layoutObject();
-    EPosition position = layoutObject->style()->position();
+  const LayoutBoxModelObject& layout_object = layer->GetLayoutObject();
 
-    if (position == FixedPosition && (!ancestorLayer || ancestorLayer == layoutObject->view()->layer())) {
-        // If the fixed layer's container is the root, just add in the offset of the view. We can obtain this by calling
-        // localToAbsolute() on the LayoutView.
-        FloatPoint absPos = layoutObject->localToAbsolute();
-        location += LayoutSize(absPos.x(), absPos.y());
-        return ancestorLayer;
-    }
+  if (layout_object.IsFixedPositioned() &&
+      (!ancestor_layer || ancestor_layer == layout_object.View()->Layer())) {
+    // If the fixed layer's container is the root, just add in the offset of the
+    // view. We can obtain this by calling localToAbsolute() on the LayoutView.
+    FloatPoint abs_pos = layout_object.LocalToAbsolute();
+    location += LayoutSize(abs_pos.X(), abs_pos.Y());
+    return ancestor_layer;
+  }
 
-    PaintLayer* parentLayer;
-    if (position == AbsolutePosition || position == FixedPosition) {
-        bool foundAncestorFirst;
-        parentLayer = layer->containingLayerForOutOfFlowPositioned(ancestorLayer, &foundAncestorFirst);
+  bool found_ancestor_first;
+  PaintLayer* containing_layer =
+      layer->ContainingLayer(ancestor_layer, &found_ancestor_first);
 
-        if (foundAncestorFirst) {
-            // Found ancestorLayer before the container of the out-of-flow object, so compute offset
-            // of both relative to the container and subtract.
+  if (found_ancestor_first) {
+    // Found ancestorLayer before the containing layer, so compute offset of
+    // both relative to the container and subtract.
+    LayoutPoint this_coords;
+    layer->ConvertToLayerCoords(containing_layer, this_coords);
 
-            LayoutPoint thisCoords;
-            layer->convertToLayerCoords(parentLayer, thisCoords);
+    LayoutPoint ancestor_coords;
+    ancestor_layer->ConvertToLayerCoords(containing_layer, ancestor_coords);
 
-            LayoutPoint ancestorCoords;
-            ancestorLayer->convertToLayerCoords(parentLayer, ancestorCoords);
+    location += (this_coords - ancestor_coords);
+    return ancestor_layer;
+  }
 
-            location += (thisCoords - ancestorCoords);
-            return ancestorLayer;
-        }
-    } else if (layoutObject->isColumnSpanAll()) {
-        LayoutBlock* multicolContainer = layoutObject->containingBlock();
-        ASSERT(toLayoutBlockFlow(multicolContainer)->multiColumnFlowThread());
-        parentLayer = multicolContainer->layer();
-        ASSERT(parentLayer);
-    } else {
-        parentLayer = layer->parent();
-    }
+  if (!containing_layer)
+    return nullptr;
 
-    if (!parentLayer)
-        return nullptr;
-
-    location += layer->location();
-    return parentLayer;
+  location += layer->Location();
+  return containing_layer;
 }
 
-void PaintLayer::convertToLayerCoords(const PaintLayer* ancestorLayer, LayoutPoint& location) const
-{
-    if (ancestorLayer == this)
-        return;
+void PaintLayer::ConvertToLayerCoords(const PaintLayer* ancestor_layer,
+                                      LayoutPoint& location) const {
+  if (ancestor_layer == this)
+    return;
 
-    const PaintLayer* currLayer = this;
-    while (currLayer && currLayer != ancestorLayer)
-        currLayer = accumulateOffsetTowardsAncestor(currLayer, ancestorLayer, location);
+  const PaintLayer* curr_layer = this;
+  while (curr_layer && curr_layer != ancestor_layer)
+    curr_layer =
+        AccumulateOffsetTowardsAncestor(curr_layer, ancestor_layer, location);
 }
 
-void PaintLayer::convertToLayerCoords(const PaintLayer* ancestorLayer, LayoutRect& rect) const
-{
-    LayoutPoint delta;
-    convertToLayerCoords(ancestorLayer, delta);
-    rect.moveBy(delta);
+void PaintLayer::ConvertToLayerCoords(const PaintLayer* ancestor_layer,
+                                      LayoutRect& rect) const {
+  LayoutPoint delta;
+  ConvertToLayerCoords(ancestor_layer, delta);
+  rect.MoveBy(delta);
 }
 
-LayoutPoint PaintLayer::visualOffsetFromAncestor(const PaintLayer* ancestorLayer) const
-{
-    LayoutPoint offset;
-    if (ancestorLayer == this)
-        return offset;
-    PaintLayer* paginationLayer = enclosingPaginationLayer();
-    if (paginationLayer == this)
-        paginationLayer = parent()->enclosingPaginationLayer();
-    if (!paginationLayer) {
-        convertToLayerCoords(ancestorLayer, offset);
-        return offset;
-    }
-
-    LayoutFlowThread* flowThread = toLayoutFlowThread(paginationLayer->layoutObject());
-    convertToLayerCoords(paginationLayer, offset);
-    offset = flowThread->flowThreadPointToVisualPoint(offset);
-    if (ancestorLayer == paginationLayer)
-        return offset;
-
-    if (ancestorLayer->enclosingPaginationLayer() != paginationLayer) {
-        offset.moveBy(paginationLayer->visualOffsetFromAncestor(ancestorLayer));
-    } else {
-        // The ancestor layer is also inside the pagination layer, so we need to subtract the visual
-        // distance from the ancestor layer to the pagination layer.
-        offset.moveBy(-ancestorLayer->visualOffsetFromAncestor(paginationLayer));
-    }
+LayoutPoint PaintLayer::VisualOffsetFromAncestor(
+    const PaintLayer* ancestor_layer,
+    LayoutPoint offset) const {
+  if (ancestor_layer == this)
     return offset;
+  PaintLayer* pagination_layer = EnclosingPaginationLayer();
+  if (pagination_layer == this)
+    pagination_layer = Parent()->EnclosingPaginationLayer();
+  if (!pagination_layer) {
+    ConvertToLayerCoords(ancestor_layer, offset);
+    return offset;
+  }
+
+  LayoutFlowThread& flow_thread =
+      ToLayoutFlowThread(pagination_layer->GetLayoutObject());
+  ConvertToLayerCoords(pagination_layer, offset);
+  offset = flow_thread.FlowThreadPointToVisualPoint(offset);
+  if (ancestor_layer == pagination_layer)
+    return offset;
+
+  if (ancestor_layer->EnclosingPaginationLayer() != pagination_layer) {
+    offset.MoveBy(pagination_layer->VisualOffsetFromAncestor(ancestor_layer));
+  } else {
+    // The ancestor layer is also inside the pagination layer, so we need to
+    // subtract the visual distance from the ancestor layer to the pagination
+    // layer.
+    offset.MoveBy(-ancestor_layer->VisualOffsetFromAncestor(pagination_layer));
+  }
+  return offset;
 }
 
-void PaintLayer::didUpdateNeedsCompositedScrolling()
-{
-    bool wasSelfPaintingLayer = isSelfPaintingLayer();
-    updateSelfPaintingLayer();
-
-    // If the floating object becomes non-self-painting, so some ancestor should paint it;
-    // if it becomes self-painting, it should paint itself and no ancestor should paint it.
-    if (wasSelfPaintingLayer != isSelfPaintingLayer() && m_layoutObject->isFloating())
-        LayoutBlockFlow::setAncestorShouldPaintFloatingObject(*layoutBox(), wasSelfPaintingLayer);
+void PaintLayer::DidUpdateNeedsCompositedScrolling() {
+  UpdateSelfPaintingLayer();
 }
 
-void PaintLayer::updateReflectionInfo(const ComputedStyle* oldStyle)
-{
-    ASSERT(!oldStyle || !layoutObject()->style()->reflectionDataEquivalent(oldStyle));
-    if (layoutObject()->hasReflection()) {
-        if (!ensureRareData().reflectionInfo)
-            m_rareData->reflectionInfo = wrapUnique(new PaintLayerReflectionInfo(*layoutBox()));
-        m_rareData->reflectionInfo->updateAfterStyleChange(oldStyle);
-    } else if (m_rareData && m_rareData->reflectionInfo) {
-        m_rareData->reflectionInfo = nullptr;
-    }
+void PaintLayer::UpdateStackingNode() {
+  DCHECK(!stacking_node_);
+  if (RequiresStackingNode())
+    stacking_node_ = WTF::MakeUnique<PaintLayerStackingNode>(this);
+  else
+    stacking_node_ = nullptr;
 }
 
-void PaintLayer::updateStackingNode()
-{
-    ASSERT(!m_stackingNode);
-    if (requiresStackingNode())
-        m_stackingNode = wrapUnique(new PaintLayerStackingNode(this));
-    else
-        m_stackingNode = nullptr;
+void PaintLayer::UpdateScrollableArea() {
+  DCHECK(!scrollable_area_);
+  if (RequiresScrollableArea())
+    scrollable_area_ = PaintLayerScrollableArea::Create(*this);
 }
 
-void PaintLayer::updateScrollableArea()
-{
-    ASSERT(!m_scrollableArea);
-    if (requiresScrollableArea())
-        m_scrollableArea = PaintLayerScrollableArea::create(*this);
+bool PaintLayer::HasOverflowControls() const {
+  return scrollable_area_ &&
+         (scrollable_area_->HasScrollbar() ||
+          scrollable_area_->ScrollCorner() ||
+          GetLayoutObject().Style()->Resize() != RESIZE_NONE);
 }
 
-bool PaintLayer::hasOverflowControls() const
-{
-    return m_scrollableArea && (m_scrollableArea->hasScrollbar() || m_scrollableArea->scrollCorner() || layoutObject()->style()->resize() != RESIZE_NONE);
+void PaintLayer::AppendSingleFragmentIgnoringPagination(
+    PaintLayerFragments& fragments,
+    const PaintLayer* root_layer,
+    const LayoutRect& dirty_rect,
+    ClipRectsCacheSlot clip_rects_cache_slot,
+    PaintLayer::GeometryMapperOption geometry_mapper_option,
+    OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
+    ShouldRespectOverflowClipType respect_overflow_clip,
+    const LayoutPoint* offset_from_root,
+    const LayoutSize& sub_pixel_accumulation) {
+  PaintLayerFragment fragment;
+  ClipRectsContext clip_rects_context(root_layer, clip_rects_cache_slot,
+                                      overlay_scrollbar_clip_behavior,
+                                      sub_pixel_accumulation);
+  if (respect_overflow_clip == kIgnoreOverflowClip)
+    clip_rects_context.SetIgnoreOverflowClip();
+  Clipper(geometry_mapper_option)
+      .CalculateRects(clip_rects_context, dirty_rect, fragment.layer_bounds,
+                      fragment.background_rect, fragment.foreground_rect,
+                      offset_from_root);
+  fragments.push_back(fragment);
 }
 
-void PaintLayer::appendSingleFragmentIgnoringPagination(PaintLayerFragments& fragments, const PaintLayer* rootLayer, const LayoutRect& dirtyRect, ClipRectsCacheSlot clipRectsCacheSlot, OverlayScrollbarClipBehavior overlayScrollbarClipBehavior, ShouldRespectOverflowClipType respectOverflowClip, const LayoutPoint* offsetFromRoot, const LayoutSize& subPixelAccumulation)
-{
+bool PaintLayer::ShouldFragmentCompositedBounds(
+    const PaintLayer* compositing_layer) const {
+  // Composited layers may not be fragmented.
+  return EnclosingPaginationLayer() &&
+         !compositing_layer->EnclosingPaginationLayer();
+}
+
+void PaintLayer::CollectFragments(
+    PaintLayerFragments& fragments,
+    const PaintLayer* root_layer,
+    const LayoutRect& dirty_rect,
+    ClipRectsCacheSlot clip_rects_cache_slot,
+    PaintLayer::GeometryMapperOption geometry_mapper_option,
+    OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
+    ShouldRespectOverflowClipType respect_overflow_clip,
+    const LayoutPoint* offset_from_root,
+    const LayoutSize& sub_pixel_accumulation,
+    const LayoutRect* layer_bounding_box) {
+  // For unpaginated layers, there is only one fragment. We also avoid
+  // fragmentation when compositing, due to implementation limitations.
+  if (!EnclosingPaginationLayer() ||
+      !ShouldFragmentCompositedBounds(root_layer)) {
+    AppendSingleFragmentIgnoringPagination(
+        fragments, root_layer, dirty_rect, clip_rects_cache_slot,
+        geometry_mapper_option, overlay_scrollbar_clip_behavior,
+        respect_overflow_clip, offset_from_root, sub_pixel_accumulation);
+    return;
+  }
+
+  // Compute our offset within the enclosing pagination layer.
+  LayoutPoint offset_within_paginated_layer;
+  ConvertToLayerCoords(EnclosingPaginationLayer(),
+                       offset_within_paginated_layer);
+
+  // Calculate clip rects relative to the enclosingPaginationLayer. The purpose
+  // of this call is to determine our bounds clipped to intermediate layers
+  // between us and the pagination context. It's important to minimize the
+  // number of fragments we need to create and this helps with that.
+  ClipRectsContext pagination_clip_rects_context(
+      EnclosingPaginationLayer(), clip_rects_cache_slot,
+      overlay_scrollbar_clip_behavior);
+  if (respect_overflow_clip == kIgnoreOverflowClip)
+    pagination_clip_rects_context.SetIgnoreOverflowClip();
+  LayoutRect layer_bounds_in_flow_thread;
+  ClipRect background_rect_in_flow_thread;
+  ClipRect foreground_rect_in_flow_thread;
+  Clipper(geometry_mapper_option)
+      .CalculateRects(
+          pagination_clip_rects_context,
+          LayoutRect(LayoutRect::InfiniteIntRect()),
+          layer_bounds_in_flow_thread, background_rect_in_flow_thread,
+          foreground_rect_in_flow_thread, &offset_within_paginated_layer);
+
+  // Take our bounding box within the flow thread and clip it.
+  LayoutRect layer_bounding_box_in_flow_thread =
+      layer_bounding_box ? *layer_bounding_box
+                         : PhysicalBoundingBox(offset_within_paginated_layer);
+  layer_bounding_box_in_flow_thread.Intersect(
+      background_rect_in_flow_thread.Rect());
+
+  LayoutFlowThread& enclosing_flow_thread =
+      ToLayoutFlowThread(EnclosingPaginationLayer()->GetLayoutObject());
+  // Visual offset from the root layer to the nearest fragmentation context.
+  LayoutPoint offset_of_pagination_layer_from_root;
+  bool root_layer_is_inside_pagination_layer =
+      root_layer->EnclosingPaginationLayer() == EnclosingPaginationLayer();
+  if (root_layer_is_inside_pagination_layer) {
+    // The root layer is in the same fragmentation context as this layer, so we
+    // need to look inside it and subtract the offset between the fragmentation
+    // context and the root layer.
+    offset_of_pagination_layer_from_root =
+        -root_layer->VisualOffsetFromAncestor(EnclosingPaginationLayer());
+  } else {
+    offset_of_pagination_layer_from_root =
+        EnclosingPaginationLayer()->VisualOffsetFromAncestor(root_layer);
+  }
+  // Make the dirty rect relative to the fragmentation context (multicol
+  // container, etc.).
+  LayoutRect dirty_rect_in_multicol_container(dirty_rect);
+  dirty_rect_in_multicol_container.Move(
+      enclosing_flow_thread.PhysicalLocation() -
+      offset_of_pagination_layer_from_root);
+
+  // Slice the layer into fragments. Each fragment needs to be processed (e.g.
+  // painted) separately. We pass enough information to walk a minimal number of
+  // fragments based on the pages/columns that intersect the actual dirtyRect as
+  // well as the pages/columns that intersect our layer's bounding box.
+  FragmentainerIterator iterator(enclosing_flow_thread,
+                                 layer_bounding_box_in_flow_thread,
+                                 dirty_rect_in_multicol_container);
+  if (iterator.AtEnd())
+    return;
+
+  // Get the parent clip rects of the pagination layer, since we need to
+  // intersect with that when painting column contents.
+  ClipRect ancestor_clip_rect = dirty_rect;
+  if (const PaintLayer* pagination_parent_layer =
+          EnclosingPaginationLayer()->Parent()) {
+    const PaintLayer* ancestor_layer = root_layer_is_inside_pagination_layer
+                                           ? pagination_parent_layer
+                                           : root_layer;
+    ClipRectsContext clip_rects_context(ancestor_layer, clip_rects_cache_slot,
+                                        overlay_scrollbar_clip_behavior);
+    if (respect_overflow_clip == kIgnoreOverflowClip)
+      clip_rects_context.SetIgnoreOverflowClip();
+
+    EnclosingPaginationLayer()
+        ->Clipper(geometry_mapper_option)
+        .CalculateBackgroundClipRect(clip_rects_context, ancestor_clip_rect);
+    if (root_layer_is_inside_pagination_layer)
+      ancestor_clip_rect.MoveBy(
+          -root_layer->VisualOffsetFromAncestor(ancestor_layer));
+    ancestor_clip_rect.Intersect(dirty_rect);
+  }
+
+  const LayoutSize sub_pixel_accumulation_if_needed =
+      offset_from_root ? sub_pixel_accumulation : LayoutSize();
+  for (; !iterator.AtEnd(); iterator.Advance()) {
     PaintLayerFragment fragment;
-    ClipRectsContext clipRectsContext(rootLayer, clipRectsCacheSlot, overlayScrollbarClipBehavior, subPixelAccumulation);
-    if (respectOverflowClip == IgnoreOverflowClip)
-        clipRectsContext.setIgnoreOverflowClip();
-    clipper().calculateRects(clipRectsContext, dirtyRect, fragment.layerBounds, fragment.backgroundRect, fragment.foregroundRect, offsetFromRoot);
-    fragments.append(fragment);
+    fragment.pagination_offset = ToLayoutPoint(iterator.PaginationOffset());
+    fragment.pagination_clip = iterator.ClipRectInFlowThread();
+
+    // Set our four rects with all clipping applied that was internal to the
+    // flow thread.
+    fragment.SetRects(layer_bounds_in_flow_thread,
+                      background_rect_in_flow_thread,
+                      foreground_rect_in_flow_thread);
+
+    // Shift to the root-relative physical position used when painting the flow
+    // thread in this fragment.
+    fragment.MoveBy(fragment.pagination_offset +
+                    offset_of_pagination_layer_from_root +
+                    sub_pixel_accumulation_if_needed);
+
+    // Intersect the fragment with our ancestor's background clip so that e.g.,
+    // columns in an overflow:hidden block are properly clipped by the overflow.
+    fragment.Intersect(ancestor_clip_rect.Rect());
+
+    // Now intersect with our pagination clip. This will typically mean we're
+    // just intersecting the dirty rect with the column clip, so the column clip
+    // ends up being all we apply.
+    fragment.Intersect(fragment.pagination_clip);
+
+    // TODO(mstensho): Don't add empty fragments. We've always done that in some
+    // cases, but there should be no reason to do so. Either filter them out
+    // here, or, even better: pass a better clip rectangle to the fragmentainer
+    // iterator, so that we won't end up with empty fragments here.
+    fragments.push_back(fragment);
+  }
 }
 
-bool PaintLayer::shouldFragmentCompositedBounds(const PaintLayer* compositingLayer) const
-{
-    // Composited layers may not be fragmented.
-    return enclosingPaginationLayer() && !compositingLayer->enclosingPaginationLayer();
+static inline LayoutRect FrameVisibleRect(LayoutObject& layout_object) {
+  FrameView* frame_view = layout_object.GetDocument().View();
+  if (!frame_view)
+    return LayoutRect();
+
+  return LayoutRect(frame_view->VisibleContentRect());
 }
 
-void PaintLayer::collectFragments(PaintLayerFragments& fragments, const PaintLayer* rootLayer, const LayoutRect& dirtyRect,
-    ClipRectsCacheSlot clipRectsCacheSlot, OverlayScrollbarClipBehavior overlayScrollbarClipBehavior, ShouldRespectOverflowClipType respectOverflowClip, const LayoutPoint* offsetFromRoot,
-    const LayoutSize& subPixelAccumulation, const LayoutRect* layerBoundingBox)
-{
-    if (!enclosingPaginationLayer()) {
-        // For unpaginated layers, there is only one fragment.
-        appendSingleFragmentIgnoringPagination(fragments, rootLayer, dirtyRect, clipRectsCacheSlot, overlayScrollbarClipBehavior, respectOverflowClip, offsetFromRoot, subPixelAccumulation);
-        return;
+bool PaintLayer::HitTest(HitTestResult& result) {
+  DCHECK(IsSelfPaintingLayer() || HasSelfPaintingLayerDescendant());
+
+  // LayoutView should make sure to update layout before entering hit testing
+  DCHECK(!GetLayoutObject().GetFrame()->View()->LayoutPending());
+  DCHECK(!GetLayoutObject().GetDocument().GetLayoutViewItem().NeedsLayout());
+
+  const HitTestRequest& request = result.GetHitTestRequest();
+  const HitTestLocation& hit_test_location = result.GetHitTestLocation();
+
+  // Start with frameVisibleRect to ensure we include the scrollbars.
+  LayoutRect hit_test_area = FrameVisibleRect(GetLayoutObject());
+  if (request.IgnoreClipping())
+    hit_test_area.Unite(LayoutRect(GetLayoutObject().View()->DocumentRect()));
+
+  PaintLayer* inside_layer =
+      HitTestLayer(this, 0, result, hit_test_area, hit_test_location, false);
+  if (!inside_layer && IsRootLayer()) {
+    IntRect hit_rect = hit_test_location.BoundingBox();
+    bool fallback = false;
+    // If we didn't hit any layers but are still inside the document
+    // bounds, then we should fallback to hitting the document.
+    // For rect-based hit test, we do the fallback only when the hit-rect
+    // is totally within the document bounds.
+    if (hit_test_area.Contains(LayoutRect(hit_rect))) {
+      fallback = true;
+
+      // Mouse dragging outside the main document should also be
+      // delivered to the document.
+      // TODO(miletus): Capture behavior inconsistent with iframes
+      // crbug.com/522109.
+      // TODO(majidvp): This should apply more consistently across different
+      // event types and we should not use RequestType for it. Perhaps best for
+      // it to be done at a higher level. See http://crbug.com/505825
+    } else if ((request.Active() || request.Release()) &&
+               !request.IsChildFrameHitTest()) {
+      fallback = true;
     }
+    if (fallback) {
+      GetLayoutObject().UpdateHitTestResult(
+          result, ToLayoutView(GetLayoutObject())
+                      .FlipForWritingMode(hit_test_location.Point()));
+      inside_layer = this;
 
-    if (!shouldFragmentCompositedBounds(rootLayer)) {
-        appendSingleFragmentIgnoringPagination(fragments, rootLayer, dirtyRect, clipRectsCacheSlot, overlayScrollbarClipBehavior, respectOverflowClip, offsetFromRoot, subPixelAccumulation);
-        return;
+      // Don't cache this result since it really wasn't a true hit.
+      result.SetCacheable(false);
     }
+  }
 
-    // Compute our offset within the enclosing pagination layer.
-    LayoutPoint offsetWithinPaginatedLayer;
-    convertToLayerCoords(enclosingPaginationLayer(), offsetWithinPaginatedLayer);
+  // Now determine if the result is inside an anchor - if the urlElement isn't
+  // already set.
+  Node* node = result.InnerNode();
+  if (node && !result.URLElement())
+    result.SetURLElement(node->EnclosingLinkEventParentOrSelf());
 
-    // Calculate clip rects relative to the enclosingPaginationLayer. The purpose of this call is to determine our bounds clipped to intermediate
-    // layers between us and the pagination context. It's important to minimize the number of fragments we need to create and this helps with that.
-    ClipRectsContext paginationClipRectsContext(enclosingPaginationLayer(), clipRectsCacheSlot, overlayScrollbarClipBehavior);
-    if (respectOverflowClip == IgnoreOverflowClip)
-        paginationClipRectsContext.setIgnoreOverflowClip();
-    LayoutRect layerBoundsInFlowThread;
-    ClipRect backgroundRectInFlowThread;
-    ClipRect foregroundRectInFlowThread;
-    clipper().calculateRects(paginationClipRectsContext, LayoutRect(LayoutRect::infiniteIntRect()), layerBoundsInFlowThread,
-        backgroundRectInFlowThread, foregroundRectInFlowThread, &offsetWithinPaginatedLayer);
-
-    // Take our bounding box within the flow thread and clip it.
-    LayoutRect layerBoundingBoxInFlowThread = layerBoundingBox ? *layerBoundingBox : physicalBoundingBox(offsetWithinPaginatedLayer);
-    layerBoundingBoxInFlowThread.intersect(backgroundRectInFlowThread.rect());
-
-    // Make the dirty rect relative to the fragmentation context (multicol container, etc.).
-    LayoutFlowThread* enclosingFlowThread = toLayoutFlowThread(enclosingPaginationLayer()->layoutObject());
-    LayoutPoint offsetOfPaginationLayerFromRoot; // Visual offset from the root layer to the nearest fragmentation context.
-    bool rootLayerIsInsidePaginationLayer = rootLayer->enclosingPaginationLayer() == enclosingPaginationLayer();
-    if (rootLayerIsInsidePaginationLayer) {
-        // The root layer is in the same fragmentation context as this layer, so we need to look
-        // inside it and subtract the offset between the fragmentation context and the root layer.
-        offsetOfPaginationLayerFromRoot = -rootLayer->visualOffsetFromAncestor(enclosingPaginationLayer());
-    } else {
-        offsetOfPaginationLayerFromRoot = enclosingPaginationLayer()->visualOffsetFromAncestor(rootLayer);
-    }
-    LayoutRect dirtyRectInFlowThread(dirtyRect);
-    dirtyRectInFlowThread.moveBy(-offsetOfPaginationLayerFromRoot);
-
-    // Tell the flow thread to collect the fragments. We pass enough information to create a minimal number of fragments based off the pages/columns
-    // that intersect the actual dirtyRect as well as the pages/columns that intersect our layer's bounding box.
-    enclosingFlowThread->collectLayerFragments(fragments, layerBoundingBoxInFlowThread, dirtyRectInFlowThread);
-
-    if (fragments.isEmpty())
-        return;
-
-    // Get the parent clip rects of the pagination layer, since we need to intersect with that when painting column contents.
-    ClipRect ancestorClipRect = dirtyRect;
-    if (const PaintLayer* paginationParentLayer = enclosingPaginationLayer()->parent()) {
-        const PaintLayer* ancestorLayer = rootLayerIsInsidePaginationLayer ? paginationParentLayer : rootLayer;
-        ClipRectsContext clipRectsContext(ancestorLayer, clipRectsCacheSlot, overlayScrollbarClipBehavior);
-        if (respectOverflowClip == IgnoreOverflowClip)
-            clipRectsContext.setIgnoreOverflowClip();
-        ancestorClipRect = enclosingPaginationLayer()->clipper().backgroundClipRect(clipRectsContext);
-        if (rootLayerIsInsidePaginationLayer)
-            ancestorClipRect.moveBy(-rootLayer->visualOffsetFromAncestor(ancestorLayer));
-        ancestorClipRect.intersect(dirtyRect);
-    }
-
-    const LayoutSize subPixelAccumulationIfNeeded = offsetFromRoot ? subPixelAccumulation : LayoutSize();
-    for (size_t i = 0; i < fragments.size(); ++i) {
-        PaintLayerFragment& fragment = fragments.at(i);
-
-        // Set our four rects with all clipping applied that was internal to the flow thread.
-        fragment.setRects(layerBoundsInFlowThread, backgroundRectInFlowThread, foregroundRectInFlowThread);
-
-        // Shift to the root-relative physical position used when painting the flow thread in this fragment.
-        fragment.moveBy(fragment.paginationOffset + offsetOfPaginationLayerFromRoot + subPixelAccumulationIfNeeded);
-
-        // Intersect the fragment with our ancestor's background clip so that e.g., columns in an overflow:hidden block are
-        // properly clipped by the overflow.
-        fragment.intersect(ancestorClipRect.rect());
-
-        // Now intersect with our pagination clip. This will typically mean we're just intersecting the dirty rect with the column
-        // clip, so the column clip ends up being all we apply.
-        fragment.intersect(fragment.paginationClip);
-    }
+  // Now return whether we were inside this layer (this will always be true for
+  // the root layer).
+  return inside_layer;
 }
 
-static inline LayoutRect frameVisibleRect(LayoutObject* layoutObject)
-{
-    FrameView* frameView = layoutObject->document().view();
-    if (!frameView)
-        return LayoutRect();
-
-    return LayoutRect(frameView->visibleContentRect());
+Node* PaintLayer::EnclosingNode() const {
+  for (LayoutObject* r = &GetLayoutObject(); r; r = r->Parent()) {
+    if (Node* e = r->GetNode())
+      return e;
+  }
+  ASSERT_NOT_REACHED();
+  return 0;
 }
 
-bool PaintLayer::hitTest(HitTestResult& result)
-{
-    ASSERT(isSelfPaintingLayer() || hasSelfPaintingLayerDescendant());
-
-    // LayoutView should make sure to update layout before entering hit testing
-    ASSERT(!layoutObject()->frame()->view()->layoutPending());
-    ASSERT(!layoutObject()->document().layoutViewItem().needsLayout());
-
-    const HitTestRequest& request = result.hitTestRequest();
-    const HitTestLocation& hitTestLocation = result.hitTestLocation();
-
-    // Start with frameVisibleRect to ensure we include the scrollbars.
-    LayoutRect hitTestArea = frameVisibleRect(layoutObject());
-    if (request.ignoreClipping())
-        hitTestArea.unite(LayoutRect(layoutObject()->view()->documentRect()));
-
-    PaintLayer* insideLayer = hitTestLayer(this, 0, result, hitTestArea, hitTestLocation, false);
-    if (!insideLayer && isRootLayer()) {
-        IntRect hitRect = hitTestLocation.boundingBox();
-        bool fallback = false;
-        // If we didn't hit any layers but are still inside the document
-        // bounds, then we should fallback to hitting the document.
-        // For rect-based hit test, we do the fallback only when the hit-rect
-        // is totally within the document bounds.
-        if (hitTestArea.contains(LayoutRect(hitRect))) {
-            fallback = true;
-
-        // Mouse dragging outside the main document should also be
-        // delivered to the document.
-        // TODO(miletus): Capture behavior inconsistent with iframes
-        // crbug.com/522109.
-        // TODO(majidvp): This should apply more consistently across different event types and we
-        // should not use RequestType for it. Perhaps best for it to be done at a higher level. See
-        // http://crbug.com/505825
-        } else if ((request.active() || request.release()) && !request.isChildFrameHitTest()) {
-            fallback = true;
-        }
-        if (fallback) {
-            layoutObject()->updateHitTestResult(result, toLayoutView(layoutObject())->flipForWritingMode(hitTestLocation.point()));
-            insideLayer = this;
-
-            // Don't cache this result since it really wasn't a true hit.
-            result.setCacheable(false);
-        }
-    }
-
-    // Now determine if the result is inside an anchor - if the urlElement isn't already set.
-    Node* node = result.innerNode();
-    if (node && !result.URLElement())
-        result.setURLElement(node->enclosingLinkEventParentOrSelf());
-
-    // Now return whether we were inside this layer (this will always be true for the root
-    // layer).
-    return insideLayer;
-}
-
-Node* PaintLayer::enclosingNode() const
-{
-    for (LayoutObject* r = layoutObject(); r; r = r->parent()) {
-        if (Node* e = r->node())
-            return e;
-    }
-    ASSERT_NOT_REACHED();
-    return 0;
-}
-
-bool PaintLayer::isInTopLayer() const
-{
-    Node* node = layoutObject()->node();
-    return node && node->isElementNode() && toElement(node)->isInTopLayer();
+bool PaintLayer::IsInTopLayer() const {
+  Node* node = GetLayoutObject().GetNode();
+  return node && node->IsElementNode() && ToElement(node)->IsInTopLayer();
 }
 
 // Compute the z-offset of the point in the transformState.
-// This is effectively projecting a ray normal to the plane of ancestor, finding where that
-// ray intersects target, and computing the z delta between those two points.
-static double computeZOffset(const HitTestingTransformState& transformState)
-{
-    // We got an affine transform, so no z-offset
-    if (transformState.m_accumulatedTransform.isAffine())
-        return 0;
+// This is effectively projecting a ray normal to the plane of ancestor, finding
+// where that ray intersects target, and computing the z delta between those two
+// points.
+static double ComputeZOffset(const HitTestingTransformState& transform_state) {
+  // We got an affine transform, so no z-offset
+  if (transform_state.accumulated_transform_.IsAffine())
+    return 0;
 
-    // Flatten the point into the target plane
-    FloatPoint targetPoint = transformState.mappedPoint();
+  // Flatten the point into the target plane
+  FloatPoint target_point = transform_state.MappedPoint();
 
-    // Now map the point back through the transform, which computes Z.
-    FloatPoint3D backmappedPoint = transformState.m_accumulatedTransform.mapPoint(FloatPoint3D(targetPoint));
-    return backmappedPoint.z();
+  // Now map the point back through the transform, which computes Z.
+  FloatPoint3D backmapped_point =
+      transform_state.accumulated_transform_.MapPoint(
+          FloatPoint3D(target_point));
+  return backmapped_point.Z();
 }
 
-PassRefPtr<HitTestingTransformState> PaintLayer::createLocalTransformState(PaintLayer* rootLayer, PaintLayer* containerLayer,
-    const LayoutRect& hitTestRect, const HitTestLocation& hitTestLocation,
-    const HitTestingTransformState* containerTransformState,
-    const LayoutPoint& translationOffset) const
-{
-    RefPtr<HitTestingTransformState> transformState;
-    LayoutPoint offset;
-    if (containerTransformState) {
-        // If we're already computing transform state, then it's relative to the container (which we know is non-null).
-        transformState = HitTestingTransformState::create(*containerTransformState);
-        convertToLayerCoords(containerLayer, offset);
-    } else {
-        // If this is the first time we need to make transform state, then base it off of hitTestLocation,
-        // which is relative to rootLayer.
-        transformState = HitTestingTransformState::create(hitTestLocation.transformedPoint(), hitTestLocation.transformedRect(), FloatQuad(FloatRect(hitTestRect)));
-        convertToLayerCoords(rootLayer, offset);
-    }
-    offset.moveBy(translationOffset);
+PassRefPtr<HitTestingTransformState> PaintLayer::CreateLocalTransformState(
+    PaintLayer* root_layer,
+    PaintLayer* container_layer,
+    const LayoutRect& hit_test_rect,
+    const HitTestLocation& hit_test_location,
+    const HitTestingTransformState* container_transform_state,
+    const LayoutPoint& translation_offset) const {
+  RefPtr<HitTestingTransformState> transform_state;
+  LayoutPoint offset;
+  if (container_transform_state) {
+    // If we're already computing transform state, then it's relative to the
+    // container (which we know is non-null).
+    transform_state =
+        HitTestingTransformState::Create(*container_transform_state);
+    ConvertToLayerCoords(container_layer, offset);
+  } else {
+    // If this is the first time we need to make transform state, then base it
+    // off of hitTestLocation, which is relative to rootLayer.
+    transform_state =
+        HitTestingTransformState::Create(hit_test_location.TransformedPoint(),
+                                         hit_test_location.TransformedRect(),
+                                         FloatQuad(FloatRect(hit_test_rect)));
+    ConvertToLayerCoords(root_layer, offset);
+  }
+  offset.MoveBy(translation_offset);
 
-    LayoutObject* containerLayoutObject = containerLayer ? containerLayer->layoutObject() : 0;
-    if (layoutObject()->shouldUseTransformFromContainer(containerLayoutObject)) {
-        TransformationMatrix containerTransform;
-        layoutObject()->getTransformFromContainer(containerLayoutObject, toLayoutSize(offset), containerTransform);
-        transformState->applyTransform(containerTransform, HitTestingTransformState::AccumulateTransform);
-    } else {
-        transformState->translate(offset.x(), offset.y(), HitTestingTransformState::AccumulateTransform);
-    }
+  LayoutObject* container_layout_object =
+      container_layer ? &container_layer->GetLayoutObject() : 0;
+  if (GetLayoutObject().ShouldUseTransformFromContainer(
+          container_layout_object)) {
+    TransformationMatrix container_transform;
+    GetLayoutObject().GetTransformFromContainer(
+        container_layout_object, ToLayoutSize(offset), container_transform);
+    transform_state->ApplyTransform(
+        container_transform, HitTestingTransformState::kAccumulateTransform);
+  } else {
+    transform_state->Translate(offset.X().ToInt(), offset.Y().ToInt(),
+                               HitTestingTransformState::kAccumulateTransform);
+  }
 
-    return transformState;
+  return transform_state;
 }
 
+static bool IsHitCandidate(const PaintLayer* hit_layer,
+                           bool can_depth_sort,
+                           double* z_offset,
+                           const HitTestingTransformState* transform_state) {
+  if (!hit_layer)
+    return false;
 
-static bool isHitCandidate(const PaintLayer* hitLayer, bool canDepthSort, double* zOffset, const HitTestingTransformState* transformState)
-{
-    if (!hitLayer)
-        return false;
-
-    // The hit layer is depth-sorting with other layers, so just say that it was hit.
-    if (canDepthSort)
-        return true;
-
-    // We need to look at z-depth to decide if this layer was hit.
-    if (zOffset) {
-        ASSERT(transformState);
-        // This is actually computing our z, but that's OK because the hitLayer is coplanar with us.
-        double childZOffset = computeZOffset(*transformState);
-        if (childZOffset > *zOffset) {
-            *zOffset = childZOffset;
-            return true;
-        }
-        return false;
-    }
-
+  // The hit layer is depth-sorting with other layers, so just say that it was
+  // hit.
+  if (can_depth_sort)
     return true;
+
+  // We need to look at z-depth to decide if this layer was hit.
+  if (z_offset) {
+    DCHECK(transform_state);
+    // This is actually computing our z, but that's OK because the hitLayer is
+    // coplanar with us.
+    double child_z_offset = ComputeZOffset(*transform_state);
+    if (child_z_offset > *z_offset) {
+      *z_offset = child_z_offset;
+      return true;
+    }
+    return false;
+  }
+
+  return true;
 }
 
 // hitTestLocation and hitTestRect are relative to rootLayer.
 // A 'flattening' layer is one preserves3D() == false.
-// transformState.m_accumulatedTransform holds the transform from the containing flattening layer.
-// transformState.m_lastPlanarPoint is the hitTestLocation in the plane of the containing flattening layer.
-// transformState.m_lastPlanarQuad is the hitTestRect as a quad in the plane of the containing flattening layer.
+// transformState.m_accumulatedTransform holds the transform from the containing
+// flattening layer.
+// transformState.m_lastPlanarPoint is the hitTestLocation in the plane of the
+// containing flattening layer.
+// transformState.m_lastPlanarQuad is the hitTestRect as a quad in the plane of
+// the containing flattening layer.
 //
-// If zOffset is non-null (which indicates that the caller wants z offset information),
-//  *zOffset on return is the z offset of the hit point relative to the containing flattening layer.
-PaintLayer* PaintLayer::hitTestLayer(PaintLayer* rootLayer, PaintLayer* containerLayer, HitTestResult& result,
-    const LayoutRect& hitTestRect, const HitTestLocation& hitTestLocation, bool appliedTransform,
-    const HitTestingTransformState* transformState, double* zOffset)
-{
-    ASSERT(layoutObject()->document().lifecycle().state() >= DocumentLifecycle::CompositingClean);
-
-    if (!isSelfPaintingLayer() && !hasSelfPaintingLayerDescendant())
-        return nullptr;
-
-    ClipRectsCacheSlot clipRectsCacheSlot = result.hitTestRequest().ignoreClipping() ? RootRelativeClipRectsIgnoringViewportClip : RootRelativeClipRects;
-
-    // Apply a transform if we have one.
-    if (transform() && !appliedTransform) {
-        if (enclosingPaginationLayer())
-            return hitTestTransformedLayerInFragments(rootLayer, containerLayer, result, hitTestRect, hitTestLocation, transformState, zOffset, clipRectsCacheSlot);
-
-        // Make sure the parent's clip rects have been calculated.
-        if (parent()) {
-            ClipRect clipRect = clipper().backgroundClipRect(ClipRectsContext(rootLayer, clipRectsCacheSlot, ExcludeOverlayScrollbarSizeForHitTesting));
-            // Go ahead and test the enclosing clip now.
-            if (!clipRect.intersects(hitTestLocation))
-                return nullptr;
-        }
-
-        return hitTestLayerByApplyingTransform(rootLayer, containerLayer, result, hitTestRect, hitTestLocation, transformState, zOffset);
-    }
-
-    if (hitTestClippedOutByClipPath(rootLayer, hitTestLocation))
-        return nullptr;
-
-    // Ensure our lists and 3d status are up to date.
-    m_stackingNode->updateLayerListsIfNeeded();
-    update3DTransformedDescendantStatus();
-
-    // The natural thing would be to keep HitTestingTransformState on the stack, but it's big, so we heap-allocate.
-    RefPtr<HitTestingTransformState> localTransformState;
-    if (appliedTransform) {
-        // We computed the correct state in the caller (above code), so just reference it.
-        ASSERT(transformState);
-        localTransformState = const_cast<HitTestingTransformState*>(transformState);
-    } else if (transformState || m_has3DTransformedDescendant || preserves3D()) {
-        // We need transform state for the first time, or to offset the container state, so create it here.
-        localTransformState = createLocalTransformState(rootLayer, containerLayer, hitTestRect, hitTestLocation, transformState);
-    }
-
-    // Check for hit test on backface if backface-visibility is 'hidden'
-    if (localTransformState && layoutObject()->style()->backfaceVisibility() == BackfaceVisibilityHidden) {
-        TransformationMatrix invertedMatrix = localTransformState->m_accumulatedTransform.inverse();
-        // If the z-vector of the matrix is negative, the back is facing towards the viewer.
-        if (invertedMatrix.m33() < 0)
-            return nullptr;
-    }
-
-    RefPtr<HitTestingTransformState> unflattenedTransformState = localTransformState;
-    if (localTransformState && !preserves3D()) {
-        // Keep a copy of the pre-flattening state, for computing z-offsets for the container
-        unflattenedTransformState = HitTestingTransformState::create(*localTransformState);
-        // This layer is flattening, so flatten the state passed to descendants.
-        localTransformState->flatten();
-    }
-
-    // The following are used for keeping track of the z-depth of the hit point of 3d-transformed
-    // descendants.
-    double localZOffset = -std::numeric_limits<double>::infinity();
-    double* zOffsetForDescendantsPtr = 0;
-    double* zOffsetForContentsPtr = 0;
-
-    bool depthSortDescendants = false;
-    if (preserves3D()) {
-        depthSortDescendants = true;
-        // Our layers can depth-test with our container, so share the z depth pointer with the container, if it passed one down.
-        zOffsetForDescendantsPtr = zOffset ? zOffset : &localZOffset;
-        zOffsetForContentsPtr = zOffset ? zOffset : &localZOffset;
-    } else if (zOffset) {
-        zOffsetForDescendantsPtr = 0;
-        // Container needs us to give back a z offset for the hit layer.
-        zOffsetForContentsPtr = zOffset;
-    }
-
-    // This variable tracks which layer the mouse ends up being inside.
-    PaintLayer* candidateLayer = 0;
-
-    // Begin by walking our list of positive layers from highest z-index down to the lowest z-index.
-    PaintLayer* hitLayer = hitTestChildren(PositiveZOrderChildren, rootLayer, result, hitTestRect, hitTestLocation,
-        localTransformState.get(), zOffsetForDescendantsPtr, zOffset, unflattenedTransformState.get(), depthSortDescendants);
-    if (hitLayer) {
-        if (!depthSortDescendants)
-            return hitLayer;
-        candidateLayer = hitLayer;
-    }
-
-    // Now check our overflow objects.
-    hitLayer = hitTestChildren(NormalFlowChildren, rootLayer, result, hitTestRect, hitTestLocation,
-        localTransformState.get(), zOffsetForDescendantsPtr, zOffset, unflattenedTransformState.get(), depthSortDescendants);
-    if (hitLayer) {
-        if (!depthSortDescendants)
-            return hitLayer;
-        candidateLayer = hitLayer;
-    }
-
-    // Collect the fragments. This will compute the clip rectangles for each layer fragment.
-    PaintLayerFragments layerFragments;
-    if (appliedTransform)
-        appendSingleFragmentIgnoringPagination(layerFragments, rootLayer, hitTestRect, clipRectsCacheSlot, ExcludeOverlayScrollbarSizeForHitTesting);
-    else
-        collectFragments(layerFragments, rootLayer, hitTestRect, clipRectsCacheSlot, ExcludeOverlayScrollbarSizeForHitTesting);
-
-    if (m_scrollableArea && m_scrollableArea->hitTestResizerInFragments(layerFragments, hitTestLocation)) {
-        layoutObject()->updateHitTestResult(result, hitTestLocation.point());
-        return this;
-    }
-
-    // Next we want to see if the mouse pos is inside the child LayoutObjects of the layer. Check
-    // every fragment in reverse order.
-    if (isSelfPaintingLayer()) {
-        // Hit test with a temporary HitTestResult, because we only want to commit to 'result' if we know we're frontmost.
-        HitTestResult tempResult(result.hitTestRequest(), result.hitTestLocation());
-        bool insideFragmentForegroundRect = false;
-        if (hitTestContentsForFragments(layerFragments, tempResult, hitTestLocation, HitTestDescendants, insideFragmentForegroundRect)
-            && isHitCandidate(this, false, zOffsetForContentsPtr, unflattenedTransformState.get())) {
-            if (result.hitTestRequest().listBased())
-                result.append(tempResult);
-            else
-                result = tempResult;
-            if (!depthSortDescendants)
-                return this;
-            // Foreground can depth-sort with descendant layers, so keep this as a candidate.
-            candidateLayer = this;
-        } else if (insideFragmentForegroundRect && result.hitTestRequest().listBased()) {
-            result.append(tempResult);
-        }
-    }
-
-    // Now check our negative z-index children.
-    hitLayer = hitTestChildren(NegativeZOrderChildren, rootLayer, result, hitTestRect, hitTestLocation,
-        localTransformState.get(), zOffsetForDescendantsPtr, zOffset, unflattenedTransformState.get(), depthSortDescendants);
-    if (hitLayer) {
-        if (!depthSortDescendants)
-            return hitLayer;
-        candidateLayer = hitLayer;
-    }
-
-    // If we found a layer, return. Child layers, and foreground always render in front of background.
-    if (candidateLayer)
-        return candidateLayer;
-
-    if (isSelfPaintingLayer()) {
-        HitTestResult tempResult(result.hitTestRequest(), result.hitTestLocation());
-        bool insideFragmentBackgroundRect = false;
-        if (hitTestContentsForFragments(layerFragments, tempResult, hitTestLocation, HitTestSelf, insideFragmentBackgroundRect)
-            && isHitCandidate(this, false, zOffsetForContentsPtr, unflattenedTransformState.get())) {
-            if (result.isRectBasedTest())
-                result.append(tempResult);
-            else
-                result = tempResult;
-            return this;
-        }
-        if (insideFragmentBackgroundRect && result.hitTestRequest().listBased())
-            result.append(tempResult);
-    }
-
-    return nullptr;
-}
-
-bool PaintLayer::hitTestContentsForFragments(const PaintLayerFragments& layerFragments, HitTestResult& result,
-    const HitTestLocation& hitTestLocation, HitTestFilter hitTestFilter, bool& insideClipRect) const
-{
-    if (layerFragments.isEmpty())
-        return false;
-
-    for (int i = layerFragments.size() - 1; i >= 0; --i) {
-        const PaintLayerFragment& fragment = layerFragments.at(i);
-        if ((hitTestFilter == HitTestSelf && !fragment.backgroundRect.intersects(hitTestLocation))
-            || (hitTestFilter == HitTestDescendants && !fragment.foregroundRect.intersects(hitTestLocation)))
-            continue;
-        insideClipRect = true;
-        if (hitTestContents(result, fragment.layerBounds, hitTestLocation, hitTestFilter))
-            return true;
-    }
-
-    return false;
-}
-
-PaintLayer* PaintLayer::hitTestTransformedLayerInFragments(PaintLayer* rootLayer, PaintLayer* containerLayer, HitTestResult& result,
-    const LayoutRect& hitTestRect, const HitTestLocation& hitTestLocation, const HitTestingTransformState* transformState, double* zOffset, ClipRectsCacheSlot clipRectsCacheSlot)
-{
-    PaintLayerFragments enclosingPaginationFragments;
-    LayoutPoint offsetOfPaginationLayerFromRoot;
-    // FIXME: We're missing a sub-pixel offset here crbug.com/348728
-    LayoutRect transformedExtent = transparencyClipBox(this, enclosingPaginationLayer(), HitTestingTransparencyClipBox, PaintLayer::RootOfTransparencyClipBox, LayoutSize());
-    enclosingPaginationLayer()->collectFragments(enclosingPaginationFragments, rootLayer, hitTestRect,
-        clipRectsCacheSlot, ExcludeOverlayScrollbarSizeForHitTesting, RespectOverflowClip, &offsetOfPaginationLayerFromRoot, LayoutSize(), &transformedExtent);
-
-    for (int i = enclosingPaginationFragments.size() - 1; i >= 0; --i) {
-        const PaintLayerFragment& fragment = enclosingPaginationFragments.at(i);
-
-        // Apply the page/column clip for this fragment, as well as any clips established by layers in between us and
-        // the enclosing pagination layer.
-        LayoutRect clipRect = fragment.backgroundRect.rect();
-
-        // Now compute the clips within a given fragment
-        if (parent() != enclosingPaginationLayer()) {
-            enclosingPaginationLayer()->convertToLayerCoords(rootLayer, offsetOfPaginationLayerFromRoot);
-            LayoutRect parentClipRect = clipper().backgroundClipRect(ClipRectsContext(enclosingPaginationLayer(), clipRectsCacheSlot, ExcludeOverlayScrollbarSizeForHitTesting)).rect();
-            parentClipRect.moveBy(fragment.paginationOffset + offsetOfPaginationLayerFromRoot);
-            clipRect.intersect(parentClipRect);
-        }
-
-        if (!hitTestLocation.intersects(clipRect))
-            continue;
-
-        PaintLayer* hitLayer = hitTestLayerByApplyingTransform(rootLayer, containerLayer, result, hitTestRect, hitTestLocation,
-            transformState, zOffset, fragment.paginationOffset);
-        if (hitLayer)
-            return hitLayer;
-    }
-
-    return 0;
-}
-
-PaintLayer* PaintLayer::hitTestLayerByApplyingTransform(PaintLayer* rootLayer, PaintLayer* containerLayer, HitTestResult& result,
-    const LayoutRect& hitTestRect, const HitTestLocation& hitTestLocation, const HitTestingTransformState* transformState, double* zOffset,
-    const LayoutPoint& translationOffset)
-{
-    // Create a transform state to accumulate this transform.
-    RefPtr<HitTestingTransformState> newTransformState = createLocalTransformState(rootLayer, containerLayer, hitTestRect, hitTestLocation, transformState, translationOffset);
-
-    // If the transform can't be inverted, then don't hit test this layer at all.
-    if (!newTransformState->m_accumulatedTransform.isInvertible())
-        return 0;
-
-    // Compute the point and the hit test rect in the coords of this layer by using the values
-    // from the transformState, which store the point and quad in the coords of the last flattened
-    // layer, and the accumulated transform which lets up map through preserve-3d layers.
-    //
-    // We can't just map hitTestLocation and hitTestRect because they may have been flattened (losing z)
-    // by our container.
-    FloatPoint localPoint = newTransformState->mappedPoint();
-    FloatQuad localPointQuad = newTransformState->mappedQuad();
-    LayoutRect localHitTestRect = newTransformState->boundsOfMappedArea();
-    HitTestLocation newHitTestLocation;
-    if (hitTestLocation.isRectBasedTest())
-        newHitTestLocation = HitTestLocation(localPoint, localPointQuad);
-    else
-        newHitTestLocation = HitTestLocation(localPoint);
-
-    // Now do a hit test with the root layer shifted to be us.
-    return hitTestLayer(this, containerLayer, result, localHitTestRect, newHitTestLocation, true, newTransformState.get(), zOffset);
-}
-
-bool PaintLayer::hitTestContents(HitTestResult& result, const LayoutRect& layerBounds, const HitTestLocation& hitTestLocation, HitTestFilter hitTestFilter) const
-{
-    ASSERT(isSelfPaintingLayer() || hasSelfPaintingLayerDescendant());
-
-    if (!layoutObject()->hitTest(result, hitTestLocation, toLayoutPoint(layerBounds.location() - layoutBoxLocation()), hitTestFilter)) {
-        // It's wrong to set innerNode, but then claim that you didn't hit anything, unless it is
-        // a rect-based test.
-        ASSERT(!result.innerNode() || (result.hitTestRequest().listBased() && result.listBasedTestResult().size()));
-        return false;
-    }
-
-    if (!result.innerNode()) {
-        // We hit something anonymous, and we didn't find a DOM node ancestor in this layer.
-
-        if (layoutObject()->isLayoutFlowThread()) {
-            // For a flow thread it's safe to just say that we didn't hit anything. That means that
-            // we'll continue as normally, and eventually hit a column set sibling instead. Column
-            // sets are also anonymous, but, unlike flow threads, they don't establish layers, so
-            // we'll fall back and hit the multicol container parent (which should have a DOM node).
-            return false;
-        }
-
-        Node* e = enclosingNode();
-        // FIXME: should be a call to result.setNodeAndPosition. What we would really want to do here is to
-        // return and look for the nearest non-anonymous ancestor, and ignore aunts and uncles on
-        // our way. It's bad to look for it manually like we do here, and give up on setting a local
-        // point in the result, because that has bad implications for text selection and
-        // caretRangeFromPoint(). See crbug.com/461791
-        if (!result.innerNode())
-            result.setInnerNode(e);
-
-    }
-    return true;
-}
-
-PaintLayer* PaintLayer::hitTestChildren(ChildrenIteration childrentoVisit, PaintLayer* rootLayer,
+// If zOffset is non-null (which indicates that the caller wants z offset
+// information), *zOffset on return is the z offset of the hit point relative to
+// the containing flattening layer.
+PaintLayer* PaintLayer::HitTestLayer(
+    PaintLayer* root_layer,
+    PaintLayer* container_layer,
     HitTestResult& result,
-    const LayoutRect& hitTestRect, const HitTestLocation& hitTestLocation,
-    const HitTestingTransformState* transformState,
-    double* zOffsetForDescendants, double* zOffset,
-    const HitTestingTransformState* unflattenedTransformState,
-    bool depthSortDescendants)
-{
-    if (!hasSelfPaintingLayerDescendant())
-        return 0;
+    const LayoutRect& hit_test_rect,
+    const HitTestLocation& hit_test_location,
+    bool applied_transform,
+    const HitTestingTransformState* transform_state,
+    double* z_offset) {
+  DCHECK(GetLayoutObject().GetDocument().Lifecycle().GetState() >=
+         DocumentLifecycle::kCompositingClean);
 
-    PaintLayer* resultLayer = 0;
-    PaintLayerStackingNodeReverseIterator iterator(*m_stackingNode, childrentoVisit);
-    while (PaintLayerStackingNode* child = iterator.next()) {
-        PaintLayer* childLayer = child->layer();
-        PaintLayer* hitLayer = 0;
-        HitTestResult tempResult(result.hitTestRequest(), result.hitTestLocation());
-        hitLayer = childLayer->hitTestLayer(rootLayer, this, tempResult, hitTestRect, hitTestLocation, false, transformState, zOffsetForDescendants);
+  if (!IsSelfPaintingLayer() && !HasSelfPaintingLayerDescendant())
+    return nullptr;
 
-        // If it is a list-based test, we can safely append the temporary result since it might had hit
-        // nodes but not necesserily had hitLayer set.
-        ASSERT(!result.isRectBasedTest() || result.hitTestRequest().listBased());
-        if (result.hitTestRequest().listBased())
-            result.append(tempResult);
+  ClipRectsCacheSlot clip_rects_cache_slot =
+      result.GetHitTestRequest().IgnoreClipping()
+          ? kRootRelativeClipRectsIgnoringViewportClip
+          : kRootRelativeClipRects;
 
-        if (isHitCandidate(hitLayer, depthSortDescendants, zOffset, unflattenedTransformState)) {
-            resultLayer = hitLayer;
-            if (!result.hitTestRequest().listBased())
-                result = tempResult;
-            if (!depthSortDescendants)
-                break;
-        }
+  // Apply a transform if we have one.
+  if (Transform() && !applied_transform) {
+    if (EnclosingPaginationLayer())
+      return HitTestTransformedLayerInFragments(
+          root_layer, container_layer, result, hit_test_rect, hit_test_location,
+          transform_state, z_offset, clip_rects_cache_slot);
+
+    // Make sure the parent's clip rects have been calculated.
+    if (Parent()) {
+      ClipRect clip_rect;
+      Clipper(PaintLayer::kDoNotUseGeometryMapper)
+          .CalculateBackgroundClipRect(
+              ClipRectsContext(root_layer, clip_rects_cache_slot,
+                               kExcludeOverlayScrollbarSizeForHitTesting),
+              clip_rect);
+      // Go ahead and test the enclosing clip now.
+      if (!clip_rect.Intersects(hit_test_location))
+        return nullptr;
     }
 
-    return resultLayer;
+    return HitTestLayerByApplyingTransform(root_layer, container_layer, result,
+                                           hit_test_rect, hit_test_location,
+                                           transform_state, z_offset);
+  }
+
+  if (HitTestClippedOutByClipPath(root_layer, hit_test_location))
+    return nullptr;
+
+  // The natural thing would be to keep HitTestingTransformState on the stack,
+  // but it's big, so we heap-allocate.
+  RefPtr<HitTestingTransformState> local_transform_state;
+  if (applied_transform) {
+    // We computed the correct state in the caller (above code), so just
+    // reference it.
+    DCHECK(transform_state);
+    local_transform_state =
+        const_cast<HitTestingTransformState*>(transform_state);
+  } else if (transform_state || has3d_transformed_descendant_ ||
+             Preserves3D()) {
+    // We need transform state for the first time, or to offset the container
+    // state, so create it here.
+    local_transform_state =
+        CreateLocalTransformState(root_layer, container_layer, hit_test_rect,
+                                  hit_test_location, transform_state);
+  }
+
+  // Check for hit test on backface if backface-visibility is 'hidden'
+  if (local_transform_state &&
+      GetLayoutObject().Style()->BackfaceVisibility() ==
+          kBackfaceVisibilityHidden) {
+    TransformationMatrix inverted_matrix =
+        local_transform_state->accumulated_transform_.Inverse();
+    // If the z-vector of the matrix is negative, the back is facing towards the
+    // viewer.
+    if (inverted_matrix.M33() < 0)
+      return nullptr;
+  }
+
+  RefPtr<HitTestingTransformState> unflattened_transform_state =
+      local_transform_state;
+  if (local_transform_state && !Preserves3D()) {
+    // Keep a copy of the pre-flattening state, for computing z-offsets for the
+    // container
+    unflattened_transform_state =
+        HitTestingTransformState::Create(*local_transform_state);
+    // This layer is flattening, so flatten the state passed to descendants.
+    local_transform_state->Flatten();
+  }
+
+  // The following are used for keeping track of the z-depth of the hit point of
+  // 3d-transformed descendants.
+  double local_z_offset = -std::numeric_limits<double>::infinity();
+  double* z_offset_for_descendants_ptr = 0;
+  double* z_offset_for_contents_ptr = 0;
+
+  bool depth_sort_descendants = false;
+  if (Preserves3D()) {
+    depth_sort_descendants = true;
+    // Our layers can depth-test with our container, so share the z depth
+    // pointer with the container, if it passed one down.
+    z_offset_for_descendants_ptr = z_offset ? z_offset : &local_z_offset;
+    z_offset_for_contents_ptr = z_offset ? z_offset : &local_z_offset;
+  } else if (z_offset) {
+    z_offset_for_descendants_ptr = 0;
+    // Container needs us to give back a z offset for the hit layer.
+    z_offset_for_contents_ptr = z_offset;
+  }
+
+  // This variable tracks which layer the mouse ends up being inside.
+  PaintLayer* candidate_layer = 0;
+
+  // Begin by walking our list of positive layers from highest z-index down to
+  // the lowest z-index.
+  PaintLayer* hit_layer = HitTestChildren(
+      kPositiveZOrderChildren, root_layer, result, hit_test_rect,
+      hit_test_location, local_transform_state.Get(),
+      z_offset_for_descendants_ptr, z_offset, unflattened_transform_state.Get(),
+      depth_sort_descendants);
+  if (hit_layer) {
+    if (!depth_sort_descendants)
+      return hit_layer;
+    candidate_layer = hit_layer;
+  }
+
+  // Now check our overflow objects.
+  hit_layer = HitTestChildren(
+      kNormalFlowChildren, root_layer, result, hit_test_rect, hit_test_location,
+      local_transform_state.Get(), z_offset_for_descendants_ptr, z_offset,
+      unflattened_transform_state.Get(), depth_sort_descendants);
+  if (hit_layer) {
+    if (!depth_sort_descendants)
+      return hit_layer;
+    candidate_layer = hit_layer;
+  }
+
+  // Collect the fragments. This will compute the clip rectangles for each layer
+  // fragment.
+  PaintLayerFragments layer_fragments;
+  if (applied_transform)
+    AppendSingleFragmentIgnoringPagination(
+        layer_fragments, root_layer, hit_test_rect, clip_rects_cache_slot,
+        PaintLayer::kDoNotUseGeometryMapper,
+        kExcludeOverlayScrollbarSizeForHitTesting);
+  else
+    CollectFragments(layer_fragments, root_layer, hit_test_rect,
+                     clip_rects_cache_slot, PaintLayer::kDoNotUseGeometryMapper,
+                     kExcludeOverlayScrollbarSizeForHitTesting);
+
+  if (scrollable_area_ && scrollable_area_->HitTestResizerInFragments(
+                              layer_fragments, hit_test_location)) {
+    GetLayoutObject().UpdateHitTestResult(result, hit_test_location.Point());
+    return this;
+  }
+
+  // Next we want to see if the mouse pos is inside the child LayoutObjects of
+  // the layer. Check every fragment in reverse order.
+  if (IsSelfPaintingLayer()) {
+    // Hit test with a temporary HitTestResult, because we only want to commit
+    // to 'result' if we know we're frontmost.
+    HitTestResult temp_result(result.GetHitTestRequest(),
+                              result.GetHitTestLocation());
+    bool inside_fragment_foreground_rect = false;
+    if (HitTestContentsForFragments(layer_fragments, temp_result,
+                                    hit_test_location, kHitTestDescendants,
+                                    inside_fragment_foreground_rect) &&
+        IsHitCandidate(this, false, z_offset_for_contents_ptr,
+                       unflattened_transform_state.Get())) {
+      if (result.GetHitTestRequest().ListBased())
+        result.Append(temp_result);
+      else
+        result = temp_result;
+      if (!depth_sort_descendants)
+        return this;
+      // Foreground can depth-sort with descendant layers, so keep this as a
+      // candidate.
+      candidate_layer = this;
+    } else if (inside_fragment_foreground_rect &&
+               result.GetHitTestRequest().ListBased()) {
+      result.Append(temp_result);
+    }
+  }
+
+  // Now check our negative z-index children.
+  hit_layer = HitTestChildren(
+      kNegativeZOrderChildren, root_layer, result, hit_test_rect,
+      hit_test_location, local_transform_state.Get(),
+      z_offset_for_descendants_ptr, z_offset, unflattened_transform_state.Get(),
+      depth_sort_descendants);
+  if (hit_layer) {
+    if (!depth_sort_descendants)
+      return hit_layer;
+    candidate_layer = hit_layer;
+  }
+
+  // If we found a layer, return. Child layers, and foreground always render in
+  // front of background.
+  if (candidate_layer)
+    return candidate_layer;
+
+  if (IsSelfPaintingLayer()) {
+    HitTestResult temp_result(result.GetHitTestRequest(),
+                              result.GetHitTestLocation());
+    bool inside_fragment_background_rect = false;
+    if (HitTestContentsForFragments(layer_fragments, temp_result,
+                                    hit_test_location, kHitTestSelf,
+                                    inside_fragment_background_rect) &&
+        IsHitCandidate(this, false, z_offset_for_contents_ptr,
+                       unflattened_transform_state.Get())) {
+      if (result.IsRectBasedTest())
+        result.Append(temp_result);
+      else
+        result = temp_result;
+      return this;
+    }
+    if (inside_fragment_background_rect &&
+        result.GetHitTestRequest().ListBased())
+      result.Append(temp_result);
+  }
+
+  return nullptr;
 }
 
-bool PaintLayer::hitTestClippedOutByClipPath(PaintLayer* rootLayer, const HitTestLocation& hitTestLocation) const
-{
-    if (!layoutObject()->hasClipPath())
-        return false;
-    ASSERT(isSelfPaintingLayer());
-
-    LayoutPoint offsetToRootLayer;
-    if (rootLayer)
-        convertToLayerCoords(rootLayer, offsetToRootLayer);
-    LayoutRect rootRelativeBounds = physicalBoundingBoxIncludingReflectionAndStackingChildren(offsetToRootLayer);
-
-    ClipPathOperation* clipPathOperation = layoutObject()->style()->clipPath();
-    ASSERT(clipPathOperation);
-    if (clipPathOperation->type() == ClipPathOperation::SHAPE) {
-        ShapeClipPathOperation* clipPath = toShapeClipPathOperation(clipPathOperation);
-        if (!clipPath->path(FloatRect(rootRelativeBounds)).contains(FloatPoint(hitTestLocation.point())))
-            return true;
-    } else {
-        ASSERT(clipPathOperation->type() == ClipPathOperation::REFERENCE);
-        ReferenceClipPathOperation* referenceClipPathOperation = toReferenceClipPathOperation(clipPathOperation);
-        Element* element = layoutObject()->document().getElementById(referenceClipPathOperation->fragment());
-        if (isSVGClipPathElement(element) && element->layoutObject()) {
-            LayoutSVGResourceClipper* clipper = toLayoutSVGResourceClipper(toLayoutSVGResourceContainer(element->layoutObject()));
-            if (!clipper->hitTestClipContent(FloatRect(rootRelativeBounds), FloatPoint(hitTestLocation.point())))
-                return true;
-        }
-    }
-
+bool PaintLayer::HitTestContentsForFragments(
+    const PaintLayerFragments& layer_fragments,
+    HitTestResult& result,
+    const HitTestLocation& hit_test_location,
+    HitTestFilter hit_test_filter,
+    bool& inside_clip_rect) const {
+  if (layer_fragments.IsEmpty())
     return false;
+
+  for (int i = layer_fragments.size() - 1; i >= 0; --i) {
+    const PaintLayerFragment& fragment = layer_fragments.at(i);
+    if ((hit_test_filter == kHitTestSelf &&
+         !fragment.background_rect.Intersects(hit_test_location)) ||
+        (hit_test_filter == kHitTestDescendants &&
+         !fragment.foreground_rect.Intersects(hit_test_location)))
+      continue;
+    inside_clip_rect = true;
+    if (HitTestContents(result, fragment.layer_bounds, hit_test_location,
+                        hit_test_filter))
+      return true;
+  }
+
+  return false;
 }
 
-bool PaintLayer::intersectsDamageRect(const LayoutRect& layerBounds, const LayoutRect& damageRect, const LayoutPoint& offsetFromRoot) const
-{
-    // Always examine the canvas and the root.
-    // FIXME: Could eliminate the isDocumentElement() check if we fix background painting so that the LayoutView
-    // paints the root's background.
-    if (isRootLayer() || layoutObject()->isDocumentElement())
-        return true;
+PaintLayer* PaintLayer::HitTestTransformedLayerInFragments(
+    PaintLayer* root_layer,
+    PaintLayer* container_layer,
+    HitTestResult& result,
+    const LayoutRect& hit_test_rect,
+    const HitTestLocation& hit_test_location,
+    const HitTestingTransformState* transform_state,
+    double* z_offset,
+    ClipRectsCacheSlot clip_rects_cache_slot) {
+  PaintLayerFragments enclosing_pagination_fragments;
+  LayoutPoint offset_of_pagination_layer_from_root;
+  // FIXME: We're missing a sub-pixel offset here crbug.com/348728
+  LayoutRect transformed_extent = TransparencyClipBox(
+      this, EnclosingPaginationLayer(), kHitTestingTransparencyClipBox,
+      PaintLayer::kRootOfTransparencyClipBox, LayoutSize());
+  EnclosingPaginationLayer()->CollectFragments(
+      enclosing_pagination_fragments, root_layer, hit_test_rect,
+      clip_rects_cache_slot, PaintLayer::kDoNotUseGeometryMapper,
+      kExcludeOverlayScrollbarSizeForHitTesting, kRespectOverflowClip,
+      &offset_of_pagination_layer_from_root, LayoutSize(), &transformed_extent);
 
-    // If we aren't an inline flow, and our layer bounds do intersect the damage rect, then we
-    // can go ahead and return true.
-    LayoutView* view = layoutObject()->view();
-    ASSERT(view);
-    if (view && !layoutObject()->isLayoutInline()) {
-        if (layerBounds.intersects(damageRect))
-            return true;
+  for (int i = enclosing_pagination_fragments.size() - 1; i >= 0; --i) {
+    const PaintLayerFragment& fragment = enclosing_pagination_fragments.at(i);
+
+    // Apply the page/column clip for this fragment, as well as any clips
+    // established by layers in between us and the enclosing pagination layer.
+    LayoutRect clip_rect = fragment.background_rect.Rect();
+
+    // Now compute the clips within a given fragment
+    if (Parent() != EnclosingPaginationLayer()) {
+      EnclosingPaginationLayer()->ConvertToLayerCoords(
+          root_layer, offset_of_pagination_layer_from_root);
+
+      ClipRect parent_clip_rect;
+      Clipper(PaintLayer::kDoNotUseGeometryMapper)
+          .CalculateBackgroundClipRect(
+              ClipRectsContext(EnclosingPaginationLayer(),
+                               clip_rects_cache_slot,
+                               kExcludeOverlayScrollbarSizeForHitTesting),
+              parent_clip_rect);
+
+      parent_clip_rect.MoveBy(fragment.pagination_offset +
+                              offset_of_pagination_layer_from_root);
+      clip_rect.Intersect(parent_clip_rect.Rect());
     }
 
-    // Otherwise we need to compute the bounding box of this single layer and see if it intersects
-    // the damage rect.
-    return physicalBoundingBox(offsetFromRoot).intersects(damageRect);
+    if (!hit_test_location.Intersects(clip_rect))
+      continue;
+
+    PaintLayer* hit_layer = HitTestLayerByApplyingTransform(
+        root_layer, container_layer, result, hit_test_rect, hit_test_location,
+        transform_state, z_offset, fragment.pagination_offset);
+    if (hit_layer)
+      return hit_layer;
+  }
+
+  return 0;
 }
 
-LayoutRect PaintLayer::logicalBoundingBox() const
-{
-    return layoutObject()->visualOverflowRect();
+PaintLayer* PaintLayer::HitTestLayerByApplyingTransform(
+    PaintLayer* root_layer,
+    PaintLayer* container_layer,
+    HitTestResult& result,
+    const LayoutRect& hit_test_rect,
+    const HitTestLocation& hit_test_location,
+    const HitTestingTransformState* transform_state,
+    double* z_offset,
+    const LayoutPoint& translation_offset) {
+  // Create a transform state to accumulate this transform.
+  RefPtr<HitTestingTransformState> new_transform_state =
+      CreateLocalTransformState(root_layer, container_layer, hit_test_rect,
+                                hit_test_location, transform_state,
+                                translation_offset);
+
+  // If the transform can't be inverted, then don't hit test this layer at all.
+  if (!new_transform_state->accumulated_transform_.IsInvertible())
+    return 0;
+
+  // Compute the point and the hit test rect in the coords of this layer by
+  // using the values from the transformState, which store the point and quad in
+  // the coords of the last flattened layer, and the accumulated transform which
+  // lets up map through preserve-3d layers.
+  //
+  // We can't just map hitTestLocation and hitTestRect because they may have
+  // been flattened (losing z) by our container.
+  FloatPoint local_point = new_transform_state->MappedPoint();
+  FloatQuad local_point_quad = new_transform_state->MappedQuad();
+  LayoutRect local_hit_test_rect = new_transform_state->BoundsOfMappedArea();
+  HitTestLocation new_hit_test_location;
+  if (hit_test_location.IsRectBasedTest())
+    new_hit_test_location = HitTestLocation(local_point, local_point_quad);
+  else
+    new_hit_test_location = HitTestLocation(local_point);
+
+  // Now do a hit test with the root layer shifted to be us.
+  return HitTestLayer(this, container_layer, result, local_hit_test_rect,
+                      new_hit_test_location, true, new_transform_state.Get(),
+                      z_offset);
 }
 
-static inline LayoutRect flippedLogicalBoundingBox(LayoutRect boundingBox, LayoutObject* layoutObjects)
-{
-    LayoutRect result = boundingBox;
-    if (layoutObjects->isBox())
-        toLayoutBox(layoutObjects)->flipForWritingMode(result);
-    else
-        layoutObjects->containingBlock()->flipForWritingMode(result);
-    return result;
-}
+bool PaintLayer::HitTestContents(HitTestResult& result,
+                                 const LayoutRect& layer_bounds,
+                                 const HitTestLocation& hit_test_location,
+                                 HitTestFilter hit_test_filter) const {
+  DCHECK(IsSelfPaintingLayer() || HasSelfPaintingLayerDescendant());
 
-LayoutRect PaintLayer::physicalBoundingBox(const PaintLayer* ancestorLayer) const
-{
-    LayoutPoint offsetFromRoot;
-    convertToLayerCoords(ancestorLayer, offsetFromRoot);
-    return physicalBoundingBox(offsetFromRoot);
-}
-
-LayoutRect PaintLayer::physicalBoundingBox(const LayoutPoint& offsetFromRoot) const
-{
-    LayoutRect result = flippedLogicalBoundingBox(logicalBoundingBox(), layoutObject());
-    result.moveBy(offsetFromRoot);
-    return result;
-}
-
-LayoutRect PaintLayer::fragmentsBoundingBox(const PaintLayer* ancestorLayer) const
-{
-    if (!enclosingPaginationLayer())
-        return physicalBoundingBox(ancestorLayer);
-
-    LayoutRect result = flippedLogicalBoundingBox(logicalBoundingBox(), layoutObject());
-    convertFromFlowThreadToVisualBoundingBoxInAncestor(ancestorLayer, result);
-    return result;
-}
-
-LayoutRect PaintLayer::boundingBoxForCompositingOverlapTest() const
-{
-    // Apply NeverIncludeTransformForAncestorLayer, because the geometry map in CompositingInputsUpdater will take care of applying the
-    // transform of |this| (== the ancestorLayer argument to boundingBoxForCompositing).
-    // TODO(trchen): Layer fragmentation is inhibited across compositing boundary. Should we
-    // return the unfragmented bounds for overlap testing? Or perhaps assume fragmented layers
-    // always overlap?
-    return overlapBoundsIncludeChildren() ? boundingBoxForCompositing(this, NeverIncludeTransformForAncestorLayer) : fragmentsBoundingBox(this);
-}
-
-bool PaintLayer::overlapBoundsIncludeChildren() const
-{
-    const auto* style = layoutObject()->style();
-    if (style && style->filter().hasFilterThatMovesPixels())
-        return true;
-    if (RuntimeEnabledFeatures::cssBoxReflectFilterEnabled() && layoutObject()->hasReflection())
-        return true;
+  if (!GetLayoutObject().HitTest(
+          result, hit_test_location,
+          ToLayoutPoint(layer_bounds.Location() - LayoutBoxLocation()),
+          hit_test_filter)) {
+    // It's wrong to set innerNode, but then claim that you didn't hit anything,
+    // unless it is a rect-based test.
+    DCHECK(!result.InnerNode() || (result.GetHitTestRequest().ListBased() &&
+                                   result.ListBasedTestResult().size()));
     return false;
+  }
+
+  if (!result.InnerNode()) {
+    // We hit something anonymous, and we didn't find a DOM node ancestor in
+    // this layer.
+
+    if (GetLayoutObject().IsLayoutFlowThread()) {
+      // For a flow thread it's safe to just say that we didn't hit anything.
+      // That means that we'll continue as normally, and eventually hit a column
+      // set sibling instead. Column sets are also anonymous, but, unlike flow
+      // threads, they don't establish layers, so we'll fall back and hit the
+      // multicol container parent (which should have a DOM node).
+      return false;
+    }
+
+    Node* e = EnclosingNode();
+    // FIXME: should be a call to result.setNodeAndPosition. What we would
+    // really want to do here is to return and look for the nearest
+    // non-anonymous ancestor, and ignore aunts and uncles on our way. It's bad
+    // to look for it manually like we do here, and give up on setting a local
+    // point in the result, because that has bad implications for text selection
+    // and caretRangeFromPoint(). See crbug.com/461791
+    if (!result.InnerNode())
+      result.SetInnerNode(e);
+  }
+  return true;
 }
 
-static void expandRectForReflectionAndStackingChildren(const PaintLayer* ancestorLayer, LayoutRect& result)
-{
-    if (ancestorLayer->reflectionInfo() && !ancestorLayer->reflectionInfo()->reflectionLayer()->hasCompositedLayerMapping() && !RuntimeEnabledFeatures::cssBoxReflectFilterEnabled())
-        result.unite(ancestorLayer->reflectionInfo()->reflectionLayer()->boundingBoxForCompositing(ancestorLayer));
+PaintLayer* PaintLayer::HitTestChildren(
+    ChildrenIteration childrento_visit,
+    PaintLayer* root_layer,
+    HitTestResult& result,
+    const LayoutRect& hit_test_rect,
+    const HitTestLocation& hit_test_location,
+    const HitTestingTransformState* transform_state,
+    double* z_offset_for_descendants,
+    double* z_offset,
+    const HitTestingTransformState* unflattened_transform_state,
+    bool depth_sort_descendants) {
+  if (!HasSelfPaintingLayerDescendant())
+    return 0;
 
-    ASSERT(ancestorLayer->stackingNode()->isStackingContext() || !ancestorLayer->stackingNode()->hasPositiveZOrderList());
+  PaintLayer* result_layer = 0;
+  PaintLayerStackingNodeReverseIterator iterator(*stacking_node_,
+                                                 childrento_visit);
+  while (PaintLayerStackingNode* child = iterator.Next()) {
+    PaintLayer* child_layer = child->Layer();
+    PaintLayer* hit_layer = 0;
+    HitTestResult temp_result(result.GetHitTestRequest(),
+                              result.GetHitTestLocation());
+    hit_layer = child_layer->HitTestLayer(
+        root_layer, this, temp_result, hit_test_rect, hit_test_location, false,
+        transform_state, z_offset_for_descendants);
 
-#if ENABLE(ASSERT)
-    LayerListMutationDetector mutationChecker(const_cast<PaintLayer*>(ancestorLayer)->stackingNode());
+    // If it is a list-based test, we can safely append the temporary result
+    // since it might had hit nodes but not necesserily had hitLayer set.
+    DCHECK(!result.IsRectBasedTest() || result.GetHitTestRequest().ListBased());
+    if (result.GetHitTestRequest().ListBased())
+      result.Append(temp_result);
+
+    if (IsHitCandidate(hit_layer, depth_sort_descendants, z_offset,
+                       unflattened_transform_state)) {
+      result_layer = hit_layer;
+      if (!result.GetHitTestRequest().ListBased())
+        result = temp_result;
+      if (!depth_sort_descendants)
+        break;
+    }
+  }
+
+  return result_layer;
+}
+
+FloatRect PaintLayer::BoxForFilterOrMask() const {
+  return FloatRect(PhysicalBoundingBoxIncludingStackingChildren(
+      LayoutPoint(), PaintLayer::CalculateBoundsOptions::
+                         kIncludeTransformsAndCompositedChildLayers));
+}
+
+LayoutRect PaintLayer::BoxForClipPath() const {
+  if (!GetLayoutObject().IsBox()) {
+    SECURITY_DCHECK(GetLayoutObject().IsLayoutInline());
+    const LayoutInline& layout_inline = ToLayoutInline(GetLayoutObject());
+    // This somewhat convoluted computation matches what Gecko does.
+    // See crbug.com/641907.
+    LayoutRect inline_b_box = layout_inline.LinesBoundingBox();
+    const InlineFlowBox* flow_box = layout_inline.FirstLineBox();
+    inline_b_box.SetHeight(flow_box ? flow_box->FrameRect().Height()
+                                    : LayoutUnit(0));
+    return inline_b_box;
+  }
+  return ToLayoutBox(GetLayoutObject()).BorderBoxRect();
+}
+
+bool PaintLayer::HitTestClippedOutByClipPath(
+    PaintLayer* root_layer,
+    const HitTestLocation& hit_test_location) const {
+  if (!GetLayoutObject().HasClipPath())
+    return false;
+  DCHECK(IsSelfPaintingLayer());
+  DCHECK(root_layer);
+
+  LayoutRect reference_box(BoxForClipPath());
+  if (EnclosingPaginationLayer())
+    ConvertFromFlowThreadToVisualBoundingBoxInAncestor(root_layer,
+                                                       reference_box);
+  else
+    ConvertToLayerCoords(root_layer, reference_box);
+
+  FloatPoint point(hit_test_location.Point());
+
+  ClipPathOperation* clip_path_operation =
+      GetLayoutObject().Style()->ClipPath();
+  DCHECK(clip_path_operation);
+  if (clip_path_operation->GetType() == ClipPathOperation::SHAPE) {
+    ShapeClipPathOperation* clip_path =
+        ToShapeClipPathOperation(clip_path_operation);
+    return !clip_path->GetPath(FloatRect(reference_box)).Contains(point);
+  }
+  DCHECK_EQ(clip_path_operation->GetType(), ClipPathOperation::REFERENCE);
+  Node* target_node = GetLayoutObject().GetNode();
+  if (!target_node)
+    return false;
+  const ReferenceClipPathOperation& reference_clip_path_operation =
+      ToReferenceClipPathOperation(*clip_path_operation);
+  SVGElement* element =
+      reference_clip_path_operation.FindElement(target_node->GetTreeScope());
+  if (!isSVGClipPathElement(element) || !element->GetLayoutObject())
+    return false;
+  LayoutSVGResourceClipper* clipper = ToLayoutSVGResourceClipper(
+      ToLayoutSVGResourceContainer(element->GetLayoutObject()));
+  // If the clipPath is using "userspace on use" units, then the origin of
+  // the coordinate system is the top-left of the reference box, so adjust
+  // the point accordingly.
+  if (clipper->ClipPathUnits() == SVGUnitTypes::kSvgUnitTypeUserspaceonuse)
+    point.MoveBy(-reference_box.Location());
+  return !clipper->HitTestClipContent(FloatRect(reference_box), point);
+}
+
+bool PaintLayer::IntersectsDamageRect(
+    const LayoutRect& layer_bounds,
+    const LayoutRect& damage_rect,
+    const LayoutPoint& offset_from_root) const {
+  // Always examine the canvas and the root.
+  // FIXME: Could eliminate the isDocumentElement() check if we fix background
+  // painting so that the LayoutView paints the root's background.
+  if (IsRootLayer() || GetLayoutObject().IsDocumentElement())
+    return true;
+
+  // If we aren't an inline flow, and our layer bounds do intersect the damage
+  // rect, then we can go ahead and return true.
+  LayoutView* view = GetLayoutObject().View();
+  DCHECK(view);
+  if (view && !GetLayoutObject().IsLayoutInline()) {
+    if (layer_bounds.Intersects(damage_rect))
+      return true;
+  }
+
+  // Otherwise we need to compute the bounding box of this single layer and see
+  // if it intersects the damage rect.
+  return PhysicalBoundingBox(offset_from_root).Intersects(damage_rect);
+}
+
+LayoutRect PaintLayer::LogicalBoundingBox() const {
+  LayoutRect rect = GetLayoutObject().VisualOverflowRect();
+
+  if (IsRootLayer()) {
+    rect.Unite(LayoutRect(rect.Location(),
+                          GetLayoutObject().View()->ViewRect().Size()));
+  }
+
+  return rect;
+}
+
+static inline LayoutRect FlippedLogicalBoundingBox(
+    LayoutRect bounding_box,
+    LayoutObject& layout_object) {
+  LayoutRect result = bounding_box;
+  if (layout_object.IsBox())
+    ToLayoutBox(layout_object).FlipForWritingMode(result);
+  else
+    layout_object.ContainingBlock()->FlipForWritingMode(result);
+  return result;
+}
+
+LayoutRect PaintLayer::PhysicalBoundingBox(
+    const PaintLayer* ancestor_layer) const {
+  LayoutPoint offset_from_root;
+  ConvertToLayerCoords(ancestor_layer, offset_from_root);
+  return PhysicalBoundingBox(offset_from_root);
+}
+
+LayoutRect PaintLayer::PhysicalBoundingBox(
+    const LayoutPoint& offset_from_root) const {
+  LayoutRect result =
+      FlippedLogicalBoundingBox(LogicalBoundingBox(), GetLayoutObject());
+  result.MoveBy(offset_from_root);
+  return result;
+}
+
+LayoutRect PaintLayer::FragmentsBoundingBox(
+    const PaintLayer* ancestor_layer) const {
+  if (!EnclosingPaginationLayer())
+    return PhysicalBoundingBox(ancestor_layer);
+
+  LayoutRect result =
+      FlippedLogicalBoundingBox(LogicalBoundingBox(), GetLayoutObject());
+  ConvertFromFlowThreadToVisualBoundingBoxInAncestor(ancestor_layer, result);
+  return result;
+}
+
+LayoutRect PaintLayer::BoundingBoxForCompositingOverlapTest() const {
+  // Apply NeverIncludeTransformForAncestorLayer, because the geometry map in
+  // CompositingInputsUpdater will take care of applying the transform of |this|
+  // (== the ancestorLayer argument to boundingBoxForCompositing).
+  // TODO(trchen): Layer fragmentation is inhibited across compositing boundary.
+  // Should we return the unfragmented bounds for overlap testing? Or perhaps
+  // assume fragmented layers always overlap?
+  return OverlapBoundsIncludeChildren()
+             ? BoundingBoxForCompositingInternal(
+                   *this, nullptr, kNeverIncludeTransformForAncestorLayer)
+             : FragmentsBoundingBox(this);
+}
+
+bool PaintLayer::OverlapBoundsIncludeChildren() const {
+  return HasFilterThatMovesPixels();
+}
+
+void PaintLayer::ExpandRectForStackingChildren(
+    const PaintLayer& composited_layer,
+    LayoutRect& result,
+    PaintLayer::CalculateBoundsOptions options) const {
+  DCHECK(StackingNode()->IsStackingContext() ||
+         !StackingNode()->HasPositiveZOrderList());
+
+#if DCHECK_IS_ON()
+  LayerListMutationDetector mutation_checker(
+      const_cast<PaintLayer*>(this)->StackingNode());
 #endif
 
-    PaintLayerStackingNodeIterator iterator(*ancestorLayer->stackingNode(), AllChildren);
-    while (PaintLayerStackingNode* node = iterator.next()) {
-        // Here we exclude both directly composited layers and squashing layers
-        // because those Layers don't paint into the graphics layer
-        // for this Layer. For example, the bounds of squashed Layers
-        // will be included in the computation of the appropriate squashing
-        // GraphicsLayer.
-        if (node->layer()->compositingState() != NotComposited)
-            continue;
-        result.unite(node->layer()->boundingBoxForCompositing(ancestorLayer));
-    }
+  PaintLayerStackingNodeIterator iterator(*this->StackingNode(), kAllChildren);
+  while (PaintLayerStackingNode* node = iterator.Next()) {
+    // Here we exclude both directly composited layers and squashing layers
+    // because those Layers don't paint into the graphics layer
+    // for this Layer. For example, the bounds of squashed Layers
+    // will be included in the computation of the appropriate squashing
+    // GraphicsLayer.
+    if (options != PaintLayer::CalculateBoundsOptions::
+                       kIncludeTransformsAndCompositedChildLayers &&
+        node->Layer()->GetCompositingState() != kNotComposited)
+      continue;
+    result.Unite(node->Layer()->BoundingBoxForCompositingInternal(
+        composited_layer, this, options));
+  }
 }
 
-LayoutRect PaintLayer::physicalBoundingBoxIncludingReflectionAndStackingChildren(const LayoutPoint& offsetFromRoot) const
-{
-    LayoutRect result = physicalBoundingBox(LayoutPoint());
+LayoutRect PaintLayer::PhysicalBoundingBoxIncludingStackingChildren(
+    const LayoutPoint& offset_from_root,
+    CalculateBoundsOptions options) const {
+  LayoutRect result = PhysicalBoundingBox(LayoutPoint());
 
-    const_cast<PaintLayer*>(this)->stackingNode()->updateLayerListsIfNeeded();
+  const_cast<PaintLayer*>(this)->StackingNode()->UpdateLayerListsIfNeeded();
 
-    expandRectForReflectionAndStackingChildren(this, result);
+  ExpandRectForStackingChildren(*this, result, options);
 
-    result.moveBy(offsetFromRoot);
+  result.MoveBy(offset_from_root);
+  return result;
+}
+
+LayoutRect PaintLayer::BoundingBoxForCompositing() const {
+  return BoundingBoxForCompositingInternal(
+      *this, nullptr, kMaybeIncludeTransformForAncestorLayer);
+}
+
+LayoutRect PaintLayer::BoundingBoxForCompositingInternal(
+    const PaintLayer& composited_layer,
+    const PaintLayer* stacking_parent,
+    CalculateBoundsOptions options) const {
+  if (!IsSelfPaintingLayer())
+    return LayoutRect();
+
+  // FIXME: This could be improved to do a check like
+  // hasVisibleNonCompositingDescendantLayers() (bug 92580).
+  if (this != &composited_layer && !HasVisibleContent() &&
+      !HasVisibleDescendant())
+    return LayoutRect();
+
+  if (IsRootLayer()) {
+    // In root layer scrolling mode, the main GraphicsLayer is the size of the
+    // layout viewport. In non-RLS mode, it is the union of the layout viewport
+    // and the document's layout overflow rect.
+    IntRect result = IntRect();
+    if (FrameView* frame_view = GetLayoutObject().GetFrameView())
+      result = IntRect(IntPoint(), frame_view->VisibleContentSize());
+    if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
+      result.Unite(GetLayoutObject().View()->DocumentRect());
+    return LayoutRect(result);
+  }
+
+  // The layer created for the LayoutFlowThread is just a helper for painting
+  // and hit-testing, and should not contribute to the bounding box. The
+  // LayoutMultiColumnSets will contribute the correct size for the layout
+  // content of the multicol container.
+  if (GetLayoutObject().IsLayoutFlowThread())
+    return LayoutRect();
+
+  const_cast<PaintLayer*>(this)->StackingNode()->UpdateLayerListsIfNeeded();
+
+  // If there is a clip applied by an ancestor to this PaintLayer but below or
+  // equal to |ancestorLayer|, apply that clip.
+  LayoutRect result = Clipper(PaintLayer::kDoNotUseGeometryMapper)
+                          .LocalClipRect(composited_layer);
+
+  result.Intersect(PhysicalBoundingBox(LayoutPoint()));
+
+  ExpandRectForStackingChildren(composited_layer, result, options);
+
+  // Only enlarge by the filter outsets if we know the filter is going to be
+  // rendered in software.  Accelerated filters will handle their own outsets.
+  if (PaintsWithFilters())
+    result = MapLayoutRectForFilter(result);
+
+  if (Transform() && (options == kIncludeTransformsAndCompositedChildLayers ||
+                      ((PaintsWithTransform(kGlobalPaintNormalPhase) &&
+                        (this != &composited_layer ||
+                         options == kMaybeIncludeTransformForAncestorLayer)))))
+    result = Transform()->MapRect(result);
+
+  if (ShouldFragmentCompositedBounds(&composited_layer)) {
+    ConvertFromFlowThreadToVisualBoundingBoxInAncestor(&composited_layer,
+                                                       result);
     return result;
-}
+  }
 
-LayoutRect PaintLayer::boundingBoxForCompositing(const PaintLayer* ancestorLayer, CalculateBoundsOptions options) const
-{
-    if (!isSelfPaintingLayer())
-        return LayoutRect();
-
-    if (!ancestorLayer)
-        ancestorLayer = this;
-
-    // FIXME: This could be improved to do a check like hasVisibleNonCompositingDescendantLayers() (bug 92580).
-    if (this != ancestorLayer && !hasVisibleContent() && !hasVisibleDescendant())
-        return LayoutRect();
-
-    // Without composited scrolling, the root layer is the size of the document.
-    if (isRootLayer() && !needsCompositedScrolling())
-        return LayoutRect(m_layoutObject->view()->documentRect());
-
-    // The layer created for the LayoutFlowThread is just a helper for painting and hit-testing,
-    // and should not contribute to the bounding box. The LayoutMultiColumnSets will contribute
-    // the correct size for the layout content of the multicol container.
-    if (layoutObject()->isLayoutFlowThread())
-        return LayoutRect();
-
-    // If there is a clip applied by an ancestor to this PaintLayer but below or equal to |ancestorLayer|,
-    // use that clip as the bounds rather than the recursive bounding boxes, since the latter may be larger than the
-    // actual size. See https://bugs.webkit.org/show_bug.cgi?id=80372 for examples.
-    LayoutRect result = clipper().localClipRect(ancestorLayer);
-    // TODO(chrishtr): avoid converting to IntRect and back.
-    if (result == LayoutRect(LayoutRect::infiniteIntRect())) {
-        result = physicalBoundingBox(LayoutPoint());
-
-        const_cast<PaintLayer*>(this)->stackingNode()->updateLayerListsIfNeeded();
-
-        // Reflections are implemented with Layers that hang off of the reflected layer. However,
-        // the reflection layer subtree does not include the subtree of the parent Layer, so
-        // a recursive computation of stacking children yields no results. This breaks cases when there are stacking
-        // children of the parent, that need to be included in reflected composited bounds.
-        // Fix this by including composited bounds of stacking children of the reflected Layer.
-        if (hasCompositedLayerMapping() && parent() && parent()->reflectionInfo() && parent()->reflectionInfo()->reflectionLayer() == this)
-            expandRectForReflectionAndStackingChildren(parent(), result);
-        else
-            expandRectForReflectionAndStackingChildren(this, result);
-
-        // Only enlarge by the filter outsets if we know the filter is going to be rendered in software.
-        // Accelerated filters will handle their own outsets.
-        if (paintsWithFilters())
-            result = mapLayoutRectForFilter(result);
-    }
-
-    if (transform() && paintsWithTransform(GlobalPaintNormalPhase) && (this != ancestorLayer || options == MaybeIncludeTransformForAncestorLayer))
-        result = transform()->mapRect(result);
-
-    if (shouldFragmentCompositedBounds(ancestorLayer)) {
-        convertFromFlowThreadToVisualBoundingBoxInAncestor(ancestorLayer, result);
-        return result;
-    }
+  if (stacking_parent) {
     LayoutPoint delta;
-    convertToLayerCoords(ancestorLayer, delta);
-    result.moveBy(delta);
-    return result;
+    ConvertToLayerCoords(stacking_parent, delta);
+    result.MoveBy(delta);
+  }
+  return result;
 }
 
-CompositingState PaintLayer::compositingState() const
-{
-    ASSERT(isAllowedToQueryCompositingState());
+CompositingState PaintLayer::GetCompositingState() const {
+  DCHECK(IsAllowedToQueryCompositingState());
 
-    // This is computed procedurally so there is no redundant state variable that
-    // can get out of sync from the real actual compositing state.
+  // This is computed procedurally so there is no redundant state variable that
+  // can get out of sync from the real actual compositing state.
 
-    if (groupedMapping()) {
-        ASSERT(!compositedLayerMapping());
-        return PaintsIntoGroupedBacking;
-    }
+  if (GroupedMapping()) {
+    DCHECK(!GetCompositedLayerMapping());
+    return kPaintsIntoGroupedBacking;
+  }
 
-    if (!compositedLayerMapping())
-        return NotComposited;
+  if (!GetCompositedLayerMapping())
+    return kNotComposited;
 
-    return PaintsIntoOwnBacking;
+  return kPaintsIntoOwnBacking;
 }
 
-bool PaintLayer::isAllowedToQueryCompositingState() const
-{
-    if (gCompositingQueryMode == CompositingQueriesAreAllowed || RuntimeEnabledFeatures::slimmingPaintV2Enabled())
-        return true;
-    return layoutObject()->document().lifecycle().state() >= DocumentLifecycle::InCompositingUpdate;
-}
-
-CompositedLayerMapping* PaintLayer::compositedLayerMapping() const
-{
-    ASSERT(isAllowedToQueryCompositingState());
-    return m_rareData ? m_rareData->compositedLayerMapping.get() : nullptr;
-}
-
-GraphicsLayer* PaintLayer::graphicsLayerBacking() const
-{
-    switch (compositingState()) {
-    case NotComposited:
-        return 0;
-    case PaintsIntoGroupedBacking:
-        return groupedMapping()->squashingLayer();
-    default:
-        return compositedLayerMapping()->mainGraphicsLayer();
-    }
-}
-
-GraphicsLayer* PaintLayer::graphicsLayerBackingForScrolling() const
-{
-    switch (compositingState()) {
-    case NotComposited:
-        return 0;
-    case PaintsIntoGroupedBacking:
-        return groupedMapping()->squashingLayer();
-    default:
-        return compositedLayerMapping()->scrollingContentsLayer() ? compositedLayerMapping()->scrollingContentsLayer() : compositedLayerMapping()->mainGraphicsLayer();
-    }
-}
-
-void PaintLayer::ensureCompositedLayerMapping()
-{
-    if (m_rareData && m_rareData->compositedLayerMapping)
-        return;
-
-    ensureRareData().compositedLayerMapping = wrapUnique(new CompositedLayerMapping(*this));
-    m_rareData->compositedLayerMapping->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateSubtree);
-
-    updateOrRemoveFilterEffectBuilder();
-}
-
-void PaintLayer::clearCompositedLayerMapping(bool layerBeingDestroyed)
-{
-    if (!layerBeingDestroyed) {
-        // We need to make sure our decendants get a geometry update. In principle,
-        // we could call setNeedsGraphicsLayerUpdate on our children, but that would
-        // require walking the z-order lists to find them. Instead, we over-invalidate
-        // by marking our parent as needing a geometry update.
-        if (PaintLayer* compositingParent = enclosingLayerWithCompositedLayerMapping(ExcludeSelf))
-            compositingParent->compositedLayerMapping()->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateSubtree);
-    }
-
-    if (m_rareData)
-        m_rareData->compositedLayerMapping.reset();
-
-    if (!layerBeingDestroyed)
-        updateOrRemoveFilterEffectBuilder();
-}
-
-void PaintLayer::setGroupedMapping(CompositedLayerMapping* groupedMapping, SetGroupMappingOptions options)
-{
-    CompositedLayerMapping* oldGroupedMapping = this->groupedMapping();
-    if (groupedMapping == oldGroupedMapping)
-        return;
-
-    if (options == InvalidateLayerAndRemoveFromMapping && oldGroupedMapping) {
-        oldGroupedMapping->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateSubtree);
-        oldGroupedMapping->removeLayerFromSquashingGraphicsLayer(this);
-    }
-    if (m_rareData || groupedMapping)
-        ensureRareData().groupedMapping = groupedMapping;
-    ASSERT(!groupedMapping || groupedMapping->verifyLayerInSquashingVector(this));
-    if (options == InvalidateLayerAndRemoveFromMapping && groupedMapping)
-        groupedMapping->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateSubtree);
-}
-
-bool PaintLayer::hasCompositedMask() const
-{
-    return m_rareData && m_rareData->compositedLayerMapping && m_rareData->compositedLayerMapping->hasMaskLayer();
-}
-
-bool PaintLayer::hasCompositedClippingMask() const
-{
-    return m_rareData && m_rareData->compositedLayerMapping && m_rareData->compositedLayerMapping->hasChildClippingMaskLayer();
-}
-
-bool PaintLayer::paintsWithTransform(GlobalPaintFlags globalPaintFlags) const
-{
-    return (transform() || layoutObject()->style()->position() == FixedPosition) && ((globalPaintFlags & GlobalPaintFlattenCompositingLayers) || compositingState() != PaintsIntoOwnBacking);
-}
-
-bool PaintLayer::backgroundIsKnownToBeOpaqueInRect(const LayoutRect& localRect) const
-{
-    if (!isSelfPaintingLayer() && !hasSelfPaintingLayerDescendant())
-        return false;
-
-    if (paintsWithTransparency(GlobalPaintNormalPhase))
-        return false;
-
-    // We can't use hasVisibleContent(), because that will be true if our layoutObject is hidden, but some child
-    // is visible and that child doesn't cover the entire rect.
-    if (layoutObject()->style()->visibility() != VISIBLE)
-        return false;
-
-    if (paintsWithFilters() && layoutObject()->style()->filter().hasFilterThatAffectsOpacity())
-        return false;
-
-    // FIXME: Handle simple transforms.
-    if (paintsWithTransform(GlobalPaintNormalPhase))
-        return false;
-
-    // FIXME: Remove this check.
-    // This function should not be called when layer-lists are dirty.
-    // It is somehow getting triggered during style update.
-    if (m_stackingNode->zOrderListsDirty())
-        return false;
-
-    // FIXME: We currently only check the immediate layoutObject,
-    // which will miss many cases.
-    if (layoutObject()->backgroundIsKnownToBeOpaqueInRect(localRect))
-        return true;
-
-    // We can't consult child layers if we clip, since they might cover
-    // parts of the rect that are clipped out.
-    if (layoutObject()->hasOverflowClip() || layoutObject()->style()->containsPaint())
-        return false;
-
-    return childBackgroundIsKnownToBeOpaqueInRect(localRect);
-}
-
-bool PaintLayer::childBackgroundIsKnownToBeOpaqueInRect(const LayoutRect& localRect) const
-{
-    PaintLayerStackingNodeReverseIterator revertseIterator(*m_stackingNode, PositiveZOrderChildren | NormalFlowChildren | NegativeZOrderChildren);
-    while (PaintLayerStackingNode* child = revertseIterator.next()) {
-        const PaintLayer* childLayer = child->layer();
-        // Stop at composited paint boundaries.
-        if (childLayer->isPaintInvalidationContainer())
-            continue;
-
-        if (!childLayer->canUseConvertToLayerCoords())
-            continue;
-
-        LayoutPoint childOffset;
-        LayoutRect childLocalRect(localRect);
-        childLayer->convertToLayerCoords(this, childOffset);
-        childLocalRect.moveBy(-childOffset);
-
-        if (childLayer->backgroundIsKnownToBeOpaqueInRect(childLocalRect))
-            return true;
-    }
-    return false;
-}
-
-bool PaintLayer::shouldBeSelfPaintingLayer() const
-{
-    if (layoutObject()->isLayoutPart() && toLayoutPart(layoutObject())->requiresAcceleratedCompositing())
-        return true;
-    return layoutObject()->layerTypeRequired() == NormalPaintLayer
-        || (m_scrollableArea && m_scrollableArea->hasOverlayScrollbars())
-        || needsCompositedScrolling();
-}
-
-void PaintLayer::updateSelfPaintingLayer()
-{
-    bool isSelfPaintingLayer = shouldBeSelfPaintingLayer();
-    if (this->isSelfPaintingLayer() == isSelfPaintingLayer)
-        return;
-
-    m_isSelfPaintingLayer = isSelfPaintingLayer;
-
-    if (PaintLayer* parent = this->parent()) {
-        parent->dirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
-
-        if (PaintLayer* enclosingSelfPaintingLayer = parent->enclosingSelfPaintingLayer()) {
-            if (isSelfPaintingLayer)
-                mergeNeedsPaintPhaseFlagsFrom(*enclosingSelfPaintingLayer);
-            else
-                enclosingSelfPaintingLayer->mergeNeedsPaintPhaseFlagsFrom(*this);
-        }
-    }
-}
-
-PaintLayer* PaintLayer::enclosingSelfPaintingLayer()
-{
-    PaintLayer* layer = this;
-    while (layer && !layer->isSelfPaintingLayer())
-        layer = layer->parent();
-    return layer;
-}
-
-bool PaintLayer::hasNonEmptyChildLayoutObjects() const
-{
-    // Some HTML can cause whitespace text nodes to have layoutObjects, like:
-    // <div>
-    // <img src=...>
-    // </div>
-    // so test for 0x0 LayoutTexts here
-    for (LayoutObject* child = layoutObject()->slowFirstChild(); child; child = child->nextSibling()) {
-        if (!child->hasLayer()) {
-            if (child->isLayoutInline() || !child->isBox())
-                return true;
-
-            if (toLayoutBox(child)->size().width() > 0 || toLayoutBox(child)->size().height() > 0)
-                return true;
-        }
-    }
-    return false;
-}
-
-bool PaintLayer::hasBoxDecorationsOrBackground() const
-{
-    return layoutObject()->style()->hasBoxDecorations() || layoutObject()->style()->hasBackground();
-}
-
-bool PaintLayer::hasVisibleBoxDecorations() const
-{
-    if (!hasVisibleContent())
-        return false;
-
-    return hasBoxDecorationsOrBackground() || hasOverflowControls();
-}
-
-void PaintLayer::updateFilters(const ComputedStyle* oldStyle, const ComputedStyle& newStyle)
-{
-    if (!newStyle.hasFilterInducingProperty() && (!oldStyle || !oldStyle->hasFilterInducingProperty()))
-        return;
-
-    updateOrRemoveFilterClients();
-    updateOrRemoveFilterEffectBuilder();
-}
-
-bool PaintLayer::attemptDirectCompositingUpdate(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    CompositingReasons oldPotentialCompositingReasonsFromStyle = potentialCompositingReasonsFromStyle();
-    compositor()->updatePotentialCompositingReasonsFromStyle(this);
-
-    // This function implements an optimization for transforms and opacity.
-    // A common pattern is for a touchmove handler to update the transform
-    // and/or an opacity of an element every frame while the user moves their
-    // finger across the screen. The conditions below recognize when the
-    // compositing state is set up to receive a direct transform or opacity
-    // update.
-
-    if (!diff.hasAtMostPropertySpecificDifferences(StyleDifference::TransformChanged | StyleDifference::OpacityChanged))
-        return false;
-    // The potentialCompositingReasonsFromStyle could have changed without
-    // a corresponding StyleDifference if an animation started or ended.
-    if (potentialCompositingReasonsFromStyle() != oldPotentialCompositingReasonsFromStyle)
-        return false;
-    // We could add support for reflections if we updated the transform on
-    // the reflection layers.
-    if (layoutObject()->hasReflection())
-        return false;
-    // If we're unwinding a scheduleSVGFilterLayerUpdateHack(), then we can't
-    // perform a direct compositing update because the filters code is going
-    // to produce different output this time around. We can remove this code
-    // once we fix the chicken/egg bugs in the filters code and delete the
-    // scheduleSVGFilterLayerUpdateHack().
-    if (layoutObject()->node() && layoutObject()->node()->svgFilterNeedsLayerUpdate())
-        return false;
-    if (!m_rareData || !m_rareData->compositedLayerMapping)
-        return false;
-
-    // To cut off almost all the work in the compositing update for
-    // this case, we treat inline transforms has having assumed overlap
-    // (similar to how we treat animated transforms). Notice that we read
-    // CompositingReasonInlineTransform from the m_compositingReasons, which
-    // means that the inline transform actually triggered assumed overlap in
-    // the overlap map.
-    if (diff.transformChanged() && (!m_rareData || !(m_rareData->compositingReasons & CompositingReasonInlineTransform)))
-        return false;
-
-    // We composite transparent Layers differently from non-transparent
-    // Layers even when the non-transparent Layers are already a
-    // stacking context.
-    if (diff.opacityChanged() && m_layoutObject->style()->hasOpacity() != oldStyle->hasOpacity())
-        return false;
-
-    // Changes in pointer-events affect hit test visibility of the scrollable
-    // area and its |m_scrollsOverflow| value which determines if the layer
-    // requires composited scrolling or not.
-    if (m_scrollableArea && m_layoutObject->style()->pointerEvents() != oldStyle->pointerEvents())
-        return false;
-
-    updateTransform(oldStyle, layoutObject()->styleRef());
-
-    // FIXME: Consider introducing a smaller graphics layer update scope
-    // that just handles transforms and opacity. GraphicsLayerUpdateLocal
-    // will also program bounds, clips, and many other properties that could
-    // not possibly have changed.
-    m_rareData->compositedLayerMapping->setNeedsGraphicsLayerUpdate(GraphicsLayerUpdateLocal);
-    compositor()->setNeedsCompositingUpdate(CompositingUpdateAfterGeometryChange);
-
-    if (m_scrollableArea)
-        m_scrollableArea->updateAfterStyleChange(oldStyle);
-
+bool PaintLayer::IsAllowedToQueryCompositingState() const {
+  if (g_compositing_query_mode == kCompositingQueriesAreAllowed ||
+      RuntimeEnabledFeatures::slimmingPaintV2Enabled())
     return true;
+  return GetLayoutObject().GetDocument().Lifecycle().GetState() >=
+         DocumentLifecycle::kInCompositingUpdate;
 }
 
-void PaintLayer::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    if (attemptDirectCompositingUpdate(diff, oldStyle))
-        return;
-
-    m_stackingNode->styleDidChange(oldStyle);
-
-    if (m_scrollableArea)
-        m_scrollableArea->updateAfterStyleChange(oldStyle);
-
-    // Overlay scrollbars can make this layer self-painting so we need
-    // to recompute the bit once scrollbars have been updated.
-    updateSelfPaintingLayer();
-
-    if (!oldStyle || !layoutObject()->style()->reflectionDataEquivalent(oldStyle)) {
-        // A full layout is required for non-filter-based reflections.
-        DCHECK(!oldStyle || diff.needsFullLayout() || RuntimeEnabledFeatures::cssBoxReflectFilterEnabled());
-        updateReflectionInfo(oldStyle);
-    }
-
-    updateDescendantDependentFlags();
-
-    updateTransform(oldStyle, layoutObject()->styleRef());
-    updateFilters(oldStyle, layoutObject()->styleRef());
-
-    setNeedsCompositingInputsUpdate();
+CompositedLayerMapping* PaintLayer::GetCompositedLayerMapping() const {
+  DCHECK(IsAllowedToQueryCompositingState());
+  return rare_data_ ? rare_data_->composited_layer_mapping.get() : nullptr;
 }
 
-bool PaintLayer::scrollsOverflow() const
-{
-    if (PaintLayerScrollableArea* scrollableArea = this->getScrollableArea())
-        return scrollableArea->scrollsOverflow();
+GraphicsLayer* PaintLayer::GraphicsLayerBacking(const LayoutObject* obj) const {
+  switch (GetCompositingState()) {
+    case kNotComposited:
+      return nullptr;
+    case kPaintsIntoGroupedBacking:
+      return GroupedMapping()->SquashingLayer();
+    default:
+      return (obj != &GetLayoutObject() &&
+              GetCompositedLayerMapping()->ScrollingContentsLayer())
+                 ? GetCompositedLayerMapping()->ScrollingContentsLayer()
+                 : GetCompositedLayerMapping()->MainGraphicsLayer();
+  }
+}
 
+BackgroundPaintLocation PaintLayer::GetBackgroundPaintLocation(
+    uint32_t* reasons) const {
+  BackgroundPaintLocation location;
+  if (!ScrollsOverflow()) {
+    location = kBackgroundPaintInGraphicsLayer;
+  } else if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    location = GetLayoutObject().GetBackgroundPaintLocation(reasons);
+  } else {
+    location = IsRootLayer()
+                   ? kBackgroundPaintInGraphicsLayer
+                   : GetLayoutObject().GetBackgroundPaintLocation(reasons);
+  }
+  stacking_node_->UpdateLayerListsIfNeeded();
+  if (stacking_node_->HasNegativeZOrderList())
+    location = kBackgroundPaintInGraphicsLayer;
+  return location;
+}
+
+void PaintLayer::EnsureCompositedLayerMapping() {
+  if (rare_data_ && rare_data_->composited_layer_mapping)
+    return;
+
+  EnsureRareData().composited_layer_mapping =
+      WTF::WrapUnique(new CompositedLayerMapping(*this));
+  rare_data_->composited_layer_mapping->SetNeedsGraphicsLayerUpdate(
+      kGraphicsLayerUpdateSubtree);
+
+  if (PaintLayerResourceInfo* resource_info = this->ResourceInfo())
+    resource_info->InvalidateFilterChain();
+}
+
+void PaintLayer::ClearCompositedLayerMapping(bool layer_being_destroyed) {
+  if (!layer_being_destroyed) {
+    // We need to make sure our decendants get a geometry update. In principle,
+    // we could call setNeedsGraphicsLayerUpdate on our children, but that would
+    // require walking the z-order lists to find them. Instead, we
+    // over-invalidate by marking our parent as needing a geometry update.
+    if (PaintLayer* compositing_parent =
+            EnclosingLayerWithCompositedLayerMapping(kExcludeSelf))
+      compositing_parent->GetCompositedLayerMapping()
+          ->SetNeedsGraphicsLayerUpdate(kGraphicsLayerUpdateSubtree);
+  }
+
+  if (rare_data_)
+    rare_data_->composited_layer_mapping.reset();
+
+  if (layer_being_destroyed)
+    return;
+
+  if (PaintLayerResourceInfo* resource_info = this->ResourceInfo())
+    resource_info->InvalidateFilterChain();
+}
+
+void PaintLayer::SetGroupedMapping(CompositedLayerMapping* grouped_mapping,
+                                   SetGroupMappingOptions options) {
+  CompositedLayerMapping* old_grouped_mapping = this->GroupedMapping();
+  if (grouped_mapping == old_grouped_mapping)
+    return;
+
+  if (options == kInvalidateLayerAndRemoveFromMapping && old_grouped_mapping) {
+    old_grouped_mapping->SetNeedsGraphicsLayerUpdate(
+        kGraphicsLayerUpdateSubtree);
+    old_grouped_mapping->RemoveLayerFromSquashingGraphicsLayer(this);
+  }
+  if (rare_data_ || grouped_mapping)
+    EnsureRareData().grouped_mapping = grouped_mapping;
+#if DCHECK_IS_ON()
+  DCHECK(!grouped_mapping ||
+         grouped_mapping->VerifyLayerInSquashingVector(this));
+#endif
+  if (options == kInvalidateLayerAndRemoveFromMapping && grouped_mapping)
+    grouped_mapping->SetNeedsGraphicsLayerUpdate(kGraphicsLayerUpdateSubtree);
+}
+
+bool PaintLayer::MaskBlendingAppliedByCompositor() const {
+  DCHECK(layout_object_.HasMask());
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+    return true;
+  return rare_data_ && rare_data_->composited_layer_mapping &&
+         rare_data_->composited_layer_mapping->HasMaskLayer();
+}
+
+bool PaintLayer::HasCompositedClippingMask() const {
+  return rare_data_ && rare_data_->composited_layer_mapping &&
+         rare_data_->composited_layer_mapping->HasChildClippingMaskLayer();
+}
+
+bool PaintLayer::PaintsWithTransform(
+    GlobalPaintFlags global_paint_flags) const {
+  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled()) {
+    return Transform() &&
+           ((global_paint_flags & kGlobalPaintFlattenCompositingLayers) ||
+            GetCompositingState() != kPaintsIntoOwnBacking);
+  }
+
+  return (Transform() ||
+          GetLayoutObject().Style()->GetPosition() == EPosition::kFixed) &&
+         ((global_paint_flags & kGlobalPaintFlattenCompositingLayers) ||
+          GetCompositingState() != kPaintsIntoOwnBacking);
+}
+
+bool PaintLayer::SupportsSubsequenceCaching() const {
+  // SVG paints atomically.
+  if (GetLayoutObject().IsSVGRoot())
+    return true;
+
+  // Create subsequence for only stacking contexts whose painting are atomic.
+  if (!StackingNode()->IsStackingContext())
     return false;
-}
 
-namespace {
-
-FilterOperations computeFilterOperationsHandleReferenceFilters(const FilterOperations& filters, float effectiveZoom, Node* enclosingNode)
-{
-    if (filters.hasReferenceFilter()) {
-        for (size_t i = 0; i < filters.size(); ++i) {
-            FilterOperation* filterOperation = filters.operations().at(i).get();
-            if (filterOperation->type() != FilterOperation::REFERENCE)
-                continue;
-            ReferenceFilterOperation& referenceOperation = toReferenceFilterOperation(*filterOperation);
-            // FIXME: Cache the Filter if it didn't change.
-            Filter* referenceFilter = FilterEffectBuilder::buildReferenceFilter(referenceOperation, nullptr, nullptr, nullptr, *toElement(enclosingNode), nullptr, effectiveZoom);
-            referenceOperation.setFilter(referenceFilter);
-        }
-    }
-    return filters;
-}
-
-} // unnamed namespace
-
-FilterOperations PaintLayer::computeFilterOperations(const ComputedStyle& style) const
-{
-    FilterOperations filterOperations = style.filter();
-    if (RuntimeEnabledFeatures::cssBoxReflectFilterEnabled() && layoutObject()->hasReflection() && layoutObject()->isBox()) {
-        BoxReflection reflection = boxReflectionForPaintLayer(*this, style);
-        filterOperations.operations().append(BoxReflectFilterOperation::create(reflection));
-    }
-    return computeFilterOperationsHandleReferenceFilters(filterOperations, style.effectiveZoom(), enclosingNode());
-}
-
-FilterOperations PaintLayer::computeBackdropFilterOperations(const ComputedStyle& style) const
-{
-    return computeFilterOperationsHandleReferenceFilters(style.backdropFilter(), style.effectiveZoom(), enclosingNode());
-}
-
-PaintLayerFilterInfo& PaintLayer::ensureFilterInfo()
-{
-    PaintLayerRareData& rareData = ensureRareData();
-    if (!rareData.filterInfo)
-        rareData.filterInfo = new PaintLayerFilterInfo(this);
-    return *rareData.filterInfo;
-}
-
-void PaintLayer::removeAncestorOverflowLayer(const PaintLayer* removedLayer)
-{
-    // If the current ancestor overflow layer does not match the removed layer
-    // the ancestor overflow layer has changed so we can stop searching.
-    if (ancestorOverflowLayer() && ancestorOverflowLayer() != removedLayer)
-        return;
-
-    if (ancestorOverflowLayer())
-        ancestorOverflowLayer()->getScrollableArea()->invalidateStickyConstraintsFor(this);
-    updateAncestorOverflowLayer(nullptr);
-    PaintLayer* current = m_first;
-    while (current) {
-        current->removeAncestorOverflowLayer(removedLayer);
-        current = current->nextSibling();
-    }
-}
-
-void PaintLayer::updateOrRemoveFilterClients()
-{
-    const auto& filter = layoutObject()->style()->filter();
-    if (filter.isEmpty() && m_rareData && m_rareData->filterInfo) {
-        m_rareData->filterInfo->clearLayer();
-        m_rareData->filterInfo = nullptr;
-    } else if (filter.hasReferenceFilter()) {
-        ensureFilterInfo().updateReferenceFilterClients(filter);
-    } else if (filterInfo()) {
-        filterInfo()->clearFilterReferences();
-    }
-}
-
-FilterEffectBuilder* PaintLayer::updateFilterEffectBuilder() const
-{
-    // TODO(chrishtr): ensure (and assert) that compositing is clean here.
-
-    if (!paintsWithFilters())
-        return nullptr;
-
-    PaintLayerFilterInfo* filterInfo = this->filterInfo();
-
-    // Should have been added by updateOrRemoveFilterEffectBuilder().
-    ASSERT(filterInfo);
-
-    if (filterInfo->builder())
-        return filterInfo->builder();
-
-    filterInfo->setBuilder(FilterEffectBuilder::create());
-
-    const ComputedStyle& style = layoutObject()->styleRef();
-    if (!filterInfo->builder()->build(toElement(enclosingNode()), computeFilterOperations(style), style.effectiveZoom()))
-        filterInfo->setBuilder(nullptr);
-
-    return filterInfo->builder();
-}
-
-FilterEffect* PaintLayer::lastFilterEffect() const
-{
-    FilterEffectBuilder* builder = updateFilterEffectBuilder();
-    if (!builder)
-        return nullptr;
-    return builder->lastEffect();
-}
-
-FloatRect PaintLayer::mapRectForFilter(const FloatRect& rect) const
-{
-    if (!hasFilterThatMovesPixels())
-        return rect;
-    // Ensure the filter-chain is refreshed wrt reference filters.
-    updateFilterEffectBuilder();
-
-    FilterOperations filterOperations = computeFilterOperations(layoutObject()->styleRef());
-    return filterOperations.mapRect(rect);
-}
-
-LayoutRect PaintLayer::mapLayoutRectForFilter(const LayoutRect& rect) const
-{
-    if (!hasFilterThatMovesPixels())
-        return rect;
-    return enclosingLayoutRect(mapRectForFilter(FloatRect(rect)));
-}
-
-bool PaintLayer::hasFilterThatMovesPixels() const
-{
-    if (!hasFilterInducingProperty())
-        return false;
-    const ComputedStyle& style = layoutObject()->styleRef();
-    if (style.hasFilter() && style.filter().hasFilterThatMovesPixels())
-        return true;
-    if (RuntimeEnabledFeatures::cssBoxReflectFilterEnabled() && style.hasBoxReflect())
-        return true;
+  // The layer doesn't have children. Subsequence caching is not worth it,
+  // because normally the actual painting will be cheap.
+  // SVG is also painted atomically.
+  if (!PaintLayerStackingNodeIterator(*StackingNode(), kAllChildren).Next())
     return false;
+
+  return true;
 }
 
-void PaintLayer::updateOrRemoveFilterEffectBuilder()
-{
-    // FilterEffectBuilder is only used to render the filters in software mode,
-    // so we always need to run updateOrRemoveFilterEffectBuilder after the composited
-    // mode might have changed for this layer.
-    if (!paintsWithFilters()) {
-        // Don't delete the whole filter info here, because we might use it
-        // for loading CSS shader files.
-        if (PaintLayerFilterInfo* filterInfo = this->filterInfo())
-            filterInfo->setBuilder(nullptr);
+ScrollingCoordinator* PaintLayer::GetScrollingCoordinator() {
+  Page* page = GetLayoutObject().GetFrame()->GetPage();
+  return (!page) ? nullptr : page->GetScrollingCoordinator();
+}
 
-        return;
+bool PaintLayer::CompositesWithTransform() const {
+  return TransformAncestor() || Transform();
+}
+
+bool PaintLayer::CompositesWithOpacity() const {
+  return OpacityAncestor() || GetLayoutObject().Style()->HasOpacity();
+}
+
+bool PaintLayer::BackgroundIsKnownToBeOpaqueInRect(
+    const LayoutRect& local_rect) const {
+  if (PaintsWithTransparency(kGlobalPaintNormalPhase))
+    return false;
+
+  // We can't use hasVisibleContent(), because that will be true if our
+  // layoutObject is hidden, but some child is visible and that child doesn't
+  // cover the entire rect.
+  if (GetLayoutObject().Style()->Visibility() != EVisibility::kVisible)
+    return false;
+
+  if (PaintsWithFilters() &&
+      GetLayoutObject().Style()->Filter().HasFilterThatAffectsOpacity())
+    return false;
+
+  // FIXME: Handle simple transforms.
+  if (Transform() && GetCompositingState() != kPaintsIntoOwnBacking)
+    return false;
+
+  if (!RuntimeEnabledFeatures::compositeOpaqueFixedPositionEnabled() &&
+      GetLayoutObject().Style()->GetPosition() == EPosition::kFixed &&
+      GetCompositingState() != kPaintsIntoOwnBacking)
+    return false;
+
+  // This function should not be called when layer-lists are dirty.
+  // TODO(schenney) This check never hits in layout tests or most platforms, but
+  // does hit in PopupBlockerBrowserTest.AllowPopupThroughContentSetting on
+  // Win 7 Test Builder.
+  if (stacking_node_->ZOrderListsDirty())
+    return false;
+
+  // FIXME: We currently only check the immediate layoutObject,
+  // which will miss many cases where additional layout objects paint
+  // into this layer.
+  if (GetLayoutObject().BackgroundIsKnownToBeOpaqueInRect(local_rect))
+    return true;
+
+  // We can't consult child layers if we clip, since they might cover
+  // parts of the rect that are clipped out.
+  if (GetLayoutObject().HasClipRelatedProperty())
+    return false;
+
+  // TODO(schenney): This could be improved by unioning the opaque regions of
+  // all the children.  That would require a refactoring because currently
+  // children just check they at least cover the given rect, but a unioning
+  // method would require children to compute and report their rects.
+  return ChildBackgroundIsKnownToBeOpaqueInRect(local_rect);
+}
+
+bool PaintLayer::ChildBackgroundIsKnownToBeOpaqueInRect(
+    const LayoutRect& local_rect) const {
+  PaintLayerStackingNodeReverseIterator reverse_iterator(
+      *stacking_node_,
+      kPositiveZOrderChildren | kNormalFlowChildren | kNegativeZOrderChildren);
+  while (PaintLayerStackingNode* child = reverse_iterator.Next()) {
+    const PaintLayer* child_layer = child->Layer();
+    // Stop at composited paint boundaries and non-self-painting layers.
+    if (child_layer->IsPaintInvalidationContainer())
+      continue;
+
+    if (!child_layer->CanUseConvertToLayerCoords())
+      continue;
+
+    LayoutPoint child_offset;
+    LayoutRect child_local_rect(local_rect);
+    child_layer->ConvertToLayerCoords(this, child_offset);
+    child_local_rect.MoveBy(-child_offset);
+
+    if (child_layer->BackgroundIsKnownToBeOpaqueInRect(child_local_rect))
+      return true;
+  }
+  return false;
+}
+
+bool PaintLayer::ShouldBeSelfPaintingLayer() const {
+  if (GetLayoutObject().IsLayoutPart() &&
+      ToLayoutPart(GetLayoutObject()).RequiresAcceleratedCompositing())
+    return true;
+
+  return GetLayoutObject().LayerTypeRequired() == kNormalPaintLayer ||
+         (scrollable_area_ && scrollable_area_->HasOverlayScrollbars()) ||
+         NeedsCompositedScrolling();
+}
+
+void PaintLayer::UpdateSelfPaintingLayer() {
+  bool is_self_painting_layer = ShouldBeSelfPaintingLayer();
+  if (this->IsSelfPaintingLayer() == is_self_painting_layer)
+    return;
+
+  is_self_painting_layer_ = is_self_painting_layer;
+  self_painting_status_changed_ = true;
+
+  if (PaintLayer* parent = this->Parent()) {
+    parent->DirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
+
+    if (PaintLayer* enclosing_self_painting_layer =
+            parent->EnclosingSelfPaintingLayer()) {
+      if (is_self_painting_layer)
+        MergeNeedsPaintPhaseFlagsFrom(*enclosing_self_painting_layer);
+      else
+        enclosing_self_painting_layer->MergeNeedsPaintPhaseFlagsFrom(*this);
     }
-
-    ensureFilterInfo().setBuilder(nullptr);
+  }
 }
 
-void PaintLayer::filterNeedsPaintInvalidation()
-{
-    {
-        DeprecatedScheduleStyleRecalcDuringLayout marker(layoutObject()->document().lifecycle());
-        // It's possible for scheduleSVGFilterLayerUpdateHack to schedule a style recalc, which
-        // is a problem because this function can be called right before performing layout but
-        // after style recalc.
-        //
-        // See LayoutView::layout() and the call to
-        // invalidateSVGRootsWithRelativeLengthDescendents(). This violation is worked around
-        // in FrameView::updateStyleAndLayoutIfNeededRecursive() by doing an extra style recalc
-        // and layout in case it's needed.
-        toElement(layoutObject()->node())->scheduleSVGFilterLayerUpdateHack();
+PaintLayer* PaintLayer::EnclosingSelfPaintingLayer() {
+  PaintLayer* layer = this;
+  while (layer && !layer->IsSelfPaintingLayer())
+    layer = layer->Parent();
+  return layer;
+}
+
+bool PaintLayer::HasNonEmptyChildLayoutObjects() const {
+  // Some HTML can cause whitespace text nodes to have layoutObjects, like:
+  // <div>
+  // <img src=...>
+  // </div>
+  // so test for 0x0 LayoutTexts here
+  for (LayoutObject* child = GetLayoutObject().SlowFirstChild(); child;
+       child = child->NextSibling()) {
+    if (!child->HasLayer()) {
+      if (child->IsLayoutInline() || !child->IsBox())
+        return true;
+
+      if (ToLayoutBox(child)->Size().Width() > 0 ||
+          ToLayoutBox(child)->Size().Height() > 0)
+        return true;
     }
-
-    layoutObject()->setShouldDoFullPaintInvalidation();
+  }
+  return false;
 }
 
-void PaintLayer::addLayerHitTestRects(LayerHitTestRects& rects) const
-{
-    computeSelfHitTestRects(rects);
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling())
-        child->addLayerHitTestRects(rects);
+bool PaintLayer::HasBoxDecorationsOrBackground() const {
+  return GetLayoutObject().Style()->HasBoxDecorations() ||
+         GetLayoutObject().Style()->HasBackground();
 }
 
-void PaintLayer::computeSelfHitTestRects(LayerHitTestRects& rects) const
-{
-    if (!size().isEmpty()) {
-        Vector<LayoutRect> rect;
+bool PaintLayer::HasVisibleBoxDecorations() const {
+  if (!HasVisibleContent())
+    return false;
 
-        if (layoutBox() && layoutBox()->scrollsOverflow()) {
-            // For scrolling layers, rects are taken to be in the space of the contents.
-            // We need to include the bounding box of the layer in the space of its parent
-            // (eg. for border / scroll bars) and if it's composited then the entire contents
-            // as well as they may be on another composited layer. Skip reporting contents
-            // for non-composited layers as they'll get projected to the same layer as the
-            // bounding box.
-            if (compositingState() != NotComposited)
-                rect.append(m_scrollableArea->overflowRect());
-
-            rects.set(this, rect);
-            if (const PaintLayer* parentLayer = parent()) {
-                LayerHitTestRects::iterator iter = rects.find(parentLayer);
-                if (iter == rects.end()) {
-                    rects.add(parentLayer, Vector<LayoutRect>()).storedValue->value.append(physicalBoundingBox(parentLayer));
-                } else {
-                    iter->value.append(physicalBoundingBox(parentLayer));
-                }
-            }
-        } else {
-            rect.append(logicalBoundingBox());
-            rects.set(this, rect);
-        }
-    }
+  return HasBoxDecorationsOrBackground() || HasOverflowControls();
 }
 
-void PaintLayer::setNeedsRepaint()
-{
-    setNeedsRepaintInternal();
-
-    // Do this unconditionally to ensure container chain is marked when compositing status of the layer changes.
-    markCompositingContainerChainForNeedsRepaint();
+void PaintLayer::UpdateFilters(const ComputedStyle* old_style,
+                               const ComputedStyle& new_style) {
+  if (!new_style.HasFilterInducingProperty() &&
+      (!old_style || !old_style->HasFilterInducingProperty()))
+    return;
+  const bool had_resource_info = ResourceInfo();
+  if (new_style.HasFilterInducingProperty())
+    new_style.Filter().AddClient(&EnsureResourceInfo());
+  if (had_resource_info && old_style)
+    old_style->Filter().RemoveClient(ResourceInfo());
+  if (PaintLayerResourceInfo* resource_info = this->ResourceInfo())
+    resource_info->InvalidateFilterChain();
 }
 
-void PaintLayer::setNeedsRepaintInternal()
-{
-    m_needsRepaint = true;
-    setDisplayItemsUncached(); // Invalidate as a display item client.
+void PaintLayer::UpdateClipPath(const ComputedStyle* old_style,
+                                const ComputedStyle& new_style) {
+  ClipPathOperation* new_clip_operation = new_style.ClipPath();
+  ClipPathOperation* old_clip_operation =
+      old_style ? old_style->ClipPath() : nullptr;
+  if (!new_clip_operation && !old_clip_operation)
+    return;
+  const bool had_resource_info = ResourceInfo();
+  if (IsReferenceClipPath(new_clip_operation)) {
+    ToReferenceClipPathOperation(new_clip_operation)
+        ->AddClient(&EnsureResourceInfo());
+  }
+  if (had_resource_info && IsReferenceClipPath(old_clip_operation)) {
+    ToReferenceClipPathOperation(old_clip_operation)
+        ->RemoveClient(ResourceInfo());
+  }
 }
 
-void PaintLayer::markCompositingContainerChainForNeedsRepaint()
-{
-    // Need to access compositingState(). We've ensured correct flag setting when compositingState() changes.
-    DisableCompositingQueryAsserts disabler;
+bool PaintLayer::AttemptDirectCompositingUpdate(
+    StyleDifference diff,
+    const ComputedStyle* old_style) {
+  CompositingReasons old_potential_compositing_reasons_from_style =
+      PotentialCompositingReasonsFromStyle();
+  Compositor()->UpdatePotentialCompositingReasonsFromStyle(this);
 
-    PaintLayer* layer = this;
-    while (true) {
-        if (layer->compositingState() == PaintsIntoOwnBacking)
-            return;
-        if (CompositedLayerMapping* groupedMapping = layer->groupedMapping()) {
-            // TODO(wkorman): As we clean up the CompositedLayerMapping needsRepaint logic to
-            // delegate to scrollbars, we may be able to remove the line below as well.
-            groupedMapping->owningLayer().setNeedsRepaint();
-            return;
-        }
+  // This function implements an optimization for transforms and opacity.
+  // A common pattern is for a touchmove handler to update the transform
+  // and/or an opacity of an element every frame while the user moves their
+  // finger across the screen. The conditions below recognize when the
+  // compositing state is set up to receive a direct transform or opacity
+  // update.
 
-        PaintLayer* container = layer->compositingContainer();
-        if (!container) {
-            LayoutObject* owner = layer->layoutObject()->frame()->ownerLayoutObject();
-            if (!owner)
-                break;
-            container = owner->enclosingLayer();
-        }
+  if (!diff.HasAtMostPropertySpecificDifferences(
+          StyleDifference::kTransformChanged |
+          StyleDifference::kOpacityChanged))
+    return false;
+  // The potentialCompositingReasonsFromStyle could have changed without
+  // a corresponding StyleDifference if an animation started or ended.
+  if (PotentialCompositingReasonsFromStyle() !=
+      old_potential_compositing_reasons_from_style)
+    return false;
+  if (!rare_data_ || !rare_data_->composited_layer_mapping)
+    return false;
 
-        if (container->m_needsRepaint)
-            break;
+  // To cut off almost all the work in the compositing update for
+  // this case, we treat inline transforms has having assumed overlap
+  // (similar to how we treat animated transforms). Notice that we read
+  // CompositingReasonInlineTransform from the m_compositingReasons, which
+  // means that the inline transform actually triggered assumed overlap in
+  // the overlap map.
+  if (diff.TransformChanged() &&
+      (!rare_data_ ||
+       !(rare_data_->compositing_reasons & kCompositingReasonInlineTransform)))
+    return false;
 
-        container->setNeedsRepaintInternal();
-        layer = container;
-    }
+  // We composite transparent Layers differently from non-transparent
+  // Layers even when the non-transparent Layers are already a
+  // stacking context.
+  if (diff.OpacityChanged() &&
+      layout_object_.Style()->HasOpacity() != old_style->HasOpacity())
+    return false;
+
+  // Changes in pointer-events affect hit test visibility of the scrollable
+  // area and its |m_scrollsOverflow| value which determines if the layer
+  // requires composited scrolling or not.
+  if (scrollable_area_ &&
+      layout_object_.Style()->PointerEvents() != old_style->PointerEvents())
+    return false;
+
+  UpdateTransform(old_style, GetLayoutObject().StyleRef());
+
+  // FIXME: Consider introducing a smaller graphics layer update scope
+  // that just handles transforms and opacity. GraphicsLayerUpdateLocal
+  // will also program bounds, clips, and many other properties that could
+  // not possibly have changed.
+  rare_data_->composited_layer_mapping->SetNeedsGraphicsLayerUpdate(
+      kGraphicsLayerUpdateLocal);
+  Compositor()->SetNeedsCompositingUpdate(
+      kCompositingUpdateAfterGeometryChange);
+
+  if (scrollable_area_)
+    scrollable_area_->UpdateAfterStyleChange(old_style);
+
+  return true;
 }
 
-void PaintLayer::clearNeedsRepaintRecursively()
-{
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling())
-        child->clearNeedsRepaintRecursively();
-    m_needsRepaint = false;
+void PaintLayer::StyleDidChange(StyleDifference diff,
+                                const ComputedStyle* old_style) {
+  if (AttemptDirectCompositingUpdate(diff, old_style))
+    return;
+
+  stacking_node_->StyleDidChange(old_style);
+
+  if (scrollable_area_)
+    scrollable_area_->UpdateAfterStyleChange(old_style);
+
+  // Overlay scrollbars can make this layer self-painting so we need
+  // to recompute the bit once scrollbars have been updated.
+  UpdateSelfPaintingLayer();
+
+  UpdateTransform(old_style, GetLayoutObject().StyleRef());
+  UpdateFilters(old_style, GetLayoutObject().StyleRef());
+  UpdateClipPath(old_style, GetLayoutObject().StyleRef());
+
+  SetNeedsCompositingInputsUpdate();
+  GetLayoutObject().SetNeedsPaintPropertyUpdate();
 }
 
-PaintTiming* PaintLayer::paintTiming()
-{
-    if (Node* node = layoutObject()->node())
-        return &PaintTiming::from(node->document());
+PaintLayerClipper PaintLayer::Clipper(
+    GeometryMapperOption geometry_mapper_option) const {
+  if (geometry_mapper_option == kUseGeometryMapper) {
+    DCHECK(RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
+    return PaintLayerClipper(*this, true);
+  }
+  return PaintLayerClipper(*this, false);
+}
+
+bool PaintLayer::ScrollsOverflow() const {
+  if (PaintLayerScrollableArea* scrollable_area = this->GetScrollableArea())
+    return scrollable_area->ScrollsOverflow();
+
+  return false;
+}
+
+FilterOperations PaintLayer::AddReflectionToFilterOperations(
+    const ComputedStyle& style) const {
+  FilterOperations filter_operations = style.Filter();
+  if (GetLayoutObject().HasReflection() && GetLayoutObject().IsBox()) {
+    BoxReflection reflection = BoxReflectionForPaintLayer(*this, style);
+    filter_operations.Operations().push_back(
+        BoxReflectFilterOperation::Create(reflection));
+  }
+  return filter_operations;
+}
+
+CompositorFilterOperations
+PaintLayer::CreateCompositorFilterOperationsForFilter(
+    const ComputedStyle& style) {
+  FloatRect zoomed_reference_box;
+  if (style.Filter().HasReferenceFilter())
+    zoomed_reference_box = BoxForFilterOrMask();
+  FilterEffectBuilder builder(EnclosingNode(), zoomed_reference_box,
+                              style.EffectiveZoom());
+  return builder.BuildFilterOperations(AddReflectionToFilterOperations(style));
+}
+
+CompositorFilterOperations
+PaintLayer::CreateCompositorFilterOperationsForBackdropFilter(
+    const ComputedStyle& style) {
+  FloatRect zoomed_reference_box;
+  if (style.BackdropFilter().HasReferenceFilter())
+    zoomed_reference_box = BoxForFilterOrMask();
+  FilterEffectBuilder builder(EnclosingNode(), zoomed_reference_box,
+                              style.EffectiveZoom());
+  return builder.BuildFilterOperations(style.BackdropFilter());
+}
+
+PaintLayerResourceInfo& PaintLayer::EnsureResourceInfo() {
+  PaintLayerRareData& rare_data = EnsureRareData();
+  if (!rare_data.resource_info)
+    rare_data.resource_info = new PaintLayerResourceInfo(this);
+  return *rare_data.resource_info;
+}
+
+void PaintLayer::RemoveAncestorOverflowLayer(const PaintLayer* removed_layer) {
+  // If the current ancestor overflow layer does not match the removed layer
+  // the ancestor overflow layer has changed so we can stop searching.
+  if (AncestorOverflowLayer() && AncestorOverflowLayer() != removed_layer)
+    return;
+
+  if (AncestorOverflowLayer()) {
+    // TODO(pdr): When slimming paint v2 is enabled, we will need to
+    // invalidate the scroll paint property subtree for this so main
+    // thread scroll reasons are recomputed.
+    AncestorOverflowLayer()
+        ->GetScrollableArea()
+        ->InvalidateStickyConstraintsFor(this);
+  }
+  UpdateAncestorOverflowLayer(nullptr);
+  PaintLayer* current = first_;
+  while (current) {
+    current->RemoveAncestorOverflowLayer(removed_layer);
+    current = current->NextSibling();
+  }
+}
+
+FilterEffect* PaintLayer::LastFilterEffect() const {
+  // TODO(chrishtr): ensure (and assert) that compositing is clean here.
+  if (!PaintsWithFilters())
     return nullptr;
+  PaintLayerResourceInfo* resource_info = this->ResourceInfo();
+  DCHECK(resource_info);
+
+  if (resource_info->LastEffect())
+    return resource_info->LastEffect();
+
+  const ComputedStyle& style = GetLayoutObject().StyleRef();
+  FloatRect zoomed_reference_box;
+  if (style.Filter().HasReferenceFilter())
+    zoomed_reference_box = BoxForFilterOrMask();
+  FilterEffectBuilder builder(EnclosingNode(), zoomed_reference_box,
+                              style.EffectiveZoom());
+  resource_info->SetLastEffect(
+      builder.BuildFilterEffect(AddReflectionToFilterOperations(style)));
+  return resource_info->LastEffect();
+}
+
+FloatRect PaintLayer::MapRectForFilter(const FloatRect& rect) const {
+  if (!HasFilterThatMovesPixels())
+    return rect;
+
+  // Ensure the filter-chain is refreshed wrt reference filters.
+  // TODO(fs): Avoid having this side-effect inducing call.
+  LastFilterEffect();
+
+  FilterOperations filter_operations =
+      AddReflectionToFilterOperations(GetLayoutObject().StyleRef());
+  return filter_operations.MapRect(rect);
+}
+
+LayoutRect PaintLayer::MapLayoutRectForFilter(const LayoutRect& rect) const {
+  if (!HasFilterThatMovesPixels())
+    return rect;
+  return EnclosingLayoutRect(MapRectForFilter(FloatRect(rect)));
+}
+
+bool PaintLayer::HasFilterThatMovesPixels() const {
+  if (!HasFilterInducingProperty())
+    return false;
+  const ComputedStyle& style = GetLayoutObject().StyleRef();
+  if (style.HasFilter() && style.Filter().HasFilterThatMovesPixels())
+    return true;
+  if (style.HasBoxReflect())
+    return true;
+  return false;
+}
+
+void PaintLayer::AddLayerHitTestRects(LayerHitTestRects& rects) const {
+  ComputeSelfHitTestRects(rects);
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->AddLayerHitTestRects(rects);
+}
+
+void PaintLayer::ComputeSelfHitTestRects(LayerHitTestRects& rects) const {
+  if (!size().IsEmpty()) {
+    Vector<LayoutRect> rect;
+
+    if (GetLayoutBox() && GetLayoutBox()->ScrollsOverflow()) {
+      // For scrolling layers, rects are taken to be in the space of the
+      // contents.  We need to include the bounding box of the layer in the
+      // space of its parent (eg. for border / scroll bars) and if it's
+      // composited then the entire contents as well as they may be on another
+      // composited layer. Skip reporting contents for non-composited layers as
+      // they'll get projected to the same layer as the bounding box.
+      if (GetCompositingState() != kNotComposited)
+        rect.push_back(scrollable_area_->OverflowRect());
+
+      rects.Set(this, rect);
+      if (const PaintLayer* parent_layer = Parent()) {
+        LayerHitTestRects::iterator iter = rects.Find(parent_layer);
+        if (iter == rects.end()) {
+          rects.insert(parent_layer, Vector<LayoutRect>())
+              .stored_value->value.push_back(PhysicalBoundingBox(parent_layer));
+        } else {
+          iter->value.push_back(PhysicalBoundingBox(parent_layer));
+        }
+      }
+    } else {
+      rect.push_back(LogicalBoundingBox());
+      rects.Set(this, rect);
+    }
+  }
+}
+
+void PaintLayer::SetNeedsRepaint() {
+  SetNeedsRepaintInternal();
+
+  // Do this unconditionally to ensure container chain is marked when
+  // compositing status of the layer changes.
+  MarkCompositingContainerChainForNeedsRepaint();
+}
+
+void PaintLayer::SetNeedsRepaintInternal() {
+  needs_repaint_ = true;
+  SetDisplayItemsUncached();  // Invalidate as a display item client.
+}
+
+void PaintLayer::MarkCompositingContainerChainForNeedsRepaint() {
+  // Need to access compositingState(). We've ensured correct flag setting when
+  // compositingState() changes.
+  DisableCompositingQueryAsserts disabler;
+
+  PaintLayer* layer = this;
+  while (true) {
+    if (layer->GetCompositingState() == kPaintsIntoOwnBacking)
+      return;
+    if (CompositedLayerMapping* grouped_mapping = layer->GroupedMapping()) {
+      // TODO(wkorman): As we clean up the CompositedLayerMapping needsRepaint
+      // logic to delegate to scrollbars, we may be able to remove the line
+      // below as well.
+      grouped_mapping->OwningLayer().SetNeedsRepaint();
+      return;
+    }
+
+    PaintLayer* container = layer->CompositingContainer();
+    if (!container) {
+      LayoutItem owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutItem();
+      if (owner.IsNull())
+        break;
+      container = owner.EnclosingLayer();
+    }
+
+    if (container->needs_repaint_)
+      break;
+
+    container->SetNeedsRepaintInternal();
+    layer = container;
+  }
+}
+
+void PaintLayer::ClearNeedsRepaintRecursively() {
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->ClearNeedsRepaintRecursively();
+  needs_repaint_ = false;
 }
 
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
-void PaintLayer::endShouldKeepAliveAllClientsRecursive()
-{
-    for (PaintLayer* child = firstChild(); child; child = child->nextSibling())
-        child->endShouldKeepAliveAllClientsRecursive();
-    DisplayItemClient::endShouldKeepAliveAllClients(this);
+void PaintLayer::EndShouldKeepAliveAllClientsRecursive() {
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->EndShouldKeepAliveAllClientsRecursive();
+  DisplayItemClient::EndShouldKeepAliveAllClients(this);
 }
 #endif
 
 DisableCompositingQueryAsserts::DisableCompositingQueryAsserts()
-    : m_disabler(&gCompositingQueryMode, CompositingQueriesAreAllowed) { }
+    : disabler_(&g_compositing_query_mode, kCompositingQueriesAreAllowed) {}
 
-} // namespace blink
+}  // namespace blink
 
 #ifndef NDEBUG
 // FIXME: Rename?
-void showLayerTree(const blink::PaintLayer* layer)
-{
-    if (!layer) {
-        fprintf(stderr, "Cannot showLayerTree. Root is (nil)\n");
-        return;
-    }
+void showLayerTree(const blink::PaintLayer* layer) {
+  blink::DisableCompositingQueryAsserts disabler;
+  if (!layer) {
+    LOG(INFO) << "Cannot showLayerTree. Root is (nil)";
+    return;
+  }
 
-    if (blink::LocalFrame* frame = layer->layoutObject()->frame()) {
-        WTF::String output = externalRepresentation(frame, blink::LayoutAsTextShowAllLayers | blink::LayoutAsTextShowLayerNesting | blink::LayoutAsTextShowCompositedLayers | blink::LayoutAsTextShowAddresses | blink::LayoutAsTextShowIDAndClass | blink::LayoutAsTextDontUpdateLayout | blink::LayoutAsTextShowLayoutState, layer);
-        fprintf(stderr, "%s\n", output.utf8().data());
-    }
+  if (blink::LocalFrame* frame = layer->GetLayoutObject().GetFrame()) {
+    WTF::String output =
+        ExternalRepresentation(frame,
+                               blink::kLayoutAsTextShowAllLayers |
+                                   blink::kLayoutAsTextShowLayerNesting |
+                                   blink::kLayoutAsTextShowCompositedLayers |
+                                   blink::kLayoutAsTextShowAddresses |
+                                   blink::kLayoutAsTextShowIDAndClass |
+                                   blink::kLayoutAsTextDontUpdateLayout |
+                                   blink::kLayoutAsTextShowLayoutState,
+                               layer);
+    LOG(INFO) << output.Utf8().Data();
+  }
 }
 
-void showLayerTree(const blink::LayoutObject* layoutObject)
-{
-    if (!layoutObject) {
-        fprintf(stderr, "Cannot showLayerTree. Root is (nil)\n");
-        return;
-    }
-    showLayerTree(layoutObject->enclosingLayer());
+void showLayerTree(const blink::LayoutObject* layoutObject) {
+  if (!layoutObject) {
+    LOG(INFO) << "Cannot showLayerTree. Root is (nil)";
+    return;
+  }
+  showLayerTree(layoutObject->EnclosingLayer());
 }
 #endif

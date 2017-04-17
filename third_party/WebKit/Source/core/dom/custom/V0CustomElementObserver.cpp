@@ -36,32 +36,30 @@ namespace blink {
 
 // Maps elements to the observer watching them. At most one per
 // element at a time.
-typedef HeapHashMap<WeakMember<Element>, Member<V0CustomElementObserver>> ElementObserverMap;
+typedef HeapHashMap<WeakMember<Element>, Member<V0CustomElementObserver>>
+    ElementObserverMap;
 
-static ElementObserverMap& elementObservers()
-{
-    DEFINE_STATIC_LOCAL(ElementObserverMap, map, (new ElementObserverMap));
-    return map;
+static ElementObserverMap& ElementObservers() {
+  DEFINE_STATIC_LOCAL(ElementObserverMap, map, (new ElementObserverMap));
+  return map;
 }
 
-void V0CustomElementObserver::notifyElementWasDestroyed(Element* element)
-{
-    ElementObserverMap::iterator it = elementObservers().find(element);
-    if (it == elementObservers().end())
-        return;
-    it->value->elementWasDestroyed(element);
+void V0CustomElementObserver::NotifyElementWasDestroyed(Element* element) {
+  ElementObserverMap::iterator it = ElementObservers().Find(element);
+  if (it == ElementObservers().end())
+    return;
+  it->value->ElementWasDestroyed(element);
 }
 
-void V0CustomElementObserver::observe(Element* element)
-{
-    ElementObserverMap::AddResult result = elementObservers().add(element, this);
-    ASSERT_UNUSED(result, result.isNewEntry);
+void V0CustomElementObserver::Observe(Element* element) {
+  ElementObserverMap::AddResult result =
+      ElementObservers().insert(element, this);
+  DCHECK(result.is_new_entry);
 }
 
-void V0CustomElementObserver::unobserve(Element* element)
-{
-    V0CustomElementObserver* observer = elementObservers().take(element);
-    ASSERT_UNUSED(observer, observer == this);
+void V0CustomElementObserver::Unobserve(Element* element) {
+  V0CustomElementObserver* observer = ElementObservers().Take(element);
+  DCHECK_EQ(observer, this);
 }
 
-} // namespace blink
+}  // namespace blink

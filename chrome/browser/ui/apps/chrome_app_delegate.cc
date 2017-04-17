@@ -11,12 +11,13 @@
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/app_mode/app_mode_utils.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
 #include "chrome/browser/favicon/favicon_utils.h"
 #include "chrome/browser/file_select_helper.h"
 #include "chrome/browser/lifetime/keep_alive_types.h"
 #include "chrome/browser/lifetime/scoped_keep_alive.h"
-#include "chrome/browser/media/media_capture_devices_dispatcher.h"
+#include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/shell_integration.h"
@@ -33,23 +34,27 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/notification_service.h"
-#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "extensions/common/constants.h"
+#include "extensions/common/mojo/app_window.mojom.h"
+#include "printing/features/features.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 #if defined(USE_ASH)
-#include "ash/common/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_constants.h"  // nogncheck
 #endif
 
-#if defined(ENABLE_PRINTING)
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINTING)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 #include "chrome/browser/printing/print_preview_message_handler.h"
 #include "chrome/browser/printing/print_view_manager.h"
 #else
 #include "chrome/browser/printing/print_view_manager_basic.h"
-#endif  // defined(ENABLE_PRINT_PREVIEW)
-#endif  // defined(ENABLE_PRINTING)
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINTING)
 
 namespace {
 
@@ -66,10 +71,10 @@ content::WebContents* OpenURLFromTabInternal(
   // window.
   chrome::NavigateParams new_tab_params(
       static_cast<Browser*>(NULL), params.url, params.transition);
-  if (params.disposition == NEW_BACKGROUND_TAB) {
-    new_tab_params.disposition = NEW_BACKGROUND_TAB;
+  if (params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
+    new_tab_params.disposition = WindowOpenDisposition::NEW_BACKGROUND_TAB;
   } else {
-    new_tab_params.disposition = NEW_FOREGROUND_TAB;
+    new_tab_params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
     new_tab_params.window_action = chrome::NavigateParams::SHOW_WINDOW;
   }
 
@@ -180,22 +185,22 @@ void ChromeAppDelegate::DisableExternalOpenForTesting() {
 }
 
 void ChromeAppDelegate::InitWebContents(content::WebContents* web_contents) {
+  data_use_measurement::DataUseWebContentsObserver::CreateForWebContents(
+      web_contents);
   favicon::CreateContentFaviconDriverForWebContents(web_contents);
 
-#if defined(ENABLE_PRINTING)
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINTING)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   printing::PrintViewManager::CreateForWebContents(web_contents);
   printing::PrintPreviewMessageHandler::CreateForWebContents(web_contents);
 #else
   printing::PrintViewManagerBasic::CreateForWebContents(web_contents);
-#endif  // defined(ENABLE_PRINT_PREVIEW)
-#endif  // defined(ENABLE_PRINTING)
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINTING)
   extensions::ChromeExtensionWebContentsObserver::CreateForWebContents(
       web_contents);
 
-  // Kiosk app supports zooming.
-  if (chrome::IsRunningInForcedAppMode())
-    zoom::ZoomController::CreateForWebContents(web_contents);
+  zoom::ZoomController::CreateForWebContents(web_contents);
 }
 
 void ChromeAppDelegate::RenderViewCreated(
@@ -218,7 +223,7 @@ void ChromeAppDelegate::RenderViewCreated(
 
 void ChromeAppDelegate::ResizeWebContents(content::WebContents* web_contents,
                                           const gfx::Size& size) {
-  ::ResizeWebContents(web_contents, size);
+  ::ResizeWebContents(web_contents, gfx::Rect(size));
 }
 
 content::WebContents* ChromeAppDelegate::OpenURLFromTab(
@@ -246,8 +251,9 @@ void ChromeAppDelegate::AddNewContents(content::BrowserContext* context,
       Profile::FromBrowserContext(context));
   // Force all links to open in a new tab, even if they were trying to open a
   // new window.
-  disposition =
-      disposition == NEW_BACKGROUND_TAB ? disposition : NEW_FOREGROUND_TAB;
+  disposition = disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB
+                    ? disposition
+                    : WindowOpenDisposition::NEW_FOREGROUND_TAB;
   chrome::AddWebContents(displayer.browser(),
                          NULL,
                          new_contents,
@@ -302,10 +308,11 @@ void ChromeAppDelegate::SetWebContentsBlocked(
   if (!blocked)
     web_contents->Focus();
   // RenderViewHost may be NULL during shutdown.
-  content::RenderViewHost* host = web_contents->GetRenderViewHost();
+  content::RenderFrameHost* host = web_contents->GetMainFrame();
   if (host) {
-    host->Send(new ChromeViewMsg_SetVisuallyDeemphasized(host->GetRoutingID(),
-                                                         blocked));
+    extensions::mojom::AppWindowPtr app_window;
+    BindInterface(host->GetProcess(), &app_window);
+    app_window->SetVisuallyDeemphasized(blocked);
   }
 }
 

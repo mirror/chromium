@@ -4,11 +4,9 @@
 
 #include "net/quic/test_tools/quic_session_peer.h"
 
-#include "base/stl_util.h"
-#include "net/quic/quic_session.h"
-#include "net/quic/reliable_quic_stream.h"
-
-using std::map;
+#include "net/quic/core/quic_session.h"
+#include "net/quic/core/quic_stream.h"
+#include "net/quic/platform/api/quic_map_util.h"
 
 namespace net {
 namespace test {
@@ -48,14 +46,13 @@ QuicWriteBlockedList* QuicSessionPeer::GetWriteBlockedStreams(
 }
 
 // static
-ReliableQuicStream* QuicSessionPeer::GetOrCreateDynamicStream(
-    QuicSession* session,
-    QuicStreamId stream_id) {
+QuicStream* QuicSessionPeer::GetOrCreateDynamicStream(QuicSession* session,
+                                                      QuicStreamId stream_id) {
   return session->GetOrCreateDynamicStream(stream_id);
 }
 
 // static
-map<QuicStreamId, QuicStreamOffset>&
+std::map<QuicStreamId, QuicStreamOffset>&
 QuicSessionPeer::GetLocallyClosedStreamsHighestOffset(QuicSession* session) {
   return session->locally_closed_streams_highest_offset_;
 }
@@ -67,6 +64,12 @@ QuicSession::StaticStreamMap& QuicSessionPeer::static_streams(
 }
 
 // static
+QuicSession::DynamicStreamMap& QuicSessionPeer::dynamic_streams(
+    QuicSession* session) {
+  return session->dynamic_streams();
+}
+
+// static
 std::unordered_set<QuicStreamId>* QuicSessionPeer::GetDrainingStreams(
     QuicSession* session) {
   return &session->draining_streams_;
@@ -74,8 +77,8 @@ std::unordered_set<QuicStreamId>* QuicSessionPeer::GetDrainingStreams(
 
 // static
 void QuicSessionPeer::ActivateStream(QuicSession* session,
-                                     ReliableQuicStream* stream) {
-  return session->ActivateStream(stream);
+                                     std::unique_ptr<QuicStream> stream) {
+  return session->ActivateStream(std::move(stream));
 }
 
 // static
@@ -87,13 +90,13 @@ bool QuicSessionPeer::IsStreamClosed(QuicSession* session, QuicStreamId id) {
 // static
 bool QuicSessionPeer::IsStreamCreated(QuicSession* session, QuicStreamId id) {
   DCHECK_NE(0u, id);
-  return ContainsKey(session->dynamic_streams(), id);
+  return QuicContainsKey(session->dynamic_streams(), id);
 }
 
 // static
 bool QuicSessionPeer::IsStreamAvailable(QuicSession* session, QuicStreamId id) {
   DCHECK_NE(0u, id);
-  return ContainsKey(session->available_streams_, id);
+  return QuicContainsKey(session->available_streams_, id);
 }
 
 // static

@@ -86,13 +86,13 @@ class ExternalCacheTest : public testing::Test,
   base::FilePath CreateCacheDir(bool initialized) {
     EXPECT_TRUE(cache_dir_.CreateUniqueTempDir());
     if (initialized)
-      CreateFlagFile(cache_dir_.path());
-    return cache_dir_.path();
+      CreateFlagFile(cache_dir_.GetPath());
+    return cache_dir_.GetPath();
   }
 
   base::FilePath CreateTempDir() {
     EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
-    return temp_dir_.path();
+    return temp_dir_.GetPath();
   }
 
   void CreateFlagFile(const base::FilePath& dir) {
@@ -116,8 +116,9 @@ class ExternalCacheTest : public testing::Test,
     return dir.Append(id + "-" + version + ".crx");
   }
 
-  base::DictionaryValue* CreateEntryWithUpdateUrl(bool from_webstore) {
-    base::DictionaryValue* entry = new base::DictionaryValue;
+  std::unique_ptr<base::DictionaryValue> CreateEntryWithUpdateUrl(
+      bool from_webstore) {
+    auto entry = base::MakeUnique<base::DictionaryValue>();
     entry->SetString(extensions::ExternalProviderImpl::kExternalUpdateUrl,
         from_webstore ? extension_urls::GetWebstoreUpdateUrl().spec()
                       : kNonWebstoreUpdateUrl);
@@ -162,11 +163,9 @@ TEST_F(ExternalCacheTest, Basic) {
       background_task_runner(), this, true, false);
 
   std::unique_ptr<base::DictionaryValue> prefs(new base::DictionaryValue);
-  base::DictionaryValue* dict = CreateEntryWithUpdateUrl(true);
-  prefs->Set(kTestExtensionId1, dict);
+  prefs->Set(kTestExtensionId1, CreateEntryWithUpdateUrl(true));
   CreateExtensionFile(cache_dir, kTestExtensionId1, "1");
-  dict = CreateEntryWithUpdateUrl(true);
-  prefs->Set(kTestExtensionId2, dict);
+  prefs->Set(kTestExtensionId2, CreateEntryWithUpdateUrl(true));
   prefs->Set(kTestExtensionId3, CreateEntryWithUpdateUrl(false));
   CreateExtensionFile(cache_dir, kTestExtensionId3, "3");
   prefs->Set(kTestExtensionId4, CreateEntryWithUpdateUrl(false));

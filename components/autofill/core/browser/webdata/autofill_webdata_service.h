@@ -14,11 +14,11 @@
 #include "base/supports_user_data.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata.h"
 #include "components/autofill/core/common/form_field_data.h"
+#include "components/sync/base/model_type.h"
 #include "components/webdata/common/web_data_results.h"
 #include "components/webdata/common/web_data_service_base.h"
 #include "components/webdata/common/web_data_service_consumer.h"
 #include "components/webdata/common/web_database.h"
-#include "sync/internal_api/public/base/model_type.h"
 
 class WebDatabaseService;
 
@@ -28,7 +28,6 @@ class SingleThreadTaskRunner;
 
 namespace autofill {
 
-class AutofillChange;
 class AutofillEntry;
 class AutofillProfile;
 class AutofillWebDataBackend;
@@ -98,9 +97,8 @@ class AutofillWebDataService : public AutofillWebData,
 
   void ClearAllServerData();
 
-  void UpdateServerCardUsageStats(const CreditCard& credit_card) override;
-  void UpdateServerAddressUsageStats(const AutofillProfile& profile) override;
-  void UpdateServerCardBillingAddress(const CreditCard& credit_card) override;
+  void UpdateServerCardMetadata(const CreditCard& credit_card) override;
+  void UpdateServerAddressMetadata(const AutofillProfile& profile) override;
 
   void RemoveAutofillDataModifiedBetween(const base::Time& delete_begin,
                                          const base::Time& delete_end) override;

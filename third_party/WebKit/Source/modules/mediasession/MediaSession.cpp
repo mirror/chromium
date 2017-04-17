@@ -4,76 +4,243 @@
 
 #include "modules/mediasession/MediaSession.h"
 
-#include "bindings/core/v8/CallbackPromiseAdapter.h"
-#include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "bindings/core/v8/ScriptState.h"
-#include "core/dom/DOMException.h"
-#include "core/dom/ExceptionCode.h"
-#include "core/frame/LocalDOMWindow.h"
-#include "core/frame/LocalFrame.h"
-#include "core/loader/FrameLoaderClient.h"
-#include "modules/mediasession/MediaMetadata.h"
-#include "modules/mediasession/MediaSessionError.h"
 #include <memory>
+#include "bindings/modules/v8/MediaSessionActionHandler.h"
+#include "core/dom/Document.h"
+#include "core/dom/DocumentUserGestureToken.h"
+#include "core/dom/ExecutionContext.h"
+#include "core/frame/LocalFrame.h"
+#include "modules/mediasession/MediaMetadata.h"
+#include "modules/mediasession/MediaMetadataSanitizer.h"
+#include "platform/UserGestureIndicator.h"
+#include "platform/wtf/Optional.h"
+#include "public/platform/InterfaceProvider.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
-MediaSession::MediaSession(std::unique_ptr<WebMediaSession> webMediaSession)
-    : m_webMediaSession(std::move(webMediaSession))
-{
-    DCHECK(m_webMediaSession);
+namespace {
+
+using ::blink::mojom::blink::MediaSessionAction;
+
+const AtomicString& MojomActionToActionName(MediaSessionAction action) {
+  DEFINE_STATIC_LOCAL(const AtomicString, play_action_name, ("play"));
+  DEFINE_STATIC_LOCAL(const AtomicString, pause_action_name, ("pause"));
+  DEFINE_STATIC_LOCAL(const AtomicString, previous_track_action_name,
+                      ("previoustrack"));
+  DEFINE_STATIC_LOCAL(const AtomicString, next_track_action_name,
+                      ("nexttrack"));
+  DEFINE_STATIC_LOCAL(const AtomicString, seek_backward_action_name,
+                      ("seekbackward"));
+  DEFINE_STATIC_LOCAL(const AtomicString, seek_forward_action_name,
+                      ("seekforward"));
+
+  switch (action) {
+    case MediaSessionAction::PLAY:
+      return play_action_name;
+    case MediaSessionAction::PAUSE:
+      return pause_action_name;
+    case MediaSessionAction::PREVIOUS_TRACK:
+      return previous_track_action_name;
+    case MediaSessionAction::NEXT_TRACK:
+      return next_track_action_name;
+    case MediaSessionAction::SEEK_BACKWARD:
+      return seek_backward_action_name;
+    case MediaSessionAction::SEEK_FORWARD:
+      return seek_forward_action_name;
+    default:
+      NOTREACHED();
+  }
+  return WTF::g_empty_atom;
 }
 
-MediaSession* MediaSession::create(ExecutionContext* context, ExceptionState& exceptionState)
-{
-    Document* document = toDocument(context);
-    LocalFrame* frame = document->frame();
-    FrameLoaderClient* client = frame->loader().client();
-    std::unique_ptr<WebMediaSession> webMediaSession = client->createWebMediaSession();
-    if (!webMediaSession) {
-        exceptionState.throwDOMException(NotSupportedError, "Missing platform implementation.");
-        return nullptr;
-    }
-    return new MediaSession(std::move(webMediaSession));
+WTF::Optional<MediaSessionAction> ActionNameToMojomAction(
+    const String& action_name) {
+  if ("play" == action_name)
+    return MediaSessionAction::PLAY;
+  if ("pause" == action_name)
+    return MediaSessionAction::PAUSE;
+  if ("previoustrack" == action_name)
+    return MediaSessionAction::PREVIOUS_TRACK;
+  if ("nexttrack" == action_name)
+    return MediaSessionAction::NEXT_TRACK;
+  if ("seekbackward" == action_name)
+    return MediaSessionAction::SEEK_BACKWARD;
+  if ("seekforward" == action_name)
+    return MediaSessionAction::SEEK_FORWARD;
+
+  NOTREACHED();
+  return WTF::kNullopt;
 }
 
-ScriptPromise MediaSession::activate(ScriptState* scriptState)
-{
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    ScriptPromise promise = resolver->promise();
+const AtomicString& MediaSessionPlaybackStateToString(
+    mojom::blink::MediaSessionPlaybackState state) {
+  DEFINE_STATIC_LOCAL(const AtomicString, none_value, ("none"));
+  DEFINE_STATIC_LOCAL(const AtomicString, paused_value, ("paused"));
+  DEFINE_STATIC_LOCAL(const AtomicString, playing_value, ("playing"));
 
-    m_webMediaSession->activate(new CallbackPromiseAdapter<void, MediaSessionError>(resolver));
-    return promise;
+  switch (state) {
+    case mojom::blink::MediaSessionPlaybackState::NONE:
+      return none_value;
+    case mojom::blink::MediaSessionPlaybackState::PAUSED:
+      return paused_value;
+    case mojom::blink::MediaSessionPlaybackState::PLAYING:
+      return playing_value;
+  }
+  NOTREACHED();
+  return WTF::g_empty_atom;
 }
 
-ScriptPromise MediaSession::deactivate(ScriptState* scriptState)
-{
-    ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
-    ScriptPromise promise = resolver->promise();
-
-    m_webMediaSession->deactivate(new CallbackPromiseAdapter<void, void>(resolver));
-    return promise;
+mojom::blink::MediaSessionPlaybackState StringToMediaSessionPlaybackState(
+    const String& state_name) {
+  if (state_name == "none")
+    return mojom::blink::MediaSessionPlaybackState::NONE;
+  if (state_name == "paused")
+    return mojom::blink::MediaSessionPlaybackState::PAUSED;
+  DCHECK_EQ(state_name, "playing");
+  return mojom::blink::MediaSessionPlaybackState::PLAYING;
 }
 
-void MediaSession::setMetadata(MediaMetadata* metadata)
-{
-    m_metadata = metadata;
-    if (metadata) {
-        WebMediaMetadata webMetadata = (WebMediaMetadata) *metadata;
-        m_webMediaSession->setMetadata(&webMetadata);
-    } else {
-        m_webMediaSession->setMetadata(nullptr);
-    }
+}  // anonymous namespace
+
+MediaSession::MediaSession(ExecutionContext* execution_context)
+    : ContextClient(execution_context),
+      playback_state_(mojom::blink::MediaSessionPlaybackState::NONE),
+      client_binding_(this) {}
+
+MediaSession* MediaSession::Create(ExecutionContext* execution_context) {
+  return new MediaSession(execution_context);
 }
 
-MediaMetadata* MediaSession::metadata() const
-{
-    return m_metadata;
+void MediaSession::Dispose() {
+  client_binding_.Close();
 }
 
-DEFINE_TRACE(MediaSession)
-{
-    visitor->trace(m_metadata);
+void MediaSession::setPlaybackState(const String& playback_state) {
+  playback_state_ = StringToMediaSessionPlaybackState(playback_state);
+  mojom::blink::MediaSessionService* service = GetService();
+  if (service)
+    service->SetPlaybackState(playback_state_);
 }
 
-} // namespace blink
+String MediaSession::playbackState() {
+  return MediaSessionPlaybackStateToString(playback_state_);
+}
+
+void MediaSession::setMetadata(MediaMetadata* metadata) {
+  if (metadata)
+    metadata->SetSession(this);
+
+  if (metadata_)
+    metadata_->SetSession(nullptr);
+
+  metadata_ = metadata;
+  OnMetadataChanged();
+}
+
+MediaMetadata* MediaSession::metadata() const {
+  return metadata_;
+}
+
+void MediaSession::OnMetadataChanged() {
+  mojom::blink::MediaSessionService* service = GetService();
+  if (!service)
+    return;
+
+  service->SetMetadata(MediaMetadataSanitizer::SanitizeAndConvertToMojo(
+      metadata_, GetExecutionContext()));
+}
+
+void MediaSession::setActionHandler(const String& action,
+                                    MediaSessionActionHandler* handler) {
+  if (handler) {
+    auto add_result = action_handlers_.Set(
+        action, TraceWrapperMember<MediaSessionActionHandler>(this, handler));
+
+    if (!add_result.is_new_entry)
+      return;
+
+    NotifyActionChange(action, ActionChangeType::kActionEnabled);
+  } else {
+    if (action_handlers_.Find(action) == action_handlers_.end())
+      return;
+
+    action_handlers_.erase(action);
+
+    NotifyActionChange(action, ActionChangeType::kActionDisabled);
+  }
+}
+
+void MediaSession::NotifyActionChange(const String& action,
+                                      ActionChangeType type) {
+  mojom::blink::MediaSessionService* service = GetService();
+  if (!service)
+    return;
+
+  auto mojom_action = ActionNameToMojomAction(action);
+  DCHECK(mojom_action.has_value());
+
+  switch (type) {
+    case ActionChangeType::kActionEnabled:
+      service->EnableAction(mojom_action.value());
+      break;
+    case ActionChangeType::kActionDisabled:
+      service->DisableAction(mojom_action.value());
+      break;
+  }
+}
+
+mojom::blink::MediaSessionService* MediaSession::GetService() {
+  if (service_)
+    return service_.get();
+  if (!GetExecutionContext())
+    return nullptr;
+
+  DCHECK(GetExecutionContext()->IsDocument())
+      << "MediaSession::getService() is only available from a frame";
+  Document* document = ToDocument(GetExecutionContext());
+  if (!document->GetFrame())
+    return nullptr;
+
+  InterfaceProvider* interface_provider =
+      document->GetFrame()->GetInterfaceProvider();
+  if (!interface_provider)
+    return nullptr;
+
+  interface_provider->GetInterface(mojo::MakeRequest(&service_));
+  if (service_.get()) {
+    // Record the eTLD+1 of the frame using the API.
+    Platform::Current()->RecordRapporURL("Media.Session.APIUsage.Origin",
+                                         document->Url());
+    service_->SetClient(client_binding_.CreateInterfacePtrAndBind());
+  }
+
+  return service_.get();
+}
+
+void MediaSession::DidReceiveAction(
+    blink::mojom::blink::MediaSessionAction action) {
+  DCHECK(GetExecutionContext()->IsDocument());
+  Document* document = ToDocument(GetExecutionContext());
+  UserGestureIndicator gesture_indicator(
+      DocumentUserGestureToken::Create(document));
+
+  auto iter = action_handlers_.Find(MojomActionToActionName(action));
+  if (iter == action_handlers_.end())
+    return;
+
+  iter->value->call(this);
+}
+
+DEFINE_TRACE(MediaSession) {
+  visitor->Trace(metadata_);
+  visitor->Trace(action_handlers_);
+  ContextClient::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(MediaSession) {
+  for (auto handler : action_handlers_.Values())
+    visitor->TraceWrappers(handler);
+}
+
+}  // namespace blink

@@ -4,71 +4,72 @@
 
 #include "core/timing/PerformanceObserverEntryList.h"
 
-#include "core/timing/PerformanceEntry.h"
-#include "wtf/StdLibExtras.h"
 #include <algorithm>
+#include "core/timing/PerformanceEntry.h"
+#include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
 
-PerformanceObserverEntryList::PerformanceObserverEntryList(const PerformanceEntryVector& entryVector)
-    : m_performanceEntries(entryVector)
-{
+PerformanceObserverEntryList::PerformanceObserverEntryList(
+    const PerformanceEntryVector& entry_vector)
+    : performance_entries_(entry_vector) {}
+
+PerformanceObserverEntryList::~PerformanceObserverEntryList() {}
+
+PerformanceEntryVector PerformanceObserverEntryList::getEntries() const {
+  PerformanceEntryVector entries;
+
+  entries.AppendVector(performance_entries_);
+
+  std::sort(entries.begin(), entries.end(),
+            PerformanceEntry::StartTimeCompareLessThan);
+  return entries;
 }
 
-PerformanceObserverEntryList::~PerformanceObserverEntryList()
-{
-}
+PerformanceEntryVector PerformanceObserverEntryList::getEntriesByType(
+    const String& entry_type) {
+  PerformanceEntryVector entries;
+  PerformanceEntry::EntryType type =
+      PerformanceEntry::ToEntryTypeEnum(entry_type);
 
-
-PerformanceEntryVector PerformanceObserverEntryList::getEntries() const
-{
-    PerformanceEntryVector entries;
-
-    entries.appendVector(m_performanceEntries);
-
-    std::sort(entries.begin(), entries.end(), PerformanceEntry::startTimeCompareLessThan);
+  if (type == PerformanceEntry::kInvalid)
     return entries;
-}
 
-PerformanceEntryVector PerformanceObserverEntryList::getEntriesByType(const String& entryType)
-{
-    PerformanceEntryVector entries;
-    PerformanceEntry::EntryType type = PerformanceEntry::toEntryTypeEnum(entryType);
-
-    if (type == PerformanceEntry::Invalid)
-        return entries;
-
-    for (const auto& entry : m_performanceEntries) {
-        if (entry->entryTypeEnum() == type) {
-            entries.append(entry);
-        }
+  for (const auto& entry : performance_entries_) {
+    if (entry->EntryTypeEnum() == type) {
+      entries.push_back(entry);
     }
+  }
 
-    std::sort(entries.begin(), entries.end(), PerformanceEntry::startTimeCompareLessThan);
-    return entries;
+  std::sort(entries.begin(), entries.end(),
+            PerformanceEntry::StartTimeCompareLessThan);
+  return entries;
 }
 
-PerformanceEntryVector PerformanceObserverEntryList::getEntriesByName(const String& name, const String& entryType)
-{
-    PerformanceEntryVector entries;
-    PerformanceEntry::EntryType type = PerformanceEntry::toEntryTypeEnum(entryType);
+PerformanceEntryVector PerformanceObserverEntryList::getEntriesByName(
+    const String& name,
+    const String& entry_type) {
+  PerformanceEntryVector entries;
+  PerformanceEntry::EntryType type =
+      PerformanceEntry::ToEntryTypeEnum(entry_type);
 
-    if (!entryType.isNull() && type == PerformanceEntry::Invalid)
-        return entries;
+  if (!entry_type.IsNull() && type == PerformanceEntry::kInvalid)
+    return entries;
 
-    for (const auto& entry : m_performanceEntries) {
-        if (entry->name() == name && (entryType.isNull() || type == entry->entryTypeEnum())) {
-            entries.append(entry);
-        }
+  for (const auto& entry : performance_entries_) {
+    if (entry->name() == name &&
+        (entry_type.IsNull() || type == entry->EntryTypeEnum())) {
+      entries.push_back(entry);
     }
+  }
 
-    std::sort(entries.begin(), entries.end(), PerformanceEntry::startTimeCompareLessThan);
-    return entries;
+  std::sort(entries.begin(), entries.end(),
+            PerformanceEntry::StartTimeCompareLessThan);
+  return entries;
 }
 
-DEFINE_TRACE(PerformanceObserverEntryList)
-{
-    visitor->trace(m_performanceEntries);
+DEFINE_TRACE(PerformanceObserverEntryList) {
+  visitor->Trace(performance_entries_);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -46,11 +46,6 @@ Browser* FindOtherBrowser(Browser* browser) {
 
 class ExtensionManagementApiTest : public ExtensionApiTest {
  public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    ExtensionApiTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitch(switches::kEnablePanels);
-  }
-
   virtual void LoadExtensions() {
     base::FilePath basedir = test_data_dir_.AppendASCII("management");
 
@@ -206,8 +201,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementApiTest,
                                   "prohibited.html"));
 }
 
-// Disabled. See http://crbug.com/176023
-IN_PROC_BROWSER_TEST_F(ExtensionManagementApiTest, DISABLED_LaunchPanelApp) {
+IN_PROC_BROWSER_TEST_F(ExtensionManagementApiTest, LaunchPanelApp) {
   ExtensionService* service = extensions::ExtensionSystem::Get(
       browser()->profile())->extension_service();
 

@@ -38,27 +38,35 @@ namespace blink {
 
 class Document;
 
-class VideoPlaybackQuality : public GarbageCollected<VideoPlaybackQuality>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static VideoPlaybackQuality* create(const Document&, unsigned totalVideoFrames, unsigned droppedVideoFrames, unsigned corruptedVideoFrames);
+class VideoPlaybackQuality : public GarbageCollected<VideoPlaybackQuality>,
+                             public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    double creationTime() const { return m_creationTime; }
-    unsigned totalVideoFrames() const { return m_totalVideoFrames; }
-    unsigned droppedVideoFrames() const { return m_droppedVideoFrames; }
-    unsigned corruptedVideoFrames() const { return m_corruptedVideoFrames; }
+ public:
+  static VideoPlaybackQuality* Create(const Document&,
+                                      unsigned total_video_frames,
+                                      unsigned dropped_video_frames,
+                                      unsigned corrupted_video_frames);
 
-    DEFINE_INLINE_TRACE() { }
+  double creationTime() const { return creation_time_; }
+  unsigned totalVideoFrames() const { return total_video_frames_; }
+  unsigned droppedVideoFrames() const { return dropped_video_frames_; }
+  unsigned corruptedVideoFrames() const { return corrupted_video_frames_; }
 
-private:
-    VideoPlaybackQuality(const Document&, unsigned totalVideoFrames, unsigned droppedVideoFrames, unsigned corruptedVideoFrames);
+  DEFINE_INLINE_TRACE() {}
 
-    double m_creationTime;
-    unsigned m_totalVideoFrames;
-    unsigned m_droppedVideoFrames;
-    unsigned m_corruptedVideoFrames;
+ private:
+  VideoPlaybackQuality(const Document&,
+                       unsigned total_video_frames,
+                       unsigned dropped_video_frames,
+                       unsigned corrupted_video_frames);
+
+  double creation_time_;
+  unsigned total_video_frames_;
+  unsigned dropped_video_frames_;
+  unsigned corrupted_video_frames_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VideoPlaybackQuality_h
+#endif  // VideoPlaybackQuality_h

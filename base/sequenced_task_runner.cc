@@ -4,28 +4,37 @@
 
 #include "base/sequenced_task_runner.h"
 
+#include <utility>
+
 #include "base/bind.h"
 
 namespace base {
 
 bool SequencedTaskRunner::PostNonNestableTask(
     const tracked_objects::Location& from_here,
-    const Closure& task) {
-  return PostNonNestableDelayedTask(from_here, task, base::TimeDelta());
+    OnceClosure task) {
+  return PostNonNestableDelayedTask(from_here, std::move(task),
+                                    base::TimeDelta());
 }
 
-bool SequencedTaskRunner::DeleteSoonInternal(
+bool SequencedTaskRunner::DeleteOrReleaseSoonInternal(
     const tracked_objects::Location& from_here,
-    void(*deleter)(const void*),
+    void (*deleter)(const void*),
     const void* object) {
-  return PostNonNestableTask(from_here, Bind(deleter, object));
+  return PostNonNestableTask(from_here, BindOnce(deleter, object));
 }
 
-bool SequencedTaskRunner::ReleaseSoonInternal(
-    const tracked_objects::Location& from_here,
-    void(*releaser)(const void*),
-    const void* object) {
-  return PostNonNestableTask(from_here, Bind(releaser, object));
+OnTaskRunnerDeleter::OnTaskRunnerDeleter(
+    scoped_refptr<SequencedTaskRunner> task_runner)
+    : task_runner_(std::move(task_runner)) {
 }
+
+OnTaskRunnerDeleter::~OnTaskRunnerDeleter() {
+}
+
+OnTaskRunnerDeleter::OnTaskRunnerDeleter(OnTaskRunnerDeleter&&) = default;
+
+OnTaskRunnerDeleter& OnTaskRunnerDeleter::operator=(
+    OnTaskRunnerDeleter&&) = default;
 
 }  // namespace base

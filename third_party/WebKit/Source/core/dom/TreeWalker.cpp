@@ -31,255 +31,245 @@
 
 namespace blink {
 
-TreeWalker::TreeWalker(Node* rootNode, unsigned whatToShow, NodeFilter* filter)
-    : NodeIteratorBase(rootNode, whatToShow, filter)
-    , m_current(root())
-{
+TreeWalker::TreeWalker(Node* root_node,
+                       unsigned what_to_show,
+                       NodeFilter* filter)
+    : NodeIteratorBase(this, root_node, what_to_show, filter),
+      current_(root()) {}
+
+void TreeWalker::setCurrentNode(Node* node) {
+  DCHECK(node);
+  current_ = node;
 }
 
-void TreeWalker::setCurrentNode(Node* node)
-{
-    DCHECK(node);
-    m_current = node;
+inline Node* TreeWalker::SetCurrent(Node* node) {
+  current_ = node;
+  return current_.Get();
 }
 
-inline Node* TreeWalker::setCurrent(Node* node)
-{
-    m_current = node;
-    return m_current.get();
+Node* TreeWalker::parentNode(ExceptionState& exception_state) {
+  Node* node = current_;
+  while (node != root()) {
+    node = node->parentNode();
+    if (!node)
+      return 0;
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    if (accept_node_result == NodeFilter::kFilterAccept)
+      return SetCurrent(node);
+  }
+  return 0;
 }
 
-Node* TreeWalker::parentNode(ExceptionState& exceptionState)
-{
-    Node* node = m_current;
-    while (node != root()) {
-        node = node->parentNode();
-        if (!node)
-            return 0;
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        if (acceptNodeResult == NodeFilter::FILTER_ACCEPT)
-            return setCurrent(node);
-    }
-    return 0;
-}
-
-Node* TreeWalker::firstChild(ExceptionState& exceptionState)
-{
-    for (Node* node = m_current->firstChild(); node; ) {
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        switch (acceptNodeResult) {
-        case NodeFilter::FILTER_ACCEPT:
-            m_current = node;
-            return m_current.get();
-        case NodeFilter::FILTER_SKIP:
-            if (node->hasChildren()) {
-                node = node->firstChild();
-                continue;
-            }
-            break;
-        case NodeFilter::FILTER_REJECT:
-            break;
+Node* TreeWalker::firstChild(ExceptionState& exception_state) {
+  for (Node* node = current_->firstChild(); node;) {
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    switch (accept_node_result) {
+      case NodeFilter::kFilterAccept:
+        current_ = node;
+        return current_.Get();
+      case NodeFilter::kFilterSkip:
+        if (node->hasChildren()) {
+          node = node->firstChild();
+          continue;
         }
-        do {
-            if (node->nextSibling()) {
-                node = node->nextSibling();
-                break;
-            }
-            ContainerNode* parent = node->parentNode();
-            if (!parent || parent == root() || parent == m_current)
-                return 0;
-            node = parent;
-        } while (node);
+        break;
+      case NodeFilter::kFilterReject:
+        break;
     }
-    return 0;
-}
-
-Node* TreeWalker::lastChild(ExceptionState& exceptionState)
-{
-    for (Node* node = m_current->lastChild(); node; ) {
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        switch (acceptNodeResult) {
-        case NodeFilter::FILTER_ACCEPT:
-            m_current = node;
-            return m_current.get();
-        case NodeFilter::FILTER_SKIP:
-            if (node->lastChild()) {
-                node = node->lastChild();
-                continue;
-            }
-            break;
-        case NodeFilter::FILTER_REJECT:
-            break;
-        }
-        do {
-            if (node->previousSibling()) {
-                node = node->previousSibling();
-                break;
-            }
-            ContainerNode* parent = node->parentNode();
-            if (!parent || parent == root() || parent == m_current)
-                return 0;
-            node = parent;
-        } while (node);
-    }
-    return 0;
-}
-
-Node* TreeWalker::previousSibling(ExceptionState& exceptionState)
-{
-    Node* node = m_current;
-    if (node == root())
+    do {
+      if (node->nextSibling()) {
+        node = node->nextSibling();
+        break;
+      }
+      ContainerNode* parent = node->parentNode();
+      if (!parent || parent == root() || parent == current_)
         return 0;
-    while (1) {
-        for (Node* sibling = node->previousSibling(); sibling; ) {
-            unsigned acceptNodeResult = acceptNode(sibling, exceptionState);
-            if (exceptionState.hadException())
-                return 0;
-            switch (acceptNodeResult) {
-            case NodeFilter::FILTER_ACCEPT:
-                m_current = sibling;
-                return m_current.get();
-            case NodeFilter::FILTER_SKIP:
-                if (sibling->lastChild()) {
-                    sibling = sibling->lastChild();
-                    node = sibling;
-                    continue;
-                }
-                break;
-            case NodeFilter::FILTER_REJECT:
-                break;
-            }
-            sibling = sibling->previousSibling();
-        }
-        node = node->parentNode();
-        if (!node || node == root())
-            return 0;
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        if (acceptNodeResult == NodeFilter::FILTER_ACCEPT)
-            return 0;
-    }
+      node = parent;
+    } while (node);
+  }
+  return 0;
 }
 
-Node* TreeWalker::nextSibling(ExceptionState& exceptionState)
-{
-    Node* node = m_current;
-    if (node == root())
+Node* TreeWalker::lastChild(ExceptionState& exception_state) {
+  for (Node* node = current_->lastChild(); node;) {
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    switch (accept_node_result) {
+      case NodeFilter::kFilterAccept:
+        current_ = node;
+        return current_.Get();
+      case NodeFilter::kFilterSkip:
+        if (node->lastChild()) {
+          node = node->lastChild();
+          continue;
+        }
+        break;
+      case NodeFilter::kFilterReject:
+        break;
+    }
+    do {
+      if (node->previousSibling()) {
+        node = node->previousSibling();
+        break;
+      }
+      ContainerNode* parent = node->parentNode();
+      if (!parent || parent == root() || parent == current_)
         return 0;
-    while (1) {
-        for (Node* sibling = node->nextSibling(); sibling; ) {
-            unsigned acceptNodeResult = acceptNode(sibling, exceptionState);
-            if (exceptionState.hadException())
-                return 0;
-            switch (acceptNodeResult) {
-            case NodeFilter::FILTER_ACCEPT:
-                m_current = sibling;
-                return m_current.get();
-            case NodeFilter::FILTER_SKIP:
-                if (sibling->hasChildren()) {
-                    sibling = sibling->firstChild();
-                    node = sibling;
-                    continue;
-                }
-                break;
-            case NodeFilter::FILTER_REJECT:
-                break;
-            }
-            sibling = sibling->nextSibling();
-        }
-        node = node->parentNode();
-        if (!node || node == root())
-            return 0;
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        if (acceptNodeResult == NodeFilter::FILTER_ACCEPT)
-            return 0;
-    }
+      node = parent;
+    } while (node);
+  }
+  return 0;
 }
 
-Node* TreeWalker::previousNode(ExceptionState& exceptionState)
-{
-    Node* node = m_current;
-    while (node != root()) {
-        while (Node* previousSibling = node->previousSibling()) {
-            node = previousSibling;
-            unsigned acceptNodeResult = acceptNode(node, exceptionState);
-            if (exceptionState.hadException())
-                return 0;
-            if (acceptNodeResult == NodeFilter::FILTER_REJECT)
-                continue;
-            while (Node* lastChild = node->lastChild()) {
-                node = lastChild;
-                acceptNodeResult = acceptNode(node, exceptionState);
-                if (exceptionState.hadException())
-                    return 0;
-                if (acceptNodeResult == NodeFilter::FILTER_REJECT)
-                    break;
-            }
-            if (acceptNodeResult == NodeFilter::FILTER_ACCEPT) {
-                m_current = node;
-                return m_current.get();
-            }
-        }
-        if (node == root())
-            return 0;
-        ContainerNode* parent = node->parentNode();
-        if (!parent)
-            return 0;
-        node = parent;
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        if (acceptNodeResult == NodeFilter::FILTER_ACCEPT)
-            return setCurrent(node);
-    }
+Node* TreeWalker::previousSibling(ExceptionState& exception_state) {
+  Node* node = current_;
+  if (node == root())
     return 0;
+  while (1) {
+    for (Node* sibling = node->previousSibling(); sibling;) {
+      unsigned accept_node_result = AcceptNode(sibling, exception_state);
+      if (exception_state.HadException())
+        return 0;
+      switch (accept_node_result) {
+        case NodeFilter::kFilterAccept:
+          current_ = sibling;
+          return current_.Get();
+        case NodeFilter::kFilterSkip:
+          if (sibling->lastChild()) {
+            sibling = sibling->lastChild();
+            node = sibling;
+            continue;
+          }
+          break;
+        case NodeFilter::kFilterReject:
+          break;
+      }
+      sibling = sibling->previousSibling();
+    }
+    node = node->parentNode();
+    if (!node || node == root())
+      return 0;
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    if (accept_node_result == NodeFilter::kFilterAccept)
+      return 0;
+  }
 }
 
-Node* TreeWalker::nextNode(ExceptionState& exceptionState)
-{
-    Node* node = m_current;
+Node* TreeWalker::nextSibling(ExceptionState& exception_state) {
+  Node* node = current_;
+  if (node == root())
+    return 0;
+  while (1) {
+    for (Node* sibling = node->nextSibling(); sibling;) {
+      unsigned accept_node_result = AcceptNode(sibling, exception_state);
+      if (exception_state.HadException())
+        return 0;
+      switch (accept_node_result) {
+        case NodeFilter::kFilterAccept:
+          current_ = sibling;
+          return current_.Get();
+        case NodeFilter::kFilterSkip:
+          if (sibling->hasChildren()) {
+            sibling = sibling->firstChild();
+            node = sibling;
+            continue;
+          }
+          break;
+        case NodeFilter::kFilterReject:
+          break;
+      }
+      sibling = sibling->nextSibling();
+    }
+    node = node->parentNode();
+    if (!node || node == root())
+      return 0;
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    if (accept_node_result == NodeFilter::kFilterAccept)
+      return 0;
+  }
+}
+
+Node* TreeWalker::previousNode(ExceptionState& exception_state) {
+  Node* node = current_;
+  while (node != root()) {
+    while (Node* previous_sibling = node->previousSibling()) {
+      node = previous_sibling;
+      unsigned accept_node_result = AcceptNode(node, exception_state);
+      if (exception_state.HadException())
+        return 0;
+      if (accept_node_result == NodeFilter::kFilterReject)
+        continue;
+      while (Node* last_child = node->lastChild()) {
+        node = last_child;
+        accept_node_result = AcceptNode(node, exception_state);
+        if (exception_state.HadException())
+          return 0;
+        if (accept_node_result == NodeFilter::kFilterReject)
+          break;
+      }
+      if (accept_node_result == NodeFilter::kFilterAccept) {
+        current_ = node;
+        return current_.Get();
+      }
+    }
+    if (node == root())
+      return 0;
+    ContainerNode* parent = node->parentNode();
+    if (!parent)
+      return 0;
+    node = parent;
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    if (accept_node_result == NodeFilter::kFilterAccept)
+      return SetCurrent(node);
+  }
+  return 0;
+}
+
+Node* TreeWalker::nextNode(ExceptionState& exception_state) {
+  Node* node = current_;
 Children:
-    while (Node* firstChild = node->firstChild()) {
-        node = firstChild;
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        if (acceptNodeResult == NodeFilter::FILTER_ACCEPT)
-            return setCurrent(node);
-        if (acceptNodeResult == NodeFilter::FILTER_REJECT)
-            break;
-    }
-    while (Node* nextSibling = NodeTraversal::nextSkippingChildren(*node, root())) {
-        node = nextSibling;
-        unsigned acceptNodeResult = acceptNode(node, exceptionState);
-        if (exceptionState.hadException())
-            return 0;
-        if (acceptNodeResult == NodeFilter::FILTER_ACCEPT)
-            return setCurrent(node);
-        if (acceptNodeResult == NodeFilter::FILTER_SKIP)
-            goto Children;
-    }
-    return 0;
+  while (Node* first_child = node->firstChild()) {
+    node = first_child;
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    if (accept_node_result == NodeFilter::kFilterAccept)
+      return SetCurrent(node);
+    if (accept_node_result == NodeFilter::kFilterReject)
+      break;
+  }
+  while (Node* next_sibling =
+             NodeTraversal::NextSkippingChildren(*node, root())) {
+    node = next_sibling;
+    unsigned accept_node_result = AcceptNode(node, exception_state);
+    if (exception_state.HadException())
+      return 0;
+    if (accept_node_result == NodeFilter::kFilterAccept)
+      return SetCurrent(node);
+    if (accept_node_result == NodeFilter::kFilterSkip)
+      goto Children;
+  }
+  return 0;
 }
 
-DEFINE_TRACE(TreeWalker)
-{
-    visitor->trace(m_current);
-    NodeIteratorBase::trace(visitor);
+DEFINE_TRACE(TreeWalker) {
+  visitor->Trace(current_);
+  NodeIteratorBase::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(TreeWalker)
-{
-    NodeIteratorBase::traceWrappers(visitor);
+DEFINE_TRACE_WRAPPERS(TreeWalker) {
+  NodeIteratorBase::TraceWrappers(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

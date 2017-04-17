@@ -25,62 +25,74 @@
 
 #include "platform/exported/WebScrollbarThemeGeometryNative.h"
 
+#include <memory>
 #include "platform/exported/WebScrollbarThemeClientImpl.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebScrollbar.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
-std::unique_ptr<WebScrollbarThemeGeometryNative> WebScrollbarThemeGeometryNative::create(ScrollbarTheme& theme)
-{
-    return wrapUnique(new WebScrollbarThemeGeometryNative(theme));
+std::unique_ptr<WebScrollbarThemeGeometryNative>
+WebScrollbarThemeGeometryNative::Create(ScrollbarTheme& theme) {
+  return WTF::WrapUnique(new WebScrollbarThemeGeometryNative(theme));
 }
 
-WebScrollbarThemeGeometryNative::WebScrollbarThemeGeometryNative(ScrollbarTheme& theme)
-    : m_theme(theme)
-{
+WebScrollbarThemeGeometryNative::WebScrollbarThemeGeometryNative(
+    ScrollbarTheme& theme)
+    : theme_(theme) {}
+
+bool WebScrollbarThemeGeometryNative::HasButtons(WebScrollbar* scrollbar) {
+  return theme_.HasButtons(WebScrollbarThemeClientImpl(*scrollbar));
 }
 
-bool WebScrollbarThemeGeometryNative::hasButtons(WebScrollbar* scrollbar)
-{
-    return m_theme.hasButtons(WebScrollbarThemeClientImpl(*scrollbar));
+bool WebScrollbarThemeGeometryNative::HasThumb(WebScrollbar* scrollbar) {
+  return theme_.HasThumb(WebScrollbarThemeClientImpl(*scrollbar));
 }
 
-bool WebScrollbarThemeGeometryNative::hasThumb(WebScrollbar* scrollbar)
-{
-    return m_theme.hasThumb(WebScrollbarThemeClientImpl(*scrollbar));
+WebRect WebScrollbarThemeGeometryNative::TrackRect(WebScrollbar* scrollbar) {
+  return theme_.TrackRect(WebScrollbarThemeClientImpl(*scrollbar));
 }
 
-WebRect WebScrollbarThemeGeometryNative::trackRect(WebScrollbar* scrollbar)
-{
-    return m_theme.trackRect(WebScrollbarThemeClientImpl(*scrollbar));
+WebRect WebScrollbarThemeGeometryNative::ThumbRect(WebScrollbar* scrollbar) {
+  return theme_.ThumbRect(WebScrollbarThemeClientImpl(*scrollbar));
 }
 
-WebRect WebScrollbarThemeGeometryNative::thumbRect(WebScrollbar* scrollbar)
-{
-    return m_theme.thumbRect(WebScrollbarThemeClientImpl(*scrollbar));
+WebRect WebScrollbarThemeGeometryNative::BackButtonStartRect(
+    WebScrollbar* scrollbar) {
+  return theme_.BackButtonRect(WebScrollbarThemeClientImpl(*scrollbar),
+                               kBackButtonStartPart, false);
 }
 
-WebRect WebScrollbarThemeGeometryNative::backButtonStartRect(WebScrollbar* scrollbar)
-{
-    return m_theme.backButtonRect(WebScrollbarThemeClientImpl(*scrollbar), BackButtonStartPart, false);
+WebRect WebScrollbarThemeGeometryNative::BackButtonEndRect(
+    WebScrollbar* scrollbar) {
+  return theme_.BackButtonRect(WebScrollbarThemeClientImpl(*scrollbar),
+                               kBackButtonEndPart, false);
 }
 
-WebRect WebScrollbarThemeGeometryNative::backButtonEndRect(WebScrollbar* scrollbar)
-{
-    return m_theme.backButtonRect(WebScrollbarThemeClientImpl(*scrollbar), BackButtonEndPart, false);
+WebRect WebScrollbarThemeGeometryNative::ForwardButtonStartRect(
+    WebScrollbar* scrollbar) {
+  return theme_.ForwardButtonRect(WebScrollbarThemeClientImpl(*scrollbar),
+                                  kForwardButtonStartPart, false);
 }
 
-WebRect WebScrollbarThemeGeometryNative::forwardButtonStartRect(WebScrollbar* scrollbar)
-{
-    return m_theme.forwardButtonRect(WebScrollbarThemeClientImpl(*scrollbar), ForwardButtonStartPart, false);
+WebRect WebScrollbarThemeGeometryNative::ForwardButtonEndRect(
+    WebScrollbar* scrollbar) {
+  return theme_.ForwardButtonRect(WebScrollbarThemeClientImpl(*scrollbar),
+                                  kForwardButtonEndPart, false);
 }
 
-WebRect WebScrollbarThemeGeometryNative::forwardButtonEndRect(WebScrollbar* scrollbar)
-{
-    return m_theme.forwardButtonRect(WebScrollbarThemeClientImpl(*scrollbar), ForwardButtonEndPart, false);
+WebSize WebScrollbarThemeGeometryNative::NinePatchThumbCanvasSize(
+    WebScrollbar* scrollbar) {
+  DCHECK(theme_.UsesNinePatchThumbResource());
+  return theme_.NinePatchThumbCanvasSize(
+      WebScrollbarThemeClientImpl(*scrollbar));
 }
 
-} // namespace blink
+WebRect WebScrollbarThemeGeometryNative::NinePatchThumbAperture(
+    WebScrollbar* scrollbar) {
+  DCHECK(theme_.UsesNinePatchThumbResource());
+  return theme_.NinePatchThumbAperture(WebScrollbarThemeClientImpl(*scrollbar));
+}
+
+}  // namespace blink

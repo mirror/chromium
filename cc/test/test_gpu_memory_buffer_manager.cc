@@ -129,7 +129,10 @@ TestGpuMemoryBufferManager::TestGpuMemoryBufferManager() {
 }
 
 TestGpuMemoryBufferManager::~TestGpuMemoryBufferManager() {
-  DCHECK(buffers_.empty());
+  {
+    base::AutoLock hold(buffers_lock_);
+    DCHECK(buffers_.empty());
+  }
   DCHECK(clients_.empty());
   if (parent_gpu_memory_buffer_manager_)
     parent_gpu_memory_buffer_manager_->clients_.erase(client_id_);
@@ -148,12 +151,13 @@ TestGpuMemoryBufferManager::CreateClientGpuMemoryBufferManager() {
 
 void TestGpuMemoryBufferManager::OnGpuMemoryBufferDestroyed(
     gfx::GpuMemoryBufferId gpu_memory_buffer_id) {
+  base::AutoLock hold(buffers_lock_);
   DCHECK(buffers_.find(gpu_memory_buffer_id.id) != buffers_.end());
   buffers_.erase(gpu_memory_buffer_id.id);
 }
 
 std::unique_ptr<gfx::GpuMemoryBuffer>
-TestGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
+TestGpuMemoryBufferManager::CreateGpuMemoryBuffer(
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
@@ -168,31 +172,9 @@ TestGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
       this, last_gpu_memory_buffer_id_, size, format, std::move(shared_memory),
       0, base::checked_cast<int>(
              gfx::RowSizeForBufferFormat(size.width(), format, 0))));
+  base::AutoLock hold(buffers_lock_);
   buffers_[last_gpu_memory_buffer_id_] = result.get();
   return result;
-}
-
-std::unique_ptr<gfx::GpuMemoryBuffer>
-TestGpuMemoryBufferManager::CreateGpuMemoryBufferFromHandle(
-    const gfx::GpuMemoryBufferHandle& handle,
-    const gfx::Size& size,
-    gfx::BufferFormat format) {
-  if (handle.type != gfx::SHARED_MEMORY_BUFFER)
-    return nullptr;
-
-  last_gpu_memory_buffer_id_ += 1;
-  std::unique_ptr<gfx::GpuMemoryBuffer> result(new GpuMemoryBufferImpl(
-      this, last_gpu_memory_buffer_id_, size, format,
-      base::WrapUnique(new base::SharedMemory(handle.handle, false)),
-      handle.offset, handle.stride));
-  buffers_[last_gpu_memory_buffer_id_] = result.get();
-  return result;
-}
-
-gfx::GpuMemoryBuffer*
-TestGpuMemoryBufferManager::GpuMemoryBufferFromClientBuffer(
-    ClientBuffer buffer) {
-  return reinterpret_cast<gfx::GpuMemoryBuffer*>(buffer);
 }
 
 void TestGpuMemoryBufferManager::SetDestructionSyncToken(

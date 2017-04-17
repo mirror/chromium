@@ -3,64 +3,46 @@
 // found in the LICENSE file.
 
 #include "base/macros.h"
+#include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/password_manager/password_manager_test_base.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_io_data.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/passwords/passwords_model_delegate.h"
+#include "chrome/test/base/ui_test_utils.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
-#include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/test_password_store.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/browser_test_utils.h"
+#include "net/dns/mock_host_resolver.h"
 
 namespace {
-
-// A helper class that synchronously waits until the password store handles a
-// GetLogins() request.
-class PasswordStoreResultsObserver
-    : public password_manager::PasswordStoreConsumer {
- public:
-  PasswordStoreResultsObserver() = default;
-
-  void OnGetPasswordStoreResults(
-      ScopedVector<autofill::PasswordForm> results) override {
-    run_loop_.Quit();
-  }
-
-  void Wait() {
-    run_loop_.Run();
-  }
-
- private:
-  base::RunLoop run_loop_;
-
-  DISALLOW_COPY_AND_ASSIGN(PasswordStoreResultsObserver);
-};
 
 class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
  public:
   CredentialManagerBrowserTest() = default;
 
   bool IsShowingAccountChooser() {
-    return PasswordsModelDelegateFromWebContents(WebContents())->GetState() ==
-        password_manager::ui::CREDENTIAL_REQUEST_STATE;
+    return PasswordsModelDelegateFromWebContents(WebContents())->
+        GetState() == password_manager::ui::CREDENTIAL_REQUEST_STATE;
   }
 
-  // Make sure that the password store processed all the previous calls which
-  // are executed on another thread.
-  void WaitForPasswordStore() {
-    scoped_refptr<password_manager::PasswordStore> password_store =
-        PasswordStoreFactory::GetForProfile(
-            browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS);
-    PasswordStoreResultsObserver syncer;
-    password_store->GetAutofillableLoginsWithAffiliatedRealms(&syncer);
-    syncer.Wait();
+  // Similarly to PasswordManagerBrowserTestBase::NavigateToFile this is a
+  // wrapper around ui_test_utils::NavigateURL that waits until DidFinishLoad()
+  // fires. Different to NavigateToFile this method allows passing a test_server
+  // and modifications to the hostname.
+  void NavigateToURL(const net::EmbeddedTestServer& test_server,
+                     const std::string& hostname,
+                     const std::string& relative_url) {
+    NavigationObserver observer(WebContents());
+    GURL url = test_server.GetURL(hostname, relative_url);
+    ui_test_utils::NavigateToURL(browser(), url);
+    observer.Wait();
   }
 
  private:
-
   DISALLOW_COPY_AND_ASSIGN(CredentialManagerBrowserTest);
 };
 
@@ -93,8 +75,9 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
       "navigator.credentials.get({password: true})"
       ".then(cred => window.location = '/password/done.html')"));
   WaitForPasswordStore();
-  ASSERT_EQ(password_manager::ui::CREDENTIAL_REQUEST_STATE,
-            PasswordsModelDelegateFromWebContents(WebContents())->GetState());
+  ASSERT_EQ(
+      password_manager::ui::CREDENTIAL_REQUEST_STATE,
+      PasswordsModelDelegateFromWebContents(WebContents())->GetState());
   PasswordsModelDelegateFromWebContents(WebContents())->ChooseCredential(
       signin_form,
       password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD);
@@ -118,6 +101,108 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
   EXPECT_FALSE(form.skip_zero_click);
 }
 
+IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
+                       StoreSavesPSLMatchedCredential) {
+  // Redirect all requests to localhost.
+  host_resolver()->AddRule("*", "127.0.0.1");
+
+  scoped_refptr<password_manager::TestPasswordStore> password_store =
+      static_cast<password_manager::TestPasswordStore*>(
+          PasswordStoreFactory::GetForProfile(
+              browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS)
+              .get());
+
+  // The call to |GetURL| is needed to get the correct port.
+  GURL psl_url = https_test_server().GetURL("psl.example.com", "/");
+
+  autofill::PasswordForm signin_form;
+  signin_form.signon_realm = psl_url.spec();
+  signin_form.password_value = base::ASCIIToUTF16("password");
+  signin_form.username_value = base::ASCIIToUTF16("user");
+  signin_form.origin = psl_url;
+  password_store->AddLogin(signin_form);
+
+  NavigateToURL(https_test_server(), "www.example.com",
+                "/password/password_form.html");
+
+  // Call the API to trigger |get| and |store| and redirect.
+  ASSERT_TRUE(
+      content::ExecuteScript(RenderViewHost(),
+                             "navigator.credentials.get({password: true})"
+                             ".then(cred => "
+                             "navigator.credentials.store(cred)"
+                             ".then(cred => "
+                             "window.location = '/password/done.html'))"));
+
+  WaitForPasswordStore();
+  ASSERT_EQ(password_manager::ui::CREDENTIAL_REQUEST_STATE,
+            PasswordsModelDelegateFromWebContents(WebContents())->GetState());
+  PasswordsModelDelegateFromWebContents(WebContents())
+      ->ChooseCredential(
+          signin_form,
+          password_manager::CredentialType::CREDENTIAL_TYPE_PASSWORD);
+
+  NavigationObserver observer(WebContents());
+  observer.SetPathToWaitFor("/password/done.html");
+  observer.Wait();
+
+  // Wait for the password store before checking the prompt because it pops up
+  // after the store replies.
+  WaitForPasswordStore();
+  BubbleObserver prompt_observer(WebContents());
+  EXPECT_FALSE(prompt_observer.IsShowingSavePrompt());
+  EXPECT_FALSE(prompt_observer.IsShowingUpdatePrompt());
+
+  // There should be an entry for both psl.example.com and www.example.com.
+  password_manager::TestPasswordStore::PasswordMap passwords =
+      password_store->stored_passwords();
+  GURL www_url = https_test_server().GetURL("www.example.com", "/");
+  EXPECT_EQ(2U, passwords.size());
+  EXPECT_TRUE(base::ContainsKey(passwords, psl_url.spec()));
+  EXPECT_TRUE(base::ContainsKey(passwords, www_url.spec()));
+}
+
+IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
+                       ObsoleteHttpCredentialMovedOnMigrationToHstsSite) {
+  // Add an http credential to the password store.
+  GURL https_origin = https_test_server().base_url();
+  ASSERT_TRUE(https_origin.SchemeIs(url::kHttpsScheme));
+  GURL::Replacements rep;
+  rep.SetSchemeStr(url::kHttpScheme);
+  GURL http_origin = https_origin.ReplaceComponents(rep);
+  autofill::PasswordForm http_form;
+  http_form.signon_realm = http_origin.spec();
+  http_form.origin = http_origin;
+  http_form.username_value = base::ASCIIToUTF16("user");
+  http_form.password_value = base::ASCIIToUTF16("12345");
+  scoped_refptr<password_manager::TestPasswordStore> password_store =
+      static_cast<password_manager::TestPasswordStore*>(
+          PasswordStoreFactory::GetForProfile(
+              browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS)
+              .get());
+  password_store->AddLogin(http_form);
+  WaitForPasswordStore();
+
+  // Treat the host of the HTTPS test server as HSTS.
+  AddHSTSHost(https_test_server().host_port_pair().host());
+
+  // Navigate to HTTPS page and trigger the migration.
+  ui_test_utils::NavigateToURL(
+      browser(), https_test_server().GetURL("/password/done.html"));
+
+  // Call the API to trigger the account chooser.
+  ASSERT_TRUE(content::ExecuteScript(
+      RenderViewHost(), "navigator.credentials.get({password: true})"));
+  BubbleObserver(WebContents()).WaitForAccountChooser();
+
+  // Wait for the migration logic to actually touch the password store.
+  WaitForPasswordStore();
+  // Only HTTPS passwords should be present.
+  EXPECT_TRUE(
+      password_store->stored_passwords().at(http_origin.spec()).empty());
+  EXPECT_FALSE(
+      password_store->stored_passwords().at(https_origin.spec()).empty());
+}
 
 IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
                        AutoSigninOldCredentialAndNavigation) {
@@ -144,47 +229,34 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest,
   "document.getElementById('password_field').value = 'trash';";
   ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), fill_password));
 
-  // Call the API with a delay to trigger the notification to the client. The
-  // delay ensures that parsing password forms won't happen again after the API
-  // call making the test flaky.
+  // Call the API to trigger the notification to the client.
   ASSERT_TRUE(content::ExecuteScript(
       RenderViewHost(),
-      "setTimeout( function() {"
-        "navigator.credentials.get({password: true})"
-        ".then(cred => window.location = '/password/done.html');"
-      "}, 1000)"));
+      "navigator.credentials.get({password: true})"
+      ".then(cred => window.location = '/password/done.html');"));
 
   NavigationObserver observer(WebContents());
   observer.SetPathToWaitFor("/password/done.html");
   observer.Wait();
 
-  std::unique_ptr<BubbleObserver> prompt_observer(
-      new BubbleObserver(WebContents()));
-  // The autofill password manager shouldn't react to the successful login.
-  EXPECT_FALSE(prompt_observer->IsShowingSavePrompt());
+  BubbleObserver prompt_observer(WebContents());
+  // The autofill password manager shouldn't react to the successful login
+  // because it was suppressed when the site got the credential back.
+  EXPECT_FALSE(prompt_observer.IsShowingSavePrompt());
 }
 
 IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest, SaveViaAPIAndAutofill) {
   NavigateToFile("/password/password_form.html");
 
-  // Postpone a submit event for 1 second. Even for the static html page Chrome
-  // continues to parse and recreate the PasswordFormManager instances after the
-  // page load. Calling the API before this would make the test flaky. Clicking
-  // on the button emulates server analysing the credential and then saving and
-  // navigating to the landing page.
   ASSERT_TRUE(content::ExecuteScript(
       RenderViewHost(),
       "document.getElementById('input_submit_button').addEventListener('click',"
       "function(event) {"
-        "setTimeout( function() {"
-          "var c = new PasswordCredential({ id: 'user', password: 'API' });"
-          "navigator.credentials.store(c);"
-          "document.getElementById('testform').submit();"
-        "}, 1000 );"
-        "event.preventDefault();"
+        "var c = new PasswordCredential({ id: 'user', password: 'API' });"
+        "navigator.credentials.store(c);"
       "});"));
-  // Fill the password and click the button to submit the page later. The API
-  // should suppress the autofill password manager.
+  // Fill the password and click the button to submit the page. The API should
+  // suppress the autofill password manager.
   NavigationObserver form_submit_observer(WebContents());
   ASSERT_TRUE(content::ExecuteScript(
       RenderViewHost(),
@@ -194,10 +266,9 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest, SaveViaAPIAndAutofill) {
   form_submit_observer.Wait();
 
   WaitForPasswordStore();
-  std::unique_ptr<BubbleObserver> prompt_observer(
-      new BubbleObserver(WebContents()));
-  ASSERT_TRUE(prompt_observer->IsShowingSavePrompt());
-  prompt_observer->AcceptSavePrompt();
+  BubbleObserver prompt_observer(WebContents());
+  ASSERT_TRUE(prompt_observer.IsShowingSavePrompt());
+  prompt_observer.AcceptSavePrompt();
 
   WaitForPasswordStore();
   password_manager::TestPasswordStore::PasswordMap stored =
@@ -232,21 +303,12 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest, UpdateViaAPIAndAutofill) {
 
   NavigateToFile("/password/password_form.html");
 
-  // Postpone a submit event for 1 second. Even for the static html page Chrome
-  // continues to parse and recreate the PasswordFormManager instances after the
-  // page load. Calling the API before this would make the test flaky. Clicking
-  // on the button emulates server analysing the credential and then saving and
-  // navigating to the landing page.
   ASSERT_TRUE(content::ExecuteScript(
       RenderViewHost(),
       "document.getElementById('input_submit_button').addEventListener('click',"
       "function(event) {"
-        "setTimeout( function() {"
-          "var c = new PasswordCredential({ id: 'user', password: 'API' });"
-          "navigator.credentials.store(c);"
-          "document.getElementById('testform').submit();"
-        "}, 1000 );"
-        "event.preventDefault();"
+        "var c = new PasswordCredential({ id: 'user', password: 'API' });"
+        "navigator.credentials.store(c);"
       "});"));
   // Fill the new password and click the button to submit the page later. The
   // API should suppress the autofill password manager and overwrite the
@@ -262,10 +324,9 @@ IN_PROC_BROWSER_TEST_F(CredentialManagerBrowserTest, UpdateViaAPIAndAutofill) {
   // Wait for the password store before checking the prompt because it pops up
   // after the store replies.
   WaitForPasswordStore();
-  std::unique_ptr<BubbleObserver> prompt_observer(
-      new BubbleObserver(WebContents()));
-  EXPECT_FALSE(prompt_observer->IsShowingSavePrompt());
-  EXPECT_FALSE(prompt_observer->IsShowingUpdatePrompt());
+  BubbleObserver prompt_observer(WebContents());
+  EXPECT_FALSE(prompt_observer.IsShowingSavePrompt());
+  EXPECT_FALSE(prompt_observer.IsShowingUpdatePrompt());
   signin_form.skip_zero_click = false;
   signin_form.times_used = 1;
   signin_form.password_value = base::ASCIIToUTF16("API");

@@ -111,8 +111,8 @@ class SubMenuModel : public CommonMenuModel {
 
   void MenuWillShow() override { showing_ = true; }
 
-  // Called when the menu has been closed.
-  void MenuClosed() override { showing_ = false; }
+  // Called when the menu is about to close.
+  void MenuWillClose() override { showing_ = false; }
 
   bool showing_;
 
@@ -174,8 +174,8 @@ class MenuModelAdapterTest : public ViewEventTestBase,
                                     this, true);
 
     menu_ = menu_model_adapter_.CreateMenu();
-    menu_runner_.reset(
-        new views::MenuRunner(menu_, views::MenuRunner::HAS_MNEMONICS));
+    menu_runner_.reset(new views::MenuRunner(
+        menu_, views::MenuRunner::HAS_MNEMONICS | views::MenuRunner::ASYNC));
 
     ViewEventTestBase::SetUp();
   }
@@ -233,7 +233,8 @@ class MenuModelAdapterTest : public ViewEventTestBase,
 
     menu_model_adapter_.BuildMenu(menu_);
 
-    base::MessageLoopForUI::current()->task_runner()->PostTask(
+    ASSERT_TRUE(base::MessageLoopForUI::IsCurrent());
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, CreateEventTask(this, &MenuModelAdapterTest::Step3));
   }
 

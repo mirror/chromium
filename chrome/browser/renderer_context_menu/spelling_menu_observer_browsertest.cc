@@ -9,10 +9,10 @@
 #include "base/values.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/renderer_context_menu/mock_render_view_context_menu.h"
-#include "chrome/browser/spellchecker/spelling_service_client.h"
-#include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/prefs/pref_service.h"
+#include "components/spellcheck/browser/pref_names.h"
+#include "components/spellcheck/browser/spelling_service_client.h"
 #include "content/public/common/context_menu_params.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -49,11 +49,13 @@ class SpellingMenuObserverTest : public InProcessBrowserTest {
   }
 
   void ForceSuggestMode() {
-    menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, true);
+    menu()->GetPrefs()->SetBoolean(
+        spellcheck::prefs::kSpellCheckUseSpellingService, true);
     // Force a non-empty and non-"en" locale so SUGGEST is available.
     base::ListValue dictionary;
     dictionary.AppendString("fr");
-    menu()->GetPrefs()->Set(prefs::kSpellCheckDictionaries, dictionary);
+    menu()->GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries,
+                            dictionary);
 
     ASSERT_TRUE(SpellingServiceClient::IsAvailable(
         menu()->GetBrowserContext(), SpellingServiceClient::SUGGEST));
@@ -84,11 +86,11 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, InitMenuWithCorrectWord) {
   EXPECT_EQ(static_cast<size_t>(0), menu()->GetMenuSize());
 }
 
-// Tests that right-clicking a misspelled word adds three items:
-// "Add to dictionary", "Ask Google for suggestions", and a separator.
+// Tests that right-clicking a misspelled word adds two items:
+// "Add to dictionary", "Ask Google for suggestions".
 IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, InitMenuWithMisspelledWord) {
   InitMenu("wiimode", nullptr);
-  EXPECT_EQ(3U, menu()->GetMenuSize());
+  EXPECT_EQ(2U, menu()->GetMenuSize());
 
   // Read all the context-menu items added by this test and verify they are
   // expected ones. We do not check the item titles to prevent resource changes
@@ -105,9 +107,6 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, InitMenuWithMisspelledWord) {
   EXPECT_FALSE(item.checked);
   EXPECT_FALSE(item.hidden);
   menu()->GetMenuItem(2, &item);
-  EXPECT_EQ(-1, item.command_id);
-  EXPECT_FALSE(item.enabled);
-  EXPECT_FALSE(item.hidden);
 }
 
 // Tests that right-clicking a correct word when we enable spelling-service
@@ -116,7 +115,8 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, InitMenuWithMisspelledWord) {
 // and calls SpellingMenuObserver::IsChecked() to check it.
 IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
                        EnableSpellingServiceWithCorrectWord) {
-  menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, true);
+  menu()->GetPrefs()->SetBoolean(
+      spellcheck::prefs::kSpellCheckUseSpellingService, true);
   InitMenu("", nullptr);
 
   EXPECT_TRUE(
@@ -128,12 +128,14 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
 // test does not actually send JSON-RPC requests to the service because it makes
 // this test flaky.)
 IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, EnableSpellingService) {
-  menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, true);
+  menu()->GetPrefs()->SetBoolean(
+      spellcheck::prefs::kSpellCheckUseSpellingService, true);
   base::ListValue dictionary;
-  menu()->GetPrefs()->Set(prefs::kSpellCheckDictionaries, dictionary);
+  menu()->GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries,
+                          dictionary);
 
   InitMenu("wiimode", nullptr);
-  EXPECT_EQ(3U, menu()->GetMenuSize());
+  EXPECT_EQ(2U, menu()->GetMenuSize());
 
   // To avoid duplicates, this test reads only the "Ask Google for suggestions"
   // item and verifies it is enabled and checked.
@@ -149,20 +151,22 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, EnableSpellingService) {
 // service is enabled and that there is only one suggestion.
 IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
                        NoMoreSuggestionsNotDisplayed) {
-  menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, true);
+  menu()->GetPrefs()->SetBoolean(
+      spellcheck::prefs::kSpellCheckUseSpellingService, true);
 
   // Force a non-empty locale so SPELLCHECK is available.
   base::ListValue dictionary;
   dictionary.AppendString("en");
-  menu()->GetPrefs()->Set(prefs::kSpellCheckDictionaries, dictionary);
+  menu()->GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries,
+                          dictionary);
 
   EXPECT_TRUE(SpellingServiceClient::IsAvailable(
       menu()->GetBrowserContext(), SpellingServiceClient::SPELLCHECK));
   InitMenu("asdfkj", "asdf");
 
-  // The test should see a separator, suggestion, "Add to dictionary",
-  // "Ask Google for suggestions", and a separator. Possibly more items (not
-  // relevant here).
+  // The test should see a suggestion, separator, "Add to dictionary",
+  // "Ask Google for suggestions".
+  // Possibly more items (not relevant here).
   EXPECT_LT(3U, menu()->GetMenuSize());
 
   MockRenderViewContextMenu::MockMenuItem item;
@@ -177,19 +181,19 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
   EXPECT_FALSE(item.hidden);
 
   menu()->GetMenuItem(2, &item);
+  EXPECT_EQ(-1, item.command_id);
+  EXPECT_FALSE(item.enabled);
+  EXPECT_FALSE(item.hidden);
+
+  menu()->GetMenuItem(3, &item);
   EXPECT_EQ(IDC_SPELLCHECK_ADD_TO_DICTIONARY, item.command_id);
   EXPECT_TRUE(item.enabled);
   EXPECT_FALSE(item.hidden);
 
-  menu()->GetMenuItem(3, &item);
+  menu()->GetMenuItem(4, &item);
   EXPECT_EQ(IDC_CONTENT_CONTEXT_SPELLING_TOGGLE, item.command_id);
   EXPECT_TRUE(item.enabled);
   EXPECT_TRUE(item.checked);
-  EXPECT_FALSE(item.hidden);
-
-  menu()->GetMenuItem(4, &item);
-  EXPECT_EQ(-1, item.command_id);
-  EXPECT_FALSE(item.enabled);
   EXPECT_FALSE(item.hidden);
 }
 
@@ -205,12 +209,14 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
   // This means spellchecking is allowed. Default is that the service is
   // contacted but this test makes sure that if profile is incognito, that
   // is not an option.
-  menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, true);
+  menu()->GetPrefs()->SetBoolean(
+      spellcheck::prefs::kSpellCheckUseSpellingService, true);
 
   // Force a non-empty locale so SUGGEST normally would be available.
   base::ListValue dictionary;
   dictionary.AppendString("en");
-  menu()->GetPrefs()->Set(prefs::kSpellCheckDictionaries, dictionary);
+  menu()->GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries,
+                          dictionary);
 
   EXPECT_FALSE(SpellingServiceClient::IsAvailable(
       menu()->GetBrowserContext(), SpellingServiceClient::SUGGEST));
@@ -223,7 +229,7 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
   // or a separator. The next 2 items should be "Add to Dictionary" followed
   // by "Ask Google for suggestions" which should be disabled.
   // TODO(rlp): add autocorrect here when it is functional.
-  EXPECT_LT(2U, menu()->GetMenuSize());
+  EXPECT_LT(1U, menu()->GetMenuSize());
 
   MockRenderViewContextMenu::MockMenuItem item;
   menu()->GetMenuItem(0, &item);
@@ -240,19 +246,21 @@ IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest,
 // Test that the menu is preceeded by a separator if there are any suggestions,
 // or if the SpellingServiceClient is available
 IN_PROC_BROWSER_TEST_F(SpellingMenuObserverTest, SuggestionsForceTopSeparator) {
-  menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, false);
+  menu()->GetPrefs()->SetBoolean(
+      spellcheck::prefs::kSpellCheckUseSpellingService, false);
 
   // First case: Misspelled word, no suggestions, no spellcheck service.
   InitMenu("asdfkj", nullptr);
-  // See SpellingMenuObserverTest.InitMenuWithMisspelledWord on why 3 items.
-  EXPECT_EQ(3U, menu()->GetMenuSize());
+  // See SpellingMenuObserverTest.InitMenuWithMisspelledWord on why 2 items.
+  EXPECT_EQ(2U, menu()->GetMenuSize());
   MockRenderViewContextMenu::MockMenuItem item;
   menu()->GetMenuItem(0, &item);
   EXPECT_NE(-1, item.command_id);
 
   // Case #2. Misspelled word, suggestions, no spellcheck service.
   Reset(false);
-  menu()->GetPrefs()->SetBoolean(prefs::kSpellCheckUseSpellingService, false);
+  menu()->GetPrefs()->SetBoolean(
+      spellcheck::prefs::kSpellCheckUseSpellingService, false);
   InitMenu("asdfkj", "asdf");
 
   // Expect at least separator and 4 default entries.

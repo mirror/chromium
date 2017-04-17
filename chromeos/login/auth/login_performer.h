@@ -20,12 +20,12 @@
 
 class AccountId;
 
-namespace net {
-class URLRequestContextGetter;
+namespace base {
+class TaskRunner;
 }
 
-namespace policy {
-class WildcardLoginChecker;
+namespace net {
+class URLRequestContextGetter;
 }
 
 namespace content {
@@ -83,11 +83,16 @@ class CHROMEOS_EXPORT LoginPerformer : public AuthStatusConsumer {
   void LoginAsKioskAccount(const AccountId& app_account_id,
                            bool use_guest_mount);
 
+  // Performs a login into the ARC kiosk mode account with |arc_app_account_id|.
+  void LoginAsArcKioskAccount(const AccountId& arc_app_account_id);
+
   // AuthStatusConsumer implementation:
   void OnAuthFailure(const AuthFailure& error) override;
   void OnAuthSuccess(const UserContext& user_context) override;
   void OnOffTheRecordAuthSuccess() override;
   void OnPasswordChangeDetected() override;
+  void OnOldEncryptionDetected(const UserContext& user_context,
+                               bool has_incomplete_migration) override;
 
   // Migrates cryptohome using |old_password| specified.
   void RecoverEncryptedData(const std::string& old_password);

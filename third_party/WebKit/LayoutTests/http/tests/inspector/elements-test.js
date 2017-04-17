@@ -4,12 +4,12 @@ InspectorTest.preloadPanel("elements");
 
 InspectorTest.inlineStyleSection = function()
 {
-    return WebInspector.panels.elements.sidebarPanes.styles._sectionBlocks[0].sections[0];
+    return UI.panels.elements._stylesWidget._sectionBlocks[0].sections[0];
 }
 
 InspectorTest.computedStyleWidget = function()
 {
-    return WebInspector.panels.elements.sidebarPanes.computedStyle;
+    return UI.panels.elements._computedStyleWidget;
 }
 
 InspectorTest.dumpComputedStyle = function(doNotAutoExpand)
@@ -18,7 +18,7 @@ InspectorTest.dumpComputedStyle = function(doNotAutoExpand)
     var treeOutline = computed._propertiesOutline;
     var children = treeOutline.rootElement().children();
     for (var treeElement of children) {
-        var property = treeElement[WebInspector.ComputedStyleWidget._propertySymbol];
+        var property = treeElement[Elements.ComputedStyleWidget._propertySymbol];
         if (property.name === "width" || property.name === "height")
             continue;
         var dumpText = "";
@@ -38,7 +38,7 @@ InspectorTest.dumpComputedStyle = function(doNotAutoExpand)
             dumpText += title.querySelector(".property-trace-selector").textContent;
             var link = title.querySelector(".trace-link");
             if (link)
-                dumpText += " " + extractText(link);
+                dumpText += " " + extractLinkText(link);
             InspectorTest.addResult("    " + dumpText);
         }
     }
@@ -50,7 +50,7 @@ InspectorTest.findComputedPropertyWithName = function(name)
     var treeOutline = computed._propertiesOutline;
     var children = treeOutline.rootElement().children();
     for (var treeElement of children) {
-        var property = treeElement[WebInspector.ComputedStyleWidget._propertySymbol];
+        var property = treeElement[Elements.ComputedStyleWidget._propertySymbol];
         if (property.name === name)
             return treeElement;
     }
@@ -59,7 +59,7 @@ InspectorTest.findComputedPropertyWithName = function(name)
 
 InspectorTest.firstMatchedStyleSection = function()
 {
-    return WebInspector.panels.elements.sidebarPanes.styles._sectionBlocks[0].sections[1];
+    return UI.panels.elements._stylesWidget._sectionBlocks[0].sections[1];
 }
 
 InspectorTest.firstMediaTextElementInSection = function(section)
@@ -168,7 +168,7 @@ InspectorTest.expandedNodeWithId = function(idValue)
 
 InspectorTest.selectNode = function(node)
 {
-    return WebInspector.Revealer.revealPromise(node);
+    return Common.Revealer.revealPromise(node);
 }
 
 InspectorTest.selectNodeWithId = function(idValue, callback)
@@ -189,7 +189,7 @@ function waitForStylesRebuild(matchFunction, callback, requireRebuild)
             callback();
             return;
         }
-        InspectorTest.addSniffer(WebInspector.StylesSidebarPane.prototype, "_nodeStylesUpdatedForTest", sniff);
+        InspectorTest.addSniffer(Elements.StylesSidebarPane.prototype, "_nodeStylesUpdatedForTest", sniff);
     })(null);
 }
 
@@ -220,17 +220,17 @@ InspectorTest.waitForStylesForClass = function(classValue, callback, requireRebu
 
 InspectorTest.waitForSelectorCommitted = function(callback)
 {
-    InspectorTest.addSniffer(WebInspector.StylePropertiesSection.prototype, "_editingSelectorCommittedForTest", callback);
+    InspectorTest.addSniffer(Elements.StylePropertiesSection.prototype, "_editingSelectorCommittedForTest", callback);
 }
 
 InspectorTest.waitForMediaTextCommitted = function(callback)
 {
-    InspectorTest.addSniffer(WebInspector.StylePropertiesSection.prototype, "_editingMediaTextCommittedForTest", callback);
+    InspectorTest.addSniffer(Elements.StylePropertiesSection.prototype, "_editingMediaTextCommittedForTest", callback);
 }
 
 InspectorTest.waitForStyleApplied = function(callback)
 {
-    InspectorTest.addSniffer(WebInspector.StylePropertyTreeElement.prototype, "styleTextAppliedForTest", callback);
+    InspectorTest.addSniffer(Elements.StylePropertyTreeElement.prototype, "styleTextAppliedForTest", callback);
 }
 
 InspectorTest.selectNodeAndWaitForStyles = function(idValue, callback)
@@ -265,7 +265,7 @@ InspectorTest.selectPseudoElementAndWaitForStyles = function(parentId, pseudoTyp
     function nodeFound(node)
     {
         targetNode = node;
-        WebInspector.Revealer.reveal(node);
+        Common.Revealer.reveal(node);
     }
 
     function stylesUpdated()
@@ -292,19 +292,19 @@ InspectorTest.selectNodeAndWaitForStylesWithComputed = function(idValue, callbac
 
 InspectorTest.firstElementsTreeOutline = function()
 {
-    return WebInspector.panels.elements._treeOutlines[0];
+    return UI.panels.elements._treeOutlines[0];
 }
 
 InspectorTest.filterMatchedStyles = function(text)
 {
     var regex = text ? new RegExp(text, "i") : null;
     InspectorTest.addResult("Filtering styles by: " + text);
-    WebInspector.panels.elements.sidebarPanes.styles.onFilterChanged(regex);
+    UI.panels.elements._stylesWidget.onFilterChanged(regex);
 }
 
 InspectorTest.dumpRenderedMatchedStyles = function()
 {
-    var sectionBlocks = WebInspector.panels.elements.sidebarPanes.styles._sectionBlocks;
+    var sectionBlocks = UI.panels.elements._stylesWidget._sectionBlocks;
     for (var block of sectionBlocks) {
         for (var section of block.sections) {
             // Skip sections which were filtered out.
@@ -352,7 +352,7 @@ InspectorTest.dumpRenderedMatchedStyles = function()
 
 InspectorTest.dumpSelectedElementStyles = function(excludeComputed, excludeMatched, omitLonghands, includeSelectorGroupMarks)
 {
-    var sectionBlocks = WebInspector.panels.elements.sidebarPanes.styles._sectionBlocks;
+    var sectionBlocks = UI.panels.elements._stylesWidget._sectionBlocks;
     if (!excludeComputed)
         InspectorTest.dumpComputedStyle();
     for (var block of sectionBlocks) {
@@ -374,7 +374,7 @@ function printStyleSection(section, omitLonghands, includeSelectorGroupMarks)
 {
     if (!section)
         return;
-    InspectorTest.addResult("[expanded] " + (section.element.classList.contains("no-affect") ? "[no-affect] " : ""));
+    InspectorTest.addResult("[expanded] " + (section.propertiesTreeOutline.element.classList.contains("no-affect") ? "[no-affect] " : ""));
 
     var medias = section._titleElement.querySelectorAll(".media-list .media");
     for (var i = 0; i < medias.length; ++i) {
@@ -387,7 +387,7 @@ function printStyleSection(section, omitLonghands, includeSelectorGroupMarks)
     selectorText += selector.nextSibling.textContent;
     var anchor = section._titleElement.querySelector(".styles-section-subtitle");
     if (anchor) {
-        var anchorText = extractText(anchor);
+        var anchorText = extractLinkText(anchor);
         selectorText += String.sprintf(" (%s)", anchorText);
     }
     InspectorTest.addResult(selectorText);
@@ -396,16 +396,14 @@ function printStyleSection(section, omitLonghands, includeSelectorGroupMarks)
     InspectorTest.addResult("");
 }
 
-function extractText(element)
+function extractLinkText(element)
 {
-    var text = element.textContent;
-    if (text)
-        return text;
-    var anchor = element.hasAttribute("data-uncopyable") ? element : element.querySelector("[data-uncopyable]");
+    var anchor = element.querySelector(".devtools-link");
     if (!anchor)
-        return "";
-    var anchorText = anchor.getAttribute("data-uncopyable");
-    var uiLocation = anchor[WebInspector.Linkifier._uiLocationSymbol];
+        return element.textContent;
+    var anchorText = anchor.textContent;
+    var info = Components.Linkifier._linkInfo(anchor);
+    var uiLocation = info && info.uiLocation;
     var anchorTarget = uiLocation ? (uiLocation.uiSourceCode.name() + ":" + (uiLocation.lineNumber + 1) + ":" + (uiLocation.columnNumber + 1)) : "";
     return anchorText + " -> " + anchorTarget;
 }
@@ -436,14 +434,32 @@ InspectorTest.toggleMatchedStyleProperty = function(propertyName, checked)
 
 InspectorTest.eventListenersWidget = function()
 {
-    var sidebarPane = WebInspector.panels.elements.sidebarPanes.eventListeners;
-    sidebarPane.revealWidget();
-    return sidebarPane;
+    UI.viewManager.showView("elements.eventListeners");
+    return self.runtime.sharedInstance(Elements.EventListenersWidget);
 }
 
-InspectorTest.expandAndDumpSelectedElementEventListeners = function(callback)
+InspectorTest.showEventListenersWidget = function()
 {
-    InspectorTest.expandAndDumpEventListeners(InspectorTest.eventListenersWidget()._eventListenersView, null, callback);
+    return UI.viewManager.showView("elements.eventListeners");
+}
+
+InspectorTest.expandAndDumpSelectedElementEventListeners = function(callback, force)
+{
+    InspectorTest.expandAndDumpEventListeners(InspectorTest.eventListenersWidget()._eventListenersView, callback, force);
+}
+
+InspectorTest.removeFirstEventListener = function()
+{
+    var treeOutline = InspectorTest.eventListenersWidget()._eventListenersView._treeOutline;
+    var listenerTypes = treeOutline.rootElement().children();
+    for (var i = 0; i < listenerTypes.length; i++) {
+        var listeners = listenerTypes[i].children();
+        if (listeners.length && !listenerTypes[i].hidden) {
+            listeners[0].eventListener().remove();
+            listeners[0]._removeListenerBar();
+            break;
+        }
+    }
 }
 
 InspectorTest.dumpObjectPropertySectionDeep = function(section)
@@ -478,7 +494,7 @@ InspectorTest.getElementStylePropertyTreeItem = function(propertyName)
 // FIXME: this returns the first tree item found (may fail for same-named properties in a style).
 InspectorTest.getMatchedStylePropertyTreeItem = function(propertyName)
 {
-    var sectionBlocks = WebInspector.panels.elements.sidebarPanes.styles._sectionBlocks;
+    var sectionBlocks = UI.panels.elements._stylesWidget._sectionBlocks;
     for (var block of sectionBlocks) {
         for (var section of block.sections) {
             var treeItem = InspectorTest.getFirstPropertyTreeItemForSection(section, propertyName);
@@ -524,10 +540,6 @@ InspectorTest.dumpStyleTreeItem = function(treeItem, prefix, depth)
         typePrefix += "/-- disabled --/ ";
     var textContent = treeItem.listItemElement.textContent;
 
-    // Add non-selectable url text.
-    var textData = treeItem.listItemElement.querySelector("[data-uncopyable]");
-    if (textData)
-        textContent += textData.getAttribute("data-uncopyable");
     InspectorTest.addResult(prefix + typePrefix + textContent);
     if (--depth) {
         treeItem.expand();
@@ -626,7 +638,7 @@ InspectorTest.dumpDOMUpdateHighlights = function(rootNode, callback, depth)
 {
     var hasHighlights = false;
 
-    InspectorTest.addSniffer(WebInspector.ElementsTreeOutline.prototype, "_updateModifiedNodes", didUpdate);
+    InspectorTest.addSniffer(Elements.ElementsTreeOutline.prototype, "_updateModifiedNodes", didUpdate);
 
     function didUpdate()
     {
@@ -641,7 +653,7 @@ InspectorTest.dumpDOMUpdateHighlights = function(rootNode, callback, depth)
     function print(treeItem, prefix, depth)
     {
         if (!treeItem.root) {
-            var elementXPath = WebInspector.DOMPresentationUtils.xPath(treeItem.node(), true);
+            var elementXPath = Components.DOMPresentationUtils.xPath(treeItem.node(), true);
             var highlightedElements = treeItem.listItemElement.querySelectorAll(".dom-update-highlight");
             for (var i = 0; i < highlightedElements.length; ++i) {
                 var element = highlightedElements[i];
@@ -894,7 +906,7 @@ InspectorTest.dumpCSSStyleDeclaration = function(style, currentIndent)
         InspectorTest.addResult(currentIndent + "[NO STYLE]");
         return;
     }
-    var properties = style.allProperties;
+    var properties = style.allProperties();
     for (var i = 0; i < properties.length; ++i) {
         var property = properties[i];
         if (!property.disabled)
@@ -909,7 +921,7 @@ InspectorTest.dumpBreadcrumb = function(message)
     if (message)
         InspectorTest.addResult(message + ":");
     var result = [];
-    var crumbs = WebInspector.panels.elements._breadcrumbs.crumbsElement;
+    var crumbs = UI.panels.elements._breadcrumbs.crumbsElement;
     var crumb = crumbs.lastChild;
     while (crumb) {
         result.unshift(crumb.textContent);
@@ -929,15 +941,15 @@ InspectorTest.matchingSelectors = function(matchedStyles, rule)
 
 InspectorTest.addNewRuleInStyleSheet = function(styleSheetHeader, selector, callback)
 {
-    InspectorTest.addSniffer(WebInspector.StylesSidebarPane.prototype, "_addBlankSection", onBlankSection.bind(null, selector, callback));
-    WebInspector.panels.elements.sidebarPanes.styles._createNewRuleInStyleSheet(styleSheetHeader);
+    InspectorTest.addSniffer(Elements.StylesSidebarPane.prototype, "_addBlankSection", onBlankSection.bind(null, selector, callback));
+    UI.panels.elements._stylesWidget._createNewRuleInStyleSheet(styleSheetHeader);
 }
 
 InspectorTest.addNewRule = function(selector, callback)
 {
     // Click "Add new rule".
-    document.querySelector(".styles-pane-toolbar").shadowRoot.querySelector(".add-toolbar-item").click();
-    InspectorTest.addSniffer(WebInspector.StylesSidebarPane.prototype, "_addBlankSection", onBlankSection.bind(null, selector, callback));
+    document.querySelector(".styles-pane-toolbar").shadowRoot.querySelector(".largeicon-add").click();
+    InspectorTest.addSniffer(Elements.StylesSidebarPane.prototype, "_addBlankSection", onBlankSection.bind(null, selector, callback));
 }
 
 function onBlankSection(selector, callback)
@@ -967,7 +979,7 @@ InspectorTest.dumpInspectorHighlightJSON = function(idValue, callback)
 
 InspectorTest.waitForAnimationAdded = function(callback)
 {
-    InspectorTest.addSniffer(WebInspector.AnimationTimeline.prototype, "_addAnimationGroup", callback);
+    InspectorTest.addSniffer(Animation.AnimationTimeline.prototype, "_addAnimationGroup", callback);
 }
 
 InspectorTest.dumpAnimationTimeline = function(timeline)

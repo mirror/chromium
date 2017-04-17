@@ -20,6 +20,7 @@ extern "C" {
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/multiprocess_test.h"
 #include "content/common/sandbox_mac.h"
+#include "sandbox/mac/sandbox_compiler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/multiprocess_func_list.h"
 
@@ -38,13 +39,13 @@ class MacDirAccessSandboxTest : public base::MultiProcessTest {
  public:
   bool CheckSandbox(const std::string& directory_to_try) {
     setenv(kSandboxAccessPathKey, directory_to_try.c_str(), 1);
-    base::Process child_process = SpawnChild("mac_sandbox_path_access");
-    if (!child_process.IsValid()) {
+    base::SpawnChildResult spawn_child = SpawnChild("mac_sandbox_path_access");
+    if (!spawn_child.process.IsValid()) {
       LOG(WARNING) << "SpawnChild failed";
       return false;
     }
     int code = -1;
-    if (!child_process.WaitForExit(&code)) {
+    if (!spawn_child.process.WaitForExit(&code)) {
       LOG(WARNING) << "Process::WaitForExit failed";
       return false;
     }
@@ -205,7 +206,7 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
       "perm_dir)))))";
 
   // Setup the parameters to pass to the sandbox.
-  SandboxCompiler compiler(sandbox_profile);
+  sandbox::SandboxCompiler compiler(sandbox_profile);
   CHECK(compiler.InsertStringParam("PERMITTED_DIR", final_allowed_dir));
 
   // Enable Sandbox.

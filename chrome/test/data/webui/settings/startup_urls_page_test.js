@@ -91,7 +91,7 @@ cr.define('settings_startup_urls_page', function() {
 
     test('Initialization_Add', function() {
       document.body.appendChild(dialog);
-      assertTrue(dialog.$.dialog.opened);
+      assertTrue(dialog.$.dialog.open);
 
       // Assert that the "Add" button is disabled.
       var actionButton = dialog.$.actionButton;
@@ -107,7 +107,7 @@ cr.define('settings_startup_urls_page', function() {
     test('Initialization_Edit', function() {
       dialog.model = createSampleUrlEntry();
       document.body.appendChild(dialog);
-      assertTrue(dialog.$.dialog.opened);
+      assertTrue(dialog.$.dialog.open);
 
       // Assert that the "Edit" button is enabled.
       var actionButton = dialog.$.actionButton;
@@ -161,7 +161,7 @@ cr.define('settings_startup_urls_page', function() {
       browserProxy.setUrlValidity(false);
       MockInteractions.tap(actionButton);
       return browserProxy.whenCalled(proxyMethodName).then(function() {
-        assertTrue(dialog.$.dialog.opened);
+        assertTrue(dialog.$.dialog.open);
 
         // Test that dialog is closed if the user submits a valid URL.
         browserProxy.setUrlValidity(true);
@@ -169,7 +169,7 @@ cr.define('settings_startup_urls_page', function() {
         MockInteractions.tap(actionButton);
         return browserProxy.whenCalled(proxyMethodName);
       }).then(function() {
-        assertFalse(dialog.$.dialog.opened);
+        assertFalse(dialog.$.dialog.open);
       });
     }
 
@@ -182,6 +182,22 @@ cr.define('settings_startup_urls_page', function() {
       dialog.model = createSampleUrlEntry();
       document.body.appendChild(dialog);
       return testProxyCalled('editStartupPage');
+    });
+
+    test('Enter key submits', function() {
+      document.body.appendChild(dialog);
+
+      // Input a URL and force validation.
+      var inputElement = dialog.$.url;
+      inputElement.value = 'foo.com';
+      pressSpace(inputElement);
+
+      return browserProxy.whenCalled('validateStartupPage').then(function() {
+        MockInteractions.keyEventOn(
+            inputElement, 'keypress', 13, undefined, 'Enter');
+
+        return browserProxy.whenCalled('addStartupPage');
+      });
     });
   });
 
@@ -196,7 +212,16 @@ cr.define('settings_startup_urls_page', function() {
       settings.StartupUrlsPageBrowserProxyImpl.instance_ = browserProxy;
       PolymerTest.clearBody();
       page = document.createElement('settings-startup-urls-page');
+      page.prefs = {
+        session: {
+          restore_on_startup: {
+            type: chrome.settingsPrivate.PrefType.NUMBER,
+            value: 5,
+          },
+        },
+      };
       document.body.appendChild(page);
+      Polymer.dom.flush();
     });
 
     teardown(function() { page.remove(); });
@@ -207,14 +232,14 @@ cr.define('settings_startup_urls_page', function() {
     });
 
     test('UseCurrentPages', function() {
-      var useCurrentPagesButton = page.$.useCurrentPages;
+      var useCurrentPagesButton = page.$$('#useCurrentPages > a');
       assertTrue(!!useCurrentPagesButton);
       MockInteractions.tap(useCurrentPagesButton);
       return browserProxy.whenCalled('useCurrentPages');
     });
 
     test('AddPage_OpensDialog', function() {
-      var addPageButton = page.$.addPage;
+      var addPageButton = page.$$('#addPage > a');
       assertTrue(!!addPageButton);
       assertFalse(!!page.$$('settings-startup-url-dialog'));
 
@@ -225,9 +250,59 @@ cr.define('settings_startup_urls_page', function() {
 
     test('EditPage_OpensDialog', function() {
       assertFalse(!!page.$$('settings-startup-url-dialog'));
-      page.fire(settings.EDIT_STARTUP_URL_EVENT, createSampleUrlEntry());
+      page.fire(
+          settings.EDIT_STARTUP_URL_EVENT,
+          {model: createSampleUrlEntry(), anchor: null});
       Polymer.dom.flush();
       assertTrue(!!page.$$('settings-startup-url-dialog'));
+    });
+
+    test('StartupPagesChanges_CloseOpenEditDialog', function() {
+      var entry1 = {
+        modelIndex: 2,
+        title: 'Test page 1',
+        tooltip: 'test tooltip',
+        url: 'chrome://bar',
+      };
+
+      var entry2 = {
+        modelIndex: 2,
+        title: 'Test page 2',
+        tooltip: 'test tooltip',
+        url: 'chrome://foo',
+      };
+
+      cr.webUIListenerCallback('update-startup-pages', [entry1, entry2]);
+      page.fire(
+          settings.EDIT_STARTUP_URL_EVENT, {model: entry2, anchor: null});
+      Polymer.dom.flush();
+
+      assertTrue(!!page.$$('settings-startup-url-dialog'));
+      cr.webUIListenerCallback('update-startup-pages', [entry1]);
+      Polymer.dom.flush();
+
+      assertFalse(!!page.$$('settings-startup-url-dialog'));
+    });
+
+    test('StarupPages_WhenExtensionControlled', function() {
+      assertFalse(!!page.get('prefs.session.startup_urls.controlledBy'));
+      assertFalse(!!page.$$('extension-controlled-indicator'));
+      assertTrue(!!page.$$('#addPage'));
+      assertTrue(!!page.$$('#useCurrentPages'));
+
+      page.set('prefs.session.startup_urls', {
+        controlledBy: chrome.settingsPrivate.ControlledBy.EXTENSION,
+        controlledByName: 'Totally Real Extension',
+        enforcement: chrome.settingsPrivate.Enforcement.ENFORCED,
+        extensionId: 'mefmhpjnkplhdhmfmblilkgpkbjebmij',
+        type: chrome.settingsPrivate.PrefType.NUMBER,
+        value: 5,
+      });
+      Polymer.dom.flush();
+
+      assertTrue(!!page.$$('extension-controlled-indicator'));
+      assertFalse(!!page.$$('#addPage'));
+      assertFalse(!!page.$$('#useCurrentPages'));
     });
   });
 
@@ -254,23 +329,36 @@ cr.define('settings_startup_urls_page', function() {
       element = document.createElement('settings-startup-url-entry');
       element.model = createSampleUrlEntry();
       document.body.appendChild(element);
-
-      // Bring up the popup menu for the following tests to use.
-      assertFalse(!!element.$$('iron-dropdown'));
-      MockInteractions.tap(element.$.dots);
       Polymer.dom.flush();
-      assertTrue(!!element.$$('iron-dropdown'));
     });
 
     teardown(function() { element.remove(); });
 
     test('MenuOptions_Remove', function() {
+      element.editable = true;
+      Polymer.dom.flush();
+
+      // Bring up the popup menu.
+      assertFalse(!!element.$$('dialog[is=cr-action-menu]'));
+      MockInteractions.tap(element.$$('#dots'));
+      Polymer.dom.flush();
+      assertTrue(!!element.$$('dialog[is=cr-action-menu]'));
+
       var removeButton = element.shadowRoot.querySelector('#remove')
       MockInteractions.tap(removeButton);
       return browserProxy.whenCalled('removeStartupPage').then(
           function(modelIndex) {
             assertEquals(element.model.modelIndex, modelIndex);
           });
+    });
+
+    test('Editable', function() {
+      assertFalse(!!element.editable);
+      assertFalse(!!element.$$('#dots'));
+
+      element.editable = true;
+      Polymer.dom.flush();
+      assertTrue(!!element.$$('#dots'));
     });
   });
 });

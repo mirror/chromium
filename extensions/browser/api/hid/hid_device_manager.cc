@@ -15,7 +15,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "device/core/device_client.h"
+#include "device/base/device_client.h"
 #include "device/hid/hid_device_filter.h"
 #include "device/hid/hid_service.h"
 #include "extensions/browser/api/device_permissions_manager.h"
@@ -112,8 +112,8 @@ HidDeviceManager::~HidDeviceManager() {
 // static
 BrowserContextKeyedAPIFactory<HidDeviceManager>*
 HidDeviceManager::GetFactoryInstance() {
-  static base::LazyInstance<BrowserContextKeyedAPIFactory<HidDeviceManager> >
-      factory = LAZY_INSTANCE_INITIALIZER;
+  static base::LazyInstance<BrowserContextKeyedAPIFactory<HidDeviceManager>>::
+      DestructorAtExit factory = LAZY_INSTANCE_INITIALIZER;
   return &factory.Get();
 }
 
@@ -130,8 +130,8 @@ void HidDeviceManager::GetApiDevices(
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(callback, base::Passed(&devices)));
   } else {
-    pending_enumerations_.push_back(base::WrapUnique(
-        new GetApiDevicesParams(extension, filters, callback)));
+    pending_enumerations_.push_back(
+        base::MakeUnique<GetApiDevicesParams>(extension, filters, callback));
   }
 }
 
@@ -183,11 +183,11 @@ bool HidDeviceManager::HasPermission(const Extension* extension,
     return true;
   }
 
-  UsbDevicePermission::CheckParam usbParam(
-      device_info->vendor_id(), device_info->product_id(),
-      UsbDevicePermissionData::UNSPECIFIED_INTERFACE);
+  std::unique_ptr<UsbDevicePermission::CheckParam> usb_param =
+      UsbDevicePermission::CheckParam::ForHidDevice(
+          extension, device_info->vendor_id(), device_info->product_id());
   if (extension->permissions_data()->CheckAPIPermissionWithParam(
-          APIPermission::kUsbDevice, &usbParam)) {
+          APIPermission::kUsbDevice, usb_param.get())) {
     return true;
   }
 
@@ -217,7 +217,7 @@ void HidDeviceManager::OnDeviceAdded(scoped_refptr<HidDeviceInfo> device_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_LT(next_resource_id_, std::numeric_limits<int>::max());
   int new_id = next_resource_id_++;
-  DCHECK(!ContainsKey(resource_ids_, device_info->device_id()));
+  DCHECK(!base::ContainsKey(resource_ids_, device_info->device_id()));
   resource_ids_[device_info->device_id()] = new_id;
   device_ids_[new_id] = device_info->device_id();
 

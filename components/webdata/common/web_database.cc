@@ -13,13 +13,13 @@
 // corresponding changes must happen in the unit tests, and new migration test
 // added.  See |WebDatabaseMigrationTest::kCurrentTestedVersionNumber|.
 // static
-const int WebDatabase::kCurrentVersionNumber = 67;
+const int WebDatabase::kCurrentVersionNumber = 71;
 
 const int WebDatabase::kDeprecatedVersionNumber = 51;
 
 namespace {
 
-const int kCompatibleVersionNumber = 61;
+const int kCompatibleVersionNumber = 71;
 
 // Change the version number and possibly the compatibility version of
 // |meta_table_|.
@@ -63,6 +63,11 @@ void WebDatabase::BeginTransaction() {
 
 void WebDatabase::CommitTransaction() {
   db_.CommitTransaction();
+}
+
+std::string WebDatabase::GetDiagnosticInfo(int extended_error,
+                                           sql::Statement* statement) {
+  return db_.GetDiagnosticInfo(extended_error, statement);
 }
 
 sql::Connection* WebDatabase::GetSQLConnection() {

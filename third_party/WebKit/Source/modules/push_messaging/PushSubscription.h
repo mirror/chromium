@@ -5,15 +5,15 @@
 #ifndef PushSubscription_h
 #define PushSubscription_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include <memory>
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -23,38 +23,43 @@ class ScriptPromiseResolver;
 class ScriptState;
 struct WebPushSubscription;
 
-class PushSubscription final : public GarbageCollectedFinalized<PushSubscription>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PushSubscription* take(ScriptPromiseResolver*, std::unique_ptr<WebPushSubscription>, ServiceWorkerRegistration*);
-    static void dispose(WebPushSubscription* subscriptionRaw);
+class PushSubscription final
+    : public GarbageCollectedFinalized<PushSubscription>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    virtual ~PushSubscription();
+ public:
+  static PushSubscription* Take(ScriptPromiseResolver*,
+                                std::unique_ptr<WebPushSubscription>,
+                                ServiceWorkerRegistration*);
+  static void Dispose(WebPushSubscription* subscription_raw);
 
-    KURL endpoint() const { return m_endpoint; }
+  virtual ~PushSubscription();
 
-    PushSubscriptionOptions* options() const { return m_options.get(); }
+  KURL endpoint() const { return endpoint_; }
 
-    DOMArrayBuffer* getKey(const AtomicString& name) const;
-    ScriptPromise unsubscribe(ScriptState*);
+  PushSubscriptionOptions* options() const { return options_.Get(); }
 
-    ScriptValue toJSONForBinding(ScriptState*);
+  DOMArrayBuffer* getKey(const AtomicString& name) const;
+  ScriptPromise unsubscribe(ScriptState*);
 
-    DECLARE_TRACE();
+  ScriptValue toJSONForBinding(ScriptState*);
 
-private:
-    PushSubscription(const WebPushSubscription&, ServiceWorkerRegistration*);
+  DECLARE_TRACE();
 
-    KURL m_endpoint;
+ private:
+  PushSubscription(const WebPushSubscription&, ServiceWorkerRegistration*);
 
-    Member<PushSubscriptionOptions> m_options;
+  KURL endpoint_;
 
-    Member<DOMArrayBuffer> m_p256dh;
-    Member<DOMArrayBuffer> m_auth;
+  Member<PushSubscriptionOptions> options_;
 
-    Member<ServiceWorkerRegistration> m_serviceWorkerRegistration;
+  Member<DOMArrayBuffer> p256dh_;
+  Member<DOMArrayBuffer> auth_;
+
+  Member<ServiceWorkerRegistration> service_worker_registration_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PushSubscription_h
+#endif  // PushSubscription_h

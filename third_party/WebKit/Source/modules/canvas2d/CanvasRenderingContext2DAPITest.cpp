@@ -4,10 +4,10 @@
 
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
 
+#include "core/dom/Document.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"
-#include "core/html/HTMLDocument.h"
 #include "core/html/ImageData.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
@@ -27,302 +27,344 @@ using ::testing::Mock;
 namespace blink {
 
 class CanvasRenderingContext2DAPITest : public ::testing::Test {
-protected:
-    CanvasRenderingContext2DAPITest();
-    void SetUp() override;
+ protected:
+  CanvasRenderingContext2DAPITest();
+  void SetUp() override;
 
-    DummyPageHolder& page() const { return *m_dummyPageHolder; }
-    HTMLDocument& document() const { return *m_document; }
-    HTMLCanvasElement& canvasElement() const { return *m_canvasElement; }
-    CanvasRenderingContext2D* context2d() const;
+  DummyPageHolder& Page() const { return *dummy_page_holder_; }
+  Document& GetDocument() const { return *document_; }
+  HTMLCanvasElement& CanvasElement() const { return *canvas_element_; }
+  CanvasRenderingContext2D* Context2d() const;
 
-    void createContext(OpacityMode);
+  void CreateContext(OpacityMode);
 
-private:
-    std::unique_ptr<DummyPageHolder> m_dummyPageHolder;
-    Persistent<HTMLDocument> m_document;
-    Persistent<HTMLCanvasElement> m_canvasElement;
-
+ private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  Persistent<Document> document_;
+  Persistent<HTMLCanvasElement> canvas_element_;
 };
 
-CanvasRenderingContext2DAPITest::CanvasRenderingContext2DAPITest()
-{ }
+CanvasRenderingContext2DAPITest::CanvasRenderingContext2DAPITest() {}
 
-CanvasRenderingContext2D* CanvasRenderingContext2DAPITest::context2d() const
-{
-    // If the following check fails, perhaps you forgot to call createContext
-    // in your test?
-    EXPECT_NE(nullptr, canvasElement().renderingContext());
-    EXPECT_TRUE(canvasElement().renderingContext()->is2d());
-    return static_cast<CanvasRenderingContext2D*>(canvasElement().renderingContext());
+CanvasRenderingContext2D* CanvasRenderingContext2DAPITest::Context2d() const {
+  // If the following check fails, perhaps you forgot to call createContext
+  // in your test?
+  EXPECT_NE(nullptr, CanvasElement().RenderingContext());
+  EXPECT_TRUE(CanvasElement().RenderingContext()->Is2d());
+  return static_cast<CanvasRenderingContext2D*>(
+      CanvasElement().RenderingContext());
 }
 
-void CanvasRenderingContext2DAPITest::createContext(OpacityMode opacityMode)
-{
-    String canvasType("2d");
-    CanvasContextCreationAttributes attributes;
-    attributes.setAlpha(opacityMode == NonOpaque);
-    m_canvasElement->getCanvasRenderingContext(canvasType, attributes);
-    context2d(); // Calling this for the checks
+void CanvasRenderingContext2DAPITest::CreateContext(OpacityMode opacity_mode) {
+  String canvas_type("2d");
+  CanvasContextCreationAttributes attributes;
+  attributes.setAlpha(opacity_mode == kNonOpaque);
+  canvas_element_->GetCanvasRenderingContext(canvas_type, attributes);
+  Context2d();  // Calling this for the checks
 }
 
-void CanvasRenderingContext2DAPITest::SetUp()
-{
-    Page::PageClients pageClients;
-    fillWithEmptyClients(pageClients);
-    m_dummyPageHolder = DummyPageHolder::create(IntSize(800, 600), &pageClients);
-    m_document = toHTMLDocument(&m_dummyPageHolder->document());
-    m_document->documentElement()->setInnerHTML("<body><canvas id='c'></canvas></body>", ASSERT_NO_EXCEPTION);
-    m_document->view()->updateAllLifecyclePhases();
-    m_canvasElement = toHTMLCanvasElement(m_document->getElementById("c"));
+void CanvasRenderingContext2DAPITest::SetUp() {
+  Page::PageClients page_clients;
+  FillWithEmptyClients(page_clients);
+  dummy_page_holder_ =
+      DummyPageHolder::Create(IntSize(800, 600), &page_clients);
+  document_ = &dummy_page_holder_->GetDocument();
+  document_->documentElement()->setInnerHTML(
+      "<body><canvas id='c'></canvas></body>");
+  document_->View()->UpdateAllLifecyclePhases();
+  canvas_element_ = toHTMLCanvasElement(document_->GetElementById("c"));
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, SetShadowColor_Clamping)
-{
-    createContext(NonOpaque);
+TEST_F(CanvasRenderingContext2DAPITest, SetShadowColor_Clamping) {
+  CreateContext(kNonOpaque);
 
-    context2d()->setShadowColor("rgba(0,0,0,0)");
-    EXPECT_EQ(String("rgba(0, 0, 0, 0)"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgb(0,0,0)");
-    EXPECT_EQ(String("#000000"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgb(0,999,0)");
-    EXPECT_EQ(String("#00ff00"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgb(0,999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999,0)");
-    EXPECT_EQ(String("#00ff00"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgb(0,0,256)");
-    EXPECT_EQ(String("#0000ff"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgb(999999999999999999999999,0,-9999999999999999999999999999)");
-    EXPECT_EQ(String("#ff0000"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgba(9999999999999999999999999999999999999999999999999999999999999999999999999999999999,9,0,1)");
-    EXPECT_EQ(String("#ff0900"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgba(9999999999999999999999999999999999999999999999999999999999999999999999999999999999,9,0,-99999999999999999999999999999999999999)");
-    EXPECT_EQ(String("rgba(255, 9, 0, 0)"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgba(7,9999999999999999999999999999999999999999999999999999999999999999999999999999999999,0,99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)");
-    EXPECT_EQ(String("#07ff00"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgba(-7,9999999999999999999999999999999999999999999999999999999999999999999999999999999999,0,99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)");
-    EXPECT_EQ(String("#00ff00"), context2d()->shadowColor());
-    context2d()->setShadowColor("rgba(0%,100%,0%,0.4)");
-    EXPECT_EQ(String("rgba(0, 255, 0, 0.4)"), context2d()->shadowColor());
+  Context2d()->setShadowColor("rgba(0,0,0,0)");
+  EXPECT_EQ(String("rgba(0, 0, 0, 0)"), Context2d()->shadowColor());
+  Context2d()->setShadowColor("rgb(0,0,0)");
+  EXPECT_EQ(String("#000000"), Context2d()->shadowColor());
+  Context2d()->setShadowColor("rgb(0,999,0)");
+  EXPECT_EQ(String("#00ff00"), Context2d()->shadowColor());
+  Context2d()->setShadowColor(
+      "rgb(0,"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      ",0)");
+  EXPECT_EQ(String("#00ff00"), Context2d()->shadowColor());
+  Context2d()->setShadowColor("rgb(0,0,256)");
+  EXPECT_EQ(String("#0000ff"), Context2d()->shadowColor());
+  Context2d()->setShadowColor(
+      "rgb(999999999999999999999999,0,-9999999999999999999999999999)");
+  EXPECT_EQ(String("#ff0000"), Context2d()->shadowColor());
+  Context2d()->setShadowColor(
+      "rgba("
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "9999999999,9,0,1)");
+  EXPECT_EQ(String("#ff0900"), Context2d()->shadowColor());
+  Context2d()->setShadowColor(
+      "rgba("
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "9999999999,9,0,-99999999999999999999999999999999999999)");
+  EXPECT_EQ(String("rgba(255, 9, 0, 0)"), Context2d()->shadowColor());
+  Context2d()->setShadowColor(
+      "rgba(7,"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "9999999999,0,"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "99999999999999999)");
+  EXPECT_EQ(String("#07ff00"), Context2d()->shadowColor());
+  Context2d()->setShadowColor(
+      "rgba(-7,"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "9999999999,0,"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "999999999999999999999999999999999999999999999999999999999999999999999999"
+      "99999999999999999)");
+  EXPECT_EQ(String("#00ff00"), Context2d()->shadowColor());
+  Context2d()->setShadowColor("rgba(0%,100%,0%,0.4)");
+  EXPECT_EQ(String("rgba(0, 255, 0, 0.4)"), Context2d()->shadowColor());
 }
 
-String trySettingStrokeStyle(CanvasRenderingContext2D* ctx, const String& value)
-{
-    StringOrCanvasGradientOrCanvasPattern arg1, arg2, arg3;
-    arg1.setString("#666");
-    ctx->setStrokeStyle(arg1);
-    arg2.setString(value);
-    ctx->setStrokeStyle(arg2);
-    ctx->strokeStyle(arg3);
-    EXPECT_TRUE(arg3.isString());
-    return arg3.getAsString();
+String TrySettingStrokeStyle(CanvasRenderingContext2D* ctx,
+                             const String& value) {
+  StringOrCanvasGradientOrCanvasPattern arg1, arg2, arg3;
+  arg1.setString("#666");
+  ctx->setStrokeStyle(arg1);
+  arg2.setString(value);
+  ctx->setStrokeStyle(arg2);
+  ctx->strokeStyle(arg3);
+  EXPECT_TRUE(arg3.isString());
+  return arg3.getAsString();
 }
 
-String trySettingFillStyle(CanvasRenderingContext2D* ctx, const String& value)
-{
-    StringOrCanvasGradientOrCanvasPattern arg1, arg2, arg3;
-    arg1.setString("#666");
-    ctx->setFillStyle(arg1);
-    arg2.setString(value);
-    ctx->setFillStyle(arg2);
-    ctx->fillStyle(arg3);
-    EXPECT_TRUE(arg3.isString());
-    return arg3.getAsString();
+String TrySettingFillStyle(CanvasRenderingContext2D* ctx, const String& value) {
+  StringOrCanvasGradientOrCanvasPattern arg1, arg2, arg3;
+  arg1.setString("#666");
+  ctx->setFillStyle(arg1);
+  arg2.setString(value);
+  ctx->setFillStyle(arg2);
+  ctx->fillStyle(arg3);
+  EXPECT_TRUE(arg3.isString());
+  return arg3.getAsString();
 }
 
-String trySettingShadowColor(CanvasRenderingContext2D* ctx, const String& value)
-{
-    ctx->setShadowColor("#666");
-    ctx->setShadowColor(value);
-    return ctx->shadowColor();
+String TrySettingShadowColor(CanvasRenderingContext2D* ctx,
+                             const String& value) {
+  ctx->setShadowColor("#666");
+  ctx->setShadowColor(value);
+  return ctx->shadowColor();
 }
 
-void trySettingColor(CanvasRenderingContext2D* ctx, const String& value, const String& expected)
-{
-    EXPECT_EQ(expected, trySettingStrokeStyle(ctx, value));
-    EXPECT_EQ(expected, trySettingFillStyle(ctx, value));
-    EXPECT_EQ(expected, trySettingShadowColor(ctx, value));
+void TrySettingColor(CanvasRenderingContext2D* ctx,
+                     const String& value,
+                     const String& expected) {
+  EXPECT_EQ(expected, TrySettingStrokeStyle(ctx, value));
+  EXPECT_EQ(expected, TrySettingFillStyle(ctx, value));
+  EXPECT_EQ(expected, TrySettingShadowColor(ctx, value));
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, ColorSerialization)
-{
-    createContext(NonOpaque);
-    // Check round trips
-    trySettingColor(context2d(), "transparent", "rgba(0, 0, 0, 0)");
-    trySettingColor(context2d(), "red", "#ff0000");
-    trySettingColor(context2d(), "white", "#ffffff");
-    trySettingColor(context2d(), "", "#666666");
-    trySettingColor(context2d(), "RGBA(0, 0, 0, 0)", "rgba(0, 0, 0, 0)");
-    trySettingColor(context2d(), "rgba(0,255,0,1.0)", "#00ff00");
-    trySettingColor(context2d(), "rgba(1,2,3,0.4)", "rgba(1, 2, 3, 0.4)");
-    trySettingColor(context2d(), "RgB(1,2,3)", "#010203");
-    trySettingColor(context2d(), "rGbA(1,2,3,0)", "rgba(1, 2, 3, 0)");
+TEST_F(CanvasRenderingContext2DAPITest, ColorSerialization) {
+  CreateContext(kNonOpaque);
+  // Check round trips
+  TrySettingColor(Context2d(), "transparent", "rgba(0, 0, 0, 0)");
+  TrySettingColor(Context2d(), "red", "#ff0000");
+  TrySettingColor(Context2d(), "white", "#ffffff");
+  TrySettingColor(Context2d(), "", "#666666");
+  TrySettingColor(Context2d(), "RGBA(0, 0, 0, 0)", "rgba(0, 0, 0, 0)");
+  TrySettingColor(Context2d(), "rgba(0,255,0,1.0)", "#00ff00");
+  TrySettingColor(Context2d(), "rgba(1,2,3,0.4)", "rgba(1, 2, 3, 0.4)");
+  TrySettingColor(Context2d(), "RgB(1,2,3)", "#010203");
+  TrySettingColor(Context2d(), "rGbA(1,2,3,0)", "rgba(1, 2, 3, 0)");
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, DefaultAttributeValues)
-{
-    createContext(NonOpaque);
+TEST_F(CanvasRenderingContext2DAPITest, DefaultAttributeValues) {
+  CreateContext(kNonOpaque);
 
-    {
-        StringOrCanvasGradientOrCanvasPattern value;
-        context2d()->strokeStyle(value);
-        EXPECT_TRUE(value.isString());
-        EXPECT_EQ(String("#000000"), value.getAsString());
-    }
+  {
+    StringOrCanvasGradientOrCanvasPattern value;
+    Context2d()->strokeStyle(value);
+    EXPECT_TRUE(value.isString());
+    EXPECT_EQ(String("#000000"), value.getAsString());
+  }
 
-    {
-        StringOrCanvasGradientOrCanvasPattern value;
-        context2d()->fillStyle(value);
-        EXPECT_TRUE(value.isString());
-        EXPECT_EQ(String("#000000"), value.getAsString());
-    }
+  {
+    StringOrCanvasGradientOrCanvasPattern value;
+    Context2d()->fillStyle(value);
+    EXPECT_TRUE(value.isString());
+    EXPECT_EQ(String("#000000"), value.getAsString());
+  }
 
-    EXPECT_EQ(String("rgba(0, 0, 0, 0)"), context2d()->shadowColor());
+  EXPECT_EQ(String("rgba(0, 0, 0, 0)"), Context2d()->shadowColor());
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, LineDashStateSave)
-{
-    createContext(NonOpaque);
+TEST_F(CanvasRenderingContext2DAPITest, LineDashStateSave) {
+  CreateContext(kNonOpaque);
 
-    Vector<double> simpleDash;
-    simpleDash.append(4);
-    simpleDash.append(2);
+  Vector<double> simple_dash;
+  simple_dash.push_back(4);
+  simple_dash.push_back(2);
 
-    context2d()->setLineDash(simpleDash);
-    EXPECT_EQ(simpleDash, context2d()->getLineDash());
-    context2d()->save();
-    // Realize the save.
-    context2d()->scale(2, 2);
-    EXPECT_EQ(simpleDash, context2d()->getLineDash());
-    context2d()->restore();
-    EXPECT_EQ(simpleDash, context2d()->getLineDash());
+  Context2d()->setLineDash(simple_dash);
+  EXPECT_EQ(simple_dash, Context2d()->getLineDash());
+  Context2d()->save();
+  // Realize the save.
+  Context2d()->scale(2, 2);
+  EXPECT_EQ(simple_dash, Context2d()->getLineDash());
+  Context2d()->restore();
+  EXPECT_EQ(simple_dash, Context2d()->getLineDash());
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, CreateImageData)
-{
-    createContext(NonOpaque);
+TEST_F(CanvasRenderingContext2DAPITest, CreateImageData) {
+  CreateContext(kNonOpaque);
 
-    NonThrowableExceptionState exceptionState;
+  NonThrowableExceptionState exception_state;
 
-    // create a 100x50 imagedata and fill it with white pixels
-    ImageData* imageData = context2d()->createImageData(100, 50, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
-    EXPECT_EQ(100, imageData->width());
-    EXPECT_EQ(50, imageData->height());
+  // create a 100x50 imagedata and fill it with white pixels
+  ImageData* image_data =
+      Context2d()->createImageData(100, 50, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
+  EXPECT_EQ(100, image_data->width());
+  EXPECT_EQ(50, image_data->height());
 
-    for (unsigned i = 0; i < imageData->data()->length(); ++i)
-        imageData->data()->data()[i] = 255;
+  for (unsigned i = 0; i < image_data->data()->length(); ++i)
+    image_data->data()->Data()[i] = 255;
 
-    EXPECT_EQ(255, imageData->data()->data()[32]);
+  EXPECT_EQ(255, image_data->data()->Data()[32]);
 
-    // createImageData(imageData) should create a new ImageData of the same size as 'imageData'
-    // but filled with transparent black
+  // createImageData(imageData) should create a new ImageData of the same size
+  // as 'imageData' but filled with transparent black
 
-    ImageData* sameSizeImageData = context2d()->createImageData(imageData, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
-    EXPECT_EQ(100, sameSizeImageData->width());
-    EXPECT_EQ(50, sameSizeImageData->height());
-    EXPECT_EQ(0, sameSizeImageData->data()->data()[32]);
+  ImageData* same_size_image_data =
+      Context2d()->createImageData(image_data, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
+  EXPECT_EQ(100, same_size_image_data->width());
+  EXPECT_EQ(50, same_size_image_data->height());
+  EXPECT_EQ(0, same_size_image_data->data()->Data()[32]);
 
-    // createImageData(width, height) takes the absolute magnitude of the size arguments
+  // createImageData(width, height) takes the absolute magnitude of the size
+  // arguments
 
-    ImageData* imgdata1 = context2d()->createImageData(10, 20, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
-    ImageData* imgdata2 = context2d()->createImageData(-10, 20, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
-    ImageData* imgdata3 = context2d()->createImageData(10, -20, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
-    ImageData* imgdata4 = context2d()->createImageData(-10, -20, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
+  ImageData* imgdata1 = Context2d()->createImageData(10, 20, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
+  ImageData* imgdata2 = Context2d()->createImageData(-10, 20, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
+  ImageData* imgdata3 = Context2d()->createImageData(10, -20, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
+  ImageData* imgdata4 = Context2d()->createImageData(-10, -20, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
 
-    EXPECT_EQ((unsigned)800, imgdata1->data()->length());
-    EXPECT_EQ((unsigned)800, imgdata2->data()->length());
-    EXPECT_EQ((unsigned)800, imgdata3->data()->length());
-    EXPECT_EQ((unsigned)800, imgdata4->data()->length());
+  EXPECT_EQ((unsigned)800, imgdata1->data()->length());
+  EXPECT_EQ((unsigned)800, imgdata2->data()->length());
+  EXPECT_EQ((unsigned)800, imgdata3->data()->length());
+  EXPECT_EQ((unsigned)800, imgdata4->data()->length());
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, CreateImageDataTooBig)
-{
-    createContext(NonOpaque);
-    TrackExceptionState exceptionState;
-    ImageData* tooBigImageData = context2d()->createImageData(1000000, 1000000, exceptionState);
-    EXPECT_EQ(nullptr, tooBigImageData);
-    EXPECT_TRUE(exceptionState.hadException());
-    EXPECT_EQ(V8RangeError, exceptionState.code());
+TEST_F(CanvasRenderingContext2DAPITest, CreateImageDataTooBig) {
+  CreateContext(kNonOpaque);
+  DummyExceptionStateForTesting exception_state;
+  ImageData* too_big_image_data =
+      Context2d()->createImageData(1000000, 1000000, exception_state);
+  EXPECT_EQ(nullptr, too_big_image_data);
+  EXPECT_TRUE(exception_state.HadException());
+  EXPECT_EQ(kV8RangeError, exception_state.Code());
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, GetImageDataTooBig)
-{
-    createContext(NonOpaque);
-    TrackExceptionState exceptionState;
-    ImageData* imageData = context2d()->getImageData(0, 0, 1000000, 1000000, exceptionState);
-    EXPECT_EQ(nullptr, imageData);
-    EXPECT_TRUE(exceptionState.hadException());
-    EXPECT_EQ(V8RangeError, exceptionState.code());
+TEST_F(CanvasRenderingContext2DAPITest, GetImageDataTooBig) {
+  CreateContext(kNonOpaque);
+  DummyExceptionStateForTesting exception_state;
+  ImageData* image_data =
+      Context2d()->getImageData(0, 0, 1000000, 1000000, exception_state);
+  EXPECT_EQ(nullptr, image_data);
+  EXPECT_TRUE(exception_state.HadException());
+  EXPECT_EQ(kV8RangeError, exception_state.Code());
 }
 
-void resetCanvasForAccessibilityRectTest(HTMLDocument& document)
-{
-    document.documentElement()->setInnerHTML(
-        "<canvas id='canvas' style='position:absolute; top:0px; left:0px; padding:10px; margin:5px;'>"
-        "<button id='button'></button></canvas>", ASSERT_NO_EXCEPTION);
-    document.settings()->setAccessibilityEnabled(true);
-    HTMLCanvasElement* canvas = toHTMLCanvasElement(document.getElementById("canvas"));
+void ResetCanvasForAccessibilityRectTest(Document& document) {
+  document.documentElement()->setInnerHTML(
+      "<canvas id='canvas' style='position:absolute; top:0px; left:0px; "
+      "padding:10px; margin:5px;'>"
+      "<button id='button'></button></canvas>");
+  document.GetSettings()->SetAccessibilityEnabled(true);
+  HTMLCanvasElement* canvas =
+      toHTMLCanvasElement(document.GetElementById("canvas"));
 
-    String canvasType("2d");
-    CanvasContextCreationAttributes attributes;
-    attributes.setAlpha(true);
-    canvas->getCanvasRenderingContext(canvasType, attributes);
+  String canvas_type("2d");
+  CanvasContextCreationAttributes attributes;
+  attributes.setAlpha(true);
+  canvas->GetCanvasRenderingContext(canvas_type, attributes);
 
-    EXPECT_NE(nullptr, canvas->renderingContext());
-    EXPECT_TRUE(canvas->renderingContext()->is2d());
+  EXPECT_NE(nullptr, canvas->RenderingContext());
+  EXPECT_TRUE(canvas->RenderingContext()->Is2d());
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, AccessibilityRectTestForAddHitRegion)
-{
-    resetCanvasForAccessibilityRectTest(document());
+TEST_F(CanvasRenderingContext2DAPITest, AccessibilityRectTestForAddHitRegion) {
+  ResetCanvasForAccessibilityRectTest(GetDocument());
 
-    Element* buttonElement = document().getElementById("button");
-    HTMLCanvasElement* canvas = toHTMLCanvasElement(document().getElementById("canvas"));
-    CanvasRenderingContext2D* context = static_cast<CanvasRenderingContext2D*>(canvas->renderingContext());
+  Element* button_element = GetDocument().GetElementById("button");
+  HTMLCanvasElement* canvas =
+      toHTMLCanvasElement(GetDocument().GetElementById("canvas"));
+  CanvasRenderingContext2D* context =
+      static_cast<CanvasRenderingContext2D*>(canvas->RenderingContext());
 
-    NonThrowableExceptionState exceptionState;
-    HitRegionOptions options;
-    options.setControl(buttonElement);
+  NonThrowableExceptionState exception_state;
+  HitRegionOptions options;
+  options.setControl(button_element);
 
-    context->beginPath();
-    context->rect(10, 10, 40, 40);
-    context->addHitRegion(options, exceptionState);
+  context->beginPath();
+  context->rect(10, 10, 40, 40);
+  context->addHitRegion(options, exception_state);
 
-    AXObjectCacheImpl* axObjectCache = toAXObjectCacheImpl(document().existingAXObjectCache());
-    AXObject* axObject = axObjectCache->getOrCreate(buttonElement);
+  AXObjectCacheImpl* ax_object_cache =
+      ToAXObjectCacheImpl(GetDocument().ExistingAXObjectCache());
+  AXObject* ax_object = ax_object_cache->GetOrCreate(button_element);
 
-    EXPECT_EQ(25, axObject->elementRect().x().toInt());
-    EXPECT_EQ(25, axObject->elementRect().y().toInt());
-    EXPECT_EQ(40, axObject->elementRect().width().toInt());
-    EXPECT_EQ(40, axObject->elementRect().height().toInt());
+  LayoutRect ax_bounds = ax_object->GetBoundsInFrameCoordinates();
+  EXPECT_EQ(25, ax_bounds.X().ToInt());
+  EXPECT_EQ(25, ax_bounds.Y().ToInt());
+  EXPECT_EQ(40, ax_bounds.Width().ToInt());
+  EXPECT_EQ(40, ax_bounds.Height().ToInt());
 }
 
-TEST_F(CanvasRenderingContext2DAPITest, AccessibilityRectTestForDrawFocusIfNeeded)
-{
-    resetCanvasForAccessibilityRectTest(document());
+TEST_F(CanvasRenderingContext2DAPITest,
+       AccessibilityRectTestForDrawFocusIfNeeded) {
+  ResetCanvasForAccessibilityRectTest(GetDocument());
 
-    Element* buttonElement = document().getElementById("button");
-    HTMLCanvasElement* canvas = toHTMLCanvasElement(document().getElementById("canvas"));
-    CanvasRenderingContext2D* context = static_cast<CanvasRenderingContext2D*>(canvas->renderingContext());
+  Element* button_element = GetDocument().GetElementById("button");
+  HTMLCanvasElement* canvas =
+      toHTMLCanvasElement(GetDocument().GetElementById("canvas"));
+  CanvasRenderingContext2D* context =
+      static_cast<CanvasRenderingContext2D*>(canvas->RenderingContext());
 
-    document().updateStyleAndLayoutTreeForNode(canvas);
+  GetDocument().UpdateStyleAndLayoutTreeForNode(canvas);
 
-    context->beginPath();
-    context->rect(10, 10, 40, 40);
-    context->drawFocusIfNeeded(buttonElement);
+  context->beginPath();
+  context->rect(10, 10, 40, 40);
+  context->drawFocusIfNeeded(button_element);
 
-    AXObjectCacheImpl* axObjectCache = toAXObjectCacheImpl(document().existingAXObjectCache());
-    AXObject* axObject = axObjectCache->getOrCreate(buttonElement);
+  AXObjectCacheImpl* ax_object_cache =
+      ToAXObjectCacheImpl(GetDocument().ExistingAXObjectCache());
+  AXObject* ax_object = ax_object_cache->GetOrCreate(button_element);
 
-    EXPECT_EQ(25, axObject->elementRect().x().toInt());
-    EXPECT_EQ(25, axObject->elementRect().y().toInt());
-    EXPECT_EQ(40, axObject->elementRect().width().toInt());
-    EXPECT_EQ(40, axObject->elementRect().height().toInt());
+  LayoutRect ax_bounds = ax_object->GetBoundsInFrameCoordinates();
+  EXPECT_EQ(25, ax_bounds.X().ToInt());
+  EXPECT_EQ(25, ax_bounds.Y().ToInt());
+  EXPECT_EQ(40, ax_bounds.Width().ToInt());
+  EXPECT_EQ(40, ax_bounds.Height().ToInt());
 }
 
-} // namespace blink
+}  // namespace blink

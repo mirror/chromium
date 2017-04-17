@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+GEN('#include "base/feature_list.h"');
+GEN('#include "chrome/common/chrome_features.h"');
+
 /**
  * Test fixture for print preview WebUI testing.
  * @constructor
@@ -55,6 +58,25 @@ PrintPreviewWebUITest.prototype = {
   isAsync: true,
 
   /**
+   * @override
+   */
+  testGenPreamble: function() {
+    // Enable print scaling and print as image for tests.
+    GEN('  base::FeatureList::ClearInstanceForTesting();');
+    GEN('  std::unique_ptr<base::FeatureList>');
+    GEN('      feature_list(new base::FeatureList);');
+    GEN('  char enabled_features[128] = {0};');
+    GEN('  strcpy(enabled_features, features::kPrintScaling.name);');
+    GEN('#if !defined(OS_WINDOWS) && !defined(OS_MACOSX)');
+    GEN('  strcat(strcat(enabled_features, ","), ');
+    GEN('      features::kPrintPdfAsImage.name);');
+    GEN('#endif');
+    GEN('  feature_list->InitializeFromCommandLine(');
+    GEN('      enabled_features, std::string());');
+    GEN('  base::FeatureList::SetInstance(std::move(feature_list));');
+  },
+
+  /**
    * Stub out low-level functionality like the NativeLayer and
    * CloudPrintInterface.
    * @this {PrintPreviewWebUITest}
@@ -71,7 +93,8 @@ PrintPreviewWebUITest.prototype = {
         startGetLocalDestinations: function() {},
         startGetPrivetDestinations: function() {},
         startGetExtensionDestinations: function() {},
-        startGetLocalDestinationCapabilities: function(destinationId) {}
+        startGetLocalDestinationCapabilities: function(destinationId) {},
+        startGetPreview: function() {},
       };
       var oldNativeLayerEventType = print_preview.NativeLayer.EventType;
       var oldDuplexMode = print_preview.NativeLayer.DuplexMode;
@@ -137,9 +160,9 @@ PrintPreviewWebUITest.prototype = {
    */
   waitForAnimationToEnd: function(elementId) {
     // add a listener for the animation end event
-    document.addEventListener('webkitAnimationEnd', function f(e) {
+    document.addEventListener('animationend', function f(e) {
       if (e.target.id == elementId) {
-        document.removeEventListener(f, 'webkitAnimationEnd');
+        document.removeEventListener(f, 'animationend');
         testDone();
       }
     });
@@ -352,12 +375,92 @@ function getCddTemplate(printerId) {
   };
 }
 
+function isPrintAsImageEnabled() {
+  return !cr.isWindows && !cr.isMac;
+}
+
+// Test restore settings with one destination.
 TEST_F('PrintPreviewWebUITest', 'TestPrintPreviewRestoreLocalDestination',
     function() {
   this.initialSettings_.serializedAppStateStr_ =
-      '{"version":2,"selectedDestinationId":"ID",' +
-      '"selectedDestinationOrigin":"local"}';
+      '{"version":2,"recentDestinations":[{"id":"ID", "origin":"local",' +
+        '"account":"", "capabilities":0, "name":"", "extensionId":"",' +
+            '"extensionName":""}]}';
   this.setInitialSettings();
+
+  testDone();
+});
+
+//Test with multiple destinations
+TEST_F('PrintPreviewWebUITest', 'TestPrintPreviewRestoreMultipleDestinations',
+    function() {
+  var origin = cr.isChromeOS ? "chrome_os" : "local";
+
+  var appState = {
+    'version': 2,
+    'recentDestinations': [
+      {
+        'id': 'ID1',
+        'origin': origin,
+        'account': '',
+        'capabilities': 0,
+        'name': '',
+        'extensionId': '',
+        'extensionName': ''
+      },
+      {
+        'id': 'ID2',
+        'origin': origin,
+        'account': '',
+        'capabilities': 0,
+        'name': '',
+        'extensionId': '',
+        'extensionName': ''
+      },
+      {
+        'id': 'ID3',
+        'origin': origin,
+        'account': '',
+        'capabilities': 0,
+        'name': '',
+        'extensionId': '',
+        'extensionName': ''
+      }
+    ]
+  };
+
+  this.initialSettings_.serializedAppStateStr_ = JSON.stringify(appState);
+
+  this.setInitialSettings();
+
+  // Set capabilities for the three recently used destinations + 1 more
+  this.setCapabilities(getCddTemplate('ID1'));
+  this.setCapabilities(getCddTemplate('ID2'));
+  this.setCapabilities(getCddTemplate('ID3'));
+  this.setCapabilities(getCddTemplate('ID4'));
+
+  // The most recently used destination should be the currently selected one.
+  // This is ID1.
+  assertEquals(
+      'ID1', printPreview.destinationStore_.selectedDestination.id);
+
+  // Look through the destinations. ID1, ID2, and ID3 should all be recent.
+  var destinations = printPreview.destinationStore_.destinations_;
+  var ids_found = [];
+
+  for (var i = 0; i < destinations.length; i++) {
+    if (!destinations[i])
+      continue;
+    if (destinations[i].isRecent)
+      ids_found.push(destinations[i].id);
+  }
+
+  // Make sure there were 3 recent destinations and that they are the correct
+  // IDs.
+  assertEquals(3, ids_found.length);
+  assertNotEquals(-1, ids_found.indexOf("ID1"));
+  assertNotEquals(-1, ids_found.indexOf("ID2"));
+  assertNotEquals(-1, ids_found.indexOf("ID3"));
 
   testDone();
 });
@@ -453,8 +556,18 @@ TEST_F('PrintPreviewWebUITest', 'PrintToPDFSelectedCapabilities', function() {
   };
   this.setCapabilities(device);
 
-  checkSectionVisible($('other-options-settings'), false);
+  var otherOptions = $('other-options-settings');
+  // If rasterization is an option, other options should be visible. If not,
+  // there should be no available other options.
+  checkSectionVisible(otherOptions, isPrintAsImageEnabled());
+  if (isPrintAsImageEnabled()) {
+    checkElementDisplayed(
+        otherOptions.querySelector('#fit-to-page-container'), false);
+    checkElementDisplayed(
+        otherOptions.querySelector('#rasterize-container'), true);
+  }
   checkSectionVisible($('media-size-settings'), false);
+  checkSectionVisible($('scaling-settings'), false);
 
   testDone();
 });
@@ -467,19 +580,29 @@ TEST_F('PrintPreviewWebUITest', 'SourceIsHTMLCapabilities', function() {
   this.setCapabilities(getCddTemplate("FooDevice"));
 
   var otherOptions = $('other-options-settings');
-  var fitToPage = otherOptions.querySelector('.fit-to-page-container');
+  var fitToPage = otherOptions.querySelector('#fit-to-page-container');
+  var rasterize;
+  if (isPrintAsImageEnabled())
+    rasterize = otherOptions.querySelector('#rasterize-container');
   var mediaSize = $('media-size-settings');
+  var scalingSettings = $('scaling-settings');
 
   // Check that options are collapsed (section is visible, because duplex is
   // available).
   checkSectionVisible(otherOptions, true);
   checkElementDisplayed(fitToPage, false);
+  if (isPrintAsImageEnabled())
+    checkElementDisplayed(rasterize, false);
   checkSectionVisible(mediaSize, false);
+  checkSectionVisible(scalingSettings, false);
 
   this.expandMoreSettings();
 
   checkElementDisplayed(fitToPage, false);
+  if (isPrintAsImageEnabled())
+    checkElementDisplayed(rasterize, false);
   checkSectionVisible(mediaSize, true);
+  checkSectionVisible(scalingSettings, true);
 
   this.waitForAnimationToEnd('more-settings');
 });
@@ -493,12 +616,67 @@ TEST_F('PrintPreviewWebUITest', 'SourceIsPDFCapabilities', function() {
   this.setCapabilities(getCddTemplate("FooDevice"));
 
   var otherOptions = $('other-options-settings');
+  var scalingSettings = $('scaling-settings');
+  var fitToPageContainer =
+      otherOptions.querySelector('#fit-to-page-container');
+  var rasterizeContainer;
+  if (isPrintAsImageEnabled()) {
+    rasterizeContainer =
+      otherOptions.querySelector('#rasterize-container');
+  }
+
   checkSectionVisible(otherOptions, true);
-  checkElementDisplayed(
-      otherOptions.querySelector('.fit-to-page-container'), true);
+  checkElementDisplayed(fitToPageContainer, true);
+  if (isPrintAsImageEnabled())
+    checkElementDisplayed(rasterizeContainer, false);
   expectTrue(
-      otherOptions.querySelector('.fit-to-page-checkbox').checked);
+      fitToPageContainer.querySelector('.checkbox').checked);
+  this.expandMoreSettings();
+  if (isPrintAsImageEnabled()) {
+    checkElementDisplayed(rasterizeContainer, true);
+    expectFalse(
+        rasterizeContainer.querySelector('.checkbox').checked);
+  }
   checkSectionVisible($('media-size-settings'), true);
+  checkSectionVisible(scalingSettings, true);
+
+  this.waitForAnimationToEnd('other-options-collapsible');
+});
+
+// When the source is "PDF", depending on the selected destination printer, we
+// show/hide the fit to page option and hide media size selection.
+TEST_F('PrintPreviewWebUITest', 'ScalingUnchecksFitToPage', function() {
+  this.initialSettings_.isDocumentModifiable_ = false;
+  this.setInitialSettings();
+  this.setLocalDestinations();
+  this.setCapabilities(getCddTemplate("FooDevice"));
+
+  var otherOptions = $('other-options-settings');
+  var scalingSettings = $('scaling-settings');
+
+  checkSectionVisible(otherOptions, true);
+  var fitToPageContainer =
+      otherOptions.querySelector('#fit-to-page-container');
+  checkElementDisplayed(fitToPageContainer, true);
+  expectTrue(
+      fitToPageContainer.querySelector('.checkbox').checked);
+  this.expandMoreSettings();
+  checkSectionVisible($('media-size-settings'), true);
+  checkSectionVisible(scalingSettings, true);
+
+  //Change scaling input
+  var scalingInput = scalingSettings.querySelector('.user-value');
+  expectEquals(scalingInput.value, '100');
+  scalingInput.stepUp(5);
+  expectEquals(scalingInput.value, '105');
+
+  // Trigger the event
+  var enter = document.createEvent('Event');
+  enter.initEvent('keydown');
+  enter.keyCode = 'Enter';
+  scalingInput.dispatchEvent(enter);
+  expectFalse(
+      fitToPageContainer.querySelector('.checkbox').checked);
 
   this.waitForAnimationToEnd('other-options-collapsible');
 });
@@ -524,7 +702,7 @@ TEST_F('PrintPreviewWebUITest', 'CheckNumCopiesPrintPreset', function() {
   checkSectionVisible($('copies-settings'), true);
   expectEquals(
       printPresetOptions.copies,
-      parseInt($('copies-settings').querySelector('.copies').value));
+      parseInt($('copies-settings').querySelector('.user-value').value));
 
   this.waitForAnimationToEnd('other-options-collapsible');
 });
@@ -548,8 +726,9 @@ TEST_F('PrintPreviewWebUITest', 'CheckDuplexPrintPreset', function() {
 
   var otherOptions = $('other-options-settings');
   checkSectionVisible(otherOptions, true);
-  checkElementDisplayed(otherOptions.querySelector('.duplex-container'), true);
-  expectTrue(otherOptions.querySelector('.duplex-checkbox').checked);
+  var duplexContainer = otherOptions.querySelector('#duplex-container');
+  checkElementDisplayed(duplexContainer, true);
+  expectTrue(duplexContainer.querySelector('.checkbox').checked);
 
   this.waitForAnimationToEnd('other-options-collapsible');
 });
@@ -581,7 +760,7 @@ TEST_F('PrintPreviewWebUITest', 'PageLayoutHasNoMarginsHideHeaderFooter',
   this.setCapabilities(getCddTemplate("FooDevice"));
 
   var otherOptions = $('other-options-settings');
-  var headerFooter = otherOptions.querySelector('.header-footer-container');
+  var headerFooter = otherOptions.querySelector('#header-footer-container');
 
   // Check that options are collapsed (section is visible, because duplex is
   // available).
@@ -610,7 +789,7 @@ TEST_F('PrintPreviewWebUITest', 'PageLayoutHasMarginsShowHeaderFooter',
   this.setCapabilities(getCddTemplate("FooDevice"));
 
   var otherOptions = $('other-options-settings');
-  var headerFooter = otherOptions.querySelector('.header-footer-container');
+  var headerFooter = otherOptions.querySelector('#header-footer-container');
 
   // Check that options are collapsed (section is visible, because duplex is
   // available).
@@ -640,7 +819,7 @@ TEST_F('PrintPreviewWebUITest',
   this.setCapabilities(getCddTemplate("FooDevice"));
 
   var otherOptions = $('other-options-settings');
-  var headerFooter = otherOptions.querySelector('.header-footer-container');
+  var headerFooter = otherOptions.querySelector('#header-footer-container');
 
   // Check that options are collapsed (section is visible, because duplex is
   // available).
@@ -671,7 +850,7 @@ TEST_F('PrintPreviewWebUITest',
   this.setCapabilities(getCddTemplate("FooDevice"));
 
   var otherOptions = $('other-options-settings');
-  var headerFooter = otherOptions.querySelector('.header-footer-container');
+  var headerFooter = otherOptions.querySelector('#header-footer-container');
 
   // Check that options are collapsed (section is visible, because duplex is
   // available).
@@ -687,6 +866,46 @@ TEST_F('PrintPreviewWebUITest',
   printPreview.printTicketStore_.customMargins.updateValue(
       new print_preview.Margins(0, 36, 36, 36));
 
+  checkElementDisplayed(headerFooter, true);
+
+  this.waitForAnimationToEnd('more-settings');
+});
+
+// Check header footer availability with small (label) page size.
+TEST_F('PrintPreviewWebUITest', 'SmallPaperSizeHeaderFooter', function() {
+  this.setInitialSettings();
+  this.setLocalDestinations();
+  var device = getCddTemplate("FooDevice");
+  device.capabilities.printer.media_size = {
+    "option": [
+      {"name": "SmallLabel", "width_microns": 38100, "height_microns": 12700,
+        "is_default": false},
+      {"name": "BigLabel", "width_microns": 50800, "height_microns": 76200,
+        "is_default": true}
+    ]
+  };
+  this.setCapabilities(device);
+
+  var otherOptions = $('other-options-settings');
+  var headerFooter = otherOptions.querySelector('#header-footer-container');
+
+  // Check that options are collapsed (section is visible, because duplex is
+  // available).
+  checkSectionVisible(otherOptions, true);
+  checkElementDisplayed(headerFooter, false);
+
+  this.expandMoreSettings();
+
+  // Big label should have header/footer
+  checkElementDisplayed(headerFooter, true);
+
+  // Small label should not
+  printPreview.printTicketStore_.mediaSize.updateValue(
+      device.capabilities.printer.media_size.option[0]);
+  checkElementDisplayed(headerFooter, false);
+
+  // Oriented in landscape, there should be enough space for header/footer.
+  printPreview.printTicketStore_.landscape.updateValue(true);
   checkElementDisplayed(headerFooter, true);
 
   this.waitForAnimationToEnd('more-settings');
@@ -845,8 +1064,9 @@ TEST_F('PrintPreviewWebUITest', 'TestDuplexSettingsTrue', function() {
 
   var otherOptions = $('other-options-settings');
   checkSectionVisible(otherOptions, true);
-  expectFalse(otherOptions.querySelector('.duplex-container').hidden);
-  expectFalse(otherOptions.querySelector('.duplex-checkbox').checked);
+  duplexContainer = otherOptions.querySelector('#duplex-container');
+  expectFalse(duplexContainer.hidden);
+  expectFalse(duplexContainer.querySelector('.checkbox').checked);
 
   this.waitForAnimationToEnd('more-settings');
 });
@@ -868,7 +1088,7 @@ TEST_F('PrintPreviewWebUITest', 'TestDuplexSettingsFalse', function() {
 
   // Now it should be visible.
   checkSectionVisible(otherOptions, true);
-  expectTrue(otherOptions.querySelector('.duplex-container').hidden);
+  expectTrue(otherOptions.querySelector('#duplex-container').hidden);
 
   this.waitForAnimationToEnd('more-settings');
 });
@@ -881,7 +1101,10 @@ TEST_F('PrintPreviewWebUITest', 'TestPrinterChangeUpdatesPreview', function() {
 
   var previewGenerator = mock(print_preview.PreviewGenerator);
   printPreview.previewArea_.previewGenerator_ = previewGenerator.proxy();
-  previewGenerator.expects(exactly(6)).requestPreview();
+
+  // The number of settings that can change due to a change in the destination
+  // that will therefore dispatch ticket item change events.
+  previewGenerator.expects(exactly(9)).requestPreview();
 
   var barDestination;
   var destinations = printPreview.destinationStore_.destinations();
@@ -1100,3 +1323,40 @@ TEST_F('PrintPreviewWebUITest', 'TestAdvancedSettings2Options', function() {
   this.waitForAnimationToEnd('more-settings');
 });
 
+// Test that initialization with saved destination only issues one call
+// to startPreview.
+TEST_F('PrintPreviewWebUITest', 'TestInitIssuesOneRequest', function() {
+  // Load in a bunch of recent destinations with non null capabilities.
+  var origin = cr.isChromeOS ? 'chrome_os' : 'local';
+  var initSettings = {
+    version: 2,
+    recentDestinations: [1, 2, 3].map(function(i) {
+      return {
+        id: 'ID' + i, origin: origin, account: '',
+        capabilities: getCddTemplate('ID' + i), name: '',
+        extensionId: '', extensionName: ''
+      };
+    }),
+  };
+  this.initialSettings_.serializedAppStateStr_ = JSON.stringify(initSettings);
+  this.setCapabilities(getCddTemplate('ID1'));
+  this.setCapabilities(getCddTemplate('ID2'));
+  this.setCapabilities(getCddTemplate('ID3'));
+
+  // Use a real preview generator.
+  printPreview.previewArea_.previewGenerator_ =
+      new print_preview.PreviewGenerator(printPreview.destinationStore_,
+        printPreview.printTicketStore_, this.nativeLayer_,
+        printPreview.documentInfo_);
+
+  // Preview generator starts out with inFlightRequestId_ == -1. The id
+  // increments by 1 for each startGetPreview call it makes. It should only
+  // make one such call during initialization or there will be a race; see
+  // crbug.com/666595
+  expectEquals(printPreview.previewArea_.previewGenerator_.inFlightRequestId_,
+    -1);
+  this.setInitialSettings();
+  expectEquals(printPreview.previewArea_.previewGenerator_.inFlightRequestId_,
+    0);
+  testDone();
+});

@@ -32,8 +32,8 @@
 #define SubtreeLayoutScope_h
 
 #include "core/inspector/InspectorTraceEvents.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashSet.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashSet.h"
 
 // This is the way to mark a subtree as needing layout during layout,
 // e.g. for the purposes of doing a multipass layout.
@@ -49,25 +49,27 @@ namespace blink {
 class LayoutObject;
 
 class SubtreeLayoutScope {
-    STACK_ALLOCATED();
-public:
-    SubtreeLayoutScope(LayoutObject& root);
-    ~SubtreeLayoutScope();
+  STACK_ALLOCATED();
 
-    void setNeedsLayout(LayoutObject* descendant, LayoutInvalidationReasonForTracing);
-    void setChildNeedsLayout(LayoutObject* descendant);
+ public:
+  SubtreeLayoutScope(LayoutObject& root);
+  ~SubtreeLayoutScope();
 
-    LayoutObject& root() { return m_root; }
-    void recordObjectMarkedForLayout(LayoutObject*);
+  void SetNeedsLayout(LayoutObject* descendant,
+                      LayoutInvalidationReasonForTracing);
+  void SetChildNeedsLayout(LayoutObject* descendant);
 
-private:
-    LayoutObject& m_root;
+  LayoutObject& Root() { return root_; }
+  void RecordObjectMarkedForLayout(LayoutObject*);
 
-#if ENABLE(ASSERT)
-    HashSet<LayoutObject*> m_layoutObjectsToLayout;
+ private:
+  LayoutObject& root_;
+
+#if DCHECK_IS_ON()
+  HashSet<LayoutObject*> layout_objects_to_layout_;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

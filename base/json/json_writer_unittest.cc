@@ -15,7 +15,7 @@ TEST(JSONWriterTest, BasicTypes) {
   std::string output_js;
 
   // Test null.
-  EXPECT_TRUE(JSONWriter::Write(*Value::CreateNullValue(), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value(), &output_js));
   EXPECT_EQ("null", output_js);
 
   // Test empty dict.
@@ -27,27 +27,27 @@ TEST(JSONWriterTest, BasicTypes) {
   EXPECT_EQ("[]", output_js);
 
   // Test integer values.
-  EXPECT_TRUE(JSONWriter::Write(FundamentalValue(42), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value(42), &output_js));
   EXPECT_EQ("42", output_js);
 
   // Test boolean values.
-  EXPECT_TRUE(JSONWriter::Write(FundamentalValue(true), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value(true), &output_js));
   EXPECT_EQ("true", output_js);
 
   // Test Real values should always have a decimal or an 'e'.
-  EXPECT_TRUE(JSONWriter::Write(FundamentalValue(1.0), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value(1.0), &output_js));
   EXPECT_EQ("1.0", output_js);
 
   // Test Real values in the the range (-1, 1) must have leading zeros
-  EXPECT_TRUE(JSONWriter::Write(FundamentalValue(0.2), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value(0.2), &output_js));
   EXPECT_EQ("0.2", output_js);
 
   // Test Real values in the the range (-1, 1) must have leading zeros
-  EXPECT_TRUE(JSONWriter::Write(FundamentalValue(-0.8), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value(-0.8), &output_js));
   EXPECT_EQ("-0.8", output_js);
 
   // Test String values.
-  EXPECT_TRUE(JSONWriter::Write(StringValue("foo"), &output_js));
+  EXPECT_TRUE(JSONWriter::Write(Value("foo"), &output_js));
   EXPECT_EQ("\"foo\"", output_js);
 }
 
@@ -61,7 +61,7 @@ TEST(JSONWriterTest, NestedTypes) {
   std::unique_ptr<DictionaryValue> inner_dict(new DictionaryValue());
   inner_dict->SetInteger("inner int", 10);
   list->Append(std::move(inner_dict));
-  list->Append(WrapUnique(new ListValue()));
+  list->Append(MakeUnique<ListValue>());
   list->AppendBoolean(true);
   root_dict.Set("list", std::move(list));
 
@@ -111,29 +111,29 @@ TEST(JSONWriterTest, BinaryValues) {
 
   // Binary values should return errors unless suppressed via the
   // OPTIONS_OMIT_BINARY_VALUES flag.
-  std::unique_ptr<Value> root(BinaryValue::CreateWithCopiedBuffer("asdf", 4));
+  std::unique_ptr<Value> root(Value::CreateWithCopiedBuffer("asdf", 4));
   EXPECT_FALSE(JSONWriter::Write(*root, &output_js));
   EXPECT_TRUE(JSONWriter::WriteWithOptions(
       *root, JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &output_js));
   EXPECT_TRUE(output_js.empty());
 
   ListValue binary_list;
-  binary_list.Append(BinaryValue::CreateWithCopiedBuffer("asdf", 4));
-  binary_list.Append(WrapUnique(new FundamentalValue(5)));
-  binary_list.Append(BinaryValue::CreateWithCopiedBuffer("asdf", 4));
-  binary_list.Append(WrapUnique(new FundamentalValue(2)));
-  binary_list.Append(BinaryValue::CreateWithCopiedBuffer("asdf", 4));
+  binary_list.Append(Value::CreateWithCopiedBuffer("asdf", 4));
+  binary_list.Append(MakeUnique<Value>(5));
+  binary_list.Append(Value::CreateWithCopiedBuffer("asdf", 4));
+  binary_list.Append(MakeUnique<Value>(2));
+  binary_list.Append(Value::CreateWithCopiedBuffer("asdf", 4));
   EXPECT_FALSE(JSONWriter::Write(binary_list, &output_js));
   EXPECT_TRUE(JSONWriter::WriteWithOptions(
       binary_list, JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &output_js));
   EXPECT_EQ("[5,2]", output_js);
 
   DictionaryValue binary_dict;
-  binary_dict.Set("a", BinaryValue::CreateWithCopiedBuffer("asdf", 4));
+  binary_dict.Set("a", Value::CreateWithCopiedBuffer("asdf", 4));
   binary_dict.SetInteger("b", 5);
-  binary_dict.Set("c", BinaryValue::CreateWithCopiedBuffer("asdf", 4));
+  binary_dict.Set("c", Value::CreateWithCopiedBuffer("asdf", 4));
   binary_dict.SetInteger("d", 2);
-  binary_dict.Set("e", BinaryValue::CreateWithCopiedBuffer("asdf", 4));
+  binary_dict.Set("e", Value::CreateWithCopiedBuffer("asdf", 4));
   EXPECT_FALSE(JSONWriter::Write(binary_dict, &output_js));
   EXPECT_TRUE(JSONWriter::WriteWithOptions(
       binary_dict, JSONWriter::OPTIONS_OMIT_BINARY_VALUES, &output_js));
@@ -144,7 +144,7 @@ TEST(JSONWriterTest, DoublesAsInts) {
   std::string output_js;
 
   // Test allowing a double with no fractional part to be written as an integer.
-  FundamentalValue double_value(1e10);
+  Value double_value(1e10);
   EXPECT_TRUE(JSONWriter::WriteWithOptions(
       double_value, JSONWriter::OPTIONS_OMIT_DOUBLE_TYPE_PRESERVATION,
       &output_js));

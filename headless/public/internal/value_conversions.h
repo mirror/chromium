@@ -14,7 +14,7 @@ namespace headless {
 namespace internal {
 
 // Generic conversion from a type to a base::Value. Implemented in
-// type_conversions.h after all type-specific ToValueImpls have been defined.
+// types_DOMAIN.cc after all type-specific ToValueImpls have been defined.
 template <typename T>
 std::unique_ptr<base::Value> ToValue(const T& value);
 
@@ -32,22 +32,22 @@ struct FromValue {
 // partially specialize vector types.
 template <typename T>
 std::unique_ptr<base::Value> ToValueImpl(int value, T*) {
-  return base::WrapUnique(new base::FundamentalValue(value));
+  return base::MakeUnique<base::Value>(value);
 }
 
 template <typename T>
 std::unique_ptr<base::Value> ToValueImpl(double value, T*) {
-  return base::WrapUnique(new base::FundamentalValue(value));
+  return base::MakeUnique<base::Value>(value);
 }
 
 template <typename T>
 std::unique_ptr<base::Value> ToValueImpl(bool value, T*) {
-  return base::WrapUnique(new base::FundamentalValue(value));
+  return base::MakeUnique<base::Value>(value);
 }
 
 template <typename T>
 std::unique_ptr<base::Value> ToValueImpl(const std::string& value, T*) {
-  return base::WrapUnique(new base::StringValue(value));
+  return base::MakeUnique<base::Value>(value);
 }
 
 template <typename T>
@@ -67,7 +67,7 @@ std::unique_ptr<base::Value> ToValueImpl(const std::vector<T>& vector,
 template <typename T>
 std::unique_ptr<base::Value> ToValueImpl(const std::unique_ptr<T>& value,
                                          std::unique_ptr<T>*) {
-  return ToValue(value.get());
+  return ToValue(*value);
 }
 
 // FromValue specializations for basic types.
@@ -151,7 +151,7 @@ struct FromValue<std::vector<T>> {
     }
     errors->Push();
     for (const auto& item : *list)
-      result.push_back(FromValue<T>::Parse(*item, errors));
+      result.push_back(FromValue<T>::Parse(item, errors));
     errors->Pop();
     return result;
   }

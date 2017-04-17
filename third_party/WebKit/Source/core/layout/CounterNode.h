@@ -22,18 +22,21 @@
 #ifndef CounterNode_h
 #define CounterNode_h
 
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefCounted.h"
 
-// This implements a counter tree that is used for finding parents in counters() lookup,
-// and for propagating count changes when nodes are added or removed.
+// This implements a counter tree that is used for finding parents in counters()
+// lookup, and for propagating count changes when nodes are added or removed.
 
-// Parents represent unique counters and their scope, which are created either explicitly
-// by "counter-reset" style rules or implicitly by referring to a counter that is not in scope.
-// Such nodes are tagged as "reset" nodes, although they are not all due to "counter-reset".
+// Parents represent unique counters and their scope, which are created either
+// explicitly by "counter-reset" style rules or implicitly by referring to a
+// counter that is not in scope.
+// Such nodes are tagged as "reset" nodes, although they are not all due to
+// "counter-reset".
 
-// Not that layout tree children are often counter tree siblings due to counter scoping rules.
+// Not that layout tree children are often counter tree siblings due to counter
+// scoping rules.
 
 namespace blink {
 
@@ -41,61 +44,66 @@ class LayoutObject;
 class LayoutCounter;
 
 class CounterNode : public RefCounted<CounterNode> {
-public:
-    static PassRefPtr<CounterNode> create(LayoutObject&, bool isReset, int value);
-    ~CounterNode();
-    bool actsAsReset() const { return m_hasResetType || !m_parent; }
-    bool hasResetType() const { return m_hasResetType; }
-    int value() const { return m_value; }
-    int countInParent() const { return m_countInParent; }
-    LayoutObject& owner() const { return m_owner; }
-    void addLayoutObject(LayoutCounter*);
-    void removeLayoutObject(LayoutCounter*);
+ public:
+  static PassRefPtr<CounterNode> Create(LayoutObject&,
+                                        bool is_reset,
+                                        int value);
+  ~CounterNode();
+  bool ActsAsReset() const { return has_reset_type_ || !parent_; }
+  bool HasResetType() const { return has_reset_type_; }
+  int Value() const { return value_; }
+  int CountInParent() const { return count_in_parent_; }
+  LayoutObject& Owner() const { return owner_; }
+  void AddLayoutObject(LayoutCounter*);
+  void RemoveLayoutObject(LayoutCounter*);
 
-    // Invalidates the text in the layoutObjects of this counter, if any.
-    void resetLayoutObjects();
+  // Invalidates the text in the layoutObjects of this counter, if any.
+  void ResetLayoutObjects();
 
-    CounterNode* parent() const { return m_parent; }
-    CounterNode* previousSibling() const { return m_previousSibling; }
-    CounterNode* nextSibling() const { return m_nextSibling; }
-    CounterNode* firstChild() const { return m_firstChild; }
-    CounterNode* lastChild() const { return m_lastChild; }
-    CounterNode* lastDescendant() const;
-    CounterNode* previousInPreOrder() const;
-    CounterNode* nextInPreOrder(const CounterNode* stayWithin = nullptr) const;
-    CounterNode* nextInPreOrderAfterChildren(const CounterNode* stayWithin = nullptr) const;
+  CounterNode* Parent() const { return parent_; }
+  CounterNode* PreviousSibling() const { return previous_sibling_; }
+  CounterNode* NextSibling() const { return next_sibling_; }
+  CounterNode* FirstChild() const { return first_child_; }
+  CounterNode* LastChild() const { return last_child_; }
+  CounterNode* LastDescendant() const;
+  CounterNode* PreviousInPreOrder() const;
+  CounterNode* NextInPreOrder(const CounterNode* stay_within = nullptr) const;
+  CounterNode* NextInPreOrderAfterChildren(
+      const CounterNode* stay_within = nullptr) const;
 
-    void insertAfter(CounterNode* newChild, CounterNode* beforeChild, const AtomicString& identifier);
+  void InsertAfter(CounterNode* new_child,
+                   CounterNode* before_child,
+                   const AtomicString& identifier);
 
-    // identifier must match the identifier of this counter.
-    void removeChild(CounterNode*);
+  // identifier must match the identifier of this counter.
+  void RemoveChild(CounterNode*);
 
-private:
-    CounterNode(LayoutObject&, bool isReset, int value);
-    int computeCountInParent() const;
-    // Invalidates the text in the layoutObject of this counter, if any,
-    // and in the layoutObjects of all descendants of this counter, if any.
-    void resetThisAndDescendantsLayoutObjects();
-    void recount();
+ private:
+  CounterNode(LayoutObject&, bool is_reset, int value);
+  int ComputeCountInParent() const;
+  // Invalidates the text in the layoutObject of this counter, if any,
+  // and in the layoutObjects of all descendants of this counter, if any.
+  void ResetThisAndDescendantsLayoutObjects();
+  void Recount();
 
-    bool m_hasResetType;
-    int m_value;
-    int m_countInParent;
-    LayoutObject& m_owner;
-    LayoutCounter* m_rootLayoutObject;
+  bool has_reset_type_;
+  int value_;
+  int count_in_parent_;
+  LayoutObject& owner_;
+  LayoutCounter* root_layout_object_;
 
-    CounterNode* m_parent;
-    CounterNode* m_previousSibling;
-    CounterNode* m_nextSibling;
-    CounterNode* m_firstChild;
-    CounterNode* m_lastChild;
+  CounterNode* parent_;
+  CounterNode* previous_sibling_;
+  CounterNode* next_sibling_;
+  CounterNode* first_child_;
+  CounterNode* last_child_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #ifndef NDEBUG
 // Outside the WebCore namespace for ease of invocation from gdb.
 void showCounterTree(const blink::CounterNode*);
 #endif
 
-#endif // CounterNode_h
+#endif  // CounterNode_h

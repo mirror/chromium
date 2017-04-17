@@ -86,7 +86,7 @@ class ProcessSingletonPosixTest : public testing::Test {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     // Use a long directory name to ensure that the socket isn't opened through
     // the symlink.
-    user_data_path_ = temp_dir_.path().Append(
+    user_data_path_ = temp_dir_.GetPath().Append(
         std::string(sizeof(sockaddr_un::sun_path), 'a'));
     ASSERT_TRUE(CreateDirectory(user_data_path_));
 
@@ -406,6 +406,24 @@ TEST_F(ProcessSingletonPosixTest, NotifyOtherProcessOrCreate_BadCookie) {
 
   std::string url("about:blank");
   EXPECT_EQ(ProcessSingleton::PROFILE_IN_USE, NotifyOtherProcessOrCreate(url));
+}
+
+TEST_F(ProcessSingletonPosixTest, IgnoreSocketSymlinkWithTooLongTarget) {
+  CreateProcessSingletonOnThread();
+  // Change the symlink to one with a too-long target.
+  char buf[PATH_MAX];
+  ssize_t len = readlink(socket_path_.value().c_str(), buf, PATH_MAX);
+  ASSERT_GT(len, 0);
+  base::FilePath socket_target_path = base::FilePath(std::string(buf, len));
+  base::FilePath long_socket_target_path = socket_target_path.DirName().Append(
+      std::string(sizeof(sockaddr_un::sun_path), 'b'));
+  ASSERT_EQ(0, unlink(socket_path_.value().c_str()));
+  ASSERT_EQ(0, symlink(long_socket_target_path.value().c_str(),
+                       socket_path_.value().c_str()));
+
+  // A new ProcessSingleton should ignore the invalid socket path target.
+  std::string url("about:blank");
+  EXPECT_EQ(ProcessSingleton::PROCESS_NONE, NotifyOtherProcessOrCreate(url));
 }
 
 #if defined(OS_MACOSX)

@@ -13,6 +13,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -305,7 +306,7 @@ class TestMessageLoopCondition {
   void Wait() {
     while (!signaled_) {
       waiting_ = true;
-      base::MessageLoop::current()->Run();
+      base::RunLoop().Run();
       waiting_ = false;
     }
     signaled_ = false;
@@ -446,6 +447,7 @@ class LocalDiscoveryUITest : public WebUIBrowserTest {
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile,
                                     chrome::kTestUserProfileDir);
 #endif
+    command_line->AppendSwitch(switches::kDisableDeviceDiscoveryNotifications);
     WebUIBrowserTest::SetUpCommandLine(command_line);
   }
 
@@ -456,7 +458,7 @@ class LocalDiscoveryUITest : public WebUIBrowserTest {
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE, callback.callback(), time_period);
 
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
     callback.Cancel();
   }
 
@@ -502,7 +504,7 @@ IN_PROC_BROWSER_TEST_F(LocalDiscoveryUITest, AddRowTest) {
   test_service_discovery_client()->SimulateReceive(
       kAnnouncePacket, sizeof(kAnnouncePacket));
 
-  base::MessageLoop::current()->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(WebUIBrowserTest::RunJavascriptTest("checkOneDevice"));
 
@@ -514,7 +516,7 @@ IN_PROC_BROWSER_TEST_F(LocalDiscoveryUITest, AddRowTest) {
   EXPECT_TRUE(WebUIBrowserTest::RunJavascriptTest("checkNoDevices"));
 }
 
-
+// Flaky: http://crbug.com/660669.
 IN_PROC_BROWSER_TEST_F(LocalDiscoveryUITest, RegisterTest) {
   TestMessageLoopCondition condition_token_claimed;
 
@@ -525,7 +527,7 @@ IN_PROC_BROWSER_TEST_F(LocalDiscoveryUITest, RegisterTest) {
   test_service_discovery_client()->SimulateReceive(
       kAnnouncePacket, sizeof(kAnnouncePacket));
 
-  base::MessageLoop::current()->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(WebUIBrowserTest::RunJavascriptTest("checkOneDevice"));
 
@@ -578,7 +580,7 @@ IN_PROC_BROWSER_TEST_F(LocalDiscoveryUITest, RegisterTest) {
   test_service_discovery_client()->SimulateReceive(
       kAnnouncePacketRegistered, sizeof(kAnnouncePacketRegistered));
 
-  base::MessageLoop::current()->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(WebUIBrowserTest::RunJavascriptTest("expectRegisterDone"));
 }

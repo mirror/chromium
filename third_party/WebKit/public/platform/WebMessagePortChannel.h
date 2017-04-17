@@ -33,47 +33,28 @@
 
 #include "WebCommon.h"
 #include "WebVector.h"
-
-#if INSIDE_BLINK
 #include <memory>
-#endif
 
 namespace blink {
 
 class WebMessagePortChannelClient;
+class WebMessagePortChannel;
 class WebString;
 
-typedef WebVector<class WebMessagePortChannel*> WebMessagePortChannelArray;
+using WebMessagePortChannelArray =
+    WebVector<std::unique_ptr<WebMessagePortChannel>>;
 
-// Provides an interface to a Message Port Channel implementation. The object owns itself and
-// is signalled that its not needed anymore with the destroy() call.
+// Provides an interface to a Message Port Channel implementation.
 class WebMessagePortChannel {
-public:
-    virtual void setClient(WebMessagePortChannelClient*) = 0;
-    virtual void destroy() = 0;
-    // Callee receives ownership of the passed vector.
-    // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
-    virtual void postMessage(const WebString&, WebMessagePortChannelArray*) = 0;
-    virtual bool tryGetMessage(WebString*, WebMessagePortChannelArray&) = 0;
-
-protected:
-    ~WebMessagePortChannel() { }
+ public:
+  virtual ~WebMessagePortChannel() {}
+  virtual void SetClient(WebMessagePortChannelClient*) = 0;
+  // Callee receives ownership of the passed vector.
+  // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
+  virtual void PostMessage(const WebString&, WebMessagePortChannelArray) = 0;
+  virtual bool TryGetMessage(WebString*, WebMessagePortChannelArray&) = 0;
 };
 
-#if INSIDE_BLINK
+}  // namespace blink
 
-struct WebMessagePortChannelDeleter {
-    void operator()(WebMessagePortChannel* channel)
-    {
-        if (channel)
-            channel->destroy();
-    }
-};
-
-using WebMessagePortChannelUniquePtr = std::unique_ptr<WebMessagePortChannel, WebMessagePortChannelDeleter>;
-
-#endif // INSIDE_BLINK
-
-} // namespace blink
-
-#endif // WebMessagePortChannel_h
+#endif  // WebMessagePortChannel_h

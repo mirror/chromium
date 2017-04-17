@@ -5,14 +5,18 @@
 #include "platform/graphics/CanvasMetrics.h"
 
 #include "platform/Histogram.h"
-#include "wtf/Threading.h"
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/Threading.h"
 
 namespace blink {
 
-void CanvasMetrics::countCanvasContextUsage(const CanvasContextUsage canvasContextUsage)
-{
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, usageHistogram, new EnumerationHistogram("WebCore.CanvasContextUsage", CanvasContextUsage::NumberOfUsages));
-    usageHistogram.count(canvasContextUsage);
+void CanvasMetrics::CountCanvasContextUsage(
+    const CanvasContextUsage canvas_context_usage) {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, usage_histogram,
+      new EnumerationHistogram("WebCore.CanvasContextUsage",
+                               CanvasContextUsage::kNumberOfUsages));
+  usage_histogram.Count(canvas_context_usage);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -4,8 +4,7 @@
 
 #include "apps/app_lifetime_monitor.h"
 
-#include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/profiles/profile.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "extensions/browser/app_window/app_window.h"
@@ -20,20 +19,17 @@ using extensions::AppWindowRegistry;
 using extensions::Extension;
 using extensions::ExtensionHost;
 
-AppLifetimeMonitor::AppLifetimeMonitor(Profile* profile)
-    : profile_(profile) {
+AppLifetimeMonitor::AppLifetimeMonitor(content::BrowserContext* context)
+    : context_(context) {
   registrar_.Add(this,
                  extensions::NOTIFICATION_EXTENSION_HOST_DID_STOP_FIRST_LOAD,
                  content::NotificationService::AllSources());
   registrar_.Add(this,
                  extensions::NOTIFICATION_EXTENSION_HOST_DESTROYED,
                  content::NotificationService::AllSources());
-  registrar_.Add(
-      this, chrome::NOTIFICATION_APP_TERMINATING,
-      content::NotificationService::AllSources());
 
   AppWindowRegistry* app_window_registry =
-      AppWindowRegistry::Factory::GetForBrowserContext(profile_,
+      AppWindowRegistry::Factory::GetForBrowserContext(context_,
                                                        false /* create */);
   DCHECK(app_window_registry);
   app_window_registry->AddObserver(this);
@@ -72,11 +68,6 @@ void AppLifetimeMonitor::Observe(int type,
       NotifyAppStop(extension->id());
       break;
     }
-
-    case chrome::NOTIFICATION_APP_TERMINATING: {
-      NotifyChromeTerminating();
-      break;
-    }
   }
 }
 
@@ -103,7 +94,7 @@ void AppLifetimeMonitor::OnAppWindowShown(AppWindow* app_window,
 
 void AppLifetimeMonitor::Shutdown() {
   AppWindowRegistry* app_window_registry =
-      AppWindowRegistry::Factory::GetForBrowserContext(profile_,
+      AppWindowRegistry::Factory::GetForBrowserContext(context_,
                                                        false /* create */);
   if (app_window_registry)
     app_window_registry->RemoveObserver(this);
@@ -125,23 +116,23 @@ bool AppLifetimeMonitor::HasOtherVisibleAppWindows(
 }
 
 void AppLifetimeMonitor::NotifyAppStart(const std::string& app_id) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnAppStart(profile_, app_id));
+  for (auto& observer : observers_)
+    observer.OnAppStart(context_, app_id);
 }
 
 void AppLifetimeMonitor::NotifyAppActivated(const std::string& app_id) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnAppActivated(profile_, app_id));
+  for (auto& observer : observers_)
+    observer.OnAppActivated(context_, app_id);
 }
 
 void AppLifetimeMonitor::NotifyAppDeactivated(const std::string& app_id) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnAppDeactivated(profile_, app_id));
+  for (auto& observer : observers_)
+    observer.OnAppDeactivated(context_, app_id);
 }
 
 void AppLifetimeMonitor::NotifyAppStop(const std::string& app_id) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnAppStop(profile_, app_id));
-}
-
-void AppLifetimeMonitor::NotifyChromeTerminating() {
-  FOR_EACH_OBSERVER(Observer, observers_, OnChromeTerminating());
+  for (auto& observer : observers_)
+    observer.OnAppStop(context_, app_id);
 }
 
 }  // namespace apps

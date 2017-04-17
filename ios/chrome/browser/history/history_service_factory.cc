@@ -74,13 +74,14 @@ std::unique_ptr<KeyedService> HistoryServiceFactory::BuildServiceInstanceFor(
       ios::ChromeBrowserState::FromBrowserState(context);
   std::unique_ptr<history::HistoryService> history_service(
       new history::HistoryService(
-          base::WrapUnique(new HistoryClientImpl(
-              ios::BookmarkModelFactory::GetForBrowserState(browser_state))),
+          base::MakeUnique<HistoryClientImpl>(
+              ios::BookmarkModelFactory::GetForBrowserState(browser_state)),
           nullptr));
   if (!history_service->Init(history::HistoryDatabaseParamsForPath(
           browser_state->GetStatePath()))) {
     return nullptr;
   }
+  // TODO(crbug.com/703565): remove std::move() once Xcode 9.0+ is required.
   return std::move(history_service);
 }
 

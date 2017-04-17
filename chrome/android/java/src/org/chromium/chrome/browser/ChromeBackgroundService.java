@@ -22,6 +22,7 @@ import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsLauncher;
 import org.chromium.chrome.browser.offlinepages.BackgroundOfflinerTask;
+import org.chromium.chrome.browser.offlinepages.BackgroundScheduler;
 import org.chromium.chrome.browser.offlinepages.BackgroundSchedulerProcessorImpl;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.precache.PrecacheController;
@@ -44,7 +45,8 @@ public class ChromeBackgroundService extends GcmTaskService {
      * the UI thread is done before returning to the GcmNetworkManager.
      */
     public static final String HOLD_WAKELOCK = "HoldWakelock";
-    private static final int WAKELOCK_TIMEOUT_SECONDS = 4 * 60;
+    // GCM will return our wakelock after 3 minutes, we should be a second less than that.
+    private static final int WAKELOCK_TIMEOUT_SECONDS = 3 * 60 - 1;
 
     private BackgroundOfflinerTask mBackgroundOfflinerTask;
 
@@ -68,14 +70,9 @@ public class ChromeBackgroundService extends GcmTaskService {
                                 context, params.getExtras(), waiter, taskTag);
                         break;
 
-                    case SnippetsLauncher.TASK_TAG_WIFI_CHARGING:
                     case SnippetsLauncher.TASK_TAG_WIFI:
                     case SnippetsLauncher.TASK_TAG_FALLBACK:
                         handleFetchSnippets(context, taskTag);
-                        break;
-
-                    case SnippetsLauncher.TASK_TAG_RESCHEDULE:
-                        handleRescheduleSnippets(context, taskTag);
                         break;
 
                     case PrecacheController.PERIODIC_TASK_TAG:
@@ -121,19 +118,11 @@ public class ChromeBackgroundService extends GcmTaskService {
 
     @VisibleForTesting
     protected void fetchSnippets() {
-        // Do not force regular background fetches.
-        SnippetsBridge.fetchSnippets(/*forceRequest=*/false);
-    }
-
-    private void handleRescheduleSnippets(Context context, String tag) {
-        if (!SnippetsLauncher.hasInstance()) {
-            launchBrowser(context, tag);
-        }
-        rescheduleSnippets();
+        SnippetsBridge.fetchRemoteSuggestionsFromBackground();
     }
 
     @VisibleForTesting
-    protected void rescheduleSnippets() {
+    protected void rescheduleFetching() {
         SnippetsBridge.rescheduleFetching();
     }
 
@@ -166,8 +155,6 @@ public class ChromeBackgroundService extends GcmTaskService {
                     new BackgroundOfflinerTask(new BackgroundSchedulerProcessorImpl());
         }
         mBackgroundOfflinerTask.startBackgroundRequests(context, bundle, waiter);
-        // TODO(petewil) if processBackgroundRequest returns false, return RESTART_RESCHEDULE
-        // to the GcmNetworkManager
     }
 
     /**
@@ -219,9 +206,34 @@ public class ChromeBackgroundService extends GcmTaskService {
         }
     }
 
+    @VisibleForTesting
+    protected void rescheduleBackgroundSyncTasksOnUpgrade() {
+        BackgroundSyncLauncher.rescheduleTasksOnUpgrade(this);
+    }
+
+    @VisibleForTesting
+    protected void reschedulePrecacheTasksOnUpgrade() {
+        PrecacheController.rescheduleTasksOnUpgrade(this);
+    }
+
+    private void rescheduleSnippetsTasksOnUpgrade() {
+        if (SnippetsLauncher.shouldRescheduleTasksOnUpgrade()) {
+            if (!SnippetsLauncher.hasInstance()) {
+                launchBrowser(this, /*tag=*/""); // The |tag| doesn't matter here.
+            }
+            rescheduleFetching();
+        }
+    }
+
+    protected void rescheduleOfflinePagesTasksOnUpgrade() {
+        BackgroundScheduler.getInstance(this).rescheduleOfflinePagesTasksOnUpgrade();
+    }
+
     @Override
     public void onInitializeTasks() {
-        BackgroundSyncLauncher.rescheduleTasksOnUpgrade(this);
-        PrecacheController.rescheduleTasksOnUpgrade(this);
+        rescheduleBackgroundSyncTasksOnUpgrade();
+        reschedulePrecacheTasksOnUpgrade();
+        rescheduleSnippetsTasksOnUpgrade();
+        rescheduleOfflinePagesTasksOnUpgrade();
     }
 }

@@ -20,13 +20,13 @@ namespace certificate_transparency {
 
 namespace {
 
-template <size_t N>
-base::ListValue* ListValueFromStrings(const char* const (&strings)[N]) {
+std::unique_ptr<base::ListValue> ListValueFromStrings(
+    const std::vector<const char*>& strings) {
   std::unique_ptr<base::ListValue> result(new base::ListValue);
-  for (const auto& str : strings) {
+  for (auto* const str : strings) {
     result->AppendString(str);
   }
-  return result.release();
+  return result;
 }
 
 class CTPolicyManagerTest : public ::testing::Test {
@@ -67,8 +67,9 @@ TEST_F(CTPolicyManagerTest, DelegateChecksRequired) {
 
   // Now set a preference, pump the message loop, and ensure things are now
   // reflected.
-  pref_service_.SetManagedPref(prefs::kCTRequiredHosts,
-                               ListValueFromStrings({"google.com"}));
+  pref_service_.SetManagedPref(
+      prefs::kCTRequiredHosts,
+      ListValueFromStrings(std::vector<const char*>{"google.com"}));
   base::RunLoop().RunUntilIdle();
 
   // The new preferences should take effect.
@@ -94,8 +95,9 @@ TEST_F(CTPolicyManagerTest, DelegateChecksExcluded) {
 
   // Now set a preference, pump the message loop, and ensure things are now
   // reflected.
-  pref_service_.SetManagedPref(prefs::kCTExcludedHosts,
-                               ListValueFromStrings({"google.com"}));
+  pref_service_.SetManagedPref(
+      prefs::kCTExcludedHosts,
+      ListValueFromStrings(std::vector<const char*>{"google.com"}));
   base::RunLoop().RunUntilIdle();
 
   // The new preferences should take effect.
@@ -123,7 +125,7 @@ TEST_F(CTPolicyManagerTest, IgnoresInvalidEntries) {
   // URLs).
   pref_service_.SetManagedPref(
       prefs::kCTRequiredHosts,
-      ListValueFromStrings({
+      ListValueFromStrings(std::vector<const char*>{
           "file:///etc/fstab", "file://withahost/etc/fstab",
           "file:///c|/Windows", "*", "https://*", "example.com",
           "https://example.test:invalid_port",
@@ -180,12 +182,13 @@ TEST_F(CTPolicyManagerTest, AppliesPriority) {
   // but then require it for a specific host.
   pref_service_.SetManagedPref(
       prefs::kCTExcludedHosts,
-      ListValueFromStrings({"example.com", ".sub.example.com",
-                            ".sub.accounts.example.com", "test.example.com"}));
+      ListValueFromStrings(std::vector<const char*>{
+          "example.com", ".sub.example.com", ".sub.accounts.example.com",
+          "test.example.com"}));
   pref_service_.SetManagedPref(
       prefs::kCTRequiredHosts,
-      ListValueFromStrings(
-          {"sub.example.com", "accounts.example.com", "test.example.com"}));
+      ListValueFromStrings(std::vector<const char*>{
+          "sub.example.com", "accounts.example.com", "test.example.com"}));
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(CTRequirementLevel::NOT_REQUIRED,
@@ -231,8 +234,9 @@ TEST_F(CTPolicyManagerTest, UsableAfterShutdown) {
 
   // Now set a preference, pump the message loop, and ensure things are now
   // reflected.
-  pref_service_.SetManagedPref(prefs::kCTRequiredHosts,
-                               ListValueFromStrings({"google.com"}));
+  pref_service_.SetManagedPref(
+      prefs::kCTRequiredHosts,
+      ListValueFromStrings(std::vector<const char*>{"google.com"}));
   base::RunLoop().RunUntilIdle();
 
   // The new preferences should take effect.
@@ -251,8 +255,9 @@ TEST_F(CTPolicyManagerTest, UsableAfterShutdown) {
             delegate->IsCTRequiredForHost("example.com"));
   EXPECT_EQ(CTRequirementLevel::DEFAULT,
             delegate->IsCTRequiredForHost("sub.example.com"));
-  pref_service_.SetManagedPref(prefs::kCTRequiredHosts,
-                               ListValueFromStrings({"sub.example.com"}));
+  pref_service_.SetManagedPref(
+      prefs::kCTRequiredHosts,
+      ListValueFromStrings(std::vector<const char*>{"sub.example.com"}));
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(CTRequirementLevel::REQUIRED,
             delegate->IsCTRequiredForHost("google.com"));

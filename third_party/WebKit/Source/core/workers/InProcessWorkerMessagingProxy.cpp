@@ -25,19 +25,15 @@
  *
  */
 
-
 #include "core/workers/InProcessWorkerMessagingProxy.h"
 
-#include "bindings/core/v8/V8GCController.h"
-#include "core/dom/CrossThreadTask.h"
+#include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
 #include "core/events/ErrorEvent.h"
 #include "core/events/MessageEvent.h"
-#include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
@@ -47,263 +43,201 @@
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
-#include "wtf/WTF.h"
-#include <memory>
+#include "platform/CrossThreadFunctional.h"
+#include "platform/WebTaskRunner.h"
+#include "platform/wtf/WTF.h"
 
 namespace blink {
 
-namespace {
+struct InProcessWorkerMessagingProxy::QueuedTask {
+  RefPtr<SerializedScriptValue> message;
+  MessagePortChannelArray channels;
+};
 
-void processUnhandledExceptionOnWorkerGlobalScope(const String& errorMessage, std::unique_ptr<SourceLocation> location, ExecutionContext* scriptContext)
-{
-    WorkerGlobalScope* globalScope = toWorkerGlobalScope(scriptContext);
-    globalScope->exceptionUnhandled(errorMessage, std::move(location));
+InProcessWorkerMessagingProxy::InProcessWorkerMessagingProxy(
+    InProcessWorkerBase* worker_object,
+    WorkerClients* worker_clients)
+    : InProcessWorkerMessagingProxy(worker_object->GetExecutionContext(),
+                                    worker_object,
+                                    worker_clients) {
+  DCHECK(worker_object_);
 }
 
-void processMessageOnWorkerGlobalScope(PassRefPtr<SerializedScriptValue> message, std::unique_ptr<MessagePortChannelArray> channels, InProcessWorkerObjectProxy* workerObjectProxy, ExecutionContext* scriptContext)
-{
-    WorkerGlobalScope* globalScope = toWorkerGlobalScope(scriptContext);
-    MessagePortArray* ports = MessagePort::entanglePorts(*scriptContext, std::move(channels));
-    globalScope->dispatchEvent(MessageEvent::create(ports, message));
-    workerObjectProxy->confirmMessageFromWorkerObject(V8GCController::hasPendingActivity(globalScope->thread()->isolate(), scriptContext));
+InProcessWorkerMessagingProxy::InProcessWorkerMessagingProxy(
+    ExecutionContext* execution_context,
+    InProcessWorkerBase* worker_object,
+    WorkerClients* worker_clients)
+    : ThreadedMessagingProxyBase(execution_context),
+      worker_object_(worker_object),
+      worker_clients_(worker_clients),
+      weak_ptr_factory_(this) {
+  worker_object_proxy_ = InProcessWorkerObjectProxy::Create(
+      weak_ptr_factory_.CreateWeakPtr(), GetParentFrameTaskRunners());
 }
 
-static int s_liveMessagingProxyCount = 0;
-
-} // namespace
-
-InProcessWorkerMessagingProxy::InProcessWorkerMessagingProxy(InProcessWorkerBase* workerObject, WorkerClients* workerClients)
-    : m_executionContext(workerObject->getExecutionContext())
-    , m_workerObjectProxy(InProcessWorkerObjectProxy::create(this))
-    , m_workerObject(workerObject)
-    , m_mayBeDestroyed(false)
-    , m_unconfirmedMessageCount(0)
-    , m_workerThreadHadPendingActivity(false)
-    , m_askedToTerminate(false)
-    , m_workerInspectorProxy(WorkerInspectorProxy::create())
-    , m_workerClients(workerClients)
-{
-    DCHECK(isParentContextThread());
-    DCHECK(m_workerObject);
-    s_liveMessagingProxyCount++;
+InProcessWorkerMessagingProxy::~InProcessWorkerMessagingProxy() {
+  DCHECK(!worker_object_);
 }
 
-InProcessWorkerMessagingProxy::~InProcessWorkerMessagingProxy()
-{
-    DCHECK(isParentContextThread());
-    DCHECK(!m_workerObject);
-    if (m_loaderProxy)
-        m_loaderProxy->detachProvider(this);
-    s_liveMessagingProxyCount--;
+void InProcessWorkerMessagingProxy::StartWorkerGlobalScope(
+    const KURL& script_url,
+    const String& user_agent,
+    const String& source_code,
+    const String& referrer_policy) {
+  DCHECK(IsParentContextThread());
+  if (AskedToTerminate()) {
+    // Worker.terminate() could be called from JS before the thread was
+    // created.
+    return;
+  }
+
+  Document* document = ToDocument(GetExecutionContext());
+  SecurityOrigin* starter_origin = document->GetSecurityOrigin();
+
+  ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
+  DCHECK(csp);
+
+  WorkerThreadStartMode start_mode =
+      GetWorkerInspectorProxy()->WorkerStartMode(document);
+  std::unique_ptr<WorkerSettings> worker_settings =
+      WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
+  WorkerV8Settings worker_v8_settings(WorkerV8Settings::Default());
+  worker_v8_settings.heap_limit_mode_ =
+      ToIsolate(document)->IsHeapLimitIncreasedForDebugging()
+          ? WorkerV8Settings::HeapLimitMode::kIncreasedForDebugging
+          : WorkerV8Settings::HeapLimitMode::kDefault;
+  std::unique_ptr<WorkerThreadStartupData> startup_data =
+      WorkerThreadStartupData::Create(
+          script_url, user_agent, source_code, nullptr, start_mode,
+          csp->Headers().get(), referrer_policy, starter_origin,
+          worker_clients_.Release(), document->AddressSpace(),
+          OriginTrialContext::GetTokens(document).get(),
+          std::move(worker_settings), worker_v8_settings);
+
+  InitializeWorkerThread(std::move(startup_data));
+  GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),
+                                                 script_url);
 }
 
-int InProcessWorkerMessagingProxy::proxyCount()
-{
-    DCHECK(isMainThread());
-    return s_liveMessagingProxyCount;
+void InProcessWorkerMessagingProxy::PostMessageToWorkerObject(
+    PassRefPtr<SerializedScriptValue> message,
+    MessagePortChannelArray channels) {
+  DCHECK(IsParentContextThread());
+  if (!worker_object_ || AskedToTerminate())
+    return;
+
+  MessagePortArray* ports =
+      MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
+  worker_object_->DispatchEvent(
+      MessageEvent::Create(ports, std::move(message)));
 }
 
-void InProcessWorkerMessagingProxy::startWorkerGlobalScope(const KURL& scriptURL, const String& userAgent, const String& sourceCode)
-{
-    DCHECK(isParentContextThread());
-    if (m_askedToTerminate) {
-        // Worker.terminate() could be called from JS before the thread was
-        // created.
-        return;
-    }
+void InProcessWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
+    PassRefPtr<SerializedScriptValue> message,
+    MessagePortChannelArray channels) {
+  DCHECK(IsParentContextThread());
+  if (AskedToTerminate())
+    return;
 
-    Document* document = toDocument(getExecutionContext());
-    SecurityOrigin* starterOrigin = document->getSecurityOrigin();
-
-    ContentSecurityPolicy* csp = m_workerObject->contentSecurityPolicy() ? m_workerObject->contentSecurityPolicy() : document->contentSecurityPolicy();
-    DCHECK(csp);
-
-    WorkerThreadStartMode startMode = m_workerInspectorProxy->workerStartMode(document);
-    std::unique_ptr<WorkerSettings> workerSettings = wrapUnique(new WorkerSettings(document->settings()));
-    std::unique_ptr<WorkerThreadStartupData> startupData = WorkerThreadStartupData::create(scriptURL, userAgent, sourceCode, nullptr, startMode, csp->headers().get(), m_workerObject->referrerPolicy(), starterOrigin, m_workerClients.release(), document->addressSpace(), OriginTrialContext::getTokens(document).get(), std::move(workerSettings));
-    double originTime = document->loader() ? document->loader()->timing().referenceMonotonicTime() : monotonicallyIncreasingTime();
-
-    m_loaderProxy = WorkerLoaderProxy::create(this);
-    m_workerThread = createWorkerThread(originTime);
-    m_workerThread->start(std::move(startupData));
-    workerThreadCreated();
-    m_workerInspectorProxy->workerThreadCreated(document, m_workerThread.get(), scriptURL);
+  if (GetWorkerThread()) {
+    // A message event is an activity and may initiate another activity.
+    worker_global_scope_has_pending_activity_ = true;
+    ++unconfirmed_message_count_;
+    std::unique_ptr<WTF::CrossThreadClosure> task = CrossThreadBind(
+        &InProcessWorkerObjectProxy::ProcessMessageFromWorkerObject,
+        CrossThreadUnretained(&WorkerObjectProxy()), std::move(message),
+        WTF::Passed(std::move(channels)),
+        CrossThreadUnretained(GetWorkerThread()));
+    GetWorkerThread()->PostTask(BLINK_FROM_HERE, std::move(task));
+  } else {
+    queued_early_tasks_.push_back(
+        QueuedTask{std::move(message), std::move(channels)});
+  }
 }
 
-void InProcessWorkerMessagingProxy::postMessageToWorkerObject(PassRefPtr<SerializedScriptValue> message, std::unique_ptr<MessagePortChannelArray> channels)
-{
-    DCHECK(isParentContextThread());
-    if (!m_workerObject || m_askedToTerminate)
-        return;
+void InProcessWorkerMessagingProxy::DispatchErrorEvent(
+    const String& error_message,
+    std::unique_ptr<SourceLocation> location,
+    int exception_id) {
+  DCHECK(IsParentContextThread());
+  if (!worker_object_)
+    return;
 
-    MessagePortArray* ports = MessagePort::entanglePorts(*getExecutionContext(), std::move(channels));
-    m_workerObject->dispatchEvent(MessageEvent::create(ports, message));
+  // We don't bother checking the askedToTerminate() flag here, because
+  // exceptions should *always* be reported even if the thread is terminated.
+  // This is intentionally different than the behavior in MessageWorkerTask,
+  // because terminated workers no longer deliver messages (section 4.6 of the
+  // WebWorker spec), but they do report exceptions.
+
+  ErrorEvent* event =
+      ErrorEvent::Create(error_message, location->Clone(), nullptr);
+  if (worker_object_->DispatchEvent(event) != DispatchEventResult::kNotCanceled)
+    return;
+
+  PostTaskToWorkerGlobalScope(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&InProcessWorkerObjectProxy::ProcessUnhandledException,
+                      CrossThreadUnretained(worker_object_proxy_.get()),
+                      exception_id, CrossThreadUnretained(GetWorkerThread())));
 }
 
-void InProcessWorkerMessagingProxy::postMessageToWorkerGlobalScope(PassRefPtr<SerializedScriptValue> message, std::unique_ptr<MessagePortChannelArray> channels)
-{
-    DCHECK(isParentContextThread());
-    if (m_askedToTerminate)
-        return;
+void InProcessWorkerMessagingProxy::WorkerThreadCreated() {
+  DCHECK(IsParentContextThread());
+  ThreadedMessagingProxyBase::WorkerThreadCreated();
 
-    std::unique_ptr<ExecutionContextTask> task = createCrossThreadTask(&processMessageOnWorkerGlobalScope, message, passed(std::move(channels)), crossThreadUnretained(&workerObjectProxy()));
-    if (m_workerThread) {
-        ++m_unconfirmedMessageCount;
-        m_workerThread->postTask(BLINK_FROM_HERE, std::move(task));
-    } else {
-        m_queuedEarlyTasks.append(std::move(task));
-    }
+  // Worker initialization means a pending activity.
+  worker_global_scope_has_pending_activity_ = true;
+
+  DCHECK_EQ(0u, unconfirmed_message_count_);
+  unconfirmed_message_count_ = queued_early_tasks_.size();
+  for (auto& queued_task : queued_early_tasks_) {
+    std::unique_ptr<WTF::CrossThreadClosure> task = CrossThreadBind(
+        &InProcessWorkerObjectProxy::ProcessMessageFromWorkerObject,
+        CrossThreadUnretained(&WorkerObjectProxy()),
+        queued_task.message.Release(),
+        WTF::Passed(std::move(queued_task.channels)),
+        CrossThreadUnretained(GetWorkerThread()));
+    GetWorkerThread()->PostTask(BLINK_FROM_HERE, std::move(task));
+  }
+  queued_early_tasks_.Clear();
 }
 
-bool InProcessWorkerMessagingProxy::postTaskToWorkerGlobalScope(std::unique_ptr<ExecutionContextTask> task)
-{
-    if (m_askedToTerminate)
-        return false;
+void InProcessWorkerMessagingProxy::ParentObjectDestroyed() {
+  DCHECK(IsParentContextThread());
 
-    DCHECK(m_workerThread);
-    m_workerThread->postTask(BLINK_FROM_HERE, std::move(task));
-    return true;
+  // parentObjectDestroyed() is called in InProcessWorkerBase's destructor.
+  // Thus it should be guaranteed that a weak pointer m_workerObject has been
+  // cleared before this method gets called.
+  DCHECK(!worker_object_);
+
+  ThreadedMessagingProxyBase::ParentObjectDestroyed();
 }
 
-void InProcessWorkerMessagingProxy::postTaskToLoader(std::unique_ptr<ExecutionContextTask> task)
-{
-    DCHECK(getExecutionContext()->isDocument());
-    getExecutionContext()->postTask(BLINK_FROM_HERE, std::move(task));
+void InProcessWorkerMessagingProxy::ConfirmMessageFromWorkerObject() {
+  DCHECK(IsParentContextThread());
+  if (AskedToTerminate())
+    return;
+  DCHECK(worker_global_scope_has_pending_activity_);
+  DCHECK_GT(unconfirmed_message_count_, 0u);
+  --unconfirmed_message_count_;
 }
 
-void InProcessWorkerMessagingProxy::reportException(const String& errorMessage, std::unique_ptr<SourceLocation> location)
-{
-    DCHECK(isParentContextThread());
-    if (!m_workerObject)
-        return;
-
-    // We don't bother checking the askedToTerminate() flag here, because
-    // exceptions should *always* be reported even if the thread is terminated.
-    // This is intentionally different than the behavior in MessageWorkerTask,
-    // because terminated workers no longer deliver messages (section 4.6 of the
-    // WebWorker spec), but they do report exceptions.
-
-    ErrorEvent* event = ErrorEvent::create(errorMessage, location->clone(), nullptr);
-    if (m_workerObject->dispatchEvent(event) == DispatchEventResult::NotCanceled)
-        postTaskToWorkerGlobalScope(createCrossThreadTask(&processUnhandledExceptionOnWorkerGlobalScope, errorMessage, passed(std::move(location))));
+void InProcessWorkerMessagingProxy::PendingActivityFinished() {
+  DCHECK(IsParentContextThread());
+  DCHECK(worker_global_scope_has_pending_activity_);
+  if (unconfirmed_message_count_ > 0) {
+    // Ignore the report because an inflight message event may initiate a
+    // new activity.
+    return;
+  }
+  worker_global_scope_has_pending_activity_ = false;
 }
 
-void InProcessWorkerMessagingProxy::reportConsoleMessage(MessageSource source, MessageLevel level, const String& message, std::unique_ptr<SourceLocation> location)
-{
-    DCHECK(isParentContextThread());
-    if (m_askedToTerminate)
-        return;
-    if (m_workerInspectorProxy)
-        m_workerInspectorProxy->addConsoleMessageFromWorker(ConsoleMessage::create(source, level, message, std::move(location)));
+bool InProcessWorkerMessagingProxy::HasPendingActivity() const {
+  DCHECK(IsParentContextThread());
+  if (AskedToTerminate())
+    return false;
+  return worker_global_scope_has_pending_activity_;
 }
 
-void InProcessWorkerMessagingProxy::workerThreadCreated()
-{
-    DCHECK(isParentContextThread());
-    DCHECK(!m_askedToTerminate);
-    DCHECK(m_workerThread);
-
-    DCHECK(!m_unconfirmedMessageCount);
-    m_unconfirmedMessageCount = m_queuedEarlyTasks.size();
-
-    // Worker initialization means a pending activity.
-    m_workerThreadHadPendingActivity = true;
-
-    for (auto& earlyTasks : m_queuedEarlyTasks)
-        m_workerThread->postTask(BLINK_FROM_HERE, std::move(earlyTasks));
-    m_queuedEarlyTasks.clear();
-}
-
-void InProcessWorkerMessagingProxy::workerObjectDestroyed()
-{
-    DCHECK(isParentContextThread());
-
-    // workerObjectDestroyed() is called in InProcessWorkerBase's destructor.
-    // Thus it should be guaranteed that a weak pointer m_workerObject has been
-    // cleared before this method gets called.
-    DCHECK(!m_workerObject);
-
-    getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&InProcessWorkerMessagingProxy::workerObjectDestroyedInternal, crossThreadUnretained(this)));
-}
-
-void InProcessWorkerMessagingProxy::workerObjectDestroyedInternal()
-{
-    DCHECK(isParentContextThread());
-    m_mayBeDestroyed = true;
-    if (m_workerThread)
-        terminateWorkerGlobalScope();
-    else
-        workerThreadTerminated();
-}
-
-void InProcessWorkerMessagingProxy::workerThreadTerminated()
-{
-    DCHECK(isParentContextThread());
-
-    // This method is always the last to be performed, so the proxy is not
-    // needed for communication in either side any more. However, the Worker
-    // object may still exist, and it assumes that the proxy exists, too.
-    m_askedToTerminate = true;
-    m_workerThread = nullptr;
-    terminateInternally();
-    if (m_mayBeDestroyed)
-        delete this;
-}
-
-void InProcessWorkerMessagingProxy::terminateWorkerGlobalScope()
-{
-    DCHECK(isParentContextThread());
-    if (m_askedToTerminate)
-        return;
-    m_askedToTerminate = true;
-
-    if (m_workerThread)
-        m_workerThread->terminate();
-
-    terminateInternally();
-}
-
-void InProcessWorkerMessagingProxy::postMessageToPageInspector(const String& message)
-{
-    DCHECK(isParentContextThread());
-    if (m_workerInspectorProxy)
-        m_workerInspectorProxy->dispatchMessageFromWorker(message);
-}
-
-void InProcessWorkerMessagingProxy::confirmMessageFromWorkerObject(bool hasPendingActivity)
-{
-    DCHECK(isParentContextThread());
-    if (!m_askedToTerminate) {
-        DCHECK(m_unconfirmedMessageCount);
-        --m_unconfirmedMessageCount;
-    }
-    reportPendingActivity(hasPendingActivity);
-}
-
-void InProcessWorkerMessagingProxy::reportPendingActivity(bool hasPendingActivity)
-{
-    DCHECK(isParentContextThread());
-    m_workerThreadHadPendingActivity = hasPendingActivity;
-}
-
-bool InProcessWorkerMessagingProxy::hasPendingActivity() const
-{
-    DCHECK(isParentContextThread());
-    return (m_unconfirmedMessageCount || m_workerThreadHadPendingActivity) && !m_askedToTerminate;
-}
-
-void InProcessWorkerMessagingProxy::terminateInternally()
-{
-    DCHECK(isParentContextThread());
-    m_workerInspectorProxy->workerThreadTerminated();
-}
-
-bool InProcessWorkerMessagingProxy::isParentContextThread() const
-{
-    // TODO(nhiroki): Nested worker is not supported yet, so the parent context
-    // thread should be equal to the main thread (http://crbug.com/31666).
-    DCHECK(getExecutionContext()->isDocument());
-    return isMainThread();
-}
-
-} // namespace blink
+}  // namespace blink

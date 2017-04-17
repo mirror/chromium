@@ -11,8 +11,11 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/callback.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/memory/singleton.h"
 #include "chrome/browser/android/download/download_controller.h"
+#include "chrome/browser/download/all_download_item_notifier.h"
 #include "chrome/browser/download/download_history.h"
 #include "content/public/browser/download_manager.h"
 
@@ -24,7 +27,8 @@ class DownloadItem;
 
 // Native side of DownloadManagerService.java. The native object is owned by its
 // Java object.
-class DownloadManagerService : public DownloadHistory::Observer {
+class DownloadManagerService : public AllDownloadItemNotifier::Observer,
+                               public DownloadHistory::Observer {
  public:
   // JNI registration.
   static bool RegisterDownloadManagerService(JNIEnv* env);
@@ -33,9 +37,16 @@ class DownloadManagerService : public DownloadHistory::Observer {
       content::DownloadItem* download,
       DownloadController::DownloadCancelReason reason);
 
-  DownloadManagerService(JNIEnv* env,
-                         jobject jobj);
+  static DownloadManagerService* GetInstance();
+
+  static base::android::ScopedJavaLocalRef<jobject> CreateJavaDownloadInfo(
+      JNIEnv* env, content::DownloadItem* item);
+
+  DownloadManagerService();
   ~DownloadManagerService() override;
+
+  // Called to Initialize this object.
+  void Init(JNIEnv* env, jobject obj);
 
   // Called to resume downloading the item that has GUID equal to
   // |jdownload_guid|..
@@ -49,8 +60,7 @@ class DownloadManagerService : public DownloadHistory::Observer {
   void CancelDownload(JNIEnv* env,
                       jobject obj,
                       const JavaParamRef<jstring>& jdownload_guid,
-                      bool is_off_the_record,
-                      bool is_notification_dismissed);
+                      bool is_off_the_record);
 
   // Called to pause a download item that has GUID equal to |jdownload_guid|.
   // If the DownloadItem is not yet created, do nothing as it is already paused.
@@ -59,12 +69,46 @@ class DownloadManagerService : public DownloadHistory::Observer {
                      const JavaParamRef<jstring>& jdownload_guid,
                      bool is_off_the_record);
 
+  // Called to remove a download item that has GUID equal to |jdownload_guid|.
+  void RemoveDownload(JNIEnv* env,
+                      jobject obj,
+                      const JavaParamRef<jstring>& jdownload_guid,
+                      bool is_off_the_record);
+
+  // Returns whether or not the given download can be opened by the browser.
+  bool IsDownloadOpenableInBrowser(JNIEnv* env,
+                                   jobject obj,
+                                   const JavaParamRef<jstring>& jdownload_guid,
+                                   bool is_off_the_record);
+
   // Called to request that the DownloadManagerService return data about all
   // downloads in the user's history.
-  void GetAllDownloads(JNIEnv* env, const JavaParamRef<jobject>& obj);
+  void GetAllDownloads(JNIEnv* env,
+                       const JavaParamRef<jobject>& obj,
+                       bool is_off_the_record);
+
+  // Called to check if the files associated with any downloads have been
+  // removed by an external action.
+  void CheckForExternallyRemovedDownloads(JNIEnv* env,
+                                          const JavaParamRef<jobject>& obj,
+                                          bool is_off_the_record);
+
+  // Called to update the last access time associated with a download.
+  void UpdateLastAccessTime(JNIEnv* env,
+                            const JavaParamRef<jobject>& obj,
+                            const JavaParamRef<jstring>& jdownload_guid,
+                            bool is_off_the_record);
 
   // DownloadHistory::Observer methods.
   void OnHistoryQueryComplete() override;
+
+  // AllDownloadItemNotifier::Observer methods.
+  void OnDownloadCreated(content::DownloadManager* manager,
+                         content::DownloadItem* item) override;
+  void OnDownloadUpdated(content::DownloadManager* manager,
+                         content::DownloadItem* item) override;
+  void OnDownloadRemoved(content::DownloadManager* manager,
+                         content::DownloadItem* item) override;
 
  protected:
   // Called to get the content::DownloadManager instance.
@@ -73,6 +117,7 @@ class DownloadManagerService : public DownloadHistory::Observer {
  private:
   // For testing.
   friend class DownloadManagerServiceTest;
+  friend struct base::DefaultSingletonTraits<DownloadManagerService>;
 
   // Helper function to start the download resumption.
   void ResumeDownloadInternal(const std::string& download_guid,
@@ -86,8 +131,12 @@ class DownloadManagerService : public DownloadHistory::Observer {
   void PauseDownloadInternal(const std::string& download_guid,
                              bool is_off_the_record);
 
+  // Helper function to remove a download.
+  void RemoveDownloadInternal(const std::string& download_guid,
+                              bool is_off_the_record);
+
   // Helper function to send info about all downloads to the Java-side.
-  void GetAllDownloadsInternal();
+  void GetAllDownloadsInternal(bool is_off_the_record);
 
   // Called to notify the java side that download resumption failed.
   void OnResumptionFailed(const std::string& download_guid);
@@ -104,8 +153,20 @@ class DownloadManagerService : public DownloadHistory::Observer {
 
   bool is_history_query_complete_;
 
-  enum DownloadAction { RESUME, PAUSE, CANCEL, INITIALIZE_UI, UNKNOWN };
+  enum PendingGetDownloadsFlags {
+    NONE = 0,
+    REGULAR = 1 << 0,
+    OFF_THE_RECORD = 1 << 1,
+  };
+  int pending_get_downloads_actions_;
 
+  enum DownloadAction {
+    RESUME,
+    PAUSE,
+    CANCEL,
+    REMOVE,
+    UNKNOWN
+  };
   using PendingDownloadActions = std::map<std::string, DownloadAction>;
   PendingDownloadActions pending_actions_;
 
@@ -113,6 +174,9 @@ class DownloadManagerService : public DownloadHistory::Observer {
                              DownloadAction action);
 
   ResumeCallback resume_callback_for_testing_;
+
+  std::unique_ptr<AllDownloadItemNotifier> original_notifier_;
+  std::unique_ptr<AllDownloadItemNotifier> off_the_record_notifier_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadManagerService);
 };

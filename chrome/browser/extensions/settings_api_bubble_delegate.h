@@ -36,12 +36,14 @@ class SettingsApiBubbleDelegate
   base::string16 GetActionButtonLabel() const override;
   base::string16 GetDismissButtonLabel() const override;
   bool ShouldCloseOnDeactivate() const override;
+  bool ShouldAcknowledgeOnDeactivate() const override;
   bool ShouldShowExtensionList() const override;
   bool ShouldHighlightExtensions() const override;
   bool ShouldLimitToEnabledExtensions() const override;
   void LogExtensionCount(size_t count) override;
   void LogAction(ExtensionMessageBubbleController::BubbleAction) override;
   const char* GetKey() override;
+  bool SupportsPolicyIndicator() override;
 
  private:
   // The type of settings override this bubble will report on. This can be, for

@@ -22,36 +22,38 @@
 #define DOMMimeTypeArray_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "core/frame/DOMWindowProperty.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "modules/plugins/DOMMimeType.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class LocalFrame;
 class PluginData;
 
-class DOMMimeTypeArray final : public GarbageCollected<DOMMimeTypeArray>, public ScriptWrappable, public DOMWindowProperty {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(DOMMimeTypeArray);
-public:
-    static DOMMimeTypeArray* create(LocalFrame* frame)
-    {
-        return new DOMMimeTypeArray(frame);
-    }
+class DOMMimeTypeArray final : public GarbageCollected<DOMMimeTypeArray>,
+                               public ScriptWrappable,
+                               public ContextClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(DOMMimeTypeArray);
 
-    unsigned length() const;
-    DOMMimeType* item(unsigned index);
-    DOMMimeType* namedItem(const AtomicString& propertyName);
+ public:
+  static DOMMimeTypeArray* Create(LocalFrame* frame) {
+    return new DOMMimeTypeArray(frame);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  unsigned length() const;
+  DOMMimeType* item(unsigned index);
+  DOMMimeType* namedItem(const AtomicString& property_name);
 
-private:
-    explicit DOMMimeTypeArray(LocalFrame*);
-    PluginData* getPluginData() const;
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  explicit DOMMimeTypeArray(LocalFrame*);
+  PluginData* GetPluginData() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMMimeTypeArray_h
+#endif  // DOMMimeTypeArray_h

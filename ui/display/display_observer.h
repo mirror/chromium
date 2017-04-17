@@ -24,18 +24,19 @@ class DISPLAY_EXPORT DisplayObserver {
     DISPLAY_METRIC_DEVICE_SCALE_FACTOR = 1 << 2,
     DISPLAY_METRIC_ROTATION = 1 << 3,
     DISPLAY_METRIC_PRIMARY = 1 << 4,
+    DISPLAY_METRIC_MIRROR_STATE = 1 << 5,
   };
 
   // Called when |new_display| has been added.
-  virtual void OnDisplayAdded(const Display& new_display) = 0;
+  virtual void OnDisplayAdded(const Display& new_display);
 
   // Called when |old_display| has been removed.
-  virtual void OnDisplayRemoved(const Display& old_display) = 0;
+  virtual void OnDisplayRemoved(const Display& old_display);
 
   // Called when a |display| has one or more metrics changed. |changed_metrics|
   // will contain the information about the change, see |DisplayMetric|.
   virtual void OnDisplayMetricsChanged(const Display& display,
-                                       uint32_t changed_metrics) = 0;
+                                       uint32_t changed_metrics);
 
  protected:
   virtual ~DisplayObserver();

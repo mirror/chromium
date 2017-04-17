@@ -39,24 +39,23 @@
 
 namespace blink {
 
-FileEntry::FileEntry(DOMFileSystemBase* fileSystem, const String& fullPath)
-    : Entry(fileSystem, fullPath)
-{
+FileEntry::FileEntry(DOMFileSystemBase* file_system, const String& full_path)
+    : Entry(file_system, full_path) {}
+
+void FileEntry::createWriter(FileWriterCallback* success_callback,
+                             ErrorCallback* error_callback) {
+  filesystem()->CreateWriter(this, success_callback,
+                             ScriptErrorCallback::Wrap(error_callback));
 }
 
-void FileEntry::createWriter(FileWriterCallback* successCallback, ErrorCallback* errorCallback)
-{
-    filesystem()->createWriter(this, successCallback, ScriptErrorCallback::wrap(errorCallback));
+void FileEntry::file(BlobCallback* success_callback,
+                     ErrorCallback* error_callback) {
+  filesystem()->CreateFile(this, success_callback,
+                           ScriptErrorCallback::Wrap(error_callback));
 }
 
-void FileEntry::file(BlobCallback* successCallback, ErrorCallback* errorCallback)
-{
-    filesystem()->createFile(this, successCallback, ScriptErrorCallback::wrap(errorCallback));
+DEFINE_TRACE(FileEntry) {
+  Entry::Trace(visitor);
 }
 
-DEFINE_TRACE(FileEntry)
-{
-    Entry::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

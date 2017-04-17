@@ -104,9 +104,10 @@ void LayeredNetworkDelegate::OnBeforeRedirectInternal(
     const GURL& new_location) {
 }
 
-void LayeredNetworkDelegate::OnResponseStarted(URLRequest* request) {
+void LayeredNetworkDelegate::OnResponseStarted(URLRequest* request,
+                                               int net_error) {
   OnResponseStartedInternal(request);
-  nested_network_delegate_->NotifyResponseStarted(request);
+  nested_network_delegate_->NotifyResponseStarted(request, net_error);
 }
 
 void LayeredNetworkDelegate::OnResponseStartedInternal(URLRequest* request) {
@@ -131,14 +132,15 @@ void LayeredNetworkDelegate::OnNetworkBytesSent(URLRequest* request,
 void LayeredNetworkDelegate::OnNetworkBytesSentInternal(URLRequest* request,
                                                         int64_t bytes_sent) {}
 
-void LayeredNetworkDelegate::OnCompleted(URLRequest* request, bool started) {
+void LayeredNetworkDelegate::OnCompleted(URLRequest* request,
+                                         bool started,
+                                         int net_error) {
   OnCompletedInternal(request, started);
-  nested_network_delegate_->NotifyCompleted(request, started);
+  nested_network_delegate_->NotifyCompleted(request, started, net_error);
 }
 
 void LayeredNetworkDelegate::OnCompletedInternal(URLRequest* request,
-                                                 bool started) {
-}
+                                                 bool started) {}
 
 void LayeredNetworkDelegate::OnURLRequestDestroyed(URLRequest* request) {
   OnURLRequestDestroyedInternal(request);
@@ -230,15 +232,8 @@ bool LayeredNetworkDelegate::OnAreExperimentalCookieFeaturesEnabled() const {
   return nested_network_delegate_->AreExperimentalCookieFeaturesEnabled();
 }
 
-bool LayeredNetworkDelegate::OnAreStrictSecureCookiesEnabled() const {
-  OnAreStrictSecureCookiesEnabledInternal();
-  return nested_network_delegate_->AreStrictSecureCookiesEnabled();
-}
-
 void LayeredNetworkDelegate::OnAreExperimentalCookieFeaturesEnabledInternal()
     const {}
-
-void LayeredNetworkDelegate::OnAreStrictSecureCookiesEnabledInternal() const {}
 
 bool LayeredNetworkDelegate::
     OnCancelURLRequestWithPolicyViolatingReferrerHeader(

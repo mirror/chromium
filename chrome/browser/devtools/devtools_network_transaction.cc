@@ -12,16 +12,19 @@
 #include "chrome/browser/devtools/devtools_network_upload_data_stream.h"
 #include "net/base/load_timing_info.h"
 #include "net/base/net_errors.h"
-#include "net/base/upload_progress.h"
 #include "net/http/http_network_transaction.h"
 #include "net/http/http_request_info.h"
 #include "net/socket/connection_attempts.h"
 
 // Keep in sync with X_DevTools_Emulate_Network_Conditions_Client_Id defined in
-// HTTPNames.in.
+// HTTPNames.json5.
 const char
     DevToolsNetworkTransaction::kDevToolsEmulateNetworkConditionsClientId[] =
         "X-DevTools-Emulate-Network-Conditions-Client-Id";
+
+// Keep in sync with X_DevTools_Request_Id defined in HTTPNames.json5.
+const char DevToolsNetworkTransaction::kDevToolsRequestId[] =
+    "X-DevTools-Request-Id";
 
 DevToolsNetworkTransaction::DevToolsNetworkTransaction(
     DevToolsNetworkController* controller,
@@ -106,10 +109,9 @@ bool DevToolsNetworkTransaction::CheckFailed() {
   return false;
 }
 
-int DevToolsNetworkTransaction::Start(
-    const net::HttpRequestInfo* request,
-    const net::CompletionCallback& callback,
-    const net::BoundNetLog& net_log) {
+int DevToolsNetworkTransaction::Start(const net::HttpRequestInfo* request,
+                                      const net::CompletionCallback& callback,
+                                      const net::NetLogWithSource& net_log) {
   DCHECK(request);
   request_ = request;
 
@@ -122,6 +124,7 @@ int DevToolsNetworkTransaction::Start(
         kDevToolsEmulateNetworkConditionsClientId, &client_id);
     custom_request_->extra_headers.RemoveHeader(
         kDevToolsEmulateNetworkConditionsClientId);
+    custom_request_->extra_headers.RemoveHeader(kDevToolsRequestId);
 
     if (request_->upload_data_stream) {
       custom_upload_data_stream_.reset(
@@ -248,10 +251,6 @@ DevToolsNetworkTransaction::GetResponseInfo() const {
 
 net::LoadState DevToolsNetworkTransaction::GetLoadState() const {
   return network_transaction_->GetLoadState();
-}
-
-net::UploadProgress DevToolsNetworkTransaction::GetUploadProgress() const {
-  return network_transaction_->GetUploadProgress();
 }
 
 void DevToolsNetworkTransaction::SetQuicServerInfo(

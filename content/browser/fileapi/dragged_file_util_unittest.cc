@@ -20,8 +20,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "content/public/test/async_file_test_helper.h"
-#include "content/public/test/test_file_system_context.h"
 #include "content/test/fileapi_test_file_set.h"
 #include "storage/browser/fileapi/dragged_file_util.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -29,6 +27,8 @@
 #include "storage/browser/fileapi/isolated_context.h"
 #include "storage/browser/fileapi/local_file_util.h"
 #include "storage/browser/fileapi/native_file_util.h"
+#include "storage/browser/test/async_file_test_helper.h"
+#include "storage/browser/test/test_file_system_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using content::AsyncFileTestHelper;
@@ -112,8 +112,7 @@ class DraggedFileUtilTest : public testing::Test {
     SimulateDropFiles();
 
     file_system_context_ = CreateFileSystemContextForTesting(
-        NULL /* quota_manager */,
-        partition_dir_.path());
+        NULL /* quota_manager */, partition_dir_.GetPath());
 
     isolated_context()->AddReference(filesystem_id_);
   }
@@ -126,9 +125,7 @@ class DraggedFileUtilTest : public testing::Test {
   storage::IsolatedContext* isolated_context() const {
     return storage::IsolatedContext::GetInstance();
   }
-  const base::FilePath& root_path() const {
-    return data_dir_.path();
-  }
+  const base::FilePath& root_path() const { return data_dir_.GetPath(); }
   FileSystemContext* file_system_context() const {
     return file_system_context_.get();
   }
@@ -143,7 +140,7 @@ class DraggedFileUtilTest : public testing::Test {
 
   base::FilePath GetTestCaseLocalPath(const base::FilePath& path) {
     base::FilePath relative;
-    if (data_dir_.path().AppendRelativePath(path, &relative))
+    if (data_dir_.GetPath().AppendRelativePath(path, &relative))
       return relative;
     return path;
   }
@@ -253,8 +250,8 @@ class DraggedFileUtilTest : public testing::Test {
   }
 
   std::unique_ptr<storage::FileSystemOperationContext> GetOperationContext() {
-    return base::WrapUnique(
-        new storage::FileSystemOperationContext(file_system_context()));
+    return base::MakeUnique<storage::FileSystemOperationContext>(
+        file_system_context());
   }
 
 

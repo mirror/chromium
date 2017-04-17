@@ -40,34 +40,38 @@
 
 namespace blink {
 
-DirectoryEntry::DirectoryEntry(DOMFileSystemBase* fileSystem, const String& fullPath)
-    : Entry(fileSystem, fullPath)
-{
+DirectoryEntry::DirectoryEntry(DOMFileSystemBase* file_system,
+                               const String& full_path)
+    : Entry(file_system, full_path) {}
+
+DirectoryReader* DirectoryEntry::createReader() {
+  return DirectoryReader::Create(file_system_, full_path_);
 }
 
-DirectoryReader* DirectoryEntry::createReader()
-{
-    return DirectoryReader::create(m_fileSystem, m_fullPath);
+void DirectoryEntry::getFile(const String& path,
+                             const FileSystemFlags& options,
+                             EntryCallback* success_callback,
+                             ErrorCallback* error_callback) {
+  file_system_->GetFile(this, path, options, success_callback,
+                        ScriptErrorCallback::Wrap(error_callback));
 }
 
-void DirectoryEntry::getFile(const String& path, const FileSystemFlags& options, EntryCallback* successCallback, ErrorCallback* errorCallback)
-{
-    m_fileSystem->getFile(this, path, options, successCallback, ScriptErrorCallback::wrap(errorCallback));
+void DirectoryEntry::getDirectory(const String& path,
+                                  const FileSystemFlags& options,
+                                  EntryCallback* success_callback,
+                                  ErrorCallback* error_callback) {
+  file_system_->GetDirectory(this, path, options, success_callback,
+                             ScriptErrorCallback::Wrap(error_callback));
 }
 
-void DirectoryEntry::getDirectory(const String& path, const FileSystemFlags& options, EntryCallback* successCallback, ErrorCallback* errorCallback)
-{
-    m_fileSystem->getDirectory(this, path, options, successCallback, ScriptErrorCallback::wrap(errorCallback));
+void DirectoryEntry::removeRecursively(VoidCallback* success_callback,
+                                       ErrorCallback* error_callback) const {
+  file_system_->RemoveRecursively(this, success_callback,
+                                  ScriptErrorCallback::Wrap(error_callback));
 }
 
-void DirectoryEntry::removeRecursively(VoidCallback* successCallback, ErrorCallback* errorCallback) const
-{
-    m_fileSystem->removeRecursively(this, successCallback, ScriptErrorCallback::wrap(errorCallback));
+DEFINE_TRACE(DirectoryEntry) {
+  Entry::Trace(visitor);
 }
 
-DEFINE_TRACE(DirectoryEntry)
-{
-    Entry::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

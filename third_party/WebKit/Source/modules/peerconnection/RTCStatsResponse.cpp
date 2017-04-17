@@ -10,55 +10,50 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "modules/peerconnection/RTCStatsResponse.h"
 
 namespace blink {
 
-RTCStatsResponse* RTCStatsResponse::create()
-{
-    return new RTCStatsResponse();
+RTCStatsResponse* RTCStatsResponse::Create() {
+  return new RTCStatsResponse();
 }
 
-RTCStatsResponse::RTCStatsResponse()
-{
+RTCStatsResponse::RTCStatsResponse() {}
+
+RTCLegacyStatsReport* RTCStatsResponse::namedItem(const AtomicString& name) {
+  if (idmap_.Find(name) != idmap_.end())
+    return result_[idmap_.at(name)];
+  return nullptr;
 }
 
-RTCLegacyStatsReport* RTCStatsResponse::namedItem(const AtomicString& name)
-{
-    if (m_idmap.find(name) != m_idmap.end())
-        return m_result[m_idmap.get(name)];
-    return nullptr;
+void RTCStatsResponse::AddStats(const WebRTCLegacyStats& stats) {
+  result_.push_back(RTCLegacyStatsReport::Create(stats.Id(), stats.GetType(),
+                                                 stats.Timestamp()));
+  idmap_.insert(stats.Id(), result_.size() - 1);
+  RTCLegacyStatsReport* report = result_[result_.size() - 1].Get();
+
+  for (std::unique_ptr<WebRTCLegacyStatsMemberIterator> member(
+           stats.Iterator());
+       !member->IsEnd(); member->Next()) {
+    report->AddStatistic(member->GetName(), member->ValueToString());
+  }
 }
 
-size_t RTCStatsResponse::addReport(const String& id, const String& type, double timestamp)
-{
-    m_result.append(RTCLegacyStatsReport::create(id, type, timestamp));
-    m_idmap.add(id, m_result.size() - 1);
-    return m_result.size() - 1;
+DEFINE_TRACE(RTCStatsResponse) {
+  visitor->Trace(result_);
+  RTCStatsResponseBase::Trace(visitor);
 }
 
-void RTCStatsResponse::addStatistic(size_t report, const String& name, const String& value)
-{
-    SECURITY_DCHECK(report >= 0 && report < m_result.size());
-    m_result[report]->addStatistic(name, value);
-}
-
-DEFINE_TRACE(RTCStatsResponse)
-{
-    visitor->trace(m_result);
-    RTCStatsResponseBase::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -24,13 +24,15 @@ cr.define('md_history', function() {
     deleteItems: function(items) {
       if (this.pendingDeleteItems_ != null) {
         // There's already a deletion in progress, reject immediately.
-        return new Promise(function(resolve, reject) { reject(items); });
+        return new Promise(function(resolve, reject) {
+          reject(items);
+        });
       }
 
       var removalList = items.map(function(item) {
         return {
           url: item.url,
-          timestamps: item.allTimestamps
+          timestamps: item.allTimestamps,
         };
       });
 
@@ -60,7 +62,7 @@ cr.define('md_history', function() {
      * @param {string} sessionTag
      * @param {number} windowId
      * @param {number} tabId
-     * @param {Event} e
+     * @param {MouseEvent} e
      */
     openForeignSessionTab: function(sessionTag, windowId, tabId, e) {
       chrome.send('openForeignSession', [
@@ -69,8 +71,34 @@ cr.define('md_history', function() {
       ]);
     },
 
+    /**
+     * @param {string} sessionTag
+     */
+    deleteForeignSession: function(sessionTag) {
+      chrome.send('deleteForeignSession', [sessionTag]);
+    },
+
     openClearBrowsingData: function() {
       chrome.send('clearBrowsingData');
+    },
+
+    /**
+     * @param {string} histogram
+     * @param {number} value
+     * @param {number} max
+     */
+    recordHistogram: function(histogram, value, max) {
+      chrome.send('metricsHandler:recordInHistogram', [histogram, value, max]);
+    },
+
+    /**
+    * Record an action in UMA.
+    * @param {string} action The name of the action to be logged.
+    */
+    recordAction: function(action) {
+      if (action.indexOf('_') == -1)
+        action = 'HistoryPage_' + action;
+      chrome.send('metricsHandler:recordAction', [action]);
     },
 
     /**
@@ -90,6 +118,10 @@ cr.define('md_history', function() {
 
       this.pendingDeleteItems_ = null;
       this.pendingDeletePromise_ = null;
+    },
+
+    menuPromoShown: function() {
+      chrome.send('menuPromoShown');
     },
   };
 
@@ -111,4 +143,3 @@ function deleteComplete() {
 function deleteFailed() {
   md_history.BrowserService.getInstance().resolveDelete_(false);
 }
-

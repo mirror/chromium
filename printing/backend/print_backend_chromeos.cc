@@ -79,7 +79,8 @@ bool PrintBackendChromeOS::IsValidPrinter(const std::string& printer_name) {
   return true;
 }
 
-scoped_refptr<PrintBackend> PrintBackend::CreateInstance(
+// static
+scoped_refptr<PrintBackend> PrintBackend::CreateInstanceImpl(
     const base::DictionaryValue* print_backend_settings) {
   if (GetNativeCupsEnabled()) {
 #if defined(USE_CUPS)
@@ -94,7 +95,7 @@ scoped_refptr<PrintBackend> PrintBackend::CreateInstance(
 
       print_backend_settings->GetInteger(kCUPSEncryption, &encryption);
     }
-    GURL print_server_url(print_server_url_str.c_str());
+    GURL print_server_url(print_server_url_str);
 
     std::unique_ptr<CupsConnection> connection =
         base::MakeUnique<CupsConnection>(

@@ -7,24 +7,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class Downloader;
 @protocol DownloaderDelegate
-- (void)onDownloadSuccess;
+- (void)downloader:(Downloader*)download percentProgress:(double)percentage;
+- (void)downloader:(Downloader*)download onSuccess:(NSURL*)diskImageURL;
+- (void)downloader:(Downloader*)download onFailure:(NSError*)error;
 @end
 
-@interface Downloader
-    : NSObject<NSXMLParserDelegate, NSURLSessionDownloadDelegate>
+@interface Downloader : NSObject<NSURLSessionDownloadDelegate>
 
 @property(nonatomic, assign) id<DownloaderDelegate> delegate;
 
-// Returns a path to a user's home download folder.
-+ (NSString*)getDownloadsFilePath;
-
-- (NSMutableArray*)appendFilename:(NSString*)filename
-                           toURLs:(NSArray*)incompleteURLs;
-
-// Takes an NSData with a response XML from Omaha and writes the latest
-// version of chrome to the user's download directory.
-- (BOOL)downloadChromeImageToDownloadsDirectory:(NSData*)omahaResponseXML;
+// Downloads Chrome from |chromeImageURL| to the local hard drive.
+- (void)downloadChromeImageFrom:(NSURL*)chromeImageURL;
 
 @end
 

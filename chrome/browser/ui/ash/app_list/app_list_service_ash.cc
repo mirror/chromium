@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/app_list/start_page_service.h"
 #include "chrome/browser/ui/ash/app_list/app_list_controller_ash.h"
 #include "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.h"
+#include "chrome/browser/ui/ash/app_list/app_list_presenter_service.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/session_util.h"
@@ -26,6 +27,8 @@
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/contents_view.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 
 namespace {
 
@@ -58,9 +61,9 @@ class AppListPresenterDelegateFactoryMus
   ~AppListPresenterDelegateFactoryMus() override {}
 
   std::unique_ptr<app_list::AppListPresenterDelegate> GetDelegate(
-      app_list::AppListPresenter* presenter) override {
-    return base::WrapUnique(
-        new AppListPresenterDelegateMus(view_delegate_factory_.get()));
+      app_list::AppListPresenterImpl* presenter) override {
+    return base::MakeUnique<AppListPresenterDelegateMus>(
+        presenter, view_delegate_factory_.get());
   }
 
  private:
@@ -68,6 +71,12 @@ class AppListPresenterDelegateFactoryMus
 
   DISALLOW_COPY_AND_ASSIGN(AppListPresenterDelegateFactoryMus);
 };
+
+int64_t GetDisplayIdToShowAppListOn() {
+  return display::Screen::GetScreen()
+      ->GetDisplayNearestWindow(ash::Shell::GetRootWindowForNewWindows())
+      .id();
+}
 
 }  // namespace
 
@@ -78,27 +87,32 @@ AppListServiceAsh* AppListServiceAsh::GetInstance() {
 }
 
 AppListServiceAsh::AppListServiceAsh() {
-  if (chrome::IsRunningInMash()) {
-    presenter_delegate_factory_.reset(new AppListPresenterDelegateFactoryMus(
-        base::WrapUnique(new ViewDelegateFactoryImpl(this))));
+  std::unique_ptr<app_list::AppListPresenterDelegateFactory> factory;
+  if (ash_util::IsRunningInMash()) {
+    factory = base::MakeUnique<AppListPresenterDelegateFactoryMus>(
+        base::MakeUnique<ViewDelegateFactoryImpl>(this));
   } else {
-    presenter_delegate_factory_.reset(new ash::AppListPresenterDelegateFactory(
-        base::WrapUnique(new ViewDelegateFactoryImpl(this))));
+    factory = base::MakeUnique<ash::AppListPresenterDelegateFactory>(
+        base::MakeUnique<ViewDelegateFactoryImpl>(this));
   }
-  app_list_presenter_.reset(
-      new app_list::AppListPresenterImpl(presenter_delegate_factory_.get()));
-  controller_delegate_.reset(
-      new AppListControllerDelegateAsh(app_list_presenter_.get()));
+  app_list_presenter_ =
+      base::MakeUnique<app_list::AppListPresenterImpl>(std::move(factory));
+  controller_delegate_ =
+      base::MakeUnique<AppListControllerDelegateAsh>(app_list_presenter_.get());
 }
 
-AppListServiceAsh::~AppListServiceAsh() {
-}
+AppListServiceAsh::~AppListServiceAsh() {}
 
-app_list::AppListPresenter* AppListServiceAsh::GetAppListPresenter() {
+app_list::AppListPresenterImpl* AppListServiceAsh::GetAppListPresenter() {
   return app_list_presenter_.get();
 }
 
 void AppListServiceAsh::Init(Profile* initial_profile) {
+  // The AppListPresenterService ctor calls AppListServiceAsh::GetInstance(),
+  // which isn't available in the AppListServiceAsh constructor, so init here.
+  // This establishes the mojo connections between the app list and presenter.
+  app_list_presenter_service_ = base::MakeUnique<AppListPresenterService>();
+
   // Ensure the StartPageService is created here. This early initialization is
   // necessary to allow the WebContents to load before the app list is shown.
   app_list::StartPageService* service =
@@ -118,7 +132,7 @@ void AppListServiceAsh::ShowAndSwitchToState(
     // TODO(calamity): This may cause the app list to show briefly before the
     // state change. If this becomes an issue, add the ability to ash::Shell to
     // load the app list without showing it.
-    app_list_presenter_->Show(ash::Shell::GetTargetDisplayId());
+    app_list_presenter_->Show(GetDisplayIdToShowAppListOn());
     app_list_was_open = false;
     app_list_view = app_list_presenter_->GetView();
     DCHECK(app_list_view);
@@ -134,21 +148,19 @@ void AppListServiceAsh::ShowAndSwitchToState(
 
 base::FilePath AppListServiceAsh::GetProfilePath(
     const base::FilePath& user_data_dir) {
-  return ChromeLauncherController::instance()->GetProfile()->GetPath();
+  return ChromeLauncherController::instance()->profile()->GetPath();
 }
 
 void AppListServiceAsh::ShowForProfile(Profile* /*default_profile*/) {
   // This may not work correctly if the profile passed in is different from the
   // one the ash Shell is currently using.
-  app_list_presenter_->Show(ash::Shell::GetTargetDisplayId());
+  app_list_presenter_->Show(GetDisplayIdToShowAppListOn());
 }
 
 void AppListServiceAsh::ShowForAppInstall(Profile* profile,
                                           const std::string& extension_id,
                                           bool start_discovery_tracking) {
-  if (app_list::switches::IsExperimentalAppListEnabled())
-    ShowAndSwitchToState(app_list::AppListModel::STATE_APPS);
-
+  ShowAndSwitchToState(app_list::AppListModel::STATE_APPS);
   AppListServiceImpl::ShowForAppInstall(profile, extension_id,
                                         start_discovery_tracking);
 }
@@ -186,7 +198,7 @@ gfx::NativeWindow AppListServiceAsh::GetAppListWindow() {
 }
 
 Profile* AppListServiceAsh::GetCurrentAppListProfile() {
-  return ChromeLauncherController::instance()->GetProfile();
+  return ChromeLauncherController::instance()->profile();
 }
 
 AppListControllerDelegate* AppListServiceAsh::GetControllerDelegate() {

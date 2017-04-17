@@ -4,13 +4,13 @@
 
 package org.chromium.android_webview.test;
 
+import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 import android.util.Base64;
-
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContents.VisualStateCallback;
@@ -20,9 +20,10 @@ import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.android_webview.test.util.GraphicsTestUtils;
 import org.chromium.android_webview.test.util.JavascriptEventObserver;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.test.util.CallbackHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
 
@@ -30,7 +31,6 @@ import java.io.ByteArrayInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -113,8 +113,8 @@ public class VisualStateTest extends AwTestBase {
     public void testVisualStateCallbackIsReceived() throws Throwable {
         AwTestContainerView testContainer = createAwTestContainerViewOnMainSync(mContentsClient);
         final AwContents awContents = testContainer.getAwContents();
-        loadUrlSync(
-                awContents, mContentsClient.getOnPageFinishedHelper(), CommonResources.ABOUT_HTML);
+        loadDataSync(awContents, mContentsClient.getOnPageFinishedHelper(),
+                CommonResources.ABOUT_HTML, "text/html", false);
         final CallbackHelper ch = new CallbackHelper();
         final int chCount = ch.getCallCount();
         runTestOnUiThread(new Runnable() {
@@ -310,8 +310,7 @@ public class VisualStateTest extends AwTestBase {
                 awContentsClient.getOnPageFinishedHelper(), WAIT_FOR_JS_TEST_URL);
 
         assertTrue(readyToUpdateColor.await(AwTestBase.WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS));
-        DOMUtils.clickNode(
-                VisualStateTest.this, contentViewCore, UPDATE_COLOR_CONTROL_ID);
+        DOMUtils.clickNode(contentViewCore, UPDATE_COLOR_CONTROL_ID);
         assertTrue(jsObserver.waitForEvent(WAIT_TIMEOUT_MS));
 
         runTestOnUiThread(new Runnable() {
@@ -382,7 +381,7 @@ public class VisualStateTest extends AwTestBase {
 
         assertTrue(readyToEnterFullscreenSignal.await(
                 AwTestBase.WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS));
-        DOMUtils.clickNode(VisualStateTest.this, contentViewCore, ENTER_FULLSCREEN_CONTROL_ID);
+        DOMUtils.clickNode(contentViewCore, ENTER_FULLSCREEN_CONTROL_ID);
         assertTrue(jsObserver.waitForEvent(WAIT_TIMEOUT_MS));
 
         runTestOnUiThread(new Runnable() {
@@ -435,6 +434,7 @@ public class VisualStateTest extends AwTestBase {
 
         // JS will notify this observer once it has changed the background color of the page.
         final Object pageChangeNotifier = new Object() {
+            @SuppressFBWarnings("UMAC_UNCALLABLE_METHOD_OF_ANONYMOUS_CLASS")
             public void onPageChanged() {
                 ThreadUtils.postOnUiThread(new Runnable() {
                     @Override

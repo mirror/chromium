@@ -10,7 +10,7 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -549,6 +549,16 @@ void NetworkPortalDetectorImpl::OnAttemptCompleted(
       same_detection_result_count_ >= kMaxOfflineResultsBeforeReport) {
     OnDetectionCompleted(network, state);
   }
+
+  // Observers (via OnDetectionCompleted) may already schedule new attempt.
+  if (!is_idle())
+    return;
+
+  // If behind a captive portal and the response code was 200 (OK), do not
+  // schedule a new attempt.
+  if (state.status == CAPTIVE_PORTAL_STATUS_PORTAL && response_code == 200)
+    return;
+
   ScheduleAttempt(results.retry_after_delta);
 }
 
@@ -596,8 +606,8 @@ void NetworkPortalDetectorImpl::OnDetectionCompleted(
 void NetworkPortalDetectorImpl::NotifyDetectionCompleted(
     const NetworkState* network,
     const CaptivePortalState& state) {
-  FOR_EACH_OBSERVER(
-      Observer, observers_, OnPortalDetectionCompleted(network, state));
+  for (auto& observer : observers_)
+    observer.OnPortalDetectionCompleted(network, state);
 }
 
 bool NetworkPortalDetectorImpl::AttemptTimeoutIsCancelledForTesting() const {

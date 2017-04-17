@@ -9,6 +9,7 @@
 #include <cwctype>
 
 #include "base/auto_reset.h"
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "ui/base/ime/ime_bridge.h"
 #include "ui/base/ime/ime_engine_handler_interface.h"
@@ -51,9 +52,15 @@ InputMethodWin::InputMethodWin(internal::InputMethodDelegate* delegate,
       composing_window_handle_(NULL),
       weak_ptr_factory_(this) {
   SetDelegate(delegate);
+  imm32_manager_.SetInputLanguage();
 }
 
 InputMethodWin::~InputMethodWin() {}
+
+void InputMethodWin::OnFocus() {
+  InputMethodBase::OnFocus();
+  RefreshInputLanguage();
+}
 
 bool InputMethodWin::OnUntranslatedIMEMessage(
     const base::NativeEvent& event,
@@ -266,12 +273,18 @@ void InputMethodWin::CancelComposition(const TextInputClient* client) {
 }
 
 void InputMethodWin::OnInputLocaleChanged() {
-  // Note: OnInputLocaleChanged() is for crbug.com/168971.
+  // Note: OnInputLocaleChanged() is for capturing the input language which can
+  // be used to determine the appropriate TextInputType for Omnibox.
+  // See crbug.com/344834.
+  // Currently OnInputLocaleChanged() on Windows relies on WM_INPUTLANGCHANGED,
+  // which is known to be incompatible with TSF.
+  // TODO(shuchen): Use ITfLanguageProfileNotifySink instead.
   OnInputMethodChanged();
+  RefreshInputLanguage();
 }
 
-std::string InputMethodWin::GetInputLocale() {
-  return imm32_manager_.GetInputLanguageName();
+bool InputMethodWin::IsInputLocaleCJK() const {
+  return imm32_manager_.IsInputLanguageCJK();
 }
 
 bool InputMethodWin::IsCandidatePopupOpen() const {
@@ -417,6 +430,26 @@ LRESULT InputMethodWin::OnImeEndComposition(HWND window_handle,
   *handled = FALSE;
 
   composing_window_handle_ = NULL;
+
+  // This is a hack fix for MS Korean IME issue (crbug.com/647150).
+  // Messages received when hitting Space key during composition:
+  //   1. WM_IME_ENDCOMPOSITION (we usually clear composition for this MSG)
+  //   2. WM_IME_COMPOSITION with GCS_RESULTSTR (we usually commit composition)
+  // (Which is in the reversed order compared to MS Japanese and Chinese IME.)
+  // Hack fix:
+  //   * Discard WM_IME_ENDCOMPOSITION message if it's followed by a
+  //     WM_IME_COMPOSITION message with GCS_RESULTSTR.
+  // This works because we don't require WM_IME_ENDCOMPOSITION after committing
+  // composition (it doesn't do anything if there is no on-going composition).
+  // Also see Firefox's implementation:
+  // https://dxr.mozilla.org/mozilla-beta/source/widget/windows/IMMHandler.cpp#800
+  // TODO(crbug.com/654865): Further investigations and clean-ups required.
+  MSG compositionMsg;
+  if (::PeekMessage(&compositionMsg, window_handle, WM_IME_STARTCOMPOSITION,
+                    WM_IME_COMPOSITION, PM_NOREMOVE) &&
+      compositionMsg.message == WM_IME_COMPOSITION &&
+      (compositionMsg.lParam & GCS_RESULTSTR))
+    return 0;
 
   if (!IsTextInputTypeNone() && GetTextInputClient()->HasCompositionText())
     GetTextInputClient()->ClearCompositionText();
@@ -625,6 +658,20 @@ LRESULT InputMethodWin::OnQueryCharPosition(IMECHARPOSITION* char_positon) {
   char_positon->pt.y = rect.y();
   char_positon->cLineHeight = rect.height();
   return 1;  // returns non-zero value when succeeded.
+}
+
+void InputMethodWin::RefreshInputLanguage() {
+  TextInputType type_original = GetTextInputType();
+  imm32_manager_.SetInputLanguage();
+  if (type_original != GetTextInputType()) {
+    // Only update the IME state when necessary.
+    // It's unnecessary to report IME state, when:
+    // 1) Switching betweeen 2 top-level windows, and the switched-away window
+    //    receives OnInputLocaleChanged.
+    // 2) The text input type is not changed by |SetInputLanguage|.
+    // Please refer to crbug.com/679564.
+    UpdateIMEState();
+  }
 }
 
 bool InputMethodWin::IsWindowFocused(const TextInputClient* client) const {

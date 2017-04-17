@@ -25,123 +25,120 @@
 
 #include "core/html/forms/ChooserOnlyTemporalInputTypeView.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/shadow/ShadowRoot.h"
-#include "core/frame/FrameHost.h"
 #include "core/html/HTMLDivElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "platform/UserGestureIndicator.h"
 
 namespace blink {
 
-ChooserOnlyTemporalInputTypeView::ChooserOnlyTemporalInputTypeView(HTMLInputElement& element, BaseTemporalInputType& inputType)
-    : KeyboardClickableInputTypeView(element)
-    ,  m_inputType(inputType)
-{
-    ThreadState::current()->registerPreFinalizer(this);
+ChooserOnlyTemporalInputTypeView::ChooserOnlyTemporalInputTypeView(
+    HTMLInputElement& element,
+    BaseTemporalInputType& input_type)
+    : KeyboardClickableInputTypeView(element), input_type_(input_type) {}
+
+ChooserOnlyTemporalInputTypeView* ChooserOnlyTemporalInputTypeView::Create(
+    HTMLInputElement& element,
+    BaseTemporalInputType& input_type) {
+  return new ChooserOnlyTemporalInputTypeView(element, input_type);
 }
 
-ChooserOnlyTemporalInputTypeView* ChooserOnlyTemporalInputTypeView::create(HTMLInputElement& element, BaseTemporalInputType& inputType)
-{
-    return new ChooserOnlyTemporalInputTypeView(element, inputType);
+ChooserOnlyTemporalInputTypeView::~ChooserOnlyTemporalInputTypeView() {
+  DCHECK(!date_time_chooser_);
 }
 
-ChooserOnlyTemporalInputTypeView::~ChooserOnlyTemporalInputTypeView()
-{
-    DCHECK(!m_dateTimeChooser);
+DEFINE_TRACE(ChooserOnlyTemporalInputTypeView) {
+  visitor->Trace(input_type_);
+  visitor->Trace(date_time_chooser_);
+  InputTypeView::Trace(visitor);
+  DateTimeChooserClient::Trace(visitor);
 }
 
-DEFINE_TRACE(ChooserOnlyTemporalInputTypeView)
-{
-    visitor->trace(m_inputType);
-    visitor->trace(m_dateTimeChooser);
-    InputTypeView::trace(visitor);
-    DateTimeChooserClient::trace(visitor);
+void ChooserOnlyTemporalInputTypeView::HandleDOMActivateEvent(Event*) {
+  if (GetElement().IsDisabledOrReadOnly() || !GetElement().GetLayoutObject() ||
+      !UserGestureIndicator::ProcessingUserGesture() ||
+      GetElement().openShadowRoot())
+    return;
+
+  if (date_time_chooser_)
+    return;
+  if (!GetElement().GetDocument().IsActive())
+    return;
+  DateTimeChooserParameters parameters;
+  if (!GetElement().SetupDateTimeChooserParameters(parameters))
+    return;
+  date_time_chooser_ = GetElement()
+                           .GetDocument()
+                           .GetPage()
+                           ->GetChromeClient()
+                           .OpenDateTimeChooser(this, parameters);
 }
 
-void ChooserOnlyTemporalInputTypeView::handleDOMActivateEvent(Event*)
-{
-    if (element().isDisabledOrReadOnly() || !element().layoutObject() || !UserGestureIndicator::processingUserGesture() || element().openShadowRoot())
-        return;
+void ChooserOnlyTemporalInputTypeView::CreateShadowSubtree() {
+  DEFINE_STATIC_LOCAL(AtomicString, value_container_pseudo,
+                      ("-webkit-date-and-time-value"));
 
-    if (m_dateTimeChooser)
-        return;
-    if (!element().document().isActive())
-        return;
-    DateTimeChooserParameters parameters;
-    if (!element().setupDateTimeChooserParameters(parameters))
-        return;
-    m_dateTimeChooser = element().document().frameHost()->chromeClient().openDateTimeChooser(this, parameters);
+  HTMLDivElement* value_container =
+      HTMLDivElement::Create(GetElement().GetDocument());
+  value_container->SetShadowPseudoId(value_container_pseudo);
+  GetElement().UserAgentShadowRoot()->AppendChild(value_container);
+  UpdateView();
 }
 
-void ChooserOnlyTemporalInputTypeView::createShadowSubtree()
-{
-    DEFINE_STATIC_LOCAL(AtomicString, valueContainerPseudo, ("-webkit-date-and-time-value"));
-
-    HTMLDivElement* valueContainer = HTMLDivElement::create(element().document());
-    valueContainer->setShadowPseudoId(valueContainerPseudo);
-    element().userAgentShadowRoot()->appendChild(valueContainer);
-    updateView();
+void ChooserOnlyTemporalInputTypeView::UpdateView() {
+  Node* node = GetElement().UserAgentShadowRoot()->FirstChild();
+  if (!node || !node->IsHTMLElement())
+    return;
+  String display_value;
+  if (!GetElement().SuggestedValue().IsNull())
+    display_value = GetElement().SuggestedValue();
+  else
+    display_value = input_type_->VisibleValue();
+  if (display_value.IsEmpty()) {
+    // Need to put something to keep text baseline.
+    display_value = " ";
+  }
+  ToHTMLElement(node)->setTextContent(display_value);
 }
 
-void ChooserOnlyTemporalInputTypeView::updateView()
-{
-    Node* node = element().userAgentShadowRoot()->firstChild();
-    if (!node || !node->isHTMLElement())
-        return;
-    String displayValue;
-    if (!element().suggestedValue().isNull())
-        displayValue = element().suggestedValue();
-    else
-        displayValue = m_inputType->visibleValue();
-    if (displayValue.isEmpty()) {
-        // Need to put something to keep text baseline.
-        displayValue = " ";
-    }
-    toHTMLElement(node)->setTextContent(displayValue);
+void ChooserOnlyTemporalInputTypeView::DidSetValue(const String& value,
+                                                   bool value_changed) {
+  if (value_changed)
+    UpdateView();
 }
 
-void ChooserOnlyTemporalInputTypeView::didSetValue(const String& value, bool valueChanged)
-{
-    if (valueChanged)
-        updateView();
+void ChooserOnlyTemporalInputTypeView::ClosePopupView() {
+  CloseDateTimeChooser();
 }
 
-void ChooserOnlyTemporalInputTypeView::closePopupView()
-{
-    closeDateTimeChooser();
+Element& ChooserOnlyTemporalInputTypeView::OwnerElement() const {
+  return GetElement();
 }
 
-Element& ChooserOnlyTemporalInputTypeView::ownerElement() const
-{
-    return element();
+void ChooserOnlyTemporalInputTypeView::DidChooseValue(const String& value) {
+  GetElement().setValue(value, kDispatchInputAndChangeEvent);
 }
 
-void ChooserOnlyTemporalInputTypeView::didChooseValue(const String& value)
-{
-    element().setValue(value, DispatchInputAndChangeEvent);
+void ChooserOnlyTemporalInputTypeView::DidChooseValue(double value) {
+  DCHECK(std::isfinite(value) || std::isnan(value));
+  if (std::isnan(value))
+    GetElement().setValue(g_empty_string, kDispatchInputAndChangeEvent);
+  else
+    GetElement().setValueAsNumber(value, ASSERT_NO_EXCEPTION,
+                                  kDispatchInputAndChangeEvent);
 }
 
-void ChooserOnlyTemporalInputTypeView::didChooseValue(double value)
-{
-    DCHECK(std::isfinite(value) || std::isnan(value));
-    if (std::isnan(value))
-        element().setValue(emptyString(), DispatchInputAndChangeEvent);
-    else
-        element().setValueAsNumber(value, ASSERT_NO_EXCEPTION, DispatchInputAndChangeEvent);
+void ChooserOnlyTemporalInputTypeView::DidEndChooser() {
+  date_time_chooser_.Clear();
 }
 
-void ChooserOnlyTemporalInputTypeView::didEndChooser()
-{
-    m_dateTimeChooser.clear();
+void ChooserOnlyTemporalInputTypeView::CloseDateTimeChooser() {
+  if (date_time_chooser_)
+    date_time_chooser_->EndChooser();
 }
 
-void ChooserOnlyTemporalInputTypeView::closeDateTimeChooser()
-{
-    if (m_dateTimeChooser)
-        m_dateTimeChooser->endChooser();
-}
-
-} // namespace blink
+}  // namespace blink

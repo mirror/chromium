@@ -192,17 +192,6 @@ Polymer({
     },
 
     /**
-     * Whether the sink with a pending route creation, whose ID is given by
-     * |currentLaunchingSinkId_|, is waiting for the current route to it to be
-     * closed so a new one can be started.
-     * @private {boolean}
-     */
-    launchingSinkAwaitingRouteClose_: {
-      type: Boolean,
-      value: false,
-    },
-
-    /**
      * Whether the user's mouse is positioned over the dialog.
      * @private {boolean|undefined}
      */
@@ -425,7 +414,7 @@ Polymer({
   ],
 
   ready: function() {
-    this.elementReadyTimeMs_ = performance.now();
+    this.elementReadyTimeMs_ = window.performance.now();
     this.showSinkList_();
 
     Polymer.RenderStatus.afterNextRender(this, function() {
@@ -519,13 +508,17 @@ Polymer({
     });
 
     if (initialAction == media_router.MediaRouterUserAction.CLOSE) {
-      var timeToClose = performance.now() - this.elementReadyTimeMs_;
+      var timeToClose = window.performance.now() - this.elementReadyTimeMs_;
       this.fire('report-initial-action-close', {
         timeMs: timeToClose,
       });
     }
 
     this.userHasTakenInitialAction_ = true;
+  },
+
+  get header() {
+    return this.$['container-header'];
   },
 
   /**
@@ -903,6 +896,8 @@ Polymer({
         return 'media-router:tv';
       case media_router.SinkIconType.HANGOUT:
         return 'media-router:hangout';
+      case media_router.SinkIconType.MEETING:
+        return 'media-router:meeting';
       default:
         return 'media-router:tv';
     }
@@ -1293,7 +1288,7 @@ Polymer({
     var focusedSink =
         this.$$('#searchResults').itemForElement(focusedElem).sinkItem;
     setTimeout(function() {
-      var sinkListPaperMenu = this.$$('#sink-list');
+      var sinkListPaperMenu = this.$$('#sink-list-paper-menu');
       var sinks = sinkListPaperMenu.children;
       var sinkList = this.$$('#sinkList');
       for (var i = 0; i < sinks.length; i++) {
@@ -1320,7 +1315,7 @@ Polymer({
         sinksToShow.length != 0) {
       // Only set |populatedSinkListSeenTimeMs_| if it has not already been set.
       if (this.populatedSinkListSeenTimeMs_ == -1)
-        this.populatedSinkListSeenTimeMs_ = performance.now();
+        this.populatedSinkListSeenTimeMs_ = window.performance.now();
     } else {
       // Reset |populatedSinkListLastSeen_| if the sink list isn't being shown
       // or if there aren't any sinks available for display.
@@ -1384,7 +1379,6 @@ Polymer({
     var searchFinalTop = hasList ? list.offsetHeight - search.offsetHeight :
                                    deviceMissing.offsetHeight;
     resultsContainer.style['position'] = 'absolute';
-    resultsContainer.style['overflow-y'] = '';
 
     var duration =
         this.computeAnimationDuration_(searchFinalTop - searchInitialTop);
@@ -1569,19 +1563,31 @@ Polymer({
     if (!clickedMode)
       return;
 
-    this.userHasSelectedCastMode_ = true;
+    this.selectCastMode(clickedMode.type);
     this.fire('cast-mode-selected', {castModeType: clickedMode.type});
-
-    // The list of sinks to show will be the same if the shown cast mode did
-    // not change, regardless of whether the user selected it explicitly.
-    if (clickedMode.type != this.shownCastModeValue_) {
-      this.setShownCastMode_(clickedMode);
-      this.rebuildSinksToShow_();
-    }
-
     this.showSinkList_();
     this.maybeReportUserFirstAction(
         media_router.MediaRouterUserAction.CHANGE_MODE);
+  },
+
+  /**
+   * Handles a change-route-source-click event. Sets the currently launching
+   * sink to be the current route's sink and shows the sink list.
+   *
+   * @param {!Event} event The event object.
+   * Parameters in |event|.detail:
+   *   route - route to modify.
+   *   selectedCastMode - cast mode to use for the new source.
+   * @private
+   */
+  onChangeRouteSourceClick_: function(event) {
+    /** @type {{route: !media_router.Route, selectedCastMode: number}} */
+    var detail = event.detail;
+    this.currentLaunchingSinkId_ = detail.route.sinkId;
+    var sink = this.sinkMap_[detail.route.sinkId];
+    this.showSinkList_();
+    this.maybeReportUserFirstAction(
+        media_router.MediaRouterUserAction.REPLACE_LOCAL_ROUTE);
   },
 
   /**
@@ -1740,28 +1746,6 @@ Polymer({
   },
 
   /**
-   * Handles a replace-route-click event. Closes the currently displayed local
-   * route and shows the sink list. When the current route has been successfully
-   * removed from the route map, the container will launch a new route for the
-   * same sink.
-   *
-   * @param {!Event} event The event object.
-   * Parameters in |event|.detail:
-   *   route - route to close.
-   * @private
-   */
-  onReplaceRouteClick_: function(event) {
-    /** @type {{route: !media_router.Route}} */
-    var detail = event.detail;
-    this.currentLaunchingSinkId_ = detail.route.sinkId;
-    this.launchingSinkAwaitingRouteClose_ = true;
-    this.fire('close-route', detail);
-    this.showSinkList_();
-    this.maybeReportUserFirstAction(
-        media_router.MediaRouterUserAction.REPLACE_LOCAL_ROUTE);
-  },
-
-  /**
    * Called when a sink is clicked.
    *
    * @param {!Event} event The event object.
@@ -1869,7 +1853,6 @@ Polymer({
     resultsContainer.style['position'] = 'relative';
     resultsContainer.style['padding-top'] = resultsPaddingTop;
     resultsContainer.style['top'] = '';
-    resultsContainer.style['overflow-y'] = 'auto';
 
     view.style['overflow'] = '';
     view.style['padding-bottom'] = '';
@@ -1972,14 +1955,6 @@ Polymer({
 
     this.sinkToRouteMap_ = tempSinkToRouteMap;
     this.rebuildSinksToShow_();
-
-    // A sink was waiting for its route to be closed and removed from the route
-    // map so a new route to it can be started.
-    if (this.launchingSinkAwaitingRouteClose_ &&
-        !(this.currentLaunchingSinkId_ in this.sinkToRouteMap_) &&
-        this.currentLaunchingSinkId_ in this.sinkMap_) {
-      this.showOrCreateRoute_(this.sinkMap_[this.currentLaunchingSinkId_]);
-    }
   },
 
   /**
@@ -1989,7 +1964,7 @@ Polymer({
    * name.
    */
   rebuildSinksToShow_: function() {
-    var sinksToShow = this.allSinks.filter(function(sink) {
+    var updatedSinkList = this.allSinks.filter(function(sink) {
       return !sink.isPseudoSink;
     }, this);
     if (this.pseudoSinkSearchState_) {
@@ -2000,13 +1975,13 @@ Polymer({
       // list but |currentLaunchingSinkId_| is non-empty (thereby preventing any
       // other sink from launching).
       if (pendingPseudoSink.id == this.currentLaunchingSinkId_) {
-        sinksToShow.unshift(pendingPseudoSink);
+        updatedSinkList.unshift(pendingPseudoSink);
       }
     }
     if (this.userHasSelectedCastMode_) {
       // If user explicitly selected a cast mode, then we show only sinks that
       // are compatible with current cast mode or sinks that are active.
-      sinksToShow = sinksToShow.filter(function(element) {
+      updatedSinkList = updatedSinkList.filter(function(element) {
         return (element.castModes & this.shownCastModeValue_) ||
                this.sinkToRouteMap_[element.id];
       }, this);
@@ -2019,7 +1994,29 @@ Polymer({
       this.setShownCastMode_(this.computeCastMode_());
     }
 
-    this.sinksToShow_ = sinksToShow;
+    // When there's an updated list of sinks, append any new sinks to the end
+    // of the existing list. This prevents sinks randomly jumping around the
+    // dialog, which can surprise users / lead to inadvertently casting to the
+    // wrong sink.
+    if (this.sinksToShow_) {
+      for (var i = this.sinksToShow_.length - 1; i >= 0; i--) {
+        var index = updatedSinkList.findIndex(function(updatedSink) {
+            return this.sinksToShow_[i].id == updatedSink.id; }.bind(this));
+        if (index < 0) {
+          // Remove any sinks that are no longer discovered.
+          this.sinksToShow_.splice(i, 1);
+        } else {
+          // If the sink exists, move it from |updatedSinkList| to
+          // |sinksToShow_| in the same position, as the cast modes or other
+          // fields may have been updated.
+          this.sinksToShow_[i] = updatedSinkList[index];
+          updatedSinkList.splice(index, 1);
+        }
+      }
+
+      updatedSinkList = this.sinksToShow_.concat(updatedSinkList);
+    }
+    this.sinksToShow_ = updatedSinkList;
   },
 
   /**
@@ -2119,6 +2116,20 @@ Polymer({
   },
 
   /**
+   * Sets the selected cast mode to the one associated with |castModeType|,
+   * and rebuilds sinks to reflect the change.
+   * @param {number} castModeType The type of the selected cast mode.
+   */
+  selectCastMode: function(castModeType) {
+    var castMode = this.findCastModeByType_(castModeType);
+    if (castMode && castModeType != this.shownCastModeValue_) {
+      this.setShownCastMode_(castMode);
+      this.userHasSelectedCastMode_ = true;
+      this.rebuildSinksToShow_();
+    }
+  },
+
+  /**
    * Sets various focus and blur event handlers to handle showing search results
    * when the search input is focused.
    * @private
@@ -2199,9 +2210,7 @@ Polymer({
       this.fire('navigate-sink-list-to-details');
       this.maybeReportUserFirstAction(
           media_router.MediaRouterUserAction.STATUS_REMOTE);
-    } else if ((this.launchingSinkAwaitingRouteClose_ &&
-                this.currentLaunchingSinkId_ == sink.id) ||
-               this.currentLaunchingSinkId_ == '') {
+    } else if (this.currentLaunchingSinkId_ == '') {
       // Allow one launch at a time.
       var selectedCastModeValue =
           this.shownCastModeValue_ == media_router.CastModeType.AUTO ?
@@ -2225,14 +2234,10 @@ Polymer({
         });
 
         var timeToSelectSink =
-            performance.now() - this.populatedSinkListSeenTimeMs_;
+            window.performance.now() - this.populatedSinkListSeenTimeMs_;
         this.fire('report-sink-click-time', {timeMs: timeToSelectSink});
       }
-      if (!this.launchingSinkAwaitingRouteClose_) {
-        this.currentLaunchingSinkId_ = sink.id;
-      } else {
-        this.launchingSinkAwaitingRouteClose_ = false;
-      }
+      this.currentLaunchingSinkId_ = sink.id;
       if (sink.isPseudoSink) {
         this.rebuildSinksToShow_();
       }
@@ -2317,10 +2322,13 @@ Polymer({
   updateElementPositioning_: function() {
     // Ensures that conditionally templated elements have finished stamping.
     this.async(function() {
-      var headerHeight = this.$$('#container-header').offsetHeight;
+      var headerHeight = this.header.offsetHeight;
+      // Unlike the other elements whose heights are fixed, the first-run-flow
+      // element can have a fractional height. So we use getBoundingClientRect()
+      // to avoid rounding errors.
       var firstRunFlowHeight = this.$$('#first-run-flow') &&
           this.$$('#first-run-flow').style.display != 'none' ?
-              this.$$('#first-run-flow').offsetHeight : 0;
+              this.$$('#first-run-flow').getBoundingClientRect().height : 0;
       var issueHeight = this.$$('#issue-banner') &&
           this.$$('#issue-banner').style.display != 'none' ?
               this.$$('#issue-banner').offsetHeight : 0;
@@ -2330,7 +2338,7 @@ Polymer({
       var searchPadding =
           hasSearch ? this.computeElementVerticalPadding_(search) : 0;
 
-      this.$['container-header'].style.marginTop = firstRunFlowHeight + 'px';
+      this.header.style.marginTop = firstRunFlowHeight + 'px';
       this.$['content'].style.marginTop =
           firstRunFlowHeight + headerHeight + 'px';
 
@@ -2338,7 +2346,7 @@ Polymer({
       if (hasSearch && sinkList) {
         // This would need to be reset to '' if search could be disabled again,
         // but once it's enabled it can't be disabled again.
-        sinkList.style.paddingBottom = '0';
+        this.$$('#sink-list-paper-menu').style.paddingBottom = '0';
       }
       var sinkListPadding =
           sinkList ? this.computeElementVerticalPadding_(sinkList) : 0;

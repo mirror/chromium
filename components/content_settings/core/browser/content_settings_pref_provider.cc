@@ -15,9 +15,6 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/strings/string_split.h"
-#include "base/time/clock.h"
-#include "base/time/default_clock.h"
 #include "components/content_settings/core/browser/content_settings_pref.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
@@ -32,19 +29,22 @@
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 
+namespace content_settings {
+
 namespace {
 
-// Obsolete prefs.
-// TODO(msramek): Remove the cleanup code after two releases (i.e. in M50).
-const char kObsoleteMetroSwitchToDesktopExceptions[] =
-    "profile.content_settings.exceptions.metro_switch_to_desktop";
-
-const char kObsoleteMediaStreamExceptions[] =
-    "profile.content_settings.exceptions.media_stream";
+// These settings are no longer used, and should be deleted on profile startup.
+#if !defined(OS_IOS)
+const char kObsoleteFullscreenExceptionsPref[] =
+    "profile.content_settings.exceptions.fullscreen";
+#if !defined(OS_ANDROID)
+const char kObsoleteMouseLockExceptionsPref[] =
+    "profile.content_settings.exceptions.mouselock";
+#endif  // !defined(OS_ANDROID)
+#endif  // !defined(OS_IOS)
+const char kObsoleteLastUsed[] = "last_used";
 
 }  // namespace
-
-namespace content_settings {
 
 // ////////////////////////////////////////////////////////////////////////////
 // PrefProvider:
@@ -66,16 +66,22 @@ void PrefProvider::RegisterProfilePrefs(
 
   // Obsolete prefs ----------------------------------------------------------
 
+  // These prefs have been removed, but need to be registered so they can
+  // be deleted on startup.
+#if !defined(OS_IOS)
   registry->RegisterDictionaryPref(
-      kObsoleteMetroSwitchToDesktopExceptions,
+      kObsoleteFullscreenExceptionsPref,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
-
-  registry->RegisterDictionaryPref(kObsoleteMediaStreamExceptions);
+#if !defined(OS_ANDROID)
+  registry->RegisterDictionaryPref(
+      kObsoleteMouseLockExceptionsPref,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+#endif  // !defined(OS_ANDROID)
+#endif  // !defined(OS_IOS)
 }
 
 PrefProvider::PrefProvider(PrefService* prefs, bool incognito)
     : prefs_(prefs),
-      clock_(new base::DefaultClock()),
       is_incognito_(incognito) {
   DCHECK(prefs_);
   // Verify preferences version.
@@ -88,6 +94,8 @@ PrefProvider::PrefProvider(PrefService* prefs, bool incognito)
     return;
   }
 
+  DiscardObsoletePreferences();
+
   pref_change_registrar_.Init(prefs_);
 
   WebsiteSettingsRegistry* website_settings =
@@ -95,10 +103,10 @@ PrefProvider::PrefProvider(PrefService* prefs, bool incognito)
   for (const WebsiteSettingsInfo* info : *website_settings) {
     content_settings_prefs_.insert(std::make_pair(
         info->type(),
-        base::WrapUnique(new ContentSettingsPref(
+        base::MakeUnique<ContentSettingsPref>(
             info->type(), prefs_, &pref_change_registrar_, info->pref_name(),
             is_incognito_,
-            base::Bind(&PrefProvider::Notify, base::Unretained(this))))));
+            base::Bind(&PrefProvider::Notify, base::Unretained(this)))));
   }
 
   if (!is_incognito_) {
@@ -109,8 +117,6 @@ PrefProvider::PrefProvider(PrefService* prefs, bool incognito)
     UMA_HISTOGRAM_COUNTS("ContentSettings.NumberOfExceptions",
                          num_exceptions);
   }
-
-  DiscardObsoletePreferences();
 }
 
 PrefProvider::~PrefProvider() {
@@ -173,30 +179,10 @@ void PrefProvider::ClearPrefs() {
     pref.second->ClearPref();
 }
 
-void PrefProvider::UpdateLastUsage(
-    const ContentSettingsPattern& primary_pattern,
-    const ContentSettingsPattern& secondary_pattern,
-    ContentSettingsType content_type) {
-  GetPref(content_type)
-      ->UpdateLastUsage(primary_pattern, secondary_pattern, clock_.get());
-}
-
-base::Time PrefProvider::GetLastUsage(
-    const ContentSettingsPattern& primary_pattern,
-    const ContentSettingsPattern& secondary_pattern,
-    ContentSettingsType content_type) {
-  return GetPref(content_type)
-      ->GetLastUsage(primary_pattern, secondary_pattern);
-}
-
 ContentSettingsPref* PrefProvider::GetPref(ContentSettingsType type) const {
   auto it = content_settings_prefs_.find(type);
   DCHECK(it != content_settings_prefs_.end());
   return it->second.get();
-}
-
-void PrefProvider::SetClockForTesting(std::unique_ptr<base::Clock> clock) {
-  clock_ = std::move(clock);
 }
 
 void PrefProvider::Notify(
@@ -211,8 +197,65 @@ void PrefProvider::Notify(
 }
 
 void PrefProvider::DiscardObsoletePreferences() {
-  prefs_->ClearPref(kObsoleteMetroSwitchToDesktopExceptions);
-  prefs_->ClearPref(kObsoleteMediaStreamExceptions);
+  // These prefs were never stored on iOS/Android so they don't need to be
+  // deleted.
+#if !defined(OS_IOS)
+  prefs_->ClearPref(kObsoleteFullscreenExceptionsPref);
+#if !defined(OS_ANDROID)
+  prefs_->ClearPref(kObsoleteMouseLockExceptionsPref);
+#endif  // !defined(OS_ANDROID)
+#endif  // !defined(OS_IOS)
+
+#if !defined(OS_IOS)
+  // Migrate CONTENT_SETTINGS_TYPE_PROMPT_NO_DECISION_COUNT to
+  // CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA.
+  // TODO(raymes): See crbug.com/681709. Remove after M60.
+  const std::string prompt_no_decision_count_pref =
+      WebsiteSettingsRegistry::GetInstance()
+          ->Get(CONTENT_SETTINGS_TYPE_PROMPT_NO_DECISION_COUNT)
+          ->pref_name();
+  const base::DictionaryValue* old_dict =
+      prefs_->GetDictionary(prompt_no_decision_count_pref);
+
+  const std::string permission_autoblocker_data_pref =
+      WebsiteSettingsRegistry::GetInstance()
+          ->Get(CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA)
+          ->pref_name();
+  const base::DictionaryValue* new_dict =
+      prefs_->GetDictionary(permission_autoblocker_data_pref);
+
+  if (!old_dict->empty() && new_dict->empty())
+    prefs_->Set(permission_autoblocker_data_pref, *old_dict);
+  prefs_->ClearPref(prompt_no_decision_count_pref);
+#endif  // !defined(OS_IOS)
+
+  // TODO(timloh): See crbug.com/691893. This removal code was added in M58,
+  // so is probably fine to remove in M60 or later.
+  for (const WebsiteSettingsInfo* info :
+       *WebsiteSettingsRegistry::GetInstance()) {
+    if (!prefs_->GetDictionary(info->pref_name()))
+      continue;
+
+    DictionaryPrefUpdate update(prefs_, info->pref_name());
+    base::DictionaryValue* all_settings = update.Get();
+    std::vector<std::string> values_to_clean;
+    for (base::DictionaryValue::Iterator i(*all_settings); !i.IsAtEnd();
+         i.Advance()) {
+      const base::DictionaryValue* pattern_settings = nullptr;
+      bool is_dictionary = i.value().GetAsDictionary(&pattern_settings);
+      DCHECK(is_dictionary);
+      if (pattern_settings->GetWithoutPathExpansion(kObsoleteLastUsed, nullptr))
+        values_to_clean.push_back(i.key());
+    }
+
+    for (const std::string& key : values_to_clean) {
+      base::DictionaryValue* pattern_settings = nullptr;
+      all_settings->GetDictionaryWithoutPathExpansion(key, &pattern_settings);
+      pattern_settings->RemoveWithoutPathExpansion(kObsoleteLastUsed, nullptr);
+      if (pattern_settings->empty())
+        all_settings->RemoveWithoutPathExpansion(key, nullptr);
+    }
+  }
 }
 
 }  // namespace content_settings

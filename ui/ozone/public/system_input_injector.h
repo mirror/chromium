@@ -11,24 +11,23 @@
 #include "ui/events/event.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
 #include "ui/gfx/geometry/point_f.h"
-#include "ui/ozone/ozone_export.h"
+#include "ui/ozone/ozone_base_export.h"
 
 namespace gfx {
 class PointF;
 }  // namespace gfx
 
 namespace ui {
-class Event;
 
 // Interface for converting input into ui::Events and injecting them to the
 // Ozone platform.
-class OZONE_EXPORT SystemInputInjector {
+class OZONE_BASE_EXPORT SystemInputInjector {
  public:
   SystemInputInjector() {}
   virtual ~SystemInputInjector() {}
 
   // Moves the cursor on the screen and generates the corresponding MouseMove or
-  // MouseDragged event.  |location| is in physical screen co-ordinates,
+  // MouseDragged event.  |location| is in physical screen coordinates,
   // independent of the scale factor and the display rotation settings.
   virtual void MoveCursorTo(const gfx::PointF& location) = 0;
 

@@ -5,16 +5,17 @@
 #ifndef EXTENSIONS_RENDERER_USER_SCRIPT_SET_H_
 #define EXTENSIONS_RENDERER_USER_SCRIPT_SET_H_
 
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/shared_memory.h"
 #include "base/observer_list.h"
 #include "extensions/common/user_script.h"
+#include "third_party/WebKit/public/platform/WebString.h"
 
 class GURL;
 
@@ -32,9 +33,11 @@ class UserScriptSet {
  public:
   class Observer {
    public:
-    virtual void OnUserScriptsUpdated(
-        const std::set<HostID>& changed_hosts,
-        const std::vector<UserScript*>& scripts) = 0;
+    // Called when the set of user scripts is updated. |changed_hosts| contains
+    // the hosts whose scripts have been altered. Note that *all* script objects
+    // are invalidated, even if they aren't in |changed_hosts|.
+    virtual void OnUserScriptsUpdated(const std::set<HostID>& changed_hosts,
+                                      const UserScriptList& scripts) = 0;
   };
 
   UserScriptSet();
@@ -71,7 +74,11 @@ class UserScriptSet {
                          const std::set<HostID>& changed_hosts,
                          bool whitelisted_only);
 
-  const std::vector<UserScript*>& scripts() const { return scripts_.get(); }
+  // Returns the contents of a script file.
+  // Note that copying is cheap as this uses WebString.
+  blink::WebString GetJsSource(const UserScript::File& file,
+                               bool emulate_greasemonkey);
+  blink::WebString GetCssSource(const UserScript::File& file);
 
  private:
   // Returns a new ScriptInjection for the given |script| to execute in the
@@ -89,7 +96,10 @@ class UserScriptSet {
   std::unique_ptr<base::SharedMemory> shared_memory_;
 
   // The UserScripts this injector manages.
-  ScopedVector<UserScript> scripts_;
+  UserScriptList scripts_;
+
+  // Map of user script file url -> source.
+  std::map<GURL, blink::WebString> script_sources_;
 
   // The associated observers.
   base::ObserverList<Observer> observers_;

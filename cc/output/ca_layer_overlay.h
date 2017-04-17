@@ -15,6 +15,7 @@
 namespace cc {
 
 class DrawQuad;
+class RenderPassDrawQuad;
 class ResourceProvider;
 
 // Holds information that is frequently shared between consecutive
@@ -23,7 +24,6 @@ class CC_EXPORT CALayerOverlaySharedState
     : public base::RefCounted<CALayerOverlaySharedState> {
  public:
   CALayerOverlaySharedState() {}
-
   // Layers in a non-zero sorting context exist in the same 3D space and should
   // intersect.
   unsigned sorting_context_id = 0;
@@ -63,24 +63,22 @@ class CC_EXPORT CALayerOverlay {
   unsigned edge_aa_mask = 0;
   // The minification and magnification filters for the CALayer.
   unsigned filter;
-
-  // If valid, the renderer must copy the contents of the render pass into an
-  // overlay resource to use as the contents.
-  RenderPassId render_pass_id;
-  ui::CARendererLayerParams::FilterEffects filter_effects;
+  // If |rpdq| is present, then the renderer must draw the filter effects and
+  // copy the result into an IOSurface.
+  const RenderPassDrawQuad* rpdq = nullptr;
 };
 
 typedef std::vector<CALayerOverlay> CALayerOverlayList;
 
 // Returns true if all quads in the root render pass have been replaced by
 // CALayerOverlays.
-bool ProcessForCALayerOverlays(ResourceProvider* resource_provider,
-                               const gfx::RectF& display_rect,
-                               const QuadList& quad_list,
-                               CALayerOverlayList* ca_layer_overlays);
-
-// Allows RenderPassDrawQuads to be converted to CALayerOverlays.
-void CC_EXPORT EnableRenderPassDrawQuadForTesting();
+bool ProcessForCALayerOverlays(
+    ResourceProvider* resource_provider,
+    const gfx::RectF& display_rect,
+    const QuadList& quad_list,
+    const RenderPassFilterList& render_pass_filters,
+    const RenderPassFilterList& render_pass_background_filters,
+    CALayerOverlayList* ca_layer_overlays);
 
 }  // namespace cc
 

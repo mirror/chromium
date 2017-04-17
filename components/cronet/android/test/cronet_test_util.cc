@@ -6,90 +6,99 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/message_loop/message_loop.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/cronet/android/cronet_url_request_adapter.h"
 #include "components/cronet/android/cronet_url_request_context_adapter.h"
-#include "components/cronet/android/test/native_test_server.h"
-#include "components/cronet/android/url_request_context_adapter.h"
 #include "jni/CronetTestUtil_jni.h"
-#include "net/dns/host_resolver_impl.h"
-#include "net/dns/mock_host_resolver.h"
 #include "net/url_request/url_request.h"
+
+using base::android::JavaParamRef;
 
 namespace cronet {
 
-const char kFakeSdchDomain[] = "fake.sdch.domain";
-// This must match the certificate used
-// (quic_test.example.com.crt and quic_test.example.com.key.pkcs8), and
-// the file served (
-// components/cronet/android/test/assets/test/quic_data/simple.txt).
-const char kFakeQuicDomain[] = "test.example.com";
-
-namespace {
-
-// Install host resolver rules to map fake domains to |destination|, usually an
-// IP address.
-void RegisterHostResolverProcHelper(net::URLRequestContext* url_request_context,
-                                    const std::string& destination) {
-  net::HostResolverImpl* resolver =
-      static_cast<net::HostResolverImpl*>(url_request_context->host_resolver());
-  scoped_refptr<net::RuleBasedHostResolverProc> proc =
-      new net::RuleBasedHostResolverProc(NULL);
-  proc->AddRule(kFakeSdchDomain, destination);
-  proc->AddRule(kFakeQuicDomain, destination);
-  resolver->set_proc_params_for_test(
-      net::HostResolverImpl::ProcTaskParams(proc.get(), 1u));
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_CronetTestUtil_onHostResolverProcRegistered(env);
+jint GetLoadFlags(JNIEnv* env,
+                  const JavaParamRef<jclass>& jcaller,
+                  const jlong jurl_request_adapter) {
+  return TestUtil::GetURLRequest(jurl_request_adapter)->load_flags();
 }
 
-void RegisterHostResolverProcOnNetworkThread(
-    CronetURLRequestContextAdapter* context_adapter,
-    const std::string& destination) {
-  RegisterHostResolverProcHelper(context_adapter->GetURLRequestContext(),
-                                 destination);
+// static
+scoped_refptr<base::SingleThreadTaskRunner> TestUtil::GetTaskRunner(
+    jlong jcontext_adapter) {
+  CronetURLRequestContextAdapter* context_adapter =
+      reinterpret_cast<CronetURLRequestContextAdapter*>(jcontext_adapter);
+  return context_adapter->network_thread_->task_runner();
 }
 
-// TODO(xunjieli): Delete this once legacy API is removed.
-void RegisterHostResolverProcOnNetworkThreadLegacyAPI(
-    URLRequestContextAdapter* context_adapter,
-    const std::string& destination) {
-  RegisterHostResolverProcHelper(context_adapter->GetURLRequestContext(),
-                                 destination);
+// static
+net::URLRequestContext* TestUtil::GetURLRequestContext(jlong jcontext_adapter) {
+  CronetURLRequestContextAdapter* context_adapter =
+      reinterpret_cast<CronetURLRequestContextAdapter*>(jcontext_adapter);
+  return context_adapter->context_.get();
 }
 
-}  // namespace
-
-void RegisterHostResolverProc(JNIEnv* env,
-                              const JavaParamRef<jclass>& jcaller,
-                              jlong jadapter,
-                              jboolean jlegacy_api,
-                              const JavaParamRef<jstring>& jdestination) {
-  std::string destination(
-      base::android::ConvertJavaStringToUTF8(env, jdestination));
-  if (jlegacy_api == JNI_TRUE) {
-    URLRequestContextAdapter* context_adapter =
-        reinterpret_cast<URLRequestContextAdapter*>(jadapter);
-    context_adapter->PostTaskToNetworkThread(
-        FROM_HERE, base::Bind(&RegisterHostResolverProcOnNetworkThreadLegacyAPI,
-                              base::Unretained(context_adapter), destination));
+// static
+void TestUtil::RunAfterContextInitOnNetworkThread(jlong jcontext_adapter,
+                                                  const base::Closure& task) {
+  CronetURLRequestContextAdapter* context_adapter =
+      reinterpret_cast<CronetURLRequestContextAdapter*>(jcontext_adapter);
+  if (context_adapter->is_context_initialized_) {
+    task.Run();
   } else {
-    CronetURLRequestContextAdapter* context_adapter =
-        reinterpret_cast<CronetURLRequestContextAdapter*>(jadapter);
-    context_adapter->PostTaskToNetworkThread(
-        FROM_HERE, base::Bind(&RegisterHostResolverProcOnNetworkThread,
-                              base::Unretained(context_adapter), destination));
+    context_adapter->tasks_waiting_for_context_.push(task);
   }
 }
 
-jint GetLoadFlags(JNIEnv* env,
-                  const JavaParamRef<jclass>& jcaller,
-                  const jlong urlRequest) {
-  return reinterpret_cast<CronetURLRequestAdapter*>(urlRequest)
-      ->GetURLRequestForTesting()
-      ->load_flags();
+// static
+void TestUtil::RunAfterContextInit(jlong jcontext_adapter,
+                                   const base::Closure& task) {
+  GetTaskRunner(jcontext_adapter)
+      ->PostTask(FROM_HERE,
+                 base::Bind(&TestUtil::RunAfterContextInitOnNetworkThread,
+                            jcontext_adapter, task));
 }
 
-bool RegisterCronetTestUtil(JNIEnv* env) {
+// static
+net::URLRequest* TestUtil::GetURLRequest(jlong jrequest_adapter) {
+  CronetURLRequestAdapter* request_adapter =
+      reinterpret_cast<CronetURLRequestAdapter*>(jrequest_adapter);
+  return request_adapter->url_request_.get();
+}
+
+static void PrepareNetworkThreadOnNetworkThread(jlong jcontext_adapter) {
+  (new base::MessageLoopForIO())
+      ->SetTaskRunner(TestUtil::GetTaskRunner(jcontext_adapter));
+}
+
+// Tests need to call into libcronet.so code on libcronet.so threads.
+// libcronet.so's threads are registered with static tables for MessageLoops
+// and SingleThreadTaskRunners in libcronet.so, so libcronet_test.so
+// functions that try and access these tables will find missing entries in
+// the corresponding static tables in libcronet_test.so.  Fix this by
+// initializing a MessageLoop and SingleThreadTaskRunner in libcronet_test.so
+// for these threads.  Called from Java CronetTestUtil class.
+void PrepareNetworkThread(JNIEnv* env,
+                          const JavaParamRef<jclass>& jcaller,
+                          jlong jcontext_adapter) {
+  TestUtil::GetTaskRunner(jcontext_adapter)
+      ->PostTask(FROM_HERE, base::Bind(&PrepareNetworkThreadOnNetworkThread,
+                                       jcontext_adapter));
+}
+
+static void CleanupNetworkThreadOnNetworkThread() {
+  delete base::MessageLoop::current();
+}
+
+// Called from Java CronetTestUtil class.
+void CleanupNetworkThread(JNIEnv* env,
+                          const JavaParamRef<jclass>& jcaller,
+                          jlong jcontext_adapter) {
+  TestUtil::GetTaskRunner(jcontext_adapter)
+      ->PostTask(FROM_HERE, base::Bind(&CleanupNetworkThreadOnNetworkThread));
+}
+
+bool TestUtil::Register(JNIEnv* env) {
   return RegisterNativesImpl(env);
 }
 

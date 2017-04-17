@@ -7,10 +7,11 @@
 
 #include <jni.h>
 
+#include <unordered_map>
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/containers/hash_tables.h"
-#include "base/containers/scoped_ptr_hash_map.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "cc/layers/ui_resource_layer.h"
@@ -19,7 +20,6 @@
 using base::android::ScopedJavaLocalRef;
 
 namespace cc {
-class CopyOutputResult;
 class Layer;
 }
 
@@ -27,7 +27,6 @@ namespace ui {
 class UIResourceProvider;
 }
 
-namespace chrome {
 namespace android {
 
 class ThumbnailLayer;
@@ -54,9 +53,11 @@ class TabContentManager : public ThumbnailCacheObserver {
   // Get the live layer from the cache.
   scoped_refptr<cc::Layer> GetLiveLayer(int tab_id);
 
+  scoped_refptr<ThumbnailLayer> GetStaticLayer(int tab_id);
+
   // Get the static thumbnail from the cache, or the NTP.
-  scoped_refptr<ThumbnailLayer> GetStaticLayer(int tab_id,
-                                               bool force_disk_read);
+  scoped_refptr<ThumbnailLayer> GetOrCreateStaticLayer(int tab_id,
+                                                       bool force_disk_read);
 
   // Should be called when a tab gets a new live layer that should be served
   // by the cache to the CompositorView.
@@ -77,7 +78,6 @@ class TabContentManager : public ThumbnailCacheObserver {
   void CacheTab(JNIEnv* env,
                 const base::android::JavaParamRef<jobject>& obj,
                 const base::android::JavaParamRef<jobject>& tab,
-                const base::android::JavaParamRef<jobject>& content_view_core,
                 jfloat thumbnail_scale);
   void CacheTabWithBitmap(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,
@@ -104,10 +104,10 @@ class TabContentManager : public ThumbnailCacheObserver {
 
  private:
   class TabReadbackRequest;
-  typedef base::hash_map<int, scoped_refptr<cc::Layer>> LayerMap;
-  typedef base::hash_map<int, scoped_refptr<ThumbnailLayer>> ThumbnailLayerMap;
-  typedef base::ScopedPtrHashMap<int, std::unique_ptr<TabReadbackRequest>>
-      TabReadbackRequestMap;
+  using LayerMap = base::hash_map<int, scoped_refptr<cc::Layer>>;
+  using ThumbnailLayerMap = base::hash_map<int, scoped_refptr<ThumbnailLayer>>;
+  using TabReadbackRequestMap =
+      std::unordered_map<int, std::unique_ptr<TabReadbackRequest>>;
 
   void PutThumbnailIntoCache(int tab_id,
                              float thumbnail_scale,
@@ -127,6 +127,5 @@ class TabContentManager : public ThumbnailCacheObserver {
 bool RegisterTabContentManager(JNIEnv* env);
 
 }  // namespace android
-}  // namespace chrome
 
 #endif  // CHROME_BROWSER_ANDROID_COMPOSITOR_TAB_CONTENT_MANAGER_H_

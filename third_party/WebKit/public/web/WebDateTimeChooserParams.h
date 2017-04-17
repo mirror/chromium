@@ -37,47 +37,42 @@ namespace blink {
 // This class conveys various information to make date/time chooser UI.
 // See WebViewClient::openDateTimeChooser.
 struct WebDateTimeChooserParams {
-    // The type of chooser to show.
-    WebDateTimeInputType type;
-    // Bounding rectangle of the requester element.
-    WebRect anchorRectInScreen;
-    // The current value of the requester element.
-    // FIXME: Remove. Deprecated in favor of doubleValue.
-    WebString currentValue;
-    // The current value of the requester element as a double.
-    // NaN means empty value. Should not be infinity.
-    double doubleValue;
-    // <datalist> option suggestions associated to the requester element. The
-    // vector size might be 0.
-    WebVector<WebDateTimeSuggestion> suggestions;
-    // HTMLInputElement::min attribute value parsed in the valusAsNumber rule,
-    // that is to say, milliseconds from the epoch for non-month types and
-    // months from the epoch for month type. If the min attribute is missing,
-    // this field has the hard minimum limit.
-    double minimum;
-    // Similar to minimum.
-    double maximum;
-    // Step value represented in milliseconds for non-month types, and
-    // represetnted in months for month type.
-    double step;
-    // Step-base value represeted in milliseconds, or months.
-    double stepBase;
-    // True if the requester element has required attribute.
-    bool isRequired;
-    // True if the requester element is rendered in rtl direction.
-    bool isAnchorElementRTL;
+  // The type of chooser to show.
+  WebDateTimeInputType type;
+  // Bounding rectangle of the requester element.
+  WebRect anchor_rect_in_screen;
+  // The current value of the requester element as a double.
+  // NaN means empty value. Should not be infinity.
+  double double_value;
+  // <datalist> option suggestions associated to the requester element. The
+  // vector size might be 0.
+  WebVector<WebDateTimeSuggestion> suggestions;
+  // HTMLInputElement::min attribute value parsed in the valusAsNumber rule,
+  // that is to say, milliseconds from the epoch for non-month types and
+  // months from the epoch for month type. If the min attribute is missing,
+  // this field has the hard minimum limit.
+  double minimum;
+  // Similar to minimum.
+  double maximum;
+  // Step value represented in milliseconds for non-month types, and
+  // represetnted in months for month type.
+  double step;
+  // Step-base value represeted in milliseconds, or months.
+  double step_base;
+  // True if the requester element has required attribute.
+  bool is_required;
+  // True if the requester element is rendered in rtl direction.
+  bool is_anchor_element_rtl;
 
-    WebDateTimeChooserParams()
-        : minimum(0)
-        , maximum(0)
-        , step(0)
-        , stepBase(0)
-        , isRequired(false)
-        , isAnchorElementRTL(false)
-    {
-    }
+  WebDateTimeChooserParams()
+      : minimum(0),
+        maximum(0),
+        step(0),
+        step_base(0),
+        is_required(false),
+        is_anchor_element_rtl(false) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

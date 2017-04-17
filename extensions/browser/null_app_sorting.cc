@@ -4,7 +4,7 @@
 
 #include "extensions/browser/null_app_sorting.h"
 
-#include "sync/api/string_ordinal.h"
+#include "components/sync/model/string_ordinal.h"
 
 namespace {
 
@@ -29,6 +29,13 @@ void NullAppSorting::FixNTPOrdinalCollisions() {
 void NullAppSorting::EnsureValidOrdinals(
     const std::string& extension_id,
     const syncer::StringOrdinal& suggested_page) {
+}
+
+bool NullAppSorting::GetDefaultOrdinals(
+    const std::string& extension_id,
+    syncer::StringOrdinal* page_ordinal,
+    syncer::StringOrdinal* app_launch_ordinal) {
+  return false;
 }
 
 void NullAppSorting::OnExtensionMoved(

@@ -61,7 +61,6 @@ void FakeDemuxerStream::Initialize() {
   num_buffers_returned_ = 0;
   current_timestamp_ = base::TimeDelta::FromMilliseconds(kStartTimestampMs);
   duration_ = base::TimeDelta::FromMilliseconds(kDurationMs);
-  splice_timestamp_ = kNoTimestamp;
   next_coded_size_ = gfx::Size(kStartWidth, kStartHeight);
   next_read_num_ = 0;
 }
@@ -102,18 +101,6 @@ bool FakeDemuxerStream::SupportsConfigChanges() {
 
 VideoRotation FakeDemuxerStream::video_rotation() {
   return VIDEO_ROTATION_0;
-}
-
-bool FakeDemuxerStream::enabled() const {
-  return true;
-}
-
-void FakeDemuxerStream::set_enabled(bool enabled, base::TimeDelta timestamp) {
-  NOTIMPLEMENTED();
-}
-
-void FakeDemuxerStream::SetStreamRestartedCB(const StreamRestartedCB& cb) {
-  NOTIMPLEMENTED();
 }
 
 void FakeDemuxerStream::HoldNextRead() {
@@ -199,14 +186,12 @@ void FakeDemuxerStream::DoRead() {
 
   // TODO(xhwang): Output out-of-order buffers if needed.
   if (is_encrypted_) {
-    buffer->set_decrypt_config(base::WrapUnique(
-        new DecryptConfig(std::string(kKeyId, kKeyId + arraysize(kKeyId)),
-                          std::string(kIv, kIv + arraysize(kIv)),
-                          std::vector<SubsampleEntry>())));
+    buffer->set_decrypt_config(base::MakeUnique<DecryptConfig>(
+        std::string(kKeyId, kKeyId + arraysize(kKeyId)),
+        std::string(kIv, kIv + arraysize(kIv)), std::vector<SubsampleEntry>()));
   }
   buffer->set_timestamp(current_timestamp_);
   buffer->set_duration(duration_);
-  buffer->set_splice_timestamp(splice_timestamp_);
   current_timestamp_ += duration_;
 
   num_buffers_left_in_current_config_--;
@@ -217,22 +202,24 @@ void FakeDemuxerStream::DoRead() {
   base::ResetAndReturn(&read_cb_).Run(kOk, buffer);
 }
 
-FakeDemuxerStreamProvider::FakeDemuxerStreamProvider(
-    int num_video_configs,
-    int num_video_buffers_in_one_config,
-    bool is_video_encrypted)
+FakeMediaResource::FakeMediaResource(int num_video_configs,
+                                     int num_video_buffers_in_one_config,
+                                     bool is_video_encrypted)
     : fake_video_stream_(num_video_configs,
                          num_video_buffers_in_one_config,
-                         is_video_encrypted) {
+                         is_video_encrypted) {}
+
+FakeMediaResource::~FakeMediaResource() {}
+
+std::vector<DemuxerStream*> FakeMediaResource::GetAllStreams() {
+  std::vector<DemuxerStream*> result;
+  result.push_back(&fake_video_stream_);
+  return result;
 }
 
-FakeDemuxerStreamProvider::~FakeDemuxerStreamProvider() {
+void FakeMediaResource::SetStreamStatusChangeCB(
+    const StreamStatusChangeCB& cb) {
+  NOTIMPLEMENTED();
 }
-
-DemuxerStream* FakeDemuxerStreamProvider::GetStream(DemuxerStream::Type type) {
-  if (type == DemuxerStream::Type::AUDIO)
-    return nullptr;
-  return &fake_video_stream_;
-};
 
 }  // namespace media

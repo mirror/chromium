@@ -6,12 +6,14 @@
 
 #include <unordered_set>
 
+#include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_aura.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_base_observer.h"
 #include "content/browser/renderer_host/text_input_manager.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/common/input_messages.h"
 #include "content/common/text_input_state.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -69,7 +71,7 @@ class TextInputManagerTester::InternalObserver
     on_text_selection_changed_callback_ = callback;
   }
 
-  const RenderWidgetHostView* GetUpdatedView() const { return updated_view_; }
+  RenderWidgetHostView* GetUpdatedView() const { return updated_view_; }
 
   bool text_input_state_changed() const { return text_input_state_changed_; }
 
@@ -244,23 +246,37 @@ bool GetTextInputTypeForView(WebContents* web_contents,
   return true;
 }
 
-void SetCompositionForRenderWidgetHost(
-    RenderWidgetHost* render_widget_host,
+bool RequestCompositionInfoFromActiveWidget(WebContents* web_contents) {
+  TextInputManager* manager =
+      static_cast<WebContentsImpl*>(web_contents)->GetTextInputManager();
+  if (!manager || !manager->GetActiveWidget())
+    return false;
+
+  manager->GetActiveWidget()->RequestCompositionUpdates(
+      true /* immediate_request */, false /* monitor_updates */);
+  return true;
+}
+
+bool DoesFrameHaveFocusedEditableElement(RenderFrameHost* frame) {
+  return static_cast<RenderFrameHostImpl*>(frame)
+      ->has_focused_editable_element();
+}
+
+void SendImeCommitTextToWidget(
+    RenderWidgetHost* rwh,
     const base::string16& text,
     const std::vector<ui::CompositionUnderline>& underlines,
     const gfx::Range& replacement_range,
-    int selection_start,
-    int selection_end) {
-  std::vector<blink::WebCompositionUnderline> web_underlines;
+    int relative_cursor_pos) {
+  std::vector<blink::WebCompositionUnderline> web_composition_underlines;
   for (auto underline : underlines) {
-    web_underlines.emplace_back(blink::WebCompositionUnderline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color));
+    web_composition_underlines.emplace_back(
+        static_cast<int>(underline.start_offset),
+        static_cast<int>(underline.end_offset), underline.color,
+        underline.thick, underline.background_color);
   }
-
-  static_cast<RenderWidgetHostImpl*>(render_widget_host)
-      ->ImeSetComposition(text, web_underlines, replacement_range,
-                          selection_start, selection_end);
+  RenderWidgetHostImpl::From(rwh)->ImeCommitText(
+      text, web_composition_underlines, replacement_range, relative_cursor_pos);
 }
 
 size_t GetRegisteredViewsCountFromTextInputManager(WebContents* web_contents) {
@@ -326,7 +342,7 @@ const RenderWidgetHostView* TextInputManagerTester::GetActiveView() {
   return observer_->text_input_manager()->active_view_for_testing();
 }
 
-const RenderWidgetHostView* TextInputManagerTester::GetUpdatedView() {
+RenderWidgetHostView* TextInputManagerTester::GetUpdatedView() {
   return observer_->GetUpdatedView();
 }
 
@@ -336,7 +352,7 @@ bool TextInputManagerTester::GetCurrentTextSelectionLength(size_t* length) {
   if (!observer_->text_input_manager()->GetActiveWidget())
     return false;
 
-  *length = observer_->text_input_manager()->GetTextSelection()->text.size();
+  *length = observer_->text_input_manager()->GetTextSelection()->text().size();
   return true;
 }
 
@@ -395,10 +411,6 @@ void TextInputStateSender::SetCanComposeInline(bool can_compose_inline) {
 
 void TextInputStateSender::SetShowImeIfNeeded(bool show_ime_if_needed) {
   text_input_state_->show_ime_if_needed = show_ime_if_needed;
-}
-
-void TextInputStateSender::SetIsNonImeChange(bool is_non_ime_change) {
-  text_input_state_->is_non_ime_change = is_non_ime_change;
 }
 
 TestInputMethodObserver::TestInputMethodObserver() {}

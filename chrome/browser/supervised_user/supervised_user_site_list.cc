@@ -12,6 +12,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_runner_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/values.h"
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
@@ -47,7 +48,7 @@ std::vector<std::string> ConvertListValues(const base::ListValue* list_values) {
   if (list_values) {
     for (const auto& entry : *list_values) {
       std::string entry_string;
-      if (!entry->GetAsString(&entry_string)) {
+      if (!entry.GetAsString(&entry_string)) {
         LOG(ERROR) << "Invalid whitelist entry";
         continue;
       }

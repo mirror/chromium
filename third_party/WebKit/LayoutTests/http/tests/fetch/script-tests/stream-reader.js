@@ -37,6 +37,17 @@ promise_test(function(t) {
       });
   }, 'read contents with ReadableStreamReader');
 
+promise_test(() => {
+    let reader;
+    return fetch('/fetch/resources/progressive.php').then(res => {
+        reader = res.body.getReader();
+        return Promise.all([reader.read(), reader.read(), reader.read()]);
+      }).then(() => {
+        reader.releaseLock();
+        // We expect the test finishes without crashing.
+      });
+  }, 'parallel read');
+
 promise_test(function(t) {
     return fetch('/fetch/resources/progressive.php').then(function(res) {
         assert_false(res.bodyUsed);
@@ -84,5 +95,16 @@ promise_test(function(t) {
         assert_true(clone.bodyUsed);
       });
   }, 'Cancelling stream should not affect cloned one.');
+
+promise_test(t => {
+    let reader;
+    return fetch('/fetch/resources/slow-failure.cgi').then(res => {
+        reader = res.body.getReader();
+        return readableStreamToArray(res.body, reader);
+      }).then(unreached_fulfillment(t), e => {
+        reader.releaseLock();
+        assert_equals(e.name, 'TypeError');
+      });
+  }, 'Streaming error should be reported as a TypeError.');
 
 done();

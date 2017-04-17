@@ -16,16 +16,11 @@
 #include "components/sessions/core/serialized_navigation_entry.h"
 #include "components/sessions/core/session_id.h"
 #include "components/sessions/core/sessions_export.h"
+#include "components/sync/protocol/session_specifics.pb.h"
 #include "components/variations/variations_associated_data.h"
-#include "sync/protocol/session_specifics.pb.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/gfx/geometry/rect.h"
 #include "url/gurl.h"
-
-namespace content {
-class BrowserContext;
-class NavigationEntry;
-}
 
 namespace sessions {
 
@@ -62,7 +57,7 @@ struct SESSIONS_EXPORT SessionTab {
   // Unique id of the window.
   SessionID window_id;
 
-  // Unique if of the tab.
+  // Unique id of the tab.
   SessionID tab_id;
 
   // Visual index of the tab within its window. There may be gaps in these
@@ -108,9 +103,6 @@ struct SESSIONS_EXPORT SessionTab {
   // For reassociating sessionStorage.
   std::string session_storage_persistent_id;
 
-  // Ids of the currently assigned variations which should be sent to sync.
-  std::vector<variations::VariationID> variation_ids;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(SessionTab);
 };
@@ -128,11 +120,6 @@ struct SESSIONS_EXPORT SessionWindow {
     TYPE_TABBED = 0,
     TYPE_POPUP = 1
   };
-
-  // Convert this object into its sync protocol buffer equivalent. Note that
-  // not all fields are synced here, because they don't all make sense or
-  // translate when restoring a SessionWindow on another device.
-  sync_pb::SessionWindow ToSyncData() const;
 
   // Identifier of the window.
   SessionID window_id;
@@ -166,7 +153,7 @@ struct SESSIONS_EXPORT SessionWindow {
   base::Time timestamp;
 
   // The tabs, ordered by visual order.
-  std::vector<SessionTab*> tabs;
+  std::vector<std::unique_ptr<SessionTab>> tabs;
 
   // Is the window maximized, minimized, or normal?
   ui::WindowShowState show_state;

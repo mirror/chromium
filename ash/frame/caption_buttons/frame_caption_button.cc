@@ -9,7 +9,6 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 
 namespace ash {
 
@@ -44,6 +43,7 @@ FrameCaptionButton::FrameCaptionButton(views::ButtonListener* listener,
       use_light_images_(false),
       alpha_(255),
       swap_images_animation_(new gfx::SlideAnimation(this)) {
+  set_animate_on_state_change(true);
   swap_images_animation_->Reset(1);
 
   // Do not flip the gfx::Canvas passed to the OnPaint() method. The snap left
@@ -55,9 +55,10 @@ FrameCaptionButton::~FrameCaptionButton() {}
 
 void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
                                   Animate animate,
-                                  gfx::VectorIconId icon_image_id) {
+                                  const gfx::VectorIcon& icon_definition) {
   gfx::ImageSkia new_icon_image = gfx::CreateVectorIcon(
-      icon_image_id, use_light_images_ ? SK_ColorWHITE : gfx::kChromeIconGrey);
+      icon_definition,
+      use_light_images_ ? SK_ColorWHITE : gfx::kChromeIconGrey);
 
   // The early return is dependent on |animate| because callers use SetImage()
   // with ANIMATE_NO to progress the crossfade animation to the end.
@@ -71,7 +72,7 @@ void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
     crossfade_icon_image_ = icon_image_;
 
   icon_ = icon;
-  icon_image_id_ = icon_image_id;
+  icon_definition_ = &icon_definition;
   icon_image_ = new_icon_image;
 
   if (animate == ANIMATE_YES) {
@@ -123,22 +124,28 @@ void FrameCaptionButton::OnPaint(gfx::Canvas* canvas) {
   if (icon_alpha < static_cast<int>(kFadeOutRatio * 255))
     crossfade_icon_alpha = static_cast<int>(255 - icon_alpha / kFadeOutRatio);
 
+  int centered_origin_x = (width() - icon_image_.width()) / 2;
+  int centered_origin_y = (height() - icon_image_.height()) / 2;
+
   if (crossfade_icon_alpha > 0 && !crossfade_icon_image_.isNull()) {
-    gfx::Canvas icon_canvas(icon_image_.size(), canvas->image_scale(), false);
-    SkPaint paint;
-    paint.setAlpha(icon_alpha);
-    icon_canvas.DrawImageInt(icon_image_, 0, 0, paint);
+    canvas->SaveLayerAlpha(GetAlphaForIcon(alpha_));
+    cc::PaintFlags flags;
+    flags.setAlpha(icon_alpha);
+    canvas->DrawImageInt(icon_image_, centered_origin_x, centered_origin_y,
+                         flags);
 
-    paint.setAlpha(crossfade_icon_alpha);
-    paint.setXfermodeMode(SkXfermode::kPlus_Mode);
-    icon_canvas.DrawImageInt(crossfade_icon_image_, 0, 0, paint);
-
-    PaintCentered(canvas, gfx::ImageSkia(icon_canvas.ExtractImageRep()),
-                  alpha_);
+    flags.setAlpha(crossfade_icon_alpha);
+    flags.setBlendMode(SkBlendMode::kPlus);
+    canvas->DrawImageInt(crossfade_icon_image_, centered_origin_x,
+                         centered_origin_y, flags);
+    canvas->Restore();
   } else {
     if (!swap_images_animation_->is_animating())
       icon_alpha = alpha_;
-    PaintCentered(canvas, icon_image_, icon_alpha);
+    cc::PaintFlags flags;
+    flags.setAlpha(GetAlphaForIcon(icon_alpha));
+    canvas->DrawImageInt(icon_image_, centered_origin_x, centered_origin_y,
+                         flags);
   }
 }
 
@@ -165,25 +172,19 @@ void FrameCaptionButton::OnGestureEvent(ui::GestureEvent* event) {
   CustomButton::OnGestureEvent(event);
 }
 
-void FrameCaptionButton::PaintCentered(gfx::Canvas* canvas,
-                                       const gfx::ImageSkia& to_center,
-                                       int alpha) {
-  if (!paint_as_active_) {
-    // Paint icons as active when they are hovered over or pressed.
-    double inactive_alpha = kInactiveIconAlpha;
-    if (hover_animation().is_animating()) {
-      inactive_alpha =
-          hover_animation().CurrentValueBetween(inactive_alpha, 1.0f);
-    } else if (state() == STATE_PRESSED || state() == STATE_HOVERED) {
-      inactive_alpha = 1.0f;
-    }
-    alpha *= inactive_alpha;
-  }
+int FrameCaptionButton::GetAlphaForIcon(int base_alpha) const {
+  if (paint_as_active_)
+    return base_alpha;
 
-  SkPaint paint;
-  paint.setAlpha(alpha);
-  canvas->DrawImageInt(to_center, (width() - to_center.width()) / 2,
-                       (height() - to_center.height()) / 2, paint);
+  // Paint icons as active when they are hovered over or pressed.
+  double inactive_alpha = kInactiveIconAlpha;
+  if (hover_animation().is_animating()) {
+    inactive_alpha =
+        hover_animation().CurrentValueBetween(inactive_alpha, 1.0f);
+  } else if (state() == STATE_PRESSED || state() == STATE_HOVERED) {
+    inactive_alpha = 1.0f;
+  }
+  return base_alpha * inactive_alpha;
 }
 
 }  // namespace ash

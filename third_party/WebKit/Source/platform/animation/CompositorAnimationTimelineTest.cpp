@@ -6,37 +6,39 @@
 
 #include "base/memory/ref_counted.h"
 #include "cc/animation/animation_host.h"
+#include "platform/animation/CompositorAnimationHost.h"
 #include "platform/animation/CompositorAnimationPlayer.h"
 #include "platform/testing/CompositorTest.h"
 #include "platform/testing/WebLayerTreeViewImplForTesting.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
 
 namespace blink {
 
-class CompositorAnimationTimelineTest : public CompositorTest {
-};
+class CompositorAnimationTimelineTest : public CompositorTest {};
 
-TEST_F(CompositorAnimationTimelineTest, CompositorTimelineDeletionDetachesFromAnimationHost)
-{
-    std::unique_ptr<CompositorAnimationTimeline> timeline = CompositorAnimationTimeline::create();
+TEST_F(CompositorAnimationTimelineTest,
+       CompositorTimelineDeletionDetachesFromAnimationHost) {
+  std::unique_ptr<CompositorAnimationTimeline> timeline =
+      CompositorAnimationTimeline::Create();
 
-    scoped_refptr<cc::AnimationTimeline> ccTimeline = timeline->animationTimeline();
-    EXPECT_FALSE(ccTimeline->animation_host());
+  scoped_refptr<cc::AnimationTimeline> cc_timeline =
+      timeline->GetAnimationTimeline();
+  EXPECT_FALSE(cc_timeline->animation_host());
 
-    std::unique_ptr<WebLayerTreeView> layerTreeHost = wrapUnique(new WebLayerTreeViewImplForTesting);
-    DCHECK(layerTreeHost);
+  WebLayerTreeViewImplForTesting layer_tree_view;
+  CompositorAnimationHost compositor_animation_host(
+      layer_tree_view.CompositorAnimationHost());
 
-    layerTreeHost->attachCompositorAnimationTimeline(timeline->animationTimeline());
-    cc::AnimationHost* animationHost = ccTimeline->animation_host();
-    EXPECT_TRUE(animationHost);
-    EXPECT_TRUE(animationHost->GetTimelineById(ccTimeline->id()));
+  compositor_animation_host.AddTimeline(*timeline);
+  cc::AnimationHost* animation_host = cc_timeline->animation_host();
+  EXPECT_TRUE(animation_host);
+  EXPECT_TRUE(animation_host->GetTimelineById(cc_timeline->id()));
 
-    // Delete CompositorAnimationTimeline while attached to host.
-    timeline = nullptr;
+  // Delete CompositorAnimationTimeline while attached to host.
+  timeline = nullptr;
 
-    EXPECT_FALSE(ccTimeline->animation_host());
-    EXPECT_FALSE(animationHost->GetTimelineById(ccTimeline->id()));
+  EXPECT_FALSE(cc_timeline->animation_host());
+  EXPECT_FALSE(animation_host->GetTimelineById(cc_timeline->id()));
 }
 
-} // namespace blink
+}  // namespace blink

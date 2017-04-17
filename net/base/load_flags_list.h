@@ -19,7 +19,7 @@ LOAD_FLAG(BYPASS_CACHE, 1 << 1)
 
 // This is a back/forward style navigation where the cached content should
 // be preferred over any protocol specific cache validation.
-LOAD_FLAG(PREFERRING_CACHE, 1 << 2)
+LOAD_FLAG(SKIP_CACHE_VALIDATION, 1 << 2)
 
 // This is a navigation that will fail if it cannot serve the requested
 // resource from the cache (or some equivalent local store).
@@ -54,10 +54,14 @@ LOAD_FLAG(DO_NOT_SEND_AUTH_DATA, 1 << 10)
 // This should only be used for testing (set by HttpNetworkTransaction).
 LOAD_FLAG(IGNORE_ALL_CERT_ERRORS, 1 << 11)
 
+// DO NOT USE THIS FLAG
+// The network stack should not have frame level knowledge.  Any pre-connect
+// or pre-resolution requiring that knowledge should be done from the
+// stack embedder.
 // Indicate that this is a top level frame, so that we don't assume it is a
 // subresource and speculatively pre-connect or pre-resolve when a referring
 // page is loaded.
-LOAD_FLAG(MAIN_FRAME, 1 << 12)
+LOAD_FLAG(MAIN_FRAME_DEPRECATED, 1 << 12)
 
 // Indicates that this load was motivated by the rel=prefetch feature,
 // and is (in theory) not intended for the current frame.
@@ -76,11 +80,10 @@ LOAD_FLAG(MAYBE_USER_GESTURE, 1 << 15)
 // be honored, but that other forms of authority may be used.
 LOAD_FLAG(DO_NOT_USE_EMBEDDED_IDENTITY, 1 << 16)
 
-// The creator of this URLRequest wishes to receive stale responses when allowed
-// by the "Cache-Control: stale-while-revalidate" directive and is able to issue
-// an async revalidation to update the cache.
-LOAD_FLAG(SUPPORT_ASYNC_REVALIDATION, 1 << 17)
-
 // Indicates that this request is not to be migrated to a new network when QUIC
 // connection migration is enabled.
-LOAD_FLAG(DISABLE_CONNECTION_MIGRATION, 1 << 18)
+LOAD_FLAG(DISABLE_CONNECTION_MIGRATION, 1 << 17)
+
+// Indicates that the cache should not check that the request matches the
+// response's vary header.
+LOAD_FLAG(SKIP_VARY_CHECK, 1 << 18)

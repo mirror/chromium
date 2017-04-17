@@ -30,73 +30,85 @@
 
 namespace blink {
 
-CrossfadeGeneratedImage::CrossfadeGeneratedImage(PassRefPtr<Image> fromImage, PassRefPtr<Image> toImage, float percentage, IntSize crossfadeSize, const IntSize& size)
-    : GeneratedImage(size)
-    , m_fromImage(fromImage)
-    , m_toImage(toImage)
-    , m_percentage(percentage)
-    , m_crossfadeSize(crossfadeSize)
-{
+CrossfadeGeneratedImage::CrossfadeGeneratedImage(PassRefPtr<Image> from_image,
+                                                 PassRefPtr<Image> to_image,
+                                                 float percentage,
+                                                 IntSize crossfade_size,
+                                                 const IntSize& size)
+    : GeneratedImage(size),
+      from_image_(std::move(from_image)),
+      to_image_(std::move(to_image)),
+      percentage_(percentage),
+      crossfade_size_(crossfade_size) {}
+
+void CrossfadeGeneratedImage::DrawCrossfade(PaintCanvas* canvas,
+                                            const PaintFlags& flags,
+                                            ImageClampingMode clamp_mode) {
+  FloatRect from_image_rect(FloatPoint(), FloatSize(from_image_->Size()));
+  FloatRect to_image_rect(FloatPoint(), FloatSize(to_image_->Size()));
+  FloatRect dest_rect((FloatPoint()), FloatSize(crossfade_size_));
+
+  // TODO(junov): The various effects encoded into paint should probably be
+  // applied here instead of inside the layer.  This probably faulty behavior
+  // was maintained in order to preserve pre-existing behavior while refactoring
+  // this code.  This should be investigated further. crbug.com/472634
+  PaintFlags layer_flags;
+  layer_flags.setBlendMode(flags.getBlendMode());
+  PaintCanvasAutoRestore ar(canvas, false);
+  canvas->saveLayer(nullptr, &layer_flags);
+
+  PaintFlags image_flags(flags);
+  image_flags.setBlendMode(SkBlendMode::kSrcOver);
+  int image_alpha = ClampedAlphaForBlending(1 - percentage_);
+  image_flags.setAlpha(image_alpha > 255 ? 255 : image_alpha);
+  image_flags.setAntiAlias(flags.isAntiAlias());
+  // TODO(junov): This code should probably be propagating the
+  // RespectImageOrientationEnum from CrossfadeGeneratedImage::draw(). Code was
+  // written this way during refactoring to avoid modifying existing behavior,
+  // but this warrants further investigation. crbug.com/472634
+  from_image_->Draw(canvas, image_flags, dest_rect, from_image_rect,
+                    kDoNotRespectImageOrientation, clamp_mode);
+  image_flags.setBlendMode(SkBlendMode::kPlus);
+  image_alpha = ClampedAlphaForBlending(percentage_);
+  image_flags.setAlpha(image_alpha > 255 ? 255 : image_alpha);
+  to_image_->Draw(canvas, image_flags, dest_rect, to_image_rect,
+                  kDoNotRespectImageOrientation, clamp_mode);
 }
 
-void CrossfadeGeneratedImage::drawCrossfade(SkCanvas* canvas, const SkPaint& paint, ImageClampingMode clampMode)
-{
-    FloatRect fromImageRect(FloatPoint(), FloatSize(m_fromImage->size()));
-    FloatRect toImageRect(FloatPoint(), FloatSize(m_toImage->size()));
-    FloatRect destRect((FloatPoint()), FloatSize(m_crossfadeSize));
+void CrossfadeGeneratedImage::Draw(PaintCanvas* canvas,
+                                   const PaintFlags& flags,
+                                   const FloatRect& dst_rect,
+                                   const FloatRect& src_rect,
+                                   RespectImageOrientationEnum,
+                                   ImageClampingMode clamp_mode) {
+  // Draw nothing if either of the images hasn't loaded yet.
+  if (from_image_ == Image::NullImage() || to_image_ == Image::NullImage())
+    return;
 
-    // TODO(junov): The various effects encoded into paint should probably be applied here
-    // instead of inside the layer.  This probably faulty behavior was maintained in order
-    // to preserve pre-existing behavior while refactoring this code.  This should be
-    // investigated further. crbug.com/472634
-    SkPaint layerPaint;
-    layerPaint.setXfermode(sk_ref_sp(paint.getXfermode()));
-    SkAutoCanvasRestore ar(canvas, false);
-    canvas->saveLayer(nullptr, &layerPaint);
+  PaintCanvasAutoRestore ar(canvas, true);
+  canvas->clipRect(dst_rect);
+  canvas->translate(dst_rect.X(), dst_rect.Y());
+  if (dst_rect.Size() != src_rect.Size())
+    canvas->scale(dst_rect.Width() / src_rect.Width(),
+                  dst_rect.Height() / src_rect.Height());
+  canvas->translate(-src_rect.X(), -src_rect.Y());
 
-    SkPaint imagePaint(paint);
-    imagePaint.setXfermodeMode(SkXfermode::kSrcOver_Mode);
-    int imageAlpha = clampedAlphaForBlending(1 - m_percentage);
-    imagePaint.setAlpha(imageAlpha > 255 ? 255 : imageAlpha);
-    imagePaint.setAntiAlias(paint.isAntiAlias());
-    // TODO(junov): This code should probably be propagating the RespectImageOrientationEnum
-    // form CrossfadeGeneratedImage::draw. Code was written this way during refactoring to
-    // avoid modifying existing behavior, but this warrants further investigation. crbug.com/472634
-    m_fromImage->draw(canvas, imagePaint, destRect, fromImageRect, DoNotRespectImageOrientation, clampMode);
-    imagePaint.setXfermodeMode(SkXfermode::kPlus_Mode);
-    imageAlpha = clampedAlphaForBlending(m_percentage);
-    imagePaint.setAlpha(imageAlpha > 255 ? 255 : imageAlpha);
-    m_toImage->draw(canvas, imagePaint, destRect, toImageRect, DoNotRespectImageOrientation, clampMode);
+  DrawCrossfade(canvas, flags, clamp_mode);
 }
 
-void CrossfadeGeneratedImage::draw(SkCanvas* canvas, const SkPaint& paint, const FloatRect& dstRect, const FloatRect& srcRect, RespectImageOrientationEnum, ImageClampingMode clampMode)
-{
-    // Draw nothing if either of the images hasn't loaded yet.
-    if (m_fromImage == Image::nullImage() || m_toImage == Image::nullImage())
-        return;
+void CrossfadeGeneratedImage::DrawTile(GraphicsContext& context,
+                                       const FloatRect& src_rect) {
+  // Draw nothing if either of the images hasn't loaded yet.
+  if (from_image_ == Image::NullImage() || to_image_ == Image::NullImage())
+    return;
 
-    SkAutoCanvasRestore ar(canvas, true);
-    canvas->clipRect(dstRect);
-    canvas->translate(dstRect.x(), dstRect.y());
-    if (dstRect.size() != srcRect.size())
-        canvas->scale(dstRect.width() / srcRect.width(), dstRect.height() / srcRect.height());
-    canvas->translate(-srcRect.x(), -srcRect.y());
-
-    drawCrossfade(canvas, paint, clampMode);
+  PaintFlags flags = context.FillFlags();
+  flags.setBlendMode(SkBlendMode::kSrcOver);
+  flags.setAntiAlias(context.ShouldAntialias());
+  FloatRect dest_rect((FloatPoint()), FloatSize(crossfade_size_));
+  flags.setFilterQuality(
+      context.ComputeFilterQuality(this, dest_rect, src_rect));
+  DrawCrossfade(context.Canvas(), flags, kClampImageToSourceRect);
 }
 
-void CrossfadeGeneratedImage::drawTile(GraphicsContext& context, const FloatRect& srcRect)
-{
-    // Draw nothing if either of the images hasn't loaded yet.
-    if (m_fromImage == Image::nullImage() || m_toImage == Image::nullImage())
-        return;
-
-    SkPaint paint = context.fillPaint();
-    paint.setXfermodeMode(SkXfermode::kSrcOver_Mode);
-    paint.setAntiAlias(context.shouldAntialias());
-    FloatRect destRect((FloatPoint()), FloatSize(m_crossfadeSize));
-    paint.setFilterQuality(context.computeFilterQuality(this, destRect, srcRect));
-    drawCrossfade(context.canvas(), paint, ClampImageToSourceRect);
-}
-
-} // namespace blink
+}  // namespace blink

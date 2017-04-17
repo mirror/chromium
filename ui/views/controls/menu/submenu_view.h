@@ -21,6 +21,10 @@ class MenuHost;
 class MenuItemView;
 class MenuScrollViewContainer;
 
+namespace test {
+class MenuControllerTest;
+}  // test
+
 // SubmenuView is the parent of all menu items.
 //
 // SubmenuView has the following responsibilities:
@@ -36,7 +40,8 @@ class MenuScrollViewContainer;
 // MenuScrollViewContainer handles showing as much of the SubmenuView as the
 // screen allows. If the SubmenuView is taller than the screen, scroll buttons
 // are provided that allow the user to see all the menu items.
-class VIEWS_EXPORT SubmenuView : public PrefixDelegate,
+class VIEWS_EXPORT SubmenuView : public View,
+                                 public PrefixDelegate,
                                  public ScrollDelegate {
  public:
   // The submenu's class name.
@@ -61,7 +66,7 @@ class VIEWS_EXPORT SubmenuView : public PrefixDelegate,
   gfx::Size GetPreferredSize() const override;
 
   // Override from View.
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
 
   // Painting.
   void PaintChildren(const ui::PaintContext& context) override;
@@ -168,6 +173,8 @@ class VIEWS_EXPORT SubmenuView : public PrefixDelegate,
   void ChildPreferredSizeChanged(View* child) override;
 
  private:
+  friend class test::MenuControllerTest;
+
   void SchedulePaintForDropIndicator(MenuItemView* item,
                                      MenuDelegate::DropPosition position);
 

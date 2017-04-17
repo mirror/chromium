@@ -6,16 +6,19 @@
 #define DocumentAnimation_h
 
 #include "core/dom/Document.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class DocumentAnimation {
-    STATIC_ONLY(DocumentAnimation);
-public:
-    static AnimationTimeline* timeline(Document& document) { return &document.timeline(); }
+  STATIC_ONLY(DocumentAnimation);
+
+ public:
+  static DocumentTimeline* timeline(Document& document) {
+    return &document.Timeline();
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentAnimation_h
+#endif  // DocumentAnimation_h

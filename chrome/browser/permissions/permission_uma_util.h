@@ -9,31 +9,16 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/time/time.h"
+#include "chrome/browser/permissions/permission_request.h"
+#include "chrome/browser/permissions/permission_result.h"
+#include "chrome/browser/permissions/permission_util.h"
+#include "content/public/browser/permission_type.h"
 
+enum class PermissionRequestGestureType;
 class GURL;
-class Profile;
-
-namespace content {
-enum class PermissionType;
-}  // namespace content
-
 class PermissionRequest;
-
-// Enum for UMA purposes, make sure you update histograms.xml if you add new
-// permission actions. Never delete or reorder an entry; only add new entries
-// immediately before PERMISSION_NUM
-enum PermissionAction {
-  GRANTED = 0,
-  DENIED = 1,
-  DISMISSED = 2,
-  IGNORED = 3,
-  REVOKED = 4,
-  REENABLED = 5,
-  REQUESTED = 6,
-
-  // Always keep this at the end.
-  PERMISSION_ACTION_NUM,
-};
+class Profile;
 
 // This should stay in sync with the SourceUI enum in the permission report
 // protobuf (src/chrome/common/safe_browsing/permission_report.proto).
@@ -44,7 +29,60 @@ enum class PermissionSourceUI {
   PAGE_ACTION = 3,
 
   // Always keep this at the end.
-  SOURCE_UI_NUM,
+  NUM,
+};
+
+// This should stay in sync with the PersistDecision enum in the permission
+// report message (src/chrome/common/safe_browsing/permission_report.proto).
+enum class PermissionPersistDecision {
+  UNSPECIFIED = 0,
+  PERSISTED = 1,
+  NOT_PERSISTED = 2,
+};
+
+// Any new values should be inserted immediately prior to NUM.
+enum class SafeBrowsingResponse {
+  NOT_BLACKLISTED = 0,
+  TIMEOUT = 1,
+  BLACKLISTED = 2,
+
+  // Always keep this at the end.
+  NUM,
+};
+
+// Any new values should be inserted immediately prior to NUM.
+enum class PermissionEmbargoStatus {
+  NOT_EMBARGOED = 0,
+  PERMISSIONS_BLACKLISTING = 1,
+  REPEATED_DISMISSALS = 2,
+  REPEATED_IGNORES = 3,
+
+  // Keep this at the end.
+  NUM,
+};
+
+// A bundle for the information sent in a PermissionReport.
+struct PermissionReportInfo {
+  PermissionReportInfo(
+      const GURL& origin,
+      ContentSettingsType permission,
+      PermissionAction action,
+      PermissionSourceUI source_ui,
+      PermissionRequestGestureType gesture_type,
+      PermissionPersistDecision persist_decision,
+      int num_prior_dismissals,
+      int num_prior_ignores);
+
+  PermissionReportInfo(const PermissionReportInfo& other);
+
+  GURL origin;
+  ContentSettingsType permission;
+  PermissionAction action;
+  PermissionSourceUI source_ui;
+  PermissionRequestGestureType gesture_type;
+  PermissionPersistDecision persist_decision;
+  int num_prior_dismissals;
+  int num_prior_ignores;
 };
 
 // Provides a convenient way of logging UMA for permission related operations.
@@ -63,27 +101,50 @@ class PermissionUmaUtil {
   static const char kPermissionsPromptMergedBubbleTypes[];
   static const char kPermissionsPromptMergedBubbleAccepted[];
   static const char kPermissionsPromptMergedBubbleDenied[];
+  static const char kPermissionsPromptAcceptedPriorDismissCountPrefix[];
+  static const char kPermissionsPromptAcceptedPriorIgnoreCountPrefix[];
+  static const char kPermissionsPromptDeniedPriorDismissCountPrefix[];
+  static const char kPermissionsPromptDeniedPriorIgnoreCountPrefix[];
+  static const char kPermissionsPromptDismissedPriorDismissCountPrefix[];
+  static const char kPermissionsPromptDismissedPriorIgnoreCountPrefix[];
+  static const char kPermissionsPromptIgnoredPriorDismissCountPrefix[];
+  static const char kPermissionsPromptIgnoredPriorIgnoreCountPrefix[];
 
-  static void PermissionRequested(content::PermissionType permission,
+  static void PermissionRequested(ContentSettingsType permission,
                                   const GURL& requesting_origin,
                                   const GURL& embedding_origin,
                                   Profile* profile);
-  static void PermissionGranted(content::PermissionType permission,
+  static void PermissionGranted(ContentSettingsType permission,
+                                PermissionRequestGestureType gesture_type,
                                 const GURL& requesting_origin,
                                 Profile* profile);
-  static void PermissionDenied(content::PermissionType permission,
+  static void PermissionDenied(ContentSettingsType permission,
+                               PermissionRequestGestureType gesture_type,
                                const GURL& requesting_origin,
                                Profile* profile);
-  static void PermissionDismissed(content::PermissionType permission,
+  static void PermissionDismissed(ContentSettingsType permission,
+                                  PermissionRequestGestureType gesture_type,
                                   const GURL& requesting_origin,
                                   Profile* profile);
-  static void PermissionIgnored(content::PermissionType permission,
+  static void PermissionIgnored(ContentSettingsType permission,
+                                PermissionRequestGestureType gesture_type,
                                 const GURL& requesting_origin,
                                 Profile* profile);
-  static void PermissionRevoked(content::PermissionType permission,
+  static void PermissionRevoked(ContentSettingsType permission,
                                 PermissionSourceUI source_ui,
                                 const GURL& revoked_origin,
                                 Profile* profile);
+
+  static void RecordEmbargoPromptSuppression(
+      PermissionEmbargoStatus embargo_status);
+
+  static void RecordEmbargoPromptSuppressionFromSource(
+      PermissionStatusSource source);
+
+  static void RecordEmbargoStatus(PermissionEmbargoStatus embargo_status);
+
+  static void RecordSafeBrowsingResponse(base::TimeDelta response_time,
+                                         SafeBrowsingResponse response);
 
   // UMA specifically for when permission prompts are shown. This should be
   // roughly equivalent to the metrics above, however it is
@@ -109,16 +170,50 @@ class PermissionUmaUtil {
   static void PermissionPromptDenied(
       const std::vector<PermissionRequest*>& requests);
 
+  // Records the request type and gesture type for a shown, accepted, and denied
+  // prompt. Defined separately as Android must call this method explicitly
+  // until the removal of PermissionQueueController is completed.
+  static void RecordPermissionPromptShown(
+      PermissionRequestType request_type,
+      PermissionRequestGestureType gesture_type);
+
+  static void RecordPermissionPromptAccepted(
+      PermissionRequestType request_type,
+      PermissionRequestGestureType gesture_type);
+
+  static void RecordPermissionPromptDenied(
+      PermissionRequestType request_type,
+      PermissionRequestGestureType gesture_type);
+
+  // A permission prompt was accepted or denied, and the prompt displayed a
+  // persistence toggle. Records whether the toggle was enabled (persist) or
+  // disabled (don't persist).
+  static void PermissionPromptAcceptedWithPersistenceToggle(
+      ContentSettingsType permission,
+      bool toggle_enabled);
+
+  static void PermissionPromptDeniedWithPersistenceToggle(
+      ContentSettingsType permission,
+      bool toggle_enabled);
+
  private:
   friend class PermissionUmaUtilTest;
 
   static bool IsOptedIntoPermissionActionReporting(Profile* profile);
 
-  static void RecordPermissionAction(content::PermissionType permission,
+  static void RecordPermissionAction(ContentSettingsType permission,
                                      PermissionAction action,
                                      PermissionSourceUI source_ui,
+                                     PermissionRequestGestureType gesture_type,
                                      const GURL& requesting_origin,
                                      Profile* profile);
+
+  // Records |count| total prior actions for a prompt of type |permission|
+  // for a single origin using |prefix| for the metric.
+  static void RecordPermissionPromptPriorCount(
+      ContentSettingsType permission,
+      const std::string& prefix,
+      int count);
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(PermissionUmaUtil);
 };

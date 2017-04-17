@@ -27,6 +27,7 @@
 #include "components/update_client/test_configurator.h"
 #include "components/update_client/test_installer.h"
 #include "components/update_client/update_checker.h"
+#include "components/update_client/update_client_errors.h"
 #include "components/update_client/update_client_internal.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -148,7 +149,7 @@ class UpdateClientTest : public testing::Test {
   // Returns the full path to a test file.
   static base::FilePath TestFilePath(const char* file);
 
-  scoped_refptr<update_client::Configurator> config() { return config_; }
+  scoped_refptr<update_client::TestConfigurator> config() { return config_; }
   update_client::PersistedData* metadata() { return metadata_.get(); }
 
   base::Closure quit_closure() { return quit_closure_; }
@@ -162,7 +163,7 @@ class UpdateClientTest : public testing::Test {
 
   std::unique_ptr<base::SequencedWorkerPoolOwner> worker_pool_;
 
-  scoped_refptr<update_client::Configurator> config_;
+  scoped_refptr<update_client::TestConfigurator> config_;
   std::unique_ptr<TestingPrefServiceSimple> pref_;
   std::unique_ptr<update_client::PersistedData> metadata_;
 
@@ -210,7 +211,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
       CrxComponent crx;
       crx.name = "test_jebg";
       crx.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx.version = Version("0.9");
+      crx.version = base::Version("0.9");
       crx.installer = new TestInstaller;
       components->push_back(crx);
     }
@@ -218,8 +219,8 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -233,9 +234,11 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
+      EXPECT_TRUE(enabled_component_updates);
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
           base::Bind(update_check_callback, 0, UpdateResponse::Results(), 0));
@@ -309,13 +312,13 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
       CrxComponent crx1;
       crx1.name = "test_jebg";
       crx1.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx1.version = Version("0.9");
+      crx1.version = base::Version("0.9");
       crx1.installer = new TestInstaller;
 
       CrxComponent crx2;
       crx2.name = "test_abag";
       crx2.pk_hash.assign(abag_hash, abag_hash + arraysize(abag_hash));
-      crx2.version = Version("2.2");
+      crx2.version = base::Version("2.2");
       crx2.installer = new TestInstaller;
 
       components->push_back(crx1);
@@ -325,8 +328,8 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -340,8 +343,9 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       /*
       Fake the following response:
@@ -371,6 +375,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
 
       UpdateResponse::Result result;
       result.extension_id = "jebgalgnebhfojomionfpkfelancnnkf";
+      result.status = "ok";
       result.crx_urls.push_back(GURL("http://localhost/download/"));
       result.manifest.version = "1.0";
       result.manifest.browser_min_version = "11.0.1.0";
@@ -495,13 +500,13 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
       CrxComponent crx1;
       crx1.name = "test_jebg";
       crx1.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx1.version = Version("0.9");
+      crx1.version = base::Version("0.9");
       crx1.installer = new TestInstaller;
 
       CrxComponent crx2;
       crx2.name = "test_ihfo";
       crx2.pk_hash.assign(ihfo_hash, ihfo_hash + arraysize(ihfo_hash));
-      crx2.version = Version("0.8");
+      crx2.version = base::Version("0.8");
       crx2.installer = new TestInstaller;
 
       components->push_back(crx1);
@@ -511,8 +516,8 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -526,8 +531,9 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       /*
       Fake the following response:
@@ -571,6 +577,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
 
       UpdateResponse::Result result1;
       result1.extension_id = "jebgalgnebhfojomionfpkfelancnnkf";
+      result1.status = "ok";
       result1.crx_urls.push_back(GURL("http://localhost/download/"));
       result1.manifest.version = "1.0";
       result1.manifest.browser_min_version = "11.0.1.0";
@@ -583,6 +590,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
 
       UpdateResponse::Result result2;
       result2.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+      result2.status = "ok";
       result2.crx_urls.push_back(GURL("http://localhost/download/"));
       result2.manifest.version = "1.0";
       result2.manifest.browser_min_version = "11.0.1.0";
@@ -743,13 +751,13 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
       CrxComponent crx1;
       crx1.name = "test_jebg";
       crx1.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx1.version = Version("0.9");
+      crx1.version = base::Version("0.9");
       crx1.installer = new TestInstaller;
 
       CrxComponent crx2;
       crx2.name = "test_ihfo";
       crx2.pk_hash.assign(ihfo_hash, ihfo_hash + arraysize(ihfo_hash));
-      crx2.version = Version("0.8");
+      crx2.version = base::Version("0.8");
       crx2.installer = new TestInstaller;
 
       components->push_back(crx1);
@@ -759,8 +767,8 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -774,8 +782,9 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       /*
       Fake the following response:
@@ -819,6 +828,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
 
       UpdateResponse::Result result1;
       result1.extension_id = "jebgalgnebhfojomionfpkfelancnnkf";
+      result1.status = "ok";
       result1.crx_urls.push_back(GURL("http://localhost/download/"));
       result1.manifest.version = "1.0";
       result1.manifest.browser_min_version = "11.0.1.0";
@@ -831,6 +841,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
 
       UpdateResponse::Result result2;
       result2.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+      result2.status = "ok";
       result2.crx_urls.push_back(GURL("http://localhost/download/"));
       result2.manifest.version = "1.0";
       result2.manifest.browser_min_version = "11.0.1.0";
@@ -997,9 +1008,9 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
       crx.pk_hash.assign(ihfo_hash, ihfo_hash + arraysize(ihfo_hash));
       crx.installer = installer;
       if (num_calls == 1) {
-        crx.version = Version("0.8");
+        crx.version = base::Version("0.8");
       } else if (num_calls == 2) {
-        crx.version = Version("1.0");
+        crx.version = base::Version("1.0");
       } else {
         NOTREACHED();
       }
@@ -1010,8 +1021,8 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -1025,8 +1036,9 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       static int num_call = 0;
       ++num_call;
@@ -1061,6 +1073,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
         package.fingerprint = "1";
         UpdateResponse::Result result;
         result.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+        result.status = "ok";
         result.crx_urls.push_back(GURL("http://localhost/download/"));
         result.manifest.version = "1.0";
         result.manifest.browser_min_version = "11.0.1.0";
@@ -1085,8 +1098,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
                                         0ecde26c262bad942b112990'
                            fp='22'
                            hashdiff_sha256='73c6e2d4f783fc4ca5481e89e0b8bfce7aec
-                                            8ead3686290c94792658ec06f2f2'
-                           />
+                                            8ead3686290c94792658ec06f2f2'/>
                 </packages>
               </manifest>
             </updatecheck>
@@ -1103,6 +1115,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
         package.fingerprint = "22";
         UpdateResponse::Result result;
         result.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+        result.status = "ok";
         result.crx_urls.push_back(GURL("http://localhost/download/"));
         result.crx_diffurls.push_back(GURL("http://localhost/download/"));
         result.manifest.version = "2.0";
@@ -1264,8 +1277,8 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
    public:
     MOCK_METHOD1(OnUpdateError, void(int error));
     MOCK_METHOD2(Install,
-                 bool(const base::DictionaryValue& manifest,
-                      const base::FilePath& unpack_path));
+                 Result(const base::DictionaryValue& manifest,
+                        const base::FilePath& unpack_path));
     MOCK_METHOD2(GetInstalledFile,
                  bool(const std::string& file, base::FilePath* installed_file));
     MOCK_METHOD0(Uninstall, bool());
@@ -1287,14 +1300,16 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
 
       EXPECT_CALL(*installer, OnUpdateError(_)).Times(0);
       EXPECT_CALL(*installer, Install(_, _))
-          .WillOnce(DoAll(Invoke(MockInstaller::OnInstall), Return(false)));
+          .WillOnce(
+              DoAll(Invoke(MockInstaller::OnInstall),
+                    Return(CrxInstaller::Result(InstallError::GENERIC_ERROR))));
       EXPECT_CALL(*installer, GetInstalledFile(_, _)).Times(0);
       EXPECT_CALL(*installer, Uninstall()).Times(0);
 
       CrxComponent crx;
       crx.name = "test_jebg";
       crx.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx.version = Version("0.9");
+      crx.version = base::Version("0.9");
       crx.installer = installer;
       components->push_back(crx);
     }
@@ -1302,8 +1317,8 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -1317,8 +1332,9 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       /*
       Fake the following response:
@@ -1347,6 +1363,7 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
           "6fc4b93fd11134de1300c2c0bb88c12b644a4ec0fd7c9b12cb7cc067667bde87";
       UpdateResponse::Result result;
       result.extension_id = "jebgalgnebhfojomionfpkfelancnnkf";
+      result.status = "ok";
       result.crx_urls.push_back(GURL("http://localhost/download/"));
       result.manifest.version = "1.0";
       result.manifest.browser_min_version = "11.0.1.0";
@@ -1473,9 +1490,9 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
       crx.pk_hash.assign(ihfo_hash, ihfo_hash + arraysize(ihfo_hash));
       crx.installer = installer;
       if (num_calls == 1) {
-        crx.version = Version("0.8");
+        crx.version = base::Version("0.8");
       } else if (num_calls == 2) {
-        crx.version = Version("1.0");
+        crx.version = base::Version("1.0");
       } else {
         NOTREACHED();
       }
@@ -1486,8 +1503,8 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -1501,8 +1518,9 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       static int num_call = 0;
       ++num_call;
@@ -1537,6 +1555,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
         package.fingerprint = "1";
         UpdateResponse::Result result;
         result.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+        result.status = "ok";
         result.crx_urls.push_back(GURL("http://localhost/download/"));
         result.manifest.version = "1.0";
         result.manifest.browser_min_version = "11.0.1.0";
@@ -1561,8 +1580,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
                                         0ecde26c262bad942b112990'
                            fp='22'
                            hashdiff_sha256='73c6e2d4f783fc4ca5481e89e0b8bfce7aec
-                                            8ead3686290c94792658ec06f2f2'
-                           />
+                                            8ead3686290c94792658ec06f2f2'/>
                 </packages>
               </manifest>
             </updatecheck>
@@ -1579,6 +1597,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
         package.fingerprint = "22";
         UpdateResponse::Result result;
         result.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+        result.status = "ok";
         result.crx_urls.push_back(GURL("http://localhost/download/"));
         result.crx_diffurls.push_back(GURL("http://localhost/download/"));
         result.manifest.version = "2.0";
@@ -1763,7 +1782,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
       CrxComponent crx;
       crx.name = "test_jebg";
       crx.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx.version = Version("0.9");
+      crx.version = base::Version("0.9");
       crx.installer = new TestInstaller;
       components->push_back(crx);
     }
@@ -1771,11 +1790,11 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
+    static void Callback(const base::Closure& quit_closure, Error error) {
       static int num_call = 0;
       ++num_call;
 
-      EXPECT_EQ(0, error);
+      EXPECT_EQ(Error::NONE, error);
 
       if (num_call == 2)
         quit_closure.Run();
@@ -1791,8 +1810,9 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
@@ -1867,7 +1887,7 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
       CrxComponent crx;
       crx.name = "test_jebg";
       crx.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx.version = Version("0.0");
+      crx.version = base::Version("0.0");
       crx.installer = new TestInstaller;
 
       components->push_back(crx);
@@ -1876,8 +1896,8 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
-      EXPECT_EQ(0, error);
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
       quit_closure.Run();
     }
   };
@@ -1891,8 +1911,9 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       /*
       Fake the following response:
@@ -1921,6 +1942,7 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
           "6fc4b93fd11134de1300c2c0bb88c12b644a4ec0fd7c9b12cb7cc067667bde87";
       UpdateResponse::Result result;
       result.extension_id = "jebgalgnebhfojomionfpkfelancnnkf";
+      result.status = "ok";
       result.crx_urls.push_back(GURL("http://localhost/download/"));
       result.manifest.version = "1.0";
       result.manifest.browser_min_version = "11.0.1.0";
@@ -2043,7 +2065,7 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
       CrxComponent crx;
       crx.name = "test_jebg";
       crx.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx.version = Version("0.0");
+      crx.version = base::Version("0.0");
       crx.installer = new TestInstaller;
 
       components->push_back(crx);
@@ -2052,18 +2074,18 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
+    static void Callback(const base::Closure& quit_closure, Error error) {
       static int num_call = 0;
       ++num_call;
 
       EXPECT_LE(num_call, 2);
 
       if (num_call == 1) {
-        EXPECT_EQ(Error::ERROR_UPDATE_IN_PROGRESS, error);
+        EXPECT_EQ(Error::UPDATE_IN_PROGRESS, error);
         return;
       }
       if (num_call == 2) {
-        EXPECT_EQ(0, error);
+        EXPECT_EQ(Error::NONE, error);
         quit_closure.Run();
       }
     }
@@ -2078,8 +2100,9 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
@@ -2159,7 +2182,7 @@ TEST_F(UpdateClientTest, EmptyIdList) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
+    static void Callback(const base::Closure& quit_closure, Error error) {
       quit_closure.Run();
     }
   };
@@ -2172,8 +2195,9 @@ TEST_F(UpdateClientTest, EmptyIdList) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       return false;
     }
@@ -2218,8 +2242,9 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       return false;
     }
@@ -2273,7 +2298,7 @@ TEST_F(UpdateClientTest, RetryAfter) {
       CrxComponent crx;
       crx.name = "test_jebg";
       crx.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
-      crx.version = Version("0.9");
+      crx.version = base::Version("0.9");
       crx.installer = new TestInstaller;
       components->push_back(crx);
     }
@@ -2281,26 +2306,26 @@ TEST_F(UpdateClientTest, RetryAfter) {
 
   class CompletionCallbackFake {
    public:
-    static void Callback(const base::Closure& quit_closure, int error) {
+    static void Callback(const base::Closure& quit_closure, Error error) {
       static int num_call = 0;
       ++num_call;
 
       EXPECT_LE(num_call, 4);
 
       if (num_call == 1) {
-        EXPECT_EQ(0, error);
+        EXPECT_EQ(Error::NONE, error);
       } else if (num_call == 2) {
         // This request is throttled since the update engine received a
         // positive |retry_after_sec| value in the update check response.
-        EXPECT_EQ(Error::ERROR_UPDATE_RETRY_LATER, error);
+        EXPECT_EQ(Error::RETRY_LATER, error);
       } else if (num_call == 3) {
         // This request is a foreground Install, which is never throttled.
         // The update engine received a |retry_after_sec| value of 0, which
         // resets the throttling.
-        EXPECT_EQ(0, error);
+        EXPECT_EQ(Error::NONE, error);
       } else if (num_call == 4) {
         // This request succeeds since there is no throttling in effect.
-        EXPECT_EQ(0, error);
+        EXPECT_EQ(Error::NONE, error);
       }
 
       quit_closure.Run();
@@ -2316,8 +2341,9 @@ TEST_F(UpdateClientTest, RetryAfter) {
     }
 
     bool CheckForUpdates(
-        const std::vector<CrxUpdateItem*>& items_to_check,
+        const IdToCrxUpdateItemMap& items_to_check,
         const std::string& additional_attributes,
+        bool enabled_component_updates,
         const UpdateCheckCallback& update_check_callback) override {
       static int num_call = 0;
       ++num_call;
@@ -2432,6 +2458,257 @@ TEST_F(UpdateClientTest, RetryAfter) {
         base::Bind(&CompletionCallbackFake::Callback, runloop.QuitClosure()));
     runloop.Run();
   }
+
+  update_client->RemoveObserver(&observer);
+}
+
+// Tests the update check for two CRXs scenario. The first component supports
+// the group policy to enable updates, and has its updates disabled. The second
+// component has an update. The server does not honor the "updatedisabled"
+// attribute and returns updates for both components.
+TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
+  class DataCallbackFake {
+   public:
+    static void Callback(const std::vector<std::string>& ids,
+                         std::vector<CrxComponent>* components) {
+      CrxComponent crx1;
+      crx1.name = "test_jebg";
+      crx1.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
+      crx1.version = base::Version("0.9");
+      crx1.installer = new TestInstaller;
+      crx1.supports_group_policy_enable_component_updates = true;
+
+      CrxComponent crx2;
+      crx2.name = "test_ihfo";
+      crx2.pk_hash.assign(ihfo_hash, ihfo_hash + arraysize(ihfo_hash));
+      crx2.version = base::Version("0.8");
+      crx2.installer = new TestInstaller;
+
+      components->push_back(crx1);
+      components->push_back(crx2);
+    }
+  };
+
+  class CompletionCallbackFake {
+   public:
+    static void Callback(const base::Closure& quit_closure, Error error) {
+      EXPECT_EQ(Error::NONE, error);
+      quit_closure.Run();
+    }
+  };
+
+  class FakeUpdateChecker : public UpdateChecker {
+   public:
+    static std::unique_ptr<UpdateChecker> Create(
+        const scoped_refptr<Configurator>& config,
+        PersistedData* metadata) {
+      return std::unique_ptr<UpdateChecker>(new FakeUpdateChecker());
+    }
+
+    bool CheckForUpdates(
+        const IdToCrxUpdateItemMap& items_to_check,
+        const std::string& additional_attributes,
+        bool enabled_component_updates,
+        const UpdateCheckCallback& update_check_callback) override {
+      /*
+      Fake the following response:
+
+      <?xml version='1.0' encoding='UTF-8'?>
+      <response protocol='3.0'>
+        <app appid='jebgalgnebhfojomionfpkfelancnnkf'>
+          <updatecheck status='ok'>
+            <urls>
+              <url codebase='http://localhost/download/'/>
+            </urls>
+            <manifest version='1.0' prodversionmin='11.0.1.0'>
+              <packages>
+                <package name='jebgalgnebhfojomionfpkfelancnnkf.crx'
+                         hash_sha256='6fc4b93fd11134de1300c2c0bb88c12b644a4ec0fd
+                                      7c9b12cb7cc067667bde87'/>
+              </packages>
+            </manifest>
+          </updatecheck>
+        </app>
+        <app appid='ihfokbkgjpifnbbojhneepfflplebdkc'>
+          <updatecheck status='ok'>
+            <urls>
+              <url codebase='http://localhost/download/'/>
+            </urls>
+            <manifest version='1.0' prodversionmin='11.0.1.0'>
+              <packages>
+                <package name='ihfokbkgjpifnbbojhneepfflplebdkc_1.crx'
+                         hash_sha256='813c59747e139a608b3b5fc49633affc6db574373f
+                                      309f156ea6d27229c0b3f9'/>
+              </packages>
+            </manifest>
+          </updatecheck>
+        </app>
+      </response>
+      */
+
+      // UpdateClient reads the state of |enabled_component_updates| from the
+      // configurator instance, persists its value in the corresponding
+      // update context, and propagates it down to each of the update actions,
+      // and further down to the UpdateChecker instance.
+      EXPECT_FALSE(enabled_component_updates);
+
+      UpdateResponse::Result::Manifest::Package package1;
+      package1.name = "jebgalgnebhfojomionfpkfelancnnkf.crx";
+      package1.hash_sha256 =
+          "6fc4b93fd11134de1300c2c0bb88c12b644a4ec0fd7c9b12cb7cc067667bde87";
+
+      UpdateResponse::Result result1;
+      result1.extension_id = "jebgalgnebhfojomionfpkfelancnnkf";
+      result1.status = "ok";
+      result1.crx_urls.push_back(GURL("http://localhost/download/"));
+      result1.manifest.version = "1.0";
+      result1.manifest.browser_min_version = "11.0.1.0";
+      result1.manifest.packages.push_back(package1);
+
+      UpdateResponse::Result::Manifest::Package package2;
+      package2.name = "ihfokbkgjpifnbbojhneepfflplebdkc_1.crx";
+      package2.hash_sha256 =
+          "813c59747e139a608b3b5fc49633affc6db574373f309f156ea6d27229c0b3f9";
+
+      UpdateResponse::Result result2;
+      result2.extension_id = "ihfokbkgjpifnbbojhneepfflplebdkc";
+      result2.status = "ok";
+      result2.crx_urls.push_back(GURL("http://localhost/download/"));
+      result2.manifest.version = "1.0";
+      result2.manifest.browser_min_version = "11.0.1.0";
+      result2.manifest.packages.push_back(package2);
+
+      UpdateResponse::Results results;
+      results.list.push_back(result1);
+      results.list.push_back(result2);
+
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::Bind(update_check_callback, 0, results, 0));
+      return true;
+    }
+  };
+
+  class FakeCrxDownloader : public CrxDownloader {
+   public:
+    static std::unique_ptr<CrxDownloader> Create(
+        bool is_background_download,
+        net::URLRequestContextGetter* context_getter,
+        const scoped_refptr<base::SequencedTaskRunner>& task_runner) {
+      return std::unique_ptr<CrxDownloader>(new FakeCrxDownloader());
+    }
+
+   private:
+    FakeCrxDownloader()
+        : CrxDownloader(base::ThreadTaskRunnerHandle::Get(), nullptr) {}
+    ~FakeCrxDownloader() override {}
+
+    void DoStartDownload(const GURL& url) override {
+      DownloadMetrics download_metrics;
+      FilePath path;
+      Result result;
+      if (url.path() == "/download/ihfokbkgjpifnbbojhneepfflplebdkc_1.crx") {
+        download_metrics.url = url;
+        download_metrics.downloader = DownloadMetrics::kNone;
+        download_metrics.error = 0;
+        download_metrics.downloaded_bytes = 53638;
+        download_metrics.total_bytes = 53638;
+        download_metrics.download_time_ms = 2000;
+
+        EXPECT_TRUE(MakeTestFile(
+            TestFilePath("ihfokbkgjpifnbbojhneepfflplebdkc_1.crx"), &path));
+
+        result.error = 0;
+        result.response = path;
+        result.downloaded_bytes = 53638;
+        result.total_bytes = 53638;
+      } else {
+        NOTREACHED();
+      }
+
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::Bind(&FakeCrxDownloader::OnDownloadProgress,
+                                base::Unretained(this), result));
+
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE,
+          base::Bind(&FakeCrxDownloader::OnDownloadComplete,
+                     base::Unretained(this), true, result, download_metrics));
+    }
+  };
+
+  class FakePingManager : public FakePingManagerImpl {
+   public:
+    explicit FakePingManager(const scoped_refptr<Configurator>& config)
+        : FakePingManagerImpl(config) {}
+    ~FakePingManager() override {
+      const auto& ping_items = items();
+      EXPECT_EQ(2U, ping_items.size());
+      EXPECT_EQ("jebgalgnebhfojomionfpkfelancnnkf", ping_items[0].id);
+      EXPECT_EQ(base::Version("0.9"), ping_items[0].previous_version);
+      EXPECT_EQ(base::Version("1.0"), ping_items[0].next_version);
+      EXPECT_EQ(4, ping_items[0].error_category);
+      EXPECT_EQ(2, ping_items[0].error_code);
+      EXPECT_EQ("ihfokbkgjpifnbbojhneepfflplebdkc", ping_items[1].id);
+      EXPECT_EQ(base::Version("0.8"), ping_items[1].previous_version);
+      EXPECT_EQ(base::Version("1.0"), ping_items[1].next_version);
+      EXPECT_EQ(0, ping_items[1].error_category);
+      EXPECT_EQ(0, ping_items[1].error_code);
+    }
+  };
+
+  // Disables updates for the components declaring support for the group policy.
+  config()->SetEnabledComponentUpdates(false);
+  std::unique_ptr<FakePingManager> ping_manager(new FakePingManager(config()));
+  scoped_refptr<UpdateClient> update_client(new UpdateClientImpl(
+      config(), std::move(ping_manager), &FakeUpdateChecker::Create,
+      &FakeCrxDownloader::Create));
+
+  MockObserver observer;
+  {
+    InSequence seq;
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
+                                  "jebgalgnebhfojomionfpkfelancnnkf"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_FOUND,
+                                  "jebgalgnebhfojomionfpkfelancnnkf"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_NOT_UPDATED,
+                                  "jebgalgnebhfojomionfpkfelancnnkf"))
+        .Times(1);
+  }
+  {
+    InSequence seq;
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
+                                  "ihfokbkgjpifnbbojhneepfflplebdkc"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_FOUND,
+                                  "ihfokbkgjpifnbbojhneepfflplebdkc"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_WAIT,
+                                  "ihfokbkgjpifnbbojhneepfflplebdkc"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_DOWNLOADING,
+                                  "ihfokbkgjpifnbbojhneepfflplebdkc"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATE_READY,
+                                  "ihfokbkgjpifnbbojhneepfflplebdkc"))
+        .Times(1);
+    EXPECT_CALL(observer, OnEvent(Events::COMPONENT_UPDATED,
+                                  "ihfokbkgjpifnbbojhneepfflplebdkc"))
+        .Times(1);
+  }
+
+  update_client->AddObserver(&observer);
+
+  std::vector<std::string> ids;
+  ids.push_back(std::string("jebgalgnebhfojomionfpkfelancnnkf"));
+  ids.push_back(std::string("ihfokbkgjpifnbbojhneepfflplebdkc"));
+
+  update_client->Update(
+      ids, base::Bind(&DataCallbackFake::Callback),
+      base::Bind(&CompletionCallbackFake::Callback, quit_closure()));
+
+  RunThreads();
 
   update_client->RemoveObserver(&observer);
 }

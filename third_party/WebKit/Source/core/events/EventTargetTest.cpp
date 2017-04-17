@@ -9,42 +9,44 @@
 namespace blink {
 
 enum PassiveForcedListenerResultType {
-    PreventDefaultNotCalled,
-    DocumentLevelTouchPreventDefaultCalled
+  kPreventDefaultNotCalled,
+  kDocumentLevelTouchPreventDefaultCalled
 };
 
 class EventTargetTest : public RenderingTest {
-public:
-    EventTargetTest() {}
-    ~EventTargetTest() {}
+ public:
+  EventTargetTest() {}
+  ~EventTargetTest() {}
 };
 
-TEST_F(EventTargetTest, PreventDefaultNotCalled)
-{
-    document().settings()->setScriptEnabled(true);
-    HistogramTester histogramTester;
-    document().frame()->script().executeScriptInMainWorld(
-        "window.addEventListener('touchstart', function(e) {}, {});"
-        "window.dispatchEvent(new TouchEvent('touchstart', {cancelable: false}));");
+TEST_F(EventTargetTest, PreventDefaultNotCalled) {
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  HistogramTester histogram_tester;
+  GetDocument().GetFrame()->GetScriptController().ExecuteScriptInMainWorld(
+      "window.addEventListener('touchstart', function(e) {}, {});"
+      "window.dispatchEvent(new TouchEvent('touchstart', {cancelable: "
+      "false}));");
 
-    histogramTester.expectTotalCount(
-        "Event.PassiveForcedEventDispatchCancelled", 1);
-    histogramTester.expectUniqueSample(
-        "Event.PassiveForcedEventDispatchCancelled", PreventDefaultNotCalled, 1);
+  histogram_tester.ExpectTotalCount("Event.PassiveForcedEventDispatchCancelled",
+                                    1);
+  histogram_tester.ExpectUniqueSample(
+      "Event.PassiveForcedEventDispatchCancelled", kPreventDefaultNotCalled, 1);
 }
 
-TEST_F(EventTargetTest, PreventDefaultCalled)
-{
-    document().settings()->setScriptEnabled(true);
-    HistogramTester histogramTester;
-    document().frame()->script().executeScriptInMainWorld(
-        "window.addEventListener('touchstart', function(e) {e.preventDefault();}, {});"
-        "window.dispatchEvent(new TouchEvent('touchstart', {cancelable: false}));");
+TEST_F(EventTargetTest, PreventDefaultCalled) {
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  HistogramTester histogram_tester;
+  GetDocument().GetFrame()->GetScriptController().ExecuteScriptInMainWorld(
+      "window.addEventListener('touchstart', function(e) "
+      "{e.preventDefault();}, {});"
+      "window.dispatchEvent(new TouchEvent('touchstart', {cancelable: "
+      "false}));");
 
-    histogramTester.expectTotalCount(
-        "Event.PassiveForcedEventDispatchCancelled", 1);
-    histogramTester.expectUniqueSample(
-        "Event.PassiveForcedEventDispatchCancelled", DocumentLevelTouchPreventDefaultCalled, 1);
+  histogram_tester.ExpectTotalCount("Event.PassiveForcedEventDispatchCancelled",
+                                    1);
+  histogram_tester.ExpectUniqueSample(
+      "Event.PassiveForcedEventDispatchCancelled",
+      kDocumentLevelTouchPreventDefaultCalled, 1);
 }
 
-} // namespace blink
+}  // namespace blink

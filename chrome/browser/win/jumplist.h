@@ -23,16 +23,23 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/top_sites_observer.h"
+#include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "components/sessions/core/tab_restore_service.h"
 #include "components/sessions/core/tab_restore_service_observer.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+class SequencedTaskRunner;
+}
+
 namespace chrome {
 struct FaviconImageResult;
 }
 
+class JumpListFactory;
 class PrefChangeRegistrar;
 class Profile;
 
@@ -53,10 +60,9 @@ class Profile;
 // Note. base::CancelableTaskTracker is not thread safe, so we
 // always delete JumpList on UI thread (the same thread it got constructed on).
 class JumpList : public sessions::TabRestoreServiceObserver,
-                 public content::NotificationObserver,
                  public history::TopSitesObserver,
-                 public base::NonThreadSafe,
-                 public base::RefCounted<JumpList> {
+                 public RefcountedKeyedService,
+                 public base::NonThreadSafe {
  public:
   struct JumpListData {
     JumpListData();
@@ -80,13 +86,6 @@ class JumpList : public sessions::TabRestoreServiceObserver,
     ShellLinkItemList recently_closed_pages_;
   };
 
-  explicit JumpList(Profile* profile);
-
-  // NotificationObserver implementation.
-  void Observe(int type,
-               const content::NotificationSource& source,
-               const content::NotificationDetails& details) override;
-
   // Observer callback for TabRestoreService::Observer to notify when a tab is
   // added or removed.
   void TabRestoreServiceChanged(sessions::TabRestoreService* service) override;
@@ -104,22 +103,26 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   // is destroyed.
   void Terminate();
 
+  // RefcountedKeyedService:
+  void ShutdownOnUIThread() override;
+
   // Returns true if the custom JumpList is enabled.
   // The custom jumplist works only on Windows 7 and above.
   static bool Enabled();
 
  private:
-  friend class base::RefCounted<JumpList>;
+  friend JumpListFactory;
+  explicit JumpList(Profile* profile);  // Use JumpListFactory instead
   ~JumpList() override;
 
   // Creates a ShellLinkItem object from a tab (or a window) and add it to the
   // given list.
   // These functions are copied from the RecentlyClosedTabsHandler class for
   // compatibility with the new-tab page.
-  bool AddTab(const sessions::TabRestoreService::Tab* tab,
+  bool AddTab(const sessions::TabRestoreService::Tab& tab,
               ShellLinkItemList* list,
               size_t max_items);
-  void AddWindow(const sessions::TabRestoreService::Window* window,
+  void AddWindow(const sessions::TabRestoreService::Window& window,
                  ShellLinkItemList* list,
                  size_t max_items);
 
@@ -149,8 +152,8 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   // Helper for RunUpdate() that determines its parameters.
   void PostRunUpdate();
 
-  // Called on a timer to invoke RunUpdateOnFileThread() after requests storms
-  // have subsided.
+  // Called on a timer to invoke RunUpdateJumpList() after
+  // requests storms have subsided.
   void DeferredRunUpdate();
 
   // history::TopSitesObserver implementation.
@@ -165,7 +168,6 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   Profile* profile_;
 
   // Lives on the UI thread.
-  std::unique_ptr<content::NotificationRegistrar> registrar_;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
 
   // App id to associate with the jump list.
@@ -183,6 +185,12 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   // Id of last favicon task. It's used to cancel current task if a new one
   // comes in before it finishes.
   base::CancelableTaskTracker::TaskId task_id_;
+
+  // A task runner running tasks to update the jumplist in JumpListIcons.
+  scoped_refptr<base::SingleThreadTaskRunner> update_jumplisticons_task_runner_;
+
+  // A task runner running tasks to delete JumpListIconsOld directory.
+  scoped_refptr<base::SequencedTaskRunner> delete_jumplisticonsold_task_runner_;
 
   // For callbacks may be run after destruction.
   base::WeakPtrFactory<JumpList> weak_ptr_factory_;

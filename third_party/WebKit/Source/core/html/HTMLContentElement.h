@@ -38,73 +38,77 @@
 
 namespace blink {
 
-class HTMLContentSelectFilter : public GarbageCollectedFinalized<HTMLContentSelectFilter> {
-public:
-    virtual ~HTMLContentSelectFilter() { }
-    virtual bool canSelectNode(const HeapVector<Member<Node>, 32>& siblings, int nth) const = 0;
+class HTMLContentSelectFilter
+    : public GarbageCollectedFinalized<HTMLContentSelectFilter> {
+ public:
+  virtual ~HTMLContentSelectFilter() {}
+  virtual bool CanSelectNode(const HeapVector<Member<Node>, 32>& siblings,
+                             int nth) const = 0;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 class CORE_EXPORT HTMLContentElement final : public InsertionPoint {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLContentElement* create(Document&, HTMLContentSelectFilter* = nullptr);
-    ~HTMLContentElement() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool canAffectSelector() const override { return true; }
+ public:
+  static HTMLContentElement* Create(Document&,
+                                    HTMLContentSelectFilter* = nullptr);
+  ~HTMLContentElement() override;
 
-    bool canSelectNode(const HeapVector<Member<Node>, 32>& siblings, int nth) const;
+  bool CanAffectSelector() const override { return true; }
 
-    const CSSSelectorList& selectorList() const;
-    bool isSelectValid() const;
+  bool CanSelectNode(const HeapVector<Member<Node>, 32>& siblings,
+                     int nth) const;
 
-    DECLARE_VIRTUAL_TRACE();
+  const CSSSelectorList& SelectorList() const;
+  bool IsSelectValid() const;
 
-private:
-    HTMLContentElement(Document&, HTMLContentSelectFilter*);
+  DECLARE_VIRTUAL_TRACE();
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
+ private:
+  HTMLContentElement(Document&, HTMLContentSelectFilter*);
 
-    bool validateSelect() const;
-    void parseSelect();
+  void ParseAttribute(const AttributeModificationParams&) override;
 
-    bool matchSelector(Element&) const;
+  bool ValidateSelect() const;
+  void ParseSelect();
 
-    bool m_shouldParseSelect;
-    bool m_isValidSelector;
-    AtomicString m_select;
-    CSSSelectorList m_selectorList;
-    Member<HTMLContentSelectFilter> m_filter;
+  bool MatchSelector(Element&) const;
+
+  bool should_parse_select_;
+  bool is_valid_selector_;
+  AtomicString select_;
+  CSSSelectorList selector_list_;
+  Member<HTMLContentSelectFilter> filter_;
 };
 
-inline const CSSSelectorList& HTMLContentElement::selectorList() const
-{
-    if (m_shouldParseSelect)
-        const_cast<HTMLContentElement*>(this)->parseSelect();
-    return m_selectorList;
+inline const CSSSelectorList& HTMLContentElement::SelectorList() const {
+  if (should_parse_select_)
+    const_cast<HTMLContentElement*>(this)->ParseSelect();
+  return selector_list_;
 }
 
-inline bool HTMLContentElement::isSelectValid() const
-{
-    if (m_shouldParseSelect)
-        const_cast<HTMLContentElement*>(this)->parseSelect();
-    return m_isValidSelector;
+inline bool HTMLContentElement::IsSelectValid() const {
+  if (should_parse_select_)
+    const_cast<HTMLContentElement*>(this)->ParseSelect();
+  return is_valid_selector_;
 }
 
-inline bool HTMLContentElement::canSelectNode(const HeapVector<Member<Node>, 32>& siblings, int nth) const
-{
-    if (m_filter)
-        return m_filter->canSelectNode(siblings, nth);
-    if (m_select.isNull() || m_select.isEmpty())
-        return true;
-    if (!isSelectValid())
-        return false;
-    if (!siblings[nth]->isElementNode())
-        return false;
-    return matchSelector(*toElement(siblings[nth]));
+inline bool HTMLContentElement::CanSelectNode(
+    const HeapVector<Member<Node>, 32>& siblings,
+    int nth) const {
+  if (filter_)
+    return filter_->CanSelectNode(siblings, nth);
+  if (select_.IsNull() || select_.IsEmpty())
+    return true;
+  if (!IsSelectValid())
+    return false;
+  if (!siblings[nth]->IsElementNode())
+    return false;
+  return MatchSelector(*ToElement(siblings[nth]));
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLContentElement_h
+#endif  // HTMLContentElement_h

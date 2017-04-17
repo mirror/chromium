@@ -6,77 +6,33 @@
 
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/timing_function.h"
-#include "cc/output/filter_operations.h"
+#include "cc/base/filter_operations.h"
 #include "platform/graphics/CompositorFilterOperations.h"
-
-using blink::CompositorFilterKeyframe;
 
 namespace blink {
 
 CompositorFilterAnimationCurve::CompositorFilterAnimationCurve()
-    : m_curve(cc::KeyframedFilterAnimationCurve::Create())
-{
+    : curve_(cc::KeyframedFilterAnimationCurve::Create()) {}
+
+CompositorFilterAnimationCurve::~CompositorFilterAnimationCurve() {}
+
+void CompositorFilterAnimationCurve::AddKeyframe(
+    const CompositorFilterKeyframe& keyframe) {
+  curve_->AddKeyframe(keyframe.CloneToCC());
 }
 
-CompositorFilterAnimationCurve::~CompositorFilterAnimationCurve()
-{
+void CompositorFilterAnimationCurve::SetTimingFunction(
+    const TimingFunction& timing_function) {
+  curve_->SetTimingFunction(timing_function.CloneToCC());
 }
 
-void CompositorFilterAnimationCurve::addLinearKeyframe(const CompositorFilterKeyframe& keyframe)
-{
-    const cc::FilterOperations& filterOperations = keyframe.value().asFilterOperations();
-    m_curve->AddKeyframe(cc::FilterKeyframe::Create(
-        base::TimeDelta::FromSecondsD(keyframe.time()), filterOperations, nullptr));
-
+void CompositorFilterAnimationCurve::SetScaledDuration(double scaled_duration) {
+  curve_->set_scaled_duration(scaled_duration);
 }
 
-void CompositorFilterAnimationCurve::addCubicBezierKeyframe(const CompositorFilterKeyframe& keyframe, CubicBezierTimingFunction::EaseType easeType)
-{
-    const cc::FilterOperations& filterOperations = keyframe.value().asFilterOperations();
-    m_curve->AddKeyframe(cc::FilterKeyframe::Create(
-        base::TimeDelta::FromSecondsD(keyframe.time()), filterOperations,
-        cc::CubicBezierTimingFunction::CreatePreset(easeType)));
+std::unique_ptr<cc::AnimationCurve>
+CompositorFilterAnimationCurve::CloneToAnimationCurve() const {
+  return curve_->Clone();
 }
 
-void CompositorFilterAnimationCurve::addCubicBezierKeyframe(const CompositorFilterKeyframe& keyframe, double x1, double y1, double x2, double y2)
-{
-    const cc::FilterOperations& filterOperations = keyframe.value().asFilterOperations();
-    m_curve->AddKeyframe(cc::FilterKeyframe::Create(
-        base::TimeDelta::FromSecondsD(keyframe.time()), filterOperations,
-        cc::CubicBezierTimingFunction::Create(x1, y1, x2, y2)));
-}
-
-void CompositorFilterAnimationCurve::addStepsKeyframe(const CompositorFilterKeyframe& keyframe, int steps, StepsTimingFunction::StepPosition stepPosition)
-{
-    const cc::FilterOperations& filterOperations = keyframe.value().asFilterOperations();
-    m_curve->AddKeyframe(cc::FilterKeyframe::Create(
-        base::TimeDelta::FromSecondsD(keyframe.time()), filterOperations,
-        cc::StepsTimingFunction::Create(steps, stepPosition)));
-}
-
-void CompositorFilterAnimationCurve::setLinearTimingFunction()
-{
-    m_curve->SetTimingFunction(nullptr);
-}
-
-void CompositorFilterAnimationCurve::setCubicBezierTimingFunction(CubicBezierTimingFunction::EaseType easeType)
-{
-    m_curve->SetTimingFunction(cc::CubicBezierTimingFunction::CreatePreset(easeType));
-}
-
-void CompositorFilterAnimationCurve::setCubicBezierTimingFunction(double x1, double y1, double x2, double y2)
-{
-    m_curve->SetTimingFunction(cc::CubicBezierTimingFunction::Create(x1, y1, x2, y2));
-}
-
-void CompositorFilterAnimationCurve::setStepsTimingFunction(int numberOfSteps, StepsTimingFunction::StepPosition stepPosition)
-{
-    m_curve->SetTimingFunction(cc::StepsTimingFunction::Create(numberOfSteps, stepPosition));
-}
-
-std::unique_ptr<cc::AnimationCurve> CompositorFilterAnimationCurve::cloneToAnimationCurve() const
-{
-    return m_curve->Clone();
-}
-
-} // namespace blink
+}  // namespace blink

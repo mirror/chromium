@@ -23,6 +23,7 @@ struct StructWithTraits {
   string f_string;
   string f_string2;
   array<string> f_string_array;
+  array<string> f_string_set;
   NestedStructWithTraits f_struct;
   array<NestedStructWithTraits> f_struct_array;
   map<string, NestedStructWithTraits> f_struct_map;
@@ -49,8 +50,13 @@ struct MoveOnlyStructWithTraitsContainer {
   MoveOnlyStructWithTraits f_struct;
 };
 
-struct StructWithTraitsForUniquePtrTest {
+struct StructWithTraitsForUniquePtr {
   int32 f_int32;
+};
+
+union UnionWithTraits {
+  int32 f_int32;
+  NestedStructWithTraits f_struct;
 };
 
 interface TraitsTestService {
@@ -62,8 +68,16 @@ interface TraitsTestService {
   EchoMoveOnlyStructWithTraits(MoveOnlyStructWithTraits s) =>
       (MoveOnlyStructWithTraits passed);
 
+  EchoNullableMoveOnlyStructWithTraits(MoveOnlyStructWithTraits? s) =>
+      (MoveOnlyStructWithTraits? passed);
+
   EchoEnumWithTraits(EnumWithTraits e) => (EnumWithTraits passed);
 
-  EchoStructWithTraitsForUniquePtrTest(StructWithTraitsForUniquePtrTest e) => (
-      StructWithTraitsForUniquePtrTest passed);
+  EchoStructWithTraitsForUniquePtr(StructWithTraitsForUniquePtr e) => (
+      StructWithTraitsForUniquePtr passed);
+
+  EchoNullableStructWithTraitsForUniquePtr(StructWithTraitsForUniquePtr? e) => (
+      StructWithTraitsForUniquePtr? passed);
+
+  EchoUnionWithTraits(UnionWithTraits u) => (UnionWithTraits passed);
 };

@@ -10,48 +10,38 @@
 
 namespace chromeos {
 
-EnableDebuggingScreen::EnableDebuggingScreen(
-    BaseScreenDelegate* delegate,
-    EnableDebuggingScreenActor* actor)
-    : BaseScreen(delegate), actor_(actor) {
-  DCHECK(actor_);
-  if (actor_)
-    actor_->SetDelegate(this);
+EnableDebuggingScreen::EnableDebuggingScreen(BaseScreenDelegate* delegate,
+                                             EnableDebuggingScreenView* view)
+    : BaseScreen(delegate, OobeScreen::SCREEN_OOBE_ENABLE_DEBUGGING),
+      view_(view) {
+  DCHECK(view_);
+  if (view_)
+    view_->SetDelegate(this);
 }
 
 EnableDebuggingScreen::~EnableDebuggingScreen() {
-  if (actor_)
-    actor_->SetDelegate(NULL);
-}
-
-void EnableDebuggingScreen::PrepareToShow() {
-  if (actor_)
-    actor_->PrepareToShow();
+  if (view_)
+    view_->SetDelegate(NULL);
 }
 
 void EnableDebuggingScreen::Show() {
-  if (actor_)
-    actor_->Show();
+  if (view_)
+    view_->Show();
 }
 
 void EnableDebuggingScreen::Hide() {
-  if (actor_)
-    actor_->Hide();
-}
-
-std::string EnableDebuggingScreen::GetName() const {
-  return WizardController::kEnableDebuggingScreenName;
+  if (view_)
+    view_->Hide();
 }
 
 void EnableDebuggingScreen::OnExit(bool success) {
-  Finish(success ? BaseScreenDelegate::ENABLE_DEBUGGING_FINISHED :
-                   BaseScreenDelegate::ENABLE_DEBUGGING_CANCELED);
+  Finish(success ? ScreenExitCode::ENABLE_DEBUGGING_FINISHED
+                 : ScreenExitCode::ENABLE_DEBUGGING_CANCELED);
 }
 
-void EnableDebuggingScreen::OnActorDestroyed(
-    EnableDebuggingScreenActor* actor) {
-  if (actor_ == actor)
-    actor_ = NULL;
+void EnableDebuggingScreen::OnViewDestroyed(EnableDebuggingScreenView* view) {
+  if (view_ == view)
+    view_ = NULL;
 }
 
 }  // namespace chromeos

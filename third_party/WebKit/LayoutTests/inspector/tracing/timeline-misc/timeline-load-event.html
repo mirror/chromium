@@ -3,25 +3,28 @@
 <script src="../../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
-function display(callback)
+function display()
 {
+    var callback;
+    var promise = new Promise((fulfill) => callback = fulfill);
     if (window.testRunner)
         testRunner.setCanOpenWindows(true);
-    var popup = window.open("data:text/html,<b>Hello, world</b>");
+    var popup = window.open("resources/hello.html");
     popup.onload = function()
     {
         requestAnimationFrame(testRunner.capturePixelsAsyncThen.bind(testRunner, callback));
     }
+    return promise;
 }
 
 function test()
 {
-    WebInspector.panels.timeline._captureJSProfileSetting.set(false);
+    UI.panels.timeline._disableCaptureJSProfileSetting.set(true);
     InspectorTest.startTimeline(function() { InspectorTest.reloadPage(pageReloaded); });
 
     function pageReloaded()
     {
-        InspectorTest.invokePageFunctionAsync("display", displayDone);
+        InspectorTest.callFunctionInPageAsync("display").then(displayDone);
     }
 
     function displayDone()
@@ -39,9 +42,9 @@ function test()
         InspectorTest.printTimestampRecords("MarkLoad");
         InspectorTest.printTimestampRecords("MarkFirstPaint");
 
-        var eventDividers = InspectorTest.timelineModel().eventDividerRecords();
+        var eventDividers = InspectorTest.timelineModel().eventDividers();
         for (var i = 1; i < eventDividers.length; ++i)
-            InspectorTest.assertGreaterOrEqual(eventDividers[i], eventDividers[i - 1], "Event divider timestamps should be monotonically non-decreasing");
+            InspectorTest.assertGreaterOrEqual(eventDividers[i].startTime, eventDividers[i - 1].startTime, "Event divider timestamps should be monotonically non-decreasing");
 
         InspectorTest.completeTest();
     }

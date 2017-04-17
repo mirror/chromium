@@ -29,113 +29,111 @@
 #include "platform/audio/HRTFDatabaseLoader.h"
 
 #include "platform/CrossThreadFunctional.h"
-#include "platform/TaskSynchronizer.h"
+#include "platform/WaitableEvent.h"
+#include "platform/WebTaskRunner.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebTaskRunner.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
 using LoaderMap = HashMap<double, HRTFDatabaseLoader*>;
 
-// loaderMap() returns the static hash map that contains the mapping between the
-// sample rate and the corresponding HRTF database.
-static LoaderMap& loaderMap()
-{
-    DEFINE_STATIC_LOCAL(LoaderMap*, map, (new LoaderMap));
-    return *map;
+// getLoaderMap() returns the static hash map that contains the mapping between
+// the sample rate and the corresponding HRTF database.
+static LoaderMap& GetLoaderMap() {
+  DEFINE_STATIC_LOCAL(LoaderMap*, map, (new LoaderMap));
+  return *map;
 }
 
-PassRefPtr<HRTFDatabaseLoader> HRTFDatabaseLoader::createAndLoadAsynchronouslyIfNecessary(float sampleRate)
-{
-    ASSERT(isMainThread());
+PassRefPtr<HRTFDatabaseLoader>
+HRTFDatabaseLoader::CreateAndLoadAsynchronouslyIfNecessary(float sample_rate) {
+  DCHECK(IsMainThread());
 
-    RefPtr<HRTFDatabaseLoader> loader = loaderMap().get(sampleRate);
-    if (loader) {
-        ASSERT(sampleRate == loader->databaseSampleRate());
-        return loader.release();
-    }
+  RefPtr<HRTFDatabaseLoader> loader = GetLoaderMap().at(sample_rate);
+  if (loader) {
+    DCHECK_EQ(sample_rate, loader->DatabaseSampleRate());
+    return loader.Release();
+  }
 
-    loader = adoptRef(new HRTFDatabaseLoader(sampleRate));
-    loaderMap().add(sampleRate, loader.get());
-    loader->loadAsynchronously();
-    return loader.release();
+  loader = AdoptRef(new HRTFDatabaseLoader(sample_rate));
+  GetLoaderMap().insert(sample_rate, loader.Get());
+  loader->LoadAsynchronously();
+  return loader.Release();
 }
 
-HRTFDatabaseLoader::HRTFDatabaseLoader(float sampleRate)
-    : m_databaseSampleRate(sampleRate)
-{
-    ASSERT(isMainThread());
+HRTFDatabaseLoader::HRTFDatabaseLoader(float sample_rate)
+    : database_sample_rate_(sample_rate) {
+  DCHECK(IsMainThread());
 }
 
-HRTFDatabaseLoader::~HRTFDatabaseLoader()
-{
-    ASSERT(isMainThread());
-    ASSERT(!m_thread);
-    loaderMap().remove(m_databaseSampleRate);
+HRTFDatabaseLoader::~HRTFDatabaseLoader() {
+  DCHECK(IsMainThread());
+  DCHECK(!thread_);
+  GetLoaderMap().erase(database_sample_rate_);
 }
 
-void HRTFDatabaseLoader::loadTask()
-{
-    DCHECK(!isMainThread());
-    DCHECK(!m_hrtfDatabase);
+void HRTFDatabaseLoader::LoadTask() {
+  DCHECK(!IsMainThread());
+  DCHECK(!hrtf_database_);
 
-    // Protect access to m_hrtfDatabase, which can be accessed from the audio
-    // thread.
-    MutexLocker locker(m_lock);
-    // Load the default HRTF database.
-    m_hrtfDatabase = HRTFDatabase::create(m_databaseSampleRate);
+  // Protect access to m_hrtfDatabase, which can be accessed from the audio
+  // thread.
+  MutexLocker locker(lock_);
+  // Load the default HRTF database.
+  hrtf_database_ = HRTFDatabase::Create(database_sample_rate_);
 }
 
-void HRTFDatabaseLoader::loadAsynchronously()
-{
-    ASSERT(isMainThread());
+void HRTFDatabaseLoader::LoadAsynchronously() {
+  DCHECK(IsMainThread());
 
-    // m_hrtfDatabase and m_thread should both be unset because this should be a
-    // new HRTFDatabaseLoader object that was just created by
-    // createAndLoadAsynchronouslyIfNecessary and because we haven't started
-    // loadTask yet for this object.
-    DCHECK(!m_hrtfDatabase);
-    DCHECK(!m_thread);
+  // m_hrtfDatabase and m_thread should both be unset because this should be a
+  // new HRTFDatabaseLoader object that was just created by
+  // createAndLoadAsynchronouslyIfNecessary and because we haven't started
+  // loadTask yet for this object.
+  DCHECK(!hrtf_database_);
+  DCHECK(!thread_);
 
-    // Start the asynchronous database loading process.
-    m_thread = wrapUnique(Platform::current()->createThread("HRTF database loader"));
-    // TODO(alexclarke): Should this be posted as a loading task?
-    m_thread->getWebTaskRunner()->postTask(BLINK_FROM_HERE, crossThreadBind(&HRTFDatabaseLoader::loadTask, crossThreadUnretained(this)));
+  // Start the asynchronous database loading process.
+  thread_ = WTF::WrapUnique(
+      Platform::Current()->CreateThread("HRTF database loader"));
+  // TODO(alexclarke): Should this be posted as a loading task?
+  thread_->GetWebTaskRunner()->PostTask(
+      BLINK_FROM_HERE, CrossThreadBind(&HRTFDatabaseLoader::LoadTask,
+                                       CrossThreadUnretained(this)));
 }
 
-HRTFDatabase* HRTFDatabaseLoader::database()
-{
-    DCHECK(!isMainThread());
+HRTFDatabase* HRTFDatabaseLoader::Database() {
+  DCHECK(!IsMainThread());
 
-    // Seeing that this is only called from the audio thread, we can't block.
-    // It's ok to return nullptr if we can't get the lock.
-    MutexTryLocker tryLocker(m_lock);
+  // Seeing that this is only called from the audio thread, we can't block.
+  // It's ok to return nullptr if we can't get the lock.
+  MutexTryLocker try_locker(lock_);
 
-    if (!tryLocker.locked())
-        return nullptr;
+  if (!try_locker.Locked())
+    return nullptr;
 
-    return m_hrtfDatabase.get();
+  return hrtf_database_.get();
 }
 
 // This cleanup task is needed just to make sure that the loader thread finishes
 // the load task and thus the loader thread doesn't touch m_thread any more.
-void HRTFDatabaseLoader::cleanupTask(TaskSynchronizer* sync)
-{
-    sync->taskCompleted();
+void HRTFDatabaseLoader::CleanupTask(WaitableEvent* sync) {
+  sync->Signal();
 }
 
-void HRTFDatabaseLoader::waitForLoaderThreadCompletion()
-{
-    if (!m_thread)
-        return;
+void HRTFDatabaseLoader::WaitForLoaderThreadCompletion() {
+  if (!thread_)
+    return;
 
-    TaskSynchronizer sync;
-    // TODO(alexclarke): Should this be posted as a loading task?
-    m_thread->getWebTaskRunner()->postTask(BLINK_FROM_HERE, crossThreadBind(&HRTFDatabaseLoader::cleanupTask, crossThreadUnretained(this), crossThreadUnretained(&sync)));
-    sync.waitForTaskCompletion();
-    m_thread.reset();
+  WaitableEvent sync;
+  // TODO(alexclarke): Should this be posted as a loading task?
+  thread_->GetWebTaskRunner()->PostTask(
+      BLINK_FROM_HERE, CrossThreadBind(&HRTFDatabaseLoader::CleanupTask,
+                                       CrossThreadUnretained(this),
+                                       CrossThreadUnretained(&sync)));
+  sync.Wait();
+  thread_.reset();
 }
 
-} // namespace blink
+}  // namespace blink

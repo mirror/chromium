@@ -4,7 +4,8 @@
  *           (C) 1998 Waldo Bastian (bastian@kde.org)
  *           (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009, 2010, 2013 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009, 2010, 2013 Apple Inc.
+ *               All rights reserved.
  * Copyright (C) 2006 Alexey Proskuryakov (ap@nypop.com)
  *
  * This library is free software; you can redistribute it and/or
@@ -25,6 +26,8 @@
 
 #include "core/layout/LayoutTableSection.h"
 
+#include <algorithm>
+#include <limits>
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutTableCell.h"
@@ -33,1708 +36,2132 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/SubtreeLayoutScope.h"
 #include "core/paint/TableSectionPainter.h"
-#include "wtf/HashSet.h"
-#include <algorithm>
-#include <limits>
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-// This variable is used to balance the memory consumption vs the paint invalidation time on big tables.
-static unsigned gMinTableSizeToUseFastPaintPathWithOverflowingCell = 75 * 75;
+// This variable is used to balance the memory consumption vs the paint
+// invalidation time on big tables.
+static unsigned g_min_table_size_to_use_fast_paint_path_with_overflowing_cell =
+    75 * 75;
 
-static inline void setRowLogicalHeightToRowStyleLogicalHeight(LayoutTableSection::RowStruct& row)
-{
-    ASSERT(row.rowLayoutObject);
-    row.logicalHeight = row.rowLayoutObject->style()->logicalHeight();
+static inline void SetRowLogicalHeightToRowStyleLogicalHeight(
+    LayoutTableSection::RowStruct& row) {
+  DCHECK(row.row_layout_object);
+  row.logical_height = row.row_layout_object->Style()->LogicalHeight();
 }
 
-static inline void updateLogicalHeightForCell(LayoutTableSection::RowStruct&
-row, const LayoutTableCell* cell)
-{
-    // We ignore height settings on rowspan cells.
-    if (cell->rowSpan() != 1)
-        return;
+static inline void UpdateLogicalHeightForCell(
+    LayoutTableSection::RowStruct& row,
+    const LayoutTableCell* cell) {
+  // We ignore height settings on rowspan cells.
+  if (cell->RowSpan() != 1)
+    return;
 
-    Length logicalHeight = cell->style()->logicalHeight();
-    if (logicalHeight.isPositive()) {
-        Length cRowLogicalHeight = row.logicalHeight;
-        switch (logicalHeight.type()) {
-        case Percent:
-            // TODO(alancutter): Make this work correctly for calc lengths.
-            if (!(cRowLogicalHeight.hasPercent())
-                || (cRowLogicalHeight.hasPercent() && cRowLogicalHeight.percent() < logicalHeight.percent()))
-                row.logicalHeight = logicalHeight;
-            break;
-        case Fixed:
-            if (cRowLogicalHeight.type() < Percent
-                || (cRowLogicalHeight.isFixed() && cRowLogicalHeight.value() < logicalHeight.value()))
-                row.logicalHeight = logicalHeight;
-            break;
-        default:
-            break;
-        }
+  Length logical_height = cell->Style()->LogicalHeight();
+  if (logical_height.IsPositive()) {
+    Length c_row_logical_height = row.logical_height;
+    switch (logical_height.GetType()) {
+      case kPercent:
+        // TODO(alancutter): Make this work correctly for calc lengths.
+        if (!(c_row_logical_height.IsPercentOrCalc()) ||
+            (c_row_logical_height.IsPercent() &&
+             c_row_logical_height.Percent() < logical_height.Percent()))
+          row.logical_height = logical_height;
+        break;
+      case kFixed:
+        if (c_row_logical_height.GetType() < kPercent ||
+            (c_row_logical_height.IsFixed() &&
+             c_row_logical_height.Value() < logical_height.Value()))
+          row.logical_height = logical_height;
+        break;
+      default:
+        break;
     }
+  }
 }
 
-void CellSpan::ensureConsistency(const unsigned maximumSpanSize)
-{
-    static_assert(std::is_same<decltype(m_start), unsigned>::value, "Asserts below assume m_start is unsigned");
-    static_assert(std::is_same<decltype(m_end), unsigned>::value, "Asserts below assume m_end is unsigned");
-    RELEASE_ASSERT(m_start <= maximumSpanSize);
-    RELEASE_ASSERT(m_end <= maximumSpanSize);
-    RELEASE_ASSERT(m_start <= m_end);
+void CellSpan::EnsureConsistency(const unsigned maximum_span_size) {
+  static_assert(std::is_same<decltype(start_), unsigned>::value,
+                "Asserts below assume m_start is unsigned");
+  static_assert(std::is_same<decltype(end_), unsigned>::value,
+                "Asserts below assume m_end is unsigned");
+  CHECK_LE(start_, maximum_span_size);
+  CHECK_LE(end_, maximum_span_size);
+  CHECK_LE(start_, end_);
 }
 
-LayoutTableSection::CellStruct::CellStruct()
-    : inColSpan(false)
-{
-}
+LayoutTableSection::CellStruct::CellStruct() : in_col_span(false) {}
 
-LayoutTableSection::CellStruct::~CellStruct()
-{
-}
+LayoutTableSection::CellStruct::~CellStruct() {}
 
 LayoutTableSection::LayoutTableSection(Element* element)
-    : LayoutTableBoxComponent(element)
-    , m_cCol(0)
-    , m_cRow(0)
-    , m_outerBorderStart(0)
-    , m_outerBorderEnd(0)
-    , m_outerBorderBefore(0)
-    , m_outerBorderAfter(0)
-    , m_needsCellRecalc(false)
-    , m_forceSlowPaintPathWithOverflowingCell(false)
-    , m_hasMultipleCellLevels(false)
-    , m_offsetForRepeatingHeader(LayoutUnit())
-{
-    // init LayoutObject attributes
-    setInline(false); // our object is not Inline
+    : LayoutTableBoxComponent(element),
+      c_col_(0),
+      c_row_(0),
+      outer_border_start_(0),
+      outer_border_end_(0),
+      outer_border_before_(0),
+      outer_border_after_(0),
+      needs_cell_recalc_(false),
+      force_slow_paint_path_with_overflowing_cell_(false),
+      has_multiple_cell_levels_(false),
+      has_spanning_cells_(false) {
+  // init LayoutObject attributes
+  SetInline(false);  // our object is not Inline
 }
 
-LayoutTableSection::~LayoutTableSection()
-{
+LayoutTableSection::~LayoutTableSection() {}
+
+void LayoutTableSection::StyleDidChange(StyleDifference diff,
+                                        const ComputedStyle* old_style) {
+  DCHECK(Style()->Display() == EDisplay::kTableFooterGroup ||
+         Style()->Display() == EDisplay::kTableRowGroup ||
+         Style()->Display() == EDisplay::kTableHeaderGroup);
+
+  LayoutTableBoxComponent::StyleDidChange(diff, old_style);
+  PropagateStyleToAnonymousChildren();
+
+  if (!old_style)
+    return;
+
+  LayoutTable* table = this->Table();
+  if (!table)
+    return;
+
+  if (!table->SelfNeedsLayout() && !table->NormalChildNeedsLayout() &&
+      old_style->Border() != Style()->Border())
+    table->InvalidateCollapsedBorders();
+
+  if (LayoutTableBoxComponent::DoCellsHaveDirtyWidth(*this, *table, diff,
+                                                     *old_style))
+    MarkAllCellsWidthsDirtyAndOrNeedsLayout(
+        LayoutTable::kMarkDirtyAndNeedsLayout);
 }
 
-void LayoutTableSection::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    DCHECK(style()->display() == TABLE_FOOTER_GROUP || style()->display() == TABLE_ROW_GROUP || style()->display() == TABLE_HEADER_GROUP);
+void LayoutTableSection::WillBeRemovedFromTree() {
+  LayoutTableBoxComponent::WillBeRemovedFromTree();
 
-    LayoutTableBoxComponent::styleDidChange(diff, oldStyle);
-    propagateStyleToAnonymousChildren();
-
-    if (!oldStyle)
-        return;
-
-    LayoutTable* table = this->table();
-    if (!table)
-        return;
-
-    if (!table->selfNeedsLayout() && !table->normalChildNeedsLayout() && oldStyle->border() != style()->border())
-        table->invalidateCollapsedBorders();
-
-    if (LayoutTableBoxComponent::doCellsHaveDirtyWidth(*this, *table, diff, *oldStyle))
-        markAllCellsWidthsDirtyAndOrNeedsLayout(MarkDirtyAndNeedsLayout);
+  // Preventively invalidate our cells as we may be re-inserted into
+  // a new table which would require us to rebuild our structure.
+  SetNeedsCellRecalc();
 }
 
-void LayoutTableSection::willBeRemovedFromTree()
-{
-    LayoutTableBoxComponent::willBeRemovedFromTree();
-
-    // Preventively invalidate our cells as we may be re-inserted into
-    // a new table which would require us to rebuild our structure.
-    setNeedsCellRecalc();
-}
-
-void LayoutTableSection::addChild(LayoutObject* child, LayoutObject* beforeChild)
-{
-    if (!child->isTableRow()) {
-        LayoutObject* last = beforeChild;
-        if (!last)
-            last = lastRow();
-        if (last && last->isAnonymous() && !last->isBeforeOrAfterContent()) {
-            if (beforeChild == last)
-                beforeChild = last->slowFirstChild();
-            last->addChild(child, beforeChild);
-            return;
-        }
-
-        if (beforeChild && !beforeChild->isAnonymous() && beforeChild->parent() == this) {
-            LayoutObject* row = beforeChild->previousSibling();
-            if (row && row->isTableRow() && row->isAnonymous()) {
-                row->addChild(child);
-                return;
-            }
-        }
-
-        // If beforeChild is inside an anonymous cell/row, insert into the cell or into
-        // the anonymous row containing it, if there is one.
-        LayoutObject* lastBox = last;
-        while (lastBox && lastBox->parent()->isAnonymous() && !lastBox->isTableRow())
-            lastBox = lastBox->parent();
-        if (lastBox && lastBox->isAnonymous() && !lastBox->isBeforeOrAfterContent()) {
-            lastBox->addChild(child, beforeChild);
-            return;
-        }
-
-        LayoutObject* row = LayoutTableRow::createAnonymousWithParent(this);
-        addChild(row, beforeChild);
-        row->addChild(child);
-        return;
+void LayoutTableSection::AddChild(LayoutObject* child,
+                                  LayoutObject* before_child) {
+  if (!child->IsTableRow()) {
+    LayoutObject* last = before_child;
+    if (!last)
+      last = LastRow();
+    if (last && last->IsAnonymous() && !last->IsBeforeOrAfterContent()) {
+      if (before_child == last)
+        before_child = last->SlowFirstChild();
+      last->AddChild(child, before_child);
+      return;
     }
 
-    if (beforeChild)
-        setNeedsCellRecalc();
-
-    unsigned insertionRow = m_cRow;
-    ++m_cRow;
-    m_cCol = 0;
-
-    ensureRows(m_cRow);
-
-    LayoutTableRow* row = toLayoutTableRow(child);
-    m_grid[insertionRow].rowLayoutObject = row;
-    row->setRowIndex(insertionRow);
-
-    if (!beforeChild)
-        setRowLogicalHeightToRowStyleLogicalHeight(m_grid[insertionRow]);
-
-    if (beforeChild && beforeChild->parent() != this)
-        beforeChild = splitAnonymousBoxesAroundChild(beforeChild);
-
-    ASSERT(!beforeChild || beforeChild->isTableRow());
-    LayoutTableBoxComponent::addChild(child, beforeChild);
-}
-
-void LayoutTableSection::ensureRows(unsigned numRows)
-{
-    if (numRows <= m_grid.size())
+    if (before_child && !before_child->IsAnonymous() &&
+        before_child->Parent() == this) {
+      LayoutObject* row = before_child->PreviousSibling();
+      if (row && row->IsTableRow() && row->IsAnonymous()) {
+        row->AddChild(child);
         return;
+      }
+    }
 
-    unsigned oldSize = m_grid.size();
-    m_grid.grow(numRows);
+    // If beforeChild is inside an anonymous cell/row, insert into the cell or
+    // into the anonymous row containing it, if there is one.
+    LayoutObject* last_box = last;
+    while (last_box && last_box->Parent()->IsAnonymous() &&
+           !last_box->IsTableRow())
+      last_box = last_box->Parent();
+    if (last_box && last_box->IsAnonymous() &&
+        !last_box->IsBeforeOrAfterContent()) {
+      last_box->AddChild(child, before_child);
+      return;
+    }
 
-    unsigned effectiveColumnCount = std::max(1u, table()->numEffectiveColumns());
-    for (unsigned row = oldSize; row < m_grid.size(); ++row)
-        m_grid[row].row.grow(effectiveColumnCount);
+    LayoutObject* row = LayoutTableRow::CreateAnonymousWithParent(this);
+    AddChild(row, before_child);
+    row->AddChild(child);
+    return;
+  }
+
+  if (before_child)
+    SetNeedsCellRecalc();
+
+  unsigned insertion_row = c_row_;
+  ++c_row_;
+  c_col_ = 0;
+
+  EnsureRows(c_row_);
+
+  LayoutTableRow* row = ToLayoutTableRow(child);
+  grid_[insertion_row].row_layout_object = row;
+  row->SetRowIndex(insertion_row);
+
+  if (!before_child)
+    SetRowLogicalHeightToRowStyleLogicalHeight(grid_[insertion_row]);
+
+  if (before_child && before_child->Parent() != this)
+    before_child = SplitAnonymousBoxesAroundChild(before_child);
+
+  DCHECK(!before_child || before_child->IsTableRow());
+  LayoutTableBoxComponent::AddChild(child, before_child);
 }
 
-static inline void checkThatVectorIsDOMOrdered(const Vector<LayoutTableCell*, 1>& cells)
-{
+static inline void CheckThatVectorIsDOMOrdered(
+    const Vector<LayoutTableCell*, 1>& cells) {
 #ifndef NDEBUG
-    // This function should be called on a non-empty vector.
-    ASSERT(cells.size() > 0);
+  // This function should be called on a non-empty vector.
+  DCHECK_GT(cells.size(), 0u);
 
-    const LayoutTableCell* previousCell = cells[0];
-    for (size_t i = 1; i < cells.size(); ++i) {
-        const LayoutTableCell* currentCell = cells[i];
-        // The check assumes that all cells belong to the same row group.
-        ASSERT(previousCell->section() == currentCell->section());
+  const LayoutTableCell* previous_cell = cells[0];
+  for (size_t i = 1; i < cells.size(); ++i) {
+    const LayoutTableCell* current_cell = cells[i];
+    // The check assumes that all cells belong to the same row group.
+    DCHECK_EQ(previous_cell->Section(), current_cell->Section());
 
-        // 2 overlapping cells can't be on the same row.
-        ASSERT(currentCell->row() != previousCell->row());
+    // 2 overlapping cells can't be on the same row.
+    DCHECK_NE(current_cell->Row(), previous_cell->Row());
 
-        // Look backwards in the tree for the previousCell's row. If we are
-        // DOM ordered, we should find it.
-        const LayoutTableRow* row = currentCell->row();
-        for (; row && row != previousCell->row(); row = row->previousRow()) { }
-        ASSERT(row == previousCell->row());
-
-        previousCell = currentCell;
+    // Look backwards in the tree for the previousCell's row. If we are
+    // DOM ordered, we should find it.
+    const LayoutTableRow* row = current_cell->Row();
+    for (; row && row != previous_cell->Row(); row = row->PreviousRow()) {
     }
-#endif // NDEBUG
+    DCHECK_EQ(row, previous_cell->Row());
+
+    previous_cell = current_cell;
+  }
+#endif  // NDEBUG
 }
 
-void LayoutTableSection::addCell(LayoutTableCell* cell, LayoutTableRow* row)
-{
-    // We don't insert the cell if we need cell recalc as our internal columns' representation
-    // will have drifted from the table's representation. Also recalcCells will call addCell
-    // at a later time after sync'ing our columns' with the table's.
-    if (needsCellRecalc())
-        return;
+void LayoutTableSection::AddCell(LayoutTableCell* cell, LayoutTableRow* row) {
+  // We don't insert the cell if we need cell recalc as our internal columns'
+  // representation will have drifted from the table's representation. Also
+  // recalcCells will call addCell at a later time after sync'ing our columns'
+  // with the table's.
+  if (NeedsCellRecalc())
+    return;
 
-    unsigned rSpan = cell->rowSpan();
-    unsigned cSpan = cell->colSpan();
-    const Vector<LayoutTable::ColumnStruct>& columns = table()->effectiveColumns();
-    unsigned nCols = columns.size();
-    unsigned insertionRow = row->rowIndex();
+  unsigned r_span = cell->RowSpan();
+  unsigned c_span = cell->ColSpan();
+  if (r_span > 1 || c_span > 1)
+    has_spanning_cells_ = true;
 
-    // ### mozilla still seems to do the old HTML way, even for strict DTD
-    // (see the annotation on table cell layouting in the CSS specs and the testcase below:
-    // <TABLE border>
-    // <TR><TD>1 <TD rowspan="2">2 <TD>3 <TD>4
-    // <TR><TD colspan="2">5
-    // </TABLE>
-    while (m_cCol < nCols && (cellAt(insertionRow, m_cCol).hasCells() || cellAt(insertionRow, m_cCol).inColSpan))
-        m_cCol++;
+  const Vector<LayoutTable::ColumnStruct>& columns =
+      Table()->EffectiveColumns();
+  unsigned insertion_row = row->RowIndex();
 
-    updateLogicalHeightForCell(m_grid[insertionRow], cell);
+  // ### mozilla still seems to do the old HTML way, even for strict DTD
+  // (see the annotation on table cell layouting in the CSS specs and the
+  // testcase below:
+  // <TABLE border>
+  // <TR><TD>1 <TD rowspan="2">2 <TD>3 <TD>4
+  // <TR><TD colspan="2">5
+  // </TABLE>
+  unsigned n_cols = NumCols(insertion_row);
+  while (c_col_ < n_cols && (CellAt(insertion_row, c_col_).HasCells() ||
+                             CellAt(insertion_row, c_col_).in_col_span))
+    c_col_++;
 
-    ensureRows(insertionRow + rSpan);
+  UpdateLogicalHeightForCell(grid_[insertion_row], cell);
 
-    m_grid[insertionRow].rowLayoutObject = row;
+  EnsureRows(insertion_row + r_span);
 
-    unsigned col = m_cCol;
-    // tell the cell where it is
-    bool inColSpan = false;
-    while (cSpan) {
-        unsigned currentSpan;
-        if (m_cCol >= nCols) {
-            table()->appendEffectiveColumn(cSpan);
-            currentSpan = cSpan;
-        } else {
-            if (cSpan < columns[m_cCol].span)
-                table()->splitEffectiveColumn(m_cCol, cSpan);
-            currentSpan = columns[m_cCol].span;
-        }
-        for (unsigned r = 0; r < rSpan; r++) {
-            CellStruct& c = cellAt(insertionRow + r, m_cCol);
-            ASSERT(cell);
-            c.cells.append(cell);
-            checkThatVectorIsDOMOrdered(c.cells);
-            // If cells overlap then we take the slow path for painting.
-            if (c.cells.size() > 1)
-                m_hasMultipleCellLevels = true;
-            if (inColSpan)
-                c.inColSpan = true;
-        }
-        m_cCol++;
-        cSpan -= currentSpan;
-        inColSpan = true;
+  grid_[insertion_row].row_layout_object = row;
+
+  unsigned col = c_col_;
+  // tell the cell where it is
+  bool in_col_span = false;
+  unsigned col_size = columns.size();
+  while (c_span) {
+    unsigned current_span;
+    if (c_col_ >= col_size) {
+      Table()->AppendEffectiveColumn(c_span);
+      current_span = c_span;
+    } else {
+      if (c_span < columns[c_col_].span)
+        Table()->SplitEffectiveColumn(c_col_, c_span);
+      current_span = columns[c_col_].span;
     }
-    cell->setAbsoluteColumnIndex(table()->effectiveColumnToAbsoluteColumn(col));
-}
-
-bool LayoutTableSection::rowHasOnlySpanningCells(unsigned row)
-{
-    unsigned totalCols = m_grid[row].row.size();
-
-    if (!totalCols)
-        return false;
-
-    for (unsigned col = 0; col < totalCols; col++) {
-        const CellStruct& rowSpanCell = cellAt(row, col);
-
-        // Empty cell is not a valid cell so it is not a rowspan cell.
-        if (rowSpanCell.cells.isEmpty())
-            return false;
-
-        if (rowSpanCell.cells[0]->rowSpan() == 1)
-            return false;
+    for (unsigned r = 0; r < r_span; r++) {
+      EnsureCols(insertion_row + r, c_col_ + 1);
+      CellStruct& c = CellAt(insertion_row + r, c_col_);
+      DCHECK(cell);
+      c.cells.push_back(cell);
+      CheckThatVectorIsDOMOrdered(c.cells);
+      // If cells overlap then we take the slow path for painting.
+      if (c.cells.size() > 1)
+        has_multiple_cell_levels_ = true;
+      if (in_col_span)
+        c.in_col_span = true;
     }
-
-    return true;
+    c_col_++;
+    c_span -= current_span;
+    in_col_span = true;
+  }
+  cell->SetAbsoluteColumnIndex(Table()->EffectiveColumnToAbsoluteColumn(col));
 }
 
-void LayoutTableSection::populateSpanningRowsHeightFromCell(LayoutTableCell* cell, struct SpanningRowsHeight& spanningRowsHeight)
-{
-    const unsigned rowSpan = cell->rowSpan();
-    const unsigned rowIndex = cell->rowIndex();
+bool LayoutTableSection::RowHasOnlySpanningCells(unsigned row) {
+  unsigned total_cols = grid_[row].row.size();
 
-    spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing = cell->logicalHeightForRowSizing();
-
-    spanningRowsHeight.rowHeight.resize(rowSpan);
-    spanningRowsHeight.totalRowsHeight = 0;
-    for (unsigned row = 0; row < rowSpan; row++) {
-        unsigned actualRow = row + rowIndex;
-
-        spanningRowsHeight.rowHeight[row] = m_rowPos[actualRow + 1] - m_rowPos[actualRow] - borderSpacingForRow(actualRow);
-        if (!spanningRowsHeight.rowHeight[row])
-            spanningRowsHeight.isAnyRowWithOnlySpanningCells |= rowHasOnlySpanningCells(actualRow);
-
-        spanningRowsHeight.totalRowsHeight += spanningRowsHeight.rowHeight[row];
-        spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing -= borderSpacingForRow(actualRow);
-    }
-    // We don't span the following row so its border-spacing (if any) should be included.
-    spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing += borderSpacingForRow(rowIndex + rowSpan - 1);
-}
-
-void LayoutTableSection::distributeExtraRowSpanHeightToPercentRows(LayoutTableCell* cell, float totalPercent, int& extraRowSpanningHeight, Vector<int>& rowsHeight)
-{
-    if (!extraRowSpanningHeight || !totalPercent)
-        return;
-
-    const unsigned rowSpan = cell->rowSpan();
-    const unsigned rowIndex = cell->rowIndex();
-    float percent = std::min(totalPercent, 100.0f);
-    const int tableHeight = m_rowPos[m_grid.size()] + extraRowSpanningHeight;
-
-    // Our algorithm matches Firefox. Extra spanning height would be distributed Only in first percent height rows
-    // those total percent is 100. Other percent rows would be uneffected even extra spanning height is remain.
-    int accumulatedPositionIncrease = 0;
-    for (unsigned row = rowIndex; row < (rowIndex + rowSpan); row++) {
-        if (percent > 0 && extraRowSpanningHeight > 0) {
-            // TODO(alancutter): Make this work correctly for calc lengths.
-            if (m_grid[row].logicalHeight.hasPercent()) {
-                int toAdd = (tableHeight * std::min(m_grid[row].logicalHeight.percent(), percent) / 100) - rowsHeight[row - rowIndex];
-
-                toAdd = std::max(std::min(toAdd, extraRowSpanningHeight), 0);
-                accumulatedPositionIncrease += toAdd;
-                extraRowSpanningHeight -= toAdd;
-                percent -= m_grid[row].logicalHeight.percent();
-            }
-        }
-        m_rowPos[row + 1] += accumulatedPositionIncrease;
-    }
-}
-
-
-static void updatePositionIncreasedWithRowHeight(int extraHeight, float rowHeight, float totalHeight, int& accumulatedPositionIncrease, double& remainder)
-{
-    // Without the cast we lose enough precision to cause heights to miss pixels
-    // (and trigger asserts) in some layout tests.
-    double proportionalPositionIncrease = remainder + (extraHeight * double(rowHeight)) / totalHeight;
-    // The epsilon is to push any values that are close to a whole number but aren't due to floating point imprecision.
-    // The epsilons are not accumulated, any that aren't necessary are lost in the cast to int.
-    int positionIncreaseInt = proportionalPositionIncrease + 0.000001;
-    accumulatedPositionIncrease += positionIncreaseInt;
-    remainder = proportionalPositionIncrease - positionIncreaseInt;
-}
-
-// This is mainly used to distribute whole extra rowspanning height in percent rows when all spanning rows are
-// percent rows.
-// Distributing whole extra rowspanning height in percent rows based on the ratios of percent because this method works
-// same as percent distribution when only percent rows are present and percent is 100. Also works perfectly fine when
-// percent is not equal to 100.
-void LayoutTableSection::distributeWholeExtraRowSpanHeightToPercentRows(LayoutTableCell* cell, float totalPercent, int& extraRowSpanningHeight, Vector<int>& rowsHeight)
-{
-    if (!extraRowSpanningHeight || !totalPercent)
-        return;
-
-    const unsigned rowSpan = cell->rowSpan();
-    const unsigned rowIndex = cell->rowIndex();
-    double remainder = 0;
-
-    int accumulatedPositionIncrease = 0;
-    for (unsigned row = rowIndex; row < (rowIndex + rowSpan); row++) {
-        // TODO(alancutter): Make this work correctly for calc lengths.
-        if (m_grid[row].logicalHeight.hasPercent()) {
-            updatePositionIncreasedWithRowHeight(extraRowSpanningHeight, m_grid[row].logicalHeight.percent(), totalPercent, accumulatedPositionIncrease, remainder);
-        }
-        m_rowPos[row + 1] += accumulatedPositionIncrease;
-    }
-
-    DCHECK(!round(remainder)) << "remainder was " << remainder;
-
-    extraRowSpanningHeight -= accumulatedPositionIncrease;
-}
-
-void LayoutTableSection::distributeExtraRowSpanHeightToAutoRows(LayoutTableCell* cell, int totalAutoRowsHeight, int& extraRowSpanningHeight, Vector<int>& rowsHeight)
-{
-    if (!extraRowSpanningHeight || !totalAutoRowsHeight)
-        return;
-
-    const unsigned rowSpan = cell->rowSpan();
-    const unsigned rowIndex = cell->rowIndex();
-    int accumulatedPositionIncrease = 0;
-    double remainder = 0;
-
-    // Aspect ratios of auto rows should not change otherwise table may look different than user expected.
-    // So extra height distributed in auto spanning rows based on their weight in spanning cell.
-    for (unsigned row = rowIndex; row < (rowIndex + rowSpan); row++) {
-        if (m_grid[row].logicalHeight.isAuto()) {
-            updatePositionIncreasedWithRowHeight(extraRowSpanningHeight, rowsHeight[row - rowIndex], totalAutoRowsHeight, accumulatedPositionIncrease, remainder);
-        }
-        m_rowPos[row + 1] += accumulatedPositionIncrease;
-    }
-
-    DCHECK(!round(remainder)) << "remainder was " << remainder;
-
-    extraRowSpanningHeight -= accumulatedPositionIncrease;
-}
-
-void LayoutTableSection::distributeExtraRowSpanHeightToRemainingRows(LayoutTableCell* cell, int totalRemainingRowsHeight, int& extraRowSpanningHeight, Vector<int>& rowsHeight)
-{
-    if (!extraRowSpanningHeight || !totalRemainingRowsHeight)
-        return;
-
-    const unsigned rowSpan = cell->rowSpan();
-    const unsigned rowIndex = cell->rowIndex();
-    int accumulatedPositionIncrease = 0;
-    double remainder = 0;
-
-    // Aspect ratios of the rows should not change otherwise table may look different than user expected.
-    // So extra height distribution in remaining spanning rows based on their weight in spanning cell.
-    for (unsigned row = rowIndex; row < (rowIndex + rowSpan); row++) {
-        if (!m_grid[row].logicalHeight.hasPercent()) {
-            updatePositionIncreasedWithRowHeight(extraRowSpanningHeight, rowsHeight[row - rowIndex], totalRemainingRowsHeight, accumulatedPositionIncrease, remainder);
-        }
-        m_rowPos[row + 1] += accumulatedPositionIncrease;
-    }
-
-    DCHECK(!round(remainder)) << "remainder was " << remainder;
-
-    extraRowSpanningHeight -= accumulatedPositionIncrease;
-}
-
-static bool cellIsFullyIncludedInOtherCell(const LayoutTableCell* cell1, const LayoutTableCell* cell2)
-{
-    return (cell1->rowIndex() >= cell2->rowIndex() && (cell1->rowIndex() + cell1->rowSpan()) <= (cell2->rowIndex() + cell2->rowSpan()));
-}
-
-// To avoid unneeded extra height distributions, we apply the following sorting algorithm:
-static bool compareRowSpanCellsInHeightDistributionOrder(const LayoutTableCell* cell1, const LayoutTableCell* cell2)
-{
-    // Sorting bigger height cell first if cells are at same index with same span because we will skip smaller
-    // height cell to distribute it's extra height.
-    if (cell1->rowIndex() == cell2->rowIndex() && cell1->rowSpan() == cell2->rowSpan())
-        return (cell1->logicalHeightForRowSizing() > cell2->logicalHeightForRowSizing());
-    // Sorting inner most cell first because if inner spanning cell'e extra height is distributed then outer
-    // spanning cell's extra height will adjust accordingly. In reverse order, there is more chances that outer
-    // spanning cell's height will exceed than defined by user.
-    if (cellIsFullyIncludedInOtherCell(cell1, cell2))
-        return true;
-    // Sorting lower row index first because first we need to apply the extra height of spanning cell which
-    // comes first in the table so lower rows's position would increment in sequence.
-    if (!cellIsFullyIncludedInOtherCell(cell2, cell1))
-        return (cell1->rowIndex() < cell2->rowIndex());
-
+  if (!total_cols)
     return false;
+
+  for (unsigned col = 0; col < total_cols; col++) {
+    const CellStruct& row_span_cell = CellAt(row, col);
+
+    // Empty cell is not a valid cell so it is not a rowspan cell.
+    if (row_span_cell.cells.IsEmpty())
+      return false;
+
+    if (row_span_cell.cells[0]->RowSpan() == 1)
+      return false;
+  }
+
+  return true;
 }
 
-unsigned LayoutTableSection::calcRowHeightHavingOnlySpanningCells(unsigned row, int& accumulatedCellPositionIncrease, unsigned rowToApplyExtraHeight, unsigned& extraTableHeightToPropgate, Vector<int>& rowsCountWithOnlySpanningCells)
-{
-    ASSERT(rowHasOnlySpanningCells(row));
+void LayoutTableSection::PopulateSpanningRowsHeightFromCell(
+    LayoutTableCell* cell,
+    struct SpanningRowsHeight& spanning_rows_height) {
+  const unsigned row_span = cell->RowSpan();
+  const unsigned row_index = cell->RowIndex();
 
-    unsigned totalCols = m_grid[row].row.size();
+  spanning_rows_height.spanning_cell_height_ignoring_border_spacing =
+      cell->LogicalHeightForRowSizing();
 
-    if (!totalCols)
-        return 0;
+  spanning_rows_height.row_height.Resize(row_span);
+  spanning_rows_height.total_rows_height = 0;
+  for (unsigned row = 0; row < row_span; row++) {
+    unsigned actual_row = row + row_index;
 
-    unsigned rowHeight = 0;
+    spanning_rows_height.row_height[row] = row_pos_[actual_row + 1] -
+                                           row_pos_[actual_row] -
+                                           BorderSpacingForRow(actual_row);
+    if (!spanning_rows_height.row_height[row])
+      spanning_rows_height.is_any_row_with_only_spanning_cells |=
+          RowHasOnlySpanningCells(actual_row);
 
-    for (unsigned col = 0; col < totalCols; col++) {
-        const CellStruct& rowSpanCell = cellAt(row, col);
-
-        if (!rowSpanCell.cells.size())
-            continue;
-
-        LayoutTableCell* cell = rowSpanCell.cells[0];
-
-        if (cell->rowSpan() < 2)
-            continue;
-
-        const unsigned cellRowIndex = cell->rowIndex();
-        const unsigned cellRowSpan = cell->rowSpan();
-
-        // As we are going from the top of the table to the bottom to calculate the row
-        // heights for rows that only contain spanning cells and all previous rows are
-        // processed we only need to find the number of rows with spanning cells from the
-        // current cell to the end of the current cells spanning height.
-        unsigned startRowForSpanningCellCount = std::max(cellRowIndex, row);
-        unsigned endRow = cellRowIndex + cellRowSpan;
-        unsigned spanningCellsRowsCountHavingZeroHeight = rowsCountWithOnlySpanningCells[endRow - 1];
-
-        if (startRowForSpanningCellCount)
-            spanningCellsRowsCountHavingZeroHeight -= rowsCountWithOnlySpanningCells[startRowForSpanningCellCount - 1];
-
-        int totalRowspanCellHeight = (m_rowPos[endRow] - m_rowPos[cellRowIndex]) - borderSpacingForRow(endRow - 1);
-
-        totalRowspanCellHeight += accumulatedCellPositionIncrease;
-        if (rowToApplyExtraHeight >= cellRowIndex && rowToApplyExtraHeight < endRow)
-            totalRowspanCellHeight += extraTableHeightToPropgate;
-
-        if (totalRowspanCellHeight < cell->logicalHeightForRowSizing()) {
-            unsigned extraHeightRequired = cell->logicalHeightForRowSizing() - totalRowspanCellHeight;
-
-            rowHeight = std::max(rowHeight, extraHeightRequired / spanningCellsRowsCountHavingZeroHeight);
-        }
-    }
-
-    return rowHeight;
+    spanning_rows_height.total_rows_height +=
+        spanning_rows_height.row_height[row];
+    spanning_rows_height.spanning_cell_height_ignoring_border_spacing -=
+        BorderSpacingForRow(actual_row);
+  }
+  // We don't span the following row so its border-spacing (if any) should be
+  // included.
+  spanning_rows_height.spanning_cell_height_ignoring_border_spacing +=
+      BorderSpacingForRow(row_index + row_span - 1);
 }
 
-void LayoutTableSection::updateRowsHeightHavingOnlySpanningCells(LayoutTableCell* cell, struct SpanningRowsHeight& spanningRowsHeight, unsigned& extraHeightToPropagate, Vector<int>& rowsCountWithOnlySpanningCells)
-{
-    ASSERT(spanningRowsHeight.rowHeight.size());
+void LayoutTableSection::DistributeExtraRowSpanHeightToPercentRows(
+    LayoutTableCell* cell,
+    float total_percent,
+    int& extra_row_spanning_height,
+    Vector<int>& rows_height) {
+  if (!extra_row_spanning_height || !total_percent)
+    return;
 
-    int accumulatedPositionIncrease = 0;
-    const unsigned rowSpan = cell->rowSpan();
-    const unsigned rowIndex = cell->rowIndex();
+  const unsigned row_span = cell->RowSpan();
+  const unsigned row_index = cell->RowIndex();
+  float percent = std::min(total_percent, 100.0f);
+  const int table_height = row_pos_[grid_.size()] + extra_row_spanning_height;
 
-    ASSERT_UNUSED(rowSpan, rowSpan == spanningRowsHeight.rowHeight.size());
+  // Our algorithm matches Firefox. Extra spanning height would be distributed
+  // Only in first percent height rows those total percent is 100. Other percent
+  // rows would be uneffected even extra spanning height is remain.
+  int accumulated_position_increase = 0;
+  for (unsigned row = row_index; row < (row_index + row_span); row++) {
+    if (percent > 0 && extra_row_spanning_height > 0) {
+      // TODO(alancutter): Make this work correctly for calc lengths.
+      if (grid_[row].logical_height.IsPercent()) {
+        int to_add =
+            (table_height *
+             std::min(grid_[row].logical_height.Percent(), percent) / 100) -
+            rows_height[row - row_index];
 
-    for (unsigned row = 0; row < spanningRowsHeight.rowHeight.size(); row++) {
-        unsigned actualRow = row + rowIndex;
-        if (!spanningRowsHeight.rowHeight[row] && rowHasOnlySpanningCells(actualRow)) {
-            spanningRowsHeight.rowHeight[row] = calcRowHeightHavingOnlySpanningCells(actualRow, accumulatedPositionIncrease, rowIndex + rowSpan, extraHeightToPropagate, rowsCountWithOnlySpanningCells);
-            accumulatedPositionIncrease += spanningRowsHeight.rowHeight[row];
-        }
-        m_rowPos[actualRow + 1] += accumulatedPositionIncrease;
+        to_add = std::max(std::min(to_add, extra_row_spanning_height), 0);
+        accumulated_position_increase += to_add;
+        extra_row_spanning_height -= to_add;
+        percent -= grid_[row].logical_height.Percent();
+      }
     }
-
-    spanningRowsHeight.totalRowsHeight += accumulatedPositionIncrease;
+    row_pos_[row + 1] += accumulated_position_increase;
+  }
 }
 
-// Distribute rowSpan cell height in rows those comes in rowSpan cell based on the ratio of row's height if
-// 1. RowSpan cell height is greater than the total height of rows in rowSpan cell
-void LayoutTableSection::distributeRowSpanHeightToRows(SpanningLayoutTableCells& rowSpanCells)
-{
-    ASSERT(rowSpanCells.size());
+static void UpdatePositionIncreasedWithRowHeight(
+    int extra_height,
+    float row_height,
+    float total_height,
+    int& accumulated_position_increase,
+    double& remainder) {
+  // Without the cast we lose enough precision to cause heights to miss pixels
+  // (and trigger asserts) in some layout tests.
+  double proportional_position_increase =
+      remainder + (extra_height * double(row_height)) / total_height;
+  // The epsilon is to push any values that are close to a whole number but
+  // aren't due to floating point imprecision. The epsilons are not accumulated,
+  // any that aren't necessary are lost in the cast to int.
+  int position_increase_int = proportional_position_increase + 0.000001;
+  accumulated_position_increase += position_increase_int;
+  remainder = proportional_position_increase - position_increase_int;
+}
 
-    // 'rowSpanCells' list is already sorted based on the cells rowIndex in ascending order
-    // Arrange row spanning cell in the order in which we need to process first.
-    std::sort(rowSpanCells.begin(), rowSpanCells.end(), compareRowSpanCellsInHeightDistributionOrder);
+// This is mainly used to distribute whole extra rowspanning height in percent
+// rows when all spanning rows are percent rows.
+// Distributing whole extra rowspanning height in percent rows based on the
+// ratios of percent because this method works same as percent distribution when
+// only percent rows are present and percent is 100. Also works perfectly fine
+// when percent is not equal to 100.
+void LayoutTableSection::DistributeWholeExtraRowSpanHeightToPercentRows(
+    LayoutTableCell* cell,
+    float total_percent,
+    int& extra_row_spanning_height,
+    Vector<int>& rows_height) {
+  if (!extra_row_spanning_height || !total_percent)
+    return;
 
-    unsigned extraHeightToPropagate = 0;
-    unsigned lastRowIndex = 0;
-    unsigned lastRowSpan = 0;
+  const unsigned row_span = cell->RowSpan();
+  const unsigned row_index = cell->RowIndex();
+  double remainder = 0;
 
-    Vector<int> rowsCountWithOnlySpanningCells;
+  int accumulated_position_increase = 0;
+  for (unsigned row = row_index; row < (row_index + row_span); row++) {
+    // TODO(alancutter): Make this work correctly for calc lengths.
+    if (grid_[row].logical_height.IsPercent()) {
+      UpdatePositionIncreasedWithRowHeight(
+          extra_row_spanning_height, grid_[row].logical_height.Percent(),
+          total_percent, accumulated_position_increase, remainder);
+    }
+    row_pos_[row + 1] += accumulated_position_increase;
+  }
 
-    // At this stage, Height of the rows are zero for the one containing only spanning cells.
-    int count = 0;
-    for (unsigned row = 0; row < m_grid.size(); row++) {
-        if (rowHasOnlySpanningCells(row))
-            count++;
-        rowsCountWithOnlySpanningCells.append(count);
+  DCHECK(!round(remainder)) << "remainder was " << remainder;
+
+  extra_row_spanning_height -= accumulated_position_increase;
+}
+
+void LayoutTableSection::DistributeExtraRowSpanHeightToAutoRows(
+    LayoutTableCell* cell,
+    int total_auto_rows_height,
+    int& extra_row_spanning_height,
+    Vector<int>& rows_height) {
+  if (!extra_row_spanning_height || !total_auto_rows_height)
+    return;
+
+  const unsigned row_span = cell->RowSpan();
+  const unsigned row_index = cell->RowIndex();
+  int accumulated_position_increase = 0;
+  double remainder = 0;
+
+  // Aspect ratios of auto rows should not change otherwise table may look
+  // different than user expected. So extra height distributed in auto spanning
+  // rows based on their weight in spanning cell.
+  for (unsigned row = row_index; row < (row_index + row_span); row++) {
+    if (grid_[row].logical_height.IsAuto()) {
+      UpdatePositionIncreasedWithRowHeight(
+          extra_row_spanning_height, rows_height[row - row_index],
+          total_auto_rows_height, accumulated_position_increase, remainder);
+    }
+    row_pos_[row + 1] += accumulated_position_increase;
+  }
+
+  DCHECK(!round(remainder)) << "remainder was " << remainder;
+
+  extra_row_spanning_height -= accumulated_position_increase;
+}
+
+void LayoutTableSection::DistributeExtraRowSpanHeightToRemainingRows(
+    LayoutTableCell* cell,
+    int total_remaining_rows_height,
+    int& extra_row_spanning_height,
+    Vector<int>& rows_height) {
+  if (!extra_row_spanning_height || !total_remaining_rows_height)
+    return;
+
+  const unsigned row_span = cell->RowSpan();
+  const unsigned row_index = cell->RowIndex();
+  int accumulated_position_increase = 0;
+  double remainder = 0;
+
+  // Aspect ratios of the rows should not change otherwise table may look
+  // different than user expected. So extra height distribution in remaining
+  // spanning rows based on their weight in spanning cell.
+  for (unsigned row = row_index; row < (row_index + row_span); row++) {
+    if (!grid_[row].logical_height.IsPercentOrCalc()) {
+      UpdatePositionIncreasedWithRowHeight(
+          extra_row_spanning_height, rows_height[row - row_index],
+          total_remaining_rows_height, accumulated_position_increase,
+          remainder);
+    }
+    row_pos_[row + 1] += accumulated_position_increase;
+  }
+
+  DCHECK(!round(remainder)) << "remainder was " << remainder;
+
+  extra_row_spanning_height -= accumulated_position_increase;
+}
+
+static bool CellIsFullyIncludedInOtherCell(const LayoutTableCell* cell1,
+                                           const LayoutTableCell* cell2) {
+  return (cell1->RowIndex() >= cell2->RowIndex() &&
+          (cell1->RowIndex() + cell1->RowSpan()) <=
+              (cell2->RowIndex() + cell2->RowSpan()));
+}
+
+// To avoid unneeded extra height distributions, we apply the following sorting
+// algorithm:
+static bool CompareRowSpanCellsInHeightDistributionOrder(
+    const LayoutTableCell* cell1,
+    const LayoutTableCell* cell2) {
+  // Sorting bigger height cell first if cells are at same index with same span
+  // because we will skip smaller height cell to distribute it's extra height.
+  if (cell1->RowIndex() == cell2->RowIndex() &&
+      cell1->RowSpan() == cell2->RowSpan())
+    return (cell1->LogicalHeightForRowSizing() >
+            cell2->LogicalHeightForRowSizing());
+  // Sorting inner most cell first because if inner spanning cell'e extra height
+  // is distributed then outer spanning cell's extra height will adjust
+  // accordingly. In reverse order, there is more chances that outer spanning
+  // cell's height will exceed than defined by user.
+  if (CellIsFullyIncludedInOtherCell(cell1, cell2))
+    return true;
+  // Sorting lower row index first because first we need to apply the extra
+  // height of spanning cell which comes first in the table so lower rows's
+  // position would increment in sequence.
+  if (!CellIsFullyIncludedInOtherCell(cell2, cell1))
+    return (cell1->RowIndex() < cell2->RowIndex());
+
+  return false;
+}
+
+unsigned LayoutTableSection::CalcRowHeightHavingOnlySpanningCells(
+    unsigned row,
+    int& accumulated_cell_position_increase,
+    unsigned row_to_apply_extra_height,
+    unsigned& extra_table_height_to_propgate,
+    Vector<int>& rows_count_with_only_spanning_cells) {
+  DCHECK(RowHasOnlySpanningCells(row));
+
+  unsigned total_cols = grid_[row].row.size();
+
+  if (!total_cols)
+    return 0;
+
+  unsigned row_height = 0;
+
+  for (unsigned col = 0; col < total_cols; col++) {
+    const CellStruct& row_span_cell = CellAt(row, col);
+
+    if (!row_span_cell.cells.size())
+      continue;
+
+    LayoutTableCell* cell = row_span_cell.cells[0];
+
+    if (cell->RowSpan() < 2)
+      continue;
+
+    const unsigned cell_row_index = cell->RowIndex();
+    const unsigned cell_row_span = cell->RowSpan();
+
+    // As we are going from the top of the table to the bottom to calculate the
+    // row heights for rows that only contain spanning cells and all previous
+    // rows are processed we only need to find the number of rows with spanning
+    // cells from the current cell to the end of the current cells spanning
+    // height.
+    unsigned start_row_for_spanning_cell_count = std::max(cell_row_index, row);
+    unsigned end_row = cell_row_index + cell_row_span;
+    unsigned spanning_cells_rows_count_having_zero_height =
+        rows_count_with_only_spanning_cells[end_row - 1];
+
+    if (start_row_for_spanning_cell_count)
+      spanning_cells_rows_count_having_zero_height -=
+          rows_count_with_only_spanning_cells
+              [start_row_for_spanning_cell_count - 1];
+
+    int total_rowspan_cell_height =
+        (row_pos_[end_row] - row_pos_[cell_row_index]) -
+        BorderSpacingForRow(end_row - 1);
+
+    total_rowspan_cell_height += accumulated_cell_position_increase;
+    if (row_to_apply_extra_height >= cell_row_index &&
+        row_to_apply_extra_height < end_row)
+      total_rowspan_cell_height += extra_table_height_to_propgate;
+
+    if (total_rowspan_cell_height < cell->LogicalHeightForRowSizing()) {
+      unsigned extra_height_required =
+          cell->LogicalHeightForRowSizing() - total_rowspan_cell_height;
+
+      row_height = std::max(
+          row_height,
+          extra_height_required / spanning_cells_rows_count_having_zero_height);
+    }
+  }
+
+  return row_height;
+}
+
+void LayoutTableSection::UpdateRowsHeightHavingOnlySpanningCells(
+    LayoutTableCell* cell,
+    struct SpanningRowsHeight& spanning_rows_height,
+    unsigned& extra_height_to_propagate,
+    Vector<int>& rows_count_with_only_spanning_cells) {
+  DCHECK(spanning_rows_height.row_height.size());
+
+  int accumulated_position_increase = 0;
+  const unsigned row_span = cell->RowSpan();
+  const unsigned row_index = cell->RowIndex();
+
+  DCHECK_EQ(row_span, spanning_rows_height.row_height.size());
+
+  for (unsigned row = 0; row < spanning_rows_height.row_height.size(); row++) {
+    unsigned actual_row = row + row_index;
+    if (!spanning_rows_height.row_height[row] &&
+        RowHasOnlySpanningCells(actual_row)) {
+      spanning_rows_height.row_height[row] =
+          CalcRowHeightHavingOnlySpanningCells(
+              actual_row, accumulated_position_increase, row_index + row_span,
+              extra_height_to_propagate, rows_count_with_only_spanning_cells);
+      accumulated_position_increase += spanning_rows_height.row_height[row];
+    }
+    row_pos_[actual_row + 1] += accumulated_position_increase;
+  }
+
+  spanning_rows_height.total_rows_height += accumulated_position_increase;
+}
+
+// Distribute rowSpan cell height in rows those comes in rowSpan cell based on
+// the ratio of row's height if 1 RowSpan cell height is greater than the total
+// height of rows in rowSpan cell.
+void LayoutTableSection::DistributeRowSpanHeightToRows(
+    SpanningLayoutTableCells& row_span_cells) {
+  DCHECK(row_span_cells.size());
+
+  // 'rowSpanCells' list is already sorted based on the cells rowIndex in
+  // ascending order
+  // Arrange row spanning cell in the order in which we need to process first.
+  std::sort(row_span_cells.begin(), row_span_cells.end(),
+            CompareRowSpanCellsInHeightDistributionOrder);
+
+  unsigned extra_height_to_propagate = 0;
+  unsigned last_row_index = 0;
+  unsigned last_row_span = 0;
+
+  Vector<int> rows_count_with_only_spanning_cells;
+
+  // At this stage, Height of the rows are zero for the one containing only
+  // spanning cells.
+  int count = 0;
+  for (unsigned row = 0; row < grid_.size(); row++) {
+    if (RowHasOnlySpanningCells(row))
+      count++;
+    rows_count_with_only_spanning_cells.push_back(count);
+  }
+
+  for (unsigned i = 0; i < row_span_cells.size(); i++) {
+    LayoutTableCell* cell = row_span_cells[i];
+
+    unsigned row_index = cell->RowIndex();
+
+    unsigned row_span = cell->RowSpan();
+
+    unsigned spanning_cell_end_index = row_index + row_span;
+    unsigned last_spanning_cell_end_index = last_row_index + last_row_span;
+
+    // Only the highest spanning cell will distribute its extra height in a row
+    // if more than one spanning cell is present at the same level.
+    if (row_index == last_row_index && row_span == last_row_span)
+      continue;
+
+    int original_before_position = row_pos_[spanning_cell_end_index];
+
+    // When 2 spanning cells are ending at same row index then while extra
+    // height distribution of first spanning cell updates position of the last
+    // row so getting the original position of the last row in second spanning
+    // cell need to reduce the height changed by first spanning cell.
+    if (spanning_cell_end_index == last_spanning_cell_end_index)
+      original_before_position -= extra_height_to_propagate;
+
+    if (extra_height_to_propagate) {
+      for (unsigned row = last_spanning_cell_end_index + 1;
+           row <= spanning_cell_end_index; row++)
+        row_pos_[row] += extra_height_to_propagate;
     }
 
-    for (unsigned i = 0; i < rowSpanCells.size(); i++) {
-        LayoutTableCell* cell = rowSpanCells[i];
+    last_row_index = row_index;
+    last_row_span = row_span;
 
-        unsigned rowIndex = cell->rowIndex();
+    struct SpanningRowsHeight spanning_rows_height;
 
-        unsigned rowSpan = cell->rowSpan();
+    PopulateSpanningRowsHeightFromCell(cell, spanning_rows_height);
 
-        unsigned spanningCellEndIndex = rowIndex + rowSpan;
-        unsigned lastSpanningCellEndIndex = lastRowIndex + lastRowSpan;
+    // Here we are handling only row(s) who have only rowspanning cells and do
+    // not have any empty cell.
+    if (spanning_rows_height.is_any_row_with_only_spanning_cells)
+      UpdateRowsHeightHavingOnlySpanningCells(
+          cell, spanning_rows_height, extra_height_to_propagate,
+          rows_count_with_only_spanning_cells);
 
-        // Only the highest spanning cell will distribute its extra height in a row if more than one spanning cell
-        // is present at the same level.
-        if (rowIndex == lastRowIndex && rowSpan == lastRowSpan)
-            continue;
+    // This code handle row(s) that have rowspanning cell(s) and at least one
+    // empty cell. Such rows are not handled below and end up having a height of
+    // 0. That would mean content overlapping if one of their cells has any
+    // content. To avoid the problem, we add all the remaining spanning cells'
+    // height to the last spanned row. This means that we could grow a row past
+    // its 'height' or break percentage spreading however this is better than
+    // overlapping content.
+    // FIXME: Is there a better algorithm?
+    if (!spanning_rows_height.total_rows_height) {
+      if (spanning_rows_height.spanning_cell_height_ignoring_border_spacing)
+        row_pos_[spanning_cell_end_index] +=
+            spanning_rows_height.spanning_cell_height_ignoring_border_spacing +
+            BorderSpacingForRow(spanning_cell_end_index - 1);
 
-        int originalBeforePosition = m_rowPos[spanningCellEndIndex];
-
-        // When 2 spanning cells are ending at same row index then while extra height distribution of first spanning
-        // cell updates position of the last row so getting the original position of the last row in second spanning
-        // cell need to reduce the height changed by first spanning cell.
-        if (spanningCellEndIndex == lastSpanningCellEndIndex)
-            originalBeforePosition -= extraHeightToPropagate;
-
-        if (extraHeightToPropagate) {
-            for (unsigned row = lastSpanningCellEndIndex + 1; row <= spanningCellEndIndex; row++)
-                m_rowPos[row] += extraHeightToPropagate;
-        }
-
-        lastRowIndex = rowIndex;
-        lastRowSpan = rowSpan;
-
-        struct SpanningRowsHeight spanningRowsHeight;
-
-        populateSpanningRowsHeightFromCell(cell, spanningRowsHeight);
-
-        // Here we are handling only row(s) who have only rowspanning cells and do not have any empty cell.
-        if (spanningRowsHeight.isAnyRowWithOnlySpanningCells)
-            updateRowsHeightHavingOnlySpanningCells(cell, spanningRowsHeight, extraHeightToPropagate, rowsCountWithOnlySpanningCells);
-
-        // This code handle row(s) that have rowspanning cell(s) and at least one empty cell.
-        // Such rows are not handled below and end up having a height of 0. That would mean
-        // content overlapping if one of their cells has any content. To avoid the problem, we
-        // add all the remaining spanning cells' height to the last spanned row.
-        // This means that we could grow a row past its 'height' or break percentage spreading
-        // however this is better than overlapping content.
-        // FIXME: Is there a better algorithm?
-        if (!spanningRowsHeight.totalRowsHeight) {
-            if (spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing)
-                m_rowPos[spanningCellEndIndex] += spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing + borderSpacingForRow(spanningCellEndIndex - 1);
-
-            extraHeightToPropagate = m_rowPos[spanningCellEndIndex] - originalBeforePosition;
-            continue;
-        }
-
-        if (spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing <= spanningRowsHeight.totalRowsHeight) {
-            extraHeightToPropagate = m_rowPos[rowIndex + rowSpan] - originalBeforePosition;
-            continue;
-        }
-
-        // Below we are handling only row(s) who have at least one visible cell without rowspan value.
-        float totalPercent = 0;
-        int totalAutoRowsHeight = 0;
-        int totalRemainingRowsHeight = spanningRowsHeight.totalRowsHeight;
-
-        // FIXME: Inner spanning cell height should not change if it have fixed height when it's parent spanning cell
-        // is distributing it's extra height in rows.
-
-        // Calculate total percentage, total auto rows height and total rows height except percent rows.
-        for (unsigned row = rowIndex; row < spanningCellEndIndex; row++) {
-            // TODO(alancutter): Make this work correctly for calc lengths.
-            if (m_grid[row].logicalHeight.hasPercent()) {
-                totalPercent += m_grid[row].logicalHeight.percent();
-                totalRemainingRowsHeight -= spanningRowsHeight.rowHeight[row - rowIndex];
-            } else if (m_grid[row].logicalHeight.isAuto()) {
-                totalAutoRowsHeight += spanningRowsHeight.rowHeight[row - rowIndex];
-            }
-        }
-
-        int extraRowSpanningHeight = spanningRowsHeight.spanningCellHeightIgnoringBorderSpacing - spanningRowsHeight.totalRowsHeight;
-
-        if (totalPercent < 100 && !totalAutoRowsHeight && !totalRemainingRowsHeight) {
-            // Distributing whole extra rowspanning height in percent row when only non-percent rows height is 0.
-            distributeWholeExtraRowSpanHeightToPercentRows(cell, totalPercent, extraRowSpanningHeight, spanningRowsHeight.rowHeight);
-        } else {
-            distributeExtraRowSpanHeightToPercentRows(cell, totalPercent, extraRowSpanningHeight, spanningRowsHeight.rowHeight);
-            distributeExtraRowSpanHeightToAutoRows(cell, totalAutoRowsHeight, extraRowSpanningHeight, spanningRowsHeight.rowHeight);
-            distributeExtraRowSpanHeightToRemainingRows(cell, totalRemainingRowsHeight, extraRowSpanningHeight, spanningRowsHeight.rowHeight);
-        }
-
-        ASSERT(!extraRowSpanningHeight);
-
-        // Getting total changed height in the table
-        extraHeightToPropagate = m_rowPos[spanningCellEndIndex] - originalBeforePosition;
+      extra_height_to_propagate =
+          row_pos_[spanning_cell_end_index] - original_before_position;
+      continue;
     }
 
-    if (extraHeightToPropagate) {
-        // Apply changed height by rowSpan cells to rows present at the end of the table
-        for (unsigned row = lastRowIndex + lastRowSpan + 1; row <= m_grid.size(); row++)
-            m_rowPos[row] += extraHeightToPropagate;
+    if (spanning_rows_height.spanning_cell_height_ignoring_border_spacing <=
+        spanning_rows_height.total_rows_height) {
+      extra_height_to_propagate =
+          row_pos_[row_index + row_span] - original_before_position;
+      continue;
     }
+
+    // Below we are handling only row(s) who have at least one visible cell
+    // without rowspan value.
+    float total_percent = 0;
+    int total_auto_rows_height = 0;
+    int total_remaining_rows_height = spanning_rows_height.total_rows_height;
+
+    // FIXME: Inner spanning cell height should not change if it have fixed
+    // height when it's parent spanning cell is distributing it's extra height
+    // in rows.
+
+    // Calculate total percentage, total auto rows height and total rows height
+    // except percent rows.
+    for (unsigned row = row_index; row < spanning_cell_end_index; row++) {
+      // TODO(alancutter): Make this work correctly for calc lengths.
+      if (grid_[row].logical_height.IsPercent()) {
+        total_percent += grid_[row].logical_height.Percent();
+        total_remaining_rows_height -=
+            spanning_rows_height.row_height[row - row_index];
+      } else if (grid_[row].logical_height.IsAuto()) {
+        total_auto_rows_height +=
+            spanning_rows_height.row_height[row - row_index];
+      }
+    }
+
+    int extra_row_spanning_height =
+        spanning_rows_height.spanning_cell_height_ignoring_border_spacing -
+        spanning_rows_height.total_rows_height;
+
+    if (total_percent < 100 && !total_auto_rows_height &&
+        !total_remaining_rows_height) {
+      // Distributing whole extra rowspanning height in percent row when only
+      // non-percent rows height is 0.
+      DistributeWholeExtraRowSpanHeightToPercentRows(
+          cell, total_percent, extra_row_spanning_height,
+          spanning_rows_height.row_height);
+    } else {
+      DistributeExtraRowSpanHeightToPercentRows(
+          cell, total_percent, extra_row_spanning_height,
+          spanning_rows_height.row_height);
+      DistributeExtraRowSpanHeightToAutoRows(cell, total_auto_rows_height,
+                                             extra_row_spanning_height,
+                                             spanning_rows_height.row_height);
+      DistributeExtraRowSpanHeightToRemainingRows(
+          cell, total_remaining_rows_height, extra_row_spanning_height,
+          spanning_rows_height.row_height);
+    }
+
+    DCHECK(!extra_row_spanning_height);
+
+    // Getting total changed height in the table
+    extra_height_to_propagate =
+        row_pos_[spanning_cell_end_index] - original_before_position;
+  }
+
+  if (extra_height_to_propagate) {
+    // Apply changed height by rowSpan cells to rows present at the end of the
+    // table
+    for (unsigned row = last_row_index + last_row_span + 1; row <= grid_.size();
+         row++)
+      row_pos_[row] += extra_height_to_propagate;
+  }
 }
 
 // Find out the baseline of the cell
-// If the cell's baseline is more than the row's baseline then the cell's baseline become the row's baseline
-// and if the row's baseline goes out of the row's boundaries then adjust row height accordingly.
-void LayoutTableSection::updateBaselineForCell(LayoutTableCell* cell, unsigned row, int& baselineDescent)
-{
-    if (!cell->isBaselineAligned())
-        return;
+// If the cell's baseline is more than the row's baseline then the cell's
+// baseline become the row's baseline and if the row's baseline goes out of the
+// row's boundaries then adjust row height accordingly.
+void LayoutTableSection::UpdateBaselineForCell(LayoutTableCell* cell,
+                                               unsigned row,
+                                               int& baseline_descent) {
+  if (!cell->IsBaselineAligned())
+    return;
 
-    // Ignoring the intrinsic padding as it depends on knowing the row's baseline, which won't be accurate
-    // until the end of this function.
-    int baselinePosition = cell->cellBaselinePosition() - cell->intrinsicPaddingBefore();
-    if (baselinePosition > cell->borderBefore() + (cell->paddingBefore() - cell->intrinsicPaddingBefore())) {
-        m_grid[row].baseline = std::max(m_grid[row].baseline, baselinePosition);
+  // Ignoring the intrinsic padding as it depends on knowing the row's baseline,
+  // which won't be accurate until the end of this function.
+  int baseline_position =
+      cell->CellBaselinePosition() - cell->IntrinsicPaddingBefore();
+  if (baseline_position >
+      cell->BorderBefore() +
+          (cell->PaddingBefore() - cell->IntrinsicPaddingBefore())) {
+    grid_[row].baseline = std::max(grid_[row].baseline, baseline_position);
 
-        int cellStartRowBaselineDescent = 0;
-        if (cell->rowSpan() == 1) {
-            baselineDescent = std::max(baselineDescent, cell->logicalHeightForRowSizing() - baselinePosition);
-            cellStartRowBaselineDescent = baselineDescent;
-        }
-        m_rowPos[row + 1] = std::max<int>(m_rowPos[row + 1], m_rowPos[row] + m_grid[row].baseline + cellStartRowBaselineDescent);
+    int cell_start_row_baseline_descent = 0;
+    if (cell->RowSpan() == 1) {
+      baseline_descent =
+          std::max(baseline_descent,
+                   cell->LogicalHeightForRowSizing() - baseline_position);
+      cell_start_row_baseline_descent = baseline_descent;
     }
+    row_pos_[row + 1] =
+        std::max<int>(row_pos_[row + 1], row_pos_[row] + grid_[row].baseline +
+                                             cell_start_row_baseline_descent);
+  }
 }
 
-int LayoutTableSection::calcRowLogicalHeight()
-{
-#if ENABLE(ASSERT)
-    SetLayoutNeededForbiddenScope layoutForbiddenScope(*this);
+int LayoutTableSection::CalcRowLogicalHeight() {
+#if DCHECK_IS_ON()
+  SetLayoutNeededForbiddenScope layout_forbidden_scope(*this);
 #endif
 
-    ASSERT(!needsLayout());
-
-    LayoutTableCell* cell;
-
-    // We may have to forcefully lay out cells here, in which case we need a layout
-    // state. Technically, we should also push state for the row, but since rows don't push a
-    // coordinate transform, that's not necessary.
-    LayoutState state(*this, locationOffset());
-
-    m_rowPos.resize(m_grid.size() + 1);
-
-    // We ignore the border-spacing on any non-top section as it is already included in the previous section's last row position.
-    if (this == table()->topSection())
-        m_rowPos[0] = table()->vBorderSpacing();
-    else
-        m_rowPos[0] = 0;
-
-    SpanningLayoutTableCells rowSpanCells;
-#if ENABLE(ASSERT)
-    HashSet<const LayoutTableCell*> uniqueCells;
-#endif
-
-    for (unsigned r = 0; r < m_grid.size(); r++) {
-        m_grid[r].baseline = -1;
-        int baselineDescent = 0;
-
-        if (m_grid[r].logicalHeight.isSpecified()) {
-            // Our base size is the biggest logical height from our cells' styles (excluding row spanning cells).
-            m_rowPos[r + 1] = std::max(m_rowPos[r] + minimumValueForLength(m_grid[r].logicalHeight, LayoutUnit()).round(), 0);
-        } else {
-            // Non-specified lengths are ignored because the row already accounts for the cells
-            // intrinsic logical height.
-            m_rowPos[r + 1] = std::max(m_rowPos[r], 0);
-        }
-
-        Row& row = m_grid[r].row;
-        unsigned totalCols = row.size();
-        LayoutTableCell* lastRowSpanCell = nullptr;
-
-        for (unsigned c = 0; c < totalCols; c++) {
-            CellStruct& current = cellAt(r, c);
-            for (unsigned i = 0; i < current.cells.size(); i++) {
-                cell = current.cells[i];
-                if (current.inColSpan && cell->rowSpan() == 1)
-                    continue;
-
-                if (cell->rowSpan() > 1) {
-                    // For row spanning cells, we only handle them for the first row they span. This ensures we take their baseline into account.
-                    if (lastRowSpanCell != cell && cell->rowIndex() == r) {
-#if ENABLE(ASSERT)
-                        ASSERT(!uniqueCells.contains(cell));
-                        uniqueCells.add(cell);
-#endif
-
-                        rowSpanCells.append(cell);
-                        lastRowSpanCell = cell;
-                    }
-                }
-
-                if (cell->rowIndex() == r && cell->hasOverrideLogicalContentHeight()) {
-                    cell->clearIntrinsicPadding();
-                    cell->clearOverrideSize();
-                    cell->forceChildLayout();
-                }
-
-                if (cell->rowSpan() == 1)
-                    m_rowPos[r + 1] = std::max(m_rowPos[r + 1], m_rowPos[r] + cell->logicalHeightForRowSizing());
-
-                // Find out the baseline. The baseline is set on the first row in a rowSpan.
-                if (cell->rowIndex() == r)
-                    updateBaselineForCell(cell, r, baselineDescent);
-            }
-        }
-
-        // Add the border-spacing to our final position.
-        m_rowPos[r + 1] += borderSpacingForRow(r);
-        m_rowPos[r + 1] = std::max(m_rowPos[r + 1], m_rowPos[r]);
-    }
-
-    if (!rowSpanCells.isEmpty())
-        distributeRowSpanHeightToRows(rowSpanCells);
-
-    ASSERT(!needsLayout());
-
-    return m_rowPos[m_grid.size()];
-}
-
-void LayoutTableSection::layout()
-{
-    ASSERT(needsLayout());
-    LayoutAnalyzer::Scope analyzer(*this);
-    RELEASE_ASSERT(!needsCellRecalc());
-    ASSERT(!table()->needsSectionRecalc());
-
-    // addChild may over-grow m_grid but we don't want to throw away the memory too early as addChild
-    // can be called in a loop (e.g during parsing). Doing it now ensures we have a stable-enough structure.
-    m_grid.shrinkToFit();
-
-    LayoutState state(*this, locationOffset());
-
-    const Vector<int>& columnPos = table()->effectiveColumnPositions();
-
-    SubtreeLayoutScope layouter(*this);
-    for (unsigned r = 0; r < m_grid.size(); ++r) {
-        Row& row = m_grid[r].row;
-        unsigned cols = row.size();
-        // First, propagate our table layout's information to the cells. This will mark the row as needing layout
-        // if there was a column logical width change.
-        for (unsigned startColumn = 0; startColumn < cols; ++startColumn) {
-            CellStruct& current = row[startColumn];
-            LayoutTableCell* cell = current.primaryCell();
-            if (!cell || current.inColSpan)
-                continue;
-
-            unsigned endCol = startColumn;
-            unsigned cspan = cell->colSpan();
-            while (cspan && endCol < cols) {
-                ASSERT(endCol < table()->effectiveColumns().size());
-                cspan -= table()->effectiveColumns()[endCol].span;
-                endCol++;
-            }
-            int tableLayoutLogicalWidth = columnPos[endCol] - columnPos[startColumn] - table()->hBorderSpacing();
-            cell->setCellLogicalWidth(tableLayoutLogicalWidth, layouter);
-        }
-
-        if (LayoutTableRow* rowLayoutObject = m_grid[r].rowLayoutObject) {
-            if (!rowLayoutObject->needsLayout())
-                rowLayoutObject->markForPaginationRelayoutIfNeeded(layouter);
-            rowLayoutObject->layoutIfNeeded();
-        }
-    }
-
-    clearNeedsLayout();
-}
-
-void LayoutTableSection::distributeExtraLogicalHeightToPercentRows(int& extraLogicalHeight, int totalPercent)
-{
-    if (!totalPercent)
-        return;
-
-    unsigned totalRows = m_grid.size();
-    int totalHeight = m_rowPos[totalRows] + extraLogicalHeight;
-    int totalLogicalHeightAdded = 0;
-    totalPercent = std::min(totalPercent, 100);
-    int rowHeight = m_rowPos[1] - m_rowPos[0];
-    for (unsigned r = 0; r < totalRows; ++r) {
-        // TODO(alancutter): Make this work correctly for calc lengths.
-        if (totalPercent > 0 && m_grid[r].logicalHeight.hasPercent()) {
-            int toAdd = std::min<int>(extraLogicalHeight, (totalHeight * m_grid[r].logicalHeight.percent() / 100) - rowHeight);
-            // If toAdd is negative, then we don't want to shrink the row (this bug
-            // affected Outlook Web Access).
-            toAdd = std::max(0, toAdd);
-            totalLogicalHeightAdded += toAdd;
-            extraLogicalHeight -= toAdd;
-            totalPercent -= m_grid[r].logicalHeight.percent();
-        }
-        ASSERT(totalRows >= 1);
-        if (r < totalRows - 1)
-            rowHeight = m_rowPos[r + 2] - m_rowPos[r + 1];
-        m_rowPos[r + 1] += totalLogicalHeightAdded;
-    }
-}
-
-void LayoutTableSection::distributeExtraLogicalHeightToAutoRows(int& extraLogicalHeight, unsigned autoRowsCount)
-{
-    if (!autoRowsCount)
-        return;
-
-    int totalLogicalHeightAdded = 0;
-    for (unsigned r = 0; r < m_grid.size(); ++r) {
-        if (autoRowsCount > 0 && m_grid[r].logicalHeight.isAuto()) {
-            // Recomputing |extraLogicalHeightForRow| guarantees that we properly ditribute round |extraLogicalHeight|.
-            int extraLogicalHeightForRow = extraLogicalHeight / autoRowsCount;
-            totalLogicalHeightAdded += extraLogicalHeightForRow;
-            extraLogicalHeight -= extraLogicalHeightForRow;
-            --autoRowsCount;
-        }
-        m_rowPos[r + 1] += totalLogicalHeightAdded;
-    }
-}
-
-void LayoutTableSection::distributeRemainingExtraLogicalHeight(int& extraLogicalHeight)
-{
-    unsigned totalRows = m_grid.size();
-
-    if (extraLogicalHeight <= 0 || !m_rowPos[totalRows])
-        return;
-
-    // FIXME: m_rowPos[totalRows] - m_rowPos[0] is the total rows' size.
-    int totalRowSize = m_rowPos[totalRows];
-    int totalLogicalHeightAdded = 0;
-    int previousRowPosition = m_rowPos[0];
-    for (unsigned r = 0; r < totalRows; r++) {
-        // weight with the original height
-        totalLogicalHeightAdded += extraLogicalHeight * (m_rowPos[r + 1] - previousRowPosition) / totalRowSize;
-        previousRowPosition = m_rowPos[r + 1];
-        m_rowPos[r + 1] += totalLogicalHeightAdded;
-    }
-
-    extraLogicalHeight -= totalLogicalHeightAdded;
-}
-
-int LayoutTableSection::distributeExtraLogicalHeightToRows(int extraLogicalHeight)
-{
-    if (!extraLogicalHeight)
-        return extraLogicalHeight;
-
-    unsigned totalRows = m_grid.size();
-    if (!totalRows)
-        return extraLogicalHeight;
-
-    if (!m_rowPos[totalRows] && nextSibling())
-        return extraLogicalHeight;
-
-    unsigned autoRowsCount = 0;
-    int totalPercent = 0;
-    for (unsigned r = 0; r < totalRows; r++) {
-        if (m_grid[r].logicalHeight.isAuto())
-            ++autoRowsCount;
-        else if (m_grid[r].logicalHeight.hasPercent())
-            totalPercent += m_grid[r].logicalHeight.percent();
-    }
-
-    int remainingExtraLogicalHeight = extraLogicalHeight;
-    distributeExtraLogicalHeightToPercentRows(remainingExtraLogicalHeight, totalPercent);
-    distributeExtraLogicalHeightToAutoRows(remainingExtraLogicalHeight, autoRowsCount);
-    distributeRemainingExtraLogicalHeight(remainingExtraLogicalHeight);
-    return extraLogicalHeight - remainingExtraLogicalHeight;
-}
-
-static bool shouldFlexCellChild(LayoutObject* cellDescendant)
-{
-    return cellDescendant->isAtomicInlineLevel() || (cellDescendant->isBox() && toLayoutBox(cellDescendant)->scrollsOverflow());
-}
-
-void LayoutTableSection::layoutRows()
-{
-#if ENABLE(ASSERT)
-    SetLayoutNeededForbiddenScope layoutForbiddenScope(*this);
-#endif
-
-    ASSERT(!needsLayout());
-
-    LayoutAnalyzer::Scope analyzer(*this);
-
-    // FIXME: Changing the height without a layout can change the overflow so it seems wrong.
-
-    unsigned totalRows = m_grid.size();
-
-    // Set the width of our section now.  The rows will also be this width.
-    setLogicalWidth(table()->contentLogicalWidth());
-
-    int vspacing = table()->vBorderSpacing();
-    unsigned nEffCols = table()->numEffectiveColumns();
-    bool isPaginated = view()->layoutState()->isPaginated();
-
-    if (isPaginated) {
-        LayoutTableSection* header = table()->header();
-        // If we're a table header nested inside a table cell then we want to repeat on each
-        // page, but below the header we're nested inside. Note we don't try to match the padding
-        // on the cell on each repeated header.
-        if (header && header == this)
-            setOffsetForRepeatingHeader(view()->layoutState()->heightOffsetForTableHeaders());
-    }
-
-    LayoutState state(*this, locationOffset());
-
-    for (unsigned r = 0; r < totalRows; r++) {
-        // Set the row's x/y position and width/height.
-        LayoutTableRow* rowLayoutObject = m_grid[r].rowLayoutObject;
-        int paginationStrutOnRow = 0;
-        if (rowLayoutObject) {
-            rowLayoutObject->setLocation(LayoutPoint(0, m_rowPos[r]));
-            rowLayoutObject->setLogicalWidth(logicalWidth());
-            rowLayoutObject->setLogicalHeight(LayoutUnit(m_rowPos[r + 1] - m_rowPos[r] - vspacing));
-            rowLayoutObject->updateLayerTransformAfterLayout();
-            if (isPaginated) {
-                paginationStrutOnRow = paginationStrutForRow(rowLayoutObject, LayoutUnit(m_rowPos[r]));
-                if (paginationStrutOnRow) {
-                    // If we have a header group we will paint it at the top of each page, move the rows
-                    // down to accomodate it.
-                    paginationStrutOnRow += state.heightOffsetForTableHeaders().toInt();
-                    for (unsigned rowIndex = r; rowIndex <= totalRows; rowIndex++)
-                        m_rowPos[rowIndex] += paginationStrutOnRow;
-                }
-            }
-        }
-
-        int rowHeightIncreaseForPagination = INT_MIN;
-
-        for (unsigned c = 0; c < nEffCols; c++) {
-            CellStruct& cs = cellAt(r, c);
-            LayoutTableCell* cell = cs.primaryCell();
-
-            if (!cell || cs.inColSpan)
-                continue;
-
-            int rowIndex = cell->rowIndex();
-            int rHeight = m_rowPos[rowIndex + cell->rowSpan()] - m_rowPos[rowIndex] - vspacing;
-
-            // Force percent height children to lay themselves out again.
-            // This will cause these children to grow to fill the cell.
-            // FIXME: There is still more work to do here to fully match WinIE (should
-            // it become necessary to do so).  In quirks mode, WinIE behaves like we
-            // do, but it will clip the cells that spill out of the table section.  In
-            // strict mode, Mozilla and WinIE both regrow the table to accommodate the
-            // new height of the cell (thus letting the percentages cause growth one
-            // time only).  We may also not be handling row-spanning cells correctly.
-            //
-            // Note also the oddity where replaced elements always flex, and yet blocks/tables do
-            // not necessarily flex.  WinIE is crazy and inconsistent, and we can't hope to
-            // match the behavior perfectly, but we'll continue to refine it as we discover new
-            // bugs. :)
-            bool cellChildrenFlex = false;
-            bool flexAllChildren = cell->style()->logicalHeight().isFixed()
-                || (!table()->style()->logicalHeight().isAuto() && rHeight != cell->logicalHeight());
-
-            for (LayoutObject* child = cell->firstChild(); child; child = child->nextSibling()) {
-                if (!child->isText() && child->style()->logicalHeight().hasPercent()
-                    && (flexAllChildren || shouldFlexCellChild(child))
-                    && (!child->isTable() || toLayoutTable(child)->hasSections())) {
-                    cellChildrenFlex = true;
-                    break;
-                }
-            }
-
-            if (!cellChildrenFlex) {
-                if (TrackedLayoutBoxListHashSet* percentHeightDescendants = cell->percentHeightDescendants()) {
-                    for (auto* descendant : *percentHeightDescendants) {
-                        if (flexAllChildren || shouldFlexCellChild(descendant)) {
-                            cellChildrenFlex = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (cellChildrenFlex) {
-                // Alignment within a cell is based off the calculated
-                // height, which becomes irrelevant once the cell has
-                // been resized based off its percentage.
-                cell->setOverrideLogicalContentHeightFromRowHeight(LayoutUnit(rHeight));
-                cell->forceChildLayout();
-
-                // If the baseline moved, we may have to update the data for our row. Find out the new baseline.
-                if (cell->isBaselineAligned()) {
-                    int baseline = cell->cellBaselinePosition();
-                    if (baseline > cell->borderBefore() + cell->paddingBefore())
-                        m_grid[r].baseline = std::max(m_grid[r].baseline, baseline);
-                }
-            }
-
-            SubtreeLayoutScope layouter(*cell);
-            cell->computeIntrinsicPadding(rHeight, layouter);
-
-            LayoutRect oldCellRect = cell->frameRect();
-
-            setLogicalPositionForCell(cell, c);
-
-            if (!cell->needsLayout())
-                cell->markForPaginationRelayoutIfNeeded(layouter);
-
-            cell->layoutIfNeeded();
-
-            // FIXME: Make pagination work with vertical tables.
-            if (view()->layoutState()->pageLogicalHeight() && cell->logicalHeight() != rHeight) {
-                // FIXME: Pagination might have made us change size. For now just shrink or grow the cell to fit without doing a relayout.
-                // We'll also do a basic increase of the row height to accommodate the cell if it's bigger, but this isn't quite right
-                // either. It's at least stable though and won't result in an infinite # of relayouts that may never stabilize.
-                LayoutUnit oldLogicalHeight = cell->logicalHeight();
-                rowHeightIncreaseForPagination = std::max<int>(rowHeightIncreaseForPagination, oldLogicalHeight - rHeight);
-                cell->setLogicalHeight(LayoutUnit(rHeight));
-                cell->computeOverflow(oldLogicalHeight, false);
-            }
-
-            LayoutSize childOffset(cell->location() - oldCellRect.location());
-            if (childOffset.width() || childOffset.height()) {
-                // If the child moved, we have to issue paint invalidations to it as well as any floating/positioned
-                // descendants. An exception is if we need a layout. In this case, we know we're going to
-                // issue paint invalidations ourselves (and the child) anyway.
-                if (!table()->selfNeedsLayout())
-                    cell->setMayNeedPaintInvalidation();
-            }
-        }
-        if (rowHeightIncreaseForPagination > INT_MIN) {
-            for (unsigned rowIndex = r + 1; rowIndex <= totalRows; rowIndex++)
-                m_rowPos[rowIndex] += rowHeightIncreaseForPagination;
-            for (unsigned c = 0; c < nEffCols; ++c) {
-                Vector<LayoutTableCell*, 1>& cells = cellAt(r, c).cells;
-                for (size_t i = 0; i < cells.size(); ++i) {
-                    LayoutUnit oldLogicalHeight = cells[i]->logicalHeight();
-                    cells[i]->setLogicalHeight(oldLogicalHeight + rowHeightIncreaseForPagination);
-                    cells[i]->computeOverflow(oldLogicalHeight, false);
-                }
-            }
-        }
-        if (rowLayoutObject)
-            rowLayoutObject->computeOverflow();
-    }
-
-    ASSERT(!needsLayout());
-
-    setLogicalHeight(LayoutUnit(m_rowPos[totalRows]));
-
-    computeOverflowFromCells(totalRows, nEffCols);
-}
-
-int LayoutTableSection::paginationStrutForRow(LayoutTableRow* row, LayoutUnit logicalOffset) const
-{
-    // Even if the row allows us to break-inside, we will want to put a strut on the row if we have a header
-    // group that wants to appear at the top of each page.
-    bool tableHeaderForcesStrut = table()->header() ? table()->header()->getPaginationBreakability() != AllowAnyBreaks : false;
-    if (row->getPaginationBreakability() == AllowAnyBreaks && !tableHeaderForcesStrut)
-        return 0;
-    LayoutUnit pageLogicalHeight = pageLogicalHeightForOffset(logicalOffset);
-    if (!pageLogicalHeight)
-        return 0;
-    // If the row is too tall for the page don't insert a strut.
-    LayoutUnit rowLogicalHeight = row->logicalHeight();
-    if (rowLogicalHeight > pageLogicalHeight)
-        return 0;
-    LayoutUnit remainingLogicalHeight = pageRemainingLogicalHeightForOffset(logicalOffset, LayoutBlock::AssociateWithLatterPage);
-    if (remainingLogicalHeight >= rowLogicalHeight)
-        return 0; // It fits fine where it is. No need to break.
-    LayoutUnit paginationStrut = calculatePaginationStrutToFitContent(logicalOffset, remainingLogicalHeight, rowLogicalHeight);
-    if (paginationStrut == remainingLogicalHeight && remainingLogicalHeight == pageLogicalHeight) {
-        // Don't break if we were at the top of a page, and we failed to fit the content
-        // completely. No point in leaving a page completely blank.
-        return 0;
-    }
-    return paginationStrut;
-}
-
-void LayoutTableSection::computeOverflowFromCells()
-{
-    unsigned totalRows = m_grid.size();
-    unsigned nEffCols = table()->numEffectiveColumns();
-    computeOverflowFromCells(totalRows, nEffCols);
-}
-
-void LayoutTableSection::computeOverflowFromCells(unsigned totalRows, unsigned nEffCols)
-{
-    unsigned totalCellsCount = nEffCols * totalRows;
-    unsigned maxAllowedOverflowingCellsCount = totalCellsCount < gMinTableSizeToUseFastPaintPathWithOverflowingCell ? 0 : gMaxAllowedOverflowingCellRatioForFastPaintPath * totalCellsCount;
-
-    m_overflow.reset();
-    m_overflowingCells.clear();
-    m_forceSlowPaintPathWithOverflowingCell = false;
-#if ENABLE(ASSERT)
-    bool hasOverflowingCell = false;
-#endif
-    // Now that our height has been determined, add in overflow from cells.
-    for (unsigned r = 0; r < totalRows; r++) {
-        for (unsigned c = 0; c < nEffCols; c++) {
-            CellStruct& cs = cellAt(r, c);
-            LayoutTableCell* cell = cs.primaryCell();
-            if (!cell || cs.inColSpan)
-                continue;
-            if (r < totalRows - 1 && cell == primaryCellAt(r + 1, c))
-                continue;
-            addOverflowFromChild(cell);
-#if ENABLE(ASSERT)
-            hasOverflowingCell |= cell->hasVisualOverflow();
-#endif
-            if (cell->hasVisualOverflow() && !m_forceSlowPaintPathWithOverflowingCell) {
-                m_overflowingCells.add(cell);
-                if (m_overflowingCells.size() > maxAllowedOverflowingCellsCount) {
-                    // We need to set m_forcesSlowPaintPath only if there is a least one overflowing cells as the hit testing code rely on this information.
-                    m_forceSlowPaintPathWithOverflowingCell = true;
-                    // The slow path does not make any use of the overflowing cells info, don't hold on to the memory.
-                    m_overflowingCells.clear();
-                }
-            }
-        }
-    }
-
-    ASSERT(hasOverflowingCell == this->hasOverflowingCell());
-}
-
-bool LayoutTableSection::recalcChildOverflowAfterStyleChange()
-{
-    ASSERT(childNeedsOverflowRecalcAfterStyleChange());
-    clearChildNeedsOverflowRecalcAfterStyleChange();
-    unsigned totalRows = m_grid.size();
-    unsigned numEffCols = table()->numEffectiveColumns();
-    bool childrenOverflowChanged = false;
-    for (unsigned r = 0; r < totalRows; r++) {
-        LayoutTableRow* rowLayouter = rowLayoutObjectAt(r);
-        if (!rowLayouter || !rowLayouter->childNeedsOverflowRecalcAfterStyleChange())
-            continue;
-        rowLayouter->clearChildNeedsOverflowRecalcAfterStyleChange();
-        bool rowChildrenOverflowChanged = false;
-        for (unsigned c = 0; c < numEffCols; c++) {
-            CellStruct& cs = cellAt(r, c);
-            LayoutTableCell* cell = cs.primaryCell();
-            if (!cell || cs.inColSpan || !cell->needsOverflowRecalcAfterStyleChange())
-                continue;
-            rowChildrenOverflowChanged |= cell->recalcOverflowAfterStyleChange();
-        }
-        if (rowChildrenOverflowChanged)
-            rowLayouter->computeOverflow();
-        childrenOverflowChanged |= rowChildrenOverflowChanged;
-    }
-    // TODO(crbug.com/604136): Add visual overflow from rows too.
-    if (childrenOverflowChanged)
-        computeOverflowFromCells(totalRows, numEffCols);
-    return childrenOverflowChanged;
-}
-
-void LayoutTableSection::markAllCellsWidthsDirtyAndOrNeedsLayout(WhatToMarkAllCells whatToMark)
-{
-    for (LayoutTableRow* row = firstRow(); row; row = row->nextRow()) {
-        for (LayoutTableCell* cell = row->firstCell(); cell; cell = cell->nextCell()) {
-            cell->setPreferredLogicalWidthsDirty();
-            if (whatToMark == MarkDirtyAndNeedsLayout)
-                cell->setChildNeedsLayout();
-        }
-    }
-}
-
-int LayoutTableSection::calcBlockDirectionOuterBorder(BlockBorderSide side) const
-{
-    unsigned totalCols = table()->numEffectiveColumns();
-    if (!m_grid.size() || !totalCols)
-        return 0;
-
-    int borderWidth = 0;
-
-    const BorderValue& sb = side == BorderBefore ? style()->borderBefore() : style()->borderAfter();
-    if (sb.style() == BorderStyleHidden)
-        return -1;
-    if (sb.style() > BorderStyleHidden)
-        borderWidth = sb.width();
-
-    const BorderValue& rb = side == BorderBefore ? firstRow()->style()->borderBefore() : lastRow()->style()->borderAfter();
-    if (rb.style() == BorderStyleHidden)
-        return -1;
-    if (rb.style() > BorderStyleHidden && rb.width() > borderWidth)
-        borderWidth = rb.width();
-
-    bool allHidden = true;
-    for (unsigned c = 0; c < totalCols; c++) {
-        const CellStruct& current = cellAt(side == BorderBefore ? 0 : m_grid.size() - 1, c);
-        if (current.inColSpan || !current.hasCells())
-            continue;
-        const ComputedStyle& primaryCellStyle = current.primaryCell()->styleRef();
-        const BorderValue& cb = side == BorderBefore ? primaryCellStyle.borderBefore() : primaryCellStyle.borderAfter(); // FIXME: Make this work with perpendicular and flipped cells.
-        // FIXME: Don't repeat for the same col group
-        LayoutTableCol* col = table()->colElementAtAbsoluteColumn(c).innermostColOrColGroup();
-        if (col) {
-            const BorderValue& gb = side == BorderBefore ? col->style()->borderBefore() : col->style()->borderAfter();
-            if (gb.style() == BorderStyleHidden || cb.style() == BorderStyleHidden)
-                continue;
-            allHidden = false;
-            if (gb.style() > BorderStyleHidden && gb.width() > borderWidth)
-                borderWidth = gb.width();
-            if (cb.style() > BorderStyleHidden && cb.width() > borderWidth)
-                borderWidth = cb.width();
-        } else {
-            if (cb.style() == BorderStyleHidden)
-                continue;
-            allHidden = false;
-            if (cb.style() > BorderStyleHidden && cb.width() > borderWidth)
-                borderWidth = cb.width();
-        }
-    }
-    if (allHidden)
-        return -1;
-
-    if (side == BorderAfter)
-        borderWidth++; // Distribute rounding error
-    return borderWidth / 2;
-}
-
-int LayoutTableSection::calcInlineDirectionOuterBorder(InlineBorderSide side) const
-{
-    unsigned totalCols = table()->numEffectiveColumns();
-    if (!m_grid.size() || !totalCols)
-        return 0;
-    unsigned colIndex = side == BorderStart ? 0 : totalCols - 1;
-
-    int borderWidth = 0;
-
-    const BorderValue& sb = side == BorderStart ? style()->borderStart() : style()->borderEnd();
-    if (sb.style() == BorderStyleHidden)
-        return -1;
-    if (sb.style() > BorderStyleHidden)
-        borderWidth = sb.width();
-
-    if (LayoutTableCol* col = table()->colElementAtAbsoluteColumn(colIndex).innermostColOrColGroup()) {
-        const BorderValue& gb = side == BorderStart ? col->style()->borderStart() : col->style()->borderEnd();
-        if (gb.style() == BorderStyleHidden)
-            return -1;
-        if (gb.style() > BorderStyleHidden && gb.width() > borderWidth)
-            borderWidth = gb.width();
-    }
-
-    bool allHidden = true;
-    for (unsigned r = 0; r < m_grid.size(); r++) {
-        const CellStruct& current = cellAt(r, colIndex);
-        if (!current.hasCells())
-            continue;
-        // FIXME: Don't repeat for the same cell
-        const ComputedStyle& primaryCellStyle = current.primaryCell()->styleRef();
-        const ComputedStyle& primaryCellParentStyle = current.primaryCell()->parent()->styleRef();
-        const BorderValue& cb = side == BorderStart ? primaryCellStyle.borderStart() : primaryCellStyle.borderEnd(); // FIXME: Make this work with perpendicular and flipped cells.
-        const BorderValue& rb = side == BorderStart ? primaryCellParentStyle.borderStart() : primaryCellParentStyle.borderEnd();
-        if (cb.style() == BorderStyleHidden || rb.style() == BorderStyleHidden)
-            continue;
-        allHidden = false;
-        if (cb.style() > BorderStyleHidden && cb.width() > borderWidth)
-            borderWidth = cb.width();
-        if (rb.style() > BorderStyleHidden && rb.width() > borderWidth)
-            borderWidth = rb.width();
-    }
-    if (allHidden)
-        return -1;
-
-    if ((side == BorderStart) != table()->style()->isLeftToRightDirection())
-        borderWidth++; // Distribute rounding error
-    return borderWidth / 2;
-}
-
-void LayoutTableSection::recalcOuterBorder()
-{
-    m_outerBorderBefore = calcBlockDirectionOuterBorder(BorderBefore);
-    m_outerBorderAfter = calcBlockDirectionOuterBorder(BorderAfter);
-    m_outerBorderStart = calcInlineDirectionOuterBorder(BorderStart);
-    m_outerBorderEnd = calcInlineDirectionOuterBorder(BorderEnd);
-}
-
-int LayoutTableSection::firstLineBoxBaseline() const
-{
-    if (!m_grid.size())
-        return -1;
-
-    int firstLineBaseline = m_grid[0].baseline;
-    if (firstLineBaseline >= 0)
-        return firstLineBaseline + m_rowPos[0];
-
-    const Row& firstRow = m_grid[0].row;
-    for (size_t i = 0; i < firstRow.size(); ++i) {
-        const CellStruct& cs = firstRow.at(i);
-        const LayoutTableCell* cell = cs.primaryCell();
-        if (cell)
-            firstLineBaseline = std::max<int>(firstLineBaseline, cell->logicalTop() + cell->borderBefore() + cell->paddingBefore() + cell->contentLogicalHeight());
-    }
-
-    return firstLineBaseline;
-}
-
-void LayoutTableSection::paint(const PaintInfo& paintInfo, const LayoutPoint& paintOffset) const
-{
-    TableSectionPainter(*this).paint(paintInfo, paintOffset);
-}
-
-LayoutRect LayoutTableSection::logicalRectForWritingModeAndDirection(const LayoutRect& rect) const
-{
-    LayoutRect tableAlignedRect(rect);
-
-    flipForWritingMode(tableAlignedRect);
-
-    if (!style()->isHorizontalWritingMode())
-        tableAlignedRect = tableAlignedRect.transposedRect();
-
-    const Vector<int>& columnPos = table()->effectiveColumnPositions();
-    // FIXME: The table's direction should determine our row's direction, not the section's (see bug 96691).
-    if (!style()->isLeftToRightDirection())
-        tableAlignedRect.setX(columnPos[columnPos.size() - 1] - tableAlignedRect.maxX());
-
-    return tableAlignedRect;
-}
-
-CellSpan LayoutTableSection::dirtiedRows(const LayoutRect& damageRect) const
-{
-    if (m_forceSlowPaintPathWithOverflowingCell)
-        return fullTableRowSpan();
-
-    if (!m_grid.size())
-        return CellSpan(0, 0);
-
-    CellSpan coveredRows = spannedRows(damageRect);
-
-    // To issue paint invalidations for the border we might need to paint invalidate the first
-    // or last row even if they are not spanned themselves.
-    RELEASE_ASSERT(coveredRows.start() < m_rowPos.size());
-    if (coveredRows.start() == m_rowPos.size() - 1
-        && m_rowPos[m_rowPos.size() - 1] + table()->outerBorderAfter() >= damageRect.y())
-        coveredRows.decreaseStart();
-
-    if (!coveredRows.end()
-        && m_rowPos[0] - table()->outerBorderBefore() <= damageRect.maxY())
-        coveredRows.increaseEnd();
-
-    coveredRows.ensureConsistency(m_grid.size());
-
-    return coveredRows;
-}
-
-CellSpan LayoutTableSection::dirtiedEffectiveColumns(const LayoutRect& damageRect) const
-{
-    if (m_forceSlowPaintPathWithOverflowingCell)
-        return fullTableEffectiveColumnSpan();
-
-    RELEASE_ASSERT(table()->numEffectiveColumns());
-    CellSpan coveredColumns = spannedEffectiveColumns(damageRect);
-
-    const Vector<int>& columnPos = table()->effectiveColumnPositions();
-    // To issue paint invalidations for the border we might need to paint invalidate the first
-    // or last column even if they are not spanned themselves.
-    RELEASE_ASSERT(coveredColumns.start() < columnPos.size());
-    if (coveredColumns.start() == columnPos.size() - 1
-        && columnPos[columnPos.size() - 1] + table()->outerBorderEnd() >= damageRect.x())
-        coveredColumns.decreaseStart();
-
-    if (!coveredColumns.end()
-        && columnPos[0] - table()->outerBorderStart() <= damageRect.maxX())
-        coveredColumns.increaseEnd();
-
-    coveredColumns.ensureConsistency(table()->numEffectiveColumns());
-
-    return coveredColumns;
-}
-
-CellSpan LayoutTableSection::spannedRows(const LayoutRect& flippedRect) const
-{
-    // Find the first row that starts after rect top.
-    unsigned nextRow = std::upper_bound(m_rowPos.begin(), m_rowPos.end(), flippedRect.y()) - m_rowPos.begin();
-
-    if (nextRow == m_rowPos.size())
-        return CellSpan(m_rowPos.size() - 1, m_rowPos.size() - 1); // After all rows.
-
-    unsigned startRow = nextRow > 0 ? nextRow - 1 : 0;
-
-    // Find the first row that starts after rect bottom.
-    unsigned endRow;
-    if (m_rowPos[nextRow] >= flippedRect.maxY()) {
-        endRow = nextRow;
+  DCHECK(!NeedsLayout());
+
+  LayoutTableCell* cell;
+
+  // We may have to forcefully lay out cells here, in which case we need a
+  // layout state.
+  LayoutState state(*this);
+
+  row_pos_.Resize(grid_.size() + 1);
+
+  // We ignore the border-spacing on any non-top section as it is already
+  // included in the previous section's last row position.
+  if (this == Table()->TopSection())
+    row_pos_[0] = Table()->VBorderSpacing();
+  else
+    row_pos_[0] = 0;
+
+  SpanningLayoutTableCells row_span_cells;
+
+  // At fragmentainer breaks we need to prevent rowspanned cells (and whatever
+  // else) from distributing their extra height requirements over the rows that
+  // it spans. Otherwise we'd need to refragment afterwards.
+  unsigned index_of_first_stretchable_row = 0;
+
+  for (unsigned r = 0; r < grid_.size(); r++) {
+    grid_[r].baseline = -1;
+    int baseline_descent = 0;
+
+    if (state.IsPaginated() && grid_[r].row_layout_object)
+      row_pos_[r] += grid_[r].row_layout_object->PaginationStrut().Ceil();
+
+    if (grid_[r].logical_height.IsSpecified()) {
+      // Our base size is the biggest logical height from our cells' styles
+      // (excluding row spanning cells).
+      row_pos_[r + 1] =
+          std::max(row_pos_[r] + MinimumValueForLength(grid_[r].logical_height,
+                                                       LayoutUnit())
+                                     .Round(),
+                   0);
     } else {
-        endRow = std::upper_bound(m_rowPos.begin() + nextRow, m_rowPos.end(), flippedRect.maxY()) - m_rowPos.begin();
-        if (endRow == m_rowPos.size())
-            endRow = m_rowPos.size() - 1;
+      // Non-specified lengths are ignored because the row already accounts for
+      // the cells intrinsic logical height.
+      row_pos_[r + 1] = std::max(row_pos_[r], 0);
     }
 
-    return CellSpan(startRow, endRow);
+    Row& row = grid_[r].row;
+    unsigned total_cols = row.size();
+
+    for (unsigned c = 0; c < total_cols; c++) {
+      CellStruct& current = CellAt(r, c);
+      if (current.in_col_span)
+        continue;
+      for (unsigned i = 0; i < current.cells.size(); i++) {
+        cell = current.cells[i];
+
+        // For row spanning cells, we only handle them for the first row they
+        // span. This ensures we take their baseline into account.
+        if (cell->RowIndex() != r)
+          continue;
+
+        if (r < index_of_first_stretchable_row ||
+            (state.IsPaginated() &&
+             CrossesPageBoundary(
+                 LayoutUnit(row_pos_[r]),
+                 LayoutUnit(cell->LogicalHeightForRowSizing())))) {
+          // Entering or extending a range of unstretchable rows. We enter this
+          // mode when a cell in a row crosses a fragmentainer boundary, and
+          // we'll stay in this mode until we get to a row where we're past all
+          // rowspanned cells that we encountered while in this mode.
+          DCHECK(state.IsPaginated());
+          unsigned row_index_below_cell = r + cell->RowSpan();
+          index_of_first_stretchable_row =
+              std::max(index_of_first_stretchable_row, row_index_below_cell);
+        } else if (cell->RowSpan() > 1) {
+          DCHECK(!row_span_cells.Contains(cell));
+          row_span_cells.push_back(cell);
+        }
+
+        if (cell->HasOverrideLogicalContentHeight()) {
+          cell->ClearIntrinsicPadding();
+          cell->ClearOverrideSize();
+          cell->ForceChildLayout();
+        }
+
+        if (cell->RowSpan() == 1)
+          row_pos_[r + 1] = std::max(
+              row_pos_[r + 1], row_pos_[r] + cell->LogicalHeightForRowSizing());
+
+        // Find out the baseline. The baseline is set on the first row in a
+        // rowSpan.
+        UpdateBaselineForCell(cell, r, baseline_descent);
+      }
+    }
+
+    if (r < index_of_first_stretchable_row && grid_[r].row_layout_object) {
+      // We're not allowed to resize this row. Just scratch what we've
+      // calculated so far, and use the height that we got during initial
+      // layout instead.
+      row_pos_[r + 1] =
+          row_pos_[r] + grid_[r].row_layout_object->LogicalHeight().ToInt();
+    }
+
+    // Add the border-spacing to our final position.
+    row_pos_[r + 1] += BorderSpacingForRow(r);
+    row_pos_[r + 1] = std::max(row_pos_[r + 1], row_pos_[r]);
+  }
+
+  if (!row_span_cells.IsEmpty())
+    DistributeRowSpanHeightToRows(row_span_cells);
+
+  DCHECK(!NeedsLayout());
+
+  return row_pos_[grid_.size()];
 }
 
-CellSpan LayoutTableSection::spannedEffectiveColumns(const LayoutRect& flippedRect) const
-{
-    const Vector<int>& columnPos = table()->effectiveColumnPositions();
+void LayoutTableSection::UpdateLayout() {
+  DCHECK(NeedsLayout());
+  LayoutAnalyzer::Scope analyzer(*this);
+  CHECK(!NeedsCellRecalc());
+  DCHECK(!Table()->NeedsSectionRecalc());
 
-    // Find the first column that starts after rect left.
-    // lower_bound doesn't handle the edge between two cells properly as it would wrongly return the
-    // cell on the logical top/left.
-    // upper_bound on the other hand properly returns the cell on the logical bottom/right, which also
-    // matches the behavior of other browsers.
-    unsigned nextColumn = std::upper_bound(columnPos.begin(), columnPos.end(), flippedRect.x()) - columnPos.begin();
+  // addChild may over-grow m_grid but we don't want to throw away the memory
+  // too early as addChild can be called in a loop (e.g during parsing). Doing
+  // it now ensures we have a stable-enough structure.
+  grid_.ShrinkToFit();
 
-    if (nextColumn == columnPos.size())
-        return CellSpan(columnPos.size() - 1, columnPos.size() - 1); // After all columns.
+  LayoutState state(*this);
 
-    unsigned startColumn = nextColumn > 0 ? nextColumn - 1 : 0;
+  const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
+  LayoutUnit row_logical_top;
 
-    // Find the first column that starts after rect right.
-    unsigned endColumn;
-    if (columnPos[nextColumn] >= flippedRect.maxX()) {
-        endColumn = nextColumn;
+  SubtreeLayoutScope layouter(*this);
+  for (unsigned r = 0; r < grid_.size(); ++r) {
+    Row& row = grid_[r].row;
+    unsigned cols = row.size();
+    // First, propagate our table layout's information to the cells. This will
+    // mark the row as needing layout if there was a column logical width
+    // change.
+    for (unsigned start_column = 0; start_column < cols; ++start_column) {
+      CellStruct& current = row[start_column];
+      LayoutTableCell* cell = current.PrimaryCell();
+      if (!cell || current.in_col_span)
+        continue;
+
+      unsigned end_col = start_column;
+      unsigned cspan = cell->ColSpan();
+      while (cspan && end_col < cols) {
+        DCHECK_LT(end_col, Table()->EffectiveColumns().size());
+        cspan -= Table()->EffectiveColumns()[end_col].span;
+        end_col++;
+      }
+      int table_layout_logical_width = column_pos[end_col] -
+                                       column_pos[start_column] -
+                                       Table()->HBorderSpacing();
+      cell->SetCellLogicalWidth(table_layout_logical_width, layouter);
+    }
+
+    if (LayoutTableRow* row_layout_object = grid_[r].row_layout_object) {
+      if (state.IsPaginated())
+        row_layout_object->SetLogicalTop(row_logical_top);
+      if (!row_layout_object->NeedsLayout())
+        MarkChildForPaginationRelayoutIfNeeded(*row_layout_object, layouter);
+      row_layout_object->LayoutIfNeeded();
+      if (state.IsPaginated()) {
+        AdjustRowForPagination(*row_layout_object, layouter);
+        UpdateFragmentationInfoForChild(*row_layout_object);
+        row_logical_top = row_layout_object->LogicalBottom();
+        row_logical_top += LayoutUnit(Table()->VBorderSpacing());
+      }
+    }
+  }
+
+  ClearNeedsLayout();
+}
+
+void LayoutTableSection::DistributeExtraLogicalHeightToPercentRows(
+    int& extra_logical_height,
+    int total_percent) {
+  if (!total_percent)
+    return;
+
+  unsigned total_rows = grid_.size();
+  int total_height = row_pos_[total_rows] + extra_logical_height;
+  int total_logical_height_added = 0;
+  total_percent = std::min(total_percent, 100);
+  int row_height = row_pos_[1] - row_pos_[0];
+  for (unsigned r = 0; r < total_rows; ++r) {
+    // TODO(alancutter): Make this work correctly for calc lengths.
+    if (total_percent > 0 && grid_[r].logical_height.IsPercent()) {
+      int to_add = std::min<int>(
+          extra_logical_height,
+          (total_height * grid_[r].logical_height.Percent() / 100) -
+              row_height);
+      // If toAdd is negative, then we don't want to shrink the row (this bug
+      // affected Outlook Web Access).
+      to_add = std::max(0, to_add);
+      total_logical_height_added += to_add;
+      extra_logical_height -= to_add;
+      total_percent -= grid_[r].logical_height.Percent();
+    }
+    DCHECK_GE(total_rows, 1u);
+    if (r < total_rows - 1)
+      row_height = row_pos_[r + 2] - row_pos_[r + 1];
+    row_pos_[r + 1] += total_logical_height_added;
+  }
+}
+
+void LayoutTableSection::DistributeExtraLogicalHeightToAutoRows(
+    int& extra_logical_height,
+    unsigned auto_rows_count) {
+  if (!auto_rows_count)
+    return;
+
+  int total_logical_height_added = 0;
+  for (unsigned r = 0; r < grid_.size(); ++r) {
+    if (auto_rows_count > 0 && grid_[r].logical_height.IsAuto()) {
+      // Recomputing |extraLogicalHeightForRow| guarantees that we properly
+      // ditribute round |extraLogicalHeight|.
+      int extra_logical_height_for_row = extra_logical_height / auto_rows_count;
+      total_logical_height_added += extra_logical_height_for_row;
+      extra_logical_height -= extra_logical_height_for_row;
+      --auto_rows_count;
+    }
+    row_pos_[r + 1] += total_logical_height_added;
+  }
+}
+
+void LayoutTableSection::DistributeRemainingExtraLogicalHeight(
+    int& extra_logical_height) {
+  unsigned total_rows = grid_.size();
+
+  if (extra_logical_height <= 0 || !row_pos_[total_rows])
+    return;
+
+  // FIXME: m_rowPos[totalRows] - m_rowPos[0] is the total rows' size.
+  int total_row_size = row_pos_[total_rows];
+  int total_logical_height_added = 0;
+  int previous_row_position = row_pos_[0];
+  for (unsigned r = 0; r < total_rows; r++) {
+    // weight with the original height
+    total_logical_height_added += extra_logical_height *
+                                  (row_pos_[r + 1] - previous_row_position) /
+                                  total_row_size;
+    previous_row_position = row_pos_[r + 1];
+    row_pos_[r + 1] += total_logical_height_added;
+  }
+
+  extra_logical_height -= total_logical_height_added;
+}
+
+int LayoutTableSection::DistributeExtraLogicalHeightToRows(
+    int extra_logical_height) {
+  if (!extra_logical_height)
+    return extra_logical_height;
+
+  unsigned total_rows = grid_.size();
+  if (!total_rows)
+    return extra_logical_height;
+
+  if (!row_pos_[total_rows] && NextSibling())
+    return extra_logical_height;
+
+  unsigned auto_rows_count = 0;
+  int total_percent = 0;
+  for (unsigned r = 0; r < total_rows; r++) {
+    if (grid_[r].logical_height.IsAuto())
+      ++auto_rows_count;
+    else if (grid_[r].logical_height.IsPercent())
+      total_percent += grid_[r].logical_height.Percent();
+  }
+
+  int remaining_extra_logical_height = extra_logical_height;
+  DistributeExtraLogicalHeightToPercentRows(remaining_extra_logical_height,
+                                            total_percent);
+  DistributeExtraLogicalHeightToAutoRows(remaining_extra_logical_height,
+                                         auto_rows_count);
+  DistributeRemainingExtraLogicalHeight(remaining_extra_logical_height);
+  return extra_logical_height - remaining_extra_logical_height;
+}
+
+static bool ShouldFlexCellChild(const LayoutTableCell& cell,
+                                LayoutObject* cell_descendant) {
+  if (!cell.Style()->LogicalHeight().IsSpecified())
+    return false;
+  if (cell_descendant->Style()->OverflowY() == EOverflow::kVisible ||
+      cell_descendant->Style()->OverflowY() == EOverflow::kHidden)
+    return true;
+  return cell_descendant->IsBox() &&
+         ToLayoutBox(cell_descendant)->ShouldBeConsideredAsReplaced();
+}
+
+void LayoutTableSection::LayoutRows() {
+#if DCHECK_IS_ON()
+  SetLayoutNeededForbiddenScope layout_forbidden_scope(*this);
+#endif
+
+  DCHECK(!NeedsLayout());
+
+  LayoutAnalyzer::Scope analyzer(*this);
+
+  // FIXME: Changing the height without a layout can change the overflow so it
+  // seems wrong.
+
+  unsigned total_rows = grid_.size();
+
+  // Set the width of our section now.  The rows will also be this width.
+  SetLogicalWidth(Table()->ContentLogicalWidth());
+
+  int vspacing = Table()->VBorderSpacing();
+  LayoutState state(*this);
+
+  // Set the rows' location and size.
+  for (unsigned r = 0; r < total_rows; r++) {
+    LayoutTableRow* row_layout_object = grid_[r].row_layout_object;
+    if (row_layout_object) {
+      row_layout_object->SetLogicalLocation(LayoutPoint(0, row_pos_[r]));
+      row_layout_object->SetLogicalWidth(LogicalWidth());
+      LayoutUnit row_logical_height(row_pos_[r + 1] - row_pos_[r] - vspacing);
+      if (state.IsPaginated() && r + 1 < total_rows) {
+        // If the next row has a pagination strut, we need to subtract it. It
+        // should not be included in this row's height.
+        if (LayoutTableRow* next_row_object = grid_[r + 1].row_layout_object)
+          row_logical_height -= next_row_object->PaginationStrut();
+      }
+      row_layout_object->SetLogicalHeight(row_logical_height);
+      row_layout_object->UpdateLayerTransformAfterLayout();
+    }
+  }
+
+  // Vertically align and flex the cells in each row.
+  for (unsigned r = 0; r < total_rows; r++) {
+    LayoutTableRow* row_layout_object = grid_[r].row_layout_object;
+
+    unsigned n_cols = NumCols(r);
+    for (unsigned c = 0; c < n_cols; c++) {
+      LayoutTableCell* cell = OriginatingCellAt(r, c);
+      if (!cell)
+        continue;
+
+      int r_height;
+      int row_logical_top;
+      unsigned row_span = std::max(1U, cell->RowSpan());
+      unsigned end_row_index = std::min(r + row_span, total_rows) - 1;
+      LayoutTableRow* last_row_object = grid_[end_row_index].row_layout_object;
+      if (last_row_object && row_layout_object) {
+        row_logical_top = row_layout_object->LogicalTop().ToInt();
+        r_height = last_row_object->LogicalBottom().ToInt() - row_logical_top;
+      } else {
+        r_height = row_pos_[end_row_index + 1] - row_pos_[r] - vspacing;
+        row_logical_top = row_pos_[r];
+      }
+
+      RelayoutCellIfFlexed(*cell, r, r_height);
+
+      SubtreeLayoutScope layouter(*cell);
+      EVerticalAlign cell_vertical_align;
+      // If the cell crosses a fragmentainer boundary, just align it at the
+      // top. That's how it was laid out initially, before we knew the final
+      // row height, and re-aligning it now could result in the cell being
+      // fragmented differently, which could change its height and thus violate
+      // the requested alignment. Give up instead of risking circular
+      // dependencies and unstable layout.
+      if (state.IsPaginated() &&
+          CrossesPageBoundary(LayoutUnit(row_logical_top),
+                              LayoutUnit(r_height)))
+        cell_vertical_align = EVerticalAlign::kTop;
+      else
+        cell_vertical_align = cell->Style()->VerticalAlign();
+      cell->ComputeIntrinsicPadding(r_height, cell_vertical_align, layouter);
+
+      LayoutRect old_cell_rect = cell->FrameRect();
+
+      SetLogicalPositionForCell(cell, c);
+
+      cell->LayoutIfNeeded();
+
+      LayoutSize child_offset(cell->Location() - old_cell_rect.Location());
+      if (child_offset.Width() || child_offset.Height()) {
+        // If the child moved, we have to issue paint invalidations to it as
+        // well as any floating/positioned descendants. An exception is if we
+        // need a layout. In this case, we know we're going to issue paint
+        // invalidations ourselves (and the child) anyway.
+        if (!Table()->SelfNeedsLayout())
+          cell->SetMayNeedPaintInvalidation();
+      }
+    }
+    if (row_layout_object)
+      row_layout_object->ComputeOverflow();
+  }
+
+  DCHECK(!NeedsLayout());
+
+  SetLogicalHeight(LayoutUnit(row_pos_[total_rows]));
+
+  ComputeOverflowFromCells(total_rows, Table()->NumEffectiveColumns());
+}
+
+int LayoutTableSection::PaginationStrutForRow(LayoutTableRow* row,
+                                              LayoutUnit logical_offset) const {
+  DCHECK(row);
+  if (row->GetPaginationBreakability() == kAllowAnyBreaks)
+    return 0;
+  LayoutUnit page_logical_height = PageLogicalHeightForOffset(logical_offset);
+  if (!page_logical_height)
+    return 0;
+  // If the row is too tall for the page don't insert a strut.
+  LayoutUnit row_logical_height = row->LogicalHeight();
+  if (row_logical_height > page_logical_height)
+    return 0;
+
+  LayoutUnit remaining_logical_height = PageRemainingLogicalHeightForOffset(
+      logical_offset, LayoutBlock::kAssociateWithLatterPage);
+  if (remaining_logical_height >= row_logical_height)
+    return 0;  // It fits fine where it is. No need to break.
+  LayoutUnit pagination_strut = CalculatePaginationStrutToFitContent(
+      logical_offset, remaining_logical_height, row_logical_height);
+  if (pagination_strut == remaining_logical_height &&
+      remaining_logical_height == page_logical_height) {
+    // Don't break if we were at the top of a page, and we failed to fit the
+    // content completely. No point in leaving a page completely blank.
+    return 0;
+  }
+  // Table layout parts only work on integers, so we have to round. Round up, to
+  // make sure that no fraction ever gets left behind in the previous
+  // fragmentainer.
+  return pagination_strut.Ceil();
+}
+
+void LayoutTableSection::ComputeOverflowFromCells() {
+  unsigned total_rows = grid_.size();
+  unsigned n_eff_cols = Table()->NumEffectiveColumns();
+  ComputeOverflowFromCells(total_rows, n_eff_cols);
+}
+
+void LayoutTableSection::ComputeOverflowFromCells(unsigned total_rows,
+                                                  unsigned n_eff_cols) {
+  unsigned total_cells_count = n_eff_cols * total_rows;
+  unsigned max_allowed_overflowing_cells_count =
+      total_cells_count <
+              g_min_table_size_to_use_fast_paint_path_with_overflowing_cell
+          ? 0
+          : kGMaxAllowedOverflowingCellRatioForFastPaintPath *
+                total_cells_count;
+
+  overflow_.reset();
+  overflowing_cells_.Clear();
+  force_slow_paint_path_with_overflowing_cell_ = false;
+#if DCHECK_IS_ON()
+  bool has_overflowing_cell = false;
+#endif
+  // Now that our height has been determined, add in overflow from cells.
+  for (unsigned r = 0; r < total_rows; r++) {
+    unsigned n_cols = NumCols(r);
+    for (unsigned c = 0; c < n_cols; c++) {
+      const auto* cell = OriginatingCellAt(r, c);
+      if (!cell)
+        continue;
+      AddOverflowFromChild(*cell);
+#if DCHECK_IS_ON()
+      has_overflowing_cell |= cell->HasVisualOverflow();
+#endif
+      if (cell->HasVisualOverflow() &&
+          !force_slow_paint_path_with_overflowing_cell_) {
+        overflowing_cells_.insert(cell);
+        if (overflowing_cells_.size() > max_allowed_overflowing_cells_count) {
+          // We need to set m_forcesSlowPaintPath only if there is a least one
+          // overflowing cells as the hit testing code rely on this information.
+          force_slow_paint_path_with_overflowing_cell_ = true;
+          // The slow path does not make any use of the overflowing cells info,
+          // don't hold on to the memory.
+          overflowing_cells_.Clear();
+        }
+      }
+    }
+  }
+
+#if DCHECK_IS_ON()
+  DCHECK_EQ(has_overflowing_cell, this->HasOverflowingCell());
+#endif
+}
+
+bool LayoutTableSection::RecalcChildOverflowAfterStyleChange() {
+  DCHECK(ChildNeedsOverflowRecalcAfterStyleChange());
+  ClearChildNeedsOverflowRecalcAfterStyleChange();
+  unsigned total_rows = grid_.size();
+  bool children_overflow_changed = false;
+  for (unsigned r = 0; r < total_rows; r++) {
+    LayoutTableRow* row_layouter = RowLayoutObjectAt(r);
+    if (!row_layouter ||
+        !row_layouter->ChildNeedsOverflowRecalcAfterStyleChange())
+      continue;
+    row_layouter->ClearChildNeedsOverflowRecalcAfterStyleChange();
+    bool row_children_overflow_changed = false;
+    unsigned n_cols = NumCols(r);
+    for (unsigned c = 0; c < n_cols; c++) {
+      auto* cell = OriginatingCellAt(r, c);
+      if (!cell || !cell->NeedsOverflowRecalcAfterStyleChange())
+        continue;
+      row_children_overflow_changed |= cell->RecalcOverflowAfterStyleChange();
+    }
+    if (row_children_overflow_changed)
+      row_layouter->ComputeOverflow();
+    children_overflow_changed |= row_children_overflow_changed;
+  }
+  // TODO(crbug.com/604136): Add visual overflow from rows too.
+  if (children_overflow_changed)
+    ComputeOverflowFromCells(total_rows, Table()->NumEffectiveColumns());
+  return children_overflow_changed;
+}
+
+void LayoutTableSection::MarkAllCellsWidthsDirtyAndOrNeedsLayout(
+    LayoutTable::WhatToMarkAllCells what_to_mark) {
+  for (LayoutTableRow* row = FirstRow(); row; row = row->NextRow()) {
+    for (LayoutTableCell* cell = row->FirstCell(); cell;
+         cell = cell->NextCell()) {
+      cell->SetPreferredLogicalWidthsDirty();
+      if (what_to_mark == LayoutTable::kMarkDirtyAndNeedsLayout)
+        cell->SetChildNeedsLayout();
+    }
+  }
+}
+
+int LayoutTableSection::CalcBlockDirectionOuterBorder(
+    BlockBorderSide side) const {
+  if (!grid_.size() || !Table()->NumEffectiveColumns())
+    return 0;
+
+  int border_width = 0;
+
+  const BorderValue& sb =
+      side == kBorderBefore ? Style()->BorderBefore() : Style()->BorderAfter();
+  if (sb.Style() == kBorderStyleHidden)
+    return -1;
+  if (sb.Style() > kBorderStyleHidden)
+    border_width = sb.Width();
+
+  const BorderValue& rb = side == kBorderBefore
+                              ? FirstRow()->Style()->BorderBefore()
+                              : LastRow()->Style()->BorderAfter();
+  if (rb.Style() == kBorderStyleHidden)
+    return -1;
+  if (rb.Style() > kBorderStyleHidden && rb.Width() > border_width)
+    border_width = rb.Width();
+
+  bool all_hidden = true;
+  unsigned r = side == kBorderBefore ? 0 : grid_.size() - 1;
+  unsigned n_cols = NumCols(r);
+  for (unsigned c = 0; c < n_cols; c++) {
+    const CellStruct& current = CellAt(r, c);
+    if (current.in_col_span || !current.HasCells())
+      continue;
+    const ComputedStyle& primary_cell_style = current.PrimaryCell()->StyleRef();
+    // FIXME: Make this work with perpendicular and flipped cells.
+    const BorderValue& cb = side == kBorderBefore
+                                ? primary_cell_style.BorderBefore()
+                                : primary_cell_style.BorderAfter();
+    // FIXME: Don't repeat for the same col group
+    LayoutTableCol* col =
+        Table()->ColElementAtAbsoluteColumn(c).InnermostColOrColGroup();
+    if (col) {
+      const BorderValue& gb = side == kBorderBefore
+                                  ? col->Style()->BorderBefore()
+                                  : col->Style()->BorderAfter();
+      if (gb.Style() == kBorderStyleHidden || cb.Style() == kBorderStyleHidden)
+        continue;
+      all_hidden = false;
+      if (gb.Style() > kBorderStyleHidden && gb.Width() > border_width)
+        border_width = gb.Width();
+      if (cb.Style() > kBorderStyleHidden && cb.Width() > border_width)
+        border_width = cb.Width();
     } else {
-        endColumn = std::upper_bound(columnPos.begin() + nextColumn, columnPos.end(), flippedRect.maxX()) - columnPos.begin();
-        if (endColumn == columnPos.size())
-            endColumn = columnPos.size() - 1;
+      if (cb.Style() == kBorderStyleHidden)
+        continue;
+      all_hidden = false;
+      if (cb.Style() > kBorderStyleHidden && cb.Width() > border_width)
+        border_width = cb.Width();
     }
+  }
+  if (all_hidden)
+    return -1;
 
-    return CellSpan(startColumn, endColumn);
+  if (side == kBorderAfter)
+    border_width++;  // Distribute rounding error
+  return border_width / 2;
 }
 
-void LayoutTableSection::recalcCells()
-{
-    ASSERT(m_needsCellRecalc);
-    // We reset the flag here to ensure that |addCell| works. This is safe to do as
-    // fillRowsWithDefaultStartingAtPosition makes sure we match the table's columns
-    // representation.
-    m_needsCellRecalc = false;
+int LayoutTableSection::CalcInlineDirectionOuterBorder(
+    InlineBorderSide side) const {
+  unsigned total_cols = Table()->NumEffectiveColumns();
+  if (!grid_.size() || !total_cols)
+    return 0;
+  unsigned col_index = side == kBorderStart ? 0 : total_cols - 1;
 
-    m_cCol = 0;
-    m_cRow = 0;
-    m_grid.clear();
+  int border_width = 0;
 
-    for (LayoutTableRow* row = firstRow(); row; row = row->nextRow()) {
-        unsigned insertionRow = m_cRow;
-        ++m_cRow;
-        m_cCol = 0;
-        ensureRows(m_cRow);
+  const BorderValue& sb =
+      side == kBorderStart ? Style()->BorderStart() : Style()->BorderEnd();
+  if (sb.Style() == kBorderStyleHidden)
+    return -1;
+  if (sb.Style() > kBorderStyleHidden)
+    border_width = sb.Width();
 
-        m_grid[insertionRow].rowLayoutObject = row;
-        row->setRowIndex(insertionRow);
-        setRowLogicalHeightToRowStyleLogicalHeight(m_grid[insertionRow]);
+  if (LayoutTableCol* col = Table()
+                                ->ColElementAtAbsoluteColumn(col_index)
+                                .InnermostColOrColGroup()) {
+    const BorderValue& gb = side == kBorderStart ? col->Style()->BorderStart()
+                                                 : col->Style()->BorderEnd();
+    if (gb.Style() == kBorderStyleHidden)
+      return -1;
+    if (gb.Style() > kBorderStyleHidden && gb.Width() > border_width)
+      border_width = gb.Width();
+  }
 
-        for (LayoutTableCell* cell = row->firstCell(); cell; cell = cell->nextCell())
-            addCell(cell, row);
+  bool all_hidden = true;
+  for (unsigned r = 0; r < grid_.size(); r++) {
+    if (col_index >= NumCols(r))
+      continue;
+    const CellStruct& current = CellAt(r, col_index);
+    if (!current.HasCells())
+      continue;
+    // FIXME: Don't repeat for the same cell
+    const ComputedStyle& primary_cell_style = current.PrimaryCell()->StyleRef();
+    const ComputedStyle& primary_cell_parent_style =
+        current.PrimaryCell()->Parent()->StyleRef();
+    // FIXME: Make this work with perpendicular and flipped cells.
+    const BorderValue& cb = side == kBorderStart
+                                ? primary_cell_style.BorderStart()
+                                : primary_cell_style.BorderEnd();
+    const BorderValue& rb = side == kBorderStart
+                                ? primary_cell_parent_style.BorderStart()
+                                : primary_cell_parent_style.BorderEnd();
+    if (cb.Style() == kBorderStyleHidden || rb.Style() == kBorderStyleHidden)
+      continue;
+    all_hidden = false;
+    if (cb.Style() > kBorderStyleHidden && cb.Width() > border_width)
+      border_width = cb.Width();
+    if (rb.Style() > kBorderStyleHidden && rb.Width() > border_width)
+      border_width = rb.Width();
+  }
+  if (all_hidden)
+    return -1;
+
+  if ((side == kBorderStart) != Table()->Style()->IsLeftToRightDirection())
+    border_width++;  // Distribute rounding error
+  return border_width / 2;
+}
+
+void LayoutTableSection::RecalcOuterBorder() {
+  outer_border_before_ = CalcBlockDirectionOuterBorder(kBorderBefore);
+  outer_border_after_ = CalcBlockDirectionOuterBorder(kBorderAfter);
+  outer_border_start_ = CalcInlineDirectionOuterBorder(kBorderStart);
+  outer_border_end_ = CalcInlineDirectionOuterBorder(kBorderEnd);
+}
+
+int LayoutTableSection::FirstLineBoxBaseline() const {
+  if (!grid_.size())
+    return -1;
+
+  int first_line_baseline = grid_[0].baseline;
+  if (first_line_baseline >= 0)
+    return first_line_baseline + row_pos_[0];
+
+  const Row& first_row = grid_[0].row;
+  for (size_t i = 0; i < first_row.size(); ++i) {
+    const CellStruct& cs = first_row.at(i);
+    const LayoutTableCell* cell = cs.PrimaryCell();
+    if (cell)
+      first_line_baseline =
+          std::max<int>(first_line_baseline,
+                        (cell->LogicalTop() + cell->BorderBefore() +
+                         cell->PaddingBefore() + cell->ContentLogicalHeight())
+                            .ToInt());
+  }
+
+  return first_line_baseline;
+}
+
+void LayoutTableSection::Paint(const PaintInfo& paint_info,
+                               const LayoutPoint& paint_offset) const {
+  TableSectionPainter(*this).Paint(paint_info, paint_offset);
+}
+
+LayoutRect LayoutTableSection::LogicalRectForWritingModeAndDirection(
+    const LayoutRect& rect) const {
+  LayoutRect table_aligned_rect(rect);
+
+  FlipForWritingMode(table_aligned_rect);
+
+  if (!Style()->IsHorizontalWritingMode())
+    table_aligned_rect = table_aligned_rect.TransposedRect();
+
+  const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
+  // FIXME: The table's direction should determine our row's direction, not the
+  // section's (see bug 96691).
+  if (!Style()->IsLeftToRightDirection())
+    table_aligned_rect.SetX(column_pos[column_pos.size() - 1] -
+                            table_aligned_rect.MaxX());
+
+  return table_aligned_rect;
+}
+
+CellSpan LayoutTableSection::DirtiedRows(const LayoutRect& damage_rect) const {
+  if (force_slow_paint_path_with_overflowing_cell_)
+    return FullSectionRowSpan();
+
+  if (!grid_.size())
+    return CellSpan(0, 0);
+
+  CellSpan covered_rows = SpannedRows(damage_rect);
+
+  // To issue paint invalidations for the border we might need to paint
+  // invalidate the first or last row even if they are not spanned themselves.
+  CHECK_LT(covered_rows.Start(), row_pos_.size());
+  if (covered_rows.Start() == row_pos_.size() - 1 &&
+      row_pos_[row_pos_.size() - 1] + Table()->OuterBorderAfter() >=
+          damage_rect.Y())
+    covered_rows.DecreaseStart();
+
+  if (!covered_rows.end() &&
+      row_pos_[0] - Table()->OuterBorderBefore() <= damage_rect.MaxY())
+    covered_rows.IncreaseEnd();
+
+  covered_rows.EnsureConsistency(grid_.size());
+  if (!has_spanning_cells_ || !covered_rows.Start() ||
+      covered_rows.Start() >= grid_.size())
+    return covered_rows;
+
+  // If there are any cells spanning into the first row, expand coveredRows
+  // to cover the primary cells.
+  unsigned n_cols = NumCols(covered_rows.Start());
+  unsigned smallest_row = covered_rows.Start();
+  CellSpan covered_columns = SpannedEffectiveColumns(damage_rect);
+  for (unsigned c = covered_columns.Start();
+       c < std::min(covered_columns.end(), n_cols); ++c) {
+    if (const auto* cell = PrimaryCellAt(covered_rows.Start(), c)) {
+      smallest_row = std::min(smallest_row, cell->RowIndex());
+      if (!smallest_row)
+        break;
     }
-
-    m_grid.shrinkToFit();
-    setNeedsLayoutAndFullPaintInvalidation(LayoutInvalidationReason::Unknown);
+  }
+  return CellSpan(smallest_row, covered_rows.end());
 }
 
-// FIXME: This function could be made O(1) in certain cases (like for the non-most-constrainive cells' case).
-void LayoutTableSection::rowLogicalHeightChanged(LayoutTableRow* row)
-{
-    if (needsCellRecalc())
-        return;
+CellSpan LayoutTableSection::DirtiedEffectiveColumns(
+    const LayoutRect& damage_rect) const {
+  if (force_slow_paint_path_with_overflowing_cell_)
+    return FullTableEffectiveColumnSpan();
 
-    unsigned rowIndex = row->rowIndex();
-    setRowLogicalHeightToRowStyleLogicalHeight(m_grid[rowIndex]);
+  CHECK(Table()->NumEffectiveColumns());
+  CellSpan covered_columns = SpannedEffectiveColumns(damage_rect);
 
-    for (LayoutTableCell* cell = m_grid[rowIndex].rowLayoutObject->firstCell(); cell; cell = cell->nextCell())
-        updateLogicalHeightForCell(m_grid[rowIndex], cell);
-}
+  const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
+  // To issue paint invalidations for the border we might need to paint
+  // invalidate the first or last column even if they are not spanned
+  // themselves.
+  CHECK_LT(covered_columns.Start(), column_pos.size());
+  if (covered_columns.Start() == column_pos.size() - 1 &&
+      column_pos[column_pos.size() - 1] + Table()->OuterBorderEnd() >=
+          damage_rect.X())
+    covered_columns.DecreaseStart();
 
-void LayoutTableSection::setNeedsCellRecalc()
-{
-    m_needsCellRecalc = true;
-    if (LayoutTable* t = table())
-        t->setNeedsSectionRecalc();
-}
+  if (!covered_columns.end() &&
+      column_pos[0] - Table()->OuterBorderStart() <= damage_rect.MaxX())
+    covered_columns.IncreaseEnd();
 
-unsigned LayoutTableSection::numEffectiveColumns() const
-{
-    unsigned result = 0;
+  covered_columns.EnsureConsistency(Table()->NumEffectiveColumns());
+  if (!has_spanning_cells_ || !covered_columns.Start())
+    return covered_columns;
 
-    for (unsigned r = 0; r < m_grid.size(); ++r) {
-        for (unsigned c = result; c < table()->numEffectiveColumns(); ++c) {
-            const CellStruct& cell = cellAt(r, c);
-            if (cell.hasCells() || cell.inColSpan)
-                result = c;
-        }
+  // If there are any cells spanning into the first column, expand
+  // coveredRows to cover the primary cells.
+  unsigned smallest_column = covered_columns.Start();
+  CellSpan covered_rows = SpannedRows(damage_rect);
+  for (unsigned r = covered_rows.Start(); r < covered_rows.end(); ++r) {
+    const auto& row = grid_[r].row;
+    if (covered_columns.Start() < row.size()) {
+      unsigned c = covered_columns.Start();
+      while (c && row[c].in_col_span)
+        --c;
+      smallest_column = std::min(c, smallest_column);
+      if (!smallest_column)
+        break;
     }
-
-    return result + 1;
+  }
+  return CellSpan(smallest_column, covered_columns.end());
 }
 
-const BorderValue& LayoutTableSection::borderAdjoiningStartCell(const LayoutTableCell* cell) const
-{
-    ASSERT(cell->isFirstOrLastCellInRow());
-    return hasSameDirectionAs(cell) ? style()->borderStart() : style()->borderEnd();
+CellSpan LayoutTableSection::SpannedRows(const LayoutRect& flipped_rect) const {
+  // Find the first row that starts after rect top.
+  unsigned next_row =
+      std::upper_bound(row_pos_.begin(), row_pos_.end(), flipped_rect.Y()) -
+      row_pos_.begin();
+
+  // After all rows.
+  if (next_row == row_pos_.size())
+    return CellSpan(row_pos_.size() - 1, row_pos_.size() - 1);
+
+  unsigned start_row = next_row > 0 ? next_row - 1 : 0;
+
+  // Find the first row that starts after rect bottom.
+  unsigned end_row;
+  if (row_pos_[next_row] >= flipped_rect.MaxY()) {
+    end_row = next_row;
+  } else {
+    end_row = std::upper_bound(row_pos_.begin() + next_row, row_pos_.end(),
+                               flipped_rect.MaxY()) -
+              row_pos_.begin();
+    if (end_row == row_pos_.size())
+      end_row = row_pos_.size() - 1;
+  }
+
+  return CellSpan(start_row, end_row);
 }
 
-const BorderValue& LayoutTableSection::borderAdjoiningEndCell(const LayoutTableCell* cell) const
-{
-    ASSERT(cell->isFirstOrLastCellInRow());
-    return hasSameDirectionAs(cell) ? style()->borderEnd() : style()->borderStart();
+CellSpan LayoutTableSection::SpannedEffectiveColumns(
+    const LayoutRect& flipped_rect) const {
+  const Vector<int>& column_pos = Table()->EffectiveColumnPositions();
+
+  // Find the first column that starts after rect left.
+  // lower_bound doesn't handle the edge between two cells properly as it would
+  // wrongly return the cell on the logical top/left.
+  // upper_bound on the other hand properly returns the cell on the logical
+  // bottom/right, which also matches the behavior of other browsers.
+  unsigned next_column =
+      std::upper_bound(column_pos.begin(), column_pos.end(), flipped_rect.X()) -
+      column_pos.begin();
+
+  if (next_column == column_pos.size())
+    return CellSpan(column_pos.size() - 1,
+                    column_pos.size() - 1);  // After all columns.
+
+  unsigned start_column = next_column > 0 ? next_column - 1 : 0;
+
+  // Find the first column that starts after rect right.
+  unsigned end_column;
+  if (column_pos[next_column] >= flipped_rect.MaxX()) {
+    end_column = next_column;
+  } else {
+    end_column = std::upper_bound(column_pos.begin() + next_column,
+                                  column_pos.end(), flipped_rect.MaxX()) -
+                 column_pos.begin();
+    if (end_column == column_pos.size())
+      end_column = column_pos.size() - 1;
+  }
+
+  return CellSpan(start_column, end_column);
 }
 
-const LayoutTableCell* LayoutTableSection::firstRowCellAdjoiningTableStart() const
-{
-    unsigned adjoiningStartCellColumnIndex = hasSameDirectionAs(table()) ? 0 : table()->lastEffectiveColumnIndex();
-    return cellAt(0, adjoiningStartCellColumnIndex).primaryCell();
+void LayoutTableSection::RecalcCells() {
+  DCHECK(needs_cell_recalc_);
+  // We reset the flag here to ensure that |addCell| works. This is safe to do
+  // as fillRowsWithDefaultStartingAtPosition makes sure we match the table's
+  // columns representation.
+  needs_cell_recalc_ = false;
+
+  c_col_ = 0;
+  c_row_ = 0;
+  grid_.Clear();
+
+  for (LayoutTableRow* row = FirstRow(); row; row = row->NextRow()) {
+    unsigned insertion_row = c_row_;
+    ++c_row_;
+    c_col_ = 0;
+    EnsureRows(c_row_);
+
+    grid_[insertion_row].row_layout_object = row;
+    row->SetRowIndex(insertion_row);
+    SetRowLogicalHeightToRowStyleLogicalHeight(grid_[insertion_row]);
+
+    for (LayoutTableCell* cell = row->FirstCell(); cell;
+         cell = cell->NextCell())
+      AddCell(cell, row);
+  }
+
+  grid_.ShrinkToFit();
+  SetNeedsLayoutAndFullPaintInvalidation(LayoutInvalidationReason::kUnknown);
 }
 
-const LayoutTableCell* LayoutTableSection::firstRowCellAdjoiningTableEnd() const
-{
-    unsigned adjoiningEndCellColumnIndex = hasSameDirectionAs(table()) ? table()->lastEffectiveColumnIndex() : 0;
-    return cellAt(0, adjoiningEndCellColumnIndex).primaryCell();
+// FIXME: This function could be made O(1) in certain cases (like for the
+// non-most-constrainive cells' case).
+void LayoutTableSection::RowLogicalHeightChanged(LayoutTableRow* row) {
+  if (NeedsCellRecalc())
+    return;
+
+  unsigned row_index = row->RowIndex();
+  SetRowLogicalHeightToRowStyleLogicalHeight(grid_[row_index]);
+
+  for (LayoutTableCell* cell = grid_[row_index].row_layout_object->FirstCell();
+       cell; cell = cell->NextCell())
+    UpdateLogicalHeightForCell(grid_[row_index], cell);
 }
 
-void LayoutTableSection::appendEffectiveColumn(unsigned pos)
-{
-    ASSERT(!m_needsCellRecalc);
-
-    for (unsigned row = 0; row < m_grid.size(); ++row)
-        m_grid[row].row.resize(pos + 1);
+void LayoutTableSection::SetNeedsCellRecalc() {
+  needs_cell_recalc_ = true;
+  if (LayoutTable* t = Table())
+    t->SetNeedsSectionRecalc();
 }
 
-void LayoutTableSection::splitEffectiveColumn(unsigned pos, unsigned first)
-{
-    ASSERT(!m_needsCellRecalc);
+unsigned LayoutTableSection::NumEffectiveColumns() const {
+  unsigned result = 0;
 
-    if (m_cCol > pos)
-        m_cCol++;
-    for (unsigned row = 0; row < m_grid.size(); ++row) {
-        Row& r = m_grid[row].row;
-        r.insert(pos + 1, CellStruct());
-        if (r[pos].hasCells()) {
-            r[pos + 1].cells.appendVector(r[pos].cells);
-            LayoutTableCell* cell = r[pos].primaryCell();
-            ASSERT(cell);
-            ASSERT(cell->colSpan() >= (r[pos].inColSpan ? 1u : 0));
-            unsigned colleft = cell->colSpan() - r[pos].inColSpan;
-            if (first > colleft)
-                r[pos + 1].inColSpan = 0;
-            else
-                r[pos + 1].inColSpan = first + r[pos].inColSpan;
-        } else {
-            r[pos + 1].inColSpan = 0;
-        }
+  for (unsigned r = 0; r < grid_.size(); ++r) {
+    unsigned n_cols = NumCols(r);
+    for (unsigned c = result; c < n_cols; ++c) {
+      const CellStruct& cell = CellAt(r, c);
+      if (cell.HasCells() || cell.in_col_span)
+        result = c;
     }
+  }
+
+  return result + 1;
+}
+
+const BorderValue& LayoutTableSection::BorderAdjoiningStartCell(
+    const LayoutTableCell* cell) const {
+#if DCHECK_IS_ON()
+  DCHECK(cell->IsFirstOrLastCellInRow());
+#endif
+  return HasSameDirectionAs(cell) ? Style()->BorderStart()
+                                  : Style()->BorderEnd();
+}
+
+const BorderValue& LayoutTableSection::BorderAdjoiningEndCell(
+    const LayoutTableCell* cell) const {
+#if DCHECK_IS_ON()
+  DCHECK(cell->IsFirstOrLastCellInRow());
+#endif
+  return HasSameDirectionAs(cell) ? Style()->BorderEnd()
+                                  : Style()->BorderStart();
+}
+
+const LayoutTableCell* LayoutTableSection::FirstRowCellAdjoiningTableStart()
+    const {
+  unsigned adjoining_start_cell_column_index =
+      HasSameDirectionAs(Table()) ? 0 : Table()->LastEffectiveColumnIndex();
+  return PrimaryCellAt(0, adjoining_start_cell_column_index);
+}
+
+const LayoutTableCell* LayoutTableSection::FirstRowCellAdjoiningTableEnd()
+    const {
+  unsigned adjoining_end_cell_column_index =
+      HasSameDirectionAs(Table()) ? Table()->LastEffectiveColumnIndex() : 0;
+  return PrimaryCellAt(0, adjoining_end_cell_column_index);
+}
+
+LayoutTableCell* LayoutTableSection::OriginatingCellAt(
+    unsigned row,
+    unsigned effective_column) {
+  auto& row_vector = grid_[row].row;
+  if (effective_column >= row_vector.size())
+    return nullptr;
+  auto& cell_struct = row_vector[effective_column];
+  if (cell_struct.in_col_span)
+    return nullptr;
+  if (auto* cell = cell_struct.PrimaryCell()) {
+    if (cell->RowIndex() == row)
+      return cell;
+  }
+  return nullptr;
+}
+
+void LayoutTableSection::AppendEffectiveColumn(unsigned pos) {
+  DCHECK(!needs_cell_recalc_);
+
+  for (unsigned row = 0; row < grid_.size(); ++row)
+    grid_[row].row.Resize(pos + 1);
+}
+
+void LayoutTableSection::SplitEffectiveColumn(unsigned pos, unsigned first) {
+  DCHECK(!needs_cell_recalc_);
+
+  if (c_col_ > pos)
+    c_col_++;
+  for (unsigned row = 0; row < grid_.size(); ++row) {
+    Row& r = grid_[row].row;
+    EnsureCols(row, pos + 2);
+    r.insert(pos + 1, CellStruct());
+    if (r[pos].HasCells()) {
+      r[pos + 1].cells.AppendVector(r[pos].cells);
+      LayoutTableCell* cell = r[pos].PrimaryCell();
+      DCHECK(cell);
+      DCHECK_GE(cell->ColSpan(), (r[pos].in_col_span ? 1u : 0));
+      unsigned colleft = cell->ColSpan() - r[pos].in_col_span;
+      if (first > colleft)
+        r[pos + 1].in_col_span = 0;
+      else
+        r[pos + 1].in_col_span = first + r[pos].in_col_span;
+    } else {
+      r[pos + 1].in_col_span = 0;
+    }
+  }
 }
 
 // Hit Testing
-bool LayoutTableSection::nodeAtPoint(HitTestResult& result, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction action)
-{
-    // If we have no children then we have nothing to do.
-    if (!firstRow())
-        return false;
-
-    // Table sections cannot ever be hit tested.  Effectively they do not exist.
-    // Just forward to our children always.
-    LayoutPoint adjustedLocation = accumulatedOffset + location();
-
-    if (hasOverflowClip() && !locationInContainer.intersects(overflowClipRect(adjustedLocation)))
-        return false;
-
-    if (hasOverflowingCell()) {
-        for (LayoutTableRow* row = lastRow(); row; row = row->previousRow()) {
-            // FIXME: We have to skip over inline flows, since they can show up inside table rows
-            // at the moment (a demoted inline <form> for example). If we ever implement a
-            // table-specific hit-test method (which we should do for performance reasons anyway),
-            // then we can remove this check.
-            if (!row->hasSelfPaintingLayer()) {
-                LayoutPoint childPoint = flipForWritingModeForChild(row, adjustedLocation);
-                if (row->nodeAtPoint(result, locationInContainer, childPoint, action)) {
-                    updateHitTestResult(result, toLayoutPoint(locationInContainer.point() - childPoint));
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    recalcCellsIfNeeded();
-
-    LayoutRect hitTestRect = LayoutRect(locationInContainer.boundingBox());
-    hitTestRect.moveBy(-adjustedLocation);
-
-    LayoutRect tableAlignedRect = logicalRectForWritingModeAndDirection(hitTestRect);
-    CellSpan rowSpan = spannedRows(tableAlignedRect);
-    CellSpan columnSpan = spannedEffectiveColumns(tableAlignedRect);
-
-    // Now iterate over the spanned rows and columns.
-    for (unsigned hitRow = rowSpan.start(); hitRow < rowSpan.end(); ++hitRow) {
-        for (unsigned hitColumn = columnSpan.start(); hitColumn < columnSpan.end(); ++hitColumn) {
-            CellStruct& current = cellAt(hitRow, hitColumn);
-
-            // If the cell is empty, there's nothing to do
-            if (!current.hasCells())
-                continue;
-
-            for (unsigned i = current.cells.size() ; i; ) {
-                --i;
-                LayoutTableCell* cell = current.cells[i];
-                LayoutPoint cellPoint = flipForWritingModeForChild(cell, adjustedLocation);
-                if (static_cast<LayoutObject*>(cell)->nodeAtPoint(result, locationInContainer, cellPoint, action)) {
-                    updateHitTestResult(result, locationInContainer.point() - toLayoutSize(cellPoint));
-                    return true;
-                }
-            }
-            if (!result.hitTestRequest().listBased())
-                break;
-        }
-        if (!result.hitTestRequest().listBased())
-            break;
-    }
-
+bool LayoutTableSection::NodeAtPoint(
+    HitTestResult& result,
+    const HitTestLocation& location_in_container,
+    const LayoutPoint& accumulated_offset,
+    HitTestAction action) {
+  // If we have no children then we have nothing to do.
+  if (!FirstRow())
     return false;
+
+  // Table sections cannot ever be hit tested.  Effectively they do not exist.
+  // Just forward to our children always.
+  LayoutPoint adjusted_location = accumulated_offset + Location();
+
+  if (HasOverflowClip() &&
+      !location_in_container.Intersects(OverflowClipRect(adjusted_location)))
+    return false;
+
+  if (HasOverflowingCell()) {
+    for (LayoutTableRow* row = LastRow(); row; row = row->PreviousRow()) {
+      // FIXME: We have to skip over inline flows, since they can show up inside
+      // table rows at the moment (a demoted inline <form> for example). If we
+      // ever implement a table-specific hit-test method (which we should do for
+      // performance reasons anyway), then we can remove this check.
+      if (!row->HasSelfPaintingLayer()) {
+        LayoutPoint child_point =
+            FlipForWritingModeForChild(row, adjusted_location);
+        if (row->NodeAtPoint(result, location_in_container, child_point,
+                             action)) {
+          UpdateHitTestResult(
+              result,
+              ToLayoutPoint(location_in_container.Point() - child_point));
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  RecalcCellsIfNeeded();
+
+  LayoutRect hit_test_rect = LayoutRect(location_in_container.BoundingBox());
+  hit_test_rect.MoveBy(-adjusted_location);
+
+  LayoutRect table_aligned_rect =
+      LogicalRectForWritingModeAndDirection(hit_test_rect);
+  CellSpan row_span = SpannedRows(table_aligned_rect);
+  CellSpan column_span = SpannedEffectiveColumns(table_aligned_rect);
+
+  // Now iterate over the spanned rows and columns.
+  for (unsigned hit_row = row_span.Start(); hit_row < row_span.end();
+       ++hit_row) {
+    unsigned n_cols = NumCols(hit_row);
+    for (unsigned hit_column = column_span.Start();
+         hit_column < n_cols && hit_column < column_span.end(); ++hit_column) {
+      CellStruct& current = CellAt(hit_row, hit_column);
+
+      // If the cell is empty, there's nothing to do
+      if (!current.HasCells())
+        continue;
+
+      for (unsigned i = current.cells.size(); i;) {
+        --i;
+        LayoutTableCell* cell = current.cells[i];
+        LayoutPoint cell_point =
+            FlipForWritingModeForChild(cell, adjusted_location);
+        if (static_cast<LayoutObject*>(cell)->NodeAtPoint(
+                result, location_in_container, cell_point, action)) {
+          UpdateHitTestResult(
+              result, location_in_container.Point() - ToLayoutSize(cell_point));
+          return true;
+        }
+      }
+      if (!result.GetHitTestRequest().ListBased())
+        break;
+    }
+    if (!result.GetHitTestRequest().ListBased())
+      break;
+  }
+
+  return false;
 }
 
-LayoutTableSection* LayoutTableSection::createAnonymousWithParent(const LayoutObject* parent)
-{
-    RefPtr<ComputedStyle> newStyle = ComputedStyle::createAnonymousStyleWithDisplay(parent->styleRef(), TABLE_ROW_GROUP);
-    LayoutTableSection* newSection = new LayoutTableSection(nullptr);
-    newSection->setDocumentForAnonymous(&parent->document());
-    newSection->setStyle(newStyle.release());
-    return newSection;
+LayoutTableSection* LayoutTableSection::CreateAnonymousWithParent(
+    const LayoutObject* parent) {
+  RefPtr<ComputedStyle> new_style =
+      ComputedStyle::CreateAnonymousStyleWithDisplay(parent->StyleRef(),
+                                                     EDisplay::kTableRowGroup);
+  LayoutTableSection* new_section = new LayoutTableSection(nullptr);
+  new_section->SetDocumentForAnonymous(&parent->GetDocument());
+  new_section->SetStyle(std::move(new_style));
+  return new_section;
 }
 
-void LayoutTableSection::setLogicalPositionForCell(LayoutTableCell* cell, unsigned effectiveColumn) const
-{
-    LayoutPoint cellLocation(0, m_rowPos[cell->rowIndex()]);
-    int horizontalBorderSpacing = table()->hBorderSpacing();
+void LayoutTableSection::SetLogicalPositionForCell(
+    LayoutTableCell* cell,
+    unsigned effective_column) const {
+  LayoutPoint cell_location(0, row_pos_[cell->RowIndex()]);
+  int horizontal_border_spacing = Table()->HBorderSpacing();
 
-    // FIXME: The table's direction should determine our row's direction, not the section's (see bug 96691).
-    if (!style()->isLeftToRightDirection())
-        cellLocation.setX(LayoutUnit(table()->effectiveColumnPositions()[table()->numEffectiveColumns()] - table()->effectiveColumnPositions()[table()->absoluteColumnToEffectiveColumn(cell->absoluteColumnIndex() + cell->colSpan())] + horizontalBorderSpacing));
-    else
-        cellLocation.setX(LayoutUnit(table()->effectiveColumnPositions()[effectiveColumn] + horizontalBorderSpacing));
+  // FIXME: The table's direction should determine our row's direction, not the
+  // section's (see bug 96691).
+  if (!Style()->IsLeftToRightDirection())
+    cell_location.SetX(LayoutUnit(
+        Table()->EffectiveColumnPositions()[Table()->NumEffectiveColumns()] -
+        Table()->EffectiveColumnPositions()
+            [Table()->AbsoluteColumnToEffectiveColumn(
+                cell->AbsoluteColumnIndex() + cell->ColSpan())] +
+        horizontal_border_spacing));
+  else
+    cell_location.SetX(
+        LayoutUnit(Table()->EffectiveColumnPositions()[effective_column] +
+                   horizontal_border_spacing));
 
-    cell->setLogicalLocation(cellLocation);
+  cell->SetLogicalLocation(cell_location);
 }
 
-bool LayoutTableSection::hasRepeatingHeaderGroup() const
-{
-    if (getPaginationBreakability() == LayoutBox::AllowAnyBreaks)
-        return false;
-    // TODO(rhogan): Should we paint a header repeatedly if it's self-painting?
-    if (hasSelfPaintingLayer())
-        return false;
-    LayoutUnit pageHeight = table()->pageLogicalHeightForOffset(LayoutUnit());
-    if (!pageHeight)
-        return false;
+void LayoutTableSection::RelayoutCellIfFlexed(LayoutTableCell& cell,
+                                              int row_index,
+                                              int row_height) {
+  // Force percent height children to lay themselves out again.
+  // This will cause these children to grow to fill the cell.
+  // FIXME: There is still more work to do here to fully match WinIE (should
+  // it become necessary to do so).  In quirks mode, WinIE behaves like we
+  // do, but it will clip the cells that spill out of the table section.
+  // strict mode, Mozilla and WinIE both regrow the table to accommodate the
+  // new height of the cell (thus letting the percentages cause growth one
+  // time only). We may also not be handling row-spanning cells correctly.
+  //
+  // Note also the oddity where replaced elements always flex, and yet blocks/
+  // tables do not necessarily flex. WinIE is crazy and inconsistent, and we
+  // can't hope to match the behavior perfectly, but we'll continue to refine it
+  // as we discover new bugs. :)
+  bool cell_children_flex = false;
+  bool flex_all_children = cell.Style()->LogicalHeight().IsSpecified() ||
+                           (!Table()->Style()->LogicalHeight().IsAuto() &&
+                            row_height != cell.LogicalHeight());
+
+  for (LayoutObject* child = cell.FirstChild(); child;
+       child = child->NextSibling()) {
+    if (!child->IsText() && child->Style()->LogicalHeight().IsPercentOrCalc() &&
+        (flex_all_children || ShouldFlexCellChild(cell, child)) &&
+        (!child->IsTable() || ToLayoutTable(child)->HasSections())) {
+      cell_children_flex = true;
+      break;
+    }
+  }
+
+  if (!cell_children_flex) {
+    if (TrackedLayoutBoxListHashSet* percent_height_descendants =
+            cell.PercentHeightDescendants()) {
+      for (auto* descendant : *percent_height_descendants) {
+        if (flex_all_children || ShouldFlexCellChild(cell, descendant)) {
+          cell_children_flex = true;
+          break;
+        }
+      }
+    }
+  }
+
+  if (!cell_children_flex)
+    return;
+
+  // Alignment within a cell is based off the calculated height, which becomes
+  // irrelevant once the cell has been resized based off its percentage.
+  cell.SetOverrideLogicalContentHeightFromRowHeight(LayoutUnit(row_height));
+  cell.ForceChildLayout();
+
+  // If the baseline moved, we may have to update the data for our row. Find
+  // out the new baseline.
+  if (cell.IsBaselineAligned()) {
+    int baseline = cell.CellBaselinePosition();
+    if (baseline > cell.BorderBefore() + cell.PaddingBefore())
+      grid_[row_index].baseline = std::max(grid_[row_index].baseline, baseline);
+  }
+}
+
+int LayoutTableSection::LogicalHeightForRow(
+    const LayoutTableRow& row_object) const {
+  unsigned row_index = row_object.RowIndex();
+  DCHECK_LT(row_index, grid_.size());
+  int logical_height = 0;
+  const Row& row = grid_[row_index].row;
+  unsigned cols = row.size();
+  for (unsigned col_index = 0; col_index < cols; col_index++) {
+    const CellStruct& cell_struct = CellAt(row_index, col_index);
+    const LayoutTableCell* cell = cell_struct.PrimaryCell();
+    if (!cell || cell_struct.in_col_span)
+      continue;
+    unsigned row_span = cell->RowSpan();
+    if (row_span == 1) {
+      logical_height =
+          std::max(logical_height, cell->LogicalHeightForRowSizing());
+      continue;
+    }
+    unsigned row_index_for_cell = cell->RowIndex();
+    if (row_index == grid_.size() - 1 ||
+        (row_span > 1 && row_index - row_index_for_cell == row_span - 1)) {
+      // This is the last row of the rowspanned cell. Add extra height if
+      // needed.
+      if (LayoutTableRow* first_row_for_cell =
+              grid_[row_index_for_cell].row_layout_object) {
+        int min_logical_height = cell->LogicalHeightForRowSizing();
+        // Subtract space provided by previous rows.
+        min_logical_height -= row_object.LogicalTop().ToInt() -
+                              first_row_for_cell->LogicalTop().ToInt();
+
+        logical_height = std::max(logical_height, min_logical_height);
+      }
+    }
+  }
+
+  if (grid_[row_index].logical_height.IsSpecified()) {
+    LayoutUnit specified_logical_height =
+        MinimumValueForLength(grid_[row_index].logical_height, LayoutUnit());
+    logical_height = std::max(logical_height, specified_logical_height.ToInt());
+  }
+  return logical_height;
+}
+
+void LayoutTableSection::AdjustRowForPagination(LayoutTableRow& row_object,
+                                                SubtreeLayoutScope& layouter) {
+  row_object.SetPaginationStrut(LayoutUnit());
+  row_object.SetLogicalHeight(LayoutUnit(LogicalHeightForRow(row_object)));
+  int pagination_strut =
+      PaginationStrutForRow(&row_object, row_object.LogicalTop());
+  bool row_is_at_top_of_column = false;
+  LayoutUnit offset_from_top_of_page;
+  if (!pagination_strut) {
+    LayoutUnit page_logical_height =
+        PageLogicalHeightForOffset(row_object.LogicalTop());
+    if (page_logical_height && Table()->Header() &&
+        Table()->RowOffsetFromRepeatingHeader()) {
+      offset_from_top_of_page =
+          page_logical_height -
+          PageRemainingLogicalHeightForOffset(row_object.LogicalTop(),
+                                              kAssociateWithLatterPage);
+      row_is_at_top_of_column =
+          !offset_from_top_of_page ||
+          offset_from_top_of_page <= Table()->VBorderSpacing();
+    }
+
+    if (!row_is_at_top_of_column)
+      return;
+  }
+  // We need to push this row to the next fragmentainer. If there are repeated
+  // table headers, we need to make room for those at the top of the next
+  // fragmentainer, above this row. Otherwise, this row will just go at the top
+  // of the next fragmentainer.
+
+  LayoutTableSection* header = Table()->Header();
+  if (row_object.IsFirstRowInSectionAfterHeader())
+    Table()->SetRowOffsetFromRepeatingHeader(LayoutUnit());
+  // Border spacing from the previous row has pushed this row just past the top
+  // of the page, so we must reposition it to the top of the page and avoid any
+  // repeating header.
+  if (row_is_at_top_of_column && offset_from_top_of_page)
+    pagination_strut -= offset_from_top_of_page.ToInt();
+
+  // If we have a header group we will paint it at the top of each page,
+  // move the rows down to accomodate it.
+  if (header && header != this)
+    pagination_strut += Table()->RowOffsetFromRepeatingHeader().ToInt();
+  row_object.SetPaginationStrut(LayoutUnit(pagination_strut));
+
+  // We have inserted a pagination strut before the row. Adjust the logical top
+  // and re-lay out. We no longer want to break inside the row, but rather
+  // *before* it. From the previous layout pass, there are most likely
+  // pagination struts inside some cell in this row that we need to get rid of.
+  row_object.SetLogicalTop(row_object.LogicalTop() + pagination_strut);
+  layouter.SetChildNeedsLayout(&row_object);
+  row_object.LayoutIfNeeded();
+
+  // It's very likely that re-laying out (and nuking pagination struts inside
+  // cells) gave us a new height.
+  row_object.SetLogicalHeight(LayoutUnit(LogicalHeightForRow(row_object)));
+}
+
+bool LayoutTableSection::IsRepeatingHeaderGroup() const {
+  if (GetPaginationBreakability() == LayoutBox::kAllowAnyBreaks)
+    return false;
+  // TODO(rhogan): Should we paint a header repeatedly if it's self-painting?
+  if (HasSelfPaintingLayer())
+    return false;
+  LayoutUnit page_height = Table()->PageLogicalHeightForOffset(LayoutUnit());
+  if (!page_height)
+    return false;
+
+  if (LogicalHeight() > page_height)
+    return false;
+
+  // If the first row of the section after the header group doesn't fit on the
+  // page, then don't repeat the header on each page.
+  // See https://drafts.csswg.org/css-tables-3/#repeated-headers
+  LayoutTableSection* section_below = Table()->SectionBelow(this);
+  if (!section_below)
     return true;
+  if (LayoutTableRow* first_row = section_below->FirstRow()) {
+    if (first_row->PaginationStrut() ||
+        first_row->LogicalHeight() > page_height)
+      return false;
+  }
+
+  return true;
 }
 
-bool LayoutTableSection::mapToVisualRectInAncestorSpace(const LayoutBoxModelObject* ancestor, LayoutRect& rect, VisualRectFlags flags) const
-{
-    if (ancestor == this)
-        return true;
-    // Repeating table headers are painted once per fragmentation page/column. This does not go through the regular fragmentation machinery,
-    // so we need special code to expand the invalidation rect to contain all positions of the header in all columns.
-    // Note that this is in flow thread coordinates, not visual coordinates. The enclosing LayoutFlowThread will convert to visual coordinates.
-    if (table()->header() == this && hasRepeatingHeaderGroup())
-        rect.setHeight(table()->logicalHeight());
-    return LayoutTableBoxComponent::mapToVisualRectInAncestorSpace(ancestor, rect, flags);
+bool LayoutTableSection::MapToVisualRectInAncestorSpaceInternal(
+    const LayoutBoxModelObject* ancestor,
+    TransformState& transform_state,
+    VisualRectFlags flags) const {
+  if (ancestor == this)
+    return true;
+  // Repeating table headers are painted once per fragmentation page/column.
+  // This does not go through the regular fragmentation machinery, so we need
+  // special code to expand the invalidation rect to contain all positions of
+  // the header in all columns.
+  // Note that this is in flow thread coordinates, not visual coordinates. The
+  // enclosing LayoutFlowThread will convert to visual coordinates.
+  if (Table()->Header() == this && IsRepeatingHeaderGroup()) {
+    transform_state.Flatten();
+    FloatRect rect = transform_state.LastPlanarQuad().BoundingBox();
+    rect.SetHeight(Table()->LogicalHeight());
+    transform_state.SetQuad(FloatQuad(rect));
+  }
+  return LayoutTableBoxComponent::MapToVisualRectInAncestorSpaceInternal(
+      ancestor, transform_state, flags);
 }
 
+bool LayoutTableSection::PaintedOutputOfObjectHasNoEffectRegardlessOfSize()
+    const {
+  // LayoutTableSection paints background from columns.
+  if (Table()->HasColElements())
+    return false;
+  return LayoutTableBoxComponent::
+      PaintedOutputOfObjectHasNoEffectRegardlessOfSize();
+}
 
-} // namespace blink
+}  // namespace blink

@@ -5,6 +5,7 @@
 #include "components/crash/content/app/breakpad_win.h"
 
 #include <windows.h>
+#include <intrin.h>
 #include <shellapi.h>
 #include <stddef.h>
 #include <tchar.h>
@@ -149,10 +150,28 @@ MSVC_ENABLE_OPTIMIZE()
 }  // namespace
 
 // Injects a thread into a remote process to dump state when there is no crash.
-extern "C" HANDLE __declspec(dllexport) __cdecl
-InjectDumpProcessWithoutCrash(HANDLE process) {
+extern "C" HANDLE __declspec(dllexport) __cdecl InjectDumpProcessWithoutCrash(
+    HANDLE process) {
+  return CreateRemoteThread(process, NULL, 0, DumpProcessWithoutCrashThread, 0,
+                            0, NULL);
+}
+
+extern "C" HANDLE __declspec(dllexport) __cdecl InjectDumpForHungInput(
+    HANDLE process,
+    void* serialized_crash_keys) {
+  // |serialized_crash_keys| is not propagated in breakpad but is in crashpad
+  // since breakpad is deprecated.
   return CreateRemoteThread(process, NULL, 0, DumpProcessWithoutCrashThread,
                             0, 0, NULL);
+}
+
+extern "C" HANDLE __declspec(
+    dllexport) __cdecl InjectDumpForHungInputNoCrashKeys(HANDLE process,
+                                                         int reason) {
+  // |reason| is not propagated in breakpad but is in crashpad since breakpad
+  // is deprecated.
+  return CreateRemoteThread(process, NULL, 0, DumpProcessWithoutCrashThread, 0,
+                            0, NULL);
 }
 
 extern "C" HANDLE __declspec(dllexport) __cdecl
@@ -271,10 +290,10 @@ long WINAPI ChromeExceptionFilter(EXCEPTION_POINTERS* info) {
   return EXCEPTION_EXECUTE_HANDLER;
 }
 
-// Exception filter for the service process used when breakpad is not enabled.
-// We just display the "Do you want to restart" message and then die
-// (without calling the previous filter).
-long WINAPI ServiceExceptionFilter(EXCEPTION_POINTERS* info) {
+// Exception filter for the Cloud Print service process used when breakpad is
+// not enabled. We just display the "Do you want to restart" message and then
+// die (without calling the previous filter).
+long WINAPI CloudPrintServiceExceptionFilter(EXCEPTION_POINTERS* info) {
   DumpDoneCallback(NULL, NULL, NULL, info, NULL, false);
   return EXCEPTION_EXECUTE_HANDLER;
 }
@@ -536,9 +555,6 @@ void InitCrashReporter(const std::string& process_type_switch) {
   exe_path[0] = 0;
   GetModuleFileNameW(NULL, exe_path, MAX_PATH);
 
-  bool is_per_user_install =
-      GetCrashReporterClient()->GetIsPerUserInstall(exe_path);
-
   // This is intentionally leaked.
   CrashKeysWin* keeper = new CrashKeysWin();
 
@@ -565,13 +581,13 @@ void InitCrashReporter(const std::string& process_type_switch) {
   if (process_type == L"browser") {
     callback = &DumpDoneCallback;
     default_filter = &ChromeExceptionFilter;
-  } else if (process_type == L"service") {
+  } else if (process_type == L"cloud-print-service") {
     callback = &DumpDoneCallback;
-    default_filter = &ServiceExceptionFilter;
+    default_filter = &CloudPrintServiceExceptionFilter;
   }
 
   if (GetCrashReporterClient()->ShouldCreatePipeName(process_type))
-    InitPipeNameEnvVar(is_per_user_install);
+    InitPipeNameEnvVar(GetCrashReporterClient()->GetIsPerUserInstall());
 
   std::unique_ptr<base::Environment> env(base::Environment::Create());
   std::string pipe_name_ascii;
@@ -603,8 +619,7 @@ void InitCrashReporter(const std::string& process_type_switch) {
   // Capture full memory if explicitly instructed to.
   if (command.HasSwitch(switches::kFullMemoryCrashReport))
     dump_type = kFullDumpType;
-  else if (GetCrashReporterClient()->GetShouldDumpLargerDumps(
-               is_per_user_install))
+  else if (GetCrashReporterClient()->GetShouldDumpLargerDumps())
     dump_type = kLargerDumpType;
 
   g_breakpad = new google_breakpad::ExceptionHandler(temp_dir, &FilterCallback,

@@ -23,12 +23,12 @@
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/gfx/range/range.h"
 
 class GURL;
 class OmniboxClient;
 class OmniboxEditController;
 class OmniboxViewMacTest;
-class ToolbarModel;
 class OmniboxEditModel;
 
 namespace gfx {
@@ -57,9 +57,6 @@ class OmniboxView {
   // Used by the automation system for getting at the model from the view.
   OmniboxEditModel* model() { return model_.get(); }
   const OmniboxEditModel* model() const { return model_.get(); }
-
-  // Shared cross-platform focus handling.
-  void OnDidKillFocus();
 
   // Called when any relevant state changes other than changing tabs.
   virtual void Update() = 0;
@@ -90,11 +87,8 @@ class OmniboxView {
   // the field is empty.
   bool IsEditingOrEmpty() const;
 
-  // Returns the resource ID of the icon to show for the current text.
-  int GetIcon() const;
-
-  // Like GetIcon(), but returns a vector icon identifier.
-  gfx::VectorIconId GetVectorIcon() const;
+  // Returns the vector icon to display as the location icon.
+  const gfx::VectorIcon& GetVectorIcon() const;
 
   // The user text is the text the user has manually keyed in.  When present,
   // this is shown in preference to the permanent text; hitting escape will
@@ -130,20 +124,9 @@ class OmniboxView {
   // avoid selecting the "phantom newline" at the end of the edit.
   virtual void SelectAll(bool reversed) = 0;
 
-  // Sets focus, disables search term replacement, reverts the omnibox, and
-  // selects all.
-  void ShowURL();
-
-  // Enables search term replacement and reverts the omnibox.
-  void HideURL();
-
-  // Re-enables search term replacement on the ToolbarModel, and reverts the
-  // edit and popup back to their unedited state (permanent text showing, popup
-  // closed, no user input in progress).
+  // Reverts the edit and popup back to their unedited state (permanent text
+  // showing, popup closed, no user input in progress).
   virtual void RevertAll();
-
-  // Like RevertAll(), but does not touch the search term replacement state.
-  void RevertWithoutResettingSearchTermReplacement();
 
   // Updates the autocomplete popup and other state after the text has been
   // changed by the user.
@@ -202,12 +185,6 @@ class OmniboxView {
   // to the rich edit control, the IME window is the relative window. Otherwise,
   // the top-most window is the relative window.
   virtual gfx::NativeView GetRelativeWindowForPopup() const = 0;
-
-  // Shows |input| as gray suggested text after what the user has typed.
-  virtual void SetGrayTextAutocompletion(const base::string16& input) = 0;
-
-  // Returns the current gray suggested text.
-  virtual base::string16 GetGrayTextAutocompletion() const = 0;
 
   // Returns the width in pixels needed to display the current text. The
   // returned value includes margins.
@@ -283,9 +260,26 @@ class OmniboxView {
   OmniboxEditController* controller() { return controller_; }
   const OmniboxEditController* controller() const { return controller_; }
 
+  // Marks part (or, if |range| is invalid, all) of the current text as
+  // emphasized or de-emphasized, by changing its color.
+  virtual void SetEmphasis(bool emphasize, const gfx::Range& range) = 0;
+
+  // Sets the color and strikethrough state for |range|, which represents the
+  // current scheme, based on the current security state.  Schemes are displayed
+  // in different ways for different security levels.
+  virtual void UpdateSchemeStyle(const gfx::Range& range) = 0;
+
+  // Parses |display_text|, then invokes SetEmphasis() and UpdateSchemeStyle()
+  // appropriately. If the text is a query string, there is no scheme, and
+  // everything is emphasized equally, whereas for URLs the scheme may be styled
+  // based on the current security state, with parts of the URL de-emphasized to
+  // draw attention to whatever best represents the "identity" of the current
+  // URL.
+  void UpdateTextStyle(const base::string16& display_text,
+                       const AutocompleteSchemeClassifier& classifier);
+
  private:
   friend class OmniboxViewMacTest;
-  FRIEND_TEST_ALL_PREFIXES(InstantExtendedTest, ShowURL);
 
   // |model_| can be NULL in tests.
   std::unique_ptr<OmniboxEditModel> model_;

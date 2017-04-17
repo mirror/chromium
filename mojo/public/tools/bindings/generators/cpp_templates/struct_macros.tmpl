@@ -19,7 +19,8 @@
 {%- macro get_serialized_size(struct, input_field_pattern, context,
                               input_may_be_temp=False) -%}
   size_t size = sizeof({{struct|get_qualified_name_for_kind(internal=True)}});
-{%-   for pf in struct.packed.packed_fields_in_ordinal_order if pf.field.kind|is_object_kind %}
+{%-   for pf in struct.packed.packed_fields_in_ordinal_order
+          if pf.field.kind|is_object_kind or pf.field.kind|is_associated_kind %}
 {%-     set name = pf.field.name -%}
 {%-     set kind = pf.field.kind -%}
 {%-     set original_input_field = input_field_pattern|format(name) %}
@@ -148,8 +149,11 @@
 {%-     if kind|is_object_kind or kind|is_enum_kind %}
   if (!{{input}}.Read{{name|under_to_camel}}(&{{output_field}}))
     {{success}} = false;
-{%-     elif kind|is_any_handle_or_interface_kind %}
+{%-     elif kind|is_any_handle_kind %}
   {{output_field}} = {{input}}.Take{{name|under_to_camel}}();
+{%-     elif kind|is_any_interface_kind %}
+  {{output_field}} =
+      {{input}}.Take{{name|under_to_camel}}<decltype({{output_field}})>();
 {%-     else %}
   {{output_field}} = {{input}}.{{name}}();
 {%-     endif %}

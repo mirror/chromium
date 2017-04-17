@@ -8,7 +8,7 @@
 var expandedDetails = false;
 var keyPressState = 0;
 
-// Should match SecurityInterstitialCommands in security_interstitial_page.h
+// Should match security_interstitials::SecurityInterstitialCommands
 var CMD_DONT_PROCEED = 0;
 var CMD_PROCEED = 1;
 // Ways for user to get more information
@@ -23,25 +23,26 @@ var CMD_OPEN_LOGIN = 7;
 var CMD_DO_REPORT = 8;
 var CMD_DONT_REPORT = 9;
 var CMD_OPEN_REPORTING_PRIVACY = 10;
+var CMD_OPEN_WHITEPAPER = 11;
 // Report a phishing error.
-var CMD_REPORT_PHISHING_ERROR = 11;
+var CMD_REPORT_PHISHING_ERROR = 12;
 
 /**
  * A convenience method for sending commands to the parent page.
  * @param {string} cmd  The command to send.
  */
 function sendCommand(cmd) {
-<if expr="not is_ios">
+// <if expr="not is_ios">
   window.domAutomationController.setAutomationId(1);
   window.domAutomationController.send(cmd);
-</if>
-<if expr="is_ios">
+// </if>
+// <if expr="is_ios">
   // TODO(crbug.com/565877): Revisit message passing for WKWebView.
   var iframe = document.createElement('IFRAME');
   iframe.setAttribute('src', 'js-command:' + cmd);
   document.documentElement.appendChild(iframe);
   iframe.parentNode.removeChild(iframe);
-</if>
+// </if>
 }
 
 /**
@@ -67,8 +68,10 @@ function handleKeypress(e) {
  * (error-debugging-info) visible.
  * @param {string} title  The name of this debugging field.
  * @param {string} value  The value of the debugging field.
+ * @param {boolean=} fixedWidth If true, the value field is displayed fixed
+ *                              width.
  */
-function appendDebuggingField(title, value) {
+function appendDebuggingField(title, value, fixedWidth) {
   // The values input here are not trusted. Never use innerHTML on these
   // values!
   var spanTitle = document.createElement('span');
@@ -76,7 +79,10 @@ function appendDebuggingField(title, value) {
   spanTitle.innerText = title + ': ';
 
   var spanValue = document.createElement('span');
-  spanValue.classList.add('debugging-value');
+  spanValue.classList.add('debugging-content');
+  if (fixedWidth) {
+    spanValue.classList.add('debugging-content-fixed-width');
+  }
   spanValue.innerText = value;
 
   var pElem = document.createElement('p');
@@ -109,10 +115,7 @@ function setupEvents() {
     $('body').classList.add('safe-browsing');
   }
 
-  if (loadTimeData.getBoolean('iconUpdate') === true)
-    $('icon').classList.add('new-icons');
-  else
-    $('icon').classList.add('old-icons');
+  $('icon').classList.add('icon');
 
   if (hidePrimaryButton) {
     $('primary-button').classList.add('hidden');
@@ -153,13 +156,17 @@ function setupEvents() {
 
   if (ssl && overridable) {
     $('proceed-link').classList.add('small-link');
-  } else if ($('help-link')) {
-    // Overridable SSL page doesn't have this link.
-    $('help-link').addEventListener('click', function(event) {
-      if (ssl || loadTimeData.getBoolean('phishing'))
-        sendCommand(CMD_OPEN_HELP_CENTER);
-      else
-        sendCommand(CMD_OPEN_DIAGNOSTIC);
+  }
+
+  if ($('diagnostic-link')) {
+    $('diagnostic-link').addEventListener('click', function(event) {
+      sendCommand(CMD_OPEN_DIAGNOSTIC);
+    });
+  }
+
+  if ($('learn-more-link')) {
+    $('learn-more-link').addEventListener('click', function(event) {
+      sendCommand(CMD_OPEN_HELP_CENTER);
     });
   }
 

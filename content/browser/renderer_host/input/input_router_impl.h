@@ -10,6 +10,7 @@
 #include <memory>
 #include <queue>
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "content/browser/renderer_host/input/gesture_event_queue.h"
@@ -28,14 +29,13 @@ class Sender;
 
 namespace ui {
 class LatencyInfo;
+struct DidOverscrollParams;
 }
 
 namespace content {
 
 class InputAckHandler;
 class InputRouterClient;
-class OverscrollController;
-struct DidOverscrollParams;
 struct InputEventAck;
 
 // A default implementation for browser input event routing.
@@ -82,6 +82,13 @@ class CONTENT_EXPORT InputRouterImpl
 
  private:
   friend class InputRouterImplTest;
+  FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
+                           SubframeTouchEventRouting);
+  FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
+                           MainframeTouchEventRouting);
+
+  // Keeps track of last position of touch points and sets MovementXY for them.
+  void SetMovementXYForTouchPoints(blink::WebTouchEvent* event);
 
   // TouchpadTapSuppressionControllerClient
   void SendMouseEventImmediately(
@@ -136,7 +143,7 @@ class CONTENT_EXPORT InputRouterImpl
 
   // IPC message handlers
   void OnInputEventAck(const InputEventAck& ack);
-  void OnDidOverscroll(const DidOverscrollParams& params);
+  void OnDidOverscroll(const ui::DidOverscrollParams& params);
   void OnMsgMoveCaretAck();
   void OnSelectMessageAck();
   void OnHasTouchEventHandlers(bool has_handlers);
@@ -209,33 +216,26 @@ class CONTENT_EXPORT InputRouterImpl
   // or MoveRangeSelectionExtent_ACK.
   bool select_message_pending_;
 
-  // Queue of pending select messages to send after receving the next select
+  // Queue of pending select messages to send after receiving the next select
   // message ack.
-  std::deque<IPC::Message*> pending_select_messages_;
+  std::deque<std::unique_ptr<IPC::Message>> pending_select_messages_;
 
-  // (Similar to |mouse_move_pending_|.) True while waiting for MoveCaret_ACK.
+  // True while waiting for MoveCaret_ACK.
   bool move_caret_pending_;
 
-  // (Similar to |next_mouse_move_|.) The next MoveCaret to send, if any.
+  // The next MoveCaret to send, if any.
   std::unique_ptr<IPC::Message> next_move_caret_;
 
-  // True if a mouse move event was sent to the render view and we are waiting
-  // for a corresponding InputHostMsg_HandleInputEvent_ACK message.
-  bool mouse_move_pending_;
-
-  // The next mouse move event to send (only non-null while mouse_move_pending_
-  // is true).
-  std::unique_ptr<MouseEventWithLatencyInfo> next_mouse_move_;
-  MouseEventWithLatencyInfo current_mouse_move_;
+  // A queue of the mouse move events sent to the renderer. Similar
+  // to |key_queue_|.
+  typedef std::deque<MouseEventWithLatencyInfo> MouseMoveQueue;
+  MouseMoveQueue mouse_move_queue_;
 
   // A queue of keyboard events. We can't trust data from the renderer so we
   // stuff key events into a queue and pop them out on ACK, feeding our copy
   // back to whatever unhandled handler instead of the returned version.
   typedef std::deque<NativeWebKeyboardEventWithLatencyInfo> KeyQueue;
   KeyQueue key_queue_;
-
-  // The time when an input event was sent to the client.
-  base::TimeTicks input_event_start_time_;
 
   // The source of the ack within the scope of |ProcessInputEventAck()|.
   // Defaults to ACK_SOURCE_NONE.
@@ -255,13 +255,17 @@ class CONTENT_EXPORT InputRouterImpl
   bool touch_scroll_started_sent_;
 
   MouseWheelEventQueue wheel_event_queue_;
-  TouchEventQueue touch_event_queue_;
+  std::unique_ptr<TouchEventQueue> touch_event_queue_;
   GestureEventQueue gesture_event_queue_;
   TouchActionFilter touch_action_filter_;
   InputEventStreamValidator input_stream_validator_;
   InputEventStreamValidator output_stream_validator_;
 
   float device_scale_factor_;
+  bool raf_aligned_touch_enabled_;
+
+  // Last touch position relative to screen. Used to compute movementX/Y.
+  std::map<int, gfx::Point> global_touch_position_;
 
   DISALLOW_COPY_AND_ASSIGN(InputRouterImpl);
 };

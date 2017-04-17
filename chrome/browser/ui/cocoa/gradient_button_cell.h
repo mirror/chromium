@@ -31,6 +31,7 @@ enum {
   // normal un-pressed gradient.
   kStandardButtonTypeWithLimitedClickFeedback = 3,
   kMaterialStandardButtonTypeWithLimitedClickFeedback = 4,
+  kMaterialMenuButtonTypeWithLimitedClickFeedback = 5,
 };
 typedef NSInteger ButtonType;
 
@@ -44,8 +45,8 @@ typedef enum {
   // In motion which will end in a stable state.
   kPulsingOn,
   kPulsingOff,
-  // In continuous motion.
-  kPulsingContinuous,
+  // Continuously illuminated, used to highlight buttons.
+  kPulsingStuckOn,
 } PulseState;
 
 };
@@ -62,7 +63,6 @@ typedef enum {
   NSTimeInterval lastHoverUpdate_;
   base::scoped_nsobject<NSGradient> gradient_;
   gradient_button_cell::PulseState pulseState_;
-  CGFloat pulseMultiplier_;  // for selecting pulse direction when continuous.
   CGFloat outerStrokeAlphaMult_;  // For pulsing.
   base::scoped_nsobject<NSImage> overlayImage_;
 }
@@ -90,14 +90,13 @@ typedef enum {
 - (NSBezierPath*)clipPathForFrame:(NSRect)cellFrame
                            inView:(NSView*)controlView;
 
-// Turn on or off continuous pulsing.  When turning off continuous
-// pulsing, leave our pulse state in the correct ending position for
-// our isMouseInside_ property.  Public since it's called from the
-// bookmark bubble.
-- (void)setIsContinuousPulsing:(BOOL)continuous;
+// Turn on or off pulse sticking.  When turning off sticking, leave our pulse
+// state in the correct ending position for our isMouseInside_ property.  Public
+// since it's called from the bookmark bubble.
+- (void)setPulseIsStuckOn:(BOOL)continuous;
 
 // Returns continuous pulse state.
-- (BOOL)isContinuousPulsing;
+- (BOOL)isPulseStuckOn;
 
 // Safely stop continuous pulsing by turning off all timers.
 // May leave the cell in an odd state.
@@ -117,6 +116,9 @@ typedef enum {
 // The amount by which the gradient button cell should nudge the path used to
 // draw the hover (and pressed) state background path.
 - (CGFloat)hoverBackgroundVerticalOffsetInControlView:(NSView*)controlView;
+
+// Returns YES if the cell's tag indicates a Material Design button type.
+- (BOOL)isMaterialDesignButtonType;
 
 @property(assign, nonatomic) CGFloat hoverAlpha;
 

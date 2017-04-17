@@ -13,7 +13,8 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *  MA 02110-1301 USA
  */
 
 #include "modules/plugins/DOMMimeType.h"
@@ -22,58 +23,53 @@
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
 #include "modules/plugins/DOMPlugin.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-DOMMimeType::DOMMimeType(PassRefPtr<PluginData> pluginData, LocalFrame* frame, unsigned index)
-    : LocalFrameLifecycleObserver(frame)
-    , m_pluginData(pluginData)
-    , m_index(index)
-{
+DOMMimeType::DOMMimeType(PassRefPtr<PluginData> plugin_data,
+                         LocalFrame* frame,
+                         unsigned index)
+    : ContextClient(frame),
+      plugin_data_(std::move(plugin_data)),
+      index_(index) {}
+
+DOMMimeType::~DOMMimeType() {}
+
+DEFINE_TRACE(DOMMimeType) {
+  ContextClient::Trace(visitor);
 }
 
-DOMMimeType::~DOMMimeType()
-{
+const String& DOMMimeType::type() const {
+  return GetMimeClassInfo().type;
 }
 
-DEFINE_TRACE(DOMMimeType)
-{
-    LocalFrameLifecycleObserver::trace(visitor);
+String DOMMimeType::suffixes() const {
+  const Vector<String>& extensions = GetMimeClassInfo().extensions;
+
+  StringBuilder builder;
+  for (size_t i = 0; i < extensions.size(); ++i) {
+    if (i)
+      builder.Append(',');
+    builder.Append(extensions[i]);
+  }
+  return builder.ToString();
 }
 
-const String &DOMMimeType::type() const
-{
-    return mimeClassInfo().type;
+const String& DOMMimeType::description() const {
+  return GetMimeClassInfo().desc;
 }
 
-String DOMMimeType::suffixes() const
-{
-    const Vector<String>& extensions = mimeClassInfo().extensions;
+DOMPlugin* DOMMimeType::enabledPlugin() const {
+  // FIXME: allowPlugins is just a client call. We should not need
+  // to bounce through the loader to get there.
+  // Something like: frame()->page()->client()->allowPlugins().
+  if (!GetFrame() ||
+      !GetFrame()->Loader().AllowPlugins(kNotAboutToInstantiatePlugin))
+    return nullptr;
 
-    StringBuilder builder;
-    for (size_t i = 0; i < extensions.size(); ++i) {
-        if (i)
-            builder.append(',');
-        builder.append(extensions[i]);
-    }
-    return builder.toString();
+  return DOMPlugin::Create(plugin_data_.Get(), GetFrame(),
+                           plugin_data_->MimePluginIndices()[index_]);
 }
 
-const String &DOMMimeType::description() const
-{
-    return mimeClassInfo().desc;
-}
-
-DOMPlugin* DOMMimeType::enabledPlugin() const
-{
-    // FIXME: allowPlugins is just a client call. We should not need
-    // to bounce through the loader to get there.
-    // Something like: frame()->host()->client()->allowPlugins().
-    if (!frame() || !frame()->loader().allowPlugins(NotAboutToInstantiatePlugin))
-        return nullptr;
-
-    return DOMPlugin::create(m_pluginData.get(), frame(), m_pluginData->mimePluginIndices()[m_index]);
-}
-
-} // namespace blink
+}  // namespace blink

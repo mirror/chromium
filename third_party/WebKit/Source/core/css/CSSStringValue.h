@@ -6,35 +6,34 @@
 #define CSSStringValue_h
 
 #include "core/css/CSSValue.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CSSStringValue : public CSSValue {
-public:
-    static CSSStringValue* create(const String& str)
-    {
-        return new CSSStringValue(str);
-    }
+ public:
+  static CSSStringValue* Create(const String& str) {
+    return new CSSStringValue(str);
+  }
 
-    String value() const { return m_string; }
+  String Value() const { return string_; }
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSStringValue& other) const
-    {
-        return m_string == other.m_string;
-    }
+  bool Equals(const CSSStringValue& other) const {
+    return string_ == other.string_;
+  }
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-private:
-    CSSStringValue(const String&);
+ private:
+  CSSStringValue(const String&);
 
-    String m_string;
+  String string_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSStringValue, isStringValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSStringValue, IsStringValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSStringValue_h
+#endif  // CSSStringValue_h

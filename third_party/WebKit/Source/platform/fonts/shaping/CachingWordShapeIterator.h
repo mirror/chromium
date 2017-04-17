@@ -29,203 +29,185 @@
 #include "platform/fonts/Font.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/shaping/CachingWordShapeIterator.h"
-#include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeCache.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/CharacterNames.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/CharacterNames.h"
 
 namespace blink {
 
-class CachingWordShapeIterator final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(CachingWordShapeIterator);
-public:
-    CachingWordShapeIterator(ShapeCache* cache, const TextRun& run,
-        const Font* font)
-        : m_shapeCache(cache), m_textRun(run), m_font(font)
-        , m_spacing(run, font->getFontDescription())
-        , m_widthSoFar(0), m_startIndex(0)
-    {
-        ASSERT(font);
+class PLATFORM_EXPORT CachingWordShapeIterator final {
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(CachingWordShapeIterator);
 
-        // Shaping word by word is faster as each word is cached. If we cannot
-        // use the cache or if the font doesn't support word by word shaping
-        // fall back on shaping the entire run.
-        m_shapeByWord = m_font->canShapeWordByWord();
+ public:
+  CachingWordShapeIterator(ShapeCache* cache,
+                           const TextRun& run,
+                           const Font* font)
+      : shape_cache_(cache),
+        text_run_(run),
+        font_(font),
+        spacing_(run, font->GetFontDescription()),
+        width_so_far_(0),
+        start_index_(0) {
+    DCHECK(font);
+
+    // Shaping word by word is faster as each word is cached. If we cannot
+    // use the cache or if the font doesn't support word by word shaping
+    // fall back on shaping the entire run.
+    shape_by_word_ = font_->CanShapeWordByWord();
+  }
+
+  bool Next(RefPtr<const ShapeResult>* word_result) {
+    if (UNLIKELY(text_run_.AllowTabs()))
+      return NextForAllowTabs(word_result);
+
+    if (!shape_by_word_) {
+      if (start_index_)
+        return false;
+      *word_result = ShapeWord(text_run_, font_);
+      start_index_ = 1;
+      return word_result->Get();
     }
 
-    bool next(RefPtr<const ShapeResult>* wordResult)
-    {
-        if (UNLIKELY(m_textRun.allowTabs()))
-            return nextForAllowTabs(wordResult);
+    return NextWord(word_result);
+  }
 
-        if (!m_shapeByWord) {
-            if (m_startIndex)
-                return false;
-            *wordResult = shapeWord(m_textRun, m_font);
-            m_startIndex = 1;
-            return wordResult->get();
+ private:
+  PassRefPtr<const ShapeResult> ShapeWordWithoutSpacing(const TextRun&,
+                                                        const Font*);
+
+  PassRefPtr<const ShapeResult> ShapeWord(const TextRun& word_run,
+                                          const Font* font) {
+    if (LIKELY(!spacing_.HasSpacing()))
+      return ShapeWordWithoutSpacing(word_run, font);
+
+    RefPtr<const ShapeResult> result = ShapeWordWithoutSpacing(word_run, font);
+    return result->ApplySpacingToCopy(spacing_, word_run);
+  }
+
+  bool NextWord(RefPtr<const ShapeResult>* word_result) {
+    return ShapeToEndIndex(word_result, NextWordEndIndex());
+  }
+
+  static bool IsWordDelimiter(UChar ch) {
+    return ch == kSpaceCharacter || ch == kTabulationCharacter;
+  }
+
+  unsigned NextWordEndIndex() const {
+    const unsigned length = text_run_.length();
+    if (start_index_ >= length)
+      return 0;
+
+    if (start_index_ + 1u == length || IsWordDelimiter(text_run_[start_index_]))
+      return start_index_ + 1;
+
+    // 8Bit words end at isWordDelimiter().
+    if (text_run_.Is8Bit()) {
+      for (unsigned i = start_index_ + 1;; i++) {
+        if (i == length || IsWordDelimiter(text_run_[i]))
+          return i;
+      }
+    }
+
+    // Non-CJK/Emoji words end at isWordDelimiter() or CJK/Emoji characters.
+    unsigned end = start_index_;
+    UChar32 ch = text_run_.CodepointAtAndNext(end);
+    if (!Character::IsCJKIdeographOrSymbol(ch)) {
+      for (unsigned next_end = end; end < length; end = next_end) {
+        ch = text_run_.CodepointAtAndNext(next_end);
+        if (IsWordDelimiter(ch) || Character::IsCJKIdeographOrSymbolBase(ch))
+          return end;
+      }
+      return length;
+    }
+
+    // For CJK/Emoji words, delimit every character because these scripts do
+    // not delimit words by spaces, and delimiting only at isWordDelimiter()
+    // worsen the cache efficiency.
+    bool has_any_script = !Character::IsCommonOrInheritedScript(ch);
+    for (unsigned next_end = end; end < length; end = next_end) {
+      ch = text_run_.CodepointAtAndNext(next_end);
+      // ZWJ and modifier check in order not to split those Emoji sequences.
+      if (U_GET_GC_MASK(ch) & (U_GC_M_MASK | U_GC_LM_MASK | U_GC_SK_MASK) ||
+          ch == kZeroWidthJoinerCharacter || Character::IsModifier(ch))
+        continue;
+      // Avoid delimiting COMMON/INHERITED alone, which makes harder to
+      // identify the script.
+      if (Character::IsCJKIdeographOrSymbol(ch)) {
+        if (Character::IsCommonOrInheritedScript(ch))
+          continue;
+        if (!has_any_script) {
+          has_any_script = true;
+          continue;
         }
-
-        return nextWord(wordResult);
+      }
+      return end;
     }
+    return length;
+  }
 
-private:
-    PassRefPtr<const ShapeResult> shapeWordWithoutSpacing(
-        const TextRun& wordRun, const Font* font)
-    {
-        ShapeCacheEntry* cacheEntry = m_shapeCache->add(wordRun,
-            ShapeCacheEntry());
-        if (cacheEntry && cacheEntry->m_shapeResult)
-            return cacheEntry->m_shapeResult;
+  bool ShapeToEndIndex(RefPtr<const ShapeResult>* result, unsigned end_index) {
+    if (!end_index || end_index <= start_index_)
+      return false;
 
-        HarfBuzzShaper shaper(font, wordRun);
-        RefPtr<const ShapeResult> shapeResult = shaper.shapeResult();
-        if (!shapeResult)
-            return nullptr;
-
-        if (cacheEntry)
-            cacheEntry->m_shapeResult = shapeResult;
-
-        return shapeResult.release();
+    const unsigned length = text_run_.length();
+    if (!start_index_ && end_index == length) {
+      *result = ShapeWord(text_run_, font_);
+    } else {
+      DCHECK_LE(end_index, length);
+      TextRun sub_run =
+          text_run_.SubRun(start_index_, end_index - start_index_);
+      *result = ShapeWord(sub_run, font_);
     }
+    start_index_ = end_index;
+    return result->Get();
+  }
 
-    PassRefPtr<const ShapeResult> shapeWord(const TextRun& wordRun,
-        const Font* font)
-    {
-        if (LIKELY(!m_spacing.hasSpacing()))
-            return shapeWordWithoutSpacing(wordRun, font);
-
-        RefPtr<const ShapeResult> result = shapeWordWithoutSpacing(wordRun, font);
-        return result->applySpacingToCopy(m_spacing, wordRun);
+  unsigned EndIndexUntil(UChar ch) const {
+    unsigned length = text_run_.length();
+    DCHECK_LT(start_index_, length);
+    for (unsigned i = start_index_ + 1;; i++) {
+      if (i == length || text_run_[i] == ch)
+        return i;
     }
+  }
 
-    bool nextWord(RefPtr<const ShapeResult>* wordResult)
-    {
-        return shapeToEndIndex(wordResult, nextWordEndIndex());
-    }
+  bool NextForAllowTabs(RefPtr<const ShapeResult>* word_result) {
+    unsigned length = text_run_.length();
+    if (start_index_ >= length)
+      return false;
 
-    static bool isWordDelimiter(UChar ch)
-    {
-        return ch == spaceCharacter || ch == tabulationCharacter;
-    }
-
-    unsigned nextWordEndIndex()
-    {
-        const unsigned length = m_textRun.length();
-        if (m_startIndex >= length)
-            return 0;
-
-        if (m_startIndex + 1u == length || isWordDelimiter(m_textRun[m_startIndex]))
-            return m_startIndex + 1;
-
-        // Delimit every CJK character because these scripts do not delimit
-        // words by spaces, and not delimiting hits the performance.
-        if (!m_textRun.is8Bit()) {
-            UChar32 ch;
-            unsigned end = m_startIndex;
-            U16_NEXT(m_textRun.characters16(), end, length, ch);
-            if (Character::isCJKIdeographOrSymbol(ch)) {
-                bool hasAnyScript = !Character::isCommonOrInheritedScript(ch);
-                for (unsigned i = end; i < length; end = i) {
-                    U16_NEXT(m_textRun.characters16(), i, length, ch);
-                    // ZWJ and modifier check in order not to split those Emoji sequences.
-                    if (U_GET_GC_MASK(ch) & (U_GC_M_MASK | U_GC_LM_MASK | U_GC_SK_MASK)
-                        || ch == zeroWidthJoinerCharacter || Character::isModifier(ch))
-                        continue;
-                    // Avoid delimiting COMMON/INHERITED alone, which makes harder to
-                    // identify the script.
-                    if (Character::isCJKIdeographOrSymbol(ch)) {
-                        if (Character::isCommonOrInheritedScript(ch))
-                            continue;
-                        if (!hasAnyScript) {
-                            hasAnyScript = true;
-                            continue;
-                        }
-                    }
-                    return end;
-                }
-                return length;
-            }
+    if (UNLIKELY(text_run_[start_index_] == kTabulationCharacter)) {
+      for (unsigned i = start_index_ + 1;; i++) {
+        if (i == length || text_run_[i] != kTabulationCharacter) {
+          *word_result = ShapeResult::CreateForTabulationCharacters(
+              font_, text_run_, width_so_far_, i - start_index_);
+          start_index_ = i;
+          break;
         }
-
-        for (unsigned i = m_startIndex + 1; ; i++) {
-            if (i == length || isWordDelimiter(m_textRun[i])) {
-                return i;
-            }
-            if (!m_textRun.is8Bit()) {
-                UChar32 nextChar;
-                U16_GET(m_textRun.characters16(), 0, i, length, nextChar);
-                if (Character::isCJKIdeographOrSymbolBase(nextChar))
-                    return i;
-            }
-        }
+      }
+    } else if (!shape_by_word_) {
+      if (!ShapeToEndIndex(word_result, EndIndexUntil(kTabulationCharacter)))
+        return false;
+    } else {
+      if (!NextWord(word_result))
+        return false;
     }
+    DCHECK(*word_result);
+    width_so_far_ += (*word_result)->Width();
+    return true;
+  }
 
-    bool shapeToEndIndex(RefPtr<const ShapeResult>* result, unsigned endIndex)
-    {
-        if (!endIndex || endIndex <= m_startIndex)
-            return false;
-
-        const unsigned length = m_textRun.length();
-        if (!m_startIndex && endIndex == length) {
-            *result = shapeWord(m_textRun, m_font);
-        } else {
-            ASSERT(endIndex <= length);
-            TextRun subRun = m_textRun.subRun(m_startIndex, endIndex - m_startIndex);
-            *result = shapeWord(subRun, m_font);
-        }
-        m_startIndex = endIndex;
-        return result->get();
-    }
-
-    unsigned endIndexUntil(UChar ch)
-    {
-        unsigned length = m_textRun.length();
-        ASSERT(m_startIndex < length);
-        for (unsigned i = m_startIndex + 1; ; i++) {
-            if (i == length || m_textRun[i] == ch)
-                return i;
-        }
-    }
-
-    bool nextForAllowTabs(RefPtr<const ShapeResult>* wordResult)
-    {
-        unsigned length = m_textRun.length();
-        if (m_startIndex >= length)
-            return false;
-
-        if (UNLIKELY(m_textRun[m_startIndex] == tabulationCharacter)) {
-            for (unsigned i = m_startIndex + 1; ; i++) {
-                if (i == length || m_textRun[i] != tabulationCharacter) {
-                    *wordResult = ShapeResult::createForTabulationCharacters(
-                        m_font, m_textRun, m_widthSoFar, i - m_startIndex);
-                    m_startIndex = i;
-                    break;
-                }
-            }
-        } else if (!m_shapeByWord) {
-            if (!shapeToEndIndex(wordResult, endIndexUntil(tabulationCharacter)))
-                return false;
-        } else {
-            if (!nextWord(wordResult))
-                return false;
-        }
-        ASSERT(*wordResult);
-        m_widthSoFar += (*wordResult)->width();
-        return true;
-    }
-
-    ShapeCache* m_shapeCache;
-    const TextRun& m_textRun;
-    const Font* m_font;
-    ShapeResultSpacing m_spacing;
-    float m_widthSoFar; // Used only when allowTabs()
-    unsigned m_startIndex : 31;
-    unsigned m_shapeByWord : 1;
+  ShapeCache* shape_cache_;
+  const TextRun& text_run_;
+  const Font* font_;
+  ShapeResultSpacing spacing_;
+  float width_so_far_;  // Used only when allowTabs()
+  unsigned start_index_ : 31;
+  unsigned shape_by_word_ : 1;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CachingWordShapeIterator_h
+#endif  // CachingWordShapeIterator_h

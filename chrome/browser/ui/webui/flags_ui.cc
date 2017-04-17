@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/webui/flags_ui.h"
 
+#include <memory>
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -23,18 +25,17 @@
 #include "components/flags_ui/flags_ui_constants.h"
 #include "components/flags_ui/flags_ui_pref_names.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
+#include "components/grit/components_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/strings/grit/components_chromium_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
-#include "grit/components_chromium_strings.h"
-#include "grit/components_google_chrome_strings.h"
-#include "grit/components_resources.h"
-#include "grit/components_scaled_resources.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -193,8 +194,8 @@ void FlagsDOMHandler::HandleRequestExperimentalFeatures(
                                      access_,
                                      supported_features.get(),
                                      unsupported_features.get());
-  results.Set(flags_ui::kSupportedFeatures, supported_features.release());
-  results.Set(flags_ui::kUnsupportedFeatures, unsupported_features.release());
+  results.Set(flags_ui::kSupportedFeatures, std::move(supported_features));
+  results.Set(flags_ui::kUnsupportedFeatures, std::move(unsupported_features));
   results.SetBoolean(flags_ui::kNeedsRestart,
                      about_flags::IsRestartNeededToCommitChanges());
   results.SetBoolean(flags_ui::kShowOwnerWarning,
@@ -306,8 +307,9 @@ FlagsUI::FlagsUI(content::WebUI* web_ui)
       weak_factory_(this) {
   Profile* profile = Profile::FromWebUI(web_ui);
 
-  FlagsDOMHandler* handler = new FlagsDOMHandler();
-  web_ui->AddMessageHandler(handler);
+  auto handler_owner = base::MakeUnique<FlagsDOMHandler>();
+  FlagsDOMHandler* handler = handler_owner.get();
+  web_ui->AddMessageHandler(std::move(handler_owner));
 
 #if defined(OS_CHROMEOS)
   if (base::SysInfo::IsRunningOnChromeOS() &&

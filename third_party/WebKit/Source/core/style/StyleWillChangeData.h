@@ -7,36 +7,37 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class StyleWillChangeData : public RefCounted<StyleWillChangeData> {
-public:
-    static PassRefPtr<StyleWillChangeData> create() { return adoptRef(new StyleWillChangeData); }
-    PassRefPtr<StyleWillChangeData> copy() const { return adoptRef(new StyleWillChangeData(*this)); }
+ public:
+  static PassRefPtr<StyleWillChangeData> Create() {
+    return AdoptRef(new StyleWillChangeData);
+  }
+  PassRefPtr<StyleWillChangeData> Copy() const {
+    return AdoptRef(new StyleWillChangeData(*this));
+  }
 
-    bool operator==(const StyleWillChangeData& o) const
-    {
-        return m_properties == o.m_properties && m_contents == o.m_contents && m_scrollPosition == o.m_scrollPosition;
-    }
+  bool operator==(const StyleWillChangeData& o) const {
+    return properties_ == o.properties_ && contents_ == o.contents_ &&
+           scroll_position_ == o.scroll_position_;
+  }
 
-    bool operator!=(const StyleWillChangeData& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator!=(const StyleWillChangeData& o) const { return !(*this == o); }
 
-    Vector<CSSPropertyID> m_properties;
-    unsigned m_contents : 1;
-    unsigned m_scrollPosition : 1;
+  Vector<CSSPropertyID> properties_;
+  unsigned contents_ : 1;
+  unsigned scroll_position_ : 1;
 
-private:
-    StyleWillChangeData();
-    StyleWillChangeData(const StyleWillChangeData&);
+ private:
+  StyleWillChangeData();
+  StyleWillChangeData(const StyleWillChangeData&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleWillChangeData_h
+#endif  // StyleWillChangeData_h

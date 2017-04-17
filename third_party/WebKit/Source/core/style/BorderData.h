@@ -29,135 +29,122 @@
 #include "core/style/NinePieceImage.h"
 #include "platform/LengthSize.h"
 #include "platform/geometry/IntRect.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class BorderData {
-    DISALLOW_NEW();
-friend class ComputedStyle;
-public:
-    BorderData() : m_topLeft(Length(0, Fixed), Length(0, Fixed))
-        , m_topRight(Length(0, Fixed), Length(0, Fixed))
-        , m_bottomLeft(Length(0, Fixed), Length(0, Fixed))
-        , m_bottomRight(Length(0, Fixed), Length(0, Fixed))
-    {
-    }
+  DISALLOW_NEW();
+  friend class ComputedStyle;
 
-    bool hasBorder() const
-    {
-        return m_left.nonZero() || m_right.nonZero() || m_top.nonZero() || m_bottom.nonZero();
-    }
+ public:
+  BorderData()
+      : top_left_(Length(0, kFixed), Length(0, kFixed)),
+        top_right_(Length(0, kFixed), Length(0, kFixed)),
+        bottom_left_(Length(0, kFixed), Length(0, kFixed)),
+        bottom_right_(Length(0, kFixed), Length(0, kFixed)) {}
 
-    bool hasBorderFill() const
-    {
-        return m_image.hasImage() && m_image.fill();
-    }
+  bool HasBorder() const {
+    return left_.NonZero() || right_.NonZero() || top_.NonZero() ||
+           bottom_.NonZero();
+  }
 
-    bool hasBorderRadius() const
-    {
-        if (!m_topLeft.width().isZero())
-            return true;
-        if (!m_topRight.width().isZero())
-            return true;
-        if (!m_bottomLeft.width().isZero())
-            return true;
-        if (!m_bottomRight.width().isZero())
-            return true;
-        return false;
-    }
+  bool HasBorderFill() const { return image_.HasImage() && image_.Fill(); }
 
-    int borderLeftWidth() const
-    {
-        if (m_left.style() == BorderStyleNone || m_left.style() == BorderStyleHidden)
-            return 0;
-        return m_left.width();
-    }
+  bool HasBorderRadius() const {
+    if (!top_left_.Width().IsZero())
+      return true;
+    if (!top_right_.Width().IsZero())
+      return true;
+    if (!bottom_left_.Width().IsZero())
+      return true;
+    if (!bottom_right_.Width().IsZero())
+      return true;
+    return false;
+  }
 
-    int borderRightWidth() const
-    {
-        if (m_right.style() == BorderStyleNone || m_right.style() == BorderStyleHidden)
-            return 0;
-        return m_right.width();
-    }
+  float BorderLeftWidth() const {
+    if (left_.Style() == kBorderStyleNone ||
+        left_.Style() == kBorderStyleHidden)
+      return 0;
+    return left_.Width();
+  }
 
-    int borderTopWidth() const
-    {
-        if (m_top.style() == BorderStyleNone || m_top.style() == BorderStyleHidden)
-            return 0;
-        return m_top.width();
-    }
+  float BorderRightWidth() const {
+    if (right_.Style() == kBorderStyleNone ||
+        right_.Style() == kBorderStyleHidden)
+      return 0;
+    return right_.Width();
+  }
 
-    int borderBottomWidth() const
-    {
-        if (m_bottom.style() == BorderStyleNone || m_bottom.style() == BorderStyleHidden)
-            return 0;
-        return m_bottom.width();
-    }
+  float BorderTopWidth() const {
+    if (top_.Style() == kBorderStyleNone || top_.Style() == kBorderStyleHidden)
+      return 0;
+    return top_.Width();
+  }
 
-    bool operator==(const BorderData& o) const
-    {
-        return m_left == o.m_left && m_right == o.m_right && m_top == o.m_top && m_bottom == o.m_bottom && m_image == o.m_image
-               && m_topLeft == o.m_topLeft && m_topRight == o.m_topRight && m_bottomLeft == o.m_bottomLeft && m_bottomRight == o.m_bottomRight;
-    }
+  float BorderBottomWidth() const {
+    if (bottom_.Style() == kBorderStyleNone ||
+        bottom_.Style() == kBorderStyleHidden)
+      return 0;
+    return bottom_.Width();
+  }
 
-    bool visuallyEqual(const BorderData& o) const
-    {
-        return m_left.visuallyEqual(o.m_left)
-            && m_right.visuallyEqual(o.m_right)
-            && m_top.visuallyEqual(o.m_top)
-            && m_bottom.visuallyEqual(o.m_bottom)
-            && m_image == o.m_image
-            && m_topLeft == o.m_topLeft
-            && m_topRight == o.m_topRight
-            && m_bottomLeft == o.m_bottomLeft
-            && m_bottomRight == o.m_bottomRight;
-    }
+  bool operator==(const BorderData& o) const {
+    return left_ == o.left_ && right_ == o.right_ && top_ == o.top_ &&
+           bottom_ == o.bottom_ && image_ == o.image_ && RadiiEqual(o);
+  }
 
-    bool visualOverflowEqual(const BorderData& o) const
-    {
-        return m_image.outset() == o.m_image.outset();
-    }
+  bool VisuallyEqual(const BorderData& o) const {
+    return left_.VisuallyEqual(o.left_) && right_.VisuallyEqual(o.right_) &&
+           top_.VisuallyEqual(o.top_) && bottom_.VisuallyEqual(o.bottom_) &&
+           image_ == o.image_ && RadiiEqual(o);
+  }
 
-    bool operator!=(const BorderData& o) const
-    {
-        return !(*this == o);
-    }
+  bool VisualOverflowEqual(const BorderData& o) const {
+    return image_.Outset() == o.image_.Outset();
+  }
 
-    bool sizeEquals(const BorderData& o) const
-    {
-        return borderLeftWidth() == o.borderLeftWidth()
-            && borderTopWidth() == o.borderTopWidth()
-            && borderRightWidth() == o.borderRightWidth()
-            && borderBottomWidth() == o.borderBottomWidth();
-    }
+  bool operator!=(const BorderData& o) const { return !(*this == o); }
 
-    const BorderValue& left() const { return m_left; }
-    const BorderValue& right() const { return m_right; }
-    const BorderValue& top() const { return m_top; }
-    const BorderValue& bottom() const { return m_bottom; }
+  bool SizeEquals(const BorderData& o) const {
+    return BorderLeftWidth() == o.BorderLeftWidth() &&
+           BorderTopWidth() == o.BorderTopWidth() &&
+           BorderRightWidth() == o.BorderRightWidth() &&
+           BorderBottomWidth() == o.BorderBottomWidth();
+  }
 
-    const NinePieceImage& image() const { return m_image; }
+  bool RadiiEqual(const BorderData& o) const {
+    return top_left_ == o.top_left_ && top_right_ == o.top_right_ &&
+           bottom_left_ == o.bottom_left_ && bottom_right_ == o.bottom_right_;
+  }
 
-    const LengthSize& topLeft() const { return m_topLeft; }
-    const LengthSize& topRight() const { return m_topRight; }
-    const LengthSize& bottomLeft() const { return m_bottomLeft; }
-    const LengthSize& bottomRight() const { return m_bottomRight; }
+  const BorderValue& Left() const { return left_; }
+  const BorderValue& Right() const { return right_; }
+  const BorderValue& Top() const { return top_; }
+  const BorderValue& Bottom() const { return bottom_; }
 
-private:
-    BorderValue m_left;
-    BorderValue m_right;
-    BorderValue m_top;
-    BorderValue m_bottom;
+  const NinePieceImage& GetImage() const { return image_; }
 
-    NinePieceImage m_image;
+  const LengthSize& TopLeft() const { return top_left_; }
+  const LengthSize& TopRight() const { return top_right_; }
+  const LengthSize& BottomLeft() const { return bottom_left_; }
+  const LengthSize& BottomRight() const { return bottom_right_; }
 
-    LengthSize m_topLeft;
-    LengthSize m_topRight;
-    LengthSize m_bottomLeft;
-    LengthSize m_bottomRight;
+ private:
+  BorderValue left_;
+  BorderValue right_;
+  BorderValue top_;
+  BorderValue bottom_;
+
+  NinePieceImage image_;
+
+  LengthSize top_left_;
+  LengthSize top_right_;
+  LengthSize bottom_left_;
+  LengthSize bottom_right_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BorderData_h
+#endif  // BorderData_h

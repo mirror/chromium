@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/wm_shell.h"
 #include "base/macros.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
@@ -18,6 +16,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/prefs/pref_service.h"
+#include "components/session_manager/core/session_manager.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
@@ -111,31 +110,33 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, PRE_CancelAdding) {
 IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, CancelAdding) {
   EXPECT_EQ(3u, user_manager::UserManager::Get()->GetUsers().size());
   EXPECT_EQ(0u, user_manager::UserManager::Get()->GetLoggedInUsers().size());
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_LOGIN_PRIMARY,
-            ash::WmShell::Get()->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::LOGIN_PRIMARY,
+            session_manager::SessionManager::Get()->session_state());
 
   LoginUser(kTestUsers[0]);
   EXPECT_EQ(1u, user_manager::UserManager::Get()->GetLoggedInUsers().size());
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_ACTIVE,
-            ash::WmShell::Get()->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::ACTIVE,
+            session_manager::SessionManager::Get()->session_state());
 
   UserAddingScreen::Get()->Start();
   content::RunAllPendingInMessageLoop();
   EXPECT_EQ(1, user_adding_started());
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_LOGIN_SECONDARY,
-            ash::WmShell::Get()->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::LOGIN_SECONDARY,
+            session_manager::SessionManager::Get()->session_state());
 
   UserAddingScreen::Get()->Cancel();
   WaitUntilUserAddingFinishedOrCancelled();
   content::RunAllPendingInMessageLoop();
   EXPECT_EQ(1, user_adding_finished());
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_ACTIVE,
-            ash::WmShell::Get()->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::ACTIVE,
+            session_manager::SessionManager::Get()->session_state());
 
   EXPECT_TRUE(LoginDisplayHost::default_host() == nullptr);
   EXPECT_EQ(1u, user_manager::UserManager::Get()->GetLoggedInUsers().size());
-  EXPECT_EQ(kTestUsers[0],
-            user_manager::UserManager::Get()->GetActiveUser()->email());
+  EXPECT_EQ(kTestUsers[0], user_manager::UserManager::Get()
+                               ->GetActiveUser()
+                               ->GetAccountId()
+                               .GetUserEmail());
 }
 
 IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, PRE_AddingSeveralUsers) {
@@ -146,12 +147,11 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, PRE_AddingSeveralUsers) {
 }
 
 IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, AddingSeveralUsers) {
-  ash::WmShell* wm_shell = ash::WmShell::Get();
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_LOGIN_PRIMARY,
-            wm_shell->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::LOGIN_PRIMARY,
+            session_manager::SessionManager::Get()->session_state());
   LoginUser(kTestUsers[0]);
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_ACTIVE,
-            wm_shell->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::ACTIVE,
+            session_manager::SessionManager::Get()->session_state());
 
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
 
@@ -159,20 +159,20 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, AddingSeveralUsers) {
     UserAddingScreen::Get()->Start();
     content::RunAllPendingInMessageLoop();
     EXPECT_EQ(i, user_adding_started());
-    EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_LOGIN_SECONDARY,
-              wm_shell->GetSessionStateDelegate()->GetSessionState());
+    EXPECT_EQ(session_manager::SessionState::LOGIN_SECONDARY,
+              session_manager::SessionManager::Get()->session_state());
     AddUser(kTestUsers[i]);
     WaitUntilUserAddingFinishedOrCancelled();
     content::RunAllPendingInMessageLoop();
     EXPECT_EQ(i, user_adding_finished());
-    EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_ACTIVE,
-              wm_shell->GetSessionStateDelegate()->GetSessionState());
+    EXPECT_EQ(session_manager::SessionState::ACTIVE,
+              session_manager::SessionManager::Get()->session_state());
     EXPECT_TRUE(LoginDisplayHost::default_host() == nullptr);
     ASSERT_EQ(unsigned(i + 1), user_manager->GetLoggedInUsers().size());
   }
 
-  EXPECT_EQ(ash::SessionStateDelegate::SESSION_STATE_ACTIVE,
-            wm_shell->GetSessionStateDelegate()->GetSessionState());
+  EXPECT_EQ(session_manager::SessionState::ACTIVE,
+            session_manager::SessionManager::Get()->session_state());
 
   // Now check how unlock policy works for these users.
   PrefService* prefs1 =
@@ -205,12 +205,12 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, AddingSeveralUsers) {
                     MultiProfileUserController::kBehaviorUnrestricted);
   user_manager::UserList unlock_users = user_manager->GetUnlockUsers();
   ASSERT_EQ(1UL, unlock_users.size());
-  EXPECT_EQ(kTestUsers[0], unlock_users[0]->email());
+  EXPECT_EQ(kTestUsers[0], unlock_users[0]->GetAccountId().GetUserEmail());
 
   prefs1->SetBoolean(prefs::kEnableAutoScreenLock, false);
   unlock_users = user_manager->GetUnlockUsers();
   ASSERT_EQ(1UL, unlock_users.size());
-  EXPECT_EQ(kTestUsers[0], unlock_users[0]->email());
+  EXPECT_EQ(kTestUsers[0], unlock_users[0]->GetAccountId().GetUserEmail());
 
   // If all users have unrestricted policy then anyone can perform unlock.
   prefs1->SetString(prefs::kMultiProfileUserBehavior,
@@ -218,21 +218,21 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, AddingSeveralUsers) {
   unlock_users = user_manager->GetUnlockUsers();
   ASSERT_EQ(3UL, unlock_users.size());
   for (int i = 0; i < 3; ++i)
-    EXPECT_EQ(kTestUsers[i], unlock_users[i]->email());
+    EXPECT_EQ(kTestUsers[i], unlock_users[i]->GetAccountId().GetUserEmail());
 
   // This preference doesn't affect list of unlock users.
   prefs2->SetBoolean(prefs::kEnableAutoScreenLock, true);
   unlock_users = user_manager->GetUnlockUsers();
   ASSERT_EQ(3UL, unlock_users.size());
   for (int i = 0; i < 3; ++i)
-    EXPECT_EQ(kTestUsers[i], unlock_users[i]->email());
+    EXPECT_EQ(kTestUsers[i], unlock_users[i]->GetAccountId().GetUserEmail());
 
   // Now one of the users is unable to unlock.
   SetUserCanLock(user_manager->GetLoggedInUsers()[2], false);
   unlock_users = user_manager->GetUnlockUsers();
   ASSERT_EQ(2UL, unlock_users.size());
   for (int i = 0; i < 2; ++i)
-    EXPECT_EQ(kTestUsers[i], unlock_users[i]->email());
+    EXPECT_EQ(kTestUsers[i], unlock_users[i]->GetAccountId().GetUserEmail());
   SetUserCanLock(user_manager->GetLoggedInUsers()[2], true);
 
   // Now one of the users has not-allowed policy.
@@ -244,7 +244,7 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, AddingSeveralUsers) {
   unlock_users = user_manager->GetUnlockUsers();
   ASSERT_EQ(2UL, unlock_users.size());
   for (int i = 0; i < 2; ++i)
-    EXPECT_EQ(kTestUsers[i], unlock_users[i]->email());
+    EXPECT_EQ(kTestUsers[i], unlock_users[i]->GetAccountId().GetUserEmail());
 }
 
 IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, PRE_ScreenVisibility) {
@@ -264,15 +264,21 @@ IN_PROC_BROWSER_TEST_F(UserAddingScreenTest, ScreenVisibility) {
   WaitUntilUserAddingFinishedOrCancelled();
   content::RunAllPendingInMessageLoop();
 
-  ScreenLocker::Show();
-  content::WindowedNotificationObserver(
-      chrome::NOTIFICATION_SCREEN_LOCK_STATE_CHANGED,
-      content::NotificationService::AllSources()).Wait();
+  {
+    content::WindowedNotificationObserver observer(
+        chrome::NOTIFICATION_SCREEN_LOCK_STATE_CHANGED,
+        content::NotificationService::AllSources());
+    ScreenLocker::Show();
+    observer.Wait();
+  }
 
-  ScreenLocker::Hide();
-  content::WindowedNotificationObserver(
-      chrome::NOTIFICATION_SCREEN_LOCK_STATE_CHANGED,
-      content::NotificationService::AllSources()).Wait();
+  {
+    content::WindowedNotificationObserver observer(
+        chrome::NOTIFICATION_SCREEN_LOCK_STATE_CHANGED,
+        content::NotificationService::AllSources());
+    ScreenLocker::Hide();
+    observer.Wait();
+  }
 
   UserAddingScreen::Get()->Start();
   content::RunAllPendingInMessageLoop();

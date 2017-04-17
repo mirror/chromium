@@ -13,7 +13,7 @@
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "ui/views/accessibility/native_view_accessibility.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/views/controls/webview/webview_export.h"
 #include "ui/views/view.h"
 
@@ -113,7 +113,7 @@ class WEBVIEW_EXPORT WebView : public View,
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnFocus() override;
   void AboutToRequestFocusFromTabTraversal(bool reverse) override;
-  void GetAccessibleState(ui::AXViewState* state) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   gfx::Size GetPreferredSize() const override;
 

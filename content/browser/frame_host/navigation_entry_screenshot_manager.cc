@@ -6,7 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/threading/worker_pool.h"
+#include "base/task_scheduler/post_task.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -32,14 +32,10 @@ class ScreenshotData : public base::RefCountedThreadSafe<ScreenshotData> {
   }
 
   void EncodeScreenshot(const SkBitmap& bitmap, base::Closure callback) {
-    if (!base::WorkerPool::PostTaskAndReply(FROM_HERE,
-            base::Bind(&ScreenshotData::EncodeOnWorker,
-                       this,
-                       bitmap),
-            callback,
-            true)) {
-      callback.Run();
-    }
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, base::TaskTraits().WithShutdownBehavior(
+                       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN),
+        base::Bind(&ScreenshotData::EncodeOnWorker, this, bitmap), callback);
   }
 
   scoped_refptr<base::RefCountedBytes> data() const { return data_; }
@@ -87,6 +83,7 @@ void NavigationEntryScreenshotManager::TakeScreenshot() {
     return;
 
   RenderViewHost* render_view_host = owner_->delegate()->GetRenderViewHost();
+  DCHECK(render_view_host && render_view_host->GetWidget());
   content::RenderWidgetHostView* view =
       render_view_host->GetWidget()->GetView();
   if (!view)
@@ -99,9 +96,18 @@ void NavigationEntryScreenshotManager::TakeScreenshot() {
     return;
   }
 
+  WillTakeScreenshot(render_view_host);
+
   last_screenshot_time_ = now;
 
-  TakeScreenshotImpl(render_view_host, entry);
+  // This screenshot is destined for the UI, so size the result to the actual
+  // on-screen size of the view (and not its device-rendering size).
+  const gfx::Size view_size_on_screen = view->GetViewBounds().size();
+  view->CopyFromSurface(
+      gfx::Rect(), view_size_on_screen,
+      base::Bind(&NavigationEntryScreenshotManager::OnScreenshotTaken,
+                 screenshot_factory_.GetWeakPtr(), entry->GetUniqueID()),
+      kAlpha_8_SkColorType);
 }
 
 // Implemented here and not in NavigationEntry because this manager keeps track
@@ -112,18 +118,6 @@ void NavigationEntryScreenshotManager::ClearAllScreenshots() {
     ClearScreenshot(owner_->GetEntryAtIndex(i));
   }
   DCHECK_EQ(GetScreenshotCount(), 0);
-}
-
-void NavigationEntryScreenshotManager::TakeScreenshotImpl(
-    RenderViewHost* host,
-    NavigationEntryImpl* entry) {
-  DCHECK(host && host->GetWidget()->GetView());
-  DCHECK(entry);
-  host->GetWidget()->CopyFromBackingStore(
-      gfx::Rect(), host->GetWidget()->GetView()->GetViewBounds().size(),
-      base::Bind(&NavigationEntryScreenshotManager::OnScreenshotTaken,
-                 screenshot_factory_.GetWeakPtr(), entry->GetUniqueID()),
-      kAlpha_8_SkColorType);
 }
 
 void NavigationEntryScreenshotManager::SetMinScreenshotIntervalMS(

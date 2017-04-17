@@ -9,11 +9,12 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/stl_util.h"
+#include "base/memory/ptr_util.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_response_writer.h"
 #include "url/gurl.h"
@@ -40,7 +41,8 @@ class UnownedStringWriter : public net::URLFetcherResponseWriter {
     return num_bytes;
   }
 
-  virtual int Finish(const net::CompletionCallback& callback) override {
+  virtual int Finish(int net_error,
+                     const net::CompletionCallback& callback) override {
     return net::OK;
   }
 
@@ -58,9 +60,7 @@ ChromeMetadataSource::ChromeMetadataSource(
     : validation_data_url_(validation_data_url),
       getter_(getter) {}
 
-ChromeMetadataSource::~ChromeMetadataSource() {
-  STLDeleteValues(&requests_);
-}
+ChromeMetadataSource::~ChromeMetadataSource() {}
 
 void ChromeMetadataSource::Get(const std::string& key,
                                const Callback& downloaded) const {
@@ -68,8 +68,7 @@ void ChromeMetadataSource::Get(const std::string& key,
 }
 
 void ChromeMetadataSource::OnURLFetchComplete(const net::URLFetcher* source) {
-  std::map<const net::URLFetcher*, Request*>::iterator request =
-      requests_.find(source);
+  auto request = requests_.find(source);
   DCHECK(request != requests_.end());
 
   bool ok = source->GetResponseCode() == net::HTTP_OK;
@@ -78,7 +77,6 @@ void ChromeMetadataSource::OnURLFetchComplete(const net::URLFetcher* source) {
     data->swap(request->second->data);
   request->second->callback(ok, request->second->key, data.release());
 
-  delete request->second;
   requests_.erase(request);
 }
 
@@ -95,8 +93,33 @@ void ChromeMetadataSource::Download(const std::string& key,
     return;
   }
 
-  std::unique_ptr<net::URLFetcher> fetcher =
-      net::URLFetcher::Create(resource, net::URLFetcher::GET, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("lib_address_input", R"(
+        semantics {
+          sender: "Address Format Metadata"
+          description:
+            "Address format metadata assists in handling postal addresses from "
+            "all over the world."
+          trigger:
+            "User edits an address in Chromium settings, or shipping address "
+            "in Android's 'web payments'."
+          data:
+            "The country code for the address being edited. No user identifier "
+            "is sent."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "This feature cannot be disabled in settings. It can only be "
+            "prevented if user does not edit the address in Android 'Web "
+            "Payments' settings, Android's Chromium settings ('Autofill and "
+            "payments' -> 'Addresses'), and Chromium settings on desktop ("
+            "'Manage Autofill Settings' -> 'Addresses')."
+          policy_exception_justification: "Not implemented."
+        })");
+  std::unique_ptr<net::URLFetcher> fetcher = net::URLFetcher::Create(
+      resource, net::URLFetcher::GET, this, traffic_annotation);
   fetcher->SetLoadFlags(
       net::LOAD_DO_NOT_SEND_COOKIES | net::LOAD_DO_NOT_SAVE_COOKIES);
   fetcher->SetRequestContext(getter_);
@@ -105,7 +128,7 @@ void ChromeMetadataSource::Download(const std::string& key,
   request->fetcher->SaveResponseWithWriter(
       std::unique_ptr<net::URLFetcherResponseWriter>(
           new UnownedStringWriter(&request->data)));
-  requests_[request->fetcher.get()] = request;
+  requests_[request->fetcher.get()] = base::WrapUnique(request);
   request->fetcher->Start();
 }
 

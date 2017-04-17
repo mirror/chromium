@@ -14,13 +14,11 @@
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/values.h"
 #include "base/version.h"
 #include "chrome/browser/net/sth_distributor_provider.h"
-#include "chrome/common/chrome_features.h"
 #include "components/component_updater/component_updater_paths.h"
-#include "components/safe_json/safe_json_parser.h"
-#include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browser_thread.h"
 #include "crypto/sha2.h"
 #include "net/cert/ct_log_response_parser.h"
@@ -58,8 +56,9 @@ STHSetComponentInstallerTraits::STHSetComponentInstallerTraits(
 
 STHSetComponentInstallerTraits::~STHSetComponentInstallerTraits() {}
 
-bool STHSetComponentInstallerTraits::CanAutoUpdate() const {
-  return true;
+bool STHSetComponentInstallerTraits::
+    SupportsGroupPolicyEnabledComponentUpdates() const {
+  return false;
 }
 
 // Public data is delivered via this component, no need for encryption.
@@ -67,10 +66,11 @@ bool STHSetComponentInstallerTraits::RequiresNetworkEncryption() const {
   return false;
 }
 
-bool STHSetComponentInstallerTraits::OnCustomInstall(
+update_client::CrxInstaller::Result
+STHSetComponentInstallerTraits::OnCustomInstall(
     const base::DictionaryValue& manifest,
     const base::FilePath& install_dir) {
-  return true;  // Nothing custom here.
+  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
 }
 
 void STHSetComponentInstallerTraits::ComponentReady(
@@ -81,16 +81,8 @@ void STHSetComponentInstallerTraits::ComponentReady(
       &STHSetComponentInstallerTraits::LoadSTHsFromDisk,
       weak_ptr_factory_.GetWeakPtr(), GetInstalledPath(install_dir), version);
 
-  if (variations::GetVariationParamValueByFeature(features::kSTHSetComponent,
-                                                  "delay_load") != "no") {
-    DVLOG(1) << "Delaying STHSet load until after start-up.";
-    content::BrowserThread::PostAfterStartupTask(
-        FROM_HERE, content::BrowserThread::GetBlockingPool(),
-        load_sths_closure);
-  } else {
-    DVLOG(1) << "Loading STHSet during start-up.";
-    content::BrowserThread::PostBlockingPoolTask(FROM_HERE, load_sths_closure);
-  }
+  content::BrowserThread::PostAfterStartupTask(
+      FROM_HERE, content::BrowserThread::GetBlockingPool(), load_sths_closure);
 }
 
 // Called during startup and installation before ComponentReady().
@@ -115,6 +107,10 @@ std::string STHSetComponentInstallerTraits::GetName() const {
 update_client::InstallerAttributes
 STHSetComponentInstallerTraits::GetInstallerAttributes() const {
   return update_client::InstallerAttributes();
+}
+
+std::vector<std::string> STHSetComponentInstallerTraits::GetMimeTypes() const {
+  return std::vector<std::string>();
 }
 
 void STHSetComponentInstallerTraits::LoadSTHsFromDisk(
@@ -156,26 +152,16 @@ void STHSetComponentInstallerTraits::LoadSTHsFromDisk(
 
     DVLOG(1) << "STH: Successfully read: " << json_sth;
 
-    if (variations::GetVariationParamValueByFeature(
-            features::kSTHSetComponent, "oop_json_parsing") != "yes") {
-      int error_code = 0;
-      std::string error_message;
-      std::unique_ptr<base::Value> parsed_json =
-          base::JSONReader::ReadAndReturnError(json_sth, base::JSON_PARSE_RFC,
-                                               &error_code, &error_message);
+    int error_code = 0;
+    std::string error_message;
+    std::unique_ptr<base::Value> parsed_json =
+        base::JSONReader::ReadAndReturnError(json_sth, base::JSON_PARSE_RFC,
+                                             &error_code, &error_message);
 
-      if (error_code == base::JSONReader::JSON_NO_ERROR) {
-        OnJsonParseSuccess(log_id, std::move(parsed_json));
-      } else {
-        OnJsonParseError(log_id, error_message);
-      }
+    if (error_code == base::JSONReader::JSON_NO_ERROR) {
+      OnJsonParseSuccess(log_id, std::move(parsed_json));
     } else {
-      safe_json::SafeJsonParser::Parse(
-          json_sth,
-          base::Bind(&STHSetComponentInstallerTraits::OnJsonParseSuccess,
-                     weak_ptr_factory_.GetWeakPtr(), log_id),
-          base::Bind(&STHSetComponentInstallerTraits::OnJsonParseError,
-                     weak_ptr_factory_.GetWeakPtr(), log_id));
+      OnJsonParseError(log_id, error_message);
     }
   }
 }

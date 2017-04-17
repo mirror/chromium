@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/chromeos/logging.h"
+#include "base/syslog_logging.h"
 
 namespace policy {
 
@@ -32,11 +32,11 @@ bool RemoteCommandJob::Init(base::TimeTicks now,
 
   status_ = INVALID;
 
-  if (!command.has_type() || !command.has_unique_id())
+  if (!command.has_type() || !command.has_command_id())
     return false;
   DCHECK_EQ(command.type(), GetType());
 
-  unique_id_ = command.unique_id();
+  unique_id_ = command.command_id();
 
   if (command.has_age_of_command()) {
     // Use age of command provided by server to estimate the command issued time
@@ -48,30 +48,41 @@ bool RemoteCommandJob::Init(base::TimeTicks now,
     issued_time_ =
         now - base::TimeDelta::FromMilliseconds(command.age_of_command());
   } else {
-    CHROMEOS_SYSLOG(WARNING)
-        << "No age_of_command provided be server for command " << unique_id_
-        << ".";
+    SYSLOG(WARNING) << "No age_of_command provided by server for command "
+                    << unique_id_ << ".";
     // Otherwise, assuming the command was issued just now.
     issued_time_ = now;
   }
 
-  if (!ParseCommandPayload(command.payload()))
+  if (!ParseCommandPayload(command.payload())) {
+    SYSLOG(ERROR) << "Unable to parse command payload for type "
+                  << command.type() << ": " << command.payload();
     return false;
+  }
 
   switch (command.type()) {
     case em::RemoteCommand_Type_COMMAND_ECHO_TEST: {
-      CHROMEOS_SYSLOG(WARNING) << "Remote echo test command " << unique_id_
-                               << " initialized.";
+      SYSLOG(INFO) << "Remote echo test command " << unique_id_
+                   << " initialized.";
       break;
     }
     case em::RemoteCommand_Type_DEVICE_REBOOT: {
-      CHROMEOS_SYSLOG(WARNING) << "Remote reboot command " << unique_id_
-                               << " initialized.";
+      SYSLOG(INFO) << "Remote reboot command " << unique_id_ << " initialized.";
       break;
     }
     case em::RemoteCommand_Type_DEVICE_SCREENSHOT: {
-      CHROMEOS_SYSLOG(WARNING) << "Remote screenshot command " << unique_id_
-                               << " initialized.";
+      SYSLOG(INFO) << "Remote screenshot command " << unique_id_
+                   << " initialized.";
+      break;
+    }
+    case em::RemoteCommand_Type_DEVICE_SET_VOLUME: {
+      SYSLOG(INFO) << "Remote set volume command " << unique_id_
+                   << " initialized.";
+      break;
+    }
+    case em::RemoteCommand_Type_DEVICE_FETCH_STATUS: {
+      SYSLOG(INFO) << "Remote fetch device status command " << unique_id_
+                   << " initialized.";
       break;
     }
   }
@@ -84,16 +95,16 @@ bool RemoteCommandJob::Run(base::TimeTicks now,
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (status_ == INVALID) {
-    CHROMEOS_SYSLOG(ERROR) << "Remote command " << unique_id_ << " is invalid.";
+    SYSLOG(ERROR) << "Remote command " << unique_id_ << " is invalid.";
     return false;
   }
 
   DCHECK_EQ(NOT_STARTED, status_);
 
   if (IsExpired(now)) {
-    CHROMEOS_SYSLOG(ERROR) << "Remote command " << unique_id_
-                           << " expired (it was issued " << now - issued_time_
-                           << " ago).";
+    SYSLOG(ERROR) << "Remote command " << unique_id_
+                  << " expired (it was issued " << now - issued_time_
+                  << " ago).";
     status_ = EXPIRED;
     return false;
   }

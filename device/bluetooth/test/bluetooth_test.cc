@@ -25,10 +25,37 @@ const std::string BluetoothTestBase::kTestDeviceAddress1 = "01:00:00:90:1E:BE";
 const std::string BluetoothTestBase::kTestDeviceAddress2 = "02:00:00:8B:74:63";
 const std::string BluetoothTestBase::kTestDeviceAddress3 = "03:00:00:17:C0:57";
 
-const std::string BluetoothTestBase::kTestUUIDGenericAccess = "1800";
-const std::string BluetoothTestBase::kTestUUIDGenericAttribute = "1801";
-const std::string BluetoothTestBase::kTestUUIDImmediateAlert = "1802";
-const std::string BluetoothTestBase::kTestUUIDLinkLoss = "1803";
+// Service UUIDs
+const std::string BluetoothTestBase::kTestUUIDGenericAccess =
+    "00001800-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDGenericAttribute =
+    "00001801-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDImmediateAlert =
+    "00001802-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDLinkLoss =
+    "00001803-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDHeartRate =
+    "0000180d-0000-1000-8000-00805f9b34fb";
+// Characteristic UUIDs
+const std::string BluetoothTestBase::kTestUUIDDeviceName =
+    "00002a00-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDAppearance =
+    "00002a01-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDReconnectionAddress =
+    "00002a03-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDHeartRateMeasurement =
+    "00002a37-0000-1000-8000-00805f9b34fb";
+// Descriptor UUIDs
+const std::string BluetoothTestBase::kTestUUIDCharacteristicUserDescription =
+    "00002901-0000-1000-8000-00805f9b34fb";
+const std::string
+    BluetoothTestBase::kTestUUIDClientCharacteristicConfiguration =
+        "00002902-0000-1000-8000-00805f9b34fb";
+const std::string
+    BluetoothTestBase::kTestUUIDServerCharacteristicConfiguration =
+        "00002903-0000-1000-8000-00805f9b34fb";
+const std::string BluetoothTestBase::kTestUUIDCharacteristicPresentationFormat =
+    "00002904-0000-1000-8000-00805f9b34fb";
 
 BluetoothTestBase::BluetoothTestBase() : weak_factory_(this) {}
 
@@ -37,7 +64,7 @@ BluetoothTestBase::~BluetoothTestBase() {
 
 void BluetoothTestBase::StartLowEnergyDiscoverySession() {
   adapter_->StartDiscoverySessionWithFilter(
-      base::WrapUnique(new BluetoothDiscoveryFilter(BLUETOOTH_TRANSPORT_LE)),
+      base::MakeUnique<BluetoothDiscoveryFilter>(BLUETOOTH_TRANSPORT_LE),
       GetDiscoverySessionCallback(Call::EXPECTED),
       GetErrorCallback(Call::NOT_EXPECTED));
   base::RunLoop().RunUntilIdle();
@@ -45,7 +72,7 @@ void BluetoothTestBase::StartLowEnergyDiscoverySession() {
 
 void BluetoothTestBase::StartLowEnergyDiscoverySessionExpectedToFail() {
   adapter_->StartDiscoverySessionWithFilter(
-      base::WrapUnique(new BluetoothDiscoveryFilter(BLUETOOTH_TRANSPORT_LE)),
+      base::MakeUnique<BluetoothDiscoveryFilter>(BLUETOOTH_TRANSPORT_LE),
       GetDiscoverySessionCallback(Call::NOT_EXPECTED),
       GetErrorCallback(Call::EXPECTED));
   base::RunLoop().RunUntilIdle();
@@ -86,6 +113,30 @@ std::vector<uint8_t> BluetoothTestBase::LastNotifactionValueForCharacteristic(
   return std::vector<uint8_t>();
 }
 
+void BluetoothTestBase::ExpectedChangeNotifyValueAttempts(int attempts) {
+  EXPECT_EQ(attempts, gatt_write_descriptor_attempts_);
+  EXPECT_EQ(attempts, gatt_notify_characteristic_attempts_);
+}
+
+void BluetoothTestBase::ExpectedNotifyValue(
+    NotifyValueState expected_value_state) {
+  ASSERT_EQ(2u, last_write_value_.size());
+  switch (expected_value_state) {
+    case NotifyValueState::NONE:
+      EXPECT_EQ(0, last_write_value_[0]);
+      EXPECT_EQ(0, last_write_value_[1]);
+      break;
+    case NotifyValueState::NOTIFY:
+      EXPECT_EQ(1, last_write_value_[0]);
+      EXPECT_EQ(0, last_write_value_[1]);
+      break;
+    case NotifyValueState::INDICATE:
+      EXPECT_EQ(2, last_write_value_[0]);
+      EXPECT_EQ(0, last_write_value_[1]);
+      break;
+  }
+}
+
 std::vector<BluetoothLocalGattService*>
 BluetoothTestBase::RegisteredGattServices() {
   NOTIMPLEMENTED();
@@ -109,7 +160,7 @@ void BluetoothTestBase::DiscoverySessionCallback(
     Call expected,
     std::unique_ptr<BluetoothDiscoverySession> discovery_session) {
   ++callback_count_;
-  discovery_sessions_.push_back(discovery_session.release());
+  discovery_sessions_.push_back(std::move(discovery_session));
 
   if (expected == Call::EXPECTED)
     ++actual_success_callback_calls_;
@@ -121,7 +172,7 @@ void BluetoothTestBase::GattConnectionCallback(
     Call expected,
     std::unique_ptr<BluetoothGattConnection> connection) {
   ++callback_count_;
-  gatt_connections_.push_back(connection.release());
+  gatt_connections_.push_back(std::move(connection));
 
   if (expected == Call::EXPECTED)
     ++actual_success_callback_calls_;
@@ -132,13 +183,41 @@ void BluetoothTestBase::GattConnectionCallback(
 void BluetoothTestBase::NotifyCallback(
     Call expected,
     std::unique_ptr<BluetoothGattNotifySession> notify_session) {
+  notify_sessions_.push_back(std::move(notify_session));
+
   ++callback_count_;
-  notify_sessions_.push_back(notify_session.release());
+  if (expected == Call::EXPECTED)
+    ++actual_success_callback_calls_;
+  else
+    unexpected_success_callback_ = true;
+}
+
+void BluetoothTestBase::NotifyCheckForPrecedingCalls(
+    int num_of_preceding_calls,
+    std::unique_ptr<BluetoothGattNotifySession> notify_session) {
+  EXPECT_EQ(num_of_preceding_calls, callback_count_);
+
+  notify_sessions_.push_back(std::move(notify_session));
+
+  ++callback_count_;
+  ++actual_success_callback_calls_;
+}
+
+void BluetoothTestBase::StopNotifyCallback(Call expected) {
+  ++callback_count_;
 
   if (expected == Call::EXPECTED)
     ++actual_success_callback_calls_;
   else
     unexpected_success_callback_ = true;
+}
+
+void BluetoothTestBase::StopNotifyCheckForPrecedingCalls(
+    int num_of_preceding_calls) {
+  EXPECT_EQ(num_of_preceding_calls, callback_count_);
+
+  ++callback_count_;
+  ++actual_success_callback_calls_;
 }
 
 void BluetoothTestBase::ReadValueCallback(Call expected,
@@ -255,6 +334,27 @@ BluetoothTestBase::GetNotifyCallback(Call expected) {
     ++expected_success_callback_calls_;
   return base::Bind(&BluetoothTestBase::NotifyCallback,
                     weak_factory_.GetWeakPtr(), expected);
+}
+
+BluetoothRemoteGattCharacteristic::NotifySessionCallback
+BluetoothTestBase::GetNotifyCheckForPrecedingCalls(int num_of_preceding_calls) {
+  ++expected_success_callback_calls_;
+  return base::Bind(&BluetoothTestBase::NotifyCheckForPrecedingCalls,
+                    weak_factory_.GetWeakPtr(), num_of_preceding_calls);
+}
+
+base::Closure BluetoothTestBase::GetStopNotifyCallback(Call expected) {
+  if (expected == Call::EXPECTED)
+    ++expected_success_callback_calls_;
+  return base::Bind(&BluetoothTestBase::StopNotifyCallback,
+                    weak_factory_.GetWeakPtr(), expected);
+}
+
+base::Closure BluetoothTestBase::GetStopNotifyCheckForPrecedingCalls(
+    int num_of_preceding_calls) {
+  ++expected_success_callback_calls_;
+  return base::Bind(&BluetoothTestBase::StopNotifyCheckForPrecedingCalls,
+                    weak_factory_.GetWeakPtr(), num_of_preceding_calls);
 }
 
 BluetoothRemoteGattCharacteristic::ValueCallback

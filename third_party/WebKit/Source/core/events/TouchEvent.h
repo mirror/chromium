@@ -30,94 +30,100 @@
 #include "core/CoreExport.h"
 #include "core/dom/TouchList.h"
 #include "core/events/EventDispatchMediator.h"
-#include "core/events/MouseRelatedEvent.h"
 #include "core/events/TouchEventInit.h"
+#include "core/events/UIEventWithKeyState.h"
+#include "public/platform/WebTouchEvent.h"
 
 namespace blink {
 
 class CORE_EXPORT TouchEvent final : public UIEventWithKeyState {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~TouchEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    // We only initialize sourceCapabilities when we create TouchEvent from EventHandler, null if it is from JavaScript.
-    static TouchEvent* create()
-    {
-        return new TouchEvent;
-    }
-    static TouchEvent* create(TouchList* touches,
-        TouchList* targetTouches, TouchList* changedTouches,
-        const AtomicString& type, AbstractView* view,
-        PlatformEvent::Modifiers modifiers, bool cancelable, bool causesScrollingIfUncanceled, bool firstTouchMoveOrStart,
-        double platformTimeStamp)
-    {
-        return new TouchEvent(touches, targetTouches, changedTouches, type, view,
-            modifiers, cancelable, causesScrollingIfUncanceled, firstTouchMoveOrStart, platformTimeStamp);
-    }
+ public:
+  ~TouchEvent() override;
 
-    static TouchEvent* create(const AtomicString& type, const TouchEventInit& initializer)
-    {
-        return new TouchEvent(type, initializer);
-    }
+  // We only initialize sourceCapabilities when we create TouchEvent from
+  // EventHandler, null if it is from JavaScript.
+  static TouchEvent* Create() { return new TouchEvent; }
+  static TouchEvent* Create(const WebTouchEvent& event,
+                            TouchList* touches,
+                            TouchList* target_touches,
+                            TouchList* changed_touches,
+                            const AtomicString& type,
+                            AbstractView* view,
+                            TouchAction current_touch_action) {
+    return new TouchEvent(event, touches, target_touches, changed_touches, type,
+                          view, current_touch_action);
+  }
 
-    void initTouchEvent(ScriptState*, TouchList* touches, TouchList* targetTouches,
-        TouchList* changedTouches, const AtomicString& type,
-        AbstractView*,
-        int, int, int, int, // unused useless members of web exposed API
-        bool ctrlKey, bool altKey, bool shiftKey, bool metaKey);
+  static TouchEvent* Create(const AtomicString& type,
+                            const TouchEventInit& initializer) {
+    return new TouchEvent(type, initializer);
+  }
 
-    TouchList* touches() const { return m_touches.get(); }
-    TouchList* targetTouches() const { return m_targetTouches.get(); }
-    TouchList* changedTouches() const { return m_changedTouches.get(); }
+  TouchList* touches() const { return touches_.Get(); }
+  TouchList* targetTouches() const { return target_touches_.Get(); }
+  TouchList* changedTouches() const { return changed_touches_.Get(); }
 
-    void setTouches(TouchList* touches) { m_touches = touches; }
-    void setTargetTouches(TouchList* targetTouches) { m_targetTouches = targetTouches; }
-    void setChangedTouches(TouchList* changedTouches) { m_changedTouches = changedTouches; }
+  void SetTouches(TouchList* touches) { touches_ = touches; }
+  void SetTargetTouches(TouchList* target_touches) {
+    target_touches_ = target_touches;
+  }
+  void SetChangedTouches(TouchList* changed_touches) {
+    changed_touches_ = changed_touches;
+  }
 
-    bool causesScrollingIfUncanceled() const { return m_causesScrollingIfUncanceled; }
+  bool IsTouchEvent() const override;
 
-    bool isTouchEvent() const override;
+  const AtomicString& InterfaceName() const override;
 
-    const AtomicString& interfaceName() const override;
+  void preventDefault() override;
 
-    void preventDefault() override;
+  void DoneDispatchingEventAtCurrentTarget() override;
 
-    void doneDispatchingEventAtCurrentTarget() override;
+  EventDispatchMediator* CreateMediator() override;
 
-    EventDispatchMediator* createMediator() override;
+  const WebTouchEvent* NativeEvent() const { return native_event_.get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    TouchEvent();
-    TouchEvent(TouchList* touches, TouchList* targetTouches,
-        TouchList* changedTouches, const AtomicString& type,
-        AbstractView*, PlatformEvent::Modifiers,
-        bool cancelable, bool causesScrollingIfUncanceled,
-        bool firstTouchMoveOrStart,
-        double platformTimeStamp);
-    TouchEvent(const AtomicString&, const TouchEventInit&);
+ private:
+  TouchEvent();
+  TouchEvent(const WebTouchEvent&,
+             TouchList* touches,
+             TouchList* target_touches,
+             TouchList* changed_touches,
+             const AtomicString& type,
+             AbstractView*,
+             TouchAction current_touch_action);
+  TouchEvent(const AtomicString&, const TouchEventInit&);
+  bool IsTouchStartOrFirstTouchMove() const;
 
-    Member<TouchList> m_touches;
-    Member<TouchList> m_targetTouches;
-    Member<TouchList> m_changedTouches;
-    bool m_causesScrollingIfUncanceled;
-    bool m_firstTouchMoveOrStart;
-    bool m_defaultPreventedBeforeCurrentTarget;
+  Member<TouchList> touches_;
+  Member<TouchList> target_touches_;
+  Member<TouchList> changed_touches_;
+
+  bool default_prevented_before_current_target_;
+
+  // The current effective touch action computed before each
+  // touchstart event is generated. It is used for UMA histograms.
+  TouchAction current_touch_action_;
+
+  std::unique_ptr<WebTouchEvent> native_event_;
 };
 
 class TouchEventDispatchMediator final : public EventDispatchMediator {
-public:
-    static TouchEventDispatchMediator* create(TouchEvent*);
+ public:
+  static TouchEventDispatchMediator* Create(TouchEvent*);
 
-private:
-    explicit TouchEventDispatchMediator(TouchEvent*);
-    TouchEvent& event() const;
-    DispatchEventResult dispatchEvent(EventDispatcher&) const override;
+ private:
+  explicit TouchEventDispatchMediator(TouchEvent*);
+  TouchEvent& Event() const;
+  DispatchEventResult DispatchEvent(EventDispatcher&) const override;
 };
 
 DEFINE_EVENT_TYPE_CASTS(TouchEvent);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TouchEvent_h
+#endif  // TouchEvent_h

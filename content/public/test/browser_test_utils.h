@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/process/process.h"
+#include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "cc/output/compositor_frame.h"
@@ -22,10 +23,13 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/render_process_host_observer.h"
+#include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/page_type.h"
 #include "ipc/message_filter.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "storage/common/fileapi/file_system_types.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/ax_tree_update.h"
 #include "ui/events/keycodes/dom/dom_code.h"
@@ -60,9 +64,12 @@ using test_server::EmbeddedTestServer;
 namespace content {
 
 class BrowserContext;
+class InterstitialPage;
 class MessageLoopRunner;
+class NavigationHandle;
 class RenderViewHost;
 class RenderWidgetHost;
+class RenderWidgetHostView;
 class WebContents;
 
 // Navigate a frame with ID |iframe_id| to |url|, blocking until the navigation
@@ -165,6 +172,9 @@ void SimulateKeyPress(WebContents* web_contents,
                       bool alt,
                       bool command);
 
+// Method to check what devices we have on the system.
+bool IsWebcamAvailableOnSystem(WebContents* web_contents);
+
 // Allow ExecuteScript* methods to target either a WebContents or a
 // RenderFrameHost.  Targetting a WebContents means executing the script in the
 // RenderFrameHost returned by WebContents::GetMainFrame(), which is the main
@@ -187,17 +197,24 @@ RenderFrameHost* ConvertToRenderFrameHost(RenderViewHost* render_view_host);
 RenderFrameHost* ConvertToRenderFrameHost(RenderFrameHost* render_view_host);
 RenderFrameHost* ConvertToRenderFrameHost(WebContents* web_contents);
 
-// Executes the passed |script| in the specified frame. The |script| should not
-// invoke domAutomationController.send(); otherwise, your test will hang or be
-// flaky. If you want to extract a result, use one of the below functions.
-// Returns true on success.
+// Executes the passed |script| in the specified frame with the user gesture.
+// The |script| should not invoke domAutomationController.send(); otherwise,
+// your test will hang or be flaky. If you want to extract a result, use one of
+// the below functions. Returns true on success.
 bool ExecuteScript(const ToRenderFrameHost& adapter,
                    const std::string& script) WARN_UNUSED_RESULT;
 
-// The following methods executes the passed |script| in the specified frame and
-// sets |result| to the value passed to "window.domAutomationController.send" by
-// the executed script. They return true on success, false if the script
-// execution failed or did not evaluate to the expected type.
+// Same as content::ExecuteScript but doesn't send a user gesture to the
+// renderer.
+bool ExecuteScriptWithoutUserGesture(const ToRenderFrameHost& adapter,
+                                     const std::string& script)
+    WARN_UNUSED_RESULT;
+
+// The following methods execute the passed |script| in the specified frame with
+// the user gesture and set |result| to the value passed to
+// "window.domAutomationController.send" by the executed script. They return
+// true on success, false if the script execution failed or did not evaluate to
+// the expected type.
 bool ExecuteScriptAndExtractDouble(const ToRenderFrameHost& adapter,
                                    const std::string& script,
                                    double* result) WARN_UNUSED_RESULT;
@@ -210,6 +227,24 @@ bool ExecuteScriptAndExtractBool(const ToRenderFrameHost& adapter,
 bool ExecuteScriptAndExtractString(const ToRenderFrameHost& adapter,
                                    const std::string& script,
                                    std::string* result) WARN_UNUSED_RESULT;
+
+// Same as above but the script executed without user gesture.
+bool ExecuteScriptWithoutUserGestureAndExtractDouble(
+    const ToRenderFrameHost& adapter,
+    const std::string& script,
+    double* result) WARN_UNUSED_RESULT;
+bool ExecuteScriptWithoutUserGestureAndExtractInt(
+    const ToRenderFrameHost& adapter,
+    const std::string& script,
+    int* result) WARN_UNUSED_RESULT;
+bool ExecuteScriptWithoutUserGestureAndExtractBool(
+    const ToRenderFrameHost& adapter,
+    const std::string& script,
+    bool* result) WARN_UNUSED_RESULT;
+bool ExecuteScriptWithoutUserGestureAndExtractString(
+    const ToRenderFrameHost& adapter,
+    const std::string& script,
+    std::string* result) WARN_UNUSED_RESULT;
 
 // This function behaves similarly to ExecuteScriptAndExtractBool but runs the
 // the script in the specified isolated world.
@@ -265,6 +300,9 @@ void FetchHistogramsFromChildProcesses();
 // prescribed by https://tools.ietf.org/html/rfc7231#section-6.4.7) a test might
 // want to use HTTP 307 response instead.  This can be accomplished by replacing
 // "/cross-site/" URL substring above with "/cross-site-307/".
+//
+// |embedded_test_server| should not be running when passing it to this function
+// because adding the request handler won't be thread safe.
 void SetupCrossSiteRedirector(net::EmbeddedTestServer* embedded_test_server);
 
 // Waits for an interstitial page to attach to given web contents.
@@ -314,6 +352,25 @@ ui::AXTreeUpdate GetAccessibilityTreeSnapshot(WebContents* web_contents);
 // false if the WebContents isn't a guest with a BrowserPlugin.
 bool IsWebContentsBrowserPluginFocused(content::WebContents* web_contents);
 
+// Returns the RenderWidgetHost that holds the mouse lock.
+RenderWidgetHost* GetMouseLockWidget(WebContents* web_contents);
+
+// Returns true if inner |interstitial_page| is connected to an outer
+// WebContents.
+bool IsInnerInterstitialPageConnected(InterstitialPage* interstitial_page);
+
+// Returns all the RenderWidgetHostViews inside the |web_contents| that are
+// registered in the RenderWidgetHostInputEventRouter.
+std::vector<RenderWidgetHostView*> GetInputEventRouterRenderWidgetHostViews(
+    WebContents* web_contents);
+
+// Returns the focused RenderWidgetHost.
+RenderWidgetHost* GetFocusedRenderWidgetHost(WebContents* web_contents);
+
+// Route the |event| through the RenderWidgetHostInputEventRouter. This allows
+// correct targeting of events to out of process iframes.
+void RouteMouseEvent(WebContents* web_contents, blink::WebMouseEvent* event);
+
 #if defined(USE_AURA)
 // The following two methods allow a test to send a touch tap sequence, and
 // a corresponding gesture tap sequence, by sending it to the top-level
@@ -336,6 +393,12 @@ void SendRoutedGestureTapSequence(content::WebContents* web_contents,
 void WaitForGuestSurfaceReady(content::WebContents* web_contents);
 
 #endif
+
+// Waits until the cc::Surface associated with a cross-process child frame
+// has been drawn for the first time. Once this method returns it should be
+// safe to assume that events sent to the top-level RenderWidgetHostView can
+// be expected to properly hit-test to this surface, if appropriate.
+void WaitForChildFrameSurfaceReady(content::RenderFrameHost* child_frame);
 
 // Watches title changes on a WebContents, blocking until an expected title is
 // set.
@@ -364,7 +427,7 @@ class TitleWatcher : public WebContentsObserver {
   void TestTitle();
 
   std::vector<base::string16> expected_titles_;
-  scoped_refptr<MessageLoopRunner> message_loop_runner_;
+  base::RunLoop run_loop_;
 
   // The most recently observed expected title, if any.
   base::string16 observed_title_;
@@ -412,12 +475,18 @@ class RenderProcessHostWatcher : public RenderProcessHostObserver {
 
 // Watches for responses from the DOMAutomationController and keeps them in a
 // queue. Useful for waiting for a message to be received.
-class DOMMessageQueue : public NotificationObserver {
+class DOMMessageQueue : public NotificationObserver,
+                        public WebContentsObserver {
  public:
   // Constructs a DOMMessageQueue and begins listening for messages from the
   // DOMAutomationController. Do not construct this until the browser has
   // started.
   DOMMessageQueue();
+
+  // Same as the default constructor, but only listens for messages
+  // sent from a particular |web_contents|.
+  explicit DOMMessageQueue(WebContents* web_contents);
+
   ~DOMMessageQueue() override;
 
   // Removes all messages in the message queue.
@@ -427,10 +496,17 @@ class DOMMessageQueue : public NotificationObserver {
   // message. Returns true on success.
   bool WaitForMessage(std::string* message) WARN_UNUSED_RESULT;
 
+  // If there is a message in the queue, then copies it to |message| and returns
+  // true.  Otherwise (if the queue is empty), returns false.
+  bool PopMessage(std::string* message) WARN_UNUSED_RESULT;
+
   // Overridden NotificationObserver methods.
   void Observe(int type,
                const NotificationSource& source,
                const NotificationDetails& details) override;
+
+  // Overridden WebContentsObserver methods.
+  void RenderProcessGone(base::TerminationStatus status) override;
 
  private:
   NotificationRegistrar registrar_;
@@ -473,33 +549,34 @@ class WebContentsAddedObserver {
 bool RequestFrame(WebContents* web_contents);
 
 // Watches compositor frame changes, blocking until a frame has been
-// composited. This class is intended to be run on the main thread; to
-// synchronize the main thread against the impl thread.
-class FrameWatcher : public IPC::MessageFilter {
+// composited. This class must run on the UI thread.
+class FrameWatcher : public WebContentsObserver {
  public:
+  // Don't observe any WebContents at construction. Observe() must be called
+  // later on.
   FrameWatcher();
 
-  // Listen for new frames from the |web_contents| renderer process.
-  void AttachTo(WebContents* web_contents);
+  // Listen for new frames from the |web_contents| renderer process. The
+  // WebContents that we observe can be changed by calling Observe().
+  explicit FrameWatcher(WebContents* web_contents);
+
+  ~FrameWatcher() override;
 
   // Wait for |frames_to_wait| swap mesages from the compositor.
   void WaitFrames(int frames_to_wait);
 
-  // Return the meta data received in the last compositor
-  // swap frame.
+  // Return the last received CompositorFrame's metadata.
   const cc::CompositorFrameMetadata& LastMetadata();
 
+  // Call this method to start observing a WebContents for CompositorFrames.
+  using WebContentsObserver::Observe;
+
  private:
-  ~FrameWatcher() override;
+  // WebContentsObserver implementation.
+  void DidReceiveCompositorFrame() override;
 
-  // Overridden BrowserMessageFilter methods.
-  bool OnMessageReceived(const IPC::Message& message) override;
-
-  void ReceivedFrameSwap(cc::CompositorFrameMetadata meta_data);
-
-  int frames_to_wait_;
+  int frames_to_wait_ = 0;
   base::Closure quit_;
-  cc::CompositorFrameMetadata last_metadata_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameWatcher);
 };
@@ -534,9 +611,13 @@ class InputMsgWatcher : public BrowserMessageFilter {
   InputMsgWatcher(RenderWidgetHost* render_widget_host,
                   blink::WebInputEvent::Type type);
 
+  bool HasReceivedAck() const;
+
   // Wait until ack message occurs, returning the ack result from
   // the message.
   uint32_t WaitForAck();
+
+  uint32_t last_event_ack_source() const { return ack_source_; }
 
  private:
   ~InputMsgWatcher() override;
@@ -544,10 +625,13 @@ class InputMsgWatcher : public BrowserMessageFilter {
   // Overridden BrowserMessageFilter methods.
   bool OnMessageReceived(const IPC::Message& message) override;
 
-  void ReceivedAck(blink::WebInputEvent::Type ack_type, uint32_t ack_state);
+  void ReceivedAck(blink::WebInputEvent::Type ack_type,
+                   uint32_t ack_state,
+                   uint32_t ack_source);
 
   blink::WebInputEvent::Type wait_for_type_;
   uint32_t ack_result_;
+  uint32_t ack_source_;
   base::Closure quit_;
 
   DISALLOW_COPY_AND_ASSIGN(InputMsgWatcher);
@@ -572,6 +656,171 @@ class BrowserTestClipboardScope {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserTestClipboardScope);
+};
+
+// This observer is used to wait for its owner Frame to become focused.
+class FrameFocusedObserver {
+  // Private impl struct which hides non public types including FrameTreeNode.
+  class FrameTreeNodeObserverImpl;
+
+ public:
+  explicit FrameFocusedObserver(RenderFrameHost* owner_host);
+  ~FrameFocusedObserver();
+
+  void Wait();
+
+ private:
+  // FrameTreeNode::Observer
+  std::unique_ptr<FrameTreeNodeObserverImpl> impl_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameFocusedObserver);
+};
+
+// This class can be used to pause and resume navigations, based on a URL
+// match. Note that it only keeps track of one navigation at a time.
+// Navigations are paused automatically before hitting the network, and are
+// resumed automatically if a Wait method is called for a future event.
+// Note: This class is one time use only! After it successfully tracks a
+// navigation it will ignore all subsequent navigations. Explicitly create
+// mutliple instances of this class if you want to pause multiple navigations.
+class TestNavigationManager : public WebContentsObserver {
+ public:
+  // Monitors any frame in WebContents.
+  TestNavigationManager(WebContents* web_contents, const GURL& url);
+
+  ~TestNavigationManager() override;
+
+  // Waits until the navigation request is ready to be sent to the network
+  // stack. Returns false if the request was aborted before starting.
+  WARN_UNUSED_RESULT bool WaitForRequestStart();
+
+  // Waits until the navigation response has been sent received. Returns false
+  // if the request was aborted before getting a response.
+  WARN_UNUSED_RESULT bool WaitForResponse();
+
+  // Waits until the navigation has been finished. Will automatically resume
+  // navigations paused before this point.
+  void WaitForNavigationFinished();
+
+ protected:
+  // Derived classes can override if they want to filter out navigations. This
+  // is called from DidStartNavigation.
+  virtual bool ShouldMonitorNavigation(NavigationHandle* handle);
+
+ private:
+  enum class NavigationState {
+    INITIAL = 0,
+    STARTED = 1,
+    RESPONSE = 2,
+    FINISHED = 3,
+  };
+
+  // WebContentsObserver:
+  void DidStartNavigation(NavigationHandle* handle) override;
+  void DidFinishNavigation(NavigationHandle* handle) override;
+
+  // Called when the NavigationThrottle pauses the navigation in
+  // WillStartRequest.
+  void OnWillStartRequest();
+
+  // Called when the NavigationThrottle pauses the navigation in
+  // WillProcessResponse.
+  void OnWillProcessResponse();
+
+  // Waits for the desired state. Returns false if the desired state cannot be
+  // reached (eg the navigation finishes before reaching this state).
+  bool WaitForDesiredState();
+
+  // Called when the state of the navigation has changed. This will either stop
+  // the message loop if the state specified by the user has been reached, or
+  // resume the navigation if it hasn't been reached yet.
+  void OnNavigationStateChanged();
+
+  const GURL url_;
+  NavigationHandle* handle_;
+  bool navigation_paused_;
+  NavigationState current_state_;
+  NavigationState desired_state_;
+  scoped_refptr<MessageLoopRunner> loop_runner_;
+
+  base::WeakPtrFactory<TestNavigationManager> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestNavigationManager);
+};
+
+// A WebContentsDelegate that catches messages sent to the console.
+class ConsoleObserverDelegate : public WebContentsDelegate {
+ public:
+  ConsoleObserverDelegate(WebContents* web_contents, const std::string& filter);
+  ~ConsoleObserverDelegate() override;
+
+  // WebContentsDelegate method:
+  bool DidAddMessageToConsole(WebContents* source,
+                              int32_t level,
+                              const base::string16& message,
+                              int32_t line_no,
+                              const base::string16& source_id) override;
+
+  // Returns the most recent message sent to the console.
+  std::string message() { return message_; }
+
+  // Waits for the next message captured by the filter to be sent to the
+  // console.
+  void Wait();
+
+ private:
+  WebContents* web_contents_;
+  std::string filter_;
+  std::string message_;
+
+  // The MessageLoopRunner used to spin the message loop.
+  scoped_refptr<MessageLoopRunner> message_loop_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(ConsoleObserverDelegate);
+};
+
+// Static methods that inject particular IPCs into the message pipe as if they
+// came from |process|. Used to simulate a compromised renderer.
+class PwnMessageHelper {
+ public:
+  // Sends BlobStorageMsg_RegisterBlob
+  static void CreateBlobWithPayload(RenderProcessHost* process,
+                                    std::string uuid,
+                                    std::string content_type,
+                                    std::string content_disposition,
+                                    std::string payload);
+
+  // Sends BlobHostMsg_RegisterPublicURL
+  static void RegisterBlobURL(RenderProcessHost* process,
+                              GURL url,
+                              std::string uuid);
+
+  // Sends FileSystemHostMsg_Create
+  static void FileSystemCreate(RenderProcessHost* process,
+                               int request_id,
+                               GURL path,
+                               bool exclusive,
+                               bool is_directory,
+                               bool recursive);
+
+  // Sends FileSystemHostMsg_Write
+  static void FileSystemWrite(RenderProcessHost* process,
+                              int request_id,
+                              GURL file_path,
+                              std::string blob_uuid,
+                              int64_t position);
+
+  // Sends ViewHostMsg_LockMouse
+  static void LockMouse(RenderProcessHost* process,
+                        int routing_id,
+                        bool user_gesture,
+                        bool last_unlocked_by_target,
+                        bool privileged);
+
+ private:
+  PwnMessageHelper();  // Not instantiable.
+
+  DISALLOW_COPY_AND_ASSIGN(PwnMessageHelper);
 };
 
 }  // namespace content

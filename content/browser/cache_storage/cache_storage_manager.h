@@ -6,7 +6,9 @@
 #define CONTENT_BROWSER_CACHE_STORAGE_CACHE_STORAGE_MANAGER_H_
 
 #include <map>
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -64,13 +66,15 @@ class CONTENT_EXPORT CacheStorageManager {
                    const std::string& cache_name,
                    const CacheStorage::BoolAndErrorCallback& callback);
   void EnumerateCaches(const GURL& origin,
-                       const CacheStorage::StringsAndErrorCallback& callback);
+                       const CacheStorage::IndexCallback& callback);
   void MatchCache(const GURL& origin,
                   const std::string& cache_name,
                   std::unique_ptr<ServiceWorkerFetchRequest> request,
+                  const CacheStorageCacheQueryParams& match_params,
                   const CacheStorageCache::ResponseCallback& callback);
   void MatchAllCaches(const GURL& origin,
                       std::unique_ptr<ServiceWorkerFetchRequest> request,
+                      const CacheStorageCacheQueryParams& match_params,
                       const CacheStorageCache::ResponseCallback& callback);
 
   // This must be called before creating any of the public *Cache functions
@@ -88,7 +92,6 @@ class CONTENT_EXPORT CacheStorageManager {
  private:
   friend class CacheStorageContextImpl;
   friend class CacheStorageManagerTest;
-  friend class CacheStorageMigrationTest;
   friend class CacheStorageQuotaClient;
 
   typedef std::map<GURL, std::unique_ptr<CacheStorage>> CacheStorageMap;
@@ -137,17 +140,6 @@ class CONTENT_EXPORT CacheStorageManager {
   }
 
   bool IsMemoryBacked() const { return root_path_.empty(); }
-
-  // Map a origin to the path. Exposed for testing.
-  static base::FilePath ConstructLegacyOriginPath(
-      const base::FilePath& root_path,
-      const GURL& origin);
-
-  // Migrate from old origin-based path to storage identifier-based path.
-  // TODO(jsbell); Remove method and all calls after a few releases.
-  void MigrateOrigin(const GURL& origin);
-  static void MigrateOriginOnTaskRunner(const base::FilePath& old_path,
-                                        const base::FilePath& new_path);
 
   base::FilePath root_path_;
   scoped_refptr<base::SequencedTaskRunner> cache_task_runner_;

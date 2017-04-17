@@ -45,37 +45,37 @@ class HTMLImportChild;
 //
 // This step blocks further Custom Element microtask processing if its
 // import isn't "ready" (finished parsing and running script.)
-class V0CustomElementMicrotaskImportStep final : public V0CustomElementMicrotaskStep {
-public:
-    static V0CustomElementMicrotaskImportStep* create(HTMLImportChild* import)
-    {
-        return new V0CustomElementMicrotaskImportStep(import);
-    }
+class V0CustomElementMicrotaskImportStep final
+    : public V0CustomElementMicrotaskStep {
+ public:
+  static V0CustomElementMicrotaskImportStep* Create(HTMLImportChild* import) {
+    return new V0CustomElementMicrotaskImportStep(import);
+  }
 
-    ~V0CustomElementMicrotaskImportStep() override;
+  ~V0CustomElementMicrotaskImportStep() override;
 
-    // API for HTML Imports
-    void invalidate();
-    void importDidFinishLoading();
+  // API for HTML Imports
+  void Invalidate();
+  void ImportDidFinishLoading();
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit V0CustomElementMicrotaskImportStep(HTMLImportChild*);
+ private:
+  explicit V0CustomElementMicrotaskImportStep(HTMLImportChild*);
 
-    void didUpgradeAllCustomElements();
-    bool shouldWaitForImport() const;
+  void DidUpgradeAllCustomElements();
+  bool ShouldWaitForImport() const;
 
-    // V0CustomElementMicrotaskStep
-    Result process() final;
+  // V0CustomElementMicrotaskStep
+  Result Process() final;
 
 #if !defined(NDEBUG)
-    void show(unsigned indent) override;
+  void Show(unsigned indent) override;
 #endif
-    WeakMember<HTMLImportChild> m_import;
-    Member<V0CustomElementSyncMicrotaskQueue> m_queue;
+  WeakMember<HTMLImportChild> import_;
+  Member<V0CustomElementSyncMicrotaskQueue> queue_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementMicrotaskImportStep_h
+#endif  // V0CustomElementMicrotaskImportStep_h

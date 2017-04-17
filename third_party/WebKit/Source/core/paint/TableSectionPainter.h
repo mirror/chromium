@@ -7,7 +7,7 @@
 
 #include "core/paint/PaintPhase.h"
 #include "core/style/ShadowData.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -19,37 +19,43 @@ class LayoutTableSection;
 struct PaintInfo;
 
 class TableSectionPainter {
-    STACK_ALLOCATED();
-public:
-    TableSectionPainter(const LayoutTableSection& layoutTableSection) : m_layoutTableSection(layoutTableSection) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&);
-    void paintCollapsedBorders(const PaintInfo&, const LayoutPoint&, const CollapsedBorderValue&);
+ public:
+  TableSectionPainter(const LayoutTableSection& layout_table_section)
+      : layout_table_section_(layout_table_section) {}
 
-private:
-    void paintObject(const PaintInfo&, const LayoutPoint&);
+  void Paint(const PaintInfo&, const LayoutPoint&);
+  void PaintCollapsedBorders(const PaintInfo&,
+                             const LayoutPoint&,
+                             const CollapsedBorderValue&);
 
-    void paintBackgroundsBehindCell(const LayoutTableCell&, const PaintInfo&, const LayoutPoint&);
-    void paintCell(const LayoutTableCell&, const PaintInfo&, const LayoutPoint&);
-    void paintBoxShadow(const PaintInfo&, const LayoutPoint&, ShadowStyle);
+ private:
+  void PaintObject(const PaintInfo&, const LayoutPoint&);
 
-    // Returns the primary cell that should be painted for the grid item at (row, column)
-    // intersecting dirtiedRows and dirtiedColumns. Returns nullptr if we have painted the grid item
-    // when painting the grid item left to or above (row, column) when painting cells intersecting
-    // dirtiedRows and dirtiedColumns.
-    const LayoutTableCell* primaryCellToPaint(unsigned row, unsigned column, const CellSpan& dirtiedRows, const CellSpan& dirtiedColumns) const;
+  void PaintBoxDecorationBackground(const PaintInfo&,
+                                    const LayoutPoint&,
+                                    const CellSpan& dirtied_rows,
+                                    const CellSpan& dirtied_columns);
+  void PaintBackgroundsBehindCell(const LayoutTableCell&,
+                                  const PaintInfo&,
+                                  const LayoutPoint&);
+  void PaintCell(const LayoutTableCell&, const PaintInfo&, const LayoutPoint&);
 
-    enum ItemToPaint {
-        PaintCollapsedBorders,
-        PaintSection
-    };
-    void paintRepeatingHeaderGroup(const PaintInfo&, const LayoutPoint& paintOffset, const CollapsedBorderValue& currentBorderValue, ItemToPaint);
-    void paintSection(const PaintInfo&, const LayoutPoint&);
-    void paintCollapsedSectionBorders(const PaintInfo&, const LayoutPoint&, const CollapsedBorderValue&);
+  enum ItemToPaint { kPaintCollapsedBorders, kPaintSection };
+  void PaintRepeatingHeaderGroup(
+      const PaintInfo&,
+      const LayoutPoint& paint_offset,
+      const CollapsedBorderValue& current_border_value,
+      ItemToPaint);
+  void PaintSection(const PaintInfo&, const LayoutPoint&);
+  void PaintCollapsedSectionBorders(const PaintInfo&,
+                                    const LayoutPoint&,
+                                    const CollapsedBorderValue&);
 
-    const LayoutTableSection& m_layoutTableSection;
+  const LayoutTableSection& layout_table_section_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TableSectionPainter_h
+#endif  // TableSectionPainter_h

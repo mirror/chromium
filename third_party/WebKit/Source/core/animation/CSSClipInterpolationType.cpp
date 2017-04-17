@@ -4,264 +4,288 @@
 
 #include "core/animation/CSSClipInterpolationType.h"
 
-#include "core/animation/CSSLengthInterpolationType.h"
+#include <memory>
+#include "core/animation/LengthInterpolationFunctions.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSQuadValue.h"
 #include "core/css/resolver/StyleResolverState.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 struct ClipAutos {
-    ClipAutos()
-        : isAuto(true)
-        , isTopAuto(false)
-        , isRightAuto(false)
-        , isBottomAuto(false)
-        , isLeftAuto(false)
-    { }
-    ClipAutos(bool isTopAuto, bool isRightAuto, bool isBottomAuto, bool isLeftAuto)
-        : isAuto(false)
-        , isTopAuto(isTopAuto)
-        , isRightAuto(isRightAuto)
-        , isBottomAuto(isBottomAuto)
-        , isLeftAuto(isLeftAuto)
-    { }
-    explicit ClipAutos(const LengthBox& clip)
-        : isAuto(false)
-        , isTopAuto(clip.top().isAuto())
-        , isRightAuto(clip.right().isAuto())
-        , isBottomAuto(clip.bottom().isAuto())
-        , isLeftAuto(clip.left().isAuto())
-    { }
+  ClipAutos()
+      : is_auto(true),
+        is_top_auto(false),
+        is_right_auto(false),
+        is_bottom_auto(false),
+        is_left_auto(false) {}
+  ClipAutos(bool is_top_auto,
+            bool is_right_auto,
+            bool is_bottom_auto,
+            bool is_left_auto)
+      : is_auto(false),
+        is_top_auto(is_top_auto),
+        is_right_auto(is_right_auto),
+        is_bottom_auto(is_bottom_auto),
+        is_left_auto(is_left_auto) {}
+  explicit ClipAutos(const LengthBox& clip)
+      : is_auto(false),
+        is_top_auto(clip.Top().IsAuto()),
+        is_right_auto(clip.Right().IsAuto()),
+        is_bottom_auto(clip.Bottom().IsAuto()),
+        is_left_auto(clip.Left().IsAuto()) {}
 
-    bool operator==(const ClipAutos& other) const
-    {
-        return isAuto == other.isAuto
-            && isTopAuto == other.isTopAuto
-            && isRightAuto == other.isRightAuto
-            && isBottomAuto == other.isBottomAuto
-            && isLeftAuto == other.isLeftAuto;
-    }
-    bool operator!=(const ClipAutos& other) const { return !(*this == other); }
+  bool operator==(const ClipAutos& other) const {
+    return is_auto == other.is_auto && is_top_auto == other.is_top_auto &&
+           is_right_auto == other.is_right_auto &&
+           is_bottom_auto == other.is_bottom_auto &&
+           is_left_auto == other.is_left_auto;
+  }
+  bool operator!=(const ClipAutos& other) const { return !(*this == other); }
 
-    bool isAuto;
-    bool isTopAuto;
-    bool isRightAuto;
-    bool isBottomAuto;
-    bool isLeftAuto;
+  bool is_auto;
+  bool is_top_auto;
+  bool is_right_auto;
+  bool is_bottom_auto;
+  bool is_left_auto;
 };
 
-static ClipAutos getClipAutos(const ComputedStyle& style)
-{
-    if (style.hasAutoClip())
-        return ClipAutos();
-    return ClipAutos(
-        style.clipTop().isAuto(),
-        style.clipRight().isAuto(),
-        style.clipBottom().isAuto(),
-        style.clipLeft().isAuto());
+static ClipAutos GetClipAutos(const ComputedStyle& style) {
+  if (style.HasAutoClip())
+    return ClipAutos();
+  return ClipAutos(style.ClipTop().IsAuto(), style.ClipRight().IsAuto(),
+                   style.ClipBottom().IsAuto(), style.ClipLeft().IsAuto());
 }
 
-class ParentAutosChecker : public InterpolationType::ConversionChecker {
-public:
-    static std::unique_ptr<ParentAutosChecker> create(const ClipAutos& parentAutos)
-    {
-        return wrapUnique(new ParentAutosChecker(parentAutos));
-    }
+class InheritedAutosChecker : public InterpolationType::ConversionChecker {
+ public:
+  static std::unique_ptr<InheritedAutosChecker> Create(
+      const ClipAutos& inherited_autos) {
+    return WTF::WrapUnique(new InheritedAutosChecker(inherited_autos));
+  }
 
-private:
-    ParentAutosChecker(const ClipAutos& parentAutos)
-        : m_parentAutos(parentAutos)
-    { }
+ private:
+  InheritedAutosChecker(const ClipAutos& inherited_autos)
+      : inherited_autos_(inherited_autos) {}
 
-    bool isValid(const InterpolationEnvironment& environment, const InterpolationValue& underlying) const final
-    {
-        return m_parentAutos == getClipAutos(*environment.state().parentStyle());
-    }
+  bool IsValid(const InterpolationEnvironment& environment,
+               const InterpolationValue& underlying) const final {
+    return inherited_autos_ ==
+           GetClipAutos(*environment.GetState().ParentStyle());
+  }
 
-    const ClipAutos m_parentAutos;
+  const ClipAutos inherited_autos_;
 };
 
 class CSSClipNonInterpolableValue : public NonInterpolableValue {
-public:
-    ~CSSClipNonInterpolableValue() final { }
+ public:
+  ~CSSClipNonInterpolableValue() final {}
 
-    static PassRefPtr<CSSClipNonInterpolableValue> create(const ClipAutos& clipAutos)
-    {
-        return adoptRef(new CSSClipNonInterpolableValue(clipAutos));
-    }
+  static PassRefPtr<CSSClipNonInterpolableValue> Create(
+      const ClipAutos& clip_autos) {
+    return AdoptRef(new CSSClipNonInterpolableValue(clip_autos));
+  }
 
-    const ClipAutos& clipAutos() const { return m_clipAutos; }
+  const ClipAutos& GetClipAutos() const { return clip_autos_; }
 
-    DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
+  DECLARE_NON_INTERPOLABLE_VALUE_TYPE();
 
-private:
-    CSSClipNonInterpolableValue(const ClipAutos& clipAutos)
-        : m_clipAutos(clipAutos)
-    {
-        ASSERT(!m_clipAutos.isAuto);
-    }
+ private:
+  CSSClipNonInterpolableValue(const ClipAutos& clip_autos)
+      : clip_autos_(clip_autos) {
+    DCHECK(!clip_autos_.is_auto);
+  }
 
-    const ClipAutos m_clipAutos;
+  const ClipAutos clip_autos_;
 };
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSClipNonInterpolableValue);
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSClipNonInterpolableValue);
 
 class UnderlyingAutosChecker : public InterpolationType::ConversionChecker {
-public:
-    ~UnderlyingAutosChecker() final {}
+ public:
+  ~UnderlyingAutosChecker() final {}
 
-    static std::unique_ptr<UnderlyingAutosChecker> create(const ClipAutos& underlyingAutos)
-    {
-        return wrapUnique(new UnderlyingAutosChecker(underlyingAutos));
-    }
+  static std::unique_ptr<UnderlyingAutosChecker> Create(
+      const ClipAutos& underlying_autos) {
+    return WTF::WrapUnique(new UnderlyingAutosChecker(underlying_autos));
+  }
 
-    static ClipAutos getUnderlyingAutos(const InterpolationValue& underlying)
-    {
-        if (!underlying)
-            return ClipAutos();
-        return toCSSClipNonInterpolableValue(*underlying.nonInterpolableValue).clipAutos();
-    }
+  static ClipAutos GetUnderlyingAutos(const InterpolationValue& underlying) {
+    if (!underlying)
+      return ClipAutos();
+    return ToCSSClipNonInterpolableValue(*underlying.non_interpolable_value)
+        .GetClipAutos();
+  }
 
-private:
-    UnderlyingAutosChecker(const ClipAutos& underlyingAutos)
-        : m_underlyingAutos(underlyingAutos)
-    { }
+ private:
+  UnderlyingAutosChecker(const ClipAutos& underlying_autos)
+      : underlying_autos_(underlying_autos) {}
 
-    bool isValid(const InterpolationEnvironment&, const InterpolationValue& underlying) const final
-    {
-        return m_underlyingAutos == getUnderlyingAutos(underlying);
-    }
+  bool IsValid(const InterpolationEnvironment&,
+               const InterpolationValue& underlying) const final {
+    return underlying_autos_ == GetUnderlyingAutos(underlying);
+  }
 
-    const ClipAutos m_underlyingAutos;
+  const ClipAutos underlying_autos_;
 };
 
-enum ClipComponentIndex {
-    ClipTop,
-    ClipRight,
-    ClipBottom,
-    ClipLeft,
-    ClipComponentIndexCount,
+enum ClipComponentIndex : unsigned {
+  kClipTop,
+  kClipRight,
+  kClipBottom,
+  kClipLeft,
+  kClipComponentIndexCount,
 };
 
-static std::unique_ptr<InterpolableValue> convertClipComponent(const Length& length, double zoom)
-{
-    if (length.isAuto())
-        return InterpolableList::create(0);
-    return CSSLengthInterpolationType::maybeConvertLength(length, zoom).interpolableValue;
+static std::unique_ptr<InterpolableValue> ConvertClipComponent(
+    const Length& length,
+    double zoom) {
+  if (length.IsAuto())
+    return InterpolableList::Create(0);
+  return LengthInterpolationFunctions::MaybeConvertLength(length, zoom)
+      .interpolable_value;
 }
 
-static InterpolationValue createClipValue(const LengthBox& clip, double zoom)
-{
-    std::unique_ptr<InterpolableList> list = InterpolableList::create(ClipComponentIndexCount);
-    list->set(ClipTop, convertClipComponent(clip.top(), zoom));
-    list->set(ClipRight, convertClipComponent(clip.right(), zoom));
-    list->set(ClipBottom, convertClipComponent(clip.bottom(), zoom));
-    list->set(ClipLeft, convertClipComponent(clip.left(), zoom));
-    return InterpolationValue(std::move(list), CSSClipNonInterpolableValue::create(ClipAutos(clip)));
+static InterpolationValue CreateClipValue(const LengthBox& clip, double zoom) {
+  std::unique_ptr<InterpolableList> list =
+      InterpolableList::Create(kClipComponentIndexCount);
+  list->Set(kClipTop, ConvertClipComponent(clip.Top(), zoom));
+  list->Set(kClipRight, ConvertClipComponent(clip.Right(), zoom));
+  list->Set(kClipBottom, ConvertClipComponent(clip.Bottom(), zoom));
+  list->Set(kClipLeft, ConvertClipComponent(clip.Left(), zoom));
+  return InterpolationValue(
+      std::move(list), CSSClipNonInterpolableValue::Create(ClipAutos(clip)));
 }
 
-InterpolationValue CSSClipInterpolationType::maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers& conversionCheckers) const
-{
-    ClipAutos underlyingAutos = UnderlyingAutosChecker::getUnderlyingAutos(underlying);
-    conversionCheckers.append(UnderlyingAutosChecker::create(underlyingAutos));
-    if (underlyingAutos.isAuto)
-        return nullptr;
-    LengthBox neutralBox(
-        underlyingAutos.isTopAuto ? Length(Auto) : Length(0, Fixed),
-        underlyingAutos.isRightAuto ? Length(Auto) : Length(0, Fixed),
-        underlyingAutos.isBottomAuto ? Length(Auto) : Length(0, Fixed),
-        underlyingAutos.isLeftAuto ? Length(Auto) : Length(0, Fixed));
-    return createClipValue(neutralBox, 1);
-}
-
-InterpolationValue CSSClipInterpolationType::maybeConvertInitial(const StyleResolverState&, ConversionCheckers&) const
-{
+InterpolationValue CSSClipInterpolationType::MaybeConvertNeutral(
+    const InterpolationValue& underlying,
+    ConversionCheckers& conversion_checkers) const {
+  ClipAutos underlying_autos =
+      UnderlyingAutosChecker::GetUnderlyingAutos(underlying);
+  conversion_checkers.push_back(
+      UnderlyingAutosChecker::Create(underlying_autos));
+  if (underlying_autos.is_auto)
     return nullptr;
+  LengthBox neutral_box(
+      underlying_autos.is_top_auto ? Length(kAuto) : Length(0, kFixed),
+      underlying_autos.is_right_auto ? Length(kAuto) : Length(0, kFixed),
+      underlying_autos.is_bottom_auto ? Length(kAuto) : Length(0, kFixed),
+      underlying_autos.is_left_auto ? Length(kAuto) : Length(0, kFixed));
+  return CreateClipValue(neutral_box, 1);
 }
 
-InterpolationValue CSSClipInterpolationType::maybeConvertInherit(const StyleResolverState& state, ConversionCheckers& conversionCheckers) const
-{
-    ClipAutos parentAutos = getClipAutos(*state.parentStyle());
-    conversionCheckers.append(ParentAutosChecker::create(parentAutos));
-    if (parentAutos.isAuto)
-        return nullptr;
-    return createClipValue(state.parentStyle()->clip(), state.parentStyle()->effectiveZoom());
+InterpolationValue CSSClipInterpolationType::MaybeConvertInitial(
+    const StyleResolverState&,
+    ConversionCheckers&) const {
+  return nullptr;
 }
 
-static bool isCSSAuto(const CSSPrimitiveValue& value)
-{
-    return value.getValueID() == CSSValueAuto;
+InterpolationValue CSSClipInterpolationType::MaybeConvertInherit(
+    const StyleResolverState& state,
+    ConversionCheckers& conversion_checkers) const {
+  ClipAutos inherited_autos = GetClipAutos(*state.ParentStyle());
+  conversion_checkers.push_back(InheritedAutosChecker::Create(inherited_autos));
+  if (inherited_autos.is_auto)
+    return nullptr;
+  return CreateClipValue(state.ParentStyle()->Clip(),
+                         state.ParentStyle()->EffectiveZoom());
 }
 
-static std::unique_ptr<InterpolableValue> convertClipComponent(const CSSPrimitiveValue& length)
-{
-    if (isCSSAuto(length))
-        return InterpolableList::create(0);
-    return CSSLengthInterpolationType::maybeConvertCSSValue(length).interpolableValue;
+static bool IsCSSAuto(const CSSValue& value) {
+  return value.IsIdentifierValue() &&
+         ToCSSIdentifierValue(value).GetValueID() == CSSValueAuto;
 }
 
-InterpolationValue CSSClipInterpolationType::maybeConvertValue(const CSSValue& value, const StyleResolverState& state, ConversionCheckers&) const
-{
-    if (!value.isQuadValue())
-        return nullptr;
-    const CSSQuadValue& quad = toCSSQuadValue(value);
-    std::unique_ptr<InterpolableList> list = InterpolableList::create(ClipComponentIndexCount);
-    list->set(ClipTop, convertClipComponent(*quad.top()));
-    list->set(ClipRight, convertClipComponent(*quad.right()));
-    list->set(ClipBottom, convertClipComponent(*quad.bottom()));
-    list->set(ClipLeft, convertClipComponent(*quad.left()));
-    ClipAutos autos(
-        isCSSAuto(*quad.top()),
-        isCSSAuto(*quad.right()),
-        isCSSAuto(*quad.bottom()),
-        isCSSAuto(*quad.left()));
-    return InterpolationValue(std::move(list), CSSClipNonInterpolableValue::create(autos));
+static std::unique_ptr<InterpolableValue> ConvertClipComponent(
+    const CSSValue& length) {
+  if (IsCSSAuto(length))
+    return InterpolableList::Create(0);
+  return LengthInterpolationFunctions::MaybeConvertCSSValue(length)
+      .interpolable_value;
 }
 
-InterpolationValue CSSClipInterpolationType::maybeConvertUnderlyingValue(const InterpolationEnvironment& environment) const
-{
-    if (environment.state().style()->hasAutoClip())
-        return nullptr;
-    return createClipValue(environment.state().style()->clip(), environment.state().style()->effectiveZoom());
+InterpolationValue CSSClipInterpolationType::MaybeConvertValue(
+    const CSSValue& value,
+    const StyleResolverState*,
+    ConversionCheckers&) const {
+  if (!value.IsQuadValue())
+    return nullptr;
+  const CSSQuadValue& quad = ToCSSQuadValue(value);
+  std::unique_ptr<InterpolableList> list =
+      InterpolableList::Create(kClipComponentIndexCount);
+  list->Set(kClipTop, ConvertClipComponent(*quad.Top()));
+  list->Set(kClipRight, ConvertClipComponent(*quad.Right()));
+  list->Set(kClipBottom, ConvertClipComponent(*quad.Bottom()));
+  list->Set(kClipLeft, ConvertClipComponent(*quad.Left()));
+  ClipAutos autos(IsCSSAuto(*quad.Top()), IsCSSAuto(*quad.Right()),
+                  IsCSSAuto(*quad.Bottom()), IsCSSAuto(*quad.Left()));
+  return InterpolationValue(std::move(list),
+                            CSSClipNonInterpolableValue::Create(autos));
 }
 
-PairwiseInterpolationValue CSSClipInterpolationType::maybeMergeSingles(InterpolationValue&& start, InterpolationValue&& end) const
-{
-    const ClipAutos& startAutos = toCSSClipNonInterpolableValue(*start.nonInterpolableValue).clipAutos();
-    const ClipAutos& endAutos = toCSSClipNonInterpolableValue(*end.nonInterpolableValue).clipAutos();
-    if (startAutos != endAutos)
-        return nullptr;
-    return PairwiseInterpolationValue(std::move(start.interpolableValue), std::move(end.interpolableValue), start.nonInterpolableValue.release());
+InterpolationValue
+CSSClipInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
+    const ComputedStyle& style) const {
+  if (style.HasAutoClip())
+    return nullptr;
+  return CreateClipValue(style.Clip(), style.EffectiveZoom());
 }
 
-void CSSClipInterpolationType::composite(UnderlyingValueOwner& underlyingValueOwner, double underlyingFraction, const InterpolationValue& value, double interpolationFraction) const
-{
-    const ClipAutos& underlyingAutos = toCSSClipNonInterpolableValue(*underlyingValueOwner.value().nonInterpolableValue).clipAutos();
-    const ClipAutos& autos = toCSSClipNonInterpolableValue(*value.nonInterpolableValue).clipAutos();
-    if (underlyingAutos == autos)
-        underlyingValueOwner.mutableValue().interpolableValue->scaleAndAdd(underlyingFraction, *value.interpolableValue);
-    else
-        underlyingValueOwner.set(*this, value);
+PairwiseInterpolationValue CSSClipInterpolationType::MaybeMergeSingles(
+    InterpolationValue&& start,
+    InterpolationValue&& end) const {
+  const ClipAutos& start_autos =
+      ToCSSClipNonInterpolableValue(*start.non_interpolable_value)
+          .GetClipAutos();
+  const ClipAutos& end_autos =
+      ToCSSClipNonInterpolableValue(*end.non_interpolable_value).GetClipAutos();
+  if (start_autos != end_autos)
+    return nullptr;
+  return PairwiseInterpolationValue(std::move(start.interpolable_value),
+                                    std::move(end.interpolable_value),
+                                    std::move(start.non_interpolable_value));
 }
 
-void CSSClipInterpolationType::apply(const InterpolableValue& interpolableValue, const NonInterpolableValue* nonInterpolableValue, InterpolationEnvironment& environment) const
-{
-    const ClipAutos& autos = toCSSClipNonInterpolableValue(nonInterpolableValue)->clipAutos();
-    const InterpolableList& list = toInterpolableList(interpolableValue);
-    const auto& convertIndex = [&list, &environment](bool isAuto, size_t index)
-    {
-        if (isAuto)
-            return Length(Auto);
-        return CSSLengthInterpolationType::resolveInterpolableLength(*list.get(index), nullptr, environment.state().cssToLengthConversionData(), ValueRangeAll);
-    };
-    environment.state().style()->setClip(LengthBox(
-        convertIndex(autos.isTopAuto, ClipTop),
-        convertIndex(autos.isRightAuto, ClipRight),
-        convertIndex(autos.isBottomAuto, ClipBottom),
-        convertIndex(autos.isLeftAuto, ClipLeft)));
+void CSSClipInterpolationType::Composite(
+    UnderlyingValueOwner& underlying_value_owner,
+    double underlying_fraction,
+    const InterpolationValue& value,
+    double interpolation_fraction) const {
+  const ClipAutos& underlying_autos =
+      ToCSSClipNonInterpolableValue(
+          *underlying_value_owner.Value().non_interpolable_value)
+          .GetClipAutos();
+  const ClipAutos& autos =
+      ToCSSClipNonInterpolableValue(*value.non_interpolable_value)
+          .GetClipAutos();
+  if (underlying_autos == autos)
+    underlying_value_owner.MutableValue().interpolable_value->ScaleAndAdd(
+        underlying_fraction, *value.interpolable_value);
+  else
+    underlying_value_owner.Set(*this, value);
 }
 
-} // namespace blink
+void CSSClipInterpolationType::ApplyStandardPropertyValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* non_interpolable_value,
+    StyleResolverState& state) const {
+  const ClipAutos& autos =
+      ToCSSClipNonInterpolableValue(non_interpolable_value)->GetClipAutos();
+  const InterpolableList& list = ToInterpolableList(interpolable_value);
+  const auto& convert_index = [&list, &state](bool is_auto, size_t index) {
+    if (is_auto)
+      return Length(kAuto);
+    return LengthInterpolationFunctions::CreateLength(
+        *list.Get(index), nullptr, state.CssToLengthConversionData(),
+        kValueRangeAll);
+  };
+  state.Style()->SetClip(
+      LengthBox(convert_index(autos.is_top_auto, kClipTop),
+                convert_index(autos.is_right_auto, kClipRight),
+                convert_index(autos.is_bottom_auto, kClipBottom),
+                convert_index(autos.is_left_auto, kClipLeft)));
+}
+
+}  // namespace blink

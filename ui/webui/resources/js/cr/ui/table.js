@@ -38,21 +38,21 @@ cr.define('cr.ui', function() {
     set dataModel(dataModel) {
       if (this.list_.dataModel != dataModel) {
         if (this.list_.dataModel) {
-          this.list_.dataModel.removeEventListener('sorted',
-                                                   this.boundHandleSorted_);
-          this.list_.dataModel.removeEventListener('change',
-                                                   this.boundHandleChangeList_);
-          this.list_.dataModel.removeEventListener('splice',
-                                                   this.boundHandleChangeList_);
+          this.list_.dataModel.removeEventListener(
+              'sorted', this.boundHandleSorted_);
+          this.list_.dataModel.removeEventListener(
+              'change', this.boundHandleChangeList_);
+          this.list_.dataModel.removeEventListener(
+              'splice', this.boundHandleChangeList_);
         }
         this.list_.dataModel = dataModel;
         if (this.list_.dataModel) {
-          this.list_.dataModel.addEventListener('sorted',
-                                                this.boundHandleSorted_);
-          this.list_.dataModel.addEventListener('change',
-                                                this.boundHandleChangeList_);
-          this.list_.dataModel.addEventListener('splice',
-                                                this.boundHandleChangeList_);
+          this.list_.dataModel.addEventListener(
+              'sorted', this.boundHandleSorted_);
+          this.list_.dataModel.addEventListener(
+              'change', this.boundHandleChangeList_);
+          this.list_.dataModel.addEventListener(
+              'splice', this.boundHandleChangeList_);
         }
         this.header_.redraw();
       }
@@ -129,7 +129,35 @@ cr.define('cr.ui', function() {
      * @return {function(*, cr.ui.Table): HTMLElement} Render function.
      */
     getRenderFunction: function() {
-      return this.list_.renderFunction_;
+      return this.renderFunction_;
+    },
+
+    /**
+     * @private
+     */
+    renderFunction_: function(dataItem, table) {
+      // `This` must not be accessed here, since it may be anything, especially
+      // not a pointer to this object.
+
+      var cm = table.columnModel;
+      var listItem = cr.ui.List.prototype.createItem.call(table.list, '');
+      listItem.className = 'table-row';
+
+      for (var i = 0; i < cm.size; i++) {
+        var cell = table.ownerDocument.createElement('div');
+        cell.style.width = cm.getWidth(i) + 'px';
+        cell.className = 'table-row-cell';
+        if (cm.isEndAlign(i))
+          cell.style.textAlign = 'end';
+        cell.hidden = !cm.isVisible(i);
+        cell.appendChild(
+            cm.getRenderFunction(i).call(null, dataItem, cm.getId(i), table));
+
+        listItem.appendChild(cell);
+      }
+      listItem.style.width = cm.totalWidth + 'px';
+
+      return listItem;
     },
 
     /**
@@ -138,10 +166,10 @@ cr.define('cr.ui', function() {
      *     function.
      */
     setRenderFunction: function(renderFunction) {
-      if (renderFunction === this.list_.renderFunction_)
+      if (renderFunction === this.renderFunction_)
         return;
 
-      this.list_.renderFunction_ = renderFunction;
+      this.renderFunction_ = renderFunction;
       cr.dispatchSimpleEvent(this, 'change');
     },
 
@@ -342,10 +370,10 @@ cr.define('cr.ui', function() {
       dm.prepareSort(columnId, function() {
         // Select at most MAXIMUM_ROWS_TO_MEASURE items around visible area.
         var items = list.getItemsInViewPort(list.scrollTop, listHeight);
-        var firstIndex = Math.floor(Math.max(0,
-            (items.last + items.first - MAXIMUM_ROWS_TO_MEASURE) / 2));
-        var lastIndex = Math.min(dm.length,
-                                 firstIndex + MAXIMUM_ROWS_TO_MEASURE);
+        var firstIndex = Math.floor(Math.max(
+            0, (items.last + items.first - MAXIMUM_ROWS_TO_MEASURE) / 2));
+        var lastIndex =
+            Math.min(dm.length, firstIndex + MAXIMUM_ROWS_TO_MEASURE);
         for (var i = firstIndex; i < lastIndex; i++) {
           var item = dm.item(i);
           var div = doc.createElement('div');
@@ -373,7 +401,5 @@ cr.define('cr.ui', function() {
    */
   cr.defineProperty(Table, 'hasElementFocus', cr.PropertyKind.BOOL_ATTR);
 
-  return {
-    Table: Table
-  };
+  return {Table: Table};
 });

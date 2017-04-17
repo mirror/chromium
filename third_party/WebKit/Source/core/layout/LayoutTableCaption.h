@@ -43,22 +43,24 @@ class LayoutTable;
 // See http://www.w3.org/TR/CSS21/tables.html#caption-position for the
 // positioning.
 class LayoutTableCaption final : public LayoutBlockFlow {
-public:
-    explicit LayoutTableCaption(Element*);
-    ~LayoutTableCaption() override;
-    LayoutUnit containingBlockLogicalWidthForContent() const override;
+ public:
+  explicit LayoutTableCaption(Element*);
+  ~LayoutTableCaption() override;
+  LayoutUnit ContainingBlockLogicalWidthForContent() const override;
 
-private:
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectTableCaption || LayoutBlockFlow::isOfType(type); }
+ private:
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectTableCaption || LayoutBlockFlow::IsOfType(type);
+  }
 
-    void insertedIntoTree() override;
-    void willBeRemovedFromTree() override;
+  void InsertedIntoTree() override;
+  void WillBeRemovedFromTree() override;
 
-    LayoutTable* table() const;
+  LayoutTable* Table() const;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTableCaption, isTableCaption());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTableCaption, IsTableCaption());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutTableCaption_h
+#endif  // LayoutTableCaption_h

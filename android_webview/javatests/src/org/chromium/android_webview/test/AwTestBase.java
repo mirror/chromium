@@ -8,13 +8,17 @@ import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import android.app.Instrumentation;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.AndroidRuntimeException;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import org.chromium.android_webview.AwBrowserContext;
 import org.chromium.android_webview.AwBrowserProcess;
 import org.chromium.android_webview.AwContents;
+import org.chromium.android_webview.AwContents.DependencyFactory;
+import org.chromium.android_webview.AwContents.InternalAccessDelegate;
+import org.chromium.android_webview.AwContents.NativeDrawGLFunctorFactory;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
@@ -22,12 +26,12 @@ import org.chromium.android_webview.test.util.GraphicsTestUtils;
 import org.chromium.android_webview.test.util.JSUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseActivityInstrumentationTestCase;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.InMemorySharedPreferences;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.parameter.Parameter;
 import org.chromium.base.test.util.parameter.ParameterizedTest;
-import org.chromium.content.browser.test.util.CallbackHelper;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnPageFinishedHelper;
@@ -41,6 +45,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A base class for android_webview tests. WebView only runs on KitKat and later,
@@ -70,6 +76,7 @@ public class AwTestBase
     public static final long WAIT_TIMEOUT_MS = scaleTimeout(15000);
     public static final int CHECK_INTERVAL = 100;
     private static final String TAG = "AwTestBase";
+    private static final Pattern MAYBE_QUOTED_STRING = Pattern.compile("^(\"?)(.*)\\1$");
 
     // The browser context needs to be a process-wide singleton.
     private AwBrowserContext mBrowserContext;
@@ -80,8 +87,9 @@ public class AwTestBase
 
     @Override
     protected void setUp() throws Exception {
-        Context appContext = getInstrumentation().getTargetContext().getApplicationContext();
-        mBrowserContext = new AwBrowserContext(new InMemorySharedPreferences(), appContext);
+        if (needsAwBrowserContextCreated()) {
+            createAwBrowserContext();
+        }
 
         super.setUp();
         if (needsBrowserProcessStarted()) {
@@ -89,8 +97,28 @@ public class AwTestBase
         }
     }
 
+    protected void createAwBrowserContext() {
+        if (mBrowserContext != null) {
+            throw new AndroidRuntimeException("There should only be one browser context.");
+        }
+        getActivity(); // The Activity must be launched in order to load native code
+        final InMemorySharedPreferences prefs = new InMemorySharedPreferences();
+        final Context appContext = getInstrumentation().getTargetContext().getApplicationContext();
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                mBrowserContext = createAwBrowserContextOnUiThread(prefs, appContext);
+            }
+        });
+    }
+
+    protected AwBrowserContext createAwBrowserContextOnUiThread(
+            InMemorySharedPreferences prefs, Context appContext) {
+        return new AwBrowserContext(prefs, appContext);
+    }
+
     protected void startBrowserProcess() throws Exception {
-        // The activity must be launched in order for proper webview statics to be setup.
+        // The Activity must be launched in order for proper webview statics to be setup.
         getActivity();
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
@@ -98,6 +126,14 @@ public class AwTestBase
                 AwBrowserProcess.start();
             }
         });
+    }
+
+    /**
+     * Override this to return false if the test doesn't want to create an AwBrowserContext
+     * automatically.
+     */
+    protected boolean needsAwBrowserContextCreated() {
+        return true;
     }
 
     /**
@@ -338,6 +374,16 @@ public class AwTestBase
         ch.waitForCallback(chCount);
     }
 
+    public void insertVisualStateCallbackOnUIThread(final AwContents awContents,
+            final long requestId, final AwContents.VisualStateCallback callback) {
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.insertVisualStateCallback(requestId, callback);
+            }
+        });
+    }
+
     // Waits for the pixel at the center of AwContents to color up into expectedColor.
     // Note that this is a stricter condition that waiting for a visual state callback,
     // as visual state callback only indicates that *something* has appeared in WebView.
@@ -346,10 +392,8 @@ public class AwTestBase
         pollUiThread(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                Bitmap bitmap = GraphicsTestUtils.drawAwContents(awContents, 2, 2,
-                        -(float) testContainerView.getWidth() / 2,
-                        -(float) testContainerView.getHeight() / 2);
-                return bitmap.getPixel(0, 0) == expectedColor;
+                return GraphicsTestUtils.getPixelColorAtCenterOfView(awContents, testContainerView)
+                        == expectedColor;
             }
         });
     }
@@ -388,7 +432,17 @@ public class AwTestBase
         public AwSettings createAwSettings(Context context, boolean supportsLegacyQuirks) {
             return new AwSettings(context, false /* isAccessFromFileURLsGrantedByDefault */,
                     supportsLegacyQuirks, false /* allowEmptyDocumentPersistence */,
-                    true /* allowGeolocationOnInsecureOrigins */);
+                    true /* allowGeolocationOnInsecureOrigins */,
+                    false /* doNotUpdateSelectionOnMutatingSelectionRange */);
+        }
+
+        public AwContents createAwContents(AwBrowserContext browserContext, ViewGroup containerView,
+                Context context, InternalAccessDelegate internalAccessAdapter,
+                NativeDrawGLFunctorFactory nativeDrawGLFunctorFactory,
+                AwContentsClient contentsClient, AwSettings settings,
+                DependencyFactory dependencyFactory) {
+            return new AwContents(browserContext, containerView, context, internalAccessAdapter,
+                    nativeDrawGLFunctorFactory, contentsClient, settings, dependencyFactory);
         }
     }
 
@@ -398,13 +452,13 @@ public class AwTestBase
 
     public AwTestContainerView createAwTestContainerView(
             final AwContentsClient awContentsClient) {
-        return createAwTestContainerView(awContentsClient, false);
+        return createAwTestContainerView(awContentsClient, false, null);
     }
 
-    public AwTestContainerView createAwTestContainerView(
-            final AwContentsClient awContentsClient, boolean supportsLegacyQuirks) {
-        AwTestContainerView testContainerView =
-                createDetachedAwTestContainerView(awContentsClient, supportsLegacyQuirks);
+    public AwTestContainerView createAwTestContainerView(final AwContentsClient awContentsClient,
+            boolean supportsLegacyQuirks, final TestDependencyFactory testDependencyFactory) {
+        AwTestContainerView testContainerView = createDetachedAwTestContainerView(
+                awContentsClient, supportsLegacyQuirks, testDependencyFactory);
         getActivity().addView(testContainerView);
         testContainerView.requestFocus();
         return testContainerView;
@@ -416,24 +470,28 @@ public class AwTestBase
 
     public AwTestContainerView createDetachedAwTestContainerView(
             final AwContentsClient awContentsClient) {
-        return createDetachedAwTestContainerView(awContentsClient, false);
+        return createDetachedAwTestContainerView(awContentsClient, false, null);
     }
 
     public AwTestContainerView createDetachedAwTestContainerView(
-            final AwContentsClient awContentsClient, boolean supportsLegacyQuirks) {
-        final TestDependencyFactory testDependencyFactory = createTestDependencyFactory();
-
+            final AwContentsClient awContentsClient, boolean supportsLegacyQuirks,
+            TestDependencyFactory testDependencyFactory) {
+        if (testDependencyFactory == null) {
+            testDependencyFactory = createTestDependencyFactory();
+        }
         boolean allowHardwareAcceleration = isHardwareAcceleratedTest();
         final AwTestContainerView testContainerView =
-                testDependencyFactory.createAwTestContainerView(getActivity(),
-                        allowHardwareAcceleration);
+                testDependencyFactory.createAwTestContainerView(
+                        getActivity(), allowHardwareAcceleration);
 
-        AwSettings awSettings = testDependencyFactory.createAwSettings(getActivity(),
-                supportsLegacyQuirks);
-        testContainerView.initialize(new AwContents(mBrowserContext, testContainerView,
-                testContainerView.getContext(), testContainerView.getInternalAccessDelegate(),
+        AwSettings awSettings =
+                testDependencyFactory.createAwSettings(getActivity(), supportsLegacyQuirks);
+        AwContents awContents = testDependencyFactory.createAwContents(mBrowserContext,
+                testContainerView, testContainerView.getContext(),
+                testContainerView.getInternalAccessDelegate(),
                 testContainerView.getNativeDrawGLFunctorFactory(), awContentsClient, awSettings,
-                testDependencyFactory));
+                testDependencyFactory);
+        testContainerView.initialize(awContents);
         return testContainerView;
     }
 
@@ -443,15 +501,21 @@ public class AwTestBase
 
     public AwTestContainerView createAwTestContainerViewOnMainSync(
             final AwContentsClient client) throws Exception {
-        return createAwTestContainerViewOnMainSync(client, false);
+        return createAwTestContainerViewOnMainSync(client, false, null);
     }
 
     public AwTestContainerView createAwTestContainerViewOnMainSync(
             final AwContentsClient client, final boolean supportsLegacyQuirks) {
+        return createAwTestContainerViewOnMainSync(client, supportsLegacyQuirks, null);
+    }
+
+    public AwTestContainerView createAwTestContainerViewOnMainSync(final AwContentsClient client,
+            final boolean supportsLegacyQuirks, final TestDependencyFactory testDependencyFactory) {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<AwTestContainerView>() {
             @Override
             public AwTestContainerView call() {
-                return createAwTestContainerView(client, supportsLegacyQuirks);
+                return createAwTestContainerView(
+                        client, supportsLegacyQuirks, testDependencyFactory);
             }
         });
     }
@@ -483,6 +547,17 @@ public class AwTestBase
                 return awContents.getSettings();
             }
         });
+    }
+
+    /**
+     * Verify double quotes in both sides of the raw string. Strip the double quotes and
+     * returns rest of the string.
+     */
+    protected String maybeStripDoubleQuotes(String raw) {
+        assertNotNull(raw);
+        Matcher m = MAYBE_QUOTED_STRING.matcher(raw);
+        assertTrue(m.matches());
+        return m.group(2);
     }
 
     /**
@@ -590,6 +665,15 @@ public class AwTestBase
         });
     }
 
+    public void killRenderProcessOnUiThreadAsync(final AwContents awContents) throws Exception {
+        getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                awContents.killRenderProcess();
+            }
+        });
+    }
+
     /**
      * Loads the main html then triggers the popup window.
      */
@@ -659,8 +743,15 @@ public class AwTestBase
         });
 
         OnPageFinishedHelper onPageFinishedHelper = popupContentsClient.getOnPageFinishedHelper();
-        int callCount = onPageFinishedHelper.getCallCount();
-        onPageFinishedHelper.waitForCallback(callCount, 1, WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        int finishCallCount = onPageFinishedHelper.getCallCount();
+        TestAwContentsClient.OnReceivedTitleHelper onReceivedTitleHelper =
+                popupContentsClient.getOnReceivedTitleHelper();
+        int titleCallCount = onReceivedTitleHelper.getCallCount();
+
+        onPageFinishedHelper.waitForCallback(finishCallCount, 1, WAIT_TIMEOUT_MS,
+                TimeUnit.MILLISECONDS);
+        onReceivedTitleHelper.waitForCallback(titleCallCount, 1, WAIT_TIMEOUT_MS,
+                TimeUnit.MILLISECONDS);
 
         return new PopupInfo(popupContentsClient, popupContainerView, popupContents);
     }

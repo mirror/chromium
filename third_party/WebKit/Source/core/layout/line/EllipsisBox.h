@@ -25,39 +25,59 @@
 
 namespace blink {
 
-class HitTestRequest;
 class HitTestResult;
 
 class EllipsisBox final : public InlineBox {
-public:
-    EllipsisBox(LineLayoutItem item, const AtomicString& ellipsisStr, InlineFlowBox* parent,
-        LayoutUnit width, int height, int x, int y, bool firstLine, bool isVertical)
-        : InlineBox(item, LayoutPoint(x, y), width, firstLine, true, false, false, isVertical, 0, 0, parent)
-        , m_height(height)
-        , m_str(ellipsisStr)
-        , m_selectionState(SelectionNone)
-    {
-        setHasVirtualLogicalHeight();
-    }
+ public:
+  EllipsisBox(LineLayoutItem item,
+              const AtomicString& ellipsis_str,
+              InlineFlowBox* parent,
+              LayoutUnit width,
+              LayoutUnit height,
+              LayoutPoint location,
+              bool first_line,
+              bool is_vertical)
+      : InlineBox(item,
+                  location,
+                  width,
+                  first_line,
+                  true,
+                  false,
+                  false,
+                  is_vertical,
+                  0,
+                  0,
+                  parent),
+        height_(height),
+        str_(ellipsis_str),
+        selection_state_(SelectionNone) {
+    SetHasVirtualLogicalHeight();
+  }
 
-    void paint(const PaintInfo&, const LayoutPoint&, LayoutUnit lineTop, LayoutUnit lineBottom) const override;
-    bool nodeAtPoint(HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, LayoutUnit lineTop, LayoutUnit lineBottom) override;
-    void setSelectionState(SelectionState s) { m_selectionState = s; }
-    IntRect selectionRect() const;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             LayoutUnit line_top,
+             LayoutUnit line_bottom) const override;
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation& location_in_container,
+                   const LayoutPoint& accumulated_offset,
+                   LayoutUnit line_top,
+                   LayoutUnit line_bottom) override;
+  void SetSelectionState(SelectionState s) { selection_state_ = s; }
+  IntRect SelectionRect() const;
 
-    LayoutUnit virtualLogicalHeight() const override { return LayoutUnit(m_height); }
-    SelectionState getSelectionState() const override { return m_selectionState; }
-    const AtomicString& ellipsisStr() const { return m_str; }
+  LayoutUnit VirtualLogicalHeight() const override { return height_; }
+  SelectionState GetSelectionState() const override { return selection_state_; }
+  const AtomicString& EllipsisStr() const { return str_; }
 
-    const char* boxName() const override;
+  const char* BoxName() const override;
 
-private:
-
-    int m_height;
-    AtomicString m_str;
-    SelectionState m_selectionState;
+ private:
+  LayoutUnit height_;
+  AtomicString str_;
+  SelectionState selection_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EllipsisBox_h
+#endif  // EllipsisBox_h

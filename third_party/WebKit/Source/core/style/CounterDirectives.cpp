@@ -21,24 +21,23 @@
 
 #include "core/style/CounterDirectives.h"
 
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-bool operator==(const CounterDirectives& a, const CounterDirectives& b)
-{
-    return a.isIncrement() == b.isIncrement()
-        && a.incrementValue() == b.incrementValue()
-        && a.isReset() == b.isReset()
-        && a.resetValue() == b.resetValue();
+bool operator==(const CounterDirectives& a, const CounterDirectives& b) {
+  return a.IsIncrement() == b.IsIncrement() &&
+         a.IncrementValue() == b.IncrementValue() &&
+         a.IsReset() == b.IsReset() && a.ResetValue() == b.ResetValue();
 }
 
-std::unique_ptr<CounterDirectiveMap> clone(const CounterDirectiveMap& counterDirectives)
-{
-    std::unique_ptr<CounterDirectiveMap> result = wrapUnique(new CounterDirectiveMap);
-    *result = counterDirectives;
-    return result;
+std::unique_ptr<CounterDirectiveMap> Clone(
+    const CounterDirectiveMap& counter_directives) {
+  std::unique_ptr<CounterDirectiveMap> result =
+      WTF::WrapUnique(new CounterDirectiveMap);
+  *result = counter_directives;
+  return result;
 }
 
-} // namespace blink
+}  // namespace blink

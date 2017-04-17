@@ -31,6 +31,8 @@
 #ifndef V8PerContextData_h
 #define V8PerContextData_h
 
+#include <memory>
+
 #include "bindings/core/v8/ScopedPersistent.h"
 #include "bindings/core/v8/V0CustomElementBinding.h"
 #include "bindings/core/v8/V8GlobalValueMap.h"
@@ -38,13 +40,12 @@
 #include "core/CoreExport.h"
 #include "gin/public/context_holder.h"
 #include "gin/public/gin_embedders.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
-#include <memory>
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -52,76 +53,99 @@ class V8DOMActivityLogger;
 class V8PerContextData;
 
 enum V8ContextEmbedderDataField {
-    v8ContextPerContextDataIndex = static_cast<int>(gin::kPerContextDataStartIndex + gin::kEmbedderBlink),
+  kV8ContextPerContextDataIndex =
+      static_cast<int>(gin::kPerContextDataStartIndex + gin::kEmbedderBlink),
 };
 
 class CORE_EXPORT V8PerContextData final {
-    USING_FAST_MALLOC(V8PerContextData);
-    WTF_MAKE_NONCOPYABLE(V8PerContextData);
-public:
-    static std::unique_ptr<V8PerContextData> create(v8::Local<v8::Context>);
+  USING_FAST_MALLOC(V8PerContextData);
+  WTF_MAKE_NONCOPYABLE(V8PerContextData);
 
-    static V8PerContextData* from(v8::Local<v8::Context>);
+ public:
+  static std::unique_ptr<V8PerContextData> Create(v8::Local<v8::Context>);
 
-    ~V8PerContextData();
+  static V8PerContextData* From(v8::Local<v8::Context>);
 
-    v8::Local<v8::Context> context() { return m_context.newLocal(m_isolate); }
+  ~V8PerContextData();
 
-    // To create JS Wrapper objects, we create a cache of a 'boiler plate'
-    // object, and then simply Clone that object each time we need a new one.
-    // This is faster than going through the full object creation process.
-    v8::Local<v8::Object> createWrapperFromCache(const WrapperTypeInfo* type)
-    {
-        v8::Local<v8::Object> boilerplate = m_wrapperBoilerplates.Get(type);
-        return !boilerplate.IsEmpty() ? boilerplate->Clone() : createWrapperFromCacheSlowCase(type);
-    }
+  v8::Local<v8::Context> GetContext() { return context_.NewLocal(isolate_); }
 
-    v8::Local<v8::Function> constructorForType(const WrapperTypeInfo* type)
-    {
-        v8::Local<v8::Function> interfaceObject = m_constructorMap.Get(type);
-        return (!interfaceObject.IsEmpty()) ? interfaceObject : constructorForTypeSlowCase(type);
-    }
+  // To create JS Wrapper objects, we create a cache of a 'boiler plate'
+  // object, and then simply Clone that object each time we need a new one.
+  // This is faster than going through the full object creation process.
+  v8::Local<v8::Object> CreateWrapperFromCache(const WrapperTypeInfo* type) {
+    v8::Local<v8::Object> boilerplate = wrapper_boilerplates_.Get(type);
+    return !boilerplate.IsEmpty() ? boilerplate->Clone()
+                                  : CreateWrapperFromCacheSlowCase(type);
+  }
 
-    v8::Local<v8::Object> prototypeForType(const WrapperTypeInfo*);
+  v8::Local<v8::Function> ConstructorForType(const WrapperTypeInfo* type) {
+    v8::Local<v8::Function> interface_object = constructor_map_.Get(type);
+    return (!interface_object.IsEmpty()) ? interface_object
+                                         : ConstructorForTypeSlowCase(type);
+  }
 
-    void addCustomElementBinding(std::unique_ptr<V0CustomElementBinding>);
+  v8::Local<v8::Object> PrototypeForType(const WrapperTypeInfo*);
 
-    V8DOMActivityLogger* activityLogger() const { return m_activityLogger; }
-    void setActivityLogger(V8DOMActivityLogger* activityLogger) { m_activityLogger = activityLogger; }
+  // Gets the constructor and prototype for a type, if they have already been
+  // created. Returns true if they exist, and sets the existing values in
+  // |prototypeObject| and |interfaceObject|. Otherwise, returns false, and the
+  // values are set to empty objects (non-null).
+  bool GetExistingConstructorAndPrototypeForType(
+      const WrapperTypeInfo*,
+      v8::Local<v8::Object>* prototype_object,
+      v8::Local<v8::Function>* interface_object);
 
-    v8::Local<v8::Value> compiledPrivateScript(String);
-    void setCompiledPrivateScript(String, v8::Local<v8::Value>);
+  void AddCustomElementBinding(std::unique_ptr<V0CustomElementBinding>);
 
-private:
-    V8PerContextData(v8::Local<v8::Context>);
+  V8DOMActivityLogger* ActivityLogger() const { return activity_logger_; }
+  void SetActivityLogger(V8DOMActivityLogger* activity_logger) {
+    activity_logger_ = activity_logger;
+  }
 
-    v8::Local<v8::Object> createWrapperFromCacheSlowCase(const WrapperTypeInfo*);
-    v8::Local<v8::Function> constructorForTypeSlowCase(const WrapperTypeInfo*);
+  // Garbage collected classes that use V8PerContextData to hold an instance
+  // should subclass Data, and use addData / clearData / getData to manage the
+  // instance.
+  class CORE_EXPORT Data : public GarbageCollectedMixin {};
 
-    v8::Isolate* m_isolate;
+  void AddData(const char* key, Data*);
+  void ClearData(const char* key);
+  Data* GetData(const char* key);
 
-    // For each possible type of wrapper, we keep a boilerplate object.
-    // The boilerplate is used to create additional wrappers of the same type.
-    typedef V8GlobalValueMap<const WrapperTypeInfo*, v8::Object, v8::kNotWeak> WrapperBoilerplateMap;
-    WrapperBoilerplateMap m_wrapperBoilerplates;
+ private:
+  V8PerContextData(v8::Local<v8::Context>);
 
-    typedef V8GlobalValueMap<const WrapperTypeInfo*, v8::Function, v8::kNotWeak> ConstructorMap;
-    ConstructorMap m_constructorMap;
+  v8::Local<v8::Object> CreateWrapperFromCacheSlowCase(const WrapperTypeInfo*);
+  v8::Local<v8::Function> ConstructorForTypeSlowCase(const WrapperTypeInfo*);
 
-    std::unique_ptr<gin::ContextHolder> m_contextHolder;
+  v8::Isolate* isolate_;
 
-    ScopedPersistent<v8::Context> m_context;
-    ScopedPersistent<v8::Value> m_errorPrototype;
+  // For each possible type of wrapper, we keep a boilerplate object.
+  // The boilerplate is used to create additional wrappers of the same type.
+  typedef V8GlobalValueMap<const WrapperTypeInfo*, v8::Object, v8::kNotWeak>
+      WrapperBoilerplateMap;
+  WrapperBoilerplateMap wrapper_boilerplates_;
 
-    typedef Vector<std::unique_ptr<V0CustomElementBinding>> V0CustomElementBindingList;
-    V0CustomElementBindingList m_customElementBindings;
+  typedef V8GlobalValueMap<const WrapperTypeInfo*, v8::Function, v8::kNotWeak>
+      ConstructorMap;
+  ConstructorMap constructor_map_;
 
-    // This is owned by a static hash map in V8DOMActivityLogger.
-    V8DOMActivityLogger* m_activityLogger;
+  std::unique_ptr<gin::ContextHolder> context_holder_;
 
-    V8GlobalValueMap<String, v8::Value, v8::kNotWeak> m_compiledPrivateScript;
+  ScopedPersistent<v8::Context> context_;
+  ScopedPersistent<v8::Value> error_prototype_;
+
+  typedef Vector<std::unique_ptr<V0CustomElementBinding>>
+      V0CustomElementBindingList;
+  V0CustomElementBindingList custom_element_bindings_;
+
+  // This is owned by a static hash map in V8DOMActivityLogger.
+  V8DOMActivityLogger* activity_logger_;
+
+  using DataMap = PersistentHeapHashMap<const char*, Member<Data>>;
+  DataMap data_map_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8PerContextData_h
+#endif  // V8PerContextData_h

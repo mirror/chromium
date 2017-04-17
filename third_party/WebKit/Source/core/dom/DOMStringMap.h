@@ -30,60 +30,46 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class Element;
+class DOMStringMap : public GarbageCollected<DOMStringMap>,
+                     public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(DOMStringMap);
 
-class DOMStringMap : public GarbageCollected<DOMStringMap>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-    WTF_MAKE_NONCOPYABLE(DOMStringMap);
-public:
-    virtual void getNames(Vector<String>&) = 0;
-    virtual String item(const String& name) = 0;
-    virtual bool contains(const String& name) = 0;
-    virtual void setItem(const String& name, const String& value, ExceptionState&) = 0;
-    virtual bool deleteItem(const String& name) = 0;
-    bool anonymousNamedSetter(const String& name, const String& value, ExceptionState& exceptionState)
-    {
-        setItem(name, value, exceptionState);
-        return true;
-    }
-    DeleteResult anonymousNamedDeleter(const AtomicString& name)
-    {
-        bool knownProperty = deleteItem(name);
-        return knownProperty ? DeleteSuccess : DeleteUnknownProperty;
-    }
-    void namedPropertyEnumerator(Vector<String>& names, ExceptionState&)
-    {
-        getNames(names);
-    }
-    bool namedPropertyQuery(const AtomicString&, ExceptionState&);
+ public:
+  virtual void GetNames(Vector<String>&) = 0;
+  virtual String item(const String& name) = 0;
+  virtual bool Contains(const String& name) = 0;
+  virtual void SetItem(const String& name,
+                       const String& value,
+                       ExceptionState&) = 0;
+  virtual bool DeleteItem(const String& name) = 0;
+  bool AnonymousNamedSetter(const String& name,
+                            const String& value,
+                            ExceptionState& exception_state) {
+    SetItem(name, value, exception_state);
+    return true;
+  }
+  DeleteResult AnonymousNamedDeleter(const AtomicString& name) {
+    bool known_property = DeleteItem(name);
+    return known_property ? kDeleteSuccess : kDeleteUnknownProperty;
+  }
+  void NamedPropertyEnumerator(Vector<String>& names, ExceptionState&) {
+    GetNames(names);
+  }
+  bool NamedPropertyQuery(const AtomicString&, ExceptionState&);
 
-    String anonymousIndexedGetter(uint32_t index)
-    {
-        return item(String::number(index));
-    }
-    bool anonymousIndexedSetter(uint32_t index, const String& value, ExceptionState& exceptionState)
-    {
-        return anonymousNamedSetter(String::number(index), value, exceptionState);
-    }
-    DeleteResult anonymousIndexedDeleter(uint32_t index)
-    {
-        return anonymousNamedDeleter(AtomicString::number(index));
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-    virtual Element* element() = 0;
-
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
-
-protected:
-    DOMStringMap() { }
+ protected:
+  DOMStringMap() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMStringMap_h
+#endif  // DOMStringMap_h

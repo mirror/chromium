@@ -9,6 +9,18 @@
 
 #include "base/macros.h"
 
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.contextualsearch
+enum QuickActionCategory {
+  QUICK_ACTION_CATEGORY_NONE,
+  QUICK_ACTION_CATEGORY_ADDRESS,
+  QUICK_ACTION_CATEGORY_EMAIL,
+  QUICK_ACTION_CATEGORY_EVENT,
+  QUICK_ACTION_CATEGORY_PHONE,
+  QUICK_ACTION_CATEGORY_WEBSITE,
+  QUICK_ACTION_CATEGORY_BOUNDARY
+};
+
 // Encapsulates the various parts of a Resolved Search Term, which tells
 // Contextual Search what to search for and how that term appears in the
 // surrounding text.
@@ -20,10 +32,15 @@ struct ResolvedSearchTerm {
                      const std::string& search_term,
                      const std::string& display_text,
                      const std::string& alternate_term,
+                     const std::string& mid,
                      bool prevent_preload,
                      int selection_start_adjust,
                      int selection_end_adjust,
-                     const std::string& context_language);
+                     const std::string& context_language,
+                     const std::string& thumbnail_url,
+                     const std::string& caption,
+                     const std::string& quick_action_uri,
+                     const QuickActionCategory& quick_action_category);
   ~ResolvedSearchTerm();
 
   const bool is_invalid;
@@ -32,10 +49,15 @@ struct ResolvedSearchTerm {
   const std::string search_term;
   const std::string display_text;
   const std::string alternate_term;
+  const std::string mid;  // Mid (entity ID), or empty.
   const bool prevent_preload;
   const int selection_start_adjust;
   const int selection_end_adjust;
   const std::string context_language;
+  const std::string thumbnail_url;
+  const std::string caption;
+  const std::string quick_action_uri;
+  const QuickActionCategory quick_action_category;
 
   DISALLOW_COPY_AND_ASSIGN(ResolvedSearchTerm);
 };

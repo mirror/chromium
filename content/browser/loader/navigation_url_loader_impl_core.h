@@ -8,50 +8,57 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/loader/navigation_url_loader_impl.h"
-#include "content/common/service_worker/service_worker_status_code.h"
 
 namespace net {
-class URLRequest;
+class URLRequestContextGetter;
 struct RedirectInfo;
 }
 
 namespace content {
 
-class FrameTreeNode;
+class AppCacheNavigationHandleCore;
 class NavigationResourceHandler;
 class NavigationData;
 class ResourceContext;
-class ResourceHandler;
-class ResourceRequestBody;
-class ServiceWorkerContextWrapper;
-class ServiceWorkerRegistration;
+class ServiceWorkerNavigationHandleCore;
 class StreamHandle;
+struct GlobalRequestID;
 struct ResourceResponse;
+struct SSLStatus;
 
 // The IO-thread counterpart to the NavigationURLLoaderImpl. It lives on the IO
-// thread and is owned by the UI-thread NavigationURLLoaderImpl.
+// thread and is owned by the UI-thread NavigationURLLoaderImpl and the
+// IO-thread NavigationResourceHandler.
 // NavigationURLLoaderImplCore interacts with the ResourceDispatcherHost stack
 // and forwards signals back to the loader on the UI thread.
-class NavigationURLLoaderImplCore {
+class NavigationURLLoaderImplCore
+    : public base::RefCountedThreadSafe<NavigationURLLoaderImplCore> {
  public:
   // Creates a new NavigationURLLoaderImplCore that forwards signals back to
   // |loader| on the UI thread.
   explicit NavigationURLLoaderImplCore(
       const base::WeakPtr<NavigationURLLoaderImpl>& loader);
-  ~NavigationURLLoaderImplCore();
 
   // Starts the request.
   void Start(ResourceContext* resource_context,
-             ServiceWorkerContextWrapper* service_worker_context_wrapper,
-             std::unique_ptr<NavigationRequestInfo> request_info);
+             net::URLRequestContextGetter* url_request_context_getter,
+             ServiceWorkerNavigationHandleCore* service_worker_handle_core,
+             AppCacheNavigationHandleCore* appcache_handle_core,
+             std::unique_ptr<NavigationRequestInfo> request_info,
+             std::unique_ptr<NavigationUIData> navigation_ui_data);
 
   // Follows the current pending redirect.
   void FollowRedirect();
 
   // Proceeds with processing the response.
   void ProceedWithResponse();
+
+  // Cancels the request on the IO thread if this NavigationURLLoaderImplCore is
+  // still attached to the NavigationResourceHandler.
+  void CancelRequestIfNeeded();
 
   void set_resource_handler(NavigationResourceHandler* resource_handler) {
     resource_handler_ = resource_handler;
@@ -64,24 +71,21 @@ class NavigationURLLoaderImplCore {
   // Notifies |loader_| on the UI thread that the response started.
   void NotifyResponseStarted(ResourceResponse* response,
                              std::unique_ptr<StreamHandle> body,
-                             std::unique_ptr<NavigationData> navigation_data);
+                             const SSLStatus& ssl_status,
+                             std::unique_ptr<NavigationData> navigation_data,
+                             const GlobalRequestID& request_id,
+                             bool is_download,
+                             bool is_stream);
 
   // Notifies |loader_| on the UI thread that the request failed.
   void NotifyRequestFailed(bool in_cache, int net_error);
 
  private:
-  // Called when done checking whether the navigation has a ServiceWorker
-  // registered for it.
-  void OnServiceWorkerChecksPerformed(
-      ServiceWorkerStatusCode status,
-      scoped_refptr<ServiceWorkerRegistration> registration);
+  friend class base::RefCountedThreadSafe<NavigationURLLoaderImplCore>;
+  virtual ~NavigationURLLoaderImplCore();
 
   base::WeakPtr<NavigationURLLoaderImpl> loader_;
   NavigationResourceHandler* resource_handler_;
-  std::unique_ptr<NavigationRequestInfo> request_info_;
-  ResourceContext* resource_context_;
-
-  base::WeakPtrFactory<NavigationURLLoaderImplCore> factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationURLLoaderImplCore);
 };

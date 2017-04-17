@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Apple Inc. All rights
+ * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -32,12 +33,12 @@
 #define DocumentOrderedMap_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
-#include "wtf/text/StringImpl.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
+#include "platform/wtf/text/StringImpl.h"
 
 namespace blink {
 
@@ -46,81 +47,78 @@ class HTMLSlotElement;
 class TreeScope;
 
 class DocumentOrderedMap : public GarbageCollected<DocumentOrderedMap> {
-public:
-    static DocumentOrderedMap* create();
+ public:
+  static DocumentOrderedMap* Create();
 
-    void add(const AtomicString&, Element*);
-    void remove(const AtomicString&, Element*);
+  void Add(const AtomicString&, Element*);
+  void Remove(const AtomicString&, Element*);
 
-    bool contains(const AtomicString&) const;
-    bool containsMultiple(const AtomicString&) const;
-    // concrete instantiations of the get<>() method template
-    Element* getElementById(const AtomicString&, const TreeScope*) const;
-    const HeapVector<Member<Element>>& getAllElementsById(const AtomicString&, const TreeScope*) const;
-    Element* getElementByMapName(const AtomicString&, const TreeScope*) const;
-    HTMLSlotElement* getSlotByName(const AtomicString&, const TreeScope*) const;
-    Element* getElementByLowercasedMapName(const AtomicString&, const TreeScope*) const;
+  bool Contains(const AtomicString&) const;
+  bool ContainsMultiple(const AtomicString&) const;
+  // concrete instantiations of the get<>() method template
+  Element* GetElementById(const AtomicString&, const TreeScope*) const;
+  const HeapVector<Member<Element>>& GetAllElementsById(const AtomicString&,
+                                                        const TreeScope*) const;
+  Element* GetElementByMapName(const AtomicString&, const TreeScope*) const;
+  HTMLSlotElement* GetSlotByName(const AtomicString&, const TreeScope*) const;
+
+  DECLARE_TRACE();
+
+#if DCHECK_IS_ON()
+  // While removing a ContainerNode, ID lookups won't be precise should the tree
+  // have elements with duplicate IDs contained in the element being removed.
+  // Rare trees, but ID lookups may legitimately fail across such removals;
+  // this scope object informs DocumentOrderedMaps about the transitory
+  // state of the underlying tree.
+  class RemoveScope {
+    STACK_ALLOCATED();
+
+   public:
+    RemoveScope();
+    ~RemoveScope();
+  };
+#else
+  class RemoveScope {
+    STACK_ALLOCATED();
+
+   public:
+    RemoveScope() {}
+    ~RemoveScope() {}
+  };
+#endif
+
+ private:
+  DocumentOrderedMap();
+
+  template <bool keyMatches(const AtomicString&, const Element&)>
+  Element* Get(const AtomicString&, const TreeScope*) const;
+
+  class MapEntry : public GarbageCollected<MapEntry> {
+   public:
+    explicit MapEntry(Element* first_element)
+        : element(first_element), count(1) {}
 
     DECLARE_TRACE();
 
-#if DCHECK_IS_ON()
-    // While removing a ContainerNode, ID lookups won't be precise should the tree
-    // have elements with duplicate IDs contained in the element being removed.
-    // Rare trees, but ID lookups may legitimately fail across such removals;
-    // this scope object informs DocumentOrderedMaps about the transitory
-    // state of the underlying tree.
-    class RemoveScope {
-        STACK_ALLOCATED();
-    public:
-        RemoveScope();
-        ~RemoveScope();
-    };
-#else
-    class RemoveScope {
-        STACK_ALLOCATED();
-    public:
-        RemoveScope() { }
-        ~RemoveScope() { }
-    };
-#endif
+    Member<Element> element;
+    unsigned count;
+    HeapVector<Member<Element>> ordered_list;
+  };
 
-private:
-    DocumentOrderedMap();
+  using Map = HeapHashMap<AtomicString, Member<MapEntry>>;
 
-    template<bool keyMatches(const AtomicString&, const Element&)>
-    Element* get(const AtomicString&, const TreeScope*) const;
-
-    class MapEntry : public GarbageCollected<MapEntry> {
-    public:
-        explicit MapEntry(Element* firstElement)
-            : element(firstElement)
-            , count(1)
-        {
-        }
-
-        DECLARE_TRACE();
-
-        Member<Element> element;
-        unsigned count;
-        HeapVector<Member<Element>> orderedList;
-    };
-
-    using Map = HeapHashMap<AtomicString, Member<MapEntry>>;
-
-    mutable Map m_map;
+  mutable Map map_;
 };
 
-inline bool DocumentOrderedMap::contains(const AtomicString& id) const
-{
-    return m_map.contains(id);
+inline bool DocumentOrderedMap::Contains(const AtomicString& id) const {
+  return map_.Contains(id);
 }
 
-inline bool DocumentOrderedMap::containsMultiple(const AtomicString& id) const
-{
-    Map::const_iterator it = m_map.find(id);
-    return it != m_map.end() && it->value->count > 1;
+inline bool DocumentOrderedMap::ContainsMultiple(const AtomicString& id) const {
+  Map::const_iterator it = map_.Find(id);
+  return it != map_.end() && it->value->count > 1;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentOrderedMap_h
+#endif  // DocumentOrderedMap_h

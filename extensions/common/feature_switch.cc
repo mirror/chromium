@@ -15,18 +15,18 @@ namespace extensions {
 
 namespace {
 
-// The switch media-router is defined in chrome/common/chrome_switches.cc, but
-// we can't depend on chrome here.
-const char kMediaRouterFlag[] = "media-router";
+// The switch load-media-router-component-extension is defined in
+// chrome/common/chrome_switches.cc, but we can't depend on chrome here.
+const char kLoadMediaRouterComponentExtensionFlag[] =
+    "load-media-router-component-extension";
 
-const char kEnableMediaRouterExperiment[] = "EnableMediaRouter";
-const char kExtensionActionRedesignExperiment[] = "ExtensionActionRedesign";
+const char kYieldBetweenContentScriptRunsFieldTrial[] =
+    "YieldBetweenContentScriptRuns";
 
 class CommonSwitches {
  public:
   CommonSwitches()
-      : easy_off_store_install(nullptr, FeatureSwitch::DEFAULT_DISABLED),
-        force_dev_mode_highlighting(switches::kForceDevModeHighlighting,
+      : force_dev_mode_highlighting(switches::kForceDevModeHighlighting,
                                     FeatureSwitch::DEFAULT_DISABLED),
         prompt_for_external_extensions(
 #if defined(CHROMIUM_BUILD)
@@ -34,7 +34,7 @@ class CommonSwitches {
 #else
             nullptr,
 #endif
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_MACOSX)
             FeatureSwitch::DEFAULT_ENABLED),
 #else
             FeatureSwitch::DEFAULT_DISABLED),
@@ -42,25 +42,27 @@ class CommonSwitches {
         error_console(switches::kErrorConsole, FeatureSwitch::DEFAULT_DISABLED),
         enable_override_bookmarks_ui(switches::kEnableOverrideBookmarksUI,
                                      FeatureSwitch::DEFAULT_DISABLED),
-        extension_action_redesign(switches::kExtensionActionRedesign,
-                                  kExtensionActionRedesignExperiment,
-                                  FeatureSwitch::DEFAULT_ENABLED),
-        extension_action_redesign_override(switches::kExtensionActionRedesign,
-                                           FeatureSwitch::DEFAULT_ENABLED),
+        extension_action_redesign(nullptr, FeatureSwitch::DEFAULT_ENABLED),
         scripts_require_action(switches::kScriptsRequireAction,
                                FeatureSwitch::DEFAULT_DISABLED),
         embedded_extension_options(switches::kEmbeddedExtensionOptions,
                                    FeatureSwitch::DEFAULT_DISABLED),
         trace_app_source(switches::kTraceAppSource,
                          FeatureSwitch::DEFAULT_ENABLED),
-        media_router(kMediaRouterFlag,
-                     kEnableMediaRouterExperiment,
-                     FeatureSwitch::DEFAULT_DISABLED) {
+        load_media_router_component_extension(
+            kLoadMediaRouterComponentExtensionFlag,
+#if defined(GOOGLE_CHROME_BUILD)
+            FeatureSwitch::DEFAULT_ENABLED),
+#else
+            FeatureSwitch::DEFAULT_DISABLED),
+#endif  // defined(GOOGLE_CHROME_BUILD)
+        native_crx_bindings(switches::kNativeCrxBindings,
+                            FeatureSwitch::DEFAULT_DISABLED),
+        yield_between_content_script_runs(
+            switches::kYieldBetweenContentScriptRuns,
+            kYieldBetweenContentScriptRunsFieldTrial,
+            FeatureSwitch::DEFAULT_DISABLED) {
   }
-
-  // Enables extensions to be easily installed from sites other than the web
-  // store.
-  FeatureSwitch easy_off_store_install;
 
   FeatureSwitch force_dev_mode_highlighting;
 
@@ -71,23 +73,21 @@ class CommonSwitches {
   FeatureSwitch error_console;
   FeatureSwitch enable_override_bookmarks_ui;
   FeatureSwitch extension_action_redesign;
-  FeatureSwitch extension_action_redesign_override;
   FeatureSwitch scripts_require_action;
   FeatureSwitch embedded_extension_options;
   FeatureSwitch trace_app_source;
-  FeatureSwitch media_router;
+  FeatureSwitch load_media_router_component_extension;
+  FeatureSwitch native_crx_bindings;
+  FeatureSwitch yield_between_content_script_runs;
 };
 
-base::LazyInstance<CommonSwitches> g_common_switches =
+base::LazyInstance<CommonSwitches>::DestructorAtExit g_common_switches =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
 FeatureSwitch* FeatureSwitch::force_dev_mode_highlighting() {
   return &g_common_switches.Get().force_dev_mode_highlighting;
-}
-FeatureSwitch* FeatureSwitch::easy_off_store_install() {
-  return &g_common_switches.Get().easy_off_store_install;
 }
 FeatureSwitch* FeatureSwitch::prompt_for_external_extensions() {
   return &g_common_switches.Get().prompt_for_external_extensions;
@@ -99,16 +99,6 @@ FeatureSwitch* FeatureSwitch::enable_override_bookmarks_ui() {
   return &g_common_switches.Get().enable_override_bookmarks_ui;
 }
 FeatureSwitch* FeatureSwitch::extension_action_redesign() {
-  // Force-enable the redesigned extension action toolbar when the Media Router
-  // is enabled. Should be removed when the toolbar redesign is used by default.
-  // See crbug.com/514694
-  // Note that if Media Router is enabled by experiment, it implies that the
-  // extension action redesign is also enabled by experiment. Thus it is fine
-  // to return the override switch.
-  // TODO(kmarshall): Remove this override.
-  if (media_router()->IsEnabled())
-    return &g_common_switches.Get().extension_action_redesign_override;
-
   return &g_common_switches.Get().extension_action_redesign;
 }
 FeatureSwitch* FeatureSwitch::scripts_require_action() {
@@ -120,8 +110,14 @@ FeatureSwitch* FeatureSwitch::embedded_extension_options() {
 FeatureSwitch* FeatureSwitch::trace_app_source() {
   return &g_common_switches.Get().trace_app_source;
 }
-FeatureSwitch* FeatureSwitch::media_router() {
-  return &g_common_switches.Get().media_router;
+FeatureSwitch* FeatureSwitch::load_media_router_component_extension() {
+  return &g_common_switches.Get().load_media_router_component_extension;
+}
+FeatureSwitch* FeatureSwitch::native_crx_bindings() {
+  return &g_common_switches.Get().native_crx_bindings;
+}
+FeatureSwitch* FeatureSwitch::yield_between_content_script_runs() {
+  return &g_common_switches.Get().yield_between_content_script_runs;
 }
 
 FeatureSwitch::ScopedOverride::ScopedOverride(FeatureSwitch* feature,
@@ -168,7 +164,12 @@ FeatureSwitch::FeatureSwitch(const base::CommandLine* command_line,
 bool FeatureSwitch::IsEnabled() const {
   if (override_value_ != OVERRIDE_NONE)
     return override_value_ == OVERRIDE_ENABLED;
+  if (!cached_value_.has_value())
+    cached_value_ = ComputeValue();
+  return cached_value_.value();
+}
 
+bool FeatureSwitch::ComputeValue() const {
   if (!switch_name_)
     return default_value_;
 

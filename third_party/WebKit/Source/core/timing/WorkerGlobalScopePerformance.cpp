@@ -35,41 +35,42 @@
 
 namespace blink {
 
-WorkerGlobalScopePerformance::WorkerGlobalScopePerformance()
-{
+WorkerGlobalScopePerformance::WorkerGlobalScopePerformance(
+    WorkerGlobalScope& worker_global_scope)
+    : Supplement<WorkerGlobalScope>(worker_global_scope) {}
+
+const char* WorkerGlobalScopePerformance::SupplementName() {
+  return "WorkerGlobalScopePerformance";
 }
 
-const char* WorkerGlobalScopePerformance::supplementName()
-{
-    return "WorkerGlobalScopePerformance";
+WorkerGlobalScopePerformance& WorkerGlobalScopePerformance::From(
+    WorkerGlobalScope& worker_global_scope) {
+  WorkerGlobalScopePerformance* supplement =
+      static_cast<WorkerGlobalScopePerformance*>(
+          Supplement<WorkerGlobalScope>::From(worker_global_scope,
+                                              SupplementName()));
+  if (!supplement) {
+    supplement = new WorkerGlobalScopePerformance(worker_global_scope);
+    ProvideTo(worker_global_scope, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-WorkerGlobalScopePerformance& WorkerGlobalScopePerformance::from(WorkerGlobalScope& context)
-{
-    WorkerGlobalScopePerformance* supplement = static_cast<WorkerGlobalScopePerformance*>(Supplement<WorkerGlobalScope>::from(context, supplementName()));
-    if (!supplement) {
-        supplement = new WorkerGlobalScopePerformance;
-        provideTo(context, supplementName(), supplement);
-    }
-    return *supplement;
+WorkerPerformance* WorkerGlobalScopePerformance::performance(
+    WorkerGlobalScope& worker_global_scope) {
+  return From(worker_global_scope).performance(&worker_global_scope);
 }
 
-WorkerPerformance* WorkerGlobalScopePerformance::performance(WorkerGlobalScope& context)
-{
-    return from(context).performance(&context);
+WorkerPerformance* WorkerGlobalScopePerformance::performance(
+    WorkerGlobalScope* worker_global_scope) {
+  if (!performance_)
+    performance_ = WorkerPerformance::Create(worker_global_scope);
+  return performance_.Get();
 }
 
-WorkerPerformance* WorkerGlobalScopePerformance::performance(WorkerGlobalScope* context)
-{
-    if (!m_performance)
-        m_performance = WorkerPerformance::create(context);
-    return m_performance.get();
+DEFINE_TRACE(WorkerGlobalScopePerformance) {
+  visitor->Trace(performance_);
+  Supplement<WorkerGlobalScope>::Trace(visitor);
 }
 
-DEFINE_TRACE(WorkerGlobalScopePerformance)
-{
-    visitor->trace(m_performance);
-    Supplement<WorkerGlobalScope>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -5,6 +5,12 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_CHROME_CONTENT_VERIFIER_DELEGATE_H_
 #define CHROME_BROWSER_EXTENSIONS_CHROME_CONTENT_VERIFIER_DELEGATE_H_
 
+#include <map>
+#include <memory>
+#include <set>
+#include <string>
+
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "extensions/browser/content_verifier_delegate.h"
 
@@ -12,7 +18,13 @@ namespace content {
 class BrowserContext;
 }
 
+namespace net {
+class BackoffEntry;
+}
+
 namespace extensions {
+
+class PolicyExtensionReinstaller;
 
 class ChromeContentVerifierDelegate : public ContentVerifierDelegate {
  public:
@@ -31,22 +43,23 @@ class ChromeContentVerifierDelegate : public ContentVerifierDelegate {
       const extensions::Extension* extension) override;
   void VerifyFailed(const std::string& extension_id,
                     ContentVerifyJob::FailureReason reason) override;
+  void Shutdown() override;
 
  private:
-  void LogFailureForPolicyForceInstall(const std::string& extension_id);
-
   content::BrowserContext* context_;
   ContentVerifierDelegate::Mode default_mode_;
+
+  // This maps an extension id to a backoff entry for slowing down
+  // redownload/reinstall of corrupt policy extensions if it keeps happening
+  // in a loop (eg crbug.com/661738).
+  std::map<std::string, std::unique_ptr<net::BackoffEntry>>
+      policy_reinstall_backoff_;
 
   // For reporting metrics in BOOTSTRAP mode, when an extension would be
   // disabled if content verification was in ENFORCE mode.
   std::set<std::string> would_be_disabled_ids_;
 
-  // Currently enterprise policy extensions that must remain enabled will not
-  // be disabled due to content verification failure, but we are considering
-  // changing this (crbug.com/447040), so for now we are tracking how often
-  // this happens to help inform the decision.
-  std::set<std::string> corrupt_policy_extensions_;
+  std::unique_ptr<PolicyExtensionReinstaller> policy_extension_reinstaller_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeContentVerifierDelegate);
 };

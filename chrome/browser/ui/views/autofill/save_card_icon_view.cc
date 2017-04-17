@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/autofill/save_card_bubble_controller_impl.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -12,7 +13,6 @@
 #include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/vector_icons_public.h"
 
 namespace autofill {
 
@@ -40,8 +40,8 @@ views::BubbleDialogDelegateView* SaveCardIconView::GetBubble() const {
       controller->save_card_bubble_view());
 }
 
-gfx::VectorIconId SaveCardIconView::GetVectorIcon() const {
-  return gfx::VectorIconId::CREDIT_CARD;
+const gfx::VectorIcon& SaveCardIconView::GetVectorIcon() const {
+  return kCreditCardIcon;
 }
 
 void SaveCardIconView::TabDeactivated(content::WebContents* contents) {

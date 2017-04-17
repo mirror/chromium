@@ -35,74 +35,75 @@
 #include "platform/animation/CompositorAnimationDelegate.h"
 #include "platform/animation/CompositorAnimationPlayerClient.h"
 #include "platform/animation/CompositorScrollOffsetAnimationCurve.h"
-#include "platform/geometry/FloatPoint.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include <memory>
 
 namespace blink {
 
-class ScrollAnimatorTest;
 class CompositorAnimationTimeline;
 
 class PLATFORM_EXPORT ScrollAnimator : public ScrollAnimatorBase {
-public:
-    explicit ScrollAnimator(ScrollableArea*, WTF::TimeFunction = WTF::monotonicallyIncreasingTime);
-    ~ScrollAnimator() override;
+ public:
+  explicit ScrollAnimator(ScrollableArea*,
+                          WTF::TimeFunction = WTF::MonotonicallyIncreasingTime);
+  ~ScrollAnimator() override;
 
-    bool hasRunningAnimation() const override;
-    FloatSize computeDeltaToConsume(const FloatSize& delta) const override;
+  bool HasRunningAnimation() const override;
+  ScrollOffset ComputeDeltaToConsume(const ScrollOffset& delta) const override;
 
-    ScrollResult userScroll(ScrollGranularity, const FloatSize& delta) override;
-    void scrollToOffsetWithoutAnimation(const FloatPoint&) override;
-    FloatPoint desiredTargetPosition() const override;
+  ScrollResult UserScroll(ScrollGranularity,
+                          const ScrollOffset& delta) override;
+  void ScrollToOffsetWithoutAnimation(const ScrollOffset&) override;
+  ScrollOffset DesiredTargetOffset() const override;
 
-    // ScrollAnimatorCompositorCoordinator implementation.
-    void tickAnimation(double monotonicTime) override;
-    void cancelAnimation() override;
-    void adjustAnimationAndSetScrollPosition(const DoublePoint& position, ScrollType) override;
-    void takeOverCompositorAnimation() override;
-    void resetAnimationState() override;
-    void updateCompositorAnimations() override;
-    void notifyCompositorAnimationFinished(int groupId) override;
-    void notifyCompositorAnimationAborted(int groupId) override;
-    void layerForCompositedScrollingDidChange(CompositorAnimationTimeline*) override;
+  // ScrollAnimatorCompositorCoordinator implementation.
+  void TickAnimation(double monotonic_time) override;
+  void CancelAnimation() override;
+  void AdjustAnimationAndSetScrollOffset(const ScrollOffset&,
+                                         ScrollType) override;
+  void TakeOverCompositorAnimation() override;
+  void ResetAnimationState() override;
+  void UpdateCompositorAnimations() override;
+  void NotifyCompositorAnimationFinished(int group_id) override;
+  void NotifyCompositorAnimationAborted(int group_id) override;
+  void LayerForCompositedScrollingDidChange(
+      CompositorAnimationTimeline*) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    // Returns whether or not the animation was sent to the compositor.
-    virtual bool sendAnimationToCompositor();
+ protected:
+  // Returns whether or not the animation was sent to the compositor.
+  virtual bool SendAnimationToCompositor();
 
-    void notifyAnimationTakeover(
-        double monotonicTime,
-        double animationStartTime,
-        std::unique_ptr<cc::AnimationCurve>) override;
+  void NotifyAnimationTakeover(double monotonic_time,
+                               double animation_start_time,
+                               std::unique_ptr<cc::AnimationCurve>) override;
 
-    std::unique_ptr<CompositorScrollOffsetAnimationCurve> m_animationCurve;
-    double m_startTime;
-    WTF::TimeFunction m_timeFunction;
+  std::unique_ptr<CompositorScrollOffsetAnimationCurve> animation_curve_;
+  double start_time_;
+  WTF::TimeFunction time_function_;
 
-private:
-    // Returns true if the animation was scheduled successfully. If animation
-    // could not be scheduled (e.g. because the frame is detached), scrolls
-    // immediately to the target and returns false.
-    bool registerAndScheduleAnimation();
+ private:
+  // Returns true if the animation was scheduled successfully. If animation
+  // could not be scheduled (e.g. because the frame is detached), scrolls
+  // immediately to the target and returns false.
+  bool RegisterAndScheduleAnimation();
 
-    void createAnimationCurve();
-    void postAnimationCleanupAndReset();
+  void CreateAnimationCurve();
+  void PostAnimationCleanupAndReset();
 
-    void addMainThreadScrollingReason();
-    void removeMainThreadScrollingReason();
+  void AddMainThreadScrollingReason();
+  void RemoveMainThreadScrollingReason();
 
-    // Returns true if will animate to the given target position. Returns false
-    // only when there is no animation running and we are not starting one
-    // because we are already at targetPos.
-    bool willAnimateToOffset(const FloatPoint& targetPos);
+  // Returns true if will animate to the given target offset. Returns false
+  // only when there is no animation running and we are not starting one
+  // because we are already at targetPos.
+  bool WillAnimateToOffset(const ScrollOffset& target_pos);
 
-    FloatPoint m_targetOffset;
-    ScrollGranularity m_lastGranularity;
+  ScrollOffset target_offset_;
+  ScrollGranularity last_granularity_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScrollAnimator_h
+#endif  // ScrollAnimator_h

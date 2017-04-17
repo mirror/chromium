@@ -47,8 +47,10 @@ const IntelUarchTableEntry kIntelUarchTable[] = {
   {"06_46", "Haswell"},
   {"06_47", "Broadwell"},  // Broadwell-H
   {"06_4C", "Airmont"},    // Braswell
+  {"06_4D", "Silvermont"}, // Avoton/Rangely
   {"06_4E", "Skylake"},
   {"06_56", "Broadwell"},  // Broadwell-DE
+  {"06_5E", "Skylake"},
   {"0F_03", "Prescott"},
   {"0F_04", "Prescott"},
   {"0F_06", "Presler"},
@@ -77,9 +79,9 @@ std::string GetIntelUarch(const CPUIdentity& cpuid) {
   std::string family_model =
       base::StringPrintf("%02X_%02X", cpuid.family, cpuid.model);
   const internal::IntelUarchTableEntry search_elem = {family_model.c_str(), ""};
-  const auto bound = std::lower_bound(
-      internal::kIntelUarchTable, internal::kIntelUarchTableEnd,
-      search_elem, internal::IntelUarchTableCmp);
+  auto* bound = std::lower_bound(internal::kIntelUarchTable,
+                                 internal::kIntelUarchTableEnd, search_elem,
+                                 internal::IntelUarchTableCmp);
   if (bound->family_model != family_model)
     return std::string();  // Unknown uarch
   return bound->uarch;
@@ -88,6 +90,7 @@ std::string GetIntelUarch(const CPUIdentity& cpuid) {
 CPUIdentity GetCPUIdentity() {
   CPUIdentity result = {};
   result.arch = base::SysInfo::OperatingSystemArchitecture();
+  result.release = base::SysInfo::OperatingSystemVersion();
   base::CPU cpuid;
   result.vendor = cpuid.vendor_name();
   result.family = cpuid.family();

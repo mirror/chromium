@@ -17,6 +17,7 @@ class PrefService;
 class Profile;
 
 namespace extensions {
+class Extension;
 
 class PrefsUtil {
 
@@ -40,6 +41,11 @@ class PrefsUtil {
   // to prefs that clients of the settingsPrivate API may retrieve and
   // manipulate.
   const TypedPrefMap& GetWhitelistedKeys();
+
+  // Returns the pref type for |pref_name| or PREF_TYPE_NONE if not in the
+  // whitelist.
+  api::settings_private::PrefType GetWhitelistedPrefType(
+      const std::string& pref_name);
 
   // Gets the value of the pref with the given |name|. Returns a pointer to an
   // empty PrefObject if no pref is found for |name|.
@@ -101,6 +107,10 @@ class PrefsUtil {
 
   SetPrefResult SetCrosSettingsPref(const std::string& name,
                                     const base::Value* value);
+
+ private:
+  const Extension* GetExtensionControllingPref(
+      const api::settings_private::PrefObject& pref_object);
 
   Profile* profile_;  // weak
 };

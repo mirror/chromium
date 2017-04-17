@@ -14,41 +14,39 @@
 namespace blink {
 
 class DummyFontFaceSource : public CSSFontFaceSource {
-public:
-    PassRefPtr<SimpleFontData> createFontData(const FontDescription&) override
-    {
-        return SimpleFontData::create(FontPlatformData(fromSkSp(SkTypeface::MakeDefault()), "", 0, false, false));
-    }
+ public:
+  PassRefPtr<SimpleFontData> CreateFontData(const FontDescription&) override {
+    return SimpleFontData::Create(
+        FontPlatformData(SkTypeface::MakeDefault(), "", 0, false, false));
+  }
 
-    DummyFontFaceSource() { }
+  DummyFontFaceSource() {}
 
-    PassRefPtr<SimpleFontData> getFontDataForSize(float size)
-    {
-        FontDescription fontDescription;
-        fontDescription.setSizeAdjust(size);
-        fontDescription.setAdjustedSize(size);
-        return getFontData(fontDescription);
-    }
+  PassRefPtr<SimpleFontData> GetFontDataForSize(float size) {
+    FontDescription font_description;
+    font_description.SetSizeAdjust(size);
+    font_description.SetAdjustedSize(size);
+    return GetFontData(font_description);
+  }
 };
 
 namespace {
 
-unsigned simulateHashCalculation(float size)
-{
-    FontDescription fontDescription;
-    fontDescription.setSizeAdjust(size);
-    fontDescription.setAdjustedSize(size);
-    return fontDescription.cacheKey(FontFaceCreationParams()).hash();
+unsigned SimulateHashCalculation(float size) {
+  FontDescription font_description;
+  font_description.SetSizeAdjust(size);
+  font_description.SetAdjustedSize(size);
+  return font_description.CacheKey(FontFaceCreationParams()).GetHash();
+}
 }
 
+TEST(CSSFontFaceSourceTest, HashCollision) {
+  DummyFontFaceSource font_face_source;
+  // Even if the hash value collide, fontface cache should return different
+  // value for different fonts.
+  EXPECT_EQ(SimulateHashCalculation(8775), SimulateHashCalculation(418));
+  EXPECT_NE(font_face_source.GetFontDataForSize(8775),
+            font_face_source.GetFontDataForSize(418));
 }
 
-TEST(CSSFontFaceSourceTest, HashCollision)
-{
-    DummyFontFaceSource fontFaceSource;
-    // Even if the hash value collide, fontface cache should return different value for different fonts.
-    EXPECT_EQ(simulateHashCalculation(2821), simulateHashCalculation(3346));
-    EXPECT_NE(fontFaceSource.getFontDataForSize(2821), fontFaceSource.getFontDataForSize(3346));
-}
-
-} // namespace blink
+}  // namespace blink

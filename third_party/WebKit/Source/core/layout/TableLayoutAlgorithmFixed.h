@@ -23,27 +23,29 @@
 
 #include "core/layout/TableLayoutAlgorithm.h"
 #include "platform/Length.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class LayoutTable;
 
 class TableLayoutAlgorithmFixed final : public TableLayoutAlgorithm {
-public:
-    TableLayoutAlgorithmFixed(LayoutTable*);
+ public:
+  TableLayoutAlgorithmFixed(LayoutTable*);
 
-    void computeIntrinsicLogicalWidths(LayoutUnit& minWidth, LayoutUnit& maxWidth) override;
-    void applyPreferredLogicalWidthQuirks(LayoutUnit& minWidth, LayoutUnit& maxWidth) const override;
-    void layout() override;
-    void willChangeTableLayout() override;
+  void ComputeIntrinsicLogicalWidths(LayoutUnit& min_width,
+                                     LayoutUnit& max_width) override;
+  void ApplyPreferredLogicalWidthQuirks(LayoutUnit& min_width,
+                                        LayoutUnit& max_width) const override;
+  void UpdateLayout() override;
+  void WillChangeTableLayout() override;
 
-private:
-    int calcWidthArray();
+ private:
+  int CalcWidthArray();
 
-    Vector<Length> m_width;
+  Vector<Length> width_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TableLayoutAlgorithmFixed_h
+#endif  // TableLayoutAlgorithmFixed_h

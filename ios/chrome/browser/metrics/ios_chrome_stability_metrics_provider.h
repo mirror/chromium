@@ -2,11 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_METRICS_CHROME_STABILITY_METRICS_PROVIDER_H_
-#define IOS_CHROME_BROWSER_METRICS_CHROME_STABILITY_METRICS_PROVIDER_H_
+#ifndef IOS_CHROME_BROWSER_METRICS_IOS_CHROME_STABILITY_METRICS_PROVIDER_H_
+#define IOS_CHROME_BROWSER_METRICS_IOS_CHROME_STABILITY_METRICS_PROVIDER_H_
 
 #include "base/macros.h"
-#include "base/metrics/user_metrics.h"
 #include "components/metrics/metrics_provider.h"
 #include "components/metrics/stability_metrics_helper.h"
 #include "ios/web/public/web_state/global_web_state_observer.h"
@@ -30,6 +29,7 @@ class IOSChromeStabilityMetricsProvider : public metrics::MetricsProvider,
 
   // web::GlobalWebStateObserver:
   void WebStateDidStartLoading(web::WebState* web_state) override;
+  void RenderProcessGone(web::WebState* web_state) override;
 
   // Records a renderer process crash.
   void LogRendererCrash();
@@ -43,4 +43,4 @@ class IOSChromeStabilityMetricsProvider : public metrics::MetricsProvider,
   DISALLOW_COPY_AND_ASSIGN(IOSChromeStabilityMetricsProvider);
 };
 
-#endif  // IOS_CHROME_BROWSER_METRICS_CHROME_STABILITY_METRICS_PROVIDER_H_
+#endif  // IOS_CHROME_BROWSER_METRICS_IOS_CHROME_STABILITY_METRICS_PROVIDER_H_

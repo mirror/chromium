@@ -19,12 +19,12 @@
 #include "components/policy/core/common/cloud/cloud_policy_client_registration_helper.h"
 #include "components/policy/core/common/cloud/user_cloud_policy_manager.h"
 #include "components/policy/core/common/policy_switches.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "policy/proto/device_management_backend.pb.h"
 
 namespace em = enterprise_management;
 
@@ -109,22 +109,20 @@ void UserPolicySigninService::RegisterForPolicyInternal(
       policy_client.get(),
       kCloudPolicyRegistrationType));
 
+  // Using a raw pointer to |this| is okay, because we own the
+  // |registration_helper_|.
+  auto registration_callback = base::Bind(
+      &UserPolicySigninService::CallPolicyRegistrationCallback,
+      base::Unretained(this), base::Passed(&policy_client), callback);
   if (access_token.empty()) {
     registration_helper_->StartRegistration(
-        oauth2_token_service_, account_id,
-        base::Bind(&UserPolicySigninService::CallPolicyRegistrationCallback,
-                   base::Unretained(this), base::Passed(&policy_client),
-                   callback));
+        oauth2_token_service_, account_id, registration_callback);
   } else {
 #if defined(OS_ANDROID)
     NOTREACHED();
 #else
     registration_helper_->StartRegistrationWithAccessToken(
-        access_token,
-        base::Bind(&UserPolicySigninService::CallPolicyRegistrationCallback,
-                   base::Unretained(this),
-                   base::Passed(&policy_client),
-                   callback));
+        access_token, registration_callback);
 #endif
   }
 }
@@ -138,7 +136,6 @@ void UserPolicySigninService::CallPolicyRegistrationCallback(
 
 void UserPolicySigninService::Shutdown() {
   CancelPendingRegistration();
-  registration_helper_.reset();
   UserPolicySigninServiceBase::Shutdown();
 }
 
@@ -206,6 +203,7 @@ void UserPolicySigninService::RegisterCloudPolicyService() {
 
 void UserPolicySigninService::CancelPendingRegistration() {
   weak_factory_.InvalidateWeakPtrs();
+  registration_helper_.reset();
 }
 
 void UserPolicySigninService::OnRegistrationDone() {

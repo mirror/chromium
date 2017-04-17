@@ -24,6 +24,8 @@ class NetworkState;
 class NetworkPortalWebDialog;
 class NetworkPortalNotificationControllerTest;
 
+// Shows a message center notification when the networking stack detects a
+// captive portal.
 class NetworkPortalNotificationController
     : public NetworkStateHandlerObserver,
       public NetworkPortalDetector::Observer {
@@ -123,8 +125,8 @@ class NetworkPortalNotificationController
       const NetworkState* network,
       const NetworkPortalDetector::CaptivePortalState& state) override;
 
-  // Last network path for which notification was displayed.
-  std::string last_network_path_;
+  // Last network guid for which notification was displayed.
+  std::string last_network_guid_;
 
   // Backpointer to owner.
   NetworkPortalDetector* network_portal_detector_ = nullptr;

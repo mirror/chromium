@@ -27,9 +27,10 @@ class Value;
 namespace net {
 
 class AddressList;
-class BoundNetLog;
+class HostResolverImpl;
 class HostResolverProc;
 class NetLog;
+class NetLogWithSource;
 
 // This class represents the task of resolving hostnames (or IP address
 // literal) to an AddressList object.
@@ -76,6 +77,8 @@ class NET_EXPORT HostResolver {
   class NET_EXPORT RequestInfo {
    public:
     explicit RequestInfo(const HostPortPair& host_port_pair);
+    RequestInfo(const RequestInfo& request_info);
+    ~RequestInfo();
 
     const HostPortPair& host_port_pair() const { return host_port_pair_; }
     void set_host_port_pair(const HostPortPair& host_port_pair) {
@@ -106,7 +109,17 @@ class NET_EXPORT HostResolver {
     bool is_my_ip_address() const { return is_my_ip_address_; }
     void set_is_my_ip_address(bool b) { is_my_ip_address_ = b; }
 
+    using CacheHitCallback = base::Callback<void(const RequestInfo&)>;
+    const CacheHitCallback& cache_hit_callback() const {
+      return cache_hit_callback_;
+    }
+    void set_cache_hit_callback(const CacheHitCallback& callback) {
+      cache_hit_callback_ = callback;
+    }
+
    private:
+    RequestInfo();
+
     // The hostname to resolve, and the port to use in resulting sockaddrs.
     HostPortPair host_port_pair_;
 
@@ -125,6 +138,10 @@ class NET_EXPORT HostResolver {
     // Indicates a request for myIpAddress (to differentiate from other requests
     // for localhost, currently used by Chrome OS).
     bool is_my_ip_address_;
+
+    // A callback that will be called when another request reads the cache data
+    // returned (and possibly written) by this request.
+    CacheHitCallback cache_hit_callback_;
   };
 
   // Set Options.max_concurrent_resolves to this to select a default level
@@ -165,7 +182,7 @@ class NET_EXPORT HostResolver {
                       AddressList* addresses,
                       const CompletionCallback& callback,
                       std::unique_ptr<Request>* out_req,
-                      const BoundNetLog& net_log) = 0;
+                      const NetLogWithSource& net_log) = 0;
 
   // Resolves the given hostname (or IP address literal) out of cache or HOSTS
   // file (if enabled) only. This is guaranteed to complete synchronously.
@@ -173,7 +190,7 @@ class NET_EXPORT HostResolver {
   // or HOSTS entry exists. Otherwise, ERR_DNS_CACHE_MISS is returned.
   virtual int ResolveFromCache(const RequestInfo& info,
                                AddressList* addresses,
-                               const BoundNetLog& net_log) = 0;
+                               const NetLogWithSource& net_log) = 0;
 
   // Enable or disable the built-in asynchronous DnsClient.
   virtual void SetDnsClientEnabled(bool enabled);
@@ -186,15 +203,39 @@ class NET_EXPORT HostResolver {
   // nullptr if it's configured to always use the system host resolver.
   virtual std::unique_ptr<base::Value> GetDnsConfigAsValue() const;
 
+  typedef base::Callback<void(std::unique_ptr<const base::Value>)>
+      PersistCallback;
+  // Configures the HostResolver to be able to persist data (e.g. observed
+  // performance) between sessions. |persist_callback| is a callback that will
+  // be called when the HostResolver wants to persist data; |old_data| is the
+  // data last persisted by the resolver on the previous session.
+  virtual void InitializePersistence(
+      const PersistCallback& persist_callback,
+      std::unique_ptr<const base::Value> old_data);
+
+  // Sets the HostResolver to assume that IPv6 is unreachable when on a wifi
+  // connection. See https://crbug.com/696569 for further context.
+  virtual void SetNoIPv6OnWifi(bool no_ipv6_on_wifi);
+  virtual bool GetNoIPv6OnWifi();
+
   // Creates a HostResolver implementation that queries the underlying system.
   // (Except if a unit-test has changed the global HostResolverProc using
   // ScopedHostResolverProc to intercept requests to the system).
   static std::unique_ptr<HostResolver> CreateSystemResolver(
       const Options& options,
       NetLog* net_log);
+  // Same, but explicitly returns the HostResolverImpl. Only used by
+  // StaleHostResolver in cronet.
+  static std::unique_ptr<HostResolverImpl> CreateSystemResolverImpl(
+      const Options& options,
+      NetLog* net_log);
 
   // As above, but uses default parameters.
   static std::unique_ptr<HostResolver> CreateDefaultResolver(NetLog* net_log);
+  // Same, but explicitly returns the HostResolverImpl. Only used by
+  // StaleHostResolver in cronet.
+  static std::unique_ptr<HostResolverImpl> CreateDefaultResolverImpl(
+      NetLog* net_log);
 
  protected:
   HostResolver();

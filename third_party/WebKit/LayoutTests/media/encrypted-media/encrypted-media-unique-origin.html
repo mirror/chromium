@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Unique origin is unable to create MediaKeys</title>
+        <title>requestMediaKeySystemAccess() is not available on unique origin</title>
         <script src="../../resources/testharness.js"></script>
         <script src="../../resources/testharnessreport.js"></script>
     </head>
     <body>
-        <div id="log"></div>
         <script>
             // When the sandbox attribute is present on an iframe, it will
             // treat the content as being from a unique origin. So try to
@@ -32,27 +31,20 @@
             }
 
             promise_test(function(test) {
+                // TODO(xhwang): Also check other EME APIs.
                 var script = 'data:text/html,' +
                     '<script>' +
                     '    window.onmessage = function(e) {' +
-                    '        navigator.requestMediaKeySystemAccess(\'org.w3.clearkey\', [{' +
-                    '           initDataTypes: [ \'keyids\' ],' +
-                    '           audioCapabilities: [' +
-                    '               { contentType: \'audio/mp4; codecs="mp4a.40.2"\' },' +
-                    '               { contentType: \'audio/webm; codecs="opus"\' }' +
-                    '           ]' +
-                    '       }]).then(function(access) {' +
-                    '            return access.createMediaKeys();' +
-                    '        }).then(function(mediaKeys) {' +
-                    '            window.parent.postMessage({result: \'allowed\'}, \'*\');' +
-                    '        }, function(error) {' +
-                    '            window.parent.postMessage({result: \'failed\'}, \'*\');' +
-                    '        });' +
+                    '        if (\'requestMediaKeySystemAccess\' in navigator) {' +
+                    '            window.parent.postMessage({result: \'available\'}, \'*\');' +
+                    '        } else { ' +
+                    '            window.parent.postMessage({result: \'unavailable\'}, \'*\');' +
+                    '        }' +
                     '    };' +
                     '<\/script>';
 
                 // Verify that this page can create a MediaKeys first.
-                navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{
+                return navigator.requestMediaKeySystemAccess('org.w3.clearkey', [{
                     initDataTypes: [ 'keyids' ],
                     audioCapabilities: [
                         { contentType: 'audio/mp4; codecs="mp4a.40.2"' },
@@ -62,14 +54,14 @@
                     return access.createMediaKeys();
                 }).then(function(mediaKeys) {
                     // Success, so now create the iframe and try there.
-                    return load_iframe(script, 'allow-scripts')
+                    return load_iframe(script, 'allow-scripts');
                 }).then(function(iframe) {
                     iframe.contentWindow.postMessage({}, '*');
                     return wait_for_message();
                 }).then(function(message) {
-                    assert_equals(message.result, 'failed');
+                    assert_equals(message.result, 'unavailable');
                 });
-            }, 'Unique origin is unable to create MediaKeys');
+            }, 'requestMediaKeySystemAccess() is not available on unique origin');
         </script>
     </body>
 </html>

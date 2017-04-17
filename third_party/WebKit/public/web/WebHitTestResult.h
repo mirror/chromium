@@ -37,47 +37,47 @@ class WebNode;
 class WebURL;
 struct WebPoint;
 
-// Properties of a hit test result, i.e. properties of the nodes at a given point
-// (the hit point) on the page. Both urls may be populated at the same time, for
-// example in the instance of an <img> inside an <a>.
+// Properties of a hit test result, i.e. properties of the nodes at a given
+// point (the hit point) on the page. Both urls may be populated at the same
+// time, for example in the instance of an <img> inside an <a>.
 class WebHitTestResult {
-public:
-    WebHitTestResult() { }
-    WebHitTestResult(const WebHitTestResult& info) { assign(info); }
-    ~WebHitTestResult() { reset(); }
+ public:
+  WebHitTestResult() {}
+  WebHitTestResult(const WebHitTestResult& info) { Assign(info); }
+  ~WebHitTestResult() { Reset(); }
 
-    BLINK_EXPORT void assign(const WebHitTestResult&);
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT bool isNull() const;
+  BLINK_EXPORT void Assign(const WebHitTestResult&);
+  BLINK_EXPORT void Reset();
+  BLINK_EXPORT bool IsNull() const;
 
-    // The node that was hit (only one for point-based tests).
-    BLINK_EXPORT WebNode node() const;
+  // The node that was hit (only one for point-based tests).
+  BLINK_EXPORT WebNode GetNode() const;
 
-    // Coordinates of the point that was hit. Relative to the node.
-    BLINK_EXPORT WebPoint localPoint() const;
+  // Coordinates of the point that was hit. Relative to the node.
+  BLINK_EXPORT WebPoint LocalPoint() const;
 
-    // If a link (eg. anchor or area tag) is hit, return the element.
-    // Return null otheriwse.
-    BLINK_EXPORT WebElement urlElement() const;
+  // If a link (eg. anchor or area tag) is hit, return the element.
+  // Return null otheriwse.
+  BLINK_EXPORT WebElement UrlElement() const;
 
-    // If an image is hit, return the image source. Return empty otherwise.
-    BLINK_EXPORT WebURL absoluteImageURL() const;
+  // If an image is hit, return the image source. Return empty otherwise.
+  BLINK_EXPORT WebURL AbsoluteImageURL() const;
 
-    // If an link is hit, return the link url source. Return empty otherwise.
-    BLINK_EXPORT WebURL absoluteLinkURL() const;
+  // If an link is hit, return the link url source. Return empty otherwise.
+  BLINK_EXPORT WebURL AbsoluteLinkURL() const;
 
-    // Return whether an editable input element was hit.
-    BLINK_EXPORT bool isContentEditable() const;
+  // Return whether an editable input element was hit.
+  BLINK_EXPORT bool IsContentEditable() const;
 
 #if BLINK_IMPLEMENTATION
-    WebHitTestResult(const HitTestResult&);
-    WebHitTestResult& operator=(const HitTestResult&);
+  WebHitTestResult(const HitTestResult&);
+  WebHitTestResult& operator=(const HitTestResult&);
 #endif
 
-protected:
-    WebPrivatePtr<WebHitTestResultPrivate> m_private;
+ protected:
+  WebPrivatePtr<WebHitTestResultPrivate> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

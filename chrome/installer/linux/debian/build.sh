@@ -128,6 +128,7 @@ usage() {
   echo "-o dir     package output directory [${OUTPUTDIR}]"
   echo "-b dir     build input directory    [${BUILDDIR}]"
   echo "-d brand   either chromium or google_chrome"
+  echo "-s dir     /path/to/sysroot"
   echo "-h         this help message"
 }
 
@@ -162,7 +163,7 @@ verify_channel() {
 }
 
 process_opts() {
-  while getopts ":o:b:c:a:d:h" OPTNAME
+  while getopts ":s:o:b:c:a:d:h" OPTNAME
   do
     case $OPTNAME in
       o )
@@ -180,6 +181,9 @@ process_opts() {
         ;;
       d )
         BRANDING="$OPTARG"
+        ;;
+      s )
+        SYSROOT="$OPTARG"
         ;;
       h )
         usage
@@ -223,6 +227,13 @@ trap cleanup 0
 process_opts "$@"
 BUILDDIR=${BUILDDIR:=$(readlink -f "${SCRIPTDIR}/../../../../out/Release")}
 
+if [[ "$(basename ${SYSROOT})" = "debian_jessie_"*"-sysroot" ]]; then
+  TARGET_DISTRO="jessie"
+else
+  echo "Debian package can only be built using the jessie sysroot."
+  exit 1
+fi
+
 source ${BUILDDIR}/installer/common/installer.include
 
 get_version_info
@@ -248,13 +259,6 @@ export DEBEMAIL="${MAINTMAIL}"
 # the LSB sub-packages, to avoid pulling in all that stuff that's not installed
 # by default.
 
-# Need a dummy debian/control file for dpkg-shlibdeps.
-DUMMY_STAGING_DIR="${TMPFILEDIR}/dummy_staging"
-mkdir "$DUMMY_STAGING_DIR"
-cd "$DUMMY_STAGING_DIR"
-mkdir debian
-touch debian/control
-
 # Generate the dependencies,
 # TODO(mmoss): This is a workaround for a problem where dpkg-shlibdeps was
 # resolving deps using some of our build output shlibs (i.e.
@@ -264,43 +268,48 @@ touch debian/control
 # but it seems that we don't currently, so this is the most expediant fix.
 SAVE_LDLP=${LD_LIBRARY_PATH:-}
 unset LD_LIBRARY_PATH
-DPKG_SHLIB_DEPS=$(dpkg-shlibdeps -O "$BUILDDIR/chrome" | \
-  sed 's/^shlibs:Depends=//')
+if [ ${TARGETARCH} = "x64" ]; then
+  SHLIB_ARGS="-l${SYSROOT}/usr/lib/x86_64-linux-gnu"
+  SHLIB_ARGS="${SHLIB_ARGS} -l${SYSROOT}/lib/x86_64-linux-gnu"
+else
+  SHLIB_ARGS="-l${SYSROOT}/usr/lib/i386-linux-gnu"
+  SHLIB_ARGS="${SHLIB_ARGS} -l${SYSROOT}/lib/i386-linux-gnu"
+fi
+SHLIB_ARGS="${SHLIB_ARGS} -l${SYSROOT}/usr/lib"
+DPKG_SHLIB_DEPS=$(cd ${SYSROOT} && dpkg-shlibdeps ${SHLIB_ARGS:-} -O \
+                  -e"$BUILDDIR/chrome" | sed 's/^shlibs:Depends=//')
 if [ -n "$SAVE_LDLP" ]; then
   LD_LIBRARY_PATH=$SAVE_LDLP
 fi
 
 # Format it nicely and save it for comparison.
-# The grep -v is for a duplicate libc6 dep caused by Lucid glibc silliness.
-echo "$DPKG_SHLIB_DEPS" | sed 's/, /\n/g' | \
-  grep -v '^libc6 (>= 2.3.6-6~)$' | LANG=C sort > actual
+echo "$DPKG_SHLIB_DEPS" | sed 's/, /\n/g' | LANG=C sort > actual
 
-# Compare the expected dependency list to the generate list.
+# Compare the expected dependency list to the generated list.
 BAD_DIFF=0
-diff -u "$SCRIPTDIR/expected_deps_$TARGETARCH" actual || BAD_DIFF=1
+diff -u "$SCRIPTDIR/expected_deps_${TARGETARCH}_${TARGET_DISTRO}" actual || \
+  BAD_DIFF=1
 if [ $BAD_DIFF -ne 0 ] && [ -z "${IGNORE_DEPS_CHANGES:-}" ]; then
   echo
   echo "ERROR: Shared library dependencies changed!"
   echo "If this is intentional, please update:"
-  echo "chrome/installer/linux/debian/expected_deps_ia32"
-  echo "chrome/installer/linux/debian/expected_deps_x64"
+  echo "chrome/installer/linux/debian/expected_deps_ia32_jessie"
+  echo "chrome/installer/linux/debian/expected_deps_x64_jessie"
   echo
   exit $BAD_DIFF
 fi
-rm -rf "$DUMMY_STAGING_DIR"
 
 # Additional dependencies not in the dpkg-shlibdeps output.
 # ca-certificates: Make sure users have SSL certificates.
 # fonts-liberation: Make sure users have compatible fonts for viewing PDFs.
 # libappindicator1: Make systray icons work in Unity.
-# libcurl3: Was for NPAPI Flash. TODO(thestig): Remove?
 # libnss3: Pull a more recent version of NSS than required by runtime linking,
 #          for security and stability updates in NSS.
 # libstdc++6: For C++11 support.
 # lsb-base: Implies many other dependencies.
 # xdg-utils: For OS integration.
 # wget: For uploading crash reports with Breakpad.
-ADDITION_DEPS="ca-certificates, fonts-liberation, libappindicator1, libcurl3, \
+ADDITION_DEPS="ca-certificates, fonts-liberation, libappindicator1, \
   libnss3 (>= 3.17.2), libstdc++6 (>=4.8.0), lsb-base (>=4.1), \
   xdg-utils (>= 1.0.2), wget"
 

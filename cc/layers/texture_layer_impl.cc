@@ -11,7 +11,6 @@
 
 #include "base/strings/stringprintf.h"
 #include "cc/output/output_surface.h"
-#include "cc/output/renderer.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/platform_color.h"
@@ -56,6 +55,10 @@ void TextureLayerImpl::SetTextureMailbox(
 std::unique_ptr<LayerImpl> TextureLayerImpl::CreateLayerImpl(
     LayerTreeImpl* tree_impl) {
   return TextureLayerImpl::Create(tree_impl, id());
+}
+
+bool TextureLayerImpl::IsSnapped() {
+  return true;
 }
 
 void TextureLayerImpl::PushPropertiesTo(LayerImpl* layer) {
@@ -103,7 +106,7 @@ bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
     // Have to upload a copy to a texture for it to be used in a
     // hardware draw.
     if (!texture_copy_)
-      texture_copy_ = ScopedResource::Create(resource_provider);
+      texture_copy_ = base::MakeUnique<ScopedResource>(resource_provider);
     if (texture_copy_->size() != texture_mailbox_.size_in_pixels() ||
         resource_provider->InUseByConsumer(texture_copy_->id()))
       texture_copy_->Free();
@@ -111,7 +114,8 @@ bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
     if (!texture_copy_->id()) {
       texture_copy_->Allocate(texture_mailbox_.size_in_pixels(),
                               ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-                              resource_provider->best_texture_format());
+                              resource_provider->best_texture_format(),
+                              gfx::ColorSpace());
     }
 
     if (texture_copy_->id()) {

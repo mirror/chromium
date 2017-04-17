@@ -29,27 +29,28 @@
 namespace blink {
 
 class SVGStopElement final : public SVGElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGStopElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    Color stopColorIncludingOpacity() const;
+ public:
+  DECLARE_NODE_FACTORY(SVGStopElement);
 
-    SVGAnimatedNumber* offset() const { return m_offset.get(); }
+  Color StopColorIncludingOpacity() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedNumber* offset() const { return offset_.Get(); }
 
-private:
-    explicit SVGStopElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    void svgAttributeChanged(const QualifiedName&) override;
+ private:
+  explicit SVGStopElement(Document&);
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    Member<SVGAnimatedNumber> m_offset;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+
+  Member<SVGAnimatedNumber> offset_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGStopElement_h
+#endif  // SVGStopElement_h

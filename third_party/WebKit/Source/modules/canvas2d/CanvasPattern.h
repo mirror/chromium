@@ -29,40 +29,44 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/svg/SVGMatrixTearOff.h"
 #include "platform/graphics/Pattern.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class ExceptionState;
 class Image;
 
-class CanvasPattern final : public GarbageCollectedFinalized<CanvasPattern>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static Pattern::RepeatMode parseRepetitionType(const String&, ExceptionState&);
+class CanvasPattern final : public GarbageCollectedFinalized<CanvasPattern>,
+                            public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static CanvasPattern* create(PassRefPtr<Image> image, Pattern::RepeatMode repeat, bool originClean)
-    {
-        return new CanvasPattern(image, repeat, originClean);
-    }
+ public:
+  static Pattern::RepeatMode ParseRepetitionType(const String&,
+                                                 ExceptionState&);
 
-    Pattern* getPattern() const { return m_pattern.get(); }
-    const AffineTransform& getTransform() const { return m_patternTransform; }
+  static CanvasPattern* Create(PassRefPtr<Image> image,
+                               Pattern::RepeatMode repeat,
+                               bool origin_clean) {
+    return new CanvasPattern(std::move(image), repeat, origin_clean);
+  }
 
-    bool originClean() const { return m_originClean; }
+  Pattern* GetPattern() const { return pattern_.Get(); }
+  const AffineTransform& GetTransform() const { return pattern_transform_; }
 
-    DEFINE_INLINE_TRACE() { }
+  bool OriginClean() const { return origin_clean_; }
 
-    void setTransform(SVGMatrixTearOff*);
+  DEFINE_INLINE_TRACE() {}
 
-private:
-    CanvasPattern(PassRefPtr<Image>, Pattern::RepeatMode, bool originClean);
+  void setTransform(SVGMatrixTearOff*);
 
-    RefPtr<Pattern> m_pattern;
-    AffineTransform m_patternTransform;
-    bool m_originClean;
+ private:
+  CanvasPattern(PassRefPtr<Image>, Pattern::RepeatMode, bool origin_clean);
+
+  RefPtr<Pattern> pattern_;
+  AffineTransform pattern_transform_;
+  bool origin_clean_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CanvasPattern_h
+#endif  // CanvasPattern_h

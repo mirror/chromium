@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer.h"
 #include "cc/resources/texture_mailbox.h"
 
@@ -137,6 +137,7 @@ class CC_EXPORT TextureLayer : public Layer {
 
   void SetLayerTreeHost(LayerTreeHost* layer_tree_host) override;
   bool Update() override;
+  bool IsSnapped() override;
   void PushPropertiesTo(LayerImpl* layer) override;
 
  protected:

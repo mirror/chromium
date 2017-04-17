@@ -5,74 +5,78 @@
 #ifndef CSSTokenizerInputStream_h
 #define CSSTokenizerInputStream_h
 
-#include "wtf/text/StringView.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/StringView.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CSSTokenizerInputStream {
-    WTF_MAKE_NONCOPYABLE(CSSTokenizerInputStream);
-    USING_FAST_MALLOC(CSSTokenizerInputStream);
-public:
-    explicit CSSTokenizerInputStream(String input);
+  WTF_MAKE_NONCOPYABLE(CSSTokenizerInputStream);
+  USING_FAST_MALLOC(CSSTokenizerInputStream);
 
-    // Gets the char in the stream replacing NUL characters with a unicode
-    // replacement character. Will return (NUL) kEndOfFileMarker when at the
-    // end of the stream.
-    UChar nextInputChar() const
-    {
-        if (m_offset >= m_stringLength)
-            return '\0';
-        UChar result = (*m_string)[m_offset];
-        return result ? result : 0xFFFD;
+ public:
+  explicit CSSTokenizerInputStream(const String& input);
+
+  // Gets the char in the stream replacing NUL characters with a unicode
+  // replacement character. Will return (NUL) kEndOfFileMarker when at the
+  // end of the stream.
+  UChar NextInputChar() const {
+    if (offset_ >= string_length_)
+      return '\0';
+    UChar result = (*string_)[offset_];
+    return result ? result : 0xFFFD;
+  }
+
+  // Gets the char at lookaheadOffset from the current stream position. Will
+  // return NUL (kEndOfFileMarker) if the stream position is at the end.
+  // NOTE: This may *also* return NUL if there's one in the input! Never
+  // compare the return value to '\0'.
+  UChar PeekWithoutReplacement(unsigned lookahead_offset) const {
+    if ((offset_ + lookahead_offset) >= string_length_)
+      return '\0';
+    return (*string_)[offset_ + lookahead_offset];
+  }
+
+  void Advance(unsigned offset = 1) { offset_ += offset; }
+  void PushBack(UChar cc) {
+    --offset_;
+    DCHECK(NextInputChar() == cc);
+  }
+
+  double GetDouble(unsigned start, unsigned end) const;
+
+  template <bool characterPredicate(UChar)>
+  unsigned SkipWhilePredicate(unsigned offset) {
+    if (string_->Is8Bit()) {
+      const LChar* characters8 = string_->Characters8();
+      while ((offset_ + offset) < string_length_ &&
+             characterPredicate(characters8[offset_ + offset]))
+        ++offset;
+    } else {
+      const UChar* characters16 = string_->Characters16();
+      while ((offset_ + offset) < string_length_ &&
+             characterPredicate(characters16[offset_ + offset]))
+        ++offset;
     }
+    return offset;
+  }
 
-    // Gets the char at lookaheadOffset from the current stream position. Will
-    // return NUL (kEndOfFileMarker) if the stream position is at the end.
-    // NOTE: This may *also* return NUL if there's one in the input! Never
-    // compare the return value to '\0'.
-    UChar peekWithoutReplacement(unsigned lookaheadOffset) const
-    {
-        if ((m_offset + lookaheadOffset) >= m_stringLength)
-            return '\0';
-        return (*m_string)[m_offset + lookaheadOffset];
-    }
+  void AdvanceUntilNonWhitespace();
 
-    void advance(unsigned offset = 1) { m_offset += offset; }
-    void pushBack(UChar cc)
-    {
-        --m_offset;
-        DCHECK(nextInputChar() == cc);
-    }
+  unsigned length() const { return string_length_; }
+  unsigned Offset() const { return std::min(offset_, string_length_); }
 
-    double getDouble(unsigned start, unsigned end) const;
+  StringView RangeAt(unsigned start, unsigned length) const {
+    DCHECK(start + length <= string_length_);
+    return StringView(*string_, start, length);
+  }
 
-    template<bool characterPredicate(UChar)>
-    unsigned skipWhilePredicate(unsigned offset)
-    {
-        while ((m_offset + offset) < m_stringLength && characterPredicate((*m_string)[m_offset + offset]))
-            ++offset;
-        return offset;
-    }
-
-    void advanceUntilNonWhitespace();
-
-    unsigned length() const { return m_stringLength; }
-    unsigned offset() const { return std::min(m_offset, m_stringLength); }
-
-    StringView rangeAt(unsigned start, unsigned length) const
-    {
-        DCHECK(start + length <= m_stringLength);
-        return StringView(*m_string, start, length);
-    }
-
-private:
-    size_t m_offset;
-    const size_t m_stringLength;
-    const RefPtr<StringImpl> m_string;
+ private:
+  size_t offset_;
+  const size_t string_length_;
+  const RefPtr<StringImpl> string_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSTokenizerInputStream_h
-
+#endif  // CSSTokenizerInputStream_h

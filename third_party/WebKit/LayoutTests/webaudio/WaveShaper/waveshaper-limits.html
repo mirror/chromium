@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script> 
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+
+  <body>
+    <script>
+      var audit = Audit.createTaskRunner();
+
+      var context;
+      var bufferData;
+      var outputData;
+      var reference;
+
+      var sampleRate = 48000;
+      // Must be odd so we have an exact middle point.
+      var testFrames = 23;
+      var scale = 1 / ((testFrames - 1) / 2 - 1);
+      // Number of decimal digits to print
+      var decimals = 6;
+      // Required accuracy
+      var diffThreshold = Math.pow(10, -decimals);
+
+      // Generate reference data
+      function generateReference() {
+        // The curve data is 0, 1, 0, and the input data is a ramp from -1+eps to 1+eps.  Then the
+        // output is a ramp from 0 to 1 back to 0.
+        var ref = new Float32Array(testFrames);
+        var midPoint = (testFrames - 1) / 2;
+        // First sample is below -1 at -1-scale.
+        ref[0] = 0;
+        // Generate ramp up to the mid-point
+        for (var k = 0; k < midPoint; ++k) {
+          ref[k + 1] = k * scale;
+        }
+        // The value at the mid-point must be 1, from the curve
+        ref[midPoint] = 1;
+        // Generate a ramp from 1 down to 0
+        for (var k = midPoint; k < testFrames - 1; ++k) {
+           ref[k + 1] = 2 - k * scale;
+        }
+        // The last sample is out of range at 1+scale
+        ref[testFrames - 1] = 0;
+        return ref;
+      }
+
+      function checkResult (renderedBuffer, should) {
+        outputData = renderedBuffer.getChannelData(0);
+        reference = generateReference();
+        var success = true;
+        // Verify that every output value matches our expected reference value.
+        for (var k = 0; k < outputData.length; ++k) {
+           var diff = outputData[k] - reference[k];
+          should(Math.abs(diff),
+              "Max error mapping " + bufferData[k].toFixed(decimals) + " to " +
+              outputData[k].toFixed(decimals))
+            .beLessThanOrEqualTo(diffThreshold);
+        }
+      }
+
+      audit.define(
+          {
+            label: 'test',
+            description:
+                'WaveShaperNode including values outside the range of [-1,1]'
+          },
+          function(task, should) {
+            context = new OfflineAudioContext(1, testFrames, sampleRate);
+            // Create input values between -1.1 and 1.1
+            var buffer =
+                context.createBuffer(1, testFrames, context.sampleRate);
+            bufferData = buffer.getChannelData(0);
+            var start = -1 - scale;
+            for (var k = 0; k < testFrames; ++k) {
+              bufferData[k] = k * scale + start;
+            }
+
+            var source = context.createBufferSource();
+            source.buffer = buffer;
+
+            // Create simple waveshaper. It should map -1 to 0, 0 to 1, and +1
+            // to 0 and interpolate all points in between using a simple linear
+            // interpolator.
+            var shaper = context.createWaveShaper();
+            var curve = new Float32Array(3);
+            curve[0] = 0;
+            curve[1] = 1;
+            curve[2] = 0;
+            shaper.curve = curve;
+            source.connect(shaper);
+            shaper.connect(context.destination);
+
+            source.start();
+            context.startRendering()
+                .then(buffer => checkResult(buffer, should))
+                .then(() => task.done());
+          });
+
+      audit.run();
+    </script>
+  </body>
+</html>

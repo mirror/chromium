@@ -7,13 +7,14 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/threading/thread_checker.h"
+#include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
 #include "content/common/content_export.h"
-#include "media/mojo/interfaces/service_factory.mojom.h"
-#include "services/shell/public/interfaces/interface_provider.mojom.h"
+#include "media/mojo/interfaces/interface_factory.mojom.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "url/gurl.h"
 
-namespace shell {
+namespace service_manager {
 class InterfaceProvider;
 }
 
@@ -21,24 +22,28 @@ namespace content {
 
 // MediaInterfaceProvider is an implementation of mojo InterfaceProvider that
 // provides media related services and handles disconnection automatically.
-// This class is single threaded.
+// The GetInterface can be called on any thread.
 class CONTENT_EXPORT MediaInterfaceProvider
-    : public shell::mojom::InterfaceProvider {
+    : public service_manager::mojom::InterfaceProvider {
  public:
-  explicit MediaInterfaceProvider(shell::InterfaceProvider* remote_interfaces);
+  explicit MediaInterfaceProvider(
+      service_manager::InterfaceProvider* remote_interfaces);
   ~MediaInterfaceProvider() final;
 
   // InterfaceProvider implementation.
-  void GetInterface(const mojo::String& interface_name,
+  void GetInterface(const std::string& interface_name,
                     mojo::ScopedMessagePipeHandle pipe) final;
 
  private:
-  media::mojom::ServiceFactory* GetMediaServiceFactory();
+  media::mojom::InterfaceFactory* GetMediaInterfaceFactory();
   void OnConnectionError();
 
-  base::ThreadChecker thread_checker_;
-  shell::InterfaceProvider* remote_interfaces_;
-  media::mojom::ServiceFactoryPtr media_service_factory_;
+  service_manager::InterfaceProvider* remote_interfaces_;
+  media::mojom::InterfaceFactoryPtr media_interface_factory_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  base::WeakPtr<MediaInterfaceProvider> weak_this_;
+  base::WeakPtrFactory<MediaInterfaceProvider> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaInterfaceProvider);
 };

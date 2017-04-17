@@ -8,19 +8,17 @@
 #include <stdint.h>
 
 #include <memory>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "extensions/common/user_script.h"
 #include "extensions/renderer/injection_host.h"
 #include "extensions/renderer/script_injector.h"
 
 struct HostID;
-
-namespace blink {
-template<typename T> class WebVector;
-}
 
 namespace content {
 class RenderFrame;
@@ -87,6 +85,11 @@ class ScriptInjection {
   const HostID& host_id() const { return injection_host_->id(); }
   int64_t request_id() const { return request_id_; }
 
+  // Called when JS injection for the given frame has been completed or
+  // cancelled.
+  void OnJsInjectionCompleted(const std::vector<v8::Local<v8::Value>>& results,
+                              base::Optional<base::TimeDelta> elapsed);
+
  private:
   class FrameWatcher;
 
@@ -98,14 +101,12 @@ class ScriptInjection {
   InjectionResult Inject(ScriptsRunInfo* scripts_run_info);
 
   // Inject any JS scripts into the frame for the injection.
-  void InjectJs(ScriptsRunInfo* scripts_run_info);
-
-  // Called when JS injection for the given frame has been completed.
-  void OnJsInjectionCompleted(
-      const blink::WebVector<v8::Local<v8::Value> >& results);
+  void InjectJs(std::set<std::string>* executing_scripts,
+                size_t* num_injected_js_scripts);
 
   // Inject any CSS source into the frame for the injection.
-  void InjectCss(ScriptsRunInfo* scripts_run_info);
+  void InjectCss(std::set<std::string>* injected_stylesheets,
+                 size_t* num_injected_stylesheets);
 
   // Notify that we will not inject, and mark it as acknowledged.
   void NotifyWillNotInject(ScriptInjector::InjectFailureReason reason);

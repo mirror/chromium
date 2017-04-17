@@ -11,6 +11,8 @@
 
 struct wl_buffer;
 struct wl_compositor;
+struct wl_keyboard;
+struct wl_output;
 struct wl_pointer;
 struct wl_registry;
 struct wl_seat;
@@ -41,6 +43,18 @@ template <>
 struct ObjectTraits<wl_display> {
   static const wl_interface* interface;
   static void (*deleter)(wl_display*);
+};
+
+template <>
+struct ObjectTraits<wl_output> {
+  static const wl_interface* interface;
+  static void (*deleter)(wl_output*);
+};
+
+template <>
+struct ObjectTraits<wl_keyboard> {
+  static const wl_interface* interface;
+  static void (*deleter)(wl_keyboard*);
 };
 
 template <>

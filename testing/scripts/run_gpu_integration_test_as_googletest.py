@@ -46,6 +46,15 @@ def main():
       required=True)
   parser.add_argument('--xvfb', help='Start xvfb.', action='store_true')
   args, rest_args = parser.parse_known_args()
+  # Remove the chartjson extra arg until this script cares about chartjson
+  # results from telemetry
+  index = 0
+  for arg in rest_args:
+    if '--isolated-script-test-chartjson-output' in arg:
+      rest_args.pop(index)
+      break
+    index += 1
+
   xvfb_proc = None
   openbox_proc = None
   xcompmgr_proc = None
@@ -78,7 +87,7 @@ def main():
     rc = 0
     try:
       rc = common.run_command([sys.executable] + rest_args + sharding_args + [
-        '--write-abbreviated-json-results-to', args.isolated_script_test_output,
+        '--write-full-results-to', args.isolated_script_test_output
       ], env=env)
     except Exception:
       traceback.print_exc()

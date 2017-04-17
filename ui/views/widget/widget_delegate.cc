@@ -5,6 +5,7 @@
 #include "ui/views/widget/widget_delegate.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/views/view.h"
 #include "ui/views/views_delegate.h"
@@ -54,6 +55,17 @@ bool WidgetDelegate::CanMinimize() const {
   return false;
 }
 
+int32_t WidgetDelegate::GetResizeBehavior() const {
+  int32_t behavior = ui::mojom::kResizeBehaviorNone;
+  if (CanResize())
+    behavior |= ui::mojom::kResizeBehaviorCanResize;
+  if (CanMaximize())
+    behavior |= ui::mojom::kResizeBehaviorCanMaximize;
+  if (CanMinimize())
+    behavior |= ui::mojom::kResizeBehaviorCanMinimize;
+  return behavior;
+}
+
 bool WidgetDelegate::CanActivate() const {
   return can_activate_;
 }
@@ -79,11 +91,7 @@ bool WidgetDelegate::ShouldShowWindowTitle() const {
 }
 
 bool WidgetDelegate::ShouldShowCloseButton() const {
-#if defined(OS_MACOSX)
-  return false;
-#else
   return true;
-#endif
 }
 
 bool WidgetDelegate::ShouldHandleSystemCommands() const {
@@ -206,6 +214,10 @@ Widget* WidgetDelegateView::GetWidget() {
 
 const Widget* WidgetDelegateView::GetWidget() const {
   return View::GetWidget();
+}
+
+views::View* WidgetDelegateView::GetContentsView() {
+  return this;
 }
 
 const char* WidgetDelegateView::GetClassName() const {

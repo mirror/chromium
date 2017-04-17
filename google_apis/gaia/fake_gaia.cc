@@ -17,6 +17,7 @@
 #include "base/memory/linked_ptr.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -298,6 +299,11 @@ void FakeGaia::Initialize() {
   // Handles /oauth2/v1/userinfo call.
   REGISTER_RESPONSE_HANDLER(
       gaia_urls->oauth_user_info_url(), HandleOAuthUserInfo);
+
+  // Handles /GetCheckConnectionInfo GAIA call.
+  REGISTER_RESPONSE_HANDLER(
+      gaia_urls->GetCheckConnectionInfoURLWithSource(std::string()),
+      HandleGetCheckConnectionInfo);
 }
 
 std::unique_ptr<HttpResponse> FakeGaia::HandleRequest(
@@ -443,10 +449,10 @@ void FakeGaia::HandleProgramaticAuth(
   http_response->set_content_type("text/html");
 }
 
-void FakeGaia::FormatJSONResponse(const base::DictionaryValue& response_dict,
+void FakeGaia::FormatJSONResponse(const base::Value& value,
                                   BasicHttpResponse* http_response) {
   std::string response_json;
-  base::JSONWriter::Write(response_dict, &response_json);
+  base::JSONWriter::Write(value, &response_json);
   http_response->set_content(response_json);
   http_response->set_code(net::HTTP_OK);
 }
@@ -743,8 +749,8 @@ void FakeGaia::HandleTokenInfo(const HttpRequest& request,
     response_dict.SetString("issued_to", token_info->issued_to);
     response_dict.SetString("audience", token_info->audience);
     response_dict.SetString("user_id", token_info->user_id);
-    std::vector<std::string> scope_vector(token_info->scopes.begin(),
-                                          token_info->scopes.end());
+    std::vector<base::StringPiece> scope_vector(token_info->scopes.begin(),
+                                                token_info->scopes.end());
     response_dict.SetString("scope", base::JoinString(scope_vector, " "));
     response_dict.SetInteger("expires_in", token_info->expires_in);
     response_dict.SetString("email", token_info->email);
@@ -839,4 +845,11 @@ void FakeGaia::HandleSAMLRedirect(
   http_response->set_code(net::HTTP_TEMPORARY_REDIRECT);
   http_response->AddCustomHeader("Google-Accounts-SAML", "Start");
   http_response->AddCustomHeader("Location", redirect_url);
+}
+
+void FakeGaia::HandleGetCheckConnectionInfo(
+    const net::test_server::HttpRequest& request,
+    net::test_server::BasicHttpResponse* http_response) {
+  base::ListValue connection_list;
+  FormatJSONResponse(connection_list, http_response);
 }

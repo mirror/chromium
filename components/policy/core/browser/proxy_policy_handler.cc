@@ -14,11 +14,11 @@
 #include "components/policy/core/browser/configuration_policy_handler.h"
 #include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/policy_map.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
 #include "components/proxy_config/proxy_config_dictionary.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
-#include "grit/components_strings.h"
-#include "policy/policy_constants.h"
+#include "components/strings/grit/components_strings.h"
 
 namespace {
 
@@ -56,8 +56,7 @@ namespace policy {
 
 // The proxy policies have the peculiarity that they are loaded from individual
 // policies, but the providers then expose them through a unified
-// DictionaryValue. Once Dictionary policies are fully supported, the individual
-// proxy policies will be deprecated. http://crbug.com/108996
+// DictionaryValue.
 
 ProxyPolicyHandler::ProxyPolicyHandler() {}
 
@@ -176,19 +175,18 @@ void ProxyPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
   switch (proxy_mode) {
     case ProxyPrefs::MODE_DIRECT:
       prefs->SetValue(proxy_config::prefs::kProxy,
-                      base::WrapUnique(ProxyConfigDictionary::CreateDirect()));
+                      ProxyConfigDictionary::CreateDirect());
       break;
     case ProxyPrefs::MODE_AUTO_DETECT:
-      prefs->SetValue(
-          proxy_config::prefs::kProxy,
-          base::WrapUnique(ProxyConfigDictionary::CreateAutoDetect()));
+      prefs->SetValue(proxy_config::prefs::kProxy,
+                      ProxyConfigDictionary::CreateAutoDetect());
       break;
     case ProxyPrefs::MODE_PAC_SCRIPT: {
       std::string pac_url_string;
       if (pac_url && pac_url->GetAsString(&pac_url_string)) {
-        prefs->SetValue(proxy_config::prefs::kProxy,
-                        base::WrapUnique(ProxyConfigDictionary::CreatePacScript(
-                            pac_url_string, false)));
+        prefs->SetValue(
+            proxy_config::prefs::kProxy,
+            ProxyConfigDictionary::CreatePacScript(pac_url_string, false));
       } else {
         NOTREACHED();
       }
@@ -200,16 +198,15 @@ void ProxyPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
       if (server->GetAsString(&proxy_server)) {
         if (bypass_list)
           bypass_list->GetAsString(&bypass_list_string);
-        prefs->SetValue(
-            proxy_config::prefs::kProxy,
-            base::WrapUnique(ProxyConfigDictionary::CreateFixedServers(
-                proxy_server, bypass_list_string)));
+        prefs->SetValue(proxy_config::prefs::kProxy,
+                        ProxyConfigDictionary::CreateFixedServers(
+                            proxy_server, bypass_list_string));
       }
       break;
     }
     case ProxyPrefs::MODE_SYSTEM:
       prefs->SetValue(proxy_config::prefs::kProxy,
-                      base::WrapUnique(ProxyConfigDictionary::CreateSystem()));
+                      ProxyConfigDictionary::CreateSystem());
       break;
     case ProxyPrefs::kModeCount:
       NOTREACHED();
@@ -227,8 +224,8 @@ const base::Value* ProxyPolicyHandler::GetProxyPolicyValue(
   const base::Value* policy_value = NULL;
   std::string tmp;
   if (!settings->Get(policy_name, &policy_value) ||
-      policy_value->IsType(base::Value::TYPE_NULL) ||
-      (policy_value->IsType(base::Value::TYPE_STRING) &&
+      policy_value->IsType(base::Value::Type::NONE) ||
+      (policy_value->IsType(base::Value::Type::STRING) &&
        policy_value->GetAsString(&tmp) &&
        tmp.empty())) {
     return NULL;
@@ -257,7 +254,7 @@ bool ProxyPolicyHandler::CheckProxyModeAndServerMode(const PolicyMap& policies,
     if (!mode->GetAsString(mode_value)) {
       errors->AddError(key::kProxySettings, key::kProxyMode,
                        IDS_POLICY_TYPE_ERROR,
-                       base::Value::GetTypeName(base::Value::TYPE_BOOLEAN));
+                       base::Value::GetTypeName(base::Value::Type::BOOLEAN));
       return false;
     }
 
@@ -286,7 +283,7 @@ bool ProxyPolicyHandler::CheckProxyModeAndServerMode(const PolicyMap& policies,
     if (!server_mode->GetAsInteger(&server_mode_value)) {
       errors->AddError(key::kProxySettings, key::kProxyServerMode,
                        IDS_POLICY_TYPE_ERROR,
-                       base::Value::GetTypeName(base::Value::TYPE_INTEGER));
+                       base::Value::GetTypeName(base::Value::Type::INTEGER));
       return false;
     }
 

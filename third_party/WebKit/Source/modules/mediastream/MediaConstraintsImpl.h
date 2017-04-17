@@ -33,26 +33,33 @@
 
 #include "modules/ModulesExport.h"
 #include "modules/mediastream/MediaErrorState.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebMediaConstraints.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class Dictionary;
+class ExecutionContext;
 class MediaTrackConstraints;
 
 namespace MediaConstraintsImpl {
 
-WebMediaConstraints create();
-WebMediaConstraints create(ExecutionContext*, const Dictionary&, MediaErrorState&);
-WebMediaConstraints create(ExecutionContext*, const MediaTrackConstraints&, MediaErrorState&);
+WebMediaConstraints Create();
+WebMediaConstraints Create(ExecutionContext*,
+                           const Dictionary&,
+                           MediaErrorState&);
+WebMediaConstraints Create(ExecutionContext*,
+                           const MediaTrackConstraints&,
+                           MediaErrorState&);
 
 // Exported with MODULES_EXPORT for testing
-MODULES_EXPORT void convertConstraints(const WebMediaConstraints& input, MediaTrackConstraints& output);
+MODULES_EXPORT void ConvertConstraints(const WebMediaConstraints& input,
+                                       MediaTrackConstraints& output);
 // Exported for testing only.
-MODULES_EXPORT WebMediaConstraints convertConstraintsToWeb(const MediaTrackConstraints&);
+MODULES_EXPORT WebMediaConstraints
+ConvertConstraintsToWeb(const MediaTrackConstraints&);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaConstraintsImpl_h
+#endif  // MediaConstraintsImpl_h

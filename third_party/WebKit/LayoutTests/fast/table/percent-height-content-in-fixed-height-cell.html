@@ -15,7 +15,6 @@ td {
 .container {
     height: 100%;
     overflow-y: hidden;
-    border: 1px solid #ccc;
 }
 .content {
     background-color: black;
@@ -25,7 +24,7 @@ td {
 </style>
 <table>
     <td class="cell-specified-height">
-        <div class="container" data-expected-height=204>
+        <div class="container" data-expected-height=2000>
             <div class="content"></div>
         </div>
     </td>
@@ -34,5 +33,6 @@ td {
 <p> crbug.com/465096: Percent height content in a cell with a computed height should use the height of the cell. </p>
 <div id="output"></div>
 <script>
+document.body.offsetTop;
 checkLayout('.container', output);
 </script>

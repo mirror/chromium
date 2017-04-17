@@ -29,72 +29,73 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
-#include "wtf/text/CharacterNames.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/CharacterNames.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-String convertHTMLTextToInterchangeFormat(const String& in, const Text& node)
-{
-    // Assume all the text comes from node.
-    if (node.layoutObject() && node.layoutObject()->style()->preserveNewline())
-        return in;
+String ConvertHTMLTextToInterchangeFormat(const String& in, const Text& node) {
+  // Assume all the text comes from node.
+  if (node.GetLayoutObject() &&
+      node.GetLayoutObject()->Style()->PreserveNewline())
+    return in;
 
-    const char convertedSpaceString[] = "<span class=\"" AppleConvertedSpace "\">\xA0</span>";
-    static_assert((static_cast<unsigned char>('\xA0') == noBreakSpaceCharacter), "\\xA0 should be non-breaking space");
+  const char kConvertedSpaceString[] = "<span>\xA0</span>";
+  static_assert((static_cast<unsigned char>('\xA0') == kNoBreakSpaceCharacter),
+                "\\xA0 should be non-breaking space");
 
-    StringBuilder s;
+  StringBuilder s;
 
-    unsigned i = 0;
-    unsigned consumed = 0;
-    while (i < in.length()) {
-        consumed = 1;
-        if (isCollapsibleWhitespace(in[i])) {
-            // count number of adjoining spaces
-            unsigned j = i + 1;
-            while (j < in.length() && isCollapsibleWhitespace(in[j]))
-                j++;
-            unsigned count = j - i;
-            consumed = count;
-            while (count) {
-                unsigned add = count % 3;
-                switch (add) {
-                case 0:
-                    s.append(convertedSpaceString);
-                    s.append(' ');
-                    s.append(convertedSpaceString);
-                    add = 3;
-                    break;
-                case 1:
-                    if (i == 0 || i + 1 == in.length()) // at start or end of string
-                        s.append(convertedSpaceString);
-                    else
-                        s.append(' ');
-                    break;
-                case 2:
-                    if (i == 0) {
-                        // at start of string
-                        s.append(convertedSpaceString);
-                        s.append(' ');
-                    } else if (i + 2 == in.length()) {
-                        // at end of string
-                        s.append(convertedSpaceString);
-                        s.append(convertedSpaceString);
-                    } else {
-                        s.append(convertedSpaceString);
-                        s.append(' ');
-                    }
-                    break;
-                }
-                count -= add;
+  unsigned i = 0;
+  unsigned consumed = 0;
+  while (i < in.length()) {
+    consumed = 1;
+    if (IsCollapsibleWhitespace(in[i])) {
+      // count number of adjoining spaces
+      unsigned j = i + 1;
+      while (j < in.length() && IsCollapsibleWhitespace(in[j]))
+        j++;
+      unsigned count = j - i;
+      consumed = count;
+      while (count) {
+        unsigned add = count % 3;
+        switch (add) {
+          case 0:
+            s.Append(kConvertedSpaceString);
+            s.Append(' ');
+            s.Append(kConvertedSpaceString);
+            add = 3;
+            break;
+          case 1:
+            if (i == 0 || i + 1 == in.length())  // at start or end of string
+              s.Append(kConvertedSpaceString);
+            else
+              s.Append(' ');
+            break;
+          case 2:
+            if (i == 0) {
+              // at start of string
+              s.Append(kConvertedSpaceString);
+              s.Append(' ');
+            } else if (i + 2 == in.length()) {
+              // at end of string
+              s.Append(kConvertedSpaceString);
+              s.Append(kConvertedSpaceString);
+            } else {
+              s.Append(kConvertedSpaceString);
+              s.Append(' ');
             }
-        } else {
-            s.append(in[i]);
+            break;
         }
-        i += consumed;
+        count -= add;
+      }
+    } else {
+      s.Append(in[i]);
     }
+    i += consumed;
+  }
 
-    return s.toString();
+  return s.ToString();
 }
 
-} // namespace blink
+}  // namespace blink

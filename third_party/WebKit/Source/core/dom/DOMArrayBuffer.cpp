@@ -5,17 +5,30 @@
 #include "core/dom/DOMArrayBuffer.h"
 
 #include "bindings/core/v8/DOMDataStore.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
-v8::Local<v8::Object> DOMArrayBuffer::wrap(v8::Isolate* isolate, v8::Local<v8::Object> creationContext)
-{
-    DCHECK(!DOMDataStore::containsWrapper(this, isolate));
-
-    const WrapperTypeInfo* wrapperTypeInfo = this->wrapperTypeInfo();
-    v8::Local<v8::Object> wrapper = v8::ArrayBuffer::New(isolate, data(), byteLength());
-
-    return associateWithWrapper(isolate, wrapperTypeInfo, wrapper);
+DOMArrayBuffer* DOMArrayBuffer::CreateUninitializedOrNull(
+    unsigned num_elements,
+    unsigned element_byte_size) {
+  RefPtr<ArrayBuffer> buffer = WTF::ArrayBuffer::CreateUninitializedOrNull(
+      num_elements, element_byte_size);
+  if (!buffer)
+    return nullptr;
+  return Create(std::move(buffer));
 }
 
-} // namespace blink
+v8::Local<v8::Object> DOMArrayBuffer::Wrap(
+    v8::Isolate* isolate,
+    v8::Local<v8::Object> creation_context) {
+  DCHECK(!DOMDataStore::ContainsWrapper(this, isolate));
+
+  const WrapperTypeInfo* wrapper_type_info = this->GetWrapperTypeInfo();
+  v8::Local<v8::Object> wrapper =
+      v8::ArrayBuffer::New(isolate, Data(), ByteLength());
+
+  return AssociateWithWrapper(isolate, wrapper_type_info, wrapper);
+}
+
+}  // namespace blink

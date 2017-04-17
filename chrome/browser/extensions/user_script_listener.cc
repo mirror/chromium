@@ -8,12 +8,13 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/timer/elapsed_timer.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/extensions/manifest_handlers/content_scripts_handler.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
-#include "content/public/browser/resource_controller.h"
 #include "content/public/browser/resource_throttle.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
@@ -33,14 +34,14 @@ class UserScriptListener::Throttle
   Throttle() : should_defer_(true), did_defer_(false) {
   }
 
-  void Resume() {
+  void ResumeIfDeferred() {
     DCHECK(should_defer_);
     should_defer_ = false;
     // Only resume the request if |this| has deferred it.
     if (did_defer_) {
       UMA_HISTOGRAM_TIMES("Extensions.ThrottledNetworkRequestDelay",
                           timer_->Elapsed());
-      controller()->Resume();
+      Resume();
     }
   }
 
@@ -78,19 +79,21 @@ struct UserScriptListener::ProfileData {
 };
 
 UserScriptListener::UserScriptListener()
-    : user_scripts_ready_(false) {
+    : user_scripts_ready_(false), extension_registry_observer_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  registrar_.Add(this,
-                 extensions::NOTIFICATION_EXTENSION_LOADED_DEPRECATED,
+  for (auto* profile :
+       g_browser_process->profile_manager()->GetLoadedProfiles()) {
+    extension_registry_observer_.Add(ExtensionRegistry::Get(profile));
+  }
+
+  registrar_.Add(this, chrome::NOTIFICATION_PROFILE_ADDED,
                  content::NotificationService::AllSources());
-  registrar_.Add(this,
-                 extensions::NOTIFICATION_EXTENSION_UNLOADED_DEPRECATED,
+
+  registrar_.Add(this, chrome::NOTIFICATION_PROFILE_DESTROYED,
                  content::NotificationService::AllSources());
   registrar_.Add(this,
                  extensions::NOTIFICATION_USER_SCRIPTS_UPDATED,
-                 content::NotificationService::AllSources());
-  registrar_.Add(this, chrome::NOTIFICATION_PROFILE_DESTROYED,
                  content::NotificationService::AllSources());
 }
 
@@ -146,7 +149,7 @@ void UserScriptListener::StartDelayedRequests() {
   WeakThrottleList::const_iterator it;
   for (it = throttles_.begin(); it != throttles_.end(); ++it) {
     if (it->get())
-      (*it)->Resume();
+      (*it)->ResumeIfDeferred();
   }
   throttles_.clear();
 }
@@ -206,13 +209,10 @@ void UserScriptListener::CollectURLPatterns(const Extension* extension,
                                             URLPatterns* patterns) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  const UserScriptList& scripts =
-      ContentScriptsInfo::GetContentScripts(extension);
-  for (UserScriptList::const_iterator iter = scripts.begin();
-       iter != scripts.end(); ++iter) {
-    patterns->insert(patterns->end(),
-                     (*iter).url_patterns().begin(),
-                     (*iter).url_patterns().end());
+  for (const std::unique_ptr<UserScript>& script :
+       ContentScriptsInfo::GetContentScripts(extension)) {
+    patterns->insert(patterns->end(), script->url_patterns().begin(),
+                     script->url_patterns().end());
   }
 }
 
@@ -222,62 +222,71 @@ void UserScriptListener::Observe(int type,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   switch (type) {
-    case extensions::NOTIFICATION_EXTENSION_LOADED_DEPRECATED: {
-      Profile* profile = content::Source<Profile>(source).ptr();
-      const Extension* extension =
-          content::Details<const Extension>(details).ptr();
-      if (ContentScriptsInfo::GetContentScripts(extension).empty())
-        return;  // no new patterns from this extension.
-
-      URLPatterns new_patterns;
-      CollectURLPatterns(extension, &new_patterns);
-      if (!new_patterns.empty()) {
-        BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, base::Bind(
-            &UserScriptListener::AppendNewURLPatterns, this,
-            profile, new_patterns));
-      }
+    case chrome::NOTIFICATION_PROFILE_ADDED: {
+      auto* registry =
+          ExtensionRegistry::Get(content::Source<Profile>(source).ptr());
+      DCHECK(!extension_registry_observer_.IsObserving(registry));
+      extension_registry_observer_.Add(registry);
       break;
     }
-
-    case extensions::NOTIFICATION_EXTENSION_UNLOADED_DEPRECATED: {
-      Profile* profile = content::Source<Profile>(source).ptr();
-      const Extension* unloaded_extension =
-          content::Details<UnloadedExtensionInfo>(details)->extension;
-      if (ContentScriptsInfo::GetContentScripts(unloaded_extension).empty())
-        return;  // no patterns to delete for this extension.
-
-      // Clear all our patterns and reregister all the still-loaded extensions.
-      const ExtensionSet& extensions =
-          ExtensionRegistry::Get(profile)->enabled_extensions();
-      URLPatterns new_patterns;
-      for (ExtensionSet::const_iterator it = extensions.begin();
-           it != extensions.end(); ++it) {
-        if (it->get() != unloaded_extension)
-          CollectURLPatterns(it->get(), &new_patterns);
-      }
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, base::Bind(
-          &UserScriptListener::ReplaceURLPatterns, this,
-          profile, new_patterns));
-      break;
-    }
-
-    case extensions::NOTIFICATION_USER_SCRIPTS_UPDATED: {
-      Profile* profile = content::Source<Profile>(source).ptr();
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, base::Bind(
-          &UserScriptListener::UserScriptsReady, this, profile));
-      break;
-    }
-
     case chrome::NOTIFICATION_PROFILE_DESTROYED: {
       Profile* profile = content::Source<Profile>(source).ptr();
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, base::Bind(
-          &UserScriptListener::ProfileDestroyed, this, profile));
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::Bind(&UserScriptListener::ProfileDestroyed, this, profile));
       break;
     }
-
+    case extensions::NOTIFICATION_USER_SCRIPTS_UPDATED: {
+      Profile* profile = content::Source<Profile>(source).ptr();
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::Bind(&UserScriptListener::UserScriptsReady, this, profile));
+      break;
+    }
     default:
       NOTREACHED();
   }
+}
+
+void UserScriptListener::OnExtensionLoaded(
+    content::BrowserContext* browser_context,
+    const Extension* extension) {
+  if (ContentScriptsInfo::GetContentScripts(extension).empty())
+    return;  // no new patterns from this extension.
+
+  URLPatterns new_patterns;
+  CollectURLPatterns(extension, &new_patterns);
+  if (!new_patterns.empty()) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&UserScriptListener::AppendNewURLPatterns, this,
+                   browser_context, new_patterns));
+  }
+}
+
+void UserScriptListener::OnExtensionUnloaded(
+    content::BrowserContext* browser_context,
+    const Extension* extension,
+    UnloadedExtensionInfo::Reason reason) {
+  if (ContentScriptsInfo::GetContentScripts(extension).empty())
+    return;  // No patterns to delete for this extension.
+
+  // Clear all our patterns and reregister all the still-loaded extensions.
+  const ExtensionSet& extensions =
+      ExtensionRegistry::Get(browser_context)->enabled_extensions();
+  URLPatterns new_patterns;
+  for (ExtensionSet::const_iterator it = extensions.begin();
+       it != extensions.end(); ++it) {
+    if (it->get() != extension)
+      CollectURLPatterns(it->get(), &new_patterns);
+  }
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&UserScriptListener::ReplaceURLPatterns,
+                                     this, browser_context, new_patterns));
+}
+
+void UserScriptListener::OnShutdown(ExtensionRegistry* registry) {
+  extension_registry_observer_.Remove(registry);
 }
 
 }  // namespace extensions

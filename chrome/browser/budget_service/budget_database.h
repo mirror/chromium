@@ -6,85 +6,145 @@
 #define CHROME_BROWSER_BUDGET_SERVICE_BUDGET_DATABASE_H_
 
 #include <list>
+#include <map>
 #include <memory>
-#include <unordered_map>
-#include <vector>
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/leveldb_proto/proto_database.h"
+#include "third_party/WebKit/public/platform/modules/budget_service/budget_service.mojom.h"
 
 namespace base {
-class SequencedTaskRunner;
+class Clock;
+class Time;
 }
 
 namespace budget_service {
 class Budget;
 }
 
-class GURL;
+namespace url {
+class Origin;
+}
+
+class Profile;
 
 // A class used to asynchronously read and write details of the budget
 // assigned to an origin. The class uses an underlying LevelDB.
 class BudgetDatabase {
  public:
-  // Data structure for returing the budget decay expectations to the caller.
-  using BudgetExpectation = std::list<std::pair<double, double>>;
-
-  // Callback for the basic GetBudget call.
-  using GetValueCallback =
-      base::Callback<void(bool success,
-                          std::unique_ptr<budget_service::Budget>)>;
-
-  // Callback for setting a budget value.
-  using SetValueCallback = base::Callback<void(bool success)>;
-
   // Callback for getting a list of all budget chunks.
-  using GetBudgetDetailsCallback = base::Callback<
-      void(bool success, double debt, const BudgetExpectation& expectation)>;
+  using GetBudgetCallback = blink::mojom::BudgetService::GetBudgetCallback;
 
-  // The database_dir specifies the location of the budget information on
-  // disk. The task_runner is used by the ProtoDatabase to handle all blocking
-  // calls and disk access.
-  BudgetDatabase(const base::FilePath& database_dir,
-                 const scoped_refptr<base::SequencedTaskRunner>& task_runner);
+  // This is invoked only after the spend has been written to the database.
+  using SpendBudgetCallback =
+      base::Callback<void(blink::mojom::BudgetServiceErrorType error_type,
+                          bool success)>;
+
+  // The database_dir specifies the location of the budget information on disk.
+  BudgetDatabase(Profile* profile, const base::FilePath& database_dir);
   ~BudgetDatabase();
 
-  void GetValue(const GURL& origin, const GetValueCallback& callback);
-  void SetValue(const GURL& origin,
-                const budget_service::Budget& budget,
-                const SetValueCallback& callback);
+  // Get the full budget expectation for the origin. This will return a
+  // sequence of time points and the expected budget at those times.
+  void GetBudgetDetails(const url::Origin& origin,
+                        const GetBudgetCallback& callback);
 
-  // Get the full budget expectation for the origin. This will return any
-  // debt as well as a sequence of time points and the expected budget at
-  // those times.
-  void GetBudgetDetails(const GURL& origin,
-                        const GetBudgetDetailsCallback& callback);
+  // Spend a particular amount of budget for an origin. The callback indicates
+  // whether there was an error and if the origin had enough budget.
+  void SpendBudget(const url::Origin& origin,
+                   double amount,
+                   const SpendBudgetCallback& callback);
 
  private:
-  // Data structure for caching budget information.
-  using BudgetChunks = std::vector<std::pair<double, double>>;
-  using BudgetInfo = std::pair<double, BudgetChunks>;
+  friend class BudgetDatabaseTest;
 
-  using AddToCacheCallback = base::Callback<void(bool success)>;
+  // Used to allow tests to change time for testing.
+  void SetClockForTesting(std::unique_ptr<base::Clock> clock);
+
+  // Holds information about individual pieces of awarded budget. There is a
+  // one-to-one mapping of these to the chunks in the underlying database.
+  struct BudgetChunk {
+    BudgetChunk(double amount, base::Time expiration)
+        : amount(amount), expiration(expiration) {}
+    BudgetChunk(const BudgetChunk& other)
+        : amount(other.amount), expiration(other.expiration) {}
+
+    double amount;
+    base::Time expiration;
+  };
+
+  // Data structure for caching budget information.
+  using BudgetChunks = std::list<BudgetChunk>;
+
+  // Holds information about the overall budget for a site. This includes the
+  // time the budget was last incremented, as well as a list of budget chunks
+  // which have been awarded.
+  struct BudgetInfo {
+    BudgetInfo();
+    BudgetInfo(const BudgetInfo&& other);
+    ~BudgetInfo();
+
+    base::Time last_engagement_award;
+    BudgetChunks chunks;
+
+    DISALLOW_COPY_AND_ASSIGN(BudgetInfo);
+  };
+
+  // Callback for writing budget values to the database.
+  using StoreBudgetCallback = base::Callback<void(bool success)>;
+
+  using CacheCallback = base::Callback<void(bool success)>;
 
   void OnDatabaseInit(bool success);
 
-  void AddToCache(const GURL& origin,
-                  const AddToCacheCallback& callback,
+  bool IsCached(const url::Origin& origin) const;
+
+  double GetBudget(const url::Origin& origin) const;
+
+  void AddToCache(const url::Origin& origin,
+                  const CacheCallback& callback,
                   bool success,
                   std::unique_ptr<budget_service::Budget> budget);
 
-  void DidGetBudget(const GURL& origin,
-                    const GetBudgetDetailsCallback& callback,
-                    bool success);
+  void GetBudgetAfterSync(const url::Origin& origin,
+                          const GetBudgetCallback& callback,
+                          bool success);
+
+  void SpendBudgetAfterSync(const url::Origin& origin,
+                            double amount,
+                            const SpendBudgetCallback& callback,
+                            bool success);
+
+  void SpendBudgetAfterWrite(const SpendBudgetCallback& callback, bool success);
+
+  void WriteCachedValuesToDatabase(const url::Origin& origin,
+                                   const StoreBudgetCallback& callback);
+
+  void SyncCache(const url::Origin& origin, const CacheCallback& callback);
+  void SyncLoadedCache(const url::Origin& origin,
+                       const CacheCallback& callback,
+                       bool success);
+
+  // Add budget based on engagement with an origin. The method queries for the
+  // engagement score of the origin, and then calculates when engagement budget
+  // was last awarded and awards a portion of the score based on that.
+  // This only writes budget to the cache.
+  void AddEngagementBudget(const url::Origin& origin);
+
+  bool CleanupExpiredBudget(const url::Origin& origin);
+
+  Profile* profile_;
 
   // The database for storing budget information.
   std::unique_ptr<leveldb_proto::ProtoDatabase<budget_service::Budget>> db_;
 
   // Cached data for the origins which have been loaded.
-  std::unordered_map<std::string, BudgetInfo> budget_map_;
+  std::map<url::Origin, BudgetInfo> budget_map_;
+
+  // The clock used to vend times.
+  std::unique_ptr<base::Clock> clock_;
 
   base::WeakPtrFactory<BudgetDatabase> weak_ptr_factory_;
 

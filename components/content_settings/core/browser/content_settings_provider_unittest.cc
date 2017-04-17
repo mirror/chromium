@@ -4,8 +4,8 @@
 
 #include <memory>
 
-#include "components/content_settings/core/browser/content_settings_mock_provider.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
+#include "components/content_settings/core/test/content_settings_mock_provider.h"
 #include "components/content_settings/core/test/content_settings_test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -18,12 +18,9 @@ TEST(ContentSettingsProviderTest, Mock) {
   GURL url("http://www.youtube.com");
 
   MockProvider mock_provider(false);
-  mock_provider.SetWebsiteSetting(
-      pattern,
-      pattern,
-      CONTENT_SETTINGS_TYPE_PLUGINS,
-      "java_plugin",
-      new base::FundamentalValue(CONTENT_SETTING_BLOCK));
+  mock_provider.SetWebsiteSetting(pattern, pattern,
+                                  CONTENT_SETTINGS_TYPE_PLUGINS, "java_plugin",
+                                  new base::Value(CONTENT_SETTING_BLOCK));
 
   EXPECT_EQ(CONTENT_SETTING_BLOCK,
             TestUtils::GetContentSetting(&mock_provider, url, url,
@@ -52,11 +49,8 @@ TEST(ContentSettingsProviderTest, Mock) {
                       CONTENT_SETTINGS_TYPE_GEOLOCATION, std::string(), false));
 
   bool owned = mock_provider.SetWebsiteSetting(
-      pattern,
-      pattern,
-      CONTENT_SETTINGS_TYPE_PLUGINS,
-      "java_plugin",
-      new base::FundamentalValue(CONTENT_SETTING_ALLOW));
+      pattern, pattern, CONTENT_SETTINGS_TYPE_PLUGINS, "java_plugin",
+      new base::Value(CONTENT_SETTING_ALLOW));
   EXPECT_TRUE(owned);
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             TestUtils::GetContentSetting(&mock_provider, url, url,
@@ -64,8 +58,7 @@ TEST(ContentSettingsProviderTest, Mock) {
                                          "java_plugin", false));
 
   mock_provider.set_read_only(true);
-  std::unique_ptr<base::Value> value(
-      new base::FundamentalValue(CONTENT_SETTING_BLOCK));
+  std::unique_ptr<base::Value> value(new base::Value(CONTENT_SETTING_BLOCK));
   owned = mock_provider.SetWebsiteSetting(
       pattern,
       pattern,
@@ -82,11 +75,8 @@ TEST(ContentSettingsProviderTest, Mock) {
 
   mock_provider.set_read_only(false);
   owned = mock_provider.SetWebsiteSetting(
-      pattern,
-      pattern,
-      CONTENT_SETTINGS_TYPE_PLUGINS,
-      "java_plugin",
-      new base::FundamentalValue(CONTENT_SETTING_BLOCK));
+      pattern, pattern, CONTENT_SETTINGS_TYPE_PLUGINS, "java_plugin",
+      new base::Value(CONTENT_SETTING_BLOCK));
   EXPECT_TRUE(owned);
   EXPECT_EQ(CONTENT_SETTING_BLOCK,
             TestUtils::GetContentSetting(&mock_provider, url, url,

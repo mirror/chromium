@@ -14,13 +14,15 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/extensions/extension_install_checker.h"
+#include "extensions/browser/preload_check.h"
 
 class ExtensionService;
+class Profile;
 
 namespace extensions {
 
 class Extension;
+class PreloadCheckGroup;
 
 // Installs and loads an unpacked extension. Because internal state needs to be
 // held about the instalation process, only one call to Load*() should be made
@@ -50,8 +52,10 @@ class UnpackedInstaller
   // |extension_path| synchronously.
   // The return value indicates whether the installation has begun successfully.
   // The id of the extension being loaded is returned in |extension_id|.
+  // |only_allow_apps| is used to avoid side-loading of non-app extensions.
   bool LoadFromCommandLine(const base::FilePath& extension_path,
-                           std::string* extension_id);
+                           std::string* extension_id,
+                           bool only_allow_apps);
 
   // Allows prompting for plugins to be disabled; intended for testing only.
   bool prompt_for_plugins() { return prompt_for_plugins_; }
@@ -86,8 +90,8 @@ class UnpackedInstaller
   // Begin management policy and requirements checks.
   void StartInstallChecks();
 
-  // Callback from ExtensionInstallChecker.
-  void OnInstallChecksComplete(int failed_checks);
+  // Callback from PreloadCheckGroup.
+  void OnInstallChecksComplete(PreloadCheck::Errors errors);
 
   // Verifies if loading unpacked extensions is allowed.
   bool IsLoadingUnpackedAllowed() const;
@@ -115,14 +119,20 @@ class UnpackedInstaller
   // Helper to get the Extension::CreateFlags for the installing extension.
   int GetFlags();
 
-  const Extension* extension() { return install_checker_.extension().get(); }
+  const Extension* extension() { return extension_.get(); }
 
   // The service we will report results back to.
   base::WeakPtr<ExtensionService> service_weak_;
 
+  // The Profile the extension is being installed in.
+  Profile* profile_;
+
   // The pathname of the directory to load from, which is an absolute path
   // after GetAbsolutePath has been called.
   base::FilePath extension_path_;
+
+  // The extension being installed.
+  scoped_refptr<const Extension> extension_;
 
   // If true and the extension contains plugins, we prompt the user before
   // loading.
@@ -135,9 +145,12 @@ class UnpackedInstaller
   // Whether or not to be noisy (show a dialog) on failure. Defaults to true.
   bool be_noisy_on_failure_;
 
-  // Checks management policies and requirements before the extension can be
-  // installed.
-  ExtensionInstallChecker install_checker_;
+  // Checks to run before the extension can be installed.
+  std::unique_ptr<PreloadCheck> policy_check_;
+  std::unique_ptr<PreloadCheck> requirements_check_;
+
+  // Runs the above checks.
+  std::unique_ptr<PreloadCheckGroup> check_group_;
 
   CompletionCallback callback_;
 

@@ -35,38 +35,33 @@
 
 #include "web/WebPluginContainerImpl.h"
 
-#include "wtf/PassRefPtr.h"
-
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
-
-WebPlugin* WebPluginDocument::plugin()
-{
-    if (!isPluginDocument())
-        return 0;
-    PluginDocument* doc = unwrap<PluginDocument>();
-    WebPluginContainerImpl* container = toWebPluginContainerImpl(doc->pluginWidget());
-    return container ? container->plugin() : 0;
+WebPlugin* WebPluginDocument::Plugin() {
+  if (!IsPluginDocument())
+    return 0;
+  PluginDocument* doc = Unwrap<PluginDocument>();
+  WebPluginContainerImpl* container =
+      ToWebPluginContainerImpl(doc->GetPluginView());
+  return container ? container->Plugin() : 0;
 }
 
+WebPluginDocument::WebPluginDocument(PluginDocument* elem)
+    : WebDocument(elem) {}
 
-WebPluginDocument::WebPluginDocument(PluginDocument*elem)
-    : WebDocument(elem)
-{
+DEFINE_WEB_NODE_TYPE_CASTS(WebPluginDocument,
+                           IsDocumentNode() &&
+                               ConstUnwrap<Document>()->IsPluginDocument());
+
+WebPluginDocument& WebPluginDocument::operator=(PluginDocument* elem) {
+  private_ = elem;
+  return *this;
 }
 
-DEFINE_WEB_NODE_TYPE_CASTS(WebPluginDocument, isDocumentNode() && constUnwrap<Document>()->isPluginDocument());
-
-WebPluginDocument& WebPluginDocument::operator=(PluginDocument*elem)
-{
-    m_private = elem;
-    return *this;
+WebPluginDocument::operator PluginDocument*() const {
+  return static_cast<PluginDocument*>(private_.Get());
 }
 
-WebPluginDocument::operator PluginDocument*() const
-{
-    return static_cast<PluginDocument*>(m_private.get());
-}
-
-} // namespace blink
+}  // namespace blink

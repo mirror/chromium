@@ -32,10 +32,10 @@
 #include "core/css/FontFace.h"
 #include "platform/fonts/SegmentedFontData.h"
 #include "platform/fonts/UnicodeRangeSet.h"
-#include "wtf/Deque.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -43,54 +43,57 @@ class FontDescription;
 class RemoteFontFaceSource;
 class SimpleFontData;
 
-class CORE_EXPORT CSSFontFace final : public GarbageCollectedFinalized<CSSFontFace> {
-    WTF_MAKE_NONCOPYABLE(CSSFontFace);
-public:
-    CSSFontFace(FontFace* fontFace, Vector<UnicodeRange>& ranges)
-        : m_ranges(adoptRef(new UnicodeRangeSet(ranges)))
-        , m_segmentedFontFace(nullptr)
-        , m_fontFace(fontFace)
-    {
-        ASSERT(m_fontFace);
-    }
+class CORE_EXPORT CSSFontFace final
+    : public GarbageCollectedFinalized<CSSFontFace> {
+  WTF_MAKE_NONCOPYABLE(CSSFontFace);
 
-    FontFace* fontFace() const { return m_fontFace; }
+ public:
+  CSSFontFace(FontFace* font_face, Vector<UnicodeRange>& ranges)
+      : ranges_(AdoptRef(new UnicodeRangeSet(ranges))),
+        segmented_font_face_(nullptr),
+        font_face_(font_face) {
+    DCHECK(font_face_);
+  }
 
-    PassRefPtr<UnicodeRangeSet> ranges() { return m_ranges; }
+  FontFace* GetFontFace() const { return font_face_; }
 
-    void setSegmentedFontFace(CSSSegmentedFontFace*);
-    void clearSegmentedFontFace() { m_segmentedFontFace = nullptr; }
+  PassRefPtr<UnicodeRangeSet> Ranges() { return ranges_; }
 
-    bool isValid() const { return !m_sources.isEmpty(); }
-    size_t approximateBlankCharacterCount() const;
+  void SetSegmentedFontFace(CSSSegmentedFontFace*);
+  void ClearSegmentedFontFace() { segmented_font_face_ = nullptr; }
 
-    void addSource(CSSFontFaceSource*);
+  bool IsValid() const { return !sources_.IsEmpty(); }
+  size_t ApproximateBlankCharacterCount() const;
 
-    void didBeginLoad();
-    void fontLoaded(RemoteFontFaceSource*);
-    void didBecomeVisibleFallback(RemoteFontFaceSource*);
+  void AddSource(CSSFontFaceSource*);
 
-    PassRefPtr<SimpleFontData> getFontData(const FontDescription&);
+  void DidBeginLoad();
+  void FontLoaded(RemoteFontFaceSource*);
+  void DidBecomeVisibleFallback(RemoteFontFaceSource*);
 
-    FontFace::LoadStatusType loadStatus() const { return m_fontFace->loadStatus(); }
-    bool maybeLoadFont(const FontDescription&, const String&);
-    bool maybeLoadFont(const FontDescription&, const FontDataForRangeSet&);
-    void load();
-    void load(const FontDescription&);
+  PassRefPtr<SimpleFontData> GetFontData(const FontDescription&);
 
-    bool hadBlankText() { return isValid() && m_sources.first()->hadBlankText(); }
+  FontFace::LoadStatusType LoadStatus() const {
+    return font_face_->LoadStatus();
+  }
+  bool MaybeLoadFont(const FontDescription&, const String&);
+  bool MaybeLoadFont(const FontDescription&, const FontDataForRangeSet&);
+  void Load();
+  void Load(const FontDescription&);
 
-    DECLARE_TRACE();
+  bool HadBlankText() { return IsValid() && sources_.front()->HadBlankText(); }
 
-private:
-    void setLoadStatus(FontFace::LoadStatusType);
+  DECLARE_TRACE();
 
-    RefPtr<UnicodeRangeSet> m_ranges;
-    Member<CSSSegmentedFontFace> m_segmentedFontFace;
-    HeapDeque<Member<CSSFontFaceSource>> m_sources;
-    Member<FontFace> m_fontFace;
+ private:
+  void SetLoadStatus(FontFace::LoadStatusType);
+
+  RefPtr<UnicodeRangeSet> ranges_;
+  Member<CSSSegmentedFontFace> segmented_font_face_;
+  HeapDeque<Member<CSSFontFaceSource>> sources_;
+  Member<FontFace> font_face_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

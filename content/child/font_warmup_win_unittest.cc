@@ -16,6 +16,7 @@
 #include "base/sys_byteorder.h"
 #include "base/win/windows_version.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkString.h"
 #include "third_party/skia/include/core/SkTypeface.h"
 #include "third_party/skia/include/ports/SkFontMgr.h"
@@ -56,9 +57,11 @@ class TestSkTypeface : public SkTypeface {
     return nullptr;
   }
 
-  SkFontData* onCreateFontData() const override {
+  int onGetVariationDesignPosition(
+      SkFontArguments::VariationPosition::Coordinate coordinates[],
+      int coordinateCount) const override {
     ADD_FAILURE();
-    return nullptr;
+    return -1;
   }
 
   void onGetFontDescriptor(SkFontDescriptor*, bool* isLocal) const override {
@@ -135,7 +138,9 @@ const wchar_t* kTestFontFamilyInvalid = L"InvalidFont";
 
 class TestSkFontMgr : public SkFontMgr {
  public:
-  TestSkFontMgr() { content::SetPreSandboxWarmupFontMgrForTesting(this); }
+  TestSkFontMgr() {
+    content::SetPreSandboxWarmupFontMgrForTesting(sk_ref_sp(this));
+  }
   ~TestSkFontMgr() override {
     content::SetPreSandboxWarmupFontMgrForTesting(nullptr);
   }
@@ -186,11 +191,6 @@ class TestSkFontMgr : public SkFontMgr {
   }
 
   SkTypeface* onCreateFromStream(SkStreamAsset*, int ttcIndex) const override {
-    ADD_FAILURE();
-    return nullptr;
-  }
-
-  SkTypeface* onCreateFromFontData(SkFontData*) const override {
     ADD_FAILURE();
     return nullptr;
   }

@@ -35,45 +35,50 @@ class ChromeClientImpl;
 class ColorChooserClient;
 class PagePopup;
 
-class ColorChooserPopupUIController final : public ColorChooserUIController, public PagePopupClient  {
-    USING_PRE_FINALIZER(ColorChooserPopupUIController, dispose);
-public:
-    static ColorChooserPopupUIController* create(LocalFrame* frame, ChromeClientImpl* chromeClient, ColorChooserClient* client)
-    {
-        return new ColorChooserPopupUIController(frame, chromeClient, client);
-    }
+class ColorChooserPopupUIController final : public ColorChooserUIController,
+                                            public PagePopupClient {
+  USING_PRE_FINALIZER(ColorChooserPopupUIController, Dispose);
 
-    ~ColorChooserPopupUIController() override;
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static ColorChooserPopupUIController* Create(LocalFrame* frame,
+                                               ChromeClientImpl* chrome_client,
+                                               ColorChooserClient* client) {
+    return new ColorChooserPopupUIController(frame, chrome_client, client);
+  }
 
-    // ColorChooserUIController functions:
-    void openUI() override;
+  ~ColorChooserPopupUIController() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    // ColorChooser functions
-    void endChooser() override;
-    AXObject* rootAXObject() override;
+  // ColorChooserUIController functions:
+  void OpenUI() override;
 
-    // PagePopupClient functions:
-    void writeDocument(SharedBuffer*) override;
-    void selectFontsFromOwnerDocument(Document&) override { }
-    Locale& locale() override;
-    void setValueAndClosePopup(int, const String&) override;
-    void setValue(const String&) override;
-    void closePopup() override;
-    Element& ownerElement() override;
-    void didClosePopup() override;
+  // ColorChooser functions
+  void EndChooser() override;
+  AXObject* RootAXObject() override;
 
-private:
-    ColorChooserPopupUIController(LocalFrame*, ChromeClientImpl*, ColorChooserClient*);
+  // PagePopupClient functions:
+  void WriteDocument(SharedBuffer*) override;
+  void SelectFontsFromOwnerDocument(Document&) override {}
+  Locale& GetLocale() override;
+  void SetValueAndClosePopup(int, const String&) override;
+  void SetValue(const String&) override;
+  void ClosePopup() override;
+  Element& OwnerElement() override;
+  void DidClosePopup() override;
 
-    void openPopup();
-    void dispose();
+ private:
+  ColorChooserPopupUIController(LocalFrame*,
+                                ChromeClientImpl*,
+                                ColorChooserClient*);
 
-    Member<ChromeClientImpl> m_chromeClient;
-    PagePopup* m_popup;
-    Locale& m_locale;
+  void OpenPopup();
+  void Dispose();
+
+  Member<ChromeClientImpl> chrome_client_;
+  PagePopup* popup_;
+  Locale& locale_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ColorChooserPopupUIController_h
+#endif  // ColorChooserPopupUIController_h

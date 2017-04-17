@@ -13,7 +13,7 @@
 #include "base/files/file.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/path_service.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "crypto/sha2.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -25,7 +25,7 @@ class BinaryFeatureExtractorTest : public testing::Test {
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    path_ = temp_dir_.path().Append(FILE_PATH_LITERAL("file.dll"));
+    path_ = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("file.dll"));
   }
 
   // Writes |size| bytes from |data| to |path_|.
@@ -55,7 +55,7 @@ class BinaryFeatureExtractorTest : public testing::Test {
 
 TEST_F(BinaryFeatureExtractorTest, ExtractDigestNoFile) {
   base::FilePath no_file =
-      temp_dir_.path().Append(FILE_PATH_LITERAL("does_not_exist.dll"));
+      temp_dir_.GetPath().Append(FILE_PATH_LITERAL("does_not_exist.dll"));
 
   ClientDownloadRequest_Digests digests;
   extractor_->ExtractDigest(no_file, &digests);

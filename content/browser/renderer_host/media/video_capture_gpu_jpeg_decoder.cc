@@ -9,7 +9,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -18,8 +18,10 @@
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
+#include "media/base/media_switches.h"
 #include "media/base/video_frame.h"
 #include "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 
 namespace content {
 
@@ -46,7 +48,9 @@ void VideoCaptureGpuJpegDecoder::Initialize() {
   DCHECK(CalledOnValidThread());
 
   base::AutoLock lock(lock_);
-  bool is_platform_supported = false;
+  bool is_platform_supported =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kUseFakeJpegDecodeAccelerator);
 #if defined(OS_CHROMEOS)
   // Non-ChromeOS platforms do not support HW JPEG decode now. Do not establish
   // gpu channel to avoid introducing overhead.
@@ -81,7 +85,7 @@ void VideoCaptureGpuJpegDecoder::DecodeCapturedData(
     const media::VideoCaptureFormat& frame_format,
     base::TimeTicks reference_time,
     base::TimeDelta timestamp,
-    std::unique_ptr<media::VideoCaptureDevice::Client::Buffer> out_buffer) {
+    media::VideoCaptureDevice::Client::Buffer out_buffer) {
   DCHECK(CalledOnValidThread());
   DCHECK(decoder_);
 
@@ -121,20 +125,23 @@ void VideoCaptureGpuJpegDecoder::DecodeCapturedData(
   // Mask against 30 bits, to avoid (undefined) wraparound on signed integer.
   next_bitstream_buffer_id_ = (next_bitstream_buffer_id_ + 1) & 0x3FFFFFFF;
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
+  // The API of |decoder_| requires us to wrap the |out_buffer| in a VideoFrame.
   const gfx::Size dimensions = frame_format.frame_size;
-  base::SharedMemoryHandle out_handle = out_buffer->AsPlatformFile();
+  std::unique_ptr<media::VideoCaptureBufferHandle> out_buffer_access =
+      out_buffer.handle_provider->GetHandleForInProcessAccess();
+  base::SharedMemoryHandle out_handle =
+      out_buffer.handle_provider->GetNonOwnedSharedMemoryHandleForLegacyIPC();
   scoped_refptr<media::VideoFrame> out_frame =
       media::VideoFrame::WrapExternalSharedMemory(
-          media::PIXEL_FORMAT_I420,                   // format
-          dimensions,                                 // coded_size
-          gfx::Rect(dimensions),                      // visible_rect
-          dimensions,                                 // natural_size
-          static_cast<uint8_t*>(out_buffer->data()),  // data
-          out_buffer->mapped_size(),                  // data_size
-          out_handle,                                 // handle
-          0,                                          // shared_memory_offset
-          timestamp);                                 // timestamp
+          media::PIXEL_FORMAT_I420,          // format
+          dimensions,                        // coded_size
+          gfx::Rect(dimensions),             // visible_rect
+          dimensions,                        // natural_size
+          out_buffer_access->data(),         // data
+          out_buffer_access->mapped_size(),  // data_size
+          out_handle,                        // handle
+          0,                                 // shared_memory_offset
+          timestamp);                        // timestamp
   if (!out_frame) {
     base::AutoLock lock(lock_);
     decoder_status_ = FAILED;
@@ -147,15 +154,23 @@ void VideoCaptureGpuJpegDecoder::DecodeCapturedData(
   out_frame->metadata()->SetTimeTicks(media::VideoFrameMetadata::REFERENCE_TIME,
                                       reference_time);
 
+  media::mojom::VideoFrameInfoPtr out_frame_info =
+      media::mojom::VideoFrameInfo::New();
+  out_frame_info->timestamp = timestamp;
+  out_frame_info->pixel_format = media::PIXEL_FORMAT_I420;
+  out_frame_info->storage_type = media::PIXEL_STORAGE_CPU;
+  out_frame_info->coded_size = dimensions;
+  out_frame_info->visible_rect = gfx::Rect(dimensions);
+  out_frame_info->metadata = out_frame->metadata()->CopyInternalValues();
+
   {
     base::AutoLock lock(lock_);
     decode_done_closure_ =
-        base::Bind(decode_done_cb_, base::Passed(&out_buffer), out_frame);
+        base::Bind(decode_done_cb_, out_buffer.id, out_buffer.frame_feedback_id,
+                   base::Passed(&out_buffer.access_permission),
+                   base::Passed(&out_frame_info));
   }
-  decoder_->Decode(in_buffer, out_frame);
-#else
-  NOTREACHED();
-#endif
+  decoder_->Decode(in_buffer, std::move(out_frame));
 }
 
 void VideoCaptureGpuJpegDecoder::VideoFrameReady(int32_t bitstream_buffer_id) {
@@ -202,7 +217,6 @@ void VideoCaptureGpuJpegDecoder::EstablishGpuChannelOnUIThread(
   DCHECK(BrowserGpuChannelHostFactory::instance());
 
   BrowserGpuChannelHostFactory::instance()->EstablishGpuChannel(
-      CAUSE_FOR_GPU_LAUNCH_JPEGDECODEACCELERATOR_INITIALIZE,
       base::Bind(&VideoCaptureGpuJpegDecoder::GpuChannelEstablishedOnUIThread,
                  task_runner, weak_this));
 }
@@ -210,11 +224,10 @@ void VideoCaptureGpuJpegDecoder::EstablishGpuChannelOnUIThread(
 // static
 void VideoCaptureGpuJpegDecoder::GpuChannelEstablishedOnUIThread(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this) {
+    base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
+    scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(
-      BrowserGpuChannelHostFactory::instance()->GetGpuChannel());
   task_runner->PostTask(
       FROM_HERE, base::Bind(&VideoCaptureGpuJpegDecoder::FinishInitialization,
                             weak_this, std::move(gpu_channel_host)));

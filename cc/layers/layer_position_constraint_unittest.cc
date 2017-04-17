@@ -6,9 +6,9 @@
 
 #include <vector>
 
+#include "cc/animation/animation_host.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
-#include "cc/proto/layer_position_constraint.pb.h"
 #include "cc/test/fake_layer_tree_host.h"
 #include "cc/test/fake_proxy.h"
 #include "cc/test/geometry_test_utils.h"
@@ -61,8 +61,10 @@ void ExecuteCalculateDrawProperties(LayerImpl* root_layer) {
 class LayerPositionConstraintTest : public testing::Test {
  public:
   LayerPositionConstraintTest()
-      : layer_tree_host_(
-            FakeLayerTreeHost::Create(&fake_client_, &task_graph_runner_)),
+      : animation_host_(AnimationHost::CreateForTesting(ThreadInstance::MAIN)),
+        layer_tree_host_(FakeLayerTreeHost::Create(&fake_client_,
+                                                   &task_graph_runner_,
+                                                   animation_host_.get())),
         root_impl_(nullptr),
         inner_viewport_container_layer_impl_(nullptr),
         scroll_layer_impl_(nullptr),
@@ -73,7 +75,7 @@ class LayerPositionConstraintTest : public testing::Test {
         great_grand_child_impl_(nullptr) {
     layer_tree_host_->InitializeForTesting(
         TaskRunnerProvider::Create(nullptr, nullptr),
-        std::unique_ptr<Proxy>(new FakeProxy), nullptr);
+        std::unique_ptr<Proxy>(new FakeProxy));
     CreateTreeForTest();
     fixed_to_top_left_.set_is_fixed_position(true);
     fixed_to_bottom_right_.set_is_fixed_position(true);
@@ -170,6 +172,7 @@ class LayerPositionConstraintTest : public testing::Test {
  protected:
   FakeLayerTreeHostClient fake_client_;
   TestTaskGraphRunner task_graph_runner_;
+  std::unique_ptr<AnimationHost> animation_host_;
   std::unique_ptr<FakeLayerTreeHost> layer_tree_host_;
   scoped_refptr<Layer> root_;
   scoped_refptr<Layer> inner_viewport_container_layer_;
@@ -200,8 +203,7 @@ class LayerPositionConstraintTest : public testing::Test {
             ->property_trees()
             ->scroll_tree.SetScrollOffsetDeltaForTesting(layer_impl->id(),
                                                          delta))
-      layer_impl->layer_tree_impl()->DidUpdateScrollOffset(
-          layer_impl->id(), layer_impl->transform_tree_index());
+      layer_impl->layer_tree_impl()->DidUpdateScrollOffset(layer_impl->id());
   }
 };
 
@@ -457,12 +459,12 @@ TEST_F(LayerPositionConstraintTest,
   gfx::Transform expected_grand_child_transform;
   gfx::Transform expected_great_grand_child_transform;
   expected_great_grand_child_transform.PreconcatTransform(rotation_about_z);
-  EXPECT_TRUE(grand_child_impl_->render_surface());
+  EXPECT_TRUE(grand_child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_surface_draw_transform,
-      grand_child_impl_->render_surface()->draw_transform());
+      grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
                                   grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_great_grand_child_transform,
@@ -494,12 +496,12 @@ TEST_F(LayerPositionConstraintTest,
   expected_great_grand_child_transform.Translate(10.0, 30.0);
   expected_great_grand_child_transform.PreconcatTransform(rotation_about_z);
 
-  EXPECT_TRUE(grand_child_impl_->render_surface());
+  EXPECT_TRUE(grand_child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_surface_draw_transform,
-      grand_child_impl_->render_surface()->draw_transform());
+      grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
                                   grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_great_grand_child_transform,
@@ -601,18 +603,18 @@ TEST_F(LayerPositionConstraintTest,
   gfx::Transform expected_fixed_position_child_transform;
   expected_fixed_position_child_transform.PreconcatTransform(rotation_about_z);
 
-  EXPECT_TRUE(grand_child_impl_->render_surface());
-  EXPECT_TRUE(great_grand_child_impl_->render_surface());
+  EXPECT_TRUE(grand_child_impl_->GetRenderSurface());
+  EXPECT_TRUE(great_grand_child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_grand_child_surface_draw_transform,
-      grand_child_impl_->render_surface()->draw_transform());
+      grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
                                   grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_great_grand_child_surface_draw_transform,
-      great_grand_child_impl_->render_surface()->draw_transform());
+      great_grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_great_grand_child_transform,
                                   great_grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_fixed_position_child_transform,
@@ -641,18 +643,18 @@ TEST_F(LayerPositionConstraintTest,
   expected_fixed_position_child_transform.Translate(10.0, 30.0);
   expected_fixed_position_child_transform.PreconcatTransform(rotation_about_z);
 
-  EXPECT_TRUE(grand_child_impl_->render_surface());
-  EXPECT_TRUE(great_grand_child_impl_->render_surface());
+  EXPECT_TRUE(grand_child_impl_->GetRenderSurface());
+  EXPECT_TRUE(great_grand_child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_grand_child_surface_draw_transform,
-      grand_child_impl_->render_surface()->draw_transform());
+      grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
                                   grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_great_grand_child_surface_draw_transform,
-      great_grand_child_impl_->render_surface()->draw_transform());
+      great_grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_great_grand_child_transform,
                                   great_grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_fixed_position_child_transform,
@@ -763,18 +765,18 @@ TEST_F(
   gfx::Transform expected_fixed_position_child_transform;
   expected_fixed_position_child_transform.PreconcatTransform(rotation_about_z);
 
-  EXPECT_TRUE(grand_child_impl_->render_surface());
-  EXPECT_TRUE(great_grand_child_impl_->render_surface());
+  EXPECT_TRUE(grand_child_impl_->GetRenderSurface());
+  EXPECT_TRUE(great_grand_child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_grand_child_surface_draw_transform,
-      grand_child_impl_->render_surface()->draw_transform());
+      grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
                                   grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_great_grand_child_surface_draw_transform,
-      great_grand_child_impl_->render_surface()->draw_transform());
+      great_grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_great_grand_child_transform,
                                   great_grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_fixed_position_child_transform,
@@ -808,18 +810,18 @@ TEST_F(
   expected_fixed_position_child_transform.Translate(10.0, 30.0);
   expected_fixed_position_child_transform.PreconcatTransform(rotation_about_z);
 
-  EXPECT_TRUE(grand_child_impl_->render_surface());
-  EXPECT_TRUE(great_grand_child_impl_->render_surface());
+  EXPECT_TRUE(grand_child_impl_->GetRenderSurface());
+  EXPECT_TRUE(great_grand_child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_grand_child_surface_draw_transform,
-      grand_child_impl_->render_surface()->draw_transform());
+      grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
                                   grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_great_grand_child_surface_draw_transform,
-      great_grand_child_impl_->render_surface()->draw_transform());
+      great_grand_child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_great_grand_child_transform,
                                   great_grand_child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_fixed_position_child_transform,
@@ -846,10 +848,10 @@ TEST_F(LayerPositionConstraintTest,
   gfx::Transform expected_surface_draw_transform;
   gfx::Transform expected_child_transform;
   gfx::Transform expected_grand_child_transform;
-  EXPECT_TRUE(child_impl_->render_surface());
+  EXPECT_TRUE(child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_surface_draw_transform,
-      child_impl_->render_surface()->draw_transform());
+      child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
@@ -867,10 +869,10 @@ TEST_F(LayerPositionConstraintTest,
   expected_grand_child_transform.MakeIdentity();
   expected_grand_child_transform.Translate(10.0, 10.0);
 
-  EXPECT_TRUE(child_impl_->render_surface());
+  EXPECT_TRUE(child_impl_->GetRenderSurface());
   EXPECT_TRANSFORMATION_MATRIX_EQ(
       expected_surface_draw_transform,
-      child_impl_->render_surface()->draw_transform());
+      child_impl_->GetRenderSurface()->draw_transform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_child_transform,
                                   child_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_grand_child_transform,
@@ -1142,32 +1144,6 @@ TEST_F(LayerPositionConstraintTest,
                                   scroll_layer_impl_->DrawTransform());
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_fixed_child_transform,
                                   fixed_child_impl->DrawTransform());
-}
-
-void VerifySerializeAndDeserializeProto(bool is_fixed_position,
-                                        bool is_fixed_to_right_edge,
-                                        bool is_fixed_to_bottom_edge) {
-  LayerPositionConstraint constraint;
-  constraint.set_is_fixed_position(is_fixed_position);
-  constraint.set_is_fixed_to_right_edge(is_fixed_to_right_edge);
-  constraint.set_is_fixed_to_bottom_edge(is_fixed_to_bottom_edge);
-  proto::LayerPositionConstraint proto;
-  constraint.ToProtobuf(&proto);
-
-  LayerPositionConstraint constraint2;
-  constraint2.FromProtobuf(proto);
-  EXPECT_EQ(constraint, constraint2);
-}
-
-TEST(LayerPositionConstraintSerializationTest, SerializeAndDeserializeProto) {
-  VerifySerializeAndDeserializeProto(true, true, true);
-  VerifySerializeAndDeserializeProto(true, true, false);
-  VerifySerializeAndDeserializeProto(true, false, true);
-  VerifySerializeAndDeserializeProto(true, false, false);
-  VerifySerializeAndDeserializeProto(false, true, true);
-  VerifySerializeAndDeserializeProto(false, true, false);
-  VerifySerializeAndDeserializeProto(false, false, true);
-  VerifySerializeAndDeserializeProto(false, false, false);
 }
 
 }  // namespace

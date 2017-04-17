@@ -28,74 +28,110 @@
 
 namespace blink {
 
-#pragma pack(push, 1)
+#pragma pack(push, 4)
 
 class WebGamepadButton {
-public:
-    WebGamepadButton()
-        : pressed(false)
-        , value(0.)
-    {
-    }
-    WebGamepadButton(bool pressed, double value)
-        : pressed(pressed)
-        , value(value)
-    {
-    }
-    bool pressed;
-    double value;
+ public:
+  WebGamepadButton() : pressed(false), touched(false), value(0.) {}
+  WebGamepadButton(bool pressed, bool touched, double value)
+      : pressed(pressed), touched(touched), value(value) {}
+  bool pressed;
+  bool touched;
+  double value;
+};
+
+class WebGamepadVector {
+ public:
+  WebGamepadVector() : not_null(false) {}
+
+  bool not_null;
+  float x, y, z;
+};
+
+class WebGamepadQuaternion {
+ public:
+  WebGamepadQuaternion() : not_null(false) {}
+
+  bool not_null;
+  float x, y, z, w;
+};
+
+class WebGamepadPose {
+ public:
+  WebGamepadPose() : not_null(false) {}
+
+  bool not_null;
+
+  bool has_orientation;
+  bool has_position;
+
+  WebGamepadQuaternion orientation;
+  WebGamepadVector position;
+  WebGamepadVector angular_velocity;
+  WebGamepadVector linear_velocity;
+  WebGamepadVector angular_acceleration;
+  WebGamepadVector linear_acceleration;
+};
+
+enum WebGamepadHand {
+  kGamepadHandNone = 0,
+  kGamepadHandLeft = 1,
+  kGamepadHandRight = 2
 };
 
 // This structure is intentionally POD and fixed size so that it can be shared
 // memory between hardware polling threads and the rest of the browser. See
 // also WebGamepads.h.
 class WebGamepad {
-public:
-    static const size_t idLengthCap = 128;
-    static const size_t mappingLengthCap = 16;
-    static const size_t axesLengthCap = 16;
-    static const size_t buttonsLengthCap = 32;
+ public:
+  static const size_t kIdLengthCap = 128;
+  static const size_t kMappingLengthCap = 16;
+  static const size_t kAxesLengthCap = 16;
+  static const size_t kButtonsLengthCap = 32;
 
-    WebGamepad()
-        : connected(false)
-        , timestamp(0)
-        , axesLength(0)
-        , buttonsLength(0)
-    {
-        id[0] = 0;
-        mapping[0] = 0;
-    }
+  WebGamepad()
+      : connected(false),
+        timestamp(0),
+        axes_length(0),
+        buttons_length(0),
+        display_id(0) {
+    id[0] = 0;
+    mapping[0] = 0;
+  }
 
-    // Is there a gamepad connected at this index?
-    bool connected;
+  // Is there a gamepad connected at this index?
+  bool connected;
 
-    // Device identifier (based on manufacturer, model, etc.).
-    WebUChar id[idLengthCap];
+  // Device identifier (based on manufacturer, model, etc.).
+  WebUChar id[kIdLengthCap];
 
-    // Monotonically increasing value referring to when the data were last
-    // updated.
-    unsigned long long timestamp;
+  // Monotonically increasing value referring to when the data were last
+  // updated.
+  unsigned long long timestamp;
 
-    // Number of valid entries in the axes array.
-    unsigned axesLength;
+  // Number of valid entries in the axes array.
+  unsigned axes_length;
 
-    // Normalized values representing axes, in the range [-1..1].
-    double axes[axesLengthCap];
+  // Normalized values representing axes, in the range [-1..1].
+  double axes[kAxesLengthCap];
 
-    // Number of valid entries in the buttons array.
-    unsigned buttonsLength;
+  // Number of valid entries in the buttons array.
+  unsigned buttons_length;
 
-    // Button states
-    WebGamepadButton buttons[buttonsLengthCap];
+  // Button states
+  WebGamepadButton buttons[kButtonsLengthCap];
 
-    // Mapping type (for example "standard")
-    WebUChar mapping[mappingLengthCap];
+  // Mapping type (for example "standard")
+  WebUChar mapping[kMappingLengthCap];
+
+  WebGamepadPose pose;
+
+  WebGamepadHand hand;
+
+  unsigned display_id;
 };
 
-static_assert(sizeof(WebGamepad) == 721, "WebGamepad has wrong size");
-
 #pragma pack(pop)
-
 }
 
-#endif // WebGamepad_h
+#endif  // WebGamepad_h

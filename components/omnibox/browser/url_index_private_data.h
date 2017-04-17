@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <set>
+#include <stack>
 #include <string>
 
 #include "base/files/file_path.h"
@@ -32,7 +33,6 @@ class InMemoryURLIndexCacheItem;
 namespace history {
 class HistoryDatabase;
 class InMemoryURLIndex;
-class RefCountedBool;
 }
 
 // Current version of the cache file.
@@ -48,6 +48,11 @@ static const int kCurrentCacheFileVersion = 5;
 class URLIndexPrivateData
     : public base::RefCountedThreadSafe<URLIndexPrivateData> {
  public:
+  // The maximum number of recent visits stored.  Public so that
+  // ScoredHistoryMatch can enuse that this number is greater than the number
+  // of visits it wants to use for scoring.
+  static constexpr size_t kMaxVisitsToStoreInCache = 10;
+
   URLIndexPrivateData();
 
   // Given a base::string16 in |term_string|, scans the history index and
@@ -140,16 +145,16 @@ class URLIndexPrivateData
   friend class base::RefCountedThreadSafe<URLIndexPrivateData>;
   ~URLIndexPrivateData();
 
-  friend class AddHistoryMatch;
   friend class ::HistoryQuickProviderTest;
   friend class InMemoryURLIndexTest;
-  FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, AddHistoryMatch);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, CacheSaveRestore);
+  FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, CalculateWordStartsOffsets);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, HugeResultSet);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, ReadVisitsFromHistory);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, RebuildFromHistoryIfCacheOld);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, Scoring);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, TitleSearch);
+  FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, TrimHistoryIds);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, TypedCharacterCaching);
   FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, WhitelistedURLs);
   FRIEND_TEST_ALL_PREFIXES(LimitedInMemoryURLIndexTest, Initialization);
@@ -186,36 +191,6 @@ class URLIndexPrivateData
   };
   typedef std::map<base::string16, SearchTermCacheItem> SearchTermCacheMap;
 
-  // A helper class which performs the final filter on each candidate
-  // history URL match, inserting accepted matches into |scored_matches_|.
-  class AddHistoryMatch {
-   public:
-    AddHistoryMatch(bookmarks::BookmarkModel* bookmark_model,
-                    TemplateURLService* template_url_service,
-                    const URLIndexPrivateData& private_data,
-                    const base::string16& lower_string,
-                    const String16Vector& lower_terms,
-                    const base::Time now);
-    AddHistoryMatch(const AddHistoryMatch& other);
-    ~AddHistoryMatch();
-
-    void operator()(const HistoryID history_id);
-
-    ScoredHistoryMatches ScoredMatches() const { return scored_matches_; }
-
-   private:
-    friend class InMemoryURLIndexTest;
-    FRIEND_TEST_ALL_PREFIXES(InMemoryURLIndexTest, AddHistoryMatch);
-    bookmarks::BookmarkModel* bookmark_model_;
-    TemplateURLService* template_url_service_;
-    const URLIndexPrivateData& private_data_;
-    ScoredHistoryMatches scored_matches_;
-    const base::string16& lower_string_;
-    const String16Vector& lower_terms_;
-    WordStarts lower_terms_to_word_starts_offsets_;
-    const base::Time now_;
-  };
-
   // A helper predicate class used to filter excess history items when the
   // candidate results set is too large.
   class HistoryItemFactorGreater {
@@ -231,9 +206,17 @@ class URLIndexPrivateData
 
   // URL History indexing support functions.
 
-  // Composes a set of history item IDs by intersecting the set for each word
+  // Composes a vector of history item IDs by intersecting the set for each word
   // in |unsorted_words|.
-  HistoryIDSet HistoryIDSetFromWords(const String16Vector& unsorted_words);
+  HistoryIDVector HistoryIDsFromWords(const String16Vector& unsorted_words);
+
+  // Trims the candidate pool in advance of doing proper substring searching, to
+  // cap the cost of such searching. Discards the least-relevant items (based on
+  // visit stats), which are least likely to score highly in the end.  To
+  // minimize the risk of discarding a valuable URL, the candidate pool is still
+  // left two orders of magnitude larger than the final number of results
+  // returned from the HQP. Returns whether anything was trimmed.
+  bool TrimHistoryIdsPool(HistoryIDVector* history_ids) const;
 
   // Helper function to HistoryIDSetFromWords which composes a set of history
   // ids for the given term given in |term|.
@@ -241,6 +224,20 @@ class URLIndexPrivateData
 
   // Given a set of Char16s, finds words containing those characters.
   WordIDSet WordIDSetForTermChars(const Char16Set& term_chars);
+
+  // Helper function for HistoryItemsForTerms().  Fills in |scored_items| from
+  // the matches listed in |history_ids|.
+  void HistoryIdsToScoredMatches(HistoryIDVector history_ids,
+                                 const base::string16& lower_raw_string,
+                                 const TemplateURLService* template_url_service,
+                                 bookmarks::BookmarkModel* bookmark_model,
+                                 ScoredHistoryMatches* scored_items) const;
+
+  // Fills in |terms_to_word_starts_offsets| according to where the word starts
+  // in each term.  For example, in the term "-foo" the word starts at offset 1.
+  static void CalculateWordStartsOffsets(
+      const String16Vector& terms,
+      WordStarts* terms_to_word_starts_offsets);
 
   // Indexes one URL history item as described by |row|. Returns true if the
   // row was actually indexed. |scheme_whitelist| is used to filter
@@ -265,17 +262,9 @@ class URLIndexPrivateData
   // history item identified by |history_id| to the index.
   void AddWordToIndex(const base::string16& uni_word, HistoryID history_id);
 
-  // Creates a new entry in the word/history map for |word_id| and add
-  // |history_id| as the initial element of the word's set.
-  void AddWordHistory(const base::string16& uni_word, HistoryID history_id);
-
-  // Updates an existing entry in the word/history index by adding the
-  // |history_id| to set for |word_id| in the word_id_history_map_.
-  void UpdateWordHistory(WordID word_id, HistoryID history_id);
-
-  // Adds |word_id| to |history_id|'s entry in the history/word map,
-  // creating a new entry if one does not already exist.
-  void AddToHistoryIDWordMap(HistoryID history_id, WordID word_id);
+  // Adds a new entry to |word_list_|. Uses previously freed positions if
+  // available.
+  WordID AddNewWordToWordList(const base::string16& term);
 
   // Removes |row| and all associated words and characters from the index.
   void RemoveRowFromIndex(const history::URLRow& row);
@@ -326,6 +315,12 @@ class URLIndexPrivateData
   static bool URLSchemeIsWhitelisted(const GURL& gurl,
                                      const std::set<std::string>& whitelist);
 
+  // Returns true if the URL associated with |history_id| is missing, malformed,
+  // or otherwise should not be displayed.  (Results from the default search
+  // provider fall into this category.)
+  bool ShouldFilter(const HistoryID history_id,
+                    const TemplateURLService* template_url_service) const;
+
   // Cache of search terms.
   SearchTermCacheMap search_term_cache_;
 
@@ -350,9 +345,9 @@ class URLIndexPrivateData
   // the index, in which case any available words are used, if any, and then
   // words are added to the end of the word_list_. When URL visits are
   // modified or deleted old words may be removed from the index, in which
-  // case the slots for those words are added to available_words_ for resuse
+  // case the slots for those words are added to available_words_ for reuse
   // by future URL updates.
-  WordIDSet available_words_;
+  std::stack<WordID> available_words_;
 
   // A one-to-one mapping from the a word string to its slot number (i.e.
   // WordID) in the |word_list_|.
@@ -385,12 +380,6 @@ class URLIndexPrivateData
   // Used only for testing upgrading of an older version of the cache upon
   // restore.
   int saved_cache_version_;
-
-  // Used for unit testing only. Records the number of candidate history items
-  // at three stages in the index searching process.
-  size_t pre_filter_item_count_;    // After word index is queried.
-  size_t post_filter_item_count_;   // After trimming large result set.
-  size_t post_scoring_item_count_;  // After performing final filter/scoring.
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_URL_INDEX_PRIVATE_DATA_H_

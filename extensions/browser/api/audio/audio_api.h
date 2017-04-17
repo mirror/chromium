@@ -41,31 +41,58 @@ class AudioAPI : public BrowserContextKeyedAPI, public AudioService::Observer {
   AudioService* service_;
 };
 
-class AudioGetInfoFunction : public SyncExtensionFunction {
+class AudioGetInfoFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("audio.getInfo", AUDIO_GETINFO);
 
  protected:
   ~AudioGetInfoFunction() override {}
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
-class AudioSetActiveDevicesFunction : public SyncExtensionFunction {
+class AudioGetDevicesFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("audio.getDevices", AUDIO_GETDEVICES);
+
+ protected:
+  ~AudioGetDevicesFunction() override {}
+  ResponseAction Run() override;
+};
+
+class AudioSetActiveDevicesFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("audio.setActiveDevices", AUDIO_SETACTIVEDEVICES);
 
  protected:
   ~AudioSetActiveDevicesFunction() override {}
-  bool RunSync() override;
+  ResponseAction Run() override;
 };
 
-class AudioSetPropertiesFunction : public SyncExtensionFunction {
+class AudioSetPropertiesFunction : public UIThreadExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("audio.setProperties", AUDIO_SETPROPERTIES);
 
  protected:
   ~AudioSetPropertiesFunction() override {}
-  bool RunSync() override;
+  ResponseAction Run() override;
+};
+
+class AudioSetMuteFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("audio.setMute", AUDIO_SETMUTE);
+
+ protected:
+  ~AudioSetMuteFunction() override {}
+  ResponseAction Run() override;
+};
+
+class AudioGetMuteFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("audio.getMute", AUDIO_GETMUTE);
+
+ protected:
+  ~AudioGetMuteFunction() override {}
+  ResponseAction Run() override;
 };
 
 }  // namespace extensions

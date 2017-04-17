@@ -39,38 +39,31 @@
 namespace blink {
 
 WebRTCStatsRequest::WebRTCStatsRequest(RTCStatsRequest* request)
-    : m_private(request)
-{
+    : private_(request) {}
+
+void WebRTCStatsRequest::Assign(const WebRTCStatsRequest& other) {
+  private_ = other.private_;
 }
 
-void WebRTCStatsRequest::assign(const WebRTCStatsRequest& other)
-{
-    m_private = other.m_private;
+void WebRTCStatsRequest::Reset() {
+  private_.Reset();
 }
 
-void WebRTCStatsRequest::reset()
-{
-    m_private.reset();
+WebRTCStatsResponse WebRTCStatsRequest::CreateResponse() const {
+  return WebRTCStatsResponse(private_->CreateResponse());
 }
 
-WebRTCStatsResponse WebRTCStatsRequest::createResponse() const
-{
-    return WebRTCStatsResponse(m_private->createResponse());
+bool WebRTCStatsRequest::HasSelector() const {
+  return private_->HasSelector();
 }
 
-bool WebRTCStatsRequest::hasSelector() const
-{
-    return m_private->hasSelector();
+const WebMediaStreamTrack WebRTCStatsRequest::Component() const {
+  return WebMediaStreamTrack(private_->Component());
 }
 
-const WebMediaStreamTrack WebRTCStatsRequest::component() const
-{
-    return WebMediaStreamTrack(m_private->component());
+void WebRTCStatsRequest::RequestSucceeded(
+    const WebRTCStatsResponse& response) const {
+  private_->RequestSucceeded(response);
 }
 
-void WebRTCStatsRequest::requestSucceeded(const WebRTCStatsResponse& response) const
-{
-    m_private->requestSucceeded(response);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -32,37 +32,43 @@
 #define ReplayingCanvas_h
 
 #include "platform/graphics/InterceptingCanvas.h"
-#include "third_party/skia/include/core/SkPaint.h"
-#include "third_party/skia/include/core/SkPicture.h"
 
 namespace blink {
 
 class ReplayingCanvas;
 
-template<> class CanvasInterceptor<ReplayingCanvas> : protected InterceptingCanvasBase::CanvasInterceptorBase<ReplayingCanvas> {
-public:
-    CanvasInterceptor(InterceptingCanvasBase* canvas) : InterceptingCanvasBase::CanvasInterceptorBase<ReplayingCanvas>(canvas) { }
-    ~CanvasInterceptor();
+template <>
+class CanvasInterceptor<ReplayingCanvas>
+    : protected InterceptingCanvasBase::CanvasInterceptorBase<ReplayingCanvas> {
+ public:
+  CanvasInterceptor(InterceptingCanvasBase* canvas)
+      : InterceptingCanvasBase::CanvasInterceptorBase<ReplayingCanvas>(canvas) {
+  }
+  ~CanvasInterceptor();
 };
 
-class ReplayingCanvas : public InterceptingCanvas<ReplayingCanvas>, public SkPicture::AbortCallback {
-public:
-    ReplayingCanvas(SkBitmap, unsigned fromStep, unsigned toStep);
+class ReplayingCanvas : public InterceptingCanvas<ReplayingCanvas>,
+                        public SkPicture::AbortCallback {
+ public:
+  ReplayingCanvas(SkBitmap, unsigned from_step, unsigned to_step);
 
-    bool abort() override;
-    SkCanvas::SaveLayerStrategy getSaveLayerStrategy(const SaveLayerRec&) override;
-    void onDrawPicture(const SkPicture*, const SkMatrix*, const SkPaint*) override;
+  bool abort() override;
+  SkCanvas::SaveLayerStrategy getSaveLayerStrategy(
+      const SaveLayerRec&) override;
+  void onDrawPicture(const SkPicture*,
+                     const SkMatrix*,
+                     const SkPaint*) override;
 
-private:
-    friend class CanvasInterceptor<ReplayingCanvas>;
+ private:
+  friend class CanvasInterceptor<ReplayingCanvas>;
 
-    void updateInRange();
+  void UpdateInRange();
 
-    unsigned m_fromStep;
-    unsigned m_toStep;
-    bool m_abortDrawing;
+  unsigned from_step_;
+  unsigned to_step_;
+  bool abort_drawing_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ReplayingCanvas_h
+#endif  // ReplayingCanvas_h

@@ -10,61 +10,71 @@
 #include "media/mojo/interfaces/content_decryption_module.mojom.h"
 #include "media/mojo/interfaces/renderer.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
-#include "services/shell/public/cpp/interface_provider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace content {
 
 MediaInterfaceProvider::MediaInterfaceProvider(
-    shell::InterfaceProvider* remote_interfaces)
-    : remote_interfaces_(remote_interfaces) {
+    service_manager::InterfaceProvider* remote_interfaces)
+    : remote_interfaces_(remote_interfaces), weak_factory_(this) {
+  task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  weak_this_ = weak_factory_.GetWeakPtr();
 }
 
 MediaInterfaceProvider::~MediaInterfaceProvider() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
 }
 
-void MediaInterfaceProvider::GetInterface(const mojo::String& interface_name,
+void MediaInterfaceProvider::GetInterface(const std::string& interface_name,
                                           mojo::ScopedMessagePipeHandle pipe) {
-  DVLOG(1) << __FUNCTION__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DVLOG(1) << __func__;
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE, base::Bind(&MediaInterfaceProvider::GetInterface, weak_this_,
+                              interface_name, base::Passed(&pipe)));
+    return;
+  }
+
+  DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (interface_name == media::mojom::ContentDecryptionModule::Name_) {
-    GetMediaServiceFactory()->CreateCdm(
+    GetMediaInterfaceFactory()->CreateCdm(
         mojo::MakeRequest<media::mojom::ContentDecryptionModule>(
             std::move(pipe)));
   } else if (interface_name == media::mojom::Renderer::Name_) {
-    GetMediaServiceFactory()->CreateRenderer(
+    GetMediaInterfaceFactory()->CreateRenderer(
         std::string(),
         mojo::MakeRequest<media::mojom::Renderer>(std::move(pipe)));
   } else if (interface_name == media::mojom::AudioDecoder::Name_) {
-    GetMediaServiceFactory()->CreateAudioDecoder(
+    GetMediaInterfaceFactory()->CreateAudioDecoder(
         mojo::MakeRequest<media::mojom::AudioDecoder>(std::move(pipe)));
   } else if (interface_name == media::mojom::VideoDecoder::Name_) {
-    GetMediaServiceFactory()->CreateVideoDecoder(
+    GetMediaInterfaceFactory()->CreateVideoDecoder(
         mojo::MakeRequest<media::mojom::VideoDecoder>(std::move(pipe)));
   } else {
     NOTREACHED();
   }
 }
 
-media::mojom::ServiceFactory* MediaInterfaceProvider::GetMediaServiceFactory() {
-  DVLOG(1) << __FUNCTION__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+media::mojom::InterfaceFactory*
+MediaInterfaceProvider::GetMediaInterfaceFactory() {
+  DVLOG(1) << __func__;
+  DCHECK(task_runner_->BelongsToCurrentThread());
 
-  if (!media_service_factory_) {
-    remote_interfaces_->GetInterface(&media_service_factory_);
-    media_service_factory_.set_connection_error_handler(base::Bind(
+  if (!media_interface_factory_) {
+    remote_interfaces_->GetInterface(&media_interface_factory_);
+    media_interface_factory_.set_connection_error_handler(base::Bind(
         &MediaInterfaceProvider::OnConnectionError, base::Unretained(this)));
   }
 
-  return media_service_factory_.get();
+  return media_interface_factory_.get();
 }
 
 void MediaInterfaceProvider::OnConnectionError() {
-  DVLOG(1) << __FUNCTION__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DVLOG(1) << __func__;
+  DCHECK(task_runner_->BelongsToCurrentThread());
 
-  media_service_factory_.reset();
+  media_interface_factory_.reset();
 }
 
 }  // namespace content

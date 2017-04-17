@@ -7,6 +7,7 @@
 import mojom.generate.generator as generator
 import mojom.generate.module as mojom
 import mojom.generate.pack as pack
+import os
 from mojom.generate.template_expander import UseJinja
 
 _kind_to_javascript_default_value = {
@@ -37,9 +38,13 @@ _kind_to_javascript_default_value = {
 
 
 def JavaScriptType(kind):
+  name = []
   if kind.imported_from:
-    return kind.imported_from["unique_name"] + "." + kind.name
-  return kind.name
+    name.append(kind.imported_from["unique_name"])
+  if kind.parent_kind:
+    name.append(kind.parent_kind.name)
+  name.append(kind.name)
+  return ".".join(name)
 
 
 def JavaScriptDefaultValue(field):
@@ -58,11 +63,14 @@ def JavaScriptDefaultValue(field):
     return "null"
   if mojom.IsMapKind(field.kind):
     return "null"
-  if mojom.IsInterfaceKind(field.kind) or \
-     mojom.IsInterfaceRequestKind(field.kind):
-    return _kind_to_javascript_default_value[mojom.MSGPIPE]
-  if mojom.IsAssociatedKind(field.kind):
-    return "null"
+  if mojom.IsInterfaceKind(field.kind):
+    return "new %sPtr()" % JavaScriptType(field.kind)
+  if mojom.IsInterfaceRequestKind(field.kind):
+    return "new bindings.InterfaceRequest()"
+  if mojom.IsAssociatedInterfaceKind(field.kind):
+    return "new associatedBindings.AssociatedInterfacePtrInfo()"
+  if mojom.IsAssociatedInterfaceRequestKind(field.kind):
+    return "new associatedBindings.AssociatedInterfaceRequest()"
   if mojom.IsEnumKind(field.kind):
     return "0"
   raise Exception("No valid default: %s" % field)
@@ -120,16 +128,23 @@ def CodecType(kind):
     element_type = ElementCodecType(kind.kind)
     return "new codec.%s(%s%s)" % (array_type, element_type, array_length)
   if mojom.IsInterfaceKind(kind):
-    return "codec.%s" % ("NullableInterface" if mojom.IsNullableKind(kind)
-        else "Interface")
+    return "new codec.%s(%sPtr)" % (
+        "NullableInterface" if mojom.IsNullableKind(kind) else "Interface",
+        JavaScriptType(kind))
   if mojom.IsInterfaceRequestKind(kind):
-    return CodecType(mojom.MSGPIPE)
+    return "codec.%s" % (
+        "NullableInterfaceRequest" if mojom.IsNullableKind(kind)
+                                   else "InterfaceRequest")
   if mojom.IsAssociatedInterfaceKind(kind):
-    return "codec.AssociatedInterfaceNotSupported"
+    return "codec.%s" % (
+        "NullableAssociatedInterfacePtrInfo" if mojom.IsNullableKind(kind)
+                                             else "AssociatedInterfacePtrInfo")
   if mojom.IsAssociatedInterfaceRequestKind(kind):
-    return "codec.AssociatedInterfaceRequestNotSupported"
+    return "codec.%s" % (
+        "NullableAssociatedInterfaceRequest" if mojom.IsNullableKind(kind)
+                                             else "AssociatedInterfaceRequest")
   if mojom.IsEnumKind(kind):
-    return _kind_to_codec_type[mojom.INT32]
+    return "new codec.Enum(%s)" % JavaScriptType(kind)
   if mojom.IsMapKind(kind):
     map_type = "NullableMapOf" if mojom.IsNullableKind(kind) else "MapOf"
     key_type = ElementCodecType(kind.key_kind)
@@ -141,9 +156,10 @@ def CodecType(kind):
 def ElementCodecType(kind):
   return "codec.PackedBool" if mojom.IsBoolKind(kind) else CodecType(kind)
 
+
 def JavaScriptDecodeSnippet(kind):
   if (kind in mojom.PRIMITIVES or mojom.IsUnionKind(kind) or
-      mojom.IsInterfaceKind(kind) or mojom.IsAssociatedKind(kind)):
+      mojom.IsAnyInterfaceKind(kind)):
     return "decodeStruct(%s)" % CodecType(kind)
   if mojom.IsStructKind(kind):
     return "decodeStructPointer(%s)" % JavaScriptType(kind)
@@ -156,8 +172,6 @@ def JavaScriptDecodeSnippet(kind):
     return "decodeArrayPointer(%s)" % CodecType(kind.kind)
   if mojom.IsUnionKind(kind):
     return "decodeUnion(%s)" % CodecType(kind)
-  if mojom.IsInterfaceRequestKind(kind):
-    return JavaScriptDecodeSnippet(mojom.MSGPIPE)
   if mojom.IsEnumKind(kind):
     return JavaScriptDecodeSnippet(mojom.INT32)
   raise Exception("No decode snippet for %s" % kind)
@@ -165,7 +179,7 @@ def JavaScriptDecodeSnippet(kind):
 
 def JavaScriptEncodeSnippet(kind):
   if (kind in mojom.PRIMITIVES or mojom.IsUnionKind(kind) or
-      mojom.IsInterfaceKind(kind) or mojom.IsAssociatedKind(kind)):
+      mojom.IsAnyInterfaceKind(kind)):
     return "encodeStruct(%s, " % CodecType(kind)
   if mojom.IsUnionKind(kind):
     return "encodeStruct(%s, " % JavaScriptType(kind)
@@ -178,8 +192,6 @@ def JavaScriptEncodeSnippet(kind):
     return "encodeArrayPointer(codec.PackedBool, ";
   if mojom.IsArrayKind(kind):
     return "encodeArrayPointer(%s, " % CodecType(kind.kind)
-  if mojom.IsInterfaceRequestKind(kind):
-    return JavaScriptEncodeSnippet(mojom.MSGPIPE)
   if mojom.IsEnumKind(kind):
     return JavaScriptEncodeSnippet(mojom.INT32)
   raise Exception("No encode snippet for %s" % kind)
@@ -228,6 +240,9 @@ def JavaScriptValidateArrayParams(field):
        expected_dimension_sizes)
 
 
+def JavaScriptValidateEnumParams(field):
+  return JavaScriptType(field.kind)
+
 def JavaScriptValidateStructParams(field):
   nullable = JavaScriptNullableParam(field)
   struct_type = JavaScriptType(field.kind)
@@ -246,42 +261,6 @@ def JavaScriptValidateMapParams(field):
   values_nullable = "true" if mojom.IsNullableKind(values_kind) else "false"
   return "%s, %s, %s, %s" % \
       (nullable, keys_type, values_type, values_nullable)
-
-
-def JavaScriptValidateStringParams(field):
-  nullable = JavaScriptNullableParam(field)
-  return "%s" % (nullable)
-
-
-def JavaScriptValidateHandleParams(field):
-  nullable = JavaScriptNullableParam(field)
-  return "%s" % (nullable)
-
-def JavaScriptValidateInterfaceParams(field):
-  return JavaScriptValidateHandleParams(field)
-
-def JavaScriptProxyMethodParameterValue(parameter):
-  name = parameter.name;
-  if (mojom.IsInterfaceKind(parameter.kind)):
-   type = JavaScriptType(parameter.kind)
-   return "core.isHandle(%s) ? %s : connection.bindImpl" \
-       "(%s, %s)" % (name, name, name, type)
-  if (mojom.IsInterfaceRequestKind(parameter.kind)):
-   type = JavaScriptType(parameter.kind.kind)
-   return "core.isHandle(%s) ? %s : connection.bindProxy" \
-       "(%s, %s)" % (name, name, name, type)
-  return name;
-
-
-def JavaScriptStubMethodParameterValue(parameter):
-  name = parameter.name;
-  if (mojom.IsInterfaceKind(parameter.kind)):
-   type = JavaScriptType(parameter.kind)
-   return "connection.bindHandleToProxy(%s, %s)" % (name, type)
-  if (mojom.IsInterfaceRequestKind(parameter.kind)):
-   type = JavaScriptType(parameter.kind.kind)
-   return "connection.bindHandleToStub(%s, %s)" % (name, type)
-  return name;
 
 
 def TranslateConstants(token):
@@ -316,6 +295,9 @@ def ExpressionToText(value):
 def IsArrayPointerField(field):
   return mojom.IsArrayKind(field.kind)
 
+def IsEnumField(field):
+  return mojom.IsEnumKind(field.kind)
+
 def IsStringPointerField(field):
   return mojom.IsStringKind(field.kind)
 
@@ -331,38 +313,67 @@ def IsHandleField(field):
 def IsInterfaceField(field):
   return mojom.IsInterfaceKind(field.kind)
 
+def IsInterfaceRequestField(field):
+  return mojom.IsInterfaceRequestKind(field.kind)
+
+def IsAssociatedInterfaceField(field):
+  return mojom.IsAssociatedInterfaceKind(field.kind)
+
+def IsAssociatedInterfaceRequestField(field):
+  return mojom.IsAssociatedInterfaceRequestKind(field.kind)
+
 def IsUnionField(field):
   return mojom.IsUnionKind(field.kind)
+
+def IsBoolField(field):
+  return mojom.IsBoolKind(field.kind)
+
+def IsObjectField(field):
+  return mojom.IsObjectKind(field.kind)
+
+def IsAnyHandleOrInterfaceField(field):
+  return mojom.IsAnyHandleOrInterfaceKind(field.kind)
+
+def IsEnumField(field):
+  return mojom.IsEnumKind(field.kind)
+
+def GetRelativePath(module, base_module):
+  return os.path.relpath(module.path, os.path.dirname(base_module.path))
 
 
 class Generator(generator.Generator):
 
   js_filters = {
-    "default_value": JavaScriptDefaultValue,
-    "payload_size": JavaScriptPayloadSize,
     "decode_snippet": JavaScriptDecodeSnippet,
+    "default_value": JavaScriptDefaultValue,
     "encode_snippet": JavaScriptEncodeSnippet,
-    "union_decode_snippet": JavaScriptUnionDecodeSnippet,
-    "union_encode_snippet": JavaScriptUnionEncodeSnippet,
     "expression_to_text": ExpressionToText,
     "field_offset": JavaScriptFieldOffset,
     "has_callbacks": mojom.HasCallbacks,
+    "is_any_handle_or_interface_field": IsAnyHandleOrInterfaceField,
     "is_array_pointer_field": IsArrayPointerField,
-    "is_map_pointer_field": IsMapPointerField,
-    "is_struct_pointer_field": IsStructPointerField,
-    "is_string_pointer_field": IsStringPointerField,
-    "is_union_field": IsUnionField,
+    "is_associated_interface_field": IsAssociatedInterfaceField,
+    "is_associated_interface_request_field": IsAssociatedInterfaceRequestField,
+    "is_bool_field": IsBoolField,
+    "is_enum_field": IsEnumField,
     "is_handle_field": IsHandleField,
     "is_interface_field": IsInterfaceField,
+    "is_interface_request_field": IsInterfaceRequestField,
+    "is_map_pointer_field": IsMapPointerField,
+    "is_object_field": IsObjectField,
+    "is_string_pointer_field": IsStringPointerField,
+    "is_struct_pointer_field": IsStructPointerField,
+    "is_union_field": IsUnionField,
     "js_type": JavaScriptType,
-    "js_proxy_method_parameter_value": JavaScriptProxyMethodParameterValue,
-    "js_stub_method_parameter_value": JavaScriptStubMethodParameterValue,
+    "payload_size": JavaScriptPayloadSize,
+    "get_relative_path": GetRelativePath,
     "stylize_method": generator.StudlyCapsToCamel,
+    "union_decode_snippet": JavaScriptUnionDecodeSnippet,
+    "union_encode_snippet": JavaScriptUnionEncodeSnippet,
     "validate_array_params": JavaScriptValidateArrayParams,
-    "validate_handle_params": JavaScriptValidateHandleParams,
-    "validate_interface_params": JavaScriptValidateInterfaceParams,
+    "validate_enum_params": JavaScriptValidateEnumParams,
     "validate_map_params": JavaScriptValidateMapParams,
-    "validate_string_params": JavaScriptValidateStringParams,
+    "validate_nullable_params": JavaScriptNullableParam,
     "validate_struct_params": JavaScriptValidateStructParams,
     "validate_union_params": JavaScriptValidateUnionParams,
   }
@@ -376,6 +387,7 @@ class Generator(generator.Generator):
       "module": self.module,
       "structs": self.GetStructs() + self.GetStructsFromMethods(),
       "unions": self.GetUnions(),
+      "use_new_js_bindings": self.use_new_js_bindings,
       "interfaces": self.GetInterfaces(),
       "imported_interfaces": self.GetImportedInterfaces(),
     }

@@ -9,19 +9,18 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <string>
 #include <tuple>
-#include <vector>
 
 #include "base/atomic_sequence_num.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
+#include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
-#include "content/browser/message_port_message_filter.h"
 #include "content/browser/shared_worker/shared_worker_message_filter.h"
 #include "content/browser/shared_worker/worker_storage_partition.h"
-#include "content/common/message_port_messages.h"
 #include "content/common/view_messages.h"
 #include "content/common/worker_messages.h"
 #include "content/public/browser/storage_partition.h"
@@ -49,15 +48,15 @@ class SharedWorkerServiceImplTest : public testing::Test {
       : browser_thread_bundle_(TestBrowserThreadBundle::IO_MAINLOOP),
         browser_context_(new TestBrowserContext()),
         partition_(new WorkerStoragePartition(
-            BrowserContext::GetDefaultStoragePartition(browser_context_.get())->
-                GetURLRequestContext(),
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL,
-            NULL)) {
+            BrowserContext::GetDefaultStoragePartition(browser_context_.get())
+                ->GetURLRequestContext(),
+            nullptr /* media_url_request_context */,
+            nullptr /* appcache_service */,
+            nullptr /* quota_manager */,
+            nullptr /* filesystem_context */,
+            nullptr /* database_tracker */,
+            nullptr /* indexed_db_context */,
+            nullptr /* service_worker_context */)) {
     SharedWorkerServiceImpl::GetInstance()
         ->ChangeUpdateWorkerDependencyFuncForTesting(
             &SharedWorkerServiceImplTest::MockUpdateWorkerDependency);
@@ -94,6 +93,8 @@ class SharedWorkerServiceImplTest : public testing::Test {
   static std::vector<int> s_worker_dependency_removed_ids_;
   static base::Lock s_lock_;
   static std::set<int> s_running_process_id_set_;
+
+ private:
   DISALLOW_COPY_AND_ASSIGN(SharedWorkerServiceImplTest);
 };
 
@@ -110,61 +111,46 @@ static const int kProcessIDs[] = {100, 101, 102};
 static const unsigned long long kDocumentIDs[] = {200, 201, 202};
 static const int kRenderFrameRouteIDs[] = {300, 301, 302};
 
-class MockMessagePortMessageFilter : public MessagePortMessageFilter {
- public:
-  MockMessagePortMessageFilter(const NextRoutingIDCallback& callback,
-                               ScopedVector<IPC::Message>* message_queue)
-      : MessagePortMessageFilter(callback), message_queue_(message_queue) {}
+void BlockingReadFromMessagePort(MessagePort port, base::string16* message) {
+  base::RunLoop run_loop;
+  port.SetCallback(run_loop.QuitClosure());
+  run_loop.Run();
 
-  bool Send(IPC::Message* message) override {
-    if (!message_queue_) {
-      delete message;
-      return false;
-    }
-    message_queue_->push_back(message);
-    return true;
-  }
-
-  void Close() {
-    message_queue_ = NULL;
-    OnChannelClosing();
-  }
-
- private:
-  ~MockMessagePortMessageFilter() override {}
-  ScopedVector<IPC::Message>* message_queue_;
-};
+  std::vector<MessagePort> should_be_empty;
+  EXPECT_TRUE(port.GetMessage(message, &should_be_empty));
+  EXPECT_TRUE(should_be_empty.empty());
+}
 
 class MockSharedWorkerMessageFilter : public SharedWorkerMessageFilter {
  public:
-  MockSharedWorkerMessageFilter(int render_process_id,
-                                ResourceContext* resource_context,
-                                const WorkerStoragePartition& partition,
-                                MessagePortMessageFilter* message_port_filter,
-                                ScopedVector<IPC::Message>* message_queue)
+  MockSharedWorkerMessageFilter(
+      int render_process_id,
+      ResourceContext* resource_context,
+      const WorkerStoragePartition& partition,
+      const SharedWorkerMessageFilter::NextRoutingIDCallback& callback,
+      std::vector<std::unique_ptr<IPC::Message>>* message_queue)
       : SharedWorkerMessageFilter(render_process_id,
                                   resource_context,
                                   partition,
-                                  message_port_filter),
+                                  callback),
         message_queue_(message_queue) {}
 
   bool Send(IPC::Message* message) override {
-    if (!message_queue_) {
-      delete message;
+    std::unique_ptr<IPC::Message> owned(message);
+    if (!message_queue_)
       return false;
-    }
-    message_queue_->push_back(message);
+    message_queue_->push_back(std::move(owned));
     return true;
   }
 
   void Close() {
-    message_queue_ = NULL;
+    message_queue_ = nullptr;
     OnChannelClosing();
   }
 
  private:
   ~MockSharedWorkerMessageFilter() override {}
-  ScopedVector<IPC::Message>* message_queue_;
+  std::vector<std::unique_ptr<IPC::Message>>* message_queue_;
 };
 
 class MockRendererProcessHost {
@@ -173,37 +159,34 @@ class MockRendererProcessHost {
                           ResourceContext* resource_context,
                           const WorkerStoragePartition& partition)
       : process_id_(process_id),
-        message_filter_(new MockMessagePortMessageFilter(
+        worker_filter_(new MockSharedWorkerMessageFilter(
+            process_id,
+            resource_context,
+            partition,
             base::Bind(&base::AtomicSequenceNumber::GetNext,
                        base::Unretained(&next_routing_id_)),
-            &queued_messages_)),
-        worker_filter_(new MockSharedWorkerMessageFilter(process_id,
-                                                         resource_context,
-                                                         partition,
-                                                         message_filter_.get(),
-                                                         &queued_messages_)) {
+            &queued_messages_)) {
     SharedWorkerServiceImplTest::RegisterRunningProcessID(process_id);
   }
 
   ~MockRendererProcessHost() {
     SharedWorkerServiceImplTest::UnregisterRunningProcessID(process_id_);
-    message_filter_->Close();
     worker_filter_->Close();
   }
 
   bool OnMessageReceived(IPC::Message* message) {
     std::unique_ptr<IPC::Message> msg(message);
-    const bool ret = message_filter_->OnMessageReceived(*message) ||
-                     worker_filter_->OnMessageReceived(*message);
+    const bool ret = worker_filter_->OnMessageReceived(*message);
     if (message->is_sync()) {
       CHECK(!queued_messages_.empty());
-      const IPC::Message* response_msg = queued_messages_.back();
+      std::unique_ptr<IPC::Message> response_msg(
+          queued_messages_.back().release());
+      queued_messages_.pop_back();
       IPC::SyncMessage* sync_msg = static_cast<IPC::SyncMessage*>(message);
       std::unique_ptr<IPC::MessageReplyDeserializer> reply_serializer(
           sync_msg->GetReplyDeserializer());
       bool result = reply_serializer->SerializeOutputParameters(*response_msg);
       CHECK(result);
-      queued_messages_.pop_back();
     }
     return ret;
   }
@@ -212,8 +195,8 @@ class MockRendererProcessHost {
 
   std::unique_ptr<IPC::Message> PopMessage() {
     CHECK(queued_messages_.size());
-    std::unique_ptr<IPC::Message> msg(*queued_messages_.begin());
-    queued_messages_.weak_erase(queued_messages_.begin());
+    std::unique_ptr<IPC::Message> msg(queued_messages_.begin()->release());
+    queued_messages_.erase(queued_messages_.begin());
     return msg;
   }
 
@@ -223,26 +206,10 @@ class MockRendererProcessHost {
 
  private:
   const int process_id_;
-  ScopedVector<IPC::Message> queued_messages_;
+  std::vector<std::unique_ptr<IPC::Message>> queued_messages_;
   base::AtomicSequenceNumber next_routing_id_;
-  scoped_refptr<MockMessagePortMessageFilter> message_filter_;
   scoped_refptr<MockSharedWorkerMessageFilter> worker_filter_;
 };
-
-void CreateMessagePortPair(MockRendererProcessHost* renderer,
-                           int* route_1,
-                           int* port_1,
-                           int* route_2,
-                           int* port_2) {
-  EXPECT_TRUE(renderer->OnMessageReceived(
-      new MessagePortHostMsg_CreateMessagePort(route_1, port_1)));
-  EXPECT_TRUE(renderer->OnMessageReceived(
-      new MessagePortHostMsg_CreateMessagePort(route_2, port_2)));
-  EXPECT_TRUE(renderer->OnMessageReceived(
-      new MessagePortHostMsg_Entangle(*port_1, *port_2)));
-  EXPECT_TRUE(renderer->OnMessageReceived(
-      new MessagePortHostMsg_Entangle(*port_2, *port_1)));
-}
 
 void PostCreateWorker(MockRendererProcessHost* renderer,
                       const std::string& url,
@@ -254,11 +221,11 @@ void PostCreateWorker(MockRendererProcessHost* renderer,
   params.url = GURL(url);
   params.name = base::ASCIIToUTF16(name);
   params.content_security_policy = base::string16();
-  params.security_policy_type = blink::WebContentSecurityPolicyTypeReport;
+  params.security_policy_type = blink::kWebContentSecurityPolicyTypeReport;
   params.document_id = document_id;
   params.render_frame_route_id = render_frame_route_id;
   params.creation_context_type =
-      blink::WebSharedWorkerCreationContextTypeSecure;
+      blink::kWebSharedWorkerCreationContextTypeSecure;
   EXPECT_TRUE(
       renderer->OnMessageReceived(new ViewHostMsg_CreateWorker(params, reply)));
 }
@@ -266,62 +233,31 @@ void PostCreateWorker(MockRendererProcessHost* renderer,
 class MockSharedWorkerConnector {
  public:
   MockSharedWorkerConnector(MockRendererProcessHost* renderer_host)
-      : renderer_host_(renderer_host),
-        temporary_remote_port_route_id_(0),
-        remote_port_id_(0),
-        local_port_route_id_(0),
-        local_port_id_(0) {}
+      : renderer_host_(renderer_host) {}
   void Create(const std::string& url,
               const std::string& name,
               unsigned long long document_id,
               int render_frame_route_id) {
-    CreateMessagePortPair(renderer_host_,
-                          &temporary_remote_port_route_id_,
-                          &remote_port_id_,
-                          &local_port_route_id_,
-                          &local_port_id_);
     PostCreateWorker(renderer_host_, url, name, document_id,
                      render_frame_route_id, &create_worker_reply_);
   }
-  void SendQueueMessages() {
-    EXPECT_TRUE(renderer_host_->OnMessageReceived(
-        new MessagePortHostMsg_QueueMessages(remote_port_id_)));
-  }
-  void SendPostMessage(const std::string& data) {
-    const std::vector<int> empty_ports;
-    EXPECT_TRUE(
-        renderer_host_->OnMessageReceived(new MessagePortHostMsg_PostMessage(
-            local_port_id_, base::ASCIIToUTF16(data), empty_ports)));
-  }
   void SendConnect() {
+    mojo::MessagePipe message_pipe;
+    local_port_ = MessagePort(std::move(message_pipe.handle0));
+
     EXPECT_TRUE(
-        renderer_host_->OnMessageReceived(new ViewHostMsg_ForwardToWorker(
-            WorkerMsg_Connect(create_worker_reply_.route_id, remote_port_id_,
-                              MSG_ROUTING_NONE))));
+        renderer_host_->OnMessageReceived(new ViewHostMsg_ConnectToWorker(
+            create_worker_reply_.route_id,
+            MessagePort(std::move(message_pipe.handle1)))));
   }
-  void SendSendQueuedMessages(
-      const std::vector<QueuedMessage>& queued_messages) {
-    EXPECT_TRUE(renderer_host_->OnMessageReceived(
-        new MessagePortHostMsg_SendQueuedMessages(remote_port_id_,
-                                                  queued_messages)));
-  }
-  int temporary_remote_port_route_id() {
-    return temporary_remote_port_route_id_;
-  }
-  int remote_port_id() { return remote_port_id_; }
-  int local_port_route_id() { return local_port_route_id_; }
-  int local_port_id() { return local_port_id_; }
+  MessagePort local_port() { return local_port_; }
   int route_id() { return create_worker_reply_.route_id; }
   blink::WebWorkerCreationError creation_error() {
     return create_worker_reply_.error;
   }
-
  private:
   MockRendererProcessHost* renderer_host_;
-  int temporary_remote_port_route_id_;
-  int remote_port_id_;
-  int local_port_route_id_;
-  int local_port_id_;
+  MessagePort local_port_;
   ViewHostMsg_CreateWorker_Reply create_worker_reply_;
 };
 
@@ -349,44 +285,41 @@ void CheckViewMsgWorkerCreated(MockRendererProcessHost* renderer_host,
   EXPECT_EQ(connector->route_id(), msg->routing_id());
 }
 
-void CheckMessagePortMsgMessagesQueued(MockRendererProcessHost* renderer_host,
-                                       MockSharedWorkerConnector* connector) {
+void CheckViewMsgCountFeature(MockRendererProcessHost* renderer_host,
+                              MockSharedWorkerConnector* connector,
+                              uint32_t expected_feature) {
   std::unique_ptr<IPC::Message> msg(renderer_host->PopMessage());
-  EXPECT_EQ(MessagePortMsg_MessagesQueued::ID, msg->type());
-  EXPECT_EQ(connector->temporary_remote_port_route_id(), msg->routing_id());
+  EXPECT_EQ(ViewMsg_CountFeatureOnSharedWorker::ID, msg->type());
+  EXPECT_EQ(connector->route_id(), msg->routing_id());
+  ViewMsg_CountFeatureOnSharedWorker::Param params;
+  EXPECT_TRUE(ViewMsg_CountFeatureOnSharedWorker::Read(msg.get(), &params));
+  uint32_t feature = std::get<0>(params);
+  EXPECT_EQ(expected_feature, feature);
 }
 
 void CheckWorkerMsgConnect(MockRendererProcessHost* renderer_host,
                            int expected_msg_route_id,
-                           int expected_sent_message_port_id,
-                           int* routing_id) {
+                           int* connection_request_id,
+                           MessagePort* port) {
   std::unique_ptr<IPC::Message> msg(renderer_host->PopMessage());
   EXPECT_EQ(WorkerMsg_Connect::ID, msg->type());
   EXPECT_EQ(expected_msg_route_id, msg->routing_id());
   WorkerMsg_Connect::Param params;
   EXPECT_TRUE(WorkerMsg_Connect::Read(msg.get(), &params));
-  int port_id = std::get<0>(params);
-  *routing_id = std::get<1>(params);
-  EXPECT_EQ(expected_sent_message_port_id, port_id);
-}
-
-void CheckMessagePortMsgMessage(MockRendererProcessHost* renderer_host,
-                                int expected_msg_route_id,
-                                std::string expected_data) {
-  std::unique_ptr<IPC::Message> msg(renderer_host->PopMessage());
-  EXPECT_EQ(MessagePortMsg_Message::ID, msg->type());
-  EXPECT_EQ(expected_msg_route_id, msg->routing_id());
-  MessagePortMsg_Message::Param params;
-  EXPECT_TRUE(MessagePortMsg_Message::Read(msg.get(), &params));
-  base::string16 data = std::get<0>(params);
-  EXPECT_EQ(base::ASCIIToUTF16(expected_data), data);
+  *connection_request_id = std::get<0>(params);
+  *port = std::get<1>(params);
 }
 
 void CheckViewMsgWorkerConnected(MockRendererProcessHost* renderer_host,
-                                 MockSharedWorkerConnector* connector) {
+                                 MockSharedWorkerConnector* connector,
+                                 std::set<uint32_t> expected_used_features) {
   std::unique_ptr<IPC::Message> msg(renderer_host->PopMessage());
   EXPECT_EQ(ViewMsg_WorkerConnected::ID, msg->type());
   EXPECT_EQ(connector->route_id(), msg->routing_id());
+  ViewMsg_WorkerConnected::Param params;
+  EXPECT_TRUE(ViewMsg_WorkerConnected::Read(msg.get(), &params));
+  std::set<uint32_t> used_features = std::get<0>(params);
+  EXPECT_EQ(expected_used_features, used_features);
 }
 
 }  // namespace
@@ -399,50 +332,31 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   std::unique_ptr<MockSharedWorkerConnector> connector(
       new MockSharedWorkerConnector(renderer_host.get()));
   int worker_route_id;
-  int worker_msg_port_route_id;
 
-  // SharedWorkerConnector creates two message ports and sends
-  // ViewHostMsg_CreateWorker.
+  // Sends ViewHostMsg_CreateWorker.
   connector->Create("http://example.com/w.js",
                     "name",
                     kDocumentIDs[0],
                     kRenderFrameRouteIDs[0]);
-  // We need to go to UI thread to call ReserveRenderProcessOnUI().
   RunAllPendingInMessageLoop();
   EXPECT_EQ(2U, renderer_host->QueuedMessageCount());
   // WorkerProcessMsg_CreateWorker should be sent to the renderer in which
   // SharedWorker will be created.
-  CheckWorkerProcessMsgCreateWorker(renderer_host.get(),
-                                    "http://example.com/w.js",
-                                    "name",
-                                    blink::WebContentSecurityPolicyTypeReport,
-                                    &worker_route_id);
+  CheckWorkerProcessMsgCreateWorker(
+      renderer_host.get(), "http://example.com/w.js", "name",
+      blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
   // ViewMsg_WorkerCreated(1) should be sent back to SharedWorkerConnector side.
   CheckViewMsgWorkerCreated(renderer_host.get(), connector.get());
 
-  // SharedWorkerConnector side sends MessagePortHostMsg_QueueMessages in
-  // WebSharedWorkerProxy::connect.
-  connector->SendQueueMessages();
-  EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
-  // MessagePortMsg_MessagesQueued(2) should be sent back to
-  // SharedWorkerConnector side.
-  CheckMessagePortMsgMessagesQueued(renderer_host.get(), connector.get());
-
   // When SharedWorkerConnector receives ViewMsg_WorkerCreated(1), it sends
-  // WorkerMsg_Connect wrapped in ViewHostMsg_ForwardToWorker.
+  // WorkerMsg_Connect via ViewHostMsg_ConnectToWorker.
   connector->SendConnect();
   EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
   // WorkerMsg_Connect should be sent to SharedWorker side.
-  CheckWorkerMsgConnect(renderer_host.get(),
-                        worker_route_id,
-                        connector->remote_port_id(),
-                        &worker_msg_port_route_id);
-
-  // When SharedWorkerConnector receives MessagePortMsg_MessagesQueued(2), it
-  // sends MessagePortHostMsg_SendQueuedMessages.
-  std::vector<QueuedMessage> empty_messages;
-  connector->SendSendQueuedMessages(empty_messages);
-  EXPECT_EQ(0U, renderer_host->QueuedMessageCount());
+  int worker_msg_connection_request_id;
+  MessagePort worker_msg_port;
+  CheckWorkerMsgConnect(renderer_host.get(), worker_route_id,
+                        &worker_msg_connection_request_id, &worker_msg_port);
 
   // SharedWorker sends WorkerHostMsg_WorkerReadyForInspection in
   // EmbeddedSharedWorkerStub::WorkerReadyForInspection().
@@ -460,28 +374,41 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   // EmbeddedSharedWorkerStub::workerScriptLoaded().
   EXPECT_TRUE(
       renderer_host->OnMessageReceived(new WorkerHostMsg_WorkerConnected(
-          connector->remote_port_id(), worker_route_id)));
+          worker_msg_connection_request_id, worker_route_id)));
   EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
   // ViewMsg_WorkerConnected should be sent to SharedWorkerConnector side.
-  CheckViewMsgWorkerConnected(renderer_host.get(), connector.get());
+  CheckViewMsgWorkerConnected(renderer_host.get(), connector.get(),
+                              std::set<uint32_t>());
 
-  // When SharedWorkerConnector side sends MessagePortHostMsg_PostMessage,
-  // SharedWorker side shuold receive MessagePortMsg_Message.
-  connector->SendPostMessage("test1");
-  EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
-  CheckMessagePortMsgMessage(
-      renderer_host.get(), worker_msg_port_route_id, "test1");
+  // Verify that |worker_msg_port| corresponds to |connector->local_port()|.
+  base::string16 expected_message(base::ASCIIToUTF16("test1"));
+  connector->local_port().PostMessage(expected_message,
+                                      std::vector<MessagePort>());
+  base::string16 received_message;
+  BlockingReadFromMessagePort(worker_msg_port, &received_message);
+  EXPECT_EQ(expected_message, received_message);
 
-  // When SharedWorker side sends MessagePortHostMsg_PostMessage,
-  // SharedWorkerConnector side shuold receive MessagePortMsg_Message.
-  const std::vector<int> empty_ports;
-  EXPECT_TRUE(
-      renderer_host->OnMessageReceived(new MessagePortHostMsg_PostMessage(
-          connector->remote_port_id(),
-          base::ASCIIToUTF16("test2"), empty_ports)));
+  // SharedWorker sends WorkerHostMsg_CountFeature in
+  // EmbeddedSharedWorkerStub::CountFeature().
+  uint32_t feature1 = 124;
+  EXPECT_TRUE(renderer_host->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature1)));
   EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
-  CheckMessagePortMsgMessage(
-      renderer_host.get(), connector->local_port_route_id(), "test2");
+  // ViewMsg_CountFeature should be sent to SharedWorkerConnector side.
+  CheckViewMsgCountFeature(renderer_host.get(), connector.get(), feature1);
+  // A message should be sent only one time per feature.
+  EXPECT_TRUE(renderer_host->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature1)));
+  EXPECT_EQ(0U, renderer_host->QueuedMessageCount());
+
+  // SharedWorker sends WorkerHostMsg_CountFeature in
+  // EmbeddedSharedWorkerStub::CountFeature() for another feature use.
+  uint32_t feature2 = 901;
+  EXPECT_TRUE(renderer_host->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature2)));
+  EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
+  // ViewMsg_CountFeature should be sent to SharedWorkerConnector side.
+  CheckViewMsgCountFeature(renderer_host.get(), connector.get(), feature2);
 
   // UpdateWorkerDependency should not be called.
   EXPECT_EQ(0, s_update_worker_dependency_call_count_);
@@ -496,50 +423,31 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   std::unique_ptr<MockSharedWorkerConnector> connector0(
       new MockSharedWorkerConnector(renderer_host0.get()));
   int worker_route_id;
-  int worker_msg_port_route_id1;
 
-  // SharedWorkerConnector creates two message ports and sends
-  // ViewHostMsg_CreateWorker.
+  // Sends ViewHostMsg_CreateWorker.
   connector0->Create("http://example.com/w.js",
                      "name",
                      kDocumentIDs[0],
                      kRenderFrameRouteIDs[0]);
-  // We need to go to UI thread to call ReserveRenderProcessOnUI().
   RunAllPendingInMessageLoop();
   EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
   // WorkerProcessMsg_CreateWorker should be sent to the renderer in which
   // SharedWorker will be created.
-  CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
-                                    "http://example.com/w.js",
-                                    "name",
-                                    blink::WebContentSecurityPolicyTypeReport,
-                                    &worker_route_id);
+  CheckWorkerProcessMsgCreateWorker(
+      renderer_host0.get(), "http://example.com/w.js", "name",
+      blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
   // ViewMsg_WorkerCreated(1) should be sent back to SharedWorkerConnector side.
   CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
-
-  // SharedWorkerConnector side sends MessagePortHostMsg_QueueMessages in
-  // WebSharedWorkerProxy::connect.
-  connector0->SendQueueMessages();
-  EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
-  // MessagePortMsg_MessagesQueued(2) should be sent back to
-  // SharedWorkerConnector side.
-  CheckMessagePortMsgMessagesQueued(renderer_host0.get(), connector0.get());
 
   // When SharedWorkerConnector receives ViewMsg_WorkerCreated(1), it sends
   // WorkerMsg_Connect wrapped in ViewHostMsg_ForwardToWorker.
   connector0->SendConnect();
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
   // WorkerMsg_Connect should be sent to SharedWorker side.
-  CheckWorkerMsgConnect(renderer_host0.get(),
-                        worker_route_id,
-                        connector0->remote_port_id(),
-                        &worker_msg_port_route_id1);
-
-  // When SharedWorkerConnector receives MessagePortMsg_MessagesQueued(2), it
-  // sends MessagePortHostMsg_SendQueuedMessages.
-  std::vector<QueuedMessage> empty_messages;
-  connector0->SendSendQueuedMessages(empty_messages);
-  EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
+  int worker_msg_connection_request_id1;
+  MessagePort worker_msg_port1;
+  CheckWorkerMsgConnect(renderer_host0.get(), worker_route_id,
+                        &worker_msg_connection_request_id1, &worker_msg_port1);
 
   // SharedWorker sends WorkerHostMsg_WorkerReadyForInspection in
   // EmbeddedSharedWorkerStub::WorkerReadyForInspection().
@@ -557,28 +465,34 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   // EmbeddedSharedWorkerStub::workerScriptLoaded().
   EXPECT_TRUE(
       renderer_host0->OnMessageReceived(new WorkerHostMsg_WorkerConnected(
-          connector0->remote_port_id(), worker_route_id)));
+          worker_msg_connection_request_id1, worker_route_id)));
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
   // ViewMsg_WorkerConnected should be sent to SharedWorkerConnector side.
-  CheckViewMsgWorkerConnected(renderer_host0.get(), connector0.get());
+  CheckViewMsgWorkerConnected(renderer_host0.get(), connector0.get(),
+                              std::set<uint32_t>());
 
-  // When SharedWorkerConnector side sends MessagePortHostMsg_PostMessage,
-  // SharedWorker side shuold receive MessagePortMsg_Message.
-  connector0->SendPostMessage("test1");
-  EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
-  CheckMessagePortMsgMessage(
-      renderer_host0.get(), worker_msg_port_route_id1, "test1");
+  // Verify that |worker_msg_port1| corresponds to |connector0->local_port()|.
+  base::string16 expected_message1(base::ASCIIToUTF16("test1"));
+  connector0->local_port().PostMessage(expected_message1,
+                                       std::vector<MessagePort>());
+  base::string16 received_message1;
+  BlockingReadFromMessagePort(worker_msg_port1, &received_message1);
+  EXPECT_EQ(expected_message1, received_message1);
 
-  // When SharedWorker side sends MessagePortHostMsg_PostMessage,
-  // SharedWorkerConnector side shuold receive MessagePortMsg_Message.
-  const std::vector<int> empty_ports;
-  EXPECT_TRUE(
-      renderer_host0->OnMessageReceived(new MessagePortHostMsg_PostMessage(
-          connector0->remote_port_id(),
-          base::ASCIIToUTF16("test2"), empty_ports)));
+  // SharedWorker sends WorkerHostMsg_CountFeature in
+  // EmbeddedSharedWorkerStub::CountFeature().
+  uint32_t feature1 = 124;
+  EXPECT_TRUE(renderer_host0->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature1)));
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
-  CheckMessagePortMsgMessage(
-      renderer_host0.get(), connector0->local_port_route_id(), "test2");
+  // ViewMsg_CountFeature should be sent to SharedWorkerConnector side.
+  CheckViewMsgCountFeature(renderer_host0.get(), connector0.get(), feature1);
+  uint32_t feature2 = 901;
+  EXPECT_TRUE(renderer_host0->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature2)));
+  EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
+  // ViewMsg_CountFeature should be sent to SharedWorkerConnector side.
+  CheckViewMsgCountFeature(renderer_host0.get(), connector0.get(), feature2);
 
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
@@ -587,7 +501,6 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
                                   *partition_.get()));
   std::unique_ptr<MockSharedWorkerConnector> connector1(
       new MockSharedWorkerConnector(renderer_host1.get()));
-  int worker_msg_port_route_id2;
 
   // UpdateWorkerDependency should not be called yet.
   EXPECT_EQ(0, s_update_worker_dependency_call_count_);
@@ -610,54 +523,54 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   EXPECT_EQ(kProcessIDs[0], s_worker_dependency_added_ids_[0]);
   EXPECT_EQ(0U, s_worker_dependency_removed_ids_.size());
 
-  // SharedWorkerConnector side sends MessagePortHostMsg_QueueMessages in
-  // WebSharedWorkerProxy::connect.
-  connector1->SendQueueMessages();
-  EXPECT_EQ(1U, renderer_host1->QueuedMessageCount());
-  // MessagePortMsg_MessagesQueued(4) should be sent back to
-  // SharedWorkerConnector side.
-  CheckMessagePortMsgMessagesQueued(renderer_host1.get(), connector1.get());
-
   // When SharedWorkerConnector receives ViewMsg_WorkerCreated(3), it sends
   // WorkerMsg_Connect wrapped in ViewHostMsg_ForwardToWorker.
   connector1->SendConnect();
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
   // WorkerMsg_Connect should be sent to SharedWorker side.
-  CheckWorkerMsgConnect(renderer_host0.get(),
-                        worker_route_id,
-                        connector1->remote_port_id(),
-                        &worker_msg_port_route_id2);
-
-  // When SharedWorkerConnector receives MessagePortMsg_MessagesQueued(4), it
-  // sends MessagePortHostMsg_SendQueuedMessages.
-  connector1->SendSendQueuedMessages(empty_messages);
-  EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
+  int worker_msg_connection_request_id2;
+  MessagePort worker_msg_port2;
+  CheckWorkerMsgConnect(renderer_host0.get(), worker_route_id,
+                        &worker_msg_connection_request_id2, &worker_msg_port2);
 
   // SharedWorker sends WorkerHostMsg_WorkerConnected in
   // EmbeddedSharedWorkerStub::OnConnect().
   EXPECT_TRUE(
       renderer_host0->OnMessageReceived(new WorkerHostMsg_WorkerConnected(
-          connector1->remote_port_id(), worker_route_id)));
+          worker_msg_connection_request_id2, worker_route_id)));
   EXPECT_EQ(1U, renderer_host1->QueuedMessageCount());
   // ViewMsg_WorkerConnected should be sent to SharedWorkerConnector side.
-  CheckViewMsgWorkerConnected(renderer_host1.get(), connector1.get());
+  CheckViewMsgWorkerConnected(renderer_host1.get(), connector1.get(),
+                              {feature1, feature2});
 
-  // When SharedWorkerConnector side sends MessagePortHostMsg_PostMessage,
-  // SharedWorker side shuold receive MessagePortMsg_Message.
-  connector1->SendPostMessage("test3");
+  // Verify that |worker_msg_port2| corresponds to |connector1->local_port()|.
+  base::string16 expected_message2(base::ASCIIToUTF16("test2"));
+  connector1->local_port().PostMessage(expected_message2,
+                                       std::vector<MessagePort>());
+  base::string16 received_message2;
+  BlockingReadFromMessagePort(worker_msg_port2, &received_message2);
+  EXPECT_EQ(expected_message2, received_message2);
+
+  // SharedWorker sends WorkerHostMsg_CountFeature in
+  // EmbeddedSharedWorkerStub::CountFeature(). These used_features are already
+  // counted in the browser-side, so messages should not be sent to
+  // SharedWorkerConnectors.
+  EXPECT_TRUE(renderer_host0->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature1)));
+  EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
+  EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
+
+  // SharedWorker sends WorkerHostMsg_CountFeature in
+  // EmbeddedSharedWorkerStub::CountFeature() for another feature use.
+  uint32_t feature3 = 1019;
+  EXPECT_TRUE(renderer_host0->OnMessageReceived(
+      new WorkerHostMsg_CountFeature(worker_route_id, feature3)));
+  // ViewMsg_CountFeature should be sent to all SharedWorkerConnectors
+  // connecting to this worker.
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
-  CheckMessagePortMsgMessage(
-      renderer_host0.get(), worker_msg_port_route_id2, "test3");
-
-  // When SharedWorker side sends MessagePortHostMsg_PostMessage,
-  // SharedWorkerConnector side shuold receive MessagePortMsg_Message.
-  EXPECT_TRUE(
-      renderer_host0->OnMessageReceived(new MessagePortHostMsg_PostMessage(
-          connector1->remote_port_id(),
-          base::ASCIIToUTF16("test4"), empty_ports)));
+  CheckViewMsgCountFeature(renderer_host0.get(), connector0.get(), feature3);
   EXPECT_EQ(1U, renderer_host1->QueuedMessageCount());
-  CheckMessagePortMsgMessage(
-      renderer_host1.get(), connector1->local_port_route_id(), "test4");
+  CheckViewMsgCountFeature(renderer_host1.get(), connector1.get(), feature3);
 
   EXPECT_EQ(1, s_update_worker_dependency_call_count_);
   renderer_host1.reset();
@@ -695,11 +608,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
     RunAllPendingInMessageLoop();
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
-    CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
-                                      "http://example.com/w1.js",
-                                      "name1",
-                                      blink::WebContentSecurityPolicyTypeReport,
-                                      &worker_route_id);
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host0.get(), "http://example.com/w1.js", "name1",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     connector1->Create("http://example.com/w1.js",
                        "name1",
@@ -726,25 +637,26 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
     EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
     RunAllPendingInMessageLoop();
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
-    CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
-                                      "http://example.com/w2.js",
-                                      "name2",
-                                      blink::WebContentSecurityPolicyTypeReport,
-                                      &worker_route_id);
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host0.get(), "http://example.com/w2.js", "name2",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
     connector1->Create("http://example.com/w2x.js",
                        "name2",
                        kDocumentIDs[1],
                        kRenderFrameRouteIDs[1]);
-    EXPECT_EQ(MSG_ROUTING_NONE, connector1->route_id());
-    EXPECT_EQ(blink::WebWorkerCreationErrorURLMismatch,
-              connector1->creation_error());
+    EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
+    EXPECT_EQ(blink::kWebWorkerCreationErrorNone, connector1->creation_error());
     EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
     RunAllPendingInMessageLoop();
-    EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
+    EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host1.get(), "http://example.com/w2x.js", "name2",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
+    CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 
-  // Pending case.
+  // Normal case (name mismatch).
   {
     std::unique_ptr<MockSharedWorkerConnector> connector0(
         new MockSharedWorkerConnector(renderer_host0.get()));
@@ -756,25 +668,26 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
                        kRenderFrameRouteIDs[0]);
     EXPECT_NE(MSG_ROUTING_NONE, connector0->route_id());
     EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
-    connector1->Create("http://example.com/w3.js",
-                       "name3",
-                       kDocumentIDs[1],
-                       kRenderFrameRouteIDs[1]);
-    EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
-    EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
     RunAllPendingInMessageLoop();
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
-    CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
-                                      "http://example.com/w3.js",
-                                      "name3",
-                                      blink::WebContentSecurityPolicyTypeReport,
-                                      &worker_route_id);
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host0.get(), "http://example.com/w3.js", "name3",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
-    EXPECT_EQ(1U, renderer_host1->QueuedMessageCount());
+    connector1->Create("http://example.com/w3.js", "name3x", kDocumentIDs[1],
+                       kRenderFrameRouteIDs[1]);
+    EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
+    EXPECT_EQ(blink::kWebWorkerCreationErrorNone, connector1->creation_error());
+    EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
+    RunAllPendingInMessageLoop();
+    EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host1.get(), "http://example.com/w3.js", "name3x",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 
-  // Pending case (URL mismatch).
+  // Pending case.
   {
     std::unique_ptr<MockSharedWorkerConnector> connector0(
         new MockSharedWorkerConnector(renderer_host0.get()));
@@ -786,21 +699,72 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest) {
                        kRenderFrameRouteIDs[0]);
     EXPECT_NE(MSG_ROUTING_NONE, connector0->route_id());
     EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
-    connector1->Create("http://example.com/w4x.js",
-                       "name4",
-                       kDocumentIDs[1],
+    connector1->Create("http://example.com/w4.js", "name4", kDocumentIDs[1],
                        kRenderFrameRouteIDs[1]);
-    EXPECT_EQ(MSG_ROUTING_NONE, connector1->route_id());
+    EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
     EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
     RunAllPendingInMessageLoop();
     EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
-    CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
-                                      "http://example.com/w4.js",
-                                      "name4",
-                                      blink::WebContentSecurityPolicyTypeReport,
-                                      &worker_route_id);
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host0.get(), "http://example.com/w4.js", "name4",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
     CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
+    EXPECT_EQ(1U, renderer_host1->QueuedMessageCount());
+    CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
+  }
+
+  // Pending case (URL mismatch).
+  {
+    std::unique_ptr<MockSharedWorkerConnector> connector0(
+        new MockSharedWorkerConnector(renderer_host0.get()));
+    std::unique_ptr<MockSharedWorkerConnector> connector1(
+        new MockSharedWorkerConnector(renderer_host1.get()));
+    connector0->Create("http://example.com/w5.js", "name5", kDocumentIDs[0],
+                       kRenderFrameRouteIDs[0]);
+    EXPECT_NE(MSG_ROUTING_NONE, connector0->route_id());
+    EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
+    connector1->Create("http://example.com/w5x.js", "name5", kDocumentIDs[1],
+                       kRenderFrameRouteIDs[1]);
+    EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
     EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
+    RunAllPendingInMessageLoop();
+    EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host0.get(), "http://example.com/w5.js", "name5",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
+    CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
+    EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host1.get(), "http://example.com/w5x.js", "name5",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
+    CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
+  }
+
+  // Pending case (name mismatch).
+  {
+    std::unique_ptr<MockSharedWorkerConnector> connector0(
+        new MockSharedWorkerConnector(renderer_host0.get()));
+    std::unique_ptr<MockSharedWorkerConnector> connector1(
+        new MockSharedWorkerConnector(renderer_host1.get()));
+    connector0->Create("http://example.com/w6.js", "name6", kDocumentIDs[0],
+                       kRenderFrameRouteIDs[0]);
+    EXPECT_NE(MSG_ROUTING_NONE, connector0->route_id());
+    EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
+    connector1->Create("http://example.com/w6.js", "name6x", kDocumentIDs[1],
+                       kRenderFrameRouteIDs[1]);
+    EXPECT_NE(MSG_ROUTING_NONE, connector1->route_id());
+    EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
+    RunAllPendingInMessageLoop();
+    EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host0.get(), "http://example.com/w6.js", "name6",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
+    CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
+    EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
+    CheckWorkerProcessMsgCreateWorker(
+        renderer_host1.get(), "http://example.com/w6.js", "name6x",
+        blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
+    CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
   }
 }
 
@@ -834,11 +798,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
   EXPECT_EQ(0U, renderer_host0->QueuedMessageCount());
   RunAllPendingInMessageLoop();
   EXPECT_EQ(2U, renderer_host0->QueuedMessageCount());
-  CheckWorkerProcessMsgCreateWorker(renderer_host0.get(),
-                                    "http://example.com/w1.js",
-                                    "name1",
-                                    blink::WebContentSecurityPolicyTypeReport,
-                                    &worker_route_id);
+  CheckWorkerProcessMsgCreateWorker(
+      renderer_host0.get(), "http://example.com/w1.js", "name1",
+      blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
   CheckViewMsgWorkerCreated(renderer_host0.get(), connector0.get());
   renderer_host0->FastShutdownIfPossible();
 
@@ -850,11 +812,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
   EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
   RunAllPendingInMessageLoop();
   EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
-  CheckWorkerProcessMsgCreateWorker(renderer_host1.get(),
-                                    "http://example.com/w1.js",
-                                    "name1",
-                                    blink::WebContentSecurityPolicyTypeReport,
-                                    &worker_route_id);
+  CheckWorkerProcessMsgCreateWorker(
+      renderer_host1.get(), "http://example.com/w1.js", "name1",
+      blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
   CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
 
   connector2->Create("http://example.com/w1.js",
@@ -906,11 +866,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest2) {
   EXPECT_EQ(0U, renderer_host1->QueuedMessageCount());
   RunAllPendingInMessageLoop();
   EXPECT_EQ(2U, renderer_host1->QueuedMessageCount());
-  CheckWorkerProcessMsgCreateWorker(renderer_host1.get(),
-                                    "http://example.com/w1.js",
-                                    "name1",
-                                    blink::WebContentSecurityPolicyTypeReport,
-                                    &worker_route_id);
+  CheckWorkerProcessMsgCreateWorker(
+      renderer_host1.get(), "http://example.com/w1.js", "name1",
+      blink::kWebContentSecurityPolicyTypeReport, &worker_route_id);
   CheckViewMsgWorkerCreated(renderer_host1.get(), connector1.get());
 
   connector2->Create("http://example.com/w1.js",

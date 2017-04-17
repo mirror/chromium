@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -16,7 +17,8 @@
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "content/public/common/origin_util.h"
-#include "device/core/device_client.h"
+#include "device/base/device_client.h"
+#include "device/base/features.h"
 #include "device/usb/usb_device.h"
 #include "device/usb/usb_ids.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -30,7 +32,7 @@
 #include "url/gurl.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/common/system/system_notifier.h"  // nogncheck
+#include "ash/system/system_notifier.h"  // nogncheck
 #endif
 
 namespace {
@@ -67,14 +69,14 @@ void RecordNotificationClosure(WebUsbNotificationClosed disposition) {
 
 Browser* GetBrowser() {
   chrome::ScopedTabbedBrowserDisplayer browser_displayer(
-      ProfileManager::GetActiveUserProfile());
+      ProfileManager::GetLastUsedProfileAllowedByPolicy());
   DCHECK(browser_displayer.browser());
   return browser_displayer.browser();
 }
 
 void OpenURL(const GURL& url) {
   GetBrowser()->OpenURL(content::OpenURLParams(
-      url, content::Referrer(), NEW_FOREGROUND_TAB,
+      url, content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
       ui::PAGE_TRANSITION_AUTO_TOPLEVEL, false /* is_renderer_initialized */));
 }
 
@@ -113,13 +115,20 @@ class WebUsbNotificationDelegate : public message_center::NotificationDelegate {
 
 }  // namespace
 
-WebUsbDetector::WebUsbDetector() : observer_(this) {
-  Initialize();
-}
+WebUsbDetector::WebUsbDetector() : observer_(this) {}
 
 WebUsbDetector::~WebUsbDetector() {}
 
 void WebUsbDetector::Initialize() {
+#if defined(OS_WIN)
+  // The WebUSB device detector is disabled on Windows due to jank and hangs
+  // caused by enumerating devices. The new USB backend is designed to resolve
+  // these issues so enable it for testing. https://crbug.com/656702
+  if (!base::FeatureList::IsEnabled(device::kNewUsbBackend))
+    return;
+#endif  // defined(OS_WIN)
+
+  SCOPED_UMA_HISTOGRAM_TIMER("WebUsb.DetectorInitialization");
   device::UsbService* usb_service =
       device::DeviceClient::Get()->GetUsbService();
   if (!usb_service)

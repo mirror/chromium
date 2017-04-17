@@ -18,6 +18,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -40,6 +41,7 @@ enum DirectWriteFontLoaderType {
   FILE_SYSTEM_FONT_DIR = 0,
   FILE_OUTSIDE_SANDBOX = 1,
   OTHER_LOADER = 2,
+  FONT_WITH_MISSING_REQUIRED_STYLES = 3,
 
   FONT_LOADER_TYPE_MAX_VALUE
 };
@@ -54,6 +56,14 @@ enum MessageFilterError {
   LAST_RESORT_FONT_GET_FAMILY_FAILED = 2,
   ERROR_NO_COLLECTION = 3,
   MAP_CHARACTERS_NO_FAMILY = 4,
+  ADD_FILES_FOR_FONT_CREATE_FACE_FAILED = 5,
+  ADD_FILES_FOR_FONT_GET_FILE_COUNT_FAILED = 6,
+  ADD_FILES_FOR_FONT_GET_FILES_FAILED = 7,
+  ADD_FILES_FOR_FONT_GET_LOADER_FAILED = 8,
+  ADD_FILES_FOR_FONT_QI_FAILED = 9,
+  ADD_LOCAL_FILE_GET_REFERENCE_KEY_FAILED = 10,
+  ADD_LOCAL_FILE_GET_PATH_LENGTH_FAILED = 11,
+  ADD_LOCAL_FILE_GET_PATH_FAILED = 12,
 
   MESSAGE_FILTER_ERROR_MAX_VALUE
 };
@@ -78,23 +88,6 @@ void LogMessageFilterError(MessageFilterError error) {
                             MESSAGE_FILTER_ERROR_MAX_VALUE);
 }
 
-const wchar_t* kFontsToIgnore[] = {
-    // "Gill Sans Ultra Bold" turns into an Ultra Bold weight "Gill Sans" in
-    // DirectWrite, but most users don't have any other weights. The regular
-    // weight font is named "Gill Sans MT", but that ends up in a different
-    // family with that name. On Mac, there's a "Gill Sans" with various
-    // weights, so CSS authors use { 'font-family': 'Gill Sans',
-    // 'Gill Sans MT', ... } and because of the DirectWrite family futzing,
-    // they end up with an Ultra Bold font, when they just wanted "Gill Sans".
-    // Mozilla implemented a more complicated hack where they effectively
-    // rename the Ultra Bold font to "Gill Sans MT Ultra Bold", but because the
-    // Ultra Bold font is so ugly anyway, we simply ignore it. See
-    // http://www.microsoft.com/typography/fonts/font.aspx?FMID=978 for a
-    // picture of the font, and the file name. We also ignore "Gill Sans Ultra
-    // Bold Condensed".
-    L"gilsanub.ttf", L"gillubcd.ttf",
-};
-
 base::string16 GetWindowsFontsPath() {
   std::vector<base::char16> font_path_chars;
   // SHGetSpecialFolderPath requires at least MAX_PATH characters.
@@ -108,8 +101,9 @@ base::string16 GetWindowsFontsPath() {
 
 // These are the fonts that Blink tries to load in getLastResortFallbackFont,
 // and will crash if none can be loaded.
-const wchar_t* kLastResortFontNames[] = {L"Sans", L"Arial", L"MS UI Gothic",
-                                         L"Microsoft Sans Serif"};
+const wchar_t* kLastResortFontNames[] = {
+    L"Sans",     L"Arial",   L"MS UI Gothic",    L"Microsoft Sans Serif",
+    L"Segoe UI", L"Calibri", L"Times New Roman", L"Courier New"};
 
 // Feature to enable loading font files from outside the system font directory.
 const base::Feature kEnableCustomFonts {
@@ -121,6 +115,65 @@ const base::Feature kEnableCustomFonts {
 const base::Feature kForceCustomFonts {
   "ForceDirectWriteCustomFonts", base::FEATURE_DISABLED_BY_DEFAULT
 };
+
+struct RequiredFontStyle {
+  const wchar_t* family_name;
+  DWRITE_FONT_WEIGHT required_weight;
+  DWRITE_FONT_STRETCH required_stretch;
+  DWRITE_FONT_STYLE required_style;
+};
+
+const RequiredFontStyle kRequiredStyles[] = {
+    // The regular version of Gill Sans is actually in the Gill Sans MT family,
+    // and the Gill Sans family typically contains just the ultra-bold styles.
+    {L"gill sans", DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
+     DWRITE_FONT_STYLE_NORMAL},
+    {L"helvetica", DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
+     DWRITE_FONT_STYLE_NORMAL},
+    {L"open sans", DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
+     DWRITE_FONT_STYLE_NORMAL},
+};
+
+// As a workaround for crbug.com/635932, refuse to load some common fonts that
+// do not contain certain styles. We found that sometimes these fonts are
+// installed only in specialized styles ('Open Sans' might only be available in
+// the condensed light variant, or Helvetica might only be available in bold).
+// That results in a poor user experience because websites that use those fonts
+// usually expect them to be rendered in the regular variant.
+bool CheckRequiredStylesPresent(IDWriteFontCollection* collection,
+                                const base::string16& family_name,
+                                uint32_t family_index) {
+  for (const auto& font_style : kRequiredStyles) {
+    if (base::EqualsCaseInsensitiveASCII(family_name, font_style.family_name)) {
+      mswr::ComPtr<IDWriteFontFamily> family;
+      if (FAILED(collection->GetFontFamily(family_index, &family))) {
+        DCHECK(false);
+        return true;
+      }
+      mswr::ComPtr<IDWriteFont> font;
+      if (FAILED(family->GetFirstMatchingFont(
+          font_style.required_weight, font_style.required_stretch,
+          font_style.required_style, &font))) {
+        DCHECK(false);
+        return true;
+      }
+
+      // GetFirstMatchingFont doesn't require strict style matching, so check
+      // the actual font that we got.
+      if (font->GetWeight() != font_style.required_weight ||
+          font->GetStretch() != font_style.required_stretch ||
+          font->GetStyle() != font_style.required_style) {
+        // Not really a loader type, but good to have telemetry on how often
+        // fonts like these are encountered, and the data can be compared with
+        // the other loader types.
+        LogLoaderType(FONT_WITH_MISSING_REQUIRED_STYLES);
+        return false;
+      }
+      break;
+    }
+  }
+  return true;
+}
 
 }  // namespace
 
@@ -169,8 +222,10 @@ void DWriteFontProxyMessageFilter::OnFindFamily(
     UINT32 index = UINT32_MAX;
     HRESULT hr =
         collection_->FindFamilyName(family_name.data(), &index, &exists);
-    if (SUCCEEDED(hr) && exists)
+    if (SUCCEEDED(hr) && exists &&
+        CheckRequiredStylesPresent(collection_.Get(), family_name, index)) {
       *family_index = index;
+    }
   }
 }
 
@@ -424,6 +479,8 @@ void DWriteFontProxyMessageFilter::InitializeDirectWrite() {
   DCHECK(SUCCEEDED(hr));
 
   if (!collection_) {
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        "DirectWrite.Fonts.Proxy.GetSystemFontCollectionResult", hr);
     LogMessageFilterError(ERROR_NO_COLLECTION);
     return;
   }
@@ -454,12 +511,16 @@ bool DWriteFontProxyMessageFilter::AddFilesForFont(
   HRESULT hr;
   hr = font->CreateFontFace(&font_face);
   if (FAILED(hr)) {
+    UMA_HISTOGRAM_SPARSE_SLOWLY("DirectWrite.Fonts.Proxy.CreateFontFaceResult",
+                                hr);
+    LogMessageFilterError(ADD_FILES_FOR_FONT_CREATE_FACE_FAILED);
     return false;
   }
 
   UINT32 file_count;
   hr = font_face->GetFiles(&file_count, nullptr);
   if (FAILED(hr)) {
+    LogMessageFilterError(ADD_FILES_FOR_FONT_GET_FILE_COUNT_FAILED);
     return false;
   }
 
@@ -468,6 +529,7 @@ bool DWriteFontProxyMessageFilter::AddFilesForFont(
   hr = font_face->GetFiles(
       &file_count, reinterpret_cast<IDWriteFontFile**>(font_files.data()));
   if (FAILED(hr)) {
+    LogMessageFilterError(ADD_FILES_FOR_FONT_GET_FILES_FAILED);
     return false;
   }
 
@@ -475,6 +537,7 @@ bool DWriteFontProxyMessageFilter::AddFilesForFont(
     mswr::ComPtr<IDWriteFontFileLoader> loader;
     hr = font_files[file_index]->GetLoader(&loader);
     if (FAILED(hr)) {
+      LogMessageFilterError(ADD_FILES_FOR_FONT_GET_LOADER_FAILED);
       return false;
     }
 
@@ -496,6 +559,7 @@ bool DWriteFontProxyMessageFilter::AddFilesForFont(
 
       return false;
     } else if (FAILED(hr)) {
+      LogMessageFilterError(ADD_FILES_FOR_FONT_QI_FAILED);
       return false;
     }
 
@@ -517,12 +581,14 @@ bool DWriteFontProxyMessageFilter::AddLocalFile(
   UINT32 key_size;
   hr = font_file->GetReferenceKey(&key, &key_size);
   if (FAILED(hr)) {
+    LogMessageFilterError(ADD_LOCAL_FILE_GET_REFERENCE_KEY_FAILED);
     return false;
   }
 
   UINT32 path_length = 0;
   hr = local_loader->GetFilePathLengthFromKey(key, key_size, &path_length);
   if (FAILED(hr)) {
+    LogMessageFilterError(ADD_LOCAL_FILE_GET_PATH_LENGTH_FAILED);
     return false;
   }
   ++path_length;  // Reserve space for the null terminator.
@@ -531,25 +597,11 @@ bool DWriteFontProxyMessageFilter::AddLocalFile(
   hr = local_loader->GetFilePathFromKey(key, key_size, file_path_chars.data(),
                                         path_length);
   if (FAILED(hr)) {
+    LogMessageFilterError(ADD_LOCAL_FILE_GET_PATH_FAILED);
     return false;
   }
 
   base::string16 file_path = base::i18n::FoldCase(file_path_chars.data());
-
-  // Refer to comments in kFontsToIgnore for this block.
-  for (const auto& file_to_ignore : kFontsToIgnore) {
-    // Ok to do ascii comparison since the strings we are looking for are
-    // all ascii.
-    if (base::EndsWith(file_path, file_to_ignore,
-                       base::CompareCase::INSENSITIVE_ASCII)) {
-      // Unlike most other cases in this function, we do not abort loading
-      // the entire family, since we want to specifically ignore particular
-      // font styles and load the rest of the family if it exists. The
-      // renderer can deal with a family with zero files if that ends up
-      // being the case.
-      return true;
-    }
-  }
 
   if (!base::StartsWith(file_path, windows_fonts_path_,
                         base::CompareCase::SENSITIVE) ||

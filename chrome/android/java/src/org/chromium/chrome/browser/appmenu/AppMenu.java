@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.IdRes;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,6 +54,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
     private final int mItemDividerHeight;
     private final int mVerticalFadeDistance;
     private final int mNegativeSoftwareVerticalOffset;
+    private final int[] mTempLocation;
+
     private ListPopupWindow mPopup;
     private AppMenuAdapter mAdapter;
     private AppMenuHandler mHandler;
@@ -85,6 +88,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         mNegativeSoftwareVerticalOffset =
                 res.getDimensionPixelSize(R.dimen.menu_negative_software_vertical_offset);
         mVerticalFadeDistance = res.getDimensionPixelSize(R.dimen.menu_vertical_fade_distance);
+
+        mTempLocation = new int[2];
     }
 
     /**
@@ -128,18 +133,22 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
     /**
      * Creates and shows the app menu anchored to the specified view.
      *
-     * @param context The context of the AppMenu (ensure the proper theme is set on this context).
-     * @param anchorView The anchor {@link View} of the {@link ListPopupWindow}.
+     * @param context             The context of the AppMenu (ensure the proper theme is set on this
+     * context).
+     * @param anchorView          The anchor {@link View} of the {@link ListPopupWindow}.
      * @param isByPermanentButton Whether or not permanent hardware button triggered it. (oppose to
      *                            software button or keyboard).
-     * @param screenRotation Current device screen rotation.
+     * @param screenRotation      Current device screen rotation.
      * @param visibleDisplayFrame The display area rect in which AppMenu is supposed to fit in.
-     * @param screenHeight Current device screen height.
-     * @param footerResourceId The resource id for a view to add to the end of the menu list.
-     *                         Can be 0 if no such view is required.
+     * @param screenHeight        Current device screen height.
+     * @param footerResourceId    The resource id for a view to add to the end of the menu list. Can
+     *                            be 0 if no such view is required.
+     * @param highlightedItemId   The resource id of the menu item that should be highlighted.  Can
+     *                            be 0 if no item should be highlighted.
      */
     void show(Context context, View anchorView, boolean isByPermanentButton, int screenRotation,
-            Rect visibleDisplayFrame, int screenHeight, int footerResourceId) {
+            Rect visibleDisplayFrame, int screenHeight, @IdRes int footerResourceId,
+            @IdRes int highlightedItemId) {
         mPopup = new ListPopupWindow(context, null, android.R.attr.popupMenuStyle);
         mPopup.setModal(true);
         mPopup.setAnchorView(anchorView);
@@ -221,7 +230,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
 
         // A List adapter for visible items in the Menu. The first row is added as a header to the
         // list view.
-        mAdapter = new AppMenuAdapter(this, menuItems, LayoutInflater.from(context));
+        mAdapter = new AppMenuAdapter(
+                this, menuItems, LayoutInflater.from(context), highlightedItemId);
         mPopup.setAdapter(mAdapter);
 
         setMenuHeight(
@@ -252,16 +262,21 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         }
     }
 
+    private boolean isAnchorAtBottom(View anchorView, Rect visibleDisplayFrame) {
+        anchorView.getLocationOnScreen(mTempLocation);
+        return (mTempLocation[1] + anchorView.getHeight()) == visibleDisplayFrame.bottom;
+    }
+
     private void setPopupOffset(
             ListPopupWindow popup, int screenRotation, Rect appRect, Rect padding) {
-        int[] anchorLocation = new int[2];
-        popup.getAnchorView().getLocationInWindow(anchorLocation);
+        popup.getAnchorView().getLocationInWindow(mTempLocation);
+        int anchorViewX = mTempLocation[0];
         int anchorHeight = popup.getAnchorView().getHeight();
 
         // If we have a hardware menu button, locate the app menu closer to the estimated
         // hardware menu button location.
         if (mIsByPermanentButton) {
-            int horizontalOffset = -anchorLocation[0];
+            int horizontalOffset = -anchorViewX;
             switch (screenRotation) {
                 case Surface.ROTATION_0:
                 case Surface.ROTATION_180:
@@ -281,9 +296,20 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             // padding of the background.
             popup.setVerticalOffset(-padding.bottom);
         } else {
-            // The menu is displayed over and below the anchored view, so shift the menu up by the
-            // height of the anchor view.
-            popup.setVerticalOffset(-mNegativeSoftwareVerticalOffset - anchorHeight);
+            boolean anchorAtBottom = isAnchorAtBottom(mPopup.getAnchorView(), appRect);
+            if (anchorAtBottom && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                // When the anchor view is at the bottom of the screen on Android N+, the menu
+                // must be shifted down by the height of the anchor view in order to be displayed
+                // over and above it. The framework's PopupWindow positioning changed between
+                // N and M. Pre-N, setting a positive offset here shifts the menu up rather than
+                // down.
+                // See crbug.com/705348.
+                popup.setVerticalOffset(-mNegativeSoftwareVerticalOffset + anchorHeight);
+            } else {
+                // Shift the menu by the height of the anchor view so that it is displayed
+                // over the anchor view.
+                popup.setVerticalOffset(-mNegativeSoftwareVerticalOffset - anchorHeight);
+            }
         }
     }
 
@@ -363,17 +389,19 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             int screenHeight, Rect padding, int footerHeight) {
         assert mPopup.getAnchorView() != null;
         View anchorView = mPopup.getAnchorView();
-        int[] anchorViewLocation = new int[2];
-        anchorView.getLocationInWindow(anchorViewLocation);
-        anchorViewLocation[1] -= appDimensions.top;
+        anchorView.getLocationInWindow(mTempLocation);
+        int anchorViewY = mTempLocation[1] - appDimensions.top;
+        if (isAnchorAtBottom(anchorView, appDimensions)) {
+            anchorViewY += mPopup.getAnchorView().getHeight();
+        }
         int anchorViewImpactHeight = mIsByPermanentButton ? anchorView.getHeight() : 0;
 
         // Set appDimensions.height() for abnormal anchorViewLocation.
-        if (anchorViewLocation[1] > screenHeight) {
-            anchorViewLocation[1] = appDimensions.height();
+        if (anchorViewY > screenHeight) {
+            anchorViewY = appDimensions.height();
         }
-        int availableScreenSpace = Math.max(anchorViewLocation[1],
-                appDimensions.height() - anchorViewLocation[1] - anchorViewImpactHeight);
+        int availableScreenSpace = Math.max(
+                anchorViewY, appDimensions.height() - anchorViewY - anchorViewImpactHeight);
 
         availableScreenSpace -= padding.bottom + footerHeight;
         if (mIsByPermanentButton) availableScreenSpace -= padding.top;
@@ -383,6 +411,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         // Fade out the last item if we cannot fit all items.
         if (numCanFit < numMenuItems) {
             int spaceForFullItems = numCanFit * (mItemRowHeight + mItemDividerHeight);
+            spaceForFullItems += footerHeight;
+
             int spaceForPartialItem = (int) (LAST_ITEM_SHOW_FRACTION * mItemRowHeight);
             // Determine which item needs hiding.
             if (spaceForFullItems + spaceForPartialItem < availableScreenSpace) {

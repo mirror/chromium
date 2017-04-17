@@ -12,7 +12,7 @@
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/browser/ui/views/tabs/alert_indicator_button.h"
 #include "chrome/browser/ui/views/tabs/tab_controller.h"
-#include "grit/theme_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/models/list_selection_model.h"
 #include "ui/views/controls/button/image_button.h"
@@ -26,7 +26,6 @@ class FakeTabController : public TabController {
  public:
   FakeTabController() {}
 
-  void set_immersive_style(bool value) { immersive_style_ = value; }
   void set_active_tab(bool value) { active_tab_ = value; }
   void set_paint_throbber_to_layer(bool value) {
     paint_throbber_to_layer_ = value;
@@ -39,6 +38,7 @@ class FakeTabController : public TabController {
   bool ShouldHideCloseButtonForInactiveTabs() override {
     return false;
   }
+  bool MaySetClip() override { return false; }
   void SelectTab(Tab* tab) override {}
   void ExtendSelectionTo(Tab* tab) override {}
   void ToggleSelected(Tab* tab) override {}
@@ -63,22 +63,28 @@ class FakeTabController : public TabController {
   }
   void OnMouseEventInTab(views::View* source,
                          const ui::MouseEvent& event) override {}
-  bool ShouldPaintTab(const Tab* tab, gfx::Rect* clip) override { return true; }
+  bool ShouldPaintTab(
+      const Tab* tab,
+      const base::Callback<gfx::Path(const gfx::Size&)>& border_callback,
+      gfx::Path* clip) override {
+    return true;
+  }
   bool CanPaintThrobberToLayer() const override {
     return paint_throbber_to_layer_;
   }
-  bool IsImmersiveStyle() const override { return immersive_style_; }
   SkColor GetToolbarTopSeparatorColor() const override { return SK_ColorBLACK; }
   int GetBackgroundResourceId(bool* custom_image) const override {
     *custom_image = false;
     return IDR_THEME_TAB_BACKGROUND;
   }
   void UpdateTabAccessibilityState(const Tab* tab,
-                                   ui::AXViewState* state) override{};
+                                   ui::AXNodeData* node_data) override{};
+  base::string16 GetAccessibleTabName(const Tab* tab) const override {
+    return base::string16();
+  }
 
  private:
   ui::ListSelectionModel selection_model_;
-  bool immersive_style_ = false;
   bool active_tab_ = false;
   bool paint_throbber_to_layer_ = true;
 
@@ -259,15 +265,13 @@ TEST_F(TabTest, HitTestTopPixel) {
   int middle_y = tab.height() / 2;
   EXPECT_FALSE(tab.HitTestPoint(gfx::Point(0, middle_y)));
 
-  // Normally, tabs should not be hit if we click in the exclusion region, only
-  // if we click below it.
-  const int exclusion = GetLayoutConstant(TAB_TOP_EXCLUSION_HEIGHT);
+  // Tabs should not be hit if we click above them.
   int middle_x = tab.width() / 2;
-  EXPECT_FALSE(tab.HitTestPoint(gfx::Point(middle_x, exclusion - 1)));
-  EXPECT_TRUE(tab.HitTestPoint(gfx::Point(middle_x, exclusion)));
+  EXPECT_FALSE(tab.HitTestPoint(gfx::Point(middle_x, -1)));
+  EXPECT_TRUE(tab.HitTestPoint(gfx::Point(middle_x, 0)));
 
-  // If the window is maximized, however, we want clicks in the top edge to
-  // select the tab.
+  // Make sure top edge clicks still select the tab when the window is
+  // maximized.
   widget.Maximize();
   EXPECT_TRUE(tab.HitTestPoint(gfx::Point(middle_x, 0)));
 

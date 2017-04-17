@@ -27,29 +27,34 @@
 
 namespace blink {
 
-PassRefPtr<PlatformSpeechSynthesisVoice> PlatformSpeechSynthesisVoice::create(const String& voiceURI, const String& name, const String& lang, bool localService, bool isDefault)
-{
-    return adoptRef(new PlatformSpeechSynthesisVoice(voiceURI, name, lang, localService, isDefault));
+PassRefPtr<PlatformSpeechSynthesisVoice> PlatformSpeechSynthesisVoice::Create(
+    const String& voice_uri,
+    const String& name,
+    const String& lang,
+    bool local_service,
+    bool is_default) {
+  return AdoptRef(new PlatformSpeechSynthesisVoice(voice_uri, name, lang,
+                                                   local_service, is_default));
 }
 
-PassRefPtr<PlatformSpeechSynthesisVoice> PlatformSpeechSynthesisVoice::create()
-{
-    return adoptRef(new PlatformSpeechSynthesisVoice);
+PassRefPtr<PlatformSpeechSynthesisVoice>
+PlatformSpeechSynthesisVoice::Create() {
+  return AdoptRef(new PlatformSpeechSynthesisVoice);
 }
 
-PlatformSpeechSynthesisVoice::PlatformSpeechSynthesisVoice(const String& voiceURI, const String& name, const String& lang, bool localService, bool isDefault)
-    : m_voiceURI(voiceURI)
-    , m_name(name)
-    , m_lang(lang)
-    , m_localService(localService)
-    , m_default(isDefault)
-{
-}
+PlatformSpeechSynthesisVoice::PlatformSpeechSynthesisVoice(
+    const String& voice_uri,
+    const String& name,
+    const String& lang,
+    bool local_service,
+    bool is_default)
+    : voice_uri_(voice_uri),
+      name_(name),
+      lang_(lang),
+      local_service_(local_service),
+      default_(is_default) {}
 
 PlatformSpeechSynthesisVoice::PlatformSpeechSynthesisVoice()
-    : m_localService(false)
-    , m_default(false)
-{
-}
+    : local_service_(false), default_(false) {}
 
-} // namespace blink
+}  // namespace blink

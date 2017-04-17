@@ -31,24 +31,60 @@
 #ifndef UndoStep_h
 #define UndoStep_h
 
+#include "core/editing/VisibleSelection.h"
 #include "core/events/InputEvent.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class LocalFrame;
+class SimpleEditCommand;
 
 class UndoStep : public GarbageCollectedFinalized<UndoStep> {
-public:
-    virtual ~UndoStep() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+ public:
+  static UndoStep* Create(Document*,
+                          const VisibleSelection&,
+                          const VisibleSelection&,
+                          InputEvent::InputType);
 
-    virtual bool belongsTo(const LocalFrame&) const = 0;
-    virtual void unapply() = 0;
-    virtual void reapply() = 0;
-    virtual InputEvent::InputType inputType() const = 0;
+  void Unapply();
+  void Reapply();
+  InputEvent::InputType GetInputType() const;
+  void Append(SimpleEditCommand*);
+  void Append(UndoStep*);
+
+  const VisibleSelection& StartingSelection() const {
+    return starting_selection_;
+  }
+  const VisibleSelection& EndingSelection() const { return ending_selection_; }
+  void SetStartingSelection(const VisibleSelection&);
+  void SetEndingSelection(const VisibleSelection&);
+  Element* StartingRootEditableElement() const {
+    return starting_root_editable_element_.Get();
+  }
+  Element* EndingRootEditableElement() const {
+    return ending_root_editable_element_.Get();
+  }
+
+  uint64_t SequenceNumber() const { return sequence_number_; }
+
+  DECLARE_TRACE();
+
+ private:
+  UndoStep(Document*,
+           const VisibleSelection& starting_selection,
+           const VisibleSelection& ending_selection,
+           InputEvent::InputType);
+
+  Member<Document> document_;
+  VisibleSelection starting_selection_;
+  VisibleSelection ending_selection_;
+  HeapVector<Member<SimpleEditCommand>> commands_;
+  Member<Element> starting_root_editable_element_;
+  Member<Element> ending_root_editable_element_;
+  InputEvent::InputType input_type_;
+  const uint64_t sequence_number_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

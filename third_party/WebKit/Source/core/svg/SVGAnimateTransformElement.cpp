@@ -24,39 +24,57 @@
 
 #include "core/SVGNames.h"
 #include "core/svg/SVGTransformList.h"
+#include "core/svg/properties/SVGAnimatedProperty.h"
 
 namespace blink {
 
-inline SVGAnimateTransformElement::SVGAnimateTransformElement(Document& document)
-    : SVGAnimateElement(SVGNames::animateTransformTag, document)
-    , m_type(SVG_TRANSFORM_UNKNOWN)
-{
-}
+inline SVGAnimateTransformElement::SVGAnimateTransformElement(
+    Document& document)
+    : SVGAnimateElement(SVGNames::animateTransformTag, document),
+      transform_type_(kSvgTransformUnknown) {}
 
 DEFINE_NODE_FACTORY(SVGAnimateTransformElement)
 
-bool SVGAnimateTransformElement::hasValidAttributeType()
-{
-    SVGElement* targetElement = this->targetElement();
-    if (!targetElement)
-        return false;
-
-    if (getAttributeType() == AttributeTypeCSS)
-        return false;
-
-    return animatedPropertyType() == AnimatedTransformList;
+bool SVGAnimateTransformElement::HasValidTarget() {
+  if (!SVGAnimateElement::HasValidTarget())
+    return false;
+  if (GetAttributeType() == kAttributeTypeCSS)
+    return false;
+  return type_ == kAnimatedTransformList;
 }
 
-void SVGAnimateTransformElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == SVGNames::typeAttr) {
-        m_type = parseTransformType(value);
-        if (m_type == SVG_TRANSFORM_MATRIX)
-            m_type = SVG_TRANSFORM_UNKNOWN;
-        return;
-    }
-
-    SVGAnimateElement::parseAttribute(name, oldValue, value);
+void SVGAnimateTransformElement::ResolveTargetProperty() {
+  DCHECK(targetElement());
+  target_property_ = targetElement()->PropertyFromAttribute(AttributeName());
+  type_ = target_property_ ? target_property_->GetType() : kAnimatedUnknown;
+  // <animateTransform> only animates AnimatedTransformList.
+  // http://www.w3.org/TR/SVG/animate.html#AnimationAttributesAndProperties
+  if (type_ != kAnimatedTransformList)
+    type_ = kAnimatedUnknown;
+  // Because of the syntactic mismatch between the CSS and SVGProperty
+  // representations, disallow CSS animations of transforms. Support for that
+  // is better added to the <animate> element since the <animateTransform>
+  // element is deprecated and quirky. (We also reject this case via
+  // hasValidAttributeType above.)
+  css_property_id_ = CSSPropertyInvalid;
 }
 
-} // namespace blink
+SVGPropertyBase* SVGAnimateTransformElement::CreatePropertyForAnimation(
+    const String& value) const {
+  DCHECK(IsAnimatingSVGDom());
+  return SVGTransformList::Create(transform_type_, value);
+}
+
+void SVGAnimateTransformElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == SVGNames::typeAttr) {
+    transform_type_ = ParseTransformType(params.new_value);
+    if (transform_type_ == kSvgTransformMatrix)
+      transform_type_ = kSvgTransformUnknown;
+    return;
+  }
+
+  SVGAnimateElement::ParseAttribute(params);
+}
+
+}  // namespace blink

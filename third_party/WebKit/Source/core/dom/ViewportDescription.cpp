@@ -3,8 +3,10 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
  *           (C) 2006 Alexey Proskuryakov (ap@webkit.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2011 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2011 Apple Inc. All rights
+ * reserved.
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies)
  * Copyright (C) 2012-2013 Intel Corporation. All rights reserved.
  *
@@ -28,236 +30,279 @@
 #include "core/dom/ViewportDescription.h"
 
 #include "core/dom/Document.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
+#include "core/page/Page.h"
 #include "platform/Histogram.h"
 #include "platform/weborigin/KURL.h"
 
 namespace blink {
 
-static const float& compareIgnoringAuto(const float& value1, const float& value2, const float& (*compare) (const float&, const float&))
-{
-    if (value1 == ViewportDescription::ValueAuto)
-        return value2;
+static const float& CompareIgnoringAuto(const float& value1,
+                                        const float& value2,
+                                        const float& (*compare)(const float&,
+                                                                const float&)) {
+  if (value1 == ViewportDescription::kValueAuto)
+    return value2;
 
-    if (value2 == ViewportDescription::ValueAuto)
-        return value1;
+  if (value2 == ViewportDescription::kValueAuto)
+    return value1;
 
-    return compare(value1, value2);
+  return compare(value1, value2);
 }
 
-float ViewportDescription::resolveViewportLength(const Length& length, const FloatSize& initialViewportSize, Direction direction)
-{
-    if (length.isAuto())
-        return ViewportDescription::ValueAuto;
+float ViewportDescription::ResolveViewportLength(
+    const Length& length,
+    const FloatSize& initial_viewport_size,
+    Direction direction) {
+  if (length.IsAuto())
+    return ViewportDescription::kValueAuto;
 
-    if (length.isFixed())
-        return length.getFloatValue();
+  if (length.IsFixed())
+    return length.GetFloatValue();
 
-    if (length.type() == ExtendToZoom)
-        return ViewportDescription::ValueExtendToZoom;
+  if (length.GetType() == kExtendToZoom)
+    return ViewportDescription::kValueExtendToZoom;
 
-    if (length.type() == Percent && direction == Horizontal)
-        return initialViewportSize.width() * length.getFloatValue() / 100.0f;
+  if (length.GetType() == kPercent && direction == kHorizontal)
+    return initial_viewport_size.Width() * length.GetFloatValue() / 100.0f;
 
-    if (length.type() == Percent && direction == Vertical)
-        return initialViewportSize.height() * length.getFloatValue() / 100.0f;
+  if (length.GetType() == kPercent && direction == kVertical)
+    return initial_viewport_size.Height() * length.GetFloatValue() / 100.0f;
 
-    if (length.type() == DeviceWidth)
-        return initialViewportSize.width();
+  if (length.GetType() == kDeviceWidth)
+    return initial_viewport_size.Width();
 
-    if (length.type() == DeviceHeight)
-        return initialViewportSize.height();
+  if (length.GetType() == kDeviceHeight)
+    return initial_viewport_size.Height();
 
-    ASSERT_NOT_REACHED();
-    return ViewportDescription::ValueAuto;
+  NOTREACHED();
+  return ViewportDescription::kValueAuto;
 }
 
-PageScaleConstraints ViewportDescription::resolve(const FloatSize& initialViewportSize, Length legacyFallbackWidth) const
-{
-    float resultWidth = ValueAuto;
+PageScaleConstraints ViewportDescription::Resolve(
+    const FloatSize& initial_viewport_size,
+    Length legacy_fallback_width) const {
+  float result_width = kValueAuto;
 
-    Length copyMaxWidth = maxWidth;
-    Length copyMinWidth = minWidth;
-    // In case the width (used for min- and max-width) is undefined.
-    if (isLegacyViewportType() && maxWidth.isAuto()) {
-        // The width viewport META property is translated into 'width' descriptors, setting
-        // the 'min' value to 'extend-to-zoom' and the 'max' value to the intended length.
-        // In case the UA-defines a min-width, use that as length.
-        if (zoom == ViewportDescription::ValueAuto) {
-            copyMinWidth = Length(ExtendToZoom);
-            copyMaxWidth = legacyFallbackWidth;
-        } else if (maxHeight.isAuto()) {
-            copyMinWidth = Length(ExtendToZoom);
-            copyMaxWidth = Length(ExtendToZoom);
-        }
+  Length copy_max_width = max_width;
+  Length copy_min_width = min_width;
+  // In case the width (used for min- and max-width) is undefined.
+  if (IsLegacyViewportType() && max_width.IsAuto()) {
+    // The width viewport META property is translated into 'width' descriptors,
+    // setting the 'min' value to 'extend-to-zoom' and the 'max' value to the
+    // intended length.  In case the UA-defines a min-width, use that as length.
+    if (zoom == ViewportDescription::kValueAuto) {
+      copy_min_width = Length(kExtendToZoom);
+      copy_max_width = legacy_fallback_width;
+    } else if (max_height.IsAuto()) {
+      copy_min_width = Length(kExtendToZoom);
+      copy_max_width = Length(kExtendToZoom);
+    }
+  }
+
+  float result_max_width =
+      ResolveViewportLength(copy_max_width, initial_viewport_size, kHorizontal);
+  float result_min_width =
+      ResolveViewportLength(copy_min_width, initial_viewport_size, kHorizontal);
+
+  float result_height = kValueAuto;
+  float result_max_height =
+      ResolveViewportLength(max_height, initial_viewport_size, kVertical);
+  float result_min_height =
+      ResolveViewportLength(min_height, initial_viewport_size, kVertical);
+
+  float result_zoom = zoom;
+  float result_min_zoom = min_zoom;
+  float result_max_zoom = max_zoom;
+  bool result_user_zoom = user_zoom;
+
+  // Resolve min-zoom and max-zoom values.
+  if (result_min_zoom != ViewportDescription::kValueAuto &&
+      result_max_zoom != ViewportDescription::kValueAuto)
+    result_max_zoom = std::max(result_min_zoom, result_max_zoom);
+
+  // Constrain zoom value to the [min-zoom, max-zoom] range.
+  if (result_zoom != ViewportDescription::kValueAuto)
+    result_zoom = CompareIgnoringAuto(
+        result_min_zoom,
+        CompareIgnoringAuto(result_max_zoom, result_zoom, std::min), std::max);
+
+  float extend_zoom =
+      CompareIgnoringAuto(result_zoom, result_max_zoom, std::min);
+
+  // Resolve non-"auto" lengths to pixel lengths.
+  if (extend_zoom == ViewportDescription::kValueAuto) {
+    if (result_max_width == ViewportDescription::kValueExtendToZoom)
+      result_max_width = ViewportDescription::kValueAuto;
+
+    if (result_max_height == ViewportDescription::kValueExtendToZoom)
+      result_max_height = ViewportDescription::kValueAuto;
+
+    if (result_min_width == ViewportDescription::kValueExtendToZoom)
+      result_min_width = result_max_width;
+
+    if (result_min_height == ViewportDescription::kValueExtendToZoom)
+      result_min_height = result_max_height;
+  } else {
+    float extend_width = initial_viewport_size.Width() / extend_zoom;
+    float extend_height = initial_viewport_size.Height() / extend_zoom;
+
+    if (result_max_width == ViewportDescription::kValueExtendToZoom)
+      result_max_width = extend_width;
+
+    if (result_max_height == ViewportDescription::kValueExtendToZoom)
+      result_max_height = extend_height;
+
+    if (result_min_width == ViewportDescription::kValueExtendToZoom)
+      result_min_width =
+          CompareIgnoringAuto(extend_width, result_max_width, std::max);
+
+    if (result_min_height == ViewportDescription::kValueExtendToZoom)
+      result_min_height =
+          CompareIgnoringAuto(extend_height, result_max_height, std::max);
+  }
+
+  // Resolve initial width from min/max descriptors.
+  if (result_min_width != ViewportDescription::kValueAuto ||
+      result_max_width != ViewportDescription::kValueAuto)
+    result_width = CompareIgnoringAuto(
+        result_min_width,
+        CompareIgnoringAuto(result_max_width, initial_viewport_size.Width(),
+                            std::min),
+        std::max);
+
+  // Resolve initial height from min/max descriptors.
+  if (result_min_height != ViewportDescription::kValueAuto ||
+      result_max_height != ViewportDescription::kValueAuto)
+    result_height = CompareIgnoringAuto(
+        result_min_height,
+        CompareIgnoringAuto(result_max_height, initial_viewport_size.Height(),
+                            std::min),
+        std::max);
+
+  // Resolve width value.
+  if (result_width == ViewportDescription::kValueAuto) {
+    if (result_height == ViewportDescription::kValueAuto ||
+        !initial_viewport_size.Height())
+      result_width = initial_viewport_size.Width();
+    else
+      result_width = result_height * (initial_viewport_size.Width() /
+                                      initial_viewport_size.Height());
+  }
+
+  // Resolve height value.
+  if (result_height == ViewportDescription::kValueAuto) {
+    if (!initial_viewport_size.Width())
+      result_height = initial_viewport_size.Height();
+    else
+      result_height = result_width * initial_viewport_size.Height() /
+                      initial_viewport_size.Width();
+  }
+
+  // Resolve initial-scale value.
+  if (result_zoom == ViewportDescription::kValueAuto) {
+    if (result_width != ViewportDescription::kValueAuto && result_width > 0)
+      result_zoom = initial_viewport_size.Width() / result_width;
+    if (result_height != ViewportDescription::kValueAuto && result_height > 0) {
+      // if 'auto', the initial-scale will be negative here and thus ignored.
+      result_zoom = std::max<float>(
+          result_zoom, initial_viewport_size.Height() / result_height);
     }
 
-    float resultMaxWidth = resolveViewportLength(copyMaxWidth, initialViewportSize, Horizontal);
-    float resultMinWidth = resolveViewportLength(copyMinWidth, initialViewportSize, Horizontal);
+    // Reconstrain zoom value to the [min-zoom, max-zoom] range.
+    result_zoom = CompareIgnoringAuto(
+        result_min_zoom,
+        CompareIgnoringAuto(result_max_zoom, result_zoom, std::min), std::max);
+  }
 
-    float resultHeight = ValueAuto;
-    float resultMaxHeight = resolveViewportLength(maxHeight, initialViewportSize, Vertical);
-    float resultMinHeight = resolveViewportLength(minHeight, initialViewportSize, Vertical);
+  // If user-scalable = no, lock the min/max scale to the computed initial
+  // scale.
+  if (!result_user_zoom)
+    result_min_zoom = result_max_zoom = result_zoom;
 
-    float resultZoom = zoom;
-    float resultMinZoom = minZoom;
-    float resultMaxZoom = maxZoom;
-    bool resultUserZoom = userZoom;
+  // Only set initialScale to a value if it was explicitly set.
+  if (zoom == ViewportDescription::kValueAuto)
+    result_zoom = ViewportDescription::kValueAuto;
 
-    // 1. Resolve min-zoom and max-zoom values.
-    if (resultMinZoom != ViewportDescription::ValueAuto && resultMaxZoom != ViewportDescription::ValueAuto)
-        resultMaxZoom = std::max(resultMinZoom, resultMaxZoom);
-
-    // 2. Constrain zoom value to the [min-zoom, max-zoom] range.
-    if (resultZoom != ViewportDescription::ValueAuto)
-        resultZoom = compareIgnoringAuto(resultMinZoom, compareIgnoringAuto(resultMaxZoom, resultZoom, std::min), std::max);
-
-    float extendZoom = compareIgnoringAuto(resultZoom, resultMaxZoom, std::min);
-
-    // 3. Resolve non-"auto" lengths to pixel lengths.
-    if (extendZoom == ViewportDescription::ValueAuto) {
-        if (resultMaxWidth == ViewportDescription::ValueExtendToZoom)
-            resultMaxWidth = ViewportDescription::ValueAuto;
-
-        if (resultMaxHeight == ViewportDescription::ValueExtendToZoom)
-            resultMaxHeight = ViewportDescription::ValueAuto;
-
-        if (resultMinWidth == ViewportDescription::ValueExtendToZoom)
-            resultMinWidth = resultMaxWidth;
-
-        if (resultMinHeight == ViewportDescription::ValueExtendToZoom)
-            resultMinHeight = resultMaxHeight;
-    } else {
-        float extendWidth = initialViewportSize.width() / extendZoom;
-        float extendHeight = initialViewportSize.height() / extendZoom;
-
-        if (resultMaxWidth == ViewportDescription::ValueExtendToZoom)
-            resultMaxWidth = extendWidth;
-
-        if (resultMaxHeight == ViewportDescription::ValueExtendToZoom)
-            resultMaxHeight = extendHeight;
-
-        if (resultMinWidth == ViewportDescription::ValueExtendToZoom)
-            resultMinWidth = compareIgnoringAuto(extendWidth, resultMaxWidth, std::max);
-
-        if (resultMinHeight == ViewportDescription::ValueExtendToZoom)
-            resultMinHeight = compareIgnoringAuto(extendHeight, resultMaxHeight, std::max);
-    }
-
-    // 4. Resolve initial width from min/max descriptors.
-    if (resultMinWidth != ViewportDescription::ValueAuto || resultMaxWidth != ViewportDescription::ValueAuto)
-        resultWidth = compareIgnoringAuto(resultMinWidth, compareIgnoringAuto(resultMaxWidth, initialViewportSize.width(), std::min), std::max);
-
-    // 5. Resolve initial height from min/max descriptors.
-    if (resultMinHeight != ViewportDescription::ValueAuto || resultMaxHeight != ViewportDescription::ValueAuto)
-        resultHeight = compareIgnoringAuto(resultMinHeight, compareIgnoringAuto(resultMaxHeight, initialViewportSize.height(), std::min), std::max);
-
-    // 6-7. Resolve width value.
-    if (resultWidth == ViewportDescription::ValueAuto) {
-        if (resultHeight == ViewportDescription::ValueAuto || !initialViewportSize.height())
-            resultWidth = initialViewportSize.width();
-        else
-            resultWidth = resultHeight * (initialViewportSize.width() / initialViewportSize.height());
-    }
-
-    // 8. Resolve height value.
-    if (resultHeight == ViewportDescription::ValueAuto) {
-        if (!initialViewportSize.width())
-            resultHeight = initialViewportSize.height();
-        else
-            resultHeight = resultWidth * initialViewportSize.height() / initialViewportSize.width();
-    }
-
-    // Resolve initial-scale value.
-    if (resultZoom == ViewportDescription::ValueAuto) {
-        if (resultWidth != ViewportDescription::ValueAuto && resultWidth > 0)
-            resultZoom = initialViewportSize.width() / resultWidth;
-        if (resultHeight != ViewportDescription::ValueAuto && resultHeight > 0) {
-            // if 'auto', the initial-scale will be negative here and thus ignored.
-            resultZoom = std::max<float>(resultZoom, initialViewportSize.height() / resultHeight);
-        }
-    }
-
-    // If user-scalable = no, lock the min/max scale to the computed initial
-    // scale.
-    if (!resultUserZoom)
-        resultMinZoom = resultMaxZoom = resultZoom;
-
-    // Only set initialScale to a value if it was explicitly set.
-    if (zoom == ViewportDescription::ValueAuto)
-        resultZoom = ViewportDescription::ValueAuto;
-
-    PageScaleConstraints result;
-    result.minimumScale = resultMinZoom;
-    result.maximumScale = resultMaxZoom;
-    result.initialScale = resultZoom;
-    result.layoutSize.setWidth(resultWidth);
-    result.layoutSize.setHeight(resultHeight);
-    return result;
+  PageScaleConstraints result;
+  result.minimum_scale = result_min_zoom;
+  result.maximum_scale = result_max_zoom;
+  result.initial_scale = result_zoom;
+  result.layout_size.SetWidth(result_width);
+  result.layout_size.SetHeight(result_height);
+  return result;
 }
 
-void ViewportDescription::reportMobilePageStats(const LocalFrame* mainFrame) const
-{
+void ViewportDescription::ReportMobilePageStats(
+    const LocalFrame* main_frame) const {
 #if OS(ANDROID)
-    enum ViewportUMAType {
-        NoViewportTag,
-        DeviceWidth,
-        ConstantWidth,
-        MetaWidthOther,
-        MetaHandheldFriendly,
-        MetaMobileOptimized,
-        XhtmlMobileProfile,
-        TypeCount
-    };
+  enum ViewportUMAType {
+    kNoViewportTag,
+    kDeviceWidth,
+    kConstantWidth,
+    kMetaWidthOther,
+    kMetaHandheldFriendly,
+    kMetaMobileOptimized,
+    kXhtmlMobileProfile,
+    kTypeCount
+  };
 
-    if (!mainFrame || !mainFrame->host() || !mainFrame->view() || !mainFrame->document())
-        return;
+  if (!main_frame || !main_frame->GetPage() || !main_frame->View() ||
+      !main_frame->GetDocument())
+    return;
 
-    // Avoid chrome:// pages like the new-tab page (on Android new tab is non-http).
-    if (!mainFrame->document()->url().protocolIsInHTTPFamily())
-        return;
+  // Avoid chrome:// pages like the new-tab page (on Android new tab is
+  // non-http).
+  if (!main_frame->GetDocument()->Url().ProtocolIsInHTTPFamily())
+    return;
 
-    DEFINE_STATIC_LOCAL(EnumerationHistogram, metaTagTypeHistogram, ("Viewport.MetaTagType", TypeCount));
-    if (!isSpecifiedByAuthor()) {
-        metaTagTypeHistogram.count(mainFrame->document()->isMobileDocument() ? XhtmlMobileProfile : NoViewportTag);
-        return;
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, meta_tag_type_histogram,
+                      ("Viewport.MetaTagType", kTypeCount));
+  if (!IsSpecifiedByAuthor()) {
+    meta_tag_type_histogram.Count(main_frame->GetDocument()->IsMobileDocument()
+                                      ? kXhtmlMobileProfile
+                                      : kNoViewportTag);
+    return;
+  }
+
+  if (IsMetaViewportType()) {
+    if (max_width.GetType() == blink::kFixed) {
+      meta_tag_type_histogram.Count(kConstantWidth);
+
+      if (main_frame->View()) {
+        // To get an idea of how "far" the viewport is from the device's ideal
+        // width, we report the zoom level that we'd need to be at for the
+        // entire page to be visible.
+        int viewport_width = max_width.IntValue();
+        int window_width =
+            main_frame->GetPage()->GetVisualViewport().Size().Width();
+        int overview_zoom_percent =
+            100 * window_width / static_cast<float>(viewport_width);
+        DEFINE_STATIC_LOCAL(SparseHistogram, overview_zoom_histogram,
+                            ("Viewport.OverviewZoom"));
+        overview_zoom_histogram.Sample(overview_zoom_percent);
+      }
+
+    } else if (max_width.GetType() == blink::kDeviceWidth ||
+               max_width.GetType() == blink::kExtendToZoom) {
+      meta_tag_type_histogram.Count(kDeviceWidth);
+    } else {
+      // Overflow bucket for cases we may be unaware of.
+      meta_tag_type_histogram.Count(kMetaWidthOther);
     }
-
-    if (isMetaViewportType()) {
-        if (maxWidth.type() == blink::Fixed) {
-            metaTagTypeHistogram.count(ConstantWidth);
-
-            if (mainFrame->view()) {
-                // To get an idea of how "far" the viewport is from the device's ideal width, we
-                // report the zoom level that we'd need to be at for the entire page to be visible.
-                int viewportWidth = maxWidth.intValue();
-                int windowWidth = mainFrame->host()->visualViewport().size().width();
-                int overviewZoomPercent = 100 * windowWidth / static_cast<float>(viewportWidth);
-                DEFINE_STATIC_LOCAL(SparseHistogram, overviewZoomHistogram, ("Viewport.OverviewZoom"));
-                overviewZoomHistogram.sample(overviewZoomPercent);
-            }
-
-        } else if (maxWidth.type() == blink::DeviceWidth || maxWidth.type() == blink::ExtendToZoom) {
-            metaTagTypeHistogram.count(DeviceWidth);
-        } else {
-            // Overflow bucket for cases we may be unaware of.
-            metaTagTypeHistogram.count(MetaWidthOther);
-        }
-    } else if (type == ViewportDescription::HandheldFriendlyMeta) {
-        metaTagTypeHistogram.count(MetaHandheldFriendly);
-    } else if (type == ViewportDescription::MobileOptimizedMeta) {
-        metaTagTypeHistogram.count(MobileOptimizedMeta);
-    }
+  } else if (type == ViewportDescription::kHandheldFriendlyMeta) {
+    meta_tag_type_histogram.Count(kMetaHandheldFriendly);
+  } else if (type == ViewportDescription::kMobileOptimizedMeta) {
+    meta_tag_type_histogram.Count(kMetaMobileOptimized);
+  }
 #endif
 }
 
-bool ViewportDescription::matchesHeuristicsForGpuRasterization() const
-{
-    return isSpecifiedByAuthor();
+bool ViewportDescription::MatchesHeuristicsForGpuRasterization() const {
+  return IsSpecifiedByAuthor();
 }
 
-} // namespace blink
+}  // namespace blink

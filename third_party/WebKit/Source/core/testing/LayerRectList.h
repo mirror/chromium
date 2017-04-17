@@ -33,8 +33,8 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -42,26 +42,29 @@ class ClientRect;
 class LayerRect;
 class Node;
 
-class LayerRectList final : public GarbageCollected<LayerRectList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static LayerRectList* create()
-    {
-        return new LayerRectList;
-    }
+class LayerRectList final : public GarbageCollected<LayerRectList>,
+                            public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned length() const;
-    LayerRect* item(unsigned index);
-    void append(Node* layerAssociatedNode, const String& layerName, int layerOffsetX, int layerOffsetY, ClientRect* layerRelativeRect);
+ public:
+  static LayerRectList* Create() { return new LayerRectList; }
 
-    DECLARE_TRACE();
+  unsigned length() const;
+  LayerRect* item(unsigned index);
+  void Append(Node* layer_associated_node,
+              const String& layer_name,
+              int layer_offset_x,
+              int layer_offset_y,
+              ClientRect* layer_relative_rect);
 
-private:
-    LayerRectList();
+  DECLARE_TRACE();
 
-    HeapVector<Member<LayerRect>> m_list;
+ private:
+  LayerRectList();
+
+  HeapVector<Member<LayerRect>> list_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ClientRectList_h
+#endif  // ClientRectList_h

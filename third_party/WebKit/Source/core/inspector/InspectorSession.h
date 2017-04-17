@@ -6,81 +6,88 @@
 #define InspectorSession_h
 
 #include "core/CoreExport.h"
+#include "core/inspector/protocol/Forward.h"
 #include "platform/heap/Handle.h"
-#include "platform/inspector_protocol/DispatcherBase.h"
-#include "platform/inspector_protocol/FrontendChannel.h"
-#include "platform/inspector_protocol/Values.h"
-#include "platform/v8_inspector/public/V8InspectorSessionClient.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8-inspector-protocol.h"
 
 namespace blink {
 
-class ExecutionContext;
-class InspectedFrames;
 class InspectorAgent;
-class InstrumentingAgents;
+class CoreProbeSink;
 class LocalFrame;
-class V8Debugger;
-class V8InspectorSession;
 
 class CORE_EXPORT InspectorSession
-    : public GarbageCollectedFinalized<InspectorSession>
-    , public V8InspectorSessionClient
-    , public protocol::FrontendChannel {
-    WTF_MAKE_NONCOPYABLE(InspectorSession);
-public:
-    class Client {
-    public:
-        virtual void sendProtocolMessage(int sessionId, int callId, const String& response, const String& state) = 0;
-        virtual void resumeStartup() { }
-        virtual void profilingStarted() { }
-        virtual void profilingStopped() { }
-        virtual void consoleCleared() { }
-        virtual ~Client() {}
-    };
+    : public GarbageCollectedFinalized<InspectorSession>,
+      public protocol::FrontendChannel,
+      public v8_inspector::V8Inspector::Channel {
+  WTF_MAKE_NONCOPYABLE(InspectorSession);
 
-    InspectorSession(Client*, InspectedFrames*, InstrumentingAgents*, int sessionId, bool autoFlush, V8Debugger*, int contextGroupId, const String* savedState);
-    ~InspectorSession() override;
-    int sessionId() { return m_sessionId; }
-    V8InspectorSession* v8Session() { return m_v8Session.get(); }
+ public:
+  class Client {
+   public:
+    virtual void SendProtocolMessage(int session_id,
+                                     int call_id,
+                                     const String& response,
+                                     const String& state) = 0;
+    virtual ~Client() {}
+  };
 
-    void append(InspectorAgent*);
-    void restore();
-    void dispose();
-    void didCommitLoadForLocalFrame(LocalFrame*);
-    void dispatchProtocolMessage(const String& method, const String& message);
-    void flushProtocolNotifications() override;
+  InspectorSession(Client*,
+                   CoreProbeSink*,
+                   int session_id,
+                   v8_inspector::V8Inspector*,
+                   int context_group_id,
+                   const String* saved_state);
+  ~InspectorSession() override;
+  int SessionId() { return session_id_; }
+  v8_inspector::V8InspectorSession* V8Session() { return v8_session_.get(); }
 
-    DECLARE_TRACE();
+  void Append(InspectorAgent*);
+  void Restore();
+  void Dispose();
+  void DidCommitLoadForLocalFrame(LocalFrame*);
+  void DispatchProtocolMessage(const String& method, const String& message);
+  void flushProtocolNotifications() override;
 
-private:
-    // protocol::FrontendChannel implementation.
-    void sendProtocolResponse(int callId, const protocol::String16& message) override;
-    void sendProtocolNotification(const protocol::String16& message) override;
+  DECLARE_TRACE();
 
-    // V8InspectorSessionClient implementation.
-    void resumeStartup() override;
-    bool canExecuteScripts() override;
-    void profilingStarted() override;
-    void profilingStopped() override;
-    void consoleCleared() override;
+ private:
+  // protocol::FrontendChannel implementation.
+  void sendProtocolResponse(
+      int call_id,
+      std::unique_ptr<protocol::Serializable> message) override;
+  void sendProtocolNotification(
+      std::unique_ptr<protocol::Serializable> message) override;
 
-    Client* m_client;
-    std::unique_ptr<V8InspectorSession> m_v8Session;
-    int m_sessionId;
-    bool m_autoFlush;
-    bool m_disposed;
-    Member<InspectedFrames> m_inspectedFrames;
-    Member<InstrumentingAgents> m_instrumentingAgents;
-    std::unique_ptr<protocol::UberDispatcher> m_inspectorBackendDispatcher;
-    std::unique_ptr<protocol::DictionaryValue> m_state;
-    HeapVector<Member<InspectorAgent>> m_agents;
-    Vector<protocol::String16> m_notificationQueue;
-    String m_lastSentState;
+  // v8_inspector::V8Inspector::Channel implementation.
+  void sendResponse(
+      int call_id,
+      std::unique_ptr<v8_inspector::StringBuffer> message) override;
+  void sendNotification(
+      std::unique_ptr<v8_inspector::StringBuffer> message) override;
+  // TODO(kozyatinskiy): remove it.
+  void SendProtocolResponse(int call_id,
+                            const v8_inspector::StringView& message) {}
+  void SendProtocolNotification(const v8_inspector::StringView& message) {}
+
+  void SendProtocolResponse(int call_id, const String& message);
+
+  Client* client_;
+  std::unique_ptr<v8_inspector::V8InspectorSession> v8_session_;
+  int session_id_;
+  bool disposed_;
+  Member<CoreProbeSink> instrumenting_agents_;
+  std::unique_ptr<protocol::UberDispatcher> inspector_backend_dispatcher_;
+  std::unique_ptr<protocol::DictionaryValue> state_;
+  HeapVector<Member<InspectorAgent>> agents_;
+  class Notification;
+  Vector<std::unique_ptr<Notification>> notification_queue_;
+  String last_sent_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(InspectorSession_h)
+#endif  // !defined(InspectorSession_h)

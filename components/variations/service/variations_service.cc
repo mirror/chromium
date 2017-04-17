@@ -12,11 +12,12 @@
 #include "base/build_time.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
 #include "base/task_runner_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/values.h"
 #include "base/version.h"
@@ -502,8 +503,8 @@ std::unique_ptr<VariationsService> VariationsService::Create(
 #endif
   result.reset(new VariationsService(
       std::move(client),
-      base::WrapUnique(new web_resource::ResourceRequestAllowedNotifier(
-          local_state, disable_network_switch)),
+      base::MakeUnique<web_resource::ResourceRequestAllowedNotifier>(
+          local_state, disable_network_switch),
       local_state, state_manager, ui_string_overrider));
   return result;
 }
@@ -514,14 +515,21 @@ std::unique_ptr<VariationsService> VariationsService::CreateForTesting(
     PrefService* local_state) {
   return base::WrapUnique(new VariationsService(
       std::move(client),
-      base::WrapUnique(new web_resource::ResourceRequestAllowedNotifier(
-          local_state, nullptr)),
+      base::MakeUnique<web_resource::ResourceRequestAllowedNotifier>(
+          local_state, nullptr),
       local_state, nullptr, UIStringOverrider()));
 }
 
 void VariationsService::DoActualFetch() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(!pending_seed_request_);
+
+  // Normally, there shouldn't be a |pending_request_| when this fires. However
+  // it's not impossible - for example if Chrome was paused (e.g. in a debugger
+  // or if the machine was suspended) and OnURLFetchComplete() hasn't had a
+  // chance to run yet from the previous request. In this case, don't start a
+  // new request and just let the previous one finish.
+  if (pending_seed_request_)
+    return;
 
   pending_seed_request_ = net::URLFetcher::Create(0, variations_server_url_,
                                                   net::URLFetcher::GET, this);
@@ -529,6 +537,7 @@ void VariationsService::DoActualFetch() {
       pending_seed_request_.get(),
       data_use_measurement::DataUseUserData::VARIATIONS);
   pending_seed_request_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
+                                      net::LOAD_DO_NOT_SEND_AUTH_DATA |
                                       net::LOAD_DO_NOT_SAVE_COOKIES);
   pending_seed_request_->SetRequestContext(client_->GetURLRequestContext());
   bool enable_deltas = false;
@@ -560,7 +569,7 @@ void VariationsService::DoActualFetch() {
   if (!last_request_started_time_.is_null())
     time_since_last_fetch = now - last_request_started_time_;
   UMA_HISTOGRAM_CUSTOM_COUNTS("Variations.TimeSinceLastFetchAttempt",
-                              time_since_last_fetch.InMinutes(), 0,
+                              time_since_last_fetch.InMinutes(), 1,
                               base::TimeDelta::FromDays(7).InMinutes(), 50);
   UMA_HISTOGRAM_COUNTS_100("Variations.RequestCount", request_count_);
   ++request_count_;
@@ -626,11 +635,11 @@ void VariationsService::NotifyObservers(
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (result.kill_critical_group_change_count > 0) {
-    FOR_EACH_OBSERVER(Observer, observer_list_,
-                      OnExperimentChangesDetected(Observer::CRITICAL));
+    for (auto& observer : observer_list_)
+      observer.OnExperimentChangesDetected(Observer::CRITICAL);
   } else if (result.kill_best_effort_group_change_count > 0) {
-    FOR_EACH_OBSERVER(Observer, observer_list_,
-                      OnExperimentChangesDetected(Observer::BEST_EFFORT));
+    for (auto& observer : observer_list_)
+      observer.OnExperimentChangesDetected(Observer::BEST_EFFORT);
   }
 }
 
@@ -644,13 +653,15 @@ void VariationsService::OnURLFetchComplete(const net::URLFetcher* source) {
   // The fetcher will be deleted when the request is handled.
   std::unique_ptr<const net::URLFetcher> request(
       pending_seed_request_.release());
-  const net::URLRequestStatus& request_status = request->GetStatus();
-  if (request_status.status() != net::URLRequestStatus::SUCCESS) {
-    UMA_HISTOGRAM_SPARSE_SLOWLY("Variations.FailedRequestErrorCode",
-                                -request_status.error());
+  const net::URLRequestStatus& status = request->GetStatus();
+  const int response_code = request->GetResponseCode();
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "Variations.SeedFetchResponseOrErrorCode",
+      status.is_success() ? response_code : status.error());
+
+  if (status.status() != net::URLRequestStatus::SUCCESS) {
     DVLOG(1) << "Variations server request failed with error: "
-             << request_status.error() << ": "
-             << net::ErrorToString(request_status.error());
+             << status.error() << ": " << net::ErrorToString(status.error());
     // It's common for the very first fetch attempt to fail (e.g. the network
     // may not yet be available). In such a case, try again soon, rather than
     // waiting the full time interval.
@@ -658,11 +669,6 @@ void VariationsService::OnURLFetchComplete(const net::URLFetcher* source) {
       request_scheduler_->ScheduleFetchShortly();
     return;
   }
-
-  // Log the response code.
-  const int response_code = request->GetResponseCode();
-  UMA_HISTOGRAM_SPARSE_SLOWLY("Variations.SeedFetchResponseCode",
-                              response_code);
 
   const base::TimeDelta latency =
       base::TimeTicks::Now() - last_request_started_time_;

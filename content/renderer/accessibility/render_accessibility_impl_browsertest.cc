@@ -32,8 +32,7 @@ namespace content {
 class TestRenderAccessibilityImpl : public RenderAccessibilityImpl {
  public:
   explicit TestRenderAccessibilityImpl(RenderFrameImpl* render_frame)
-    : RenderAccessibilityImpl(render_frame) {
-  }
+      : RenderAccessibilityImpl(render_frame, kAccessibilityModeComplete) {}
 
   void SendPendingAccessibilityEvents() {
     RenderAccessibilityImpl::SendPendingAccessibilityEvents();
@@ -75,7 +74,7 @@ class RenderAccessibilityImplTest : public RenderViewTest {
     const IPC::Message* message =
         sink_->GetUniqueMessageMatching(AccessibilityHostMsg_Events::ID);
     ASSERT_TRUE(message);
-    std::tuple<std::vector<AccessibilityHostMsg_EventParams>, int> param;
+    std::tuple<std::vector<AccessibilityHostMsg_EventParams>, int, int> param;
     AccessibilityHostMsg_Events::Read(message, &param);
     *param_list = std::get<0>(param);
   }
@@ -126,8 +125,8 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   // If we post another event but the tree doesn't change,
   // we should only send 1 node to the browser.
   sink_->ClearMessages();
-  WebDocument document = view()->GetWebView()->mainFrame()->document();
-  WebAXObject root_obj = document.accessibilityObject();
+  WebDocument document = view()->GetWebView()->MainFrame()->GetDocument();
+  WebAXObject root_obj = document.AccessibilityObject();
   accessibility->HandleAXEvent(
       root_obj,
       ui::AX_EVENT_LAYOUT_COMPLETE);
@@ -137,15 +136,15 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
     // Make sure it's the root object that was updated.
     AccessibilityHostMsg_EventParams event;
     GetLastAccEvent(&event);
-    EXPECT_EQ(root_obj.axID(), event.update.nodes[0].id);
+    EXPECT_EQ(root_obj.AxID(), event.update.nodes[0].id);
   }
 
   // If we reload the page and send a event, we should send
   // all 4 nodes to the browser. Also double-check that we didn't
   // leak any of the old BrowserTreeNodes.
   LoadHTML(html.c_str());
-  document = view()->GetWebView()->mainFrame()->document();
-  root_obj = document.accessibilityObject();
+  document = view()->GetWebView()->MainFrame()->GetDocument();
+  root_obj = document.AccessibilityObject();
   sink_->ClearMessages();
   accessibility->HandleAXEvent(
       root_obj,
@@ -157,10 +156,10 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   // the root, the whole tree should be updated because we know
   // the browser doesn't have the root element.
   LoadHTML(html.c_str());
-  document = view()->GetWebView()->mainFrame()->document();
-  root_obj = document.accessibilityObject();
+  document = view()->GetWebView()->MainFrame()->GetDocument();
+  root_obj = document.AccessibilityObject();
   sink_->ClearMessages();
-  const WebAXObject& first_child = root_obj.childAt(0);
+  const WebAXObject& first_child = root_obj.ChildAt(0);
   accessibility->HandleAXEvent(
       first_child,
       ui::AX_EVENT_LIVE_REGION_CHANGED);
@@ -188,11 +187,11 @@ TEST_F(RenderAccessibilityImplTest, HideAccessibilityObject) {
   accessibility->SendPendingAccessibilityEvents();
   EXPECT_EQ(4, CountAccessibilityNodesSentToBrowser());
 
-  WebDocument document = view()->GetWebView()->mainFrame()->document();
-  WebAXObject root_obj = document.accessibilityObject();
-  WebAXObject node_a = root_obj.childAt(0);
-  WebAXObject node_b = node_a.childAt(0);
-  WebAXObject node_c = node_b.childAt(0);
+  WebDocument document = view()->GetWebView()->MainFrame()->GetDocument();
+  WebAXObject root_obj = document.AccessibilityObject();
+  WebAXObject node_a = root_obj.ChildAt(0);
+  WebAXObject node_b = node_a.ChildAt(0);
+  WebAXObject node_c = node_b.ChildAt(0);
 
   // Hide node 'B' ('C' stays visible).
   ExecuteJavaScriptForTests(
@@ -213,9 +212,9 @@ TEST_F(RenderAccessibilityImplTest, HideAccessibilityObject) {
 
   // RenderAccessibilityImpl notices that 'C' is being reparented,
   // so it clears the subtree rooted at 'A', then updates 'A' and then 'C'.
-  EXPECT_EQ(node_a.axID(), event.update.node_id_to_clear);
-  EXPECT_EQ(node_a.axID(), event.update.nodes[0].id);
-  EXPECT_EQ(node_c.axID(), event.update.nodes[1].id);
+  EXPECT_EQ(node_a.AxID(), event.update.node_id_to_clear);
+  EXPECT_EQ(node_a.AxID(), event.update.nodes[0].id);
+  EXPECT_EQ(node_c.AxID(), event.update.nodes[1].id);
   EXPECT_EQ(2, CountAccessibilityNodesSentToBrowser());
 }
 
@@ -246,11 +245,11 @@ TEST_F(RenderAccessibilityImplTest, ShowAccessibilityObject) {
   ExecuteJavaScriptForTests("document.getElementById('B').offsetLeft;");
 
   sink_->ClearMessages();
-  WebDocument document = view()->GetWebView()->mainFrame()->document();
-  WebAXObject root_obj = document.accessibilityObject();
-  WebAXObject node_a = root_obj.childAt(0);
-  WebAXObject node_b = node_a.childAt(0);
-  WebAXObject node_c = node_b.childAt(0);
+  WebDocument document = view()->GetWebView()->MainFrame()->GetDocument();
+  WebAXObject root_obj = document.AccessibilityObject();
+  WebAXObject node_a = root_obj.ChildAt(0);
+  WebAXObject node_b = node_a.ChildAt(0);
+  WebAXObject node_c = node_b.ChildAt(0);
 
   accessibility->HandleAXEvent(
       node_a,
@@ -261,82 +260,11 @@ TEST_F(RenderAccessibilityImplTest, ShowAccessibilityObject) {
   GetLastAccEvent(&event);
 
   ASSERT_EQ(3U, event.update.nodes.size());
-  EXPECT_EQ(node_a.axID(), event.update.node_id_to_clear);
-  EXPECT_EQ(node_a.axID(), event.update.nodes[0].id);
-  EXPECT_EQ(node_b.axID(), event.update.nodes[1].id);
-  EXPECT_EQ(node_c.axID(), event.update.nodes[2].id);
+  EXPECT_EQ(node_a.AxID(), event.update.node_id_to_clear);
+  EXPECT_EQ(node_a.AxID(), event.update.nodes[0].id);
+  EXPECT_EQ(node_b.AxID(), event.update.nodes[1].id);
+  EXPECT_EQ(node_c.AxID(), event.update.nodes[2].id);
   EXPECT_EQ(3, CountAccessibilityNodesSentToBrowser());
-}
-
-TEST_F(RenderAccessibilityImplTest, DetachAccessibilityObject) {
-  // Test RenderAccessibilityImpl and make sure it sends the
-  // proper event to the browser when an object in the tree
-  // is detached, but its children are not. This can happen when
-  // a layout occurs and an anonymous render block is no longer needed.
-  std::string html =
-      "<body aria-label='Body'>"
-      "<span>1</span><span style='display:block'>2</span>"
-      "</body>";
-  LoadHTML(html.c_str());
-
-  std::unique_ptr<TestRenderAccessibilityImpl> accessibility(
-      new TestRenderAccessibilityImpl(frame()));
-  accessibility->SendPendingAccessibilityEvents();
-  EXPECT_EQ(7, CountAccessibilityNodesSentToBrowser());
-
-  // Initially, the accessibility tree looks like this:
-  //
-  //   Document
-  //   +--Body
-  //      +--Anonymous Block
-  //         +--Static Text "1"
-  //            +--Inline Text Box "1"
-  //      +--Static Text "2"
-  //         +--Inline Text Box "2"
-  WebDocument document = view()->GetWebView()->mainFrame()->document();
-  WebAXObject root_obj = document.accessibilityObject();
-  WebAXObject body = root_obj.childAt(0);
-  WebAXObject anonymous_block = body.childAt(0);
-  WebAXObject text_1 = anonymous_block.childAt(0);
-  WebAXObject text_2 = body.childAt(1);
-
-  // Change the display of the second 'span' back to inline, which causes the
-  // anonymous block to be destroyed.
-  ExecuteJavaScriptForTests(
-      "document.querySelectorAll('span')[1].style.display = 'inline';");
-  // Force layout now.
-  ExecuteJavaScriptForTests("document.body.offsetLeft;");
-
-  // Send a childrenChanged on the body.
-  sink_->ClearMessages();
-  accessibility->HandleAXEvent(
-      body,
-      ui::AX_EVENT_CHILDREN_CHANGED);
-
-  accessibility->SendPendingAccessibilityEvents();
-
-  // Afterwards, the accessibility tree looks like this:
-  //
-  //   Document
-  //   +--Body
-  //      +--Static Text "1"
-  //         +--Inline Text Box "1"
-  //      +--Static Text "2"
-  //         +--Inline Text Box "2"
-  //
-  // We just assert that there are now four nodes in the
-  // accessibility tree and that only three nodes needed
-  // to be updated (the body, the static text 1, and
-  // the static text 2).
-
-  AccessibilityHostMsg_EventParams event;
-  GetLastAccEvent(&event);
-  ASSERT_EQ(5U, event.update.nodes.size());
-
-  EXPECT_EQ(body.axID(), event.update.nodes[0].id);
-  EXPECT_EQ(text_1.axID(), event.update.nodes[1].id);
-  // The third event is to update text_2, but its id changes
-  // so we don't have a test expectation for it.
 }
 
 }  // namespace content

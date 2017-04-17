@@ -35,35 +35,35 @@ namespace blink {
 class DOMArrayBuffer;
 
 class MediaKeyMessageEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~MediaKeyMessageEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static MediaKeyMessageEvent* create()
-    {
-        return new MediaKeyMessageEvent;
-    }
+ public:
+  ~MediaKeyMessageEvent() override;
 
-    static MediaKeyMessageEvent* create(const AtomicString& type, const MediaKeyMessageEventInit& initializer)
-    {
-        return new MediaKeyMessageEvent(type, initializer);
-    }
+  static MediaKeyMessageEvent* Create() { return new MediaKeyMessageEvent; }
 
-    const AtomicString& interfaceName() const override;
+  static MediaKeyMessageEvent* Create(
+      const AtomicString& type,
+      const MediaKeyMessageEventInit& initializer) {
+    return new MediaKeyMessageEvent(type, initializer);
+  }
 
-    String messageType() const { return m_messageType; }
-    DOMArrayBuffer* message() const { return m_message.get(); }
+  const AtomicString& InterfaceName() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  String messageType() const { return message_type_; }
+  DOMArrayBuffer* message() const { return message_.Get(); }
 
-private:
-    MediaKeyMessageEvent();
-    MediaKeyMessageEvent(const AtomicString& type, const MediaKeyMessageEventInit& initializer);
+  DECLARE_VIRTUAL_TRACE();
 
-    String m_messageType;
-    Member<DOMArrayBuffer> m_message;
+ private:
+  MediaKeyMessageEvent();
+  MediaKeyMessageEvent(const AtomicString& type,
+                       const MediaKeyMessageEventInit& initializer);
+
+  String message_type_;
+  Member<DOMArrayBuffer> message_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaKeyMessageEvent_h
+#endif  // MediaKeyMessageEvent_h

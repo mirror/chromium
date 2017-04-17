@@ -8,25 +8,26 @@
 #include "base/android/jni_string.h"
 #include "base/logging.h"
 #include "jni/Client_jni.h"
-#include "remoting/client/jni/chromoting_jni_instance.h"
-#include "remoting/client/jni/chromoting_jni_runtime.h"
-#include "remoting/client/jni/display_updater_factory.h"
-#include "remoting/client/jni/jni_display_handler.h"
+#include "remoting/client/audio_player_android.h"
+#include "remoting/client/chromoting_client_runtime.h"
+#include "remoting/client/chromoting_session.h"
+#include "remoting/client/connect_to_host_info.h"
 #include "remoting/client/jni/jni_gl_display_handler.h"
 #include "remoting/client/jni/jni_pairing_secret_fetcher.h"
+#include "remoting/client/jni/jni_runtime_delegate.h"
 #include "remoting/client/jni/jni_touch_event_data.h"
-#include "remoting/client/jni/jni_video_renderer.h"
+#include "remoting/protocol/video_renderer.h"
 
 using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertUTF8ToJavaString;
+using base::android::JavaParamRef;
+using base::android::ScopedJavaLocalRef;
 
 namespace remoting {
 
-JniClient::JniClient(ChromotingJniRuntime* runtime,
-                     base::android::ScopedJavaGlobalRef<jobject> java_client)
-    : runtime_(runtime),
-      java_client_(java_client),
-      weak_factory_(this) {
+JniClient::JniClient(base::android::ScopedJavaGlobalRef<jobject> java_client)
+    : java_client_(java_client), weak_factory_(this) {
+  runtime_ = ChromotingClientRuntime::GetInstance();
   weak_ptr_ = weak_factory_.GetWeakPtr();
 }
 
@@ -38,27 +39,29 @@ JniClient::~JniClient() {
   DisconnectFromHost();
 }
 
-void JniClient::ConnectToHost(DisplayUpdaterFactory* updater_factory,
-                              const std::string& username,
-                              const std::string& auth_token,
-                              const std::string& host_jid,
-                              const std::string& host_id,
-                              const std::string& host_pubkey,
-                              const std::string& pairing_id,
-                              const std::string& pairing_secret,
-                              const std::string& capabilities,
-                              const std::string& flags) {
+void JniClient::ConnectToHost(const ConnectToHostInfo& info) {
   DCHECK(runtime_->ui_task_runner()->BelongsToCurrentThread());
+  DCHECK(!display_handler_);
+  DCHECK(!audio_player_);
   DCHECK(!session_);
   DCHECK(!secret_fetcher_);
-  secret_fetcher_.reset(new JniPairingSecretFetcher(runtime_, GetWeakPtr(),
-                                                    host_id));
-  session_.reset(new ChromotingJniInstance(
-      runtime_, GetWeakPtr(), secret_fetcher_->GetWeakPtr(),
-      updater_factory->CreateCursorShapeStub(),
-      updater_factory->CreateVideoRenderer(),
-      username, auth_token, host_jid, host_id,
-      host_pubkey, pairing_id, pairing_secret, capabilities, flags));
+  display_handler_.reset(new JniGlDisplayHandler(java_client_));
+  secret_fetcher_.reset(
+      new JniPairingSecretFetcher(GetWeakPtr(), info.host_id));
+
+  protocol::ClientAuthenticationConfig client_auth_config;
+  client_auth_config.host_id = info.host_id;
+  client_auth_config.pairing_client_id = info.pairing_id;
+  client_auth_config.pairing_secret = info.pairing_secret;
+  client_auth_config.fetch_secret_callback = base::Bind(
+      &JniPairingSecretFetcher::FetchSecret, secret_fetcher_->GetWeakPtr());
+
+  audio_player_.reset(new AudioPlayerAndroid());
+
+  session_.reset(new ChromotingSession(
+      weak_ptr_, display_handler_->CreateCursorShapeStub(),
+      display_handler_->CreateVideoRenderer(), audio_player_->GetWeakPtr(),
+      info, client_auth_config));
   session_->Connect();
 }
 
@@ -73,10 +76,11 @@ void JniClient::DisconnectFromHost() {
     runtime_->network_task_runner()->DeleteSoon(FROM_HERE,
                                                 secret_fetcher_.release());
   }
-  if (display_handler_) {
-    runtime_->display_task_runner()->DeleteSoon(FROM_HERE,
-                                                display_handler_.release());
+  if (audio_player_) {
+    runtime_->network_task_runner()->DeleteSoon(FROM_HERE,
+                                                audio_player_.release());
   }
+  display_handler_.reset();
 }
 
 void JniClient::OnConnectionState(protocol::ConnectionToHost::State state,
@@ -84,15 +88,14 @@ void JniClient::OnConnectionState(protocol::ConnectionToHost::State state,
   DCHECK(runtime_->ui_task_runner()->BelongsToCurrentThread());
 
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_Client_onConnectionState(env, java_client_.obj(), state, error);
+  Java_Client_onConnectionState(env, java_client_, state, error);
 }
 
 void JniClient::DisplayAuthenticationPrompt(bool pairing_supported) {
   DCHECK(runtime_->ui_task_runner()->BelongsToCurrentThread());
 
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_Client_displayAuthenticationPrompt(env, java_client_.obj(),
-                                          pairing_supported);
+  Java_Client_displayAuthenticationPrompt(env, java_client_, pairing_supported);
 }
 
 void JniClient::CommitPairingCredentials(const std::string& host,
@@ -105,8 +108,8 @@ void JniClient::CommitPairingCredentials(const std::string& host,
   ScopedJavaLocalRef<jstring> j_id = ConvertUTF8ToJavaString(env, id);
   ScopedJavaLocalRef<jstring> j_secret = ConvertUTF8ToJavaString(env, secret);
 
-  Java_Client_commitPairingCredentials(env, java_client_.obj(), j_host.obj(),
-                                       j_id.obj(), j_secret.obj());
+  Java_Client_commitPairingCredentials(env, java_client_, j_host, j_id,
+                                       j_secret);
 }
 
 void JniClient::FetchThirdPartyToken(const std::string& token_url,
@@ -120,8 +123,8 @@ void JniClient::FetchThirdPartyToken(const std::string& token_url,
       ConvertUTF8ToJavaString(env, client_id);
   ScopedJavaLocalRef<jstring> j_scope = ConvertUTF8ToJavaString(env, scope);
 
-  Java_Client_fetchThirdPartyToken(env, java_client_.obj(), j_url.obj(),
-                                   j_client_id.obj(), j_scope.obj());
+  Java_Client_fetchThirdPartyToken(env, java_client_, j_url, j_client_id,
+                                   j_scope);
 }
 
 void JniClient::SetCapabilities(const std::string& capabilities) {
@@ -131,7 +134,7 @@ void JniClient::SetCapabilities(const std::string& capabilities) {
   ScopedJavaLocalRef<jstring> j_cap =
       ConvertUTF8ToJavaString(env, capabilities);
 
-  Java_Client_setCapabilities(env, java_client_.obj(), j_cap.obj());
+  Java_Client_setCapabilities(env, java_client_, j_cap);
 }
 
 void JniClient::HandleExtensionMessage(const std::string& type,
@@ -142,8 +145,7 @@ void JniClient::HandleExtensionMessage(const std::string& type,
   ScopedJavaLocalRef<jstring> j_type = ConvertUTF8ToJavaString(env, type);
   ScopedJavaLocalRef<jstring> j_message = ConvertUTF8ToJavaString(env, message);
 
-  Java_Client_handleExtensionMessage(env, java_client_.obj(), j_type.obj(),
-                                     j_message.obj());
+  Java_Client_handleExtensionMessage(env, java_client_, j_type, j_message);
 }
 
 // static
@@ -155,31 +157,32 @@ void JniClient::Connect(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& caller,
     const base::android::JavaParamRef<jstring>& username,
-    const base::android::JavaParamRef<jstring>& authToken,
-    const base::android::JavaParamRef<jstring>& hostJid,
-    const base::android::JavaParamRef<jstring>& hostId,
-    const base::android::JavaParamRef<jstring>& hostPubkey,
-    const base::android::JavaParamRef<jstring>& pairId,
-    const base::android::JavaParamRef<jstring>& pairSecret,
+    const base::android::JavaParamRef<jstring>& auth_token,
+    const base::android::JavaParamRef<jstring>& host_jid,
+    const base::android::JavaParamRef<jstring>& host_id,
+    const base::android::JavaParamRef<jstring>& host_pubkey,
+    const base::android::JavaParamRef<jstring>& pair_id,
+    const base::android::JavaParamRef<jstring>& pair_secret,
     const base::android::JavaParamRef<jstring>& capabilities,
-    const base::android::JavaParamRef<jstring>& flags) {
-#if defined(REMOTING_ANDROID_ENABLE_OPENGL_RENDERER)
-  JniGlDisplayHandler* raw_display_handler = new JniGlDisplayHandler(runtime_);
-#else
-  JniDisplayHandler* raw_display_handler = new JniDisplayHandler(runtime_);
-#endif  // defined(REMOTING_ANDROID_ENABLE_OPENGL_RENDERER)
-  raw_display_handler->InitializeClient(java_client_);
-  display_handler_.reset(raw_display_handler);
-  ConnectToHost(raw_display_handler,
-                ConvertJavaStringToUTF8(env, username),
-                ConvertJavaStringToUTF8(env, authToken),
-                ConvertJavaStringToUTF8(env, hostJid),
-                ConvertJavaStringToUTF8(env, hostId),
-                ConvertJavaStringToUTF8(env, hostPubkey),
-                ConvertJavaStringToUTF8(env, pairId),
-                ConvertJavaStringToUTF8(env, pairSecret),
-                ConvertJavaStringToUTF8(env, capabilities),
-                ConvertJavaStringToUTF8(env, flags));
+    const base::android::JavaParamRef<jstring>& flags,
+    const base::android::JavaParamRef<jstring>& host_version,
+    const base::android::JavaParamRef<jstring>& host_os,
+    const base::android::JavaParamRef<jstring>& host_os_version) {
+  ConnectToHostInfo info;
+  info.username = ConvertJavaStringToUTF8(env, username);
+  info.auth_token = ConvertJavaStringToUTF8(env, auth_token);
+  info.host_jid = ConvertJavaStringToUTF8(env, host_jid);
+  info.host_id = ConvertJavaStringToUTF8(env, host_id);
+  info.host_pubkey = ConvertJavaStringToUTF8(env, host_pubkey);
+  info.pairing_id = ConvertJavaStringToUTF8(env, pair_id);
+  info.pairing_secret = ConvertJavaStringToUTF8(env, pair_secret);
+  info.capabilities = ConvertJavaStringToUTF8(env, capabilities);
+  info.flags = ConvertJavaStringToUTF8(env, flags);
+  info.host_version = ConvertJavaStringToUTF8(env, host_version);
+  info.host_os = ConvertJavaStringToUTF8(env, host_os);
+  info.host_os_version = ConvertJavaStringToUTF8(env, host_os_version);
+
+  ConnectToHost(info);
 }
 
 void JniClient::Disconnect(JNIEnv* env,
@@ -193,8 +196,17 @@ void JniClient::AuthenticationResponse(
     const JavaParamRef<jstring>& pin,
     jboolean createPair,
     const JavaParamRef<jstring>& deviceName) {
-  session_->ProvideSecret(ConvertJavaStringToUTF8(env, pin).c_str(), createPair,
-                          ConvertJavaStringToUTF8(env, deviceName));
+  if (session_) {
+    session_->ProvideSecret(ConvertJavaStringToUTF8(env, pin), createPair,
+                            ConvertJavaStringToUTF8(env, deviceName));
+  }
+
+  if (secret_fetcher_) {
+    runtime_->network_task_runner()->PostTask(
+        FROM_HERE, base::Bind(&JniPairingSecretFetcher::ProvideSecret,
+                              secret_fetcher_->GetWeakPtr(),
+                              ConvertJavaStringToUTF8(env, pin)));
+  }
 }
 
 void JniClient::SendMouseEvent(
@@ -276,7 +288,7 @@ void JniClient::OnThirdPartyTokenFetched(
     const JavaParamRef<jstring>& shared_secret) {
   runtime_->network_task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&ChromotingJniInstance::HandleOnThirdPartyTokenFetched,
+      base::Bind(&ChromotingSession::HandleOnThirdPartyTokenFetched,
                  session_->GetWeakPtr(), ConvertJavaStringToUTF8(env, token),
                  ConvertJavaStringToUTF8(env, shared_secret)));
 }
@@ -300,8 +312,7 @@ base::WeakPtr<JniClient> JniClient::GetWeakPtr() {
 
 static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& caller) {
   return reinterpret_cast<intptr_t>(
-      new JniClient(ChromotingJniRuntime::GetInstance(),
-                    base::android::ScopedJavaGlobalRef<jobject>(env, caller)));
+      new JniClient(base::android::ScopedJavaGlobalRef<jobject>(env, caller)));
 }
 
 }  // namespace remoting

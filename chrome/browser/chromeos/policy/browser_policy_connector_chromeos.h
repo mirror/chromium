@@ -20,6 +20,15 @@
 class PrefRegistrySimple;
 class PrefService;
 
+namespace chromeos {
+
+class InstallAttributes;
+
+namespace attestation {
+class AttestationFlow;
+}
+}
+
 namespace net {
 class URLRequestContextGetter;
 }
@@ -30,12 +39,10 @@ class AffiliatedCloudPolicyInvalidator;
 class AffiliatedInvalidationServiceProvider;
 class AffiliatedRemoteCommandsInvalidator;
 class BluetoothPolicyHandler;
-class ConsumerManagementService;
+class ActiveDirectoryPolicyManager;
 class DeviceCloudPolicyInitializer;
 class DeviceLocalAccountPolicyService;
-class DeviceManagementService;
 struct EnrollmentConfig;
-class EnterpriseInstallAttributes;
 class NetworkConfigurationUpdater;
 class ProxyPolicyProvider;
 class ServerBackedStateKeysBroker;
@@ -61,12 +68,21 @@ class BrowserPolicyConnectorChromeOS
 
   void Shutdown() override;
 
-  // Returns true if this device is managed by an enterprise (as opposed to
-  // a local owner).
+  // Checks whether this devices is under any kind of enterprise management.
   bool IsEnterpriseManaged() const;
+
+  // Checks whether this is a cloud (DM server) managed enterprise device.
+  bool IsCloudManaged() const;
+
+  // Checks whether this is an Active Directory managed enterprise device.
+  bool IsActiveDirectoryManaged() const;
 
   // Returns the enterprise domain if device is managed.
   std::string GetEnterpriseDomain() const;
+
+  // Returns the Kerberos realm (aka Windows Domain) if the device is managed by
+  // Active Directory.
+  std::string GetRealm() const;
 
   // Returns the device asset ID if it is set.
   std::string GetDeviceAssetID() const;
@@ -85,22 +101,31 @@ class BrowserPolicyConnectorChromeOS
   // for details.
   EnrollmentConfig GetPrescribedEnrollmentConfig() const;
 
+  // May be nullptr, e.g. for devices managed by Active Directory.
   DeviceCloudPolicyManagerChromeOS* GetDeviceCloudPolicyManager() const {
     return device_cloud_policy_manager_;
   }
 
+  // May be nullptr, e.g. for cloud-managed devices.
+  ActiveDirectoryPolicyManager* GetDeviceActiveDirectoryPolicyManager() const {
+    return device_active_directory_policy_manager_;
+  }
+
+  // May be nullptr, e.g. for devices managed by Active Directory.
   DeviceCloudPolicyInitializer* GetDeviceCloudPolicyInitializer() const {
     return device_cloud_policy_initializer_.get();
   }
 
+  // May be nullptr, e.g. for devices managed by Active Directory.
   DeviceLocalAccountPolicyService* GetDeviceLocalAccountPolicyService() const {
     return device_local_account_policy_service_.get();
   }
 
-  EnterpriseInstallAttributes* GetInstallAttributes() const {
+  chromeos::InstallAttributes* GetInstallAttributes() const {
     return install_attributes_.get();
   }
 
+  // May be nullptr, e.g. for devices managed by Active Directory.
   ServerBackedStateKeysBroker* GetStateKeysBroker() const {
     return state_keys_broker_.get();
   }
@@ -116,18 +141,6 @@ class BrowserPolicyConnectorChromeOS
   // delegate, if there is one.
   void SetUserPolicyDelegate(ConfigurationPolicyProvider* user_policy_provider);
 
-  ConsumerManagementService* GetConsumerManagementService() const {
-    return consumer_management_service_.get();
-  }
-
-  DeviceManagementService* GetDeviceManagementServiceForConsumer() const {
-    return consumer_device_management_service_.get();
-  }
-
-  // Sets the consumer management service for testing.
-  void SetConsumerManagementServiceForTesting(
-      std::unique_ptr<ConsumerManagementService> service);
-
   // Sets the device cloud policy initializer for testing.
   void SetDeviceCloudPolicyInitializerForTesting(
       std::unique_ptr<DeviceCloudPolicyInitializer> initializer);
@@ -136,7 +149,7 @@ class BrowserPolicyConnectorChromeOS
   // is created. RemoveInstallAttributesForTesting must be called after the test
   // to free the attributes.
   static void SetInstallAttributesForTesting(
-      EnterpriseInstallAttributes* attributes);
+      chromeos::InstallAttributes* attributes);
   static void RemoveInstallAttributesForTesting();
 
   // Registers device refresh rate pref.
@@ -156,15 +169,20 @@ class BrowserPolicyConnectorChromeOS
   // registration status changed from registered to unregistered.
   void RestartDeviceCloudPolicyInitializer();
 
+  // Creates an attestation flow using our async method handler and
+  // cryptohome client.
+  std::unique_ptr<chromeos::attestation::AttestationFlow>
+  CreateAttestationFlow();
+
   // Components of the device cloud policy implementation.
   std::unique_ptr<ServerBackedStateKeysBroker> state_keys_broker_;
-  std::unique_ptr<EnterpriseInstallAttributes> install_attributes_;
+  std::unique_ptr<chromeos::InstallAttributes> install_attributes_;
   std::unique_ptr<AffiliatedInvalidationServiceProvider>
       affiliated_invalidation_service_provider_;
-  std::unique_ptr<ConsumerManagementService> consumer_management_service_;
-  DeviceCloudPolicyManagerChromeOS* device_cloud_policy_manager_;
-  PrefService* local_state_;
-  std::unique_ptr<DeviceManagementService> consumer_device_management_service_;
+  DeviceCloudPolicyManagerChromeOS* device_cloud_policy_manager_ = nullptr;
+  ActiveDirectoryPolicyManager* device_active_directory_policy_manager_ =
+      nullptr;
+  PrefService* local_state_ = nullptr;
   std::unique_ptr<DeviceCloudPolicyInitializer>
       device_cloud_policy_initializer_;
   std::unique_ptr<DeviceLocalAccountPolicyService>
@@ -182,7 +200,7 @@ class BrowserPolicyConnectorChromeOS
   // after login.
   // The provider is owned by the base class; this field is just a typed weak
   // pointer to get to the ProxyPolicyProvider at SetUserPolicyDelegate().
-  ProxyPolicyProvider* global_user_cloud_policy_provider_;
+  ProxyPolicyProvider* global_user_cloud_policy_provider_ = nullptr;
 
   std::unique_ptr<NetworkConfigurationUpdater> network_configuration_updater_;
 

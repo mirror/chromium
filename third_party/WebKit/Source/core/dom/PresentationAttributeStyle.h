@@ -38,8 +38,8 @@ namespace blink {
 class Element;
 class StylePropertySet;
 
-StylePropertySet* computePresentationAttributeStyle(Element&);
+StylePropertySet* ComputePresentationAttributeStyle(Element&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PresentationAttributeStyle_h
+#endif  // PresentationAttributeStyle_h

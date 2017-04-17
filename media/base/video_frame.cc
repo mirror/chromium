@@ -57,12 +57,6 @@ static std::string StorageTypeToString(
     case VideoFrame::STORAGE_DMABUFS:
       return "DMABUFS";
 #endif
-#if defined(VIDEO_HOLE)
-    case VideoFrame::STORAGE_HOLE:
-      return "HOLE";
-#endif
-    case VideoFrame::STORAGE_GPU_MEMORY_BUFFERS:
-      return "GPU_MEMORY_BUFFERS";
     case VideoFrame::STORAGE_MOJO_SHARED_BUFFER:
       return "MOJO_SHARED_BUFFER";
   }
@@ -83,7 +77,6 @@ static bool IsStorageTypeMappable(VideoFrame::StorageType storage_type) {
       (storage_type == VideoFrame::STORAGE_UNOWNED_MEMORY ||
        storage_type == VideoFrame::STORAGE_OWNED_MEMORY ||
        storage_type == VideoFrame::STORAGE_SHMEM ||
-       storage_type == VideoFrame::STORAGE_GPU_MEMORY_BUFFERS ||
        storage_type == VideoFrame::STORAGE_MOJO_SHARED_BUFFER);
 }
 
@@ -97,6 +90,46 @@ static bool AreValidPixelFormatsForWrap(VideoPixelFormat source_format,
   // use case is there.
   return source_format == PIXEL_FORMAT_YV12A &&
          target_format == PIXEL_FORMAT_I420;
+}
+
+// If it is required to allocate aligned to multiple-of-two size overall for the
+// frame of pixel |format|.
+bool RequiresEvenSizeAllocation(VideoPixelFormat format) {
+  switch (format) {
+    case PIXEL_FORMAT_ARGB:
+    case PIXEL_FORMAT_XRGB:
+    case PIXEL_FORMAT_RGB24:
+    case PIXEL_FORMAT_RGB32:
+    case PIXEL_FORMAT_Y8:
+    case PIXEL_FORMAT_Y16:
+      return false;
+    case PIXEL_FORMAT_NV12:
+    case PIXEL_FORMAT_NV21:
+    case PIXEL_FORMAT_MT21:
+    case PIXEL_FORMAT_I420:
+    case PIXEL_FORMAT_MJPEG:
+    case PIXEL_FORMAT_YUY2:
+    case PIXEL_FORMAT_YV12:
+    case PIXEL_FORMAT_YV16:
+    case PIXEL_FORMAT_YV24:
+    case PIXEL_FORMAT_YUV420P9:
+    case PIXEL_FORMAT_YUV422P9:
+    case PIXEL_FORMAT_YUV444P9:
+    case PIXEL_FORMAT_YUV420P10:
+    case PIXEL_FORMAT_YUV422P10:
+    case PIXEL_FORMAT_YUV444P10:
+    case PIXEL_FORMAT_YUV420P12:
+    case PIXEL_FORMAT_YUV422P12:
+    case PIXEL_FORMAT_YUV444P12:
+    case PIXEL_FORMAT_YV12A:
+    case PIXEL_FORMAT_UYVY:
+    case PIXEL_FORMAT_I422:
+      return true;
+    case PIXEL_FORMAT_UNKNOWN:
+      break;
+  }
+  NOTREACHED() << "Unsupported video frame format: " << format;
+  return false;
 }
 
 // static
@@ -125,7 +158,7 @@ bool VideoFrame::IsValidConfig(VideoPixelFormat format,
     return true;
 
   // Make sure new formats are properly accounted for in the method.
-  static_assert(PIXEL_FORMAT_MAX == 21,
+  static_assert(PIXEL_FORMAT_MAX == 27,
                 "Added pixel format, please review IsValidConfig()");
 
   if (format == PIXEL_FORMAT_UNKNOWN) {
@@ -246,44 +279,6 @@ scoped_refptr<VideoFrame> VideoFrame::WrapExternalYuvData(
   frame->data_[kYPlane] = y_data;
   frame->data_[kUPlane] = u_data;
   frame->data_[kVPlane] = v_data;
-  return frame;
-}
-
-// static
-scoped_refptr<VideoFrame> VideoFrame::WrapExternalYuvGpuMemoryBuffers(
-    VideoPixelFormat format,
-    const gfx::Size& coded_size,
-    const gfx::Rect& visible_rect,
-    const gfx::Size& natural_size,
-    int32_t y_stride,
-    int32_t u_stride,
-    int32_t v_stride,
-    uint8_t* y_data,
-    uint8_t* u_data,
-    uint8_t* v_data,
-    const gfx::GpuMemoryBufferHandle& y_handle,
-    const gfx::GpuMemoryBufferHandle& u_handle,
-    const gfx::GpuMemoryBufferHandle& v_handle,
-    base::TimeDelta timestamp) {
-  const StorageType storage = STORAGE_GPU_MEMORY_BUFFERS;
-  if (!IsValidConfig(format, storage, coded_size, visible_rect, natural_size)) {
-    LOG(DFATAL) << __func__ << " Invalid config."
-                << ConfigToString(format, storage, coded_size, visible_rect,
-                                  natural_size);
-    return nullptr;
-  }
-
-  scoped_refptr<VideoFrame> frame(new VideoFrame(
-      format, storage, coded_size, visible_rect, natural_size, timestamp));
-  frame->strides_[kYPlane] = y_stride;
-  frame->strides_[kUPlane] = u_stride;
-  frame->strides_[kVPlane] = v_stride;
-  frame->data_[kYPlane] = y_data;
-  frame->data_[kUPlane] = u_data;
-  frame->data_[kVPlane] = v_data;
-  frame->gpu_memory_buffer_handles_.push_back(y_handle);
-  frame->gpu_memory_buffer_handles_.push_back(u_handle);
-  frame->gpu_memory_buffer_handles_.push_back(v_handle);
   return frame;
 }
 
@@ -446,7 +441,7 @@ scoped_refptr<VideoFrame> VideoFrame::WrapVideoFrame(
   if (frame->storage_type() == STORAGE_DMABUFS) {
     std::vector<int> original_fds;
     for (size_t i = 0; i < kMaxPlanes; ++i)
-      original_fds.push_back(frame->dmabuf_fd(i));
+      original_fds.push_back(frame->DmabufFd(i));
     if (!wrapping_frame->DuplicateFileDescriptors(original_fds)) {
       LOG(DFATAL) << __func__ << " Couldn't duplicate fds.";
       return nullptr;
@@ -503,28 +498,6 @@ scoped_refptr<VideoFrame> VideoFrame::CreateTransparentFrame(
   return frame;
 }
 
-#if defined(VIDEO_HOLE)
-// This block and other blocks wrapped around #if defined(VIDEO_HOLE) is not
-// maintained by the general compositor team. Please contact
-// wonsik@chromium.org .
-
-// static
-scoped_refptr<VideoFrame> VideoFrame::CreateHoleFrame(
-    const gfx::Size& size) {
-  const VideoPixelFormat format = PIXEL_FORMAT_UNKNOWN;
-  const StorageType storage = STORAGE_HOLE;
-  const gfx::Rect visible_rect = gfx::Rect(size);
-  if (!IsValidConfig(format, storage, size, visible_rect, size)) {
-    LOG(DFATAL) << __func__ << " Invalid config."
-                << ConfigToString(format, storage, size, visible_rect, size);
-    return nullptr;
-  }
-  scoped_refptr<VideoFrame> frame(new VideoFrame(
-      format, storage, size, gfx::Rect(size), size, base::TimeDelta()));
-  return frame;
-}
-#endif  // defined(VIDEO_HOLE)
-
 // static
 size_t VideoFrame::NumPlanes(VideoPixelFormat format) {
   switch (format) {
@@ -535,6 +508,8 @@ size_t VideoFrame::NumPlanes(VideoPixelFormat format) {
     case PIXEL_FORMAT_RGB24:
     case PIXEL_FORMAT_RGB32:
     case PIXEL_FORMAT_MJPEG:
+    case PIXEL_FORMAT_Y8:
+    case PIXEL_FORMAT_Y16:
       return 1;
     case PIXEL_FORMAT_NV12:
     case PIXEL_FORMAT_NV21:
@@ -550,6 +525,10 @@ size_t VideoFrame::NumPlanes(VideoPixelFormat format) {
     case PIXEL_FORMAT_YUV420P10:
     case PIXEL_FORMAT_YUV422P10:
     case PIXEL_FORMAT_YUV444P10:
+    case PIXEL_FORMAT_YUV420P12:
+    case PIXEL_FORMAT_YUV422P12:
+    case PIXEL_FORMAT_YUV444P12:
+    case PIXEL_FORMAT_I422:
       return 3;
     case PIXEL_FORMAT_YV12A:
       return 4;
@@ -577,7 +556,7 @@ gfx::Size VideoFrame::PlaneSize(VideoPixelFormat format,
 
   int width = coded_size.width();
   int height = coded_size.height();
-  if (format != PIXEL_FORMAT_ARGB) {
+  if (RequiresEvenSizeAllocation(format)) {
     // Align to multiple-of-two size overall. This ensures that non-subsampled
     // planes can be addressed by pixel with the same scaling as the subsampled
     // planes.
@@ -653,21 +632,27 @@ bool VideoFrame::HasTextures() const {
 }
 
 gfx::ColorSpace VideoFrame::ColorSpace() const {
-  int videoframe_color_space;
-  if (metadata()->GetInteger(media::VideoFrameMetadata::COLOR_SPACE,
-                             &videoframe_color_space)) {
-    switch (videoframe_color_space) {
-      case media::COLOR_SPACE_JPEG:
-        return gfx::ColorSpace::CreateJpeg();
-      case media::COLOR_SPACE_HD_REC709:
-        return gfx::ColorSpace::CreateREC709();
-      case media::COLOR_SPACE_SD_REC601:
-        return gfx::ColorSpace::CreateREC601();
-      default:
-        break;
+  if (color_space_ == gfx::ColorSpace()) {
+    int videoframe_color_space;
+    if (metadata()->GetInteger(media::VideoFrameMetadata::COLOR_SPACE,
+                               &videoframe_color_space)) {
+      switch (videoframe_color_space) {
+        case media::COLOR_SPACE_JPEG:
+          return gfx::ColorSpace::CreateJpeg();
+        case media::COLOR_SPACE_HD_REC709:
+          return gfx::ColorSpace::CreateREC709();
+        case media::COLOR_SPACE_SD_REC601:
+          return gfx::ColorSpace::CreateREC601();
+        default:
+          break;
+      }
     }
   }
-  return gfx::ColorSpace();
+  return color_space_;
+}
+
+void VideoFrame::set_color_space(const gfx::ColorSpace& color_space) {
+  color_space_ = color_space;
 }
 
 int VideoFrame::stride(size_t plane) const {
@@ -737,15 +722,8 @@ size_t VideoFrame::shared_memory_offset() const {
   return shared_memory_offset_;
 }
 
-const std::vector<gfx::GpuMemoryBufferHandle>&
-VideoFrame::gpu_memory_buffer_handles() const {
-  DCHECK_EQ(storage_type_, STORAGE_GPU_MEMORY_BUFFERS);
-  DCHECK(!gpu_memory_buffer_handles_.empty());
-  return gpu_memory_buffer_handles_;
-}
-
 #if defined(OS_LINUX)
-int VideoFrame::dmabuf_fd(size_t plane) const {
+int VideoFrame::DmabufFd(size_t plane) const {
   DCHECK_EQ(storage_type_, STORAGE_DMABUFS);
   DCHECK(IsValidPlane(plane, format_));
   return dmabuf_fds_[plane].get();
@@ -773,7 +751,7 @@ bool VideoFrame::DuplicateFileDescriptors(const std::vector<int>& in_fds) {
     }
   }
   for (size_t i = 0; i < kMaxPlanes; ++i)
-    dmabuf_fds_[i].reset(temp_dmabuf_fds[i].release());
+    dmabuf_fds_[i] = std::move(temp_dmabuf_fds[i]);
 
   return true;
 }
@@ -785,10 +763,17 @@ void VideoFrame::AddSharedMemoryHandle(base::SharedMemoryHandle handle) {
 }
 
 #if defined(OS_MACOSX)
-CVPixelBufferRef VideoFrame::cv_pixel_buffer() const {
+CVPixelBufferRef VideoFrame::CvPixelBuffer() const {
   return cv_pixel_buffer_.get();
 }
 #endif
+
+void VideoFrame::SetReleaseMailboxCB(
+    const ReleaseMailboxCB& release_mailbox_cb) {
+  DCHECK(!release_mailbox_cb.is_null());
+  DCHECK(mailbox_holders_release_cb_.is_null());
+  mailbox_holders_release_cb_ = release_mailbox_cb;
+}
 
 void VideoFrame::AddDestructionObserver(const base::Closure& callback) {
   DCHECK(!callback.is_null());
@@ -817,6 +802,53 @@ std::string VideoFrame::AsHumanReadableString() {
   return s.str();
 }
 
+int VideoFrame::BitsPerChannel(VideoPixelFormat format) {
+  int bits_per_channel = 0;
+  switch (format) {
+    case media::PIXEL_FORMAT_UNKNOWN:
+      NOTREACHED();
+    // Fall through!
+    case media::PIXEL_FORMAT_I420:
+    case media::PIXEL_FORMAT_YV12:
+    case media::PIXEL_FORMAT_YV16:
+    case media::PIXEL_FORMAT_YV12A:
+    case media::PIXEL_FORMAT_YV24:
+    case media::PIXEL_FORMAT_NV12:
+    case media::PIXEL_FORMAT_NV21:
+    case media::PIXEL_FORMAT_UYVY:
+    case media::PIXEL_FORMAT_YUY2:
+    case media::PIXEL_FORMAT_ARGB:
+    case media::PIXEL_FORMAT_XRGB:
+    case media::PIXEL_FORMAT_RGB24:
+    case media::PIXEL_FORMAT_RGB32:
+    case media::PIXEL_FORMAT_MJPEG:
+    case media::PIXEL_FORMAT_MT21:
+    case media::PIXEL_FORMAT_Y8:
+    case media::PIXEL_FORMAT_I422:
+      bits_per_channel = 8;
+      break;
+    case media::PIXEL_FORMAT_YUV420P9:
+    case media::PIXEL_FORMAT_YUV422P9:
+    case media::PIXEL_FORMAT_YUV444P9:
+      bits_per_channel = 9;
+      break;
+    case media::PIXEL_FORMAT_YUV420P10:
+    case media::PIXEL_FORMAT_YUV422P10:
+    case media::PIXEL_FORMAT_YUV444P10:
+      bits_per_channel = 10;
+      break;
+    case media::PIXEL_FORMAT_YUV420P12:
+    case media::PIXEL_FORMAT_YUV422P12:
+    case media::PIXEL_FORMAT_YUV444P12:
+      bits_per_channel = 12;
+      break;
+    case media::PIXEL_FORMAT_Y16:
+      bits_per_channel = 16;
+      break;
+  }
+  return bits_per_channel;
+}
+
 // static
 scoped_refptr<VideoFrame> VideoFrame::WrapExternalStorage(
     VideoPixelFormat format,
@@ -833,8 +865,9 @@ scoped_refptr<VideoFrame> VideoFrame::WrapExternalStorage(
 
   // TODO(miu): This function should support any pixel format.
   // http://crbug.com/555909
-  if (format != PIXEL_FORMAT_I420) {
-    LOG(DFATAL) << "Only PIXEL_FORMAT_I420 format supported: "
+  if (format != PIXEL_FORMAT_I420 && format != PIXEL_FORMAT_Y16) {
+    LOG(DFATAL) << "Only PIXEL_FORMAT_I420 and PIXEL_FORMAT_Y16 formats are"
+                   "supported: "
                 << VideoPixelFormatToString(format);
     return nullptr;
   }
@@ -855,17 +888,30 @@ scoped_refptr<VideoFrame> VideoFrame::WrapExternalStorage(
     frame = new VideoFrame(format, storage_type, coded_size, visible_rect,
                            natural_size, timestamp);
   }
-  frame->strides_[kYPlane] = coded_size.width();
-  // TODO(miu): This always rounds widths down, whereas VideoFrame::RowBytes()
-  // always rounds up.  This inconsistency must be resolved.  Perhaps a
-  // CommonAlignment() check should be made in IsValidConfig()?
-  // http://crbug.com/555909
-  frame->strides_[kUPlane] = coded_size.width() / 2;
-  frame->strides_[kVPlane] = coded_size.width() / 2;
-  frame->data_[kYPlane] = data;
-  frame->data_[kUPlane] = data + coded_size.GetArea();
-  frame->data_[kVPlane] = data + (coded_size.GetArea() * 5 / 4);
-  return frame;
+  switch (NumPlanes(format)) {
+    case 1:
+      frame->strides_[kYPlane] = RowBytes(kYPlane, format, coded_size.width());
+      frame->data_[kYPlane] = data;
+      return frame;
+    case 3:
+      DCHECK_EQ(format, PIXEL_FORMAT_I420);
+      // TODO(miu): This always rounds widths down, whereas
+      // VideoFrame::RowBytes() always rounds up.  This inconsistency must be
+      // resolved.  Perhaps a CommonAlignment() check should be made in
+      // IsValidConfig()?
+      // http://crbug.com/555909
+      frame->strides_[kYPlane] = RowBytes(kYPlane, format, coded_size.width());
+      frame->data_[kYPlane] = data;
+      frame->strides_[kVPlane] = coded_size.width() / 2;
+      frame->data_[kVPlane] = data + (coded_size.GetArea() * 5 / 4);
+      frame->strides_[kUPlane] = coded_size.width() / 2;
+      frame->data_[kUPlane] = data + coded_size.GetArea();
+      return frame;
+    default:
+      LOG(DFATAL) << "Invalid number of planes: " << NumPlanes(format)
+                  << " in format: " << VideoPixelFormatToString(format);
+      return nullptr;
+  }
 }
 
 VideoFrame::VideoFrame(VideoPixelFormat format,
@@ -1024,7 +1070,7 @@ gfx::Size VideoFrame::SampleSize(VideoPixelFormat format, size_t plane) {
   DCHECK(IsValidPlane(plane, format));
 
   switch (plane) {
-    case kYPlane:
+    case kYPlane:  // and kARGBPlane:
     case kAPlane:
       return gfx::Size(1, 1);
 
@@ -1034,11 +1080,15 @@ gfx::Size VideoFrame::SampleSize(VideoPixelFormat format, size_t plane) {
         case PIXEL_FORMAT_YV24:
         case PIXEL_FORMAT_YUV444P9:
         case PIXEL_FORMAT_YUV444P10:
+        case PIXEL_FORMAT_YUV444P12:
+        case PIXEL_FORMAT_Y16:
           return gfx::Size(1, 1);
 
         case PIXEL_FORMAT_YV16:
+        case PIXEL_FORMAT_I422:
         case PIXEL_FORMAT_YUV422P9:
         case PIXEL_FORMAT_YUV422P10:
+        case PIXEL_FORMAT_YUV422P12:
           return gfx::Size(2, 1);
 
         case PIXEL_FORMAT_YV12:
@@ -1049,6 +1099,7 @@ gfx::Size VideoFrame::SampleSize(VideoPixelFormat format, size_t plane) {
         case PIXEL_FORMAT_MT21:
         case PIXEL_FORMAT_YUV420P9:
         case PIXEL_FORMAT_YUV420P10:
+        case PIXEL_FORMAT_YUV420P12:
           return gfx::Size(2, 2);
 
         case PIXEL_FORMAT_UNKNOWN:
@@ -1059,6 +1110,7 @@ gfx::Size VideoFrame::SampleSize(VideoPixelFormat format, size_t plane) {
         case PIXEL_FORMAT_RGB24:
         case PIXEL_FORMAT_RGB32:
         case PIXEL_FORMAT_MJPEG:
+        case PIXEL_FORMAT_Y8:
           break;
       }
   }
@@ -1076,6 +1128,7 @@ int VideoFrame::BytesPerElement(VideoPixelFormat format, size_t plane) {
       return 4;
     case PIXEL_FORMAT_RGB24:
       return 3;
+    case PIXEL_FORMAT_Y16:
     case PIXEL_FORMAT_UYVY:
     case PIXEL_FORMAT_YUY2:
     case PIXEL_FORMAT_YUV420P9:
@@ -1084,6 +1137,9 @@ int VideoFrame::BytesPerElement(VideoPixelFormat format, size_t plane) {
     case PIXEL_FORMAT_YUV420P10:
     case PIXEL_FORMAT_YUV422P10:
     case PIXEL_FORMAT_YUV444P10:
+    case PIXEL_FORMAT_YUV420P12:
+    case PIXEL_FORMAT_YUV422P12:
+    case PIXEL_FORMAT_YUV444P12:
       return 2;
     case PIXEL_FORMAT_NV12:
     case PIXEL_FORMAT_NV21:
@@ -1097,6 +1153,8 @@ int VideoFrame::BytesPerElement(VideoPixelFormat format, size_t plane) {
     case PIXEL_FORMAT_YV16:
     case PIXEL_FORMAT_YV12A:
     case PIXEL_FORMAT_YV24:
+    case PIXEL_FORMAT_Y8:
+    case PIXEL_FORMAT_I422:
       return 1;
     case PIXEL_FORMAT_MJPEG:
       return 0;

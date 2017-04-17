@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "courgette/assembly_program.h"
 #include "courgette/base_test_unittest.h"
 #include "courgette/image_utils.h"
@@ -69,13 +70,14 @@ void DisassemblerElf32X86Test::TestExe(const char* file_name,
                                        size_t expected_rel_count) const {
   std::string file1 = FileContents(file_name);
 
-  std::unique_ptr<TestDisassemblerElf32X86> disassembler(
-      new TestDisassemblerElf32X86(
-          reinterpret_cast<const uint8_t*>(file1.c_str()), file1.length()));
+  auto disassembler = base::MakeUnique<TestDisassemblerElf32X86>(
+      reinterpret_cast<const uint8_t*>(file1.c_str()), file1.length());
 
   bool can_parse_header = disassembler->ParseHeader();
   EXPECT_TRUE(can_parse_header);
   EXPECT_TRUE(disassembler->ok());
+  EXPECT_EQ(EXE_ELF_32_X86, disassembler->kind());
+  EXPECT_EQ(0U, disassembler->image_base());
 
   // The length of the disassembled value will be slightly smaller than the
   // real file, since trailing debug info is not included
@@ -89,9 +91,8 @@ void DisassemblerElf32X86Test::TestExe(const char* file_name,
   EXPECT_EQ('L', offset_p[2]);
   EXPECT_EQ('F', offset_p[3]);
 
-  std::unique_ptr<AssemblyProgram> program(new AssemblyProgram(EXE_ELF_32_X86));
-
-  EXPECT_TRUE(disassembler->Disassemble(program.get()));
+  std::unique_ptr<AssemblyProgram> program = disassembler->Disassemble(false);
+  EXPECT_TRUE(nullptr != program.get());
 
   const std::vector<RVA>& abs32_list = disassembler->Abs32Locations();
 

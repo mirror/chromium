@@ -15,11 +15,12 @@
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/path_service.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -213,10 +214,12 @@ GURL WebstoreInstaller::GetWebstoreInstallURL(
     return GURL(base::StringPrintf(download_url.c_str(),
                                    extension_id.c_str()));
   }
-  std::vector<std::string> params;
-  params.push_back("id=" + extension_id);
+  std::vector<base::StringPiece> params;
+  std::string extension_param = "id=" + extension_id;
+  std::string installsource_param = "installsource=" + install_source;
+  params.push_back(extension_param);
   if (!install_source.empty())
-    params.push_back("installsource=" + install_source);
+    params.push_back(installsource_param);
   params.push_back("uc");
   std::string url_string = extension_urls::GetWebstoreUpdateUrl().spec();
 
@@ -414,7 +417,7 @@ void WebstoreInstaller::OnExtensionInstalled(
     CHECK_EQ(extension->id(), id_);
     ReportSuccess();
   } else {
-    const Version version_required(info.minimum_version);
+    const base::Version version_required(info.minimum_version);
     if (version_required.IsValid() &&
         extension->version()->CompareTo(version_required) < 0) {
       // It should not happen, CrxInstaller will make sure the version is
@@ -488,11 +491,10 @@ void WebstoreInstaller::OnDownloadStarted(
         Approval::CreateForSharedModule(profile_);
     const SharedModuleInfo::ImportInfo& info = pending_modules_.front();
     approval->extension_id = info.extension_id;
-    const Version version_required(info.minimum_version);
+    const base::Version version_required(info.minimum_version);
 
     if (version_required.IsValid()) {
-      approval->minimum_version.reset(
-          new Version(version_required));
+      approval->minimum_version.reset(new base::Version(version_required));
     }
     download_item_->SetUserData(kApprovalKey, approval.release());
   } else {
@@ -672,7 +674,7 @@ void WebstoreInstaller::StartDownload(const std::string& extension_id,
   if (controller.GetVisibleEntry())
     params->set_referrer(content::Referrer::SanitizeForRequest(
         download_url_, content::Referrer(controller.GetVisibleEntry()->GetURL(),
-                                         blink::WebReferrerPolicyDefault)));
+                                         blink::kWebReferrerPolicyDefault)));
   params->set_callback(base::Bind(&WebstoreInstaller::OnDownloadStarted,
                                   this,
                                   extension_id));

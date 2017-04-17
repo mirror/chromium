@@ -6,22 +6,10 @@
 
 #include <memory>
 
-#include "base/memory/scoped_vector.h"
 #include "components/password_manager/core/browser/credentials_filter.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
 
 namespace password_manager {
-
-ScopedVector<autofill::PasswordForm>
-StubPasswordManagerClient::PassThroughCredentialsFilter::FilterResults(
-    ScopedVector<autofill::PasswordForm> results) const {
-  return results;
-}
-
-bool StubPasswordManagerClient::PassThroughCredentialsFilter::ShouldSave(
-    const autofill::PasswordForm& form) const {
-  return true;
-}
 
 StubPasswordManagerClient::StubPasswordManagerClient() {}
 
@@ -29,21 +17,19 @@ StubPasswordManagerClient::~StubPasswordManagerClient() {}
 
 bool StubPasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
-    password_manager::CredentialSourceType type,
     bool update_password) {
   return false;
 }
 
 bool StubPasswordManagerClient::PromptUserToChooseCredentials(
-    ScopedVector<autofill::PasswordForm> local_forms,
-    ScopedVector<autofill::PasswordForm> federated_forms,
+    std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
     const GURL& origin,
     const CredentialsCallback& callback) {
   return false;
 }
 
 void StubPasswordManagerClient::NotifyUserAutoSignin(
-    ScopedVector<autofill::PasswordForm> local_forms,
+    std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
     const GURL& origin) {}
 
 void StubPasswordManagerClient::NotifyUserCouldBeAutoSignedIn(
@@ -77,5 +63,12 @@ const CredentialsFilter* StubPasswordManagerClient::GetStoreResultFilter()
 const LogManager* StubPasswordManagerClient::GetLogManager() const {
   return &log_manager_;
 }
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+safe_browsing::PasswordProtectionService*
+StubPasswordManagerClient::GetPasswordProtectionService() const {
+  return nullptr;
+}
+#endif
 
 }  // namespace password_manager

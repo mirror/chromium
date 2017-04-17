@@ -16,72 +16,88 @@
 
 namespace blink {
 
-void TablePainter::paintObject(const PaintInfo& paintInfo, const LayoutPoint& paintOffset)
-{
-    PaintPhase paintPhase = paintInfo.phase;
+void TablePainter::PaintObject(const PaintInfo& paint_info,
+                               const LayoutPoint& paint_offset) {
+  PaintPhase paint_phase = paint_info.phase;
 
-    if (shouldPaintSelfBlockBackground(paintPhase)) {
-        paintBoxDecorationBackground(paintInfo, paintOffset);
-        if (paintPhase == PaintPhaseSelfBlockBackgroundOnly)
-            return;
+  if (ShouldPaintSelfBlockBackground(paint_phase)) {
+    PaintBoxDecorationBackground(paint_info, paint_offset);
+    if (paint_phase == kPaintPhaseSelfBlockBackgroundOnly)
+      return;
+  }
+
+  if (paint_phase == kPaintPhaseMask) {
+    PaintMask(paint_info, paint_offset);
+    return;
+  }
+
+  if (paint_phase != kPaintPhaseSelfOutlineOnly) {
+    PaintInfo paint_info_for_descendants = paint_info.ForDescendants();
+
+    for (LayoutObject* child = layout_table_.FirstChild(); child;
+         child = child->NextSibling()) {
+      if (child->IsBox() && !ToLayoutBox(child)->HasSelfPaintingLayer() &&
+          (child->IsTableSection() || child->IsTableCaption())) {
+        LayoutPoint child_point = layout_table_.FlipForWritingModeForChild(
+            ToLayoutBox(child), paint_offset);
+        child->Paint(paint_info_for_descendants, child_point);
+      }
     }
 
-    if (paintPhase == PaintPhaseMask) {
-        paintMask(paintInfo, paintOffset);
-        return;
-    }
-
-    if (paintPhase != PaintPhaseSelfOutlineOnly) {
-        PaintInfo paintInfoForDescendants = paintInfo.forDescendants();
-
-        for (LayoutObject* child = m_layoutTable.firstChild(); child; child = child->nextSibling()) {
-            if (child->isBox() && !toLayoutBox(child)->hasSelfPaintingLayer() && (child->isTableSection() || child->isTableCaption())) {
-                LayoutPoint childPoint = m_layoutTable.flipForWritingModeForChild(toLayoutBox(child), paintOffset);
-                child->paint(paintInfoForDescendants, childPoint);
-            }
+    if (layout_table_.CollapseBorders() &&
+        ShouldPaintDescendantBlockBackgrounds(paint_phase) &&
+        layout_table_.Style()->Visibility() == EVisibility::kVisible) {
+      // Using our cached sorted styles, we then do individual passes,
+      // painting each style of border from lowest precedence to highest
+      // precedence.
+      LayoutTable::CollapsedBorderValues collapsed_borders =
+          layout_table_.CollapsedBorders();
+      size_t count = collapsed_borders.size();
+      for (size_t i = 0; i < count; ++i) {
+        for (LayoutTableSection* section = layout_table_.BottomSection();
+             section; section = layout_table_.SectionAbove(section)) {
+          LayoutPoint child_point =
+              layout_table_.FlipForWritingModeForChild(section, paint_offset);
+          TableSectionPainter(*section).PaintCollapsedBorders(
+              paint_info_for_descendants, child_point, collapsed_borders[i]);
         }
-
-        if (m_layoutTable.collapseBorders() && shouldPaintDescendantBlockBackgrounds(paintPhase) && m_layoutTable.style()->visibility() == VISIBLE) {
-            // Using our cached sorted styles, we then do individual passes,
-            // painting each style of border from lowest precedence to highest precedence.
-            LayoutTable::CollapsedBorderValues collapsedBorders = m_layoutTable.collapsedBorders();
-            size_t count = collapsedBorders.size();
-            for (size_t i = 0; i < count; ++i) {
-                for (LayoutTableSection* section = m_layoutTable.bottomSection(); section; section = m_layoutTable.sectionAbove(section)) {
-                    LayoutPoint childPoint = m_layoutTable.flipForWritingModeForChild(section, paintOffset);
-                    TableSectionPainter(*section).paintCollapsedBorders(paintInfoForDescendants, childPoint, collapsedBorders[i]);
-                }
-            }
-        }
+      }
     }
+  }
 
-    if (shouldPaintSelfOutline(paintPhase))
-        ObjectPainter(m_layoutTable).paintOutline(paintInfo, paintOffset);
+  if (ShouldPaintSelfOutline(paint_phase))
+    ObjectPainter(layout_table_).PaintOutline(paint_info, paint_offset);
 }
 
-void TablePainter::paintBoxDecorationBackground(const PaintInfo& paintInfo, const LayoutPoint& paintOffset)
-{
-    if (!m_layoutTable.hasBoxDecorationBackground() || m_layoutTable.style()->visibility() != VISIBLE)
-        return;
+void TablePainter::PaintBoxDecorationBackground(
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  if (!layout_table_.HasBoxDecorationBackground() ||
+      layout_table_.Style()->Visibility() != EVisibility::kVisible)
+    return;
 
-    LayoutRect rect(paintOffset, m_layoutTable.size());
-    m_layoutTable.subtractCaptionRect(rect);
-    BoxPainter(m_layoutTable).paintBoxDecorationBackgroundWithRect(paintInfo, paintOffset, rect);
+  LayoutRect rect(paint_offset, layout_table_.Size());
+  layout_table_.SubtractCaptionRect(rect);
+  BoxPainter(layout_table_)
+      .PaintBoxDecorationBackgroundWithRect(paint_info, paint_offset, rect);
 }
 
-void TablePainter::paintMask(const PaintInfo& paintInfo, const LayoutPoint& paintOffset)
-{
-    if (m_layoutTable.style()->visibility() != VISIBLE || paintInfo.phase != PaintPhaseMask)
-        return;
+void TablePainter::PaintMask(const PaintInfo& paint_info,
+                             const LayoutPoint& paint_offset) {
+  if (layout_table_.Style()->Visibility() != EVisibility::kVisible ||
+      paint_info.phase != kPaintPhaseMask)
+    return;
 
-    if (LayoutObjectDrawingRecorder::useCachedDrawingIfPossible(paintInfo.context, m_layoutTable, paintInfo.phase))
-        return;
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+          paint_info.context, layout_table_, paint_info.phase))
+    return;
 
-    LayoutRect rect(paintOffset, m_layoutTable.size());
-    m_layoutTable.subtractCaptionRect(rect);
+  LayoutRect rect(paint_offset, layout_table_.Size());
+  layout_table_.SubtractCaptionRect(rect);
 
-    LayoutObjectDrawingRecorder recorder(paintInfo.context, m_layoutTable, paintInfo.phase, rect);
-    BoxPainter(m_layoutTable).paintMaskImages(paintInfo, rect);
+  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_table_,
+                                       paint_info.phase, rect);
+  BoxPainter(layout_table_).PaintMaskImages(paint_info, rect);
 }
 
-} // namespace blink
+}  // namespace blink

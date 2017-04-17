@@ -13,21 +13,29 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "components/arc/arc_service.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/image/image.h"
+#include "url/gurl.h"
 
 namespace arc {
+namespace internal {
 
 // A class which retrieves an activity icon from ARC.
-class ActivityIconLoader : public base::RefCounted<ActivityIconLoader> {
+class ActivityIconLoader {
  public:
   struct Icons {
-    Icons(const gfx::Image& icon16, const gfx::Image& icon20);
+    Icons(const gfx::Image& icon16, const gfx::Image& icon20,
+          const scoped_refptr<base::RefCountedData<GURL>>& icon16_dataurl);
+    Icons(const Icons& other);
+    ~Icons();
+
     const gfx::Image icon16;  // 16 dip
     const gfx::Image icon20;  // 20 dip
+    const scoped_refptr<base::RefCountedData<GURL>> icon16_dataurl;  // as URL
   };
 
   struct ActivityName {
@@ -62,6 +70,7 @@ class ActivityIconLoader : public base::RefCounted<ActivityIconLoader> {
       base::Callback<void(std::unique_ptr<ActivityToIconsMap>)>;
 
   ActivityIconLoader();
+  ~ActivityIconLoader();
 
   // Removes icons associated with |package_name| from the cache.
   void InvalidateIcons(const std::string& package_name);
@@ -76,8 +85,7 @@ class ActivityIconLoader : public base::RefCounted<ActivityIconLoader> {
 
   void OnIconsResizedForTesting(const OnIconsReadyCallback& cb,
                                 std::unique_ptr<ActivityToIconsMap> result);
-  void AddIconToCacheForTesting(const ActivityName& activity,
-                                const gfx::Image& image);
+  void AddCacheEntryForTesting(const ActivityName& activity);
 
   // Returns true if |result| indicates that the |cb| object passed to
   // GetActivityIcons() has already called.
@@ -86,17 +94,10 @@ class ActivityIconLoader : public base::RefCounted<ActivityIconLoader> {
   const ActivityToIconsMap& cached_icons_for_testing() { return cached_icons_; }
 
  private:
-  friend class base::RefCounted<ActivityIconLoader>;
-  ~ActivityIconLoader();
-
   // A function called when the mojo IPC returns.
   void OnIconsReady(std::unique_ptr<ActivityToIconsMap> cached_result,
                     const OnIconsReadyCallback& cb,
-                    mojo::Array<mojom::ActivityIconPtr> icons);
-
-  // Resize |icons| and returns the results as ActivityToIconsMap.
-  std::unique_ptr<ActivityToIconsMap> ResizeIcons(
-      mojo::Array<mojom::ActivityIconPtr> icons);
+                    std::vector<mojom::ActivityIconPtr> icons);
 
   // A function called when ResizeIcons finishes. Append items in |result| to
   // |cached_icons_|.
@@ -111,9 +112,13 @@ class ActivityIconLoader : public base::RefCounted<ActivityIconLoader> {
 
   base::ThreadChecker thread_checker_;
 
+  // This must come last to make sure weak pointers are invalidated first.
+  base::WeakPtrFactory<ActivityIconLoader> weak_ptr_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(ActivityIconLoader);
 };
 
+}  // namespace internal
 }  // namespace arc
 
 #endif  // COMPONENTS_ARC_INTENT_HELPER_ACTIVITY_ICON_LOADER_H_

@@ -14,38 +14,28 @@
 #include <utility>
 
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/registry.h"
 #include "base/win/windows_version.h"
-#include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/app_registration_data.h"
-#include "chrome/installer/util/channel_info.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/google_update_settings.h"
-#include "chrome/installer/util/helper.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/installer_util_strings.h"
 #include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/uninstall_metrics.h"
 #include "chrome/installer/util/updating_app_registration_data.h"
-#include "chrome/installer/util/util_constants.h"
 #include "chrome/installer/util/wmi.h"
 #include "third_party/crashpad/crashpad/client/crash_report_database.h"
 #include "third_party/crashpad/crashpad/client/settings.h"
 
 namespace {
-
-const wchar_t kChromeGuid[] = L"{8A69D345-D564-463c-AFF1-A69D9E530F96}";
-const wchar_t kBrowserAppId[] = L"Chrome";
-const wchar_t kBrowserProgIdPrefix[] = L"ChromeHTML";
-const wchar_t kBrowserProgIdDesc[] = L"Chrome HTML Document";
-const wchar_t kCommandExecuteImplUuid[] =
-    L"{5C65F4B0-3651-4514-B207-D10CB699B14B}";
 
 // Substitute the locale parameter in uninstall URL with whatever
 // Google Update tells us is the locale. In case we fail to find
@@ -54,7 +44,7 @@ base::string16 LocalizeUrl(const wchar_t* url) {
   base::string16 language;
   if (!GoogleUpdateSettings::GetLanguage(&language))
     language = L"en-US";  // Default to US English.
-  return base::ReplaceStringPlaceholders(url, language.c_str(), NULL);
+  return base::ReplaceStringPlaceholders(url, language, NULL);
 }
 
 base::string16 GetUninstallSurveyUrl() {
@@ -97,16 +87,11 @@ void NavigateToUrlWithIExplore(const base::string16& url) {
 }  // namespace
 
 GoogleChromeDistribution::GoogleChromeDistribution()
-    : BrowserDistribution(CHROME_BROWSER,
-                          std::unique_ptr<AppRegistrationData>(
-                              new UpdatingAppRegistrationData(kChromeGuid))) {}
-
-GoogleChromeDistribution::GoogleChromeDistribution(
-    std::unique_ptr<AppRegistrationData> app_reg_data)
-    : BrowserDistribution(CHROME_BROWSER, std::move(app_reg_data)) {}
+    : BrowserDistribution(base::MakeUnique<UpdatingAppRegistrationData>(
+          install_static::GetAppGuid())) {}
 
 void GoogleChromeDistribution::DoPostUninstallOperations(
-    const Version& version,
+    const base::Version& version,
     const base::FilePath& local_data_path,
     const base::string16& distribution_data) {
   // Send the Chrome version and OS version as params to the form.
@@ -148,44 +133,6 @@ void GoogleChromeDistribution::DoPostUninstallOperations(
   NavigateToUrlWithIExplore(url);
 }
 
-base::string16 GoogleChromeDistribution::GetActiveSetupGuid() {
-  return GetAppGuid();
-}
-
-base::string16 GoogleChromeDistribution::GetBaseAppName() {
-  // I'd really like to return L ## PRODUCT_FULLNAME_STRING; but that's no good
-  // since it'd be "Chromium" in a non-Chrome build, which isn't at all what I
-  // want.  Sigh.
-  return L"Google Chrome";
-}
-
-base::string16 GoogleChromeDistribution::GetShortcutName() {
-  return installer::GetLocalizedString(IDS_PRODUCT_NAME_BASE);
-}
-
-int GoogleChromeDistribution::GetIconIndex() {
-  return icon_resources::kApplicationIndex;
-}
-
-base::string16 GoogleChromeDistribution::GetBaseAppId() {
-  return kBrowserAppId;
-}
-
-base::string16 GoogleChromeDistribution::GetBrowserProgIdPrefix() {
-  return kBrowserProgIdPrefix;
-}
-
-base::string16 GoogleChromeDistribution::GetBrowserProgIdDesc() {
-  return kBrowserProgIdDesc;
-}
-
-base::string16 GoogleChromeDistribution::GetInstallSubDir() {
-  base::string16 sub_dir(installer::kGoogleChromeInstallSubDir1);
-  sub_dir.append(L"\\");
-  sub_dir.append(installer::kGoogleChromeInstallSubDir2);
-  return sub_dir;
-}
-
 base::string16 GoogleChromeDistribution::GetPublisherName() {
   const base::string16& publisher_name =
       installer::GetLocalizedString(IDS_ABOUT_VERSION_COMPANY_NAME_BASE);
@@ -205,7 +152,7 @@ std::string GoogleChromeDistribution::GetSafeBrowsingName() {
 base::string16 GoogleChromeDistribution::GetDistributionData(HKEY root_key) {
   base::string16 sub_key(google_update::kRegPathClientState);
   sub_key.append(L"\\");
-  sub_key.append(GetAppGuid());
+  sub_key.append(install_static::GetAppGuid());
 
   base::win::RegKey client_state_key(
       root_key, sub_key.c_str(), KEY_READ | KEY_WOW64_32KEY);
@@ -237,9 +184,17 @@ base::string16 GoogleChromeDistribution::GetDistributionData(HKEY root_key) {
   result.append(ap_value);
 
   // Crash client id.
-  base::string16 crash_dump_location;
-  if (install_static::GetDefaultCrashDumpLocation(&crash_dump_location)) {
-    base::FilePath crash_dir = base::FilePath(crash_dump_location);
+  // While it would be convenient to use the path service to get
+  // chrome::DIR_CRASH_DUMPS, that points to the dump location for the installer
+  // rather than for the browser. For per-user installs they are the same, yet
+  // for system-level installs the installer uses the system temp directory (see
+  // setup/installer_crash_reporting.cc's ConfigureCrashReporting).
+  // TODO(grt): use install_static::GetDefaultCrashDumpLocation (with an option
+  // to suppress creating the directory) once setup.exe uses
+  // install_static::InstallDetails.
+  base::FilePath crash_dir;
+  if (chrome::GetDefaultUserDataDirectory(&crash_dir)) {
+    crash_dir = crash_dir.Append(FILE_PATH_LITERAL("Crashpad"));
     crashpad::UUID client_id;
     std::unique_ptr<crashpad::CrashReportDatabase> database(
         crashpad::CrashReportDatabase::InitializeWithoutCreating(crash_dir));
@@ -248,19 +203,6 @@ base::string16 GoogleChromeDistribution::GetDistributionData(HKEY root_key) {
   }
 
   return result;
-}
-
-base::string16 GoogleChromeDistribution::GetUninstallRegPath() {
-  return L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"
-         L"Google Chrome";
-}
-
-base::string16 GoogleChromeDistribution::GetIconFilename() {
-  return installer::kChromeExe;
-}
-
-base::string16 GoogleChromeDistribution::GetCommandExecuteImplClsid() {
-  return kCommandExecuteImplUuid;
 }
 
 // This method checks if we need to change "ap" key in Google Update to try
@@ -274,15 +216,8 @@ base::string16 GoogleChromeDistribution::GetCommandExecuteImplClsid() {
 void GoogleChromeDistribution::UpdateInstallStatus(bool system_install,
     installer::ArchiveType archive_type,
     installer::InstallStatus install_status) {
-  GoogleUpdateSettings::UpdateInstallStatus(system_install,
-      archive_type, InstallUtil::GetInstallReturnCode(install_status),
-      GetAppGuid());
-}
-
-bool GoogleChromeDistribution::ShouldSetExperimentLabels() {
-  return true;
-}
-
-bool GoogleChromeDistribution::HasUserExperiments() {
-  return true;
+  GoogleUpdateSettings::UpdateInstallStatus(
+      system_install, archive_type,
+      InstallUtil::GetInstallReturnCode(install_status),
+      install_static::GetAppGuid());
 }

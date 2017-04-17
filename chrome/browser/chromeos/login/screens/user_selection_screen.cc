@@ -6,14 +6,19 @@
 
 #include <stddef.h>
 
+#include <utility>
+
+#include "base/bind.h"
+#include "base/callback.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage.h"
-#include "chrome/browser/chromeos/login/quick_unlock/pin_storage_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"
 #include "chrome/browser/chromeos/login/reauth_stats.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/ui/views/user_board_view.h"
@@ -24,12 +29,18 @@
 #include "chrome/browser/signin/easy_unlock_service.h"
 #include "chrome/browser/ui/webui/chromeos/login/l10n_util.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
+#include "chrome/grit/generated_resources.h"
+#include "chromeos/cryptohome/cryptohome_parameters.h"
+#include "chromeos/dbus/cryptohome_client.h"
+#include "chromeos/dbus/dbus_method_call_status.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "components/prefs/pref_service.h"
 #include "components/proximity_auth/screenlock_bridge.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_type.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/user_activity/user_activity_detector.h"
 
 namespace chromeos {
@@ -46,10 +57,10 @@ const char kKeyPublicAccount[] = "publicAccount";
 const char kKeyLegacySupervisedUser[] = "legacySupervisedUser";
 const char kKeyChildUser[] = "childUser";
 const char kKeyDesktopUser[] = "isDesktopUser";
-const char kKeyShowPin[] = "showPin";
 const char kKeySignedIn[] = "signedIn";
 const char kKeyCanRemove[] = "canRemove";
 const char kKeyIsOwner[] = "isOwner";
+const char kKeyIsActiveDirectory[] = "isActiveDirectory";
 const char kKeyInitialAuthType[] = "initialAuthType";
 const char kKeyMultiProfilesAllowed[] = "isMultiProfilesAllowed";
 const char kKeyMultiProfilesPolicy[] = "multiProfilesPolicy";
@@ -58,6 +69,7 @@ const char kKeyInitialLocale[] = "initialLocale";
 const char kKeyInitialMultipleRecommendedLocales[] =
     "initialMultipleRecommendedLocales";
 const char kKeyInitialKeyboardLayout[] = "initialKeyboardLayout";
+const char kKeyAllowFingerprint[] = "allowFingerprint";
 
 // Max number of users to show.
 // Please keep synced with one in signin_userlist_unittest.cc.
@@ -71,7 +83,7 @@ void AddPublicSessionDetailsToUserDictionaryEntry(
   policy::BrowserPolicyConnectorChromeOS* policy_connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
 
-  if (policy_connector->IsEnterpriseManaged()) {
+  if (policy_connector->IsCloudManaged()) {
     user_dict->SetString(kKeyEnterpriseDomain,
                          policy_connector->GetEnterpriseDomain());
   }
@@ -94,7 +106,7 @@ void AddPublicSessionDetailsToUserDictionaryEntry(
       g_browser_process->GetApplicationLocale());
 
   // Set |kKeyInitialLocales| to the list of available locales.
-  user_dict->Set(kKeyInitialLocales, available_locales.release());
+  user_dict->Set(kKeyInitialLocales, std::move(available_locales));
 
   // Set |kKeyInitialLocale| to the initially selected locale.
   user_dict->SetString(kKeyInitialLocale, selected_locale);
@@ -110,31 +122,110 @@ void AddPublicSessionDetailsToUserDictionaryEntry(
   // Set |kKeyInitialKeyboardLayout| to the current keyboard layout. This
   // value will be used temporarily only because the UI immediately requests a
   // list of keyboard layouts suitable for the currently selected locale.
-  user_dict->Set(kKeyInitialKeyboardLayout,
-                 GetCurrentKeyboardLayout().release());
+  user_dict->Set(kKeyInitialKeyboardLayout, GetCurrentKeyboardLayout());
 }
 
-// Returns true if the PIN keyboard should be displayed for the given |user|.
-bool CanShowPinForUser(user_manager::User* user) {
+// Returns true if the fingerprint icon should be displayed for the given
+// |user|.
+bool AllowFingerprintForUser(user_manager::User* user) {
   if (!user->is_logged_in())
     return false;
 
-  PinStorage* pin_storage = PinStorageFactory::GetForUser(user);
-  if (!pin_storage)
+  quick_unlock::QuickUnlockStorage* quick_unlock_storage =
+      quick_unlock::QuickUnlockFactory::GetForUser(user);
+  if (!quick_unlock_storage)
     return false;
 
-  return pin_storage->IsPinAuthenticationAvailable();
+  return quick_unlock_storage->IsFingerprintAuthenticationAvailable();
 }
 
 }  // namespace
 
+// Helper class to call cryptohome to check whether a user needs dircrypto
+// migration. The check results are cached to limit calls to cryptohome.
+class UserSelectionScreen::DircryptoMigrationChecker {
+ public:
+  explicit DircryptoMigrationChecker(UserSelectionScreen* owner)
+      : owner_(owner), weak_ptr_factory_(this) {}
+  ~DircryptoMigrationChecker() = default;
+
+  // Start to check whether the given user needs dircrypto migration.
+  void Check(const AccountId& account_id) {
+    focused_user_ = account_id;
+
+    auto it = needs_dircrypto_migration_cache_.find(account_id);
+    if (it != needs_dircrypto_migration_cache_.end()) {
+      UpdateUI(account_id, it->second);
+      return;
+    }
+
+    DBusThreadManager::Get()
+        ->GetCryptohomeClient()
+        ->WaitForServiceToBeAvailable(
+            base::Bind(&DircryptoMigrationChecker::RunCryptohomeCheck,
+                       weak_ptr_factory_.GetWeakPtr(), account_id));
+  }
+
+ private:
+  // WaitForServiceToBeAvailable callback to invoke NeedsDircryptoMigration when
+  // cryptohome service is available.
+  void RunCryptohomeCheck(const AccountId& account_id, bool service_is_ready) {
+    if (!service_is_ready) {
+      LOG(ERROR) << "Cryptohome is not available.";
+      return;
+    }
+
+    const cryptohome::Identification cryptohome_id(account_id);
+    DBusThreadManager::Get()->GetCryptohomeClient()->NeedsDircryptoMigration(
+        cryptohome_id,
+        base::Bind(&DircryptoMigrationChecker::
+                       OnCryptohomeNeedsDircryptoMigrationCallback,
+                   weak_ptr_factory_.GetWeakPtr(), account_id));
+  }
+
+  // Callback invoked when NeedsDircryptoMigration call is finished.
+  void OnCryptohomeNeedsDircryptoMigrationCallback(
+      const AccountId& account_id,
+      DBusMethodCallStatus call_status,
+      bool needs_migration) {
+    if (call_status != DBUS_METHOD_CALL_SUCCESS) {
+      LOG(ERROR) << "Failed to call cryptohome NeedsDircryptoMigration.";
+      return;
+    }
+
+    needs_dircrypto_migration_cache_[account_id] = needs_migration;
+    UpdateUI(account_id, needs_migration);
+  }
+
+  // Update UI for the given user when the check result is available.
+  void UpdateUI(const AccountId& account_id, bool needs_migration) {
+    // Bail if the user is not the currently focused.
+    if (account_id != focused_user_)
+      return;
+
+    owner_->ShowBannerMessage(
+        needs_migration ? l10n_util::GetStringUTF16(
+                              IDS_LOGIN_NEEDS_DIRCRYPTO_MIGRATION_BANNER)
+                        : base::string16());
+  }
+
+  UserSelectionScreen* const owner_;
+  AccountId focused_user_ = EmptyAccountId();
+
+  // Cached result of NeedsDircryptoMigration cryptohome check. Key is the
+  // account id of users. True value means the user needs dircrypto migration
+  // and false means dircrypto migration is done.
+  std::map<AccountId, bool> needs_dircrypto_migration_cache_;
+
+  base::WeakPtrFactory<DircryptoMigrationChecker> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(DircryptoMigrationChecker);
+};
+
 UserSelectionScreen::UserSelectionScreen(const std::string& display_type)
-    : handler_(nullptr),
-      login_display_delegate_(nullptr),
-      view_(nullptr),
+    : BaseScreen(nullptr, OobeScreen::SCREEN_USER_SELECTION),
       display_type_(display_type),
-      weak_factory_(this) {
-}
+      weak_factory_(this) {}
 
 UserSelectionScreen::~UserSelectionScreen() {
   proximity_auth::ScreenlockBridge::Get()->SetLockHandler(nullptr);
@@ -174,9 +265,10 @@ void UserSelectionScreen::FillUserDictionary(
   user_dict->SetBoolean(kKeyChildUser, is_child_user);
   user_dict->SetBoolean(kKeyDesktopUser, false);
   user_dict->SetInteger(kKeyInitialAuthType, auth_type);
-  user_dict->SetBoolean(kKeyShowPin, CanShowPinForUser(user));
   user_dict->SetBoolean(kKeySignedIn, user->is_logged_in());
   user_dict->SetBoolean(kKeyIsOwner, is_owner);
+  user_dict->SetBoolean(kKeyIsActiveDirectory, user->IsActiveDirectoryUser());
+  user_dict->SetBoolean(kKeyAllowFingerprint, AllowFingerprintForUser(user));
 
   FillMultiProfileUserPrefs(user, user_dict, is_signin_to_add);
   FillKnownUserPrefs(user, user_dict);
@@ -201,7 +293,7 @@ void UserSelectionScreen::FillMultiProfileUserPrefs(
     user_manager::User* user,
     base::DictionaryValue* user_dict,
     bool is_signin_to_add) {
-  const std::string& user_id = user->email();
+  const std::string& user_id = user->GetAccountId().GetUserEmail();
 
   if (is_signin_to_add) {
     MultiProfileUserController* multi_profile_user_controller =
@@ -229,13 +321,10 @@ void UserSelectionScreen::FillMultiProfileUserPrefs(
 bool UserSelectionScreen::ShouldForceOnlineSignIn(
     const user_manager::User* user) {
   // Public sessions are always allowed to log in offline.
-  // Supervised user are allowed to log in offline if their OAuth token status
-  // is unknown or valid.
+  // Supervised users are always allowed to log in offline.
   // For all other users, force online sign in if:
   // * The flag to force online sign-in is set for the user.
-  // * The user's OAuth token is invalid.
-  // * The user's OAuth token status is unknown (except supervised users,
-  //   see above).
+  // * The user's OAuth token is invalid or unknown.
   if (user->is_logged_in())
     return false;
 
@@ -246,26 +335,39 @@ bool UserSelectionScreen::ShouldForceOnlineSignIn(
   const bool is_public_session =
       user->GetType() == user_manager::USER_TYPE_PUBLIC_ACCOUNT;
 
-  if (is_supervised_user &&
-      token_status == user_manager::User::OAUTH_TOKEN_STATUS_UNKNOWN) {
+  if (is_supervised_user)
     return false;
-  }
 
   if (is_public_session)
     return false;
+
+  if (user->GetType() == user_manager::USER_TYPE_ACTIVE_DIRECTORY) {
+    return true;
+  }
 
   // At this point the reason for invalid token should be already set. If not,
   // this might be a leftover from an old version.
   if (token_status == user_manager::User::OAUTH2_TOKEN_STATUS_INVALID)
     RecordReauthReason(user->GetAccountId(), ReauthReason::OTHER);
 
-  return user->force_online_signin() ||
+  // We need to force an online signin if the user is marked as requiring it,
+  // or if the user's session never completed initialization (still need to
+  // check for policy/management state) or if there's an invalid OAUTH token
+  // that needs to be refreshed.
+  return user->force_online_signin() || !user->profile_ever_initialized() ||
          (token_status == user_manager::User::OAUTH2_TOKEN_STATUS_INVALID) ||
          (token_status == user_manager::User::OAUTH_TOKEN_STATUS_UNKNOWN);
 }
 
 void UserSelectionScreen::SetHandler(LoginDisplayWebUIHandler* handler) {
   handler_ = handler;
+
+  if (handler_) {
+    // Forcibly refresh all of the user images, as the |handler_| instance may
+    // have been reused.
+    for (user_manager::User* user : users_)
+      handler_->OnUserImageChanged(*user);
+  }
 }
 
 void UserSelectionScreen::SetView(UserBoardView* view) {
@@ -367,8 +469,8 @@ void UserSelectionScreen::SendUserList() {
   std::string owner_email;
   chromeos::CrosSettings::Get()->GetString(chromeos::kDeviceOwner,
                                            &owner_email);
-  const AccountId owner =
-      user_manager::known_user::GetAccountId(owner_email, std::string());
+  const AccountId owner = user_manager::known_user::GetAccountId(
+      owner_email, std::string() /* id */, AccountType::UNKNOWN);
 
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
@@ -393,18 +495,14 @@ void UserSelectionScreen::SendUserList() {
                                                           : OFFLINE_PASSWORD);
     user_auth_type_map_[account_id] = initial_auth_type;
 
-    base::DictionaryValue* user_dict = new base::DictionaryValue();
+    auto user_dict = base::MakeUnique<base::DictionaryValue>();
     const std::vector<std::string>* public_session_recommended_locales =
         public_session_recommended_locales_.find(account_id) ==
                 public_session_recommended_locales_.end()
             ? &kEmptyRecommendedLocales
             : &public_session_recommended_locales_[account_id];
-    FillUserDictionary(*it,
-                       is_owner,
-                       is_signin_to_add,
-                       initial_auth_type,
-                       public_session_recommended_locales,
-                       user_dict);
+    FillUserDictionary(*it, is_owner, is_signin_to_add, initial_auth_type,
+                       public_session_recommended_locales, user_dict.get());
     bool signed_in = (*it)->is_logged_in();
 
     // Single user check here is necessary because owner info might not be
@@ -414,7 +512,7 @@ void UserSelectionScreen::SendUserList() {
         ((!single_user || is_enterprise_managed) && account_id.is_valid() &&
          !is_owner && !is_public_account && !signed_in && !is_signin_to_add);
     user_dict->SetBoolean(kKeyCanRemove, can_remove_user);
-    users_list.Append(user_dict);
+    users_list.Append(std::move(user_dict));
   }
 
   handler_->LoadUsers(users_list, show_guest_);
@@ -437,6 +535,15 @@ void UserSelectionScreen::CheckUserStatus(const AccountId& account_id) {
     token_handle_util_->CheckToken(
         account_id, base::Bind(&UserSelectionScreen::OnUserStatusChecked,
                                weak_factory_.GetWeakPtr()));
+  }
+
+  // Run dircrypto migration check only on the login screen.
+  if (display_type_ == OobeUI::kLoginDisplay) {
+    if (!dircrypto_migration_checker_) {
+      dircrypto_migration_checker_ =
+          base::MakeUnique<DircryptoMigrationChecker>(this);
+    }
+    dircrypto_migration_checker_->Check(account_id);
   }
 }
 
@@ -525,6 +632,10 @@ void UserSelectionScreen::AttemptEasySignin(const AccountId& account_id,
 
   login_display_delegate_->Login(user_context, SigninSpecifics());
 }
+
+void UserSelectionScreen::Show() {}
+
+void UserSelectionScreen::Hide() {}
 
 void UserSelectionScreen::HardLockPod(const AccountId& account_id) {
   view_->SetAuthType(account_id, OFFLINE_PASSWORD, base::string16());

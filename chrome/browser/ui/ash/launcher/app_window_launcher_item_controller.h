@@ -8,9 +8,9 @@
 #include <list>
 #include <string>
 
+#include "ash/public/cpp/shelf_item_delegate.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
-#include "chrome/browser/ui/ash/launcher/launcher_item_controller.h"
 #include "ui/aura/window_observer.h"
 
 namespace aura {
@@ -21,15 +21,13 @@ namespace ui {
 class BaseWindow;
 }
 
-class ChromeLauncherController;
-
-// This is a LauncherItemController for abstract app windows. There is one
-// instance per app, per launcher id. For apps with multiple windows, each item
-// controller keeps track of all windows associated with the app and their
-// activation order. Instances are owned by ash::ShelfModel.
+// This is a ShelfItemDelegate for abstract app windows (extension or ARC).
+// There is one instance per app, per launcher id. For apps with multiple
+// windows, each item controller keeps track of all windows associated with the
+// app and their activation order. Instances are owned by ash::ShelfModel.
 //
 // Tests are in chrome_launcher_controller_impl_browsertest.cc
-class AppWindowLauncherItemController : public LauncherItemController,
+class AppWindowLauncherItemController : public ash::ShelfItemDelegate,
                                         public aura::WindowObserver {
  public:
   using WindowList = std::list<ui::BaseWindow*>;
@@ -42,21 +40,13 @@ class AppWindowLauncherItemController : public LauncherItemController,
   void SetActiveWindow(aura::Window* window);
   ui::BaseWindow* GetAppWindow(aura::Window* window);
 
-  const std::string& app_shelf_id() const { return app_shelf_id_; }
-
-  // LauncherItemController overrides:
-  bool IsOpen() const override;
-  bool IsVisible() const override;
-  void Launch(ash::LaunchSource source, int event_flags) override;
-  ash::ShelfItemDelegate::PerformedAction Activate(
-      ash::LaunchSource source) override;
-  ChromeLauncherAppMenuItems GetApplicationList(int event_flags) override;
-  ash::ShelfItemDelegate::PerformedAction ItemSelected(
-      const ui::Event& eent) override;
-  base::string16 GetTitle() override;
-  bool IsDraggable() override;
-  bool CanPin() const override;
-  bool ShouldShowTooltip() override;
+  // ash::ShelfItemDelegate overrides:
+  AppWindowLauncherItemController* AsAppWindowLauncherItemController() override;
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ash::ShelfLaunchSource source,
+                    const ItemSelectedCallback& callback) override;
+  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
   void Close() override;
 
   // aura::WindowObserver overrides:
@@ -73,24 +63,21 @@ class AppWindowLauncherItemController : public LauncherItemController,
   const WindowList& windows() const { return windows_; }
 
  protected:
-  AppWindowLauncherItemController(Type type,
-                                  const std::string& app_shelf_id,
-                                  const std::string& app_id,
-                                  ChromeLauncherController* controller);
+  explicit AppWindowLauncherItemController(
+      const ash::AppLaunchId& app_launch_id);
 
   // Called when app window is removed from controller.
   virtual void OnWindowRemoved(ui::BaseWindow* window) {}
 
-  // Returns the action performed. Should be one of kNoAction,
-  // kExistingWindowActivated, or kExistingWindowMinimized.
-  ash::ShelfItemDelegate::PerformedAction ShowAndActivateOrMinimize(
-      ui::BaseWindow* window);
+  // Returns the action performed. Should be one of SHELF_ACTION_NONE,
+  // SHELF_ACTION_WINDOW_ACTIVATED, or SHELF_ACTION_WINDOW_MINIMIZED.
+  ash::ShelfAction ShowAndActivateOrMinimize(ui::BaseWindow* window);
 
   // Activate the given |window_to_show|, or - if already selected - advance to
   // the next window of similar type.
-  // Returns the action performed. Should be one of kNoAction,
-  // kExistingWindowActivated, or kExistingWindowMinimized.
-  ash::ShelfItemDelegate::PerformedAction ActivateOrAdvanceToNextAppWindow(
+  // Returns the action performed. Should be one of SHELF_ACTION_NONE,
+  // SHELF_ACTION_WINDOW_ACTIVATED, or SHELF_ACTION_WINDOW_MINIMIZED.
+  ash::ShelfAction ActivateOrAdvanceToNextAppWindow(
       ui::BaseWindow* window_to_show);
 
  private:
@@ -101,10 +88,6 @@ class AppWindowLauncherItemController : public LauncherItemController,
 
   // Pointer to the most recently active app window
   ui::BaseWindow* last_active_window_ = nullptr;
-
-  // The launcher id associated with this set of windows. There is one
-  // AppLauncherItemController for each |app_shelf_id_|.
-  const std::string app_shelf_id_;
 
   // Scoped list of observed windows (for removal on destruction)
   ScopedObserver<aura::Window, aura::WindowObserver> observed_windows_;

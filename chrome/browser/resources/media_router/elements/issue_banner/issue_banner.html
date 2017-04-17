@@ -2,7 +2,7 @@
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
 <link rel="import" href="../../icons/media_router_icons.html">
-<dom-module name="issue-banner">
+<dom-module id="issue-banner">
   <link rel="import" type="css" href="../../media_router_common.css">
   <link rel="import" type="css" href="issue_banner.css">
   <template>
@@ -12,7 +12,7 @@
           <iron-icon icon="media-router:error-outline" id="blocking-icon">
           </iron-icon>
         </div>
-        <div id="title">[[issue.title]]</div>
+        <div id="title" aria-live="polite" tabindex="0">[[issue.title]]</div>
       </div>
       <div id="buttons">
         <paper-button flat id="opt-button" class="button"

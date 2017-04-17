@@ -8,27 +8,25 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "cc/blink/cc_blink_export.h"
-#include "cc/playback/display_item_list.h"
+#include "cc/paint/display_item_list.h"
+#include "cc/paint/paint_record.h"
 #include "third_party/WebKit/public/platform/WebDisplayItemList.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
-#include "third_party/skia/include/core/SkRegion.h"
-#include "third_party/skia/include/core/SkXfermode.h"
+#include "third_party/skia/include/core/SkBlendMode.h"
 #include "ui/gfx/geometry/point_f.h"
 
 class SkColorFilter;
-class SkImageFilter;
 class SkMatrix44;
 class SkPath;
-class SkPicture;
 class SkRRect;
 
 namespace blink {
 struct WebFloatRect;
+struct WebFloatPoint;
 struct WebRect;
 }
 
 namespace cc {
-class DisplayItemListSettings;
 class FilterOperations;
 }
 
@@ -42,40 +40,32 @@ class WebDisplayItemListImpl : public blink::WebDisplayItemList {
   ~WebDisplayItemListImpl() override;
 
   // blink::WebDisplayItemList implementation.
-  void appendDrawingItem(const blink::WebRect&,
-                         sk_sp<const SkPicture>) override;
-  void appendClipItem(
-      const blink::WebRect& visual_rect,
+  void AppendDrawingItem(const blink::WebRect& visual_rect,
+                         sk_sp<const cc::PaintRecord> record) override;
+  void AppendClipItem(
       const blink::WebRect& clip_rect,
       const blink::WebVector<SkRRect>& rounded_clip_rects) override;
-  void appendEndClipItem(const blink::WebRect& visual_rect) override;
-  void appendClipPathItem(const blink::WebRect& visual_rect,
-                          const SkPath& clip_path,
-                          SkRegion::Op clip_op,
-                          bool antialias) override;
-  void appendEndClipPathItem(const blink::WebRect& visual_rect) override;
-  void appendFloatClipItem(const blink::WebRect& visual_rect,
-                           const blink::WebFloatRect& clip_rect) override;
-  void appendEndFloatClipItem(const blink::WebRect& visual_rect) override;
-  void appendTransformItem(const blink::WebRect& visual_rect,
-                           const SkMatrix44& matrix) override;
-  void appendEndTransformItem(const blink::WebRect& visual_rect) override;
-  void appendCompositingItem(const blink::WebRect& visual_rect,
-                             float opacity,
-                             SkXfermode::Mode,
+  void AppendEndClipItem() override;
+  void AppendClipPathItem(const SkPath& clip_path, bool antialias) override;
+  void AppendEndClipPathItem() override;
+  void AppendFloatClipItem(const blink::WebFloatRect& clip_rect) override;
+  void AppendEndFloatClipItem() override;
+  void AppendTransformItem(const SkMatrix44& matrix) override;
+  void AppendEndTransformItem() override;
+  void AppendCompositingItem(float opacity,
+                             SkBlendMode,
                              SkRect* bounds,
                              SkColorFilter*) override;
-  void appendEndCompositingItem(const blink::WebRect& visual_rect) override;
-  void appendFilterItem(const blink::WebRect& visual_rect,
-                        const cc::FilterOperations& filters,
-                        const blink::WebFloatRect& bounds) override;
-  void appendEndFilterItem(const blink::WebRect& visual_rect) override;
-  void appendScrollItem(const blink::WebRect& visual_rect,
-                        const blink::WebSize& scrollOffset,
+  void AppendEndCompositingItem() override;
+  void AppendFilterItem(const cc::FilterOperations& filters,
+                        const blink::WebFloatRect& filter_bounds,
+                        const blink::WebFloatPoint& origin) override;
+  void AppendEndFilterItem() override;
+  void AppendScrollItem(const blink::WebSize& scrollOffset,
                         ScrollContainerId) override;
-  void appendEndScrollItem(const blink::WebRect& visual_rect) override;
+  void AppendEndScrollItem() override;
 
-  void setIsSuitableForGpuRasterization(bool isSuitable) override;
+  void SetIsSuitableForGpuRasterization(bool isSuitable) override;
 
  private:
   scoped_refptr<cc::DisplayItemList> display_item_list_;

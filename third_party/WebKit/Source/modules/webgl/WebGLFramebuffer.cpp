@@ -34,403 +34,523 @@ namespace blink {
 
 namespace {
 
-class WebGLRenderbufferAttachment final : public WebGLFramebuffer::WebGLAttachment {
-public:
-    static WebGLFramebuffer::WebGLAttachment* create(WebGLRenderbuffer*);
+class WebGLRenderbufferAttachment final
+    : public WebGLFramebuffer::WebGLAttachment {
+ public:
+  static WebGLFramebuffer::WebGLAttachment* Create(WebGLRenderbuffer*);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(renderbuffer_);
+  }
 
-private:
-    explicit WebGLRenderbufferAttachment(WebGLRenderbuffer*);
-    WebGLRenderbufferAttachment() { }
+ private:
+  explicit WebGLRenderbufferAttachment(WebGLRenderbuffer*);
 
-    WebGLSharedObject* object() const override;
-    bool isSharedObject(WebGLSharedObject*) const override;
-    bool valid() const override;
-    void onDetached(gpu::gles2::GLES2Interface*) override;
-    void attach(gpu::gles2::GLES2Interface*, GLenum target, GLenum attachment) override;
-    void unattach(gpu::gles2::GLES2Interface*, GLenum target, GLenum attachment) override;
+  WebGLSharedObject* Object() const override;
+  bool IsSharedObject(WebGLSharedObject*) const override;
+  bool Valid() const override;
+  void OnDetached(gpu::gles2::GLES2Interface*) override;
+  void Attach(gpu::gles2::GLES2Interface*,
+              GLenum target,
+              GLenum attachment) override;
+  void Unattach(gpu::gles2::GLES2Interface*,
+                GLenum target,
+                GLenum attachment) override;
 
-    Member<WebGLRenderbuffer> m_renderbuffer;
+  TraceWrapperMember<WebGLRenderbuffer> renderbuffer_;
 };
 
-WebGLFramebuffer::WebGLAttachment* WebGLRenderbufferAttachment::create(WebGLRenderbuffer* renderbuffer)
-{
-    return new WebGLRenderbufferAttachment(renderbuffer);
+WebGLFramebuffer::WebGLAttachment* WebGLRenderbufferAttachment::Create(
+    WebGLRenderbuffer* renderbuffer) {
+  return new WebGLRenderbufferAttachment(renderbuffer);
 }
 
-DEFINE_TRACE(WebGLRenderbufferAttachment)
-{
-    visitor->trace(m_renderbuffer);
-    WebGLFramebuffer::WebGLAttachment::trace(visitor);
+DEFINE_TRACE(WebGLRenderbufferAttachment) {
+  visitor->Trace(renderbuffer_);
+  WebGLFramebuffer::WebGLAttachment::Trace(visitor);
 }
 
-WebGLRenderbufferAttachment::WebGLRenderbufferAttachment(WebGLRenderbuffer* renderbuffer)
-    : m_renderbuffer(renderbuffer)
-{
+WebGLRenderbufferAttachment::WebGLRenderbufferAttachment(
+    WebGLRenderbuffer* renderbuffer)
+    : renderbuffer_(this, renderbuffer) {}
+
+WebGLSharedObject* WebGLRenderbufferAttachment::Object() const {
+  return renderbuffer_->Object() ? renderbuffer_.Get() : 0;
 }
 
-WebGLSharedObject* WebGLRenderbufferAttachment::object() const
-{
-    return m_renderbuffer->object() ? m_renderbuffer.get() : 0;
+bool WebGLRenderbufferAttachment::IsSharedObject(
+    WebGLSharedObject* object) const {
+  return object == renderbuffer_;
 }
 
-bool WebGLRenderbufferAttachment::isSharedObject(WebGLSharedObject* object) const
-{
-    return object == m_renderbuffer;
+bool WebGLRenderbufferAttachment::Valid() const {
+  return renderbuffer_->Object();
 }
 
-bool WebGLRenderbufferAttachment::valid() const
-{
-    return m_renderbuffer->object();
+void WebGLRenderbufferAttachment::OnDetached(gpu::gles2::GLES2Interface* gl) {
+  renderbuffer_->OnDetached(gl);
 }
 
-void WebGLRenderbufferAttachment::onDetached(gpu::gles2::GLES2Interface* gl)
-{
-    m_renderbuffer->onDetached(gl);
+void WebGLRenderbufferAttachment::Attach(gpu::gles2::GLES2Interface* gl,
+                                         GLenum target,
+                                         GLenum attachment) {
+  GLuint object = ObjectOrZero(renderbuffer_.Get());
+  gl->FramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, object);
 }
 
-void WebGLRenderbufferAttachment::attach(gpu::gles2::GLES2Interface* gl, GLenum target, GLenum attachment)
-{
-    GLuint object = objectOrZero(m_renderbuffer.get());
-    gl->FramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, object);
-}
-
-void WebGLRenderbufferAttachment::unattach(gpu::gles2::GLES2Interface* gl, GLenum target, GLenum attachment)
-{
-    gl->FramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, 0);
+void WebGLRenderbufferAttachment::Unattach(gpu::gles2::GLES2Interface* gl,
+                                           GLenum target,
+                                           GLenum attachment) {
+  gl->FramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, 0);
 }
 
 class WebGLTextureAttachment final : public WebGLFramebuffer::WebGLAttachment {
-public:
-    static WebGLFramebuffer::WebGLAttachment* create(WebGLTexture*, GLenum target, GLint level, GLint layer);
+ public:
+  static WebGLFramebuffer::WebGLAttachment* Create(WebGLTexture*,
+                                                   GLenum target,
+                                                   GLint level,
+                                                   GLint layer);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() { visitor->TraceWrappers(texture_); }
 
-private:
-    WebGLTextureAttachment(WebGLTexture*, GLenum target, GLint level, GLint layer);
-    WebGLTextureAttachment() { }
+ private:
+  WebGLTextureAttachment(WebGLTexture*,
+                         GLenum target,
+                         GLint level,
+                         GLint layer);
 
-    WebGLSharedObject* object() const override;
-    bool isSharedObject(WebGLSharedObject*) const override;
-    bool valid() const override;
-    void onDetached(gpu::gles2::GLES2Interface*) override;
-    void attach(gpu::gles2::GLES2Interface*, GLenum target, GLenum attachment) override;
-    void unattach(gpu::gles2::GLES2Interface*, GLenum target, GLenum attachment) override;
+  WebGLSharedObject* Object() const override;
+  bool IsSharedObject(WebGLSharedObject*) const override;
+  bool Valid() const override;
+  void OnDetached(gpu::gles2::GLES2Interface*) override;
+  void Attach(gpu::gles2::GLES2Interface*,
+              GLenum target,
+              GLenum attachment) override;
+  void Unattach(gpu::gles2::GLES2Interface*,
+                GLenum target,
+                GLenum attachment) override;
 
-    Member<WebGLTexture> m_texture;
-    GLenum m_target;
-    GLint m_level;
-    GLint m_layer;
+  TraceWrapperMember<WebGLTexture> texture_;
+  GLenum target_;
+  GLint level_;
+  GLint layer_;
 };
 
-WebGLFramebuffer::WebGLAttachment* WebGLTextureAttachment::create(WebGLTexture* texture, GLenum target, GLint level, GLint layer)
-{
-    return new WebGLTextureAttachment(texture, target, level, layer);
+WebGLFramebuffer::WebGLAttachment* WebGLTextureAttachment::Create(
+    WebGLTexture* texture,
+    GLenum target,
+    GLint level,
+    GLint layer) {
+  return new WebGLTextureAttachment(texture, target, level, layer);
 }
 
-DEFINE_TRACE(WebGLTextureAttachment)
-{
-    visitor->trace(m_texture);
-    WebGLFramebuffer::WebGLAttachment::trace(visitor);
+DEFINE_TRACE(WebGLTextureAttachment) {
+  visitor->Trace(texture_);
+  WebGLFramebuffer::WebGLAttachment::Trace(visitor);
 }
 
-WebGLTextureAttachment::WebGLTextureAttachment(WebGLTexture* texture, GLenum target, GLint level, GLint layer)
-    : m_texture(texture)
-    , m_target(target)
-    , m_level(level)
-    , m_layer(layer)
-{
+WebGLTextureAttachment::WebGLTextureAttachment(WebGLTexture* texture,
+                                               GLenum target,
+                                               GLint level,
+                                               GLint layer)
+    : texture_(this, texture), target_(target), level_(level), layer_(layer) {}
+
+WebGLSharedObject* WebGLTextureAttachment::Object() const {
+  return texture_->Object() ? texture_.Get() : 0;
 }
 
-WebGLSharedObject* WebGLTextureAttachment::object() const
-{
-    return m_texture->object() ? m_texture.get() : 0;
+bool WebGLTextureAttachment::IsSharedObject(WebGLSharedObject* object) const {
+  return object == texture_;
 }
 
-bool WebGLTextureAttachment::isSharedObject(WebGLSharedObject* object) const
-{
-    return object == m_texture;
+bool WebGLTextureAttachment::Valid() const {
+  return texture_->Object();
 }
 
-bool WebGLTextureAttachment::valid() const
-{
-    return m_texture->object();
+void WebGLTextureAttachment::OnDetached(gpu::gles2::GLES2Interface* gl) {
+  texture_->OnDetached(gl);
 }
 
-void WebGLTextureAttachment::onDetached(gpu::gles2::GLES2Interface* gl)
-{
-    m_texture->onDetached(gl);
+void WebGLTextureAttachment::Attach(gpu::gles2::GLES2Interface* gl,
+                                    GLenum target,
+                                    GLenum attachment) {
+  GLuint object = ObjectOrZero(texture_.Get());
+  if (target_ == GL_TEXTURE_3D || target_ == GL_TEXTURE_2D_ARRAY) {
+    gl->FramebufferTextureLayer(target, attachment, object, level_, layer_);
+  } else {
+    gl->FramebufferTexture2D(target, attachment, target_, object, level_);
+  }
 }
 
-void WebGLTextureAttachment::attach(gpu::gles2::GLES2Interface* gl, GLenum target, GLenum attachment)
-{
-    GLuint object = objectOrZero(m_texture.get());
-    if (m_target == GL_TEXTURE_3D || m_target == GL_TEXTURE_2D_ARRAY) {
-        gl->FramebufferTextureLayer(target, attachment, object, m_level, m_layer);
-    } else {
-        gl->FramebufferTexture2D(target, attachment, m_target, object, m_level);
-    }
+void WebGLTextureAttachment::Unattach(gpu::gles2::GLES2Interface* gl,
+                                      GLenum target,
+                                      GLenum attachment) {
+  // GL_DEPTH_STENCIL_ATTACHMENT attachment is valid in ES3.
+  if (target_ == GL_TEXTURE_3D || target_ == GL_TEXTURE_2D_ARRAY) {
+    gl->FramebufferTextureLayer(target, attachment, 0, level_, layer_);
+  } else {
+    gl->FramebufferTexture2D(target, attachment, target_, 0, level_);
+  }
 }
 
-void WebGLTextureAttachment::unattach(gpu::gles2::GLES2Interface* gl, GLenum target, GLenum attachment)
-{
-    // GL_DEPTH_STENCIL_ATTACHMENT attachment is valid in ES3.
-    if (m_target == GL_TEXTURE_3D || m_target == GL_TEXTURE_2D_ARRAY) {
-        gl->FramebufferTextureLayer(target, attachment, 0, m_level, m_layer);
-    } else {
-        gl->FramebufferTexture2D(target, attachment, m_target, 0, m_level);
-    }
-}
+}  // anonymous namespace
 
-} // anonymous namespace
+WebGLFramebuffer::WebGLAttachment::WebGLAttachment() {}
 
-WebGLFramebuffer::WebGLAttachment::WebGLAttachment()
-{
-}
-
-WebGLFramebuffer::WebGLAttachment::~WebGLAttachment()
-{
-}
-
-WebGLFramebuffer* WebGLFramebuffer::create(WebGLRenderingContextBase* ctx)
-{
-    return new WebGLFramebuffer(ctx);
+WebGLFramebuffer* WebGLFramebuffer::Create(WebGLRenderingContextBase* ctx) {
+  return new WebGLFramebuffer(ctx);
 }
 
 WebGLFramebuffer::WebGLFramebuffer(WebGLRenderingContextBase* ctx)
-    : WebGLContextObject(ctx)
-    , m_object(0)
-    , m_destructionInProgress(false)
-    , m_hasEverBeenBound(false)
-    , m_readBuffer(GL_COLOR_ATTACHMENT0)
-{
-    ctx->contextGL()->GenFramebuffers(1, &m_object);
+    : WebGLContextObject(ctx),
+      object_(0),
+      has_ever_been_bound_(false),
+      web_gl1_depth_stencil_consistent_(true),
+      read_buffer_(GL_COLOR_ATTACHMENT0) {
+  ctx->ContextGL()->GenFramebuffers(1, &object_);
 }
 
-WebGLFramebuffer::~WebGLFramebuffer()
-{
-    // Attachments in |m_attachments| will be deleted from other
-    // places, and we must not touch that map in deleteObjectImpl once
-    // the destructor has been entered.
-    m_destructionInProgress = true;
-
-    // See the comment in WebGLObject::detachAndDeleteObject().
-    detachAndDeleteObject();
+WebGLFramebuffer::~WebGLFramebuffer() {
+  RunDestructor();
 }
 
-void WebGLFramebuffer::setAttachmentForBoundFramebuffer(GLenum target, GLenum attachment, GLenum texTarget, WebGLTexture* texture, GLint level, GLint layer)
-{
-    ASSERT(isBound(target));
-    removeAttachmentFromBoundFramebuffer(target, attachment);
-    if (!m_object)
-        return;
-    if (texture && texture->object()) {
-        m_attachments.add(attachment, WebGLTextureAttachment::create(texture, texTarget, level, layer));
-        drawBuffersIfNecessary(false);
-        texture->onAttached();
+void WebGLFramebuffer::SetAttachmentForBoundFramebuffer(GLenum target,
+                                                        GLenum attachment,
+                                                        GLenum tex_target,
+                                                        WebGLTexture* texture,
+                                                        GLint level,
+                                                        GLint layer) {
+  DCHECK(object_);
+  DCHECK(IsBound(target));
+  if (Context()->IsWebGL2OrHigher()) {
+    if (attachment == GL_DEPTH_STENCIL_ATTACHMENT) {
+      SetAttachmentInternal(target, GL_DEPTH_ATTACHMENT, tex_target, texture,
+                            level, layer);
+      SetAttachmentInternal(target, GL_STENCIL_ATTACHMENT, tex_target, texture,
+                            level, layer);
+    } else {
+      SetAttachmentInternal(target, attachment, tex_target, texture, level,
+                            layer);
     }
-}
-
-void WebGLFramebuffer::setAttachmentForBoundFramebuffer(GLenum target, GLenum attachment, WebGLRenderbuffer* renderbuffer)
-{
-    ASSERT(isBound(target));
-    removeAttachmentFromBoundFramebuffer(target, attachment);
-    if (!m_object)
-        return;
-    if (renderbuffer && renderbuffer->object()) {
-        m_attachments.add(attachment, WebGLRenderbufferAttachment::create(renderbuffer));
-        drawBuffersIfNecessary(false);
-        renderbuffer->onAttached();
+    GLuint texture_id = ObjectOrZero(texture);
+    // texTarget can be 0 if detaching using framebufferTextureLayer.
+    DCHECK(tex_target || !texture_id);
+    switch (tex_target) {
+      case 0:
+      case GL_TEXTURE_3D:
+      case GL_TEXTURE_2D_ARRAY:
+        Context()->ContextGL()->FramebufferTextureLayer(
+            target, attachment, texture_id, level, layer);
+        break;
+      default:
+        DCHECK_EQ(layer, 0);
+        Context()->ContextGL()->FramebufferTexture2D(
+            target, attachment, tex_target, texture_id, level);
+        break;
     }
-}
-
-void WebGLFramebuffer::attach(GLenum target, GLenum attachment, GLenum attachmentPoint)
-{
-    ASSERT(isBound(target));
-    WebGLAttachment* attachmentObject = getAttachment(attachment);
-    if (attachmentObject)
-        attachmentObject->attach(context()->contextGL(), target, attachmentPoint);
-}
-
-WebGLSharedObject* WebGLFramebuffer::getAttachmentObject(GLenum attachment) const
-{
-    if (!m_object)
-        return nullptr;
-    WebGLAttachment* attachmentObject = getAttachment(attachment);
-    return attachmentObject ? attachmentObject->object() : nullptr;
-}
-
-WebGLFramebuffer::WebGLAttachment* WebGLFramebuffer::getAttachment(GLenum attachment) const
-{
-    const AttachmentMap::const_iterator it = m_attachments.find(attachment);
-    return (it != m_attachments.end()) ? it->value.get() : 0;
-}
-
-void WebGLFramebuffer::removeAttachmentFromBoundFramebuffer(GLenum target, GLenum attachment)
-{
-    ASSERT(isBound(target));
-    if (!m_object)
-        return;
-
-    WebGLAttachment* attachmentObject = getAttachment(attachment);
-    if (attachmentObject) {
-        attachmentObject->onDetached(context()->contextGL());
-        m_attachments.remove(attachment);
-        drawBuffersIfNecessary(false);
-        switch (attachment) {
-        case GL_DEPTH_STENCIL_ATTACHMENT:
-            attach(target, GL_DEPTH_ATTACHMENT, GL_DEPTH_ATTACHMENT);
-            attach(target, GL_STENCIL_ATTACHMENT, GL_STENCIL_ATTACHMENT);
-            break;
-        case GL_DEPTH_ATTACHMENT:
-        case GL_STENCIL_ATTACHMENT:
-            attach(target, GL_DEPTH_STENCIL_ATTACHMENT, GL_DEPTH_STENCIL_ATTACHMENT);
-            break;
-        }
+  } else {
+    DCHECK_EQ(layer, 0);
+    SetAttachmentInternal(target, attachment, tex_target, texture, level,
+                          layer);
+    switch (attachment) {
+      case GL_DEPTH_ATTACHMENT:
+      case GL_STENCIL_ATTACHMENT:
+      case GL_DEPTH_STENCIL_ATTACHMENT:
+        CommitWebGL1DepthStencilIfConsistent(target);
+        break;
+      default:
+        Context()->ContextGL()->FramebufferTexture2D(
+            target, attachment, tex_target, ObjectOrZero(texture), level);
+        break;
     }
+  }
 }
 
-void WebGLFramebuffer::removeAttachmentFromBoundFramebuffer(GLenum target, WebGLSharedObject* attachment)
-{
-    ASSERT(isBound(target));
-    if (!m_object)
-        return;
-    if (!attachment)
-        return;
-
-    bool checkMore = true;
-    while (checkMore) {
-        checkMore = false;
-        for (const auto& it : m_attachments) {
-            WebGLAttachment* attachmentObject = it.value.get();
-            if (attachmentObject->isSharedObject(attachment)) {
-                GLenum attachmentType = it.key;
-                attachmentObject->unattach(context()->contextGL(), target, attachmentType);
-                removeAttachmentFromBoundFramebuffer(target, attachmentType);
-                checkMore = true;
-                break;
-            }
-        }
+void WebGLFramebuffer::SetAttachmentForBoundFramebuffer(
+    GLenum target,
+    GLenum attachment,
+    WebGLRenderbuffer* renderbuffer) {
+  DCHECK(object_);
+  DCHECK(IsBound(target));
+  if (Context()->IsWebGL2OrHigher()) {
+    if (attachment == GL_DEPTH_STENCIL_ATTACHMENT) {
+      SetAttachmentInternal(target, GL_DEPTH_ATTACHMENT, renderbuffer);
+      SetAttachmentInternal(target, GL_STENCIL_ATTACHMENT, renderbuffer);
+    } else {
+      SetAttachmentInternal(target, attachment, renderbuffer);
     }
-}
-
-GLenum WebGLFramebuffer::checkDepthStencilStatus(const char** reason) const
-{
-    if (context()->isWebGL2OrHigher())
-        return GL_FRAMEBUFFER_COMPLETE;
-    WebGLAttachment* depthAttachment = nullptr;
-    WebGLAttachment* stencilAttachment = nullptr;
-    WebGLAttachment* depthStencilAttachment = nullptr;
-    for (const auto& it : m_attachments) {
-        WebGLAttachment* attachment = it.value.get();
-        ASSERT(attachment);
-        switch (it.key) {
-        case GL_DEPTH_ATTACHMENT:
-            depthAttachment = attachment;
-            break;
-        case GL_STENCIL_ATTACHMENT:
-            stencilAttachment = attachment;
-            break;
-        case GL_DEPTH_STENCIL_ATTACHMENT:
-            depthStencilAttachment = attachment;
-            break;
-        default:
-            break;
-        }
+    Context()->ContextGL()->FramebufferRenderbuffer(
+        target, attachment, GL_RENDERBUFFER, ObjectOrZero(renderbuffer));
+  } else {
+    SetAttachmentInternal(target, attachment, renderbuffer);
+    switch (attachment) {
+      case GL_DEPTH_ATTACHMENT:
+      case GL_STENCIL_ATTACHMENT:
+      case GL_DEPTH_STENCIL_ATTACHMENT:
+        CommitWebGL1DepthStencilIfConsistent(target);
+        break;
+      default:
+        Context()->ContextGL()->FramebufferRenderbuffer(
+            target, attachment, GL_RENDERBUFFER, ObjectOrZero(renderbuffer));
+        break;
     }
-    if ((depthStencilAttachment && (depthAttachment || stencilAttachment))
-        || (depthAttachment && stencilAttachment)) {
-        *reason = "conflicting DEPTH/STENCIL/DEPTH_STENCIL attachments";
-        return GL_FRAMEBUFFER_UNSUPPORTED;
-    }
-    return GL_FRAMEBUFFER_COMPLETE;
+  }
 }
 
-bool WebGLFramebuffer::hasStencilBuffer() const
-{
-    WebGLAttachment* attachment = getAttachment(GL_STENCIL_ATTACHMENT);
-    if (!attachment)
-        attachment = getAttachment(GL_DEPTH_STENCIL_ATTACHMENT);
-    return attachment && attachment->valid();
+WebGLSharedObject* WebGLFramebuffer::GetAttachmentObject(
+    GLenum attachment) const {
+  if (!object_)
+    return nullptr;
+  WebGLAttachment* attachment_object = GetAttachment(attachment);
+  return attachment_object ? attachment_object->Object() : nullptr;
 }
 
-void WebGLFramebuffer::deleteObjectImpl(gpu::gles2::GLES2Interface* gl)
-{
-    // Both the AttachmentMap and its WebGLAttachment objects are GCed
-    // objects and cannot be accessed after the destructor has been
-    // entered, as they may have been finalized already during the
-    // same GC sweep. These attachments' OpenGL objects will be fully
-    // destroyed once their JavaScript wrappers are collected.
-    if (!m_destructionInProgress) {
-        for (const auto& attachment : m_attachments)
-            attachment.value->onDetached(gl);
-    }
-
-    gl->DeleteFramebuffers(1, &m_object);
-    m_object = 0;
+WebGLFramebuffer::WebGLAttachment* WebGLFramebuffer::GetAttachment(
+    GLenum attachment) const {
+  const AttachmentMap::const_iterator it = attachments_.Find(attachment);
+  return (it != attachments_.end()) ? it->value.Get() : 0;
 }
 
-bool WebGLFramebuffer::isBound(GLenum target) const
-{
-    return (context()->getFramebufferBinding(target) == this);
-}
+void WebGLFramebuffer::RemoveAttachmentFromBoundFramebuffer(
+    GLenum target,
+    WebGLSharedObject* attachment) {
+  ASSERT(IsBound(target));
+  if (!object_)
+    return;
+  if (!attachment)
+    return;
 
-void WebGLFramebuffer::drawBuffers(const Vector<GLenum>& bufs)
-{
-    m_drawBuffers = bufs;
-    m_filteredDrawBuffers.resize(m_drawBuffers.size());
-    for (size_t i = 0; i < m_filteredDrawBuffers.size(); ++i)
-        m_filteredDrawBuffers[i] = GL_NONE;
-    drawBuffersIfNecessary(true);
-}
-
-void WebGLFramebuffer::drawBuffersIfNecessary(bool force)
-{
-    if (context()->isWebGL2OrHigher()
-        || context()->extensionEnabled(WebGLDrawBuffersName)) {
-        bool reset = force;
-        // This filtering works around graphics driver bugs on Mac OS X.
-        for (size_t i = 0; i < m_drawBuffers.size(); ++i) {
-            if (m_drawBuffers[i] != GL_NONE && getAttachment(m_drawBuffers[i])) {
-                if (m_filteredDrawBuffers[i] != m_drawBuffers[i]) {
-                    m_filteredDrawBuffers[i] = m_drawBuffers[i];
-                    reset = true;
-                }
+  bool check_more = true;
+  bool is_web_gl1 = !Context()->IsWebGL2OrHigher();
+  bool check_web_gl1_depth_stencil = false;
+  while (check_more) {
+    check_more = false;
+    for (const auto& it : attachments_) {
+      WebGLAttachment* attachment_object = it.value.Get();
+      if (attachment_object->IsSharedObject(attachment)) {
+        GLenum attachment_type = it.key;
+        switch (attachment_type) {
+          case GL_DEPTH_ATTACHMENT:
+          case GL_STENCIL_ATTACHMENT:
+          case GL_DEPTH_STENCIL_ATTACHMENT:
+            if (is_web_gl1) {
+              check_web_gl1_depth_stencil = true;
             } else {
-                if (m_filteredDrawBuffers[i] != GL_NONE) {
-                    m_filteredDrawBuffers[i] = GL_NONE;
-                    reset = true;
-                }
+              attachment_object->Unattach(Context()->ContextGL(), target,
+                                          attachment_type);
             }
+            break;
+          default:
+            attachment_object->Unattach(Context()->ContextGL(), target,
+                                        attachment_type);
+            break;
         }
-        if (reset) {
-            context()->contextGL()->DrawBuffersEXT(
-                m_filteredDrawBuffers.size(), m_filteredDrawBuffers.data());
-        }
+        RemoveAttachmentInternal(target, attachment_type);
+        check_more = true;
+        break;
+      }
     }
+  }
+  if (check_web_gl1_depth_stencil)
+    CommitWebGL1DepthStencilIfConsistent(target);
 }
 
-GLenum WebGLFramebuffer::getDrawBuffer(GLenum drawBuffer)
-{
-    int index = static_cast<int>(drawBuffer - GL_DRAW_BUFFER0_EXT);
-    ASSERT(index >= 0);
-    if (index < static_cast<int>(m_drawBuffers.size()))
-        return m_drawBuffers[index];
-    if (drawBuffer == GL_DRAW_BUFFER0_EXT)
-        return GL_COLOR_ATTACHMENT0;
-    return GL_NONE;
+GLenum WebGLFramebuffer::CheckDepthStencilStatus(const char** reason) const {
+  if (Context()->IsWebGL2OrHigher() || web_gl1_depth_stencil_consistent_)
+    return GL_FRAMEBUFFER_COMPLETE;
+  *reason = "conflicting DEPTH/STENCIL/DEPTH_STENCIL attachments";
+  return GL_FRAMEBUFFER_UNSUPPORTED;
 }
 
-ScopedPersistent<v8::Array>* WebGLFramebuffer::getPersistentCache()
-{
-    return &m_attachmentWrappers;
+bool WebGLFramebuffer::HasStencilBuffer() const {
+  WebGLAttachment* attachment = GetAttachment(GL_STENCIL_ATTACHMENT);
+  if (!attachment)
+    attachment = GetAttachment(GL_DEPTH_STENCIL_ATTACHMENT);
+  return attachment && attachment->Valid();
 }
 
-DEFINE_TRACE(WebGLFramebuffer)
-{
-    visitor->trace(m_attachments);
-    WebGLContextObject::trace(visitor);
+void WebGLFramebuffer::DeleteObjectImpl(gpu::gles2::GLES2Interface* gl) {
+  // Both the AttachmentMap and its WebGLAttachment objects are GCed
+  // objects and cannot be accessed after the destructor has been
+  // entered, as they may have been finalized already during the
+  // same GC sweep. These attachments' OpenGL objects will be fully
+  // destroyed once their JavaScript wrappers are collected.
+  if (!DestructionInProgress()) {
+    for (const auto& attachment : attachments_)
+      attachment.value->OnDetached(gl);
+  }
+
+  gl->DeleteFramebuffers(1, &object_);
+  object_ = 0;
 }
 
-} // namespace blink
+bool WebGLFramebuffer::IsBound(GLenum target) const {
+  return (Context()->GetFramebufferBinding(target) == this);
+}
+
+void WebGLFramebuffer::DrawBuffers(const Vector<GLenum>& bufs) {
+  draw_buffers_ = bufs;
+  filtered_draw_buffers_.Resize(draw_buffers_.size());
+  for (size_t i = 0; i < filtered_draw_buffers_.size(); ++i)
+    filtered_draw_buffers_[i] = GL_NONE;
+  DrawBuffersIfNecessary(true);
+}
+
+void WebGLFramebuffer::DrawBuffersIfNecessary(bool force) {
+  if (Context()->IsWebGL2OrHigher() ||
+      Context()->ExtensionEnabled(kWebGLDrawBuffersName)) {
+    bool reset = force;
+    // This filtering works around graphics driver bugs on Mac OS X.
+    for (size_t i = 0; i < draw_buffers_.size(); ++i) {
+      if (draw_buffers_[i] != GL_NONE && GetAttachment(draw_buffers_[i])) {
+        if (filtered_draw_buffers_[i] != draw_buffers_[i]) {
+          filtered_draw_buffers_[i] = draw_buffers_[i];
+          reset = true;
+        }
+      } else {
+        if (filtered_draw_buffers_[i] != GL_NONE) {
+          filtered_draw_buffers_[i] = GL_NONE;
+          reset = true;
+        }
+      }
+    }
+    if (reset) {
+      Context()->ContextGL()->DrawBuffersEXT(filtered_draw_buffers_.size(),
+                                             filtered_draw_buffers_.Data());
+    }
+  }
+}
+
+void WebGLFramebuffer::SetAttachmentInternal(GLenum target,
+                                             GLenum attachment,
+                                             GLenum tex_target,
+                                             WebGLTexture* texture,
+                                             GLint level,
+                                             GLint layer) {
+  DCHECK(IsBound(target));
+  DCHECK(object_);
+  RemoveAttachmentInternal(target, attachment);
+  if (texture && texture->Object()) {
+    attachments_.insert(attachment,
+                        TraceWrapperMember<WebGLAttachment>(
+                            this, WebGLTextureAttachment::Create(
+                                      texture, tex_target, level, layer)));
+    DrawBuffersIfNecessary(false);
+    texture->OnAttached();
+  }
+}
+
+void WebGLFramebuffer::SetAttachmentInternal(GLenum target,
+                                             GLenum attachment,
+                                             WebGLRenderbuffer* renderbuffer) {
+  DCHECK(IsBound(target));
+  DCHECK(object_);
+  RemoveAttachmentInternal(target, attachment);
+  if (renderbuffer && renderbuffer->Object()) {
+    attachments_.insert(
+        attachment,
+        TraceWrapperMember<WebGLAttachment>(
+            this, WebGLRenderbufferAttachment::Create(renderbuffer)));
+    DrawBuffersIfNecessary(false);
+    renderbuffer->OnAttached();
+  }
+}
+
+void WebGLFramebuffer::RemoveAttachmentInternal(GLenum target,
+                                                GLenum attachment) {
+  DCHECK(IsBound(target));
+  DCHECK(object_);
+
+  WebGLAttachment* attachment_object = GetAttachment(attachment);
+  if (attachment_object) {
+    attachment_object->OnDetached(Context()->ContextGL());
+    attachments_.erase(attachment);
+    DrawBuffersIfNecessary(false);
+  }
+}
+
+void WebGLFramebuffer::CommitWebGL1DepthStencilIfConsistent(GLenum target) {
+  DCHECK(!Context()->IsWebGL2OrHigher());
+  WebGLAttachment* depth_attachment = nullptr;
+  WebGLAttachment* stencil_attachment = nullptr;
+  WebGLAttachment* depth_stencil_attachment = nullptr;
+  int count = 0;
+  for (const auto& it : attachments_) {
+    WebGLAttachment* attachment = it.value.Get();
+    DCHECK(attachment);
+    switch (it.key) {
+      case GL_DEPTH_ATTACHMENT:
+        depth_attachment = attachment;
+        ++count;
+        break;
+      case GL_STENCIL_ATTACHMENT:
+        stencil_attachment = attachment;
+        ++count;
+        break;
+      case GL_DEPTH_STENCIL_ATTACHMENT:
+        depth_stencil_attachment = attachment;
+        ++count;
+        break;
+      default:
+        break;
+    }
+  }
+
+  web_gl1_depth_stencil_consistent_ = count <= 1;
+  if (!web_gl1_depth_stencil_consistent_)
+    return;
+
+  gpu::gles2::GLES2Interface* gl = Context()->ContextGL();
+  if (depth_attachment) {
+    gl->FramebufferRenderbuffer(target, GL_DEPTH_STENCIL_ATTACHMENT,
+                                GL_RENDERBUFFER, 0);
+    depth_attachment->Attach(gl, target, GL_DEPTH_ATTACHMENT);
+    gl->FramebufferRenderbuffer(target, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+                                0);
+  } else if (stencil_attachment) {
+    gl->FramebufferRenderbuffer(target, GL_DEPTH_STENCIL_ATTACHMENT,
+                                GL_RENDERBUFFER, 0);
+    gl->FramebufferRenderbuffer(target, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
+                                0);
+    stencil_attachment->Attach(gl, target, GL_STENCIL_ATTACHMENT);
+  } else if (depth_stencil_attachment) {
+    gl->FramebufferRenderbuffer(target, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
+                                0);
+    gl->FramebufferRenderbuffer(target, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+                                0);
+    depth_stencil_attachment->Attach(gl, target, GL_DEPTH_STENCIL_ATTACHMENT);
+  } else {
+    gl->FramebufferRenderbuffer(target, GL_DEPTH_STENCIL_ATTACHMENT,
+                                GL_RENDERBUFFER, 0);
+    gl->FramebufferRenderbuffer(target, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
+                                0);
+    gl->FramebufferRenderbuffer(target, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+                                0);
+  }
+}
+
+GLenum WebGLFramebuffer::GetDrawBuffer(GLenum draw_buffer) {
+  int index = static_cast<int>(draw_buffer - GL_DRAW_BUFFER0_EXT);
+  ASSERT(index >= 0);
+  if (index < static_cast<int>(draw_buffers_.size()))
+    return draw_buffers_[index];
+  if (draw_buffer == GL_DRAW_BUFFER0_EXT)
+    return GL_COLOR_ATTACHMENT0;
+  return GL_NONE;
+}
+
+DEFINE_TRACE(WebGLFramebuffer) {
+  visitor->Trace(attachments_);
+  WebGLContextObject::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(WebGLFramebuffer) {
+  for (const auto& attachment : attachments_) {
+    visitor->TraceWrappers(attachment.value);
+  }
+  WebGLContextObject::TraceWrappers(visitor);
+}
+
+}  // namespace blink

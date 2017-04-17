@@ -35,6 +35,7 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
   static void Show(content::WebContents* web_contents,
                    const GURL& url,
                    supervised_user_error_page::FilteringBehaviorReason reason,
+                   bool initial_page_load,
                    const base::Callback<void(bool)>& callback);
 
   static std::string GetHTMLContents(
@@ -46,6 +47,7 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
       content::WebContents* web_contents,
       const GURL& url,
       supervised_user_error_page::FilteringBehaviorReason reason,
+      bool initial_page_load,
       const base::Callback<void(bool)>& callback);
   ~SupervisedUserInterstitial() override;
 
@@ -71,6 +73,10 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
   // the return value indicates only "allow" or "don't know".
   bool ShouldProceed();
 
+  // Moves away from the page behind the interstitial when not proceeding with
+  // the request.
+  void MoveAwayFromCurrentPage();
+
   void DispatchContinueRequest(bool continue_request);
 
   // Owns the interstitial, which owns us.
@@ -82,6 +88,11 @@ class SupervisedUserInterstitial : public content::InterstitialPageDelegate,
 
   GURL url_;
   supervised_user_error_page::FilteringBehaviorReason reason_;
+
+  // True if the interstitial was shown while loading a page (with a pending
+  // navigation), false if it was shown over an already loaded page.
+  // Interstitials behave very differently in those cases.
+  bool initial_page_load_;
 
   base::Callback<void(bool)> callback_;
 

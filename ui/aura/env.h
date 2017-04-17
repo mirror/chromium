@@ -11,33 +11,62 @@
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
 #include "ui/aura/aura_export.h"
+#include "ui/base/dragdrop/os_exchange_data_provider_factory.h"
 #include "ui/events/event_handler.h"
 #include "ui/events/event_target.h"
 #include "ui/gfx/geometry/point.h"
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
+
+namespace gfx {
+class ClientNativePixmapFactory;
+}
+#endif
+
 namespace ui {
 class ContextFactory;
+class ContextFactoryPrivate;
 class PlatformEventSource;
 }
 namespace aura {
-
 namespace test {
 class EnvTestHelper;
 }
 
 class EnvObserver;
 class InputStateLookup;
+class MusMouseLocationUpdater;
 class Window;
+class WindowPort;
+class WindowTreeClient;
 class WindowTreeHost;
 
 // A singleton object that tracks general state within Aura.
-class AURA_EXPORT Env : public ui::EventTarget, public base::SupportsUserData {
+class AURA_EXPORT Env : public ui::EventTarget,
+                        public ui::OSExchangeDataProviderFactory::Factory,
+                        public base::SupportsUserData {
  public:
+  enum class Mode {
+    // Classic aura.
+    LOCAL,
+
+    // Aura with a backend of mus.
+    MUS,
+  };
+
   ~Env() override;
 
-  static std::unique_ptr<Env> CreateInstance();
+  // NOTE: if you pass in Mode::MUS it is expected that you call
+  // SetWindowTreeClient() before any windows are created.
+  static std::unique_ptr<Env> CreateInstance(Mode mode = Mode::LOCAL);
   static Env* GetInstance();
   static Env* GetInstanceDontCreate();
+
+  Mode mode() const { return mode_; }
+
+  // Called internally to create the appropriate WindowPort implementation.
+  std::unique_ptr<WindowPort> CreateWindowPort(Window* window);
 
   void AddObserver(EnvObserver* observer);
   void RemoveObserver(EnvObserver* observer);
@@ -52,7 +81,7 @@ class AURA_EXPORT Env : public ui::EventTarget, public base::SupportsUserData {
 
   // Gets/sets the last mouse location seen in a mouse event in the screen
   // coordinates.
-  const gfx::Point& last_mouse_location() const { return last_mouse_location_; }
+  const gfx::Point& last_mouse_location() const;
   void set_last_mouse_location(const gfx::Point& last_mouse_location) {
     last_mouse_location_ = last_mouse_location;
   }
@@ -66,14 +95,32 @@ class AURA_EXPORT Env : public ui::EventTarget, public base::SupportsUserData {
   }
   ui::ContextFactory* context_factory() { return context_factory_; }
 
+  void set_context_factory_private(
+      ui::ContextFactoryPrivate* context_factory_private) {
+    context_factory_private_ = context_factory_private;
+  }
+  ui::ContextFactoryPrivate* context_factory_private() {
+    return context_factory_private_;
+  }
+
+  // See CreateInstance() for description.
+  void SetWindowTreeClient(WindowTreeClient* window_tree_client);
+  bool HasWindowTreeClient() const { return window_tree_client_ != nullptr; }
+
  private:
   friend class test::EnvTestHelper;
+  friend class MusMouseLocationUpdater;
   friend class Window;
   friend class WindowTreeHost;
 
-  Env();
+  explicit Env(Mode mode);
 
   void Init();
+
+  // After calling this method, all OSExchangeDataProvider instances will be
+  // Mus instances. We can't do this work in Init(), because our mode may
+  // changed via the EnvTestHelper.
+  void EnableMusOSExchangeDataProvider();
 
   // Called by the Window when it is initialized. Notifies observers.
   void NotifyWindowInitialized(Window* window);
@@ -90,17 +137,41 @@ class AURA_EXPORT Env : public ui::EventTarget, public base::SupportsUserData {
   std::unique_ptr<ui::EventTargetIterator> GetChildIterator() const override;
   ui::EventTargeter* GetEventTargeter() override;
 
+  // Overridden from ui::OSExchangeDataProviderFactory::Factory:
+  std::unique_ptr<ui::OSExchangeData::Provider> BuildProvider() override;
+
+  // This is not const for tests, which may share Env across tests and so needs
+  // to reset the value.
+  Mode mode_;
+
+  // Intentionally not exposed publicly. Someday we might want to support
+  // multiple WindowTreeClients. Use EnvTestHelper in tests.
+  WindowTreeClient* window_tree_client_ = nullptr;
+
   base::ObserverList<EnvObserver> observers_;
 
   int mouse_button_flags_;
   // Location of last mouse event, in screen coordinates.
-  gfx::Point last_mouse_location_;
+  mutable gfx::Point last_mouse_location_;
   bool is_touch_down_;
+  bool get_last_mouse_location_from_mus_;
+  // This may be set to true in tests to force using |last_mouse_location_|
+  // rather than querying WindowTreeClient.
+  bool always_use_last_mouse_location_ = false;
+  // Whether we set ourselves as the OSExchangeDataProviderFactory.
+  bool is_os_exchange_data_provider_factory_ = false;
 
   std::unique_ptr<InputStateLookup> input_state_lookup_;
   std::unique_ptr<ui::PlatformEventSource> event_source_;
 
+#if defined(USE_OZONE)
+  // Factory for pixmaps that can use be transported from the client to the GPU
+  // process using a low-level ozone-provided platform specific mechanism.
+  std::unique_ptr<gfx::ClientNativePixmapFactory> native_pixmap_factory_;
+#endif
+
   ui::ContextFactory* context_factory_;
+  ui::ContextFactoryPrivate* context_factory_private_;
 
   DISALLOW_COPY_AND_ASSIGN(Env);
 };

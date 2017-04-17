@@ -29,7 +29,8 @@ class ViewsTestBase : public PlatformTest {
   ViewsTestBase();
   ~ViewsTestBase() override;
 
-  // Whether the test is running under mus.
+  // Returns true if running aura-mus in a client configuration (not the window
+  // manager).
   static bool IsMus();
 
   // testing::Test:
@@ -42,9 +43,14 @@ class ViewsTestBase : public PlatformTest {
   // cross-platform tests.
   Widget::InitParams CreateParams(Widget::InitParams::Type type);
 
+  bool HasCompositingManager() const;
+
+  // Simulate an OS-level destruction of the native window held by |widget|.
+  void SimulateNativeDestroy(Widget* widget);
+
  protected:
-  TestViewsDelegate* views_delegate() const {
-    return test_helper_->views_delegate();
+  TestViewsDelegate* test_views_delegate() const {
+    return test_helper_->test_views_delegate();
   }
 
   void set_views_delegate(std::unique_ptr<TestViewsDelegate> views_delegate) {
@@ -64,6 +70,7 @@ class ViewsTestBase : public PlatformTest {
   std::unique_ptr<ScopedViewsTestHelper> test_helper_;
   bool setup_called_;
   bool teardown_called_;
+  bool has_compositing_manager_;
 
 #if defined(OS_WIN)
   ui::ScopedOleInitializer ole_initializer_;

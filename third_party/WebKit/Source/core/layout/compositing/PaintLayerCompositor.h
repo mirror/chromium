@@ -26,11 +26,11 @@
 #ifndef PaintLayerCompositor_h
 #define PaintLayerCompositor_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/compositing/CompositingReasonFinder.h"
 #include "platform/graphics/GraphicsLayerClient.h"
-#include "wtf/HashMap.h"
-#include <memory>
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
@@ -43,20 +43,21 @@ class Page;
 class LayoutPart;
 class Scrollbar;
 class ScrollingCoordinator;
+class VisualViewport;
 
 enum CompositingUpdateType {
-    CompositingUpdateNone,
-    CompositingUpdateAfterGeometryChange,
-    CompositingUpdateAfterCompositingInputChange,
-    CompositingUpdateRebuildTree,
+  kCompositingUpdateNone,
+  kCompositingUpdateAfterGeometryChange,
+  kCompositingUpdateAfterCompositingInputChange,
+  kCompositingUpdateRebuildTree,
 };
 
 enum CompositingStateTransitionType {
-    NoCompositingStateChange,
-    AllocateOwnCompositedLayerMapping,
-    RemoveOwnCompositedLayerMapping,
-    PutInSquashingLayer,
-    RemoveFromSquashingLayer
+  kNoCompositingStateChange,
+  kAllocateOwnCompositedLayerMapping,
+  kRemoveOwnCompositedLayerMapping,
+  kPutInSquashingLayer,
+  kRemoveFromSquashingLayer
 };
 
 // PaintLayerCompositor manages the hierarchy of
@@ -70,193 +71,226 @@ enum CompositingStateTransitionType {
 // PaintArtifactCompositor.
 
 class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
-    USING_FAST_MALLOC(PaintLayerCompositor);
-public:
-    explicit PaintLayerCompositor(LayoutView&);
-    ~PaintLayerCompositor() override;
+  USING_FAST_MALLOC(PaintLayerCompositor);
 
-    void updateIfNeededRecursive();
+ public:
+  explicit PaintLayerCompositor(LayoutView&);
+  ~PaintLayerCompositor() override;
 
-    // Return true if this LayoutView is in "compositing mode" (i.e. has one or more
-    // composited Layers)
-    bool inCompositingMode() const;
-    // FIXME: Replace all callers with inCompositingMode and remove this function.
-    bool staleInCompositingMode() const;
-    // This will make a compositing layer at the root automatically, and hook up to
-    // the native view/window system.
-    void setCompositingModeEnabled(bool);
+  void UpdateIfNeededRecursive();
 
-    // Returns true if the accelerated compositing is enabled
-    bool hasAcceleratedCompositing() const { return m_hasAcceleratedCompositing; }
+  // Return true if this LayoutView is in "compositing mode" (i.e. has one or
+  // more composited Layers)
+  bool InCompositingMode() const;
+  // FIXME: Replace all callers with inCompositingMode and remove this function.
+  bool StaleInCompositingMode() const;
+  // This will make a compositing layer at the root automatically, and hook up
+  // to the native view/window system.
+  void SetCompositingModeEnabled(bool);
 
-    bool preferCompositingToLCDTextEnabled() const;
+  // Returns true if the accelerated compositing is enabled
+  bool HasAcceleratedCompositing() const {
+    return has_accelerated_compositing_;
+  }
 
-    bool rootShouldAlwaysComposite() const;
+  bool PreferCompositingToLCDTextEnabled() const;
 
-    // Copy the accelerated compositing related flags from Settings
-    void updateAcceleratedCompositingSettings();
+  bool RootShouldAlwaysComposite() const;
 
-    // Used to indicate that a compositing update will be needed for the next frame that gets drawn.
-    void setNeedsCompositingUpdate(CompositingUpdateType);
+  // Copy the accelerated compositing related flags from Settings
+  void UpdateAcceleratedCompositingSettings();
 
-    void didLayout();
+  // Used to indicate that a compositing update will be needed for the next
+  // frame that gets drawn.
+  void SetNeedsCompositingUpdate(CompositingUpdateType);
 
-    // Whether layer's compositedLayerMapping needs a GraphicsLayer to clip z-order children of the given Layer.
-    bool clipsCompositingDescendants(const PaintLayer*) const;
+  void DidLayout();
 
-    // Whether the given layer needs an extra 'contents' layer.
-    bool needsContentsCompositingLayer(const PaintLayer*) const;
+  // Whether layer's compositedLayerMapping needs a GraphicsLayer to clip
+  // z-order children of the given Layer.
+  bool ClipsCompositingDescendants(const PaintLayer*) const;
 
-    bool supportsFixedRootBackgroundCompositing() const;
-    bool needsFixedRootBackgroundLayer(const PaintLayer*) const;
-    GraphicsLayer* fixedRootBackgroundLayer() const;
-    void setNeedsUpdateFixedBackground() { m_needsUpdateFixedBackground = true; }
+  // Whether the given layer needs an extra 'contents' layer.
+  bool NeedsContentsCompositingLayer(const PaintLayer*) const;
 
-    // Issue paint invalidations of the appropriate layers when the given Layer starts or stops being composited.
-    void paintInvalidationOnCompositingChange(PaintLayer*);
+  bool SupportsFixedRootBackgroundCompositing() const;
+  bool NeedsFixedRootBackgroundLayer(const PaintLayer*) const;
+  GraphicsLayer* FixedRootBackgroundLayer() const;
+  void SetNeedsUpdateFixedBackground() {
+    needs_update_fixed_background_ = true;
+  }
 
-    void fullyInvalidatePaint();
+  // Issue paint invalidations of the appropriate layers when the given Layer
+  // starts or stops being composited.
+  void PaintInvalidationOnCompositingChange(PaintLayer*);
 
-    PaintLayer* rootLayer() const;
-    GraphicsLayer* rootGraphicsLayer() const;
-    GraphicsLayer* frameScrollLayer() const;
-    GraphicsLayer* scrollLayer() const;
-    GraphicsLayer* containerLayer() const;
+  void FullyInvalidatePaint();
 
-    enum RootLayerAttachment {
-        RootLayerUnattached,
-        RootLayerAttachedViaChromeClient,
-        RootLayerAttachedViaEnclosingFrame
-    };
+  PaintLayer* RootLayer() const;
 
-    RootLayerAttachment getRootLayerAttachment() const { return m_rootLayerAttachment; }
-    void updateRootLayerAttachment();
-    void updateRootLayerPosition();
+  GraphicsLayer* ContainerLayer() const { return container_layer_.get(); }
+  GraphicsLayer* FrameScrollLayer() const { return scroll_layer_.get(); }
+  GraphicsLayer* RootContentLayer() const { return root_content_layer_.get(); }
+  GraphicsLayer* LayerForHorizontalScrollbar() const {
+    return layer_for_horizontal_scrollbar_.get();
+  }
+  GraphicsLayer* LayerForVerticalScrollbar() const {
+    return layer_for_vertical_scrollbar_.get();
+  }
+  GraphicsLayer* LayerForScrollCorner() const {
+    return layer_for_scroll_corner_.get();
+  }
 
-    void setIsInWindow(bool);
+  // In root layer scrolling mode, returns the LayoutView's main GraphicsLayer.
+  // In non-RLS mode, returns the outermost PaintLayerCompositor layer.
+  GraphicsLayer* RootGraphicsLayer() const;
 
-    static PaintLayerCompositor* frameContentsCompositor(LayoutPart*);
-    // Return true if the layers changed.
-    static bool attachFrameContentLayersToIframeLayer(LayoutPart*);
+  // In root layer scrolling mode, this is the LayoutView's scroll layer.
+  // In non-RLS mode, this is the same as frameScrollLayer().
+  GraphicsLayer* ScrollLayer() const;
 
-    // Update the geometry of the layers used for clipping and scrolling in frames.
-    void frameViewDidChangeLocation(const IntPoint& contentsOffset);
-    void frameViewDidChangeSize();
-    void frameViewDidScroll();
-    void frameViewScrollbarsExistenceDidChange();
-    void rootFixedBackgroundsChanged();
+  void UpdateRootLayerPosition();
 
-    bool scrollingLayerDidChange(PaintLayer*);
+  void SetIsInWindow(bool);
 
-    PassRefPtr<JSONObject> layerTreeAsJSON(LayerTreeFlags) const;
+  static PaintLayerCompositor* FrameContentsCompositor(LayoutPart&);
+  // Return true if the layers changed.
+  static bool AttachFrameContentLayersToIframeLayer(LayoutPart&);
 
-    GraphicsLayer* layerForHorizontalScrollbar() const { return m_layerForHorizontalScrollbar.get(); }
-    GraphicsLayer* layerForVerticalScrollbar() const { return m_layerForVerticalScrollbar.get(); }
-    GraphicsLayer* layerForScrollCorner() const { return m_layerForScrollCorner.get(); }
+  // Update the geometry of the layers used for clipping and scrolling in
+  // frames.
+  void FrameViewDidChangeLocation(const IntPoint& contents_offset);
+  void FrameViewDidChangeSize();
+  void FrameViewDidScroll();
+  void FrameViewScrollbarsExistenceDidChange();
+  void RootFixedBackgroundsChanged();
 
-    void setTracksPaintInvalidations(bool);
+  bool ScrollingLayerDidChange(PaintLayer*);
 
-    String debugName(const GraphicsLayer*) const override;
-    DocumentLifecycle& lifecycle() const;
+  std::unique_ptr<JSONObject> LayerTreeAsJSON(LayerTreeFlags) const;
 
-    bool needsUpdateDescendantDependentFlags() const { return m_needsUpdateDescendantDependentFlags; }
-    void setNeedsUpdateDescendantDependentFlags() { m_needsUpdateDescendantDependentFlags = true; }
+  void SetTracksRasterInvalidations(bool);
 
-    void updatePotentialCompositingReasonsFromStyle(PaintLayer*);
+  String DebugName(const GraphicsLayer*) const override;
+  DocumentLifecycle& Lifecycle() const;
 
-    // Whether the layer could ever be composited.
-    bool canBeComposited(const PaintLayer*) const;
+  void UpdatePotentialCompositingReasonsFromStyle(PaintLayer*);
 
-    // FIXME: Move allocateOrClearCompositedLayerMapping to CompositingLayerAssigner once we've fixed
-    // the compositing chicken/egg issues.
-    bool allocateOrClearCompositedLayerMapping(PaintLayer*, CompositingStateTransitionType compositedLayerUpdate);
+  // Whether the layer could ever be composited.
+  bool CanBeComposited(const PaintLayer*) const;
 
-    void updateDirectCompositingReasons(PaintLayer*);
+  // FIXME: Move allocateOrClearCompositedLayerMapping to
+  // CompositingLayerAssigner once we've fixed the compositing chicken/egg
+  // issues.
+  bool AllocateOrClearCompositedLayerMapping(
+      PaintLayer*,
+      CompositingStateTransitionType composited_layer_update);
 
-    bool inOverlayFullscreenVideo() const { return m_inOverlayFullscreenVideo; }
+  bool InOverlayFullscreenVideo() const { return in_overlay_fullscreen_video_; }
 
-private:
-#if ENABLE(ASSERT)
-    void assertNoUnresolvedDirtyBits();
+ private:
+#if DCHECK_IS_ON()
+  void AssertNoUnresolvedDirtyBits();
 #endif
 
-    void updateIfNeededRecursiveInternal();
+  void UpdateIfNeededRecursiveInternal();
 
-    // GraphicsLayerClient implementation
-    bool needsRepaint(const GraphicsLayer&) const { return true; }
-    IntRect computeInterestRect(const GraphicsLayer*, const IntRect&) const override;
-    void paintContents(const GraphicsLayer*, GraphicsContext&, GraphicsLayerPaintingPhase, const IntRect& interestRect) const override;
+  // GraphicsLayerClient implementation
+  bool NeedsRepaint(const GraphicsLayer&) const { return true; }
+  IntRect ComputeInterestRect(const GraphicsLayer*,
+                              const IntRect&) const override;
+  void PaintContents(const GraphicsLayer*,
+                     GraphicsContext&,
+                     GraphicsLayerPaintingPhase,
+                     const IntRect& interest_rect) const override;
 
-    bool isTrackingPaintInvalidations() const override;
+  bool IsTrackingRasterInvalidations() const override;
 
-    void updateWithoutAcceleratedCompositing(CompositingUpdateType);
-    void updateIfNeeded();
+  void UpdateWithoutAcceleratedCompositing(CompositingUpdateType);
+  void UpdateIfNeeded();
 
-    void ensureRootLayer();
-    void destroyRootLayer();
+  void EnsureRootLayer();
+  void DestroyRootLayer();
 
-    void attachRootLayer(RootLayerAttachment);
-    void detachRootLayer();
+  void AttachRootLayer();
+  void DetachRootLayer();
 
-    void attachCompositorTimeline();
-    void detachCompositorTimeline();
+  void AttachCompositorTimeline();
+  void DetachCompositorTimeline();
 
-    void updateOverflowControlsLayers();
+  void UpdateOverflowControlsLayers();
 
-    Page* page() const;
+  Page* GetPage() const;
 
-    ScrollingCoordinator* scrollingCoordinator() const;
+  ScrollingCoordinator* GetScrollingCoordinator() const;
 
-    void enableCompositingModeIfNeeded();
+  void EnableCompositingModeIfNeeded();
 
-    bool requiresHorizontalScrollbarLayer() const;
-    bool requiresVerticalScrollbarLayer() const;
-    bool requiresScrollCornerLayer() const;
+  bool RequiresHorizontalScrollbarLayer() const;
+  bool RequiresVerticalScrollbarLayer() const;
+  bool RequiresScrollCornerLayer() const;
+  void ShowScrollbarLayersIfNeeded();
 
-    void applyOverlayFullscreenVideoAdjustmentIfNeeded();
+  void ApplyOverlayFullscreenVideoAdjustmentIfNeeded();
 
-    // Checks the given graphics layer against the compositor's horizontal and vertical scrollbar
-    // graphics layers, returning the associated Scrollbar instance if any, else nullptr.
-    Scrollbar* graphicsLayerToScrollbar(const GraphicsLayer*) const;
+  void UpdateContainerSizes();
 
-    LayoutView& m_layoutView;
-    std::unique_ptr<GraphicsLayer> m_rootContentLayer;
+  // Checks the given graphics layer against the compositor's horizontal and
+  // vertical scrollbar graphics layers, returning the associated Scrollbar
+  // instance if any, else nullptr.
+  Scrollbar* GraphicsLayerToScrollbar(const GraphicsLayer*) const;
 
-    CompositingReasonFinder m_compositingReasonFinder;
+  bool IsMainFrame() const;
+  VisualViewport& GetVisualViewport() const;
+  GraphicsLayer* ParentForContentLayers() const;
 
-    CompositingUpdateType m_pendingUpdateType;
+  LayoutView& layout_view_;
 
-    bool m_hasAcceleratedCompositing;
-    bool m_compositing;
+  CompositingReasonFinder compositing_reason_finder_;
 
-    // The root layer doesn't composite if it's a non-scrollable frame.
-    // So, after a layout we set this dirty bit to know that we need
-    // to recompute whether the root layer should composite even if
-    // none of its descendants composite.
-    // FIXME: Get rid of all the callers of setCompositingModeEnabled
-    // except the one in updateIfNeeded, then rename this to
-    // m_compositingDirty.
-    bool m_rootShouldAlwaysCompositeDirty;
-    bool m_needsUpdateFixedBackground;
-    bool m_isTrackingPaintInvalidations; // Used for testing.
-    bool m_inOverlayFullscreenVideo;
-    bool m_needsUpdateDescendantDependentFlags;
+  CompositingUpdateType pending_update_type_;
 
-    RootLayerAttachment m_rootLayerAttachment;
+  bool has_accelerated_compositing_;
+  bool compositing_;
 
-    // Enclosing container layer, which clips for iframe content
-    std::unique_ptr<GraphicsLayer> m_containerLayer;
-    std::unique_ptr<GraphicsLayer> m_scrollLayer;
+  // The root layer doesn't composite if it's a non-scrollable frame.
+  // So, after a layout we set this dirty bit to know that we need
+  // to recompute whether the root layer should composite even if
+  // none of its descendants composite.
+  // FIXME: Get rid of all the callers of setCompositingModeEnabled
+  // except the one in updateIfNeeded, then rename this to
+  // m_compositingDirty.
+  bool root_should_always_composite_dirty_;
+  bool needs_update_fixed_background_;
+  bool is_tracking_raster_invalidations_;  // Used for testing.
+  bool in_overlay_fullscreen_video_;
 
-    // Enclosing layer for overflow controls and the clipping layer
-    std::unique_ptr<GraphicsLayer> m_overflowControlsHostLayer;
+  enum RootLayerAttachment {
+    kRootLayerUnattached,
+    kRootLayerPendingAttachViaChromeClient,
+    kRootLayerAttachedViaChromeClient,
+    kRootLayerAttachedViaEnclosingFrame
+  };
+  RootLayerAttachment root_layer_attachment_;
 
-    // Layers for overflow controls
-    std::unique_ptr<GraphicsLayer> m_layerForHorizontalScrollbar;
-    std::unique_ptr<GraphicsLayer> m_layerForVerticalScrollbar;
-    std::unique_ptr<GraphicsLayer> m_layerForScrollCorner;
+  // Outermost layer, holds overflow controls and the container layer
+  std::unique_ptr<GraphicsLayer> overflow_controls_host_layer_;
+
+  // Clips for iframe content
+  std::unique_ptr<GraphicsLayer> container_layer_;
+
+  // Scrolls with the FrameView
+  std::unique_ptr<GraphicsLayer> scroll_layer_;
+
+  // Innermost layer, parent of LayoutView main GraphicsLayer
+  std::unique_ptr<GraphicsLayer> root_content_layer_;
+
+  // Layers for overflow controls
+  std::unique_ptr<GraphicsLayer> layer_for_horizontal_scrollbar_;
+  std::unique_ptr<GraphicsLayer> layer_for_vertical_scrollbar_;
+  std::unique_ptr<GraphicsLayer> layer_for_scroll_corner_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintLayerCompositor_h
+#endif  // PaintLayerCompositor_h

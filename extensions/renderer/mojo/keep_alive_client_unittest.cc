@@ -5,9 +5,10 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "extensions/common/mojo/keep_alive.mojom.h"
+#include "extensions/grit/extensions_renderer_resources.h"
 #include "extensions/renderer/api_test_base.h"
-#include "grit/extensions_renderer_resources.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 // A test launcher for tests for the stash client defined in
@@ -20,23 +21,21 @@ namespace {
 // destruction.
 class TestKeepAlive : public KeepAlive {
  public:
-  TestKeepAlive(const base::Closure& on_destruction,
-                mojo::InterfaceRequest<KeepAlive> keep_alive)
-      : on_destruction_(on_destruction),
-        binding_(this, std::move(keep_alive)) {}
+  explicit TestKeepAlive(const base::Closure& on_destruction)
+      : on_destruction_(on_destruction) {}
 
   ~TestKeepAlive() override { on_destruction_.Run(); }
 
   static void Create(const base::Closure& on_creation,
                      const base::Closure& on_destruction,
-                     mojo::InterfaceRequest<KeepAlive> keep_alive) {
-    new TestKeepAlive(on_destruction, std::move(keep_alive));
+                     KeepAliveRequest keep_alive) {
+    mojo::MakeStrongBinding(base::MakeUnique<TestKeepAlive>(on_destruction),
+                            std::move(keep_alive));
     on_creation.Run();
   }
 
  private:
   const base::Closure on_destruction_;
-  mojo::StrongBinding<KeepAlive> binding_;
 };
 
 }  // namespace
@@ -47,7 +46,7 @@ class KeepAliveClientTest : public ApiTestBase {
 
   void SetUp() override {
     ApiTestBase::SetUp();
-    service_provider()->AddService(
+    interface_provider()->AddInterface(
         base::Bind(&TestKeepAlive::Create,
                    base::Bind(&KeepAliveClientTest::KeepAliveCreated,
                               base::Unretained(this)),

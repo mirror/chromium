@@ -20,11 +20,6 @@
 #include "components/history/core/browser/history_types.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 
-namespace bookmarks {
-class BookMarkModel;
-class BookMarkNode;
-}
-
 class Profile;
 
 class ProfileStatisticsAggregator
@@ -127,7 +122,7 @@ class ProfileStatisticsAggregator
         : parent_(parent) {}
 
     void OnGetPasswordStoreResults(
-        ScopedVector<autofill::PasswordForm> results) override;
+        std::vector<std::unique_ptr<autofill::PasswordForm>> results) override;
 
    private:
     ProfileStatisticsAggregator* parent_ = nullptr;

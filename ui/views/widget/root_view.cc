@@ -9,7 +9,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/ui_base_switches_util.h"
@@ -193,12 +193,6 @@ void RootView::SetContentsView(View* contents_view) {
   if (has_children())
     RemoveAllChildViews(true);
   AddChildView(contents_view);
-
-  // Force a layout now, since the attached hierarchy won't be ready for the
-  // containing window's bounds. Note that we call Layout directly rather than
-  // calling the widget's size changed handler, since the RootView's bounds may
-  // not have changed, which will cause the Layout not to be done otherwise.
-  Layout();
 }
 
 View* RootView::GetContentsView() {
@@ -252,8 +246,12 @@ View* RootView::GetFocusTraversableParentView() {
 ////////////////////////////////////////////////////////////////////////////////
 // RootView, ui::EventProcessor overrides:
 
-ui::EventTarget* RootView::GetRootTarget() {
+ui::EventTarget* RootView::GetRootForEvent(ui::Event* event) {
   return this;
+}
+
+ui::EventTargeter* RootView::GetDefaultEventTargeter() {
+  return this->GetEventTargeter();
 }
 
 void RootView::OnEventProcessingStarted(ui::Event* event) {
@@ -315,11 +313,6 @@ Widget* RootView::GetWidget() {
 
 bool RootView::IsDrawn() const {
   return visible();
-}
-
-void RootView::Layout() {
-  View::Layout();
-  widget_->OnRootViewLayout();
 }
 
 const char* RootView::GetClassName() const {
@@ -600,9 +593,9 @@ void RootView::SetMouseHandler(View* new_mh) {
   drag_info_.Reset();
 }
 
-void RootView::GetAccessibleState(ui::AXViewState* state) {
-  state->name = widget_->widget_delegate()->GetAccessibleWindowTitle();
-  state->role = widget_->widget_delegate()->GetAccessibleWindowRole();
+void RootView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->SetName(widget_->widget_delegate()->GetAccessibleWindowTitle());
+  node_data->role = widget_->widget_delegate()->GetAccessibleWindowRole();
 }
 
 void RootView::UpdateParentLayer() {
@@ -647,7 +640,7 @@ void RootView::VisibilityChanged(View* /*starting_from*/, bool is_visible) {
 
 void RootView::OnPaint(gfx::Canvas* canvas) {
   if (!layer() || !layer()->fills_bounds_opaquely())
-    canvas->DrawColor(SK_ColorBLACK, SkXfermode::kClear_Mode);
+    canvas->DrawColor(SK_ColorBLACK, SkBlendMode::kClear);
 
   View::OnPaint(canvas);
 }

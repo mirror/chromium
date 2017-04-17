@@ -3,8 +3,10 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
  *           (C) 2006 Alexey Proskuryakov (ap@webkit.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2011, 2012 Apple Inc. All rights reserved.
- * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2011, 2012 Apple Inc. All
+ * rights reserved.
+ * Copyright (C) 2008, 2009 Torch Mobile Inc. All rights reserved.
+ * (http://www.torchmobile.com/)
  * Copyright (C) 2008, 2009, 2011, 2012 Google Inc. All rights reserved.
  * Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies)
  * Copyright (C) 2013 Google Inc. All rights reserved.
@@ -31,40 +33,38 @@
 
 namespace blink {
 
-void DocumentOrderedList::add(Node* node)
-{
-    if (m_nodes.isEmpty()) {
-        m_nodes.add(node);
-        return;
+void DocumentOrderedList::Add(Node* node) {
+  if (nodes_.IsEmpty()) {
+    nodes_.insert(node);
+    return;
+  }
+
+  // Determine an appropriate insertion point.
+  iterator begin = nodes_.begin();
+  iterator end = nodes_.end();
+  iterator it = end;
+  Node* following_node = 0;
+  do {
+    --it;
+    Node* n = *it;
+    unsigned short position =
+        n->compareDocumentPosition(node, Node::kTreatShadowTreesAsComposed);
+    if (position & Node::kDocumentPositionFollowing) {
+      nodes_.InsertBefore(following_node, node);
+      return;
     }
+    following_node = n;
+  } while (it != begin);
 
-    // Determine an appropriate insertion point.
-    iterator begin = m_nodes.begin();
-    iterator end = m_nodes.end();
-    iterator it = end;
-    Node* followingNode = 0;
-    do {
-        --it;
-        Node* n = *it;
-        unsigned short position = n->compareDocumentPosition(node, Node::TreatShadowTreesAsComposed);
-        if (position & Node::DOCUMENT_POSITION_FOLLOWING) {
-            m_nodes.insertBefore(followingNode, node);
-            return;
-        }
-        followingNode = n;
-    } while (it != begin);
-
-    m_nodes.insertBefore(followingNode, node);
+  nodes_.InsertBefore(following_node, node);
 }
 
-void DocumentOrderedList::remove(const Node* node)
-{
-    m_nodes.remove(const_cast<Node*>(node));
+void DocumentOrderedList::Remove(const Node* node) {
+  nodes_.erase(const_cast<Node*>(node));
 }
 
-DEFINE_TRACE(DocumentOrderedList)
-{
-    visitor->trace(m_nodes);
+DEFINE_TRACE(DocumentOrderedList) {
+  visitor->Trace(nodes_);
 }
 
-} // namespace blink
+}  // namespace blink

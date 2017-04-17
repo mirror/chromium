@@ -11,6 +11,7 @@
 
 #include "base/bind.h"
 #include "base/lazy_instance.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/stl_util.h"
@@ -18,6 +19,7 @@
 #include "content/public/common/content_client.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/resource_fetcher.h"
+#include "content/renderer/mojo_bindings_controller.h"
 #include "content/renderer/mojo_main_runner.h"
 #include "gin/converter.h"
 #include "gin/modules/module_registry.h"
@@ -60,14 +62,30 @@ scoped_refptr<base::RefCountedMemory> GetBuiltinModuleData(
     const char* path;
     const int id;
   } kBuiltinModuleResources[] = {
-    { mojo::kBindingsModuleName, IDR_MOJO_BINDINGS_JS },
-    { mojo::kBufferModuleName, IDR_MOJO_BUFFER_JS },
-    { mojo::kCodecModuleName, IDR_MOJO_CODEC_JS },
-    { mojo::kConnectionModuleName, IDR_MOJO_CONNECTION_JS },
-    { mojo::kConnectorModuleName, IDR_MOJO_CONNECTOR_JS },
-    { mojo::kRouterModuleName, IDR_MOJO_ROUTER_JS },
-    { mojo::kUnicodeModuleName, IDR_MOJO_UNICODE_JS },
-    { mojo::kValidatorModuleName, IDR_MOJO_VALIDATOR_JS },
+      {mojo::kAssociatedBindingsModuleName, IDR_MOJO_ASSOCIATED_BINDINGS_JS},
+      {mojo::kBindingsModuleName, IDR_MOJO_BINDINGS_JS},
+      {mojo::kBufferModuleName, IDR_MOJO_BUFFER_JS},
+      {mojo::kCodecModuleName, IDR_MOJO_CODEC_JS},
+      {mojo::kConnectorModuleName, IDR_MOJO_CONNECTOR_JS},
+      {mojo::kControlMessageHandlerModuleName,
+       IDR_MOJO_CONTROL_MESSAGE_HANDLER_JS},
+      {mojo::kControlMessageProxyModuleName, IDR_MOJO_CONTROL_MESSAGE_PROXY_JS},
+      {mojo::kInterfaceControlMessagesMojom,
+       IDR_MOJO_INTERFACE_CONTROL_MESSAGES_MOJOM_JS},
+      {mojo::kInterfaceEndpointClientModuleName,
+       IDR_MOJO_INTERFACE_ENDPOINT_CLIENT_JS},
+      {mojo::kInterfaceEndpointHandleModuleName,
+       IDR_MOJO_INTERFACE_ENDPOINT_HANDLE_JS},
+      {mojo::kInterfaceTypesModuleName, IDR_MOJO_INTERFACE_TYPES_JS},
+      {mojo::kPipeControlMessageHandlerModuleName,
+       IDR_MOJO_PIPE_CONTROL_MESSAGE_HANDLER_JS},
+      {mojo::kPipeControlMessageProxyModuleName,
+       IDR_MOJO_PIPE_CONTROL_MESSAGE_PROXY_JS},
+      {mojo::kPipeControlMessagesMojom,
+       IDR_MOJO_PIPE_CONTROL_MESSAGES_MOJOM_JS},
+      {mojo::kRouterModuleName, IDR_MOJO_ROUTER_JS},
+      {mojo::kUnicodeModuleName, IDR_MOJO_UNICODE_JS},
+      {mojo::kValidatorModuleName, IDR_MOJO_VALIDATOR_JS},
   };
 
   std::unique_ptr<ModuleSourceMap>& module_sources = g_module_sources.Get();
@@ -90,17 +108,28 @@ scoped_refptr<base::RefCountedMemory> GetBuiltinModuleData(
   return source_iter->second;
 }
 
+std::string GetModulePrefixForBindingsType(MojoBindingsType bindings_type,
+                                           blink::WebFrame* frame) {
+  switch (bindings_type) {
+    case MojoBindingsType::FOR_WEB_UI:
+      return frame->GetSecurityOrigin().ToString().Utf8() + "/";
+    case MojoBindingsType::FOR_LAYOUT_TESTS:
+      return "layout-test-mojom://";
+    case MojoBindingsType::FOR_HEADLESS:
+      return "headless-mojom://";
+  }
+  NOTREACHED();
+  return "";
+}
+
 }  // namespace
 
 MojoContextState::MojoContextState(blink::WebFrame* frame,
                                    v8::Local<v8::Context> context,
-                                   bool for_layout_tests)
+                                   MojoBindingsType bindings_type)
     : frame_(frame),
       module_added_(false),
-      module_prefix_(for_layout_tests
-                         ? "layout-test-mojom://"
-                         : frame_->getSecurityOrigin().toString().utf8() +
-                               "/") {
+      module_prefix_(GetModulePrefixForBindingsType(bindings_type, frame)) {
   gin::PerContextData* context_data = gin::PerContextData::From(context);
   gin::ContextHolder* context_holder = context_data->context_holder();
   runner_.reset(new MojoMainRunner(frame_, context_holder));
@@ -109,14 +138,14 @@ MojoContextState::MojoContextState(blink::WebFrame* frame,
   content::RenderFrame::FromWebFrame(frame)
       ->EnsureMojoBuiltinsAreAvailable(context_holder->isolate(), context);
   v8::Local<v8::Object> install_target;
-  if (for_layout_tests) {
-    // In layout tests we install the module system under 'mojo.define'
+  if (bindings_type == MojoBindingsType::FOR_LAYOUT_TESTS) {
+    // In layout tests we install the module system under 'gin.define'
     // for now to avoid globally exposing something as generic as 'define'.
     //
     // TODO(rockot): Remove this if/when we can integrate gin + ES6 modules.
     install_target = v8::Object::New(context->GetIsolate());
     gin::SetProperty(context->GetIsolate(), context->Global(),
-                     gin::StringToSymbol(context->GetIsolate(), "mojo"),
+                     gin::StringToSymbol(context->GetIsolate(), "gin"),
                      install_target);
   } else {
     // Otherwise we're fine installing a global 'define'.
@@ -165,11 +194,8 @@ void MojoContextState::FetchModule(const std::string& id) {
   DCHECK(fetched_modules_.find(id) == fetched_modules_.end());
   fetched_modules_.insert(id);
   ResourceFetcher* fetcher = ResourceFetcher::Create(url);
-  module_fetchers_.push_back(fetcher);
-  fetcher->Start(frame_,
-                 blink::WebURLRequest::RequestContextScript,
-                 blink::WebURLRequest::FrameTypeNone,
-                 ResourceFetcher::PLATFORM_LOADER,
+  module_fetchers_.push_back(base::WrapUnique(fetcher));
+  fetcher->Start(frame_, blink::WebURLRequest::kRequestContextScript,
                  base::Bind(&MojoContextState::OnFetchModuleComplete,
                             base::Unretained(this), fetcher, id));
 }
@@ -179,16 +205,21 @@ void MojoContextState::OnFetchModuleComplete(
     const std::string& id,
     const blink::WebURLResponse& response,
     const std::string& data) {
-  if (response.isNull()) {
+  if (response.IsNull()) {
     LOG(ERROR) << "Failed to fetch source for module \"" << id << "\"";
     return;
   }
-  DCHECK_EQ(module_prefix_ + id, response.url().string().utf8());
+  DCHECK_EQ(module_prefix_ + id, response.Url().GetString().Utf8());
   // We can't delete fetch right now as the arguments to this function come from
   // it and are used below. Instead use a scope_ptr to cleanup.
-  std::unique_ptr<ResourceFetcher> deleter(fetcher);
-  module_fetchers_.weak_erase(
-      std::find(module_fetchers_.begin(), module_fetchers_.end(), fetcher));
+  auto iter =
+      std::find_if(module_fetchers_.begin(), module_fetchers_.end(),
+                   [fetcher](const std::unique_ptr<ResourceFetcher>& item) {
+                     return item.get() == fetcher;
+                   });
+  std::unique_ptr<ResourceFetcher> deleter = std::move(*iter);
+  module_fetchers_.erase(iter);
+
   if (data.empty()) {
     LOG(ERROR) << "Fetched empty source for module \"" << id << "\"";
     return;

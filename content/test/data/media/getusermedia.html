@@ -11,15 +11,17 @@
   });
 
   function getSources() {
-    MediaStreamTrack.getSources(function(devices) {
+    navigator.mediaDevices.enumerateDevices().then(function(devices) {
       document.title = 'Media devices available';
       var results = [];
       for (var device, i = 0; device = devices[i]; ++i) {
+        if (device.kind != "audioinput" && device.kind != "videoinput")
+          continue;
         results.push({
-          'id': device.id,
-          'kind': device.kind,
+          'id': device.deviceId,
+          'kind': device.kind == "audioinput" ? "audio" : "video",
           'label': device.label,
-          'facing': device.facing
+          'facing': ""
         });
       }
       sendValueToTest(JSON.stringify(results));
@@ -39,6 +41,15 @@
             waitForVideoToStop('local-view-1');
           });
         },
+        failedCallback);
+  }
+
+  // Requests getusermedia and expects it to succeed.
+  function getUserMediaAndExpectSuccess(constraints) {
+    console.log('Calling getUserMediaAndExpectSuccess.');
+    navigator.webkitGetUserMedia(
+        constraints,
+        reportTestSuccess,
         failedCallback);
   }
 
@@ -76,7 +87,7 @@
     navigator.webkitGetUserMedia(
         constraints,
         function(stream) {
-          var duplicate = new webkitMediaStream(stream);
+          var duplicate = new MediaStream(stream);
           assertEquals(stream.getVideoTracks().length, 1);
           assertEquals(duplicate.getVideoTracks().length, 1);
           assertEquals(stream.getVideoTracks()[0].id,
@@ -95,7 +106,7 @@
     navigator.webkitGetUserMedia(
         constraints,
         function(stream) {
-          var duplicate = new webkitMediaStream();
+          var duplicate = new MediaStream();
           duplicate.addTrack(stream.getVideoTracks()[0]);
           assertEquals(duplicate.getVideoTracks().length, 1);
           assertEquals(duplicate.getVideoTracks().length, 1);
@@ -115,7 +126,7 @@
     navigator.webkitGetUserMedia(
         constraints,
         function(stream) {
-          var duplicate = new webkitMediaStream();
+          var duplicate = new MediaStream();
           duplicate.addTrack(stream.getVideoTracks()[0].clone());
           assertEquals(duplicate.getVideoTracks().length, 1);
           assertEquals(duplicate.getVideoTracks().length, 1);
@@ -368,7 +379,7 @@
   function createAndRenderClone(stream) {
     // TODO(perkj):  --use-fake-device-for-media-stream do not currently
     // work with audio devices and not all bots has a microphone.
-    newStream = new webkitMediaStream();
+    newStream = new MediaStream();
     newStream.addTrack(stream.getVideoTracks()[0]);
     assertEquals(newStream.getVideoTracks().length, 1);
     if (stream.getAudioTracks().length > 0) {

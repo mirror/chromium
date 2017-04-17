@@ -44,14 +44,8 @@ bool TraceMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(TracingHostMsg_EndTracingAck, OnEndTracingAck)
     IPC_MESSAGE_HANDLER(TracingHostMsg_TraceDataCollected,
                         OnTraceDataCollected)
-    IPC_MESSAGE_HANDLER(TracingHostMsg_WatchEventMatched,
-                        OnWatchEventMatched)
     IPC_MESSAGE_HANDLER(TracingHostMsg_TraceLogStatusReply,
                         OnTraceLogStatusReply)
-    IPC_MESSAGE_HANDLER(TracingHostMsg_GlobalMemoryDumpRequest,
-                        OnGlobalMemoryDumpRequest)
-    IPC_MESSAGE_HANDLER(TracingHostMsg_ProcessMemoryDumpResponse,
-                        OnProcessMemoryDumpResponse)
     IPC_MESSAGE_HANDLER(TracingHostMsg_TriggerBackgroundTrace,
                         OnTriggerBackgroundTrace)
     IPC_MESSAGE_HANDLER(TracingHostMsg_AbortBackgroundTrace,
@@ -89,27 +83,6 @@ void TraceMessageFilter::SendGetTraceLogStatus() {
   Send(new TracingMsg_GetTraceLogStatus);
 }
 
-void TraceMessageFilter::SendSetWatchEvent(const std::string& category_name,
-                                           const std::string& event_name) {
-  Send(new TracingMsg_SetWatchEvent(category_name, event_name));
-}
-
-void TraceMessageFilter::SendCancelWatchEvent() {
-  Send(new TracingMsg_CancelWatchEvent);
-}
-
-// Called by TracingControllerImpl, which handles the multiprocess coordination.
-void TraceMessageFilter::SendProcessMemoryDumpRequest(
-    const base::trace_event::MemoryDumpRequestArgs& args) {
-  Send(new TracingMsg_ProcessMemoryDumpRequest(args));
-}
-
-// Called by TracingControllerImpl, which handles the multiprocess coordination.
-void TraceMessageFilter::SendGlobalMemoryDumpResponse(uint64_t dump_guid,
-                                                      bool success) {
-  Send(new TracingMsg_GlobalMemoryDumpResponse(dump_guid, success));
-}
-
 void TraceMessageFilter::OnChildSupportsTracing() {
   has_child_ = true;
   TracingControllerImpl::GetInstance()->AddTraceMessageFilter(this);
@@ -134,10 +107,6 @@ void TraceMessageFilter::OnTraceDataCollected(const std::string& data) {
   TracingControllerImpl::GetInstance()->OnTraceDataCollected(data_ptr);
 }
 
-void TraceMessageFilter::OnWatchEventMatched() {
-  TracingControllerImpl::GetInstance()->OnWatchEventMatched();
-}
-
 void TraceMessageFilter::OnTraceLogStatusReply(
     const base::trace_event::TraceLogStatus& status) {
   if (is_awaiting_buffer_percent_full_ack_) {
@@ -146,19 +115,6 @@ void TraceMessageFilter::OnTraceLogStatusReply(
   } else {
     NOTREACHED();
   }
-}
-
-void TraceMessageFilter::OnGlobalMemoryDumpRequest(
-    const base::trace_event::MemoryDumpRequestArgs& args) {
-  TracingControllerImpl::GetInstance()->RequestGlobalMemoryDump(
-      args,
-      base::Bind(&TraceMessageFilter::SendGlobalMemoryDumpResponse, this));
-}
-
-void TraceMessageFilter::OnProcessMemoryDumpResponse(uint64_t dump_guid,
-                                                     bool success) {
-  TracingControllerImpl::GetInstance()->OnProcessMemoryDumpResponse(
-      this, dump_guid, success);
 }
 
 void TraceMessageFilter::OnTriggerBackgroundTrace(const std::string& name) {

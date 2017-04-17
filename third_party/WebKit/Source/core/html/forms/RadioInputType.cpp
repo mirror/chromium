@@ -36,190 +36,213 @@ namespace blink {
 
 namespace {
 
-HTMLInputElement* nextInputElement(const HTMLInputElement& element, const HTMLFormElement* stayWithin, bool forward)
-{
-    return forward ? Traversal<HTMLInputElement>::next(element, stayWithin) : Traversal<HTMLInputElement>::previous(element, stayWithin);
+HTMLInputElement* NextInputElement(const HTMLInputElement& element,
+                                   const HTMLFormElement* stay_within,
+                                   bool forward) {
+  return forward ? Traversal<HTMLInputElement>::Next(element, stay_within)
+                 : Traversal<HTMLInputElement>::Previous(element, stay_within);
 }
 
-} // namespace
+}  // namespace
 
 using namespace HTMLNames;
 
-InputType* RadioInputType::create(HTMLInputElement& element)
-{
-    return new RadioInputType(element);
+InputType* RadioInputType::Create(HTMLInputElement& element) {
+  return new RadioInputType(element);
 }
 
-const AtomicString& RadioInputType::formControlType() const
-{
-    return InputTypeNames::radio;
+const AtomicString& RadioInputType::FormControlType() const {
+  return InputTypeNames::radio;
 }
 
-bool RadioInputType::valueMissing(const String&) const
-{
-    return element().isInRequiredRadioButtonGroup() && !element().checkedRadioButtonForGroup();
+bool RadioInputType::ValueMissing(const String&) const {
+  return GetElement().IsInRequiredRadioButtonGroup() &&
+         !GetElement().CheckedRadioButtonForGroup();
 }
 
-String RadioInputType::valueMissingText() const
-{
-    return locale().queryString(WebLocalizedString::ValidationValueMissingForRadio);
+String RadioInputType::ValueMissingText() const {
+  return GetLocale().QueryString(
+      WebLocalizedString::kValidationValueMissingForRadio);
 }
 
-void RadioInputType::handleClickEvent(MouseEvent* event)
-{
-    event->setDefaultHandled();
+void RadioInputType::HandleClickEvent(MouseEvent* event) {
+  event->SetDefaultHandled();
 }
 
-HTMLInputElement* RadioInputType::findNextFocusableRadioButtonInGroup(HTMLInputElement* currentElement, bool forward)
-{
-    for (HTMLInputElement* inputElement = nextRadioButtonInGroup(currentElement, forward); inputElement; inputElement = nextRadioButtonInGroup(inputElement, forward)) {
-        if (inputElement->isFocusable())
-            return inputElement;
+HTMLInputElement* RadioInputType::FindNextFocusableRadioButtonInGroup(
+    HTMLInputElement* current_element,
+    bool forward) {
+  for (HTMLInputElement* input_element =
+           NextRadioButtonInGroup(current_element, forward);
+       input_element;
+       input_element = NextRadioButtonInGroup(input_element, forward)) {
+    if (input_element->IsFocusable())
+      return input_element;
+  }
+  return nullptr;
+}
+
+void RadioInputType::HandleKeydownEvent(KeyboardEvent* event) {
+  // TODO(tkent): We should return more earlier.
+  if (!GetElement().GetLayoutObject())
+    return;
+  BaseCheckableInputType::HandleKeydownEvent(event);
+  if (event->DefaultHandled())
+    return;
+  const String& key = event->key();
+  if (key != "ArrowUp" && key != "ArrowDown" && key != "ArrowLeft" &&
+      key != "ArrowRight")
+    return;
+
+  if (event->ctrlKey() || event->metaKey() || event->altKey())
+    return;
+
+  // Left and up mean "previous radio button".
+  // Right and down mean "next radio button".
+  // Tested in WinIE, and even for RTL, left still means previous radio button
+  // (and so moves to the right). Seems strange, but we'll match it. However,
+  // when using Spatial Navigation, we need to be able to navigate without
+  // changing the selection.
+  Document& document = GetElement().GetDocument();
+  if (IsSpatialNavigationEnabled(document.GetFrame()))
+    return;
+  bool forward = ComputedTextDirection() == TextDirection::kRtl
+                     ? (key == "ArrowDown" || key == "ArrowLeft")
+                     : (key == "ArrowDown" || key == "ArrowRight");
+
+  // Force layout for isFocusable() in findNextFocusableRadioButtonInGroup().
+  document.UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  // We can only stay within the form's children if the form hasn't been demoted
+  // to a leaf because of malformed HTML.
+  HTMLInputElement* input_element =
+      FindNextFocusableRadioButtonInGroup(&GetElement(), forward);
+  if (!input_element) {
+    // Traverse in reverse direction till last or first radio button
+    forward = !(forward);
+    HTMLInputElement* next_input_element =
+        FindNextFocusableRadioButtonInGroup(&GetElement(), forward);
+    while (next_input_element) {
+      input_element = next_input_element;
+      next_input_element =
+          FindNextFocusableRadioButtonInGroup(next_input_element, forward);
     }
-    return nullptr;
+  }
+  if (input_element) {
+    document.SetFocusedElement(input_element,
+                               FocusParams(SelectionBehaviorOnFocus::kRestore,
+                                           kWebFocusTypeNone, nullptr));
+    input_element->DispatchSimulatedClick(event, kSendNoEvents);
+    event->SetDefaultHandled();
+    return;
+  }
 }
 
-void RadioInputType::handleKeydownEvent(KeyboardEvent* event)
-{
-    // TODO(tkent): We should return more earlier.
-    if (!element().layoutObject())
-        return;
-    BaseCheckableInputType::handleKeydownEvent(event);
-    if (event->defaultHandled())
-        return;
-    const String& key = event->key();
-    if (key != "ArrowUp" && key != "ArrowDown" && key != "ArrowLeft" && key != "ArrowRight")
-        return;
-
-    if (event->ctrlKey() || event->metaKey() || event->altKey())
-        return;
-
-    // Left and up mean "previous radio button".
-    // Right and down mean "next radio button".
-    // Tested in WinIE, and even for RTL, left still means previous radio button
-    // (and so moves to the right). Seems strange, but we'll match it. However,
-    // when using Spatial Navigation, we need to be able to navigate without
-    // changing the selection.
-    Document& document = element().document();
-    if (isSpatialNavigationEnabled(document.frame()))
-        return;
-    bool forward = computedTextDirection() == RTL ? (key == "ArrowDown" || key == "ArrowLeft") : (key == "ArrowDown" || key == "ArrowRight");
-
-    // We can only stay within the form's children if the form hasn't been demoted to a leaf because
-    // of malformed HTML.
-    HTMLInputElement* inputElement = findNextFocusableRadioButtonInGroup(toHTMLInputElement(&element()), forward);
-    if (!inputElement) {
-        // Traverse in reverse direction till last or first radio button
-        forward = !(forward);
-        HTMLInputElement* nextInputElement = findNextFocusableRadioButtonInGroup(toHTMLInputElement(&element()), forward);
-        while (nextInputElement) {
-            inputElement = nextInputElement;
-            nextInputElement = findNextFocusableRadioButtonInGroup(nextInputElement, forward);
-        }
-    }
-    if (inputElement) {
-        document.setFocusedElement(inputElement, FocusParams(SelectionBehaviorOnFocus::None, WebFocusTypeNone, nullptr));
-        inputElement->dispatchSimulatedClick(event, SendNoEvents);
-        event->setDefaultHandled();
-        return;
-    }
+void RadioInputType::HandleKeyupEvent(KeyboardEvent* event) {
+  const String& key = event->key();
+  if (key != " ")
+    return;
+  // If an unselected radio is tabbed into (because the entire group has nothing
+  // checked, or because of some explicit .focus() call), then allow space to
+  // check it.
+  if (GetElement().checked())
+    return;
+  DispatchSimulatedClickIfActive(event);
 }
 
-void RadioInputType::handleKeyupEvent(KeyboardEvent* event)
-{
-    const String& key = event->key();
-    if (key != " ")
-        return;
-    // If an unselected radio is tabbed into (because the entire group has nothing
-    // checked, or because of some explicit .focus() call), then allow space to check it.
-    if (element().checked())
-        return;
-    dispatchSimulatedClickIfActive(event);
+bool RadioInputType::IsKeyboardFocusable() const {
+  if (!InputType::IsKeyboardFocusable())
+    return false;
+
+  // When using Spatial Navigation, every radio button should be focusable.
+  if (IsSpatialNavigationEnabled(GetElement().GetDocument().GetFrame()))
+    return true;
+
+  // Never allow keyboard tabbing to leave you in the same radio group. Always
+  // skip any other elements in the group.
+  Element* current_focused_element =
+      GetElement().GetDocument().FocusedElement();
+  if (isHTMLInputElement(current_focused_element)) {
+    HTMLInputElement& focused_input =
+        toHTMLInputElement(*current_focused_element);
+    if (focused_input.type() == InputTypeNames::radio &&
+        focused_input.Form() == GetElement().Form() &&
+        focused_input.GetName() == GetElement().GetName())
+      return false;
+  }
+
+  // Allow keyboard focus if we're checked or if nothing in the group is
+  // checked.
+  return GetElement().checked() || !GetElement().CheckedRadioButtonForGroup();
 }
 
-bool RadioInputType::isKeyboardFocusable() const
-{
-    if (!InputType::isKeyboardFocusable())
-        return false;
-
-    // When using Spatial Navigation, every radio button should be focusable.
-    if (isSpatialNavigationEnabled(element().document().frame()))
-        return true;
-
-    // Never allow keyboard tabbing to leave you in the same radio group. Always
-    // skip any other elements in the group.
-    Element* currentFocusedElement = element().document().focusedElement();
-    if (isHTMLInputElement(currentFocusedElement)) {
-        HTMLInputElement& focusedInput = toHTMLInputElement(*currentFocusedElement);
-        if (focusedInput.type() == InputTypeNames::radio && focusedInput.form() == element().form() && focusedInput.name() == element().name())
-            return false;
-    }
-
-    // Allow keyboard focus if we're checked or if nothing in the group is checked.
-    return element().checked() || !element().checkedRadioButtonForGroup();
+bool RadioInputType::ShouldSendChangeEventAfterCheckedChanged() {
+  // Don't send a change event for a radio button that's getting unchecked.
+  // This was done to match the behavior of other browsers.
+  return GetElement().checked();
 }
 
-bool RadioInputType::shouldSendChangeEventAfterCheckedChanged()
-{
-    // Don't send a change event for a radio button that's getting unchecked.
-    // This was done to match the behavior of other browsers.
-    return element().checked();
+ClickHandlingState* RadioInputType::WillDispatchClick() {
+  // An event handler can use preventDefault or "return false" to reverse the
+  // selection we do here.  The ClickHandlingState object contains what we need
+  // to undo what we did here in didDispatchClick.
+
+  // We want radio groups to end up in sane states, i.e., to have something
+  // checked.  Therefore if nothing is currently selected, we won't allow the
+  // upcoming action to be "undone", since we want some object in the radio
+  // group to actually get selected.
+
+  ClickHandlingState* state = new ClickHandlingState;
+
+  state->checked = GetElement().checked();
+  state->checked_radio_button = GetElement().CheckedRadioButtonForGroup();
+  GetElement().setChecked(true, kDispatchChangeEvent);
+  is_in_click_handler_ = true;
+  return state;
 }
 
-ClickHandlingState* RadioInputType::willDispatchClick()
-{
-    // An event handler can use preventDefault or "return false" to reverse the selection we do here.
-    // The ClickHandlingState object contains what we need to undo what we did here in didDispatchClick.
-
-    // We want radio groups to end up in sane states, i.e., to have something checked.
-    // Therefore if nothing is currently selected, we won't allow the upcoming action to be "undone", since
-    // we want some object in the radio group to actually get selected.
-
-    ClickHandlingState* state = new ClickHandlingState;
-
-    state->checked = element().checked();
-    state->checkedRadioButton = element().checkedRadioButtonForGroup();
-    element().setChecked(true, DispatchChangeEvent);
-    m_isInClickHandler = true;
-    return state;
+void RadioInputType::DidDispatchClick(Event* event,
+                                      const ClickHandlingState& state) {
+  if (event->defaultPrevented() || event->DefaultHandled()) {
+    // Restore the original selected radio button if possible.
+    // Make sure it is still a radio button and only do the restoration if it
+    // still belongs to our group.
+    HTMLInputElement* checked_radio_button = state.checked_radio_button.Get();
+    if (!checked_radio_button)
+      GetElement().setChecked(false);
+    else if (checked_radio_button->type() == InputTypeNames::radio &&
+             checked_radio_button->Form() == GetElement().Form() &&
+             checked_radio_button->GetName() == GetElement().GetName())
+      checked_radio_button->setChecked(true);
+  } else if (state.checked != GetElement().checked()) {
+    GetElement().DispatchChangeEventIfNeeded();
+  }
+  is_in_click_handler_ = false;
+  // The work we did in willDispatchClick was default handling.
+  event->SetDefaultHandled();
 }
 
-void RadioInputType::didDispatchClick(Event* event, const ClickHandlingState& state)
-{
-    if (event->defaultPrevented() || event->defaultHandled()) {
-        // Restore the original selected radio button if possible.
-        // Make sure it is still a radio button and only do the restoration if it still belongs to our group.
-        HTMLInputElement* checkedRadioButton = state.checkedRadioButton.get();
-        if (!checkedRadioButton)
-            element().setChecked(false);
-        else if (checkedRadioButton->type() == InputTypeNames::radio
-            && checkedRadioButton->form() == element().form()
-            && checkedRadioButton->name() == element().name())
-            checkedRadioButton->setChecked(true);
-    } else if (state.checked != element().checked()) {
-        element().dispatchChangeEventIfNeeded();
-    }
-    m_isInClickHandler = false;
-    // The work we did in willDispatchClick was default handling.
-    event->setDefaultHandled();
+bool RadioInputType::ShouldAppearIndeterminate() const {
+  return !GetElement().CheckedRadioButtonForGroup();
 }
 
-bool RadioInputType::shouldAppearIndeterminate() const
-{
-    return !element().checkedRadioButtonForGroup();
+HTMLInputElement* RadioInputType::NextRadioButtonInGroup(
+    HTMLInputElement* current,
+    bool forward) {
+  // TODO(tkent): Staying within form() is incorrect.  This code ignore input
+  // elements associated by |form| content attribute.
+  // TODO(tkent): Comparing name() with == is incorrect.  It should be
+  // case-insensitive.
+  for (HTMLInputElement* input_element =
+           NextInputElement(*current, current->Form(), forward);
+       input_element; input_element = NextInputElement(
+                          *input_element, current->Form(), forward)) {
+    if (current->Form() == input_element->Form() &&
+        input_element->type() == InputTypeNames::radio &&
+        input_element->GetName() == current->GetName())
+      return input_element;
+  }
+  return nullptr;
 }
 
-HTMLInputElement* RadioInputType::nextRadioButtonInGroup(HTMLInputElement* current, bool forward)
-{
-    // TODO(tkent): Staying within form() is incorrect.  This code ignore input
-    // elements associated by |form| content attribute.
-    // TODO(tkent): Comparing name() with == is incorrect.  It should be
-    // case-insensitive.
-    for (HTMLInputElement* inputElement = nextInputElement(*current, current->form(), forward); inputElement; inputElement = nextInputElement(*inputElement, current->form(), forward)) {
-        if (current->form() == inputElement->form() && inputElement->type() == InputTypeNames::radio && inputElement->name() == current->name())
-            return inputElement;
-    }
-    return nullptr;
-}
-
-} // namespace blink
+}  // namespace blink

@@ -30,40 +30,47 @@
 
 namespace blink {
 
-class InsertTextCommand final : public CompositeEditCommand {
-public:
-    enum RebalanceType {
-        RebalanceLeadingAndTrailingWhitespaces,
-        RebalanceAllWhitespaces
-    };
+class CORE_EXPORT InsertTextCommand : public CompositeEditCommand {
+ public:
+  enum RebalanceType {
+    kRebalanceLeadingAndTrailingWhitespaces,
+    kRebalanceAllWhitespaces
+  };
 
-    static InsertTextCommand* create(Document& document, const String& text, bool selectInsertedText = false,
-        RebalanceType rebalanceType = RebalanceLeadingAndTrailingWhitespaces)
-    {
-        return new InsertTextCommand(document, text, selectInsertedText, rebalanceType);
-    }
+  static InsertTextCommand* Create(
+      Document& document,
+      const String& text,
+      bool select_inserted_text = false,
+      RebalanceType rebalance_type = kRebalanceLeadingAndTrailingWhitespaces) {
+    return new InsertTextCommand(document, text, select_inserted_text,
+                                 rebalance_type);
+  }
 
-    String textDataForInputEvent() const final;
+  String TextDataForInputEvent() const final;
 
-private:
-    InsertTextCommand(Document&, const String& text, bool selectInsertedText, RebalanceType);
+ protected:
+  InsertTextCommand(Document&,
+                    const String& text,
+                    bool select_inserted_text,
+                    RebalanceType);
 
-    void doApply(EditingState*) override;
+  void DoApply(EditingState*) override;
 
-    Position positionInsideTextNode(const Position&, EditingState*);
-    Position insertTab(const Position&, EditingState*);
+  Position PositionInsideTextNode(const Position&, EditingState*);
+  Position InsertTab(const Position&, EditingState*);
 
-    bool performTrivialReplace(const String&, bool selectInsertedText);
-    bool performOverwrite(const String&, bool selectInsertedText);
-    void setEndingSelectionWithoutValidation(const Position& startPosition, const Position& endPosition);
+  bool PerformTrivialReplace(const String&, bool select_inserted_text);
+  bool PerformOverwrite(const String&, bool select_inserted_text);
+  void SetEndingSelectionWithoutValidation(const Position& start_position,
+                                           const Position& end_position);
 
-    friend class TypingCommand;
+  friend class TypingCommand;
 
-    String m_text;
-    bool m_selectInsertedText;
-    RebalanceType m_rebalanceType;
+  String text_;
+  bool select_inserted_text_;
+  RebalanceType rebalance_type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InsertTextCommand_h
+#endif  // InsertTextCommand_h

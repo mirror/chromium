@@ -4,11 +4,10 @@
 
 #include <stddef.h>
 
-#include "ash/common/system/tray/system_tray.h"
-#include "ash/common/wm_shell.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
 #include "ash/sticky_keys/sticky_keys_overlay.h"
+#include "ash/system/tray/system_tray.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
@@ -51,12 +50,14 @@ class StickyKeysBrowserTest : public InProcessBrowserTest {
   }
 
   ash::SystemTray* GetSystemTray() {
-    return ash::Shell::GetInstance()->GetPrimarySystemTray();
+    return ash::Shell::Get()->GetPrimarySystemTray();
   }
 
   void SendKeyPress(ui::KeyboardCode key) {
     event_generator_->PressKey(key, ui::EF_NONE);
+    content::RunAllPendingInMessageLoop();
     event_generator_->ReleaseKey(key, ui::EF_NONE);
+    content::RunAllPendingInMessageLoop();
   }
 
   content::NotificationRegistrar registrar_;
@@ -157,11 +158,11 @@ IN_PROC_BROWSER_TEST_F(StickyKeysBrowserTest, SearchLeftOmnibox) {
       browser()->window()->GetLocationBar()->GetOmniboxView();
 
   // Give the omnibox focus.
-  omnibox->ShowURL();
+  omnibox->SetFocus();
 
-  // Make sure that the AppList is not erronously displayed and the omnibox
-  // doesn't lost focus
-  EXPECT_FALSE(ash::WmShell::Get()->GetAppListTargetVisibility());
+  // Make sure that the AppList is not erroneously displayed and the omnibox
+  // doesn't lose focus.
+  EXPECT_FALSE(ash::Shell::Get()->GetAppListTargetVisibility());
   EXPECT_TRUE(omnibox->GetNativeView()->HasFocus());
 
   // Type 'foo'.
@@ -175,14 +176,14 @@ IN_PROC_BROWSER_TEST_F(StickyKeysBrowserTest, SearchLeftOmnibox) {
   ASSERT_EQ(3U, start);
   ASSERT_EQ(3U, end);
 
-  EXPECT_FALSE(ash::WmShell::Get()->GetAppListTargetVisibility());
+  EXPECT_FALSE(ash::Shell::Get()->GetAppListTargetVisibility());
   EXPECT_TRUE(omnibox->GetNativeView()->HasFocus());
 
   // Hit Home by sequencing Search (left Windows) and Left (arrow).
   SendKeyPress(ui::VKEY_LWIN);
   SendKeyPress(ui::VKEY_LEFT);
 
-  EXPECT_FALSE(ash::WmShell::Get()->GetAppListTargetVisibility());
+  EXPECT_FALSE(ash::Shell::Get()->GetAppListTargetVisibility());
   EXPECT_TRUE(omnibox->GetNativeView()->HasFocus());
 
   // Verify caret moved to the beginning.
@@ -199,7 +200,7 @@ IN_PROC_BROWSER_TEST_F(StickyKeysBrowserTest, OverlayShown) {
 
   // Overlay should not be visible if sticky keys is not enabled.
   ash::StickyKeysController* controller =
-      ash::Shell::GetInstance()->sticky_keys_controller();
+      ash::Shell::Get()->sticky_keys_controller();
   EXPECT_FALSE(controller->GetOverlayForTest());
   for (auto key_code : modifier_keys) {
     SendKeyPress(key_code);

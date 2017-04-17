@@ -7,10 +7,6 @@
 
 #include "base/macros.h"
 
-namespace gl {
-class GLContext;
-}
-
 namespace android_webview {
 
 namespace internal {
@@ -43,6 +39,8 @@ class ScopedAppGLStateRestore {
     MODE_DRAW,
     MODE_RESOURCE_MANAGEMENT,
   };
+
+  static ScopedAppGLStateRestore* Current();
 
   explicit ScopedAppGLStateRestore(CallMode mode);
   ~ScopedAppGLStateRestore();

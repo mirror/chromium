@@ -9,33 +9,67 @@ goog.provide('__crWeb.common');
 goog.require('__crWeb.base');
 
 
+/** @typedef {HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement} */
+var FormControlElement;
+
 /**
  * Namespace for this file. It depends on |__gCrWeb| having already been
  * injected. String 'common' is used in |__gCrWeb['common']| as it needs to be
  * accessed in Objective-C code.
  */
-__gCrWeb['common'] = {};
+__gCrWeb.common = {};
+
+// Store common namespace object in a global __gCrWeb object referenced by a
+// string, so it does not get renamed by closure compiler during the
+// minification.
+__gCrWeb['common'] = __gCrWeb.common;
 
 /* Beginning of anonymous object. */
 (function() {
+
   /**
    * JSON safe object to protect against custom implementation of Object.toJSON
    * in host pages.
    * @constructor
    */
-  __gCrWeb['common'].JSONSafeObject = function JSONSafeObject() {
+  __gCrWeb.common.JSONSafeObject = function JSONSafeObject() {
   };
 
   /**
    * Protect against custom implementation of Object.toJSON in host pages.
    */
-  __gCrWeb['common'].JSONSafeObject.prototype.toJSON = null;
+  __gCrWeb.common.JSONSafeObject.prototype['toJSON'] = null;
 
   /**
    * Retain the original JSON.stringify method where possible to reduce the
    * impact of sites overriding it
    */
   __gCrWeb.common.JSONStringify = JSON.stringify;
+
+  /**
+   * Returns a string that is formatted according to the JSON syntax rules.
+   * This is equivalent to the built-in JSON.stringify() function, but is
+   * less likely to be overridden by the website itself.  Prefer the private
+   * {@code __gcrWeb.common.JSONStringify} whenever possible instead of using
+   * this public function. The |__gCrWeb| object itself does not use it; it uses
+   * its private counterpart instead.
+   */
+  __gCrWeb['stringify'] = function(value) {
+    if (value === null)
+      return 'null';
+    if (value === undefined)
+       return 'undefined';
+    if (typeof(value.toJSON) == 'function') {
+      // Prevents websites from changing stringify's behavior by adding the
+      // method toJSON() by temporarily removing it.
+      var originalToJSON = value.toJSON;
+      value.toJSON = undefined;
+      var stringifiedValue = __gCrWeb.common.JSONStringify(value);
+      value.toJSON = originalToJSON;
+      return stringifiedValue;
+    }
+    return __gCrWeb.common.JSONStringify(value);
+  };
 
   /**
    * Prefix used in references to form elements that have no 'id' or 'name'
@@ -89,7 +123,7 @@ __gCrWeb['common'] = {};
    *
    * @param {Element} form A form element for which the control elements are
    *   returned.
-   * @return {Array<Element>}
+   * @return {Array<FormControlElement>}
    */
   __gCrWeb.common.getFormControlElements = function(form) {
     if (!form) {
@@ -111,7 +145,7 @@ __gCrWeb['common'] = {};
     var elements = form.elements;
     for (var i = 0; i < elements.length; i++) {
       if (__gCrWeb.common.isFormControlElement(elements[i])) {
-        results.push(elements[i]);
+        results.push(/** @type {FormControlElement} */ (elements[i]));
       }
     }
     return results;
@@ -561,7 +595,8 @@ __gCrWeb['common'] = {};
    */
   __gCrWeb.common.createAndDispatchHTMLEvent = function(
       element, type, bubbles, cancelable) {
-    var changeEvent = element.ownerDocument.createEvent('HTMLEvents');
+    var changeEvent =
+        /** @type {!Event} */(element.ownerDocument.createEvent('HTMLEvents'));
     changeEvent.initEvent(type, bubbles, cancelable);
 
     // A timer is used to avoid reentering JavaScript evaluation.
@@ -578,7 +613,7 @@ __gCrWeb['common'] = {};
   __gCrWeb.common.getFavicons = function() {
     var favicons = [];
     var hasFavicon = false;
-    favicons.toJSON = null;  // Never inherit Array.prototype.toJSON.
+    delete favicons.toJSON;  // Never inherit Array.prototype.toJSON.
     var links = document.getElementsByTagName('link');
     var linkCount = links.length;
     for (var i = 0; i < linkCount; ++i) {
@@ -641,15 +676,15 @@ __gCrWeb['common'] = {};
   /**
    * Returns a list of plugin elements in the document that have no fallback
    * content. For nested plugins, only the innermost plugin element is returned.
-   * @return {Array} A list of plugin elements.
+   * @return {!Array<!HTMLElement>} A list of plugin elements.
    * @private
    */
   var findPluginNodesWithoutFallback_ = function() {
-    var pluginNodes = [];
+    var i, pluginNodes = [];
     var objects = document.getElementsByTagName('object');
     var objectCount = objects.length;
-    for (var i = 0; i < objectCount; i++) {
-      var object = objects[i];
+    for (i = 0; i < objectCount; i++) {
+      var object = /** @type {!HTMLElement} */(objects[i]);
       if (objectNodeIsPlugin_(object) &&
           !pluginHasFallbackContent_(object)) {
         pluginNodes.push(object);
@@ -657,8 +692,8 @@ __gCrWeb['common'] = {};
     }
     var applets = document.getElementsByTagName('applet');
     var appletsCount = applets.length;
-    for (var i = 0; i < appletsCount; i++) {
-      var applet = applets[i];
+    for (i = 0; i < appletsCount; i++) {
+      var applet = /** @type {!HTMLElement} */(applets[i]);
       if (!pluginHasFallbackContent_(applet)) {
         pluginNodes.push(applet);
       }
@@ -680,4 +715,5 @@ __gCrWeb['common'] = {};
     }
     return false;
   };
+
 }());  // End of anonymous object

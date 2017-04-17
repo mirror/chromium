@@ -34,7 +34,7 @@ class TestPersonalDataManager : public PersonalDataManager {
   void AddTestingServerCreditCard(const CreditCard& credit_card);
 
   const std::vector<AutofillProfile*>& GetProfiles() const override;
-  const std::vector<AutofillProfile*>& web_profiles() const override;
+  std::vector<AutofillProfile*> web_profiles() const override;
   const std::vector<CreditCard*>& GetCreditCards() const override;
 
   std::string SaveImportedProfile(
@@ -56,6 +56,9 @@ class TestPersonalDataManager : public PersonalDataManager {
   const CreditCard& imported_credit_card() { return imported_credit_card_; }
 
  private:
+  const std::vector<AutofillProfile*>& GetProfiles(
+      bool record_metrics) const override;
+
   std::vector<AutofillProfile*> profiles_;
   std::vector<CreditCard*> credit_cards_;
   AutofillProfile imported_profile_;

@@ -11,6 +11,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/app/chrome_command_ids.h"  // IDC_HISTORY_MENU
 #include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
@@ -18,8 +19,8 @@
 #include "chrome/browser/sessions/tab_restore_service_factory.h"
 #import "chrome/browser/ui/cocoa/history_menu_cocoa_controller.h"
 #include "chrome/grit/generated_resources.h"
-#include "grit/components_scaled_resources.h"
-#include "grit/theme_resources.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
@@ -104,6 +105,7 @@ HistoryMenuBridge::HistoryMenuBridge(Profile* profile)
   NSMenuItem* item = [HistoryMenu() itemWithTag:IDC_SHOW_HISTORY];
   [item setImage:rb.GetNativeImageNamed(IDR_HISTORY_FAVICON).ToNSImage()];
 
+  [HistoryMenu() setDelegate:controller_];
 }
 
 // Note that all requests sent to either the history service or the favicon
@@ -137,16 +139,15 @@ void HistoryMenuBridge::TabRestoreServiceChanged(
   NSInteger index = [menu indexOfItemWithTag:kRecentlyClosedTitle] + 1;
   NSUInteger added_count = 0;
 
-  for (sessions::TabRestoreService::Entries::const_iterator it =
-           entries.begin();
-       it != entries.end() && added_count < kRecentlyClosedCount; ++it) {
-    sessions::TabRestoreService::Entry* entry = *it;
-
+  for (const auto& entry : entries) {
+    if (added_count >= kRecentlyClosedCount)
+      break;
     // If this is a window, create a submenu for all of its tabs.
     if (entry->type == sessions::TabRestoreService::WINDOW) {
-      sessions::TabRestoreService::Window* entry_win =
-          (sessions::TabRestoreService::Window*)entry;
-      std::vector<sessions::TabRestoreService::Tab>& tabs = entry_win->tabs;
+      const auto* entry_win =
+          static_cast<sessions::TabRestoreService::Window*>(entry.get());
+      const std::vector<std::unique_ptr<sessions::TabRestoreService::Tab>>&
+          tabs = entry_win->tabs;
       if (tabs.empty())
         continue;
 
@@ -178,9 +179,8 @@ void HistoryMenuBridge::TabRestoreServiceChanged(
 
       // Loop over the window's tabs and add them to the submenu.
       NSInteger subindex = [[submenu itemArray] count];
-      std::vector<sessions::TabRestoreService::Tab>::const_iterator it;
-      for (it = tabs.begin(); it != tabs.end(); ++it) {
-        HistoryItem* tab_item = HistoryItemForTab(*it);
+      for (const auto& tab : tabs) {
+        HistoryItem* tab_item = HistoryItemForTab(*tab);
         if (tab_item) {
           item->tabs.push_back(tab_item);
           AddItemToMenu(tab_item, submenu.get(), kRecentlyClosed + 1,
@@ -203,9 +203,8 @@ void HistoryMenuBridge::TabRestoreServiceChanged(
         ++added_count;
       }
     } else if (entry->type == sessions::TabRestoreService::TAB) {
-      sessions::TabRestoreService::Tab* tab =
-          static_cast<sessions::TabRestoreService::Tab*>(entry);
-      HistoryItem* item = HistoryItemForTab(*tab);
+      const auto& tab = static_cast<sessions::TabRestoreService::Tab&>(*entry);
+      HistoryItem* item = HistoryItemForTab(tab);
       if (item) {
         AddItemToMenu(item, menu, kRecentlyClosed, index++);
         ++added_count;
@@ -239,6 +238,15 @@ HistoryMenuBridge::HistoryItem* HistoryMenuBridge::HistoryItemForMenuItem(
     return it->second;
   }
   return NULL;
+}
+
+void HistoryMenuBridge::SetIsMenuOpen(bool flag) {
+  is_menu_open_ = flag;
+  if (!is_menu_open_ && need_recreate_) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::Bind(&HistoryMenuBridge::CreateMenu, base::Unretained(this)));
+  }
 }
 
 history::HistoryService* HistoryMenuBridge::service() {
@@ -325,7 +333,8 @@ void HistoryMenuBridge::Init() {
 
 void HistoryMenuBridge::CreateMenu() {
   // If we're currently running CreateMenu(), wait until it finishes.
-  if (create_in_progress_)
+  // If the menu is currently open, wait until it closes.
+  if (create_in_progress_ || is_menu_open_)
     return;
   create_in_progress_ = true;
   need_recreate_ = false;

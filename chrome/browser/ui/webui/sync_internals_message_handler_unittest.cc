@@ -10,9 +10,9 @@
 #include "base/command_line.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/browser_sync/common/browser_sync_switches.h"
-#include "components/sync_driver/about_sync_util.h"
-#include "components/sync_driver/sync_service.h"
+#include "components/browser_sync/browser_sync_switches.h"
+#include "components/sync/driver/about_sync_util.h"
+#include "components/sync/driver/sync_service.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -34,7 +34,7 @@ class TestableSyncInternalsMessageHandler : public SyncInternalsMessageHandler {
 class FakeExtractor : public AboutSyncDataExtractor {
  public:
   std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
-      sync_driver::SyncService* service,
+      syncer::SyncService* service,
       SigninManagerBase* signin) override {
     call_count_++;
     last_service_ = service;
@@ -46,12 +46,12 @@ class FakeExtractor : public AboutSyncDataExtractor {
   }
 
   int call_count() const { return call_count_; }
-  sync_driver::SyncService* last_service() const { return last_service_; }
+  syncer::SyncService* last_service() const { return last_service_; }
   SigninManagerBase* last_signin() const { return last_signin_; }
 
  private:
   int call_count_ = 0;
-  sync_driver::SyncService* last_service_ = nullptr;
+  syncer::SyncService* last_service_ = nullptr;
   SigninManagerBase* last_signin_ = nullptr;
 };
 
@@ -68,21 +68,19 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
   }
 
   void ValidateAboutInfoCall() {
-    const ScopedVector<content::TestWebUI::CallData>& data_vector =
-        web_ui_.call_data();
+    const auto& data_vector = web_ui_.call_data();
     ASSERT_FALSE(data_vector.empty());
     EXPECT_EQ(1u, data_vector.size());
 
     const content::TestWebUI::CallData& call_data = *data_vector[0];
 
-    EXPECT_EQ(sync_driver::sync_ui_util::kDispatchEvent,
-              call_data.function_name());
+    EXPECT_EQ(syncer::sync_ui_util::kDispatchEvent, call_data.function_name());
 
     const base::Value* arg1 = call_data.arg1();
     ASSERT_TRUE(arg1);
     std::string event_type;
     EXPECT_TRUE(arg1->GetAsString(&event_type));
-    EXPECT_EQ(sync_driver::sync_ui_util::kOnAboutInfoUpdated, event_type);
+    EXPECT_EQ(syncer::sync_ui_util::kOnAboutInfoUpdated, event_type);
 
     const base::Value* arg2 = call_data.arg2();
     ASSERT_TRUE(arg2);
@@ -114,7 +112,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
 }  // namespace
 
 TEST_F(SyncInternalsMessageHandlerTest, SendAboutInfoWithService) {
-  handler()->OnStateChanged();
+  handler()->OnStateChanged(nullptr);
   EXPECT_EQ(1, fake_extractor()->call_count());
   EXPECT_NE(nullptr, fake_extractor()->last_service());
   EXPECT_NE(nullptr, fake_extractor()->last_signin());
@@ -123,7 +121,7 @@ TEST_F(SyncInternalsMessageHandlerTest, SendAboutInfoWithService) {
 
 TEST_F(SyncInternalsMessageHandlerTest, SendAboutInfoWithoutService) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kDisableSync);
-  handler()->OnStateChanged();
+  handler()->OnStateChanged(nullptr);
   EXPECT_EQ(1, fake_extractor()->call_count());
   EXPECT_EQ(nullptr, fake_extractor()->last_service());
   EXPECT_EQ(nullptr, fake_extractor()->last_signin());

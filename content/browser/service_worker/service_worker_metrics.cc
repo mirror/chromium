@@ -10,6 +10,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_util.h"
+#include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/browser/browser_thread.h"
@@ -71,43 +72,97 @@ std::string EventTypeToSuffix(ServiceWorkerMetrics::EventType event_type) {
       return "_FETCH_WAITUNTIL";
     case ServiceWorkerMetrics::EventType::FOREIGN_FETCH_WAITUNTIL:
       return "_FOREIGN_FETCH_WAITUNTIL";
-    case ServiceWorkerMetrics::EventType::NAVIGATION_HINT_LINK_MOUSE_DOWN:
-      return "_NAVIGATION_HINT_LINK_MOUSE_DOWN";
-    case ServiceWorkerMetrics::EventType::NAVIGATION_HINT_LINK_TAP_UNCONFIRMED:
-      return "_NAVIGATION_HINT_LINK_TAP_UNCONFIRMED";
-    case ServiceWorkerMetrics::EventType::NAVIGATION_HINT_LINK_TAP_DOWN:
-      return "_NAVIGATION_HINT_LINK_TAP_DOWN";
+    case ServiceWorkerMetrics::EventType::EXTERNAL_REQUEST:
+      return "_EXTERNAL_REQUEST";
+    case ServiceWorkerMetrics::EventType::PAYMENT_REQUEST:
+      return "_PAYMENT_REQUEST";
+    case ServiceWorkerMetrics::EventType::BACKGROUND_FETCH_ABORT:
+      return "_BACKGROUND_FETCH_ABORT";
+    case ServiceWorkerMetrics::EventType::BACKGROUND_FETCH_CLICK:
+      return "_BACKGROUND_FETCH_CLICK";
+    case ServiceWorkerMetrics::EventType::BACKGROUND_FETCH_FAIL:
+      return "_BACKGROUND_FETCH_FAIL";
+    case ServiceWorkerMetrics::EventType::BACKGROUND_FETCHED:
+      return "_BACKGROUND_FETCHED";
     case ServiceWorkerMetrics::EventType::NUM_TYPES:
       NOTREACHED() << static_cast<int>(event_type);
   }
   return "_UNKNOWN";
 }
 
-std::string GetWorkerPreparationSuffix(
+ServiceWorkerMetrics::WorkerPreparationType GetWorkerPreparationType(
     EmbeddedWorkerStatus initial_worker_status,
     ServiceWorkerMetrics::StartSituation start_situation) {
+  using Situation = ServiceWorkerMetrics::StartSituation;
+  using Preparation = ServiceWorkerMetrics::WorkerPreparationType;
   switch (initial_worker_status) {
     case EmbeddedWorkerStatus::STOPPED: {
       switch (start_situation) {
-        case ServiceWorkerMetrics::StartSituation::DURING_STARTUP:
-          return "_StartWorkerDuringStartup";
-        case ServiceWorkerMetrics::StartSituation::NEW_PROCESS:
-          return "_StartWorkerNewProcess";
-        case ServiceWorkerMetrics::StartSituation::EXISTING_PROCESS:
-          return "_StartWorkerExistingProcess";
-        default:
-          NOTREACHED() << static_cast<int>(start_situation);
+        case Situation::DURING_STARTUP:
+          return Preparation::START_DURING_STARTUP;
+        case Situation::NEW_PROCESS:
+          return Preparation::START_IN_NEW_PROCESS;
+        case Situation::EXISTING_PROCESS:
+          return Preparation::START_IN_EXISTING_PROCESS;
+        case Situation::UNKNOWN:
+          break;
       }
+      break;
     }
     case EmbeddedWorkerStatus::STARTING:
-      return "_StartingWorker";
+      return Preparation::STARTING;
     case EmbeddedWorkerStatus::RUNNING:
-      return "_RunningWorker";
+      return Preparation::RUNNING;
     case EmbeddedWorkerStatus::STOPPING:
+      return Preparation::STOPPING;
+  }
+  NOTREACHED() << static_cast<int>(initial_worker_status);
+  return Preparation::UNKNOWN;
+}
+
+std::string GetWorkerPreparationSuffix(
+    ServiceWorkerMetrics::WorkerPreparationType status) {
+  using Preparation = ServiceWorkerMetrics::WorkerPreparationType;
+  switch (status) {
+    case Preparation::UNKNOWN:
+    case Preparation::NUM_TYPES:
+      break;
+    case Preparation::START_DURING_STARTUP:
+      return "_StartWorkerDuringStartup";
+    case Preparation::START_IN_NEW_PROCESS:
+      return "_StartWorkerNewProcess";
+    case Preparation::START_IN_EXISTING_PROCESS:
+      return "_StartWorkerExistingProcess";
+    case Preparation::STARTING:
+      return "_StartingWorker";
+    case Preparation::RUNNING:
+      return "_RunningWorker";
+    case Preparation::STOPPING:
       return "_StoppingWorker";
   }
   NOTREACHED();
   return "_UNKNOWN";
+}
+
+std::string GetSiteSuffix(ServiceWorkerMetrics::Site site) {
+  switch (site) {
+    case ServiceWorkerMetrics::Site::OTHER:
+    case ServiceWorkerMetrics::Site::WITH_FETCH_HANDLER:
+    case ServiceWorkerMetrics::Site::WITHOUT_FETCH_HANDLER:
+      return "";
+    case ServiceWorkerMetrics::Site::NEW_TAB_PAGE:
+      return ".ntp";
+    case ServiceWorkerMetrics::Site::PLUS:
+      return ".plus";
+    case ServiceWorkerMetrics::Site::INBOX:
+      return ".inbox";
+    case ServiceWorkerMetrics::Site::DOCS:
+      return ".docs";
+    case ServiceWorkerMetrics::Site::NUM_TYPES:
+      NOTREACHED() << static_cast<int>(site);
+  }
+  NOTREACHED();
+  return "";
 }
 
 // Use this for histograms with dynamically generated names, which
@@ -115,6 +170,20 @@ std::string GetWorkerPreparationSuffix(
 void RecordSuffixedTimeHistogram(const std::string& name,
                                  const std::string& suffix,
                                  base::TimeDelta sample) {
+  const std::string name_with_suffix = name + suffix;
+  // This unrolls UMA_HISTOGRAM_TIMES.
+  base::HistogramBase* histogram_pointer = base::Histogram::FactoryTimeGet(
+      name_with_suffix, base::TimeDelta::FromMilliseconds(1),
+      base::TimeDelta::FromSeconds(10), 50,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  histogram_pointer->AddTime(sample);
+}
+
+// Use this for histograms with dynamically generated names, which
+// otherwise can't use the UMA_MEDIUM_HISTOGRAM macro without code duplication.
+void RecordSuffixedMediumTimeHistogram(const std::string& name,
+                                       const std::string& suffix,
+                                       base::TimeDelta sample) {
   const std::string name_with_suffix = name + suffix;
   // This unrolls UMA_HISTOGRAM_MEDIUM_TIMES.
   base::HistogramBase* histogram_pointer = base::Histogram::FactoryTimeGet(
@@ -144,21 +213,6 @@ void RecordURLMetricOnUI(const GURL& url) {
       "ServiceWorker.ControlledPageUrl", url);
 }
 
-ServiceWorkerMetrics::Site SiteFromURL(const GURL& gurl) {
-  // UIThreadSearchTermsData::GoogleBaseURLValue() returns the google base
-  // URL, but not available in content layer.
-  static const char google_like_scope_prefix[] = "https://www.google.";
-  static const char ntp_scope_path[] = "/_/chrome/";
-  if (base::StartsWith(gurl.spec(), google_like_scope_prefix,
-                       base::CompareCase::INSENSITIVE_ASCII) &&
-      base::StartsWith(gurl.path(), ntp_scope_path,
-                       base::CompareCase::SENSITIVE)) {
-    return ServiceWorkerMetrics::Site::NEW_TAB_PAGE;
-  }
-
-  return ServiceWorkerMetrics::Site::OTHER;
-}
-
 enum EventHandledRatioType {
   EVENT_HANDLED_NONE,
   EVENT_HANDLED_SOME,
@@ -167,6 +221,57 @@ enum EventHandledRatioType {
 };
 
 }  // namespace
+
+using ScopedEventRecorder = ServiceWorkerMetrics::ScopedEventRecorder;
+
+ScopedEventRecorder::ScopedEventRecorder() {}
+
+ScopedEventRecorder::~ScopedEventRecorder() {
+  for (const auto& ev : event_stats_) {
+    RecordEventHandledRatio(ev.first, ev.second.handled_events,
+                            ev.second.fired_events);
+  }
+}
+
+void ScopedEventRecorder::RecordEventHandledStatus(
+    ServiceWorkerMetrics::EventType event,
+    bool handled) {
+  event_stats_[event].fired_events++;
+  if (handled)
+    event_stats_[event].handled_events++;
+}
+
+void ScopedEventRecorder::RecordEventHandledRatio(
+    ServiceWorkerMetrics::EventType event,
+    size_t handled_events,
+    size_t fired_events) {
+  if (!fired_events)
+    return;
+  EventHandledRatioType type = EVENT_HANDLED_SOME;
+  if (fired_events == handled_events)
+    type = EVENT_HANDLED_ALL;
+  else if (handled_events == 0)
+    type = EVENT_HANDLED_NONE;
+
+  // For now Fetch and Foreign Fetch are the only types that are recorded.
+  switch (event) {
+    case EventType::FETCH_MAIN_FRAME:
+    case EventType::FETCH_SUB_FRAME:
+    case EventType::FETCH_SHARED_WORKER:
+    case EventType::FETCH_SUB_RESOURCE:
+      UMA_HISTOGRAM_ENUMERATION("ServiceWorker.EventHandledRatioType.Fetch",
+                                type, NUM_EVENT_HANDLED_RATIO_TYPE);
+      break;
+    case EventType::FOREIGN_FETCH:
+      UMA_HISTOGRAM_ENUMERATION(
+          "ServiceWorker.EventHandledRatioType.ForeignFetch", type,
+          NUM_EVENT_HANDLED_RATIO_TYPE);
+      break;
+    default:
+      // Do nothing.
+      break;
+  }
+}
 
 const char* ServiceWorkerMetrics::EventTypeToString(EventType event_type) {
   switch (event_type) {
@@ -200,12 +305,18 @@ const char* ServiceWorkerMetrics::EventTypeToString(EventType event_type) {
       return "Fetch WaitUntil";
     case EventType::FOREIGN_FETCH_WAITUNTIL:
       return "Foreign Fetch WaitUntil";
-    case EventType::NAVIGATION_HINT_LINK_MOUSE_DOWN:
-      return "Navigation Hint Link Mouse Down";
-    case EventType::NAVIGATION_HINT_LINK_TAP_UNCONFIRMED:
-      return "Navigation Hint Link Tap Unconfirmed";
-    case EventType::NAVIGATION_HINT_LINK_TAP_DOWN:
-      return "Navigation Hint Link Tap Down";
+    case EventType::EXTERNAL_REQUEST:
+      return "External Request";
+    case EventType::PAYMENT_REQUEST:
+      return "Payment Request";
+    case EventType::BACKGROUND_FETCH_ABORT:
+      return "Background Fetch Abort";
+    case EventType::BACKGROUND_FETCH_CLICK:
+      return "Background Fetch Click";
+    case EventType::BACKGROUND_FETCH_FAIL:
+      return "Background Fetch Fail";
+    case EventType::BACKGROUND_FETCHED:
+      return "Background Fetched";
     case EventType::NUM_TYPES:
       break;
   }
@@ -213,12 +324,30 @@ const char* ServiceWorkerMetrics::EventTypeToString(EventType event_type) {
   return "error";
 }
 
-bool ServiceWorkerMetrics::ShouldExcludeSiteFromHistogram(Site site) {
-  return site == ServiceWorkerMetrics::Site::NEW_TAB_PAGE;
+ServiceWorkerMetrics::Site ServiceWorkerMetrics::SiteFromURL(const GURL& url) {
+  // UIThreadSearchTermsData::GoogleBaseURLValue() returns the google base
+  // URL, but not available in content layer.
+  static const char google_like_scope_prefix[] = "https://www.google.";
+  static const char ntp_scope_path[] = "/_/chrome/";
+  if (base::StartsWith(url.spec(), google_like_scope_prefix,
+                       base::CompareCase::INSENSITIVE_ASCII) &&
+      base::StartsWith(url.path(), ntp_scope_path,
+                       base::CompareCase::SENSITIVE)) {
+    return ServiceWorkerMetrics::Site::NEW_TAB_PAGE;
+  }
+
+  const std::string host = url.host();
+  if (host == "plus.google.com")
+    return ServiceWorkerMetrics::Site::PLUS;
+  if (host == "inbox.google.com")
+    return ServiceWorkerMetrics::Site::INBOX;
+  if ((host == "docs.google.com") || (host == "drive.google.com"))
+    return ServiceWorkerMetrics::Site::DOCS;
+  return ServiceWorkerMetrics::Site::OTHER;
 }
 
-bool ServiceWorkerMetrics::ShouldExcludeURLFromHistogram(const GURL& url) {
-  return ShouldExcludeSiteFromHistogram(SiteFromURL(url));
+bool ServiceWorkerMetrics::ShouldExcludeSiteFromHistogram(Site site) {
+  return site == ServiceWorkerMetrics::Site::NEW_TAB_PAGE;
 }
 
 void ServiceWorkerMetrics::CountInitDiskCacheResult(bool result) {
@@ -272,14 +401,13 @@ void ServiceWorkerMetrics::RecordDeleteAndStartOverResult(
                             result, NUM_DELETE_AND_START_OVER_RESULT_TYPES);
 }
 
-void ServiceWorkerMetrics::CountControlledPageLoad(const GURL& url,
-                                                   bool has_fetch_handler,
-                                                   bool is_main_frame_load) {
-  Site site = SiteFromURL(url);
-  if (site == Site::OTHER) {
-    site = (has_fetch_handler) ? Site::WITH_FETCH_HANDLER
-                               : Site::WITHOUT_FETCH_HANDLER;
-  }
+void ServiceWorkerMetrics::CountControlledPageLoad(
+    Site site,
+    const GURL& url,
+    bool is_main_frame_load,
+    ui::PageTransition page_transition,
+    size_t redirect_chain_length) {
+  DCHECK_NE(site, Site::OTHER);
   UMA_HISTOGRAM_ENUMERATION("ServiceWorker.PageLoad", static_cast<int>(site),
                             static_cast<int>(Site::NUM_TYPES));
   if (is_main_frame_load) {
@@ -287,9 +415,21 @@ void ServiceWorkerMetrics::CountControlledPageLoad(const GURL& url,
                               static_cast<int>(site),
                               static_cast<int>(Site::NUM_TYPES));
   }
-
   if (ShouldExcludeSiteFromHistogram(site))
     return;
+
+  if (is_main_frame_load) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "ServiceWorker.MainFramePageLoad.CoreTransition",
+        static_cast<int>(ui::PageTransitionStripQualifier(page_transition)),
+        static_cast<int>(ui::PAGE_TRANSITION_LAST_CORE) + 1);
+    // Currently the max number of HTTP redirects is 20 which is defined as
+    // kMaxRedirects in net/url_request/url_request.cc. So the max number of the
+    // chain length is 21.
+    UMA_HISTOGRAM_EXACT_LINEAR(
+        "ServiceWorker.MainFramePageLoad.RedirectChainLength",
+        redirect_chain_length, 21);
+  }
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::Bind(&RecordURLMetricOnUI, url));
 }
@@ -323,11 +463,11 @@ void ServiceWorkerMetrics::RecordStartWorkerTime(base::TimeDelta time,
                                                  StartSituation start_situation,
                                                  EventType purpose) {
   if (is_installed) {
-    std::string name = "ServiceWorker.StartWorker.Time";
-    UMA_HISTOGRAM_MEDIUM_TIMES(name, time);
-    RecordSuffixedTimeHistogram(name, StartSituationToSuffix(start_situation),
-                                time);
-    RecordSuffixedTimeHistogram(
+    UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.StartWorker.Time", time);
+    RecordSuffixedMediumTimeHistogram("ServiceWorker.StartWorker.Time",
+                                      StartSituationToSuffix(start_situation),
+                                      time);
+    RecordSuffixedMediumTimeHistogram(
         "ServiceWorker.StartWorker.Time",
         StartSituationToSuffix(start_situation) + EventTypeToSuffix(purpose),
         time);
@@ -336,16 +476,51 @@ void ServiceWorkerMetrics::RecordStartWorkerTime(base::TimeDelta time,
   }
 }
 
-void ServiceWorkerMetrics::RecordActivatedWorkerPreparationTimeForMainFrame(
+void ServiceWorkerMetrics::RecordActivatedWorkerPreparationForMainFrame(
     base::TimeDelta time,
     EmbeddedWorkerStatus initial_worker_status,
-    StartSituation start_situation) {
-  std::string name =
-      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time";
-  UMA_HISTOGRAM_MEDIUM_TIMES(name, time);
-  RecordSuffixedTimeHistogram(
-      name, GetWorkerPreparationSuffix(initial_worker_status, start_situation),
-      time);
+    StartSituation start_situation,
+    bool did_navigation_preload) {
+  // Record the worker preparation type.
+  WorkerPreparationType preparation =
+      GetWorkerPreparationType(initial_worker_status, start_situation);
+  UMA_HISTOGRAM_ENUMERATION(
+      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type",
+      static_cast<int>(preparation),
+      static_cast<int>(WorkerPreparationType::NUM_TYPES));
+  if (did_navigation_preload) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
+        "NavigationPreloadEnabled",
+        static_cast<int>(preparation),
+        static_cast<int>(WorkerPreparationType::NUM_TYPES));
+  }
+
+  // Record the preparation time.
+  UMA_HISTOGRAM_MEDIUM_TIMES(
+      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time", time);
+
+  // Record the preparation time using the worker preparation suffix.
+  RecordSuffixedMediumTimeHistogram(
+      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time",
+      GetWorkerPreparationSuffix(preparation), time);
+
+  // Record the preparation time using the navigation preload suffix.
+  if (did_navigation_preload) {
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time_"
+        "NavigationPreloadEnabled",
+        time);
+    // We're mostly interested in when the worker needed to start up. To avoid
+    // using too much memory, just log the the common case of startup in an
+    // existing process.
+    if (preparation == WorkerPreparationType::START_IN_EXISTING_PROCESS) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time_"
+          "StartWorkerExistingProcess_NavigationPreloadEnabled",
+          time);
+    }
+  }
 }
 
 void ServiceWorkerMetrics::RecordWorkerStopped(StopStatus status) {
@@ -378,35 +553,27 @@ void ServiceWorkerMetrics::RecordInstallEventStatus(
                             SERVICE_WORKER_ERROR_MAX_VALUE);
 }
 
-void ServiceWorkerMetrics::RecordEventHandledRatio(EventType event,
-                                                   size_t handled_events,
-                                                   size_t fired_events) {
-  if (!fired_events)
-    return;
-  EventHandledRatioType type = EVENT_HANDLED_SOME;
-  if (fired_events == handled_events)
-    type = EVENT_HANDLED_ALL;
-  else if (handled_events == 0)
-    type = EVENT_HANDLED_NONE;
-
-  // For now Fetch and Foreign Fetch are the only types that are recorded.
-  switch (event) {
-    case EventType::FETCH_MAIN_FRAME:
-    case EventType::FETCH_SUB_FRAME:
-    case EventType::FETCH_SHARED_WORKER:
-    case EventType::FETCH_SUB_RESOURCE:
-      UMA_HISTOGRAM_ENUMERATION("ServiceWorker.EventHandledRatioType.Fetch",
-                                type, NUM_EVENT_HANDLED_RATIO_TYPE);
-      break;
-    case EventType::FOREIGN_FETCH:
-      UMA_HISTOGRAM_ENUMERATION(
-          "ServiceWorker.EventHandledRatioType.ForeignFetch", type,
-          NUM_EVENT_HANDLED_RATIO_TYPE);
-      break;
-    default:
-      // Do nothing.
-      break;
+void ServiceWorkerMetrics::RecordForeignFetchRegistrationCount(
+    size_t scope_count,
+    size_t origin_count) {
+  UMA_HISTOGRAM_COUNTS_100("ServiceWorker.ForeignFetch.ScopeCount",
+                           scope_count);
+  if (scope_count > 0) {
+    // Only record number of origins if service worker registered for at least
+    // one foreign fetch scope.
+    UMA_HISTOGRAM_COUNTS_100("ServiceWorker.ForeignFetch.OriginCount",
+                             origin_count);
   }
+}
+
+void ServiceWorkerMetrics::RecordEventDispatchingDelay(EventType event_type,
+                                                       base::TimeDelta time,
+                                                       Site site_for_metrics) {
+  const std::string name = "ServiceWorker.EventDispatchingDelay";
+  UMA_HISTOGRAM_TIMES(name, time);
+  const std::string event_type_suffix = EventTypeToSuffix(event_type);
+  const std::string site_suffix = GetSiteSuffix(site_for_metrics);
+  RecordSuffixedTimeHistogram(name, event_type_suffix + site_suffix, time);
 }
 
 void ServiceWorkerMetrics::RecordEventTimeout(EventType event) {
@@ -473,10 +640,29 @@ void ServiceWorkerMetrics::RecordEventDuration(EventType event,
       UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.ExtendableMessageEvent.Time",
                                  time);
       break;
-    // Those navigation hints should not be sent as request events.
-    case EventType::NAVIGATION_HINT_LINK_MOUSE_DOWN:
-    case EventType::NAVIGATION_HINT_LINK_TAP_UNCONFIRMED:
-    case EventType::NAVIGATION_HINT_LINK_TAP_DOWN:
+    case EventType::EXTERNAL_REQUEST:
+      UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.ExternalRequest.Time", time);
+      break;
+    case EventType::PAYMENT_REQUEST:
+      UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.PaymentRequestEvent.Time",
+                                 time);
+      break;
+    case EventType::BACKGROUND_FETCH_ABORT:
+      UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.BackgroundFetchAbortEvent.Time",
+                                 time);
+      break;
+    case EventType::BACKGROUND_FETCH_CLICK:
+      UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.BackgroundFetchClickEvent.Time",
+                                 time);
+      break;
+    case EventType::BACKGROUND_FETCH_FAIL:
+      UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.BackgroundFetchFailEvent.Time",
+                                 time);
+      break;
+    case EventType::BACKGROUND_FETCHED:
+      UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.BackgroundFetchedEvent.Time",
+                                 time);
+      break;
 
     case EventType::UNKNOWN:
     case EventType::NUM_TYPES:
@@ -515,11 +701,11 @@ void ServiceWorkerMetrics::RecordStatusZeroResponseError(
   if (is_main_resource) {
     UMA_HISTOGRAM_ENUMERATION(
         "ServiceWorker.URLRequestJob.MainResource.StatusZeroError", error,
-        blink::WebServiceWorkerResponseErrorLast + 1);
+        blink::kWebServiceWorkerResponseErrorLast + 1);
   } else {
     UMA_HISTOGRAM_ENUMERATION(
         "ServiceWorker.URLRequestJob.Subresource.StatusZeroError", error,
-        blink::WebServiceWorkerResponseErrorLast + 1);
+        blink::kWebServiceWorkerResponseErrorLast + 1);
   }
 }
 
@@ -542,16 +728,16 @@ void ServiceWorkerMetrics::RecordTimeToSendStartWorker(
     StartSituation situation) {
   std::string name = "EmbeddedWorkerInstance.Start.TimeToSendStartWorker";
   UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-  RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                              duration);
+  RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                    duration);
 }
 
 void ServiceWorkerMetrics::RecordTimeToURLJob(base::TimeDelta duration,
                                               StartSituation situation) {
   std::string name = "EmbeddedWorkerInstance.Start.TimeToURLJob";
   UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-  RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                              duration);
+  RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                    duration);
 }
 
 void ServiceWorkerMetrics::RecordTimeToLoad(base::TimeDelta duration,
@@ -562,20 +748,20 @@ void ServiceWorkerMetrics::RecordTimeToLoad(base::TimeDelta duration,
     case LoadSource::NETWORK:
       name = "EmbeddedWorkerInstance.Start.TimeToLoad.Network";
       UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-      RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                                  duration);
+      RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                        duration);
       break;
     case LoadSource::HTTP_CACHE:
       name = "EmbeddedWorkerInstance.Start.TimeToLoad.HttpCache";
       UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-      RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                                  duration);
+      RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                        duration);
       break;
     case LoadSource::SERVICE_WORKER_STORAGE:
       name = "EmbeddedWorkerInstance.Start.TimeToLoad.InstalledScript";
       UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-      RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                                  duration);
+      RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                        duration);
       break;
     default:
       NOTREACHED() << static_cast<int>(source);
@@ -586,8 +772,8 @@ void ServiceWorkerMetrics::RecordTimeToStartThread(base::TimeDelta duration,
                                                    StartSituation situation) {
   std::string name = "EmbeddedWorkerInstance.Start.TimeToStartThread";
   UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-  RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                              duration);
+  RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                    duration);
 }
 
 void ServiceWorkerMetrics::RecordTimeToEvaluateScript(
@@ -595,8 +781,8 @@ void ServiceWorkerMetrics::RecordTimeToEvaluateScript(
     StartSituation situation) {
   std::string name = "EmbeddedWorkerInstance.Start.TimeToEvaluateScript";
   UMA_HISTOGRAM_MEDIUM_TIMES(name, duration);
-  RecordSuffixedTimeHistogram(name, StartSituationToSuffix(situation),
-                              duration);
+  RecordSuffixedMediumTimeHistogram(name, StartSituationToSuffix(situation),
+                                    duration);
 }
 
 const char* ServiceWorkerMetrics::LoadSourceToString(LoadSource source) {
@@ -645,6 +831,138 @@ void ServiceWorkerMetrics::RecordStartStatusAfterFailure(
     UMA_HISTOGRAM_ENUMERATION("ServiceWorker.StartWorker.AfterFailureStreak_3",
                               status, SERVICE_WORKER_ERROR_MAX_VALUE);
   }
+}
+
+void ServiceWorkerMetrics::RecordNavigationPreloadRequestHeaderSize(
+    size_t size) {
+  UMA_HISTOGRAM_COUNTS_100000("ServiceWorker.NavigationPreload.HeaderSize",
+                              size);
+}
+
+void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
+    base::TimeDelta worker_start,
+    base::TimeDelta response_start,
+    EmbeddedWorkerStatus initial_worker_status,
+    StartSituation start_situation) {
+  DCHECK_GE(worker_start.ToInternalValue(), 0);
+  DCHECK_GE(response_start.ToInternalValue(), 0);
+
+  UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.NavigationPreload.ResponseTime",
+                             response_start);
+
+  const bool nav_preload_finished_first = response_start < worker_start;
+  UMA_HISTOGRAM_BOOLEAN(
+      "ServiceWorker.NavigationPreload.FinishedBeforeStartWorker",
+      nav_preload_finished_first);
+
+  const bool existing_process_startup =
+      (initial_worker_status == EmbeddedWorkerStatus::STOPPED &&
+       start_situation ==
+           ServiceWorkerMetrics::StartSituation::EXISTING_PROCESS);
+  if (existing_process_startup) {
+    UMA_HISTOGRAM_BOOLEAN(
+        "ServiceWorker.NavigationPreload.FinishedBeforeStartWorker"
+        "_StartWorkerExistingProcess",
+        nav_preload_finished_first);
+  }
+
+  UMA_HISTOGRAM_MEDIUM_TIMES(
+      "ServiceWorker.NavigationPreload.ConcurrentTime",
+      nav_preload_finished_first ? response_start : worker_start);
+
+  if (nav_preload_finished_first) {
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "ServiceWorker.NavigationPreload.ConcurrentTime_NavPreloadFirst",
+        response_start);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "ServiceWorker.NavigationPreload.SWStartAfterNavPreload",
+        worker_start - response_start);
+
+    if (existing_process_startup) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavigationPreload.ConcurrentTime_"
+          "StartWorkerExistingProcess",
+          response_start);
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavigationPreload.ConcurrentTime_"
+          "NavPreloadFirst_StartWorkerExistingProcess",
+          response_start);
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavigationPreload.SWStartAfterNavPreload_"
+          "StartWorkerExistingProcess",
+          worker_start - response_start);
+    }
+  } else {
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "ServiceWorker.NavigationPreload.ConcurrentTime_SWStartFirst",
+        worker_start);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "ServiceWorker.NavigationPreload.NavPreloadAfterSWStart",
+        response_start - worker_start);
+
+    if (existing_process_startup) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavigationPreload.ConcurrentTime_"
+          "StartWorkerExistingProcess",
+          worker_start);
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavigationPreload.ConcurrentTime_"
+          "SWStartFirst_StartWorkerExistingProcess",
+          worker_start);
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavigationPreload.NavPreloadAfterSWStart_"
+          "StartWorkerExistingProcess",
+          response_start - worker_start);
+    }
+  }
+}
+
+void ServiceWorkerMetrics::RecordContextRequestHandlerStatus(
+    ServiceWorkerContextRequestHandler::CreateJobStatus status,
+    bool is_installed,
+    bool is_main_script) {
+  const int value = static_cast<int>(status);
+  const int max = static_cast<int>(
+      ServiceWorkerContextRequestHandler::CreateJobStatus::NUM_TYPES);
+  if (is_installed) {
+    if (is_main_script) {
+      UMA_HISTOGRAM_ENUMERATION(
+          "ServiceWorker.ContextRequestHandlerStatus.InstalledWorker."
+          "MainScript",
+          value, max);
+    } else {
+      UMA_HISTOGRAM_ENUMERATION(
+          "ServiceWorker.ContextRequestHandlerStatus.InstalledWorker."
+          "ImportedScript",
+          value, max);
+    }
+  } else {
+    if (is_main_script) {
+      UMA_HISTOGRAM_ENUMERATION(
+          "ServiceWorker.ContextRequestHandlerStatus.NewWorker.MainScript",
+          value, max);
+    } else {
+      UMA_HISTOGRAM_ENUMERATION(
+          "ServiceWorker.ContextRequestHandlerStatus.NewWorker."
+          "ImportedScript",
+          value, max);
+    }
+  }
+}
+
+void ServiceWorkerMetrics::RecordRuntime(base::TimeDelta time) {
+  // Start at 1 second since we expect service worker to last at least this
+  // long: the update timer and idle timeout timer run on the order of seconds.
+  constexpr base::TimeDelta kMin = base::TimeDelta::FromSeconds(1);
+  // End at 1 day since service workers can conceivably run as long as the the
+  // browser is open; we have to cap somewhere.
+  constexpr base::TimeDelta kMax = base::TimeDelta::FromDays(1);
+  // Set the bucket count to 50 since that is the recommended value for all
+  // histograms.
+  const int kBucketCount = 50;
+
+  UMA_HISTOGRAM_CUSTOM_TIMES("ServiceWorker.Runtime", time, kMin, kMax,
+                             kBucketCount);
 }
 
 }  // namespace content

@@ -11,54 +11,58 @@
  *    documentation and/or other materials provided with the distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY MOTOROLA MOBILITY, INC. AND ITS CONTRIBUTORS
- * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL MOTOROLA MOBILITY, INC. OR ITS
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
- * THE POSSIBILITY OF SUCH DAMAGE.
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef RadioNodeList_h
 #define RadioNodeList_h
 
 #include "core/dom/LiveNodeList.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class RadioNodeList final : public LiveNodeList {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static RadioNodeList* create(ContainerNode& ownerNode, CollectionType type, const AtomicString& name)
-    {
-        ASSERT_UNUSED(type, type == RadioNodeListType || type == RadioImgNodeListType);
-        return new RadioNodeList(ownerNode, name, type);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    virtual ~RadioNodeList();
+ public:
+  static RadioNodeList* Create(ContainerNode& owner_node,
+                               CollectionType type,
+                               const AtomicString& name) {
+    DCHECK(type == kRadioNodeListType || type == kRadioImgNodeListType);
+    return new RadioNodeList(owner_node, name, type);
+  }
 
-    String value() const;
-    void setValue(const String&);
+  virtual ~RadioNodeList();
 
-private:
-    RadioNodeList(ContainerNode&, const AtomicString& name, CollectionType);
+  String value() const;
+  void setValue(const String&);
 
-    bool checkElementMatchesRadioNodeListFilter(const Element&) const;
+ private:
+  RadioNodeList(ContainerNode&, const AtomicString& name, CollectionType);
 
-    bool matchesByIdOrName(const Element&) const;
-    bool shouldOnlyMatchImgElements() const { return type() == RadioImgNodeListType; }
+  bool CheckElementMatchesRadioNodeListFilter(const Element&) const;
 
-    bool elementMatches(const Element&) const override;
+  bool MatchesByIdOrName(const Element&) const;
+  bool ShouldOnlyMatchImgElements() const {
+    return GetType() == kRadioImgNodeListType;
+  }
 
-    AtomicString m_name;
+  bool ElementMatches(const Element&) const override;
+
+  AtomicString name_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RadioNodeList_h
+#endif  // RadioNodeList_h

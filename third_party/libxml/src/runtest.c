@@ -688,7 +688,7 @@ static int compareFileMem(const char *filename, const char *mem, int size) {
     }
     if (info.st_size != size) {
         fprintf(stderr, "file %s is %ld bytes, result is %d bytes\n",
-	        filename, info.st_size, size);
+	        filename, (long) info.st_size, size);
         return(-1);
     }
     fd = open(filename, RD_FLAGS);
@@ -2317,9 +2317,18 @@ static FILE *xpathOutput;
 static xmlDocPtr xpathDocument;
 
 static void
+ignoreGenericError(void *ctx ATTRIBUTE_UNUSED,
+        const char *msg ATTRIBUTE_UNUSED, ...) {
+}
+
+static void
 testXPath(const char *str, int xptr, int expr) {
+    xmlGenericErrorFunc handler = ignoreGenericError;
     xmlXPathObjectPtr res;
     xmlXPathContextPtr ctxt;
+
+    /* Don't print generic errors to stderr. */
+    initGenericErrorDefaultFunc(&handler);
 
     nb_tests++;
 #if defined(LIBXML_XPTR_ENABLED)
@@ -2349,6 +2358,9 @@ testXPath(const char *str, int xptr, int expr) {
     xmlXPathDebugDumpObject(xpathOutput, res, 0);
     xmlXPathFreeObject(res);
     xmlXPathFreeContext(ctxt);
+
+    /* Reset generic error handler. */
+    initGenericErrorDefaultFunc(NULL);
 }
 
 /**

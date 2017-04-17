@@ -5,6 +5,7 @@
 #include "components/dom_distiller/core/dom_distiller_store.h"
 
 #include <stddef.h>
+
 #include <utility>
 
 #include "base/bind.h"
@@ -13,9 +14,9 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/dom_distiller/core/article_entry.h"
-#include "sync/api/sync_change.h"
-#include "sync/protocol/article_specifics.pb.h"
-#include "sync/protocol/sync.pb.h"
+#include "components/sync/model/sync_change.h"
+#include "components/sync/protocol/article_specifics.pb.h"
+#include "components/sync/protocol/sync.pb.h"
 
 using leveldb_proto::ProtoDatabase;
 using sync_pb::ArticleSpecifics;
@@ -286,8 +287,8 @@ SyncMergeResult DomDistillerStore::MergeDataAndStartSyncing(
   DCHECK_EQ(syncer::ARTICLES, type);
   DCHECK(!sync_processor_);
   DCHECK(!error_factory_);
-  sync_processor_.reset(sync_processor.release());
-  error_factory_.reset(error_handler.release());
+  sync_processor_ = std::move(sync_processor);
+  error_factory_ = std::move(error_handler);
 
   SyncChangeList database_changes;
   SyncChangeList sync_changes;
@@ -346,8 +347,8 @@ void DomDistillerStore::NotifyObservers(const syncer::SyncChangeList& changes) {
       article_update.entry_id = entry.entry_id();
       article_changes.push_back(article_update);
     }
-    FOR_EACH_OBSERVER(DomDistillerObserver, observers_,
-                      ArticleEntriesUpdated(article_changes));
+    for (DomDistillerObserver& observer : observers_)
+      observer.ArticleEntriesUpdated(article_changes);
   }
 }
 

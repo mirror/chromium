@@ -41,14 +41,14 @@ GbmSurfaceless::GbmSurfaceless(GbmSurfaceFactory* surface_factory,
           HasEGLExtension("EGL_EXT_image_flush_external")),
       weak_factory_(this) {
   surface_factory_->RegisterSurface(window_->widget(), this);
-  unsubmitted_frames_.push_back(new PendingFrame());
+  unsubmitted_frames_.push_back(base::MakeUnique<PendingFrame>());
 }
 
 void GbmSurfaceless::QueueOverlayPlane(const OverlayPlane& plane) {
   planes_.push_back(plane);
 }
 
-bool GbmSurfaceless::Initialize(gl::GLSurface::Format format) {
+bool GbmSurfaceless::Initialize(gl::GLSurfaceFormat format) {
   if (!SurfacelessEGL::Initialize(format))
     return false;
   vsync_provider_ = base::MakeUnique<DrmVSyncProvider>(window_.get());
@@ -111,9 +111,9 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   SwapCompletionCallback surface_swap_callback = base::Bind(
       &GbmSurfaceless::SwapCompleted, weak_factory_.GetWeakPtr(), callback);
 
-  PendingFrame* frame = unsubmitted_frames_.back();
+  PendingFrame* frame = unsubmitted_frames_.back().get();
   frame->callback = surface_swap_callback;
-  unsubmitted_frames_.push_back(new PendingFrame());
+  unsubmitted_frames_.push_back(base::MakeUnique<PendingFrame>());
 
   // TODO: the following should be replaced by a per surface flush as it gets
   // implemented in GL drivers.
@@ -198,8 +198,8 @@ void GbmSurfaceless::SubmitFrame() {
   DCHECK(!unsubmitted_frames_.empty());
 
   if (unsubmitted_frames_.front()->ready && !swap_buffers_pending_) {
-    std::unique_ptr<PendingFrame> frame(unsubmitted_frames_.front());
-    unsubmitted_frames_.weak_erase(unsubmitted_frames_.begin());
+    std::unique_ptr<PendingFrame> frame(std::move(unsubmitted_frames_.front()));
+    unsubmitted_frames_.erase(unsubmitted_frames_.begin());
     swap_buffers_pending_ = true;
 
     if (!frame->ScheduleOverlayPlanes(widget_)) {

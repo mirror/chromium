@@ -10,6 +10,7 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
 #include "media/base/video_decoder.h"
 #include "media/base/video_decoder_config.h"
@@ -19,19 +20,16 @@
 struct AVCodecContext;
 struct AVFrame;
 
-namespace base {
-class SingleThreadTaskRunner;
-}
-
 namespace media {
 
 class DecoderBuffer;
+class MediaLog;
 
 class MEDIA_EXPORT FFmpegVideoDecoder : public VideoDecoder {
  public:
   static bool IsCodecSupported(VideoCodec codec);
 
-  FFmpegVideoDecoder();
+  explicit FFmpegVideoDecoder(scoped_refptr<MediaLog> media_log);
   ~FFmpegVideoDecoder() override;
 
   // Allow decoding of individual NALU. Entire frames are required by default.
@@ -77,6 +75,7 @@ class MEDIA_EXPORT FFmpegVideoDecoder : public VideoDecoder {
   void ReleaseFFmpegResources();
 
   base::ThreadChecker thread_checker_;
+  scoped_refptr<MediaLog> media_log_;
 
   DecoderState state_;
 

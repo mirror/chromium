@@ -5,16 +5,17 @@
 #include "core/animation/Keyframe.h"
 
 #include "core/animation/InvalidatableInterpolation.h"
-#include "core/animation/PropertyInterpolationTypesMapping.h"
 
 namespace blink {
 
-PassRefPtr<Interpolation> Keyframe::PropertySpecificKeyframe::createInterpolation(PropertyHandle propertyHandle, const Keyframe::PropertySpecificKeyframe& end) const
-{
-    // const_cast to take refs.
-    return InvalidatableInterpolation::create(propertyHandle, PropertyInterpolationTypesMapping::get(propertyHandle),
-        const_cast<PropertySpecificKeyframe*>(this),
-        const_cast<PropertySpecificKeyframe*>(&end));
+PassRefPtr<Interpolation>
+Keyframe::PropertySpecificKeyframe::CreateInterpolation(
+    const PropertyHandle& property_handle,
+    const Keyframe::PropertySpecificKeyframe& end) const {
+  // const_cast to take refs.
+  return InvalidatableInterpolation::Create(
+      property_handle, const_cast<PropertySpecificKeyframe*>(this),
+      const_cast<PropertySpecificKeyframe*>(&end));
 }
 
-} // namespace blink
+}  // namespace blink

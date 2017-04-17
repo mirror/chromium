@@ -33,96 +33,232 @@
 
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ScopedPersistent.h"
-#include "bindings/core/v8/ScriptState.h"
+#include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/HashMap.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/AtomicString.h"
-#include <v8.h>
+#include "platform/wtf/RefPtr.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
+class DOMWindow;
 class Frame;
-class HTMLDocument;
-class SecurityOrigin;
 
-// WindowProxy represents all the per-global object state for a Frame that
-// persist between navigations.
-class WindowProxy final : public GarbageCollectedFinalized<WindowProxy> {
-public:
-    static WindowProxy* create(v8::Isolate*, Frame*, DOMWrapperWorld&);
+// WindowProxy implements the split window model of a window for a frame. In the
+// HTML standard, the split window model is composed of the Window interface
+// (the inner global object) and the WindowProxy interface (the outer global
+// proxy).
+//
+// The Window interface is backed by the Blink DOMWindow C++ implementation.
+// In contrast, the WindowProxy interface does not have a corresponding
+// C++ implementation in Blink: the WindowProxy class defined here only manages
+// context initialization and detach. Instead, the behavior of the WindowProxy
+// interface is defined by JSGlobalProxy in v8 and the prototype chain set up
+// during context initialization.
+//
+// ====== Inner Global Object ======
+// The inner global object is the global for the script environment of a Frame.
+// Since Window and Document also have a 1:1 relationship, this means that each
+// inner global object has an associated Document which does not change. On
+// navigation, the new Document receives a new inner global object.
+//
+// However, there is one exception to the 1:1 DOMWindow:Document rule. If:
+// - the previous Document is the initial empty document
+// - the new Document is same-origin to the previous Document
+// then the inner global object will be reused for the new Document. This is the
+// only case where the associated Document of an inner global object can change.
+//
+// All methods and attributes defined on the Window interface are exposed via
+// the inner global object. Global variables defined by script running in the
+// Document also live on the inner global object.
+//
+// ====== Outer Global Proxy ====
+// The outer global proxy is reused across navigations. It implements the
+// security checks for same-origin/cross-origin access to the Window interface.
+// When the check passes (i.e. the access is same-origin), the access is
+// forwarded to the inner global object of the active Document in this
+// WindowProxy's Frame).
+//
+// When the security check fails, the access is delegated to the outer global
+// proxy's cross-origin interceptors. The cross-origin interceptors may choose
+// to return a value (if the property is exposed cross-origin) or throw an
+// exception otherwise.
+//
+// Note that the cross-origin interceptors are only used for cross-origin
+// accesses: a same-origin access to a method that is available cross-origin,
+// such as Window.postMessage, will be delegated to the inner global object.
+//
+// ====== LocalWindowProxy vs RemoteWindowProxy ======
+// WindowProxy has two concrete subclasses:
+// - LocalWindowProxy: implements the split window model for a frame in the same
+//   process, i.e. a LocalFrame.
+// - RemoteWindowProxy: implements the split window model for a frame in a
+//   different process, i.e. a RemoteFrame.
+//
+// While having a RemoteFrame implies the frame must be cross-origin, the
+// opposite is not true: a LocalFrame can be same-origin or cross-origin. One
+// additional complexity (which slightly violates the HTML standard): it is
+// possible to have SecurityOrigin::CanAccess() return true for a RemoteFrame's
+// security origin; however, it is important to still deny access as if the
+// frame were cross-origin. This is due to complexities in the process
+// allocation model for renderer processes. See https://crbug.com/601629.
+//
+// ====== LocalWindowProxy ======
+// Since a LocalWindowProxy can represent a same-origin or cross-origin frame,
+// the entire prototype chain must be available:
+//
+//   outer global proxy
+//     -- has prototype --> inner global object
+//     -- has prototype --> Window.prototype
+//     -- has prototype --> WindowProperties [1]
+//     -- has prototype --> EventTarget.prototype
+//     -- has prototype --> Object.prototype
+//     -- has prototype --> null
+//
+// [1] WindowProperties is the named properties object of the Window interface.
+//
+// ====== RemoteWindowProxy ======
+// Since a RemoteWindowProxy only represents a cross-origin frame, it has a much
+// simpler prototype chain.
+//
+//   outer global proxy
+//     -- has prototype --> inner global object
+//     -- has prototype --> null
+//
+// Property access to get/set attributes and methods on the outer global proxy
+// are redirected through the cross-origin interceptors, since any access will
+// fail the security check, by definition.
+//
+// However, note that method invocations still use the inner global object as
+// the receiver object. Blink bindings use v8::Signature to perform a strict
+// receiver check, which requires that the FunctionTemplate used to instantiate
+// the receiver object matches exactly. However, when creating a new context,
+// only inner global object is instantiated using Blink's global template, so by
+// definition, it is the only receiver object in the prototype chain that will
+// match.
+//
+//
+// ====== References ======
+// https://wiki.mozilla.org/Gecko:SplitWindow
+// https://whatwg.org/C/browsers.html#the-windowproxy-exotic-object
+class WindowProxy : public GarbageCollectedFinalized<WindowProxy> {
+ public:
+  virtual ~WindowProxy();
 
-    ~WindowProxy();
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-    v8::Local<v8::Context> contextIfInitialized() const { return m_scriptState ? m_scriptState->context() : v8::Local<v8::Context>(); }
-    ScriptState* getScriptState() const { return m_scriptState.get(); }
+  void InitializeIfNeeded();
 
-    // Update document object of the frame.
-    void updateDocument();
+  void ClearForClose();
+  void ClearForNavigation();
 
-    void namedItemAdded(HTMLDocument*, const AtomicString&);
-    void namedItemRemoved(HTMLDocument*, const AtomicString&);
+  CORE_EXPORT v8::Local<v8::Object> GlobalProxyIfNotDetached();
+  v8::Local<v8::Object> ReleaseGlobalProxy();
+  void SetGlobalProxy(v8::Local<v8::Object>);
 
-    // Update the security origin of a document
-    // (e.g., after setting docoument.domain).
-    void updateSecurityOrigin(SecurityOrigin*);
+  // TODO(dcheng): Temporarily exposed to avoid include cycles. Remove the need
+  // for this and remove this getter.
+  DOMWrapperWorld& World() { return *world_; }
 
-    bool isContextInitialized() { return m_scriptState && !!m_scriptState->perContextData(); }
-    bool isGlobalInitialized() { return !m_global.isEmpty(); }
+  virtual bool IsLocal() const { return false; }
 
-    bool initializeIfNeeded();
-    void updateDocumentWrapper(v8::Local<v8::Object> wrapper);
+ protected:
+  // Lifecycle represents the following four states.
+  //
+  // * kContextIsUninitialized
+  // We lazily initialize WindowProxies for performance reasons, and this state
+  // is "to be initialized on demand". WindowProxy basically behaves the same as
+  // |kContextIsInitialized| from a point of view of call sites.
+  // - Possible next states: kContextIsInitialized
+  // It's possible to detach the context's frame from the DOM or navigate to a
+  // new page without initializing the WindowProxy, however, there is no
+  // transition to |kFrameIsDetached| or |kGlobalObjectIsDetached|
+  // because |DisposeContext| does not change the state if the state is
+  // |kContextIsUninitialized|. In either case of a) the browsing context
+  // container is detached from the DOM or b) the page is navigated away, there
+  // must be no way for author script to access the context of
+  // |kContextIsUninitialized| because |kContextIsUninitialized| means that
+  // author script has never accessed the context, hence there must exist no
+  // reference to the context.
+  //
+  // * kContextIsInitialized
+  // The context is initialized and its frame is still attached to the DOM.
+  // - Possible next states: kFrameIsDetached, kGlobalObjectIsDetached
+  //
+  // * kGlobalObjectIsDetached
+  // The context is initialized and its frame is still attached to the DOM, but
+  // the global object(inner global)'s Document is no longer the active Document
+  // of the frame (i.e. it is being navigated away). The global object (inner
+  // global) is detached from the global proxy (outer global), but the
+  // (detached) global object and context are still alive, and author script may
+  // have references to the context.
+  // The spec does not support full web features in this state. Blink supports
+  // less things than the spec.
+  // This state is also used when swapping frames.  See also |WebFrame::Swap|.
+  // - Possible next states: kContextIsInitialized
+  // This state is in the middle of navigation. Once document loading is
+  // completed, the WindowProxy will always be reinitialized, as
+  // |DocumentLoader::InstallNewDocument| ends up calling to
+  // |WindowProxy::UpdateDocument|, which reinitializes the WindowProxy.
+  //
+  // * kFrameIsDetached
+  // The context was initialized, but its frame has been detached from the DOM.
+  // Note that the context is still alive and author script may have references
+  // to the context and hence author script may run in the context.
+  // The spec does not support some of web features such as setTimeout, etc. on
+  // a detached window. Blink supports less things than the spec.
+  // V8PerContextData is cut off from the context.  |global_proxy_| becomes a
+  // weak reference so that it's collectable when author script has no
+  // reference.
+  // - Possible next states: n/a
+  enum class Lifecycle {
+    // v8::Context is not yet initialized.
+    kContextIsUninitialized,
+    // v8::Context is initialized.
+    kContextIsInitialized,
+    // The global object (inner global) is detached from the global proxy (outer
+    // global).
+    kGlobalObjectIsDetached,
+    // The context's frame is detached from the DOM.
+    kFrameIsDetached,
+  };
 
-    void clearForNavigation();
-    void clearForClose();
+  WindowProxy(v8::Isolate*, Frame&, RefPtr<DOMWrapperWorld>);
 
-    v8::Local<v8::Object> globalIfNotDetached();
-    v8::Local<v8::Object> releaseGlobal();
-    void setGlobal(v8::Local<v8::Object>);
+  virtual void Initialize() = 0;
 
-    DOMWrapperWorld& world() { return *m_world; }
+  virtual void DisposeContext(Lifecycle next_status) = 0;
 
-private:
-    WindowProxy(Frame*, PassRefPtr<DOMWrapperWorld>, v8::Isolate*);
-    bool initialize();
+  WARN_UNUSED_RESULT v8::Local<v8::Object> AssociateWithWrapper(
+      DOMWindow*,
+      const WrapperTypeInfo*,
+      v8::Local<v8::Object> wrapper);
 
-    enum GlobalDetachmentBehavior {
-        DoNotDetachGlobal,
-        DetachGlobal
-    };
-    void disposeContext(GlobalDetachmentBehavior);
+  v8::Isolate* GetIsolate() const { return isolate_; }
+  Frame* GetFrame() const { return frame_.Get(); }
 
-    void setSecurityToken(SecurityOrigin*);
+#if DCHECK_IS_ON()
+  void DidAttachGlobalObject() { is_global_object_attached_ = true; }
+  void DidDetachGlobalObject() { is_global_object_attached_ = false; }
+#endif
 
-    // The JavaScript wrapper for the document object is cached on the global
-    // object for fast access. UpdateDocumentProperty sets the wrapper
-    // for the current document on the global object.
-    void updateDocumentProperty();
+ private:
+  v8::Isolate* const isolate_;
+  const Member<Frame> frame_;
+#if DCHECK_IS_ON()
+  bool is_global_object_attached_ = false;
+#endif
 
-    // Updates Activity Logger for the current context.
-    void updateActivityLogger();
-
-    // Creates a new v8::Context with the window wrapper object as the global
-    // object (aka the inner global).  Note that the window wrapper and its
-    // prototype chain do not get fully initialized yet, e.g. the window
-    // wrapper is not yet associated with the native DOMWindow object.
-    void createContext();
-
-    // Associates the window wrapper and its prototype chain with the native
-    // DOMWindow object.  Also does some more Window-specific initialization.
-    bool setupWindowPrototypeChain();
-
-    Member<Frame> m_frame;
-    v8::Isolate* m_isolate;
-    RefPtr<ScriptState> m_scriptState;
-    RefPtr<DOMWrapperWorld> m_world;
-    ScopedPersistent<v8::Object> m_global;
-    ScopedPersistent<v8::Object> m_document;
+ protected:
+  // TODO(dcheng): Consider making these private and using getters.
+  const RefPtr<DOMWrapperWorld> world_;
+  // |global_proxy_| is the root reference from Blink to v8::Context (a strong
+  // reference to the global proxy makes the entire context alive).  In order to
+  // discard the v8::Context, |global_proxy_| needs to be a weak reference or
+  // to be destroyed.
+  ScopedPersistent<v8::Object> global_proxy_;
+  Lifecycle lifecycle_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WindowProxy_h
+#endif  // WindowProxy_h

@@ -28,33 +28,34 @@
 
 #include "modules/EventModules.h"
 #include "modules/peerconnection/RTCDTMFToneChangeEventInit.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class RTCDTMFToneChangeEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~RTCDTMFToneChangeEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static RTCDTMFToneChangeEvent* create();
-    static RTCDTMFToneChangeEvent* create(const String& tone);
-    static RTCDTMFToneChangeEvent* create(const AtomicString& type, const RTCDTMFToneChangeEventInit& initializer);
+ public:
+  ~RTCDTMFToneChangeEvent() override;
 
-    const String& tone() const;
+  static RTCDTMFToneChangeEvent* Create(const String& tone);
+  static RTCDTMFToneChangeEvent* Create(
+      const AtomicString& type,
+      const RTCDTMFToneChangeEventInit& initializer);
 
-    const AtomicString& interfaceName() const override;
+  const String& tone() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    RTCDTMFToneChangeEvent();
-    explicit RTCDTMFToneChangeEvent(const String& tone);
-    explicit RTCDTMFToneChangeEvent(const RTCDTMFToneChangeEventInit&);
+  DECLARE_VIRTUAL_TRACE();
 
-    String m_tone;
+ private:
+  explicit RTCDTMFToneChangeEvent(const String& tone);
+  explicit RTCDTMFToneChangeEvent(const RTCDTMFToneChangeEventInit&);
+
+  String tone_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RTCDTMFToneChangeEvent_h
+#endif  // RTCDTMFToneChangeEvent_h

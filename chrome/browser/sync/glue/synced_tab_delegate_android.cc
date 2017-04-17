@@ -36,6 +36,10 @@ bool SyncedTabDelegateAndroid::IsBeingDestroyed() const {
   return tab_contents_delegate_->IsBeingDestroyed();
 }
 
+SessionID::id_type SyncedTabDelegateAndroid::GetSourceTabID() const {
+  return tab_contents_delegate_->GetSourceTabID();
+}
+
 std::string SyncedTabDelegateAndroid::GetExtensionAppId() const {
   return tab_contents_delegate_->GetExtensionAppId();
 }
@@ -91,7 +95,7 @@ bool SyncedTabDelegateAndroid::ProfileIsSupervised() const {
   return tab_contents_delegate_->ProfileIsSupervised();
 }
 
-const std::vector<const sessions::SerializedNavigationEntry*>*
+const std::vector<std::unique_ptr<const sessions::SerializedNavigationEntry>>*
 SyncedTabDelegateAndroid::GetBlockedNavigations() const {
   return tab_contents_delegate_->GetBlockedNavigations();
 }

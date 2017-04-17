@@ -16,20 +16,12 @@
 #include "content/public/browser/web_contents_user_data.h"
 #include "url/gurl.h"
 
-namespace autofill {
-struct PasswordForm;
-}
-
-namespace password_manager {
-class PasswordManager;
-}
-
 namespace prerender {
 
 class PrerenderManager;
 
-// PrerenderTabHelper is responsible for recording perceived pageload times
-// to compare PLT's with prerendering enabled and disabled.
+// Notifies the PrerenderManager with the events happening in the prerendered
+// WebContents.
 class PrerenderTabHelper
     : public content::WebContentsObserver,
       public content::WebContentsUserData<PrerenderTabHelper> {
@@ -38,18 +30,11 @@ class PrerenderTabHelper
 
   // content::WebContentsObserver implementation.
   void DidGetRedirectForResourceRequest(
-      content::RenderFrameHost* render_frame_host,
       const content::ResourceRedirectDetails& details) override;
-  void DidStopLoading() override;
-  void DidStartProvisionalLoadForFrame(
-      content::RenderFrameHost* render_frame_host,
-      const GURL& validated_url,
-      bool is_error_page,
-      bool is_iframe_srcdoc) override;
-  void DidCommitProvisionalLoadForFrame(
-      content::RenderFrameHost* render_frame_host,
-      const GURL& validated_url,
-      ui::PageTransition transition_type) override;
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
+  void DidFinishNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   // Called when the URL of the main frame changed, either when the load
   // commits, or a redirect happens.
@@ -58,48 +43,31 @@ class PrerenderTabHelper
   // Called when this prerendered WebContents has just been swapped in.
   void PrerenderSwappedIn();
 
-  // Called when a control prerender is resolved. Applies to the next load.
-  void WouldHavePrerenderedNextLoad(Origin origin);
+  base::TimeTicks swap_ticks() const { return swap_ticks_; }
+
+  Origin origin() const { return origin_; }
 
  private:
   explicit PrerenderTabHelper(content::WebContents* web_contents);
   friend class content::WebContentsUserData<PrerenderTabHelper>;
 
-  void RecordPerceivedPageLoadTime(
-      base::TimeDelta perceived_page_load_time,
-      double fraction_plt_elapsed_at_swap_in);
-
   // Retrieves the PrerenderManager, or NULL, if none was found.
   PrerenderManager* MaybeGetPrerenderManager() const;
+
+  // Returns the current TimeTicks synchronized with PrerenderManager ticks. In
+  // tests the clock can be mocked out in PrerenderManager, but in production
+  // this should be always TimeTicks::Now().
+  base::TimeTicks GetTimeTicksFromPrerenderManager() const;
 
   // Returns whether the WebContents being observed is currently prerendering.
   bool IsPrerendering();
 
-  // The type the current pending navigation, if there is one. If the tab is a
-  // prerender before swap, the value is always NAVIGATION_TYPE_PRERENDERED,
-  // even if the prerender is not currently loading.
-  NavigationType navigation_type_;
-
-  // If |navigation_type_| is not NAVIGATION_TYPE_NORMAL, the origin of the
-  // relevant prerender. Otherwise, ORIGIN_NONE.
+  // The origin of the relevant prerender or ORIGIN_NONE if there is no
+  // prerender associated with the WebContents.
   Origin origin_;
 
-  // True if the next load will be associated with a control prerender. This
-  // extra state is needed because control prerenders are resolved before the
-  // actual load begins. |next_load_origin_| gives the origin of the control
-  // prerender.
-  bool next_load_is_control_prerender_;
-  Origin next_load_origin_;
-
-  // System time at which the current load was started for the purpose of
-  // the perceived page load time (PPLT). If null, there is no current
-  // load.
-  base::TimeTicks pplt_load_start_;
-
-  // System time at which the actual pageload started (pre-swapin), if
-  // a applicable (in cases when a prerender that was still loading was
-  // swapped in).
-  base::TimeTicks actual_load_start_;
+  // Record the most recent swap time.
+  base::TimeTicks swap_ticks_;
 
   // Current URL being loaded.
   GURL url_;

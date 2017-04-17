@@ -8,6 +8,10 @@
 
 #include "base/logging.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 namespace {
 
 // The absolute maximum swipe angle from |x = y| for a swipe to begin.
@@ -47,6 +51,7 @@ const CGFloat kDefaultMinSwipeXThreshold = 4;
 
   UITouch* touch = [[event allTouches] anyObject];
   CGPoint location = [touch locationInView:self.view];
+  _startPoint = CGPointZero;
   if (_swipeEdge > 0) {
     if (location.x > _swipeEdge &&
         location.x < CGRectGetMaxX([self.view bounds]) - _swipeEdge) {
@@ -74,6 +79,16 @@ const CGFloat kDefaultMinSwipeXThreshold = 4;
 
   // Only one touch.
   if ([[event allTouches] count] > 1) {
+    self.state = UIGestureRecognizerStateFailed;
+    return;
+  }
+
+  // In iOS10, sometimes a PanGestureRecognizer will fire a touchesMoved even
+  // after touchesBegan sets its state to |UIGestureRecognizerStateFailed|.
+  // Somehow the state is re-set to UIGestureRecognizerStatePossible, and ends
+  // up in moved.  Checking if |_startPoint| has been set is a secondary way to
+  // catch for failed gestures.
+  if (CGPointEqualToPoint(_startPoint, CGPointZero)) {
     self.state = UIGestureRecognizerStateFailed;
     return;
   }

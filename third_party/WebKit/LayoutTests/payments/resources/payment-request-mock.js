@@ -6,28 +6,23 @@
 
 let paymentRequestMock = loadMojoModules(
     'paymentRequestMock',
-    ['third_party/WebKit/public/platform/modules/payments/payment_request.mojom',
-     'mojo/public/js/router',
+    ['components/payments/mojom/payment_request.mojom',
+     'mojo/public/js/bindings',
     ]).then(mojo => {
-  let [paymentRequest, router] =  mojo.modules;
+  let [paymentRequest, bindings] =  mojo.modules;
 
   class PaymentRequestMock {
-    constructor(serviceRegistry) {
-      serviceRegistry.addServiceOverrideForTesting(
+    constructor(interfaceProvider) {
+      interfaceProvider.addInterfaceOverrideForTesting(
         paymentRequest.PaymentRequest.name,
-        handle => this.connectPaymentRequest_(handle));
+        handle => this.bindings_.addBinding(this, handle));
 
-      this.serviceRegistry_ = serviceRegistry;
+      this.interfaceProvider_ = interfaceProvider;
       this.pendingResponse_ = null;
+      this.bindings_ = new bindings.BindingSet(paymentRequest.PaymentRequest);
     }
 
-    connectPaymentRequest_(handle) {
-      this.paymentRequestStub_ = new paymentRequest.PaymentRequest.stubClass(this);
-      this.paymentRequestRouter_ = new router.Router(handle);
-      this.paymentRequestRouter_.setIncomingReceiver(this.paymentRequestStub_);
-    }
-
-    setClient(client) {
+    init(client, supportedMethods, details, options) {
       this.client_ = client;
       if (this.pendingResponse_) {
         let response = this.pendingResponse_;
@@ -36,7 +31,7 @@ let paymentRequestMock = loadMojoModules(
       }
     }
 
-    show(supportedMethods, details, options, stringifiedData) {
+    show() {
     }
 
     updateWith(details) {
@@ -57,5 +52,5 @@ let paymentRequestMock = loadMojoModules(
       this.client_.onComplete();
     }
   }
-  return new PaymentRequestMock(mojo.frameServiceRegistry);
+  return new PaymentRequestMock(mojo.frameInterfaces);
 });

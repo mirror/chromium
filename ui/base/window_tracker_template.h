@@ -30,21 +30,24 @@ class WindowTrackerTemplate : public TObserver {
       Add(window);
   }
   WindowTrackerTemplate() {}
-  ~WindowTrackerTemplate() override {
-    for (T* window : windows_)
-      window->RemoveObserver(this);
-  }
+  ~WindowTrackerTemplate() override { RemoveAll(); }
 
   // Returns the set of windows being observed.
   const WindowList& windows() const { return windows_; }
 
   // Adds |window| to the set of Windows being tracked.
   void Add(T* window) {
-    if (ContainsValue(windows_, window))
+    if (base::ContainsValue(windows_, window))
       return;
 
     window->AddObserver(this);
     windows_.push_back(window);
+  }
+
+  void RemoveAll() {
+    for (T* window : windows_)
+      window->RemoveObserver(this);
+    windows_.clear();
   }
 
   // Removes |window| from the set of windows being tracked.
@@ -65,7 +68,9 @@ class WindowTrackerTemplate : public TObserver {
 
   // Returns true if |window| was previously added and has not been removed or
   // deleted.
-  bool Contains(T* window) const { return ContainsValue(windows_, window); }
+  bool Contains(T* window) const {
+    return base::ContainsValue(windows_, window);
+  }
 
   // Observer overrides:
   void OnWindowDestroying(T* window) override {

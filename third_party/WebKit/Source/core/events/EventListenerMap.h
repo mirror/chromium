@@ -37,8 +37,8 @@
 #include "core/events/AddEventListenerOptionsResolved.h"
 #include "core/events/EventListenerOptions.h"
 #include "core/events/RegisteredEventListener.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/AtomicStringHash.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/AtomicStringHash.h"
 
 namespace blink {
 
@@ -47,64 +47,73 @@ class EventTarget;
 using EventListenerVector = HeapVector<RegisteredEventListener, 1>;
 
 class CORE_EXPORT EventListenerMap {
-    WTF_MAKE_NONCOPYABLE(EventListenerMap);
-    DISALLOW_NEW();
-public:
-    EventListenerMap();
+  WTF_MAKE_NONCOPYABLE(EventListenerMap);
+  DISALLOW_NEW();
 
-    bool isEmpty() const { return m_entries.isEmpty(); }
-    bool contains(const AtomicString& eventType) const;
-    bool containsCapturing(const AtomicString& eventType) const;
+ public:
+  EventListenerMap();
 
-    void clear();
-    bool add(const AtomicString& eventType, EventListener*, const AddEventListenerOptionsResolved&, RegisteredEventListener* registeredListener);
-    bool remove(const AtomicString& eventType, const EventListener*, const EventListenerOptions&, size_t* indexOfRemovedListener, RegisteredEventListener* registeredListener);
-    EventListenerVector* find(const AtomicString& eventType);
-    Vector<AtomicString> eventTypes() const;
+  bool IsEmpty() const { return entries_.IsEmpty(); }
+  bool Contains(const AtomicString& event_type) const;
+  bool ContainsCapturing(const AtomicString& event_type) const;
 
-    void copyEventListenersNotCreatedFromMarkupToTarget(EventTarget*);
+  void Clear();
+  bool Add(const AtomicString& event_type,
+           EventListener*,
+           const AddEventListenerOptionsResolved&,
+           RegisteredEventListener* registered_listener);
+  bool Remove(const AtomicString& event_type,
+              const EventListener*,
+              const EventListenerOptions&,
+              size_t* index_of_removed_listener,
+              RegisteredEventListener* registered_listener);
+  EventListenerVector* Find(const AtomicString& event_type);
+  Vector<AtomicString> EventTypes() const;
 
-    DECLARE_TRACE();
+  void CopyEventListenersNotCreatedFromMarkupToTarget(EventTarget*);
 
-private:
-    friend class EventListenerIterator;
+  DECLARE_TRACE();
 
-    void assertNoActiveIterators();
+ private:
+  friend class EventListenerIterator;
 
-    // We use HeapVector instead of HeapHashMap because
-    //  - HeapVector is much more space efficient than HeapHashMap.
-    //  - An EventTarget rarely has event listeners for many event types, and
-    //    HeapVector is faster in such cases.
-    HeapVector<std::pair<AtomicString, Member<EventListenerVector>>, 2> m_entries;
+  void CheckNoActiveIterators();
 
-#if ENABLE(ASSERT)
-    int m_activeIteratorCount;
+  // We use HeapVector instead of HeapHashMap because
+  //  - HeapVector is much more space efficient than HeapHashMap.
+  //  - An EventTarget rarely has event listeners for many event types, and
+  //    HeapVector is faster in such cases.
+  HeapVector<std::pair<AtomicString, Member<EventListenerVector>>, 2> entries_;
+
+#if DCHECK_IS_ON()
+  int active_iterator_count_ = 0;
 #endif
 };
 
 class EventListenerIterator {
-    WTF_MAKE_NONCOPYABLE(EventListenerIterator);
-    STACK_ALLOCATED();
-public:
-    explicit EventListenerIterator(EventTarget*);
-#if ENABLE(ASSERT)
-    ~EventListenerIterator();
+  WTF_MAKE_NONCOPYABLE(EventListenerIterator);
+  STACK_ALLOCATED();
+
+ public:
+  explicit EventListenerIterator(EventTarget*);
+#if DCHECK_IS_ON()
+  ~EventListenerIterator();
 #endif
 
-    EventListener* nextListener();
+  EventListener* NextListener();
 
-private:
-    // This cannot be a Member because it is pointing to a part of object.
-    // TODO(haraken): Use Member<EventTarget> instead of EventListenerMap*.
-    EventListenerMap* m_map;
-    unsigned m_entryIndex;
-    unsigned m_index;
+ private:
+  // This cannot be a Member because it is pointing to a part of object.
+  // TODO(haraken): Use Member<EventTarget> instead of EventListenerMap*.
+  EventListenerMap* map_;
+  unsigned entry_index_;
+  unsigned index_;
 };
 
-#if !ENABLE(ASSERT)
-inline void EventListenerMap::assertNoActiveIterators() { }
+#if !DCHECK_IS_ON()
+inline void EventListenerMap::CheckNoActiveIterators() {}
 #endif
 
-} // namespace blink
+}  // namespace blink
 
-#endif // EventListenerMap_h
+#endif  // EventListenerMap_h

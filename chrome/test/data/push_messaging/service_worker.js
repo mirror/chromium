@@ -6,9 +6,8 @@
 // which would affect the scope of the importScripts call here.
 self.importScripts('/push_messaging/push_constants.js');
 
-var pushSubscriptionOptions = {
-    userVisibleOnly: true
-};
+// Don't wait for clients of old SW to close before activating.
+self.addEventListener('install', () => skipWaiting());
 
 // The "onpush" event currently understands two values as message payload
 // data coming from the test. Any other input is passed through to the
@@ -47,8 +46,14 @@ this.onpush = function(event) {
 };
 
 self.addEventListener('message', function handler (event) {
+  let pushSubscriptionOptions = {
+      userVisibleOnly: true
+  };
   if (event.data.command == 'workerSubscribe') {
     pushSubscriptionOptions.applicationServerKey = kApplicationServerKey.buffer;
+  } else if (event.data.command == 'workerSubscribeWithNumericKey') {
+    pushSubscriptionOptions.applicationServerKey =
+        new TextEncoder().encode(event.data.key);
   } else if (event.data.command == 'workerSubscribeNoKey') {
     // Nothing to set up
   } else {

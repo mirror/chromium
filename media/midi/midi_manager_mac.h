@@ -19,12 +19,13 @@
 #include "media/midi/midi_manager.h"
 #include "media/midi/midi_port_info.h"
 
-namespace media {
 namespace midi {
+
+class MidiService;
 
 class MIDI_EXPORT MidiManagerMac final : public MidiManager {
  public:
-  MidiManagerMac();
+  explicit MidiManagerMac(MidiService* service);
   ~MidiManagerMac() override;
 
   // MidiManager implementation.
@@ -90,6 +91,5 @@ class MIDI_EXPORT MidiManagerMac final : public MidiManager {
 };
 
 }  // namespace midi
-}  // namespace media
 
 #endif  // MEDIA_MIDI_MIDI_MANAGER_MAC_H_

@@ -11,6 +11,7 @@
 #include "base/version.h"
 #include "components/component_updater/configurator_impl.h"
 #include "components/update_client/component_patcher_operation.h"
+#include "components/update_client/update_query_params.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/google/google_brand.h"
 #include "ios/chrome/common/channel_info.h"
@@ -28,11 +29,11 @@ class IOSConfigurator : public update_client::Configurator {
   // update_client::Configurator overrides.
   int InitialDelay() const override;
   int NextCheckDelay() const override;
-  int StepDelay() const override;
   int OnDemandDelay() const override;
   int UpdateDelay() const override;
   std::vector<GURL> UpdateUrl() const override;
   std::vector<GURL> PingUrl() const override;
+  std::string GetProdId() const override;
   base::Version GetBrowserVersion() const override;
   std::string GetChannel() const override;
   std::string GetBrand() const override;
@@ -43,12 +44,14 @@ class IOSConfigurator : public update_client::Configurator {
   net::URLRequestContextGetter* RequestContext() const override;
   scoped_refptr<update_client::OutOfProcessPatcher> CreateOutOfProcessPatcher()
       const override;
-  bool DeltasEnabled() const override;
-  bool UseBackgroundDownloader() const override;
-  bool UseCupSigning() const override;
+  bool EnabledDeltas() const override;
+  bool EnabledComponentUpdates() const override;
+  bool EnabledBackgroundDownloader() const override;
+  bool EnabledCupSigning() const override;
   scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunner()
       const override;
   PrefService* GetPrefService() const override;
+  bool IsPerUserInstall() const override;
 
  private:
   friend class base::RefCountedThreadSafe<IOSConfigurator>;
@@ -74,10 +77,6 @@ int IOSConfigurator::NextCheckDelay() const {
   return configurator_impl_.NextCheckDelay();
 }
 
-int IOSConfigurator::StepDelay() const {
-  return configurator_impl_.StepDelay();
-}
-
 int IOSConfigurator::OnDemandDelay() const {
   return configurator_impl_.OnDemandDelay();
 }
@@ -92,6 +91,11 @@ std::vector<GURL> IOSConfigurator::UpdateUrl() const {
 
 std::vector<GURL> IOSConfigurator::PingUrl() const {
   return configurator_impl_.PingUrl();
+}
+
+std::string IOSConfigurator::GetProdId() const {
+  return update_client::UpdateQueryParams::GetProdIdString(
+      update_client::UpdateQueryParams::ProdId::CHROME);
 }
 
 base::Version IOSConfigurator::GetBrowserVersion() const {
@@ -133,16 +137,20 @@ IOSConfigurator::CreateOutOfProcessPatcher() const {
   return nullptr;
 }
 
-bool IOSConfigurator::DeltasEnabled() const {
-  return configurator_impl_.DeltasEnabled();
+bool IOSConfigurator::EnabledDeltas() const {
+  return configurator_impl_.EnabledDeltas();
 }
 
-bool IOSConfigurator::UseBackgroundDownloader() const {
-  return configurator_impl_.UseBackgroundDownloader();
+bool IOSConfigurator::EnabledComponentUpdates() const {
+  return configurator_impl_.EnabledComponentUpdates();
 }
 
-bool IOSConfigurator::UseCupSigning() const {
-  return configurator_impl_.UseCupSigning();
+bool IOSConfigurator::EnabledBackgroundDownloader() const {
+  return configurator_impl_.EnabledBackgroundDownloader();
+}
+
+bool IOSConfigurator::EnabledCupSigning() const {
+  return configurator_impl_.EnabledCupSigning();
 }
 
 scoped_refptr<base::SequencedTaskRunner>
@@ -155,6 +163,10 @@ IOSConfigurator::GetSequencedTaskRunner() const {
 
 PrefService* IOSConfigurator::GetPrefService() const {
   return GetApplicationContext()->GetLocalState();
+}
+
+bool IOSConfigurator::IsPerUserInstall() const {
+  return true;
 }
 
 }  // namespace

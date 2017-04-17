@@ -14,16 +14,18 @@
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
-#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "content/browser/appcache/appcache_interceptor.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
+#include "content/browser/background_fetch/background_fetch_context.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/browser/loader/resource_request_info_impl.h"
@@ -42,6 +44,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/origin_trial_policy.h"
 #include "content/public/common/url_constants.h"
 #include "crypto/sha2.h"
 #include "net/url_request/url_request_context.h"
@@ -376,8 +379,6 @@ StoragePartitionImplMap::StoragePartitionImplMap(
 }
 
 StoragePartitionImplMap::~StoragePartitionImplMap() {
-  STLDeleteContainerPairSecondPointers(partitions_.begin(),
-                                       partitions_.end());
 }
 
 StoragePartitionImpl* StoragePartitionImplMap::Get(
@@ -390,18 +391,16 @@ StoragePartitionImpl* StoragePartitionImplMap::Get(
 
   PartitionMap::const_iterator it = partitions_.find(partition_config);
   if (it != partitions_.end())
-    return it->second;
+    return it->second.get();
 
   base::FilePath relative_partition_path =
       GetStoragePartitionPath(partition_domain, partition_name);
 
-  StoragePartitionImpl* partition = StoragePartitionImpl::Create(
-      browser_context_, in_memory, relative_partition_path);
-  partitions_[partition_config] = partition;
-
-  partition->GetQuotaManager()->SetTemporaryStorageEvictionPolicy(
-      GetContentClient()->browser()->GetTemporaryStorageEvictionPolicy(
-          browser_context_));
+  std::unique_ptr<StoragePartitionImpl> partition_ptr(
+      StoragePartitionImpl::Create(browser_context_, in_memory,
+                                   relative_partition_path));
+  StoragePartitionImpl* partition = partition_ptr.get();
+  partitions_[partition_config] = std::move(partition_ptr);
 
   ChromeBlobStorageContext* blob_storage_context =
       ChromeBlobStorageContext::GetFor(browser_context_);
@@ -442,17 +441,14 @@ StoragePartitionImpl* StoragePartitionImplMap::Get(
                                         browser_context_->IsOffTheRecord()));
 
   URLRequestInterceptorScopedVector request_interceptors;
-  request_interceptors.push_back(
-      ServiceWorkerRequestHandler::CreateInterceptor(
-          browser_context_->GetResourceContext()).release());
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableExperimentalWebPlatformFeatures)) {
+  request_interceptors.push_back(ServiceWorkerRequestHandler::CreateInterceptor(
+      browser_context_->GetResourceContext()));
+  if (ForeignFetchRequestHandler::IsForeignFetchEnabled()) {
     request_interceptors.push_back(
         ForeignFetchRequestHandler::CreateInterceptor(
-            browser_context_->GetResourceContext())
-            .release());
+            browser_context_->GetResourceContext()));
   }
-  request_interceptors.push_back(new AppCacheInterceptor());
+  request_interceptors.push_back(base::MakeUnique<AppCacheInterceptor>());
 
   // These calls must happen after StoragePartitionImpl::Create().
   if (partition_domain.empty()) {
@@ -523,8 +519,9 @@ void StoragePartitionImplMap::AsyncObliterate(
   base::FilePath domain_root = browser_context_->GetPath().Append(
       GetStoragePartitionDomainPath(partition_domain));
 
-  BrowserThread::PostBlockingPoolTask(
-      FROM_HERE,
+  base::PostTaskWithTraits(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::BACKGROUND),
       base::Bind(&BlockingObliteratePath, browser_context_->GetPath(),
                  domain_root, paths_to_keep,
                  base::ThreadTaskRunnerHandle::Get(), on_gc_required));
@@ -560,7 +557,7 @@ void StoragePartitionImplMap::ForEach(
   for (PartitionMap::const_iterator it = partitions_.begin();
        it != partitions_.end();
        ++it) {
-    callback.Run(it->second);
+    callback.Run(it->second.get());
   }
 }
 
@@ -603,6 +600,12 @@ void StoragePartitionImplMap::PostCreateInitialization(
         base::Bind(&ServiceWorkerContextWrapper::InitializeResourceContext,
                    partition->GetServiceWorkerContext(),
                    browser_context_->GetResourceContext()));
+
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&BackgroundFetchContext::InitializeOnIOThread,
+                   partition->GetBackgroundFetchContext(),
+                   base::RetainedRef(partition->GetURLRequestContext())));
 
     // We do not call InitializeURLRequestContext() for media contexts because,
     // other than the HTTP cache, the media contexts share the same backing

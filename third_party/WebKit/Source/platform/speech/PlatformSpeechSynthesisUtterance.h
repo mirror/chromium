@@ -29,63 +29,66 @@
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/speech/PlatformSpeechSynthesisVoice.h"
-#include "wtf/MathExtras.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/MathExtras.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class PlatformSpeechSynthesisUtteranceClient : public GarbageCollectedMixin {
-public:
-    // Implement methods as needed.
-protected:
-    virtual ~PlatformSpeechSynthesisUtteranceClient() { }
+ public:
+  // Implement methods as needed.
+ protected:
+  virtual ~PlatformSpeechSynthesisUtteranceClient() {}
 };
 
-class PLATFORM_EXPORT PlatformSpeechSynthesisUtterance final : public GarbageCollectedFinalized<PlatformSpeechSynthesisUtterance> {
-public:
-    static PlatformSpeechSynthesisUtterance* create(PlatformSpeechSynthesisUtteranceClient*);
+class PLATFORM_EXPORT PlatformSpeechSynthesisUtterance final
+    : public GarbageCollectedFinalized<PlatformSpeechSynthesisUtterance> {
+ public:
+  static PlatformSpeechSynthesisUtterance* Create(
+      PlatformSpeechSynthesisUtteranceClient*);
 
-    const String& text() const { return m_text; }
-    void setText(const String& text) { m_text = text; }
+  const String& GetText() const { return text_; }
+  void SetText(const String& text) { text_ = text; }
 
-    const String& lang() const { return m_lang; }
-    void setLang(const String& lang) { m_lang = lang; }
+  const String& Lang() const { return lang_; }
+  void SetLang(const String& lang) { lang_ = lang; }
 
-    PlatformSpeechSynthesisVoice* voice() const { return m_voice.get(); }
-    void setVoice(PlatformSpeechSynthesisVoice* voice) { m_voice = voice; }
+  PlatformSpeechSynthesisVoice* Voice() const { return voice_.Get(); }
+  void SetVoice(PlatformSpeechSynthesisVoice* voice) { voice_ = voice; }
 
-    // Range = [0, 1] where 1 is the default.
-    float volume() const { return m_volume; }
-    void setVolume(float volume) { m_volume = clampTo(volume, 0.0f, 1.0f); }
+  // Range = [0, 1] where 1 is the default.
+  float Volume() const { return volume_; }
+  void SetVolume(float volume) { volume_ = clampTo(volume, 0.0f, 1.0f); }
 
-    // Range = [0.1, 10] where 1 is the default.
-    float rate() const { return m_rate; }
-    void setRate(float rate) { m_rate = clampTo(rate, 0.1f, 10.0f); }
+  // Range = [0.1, 10] where 1 is the default.
+  float Rate() const { return rate_; }
+  void SetRate(float rate) { rate_ = clampTo(rate, 0.1f, 10.0f); }
 
-    // Range = [0, 2] where 1 is the default.
-    float pitch() const { return m_pitch; }
-    void setPitch(float pitch) { m_pitch = clampTo(pitch, 0.0f, 2.0f); }
+  // Range = [0, 2] where 1 is the default.
+  float Pitch() const { return pitch_; }
+  void SetPitch(float pitch) { pitch_ = clampTo(pitch, 0.0f, 2.0f); }
 
-    double startTime() const { return m_startTime; }
-    void setStartTime(double startTime) { m_startTime = startTime; }
+  double StartTime() const { return start_time_; }
+  void SetStartTime(double start_time) { start_time_ = start_time; }
 
-    PlatformSpeechSynthesisUtteranceClient* client() const { return m_client; }
+  PlatformSpeechSynthesisUtteranceClient* Client() const { return client_; }
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    explicit PlatformSpeechSynthesisUtterance(PlatformSpeechSynthesisUtteranceClient*);
+ private:
+  explicit PlatformSpeechSynthesisUtterance(
+      PlatformSpeechSynthesisUtteranceClient*);
 
-    Member<PlatformSpeechSynthesisUtteranceClient> m_client;
-    String m_text;
-    String m_lang;
-    RefPtr<PlatformSpeechSynthesisVoice> m_voice;
-    float m_volume;
-    float m_rate;
-    float m_pitch;
-    double m_startTime;
+  Member<PlatformSpeechSynthesisUtteranceClient> client_;
+  String text_;
+  String lang_;
+  RefPtr<PlatformSpeechSynthesisVoice> voice_;
+  float volume_;
+  float rate_;
+  float pitch_;
+  double start_time_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PlatformSpeechSynthesisUtterance_h
+#endif  // PlatformSpeechSynthesisUtterance_h

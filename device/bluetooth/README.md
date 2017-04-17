@@ -1,5 +1,4 @@
-Bluetooth
-=========
+# Bluetooth
 
 `device/bluetooth` abstracts
 [Bluetooth Classic](https://en.wikipedia.org/wiki/Bluetooth) and
@@ -10,39 +9,42 @@ Classic and Low Energy based profiles differ substantially. Platform
 implementations may support only one or the other, even though several classes
 have interfaces for both, e.g. `BluetoothAdapter` & `BluetoothDevice`.
 
-|          | Classic |  Low Energy |
-|----------|:-------:|:-----------:|
-| Android  |    no   | in progress |
-| ChromeOS |   yes   |     yes     |
-| Linux    |   yes   |     yes     |
-| Mac OSX  |   yes   | in progress |
-| Windows  |  some   | in progress |
+|           | Classic |  Low Energy |
+|-----------|:-------:|:-----------:|
+| Android   |   no    |     yes     |
+| Chrome OS |   yes   |     yes     |
+| Linux     |   yes   |     yes     |
+| Mac       |   yes   |     yes     |
+| Windows   |   some  |    nearly   |
 
-ChromeOS and Linux are supported via BlueZ, see `*_bluez` files.
+Chrome OS and Linux are supported via BlueZ, see `*_bluez` files.
+
+[Mojo](https://www.chromium.org/developers/design-documents/mojo)
+interfaces in [public/interfaces](public/interfaces) have been started
+but are *not* ready for production use.
 
 
-Maintainer History
---------------------------------------------------------------------------------
+## Maintainer History
 
 Initial implementation OWNERS were youngki@chromium.org, keybuk@chromium.org,
 armansito@chromium.org, and rpaquay@chromium.org. They no longer contribute to
-chromium fulltime. They were responsible for support for ChromeOS Bluetooth
+chromium fulltime. They were responsible for support for Chrome OS Bluetooth
 features and the Chrome Apps APIs:
 
-* [bluetooth](https://developer.chrome.com/apps/bluetooth)
-* [bluetoothLowEnergy](https://developer.chrome.com/apps/bluetoothLowEnergy)
-* [bluetoothSocket](https://developer.chrome.com/apps/bluetoothSocket)
+* [chrome.bluetooth](https://developer.chrome.com/apps/bluetooth)
+* [chrome.bluetoothLowEnergy](https://developer.chrome.com/apps/bluetoothLowEnergy)
+* [chrome.bluetoothSocket](https://developer.chrome.com/apps/bluetoothSocket)
 
 Active development in 2015 & 2016 is focused on enabling GATT features for:
 
 * [Web Bluetooth](https://crbug.com/419413)
+* Peripheral mode for Chrome OS.
 
 Known future work is tracked in the
 [Refactoring meta issue](https://crbug.com/580406).
 
 
-Testing
---------------------------------------------------------------------------------
+## Testing
 
 Implementation of the Bluetooth component is tested via unittests. Client code
 uses Mock Bluetooth objects:
@@ -83,17 +85,16 @@ tests](https://crbug.com/580403).
 client code.
 
 
-### ChromeOS Blueooth Controller Tests
+### Chrome OS Blueooth Controller Tests
 
 Bluetooth controller system tests generating radio signals are run and managed
-by the ChromeOS team. See:
+by the Chrome OS team. See:
 https://chromium.googlesource.com/chromiumos/third_party/autotest/+/master/server/site_tests/
 https://chromium.googlesource.com/chromiumos/third_party/autotest/+/master/server/cros/bluetooth/
 https://chromium.googlesource.com/chromiumos/third_party/autotest/+/master/client/cros/bluetooth/
 
 
-Android
---------------------------------------------------------------------------------
+## Android
 
 The android implementation requires crossing from C++ to Java using
 [__JNI__](https://www.chromium.org/developers/design-documents/android-jni).
@@ -129,3 +130,9 @@ See also: [Class Diagram of Web Bluetooth through Bluetooth Android][Class]
 
 [Class]: https://sites.google.com/a/chromium.org/dev/developers/design-documents/bluetooth-design-docs/web-bluetooth-through-bluetooth-android-class-diagram
 
+
+## Design Documents
+
+* [Bluetooth Notifications](https://docs.google.com/document/d/1guBtAnQUP8ZoZre4VQGrjR5uX0ZYxfK-lwKNeqY0-z4/edit?usp=sharing) 2016-08-26
+    * Web Bluetooth through Android implementation details, class diagram and
+      call flow.

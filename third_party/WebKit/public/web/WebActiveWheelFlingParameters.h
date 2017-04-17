@@ -31,27 +31,21 @@
 #include "../platform/WebGestureDevice.h"
 #include "../platform/WebPoint.h"
 #include "../platform/WebSize.h"
-#include "WebInputEvent.h"
 
 namespace blink {
 
 struct WebActiveWheelFlingParameters {
-    WebFloatPoint delta;
-    WebPoint point;
-    WebPoint globalPoint;
-    int modifiers;
-    WebGestureDevice sourceDevice;
-    WebSize cumulativeScroll;
-    double startTime;
+  WebFloatPoint delta;
+  WebPoint point;
+  WebPoint global_point;
+  int modifiers;
+  WebGestureDevice source_device;
+  WebSize cumulative_scroll;
+  double start_time;
 
-    WebActiveWheelFlingParameters()
-        : modifiers(0)
-        , sourceDevice(WebGestureDeviceTouchpad)
-        , startTime(0)
-    {
-    }
+  WebActiveWheelFlingParameters()
+      : modifiers(0), source_device(kWebGestureDeviceTouchpad), start_time(0) {}
 };
-
 }
 
 #endif

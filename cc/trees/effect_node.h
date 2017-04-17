@@ -5,9 +5,11 @@
 #ifndef CC_TREES_EFFECT_NODE_H_
 #define CC_TREES_EFFECT_NODE_H_
 
-#include "cc/base/cc_export.h"
-#include "cc/output/filter_operations.h"
-#include "third_party/skia/include/core/SkXfermode.h"
+#include "cc/base/filter_operations.h"
+#include "cc/cc_export.h"
+#include "third_party/skia/include/core/SkBlendMode.h"
+#include "ui/gfx/geometry/point_f.h"
+#include "ui/gfx/geometry/size_f.h"
 
 namespace base {
 namespace trace_event {
@@ -17,32 +19,31 @@ class TracedValue;
 
 namespace cc {
 
-class RenderSurfaceImpl;
-
-namespace proto {
-class TreeNode;
-}  // namespace proto
-
 struct CC_EXPORT EffectNode {
   EffectNode();
   EffectNode(const EffectNode& other);
 
+  // The node index of this node in the effect tree node vector.
   int id;
+  // The node index of the parent node in the effect tree node vector.
   int parent_id;
-  int owner_id;
+  // The layer id of the layer that owns this node.
+  int owning_layer_id;
 
   float opacity;
   float screen_space_opacity;
 
   FilterOperations filters;
   FilterOperations background_filters;
+  gfx::PointF filters_origin;
 
-  SkXfermode::Mode blend_mode;
+  SkBlendMode blend_mode;
 
   gfx::Vector2dF surface_contents_scale;
 
+  gfx::Size unscaled_mask_target_size;
+
   bool has_render_surface;
-  RenderSurfaceImpl* render_surface;
   bool has_copy_request;
   bool hidden_by_backface_visibility;
   bool double_sided;
@@ -58,19 +59,14 @@ struct CC_EXPORT EffectNode {
   // rect.
   bool effect_changed;
   int num_copy_requests_in_subtree;
-  bool has_unclipped_descendants;
   int transform_id;
   int clip_id;
   // Effect node id of which this effect contributes to.
   int target_id;
   int mask_layer_id;
-  int replica_layer_id;
-  int replica_mask_layer_id;
 
   bool operator==(const EffectNode& other) const;
 
-  void ToProtobuf(proto::TreeNode* proto) const;
-  void FromProtobuf(const proto::TreeNode& proto);
   void AsValueInto(base::trace_event::TracedValue* value) const;
 };
 

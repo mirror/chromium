@@ -33,95 +33,102 @@
 
 #include "bindings/core/v8/FileOrUSVString.h"
 #include "bindings/core/v8/Iterable.h"
-#include "bindings/core/v8/ScriptState.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
-#include "wtf/Forward.h"
-#include "wtf/text/TextEncoding.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
 
 class Blob;
 class HTMLFormElement;
+class ScriptState;
 
 // Typedef from FormData.idl:
 typedef FileOrUSVString FormDataEntryValue;
 
-class CORE_EXPORT FormData final : public GarbageCollected<FormData>, public ScriptWrappable, public PairIterable<String, FormDataEntryValue> {
-    DEFINE_WRAPPERTYPEINFO();
+class CORE_EXPORT FormData final
+    : public GarbageCollected<FormData>,
+      public ScriptWrappable,
+      public PairIterable<String, FormDataEntryValue> {
+  DEFINE_WRAPPERTYPEINFO();
 
-public:
-    static FormData* create(HTMLFormElement* form = 0)
-    {
-        return new FormData(form);
-    }
+ public:
+  static FormData* Create(HTMLFormElement* form = 0) {
+    return new FormData(form);
+  }
 
-    static FormData* create(const WTF::TextEncoding& encoding)
-    {
-        return new FormData(encoding);
-    }
-    DECLARE_TRACE();
+  static FormData* Create(const WTF::TextEncoding& encoding) {
+    return new FormData(encoding);
+  }
+  DECLARE_TRACE();
 
-    // FormData IDL interface.
-    void append(const String& name, const String& value);
-    void append(ExecutionContext*, const String& name, Blob*, const String& filename = String());
-    void deleteEntry(const String& name);
-    void get(const String& name, FormDataEntryValue& result);
-    HeapVector<FormDataEntryValue> getAll(const String& name);
-    bool has(const String& name);
-    void set(const String& name, const String& value);
-    void set(const String& name, Blob*, const String& filename = String());
+  // FormData IDL interface.
+  void append(const String& name, const String& value);
+  void append(ScriptState*,
+              const String& name,
+              Blob*,
+              const String& filename = String());
+  void deleteEntry(const String& name);
+  void get(const String& name, FormDataEntryValue& result);
+  HeapVector<FormDataEntryValue> getAll(const String& name);
+  bool has(const String& name);
+  void set(const String& name, const String& value);
+  void set(const String& name, Blob*, const String& filename = String());
 
-    // Internal functions.
+  // Internal functions.
 
-    const WTF::TextEncoding& encoding() const { return m_encoding; }
-    class Entry;
-    const HeapVector<Member<const Entry>>& entries() const { return m_entries; }
-    size_t size() const { return m_entries.size(); }
-    void append(const String& name, int value);
-    void append(const String& name, Blob*, const String& filename = String());
-    String decode(const CString& data) const;
+  const WTF::TextEncoding& Encoding() const { return encoding_; }
+  class Entry;
+  const HeapVector<Member<const Entry>>& Entries() const { return entries_; }
+  size_t size() const { return entries_.size(); }
+  void append(const String& name, int value);
+  void append(const String& name, Blob*, const String& filename = String());
+  String Decode(const CString& data) const;
 
-    PassRefPtr<EncodedFormData> encodeFormData(EncodedFormData::EncodingType = EncodedFormData::FormURLEncoded);
-    PassRefPtr<EncodedFormData> encodeMultiPartFormData();
+  PassRefPtr<EncodedFormData> EncodeFormData(
+      EncodedFormData::EncodingType = EncodedFormData::kFormURLEncoded);
+  PassRefPtr<EncodedFormData> EncodeMultiPartFormData();
 
-private:
-    explicit FormData(const WTF::TextEncoding&);
-    explicit FormData(HTMLFormElement*);
-    void setEntry(const Entry*);
-    CString encodeAndNormalize(const String& key) const;
-    IterationSource* startIteration(ScriptState*, ExceptionState&) override;
+ private:
+  explicit FormData(const WTF::TextEncoding&);
+  explicit FormData(HTMLFormElement*);
+  void SetEntry(const Entry*);
+  CString EncodeAndNormalize(const String& key) const;
+  IterationSource* StartIteration(ScriptState*, ExceptionState&) override;
 
-    WTF::TextEncoding m_encoding;
-    // Entry pointers in m_entries never be nullptr.
-    HeapVector<Member<const Entry>> m_entries;
+  WTF::TextEncoding encoding_;
+  // Entry pointers in m_entries never be nullptr.
+  HeapVector<Member<const Entry>> entries_;
 };
 
 // Represents entry, which is a pair of a name and a value.
 // https://xhr.spec.whatwg.org/#concept-formdata-entry
 // Entry objects are immutable.
 class FormData::Entry : public GarbageCollectedFinalized<FormData::Entry> {
-public:
-    Entry(const CString& name, const CString& value) : m_name(name), m_value(value) { }
-    Entry(const CString& name, Blob* blob, const String& filename) : m_name(name), m_blob(blob), m_filename(filename) { }
-    DECLARE_TRACE();
+ public:
+  Entry(const CString& name, const CString& value)
+      : name_(name), value_(value) {}
+  Entry(const CString& name, Blob* blob, const String& filename)
+      : name_(name), blob_(blob), filename_(filename) {}
+  DECLARE_TRACE();
 
-    bool isString() const { return !m_blob; }
-    bool isFile() const { return m_blob; }
-    const CString& name() const { return m_name; }
-    const CString& value() const { return m_value; }
-    Blob* blob() const { return m_blob.get(); }
-    File* file() const;
-    const String& filename() const { return m_filename; }
+  bool IsString() const { return !blob_; }
+  bool isFile() const { return blob_; }
+  const CString& name() const { return name_; }
+  const CString& Value() const { return value_; }
+  Blob* GetBlob() const { return blob_.Get(); }
+  File* GetFile() const;
+  const String& Filename() const { return filename_; }
 
-private:
-    const CString m_name;
-    const CString m_value;
-    const Member<Blob> m_blob;
-    const String m_filename;
+ private:
+  const CString name_;
+  const CString value_;
+  const Member<Blob> blob_;
+  const String filename_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FormData_h
+#endif  // FormData_h

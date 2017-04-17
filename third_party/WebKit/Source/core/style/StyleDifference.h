@@ -5,107 +5,167 @@
 #ifndef StyleDifference_h
 #define StyleDifference_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
+#include <iosfwd>
+#include "core/CoreExport.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
 class StyleDifference {
-    STACK_ALLOCATED();
-public:
-    enum PropertyDifference {
-        TransformChanged = 1 << 0,
-        OpacityChanged = 1 << 1,
-        ZIndexChanged = 1 << 2,
-        FilterChanged = 1 << 3,
-        BackdropFilterChanged = 1 << 4,
-        // The object needs to issue paint invalidations if it is affected by text decorations or properties dependent on color (e.g., border or outline).
-        TextDecorationOrColorChanged = 1 << 5,
-        // If you add a value here, be sure to update the number of bits on m_propertySpecificDifferences.
-    };
+  STACK_ALLOCATED();
 
-    StyleDifference()
-        : m_paintInvalidationType(NoPaintInvalidation)
-        , m_layoutType(NoLayout)
-        , m_recomputeOverflow(false)
-        , m_propertySpecificDifferences(0)
-    { }
+ public:
+  enum PropertyDifference {
+    kTransformChanged = 1 << 0,
+    kOpacityChanged = 1 << 1,
+    kZIndexChanged = 1 << 2,
+    kFilterChanged = 1 << 3,
+    kBackdropFilterChanged = 1 << 4,
+    kCSSClipChanged = 1 << 5,
+    // The object needs to issue paint invalidations if it is affected by text
+    // decorations or properties dependent on color (e.g., border or outline).
+    kTextDecorationOrColorChanged = 1 << 6,
+    // If you add a value here, be sure to update kPropertyDifferenceCount.
+  };
 
-    bool hasDifference() const { return m_paintInvalidationType || m_layoutType || m_propertySpecificDifferences; }
+  StyleDifference()
+      : paint_invalidation_type_(kNoPaintInvalidation),
+        layout_type_(kNoLayout),
+        recompute_overflow_(false),
+        visual_rect_update_(false),
+        property_specific_differences_(0),
+        scroll_anchor_disabling_property_changed_(false) {}
 
-    bool hasAtMostPropertySpecificDifferences(unsigned propertyDifferences) const
-    {
-        return !m_paintInvalidationType && !m_layoutType && !(m_propertySpecificDifferences & ~propertyDifferences);
-    }
+  bool HasDifference() const {
+    return paint_invalidation_type_ || layout_type_ ||
+           property_specific_differences_ || recompute_overflow_ ||
+           visual_rect_update_ || scroll_anchor_disabling_property_changed_;
+  }
 
-    bool needsPaintInvalidation() const { return m_paintInvalidationType != NoPaintInvalidation; }
-    void clearNeedsPaintInvalidation() { m_paintInvalidationType = NoPaintInvalidation; }
+  bool HasAtMostPropertySpecificDifferences(
+      unsigned property_differences) const {
+    return !paint_invalidation_type_ && !layout_type_ &&
+           !(property_specific_differences_ & ~property_differences);
+  }
 
-    // The object just needs to issue paint invalidations.
-    bool needsPaintInvalidationObject() const { return m_paintInvalidationType == PaintInvalidationObject; }
-    void setNeedsPaintInvalidationObject()
-    {
-        ASSERT(!needsPaintInvalidationSubtree());
-        m_paintInvalidationType = PaintInvalidationObject;
-    }
+  bool NeedsFullPaintInvalidation() const {
+    return paint_invalidation_type_ != kNoPaintInvalidation;
+  }
 
-    // The object and its descendants need to issue paint invalidations.
-    bool needsPaintInvalidationSubtree() const { return m_paintInvalidationType == PaintInvalidationSubtree; }
-    void setNeedsPaintInvalidationSubtree() { m_paintInvalidationType = PaintInvalidationSubtree; }
+  // The object just needs to issue paint invalidations.
+  bool NeedsPaintInvalidationObject() const {
+    return paint_invalidation_type_ == kPaintInvalidationObject;
+  }
+  void SetNeedsPaintInvalidationObject() {
+    DCHECK(!NeedsPaintInvalidationSubtree());
+    paint_invalidation_type_ = kPaintInvalidationObject;
+  }
 
-    bool needsLayout() const { return m_layoutType != NoLayout; }
-    void clearNeedsLayout() { m_layoutType = NoLayout; }
+  // The object and its descendants need to issue paint invalidations.
+  bool NeedsPaintInvalidationSubtree() const {
+    return paint_invalidation_type_ == kPaintInvalidationSubtree;
+  }
+  void SetNeedsPaintInvalidationSubtree() {
+    paint_invalidation_type_ = kPaintInvalidationSubtree;
+  }
 
-    // The offset of this positioned object has been updated.
-    bool needsPositionedMovementLayout() const { return m_layoutType == PositionedMovement; }
-    void setNeedsPositionedMovementLayout()
-    {
-        ASSERT(!needsFullLayout());
-        m_layoutType = PositionedMovement;
-    }
+  bool NeedsLayout() const { return layout_type_ != kNoLayout; }
+  void ClearNeedsLayout() { layout_type_ = kNoLayout; }
 
-    bool needsFullLayout() const { return m_layoutType == FullLayout; }
-    void setNeedsFullLayout() { m_layoutType = FullLayout; }
+  // The offset of this positioned object has been updated.
+  bool NeedsPositionedMovementLayout() const {
+    return layout_type_ == kPositionedMovement;
+  }
+  void SetNeedsPositionedMovementLayout() {
+    DCHECK(!NeedsFullLayout());
+    layout_type_ = kPositionedMovement;
+  }
 
-    bool needsRecomputeOverflow() const { return m_recomputeOverflow; }
-    void setNeedsRecomputeOverflow() { m_recomputeOverflow = true; }
+  bool NeedsFullLayout() const { return layout_type_ == kFullLayout; }
+  void SetNeedsFullLayout() { layout_type_ = kFullLayout; }
 
-    bool transformChanged() const { return m_propertySpecificDifferences & TransformChanged; }
-    void setTransformChanged() { m_propertySpecificDifferences |= TransformChanged; }
+  bool NeedsRecomputeOverflow() const { return recompute_overflow_; }
+  void SetNeedsRecomputeOverflow() { recompute_overflow_ = true; }
 
-    bool opacityChanged() const { return m_propertySpecificDifferences & OpacityChanged; }
-    void setOpacityChanged() { m_propertySpecificDifferences |= OpacityChanged; }
+  bool NeedsVisualRectUpdate() const { return visual_rect_update_; }
+  void SetNeedsVisualRectUpdate() { visual_rect_update_ = true; }
 
-    bool zIndexChanged() const { return m_propertySpecificDifferences & ZIndexChanged; }
-    void setZIndexChanged() { m_propertySpecificDifferences |= ZIndexChanged; }
+  bool TransformChanged() const {
+    return property_specific_differences_ & kTransformChanged;
+  }
+  void SetTransformChanged() {
+    property_specific_differences_ |= kTransformChanged;
+  }
 
-    bool filterChanged() const { return m_propertySpecificDifferences & FilterChanged; }
-    void setFilterChanged() { m_propertySpecificDifferences |= FilterChanged; }
+  bool OpacityChanged() const {
+    return property_specific_differences_ & kOpacityChanged;
+  }
+  void SetOpacityChanged() {
+    property_specific_differences_ |= kOpacityChanged;
+  }
 
-    bool backdropFilterChanged() const { return m_propertySpecificDifferences & BackdropFilterChanged; }
-    void setBackdropFilterChanged() { m_propertySpecificDifferences |= BackdropFilterChanged; }
+  bool ZIndexChanged() const {
+    return property_specific_differences_ & kZIndexChanged;
+  }
+  void SetZIndexChanged() { property_specific_differences_ |= kZIndexChanged; }
 
-    bool textDecorationOrColorChanged() const { return m_propertySpecificDifferences & TextDecorationOrColorChanged; }
-    void setTextDecorationOrColorChanged() { m_propertySpecificDifferences |= TextDecorationOrColorChanged; }
+  bool FilterChanged() const {
+    return property_specific_differences_ & kFilterChanged;
+  }
+  void SetFilterChanged() { property_specific_differences_ |= kFilterChanged; }
 
-private:
-    enum PaintInvalidationType {
-        NoPaintInvalidation = 0,
-        PaintInvalidationObject,
-        PaintInvalidationSubtree
-    };
-    unsigned m_paintInvalidationType : 2;
+  bool BackdropFilterChanged() const {
+    return property_specific_differences_ & kBackdropFilterChanged;
+  }
+  void SetBackdropFilterChanged() {
+    property_specific_differences_ |= kBackdropFilterChanged;
+  }
 
-    enum LayoutType {
-        NoLayout = 0,
-        PositionedMovement,
-        FullLayout
-    };
-    unsigned m_layoutType : 2;
-    unsigned m_recomputeOverflow : 1;
-    unsigned m_propertySpecificDifferences : 6;
+  bool CssClipChanged() const {
+    return property_specific_differences_ & kCSSClipChanged;
+  }
+  void SetCSSClipChanged() {
+    property_specific_differences_ |= kCSSClipChanged;
+  }
+
+  bool TextDecorationOrColorChanged() const {
+    return property_specific_differences_ & kTextDecorationOrColorChanged;
+  }
+  void SetTextDecorationOrColorChanged() {
+    property_specific_differences_ |= kTextDecorationOrColorChanged;
+  }
+
+  bool ScrollAnchorDisablingPropertyChanged() const {
+    return scroll_anchor_disabling_property_changed_;
+  }
+  void SetScrollAnchorDisablingPropertyChanged() {
+    scroll_anchor_disabling_property_changed_ = true;
+  }
+
+ private:
+  static constexpr int kPropertyDifferenceCount = 7;
+
+  friend CORE_EXPORT std::ostream& operator<<(std::ostream&,
+                                              const StyleDifference&);
+
+  enum PaintInvalidationType {
+    kNoPaintInvalidation,
+    kPaintInvalidationObject,
+    kPaintInvalidationSubtree,
+  };
+  unsigned paint_invalidation_type_ : 2;
+
+  enum LayoutType { kNoLayout = 0, kPositionedMovement, kFullLayout };
+  unsigned layout_type_ : 2;
+  unsigned recompute_overflow_ : 1;
+  unsigned visual_rect_update_ : 1;
+  unsigned property_specific_differences_ : kPropertyDifferenceCount;
+  unsigned scroll_anchor_disabling_property_changed_ : 1;
 };
 
-} // namespace blink
+CORE_EXPORT std::ostream& operator<<(std::ostream&, const StyleDifference&);
 
-#endif // StyleDifference_h
+}  // namespace blink
+
+#endif  // StyleDifference_h

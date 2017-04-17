@@ -13,25 +13,45 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
+#include "base/compiler_specific.h"
 #include "base/logging.h"
+#include "mojo/public/cpp/bindings/bindings_export.h"
 #include "mojo/public/cpp/bindings/lib/message_buffer.h"
 #include "mojo/public/cpp/bindings/lib/message_internal.h"
+#include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
 #include "mojo/public/cpp/system/message.h"
 
 namespace mojo {
+
+class AssociatedGroupController;
+
+using ReportBadMessageCallback = base::Callback<void(const std::string& error)>;
 
 // Message is a holder for the data and handles to be sent over a MessagePipe.
 // Message owns its data and handles, but a consumer of Message is free to
 // mutate the data and handles. The message's data is comprised of a header
 // followed by payload.
-class Message {
+class MOJO_CPP_BINDINGS_EXPORT Message {
  public:
   static const uint32_t kFlagExpectsResponse = 1 << 0;
   static const uint32_t kFlagIsResponse = 1 << 1;
   static const uint32_t kFlagIsSync = 1 << 2;
 
   Message();
+  Message(Message&& other);
+
   ~Message();
+
+  Message& operator=(Message&& other);
+
+  // Resets the Message to an uninitialized state. Upon reset, the Message
+  // exists as if it were default-constructed: it has no data buffer and owns no
+  // handles.
+  void Reset();
+
+  // Indicates whether this Message is uninitialized.
+  bool IsNull() const { return !buffer_; }
 
   // Initializes a Message with enough space for |capacity| bytes.
   void Initialize(size_t capacity, bool zero_initialized);
@@ -41,10 +61,9 @@ class Message {
                                  uint32_t num_bytes,
                                  std::vector<Handle>* handles);
 
-  // Transfers data and handles to |destination|.
-  void MoveTo(Message* destination);
-
-  uint32_t data_num_bytes() const { return buffer_->data_num_bytes(); }
+  uint32_t data_num_bytes() const {
+    return static_cast<uint32_t>(buffer_->size());
+  }
 
   // Access the raw bytes of the message.
   const uint8_t* data() const {
@@ -57,11 +76,29 @@ class Message {
   const internal::MessageHeader* header() const {
     return static_cast<const internal::MessageHeader*>(buffer_->data());
   }
-
   internal::MessageHeader* header() {
-    return const_cast<internal::MessageHeader*>(
-        static_cast<const Message*>(this)->header());
+    return static_cast<internal::MessageHeader*>(buffer_->data());
   }
+
+  const internal::MessageHeaderV1* header_v1() const {
+    DCHECK_GE(version(), 1u);
+    return static_cast<const internal::MessageHeaderV1*>(buffer_->data());
+  }
+  internal::MessageHeaderV1* header_v1() {
+    DCHECK_GE(version(), 1u);
+    return static_cast<internal::MessageHeaderV1*>(buffer_->data());
+  }
+
+  const internal::MessageHeaderV2* header_v2() const {
+    DCHECK_GE(version(), 2u);
+    return static_cast<const internal::MessageHeaderV2*>(buffer_->data());
+  }
+  internal::MessageHeaderV2* header_v2() {
+    DCHECK_GE(version(), 2u);
+    return static_cast<internal::MessageHeaderV2*>(buffer_->data());
+  }
+
+  uint32_t version() const { return header()->version; }
 
   uint32_t interface_id() const { return header()->interface_id; }
   void set_interface_id(uint32_t id) { header()->interface_id = id; }
@@ -70,31 +107,31 @@ class Message {
   bool has_flag(uint32_t flag) const { return !!(header()->flags & flag); }
 
   // Access the request_id field (if present).
-  bool has_request_id() const { return header()->version >= 1; }
-  uint64_t request_id() const {
-    DCHECK(has_request_id());
-    return static_cast<const internal::MessageHeaderWithRequestID*>(
-               header())->request_id;
-  }
+  uint64_t request_id() const { return header_v1()->request_id; }
   void set_request_id(uint64_t request_id) {
-    DCHECK(has_request_id());
-    static_cast<internal::MessageHeaderWithRequestID*>(header())
-        ->request_id = request_id;
+    header_v1()->request_id = request_id;
   }
 
   // Access the payload.
-  const uint8_t* payload() const { return data() + header()->num_bytes; }
+  const uint8_t* payload() const;
   uint8_t* mutable_payload() { return const_cast<uint8_t*>(payload()); }
-  uint32_t payload_num_bytes() const {
-    DCHECK(buffer_->data_num_bytes() >= header()->num_bytes);
-    size_t num_bytes = buffer_->data_num_bytes() - header()->num_bytes;
-    DCHECK(num_bytes <= std::numeric_limits<uint32_t>::max());
-    return static_cast<uint32_t>(num_bytes);
-  }
+  uint32_t payload_num_bytes() const;
+
+  uint32_t payload_num_interface_ids() const;
+  const uint32_t* payload_interface_ids() const;
 
   // Access the handles.
   const std::vector<Handle>* handles() const { return &handles_; }
   std::vector<Handle>* mutable_handles() { return &handles_; }
+
+  const std::vector<ScopedInterfaceEndpointHandle>*
+  associated_endpoint_handles() const {
+    return &associated_endpoint_handles_;
+  }
+  std::vector<ScopedInterfaceEndpointHandle>*
+  mutable_associated_endpoint_handles() {
+    return &associated_endpoint_handles_;
+  }
 
   // Access the underlying Buffer interface.
   internal::Buffer* buffer() { return buffer_.get(); }
@@ -108,11 +145,22 @@ class Message {
   // rejected by bindings validation code.
   void NotifyBadMessage(const std::string& error);
 
+  // Serializes |associated_endpoint_handles_| into the payload_interface_ids
+  // field.
+  void SerializeAssociatedEndpointHandles(
+      AssociatedGroupController* group_controller);
+
+  // Deserializes |associated_endpoint_handles_| from the payload_interface_ids
+  // field.
+  bool DeserializeAssociatedEndpointHandles(
+      AssociatedGroupController* group_controller);
+
  private:
   void CloseHandles();
 
   std::unique_ptr<internal::MessageBuffer> buffer_;
   std::vector<Handle> handles_;
+  std::vector<ScopedInterfaceEndpointHandle> associated_endpoint_handles_;
 
   DISALLOW_COPY_AND_ASSIGN(Message);
 };
@@ -135,14 +183,8 @@ class MessageReceiverWithResponder : public MessageReceiver {
   // responder) to handle the response message generated from the given
   // message. The responder's Accept method may be called during
   // AcceptWithResponder or some time after its return.
-  //
-  // NOTE: Upon returning true, AcceptWithResponder assumes ownership of
-  // |responder| and will delete it after calling |responder->Accept| or upon
-  // its own destruction.
-  //
-  // TODO(yzshen): consider changing |responder| to
-  // std::unique_ptr<MessageReceiver>.
-  virtual bool AcceptWithResponder(Message* message, MessageReceiver* responder)
+  virtual bool AcceptWithResponder(Message* message,
+                                   std::unique_ptr<MessageReceiver> responder)
       WARN_UNUSED_RESULT = 0;
 };
 
@@ -174,16 +216,60 @@ class MessageReceiverWithResponderStatus : public MessageReceiver {
   // the responder) to handle the response message generated from the given
   // message. Any of the responder's methods (Accept or IsValid) may be called
   // during  AcceptWithResponder or some time after its return.
-  //
-  // NOTE: Upon returning true, AcceptWithResponder assumes ownership of
-  // |responder| and will delete it after calling |responder->Accept| or upon
-  // its own destruction.
-  //
-  // TODO(yzshen): consider changing |responder| to
-  // std::unique_ptr<MessageReceiver>.
   virtual bool AcceptWithResponder(Message* message,
-                                   MessageReceiverWithStatus* responder)
-      WARN_UNUSED_RESULT = 0;
+                                   std::unique_ptr<MessageReceiverWithStatus>
+                                       responder) WARN_UNUSED_RESULT = 0;
+};
+
+class MOJO_CPP_BINDINGS_EXPORT PassThroughFilter
+    : NON_EXPORTED_BASE(public MessageReceiver) {
+ public:
+  PassThroughFilter();
+  ~PassThroughFilter() override;
+
+  // MessageReceiver:
+  bool Accept(Message* message) override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PassThroughFilter);
+};
+
+namespace internal {
+class SyncMessageResponseSetup;
+}
+
+// An object which should be constructed on the stack immediately before making
+// a sync request for which the caller wishes to perform custom validation of
+// the response value(s). It is illegal to make more than one sync call during
+// the lifetime of the topmost SyncMessageResponseContext, but it is legal to
+// nest contexts to support reentrancy.
+//
+// Usage should look something like:
+//
+//     SyncMessageResponseContext response_context;
+//     foo_interface->SomeSyncCall(&response_value);
+//     if (response_value.IsBad())
+//       response_context.ReportBadMessage("Bad response_value!");
+//
+class MOJO_CPP_BINDINGS_EXPORT SyncMessageResponseContext {
+ public:
+  SyncMessageResponseContext();
+  ~SyncMessageResponseContext();
+
+  static SyncMessageResponseContext* current();
+
+  void ReportBadMessage(const std::string& error);
+
+  const ReportBadMessageCallback& GetBadMessageCallback();
+
+ private:
+  friend class internal::SyncMessageResponseSetup;
+
+  SyncMessageResponseContext* outer_context_;
+  Message response_;
+  ReportBadMessageCallback bad_message_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(SyncMessageResponseContext);
 };
 
 // Read a single message from the pipe. The caller should have created the
@@ -194,6 +280,22 @@ class MessageReceiverWithResponderStatus : public MessageReceiver {
 //
 // NOTE: The message hasn't been validated and may be malformed!
 MojoResult ReadMessage(MessagePipeHandle handle, Message* message);
+
+// Reports the currently dispatching Message as bad. Note that this is only
+// legal to call from directly within the stack frame of a message dispatch. If
+// you need to do asynchronous work before you can determine the legitimacy of
+// a message, use TakeBadMessageCallback() and retain its result until you're
+// ready to invoke or discard it.
+MOJO_CPP_BINDINGS_EXPORT
+void ReportBadMessage(const std::string& error);
+
+// Acquires a callback which may be run to report the currently dispatching
+// Message as bad. Note that this is only legal to call from directly within the
+// stack frame of a message dispatch, but the returned callback may be called
+// exactly once any time thereafter to report the message as bad. This may only
+// be called once per message.
+MOJO_CPP_BINDINGS_EXPORT
+ReportBadMessageCallback GetBadMessageCallback();
 
 }  // namespace mojo
 

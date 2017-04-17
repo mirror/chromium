@@ -6,21 +6,22 @@
 #define UI_VIEWS_TEST_WIDGET_TEST_H_
 
 #include "base/macros.h"
+#include "base/run_loop.h"
 #include "build/build_config.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/widget/widget_delegate.h"
+#include "ui/views/widget/widget_observer.h"
 
 namespace ui {
 namespace internal {
 class InputMethodDelegate;
 }
-class EventProcessor;
+class EventSink;
 }
 
 namespace views {
 
-class NativeWidget;
 class Widget;
 
 namespace internal {
@@ -60,9 +61,6 @@ class WidgetTest : public ViewsTestBase {
 
   View* GetGestureHandler(internal::RootView* root_view);
 
-  // Simulate an OS-level destruction of the native window held by |widget|.
-  static void SimulateNativeDestroy(Widget* widget);
-
   // Simulate an activation of the native window held by |widget|, as if it was
   // clicked by the user. This is a synchronous method for use in
   // non-interactive tests that do not spin a RunLoop in the test body (since
@@ -80,10 +78,10 @@ class WidgetTest : public ViewsTestBase {
   // initiated window resizes.
   gfx::Size GetNativeWidgetMinimumContentSize(Widget* widget);
 
-  // Return the event processor for |widget|. On aura platforms, this is an
+  // Return the event sink for |widget|. On aura platforms, this is an
   // aura::WindowEventDispatcher. Otherwise, it is a bridge to the OS event
-  // processor.
-  static ui::EventProcessor* GetEventProcessor(Widget* widget);
+  // sink.
+  static ui::EventSink* GetEventSink(Widget* widget);
 
   // Get the InputMethodDelegate, for setting on a Mock InputMethod in tests.
   static ui::internal::InputMethodDelegate* GetInputMethodDelegateForWidget(
@@ -91,6 +89,9 @@ class WidgetTest : public ViewsTestBase {
 
   // Return true if |window| is transparent according to the native platform.
   static bool IsNativeWindowTransparent(gfx::NativeWindow window);
+
+  // Returns the set of all Widgets that currently have a NativeWindow.
+  static Widget::Widgets GetAllWidgets();
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WidgetTest);
@@ -151,6 +152,29 @@ class TestInitialFocusWidgetDelegate : public TestDesktopWidgetDelegate {
   View* view_;
 
   DISALLOW_COPY_AND_ASSIGN(TestInitialFocusWidgetDelegate);
+};
+
+// Use in tests to wait until a Widget's activation change to a particular
+// value. To use create and call Wait().
+class WidgetActivationWaiter : public WidgetObserver {
+ public:
+  WidgetActivationWaiter(Widget* widget, bool active);
+  ~WidgetActivationWaiter() override;
+
+  // Returns when the active status matches that supplied to the constructor. If
+  // the active status does not match that of the constructor a RunLoop is used
+  // until the active status matches, otherwise this returns immediately.
+  void Wait();
+
+ private:
+  // views::WidgetObserver override:
+  void OnWidgetActivationChanged(Widget* widget, bool active) override;
+
+  base::RunLoop run_loop_;
+  bool observed_;
+  bool active_;
+
+  DISALLOW_COPY_AND_ASSIGN(WidgetActivationWaiter);
 };
 
 }  // namespace test

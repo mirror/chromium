@@ -17,7 +17,7 @@
 #include "components/policy/core/common/policy_bundle.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_types.h"
-#include "policy/policy_constants.h"
+#include "components/policy/policy_constants.h"
 
 namespace policy {
 
@@ -34,20 +34,20 @@ const char kActionDoNothing[] = "DoNothing";
 
 std::unique_ptr<base::Value> GetAction(const std::string& action) {
   if (action == kActionSuspend) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_SUSPEND));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_SUSPEND));
   }
   if (action == kActionLogout) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_STOP_SESSION));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_STOP_SESSION));
   }
   if (action == kActionShutdown) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_SHUT_DOWN));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_SHUT_DOWN));
   }
   if (action == kActionDoNothing) {
-    return std::unique_ptr<base::Value>(new base::FundamentalValue(
-        chromeos::PowerPolicyController::ACTION_DO_NOTHING));
+    return std::unique_ptr<base::Value>(
+        new base::Value(chromeos::PowerPolicyController::ACTION_DO_NOTHING));
   }
   return std::unique_ptr<base::Value>();
 }

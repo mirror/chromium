@@ -4,14 +4,14 @@
 
 #include "crypto/aead.h"
 
-#include <openssl/aes.h>
-#include <openssl/evp.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string>
 
 #include "base/strings/string_util.h"
 #include "crypto/openssl_util.h"
+#include "third_party/boringssl/src/include/openssl/aes.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace crypto {
 
@@ -120,4 +120,4 @@ size_t Aead::NonceLength() const {
   return EVP_AEAD_nonce_length(aead_);
 }
 
-}  // namespace
+}  // namespace crypto

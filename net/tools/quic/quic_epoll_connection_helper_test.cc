@@ -4,11 +4,9 @@
 
 #include "net/tools/quic/quic_epoll_connection_helper.h"
 
-#include "net/quic/crypto/quic_random.h"
+#include "net/quic/core/crypto/quic_random.h"
 #include "net/tools/quic/test_tools/mock_epoll_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using net::test::MockEpollServer;
 
 namespace net {
 namespace test {

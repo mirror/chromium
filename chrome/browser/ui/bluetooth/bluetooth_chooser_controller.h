@@ -22,19 +22,24 @@
 // access a Bluetooth device. It is owned by ChooserBubbleDelegate.
 class BluetoothChooserController : public ChooserController {
  public:
-  explicit BluetoothChooserController(
+  BluetoothChooserController(
       content::RenderFrameHost* owner,
       const content::BluetoothChooser::EventHandler& event_handler);
   ~BluetoothChooserController() override;
 
   // ChooserController:
+  bool ShouldShowIconBeforeText() const override;
   base::string16 GetNoOptionsText() const override;
   base::string16 GetOkButtonLabel() const override;
   size_t NumOptions() const override;
+  int GetSignalStrengthLevel(size_t index) const override;
+  bool IsConnected(size_t index) const override;
+  bool IsPaired(size_t index) const override;
   base::string16 GetOption(size_t index) const override;
   void RefreshOptions() override;
+  void OpenAdapterOffHelpUrl() const override;
   base::string16 GetStatus() const override;
-  void Select(size_t index) override;
+  void Select(const std::vector<size_t>& indices) override;
   void Cancel() override;
   void Close() override;
   void OpenHelpCenterUrl() const override;
@@ -47,24 +52,40 @@ class BluetoothChooserController : public ChooserController {
   // discovery is happening.
   void OnDiscoveryStateChanged(content::BluetoothChooser::DiscoveryState state);
 
-  // Shows a new device in the chooser.
-  void AddDevice(const std::string& device_id,
-                 const base::string16& device_name);
+  // Shows a new device in the chooser or updates its information.
+  // The range of |signal_strength_level| is -1 to 4 inclusively.
+  void AddOrUpdateDevice(const std::string& device_id,
+                         bool should_update_name,
+                         const base::string16& device_name,
+                         bool is_gatt_connected,
+                         bool is_paired,
+                         int signal_strength_level);
 
   // Tells the chooser that a device is no longer available.
   void RemoveDevice(const std::string& device_id);
 
+  // Called when |event_handler_| is no longer valid and should not be used
+  // any more.
+  void ResetEventHandler();
+
  private:
-  // Clears |device_names_and_ids_| and |device_name_map_|. Called when
+  struct BluetoothDeviceInfo {
+    std::string id;
+    int signal_strength_level;
+    bool is_connected;
+    bool is_paired;
+  };
+
+  // Clears |device_names_and_ids_| and |device_name_counts_|. Called when
   // Bluetooth adapter is turned on or off, or when re-scan happens.
   void ClearAllDevices();
 
-  // Each pair is a (device name, device id).
-  std::vector<std::pair<base::string16, std::string>> device_names_and_ids_;
+  std::vector<BluetoothDeviceInfo> devices_;
+  std::unordered_map<std::string, base::string16> device_id_to_name_map_;
+  // Maps from device name to number of devices with that name.
+  std::unordered_map<base::string16, int> device_name_counts_;
+
   content::BluetoothChooser::EventHandler event_handler_;
-  // Maps from device name to number of devices.
-  std::unordered_map<base::string16, int> device_name_map_;
-  base::string16 no_devices_text_;
   base::string16 status_text_;
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothChooserController);

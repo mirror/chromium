@@ -20,46 +20,64 @@ class URLRequest;
 }
 
 namespace content {
+class ResourceController;
 class SaveFileManager;
 
 // Forwards data to the save thread.
 class SaveFileResourceHandler : public ResourceHandler {
  public:
+  // Unauthorized requests are cancelled from OnWillStart callback.
+  //
+  // This way of handling unauthorized requests allows unified handling of all
+  // SaveFile requests - communicating the failure to OnResponseCompleted
+  // happens in a generic, typical way, reusing common infrastructure code
+  // (rather than forcing an ad-hoc, Save-File-specific call to
+  // OnResponseCompleted from ResourceDispatcherHostImpl::BeginSaveFile).
+  enum class AuthorizationState {
+    AUTHORIZED,
+    NOT_AUTHORIZED,
+  };
+
   SaveFileResourceHandler(net::URLRequest* request,
                           SaveItemId save_item_id,
                           SavePackageId save_package_id,
                           int render_process_host_id,
                           int render_frame_routing_id,
                           const GURL& url,
-                          SaveFileManager* manager);
+                          AuthorizationState authorization_state);
   ~SaveFileResourceHandler() override;
 
   // ResourceHandler Implementation:
 
   // Saves the redirected URL to final_url_, we need to use the original
   // URL to match original request.
-  bool OnRequestRedirected(const net::RedirectInfo& redirect_info,
-                           ResourceResponse* response,
-                           bool* defer) override;
+  void OnRequestRedirected(
+      const net::RedirectInfo& redirect_info,
+      ResourceResponse* response,
+      std::unique_ptr<ResourceController> controller) override;
 
   // Sends the download creation information to the download thread.
-  bool OnResponseStarted(ResourceResponse* response, bool* defer) override;
+  void OnResponseStarted(
+      ResourceResponse* response,
+      std::unique_ptr<ResourceController> controller) override;
 
   // Pass-through implementation.
-  bool OnWillStart(const GURL& url, bool* defer) override;
+  void OnWillStart(const GURL& url,
+                   std::unique_ptr<ResourceController> controller) override;
 
   // Creates a new buffer, which will be handed to the download thread for file
   // writing and deletion.
-  bool OnWillRead(scoped_refptr<net::IOBuffer>* buf,
+  void OnWillRead(scoped_refptr<net::IOBuffer>* buf,
                   int* buf_size,
-                  int min_size) override;
+                  std::unique_ptr<ResourceController> controller) override;
 
   // Passes the buffer to the download file writer.
-  bool OnReadCompleted(int bytes_read, bool* defer) override;
+  void OnReadCompleted(int bytes_read,
+                       std::unique_ptr<ResourceController> controller) override;
 
-  void OnResponseCompleted(const net::URLRequestStatus& status,
-                           const std::string& security_info,
-                           bool* defer) override;
+  void OnResponseCompleted(
+      const net::URLRequestStatus& status,
+      std::unique_ptr<ResourceController> controller) override;
 
   // N/A to this flavor of SaveFileResourceHandler.
   void OnDataDownloaded(int bytes_downloaded) override;
@@ -84,6 +102,8 @@ class SaveFileResourceHandler : public ResourceHandler {
   GURL final_url_;
   int64_t content_length_;
   SaveFileManager* save_manager_;
+
+  AuthorizationState authorization_state_;
 
   static const int kReadBufSize = 32768;  // bytes
 

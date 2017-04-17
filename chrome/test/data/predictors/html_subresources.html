@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Subresources collection</title>
+    <link rel="stylesheet" href="/handled-by-test/style.css">
+    <style type="text/css">
+      @font-face {
+        font-family: "Whatever";
+        src: url(/handled-by-test/font.ttf) format("truetype");
+      }
+      p.customfont {
+        font-family: "Whatever", Verdana;
+      }
+    </style>
+    <script src="/handled-by-test/script.js"></script>
+  </head>
+  <body>
+    <img src="/handled-by-test/image.png">
+    <p class="customfont">Hello world!</p>
+  </body>
+</html>

@@ -36,401 +36,367 @@
 
 namespace blink {
 
-struct SameSizeAsStyleRuleBase : public GarbageCollectedFinalized<SameSizeAsStyleRuleBase> {
-    unsigned bitfields;
+struct SameSizeAsStyleRuleBase
+    : public GarbageCollectedFinalized<SameSizeAsStyleRuleBase> {
+  unsigned bitfields;
 };
 
-static_assert(sizeof(StyleRuleBase) <= sizeof(SameSizeAsStyleRuleBase), "StyleRuleBase should stay small");
+static_assert(sizeof(StyleRuleBase) <= sizeof(SameSizeAsStyleRuleBase),
+              "StyleRuleBase should stay small");
 
-CSSRule* StyleRuleBase::createCSSOMWrapper(CSSStyleSheet* parentSheet) const
-{
-    return createCSSOMWrapper(parentSheet, 0);
+CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSStyleSheet* parent_sheet) const {
+  return CreateCSSOMWrapper(parent_sheet, 0);
 }
 
-CSSRule* StyleRuleBase::createCSSOMWrapper(CSSRule* parentRule) const
-{
-    return createCSSOMWrapper(0, parentRule);
+CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSRule* parent_rule) const {
+  return CreateCSSOMWrapper(0, parent_rule);
 }
 
-DEFINE_TRACE(StyleRuleBase)
-{
-    switch (type()) {
-    case Charset:
-        toStyleRuleCharset(this)->traceAfterDispatch(visitor);
-        return;
-    case Style:
-        toStyleRule(this)->traceAfterDispatch(visitor);
-        return;
-    case Page:
-        toStyleRulePage(this)->traceAfterDispatch(visitor);
-        return;
-    case FontFace:
-        toStyleRuleFontFace(this)->traceAfterDispatch(visitor);
-        return;
-    case Media:
-        toStyleRuleMedia(this)->traceAfterDispatch(visitor);
-        return;
-    case Supports:
-        toStyleRuleSupports(this)->traceAfterDispatch(visitor);
-        return;
-    case Import:
-        toStyleRuleImport(this)->traceAfterDispatch(visitor);
-        return;
-    case Keyframes:
-        toStyleRuleKeyframes(this)->traceAfterDispatch(visitor);
-        return;
-    case Keyframe:
-        toStyleRuleKeyframe(this)->traceAfterDispatch(visitor);
-        return;
-    case Namespace:
-        toStyleRuleNamespace(this)->traceAfterDispatch(visitor);
-        return;
-    case Viewport:
-        toStyleRuleViewport(this)->traceAfterDispatch(visitor);
-        return;
-    }
-    ASSERT_NOT_REACHED();
+DEFINE_TRACE(StyleRuleBase) {
+  switch (GetType()) {
+    case kCharset:
+      ToStyleRuleCharset(this)->TraceAfterDispatch(visitor);
+      return;
+    case kStyle:
+      ToStyleRule(this)->TraceAfterDispatch(visitor);
+      return;
+    case kPage:
+      ToStyleRulePage(this)->TraceAfterDispatch(visitor);
+      return;
+    case kFontFace:
+      ToStyleRuleFontFace(this)->TraceAfterDispatch(visitor);
+      return;
+    case kMedia:
+      ToStyleRuleMedia(this)->TraceAfterDispatch(visitor);
+      return;
+    case kSupports:
+      ToStyleRuleSupports(this)->TraceAfterDispatch(visitor);
+      return;
+    case kImport:
+      ToStyleRuleImport(this)->TraceAfterDispatch(visitor);
+      return;
+    case kKeyframes:
+      ToStyleRuleKeyframes(this)->TraceAfterDispatch(visitor);
+      return;
+    case kKeyframe:
+      ToStyleRuleKeyframe(this)->TraceAfterDispatch(visitor);
+      return;
+    case kNamespace:
+      ToStyleRuleNamespace(this)->TraceAfterDispatch(visitor);
+      return;
+    case kViewport:
+      ToStyleRuleViewport(this)->TraceAfterDispatch(visitor);
+      return;
+  }
+  NOTREACHED();
 }
 
-void StyleRuleBase::finalizeGarbageCollectedObject()
-{
-    switch (type()) {
-    case Charset:
-        toStyleRuleCharset(this)->~StyleRuleCharset();
-        return;
-    case Style:
-        toStyleRule(this)->~StyleRule();
-        return;
-    case Page:
-        toStyleRulePage(this)->~StyleRulePage();
-        return;
-    case FontFace:
-        toStyleRuleFontFace(this)->~StyleRuleFontFace();
-        return;
-    case Media:
-        toStyleRuleMedia(this)->~StyleRuleMedia();
-        return;
-    case Supports:
-        toStyleRuleSupports(this)->~StyleRuleSupports();
-        return;
-    case Import:
-        toStyleRuleImport(this)->~StyleRuleImport();
-        return;
-    case Keyframes:
-        toStyleRuleKeyframes(this)->~StyleRuleKeyframes();
-        return;
-    case Keyframe:
-        toStyleRuleKeyframe(this)->~StyleRuleKeyframe();
-        return;
-    case Namespace:
-        toStyleRuleNamespace(this)->~StyleRuleNamespace();
-        return;
-    case Viewport:
-        toStyleRuleViewport(this)->~StyleRuleViewport();
-        return;
-    }
-    ASSERT_NOT_REACHED();
+void StyleRuleBase::FinalizeGarbageCollectedObject() {
+  switch (GetType()) {
+    case kCharset:
+      ToStyleRuleCharset(this)->~StyleRuleCharset();
+      return;
+    case kStyle:
+      ToStyleRule(this)->~StyleRule();
+      return;
+    case kPage:
+      ToStyleRulePage(this)->~StyleRulePage();
+      return;
+    case kFontFace:
+      ToStyleRuleFontFace(this)->~StyleRuleFontFace();
+      return;
+    case kMedia:
+      ToStyleRuleMedia(this)->~StyleRuleMedia();
+      return;
+    case kSupports:
+      ToStyleRuleSupports(this)->~StyleRuleSupports();
+      return;
+    case kImport:
+      ToStyleRuleImport(this)->~StyleRuleImport();
+      return;
+    case kKeyframes:
+      ToStyleRuleKeyframes(this)->~StyleRuleKeyframes();
+      return;
+    case kKeyframe:
+      ToStyleRuleKeyframe(this)->~StyleRuleKeyframe();
+      return;
+    case kNamespace:
+      ToStyleRuleNamespace(this)->~StyleRuleNamespace();
+      return;
+    case kViewport:
+      ToStyleRuleViewport(this)->~StyleRuleViewport();
+      return;
+  }
+  NOTREACHED();
 }
 
-void StyleRuleBase::destroy()
-{
-    switch (type()) {
-    case Charset:
-        delete toStyleRuleCharset(this);
-        return;
-    case Style:
-        delete toStyleRule(this);
-        return;
-    case Page:
-        delete toStyleRulePage(this);
-        return;
-    case FontFace:
-        delete toStyleRuleFontFace(this);
-        return;
-    case Media:
-        delete toStyleRuleMedia(this);
-        return;
-    case Supports:
-        delete toStyleRuleSupports(this);
-        return;
-    case Import:
-        delete toStyleRuleImport(this);
-        return;
-    case Keyframes:
-        delete toStyleRuleKeyframes(this);
-        return;
-    case Keyframe:
-        delete toStyleRuleKeyframe(this);
-        return;
-    case Namespace:
-        delete toStyleRuleNamespace(this);
-        return;
-    case Viewport:
-        delete toStyleRuleViewport(this);
-        return;
-    }
-    ASSERT_NOT_REACHED();
+StyleRuleBase* StyleRuleBase::Copy() const {
+  switch (GetType()) {
+    case kStyle:
+      return ToStyleRule(this)->Copy();
+    case kPage:
+      return ToStyleRulePage(this)->Copy();
+    case kFontFace:
+      return ToStyleRuleFontFace(this)->Copy();
+    case kMedia:
+      return ToStyleRuleMedia(this)->Copy();
+    case kSupports:
+      return ToStyleRuleSupports(this)->Copy();
+    case kImport:
+      // FIXME: Copy import rules.
+      NOTREACHED();
+      return nullptr;
+    case kKeyframes:
+      return ToStyleRuleKeyframes(this)->Copy();
+    case kViewport:
+      return ToStyleRuleViewport(this)->Copy();
+    case kNamespace:
+      return ToStyleRuleNamespace(this)->Copy();
+    case kCharset:
+    case kKeyframe:
+      NOTREACHED();
+      return nullptr;
+  }
+  NOTREACHED();
+  return nullptr;
 }
 
-StyleRuleBase* StyleRuleBase::copy() const
-{
-    switch (type()) {
-    case Style:
-        return toStyleRule(this)->copy();
-    case Page:
-        return toStyleRulePage(this)->copy();
-    case FontFace:
-        return toStyleRuleFontFace(this)->copy();
-    case Media:
-        return toStyleRuleMedia(this)->copy();
-    case Supports:
-        return toStyleRuleSupports(this)->copy();
-    case Import:
-        // FIXME: Copy import rules.
-        ASSERT_NOT_REACHED();
-        return nullptr;
-    case Keyframes:
-        return toStyleRuleKeyframes(this)->copy();
-    case Viewport:
-        return toStyleRuleViewport(this)->copy();
-    case Charset:
-    case Keyframe:
-    case Namespace:
-        ASSERT_NOT_REACHED();
-        return nullptr;
-    }
-    ASSERT_NOT_REACHED();
-    return nullptr;
+CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSStyleSheet* parent_sheet,
+                                           CSSRule* parent_rule) const {
+  CSSRule* rule = nullptr;
+  StyleRuleBase* self = const_cast<StyleRuleBase*>(this);
+  switch (GetType()) {
+    case kStyle:
+      rule = CSSStyleRule::Create(ToStyleRule(self), parent_sheet);
+      break;
+    case kPage:
+      rule = CSSPageRule::Create(ToStyleRulePage(self), parent_sheet);
+      break;
+    case kFontFace:
+      rule = CSSFontFaceRule::Create(ToStyleRuleFontFace(self), parent_sheet);
+      break;
+    case kMedia:
+      rule = CSSMediaRule::Create(ToStyleRuleMedia(self), parent_sheet);
+      break;
+    case kSupports:
+      rule = CSSSupportsRule::Create(ToStyleRuleSupports(self), parent_sheet);
+      break;
+    case kImport:
+      rule = CSSImportRule::Create(ToStyleRuleImport(self), parent_sheet);
+      break;
+    case kKeyframes:
+      rule = CSSKeyframesRule::Create(ToStyleRuleKeyframes(self), parent_sheet);
+      break;
+    case kNamespace:
+      rule = CSSNamespaceRule::Create(ToStyleRuleNamespace(self), parent_sheet);
+      break;
+    case kViewport:
+      rule = CSSViewportRule::Create(ToStyleRuleViewport(self), parent_sheet);
+      break;
+    case kKeyframe:
+    case kCharset:
+      NOTREACHED();
+      return nullptr;
+  }
+  if (parent_rule)
+    rule->SetParentRule(parent_rule);
+  return rule;
 }
 
-CSSRule* StyleRuleBase::createCSSOMWrapper(CSSStyleSheet* parentSheet, CSSRule* parentRule) const
-{
-    CSSRule* rule = nullptr;
-    StyleRuleBase* self = const_cast<StyleRuleBase*>(this);
-    switch (type()) {
-    case Style:
-        rule = CSSStyleRule::create(toStyleRule(self), parentSheet);
-        break;
-    case Page:
-        rule = CSSPageRule::create(toStyleRulePage(self), parentSheet);
-        break;
-    case FontFace:
-        rule = CSSFontFaceRule::create(toStyleRuleFontFace(self), parentSheet);
-        break;
-    case Media:
-        rule = CSSMediaRule::create(toStyleRuleMedia(self), parentSheet);
-        break;
-    case Supports:
-        rule = CSSSupportsRule::create(toStyleRuleSupports(self), parentSheet);
-        break;
-    case Import:
-        rule = CSSImportRule::create(toStyleRuleImport(self), parentSheet);
-        break;
-    case Keyframes:
-        rule = CSSKeyframesRule::create(toStyleRuleKeyframes(self), parentSheet);
-        break;
-    case Namespace:
-        rule = CSSNamespaceRule::create(toStyleRuleNamespace(self), parentSheet);
-        break;
-    case Viewport:
-        rule = CSSViewportRule::create(toStyleRuleViewport(self), parentSheet);
-        break;
-    case Keyframe:
-    case Charset:
-        ASSERT_NOT_REACHED();
-        return nullptr;
-    }
-    if (parentRule)
-        rule->setParentRule(parentRule);
-    return rule;
+unsigned StyleRule::AverageSizeInBytes() {
+  return sizeof(StyleRule) + sizeof(CSSSelector) +
+         StylePropertySet::AverageSizeInBytes();
 }
 
-unsigned StyleRule::averageSizeInBytes()
-{
-    return sizeof(StyleRule) + sizeof(CSSSelector) + StylePropertySet::averageSizeInBytes();
-}
+StyleRule::StyleRule(CSSSelectorList selector_list,
+                     StylePropertySet* properties)
+    : StyleRuleBase(kStyle),
+      selector_list_(std::move(selector_list)),
+      properties_(properties),
+      should_consider_for_matching_rules_(kConsiderIfNonEmpty) {}
 
-StyleRule::StyleRule(CSSSelectorList selectorList, StylePropertySet* properties)
-    : StyleRuleBase(Style)
-    , m_properties(properties)
-{
-    m_selectorList = std::move(selectorList);
+StyleRule::StyleRule(CSSSelectorList selector_list,
+                     CSSLazyPropertyParser* lazy_property_parser)
+    : StyleRuleBase(kStyle),
+      selector_list_(std::move(selector_list)),
+      lazy_property_parser_(lazy_property_parser),
+      should_consider_for_matching_rules_(kAlwaysConsider) {}
+
+const StylePropertySet& StyleRule::Properties() const {
+  if (!properties_) {
+    properties_ = lazy_property_parser_->ParseProperties();
+    lazy_property_parser_.Clear();
+  }
+  return *properties_;
 }
 
 StyleRule::StyleRule(const StyleRule& o)
-    : StyleRuleBase(o)
-    , m_properties(o.m_properties->mutableCopy())
-    , m_selectorList(o.m_selectorList.copy())
-{
+    : StyleRuleBase(o),
+      selector_list_(o.selector_list_.Copy()),
+      properties_(o.Properties().MutableCopy()),
+      should_consider_for_matching_rules_(kConsiderIfNonEmpty) {}
+
+StyleRule::~StyleRule() {}
+
+MutableStylePropertySet& StyleRule::MutableProperties() {
+  // Ensure properties_ is initialized.
+  if (!Properties().IsMutable())
+    properties_ = properties_->MutableCopy();
+  return *ToMutableStylePropertySet(properties_.Get());
 }
 
-StyleRule::~StyleRule()
-{
+bool StyleRule::PropertiesHaveFailedOrCanceledSubresources() const {
+  return properties_ && properties_->HasFailedOrCanceledSubresources();
 }
 
-MutableStylePropertySet& StyleRule::mutableProperties()
-{
-    if (!m_properties->isMutable())
-        m_properties = m_properties->mutableCopy();
-    return *toMutableStylePropertySet(m_properties.get());
+bool StyleRule::ShouldConsiderForMatchingRules(bool include_empty_rules) const {
+  DCHECK(should_consider_for_matching_rules_ == kAlwaysConsider || properties_);
+  return include_empty_rules ||
+         should_consider_for_matching_rules_ == kAlwaysConsider ||
+         !properties_->IsEmpty();
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(StyleRule)
-{
-    visitor->trace(m_properties);
-    StyleRuleBase::traceAfterDispatch(visitor);
+bool StyleRule::HasParsedProperties() const {
+  // StyleRule should only have one of {lazy_property_parser_, properties_} set.
+  DCHECK(lazy_property_parser_ || properties_);
+  DCHECK(!lazy_property_parser_ || !properties_);
+  return !lazy_property_parser_;
 }
 
-StyleRulePage::StyleRulePage(CSSSelectorList selectorList, StylePropertySet* properties)
-    : StyleRuleBase(Page)
-    , m_properties(properties)
-    , m_selectorList(std::move(selectorList))
-{
+DEFINE_TRACE_AFTER_DISPATCH(StyleRule) {
+  visitor->Trace(properties_);
+  visitor->Trace(lazy_property_parser_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
-StyleRulePage::StyleRulePage(const StyleRulePage& o)
-    : StyleRuleBase(o)
-    , m_properties(o.m_properties->mutableCopy())
-    , m_selectorList(o.m_selectorList.copy())
-{
+StyleRulePage::StyleRulePage(CSSSelectorList selector_list,
+                             StylePropertySet* properties)
+    : StyleRuleBase(kPage),
+      properties_(properties),
+      selector_list_(std::move(selector_list)) {}
+
+StyleRulePage::StyleRulePage(const StyleRulePage& page_rule)
+    : StyleRuleBase(page_rule),
+      properties_(page_rule.properties_->MutableCopy()),
+      selector_list_(page_rule.selector_list_.Copy()) {}
+
+StyleRulePage::~StyleRulePage() {}
+
+MutableStylePropertySet& StyleRulePage::MutableProperties() {
+  if (!properties_->IsMutable())
+    properties_ = properties_->MutableCopy();
+  return *ToMutableStylePropertySet(properties_.Get());
 }
 
-StyleRulePage::~StyleRulePage()
-{
-}
-
-MutableStylePropertySet& StyleRulePage::mutableProperties()
-{
-    if (!m_properties->isMutable())
-        m_properties = m_properties->mutableCopy();
-    return *toMutableStylePropertySet(m_properties.get());
-}
-
-DEFINE_TRACE_AFTER_DISPATCH(StyleRulePage)
-{
-    visitor->trace(m_properties);
-    StyleRuleBase::traceAfterDispatch(visitor);
+DEFINE_TRACE_AFTER_DISPATCH(StyleRulePage) {
+  visitor->Trace(properties_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
 StyleRuleFontFace::StyleRuleFontFace(StylePropertySet* properties)
-    : StyleRuleBase(FontFace)
-    , m_properties(properties)
-{
+    : StyleRuleBase(kFontFace), properties_(properties) {}
+
+StyleRuleFontFace::StyleRuleFontFace(const StyleRuleFontFace& font_face_rule)
+    : StyleRuleBase(font_face_rule),
+      properties_(font_face_rule.properties_->MutableCopy()) {}
+
+StyleRuleFontFace::~StyleRuleFontFace() {}
+
+MutableStylePropertySet& StyleRuleFontFace::MutableProperties() {
+  if (!properties_->IsMutable())
+    properties_ = properties_->MutableCopy();
+  return *ToMutableStylePropertySet(properties_);
 }
 
-StyleRuleFontFace::StyleRuleFontFace(const StyleRuleFontFace& o)
-    : StyleRuleBase(o)
-    , m_properties(o.m_properties->mutableCopy())
-{
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleFontFace) {
+  visitor->Trace(properties_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
-StyleRuleFontFace::~StyleRuleFontFace()
-{
+StyleRuleGroup::StyleRuleGroup(RuleType type,
+                               HeapVector<Member<StyleRuleBase>>& adopt_rule)
+    : StyleRuleBase(type) {
+  child_rules_.Swap(adopt_rule);
 }
 
-MutableStylePropertySet& StyleRuleFontFace::mutableProperties()
-{
-    if (!m_properties->isMutable())
-        m_properties = m_properties->mutableCopy();
-    return *toMutableStylePropertySet(m_properties);
+StyleRuleGroup::StyleRuleGroup(const StyleRuleGroup& group_rule)
+    : StyleRuleBase(group_rule), child_rules_(group_rule.child_rules_.size()) {
+  for (unsigned i = 0; i < child_rules_.size(); ++i)
+    child_rules_[i] = group_rule.child_rules_[i]->Copy();
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleFontFace)
-{
-    visitor->trace(m_properties);
-    StyleRuleBase::traceAfterDispatch(visitor);
+void StyleRuleGroup::WrapperInsertRule(unsigned index, StyleRuleBase* rule) {
+  child_rules_.insert(index, rule);
 }
 
-StyleRuleGroup::StyleRuleGroup(RuleType type, HeapVector<Member<StyleRuleBase>>& adoptRule)
-    : StyleRuleBase(type)
-{
-    m_childRules.swap(adoptRule);
+void StyleRuleGroup::WrapperRemoveRule(unsigned index) {
+  child_rules_.erase(index);
 }
 
-StyleRuleGroup::StyleRuleGroup(const StyleRuleGroup& o)
-    : StyleRuleBase(o)
-    , m_childRules(o.m_childRules.size())
-{
-    for (unsigned i = 0; i < m_childRules.size(); ++i)
-        m_childRules[i] = o.m_childRules[i]->copy();
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleGroup) {
+  visitor->Trace(child_rules_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
-void StyleRuleGroup::wrapperInsertRule(unsigned index, StyleRuleBase* rule)
-{
-    m_childRules.insert(index, rule);
+StyleRuleCondition::StyleRuleCondition(
+    RuleType type,
+    HeapVector<Member<StyleRuleBase>>& adopt_rules)
+    : StyleRuleGroup(type, adopt_rules) {}
+
+StyleRuleCondition::StyleRuleCondition(
+    RuleType type,
+    const String& condition_text,
+    HeapVector<Member<StyleRuleBase>>& adopt_rules)
+    : StyleRuleGroup(type, adopt_rules), condition_text_(condition_text) {}
+
+StyleRuleCondition::StyleRuleCondition(const StyleRuleCondition& condition_rule)
+    : StyleRuleGroup(condition_rule),
+      condition_text_(condition_rule.condition_text_) {}
+
+StyleRuleMedia::StyleRuleMedia(MediaQuerySet* media,
+                               HeapVector<Member<StyleRuleBase>>& adopt_rules)
+    : StyleRuleCondition(kMedia, adopt_rules), media_queries_(media) {}
+
+StyleRuleMedia::StyleRuleMedia(const StyleRuleMedia& media_rule)
+    : StyleRuleCondition(media_rule) {
+  if (media_rule.media_queries_)
+    media_queries_ = media_rule.media_queries_->Copy();
 }
 
-void StyleRuleGroup::wrapperRemoveRule(unsigned index)
-{
-    m_childRules.remove(index);
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleMedia) {
+  visitor->Trace(media_queries_);
+  StyleRuleCondition::TraceAfterDispatch(visitor);
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleGroup)
-{
-    visitor->trace(m_childRules);
-    StyleRuleBase::traceAfterDispatch(visitor);
-}
+StyleRuleSupports::StyleRuleSupports(
+    const String& condition_text,
+    bool condition_is_supported,
+    HeapVector<Member<StyleRuleBase>>& adopt_rules)
+    : StyleRuleCondition(kSupports, condition_text, adopt_rules),
+      condition_is_supported_(condition_is_supported) {}
 
-StyleRuleMedia::StyleRuleMedia(MediaQuerySet* media, HeapVector<Member<StyleRuleBase>>& adoptRules)
-    : StyleRuleGroup(Media, adoptRules)
-    , m_mediaQueries(media)
-{
-}
-
-StyleRuleMedia::StyleRuleMedia(const StyleRuleMedia& o)
-    : StyleRuleGroup(o)
-{
-    if (o.m_mediaQueries)
-        m_mediaQueries = o.m_mediaQueries->copy();
-}
-
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleMedia)
-{
-    visitor->trace(m_mediaQueries);
-    StyleRuleGroup::traceAfterDispatch(visitor);
-}
-
-StyleRuleSupports::StyleRuleSupports(const String& conditionText, bool conditionIsSupported, HeapVector<Member<StyleRuleBase>>& adoptRules)
-    : StyleRuleGroup(Supports, adoptRules)
-    , m_conditionText(conditionText)
-    , m_conditionIsSupported(conditionIsSupported)
-{
-}
-
-StyleRuleSupports::StyleRuleSupports(const StyleRuleSupports& o)
-    : StyleRuleGroup(o)
-    , m_conditionText(o.m_conditionText)
-    , m_conditionIsSupported(o.m_conditionIsSupported)
-{
-}
+StyleRuleSupports::StyleRuleSupports(const StyleRuleSupports& supports_rule)
+    : StyleRuleCondition(supports_rule),
+      condition_is_supported_(supports_rule.condition_is_supported_) {}
 
 StyleRuleViewport::StyleRuleViewport(StylePropertySet* properties)
-    : StyleRuleBase(Viewport)
-    , m_properties(properties)
-{
+    : StyleRuleBase(kViewport), properties_(properties) {}
+
+StyleRuleViewport::StyleRuleViewport(const StyleRuleViewport& viewport_rule)
+    : StyleRuleBase(viewport_rule),
+      properties_(viewport_rule.properties_->MutableCopy()) {}
+
+StyleRuleViewport::~StyleRuleViewport() {}
+
+MutableStylePropertySet& StyleRuleViewport::MutableProperties() {
+  if (!properties_->IsMutable())
+    properties_ = properties_->MutableCopy();
+  return *ToMutableStylePropertySet(properties_);
 }
 
-StyleRuleViewport::StyleRuleViewport(const StyleRuleViewport& o)
-    : StyleRuleBase(o)
-    , m_properties(o.m_properties->mutableCopy())
-{
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleViewport) {
+  visitor->Trace(properties_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
-StyleRuleViewport::~StyleRuleViewport()
-{
-}
-
-MutableStylePropertySet& StyleRuleViewport::mutableProperties()
-{
-    if (!m_properties->isMutable())
-        m_properties = m_properties->mutableCopy();
-    return *toMutableStylePropertySet(m_properties);
-}
-
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleViewport)
-{
-    visitor->trace(m_properties);
-    StyleRuleBase::traceAfterDispatch(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

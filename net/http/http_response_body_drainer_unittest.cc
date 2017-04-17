@@ -90,7 +90,7 @@ class MockHttpStream : public HttpStream {
   // HttpStream implementation.
   int InitializeStream(const HttpRequestInfo* request_info,
                        RequestPriority priority,
-                       const BoundNetLog& net_log,
+                       const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override {
     return ERR_UNEXPECTED;
   }
@@ -99,7 +99,6 @@ class MockHttpStream : public HttpStream {
                   const CompletionCallback& callback) override {
     return ERR_UNEXPECTED;
   }
-  UploadProgress GetUploadProgress() const override { return UploadProgress(); }
   int ReadResponseHeaders(const CompletionCallback& callback) override {
     return ERR_UNEXPECTED;
   }
@@ -109,11 +108,16 @@ class MockHttpStream : public HttpStream {
   bool CanReuseConnection() const override { return can_reuse_connection_; }
   int64_t GetTotalReceivedBytes() const override { return 0; }
   int64_t GetTotalSentBytes() const override { return 0; }
+  bool GetAlternativeService(
+      AlternativeService* alternative_service) const override {
+    return false;
+  }
   void GetSSLInfo(SSLInfo* ssl_info) override {}
   void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override {}
   bool GetRemoteEndpoint(IPEndPoint* endpoint) override { return false; }
-  Error GetSignedEKMForTokenBinding(crypto::ECPrivateKey* key,
-                                    std::vector<uint8_t>* out) override {
+  Error GetTokenBindingSignature(crypto::ECPrivateKey* key,
+                                 TokenBindingType tb_type,
+                                 std::vector<uint8_t>* out) override {
     ADD_FAILURE();
     return ERR_NOT_IMPLEMENTED;
   }

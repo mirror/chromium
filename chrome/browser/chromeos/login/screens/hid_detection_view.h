@@ -8,22 +8,24 @@
 #include <string>
 
 #include "base/callback.h"
+#include "chrome/browser/chromeos/login/oobe_screen.h"
 
 namespace chromeos {
 
-class HIDDetectionModel;
+class HIDDetectionScreen;
 
 // Interface between HID detection screen and its representation, either WebUI
 // or Views one. Note, do not forget to call OnViewDestroyed in the
 // dtor.
 class HIDDetectionView {
  public:
+  constexpr static OobeScreen kScreenId = OobeScreen::SCREEN_OOBE_HID_DETECTION;
+
   virtual ~HIDDetectionView() {}
 
-  virtual void PrepareToShow() = 0;
   virtual void Show() = 0;
   virtual void Hide() = 0;
-  virtual void Bind(HIDDetectionModel& model) = 0;
+  virtual void Bind(HIDDetectionScreen* screen) = 0;
   virtual void Unbind() = 0;
   // Checks if we should show the screen or enough devices already present.
   // Calls corresponding set of actions based on the bool result.

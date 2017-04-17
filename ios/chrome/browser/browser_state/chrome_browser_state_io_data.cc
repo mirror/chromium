@@ -32,7 +32,7 @@
 #include "components/net_log/chrome_net_log.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/common/signin_pref_names.h"
-#include "components/sync_driver/pref_names.h"
+#include "components/sync/base/pref_names.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
@@ -44,7 +44,6 @@
 #include "ios/chrome/browser/net/ios_chrome_url_request_context_getter.h"
 #include "ios/chrome/browser/net/proxy_service_factory.h"
 #include "ios/web/public/web_thread.h"
-#include "net/base/keygen_handler.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/multi_log_ct_verifier.h"
 #include "net/cookies/canonical_cookie.h"
@@ -122,7 +121,7 @@ void ChromeBrowserStateIOData::InitializeOnUIThread(
                                           pref_service);
     google_services_user_account_id_.MoveToThread(io_task_runner);
 
-    sync_disabled_.Init(sync_driver::prefs::kSyncManaged, pref_service);
+    sync_disabled_.Init(syncer::prefs::kSyncManaged, pref_service);
     sync_disabled_.MoveToThread(io_task_runner);
 
     signin_allowed_.Init(prefs::kSigninAllowed, pref_service);
@@ -268,7 +267,7 @@ net::URLRequestContext* ChromeBrowserStateIOData::GetIsolatedAppRequestContext(
     const base::FilePath& partition_path) const {
   DCHECK(initialized_);
   AppRequestContext* context = nullptr;
-  if (ContainsKey(app_request_context_map_, partition_path)) {
+  if (base::ContainsKey(app_request_context_map_, partition_path)) {
     context = app_request_context_map_[partition_path];
   } else {
     context = AcquireIsolatedAppRequestContext(main_context);
@@ -281,7 +280,7 @@ net::URLRequestContext* ChromeBrowserStateIOData::GetIsolatedAppRequestContext(
 void ChromeBrowserStateIOData::SetCookieStoreForPartitionPath(
     std::unique_ptr<net::CookieStore> cookie_store,
     const base::FilePath& partition_path) {
-  DCHECK(ContainsKey(app_request_context_map_, partition_path));
+  DCHECK(base::ContainsKey(app_request_context_map_, partition_path));
   app_request_context_map_[partition_path]->SetCookieStore(
       std::move(cookie_store));
 }
@@ -395,36 +394,26 @@ void ChromeBrowserStateIOData::ApplyProfileParamsToContext(
 std::unique_ptr<net::URLRequestJobFactory>
 ChromeBrowserStateIOData::SetUpJobFactoryDefaults(
     std::unique_ptr<net::URLRequestJobFactoryImpl> job_factory,
-    URLRequestInterceptorScopedVector request_interceptors,
     net::NetworkDelegate* network_delegate) const {
   // NOTE(willchan): Keep these protocol handlers in sync with
   // ChromeBrowserStateIOData::IsHandledProtocol().
   bool set_protocol = job_factory->SetProtocolHandler(
       url::kFileScheme,
-      base::WrapUnique(new net::FileProtocolHandler(
+      base::MakeUnique<net::FileProtocolHandler>(
           web::WebThread::GetBlockingPool()->GetTaskRunnerWithShutdownBehavior(
-              base::SequencedWorkerPool::SKIP_ON_SHUTDOWN))));
+              base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)));
   DCHECK(set_protocol);
 
   set_protocol = job_factory->SetProtocolHandler(
-      url::kDataScheme, base::WrapUnique(new net::DataProtocolHandler()));
+      url::kDataScheme, base::MakeUnique<net::DataProtocolHandler>());
   DCHECK(set_protocol);
 
   job_factory->SetProtocolHandler(
       url::kAboutScheme,
-      base::WrapUnique(new about_handler::AboutProtocolHandler()));
+      base::MakeUnique<about_handler::AboutProtocolHandler>());
 
-  // Set up interceptors in the reverse order.
-  std::unique_ptr<net::URLRequestJobFactory> top_job_factory =
-      std::move(job_factory);
-  for (URLRequestInterceptorScopedVector::reverse_iterator i =
-           request_interceptors.rbegin();
-       i != request_interceptors.rend(); ++i) {
-    top_job_factory.reset(new net::URLRequestInterceptingJobFactory(
-        std::move(top_job_factory), base::WrapUnique(*i)));
-  }
-  request_interceptors.weak_clear();
-  return top_job_factory;
+  // TODO(crbug.com/703565): remove std::move() once Xcode 9.0+ is required.
+  return std::move(job_factory);
 }
 
 void ChromeBrowserStateIOData::ShutdownOnUIThread(

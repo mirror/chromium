@@ -191,36 +191,17 @@ void GetCertChainInfo(CERTCertList* cert_list,
       }
       verified_chain.push_back(node->cert);
     }
-
-    SECAlgorithmID& signature = node->cert->signature;
-    SECOidTag oid_tag = SECOID_FindOIDTag(&signature.algorithm);
-    switch (oid_tag) {
-      case SEC_OID_PKCS1_MD5_WITH_RSA_ENCRYPTION:
-        verify_result->has_md5 = true;
-        break;
-      case SEC_OID_PKCS1_MD2_WITH_RSA_ENCRYPTION:
-        verify_result->has_md2 = true;
-        break;
-      case SEC_OID_PKCS1_MD4_WITH_RSA_ENCRYPTION:
-        verify_result->has_md4 = true;
-        break;
-      case SEC_OID_PKCS1_SHA1_WITH_RSA_ENCRYPTION:
-      case SEC_OID_ISO_SHA1_WITH_RSA_SIGNATURE:
-      case SEC_OID_ANSIX9_DSA_SIGNATURE_WITH_SHA1_DIGEST:
-      case SEC_OID_ANSIX962_ECDSA_SHA1_SIGNATURE:
-        verify_result->has_sha1 = true;
-        if (i == 0)
-          verify_result->has_sha1_leaf = true;
-        break;
-      default:
-        break;
-    }
   }
 
   if (root_cert)
     verified_chain.push_back(root_cert);
-  verify_result->verified_cert =
+
+  scoped_refptr<X509Certificate> verified_cert_with_chain =
       X509Certificate::CreateFromHandle(verified_cert, verified_chain);
+  if (verified_cert_with_chain)
+    verify_result->verified_cert = std::move(verified_cert_with_chain);
+  else
+    verify_result->cert_status |= CERT_STATUS_INVALID;
 }
 
 // IsKnownRoot returns true if the given certificate is one that we believe
@@ -282,12 +263,12 @@ CRLSetResult CheckRevocationWithCRLSet(const CERTCertList* cert_list,
   if (root)
     certs.push_back(root);
 
-  // error is set to true if any errors are found. It causes such chains to be
-  // considered as not covered.
+  // Set to true if any errors are found, which will cause such chains to not be
+  // treated as covered by the CRLSet.
   bool error = false;
-  // last_covered is set to the coverage state of the previous certificate. The
-  // certificates are iterated over backwards thus, after the iteration,
-  // |last_covered| contains the coverage state of the leaf certificate.
+  // Set to the coverage state of the previous certificate.  As the certificates
+  // are iterated over from root to leaf, at the end of the iteration, this
+  // indicates the coverage state of the leaf certificate.
   bool last_covered = false;
 
   // We iterate from the root certificate down to the leaf, keeping track of
@@ -684,6 +665,7 @@ void AppendPublicKeyHashes(CERTCertList* cert_list,
 bool IsEVCandidate(EVRootCAMetadata* metadata,
                    CERTCertificate* cert_handle,
                    SECOidTag* ev_policy_oid) {
+  *ev_policy_oid = SEC_OID_UNKNOWN;
   DCHECK(cert_handle);
   ScopedCERTCertificatePolicies policies(DecodeCertPolicies(cert_handle));
   if (!policies.get())
@@ -698,11 +680,15 @@ bool IsEVCandidate(EVRootCAMetadata* metadata,
       continue;
     if (metadata->IsEVPolicyOID(policy_info->oid)) {
       *ev_policy_oid = policy_info->oid;
-      return true;
+
+      // De-prioritize the CA/Browser forum Extended Validation policy
+      // (2.23.140.1.1). See crbug.com/705285.
+      if (!EVRootCAMetadata::IsCaBrowserForumEvOid(policy_info->oid))
+        break;
     }
   }
 
-  return false;
+  return *ev_policy_oid != SEC_OID_UNKNOWN;
 }
 
 // Studied Mozilla's code (esp. security/manager/ssl/src/nsIdentityChecking.cpp
@@ -820,11 +806,6 @@ int CertVerifyProcNSS::VerifyInternalImpl(
     cache_ocsp_response_from_side_channel_(CERT_GetDefaultCertDB(), cert_handle,
                                            PR_Now(), &ocsp_response_item,
                                            nullptr);
-  }
-
-  if (!cert->VerifyNameMatch(hostname,
-                             &verify_result->common_name_fallback_used)) {
-    verify_result->cert_status |= CERT_STATUS_COMMON_NAME_INVALID;
   }
 
   // Setup a callback to call into CheckChainRevocationWithCRLSet with the

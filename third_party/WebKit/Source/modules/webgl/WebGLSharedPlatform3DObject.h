@@ -6,27 +6,25 @@
 #define WebGLSharedPlatform3DObject_h
 
 #include "modules/webgl/WebGLSharedObject.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class WebGLRenderingContextBase;
 
 class WebGLSharedPlatform3DObject : public WebGLSharedObject {
-public:
-    ~WebGLSharedPlatform3DObject() override;
+ public:
+  GLuint Object() const { return object_; }
+  void SetObject(GLuint);
 
-    GLuint object() const { return m_object; }
-    void setObject(GLuint);
+ protected:
+  explicit WebGLSharedPlatform3DObject(WebGLRenderingContextBase*);
 
-protected:
-    explicit WebGLSharedPlatform3DObject(WebGLRenderingContextBase*);
+  bool HasObject() const override;
 
-    bool hasObject() const override;
-
-    GLuint m_object;
+  GLuint object_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLSharedPlatform3DObject_h
+#endif  // WebGLSharedPlatform3DObject_h

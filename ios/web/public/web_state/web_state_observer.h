@@ -18,8 +18,10 @@ namespace web {
 
 struct Credential;
 struct FaviconURL;
+class NavigationContext;
 struct LoadCommittedDetails;
 class WebState;
+class TestWebState;
 class WebStateImpl;
 
 enum class PageLoadCompletionStatus : bool { SUCCESS = 0, FAILURE = 1 };
@@ -28,10 +30,6 @@ enum class PageLoadCompletionStatus : bool { SUCCESS = 0, FAILURE = 1 };
 // load events from WebState.
 class WebStateObserver {
  public:
-  // Key code associated to form events for which the key code is missing or
-  // irrelevant.
-  static int kInvalidFormKeyCode;
-
   // Returns the web state associated with this observer.
   WebState* web_state() const { return web_state_; }
 
@@ -51,6 +49,25 @@ class WebStateObserver {
   virtual void NavigationItemCommitted(
       const LoadCommittedDetails& load_details) {}
 
+  // Called when a navigation finished in the WebState. This happens when a
+  // navigation is committed, aborted or replaced by a new one. To know if the
+  // navigation has resulted in an error page, use
+  // NavigationContext::IsErrorPage().
+  //
+  // If this is called because the navigation committed, then the document load
+  // will still be ongoing in the WebState returned by |navigation_context|.
+  // Use the document loads events such as DidStopLoading
+  // and related methods to listen for continued events from this
+  // WebState.
+  //
+  // This is also fired by same-document navigations, such as fragment
+  // navigations or pushState/replaceState, which will not result in a document
+  // change. To filter these out, use NavigationContext::IsSameDocument().
+  //
+  // |navigation_context| will be destroyed at the end of this call, so do not
+  // keep a reference to it afterward.
+  virtual void DidFinishNavigation(NavigationContext* navigation_context) {}
+
   // Called when the current page has started loading.
   virtual void DidStartLoading() {}
 
@@ -61,13 +78,24 @@ class WebStateObserver {
   virtual void PageLoaded(PageLoadCompletionStatus load_completion_status) {}
 
   // Called when the interstitial is dismissed by the user.
-  virtual void InsterstitialDismissed() {}
+  virtual void InterstitialDismissed() {}
 
-  // Called on URL hash change events.
-  virtual void UrlHashChanged() {}
+  // Notifies the observer that the page has made some progress loading.
+  // |progress| is a value between 0.0 (nothing loaded) to 1.0 (page fully
+  // loaded).
+  virtual void LoadProgressChanged(double progress) {}
 
-  // Called on history state change events.
-  virtual void HistoryStateChanged() {}
+  // Called when the title of the WebState is set.
+  virtual void TitleWasSet() {}
+
+  // Called when the visible security state of the page changes.
+  virtual void DidChangeVisibleSecurityState() {}
+
+  // Called when a dialog (JavaScript, geolocation) or window open request was
+  // suppressed.
+  // NOTE: Called only if WebState::SetShouldSuppressDialogs() was called with
+  // false.
+  virtual void DidSuppressDialog() {}
 
   // Called on form submission. |user_initiated| is true if the user
   // interacted with the page.
@@ -76,16 +104,18 @@ class WebStateObserver {
 
   // Called when the user is typing on a form field, with |error| indicating if
   // there is any error when parsing the form field information.
-  // |key_code| may be kInvalidFormKeyCode if there is no key code.
   virtual void FormActivityRegistered(const std::string& form_name,
                                       const std::string& field_name,
                                       const std::string& type,
                                       const std::string& value,
-                                      int key_code,
                                       bool input_missing) {}
 
   // Invoked when new favicon URL candidates are received.
   virtual void FaviconUrlUpdated(const std::vector<FaviconURL>& candidates) {}
+
+  // Called when the web process is terminated (usually by crashing, though
+  // possibly by other means).
+  virtual void RenderProcessGone() {}
 
   // Notifies the observer that the credential manager API was invoked from
   // |source_url| to request a credential from the browser. If |unmediated|
@@ -156,6 +186,7 @@ class WebStateObserver {
 
  private:
   friend class WebStateImpl;
+  friend class TestWebState;
 
   // Stops observing the current web state.
   void ResetWebState();

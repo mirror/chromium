@@ -5,6 +5,7 @@
 #ifndef PRINTING_PRINT_SETTINGS_H_
 #define PRINTING_PRINT_SETTINGS_H_
 
+#include <algorithm>
 #include <string>
 
 #include "base/strings/string16.h"
@@ -31,9 +32,17 @@ PRINTING_EXPORT void GetColorModelForMode(int color_mode,
 PRINTING_EXPORT void SetAgent(const std::string& user_agent);
 PRINTING_EXPORT const std::string& GetAgent();
 
-// OS-independent print settings.
 class PRINTING_EXPORT PrintSettings {
  public:
+#if defined(OS_WIN)
+  enum PrinterType {
+    TYPE_NONE = 0,
+    TYPE_XPS,
+    TYPE_POSTSCRIPT_LEVEL2,
+    TYPE_POSTSCRIPT_LEVEL3
+  };
+#endif
+
   // Media properties requested by the user. Default instance represents
   // default media selection.
   struct RequestedMedia {
@@ -90,8 +99,23 @@ class PRINTING_EXPORT PrintSettings {
   }
   const base::string16& device_name() const { return device_name_; }
 
-  void set_dpi(int dpi) { dpi_ = dpi; }
-  int dpi() const { return dpi_; }
+  void set_dpi(int dpi) {
+    dpi_[0] = dpi;
+    dpi_[1] = dpi;
+  }
+  void set_dpi_xy(int dpi_horizontal, int dpi_vertical) {
+    dpi_[0] = dpi_horizontal;
+    dpi_[1] = dpi_vertical;
+  }
+  int dpi() const { return std::min(dpi_[0], dpi_[1]); }
+  int dpi_horizontal() const { return dpi_[0]; }
+  int dpi_vertical() const { return dpi_[1]; }
+
+  void set_scale_factor(double scale_factor) { scale_factor_ = scale_factor; }
+  double scale_factor() const { return scale_factor_; }
+
+  void set_rasterize_pdf(bool rasterize_pdf) { rasterize_pdf_ = rasterize_pdf; }
+  bool rasterize_pdf() const { return rasterize_pdf_; }
 
   void set_supports_alpha_blend(bool supports_alpha_blend) {
     supports_alpha_blend_ = supports_alpha_blend;
@@ -106,8 +130,8 @@ class PRINTING_EXPORT PrintSettings {
 #endif  // defined(OS_MACOSX)
   }
 
-  void set_ranges(const PageRanges& ranges) { ranges_ = ranges; };
-  const PageRanges& ranges() const { return ranges_; };
+  void set_ranges(const PageRanges& ranges) { ranges_ = ranges; }
+  const PageRanges& ranges() const { return ranges_; }
 
   void set_selection_only(bool selection_only) {
     selection_only_ = selection_only;
@@ -142,7 +166,19 @@ class PRINTING_EXPORT PrintSettings {
   void set_duplex_mode(DuplexMode duplex_mode) { duplex_mode_ = duplex_mode; }
   DuplexMode duplex_mode() const { return duplex_mode_; }
 
-  int desired_dpi() const { return desired_dpi_; }
+#if defined(OS_WIN)
+  void set_print_text_with_gdi(bool use_gdi) { print_text_with_gdi_ = use_gdi; }
+  bool print_text_with_gdi() const { return print_text_with_gdi_; }
+
+  void set_printer_type(PrinterType type) { printer_type_ = type; }
+  bool printer_is_xps() const { return printer_type_ == PrinterType::TYPE_XPS;}
+  bool printer_is_ps2() const {
+    return printer_type_ == PrinterType::TYPE_POSTSCRIPT_LEVEL2;
+  }
+  bool printer_is_ps3() const {
+    return printer_type_ == PrinterType::TYPE_POSTSCRIPT_LEVEL3;
+  }
+#endif
 
   // Cookie generator. It is used to initialize PrintedDocument with its
   // associated PrintSettings, to be sure that each generated PrintedPage is
@@ -153,10 +189,6 @@ class PRINTING_EXPORT PrintSettings {
   // Multi-page printing. Each PageRange describes a from-to page combination.
   // This permits printing selected pages only.
   PageRanges ranges_;
-
-  // Desired visible dots per inch rendering for output. Printing should be
-  // scaled to ScreenDpi/dpix*desired_dpi.
-  int desired_dpi_;
 
   // Indicates if the user only wants to print the current selection.
   bool selection_only_;
@@ -195,14 +227,29 @@ class PRINTING_EXPORT PrintSettings {
   // Page setup in device units.
   PageSetup page_setup_device_units_;
 
-  // Printer's device effective dots per inch in both axis.
-  int dpi_;
+  // Printer's device effective dots per inch in both axes. The two values will
+  // generally be identical. However, on Windows, there are a few rare printers
+  // that support resolutions with different DPI in different dimensions.
+  int dpi_[2];
+
+  // Scale factor
+  double scale_factor_;
+
+  // True if PDF should be printed as a raster PDF
+  bool rasterize_pdf_;
 
   // Is the orientation landscape or portrait.
   bool landscape_;
 
   // True if this printer supports AlphaBlend.
   bool supports_alpha_blend_;
+
+#if defined(OS_WIN)
+  // True to print text with GDI.
+  bool print_text_with_gdi_;
+
+  PrinterType printer_type_;
+#endif
 
   // If margin type is custom, this is what was requested.
   PageMargins requested_custom_margins_in_points_;

@@ -11,23 +11,4 @@ Polymer({
   is: 'all-sites',
 
   behaviors: [SiteSettingsBehavior],
-
-  properties: {
-    /**
-     * The current active route.
-     */
-    currentRoute: {
-      type: Object,
-      notify: true,
-    },
-
-    /**
-     * The site that was selected by the user in the dropdown list.
-     * @type {SiteException}
-     */
-    selectedSite: {
-      type: Object,
-      notify: true,
-    },
-  },
 });

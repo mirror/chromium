@@ -30,117 +30,112 @@
 
 #include "modules/filesystem/DOMFilePath.h"
 
-#include "wtf/Vector.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-const char DOMFilePath::separator = '/';
-const char DOMFilePath::root[] = "/";
+const char DOMFilePath::kSeparator = '/';
+const char DOMFilePath::kRoot[] = "/";
 
-String DOMFilePath::append(const String& base, const String& components)
-{
-    return ensureDirectoryPath(base) + components;
+String DOMFilePath::Append(const String& base, const String& components) {
+  return EnsureDirectoryPath(base) + components;
 }
 
-String DOMFilePath::ensureDirectoryPath(const String& path)
-{
-    if (!DOMFilePath::endsWithSeparator(path))
-        return path + DOMFilePath::separator;
-    return path;
+String DOMFilePath::EnsureDirectoryPath(const String& path) {
+  if (!DOMFilePath::EndsWithSeparator(path))
+    return path + DOMFilePath::kSeparator;
+  return path;
 }
 
-String DOMFilePath::getName(const String& path)
-{
-    int index = path.reverseFind(DOMFilePath::separator);
-    if (index != -1)
-        return path.substring(index + 1);
-    return path;
+String DOMFilePath::GetName(const String& path) {
+  int index = path.ReverseFind(DOMFilePath::kSeparator);
+  if (index != -1)
+    return path.Substring(index + 1);
+  return path;
 }
 
-String DOMFilePath::getDirectory(const String& path)
-{
-    int index = path.reverseFind(DOMFilePath::separator);
-    if (!index)
-        return DOMFilePath::root;
-    if (index != -1)
-        return path.substring(0, index);
-    return ".";
+String DOMFilePath::GetDirectory(const String& path) {
+  int index = path.ReverseFind(DOMFilePath::kSeparator);
+  if (!index)
+    return DOMFilePath::kRoot;
+  if (index != -1)
+    return path.Substring(0, index);
+  return ".";
 }
 
-bool DOMFilePath::isParentOf(const String& parent, const String& mayBeChild)
-{
-    ASSERT(DOMFilePath::isAbsolute(parent));
-    ASSERT(DOMFilePath::isAbsolute(mayBeChild));
-    if (parent == DOMFilePath::root && mayBeChild != DOMFilePath::root)
-        return true;
-    if (parent.length() >= mayBeChild.length() || !mayBeChild.startsWith(parent, TextCaseInsensitive))
-        return false;
-    if (mayBeChild[parent.length()] != DOMFilePath::separator)
-        return false;
+bool DOMFilePath::IsParentOf(const String& parent, const String& may_be_child) {
+  DCHECK(DOMFilePath::IsAbsolute(parent));
+  DCHECK(DOMFilePath::IsAbsolute(may_be_child));
+  if (parent == DOMFilePath::kRoot && may_be_child != DOMFilePath::kRoot)
     return true;
+  if (parent.length() >= may_be_child.length() ||
+      !may_be_child.StartsWith(parent, kTextCaseUnicodeInsensitive))
+    return false;
+  if (may_be_child[parent.length()] != DOMFilePath::kSeparator)
+    return false;
+  return true;
 }
 
-String DOMFilePath::removeExtraParentReferences(const String& path)
-{
-    ASSERT(DOMFilePath::isAbsolute(path));
-    Vector<String> components;
-    Vector<String> canonicalized;
-    path.split(DOMFilePath::separator, components);
-    for (size_t i = 0; i < components.size(); ++i) {
-        if (components[i] == ".")
-            continue;
-        if (components[i] == "..") {
-            if (canonicalized.size() > 0)
-                canonicalized.removeLast();
-            continue;
-        }
-        canonicalized.append(components[i]);
+String DOMFilePath::RemoveExtraParentReferences(const String& path) {
+  DCHECK(DOMFilePath::IsAbsolute(path));
+  Vector<String> components;
+  Vector<String> canonicalized;
+  path.Split(DOMFilePath::kSeparator, components);
+  for (size_t i = 0; i < components.size(); ++i) {
+    if (components[i] == ".")
+      continue;
+    if (components[i] == "..") {
+      if (canonicalized.size() > 0)
+        canonicalized.pop_back();
+      continue;
     }
-    if (canonicalized.isEmpty())
-        return DOMFilePath::root;
-    StringBuilder result;
-    for (size_t i = 0; i < canonicalized.size(); ++i) {
-        result.append(DOMFilePath::separator);
-        result.append(canonicalized[i]);
-    }
-    return result.toString();
+    canonicalized.push_back(components[i]);
+  }
+  if (canonicalized.IsEmpty())
+    return DOMFilePath::kRoot;
+  StringBuilder result;
+  for (size_t i = 0; i < canonicalized.size(); ++i) {
+    result.Append(DOMFilePath::kSeparator);
+    result.Append(canonicalized[i]);
+  }
+  return result.ToString();
 }
 
-bool DOMFilePath::isValidPath(const String& path)
-{
-    if (path.isEmpty() || path == DOMFilePath::root)
-        return true;
-
-    // Embedded NULs are not allowed.
-    if (path.find(static_cast<UChar>(0)) != WTF::kNotFound)
-        return false;
-
-    // While not [yet] restricted by the spec, '\\' complicates implementation for Chromium.
-    if (path.find('\\') != WTF::kNotFound)
-        return false;
-
-    // This method is only called on fully-evaluated absolute paths. Any sign of ".." or "." is likely an attempt to break out of the sandbox.
-    Vector<String> components;
-    path.split(DOMFilePath::separator, components);
-    for (size_t i = 0; i < components.size(); ++i) {
-        if (components[i] == ".")
-            return false;
-        if (components[i] == "..")
-            return false;
-    }
+bool DOMFilePath::IsValidPath(const String& path) {
+  if (path.IsEmpty() || path == DOMFilePath::kRoot)
     return true;
+
+  // Embedded NULs are not allowed.
+  if (path.Find(static_cast<UChar>(0)) != WTF::kNotFound)
+    return false;
+
+  // While not [yet] restricted by the spec, '\\' complicates implementation for
+  // Chromium.
+  if (path.Find('\\') != WTF::kNotFound)
+    return false;
+
+  // This method is only called on fully-evaluated absolute paths. Any sign of
+  // ".." or "." is likely an attempt to break out of the sandbox.
+  Vector<String> components;
+  path.Split(DOMFilePath::kSeparator, components);
+  for (size_t i = 0; i < components.size(); ++i) {
+    if (components[i] == ".")
+      return false;
+    if (components[i] == "..")
+      return false;
+  }
+  return true;
 }
 
-bool DOMFilePath::isValidName(const String& name)
-{
-    if (name.isEmpty())
-        return true;
-    // '/' is not allowed in name.
-    if (name.contains('/'))
-        return false;
-    return isValidPath(name);
+bool DOMFilePath::IsValidName(const String& name) {
+  if (name.IsEmpty())
+    return true;
+  // '/' is not allowed in name.
+  if (name.Contains('/'))
+    return false;
+  return IsValidPath(name);
 }
 
-} // namespace blink
+}  // namespace blink

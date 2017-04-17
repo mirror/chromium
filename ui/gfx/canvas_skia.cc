@@ -8,6 +8,7 @@
 
 #include <memory>
 
+#include "cc/paint/paint_canvas.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/render_text.h"
@@ -143,27 +144,20 @@ void Canvas::SizeStringFloat(const base::string16& text,
   }
 }
 
-void Canvas::DrawStringRectWithShadows(const base::string16& text,
-                                       const FontList& font_list,
-                                       SkColor color,
-                                       const Rect& text_bounds,
-                                       int line_height,
-                                       int flags,
-                                       const ShadowValues& shadows) {
+void Canvas::DrawStringRectWithFlags(const base::string16& text,
+                                     const FontList& font_list,
+                                     SkColor color,
+                                     const Rect& text_bounds,
+                                     int flags) {
   if (!IntersectsClipRect(RectToSkRect(text_bounds)))
     return;
 
-  Rect clip_rect(text_bounds);
-  clip_rect.Inset(ShadowValue::GetMargin(shadows));
-
   canvas_->save();
-  ClipRect(clip_rect);
+  ClipRect(text_bounds);
 
   Rect rect(text_bounds);
 
   std::unique_ptr<RenderText> render_text(RenderText::CreateInstance());
-  render_text->set_shadows(shadows);
-  render_text->set_halo_effect(!!(flags & HALO_EFFECT));
 
   if (flags & MULTI_LINE) {
     WordWrapBehavior wrap_behavior = IGNORE_LONG_WORDS;
@@ -182,10 +176,7 @@ void Canvas::DrawStringRectWithShadows(const base::string16& text,
       UpdateRenderText(rect, strings[i], font_list, flags, color,
                        render_text.get());
       int line_padding = 0;
-      if (line_height > 0)
-        line_padding = line_height - render_text->GetStringSize().height();
-      else
-        line_height = render_text->GetStringSize().height();
+      const int line_height = render_text->GetStringSize().height();
 
       // TODO(msw|asvitkine): Center Windows multi-line text: crbug.com/107357
 #if !defined(OS_WIN)
@@ -235,24 +226,6 @@ void Canvas::DrawStringRectWithShadows(const base::string16& text,
   }
 
   canvas_->restore();
-}
-
-void Canvas::DrawStringRectWithHalo(const base::string16& text,
-                                    const FontList& font_list,
-                                    SkColor text_color,
-                                    SkColor halo_color_in,
-                                    const Rect& display_rect,
-                                    int flags) {
-  // Some callers will have semitransparent halo colors, which we don't handle
-  // (since the resulting image can have 1-bit transparency only).
-  SkColor halo_color = SkColorSetA(halo_color_in, 0xFF);
-
-  // Draw the halo.
-  DrawStringRectWithFlags(text, font_list, halo_color, display_rect,
-                          flags | HALO_EFFECT | NO_SUBPIXEL_RENDERING);
-  // Draw the text.
-  DrawStringRectWithFlags(text, font_list, text_color, display_rect,
-                          flags | NO_SUBPIXEL_RENDERING);
 }
 
 void Canvas::DrawFadedString(const base::string16& text,

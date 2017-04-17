@@ -27,53 +27,65 @@
 #ifndef HTTPHeaderMap_h
 #define HTTPHeaderMap_h
 
-#include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/AtomicStringHash.h"
-#include "wtf/text/StringHash.h"
 #include <memory>
 #include <utility>
+#include "platform/PlatformExport.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/AtomicStringHash.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
 typedef Vector<std::pair<String, String>> CrossThreadHTTPHeaderMapData;
 
-// FIXME: Not every header fits into a map. Notably, multiple Set-Cookie header fields are needed to set multiple cookies.
+// FIXME: Not every header fits into a map. Notably, multiple Set-Cookie header
+// fields are needed to set multiple cookies.
 class PLATFORM_EXPORT HTTPHeaderMap final {
-    DISALLOW_NEW();
-public:
-    HTTPHeaderMap();
-    ~HTTPHeaderMap();
+  DISALLOW_NEW();
 
-    // Gets a copy of the data suitable for passing to another thread.
-    std::unique_ptr<CrossThreadHTTPHeaderMapData> copyData() const;
+ public:
+  HTTPHeaderMap();
+  ~HTTPHeaderMap();
 
-    void adopt(std::unique_ptr<CrossThreadHTTPHeaderMapData>);
+  // Gets a copy of the data suitable for passing to another thread.
+  std::unique_ptr<CrossThreadHTTPHeaderMapData> CopyData() const;
 
-    typedef HashMap<AtomicString, AtomicString, CaseFoldingHash> MapType;
-    typedef MapType::AddResult AddResult;
-    typedef MapType::const_iterator const_iterator;
+  void Adopt(std::unique_ptr<CrossThreadHTTPHeaderMapData>);
 
-    size_t size() const { return m_headers.size(); }
-    const_iterator begin() const { return m_headers.begin(); }
-    const_iterator end() const { return m_headers.end(); }
-    const_iterator find(const AtomicString &k) const { return m_headers.find(k); }
-    void clear() { m_headers.clear(); }
-    bool contains(const AtomicString& k) const { return m_headers.contains(k); }
-    const AtomicString& get(const AtomicString& k) const { return m_headers.get(k); }
-    AddResult set(const AtomicString& k, const AtomicString& v) { return m_headers.set(k, v); }
-    AddResult add(const AtomicString& k, const AtomicString& v) { return m_headers.add(k, v); }
-    void remove(const AtomicString& k) { m_headers.remove(k); }
-    bool operator!=(const HTTPHeaderMap& rhs) const { return m_headers != rhs.m_headers; }
-    bool operator==(const HTTPHeaderMap& rhs) const { return m_headers == rhs.m_headers; }
+  typedef HashMap<AtomicString, AtomicString, CaseFoldingHash> MapType;
+  typedef MapType::AddResult AddResult;
+  typedef MapType::const_iterator const_iterator;
 
-private:
-    HashMap<AtomicString, AtomicString, CaseFoldingHash> m_headers;
+  size_t size() const { return headers_.size(); }
+  const_iterator begin() const { return headers_.begin(); }
+  const_iterator end() const { return headers_.end(); }
+  const_iterator Find(const AtomicString& k) const { return headers_.Find(k); }
+  void Clear() { headers_.Clear(); }
+  bool Contains(const AtomicString& k) const { return headers_.Contains(k); }
+  const AtomicString& Get(const AtomicString& k) const {
+    return headers_.at(k);
+  }
+  AddResult Set(const AtomicString& k, const AtomicString& v) {
+    return headers_.Set(k, v);
+  }
+  AddResult Add(const AtomicString& k, const AtomicString& v) {
+    return headers_.insert(k, v);
+  }
+  void Remove(const AtomicString& k) { headers_.erase(k); }
+  bool operator!=(const HTTPHeaderMap& rhs) const {
+    return headers_ != rhs.headers_;
+  }
+  bool operator==(const HTTPHeaderMap& rhs) const {
+    return headers_ == rhs.headers_;
+  }
+
+ private:
+  HashMap<AtomicString, AtomicString, CaseFoldingHash> headers_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTTPHeaderMap_h
+#endif  // HTTPHeaderMap_h

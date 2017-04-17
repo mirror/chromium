@@ -6,11 +6,6 @@ cr.define('downloads', function() {
   var Toolbar = Polymer({
     is: 'downloads-toolbar',
 
-    attached: function() {
-      // isRTL() only works after i18n_template.js runs to set <html dir>.
-      this.overflowAlign_ = isRTL() ? 'left' : 'right';
-    },
-
     properties: {
       downloadsShowing: {
         reflectToAttribute: true,
@@ -19,34 +14,29 @@ cr.define('downloads', function() {
         observer: 'downloadsShowingChanged_',
       },
 
-      overflowAlign_: {
-        type: String,
-        value: 'right',
+      spinnerActive: {
+        type: Boolean,
+        notify: true,
       },
-    },
-
-    listeners: {
-      'paper-dropdown-close': 'onPaperDropdownClose_',
-      'paper-dropdown-open': 'onPaperDropdownOpen_',
     },
 
     /** @return {boolean} Whether removal can be undone. */
     canUndo: function() {
-      return this.$['search-input'] != this.shadowRoot.activeElement;
+      return !this.$.toolbar.getSearchField().isSearchFocused();
     },
 
     /** @return {boolean} Whether "Clear all" should be allowed. */
     canClearAll: function() {
-      return !this.$['search-input'].getValue() && this.downloadsShowing;
+      return this.getSearchText().length == 0 && this.downloadsShowing;
+    },
+
+    /** @return {string} The full text being searched. */
+    getSearchText: function() {
+      return this.$.toolbar.getSearchField().getValue();
     },
 
     onFindCommand: function() {
-      this.$['search-input'].showAndFocus();
-    },
-
-    /** @private */
-    closeMoreActions_: function() {
-      this.$.more.close();
+      this.$.toolbar.getSearchField().showAndFocus();
     },
 
     /** @private */
@@ -58,31 +48,12 @@ cr.define('downloads', function() {
     onClearAllTap_: function() {
       assert(this.canClearAll());
       downloads.ActionService.getInstance().clearAll();
+      this.$.moreActionsMenu.close();
     },
 
     /** @private */
-    onPaperDropdownClose_: function() {
-      window.removeEventListener('resize', assert(this.boundClose_));
-    },
-
-    /**
-     * @param {!Event} e
-     * @private
-     */
-    onItemBlur_: function(e) {
-      var menu = /** @type {PaperMenuElement} */(this.$$('paper-menu'));
-      if (menu.items.indexOf(e.relatedTarget) >= 0)
-        return;
-
-      this.$.more.restoreFocusOnClose = false;
-      this.closeMoreActions_();
-      this.$.more.restoreFocusOnClose = true;
-    },
-
-    /** @private */
-    onPaperDropdownOpen_: function() {
-      this.boundClose_ = this.boundClose_ || this.closeMoreActions_.bind(this);
-      window.addEventListener('resize', this.boundClose_);
+    onMoreActionsTap_: function() {
+      this.$.moreActionsMenu.showAt(this.$.moreActions);
     },
 
     /**
@@ -90,20 +61,21 @@ cr.define('downloads', function() {
      * @private
      */
     onSearchChanged_: function(event) {
-      downloads.ActionService.getInstance().search(
-          /** @type {string} */ (event.detail));
+      var actionService = downloads.ActionService.getInstance();
+      if (actionService.search(/** @type {string} */ (event.detail)))
+        this.spinnerActive = actionService.isSearching();
       this.updateClearAll_();
     },
 
     /** @private */
     onOpenDownloadsFolderTap_: function() {
       downloads.ActionService.getInstance().openDownloadsFolder();
+      this.$.moreActionsMenu.close();
     },
 
     /** @private */
     updateClearAll_: function() {
-      this.$$('#actions .clear-all').hidden = !this.canClearAll();
-      this.$$('paper-menu .clear-all').hidden = !this.canClearAll();
+      this.$$('.clear-all').hidden = !this.canClearAll();
     },
   });
 

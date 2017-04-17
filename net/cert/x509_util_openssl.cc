@@ -5,9 +5,6 @@
 #include "net/cert/x509_util_openssl.h"
 
 #include <limits.h>
-#include <openssl/asn1.h>
-#include <openssl/digest.h>
-#include <openssl/mem.h>
 
 #include <algorithm>
 #include <memory>
@@ -20,26 +17,19 @@
 #include "crypto/ec_private_key.h"
 #include "crypto/openssl_util.h"
 #include "crypto/rsa_private_key.h"
-#include "crypto/scoped_openssl_types.h"
 #include "net/cert/internal/parse_certificate.h"
 #include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/x509_cert_types.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util.h"
-#include "net/ssl/scoped_openssl_types.h"
+#include "third_party/boringssl/src/include/openssl/asn1.h"
+#include "third_party/boringssl/src/include/openssl/digest.h"
+#include "third_party/boringssl/src/include/openssl/mem.h"
+#include "third_party/boringssl/src/include/openssl/pool.h"
 
 namespace net {
 
 namespace {
-
-using ScopedASN1_INTEGER =
-    crypto::ScopedOpenSSL<ASN1_INTEGER, ASN1_INTEGER_free>;
-using ScopedASN1_OCTET_STRING =
-    crypto::ScopedOpenSSL<ASN1_OCTET_STRING, ASN1_OCTET_STRING_free>;
-using ScopedASN1_STRING = crypto::ScopedOpenSSL<ASN1_STRING, ASN1_STRING_free>;
-using ScopedASN1_TIME = crypto::ScopedOpenSSL<ASN1_TIME, ASN1_TIME_free>;
-using ScopedX509_EXTENSION =
-    crypto::ScopedOpenSSL<X509_EXTENSION, X509_EXTENSION_free>;
 
 const EVP_MD* ToEVP(x509_util::DigestAlgorithm alg) {
   switch (alg) {
@@ -57,34 +47,34 @@ namespace x509_util {
 
 namespace {
 
-X509* CreateCertificate(EVP_PKEY* key,
-                        DigestAlgorithm alg,
-                        const std::string& common_name,
-                        uint32_t serial_number,
-                        base::Time not_valid_before,
-                        base::Time not_valid_after) {
+bssl::UniquePtr<X509> CreateCertificate(EVP_PKEY* key,
+                                        DigestAlgorithm alg,
+                                        const std::string& common_name,
+                                        uint32_t serial_number,
+                                        base::Time not_valid_before,
+                                        base::Time not_valid_after) {
   // Put the serial number into an OpenSSL-friendly object.
-  ScopedASN1_INTEGER asn1_serial(ASN1_INTEGER_new());
+  bssl::UniquePtr<ASN1_INTEGER> asn1_serial(ASN1_INTEGER_new());
   if (!asn1_serial.get() ||
       !ASN1_INTEGER_set(asn1_serial.get(), static_cast<long>(serial_number))) {
     LOG(ERROR) << "Invalid serial number " << serial_number;
-    return NULL;
+    return nullptr;
   }
 
   // Do the same for the time stamps.
-  ScopedASN1_TIME asn1_not_before_time(
-      ASN1_TIME_set(NULL, not_valid_before.ToTimeT()));
+  bssl::UniquePtr<ASN1_TIME> asn1_not_before_time(
+      ASN1_TIME_set(nullptr, not_valid_before.ToTimeT()));
   if (!asn1_not_before_time.get()) {
     LOG(ERROR) << "Invalid not_valid_before time: "
                << not_valid_before.ToTimeT();
-    return NULL;
+    return nullptr;
   }
 
-  ScopedASN1_TIME asn1_not_after_time(
-      ASN1_TIME_set(NULL, not_valid_after.ToTimeT()));
+  bssl::UniquePtr<ASN1_TIME> asn1_not_after_time(
+      ASN1_TIME_set(nullptr, not_valid_after.ToTimeT()));
   if (!asn1_not_after_time.get()) {
     LOG(ERROR) << "Invalid not_valid_after time: " << not_valid_after.ToTimeT();
-    return NULL;
+    return nullptr;
   }
 
   // Because |common_name| only contains a common name and starts with 'CN=',
@@ -95,11 +85,11 @@ X509* CreateCertificate(EVP_PKEY* key,
   if (common_name.size() < kCommonNamePrefixLen ||
       strncmp(common_name.c_str(), kCommonNamePrefix, kCommonNamePrefixLen)) {
     LOG(ERROR) << "Common name must begin with " << kCommonNamePrefix;
-    return NULL;
+    return nullptr;
   }
   if (common_name.size() > INT_MAX) {
     LOG(ERROR) << "Common name too long";
-    return NULL;
+    return nullptr;
   }
   unsigned char* common_name_str =
       reinterpret_cast<unsigned char*>(const_cast<char*>(common_name.data())) +
@@ -107,7 +97,7 @@ X509* CreateCertificate(EVP_PKEY* key,
   int common_name_len =
       static_cast<int>(common_name.size() - kCommonNamePrefixLen);
 
-  ScopedX509_NAME name(X509_NAME_new());
+  bssl::UniquePtr<X509_NAME> name(X509_NAME_new());
   if (!name.get() || !X509_NAME_add_entry_by_NID(name.get(),
                                                  NID_commonName,
                                                  MBSTRING_ASC,
@@ -116,11 +106,11 @@ X509* CreateCertificate(EVP_PKEY* key,
                                                  -1,
                                                  0)) {
     LOG(ERROR) << "Can't parse common name: " << common_name.c_str();
-    return NULL;
+    return nullptr;
   }
 
   // Now create certificate and populate it.
-  ScopedX509 cert(X509_new());
+  bssl::UniquePtr<X509> cert(X509_new());
   if (!cert.get() || !X509_set_version(cert.get(), 2L) /* i.e. version 3 */ ||
       !X509_set_pubkey(cert.get(), key) ||
       !X509_set_serialNumber(cert.get(), asn1_serial.get()) ||
@@ -129,10 +119,10 @@ X509* CreateCertificate(EVP_PKEY* key,
       !X509_set_subject_name(cert.get(), name.get()) ||
       !X509_set_issuer_name(cert.get(), name.get())) {
     LOG(ERROR) << "Could not create certificate";
-    return NULL;
+    return nullptr;
   }
 
-  return cert.release();
+  return cert;
 }
 
 // DER-encodes |x509|. On success, returns true and writes the
@@ -201,6 +191,19 @@ class DERCacheInitSingleton {
 base::LazyInstance<DERCacheInitSingleton>::Leaky g_der_cache_singleton =
     LAZY_INSTANCE_INITIALIZER;
 
+class BufferPoolSingleton {
+ public:
+  BufferPoolSingleton() : pool_(CRYPTO_BUFFER_POOL_new()) {}
+  CRYPTO_BUFFER_POOL* pool() { return pool_; }
+
+ private:
+  // The singleton is leaky, so there is no need to use a smart pointer.
+  CRYPTO_BUFFER_POOL* pool_;
+};
+
+base::LazyInstance<BufferPoolSingleton>::Leaky g_buffer_pool_singleton =
+    LAZY_INSTANCE_INITIALIZER;
+
 }  // namespace
 
 bool CreateSelfSignedCert(crypto::RSAPrivateKey* key,
@@ -211,13 +214,10 @@ bool CreateSelfSignedCert(crypto::RSAPrivateKey* key,
                           base::Time not_valid_after,
                           std::string* der_encoded) {
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
-  ScopedX509 cert(CreateCertificate(key->key(),
-                                    alg,
-                                    common_name,
-                                    serial_number,
-                                    not_valid_before,
-                                    not_valid_after));
-  if (!cert.get())
+  bssl::UniquePtr<X509> cert =
+      CreateCertificate(key->key(), alg, common_name, serial_number,
+                        not_valid_before, not_valid_after);
+  if (!cert)
     return false;
 
   return SignAndDerEncodeCert(cert.get(), key->key(), alg, der_encoded);
@@ -285,9 +285,16 @@ bool ParseDate(ASN1_TIME* x509_time, base::Time* time) {
 }
 
 // Returns true if |der_cache| points to valid data, false otherwise.
-// (note: the DER-encoded data in |der_cache| is owned by |cert|, callers should
+// (note: the DER-encoded data in |der_cache| is owned by |x509|, callers should
 // not free it).
 bool GetDER(X509* x509, base::StringPiece* der_cache) {
+  if (x509->buf) {
+    *der_cache = base::StringPiece(
+        reinterpret_cast<const char*>(CRYPTO_BUFFER_data(x509->buf)),
+        CRYPTO_BUFFER_len(x509->buf));
+    return true;
+  }
+
   int x509_der_cache_index =
       g_der_cache_singleton.Get().der_cache_ex_index();
 
@@ -322,16 +329,24 @@ bool GetTLSServerEndPointChannelBinding(const X509Certificate& certificate,
   der::BitString signature_value;
   if (!ParseCertificate(der::Input(&der_encoded_certificate),
                         &tbs_certificate_tlv, &signature_algorithm_tlv,
-                        &signature_value))
+                        &signature_value, nullptr))
     return false;
 
   std::unique_ptr<SignatureAlgorithm> signature_algorithm =
-      SignatureAlgorithm::CreateFromDer(signature_algorithm_tlv);
+      SignatureAlgorithm::Create(signature_algorithm_tlv, nullptr);
   if (!signature_algorithm)
     return false;
 
   const EVP_MD* digest_evp_md = nullptr;
   switch (signature_algorithm->digest()) {
+    case net::DigestAlgorithm::Md2:
+    case net::DigestAlgorithm::Md4:
+      // Shouldn't be reachable.
+      digest_evp_md = nullptr;
+      break;
+
+    // Per RFC 5929 section 4.1, MD5 and SHA1 map to SHA256.
+    case net::DigestAlgorithm::Md5:
     case net::DigestAlgorithm::Sha1:
     case net::DigestAlgorithm::Sha256:
       digest_evp_md = EVP_sha256();
@@ -348,17 +363,33 @@ bool GetTLSServerEndPointChannelBinding(const X509Certificate& certificate,
   if (!digest_evp_md)
     return false;
 
-  std::vector<uint8_t> digest(EVP_MAX_MD_SIZE);
-  unsigned int out_size = digest.size();
+  uint8_t digest[EVP_MAX_MD_SIZE];
+  unsigned int out_size;
   if (!EVP_Digest(der_encoded_certificate.data(),
-                  der_encoded_certificate.size(), digest.data(), &out_size,
+                  der_encoded_certificate.size(), digest, &out_size,
                   digest_evp_md, nullptr))
     return false;
 
-  digest.resize(out_size);
   token->assign(kChannelBindingPrefix);
-  token->append(digest.begin(), digest.end());
+  token->append(digest, digest + out_size);
   return true;
+}
+
+CRYPTO_BUFFER_POOL* GetBufferPool() {
+  return g_buffer_pool_singleton.Get().pool();
+}
+
+bssl::UniquePtr<CRYPTO_BUFFER> CreateCryptoBuffer(const uint8_t* data,
+                                                  size_t length) {
+  return bssl::UniquePtr<CRYPTO_BUFFER>(
+      CRYPTO_BUFFER_new(data, length, GetBufferPool()));
+}
+
+bssl::UniquePtr<CRYPTO_BUFFER> CreateCryptoBuffer(
+    const base::StringPiece& data) {
+  return bssl::UniquePtr<CRYPTO_BUFFER>(
+      CRYPTO_BUFFER_new(reinterpret_cast<const uint8_t*>(data.data()),
+                        data.size(), GetBufferPool()));
 }
 
 }  // namespace x509_util

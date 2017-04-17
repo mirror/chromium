@@ -35,56 +35,80 @@
 
 namespace blink {
 
-String V0CustomElementException::preamble(const AtomicString& type)
-{
-    return "Registration failed for type '" + type + "'. ";
+String V0CustomElementException::Preamble(const AtomicString& type) {
+  return "Registration failed for type '" + type + "'. ";
 }
 
-void V0CustomElementException::throwException(Reason reason, const AtomicString& type, ExceptionState& exceptionState)
-{
-    switch (reason) {
-    case CannotRegisterFromExtension:
-        exceptionState.throwDOMException(NotSupportedError, preamble(type) + "Elements cannot be registered from extensions.");
-        return;
+void V0CustomElementException::ThrowException(Reason reason,
+                                              const AtomicString& type,
+                                              ExceptionState& exception_state) {
+  switch (reason) {
+    case kCannotRegisterFromExtension:
+      exception_state.ThrowDOMException(
+          kNotSupportedError,
+          Preamble(type) + "Elements cannot be registered from extensions.");
+      return;
 
-    case ConstructorPropertyNotConfigurable:
-        exceptionState.throwDOMException(NotSupportedError, preamble(type) + "Prototype constructor property is not configurable.");
-        return;
+    case kConstructorPropertyNotConfigurable:
+      exception_state.ThrowDOMException(
+          kNotSupportedError,
+          Preamble(type) +
+              "Prototype constructor property is not configurable.");
+      return;
 
-    case ContextDestroyedCheckingPrototype:
-        exceptionState.throwDOMException(InvalidStateError, preamble(type) + "The context is no longer valid.");
-        return;
+    case kContextDestroyedCheckingPrototype:
+      exception_state.ThrowDOMException(
+          kInvalidStateError,
+          Preamble(type) + "The context is no longer valid.");
+      return;
 
-    case ContextDestroyedCreatingCallbacks:
-        exceptionState.throwDOMException(InvalidStateError, preamble(type) + "The context is no longer valid.");
-        return;
+    case kContextDestroyedCreatingCallbacks:
+      exception_state.ThrowDOMException(
+          kInvalidStateError,
+          Preamble(type) + "The context is no longer valid.");
+      return;
 
-    case ContextDestroyedRegisteringDefinition:
-        exceptionState.throwDOMException(InvalidStateError, preamble(type) + "The context is no longer valid.");
-        return;
+    case kContextDestroyedRegisteringDefinition:
+      exception_state.ThrowDOMException(
+          kInvalidStateError,
+          Preamble(type) + "The context is no longer valid.");
+      return;
 
-    case ExtendsIsInvalidName:
-        exceptionState.throwDOMException(NotSupportedError, preamble(type) + "The tag name specified in 'extends' is not a valid tag name.");
-        return;
+    case kExtendsIsInvalidName:
+      exception_state.ThrowDOMException(
+          kNotSupportedError,
+          Preamble(type) +
+              "The tag name specified in 'extends' is not a valid tag name.");
+      return;
 
-    case ExtendsIsCustomElementName:
-        exceptionState.throwDOMException(NotSupportedError, preamble(type) + "The tag name specified in 'extends' is a custom element name. Use inheritance instead.");
-        return;
+    case kExtendsIsCustomElementName:
+      exception_state.ThrowDOMException(kNotSupportedError,
+                                        Preamble(type) +
+                                            "The tag name specified in "
+                                            "'extends' is a custom element "
+                                            "name. Use inheritance instead.");
+      return;
 
-    case InvalidName:
-        exceptionState.throwDOMException(SyntaxError, preamble(type) + "The type name is invalid.");
-        return;
+    case kInvalidName:
+      exception_state.ThrowDOMException(
+          kSyntaxError, Preamble(type) + "The type name is invalid.");
+      return;
 
-    case PrototypeInUse:
-        exceptionState.throwDOMException(NotSupportedError, preamble(type) + "The prototype is already in-use as an interface prototype object.");
-        return;
+    case kPrototypeInUse:
+      exception_state.ThrowDOMException(
+          kNotSupportedError, Preamble(type) +
+                                  "The prototype is already in-use as "
+                                  "an interface prototype object.");
+      return;
 
-    case TypeAlreadyRegistered:
-        exceptionState.throwDOMException(NotSupportedError, preamble(type) + "A type with that name is already registered.");
-        return;
-    }
+    case kTypeAlreadyRegistered:
+      exception_state.ThrowDOMException(
+          kNotSupportedError,
+          Preamble(type) + "A type with that name is already registered.");
+      return;
+  }
 
-    ASSERT_NOT_REACHED();
+  NOTREACHED();
 }
 
-} // namespace blink
+}  // namespace blink

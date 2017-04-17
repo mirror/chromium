@@ -4,59 +4,54 @@
 
 #include "chrome/utility/image_writer/image_writer_handler.h"
 
+#include "base/bind.h"
 #include "base/files/file_path.h"
-#include "chrome/common/extensions/chrome_utility_extensions_messages.h"
+#include "base/optional.h"
+#include "chrome/common/extensions/removable_storage_writer.mojom.h"
 #include "chrome/utility/image_writer/error_messages.h"
-#include "content/public/utility/utility_thread.h"
+
+namespace {
+
+bool IsTestDevice(const base::FilePath& device) {
+  return device.AsUTF8Unsafe() ==
+         extensions::mojom::RemovableStorageWriter::kTestDevice;
+}
+
+base::FilePath MakeTestDevicePath(const base::FilePath& image) {
+  return image.ReplaceExtension(FILE_PATH_LITERAL("out"));
+}
+
+}  // namespace
 
 namespace image_writer {
 
-ImageWriterHandler::ImageWriterHandler() {}
-ImageWriterHandler::~ImageWriterHandler() {}
+ImageWriterHandler::ImageWriterHandler() = default;
 
-void ImageWriterHandler::SendSucceeded() {
-  Send(new ChromeUtilityHostMsg_ImageWriter_Succeeded());
-  content::UtilityThread::Get()->ReleaseProcessIfNeeded();
-}
+ImageWriterHandler::~ImageWriterHandler() = default;
 
-void ImageWriterHandler::SendCancelled() {
-  Send(new ChromeUtilityHostMsg_ImageWriter_Cancelled());
-  content::UtilityThread::Get()->ReleaseProcessIfNeeded();
-}
+void ImageWriterHandler::Write(
+    const base::FilePath& image,
+    const base::FilePath& device,
+    extensions::mojom::RemovableStorageWriterClientPtr client) {
+  client_ = std::move(client);
+  client_.set_connection_error_handler(
+      base::Bind(&ImageWriterHandler::Cancel, base::Unretained(this)));
 
-void ImageWriterHandler::SendFailed(const std::string& message) {
-  Send(new ChromeUtilityHostMsg_ImageWriter_Failed(message));
-  content::UtilityThread::Get()->ReleaseProcessIfNeeded();
-}
+  base::FilePath target_device = device;
+  const bool test_mode = IsTestDevice(device);
+  if (test_mode)
+    target_device = MakeTestDevicePath(image);
 
-void ImageWriterHandler::SendProgress(int64_t progress) {
-  Send(new ChromeUtilityHostMsg_ImageWriter_Progress(progress));
-}
-
-void ImageWriterHandler::Send(IPC::Message* msg) {
-  content::UtilityThread::Get()->Send(msg);
-}
-
-bool ImageWriterHandler::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ImageWriterHandler, message)
-  IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ImageWriter_Write, OnWriteStart)
-  IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ImageWriter_Verify, OnVerifyStart)
-  IPC_MESSAGE_HANDLER(ChromeUtilityMsg_ImageWriter_Cancel, OnCancel)
-  IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
-void ImageWriterHandler::OnWriteStart(const base::FilePath& image,
-                                      const base::FilePath& device) {
-  if (!image_writer_.get() || image != image_writer_->GetImagePath() ||
-      device != image_writer_->GetDevicePath()) {
-    image_writer_.reset(new ImageWriter(this, image, device));
-  }
+  if (ShouldResetImageWriter(image, target_device))
+    image_writer_.reset(new ImageWriter(this, image, target_device));
 
   if (image_writer_->IsRunning()) {
     SendFailed(error::kOperationAlreadyInProgress);
+    return;
+  }
+
+  if (test_mode) {
+    image_writer_->Write();
     return;
   }
 
@@ -69,15 +64,29 @@ void ImageWriterHandler::OnWriteStart(const base::FilePath& image,
       base::Bind(&ImageWriter::Write, image_writer_->AsWeakPtr()));
 }
 
-void ImageWriterHandler::OnVerifyStart(const base::FilePath& image,
-                                       const base::FilePath& device) {
-  if (!image_writer_.get() || image != image_writer_->GetImagePath() ||
-      device != image_writer_->GetDevicePath()) {
-    image_writer_.reset(new ImageWriter(this, image, device));
-  }
+void ImageWriterHandler::Verify(
+    const base::FilePath& image,
+    const base::FilePath& device,
+    extensions::mojom::RemovableStorageWriterClientPtr client) {
+  client_ = std::move(client);
+  client_.set_connection_error_handler(
+      base::Bind(&ImageWriterHandler::Cancel, base::Unretained(this)));
+
+  base::FilePath target_device = device;
+  const bool test_mode = IsTestDevice(device);
+  if (test_mode)
+    target_device = MakeTestDevicePath(image);
+
+  if (ShouldResetImageWriter(image, target_device))
+    image_writer_.reset(new ImageWriter(this, image, target_device));
 
   if (image_writer_->IsRunning()) {
     SendFailed(error::kOperationAlreadyInProgress);
+    return;
+  }
+
+  if (test_mode) {
+    image_writer_->Verify();
     return;
   }
 
@@ -89,12 +98,39 @@ void ImageWriterHandler::OnVerifyStart(const base::FilePath& image,
   image_writer_->Verify();
 }
 
-void ImageWriterHandler::OnCancel() {
-  if (image_writer_.get()) {
+void ImageWriterHandler::SendProgress(int64_t progress) {
+  client_->Progress(progress);
+}
+
+void ImageWriterHandler::SendSucceeded() {
+  client_->Complete(base::nullopt);
+  client_.reset();
+}
+
+void ImageWriterHandler::SendFailed(const std::string& error) {
+  client_->Complete(error);
+  client_.reset();
+}
+
+void ImageWriterHandler::Cancel() {
+  if (image_writer_)
     image_writer_->Cancel();
-  } else {
-    SendCancelled();
-  }
+  client_.reset();
+}
+
+bool ImageWriterHandler::ShouldResetImageWriter(const base::FilePath& image,
+                                                const base::FilePath& device) {
+  if (!image_writer_)
+    return true;
+  if (image != image_writer_->GetImagePath())
+    return true;
+  if (device != image_writer_->GetDevicePath())
+    return true;
+
+  // When writing and verifying the same file on the same device, keep
+  // the file handles open; do not reset them since that can cause the
+  // operation to fail in unexpected ways: crbug.com/352442#c7
+  return false;
 }
 
 }  // namespace image_writer

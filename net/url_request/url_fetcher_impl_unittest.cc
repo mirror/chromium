@@ -25,6 +25,8 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
@@ -127,7 +129,8 @@ class WaitingURLFetcherDelegate : public URLFetcherDelegate {
 
   void OnURLFetchDownloadProgress(const URLFetcher* source,
                                   int64_t current,
-                                  int64_t total) override {
+                                  int64_t total,
+                                  int64_t current_network_bytes) override {
     // Note that the current progress may be greater than the previous progress,
     // in the case of retrying the request.
     EXPECT_FALSE(did_complete_);
@@ -179,7 +182,7 @@ class FetcherTestURLRequestContext : public TestURLRequestContext {
     context_storage_.set_host_resolver(
         std::unique_ptr<HostResolver>(mock_resolver_));
     context_storage_.set_throttler_manager(
-        base::WrapUnique(new URLRequestThrottlerManager()));
+        base::MakeUnique<URLRequestThrottlerManager>());
     Init();
   }
 
@@ -512,6 +515,33 @@ TEST_F(URLFetcherTest, DifferentThreadsTest) {
   std::string data;
   ASSERT_TRUE(delegate.fetcher()->GetResponseAsString(&data));
   EXPECT_EQ(kDefaultResponseBody, data);
+}
+
+// Create the fetcher from a sequenced (not single-threaded) task. Verify that
+// the expected response is received.
+TEST_F(URLFetcherTest, SequencedTaskTest) {
+  base::test::ScopedTaskScheduler scoped_task_scheduler(
+      base::MessageLoop::current());
+  auto sequenced_task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(base::TaskTraits());
+
+  auto delegate = base::MakeUnique<WaitingURLFetcherDelegate>();
+  sequenced_task_runner->PostTask(
+      FROM_HERE, base::Bind(&WaitingURLFetcherDelegate::CreateFetcher,
+                            base::Unretained(delegate.get()),
+                            test_server_->GetURL(kDefaultResponsePath),
+                            URLFetcher::GET, CreateCrossThreadContextGetter()));
+  base::RunLoop().RunUntilIdle();
+  delegate->StartFetcherAndWait();
+
+  EXPECT_TRUE(delegate->fetcher()->GetStatus().is_success());
+  EXPECT_EQ(200, delegate->fetcher()->GetResponseCode());
+  std::string data;
+  ASSERT_TRUE(delegate->fetcher()->GetResponseAsString(&data));
+  EXPECT_EQ(kDefaultResponseBody, data);
+
+  sequenced_task_runner->DeleteSoon(FROM_HERE, delegate.release());
+  base::RunLoop().RunUntilIdle();
 }
 
 // Tests to make sure CancelAll() will successfully cancel existing URLFetchers.
@@ -924,10 +954,11 @@ class CheckDownloadProgressDelegate : public WaitingURLFetcherDelegate {
 
   void OnURLFetchDownloadProgress(const URLFetcher* source,
                                   int64_t current,
-                                  int64_t total) override {
+                                  int64_t total,
+                                  int64_t current_network_bytes) override {
     // Run default checks.
-    WaitingURLFetcherDelegate::OnURLFetchDownloadProgress(source, current,
-                                                          total);
+    WaitingURLFetcherDelegate::OnURLFetchDownloadProgress(
+        source, current, total, current_network_bytes);
 
     EXPECT_LE(last_seen_progress_, current);
     EXPECT_EQ(file_size_, total);
@@ -1011,7 +1042,8 @@ class CancelOnDownloadProgressDelegate : public WaitingURLFetcherDelegate {
 
   void OnURLFetchDownloadProgress(const URLFetcher* source,
                                   int64_t current,
-                                  int64_t total) override {
+                                  int64_t total,
+                                  int64_t current_network_bytes) override {
     CancelFetch();
   }
 
@@ -1440,7 +1472,7 @@ TEST_F(URLFetcherTest, FileTestSmallGet) {
 
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath out_path = temp_dir.path().AppendASCII(kFileToFetch);
+  base::FilePath out_path = temp_dir.GetPath().AppendASCII(kFileToFetch);
   SaveFileTest(kFileToFetch, false, out_path, false);
 }
 
@@ -1451,7 +1483,7 @@ TEST_F(URLFetcherTest, FileTestLargeGet) {
 
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath out_path = temp_dir.path().AppendASCII(kFileToFetch);
+  base::FilePath out_path = temp_dir.GetPath().AppendASCII(kFileToFetch);
   SaveFileTest(kFileToFetch, false, out_path, false);
 }
 
@@ -1462,7 +1494,7 @@ TEST_F(URLFetcherTest, FileTestTakeOwnership) {
 
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath out_path = temp_dir.path().AppendASCII(kFileToFetch);
+  base::FilePath out_path = temp_dir.GetPath().AppendASCII(kFileToFetch);
   SaveFileTest(kFileToFetch, false, out_path, true);
 }
 
@@ -1474,7 +1506,7 @@ TEST_F(URLFetcherTest, FileTestOverwriteExisting) {
   // Create a file before trying to fetch.
   const char kFileToFetch[] = "simple.html";
   std::string data(10000, '?');  // Meant to be larger than simple.html.
-  base::FilePath out_path = temp_dir.path().AppendASCII(kFileToFetch);
+  base::FilePath out_path = temp_dir.GetPath().AppendASCII(kFileToFetch);
   ASSERT_EQ(static_cast<int>(data.size()),
             base::WriteFile(out_path, data.data(), data.size()));
   ASSERT_TRUE(base::PathExists(out_path));
@@ -1489,7 +1521,7 @@ TEST_F(URLFetcherTest, FileTestTryToOverwriteDirectory) {
 
   // Create a directory before trying to fetch.
   static const char kFileToFetch[] = "simple.html";
-  base::FilePath out_path = temp_dir.path().AppendASCII(kFileToFetch);
+  base::FilePath out_path = temp_dir.GetPath().AppendASCII(kFileToFetch);
   ASSERT_TRUE(base::CreateDirectory(out_path));
   ASSERT_TRUE(base::PathExists(out_path));
 

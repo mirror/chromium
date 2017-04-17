@@ -29,8 +29,8 @@
 #define InputStreamPreprocessor_h
 
 #include "platform/text/SegmentedString.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -39,102 +39,99 @@ const LChar kEndOfFileMarker = 0;
 // http://www.whatwg.org/specs/web-apps/current-work/#preprocessing-the-input-stream
 template <typename Tokenizer>
 class InputStreamPreprocessor {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(InputStreamPreprocessor);
-public:
-    InputStreamPreprocessor(Tokenizer* tokenizer)
-        : m_tokenizer(tokenizer)
-    {
-        reset();
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(InputStreamPreprocessor);
+
+ public:
+  InputStreamPreprocessor(Tokenizer* tokenizer) : tokenizer_(tokenizer) {
+    Reset();
+  }
+
+  ALWAYS_INLINE UChar NextInputCharacter() const {
+    return next_input_character_;
+  }
+
+  // Returns whether we succeeded in peeking at the next character.
+  // The only way we can fail to peek is if there are no more
+  // characters in |source| (after collapsing \r\n, etc).
+  ALWAYS_INLINE bool Peek(SegmentedString& source) {
+    next_input_character_ = source.CurrentChar();
+
+    // Every branch in this function is expensive, so we have a
+    // fast-reject branch for characters that don't require special
+    // handling. Please run the parser benchmark whenever you touch
+    // this function. It's very hot.
+    static const UChar kSpecialCharacterMask = '\n' | '\r' | '\0';
+    if (next_input_character_ & ~kSpecialCharacterMask) {
+      skip_next_new_line_ = false;
+      return true;
     }
+    return ProcessNextInputCharacter(source);
+  }
 
-    ALWAYS_INLINE UChar nextInputCharacter() const { return m_nextInputCharacter; }
+  // Returns whether there are more characters in |source| after advancing.
+  ALWAYS_INLINE bool Advance(SegmentedString& source) {
+    source.AdvanceAndUpdateLineNumber();
+    if (source.IsEmpty())
+      return false;
+    return Peek(source);
+  }
 
-    // Returns whether we succeeded in peeking at the next character.
-    // The only way we can fail to peek is if there are no more
-    // characters in |source| (after collapsing \r\n, etc).
-    ALWAYS_INLINE bool peek(SegmentedString& source)
-    {
-        m_nextInputCharacter = source.currentChar();
+  bool SkipNextNewLine() const { return skip_next_new_line_; }
 
-        // Every branch in this function is expensive, so we have a
-        // fast-reject branch for characters that don't require special
-        // handling. Please run the parser benchmark whenever you touch
-        // this function. It's very hot.
-        static const UChar specialCharacterMask = '\n' | '\r' | '\0';
-        if (m_nextInputCharacter & ~specialCharacterMask) {
-            m_skipNextNewLine = false;
-            return true;
-        }
-        return processNextInputCharacter(source);
+  void Reset(bool skip_next_new_line = false) {
+    next_input_character_ = '\0';
+    skip_next_new_line_ = skip_next_new_line;
+  }
+
+ private:
+  bool ProcessNextInputCharacter(SegmentedString& source) {
+  ProcessAgain:
+    DCHECK_EQ(next_input_character_, source.CurrentChar());
+
+    if (next_input_character_ == '\n' && skip_next_new_line_) {
+      skip_next_new_line_ = false;
+      source.AdvancePastNewlineAndUpdateLineNumber();
+      if (source.IsEmpty())
+        return false;
+      next_input_character_ = source.CurrentChar();
     }
-
-    // Returns whether there are more characters in |source| after advancing.
-    ALWAYS_INLINE bool advance(SegmentedString& source)
-    {
-        source.advanceAndUpdateLineNumber();
-        if (source.isEmpty())
+    if (next_input_character_ == '\r') {
+      next_input_character_ = '\n';
+      skip_next_new_line_ = true;
+    } else {
+      skip_next_new_line_ = false;
+      // FIXME: The spec indicates that the surrogate pair range as well as a
+      // number of specific character values are parse errors and should be
+      // replaced by the replacement character. We suspect this is a problem
+      // with the spec as doing that filtering breaks surrogate pair handling
+      // and causes us not to match Minefield.
+      if (next_input_character_ == '\0' &&
+          !ShouldTreatNullAsEndOfFileMarker(source)) {
+        if (tokenizer_->ShouldSkipNullCharacters()) {
+          source.AdvancePastNonNewline();
+          if (source.IsEmpty())
             return false;
-        return peek(source);
-    }
-
-    bool skipNextNewLine() const { return m_skipNextNewLine; }
-
-    void reset(bool skipNextNewLine = false)
-    {
-        m_nextInputCharacter = '\0';
-        m_skipNextNewLine = skipNextNewLine;
-    }
-
-private:
-    bool processNextInputCharacter(SegmentedString& source)
-    {
-    ProcessAgain:
-        ASSERT(m_nextInputCharacter == source.currentChar());
-
-        if (m_nextInputCharacter == '\n' && m_skipNextNewLine) {
-            m_skipNextNewLine = false;
-            source.advancePastNewlineAndUpdateLineNumber();
-            if (source.isEmpty())
-                return false;
-            m_nextInputCharacter = source.currentChar();
+          next_input_character_ = source.CurrentChar();
+          goto ProcessAgain;
         }
-        if (m_nextInputCharacter == '\r') {
-            m_nextInputCharacter = '\n';
-            m_skipNextNewLine = true;
-        } else {
-            m_skipNextNewLine = false;
-            // FIXME: The spec indicates that the surrogate pair range as well as
-            // a number of specific character values are parse errors and should be replaced
-            // by the replacement character. We suspect this is a problem with the spec as doing
-            // that filtering breaks surrogate pair handling and causes us not to match Minefield.
-            if (m_nextInputCharacter == '\0' && !shouldTreatNullAsEndOfFileMarker(source)) {
-                if (m_tokenizer->shouldSkipNullCharacters()) {
-                    source.advancePastNonNewline();
-                    if (source.isEmpty())
-                        return false;
-                    m_nextInputCharacter = source.currentChar();
-                    goto ProcessAgain;
-                }
-                m_nextInputCharacter = 0xFFFD;
-            }
-        }
-        return true;
+        next_input_character_ = 0xFFFD;
+      }
     }
+    return true;
+  }
 
-    bool shouldTreatNullAsEndOfFileMarker(SegmentedString& source) const
-    {
-        return source.isClosed() && source.length() == 1;
-    }
+  bool ShouldTreatNullAsEndOfFileMarker(SegmentedString& source) const {
+    return source.IsClosed() && source.length() == 1;
+  }
 
-    Tokenizer* m_tokenizer;
+  Tokenizer* tokenizer_;
 
-    // http://www.whatwg.org/specs/web-apps/current-work/#next-input-character
-    UChar m_nextInputCharacter;
-    bool m_skipNextNewLine;
+  // http://www.whatwg.org/specs/web-apps/current-work/#next-input-character
+  UChar next_input_character_;
+  bool skip_next_new_line_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InputStreamPreprocessor_h
-
+#endif  // InputStreamPreprocessor_h

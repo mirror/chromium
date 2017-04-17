@@ -10,7 +10,6 @@
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/pagination_model.h"
-#include "ui/base/ui_base_switches_util.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/skia_util.h"
@@ -66,9 +65,6 @@ class PageSwitcherButton : public views::CustomButton {
   void OnGestureEvent(ui::GestureEvent* event) override {
     CustomButton::OnGestureEvent(event);
 
-    if (!switches::IsTouchFeedbackEnabled())
-      return;
-
     if (event->type() == ui::ET_GESTURE_TAP_DOWN)
       SetState(views::CustomButton::STATE_HOVERED);
     else if (event->type() == ui::ET_GESTURE_TAP_CANCEL ||
@@ -87,11 +83,11 @@ class PageSwitcherButton : public views::CustomButton {
                       SkIntToScalar(kButtonCornerRadius),
                       SkIntToScalar(kButtonCornerRadius));
 
-    SkPaint paint;
-    paint.setAntiAlias(true);
-    paint.setStyle(SkPaint::kFill_Style);
-    paint.setColor(base_color);
-    canvas->DrawPath(path, paint);
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    flags.setColor(base_color);
+    canvas->DrawPath(path, flags);
 
     int selected_start_x = 0;
     int selected_width = 0;
@@ -111,8 +107,8 @@ class PageSwitcherButton : public views::CustomButton {
       selected_path.addRoundRect(gfx::RectToSkRect(selected_rect),
                                  SkIntToScalar(kButtonCornerRadius),
                                  SkIntToScalar(kButtonCornerRadius));
-      paint.setColor(kPagerSelectedColor);
-      canvas->DrawPath(selected_path, paint);
+      flags.setColor(kPagerSelectedColor);
+      canvas->DrawPath(selected_path, flags);
     }
   }
 

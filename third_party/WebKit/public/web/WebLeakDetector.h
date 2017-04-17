@@ -38,20 +38,21 @@ namespace blink {
 class WebFrame;
 
 class WebLeakDetectorClient {
-public:
-    struct Result {
-        unsigned numberOfLiveAudioNodes;
-        unsigned numberOfLiveDocuments;
-        unsigned numberOfLiveNodes;
-        unsigned numberOfLiveLayoutObjects;
-        unsigned numberOfLiveResources;
-        unsigned numberOfLiveActiveDOMObjects;
-        unsigned numberOfLiveScriptPromises;
-        unsigned numberOfLiveFrames;
-        unsigned numberOfLiveV8PerContextData;
-    };
+ public:
+  struct Result {
+    unsigned number_of_live_audio_nodes;
+    unsigned number_of_live_documents;
+    unsigned number_of_live_nodes;
+    unsigned number_of_live_layout_objects;
+    unsigned number_of_live_resources;
+    unsigned number_of_live_suspendable_objects;
+    unsigned number_of_live_script_promises;
+    unsigned number_of_live_frames;
+    unsigned number_of_live_v8_per_context_data;
+    unsigned number_of_worker_global_scopes;
+  };
 
-    virtual void onLeakDetectionComplete(const Result&) = 0;
+  virtual void OnLeakDetectionComplete(const Result&) = 0;
 };
 
 // |WebLeakDetector| detects leaks of various Blink objects, counting
@@ -59,35 +60,35 @@ public:
 // collected all garbage. See |WebLeakDetectorClient::Results|
 // for the kinds of objects supported.
 class WebLeakDetector {
-public:
-    virtual ~WebLeakDetector() { }
+ public:
+  virtual ~WebLeakDetector() {}
 
-    BLINK_EXPORT static WebLeakDetector* create(WebLeakDetectorClient*);
+  BLINK_EXPORT static WebLeakDetector* Create(WebLeakDetectorClient*);
 
-    // Leak detection is performed in two stages,
-    // |prepareForLeakDetection()| and |collectGarbageAndReport()|.
-    //
-    // The first clearing out various global resources that a frame
-    // keeps, with the second clearing out all garbage in Blink's
-    // managed heaps before reporting leak counts.
-    //
-    // |WebLeakDetectorClient::onLeakDetectionComplete()| is called
-    // with the result of the (leaked) resource counting.
-    //
-    // By separating into two, the caller is able to inject any
-    // additional releasing of resources needed before the garbage
-    // collections go ahead.
+  // Leak detection is performed in two stages,
+  // |prepareForLeakDetection()| and |collectGarbageAndReport()|.
+  //
+  // The first clearing out various global resources that a frame
+  // keeps, with the second clearing out all garbage in Blink's
+  // managed heaps before reporting leak counts.
+  //
+  // |WebLeakDetectorClient::onLeakDetectionComplete()| is called
+  // with the result of the (leaked) resource counting.
+  //
+  // By separating into two, the caller is able to inject any
+  // additional releasing of resources needed before the garbage
+  // collections go ahead.
 
-    // Perform initial stage of preparing for leak detection,
-    // releasing references to resources held globally.
-    virtual void prepareForLeakDetection(WebFrame*) = 0;
+  // Perform initial stage of preparing for leak detection,
+  // releasing references to resources held globally.
+  virtual void PrepareForLeakDetection(WebFrame*) = 0;
 
-    // Garbage collect Blink's heaps and report leak counts.
-    // |WebLeakDetectorClient::onLeakDetectionComplete()| is called
-    // upon completion.
-    virtual void collectGarbageAndReport() = 0;
+  // Garbage collect Blink's heaps and report leak counts.
+  // |WebLeakDetectorClient::onLeakDetectionComplete()| is called
+  // upon completion.
+  virtual void CollectGarbageAndReport() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebLeakDetector_h
+#endif  // WebLeakDetector_h

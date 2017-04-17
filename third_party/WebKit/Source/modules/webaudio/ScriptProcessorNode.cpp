@@ -10,333 +10,448 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/ScriptProcessorNode.h"
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/CrossThreadTask.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
 #include "modules/webaudio/AudioProcessingEvent.h"
 #include "modules/webaudio/BaseAudioContext.h"
+#include "platform/CrossThreadFunctional.h"
+#include "platform/WaitableEvent.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
 
-ScriptProcessorHandler::ScriptProcessorHandler(AudioNode& node, float sampleRate, size_t bufferSize, unsigned numberOfInputChannels, unsigned numberOfOutputChannels)
-    : AudioHandler(NodeTypeJavaScript, node, sampleRate)
-    , m_doubleBufferIndex(0)
-    , m_bufferSize(bufferSize)
-    , m_bufferReadWriteIndex(0)
-    , m_numberOfInputChannels(numberOfInputChannels)
-    , m_numberOfOutputChannels(numberOfOutputChannels)
-    , m_internalInputBus(AudioBus::create(numberOfInputChannels, ProcessingSizeInFrames, false))
-{
-    // Regardless of the allowed buffer sizes, we still need to process at the granularity of the AudioNode.
-    if (m_bufferSize < ProcessingSizeInFrames)
-        m_bufferSize = ProcessingSizeInFrames;
+ScriptProcessorHandler::ScriptProcessorHandler(
+    AudioNode& node,
+    float sample_rate,
+    size_t buffer_size,
+    unsigned number_of_input_channels,
+    unsigned number_of_output_channels)
+    : AudioHandler(kNodeTypeJavaScript, node, sample_rate),
+      double_buffer_index_(0),
+      buffer_size_(buffer_size),
+      buffer_read_write_index_(0),
+      number_of_input_channels_(number_of_input_channels),
+      number_of_output_channels_(number_of_output_channels),
+      internal_input_bus_(AudioBus::Create(number_of_input_channels,
+                                           AudioUtilities::kRenderQuantumFrames,
+                                           false)) {
+  // Regardless of the allowed buffer sizes, we still need to process at the
+  // granularity of the AudioNode.
+  if (buffer_size_ < AudioUtilities::kRenderQuantumFrames)
+    buffer_size_ = AudioUtilities::kRenderQuantumFrames;
 
-    DCHECK_LE(numberOfInputChannels, BaseAudioContext::maxNumberOfChannels());
+  DCHECK_LE(number_of_input_channels, BaseAudioContext::MaxNumberOfChannels());
 
-    addInput();
-    addOutput(numberOfOutputChannels);
+  AddInput();
+  AddOutput(number_of_output_channels);
 
-    m_channelCount = numberOfInputChannels;
-    m_channelCountMode = Explicit;
+  channel_count_ = number_of_input_channels;
+  SetInternalChannelCountMode(kExplicit);
 
-    initialize();
+  Initialize();
 }
 
-PassRefPtr<ScriptProcessorHandler> ScriptProcessorHandler::create(AudioNode& node, float sampleRate, size_t bufferSize, unsigned numberOfInputChannels, unsigned numberOfOutputChannels)
-{
-    return adoptRef(new ScriptProcessorHandler(node, sampleRate, bufferSize, numberOfInputChannels, numberOfOutputChannels));
+PassRefPtr<ScriptProcessorHandler> ScriptProcessorHandler::Create(
+    AudioNode& node,
+    float sample_rate,
+    size_t buffer_size,
+    unsigned number_of_input_channels,
+    unsigned number_of_output_channels) {
+  return AdoptRef(new ScriptProcessorHandler(node, sample_rate, buffer_size,
+                                             number_of_input_channels,
+                                             number_of_output_channels));
 }
 
-ScriptProcessorHandler::~ScriptProcessorHandler()
-{
-    uninitialize();
+ScriptProcessorHandler::~ScriptProcessorHandler() {
+  Uninitialize();
 }
 
-void ScriptProcessorHandler::initialize()
-{
-    if (isInitialized())
-        return;
+void ScriptProcessorHandler::Initialize() {
+  if (IsInitialized())
+    return;
 
-    float sampleRate = context()->sampleRate();
+  float sample_rate = Context()->sampleRate();
 
-    // Create double buffers on both the input and output sides.
-    // These AudioBuffers will be directly accessed in the main thread by JavaScript.
-    for (unsigned i = 0; i < 2; ++i) {
-        AudioBuffer* inputBuffer = m_numberOfInputChannels ? AudioBuffer::create(m_numberOfInputChannels, bufferSize(), sampleRate) : 0;
-        AudioBuffer* outputBuffer = m_numberOfOutputChannels ? AudioBuffer::create(m_numberOfOutputChannels, bufferSize(), sampleRate) : 0;
+  // Create double buffers on both the input and output sides.
+  // These AudioBuffers will be directly accessed in the main thread by
+  // JavaScript.
+  for (unsigned i = 0; i < 2; ++i) {
+    AudioBuffer* input_buffer =
+        number_of_input_channels_
+            ? AudioBuffer::Create(number_of_input_channels_, BufferSize(),
+                                  sample_rate)
+            : 0;
+    AudioBuffer* output_buffer =
+        number_of_output_channels_
+            ? AudioBuffer::Create(number_of_output_channels_, BufferSize(),
+                                  sample_rate)
+            : 0;
 
-        m_inputBuffers.append(inputBuffer);
-        m_outputBuffers.append(outputBuffer);
+    input_buffers_.push_back(input_buffer);
+    output_buffers_.push_back(output_buffer);
+  }
+
+  AudioHandler::Initialize();
+}
+
+void ScriptProcessorHandler::Process(size_t frames_to_process) {
+  // Discussion about inputs and outputs:
+  // As in other AudioNodes, ScriptProcessorNode uses an AudioBus for its input
+  // and output (see inputBus and outputBus below).  Additionally, there is a
+  // double-buffering for input and output which is exposed directly to
+  // JavaScript (see inputBuffer and outputBuffer below).  This node is the
+  // producer for inputBuffer and the consumer for outputBuffer.  The JavaScript
+  // code is the consumer of inputBuffer and the producer for outputBuffer.
+
+  // Get input and output busses.
+  AudioBus* input_bus = Input(0).Bus();
+  AudioBus* output_bus = Output(0).Bus();
+
+  // Get input and output buffers. We double-buffer both the input and output
+  // sides.
+  unsigned double_buffer_index = this->DoubleBufferIndex();
+  bool is_double_buffer_index_good =
+      double_buffer_index < 2 && double_buffer_index < input_buffers_.size() &&
+      double_buffer_index < output_buffers_.size();
+  DCHECK(is_double_buffer_index_good);
+  if (!is_double_buffer_index_good)
+    return;
+
+  AudioBuffer* input_buffer = input_buffers_[double_buffer_index].Get();
+  AudioBuffer* output_buffer = output_buffers_[double_buffer_index].Get();
+
+  // Check the consistency of input and output buffers.
+  unsigned number_of_input_channels = internal_input_bus_->NumberOfChannels();
+  bool buffers_are_good =
+      output_buffer && BufferSize() == output_buffer->length() &&
+      buffer_read_write_index_ + frames_to_process <= BufferSize();
+
+  // If the number of input channels is zero, it's ok to have inputBuffer = 0.
+  if (internal_input_bus_->NumberOfChannels())
+    buffers_are_good = buffers_are_good && input_buffer &&
+                       BufferSize() == input_buffer->length();
+
+  DCHECK(buffers_are_good);
+  if (!buffers_are_good)
+    return;
+
+  // We assume that bufferSize() is evenly divisible by framesToProcess - should
+  // always be true, but we should still check.
+  bool is_frames_to_process_good = frames_to_process &&
+                                   BufferSize() >= frames_to_process &&
+                                   !(BufferSize() % frames_to_process);
+  DCHECK(is_frames_to_process_good);
+  if (!is_frames_to_process_good)
+    return;
+
+  unsigned number_of_output_channels = output_bus->NumberOfChannels();
+
+  bool channels_are_good =
+      (number_of_input_channels == number_of_input_channels_) &&
+      (number_of_output_channels == number_of_output_channels_);
+  DCHECK(channels_are_good);
+  if (!channels_are_good)
+    return;
+
+  for (unsigned i = 0; i < number_of_input_channels; ++i)
+    internal_input_bus_->SetChannelMemory(
+        i,
+        input_buffer->getChannelData(i).View()->Data() +
+            buffer_read_write_index_,
+        frames_to_process);
+
+  if (number_of_input_channels)
+    internal_input_bus_->CopyFrom(*input_bus);
+
+  // Copy from the output buffer to the output.
+  for (unsigned i = 0; i < number_of_output_channels; ++i) {
+    memcpy(output_bus->Channel(i)->MutableData(),
+           output_buffer->getChannelData(i).View()->Data() +
+               buffer_read_write_index_,
+           sizeof(float) * frames_to_process);
+  }
+
+  // Update the buffering index.
+  buffer_read_write_index_ =
+      (buffer_read_write_index_ + frames_to_process) % BufferSize();
+
+  // m_bufferReadWriteIndex will wrap back around to 0 when the current input
+  // and output buffers are full.
+  // When this happens, fire an event and swap buffers.
+  if (!buffer_read_write_index_) {
+    // Avoid building up requests on the main thread to fire process events when
+    // they're not being handled.  This could be a problem if the main thread is
+    // very busy doing other things and is being held up handling previous
+    // requests.  The audio thread can't block on this lock, so we call
+    // tryLock() instead.
+    MutexTryLocker try_locker(process_event_lock_);
+    if (!try_locker.Locked()) {
+      // We're late in handling the previous request. The main thread must be
+      // very busy.  The best we can do is clear out the buffer ourself here.
+      output_buffer->Zero();
+    } else if (Context()->GetExecutionContext()) {
+      // With the realtime context, execute the script code asynchronously
+      // and do not wait.
+      if (Context()->HasRealtimeConstraint()) {
+        // Fire the event on the main thread with the appropriate buffer
+        // index.
+        TaskRunnerHelper::Get(TaskType::kMediaElementEvent,
+                              Context()->GetExecutionContext())
+            ->PostTask(BLINK_FROM_HERE,
+                       CrossThreadBind(
+                           &ScriptProcessorHandler::FireProcessEvent,
+                           CrossThreadUnretained(this), double_buffer_index_));
+      } else {
+        // If this node is in the offline audio context, use the
+        // waitable event to synchronize to the offline rendering thread.
+        std::unique_ptr<WaitableEvent> waitable_event =
+            WTF::MakeUnique<WaitableEvent>();
+
+        TaskRunnerHelper::Get(TaskType::kMediaElementEvent,
+                              Context()->GetExecutionContext())
+            ->PostTask(BLINK_FROM_HERE,
+                       CrossThreadBind(
+                           &ScriptProcessorHandler::
+                               FireProcessEventForOfflineAudioContext,
+                           CrossThreadUnretained(this), double_buffer_index_,
+                           CrossThreadUnretained(waitable_event.get())));
+
+        // Okay to block the offline audio rendering thread since it is
+        // not the actual audio device thread.
+        waitable_event->Wait();
+      }
     }
 
-    AudioHandler::initialize();
+    SwapBuffers();
+  }
 }
 
-void ScriptProcessorHandler::process(size_t framesToProcess)
-{
-    // Discussion about inputs and outputs:
-    // As in other AudioNodes, ScriptProcessorNode uses an AudioBus for its input and output (see inputBus and outputBus below).
-    // Additionally, there is a double-buffering for input and output which is exposed directly to JavaScript (see inputBuffer and outputBuffer below).
-    // This node is the producer for inputBuffer and the consumer for outputBuffer.
-    // The JavaScript code is the consumer of inputBuffer and the producer for outputBuffer.
+void ScriptProcessorHandler::FireProcessEvent(unsigned double_buffer_index) {
+  DCHECK(IsMainThread());
 
-    // Get input and output busses.
-    AudioBus* inputBus = input(0).bus();
-    AudioBus* outputBus = output(0).bus();
+  DCHECK_LT(double_buffer_index, 2u);
+  if (double_buffer_index > 1)
+    return;
 
-    // Get input and output buffers. We double-buffer both the input and output sides.
-    unsigned doubleBufferIndex = this->doubleBufferIndex();
-    bool isDoubleBufferIndexGood = doubleBufferIndex < 2 && doubleBufferIndex < m_inputBuffers.size() && doubleBufferIndex < m_outputBuffers.size();
-    ASSERT(isDoubleBufferIndexGood);
-    if (!isDoubleBufferIndexGood)
-        return;
+  AudioBuffer* input_buffer = input_buffers_[double_buffer_index].Get();
+  AudioBuffer* output_buffer = output_buffers_[double_buffer_index].Get();
+  DCHECK(output_buffer);
+  if (!output_buffer)
+    return;
 
-    AudioBuffer* inputBuffer = m_inputBuffers[doubleBufferIndex].get();
-    AudioBuffer* outputBuffer = m_outputBuffers[doubleBufferIndex].get();
+  // Avoid firing the event if the document has already gone away.
+  if (GetNode() && Context() && Context()->GetExecutionContext()) {
+    // This synchronizes with process().
+    MutexLocker process_locker(process_event_lock_);
 
-    // Check the consistency of input and output buffers.
-    unsigned numberOfInputChannels = m_internalInputBus->numberOfChannels();
-    bool buffersAreGood = outputBuffer && bufferSize() == outputBuffer->length() && m_bufferReadWriteIndex + framesToProcess <= bufferSize();
+    // Calculate a playbackTime with the buffersize which needs to be processed
+    // each time onaudioprocess is called.  The outputBuffer being passed to JS
+    // will be played after exhuasting previous outputBuffer by
+    // double-buffering.
+    double playback_time = (Context()->CurrentSampleFrame() + buffer_size_) /
+                           static_cast<double>(Context()->sampleRate());
 
-    // If the number of input channels is zero, it's ok to have inputBuffer = 0.
-    if (m_internalInputBus->numberOfChannels())
-        buffersAreGood = buffersAreGood && inputBuffer && bufferSize() == inputBuffer->length();
-
-    ASSERT(buffersAreGood);
-    if (!buffersAreGood)
-        return;
-
-    // We assume that bufferSize() is evenly divisible by framesToProcess - should always be true, but we should still check.
-    bool isFramesToProcessGood = framesToProcess && bufferSize() >= framesToProcess && !(bufferSize() % framesToProcess);
-    ASSERT(isFramesToProcessGood);
-    if (!isFramesToProcessGood)
-        return;
-
-    unsigned numberOfOutputChannels = outputBus->numberOfChannels();
-
-    bool channelsAreGood = (numberOfInputChannels == m_numberOfInputChannels) && (numberOfOutputChannels == m_numberOfOutputChannels);
-    ASSERT(channelsAreGood);
-    if (!channelsAreGood)
-        return;
-
-    for (unsigned i = 0; i < numberOfInputChannels; ++i)
-        m_internalInputBus->setChannelMemory(i, inputBuffer->getChannelData(i)->data() + m_bufferReadWriteIndex, framesToProcess);
-
-    if (numberOfInputChannels)
-        m_internalInputBus->copyFrom(*inputBus);
-
-    // Copy from the output buffer to the output.
-    for (unsigned i = 0; i < numberOfOutputChannels; ++i)
-        memcpy(outputBus->channel(i)->mutableData(), outputBuffer->getChannelData(i)->data() + m_bufferReadWriteIndex, sizeof(float) * framesToProcess);
-
-    // Update the buffering index.
-    m_bufferReadWriteIndex = (m_bufferReadWriteIndex + framesToProcess) % bufferSize();
-
-    // m_bufferReadWriteIndex will wrap back around to 0 when the current input and output buffers are full.
-    // When this happens, fire an event and swap buffers.
-    if (!m_bufferReadWriteIndex) {
-        // Avoid building up requests on the main thread to fire process events when they're not being handled.
-        // This could be a problem if the main thread is very busy doing other things and is being held up handling previous requests.
-        // The audio thread can't block on this lock, so we call tryLock() instead.
-        MutexTryLocker tryLocker(m_processEventLock);
-        if (!tryLocker.locked()) {
-            // We're late in handling the previous request. The main thread must be very busy.
-            // The best we can do is clear out the buffer ourself here.
-            outputBuffer->zero();
-        } else if (context()->getExecutionContext()) {
-            // Fire the event on the main thread with the appropriate buffer
-            // index.
-            context()->getExecutionContext()->postTask(BLINK_FROM_HERE,
-                createCrossThreadTask(&ScriptProcessorHandler::fireProcessEvent, PassRefPtr<ScriptProcessorHandler>(this), m_doubleBufferIndex));
-        }
-
-        swapBuffers();
-    }
+    // Call the JavaScript event handler which will do the audio processing.
+    GetNode()->DispatchEvent(AudioProcessingEvent::Create(
+        input_buffer, output_buffer, playback_time));
+  }
 }
 
-void ScriptProcessorHandler::fireProcessEvent(unsigned doubleBufferIndex)
-{
-    ASSERT(isMainThread());
+void ScriptProcessorHandler::FireProcessEventForOfflineAudioContext(
+    unsigned double_buffer_index,
+    WaitableEvent* waitable_event) {
+  DCHECK(IsMainThread());
 
-    ASSERT(doubleBufferIndex < 2);
-    if (doubleBufferIndex > 1)
-        return;
+  DCHECK_LT(double_buffer_index, 2u);
+  if (double_buffer_index > 1) {
+    waitable_event->Signal();
+    return;
+  }
 
-    AudioBuffer* inputBuffer = m_inputBuffers[doubleBufferIndex].get();
-    AudioBuffer* outputBuffer = m_outputBuffers[doubleBufferIndex].get();
-    ASSERT(outputBuffer);
-    if (!outputBuffer)
-        return;
+  AudioBuffer* input_buffer = input_buffers_[double_buffer_index].Get();
+  AudioBuffer* output_buffer = output_buffers_[double_buffer_index].Get();
+  DCHECK(output_buffer);
+  if (!output_buffer) {
+    waitable_event->Signal();
+    return;
+  }
 
-    // Avoid firing the event if the document has already gone away.
-    if (node() && context() && context()->getExecutionContext()) {
-        // This synchronizes with process().
-        MutexLocker processLocker(m_processEventLock);
+  if (GetNode() && Context() && Context()->GetExecutionContext()) {
+    // We do not need a process lock here because the offline render thread
+    // is locked by the waitable event.
+    double playback_time = (Context()->CurrentSampleFrame() + buffer_size_) /
+                           static_cast<double>(Context()->sampleRate());
+    GetNode()->DispatchEvent(AudioProcessingEvent::Create(
+        input_buffer, output_buffer, playback_time));
+  }
 
-        // Calculate a playbackTime with the buffersize which needs to be processed each time onaudioprocess is called.
-        // The outputBuffer being passed to JS will be played after exhuasting previous outputBuffer by double-buffering.
-        double playbackTime = (context()->currentSampleFrame() + m_bufferSize) / static_cast<double>(context()->sampleRate());
-
-        // Call the JavaScript event handler which will do the audio processing.
-        node()->dispatchEvent(AudioProcessingEvent::create(inputBuffer, outputBuffer, playbackTime));
-    }
+  waitable_event->Signal();
 }
 
-double ScriptProcessorHandler::tailTime() const
-{
-    return std::numeric_limits<double>::infinity();
+double ScriptProcessorHandler::TailTime() const {
+  return std::numeric_limits<double>::infinity();
 }
 
-double ScriptProcessorHandler::latencyTime() const
-{
-    return std::numeric_limits<double>::infinity();
+double ScriptProcessorHandler::LatencyTime() const {
+  return std::numeric_limits<double>::infinity();
 }
 
-void ScriptProcessorHandler::setChannelCount(unsigned long channelCount, ExceptionState& exceptionState)
-{
-    ASSERT(isMainThread());
-    BaseAudioContext::AutoLocker locker(context());
+void ScriptProcessorHandler::SetChannelCount(unsigned long channel_count,
+                                             ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
+  BaseAudioContext::AutoLocker locker(Context());
 
-    if (channelCount != m_channelCount) {
-        exceptionState.throwDOMException(
-            NotSupportedError,
-            "channelCount cannot be changed from " + String::number(m_channelCount) + " to " + String::number(channelCount));
-    }
+  if (channel_count != channel_count_) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError, "channelCount cannot be changed from " +
+                                String::Number(channel_count_) + " to " +
+                                String::Number(channel_count));
+  }
 }
 
-void ScriptProcessorHandler::setChannelCountMode(const String& mode, ExceptionState& exceptionState)
-{
-    ASSERT(isMainThread());
-    BaseAudioContext::AutoLocker locker(context());
+void ScriptProcessorHandler::SetChannelCountMode(
+    const String& mode,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
+  BaseAudioContext::AutoLocker locker(Context());
 
-    if ((mode == "max") || (mode == "clamped-max")) {
-        exceptionState.throwDOMException(
-            NotSupportedError,
-            "channelCountMode cannot be changed from 'explicit' to '" + mode + "'");
-    }
+  if ((mode == "max") || (mode == "clamped-max")) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        "channelCountMode cannot be changed from 'explicit' to '" + mode + "'");
+  }
 }
 
 // ----------------------------------------------------------------
 
-ScriptProcessorNode::ScriptProcessorNode(BaseAudioContext& context, float sampleRate, size_t bufferSize, unsigned numberOfInputChannels, unsigned numberOfOutputChannels)
-    : AudioNode(context)
-    , ActiveScriptWrappable(this)
-{
-    setHandler(ScriptProcessorHandler::create(*this, sampleRate, bufferSize, numberOfInputChannels, numberOfOutputChannels));
+ScriptProcessorNode::ScriptProcessorNode(BaseAudioContext& context,
+                                         float sample_rate,
+                                         size_t buffer_size,
+                                         unsigned number_of_input_channels,
+                                         unsigned number_of_output_channels)
+    : AudioNode(context) {
+  SetHandler(ScriptProcessorHandler::Create(*this, sample_rate, buffer_size,
+                                            number_of_input_channels,
+                                            number_of_output_channels));
 }
 
-static size_t chooseBufferSize()
-{
-    // Choose a buffer size based on the audio hardware buffer size. Arbitarily make it a power of
-    // two that is 4 times greater than the hardware buffer size.
-    // FIXME: What is the best way to choose this?
-    size_t hardwareBufferSize = Platform::current()->audioHardwareBufferSize();
-    size_t bufferSize = 1 << static_cast<unsigned>(log2(4 * hardwareBufferSize) + 0.5);
+static size_t ChooseBufferSize(size_t callback_buffer_size) {
+  // Choose a buffer size based on the audio hardware buffer size. Arbitarily
+  // make it a power of two that is 4 times greater than the hardware buffer
+  // size.
+  // FIXME: What is the best way to choose this?
+  size_t buffer_size =
+      1 << static_cast<unsigned>(log2(4 * callback_buffer_size) + 0.5);
 
-    if (bufferSize < 256)
-        return 256;
-    if (bufferSize > 16384)
-        return 16384;
+  if (buffer_size < 256)
+    return 256;
+  if (buffer_size > 16384)
+    return 16384;
 
-    return bufferSize;
+  return buffer_size;
 }
 
-ScriptProcessorNode* ScriptProcessorNode::create(
+ScriptProcessorNode* ScriptProcessorNode::Create(
     BaseAudioContext& context,
-    ExceptionState& exceptionState)
-{
-    DCHECK(isMainThread());
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    // Default buffer size is 0 (let WebAudio choose) with 2 inputs and 2
-    // outputs.
-    return create(context, 0, 2, 2, exceptionState);
+  // Default buffer size is 0 (let WebAudio choose) with 2 inputs and 2
+  // outputs.
+  return Create(context, 0, 2, 2, exception_state);
 }
 
-ScriptProcessorNode* ScriptProcessorNode::create(
+ScriptProcessorNode* ScriptProcessorNode::Create(
     BaseAudioContext& context,
-    size_t bufferSize,
-    ExceptionState& exceptionState)
-{
-    DCHECK(isMainThread());
+    size_t buffer_size,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    // Default is 2 inputs and 2 outputs.
-    return create(context, bufferSize, 2, 2, exceptionState);
+  // Default is 2 inputs and 2 outputs.
+  return Create(context, buffer_size, 2, 2, exception_state);
 }
 
-ScriptProcessorNode* ScriptProcessorNode::create(
+ScriptProcessorNode* ScriptProcessorNode::Create(
     BaseAudioContext& context,
-    size_t bufferSize,
-    unsigned numberOfInputChannels,
-    ExceptionState& exceptionState)
-{
-    DCHECK(isMainThread());
+    size_t buffer_size,
+    unsigned number_of_input_channels,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    // Default is 2 outputs.
-    return create(context, bufferSize, numberOfInputChannels, 2, exceptionState);
+  // Default is 2 outputs.
+  return Create(context, buffer_size, number_of_input_channels, 2,
+                exception_state);
 }
 
-ScriptProcessorNode* ScriptProcessorNode::create(
+ScriptProcessorNode* ScriptProcessorNode::Create(
     BaseAudioContext& context,
-    size_t bufferSize,
-    unsigned numberOfInputChannels,
-    unsigned numberOfOutputChannels,
-    ExceptionState& exceptionState)
-{
-    DCHECK(isMainThread());
+    size_t buffer_size,
+    unsigned number_of_input_channels,
+    unsigned number_of_output_channels,
+    ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    if (context.isContextClosed()) {
-        context.throwExceptionForClosedState(exceptionState);
-        return nullptr;
-    }
+  if (context.IsContextClosed()) {
+    context.ThrowExceptionForClosedState(exception_state);
+    return nullptr;
+  }
 
-    if (numberOfInputChannels == 0 && numberOfOutputChannels == 0) {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            "number of input channels and output channels cannot both be zero.");
-        return nullptr;
-    }
+  if (number_of_input_channels == 0 && number_of_output_channels == 0) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        "number of input channels and output channels cannot both be zero.");
+    return nullptr;
+  }
 
-    if (numberOfInputChannels > BaseAudioContext::maxNumberOfChannels()) {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            "number of input channels (" + String::number(numberOfInputChannels)
-            + ") exceeds maximum ("
-            + String::number(BaseAudioContext::maxNumberOfChannels()) + ").");
-        return nullptr;
-    }
+  if (number_of_input_channels > BaseAudioContext::MaxNumberOfChannels()) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        "number of input channels (" +
+            String::Number(number_of_input_channels) + ") exceeds maximum (" +
+            String::Number(BaseAudioContext::MaxNumberOfChannels()) + ").");
+    return nullptr;
+  }
 
-    if (numberOfOutputChannels > BaseAudioContext::maxNumberOfChannels()) {
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            "number of output channels (" + String::number(numberOfInputChannels)
-            + ") exceeds maximum ("
-            + String::number(BaseAudioContext::maxNumberOfChannels()) + ").");
-        return nullptr;
-    }
+  if (number_of_output_channels > BaseAudioContext::MaxNumberOfChannels()) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError,
+        "number of output channels (" +
+            String::Number(number_of_output_channels) + ") exceeds maximum (" +
+            String::Number(BaseAudioContext::MaxNumberOfChannels()) + ").");
+    return nullptr;
+  }
 
-    // Check for valid buffer size.
-    switch (bufferSize) {
+  // Check for valid buffer size.
+  switch (buffer_size) {
     case 0:
-        bufferSize = chooseBufferSize();
-        break;
+      // Choose an appropriate size.  For an AudioContext, we need to
+      // choose an appropriate size based on the callback buffer size.
+      // For OfflineAudioContext, there's no callback buffer size, so
+      // just use the minimum valid buffer size.
+      buffer_size =
+          context.HasRealtimeConstraint()
+              ? ChooseBufferSize(context.destination()->CallbackBufferSize())
+              : 256;
+      break;
     case 256:
     case 512:
     case 1024:
@@ -344,44 +459,43 @@ ScriptProcessorNode* ScriptProcessorNode::create(
     case 4096:
     case 8192:
     case 16384:
-        break;
+      break;
     default:
-        exceptionState.throwDOMException(
-            IndexSizeError,
-            "buffer size (" + String::number(bufferSize)
-            + ") must be 0 or a power of two between 256 and 16384.");
-        return nullptr;
-    }
+      exception_state.ThrowDOMException(
+          kIndexSizeError,
+          "buffer size (" + String::Number(buffer_size) +
+              ") must be 0 or a power of two between 256 and 16384.");
+      return nullptr;
+  }
 
-    ScriptProcessorNode* node =  new ScriptProcessorNode(context, context.sampleRate(), bufferSize, numberOfInputChannels, numberOfOutputChannels);
+  ScriptProcessorNode* node = new ScriptProcessorNode(
+      context, context.sampleRate(), buffer_size, number_of_input_channels,
+      number_of_output_channels);
 
-    if (!node)
-        return nullptr;
+  if (!node)
+    return nullptr;
 
-    // context keeps reference until we stop making javascript rendering callbacks
-    context.notifySourceNodeStartedProcessing(node);
+  // context keeps reference until we stop making javascript rendering callbacks
+  context.NotifySourceNodeStartedProcessing(node);
 
-    return node;
+  return node;
 }
 
-size_t ScriptProcessorNode::bufferSize() const
-{
-    return static_cast<ScriptProcessorHandler&>(handler()).bufferSize();
+size_t ScriptProcessorNode::bufferSize() const {
+  return static_cast<ScriptProcessorHandler&>(Handler()).BufferSize();
 }
 
-bool ScriptProcessorNode::hasPendingActivity() const
-{
-    // To prevent the node from leaking after the context is closed.
-    if (context()->isContextClosed())
-        return false;
-
-    // If |onaudioprocess| event handler is defined, the node should not be
-    // GCed even if it is out of scope.
-    if (hasEventListeners(EventTypeNames::audioprocess))
-        return true;
-
+bool ScriptProcessorNode::HasPendingActivity() const {
+  // To prevent the node from leaking after the context is closed.
+  if (context()->IsContextClosed())
     return false;
+
+  // If |onaudioprocess| event handler is defined, the node should not be
+  // GCed even if it is out of scope.
+  if (HasEventListeners(EventTypeNames::audioprocess))
+    return true;
+
+  return false;
 }
 
-} // namespace blink
-
+}  // namespace blink

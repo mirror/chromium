@@ -27,22 +27,23 @@
 #define KillRing_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT KillRing {
-    USING_FAST_MALLOC(KillRing);
-    WTF_MAKE_NONCOPYABLE(KillRing);
-public:
-    KillRing() { }
-    void append(const String&);
-    void prepend(const String&);
-    String yank();
-    void startNewSequence();
-    void setToYankedState();
+  USING_FAST_MALLOC(KillRing);
+  WTF_MAKE_NONCOPYABLE(KillRing);
+
+ public:
+  KillRing() {}
+  void Append(const String&);
+  void Prepend(const String&);
+  String Yank();
+  void StartNewSequence();
+  void SetToYankedState();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // KillRing_h
+#endif  // KillRing_h

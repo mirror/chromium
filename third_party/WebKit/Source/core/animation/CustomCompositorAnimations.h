@@ -7,7 +7,7 @@
 
 #include "core/animation/Animation.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -15,22 +15,19 @@ class Element;
 class CompositorMutation;
 
 class CustomCompositorAnimations final {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(CustomCompositorAnimations);
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(CustomCompositorAnimations);
 
-public:
-    CustomCompositorAnimations() {}
-    void applyUpdate(Element&, const CompositorMutation&);
+ public:
+  CustomCompositorAnimations() {}
+  void ApplyUpdate(Element&, const CompositorMutation&);
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_animation);
-    }
+  DEFINE_INLINE_TRACE() { visitor->Trace(animation_); }
 
-private:
-    Member<Animation> m_animation;
+ private:
+  Member<Animation> animation_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

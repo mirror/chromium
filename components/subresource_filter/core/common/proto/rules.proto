@@ -65,10 +65,11 @@ enum ElementType {
   ELEMENT_TYPE_MEDIA = 512;
   ELEMENT_TYPE_FONT = 1024;
   ELEMENT_TYPE_POPUP = 2048;
+  ELEMENT_TYPE_WEBSOCKET = 4096;
 
   // NOTE: Keep these two values consistent with the values above.
-  ELEMENT_TYPE_MAX = 2048;
-  ELEMENT_TYPE_ALL = 4095;
+  ELEMENT_TYPE_MAX = 4096;
+  ELEMENT_TYPE_ALL = 8191;
 };
 
 // The options controlling whether or not to activate filtering for subresources
@@ -136,8 +137,6 @@ message UrlRule {
   // Stores the ActivationTypes associated with the rule as a bitwise OR of the
   // corresponding ActivationType values.
   optional int32 activation_types = 4;
-
-  // The list of domains to be included/excluded from the filter's affected set.
 
   // The rule applies only to subresources of documents loaded from included
   // domains (or subdomains thereof). If the list is empty, the rule is applied

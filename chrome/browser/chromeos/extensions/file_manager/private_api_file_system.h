@@ -10,9 +10,14 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
+#include <set>
 #include <string>
+#include <vector>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/extensions/file_manager/private_api_base.h"
 #include "chrome/browser/extensions/chrome_extension_function.h"
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
@@ -21,18 +26,14 @@
 #include "extensions/browser/extension_function.h"
 #include "storage/browser/fileapi/file_system_url.h"
 
-class GURL;
-
-namespace base {
-class FilePath;
-}  // namespace base
-
 namespace storage {
 class FileSystemContext;
 class FileSystemURL;
+class WatcherManager;
 }  // namespace storage
 
 namespace file_manager {
+class EventRouter;
 namespace util {
 struct EntryDefinition;
 typedef std::vector<EntryDefinition> EntryDefinitionList;
@@ -88,20 +89,37 @@ class FileManagerPrivateGrantAccessFunction : public UIThreadExtensionFunction {
 // directories.
 class FileWatchFunctionBase : public LoggedAsyncExtensionFunction {
  public:
+  using ResponseCallback = base::Callback<void(bool success)>;
+
   // Calls SendResponse() with |success| converted to base::Value.
   void Respond(bool success);
 
  protected:
   ~FileWatchFunctionBase() override {}
 
-  // Performs a file watch operation (ex. adds or removes a file watch).
-  virtual void PerformFileWatchOperation(
+  // Performs a file watch operation (ex. adds or removes a file watch) on
+  // the IO thread with storage::WatcherManager.
+  virtual void PerformFileWatchOperationOnIOThread(
       scoped_refptr<storage::FileSystemContext> file_system_context,
+      storage::WatcherManager* watcher_manager,
       const storage::FileSystemURL& file_system_url,
-      const std::string& extension_id) = 0;
+      base::WeakPtr<file_manager::EventRouter> event_router) = 0;
+
+  // Performs a file watch operation (ex. adds or removes a file watch) on
+  // the UI thread with file_manager::EventRouter. This is a fallback operation
+  // called only when WatcherManager is unavailable.
+  virtual void PerformFallbackFileWatchOperationOnUIThread(
+      const storage::FileSystemURL& file_system_url,
+      base::WeakPtr<file_manager::EventRouter> event_router) = 0;
 
   // AsyncExtensionFunction overrides.
   bool RunAsync() override;
+
+ private:
+  void RunAsyncOnIOThread(
+      scoped_refptr<storage::FileSystemContext> file_system_context,
+      const storage::FileSystemURL& file_system_url,
+      base::WeakPtr<file_manager::EventRouter> event_router);
 };
 
 // Implements the chrome.fileManagerPrivate.addFileWatch method.
@@ -116,10 +134,14 @@ class FileManagerPrivateInternalAddFileWatchFunction
   ~FileManagerPrivateInternalAddFileWatchFunction() override {}
 
   // FileWatchFunctionBase override.
-  void PerformFileWatchOperation(
+  void PerformFileWatchOperationOnIOThread(
       scoped_refptr<storage::FileSystemContext> file_system_context,
+      storage::WatcherManager* watcher_manager,
       const storage::FileSystemURL& file_system_url,
-      const std::string& extension_id) override;
+      base::WeakPtr<file_manager::EventRouter> event_router) override;
+  void PerformFallbackFileWatchOperationOnUIThread(
+      const storage::FileSystemURL& file_system_url,
+      base::WeakPtr<file_manager::EventRouter> event_router) override;
 };
 
 
@@ -135,10 +157,14 @@ class FileManagerPrivateInternalRemoveFileWatchFunction
   ~FileManagerPrivateInternalRemoveFileWatchFunction() override {}
 
   // FileWatchFunctionBase override.
-  void PerformFileWatchOperation(
+  void PerformFileWatchOperationOnIOThread(
       scoped_refptr<storage::FileSystemContext> file_system_context,
+      storage::WatcherManager* watcher_manager,
       const storage::FileSystemURL& file_system_url,
-      const std::string& extension_id) override;
+      base::WeakPtr<file_manager::EventRouter> event_router) override;
+  void PerformFallbackFileWatchOperationOnUIThread(
+      const storage::FileSystemURL& file_system_url,
+      base::WeakPtr<file_manager::EventRouter> event_router) override;
 };
 
 // Implements the chrome.fileManagerPrivate.getSizeStats method.
@@ -155,10 +181,6 @@ class FileManagerPrivateGetSizeStatsFunction
   bool RunAsync() override;
 
  private:
-  void OnGetLocalSpace(uint64_t* total_size,
-                       uint64_t* remaining_size,
-                       bool is_download);
-
   void OnGetDriveAvailableSpace(drive::FileError error,
                                 int64_t bytes_total,
                                 int64_t bytes_used);
@@ -338,6 +360,22 @@ class FileManagerPrivateInternalSetEntryTagFunction
 
   ExtensionFunction::ResponseAction Run() override;
   DISALLOW_COPY_AND_ASSIGN(FileManagerPrivateInternalSetEntryTagFunction);
+};
+
+// Implements the chrome.fileManagerPrivate.getDirectorySize method.
+class FileManagerPrivateInternalGetDirectorySizeFunction
+    : public LoggedAsyncExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("fileManagerPrivateInternal.getDirectorySize",
+                             FILEMANAGERPRIVATEINTERNAL_GETDIRECTORYSIZE)
+
+ protected:
+  ~FileManagerPrivateInternalGetDirectorySizeFunction() override {}
+
+  void OnDirectorySizeRetrieved(int64_t size);
+
+  // AsyncExtensionFunction overrides
+  bool RunAsync() override;
 };
 
 }  // namespace extensions

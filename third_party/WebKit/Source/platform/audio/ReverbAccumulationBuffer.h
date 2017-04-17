@@ -31,42 +31,50 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/audio/AudioArray.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-// ReverbAccumulationBuffer is a circular delay buffer with one client reading from it and multiple clients
-// writing/accumulating to it at different delay offsets from the read position.  The read operation will zero the memory
-// just read from the buffer, so it will be ready for accumulation the next time around.
+// ReverbAccumulationBuffer is a circular delay buffer with one client reading
+// from it and multiple clients writing/accumulating to it at different delay
+// offsets from the read position.  The read operation will zero the memory
+// just read from the buffer, so it will be ready for accumulation the next
+// time around.
 class PLATFORM_EXPORT ReverbAccumulationBuffer {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(ReverbAccumulationBuffer);
-public:
-    ReverbAccumulationBuffer(size_t length);
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(ReverbAccumulationBuffer);
 
-    // This will read from, then clear-out numberOfFrames
-    void readAndClear(float* destination, size_t numberOfFrames);
+ public:
+  ReverbAccumulationBuffer(size_t length);
 
-    // Each ReverbConvolverStage will accumulate its output at the appropriate delay from the read position.
-    // We need to pass in and update readIndex here, since each ReverbConvolverStage may be running in
-    // a different thread than the realtime thread calling ReadAndClear() and maintaining m_readIndex
-    // Returns the writeIndex where the accumulation took place
-    int accumulate(float* source, size_t numberOfFrames, int* readIndex, size_t delayFrames);
+  // This will read from, then clear-out numberOfFrames
+  void ReadAndClear(float* destination, size_t number_of_frames);
 
-    size_t readIndex() const { return m_readIndex; }
-    void updateReadIndex(int* readIndex, size_t numberOfFrames) const;
+  // Each ReverbConvolverStage will accumulate its output at the appropriate
+  // delay from the read position.  We need to pass in and update readIndex
+  // here, since each ReverbConvolverStage may be running in a different thread
+  // than the realtime thread calling ReadAndClear() and maintaining
+  // m_readIndex
+  // Returns the writeIndex where the accumulation took place
+  int Accumulate(float* source,
+                 size_t number_of_frames,
+                 int* read_index,
+                 size_t delay_frames);
 
-    size_t readTimeFrame() const { return m_readTimeFrame; }
+  size_t ReadIndex() const { return read_index_; }
+  void UpdateReadIndex(int* read_index, size_t number_of_frames) const;
 
-    void reset();
+  size_t ReadTimeFrame() const { return read_time_frame_; }
 
-private:
-    AudioFloatArray m_buffer;
-    size_t m_readIndex;
-    size_t m_readTimeFrame; // for debugging (frame on continuous timeline)
+  void Reset();
+
+ private:
+  AudioFloatArray buffer_;
+  size_t read_index_;
+  size_t read_time_frame_;  // for debugging (frame on continuous timeline)
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ReverbAccumulationBuffer_h
+#endif  // ReverbAccumulationBuffer_h

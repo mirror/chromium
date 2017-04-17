@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "google_apis/gaia/google_service_auth_error.h"
@@ -25,9 +26,9 @@ class TestGCMNetworkChannelDelegate : public GCMNetworkChannelDelegate {
   TestGCMNetworkChannelDelegate()
       : register_call_count_(0) {}
 
-  void Initialize(
-      GCMNetworkChannelDelegate::ConnectionStateCallback callback) override {
-    connection_state_callback = callback;
+  void Initialize(ConnectionStateCallback connection_state_callback,
+                  base::Closure store_reset_callback) override {
+    this->connection_state_callback = connection_state_callback;
   }
 
   void RequestToken(RequestTokenCallback callback) override {
@@ -213,7 +214,7 @@ class GCMNetworkChannelTest
   }
 
  private:
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   TestGCMNetworkChannelDelegate* delegate_;
   std::unique_ptr<GCMNetworkChannel> gcm_network_channel_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_getter_;

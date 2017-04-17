@@ -35,7 +35,7 @@
 #include "test/errors.h"
 #include "test/mac/mach_errors.h"
 #include "test/mac/mach_multiprocess.h"
-#include "test/paths.h"
+#include "test/test_paths.h"
 #include "util/file/file_io.h"
 #include "util/mac/mac_util.h"
 #include "util/mach/exc_server_variants.h"
@@ -50,12 +50,12 @@ namespace {
 
 // \return The path to crashpad_snapshot_test_module_crashy_initializer.so
 std::string ModuleWithCrashyInitializer() {
-  return Paths::Executable().value() + "_module_crashy_initializer.so";
+  return TestPaths::Executable().value() + "_module_crashy_initializer.so";
 }
 
 //! \return The path to the crashpad_snapshot_test_no_op executable.
 base::FilePath NoOpExecutable() {
-  return base::FilePath(Paths::Executable().value() + "_no_op");
+  return base::FilePath(TestPaths::Executable().value() + "_no_op");
 }
 
 class TestMachOImageAnnotationsReader final
@@ -117,7 +117,18 @@ class TestMachOImageAnnotationsReader final
                                    bool* destroy_complex_request) override {
     *destroy_complex_request = true;
 
-    EXPECT_EQ(ChildTask(), task);
+    if (test_type_ != kCrashDyld) {
+      // In 10.12.1 and later, the task port will not match ChildTask() in the
+      // kCrashDyld case, because kCrashDyld uses execl(), which results in a
+      // new task port being assigned.
+      EXPECT_EQ(task, ChildTask());
+    }
+
+    // The process ID should always compare favorably.
+    pid_t task_pid;
+    kern_return_t kr = pid_for_task(task, &task_pid);
+    EXPECT_EQ(kr, KERN_SUCCESS) << MachErrorMessage(kr, "pid_for_task");
+    EXPECT_EQ(task_pid, ChildPID());
 
     ProcessReader process_reader;
     bool rv = process_reader.Initialize(task);
@@ -188,8 +199,8 @@ class TestMachOImageAnnotationsReader final
         for (const std::string& annotation : all_annotations_vector) {
           // Look for the expectation as a leading susbtring, because the actual
           // string that dyld uses will have the contents of the
-          // DYLD_INSERT_LIBRARIES environment variable appended to it on Mac
-          // OS X 10.10.
+          // DYLD_INSERT_LIBRARIES environment variable appended to it on OS X
+          // 10.10.
           if (annotation.substr(0, expected_annotation.length()) ==
                   expected_annotation) {
             found = true;
@@ -206,8 +217,8 @@ class TestMachOImageAnnotationsReader final
         bool found = false;
         for (const std::string& annotation : all_annotations_vector) {
           // Look for the expectation as a leading substring, because the actual
-          // string will contain the library’s pathname and, on Mac OS X 10.9
-          // and later, a reason.
+          // string will contain the library’s pathname and, on OS X 10.9 and
+          // later, a reason.
           if (annotation.substr(0, expected_annotation_length) ==
                   kExpectedAnnotation) {
             found = true;
@@ -234,7 +245,7 @@ class TestMachOImageAnnotationsReader final
     // Wait for the child process to indicate that it’s done setting up its
     // annotations via the CrashpadInfo interface.
     char c;
-    CheckedReadFile(ReadPipeHandle(), &c, sizeof(c));
+    CheckedReadFileExactly(ReadPipeHandle(), &c, sizeof(c));
 
     // Verify the “simple map” annotations set via the CrashpadInfo interface.
     const std::vector<ProcessReader::Module>& modules =
@@ -250,11 +261,11 @@ class TestMachOImageAnnotationsReader final
     }
 
     EXPECT_GE(all_annotations_simple_map.size(), 5u);
-    EXPECT_EQ("crash", all_annotations_simple_map["#TEST# pad"]);
-    EXPECT_EQ("value", all_annotations_simple_map["#TEST# key"]);
-    EXPECT_EQ("y", all_annotations_simple_map["#TEST# x"]);
-    EXPECT_EQ("shorter", all_annotations_simple_map["#TEST# longer"]);
-    EXPECT_EQ("", all_annotations_simple_map["#TEST# empty_value"]);
+    EXPECT_EQ(all_annotations_simple_map["#TEST# pad"], "crash");
+    EXPECT_EQ(all_annotations_simple_map["#TEST# key"], "value");
+    EXPECT_EQ(all_annotations_simple_map["#TEST# x"], "y");
+    EXPECT_EQ(all_annotations_simple_map["#TEST# longer"], "shorter");
+    EXPECT_EQ(all_annotations_simple_map["#TEST# empty_value"], "");
 
     // Tell the child process that it’s permitted to crash.
     CheckedWriteFile(WritePipeHandle(), &c, sizeof(c));
@@ -271,7 +282,7 @@ class TestMachOImageAnnotationsReader final
                                  MachMessageServer::kOneShot,
                                  MachMessageServer::kReceiveLargeError,
                                  kMachMessageTimeoutWaitIndefinitely);
-      EXPECT_EQ(MACH_MSG_SUCCESS, mr)
+      EXPECT_EQ(mr, MACH_MSG_SUCCESS)
           << MachErrorMessage(mr, "MachMessageServer::Run");
 
       switch (test_type_) {
@@ -286,10 +297,14 @@ class TestMachOImageAnnotationsReader final
           break;
 
         case kCrashDyld:
-          // dyld fatal errors result in the execution of an int3 instruction on
-          // x86 and a trap instruction on ARM, both of which raise SIGTRAP.
-          // 10.9.5 dyld-239.4/src/dyldStartup.s _dyld_fatal_error.
-          SetExpectedChildTermination(kTerminationSignal, SIGTRAP);
+          // Prior to 10.12, dyld fatal errors result in the execution of an
+          // int3 instruction on x86 and a trap instruction on ARM, both of
+          // which raise SIGTRAP. 10.9.5 dyld-239.4/src/dyldStartup.s
+          // _dyld_fatal_error. This changed in 10.12 to use
+          // abort_with_payload(), which appears as SIGABRT to a waiting parent.
+          SetExpectedChildTermination(
+              kTerminationSignal,
+              MacOSXMinorVersion() < 12 ? SIGTRAP : SIGABRT);
           break;
 
         default:
@@ -318,7 +333,7 @@ class TestMachOImageAnnotationsReader final
     CheckedWriteFile(WritePipeHandle(), &c, sizeof(c));
 
     // Wait for the parent to indicate that it’s safe to crash.
-    CheckedReadFile(ReadPipeHandle(), &c, sizeof(c));
+    CheckedReadFileExactly(ReadPipeHandle(), &c, sizeof(c));
 
     // Direct an exception message to the exception server running in the
     // parent.
@@ -345,7 +360,7 @@ class TestMachOImageAnnotationsReader final
         // This should have crashed in the dlopen(). If dlopen() failed, the
         // ASSERT_NE() will show the message. If it succeeded without crashing,
         // the FAIL() will fail the test.
-        ASSERT_NE(nullptr, dl_handle) << dlerror();
+        ASSERT_NE(dl_handle, nullptr) << dlerror();
         FAIL();
         break;
       }
@@ -354,9 +369,9 @@ class TestMachOImageAnnotationsReader final
         // Set DYLD_INSERT_LIBRARIES to contain a library that does not exist.
         // Unable to load it, dyld will abort with a fatal error.
         ASSERT_EQ(
-            0,
             setenv(
-                "DYLD_INSERT_LIBRARIES", "/var/empty/NoDirectory/NoLibrary", 1))
+                "DYLD_INSERT_LIBRARIES", "/var/empty/NoDirectory/NoLibrary", 1),
+            0)
             << ErrnoMessage("setenv");
 
         // The actual executable doesn’t matter very much, because dyld won’t
@@ -366,9 +381,10 @@ class TestMachOImageAnnotationsReader final
         // with system executables on OS X 10.11 due to System Integrity
         // Protection.
         base::FilePath no_op_executable = NoOpExecutable();
-        ASSERT_EQ(0, execl(no_op_executable.value().c_str(),
-                           no_op_executable.BaseName().value().c_str(),
-                           nullptr))
+        ASSERT_EQ(execl(no_op_executable.value().c_str(),
+                        no_op_executable.BaseName().value().c_str(),
+                        nullptr),
+                  0)
             << ErrnoMessage("execl");
         break;
       }

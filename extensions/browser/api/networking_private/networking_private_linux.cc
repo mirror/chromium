@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
@@ -83,7 +84,7 @@ std::unique_ptr<base::ListValue> CopyNetworkMapToList(
   std::unique_ptr<base::ListValue> network_list(new base::ListValue);
 
   for (const auto& network : network_map) {
-    network_list->Append(network.second->DeepCopy());
+    network_list->Append(network.second->CreateDeepCopy());
   }
 
   return network_list;
@@ -134,11 +135,8 @@ void GetCachedNetworkPropertiesCallback(
 
 }  // namespace
 
-NetworkingPrivateLinux::NetworkingPrivateLinux(
-    std::unique_ptr<VerifyDelegate> verify_delegate)
-    : NetworkingPrivateDelegate(std::move(verify_delegate)),
-      dbus_thread_("Networking Private DBus"),
-      network_manager_proxy_(NULL) {
+NetworkingPrivateLinux::NetworkingPrivateLinux()
+    : dbus_thread_("Networking Private DBus"), network_manager_proxy_(NULL) {
   base::Thread::Options thread_options(base::MessageLoop::Type::TYPE_IO, 0);
 
   dbus_thread_.StartWithOptions(thread_options);
@@ -253,6 +251,7 @@ void NetworkingPrivateLinux::GetCachedNetworkProperties(
 void NetworkingPrivateLinux::SetProperties(
     const std::string& guid,
     std::unique_ptr<base::DictionaryValue> properties,
+    bool allow_set_shared_config,
     const VoidCallback& success_callback,
     const FailureCallback& failure_callback) {
   ReportNotSupported("SetProperties", failure_callback);
@@ -268,6 +267,7 @@ void NetworkingPrivateLinux::CreateNetwork(
 
 void NetworkingPrivateLinux::ForgetNetwork(
     const std::string& guid,
+    bool allow_forget_shared_config,
     const VoidCallback& success_callback,
     const FailureCallback& failure_callback) {
   // TODO(zentaro): Implement for Linux.
@@ -589,6 +589,11 @@ NetworkingPrivateLinux::GetDeviceStateList() {
   return device_state_list;
 }
 
+std::unique_ptr<base::DictionaryValue>
+NetworkingPrivateLinux::GetGlobalPolicy() {
+  return base::MakeUnique<base::DictionaryValue>();
+}
+
 bool NetworkingPrivateLinux::EnableNetworkType(const std::string& type) {
   return false;
 }
@@ -638,8 +643,8 @@ void NetworkingPrivateLinux::SendNetworkListChangedEvent(
 
   for (const auto& network : network_list) {
     std::string guid;
-    base::DictionaryValue* dict;
-    if (network->GetAsDictionary(&dict)) {
+    const base::DictionaryValue* dict = nullptr;
+    if (network.GetAsDictionary(&dict)) {
       if (dict->GetString(kAccessPointInfoGuid, &guid)) {
         guidsForEventCallback.push_back(guid);
       }
@@ -937,15 +942,14 @@ void NetworkingPrivateLinux::AddOrUpdateAccessPoint(
 
   if (existing_access_point_iter == network_map->end()) {
     // Unseen access point. Add it to the map.
-    network_map->insert(NetworkMap::value_type(
-        ssid, linked_ptr<base::DictionaryValue>(access_point.release())));
+    network_map->insert(NetworkMap::value_type(ssid, std::move(access_point)));
   } else {
     // Already seen access point. Update the record if this is the connected
     // record or if the signal strength is higher. But don't override a weaker
     // access point if that is the one that is connected.
     int existing_signal_strength;
-    linked_ptr<base::DictionaryValue>& existing_access_point =
-        existing_access_point_iter->second;
+    base::DictionaryValue* existing_access_point =
+        existing_access_point_iter->second.get();
     existing_access_point->GetInteger(kAccessPointInfoWifiSignalStrengthDotted,
                                       &existing_signal_strength);
 
@@ -1177,17 +1181,15 @@ bool NetworkingPrivateLinux::SetConnectionStateAndPostEvent(
 void NetworkingPrivateLinux::OnNetworksChangedEventOnUIThread(
     const GuidList& network_guids) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  FOR_EACH_OBSERVER(NetworkingPrivateDelegateObserver,
-                    network_events_observers_,
-                    OnNetworksChangedEvent(network_guids));
+  for (auto& observer : network_events_observers_)
+    observer.OnNetworksChangedEvent(network_guids);
 }
 
 void NetworkingPrivateLinux::OnNetworkListChangedEventOnUIThread(
     const GuidList& network_guids) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  FOR_EACH_OBSERVER(NetworkingPrivateDelegateObserver,
-                    network_events_observers_,
-                    OnNetworkListChangedEvent(network_guids));
+  for (auto& observer : network_events_observers_)
+    observer.OnNetworkListChangedEvent(network_guids);
 }
 
 void NetworkingPrivateLinux::PostOnNetworksChangedToUIThread(

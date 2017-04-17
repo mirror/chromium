@@ -30,52 +30,50 @@
 namespace blink {
 
 IDBVersionChangeEvent::IDBVersionChangeEvent()
-    : m_dataLoss(WebIDBDataLossNone)
-{
+    : data_loss_(kWebIDBDataLossNone) {}
+
+IDBVersionChangeEvent::IDBVersionChangeEvent(
+    const AtomicString& event_type,
+    unsigned long long old_version,
+    const Nullable<unsigned long long>& new_version,
+    WebIDBDataLoss data_loss,
+    const String& data_loss_message)
+    : Event(event_type, /*can_bubble=*/false, /*cancelable=*/false),
+      old_version_(old_version),
+      new_version_(new_version),
+      data_loss_(data_loss),
+      data_loss_message_(data_loss_message) {}
+
+IDBVersionChangeEvent::IDBVersionChangeEvent(
+    const AtomicString& event_type,
+    const IDBVersionChangeEventInit& initializer)
+    : Event(event_type, /*can_bubble=*/false, /*cancelable=*/false),
+      old_version_(initializer.oldVersion()),
+      new_version_(nullptr),
+      data_loss_(kWebIDBDataLossNone) {
+  if (initializer.hasNewVersion())
+    new_version_ = initializer.newVersion();
+  if (initializer.dataLoss() == "total")
+    data_loss_ = kWebIDBDataLossTotal;
 }
 
-IDBVersionChangeEvent::IDBVersionChangeEvent(const AtomicString& eventType, unsigned long long oldVersion, const Nullable<unsigned long long>& newVersion, WebIDBDataLoss dataLoss, const String& dataLossMessage)
-    : Event(eventType, false /*canBubble*/, false /*cancelable*/)
-    , m_oldVersion(oldVersion)
-    , m_newVersion(newVersion)
-    , m_dataLoss(dataLoss)
-    , m_dataLossMessage(dataLossMessage)
-{
+unsigned long long IDBVersionChangeEvent::newVersion(bool& is_null) const {
+  is_null = new_version_.IsNull();
+  return is_null ? 0 : new_version_.Get();
 }
 
-IDBVersionChangeEvent::IDBVersionChangeEvent(const AtomicString& eventType, const IDBVersionChangeEventInit& initializer)
-    : Event(eventType, false /*canBubble*/, false /*cancelable*/)
-    , m_oldVersion(initializer.oldVersion())
-    , m_newVersion(nullptr)
-    , m_dataLoss(WebIDBDataLossNone)
-{
-    if (initializer.hasNewVersion())
-        m_newVersion = initializer.newVersion();
-    if (initializer.dataLoss() == "total")
-        m_dataLoss = WebIDBDataLossTotal;
+const AtomicString& IDBVersionChangeEvent::dataLoss() const {
+  if (data_loss_ == kWebIDBDataLossTotal)
+    return IndexedDBNames::total;
+  return IndexedDBNames::none;
 }
 
-unsigned long long IDBVersionChangeEvent::newVersion(bool& isNull) const
-{
-    isNull = m_newVersion.isNull();
-    return isNull ? 0 : m_newVersion.get();
+const AtomicString& IDBVersionChangeEvent::InterfaceName() const {
+  return EventNames::IDBVersionChangeEvent;
 }
 
-const AtomicString& IDBVersionChangeEvent::dataLoss() const
-{
-    if (m_dataLoss == WebIDBDataLossTotal)
-        return IndexedDBNames::total;
-    return IndexedDBNames::none;
+DEFINE_TRACE(IDBVersionChangeEvent) {
+  Event::Trace(visitor);
 }
 
-const AtomicString& IDBVersionChangeEvent::interfaceName() const
-{
-    return EventNames::IDBVersionChangeEvent;
-}
-
-DEFINE_TRACE(IDBVersionChangeEvent)
-{
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

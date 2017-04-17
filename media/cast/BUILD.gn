@@ -42,6 +42,7 @@ source_set("common") {
     "logging/logging_defines.cc",
     "logging/logging_defines.h",
     "logging/proto/proto_utils.cc",
+    "logging/proto/proto_utils.h",
     "logging/raw_event_subscriber.h",
     "logging/raw_event_subscriber_bundle.cc",
     "logging/raw_event_subscriber_bundle.h",
@@ -80,6 +81,7 @@ source_set("net") {
     "net/pacing/paced_sender.cc",
     "net/pacing/paced_sender.h",
     "net/rtcp/receiver_rtcp_event_subscriber.cc",
+    "net/rtcp/receiver_rtcp_event_subscriber.h",
     "net/rtcp/receiver_rtcp_session.cc",
     "net/rtcp/receiver_rtcp_session.h",
     "net/rtcp/rtcp_builder.cc",
@@ -106,6 +108,8 @@ source_set("net") {
 
   deps = [
     ":common",
+    "//base",
+    "//net",
   ]
 
   public_deps = [
@@ -153,6 +157,7 @@ source_set("sender") {
   deps = [
     ":common",
     ":net",
+    "//base",
     "//media",
     "//media:media_features",
     "//media:shared_memory_support",
@@ -160,26 +165,6 @@ source_set("sender") {
     "//third_party/opus",
     "//ui/gfx/geometry",
   ]
-
-  # use a restricted subset of media and no software codecs on iOS
-  if (is_ios) {
-    deps += [ "//media:media_for_cast_ios" ]
-    deps -= [
-      "//media",
-      "//third_party/libvpx",
-      "//third_party/opus",
-    ]
-    sources -= [
-      "sender/external_video_encoder.cc",
-      "sender/external_video_encoder.h",
-      "sender/video_encoder_impl.cc",
-      "sender/video_encoder_impl.h",
-      "sender/vp8_encoder.cc",
-      "sender/vp8_encoder.h",
-      "sender/vp8_quantizer_parser.cc",
-      "sender/vp8_quantizer_parser.h",
-    ]
-  }
 
   libs = []
 
@@ -192,7 +177,9 @@ source_set("sender") {
 
     libs += [
       "AudioToolbox.framework",
+      "CoreMedia.framework",
       "CoreVideo.framework",
+      "VideoToolbox.framework",
     ]
   }
 }
@@ -221,6 +208,7 @@ source_set("receiver") {
   deps = [
     ":common",
     ":net",
+    "//base",
     "//media",
     "//media:shared_memory_support",
     "//third_party/libvpx",
@@ -228,16 +216,6 @@ source_set("receiver") {
     "//third_party/opus",
     "//ui/gfx/geometry",
   ]
-
-  # use a restricted subset of media and no software codecs on iOS
-  if (is_ios) {
-    deps += [ "//media:media_for_cast_ios" ]
-    deps -= [
-      "//media",
-      "//third_party/libvpx",
-      "//third_party/opus",
-    ]
-  }
 }
 
 static_library("test_support") {
@@ -276,9 +254,11 @@ static_library("test_support") {
   deps = [
     ":net",
     ":receiver",
+    ":sender",
     "//base/test:test_support",
     "//media:test_support",
     "//media/base:test_support",
+    "//net",
     "//testing/gtest",
     "//third_party/libyuv",
     "//third_party/mt19937ar",
@@ -332,6 +312,7 @@ test("cast_unittests") {
     "net/rtp/packet_storage_unittest.cc",
     "net/rtp/receiver_stats_unittest.cc",
     "net/rtp/rtp_packet_builder.cc",
+    "net/rtp/rtp_packet_builder.h",
     "net/rtp/rtp_packetizer_unittest.cc",
     "net/rtp/rtp_parser_unittest.cc",
     "net/udp_transport_unittest.cc",
@@ -354,12 +335,19 @@ test("cast_unittests") {
 
   deps = [
     ":common",
+    ":net",
     ":receiver",
     ":sender",
     ":test_support",
+    "//base",
     "//base/test:run_all_unittests",
+    "//base/test:test_support",
+    "//media",
+    "//media/base:test_support",
+    "//net",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/opus",
   ]
 
   if (is_android) {
@@ -400,8 +388,13 @@ if (is_win || is_mac || (is_linux && !is_chromeos)) {
       ":receiver",
       ":sender",
       ":test_support",
+      "//base",
+      "//base/test:test_support",
+      "//media",
+      "//media/base:test_support",
       "//net",
       "//testing/gtest",
+      "//ui/gfx/geometry",
     ]
   }
 
@@ -415,7 +408,11 @@ if (is_win || is_mac || (is_linux && !is_chromeos)) {
       ":net",
       ":receiver",
       ":test_support",
+      "//base",
       "//build/win:default_exe_manifest",
+      "//media",
+      "//net",
+      "//ui/gfx/geometry",
     ]
 
     if (is_linux && !is_chromeos && use_x11) {
@@ -441,7 +438,9 @@ if (is_win || is_mac || (is_linux && !is_chromeos)) {
       ":net",
       ":sender",
       ":test_support",
+      "//base",
       "//build/win:default_exe_manifest",
+      "//media",
     ]
   }
 
@@ -461,9 +460,14 @@ if (is_win || is_mac || (is_linux && !is_chromeos)) {
       ":common",
       ":net",
       ":network_simulation_model_proto",
+      ":receiver",
       ":sender",
       ":test_support",
+      "//base",
+      "//base/test:test_support",
       "//build/win:default_exe_manifest",
+      "//media",
+      "//media/base:test_support",
     ]
   }
 
@@ -505,6 +509,7 @@ if (is_win || is_mac || (is_linux && !is_chromeos)) {
       "//base",
       "//build/config/sanitizers:deps",
       "//build/win:default_exe_manifest",
+      "//net",
     ]
   }
 } else {  # !(is_win || is_mac || (is_linux && !is_chromeos))
@@ -523,6 +528,7 @@ if (is_linux && !is_chromeos) {
       ":test_support",
       "//base",
       "//media",
+      "//net",
     ]
   }
 }

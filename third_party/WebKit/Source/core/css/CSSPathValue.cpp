@@ -10,55 +10,48 @@
 
 namespace blink {
 
-CSSPathValue* CSSPathValue::create(PassRefPtr<StylePath> stylePath)
-{
-    return new CSSPathValue(stylePath);
+CSSPathValue* CSSPathValue::Create(PassRefPtr<StylePath> style_path) {
+  return new CSSPathValue(std::move(style_path));
 }
 
-CSSPathValue* CSSPathValue::create(std::unique_ptr<SVGPathByteStream> pathByteStream)
-{
-    return CSSPathValue::create(StylePath::create(std::move(pathByteStream)));
+CSSPathValue* CSSPathValue::Create(
+    std::unique_ptr<SVGPathByteStream> path_byte_stream) {
+  return CSSPathValue::Create(StylePath::Create(std::move(path_byte_stream)));
 }
 
-CSSPathValue::CSSPathValue(PassRefPtr<StylePath> stylePath)
-    : CSSValue(PathClass)
-    , m_stylePath(stylePath)
-{
-    ASSERT(m_stylePath);
+CSSPathValue::CSSPathValue(PassRefPtr<StylePath> style_path)
+    : CSSValue(kPathClass), style_path_(std::move(style_path)) {
+  DCHECK(style_path_);
 }
 
 namespace {
 
-CSSPathValue* createPathValue()
-{
-    std::unique_ptr<SVGPathByteStream> pathByteStream = SVGPathByteStream::create();
-    // Need to be registered as LSan ignored, as it will be reachable and
-    // separately referred to by emptyPathValue() callers.
-    LEAK_SANITIZER_IGNORE_OBJECT(pathByteStream.get());
-    return CSSPathValue::create(std::move(pathByteStream));
+CSSPathValue* CreatePathValue() {
+  std::unique_ptr<SVGPathByteStream> path_byte_stream =
+      SVGPathByteStream::Create();
+  // Need to be registered as LSan ignored, as it will be reachable and
+  // separately referred to by emptyPathValue() callers.
+  LEAK_SANITIZER_IGNORE_OBJECT(path_byte_stream.get());
+  return CSSPathValue::Create(std::move(path_byte_stream));
 }
 
-} // namespace
+}  // namespace
 
-CSSPathValue& CSSPathValue::emptyPathValue()
-{
-    DEFINE_STATIC_LOCAL(CSSPathValue, empty, (createPathValue()));
-    return empty;
+CSSPathValue& CSSPathValue::EmptyPathValue() {
+  DEFINE_STATIC_LOCAL(CSSPathValue, empty, (CreatePathValue()));
+  return empty;
 }
 
-String CSSPathValue::customCSSText() const
-{
-    return "path('" + buildStringFromByteStream(byteStream()) + "')";
+String CSSPathValue::CustomCSSText() const {
+  return "path('" + BuildStringFromByteStream(ByteStream()) + "')";
 }
 
-bool CSSPathValue::equals(const CSSPathValue& other) const
-{
-    return byteStream() == other.byteStream();
+bool CSSPathValue::Equals(const CSSPathValue& other) const {
+  return ByteStream() == other.ByteStream();
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(CSSPathValue)
-{
-    CSSValue::traceAfterDispatch(visitor);
+DEFINE_TRACE_AFTER_DISPATCH(CSSPathValue) {
+  CSSValue::TraceAfterDispatch(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

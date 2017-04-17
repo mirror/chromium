@@ -119,6 +119,9 @@ cr.define('extension_test_util', function() {
 
     /** @override */
     repairItem: function(id) {},
+
+    /** @override */
+    showItemOptionsPage: function(id) {},
   };
 
   /**
@@ -172,11 +175,14 @@ cr.define('extension_test_util', function() {
         corruptInstall: false,
         updateRequired: false,
       },
+      homePage: {specified: false, url: ''},
       iconUrl: 'chrome://extension-icon/' + id + '/24/0',
       id: id,
       incognitoAccess: {isEnabled: true, isActive: false},
       location: 'FROM_STORE',
+      manifestErrors: [],
       name: 'Wonderful Extension',
+      runtimeErrors: [],
       permissions: [],
       state: 'ENABLED',
       type: 'EXTENSION',

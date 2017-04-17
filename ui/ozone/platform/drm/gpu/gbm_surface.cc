@@ -7,11 +7,11 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "ui/gfx/native_pixmap.h"
+#include "ui/gl/gl_image_native_pixmap.h"
 #include "ui/gl/gl_surface_egl.h"
-#include "ui/ozone/gl/gl_image_ozone_native_pixmap.h"
 #include "ui/ozone/platform/drm/gpu/drm_window_proxy.h"
 #include "ui/ozone/platform/drm/gpu/gbm_surface_factory.h"
-#include "ui/ozone/public/native_pixmap.h"
 
 namespace ui {
 
@@ -23,7 +23,7 @@ GbmSurface::GbmSurface(GbmSurfaceFactory* surface_factory,
     texture = 0;
 }
 
-unsigned int GbmSurface::GetBackingFrameBufferObject() {
+unsigned int GbmSurface::GetBackingFramebufferObject() {
   return fbo_;
 }
 
@@ -92,10 +92,8 @@ void GbmSurface::Destroy() {
     glDeleteFramebuffersEXT(1, &fbo_);
     fbo_ = 0;
   }
-  for (auto image : images_) {
-    if (image)
-      image->Destroy(true);
-  }
+  for (auto& image : images_)
+    image = nullptr;
 
   if (!was_current) {
     if (previous_context) {
@@ -115,7 +113,7 @@ GbmSurface::~GbmSurface() {
 }
 
 void GbmSurface::BindFramebuffer() {
-  gl::ScopedFrameBufferBinder fb(fbo_);
+  gl::ScopedFramebufferBinder fb(fbo_);
   glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
                             textures_[current_surface_], 0);
 }
@@ -124,18 +122,16 @@ bool GbmSurface::CreatePixmaps() {
   if (!fbo_)
     return true;
   for (size_t i = 0; i < arraysize(textures_); i++) {
-    scoped_refptr<NativePixmap> pixmap = surface_factory()->CreateNativePixmap(
-        widget(), GetSize(), gfx::BufferFormat::BGRA_8888,
-        gfx::BufferUsage::SCANOUT);
+    scoped_refptr<gfx::NativePixmap> pixmap =
+        surface_factory()->CreateNativePixmap(widget(), GetSize(),
+                                              gfx::BufferFormat::BGRA_8888,
+                                              gfx::BufferUsage::SCANOUT);
     if (!pixmap)
       return false;
-    scoped_refptr<GLImageOzoneNativePixmap> image =
-        new GLImageOzoneNativePixmap(GetSize(), GL_BGRA_EXT);
+    scoped_refptr<gl::GLImageNativePixmap> image =
+        new gl::GLImageNativePixmap(GetSize(), GL_BGRA_EXT);
     if (!image->Initialize(pixmap.get(), gfx::BufferFormat::BGRA_8888))
       return false;
-    // GLImage must have Destroy() called before destructor is called.
-    if (images_[i])
-      images_[i]->Destroy(true);
     images_[i] = image;
     // Bind image to texture.
     gl::ScopedTextureBinder binder(GL_TEXTURE_2D, textures_[i]);

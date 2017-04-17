@@ -1,0 +1,33 @@
+<html>
+<head>
+<script src="../inspector-test.js"></script>
+
+<script>
+async function test()
+{
+    var rootURL = "http://localhost:8080/LayoutTests/inspector/debugger/";
+    var sourcesNavigatorView = new Sources.SourcesNavigatorView();
+    sourcesNavigatorView.show(UI.inspectorView.element);
+
+    InspectorTest.addResult("\n\n================================================");
+    InspectorTest.addResult("Adding urls");
+    await InspectorTest.addScriptUISourceCode(rootURL + "foo/bar/script.js", '', false);
+    var contentUISourceCode = await InspectorTest.addScriptUISourceCode(rootURL + "foo/bar/contentScript2.js?a=1", '', true, 42);
+    InspectorTest.dumpNavigatorView(sourcesNavigatorView);
+
+    InspectorTest.addResult("\n\n================================================");
+    InspectorTest.addResult("Removing contentScripts project");
+    contentUISourceCode.project().removeProject();
+    InspectorTest.dumpNavigatorView(sourcesNavigatorView);
+    InspectorTest.completeTest();
+}
+</script>
+
+</head>
+<body onload="runTest()">
+<p>Verify that removal of one of the multiple projects, all of which are associated with the same
+frame, doesn't lead navigator to discard the frame treenode.</p>
+</p>
+</body>
+
+</html>

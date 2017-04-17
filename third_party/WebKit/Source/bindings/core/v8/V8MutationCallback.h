@@ -26,38 +26,46 @@
 #ifndef V8MutationCallback_h
 #define V8MutationCallback_h
 
-#include "bindings/core/v8/ActiveDOMCallback.h"
 #include "bindings/core/v8/ScopedPersistent.h"
+#include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/TraceWrapperV8Reference.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/dom/MutationCallback.h"
-#include "wtf/RefPtr.h"
-#include <v8.h>
+#include "platform/wtf/RefPtr.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class ExecutionContext;
-class ScriptState;
 
-class V8MutationCallback final : public MutationCallback, public ActiveDOMCallback {
-    USING_GARBAGE_COLLECTED_MIXIN(V8MutationCallback);
-public:
-    static V8MutationCallback* create(v8::Local<v8::Function> callback, v8::Local<v8::Object> owner, ScriptState* scriptState)
-    {
-        return new V8MutationCallback(callback, owner, scriptState);
-    }
-    ~V8MutationCallback() override;
+class V8MutationCallback final : public MutationCallback {
+ public:
+  static V8MutationCallback* Create(v8::Local<v8::Function> callback,
+                                    v8::Local<v8::Object> owner,
+                                    ScriptState* script_state) {
+    return new V8MutationCallback(callback, owner, script_state);
+  }
+  ~V8MutationCallback() override;
 
-    void call(const HeapVector<Member<MutationRecord>>&, MutationObserver*) override;
-    ExecutionContext* getExecutionContext() const override { return ContextLifecycleObserver::getExecutionContext(); }
+  void Call(const HeapVector<Member<MutationRecord>>&,
+            MutationObserver*) override;
 
-    DECLARE_VIRTUAL_TRACE();
+  ExecutionContext* GetExecutionContext() const override {
+    return ExecutionContext::From(script_state_.Get());
+  }
 
-private:
-    V8MutationCallback(v8::Local<v8::Function>, v8::Local<v8::Object>, ScriptState*);
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    ScopedPersistent<v8::Function> m_callback;
-    RefPtr<ScriptState> m_scriptState;
+ private:
+  V8MutationCallback(v8::Local<v8::Function>,
+                     v8::Local<v8::Object>,
+                     ScriptState*);
+
+  TraceWrapperV8Reference<v8::Function> callback_;
+  RefPtr<ScriptState> script_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8MutationCallback_h
+#endif  // V8MutationCallback_h

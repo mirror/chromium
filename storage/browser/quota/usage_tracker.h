@@ -47,8 +47,9 @@ class STORAGE_EXPORT UsageTracker : public QuotaTaskObserver {
   void UpdateUsageCache(QuotaClient::ID client_id,
                         const GURL& origin,
                         int64_t delta);
-  void GetCachedOriginsUsage(std::map<GURL, int64_t>* origin_usage) const;
+  int64_t GetCachedUsage() const;
   void GetCachedHostsUsage(std::map<std::string, int64_t>* host_usage) const;
+  void GetCachedOriginsUsage(std::map<GURL, int64_t>* origin_usage) const;
   void GetCachedOrigins(std::set<GURL>* origins) const;
   bool IsWorking() const {
     return global_usage_callbacks_.HasCallbacks() ||
@@ -67,8 +68,6 @@ class STORAGE_EXPORT UsageTracker : public QuotaTaskObserver {
     int64_t unlimited_usage;
   };
 
-  typedef std::map<QuotaClient::ID, ClientUsageTracker*> ClientTrackerMap;
-
   typedef CallbackQueue<UsageCallback, int64_t> UsageCallbackQueue;
   typedef CallbackQueue<GlobalUsageCallback, int64_t, int64_t>
       GlobalUsageCallbackQueue;
@@ -86,7 +85,8 @@ class STORAGE_EXPORT UsageTracker : public QuotaTaskObserver {
                                  int64_t usage);
 
   const StorageType type_;
-  ClientTrackerMap client_tracker_map_;
+  std::map<QuotaClient::ID, std::unique_ptr<ClientUsageTracker>>
+      client_tracker_map_;
 
   UsageCallbackQueue global_limited_usage_callbacks_;
   GlobalUsageCallbackQueue global_usage_callbacks_;

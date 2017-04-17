@@ -27,6 +27,10 @@
 #include "ios/web/public/web_client.h"
 #include "net/url_request/url_request_context_getter.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 using invalidation::InvalidatorStorage;
 using invalidation::ProfileInvalidationProvider;
 using invalidation::TiclInvalidationService;
@@ -72,16 +76,17 @@ IOSChromeProfileInvalidationProviderFactory::BuildServiceInstanceFor(
           base::Closure()));
 
   std::unique_ptr<TiclInvalidationService> service(new TiclInvalidationService(
-      web::GetWebClient()->GetUserAgent(false), std::move(identity_provider),
-      base::WrapUnique(new invalidation::TiclProfileSettingsProvider(
-          browser_state->GetPrefs())),
+      web::GetWebClient()->GetUserAgent(web::UserAgentType::MOBILE),
+      std::move(identity_provider),
+      base::MakeUnique<invalidation::TiclProfileSettingsProvider>(
+          browser_state->GetPrefs()),
       IOSChromeGCMProfileServiceFactory::GetForBrowserState(browser_state)
           ->driver(),
       browser_state->GetRequestContext()));
   service->Init(
-      base::WrapUnique(new InvalidatorStorage(browser_state->GetPrefs())));
+      base::MakeUnique<InvalidatorStorage>(browser_state->GetPrefs()));
 
-  return base::WrapUnique(new ProfileInvalidationProvider(std::move(service)));
+  return base::MakeUnique<ProfileInvalidationProvider>(std::move(service));
 }
 
 void IOSChromeProfileInvalidationProviderFactory::RegisterBrowserStatePrefs(

@@ -26,47 +26,54 @@
 
 #include "core/events/CompositionEvent.h"
 
+#include "core/input/InputDeviceCapabilities.h"
+
 namespace blink {
 
-CompositionEvent::CompositionEvent()
-{
+CompositionEvent::CompositionEvent() {}
+
+CompositionEvent::CompositionEvent(const AtomicString& type,
+                                   AbstractView* view,
+                                   const String& data)
+    : UIEvent(type,
+              true,
+              true,
+              ComposedMode::kComposed,
+              TimeTicks::Now(),
+              view,
+              0,
+              view ? view->GetInputDeviceCapabilities()->FiresTouchEvents(false)
+                   : nullptr),
+      data_(data) {}
+
+CompositionEvent::CompositionEvent(const AtomicString& type,
+                                   const CompositionEventInit& initializer)
+    : UIEvent(type, initializer) {
+  if (initializer.hasData())
+    data_ = initializer.data();
 }
 
-CompositionEvent::CompositionEvent(const AtomicString& type, AbstractView* view, const String& data)
-    : UIEvent(type, true, true, ComposedMode::Composed, view, 0, InputDeviceCapabilities::doesntFireTouchEventsSourceCapabilities())
-    , m_data(data)
-{
+CompositionEvent::~CompositionEvent() {}
+
+void CompositionEvent::initCompositionEvent(const AtomicString& type,
+                                            bool can_bubble,
+                                            bool cancelable,
+                                            AbstractView* view,
+                                            const String& data) {
+  if (IsBeingDispatched())
+    return;
+
+  initUIEvent(type, can_bubble, cancelable, view, 0);
+
+  data_ = data;
 }
 
-CompositionEvent::CompositionEvent(const AtomicString& type, const CompositionEventInit& initializer)
-    : UIEvent(type, initializer)
-{
-    if (initializer.hasData())
-        m_data = initializer.data();
+const AtomicString& CompositionEvent::InterfaceName() const {
+  return EventNames::CompositionEvent;
 }
 
-CompositionEvent::~CompositionEvent()
-{
+DEFINE_TRACE(CompositionEvent) {
+  UIEvent::Trace(visitor);
 }
 
-void CompositionEvent::initCompositionEvent(const AtomicString& type, bool canBubble, bool cancelable, AbstractView* view, const String& data)
-{
-    if (isBeingDispatched())
-        return;
-
-    initUIEvent(type, canBubble, cancelable, view, 0);
-
-    m_data = data;
-}
-
-const AtomicString& CompositionEvent::interfaceName() const
-{
-    return EventNames::CompositionEvent;
-}
-
-DEFINE_TRACE(CompositionEvent)
-{
-    UIEvent::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

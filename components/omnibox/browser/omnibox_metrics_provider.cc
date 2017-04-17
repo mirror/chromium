@@ -64,6 +64,10 @@ OmniboxEventProto::Suggestion::ResultType AsOmniboxEventResultType(
       return OmniboxEventProto::Suggestion::NAVSUGGEST_PERSONALIZED;
     case AutocompleteMatchType::CLIPBOARD:
       return OmniboxEventProto::Suggestion::CLIPBOARD;
+    case AutocompleteMatchType::PHYSICAL_WEB:
+      return OmniboxEventProto::Suggestion::PHYSICAL_WEB;
+    case AutocompleteMatchType::PHYSICAL_WEB_OVERFLOW:
+      return OmniboxEventProto::Suggestion::PHYSICAL_WEB_OVERFLOW;
     case AutocompleteMatchType::VOICE_SUGGEST:
       // VOICE_SUGGEST matches are only used in Java and are not logged,
       // so we should never reach this case.
@@ -150,11 +154,14 @@ void OmniboxMetricsProvider::RecordOmniboxOpenedURL(const OmniboxLog& log) {
   for (AutocompleteResult::const_iterator i(log.result.begin());
        i != log.result.end(); ++i) {
     OmniboxEventProto::Suggestion* suggestion = omnibox_event->add_suggestion();
-    suggestion->set_provider(i->provider->AsOmniboxEventProviderType());
+    const auto provider_type = i->provider->AsOmniboxEventProviderType();
+    suggestion->set_provider(provider_type);
     suggestion->set_result_type(AsOmniboxEventResultType(i->type));
     suggestion->set_relevance(i->relevance);
     if (i->typed_count != -1)
       suggestion->set_typed_count(i->typed_count);
+    if (i->subtype_identifier > 0)
+      suggestion->set_result_subtype_identifier(i->subtype_identifier);
   }
   for (ProvidersInfo::const_iterator i(log.providers_info.begin());
        i != log.providers_info.end(); ++i) {
