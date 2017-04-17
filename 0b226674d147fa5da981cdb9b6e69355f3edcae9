@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f51b983_24bf8d50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/product_registry/ProductRegistryData.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-04-17T22:50:16Z",
+      "side": 1,
+      "message": "drop this from the data, just use 1,2,3",
+      "range": {
+        "startLine": 7,
+        "startChar": 3,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "0b226674d147fa5da981cdb9b6e69355f3edcae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
