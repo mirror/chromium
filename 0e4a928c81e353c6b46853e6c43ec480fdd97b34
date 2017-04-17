@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "818ad7bc_a8cebdaf",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-04-17T23:44:04Z",
+      "side": 1,
+      "message": "Update this to use benchmark\u0027s enabled strings?",
+      "range": {
+        "startLine": 602,
+        "startChar": 79,
+        "endLine": 602,
+        "endChar": 0
+      },
+      "revId": "0e4a928c81e353c6b46853e6c43ec480fdd97b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
