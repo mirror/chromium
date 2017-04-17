@@ -22,6 +22,30 @@
       "revId": "ea0700031fec365e9bd55492a99f0b9cdb318aa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6dc5da8_80da1328",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-04-17T17:16:29Z",
+      "side": 1,
+      "message": "Changed to cros that I use for chromeos changes.",
+      "parentUuid": "ab118944_d3c4940c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "ea0700031fec365e9bd55492a99f0b9cdb318aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
