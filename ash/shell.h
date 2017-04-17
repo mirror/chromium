@@ -632,7 +632,6 @@ class ASH_EXPORT Shell : public SessionStateObserver,
   void OnSessionStateChanged(session_manager::SessionState state) override;
   void OnLoginStatusChanged(LoginStatus login_status) override;
   void OnLockStateChanged(bool locked) override;
-  void OnChromeTerminating() override;
 
   // Callback for prefs::ConnectToPrefService.
   void OnPrefServiceInitialized(std::unique_ptr<::PrefService> pref_service);
