@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0399f61_0cd544fe",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-18T17:29:16Z",
+      "side": 1,
+      "message": "Side comment, the default default of dict.get is None, so kwargs.get(key, None) is the same as kwargs.get(key).\n\nBut, which way is better I guess is open to interpretation:\n\n\"\"\"Beautiful is better than ugly.\nExplicit is better than implicit.\nSimple is better than complex.\nComplex is better than complicated.\n\"\"\"",
+      "revId": "0c737b602a83af295d2f9728e9db224c453cae2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565209f6_c9e221d3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-18T17:29:16Z",
+      "side": 1,
+      "message": "Another side comment about style. Some people like to express this as:\n\nwhitelist_path \u003d whitelist_path or os.path.join(repo_root, \"lint.whitelist\")\n\nBut whether that\u0027s clearer or not depends on what you\u0027re used to.",
+      "revId": "0c737b602a83af295d2f9728e9db224c453cae2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
