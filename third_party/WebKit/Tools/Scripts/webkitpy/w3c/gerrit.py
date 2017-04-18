@@ -12,7 +12,7 @@ _log = logging.getLogger(__name__)
 URL_BASE = 'https://chromium-review.googlesource.com'
 
 
-class Gerrit(object):
+class GerritAPI(object):
     """A utility class for the Chromium code review API.
 
     Wraps the API for Chromium's Gerrit instance at chromium-review.googlesource.com.
@@ -23,11 +23,16 @@ class Gerrit(object):
         self.user = user
         self.token = token
 
-    def api_get(self, url):
+    def get(self, path, raw=False):
+        url = URL_BASE + path
         raw_data = self.host.web.get_binary(url)
-        return json.loads(raw_data[5:])  # strip JSONP preamble
+        if raw:
+            return raw_data
+        else:
+            return json.loads(raw_data[5:])  # strip JSONP preamble
 
-    def api_post(self, url, data):
+    def post(self, path, data):
+        url = URL_BASE + path
         if not (self.user and self.token):
             raise 'Gerrit user and token requried for authenticated routes.'
 
@@ -38,51 +43,63 @@ class Gerrit(object):
         }
         return self.host.web.request('POST', url, data=json.dumps(data), headers=headers)
 
-    def cl_url(self, number):
-        return 'https://chromium-review.googlesource.com/c/{}/'.format(number)
+    def query_exportable_open_cls(self, limit=200):
+        path = ('/changes/?q=project:\"chromium/src\"+status:open'
+                '&o=CURRENT_FILES&o=CURRENT_REVISION&o=COMMIT_FOOTERS'
+                '&o=DETAILED_ACCOUNTS&n={}').format(limit)
+        open_cls_data = self.get(path)
+        open_cls = [GerritCL(data, self) for data in open_cls_data]
 
-    def get_diff(self, cl):
-        """Get full diff for latest revision of CL."""
-        revision = cl['revisions'].items()[0][1]
-        revision_id = cl['revisions'].items()[0][0]
-        files = revision['files'].keys()
-        diff = ''
+        return [cl for cl in open_cls if cl.is_exportable()]
 
-        for filename in files:
-            url = '{url_base}/changes/{change_id}/revisions/{revision_id}/files/{file_id}/diff'.format(
-                url_base=URL_BASE,
-                change_id=cl['id'],
-                revision_id=revision_id,
-                file_id=urllib.quote_plus(filename),
-            )
-            data = self.api_get(url)
-            diff += data
 
-        return diff
+class GerritCL(object):
+    """A data wrapper for a Chromium Gerrit CL."""
 
-    def post_comment(self, cl_id, revision_id, message):
-        url = '{url_base}/a/changes/{change_id}/revisions/{revision_id}/review'.format(
-            url_base=URL_BASE,
-            change_id=cl_id,
-            revision_id=revision_id,
+    def __init__(self, data, api):
+        assert data['change_id']
+        self._data = data
+        self.api = api
+
+    @property
+    def url(self):
+        return 'https://chromium-review.googlesource.com/c/%s' % self._data['_number']
+
+    @property
+    def subject(self):
+        return self._data['subject']
+
+    @property
+    def change_id(self):
+        return self._data['change_id']
+
+    @property
+    def owner_email(self):
+        return self._data['owner']['email']
+
+    def latest_commit_message_with_footers(self):
+        current_revision = self._data['current_revision']
+        return self._data['revisions'][current_revision]['commit_with_footers']
+
+    def post_comment(self, message):
+        path = '/a/changes/{change_id}/revisions/current/review'.format(
+            change_id=self.change_id,
         )
-        return self.api_post(url, {'message': message})
+        return self.api.post(path, {'message': message})
 
-    def query_open_cls(self, limit=200):
-        url = ('{}/changes/?q=project:\"chromium/src\"+status:open'
-               '&o=CURRENT_FILES&o=CURRENT_REVISION&o=COMMIT_FOOTERS&n={}').format(URL_BASE, limit)
-        open_cls = self.api_get(url)
-
-        return [cl for cl in open_cls if self.is_exportable(cl)]
-
-    def is_exportable(self, cl):
-        revision = cl['revisions'].items()[0][1]
+    def is_exportable(self):
+        # TODO: Needs to deal with new revisions as well
+        revision = self._data['revisions'].items()[0][1]
         files = revision['files'].keys()
 
-        if cl['subject'].startswith('Import wpt@'):
+        # Guard against accidental CLs that touch thousands of files.
+        if len(files) > 1000:
             return False
 
-        if 'Import' in cl['subject']:
+        if self.subject.startswith('Import wpt@'):
+            return False
+
+        if 'Import' in self.subject:
             return False
 
         if 'NOEXPORT=true' in revision['commit_with_footers']:
@@ -106,3 +123,12 @@ class Gerrit(object):
             and not filename.startswith('.')
             and not filename.endswith('.json')
         )
+
+    def get_patch(self):
+        """Get patch for latest revision of CL."""
+        path = '/changes/{change_id}/revisions/current/patch'.format(
+            change_id=self.change_id,
+        )
+        patch = base64.b64decode(self.api.get(path, raw=True))
+
+        return patch

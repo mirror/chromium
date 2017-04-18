@@ -60,7 +60,7 @@ class WPTGitHub(object):
         assert desc_title
         assert body
 
-        path = '/repos/w3c/web-platform-tests/pulls'
+        path = '/repos/jeffcarp/web-platform-tests/pulls'
         body = {
             'title': desc_title,
             'body': body,
@@ -75,12 +75,12 @@ class WPTGitHub(object):
         return data
 
     def add_label(self, number):
-        path = '/repos/w3c/web-platform-tests/issues/%d/labels' % number
+        path = '/repos/jeffcarp/web-platform-tests/issues/%d/labels' % number
         body = [EXPORT_LABEL]
         return self.request(path, method='POST', body=body)
 
     def in_flight_pull_requests(self):
-        path = '/search/issues?q=repo:w3c/web-platform-tests%20is:open%20type:pr%20label:{}'.format(EXPORT_LABEL)
+        path = '/search/issues?q=repo:jeffcarp/web-platform-tests%20is:open%20type:pr%20label:{}'.format(EXPORT_LABEL)
         data, status_code = self.request(path, method='GET')
         if status_code == 200:
             return [self.make_pr_from_item(item) for item in data['items']]
@@ -96,7 +96,8 @@ class WPTGitHub(object):
 
     def all_pull_requests(self, limit=30):
         assert limit <= 100, 'Maximum GitHub page size exceeded.'
-        path = '/search/issues?q=repo:w3c/web-platform-tests%20type:pr%20label:{}&page=1&per_page={}'.format(EXPORT_LABEL, limit)
+        path = ('/search/issues?q=repo:jeffcarp/web-platform-tests'
+                '%20type:pr%20label:{}&page=1&per_page={}').format(EXPORT_LABEL, limit)
         data, status_code = self.request(path, method='GET')
         if status_code == 200:
             return [self.make_pr_from_item(item) for item in data['items']]
@@ -104,7 +105,7 @@ class WPTGitHub(object):
             raise Exception('Non-200 status code (%s): %s' % (status_code, data))
 
     def get_pr_branch(self, pr_number):
-        path = '/repos/w3c/web-platform-tests/pulls/{}'.format(pr_number)
+        path = '/repos/jeffcarp/web-platform-tests/pulls/{}'.format(pr_number)
         data, status_code = self.request(path, method='GET')
         if status_code == 200:
             return data['head']['ref']
@@ -112,7 +113,7 @@ class WPTGitHub(object):
             raise Exception('Non-200 status code (%s): %s' % (status_code, data))
 
     def merge_pull_request(self, pull_request_number):
-        path = '/repos/w3c/web-platform-tests/pulls/%d/merge' % pull_request_number
+        path = '/repos/jeffcarp/web-platform-tests/pulls/%d/merge' % pull_request_number
         body = {
             # This currently will noop because the feature is in an opt-in beta.
             # Once it leaves beta this will start working.
@@ -134,7 +135,7 @@ class WPTGitHub(object):
 
     def delete_remote_branch(self, remote_branch_name):
         # TODO(jeffcarp): Unit test this method
-        path = '/repos/w3c/web-platform-tests/git/refs/heads/%s' % remote_branch_name
+        path = '/repos/jeffcarp/web-platform-tests/git/refs/heads/%s' % remote_branch_name
         data, status_code = self.request(path, method='DELETE')
 
         if status_code != 204:
