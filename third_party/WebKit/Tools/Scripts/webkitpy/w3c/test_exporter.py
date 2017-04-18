@@ -13,7 +13,8 @@ _log = logging.getLogger(__name__)
 
 PR_HISTORY_WINDOW = 100
 COMMIT_HISTORY_WINDOW = 5000
-WPT_URL = 'https://github.com/w3c/web-platform-tests/'
+# WPT_URL = 'https://github.com/w3c/web-platform-tests/'
+WPT_URL = 'https://github.com/jeffcarp/web-platform-tests/'
 
 
 class TestExporter(object):
@@ -34,8 +35,10 @@ class TestExporter(object):
         The exporter will look in chronological order at every commit in Chromium.
         """
         pull_requests = self.wpt_github.all_pull_requests(limit=PR_HISTORY_WINDOW)
-        open_gerrit_cls = self.gerrit.query_open_cls()
+        open_gerrit_cls = self.gerrit.query_exportable_open_cls()
         self.process_gerrit_cls(open_gerrit_cls, pull_requests)
+
+        return # FIXME take out after testing
 
         exportable_commits = self.get_exportable_commits(limit=COMMIT_HISTORY_WINDOW)
         for exportable_commit in exportable_commits:
@@ -43,30 +46,29 @@ class TestExporter(object):
             if pull_request:
                 if pull_request.state == 'open':
                     self.merge_pull_request(pull_request)
-                    # TODO(jeffcarp): if this was from Gerrit, comment back on the Gerrit CL that the PR was merged
                 else:
                     _log.info('Pull request is not open: #%d %s', pull_request.number, pull_request.title)
             else:
                 self.create_pull_request(exportable_commit)
 
     def process_gerrit_cls(self, gerrit_cls, pull_requests):
-        """Iterates through Gerrit CLs and prints their statuses.
+        """Creates or updates PRs for Gerrit CLs.
 
         Right now this method does nothing. In the future it will create PRs for CLs and help
         transition them when they're landed.
         """
         for cl in gerrit_cls:
-            cl_url = 'https://chromium-review.googlesource.com/c/%s' % cl['_number']
-            _log.info('Found Gerrit in-flight CL: "%s" %s', cl['subject'], cl_url)
+            _log.info('Found Gerrit in-flight CL: "%s" %s', cl.subject, cl.url)
 
-            # Check if CL already has a corresponding PR
-            pull_request = self.pr_with_change_id(cl['change_id'], pull_requests)
+            pull_request = self.pr_with_change_id(cl.change_id, pull_requests)
 
             if pull_request:
                 pr_url = '{}pull/{}'.format(WPT_URL, pull_request.number)
                 _log.info('In-flight PR found: %s', pr_url)
+                # TODO: check for new revisions (how?)
             else:
-                _log.info('No in-flight PR found for CL.')
+                _log.info('No in-flight PR found for CL. Creating...')
+                pr_data = self.create_pull_request_from_cl(cl)
 
     def pr_with_position(self, position, pull_requests):
         for pull_request in pull_requests:
@@ -93,7 +95,7 @@ class TestExporter(object):
 
     def merge_pull_request(self, pull_request):
         _log.info('In-flight PR found: %s', pull_request.title)
-        _log.info('https://github.com/w3c/web-platform-tests/pull/%d', pull_request.number)
+        _log.info('https://github.com/jeffcarp/web-platform-tests/pull/%d', pull_request.number)
 
         if self.dry_run:
             _log.info('[dry_run] Would have attempted to merge PR')
@@ -111,6 +113,16 @@ class TestExporter(object):
             # This is in the try block because if a PR can't be merged, we shouldn't
             # delete its branch.
             self.wpt_github.delete_remote_branch(branch)
+
+            change_id = self._extract_metadata('Change-Id: ', pull_request.body)
+            if change_id:
+                pr_url = '{}pull/{}'.format(WPT_URL, pull_request.number)
+                self.gerrit.post_comment(change_id, (
+                    'The WPT PR for this CL has been merged upstream! {pr_url}'
+                ).format(
+                    pr_url=pr_url
+                ))
+
         except MergeError:
             _log.info('Could not merge PR.')
 
@@ -172,5 +184,48 @@ class TestExporter(object):
         if response_data:
             data, status_code = self.wpt_github.add_label(response_data['number'])
             _log.info('Add label response (status %s): %s', status_code, data)
+
+        return response_data
+
+    def create_pull_request_from_cl(self, cl):
+        # TODO: investigate sharing more code with self.create_pull_request above
+        patch = self.gerrit.get_patch(cl._data)
+
+        if self.dry_run:
+            _log.info('[dry_run] Stopping before creating PR from CL')
+            _log.info('\n\n[dry_run] subject:')
+            _log.info(cl.subject)
+            _log.info('\n\n[dry_run] patch:')
+            _log.info(patch)
+            return
+
+        # TODO: actually get this from 'GET /changes/{change-id}/revisions/{revision-id}/commit'
+        message = cl.latest_commit_message_with_footers
+
+        branch_name = 'chromium-export-cl-{id}'.format(id=cl.change_id)
+        self.local_wpt.create_branch_with_patch(branch_name, message, patch, cl.owner_email)
+
+        response_data = self.wpt_github.create_pr(
+            remote_branch_name=branch_name,
+            desc_title=cl.subject,
+            body=message)
+
+        _log.info('Create PR response: %s', response_data)
+
+        if response_data:
+            data, status_code = self.wpt_github.add_label(response_data['number'])
+            _log.info('Add label response (status %s): %s', status_code, data)
+
+        # TODO: refactor this into PullRequest class and dedupe below
+        pr_url = 'https://github.com/jeffcarp/web-platform-tests/pull/%d' % response_data['number']
+
+        self.gerrit.post_comment(cl.change_id, (
+            'Exportable changes to web-platform-tests were detected in this CL '
+            'and a pull request in the upstream repo has been made: {pr_url}.\n\n'
+            'Travis CI has been kicked off and if it fails, we will let you know here. '
+            'If this CL lands and Travis CI is green, we will auto-merge the PR.'
+        ).format(
+            pr_url=pr_url
+        ))
 
         return response_data
