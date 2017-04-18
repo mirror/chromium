@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fb6c5ef_4c4880ff",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-18T20:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0399f61_0cd544fe",
+      "revId": "0c737b602a83af295d2f9728e9db224c453cae2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "565209f6_c9e221d3",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0c737b602a83af295d2f9728e9db224c453cae2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61793ea6_84c0e97a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-18T20:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "565209f6_c9e221d3",
+      "revId": "0c737b602a83af295d2f9728e9db224c453cae2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
