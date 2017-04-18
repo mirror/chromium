@@ -106,7 +106,7 @@ bool FetchHeaderList::Get(const String& name, String& result) const {
 
 void FetchHeaderList::GetAll(const String& name, Vector<String>& result) const {
   const String lowercased_name = name.DeprecatedLower();
-  result.Clear();
+  result.clear();
   for (size_t i = 0; i < header_list_.size(); ++i) {
     if (header_list_[i]->first == lowercased_name)
       result.push_back(header_list_[i]->second);
@@ -123,7 +123,7 @@ bool FetchHeaderList::Has(const String& name) const {
 }
 
 void FetchHeaderList::ClearList() {
-  header_list_.Clear();
+  header_list_.clear();
 }
 
 bool FetchHeaderList::ContainsNonSimpleHeader() const {
