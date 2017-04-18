@@ -114,14 +114,6 @@ namespace gl {
 
 bool GLSurfaceEGL::initialized_ = false;
 
-#if defined(OS_WIN)
-unsigned int NativeViewGLSurfaceEGL::current_swap_generation_ = 0;
-unsigned int NativeViewGLSurfaceEGL::swaps_this_generation_ = 0;
-unsigned int NativeViewGLSurfaceEGL::last_multiswap_generation_ = 0;
-
-const unsigned int MULTISWAP_FRAME_VSYNC_THRESHOLD = 60;
-#endif
-
 namespace {
 
 EGLDisplay g_display = EGL_NO_DISPLAY;
@@ -261,11 +253,7 @@ const char* DisplayTypeString(DisplayType display_type) {
 bool ValidateEglConfig(EGLDisplay display,
                        const EGLint* config_attribs,
                        EGLint* num_configs) {
-  if (!eglChooseConfig(display,
-                       config_attribs,
-                       NULL,
-                       0,
-                       num_configs)) {
+  if (!eglChooseConfig(display, config_attribs, nullptr, 0, num_configs)) {
     LOG(ERROR) << "eglChooseConfig failed with error "
                << GetLastEGLErrorString();
     return false;
@@ -487,7 +475,9 @@ void GetEGLInitDisplays(bool supports_angle_d3d,
   }
 }
 
-GLSurfaceEGL::GLSurfaceEGL() {}
+GLSurfaceEGL::GLSurfaceEGL() = default;
+
+GLSurfaceEGL::~GLSurfaceEGL() = default;
 
 GLSurfaceFormat GLSurfaceEGL::GetFormat() {
   return format_;
@@ -638,8 +628,6 @@ bool GLSurfaceEGL::IsDirectCompositionSupported() {
   return g_use_direct_composition;
 }
 
-GLSurfaceEGL::~GLSurfaceEGL() {}
-
 // InitializeDisplay is necessary because the static binding code
 // needs a full Display init before it can query the Display extensions.
 // static
@@ -709,22 +697,13 @@ EGLDisplay GLSurfaceEGL::InitializeDisplay(
 }
 
 NativeViewGLSurfaceEGL::NativeViewGLSurfaceEGL(EGLNativeWindowType window)
-    : window_(window),
-      size_(1, 1),
-      enable_fixed_size_angle_(false),
-      surface_(NULL),
-      supports_post_sub_buffer_(false),
-      supports_swap_buffer_with_damage_(false),
-      flips_vertically_(false),
-      swap_interval_(1) {
+    : window_(window) {
 #if defined(OS_ANDROID)
   if (window)
     ANativeWindow_acquire(window);
 #endif
 
 #if defined(OS_WIN)
-  vsync_override_ = false;
-  swap_generation_ = 0;
   RECT windowRect;
   if (GetClientRect(window_, &windowRect))
     size_ = gfx::Rect(windowRect).size();
@@ -827,7 +806,7 @@ void NativeViewGLSurfaceEGL::Destroy() {
       LOG(ERROR) << "eglDestroySurface failed with error "
                  << GetLastEGLErrorString();
     }
-    surface_ = NULL;
+    surface_ = nullptr;
   }
 }
 
@@ -835,51 +814,10 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
-void NativeViewGLSurfaceEGL::UpdateSwapInterval() {
-#if defined(OS_WIN)
-  if (!g_use_direct_composition && (swap_interval_ != 0)) {
-    // This code is a simple way of enforcing that we only vsync if one surface
-    // is swapping per frame. This provides single window cases a stable refresh
-    // while allowing multi-window cases to not slow down due to multiple syncs
-    // on a single thread. A better way to fix this problem would be to have
-    // each surface present on its own thread. This is unnecessary with
-    // DirectComposition because that doesn't block swaps, but instead blocks
-    // the first draw into a surface during the next frame.
-
-    if (current_swap_generation_ == swap_generation_) {
-      if (swaps_this_generation_ > 1)
-        last_multiswap_generation_ = current_swap_generation_;
-      swaps_this_generation_ = 0;
-      current_swap_generation_++;
-    }
-
-    swap_generation_ = current_swap_generation_;
-
-    if (swaps_this_generation_ != 0 ||
-        (current_swap_generation_ - last_multiswap_generation_ <
-            MULTISWAP_FRAME_VSYNC_THRESHOLD)) {
-      // Override vsync settings and switch it off
-      if (!vsync_override_) {
-        eglSwapInterval(GetDisplay(), 0);
-        vsync_override_ = true;
-      }
-    } else if (vsync_override_) {
-      // Only one window swapping, so let the normal vsync setting take over
-      eglSwapInterval(GetDisplay(), swap_interval_);
-      vsync_override_ = false;
-    }
-
-    swaps_this_generation_++;
-  }
-#endif
-}
-
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
       "width", GetSize().width(),
       "height", GetSize().height());
-
-  UpdateSwapInterval();
 
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
@@ -964,7 +902,6 @@ bool NativeViewGLSurfaceEGL::BuffersFlipped() const {
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffersWithDamage(
     const std::vector<int>& rects) {
   DCHECK(supports_swap_buffer_with_damage_);
-  UpdateSwapInterval();
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
     return gfx::SwapResult::SWAP_FAILED;
@@ -985,7 +922,6 @@ gfx::SwapResult NativeViewGLSurfaceEGL::PostSubBuffer(int x,
                                                       int width,
                                                       int height) {
   DCHECK(supports_post_sub_buffer_);
-  UpdateSwapInterval();
   if (!CommitAndClearPendingOverlays()) {
     DVLOG(1) << "Failed to commit pending overlay planes.";
     return gfx::SwapResult::SWAP_FAILED;
@@ -1041,10 +977,6 @@ bool NativeViewGLSurfaceEGL::ScheduleOverlayPlane(
 #endif
 }
 
-void NativeViewGLSurfaceEGL::OnSetSwapInterval(int interval) {
-  swap_interval_ = interval;
-}
-
 NativeViewGLSurfaceEGL::~NativeViewGLSurfaceEGL() {
   Destroy();
 #if defined(OS_ANDROID)
@@ -1064,13 +996,15 @@ bool NativeViewGLSurfaceEGL::CommitAndClearPendingOverlays() {
   return success;
 }
 
-PbufferGLSurfaceEGL::PbufferGLSurfaceEGL(const gfx::Size& size)
-    : size_(size),
-      surface_(NULL) {
+PbufferGLSurfaceEGL::PbufferGLSurfaceEGL(const gfx::Size& size) : size_(size) {
   // Some implementations of Pbuffer do not support having a 0 size. For such
   // cases use a (1, 1) surface.
   if (size_.GetArea() == 0)
     size_.SetSize(1, 1);
+}
+
+PbufferGLSurfaceEGL::~PbufferGLSurfaceEGL() {
+  Destroy();
 }
 
 bool PbufferGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
@@ -1132,7 +1066,7 @@ void PbufferGLSurfaceEGL::Destroy() {
       LOG(ERROR) << "eglDestroySurface failed with error "
                  << GetLastEGLErrorString();
     }
-    surface_ = NULL;
+    surface_ = nullptr;
   }
 }
 
@@ -1181,31 +1115,29 @@ EGLSurface PbufferGLSurfaceEGL::GetHandle() {
 void* PbufferGLSurfaceEGL::GetShareHandle() {
 #if defined(OS_ANDROID)
   NOTREACHED();
-  return NULL;
+  return nullptr;
 #else
   if (!g_driver_egl.ext.b_EGL_ANGLE_query_surface_pointer)
-    return NULL;
+    return nullptr;
 
   if (!g_driver_egl.ext.b_EGL_ANGLE_surface_d3d_texture_2d_share_handle)
-    return NULL;
+    return nullptr;
 
   void* handle;
   if (!eglQuerySurfacePointerANGLE(g_display,
                                    GetHandle(),
                                    EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE,
                                    &handle)) {
-    return NULL;
+    return nullptr;
   }
 
   return handle;
 #endif
 }
 
-PbufferGLSurfaceEGL::~PbufferGLSurfaceEGL() {
-  Destroy();
-}
-
 SurfacelessEGL::SurfacelessEGL(const gfx::Size& size) : size_(size) {}
+
+SurfacelessEGL::~SurfacelessEGL() = default;
 
 bool SurfacelessEGL::Initialize(GLSurfaceFormat format) {
   format_ = format;
@@ -1244,10 +1176,7 @@ EGLSurface SurfacelessEGL::GetHandle() {
 }
 
 void* SurfacelessEGL::GetShareHandle() {
-  return NULL;
-}
-
-SurfacelessEGL::~SurfacelessEGL() {
+  return nullptr;
 }
 
 }  // namespace gl

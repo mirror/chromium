@@ -6,6 +6,9 @@
 #define UI_GL_GL_SURFACE_GLX_H_
 
 #include <stdint.h>
+extern "C" {
+#include <X11/Xlib.h>
+}
 
 #include <memory>
 #include <string>
@@ -38,6 +41,9 @@ class GL_EXPORT GLSurfaceGLX : public GLSurface {
   static bool IsCreateContextProfileSupported();
   static bool IsCreateContextES2ProfileSupported();
   static bool IsTextureFromPixmapSupported();
+  static bool IsEXTSwapControlSupported();
+  static bool IsMESASwapControlSupported();
+  static bool IsEXTSwapControlTearSupported();
   static bool IsOMLSyncControlSupported();
 
   void* GetDisplay() override;
@@ -76,10 +82,13 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
   unsigned long GetCompatibilityKey() override;
   gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
   gfx::VSyncProvider* GetVSyncProvider() override;
+
   VisualID GetVisualID() const { return visual_id_; }
 
  protected:
   ~NativeViewGLSurfaceGLX() override;
+
+  gfx::AcceleratedWidget window() const { return window_; }
 
   // Handle registering and unregistering for Expose events.
   virtual void RegisterEvents() = 0;
@@ -91,24 +100,22 @@ class GL_EXPORT NativeViewGLSurfaceGLX : public GLSurfaceGLX {
   // Checks if event is Expose for child window.
   bool CanHandleEvent(XEvent* xevent);
 
-  gfx::AcceleratedWidget window() const { return window_; }
-
  private:
   // The handle for the drawable to make current or swap.
   GLXDrawable GetDrawableHandle() const;
 
   // Window passed in at creation. Always valid.
-  gfx::AcceleratedWidget parent_window_;
+  const gfx::AcceleratedWidget parent_window_;
 
   // Child window, used to control resizes so that they're in-order with GL.
-  gfx::AcceleratedWidget window_;
+  gfx::AcceleratedWidget window_ = 0;
 
   // GLXDrawable for the window.
-  GLXWindow glx_window_;
+  GLXWindow glx_window_ = 0;
 
-  GLXFBConfig config_;
+  GLXFBConfig config_ = nullptr;
   gfx::Size size_;
-  VisualID visual_id_;
+  VisualID visual_id_ = CopyFromParent;
 
   std::unique_ptr<gfx::VSyncProvider> vsync_provider_;
 
@@ -136,12 +143,12 @@ class GL_EXPORT UnmappedNativeViewGLSurfaceGLX : public GLSurfaceGLX {
 
  private:
   gfx::Size size_;
-  GLXFBConfig config_;
+  GLXFBConfig config_ = nullptr;
   // Unmapped dummy window, used to provide a compatible surface.
-  gfx::AcceleratedWidget window_;
+  gfx::AcceleratedWidget window_ = 0;
 
   // GLXDrawable for the window.
-  GLXWindow glx_window_;
+  GLXWindow glx_window_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(UnmappedNativeViewGLSurfaceGLX);
 };
