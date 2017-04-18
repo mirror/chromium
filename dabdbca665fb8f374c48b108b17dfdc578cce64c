@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed4daba_623fd5de",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-18T21:11:08Z",
+      "side": 1,
+      "message": "I think it\u0027s conventional to use None rather than False for this kind of attribute.",
+      "revId": "dabdbca665fb8f374c48b108b17dfdc578cce64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bc041e_310148ff",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-18T21:11:08Z",
+      "side": 1,
+      "message": "Optionally, it would also be OK to just call this _pull_requests, since the fact that it returns a cached value when available can be seen from the code.\n\nAlso, if you want to, webkitpy.common.memoized is also used for caching of fetched stuff in some other places. Although I think this is good and easy to understand.",
+      "revId": "dabdbca665fb8f374c48b108b17dfdc578cce64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
