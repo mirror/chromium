@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0e351f2_afa688bd",
+        "filename": "ui/base/x/x11_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-04-18T23:52:41Z",
+      "side": 1,
+      "message": "Save the result of this in a static var",
+      "range": {
+        "startLine": 1189,
+        "startChar": 48,
+        "endLine": 1189,
+        "endChar": 55
+      },
+      "revId": "647cf988a8d643639a9941bf520d0af7686b9791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
