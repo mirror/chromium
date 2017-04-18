@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "888c9d3c_13e66ac8",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "Does auto work here as well? :)",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1100fc8f_eb2193de",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "auto?",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf38340c_958f667a",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -41,6 +87,29 @@
         "startChar": 40,
         "endLine": 131,
         "endChar": 64
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37658065_e8ab1cd4",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "Constant error handling across all cases?  Looks like we don\u0027t do *event_config \u003d EventConfig() in half of these?",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 21
       },
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +140,75 @@
     },
     {
       "key": {
+        "uuid": "70fb6426_f7a20a29",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "ggg -\u003e gg",
+      "range": {
+        "startLine": 249,
+        "startChar": 21,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb6fb3a_075e6ffe",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "Should Comparator just have a constructor for this?  Fine either way if you\u0027d never use the constructor except for tests.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee6ba6d_f37e651d",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "Same with EventConfig?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23147826_be29d3c4",
         "filename": "components/feature_engagement_tracker/internal/configuration.cc",
         "patchSetId": 3
@@ -82,6 +220,30 @@
       "writtenOn": "2017-04-17T22:08:32Z",
       "side": 1,
       "message": "Should it be :\nif (lhs.type !\u003d rhs.type) \n  return lhs.type \u003c rhs.type;\nif (lhs.value !\u003d rhs.value) \n  return lhs.value \u003c rhs.value;\nreturn false;",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af33168c_56b05095",
+        "filename": "components/feature_engagement_tracker/internal/configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-04-18T21:24:08Z",
+      "side": 1,
+      "message": "std::tie(lhs.type, lhs.value) \u003c std::tie(rhs.type, rhs.value);  Same elsewhere?",
+      "parentUuid": "23147826_be29d3c4",
       "range": {
         "startLine": 34,
         "startChar": 0,
