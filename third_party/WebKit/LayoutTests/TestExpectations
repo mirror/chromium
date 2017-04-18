@@ -2914,3 +2914,8 @@ crbug.com/707689 shapedetection/detection-HTMLCanvasElement.html [ Skip ]
 crbug.com/682753 fast/canvas-experimental [ Skip ]
 
 crbug.com/712264 external/wpt/service-workers/service-worker/fetch-event.https.html [ Failure Pass ]
+
+# Tests from adding WPT .any.js test support
+crbug.com/709227 external/wpt/background-fetch/interfaces.worker.html [ Failure ]
+crbug.com/709227 external/wpt/user-timing/invoke_with_timing_attributes.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/nested_worker.worker.html [ Timeout ]
