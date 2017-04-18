@@ -149,13 +149,10 @@ GLXContext CreateHighestVersionContext(Display* display,
 }
 
 GLContextGLX::GLContextGLX(GLShareGroup* share_group)
-  : GLContextReal(share_group),
-    context_(nullptr),
-    display_(nullptr) {
-}
+    : GLContextReal(share_group) {}
 
-XDisplay* GLContextGLX::display() {
-  return display_;
+GLContextGLX::~GLContextGLX() {
+  Destroy();
 }
 
 bool GLContextGLX::Initialize(GLSurface* compatible_surface,
@@ -294,20 +291,27 @@ void* GLContextGLX::GetHandle() {
 
 void GLContextGLX::OnSetSwapInterval(int interval) {
   DCHECK(IsCurrent(nullptr));
-  if (HasExtension("GLX_EXT_swap_control") &&
-      g_driver_glx.fn.glXSwapIntervalEXTFn) {
-    glXSwapIntervalEXT(
-        display_,
-        glXGetCurrentDrawable(),
-        interval);
-  } else if (HasExtension("GLX_MESA_swap_control") &&
-             g_driver_glx.fn.glXSwapIntervalMESAFn) {
+  if (GLSurfaceGLX::IsEXTSwapControlTearSupported()) {
+    // Use adaptive vsync if available. Synchronizing with vsync has the
+    // advantage of not tearing but comes with two disadvantages:
+    // 1. Increased latency when we fall below the refresh rate because we have
+    //    to wait for the next vsync period.
+    // 2. Reduced throughput when multiple windows animate. All Chrome windows
+    //    share one thread (GPU main thread) for issuing swap buffers.
+    //    Therefore, if one window's swap buffers blocks the other windows'
+    //    frame rates fall.
+    //
+    // Adaptive vsync disables vsync when we fall below the refresh rate. This
+    // solves both problems by reducing latency because we don't have to wait
+    // for vsync if we missed one and not blocking on subsequent swap buffers.
+    glXSwapIntervalEXT(display_, glXGetCurrentDrawable(), -interval);
+  } else if (GLSurfaceGLX::IsEXTSwapControlSupported()) {
+    glXSwapIntervalEXT(display_, glXGetCurrentDrawable(), interval);
+  } else if (GLSurfaceGLX::IsMESASwapControlSupported()) {
     glXSwapIntervalMESA(interval);
-  } else {
-    if(interval == 0)
-      LOG(WARNING) <<
-          "Could not disable vsync: driver does not "
-          "support GLX_EXT_swap_control";
+  } else if (interval == 0) {
+    LOG(WARNING)
+        << "Could not disable vsync: driver does not support swap control";
   }
 }
 
@@ -323,10 +327,6 @@ std::string GLContextGLX::GetExtensions() {
 
 bool GLContextGLX::WasAllocatedUsingRobustnessExtension() {
   return GLSurfaceGLX::IsCreateContextRobustnessSupported();
-}
-
-GLContextGLX::~GLContextGLX() {
-  Destroy();
 }
 
 }  // namespace gl

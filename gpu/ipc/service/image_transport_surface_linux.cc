@@ -5,6 +5,7 @@
 #include "gpu/ipc/service/image_transport_surface.h"
 
 #include "gpu/ipc/service/pass_through_image_transport_surface.h"
+#include "ui/gl/gl_surface_glx.h"
 #include "ui/gl/init/gl_factory.h"
 
 namespace gpu {
@@ -23,8 +24,11 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
     surface = gl::init::CreateViewGLSurface(surface_handle);
   if (!surface)
     return surface;
-  return scoped_refptr<gl::GLSurface>(
-      new PassThroughImageTransportSurface(delegate, surface.get()));
+  bool multiswap_force_swap_interval_zero =
+      gl::GetGLImplementation() == gl::kGLImplementationDesktopGL &&
+      !gl::GLSurfaceGLX::IsEXTSwapControlTearSupported();
+  return scoped_refptr<gl::GLSurface>(new PassThroughImageTransportSurface(
+      delegate, surface.get(), multiswap_force_swap_interval_zero));
 }
 
 }  // namespace gpu
