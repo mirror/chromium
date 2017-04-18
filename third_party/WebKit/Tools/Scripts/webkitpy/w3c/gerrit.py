@@ -41,48 +41,87 @@ class Gerrit(object):
     def cl_url(self, number):
         return 'https://chromium-review.googlesource.com/c/{}/'.format(number)
 
-    def get_diff(self, cl):
-        """Get full diff for latest revision of CL."""
-        revision = cl['revisions'].items()[0][1]
-        revision_id = cl['revisions'].items()[0][0]
-        files = revision['files'].keys()
-        diff = ''
+    def get_patch(self, cl):
+        """Get patch for latest revision of CL."""
+        url = '{url_base}/changes/{change_id}/revisions/current/patch'.format(
+            url_base=URL_BASE,
+            change_id=cl['id'],
+        )
+        b64_patch = self.host.web.get_binary(url)
+        patch = base64.b64decode(b64_patch)
 
-        for filename in files:
-            url = '{url_base}/changes/{change_id}/revisions/{revision_id}/files/{file_id}/diff'.format(
-                url_base=URL_BASE,
-                change_id=cl['id'],
-                revision_id=revision_id,
-                file_id=urllib.quote_plus(filename),
-            )
-            data = self.api_get(url)
-            diff += data
+        return patch
 
-        return diff
-
-    def post_comment(self, cl_id, revision_id, message):
-        url = '{url_base}/a/changes/{change_id}/revisions/{revision_id}/review'.format(
+    # TODO: remove this if not used
+    '''
+    def get_description(self, cl_id):
+        """Get description for latest revision of CL."""
+        url = '{url_base}/changes/{change_id}/revisions/current/description'.format(
             url_base=URL_BASE,
             change_id=cl_id,
-            revision_id=revision_id,
+        )
+        raw_data = self.host.web.get_binary(url)
+
+        return raw_data[5:]  # strip JSONP preamble
+    '''
+
+    def post_comment(self, cl_id, message):
+        url = '{url_base}/a/changes/{change_id}/revisions/current/review'.format(
+            url_base=URL_BASE,
+            change_id=cl_id,
         )
         return self.api_post(url, {'message': message})
 
-    def query_open_cls(self, limit=200):
+    def query_exportable_open_cls(self, limit=200):
         url = ('{}/changes/?q=project:\"chromium/src\"+status:open'
-               '&o=CURRENT_FILES&o=CURRENT_REVISION&o=COMMIT_FOOTERS&n={}').format(URL_BASE, limit)
-        open_cls = self.api_get(url)
+               '&o=CURRENT_FILES&o=CURRENT_REVISION&o=COMMIT_FOOTERS'
+               '&o=DETAILED_ACCOUNTS&n={}').format(URL_BASE, limit)
+        open_cls_data = self.api_get(url)
+        open_cls = [GerritCL(data) for data in open_cls_data]
 
-        return [cl for cl in open_cls if self.is_exportable(cl)]
+        return [cl for cl in open_cls if cl.is_exportable()]
 
-    def is_exportable(self, cl):
-        revision = cl['revisions'].items()[0][1]
+
+class GerritCL(object):
+    """A data wrapper for a Chromium Gerrit CL."""
+
+    def __init__(self, data):
+        self._data = data
+
+    @property
+    def url(self):
+        return 'https://chromium-review.googlesource.com/c/%s' % self._data['_number']
+
+    @property
+    def subject(self):
+        return self._data['subject']
+
+    @property
+    def change_id(self):
+        return self._data['change_id']
+
+    @property
+    def owner_email(self):
+        return self._data['owner']['email']
+
+    @property
+    def latest_commit_message_with_footers(self):
+        current_revision = self._data['current_revision']
+        return self._data['revisions'][current_revision]['commit_with_footers']
+
+    def is_exportable(self):
+        # TODO: Needs to deal with new revisions as well
+        revision = self._data['revisions'].items()[0][1]
         files = revision['files'].keys()
 
-        if cl['subject'].startswith('Import wpt@'):
+        # Guard against accidental CLs that touch thousands of files.
+        if len(files) > 1000:
             return False
 
-        if 'Import' in cl['subject']:
+        if self.subject.startswith('Import wpt@'):
+            return False
+
+        if 'Import' in self.subject:
             return False
 
         if 'NOEXPORT=true' in revision['commit_with_footers']:
