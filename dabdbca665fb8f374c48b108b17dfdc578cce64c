@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06785e28_b55326f1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-18T22:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ed4daba_623fd5de",
+      "revId": "dabdbca665fb8f374c48b108b17dfdc578cce64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12bc041e_310148ff",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "dabdbca665fb8f374c48b108b17dfdc578cce64c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf0af2c_43577f47",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-18T22:28:44Z",
+      "side": 1,
+      "message": "Good idea, memoized fits well here. Updated.",
+      "parentUuid": "12bc041e_310148ff",
+      "revId": "dabdbca665fb8f374c48b108b17dfdc578cce64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
