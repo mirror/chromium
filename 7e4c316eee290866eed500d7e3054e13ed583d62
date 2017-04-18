@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff67537a_bcbfa537",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-18T00:28:27Z",
+      "side": 1,
+      "message": "optional: The new names are a little strange. I would expect AddObserver() to take a SessionControllerObserver or a SessionObserver. Do you think SessionStateObserver should be called SessionObserver? Or maybe not worth changing? I see you called most of the scoped member variables |scoped_session_observer_|.",
+      "revId": "7e4c316eee290866eed500d7e3054e13ed583d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4b9506_e2b44285",
+        "filename": "ash/session/session_state_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-18T00:28:27Z",
+      "side": 1,
+      "message": "Is this just for tests? If so, please comment.",
+      "revId": "7e4c316eee290866eed500d7e3054e13ed583d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5baa506_fc194033",
+        "filename": "ash/session/session_state_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-04-18T00:28:27Z",
+      "side": 1,
+      "message": "nit: ash:: not needed",
+      "revId": "7e4c316eee290866eed500d7e3054e13ed583d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
