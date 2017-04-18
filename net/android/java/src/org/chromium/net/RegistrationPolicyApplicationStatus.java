@@ -14,7 +14,7 @@ import org.chromium.base.VisibleForTesting;
 public class RegistrationPolicyApplicationStatus
         extends NetworkChangeNotifierAutoDetect.RegistrationPolicy
         implements ApplicationStatus.ApplicationStateListener {
-    private boolean mDestroyed = false;
+    private boolean mDestroyed;
 
     @Override
     protected void init(NetworkChangeNotifierAutoDetect notifier) {
@@ -23,6 +23,7 @@ public class RegistrationPolicyApplicationStatus
         onApplicationStateChange(getApplicationState());
     }
 
+    @Override
     protected void destroy() {
         if (mDestroyed) return;
         ApplicationStatus.unregisterApplicationStateListener(this);

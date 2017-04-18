@@ -26,118 +26,84 @@
 #include "platform/fonts/FontSelector.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/shaping/ShapeCache.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/RefCounted.h"
-#include "wtf/WeakPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
-class GlyphPageTreeNodeBase;
 class FontDescription;
 
-const int cAllFamiliesScanned = -1;
+const int kCAllFamiliesScanned = -1;
 
 class PLATFORM_EXPORT FontFallbackList : public RefCounted<FontFallbackList> {
-    WTF_MAKE_NONCOPYABLE(FontFallbackList);
-public:
-    typedef HashMap<int, GlyphPageTreeNodeBase*, DefaultHash<int>::Hash> GlyphPages;
+  WTF_MAKE_NONCOPYABLE(FontFallbackList);
 
-    class GlyphPagesStateSaver {
-        STACK_ALLOCATED();
-    public:
-        GlyphPagesStateSaver(FontFallbackList& fallbackList)
-            : m_fallbackList(fallbackList)
-            , m_pages(fallbackList.m_pages)
-            , m_pageZero(fallbackList.m_pageZero)
-        {
-        }
+ public:
+  static PassRefPtr<FontFallbackList> Create() {
+    return AdoptRef(new FontFallbackList());
+  }
 
-        ~GlyphPagesStateSaver()
-        {
-            m_fallbackList.m_pages = m_pages;
-            m_fallbackList.m_pageZero = m_pageZero;
-        }
+  ~FontFallbackList() { ReleaseFontData(); }
+  bool IsValid() const;
+  void Invalidate(FontSelector*);
 
-    private:
-        FontFallbackList& m_fallbackList;
-        GlyphPages& m_pages;
-        GlyphPageTreeNodeBase* m_pageZero;
-    };
+  bool LoadingCustomFonts() const;
+  bool ShouldSkipDrawing() const;
 
-    static PassRefPtr<FontFallbackList> create() { return adoptRef(new FontFallbackList()); }
+  FontSelector* GetFontSelector() const { return font_selector_.Get(); }
+  // FIXME: It should be possible to combine fontSelectorVersion and generation.
+  unsigned FontSelectorVersion() const { return font_selector_version_; }
+  unsigned Generation() const { return generation_; }
 
-    ~FontFallbackList() { releaseFontData(); }
-    bool isValid() const;
-    void invalidate(FontSelector*);
-
-    bool loadingCustomFonts() const;
-    bool shouldSkipDrawing() const;
-
-    FontSelector* getFontSelector() const { return m_fontSelector.get(); }
-    // FIXME: It should be possible to combine fontSelectorVersion and generation.
-    unsigned fontSelectorVersion() const { return m_fontSelectorVersion; }
-    unsigned generation() const { return m_generation; }
-
-    ShapeCache* shapeCache(const FontDescription& fontDescription) const
-    {
-        if (!m_shapeCache) {
-            FallbackListCompositeKey key = compositeKey(fontDescription);
-            m_shapeCache = FontCache::fontCache()->getShapeCache(key)->weakPtr();
-        }
-        ASSERT(m_shapeCache);
-        if (getFontSelector())
-            m_shapeCache->clearIfVersionChanged(getFontSelector()->version());
-        return m_shapeCache.get();
+  ShapeCache* GetShapeCache(const FontDescription& font_description) const {
+    if (!shape_cache_) {
+      FallbackListCompositeKey key = CompositeKey(font_description);
+      shape_cache_ =
+          FontCache::GetFontCache()->GetShapeCache(key)->GetWeakPtr();
     }
+    DCHECK(shape_cache_);
+    if (GetFontSelector())
+      shape_cache_->ClearIfVersionChanged(GetFontSelector()->Version());
+    return shape_cache_.get();
+  }
 
-    const SimpleFontData* primarySimpleFontData(const FontDescription& fontDescription)
-    {
-        ASSERT(isMainThread());
-        if (!m_cachedPrimarySimpleFontData) {
-            m_cachedPrimarySimpleFontData = determinePrimarySimpleFontData(fontDescription);
-            ASSERT(m_cachedPrimarySimpleFontData);
-        }
-        return m_cachedPrimarySimpleFontData;
+  const SimpleFontData* PrimarySimpleFontData(
+      const FontDescription& font_description) {
+    DCHECK(IsMainThread());
+    if (!cached_primary_simple_font_data_) {
+      cached_primary_simple_font_data_ =
+          DeterminePrimarySimpleFontData(font_description);
+      DCHECK(cached_primary_simple_font_data_);
     }
-    const FontData* fontDataAt(const FontDescription&, unsigned index) const;
+    return cached_primary_simple_font_data_;
+  }
+  const FontData* FontDataAt(const FontDescription&, unsigned index) const;
 
-    GlyphPageTreeNodeBase* getPageNode(unsigned pageNumber) const
-    {
-        return pageNumber ? m_pages.get(pageNumber) : m_pageZero;
-    }
+  FallbackListCompositeKey CompositeKey(const FontDescription&) const;
 
-    void setPageNode(unsigned pageNumber, GlyphPageTreeNodeBase* node)
-    {
-        if (pageNumber)
-            m_pages.set(pageNumber, node);
-        else
-            m_pageZero = node;
-    }
+ private:
+  FontFallbackList();
 
-    FallbackListCompositeKey compositeKey(const FontDescription&) const;
+  PassRefPtr<FontData> GetFontData(const FontDescription&,
+                                   int& family_index) const;
 
-private:
-    FontFallbackList();
+  const SimpleFontData* DeterminePrimarySimpleFontData(
+      const FontDescription&) const;
 
-    PassRefPtr<FontData> getFontData(const FontDescription&, int& familyIndex) const;
+  void ReleaseFontData();
 
-    const SimpleFontData* determinePrimarySimpleFontData(const FontDescription&) const;
-
-    void releaseFontData();
-
-    mutable Vector<RefPtr<FontData>, 1> m_fontList;
-    GlyphPages m_pages;
-    GlyphPageTreeNodeBase* m_pageZero;
-    mutable const SimpleFontData* m_cachedPrimarySimpleFontData;
-    Persistent<FontSelector> m_fontSelector;
-    unsigned m_fontSelectorVersion;
-    mutable int m_familyIndex;
-    unsigned short m_generation;
-    mutable bool m_hasLoadingFallback : 1;
-    mutable WeakPtr<ShapeCache> m_shapeCache;
+  mutable Vector<RefPtr<FontData>, 1> font_list_;
+  mutable const SimpleFontData* cached_primary_simple_font_data_;
+  Persistent<FontSelector> font_selector_;
+  unsigned font_selector_version_;
+  mutable int family_index_;
+  unsigned short generation_;
+  mutable bool has_loading_fallback_ : 1;
+  mutable WeakPtr<ShapeCache> shape_cache_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

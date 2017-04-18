@@ -5,19 +5,19 @@
 #include "android_webview/browser/renderer_host/aw_render_view_host_ext.h"
 
 #include "android_webview/browser/aw_browser_context.h"
-#include "android_webview/browser/scoped_allow_wait_for_legacy_web_view_api.h"
 #include "android_webview/common/render_view_messages.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "components/web_restrictions/browser/web_restrictions_mojo_implementation.h"
 #include "content/public/browser/android/content_view_core.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/frame_navigate_params.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 
 namespace android_webview {
 
@@ -57,6 +57,11 @@ void AwRenderViewHostExt::DocumentHasImages(DocumentHasImagesResult result) {
 void AwRenderViewHostExt::ClearCache() {
   DCHECK(CalledOnValidThread());
   Send(new AwViewMsg_ClearCache);
+}
+
+void AwRenderViewHostExt::KillRenderProcess() {
+  DCHECK(CalledOnValidThread());
+  Send(new AwViewMsg_KillProcess);
 }
 
 bool AwRenderViewHostExt::HasNewHitTestData() const {
@@ -143,14 +148,23 @@ void AwRenderViewHostExt::ClearImageRequests() {
   image_requests_callback_map_.clear();
 }
 
-void AwRenderViewHostExt::DidNavigateAnyFrame(
-    content::RenderFrameHost* render_frame_host,
-    const content::LoadCommittedDetails& details,
-    const content::FrameNavigateParams& params) {
+void AwRenderViewHostExt::RenderFrameCreated(
+    content::RenderFrameHost* frame_host) {
+  frame_host->GetInterfaceRegistry()->AddInterface(
+      base::Bind(&web_restrictions::WebRestrictionsMojoImplementation::Create,
+                 AwBrowserContext::GetDefault()->GetWebRestrictionProvider()));
+}
+
+void AwRenderViewHostExt::DidFinishNavigation(
+    content::NavigationHandle* navigation_handle) {
   DCHECK(CalledOnValidThread());
+  if (!navigation_handle->HasCommitted() ||
+      (!navigation_handle->IsInMainFrame() &&
+       !navigation_handle->HasSubframeNavigationEntryCommitted()))
+    return;
 
   AwBrowserContext::FromWebContents(web_contents())
-      ->AddVisitedURLs(params.redirects);
+      ->AddVisitedURLs(navigation_handle->GetRedirectChain());
 }
 
 void AwRenderViewHostExt::OnPageScaleFactorChanged(float page_scale_factor) {

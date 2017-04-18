@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="../../resources/testharness.js"></script>
+  <script src="../../resources/testharnessreport.js"></script> 
+  <script src="../resources/audit-util.js"></script>
+  <script src="../resources/audio-testing.js"></script>
+  <script src="../resources/stereopanner-testing.js"></script>
+</head>
+
+<body>
+  <script>
+
+    var audit = Audit.createTaskRunner();
+
+    audit.defineTask('mono-test', function (done) {
+      StereoPannerTest.create({ numberOfInputChannels: 1, prefix: "Mono: " }).run(done);
+    });
+
+    audit.defineTask('stereo-test', function (done) {
+      StereoPannerTest.create({ numberOfInputChannels: 2, prefix: "Stereo: " }).run(done);
+    });
+
+    audit.defineTask('finish-test', function (done) {
+      done();
+    });
+
+    audit.runTasks('mono-test', 'stereo-test', 'finish-test');
+  </script>
+</body>
+
+</html>

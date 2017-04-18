@@ -30,9 +30,6 @@ class TaskRunner;
 
 namespace net {
 
-class CryptoModule;
-typedef std::vector<scoped_refptr<CryptoModule> > CryptoModuleList;
-
 // Provides functions to manipulate the NSS certificate stores.
 // Forwards notifications about certificate changes to the global CertDatabase
 // singleton.
@@ -42,18 +39,9 @@ class NET_EXPORT NSSCertDatabase {
    public:
     virtual ~Observer() {}
 
-    // Will be called when a new certificate is added.
-    // Called with |cert| == NULL after importing a list of certificates
-    // in ImportFromPKCS12().
-    virtual void OnCertAdded(const X509Certificate* cert) {}
-
-    // Will be called when a certificate is removed.
-    virtual void OnCertRemoved(const X509Certificate* cert) {}
-
-    // Will be called when a CA certificate is changed.
-    // Called with |cert| == NULL after importing a list of certificates
-    // in ImportCACerts().
-    virtual void OnCACertChanged(const X509Certificate* cert) {}
+    // Will be called when a certificate is added, removed, or trust settings
+    // are changed.
+    virtual void OnCertDBChanged() {}
 
    protected:
     Observer() {}
@@ -153,22 +141,10 @@ class NET_EXPORT NSSCertDatabase {
   // Can return NULL.
   crypto::ScopedPK11Slot GetPrivateSlot() const;
 
-  // Get the default module for public key data.
-  // The returned pointer must be stored in a scoped_refptr<CryptoModule>.
-  // DEPRECATED: use GetPublicSlot instead.
-  // TODO(mattm): remove usage of this method and remove it.
-  CryptoModule* GetPublicModule() const;
-
-  // Get the default module for private key or mixed private/public key data.
-  // The returned pointer must be stored in a scoped_refptr<CryptoModule>.
-  // DEPRECATED: use GetPrivateSlot instead.
-  // TODO(mattm): remove usage of this method and remove it.
-  CryptoModule* GetPrivateModule() const;
-
   // Get all modules.
   // If |need_rw| is true, only writable modules will be returned.
-  // TODO(mattm): come up with better alternative to CryptoModuleList.
-  virtual void ListModules(CryptoModuleList* modules, bool need_rw) const;
+  virtual void ListModules(std::vector<crypto::ScopedPK11Slot>* modules,
+                           bool need_rw) const;
 
   // Import certificates and private keys from PKCS #12 blob into the module.
   // If |is_extractable| is false, mark the private key as being unextractable
@@ -176,7 +152,7 @@ class NET_EXPORT NSSCertDatabase {
   // Returns OK or a network error code such as ERR_PKCS12_IMPORT_BAD_PASSWORD
   // or ERR_PKCS12_IMPORT_ERROR. |imported_certs|, if non-NULL, returns a list
   // of certs that were imported.
-  int ImportFromPKCS12(CryptoModule* module,
+  int ImportFromPKCS12(PK11SlotInfo* slot_info,
                        const std::string& data,
                        const base::string16& password,
                        bool is_extractable,
@@ -199,6 +175,7 @@ class NET_EXPORT NSSCertDatabase {
   // already be installed, otherwise we return ERR_NO_PRIVATE_KEY_FOR_CERT.
   // Returns OK or a network error code.
   int ImportUserCert(const std::string& data);
+  int ImportUserCert(X509Certificate* cert);
 
   // Import CA certificates.
   // Tries to import all the certificates given.  The root will be trusted
@@ -275,9 +252,7 @@ class NET_EXPORT NSSCertDatabase {
 
  protected:
   // Broadcasts notifications to all registered observers.
-  void NotifyObserversOfCertAdded(const X509Certificate* cert);
-  void NotifyObserversOfCertRemoved(const X509Certificate* cert);
-  void NotifyObserversOfCACertChanged(const X509Certificate* cert);
+  void NotifyObserversCertDBChanged();
 
  private:
   // Registers |observer| to receive notifications of certificate changes.  The
@@ -292,10 +267,9 @@ class NET_EXPORT NSSCertDatabase {
   // on the same thread on which AddObserver() was called.
   void RemoveObserver(Observer* observer);
 
-  // Notifies observers of the removal of |cert| and calls |callback| with
+  // Notifies observers of the removal of a cert and calls |callback| with
   // |success| as argument.
-  void NotifyCertRemovalAndCallBack(scoped_refptr<X509Certificate> cert,
-                                    const DeleteCertCallback& callback,
+  void NotifyCertRemovalAndCallBack(const DeleteCertCallback& callback,
                                     bool success);
 
   // Certificate removal implementation used by |DeleteCertAndKey*|. Static so

@@ -16,6 +16,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/location.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -40,9 +41,11 @@
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/policy/test/local_policy_test_server.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/webui/signin/get_auth_frame.h"
+#include "chrome/browser/ui/webui/signin/signin_utils.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -60,12 +63,16 @@
 #include "chromeos/dbus/shill_manager_client.h"
 #include "chromeos/login/auth/key.h"
 #include "chromeos/settings/cros_settings_names.h"
+#include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "components/guest_view/browser/test_guest_view_manager.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/common/mock_configuration_policy_provider.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_switches.h"
 #include "components/policy/core/common/policy_types.h"
+#include "components/policy/policy_constants.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
@@ -89,8 +96,6 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "policy/policy_constants.h"
-#include "policy/proto/device_management_backend.pb.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -387,6 +392,19 @@ class SamlTest : public OobeBaseTest {
     ASSERT_TRUE(content::ExecuteScript(GetLoginUI()->GetWebContents(), js));
   }
 
+  void SetManualPasswords(const std::string& password,
+                          const std::string& confirm_password) {
+    std::string js =
+        "$('saml-confirm-password').$.passwordInput.value='$Password';"
+        "$('saml-confirm-password').$$('#confirmPasswordInput').value="
+        "    '$ConfirmPassword';"
+        "$('saml-confirm-password').$.inputForm.submit();";
+    base::ReplaceSubstringsAfterOffset(&js, 0, "$Password", password);
+    base::ReplaceSubstringsAfterOffset(&js, 0, "$ConfirmPassword",
+                                       confirm_password);
+    ASSERT_TRUE(content::ExecuteScript(GetLoginUI()->GetWebContents(), js));
+  }
+
   std::string WaitForAndGetFatalErrorMessage() {
     OobeScreenWaiter(OobeScreen::SCREEN_FATAL_ERROR).Wait();
     std::string message_element = "$('fatal-error-card')";
@@ -460,7 +478,14 @@ IN_PROC_BROWSER_TEST_F(SamlTest, MAYBE_SamlUI) {
 }
 
 // Tests the sign-in flow when the credentials passing API is used.
-IN_PROC_BROWSER_TEST_F(SamlTest, CredentialPassingAPI) {
+//
+// Flaky. See http://crbug.com/659992
+#if defined(OS_LINUX)
+#define MAYBE_CredentialPassingAPI DISABLED_CredentialPassingAPI
+#else
+#define MAYBE_CredentialPassingAPI CredentialPassingAPI
+#endif
+IN_PROC_BROWSER_TEST_F(SamlTest, MAYBE_CredentialPassingAPI) {
   fake_saml_idp()->SetLoginHTMLTemplate("saml_api_login.html");
   fake_saml_idp()->SetLoginAuthHTMLTemplate("saml_api_login_auth.html");
   StartSamlAndWaitForIdpPageLoad(kFirstSAMLUserEmail);
@@ -560,10 +585,12 @@ IN_PROC_BROWSER_TEST_F(SamlTest, ScrapedMultiple) {
 
   // Lands on confirm password screen.
   OobeScreenWaiter(OobeScreen::SCREEN_CONFIRM_PASSWORD).Wait();
+  JsExpect("!$('saml-confirm-password').manualInput");
 
   // Entering an unknown password should go back to the confirm password screen.
   SendConfirmPassword("wrong_password");
   OobeScreenWaiter(OobeScreen::SCREEN_CONFIRM_PASSWORD).Wait();
+  JsExpect("!$('saml-confirm-password').manualInput");
 
   // Either scraped password should be able to sign-in.
   content::WindowedNotificationObserver session_start_waiter(
@@ -582,8 +609,21 @@ IN_PROC_BROWSER_TEST_F(SamlTest, ScrapedNone) {
   SetSignFormField("Email", "fake_user");
   ExecuteJsInSigninFrame("document.getElementById('Submit').click();");
 
-  EXPECT_EQ(l10n_util::GetStringUTF8(IDS_LOGIN_FATAL_ERROR_NO_PASSWORD),
-            WaitForAndGetFatalErrorMessage());
+  // Lands on confirm password screen with manual input state.
+  OobeScreenWaiter(OobeScreen::SCREEN_CONFIRM_PASSWORD).Wait();
+  JsExpect("$('saml-confirm-password').manualInput");
+  // Entering passwords that don't match will make us land again in the same
+  // page.
+  SetManualPasswords("Test1", "Test2");
+  OobeScreenWaiter(OobeScreen::SCREEN_CONFIRM_PASSWORD).Wait();
+  JsExpect("$('saml-confirm-password').manualInput");
+
+  // Two matching passwords should let the user to sign in.
+  content::WindowedNotificationObserver session_start_waiter(
+      chrome::NOTIFICATION_SESSION_STARTED,
+      content::NotificationService::AllSources());
+  SetManualPasswords("Test1", "Test1");
+  session_start_waiter.Wait();
 }
 
 // Types |bob@example.com| into the GAIA login form but then authenticates as
@@ -609,7 +649,7 @@ IN_PROC_BROWSER_TEST_F(SamlTest, UseAutenticatedUserEmailAddress) {
   const user_manager::User* user =
       user_manager::UserManager::Get()->GetActiveUser();
   ASSERT_TRUE(user);
-  EXPECT_EQ(kFirstSAMLUserEmail, user->email());
+  EXPECT_EQ(kFirstSAMLUserEmail, user->GetAccountId().GetUserEmail());
 }
 
 // Verifies that if the authenticated user's e-mail address cannot be retrieved,
@@ -642,12 +682,14 @@ IN_PROC_BROWSER_TEST_F(SamlTest, PasswordConfirmFlow) {
 
   // Lands on confirm password screen with no error message.
   OobeScreenWaiter(OobeScreen::SCREEN_CONFIRM_PASSWORD).Wait();
+  JsExpect("!$('saml-confirm-password').manualInput");
   JsExpect("!$('saml-confirm-password').$.passwordInput.isInvalid");
 
   // Enter an unknown password for the first time should go back to confirm
   // password screen with error message.
   SendConfirmPassword("wrong_password");
   OobeScreenWaiter(OobeScreen::SCREEN_CONFIRM_PASSWORD).Wait();
+  JsExpect("!$('saml-confirm-password').manualInput");
   JsExpect("$('saml-confirm-password').$.passwordInput.isInvalid");
 
   // Enter an unknown password 2nd time should go back fatal error message.
@@ -780,7 +822,7 @@ SAMLEnrollmentTest::~SAMLEnrollmentTest() {
 void SAMLEnrollmentTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
   const base::FilePath policy_file =
-      temp_dir_.path().AppendASCII("policy.json");
+      temp_dir_.GetPath().AppendASCII("policy.json");
   ASSERT_EQ(static_cast<int>(strlen(kPolicy)),
             base::WriteFile(policy_file, kPolicy, strlen(kPolicy)));
 
@@ -793,7 +835,6 @@ void SAMLEnrollmentTest::SetUp() {
 void SAMLEnrollmentTest::SetUpCommandLine(base::CommandLine* command_line) {
   command_line->AppendSwitchASCII(policy::switches::kDeviceManagementUrl,
                                   test_server_->GetServiceURL().spec());
-  command_line->AppendSwitch(policy::switches::kDisablePolicyKeyVerification);
 
   SamlTest::SetUpCommandLine(command_line);
 }
@@ -923,6 +964,7 @@ class SAMLPolicyTest : public SamlTest {
   void SetSAMLOfflineSigninTimeLimitPolicy(int limit);
   void EnableTransferSAMLCookiesPolicy();
   void SetLoginBehaviorPolicyToSAMLInterstitial();
+  void SetLoginVideoCaptureAllowedUrls(const std::vector<GURL>& allowed);
 
   void ShowGAIALoginForm();
   void ShowSAMLInterstitial();
@@ -1021,7 +1063,7 @@ void SAMLPolicyTest::SetSAMLOfflineSigninTimeLimitPolicy(int limit) {
   user_policy.Set(policy::key::kSAMLOfflineSigninTimeLimit,
                   policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                   policy::POLICY_SOURCE_CLOUD,
-                  base::WrapUnique(new base::FundamentalValue(limit)), nullptr);
+                  base::MakeUnique<base::Value>(limit), nullptr);
   provider_.UpdateChromePolicy(user_policy);
   base::RunLoop().RunUntilIdle();
 }
@@ -1050,6 +1092,23 @@ void SAMLPolicyTest::SetLoginBehaviorPolicyToSAMLInterstitial() {
   base::RunLoop run_loop;
   std::unique_ptr<CrosSettings::ObserverSubscription> observer =
       CrosSettings::Get()->AddSettingsObserver(kLoginAuthenticationBehavior,
+                                               run_loop.QuitClosure());
+  device_policy_->SetDefaultSigningKey();
+  device_policy_->Build();
+  fake_session_manager_client_->set_device_policy(device_policy_->GetBlob());
+  fake_session_manager_client_->OnPropertyChangeComplete(true);
+  run_loop.Run();
+}
+
+void SAMLPolicyTest::SetLoginVideoCaptureAllowedUrls(
+    const std::vector<GURL>& allowed) {
+  em::ChromeDeviceSettingsProto& proto(device_policy_->payload());
+  for (const GURL& url : allowed)
+    proto.mutable_login_video_capture_allowed_urls()->add_urls(url.spec());
+
+  base::RunLoop run_loop;
+  std::unique_ptr<CrosSettings::ObserverSubscription> observer =
+      CrosSettings::Get()->AddSettingsObserver(kLoginVideoCaptureAllowedUrls,
                                                run_loop.QuitClosure());
   device_policy_->SetDefaultSigningKey();
   device_policy_->Build();
@@ -1287,7 +1346,18 @@ IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, TransferCookiesAffiliated) {
   EXPECT_EQ(kSAMLIdPCookieValue2, GetCookieValue(kSAMLIdPCookieName));
 }
 
-IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, PRE_TransferCookiesUnaffiliated) {
+// PRE_TransferCookiesUnaffiliated and TransferCookiesUnaffiliated are flaky on
+// MSAN and ASAN, most probably timing out. See crbug.com/683161.
+#if defined(MEMORY_SANITIZER) || defined(ADDRESS_SANITIZER)
+#define MAYBE_PRE_TransferCookiesUnaffiliated \
+  DISABLED_PRE_TransferCookiesUnaffiliated
+#define MAYBE_TransferCookiesUnaffiliated DISABLED_TransferCookiesUnaffiliated
+#else
+#define MAYBE_PRE_TransferCookiesUnaffiliated PRE_TransferCookiesUnaffiliated
+#define MAYBE_TransferCookiesUnaffiliated TransferCookiesUnaffiliated
+#endif
+
+IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, MAYBE_PRE_TransferCookiesUnaffiliated) {
   fake_saml_idp()->SetCookieValue(kSAMLIdPCookieValue1);
   LogInWithSAML(kDifferentDomainSAMLUserEmail,
                 kTestAuthSIDCookie1,
@@ -1303,7 +1373,7 @@ IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, PRE_TransferCookiesUnaffiliated) {
 // IdP are not transferred to a user's profile on subsequent login if the user
 // does not belong to the domain that the device is enrolled into. Also verifies
 // that GAIA cookies are not transferred.
-IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, TransferCookiesUnaffiliated) {
+IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, MAYBE_TransferCookiesUnaffiliated) {
   fake_saml_idp()->SetCookieValue(kSAMLIdPCookieValue2);
   fake_saml_idp()->SetLoginHTMLTemplate("saml_login.html");
   ShowGAIALoginForm();
@@ -1345,7 +1415,8 @@ IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, SAMLInterstitialChangeAccount) {
 // Tests that clicking "Next" in the SAML interstitial page successfully
 // triggers a SAML redirect request, and the SAML IdP authentication page is
 // loaded and authenticaing there is successful.
-IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, SAMLInterstitialNext) {
+// Disabled due to flakiness, see crbug.com/699228
+IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, DISABLED_SAMLInterstitialNext) {
   fake_saml_idp()->SetLoginHTMLTemplate("saml_login.html");
   fake_gaia_->SetFakeMergeSessionParams(
       kFirstSAMLUserEmail, kTestAuthSIDCookie1, kTestAuthLSIDCookie1);
@@ -1364,6 +1435,52 @@ IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, SAMLInterstitialNext) {
       content::NotificationService::AllSources());
   ExecuteJsInSigninFrame("document.getElementById('Submit').click();");
   session_start_waiter.Wait();
+}
+
+// Ensure that the permission status of getUserMedia requests from SAML login
+// pages is controlled by the kLoginVideoCaptureAllowedUrls pref rather than the
+// underlying user content setting.
+IN_PROC_BROWSER_TEST_F(SAMLPolicyTest, TestLoginMediaPermission) {
+  fake_saml_idp()->SetLoginHTMLTemplate("saml_login.html");
+
+  const GURL url1("https://google.com");
+  const GURL url2("https://example.com");
+  const GURL url3("https://not-allowed.com");
+  SetLoginVideoCaptureAllowedUrls({url1, url2});
+  WaitForSigninScreen();
+
+  content::WebContents* web_contents = GetLoginUI()->GetWebContents();
+
+  // Mic should always be blocked.
+  EXPECT_FALSE(
+      MediaCaptureDevicesDispatcher::GetInstance()->CheckMediaAccessPermission(
+          web_contents, url1, content::MEDIA_DEVICE_AUDIO_CAPTURE));
+
+  // Camera should be allowed if allowed by the whitelist, otherwise blocked.
+  EXPECT_TRUE(
+      MediaCaptureDevicesDispatcher::GetInstance()->CheckMediaAccessPermission(
+          web_contents, url1, content::MEDIA_DEVICE_VIDEO_CAPTURE));
+
+  EXPECT_TRUE(
+      MediaCaptureDevicesDispatcher::GetInstance()->CheckMediaAccessPermission(
+          web_contents, url2, content::MEDIA_DEVICE_VIDEO_CAPTURE));
+
+  EXPECT_FALSE(
+      MediaCaptureDevicesDispatcher::GetInstance()->CheckMediaAccessPermission(
+          web_contents, url3, content::MEDIA_DEVICE_VIDEO_CAPTURE));
+
+  // Camera should be blocked in the login screen, even if it's allowed via
+  // content setting.
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  HostContentSettingsMapFactory::GetForProfile(profile)
+      ->SetContentSettingDefaultScope(url3, url3,
+                                      CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA,
+                                      std::string(), CONTENT_SETTING_ALLOW);
+
+  EXPECT_FALSE(
+      MediaCaptureDevicesDispatcher::GetInstance()->CheckMediaAccessPermission(
+          web_contents, url3, content::MEDIA_DEVICE_VIDEO_CAPTURE));
 }
 
 }  // namespace chromeos

@@ -13,8 +13,8 @@
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/net/wake_on_wifi_connection_observer.h"
+#include "chrome/browser/gcm/gcm_profile_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/services/gcm/gcm_profile_service_factory.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/device_state.h"
@@ -180,10 +180,8 @@ void WakeOnWifiManager::HandleWakeOnWifiFeatureUpdated() {
   DCHECK(!feature_string.empty());
 
   NetworkHandler::Get()->network_device_handler()->SetDeviceProperty(
-      device->path(),
-      shill::kWakeOnWiFiFeaturesEnabledProperty,
-      base::StringValue(feature_string),
-      base::Bind(&base::DoNothing),
+      device->path(), shill::kWakeOnWiFiFeaturesEnabledProperty,
+      base::Value(feature_string), base::Bind(&base::DoNothing),
       network_handler::ErrorCallback());
 
   bool wake_on_packet_enabled = IsWakeOnPacketEnabled(current_feature_);

@@ -35,7 +35,9 @@ public abstract class InfoBar implements InfoBarView {
     private long mNativeInfoBarPtr;
 
     /**
+     * Constructor for regular infobars.
      * @param iconDrawableId ID of the resource to use for the Icon.  If 0, no icon will be shown.
+     * @param iconBitmap Icon to draw, in bitmap form.  Used mainly for generated icons.
      * @param message The message to show in the infobar.
      */
     public InfoBar(int iconDrawableId, Bitmap iconBitmap, CharSequence message) {
@@ -49,8 +51,7 @@ public abstract class InfoBar implements InfoBarView {
      * @param nativeInfoBarPtr Pointer to the native InfoBarAndroid, not to its subclass.
      */
     @CalledByNative
-    private void setNativeInfoBar(long nativeInfoBarPtr) {
-        assert mNativeInfoBarPtr == 0;
+    private final void setNativeInfoBar(long nativeInfoBarPtr) {
         mNativeInfoBarPtr = nativeInfoBarPtr;
     }
 
@@ -81,13 +82,33 @@ public abstract class InfoBar implements InfoBarView {
     protected final View createView() {
         assert mContext != null;
 
-        InfoBarLayout layout =
-                new InfoBarLayout(mContext, this, mIconDrawableId, mIconBitmap, mMessage);
-        createContent(layout);
-        layout.onContentCreated();
-        mView = layout;
+        if (usesCompactLayout()) {
+            InfoBarCompactLayout layout =
+                    new InfoBarCompactLayout(mContext, this, mIconDrawableId, mIconBitmap);
+            createCompactLayoutContent(layout);
+            mView = layout;
+        } else {
+            InfoBarLayout layout =
+                    new InfoBarLayout(mContext, this, mIconDrawableId, mIconBitmap, mMessage);
+            createContent(layout);
+            layout.onContentCreated();
+            mView = layout;
+        }
+
         return mView;
     }
+
+    /** If this returns true, the infobar contents will be replaced with a one-line layout. */
+    protected boolean usesCompactLayout() {
+        return false;
+    }
+
+    /**
+     * Prepares and inserts views into an {@link InfoBarCompactLayout}.
+     * {@link #usesCompactLayout} must return 'true' for this function to be called.
+     * @param layout Layout to plug views into.
+     */
+    protected void createCompactLayoutContent(InfoBarCompactLayout layout) {}
 
     /**
      * Replaces the View currently shown in the infobar with the given View. Triggers the swap
@@ -114,6 +135,11 @@ public abstract class InfoBar implements InfoBarView {
         return messageView.getText() + mContext.getString(R.string.bottom_bar_screen_position);
     }
 
+    @Override
+    public boolean isLegalDisclosure() {
+        return false;
+    }
+
     /**
      * @return whether the infobar actually needed closing.
      */
@@ -128,6 +154,10 @@ public abstract class InfoBar implements InfoBarView {
             return true;
         }
         return false;
+    }
+
+    long getNativeInfoBarPtr() {
+        return mNativeInfoBarPtr;
     }
 
     void setInfoBarContainer(InfoBarContainer container) {

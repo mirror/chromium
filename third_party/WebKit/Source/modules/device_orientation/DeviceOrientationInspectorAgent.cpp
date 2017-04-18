@@ -5,90 +5,93 @@
 #include "modules/device_orientation/DeviceOrientationInspectorAgent.h"
 
 #include "core/frame/LocalFrame.h"
-#include "core/page/Page.h"
+#include "core/inspector/InspectedFrames.h"
 #include "modules/device_orientation/DeviceOrientationController.h"
 #include "modules/device_orientation/DeviceOrientationData.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
+using protocol::Response;
+
 namespace DeviceOrientationInspectorAgentState {
-static const char alpha[] = "alpha";
-static const char beta[] = "beta";
-static const char gamma[] = "gamma";
-static const char overrideEnabled[] = "overrideEnabled";
+static const char kAlpha[] = "alpha";
+static const char kBeta[] = "beta";
+static const char kGamma[] = "gamma";
+static const char kOverrideEnabled[] = "overrideEnabled";
 }
 
-// static
-DeviceOrientationInspectorAgent* DeviceOrientationInspectorAgent::create(Page* page)
-{
-    return new DeviceOrientationInspectorAgent(*page);
+DeviceOrientationInspectorAgent::~DeviceOrientationInspectorAgent() {}
+
+DeviceOrientationInspectorAgent::DeviceOrientationInspectorAgent(
+    InspectedFrames* inspected_frames)
+    : inspected_frames_(inspected_frames) {}
+
+DEFINE_TRACE(DeviceOrientationInspectorAgent) {
+  visitor->Trace(inspected_frames_);
+  InspectorBaseAgent::Trace(visitor);
 }
 
-DeviceOrientationInspectorAgent::~DeviceOrientationInspectorAgent()
-{
+DeviceOrientationController* DeviceOrientationInspectorAgent::Controller() {
+  Document* document = inspected_frames_->Root()->GetDocument();
+  return document ? &DeviceOrientationController::From(*document) : nullptr;
 }
 
-DeviceOrientationInspectorAgent::DeviceOrientationInspectorAgent(Page& page)
-    : m_page(&page)
-{
+Response DeviceOrientationInspectorAgent::setDeviceOrientationOverride(
+    double alpha,
+    double beta,
+    double gamma) {
+  state_->setBoolean(DeviceOrientationInspectorAgentState::kOverrideEnabled,
+                     true);
+  state_->setDouble(DeviceOrientationInspectorAgentState::kAlpha, alpha);
+  state_->setDouble(DeviceOrientationInspectorAgentState::kBeta, beta);
+  state_->setDouble(DeviceOrientationInspectorAgentState::kGamma, gamma);
+  if (Controller()) {
+    Controller()->SetOverride(
+        DeviceOrientationData::Create(alpha, beta, gamma, false));
+  }
+  return Response::OK();
 }
 
-DEFINE_TRACE(DeviceOrientationInspectorAgent)
-{
-    visitor->trace(m_page);
-    InspectorBaseAgent::trace(visitor);
+Response DeviceOrientationInspectorAgent::clearDeviceOrientationOverride() {
+  state_->setBoolean(DeviceOrientationInspectorAgentState::kOverrideEnabled,
+                     false);
+  if (Controller())
+    Controller()->ClearOverride();
+  return Response::OK();
 }
 
-DeviceOrientationController& DeviceOrientationInspectorAgent::controller()
-{
-    DCHECK(toLocalFrame(m_page->mainFrame())->document());
-    return DeviceOrientationController::from(*m_page->deprecatedLocalMainFrame()->document());
+Response DeviceOrientationInspectorAgent::disable() {
+  state_->setBoolean(DeviceOrientationInspectorAgentState::kOverrideEnabled,
+                     false);
+  if (Controller())
+    Controller()->ClearOverride();
+  return Response::OK();
 }
 
-void DeviceOrientationInspectorAgent::setDeviceOrientationOverride(ErrorString* error, double alpha, double beta, double gamma)
-{
-    m_state->setBoolean(DeviceOrientationInspectorAgentState::overrideEnabled, true);
-    m_state->setDouble(DeviceOrientationInspectorAgentState::alpha, alpha);
-    m_state->setDouble(DeviceOrientationInspectorAgentState::beta, beta);
-    m_state->setDouble(DeviceOrientationInspectorAgentState::gamma, gamma);
-    controller().setOverride(DeviceOrientationData::create(alpha, beta, gamma, false));
+void DeviceOrientationInspectorAgent::Restore() {
+  if (!Controller())
+    return;
+  if (state_->booleanProperty(
+          DeviceOrientationInspectorAgentState::kOverrideEnabled, false)) {
+    double alpha = 0;
+    state_->getDouble(DeviceOrientationInspectorAgentState::kAlpha, &alpha);
+    double beta = 0;
+    state_->getDouble(DeviceOrientationInspectorAgentState::kBeta, &beta);
+    double gamma = 0;
+    state_->getDouble(DeviceOrientationInspectorAgentState::kGamma, &gamma);
+    Controller()->SetOverride(
+        DeviceOrientationData::Create(alpha, beta, gamma, false));
+  }
 }
 
-void DeviceOrientationInspectorAgent::clearDeviceOrientationOverride(ErrorString* error)
-{
-    m_state->setBoolean(DeviceOrientationInspectorAgentState::overrideEnabled, false);
-    controller().clearOverride();
-}
-
-void DeviceOrientationInspectorAgent::disable(ErrorString*)
-{
-    m_state->setBoolean(DeviceOrientationInspectorAgentState::overrideEnabled, false);
-    controller().clearOverride();
-}
-
-void DeviceOrientationInspectorAgent::restore()
-{
-    if (m_state->booleanProperty(DeviceOrientationInspectorAgentState::overrideEnabled, false)) {
-        double alpha = 0;
-        m_state->getDouble(DeviceOrientationInspectorAgentState::alpha, &alpha);
-        double beta = 0;
-        m_state->getDouble(DeviceOrientationInspectorAgentState::beta, &beta);
-        double gamma = 0;
-        m_state->getDouble(DeviceOrientationInspectorAgentState::gamma, &gamma);
-        controller().setOverride(DeviceOrientationData::create(alpha, beta, gamma, false));
-    }
-}
-
-void DeviceOrientationInspectorAgent::didCommitLoadForLocalFrame(LocalFrame* frame)
-{
-    // FIXME(dgozman): adapt this for out-of-process iframes.
-    if (frame != m_page->mainFrame())
-        return;
-
+void DeviceOrientationInspectorAgent::DidCommitLoadForLocalFrame(
+    LocalFrame* frame) {
+  if (frame == inspected_frames_->Root()) {
     // New document in main frame - apply override there.
     // No need to cleanup previous one, as it's already gone.
-    restore();
+    Restore();
+  }
 }
 
-} // namespace blink
+}  // namespace blink

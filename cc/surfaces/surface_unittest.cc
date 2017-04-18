@@ -3,10 +3,14 @@
 // found in the LICENSE file.
 
 #include "cc/surfaces/surface.h"
-#include "cc/surfaces/surface_factory.h"
-#include "cc/surfaces/surface_factory_client.h"
-#include "cc/surfaces/surface_id_allocator.h"
+#include "base/memory/ptr_util.h"
+#include "cc/output/copy_output_result.h"
+#include "cc/surfaces/compositor_frame_sink_support.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
+#include "cc/surfaces/surface_dependency_tracker.h"
 #include "cc/surfaces/surface_manager.h"
+#include "cc/test/begin_frame_args_test.h"
+#include "cc/test/fake_external_begin_frame_source.h"
 #include "cc/test/scheduler_test_common.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
@@ -14,51 +18,94 @@
 namespace cc {
 namespace {
 
-static constexpr uint32_t kArbitraryClientId = 0;
-
-class FakeSurfaceFactoryClient : public SurfaceFactoryClient {
- public:
-  FakeSurfaceFactoryClient() : begin_frame_source_(nullptr) {}
-
-  void ReturnResources(const ReturnedResourceArray& resources) override {}
-
-  void SetBeginFrameSource(BeginFrameSource* begin_frame_source) override {
-    begin_frame_source_ = begin_frame_source;
-  }
-
-  BeginFrameSource* begin_frame_source() { return begin_frame_source_; }
-
- private:
-  BeginFrameSource* begin_frame_source_;
-};
+constexpr FrameSinkId kArbitraryFrameSinkId(1, 1);
+constexpr bool kIsRoot = true;
+constexpr bool kHandlesFrameSinkIdInvalidation = true;
+constexpr bool kNeedsSyncPoints = true;
 
 TEST(SurfaceTest, SurfaceLifetime) {
   SurfaceManager manager;
-  FakeSurfaceFactoryClient surface_factory_client;
-  SurfaceFactory factory(&manager, &surface_factory_client);
+  std::unique_ptr<CompositorFrameSinkSupport> support =
+      CompositorFrameSinkSupport::Create(
+          nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
+          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
-  SurfaceId surface_id(kArbitraryClientId, 6, 0);
-  {
-    factory.Create(surface_id);
-    EXPECT_TRUE(manager.GetSurfaceForId(surface_id));
-    factory.Destroy(surface_id);
-  }
+  LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
+  SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
+  support->SubmitCompositorFrame(local_surface_id, CompositorFrame());
+  EXPECT_TRUE(manager.GetSurfaceForId(surface_id));
+  support->EvictFrame();
 
   EXPECT_EQ(NULL, manager.GetSurfaceForId(surface_id));
 }
 
 TEST(SurfaceTest, SurfaceIds) {
-  uint32_t client_ids[] = {0u, 37u, ~0u};
   for (size_t i = 0; i < 3; ++i) {
-    uint32_t client_id = client_ids[i];
-    SurfaceIdAllocator allocator(client_id);
-    SurfaceId id1 = allocator.GenerateId();
-    EXPECT_EQ(id1.client_id(), client_id);
-    SurfaceId id2 = allocator.GenerateId();
-    EXPECT_EQ(id2.client_id(), client_id);
-    EXPECT_NE(id1.local_id(), id2.local_id());
-    EXPECT_NE(id1.nonce(), id2.nonce());
+    LocalSurfaceIdAllocator allocator;
+    LocalSurfaceId id1 = allocator.GenerateId();
+    LocalSurfaceId id2 = allocator.GenerateId();
+    EXPECT_NE(id1, id2);
   }
+}
+
+void TestCopyResultCallback(bool* called,
+                            std::unique_ptr<CopyOutputResult> result) {
+  *called = true;
+}
+
+// Test that CopyOutputRequests can outlive the current frame and be
+// aggregated on the next frame.
+TEST(SurfaceTest, CopyRequestLifetime) {
+  SurfaceManager manager;
+  std::unique_ptr<CompositorFrameSinkSupport> support =
+      CompositorFrameSinkSupport::Create(
+          nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
+          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+
+  LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
+  SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
+  CompositorFrame frame;
+  frame.render_pass_list.push_back(RenderPass::Create());
+  support->SubmitCompositorFrame(local_surface_id, std::move(frame));
+  Surface* surface = manager.GetSurfaceForId(surface_id);
+  ASSERT_TRUE(!!surface);
+
+  bool copy_called = false;
+  support->RequestCopyOfSurface(CopyOutputRequest::CreateRequest(
+      base::Bind(&TestCopyResultCallback, &copy_called)));
+  EXPECT_TRUE(manager.GetSurfaceForId(surface_id));
+  EXPECT_FALSE(copy_called);
+
+  int max_frame = 3, start_id = 200;
+  for (int i = 0; i < max_frame; ++i) {
+    CompositorFrame frame;
+    frame.render_pass_list.push_back(RenderPass::Create());
+    frame.render_pass_list.back()->id = i * 3 + start_id;
+    frame.render_pass_list.push_back(RenderPass::Create());
+    frame.render_pass_list.back()->id = i * 3 + start_id + 1;
+    frame.render_pass_list.push_back(RenderPass::Create());
+    frame.render_pass_list.back()->id = i * 3 + start_id + 2;
+    support->SubmitCompositorFrame(local_surface_id, std::move(frame));
+  }
+
+  int last_pass_id = (max_frame - 1) * 3 + start_id + 2;
+  // The copy request should stay on the Surface until TakeCopyOutputRequests
+  // is called.
+  EXPECT_FALSE(copy_called);
+  EXPECT_EQ(
+      1u,
+      surface->GetActiveFrame().render_pass_list.back()->copy_requests.size());
+
+  std::multimap<int, std::unique_ptr<CopyOutputRequest>> copy_requests;
+  surface->TakeCopyOutputRequests(&copy_requests);
+  EXPECT_EQ(1u, copy_requests.size());
+  // Last (root) pass should receive copy request.
+  ASSERT_EQ(1u, copy_requests.count(last_pass_id));
+  EXPECT_FALSE(copy_called);
+  copy_requests.find(last_pass_id)->second->SendEmptyResult();
+  EXPECT_TRUE(copy_called);
+
+  support->EvictFrame();
 }
 
 }  // namespace

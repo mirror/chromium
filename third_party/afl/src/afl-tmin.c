@@ -46,7 +46,8 @@
 
 static s32 child_pid;                 /* PID of the tested program         */
 
-static u8* trace_bits;                /* SHM with instrumentation bitmap   */
+static u8 *trace_bits,                /* SHM with instrumentation bitmap   */
+          *mask_bitmap;               /* Mask for trace bits (-B)          */
 
 static u8 *in_file,                   /* Minimizer input test case         */
           *out_file,                  /* Minimizer output file             */
@@ -81,21 +82,17 @@ static volatile u8
 
 /* Classify tuple counts. This is a slow & naive version, but good enough here. */
 
-#define AREP4(_sym)   (_sym), (_sym), (_sym), (_sym)
-#define AREP8(_sym)   AREP4(_sym),  AREP4(_sym)
-#define AREP16(_sym)  AREP8(_sym),  AREP8(_sym)
-#define AREP32(_sym)  AREP16(_sym), AREP16(_sym)
-#define AREP64(_sym)  AREP32(_sym), AREP32(_sym)
-#define AREP128(_sym) AREP64(_sym), AREP64(_sym)
+static const u8 count_class_lookup[256] = {
 
-static u8 count_class_lookup[256] = {
-
-  /* 0 - 3:       4 */ 0, 1, 2, 4,
-  /* 4 - 7:      +4 */ AREP4(8),
-  /* 8 - 15:     +8 */ AREP8(16),
-  /* 16 - 31:   +16 */ AREP16(32),
-  /* 32 - 127:  +96 */ AREP64(64), AREP32(64),
-  /* 128+:     +128 */ AREP128(128)
+  [0]           = 0,
+  [1]           = 1,
+  [2]           = 2,
+  [3]           = 4,
+  [4 ... 7]     = 8,
+  [8 ... 15]    = 16,
+  [16 ... 31]   = 32,
+  [32 ... 127]  = 64,
+  [128 ... 255] = 128
 
 };
 
@@ -116,6 +113,25 @@ static void classify_counts(u8* mem) {
       *mem = count_class_lookup[*mem];
       mem++;
     }
+
+  }
+
+}
+
+
+/* Apply mask to classified bitmap (if set). */
+
+static void apply_mask(u32* mem, u32* mask) {
+
+  u32 i = (MAP_SIZE >> 2);
+
+  if (!mask) return;
+
+  while (i--) {
+
+    *mem &= ~*mask;
+    mem++;
+    mask++;
 
   }
 
@@ -318,6 +334,7 @@ static u8 run_target(char** argv, u8* mem, u32 len, u8 first_run) {
     FATAL("Unable to execute '%s'", argv[0]);
 
   classify_counts(trace_bits);
+  apply_mask((u32*)trace_bits, (u32*)mask_bitmap);
   total_execs++;
 
   if (stop_soon) {
@@ -702,8 +719,10 @@ static void set_up_environment(void) {
                          "allocator_may_return_null=1:"
                          "msan_track_origins=0", 0);
 
-  if (getenv("AFL_LD_PRELOAD"))
-    setenv("LD_PRELOAD", getenv("AFL_LD_PRELOAD"), 1);
+  if (getenv("AFL_PRELOAD")) {
+    setenv("LD_PRELOAD", getenv("AFL_PRELOAD"), 1);
+    setenv("DYLD_INSERT_LIBRARIES", getenv("AFL_PRELOAD"), 1);
+  }
 
 }
 
@@ -921,6 +940,22 @@ static char** get_qemu_argv(u8* own_loc, char** argv, int argc) {
 }
 
 
+/* Read mask bitmap from file. This is for the -B option. */
+
+static void read_bitmap(u8* fname) {
+
+  s32 fd = open(fname, O_RDONLY);
+
+  if (fd < 0) PFATAL("Unable to open '%s'", fname);
+
+  ck_read(fd, mask_bitmap, MAP_SIZE, fname);
+
+  close(fd);
+
+}
+
+
+
 /* Main entry point */
 
 int main(int argc, char** argv) {
@@ -933,7 +968,7 @@ int main(int argc, char** argv) {
 
   SAYF(cCYA "afl-tmin " cBRI VERSION cRST " by <lcamtuf@google.com>\n");
 
-  while ((opt = getopt(argc,argv,"+i:o:f:m:t:xeQ")) > 0)
+  while ((opt = getopt(argc,argv,"+i:o:f:m:t:B:xeQ")) > 0)
 
     switch (opt) {
 
@@ -1023,6 +1058,26 @@ int main(int argc, char** argv) {
         if (!mem_limit_given) mem_limit = MEM_LIMIT_QEMU;
 
         qemu_mode = 1;
+        break;
+
+      case 'B': /* load bitmap */
+
+        /* This is a secret undocumented option! It is speculated to be useful
+           if you have a baseline "boring" input file and another "interesting"
+           file you want to minimize.
+
+           You can dump a binary bitmap for the boring file using
+           afl-showmap -b, and then load it into afl-tmin via -B. The minimizer
+           will then minimize to preserve only the edges that are unique to
+           the interesting input file, but ignoring everything from the
+           original map.
+
+           The option may be extended and made more official if it proves
+           to be useful. */
+
+        if (mask_bitmap) FATAL("Multiple -B options not supported");
+        mask_bitmap = ck_alloc(MAP_SIZE);
+        read_bitmap(optarg);
         break;
 
       default:

@@ -5,54 +5,83 @@
 #ifndef StaticBitmapImage_h
 #define StaticBitmapImage_h
 
+#include "gpu/command_buffer/common/mailbox.h"
+#include "gpu/command_buffer/common/sync_token.h"
 #include "platform/graphics/Image.h"
-#include "public/platform/WebExternalTextureMailbox.h"
 #include "third_party/khronos/GLES2/gl2.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
 class WebGraphicsContext3DProvider;
 
-class PLATFORM_EXPORT StaticBitmapImage final : public Image {
-public:
-    ~StaticBitmapImage() override;
+class PLATFORM_EXPORT StaticBitmapImage : public Image {
+ public:
+  static PassRefPtr<StaticBitmapImage> Create(sk_sp<SkImage>);
 
-    bool currentFrameIsComplete() override { return true; }
+  // Methods overrided by all sub-classes
+  virtual ~StaticBitmapImage() {}
+  bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) = 0;
+  sk_sp<SkImage> ImageForCurrentFrame() = 0;
+  void Draw(PaintCanvas*,
+            const PaintFlags&,
+            const FloatRect& dst_rect,
+            const FloatRect& src_rect,
+            RespectImageOrientationEnum,
+            ImageClampingMode) = 0;
 
-    static PassRefPtr<StaticBitmapImage> create(PassRefPtr<SkImage>);
-    static PassRefPtr<StaticBitmapImage> create(WebExternalTextureMailbox&);
-    virtual void destroyDecodedData() { }
-    virtual bool currentFrameKnownToBeOpaque(MetadataMode = UseCurrentMetadata);
-    virtual IntSize size() const;
-    void draw(SkCanvas*, const SkPaint&, const FloatRect& dstRect, const FloatRect& srcRect, RespectImageOrientationEnum, ImageClampingMode) override;
+  // Methods have common implementation for all sub-classes
+  bool CurrentFrameIsComplete() override { return true; }
+  void DestroyDecodedData() {}
 
-    PassRefPtr<SkImage> imageForCurrentFrame() override;
+  // Methods that have a default implementation, and overrided by only one
+  // sub-class
+  virtual bool HasMailbox() { return false; }
+  virtual void Transfer() {}
 
-    bool originClean() const { return m_isOriginClean; }
-    void setOriginClean(bool flag) { m_isOriginClean = flag; }
-    bool isPremultiplied() const { return m_isPremultiplied; }
-    void setPremultiplied(bool flag) { m_isPremultiplied = flag; }
-    void copyToTexture(WebGraphicsContext3DProvider*, GLuint, GLenum, GLenum, bool);
-    bool isTextureBacked() override;
-    bool hasMailbox() { return m_mailbox.textureSize.width != 0 && m_mailbox.textureSize.height != 0; }
+  // Methods overrided by AcceleratedStaticBitmapImage only
+  virtual void CopyToTexture(WebGraphicsContext3DProvider*,
+                             GLenum,
+                             GLuint,
+                             bool,
+                             const IntPoint&,
+                             const IntRect&) {
+    NOTREACHED();
+  }
+  virtual void EnsureMailbox() { NOTREACHED(); }
+  virtual gpu::Mailbox GetMailbox() {
+    NOTREACHED();
+    return gpu::Mailbox();
+  }
+  virtual gpu::SyncToken GetSyncToken() {
+    NOTREACHED();
+    return gpu::SyncToken();
+  }
+  virtual void UpdateSyncToken(gpu::SyncToken) { NOTREACHED(); }
 
-protected:
-    StaticBitmapImage(PassRefPtr<SkImage>);
-    StaticBitmapImage(WebExternalTextureMailbox&);
+  // Methods have exactly the same implementation for all sub-classes
+  bool OriginClean() const { return is_origin_clean_; }
+  void SetOriginClean(bool flag) { is_origin_clean_ = flag; }
+  bool IsPremultiplied() const { return is_premultiplied_; }
+  void SetPremultiplied(bool flag) { is_premultiplied_ = flag; }
 
-private:
-    GLuint switchStorageToSkImage(WebGraphicsContext3DProvider*);
-    bool switchStorageToMailbox(WebGraphicsContext3DProvider*);
-    GLuint switchStorageToSkImageForWebGL(WebGraphicsContext3DProvider*);
+ protected:
+  // Helper for sub-classes
+  void DrawHelper(PaintCanvas*,
+                  const PaintFlags&,
+                  const FloatRect&,
+                  const FloatRect&,
+                  ImageClampingMode,
+                  sk_sp<SkImage>);
 
-    RefPtr<SkImage> m_image;
-    WebExternalTextureMailbox m_mailbox;
-    bool m_isOriginClean = true;
-    // The premultiply info is stored here because the SkImage API
-    // doesn't expose this info.
-    bool m_isPremultiplied = true;
+  // These two properties are here because the SkImage API doesn't expose the
+  // info. They applied to both UnacceleratedStaticBitmapImage and
+  // AcceleratedStaticBitmapImage. To change these two properties, the call
+  // site would have to call the API setOriginClean() and setPremultiplied().
+  bool is_origin_clean_ = true;
+  bool is_premultiplied_ = true;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

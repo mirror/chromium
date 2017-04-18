@@ -9,13 +9,18 @@ source_set("exo") {
   sources = [
     "buffer.cc",
     "buffer.h",
+    "compositor_frame_sink.cc",
+    "compositor_frame_sink.h",
+    "compositor_frame_sink_holder.cc",
+    "compositor_frame_sink_holder.h",
     "display.cc",
     "display.h",
-    "gamepad.cc",
-    "gamepad.h",
+    "gaming_seat.cc",
+    "gaming_seat.h",
     "keyboard.cc",
     "keyboard.h",
     "keyboard_delegate.h",
+    "keyboard_device_configuration_delegate.h",
     "notification_surface.cc",
     "notification_surface.h",
     "notification_surface_manager.h",
@@ -32,29 +37,48 @@ source_set("exo") {
     "surface.h",
     "surface_delegate.h",
     "surface_observer.h",
-    "surface_property.h",
     "touch.cc",
     "touch.h",
     "touch_delegate.h",
+    "wm_helper.cc",
+    "wm_helper.h",
+    "wm_helper_ash.cc",
+    "wm_helper_ash.h",
+    "wm_helper_mus.cc",
+    "wm_helper_mus.h",
   ]
 
   deps = [
     "//ash",
+    "//ash/public/cpp:ash_public_cpp",
     "//base",
     "//cc",
-    "//cc/surfaces:surfaces",
+    "//cc/ipc:interfaces",
+    "//cc/surfaces",
     "//device/gamepad",
+    "//device/gamepad/public/cpp:shared_with_blink",
     "//gpu",
     "//gpu/command_buffer/client:gles2_interface",
     "//skia",
     "//ui/aura",
     "//ui/compositor",
+    "//ui/display/manager",
+    "//ui/events/devices:devices",
     "//ui/gfx",
     "//ui/gfx/geometry",
     "//ui/gl",
     "//ui/views",
-    "//ui/wm:wm",
+    "//ui/views/mus",
+    "//ui/wm",
   ]
+
+  if (use_ozone) {
+    deps += [ "//ui/ozone" ]
+  }
+
+  if (is_chromeos) {
+    deps += [ "//chromeos" ]
+  }
 }
 
 source_set("test_support") {
@@ -68,7 +92,9 @@ source_set("test_support") {
   ]
 
   deps = [
-    "//ash:test_support",
+    ":exo",
+    "//ash/public/cpp:ash_public_cpp",
+    "//ash/test:test_support_without_content",
     "//base",
     "//gpu",
     "//skia",
@@ -76,6 +102,7 @@ source_set("test_support") {
     "//ui/aura",
     "//ui/compositor",
     "//ui/gfx/geometry",
+    "//ui/views",
     "//ui/wm:wm",
   ]
 }
@@ -86,7 +113,7 @@ source_set("unit_tests") {
   sources = [
     "buffer_unittest.cc",
     "display_unittest.cc",
-    "gamepad_unittest.cc",
+    "gaming_seat_unittest.cc",
     "keyboard_unittest.cc",
     "pointer_unittest.cc",
     "shared_memory_unittest.cc",
@@ -100,9 +127,11 @@ source_set("unit_tests") {
     ":exo",
     ":test_support",
     "//ash",
+    "//ash/public/cpp:ash_public_cpp",
     "//base",
     "//base/test:test_support",
     "//cc",
+    "//cc:test_support",
     "//cc/surfaces:surfaces",
     "//components/user_manager",
     "//device/gamepad:test_helpers",
@@ -117,7 +146,7 @@ source_set("unit_tests") {
     "//ui/keyboard",
     "//ui/message_center",
     "//ui/views",
-    "//ui/wm:wm",
+    "//ui/wm",
   ]
 
   if (use_ozone) {
@@ -127,26 +156,31 @@ source_set("unit_tests") {
 
 test("exo_unittests") {
   sources = [
+    "../../ash/test/ash_test_suite.cc",
+    "../../ash/test/ash_test_suite.h",
     "test/run_all_unittests.cc",
   ]
 
   deps = [
     ":unit_tests",
-    "//ash:test_support",
+    "//ash/public/cpp:ash_public_cpp",
+    "//ash/test:test_support_without_content",
     "//base",
     "//base/test:test_support",
     "//device/gamepad:test_helpers",
+    "//mojo/edk/embedder:headers",
+    "//testing/gtest",
+    "//ui/aura",
+    "//ui/base",
+    "//ui/compositor:test_support",
+    "//ui/gl:test_support",
   ]
 
   data_deps = [
-    "//ash/common/strings:ash_test_strings",
+    "//ash/strings:ash_test_strings",
     "//ash/resources:ash_test_resources_100_percent",
     "//ash/resources:ash_test_resources_200_percent",
   ]
-
-  if (use_x11) {
-    deps += [ "//tools/xdisplaycheck" ]
-  }
 
   if (is_linux) {
     deps += [ "//components/exo/wayland:unit_tests" ]

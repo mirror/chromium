@@ -25,15 +25,11 @@ function startWorkerAndRunTest()
     }
 }
 
-function startSecondWorker(onActionComplete)
+function startSecondWorker()
 {
     worker2 = new Worker("resources/worker.js");
     worker2.postMessage("");
-    worker2.onmessage = function(event)
-    {
-        onActionComplete();
-        worker2.onmessage = null;
-    }
+    return new Promise((fulfill) => worker2.onmessage = fulfill);
 }
 
 function test()
@@ -54,7 +50,7 @@ function test()
 
     function processEvent(event)
     {
-        if (!event.hasCategory(WebInspector.TracingModel.DevToolsMetadataEventCategory) || event.name !== WebInspector.TimelineModel.DevToolsMetadataEvent.TracingSessionIdForWorker)
+        if (!event.hasCategory(SDK.TracingModel.DevToolsMetadataEventCategory) || event.name !== TimelineModel.TimelineModel.DevToolsMetadataEvent.TracingSessionIdForWorker)
             return;
 
         ++workerMetadataEventCount;

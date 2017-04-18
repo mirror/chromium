@@ -31,36 +31,41 @@
 #ifndef SharedWorkerRepositoryClientImpl_h
 #define SharedWorkerRepositoryClientImpl_h
 
-#include "core/workers/SharedWorkerRepositoryClient.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "core/workers/SharedWorkerRepositoryClient.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 class WebSharedWorkerRepositoryClient;
 
-class SharedWorkerRepositoryClientImpl final : public SharedWorkerRepositoryClient {
-    WTF_MAKE_NONCOPYABLE(SharedWorkerRepositoryClientImpl);
-    USING_FAST_MALLOC(SharedWorkerRepositoryClientImpl);
-public:
-    static std::unique_ptr<SharedWorkerRepositoryClientImpl> create(WebSharedWorkerRepositoryClient* client)
-    {
-        return wrapUnique(new SharedWorkerRepositoryClientImpl(client));
-    }
+class SharedWorkerRepositoryClientImpl final
+    : public SharedWorkerRepositoryClient {
+  WTF_MAKE_NONCOPYABLE(SharedWorkerRepositoryClientImpl);
+  USING_FAST_MALLOC(SharedWorkerRepositoryClientImpl);
 
-    ~SharedWorkerRepositoryClientImpl() override { }
+ public:
+  static std::unique_ptr<SharedWorkerRepositoryClientImpl> Create(
+      WebSharedWorkerRepositoryClient* client) {
+    return WTF::WrapUnique(new SharedWorkerRepositoryClientImpl(client));
+  }
 
-    void connect(SharedWorker*, WebMessagePortChannelUniquePtr, const KURL&, const String& name, ExceptionState&) override;
-    void documentDetached(Document*) override;
+  ~SharedWorkerRepositoryClientImpl() override {}
 
-private:
-    explicit SharedWorkerRepositoryClientImpl(WebSharedWorkerRepositoryClient*);
+  void Connect(SharedWorker*,
+               std::unique_ptr<WebMessagePortChannel>,
+               const KURL&,
+               const String& name) override;
+  void DocumentDetached(Document*) override;
 
-    WebSharedWorkerRepositoryClient* m_client;
+ private:
+  explicit SharedWorkerRepositoryClientImpl(WebSharedWorkerRepositoryClient*);
+
+  WebSharedWorkerRepositoryClient* client_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SharedWorkerRepositoryClientImpl_h
+#endif  // SharedWorkerRepositoryClientImpl_h

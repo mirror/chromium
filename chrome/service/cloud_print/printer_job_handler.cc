@@ -10,7 +10,7 @@
 #include "base/json/json_reader.h"
 #include "base/location.h"
 #include "base/md5.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
@@ -241,7 +241,7 @@ void PrinterJobHandler::OnJobChanged() {
   // and have them check for updates.
   for (const auto& it : job_status_updater_list_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&JobStatusUpdater::UpdateStatus, it.get()));
+        FROM_HERE, base::Bind(&JobStatusUpdater::UpdateStatus, it));
   }
 }
 
@@ -623,7 +623,7 @@ void PrinterJobHandler::JobSpooled(PlatformJobId local_job_id) {
   job_status_updater_list_.push_back(job_status_updater);
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::Bind(&JobStatusUpdater::UpdateStatus, job_status_updater.get()));
+      base::Bind(&JobStatusUpdater::UpdateStatus, job_status_updater));
 
   CheckForJobs(kJobFetchReasonQueryMore);
 
@@ -720,15 +720,6 @@ void PrinterJobHandler::OnReceivePrinterCaps(
     cp_tag_wildcard += ".*";
     net::AddMultipartValueForUpload(kPrinterRemoveTagValue,
         cp_tag_wildcard, mime_boundary, std::string(), &post_data);
-
-    if (!last_caps_update_time_.is_null()) {
-      UMA_HISTOGRAM_CUSTOM_TIMES(
-          "CloudPrint.CapsUpdateInterval",
-          base::Time::Now() - last_caps_update_time_,
-          base::TimeDelta::FromMilliseconds(1),
-          base::TimeDelta::FromDays(7), 50);
-    }
-    last_caps_update_time_ = base::Time::Now();
   }
 
   if (printer_info.printer_name != printer_info_.printer_name) {

@@ -16,74 +16,62 @@ class LayoutSize;
 class LayoutUnit;
 
 class LayoutBoxItem : public LayoutBoxModel {
-public:
-    explicit LayoutBoxItem(LayoutBox* layoutBox)
-        : LayoutBoxModel(layoutBox)
-    {
-    }
+ public:
+  explicit LayoutBoxItem(LayoutBox* layout_box) : LayoutBoxModel(layout_box) {}
 
-    explicit LayoutBoxItem(const LayoutItem& item)
-        : LayoutBoxModel(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isBox());
-    }
+  explicit LayoutBoxItem(const LayoutItem& item) : LayoutBoxModel(item) {
+    SECURITY_DCHECK(!item || item.IsBox());
+  }
 
-    explicit LayoutBoxItem(std::nullptr_t) : LayoutBoxModel(nullptr) { }
+  explicit LayoutBoxItem(std::nullptr_t) : LayoutBoxModel(nullptr) {}
 
-    LayoutBoxItem() { }
+  LayoutBoxItem() {}
 
-    LayoutBoxItem enclosingBox() const
-    {
-        return LayoutBoxItem(toBox()->enclosingBox());
-    }
+  LayoutBoxItem EnclosingBox() const {
+    return LayoutBoxItem(ToBox()->EnclosingBox());
+  }
 
-    ScrollResult scroll(ScrollGranularity granularity, const FloatSize& delta)
-    {
-        return toBox()->scroll(granularity, delta);
-    }
+  ScrollResult Scroll(ScrollGranularity granularity, const FloatSize& delta) {
+    return ToBox()->Scroll(granularity, delta);
+  }
 
-    LayoutSize size() const
-    {
-        return toBox()->size();
-    }
+  LayoutSize Size() const { return ToBox()->Size(); }
 
-    LayoutPoint location() const
-    {
-        return toBox()->location();
-    }
+  LayoutPoint Location() const { return ToBox()->Location(); }
 
-    LayoutUnit logicalWidth() const
-    {
-        return toBox()->logicalWidth();
-    }
+  LayoutUnit LogicalWidth() const { return ToBox()->LogicalWidth(); }
 
-    LayoutUnit logicalHeight() const
-    {
-        return toBox()->logicalHeight();
-    }
+  LayoutUnit LogicalHeight() const { return ToBox()->LogicalHeight(); }
 
-    LayoutUnit minPreferredLogicalWidth() const
-    {
-        return toBox()->minPreferredLogicalWidth();
-    }
+  LayoutUnit MinPreferredLogicalWidth() const {
+    return ToBox()->MinPreferredLogicalWidth();
+  }
 
-    LayoutRect overflowClipRect(const LayoutPoint& location, OverlayScrollbarClipBehavior behavior = IgnoreOverlayScrollbarSize) const
-    {
-        return toBox()->overflowClipRect(location, behavior);
-    }
+  LayoutRect OverflowClipRect(const LayoutPoint& location,
+                              OverlayScrollbarClipBehavior behavior =
+                                  kIgnorePlatformOverlayScrollbarSize) const {
+    return ToBox()->OverflowClipRect(location, behavior);
+  }
 
-private:
-    LayoutBox* toBox()
-    {
-        return toLayoutBox(layoutObject());
-    }
+  LayoutSize ContentBoxOffset() const { return ToBox()->ContentBoxOffset(); }
 
-    const LayoutBox* toBox() const
-    {
-        return toLayoutBox(layoutObject());
-    }
+  void MapLocalToAncestor(
+      const LayoutBoxModelObject* ancestor,
+      TransformState& state,
+      MapCoordinatesFlags flags = kApplyContainerFlip) const {
+    ToBox()->MapLocalToAncestor(ancestor, state, flags);
+  }
+
+  FloatQuad AbsoluteContentQuad(MapCoordinatesFlags flags = 0) const {
+    return ToBox()->AbsoluteContentQuad(flags);
+  }
+
+ private:
+  LayoutBox* ToBox() { return ToLayoutBox(GetLayoutObject()); }
+
+  const LayoutBox* ToBox() const { return ToLayoutBox(GetLayoutObject()); }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutBoxItem_h
+#endif  // LayoutBoxItem_h

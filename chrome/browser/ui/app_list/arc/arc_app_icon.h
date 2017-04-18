@@ -5,10 +5,11 @@
 #ifndef CHROME_BROWSER_UI_APP_LIST_ARC_ARC_APP_ICON_H_
 #define CHROME_BROWSER_UI_APP_LIST_ARC_ARC_APP_ICON_H_
 
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/weak_ptr.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/image/image.h"
@@ -81,10 +82,11 @@ class ArcAppIcon {
   class DecodeRequest;
   struct ReadResult;
 
-  void RequestIcon(ui::ScaleFactor scale_factor);
+  void MaybeRequestIcon(ui::ScaleFactor scale_factor);
   static std::unique_ptr<ArcAppIcon::ReadResult> ReadOnFileThread(
       ui::ScaleFactor scale_factor,
-      const base::FilePath& path);
+      const base::FilePath& path,
+      const base::FilePath& default_app_path);
   void OnIconRead(std::unique_ptr<ArcAppIcon::ReadResult> read_result);
   void Update(const gfx::ImageSkia* image);
   void DiscardDecodeRequest(DecodeRequest* request);
@@ -102,7 +104,7 @@ class ArcAppIcon {
   gfx::Image image_;
 
   // Contains pending image decode requests.
-  ScopedVector<DecodeRequest> decode_requests_;
+  std::vector<std::unique_ptr<DecodeRequest>> decode_requests_;
 
   base::WeakPtrFactory<ArcAppIcon> weak_ptr_factory_;
 

@@ -11,10 +11,10 @@
 namespace gl {
 class GLStateRestorer;
 
-class GL_EXPORT ScopedFrameBufferBinder {
+class GL_EXPORT ScopedFramebufferBinder {
  public:
-  explicit ScopedFrameBufferBinder(unsigned int fbo);
-  ~ScopedFrameBufferBinder();
+  explicit ScopedFramebufferBinder(unsigned int fbo);
+  ~ScopedFramebufferBinder();
 
  private:
   // Whenever possible we prefer to use the current GLContext's
@@ -24,7 +24,7 @@ class GL_EXPORT ScopedFrameBufferBinder {
   // Failing that we use GL calls to save and restore state.
   int old_fbo_;
 
-  DISALLOW_COPY_AND_ASSIGN(ScopedFrameBufferBinder);
+  DISALLOW_COPY_AND_ASSIGN(ScopedFramebufferBinder);
 };
 
 class GL_EXPORT ScopedActiveTexture {
@@ -33,7 +33,11 @@ class GL_EXPORT ScopedActiveTexture {
   ~ScopedActiveTexture();
 
  private:
-  // TODO(dcastagna): Use GLStateRestorer.
+  // Whenever possible we prefer to use the current GLContext's
+  // GLStateRestorer to maximize driver compabitility.
+  GLStateRestorer* state_restorer_;
+
+  // Failing that we use GL calls to save and restore state.
   int old_texture_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedActiveTexture);
@@ -62,7 +66,11 @@ class GL_EXPORT ScopedUseProgram {
   ~ScopedUseProgram();
 
  private:
-  // TODO(dcastagna): Use GLStateRestorer.
+  // Whenever possible we prefer to use the current GLContext's
+  // GLStateRestorer to maximize driver compabitility.
+  GLStateRestorer* state_restorer_;
+
+  // Failing that we use GL calls to save and restore state.
   int old_program_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedUseProgram);
@@ -79,7 +87,11 @@ class GL_EXPORT ScopedVertexAttribArray {
   ~ScopedVertexAttribArray();
 
  private:
-  // TODO(dcastagna): Use GLStateRestorer.
+  // Whenever possible we prefer to use the current GLContext's
+  // GLStateRestorer to maximize driver compabitility.
+  GLStateRestorer* state_restorer_;
+
+  // Failing that we use GL calls to save and restore state.
   int buffer_;
   int enabled_;
   int index_;
@@ -98,7 +110,11 @@ class GL_EXPORT ScopedBufferBinder {
   ~ScopedBufferBinder();
 
  private:
-  // TODO(dcastagna): Use GLStateRestorer.
+  // Whenever possible we prefer to use the current GLContext's
+  // GLStateRestorer to maximize driver compabitility.
+  GLStateRestorer* state_restorer_;
+
+  // Failing that we use GL calls to save and restore state.
   int target_;
   int old_id_;
 

@@ -4,7 +4,7 @@
 
 #include "chrome/browser/download/download_file_picker.h"
 
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
@@ -49,10 +49,9 @@ void RecordFilePickerResult(const base::FilePath& suggested_path,
 
 }  // namespace
 
-DownloadFilePicker::DownloadFilePicker(
-    DownloadItem* item,
-    const base::FilePath& suggested_path,
-    const FileSelectedCallback& callback)
+DownloadFilePicker::DownloadFilePicker(DownloadItem* item,
+                                       const base::FilePath& suggested_path,
+                                       const ConfirmationCallback& callback)
     : suggested_path_(suggested_path),
       file_selected_callback_(callback),
       should_record_file_picker_result_(false) {
@@ -63,8 +62,16 @@ DownloadFilePicker::DownloadFilePicker(
   should_record_file_picker_result_ = !prefs->PromptForDownload();
 
   WebContents* web_contents = item->GetWebContents();
+  if (!web_contents || !web_contents->GetNativeView())
+    return;
+
   select_file_dialog_ = ui::SelectFileDialog::Create(
       this, new ChromeSelectFilePolicy(web_contents));
+  // |select_file_dialog_| could be null in Linux. See CreateSelectFileDialog()
+  // in shell_dialog_linux.cc.
+  if (!select_file_dialog_.get())
+    return;
+
   ui::SelectFileDialog::FileTypeInfo file_type_info;
   // Platform file pickers, notably on Mac and Windows, tend to break
   // with double extensions like .tar.gz, so only pass in normal ones.
@@ -96,7 +103,10 @@ DownloadFilePicker::~DownloadFilePicker() {
 void DownloadFilePicker::OnFileSelected(const base::FilePath& path) {
   if (should_record_file_picker_result_)
     RecordFilePickerResult(suggested_path_, path);
-  file_selected_callback_.Run(path);
+  file_selected_callback_.Run(path.empty()
+                                  ? DownloadConfirmationResult::CANCELED
+                                  : DownloadConfirmationResult::CONFIRMED,
+                              path);
   delete this;
 }
 
@@ -115,7 +125,7 @@ void DownloadFilePicker::FileSelectionCanceled(void* params) {
 // static
 void DownloadFilePicker::ShowFilePicker(DownloadItem* item,
                                         const base::FilePath& suggested_path,
-                                        const FileSelectedCallback& callback) {
+                                        const ConfirmationCallback& callback) {
   new DownloadFilePicker(item, suggested_path, callback);
   // DownloadFilePicker deletes itself.
 }

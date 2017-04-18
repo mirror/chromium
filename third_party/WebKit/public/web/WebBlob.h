@@ -45,7 +45,8 @@ namespace v8 {
 class Isolate;
 class Object;
 class Value;
-template <class T> class Local;
+template <class T>
+class Local;
 }
 
 namespace blink {
@@ -53,38 +54,42 @@ namespace blink {
 class Blob;
 
 class WebBlob {
-public:
-    ~WebBlob() { reset(); }
+ public:
+  ~WebBlob() { Reset(); }
 
-    WebBlob() { }
-    WebBlob(const WebBlob& b) { assign(b); }
-    WebBlob& operator=(const WebBlob& b)
-    {
-        assign(b);
-        return *this;
-    }
+  WebBlob() {}
+  WebBlob(const WebBlob& b) { Assign(b); }
+  WebBlob& operator=(const WebBlob& b) {
+    Assign(b);
+    return *this;
+  }
 
-    BLINK_EXPORT static WebBlob createFromUUID(const WebString& uuid, const WebString& type, long long size);
-    BLINK_EXPORT static WebBlob createFromFile(const WebString& path, long long size);
-    BLINK_EXPORT static WebBlob fromV8Value(v8::Local<v8::Value>);
+  BLINK_EXPORT static WebBlob CreateFromUUID(const WebString& uuid,
+                                             const WebString& type,
+                                             long long size);
+  BLINK_EXPORT static WebBlob CreateFromFile(const WebString& path,
+                                             long long size);
+  BLINK_EXPORT static WebBlob FromV8Value(v8::Local<v8::Value>);
 
-    BLINK_EXPORT void reset();
-    BLINK_EXPORT void assign(const WebBlob&);
-    BLINK_EXPORT WebString uuid();
+  BLINK_EXPORT void Reset();
+  BLINK_EXPORT void Assign(const WebBlob&);
+  BLINK_EXPORT WebString Uuid();
 
-    bool isNull() const { return m_private.isNull(); }
+  bool IsNull() const { return private_.IsNull(); }
 
-    BLINK_EXPORT v8::Local<v8::Value>  toV8Value(v8::Local<v8::Object> creationContext, v8::Isolate*);
+  BLINK_EXPORT v8::Local<v8::Value> ToV8Value(
+      v8::Local<v8::Object> creation_context,
+      v8::Isolate*);
 
 #if BLINK_IMPLEMENTATION
-    WebBlob(Blob*);
-    WebBlob& operator=(Blob*);
+  WebBlob(Blob*);
+  WebBlob& operator=(Blob*);
 #endif
 
-protected:
-    WebPrivatePtr<Blob> m_private;
+ protected:
+  WebPrivatePtr<Blob> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebBlob_h
+#endif  // WebBlob_h

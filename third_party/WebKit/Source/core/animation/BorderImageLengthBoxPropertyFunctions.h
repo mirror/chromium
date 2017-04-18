@@ -11,48 +11,53 @@
 namespace blink {
 
 class BorderImageLengthBoxPropertyFunctions {
-public:
-    static const BorderImageLengthBox& getInitialBorderImageLengthBox(CSSPropertyID property) { return getBorderImageLengthBox(property, ComputedStyle::initialStyle()); }
+ public:
+  static const BorderImageLengthBox& GetInitialBorderImageLengthBox(
+      CSSPropertyID property) {
+    return GetBorderImageLengthBox(property, ComputedStyle::InitialStyle());
+  }
 
-    static const BorderImageLengthBox& getBorderImageLengthBox(CSSPropertyID property, const ComputedStyle& style)
-    {
-        switch (property) {
-        case CSSPropertyBorderImageOutset:
-            return style.borderImageOutset();
-        case CSSPropertyBorderImageWidth:
-            return style.borderImageWidth();
-        case CSSPropertyWebkitMaskBoxImageOutset:
-            return style.maskBoxImageOutset();
-        case CSSPropertyWebkitMaskBoxImageWidth:
-            return style.maskBoxImageWidth();
-        default:
-            NOTREACHED();
-            return getInitialBorderImageLengthBox(CSSPropertyBorderImageOutset);
-        }
+  static const BorderImageLengthBox& GetBorderImageLengthBox(
+      CSSPropertyID property,
+      const ComputedStyle& style) {
+    switch (property) {
+      case CSSPropertyBorderImageOutset:
+        return style.BorderImageOutset();
+      case CSSPropertyBorderImageWidth:
+        return style.BorderImageWidth();
+      case CSSPropertyWebkitMaskBoxImageOutset:
+        return style.MaskBoxImageOutset();
+      case CSSPropertyWebkitMaskBoxImageWidth:
+        return style.MaskBoxImageWidth();
+      default:
+        NOTREACHED();
+        return GetInitialBorderImageLengthBox(CSSPropertyBorderImageOutset);
     }
+  }
 
-    static void setBorderImageLengthBox(CSSPropertyID property, ComputedStyle& style, const BorderImageLengthBox& box)
-    {
-        switch (property) {
-        case CSSPropertyBorderImageOutset:
-            style.setBorderImageOutset(box);
-            break;
-        case CSSPropertyWebkitMaskBoxImageOutset:
-            style.setMaskBoxImageOutset(box);
-            break;
-        case CSSPropertyBorderImageWidth:
-            style.setBorderImageWidth(box);
-            break;
-        case CSSPropertyWebkitMaskBoxImageWidth:
-            style.setMaskBoxImageWidth(box);
-            break;
-        default:
-            NOTREACHED();
-            break;
-        }
+  static void SetBorderImageLengthBox(CSSPropertyID property,
+                                      ComputedStyle& style,
+                                      const BorderImageLengthBox& box) {
+    switch (property) {
+      case CSSPropertyBorderImageOutset:
+        style.SetBorderImageOutset(box);
+        break;
+      case CSSPropertyWebkitMaskBoxImageOutset:
+        style.SetMaskBoxImageOutset(box);
+        break;
+      case CSSPropertyBorderImageWidth:
+        style.SetBorderImageWidth(box);
+        break;
+      case CSSPropertyWebkitMaskBoxImageWidth:
+        style.SetMaskBoxImageWidth(box);
+        break;
+      default:
+        NOTREACHED();
+        break;
     }
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BorderImageLengthBoxPropertyFunctions_h
+#endif  // BorderImageLengthBoxPropertyFunctions_h

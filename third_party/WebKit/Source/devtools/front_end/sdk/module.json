@@ -2,15 +2,10 @@
     "dependencies": [
         "common",
         "host",
-        "platform"
+        "platform",
+        "protocol"
     ],
     "extensions": [
-        {
-            "type": "setting",
-            "settingName": "blockedURLs",
-            "settingType": "array",
-            "defaultValue": []
-        },
         {
             "type": "setting",
             "settingName": "skipStackFramesPattern",
@@ -31,8 +26,14 @@
             "settingType": "boolean",
             "defaultValue": false,
             "options": [
-                { "value": true, "title": "Preserve log upon navigation" },
-                { "value": false, "title": "Do not preserve log upon navigation" }
+                {
+                    "value": true,
+                    "title": "Preserve log upon navigation"
+                },
+                {
+                    "value": false,
+                    "title": "Do not preserve log upon navigation"
+                }
             ]
         },
         {
@@ -42,8 +43,14 @@
             "settingType": "boolean",
             "defaultValue": false,
             "options": [
-                { "value": true, "title": "Pause on exceptions" },
-                { "value": false, "title": "Do not pause on exceptions" }
+                {
+                    "value": true,
+                    "title": "Pause on exceptions"
+                },
+                {
+                    "value": false,
+                    "title": "Do not pause on exceptions"
+                }
             ]
         },
         {
@@ -59,8 +66,14 @@
             "settingType": "boolean",
             "defaultValue": false,
             "options": [
-                { "value": true, "title": "Capture async stack traces" },
-                { "value": false, "title": "Do not capture async stack traces" }
+                {
+                    "value": true,
+                    "title": "Capture async stack traces"
+                },
+                {
+                    "value": false,
+                    "title": "Do not capture async stack traces"
+                }
             ]
         },
         {
@@ -68,39 +81,64 @@
             "settingName": "showMetricsRulers",
             "settingType": "boolean",
             "defaultValue": false
+        },
+        {
+            "type": "setting",
+            "category": "Console",
+            "title": "Enable custom formatters",
+            "settingName": "customFormatters",
+            "settingType": "boolean",
+            "defaultValue": false
+        },
+        {
+            "type": "setting",
+            "category": "Network",
+            "title": "Enable request blocking",
+            "settingName": "requestBlockingEnabled",
+            "settingType": "boolean",
+            "storageType": "session",
+            "defaultValue": false,
+            "options": [
+                {
+                    "value": true,
+                    "title": "Enable request blocking"
+                },
+                {
+                    "value": false,
+                    "title": "Disable request blocking"
+                }
+            ]
         }
     ],
     "scripts": [
-        "InspectorBackend.js",
-        "../InspectorBackendCommands.js",
-        "InspectorBackendHostedMode.js",
         "Target.js",
         "TargetManager.js",
-        "ApplicationCacheModel.js",
-        "ConsoleModel.js",
+        "Connections.js",
         "ContentProviders.js",
+        "CookieModel.js",
         "CookieParser.js",
         "ProfileTreeModel.js",
+        "ServerTiming.js",
         "CPUProfileDataModel.js",
         "CPUProfilerModel.js",
         "CSSMatchedStyles.js",
         "CSSMedia.js",
         "CSSMetadata.js",
         "CSSModel.js",
-        "CSSParser.js",
         "CSSProperty.js",
         "CSSRule.js",
         "CSSStyleDeclaration.js",
         "CSSStyleSheetHeader.js",
+        "DOMDebuggerModel.js",
         "DOMModel.js",
         "DebuggerModel.js",
-        "HAREntry.js",
-        "NetworkLog.js",
+        "LayerTreeBase.js",
+        "LogModel.js",
         "ServiceWorkerManager.js",
         "TracingManager.js",
         "TracingModel.js",
-        "WorkerManager.js",
         "RuntimeModel.js",
+        "ScreenCaptureModel.js",
         "Script.js",
         "ServiceWorkerCacheModel.js",
         "RemoteObject.js",
@@ -108,14 +146,15 @@
         "ResourceTreeModel.js",
         "SecurityOriginManager.js",
         "SourceMap.js",
+        "SourceMapManager.js",
         "NetworkManager.js",
         "NetworkRequest.js",
         "PaintProfiler.js",
         "HeapProfilerModel.js",
-        "../SupportedCSSProperties.js"
+        "../SupportedCSSProperties.js",
+        "FilmStripModel.js"
     ],
     "skip_compilation": [
-        "../InspectorBackendCommands.js",
         "../SupportedCSSProperties.js"
     ]
 }

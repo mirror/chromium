@@ -4,28 +4,29 @@
 
 #include "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.h"
 
+#include "base/metrics/user_metrics.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/permissions/permission_manager.h"
 #include "chrome/browser/permissions/permission_request_id.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/features.h"
 #include "chrome/common/render_messages.h"
-#include "components/content_settings/content/common/content_settings_messages.h"
-#include "content/public/browser/permission_type.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/user_metrics.h"
 #include "extensions/browser/guest_view/web_view/web_view_constants.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
+#include "ppapi/features/features.h"
 
 namespace extensions {
 
 namespace {
 
 void CallbackWrapper(const base::Callback<void(bool)>& callback,
-                     blink::mojom::PermissionStatus status) {
-  callback.Run(status == blink::mojom::PermissionStatus::GRANTED);
+                     ContentSetting status) {
+  callback.Run(status == CONTENT_SETTING_ALLOW);
 }
 
 }  // anonymous namespace
@@ -39,7 +40,7 @@ ChromeWebViewPermissionHelperDelegate::ChromeWebViewPermissionHelperDelegate(
 ChromeWebViewPermissionHelperDelegate::~ChromeWebViewPermissionHelperDelegate()
 {}
 
-#if defined(ENABLE_PLUGINS)
+#if BUILDFLAG(ENABLE_PLUGINS)
 bool ChromeWebViewPermissionHelperDelegate::OnMessageReceived(
     const IPC::Message& message,
     content::RenderFrameHost* render_frame_host) {
@@ -59,12 +60,8 @@ bool ChromeWebViewPermissionHelperDelegate::OnMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(ChromeWebViewPermissionHelperDelegate, message)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_CouldNotLoadPlugin,
                         OnCouldNotLoadPlugin)
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_OpenAboutPlugins,
-                        OnOpenAboutPlugins)
-#if defined(ENABLE_PLUGIN_INSTALLATION)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_RemovePluginPlaceholderHost,
                         OnRemovePluginPlaceholderHost)
-#endif
     IPC_MESSAGE_UNHANDLED(return false)
   IPC_END_MESSAGE_MAP()
 
@@ -87,7 +84,7 @@ void ChromeWebViewPermissionHelperDelegate::OnBlockedUnauthorizedPlugin(
                  weak_factory_.GetWeakPtr(),
                  identifier),
       true /* allowed_by_default */);
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("WebView.Guest.PluginLoadRequest"));
 }
 
@@ -100,14 +97,9 @@ void ChromeWebViewPermissionHelperDelegate::OnBlockedOutdatedPlugin(
     const std::string& identifier) {
 }
 
-void ChromeWebViewPermissionHelperDelegate::OnOpenAboutPlugins() {
-}
-
-#if defined(ENABLE_PLUGIN_INSTALLATION)
 void ChromeWebViewPermissionHelperDelegate::OnRemovePluginPlaceholderHost(
     int placeholder_id) {
 }
-#endif  // defined(ENABLE_PLUGIN_INSTALLATION)
 
 void ChromeWebViewPermissionHelperDelegate::OnPermissionResponse(
     const std::string& identifier,
@@ -119,7 +111,7 @@ void ChromeWebViewPermissionHelperDelegate::OnPermissionResponse(
   }
 }
 
-#endif  // defined(ENABLE_PLUGINS)
+#endif  // BUILDFLAG(ENABLE_PLUGINS)
 
 void ChromeWebViewPermissionHelperDelegate::CanDownload(
     const GURL& url,
@@ -201,7 +193,7 @@ void ChromeWebViewPermissionHelperDelegate::RequestGeolocationPermission(
 void ChromeWebViewPermissionHelperDelegate::OnGeolocationPermissionResponse(
     int bridge_id,
     bool user_gesture,
-    const base::Callback<void(blink::mojom::PermissionStatus)>& callback,
+    const base::Callback<void(ContentSetting)>& callback,
     bool allow,
     const std::string& user_input) {
   // The <webview> embedder has allowed the permission. We now need to make sure
@@ -209,7 +201,7 @@ void ChromeWebViewPermissionHelperDelegate::OnGeolocationPermissionResponse(
   RemoveBridgeID(bridge_id);
 
   if (!allow || !web_view_guest()->attached()) {
-    callback.Run(blink::mojom::PermissionStatus::DENIED);
+    callback.Run(CONTENT_SETTING_BLOCK);
     return;
   }
 
@@ -230,7 +222,7 @@ void ChromeWebViewPermissionHelperDelegate::OnGeolocationPermissionResponse(
   Profile* profile = Profile::FromBrowserContext(
       web_view_guest()->browser_context());
   PermissionManager::Get(profile)->RequestPermission(
-      content::PermissionType::GEOLOCATION, web_contents->GetMainFrame(),
+      CONTENT_SETTINGS_TYPE_GEOLOCATION, web_contents->GetMainFrame(),
       web_view_guest()
           ->embedder_web_contents()
           ->GetLastCommittedURL()

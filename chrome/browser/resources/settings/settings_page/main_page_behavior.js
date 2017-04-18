@@ -2,48 +2,329 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Fast out, slow in.
-var EASING_FUNCTION = 'cubic-bezier(0.4, 0, 0.2, 1)';
-var EXPAND_DURATION = 350;
-
 /**
- * Calls |readyTest| repeatedly until it returns true, then calls
- * |readyCallback|.
- * @param {function():boolean} readyTest
- * @param {!Function} readyCallback
- */
-function doWhenReady(readyTest, readyCallback) {
-  // TODO(dschuyler): Determine whether this hack can be removed.
-  // See also: https://github.com/Polymer/polymer/issues/3629
-  var intervalId = setInterval(function() {
-    if (readyTest()) {
-      clearInterval(intervalId);
-      readyCallback();
-    }
-  }, 10);
-}
-
-/**
- * Provides animations to expand and collapse individual sections in a page.
- * Expanded sections take up the full height of the container. At most one
- * section should be expanded at any given time.
- * @polymerBehavior Polymer.MainPageBehavior
+ * Responds to route changes by expanding, collapsing, or scrolling to sections
+ * on the page. Expanded sections take up the full height of the container. At
+ * most one section should be expanded at any given time.
+ * @polymerBehavior MainPageBehavior
  */
 var MainPageBehaviorImpl = {
-  /**
-   * @type {string} Selector to get the sections. Derived elements
-   *     must override.
-   */
-  sectionSelector: '',
+  properties: {
+    /**
+     * Help CSS to alter style during the horizontal swipe animation.
+     * Note that this is unrelated to the |currentAnimation_| (which refers to
+     * the vertical exapand animation).
+     */
+    isSubpageAnimating: {
+      reflectToAttribute: true,
+      type: Boolean,
+    },
 
-  /** @type {?Element} The scrolling container. */
+    /**
+     * Whether a search operation is in progress or previous search results are
+     * being displayed.
+     * @private {boolean}
+     */
+    inSearchMode: {
+      type: Boolean,
+      value: false,
+      observer: 'inSearchModeChanged_',
+    },
+  },
+
+  /** @type {?HTMLElement} The scrolling container. */
   scroller: null,
+
+  listeners: {
+    'neon-animation-finish': 'onNeonAnimationFinish_'
+  },
 
   /** @override */
   attached: function() {
-    this.scroller = this.domHost && this.domHost.parentNode.$.mainContainer;
+    this.scroller = this.domHost ? this.domHost.parentNode : document.body;
   },
 
+  /**
+   * Remove the is-animating attribute once the animation is complete.
+   * This may catch animations finishing more often than needed, which is not
+   * known to cause any issues (e.g. when animating from a shallower page to a
+   * deeper page; or when transitioning to the main page).
+   * @private
+   */
+  onNeonAnimationFinish_: function() {
+    this.isSubpageAnimating = false;
+  },
+
+  /**
+   * @param {!settings.Route} newRoute
+   * @param {settings.Route} oldRoute
+   */
+  currentRouteChanged: function(newRoute, oldRoute) {
+    var oldRouteWasSection =
+        !!oldRoute && !!oldRoute.parent && !!oldRoute.section &&
+        oldRoute.parent.section != oldRoute.section;
+
+    if (this.scroller) {
+      // When navigating from a section to the root route, we just need to
+      // scroll to the top, and can early exit afterwards.
+      if (oldRouteWasSection && newRoute == settings.Route.BASIC) {
+        this.scroller.scrollTop = 0;
+        return;
+      }
+
+      // When navigating to the About page, we need to scroll to the top, and
+      // still do the rest of section management.
+      if (newRoute == settings.Route.ABOUT)
+        this.scroller.scrollTop = 0;
+    }
+
+    // Scroll to the section except for back/forward. Also scroll for any
+    // in-page back/forward navigations (from a section or the root page).
+    // Also always scroll when coming from either the About or root page.
+    var scrollToSection = !settings.lastRouteChangeWasPopstate() ||
+        oldRouteWasSection || oldRoute == settings.Route.BASIC ||
+        oldRoute == settings.Route.ABOUT;
+
+    // TODO(dschuyler): This doesn't set the flag in the case of going to or
+    // from the main page. It seems sensible to set the flag in those cases,
+    // unfortunately bug 708465 happens. Figure out why that is and then set
+    // this flag more broadly.
+    if (oldRoute && oldRoute.isSubpage() && newRoute.isSubpage())
+      this.isSubpageAnimating = true;
+
+    // For previously uncreated pages (including on first load), allow the page
+    // to render before scrolling to or expanding the section.
+    if (!oldRoute || this.scrollHeight == 0)
+      setTimeout(this.tryTransitionToSection_.bind(this, scrollToSection));
+    else
+      this.tryTransitionToSection_(scrollToSection);
+  },
+
+  /**
+   * When exiting search mode, we need to make another attempt to scroll to
+   * the correct section, since it has just been re-rendered.
+   * @private
+   */
+  inSearchModeChanged_: function(inSearchMode) {
+    if (!this.isAttached)
+      return;
+
+    if (!inSearchMode)
+      this.tryTransitionToSection_(!settings.lastRouteChangeWasPopstate());
+  },
+
+  /**
+   * If possible, transitions to the current route's section (by expanding or
+   * scrolling to it). If another transition is running, finishes or cancels
+   * that one, then schedules this function again. This ensures the current
+   * section is quickly shown, without getting the page into a broken state --
+   * if currentRoute changes in between calls, just transition to the new route.
+   * @param {boolean} scrollToSection
+   * @private
+   */
+  tryTransitionToSection_: function(scrollToSection) {
+    var currentRoute = settings.getCurrentRoute();
+    var currentSection = this.getSection(currentRoute.section);
+
+    // If an animation is already playing, try finishing or canceling it.
+    if (this.currentAnimation_) {
+      this.maybeStopCurrentAnimation_();
+      // Either way, this function will be called again once the current
+      // animation ends.
+      return;
+    }
+
+    var promise;
+    var expandedSection = /** @type {?SettingsSectionElement} */(
+        this.$$('settings-section.expanded'));
+    if (expandedSection) {
+      // If the section shouldn't be expanded, collapse it.
+      if (!currentRoute.isSubpage() || expandedSection != currentSection) {
+        promise = this.collapseSection_(expandedSection);
+      } else {
+        // Scroll to top while sliding to another subpage.
+        this.scroller.scrollTop = 0;
+      }
+    } else if (currentSection) {
+      // Expand the section into a subpage or scroll to it on the main page.
+      if (currentRoute.isSubpage())
+        promise = this.expandSection_(currentSection);
+      else if (scrollToSection)
+        currentSection.scrollIntoView();
+    } else if (
+        this.tagName == 'SETTINGS-BASIC-PAGE' &&
+        settings.Route.ADVANCED.contains(currentRoute) &&
+        // Need to exclude routes that correspond to 'non-sectioned' children of
+        // ADVANCED, otherwise tryTransitionToSection_ will recurse endlessly.
+        !currentRoute.isNavigableDialog) {
+      assert(currentRoute.section);
+      promise = this.$$('#advancedPageTemplate').get();
+    }
+
+    // When this animation ends, another may be necessary. Call this function
+    // again after the promise resolves.
+    if (promise)
+      promise.then(this.tryTransitionToSection_.bind(this, scrollToSection));
+  },
+
+  /**
+   * If the current animation is inconsistent with the current route, stops the
+   * animation by finishing or canceling it so the new route can be animated to.
+   * @private
+   */
+  maybeStopCurrentAnimation_: function() {
+    var currentRoute = settings.getCurrentRoute();
+    var animatingSection = /** @type {?SettingsSectionElement} */(
+        this.$$('settings-section.expanding, settings-section.collapsing'));
+    assert(animatingSection);
+
+    if (animatingSection.classList.contains('expanding')) {
+      // Cancel the animation to go back to the main page if the animating
+      // section shouldn't be expanded.
+      if (animatingSection.section != currentRoute.section ||
+          !currentRoute.isSubpage()) {
+        this.currentAnimation_.cancel();
+      }
+      // Otherwise, let the expand animation continue.
+      return;
+    }
+
+    assert(animatingSection.classList.contains('collapsing'));
+    if (!currentRoute.isSubpage())
+      return;
+
+    // If the collapsing section actually matches the current route's section,
+    // we can just cancel the animation to re-expand the section.
+    if (animatingSection.section == currentRoute.section) {
+      this.currentAnimation_.cancel();
+      return;
+    }
+
+    // The current route is a subpage, so that section needs to expand.
+    // Immediately finish the current collapse animation so that can happen.
+    this.currentAnimation_.finish();
+  },
+
+  /**
+   * Animates the card in |section|, expanding it to fill the page.
+   * @param {!SettingsSectionElement} section
+   * @return {!Promise} Resolved when the transition is finished or canceled.
+   * @private
+   */
+  expandSection_: function(section) {
+    assert(this.scroller);
+
+    if (!section.canAnimateExpand()) {
+      // Try to wait for the section to be created.
+      return new Promise(function(resolve, reject) {
+        setTimeout(resolve);
+      });
+    }
+
+    // Save the scroller position before freezing it.
+    this.origScrollTop_ = this.scroller.scrollTop;
+    this.fire('freeze-scroll', true);
+
+    // Freeze the section's height so its card can be removed from the flow.
+    section.setFrozen(true);
+
+    this.currentAnimation_ = section.animateExpand(this.scroller);
+
+    var finished;
+    return this.currentAnimation_.finished.then(function() {
+      // Hide other sections and scroll to the top of the subpage.
+      this.classList.add('showing-subpage');
+      this.toggleOtherSectionsHidden_(section.section, true);
+      this.scroller.scrollTop = 0;
+      section.setFrozen(false);
+
+      // Notify that the page is fully expanded.
+      this.fire('subpage-expand');
+
+      finished = true;
+    }.bind(this), function() {
+      // The animation was canceled; restore the section and scroll position.
+      section.setFrozen(false);
+      this.scroller.scrollTop = this.origScrollTop_;
+
+      finished = false;
+    }.bind(this)).then(function() {
+      this.fire('freeze-scroll', false);
+      this.currentAnimation_ = null;
+    }.bind(this));
+  },
+
+  /**
+   * Animates the card in |section|, collapsing it back into its section.
+   * @param {!SettingsSectionElement} section
+   * @return {!Promise} Resolved when the transition is finished or canceled.
+   */
+  collapseSection_: function(section) {
+    assert(this.scroller);
+    assert(section.classList.contains('expanded'));
+
+    // Don't animate the collapse if we are transitioning between Basic/Advanced
+    // and About, since the section won't be visible.
+    var needAnimate =
+        settings.Route.ABOUT.contains(settings.getCurrentRoute()) ==
+        (section.domHost.tagName == 'SETTINGS-ABOUT-PAGE');
+
+    // Animate the collapse if the section knows the original height, except
+    // when switching between Basic/Advanced and About.
+    var shouldAnimateCollapse = needAnimate && section.canAnimateCollapse();
+    if (shouldAnimateCollapse) {
+      this.fire('freeze-scroll', true);
+      // Do the initial collapse setup, which takes the section out of the flow,
+      // before showing everything.
+      section.setUpAnimateCollapse(this.scroller);
+    } else {
+      section.classList.remove('expanded');
+    }
+
+    // Show everything.
+    this.toggleOtherSectionsHidden_(section.section, false);
+    this.classList.remove('showing-subpage');
+
+    if (!shouldAnimateCollapse) {
+      // Finish by restoring the section into the page.
+      section.setFrozen(false);
+      return Promise.resolve();
+    }
+
+    // Play the actual collapse animation.
+    return new Promise(function(resolve, reject) {
+      // Wait for the other sections to show up so we can scroll properly.
+      setTimeout(function() {
+        var newSection = settings.getCurrentRoute().section &&
+            this.getSection(settings.getCurrentRoute().section);
+
+        // Scroll to the new section or the original position.
+        if (newSection && !settings.lastRouteChangeWasPopstate() &&
+            !settings.getCurrentRoute().isSubpage()) {
+          newSection.scrollIntoView();
+        } else {
+          this.scroller.scrollTop = this.origScrollTop_;
+        }
+
+        this.currentAnimation_ = section.animateCollapse(
+            /** @type {!HTMLElement} */(this.scroller));
+
+        this.currentAnimation_.finished.catch(function() {
+          // The collapse was canceled, so the page is showing a subpage still.
+          this.fire('subpage-expand');
+        }.bind(this)).then(function() {
+          // Clean up after the animation succeeds or cancels.
+          section.setFrozen(false);
+          section.classList.remove('collapsing');
+          this.fire('freeze-scroll', false);
+          this.currentAnimation_ = null;
+          resolve();
+        }.bind(this));
+      }.bind(this));
+    }.bind(this));
+  },
+
+  /**
   /**
    * Hides or unhides the sections not being expanded.
    * @param {string} sectionName The section to keep visible.
@@ -52,383 +333,26 @@ var MainPageBehaviorImpl = {
    */
   toggleOtherSectionsHidden_: function(sectionName, hidden) {
     var sections = Polymer.dom(this.root).querySelectorAll(
-        this.sectionSelector + ':not([section=' + sectionName + '])');
-    for (var section of sections)
-      section.hidden = hidden;
-  },
-
-  /**
-   * Animates the card in |section|, expanding it to fill the page.
-   * @param {!SettingsSectionElement} section
-   */
-  expandSection: function(section) {
-    // If another section's card is expanding, cancel that animation first.
-    var expanding = this.$$('.expanding');
-    if (expanding) {
-      if (expanding == section)
-        return;
-
-      if (this.animations['section']) {
-        // Cancel the animation, then call startExpandSection_.
-        this.cancelAnimation('section', function() {
-          this.startExpandSection_(section);
-        }.bind(this));
-      } else {
-        // The animation must have finished but its promise hasn't resolved yet.
-        // When it resolves, collapse that section's card before expanding
-        // this one.
-        setTimeout(function() {
-          this.collapseSection(
-              /** @type {!SettingsSectionElement} */(expanding));
-          this.finishAnimation('section', function() {
-            this.startExpandSection_(section);
-          }.bind(this));
-        }.bind(this));
-      }
-
-      return;
-    }
-
-    if (this.$$('.collapsing') && this.animations['section']) {
-      // Finish the collapse animation before expanding.
-      this.finishAnimation('section', function() {
-        this.startExpandSection_(section);
-      }.bind(this));
-      return;
-    }
-
-    this.startExpandSection_(section);
-  },
-
-  /**
-   * Helper function to set up and start the expand animation.
-   * @param {!SettingsSectionElement} section
-   */
-  startExpandSection_: function(section) {
-    if (section.classList.contains('expanded'))
-      return;
-
-    // Freeze the scroller and save its position.
-    this.listScrollTop_ = this.scroller.scrollTop;
-
-    var scrollerWidth = this.scroller.clientWidth;
-    this.scroller.style.overflow = 'hidden';
-    // Adjust width to compensate for scroller.
-    var scrollbarWidth = this.scroller.clientWidth - scrollerWidth;
-    this.scroller.style.width = 'calc(100% - ' + scrollbarWidth + 'px)';
-
-    // Freezes the section's height so its card can be removed from the flow.
-    this.freezeSection_(section);
-
-    // Expand the section's card to fill the parent.
-    var animationPromise = this.playExpandSection_(section);
-
-    animationPromise.then(function() {
-      this.scroller.scrollTop = 0;
-      this.toggleOtherSectionsHidden_(section.section, true);
-    }.bind(this), function() {
-      // Animation was canceled; restore the section.
-      this.unfreezeSection_(section);
-    }.bind(this)).then(function() {
-      this.scroller.style.overflow = '';
-      this.scroller.style.width = '';
-    }.bind(this));
-  },
-
-  /**
-   * Animates the card in |section|, collapsing it back into its section.
-   * @param {!SettingsSectionElement} section
-   */
-  collapseSection: function(section) {
-    // If the section's card is still expanding, cancel the expand animation.
-    if (section.classList.contains('expanding')) {
-      if (this.animations['section']) {
-        this.cancelAnimation('section');
-      } else {
-        // The animation must have finished but its promise hasn't finished
-        // resolving; try again asynchronously.
-        this.async(function() {
-          this.collapseSection(section);
-        });
-      }
-      return;
-    }
-
-    if (!section.classList.contains('expanded'))
-      return;
-
-    this.toggleOtherSectionsHidden_(section.section, false);
-
-    var scrollerWidth = this.scroller.clientWidth;
-    this.scroller.style.overflow = 'hidden';
-    // Adjust width to compensate for scroller.
-    var scrollbarWidth = this.scroller.clientWidth - scrollerWidth;
-    this.scroller.style.width = 'calc(100% - ' + scrollbarWidth + 'px)';
-
-    this.playCollapseSection_(section).then(function() {
-      this.unfreezeSection_(section);
-      this.scroller.style.overflow = '';
-      this.scroller.style.width = '';
-      section.classList.remove('collapsing');
-    }.bind(this));
-  },
-
-  /**
-   * Freezes a section's height so its card can be removed from the flow without
-   * affecting the layout of the surrounding sections.
-   * @param {!SettingsSectionElement} section
-   * @private
-   */
-  freezeSection_: function(section) {
-    var card = section.$.card;
-    section.style.height = section.clientHeight + 'px';
-
-    var cardHeight = card.offsetHeight;
-    var cardWidth = card.offsetWidth;
-    // If the section is not displayed yet (e.g., navigated directly to a
-    // sub-page), cardHeight and cardWidth are 0, so do not set the height or
-    // width explicitly.
-    // TODO(michaelpg): Improve this logic when refactoring
-    // settings-animated-pages.
-    if (cardHeight && cardWidth) {
-      // TODO(michaelpg): Temporary hack to store the height the section should
-      // collapse to when it closes.
-      card.origHeight_ = cardHeight;
-
-      card.style.height = cardHeight + 'px';
-      card.style.width = cardWidth + 'px';
-    } else {
-      // Set an invalid value so we don't try to use it later.
-      card.origHeight_ = NaN;
-    }
-
-    // Place the section's card at its current position but removed from the
-    // flow.
-    card.style.top = card.getBoundingClientRect().top + 'px';
-    section.classList.add('frozen');
-  },
-
-  /**
-   * After freezeSection_, restores the section to its normal height.
-   * @param {!SettingsSectionElement} section
-   * @private
-   */
-  unfreezeSection_: function(section) {
-    if (!section.classList.contains('frozen'))
-      return;
-    var card = section.$.card;
-    section.classList.remove('frozen');
-    card.style.top = '';
-    card.style.height = '';
-    card.style.width = '';
-    section.style.height = '';
-  },
-
-  /**
-   * Expands the card in |section| to fill the page.
-   * @param {!SettingsSectionElement} section
-   * @return {!Promise}
-   * @private
-   */
-  playExpandSection_: function(section) {
-    var card = section.$.card;
-
-    // The card should start at the top of the page.
-    var targetTop = this.scroller.getBoundingClientRect().top;
-
-    section.classList.add('expanding');
-
-    // Expand the card, using minHeight. (The card must span the container's
-    // client height, so it must be at least 100% in case the card is too short.
-    // If the card is already taller than the container's client height, we
-    // don't want to shrink the card to 100% or the content will overflow, so
-    // we can't use height, and animating height wouldn't look right anyway.)
-    var keyframes = [{
-      top: card.style.top,
-      minHeight: card.style.height,
-      easing: EASING_FUNCTION,
-    }, {
-      top: targetTop + 'px',
-      minHeight: 'calc(100% - ' + targetTop + 'px)',
-    }];
-    var options = /** @type {!KeyframeEffectOptions} */({
-      duration: EXPAND_DURATION
-    });
-    // TODO(michaelpg): Change elevation of sections.
-    var promise;
-    if (keyframes[0].top && keyframes[0].minHeight)
-      promise = this.animateElement('section', card, keyframes, options);
-    else
-      promise = Promise.resolve();
-
-    promise.then(function() {
-      section.classList.add('expanded');
-      card.style.top = '';
-      this.style.margin = 'auto';
-      section.$.header.hidden = true;
-      section.style.height = '';
-    }.bind(this), function() {
-      // The animation was canceled; catch the error and continue.
-    }).then(function() {
-      // Whether finished or canceled, clean up the animation.
-      section.classList.remove('expanding');
-      card.style.height = '';
-      card.style.width = '';
-    });
-
-    return promise;
-  },
-
-  /**
-   * Collapses the card in |section| back to its normal position.
-   * @param {!SettingsSectionElement} section
-   * @return {!Promise}
-   * @private
-   */
-  playCollapseSection_: function(section) {
-    var card = section.$.card;
-
-    this.style.margin = '';
-    section.$.header.hidden = false;
-
-    var startingTop = this.scroller.getBoundingClientRect().top;
-
-    var cardHeightStart = card.clientHeight;
-    var cardWidthStart = card.clientWidth;
-
-    section.classList.add('collapsing');
-    section.classList.remove('expanding', 'expanded');
-
-    // If we navigated here directly, we don't know the original height of the
-    // section, so we skip the animation.
-    // TODO(michaelpg): remove this condition once sliding is implemented.
-    if (isNaN(card.origHeight_))
-      return Promise.resolve();
-
-    // Restore the section to its proper height to make room for the card.
-    section.style.height = section.clientHeight + card.origHeight_ + 'px';
-
-    // TODO(michaelpg): this should be in collapseSection(), but we need to wait
-    // until the full page height is available (setting the section height).
-    this.scroller.scrollTop = this.listScrollTop_;
-
-    // The card is unpositioned, so use its position as the ending state,
-    // but account for scroll.
-    var targetTop = card.getBoundingClientRect().top - this.scroller.scrollTop;
-
-    // Account for the section header.
-    var headerStyle = getComputedStyle(section.$.header);
-    targetTop += section.$.header.offsetHeight +
-        parseInt(headerStyle.marginBottom, 10) +
-        parseInt(headerStyle.marginTop, 10);
-
-    var keyframes = [{
-      top: startingTop + 'px',
-      minHeight: cardHeightStart + 'px',
-      easing: EASING_FUNCTION,
-    }, {
-      top: targetTop + 'px',
-      minHeight: card.origHeight_ + 'px',
-    }];
-    var options = /** @type {!KeyframeEffectOptions} */({
-      duration: EXPAND_DURATION
-    });
-
-    card.style.width = cardWidthStart + 'px';
-    var promise = this.animateElement('section', card, keyframes, options);
-    promise.then(function() {
-      card.style.width = '';
-    });
-    return promise;
-  },
-};
-
-
-/** @polymerBehavior */
-var MainPageBehavior = [
-  TransitionBehavior,
-  MainPageBehaviorImpl
-];
-
-
-/**
- * TODO(michaelpg): integrate slide animations.
- * @polymerBehavior RoutableBehavior
- */
-var RoutableBehaviorImpl = {
-  properties: {
-    /** Contains the current route. */
-    currentRoute: {
-      type: Object,
-      notify: true,
-      observer: 'currentRouteChanged_',
-    },
-  },
-
-  /** @private */
-  scrollToSection_: function() {
-    doWhenReady(
-        function() {
-          return this.scrollHeight > 0;
-        }.bind(this),
-        function() {
-          // If the current section changes while we are waiting for the page to
-          // be ready, scroll to the newest requested section.
-          this.getSection_(this.currentRoute.section).scrollIntoView();
-        }.bind(this));
-  },
-
-  /** @private */
-  currentRouteChanged_: function(newRoute, oldRoute) {
-    var newRouteIsSubpage = newRoute && newRoute.subpage.length;
-    var oldRouteIsSubpage = oldRoute && oldRoute.subpage.length;
-
-    if (!oldRoute && newRouteIsSubpage) {
-      // Allow the page to load before expanding the section. TODO(michaelpg):
-      // Time this better when refactoring settings-animated-pages.
-      setTimeout(function() {
-        var section = this.getSection_(newRoute.section);
-        if (section)
-          this.expandSection(section);
-      }.bind(this));
-      return;
-    }
-
-    if (newRouteIsSubpage) {
-      if (!oldRouteIsSubpage || newRoute.section != oldRoute.section) {
-        var section = this.getSection_(newRoute.section);
-        if (section)
-          this.expandSection(section);
-      }
-    } else {
-      if (oldRouteIsSubpage) {
-        var section = this.getSection_(oldRoute.section);
-        if (section)
-          this.collapseSection(section);
-      }
-
-      if (newRoute && newRoute.section &&
-          this.$$('[data-page=' + newRoute.page + ']')) {
-        this.scrollToSection_();
-      }
-    }
+        'settings-section');
+    for (var i = 0; i < sections.length; i++)
+      sections[i].hidden = hidden && (sections[i].section != sectionName);
   },
 
   /**
    * Helper function to get a section from the local DOM.
    * @param {string} section Section name of the element to get.
    * @return {?SettingsSectionElement}
-   * @private
    */
-  getSection_: function(section) {
+  getSection: function(section) {
+    if (!section)
+      return null;
     return /** @type {?SettingsSectionElement} */(
-        this.$$('[section=' + section + ']'));
+        this.$$('settings-section[section="' + section + '"]'));
   },
 };
 
-
 /** @polymerBehavior */
-var RoutableBehavior = [
-  MainPageBehavior,
-  RoutableBehaviorImpl
+var MainPageBehavior = [
+  settings.RouteObserverBehavior,
+  MainPageBehaviorImpl,
 ];

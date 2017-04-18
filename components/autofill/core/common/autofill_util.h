@@ -7,13 +7,20 @@
 
 #include <stddef.h>
 
+#include <string>
+#include <vector>
+
 #include "base/strings/string16.h"
+#include "components/autofill/core/common/form_field_data.h"
 
 namespace autofill {
 
 // Returns true when command line switch |kEnableSuggestionsWithSubstringMatch|
 // is on.
 bool IsFeatureSubstringMatchEnabled();
+
+// Returns true if showing autofill signature as HTML attributes is enabled.
+bool IsShowAutofillSignaturesEnabled();
 
 // Returns true when keyboard accessory is enabled.
 bool IsKeyboardAccessoryEnabled();
@@ -41,6 +48,20 @@ size_t GetTextSelectionStart(const base::string16& suggestion,
 // Returns true if running on a desktop platform. Any platform that is not
 // Android or iOS is considered desktop.
 bool IsDesktopPlatform();
+
+bool ShouldSkipField(const FormFieldData& field);
+
+bool IsCheckable(const FormFieldData::CheckStatus& check_status);
+bool IsChecked(const FormFieldData::CheckStatus& check_status);
+void SetCheckStatus(FormFieldData* form_field_data,
+                    bool isCheckable,
+                    bool isChecked);
+
+// Lowercases and tokenizes a given |attribute| string.
+// Considers any ASCII whitespace character as a possible separator.
+// Also ignores empty tokens, resulting in a collapsing of whitespace.
+std::vector<std::string> LowercaseAndTokenizeAttributeString(
+    const std::string& attribute);
 
 }  // namespace autofill
 

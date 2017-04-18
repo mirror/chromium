@@ -929,17 +929,15 @@ function test()
           }
     };
     var profile = profileAndExpectations._profile;
-    var startTime = profile.startTime * 1000;
-    var endTime = profile.endTime * 1000;
-    profile.startTime /= 1000;
-    profile.endTime /= 1000;
-    var samplingInterval = (endTime - startTime) / (profile.samples.length - 1);
-    profile.timestamps = [];
-    for (var i = 0; i < profile.samples.length; ++i)
-        profile.timestamps.push(startTime + i * samplingInterval);
-    profileAndExpectations.target = function() {};
-    profileAndExpectations.weakTarget = function() { return new WeakReference(null);};
-    var cpuProfileView = new WebInspector.CPUProfileView(profileAndExpectations);
+    profile.startTime *= 1000;
+    profile.endTime *= 1000;
+    var samplingInterval = (profile.endTime - profile.startTime) / (profile.samples.length - 1);
+    profile.timeDeltas = [0, ...new Array(profile.samples.length - 1).fill(samplingInterval)];
+    profileAndExpectations._cpuProfilerModel = null;
+    profileAndExpectations._debuggerModel = null;
+    profileAndExpectations.debuggerModel = () => null;
+    profileAndExpectations.weakTarget = () => new WeakReference(null);
+    var cpuProfileView = new Profiler.CPUProfileView(profileAndExpectations);
     cpuProfileView.viewSelectComboBox.setSelectedIndex(0);
     cpuProfileView._changeView();
     var overviewPane = cpuProfileView._flameChart._overviewPane;
@@ -955,7 +953,8 @@ function test()
 </head>
 <body onload="runTest()">
 <p>
-Tests Overview pane calculation in FlameChart for different width = 2^n with n in range 4 - 0.
+Tests Overview pane calculation in FlameChart for different width = 2^n with n in range 4 - 0.<br/>
+Also tests loading of a legacy nodes format, where nodes were represented as a tree.
 
 </p>
 </body>

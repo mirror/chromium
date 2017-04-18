@@ -37,36 +37,38 @@ class History;
 class SerializedScriptValue;
 
 class PopStateEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~PopStateEvent() override;
-    static PopStateEvent* create();
-    static PopStateEvent* create(PassRefPtr<SerializedScriptValue>, History*);
-    static PopStateEvent* create(const AtomicString&, const PopStateEventInit&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    ScriptValue state() const { return m_state; }
-    SerializedScriptValue* serializedState() const { return m_serializedState.get(); }
-    void setSerializedState(PassRefPtr<SerializedScriptValue> state)
-    {
-        ASSERT(!m_serializedState);
-        m_serializedState = state;
-    }
-    History* history() const { return m_history.get(); }
+ public:
+  ~PopStateEvent() override;
+  static PopStateEvent* Create();
+  static PopStateEvent* Create(PassRefPtr<SerializedScriptValue>, History*);
+  static PopStateEvent* Create(const AtomicString&, const PopStateEventInit&);
 
-    const AtomicString& interfaceName() const override;
+  ScriptValue state() const { return state_; }
+  SerializedScriptValue* SerializedState() const {
+    return serialized_state_.Get();
+  }
+  void SetSerializedState(PassRefPtr<SerializedScriptValue> state) {
+    DCHECK(!serialized_state_);
+    serialized_state_ = std::move(state);
+  }
+  History* GetHistory() const { return history_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    PopStateEvent();
-    PopStateEvent(const AtomicString&, const PopStateEventInit&);
-    PopStateEvent(PassRefPtr<SerializedScriptValue>, History*);
+  DECLARE_VIRTUAL_TRACE();
 
-    RefPtr<SerializedScriptValue> m_serializedState;
-    ScriptValue m_state;
-    Member<History> m_history;
+ private:
+  PopStateEvent();
+  PopStateEvent(const AtomicString&, const PopStateEventInit&);
+  PopStateEvent(PassRefPtr<SerializedScriptValue>, History*);
+
+  RefPtr<SerializedScriptValue> serialized_state_;
+  ScriptValue state_;
+  Member<History> history_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PopStateEvent_h
+#endif  // PopStateEvent_h

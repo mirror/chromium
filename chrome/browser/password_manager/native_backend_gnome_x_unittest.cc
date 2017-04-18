@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/location.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -278,12 +279,21 @@ const gchar* mock_gnome_keyring_result_to_message(GnomeKeyringResult res) {
 class MockGnomeKeyringLoader : public GnomeKeyringLoader {
  public:
   static bool LoadMockGnomeKeyring() {
-    if (!LoadGnomeKeyring())
-      return false;
-#define GNOME_KEYRING_ASSIGN_POINTER(name) \
-  gnome_keyring_##name = &mock_gnome_keyring_##name;
-    GNOME_KEYRING_FOR_EACH_MOCKED_FUNC(GNOME_KEYRING_ASSIGN_POINTER)
-#undef GNOME_KEYRING_ASSIGN_POINTER
+    // Mocked methods
+    gnome_keyring_is_available_ptr = &mock_gnome_keyring_is_available;
+    gnome_keyring_store_password_ptr = &mock_gnome_keyring_store_password;
+    gnome_keyring_delete_password_ptr = &mock_gnome_keyring_delete_password;
+    gnome_keyring_find_items_ptr = &mock_gnome_keyring_find_items;
+    gnome_keyring_result_to_message_ptr = &mock_gnome_keyring_result_to_message;
+    // Non-mocked methods
+    gnome_keyring_attribute_list_free_ptr =
+        &::gnome_keyring_attribute_list_free;
+    gnome_keyring_attribute_list_new_ptr = &::gnome_keyring_attribute_list_new;
+    gnome_keyring_attribute_list_append_string_ptr =
+        &::gnome_keyring_attribute_list_append_string;
+    gnome_keyring_attribute_list_append_uint32_ptr =
+        &::gnome_keyring_attribute_list_append_uint32;
+
     keyring_loaded = true;
     // Reset the state of the mock library.
     mock_keyring_items.clear();
@@ -417,7 +427,7 @@ class NativeBackendGnomeTest : public testing::Test {
   void TearDown() override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
     db_thread_.Stop();
   }
 
@@ -429,7 +439,7 @@ class NativeBackendGnomeTest : public testing::Test {
     // quit so we can get on with the rest of the test.
     BrowserThread::PostTask(BrowserThread::DB, FROM_HERE,
         base::Bind(&PostQuitTask, &message_loop_));
-    base::MessageLoop::current()->Run();
+    base::RunLoop().Run();
   }
 
   static void PostQuitTask(base::MessageLoop* loop) {
@@ -531,7 +541,7 @@ class NativeBackendGnomeTest : public testing::Test {
       // signon_realm. Just use a default value for now.
       target_form.signon_realm.append("Realm");
     }
-    ScopedVector<autofill::PasswordForm> form_list;
+    std::vector<std::unique_ptr<PasswordForm>> form_list;
     BrowserThread::PostTaskAndReplyWithResult(
         BrowserThread::DB,
         FROM_HERE,
@@ -580,7 +590,7 @@ class NativeBackendGnomeTest : public testing::Test {
     const GURL kMobileURL("http://m.facebook.com/");
     PasswordStore::FormDigest m_facebook_lookup = {
         PasswordForm::SCHEME_HTML, kMobileURL.spec(), kMobileURL};
-    ScopedVector<autofill::PasswordForm> form_list;
+    std::vector<std::unique_ptr<PasswordForm>> form_list;
     BrowserThread::PostTaskAndReplyWithResult(
         BrowserThread::DB,
         FROM_HERE,
@@ -817,7 +827,7 @@ TEST_F(NativeBackendGnomeTest, BasicListLogins) {
       base::Bind(base::IgnoreResult(&NativeBackendGnome::AddLogin),
                  base::Unretained(&backend), form_google_));
 
-  ScopedVector<autofill::PasswordForm> form_list;
+  std::vector<std::unique_ptr<PasswordForm>> form_list;
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::DB, FROM_HERE,
       base::Bind(&NativeBackendGnome::GetAutofillableLogins,
@@ -876,12 +886,49 @@ TEST_F(NativeBackendGnomeTest, PSLUpdatingStrictAddLogin) {
   CheckPSLUpdate(UPDATE_BY_ADDLOGIN);
 }
 
-TEST_F(NativeBackendGnomeTest, FetchFederatedCredential) {
+TEST_F(NativeBackendGnomeTest, FetchFederatedCredentialOnHTTPS) {
   other_auth_.signon_realm = "federation://www.example.com/google.com";
+  other_auth_.origin = GURL("https://www.example.com/");
   other_auth_.federation_origin = url::Origin(GURL("https://google.com/"));
   EXPECT_TRUE(CheckCredentialAvailability(other_auth_,
-                                          GURL("http://www.example.com/"),
+                                          GURL("https://www.example.com/"),
                                           PasswordForm::SCHEME_HTML, nullptr));
+}
+
+TEST_F(NativeBackendGnomeTest, FetchFederatedCredentialOnLocalhost) {
+  other_auth_.signon_realm = "federation://localhost/google.com";
+  other_auth_.origin = GURL("http://localhost:8080/");
+  other_auth_.federation_origin = url::Origin(GURL("https://google.com/"));
+  EXPECT_TRUE(CheckCredentialAvailability(other_auth_,
+                                          GURL("http://localhost:8080/"),
+                                          PasswordForm::SCHEME_HTML, nullptr));
+}
+
+TEST_F(NativeBackendGnomeTest, DontFetchFederatedCredentialOnHTTP) {
+  other_auth_.signon_realm = "federation://www.example.com/google.com";
+  other_auth_.origin = GURL("https://www.example.com/");
+  other_auth_.federation_origin = url::Origin(GURL("https://google.com/"));
+  EXPECT_FALSE(CheckCredentialAvailability(other_auth_,
+                                           GURL("http://www.example.com/"),
+                                           PasswordForm::SCHEME_HTML, nullptr));
+}
+
+TEST_F(NativeBackendGnomeTest, FetchPSLMatchedFederatedCredentialOnHTTPS) {
+  other_auth_.signon_realm = "federation://www.sub.example.com/google.com";
+  other_auth_.origin = GURL("https://www.sub.example.com/");
+  other_auth_.federation_origin = url::Origin(GURL("https://google.com/"));
+  EXPECT_TRUE(CheckCredentialAvailability(other_auth_,
+                                          GURL("https://www.example.com/"),
+                                          PasswordForm::SCHEME_HTML, nullptr));
+}
+
+TEST_F(NativeBackendGnomeTest, DontFetchPSLMatchedFederatedCredentialOnHTTP) {
+  other_auth_.signon_realm = "federation://www.sub.example.com/google.com";
+  other_auth_.origin = GURL("https://www.sub.example.com/");
+  other_auth_.federation_origin = url::Origin(GURL("https://google.com/"));
+  EXPECT_FALSE(CheckCredentialAvailability(other_auth_,
+                                           GURL("http://www.example.com/"),
+                                           PasswordForm::SCHEME_HTML, nullptr));
 }
 
 TEST_F(NativeBackendGnomeTest, BasicUpdateLogin) {
@@ -1010,7 +1057,7 @@ TEST_F(NativeBackendGnomeTest, RemoveNonexistentLogin) {
                  base::Owned(new PasswordStoreChangeList), &changes));
 
   // Make sure we can still get the first form back.
-  ScopedVector<autofill::PasswordForm> form_list;
+  std::vector<std::unique_ptr<PasswordForm>> form_list;
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::DB, FROM_HERE,
       base::Bind(&NativeBackendGnome::GetAutofillableLogins,
@@ -1147,7 +1194,7 @@ TEST_F(NativeBackendGnomeTest, AndroidCredentials) {
                  PasswordStoreChangeList(1, PasswordStoreChange(
                      PasswordStoreChange::ADD, saved_android_form))));
 
-  ScopedVector<autofill::PasswordForm> form_list;
+  std::vector<std::unique_ptr<PasswordForm>> form_list;
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::DB, FROM_HERE,
       base::Bind(&NativeBackendGnome::GetLogins,
@@ -1200,11 +1247,13 @@ TEST_F(NativeBackendGnomeTest, DisableAutoSignInForOrigins) {
   PasswordStoreChangeList changes;
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::DB, FROM_HERE,
-      base::Bind(&NativeBackendGnome::DisableAutoSignInForOrigins,
-                 base::Unretained(&backend),
-                 base::Bind(&GURL::operator==,
-                            base::Unretained(&form_facebook_.origin)),
-                 &changes),
+      base::Bind(
+          &NativeBackendGnome::DisableAutoSignInForOrigins,
+          base::Unretained(&backend),
+          base::Bind(
+              static_cast<bool (*)(const GURL&, const GURL&)>(operator==),
+              form_facebook_.origin),
+          &changes),
       base::Bind(&CheckPasswordChangesWithResult, &expected_changes, &changes));
   RunBothThreads();
 
@@ -1251,7 +1300,7 @@ TEST_F(NativeBackendGnomeTest, ReadDuplicateForms) {
       unique_string_replacement);
 
   // Now test that GetAutofillableLogins returns only one form.
-  ScopedVector<autofill::PasswordForm> form_list;
+  std::vector<std::unique_ptr<PasswordForm>> form_list;
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::DB, FROM_HERE,
       base::Bind(&NativeBackendGnome::GetAutofillableLogins,
@@ -1281,7 +1330,7 @@ TEST_F(NativeBackendGnomeTest, GetAllLogins) {
       base::Bind(base::IgnoreResult(&NativeBackendGnome::AddLogin),
                  base::Unretained(&backend), form_facebook_));
 
-  ScopedVector<autofill::PasswordForm> form_list;
+  std::vector<std::unique_ptr<PasswordForm>> form_list;
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::DB, FROM_HERE,
       base::Bind(&NativeBackendGnome::GetAllLogins, base::Unretained(&backend),

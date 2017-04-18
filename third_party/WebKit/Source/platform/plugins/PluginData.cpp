@@ -24,112 +24,57 @@
 #include "platform/plugins/PluginData.h"
 
 #include "platform/plugins/PluginListBuilder.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebSecurityOrigin.h"
 
 namespace blink {
 
-class PluginCache {
-public:
-    PluginCache() : m_loaded(false), m_refresh(false) { }
-    ~PluginCache() { reset(false); }
+PluginData::PluginData(SecurityOrigin* main_frame_origin)
+    : main_frame_origin_(main_frame_origin) {
+  PluginListBuilder builder(&plugins_);
+  Platform::Current()->GetPluginList(
+      false, WebSecurityOrigin(main_frame_origin_), &builder);
 
-    void reset(bool refresh)
-    {
-        m_plugins.clear();
-        m_loaded = false;
-        m_refresh = refresh;
+  for (unsigned i = 0; i < plugins_.size(); ++i) {
+    const PluginInfo& plugin = plugins_[i];
+    for (unsigned j = 0; j < plugin.mimes.size(); ++j) {
+      mimes_.push_back(plugin.mimes[j]);
+      mime_plugin_indices_.push_back(i);
     }
-
-    const Vector<PluginInfo>& plugins()
-    {
-        if (!m_loaded) {
-            PluginListBuilder builder(&m_plugins);
-            Platform::current()->getPluginList(m_refresh, &builder);
-            m_loaded = true;
-            m_refresh = false;
-        }
-        return m_plugins;
-    }
-
-private:
-    Vector<PluginInfo> m_plugins;
-    bool m_loaded;
-    bool m_refresh;
-};
-
-static PluginCache& pluginCache()
-{
-    DEFINE_STATIC_LOCAL(PluginCache, cache, ());
-    return cache;
+  }
 }
 
-PluginData::PluginData(const Page* page)
-{
-    initPlugins(page);
-
-    for (unsigned i = 0; i < m_plugins.size(); ++i) {
-        const PluginInfo& plugin = m_plugins[i];
-        for (unsigned j = 0; j < plugin.mimes.size(); ++j) {
-            m_mimes.append(plugin.mimes[j]);
-            m_mimePluginIndices.append(i);
-        }
-    }
+bool PluginData::SupportsMimeType(const String& mime_type) const {
+  for (unsigned i = 0; i < mimes_.size(); ++i)
+    if (mimes_[i].type == mime_type)
+      return true;
+  return false;
 }
 
-bool PluginData::supportsMimeType(const String& mimeType) const
-{
-    for (unsigned i = 0; i < m_mimes.size(); ++i)
-        if (m_mimes[i].type == mimeType)
-            return true;
-    return false;
+const PluginInfo* PluginData::PluginInfoForMimeType(
+    const String& mime_type) const {
+  for (unsigned i = 0; i < mimes_.size(); ++i) {
+    const MimeClassInfo& info = mimes_[i];
+
+    if (info.type == mime_type)
+      return &plugins_[mime_plugin_indices_[i]];
+  }
+
+  return 0;
 }
 
-const PluginInfo* PluginData::pluginInfoForMimeType(const String& mimeType) const
-{
-    for (unsigned i = 0; i < m_mimes.size(); ++i) {
-        const MimeClassInfo& info = m_mimes[i];
-
-        if (info.type == mimeType)
-            return &m_plugins[m_mimePluginIndices[i]];
-    }
-
-    return 0;
+String PluginData::PluginNameForMimeType(const String& mime_type) const {
+  if (const PluginInfo* info = PluginInfoForMimeType(mime_type))
+    return info->name;
+  return String();
 }
 
-String PluginData::pluginNameForMimeType(const String& mimeType) const
-{
-    if (const PluginInfo* info = pluginInfoForMimeType(mimeType))
-        return info->name;
-    return String();
+void PluginData::RefreshBrowserSidePluginCache() {
+  Vector<PluginInfo> plugins;
+  PluginListBuilder builder(&plugins);
+  Platform::Current()->GetPluginList(true, WebSecurityOrigin::CreateUnique(),
+                                     &builder);
 }
 
-void PluginData::initPlugins(const Page*)
-{
-    const Vector<PluginInfo>& plugins = pluginCache().plugins();
-    for (size_t i = 0; i < plugins.size(); ++i)
-        m_plugins.append(plugins[i]);
-}
-
-void PluginData::refresh()
-{
-    pluginCache().reset(true);
-    pluginCache().plugins(); // Force the plugins to be reloaded now.
-}
-
-String getPluginMimeTypeFromExtension(const String& extension)
-{
-    const Vector<PluginInfo>& plugins = pluginCache().plugins();
-    for (size_t i = 0; i < plugins.size(); ++i) {
-        for (size_t j = 0; j < plugins[i].mimes.size(); ++j) {
-            const MimeClassInfo& mime = plugins[i].mimes[j];
-            const Vector<String>& extensions = mime.extensions;
-            for (size_t k = 0; k < extensions.size(); ++k) {
-                if (extension == extensions[k])
-                    return mime.type;
-            }
-        }
-    }
-    return String();
-}
-
-} // namespace blink
+}  // namespace blink

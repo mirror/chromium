@@ -29,14 +29,13 @@
 import unittest
 
 from webkitpy.common.host_mock import MockHost
-from webkitpy.common.system.outputcapture import OutputCapture
+from webkitpy.common.system.output_capture import OutputCapture
 from webkitpy.layout_tests.port.driver import DriverOutput
-from webkitpy.layout_tests.port.test import TestDriver
 from webkitpy.layout_tests.port.test import TestPort
 from webkitpy.performance_tests.perftest import ChromiumStylePerfTest
 from webkitpy.performance_tests.perftest import PerfTest
-from webkitpy.performance_tests.perftest import PerfTestMetric
 from webkitpy.performance_tests.perftest import PerfTestFactory
+from webkitpy.performance_tests.perftest import PerfTestMetric
 from webkitpy.performance_tests.perftest import SingleProcessPerfTest
 
 
@@ -176,9 +175,9 @@ Should not be ignored
 [ERROR:main.cc] The sky has fallen""")
         test._filter_output(output_with_lines_to_ignore)
         self.assertEqual(output_with_lines_to_ignore.error,
-                         "Should not be ignored\n"
-                         "[WARNING:chrome.cc] Something went wrong\n"
-                         "[ERROR:main.cc] The sky has fallen")
+                         'Should not be ignored\n'
+                         '[WARNING:chrome.cc] Something went wrong\n'
+                         '[ERROR:main.cc] The sky has fallen')
 
     def test_parse_output_with_subtests(self):
         output = DriverOutput("""

@@ -1,9 +1,13 @@
 {
     "extensions": [
         {
-            "type": "@WebInspector.View",
-            "location": "elements-panel",
-            "className": "WebInspector.AccessibilitySidebarView"
+            "type": "view",
+            "location": "elements-sidebar",
+            "id": "accessibility.view",
+            "title": "Accessibility",
+            "order": 10,
+            "persistence": "permanent",
+            "className": "Accessibility.AccessibilitySidebarView"
         }
     ],
     "dependencies": ["elements"],
@@ -13,7 +17,13 @@
         "AccessibilitySidebarView.js",
         "AccessibilityNodeView.js",
         "AccessibilityStrings.js",
-        "ARIAAttributesView.js"
+        "ARIAAttributesView.js",
+        "ARIAMetadata.js",
+        "ARIAConfig.js",
+        "AXTreePane.js"
+    ],
+    "skip_compilation": [
+        "ARIAConfig.js"
     ],
     "resources": [
         "accessibilityNode.css"

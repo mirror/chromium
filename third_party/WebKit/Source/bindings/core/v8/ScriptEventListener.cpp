@@ -30,8 +30,10 @@
 
 #include "bindings/core/v8/ScriptEventListener.h"
 
+#include "bindings/core/v8/ScheduledAction.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8AbstractEventListener.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/WindowProxy.h"
@@ -40,86 +42,118 @@
 #include "core/dom/QualifiedName.h"
 #include "core/events/EventListener.h"
 #include "core/frame/LocalFrame.h"
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
-V8LazyEventListener* createAttributeEventListener(Node* node, const QualifiedName& name, const AtomicString& value, const AtomicString& eventParameterName)
-{
-    ASSERT(node);
-    if (value.isNull())
-        return nullptr;
+V8LazyEventListener* CreateAttributeEventListener(
+    Node* node,
+    const QualifiedName& name,
+    const AtomicString& value,
+    const AtomicString& event_parameter_name) {
+  DCHECK(node);
+  if (value.IsNull())
+    return nullptr;
 
-    // FIXME: Very strange: we initialize zero-based number with '1'.
-    TextPosition position(OrdinalNumber::fromZeroBasedInt(1), OrdinalNumber::first());
-    String sourceURL;
+  // FIXME: Very strange: we initialize zero-based number with '1'.
+  TextPosition position(OrdinalNumber::FromZeroBasedInt(1),
+                        OrdinalNumber::First());
+  String source_url;
 
-    v8::Isolate* isolate;
-    if (LocalFrame* frame = node->document().frame()) {
-        isolate = toIsolate(frame);
-        ScriptController& scriptController = frame->script();
-        if (!scriptController.canExecuteScripts(AboutToExecuteScript))
-            return nullptr;
-        position = scriptController.eventHandlerPosition();
-        sourceURL = node->document().url().getString();
-    } else {
-        isolate = v8::Isolate::GetCurrent();
-    }
+  v8::Isolate* isolate = ToIsolate(&node->GetDocument());
+  if (LocalFrame* frame = node->GetDocument().GetFrame()) {
+    ScriptController& script_controller = frame->GetScriptController();
+    if (!node->GetDocument().CanExecuteScripts(kAboutToExecuteScript))
+      return nullptr;
+    position = script_controller.EventHandlerPosition();
+    source_url = node->GetDocument().Url().GetString();
+  }
 
-    return V8LazyEventListener::create(name.localName(), eventParameterName, value, sourceURL, position, node, isolate);
+  return V8LazyEventListener::Create(name.LocalName(), event_parameter_name,
+                                     value, source_url, position, node,
+                                     isolate);
 }
 
-V8LazyEventListener* createAttributeEventListener(LocalFrame* frame, const QualifiedName& name, const AtomicString& value, const AtomicString& eventParameterName)
-{
-    if (!frame)
-        return nullptr;
+V8LazyEventListener* CreateAttributeEventListener(
+    LocalFrame* frame,
+    const QualifiedName& name,
+    const AtomicString& value,
+    const AtomicString& event_parameter_name) {
+  if (!frame)
+    return nullptr;
 
-    if (value.isNull())
-        return nullptr;
+  if (value.IsNull())
+    return nullptr;
 
-    ScriptController& scriptController = frame->script();
-    if (!scriptController.canExecuteScripts(AboutToExecuteScript))
-        return nullptr;
+  if (!frame->GetDocument()->CanExecuteScripts(kAboutToExecuteScript))
+    return nullptr;
 
-    TextPosition position = scriptController.eventHandlerPosition();
-    String sourceURL = frame->document()->url().getString();
+  TextPosition position = frame->GetScriptController().EventHandlerPosition();
+  String source_url = frame->GetDocument()->Url().GetString();
 
-    return V8LazyEventListener::create(name.localName(), eventParameterName, value, sourceURL, position, 0, toIsolate(frame));
+  return V8LazyEventListener::Create(name.LocalName(), event_parameter_name,
+                                     value, source_url, position, 0,
+                                     ToIsolate(frame));
 }
 
-v8::Local<v8::Object> eventListenerHandler(ExecutionContext* executionContext, EventListener* listener)
-{
-    if (listener->type() != EventListener::JSEventListenerType)
-        return v8::Local<v8::Object>();
-    V8AbstractEventListener* v8Listener = static_cast<V8AbstractEventListener*>(listener);
-    return v8Listener->getListenerObject(executionContext);
+v8::Local<v8::Object> EventListenerHandler(ExecutionContext* execution_context,
+                                           EventListener* listener) {
+  if (listener->GetType() != EventListener::kJSEventListenerType)
+    return v8::Local<v8::Object>();
+  V8AbstractEventListener* v8_listener =
+      static_cast<V8AbstractEventListener*>(listener);
+  return v8_listener->GetListenerObject(execution_context);
 }
 
-v8::Local<v8::Function> eventListenerEffectiveFunction(v8::Isolate* isolate, v8::Local<v8::Object> handler)
-{
-    v8::Local<v8::Function> function;
-    if (handler->IsFunction()) {
-        function = handler.As<v8::Function>();
-    } else if (handler->IsObject()) {
-        v8::Local<v8::Value> property;
-        // Try the "handleEvent" method (EventListener interface).
-        if (handler->Get(handler->CreationContext(), v8AtomicString(isolate, "handleEvent")).ToLocal(&property) && property->IsFunction())
-            function = property.As<v8::Function>();
-        // Fall back to the "constructor" property.
-        else if (handler->Get(handler->CreationContext(), v8AtomicString(isolate, "constructor")).ToLocal(&property) && property->IsFunction())
-            function = property.As<v8::Function>();
-    }
-    if (!function.IsEmpty())
-        return getBoundFunction(function);
-    return v8::Local<v8::Function>();
+v8::Local<v8::Function> EventListenerEffectiveFunction(
+    v8::Isolate* isolate,
+    v8::Local<v8::Object> handler) {
+  v8::Local<v8::Function> function;
+  if (handler->IsFunction()) {
+    function = handler.As<v8::Function>();
+  } else if (handler->IsObject()) {
+    v8::Local<v8::Value> property;
+    // Try the "handleEvent" method (EventListener interface).
+    if (handler
+            ->Get(handler->CreationContext(),
+                  V8AtomicString(isolate, "handleEvent"))
+            .ToLocal(&property) &&
+        property->IsFunction())
+      function = property.As<v8::Function>();
+    // Fall back to the "constructor" property.
+    else if (handler
+                 ->Get(handler->CreationContext(),
+                       V8AtomicString(isolate, "constructor"))
+                 .ToLocal(&property) &&
+             property->IsFunction())
+      function = property.As<v8::Function>();
+  }
+  if (!function.IsEmpty())
+    return GetBoundFunction(function);
+  return v8::Local<v8::Function>();
 }
 
-void getFunctionLocation(v8::Local<v8::Function> function, String& scriptId, int& lineNumber, int& columnNumber)
-{
-    int scriptIdValue = function->ScriptId();
-    scriptId = String::number(scriptIdValue);
-    lineNumber = function->GetScriptLineNumber();
-    columnNumber = function->GetScriptColumnNumber();
+void GetFunctionLocation(v8::Local<v8::Function> function,
+                         String& script_id,
+                         int& line_number,
+                         int& column_number) {
+  int script_id_value = function->ScriptId();
+  script_id = String::Number(script_id_value);
+  line_number = function->GetScriptLineNumber();
+  column_number = function->GetScriptColumnNumber();
 }
 
-} // namespace blink
+std::unique_ptr<SourceLocation> GetFunctionLocation(
+    ExecutionContext* execution_context,
+    EventListener* listener) {
+  v8::Isolate* isolate = ToIsolate(execution_context);
+  v8::HandleScope handle_scope(isolate);
+  v8::Local<v8::Object> handler =
+      EventListenerHandler(execution_context, listener);
+  if (handler.IsEmpty())
+    return nullptr;
+  return SourceLocation::FromFunction(
+      EventListenerEffectiveFunction(isolate, handler));
+}
+
+}  // namespace blink

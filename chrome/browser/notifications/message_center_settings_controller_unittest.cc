@@ -14,11 +14,12 @@
 #include "chrome/browser/extensions/test_extension_system.h"
 #include "chrome/browser/notifications/message_center_settings_controller.h"
 #include "chrome/browser/permissions/permission_manager.h"
+#include "chrome/browser/permissions/permission_result.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
-#include "content/public/browser/permission_type.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
@@ -26,7 +27,7 @@
 #include "ui/message_center/notifier_settings.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/common/system/system_notifier.h"
+#include "ash/system/system_notifier.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #endif
@@ -278,7 +279,7 @@ TEST_F(MessageCenterSettingsControllerTest, NotifierSortOrder) {
   extension_service->AddExtension(baf_app.Build().get());
   CreateController();
 
-  std::vector<message_center::Notifier*> notifiers;
+  std::vector<std::unique_ptr<message_center::Notifier>> notifiers;
   controller()->GetNotifierList(&notifiers);
 
 #if !defined(OS_CHROMEOS)
@@ -292,8 +293,6 @@ TEST_F(MessageCenterSettingsControllerTest, NotifierSortOrder) {
 
   EXPECT_EQ(kBarId, notifiers[0]->notifier_id.id);
   EXPECT_EQ(kFooId, notifiers[1]->notifier_id.id);
-
-  STLDeleteElements(&notifiers);
 }
 
 TEST_F(MessageCenterSettingsControllerTest, SetWebPageNotifierEnabled) {
@@ -317,15 +316,19 @@ TEST_F(MessageCenterSettingsControllerTest, SetWebPageNotifierEnabled) {
 
   // (1) Enable the permission when the default is to ask (expected to set).
   controller()->SetNotifierEnabled(disabled_notifier, true);
-  EXPECT_EQ(blink::mojom::PermissionStatus::GRANTED,
-            permission_manager->GetPermissionStatus(
-                content::PermissionType::NOTIFICATIONS, origin, origin));
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            permission_manager
+                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                      origin, origin)
+                .content_setting);
 
   // (2) Disable the permission when the default is to ask (expected to clear).
   controller()->SetNotifierEnabled(enabled_notifier, false);
-  EXPECT_EQ(blink::mojom::PermissionStatus::ASK,
-            permission_manager->GetPermissionStatus(
-                content::PermissionType::NOTIFICATIONS, origin, origin));
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            permission_manager
+                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                      origin, origin)
+                .content_setting);
 
   // Change the default content setting vaule for notifications to ALLOW.
   HostContentSettingsMapFactory::GetForProfile(profile)
@@ -334,15 +337,19 @@ TEST_F(MessageCenterSettingsControllerTest, SetWebPageNotifierEnabled) {
 
   // (3) Disable the permission when the default is allowed (expected to set).
   controller()->SetNotifierEnabled(enabled_notifier, false);
-  EXPECT_EQ(blink::mojom::PermissionStatus::DENIED,
-            permission_manager->GetPermissionStatus(
-                content::PermissionType::NOTIFICATIONS, origin, origin));
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            permission_manager
+                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                      origin, origin)
+                .content_setting);
 
   // (4) Enable the permission when the default is allowed (expected to clear).
   controller()->SetNotifierEnabled(disabled_notifier, true);
-  EXPECT_EQ(blink::mojom::PermissionStatus::GRANTED,
-            permission_manager->GetPermissionStatus(
-                content::PermissionType::NOTIFICATIONS, origin, origin));
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            permission_manager
+                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                      origin, origin)
+                .content_setting);
 
   // Now change the default content setting value to BLOCK.
   HostContentSettingsMapFactory::GetForProfile(profile)
@@ -351,13 +358,17 @@ TEST_F(MessageCenterSettingsControllerTest, SetWebPageNotifierEnabled) {
 
   // (5) Enable the permission when the default is blocked (expected to set).
   controller()->SetNotifierEnabled(disabled_notifier, true);
-  EXPECT_EQ(blink::mojom::PermissionStatus::GRANTED,
-            permission_manager->GetPermissionStatus(
-                content::PermissionType::NOTIFICATIONS, origin, origin));
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            permission_manager
+                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                      origin, origin)
+                .content_setting);
 
   // (6) Disable the permission when the default is blocked (expected to clear).
   controller()->SetNotifierEnabled(enabled_notifier, false);
-  EXPECT_EQ(blink::mojom::PermissionStatus::DENIED,
-            permission_manager->GetPermissionStatus(
-                content::PermissionType::NOTIFICATIONS, origin, origin));
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            permission_manager
+                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+                                      origin, origin)
+                .content_setting);
 }

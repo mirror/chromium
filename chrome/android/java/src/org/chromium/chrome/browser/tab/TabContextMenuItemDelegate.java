@@ -6,18 +6,24 @@ package org.chromium.chrome.browser.tab;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.MailTo;
 import android.net.Uri;
+import android.provider.Browser;
+import android.provider.ContactsContract;
+import android.support.customtabs.CustomTabsIntent;
 
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.contextmenu.ContextMenuItemDelegate;
+import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
-import org.chromium.chrome.browser.offlinepages.ClientId;
-import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
+import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.common.Referrer;
@@ -26,7 +32,6 @@ import org.chromium.ui.base.PageTransition;
 
 import java.net.URI;
 import java.util.Locale;
-import java.util.Random;
 
 /**
  * A default {@link ContextMenuItemDelegate} that supports the context menu functionality in Tab.
@@ -35,15 +40,27 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     public static final String PAGESPEED_PASSTHROUGH_HEADERS =
             "Chrome-Proxy: pass-through\nCache-Control: no-cache";
 
-    private final Clipboard mClipboard;
     private final Tab mTab;
+    private boolean mLoadOriginalImageRequestedForPageLoad;
+    private EmptyTabObserver mDataReductionProxyContextMenuTabObserver;
 
     /**
      * Builds a {@link TabContextMenuItemDelegate} instance.
      */
     public TabContextMenuItemDelegate(Tab tab) {
         mTab = tab;
-        mClipboard = new Clipboard(mTab.getApplicationContext());
+        mDataReductionProxyContextMenuTabObserver = new EmptyTabObserver() {
+            @Override
+            public void onPageLoadStarted(Tab tab, String url) {
+                mLoadOriginalImageRequestedForPageLoad = false;
+            }
+        };
+        mTab.addObserver(mDataReductionProxyContextMenuTabObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        mTab.removeObserver(mDataReductionProxyContextMenuTabObserver);
     }
 
     @Override
@@ -73,7 +90,72 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
 
     @Override
     public void onSaveToClipboard(String text, int clipboardType) {
-        mClipboard.setText(text);
+        Clipboard.getInstance().setText(text);
+    }
+
+    @Override
+    public boolean supportsCall() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("tel:"));
+        return mTab.getWindowAndroid().canResolveActivity(intent);
+    }
+
+    @Override
+    public void onCall(String uri) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse(uri));
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
+    }
+
+    @Override
+    public boolean supportsSendEmailMessage() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("mailto:test@example.com"));
+        return mTab.getWindowAndroid().canResolveActivity(intent);
+    }
+
+    @Override
+    public void onSendEmailMessage(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse(url));
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
+    }
+
+    @Override
+    public boolean supportsSendTextMessage() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("sms:"));
+        return mTab.getWindowAndroid().canResolveActivity(intent);
+    }
+
+    @Override
+    public void onSendTextMessage(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("sms:" + UrlUtilities.getTelNumber(url)));
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
+    }
+
+    @Override
+    public boolean supportsAddToContacts() {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+        return mTab.getWindowAndroid().canResolveActivity(intent);
+    }
+
+    @Override
+    public void onAddToContacts(String url) {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+        if (MailTo.isMailTo(url)) {
+            intent.putExtra(
+                    ContactsContract.Intents.Insert.EMAIL, MailTo.parse(url).getTo().split(",")[0]);
+        } else if (UrlUtilities.isTelScheme(url)) {
+            intent.putExtra(ContactsContract.Intents.Insert.PHONE, UrlUtilities.getTelNumber(url));
+        }
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
     }
 
     @Override
@@ -99,13 +181,14 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     }
 
     @Override
-    public void onReloadLoFiImages() {
-        mTab.reloadLoFiImages();
+    public void onLoadOriginalImage() {
+        mLoadOriginalImageRequestedForPageLoad = true;
+        mTab.loadOriginalImage();
     }
 
     @Override
-    public void onLoadOriginalImage() {
-        mTab.loadOriginalImage();
+    public boolean wasLoadOriginalImageRequestedForPageLoad() {
+        return mLoadOriginalImageRequestedForPageLoad;
     }
 
     @Override
@@ -149,8 +232,7 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
             try {
                 URI pageUri = URI.create(pageUrl);
                 if (UrlUtilities.isInternalScheme(pageUri)) {
-                    IntentHandler.startChromeLauncherActivityForTrustedIntent(
-                            chromeIntent, mTab.getApplicationContext());
+                    IntentHandler.startChromeLauncherActivityForTrustedIntent(chromeIntent);
                     activityStarted = true;
                 }
             } catch (IllegalArgumentException ex) {
@@ -168,12 +250,30 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     }
 
     @Override
-    public void onSavePageLater(String linkUrl) {
-        OfflinePageBridge bridge = OfflinePageBridge.getForProfile(mTab.getProfile());
-        Random random = new Random();
-        long offline_id = random.nextLong();
-        ClientId clientId = new ClientId("async_loading", Long.toString(offline_id));
-        bridge.savePageLater(linkUrl, clientId);
+    public void onOpenInNewChromeTabFromCCT(String linkUrl, boolean isIncognito) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage(mTab.getApplicationContext().getPackageName());
+        intent.putExtra(ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
+        if (isIncognito) {
+            intent.putExtra(IntentHandler.EXTRA_OPEN_NEW_INCOGNITO_TAB, true);
+            intent.putExtra(
+                    Browser.EXTRA_APPLICATION_ID, mTab.getApplicationContext().getPackageName());
+            IntentHandler.addTrustedIntentExtras(intent);
+        }
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
+    }
+
+    @Override
+    public String getTitleForOpenTabInExternalApp() {
+        return DefaultBrowserInfo.getTitleOpenInDefaultBrowser(false);
+    }
+
+    @Override
+    public void onOpenInDefaultBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        CustomTabsIntent.setAlwaysUseBrowserUI(intent);
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
     }
 
     /**
@@ -183,10 +283,12 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     */
     private boolean isSpdyProxyEnabledForUrl(String url) {
         if (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()
-                && url != null && !url.toLowerCase(Locale.US).startsWith("https://")
+                && url != null && !url.toLowerCase(Locale.US).startsWith(
+                        UrlConstants.HTTPS_URL_PREFIX)
                 && !isIncognito()) {
             return true;
         }
         return false;
     }
+
 }

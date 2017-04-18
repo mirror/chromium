@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_CRX_INSTALLER_H_
 #define CHROME_BROWSER_EXTENSIONS_CRX_INSTALLER_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -14,16 +15,16 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/version.h"
-#include "chrome/browser/extensions/extension_install_checker.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/webstore_installer.h"
 #include "chrome/common/extensions/extension_constants.h"
+#include "components/sync/model/string_ordinal.h"
 #include "extensions/browser/install_flag.h"
+#include "extensions/browser/preload_check.h"
 #include "extensions/browser/sandboxed_unpacker.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
-#include "sync/api/string_ordinal.h"
 
 class ExtensionService;
 class ExtensionServiceTest;
@@ -37,7 +38,7 @@ class SequencedTaskRunner;
 namespace extensions {
 class CrxInstallError;
 class ExtensionUpdaterTest;
-class RequirementsChecker;
+class PreloadCheckGroup;
 
 // This class installs a crx file into a profile.
 //
@@ -201,9 +202,9 @@ class CrxInstaller : public SandboxedUnpackerClient {
 
   bool did_handle_successfully() const { return did_handle_successfully_; }
 
-  Profile* profile() { return install_checker_.profile(); }
+  Profile* profile() { return profile_; }
 
-  const Extension* extension() { return install_checker_.extension().get(); }
+  const Extension* extension() { return extension_.get(); }
 
   // The currently installed version of the extension, for updates. Will be
   // invalid if this isn't an update.
@@ -212,7 +213,6 @@ class CrxInstaller : public SandboxedUnpackerClient {
  private:
   friend class ::ExtensionServiceTest;
   friend class ExtensionUpdaterTest;
-  friend class ExtensionCrxInstallerTest;
 
   CrxInstaller(base::WeakPtr<ExtensionService> service_weak,
                std::unique_ptr<ExtensionInstallPrompt> client,
@@ -233,7 +233,7 @@ class CrxInstaller : public SandboxedUnpackerClient {
   void OnUnpackFailure(const CrxInstallError& error) override;
   void OnUnpackSuccess(const base::FilePath& temp_dir,
                        const base::FilePath& extension_dir,
-                       const base::DictionaryValue* original_manifest,
+                       std::unique_ptr<base::DictionaryValue> original_manifest,
                        const Extension* extension,
                        const SkBitmap& install_icon) override;
 
@@ -241,12 +241,8 @@ class CrxInstaller : public SandboxedUnpackerClient {
   // checks on the extension.
   void CheckInstall();
 
-  // Runs on the UI thread. Callback from ExtensionInstallChecker.
-  void OnInstallChecksComplete(int failed_checks);
-
-  // Runs on the UI thread. Callback from Blacklist.
-  void OnBlacklistChecked(
-      extensions::BlacklistState blacklist_state);
+  // Runs on the UI thread. Callback from PreloadCheckGroup.
+  void OnInstallChecksComplete(PreloadCheck::Errors errors);
 
   // Runs on the UI thread. Confirms the installation to the ExtensionService.
   void ConfirmInstall();
@@ -288,6 +284,12 @@ class CrxInstaller : public SandboxedUnpackerClient {
     else
       install_flags_ &= ~flag;
   }
+
+  // The Profile the extension is being installed in.
+  Profile* profile_;
+
+  // The extension being installed.
+  scoped_refptr<const Extension> extension_;
 
   // The file we're installing.
   base::FilePath source_file_;
@@ -438,8 +440,13 @@ class CrxInstaller : public SandboxedUnpackerClient {
   // The flags for ExtensionService::OnExtensionInstalled.
   int install_flags_;
 
-  // Performs requirements, policy and blacklist checks on the extension.
-  ExtensionInstallChecker install_checker_;
+  // Checks that may run before installing the extension.
+  std::unique_ptr<PreloadCheck> policy_check_;
+  std::unique_ptr<PreloadCheck> requirements_check_;
+  std::unique_ptr<PreloadCheck> blacklist_check_;
+
+  // Runs the above checks.
+  std::unique_ptr<PreloadCheckGroup> check_group_;
 
   DISALLOW_COPY_AND_ASSIGN(CrxInstaller);
 };

@@ -9,11 +9,16 @@
 #include "components/sync_sessions/sync_sessions_client.h"
 #include "components/sync_sessions/synced_window_delegate.h"
 #include "components/sync_sessions/synced_window_delegates_getter.h"
+#include "components/sync_sessions/tab_node_pool.h"
 #include "ios/chrome/browser/sessions/ios_chrome_session_tab_helper.h"
 #include "ios/web/public/favicon_status.h"
 #include "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/web_state/web_state.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 using web::NavigationItem;
 
@@ -32,7 +37,8 @@ NavigationItem* GetPossiblyPendingItemAtIndex(web::WebState* web_state, int i) {
 }  // namespace
 
 IOSChromeSyncedTabDelegate::IOSChromeSyncedTabDelegate(web::WebState* web_state)
-    : web_state_(web_state), sync_session_id_(0) {}
+    : web_state_(web_state),
+      sync_session_id_(sync_sessions::TabNodePool::kInvalidTabNodeID) {}
 
 IOSChromeSyncedTabDelegate::~IOSChromeSyncedTabDelegate() {}
 
@@ -48,6 +54,12 @@ bool IOSChromeSyncedTabDelegate::IsBeingDestroyed() const {
   return web_state_->IsBeingDestroyed();
 }
 
+// todo(pnoland): add logic to store and return the source tab id on ios.
+// http://crbug/695241
+SessionID::id_type IOSChromeSyncedTabDelegate::GetSourceTabID() const {
+  return sync_sessions::kInvalidTabID;
+}
+
 std::string IOSChromeSyncedTabDelegate::GetExtensionAppId() const {
   return std::string();
 }
@@ -57,7 +69,7 @@ bool IOSChromeSyncedTabDelegate::IsInitialBlankNavigation() const {
 }
 
 int IOSChromeSyncedTabDelegate::GetCurrentEntryIndex() const {
-  return web_state_->GetNavigationManager()->GetCurrentItemIndex();
+  return web_state_->GetNavigationManager()->GetLastCommittedItemIndex();
 }
 
 int IOSChromeSyncedTabDelegate::GetEntryCount() const {
@@ -92,7 +104,7 @@ bool IOSChromeSyncedTabDelegate::ProfileIsSupervised() const {
   return false;
 }
 
-const std::vector<const sessions::SerializedNavigationEntry*>*
+const std::vector<std::unique_ptr<const sessions::SerializedNavigationEntry>>*
 IOSChromeSyncedTabDelegate::GetBlockedNavigations() const {
   NOTREACHED();
   return nullptr;

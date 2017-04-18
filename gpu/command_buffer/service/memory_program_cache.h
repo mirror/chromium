@@ -20,7 +20,7 @@
 
 namespace gpu {
 
-struct GpuPreferences;
+class GpuProcessActivityFlags;
 
 namespace gles2 {
 
@@ -28,7 +28,9 @@ namespace gles2 {
 class GPU_EXPORT MemoryProgramCache : public ProgramCache {
  public:
   MemoryProgramCache(size_t max_cache_size_bytes,
-                     bool disable_gpu_shader_disk_cache);
+                     bool disable_gpu_shader_disk_cache,
+                     bool disable_program_caching_for_transform_feedback,
+                     GpuProcessActivityFlags* activity_flags);
   ~MemoryProgramCache() override;
 
   ProgramLoadResult LoadLinkedProgram(
@@ -166,8 +168,10 @@ class GPU_EXPORT MemoryProgramCache : public ProgramCache {
 
   const size_t max_size_bytes_;
   const bool disable_gpu_shader_disk_cache_;
+  const bool disable_program_caching_for_transform_feedback_;
   size_t curr_size_bytes_;
   ProgramMRUCache store_;
+  GpuProcessActivityFlags* activity_flags_;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryProgramCache);
 };

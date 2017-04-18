@@ -17,6 +17,7 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_messages.h"
+#include "content/common/service_worker/service_worker_types.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "ipc/ipc_message.h"
@@ -50,7 +51,7 @@ class TestingServiceWorkerDispatcherHost : public ServiceWorkerDispatcherHost {
       ServiceWorkerContextWrapper* context_wrapper,
       ResourceContext* resource_context,
       EmbeddedWorkerTestHelper* helper)
-      : ServiceWorkerDispatcherHost(process_id, nullptr, resource_context),
+      : ServiceWorkerDispatcherHost(process_id, resource_context),
         bad_message_received_count_(0),
         helper_(helper) {
     Init(context_wrapper);
@@ -75,6 +76,7 @@ class ServiceWorkerHandleTest : public testing::Test {
   void SetUp() override {
     helper_.reset(new EmbeddedWorkerTestHelper(base::FilePath()));
 
+    helper_->context()->RemoveDispatcherHost(helper_->mock_render_process_id());
     dispatcher_host_ = new TestingServiceWorkerDispatcherHost(
         helper_->mock_render_process_id(), helper_->context_wrapper(),
         &resource_context_, helper_.get());
@@ -93,6 +95,10 @@ class ServiceWorkerHandleTest : public testing::Test {
     records.push_back(
         ServiceWorkerDatabase::ResourceRecord(10, version_->script_url(), 100));
     version_->script_cache_map()->SetResources(records);
+    version_->SetMainScriptHttpResponseInfo(net::HttpResponseInfo());
+    version_->set_fetch_handler_existence(
+        ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
+    version_->SetStatus(ServiceWorkerVersion::INSTALLING);
 
     // Make the registration findable via storage functions.
     helper_->context()->storage()->LazyInitialize(base::Bind(&base::DoNothing));
@@ -105,12 +111,10 @@ class ServiceWorkerHandleTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
     ASSERT_EQ(SERVICE_WORKER_OK, status);
 
-    provider_host_.reset(new ServiceWorkerProviderHost(
-        helper_->mock_render_process_id(), kRenderFrameId, 1,
-        SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-        ServiceWorkerProviderHost::FrameSecurityLevel::SECURE,
-        helper_->context()->AsWeakPtr(), dispatcher_host_.get()));
-
+    provider_host_ = CreateProviderHostWithDispatcherHost(
+        helper_->mock_render_process_id(), 1 /* provider_id */,
+        helper_->context()->AsWeakPtr(), kRenderFrameId,
+        dispatcher_host_.get());
     helper_->SimulateAddProcessToPattern(pattern,
                                          helper_->mock_render_process_id());
   }
@@ -150,26 +154,19 @@ TEST_F(ServiceWorkerHandleTest, OnVersionStateChanged) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(SERVICE_WORKER_OK, status);
 
-  // ...update state to installing...
-  version_->SetStatus(ServiceWorkerVersion::INSTALLING);
-
-  // ...and update state to installed.
+  // ...update state to installed.
   version_->SetStatus(ServiceWorkerVersion::INSTALLED);
 
-  ASSERT_EQ(3UL, ipc_sink()->message_count());
   ASSERT_EQ(0L, dispatcher_host_->bad_message_received_count_);
 
-  // We should be sending 1. StartWorker,
-  EXPECT_EQ(EmbeddedWorkerMsg_StartWorker::ID,
-            ipc_sink()->GetMessageAt(0)->type());
-  // 2. StateChanged (state == Installing),
+  const IPC::Message* message = nullptr;
+  // StartWorker shouldn't be recorded here.
+  ASSERT_EQ(1UL, ipc_sink()->message_count());
+  message = ipc_sink()->GetMessageAt(0);
+
+  // StateChanged (state == Installed).
   VerifyStateChangedMessage(handle->handle_id(),
-                            blink::WebServiceWorkerStateInstalling,
-                            ipc_sink()->GetMessageAt(1));
-  // 3. StateChanged (state == Installed).
-  VerifyStateChangedMessage(handle->handle_id(),
-                            blink::WebServiceWorkerStateInstalled,
-                            ipc_sink()->GetMessageAt(2));
+                            blink::kWebServiceWorkerStateInstalled, message);
 }
 
 }  // namespace content

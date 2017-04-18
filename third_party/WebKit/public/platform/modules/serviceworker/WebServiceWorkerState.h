@@ -8,15 +8,15 @@
 namespace blink {
 
 enum WebServiceWorkerState {
-    WebServiceWorkerStateUnknown,
-    WebServiceWorkerStateInstalling,
-    WebServiceWorkerStateInstalled,
-    WebServiceWorkerStateActivating,
-    WebServiceWorkerStateActivated,
-    WebServiceWorkerStateRedundant,
-    WebServiceWorkerStateLast = WebServiceWorkerStateRedundant
+  kWebServiceWorkerStateUnknown,
+  kWebServiceWorkerStateInstalling,
+  kWebServiceWorkerStateInstalled,
+  kWebServiceWorkerStateActivating,
+  kWebServiceWorkerStateActivated,
+  kWebServiceWorkerStateRedundant,
+  kWebServiceWorkerStateLast = kWebServiceWorkerStateRedundant
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebServiceWorkerState_h
+#endif  // WebServiceWorkerState_h

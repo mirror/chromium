@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/feature_list.h"
 #include "base/i18n/case_conversion.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -113,9 +114,9 @@ AutocompleteMatch BaseSearchProvider::CreateSearchSuggestion(
   // mode.  They also assume the caller knows what it's doing and we set
   // this match to look as if it was received/created synchronously.
   SearchSuggestionParser::SuggestResult suggest_result(
-      suggestion, type, suggestion, base::string16(), base::string16(),
-      base::string16(), base::string16(), nullptr, std::string(),
-      std::string(), from_keyword_provider, 0, false, false, base::string16());
+      suggestion, type, 0, suggestion, base::string16(), base::string16(),
+      base::string16(), base::string16(), nullptr, std::string(), std::string(),
+      from_keyword_provider, 0, false, false, base::string16());
   suggest_result.set_received_after_last_keystroke(false);
   return CreateSearchSuggestion(
       NULL, AutocompleteInput(), from_keyword_provider, suggest_result,
@@ -125,11 +126,11 @@ AutocompleteMatch BaseSearchProvider::CreateSearchSuggestion(
 void BaseSearchProvider::DeleteMatch(const AutocompleteMatch& match) {
   DCHECK(match.deletable);
   if (!match.GetAdditionalInfo(BaseSearchProvider::kDeletionUrlKey).empty()) {
-    deletion_handlers_.push_back(base::WrapUnique(new SuggestionDeletionHandler(
+    deletion_handlers_.push_back(base::MakeUnique<SuggestionDeletionHandler>(
         match.GetAdditionalInfo(BaseSearchProvider::kDeletionUrlKey),
         client_->GetRequestContext(),
         base::Bind(&BaseSearchProvider::OnDeletionComplete,
-                   base::Unretained(this)))));
+                   base::Unretained(this))));
   }
 
   TemplateURL* template_url =
@@ -214,6 +215,7 @@ AutocompleteMatch BaseSearchProvider::CreateSearchSuggestion(
   match.answer_contents = suggestion.answer_contents();
   match.answer_type = suggestion.answer_type();
   match.answer = SuggestionAnswer::copy(suggestion.answer());
+  match.subtype_identifier = suggestion.subtype_identifier();
   if (suggestion.type() == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
     match.RecordAdditionalInfo(
         kACMatchPropertyInputText, base::UTF16ToUTF8(input.text()));
@@ -337,13 +339,18 @@ bool BaseSearchProvider::CanSendURL(
   if (!current_page_url.is_valid())
     return false;
 
-  // Only allow HTTP URLs or HTTPS URLs for the same domain as the search
-  // provider.
-  if ((current_page_url.scheme() != url::kHttpScheme) &&
-      ((current_page_url.scheme() != url::kHttpsScheme) ||
-       !net::registry_controlled_domains::SameDomainOrHost(
-           current_page_url, suggest_url,
-           net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES)))
+  // Only allow HTTP URLs or HTTPS URLs.  For HTTPS URLs, require that either
+  // the appropriate feature flag is enabled or the URL is the same domain as
+  // the search provider.
+  const bool scheme_allowed =
+      (current_page_url.scheme() == url::kHttpScheme) ||
+      ((current_page_url.scheme() == url::kHttpsScheme) &&
+       (base::FeatureList::IsEnabled(
+            omnibox::kSearchProviderContextAllowHttpsUrls) ||
+        net::registry_controlled_domains::SameDomainOrHost(
+            current_page_url, suggest_url,
+            net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES)));
+  if (!scheme_allowed)
     return false;
 
   if (!client->TabSyncEnabledAndUnencrypted())

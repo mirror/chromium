@@ -40,19 +40,15 @@
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebVector.h"
 
-#if BLINK_IMPLEMENTATION
-namespace WTF { template <typename T> class PassRefPtr; }
-#endif
-
 namespace v8 {
 class Value;
-template <class T> class Local;
+template <class T>
+class Local;
 }
 
 namespace blink {
 
 class Document;
-class DocumentType;
 class WebAXObject;
 class WebElement;
 class WebFormElement;
@@ -63,92 +59,95 @@ struct WebDistillabilityFeatures;
 
 // Provides readonly access to some properties of a DOM document.
 class WebDocument : public WebNode {
-public:
-    WebDocument() { }
-    WebDocument(const WebDocument& e) : WebNode(e) { }
+ public:
+  WebDocument() {}
+  WebDocument(const WebDocument& e) : WebNode(e) {}
 
-    WebDocument& operator=(const WebDocument& e)
-    {
-        WebNode::assign(e);
-        return *this;
-    }
-    void assign(const WebDocument& e) { WebNode::assign(e); }
+  WebDocument& operator=(const WebDocument& e) {
+    WebNode::Assign(e);
+    return *this;
+  }
+  void Assign(const WebDocument& e) { WebNode::Assign(e); }
 
-    BLINK_EXPORT WebURL url() const;
-    // Note: Security checks should use the getSecurityOrigin(), not url().
-    BLINK_EXPORT WebSecurityOrigin getSecurityOrigin() const;
-    BLINK_EXPORT bool isSecureContext(WebString& errorMessage) const;
+  BLINK_EXPORT WebURL Url() const;
+  // Note: Security checks should use the getSecurityOrigin(), not url().
+  BLINK_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
+  BLINK_EXPORT bool IsSecureContext() const;
 
-    BLINK_EXPORT WebString encoding() const;
-    BLINK_EXPORT WebString contentLanguage() const;
-    BLINK_EXPORT WebString referrer() const;
-    BLINK_EXPORT WebColor themeColor() const;
-    // The url of the OpenSearch Desription Document (if any).
-    BLINK_EXPORT WebURL openSearchDescriptionURL() const;
+  BLINK_EXPORT WebString Encoding() const;
+  BLINK_EXPORT WebString ContentLanguage() const;
+  BLINK_EXPORT WebString GetReferrer() const;
+  BLINK_EXPORT WebColor ThemeColor() const;
+  // The url of the OpenSearch Desription Document (if any).
+  BLINK_EXPORT WebURL OpenSearchDescriptionURL() const;
 
-    // Returns the frame the document belongs to or 0 if the document is frameless.
-    BLINK_EXPORT WebLocalFrame* frame() const;
-    BLINK_EXPORT bool isHTMLDocument() const;
-    BLINK_EXPORT bool isXHTMLDocument() const;
-    BLINK_EXPORT bool isPluginDocument() const;
-    BLINK_EXPORT WebURL baseURL() const;
+  // Returns the frame the document belongs to or 0 if the document is
+  // frameless.
+  BLINK_EXPORT WebLocalFrame* GetFrame() const;
+  BLINK_EXPORT bool IsHTMLDocument() const;
+  BLINK_EXPORT bool IsXHTMLDocument() const;
+  BLINK_EXPORT bool IsPluginDocument() const;
+  BLINK_EXPORT WebURL BaseURL() const;
 
-    // The firstPartyForCookies is used to compute whether this document
-    // appears in a "third-party" context for the purpose of third-party
-    // cookie blocking.
-    BLINK_EXPORT WebURL firstPartyForCookies() const;
+  // The firstPartyForCookies is used to compute whether this document
+  // appears in a "third-party" context for the purpose of third-party
+  // cookie blocking.
+  BLINK_EXPORT WebURL FirstPartyForCookies() const;
 
-    BLINK_EXPORT WebElement documentElement() const;
-    BLINK_EXPORT WebElement body() const;
-    BLINK_EXPORT WebElement head();
-    BLINK_EXPORT WebString title() const;
-    BLINK_EXPORT WebString contentAsTextForTesting() const;
-    BLINK_EXPORT WebElementCollection all();
-    BLINK_EXPORT void forms(WebVector<WebFormElement>&) const;
-    BLINK_EXPORT WebURL completeURL(const WebString&) const;
-    BLINK_EXPORT WebElement getElementById(const WebString&) const;
-    BLINK_EXPORT WebElement focusedElement() const;
-    BLINK_EXPORT WebReferrerPolicy referrerPolicy() const;
-    BLINK_EXPORT WebString outgoingReferrer();
+  BLINK_EXPORT WebElement DocumentElement() const;
+  BLINK_EXPORT WebElement Body() const;
+  BLINK_EXPORT WebElement Head();
+  BLINK_EXPORT WebString Title() const;
+  BLINK_EXPORT WebString ContentAsTextForTesting() const;
+  BLINK_EXPORT WebElementCollection All();
+  BLINK_EXPORT void Forms(WebVector<WebFormElement>&) const;
+  BLINK_EXPORT WebURL CompleteURL(const WebString&) const;
+  BLINK_EXPORT WebElement GetElementById(const WebString&) const;
+  BLINK_EXPORT WebElement FocusedElement() const;
+  BLINK_EXPORT WebReferrerPolicy GetReferrerPolicy() const;
+  BLINK_EXPORT WebString OutgoingReferrer();
 
-    // Accessibility support. These methods should only be called on the
-    // top-level document, because one accessibility cache spans all of
-    // the documents on the page.
+  // Accessibility support. These methods should only be called on the
+  // top-level document, because one accessibility cache spans all of
+  // the documents on the page.
 
-    // Gets the accessibility object for this document.
-    BLINK_EXPORT WebAXObject accessibilityObject() const;
+  // Gets the accessibility object for this document.
+  BLINK_EXPORT WebAXObject AccessibilityObject() const;
 
-    // Gets the accessibility object for an object on this page by ID.
-    BLINK_EXPORT WebAXObject accessibilityObjectFromID(int axID) const;
+  // Gets the accessibility object for an object on this page by ID.
+  BLINK_EXPORT WebAXObject AccessibilityObjectFromID(int ax_id) const;
 
-    // Gets the accessibility object that has focus.
-    BLINK_EXPORT WebAXObject focusedAccessibilityObject() const;
+  // Gets the accessibility object that has focus.
+  BLINK_EXPORT WebAXObject FocusedAccessibilityObject() const;
 
-    // Inserts the given CSS source code as a stylesheet in the document.
-    BLINK_EXPORT void insertStyleSheet(const WebString& sourceCode);
+  // Inserts the given CSS source code as a stylesheet in the document.
+  BLINK_EXPORT void InsertStyleSheet(const WebString& source_code);
 
-    // Arranges to call WebFrameClient::didMatchCSS(frame(), ...) when one of
-    // the selectors matches or stops matching an element in this document.
-    // Each call to this method overrides any previous calls.
-    BLINK_EXPORT void watchCSSSelectors(const WebVector<WebString>& selectors);
+  // Arranges to call WebFrameClient::didMatchCSS(frame(), ...) when one of
+  // the selectors matches or stops matching an element in this document.
+  // Each call to this method overrides any previous calls.
+  BLINK_EXPORT void WatchCSSSelectors(const WebVector<WebString>& selectors);
 
-    BLINK_EXPORT WebVector<WebDraggableRegion> draggableRegions() const;
+  BLINK_EXPORT WebVector<WebDraggableRegion> DraggableRegions() const;
 
-    BLINK_EXPORT v8::Local<v8::Value> registerEmbedderCustomElement(const WebString& name, v8::Local<v8::Value> options, WebExceptionCode&);
+  BLINK_EXPORT v8::Local<v8::Value> RegisterEmbedderCustomElement(
+      const WebString& name,
+      v8::Local<v8::Value> options,
+      WebExceptionCode&);
 
-    BLINK_EXPORT WebURL manifestURL() const;
-    BLINK_EXPORT bool manifestUseCredentials() const;
-    BLINK_EXPORT WebDistillabilityFeatures distillabilityFeatures();
+  BLINK_EXPORT WebURL ManifestURL() const;
+  BLINK_EXPORT bool ManifestUseCredentials() const;
+  BLINK_EXPORT WebDistillabilityFeatures DistillabilityFeatures();
 
 #if BLINK_IMPLEMENTATION
-    BLINK_EXPORT WebDocument(Document*);
-    BLINK_EXPORT WebDocument& operator=(Document*);
-    BLINK_EXPORT operator Document*() const;
+  BLINK_EXPORT WebDocument(Document*);
+  BLINK_EXPORT WebDocument& operator=(Document*);
+  BLINK_EXPORT operator Document*() const;
 #endif
 };
 
 DECLARE_WEB_NODE_TYPE_CASTS(WebDocument);
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -25,22 +25,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @MainDex
 public abstract class PathUtils {
     private static final String THUMBNAIL_DIRECTORY_NAME = "textures";
+    private static final String DOWNLOAD_INTERNAL_DIRECTORY_NAME = "download_internal";
 
     private static final int DATA_DIRECTORY = 0;
     private static final int THUMBNAIL_DIRECTORY = 1;
     private static final int DATABASE_DIRECTORY = 2;
     private static final int CACHE_DIRECTORY = 3;
-    private static final int NUM_DIRECTORIES = 4;
+    private static final int DOWNLOAD_INTERNAL_DIRECTORY = 4;
+    private static final int NUM_DIRECTORIES = 5;
     private static final AtomicBoolean sInitializationStarted = new AtomicBoolean();
     private static AsyncTask<Void, Void, String[]> sDirPathFetchTask;
 
-    // In setPrivateDataDirectorySuffix(), we store the app's context. If the AsyncTask started in
-    // setPrivateDataDirectorySuffix() fails to complete by the time we need the values, we will
-    // need the context so that we can restart the task synchronously on the UI thread.
-    private static Context sDataDirectoryAppContext;
-
-    // We also store the directory path suffix from setPrivateDataDirectorySuffix() for the same
-    // reason as above.
+    // If the AsyncTask started in setPrivateDataDirectorySuffix() fails to complete by the time we
+    // need the values, we will need the suffix so that we can restart the task synchronously on
+    // the UI thread.
     private static String sDataDirectorySuffix;
 
     // Prevent instantiation.
@@ -101,13 +99,16 @@ public abstract class PathUtils {
      */
     private static String[] setPrivateDataDirectorySuffixInternal() {
         String[] paths = new String[NUM_DIRECTORIES];
-        paths[DATA_DIRECTORY] = sDataDirectoryAppContext.getDir(sDataDirectorySuffix,
-                Context.MODE_PRIVATE).getPath();
-        paths[THUMBNAIL_DIRECTORY] = sDataDirectoryAppContext.getDir(
+        Context appContext = ContextUtils.getApplicationContext();
+        paths[DATA_DIRECTORY] = appContext.getDir(
+                sDataDirectorySuffix, Context.MODE_PRIVATE).getPath();
+        paths[THUMBNAIL_DIRECTORY] = appContext.getDir(
                 THUMBNAIL_DIRECTORY_NAME, Context.MODE_PRIVATE).getPath();
-        paths[DATABASE_DIRECTORY] = sDataDirectoryAppContext.getDatabasePath("foo").getParent();
-        if (sDataDirectoryAppContext.getCacheDir() != null) {
-            paths[CACHE_DIRECTORY] = sDataDirectoryAppContext.getCacheDir().getPath();
+        paths[DOWNLOAD_INTERNAL_DIRECTORY] =
+                appContext.getDir(DOWNLOAD_INTERNAL_DIRECTORY_NAME, Context.MODE_PRIVATE).getPath();
+        paths[DATABASE_DIRECTORY] = appContext.getDatabasePath("foo").getParent();
+        if (appContext.getCacheDir() != null) {
+            paths[CACHE_DIRECTORY] = appContext.getCacheDir().getPath();
         }
         return paths;
     }
@@ -124,12 +125,12 @@ public abstract class PathUtils {
      * @param suffix The private data directory suffix.
      * @see Context#getDir(String, int)
      */
-    public static void setPrivateDataDirectorySuffix(String suffix, Context context) {
+    public static void setPrivateDataDirectorySuffix(String suffix) {
         // This method should only be called once, but many tests end up calling it multiple times,
         // so adding a guard here.
         if (!sInitializationStarted.getAndSet(true)) {
+            assert ContextUtils.getApplicationContext() != null;
             sDataDirectorySuffix = suffix;
-            sDataDirectoryAppContext = context.getApplicationContext();
             sDirPathFetchTask = new AsyncTask<Void, Void, String[]>() {
                 @Override
                 protected String[] doInBackground(Void... unused) {
@@ -151,7 +152,7 @@ public abstract class PathUtils {
      * @return the private directory that is used to store application data.
      */
     @CalledByNative
-    public static String getDataDirectory(Context appContext) {
+    public static String getDataDirectory() {
         assert sDirPathFetchTask != null : "setDataDirectorySuffix must be called first.";
         return getDirectoryPath(DATA_DIRECTORY);
     }
@@ -160,7 +161,7 @@ public abstract class PathUtils {
      * @return the private directory that is used to store application database.
      */
     @CalledByNative
-    public static String getDatabaseDirectory(Context appContext) {
+    public static String getDatabaseDirectory() {
         assert sDirPathFetchTask != null : "setDataDirectorySuffix must be called first.";
         return getDirectoryPath(DATABASE_DIRECTORY);
     }
@@ -168,17 +169,22 @@ public abstract class PathUtils {
     /**
      * @return the cache directory.
      */
-    @SuppressWarnings("unused")
     @CalledByNative
-    public static String getCacheDirectory(Context appContext) {
+    public static String getCacheDirectory() {
         assert sDirPathFetchTask != null : "setDataDirectorySuffix must be called first.";
         return getDirectoryPath(CACHE_DIRECTORY);
     }
 
     @CalledByNative
-    public static String getThumbnailCacheDirectory(Context appContext) {
+    public static String getThumbnailCacheDirectory() {
         assert sDirPathFetchTask != null : "setDataDirectorySuffix must be called first.";
         return getDirectoryPath(THUMBNAIL_DIRECTORY);
+    }
+
+    @CalledByNative
+    public static String getDownloadInternalDirectory() {
+        assert sDirPathFetchTask != null : "setDataDirectorySuffix must be called first.";
+        return getDirectoryPath(DOWNLOAD_INTERNAL_DIRECTORY);
     }
 
     /**
@@ -186,7 +192,7 @@ public abstract class PathUtils {
      */
     @SuppressWarnings("unused")
     @CalledByNative
-    private static String getDownloadsDirectory(Context appContext) {
+    private static String getDownloadsDirectory() {
         // Temporarily allowing disk access while fixing. TODO: http://crbug.com/508615
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         String downloadsPath;
@@ -207,8 +213,8 @@ public abstract class PathUtils {
      */
     @SuppressWarnings("unused")
     @CalledByNative
-    private static String getNativeLibraryDirectory(Context appContext) {
-        ApplicationInfo ai = appContext.getApplicationInfo();
+    private static String getNativeLibraryDirectory() {
+        ApplicationInfo ai = ContextUtils.getApplicationContext().getApplicationInfo();
         if ((ai.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
                 || (ai.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
             return ai.nativeLibraryDir;

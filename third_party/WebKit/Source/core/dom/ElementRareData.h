@@ -22,228 +22,272 @@
 #ifndef ElementRareData_h
 #define ElementRareData_h
 
+#include <memory>
+#include "bindings/core/v8/ScriptWrappableVisitor.h"
 #include "core/animation/ElementAnimations.h"
 #include "core/css/cssom/InlineStylePropertyMap.h"
+#include "core/dom/AccessibleNode.h"
 #include "core/dom/Attr.h"
 #include "core/dom/CompositorProxiedPropertySet.h"
 #include "core/dom/DatasetDOMStringMap.h"
+#include "core/dom/ElementIntersectionObserverData.h"
 #include "core/dom/NamedNodeMap.h"
-#include "core/dom/NodeIntersectionObserverData.h"
 #include "core/dom/NodeRareData.h"
 #include "core/dom/PseudoElement.h"
 #include "core/dom/PseudoElementData.h"
+#include "core/dom/custom/CustomElementDefinition.h"
 #include "core/dom/custom/V0CustomElementDefinition.h"
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/html/ClassList.h"
-#include "core/style/StyleInheritedData.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashSet.h"
-#include <memory>
+#include "platform/wtf/HashSet.h"
 
 namespace blink {
 
-class HTMLElement;
 class CompositorProxiedPropertySet;
 class ResizeObservation;
 class ResizeObserver;
 
 class ElementRareData : public NodeRareData {
-public:
-    static ElementRareData* create(LayoutObject* layoutObject)
-    {
-        return new ElementRareData(layoutObject);
+ public:
+  static ElementRareData* Create(NodeLayoutData* node_layout_data) {
+    return new ElementRareData(node_layout_data);
+  }
+
+  ~ElementRareData();
+
+  void SetPseudoElement(PseudoId, PseudoElement*);
+  PseudoElement* GetPseudoElement(PseudoId) const;
+
+  void SetTabIndexExplicitly() {
+    SetElementFlag(kTabIndexWasSetExplicitly, true);
+  }
+
+  void ClearTabIndexExplicitly() {
+    ClearElementFlag(kTabIndexWasSetExplicitly);
+  }
+
+  CSSStyleDeclaration& EnsureInlineCSSStyleDeclaration(Element* owner_element);
+  InlineStylePropertyMap& EnsureInlineStylePropertyMap(Element* owner_element);
+
+  InlineStylePropertyMap* GetInlineStylePropertyMap() {
+    return cssom_map_wrapper_.Get();
+  }
+
+  void ClearShadow() { shadow_ = nullptr; }
+  ElementShadow* Shadow() const { return shadow_.Get(); }
+  ElementShadow& EnsureShadow() {
+    if (!shadow_) {
+      shadow_ = ElementShadow::Create();
+      ScriptWrappableVisitor::WriteBarrier(this, shadow_);
     }
+    return *shadow_;
+  }
 
-    ~ElementRareData();
+  NamedNodeMap* AttributeMap() const { return attribute_map_.Get(); }
+  void SetAttributeMap(NamedNodeMap* attribute_map) {
+    attribute_map_ = attribute_map;
+    ScriptWrappableVisitor::WriteBarrier(this, attribute_map_);
+  }
 
-    void setPseudoElement(PseudoId, PseudoElement*);
-    PseudoElement* pseudoElement(PseudoId) const;
+  ComputedStyle* GetComputedStyle() const { return computed_style_.Get(); }
+  void SetComputedStyle(PassRefPtr<ComputedStyle> computed_style) {
+    computed_style_ = std::move(computed_style);
+  }
+  void ClearComputedStyle() { computed_style_ = nullptr; }
 
-    short tabIndex() const { return m_tabindex; }
+  ClassList* GetClassList() const { return class_list_.Get(); }
+  void SetClassList(ClassList* class_list) {
+    class_list_ = class_list;
+    ScriptWrappableVisitor::WriteBarrier(this, class_list_);
+  }
+  void ClearClassListValueForQuirksMode() {
+    if (!class_list_)
+      return;
+    class_list_->ClearValueForQuirksMode();
+  }
 
-    void setTabIndexExplicitly(short index)
-    {
-        m_tabindex = index;
-        setElementFlag(TabIndexWasSetExplicitly, true);
+  DatasetDOMStringMap* Dataset() const { return dataset_.Get(); }
+  void SetDataset(DatasetDOMStringMap* dataset) {
+    dataset_ = dataset;
+    ScriptWrappableVisitor::WriteBarrier(this, dataset_);
+  }
+
+  LayoutSize MinimumSizeForResizing() const {
+    return minimum_size_for_resizing_;
+  }
+  void SetMinimumSizeForResizing(LayoutSize size) {
+    minimum_size_for_resizing_ = size;
+  }
+
+  ScrollOffset SavedLayerScrollOffset() const {
+    return saved_layer_scroll_offset_;
+  }
+  void SetSavedLayerScrollOffset(ScrollOffset offset) {
+    saved_layer_scroll_offset_ = offset;
+  }
+
+  ElementAnimations* GetElementAnimations() {
+    return element_animations_.Get();
+  }
+  void SetElementAnimations(ElementAnimations* element_animations) {
+    element_animations_ = element_animations;
+  }
+
+  bool HasPseudoElements() const;
+  void ClearPseudoElements();
+
+  void IncrementCompositorProxiedProperties(uint32_t properties);
+  void DecrementCompositorProxiedProperties(uint32_t properties);
+  CompositorProxiedPropertySet* ProxiedPropertyCounts() const {
+    return proxied_properties_.get();
+  }
+
+  void V0SetCustomElementDefinition(V0CustomElementDefinition* definition) {
+    v0_custom_element_definition_ = definition;
+  }
+  V0CustomElementDefinition* GetV0CustomElementDefinition() const {
+    return v0_custom_element_definition_.Get();
+  }
+
+  void SetCustomElementDefinition(CustomElementDefinition* definition) {
+    custom_element_definition_ = definition;
+  }
+  CustomElementDefinition* GetCustomElementDefinition() const {
+    return custom_element_definition_.Get();
+  }
+
+  AccessibleNode* GetAccessibleNode() const { return accessible_node_.Get(); }
+  AccessibleNode* EnsureAccessibleNode(Element* owner_element) {
+    if (!accessible_node_) {
+      accessible_node_ = new AccessibleNode(owner_element);
+      ScriptWrappableVisitor::WriteBarrier(this, accessible_node_);
     }
+    return accessible_node_;
+  }
 
-    void clearTabIndexExplicitly()
-    {
-        m_tabindex = 0;
-        clearElementFlag(TabIndexWasSetExplicitly);
+  AttrNodeList& EnsureAttrNodeList();
+  AttrNodeList* GetAttrNodeList() { return attr_node_list_.Get(); }
+  void RemoveAttrNodeList() { attr_node_list_.Clear(); }
+  void AddAttr(Attr* attr) {
+    EnsureAttrNodeList().push_back(attr);
+    ScriptWrappableVisitor::WriteBarrier(this, attr);
+  }
+
+  ElementIntersectionObserverData* IntersectionObserverData() const {
+    return intersection_observer_data_.Get();
+  }
+  ElementIntersectionObserverData& EnsureIntersectionObserverData() {
+    if (!intersection_observer_data_) {
+      intersection_observer_data_ = new ElementIntersectionObserverData();
+      ScriptWrappableVisitor::WriteBarrier(this, intersection_observer_data_);
     }
+    return *intersection_observer_data_;
+  }
 
-    CSSStyleDeclaration& ensureInlineCSSStyleDeclaration(Element* ownerElement);
-    InlineStylePropertyMap& ensureInlineStylePropertyMap(Element* ownerElement);
+  using ResizeObserverDataMap =
+      HeapHashMap<Member<ResizeObserver>, Member<ResizeObservation>>;
 
-    InlineStylePropertyMap* inlineStylePropertyMap() { return m_cssomMapWrapper.get(); }
+  ResizeObserverDataMap* ResizeObserverData() const {
+    return resize_observer_data_;
+  }
+  ResizeObserverDataMap& EnsureResizeObserverData();
 
-    void clearShadow() { m_shadow = nullptr; }
-    ElementShadow* shadow() const { return m_shadow.get(); }
-    ElementShadow& ensureShadow()
-    {
-        if (!m_shadow)
-            m_shadow = ElementShadow::create();
-        return *m_shadow;
-    }
+  DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_WRAPPERS_AFTER_DISPATCH();
 
-    NamedNodeMap* attributeMap() const { return m_attributeMap.get(); }
-    void setAttributeMap(NamedNodeMap* attributeMap) { m_attributeMap = attributeMap; }
+ private:
+  CompositorProxiedPropertySet& EnsureCompositorProxiedPropertySet();
+  void ClearCompositorProxiedPropertySet() { proxied_properties_ = nullptr; }
 
-    ComputedStyle* computedStyle() const { return m_computedStyle.get(); }
-    void setComputedStyle(PassRefPtr<ComputedStyle> computedStyle) { m_computedStyle = computedStyle; }
-    void clearComputedStyle() { m_computedStyle = nullptr; }
+  LayoutSize minimum_size_for_resizing_;
+  ScrollOffset saved_layer_scroll_offset_;
 
-    ClassList* classList() const { return m_classList.get(); }
-    void setClassList(ClassList* classList) { m_classList = classList; }
-    void clearClassListValueForQuirksMode()
-    {
-        if (!m_classList)
-            return;
-        m_classList->clearValueForQuirksMode();
-    }
+  Member<DatasetDOMStringMap> dataset_;
+  Member<ElementShadow> shadow_;
+  Member<ClassList> class_list_;
+  Member<NamedNodeMap> attribute_map_;
+  Member<AttrNodeList> attr_node_list_;
+  Member<InlineCSSStyleDeclaration> cssom_wrapper_;
+  Member<InlineStylePropertyMap> cssom_map_wrapper_;
+  std::unique_ptr<CompositorProxiedPropertySet> proxied_properties_;
 
-    DatasetDOMStringMap* dataset() const { return m_dataset.get(); }
-    void setDataset(DatasetDOMStringMap* dataset) { m_dataset = dataset; }
+  Member<ElementAnimations> element_animations_;
+  Member<ElementIntersectionObserverData> intersection_observer_data_;
+  Member<ResizeObserverDataMap> resize_observer_data_;
 
-    LayoutSize minimumSizeForResizing() const { return m_minimumSizeForResizing; }
-    void setMinimumSizeForResizing(LayoutSize size) { m_minimumSizeForResizing = size; }
+  RefPtr<ComputedStyle> computed_style_;
+  // TODO(davaajav):remove this field when v0 custom elements are deprecated
+  Member<V0CustomElementDefinition> v0_custom_element_definition_;
+  Member<CustomElementDefinition> custom_element_definition_;
 
-    IntSize savedLayerScrollOffset() const { return m_savedLayerScrollOffset; }
-    void setSavedLayerScrollOffset(IntSize size) { m_savedLayerScrollOffset = size; }
+  Member<PseudoElementData> pseudo_element_data_;
 
-    ElementAnimations* elementAnimations() { return m_elementAnimations.get(); }
-    void setElementAnimations(ElementAnimations* elementAnimations)
-    {
-        m_elementAnimations = elementAnimations;
-    }
+  Member<AccessibleNode> accessible_node_;
 
-    bool hasPseudoElements() const;
-    void clearPseudoElements();
-
-    void incrementCompositorProxiedProperties(uint32_t properties);
-    void decrementCompositorProxiedProperties(uint32_t properties);
-    CompositorProxiedPropertySet* proxiedPropertyCounts() const { return m_proxiedProperties.get(); }
-
-    void setCustomElementDefinition(V0CustomElementDefinition* definition) { m_customElementDefinition = definition; }
-    V0CustomElementDefinition* customElementDefinition() const { return m_customElementDefinition.get(); }
-
-    AttrNodeList& ensureAttrNodeList();
-    AttrNodeList* attrNodeList() { return m_attrNodeList.get(); }
-    void removeAttrNodeList() { m_attrNodeList.clear(); }
-
-    NodeIntersectionObserverData* intersectionObserverData() const { return m_intersectionObserverData.get(); }
-    NodeIntersectionObserverData& ensureIntersectionObserverData()
-    {
-        if (!m_intersectionObserverData)
-            m_intersectionObserverData = new NodeIntersectionObserverData();
-        return *m_intersectionObserverData;
-    }
-
-    using ResizeObserverDataMap = HeapHashMap<Member<ResizeObserver>, Member<ResizeObservation>>;
-
-    ResizeObserverDataMap* resizeObserverData() const { return m_resizeObserverData; }
-    ResizeObserverDataMap& ensureResizeObserverData();
-
-    DECLARE_TRACE_AFTER_DISPATCH();
-
-    DECLARE_TRACE_WRAPPERS_AFTER_DISPATCH();
-
-private:
-    CompositorProxiedPropertySet& ensureCompositorProxiedPropertySet();
-    void clearCompositorProxiedPropertySet() { m_proxiedProperties = nullptr; }
-
-    short m_tabindex;
-
-    LayoutSize m_minimumSizeForResizing;
-    IntSize m_savedLayerScrollOffset;
-
-    Member<DatasetDOMStringMap> m_dataset;
-    Member<ElementShadow> m_shadow;
-    Member<ClassList> m_classList;
-    Member<NamedNodeMap> m_attributeMap;
-    Member<AttrNodeList> m_attrNodeList;
-    Member<InlineCSSStyleDeclaration> m_cssomWrapper;
-    Member<InlineStylePropertyMap> m_cssomMapWrapper;
-    std::unique_ptr<CompositorProxiedPropertySet> m_proxiedProperties;
-
-    Member<ElementAnimations> m_elementAnimations;
-    Member<NodeIntersectionObserverData> m_intersectionObserverData;
-    Member<ResizeObserverDataMap> m_resizeObserverData;
-
-    RefPtr<ComputedStyle> m_computedStyle;
-    Member<V0CustomElementDefinition> m_customElementDefinition;
-
-    Member<PseudoElementData> m_pseudoElementData;
-
-    explicit ElementRareData(LayoutObject*);
+  explicit ElementRareData(NodeLayoutData*);
 };
+DEFINE_TRAIT_FOR_TRACE_WRAPPERS(ElementRareData);
 
-inline LayoutSize defaultMinimumSizeForResizing()
-{
-    return LayoutSize(LayoutUnit::max(), LayoutUnit::max());
+inline LayoutSize DefaultMinimumSizeForResizing() {
+  return LayoutSize(LayoutUnit::Max(), LayoutUnit::Max());
 }
 
-inline ElementRareData::ElementRareData(LayoutObject* layoutObject)
-    : NodeRareData(layoutObject)
-    , m_tabindex(0)
-    , m_minimumSizeForResizing(defaultMinimumSizeForResizing())
-    , m_classList(nullptr)
-{
-    m_isElementRareData = true;
+inline ElementRareData::ElementRareData(NodeLayoutData* node_layout_data)
+    : NodeRareData(node_layout_data),
+      minimum_size_for_resizing_(DefaultMinimumSizeForResizing()),
+      class_list_(nullptr) {
+  is_element_rare_data_ = true;
 }
 
-inline ElementRareData::~ElementRareData()
-{
-    DCHECK(!m_pseudoElementData);
+inline ElementRareData::~ElementRareData() {
+  DCHECK(!pseudo_element_data_);
 }
 
-inline bool ElementRareData::hasPseudoElements() const
-{
-    return (m_pseudoElementData && m_pseudoElementData->hasPseudoElements());
+inline bool ElementRareData::HasPseudoElements() const {
+  return (pseudo_element_data_ && pseudo_element_data_->HasPseudoElements());
 }
 
-inline void ElementRareData::clearPseudoElements()
-{
-    if (m_pseudoElementData) {
-        m_pseudoElementData->clearPseudoElements();
-        m_pseudoElementData.clear();
-    }
+inline void ElementRareData::ClearPseudoElements() {
+  if (pseudo_element_data_) {
+    pseudo_element_data_->ClearPseudoElements();
+    pseudo_element_data_.Clear();
+  }
 }
 
-inline void ElementRareData::setPseudoElement(PseudoId pseudoId, PseudoElement* element)
-{
-    if (!m_pseudoElementData)
-        m_pseudoElementData = PseudoElementData::create();
-    m_pseudoElementData->setPseudoElement(pseudoId, element);
+inline void ElementRareData::SetPseudoElement(PseudoId pseudo_id,
+                                              PseudoElement* element) {
+  if (!pseudo_element_data_)
+    pseudo_element_data_ = PseudoElementData::Create();
+  pseudo_element_data_->SetPseudoElement(pseudo_id, element);
 }
 
-inline PseudoElement* ElementRareData::pseudoElement(PseudoId pseudoId) const
-{
-    if (!m_pseudoElementData)
-        return nullptr;
-    return m_pseudoElementData->pseudoElement(pseudoId);
+inline PseudoElement* ElementRareData::GetPseudoElement(
+    PseudoId pseudo_id) const {
+  if (!pseudo_element_data_)
+    return nullptr;
+  return pseudo_element_data_->GetPseudoElement(pseudo_id);
 }
 
-inline void ElementRareData::incrementCompositorProxiedProperties(uint32_t properties)
-{
-    ensureCompositorProxiedPropertySet().increment(properties);
+inline void ElementRareData::IncrementCompositorProxiedProperties(
+    uint32_t properties) {
+  EnsureCompositorProxiedPropertySet().Increment(properties);
 }
 
-inline void ElementRareData::decrementCompositorProxiedProperties(uint32_t properties)
-{
-    m_proxiedProperties->decrement(properties);
-    if (m_proxiedProperties->isEmpty())
-        clearCompositorProxiedPropertySet();
+inline void ElementRareData::DecrementCompositorProxiedProperties(
+    uint32_t properties) {
+  proxied_properties_->Decrement(properties);
+  if (proxied_properties_->IsEmpty())
+    ClearCompositorProxiedPropertySet();
 }
 
-inline CompositorProxiedPropertySet& ElementRareData::ensureCompositorProxiedPropertySet()
-{
-    if (!m_proxiedProperties)
-        m_proxiedProperties = CompositorProxiedPropertySet::create();
-    return *m_proxiedProperties;
+inline CompositorProxiedPropertySet&
+ElementRareData::EnsureCompositorProxiedPropertySet() {
+  if (!proxied_properties_)
+    proxied_properties_ = CompositorProxiedPropertySet::Create();
+  return *proxied_properties_;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ElementRareData_h
+#endif  // ElementRareData_h

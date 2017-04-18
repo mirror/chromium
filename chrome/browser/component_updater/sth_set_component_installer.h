@@ -48,10 +48,11 @@ class STHSetComponentInstallerTraits : public ComponentInstallerTraits {
   friend class STHSetComponentInstallerTest;
 
   // ComponentInstallerTraits implementation.
-  bool CanAutoUpdate() const override;
+  bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
-  bool OnCustomInstall(const base::DictionaryValue& manifest,
-                       const base::FilePath& install_dir) override;
+  update_client::CrxInstaller::Result OnCustomInstall(
+      const base::DictionaryValue& manifest,
+      const base::FilePath& install_dir) override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
   void ComponentReady(const base::Version& version,
@@ -61,6 +62,7 @@ class STHSetComponentInstallerTraits : public ComponentInstallerTraits {
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
   update_client::InstallerAttributes GetInstallerAttributes() const override;
+  std::vector<std::string> GetMimeTypes() const override;
 
   // Reads and parses the on-disk json.
   void LoadSTHsFromDisk(const base::FilePath& sths_file_path,

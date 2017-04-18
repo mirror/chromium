@@ -6,44 +6,43 @@
 #define ClipList_h
 
 #include "platform/graphics/GraphicsTypes.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/graphics/paint/PaintCanvas.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
-class SkCanvas;
 class SkPath;
 
 namespace blink {
 
-class AffineTransform;
-
 class ClipList {
-    DISALLOW_NEW();
-public:
-    ClipList() { }
-    ClipList(const ClipList&);
-    ~ClipList() { }
+  DISALLOW_NEW();
 
-    void clipPath(const SkPath&, AntiAliasingMode, const SkMatrix&);
-    void playback(SkCanvas*) const;
-    const SkPath& getCurrentClipPath() const;
+ public:
+  ClipList() {}
+  ClipList(const ClipList&);
+  ~ClipList() {}
 
-private:
+  void ClipPath(const SkPath&, AntiAliasingMode, const SkMatrix&);
+  void Playback(PaintCanvas*) const;
+  const SkPath& GetCurrentClipPath() const;
 
-    struct ClipOp {
-        SkPath m_path;
-        AntiAliasingMode m_antiAliasingMode;
+ private:
+  struct ClipOp {
+    SkPath path_;
+    AntiAliasingMode anti_aliasing_mode_;
 
-        ClipOp();
-        ClipOp(const ClipOp&);
-    };
+    ClipOp();
+    ClipOp(const ClipOp&);
+  };
 
-    // Number of clip ops that can be stored in a ClipList without resorting to dynamic allocation
-    static const size_t cInlineClipOpCapacity = 4;
+  // Number of clip ops that can be stored in a ClipList without resorting to
+  // dynamic allocation
+  static const size_t kCInlineClipOpCapacity = 4;
 
-    WTF::Vector<ClipOp, cInlineClipOpCapacity> m_clipList;
-    SkPath m_currentClipPath;
+  WTF::Vector<ClipOp, kCInlineClipOpCapacity> clip_list_;
+  SkPath current_clip_path_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

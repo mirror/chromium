@@ -48,286 +48,336 @@ class WebURL;
 enum class WebCachePolicy;
 
 class WebURLRequest {
-public:
-    enum Priority {
-        PriorityUnresolved = -1,
-        PriorityVeryLow,
-        PriorityLow,
-        PriorityMedium,
-        PriorityHigh,
-        PriorityVeryHigh,
-    };
+ public:
+  enum Priority {
+    kPriorityUnresolved = -1,
+    kPriorityVeryLow,
+    kPriorityLow,
+    kPriorityMedium,
+    kPriorityHigh,
+    kPriorityVeryHigh,
+  };
 
-    // Corresponds to Fetch's "context": http://fetch.spec.whatwg.org/#concept-request-context
-    enum RequestContext {
-        RequestContextUnspecified = 0,
-        RequestContextAudio,
-        RequestContextBeacon,
-        RequestContextCSPReport,
-        RequestContextDownload,
-        RequestContextEmbed,
-        RequestContextEventSource,
-        RequestContextFavicon,
-        RequestContextFetch,
-        RequestContextFont,
-        RequestContextForm,
-        RequestContextFrame,
-        RequestContextHyperlink,
-        RequestContextIframe,
-        RequestContextImage,
-        RequestContextImageSet,
-        RequestContextImport,
-        RequestContextInternal,
-        RequestContextLocation,
-        RequestContextManifest,
-        RequestContextObject,
-        RequestContextPing,
-        RequestContextPlugin,
-        RequestContextPrefetch,
-        RequestContextScript,
-        RequestContextServiceWorker,
-        RequestContextSharedWorker,
-        RequestContextSubresource,
-        RequestContextStyle,
-        RequestContextTrack,
-        RequestContextVideo,
-        RequestContextWorker,
-        RequestContextXMLHttpRequest,
-        RequestContextXSLT
-    };
+  // Corresponds to Fetch's "context":
+  // http://fetch.spec.whatwg.org/#concept-request-context
+  enum RequestContext {
+    kRequestContextUnspecified = 0,
+    kRequestContextAudio,
+    kRequestContextBeacon,
+    kRequestContextCSPReport,
+    kRequestContextDownload,
+    kRequestContextEmbed,
+    kRequestContextEventSource,
+    kRequestContextFavicon,
+    kRequestContextFetch,
+    kRequestContextFont,
+    kRequestContextForm,
+    kRequestContextFrame,
+    kRequestContextHyperlink,
+    kRequestContextIframe,
+    kRequestContextImage,
+    kRequestContextImageSet,
+    kRequestContextImport,
+    kRequestContextInternal,
+    kRequestContextLocation,
+    kRequestContextManifest,
+    kRequestContextObject,
+    kRequestContextPing,
+    kRequestContextPlugin,
+    kRequestContextPrefetch,
+    kRequestContextScript,
+    kRequestContextServiceWorker,
+    kRequestContextSharedWorker,
+    kRequestContextSubresource,
+    kRequestContextStyle,
+    kRequestContextTrack,
+    kRequestContextVideo,
+    kRequestContextWorker,
+    kRequestContextXMLHttpRequest,
+    kRequestContextXSLT
+  };
 
-    // Corresponds to Fetch's "context frame type": http://fetch.spec.whatwg.org/#concept-request-context-frame-type
-    enum FrameType {
-        FrameTypeAuxiliary,
-        FrameTypeNested,
-        FrameTypeNone,
-        FrameTypeTopLevel
-    };
+  // Corresponds to Fetch's "context frame type":
+  // http://fetch.spec.whatwg.org/#concept-request-context-frame-type
+  enum FrameType {
+    kFrameTypeAuxiliary,
+    kFrameTypeNested,
+    kFrameTypeNone,
+    kFrameTypeTopLevel
+  };
 
-    enum FetchRequestMode {
-        FetchRequestModeSameOrigin,
-        FetchRequestModeNoCORS,
-        FetchRequestModeCORS,
-        FetchRequestModeCORSWithForcedPreflight,
-        FetchRequestModeNavigate
-    };
+  enum FetchRequestMode {
+    kFetchRequestModeSameOrigin,
+    kFetchRequestModeNoCORS,
+    kFetchRequestModeCORS,
+    kFetchRequestModeCORSWithForcedPreflight,
+    kFetchRequestModeNavigate
+  };
 
-    enum FetchCredentialsMode {
-        FetchCredentialsModeOmit,
-        FetchCredentialsModeSameOrigin,
-        FetchCredentialsModeInclude,
-        FetchCredentialsModePassword
-    };
+  enum FetchCredentialsMode {
+    kFetchCredentialsModeOmit,
+    kFetchCredentialsModeSameOrigin,
+    kFetchCredentialsModeInclude,
+    kFetchCredentialsModePassword
+  };
 
-    enum FetchRedirectMode {
-        FetchRedirectModeFollow,
-        FetchRedirectModeError,
-        FetchRedirectModeManual
-    };
+  enum FetchRequestCacheMode {
+    kFetchRequestCacheModeDefault,
+    kFetchRequestCacheModeNoStore,
+    kFetchRequestCacheModeReload,
+    kFetchRequestCacheModeNoCache,
+    kFetchRequestCacheModeForceCache,
+    kFetchRequestCacheModeOnlyIfCached
+  };
 
-    // Used to report performance metrics timed from the UI action that
-    // triggered them (as opposed to navigation start time used in the
-    // Navigation Timing API).
-    enum InputToLoadPerfMetricReportPolicy {
-        NoReport, // Don't report metrics for this WebURLRequest.
-        ReportLink, // Report metrics with UI action link clicked.
-        ReportIntent, // Report metrics with UI action displayed intent.
-    };
+  enum FetchRedirectMode {
+    kFetchRedirectModeFollow,
+    kFetchRedirectModeError,
+    kFetchRedirectModeManual
+  };
 
-    // The LoFi state which determines whether to request a Lo-Fi version of the resource.
-    enum LoFiState {
-        LoFiUnspecified, // Let the browser process decide whether or not to request the Lo-Fi version.
-        LoFiOff, // Request a normal (non-Lo-Fi) version of the resource.
-        LoFiOn, // Request a Lo-Fi version of the resource.
-    };
+  // Used to report performance metrics timed from the UI action that
+  // triggered them (as opposed to navigation start time used in the
+  // Navigation Timing API).
+  enum InputToLoadPerfMetricReportPolicy {
+    kNoReport,      // Don't report metrics for this WebURLRequest.
+    kReportLink,    // Report metrics with UI action link clicked.
+    kReportIntent,  // Report metrics with UI action displayed intent.
+  };
 
-    // Indicates which types of ServiceWorkers should skip handling this request.
-    enum class SkipServiceWorker {
-        // Request can be handled both by a controlling same-origin worker and
-        // a cross-origin foreign fetch service worker.
-        None,
-        // Request should not be handled by a same-origin controlling worker,
-        // but can be intercepted by a foreign fetch service worker.
-        Controlling,
-        // Request should skip all possible service workers.
-        All
-    };
+  typedef int PreviewsState;
 
-    class ExtraData {
-    public:
-        virtual ~ExtraData() { }
-    };
+  // The Previews types which determines whether to request a Preview version of
+  // the resource.
+  enum PreviewsTypes {
+    kPreviewsUnspecified = 0,       // Let the browser process decide whether or
+                                    // not to request Preview types.
+    kServerLoFiOn = 1 << 0,         // Request a Lo-Fi version of the resource
+                                    // from the server.
+    kClientLoFiOn = 1 << 1,         // Request a Lo-Fi version of the resource
+                                    // from the client.
+    kServerLitePageOn = 1 << 2,     // Request a Lite Page version of the
+                                    // resource from the server.
+    kPreviewsNoTransform = 1 << 3,  // Explicitly forbid Previews
+                                    // transformations.
+    kPreviewsOff = 1 << 4,          // Request a normal (non-Preview) version of
+                                    // the resource. Server transformations may
+                                    // still happen if the page is heavy.
+    kPreviewsStateLast = kPreviewsOff
+  };
 
-    BLINK_PLATFORM_EXPORT ~WebURLRequest();
-    BLINK_PLATFORM_EXPORT WebURLRequest();
-    BLINK_PLATFORM_EXPORT WebURLRequest(const WebURLRequest&);
-    BLINK_PLATFORM_EXPORT explicit WebURLRequest(const WebURL&);
-    BLINK_PLATFORM_EXPORT WebURLRequest& operator=(const WebURLRequest&);
+  // Indicates which service workers will receive fetch events for this request.
+  enum class ServiceWorkerMode {
+    // Relevant local and foreign service workers will get a fetch or
+    // foreignfetch event for this request.
+    kAll,
+    // Only relevant foreign service workers will get a foreignfetch event for
+    // this request.
+    kForeign,
+    // Neither local nor foreign service workers will get events for this
+    // request.
+    kNone
+  };
 
-    BLINK_PLATFORM_EXPORT bool isNull() const;
+  enum class LoadingIPCType {
+    kChromeIPC,
+    kMojo,
+  };
 
-    BLINK_PLATFORM_EXPORT WebURL url() const;
-    BLINK_PLATFORM_EXPORT void setURL(const WebURL&);
+  class ExtraData {
+   public:
+    virtual ~ExtraData() {}
+  };
 
-    // Used to implement third-party cookie blocking.
-    BLINK_PLATFORM_EXPORT WebURL firstPartyForCookies() const;
-    BLINK_PLATFORM_EXPORT void setFirstPartyForCookies(const WebURL&);
+  BLINK_PLATFORM_EXPORT ~WebURLRequest();
+  BLINK_PLATFORM_EXPORT WebURLRequest();
+  BLINK_PLATFORM_EXPORT WebURLRequest(const WebURLRequest&);
+  BLINK_PLATFORM_EXPORT explicit WebURLRequest(const WebURL&);
+  BLINK_PLATFORM_EXPORT WebURLRequest& operator=(const WebURLRequest&);
 
-    // The origin of the execution context which originated the request. Used to
-    // implement First-Party-Only cookie restrictions.
-    BLINK_PLATFORM_EXPORT WebSecurityOrigin requestorOrigin() const;
-    BLINK_PLATFORM_EXPORT void setRequestorOrigin(const WebSecurityOrigin&);
+  BLINK_PLATFORM_EXPORT bool IsNull() const;
 
-    // Controls whether user name, password, and cookies may be sent with the
-    // request. (If false, this overrides allowCookies.)
-    BLINK_PLATFORM_EXPORT bool allowStoredCredentials() const;
-    BLINK_PLATFORM_EXPORT void setAllowStoredCredentials(bool);
+  BLINK_PLATFORM_EXPORT WebURL Url() const;
+  BLINK_PLATFORM_EXPORT void SetURL(const WebURL&);
 
-    BLINK_PLATFORM_EXPORT WebCachePolicy getCachePolicy() const;
-    BLINK_PLATFORM_EXPORT void setCachePolicy(WebCachePolicy);
+  // Used to implement third-party cookie blocking.
+  BLINK_PLATFORM_EXPORT WebURL FirstPartyForCookies() const;
+  BLINK_PLATFORM_EXPORT void SetFirstPartyForCookies(const WebURL&);
 
-    BLINK_PLATFORM_EXPORT WebString httpMethod() const;
-    BLINK_PLATFORM_EXPORT void setHTTPMethod(const WebString&);
+  // The origin of the execution context which originated the request. Used to
+  // implement First-Party-Only cookie restrictions.
+  BLINK_PLATFORM_EXPORT WebSecurityOrigin RequestorOrigin() const;
+  BLINK_PLATFORM_EXPORT void SetRequestorOrigin(const WebSecurityOrigin&);
 
-    BLINK_PLATFORM_EXPORT WebString httpHeaderField(const WebString& name) const;
-    // It's not possible to set the referrer header using this method. Use setHTTPReferrer instead.
-    BLINK_PLATFORM_EXPORT void setHTTPHeaderField(const WebString& name, const WebString& value);
-    BLINK_PLATFORM_EXPORT void setHTTPReferrer(const WebString& referrer, WebReferrerPolicy);
-    BLINK_PLATFORM_EXPORT void addHTTPHeaderField(const WebString& name, const WebString& value);
-    BLINK_PLATFORM_EXPORT void clearHTTPHeaderField(const WebString& name);
-    BLINK_PLATFORM_EXPORT void visitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
+  // Controls whether user name, password, and cookies may be sent with the
+  // request. (If false, this overrides allowCookies.)
+  BLINK_PLATFORM_EXPORT bool AllowStoredCredentials() const;
+  BLINK_PLATFORM_EXPORT void SetAllowStoredCredentials(bool);
 
-    BLINK_PLATFORM_EXPORT WebHTTPBody httpBody() const;
-    BLINK_PLATFORM_EXPORT void setHTTPBody(const WebHTTPBody&);
+  BLINK_PLATFORM_EXPORT WebCachePolicy GetCachePolicy() const;
+  BLINK_PLATFORM_EXPORT void SetCachePolicy(WebCachePolicy);
 
-    BLINK_PLATFORM_EXPORT WebHTTPBody attachedCredential() const;
-    BLINK_PLATFORM_EXPORT void setAttachedCredential(const WebHTTPBody&);
+  BLINK_PLATFORM_EXPORT WebString HttpMethod() const;
+  BLINK_PLATFORM_EXPORT void SetHTTPMethod(const WebString&);
 
-    // Controls whether upload progress events are generated when a request
-    // has a body.
-    BLINK_PLATFORM_EXPORT bool reportUploadProgress() const;
-    BLINK_PLATFORM_EXPORT void setReportUploadProgress(bool);
+  BLINK_PLATFORM_EXPORT WebString HttpHeaderField(const WebString& name) const;
+  // It's not possible to set the referrer header using this method. Use
+  // setHTTPReferrer instead.
+  BLINK_PLATFORM_EXPORT void SetHTTPHeaderField(const WebString& name,
+                                                const WebString& value);
+  BLINK_PLATFORM_EXPORT void SetHTTPReferrer(const WebString& referrer,
+                                             WebReferrerPolicy);
+  BLINK_PLATFORM_EXPORT void AddHTTPHeaderField(const WebString& name,
+                                                const WebString& value);
+  BLINK_PLATFORM_EXPORT void ClearHTTPHeaderField(const WebString& name);
+  BLINK_PLATFORM_EXPORT void VisitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
 
-    // Controls whether actual headers sent and received for request are
-    // collected and reported.
-    BLINK_PLATFORM_EXPORT bool reportRawHeaders() const;
-    BLINK_PLATFORM_EXPORT void setReportRawHeaders(bool);
+  BLINK_PLATFORM_EXPORT WebHTTPBody HttpBody() const;
+  BLINK_PLATFORM_EXPORT void SetHTTPBody(const WebHTTPBody&);
 
-    BLINK_PLATFORM_EXPORT RequestContext getRequestContext() const;
-    BLINK_PLATFORM_EXPORT void setRequestContext(RequestContext);
+  BLINK_PLATFORM_EXPORT WebHTTPBody AttachedCredential() const;
+  BLINK_PLATFORM_EXPORT void SetAttachedCredential(const WebHTTPBody&);
 
-    BLINK_PLATFORM_EXPORT FrameType getFrameType() const;
-    BLINK_PLATFORM_EXPORT void setFrameType(FrameType);
+  // Controls whether upload progress events are generated when a request
+  // has a body.
+  BLINK_PLATFORM_EXPORT bool ReportUploadProgress() const;
+  BLINK_PLATFORM_EXPORT void SetReportUploadProgress(bool);
 
-    BLINK_PLATFORM_EXPORT WebReferrerPolicy referrerPolicy() const;
+  // Controls whether actual headers sent and received for request are
+  // collected and reported.
+  BLINK_PLATFORM_EXPORT bool ReportRawHeaders() const;
+  BLINK_PLATFORM_EXPORT void SetReportRawHeaders(bool);
 
-    // Adds an HTTP origin header if it is empty and the HTTP method of the
-    // request requires it.
-    BLINK_PLATFORM_EXPORT void addHTTPOriginIfNeeded(const WebString& origin);
+  BLINK_PLATFORM_EXPORT RequestContext GetRequestContext() const;
+  BLINK_PLATFORM_EXPORT void SetRequestContext(RequestContext);
 
-    // True if the request was user initiated.
-    BLINK_PLATFORM_EXPORT bool hasUserGesture() const;
-    BLINK_PLATFORM_EXPORT void setHasUserGesture(bool);
+  BLINK_PLATFORM_EXPORT FrameType GetFrameType() const;
+  BLINK_PLATFORM_EXPORT void SetFrameType(FrameType);
 
-    // A consumer controlled value intended to be used to identify the
-    // requestor.
-    BLINK_PLATFORM_EXPORT int requestorID() const;
-    BLINK_PLATFORM_EXPORT void setRequestorID(int);
+  BLINK_PLATFORM_EXPORT WebReferrerPolicy GetReferrerPolicy() const;
 
-    // A consumer controlled value intended to be used to identify the
-    // process of the requestor.
-    BLINK_PLATFORM_EXPORT int requestorProcessID() const;
-    BLINK_PLATFORM_EXPORT void setRequestorProcessID(int);
+  // Adds an HTTP origin header if it is empty and the HTTP method of the
+  // request requires it.
+  BLINK_PLATFORM_EXPORT void AddHTTPOriginIfNeeded(const WebSecurityOrigin&);
 
-    // Allows the request to be matched up with its app cache host.
-    BLINK_PLATFORM_EXPORT int appCacheHostID() const;
-    BLINK_PLATFORM_EXPORT void setAppCacheHostID(int);
+  // True if the request was user initiated.
+  BLINK_PLATFORM_EXPORT bool HasUserGesture() const;
+  BLINK_PLATFORM_EXPORT void SetHasUserGesture(bool);
 
-    // If true, the response body will be downloaded to a file managed by the
-    // WebURLLoader. See WebURLResponse::downloadedFilePath.
-    BLINK_PLATFORM_EXPORT bool downloadToFile() const;
-    BLINK_PLATFORM_EXPORT void setDownloadToFile(bool);
+  // A consumer controlled value intended to be used to identify the
+  // requestor.
+  BLINK_PLATFORM_EXPORT int RequestorID() const;
+  BLINK_PLATFORM_EXPORT void SetRequestorID(int);
 
-    // True if the requestor wants to receive the response body as a stream.
-    BLINK_PLATFORM_EXPORT bool useStreamOnResponse() const;
-    BLINK_PLATFORM_EXPORT void setUseStreamOnResponse(bool);
+  // A consumer controlled value intended to be used to identify the
+  // process of the requestor.
+  BLINK_PLATFORM_EXPORT int RequestorProcessID() const;
+  BLINK_PLATFORM_EXPORT void SetRequestorProcessID(int);
 
-    // True if the request should not be handled by the ServiceWorker.
-    BLINK_PLATFORM_EXPORT SkipServiceWorker skipServiceWorker() const;
-    BLINK_PLATFORM_EXPORT void setSkipServiceWorker(SkipServiceWorker);
+  // Allows the request to be matched up with its app cache host.
+  BLINK_PLATFORM_EXPORT int AppCacheHostID() const;
+  BLINK_PLATFORM_EXPORT void SetAppCacheHostID(int);
 
-    // True if corresponding AppCache group should be resetted.
-    BLINK_PLATFORM_EXPORT bool shouldResetAppCache() const;
-    BLINK_PLATFORM_EXPORT void setShouldResetAppCache(bool);
+  // If true, the response body will be downloaded to a file managed by the
+  // WebURLLoader. See WebURLResponse::downloadedFilePath.
+  BLINK_PLATFORM_EXPORT bool DownloadToFile() const;
+  BLINK_PLATFORM_EXPORT void SetDownloadToFile(bool);
 
-    // The request mode which will be passed to the ServiceWorker.
-    BLINK_PLATFORM_EXPORT FetchRequestMode getFetchRequestMode() const;
-    BLINK_PLATFORM_EXPORT void setFetchRequestMode(FetchRequestMode);
+  // True if the requestor wants to receive the response body as a stream.
+  BLINK_PLATFORM_EXPORT bool UseStreamOnResponse() const;
+  BLINK_PLATFORM_EXPORT void SetUseStreamOnResponse(bool);
 
-    // The credentials mode which will be passed to the ServiceWorker.
-    BLINK_PLATFORM_EXPORT FetchCredentialsMode getFetchCredentialsMode() const;
-    BLINK_PLATFORM_EXPORT void setFetchCredentialsMode(FetchCredentialsMode);
+  // The service worker mode indicating which service workers should get events
+  // for this request.
+  BLINK_PLATFORM_EXPORT ServiceWorkerMode GetServiceWorkerMode() const;
+  BLINK_PLATFORM_EXPORT void SetServiceWorkerMode(ServiceWorkerMode);
 
-    // The redirect mode which is used in Fetch API.
-    BLINK_PLATFORM_EXPORT FetchRedirectMode getFetchRedirectMode() const;
-    BLINK_PLATFORM_EXPORT void setFetchRedirectMode(FetchRedirectMode);
+  // True if corresponding AppCache group should be resetted.
+  BLINK_PLATFORM_EXPORT bool ShouldResetAppCache() const;
+  BLINK_PLATFORM_EXPORT void SetShouldResetAppCache(bool);
 
-    // The LoFi state which determines whether to request a Lo-Fi version of the resource.
-    BLINK_PLATFORM_EXPORT LoFiState getLoFiState() const;
-    BLINK_PLATFORM_EXPORT void setLoFiState(LoFiState);
+  // The request mode which will be passed to the ServiceWorker.
+  BLINK_PLATFORM_EXPORT FetchRequestMode GetFetchRequestMode() const;
+  BLINK_PLATFORM_EXPORT void SetFetchRequestMode(FetchRequestMode);
 
-    // Extra data associated with the underlying resource request. Resource
-    // requests can be copied. If non-null, each copy of a resource requests
-    // holds a pointer to the extra data, and the extra data pointer will be
-    // deleted when the last resource request is destroyed. Setting the extra
-    // data pointer will cause the underlying resource request to be
-    // dissociated from any existing non-null extra data pointer.
-    BLINK_PLATFORM_EXPORT ExtraData* getExtraData() const;
-    BLINK_PLATFORM_EXPORT void setExtraData(ExtraData*);
+  // The credentials mode which will be passed to the ServiceWorker.
+  BLINK_PLATFORM_EXPORT FetchCredentialsMode GetFetchCredentialsMode() const;
+  BLINK_PLATFORM_EXPORT void SetFetchCredentialsMode(FetchCredentialsMode);
 
-    BLINK_PLATFORM_EXPORT Priority getPriority() const;
-    BLINK_PLATFORM_EXPORT void setPriority(Priority);
+  // The redirect mode which is used in Fetch API.
+  BLINK_PLATFORM_EXPORT FetchRedirectMode GetFetchRedirectMode() const;
+  BLINK_PLATFORM_EXPORT void SetFetchRedirectMode(FetchRedirectMode);
 
-    // PlzNavigate: whether the FrameLoader should try to send the request to
-    // the browser (if browser-side navigations are enabled).
-    // Note: WebURLRequests created by RenderFrameImpl::OnCommitNavigation must
-    // not be sent to the browser.
-    BLINK_PLATFORM_EXPORT bool checkForBrowserSideNavigation() const;
-    BLINK_PLATFORM_EXPORT void setCheckForBrowserSideNavigation(bool);
+  // The PreviewsState which determines whether to request a Preview version of
+  // the resource. The PreviewsState is a bitmask of potentially several
+  // Previews optimizations.
+  BLINK_PLATFORM_EXPORT PreviewsState GetPreviewsState() const;
+  BLINK_PLATFORM_EXPORT void SetPreviewsState(PreviewsState);
 
-    // This is used to report navigation metrics starting from the UI action
-    // that triggered the navigation (which can be different from the navigation
-    // start time used in the Navigation Timing API).
-    BLINK_PLATFORM_EXPORT double uiStartTime() const;
-    BLINK_PLATFORM_EXPORT void setUiStartTime(double);
-    BLINK_PLATFORM_EXPORT WebURLRequest::InputToLoadPerfMetricReportPolicy inputPerfMetricReportPolicy() const;
-    BLINK_PLATFORM_EXPORT void setInputPerfMetricReportPolicy(WebURLRequest::InputToLoadPerfMetricReportPolicy);
+  // Extra data associated with the underlying resource request. Resource
+  // requests can be copied. If non-null, each copy of a resource requests
+  // holds a pointer to the extra data, and the extra data pointer will be
+  // deleted when the last resource request is destroyed. Setting the extra
+  // data pointer will cause the underlying resource request to be
+  // dissociated from any existing non-null extra data pointer.
+  BLINK_PLATFORM_EXPORT ExtraData* GetExtraData() const;
+  BLINK_PLATFORM_EXPORT void SetExtraData(ExtraData*);
 
-    // https://mikewest.github.io/cors-rfc1918/#external-request
-    BLINK_PLATFORM_EXPORT bool isExternalRequest() const;
+  BLINK_PLATFORM_EXPORT Priority GetPriority() const;
+  BLINK_PLATFORM_EXPORT void SetPriority(Priority);
+
+  // PlzNavigate: whether the FrameLoader should try to send the request to
+  // the browser (if browser-side navigations are enabled).
+  // Note: WebURLRequests created by RenderFrameImpl::OnCommitNavigation must
+  // not be sent to the browser.
+  BLINK_PLATFORM_EXPORT bool CheckForBrowserSideNavigation() const;
+  BLINK_PLATFORM_EXPORT void SetCheckForBrowserSideNavigation(bool);
+
+  // This is used to report navigation metrics starting from the UI action
+  // that triggered the navigation (which can be different from the navigation
+  // start time used in the Navigation Timing API).
+  BLINK_PLATFORM_EXPORT double UiStartTime() const;
+  BLINK_PLATFORM_EXPORT void SetUiStartTime(double);
+  BLINK_PLATFORM_EXPORT WebURLRequest::InputToLoadPerfMetricReportPolicy
+  InputPerfMetricReportPolicy() const;
+  BLINK_PLATFORM_EXPORT void SetInputPerfMetricReportPolicy(
+      WebURLRequest::InputToLoadPerfMetricReportPolicy);
+
+  // https://mikewest.github.io/cors-rfc1918/#external-request
+  BLINK_PLATFORM_EXPORT bool IsExternalRequest() const;
+
+  BLINK_PLATFORM_EXPORT LoadingIPCType GetLoadingIPCType() const;
+
+  BLINK_PLATFORM_EXPORT void SetNavigationStartTime(double);
+
+  // PlzNavigate: specify that the request was intended to be loaded as a same
+  // document navigation. No network requests should be made and the request
+  // should be dropped if a different document was loaded in the frame
+  // in-between.
+  BLINK_PLATFORM_EXPORT void SetIsSameDocumentNavigation(bool);
 
 #if INSIDE_BLINK
-    BLINK_PLATFORM_EXPORT ResourceRequest& toMutableResourceRequest();
-    BLINK_PLATFORM_EXPORT const ResourceRequest& toResourceRequest() const;
+  BLINK_PLATFORM_EXPORT ResourceRequest& ToMutableResourceRequest();
+  BLINK_PLATFORM_EXPORT const ResourceRequest& ToResourceRequest() const;
 
-protected:
-    // Permit subclasses to set arbitrary ResourceRequest pointer as
-    // |m_resourceRequest|. |m_ownedResourceRequest| is not set in this case.
-    BLINK_PLATFORM_EXPORT explicit WebURLRequest(ResourceRequest&);
+ protected:
+  // Permit subclasses to set arbitrary ResourceRequest pointer as
+  // |m_resourceRequest|. |m_ownedResourceRequest| is not set in this case.
+  BLINK_PLATFORM_EXPORT explicit WebURLRequest(ResourceRequest&);
 #endif
 
-private:
-    struct ResourceRequestContainer;
+ private:
+  struct ResourceRequestContainer;
 
-    // If this instance owns a ResourceRequest then |m_ownedResourceRequest|
-    // is non-null and |m_resourceRequest| points to the ResourceRequest
-    // instance it contains.
-    std::unique_ptr<ResourceRequestContainer> m_ownedResourceRequest;
+  // If this instance owns a ResourceRequest then |m_ownedResourceRequest|
+  // is non-null and |m_resourceRequest| points to the ResourceRequest
+  // instance it contains.
+  std::unique_ptr<ResourceRequestContainer> owned_resource_request_;
 
-    // Should never be null.
-    ResourceRequest* m_resourceRequest;
+  // Should never be null.
+  ResourceRequest* resource_request_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

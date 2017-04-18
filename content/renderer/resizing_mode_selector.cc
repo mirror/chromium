@@ -7,7 +7,6 @@
 #include "content/common/view_messages.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_widget.h"
-#include "third_party/WebKit/public/platform/WebScreenInfo.h"
 
 namespace content {
 
@@ -21,10 +20,10 @@ bool ResizingModeSelector::NeverUsesSynchronousResize() const {
 bool ResizingModeSelector::ShouldAbortOnResize(RenderWidget* widget,
                                                const ResizeParams& params) {
   return is_synchronous_mode_ &&
-      params.is_fullscreen_granted == widget->is_fullscreen_granted() &&
-      params.display_mode == widget->display_mode() &&
-      params.screen_info.deviceScaleFactor ==
-        widget->screenInfo().deviceScaleFactor;
+         params.is_fullscreen_granted == widget->is_fullscreen_granted() &&
+         params.display_mode == widget->display_mode() &&
+         params.screen_info.device_scale_factor ==
+             widget->GetScreenInfo().device_scale_factor;
 }
 
 void ResizingModeSelector::set_is_synchronous_mode(bool mode) {

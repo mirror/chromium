@@ -29,232 +29,131 @@
  */
 
 /**
- * @constructor
- * @extends {WebInspector.VBox}
- * @implements {WebInspector.TargetManager.Observer}
- * @param {!WebInspector.ProfilesPanel} profilesPanel
+ * @unrestricted
  */
-WebInspector.ProfileLauncherView = function(profilesPanel)
-{
-    WebInspector.VBox.call(this);
-
+Profiler.ProfileLauncherView = class extends UI.VBox {
+  /**
+   * @param {!Profiler.ProfilesPanel} profilesPanel
+   */
+  constructor(profilesPanel) {
+    super();
     this._panel = profilesPanel;
+    this.element.classList.add('profile-launcher-view', 'panel-enabler-view');
 
-    this.element.classList.add("profile-launcher-view");
-    this.element.classList.add("panel-enabler-view");
-
-    this._contentElement = this.element.createChild("div", "profile-launcher-view-content");
-    this._innerContentElement = this._contentElement.createChild("div");
-    var targetSpan = this._contentElement.createChild("span");
-    var selectTargetText = targetSpan.createChild("span");
-    selectTargetText.textContent = WebInspector.UIString("Target:");
-    var targetsSelect = targetSpan.createChild("select", "chrome-select");
-    new WebInspector.TargetsComboBoxController(targetsSelect, targetSpan);
-    this._controlButton = createTextButton("", this._controlButtonClicked.bind(this), "control-profiling");
-    this._contentElement.appendChild(this._controlButton);
+    this._contentElement = this.element.createChild('div', 'profile-launcher-view-content');
+    this._innerContentElement = this._contentElement.createChild('div');
+    var controlDiv = this._contentElement.createChild('div', 'hbox profile-launcher-control');
+    var targetDiv = controlDiv.createChild('div', 'hbox profile-launcher-target');
+    targetDiv.createChild('div').textContent = Common.UIString('Target:');
+    var targetsSelect = targetDiv.createChild('select', 'chrome-select');
+    new Profiler.TargetsComboBoxController(targetsSelect, targetDiv);
+    this._controlButton = UI.createTextButton('', this._controlButtonClicked.bind(this));
+    controlDiv.appendChild(this._controlButton);
     this._recordButtonEnabled = true;
-    this._loadButton = createTextButton(WebInspector.UIString("Load"), this._loadButtonClicked.bind(this), "load-profile");
+    this._loadButton = UI.createTextButton(Common.UIString('Load'), this._loadButtonClicked.bind(this), 'load-profile');
     this._contentElement.appendChild(this._loadButton);
-    WebInspector.targetManager.observeTargets(this);
-}
 
-WebInspector.ProfileLauncherView.prototype = {
-    /**
-     * @return {?WebInspector.SearchableView}
-     */
-    searchableView: function()
-    {
-        return null;
-    },
+    this._selectedProfileTypeSetting = Common.settings.createSetting('selectedProfileType', 'CPU');
+    this._header = this._innerContentElement.createChild('h1');
+    this._profileTypeSelectorForm = this._innerContentElement.createChild('form');
+    this._innerContentElement.createChild('div', 'flexible-space');
+    /** @type {!Map<string, !HTMLOptionElement>} */
+    this._typeIdToOptionElement = new Map();
+  }
 
-    /**
-     * @override
-     * @param {!WebInspector.Target} target
-     */
-    targetAdded: function(target)
-    {
-        this._updateLoadButtonLayout();
-    },
+  _loadButtonClicked() {
+    this._panel.showLoadFromFileDialog();
+  }
 
-    /**
-     * @override
-     * @param {!WebInspector.Target} target
-     */
-    targetRemoved: function(target)
-    {
-        this._updateLoadButtonLayout();
-    },
+  _updateControls() {
+    if (this._isEnabled && this._recordButtonEnabled)
+      this._controlButton.removeAttribute('disabled');
+    else
+      this._controlButton.setAttribute('disabled', '');
+    this._controlButton.title = this._recordButtonEnabled ? '' : UI.anotherProfilerActiveLabel();
+    if (this._isInstantProfile) {
+      this._controlButton.classList.remove('running');
+      this._controlButton.textContent = Common.UIString('Take Snapshot');
+    } else if (this._isProfiling) {
+      this._controlButton.classList.add('running');
+      this._controlButton.textContent = Common.UIString('Stop');
+    } else {
+      this._controlButton.classList.remove('running');
+      this._controlButton.textContent = Common.UIString('Start');
+    }
+    for (var item of this._typeIdToOptionElement.values())
+      item.disabled = !!this._isProfiling;
+  }
 
-    _updateLoadButtonLayout: function()
-    {
-        this._loadButton.classList.toggle("multi-target", WebInspector.targetManager.targets(WebInspector.Target.Capability.JS).length > 1);
-    },
+  profileStarted() {
+    this._isProfiling = true;
+    this._updateControls();
+  }
 
-    /**
-     * @param {!WebInspector.ProfileType} profileType
-     */
-    addProfileType: function(profileType)
-    {
-        var descriptionElement = this._innerContentElement.createChild("h1");
-        descriptionElement.textContent = profileType.description;
-        var decorationElement = profileType.decorationElement();
-        if (decorationElement)
-            this._innerContentElement.appendChild(decorationElement);
-        this._isInstantProfile = profileType.isInstantProfile();
-        this._isEnabled = profileType.isEnabled();
-    },
+  profileFinished() {
+    this._isProfiling = false;
+    this._updateControls();
+  }
 
-    _controlButtonClicked: function()
-    {
-        this._panel.toggleRecord();
-    },
+  /**
+   * @param {!Profiler.ProfileType} profileType
+   * @param {boolean} recordButtonEnabled
+   */
+  updateProfileType(profileType, recordButtonEnabled) {
+    this._isInstantProfile = profileType.isInstantProfile();
+    this._recordButtonEnabled = recordButtonEnabled;
+    this._isEnabled = profileType.isEnabled();
+    this._updateControls();
+  }
 
-    _loadButtonClicked: function()
-    {
-        this._panel.showLoadFromFileDialog();
-    },
+  /**
+   * @param {!Profiler.ProfileType} profileType
+   */
+  addProfileType(profileType) {
+    var labelElement = UI.createRadioLabel('profile-type', profileType.name);
+    this._profileTypeSelectorForm.appendChild(labelElement);
+    var optionElement = labelElement.radioElement;
+    this._typeIdToOptionElement.set(profileType.id, optionElement);
+    optionElement._profileType = profileType;
+    optionElement.style.hidden = true;
+    optionElement.addEventListener('change', this._profileTypeChanged.bind(this, profileType), false);
+    var descriptionElement = this._profileTypeSelectorForm.createChild('p');
+    descriptionElement.textContent = profileType.description;
+    var decorationElement = profileType.decorationElement();
+    if (decorationElement)
+      labelElement.appendChild(decorationElement);
+    if (this._typeIdToOptionElement.size > 1)
+      this._header.textContent = Common.UIString('Select profiling type');
+    else
+      this._header.textContent = profileType.name;
+  }
 
-    _updateControls: function()
-    {
-        if (this._isEnabled && this._recordButtonEnabled)
-            this._controlButton.removeAttribute("disabled");
-        else
-            this._controlButton.setAttribute("disabled", "");
-        this._controlButton.title = this._recordButtonEnabled ? "" : WebInspector.anotherProfilerActiveLabel();
-        if (this._isInstantProfile) {
-            this._controlButton.classList.remove("running");
-            this._controlButton.textContent = WebInspector.UIString("Take Snapshot");
-        } else if (this._isProfiling) {
-            this._controlButton.classList.add("running");
-            this._controlButton.textContent = WebInspector.UIString("Stop");
-        } else {
-            this._controlButton.classList.remove("running");
-            this._controlButton.textContent = WebInspector.UIString("Start");
-        }
-    },
+  restoreSelectedProfileType() {
+    var typeId = this._selectedProfileTypeSetting.get();
+    if (!this._typeIdToOptionElement.has(typeId))
+      typeId = this._typeIdToOptionElement.keys().next().value;
+    this._typeIdToOptionElement.get(typeId).checked = true;
+    var type = this._typeIdToOptionElement.get(typeId)._profileType;
+    this.dispatchEventToListeners(Profiler.ProfileLauncherView.Events.ProfileTypeSelected, type);
+  }
 
-    profileStarted: function()
-    {
-        this._isProfiling = true;
-        this._updateControls();
-    },
+  _controlButtonClicked() {
+    this._panel.toggleRecord();
+  }
 
-    profileFinished: function()
-    {
-        this._isProfiling = false;
-        this._updateControls();
-    },
+  /**
+   * @param {!Profiler.ProfileType} profileType
+   */
+  _profileTypeChanged(profileType) {
+    this.dispatchEventToListeners(Profiler.ProfileLauncherView.Events.ProfileTypeSelected, profileType);
+    this._isInstantProfile = profileType.isInstantProfile();
+    this._isEnabled = profileType.isEnabled();
+    this._updateControls();
+    this._selectedProfileTypeSetting.set(profileType.id);
+  }
+};
 
-    /**
-     * @param {!WebInspector.ProfileType} profileType
-     * @param {boolean} recordButtonEnabled
-     */
-    updateProfileType: function(profileType, recordButtonEnabled)
-    {
-        this._isInstantProfile = profileType.isInstantProfile();
-        this._recordButtonEnabled = recordButtonEnabled;
-        this._isEnabled = profileType.isEnabled();
-        this._updateControls();
-    },
-
-    __proto__: WebInspector.VBox.prototype
-}
-
-
-/**
- * @constructor
- * @extends {WebInspector.ProfileLauncherView}
- * @param {!WebInspector.ProfilesPanel} profilesPanel
- */
-WebInspector.MultiProfileLauncherView = function(profilesPanel)
-{
-    WebInspector.ProfileLauncherView.call(this, profilesPanel);
-
-    this._selectedProfileTypeSetting = WebInspector.settings.createSetting("selectedProfileType", "CPU");
-
-    var header = this._innerContentElement.createChild("h1");
-    header.textContent = WebInspector.UIString("Select profiling type");
-
-    this._profileTypeSelectorForm = this._innerContentElement.createChild("form");
-
-    this._innerContentElement.createChild("div", "flexible-space");
-
-    this._typeIdToOptionElement = {};
-}
-
-WebInspector.MultiProfileLauncherView.EventTypes = {
-    ProfileTypeSelected: "profile-type-selected"
-}
-
-WebInspector.MultiProfileLauncherView.prototype = {
-    /**
-     * @override
-     * @param {!WebInspector.ProfileType} profileType
-     */
-    addProfileType: function(profileType)
-    {
-        var labelElement = createRadioLabel("profile-type", profileType.name);
-        this._profileTypeSelectorForm.appendChild(labelElement);
-        var optionElement = labelElement.radioElement;
-        this._typeIdToOptionElement[profileType.id] = optionElement;
-        optionElement._profileType = profileType;
-        optionElement.style.hidden = true;
-        optionElement.addEventListener("change", this._profileTypeChanged.bind(this, profileType), false);
-        var descriptionElement = labelElement.createChild("p");
-        descriptionElement.textContent = profileType.description;
-        var decorationElement = profileType.decorationElement();
-        if (decorationElement)
-            labelElement.appendChild(decorationElement);
-    },
-
-    restoreSelectedProfileType: function()
-    {
-        var typeId = this._selectedProfileTypeSetting.get();
-        if (!(typeId in this._typeIdToOptionElement))
-            typeId = Object.keys(this._typeIdToOptionElement)[0];
-        this._typeIdToOptionElement[typeId].checked = true;
-        var type = this._typeIdToOptionElement[typeId]._profileType;
-        this.dispatchEventToListeners(WebInspector.MultiProfileLauncherView.EventTypes.ProfileTypeSelected, type);
-    },
-
-    _controlButtonClicked: function()
-    {
-        this._panel.toggleRecord();
-    },
-
-    _updateControls: function()
-    {
-        WebInspector.ProfileLauncherView.prototype._updateControls.call(this);
-        var items = this._profileTypeSelectorForm.elements;
-        for (var i = 0; i < items.length; ++i) {
-            if (items[i].type === "radio")
-                items[i].disabled = this._isProfiling;
-        }
-    },
-
-    /**
-     * @param {!WebInspector.ProfileType} profileType
-     */
-    _profileTypeChanged: function(profileType)
-    {
-        this.dispatchEventToListeners(WebInspector.MultiProfileLauncherView.EventTypes.ProfileTypeSelected, profileType);
-        this._isInstantProfile = profileType.isInstantProfile();
-        this._isEnabled = profileType.isEnabled();
-        this._updateControls();
-        this._selectedProfileTypeSetting.set(profileType.id);
-    },
-
-    profileStarted: function()
-    {
-        this._isProfiling = true;
-        this._updateControls();
-    },
-
-    profileFinished: function()
-    {
-        this._isProfiling = false;
-        this._updateControls();
-    },
-
-    __proto__: WebInspector.ProfileLauncherView.prototype
-}
+/** @enum {symbol} */
+Profiler.ProfileLauncherView.Events = {
+  ProfileTypeSelected: Symbol('ProfileTypeSelected')
+};

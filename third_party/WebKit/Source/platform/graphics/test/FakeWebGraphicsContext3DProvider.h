@@ -5,43 +5,38 @@
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
 class FakeWebGraphicsContext3DProvider : public WebGraphicsContext3DProvider {
-public:
-    FakeWebGraphicsContext3DProvider(gpu::gles2::GLES2Interface* gl)
-        : m_gl(gl)
-    {
-        RefPtr<const GrGLInterface> glInterface = adoptRef(GrGLCreateNullInterface());
-        m_grContext = adoptRef(GrContext::Create(kOpenGL_GrBackend, reinterpret_cast<GrBackendContext>(glInterface.get())));
-    }
+ public:
+  FakeWebGraphicsContext3DProvider(gpu::gles2::GLES2Interface* gl) : gl_(gl) {
+    sk_sp<const GrGLInterface> gl_interface(GrGLCreateNullInterface());
+    gr_context_.reset(GrContext::Create(
+        kOpenGL_GrBackend,
+        reinterpret_cast<GrBackendContext>(gl_interface.get())));
+  }
 
-    GrContext* grContext() override
-    {
-        return m_grContext.get();
-    }
+  GrContext* GetGrContext() override { return gr_context_.get(); }
 
-    gpu::Capabilities getCapabilities()
-    {
-        return gpu::Capabilities();
-    }
+  gpu::Capabilities GetCapabilities() override { return gpu::Capabilities(); }
 
-    gpu::gles2::GLES2Interface* contextGL() override
-    {
-        return m_gl;
-    }
+  bool IsSoftwareRendering() const override { return false; }
 
-    bool bindToCurrentThread() override { return false; }
-    void setLostContextCallback(WebClosure) override {}
-    void setErrorMessageCallback(WebFunction<void(const char*, int32_t id)>) {}
+  gpu::gles2::GLES2Interface* ContextGL() override { return gl_; }
 
-private:
-    gpu::gles2::GLES2Interface* m_gl;
-    RefPtr<GrContext> m_grContext;
+  bool BindToCurrentThread() override { return false; }
+  void SetLostContextCallback(const base::Closure&) override {}
+  void SetErrorMessageCallback(
+      const base::Callback<void(const char*, int32_t id)>&) {}
+  void SignalQuery(uint32_t, const base::Closure&) override {}
+
+ private:
+  gpu::gles2::GLES2Interface* gl_;
+  sk_sp<GrContext> gr_context_;
 };
 
-} // namespace blink
+}  // namespace blink

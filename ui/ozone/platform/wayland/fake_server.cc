@@ -18,6 +18,7 @@ namespace wl {
 namespace {
 
 const uint32_t kCompositorVersion = 4;
+const uint32_t kOutputVersion = 2;
 const uint32_t kSeatVersion = 4;
 const uint32_t kXdgShellVersion = 1;
 
@@ -28,7 +29,7 @@ void DestroyResource(wl_client* client, wl_resource* resource) {
 // wl_compositor
 
 void CreateSurface(wl_client* client, wl_resource* resource, uint32_t id) {
-  auto compositor =
+  auto* compositor =
       static_cast<MockCompositor*>(wl_resource_get_user_data(resource));
   wl_resource* surface_resource = wl_resource_create(
       client, &wl_surface_interface, wl_resource_get_version(resource), id);
@@ -36,7 +37,7 @@ void CreateSurface(wl_client* client, wl_resource* resource, uint32_t id) {
     wl_client_post_no_memory(client);
     return;
   }
-  compositor->AddSurface(base::WrapUnique(new MockSurface(surface_resource)));
+  compositor->AddSurface(base::MakeUnique<MockSurface>(surface_resource));
 }
 
 const struct wl_compositor_interface compositor_impl = {
@@ -95,7 +96,7 @@ void GetXdgSurface(wl_client* client,
                    wl_resource* resource,
                    uint32_t id,
                    wl_resource* surface_resource) {
-  auto surface =
+  auto* surface =
       static_cast<MockSurface*>(wl_resource_get_user_data(surface_resource));
   if (surface->xdg_surface) {
     wl_resource_post_error(resource, XDG_SHELL_ERROR_ROLE,
@@ -126,7 +127,7 @@ const struct xdg_shell_interface xdg_shell_impl = {
 // wl_seat
 
 void GetPointer(wl_client* client, wl_resource* resource, uint32_t id) {
-  auto seat = static_cast<MockSeat*>(wl_resource_get_user_data(resource));
+  auto* seat = static_cast<MockSeat*>(wl_resource_get_user_data(resource));
   wl_resource* pointer_resource = wl_resource_create(
       client, &wl_pointer_interface, wl_resource_get_version(resource), id);
   if (!pointer_resource) {
@@ -136,10 +137,27 @@ void GetPointer(wl_client* client, wl_resource* resource, uint32_t id) {
   seat->pointer.reset(new MockPointer(pointer_resource));
 }
 
+void GetKeyboard(wl_client* client, wl_resource* resource, uint32_t id) {
+  auto* seat = static_cast<MockSeat*>(wl_resource_get_user_data(resource));
+  wl_resource* keyboard_resource = wl_resource_create(
+      client, &wl_keyboard_interface, wl_resource_get_version(resource), id);
+  if (!keyboard_resource) {
+    wl_client_post_no_memory(client);
+    return;
+  }
+  seat->keyboard.reset(new MockKeyboard(keyboard_resource));
+}
+
 const struct wl_seat_interface seat_impl = {
     &GetPointer,       // get_pointer
-    nullptr,           // get_keyboard
+    &GetKeyboard,      // get_keyboard
     nullptr,           // get_touch,
+    &DestroyResource,  // release
+};
+
+// wl_keyboard
+
+const struct wl_keyboard_interface keyboard_impl = {
     &DestroyResource,  // release
 };
 
@@ -210,7 +228,7 @@ ServerObject::~ServerObject() {
 
 // static
 void ServerObject::OnResourceDestroyed(wl_resource* resource) {
-  auto obj = static_cast<ServerObject*>(wl_resource_get_user_data(resource));
+  auto* obj = static_cast<ServerObject*>(wl_resource_get_user_data(resource));
   obj->resource_ = nullptr;
 }
 
@@ -244,6 +262,13 @@ MockPointer::MockPointer(wl_resource* resource) : ServerObject(resource) {
 
 MockPointer::~MockPointer() {}
 
+MockKeyboard::MockKeyboard(wl_resource* resource) : ServerObject(resource) {
+  wl_resource_set_implementation(resource, &keyboard_impl, this,
+                                 &ServerObject::OnResourceDestroyed);
+}
+
+MockKeyboard::~MockKeyboard() {}
+
 void GlobalDeleter::operator()(wl_global* global) {
   wl_global_destroy(global);
 }
@@ -267,7 +292,7 @@ void Global::Bind(wl_client* client,
                   void* data,
                   uint32_t version,
                   uint32_t id) {
-  auto global = static_cast<Global*>(data);
+  auto* global = static_cast<Global*>(data);
   wl_resource* resource = wl_resource_create(
       client, global->interface_, std::min(version, global->version_), id);
   if (!resource) {
@@ -278,11 +303,12 @@ void Global::Bind(wl_client* client,
     global->resource_ = resource;
   wl_resource_set_implementation(resource, global->implementation_, global,
                                  &Global::OnResourceDestroyed);
+  global->OnBind();
 }
 
 // static
 void Global::OnResourceDestroyed(wl_resource* resource) {
-  auto global = static_cast<Global*>(wl_resource_get_user_data(resource));
+  auto* global = static_cast<Global*>(wl_resource_get_user_data(resource));
   if (global->resource_ == resource)
     global->resource_ = nullptr;
 }
@@ -294,6 +320,21 @@ MockCompositor::~MockCompositor() {}
 
 void MockCompositor::AddSurface(std::unique_ptr<MockSurface> surface) {
   surfaces_.push_back(std::move(surface));
+}
+
+MockOutput::MockOutput()
+    : Global(&wl_output_interface, nullptr, kOutputVersion) {}
+
+MockOutput::~MockOutput() {}
+
+// Notify clients of the change for output position.
+void MockOutput::OnBind() {
+  const char* kUnknownMake = "unknown";
+  const char* kUnknownModel = "unknown";
+  wl_output_send_geometry(resource(), rect_.x(), rect_.y(), 0, 0, 0,
+                          kUnknownMake, kUnknownModel, 0);
+  wl_output_send_mode(resource(), WL_OUTPUT_MODE_CURRENT, rect_.width(),
+                      rect_.height(), 0);
 }
 
 MockSeat::MockSeat() : Global(&wl_seat_interface, &seat_impl, kSeatVersion) {}
@@ -314,7 +355,8 @@ FakeServer::FakeServer()
       pause_event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                    base::WaitableEvent::InitialState::NOT_SIGNALED),
       resume_event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                    base::WaitableEvent::InitialState::NOT_SIGNALED) {}
+                    base::WaitableEvent::InitialState::NOT_SIGNALED),
+      controller_(FROM_HERE) {}
 
 FakeServer::~FakeServer() {
   Resume();
@@ -336,6 +378,8 @@ bool FakeServer::Start() {
   if (wl_display_init_shm(display_.get()) < 0)
     return false;
   if (!compositor_.Initialize(display_.get()))
+    return false;
+  if (!output_.Initialize(display_.get()))
     return false;
   if (!seat_.Initialize(display_.get()))
     return false;

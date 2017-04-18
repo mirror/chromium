@@ -7,7 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -22,17 +22,16 @@ using OffscreenCanvasArray = HeapVector<Member<OffscreenCanvas>>;
 using MessagePortArray = HeapVector<Member<MessagePort>>;
 
 class CORE_EXPORT Transferables final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(Transferables);
-public:
-    Transferables()
-    {
-    }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(Transferables);
 
-    ArrayBufferArray arrayBuffers;
-    ImageBitmapArray imageBitmaps;
-    OffscreenCanvasArray offscreenCanvases;
-    MessagePortArray messagePorts;
+ public:
+  Transferables() {}
+
+  ArrayBufferArray array_buffers;
+  ImageBitmapArray image_bitmaps;
+  OffscreenCanvasArray offscreen_canvases;
+  MessagePortArray message_ports;
 };
 
 // Along with extending |Transferables| to hold a new kind of transferable
@@ -40,6 +39,6 @@ public:
 //   - extend ScriptValueSerializer::copyTransferables()
 //   - alter SerializedScriptValue(Factory) to do the actual transfer.
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Transferables_h
+#endif  // Transferables_h

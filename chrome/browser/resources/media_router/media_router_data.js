@@ -75,15 +75,17 @@ media_router.MediaRouterView = {
 media_router.MINIMUM_SINKS_FOR_SEARCH = 20;
 
 /**
- * This corresponds to the C++ MediaSink IconType.
+ * This corresponds to the C++ MediaSink IconType, and the order must stay in
+ * sync.
  * @enum {number}
  */
 media_router.SinkIconType = {
   CAST: 0,
-  CAST_AUDIO: 1,
-  CAST_AUDIO_GROUP: 2,
-  GENERIC: 3,
+  CAST_AUDIO_GROUP: 1,
+  CAST_AUDIO: 2,
+  MEETING: 3,
   HANGOUT: 4,
+  GENERIC: 5,
 };
 
 /**
@@ -124,7 +126,7 @@ cr.define('media_router', function() {
       loadTimeData.getString('autoCastMode'), null);
 
   /**
-   * @param {string} id The ID of this issue.
+   * @param {number} id The ID of this issue.
    * @param {string} title The issue title.
    * @param {string} message The issue message.
    * @param {number} defaultActionType The type of default action.
@@ -139,7 +141,7 @@ cr.define('media_router', function() {
   var Issue = function(id, title, message, defaultActionType,
                        secondaryActionType, routeId, isBlocking,
                        helpPageId) {
-    /** @type {string} */
+    /** @type {number} */
     this.id = id;
 
     /** @type {string} */

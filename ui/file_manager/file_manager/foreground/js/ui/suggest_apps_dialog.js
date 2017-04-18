@@ -88,7 +88,7 @@ SuggestAppsDialog.prototype.show = function() {
  * Shows suggest-apps dialog by file extension and mime.
  *
  * @param {string} extension Extension of the file with a trailing dot.
- * @param {string} mime Mime of the file.
+ * @param {?string} mime Mime of the file.
  * @param {function(SuggestAppsDialog.Result, ?string)} onDialogClosed Called
  *     when the dialog is closed, with a result code and an optionally an
  *     extension id, if an extension was installed.
@@ -96,14 +96,12 @@ SuggestAppsDialog.prototype.show = function() {
 SuggestAppsDialog.prototype.showByExtensionAndMime =
     function(extension, mime, onDialogClosed) {
   assert(extension && extension[0] === '.');
+  var options = {file_extension: extension.substr(1)};
+  if (mime)
+    options.mime_type = mime;
   this.showInternal_(
-      {
-        file_extension: extension.substr(1),
-        mime_type: mime
-      },
-      str('SUGGEST_DIALOG_TITLE'),
-      FileTasks.createWebStoreLink(extension, mime),
-      onDialogClosed);
+      options, str('SUGGEST_DIALOG_TITLE'),
+      webStoreUtils.createWebStoreLink(extension, mime), onDialogClosed);
 };
 
 /**
@@ -124,7 +122,7 @@ SuggestAppsDialog.prototype.showProviders = function(onDialogClosed) {
 
 /**
  * Creates platform delegate for CWSWidgetContainer.
- * @return {!CWSWidgetContainer.PlatformDelegate}
+ * @return {!CWSWidgetContainerPlatformDelegate}
  * @private
  */
 SuggestAppsDialog.prototype.createWidgetPlatformDelegate_ = function() {
@@ -237,11 +235,13 @@ SuggestAppsDialog.prototype.showInternal_ =
   }
 
   var dialogShown = false;
+  var tokenObtained = false;
 
   this.widget_.ready()
       .then(
           /** @return {!Promise} */
           function() {
+            tokenObtained = true;
             return this.showDialog_(title);
           }.bind(this))
       .then(
@@ -264,14 +264,22 @@ SuggestAppsDialog.prototype.showInternal_ =
           function(error) {
             console.error('Failed to start CWS widget: ' + error);
 
-            // If the widget dialog was not shown, consider the widget
-            // canceled.
             if (!dialogShown) {
               // Reset any widget state set in |this.widget_.ready()|. The
               // returned value is ignored because it doesn't influence the
               // value reported by dialog.
               this.widget_.finalizeAndGetResult();
-              onDialogClosed(SuggestAppsDialog.Result.CANCELLED, null);
+
+              var result = tokenObtained ?
+                  // Got access token but the widget dialog was not shown.
+                  // Consider the widget was cancelled.
+                  SuggestAppsDialog.Result.CANCELLED :
+                  // Access token was unavailable.
+                  // This can happen in the Guest mode. crbug.com/694419
+                  // Callback shows an alert notifying the file was not opened
+                  // because of the unsupported type.
+                  SuggestAppsDialog.Result.FAILED;
+              onDialogClosed(result, null);
               return;
             }
 

@@ -32,8 +32,17 @@ var EMAIL_REGEX = new RegExp(
 Polymer({
   is: 'settings-users-add-user-dialog',
 
+  properties: {
+    /** @private */
+    isValid_: {
+      type: Boolean,
+      value: false,
+    },
+  },
+
   open: function() {
-    this.$.dialog.open();
+    this.isValid_ = false;
+    this.$.dialog.showModal();
   },
 
   /** @private */
@@ -48,16 +57,15 @@ Polymer({
    */
   validate_: function() {
     var input = this.$.addUserInput.value;
-    var valid = NAME_ONLY_REGEX.test(input) || EMAIL_REGEX.test(input);
-
-    this.$.add.disabled = !valid;
-    this.$.addUserInput.invalid = !valid;
-    return valid;
+    this.isValid_ = NAME_ONLY_REGEX.test(input) || EMAIL_REGEX.test(input);
+    return this.isValid_;
   },
 
   /** @private */
   addUser_: function() {
-    assert(this.validate_());
+    // May be submitted by the Enter key even if the input value is invalid.
+    if (!this.validate_())
+      return;
 
     var input = this.$.addUserInput.value;
 

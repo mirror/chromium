@@ -4,8 +4,10 @@
 <script src="../../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
-function display(callback)
+function display()
 {
+    var callback;
+    var promise = new Promise((fulfill) => callback = fulfill);
     requestAnimationFrame(function() {
         var testElements = document.body.getElementsByClassName("testElement");
         for (var i = 0; i < testElements.length; i++) {
@@ -15,27 +17,25 @@ function display(callback)
         if (window.testRunner)
             testRunner.layoutAndPaintAsyncThen(callback);
     });
+    return promise;
 }
 
 function test()
 {
-    var currentPanel = WebInspector.inspectorView.currentPanel();
-    InspectorTest.assertEquals(currentPanel._panelName, "timeline", "Current panel should be the timeline.");
     Runtime.experiments.enableForTest("timelineInvalidationTracking");
 
     InspectorTest.invokeAsyncWithTimeline("display", function() {
-        var record = InspectorTest.findFirstTimelineRecord(WebInspector.TimelineModel.RecordType.Paint);
-        InspectorTest.addArray(record._event.invalidationTrackingEvents, InspectorTest.InvalidationFormatters, "", "paint invalidations");
+        var event = InspectorTest.findTimelineEvent(TimelineModel.TimelineModel.RecordType.Paint);
+        InspectorTest.addArray(TimelineModel.InvalidationTracker.invalidationEventsFor(event), InspectorTest.InvalidationFormatters, "", "paint invalidations");
 
-        var linkifier = new WebInspector.Linkifier();
-        var event = record.traceEvent();
+        var linkifier = new Components.Linkifier();
         var target = InspectorTest.timelineModel().targetByEvent(event);
-        var contentHelper = new WebInspector.TimelineDetailsContentHelper(target, linkifier, true);
-        WebInspector.TimelineUIUtils._generateCauses(event, target, null, contentHelper);
+        var contentHelper = new Timeline.TimelineDetailsContentHelper(target, linkifier, true);
+        Timeline.TimelineUIUtils._generateCauses(event, target, null, contentHelper);
         var invalidationsTree = contentHelper.element.getElementsByClassName("invalidations-tree")[0];
         var invalidations = invalidationsTree.shadowRoot.textContent;
-        checkStringContains(invalidations, "Inline CSS style declaration was mutated for [ DIV class='testElement' ], [ DIV class='testElement' ], and 2 others. (anonymous function) @ timeline-grouped-invalidations.html:12");
-        checkStringContains(invalidations, "Inline CSS style declaration was mutated for [ DIV class='testElement' ], [ DIV class='testElement' ], and 2 others. (anonymous function) @ timeline-grouped-invalidations.html:13");
+        checkStringContains(invalidations, "Inline CSS style declaration was mutated for [ DIV class='testElement' ], [ DIV class='testElement' ], and 2 others. (anonymous) @ timeline-grouped-invalidations.html:14");
+        checkStringContains(invalidations, "Inline CSS style declaration was mutated for [ DIV class='testElement' ], [ DIV class='testElement' ], and 2 others. (anonymous) @ timeline-grouped-invalidations.html:15");
         InspectorTest.completeTest();
     });
 

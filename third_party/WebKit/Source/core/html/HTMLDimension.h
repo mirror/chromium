@@ -32,54 +32,48 @@
 #define HTMLDimension_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 // This class corresponds to a dimension as described in HTML5 by the
 // "rules for parsing a list of dimensions" (section 2.4.4.6).
 class HTMLDimension {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    enum HTMLDimensionType {
-        Relative, Percentage, Absolute
-    };
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    HTMLDimension()
-        : m_type(Absolute)
-        , m_value(0)
-    {
-    }
+ public:
+  enum HTMLDimensionType { kRelative, kPercentage, kAbsolute };
 
-    HTMLDimension(double value, HTMLDimensionType type)
-        : m_type(type)
-        , m_value(value)
-    {
-    }
+  HTMLDimension() : type_(kAbsolute), value_(0) {}
 
-    HTMLDimensionType type() const { return m_type; }
+  HTMLDimension(double value, HTMLDimensionType type)
+      : type_(type), value_(value) {}
 
-    bool isRelative() const { return m_type == Relative; }
-    bool isPercentage() const { return m_type == Percentage; }
-    bool isAbsolute() const { return m_type == Absolute; }
+  HTMLDimensionType GetType() const { return type_; }
 
-    double value() const { return m_value; }
+  bool IsRelative() const { return type_ == kRelative; }
+  bool IsPercentage() const { return type_ == kPercentage; }
+  bool IsAbsolute() const { return type_ == kAbsolute; }
 
-    bool operator==(const HTMLDimension& other) const
-    {
-        return m_type == other.m_type && m_value == other.m_value;
-    }
-    bool operator!=(const HTMLDimension& other) const { return !(*this == other); }
+  double Value() const { return value_; }
 
-private:
-    HTMLDimensionType m_type;
-    double m_value;
+  bool operator==(const HTMLDimension& other) const {
+    return type_ == other.type_ && value_ == other.value_;
+  }
+  bool operator!=(const HTMLDimension& other) const {
+    return !(*this == other);
+  }
+
+ private:
+  HTMLDimensionType type_;
+  double value_;
 };
 
-CORE_EXPORT Vector<HTMLDimension> parseListOfDimensions(const String&);
+CORE_EXPORT Vector<HTMLDimension> ParseListOfDimensions(const String&);
+CORE_EXPORT bool ParseDimensionValue(const String&, HTMLDimension&);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLDimension_h
+#endif  // HTMLDimension_h

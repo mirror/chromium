@@ -28,7 +28,7 @@ class Time;
 }  // namespace base
 
 namespace gfx {
-enum class VectorIconId;
+struct VectorIcon;
 }  // namespace gfx
 
 const char kACMatchPropertyInputText[] = "input text";
@@ -108,12 +108,8 @@ struct AutocompleteMatch {
   // Converts |type| to a string representation.  Used in logging and debugging.
   AutocompleteMatch& operator=(const AutocompleteMatch& match);
 
-  // Converts |type| to a resource identifier for the appropriate icon for this
-  // type to show in the completion popup.
-  static int TypeToIcon(Type type);
-
   // Gets the vector icon identifier for the icon to be shown for |type|.
-  static gfx::VectorIconId TypeToVectorIcon(Type type);
+  static const gfx::VectorIcon& TypeToVectorIcon(Type type);
 
   // Comparison function for determining when one match is better than another.
   static bool MoreRelevant(const AutocompleteMatch& elem1,
@@ -262,8 +258,7 @@ struct AutocompleteMatch {
   void RecordAdditionalInfo(const std::string& property,
                             const std::string& value);
   void RecordAdditionalInfo(const std::string& property, int value);
-  void RecordAdditionalInfo(const std::string& property,
-                            const base::Time& value);
+  void RecordAdditionalInfo(const std::string& property, base::Time value);
 
   // Returns the value recorded for |property| in the |additional_info|
   // dictionary.  Returns the empty string if no such value exists.
@@ -371,6 +366,12 @@ struct AutocompleteMatch {
 
   // Type of this match.
   Type type;
+
+  // Used to identify the specific source / type for suggestions by the
+  // suggest server. See |result_subtype_identifier| in omnibox.proto for more
+  // details.
+  // The identifier 0 is reserved for cases where this specific type is unset.
+  int subtype_identifier;
 
   // Set with a keyword provider match if this match can show a keyword hint.
   // For example, if this is a SearchProvider match for "www.amazon.com",

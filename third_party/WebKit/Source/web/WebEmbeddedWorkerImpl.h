@@ -33,111 +33,123 @@
 
 #include "core/workers/WorkerLoaderProxy.h"
 
-#include "public/web/WebContentSecurityPolicy.h"
+#include <memory>
+#include "platform/heap/Handle.h"
+#include "public/platform/WebContentSecurityPolicy.h"
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebEmbeddedWorker.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
 #include "public/web/WebFrameClient.h"
-#include <memory>
 
 namespace blink {
 
+class ThreadableLoadingContext;
+class ParentFrameTaskRunners;
 class ServiceWorkerGlobalScopeProxy;
 class WebLocalFrameImpl;
-class WebServiceWorkerNetworkProvider;
 class WebView;
 class WorkerInspectorProxy;
 class WorkerScriptLoader;
 class WorkerThread;
 
-class WebEmbeddedWorkerImpl final
-    : public WebEmbeddedWorker
-    , public WebFrameClient
-    , public WebDevToolsAgentClient
-    , private WorkerLoaderProxyProvider {
-    WTF_MAKE_NONCOPYABLE(WebEmbeddedWorkerImpl);
-public:
-    WebEmbeddedWorkerImpl(std::unique_ptr<WebServiceWorkerContextClient>, std::unique_ptr<WebWorkerContentSettingsClientProxy>);
-    ~WebEmbeddedWorkerImpl() override;
+class WebEmbeddedWorkerImpl final : public WebEmbeddedWorker,
+                                    public WebFrameClient,
+                                    public WebDevToolsAgentClient,
+                                    private WorkerLoaderProxyProvider {
+  WTF_MAKE_NONCOPYABLE(WebEmbeddedWorkerImpl);
 
-    // WebEmbeddedWorker overrides.
-    void startWorkerContext(const WebEmbeddedWorkerStartData&) override;
-    void terminateWorkerContext() override;
-    void resumeAfterDownload() override;
-    void attachDevTools(const WebString& hostId, int sessionId) override;
-    void reattachDevTools(const WebString& hostId, int sessionId, const WebString& savedState) override;
-    void detachDevTools() override;
-    void dispatchDevToolsMessage(int sessionId, int callId, const WebString& method, const WebString& message) override;
-    void addMessageToConsole(const WebConsoleMessage&) override;
+ public:
+  WebEmbeddedWorkerImpl(std::unique_ptr<WebServiceWorkerContextClient>,
+                        std::unique_ptr<WebWorkerContentSettingsClientProxy>);
+  ~WebEmbeddedWorkerImpl() override;
 
-    void postMessageToPageInspector(const WTF::String&);
+  // WebEmbeddedWorker overrides.
+  void StartWorkerContext(const WebEmbeddedWorkerStartData&) override;
+  void TerminateWorkerContext() override;
+  void ResumeAfterDownload() override;
+  void AttachDevTools(const WebString& host_id, int session_id) override;
+  void ReattachDevTools(const WebString& host_id,
+                        int session_id,
+                        const WebString& saved_state) override;
+  void DetachDevTools() override;
+  void DispatchDevToolsMessage(int session_id,
+                               int call_id,
+                               const WebString& method,
+                               const WebString& message) override;
+  void AddMessageToConsole(const WebConsoleMessage&) override;
 
-private:
-    void prepareShadowPageForLoader();
-    void loadShadowPage();
+  void PostMessageToPageInspector(const WTF::String&);
 
-    // WebFrameClient overrides.
-    void willSendRequest(
-        WebLocalFrame*, unsigned identifier, WebURLRequest&,
-        const WebURLResponse& redirectResponse) override;
-    void didFinishDocumentLoad(WebLocalFrame*) override;
+ private:
+  void PrepareShadowPageForLoader();
+  void LoadShadowPage();
 
-    // WebDevToolsAgentClient overrides.
-    void sendProtocolMessage(int sessionId, int callId, const WebString&, const WebString&) override;
-    void resumeStartup() override;
-    WebDevToolsAgentClient::WebKitClientMessageLoop* createClientMessageLoop() override;
+  // WebFrameClient overrides.
+  void DidFinishDocumentLoad(WebLocalFrame*) override;
 
-    void onScriptLoaderFinished();
-    void startWorkerThread();
+  // WebDevToolsAgentClient overrides.
+  void SendProtocolMessage(int session_id,
+                           int call_id,
+                           const WebString&,
+                           const WebString&) override;
+  void ResumeStartup() override;
+  WebDevToolsAgentClient::WebKitClientMessageLoop* CreateClientMessageLoop()
+      override;
 
-    // WorkerLoaderProxyProvider
-    void postTaskToLoader(std::unique_ptr<ExecutionContextTask>) override;
-    bool postTaskToWorkerGlobalScope(std::unique_ptr<ExecutionContextTask>) override;
+  void OnScriptLoaderFinished();
+  void StartWorkerThread();
 
-    WebEmbeddedWorkerStartData m_workerStartData;
+  // WorkerLoaderProxyProvider
+  void PostTaskToLoader(const WebTraceLocation&,
+                        std::unique_ptr<WTF::CrossThreadClosure>) override;
+  void PostTaskToWorkerGlobalScope(
+      const WebTraceLocation&,
+      std::unique_ptr<WTF::CrossThreadClosure>) override;
+  ThreadableLoadingContext* GetThreadableLoadingContext() override;
 
-    std::unique_ptr<WebServiceWorkerContextClient> m_workerContextClient;
+  WebEmbeddedWorkerStartData worker_start_data_;
 
-    // This is kept until startWorkerContext is called, and then passed on
-    // to WorkerContext.
-    std::unique_ptr<WebWorkerContentSettingsClientProxy> m_contentSettingsClient;
+  std::unique_ptr<WebServiceWorkerContextClient> worker_context_client_;
 
-    // We retain ownership of this one which is for use on the
-    // main thread only.
-    std::unique_ptr<WebServiceWorkerNetworkProvider> m_networkProvider;
+  // This is kept until startWorkerContext is called, and then passed on
+  // to WorkerContext.
+  std::unique_ptr<WebWorkerContentSettingsClientProxy> content_settings_client_;
 
-    // Kept around only while main script loading is ongoing.
-    RefPtr<WorkerScriptLoader> m_mainScriptLoader;
+  // Kept around only while main script loading is ongoing.
+  RefPtr<WorkerScriptLoader> main_script_loader_;
 
-    std::unique_ptr<WorkerThread> m_workerThread;
-    RefPtr<WorkerLoaderProxy> m_loaderProxy;
-    Persistent<ServiceWorkerGlobalScopeProxy> m_workerGlobalScopeProxy;
-    Persistent<WorkerInspectorProxy> m_workerInspectorProxy;
+  // Owned by the main thread, but will be accessed by the worker when
+  // posting tasks.
+  CrossThreadPersistent<ParentFrameTaskRunners> main_thread_task_runners_;
 
-    // 'shadow page' - created to proxy loading requests from the worker.
-    // Both WebView and WebFrame objects are close()'ed (where they're
-    // deref'ed) when this EmbeddedWorkerImpl is destructed, therefore they
-    // are guaranteed to exist while this object is around.
-    WebView* m_webView;
-    Persistent<WebLocalFrameImpl> m_mainFrame;
+  std::unique_ptr<WorkerThread> worker_thread_;
+  RefPtr<WorkerLoaderProxy> loader_proxy_;
+  Persistent<ServiceWorkerGlobalScopeProxy> worker_global_scope_proxy_;
+  Persistent<WorkerInspectorProxy> worker_inspector_proxy_;
 
-    bool m_loadingShadowPage;
-    bool m_askedToTerminate;
+  // 'shadow page' - created to proxy loading requests from the worker.
+  // Both WebView and WebFrame objects are close()'ed (where they're
+  // deref'ed) when this EmbeddedWorkerImpl is destructed, therefore they
+  // are guaranteed to exist while this object is around.
+  WebView* web_view_;
 
-    enum WaitingForDebuggerState {
-        WaitingForDebugger,
-        NotWaitingForDebugger
-    };
+  Persistent<WebLocalFrameImpl> main_frame_;
+  Persistent<ThreadableLoadingContext> loading_context_;
 
-    enum {
-        DontPauseAfterDownload,
-        DoPauseAfterDownload,
-        IsPausedAfterDownload
-    } m_pauseAfterDownloadState;
+  bool loading_shadow_page_;
+  bool asked_to_terminate_;
 
-    WaitingForDebuggerState m_waitingForDebuggerState;
+  enum WaitingForDebuggerState { kWaitingForDebugger, kNotWaitingForDebugger };
+
+  enum {
+    kDontPauseAfterDownload,
+    kDoPauseAfterDownload,
+    kIsPausedAfterDownload
+  } pause_after_download_state_;
+
+  WaitingForDebuggerState waiting_for_debugger_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebEmbeddedWorkerImpl_h
+#endif  // WebEmbeddedWorkerImpl_h

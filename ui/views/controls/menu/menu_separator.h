@@ -12,8 +12,6 @@
 
 namespace views {
 
-class MenuItemView;
-
 class MenuSeparator : public View {
  public:
   explicit MenuSeparator(ui::MenuSeparatorType type) : type_(type) {}
@@ -23,11 +21,6 @@ class MenuSeparator : public View {
   gfx::Size GetPreferredSize() const override;
 
  private:
-  // Gets the bounds where the separator should be painted.
-  gfx::Rect GetPaintBounds();
-
-  void OnPaintAura(gfx::Canvas* canvas);
-
   // The type of the separator.
   const ui::MenuSeparatorType type_;
 

@@ -45,256 +45,272 @@
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/network/FormDataEncoder.h"
+#include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/TextEncoding.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
-#include "wtf/CurrentTime.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/TextEncoding.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-static int64_t generateFormDataIdentifier()
-{
-    // Initialize to the current time to reduce the likelihood of generating
-    // identifiers that overlap with those from past/future browser sessions.
-    static int64_t nextIdentifier = static_cast<int64_t>(currentTime() * 1000000.0);
-    return ++nextIdentifier;
+static int64_t GenerateFormDataIdentifier() {
+  // Initialize to the current time to reduce the likelihood of generating
+  // identifiers that overlap with those from past/future browser sessions.
+  static int64_t next_identifier =
+      static_cast<int64_t>(CurrentTime() * 1000000.0);
+  return ++next_identifier;
 }
 
-static void appendMailtoPostFormDataToURL(KURL& url, const EncodedFormData& data, const String& encodingType)
-{
-    String body = data.flattenToString();
+static void AppendMailtoPostFormDataToURL(KURL& url,
+                                          const EncodedFormData& data,
+                                          const String& encoding_type) {
+  String body = data.FlattenToString();
 
-    if (equalIgnoringCase(encodingType, "text/plain")) {
-        // Convention seems to be to decode, and s/&/\r\n/. Also, spaces are encoded as %20.
-        body = decodeURLEscapeSequences(body.replace('&', "\r\n").replace('+', ' ') + "\r\n");
-    }
+  if (DeprecatedEqualIgnoringCase(encoding_type, "text/plain")) {
+    // Convention seems to be to decode, and s/&/\r\n/. Also, spaces are encoded
+    // as %20.
+    body = DecodeURLEscapeSequences(
+        body.Replace('&', "\r\n").Replace('+', ' ') + "\r\n");
+  }
 
-    Vector<char> bodyData;
-    bodyData.append("body=", 5);
-    FormDataEncoder::encodeStringAsFormData(bodyData, body.utf8(), FormDataEncoder::NormalizeCRLF);
-    body = String(bodyData.data(), bodyData.size()).replace('+', "%20");
+  Vector<char> body_data;
+  body_data.Append("body=", 5);
+  FormDataEncoder::EncodeStringAsFormData(body_data, body.Utf8(),
+                                          FormDataEncoder::kNormalizeCRLF);
+  body = String(body_data.Data(), body_data.size()).Replace('+', "%20");
 
-    StringBuilder query;
-    query.append(url.query());
-    if (!query.isEmpty())
-        query.append('&');
-    query.append(body);
-    url.setQuery(query.toString());
+  StringBuilder query;
+  query.Append(url.Query());
+  if (!query.IsEmpty())
+    query.Append('&');
+  query.Append(body);
+  url.SetQuery(query.ToString());
 }
 
-void FormSubmission::Attributes::parseAction(const String& action)
-{
-    // m_action cannot be converted to KURL (bug https://crbug.com/388664)
-    m_action = stripLeadingAndTrailingHTMLSpaces(action);
+void FormSubmission::Attributes::ParseAction(const String& action) {
+  // m_action cannot be converted to KURL (bug https://crbug.com/388664)
+  action_ = StripLeadingAndTrailingHTMLSpaces(action);
 }
 
-AtomicString FormSubmission::Attributes::parseEncodingType(const String& type)
-{
-    if (equalIgnoringCase(type, "multipart/form-data"))
-        return AtomicString("multipart/form-data");
-    if (equalIgnoringCase(type, "text/plain"))
-        return AtomicString("text/plain");
-    return AtomicString("application/x-www-form-urlencoded");
+AtomicString FormSubmission::Attributes::ParseEncodingType(const String& type) {
+  if (DeprecatedEqualIgnoringCase(type, "multipart/form-data"))
+    return AtomicString("multipart/form-data");
+  if (DeprecatedEqualIgnoringCase(type, "text/plain"))
+    return AtomicString("text/plain");
+  return AtomicString("application/x-www-form-urlencoded");
 }
 
-void FormSubmission::Attributes::updateEncodingType(const String& type)
-{
-    m_encodingType = parseEncodingType(type);
-    m_isMultiPartForm = (m_encodingType == "multipart/form-data");
+void FormSubmission::Attributes::UpdateEncodingType(const String& type) {
+  encoding_type_ = ParseEncodingType(type);
+  is_multi_part_form_ = (encoding_type_ == "multipart/form-data");
 }
 
-FormSubmission::SubmitMethod FormSubmission::Attributes::parseMethodType(const String& type)
-{
-    if (equalIgnoringCase(type, "post"))
-        return FormSubmission::PostMethod;
-    if (equalIgnoringCase(type, "dialog"))
-        return FormSubmission::DialogMethod;
-    return FormSubmission::GetMethod;
+FormSubmission::SubmitMethod FormSubmission::Attributes::ParseMethodType(
+    const String& type) {
+  if (DeprecatedEqualIgnoringCase(type, "post"))
+    return FormSubmission::kPostMethod;
+  if (DeprecatedEqualIgnoringCase(type, "dialog"))
+    return FormSubmission::kDialogMethod;
+  return FormSubmission::kGetMethod;
 }
 
-void FormSubmission::Attributes::updateMethodType(const String& type)
-{
-    m_method = parseMethodType(type);
+void FormSubmission::Attributes::UpdateMethodType(const String& type) {
+  method_ = ParseMethodType(type);
 }
 
-String FormSubmission::Attributes::methodString(SubmitMethod method)
-{
-    switch (method) {
-    case GetMethod:
-        return "get";
-    case PostMethod:
-        return "post";
-    case DialogMethod:
-        return "dialog";
-    }
-    ASSERT_NOT_REACHED();
-    return emptyString();
+String FormSubmission::Attributes::MethodString(SubmitMethod method) {
+  switch (method) {
+    case kGetMethod:
+      return "get";
+    case kPostMethod:
+      return "post";
+    case kDialogMethod:
+      return "dialog";
+  }
+  NOTREACHED();
+  return g_empty_string;
 }
 
-void FormSubmission::Attributes::copyFrom(const Attributes& other)
-{
-    m_method = other.m_method;
-    m_isMultiPartForm = other.m_isMultiPartForm;
+void FormSubmission::Attributes::CopyFrom(const Attributes& other) {
+  method_ = other.method_;
+  is_multi_part_form_ = other.is_multi_part_form_;
 
-    m_action = other.m_action;
-    m_target = other.m_target;
-    m_encodingType = other.m_encodingType;
-    m_acceptCharset = other.m_acceptCharset;
+  action_ = other.action_;
+  target_ = other.target_;
+  encoding_type_ = other.encoding_type_;
+  accept_charset_ = other.accept_charset_;
 }
 
-inline FormSubmission::FormSubmission(SubmitMethod method, const KURL& action, const AtomicString& target, const AtomicString& contentType, HTMLFormElement* form, PassRefPtr<EncodedFormData> data, const String& boundary, Event* event)
-    : m_method(method)
-    , m_action(action)
-    , m_target(target)
-    , m_contentType(contentType)
-    , m_form(form)
-    , m_formData(data)
-    , m_boundary(boundary)
-    , m_event(event)
-{
-}
+inline FormSubmission::FormSubmission(SubmitMethod method,
+                                      const KURL& action,
+                                      const AtomicString& target,
+                                      const AtomicString& content_type,
+                                      HTMLFormElement* form,
+                                      PassRefPtr<EncodedFormData> data,
+                                      const String& boundary,
+                                      Event* event)
+    : method_(method),
+      action_(action),
+      target_(target),
+      content_type_(content_type),
+      form_(form),
+      form_data_(std::move(data)),
+      boundary_(boundary),
+      event_(event) {}
 
 inline FormSubmission::FormSubmission(const String& result)
-    : m_method(DialogMethod)
-    , m_result(result)
-{
+    : method_(kDialogMethod), result_(result) {}
+
+FormSubmission* FormSubmission::Create(HTMLFormElement* form,
+                                       const Attributes& attributes,
+                                       Event* event,
+                                       HTMLFormControlElement* submit_button) {
+  DCHECK(form);
+
+  FormSubmission::Attributes copied_attributes;
+  copied_attributes.CopyFrom(attributes);
+  if (submit_button) {
+    AtomicString attribute_value;
+    if (!(attribute_value = submit_button->FastGetAttribute(formactionAttr))
+             .IsNull())
+      copied_attributes.ParseAction(attribute_value);
+    if (!(attribute_value = submit_button->FastGetAttribute(formenctypeAttr))
+             .IsNull())
+      copied_attributes.UpdateEncodingType(attribute_value);
+    if (!(attribute_value = submit_button->FastGetAttribute(formmethodAttr))
+             .IsNull())
+      copied_attributes.UpdateMethodType(attribute_value);
+    if (!(attribute_value = submit_button->FastGetAttribute(formtargetAttr))
+             .IsNull())
+      copied_attributes.SetTarget(attribute_value);
+  }
+
+  if (copied_attributes.Method() == kDialogMethod) {
+    if (submit_button)
+      return new FormSubmission(submit_button->ResultForDialogSubmit());
+    return new FormSubmission("");
+  }
+
+  Document& document = form->GetDocument();
+  KURL action_url = document.CompleteURL(copied_attributes.Action().IsEmpty()
+                                             ? document.Url().GetString()
+                                             : copied_attributes.Action());
+
+  if (document.GetInsecureRequestPolicy() & kUpgradeInsecureRequests &&
+      action_url.ProtocolIs("http")) {
+    UseCounter::Count(document,
+                      UseCounter::kUpgradeInsecureRequestsUpgradedRequest);
+    action_url.SetProtocol("https");
+    if (action_url.Port() == 80)
+      action_url.SetPort(443);
+  }
+
+  bool is_mailto_form = action_url.ProtocolIs("mailto");
+  bool is_multi_part_form = false;
+  AtomicString encoding_type = copied_attributes.EncodingType();
+
+  if (copied_attributes.Method() == kPostMethod) {
+    is_multi_part_form = copied_attributes.IsMultiPartForm();
+    if (is_multi_part_form && is_mailto_form) {
+      encoding_type = AtomicString("application/x-www-form-urlencoded");
+      is_multi_part_form = false;
+    }
+  }
+  WTF::TextEncoding data_encoding =
+      is_mailto_form
+          ? UTF8Encoding()
+          : FormDataEncoder::EncodingFromAcceptCharset(
+                copied_attributes.AcceptCharset(), document.Encoding());
+  FormData* dom_form_data =
+      FormData::Create(data_encoding.EncodingForFormSubmission());
+
+  if (submit_button)
+    submit_button->SetActivatedSubmit(true);
+  bool contains_password_data = false;
+  for (unsigned i = 0; i < form->ListedElements().size(); ++i) {
+    ListedElement* control = form->ListedElements()[i];
+    DCHECK(control);
+    HTMLElement& element = ToHTMLElement(*control);
+    if (!element.IsDisabledFormControl())
+      control->AppendToFormData(*dom_form_data);
+    if (isHTMLInputElement(element)) {
+      HTMLInputElement& input = toHTMLInputElement(element);
+      if (input.type() == InputTypeNames::password && !input.value().IsEmpty())
+        contains_password_data = true;
+    }
+  }
+  if (submit_button)
+    submit_button->SetActivatedSubmit(false);
+
+  RefPtr<EncodedFormData> form_data;
+  String boundary;
+
+  if (is_multi_part_form) {
+    form_data = dom_form_data->EncodeMultiPartFormData();
+    boundary = form_data->Boundary().Data();
+  } else {
+    form_data = dom_form_data->EncodeFormData(
+        attributes.Method() == kGetMethod
+            ? EncodedFormData::kFormURLEncoded
+            : EncodedFormData::ParseEncodingType(encoding_type));
+    if (copied_attributes.Method() == kPostMethod && is_mailto_form) {
+      // Convert the form data into a string that we put into the URL.
+      AppendMailtoPostFormDataToURL(action_url, *form_data, encoding_type);
+      form_data = EncodedFormData::Create();
+    }
+  }
+
+  form_data->SetIdentifier(GenerateFormDataIdentifier());
+  form_data->SetContainsPasswordData(contains_password_data);
+  AtomicString target_or_base_target = copied_attributes.Target().IsEmpty()
+                                           ? document.BaseTarget()
+                                           : copied_attributes.Target();
+  return new FormSubmission(copied_attributes.Method(), action_url,
+                            target_or_base_target, encoding_type, form,
+                            std::move(form_data), boundary, event);
 }
 
-FormSubmission* FormSubmission::create(HTMLFormElement* form, const Attributes& attributes, Event* event)
-{
-    ASSERT(form);
+DEFINE_TRACE(FormSubmission) {
+  visitor->Trace(form_);
+  visitor->Trace(event_);
+}
 
-    HTMLFormControlElement* submitButton = 0;
-    if (event && event->target()) {
-        for (Node* node = event->target()->toNode(); node; node = node->parentOrShadowHostNode()) {
-            if (node->isElementNode() && toElement(node)->isFormControlElement()) {
-                submitButton = toHTMLFormControlElement(node);
-                break;
-            }
-        }
-    }
+KURL FormSubmission::RequestURL() const {
+  if (method_ == FormSubmission::kPostMethod)
+    return action_;
 
-    FormSubmission::Attributes copiedAttributes;
-    copiedAttributes.copyFrom(attributes);
-    if (submitButton) {
-        AtomicString attributeValue;
-        if (!(attributeValue = submitButton->fastGetAttribute(formactionAttr)).isNull())
-            copiedAttributes.parseAction(attributeValue);
-        if (!(attributeValue = submitButton->fastGetAttribute(formenctypeAttr)).isNull())
-            copiedAttributes.updateEncodingType(attributeValue);
-        if (!(attributeValue = submitButton->fastGetAttribute(formmethodAttr)).isNull())
-            copiedAttributes.updateMethodType(attributeValue);
-        if (!(attributeValue = submitButton->fastGetAttribute(formtargetAttr)).isNull())
-            copiedAttributes.setTarget(attributeValue);
-    }
+  KURL request_url(action_);
+  request_url.SetQuery(form_data_->FlattenToString());
+  return request_url;
+}
 
-    if (copiedAttributes.method() == DialogMethod) {
-        if (submitButton)
-            return new FormSubmission(submitButton->resultForDialogSubmit());
-        return new FormSubmission("");
-    }
+FrameLoadRequest FormSubmission::CreateFrameLoadRequest(
+    Document* origin_document) {
+  FrameLoadRequest frame_request(origin_document);
 
-    Document& document = form->document();
-    KURL actionURL = document.completeURL(copiedAttributes.action().isEmpty() ? document.url().getString() : copiedAttributes.action());
+  if (!target_.IsEmpty())
+    frame_request.SetFrameName(target_);
 
-    if (document.getInsecureRequestPolicy() & kUpgradeInsecureRequests && actionURL.protocolIs("http")) {
-        UseCounter::count(document, UseCounter::UpgradeInsecureRequestsUpgradedRequest);
-        actionURL.setProtocol("https");
-        if (actionURL.port() == 80)
-            actionURL.setPort(443);
-    }
+  if (method_ == FormSubmission::kPostMethod) {
+    frame_request.GetResourceRequest().SetHTTPMethod("POST");
+    frame_request.GetResourceRequest().SetHTTPBody(form_data_);
 
-    bool isMailtoForm = actionURL.protocolIs("mailto");
-    bool isMultiPartForm = false;
-    AtomicString encodingType = copiedAttributes.encodingType();
-
-    if (copiedAttributes.method() == PostMethod) {
-        isMultiPartForm = copiedAttributes.isMultiPartForm();
-        if (isMultiPartForm && isMailtoForm) {
-            encodingType = AtomicString("application/x-www-form-urlencoded");
-            isMultiPartForm = false;
-        }
-    }
-    WTF::TextEncoding dataEncoding = isMailtoForm ? UTF8Encoding() : FormDataEncoder::encodingFromAcceptCharset(copiedAttributes.acceptCharset(), document.encoding());
-    FormData* domFormData = FormData::create(dataEncoding.encodingForFormSubmission());
-
-    bool containsPasswordData = false;
-    for (unsigned i = 0; i < form->associatedElements().size(); ++i) {
-        FormAssociatedElement* control = form->associatedElements()[i];
-        ASSERT(control);
-        HTMLElement& element = toHTMLElement(*control);
-        if (!element.isDisabledFormControl())
-            control->appendToFormData(*domFormData);
-        if (isHTMLInputElement(element)) {
-            HTMLInputElement& input = toHTMLInputElement(element);
-            if (input.type() == InputTypeNames::password && !input.value().isEmpty())
-                containsPasswordData = true;
-        }
-    }
-
-    RefPtr<EncodedFormData> formData;
-    String boundary;
-
-    if (isMultiPartForm) {
-        formData = domFormData->encodeMultiPartFormData();
-        boundary = formData->boundary().data();
+    // construct some user headers if necessary
+    if (boundary_.IsEmpty()) {
+      frame_request.GetResourceRequest().SetHTTPContentType(content_type_);
     } else {
-        formData = domFormData->encodeFormData(attributes.method() == GetMethod ? EncodedFormData::FormURLEncoded : EncodedFormData::parseEncodingType(encodingType));
-        if (copiedAttributes.method() == PostMethod && isMailtoForm) {
-            // Convert the form data into a string that we put into the URL.
-            appendMailtoPostFormDataToURL(actionURL, *formData, encodingType);
-            formData = EncodedFormData::create();
-        }
+      frame_request.GetResourceRequest().SetHTTPContentType(
+          content_type_ + "; boundary=" + boundary_);
     }
+  }
 
-    formData->setIdentifier(generateFormDataIdentifier());
-    formData->setContainsPasswordData(containsPasswordData);
-    AtomicString targetOrBaseTarget = copiedAttributes.target().isEmpty() ? document.baseTarget() : copiedAttributes.target();
-    return new FormSubmission(copiedAttributes.method(), actionURL, targetOrBaseTarget, encodingType, form, formData.release(), boundary, event);
+  frame_request.GetResourceRequest().SetURL(RequestURL());
+
+  frame_request.SetTriggeringEvent(event_);
+  frame_request.SetForm(form_);
+
+  return frame_request;
 }
 
-DEFINE_TRACE(FormSubmission)
-{
-    visitor->trace(m_form);
-    visitor->trace(m_event);
-}
-
-KURL FormSubmission::requestURL() const
-{
-    if (m_method == FormSubmission::PostMethod)
-        return m_action;
-
-    KURL requestURL(m_action);
-    requestURL.setQuery(m_formData->flattenToString());
-    return requestURL;
-}
-
-FrameLoadRequest FormSubmission::createFrameLoadRequest(Document* originDocument)
-{
-    FrameLoadRequest frameRequest(originDocument);
-
-    if (!m_target.isEmpty())
-        frameRequest.setFrameName(m_target);
-
-    if (m_method == FormSubmission::PostMethod) {
-        frameRequest.resourceRequest().setHTTPMethod("POST");
-        frameRequest.resourceRequest().setHTTPBody(m_formData);
-
-        // construct some user headers if necessary
-        if (m_boundary.isEmpty())
-            frameRequest.resourceRequest().setHTTPContentType(m_contentType);
-        else
-            frameRequest.resourceRequest().setHTTPContentType(m_contentType + "; boundary=" + m_boundary);
-    }
-
-    frameRequest.resourceRequest().setURL(requestURL());
-
-    frameRequest.setTriggeringEvent(m_event);
-    frameRequest.setForm(m_form);
-
-    return frameRequest;
-}
-
-} // namespace blink
+}  // namespace blink

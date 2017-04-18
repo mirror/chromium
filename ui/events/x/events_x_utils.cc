@@ -28,7 +28,6 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/x/x11_atom_cache.h"
-#include "ui/gfx/x/x11_types.h"
 
 namespace {
 
@@ -270,6 +269,12 @@ ui::EventType GetTouchEventType(const XEvent& xev) {
       return ui::ET_UNKNOWN;
     case XI_DeviceChanged:
       // This can happen when --touch-devices flag is used.
+      return ui::ET_UNKNOWN;
+    case XI_Leave:
+    case XI_Enter:
+    case XI_FocusIn:
+    case XI_FocusOut:
+      // These may be handled by the PlatformEventDispatcher directly.
       return ui::ET_UNKNOWN;
     default:
       NOTREACHED();
@@ -720,6 +725,9 @@ float GetTouchAngleFromXEvent(const XEvent& xev) {
 }
 
 float GetTouchForceFromXEvent(const XEvent& xev) {
+  XIDeviceEvent* event = static_cast<XIDeviceEvent*>(xev.xcookie.data);
+  if (event->evtype == XI_TouchEnd)
+    return 0.0;
   double force = 0.0;
   force = GetTouchParamFromXEvent(
       xev, ui::DeviceDataManagerX11::DT_TOUCH_PRESSURE, 0.0);

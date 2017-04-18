@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "minidump/minidump_rva_list_writer.h"
+
 #include <utility>
 
 #include "base/format_macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "gtest/gtest.h"
-#include "minidump/minidump_rva_list_writer.h"
 #include "minidump/test/minidump_rva_list_test_util.h"
 #include "minidump/test/minidump_writable_test_util.h"
 #include "util/file/string_file.h"
@@ -47,7 +48,7 @@ TEST(MinidumpRVAListWriter, Empty) {
   StringFile string_file;
 
   ASSERT_TRUE(list_writer.WriteEverything(&string_file));
-  EXPECT_EQ(sizeof(MinidumpRVAList), string_file.string().size());
+  EXPECT_EQ(string_file.string().size(), sizeof(MinidumpRVAList));
 
   const MinidumpRVAList* list = MinidumpRVAListAtStart(string_file.string(), 0);
   ASSERT_TRUE(list);
@@ -69,7 +70,7 @@ TEST(MinidumpRVAListWriter, OneChild) {
   const uint32_t* child = MinidumpWritableAtRVA<uint32_t>(
       string_file.string(), list->children[0]);
   ASSERT_TRUE(child);
-  EXPECT_EQ(kValue, *child);
+  EXPECT_EQ(*child, kValue);
 }
 
 TEST(MinidumpRVAListWriter, ThreeChildren) {
@@ -95,7 +96,7 @@ TEST(MinidumpRVAListWriter, ThreeChildren) {
     const uint32_t* child = MinidumpWritableAtRVA<uint32_t>(
         string_file.string(), list->children[index]);
     ASSERT_TRUE(child);
-    EXPECT_EQ(kValues[index], *child);
+    EXPECT_EQ(*child, kValues[index]);
   }
 }
 

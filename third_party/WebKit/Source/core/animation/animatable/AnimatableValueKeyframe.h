@@ -12,68 +12,101 @@
 
 namespace blink {
 
+// TODO(alancutter): Delete this class once TransitionKeyframe has completely
+// replaced it.
 class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
-public:
-    static PassRefPtr<AnimatableValueKeyframe> create()
-    {
-        return adoptRef(new AnimatableValueKeyframe);
+ public:
+  static PassRefPtr<AnimatableValueKeyframe> Create() {
+    return AdoptRef(new AnimatableValueKeyframe);
+  }
+  void SetPropertyValue(CSSPropertyID property,
+                        PassRefPtr<AnimatableValue> value) {
+    property_values_.Set(property, std::move(value));
+  }
+  void ClearPropertyValue(CSSPropertyID property) {
+    property_values_.erase(property);
+  }
+  AnimatableValue* PropertyValue(CSSPropertyID property) const {
+    DCHECK(property_values_.Contains(property));
+    return property_values_.at(property);
+  }
+  PropertyHandleSet Properties() const override;
+
+  class PropertySpecificKeyframe : public Keyframe::PropertySpecificKeyframe {
+   public:
+    static PassRefPtr<PropertySpecificKeyframe> Create(
+        double offset,
+        PassRefPtr<TimingFunction> easing,
+        PassRefPtr<AnimatableValue> value,
+        EffectModel::CompositeOperation composite) {
+      return AdoptRef(new PropertySpecificKeyframe(
+          offset, std::move(easing), std::move(value), composite));
     }
-    void setPropertyValue(CSSPropertyID property, PassRefPtr<AnimatableValue> value)
-    {
-        m_propertyValues.set(property, value);
+
+    AnimatableValue* Value() const { return value_.Get(); }
+    PassRefPtr<AnimatableValue> GetAnimatableValue() const final {
+      return value_;
     }
-    void clearPropertyValue(CSSPropertyID property) { m_propertyValues.remove(property); }
-    AnimatableValue* propertyValue(CSSPropertyID property) const
-    {
-        ASSERT(m_propertyValues.contains(property));
-        return m_propertyValues.get(property);
+
+    bool IsNeutral() const final { return false; }
+    PassRefPtr<Keyframe::PropertySpecificKeyframe> NeutralKeyframe(
+        double offset,
+        PassRefPtr<TimingFunction> easing) const final {
+      NOTREACHED();
+      return nullptr;
     }
-    PropertyHandleSet properties() const override;
+    PassRefPtr<Interpolation> CreateInterpolation(
+        const PropertyHandle&,
+        const Keyframe::PropertySpecificKeyframe& end) const final;
 
-    class PropertySpecificKeyframe : public Keyframe::PropertySpecificKeyframe {
-    public:
-        static PassRefPtr<PropertySpecificKeyframe> create(double offset, PassRefPtr<TimingFunction> easing, PassRefPtr<AnimatableValue> value, EffectModel::CompositeOperation composite)
-        {
-            return adoptRef(new PropertySpecificKeyframe(offset, easing, value, composite));
-        }
+   private:
+    PropertySpecificKeyframe(double offset,
+                             PassRefPtr<TimingFunction> easing,
+                             PassRefPtr<AnimatableValue> value,
+                             EffectModel::CompositeOperation composite)
+        : Keyframe::PropertySpecificKeyframe(offset,
+                                             std::move(easing),
+                                             composite),
+          value_(std::move(value)) {}
 
-        AnimatableValue* value() const { return m_value.get(); }
-        const PassRefPtr<AnimatableValue> getAnimatableValue() const final { return m_value; }
+    PassRefPtr<Keyframe::PropertySpecificKeyframe> CloneWithOffset(
+        double offset) const override;
+    bool IsAnimatableValuePropertySpecificKeyframe() const override {
+      return true;
+    }
 
-        PassRefPtr<Keyframe::PropertySpecificKeyframe> neutralKeyframe(double offset, PassRefPtr<TimingFunction> easing) const final;
-        PassRefPtr<Interpolation> createInterpolation(PropertyHandle, const Keyframe::PropertySpecificKeyframe& end) const final;
+    RefPtr<AnimatableValue> value_;
+  };
 
-    private:
-        PropertySpecificKeyframe(double offset, PassRefPtr<TimingFunction> easing, PassRefPtr<AnimatableValue> value, EffectModel::CompositeOperation composite)
-            : Keyframe::PropertySpecificKeyframe(offset, easing, composite)
-            , m_value(value)
-        { }
+ private:
+  AnimatableValueKeyframe() {}
 
-        PassRefPtr<Keyframe::PropertySpecificKeyframe> cloneWithOffset(double offset) const override;
-        bool isAnimatableValuePropertySpecificKeyframe() const override { return true; }
+  AnimatableValueKeyframe(const AnimatableValueKeyframe& copy_from);
 
-        RefPtr<AnimatableValue> m_value;
-    };
+  PassRefPtr<Keyframe> Clone() const override;
+  PassRefPtr<Keyframe::PropertySpecificKeyframe> CreatePropertySpecificKeyframe(
+      const PropertyHandle&) const override;
 
-private:
-    AnimatableValueKeyframe() { }
+  bool IsAnimatableValueKeyframe() const override { return true; }
 
-    AnimatableValueKeyframe(const AnimatableValueKeyframe& copyFrom);
-
-    PassRefPtr<Keyframe> clone() const override;
-    PassRefPtr<Keyframe::PropertySpecificKeyframe> createPropertySpecificKeyframe(PropertyHandle) const override;
-
-    bool isAnimatableValueKeyframe() const override { return true; }
-
-    using PropertyValueMap = HashMap<CSSPropertyID, RefPtr<AnimatableValue>>;
-    PropertyValueMap m_propertyValues;
+  using PropertyValueMap = HashMap<CSSPropertyID, RefPtr<AnimatableValue>>;
+  PropertyValueMap property_values_;
 };
 
-using AnimatableValuePropertySpecificKeyframe = AnimatableValueKeyframe::PropertySpecificKeyframe;
+using AnimatableValuePropertySpecificKeyframe =
+    AnimatableValueKeyframe::PropertySpecificKeyframe;
 
-DEFINE_TYPE_CASTS(AnimatableValueKeyframe, Keyframe, value, value->isAnimatableValueKeyframe(), value.isAnimatableValueKeyframe());
-DEFINE_TYPE_CASTS(AnimatableValuePropertySpecificKeyframe, Keyframe::PropertySpecificKeyframe, value, value->isAnimatableValuePropertySpecificKeyframe(), value.isAnimatableValuePropertySpecificKeyframe());
+DEFINE_TYPE_CASTS(AnimatableValueKeyframe,
+                  Keyframe,
+                  value,
+                  value->IsAnimatableValueKeyframe(),
+                  value.IsAnimatableValueKeyframe());
+DEFINE_TYPE_CASTS(AnimatableValuePropertySpecificKeyframe,
+                  Keyframe::PropertySpecificKeyframe,
+                  value,
+                  value->IsAnimatableValuePropertySpecificKeyframe(),
+                  value.IsAnimatableValuePropertySpecificKeyframe());
 
-} // namespace blink
+}  // namespace blink
 
 #endif

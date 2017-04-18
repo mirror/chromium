@@ -20,9 +20,6 @@ class MenuModel;
 namespace message_center {
 
 class MessageCenter;
-class MessageBubbleBase;
-class MessagePopupBubble;
-class QuietModeBubble;
 
 // Implementation found with each supported platform's implementation of
 // MessageCenterTrayDelegate.
@@ -80,6 +77,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterTray : public MessageCenterObserver {
   void OnNotificationClicked(const std::string& notification_id) override;
   void OnNotificationButtonClicked(const std::string& notification_id,
                                    int button_index) override;
+  void OnNotificationSettingsClicked(bool handled) override;
   void OnNotificationDisplayed(const std::string& notification_id,
                                const DisplaySource source) override;
   void OnQuietModeChanged(bool in_quiet_mode) override;

@@ -5,7 +5,7 @@
 #ifndef SVGInlineFlowBoxPainter_h
 #define SVGInlineFlowBoxPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,17 +14,19 @@ class LayoutPoint;
 class SVGInlineFlowBox;
 
 class SVGInlineFlowBoxPainter {
-    STACK_ALLOCATED();
-public:
-    SVGInlineFlowBoxPainter(const SVGInlineFlowBox& svgInlineFlowBox) : m_svgInlineFlowBox(svgInlineFlowBox) { }
+  STACK_ALLOCATED();
 
-    void paintSelectionBackground(const PaintInfo&);
-    void paint(const PaintInfo&, const LayoutPoint&);
+ public:
+  SVGInlineFlowBoxPainter(const SVGInlineFlowBox& svg_inline_flow_box)
+      : svg_inline_flow_box_(svg_inline_flow_box) {}
 
-private:
-    const SVGInlineFlowBox& m_svgInlineFlowBox;
+  void PaintSelectionBackground(const PaintInfo&);
+  void Paint(const PaintInfo&, const LayoutPoint&);
+
+ private:
+  const SVGInlineFlowBox& svg_inline_flow_box_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGInlineFlowBoxPainter_h
+#endif  // SVGInlineFlowBoxPainter_h

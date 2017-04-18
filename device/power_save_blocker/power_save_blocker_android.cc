@@ -15,22 +15,20 @@
 namespace device {
 
 using base::android::AttachCurrentThread;
+using base::android::ScopedJavaLocalRef;
 
 class PowerSaveBlocker::Delegate
     : public base::RefCountedThreadSafe<PowerSaveBlocker::Delegate> {
  public:
-  Delegate(base::WeakPtr<ui::ViewAndroid> view_android,
-           scoped_refptr<base::SequencedTaskRunner> ui_task_runner);
+  Delegate(scoped_refptr<base::SequencedTaskRunner> ui_task_runner);
 
   // Does the actual work to apply or remove the desired power save block.
-  void ApplyBlock();
+  void ApplyBlock(ui::ViewAndroid* view_android);
   void RemoveBlock();
 
  private:
   friend class base::RefCountedThreadSafe<Delegate>;
   ~Delegate();
-
-  base::WeakPtr<ui::ViewAndroid> view_android_;
 
   base::android::ScopedJavaGlobalRef<jobject> java_power_save_blocker_;
 
@@ -40,34 +38,31 @@ class PowerSaveBlocker::Delegate
 };
 
 PowerSaveBlocker::Delegate::Delegate(
-    base::WeakPtr<ui::ViewAndroid> view_android,
     scoped_refptr<base::SequencedTaskRunner> ui_task_runner)
-    : view_android_(view_android), ui_task_runner_(ui_task_runner) {
+    : ui_task_runner_(ui_task_runner) {
   JNIEnv* env = AttachCurrentThread();
   java_power_save_blocker_.Reset(Java_PowerSaveBlocker_create(env));
 }
 
 PowerSaveBlocker::Delegate::~Delegate() {}
 
-void PowerSaveBlocker::Delegate::ApplyBlock() {
+void PowerSaveBlocker::Delegate::ApplyBlock(ui::ViewAndroid* view_android) {
   DCHECK(ui_task_runner_->RunsTasksOnCurrentThread());
+  DCHECK(view_android);
 
   ScopedJavaLocalRef<jobject> obj(java_power_save_blocker_);
-  JNIEnv* env = AttachCurrentThread();
-  if (view_android_) {
-    Java_PowerSaveBlocker_applyBlock(
-        env, obj.obj(), view_android_->GetViewAndroidDelegate().obj());
-  }
+  ScopedJavaLocalRef<jobject> container_view(view_android->GetContainerView());
+  if (container_view.is_null())
+    return;
+
+  Java_PowerSaveBlocker_applyBlock(AttachCurrentThread(), obj, container_view);
 }
 
 void PowerSaveBlocker::Delegate::RemoveBlock() {
   DCHECK(ui_task_runner_->RunsTasksOnCurrentThread());
+
   ScopedJavaLocalRef<jobject> obj(java_power_save_blocker_);
-  JNIEnv* env = AttachCurrentThread();
-  if (view_android_) {
-    Java_PowerSaveBlocker_removeBlock(
-        env, obj.obj(), view_android_->GetViewAndroidDelegate().obj());
-  }
+  Java_PowerSaveBlocker_removeBlock(AttachCurrentThread(), obj);
 }
 
 PowerSaveBlocker::PowerSaveBlocker(
@@ -88,18 +83,12 @@ PowerSaveBlocker::~PowerSaveBlocker() {
   }
 }
 
-void PowerSaveBlocker::InitDisplaySleepBlocker(
-    const base::WeakPtr<ui::ViewAndroid>& view_android) {
+void PowerSaveBlocker::InitDisplaySleepBlocker(ui::ViewAndroid* view_android) {
   DCHECK(ui_task_runner_->RunsTasksOnCurrentThread());
-  if (!view_android)
-    return;
+  DCHECK(view_android);
 
-  delegate_ = new Delegate(view_android, ui_task_runner_);
-  delegate_->ApplyBlock();
-}
-
-bool RegisterPowerSaveBlocker(JNIEnv* env) {
-  return RegisterNativesImpl(env);
+  delegate_ = new Delegate(ui_task_runner_);
+  delegate_->ApplyBlock(view_android);
 }
 
 }  // namespace device

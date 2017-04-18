@@ -15,6 +15,7 @@ namespace content {
 
 namespace {
 bool g_block_third_party_cookies = false;
+bool g_cancel_requests_with_referrer_policy_violation = false;
 }
 
 ShellNetworkDelegate::ShellNetworkDelegate() {
@@ -25,6 +26,11 @@ ShellNetworkDelegate::~ShellNetworkDelegate() {
 
 void ShellNetworkDelegate::SetBlockThirdPartyCookies(bool block) {
   g_block_third_party_cookies = block;
+}
+
+void ShellNetworkDelegate::SetCancelURLRequestWithPolicyViolatingReferrerHeader(
+    bool cancel) {
+  g_cancel_requests_with_referrer_policy_violation = cancel;
 }
 
 int ShellNetworkDelegate::OnBeforeURLRequest(
@@ -58,11 +64,12 @@ void ShellNetworkDelegate::OnBeforeRedirect(net::URLRequest* request,
                                             const GURL& new_location) {
 }
 
-void ShellNetworkDelegate::OnResponseStarted(net::URLRequest* request) {
-}
+void ShellNetworkDelegate::OnResponseStarted(net::URLRequest* request,
+                                             int net_error) {}
 
-void ShellNetworkDelegate::OnCompleted(net::URLRequest* request, bool started) {
-}
+void ShellNetworkDelegate::OnCompleted(net::URLRequest* request,
+                                       bool started,
+                                       int net_error) {}
 
 void ShellNetworkDelegate::OnURLRequestDestroyed(net::URLRequest* request) {
 }
@@ -85,8 +92,8 @@ bool ShellNetworkDelegate::OnCanGetCookies(const net::URLRequest& request,
       net::StaticCookiePolicy::BLOCK_ALL_THIRD_PARTY_COOKIES :
       net::StaticCookiePolicy::ALLOW_ALL_COOKIES;
   net::StaticCookiePolicy policy(policy_type);
-  int rv = policy.CanGetCookies(
-      request.url(), request.first_party_for_cookies());
+  int rv =
+      policy.CanAccessCookies(request.url(), request.first_party_for_cookies());
   return rv == net::OK;
 }
 
@@ -97,8 +104,8 @@ bool ShellNetworkDelegate::OnCanSetCookie(const net::URLRequest& request,
       net::StaticCookiePolicy::BLOCK_ALL_THIRD_PARTY_COOKIES :
       net::StaticCookiePolicy::ALLOW_ALL_COOKIES;
   net::StaticCookiePolicy policy(policy_type);
-  int rv = policy.CanSetCookie(
-      request.url(), request.first_party_for_cookies());
+  int rv =
+      policy.CanAccessCookies(request.url(), request.first_party_for_cookies());
   return rv == net::OK;
 }
 
@@ -112,8 +119,11 @@ bool ShellNetworkDelegate::OnAreExperimentalCookieFeaturesEnabled() const {
       switches::kEnableExperimentalWebPlatformFeatures);
 }
 
-bool ShellNetworkDelegate::OnAreStrictSecureCookiesEnabled() const {
-  return OnAreExperimentalCookieFeaturesEnabled();
+bool ShellNetworkDelegate::OnCancelURLRequestWithPolicyViolatingReferrerHeader(
+    const net::URLRequest& request,
+    const GURL& target_url,
+    const GURL& referrer_url) const {
+  return g_cancel_requests_with_referrer_policy_violation;
 }
 
 }  // namespace content

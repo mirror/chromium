@@ -7,12 +7,12 @@
 
 #include "platform/fonts/FontDataForRangeSet.h"
 #include "platform/fonts/FontFallbackPriority.h"
-#include "wtf/HashMap.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/Unicode.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/Unicode.h"
 
 namespace blink {
 
@@ -21,57 +21,65 @@ using namespace WTF;
 class FontDescription;
 class FontFallbackList;
 class SimpleFontData;
-class FontFamily;
 
 class FontFallbackIterator : public RefCounted<FontFallbackIterator> {
-    WTF_MAKE_NONCOPYABLE(FontFallbackIterator);
+  WTF_MAKE_NONCOPYABLE(FontFallbackIterator);
 
-public:
-    static PassRefPtr<FontFallbackIterator> create(const FontDescription&, PassRefPtr<FontFallbackList>,
-        FontFallbackPriority);
+ public:
+  static PassRefPtr<FontFallbackIterator> Create(const FontDescription&,
+                                                 PassRefPtr<FontFallbackList>,
+                                                 FontFallbackPriority);
 
-    // Returns whether a list of all remaining characters to be shaped is
-    // needed.  Needed by the FontfallbackIterator in order to check whether a
-    // font from a segmented range should be loaded.
-    bool needsHintList() const;
+  bool HasNext() const { return fallback_stage_ != kOutOfLuck; };
 
-    bool hasNext() const { return m_fallbackStage != OutOfLuck; };
+  // Some system fallback APIs (Windows, Android) require a character, or a
+  // portion of the string to be passed.  On Mac and Linux, we get a list of
+  // fonts without passing in characters.
+  PassRefPtr<FontDataForRangeSet> Next(const Vector<UChar32>& hint_list);
 
-    // Some system fallback APIs (Windows, Android) require a character, or a
-    // portion of the string to be passed.  On Mac and Linux, we get a list of
-    // fonts without passing in characters.
-    const PassRefPtr<FontDataForRangeSet> next(const Vector<UChar32>& hintList);
+ private:
+  FontFallbackIterator(const FontDescription&,
+                       PassRefPtr<FontFallbackList>,
+                       FontFallbackPriority);
+  bool RangeSetContributesForHint(const Vector<UChar32> hint_list,
+                                  const FontDataForRangeSet*);
+  bool AlreadyLoadingRangeForHintChar(UChar32 hint_char);
+  void WillUseRange(const AtomicString& family, const FontDataForRangeSet&);
 
-private:
-    FontFallbackIterator(const FontDescription&, PassRefPtr<FontFallbackList>,
-        FontFallbackPriority);
-    bool rangeSetContributesForHint(const Vector<UChar32> hintList, const FontDataForRangeSet*);
-    bool alreadyLoadingRangeForHintChar(UChar32 hintChar);
-    void willUseRange(const AtomicString& family, const FontDataForRangeSet&);
+  PassRefPtr<FontDataForRangeSet> UniqueOrNext(
+      PassRefPtr<FontDataForRangeSet> candidate,
+      const Vector<UChar32>& hint_list);
 
-    const PassRefPtr<SimpleFontData> fallbackPriorityFont(UChar32 hint);
-    const PassRefPtr<SimpleFontData> uniqueSystemFontForHint(UChar32 hint);
+  PassRefPtr<SimpleFontData> FallbackPriorityFont(UChar32 hint);
+  PassRefPtr<SimpleFontData> UniqueSystemFontForHintList(
+      const Vector<UChar32>& hint_list);
 
-    const FontDescription& m_fontDescription;
-    RefPtr<FontFallbackList> m_fontFallbackList;
-    int m_currentFontDataIndex;
-    unsigned m_segmentedFaceIndex;
+  const FontDescription& font_description_;
+  RefPtr<FontFallbackList> font_fallback_list_;
+  int current_font_data_index_;
+  unsigned segmented_face_index_;
 
-    enum FallbackStage {
-        FallbackPriorityFonts,
-        FontGroupFonts,
-        SegmentedFace,
-        PreferencesFonts,
-        SystemFonts,
-        OutOfLuck
-    };
+  enum FallbackStage {
+    kFallbackPriorityFonts,
+    kFontGroupFonts,
+    kSegmentedFace,
+    kPreferencesFonts,
+    kSystemFonts,
+    kOutOfLuck
+  };
 
-    FallbackStage m_fallbackStage;
-    HashSet<UChar32> m_previouslyAskedForHint;
-    Vector<RefPtr<FontDataForRangeSet>> m_trackedLoadingRangeSets;
-    FontFallbackPriority m_fontFallbackPriority;
+  FallbackStage fallback_stage_;
+  HashSet<UChar32> previously_asked_for_hint_;
+  // FontFallbackIterator is meant for single use by HarfBuzzShaper,
+  // traversing through the fonts for shaping only once. We must not return
+  // duplicate FontDataForRangeSet objects from the next() iteration functions
+  // as returning a duplicate value causes a shaping run that won't return any
+  // results.
+  HashSet<uint32_t> unique_font_data_for_range_sets_returned_;
+  Vector<RefPtr<FontDataForRangeSet>> tracked_loading_range_sets_;
+  FontFallbackPriority font_fallback_priority_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

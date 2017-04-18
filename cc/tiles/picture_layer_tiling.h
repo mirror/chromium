@@ -15,12 +15,13 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
 #include "cc/base/region.h"
 #include "cc/base/tiling_data.h"
+#include "cc/cc_export.h"
 #include "cc/tiles/tile.h"
 #include "cc/tiles/tile_priority.h"
 #include "cc/trees/occlusion.h"
+#include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace base {
@@ -39,7 +40,7 @@ class CC_EXPORT PictureLayerTilingClient {
  public:
   // Create a tile at the given content_rect (in the contents scale of the
   // tiling) This might return null if the client cannot create such a tile.
-  virtual ScopedTilePtr CreateTile(const Tile::CreateInfo& info) = 0;
+  virtual std::unique_ptr<Tile> CreateTile(const Tile::CreateInfo& info) = 0;
   virtual gfx::Size CalculateTileSize(
     const gfx::Size& content_bounds) const = 0;
   // This invalidation region defines the area (if any, it can by null) that
@@ -80,10 +81,17 @@ class CC_EXPORT PictureLayerTiling {
  public:
   static const int kBorderTexels = 1;
 
+  // Note on raster_transform: In general raster_transform could be arbitrary,
+  // the only restriction is that the layer bounds after transform should
+  // be positive (because the tiling logic doesn't support negative space).
+  // Also the implementation checks the transformed bounds leaves less than
+  // 1px margin on top left edges, because there is few reason to do so.
   PictureLayerTiling(WhichTree tree,
-                     float contents_scale,
+                     const gfx::AxisTransform2d& raster_transform,
                      scoped_refptr<RasterSource> raster_source,
-                     PictureLayerTilingClient* client);
+                     PictureLayerTilingClient* client,
+                     float min_preraster_distance,
+                     float max_preraster_distance);
   ~PictureLayerTiling();
 
   PictureLayerTilingClient* client() const { return client_; }
@@ -118,7 +126,14 @@ class CC_EXPORT PictureLayerTiling {
   gfx::Size tiling_size() const { return tiling_data_.tiling_size(); }
   gfx::Rect live_tiles_rect() const { return live_tiles_rect_; }
   gfx::Size tile_size() const { return tiling_data_.max_texture_size(); }
-  float contents_scale() const { return contents_scale_; }
+  // PictureLayerTilingSet uses the scale component of the raster transform
+  // as the key for indexing and sorting. In theory we can have multiple
+  // tilings with the same scale but different translation, but currently
+  // we only allow tilings with unique scale for the sake of simplicity.
+  float contents_scale_key() const { return raster_transform_.scale(); }
+  const gfx::AxisTransform2d& raster_transform() const {
+    return raster_transform_;
+  }
   const TilingData* tiling_data() const { return &tiling_data_; }
 
   Tile* TileAt(int i, int j) const {
@@ -132,6 +147,8 @@ class CC_EXPORT PictureLayerTiling {
   void set_all_tiles_done(bool all_tiles_done) {
     all_tiles_done_ = all_tiles_done;
   }
+
+  WhichTree tree() const { return tree_; }
 
   void VerifyNoTileNeedsRaster() const {
 #if DCHECK_IS_ON()
@@ -155,15 +172,17 @@ class CC_EXPORT PictureLayerTiling {
   }
 
   void UpdateAllRequiredStateForTesting() {
-    for (const auto& key_tile_pair : tiles_)
-      UpdateRequiredStatesOnTile(key_tile_pair.second.get());
+    for (const auto& key_tile_pair : tiles_) {
+      Tile* tile = key_tile_pair.second.get();
+      UpdateRequiredStatesOnTile(tile);
+    }
   }
   std::map<const Tile*, PrioritizedTile>
   UpdateAndGetAllPrioritizedTilesForTesting() const;
 
   void SetAllTilesOccludedForTesting() {
     gfx::Rect viewport_in_layer_space =
-        ScaleToEnclosingRect(current_visible_rect_, 1.0f / contents_scale_);
+        EnclosingLayerRectFromContentsRect(current_visible_rect_);
     current_occlusion_in_layer_space_ =
         Occlusion(gfx::Transform(),
                   SimpleEnclosedRegion(viewport_in_layer_space),
@@ -177,7 +196,7 @@ class CC_EXPORT PictureLayerTiling {
       const gfx::Rect& skewport,
       const gfx::Rect& soon_border_rect,
       const gfx::Rect& eventually_rect) {
-    SetTilePriorityRects(1.0f, visible_rect_in_content_space, skewport,
+    SetTilePriorityRects(1.f, visible_rect_in_content_space, skewport,
                          soon_border_rect, eventually_rect, Occlusion());
   }
 
@@ -188,12 +207,14 @@ class CC_EXPORT PictureLayerTiling {
   class CC_EXPORT CoverageIterator {
    public:
     CoverageIterator();
+    // This requests an iterator that produces a coverage of the
+    // |coverage_rect|, which is specified at |coverage_scale|.
     CoverageIterator(const PictureLayerTiling* tiling,
-        float dest_scale,
-        const gfx::Rect& rect);
+                     float coverage_scale,
+                     const gfx::Rect& coverage_rect);
     ~CoverageIterator();
 
-    // Visible rect (no borders), always in the space of content_rect,
+    // Visible rect (no borders), always in the space of |coverage_rect|,
     // regardless of the contents scale of the tiling.
     gfx::Rect geometry_rect() const;
     // Texture rect (in texels) for geometry_rect
@@ -209,18 +230,19 @@ class CC_EXPORT PictureLayerTiling {
     int j() const { return tile_j_; }
 
    private:
-    const PictureLayerTiling* tiling_;
-    gfx::Rect dest_rect_;
-    float dest_to_content_scale_;
+    const PictureLayerTiling* tiling_ = nullptr;
+    gfx::Size coverage_rect_max_bounds_;
+    gfx::Rect coverage_rect_;
+    gfx::AxisTransform2d coverage_to_content_;
 
-    Tile* current_tile_;
+    Tile* current_tile_ = nullptr;
     gfx::Rect current_geometry_rect_;
-    int tile_i_;
-    int tile_j_;
-    int left_;
-    int top_;
-    int right_;
-    int bottom_;
+    int tile_i_ = 0;
+    int tile_j_ = 0;
+    int left_ = 0;
+    int top_ = 0;
+    int right_ = -1;
+    int bottom_ = -1;
 
     friend class PictureLayerTiling;
   };
@@ -239,6 +261,8 @@ class CC_EXPORT PictureLayerTiling {
       std::vector<PrioritizedTile>* prioritized_tiles) const;
   void AsValueInto(base::trace_event::TracedValue* array) const;
   size_t GPUMemoryUsageInBytes() const;
+
+  void UpdateRequiredStatesOnTile(Tile* tile) const;
 
  protected:
   friend class CoverageIterator;
@@ -260,18 +284,19 @@ class CC_EXPORT PictureLayerTiling {
     EVENTUALLY_RECT
   };
 
-  using TileMap = std::unordered_map<TileMapKey, ScopedTilePtr, TileMapKeyHash>;
+  using TileMap =
+      std::unordered_map<TileMapKey, std::unique_ptr<Tile>, TileMapKeyHash>;
 
   void SetLiveTilesRect(const gfx::Rect& live_tiles_rect);
-  void VerifyLiveTilesRect(bool is_on_recycle_tree) const;
+  void VerifyLiveTilesRect() const;
   Tile* CreateTile(const Tile::CreateInfo& info);
-  ScopedTilePtr TakeTileAt(int i, int j);
-  // Returns true if the Tile existed and was removed from the tiling.
-  bool RemoveTileAt(int i, int j);
+  // Removes the tile at i, j and returns it. Returns nullptr if the tile did
+  // not exist.
+  std::unique_ptr<Tile> TakeTileAt(int i, int j);
   bool TilingMatchesTileIndices(const PictureLayerTiling* twin) const;
 
   // Save the required data for computing tile priorities later.
-  void SetTilePriorityRects(float content_to_screen_scale_,
+  void SetTilePriorityRects(float content_to_screen_scale,
                             const gfx::Rect& visible_rect_in_content_space,
                             const gfx::Rect& skewport,
                             const gfx::Rect& soon_border_rect,
@@ -282,7 +307,6 @@ class CC_EXPORT PictureLayerTiling {
   Tile::CreateInfo CreateInfoForTile(int i, int j) const;
   bool ShouldCreateTileAt(const Tile::CreateInfo& info) const;
   bool IsTileOccluded(const Tile* tile) const;
-  void UpdateRequiredStatesOnTile(Tile* tile) const;
   PrioritizedTile MakePrioritizedTile(
       Tile* tile,
       PriorityRectType priority_rect_type) const;
@@ -319,20 +343,27 @@ class CC_EXPORT PictureLayerTiling {
   }
   void RemoveTilesInRegion(const Region& layer_region, bool recreate_tiles);
 
+  gfx::Rect EnclosingContentsRectFromLayerRect(
+      const gfx::Rect& layer_rect) const;
+  gfx::Rect EnclosingLayerRectFromContentsRect(
+      const gfx::Rect& contents_rect) const;
+
   // Given properties.
-  const float contents_scale_;
+  const gfx::AxisTransform2d raster_transform_;
   PictureLayerTilingClient* const client_;
   const WhichTree tree_;
   scoped_refptr<RasterSource> raster_source_;
-  TileResolution resolution_;
-  bool may_contain_low_resolution_tiles_;
+  const float min_preraster_distance_;
+  const float max_preraster_distance_;
+  TileResolution resolution_ = NON_IDEAL_RESOLUTION;
+  bool may_contain_low_resolution_tiles_ = false;
 
   // Internal data.
-  TilingData tiling_data_;
+  TilingData tiling_data_ = TilingData(gfx::Size(), gfx::Size(), kBorderTexels);
   TileMap tiles_;  // It is not legal to have a NULL tile in the tiles_ map.
   gfx::Rect live_tiles_rect_;
 
-  bool can_require_tiles_for_activation_;
+  bool can_require_tiles_for_activation_ = false;
 
   // Iteration rects in content space.
   gfx::Rect current_visible_rect_;
@@ -340,14 +371,15 @@ class CC_EXPORT PictureLayerTiling {
   gfx::Rect current_soon_border_rect_;
   gfx::Rect current_eventually_rect_;
   // Other properties used for tile iteration and prioritization.
-  float current_content_to_screen_scale_;
+  float current_content_to_screen_scale_ = 0.f;
   Occlusion current_occlusion_in_layer_space_;
+  float max_skewport_extent_in_screen_space_ = 0.f;
 
-  bool has_visible_rect_tiles_;
-  bool has_skewport_rect_tiles_;
-  bool has_soon_border_rect_tiles_;
-  bool has_eventually_rect_tiles_;
-  bool all_tiles_done_;
+  bool has_visible_rect_tiles_ = false;
+  bool has_skewport_rect_tiles_ = false;
+  bool has_soon_border_rect_tiles_ = false;
+  bool has_eventually_rect_tiles_ = false;
+  bool all_tiles_done_ = true;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PictureLayerTiling);

@@ -33,19 +33,24 @@
 
 #include "platform/heap/Handle.h"
 #include "platform/transforms/TransformOperations.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class CSSToLengthConversionData;
 class CSSValue;
+class CSSValueList;
 
 class TransformBuilder {
-    STATIC_ONLY(TransformBuilder);
-public:
-    static void createTransformOperations(const CSSValue& inValue, const CSSToLengthConversionData&, TransformOperations& outOperations);
+  STATIC_ONLY(TransformBuilder);
+
+ public:
+  static bool HasRelativeLengths(const CSSValueList&);
+  static TransformOperations CreateTransformOperations(
+      const CSSValue& in_value,
+      const CSSToLengthConversionData&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TransformBuilder_h
+#endif  // TransformBuilder_h

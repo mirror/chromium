@@ -9,7 +9,7 @@
 #include "base/files/file_path.h"
 #include "base/format_macros.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -22,6 +22,9 @@ namespace sql {
 
 namespace {
 
+// This enum must match the numbering for Sqlite.RecoveryEvents in
+// histograms.xml.  Do not reorder or remove items, only add new items before
+// RECOVERY_EVENT_MAX.
 enum RecoveryEventType {
   // Init() completed successfully.
   RECOVERY_SUCCESS_INIT = 0,
@@ -108,7 +111,25 @@ enum RecoveryEventType {
   // Failed to recover triggers or views or virtual tables.
   RECOVERY_FAILED_AUTORECOVERDB_AUX,
 
-  // Always keep this at the end.
+  // After SQLITE_NOTADB failure setting up for recovery, Delete() failed.
+  RECOVERY_FAILED_AUTORECOVERDB_NOTADB_DELETE,
+
+  // After SQLITE_NOTADB failure setting up for recovery, Delete() succeeded
+  // then Open() failed.
+  RECOVERY_FAILED_AUTORECOVERDB_NOTADB_REOPEN,
+
+  // After SQLITE_NOTADB failure setting up for recovery, Delete() and Open()
+  // succeeded, then querying the database failed.
+  RECOVERY_FAILED_AUTORECOVERDB_NOTADB_QUERY,
+
+  // After SQLITE_NOTADB failure setting up for recovery, the database was
+  // successfully deleted.
+  RECOVERY_SUCCESS_AUTORECOVERDB_NOTADB_DELETE,
+
+  // Failed to find required [meta.version] information.
+  RECOVERY_FAILED_AUTORECOVERDB_META_VERSION,
+
+  // Add new items before this one, always keep this one at the end.
   RECOVERY_EVENT_MAX,
 };
 
@@ -240,6 +261,8 @@ bool Recovery::Init(const base::FilePath& db_path) {
 
   if (!recover_db_.AttachDatabase(db_path, "corrupt")) {
     RecordRecoveryEvent(RECOVERY_FAILED_ATTACH);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("Sqlite.RecoveryAttachError",
+                                recover_db_.GetErrorCode());
     return false;
   }
 
@@ -582,14 +605,56 @@ bool SchemaCopyHelper(Connection* db, const char* prefix) {
 // results indicate that everything is working reasonably.
 //
 // static
-void Recovery::RecoverDatabase(Connection* db,
-                               const base::FilePath& db_path) {
+std::unique_ptr<Recovery> Recovery::BeginRecoverDatabase(
+    Connection* db,
+    const base::FilePath& db_path) {
   std::unique_ptr<sql::Recovery> recovery = sql::Recovery::Begin(db, db_path);
   if (!recovery) {
-    // TODO(shess): If recovery can't even get started, Raze() or Delete().
-    RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_BEGIN);
+    // Close the underlying sqlite* handle.  Windows does not allow deleting
+    // open files, and all platforms block opening a second sqlite3* handle
+    // against a database when exclusive locking is set.
     db->Poison();
-    return;
+
+    // Histograms from Recovery::Begin() show all current failures are in
+    // attaching the corrupt database, with 2/3 being SQLITE_NOTADB.  Don't
+    // delete the database except for that specific failure case.
+    {
+      Connection probe_db;
+      if (!probe_db.OpenInMemory() ||
+          probe_db.AttachDatabase(db_path, "corrupt") ||
+          probe_db.GetErrorCode() != SQLITE_NOTADB) {
+        RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_BEGIN);
+        return nullptr;
+      }
+    }
+
+    // The database has invalid data in the SQLite header, so it is almost
+    // certainly not recoverable without manual intervention (and likely not
+    // recoverable _with_ manual intervention).  Clear away the broken database.
+    if (!sql::Connection::Delete(db_path)) {
+      RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_NOTADB_DELETE);
+      return nullptr;
+    }
+
+    // Windows deletion is complicated by file scanners and malware - sometimes
+    // Delete() appears to succeed, even though the file remains.  The following
+    // attempts to track if this happens often enough to cause concern.
+    {
+      Connection probe_db;
+      if (!probe_db.Open(db_path)) {
+        RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_NOTADB_REOPEN);
+        return nullptr;
+      }
+      if (!probe_db.Execute("PRAGMA auto_vacuum")) {
+        RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_NOTADB_QUERY);
+        return nullptr;
+      }
+    }
+
+    // The rest of the recovery code could be run on the re-opened database, but
+    // the database is empty, so there would be no point.
+    RecordRecoveryEvent(RECOVERY_SUCCESS_AUTORECOVERDB_NOTADB_DELETE);
+    return nullptr;
   }
 
 #if DCHECK_IS_ON()
@@ -621,7 +686,7 @@ void Recovery::RecoverDatabase(Connection* db,
       !SchemaCopyHelper(recovery->db(), "CREATE UNIQUE INDEX ")) {
     // No RecordRecoveryEvent() here because SchemaCopyHelper() already did.
     Recovery::Rollback(std::move(recovery));
-    return;
+    return nullptr;
   }
 
   // Run auto-recover against each table, skipping the sequence table.  This is
@@ -637,13 +702,13 @@ void Recovery::RecoverDatabase(Connection* db,
       if (!recovery->AutoRecoverTable(name.c_str(), &rows_recovered)) {
         RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_TABLE);
         Recovery::Rollback(std::move(recovery));
-        return;
+        return nullptr;
       }
     }
     if (!s.Succeeded()) {
       RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_NAMESELECT);
       Recovery::Rollback(std::move(recovery));
-      return;
+      return nullptr;
     }
   }
 
@@ -654,7 +719,7 @@ void Recovery::RecoverDatabase(Connection* db,
     if (!recovery->AutoRecoverTable("sqlite_sequence", &rows_recovered)) {
       RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_SEQUENCE);
       Recovery::Rollback(std::move(recovery));
-      return;
+      return nullptr;
     }
   }
 
@@ -667,10 +732,37 @@ void Recovery::RecoverDatabase(Connection* db,
   if (!recovery->db()->Execute(kCreateMetaItems)) {
     RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_AUX);
     Recovery::Rollback(std::move(recovery));
-    return;
+    return nullptr;
   }
 
   RecordRecoveryEvent(RECOVERY_SUCCESS_AUTORECOVERDB);
+  return recovery;
+}
+
+void Recovery::RecoverDatabase(Connection* db, const base::FilePath& db_path) {
+  std::unique_ptr<sql::Recovery> recovery = BeginRecoverDatabase(db, db_path);
+
+  // ignore_result() because BeginRecoverDatabase() and Recovered() already
+  // provide suitable histogram coverage.
+  if (recovery)
+    ignore_result(Recovery::Recovered(std::move(recovery)));
+}
+
+void Recovery::RecoverDatabaseWithMetaVersion(Connection* db,
+                                              const base::FilePath& db_path) {
+  std::unique_ptr<sql::Recovery> recovery = BeginRecoverDatabase(db, db_path);
+  if (!recovery)
+    return;
+
+  int version = 0;
+  if (!recovery->SetupMeta() || !recovery->GetMetaVersionNumber(&version)) {
+    sql::Recovery::Unrecoverable(std::move(recovery));
+    RecordRecoveryEvent(RECOVERY_FAILED_AUTORECOVERDB_META_VERSION);
+    return;
+  }
+
+  // ignore_result() because BeginRecoverDatabase() and Recovered() already
+  // provide suitable histogram coverage.
   ignore_result(Recovery::Recovered(std::move(recovery)));
 }
 

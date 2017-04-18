@@ -4,26 +4,26 @@
 
 #include "cc/test/fake_scrollbar.h"
 
-#include "third_party/skia/include/core/SkCanvas.h"
+#include "cc/paint/paint_flags.h"
 #include "ui/gfx/skia_util.h"
 
 namespace cc {
 
 FakeScrollbar::FakeScrollbar()
-    : paint_(false),
-      has_thumb_(false),
-      is_overlay_(false),
-      thumb_thickness_(10),
-      thumb_length_(5),
-      thumb_opacity_(1),
-      needs_paint_thumb_(true),
-      needs_paint_track_(true),
-      track_rect_(0, 0, 100, 10),
-      fill_color_(SK_ColorGREEN) {}
+    : FakeScrollbar(false, false, HORIZONTAL, false, false) {}
 
 FakeScrollbar::FakeScrollbar(bool paint, bool has_thumb, bool is_overlay)
+    : FakeScrollbar(paint, has_thumb, HORIZONTAL, false, is_overlay) {}
+
+FakeScrollbar::FakeScrollbar(bool paint,
+                             bool has_thumb,
+                             ScrollbarOrientation orientation,
+                             bool is_left_side_vertical_scrollbar,
+                             bool is_overlay)
     : paint_(paint),
       has_thumb_(has_thumb),
+      orientation_(orientation),
+      is_left_side_vertical_scrollbar_(is_left_side_vertical_scrollbar),
       is_overlay_(is_overlay),
       thumb_thickness_(10),
       thumb_length_(5),
@@ -36,11 +36,11 @@ FakeScrollbar::FakeScrollbar(bool paint, bool has_thumb, bool is_overlay)
 FakeScrollbar::~FakeScrollbar() {}
 
 ScrollbarOrientation FakeScrollbar::Orientation() const {
-  return HORIZONTAL;
+  return orientation_;
 }
 
 bool FakeScrollbar::IsLeftSideVerticalScrollbar() const {
-  return false;
+  return is_left_side_vertical_scrollbar_;
 }
 
 gfx::Point FakeScrollbar::Location() const { return location_; }
@@ -71,24 +71,36 @@ bool FakeScrollbar::NeedsPaintPart(ScrollbarPart part) const {
   return needs_paint_track_;
 }
 
-void FakeScrollbar::PaintPart(SkCanvas* canvas,
-                             ScrollbarPart part,
-                             const gfx::Rect& content_rect) {
+void FakeScrollbar::PaintPart(PaintCanvas* canvas,
+                              ScrollbarPart part,
+                              const gfx::Rect& content_rect) {
   if (!paint_)
     return;
 
   // Fill the scrollbar with a different color each time.
   fill_color_++;
-  SkPaint paint;
-  paint.setAntiAlias(false);
-  paint.setColor(paint_fill_color());
-  paint.setStyle(SkPaint::kFill_Style);
+  PaintFlags flags;
+  flags.setAntiAlias(false);
+  flags.setColor(paint_fill_color());
+  flags.setStyle(PaintFlags::kFill_Style);
 
   // Emulate the how the real scrollbar works by using scrollbar's rect for
   // TRACK and the given content_rect for the THUMB
   SkRect rect = part == TRACK ? RectToSkRect(TrackRect())
                               : RectToSkRect(content_rect);
-  canvas->drawRect(rect, paint);
+  canvas->drawRect(rect, flags);
+}
+
+bool FakeScrollbar::UsesNinePatchThumbResource() const {
+  return false;
+}
+
+gfx::Size FakeScrollbar::NinePatchThumbCanvasSize() const {
+  return gfx::Size();
+}
+
+gfx::Rect FakeScrollbar::NinePatchThumbAperture() const {
+  return gfx::Rect();
 }
 
 }  // namespace cc

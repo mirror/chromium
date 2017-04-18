@@ -2,7 +2,8 @@
  * Copyright (C) 2001 Peter Kelly (pmk@post.com)
  * Copyright (C) 2001 Tobias Anton (anton@stud.fbi.fh-darmstadt.de)
  * Copyright (C) 2006 Samuel Weinig (sam.weinig@gmail.com)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,245 +32,284 @@
 #include "core/events/EventInit.h"
 #include "core/events/EventPath.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Time.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class DOMWrapperWorld;
+class EventDispatchMediator;
 class EventTarget;
-class ExecutionContext;
+class ScriptState;
 
-class CORE_EXPORT Event : public GarbageCollectedFinalized<Event>,  public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    enum PhaseType {
-        NONE                = 0,
-        CAPTURING_PHASE     = 1,
-        AT_TARGET           = 2,
-        BUBBLING_PHASE      = 3
-    };
+class CORE_EXPORT Event : public GarbageCollectedFinalized<Event>,
+                          public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    enum EventType {
-        MOUSEDOWN           = 1,
-        MOUSEUP             = 2,
-        MOUSEOVER           = 4,
-        MOUSEOUT            = 8,
-        MOUSEMOVE           = 16,
-        MOUSEDRAG           = 32,
-        CLICK               = 64,
-        DBLCLICK            = 128,
-        KEYDOWN             = 256,
-        KEYUP               = 512,
-        KEYPRESS            = 1024,
-        DRAGDROP            = 2048,
-        FOCUS               = 4096,
-        BLUR                = 8192,
-        SELECT              = 16384,
-        CHANGE              = 32768
-    };
+ public:
+  enum PhaseType {
+    kNone = 0,
+    kCapturingPhase = 1,
+    kAtTarget = 2,
+    kBubblingPhase = 3
+  };
 
-    enum RailsMode {
-        RailsModeFree       = 0,
-        RailsModeHorizontal = 1,
-        RailsModeVertical   = 2
-    };
+  enum RailsMode {
+    kRailsModeFree = 0,
+    kRailsModeHorizontal = 1,
+    kRailsModeVertical = 2
+  };
 
-    enum class ComposedMode {
-        Composed,
-        Scoped,
-    };
+  enum class ComposedMode {
+    kComposed,
+    kScoped,
+  };
 
-    static Event* create()
-    {
-        return new Event;
-    }
+  enum class PassiveMode {
+    // Not passive, default initialized.
+    kNotPassiveDefault,
+    // Not passive, explicitly specified.
+    kNotPassive,
+    // Passive, explicitly specified.
+    kPassive,
+    // Passive, not explicitly specified and forced due to document level
+    // listener.
+    kPassiveForcedDocumentLevel,
+    // Passive, default initialized.
+    kPassiveDefault,
+  };
 
-    // A factory for a simple event. The event doesn't bubble, and isn't
-    // cancelable.
-    // http://www.whatwg.org/specs/web-apps/current-work/multipage/webappapis.html#fire-a-simple-event
-    static Event* create(const AtomicString& type)
-    {
-        return new Event(type, false, false);
-    }
-    static Event* createCancelable(const AtomicString& type)
-    {
-        return new Event(type, false, true);
-    }
-    static Event* createBubble(const AtomicString& type)
-    {
-        return new Event(type, true, false);
-    }
-    static Event* createCancelableBubble(const AtomicString& type)
-    {
-        return new Event(type, true, true);
-    }
+  static Event* Create() { return new Event; }
 
-    static Event* create(const AtomicString& type, const EventInit& initializer)
-    {
-        return new Event(type, initializer);
-    }
+  // A factory for a simple event. The event doesn't bubble, and isn't
+  // cancelable.
+  // http://www.whatwg.org/specs/web-apps/current-work/multipage/webappapis.html#fire-a-simple-event
+  static Event* Create(const AtomicString& type) {
+    return new Event(type, false, false);
+  }
+  static Event* CreateCancelable(const AtomicString& type) {
+    return new Event(type, false, true);
+  }
+  static Event* CreateBubble(const AtomicString& type) {
+    return new Event(type, true, false);
+  }
+  static Event* CreateCancelableBubble(const AtomicString& type) {
+    return new Event(type, true, true);
+  }
 
-    virtual ~Event();
+  static Event* Create(const AtomicString& type, const EventInit& initializer) {
+    return new Event(type, initializer);
+  }
 
-    void initEvent(const AtomicString& type, bool canBubble, bool cancelable);
-    void initEvent(const AtomicString& eventTypeArg, bool canBubbleArg, bool cancelableArg, EventTarget* relatedTarget);
+  virtual ~Event();
 
-    const AtomicString& type() const { return m_type; }
-    void setType(const AtomicString& type) { m_type = type; }
+  void initEvent(const AtomicString& type, bool can_bubble, bool cancelable);
+  void initEvent(const AtomicString& event_type_arg,
+                 bool can_bubble_arg,
+                 bool cancelable_arg,
+                 EventTarget* related_target);
 
-    EventTarget* target() const { return m_target.get(); }
-    void setTarget(EventTarget*);
+  const AtomicString& type() const { return type_; }
+  void SetType(const AtomicString& type) { type_ = type; }
 
-    EventTarget* currentTarget() const;
-    void setCurrentTarget(EventTarget* currentTarget) { m_currentTarget = currentTarget; }
+  EventTarget* target() const { return target_.Get(); }
+  void SetTarget(EventTarget*);
 
-    // This callback is invoked when an event listener has been dispatched
-    // at the current target. It should only be used to influence UMA metrics
-    // and not change functionality since observing the presence of listeners
-    // is dangerous.
-    virtual void doneDispatchingEventAtCurrentTarget() {}
+  EventTarget* currentTarget() const;
+  void SetCurrentTarget(EventTarget* current_target) {
+    current_target_ = current_target;
+  }
 
-    unsigned short eventPhase() const { return m_eventPhase; }
-    void setEventPhase(unsigned short eventPhase) { m_eventPhase = eventPhase; }
+  // This callback is invoked when an event listener has been dispatched
+  // at the current target. It should only be used to influence UMA metrics
+  // and not change functionality since observing the presence of listeners
+  // is dangerous.
+  virtual void DoneDispatchingEventAtCurrentTarget() {}
 
-    bool bubbles() const { return m_canBubble; }
-    bool cancelable() const { return m_cancelable; }
-    bool composed() const { return m_composed; }
-    bool isScopedInV0() const;
+  unsigned short eventPhase() const { return event_phase_; }
+  void SetEventPhase(unsigned short event_phase) { event_phase_ = event_phase; }
 
-    // Event creation timestamp in milliseconds. It returns a DOMHighResTimeStamp
-    // using the platform timestamp (see |m_platformTimeStamp|).
-    // For more info see http://crbug.com/160524
-    double timeStamp(ScriptState*) const;
-    double platformTimeStamp() const { return m_platformTimeStamp; }
+  bool bubbles() const { return can_bubble_; }
+  bool cancelable() const { return cancelable_; }
+  bool composed() const { return composed_; }
+  bool IsScopedInV0() const;
 
-    void stopPropagation() { m_propagationStopped = true; }
-    void stopImmediatePropagation() { m_immediatePropagationStopped = true; }
+  // Event creation timestamp in milliseconds. It returns a DOMHighResTimeStamp
+  // using the platform timestamp (see |m_platformTimeStamp|).
+  // For more info see http://crbug.com/160524
+  double timeStamp(ScriptState*) const;
+  TimeTicks PlatformTimeStamp() const { return platform_time_stamp_; }
 
-    // IE Extensions
-    EventTarget* srcElement() const { return target(); } // MSIE extension - "the object that fired the event"
+  void stopPropagation() { propagation_stopped_ = true; }
+  void SetStopPropagation(bool stop_propagation) {
+    propagation_stopped_ = stop_propagation;
+  }
+  void stopImmediatePropagation() { immediate_propagation_stopped_ = true; }
+  void SetStopImmediatePropagation(bool stop_immediate_propagation) {
+    immediate_propagation_stopped_ = stop_immediate_propagation;
+  }
 
-    bool legacyReturnValue(ExecutionContext*) const;
-    void setLegacyReturnValue(ExecutionContext*, bool returnValue);
+  // IE Extensions
+  EventTarget* srcElement() const {
+    return target();
+  }  // MSIE extension - "the object that fired the event"
 
-    virtual const AtomicString& interfaceName() const;
-    bool hasInterface(const AtomicString&) const;
+  bool legacyReturnValue(ScriptState*) const;
+  void setLegacyReturnValue(ScriptState*, bool return_value);
 
-    // These events are general classes of events.
-    virtual bool isUIEvent() const;
-    virtual bool isMouseEvent() const;
-    virtual bool isFocusEvent() const;
-    virtual bool isKeyboardEvent() const;
-    virtual bool isTouchEvent() const;
-    virtual bool isGestureEvent() const;
-    virtual bool isWheelEvent() const;
-    virtual bool isRelatedEvent() const;
-    virtual bool isPointerEvent() const;
-    virtual bool isInputEvent() const;
+  virtual const AtomicString& InterfaceName() const;
+  bool HasInterface(const AtomicString&) const;
 
-    // Drag events are a subset of mouse events.
-    virtual bool isDragEvent() const;
+  // These events are general classes of events.
+  virtual bool IsUIEvent() const;
+  virtual bool IsMouseEvent() const;
+  virtual bool IsFocusEvent() const;
+  virtual bool IsKeyboardEvent() const;
+  virtual bool IsTouchEvent() const;
+  virtual bool IsGestureEvent() const;
+  virtual bool IsWheelEvent() const;
+  virtual bool IsRelatedEvent() const;
+  virtual bool IsPointerEvent() const;
+  virtual bool IsInputEvent() const;
 
-    // These events lack a DOM interface.
-    virtual bool isClipboardEvent() const;
-    virtual bool isBeforeTextInsertedEvent() const;
+  // Drag events are a subset of mouse events.
+  virtual bool IsDragEvent() const;
 
-    virtual bool isBeforeUnloadEvent() const;
+  // These events lack a DOM interface.
+  virtual bool IsClipboardEvent() const;
+  virtual bool IsBeforeTextInsertedEvent() const;
 
-    bool propagationStopped() const { return m_propagationStopped || m_immediatePropagationStopped; }
-    bool immediatePropagationStopped() const { return m_immediatePropagationStopped; }
-    bool wasInitialized() { return m_wasInitialized; }
+  virtual bool IsBeforeUnloadEvent() const;
 
-    bool defaultPrevented() const { return m_defaultPrevented; }
-    virtual void preventDefault();
-    void setDefaultPrevented(bool defaultPrevented) { m_defaultPrevented = defaultPrevented; }
+  bool PropagationStopped() const {
+    return propagation_stopped_ || immediate_propagation_stopped_;
+  }
+  bool ImmediatePropagationStopped() const {
+    return immediate_propagation_stopped_;
+  }
+  bool WasInitialized() { return was_initialized_; }
 
-    bool defaultHandled() const { return m_defaultHandled; }
-    void setDefaultHandled() { m_defaultHandled = true; }
+  bool defaultPrevented() const { return default_prevented_; }
+  virtual void preventDefault();
+  void SetDefaultPrevented(bool default_prevented) {
+    default_prevented_ = default_prevented;
+  }
 
-    bool cancelBubble(ExecutionContext* = nullptr) const { return m_cancelBubble; }
-    void setCancelBubble(ExecutionContext*, bool);
+  bool DefaultHandled() const { return default_handled_; }
+  void SetDefaultHandled() { default_handled_ = true; }
 
-    Event* underlyingEvent() const { return m_underlyingEvent.get(); }
-    void setUnderlyingEvent(Event*);
+  bool cancelBubble(ScriptState* = nullptr) const {
+    return PropagationStopped();
+  }
+  void setCancelBubble(ScriptState*, bool);
 
-    bool hasEventPath() { return m_eventPath; }
-    EventPath& eventPath() { ASSERT(m_eventPath); return *m_eventPath; }
-    void initEventPath(Node&);
+  Event* UnderlyingEvent() const { return underlying_event_.Get(); }
+  void SetUnderlyingEvent(Event*);
 
-    HeapVector<Member<EventTarget>> path(ScriptState*) const;
-    HeapVector<Member<EventTarget>> composedPath(ScriptState*) const;
+  bool HasEventPath() { return event_path_; }
+  EventPath& GetEventPath() {
+    DCHECK(event_path_);
+    return *event_path_;
+  }
+  void InitEventPath(Node&);
 
-    bool isBeingDispatched() const { return eventPhase(); }
+  HeapVector<Member<EventTarget>> path(ScriptState*) const;
+  HeapVector<Member<EventTarget>> composedPath(ScriptState*) const;
 
-    // Events that must not leak across isolated world, similar to how
-    // ErrorEvent behaves, can override this method.
-    virtual bool canBeDispatchedInWorld(const DOMWrapperWorld&) const { return true; }
+  bool IsBeingDispatched() const { return eventPhase(); }
 
-    virtual EventDispatchMediator* createMediator();
+  // Events that must not leak across isolated world, similar to how
+  // ErrorEvent behaves, can override this method.
+  virtual bool CanBeDispatchedInWorld(const DOMWrapperWorld&) const {
+    return true;
+  }
 
-    bool isTrusted() const { return m_isTrusted; }
-    void setTrusted(bool value) { m_isTrusted = value; }
+  virtual EventDispatchMediator* CreateMediator();
 
-    void setHandlingPassive(bool value);
+  bool isTrusted() const { return is_trusted_; }
+  void SetTrusted(bool value) { is_trusted_ = value; }
 
-    bool preventDefaultCalledDuringPassive() const { return m_preventDefaultCalledDuringPassive; }
+  void SetComposed(bool composed) {
+    DCHECK(!IsBeingDispatched());
+    composed_ = composed;
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  void SetHandlingPassive(PassiveMode);
 
-protected:
-    Event();
-    Event(const AtomicString& type, bool canBubble, bool cancelable, ComposedMode, double platformTimeStamp);
-    Event(const AtomicString& type, bool canBubble, bool cancelable, double platformTimeStamp);
-    Event(const AtomicString& type, bool canBubble, bool cancelable, ComposedMode = ComposedMode::Scoped);
-    Event(const AtomicString& type, const EventInit&);
+  bool PreventDefaultCalledDuringPassive() const {
+    return prevent_default_called_during_passive_;
+  }
 
-    virtual void receivedTarget();
+  bool PreventDefaultCalledOnUncancelableEvent() const {
+    return prevent_default_called_on_uncancelable_event_;
+  }
 
-    void setCanBubble(bool bubble) { m_canBubble = bubble; }
+  DECLARE_VIRTUAL_TRACE();
 
-private:
+ protected:
+  Event();
+  Event(const AtomicString& type,
+        bool can_bubble,
+        bool cancelable,
+        ComposedMode,
+        TimeTicks platform_time_stamp);
+  Event(const AtomicString& type,
+        bool can_bubble,
+        bool cancelable,
+        TimeTicks platform_time_stamp);
+  Event(const AtomicString& type,
+        bool can_bubble,
+        bool cancelable,
+        ComposedMode = ComposedMode::kScoped);
+  Event(const AtomicString& type, const EventInit&);
 
-    enum EventPathMode {
-        EmptyAfterDispatch,
-        NonEmptyAfterDispatch
-    };
+  virtual void ReceivedTarget();
 
-    HeapVector<Member<EventTarget>> pathInternal(ScriptState*, EventPathMode) const;
+  void SetCanBubble(bool bubble) { can_bubble_ = bubble; }
 
-    AtomicString m_type;
-    unsigned m_canBubble:1;
-    unsigned m_cancelable:1;
-    unsigned m_composed:1;
-    unsigned m_isEventTypeScopedInV0:1;
+  PassiveMode HandlingPassive() const { return handling_passive_; }
 
-    unsigned m_propagationStopped:1;
-    unsigned m_immediatePropagationStopped:1;
-    unsigned m_defaultPrevented:1;
-    unsigned m_defaultHandled:1;
-    unsigned m_cancelBubble:1;
-    unsigned m_wasInitialized:1;
-    unsigned m_isTrusted : 1;
-    unsigned m_handlingPassive : 1;
+ private:
+  enum EventPathMode { kEmptyAfterDispatch, kNonEmptyAfterDispatch };
 
-    // Whether preventDefault was called when |m_handlingPassive| is
-    // true. This field is reset on each call to setHandlingPassive.
-    unsigned m_preventDefaultCalledDuringPassive : 1;
+  HeapVector<Member<EventTarget>> PathInternal(ScriptState*,
+                                               EventPathMode) const;
 
-    unsigned short m_eventPhase;
-    Member<EventTarget> m_currentTarget;
-    Member<EventTarget> m_target;
-    Member<Event> m_underlyingEvent;
-    Member<EventPath> m_eventPath;
-    // The monotonic platform time in seconds, for input events it is the
-    // event timestamp provided by the host OS and reported in the original
-    // WebInputEvent instance.
-    double m_platformTimeStamp;
+  AtomicString type_;
+  unsigned can_bubble_ : 1;
+  unsigned cancelable_ : 1;
+  unsigned composed_ : 1;
+  unsigned is_event_type_scoped_in_v0_ : 1;
+
+  unsigned propagation_stopped_ : 1;
+  unsigned immediate_propagation_stopped_ : 1;
+  unsigned default_prevented_ : 1;
+  unsigned default_handled_ : 1;
+  unsigned was_initialized_ : 1;
+  unsigned is_trusted_ : 1;
+
+  // Whether preventDefault was called when |m_handlingPassive| is
+  // true. This field is reset on each call to setHandlingPassive.
+  unsigned prevent_default_called_during_passive_ : 1;
+  // Whether preventDefault was called on uncancelable event.
+  unsigned prevent_default_called_on_uncancelable_event_ : 1;
+
+  PassiveMode handling_passive_;
+  unsigned short event_phase_;
+  Member<EventTarget> current_target_;
+  Member<EventTarget> target_;
+  Member<Event> underlying_event_;
+  Member<EventPath> event_path_;
+  // The monotonic platform time in seconds, for input events it is the
+  // event timestamp provided by the host OS and reported in the original
+  // WebInputEvent instance.
+  TimeTicks platform_time_stamp_;
 };
 
-#define DEFINE_EVENT_TYPE_CASTS(typeName) \
-    DEFINE_TYPE_CASTS(typeName, Event, event, event->is##typeName(), event.is##typeName())
+#define DEFINE_EVENT_TYPE_CASTS(typeName)                          \
+  DEFINE_TYPE_CASTS(typeName, Event, event, event->Is##typeName(), \
+                    event.Is##typeName())
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Event_h
+#endif  // Event_h

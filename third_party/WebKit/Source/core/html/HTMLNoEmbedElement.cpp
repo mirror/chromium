@@ -40,17 +40,15 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLNoEmbedElement::HTMLNoEmbedElement(Document& document)
-    : HTMLElement(noembedTag, document)
-{
-}
+    : HTMLElement(noembedTag, document) {}
 
 DEFINE_NODE_FACTORY(HTMLNoEmbedElement)
 
-bool HTMLNoEmbedElement::layoutObjectIsNeeded(const ComputedStyle& style)
-{
-    if (document().frame()->loader().allowPlugins(NotAboutToInstantiatePlugin))
-        return false;
-    return Element::layoutObjectIsNeeded(style);
+bool HTMLNoEmbedElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
+  if (GetDocument().GetFrame()->Loader().AllowPlugins(
+          kNotAboutToInstantiatePlugin))
+    return false;
+  return Element::LayoutObjectIsNeeded(style);
 }
 
-} // namespace blink
+}  // namespace blink

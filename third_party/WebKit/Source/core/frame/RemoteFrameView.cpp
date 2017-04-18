@@ -4,115 +4,140 @@
 
 #include "core/frame/RemoteFrameView.h"
 
+#include "core/dom/IntersectionObserverEntry.h"
 #include "core/frame/FrameView.h"
+#include "core/frame/LocalFrame.h"
 #include "core/frame/RemoteFrame.h"
+#include "core/frame/RemoteFrameClient.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutView.h"
+#include "core/layout/api/LayoutPartItem.h"
 
 namespace blink {
 
-RemoteFrameView::RemoteFrameView(RemoteFrame* remoteFrame)
-    : m_remoteFrame(remoteFrame)
-{
-    ASSERT(remoteFrame);
+RemoteFrameView::RemoteFrameView(RemoteFrame* remote_frame)
+    : remote_frame_(remote_frame) {
+  ASSERT(remote_frame);
 }
 
-RemoteFrameView::~RemoteFrameView()
-{
+RemoteFrameView::~RemoteFrameView() {}
+
+void RemoteFrameView::SetParent(FrameViewBase* parent) {
+  FrameViewBase::SetParent(parent);
+  FrameRectsChanged();
 }
 
-void RemoteFrameView::setParent(Widget* parent)
-{
-    Widget::setParent(parent);
-    frameRectsChanged();
+RemoteFrameView* RemoteFrameView::Create(RemoteFrame* remote_frame) {
+  RemoteFrameView* view = new RemoteFrameView(remote_frame);
+  view->Show();
+  return view;
 }
 
-RemoteFrameView* RemoteFrameView::create(RemoteFrame* remoteFrame)
-{
-    RemoteFrameView* view = new RemoteFrameView(remoteFrame);
-    view->show();
-    return view;
+void RemoteFrameView::UpdateRemoteViewportIntersection() {
+  if (!remote_frame_->OwnerLayoutObject())
+    return;
+
+  FrameView* local_root_view =
+      ToLocalFrame(remote_frame_->Tree().Parent())->LocalFrameRoot()->View();
+  if (!local_root_view)
+    return;
+
+  // Start with rect in remote frame's coordinate space. Then
+  // mapToVisualRectInAncestorSpace will move it to the local root's coordinate
+  // space and account for any clip from containing elements such as a
+  // scrollable div. Passing nullptr as an argument to
+  // mapToVisualRectInAncestorSpace causes it to be clipped to the viewport,
+  // even if there are RemoteFrame ancestors in the frame tree.
+  LayoutRect rect(0, 0, FrameRect().Width(), FrameRect().Height());
+  rect.Move(remote_frame_->OwnerLayoutObject()->ContentBoxOffset());
+  if (!remote_frame_->OwnerLayoutObject()->MapToVisualRectInAncestorSpace(
+          nullptr, rect))
+    return;
+  IntRect root_visible_rect = local_root_view->VisibleContentRect();
+  IntRect viewport_intersection(rect);
+  viewport_intersection.Intersect(root_visible_rect);
+  viewport_intersection.Move(-local_root_view->ScrollOffsetInt());
+
+  // Translate the intersection rect from the root frame's coordinate space
+  // to the remote frame's coordinate space.
+  viewport_intersection = ConvertFromRootFrame(viewport_intersection);
+  if (viewport_intersection != last_viewport_intersection_) {
+    remote_frame_->Client()->UpdateRemoteViewportIntersection(
+        viewport_intersection);
+  }
+  last_viewport_intersection_ = viewport_intersection;
 }
 
-void RemoteFrameView::dispose()
-{
-    HTMLFrameOwnerElement* ownerElement = m_remoteFrame->deprecatedLocalOwner();
-    // ownerElement can be null during frame swaps, because the
-    // RemoteFrameView is disconnected before detachment.
-    if (ownerElement && ownerElement->ownedWidget() == this)
-        ownerElement->setWidget(nullptr);
-    Widget::dispose();
+void RemoteFrameView::Dispose() {
+  HTMLFrameOwnerElement* owner_element = remote_frame_->DeprecatedLocalOwner();
+  // ownerElement can be null during frame swaps, because the
+  // RemoteFrameView is disconnected before detachment.
+  if (owner_element && owner_element->OwnedWidget() == this)
+    owner_element->SetWidget(nullptr);
+  FrameViewBase::Dispose();
 }
 
-void RemoteFrameView::invalidateRect(const IntRect& rect)
-{
-    LayoutPart* layoutObject = m_remoteFrame->ownerLayoutObject();
-    if (!layoutObject)
-        return;
+void RemoteFrameView::InvalidateRect(const IntRect& rect) {
+  LayoutPartItem layout_item = remote_frame_->OwnerLayoutItem();
+  if (layout_item.IsNull())
+    return;
 
-    LayoutRect repaintRect(rect);
-    repaintRect.move(layoutObject->borderLeft() + layoutObject->paddingLeft(),
-        layoutObject->borderTop() + layoutObject->paddingTop());
-    layoutObject->invalidatePaintRectangle(repaintRect);
+  LayoutRect repaint_rect(rect);
+  repaint_rect.Move(layout_item.BorderLeft() + layout_item.PaddingLeft(),
+                    layout_item.BorderTop() + layout_item.PaddingTop());
+  layout_item.InvalidatePaintRectangle(repaint_rect);
 }
 
-void RemoteFrameView::setFrameRect(const IntRect& newRect)
-{
-    IntRect oldRect = frameRect();
+void RemoteFrameView::SetFrameRect(const IntRect& new_rect) {
+  IntRect old_rect = FrameRect();
 
-    if (newRect == oldRect)
-        return;
+  if (new_rect == old_rect)
+    return;
 
-    Widget::setFrameRect(newRect);
+  FrameViewBase::SetFrameRect(new_rect);
 
-    frameRectsChanged();
+  FrameRectsChanged();
 }
 
-void RemoteFrameView::frameRectsChanged()
-{
-    // Update the rect to reflect the position of the frame relative to the
-    // containing local frame root. The position of the local root within
-    // any remote frames, if any, is accounted for by the embedder.
-    IntRect newRect = frameRect();
-    if (parent() && parent()->isFrameView())
-        newRect = parent()->convertToRootFrame(toFrameView(parent())->contentsToFrame(newRect));
-    m_remoteFrame->frameRectsChanged(newRect);
+void RemoteFrameView::FrameRectsChanged() {
+  // Update the rect to reflect the position of the frame relative to the
+  // containing local frame root. The position of the local root within
+  // any remote frames, if any, is accounted for by the embedder.
+  IntRect new_rect = FrameRect();
+  if (Parent() && Parent()->IsFrameView())
+    new_rect = Parent()->ConvertToRootFrame(
+        ToFrameView(Parent())->ContentsToFrame(new_rect));
+  remote_frame_->Client()->FrameRectsChanged(new_rect);
+
+  UpdateRemoteViewportIntersection();
 }
 
-void RemoteFrameView::hide()
-{
-    setSelfVisible(false);
+void RemoteFrameView::Hide() {
+  SetSelfVisible(false);
 
-    Widget::hide();
-
-    m_remoteFrame->visibilityChanged(false);
+  remote_frame_->Client()->VisibilityChanged(false);
 }
 
-void RemoteFrameView::show()
-{
-    setSelfVisible(true);
+void RemoteFrameView::Show() {
+  SetSelfVisible(true);
 
-    Widget::show();
-
-    m_remoteFrame->visibilityChanged(true);
+  remote_frame_->Client()->VisibilityChanged(true);
 }
 
-void RemoteFrameView::setParentVisible(bool visible)
-{
-    if (isParentVisible() == visible)
-        return;
+void RemoteFrameView::SetParentVisible(bool visible) {
+  if (IsParentVisible() == visible)
+    return;
 
-    Widget::setParentVisible(visible);
-    if (!isSelfVisible())
-        return;
+  FrameViewBase::SetParentVisible(visible);
+  if (!IsSelfVisible())
+    return;
 
-    m_remoteFrame->visibilityChanged(isVisible());
+  remote_frame_->Client()->VisibilityChanged(IsVisible());
 }
 
-DEFINE_TRACE(RemoteFrameView)
-{
-    visitor->trace(m_remoteFrame);
-    Widget::trace(visitor);
+DEFINE_TRACE(RemoteFrameView) {
+  visitor->Trace(remote_frame_);
+  FrameViewBase::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

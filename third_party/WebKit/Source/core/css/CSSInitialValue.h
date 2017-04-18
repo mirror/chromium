@@ -22,37 +22,30 @@
 #define CSSInitialValue_h
 
 #include "core/css/CSSValue.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class CSSInitialValue : public CSSValue {
-public:
-    static CSSInitialValue* create();
-    static CSSInitialValue* createLegacyImplicit(); // crbug.com/471917
+ public:
+  static CSSInitialValue* Create();
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool isImplicit() const { return m_isImplicit; }
+  bool Equals(const CSSInitialValue&) const { return true; }
 
-    bool equals(const CSSInitialValue&) const { return true; }
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
+    CSSValue::TraceAfterDispatch(visitor);
+  }
 
-    DEFINE_INLINE_TRACE_AFTER_DISPATCH() { CSSValue::traceAfterDispatch(visitor); }
+ private:
+  friend class CSSValuePool;
 
-private:
-    friend class CSSValuePool;
-
-    explicit CSSInitialValue(bool implicit)
-        : CSSValue(InitialClass)
-        , m_isImplicit(implicit)
-    {
-    }
-
-    bool m_isImplicit;
+  CSSInitialValue() : CSSValue(kInitialClass) {}
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSInitialValue, isInitialValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSInitialValue, IsInitialValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSInitialValue_h
+#endif  // CSSInitialValue_h

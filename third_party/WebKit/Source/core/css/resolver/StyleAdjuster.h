@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 2013 Google, Inc.
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,7 +23,7 @@
 #ifndef StyleAdjuster_h
 #define StyleAdjuster_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -33,12 +34,18 @@ class ComputedStyle;
 // and the web expects that we expose "adjusted" values when
 // for those property/element pairs.
 class StyleAdjuster {
-    STATIC_ONLY(StyleAdjuster);
-public:
-    static void adjustComputedStyle(ComputedStyle& styleToAdjust, const ComputedStyle& parentStyle, Element*);
-    static void adjustStyleForEditing(ComputedStyle&);
+  STATIC_ONLY(StyleAdjuster);
+
+ public:
+  static void AdjustComputedStyle(ComputedStyle& style_to_adjust,
+                                  const ComputedStyle& parent_style,
+                                  const ComputedStyle& layout_parent_style,
+                                  Element*);
+  static void AdjustStyleForEditing(ComputedStyle&);
+  static void AdjustStyleForAlignment(ComputedStyle&,
+                                      const ComputedStyle& parent_style);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleAdjuster_h
+#endif  // StyleAdjuster_h

@@ -16,6 +16,10 @@
 #include "ui/events/event.h"
 #include "ui/events/event_handler.h"
 
+namespace gfx {
+class Rect;
+}  // namespace gfx
+
 namespace chromeos {
 
 // Manage visual highlights that Chrome OS can draw around the focused
@@ -35,7 +39,14 @@ class AccessibilityHighlightManager
 
   void RegisterObservers();
 
+  // OnViewFocusedInArc is called when a view is focused in arc window and
+  // accessibility focus highlight is enabled.
+  void OnViewFocusedInArc(const gfx::Rect& bounds_in_screen);
+
  protected:
+  FRIEND_TEST_ALL_PREFIXES(AccessibilityFocusRingControllerTest,
+                           CursorWorksOnMultipleDisplays);
+
   // ui::EventHandler overrides:
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnKeyEvent(ui::KeyEvent* event) override;

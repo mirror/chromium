@@ -190,7 +190,14 @@ class UDIFBlock {
  public:
   UDIFBlock() : block_() {}
 
-  bool ParseBlockData(const UDIFBlockData* block_data, uint16_t sector_size) {
+  bool ParseBlockData(const UDIFBlockData* block_data,
+                      size_t block_data_size,
+                      uint16_t sector_size) {
+    if (block_data_size < sizeof(block_)) {
+      DLOG(ERROR) << "UDIF block data is smaller than expected";
+      return false;
+    }
+
     block_ = *block_data;
     ConvertBigEndian(&block_);
 
@@ -199,6 +206,19 @@ class UDIFBlock {
                       sector_size;
     if (!block_size.IsValid()) {
       DLOG(ERROR) << "UDIF block size overflows";
+      return false;
+    }
+
+    // Make sure the block data contains the reported number of chunks.
+    auto block_and_chunks_size =
+        (base::CheckedNumeric<size_t>(sizeof(UDIFBlockChunk)) *
+         block_.chunk_count) +
+        sizeof(block_);
+    if (!block_and_chunks_size.IsValid() ||
+        block_data_size < block_and_chunks_size.ValueOrDie()) {
+      DLOG(ERROR) << "UDIF block does not contain reported number of chunks, "
+                  << block_and_chunks_size.ValueOrDie() << " bytes expected, "
+                  << "got " << block_data_size;
       return false;
     }
 
@@ -382,8 +402,8 @@ size_t UDIFParser::GetPartitionSize(size_t part_number) {
 std::unique_ptr<ReadStream> UDIFParser::GetPartitionReadStream(
     size_t part_number) {
   DCHECK_LT(part_number, blocks_.size());
-  return base::WrapUnique(
-      new UDIFPartitionReadStream(stream_, block_size_, blocks_[part_number]));
+  return base::MakeUnique<UDIFPartitionReadStream>(stream_, block_size_,
+                                                   blocks_[part_number].get());
 }
 
 bool UDIFParser::ParseBlkx() {
@@ -457,25 +477,31 @@ bool UDIFParser::ParseBlkx() {
     return false;
   }
 
-  auto resource_fork = base::mac::GetValueFromDictionary<CFDictionaryRef>(
+  auto* resource_fork = base::mac::GetValueFromDictionary<CFDictionaryRef>(
       plist.get(), CFSTR("resource-fork"));
   if (!resource_fork) {
     DLOG(ERROR) << "No resource-fork entry in plist";
     return false;
   }
 
-  auto blkx = base::mac::GetValueFromDictionary<CFArrayRef>(resource_fork,
-                                                            CFSTR("blkx"));
+  auto* blkx = base::mac::GetValueFromDictionary<CFArrayRef>(resource_fork,
+                                                             CFSTR("blkx"));
   if (!blkx) {
     DLOG(ERROR) << "No blkx entry in resource-fork";
     return false;
   }
 
   for (CFIndex i = 0; i < CFArrayGetCount(blkx); ++i) {
-    auto block_dictionary =
+    auto* block_dictionary =
         base::mac::CFCast<CFDictionaryRef>(CFArrayGetValueAtIndex(blkx, i));
-    auto data = base::mac::GetValueFromDictionary<CFDataRef>(block_dictionary,
-                                                             CFSTR("Data"));
+    if (!block_dictionary) {
+      DLOG(ERROR) << "Skipping block " << i
+                  << " because it is not a CFDictionary";
+      continue;
+    }
+
+    auto* data = base::mac::GetValueFromDictionary<CFDataRef>(block_dictionary,
+                                                              CFSTR("Data"));
     if (!data) {
       DLOG(ERROR) << "Skipping block " << i
                   << " because it has no Data section";
@@ -483,9 +509,10 @@ bool UDIFParser::ParseBlkx() {
     }
 
     // Copy the block table out of the plist.
-    std::unique_ptr<UDIFBlock> block(new UDIFBlock());
+    auto block = base::MakeUnique<UDIFBlock>();
     if (!block->ParseBlockData(
             reinterpret_cast<const UDIFBlockData*>(CFDataGetBytePtr(data)),
+            base::checked_cast<size_t>(CFDataGetLength(data)),
             block_size_)) {
       DLOG(ERROR) << "Failed to parse UDIF block data";
       return false;
@@ -654,7 +681,10 @@ off_t UDIFPartitionReadStream::Seek(off_t offset, int whence) {
         new UDIFBlockChunkReadStream(stream_, block_size_, chunk));
   }
   current_chunk_ = chunk_number;
-  chunk_stream_->Seek(decompress_read_offset.ValueOrDie(), SEEK_SET);
+  if (chunk_stream_->Seek(
+          base::ValueOrDieForType<off_t>(decompress_read_offset), SEEK_SET) ==
+      -1)
+    return -1;
 
   return offset;
 }
@@ -702,7 +732,8 @@ bool UDIFBlockChunkReadStream::Read(uint8_t* buffer,
 
 off_t UDIFBlockChunkReadStream::Seek(off_t offset, int whence) {
   DCHECK_EQ(SEEK_SET, whence);
-  DCHECK_LT(static_cast<uint64_t>(offset), length_in_bytes_);
+  if (static_cast<uint64_t>(offset) >= length_in_bytes_)
+    return -1;
   offset_ = offset;
   return offset_;
 }

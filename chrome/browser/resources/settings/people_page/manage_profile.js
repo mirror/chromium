@@ -10,7 +10,7 @@
 Polymer({
   is: 'settings-manage-profile',
 
-  behaviors: [WebUIListenerBehavior],
+  behaviors: [WebUIListenerBehavior, settings.RouteObserverBehavior],
 
   properties: {
     /**
@@ -24,23 +24,39 @@ Polymer({
     profileName: String,
 
     /**
+     * True if the current profile has a shortcut.
+     */
+    hasProfileShortcut_: Boolean,
+
+    /**
      * The available icons for selection.
      * @type {!Array<string>}
      */
     availableIcons: {
       type: Array,
-      value: function() { return []; },
+      value: function() {
+        return [];
+      },
     },
 
     /**
-     * @private {!settings.ManageProfileBrowserProxy}
+     * The current sync status.
+     * @type {?settings.SyncStatus}
      */
-    browserProxy_: {
-      type: Object,
-      value: function() {
-        return settings.ManageProfileBrowserProxyImpl.getInstance();
-      },
-    },
+    syncStatus: Object,
+
+    /**
+     * True if the profile shortcuts feature is enabled.
+     */
+    isProfileShortcutSettingVisible_: Boolean,
+  },
+
+  /** @private {?settings.ManageProfileBrowserProxy} */
+  browserProxy_: null,
+
+  /** @override */
+  created: function() {
+    this.browserProxy_ = settings.ManageProfileBrowserProxyImpl.getInstance();
   },
 
   /** @override */
@@ -53,17 +69,48 @@ Polymer({
     this.browserProxy_.getAvailableIcons().then(setIcons);
   },
 
+  /** @protected */
+  currentRouteChanged: function() {
+    if (settings.getCurrentRoute() == settings.Route.MANAGE_PROFILE) {
+      this.$.name.value = this.profileName;
+
+      if (loadTimeData.getBoolean('profileShortcutsEnabled')) {
+        this.browserProxy_.getProfileShortcutStatus().then(function(status) {
+          if (status == ProfileShortcutStatus.PROFILE_SHORTCUT_SETTING_HIDDEN) {
+            this.isProfileShortcutSettingVisible_ = false;
+            return;
+          }
+
+          this.isProfileShortcutSettingVisible_ = true;
+          this.hasProfileShortcut_ =
+              status == ProfileShortcutStatus.PROFILE_SHORTCUT_FOUND;
+        }.bind(this));
+      }
+    }
+  },
+
   /**
    * Handler for when the profile name field is changed, then blurred.
-   * @private
    * @param {!Event} event
+   * @private
    */
   onProfileNameChanged_: function(event) {
     if (event.target.invalid)
       return;
 
-    this.browserProxy_.setProfileIconAndName(this.profileIconUrl,
-                                             event.target.value);
+    this.browserProxy_.setProfileName(event.target.value);
+  },
+
+  /**
+   * Handler for profile name keydowns.
+   * @param {!Event} event
+   * @private
+   */
+  onProfileNameKeydown_: function(event) {
+    if (event.key == 'Escape') {
+      event.target.value = this.profileName;
+      event.target.blur();
+    }
   },
 
   /**
@@ -72,7 +119,36 @@ Polymer({
    * @private
    */
   onIconActivate_: function(event) {
-    this.browserProxy_.setProfileIconAndName(event.detail.selected,
-                                             this.profileName);
+    // Explicitly test against undefined, because even when an element has the
+    // data-is-gaia-avatar attribute, dataset.isGaiaAvatar returns an empty
+    // string, which is falsy.
+    var isGaiaAvatar = event.detail.item.dataset.isGaiaAvatar !== undefined;
+
+    if (isGaiaAvatar)
+      this.browserProxy_.setProfileIconToGaiaAvatar();
+    else
+      this.browserProxy_.setProfileIconToDefaultAvatar(event.detail.selected);
   },
+
+  /**
+   * @param {?settings.SyncStatus} syncStatus
+   * @return {boolean} Whether the profile name field is disabled.
+   * @private
+   */
+  isProfileNameDisabled_: function(syncStatus) {
+    return !!syncStatus.supervisedUser && !syncStatus.childUser;
+  },
+
+  /**
+   * Handler for when the profile shortcut toggle is changed.
+   * @param {!Event} event
+   * @private
+   */
+  onHasProfileShortcutChange_: function(event) {
+    if (this.hasProfileShortcut_) {
+      this.browserProxy_.addProfileShortcut();
+    } else {
+      this.browserProxy_.removeProfileShortcut();
+    }
+  }
 });

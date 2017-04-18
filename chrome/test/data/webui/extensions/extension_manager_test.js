@@ -10,6 +10,8 @@ cr.define('extension_manager_tests', function() {
     ItemListVisibility: 'item list visibility',
     ShowItems: 'show items',
     ChangePages: 'change pages',
+    UrlNavigationToDetails: 'url navigation to details',
+    UpdateItemData: 'update item data',
   };
 
   function getDataByName(list, name) {
@@ -131,7 +133,7 @@ cr.define('extension_manager_tests', function() {
         expectEquals(Page.ITEM_LIST, pages.selected);
 
         // Switch: item list -> keyboard shortcuts.
-        MockInteractions.tap(manager.sidebar.$['keyboard-shortcuts']);
+        MockInteractions.tap(manager.sidebar.$['sections-shortcuts']);
         Polymer.dom.flush();
         expectEquals(Page.KEYBOARD_SHORTCUTS, pages.selected);
 
@@ -148,9 +150,56 @@ cr.define('extension_manager_tests', function() {
         expectEquals(Page.DETAIL_VIEW, pages.selected);
 
         // Switch: detail view -> keyboard shortcuts.
-        MockInteractions.tap(manager.sidebar.$['keyboard-shortcuts']);
+        MockInteractions.tap(manager.sidebar.$['sections-shortcuts']);
         Polymer.dom.flush();
         expectEquals(Page.KEYBOARD_SHORTCUTS, pages.selected);
+      });
+
+      test(assert(TestNames.UrlNavigationToDetails), function() {
+        expectEquals(Page.DETAIL_VIEW, manager.$.pages.selected);
+        var detailsView = manager.$['details-view'];
+        expectEquals('ldnnhddmnhbkjipkidpdiheffobcpfmf', detailsView.data.id);
+      });
+
+      test(assert(TestNames.UpdateItemData), function() {
+        var oldDescription = 'old description';
+        var newDescription = 'new description';
+        var extension = extension_test_util.createExtensionInfo(
+            {description: oldDescription});
+        var secondExtension = extension_test_util.createExtensionInfo({
+            description: 'irrelevant',
+            id: 'b'.repeat(32),
+        });
+        manager.addItem(extension);
+        manager.addItem(secondExtension);
+        var data = manager.extensions[0];
+        manager.showItemDetails(extension);
+        var detailsView = manager.$['details-view'];
+        expectEquals(extension.id, detailsView.data.id);
+        expectEquals(oldDescription, detailsView.data.description);
+        expectEquals(
+            oldDescription,
+            detailsView.$$('.section .section-content').textContent.trim());
+
+        var extensionCopy = Object.assign({}, extension);
+        extensionCopy.description = newDescription;
+        manager.updateItem(extensionCopy);
+        expectEquals(extension.id, detailsView.data.id);
+        expectEquals(newDescription, detailsView.data.description);
+        expectEquals(
+            newDescription,
+            detailsView.$$('.section .section-content').textContent.trim());
+
+        // Updating a different extension shouldn't have any impact.
+        var secondExtensionCopy = Object.assign({}, secondExtension);
+        secondExtensionCopy.description = 'something else';
+        manager.updateItem(secondExtensionCopy);
+        expectEquals(extension.id, detailsView.data.id);
+        expectEquals(newDescription, detailsView.data.description);
+        expectEquals(
+            newDescription,
+            detailsView.$$('.section .section-content').textContent.trim());
+
       });
     });
   }

@@ -81,7 +81,7 @@ class DefaultDownloadDirectory {
   const base::FilePath& path() const { return path_; }
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<DefaultDownloadDirectory>;
+  friend struct base::LazyInstanceTraitsBase<DefaultDownloadDirectory>;
 
   DefaultDownloadDirectory() {
     if (!PathService::Get(chrome::DIR_DEFAULT_DOWNLOADS, &path_)) {
@@ -101,7 +101,7 @@ class DefaultDownloadDirectory {
   DISALLOW_COPY_AND_ASSIGN(DefaultDownloadDirectory);
 };
 
-base::LazyInstance<DefaultDownloadDirectory>
+base::LazyInstance<DefaultDownloadDirectory>::DestructorAtExit
     g_default_download_directory = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
@@ -143,7 +143,7 @@ DownloadPrefs::DownloadPrefs(Profile* profile) : profile_(profile) {
 
   // If the download path is dangerous we forcefully reset it. But if we do
   // so we set a flag to make sure we only do it once, to avoid fighting
-  // the user if he really wants it on an unsafe place such as the desktop.
+  // the user if they really want it on an unsafe place such as the desktop.
   if (!prefs->GetBoolean(prefs::kDownloadDirUpgraded)) {
     base::FilePath current_download_dir = prefs->GetFilePath(
         prefs::kDownloadDefaultDirectory);

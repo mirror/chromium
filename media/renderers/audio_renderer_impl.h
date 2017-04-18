@@ -36,6 +36,7 @@
 #include "media/base/time_source.h"
 #include "media/filters/audio_renderer_algorithm.h"
 #include "media/filters/decoder_stream.h"
+#include "media/renderers/default_renderer_factory.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -47,8 +48,6 @@ namespace media {
 class AudioBufferConverter;
 class AudioBus;
 class AudioClock;
-class AudioSplicer;
-class DecryptingDemuxerStream;
 
 class MEDIA_EXPORT AudioRendererImpl
     : public AudioRenderer,
@@ -64,7 +63,7 @@ class MEDIA_EXPORT AudioRendererImpl
   AudioRendererImpl(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       AudioRendererSink* sink,
-      ScopedVector<AudioDecoder> decoders,
+      const CreateAudioDecodersCB& create_audio_decoders_cb,
       const scoped_refptr<MediaLog>& media_log);
   ~AudioRendererImpl() override;
 
@@ -98,16 +97,18 @@ class MEDIA_EXPORT AudioRendererImpl
   // Important detail: being in kPlaying doesn't imply that audio is being
   // rendered. Rather, it means that the renderer is ready to go. The actual
   // rendering of audio is controlled via Start/StopRendering().
+  // Audio renderer can be reinitialized completely by calling Initialize again
+  // when it is in a kFlushed state.
   //
   //   kUninitialized
-  //         | Initialize()
-  //         |
-  //         V
-  //    kInitializing
-  //         | Decoders initialized
-  //         |
-  //         V            Decoders reset
-  //      kFlushed <------------------ kFlushing
+  //  +----> | Initialize()
+  //  |      |
+  //  |      V
+  //  | kInitializing
+  //  |      | Decoders initialized
+  //  |      |
+  //  |      V            Decoders reset
+  //  +-  kFlushed <------------------ kFlushing
   //         | StartPlaying()             ^
   //         |                            |
   //         |                            | Flush()
@@ -124,9 +125,10 @@ class MEDIA_EXPORT AudioRendererImpl
   void DecodedAudioReady(AudioBufferStream::Status status,
                          const scoped_refptr<AudioBuffer>& buffer);
 
-  // Handles buffers that come out of |splicer_|.
+  // Handles buffers that come out of decoder (MSE: after passing through
+  // |buffer_converter_|).
   // Returns true if more buffers are needed.
-  bool HandleSplicerBuffer_Locked(const scoped_refptr<AudioBuffer>& buffer);
+  bool HandleDecodedBuffer_Locked(const scoped_refptr<AudioBuffer>& buffer);
 
   // Helper functions for DecodeStatus values passed to
   // DecodedAudioReady().
@@ -152,11 +154,12 @@ class MEDIA_EXPORT AudioRendererImpl
   // Render() updates the pipeline's playback timestamp. If Render() is
   // not called at the same rate as audio samples are played, then the reported
   // timestamp in the pipeline will be ahead of the actual audio playback. In
-  // this case |frames_delayed| should be used to indicate when in the future
+  // this case |delay| should be used to indicate when in the future
   // should the filled buffer be played.
-  int Render(AudioBus* audio_bus,
-             uint32_t frames_delayed,
-             uint32_t frames_skipped) override;
+  int Render(base::TimeDelta delay,
+             base::TimeTicks delay_timestamp,
+             int prior_frames_skipped,
+             AudioBus* dest) override;
   void OnRenderError() override;
 
   // Helper methods that schedule an asynchronous read from the decoder as long
@@ -190,18 +193,18 @@ class MEDIA_EXPORT AudioRendererImpl
   // Called when the |decoder_|.Reset() has completed.
   void ResetDecoderDone();
 
-  // Called by the AudioBufferStream when a splice buffer is demuxed.
-  void OnNewSpliceBuffer(base::TimeDelta);
-
   // Called by the AudioBufferStream when a config change occurs.
   void OnConfigChange();
 
   // Updates |buffering_state_| and fires |buffering_state_cb_|.
   void SetBufferingState_Locked(BufferingState buffering_state);
 
+  // Configure's the channel mask for |algorithm_|. Must be called if the layout
+  // changes. Expect the layout in |last_decoded_channel_layout_|.
+  void ConfigureChannelMask();
+
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
-  std::unique_ptr<AudioSplicer> splicer_;
   std::unique_ptr<AudioBufferConverter> buffer_converter_;
 
   // Whether or not we expect to handle config changes.
@@ -231,12 +234,16 @@ class MEDIA_EXPORT AudioRendererImpl
   std::unique_ptr<base::TickClock> tick_clock_;
 
   // Memory usage of |algorithm_| recorded during the last
-  // HandleSplicerBuffer_Locked() call.
+  // HandleDecodedBuffer_Locked() call.
   int64_t last_audio_memory_usage_;
 
   // Sample rate of the last decoded audio buffer. Allows for detection of
   // sample rate changes due to implicit AAC configuration change.
   int last_decoded_sample_rate_;
+
+  // Similar to |last_decoded_sample_rate_|, used to configure the channel mask
+  // given to the |algorithm_| for efficient playback rate changes.
+  ChannelLayout last_decoded_channel_layout_;
 
   // After Initialize() has completed, all variables below must be accessed
   // under |lock_|. ------------------------------------------------------------
@@ -248,6 +255,10 @@ class MEDIA_EXPORT AudioRendererImpl
 
   // Simple state tracking variable.
   State state_;
+
+  // TODO(servolk): Consider using DecoderFactory here instead of the
+  // CreateAudioDecodersCB.
+  CreateAudioDecodersCB create_audio_decoders_cb_;
 
   BufferingState buffering_state_;
 
@@ -285,10 +296,6 @@ class MEDIA_EXPORT AudioRendererImpl
   // Set upon receipt of the first decoded buffer after a StartPlayingFrom().
   // Used to determine how long to delay playback.
   base::TimeDelta first_packet_timestamp_;
-
-  // Set by CurrentMediaTime(), used to prevent the current media time value as
-  // reported to JavaScript from going backwards in time.
-  base::TimeDelta last_media_timestamp_;
 
   // Set by OnSuspend() and OnResume() to indicate when the system is about to
   // suspend/is suspended and when it resumes.

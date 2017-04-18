@@ -7,31 +7,37 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class GamepadButton final : public GarbageCollected<GamepadButton>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static GamepadButton* create();
+class GamepadButton final : public GarbageCollected<GamepadButton>,
+                            public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    double value() const { return m_value; }
-    void setValue(double val) { m_value = val; }
+ public:
+  static GamepadButton* Create();
 
-    bool pressed() const { return m_pressed; }
-    void setPressed(bool val) { m_pressed = val; }
+  double value() const { return value_; }
+  void SetValue(double val) { value_ = val; }
 
-    DEFINE_INLINE_TRACE() { }
+  bool pressed() const { return pressed_; }
+  void SetPressed(bool val) { pressed_ = val; }
 
-private:
-    GamepadButton();
-    double m_value;
-    bool m_pressed;
+  bool touched() const { return touched_; }
+  void SetTouched(bool val) { touched_ = val; }
+
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  GamepadButton();
+  double value_;
+  bool pressed_;
+  bool touched_;
 };
 
 typedef HeapVector<Member<GamepadButton>> GamepadButtonVector;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GamepadButton_h
+#endif  // GamepadButton_h

@@ -7,7 +7,7 @@
 #include "ash/shell.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/first_run/first_run_view.h"
@@ -77,7 +77,7 @@ void FirstRunController::Init() {
   user_profile_ = ProfileHelper::Get()->GetProfileByUserUnsafe(
       user_manager->GetActiveUser());
 
-  shell_helper_.reset(ash::Shell::GetInstance()->CreateFirstRunHelper());
+  shell_helper_.reset(ash::Shell::Get()->CreateFirstRunHelper());
   shell_helper_->AddObserver(this);
 
   FirstRunView* view = new FirstRunView();
@@ -97,9 +97,8 @@ void FirstRunController::Finalize() {
   int furthest_step = current_step_index_ == NONE_STEP_INDEX
                           ? steps_.size() - 1
                           : current_step_index_;
-  UMA_HISTOGRAM_ENUMERATION("CrosFirstRun.FurthestStep",
-                            furthest_step,
-                            steps_.size());
+  UMA_HISTOGRAM_EXACT_LINEAR("CrosFirstRun.FurthestStep", furthest_step,
+                             steps_.size());
   UMA_HISTOGRAM_MEDIUM_TIMES("CrosFirstRun.TimeSpent",
                              base::Time::Now() - start_time_);
   if (GetCurrentStep())

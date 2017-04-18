@@ -31,150 +31,165 @@
 #ifndef ScriptWrappable_h
 #define ScriptWrappable_h
 
+#include "bindings/core/v8/ScriptWrappableVisitor.h"
 #include "bindings/core/v8/WrapperTypeInfo.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/TypeTraits.h"
-#include <v8.h>
+#include "platform/wtf/Compiler.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/TypeTraits.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
-/**
- * ScriptWrappable wraps a V8 object and its WrapperTypeInfo.
- *
- * ScriptWrappable acts much like a v8::Persistent<> in that it keeps a
- * V8 object alive.
- *
- *  The state transitions are:
- *  - new: an empty ScriptWrappable.
- *  - setWrapper: install a v8::Persistent (or empty)
- *  - disposeWrapper (via setWeakCallback, triggered by V8 garbage collecter):
- *        remove v8::Persistent and become empty.
- */
-class CORE_EXPORT ScriptWrappable {
-    WTF_MAKE_NONCOPYABLE(ScriptWrappable);
-public:
-    ScriptWrappable() { }
+class CORE_EXPORT TraceWrapperBase {
+  WTF_MAKE_NONCOPYABLE(TraceWrapperBase);
 
-    template<typename T>
-    T* toImpl()
-    {
-        // All ScriptWrappables are managed by the Blink GC heap; check that
-        // |T| is a garbage collected type.
-        static_assert(sizeof(T) && WTF::IsGarbageCollectedType<T>::value, "Classes implementing ScriptWrappable must be garbage collected.");
+ public:
+  TraceWrapperBase() = default;
+  virtual bool IsScriptWrappable() const { return false; }
 
-        // Check if T* is castable to ScriptWrappable*, which means T doesn't
-        // have two or more ScriptWrappable as superclasses. If T has two
-        // ScriptWrappable as superclasses, conversions from T* to
-        // ScriptWrappable* are ambiguous.
+  DECLARE_VIRTUAL_TRACE_WRAPPERS(){};
+};
+
+// ScriptWrappable provides a way to map from/to C++ DOM implementation to/from
+// JavaScript object (platform object).  ToV8() converts a ScriptWrappable to
+// a v8::Object and toScriptWrappable() converts a v8::Object back to
+// a ScriptWrappable.  v8::Object as platform object is called "wrapper object".
+// The wrapepr object for the main world is stored in ScriptWrappable.  Wrapper
+// objects for other worlds are stored in DOMWrapperMap.
+class CORE_EXPORT ScriptWrappable : public TraceWrapperBase {
+  WTF_MAKE_NONCOPYABLE(ScriptWrappable);
+
+ public:
+  ScriptWrappable() {}
+
+  bool IsScriptWrappable() const override { return true; }
+
+  template <typename T>
+  T* ToImpl() {
+    // All ScriptWrappables are managed by the Blink GC heap; check that
+    // |T| is a garbage collected type.
+    static_assert(
+        sizeof(T) && WTF::IsGarbageCollectedType<T>::value,
+        "Classes implementing ScriptWrappable must be garbage collected.");
+
+// Check if T* is castable to ScriptWrappable*, which means T doesn't
+// have two or more ScriptWrappable as superclasses. If T has two
+// ScriptWrappable as superclasses, conversions from T* to
+// ScriptWrappable* are ambiguous.
 #if !COMPILER(MSVC)
-        // MSVC 2013 doesn't support static_assert + constexpr well.
-        static_assert(!static_cast<ScriptWrappable*>(static_cast<T*>(nullptr)),
-            "Class T must not have two or more ScriptWrappable as its superclasses.");
+    // MSVC 2013 doesn't support static_assert + constexpr well.
+    static_assert(!static_cast<ScriptWrappable*>(static_cast<T*>(nullptr)),
+                  "Class T must not have two or more ScriptWrappable as its "
+                  "superclasses.");
 #endif
-        return static_cast<T*>(this);
+    return static_cast<T*>(this);
+  }
+
+  // Returns the WrapperTypeInfo of the instance.
+  //
+  // This method must be overridden by DEFINE_WRAPPERTYPEINFO macro.
+  virtual const WrapperTypeInfo* GetWrapperTypeInfo() const = 0;
+
+  // Creates and returns a new wrapper object.
+  virtual v8::Local<v8::Object> Wrap(v8::Isolate*,
+                                     v8::Local<v8::Object> creation_context);
+
+  // Associates the instance with the given |wrapper| if this instance is not
+  // yet associated with any wrapper.  Returns the wrapper already associated
+  // or |wrapper| if not yet associated.
+  // The caller should always use the returned value rather than |wrapper|.
+  WARN_UNUSED_RESULT virtual v8::Local<v8::Object> AssociateWithWrapper(
+      v8::Isolate*,
+      const WrapperTypeInfo*,
+      v8::Local<v8::Object> wrapper);
+
+  // Returns true if the instance needs to be kept alive even when the
+  // instance is unreachable from JavaScript.
+  virtual bool HasPendingActivity() const { return false; }
+
+  // Associates this instance with the given |wrapper| if this instance is not
+  // yet associated with any wrapper.  Returns true if the given wrapper is
+  // associated with this instance, or false if this instance is already
+  // associated with a wrapper.  In the latter case, |wrapper| will be updated
+  // to the existing wrapper.
+  WARN_UNUSED_RESULT bool SetWrapper(v8::Isolate* isolate,
+                                     const WrapperTypeInfo* wrapper_type_info,
+                                     v8::Local<v8::Object>& wrapper) {
+    DCHECK(!wrapper.IsEmpty());
+    if (UNLIKELY(ContainsWrapper())) {
+      wrapper = MainWorldWrapper(isolate);
+      return false;
     }
+    main_world_wrapper_.Reset(isolate, wrapper);
+    wrapper_type_info->ConfigureWrapper(&main_world_wrapper_);
+    main_world_wrapper_.SetWeak();
+    DCHECK(ContainsWrapper());
+    ScriptWrappableVisitor::WriteBarrier(&main_world_wrapper_);
+    return true;
+  }
 
-    // Returns the WrapperTypeInfo of the instance.
-    //
-    // This method must be overridden by DEFINE_WRAPPERTYPEINFO macro.
-    virtual const WrapperTypeInfo* wrapperTypeInfo() const = 0;
-
-    // Creates and returns a new wrapper object.
-    virtual v8::Local<v8::Object> wrap(v8::Isolate*, v8::Local<v8::Object> creationContext);
-
-    // Associates the instance with the given |wrapper| if this instance is not
-    // yet associated with any wrapper.  Returns the wrapper already associated
-    // or |wrapper| if not yet associated.
-    // The caller should always use the returned value rather than |wrapper|.
-    virtual v8::Local<v8::Object> associateWithWrapper(v8::Isolate*, const WrapperTypeInfo*, v8::Local<v8::Object> wrapper) WARN_UNUSED_RETURN;
-
-    // Associates this instance with the given |wrapper| if this instance is not
-    // yet associated with any wrapper.  Returns true if the given wrapper is
-    // associated with this instance, or false if this instance is already
-    // associated with a wrapper.  In the latter case, |wrapper| will be updated
-    // to the existing wrapper.
-    bool setWrapper(v8::Isolate* isolate, const WrapperTypeInfo* wrapperTypeInfo, v8::Local<v8::Object>& wrapper) WARN_UNUSED_RETURN
-    {
-        ASSERT(!wrapper.IsEmpty());
-        if (UNLIKELY(containsWrapper())) {
-            wrapper = mainWorldWrapper(isolate);
-            return false;
-        }
-        m_mainWorldWrapper.Reset(isolate, wrapper);
-        wrapperTypeInfo->configureWrapper(&m_mainWorldWrapper);
-        m_mainWorldWrapper.SetWeak();
-        ASSERT(containsWrapper());
-        return true;
+  // Dissociates the wrapper, if any, from this instance.
+  void UnsetWrapperIfAny() {
+    if (ContainsWrapper()) {
+      main_world_wrapper_.Reset();
+      WrapperTypeInfo::WrapperDestroyed();
     }
+  }
 
-    bool isEqualTo(const v8::Local<v8::Object>& other) const
-    {
-        return m_mainWorldWrapper == other;
-    }
+  bool IsEqualTo(const v8::Local<v8::Object>& other) const {
+    return main_world_wrapper_ == other;
+  }
 
-    // Provides a way to convert Node* to ScriptWrappable* without including
-    // "core/dom/Node.h".
-    //
-    // Example:
-    //   void foo(const void*) { ... }       // [1]
-    //   void foo(ScriptWrappable*) { ... }  // [2]
-    //   class Node;
-    //   Node* node;
-    //   foo(node);  // This calls [1] because there is no definition of Node
-    //               // and compilers do not know that Node is a subclass of
-    //               // ScriptWrappable.
-    //   foo(ScriptWrappable::fromNode(node));  // This calls [2] as expected.
-    //
-    // The definition of fromNode is placed in Node.h because we'd like to
-    // inline calls to fromNode as much as possible.
-    static ScriptWrappable* fromNode(Node*);
+  // Provides a way to convert Node* to ScriptWrappable* without including
+  // "core/dom/Node.h".
+  //
+  // Example:
+  //   void foo(const void*) { ... }       // [1]
+  //   void foo(ScriptWrappable*) { ... }  // [2]
+  //   class Node;
+  //   Node* node;
+  //   foo(node);  // This calls [1] because there is no definition of Node
+  //               // and compilers do not know that Node is a subclass of
+  //               // ScriptWrappable.
+  //   foo(ScriptWrappable::fromNode(node));  // This calls [2] as expected.
+  //
+  // The definition of fromNode is placed in Node.h because we'd like to
+  // inline calls to fromNode as much as possible.
+  static ScriptWrappable* FromNode(Node*);
 
-    bool setReturnValue(v8::ReturnValue<v8::Value> returnValue)
-    {
-        returnValue.Set(m_mainWorldWrapper);
-        return containsWrapper();
-    }
+  bool SetReturnValue(v8::ReturnValue<v8::Value> return_value) {
+    return_value.Set(main_world_wrapper_);
+    return ContainsWrapper();
+  }
 
-    void setReference(const v8::Persistent<v8::Object>& parent, v8::Isolate* isolate)
-    {
-        isolate->SetReference(parent, m_mainWorldWrapper);
-    }
+  bool ContainsWrapper() const { return !main_world_wrapper_.IsEmpty(); }
 
-    bool containsWrapper() const { return !m_mainWorldWrapper.IsEmpty(); }
+  //  Mark wrapper of this ScriptWrappable as alive in V8. Only marks
+  //  wrapper in the main world. To mark wrappers in all worlds call
+  //  ScriptWrappableVisitor::markWrapper(ScriptWrappable*, v8::Isolate*)
+  void MarkWrapper(const WrapperVisitor*) const;
 
-    /**
-     *  Mark wrapper of this ScriptWrappable as alive in V8. Only marks
-     *  wrapper in the main world. To mark wrappers in all worlds call
-     *  ScriptWrappableVisitor::markWrapper(ScriptWrappable*, v8::Isolate*)
-     */
-    void markWrapper(const WrapperVisitor*) const;
+ private:
+  // These classes are exceptionally allowed to use mainWorldWrapper().
+  friend class DOMDataStore;
+  friend class HeapSnaphotWrapperVisitor;
+  friend class V8HiddenValue;
+  friend class V8PrivateProperty;
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS() {};
+  v8::Local<v8::Object> MainWorldWrapper(v8::Isolate* isolate) const {
+    return v8::Local<v8::Object>::New(isolate, main_world_wrapper_);
+  }
 
-    // With Oilpan we don't need a ScriptWrappable destructor.
-    //
-    // 'RELEASE_ASSERT_WITH_SECURITY_IMPLICATION(!containsWrapper())' is not needed
-    // because Oilpan is not using reference counting at all. If containsWrapper() is true,
-    // it means that ScriptWrappable still has a wrapper. In this case, the destructor
-    // must not be called since the wrapper has a persistent handle back to this ScriptWrappable object.
-    // Assuming that Oilpan's GC is correct (If we cannot assume this, a lot of more things are
-    // already broken), we must not hit the RELEASE_ASSERT.
+  // Only use when really necessary, i.e., when passing over this
+  // ScriptWrappable's reference to V8. Should only be needed by GC
+  // infrastructure.
+  const v8::Persistent<v8::Object>* RawMainWorldWrapper() const {
+    return &main_world_wrapper_;
+  }
 
-private:
-    // These classes are exceptionally allowed to use mainWorldWrapper().
-    friend class DOMDataStore;
-    friend class V8HiddenValue;
-    friend class V8PrivateProperty;
-    friend class WebGLRenderingContextBase;
-
-    v8::Local<v8::Object> mainWorldWrapper(v8::Isolate* isolate) const
-    {
-        return v8::Local<v8::Object>::New(isolate, m_mainWorldWrapper);
-    }
-
-    v8::Persistent<v8::Object> m_mainWorldWrapper;
+  v8::Persistent<v8::Object> main_world_wrapper_;
 };
 
 // Defines 'wrapperTypeInfo' virtual method which returns the WrapperTypeInfo of
@@ -184,14 +199,14 @@ private:
 // All the derived classes of ScriptWrappable, regardless of directly or
 // indirectly, must write this macro in the class definition as long as the
 // class has a corresponding .idl file.
-#define DEFINE_WRAPPERTYPEINFO() \
-public: \
-    const WrapperTypeInfo* wrapperTypeInfo() const override \
-    { \
-        return &s_wrapperTypeInfo; \
-    } \
-private: \
-    static const WrapperTypeInfo& s_wrapperTypeInfo
+#define DEFINE_WRAPPERTYPEINFO()                               \
+ public:                                                       \
+  const WrapperTypeInfo* GetWrapperTypeInfo() const override { \
+    return &wrapper_type_info_;                                \
+  }                                                            \
+                                                               \
+ private:                                                      \
+  static const WrapperTypeInfo& wrapper_type_info_
 
 // Declares 'wrapperTypeInfo' method without definition.
 //
@@ -203,12 +218,13 @@ private: \
 // after instantiation". So we cannot define X's s_wrapperTypeInfo in generated
 // code by using specialization. Instead, we need to implement wrapperTypeInfo
 // in X's cpp code, and instantiate X, i.e. "template class X;".
-#define DECLARE_WRAPPERTYPEINFO() \
-public: \
-    const WrapperTypeInfo* wrapperTypeInfo() const override; \
-private: \
-    typedef void end_of_define_wrappertypeinfo_not_reached_t
+#define DECLARE_WRAPPERTYPEINFO()                             \
+ public:                                                      \
+  const WrapperTypeInfo* GetWrapperTypeInfo() const override; \
+                                                              \
+ private:                                                     \
+  typedef void end_of_define_wrappertypeinfo_not_reached_t
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptWrappable_h
+#endif  // ScriptWrappable_h

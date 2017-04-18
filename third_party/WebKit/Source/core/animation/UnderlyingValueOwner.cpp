@@ -9,65 +9,61 @@
 namespace blink {
 
 struct NullValueWrapper {
-    NullValueWrapper() : value(nullptr) {}
-    const InterpolationValue value;
+  NullValueWrapper() : value(nullptr) {}
+  const InterpolationValue value;
 };
 
-const InterpolationValue& UnderlyingValueOwner::value() const
-{
-    DEFINE_STATIC_LOCAL(NullValueWrapper, nullValueWrapper, ());
-    return *this ? *m_value : nullValueWrapper.value;
+const InterpolationValue& UnderlyingValueOwner::Value() const {
+  DEFINE_STATIC_LOCAL(NullValueWrapper, null_value_wrapper, ());
+  return *this ? *value_ : null_value_wrapper.value;
 }
 
-void UnderlyingValueOwner::set(std::nullptr_t)
-{
-    m_type = nullptr;
-    m_valueOwner.clear();
-    m_value = nullptr;
+void UnderlyingValueOwner::Set(std::nullptr_t) {
+  type_ = nullptr;
+  value_owner_.Clear();
+  value_ = nullptr;
 }
 
-void UnderlyingValueOwner::set(const InterpolationType& type, const InterpolationValue& value)
-{
-    ASSERT(value);
-    m_type = &type;
-    // By clearing m_valueOwner we will perform a copy before attempting to mutate m_value,
-    // thus upholding the const contract for this instance of interpolationValue.
-    m_valueOwner.clear();
-    m_value = &value;
+void UnderlyingValueOwner::Set(const InterpolationType& type,
+                               const InterpolationValue& value) {
+  DCHECK(value);
+  type_ = &type;
+  // By clearing m_valueOwner we will perform a copy before attempting to mutate
+  // m_value, thus upholding the const contract for this instance of
+  // interpolationValue.
+  value_owner_.Clear();
+  value_ = &value;
 }
 
-void UnderlyingValueOwner::set(const InterpolationType& type, InterpolationValue&& value)
-{
-    ASSERT(value);
-    m_type = &type;
-    m_valueOwner = std::move(value);
-    m_value = &m_valueOwner;
+void UnderlyingValueOwner::Set(const InterpolationType& type,
+                               InterpolationValue&& value) {
+  DCHECK(value);
+  type_ = &type;
+  value_owner_ = std::move(value);
+  value_ = &value_owner_;
 }
 
-void UnderlyingValueOwner::set(std::unique_ptr<TypedInterpolationValue> value)
-{
-    if (value)
-        set(value->type(), std::move(value->mutableValue()));
-    else
-        set(nullptr);
+void UnderlyingValueOwner::Set(std::unique_ptr<TypedInterpolationValue> value) {
+  if (value)
+    Set(value->GetType(), std::move(value->MutableValue()));
+  else
+    Set(nullptr);
 }
 
-void UnderlyingValueOwner::set(const TypedInterpolationValue* value)
-{
-    if (value)
-        set(value->type(), value->value());
-    else
-        set(nullptr);
+void UnderlyingValueOwner::Set(const TypedInterpolationValue* value) {
+  if (value)
+    Set(value->GetType(), value->Value());
+  else
+    Set(nullptr);
 }
 
-InterpolationValue& UnderlyingValueOwner::mutableValue()
-{
-    ASSERT(m_type && m_value);
-    if (!m_valueOwner) {
-        m_valueOwner = m_value->clone();
-        m_value = &m_valueOwner;
-    }
-    return m_valueOwner;
+InterpolationValue& UnderlyingValueOwner::MutableValue() {
+  DCHECK(type_ && value_);
+  if (!value_owner_) {
+    value_owner_ = value_->Clone();
+    value_ = &value_owner_;
+  }
+  return value_owner_;
 }
 
-} // namespace blink
+}  // namespace blink

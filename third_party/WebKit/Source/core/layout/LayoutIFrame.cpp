@@ -29,42 +29,35 @@
 
 namespace blink {
 
-LayoutIFrame::LayoutIFrame(Element* element)
-    : LayoutPart(element)
-{
+LayoutIFrame::LayoutIFrame(Element* element) : LayoutPart(element) {}
+
+bool LayoutIFrame::ShouldComputeSizeAsReplaced() const {
+  return true;
 }
 
-bool LayoutIFrame::shouldComputeSizeAsReplaced() const
-{
-    return true;
+bool LayoutIFrame::IsInlineBlockOrInlineTable() const {
+  return IsInline();
 }
 
-bool LayoutIFrame::isInlineBlockOrInlineTable() const
-{
-    return isInline();
+PaintLayerType LayoutIFrame::LayerTypeRequired() const {
+  if (Style()->Resize() != RESIZE_NONE)
+    return kNormalPaintLayer;
+  return LayoutPart::LayerTypeRequired();
 }
 
-PaintLayerType LayoutIFrame::layerTypeRequired() const
-{
-    if (style()->resize() != RESIZE_NONE)
-        return NormalPaintLayer;
-    return LayoutPart::layerTypeRequired();
+void LayoutIFrame::UpdateLayout() {
+  DCHECK(NeedsLayout());
+  LayoutAnalyzer::Scope analyzer(*this);
+
+  UpdateLogicalWidth();
+  // No kids to layout as a replaced element.
+  UpdateLogicalHeight();
+
+  overflow_.reset();
+  AddVisualEffectOverflow();
+  UpdateLayerTransformAfterLayout();
+
+  ClearNeedsLayout();
 }
 
-void LayoutIFrame::layout()
-{
-    ASSERT(needsLayout());
-    LayoutAnalyzer::Scope analyzer(*this);
-
-    updateLogicalWidth();
-    // No kids to layout as a replaced element.
-    updateLogicalHeight();
-
-    m_overflow.reset();
-    addVisualEffectOverflow();
-    updateLayerTransformAfterLayout();
-
-    clearNeedsLayout();
-}
-
-} // namespace blink
+}  // namespace blink

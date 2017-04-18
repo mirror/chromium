@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann <zimmermann@kde.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann
+ * <zimmermann@kde.org>
  * Copyright (C) 2004, 2005 Rob Buis <buis@kde.org>
  * Copyright (C) 2007 Eric Seidel <eric@webkit.org>
  * Copyright (C) Research In Motion Limited 2010. All rights reserved.
@@ -33,99 +34,98 @@ namespace blink {
 namespace {
 
 class SVGPathTraversalState final : public SVGPathConsumer {
-public:
-    SVGPathTraversalState(PathTraversalState::PathTraversalAction traversalAction, float desiredLength = 0)
-        : m_traversalState(traversalAction)
-        , m_segmentIndex(0)
-    {
-        m_traversalState.m_desiredLength = desiredLength;
-    }
+ public:
+  SVGPathTraversalState(
+      PathTraversalState::PathTraversalAction traversal_action,
+      float desired_length = 0)
+      : traversal_state_(traversal_action), segment_index_(0) {
+    traversal_state_.desired_length_ = desired_length;
+  }
 
-    unsigned segmentIndex() const { return m_segmentIndex; }
-    float totalLength() const { return m_traversalState.m_totalLength; }
-    FloatPoint computedPoint() const { return m_traversalState.m_current; }
+  unsigned SegmentIndex() const { return segment_index_; }
+  float TotalLength() const { return traversal_state_.total_length_; }
+  FloatPoint ComputedPoint() const { return traversal_state_.current_; }
 
-    bool processSegment(bool hasMoreData)
-    {
-        m_traversalState.processSegment();
-        if (m_traversalState.m_success)
-            return true;
-        if (hasMoreData)
-            m_segmentIndex++;
-        return false;
-    }
+  bool ProcessSegment(bool has_more_data) {
+    traversal_state_.ProcessSegment();
+    if (traversal_state_.success_)
+      return true;
+    if (has_more_data)
+      segment_index_++;
+    return false;
+  }
 
-private:
-    void emitSegment(const PathSegmentData&) override;
+ private:
+  void EmitSegment(const PathSegmentData&) override;
 
-    PathTraversalState m_traversalState;
-    unsigned m_segmentIndex;
+  PathTraversalState traversal_state_;
+  unsigned segment_index_;
 };
 
-void SVGPathTraversalState::emitSegment(const PathSegmentData& segment)
-{
-    switch (segment.command) {
-    case PathSegMoveToAbs:
-        m_traversalState.m_totalLength += m_traversalState.moveTo(segment.targetPoint);
-        break;
-    case PathSegLineToAbs:
-        m_traversalState.m_totalLength += m_traversalState.lineTo(segment.targetPoint);
-        break;
-    case PathSegClosePath:
-        m_traversalState.m_totalLength += m_traversalState.closeSubpath();
-        break;
-    case PathSegCurveToCubicAbs:
-        m_traversalState.m_totalLength += m_traversalState.cubicBezierTo(segment.point1, segment.point2, segment.targetPoint);
-        break;
+void SVGPathTraversalState::EmitSegment(const PathSegmentData& segment) {
+  switch (segment.command) {
+    case kPathSegMoveToAbs:
+      traversal_state_.total_length_ +=
+          traversal_state_.MoveTo(segment.target_point);
+      break;
+    case kPathSegLineToAbs:
+      traversal_state_.total_length_ +=
+          traversal_state_.LineTo(segment.target_point);
+      break;
+    case kPathSegClosePath:
+      traversal_state_.total_length_ += traversal_state_.CloseSubpath();
+      break;
+    case kPathSegCurveToCubicAbs:
+      traversal_state_.total_length_ += traversal_state_.CubicBezierTo(
+          segment.point1, segment.point2, segment.target_point);
+      break;
     default:
-        ASSERT_NOT_REACHED();
-    }
+      NOTREACHED();
+  }
 }
 
-void executeQuery(const SVGPathByteStream& pathByteStream, SVGPathTraversalState& traversalState)
-{
-    SVGPathByteStreamSource source(pathByteStream);
-    SVGPathNormalizer normalizer(&traversalState);
+void ExecuteQuery(const SVGPathByteStream& path_byte_stream,
+                  SVGPathTraversalState& traversal_state) {
+  SVGPathByteStreamSource source(path_byte_stream);
+  SVGPathNormalizer normalizer(&traversal_state);
 
-    bool hasMoreData = source.hasMoreData();
-    while (hasMoreData) {
-        PathSegmentData segment = source.parseSegment();
-        ASSERT(segment.command != PathSegUnknown);
+  bool has_more_data = source.HasMoreData();
+  while (has_more_data) {
+    PathSegmentData segment = source.ParseSegment();
+    DCHECK_NE(segment.command, kPathSegUnknown);
 
-        normalizer.emitSegment(segment);
+    normalizer.EmitSegment(segment);
 
-        hasMoreData = source.hasMoreData();
-        if (traversalState.processSegment(hasMoreData))
-            break;
-    }
+    has_more_data = source.HasMoreData();
+    if (traversal_state.ProcessSegment(has_more_data))
+      break;
+  }
 }
 
-} // namespace
+}  // namespace
 
-SVGPathQuery::SVGPathQuery(const SVGPathByteStream& pathByteStream)
-    : m_pathByteStream(pathByteStream)
-{
+SVGPathQuery::SVGPathQuery(const SVGPathByteStream& path_byte_stream)
+    : path_byte_stream_(path_byte_stream) {}
+
+unsigned SVGPathQuery::GetPathSegIndexAtLength(float length) const {
+  SVGPathTraversalState traversal_state(
+      PathTraversalState::kTraversalSegmentAtLength, length);
+  ExecuteQuery(path_byte_stream_, traversal_state);
+  return traversal_state.SegmentIndex();
 }
 
-unsigned SVGPathQuery::getPathSegIndexAtLength(float length) const
-{
-    SVGPathTraversalState traversalState(PathTraversalState::TraversalSegmentAtLength, length);
-    executeQuery(m_pathByteStream, traversalState);
-    return traversalState.segmentIndex();
+float SVGPathQuery::GetTotalLength() const {
+  SVGPathTraversalState traversal_state(
+      PathTraversalState::kTraversalTotalLength);
+  ExecuteQuery(path_byte_stream_, traversal_state);
+  return traversal_state.TotalLength();
 }
 
-float SVGPathQuery::getTotalLength() const
-{
-    SVGPathTraversalState traversalState(PathTraversalState::TraversalTotalLength);
-    executeQuery(m_pathByteStream, traversalState);
-    return traversalState.totalLength();
+FloatPoint SVGPathQuery::GetPointAtLength(float length) const {
+  SVGPathTraversalState traversal_state(
+      PathTraversalState::kTraversalPointAtLength, length);
+  ExecuteQuery(path_byte_stream_, traversal_state);
+  return traversal_state.ComputedPoint();
 }
 
-FloatPoint SVGPathQuery::getPointAtLength(float length) const
-{
-    SVGPathTraversalState traversalState(PathTraversalState::TraversalPointAtLength, length);
-    executeQuery(m_pathByteStream, traversalState);
-    return traversalState.computedPoint();
-}
-
-} // namespace blink
+}  // namespace blink

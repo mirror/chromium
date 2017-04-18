@@ -6,44 +6,47 @@
 #define PartitionAllocMemoryDumpProvider_h
 
 #include "base/trace_event/memory_dump_provider.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 #include "public/platform/WebCommon.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/ThreadingPrimitives.h"
 
 namespace base {
 namespace trace_event {
 
 class AllocationRegister;
 
-} // namespace trace_event
-} // namespace base
+}  // namespace trace_event
+}  // namespace base
 
 namespace blink {
 
-class BLINK_PLATFORM_EXPORT PartitionAllocMemoryDumpProvider final : public base::trace_event::MemoryDumpProvider {
-    // TODO(tasak): PartitionAllocMemoryDumpProvider should be
-    // USING_FAST_MALLOC. c.f. crbug.com/584196
-    WTF_MAKE_NONCOPYABLE(PartitionAllocMemoryDumpProvider);
-public:
-    static PartitionAllocMemoryDumpProvider* instance();
-    ~PartitionAllocMemoryDumpProvider() override;
+class BLINK_PLATFORM_EXPORT PartitionAllocMemoryDumpProvider final
+    : public base::trace_event::MemoryDumpProvider {
+  // TODO(tasak): PartitionAllocMemoryDumpProvider should be
+  // USING_FAST_MALLOC. c.f. crbug.com/584196
+  WTF_MAKE_NONCOPYABLE(PartitionAllocMemoryDumpProvider);
 
-    // MemoryDumpProvider implementation.
-    bool OnMemoryDump(const base::trace_event::MemoryDumpArgs&, base::trace_event::ProcessMemoryDump*) override;
-    void OnHeapProfilingEnabled(bool) override;
+ public:
+  static PartitionAllocMemoryDumpProvider* Instance();
+  ~PartitionAllocMemoryDumpProvider() override;
 
-    // These methods are called only from PartitionAllocHooks' callbacks.
-    void insert(void*, size_t, const char*);
-    void remove(void*);
+  // MemoryDumpProvider implementation.
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs&,
+                    base::trace_event::ProcessMemoryDump*) override;
+  void OnHeapProfilingEnabled(bool) override;
 
-private:
-    PartitionAllocMemoryDumpProvider();
+  // These methods are called only from PartitionAllocHooks' callbacks.
+  void insert(void*, size_t, const char*);
+  void Remove(void*);
 
-    Mutex m_allocationRegisterMutex;
-    std::unique_ptr<base::trace_event::AllocationRegister> m_allocationRegister;
-    bool m_isHeapProfilingEnabled;
+ private:
+  PartitionAllocMemoryDumpProvider();
+
+  Mutex allocation_register_mutex_;
+  std::unique_ptr<base::trace_event::AllocationRegister> allocation_register_;
+  bool is_heap_profiling_enabled_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PartitionAllocMemoryDumpProvider_h
+#endif  // PartitionAllocMemoryDumpProvider_h

@@ -26,44 +26,41 @@
 namespace blink {
 
 LayoutSVGGradientStop::LayoutSVGGradientStop(SVGStopElement* element)
-    : LayoutObject(element)
-{
+    : LayoutObject(element) {}
+
+LayoutSVGGradientStop::~LayoutSVGGradientStop() {}
+
+void LayoutSVGGradientStop::StyleDidChange(StyleDifference diff,
+                                           const ComputedStyle* old_style) {
+  LayoutObject::StyleDidChange(diff, old_style);
+  if (!diff.HasDifference())
+    return;
+
+  // <stop> elements should only be allowed to make layoutObjects under gradient
+  // elements but I can imagine a few cases we might not be catching, so let's
+  // not crash if our parent isn't a gradient.
+  SVGGradientElement* gradient = GradientElement();
+  if (!gradient)
+    return;
+
+  LayoutObject* layout_object = gradient->GetLayoutObject();
+  if (!layout_object)
+    return;
+
+  LayoutSVGResourceContainer* container =
+      ToLayoutSVGResourceContainer(layout_object);
+  container->RemoveAllClientsFromCache();
 }
 
-LayoutSVGGradientStop::~LayoutSVGGradientStop()
-{
+void LayoutSVGGradientStop::UpdateLayout() {
+  ClearNeedsLayout();
 }
 
-void LayoutSVGGradientStop::styleDidChange(StyleDifference diff, const ComputedStyle* oldStyle)
-{
-    LayoutObject::styleDidChange(diff, oldStyle);
-    if (!diff.hasDifference())
-        return;
-
-    // <stop> elements should only be allowed to make layoutObjects under gradient elements
-    // but I can imagine a few cases we might not be catching, so let's not crash if our parent isn't a gradient.
-    SVGGradientElement* gradient = gradientElement();
-    if (!gradient)
-        return;
-
-    LayoutObject* layoutObject = gradient->layoutObject();
-    if (!layoutObject)
-        return;
-
-    LayoutSVGResourceContainer* container = toLayoutSVGResourceContainer(layoutObject);
-    container->removeAllClientsFromCache();
+SVGGradientElement* LayoutSVGGradientStop::GradientElement() const {
+  ContainerNode* parent_node = GetNode()->parentNode();
+  DCHECK(parent_node);
+  return IsSVGGradientElement(*parent_node) ? ToSVGGradientElement(parent_node)
+                                            : 0;
 }
 
-void LayoutSVGGradientStop::layout()
-{
-    clearNeedsLayout();
-}
-
-SVGGradientElement* LayoutSVGGradientStop::gradientElement() const
-{
-    ContainerNode* parentNode = node()->parentNode();
-    ASSERT(parentNode);
-    return isSVGGradientElement(*parentNode) ? toSVGGradientElement(parentNode) : 0;
-}
-
-} // namespace blink
+}  // namespace blink

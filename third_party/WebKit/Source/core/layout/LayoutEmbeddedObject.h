@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 2000 Simon Hausmann <hausmann@kde.org>
- * Copyright (C) 2004, 2005, 2006, 2008, 2009, 2010, 2012 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2008, 2009, 2010, 2012 Apple Inc.
+ *               All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -27,50 +28,53 @@
 
 namespace blink {
 
-class TextRun;
+// LayoutObject for embeds and objects, often, but not always, rendered via
+// plugins. For example, <embed src="foo.html"> does not invoke a plugin.
+class LayoutEmbeddedObject final : public LayoutPart {
+ public:
+  LayoutEmbeddedObject(Element*);
+  ~LayoutEmbeddedObject() override;
 
-// LayoutObject for embeds and objects, often, but not always, rendered via plugins.
-// For example, <embed src="foo.html"> does not invoke a plugin.
-class LayoutEmbeddedObject : public LayoutPart {
-public:
-    LayoutEmbeddedObject(Element*);
-    ~LayoutEmbeddedObject() override;
+  enum PluginAvailability {
+    kPluginAvailable,
+    kPluginMissing,
+    kPluginBlockedByContentSecurityPolicy,
+  };
+  void SetPluginAvailability(PluginAvailability);
+  bool ShowsUnavailablePluginIndicator() const;
 
-    enum PluginAvailability {
-        PluginAvailable,
-        PluginMissing,
-        PluginBlockedByContentSecurityPolicy,
-    };
-    void setPluginAvailability(PluginAvailability);
-    bool showsUnavailablePluginIndicator() const;
+  const char* GetName() const override { return "LayoutEmbeddedObject"; }
 
-    const char* name() const override { return "LayoutEmbeddedObject"; }
+  const String& UnavailablePluginReplacementText() const {
+    return unavailable_plugin_replacement_text_;
+  }
 
-    const String& unavailablePluginReplacementText() const { return m_unavailablePluginReplacementText; }
+ private:
+  void PaintContents(const PaintInfo&, const LayoutPoint&) const final;
+  void PaintReplaced(const PaintInfo&, const LayoutPoint&) const final;
+  void Paint(const PaintInfo&, const LayoutPoint&) const final;
+  PaintInvalidationReason InvalidatePaintIfNeeded(
+      const PaintInvalidatorContext&) const final;
 
-private:
-    void paintContents(const PaintInfo&, const LayoutPoint&) const final;
-    void paintReplaced(const PaintInfo&, const LayoutPoint&) const final;
-    void paint(const PaintInfo&, const LayoutPoint&) const final;
+  void UpdateLayout() final;
 
-    void layout() final;
-    PaintInvalidationReason invalidatePaintIfNeeded(const PaintInvalidationState&) final;
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectEmbeddedObject || LayoutPart::IsOfType(type);
+  }
+  LayoutReplaced* EmbeddedReplacedContent() const final;
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectEmbeddedObject || LayoutPart::isOfType(type); }
-    LayoutReplaced* embeddedReplacedContent() const final;
+  PaintLayerType LayerTypeRequired() const final;
 
-    PaintLayerType layerTypeRequired() const final;
+  ScrollResult Scroll(ScrollGranularity, const FloatSize&) final;
 
-    ScrollResult scroll(ScrollGranularity, const FloatSize&) final;
+  CompositingReasons AdditionalCompositingReasons() const override;
 
-    CompositingReasons additionalCompositingReasons() const override;
-
-    PluginAvailability m_pluginAvailability = PluginAvailable;
-    String m_unavailablePluginReplacementText;
+  PluginAvailability plugin_availability_ = kPluginAvailable;
+  String unavailable_plugin_replacement_text_;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutEmbeddedObject, isEmbeddedObject());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutEmbeddedObject, IsEmbeddedObject());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutEmbeddedObject_h
+#endif  // LayoutEmbeddedObject_h

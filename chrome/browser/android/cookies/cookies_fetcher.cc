@@ -15,14 +15,13 @@
 #include "net/cookies/cookie_store.h"
 #include "net/url_request/url_request_context.h"
 
+using base::android::JavaParamRef;
+using base::android::ScopedJavaLocalRef;
+
 CookiesFetcher::CookiesFetcher(JNIEnv* env, jobject obj, Profile* profile) {
 }
 
 CookiesFetcher::~CookiesFetcher() {
-}
-
-void CookiesFetcher::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
-  delete this;
 }
 
 void CookiesFetcher::PersistCookies(JNIEnv* env,
@@ -59,20 +58,19 @@ void CookiesFetcher::PersistCookiesInternal(
   // Nullable sometimes according to docs. There is no work need to be done
   // but we can consider calling the Java callback with empty output.
   if (!store) {
-    jobject_.Reset();
+    delete this;
     return;
   }
 
-  store->GetAllCookiesAsync(base::Bind(
-      &CookiesFetcher::OnCookiesFetchFinished, base::Unretained(this)));
+  store->GetAllCookiesAsync(
+      base::Bind(&CookiesFetcher::OnCookiesFetchFinished, base::Owned(this)));
 }
 
 void CookiesFetcher::OnCookiesFetchFinished(const net::CookieList& cookies) {
   JNIEnv* env = base::android::AttachCurrentThread();
 
   ScopedJavaLocalRef<jobjectArray> joa =
-      Java_CookiesFetcher_createCookiesArray(
-          env, jobject_.obj(), cookies.size());
+      Java_CookiesFetcher_createCookiesArray(env, jobject_, cookies.size());
 
   int index = 0;
   for (net::CookieList::const_iterator i = cookies.begin();
@@ -81,21 +79,17 @@ void CookiesFetcher::OnCookiesFetchFinished(const net::CookieList& cookies) {
     if (domain.length() > 1 && domain[0] == '.')
       domain = domain.substr(1);
     ScopedJavaLocalRef<jobject> java_cookie = Java_CookiesFetcher_createCookie(
-        env, jobject_.obj(),
-        base::android::ConvertUTF8ToJavaString(env, i->Name()).obj(),
-        base::android::ConvertUTF8ToJavaString(env, i->Value()).obj(),
-        base::android::ConvertUTF8ToJavaString(env, i->Domain()).obj(),
-        base::android::ConvertUTF8ToJavaString(env, i->Path()).obj(),
+        env, jobject_, base::android::ConvertUTF8ToJavaString(env, i->Name()),
+        base::android::ConvertUTF8ToJavaString(env, i->Value()),
+        base::android::ConvertUTF8ToJavaString(env, i->Domain()),
+        base::android::ConvertUTF8ToJavaString(env, i->Path()),
         i->CreationDate().ToInternalValue(), i->ExpiryDate().ToInternalValue(),
         i->LastAccessDate().ToInternalValue(), i->IsSecure(), i->IsHttpOnly(),
         static_cast<int>(i->SameSite()), i->Priority());
     env->SetObjectArrayElement(joa.obj(), index++, java_cookie.obj());
   }
 
-  Java_CookiesFetcher_onCookieFetchFinished(env, jobject_.obj(), joa.obj());
-
-  // Give up the reference.
-  jobject_.Reset();
+  Java_CookiesFetcher_onCookieFetchFinished(env, jobject_, joa);
 }
 
 static void RestoreToCookieJarInternal(net::URLRequestContextGetter* getter,
@@ -131,7 +125,7 @@ static void RestoreToCookieJarInternal(net::URLRequestContextGetter* getter,
   store->SetCookieWithDetailsAsync(
       url, cookie.Name(), cookie.Value(), effective_domain, cookie.Path(),
       base::Time(), cookie.ExpiryDate(), cookie.LastAccessDate(),
-      cookie.IsSecure(), cookie.IsHttpOnly(), cookie.SameSite(), false,
+      cookie.IsSecure(), cookie.IsHttpOnly(), cookie.SameSite(),
       cookie.Priority(), cb);
 }
 

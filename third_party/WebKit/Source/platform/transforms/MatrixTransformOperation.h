@@ -30,74 +30,73 @@
 
 namespace blink {
 
-class PLATFORM_EXPORT MatrixTransformOperation final : public TransformOperation {
-public:
-    static PassRefPtr<MatrixTransformOperation> create(double a, double b, double c, double d, double e, double f)
-    {
-        return adoptRef(new MatrixTransformOperation(a, b, c, d, e, f));
-    }
+class PLATFORM_EXPORT MatrixTransformOperation final
+    : public TransformOperation {
+ public:
+  static PassRefPtr<MatrixTransformOperation> Create(double a,
+                                                     double b,
+                                                     double c,
+                                                     double d,
+                                                     double e,
+                                                     double f) {
+    return AdoptRef(new MatrixTransformOperation(a, b, c, d, e, f));
+  }
 
-    static PassRefPtr<MatrixTransformOperation> create(const TransformationMatrix& t)
-    {
-        return adoptRef(new MatrixTransformOperation(t));
-    }
+  static PassRefPtr<MatrixTransformOperation> Create(
+      const TransformationMatrix& t) {
+    return AdoptRef(new MatrixTransformOperation(t));
+  }
 
-    TransformationMatrix matrix() const { return TransformationMatrix(m_a, m_b, m_c, m_d, m_e, m_f); }
+  TransformationMatrix Matrix() const {
+    return TransformationMatrix(a_, b_, c_, d_, e_, f_);
+  }
 
-    virtual bool canBlendWith(const TransformOperation& other) const
-    {
-        return false;
-    }
+  virtual bool CanBlendWith(const TransformOperation& other) const {
+    return false;
+  }
 
-private:
-    OperationType type() const override { return Matrix; }
+ private:
+  OperationType GetType() const override { return kMatrix; }
 
-    bool operator==(const TransformOperation& o) const override
-    {
-        if (!isSameType(o))
-            return false;
+  bool operator==(const TransformOperation& o) const override {
+    if (!IsSameType(o))
+      return false;
 
-        const MatrixTransformOperation* m = static_cast<const MatrixTransformOperation*>(&o);
-        return m_a == m->m_a && m_b == m->m_b && m_c == m->m_c && m_d == m->m_d && m_e == m->m_e && m_f == m->m_f;
-    }
+    const MatrixTransformOperation* m =
+        static_cast<const MatrixTransformOperation*>(&o);
+    return a_ == m->a_ && b_ == m->b_ && c_ == m->c_ && d_ == m->d_ &&
+           e_ == m->e_ && f_ == m->f_;
+  }
 
-    void apply(TransformationMatrix& transform, const FloatSize&) const override
-    {
-        TransformationMatrix matrix(m_a, m_b, m_c, m_d, m_e, m_f);
-        transform.multiply(matrix);
-    }
+  void Apply(TransformationMatrix& transform, const FloatSize&) const override {
+    TransformationMatrix matrix(a_, b_, c_, d_, e_, f_);
+    transform.Multiply(matrix);
+  }
 
-    PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false) override;
-    PassRefPtr<TransformOperation> zoom(double factor) final;
+  PassRefPtr<TransformOperation> Blend(const TransformOperation* from,
+                                       double progress,
+                                       bool blend_to_identity = false) override;
+  PassRefPtr<TransformOperation> Zoom(double factor) final;
 
-    MatrixTransformOperation(double a, double b, double c, double d, double e, double f)
-        : m_a(a)
-        , m_b(b)
-        , m_c(c)
-        , m_d(d)
-        , m_e(e)
-        , m_f(f)
-    {
-    }
+  MatrixTransformOperation(double a,
+                           double b,
+                           double c,
+                           double d,
+                           double e,
+                           double f)
+      : a_(a), b_(b), c_(c), d_(d), e_(e), f_(f) {}
 
-    MatrixTransformOperation(const TransformationMatrix& t)
-        : m_a(t.a())
-        , m_b(t.b())
-        , m_c(t.c())
-        , m_d(t.d())
-        , m_e(t.e())
-        , m_f(t.f())
-    {
-    }
+  MatrixTransformOperation(const TransformationMatrix& t)
+      : a_(t.A()), b_(t.B()), c_(t.C()), d_(t.D()), e_(t.E()), f_(t.F()) {}
 
-    double m_a;
-    double m_b;
-    double m_c;
-    double m_d;
-    double m_e;
-    double m_f;
+  double a_;
+  double b_;
+  double c_;
+  double d_;
+  double e_;
+  double f_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MatrixTransformOperation_h
+#endif  // MatrixTransformOperation_h

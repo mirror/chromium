@@ -72,9 +72,6 @@ PASS document.createEvent('PageTransitionEvent').constructor === window.PageTran
 PASS document.createEvent('PopStateEvent') instanceof window.PopStateEvent is true
 PASS document.createEvent('PopStateEvent') instanceof window.Event is true
 PASS document.createEvent('PopStateEvent').constructor === window.PopStateEvent is true
-PASS document.createEvent('ProgressEvent') instanceof window.ProgressEvent is true
-PASS document.createEvent('ProgressEvent') instanceof window.Event is true
-PASS document.createEvent('ProgressEvent').constructor === window.ProgressEvent is true
 PASS document.createEvent('TextEvent') instanceof window.TextEvent is true
 PASS document.createEvent('TextEvent') instanceof window.UIEvent is true
 PASS document.createEvent('TextEvent') instanceof window.Event is true
@@ -94,12 +91,6 @@ PASS document.createEvent('UIEvENts').constructor === window.UIEvent is true
 PASS document.createEvent('TransitionEvent') instanceof window.TransitionEvent is true
 PASS document.createEvent('TransitionEvent') instanceof window.Event is true
 PASS document.createEvent('TransitionEvent').constructor === window.TransitionEvent is true
-PASS document.createEvent('WebKitAnimationEvent') instanceof window.WebKitAnimationEvent is true
-PASS document.createEvent('WebKitAnimationEvent') instanceof window.Event is true
-PASS document.createEvent('WebKitAnimationEvent').constructor === window.WebKitAnimationEvent is true
-PASS document.createEvent('WebKitTransitionEvent') instanceof window.WebKitTransitionEvent is true
-PASS document.createEvent('WebKitTransitionEvent') instanceof window.Event is true
-PASS document.createEvent('WebKitTransitionEvent').constructor === window.WebKitTransitionEvent is true
 PASS document.createEvent('WheelEvent') instanceof window.WheelEvent is true
 PASS document.createEvent('WheelEvent') instanceof window.MouseEvent is true
 PASS document.createEvent('WheelEvent') instanceof window.UIEvent is true

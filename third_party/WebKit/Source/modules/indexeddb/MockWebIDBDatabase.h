@@ -9,47 +9,130 @@
 #include "modules/indexeddb/IDBKeyRange.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyRange.h"
-#include "public/platform/modules/indexeddb/WebIDBObserver.h"
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace blink {
 
 class MockWebIDBDatabase : public testing::StrictMock<WebIDBDatabase> {
-public:
-    virtual ~MockWebIDBDatabase();
+ public:
+  virtual ~MockWebIDBDatabase();
 
-    static std::unique_ptr<MockWebIDBDatabase> create();
+  static std::unique_ptr<MockWebIDBDatabase> Create();
 
-    MOCK_METHOD5(createObjectStore, void(long long transactionId, long long objectStoreId, const WebString& name, const WebIDBKeyPath&, bool autoIncrement));
-    MOCK_METHOD2(deleteObjectStore, void(long long transactionId, long long objectStoreId));
-    MOCK_METHOD4(createTransaction, void(long long id, WebIDBDatabaseCallbacks*, const WebVector<long long>& scope, WebIDBTransactionMode));
-    MOCK_METHOD0(close, void());
-    MOCK_METHOD0(versionChangeIgnored, void());
-    MOCK_METHOD1(abort, void(long long transactionId));
-    MOCK_METHOD1(commit, void(long long transactionId));
-    MOCK_METHOD7(createIndex, void(long long transactionId, long long objectStoreId, long long indexId, const WebString& name, const WebIDBKeyPath&, bool unique, bool multiEntry));
-    MOCK_METHOD3(deleteIndex, void(long long transactionId, long long objectStoreId, long long indexId));
+  MOCK_METHOD5(CreateObjectStore,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    const WebString& name,
+                    const WebIDBKeyPath&,
+                    bool auto_increment));
+  MOCK_METHOD2(DeleteObjectStore,
+               void(long long transaction_id, long long object_store_id));
+  MOCK_METHOD3(RenameObjectStore,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    const WebString& new_name));
+  MOCK_METHOD3(CreateTransaction,
+               void(long long id,
+                    const WebVector<long long>& scope,
+                    WebIDBTransactionMode));
+  MOCK_METHOD0(Close, void());
+  MOCK_METHOD0(VersionChangeIgnored, void());
+  MOCK_METHOD1(Abort, void(long long transaction_id));
+  MOCK_METHOD1(Commit, void(long long transaction_id));
+  MOCK_METHOD7(CreateIndex,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id,
+                    const WebString& name,
+                    const WebIDBKeyPath&,
+                    bool unique,
+                    bool multi_entry));
+  MOCK_METHOD3(DeleteIndex,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id));
+  MOCK_METHOD4(RenameIndex,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id,
+                    const WebString& new_name));
+  MOCK_METHOD6(
+      AddObserver,
+      void(long long transaction_id,
+           int32_t observer_id,
+           bool include_transaction,
+           bool no_records,
+           bool values,
+           const std::bitset<kWebIDBOperationTypeCount>& operation_types));
+  MOCK_CONST_METHOD1(ContainsObserverId, bool(int32_t id));
+  MOCK_METHOD1(RemoveObservers,
+               void(const WebVector<int32_t>& observer_ids_to_remove));
+  MOCK_METHOD6(Get,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id,
+                    const WebIDBKeyRange&,
+                    bool key_only,
+                    WebIDBCallbacks*));
+  MOCK_METHOD7(GetAll,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id,
+                    const WebIDBKeyRange&,
+                    long long max_count,
+                    bool key_only,
+                    WebIDBCallbacks*));
+  MOCK_METHOD9(Put,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    const WebData& value,
+                    const WebVector<WebBlobInfo>&,
+                    const WebIDBKey&,
+                    WebIDBPutMode,
+                    WebIDBCallbacks*,
+                    const WebVector<long long>& index_ids,
+                    const WebVector<WebIndexKeys>&));
+  MOCK_METHOD5(SetIndexKeys,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    const WebIDBKey&,
+                    const WebVector<long long>& index_ids,
+                    const WebVector<WebIndexKeys>&));
+  MOCK_METHOD3(SetIndexesReady,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    const WebVector<long long>& index_ids));
+  MOCK_METHOD8(OpenCursor,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id,
+                    const WebIDBKeyRange&,
+                    WebIDBCursorDirection,
+                    bool key_only,
+                    WebIDBTaskType,
+                    WebIDBCallbacks*));
+  MOCK_METHOD5(Count,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    long long index_id,
+                    const WebIDBKeyRange&,
+                    WebIDBCallbacks*));
+  MOCK_METHOD4(DeleteRange,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    const WebIDBKeyRange&,
+                    WebIDBCallbacks*));
+  MOCK_METHOD3(Clear,
+               void(long long transaction_id,
+                    long long object_store_id,
+                    WebIDBCallbacks*));
+  MOCK_METHOD1(AckReceivedBlobs, void(const WebVector<WebString>& uuids));
 
-    // Gmock does not support movable type, so cannot use MOCK_METHOD for addObserver. Issue: https://github.com/google/googletest/issues/395.
-    int32_t addObserver(std::unique_ptr<WebIDBObserver>, long long transactionId) { return -1; }
-    MOCK_CONST_METHOD1(containsObserverId, bool(int32_t id));
-    MOCK_METHOD1(removeObservers, void(const WebVector<int32_t>& observerIdsToRemove));
-    MOCK_METHOD6(get, void(long long transactionId, long long objectStoreId, long long indexId, const WebIDBKeyRange&, bool keyOnly, WebIDBCallbacks*));
-    MOCK_METHOD7(getAll, void(long long transactionId, long long objectStoreId, long long indexId, const WebIDBKeyRange&, long long maxCount, bool keyOnly, WebIDBCallbacks*));
-    MOCK_METHOD9(put, void(long long transactionId, long long objectStoreId, const WebData& value, const WebVector<WebBlobInfo>&, const WebIDBKey&, WebIDBPutMode, WebIDBCallbacks*, const WebVector<long long>& indexIds, const WebVector<WebIndexKeys>&));
-    MOCK_METHOD5(setIndexKeys, void(long long transactionId, long long objectStoreId, const WebIDBKey&, const WebVector<long long>& indexIds, const WebVector<WebIndexKeys>&));
-    MOCK_METHOD3(setIndexesReady, void(long long transactionId, long long objectStoreId, const WebVector<long long>& indexIds));
-    MOCK_METHOD8(openCursor, void(long long transactionId, long long objectStoreId, long long indexId, const WebIDBKeyRange&, WebIDBCursorDirection, bool keyOnly, WebIDBTaskType, WebIDBCallbacks*));
-    MOCK_METHOD5(count, void(long long transactionId, long long objectStoreId, long long indexId, const WebIDBKeyRange&, WebIDBCallbacks*));
-    MOCK_METHOD4(deleteRange, void(long long transactionId, long long objectStoreId, const WebIDBKeyRange&, WebIDBCallbacks*));
-    MOCK_METHOD3(clear, void(long long transactionId, long long objectStoreId, WebIDBCallbacks*));
-    MOCK_METHOD1(ackReceivedBlobs, void(const WebVector<WebString>& uuids));
-
-private:
-    MockWebIDBDatabase();
+ private:
+  MockWebIDBDatabase();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MockWebIDBDatabase_h
+#endif  // MockWebIDBDatabase_h

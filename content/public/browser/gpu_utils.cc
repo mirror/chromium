@@ -5,10 +5,14 @@
 #include "content/public/browser/gpu_utils.h"
 
 #include "base/command_line.h"
+#include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "content/browser/gpu/gpu_process_host.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/config/gpu_switches.h"
+#include "media/media_features.h"
 #include "ui/gl/gl_switches.h"
 
 namespace {
@@ -20,6 +24,20 @@ bool GetUintFromSwitch(const base::CommandLine* command_line,
     return false;
   std::string switch_value(command_line->GetSwitchValueASCII(switch_string));
   return base::StringToUint(switch_value, value);
+}
+
+void RunTaskOnTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    const base::Closure& callback) {
+  task_runner->PostTask(FROM_HERE, callback);
+}
+
+void StopGpuProcessImpl(const base::Closure& callback,
+                        content::GpuProcessHost* host) {
+  if (host)
+    host->gpu_service()->Stop(callback);
+  else
+    callback.Run();
 }
 
 }  // namespace
@@ -43,15 +61,25 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
   gpu_preferences.disable_vaapi_accelerated_video_encode =
       command_line->HasSwitch(switches::kDisableVaapiAcceleratedVideoEncode);
 #endif
-#if defined(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC)
   gpu_preferences.disable_web_rtc_hw_encoding =
-      command_line->HasSwitch(switches::kDisableWebRtcHWEncoding);
+      command_line->HasSwitch(switches::kDisableWebRtcHWEncoding) ||
+      (command_line->HasSwitch(switches::kDisableWebRtcHWVP8Encoding) &&
+       !base::FeatureList::IsEnabled(features::kWebRtcHWH264Encoding));
 #endif
 #if defined(OS_WIN)
-  gpu_preferences.enable_accelerated_vpx_decode =
-      command_line->HasSwitch(switches::kEnableAcceleratedVpxDecode);
+  uint32_t enable_accelerated_vpx_decode_val =
+      gpu::GpuPreferences::VPX_VENDOR_MICROSOFT;
+  if (GetUintFromSwitch(command_line, switches::kEnableAcceleratedVpxDecode,
+                        &enable_accelerated_vpx_decode_val)) {
+    gpu_preferences.enable_accelerated_vpx_decode =
+        static_cast<gpu::GpuPreferences::VpxDecodeVendors>(
+            enable_accelerated_vpx_decode_val);
+  }
+  gpu_preferences.enable_low_latency_dxva =
+      !command_line->HasSwitch(switches::kDisableLowLatencyDxva);
   gpu_preferences.enable_zero_copy_dxgi_video =
-      command_line->HasSwitch(switches::kEnableZeroCopyDxgiVideo);
+      !command_line->HasSwitch(switches::kDisableZeroCopyDxgiVideo);
   gpu_preferences.enable_nv12_dxgi_video =
       !command_line->HasSwitch(switches::kDisableNv12DxgiVideo);
 #endif
@@ -71,6 +99,8 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
       command_line->HasSwitch(switches::kEnableGPUDebugging);
   gpu_preferences.enable_gpu_service_logging_gpu =
       command_line->HasSwitch(switches::kEnableGPUServiceLoggingGPU);
+  gpu_preferences.enable_gpu_driver_debug_logging =
+      command_line->HasSwitch(switches::kEnableGPUDriverDebugLogging);
   gpu_preferences.disable_gpu_program_cache =
       command_line->HasSwitch(switches::kDisableGpuProgramCache);
   gpu_preferences.enforce_gl_minimums =
@@ -85,8 +115,6 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
   }
   gpu_preferences.disable_gpu_shader_disk_cache =
       command_line->HasSwitch(switches::kDisableGpuShaderDiskCache);
-  gpu_preferences.enable_share_group_async_texture_upload =
-      command_line->HasSwitch(switches::kEnableShareGroupAsyncTextureUpload);
   gpu_preferences.enable_threaded_texture_mailboxes =
       command_line->HasSwitch(switches::kEnableThreadedTextureMailboxes);
   gpu_preferences.gl_shader_interm_output =
@@ -97,11 +125,20 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
       command_line->HasSwitch(switches::kEnableGPUServiceLogging);
   gpu_preferences.enable_gpu_service_tracing =
       command_line->HasSwitch(switches::kEnableGPUServiceTracing);
-  gpu_preferences.enable_unsafe_es3_apis =
-      command_line->HasSwitch(switches::kEnableUnsafeES3APIs);
   gpu_preferences.use_passthrough_cmd_decoder =
       command_line->HasSwitch(switches::kUsePassthroughCmdDecoder);
+  // Some of these preferences are set or adjusted in
+  // GpuDataManagerImplPrivate::AppendGpuCommandLine.
   return gpu_preferences;
+}
+
+void StopGpuProcess(const base::Closure& callback) {
+  content::GpuProcessHost::CallOnIO(
+      content::GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED,
+      false /* force_create */,
+      base::Bind(&StopGpuProcessImpl,
+                 base::Bind(RunTaskOnTaskRunner,
+                            base::ThreadTaskRunnerHandle::Get(), callback)));
 }
 
 }  // namespace content

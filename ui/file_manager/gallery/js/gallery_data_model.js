@@ -42,14 +42,6 @@ function GalleryDataModel(metadataModel, opt_watcher) {
  */
 GalleryDataModel.MAX_FULL_IMAGE_CACHE_ = 3;
 
-/**
- * Maximum number of screen size image cache.
- * @type {number}
- * @const
- * @private
- */
-GalleryDataModel.MAX_SCREEN_IMAGE_CACHE_ = 5;
-
 GalleryDataModel.prototype = {
   __proto__: cr.ui.ArrayDataModel.prototype
 };
@@ -92,7 +84,7 @@ GalleryDataModel.prototype.saveItem = function(
           if (!util.isSameEntry(oldEntry, item.getEntry())) {
             Promise.all([
               this.metadataModel_.get(
-                  [oldEntry], Gallery.PREFETCH_PROPERTY_NAMES),
+                  [oldEntry], GalleryItem.PREFETCH_PROPERTY_NAMES),
               new ThumbnailModel(this.metadataModel_).get([oldEntry])
             ]).then(function(itemLists) {
               // New entry is added and the item now tracks it.

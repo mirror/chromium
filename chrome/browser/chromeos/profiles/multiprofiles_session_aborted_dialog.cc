@@ -5,7 +5,7 @@
 #include "chrome/browser/chromeos/profiles/multiprofiles_session_aborted_dialog.h"
 
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -72,7 +72,7 @@ void MultiprofilesSessionAbortedView::ShowDialog(
   MultiprofilesSessionAbortedView* dialog_view =
       new MultiprofilesSessionAbortedView();
   views::DialogDelegate::CreateDialogWidget(
-      dialog_view, ash::Shell::GetTargetRootWindow(), NULL);
+      dialog_view, ash::Shell::GetRootWindowForNewWindows(), NULL);
   dialog_view->InitDialog(user_email);
   views::Widget* widget = dialog_view->GetWidget();
   DCHECK(widget);
@@ -83,7 +83,7 @@ void MultiprofilesSessionAbortedView::ShowDialog(
   std::vector<ash::RootWindowController*> controllers =
       ash::Shell::GetAllRootWindowControllers();
   for (ash::RootWindowController* controller : controllers) {
-    controller->GetShelf()->SetAutoHideBehavior(
+    controller->wm_shelf()->SetAutoHideBehavior(
         ash::SHELF_AUTO_HIDE_ALWAYS_HIDDEN);
   }
 }

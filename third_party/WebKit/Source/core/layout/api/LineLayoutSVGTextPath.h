@@ -12,44 +12,38 @@
 namespace blink {
 
 class LineLayoutSVGTextPath : public LineLayoutSVGInline {
-public:
-    explicit LineLayoutSVGTextPath(LayoutSVGTextPath* layoutSVGTextPath)
-        : LineLayoutSVGInline(layoutSVGTextPath)
-    {
-    }
+ public:
+  explicit LineLayoutSVGTextPath(LayoutSVGTextPath* layout_svg_text_path)
+      : LineLayoutSVGInline(layout_svg_text_path) {}
 
-    explicit LineLayoutSVGTextPath(const LineLayoutItem& item)
-        : LineLayoutSVGInline(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isSVGTextPath());
-    }
+  explicit LineLayoutSVGTextPath(const LineLayoutItem& item)
+      : LineLayoutSVGInline(item) {
+    SECURITY_DCHECK(!item || item.IsSVGTextPath());
+  }
 
-    explicit LineLayoutSVGTextPath(std::nullptr_t) : LineLayoutSVGInline(nullptr) { }
+  explicit LineLayoutSVGTextPath(std::nullptr_t)
+      : LineLayoutSVGInline(nullptr) {}
 
-    LineLayoutSVGTextPath() { }
+  LineLayoutSVGTextPath() {}
 
-    std::unique_ptr<PathPositionMapper> layoutPath() const
-    {
-        return toSVGTextPath()->layoutPath();
-    }
+  std::unique_ptr<PathPositionMapper> LayoutPath() const {
+    return ToSVGTextPath()->LayoutPath();
+  }
 
-    float calculateStartOffset(float pathLength) const
-    {
-        return toSVGTextPath()->calculateStartOffset(pathLength);
-    }
+  float CalculateStartOffset(float path_length) const {
+    return ToSVGTextPath()->CalculateStartOffset(path_length);
+  }
 
-private:
-    LayoutSVGTextPath* toSVGTextPath()
-    {
-        return toLayoutSVGTextPath(layoutObject());
-    }
+ private:
+  LayoutSVGTextPath* ToSVGTextPath() {
+    return ToLayoutSVGTextPath(GetLayoutObject());
+  }
 
-    const LayoutSVGTextPath* toSVGTextPath() const
-    {
-        return toLayoutSVGTextPath(layoutObject());
-    }
+  const LayoutSVGTextPath* ToSVGTextPath() const {
+    return ToLayoutSVGTextPath(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineLayoutSVGTextPath_h
+#endif  // LineLayoutSVGTextPath_h

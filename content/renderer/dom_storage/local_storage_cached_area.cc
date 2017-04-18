@@ -5,8 +5,10 @@
 #include "content/renderer/dom_storage/local_storage_cached_area.h"
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
+#include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/time/time.h"
@@ -14,12 +16,62 @@
 #include "content/common/storage_partition_service.mojom.h"
 #include "content/renderer/dom_storage/local_storage_area.h"
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
-#include "mojo/common/common_type_converters.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebStorageEventDispatcher.h"
-#include "url/gurl.h"
 
 namespace content {
+
+namespace {
+
+// Don't change or reorder any of the values in this enum, as these values
+// are serialized on disk.
+enum class StorageFormat : uint8_t { UTF16 = 0 };
+
+base::string16 Uint8VectorToString16(const std::vector<uint8_t>& input) {
+  // TODO(mek): Better error recovery when corrupt (or otherwise invalid) data
+  // is detected.
+  if (input.size() % sizeof(base::char16) != 1 ||
+      input[0] != static_cast<uint8_t>(StorageFormat::UTF16)) {
+    VLOG(1) << "Corrupt data in localstorage";
+    return base::string16();
+  }
+  base::string16 result;
+  result.resize(input.size() / sizeof(base::char16));
+  std::memcpy(reinterpret_cast<void*>(&result[0]), input.data() + 1,
+              input.size() - 1);
+  return result;
+}
+
+std::vector<uint8_t> String16ToUint8Vector(const base::string16& input) {
+  const uint8_t* data = reinterpret_cast<const uint8_t*>(input.data());
+  std::vector<uint8_t> result;
+  result.reserve(input.size() * sizeof(base::char16) + 1);
+  result.push_back(static_cast<uint8_t>(StorageFormat::UTF16));
+  result.insert(result.end(), data, data + input.size() * sizeof(base::char16));
+  return result;
+}
+
+class GetAllCallback : public mojom::LevelDBWrapperGetAllCallback {
+ public:
+  static mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo CreateAndBind(
+      const base::Callback<void(bool)>& callback) {
+    mojom::LevelDBWrapperGetAllCallbackAssociatedPtrInfo ptr_info;
+    auto request = mojo::MakeRequest(&ptr_info);
+    mojo::MakeStrongAssociatedBinding(
+        base::WrapUnique(new GetAllCallback(callback)), std::move(request));
+    return ptr_info;
+  }
+
+ private:
+  explicit GetAllCallback(const base::Callback<void(bool)>& callback)
+      : m_callback(callback) {}
+  void Complete(bool success) override { m_callback.Run(success); }
+
+  base::Callback<void(bool)> m_callback;
+};
+
+}  // namespace
 
 // These methods are used to pack and unpack the page_url/storage_area_id into
 // source strings to/from the browser.
@@ -28,12 +80,11 @@ std::string PackSource(const GURL& page_url,
   return page_url.spec() + "\n" + storage_area_id;
 }
 
-void UnpackSource(const mojo::String& source,
+void UnpackSource(const std::string& source,
                   GURL* page_url,
                   std::string* storage_area_id) {
   std::vector<std::string> result = base::SplitString(
-      source.To<std::string>(), "\n", base::KEEP_WHITESPACE,
-      base::SPLIT_WANT_ALL);
+      source, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
   DCHECK_EQ(result.size(), 2u);
   *page_url = GURL(result[0]);
   *storage_area_id = result[1];
@@ -45,8 +96,11 @@ LocalStorageCachedArea::LocalStorageCachedArea(
     LocalStorageCachedAreas* cached_areas)
     : origin_(origin), binding_(this),
       cached_areas_(cached_areas), weak_factory_(this) {
-  storage_partition_service->OpenLocalStorage(
-      origin_, binding_.CreateInterfacePtrAndBind(), mojo::GetProxy(&leveldb_));
+  storage_partition_service->OpenLocalStorage(origin_,
+                                              mojo::MakeRequest(&leveldb_));
+  mojom::LevelDBObserverAssociatedPtrInfo ptr_info;
+  binding_.Bind(&ptr_info);
+  leveldb_->AddObserver(std::move(ptr_info));
 }
 
 LocalStorageCachedArea::~LocalStorageCachedArea() {
@@ -75,7 +129,8 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
                                      const std::string& storage_area_id) {
   // A quick check to reject obviously overbudget items to avoid priming the
   // cache.
-  if (key.length() + value.length() > kPerStorageAreaQuota)
+  if ((key.length() + value.length()) * sizeof(base::char16) >
+      kPerStorageAreaQuota)
     return false;
 
   EnsureLoaded();
@@ -85,8 +140,7 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
 
   // Ignore mutations to |key| until OnSetItemComplete.
   ignore_key_mutations_[key]++;
-  leveldb_->Put(mojo::Array<uint8_t>::From(key),
-                mojo::Array<uint8_t>::From(value),
+  leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
                 PackSource(page_url, storage_area_id),
                 base::Bind(&LocalStorageCachedArea::OnSetItemComplete,
                            weak_factory_.GetWeakPtr(), key));
@@ -103,7 +157,7 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
 
   // Ignore mutations to |key| until OnRemoveItemComplete.
   ignore_key_mutations_[key]++;
-  leveldb_->Delete(mojo::Array<uint8_t>::From(key),
+  leveldb_->Delete(String16ToUint8Vector(key),
                    PackSource(page_url, storage_area_id),
                    base::Bind(&LocalStorageCachedArea::OnRemoveItemComplete,
                               weak_factory_.GetWeakPtr(), key));
@@ -112,7 +166,6 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
 void LocalStorageCachedArea::Clear(const GURL& page_url,
                                    const std::string& storage_area_id) {
   // No need to prime the cache in this case.
-
   Reset();
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
   ignore_all_mutations_ = true;
@@ -129,31 +182,29 @@ void LocalStorageCachedArea::AreaDestroyed(LocalStorageArea* area) {
   areas_.erase(area->id());
 }
 
-void LocalStorageCachedArea::KeyAdded(mojo::Array<uint8_t> key,
-                                      mojo::Array<uint8_t> value,
-                                      const mojo::String& source) {
+void LocalStorageCachedArea::KeyAdded(const std::vector<uint8_t>& key,
+                                      const std::vector<uint8_t>& value,
+                                      const std::string& source) {
   base::NullableString16 null_value;
-  KeyAddedOrChanged(std::move(key), std::move(value),
-                    null_value, source);
+  KeyAddedOrChanged(key, value, null_value, source);
 }
 
-void LocalStorageCachedArea::KeyChanged(mojo::Array<uint8_t> key,
-                                        mojo::Array<uint8_t> new_value,
-                                        mojo::Array<uint8_t> old_value,
-                                        const mojo::String& source) {
-  base::NullableString16 old_value_str(old_value.To<base::string16>(), false);
-  KeyAddedOrChanged(std::move(key), std::move(new_value),
-                    old_value_str, source);
+void LocalStorageCachedArea::KeyChanged(const std::vector<uint8_t>& key,
+                                        const std::vector<uint8_t>& new_value,
+                                        const std::vector<uint8_t>& old_value,
+                                        const std::string& source) {
+  base::NullableString16 old_value_str(Uint8VectorToString16(old_value), false);
+  KeyAddedOrChanged(key, new_value, old_value_str, source);
 }
 
-void LocalStorageCachedArea::KeyDeleted(mojo::Array<uint8_t> key,
-                                        mojo::Array<uint8_t> old_value,
-                                        const mojo::String& source) {
+void LocalStorageCachedArea::KeyDeleted(const std::vector<uint8_t>& key,
+                                        const std::vector<uint8_t>& old_value,
+                                        const std::string& source) {
   GURL page_url;
   std::string storage_area_id;
   UnpackSource(source, &page_url, &storage_area_id);
 
-  base::string16 key_string = key.To<base::string16>();
+  base::string16 key_string = Uint8VectorToString16(key);
 
   blink::WebStorageArea* originating_area = nullptr;
   if (areas_.find(storage_area_id) != areas_.end()) {
@@ -170,12 +221,13 @@ void LocalStorageCachedArea::KeyDeleted(mojo::Array<uint8_t> key,
     }
   }
 
-  blink::WebStorageEventDispatcher::dispatchLocalStorageEvent(
-      key_string, old_value.To<base::string16>(), base::NullableString16(),
-      GURL(origin_.Serialize()), page_url, originating_area);
+  blink::WebStorageEventDispatcher::DispatchLocalStorageEvent(
+      blink::WebString::FromUTF16(key_string),
+      blink::WebString::FromUTF16(Uint8VectorToString16(old_value)),
+      blink::WebString(), origin_.GetURL(), page_url, originating_area);
 }
 
-void LocalStorageCachedArea::AllDeleted(const mojo::String& source) {
+void LocalStorageCachedArea::AllDeleted(const std::string& source) {
   GURL page_url;
   std::string storage_area_id;
   UnpackSource(source, &page_url, &storage_area_id);
@@ -201,35 +253,22 @@ void LocalStorageCachedArea::AllDeleted(const mojo::String& source) {
     }
   }
 
-  blink::WebStorageEventDispatcher::dispatchLocalStorageEvent(
-      base::NullableString16(), base::NullableString16(),
-      base::NullableString16(), GURL(origin_.Serialize()), page_url,
-      originating_area);
-}
-
-void LocalStorageCachedArea::GetAllComplete(const mojo::String& source) {
-  // Since the GetAll method is synchronous, we need this asynchronously
-  // delivered notification to avoid applying changes to the returned array
-  // that we already have.
-  if (source.To<std::string>() == get_all_request_id_) {
-    DCHECK(ignore_all_mutations_);
-    DCHECK(!get_all_request_id_.empty());
-    ignore_all_mutations_ = false;
-    get_all_request_id_.clear();
-  }
+  blink::WebStorageEventDispatcher::DispatchLocalStorageEvent(
+      blink::WebString(), blink::WebString(), blink::WebString(),
+      origin_.GetURL(), page_url, originating_area);
 }
 
 void LocalStorageCachedArea::KeyAddedOrChanged(
-    mojo::Array<uint8_t> key,
-    mojo::Array<uint8_t> new_value,
+    const std::vector<uint8_t>& key,
+    const std::vector<uint8_t>& new_value,
     const base::NullableString16& old_value,
-    const mojo::String& source) {
+    const std::string& source) {
   GURL page_url;
   std::string storage_area_id;
   UnpackSource(source, &page_url, &storage_area_id);
 
-  base::string16 key_string = key.To<base::string16>();
-  base::string16 new_value_string = new_value.To<base::string16>();
+  base::string16 key_string = Uint8VectorToString16(key);
+  base::string16 new_value_string = Uint8VectorToString16(new_value);
 
   blink::WebStorageArea* originating_area = nullptr;
   if (areas_.find(storage_area_id) != areas_.end()) {
@@ -250,10 +289,11 @@ void LocalStorageCachedArea::KeyAddedOrChanged(
     }
   }
 
-  blink::WebStorageEventDispatcher::dispatchLocalStorageEvent(
-      key_string, old_value, new_value_string,
-      GURL(origin_.Serialize()), page_url, originating_area);
-
+  blink::WebStorageEventDispatcher::DispatchLocalStorageEvent(
+      blink::WebString::FromUTF16(key_string),
+      blink::WebString::FromUTF16(old_value),
+      blink::WebString::FromUTF16(new_value_string), origin_.GetURL(), page_url,
+      originating_area);
 }
 
 void LocalStorageCachedArea::EnsureLoaded() {
@@ -262,15 +302,17 @@ void LocalStorageCachedArea::EnsureLoaded() {
 
   base::TimeTicks before = base::TimeTicks::Now();
   ignore_all_mutations_ = true;
-  get_all_request_id_ = base::Uint64ToString(base::RandUint64());
   leveldb::mojom::DatabaseError status = leveldb::mojom::DatabaseError::OK;
-  mojo::Array<content::mojom::KeyValuePtr> data;
-  leveldb_->GetAll(get_all_request_id_, &status, &data);
+  std::vector<content::mojom::KeyValuePtr> data;
+  leveldb_->GetAll(GetAllCallback::CreateAndBind(
+                       base::Bind(&LocalStorageCachedArea::OnGetAllComplete,
+                                  weak_factory_.GetWeakPtr())),
+                   &status, &data);
 
   DOMStorageValuesMap values;
   for (size_t i = 0; i < data.size(); ++i) {
-    values[data[i]->key.To<base::string16>()] =
-        base::NullableString16(data[i]->value.To<base::string16>(), false);
+    values[Uint8VectorToString16(data[i]->key)] =
+        base::NullableString16(Uint8VectorToString16(data[i]->value), false);
   }
 
   map_ = new DOMStorageMap(kPerStorageAreaQuota);
@@ -285,7 +327,7 @@ void LocalStorageCachedArea::EnsureLoaded() {
   // above what we see in practice, since histograms can't change.
   UMA_HISTOGRAM_CUSTOM_COUNTS("LocalStorage.MojoSizeInKB",
                               local_storage_size_kb,
-                              0, 6 * 1024, 50);
+                              1, 6 * 1024, 50);
   if (local_storage_size_kb < 100) {
     UMA_HISTOGRAM_TIMES("LocalStorage.MojoTimeToPrimeForUnder100KB",
                         time_to_prime);
@@ -321,6 +363,15 @@ void LocalStorageCachedArea::OnRemoveItemComplete(
 }
 
 void LocalStorageCachedArea::OnClearComplete(bool success) {
+  DCHECK(success);
+  DCHECK(ignore_all_mutations_);
+  ignore_all_mutations_ = false;
+}
+
+void LocalStorageCachedArea::OnGetAllComplete(bool success) {
+  // Since the GetAll method is synchronous, we need this asynchronously
+  // delivered notification to avoid applying changes to the returned array
+  // that we already have.
   DCHECK(success);
   DCHECK(ignore_all_mutations_);
   ignore_all_mutations_ = false;

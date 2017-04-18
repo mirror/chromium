@@ -28,8 +28,8 @@
 
 #include "core/css/CSSRule.h"
 #include "core/css/StyleRule.h"
-#include "wtf/Forward.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
@@ -38,93 +38,96 @@ class CSSKeyframeRule;
 class StyleRuleKeyframe;
 
 class StyleRuleKeyframes final : public StyleRuleBase {
-public:
-    static StyleRuleKeyframes* create() { return new StyleRuleKeyframes(); }
+ public:
+  static StyleRuleKeyframes* Create() { return new StyleRuleKeyframes(); }
 
-    ~StyleRuleKeyframes();
+  ~StyleRuleKeyframes();
 
-    const HeapVector<Member<StyleRuleKeyframe>>& keyframes() const { return m_keyframes; }
+  const HeapVector<Member<StyleRuleKeyframe>>& Keyframes() const {
+    return keyframes_;
+  }
 
-    void parserAppendKeyframe(StyleRuleKeyframe*);
-    void wrapperAppendKeyframe(StyleRuleKeyframe*);
-    void wrapperRemoveKeyframe(unsigned);
+  void ParserAppendKeyframe(StyleRuleKeyframe*);
+  void WrapperAppendKeyframe(StyleRuleKeyframe*);
+  void WrapperRemoveKeyframe(unsigned);
 
-    String name() const { return m_name; }
-    void setName(const String& name) { m_name = AtomicString(name); }
+  String GetName() const { return name_; }
+  void SetName(const String& name) { name_ = AtomicString(name); }
 
-    bool isVendorPrefixed() const { return m_isPrefixed; }
-    void setVendorPrefixed(bool isPrefixed) { m_isPrefixed = isPrefixed; }
+  bool IsVendorPrefixed() const { return is_prefixed_; }
+  void SetVendorPrefixed(bool is_prefixed) { is_prefixed_ = is_prefixed; }
 
-    int findKeyframeIndex(const String& key) const;
+  int FindKeyframeIndex(const String& key) const;
 
-    StyleRuleKeyframes* copy() const { return new StyleRuleKeyframes(*this); }
+  StyleRuleKeyframes* Copy() const { return new StyleRuleKeyframes(*this); }
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    void styleChanged() { m_version++; }
-    unsigned version() const { return m_version; }
+  void StyleChanged() { version_++; }
+  unsigned Version() const { return version_; }
 
-private:
-    StyleRuleKeyframes();
-    explicit StyleRuleKeyframes(const StyleRuleKeyframes&);
+ private:
+  StyleRuleKeyframes();
+  explicit StyleRuleKeyframes(const StyleRuleKeyframes&);
 
-    HeapVector<Member<StyleRuleKeyframe>> m_keyframes;
-    AtomicString m_name;
-    unsigned m_version : 31;
-    unsigned m_isPrefixed : 1;
+  HeapVector<Member<StyleRuleKeyframe>> keyframes_;
+  AtomicString name_;
+  unsigned version_ : 31;
+  unsigned is_prefixed_ : 1;
 };
 
 DEFINE_STYLE_RULE_TYPE_CASTS(Keyframes);
 
 class CSSKeyframesRule final : public CSSRule {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CSSKeyframesRule* create(StyleRuleKeyframes* rule, CSSStyleSheet* sheet)
-    {
-        return new CSSKeyframesRule(rule, sheet);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~CSSKeyframesRule() override;
+ public:
+  static CSSKeyframesRule* Create(StyleRuleKeyframes* rule,
+                                  CSSStyleSheet* sheet) {
+    return new CSSKeyframesRule(rule, sheet);
+  }
 
-    StyleRuleKeyframes* keyframes() { return m_keyframesRule.get(); }
+  ~CSSKeyframesRule() override;
 
-    String cssText() const override;
-    void reattach(StyleRuleBase*) override;
+  StyleRuleKeyframes* Keyframes() { return keyframes_rule_.Get(); }
 
-    String name() const { return m_keyframesRule->name(); }
-    void setName(const String&);
+  String cssText() const override;
+  void Reattach(StyleRuleBase*) override;
 
-    CSSRuleList* cssRules() const override;
+  String name() const { return keyframes_rule_->GetName(); }
+  void setName(const String&);
 
-    void appendRule(const String& rule);
-    void deleteRule(const String& key);
-    CSSKeyframeRule* findRule(const String& key);
+  CSSRuleList* cssRules() const override;
 
-    // For IndexedGetter and CSSRuleList.
-    unsigned length() const;
-    CSSKeyframeRule* item(unsigned index) const;
-    CSSKeyframeRule* anonymousIndexedGetter(unsigned index) const;
+  void appendRule(const String& rule);
+  void deleteRule(const String& key);
+  CSSKeyframeRule* findRule(const String& key);
 
-    bool isVendorPrefixed() const { return m_isPrefixed; }
-    void setVendorPrefixed(bool isPrefixed) { m_isPrefixed = isPrefixed; }
+  // For IndexedGetter and CSSRuleList.
+  unsigned length() const;
+  CSSKeyframeRule* Item(unsigned index) const;
+  CSSKeyframeRule* AnonymousIndexedGetter(unsigned index) const;
 
-    void styleChanged() { m_keyframesRule->styleChanged(); }
+  bool IsVendorPrefixed() const { return is_prefixed_; }
+  void SetVendorPrefixed(bool is_prefixed) { is_prefixed_ = is_prefixed; }
 
-    DECLARE_VIRTUAL_TRACE();
+  void StyleChanged() { keyframes_rule_->StyleChanged(); }
 
-private:
-    CSSKeyframesRule(StyleRuleKeyframes*, CSSStyleSheet* parent);
+  DECLARE_VIRTUAL_TRACE();
 
-    CSSRule::Type type() const override { return KEYFRAMES_RULE; }
+ private:
+  CSSKeyframesRule(StyleRuleKeyframes*, CSSStyleSheet* parent);
 
-    Member<StyleRuleKeyframes> m_keyframesRule;
-    mutable HeapVector<Member<CSSKeyframeRule>> m_childRuleCSSOMWrappers;
-    mutable Member<CSSRuleList> m_ruleListCSSOMWrapper;
-    bool m_isPrefixed;
+  CSSRule::Type type() const override { return kKeyframesRule; }
+
+  Member<StyleRuleKeyframes> keyframes_rule_;
+  mutable HeapVector<Member<CSSKeyframeRule>> child_rule_cssom_wrappers_;
+  mutable Member<CSSRuleList> rule_list_cssom_wrapper_;
+  bool is_prefixed_;
 };
 
-DEFINE_CSS_RULE_TYPE_CASTS(CSSKeyframesRule, KEYFRAMES_RULE);
+DEFINE_CSS_RULE_TYPE_CASTS(CSSKeyframesRule, kKeyframesRule);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSKeyframesRule_h
+#endif  // CSSKeyframesRule_h

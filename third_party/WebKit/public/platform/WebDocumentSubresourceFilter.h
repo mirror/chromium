@@ -12,11 +12,19 @@ namespace blink {
 class WebURL;
 
 class WebDocumentSubresourceFilter {
-public:
-    virtual ~WebDocumentSubresourceFilter() {}
-    virtual bool allowLoad(const WebURL& resourceUrl, WebURLRequest::RequestContext) = 0;
+ public:
+  enum LoadPolicy { kAllow, kDisallow, kWouldDisallow };
+
+  virtual ~WebDocumentSubresourceFilter() {}
+  virtual LoadPolicy GetLoadPolicy(const WebURL& resource_url,
+                                   WebURLRequest::RequestContext) = 0;
+  virtual LoadPolicy GetLoadPolicyForWebSocketConnect(const WebURL&) = 0;
+
+  // Report that a resource loaded by the document (not a preload) was
+  // disallowed.
+  virtual void ReportDisallowedLoad() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebDocumentSubresourceFilter_h
+#endif  // WebDocumentSubresourceFilter_h

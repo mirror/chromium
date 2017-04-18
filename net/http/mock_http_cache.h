@@ -134,6 +134,9 @@ class MockDiskCache : public disk_cache::Backend {
   std::unique_ptr<Iterator> CreateIterator() override;
   void GetStats(base::StringPairs* stats) override;
   void OnExternalCacheHit(const std::string& key) override;
+  size_t DumpMemoryStats(
+      base::trace_event::ProcessMemoryDump* pmd,
+      const std::string& parent_absolute_name) const override;
 
   // Returns number of times a cache entry was successfully opened.
   int open_count() const { return open_count_; }
@@ -182,6 +185,11 @@ class MockHttpCache {
   MockHttpCache();
   explicit MockHttpCache(
       std::unique_ptr<HttpCache::BackendFactory> disk_cache_factory);
+  // |is_main_cache| if set, will set a quic server info factory.
+  explicit MockHttpCache(bool is_main_cache);
+
+  MockHttpCache(std::unique_ptr<HttpCache::BackendFactory> disk_cache_factory,
+                bool is_main_cache);
 
   HttpCache* http_cache() { return &http_cache_; }
 
@@ -194,8 +202,8 @@ class MockHttpCache {
   // Wrapper around http_cache()->CreateTransaction(DEFAULT_PRIORITY...)
   int CreateTransaction(std::unique_ptr<HttpTransaction>* trans);
 
-  // Wrapper to bypass the cache lock for new transactions.
-  void BypassCacheLock();
+  // Wrapper to simulate cache lock timeout for new transactions.
+  void SimulateCacheLockTimeout();
 
   // Wrapper to fail request conditionalization for new transactions.
   void FailConditionalizations();

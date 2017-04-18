@@ -12,11 +12,13 @@
 #include <set>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/test/test_simple_task_runner.h"
+#include "base/threading/thread_checker.h"
 #include "base/trace_event/trace_event.h"
 
 namespace cc {
@@ -27,11 +29,14 @@ class TestOrderablePendingTask : public base::TestPendingTask {
  public:
   TestOrderablePendingTask();
   TestOrderablePendingTask(const tracked_objects::Location& location,
-                           const base::Closure& task,
+                           base::OnceClosure task,
                            base::TimeTicks post_time,
                            base::TimeDelta delay,
                            TestNestability nestability);
+  TestOrderablePendingTask(TestOrderablePendingTask&&);
   ~TestOrderablePendingTask();
+
+  TestOrderablePendingTask& operator=(TestOrderablePendingTask&&);
 
   // operators needed by std::set and comparison
   bool operator==(const TestOrderablePendingTask& other) const;
@@ -41,9 +46,13 @@ class TestOrderablePendingTask : public base::TestPendingTask {
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> AsValue() const;
   void AsValueInto(base::trace_event::TracedValue* state) const;
 
+  size_t task_id() const { return task_id_; }
+
  private:
   static size_t task_id_counter;
-  const size_t task_id_;
+  size_t task_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestOrderablePendingTask);
 };
 
 // This runs pending tasks based on task's post_time + delay.
@@ -55,10 +64,10 @@ class OrderedSimpleTaskRunner : public base::SingleThreadTaskRunner {
 
   // base::TestSimpleTaskRunner implementation:
   bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       const base::Closure& task,
+                       base::OnceClosure task,
                        base::TimeDelta delay) override;
   bool PostNonNestableDelayedTask(const tracked_objects::Location& from_here,
-                                  const base::Closure& task,
+                                  base::OnceClosure task,
                                   base::TimeDelta delay) override;
 
   bool RunsTasksOnCurrentThread() const override;
@@ -129,10 +138,12 @@ class OrderedSimpleTaskRunner : public base::SingleThreadTaskRunner {
   // Advance Now() to the next task to run.
   base::Callback<bool(void)> AdvanceNow();
 
+  // Removes all tasks whose weak pointer has been revoked.
+  void RemoveCancelledTasks();
+
  protected:
   static bool TaskRunCountBelowCallback(size_t max_tasks, size_t* task_run);
-  bool TaskExistedInitiallyCallback(
-      const std::set<TestOrderablePendingTask>& existing_tasks);
+  bool TaskExistedInitiallyCallback(const std::set<size_t>& existing_tasks);
   bool NowBeforeCallback(base::TimeTicks stop_at);
   bool AdvanceNowCallback();
 

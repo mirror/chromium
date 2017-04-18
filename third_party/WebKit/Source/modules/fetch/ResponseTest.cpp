@@ -4,259 +4,317 @@
 
 #include "modules/fetch/Response.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/dom/Document.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/Frame.h"
 #include "core/testing/DummyPageHolder.h"
 #include "modules/fetch/BodyStreamBuffer.h"
+#include "modules/fetch/BytesConsumer.h"
+#include "modules/fetch/BytesConsumerTestUtil.h"
 #include "modules/fetch/DataConsumerHandleTestUtil.h"
-#include "modules/fetch/DataConsumerHandleUtil.h"
 #include "modules/fetch/FetchResponseData.h"
 #include "platform/blob/BlobData.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 namespace {
 
-std::unique_ptr<WebServiceWorkerResponse> createTestWebServiceWorkerResponse()
-{
-    const KURL url(ParsedURLString, "http://www.webresponse.com/");
-    const unsigned short status = 200;
-    const String statusText = "the best status text";
-    struct {
-        const char* key;
-        const char* value;
-    } headers[] = { { "cache-control", "no-cache" }, { "set-cookie", "foop" }, { "foo", "bar" }, { 0, 0 } };
-
-    std::unique_ptr<WebServiceWorkerResponse> webResponse = wrapUnique(new WebServiceWorkerResponse());
-    webResponse->setURL(url);
-    webResponse->setStatus(status);
-    webResponse->setStatusText(statusText);
-    webResponse->setResponseType(WebServiceWorkerResponseTypeDefault);
-    for (int i = 0; headers[i].key; ++i)
-        webResponse->setHeader(WebString::fromUTF8(headers[i].key), WebString::fromUTF8(headers[i].value));
-    return webResponse;
+std::unique_ptr<WebServiceWorkerResponse> CreateTestWebServiceWorkerResponse() {
+  const KURL url(kParsedURLString, "http://www.webresponse.com/");
+  const unsigned short kStatus = 200;
+  const String status_text = "the best status text";
+  struct {
+    const char* key;
+    const char* value;
+  } headers[] = {{"cache-control", "no-cache"},
+                 {"set-cookie", "foop"},
+                 {"foo", "bar"},
+                 {0, 0}};
+  Vector<WebURL> url_list;
+  url_list.push_back(url);
+  std::unique_ptr<WebServiceWorkerResponse> web_response =
+      WTF::MakeUnique<WebServiceWorkerResponse>();
+  web_response->SetURLList(url_list);
+  web_response->SetStatus(kStatus);
+  web_response->SetStatusText(status_text);
+  web_response->SetResponseType(kWebServiceWorkerResponseTypeDefault);
+  for (int i = 0; headers[i].key; ++i)
+    web_response->SetHeader(WebString::FromUTF8(headers[i].key),
+                            WebString::FromUTF8(headers[i].value));
+  return web_response;
 }
 
-TEST(ServiceWorkerResponseTest, FromFetchResponseData)
-{
-    std::unique_ptr<DummyPageHolder> page = DummyPageHolder::create(IntSize(1, 1));
-    const KURL url(ParsedURLString, "http://www.response.com");
+TEST(ServiceWorkerResponseTest, FromFetchResponseData) {
+  std::unique_ptr<DummyPageHolder> page =
+      DummyPageHolder::Create(IntSize(1, 1));
+  const KURL url(kParsedURLString, "http://www.response.com");
 
-    FetchResponseData* fetchResponseData = FetchResponseData::create();
-    fetchResponseData->setURL(url);
-
-    Response* response = Response::create(&page->document(), fetchResponseData);
-    ASSERT(response);
-    EXPECT_EQ(url, response->url());
+  FetchResponseData* fetch_response_data = FetchResponseData::Create();
+  Vector<KURL> url_list;
+  url_list.push_back(url);
+  fetch_response_data->SetURLList(url_list);
+  Response* response =
+      Response::Create(&page->GetDocument(), fetch_response_data);
+  DCHECK(response);
+  EXPECT_EQ(url, response->url());
 }
 
-TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponse)
-{
-    V8TestingScope scope;
-    std::unique_ptr<WebServiceWorkerResponse> webResponse = createTestWebServiceWorkerResponse();
-    Response* response = Response::create(scope.getScriptState(), *webResponse);
-    ASSERT(response);
-    EXPECT_EQ(webResponse->url(), response->url());
-    EXPECT_EQ(webResponse->status(), response->status());
-    EXPECT_STREQ(webResponse->statusText().utf8().c_str(), response->statusText().utf8().data());
+TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponse) {
+  V8TestingScope scope;
+  std::unique_ptr<WebServiceWorkerResponse> web_response =
+      CreateTestWebServiceWorkerResponse();
+  Response* response = Response::Create(scope.GetScriptState(), *web_response);
+  DCHECK(response);
+  ASSERT_EQ(1u, web_response->UrlList().size());
+  EXPECT_EQ(web_response->UrlList()[0], response->url());
+  EXPECT_EQ(web_response->Status(), response->status());
+  EXPECT_STREQ(web_response->StatusText().Utf8().c_str(),
+               response->statusText().Utf8().Data());
 
-    Headers* responseHeaders = response->headers();
+  Headers* response_headers = response->headers();
 
-    WebVector<WebString> keys = webResponse->getHeaderKeys();
-    EXPECT_EQ(keys.size(), responseHeaders->headerList()->size());
-    for (size_t i = 0, max = keys.size(); i < max; ++i) {
-        WebString key = keys[i];
-        TrackExceptionState exceptionState;
-        EXPECT_STREQ(webResponse->getHeader(key).utf8().c_str(), responseHeaders->get(key, exceptionState).utf8().data());
-        EXPECT_FALSE(exceptionState.hadException());
-    }
+  WebVector<WebString> keys = web_response->GetHeaderKeys();
+  EXPECT_EQ(keys.size(), response_headers->HeaderList()->size());
+  for (size_t i = 0, max = keys.size(); i < max; ++i) {
+    WebString key = keys[i];
+    DummyExceptionStateForTesting exception_state;
+    EXPECT_STREQ(web_response->GetHeader(key).Utf8().c_str(),
+                 response_headers->get(key, exception_state).Utf8().Data());
+    EXPECT_FALSE(exception_state.HadException());
+  }
 }
 
-TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseDefault)
-{
-    V8TestingScope scope;
-    std::unique_ptr<WebServiceWorkerResponse> webResponse = createTestWebServiceWorkerResponse();
-    webResponse->setResponseType(WebServiceWorkerResponseTypeDefault);
-    Response* response = Response::create(scope.getScriptState(), *webResponse);
+TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseDefault) {
+  V8TestingScope scope;
+  std::unique_ptr<WebServiceWorkerResponse> web_response =
+      CreateTestWebServiceWorkerResponse();
+  web_response->SetResponseType(kWebServiceWorkerResponseTypeDefault);
+  Response* response = Response::Create(scope.GetScriptState(), *web_response);
 
-    Headers* responseHeaders = response->headers();
-    TrackExceptionState exceptionState;
-    EXPECT_STREQ("foop", responseHeaders->get("set-cookie", exceptionState).utf8().data());
-    EXPECT_STREQ("bar", responseHeaders->get("foo", exceptionState).utf8().data());
-    EXPECT_STREQ("no-cache", responseHeaders->get("cache-control", exceptionState).utf8().data());
-    EXPECT_FALSE(exceptionState.hadException());
+  Headers* response_headers = response->headers();
+  DummyExceptionStateForTesting exception_state;
+  EXPECT_STREQ(
+      "foop",
+      response_headers->get("set-cookie", exception_state).Utf8().Data());
+  EXPECT_STREQ("bar",
+               response_headers->get("foo", exception_state).Utf8().Data());
+  EXPECT_STREQ(
+      "no-cache",
+      response_headers->get("cache-control", exception_state).Utf8().Data());
+  EXPECT_FALSE(exception_state.HadException());
 }
 
-TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseBasic)
-{
-    V8TestingScope scope;
-    std::unique_ptr<WebServiceWorkerResponse> webResponse = createTestWebServiceWorkerResponse();
-    webResponse->setResponseType(WebServiceWorkerResponseTypeBasic);
-    Response* response = Response::create(scope.getScriptState(), *webResponse);
+TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseBasic) {
+  V8TestingScope scope;
+  std::unique_ptr<WebServiceWorkerResponse> web_response =
+      CreateTestWebServiceWorkerResponse();
+  web_response->SetResponseType(kWebServiceWorkerResponseTypeBasic);
+  Response* response = Response::Create(scope.GetScriptState(), *web_response);
 
-    Headers* responseHeaders = response->headers();
-    TrackExceptionState exceptionState;
-    EXPECT_STREQ("", responseHeaders->get("set-cookie", exceptionState).utf8().data());
-    EXPECT_STREQ("bar", responseHeaders->get("foo", exceptionState).utf8().data());
-    EXPECT_STREQ("no-cache", responseHeaders->get("cache-control", exceptionState).utf8().data());
-    EXPECT_FALSE(exceptionState.hadException());
+  Headers* response_headers = response->headers();
+  DummyExceptionStateForTesting exception_state;
+  EXPECT_STREQ(
+      "", response_headers->get("set-cookie", exception_state).Utf8().Data());
+  EXPECT_STREQ("bar",
+               response_headers->get("foo", exception_state).Utf8().Data());
+  EXPECT_STREQ(
+      "no-cache",
+      response_headers->get("cache-control", exception_state).Utf8().Data());
+  EXPECT_FALSE(exception_state.HadException());
 }
 
-TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseCORS)
-{
-    V8TestingScope scope;
-    std::unique_ptr<WebServiceWorkerResponse> webResponse = createTestWebServiceWorkerResponse();
-    webResponse->setResponseType(WebServiceWorkerResponseTypeCORS);
-    Response* response = Response::create(scope.getScriptState(), *webResponse);
+TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseCORS) {
+  V8TestingScope scope;
+  std::unique_ptr<WebServiceWorkerResponse> web_response =
+      CreateTestWebServiceWorkerResponse();
+  web_response->SetResponseType(kWebServiceWorkerResponseTypeCORS);
+  Response* response = Response::Create(scope.GetScriptState(), *web_response);
 
-    Headers* responseHeaders = response->headers();
-    TrackExceptionState exceptionState;
-    EXPECT_STREQ("", responseHeaders->get("set-cookie", exceptionState).utf8().data());
-    EXPECT_STREQ("", responseHeaders->get("foo", exceptionState).utf8().data());
-    EXPECT_STREQ("no-cache", responseHeaders->get("cache-control", exceptionState).utf8().data());
-    EXPECT_FALSE(exceptionState.hadException());
+  Headers* response_headers = response->headers();
+  DummyExceptionStateForTesting exception_state;
+  EXPECT_STREQ(
+      "", response_headers->get("set-cookie", exception_state).Utf8().Data());
+  EXPECT_STREQ("", response_headers->get("foo", exception_state).Utf8().Data());
+  EXPECT_STREQ(
+      "no-cache",
+      response_headers->get("cache-control", exception_state).Utf8().Data());
+  EXPECT_FALSE(exception_state.HadException());
 }
 
-TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseOpaque)
-{
-    V8TestingScope scope;
-    std::unique_ptr<WebServiceWorkerResponse> webResponse = createTestWebServiceWorkerResponse();
-    webResponse->setResponseType(WebServiceWorkerResponseTypeOpaque);
-    Response* response = Response::create(scope.getScriptState(), *webResponse);
+TEST(ServiceWorkerResponseTest, FromWebServiceWorkerResponseOpaque) {
+  V8TestingScope scope;
+  std::unique_ptr<WebServiceWorkerResponse> web_response =
+      CreateTestWebServiceWorkerResponse();
+  web_response->SetResponseType(kWebServiceWorkerResponseTypeOpaque);
+  Response* response = Response::Create(scope.GetScriptState(), *web_response);
 
-    Headers* responseHeaders = response->headers();
-    TrackExceptionState exceptionState;
-    EXPECT_STREQ("", responseHeaders->get("set-cookie", exceptionState).utf8().data());
-    EXPECT_STREQ("", responseHeaders->get("foo", exceptionState).utf8().data());
-    EXPECT_STREQ("", responseHeaders->get("cache-control", exceptionState).utf8().data());
-    EXPECT_FALSE(exceptionState.hadException());
+  Headers* response_headers = response->headers();
+  DummyExceptionStateForTesting exception_state;
+  EXPECT_STREQ(
+      "", response_headers->get("set-cookie", exception_state).Utf8().Data());
+  EXPECT_STREQ("", response_headers->get("foo", exception_state).Utf8().Data());
+  EXPECT_STREQ(
+      "",
+      response_headers->get("cache-control", exception_state).Utf8().Data());
+  EXPECT_FALSE(exception_state.HadException());
 }
 
-void checkResponseStream(ScriptState* scriptState, Response* response, bool checkResponseBodyStreamBuffer)
-{
-    BodyStreamBuffer* originalInternal = response->internalBodyBuffer();
-    if (checkResponseBodyStreamBuffer) {
-        EXPECT_EQ(response->bodyBuffer(), originalInternal);
-    } else {
-        EXPECT_FALSE(response->bodyBuffer());
-    }
+void CheckResponseStream(ScriptState* script_state,
+                         Response* response,
+                         bool check_response_body_stream_buffer) {
+  BodyStreamBuffer* original_internal = response->InternalBodyBuffer();
+  if (check_response_body_stream_buffer) {
+    EXPECT_EQ(response->BodyBuffer(), original_internal);
+  } else {
+    EXPECT_FALSE(response->BodyBuffer());
+  }
 
-    TrackExceptionState exceptionState;
-    Response* clonedResponse = response->clone(scriptState, exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
+  DummyExceptionStateForTesting exception_state;
+  Response* cloned_response = response->clone(script_state, exception_state);
+  EXPECT_FALSE(exception_state.HadException());
 
-    if (!response->internalBodyBuffer())
-        FAIL() << "internalBodyBuffer() must not be null.";
-    if (!clonedResponse->internalBodyBuffer())
-        FAIL() << "internalBodyBuffer() must not be null.";
-    EXPECT_TRUE(response->internalBodyBuffer());
-    EXPECT_TRUE(clonedResponse->internalBodyBuffer());
-    EXPECT_TRUE(response->internalBodyBuffer());
-    EXPECT_TRUE(clonedResponse->internalBodyBuffer());
-    EXPECT_NE(response->internalBodyBuffer(), originalInternal);
-    EXPECT_NE(clonedResponse->internalBodyBuffer(), originalInternal);
-    EXPECT_NE(response->internalBodyBuffer(), clonedResponse->internalBodyBuffer());
-    if (checkResponseBodyStreamBuffer) {
-        EXPECT_EQ(response->bodyBuffer(), response->internalBodyBuffer());
-        EXPECT_EQ(clonedResponse->bodyBuffer(), clonedResponse->internalBodyBuffer());
-    } else {
-        EXPECT_FALSE(response->bodyBuffer());
-        EXPECT_FALSE(clonedResponse->bodyBuffer());
-    }
-    DataConsumerHandleTestUtil::MockFetchDataLoaderClient* client1 = new DataConsumerHandleTestUtil::MockFetchDataLoaderClient();
-    DataConsumerHandleTestUtil::MockFetchDataLoaderClient* client2 = new DataConsumerHandleTestUtil::MockFetchDataLoaderClient();
-    EXPECT_CALL(*client1, didFetchDataLoadedString(String("Hello, world")));
-    EXPECT_CALL(*client2, didFetchDataLoadedString(String("Hello, world")));
+  if (!response->InternalBodyBuffer())
+    FAIL() << "internalBodyBuffer() must not be null.";
+  if (!cloned_response->InternalBodyBuffer())
+    FAIL() << "internalBodyBuffer() must not be null.";
+  EXPECT_TRUE(response->InternalBodyBuffer());
+  EXPECT_TRUE(cloned_response->InternalBodyBuffer());
+  EXPECT_TRUE(response->InternalBodyBuffer());
+  EXPECT_TRUE(cloned_response->InternalBodyBuffer());
+  EXPECT_NE(response->InternalBodyBuffer(), original_internal);
+  EXPECT_NE(cloned_response->InternalBodyBuffer(), original_internal);
+  EXPECT_NE(response->InternalBodyBuffer(),
+            cloned_response->InternalBodyBuffer());
+  if (check_response_body_stream_buffer) {
+    EXPECT_EQ(response->BodyBuffer(), response->InternalBodyBuffer());
+    EXPECT_EQ(cloned_response->BodyBuffer(),
+              cloned_response->InternalBodyBuffer());
+  } else {
+    EXPECT_FALSE(response->BodyBuffer());
+    EXPECT_FALSE(cloned_response->BodyBuffer());
+  }
+  BytesConsumerTestUtil::MockFetchDataLoaderClient* client1 =
+      new BytesConsumerTestUtil::MockFetchDataLoaderClient();
+  BytesConsumerTestUtil::MockFetchDataLoaderClient* client2 =
+      new BytesConsumerTestUtil::MockFetchDataLoaderClient();
+  EXPECT_CALL(*client1, DidFetchDataLoadedString(String("Hello, world")));
+  EXPECT_CALL(*client2, DidFetchDataLoadedString(String("Hello, world")));
 
-    response->internalBodyBuffer()->startLoading(FetchDataLoader::createLoaderAsString(), client1);
-    clonedResponse->internalBodyBuffer()->startLoading(FetchDataLoader::createLoaderAsString(), client2);
-    blink::testing::runPendingTasks();
+  response->InternalBodyBuffer()->StartLoading(
+      FetchDataLoader::CreateLoaderAsString(), client1);
+  cloned_response->InternalBodyBuffer()->StartLoading(
+      FetchDataLoader::CreateLoaderAsString(), client2);
+  blink::testing::RunPendingTasks();
 }
 
-BodyStreamBuffer* createHelloWorldBuffer(ScriptState* scriptState)
-{
-    using Command = DataConsumerHandleTestUtil::Command;
-    std::unique_ptr<DataConsumerHandleTestUtil::ReplayingHandle> src(DataConsumerHandleTestUtil::ReplayingHandle::create());
-    src->add(Command(Command::Data, "Hello, "));
-    src->add(Command(Command::Data, "world"));
-    src->add(Command(Command::Done));
-    return new BodyStreamBuffer(scriptState, createFetchDataConsumerHandleFromWebHandle(std::move(src)));
+BodyStreamBuffer* CreateHelloWorldBuffer(ScriptState* script_state) {
+  using Command = BytesConsumerTestUtil::Command;
+  BytesConsumerTestUtil::ReplayingBytesConsumer* src =
+      new BytesConsumerTestUtil::ReplayingBytesConsumer(
+          ExecutionContext::From(script_state));
+  src->Add(Command(Command::kData, "Hello, "));
+  src->Add(Command(Command::kData, "world"));
+  src->Add(Command(Command::kDone));
+  return new BodyStreamBuffer(script_state, src);
 }
 
-TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneDefault)
-{
-    V8TestingScope scope;
-    BodyStreamBuffer* buffer = createHelloWorldBuffer(scope.getScriptState());
-    FetchResponseData* fetchResponseData = FetchResponseData::createWithBuffer(buffer);
-    fetchResponseData->setURL(KURL(ParsedURLString, "http://www.response.com"));
-    Response* response = Response::create(scope.getExecutionContext(), fetchResponseData);
-    EXPECT_EQ(response->internalBodyBuffer(), buffer);
-    checkResponseStream(scope.getScriptState(), response, true);
+TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneDefault) {
+  V8TestingScope scope;
+  BodyStreamBuffer* buffer = CreateHelloWorldBuffer(scope.GetScriptState());
+  FetchResponseData* fetch_response_data =
+      FetchResponseData::CreateWithBuffer(buffer);
+  Vector<KURL> url_list;
+  url_list.push_back(KURL(kParsedURLString, "http://www.response.com"));
+  fetch_response_data->SetURLList(url_list);
+  Response* response =
+      Response::Create(scope.GetExecutionContext(), fetch_response_data);
+  EXPECT_EQ(response->InternalBodyBuffer(), buffer);
+  CheckResponseStream(scope.GetScriptState(), response, true);
 }
 
-TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneBasic)
-{
-    V8TestingScope scope;
-    BodyStreamBuffer* buffer = createHelloWorldBuffer(scope.getScriptState());
-    FetchResponseData* fetchResponseData = FetchResponseData::createWithBuffer(buffer);
-    fetchResponseData->setURL(KURL(ParsedURLString, "http://www.response.com"));
-    fetchResponseData = fetchResponseData->createBasicFilteredResponse();
-    Response* response = Response::create(scope.getExecutionContext(), fetchResponseData);
-    EXPECT_EQ(response->internalBodyBuffer(), buffer);
-    checkResponseStream(scope.getScriptState(), response, true);
+TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneBasic) {
+  V8TestingScope scope;
+  BodyStreamBuffer* buffer = CreateHelloWorldBuffer(scope.GetScriptState());
+  FetchResponseData* fetch_response_data =
+      FetchResponseData::CreateWithBuffer(buffer);
+  Vector<KURL> url_list;
+  url_list.push_back(KURL(kParsedURLString, "http://www.response.com"));
+  fetch_response_data->SetURLList(url_list);
+  fetch_response_data = fetch_response_data->CreateBasicFilteredResponse();
+  Response* response =
+      Response::Create(scope.GetExecutionContext(), fetch_response_data);
+  EXPECT_EQ(response->InternalBodyBuffer(), buffer);
+  CheckResponseStream(scope.GetScriptState(), response, true);
 }
 
-TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneCORS)
-{
-    V8TestingScope scope;
-    BodyStreamBuffer* buffer = createHelloWorldBuffer(scope.getScriptState());
-    FetchResponseData* fetchResponseData = FetchResponseData::createWithBuffer(buffer);
-    fetchResponseData->setURL(KURL(ParsedURLString, "http://www.response.com"));
-    fetchResponseData = fetchResponseData->createCORSFilteredResponse();
-    Response* response = Response::create(scope.getExecutionContext(), fetchResponseData);
-    EXPECT_EQ(response->internalBodyBuffer(), buffer);
-    checkResponseStream(scope.getScriptState(), response, true);
+TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneCORS) {
+  V8TestingScope scope;
+  BodyStreamBuffer* buffer = CreateHelloWorldBuffer(scope.GetScriptState());
+  FetchResponseData* fetch_response_data =
+      FetchResponseData::CreateWithBuffer(buffer);
+  Vector<KURL> url_list;
+  url_list.push_back(KURL(kParsedURLString, "http://www.response.com"));
+  fetch_response_data->SetURLList(url_list);
+  fetch_response_data = fetch_response_data->CreateCORSFilteredResponse();
+  Response* response =
+      Response::Create(scope.GetExecutionContext(), fetch_response_data);
+  EXPECT_EQ(response->InternalBodyBuffer(), buffer);
+  CheckResponseStream(scope.GetScriptState(), response, true);
 }
 
-TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneOpaque)
-{
-    V8TestingScope scope;
-    BodyStreamBuffer* buffer = createHelloWorldBuffer(scope.getScriptState());
-    FetchResponseData* fetchResponseData = FetchResponseData::createWithBuffer(buffer);
-    fetchResponseData->setURL(KURL(ParsedURLString, "http://www.response.com"));
-    fetchResponseData = fetchResponseData->createOpaqueFilteredResponse();
-    Response* response = Response::create(scope.getExecutionContext(), fetchResponseData);
-    EXPECT_EQ(response->internalBodyBuffer(), buffer);
-    checkResponseStream(scope.getScriptState(), response, false);
+TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneOpaque) {
+  V8TestingScope scope;
+  BodyStreamBuffer* buffer = CreateHelloWorldBuffer(scope.GetScriptState());
+  FetchResponseData* fetch_response_data =
+      FetchResponseData::CreateWithBuffer(buffer);
+  Vector<KURL> url_list;
+  url_list.push_back(KURL(kParsedURLString, "http://www.response.com"));
+  fetch_response_data->SetURLList(url_list);
+  fetch_response_data = fetch_response_data->CreateOpaqueFilteredResponse();
+  Response* response =
+      Response::Create(scope.GetExecutionContext(), fetch_response_data);
+  EXPECT_EQ(response->InternalBodyBuffer(), buffer);
+  CheckResponseStream(scope.GetScriptState(), response, false);
 }
 
-TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneError)
-{
-    V8TestingScope scope;
-    BodyStreamBuffer* buffer = new BodyStreamBuffer(scope.getScriptState(), createFetchDataConsumerHandleFromWebHandle(createUnexpectedErrorDataConsumerHandle()));
-    FetchResponseData* fetchResponseData = FetchResponseData::createWithBuffer(buffer);
-    fetchResponseData->setURL(KURL(ParsedURLString, "http://www.response.com"));
-    Response* response = Response::create(scope.getExecutionContext(), fetchResponseData);
-    TrackExceptionState exceptionState;
-    Response* clonedResponse = response->clone(scope.getScriptState(), exceptionState);
-    EXPECT_FALSE(exceptionState.hadException());
+TEST(ServiceWorkerResponseTest, BodyStreamBufferCloneError) {
+  V8TestingScope scope;
+  BodyStreamBuffer* buffer = new BodyStreamBuffer(
+      scope.GetScriptState(),
+      BytesConsumer::CreateErrored(BytesConsumer::Error()));
+  FetchResponseData* fetch_response_data =
+      FetchResponseData::CreateWithBuffer(buffer);
+  Vector<KURL> url_list;
+  url_list.push_back(KURL(kParsedURLString, "http://www.response.com"));
+  fetch_response_data->SetURLList(url_list);
+  Response* response =
+      Response::Create(scope.GetExecutionContext(), fetch_response_data);
+  DummyExceptionStateForTesting exception_state;
+  Response* cloned_response =
+      response->clone(scope.GetScriptState(), exception_state);
+  EXPECT_FALSE(exception_state.HadException());
 
-    DataConsumerHandleTestUtil::MockFetchDataLoaderClient* client1 = new DataConsumerHandleTestUtil::MockFetchDataLoaderClient();
-    DataConsumerHandleTestUtil::MockFetchDataLoaderClient* client2 = new DataConsumerHandleTestUtil::MockFetchDataLoaderClient();
-    EXPECT_CALL(*client1, didFetchDataLoadFailed());
-    EXPECT_CALL(*client2, didFetchDataLoadFailed());
+  BytesConsumerTestUtil::MockFetchDataLoaderClient* client1 =
+      new BytesConsumerTestUtil::MockFetchDataLoaderClient();
+  BytesConsumerTestUtil::MockFetchDataLoaderClient* client2 =
+      new BytesConsumerTestUtil::MockFetchDataLoaderClient();
+  EXPECT_CALL(*client1, DidFetchDataLoadFailed());
+  EXPECT_CALL(*client2, DidFetchDataLoadFailed());
 
-    response->internalBodyBuffer()->startLoading(FetchDataLoader::createLoaderAsString(), client1);
-    clonedResponse->internalBodyBuffer()->startLoading(FetchDataLoader::createLoaderAsString(), client2);
-    blink::testing::runPendingTasks();
+  response->InternalBodyBuffer()->StartLoading(
+      FetchDataLoader::CreateLoaderAsString(), client1);
+  cloned_response->InternalBodyBuffer()->StartLoading(
+      FetchDataLoader::CreateLoaderAsString(), client2);
+  blink::testing::RunPendingTasks();
 }
 
-} // namespace
-} // namespace blink
+}  // namespace
+}  // namespace blink

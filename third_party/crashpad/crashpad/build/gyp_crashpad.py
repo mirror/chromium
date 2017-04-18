@@ -31,12 +31,12 @@ def ChooseDependencyPath(local_path, external_path):
     external_path: The external path to fall back to.
 
   Returns:
-    A 2-tuple. The first element is 'standalone' or 'external', depending on
-    whether local_path or external_path was chosen. The second element is the
-    chosen path.
+    A 2-tuple. The first element is None or 'external', depending on whether
+    local_path or external_path was chosen. The second element is the chosen
+    path.
   """
   if os.path.exists(local_path) or not os.path.exists(external_path):
-    return ('standalone', local_path)
+    return (None, local_path)
   return ('external', external_path)
 
 
@@ -64,7 +64,8 @@ def main(args):
                    'mini_chromium', 'build', 'common.gypi'),
       os.path.join(crashpad_dir, os.pardir, os.pardir, 'mini_chromium',
                    'mini_chromium', 'build', 'common.gypi')))
-  args.extend(['-D', 'crashpad_dependencies=%s' % dependencies])
+  if dependencies is not None:
+    args.extend(['-D', 'crashpad_dependencies=%s' % dependencies])
   args.extend(['--include', mini_chromium_dir])
   args.extend(['--depth', crashpad_dir_or_dot])
   args.append(os.path.join(crashpad_dir, 'crashpad.gyp'))
@@ -74,11 +75,24 @@ def main(args):
     return result
 
   if sys.platform == 'win32':
-    # Also generate the x86 build.
-    result = gyp.main(args + ['-D', 'target_arch=ia32', '-G', 'config=Debug'])
-    if result != 0:
-      return result
-    result = gyp.main(args + ['-D', 'target_arch=ia32', '-G', 'config=Release'])
+    # Check to make sure that no target_arch was specified. target_arch may be
+    # set during a cross build, such as a cross build for Android.
+    has_target_arch = False
+    for arg_index in xrange(0, len(args)):
+      arg = args[arg_index]
+      if (arg.startswith('-Dtarget_arch=') or
+          (arg == '-D' and arg_index + 1 < len(args) and
+           args[arg_index + 1].startswith('target_arch='))):
+        has_target_arch = True
+        break
+
+    if not has_target_arch:
+      # Also generate the x86 build.
+      result = gyp.main(args + ['-D', 'target_arch=ia32', '-G', 'config=Debug'])
+      if result != 0:
+        return result
+      result = gyp.main(
+          args + ['-D', 'target_arch=ia32', '-G', 'config=Release'])
 
   return result
 

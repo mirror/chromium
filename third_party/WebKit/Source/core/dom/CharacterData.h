@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,66 +26,76 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/Node.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 
 class CORE_EXPORT CharacterData : public Node {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    void atomize();
-    const String& data() const { return m_data; }
-    void setData(const String&);
-    unsigned length() const { return m_data.length(); }
-    String substringData(unsigned offset, unsigned count, ExceptionState&);
-    void appendData(const String&);
-    void replaceData(unsigned offset, unsigned count, const String&, ExceptionState&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    void insertData(unsigned offset, const String&, ExceptionState&);
-    void deleteData(unsigned offset, unsigned count, ExceptionState&);
+ public:
+  void Atomize();
+  const String& data() const { return data_; }
+  void setData(const String&);
+  unsigned length() const { return data_.length(); }
+  String substringData(unsigned offset, unsigned count, ExceptionState&);
+  void appendData(const String&);
+  void replaceData(unsigned offset,
+                   unsigned count,
+                   const String&,
+                   ExceptionState&);
 
-    bool containsOnlyWhitespace() const;
+  void insertData(unsigned offset, const String&, ExceptionState&);
+  void deleteData(unsigned offset, unsigned count, ExceptionState&);
 
-    StringImpl* dataImpl() { return m_data.impl(); }
+  bool ContainsOnlyWhitespace() const;
 
-    void parserAppendData(const String&);
+  StringImpl* DataImpl() { return data_.Impl(); }
 
-protected:
-    CharacterData(TreeScope& treeScope, const String& text, ConstructionType type)
-        : Node(&treeScope, type)
-        , m_data(!text.isNull() ? text : emptyString())
-    {
-        DCHECK(type == CreateOther || type == CreateText || type == CreateEditingText);
-    }
+  void ParserAppendData(const String&);
 
-    void setDataWithoutUpdate(const String& data)
-    {
-        DCHECK(!data.isNull());
-        m_data = data;
-    }
-    enum UpdateSource {
-        UpdateFromParser,
-        UpdateFromNonParser,
-    };
-    void didModifyData(const String& oldValue, UpdateSource);
+ protected:
+  CharacterData(TreeScope& tree_scope,
+                const String& text,
+                ConstructionType type)
+      : Node(&tree_scope, type), data_(!text.IsNull() ? text : g_empty_string) {
+    DCHECK(type == kCreateOther || type == kCreateText ||
+           type == kCreateEditingText);
+  }
 
-    String m_data;
+  void SetDataWithoutUpdate(const String& data) {
+    DCHECK(!data.IsNull());
+    data_ = data;
+  }
+  enum UpdateSource {
+    kUpdateFromParser,
+    kUpdateFromNonParser,
+  };
+  void DidModifyData(const String& old_value, UpdateSource);
 
-private:
-    String nodeValue() const final;
-    void setNodeValue(const String&) final;
-    bool isCharacterDataNode() const final { return true; }
-    int maxCharacterOffset() const final;
-    void setDataAndUpdate(const String&, unsigned offsetOfReplacedData, unsigned oldLength, unsigned newLength, UpdateSource = UpdateFromNonParser);
+  String data_;
 
-    bool isContainerNode() const = delete; // This will catch anyone doing an unnecessary check.
-    bool isElementNode() const = delete; // This will catch anyone doing an unnecessary check.
+ private:
+  String nodeValue() const final;
+  void setNodeValue(const String&) final;
+  bool IsCharacterDataNode() const final { return true; }
+  int MaxCharacterOffset() const final;
+  void SetDataAndUpdate(const String&,
+                        unsigned offset_of_replaced_data,
+                        unsigned old_length,
+                        unsigned new_length,
+                        UpdateSource = kUpdateFromNonParser);
+
+  bool IsContainerNode() const =
+      delete;  // This will catch anyone doing an unnecessary check.
+  bool IsElementNode() const =
+      delete;  // This will catch anyone doing an unnecessary check.
 };
 
-DEFINE_NODE_TYPE_CASTS(CharacterData, isCharacterDataNode());
+DEFINE_NODE_TYPE_CASTS(CharacterData, IsCharacterDataNode());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CharacterData_h
+#endif  // CharacterData_h

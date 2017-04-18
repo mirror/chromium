@@ -32,26 +32,31 @@
 #define LinkLoaderClient_h
 
 #include "core/CoreExport.h"
+#include "platform/WebTaskRunner.h"
+
+#include "platform/heap/Handle.h"
 
 namespace blink {
 
 class CORE_EXPORT LinkLoaderClient : public GarbageCollectedMixin {
-public:
-    virtual ~LinkLoaderClient() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+ public:
+  virtual ~LinkLoaderClient() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-    virtual bool shouldLoadLink() = 0;
+  virtual bool ShouldLoadLink() = 0;
 
-    virtual void linkLoaded() = 0;
-    virtual void linkLoadingErrored() = 0;
-    // There is no notification for cancellation.
+  virtual void LinkLoaded() = 0;
+  virtual void LinkLoadingErrored() = 0;
+  // There is no notification for cancellation.
 
-    virtual void didStartLinkPrerender() = 0;
-    virtual void didStopLinkPrerender() = 0;
-    virtual void didSendLoadForLinkPrerender() = 0;
-    virtual void didSendDOMContentLoadedForLinkPrerender() = 0;
+  virtual void DidStartLinkPrerender() = 0;
+  virtual void DidStopLinkPrerender() = 0;
+  virtual void DidSendLoadForLinkPrerender() = 0;
+  virtual void DidSendDOMContentLoadedForLinkPrerender() = 0;
+
+  virtual RefPtr<WebTaskRunner> GetLoadingTaskRunner() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

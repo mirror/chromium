@@ -11,7 +11,6 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/message_loop/message_loop.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/event.h"
@@ -22,6 +21,7 @@
 #include "ui/events/ozone/evdev/event_converter_test_util.h"
 #include "ui/events/ozone/evdev/event_factory_evdev.h"
 #include "ui/events/ozone/evdev/keyboard_evdev.h"
+#include "ui/events/ozone/evdev/scoped_input_device.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"
 
 namespace ui {
@@ -30,10 +30,10 @@ const char kTestDevicePath[] = "/dev/input/test-device";
 
 class MockEventConverterEvdevImpl : public EventConverterEvdevImpl {
  public:
-  MockEventConverterEvdevImpl(int fd,
+  MockEventConverterEvdevImpl(ScopedInputDevice fd,
                               CursorDelegateEvdev* cursor,
                               DeviceEventDispatcherEvdev* dispatcher)
-      : EventConverterEvdevImpl(fd,
+      : EventConverterEvdevImpl(std::move(fd),
                                 base::FilePath(kTestDevicePath),
                                 1,
                                 EventDeviceInfo(),
@@ -94,8 +94,8 @@ class EventConverterEvdevImplTest : public testing::Test {
     int evdev_io[2];
     if (pipe(evdev_io))
       PLOG(FATAL) << "failed pipe";
-    events_in_ = evdev_io[0];
-    events_out_ = evdev_io[1];
+    ui::ScopedInputDevice events_in(evdev_io[0]);
+    events_out_.reset(evdev_io[1]);
 
     cursor_.reset(new ui::MockCursorEvdev());
 
@@ -107,15 +107,14 @@ class EventConverterEvdevImplTest : public testing::Test {
                    base::Unretained(this)));
     dispatcher_ =
         ui::CreateDeviceEventDispatcherEvdevForTest(event_factory_.get());
-    device_.reset(new ui::MockEventConverterEvdevImpl(events_in_, cursor_.get(),
-                                                      dispatcher_.get()));
+    device_.reset(new ui::MockEventConverterEvdevImpl(
+        std::move(events_in), cursor_.get(), dispatcher_.get()));
   }
 
   void TearDown() override {
     device_.reset();
     cursor_.reset();
-    close(events_in_);
-    close(events_out_);
+    events_out_.reset();
   }
 
   ui::MockCursorEvdev* cursor() { return cursor_.get(); }
@@ -157,8 +156,7 @@ class EventConverterEvdevImplTest : public testing::Test {
 
   std::vector<std::unique_ptr<ui::Event>> dispatched_events_;
 
-  int events_out_;
-  int events_in_;
+  ui::ScopedInputDevice events_out_;
 
   DISALLOW_COPY_AND_ASSIGN(EventConverterEvdevImplTest);
 };

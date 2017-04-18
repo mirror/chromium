@@ -20,20 +20,24 @@ static_library("arc") {
   ]
 
   deps = [
-    "//ash:ash",
+    "//ash",
     "//base",
     "//components/arc:arc_base",
-    "//components/arc:arc_bindings",
-    "//components/arc:arc_bitmap",
-    "//components/exo:exo",
+    "//components/exo",
     "//components/signin/core/account_id",
+    "//mojo/common:common_base",
     "//skia",
+    "//ui/aura",
     "//ui/base",
+    "//ui/compositor",
+    "//ui/display",
+    "//ui/events",
     "//ui/gfx",
     "//ui/message_center",
     "//ui/resources",
     "//ui/strings",
     "//ui/views",
+    "//ui/wm",
   ]
 }
 
@@ -48,7 +52,6 @@ test("ui_arc_unittests") {
     ":arc",
     "//base",
     "//base/test:test_support",
-    "//components/arc:arc_base",
     "//components/arc:arc_test_support",
     "//mojo/edk/system",
     "//testing/gtest",

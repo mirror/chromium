@@ -26,26 +26,19 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import optparse
 import unittest
 
-from webkitpy.common.system.systemhost_mock import MockSystemHost
-
+from webkitpy.common.system.system_host_mock import MockSystemHost
 from webkitpy.layout_tests.port.base import Port
 from webkitpy.layout_tests.port.driver import Driver
-from webkitpy.layout_tests.port.driver import DriverOutput
 from webkitpy.layout_tests.port.server_process_mock import MockServerProcess
-
-# FIXME: remove the dependency on TestWebKitPort
-from webkitpy.layout_tests.port.port_testcase import TestWebKitPort
-
-from webkitpy.tool.mock_tool import MockOptions
 
 
 class DriverTest(unittest.TestCase):
 
     def make_port(self):
-        port = Port(MockSystemHost(), 'test', MockOptions(configuration='Release'))
-        return port
+        return Port(MockSystemHost(), 'test', optparse.Values({'configuration': 'Release'}))
 
     def _assert_wrapper(self, wrapper_string, expected_wrapper):
         wrapper = Driver(self.make_port(), None, pixel_tests=False)._command_wrapper(wrapper_string)
@@ -53,11 +46,11 @@ class DriverTest(unittest.TestCase):
 
     def test_command_wrapper(self):
         self._assert_wrapper(None, [])
-        self._assert_wrapper("valgrind", ["valgrind"])
+        self._assert_wrapper('valgrind', ['valgrind'])
 
         # Validate that shlex works as expected.
-        command_with_spaces = "valgrind --smc-check=\"check with spaces!\" --foo"
-        expected_parse = ["valgrind", "--smc-check=check with spaces!", "--foo"]
+        command_with_spaces = 'valgrind --smc-check=\'check with spaces!\' --foo'
+        expected_parse = ['valgrind', '--smc-check=check with spaces!', '--foo']
         self._assert_wrapper(command_with_spaces, expected_parse)
 
     def test_test_to_uri(self):
@@ -78,13 +71,13 @@ class DriverTest(unittest.TestCase):
         self.assertEqual(driver.uri_to_test('https://127.0.0.1:8443/bar.https.html'), 'http/tests/bar.https.html')
 
     def test_read_block(self):
-        port = TestWebKitPort()
+        port = self.make_port()
         driver = Driver(port, 0, pixel_tests=False)
         driver._server_process = MockServerProcess(lines=[
             'ActualHash: foobar',
             'Content-Type: my_type',
             'Content-Transfer-Encoding: none',
-            "#EOF",
+            '#EOF',
         ])
         content_block = driver._read_block(0)
         self.assertEqual(content_block.content, '')
@@ -94,15 +87,15 @@ class DriverTest(unittest.TestCase):
         driver._server_process = None
 
     def test_read_binary_block(self):
-        port = TestWebKitPort()
+        port = self.make_port()
         driver = Driver(port, 0, pixel_tests=True)
         driver._server_process = MockServerProcess(lines=[
             'ActualHash: actual',
             'ExpectedHash: expected',
             'Content-Type: image/png',
             'Content-Length: 9',
-            "12345678",
-            "#EOF",
+            '12345678',
+            '#EOF',
         ])
         content_block = driver._read_block(0)
         self.assertEqual(content_block.content_type, 'image/png')
@@ -112,7 +105,7 @@ class DriverTest(unittest.TestCase):
         driver._server_process = None
 
     def test_read_base64_block(self):
-        port = TestWebKitPort()
+        port = self.make_port()
         driver = Driver(port, 0, pixel_tests=True)
         driver._server_process = MockServerProcess(lines=[
             'ActualHash: actual',
@@ -130,7 +123,7 @@ class DriverTest(unittest.TestCase):
         self.assertEqual(content_block.decoded_content, '12345678\n')
 
     def test_no_timeout(self):
-        port = TestWebKitPort()
+        port = self.make_port()
         driver = Driver(port, 0, pixel_tests=True, no_timeout=True)
         cmd_line = driver.cmd_line(True, [])
         self.assertEqual(cmd_line[0], '/mock-checkout/out/Release/content_shell')
@@ -138,7 +131,7 @@ class DriverTest(unittest.TestCase):
         self.assertIn('--no-timeout', cmd_line)
 
     def test_check_for_driver_crash(self):
-        port = TestWebKitPort()
+        port = self.make_port()
         driver = Driver(port, 0, pixel_tests=True)
 
         class FakeServerProcess(object):
@@ -219,33 +212,33 @@ class DriverTest(unittest.TestCase):
         assert_crash(driver, '', True, 'FakeServerProcess', 1234)
 
     def test_creating_a_port_does_not_write_to_the_filesystem(self):
-        port = TestWebKitPort()
+        port = self.make_port()
         Driver(port, 0, pixel_tests=True)
-        self.assertEqual(port._filesystem.written_files, {})
-        self.assertIsNone(port._filesystem.last_tmpdir)
+        self.assertEqual(port.host.filesystem.written_files, {})
+        self.assertIsNone(port.host.filesystem.last_tmpdir)
 
     def test_stop_cleans_up_properly(self):
-        port = TestWebKitPort()
-        port._server_process_constructor = MockServerProcess
+        port = self.make_port()
+        port.server_process_constructor = MockServerProcess
         driver = Driver(port, 0, pixel_tests=True)
         driver.start(True, [], None)
-        last_tmpdir = port._filesystem.last_tmpdir
+        last_tmpdir = port.host.filesystem.last_tmpdir
         self.assertIsNotNone(last_tmpdir)
         driver.stop()
-        self.assertFalse(port._filesystem.isdir(last_tmpdir))
+        self.assertFalse(port.host.filesystem.isdir(last_tmpdir))
 
     def test_two_starts_cleans_up_properly(self):
-        port = TestWebKitPort()
-        port._server_process_constructor = MockServerProcess
+        port = self.make_port()
+        port.server_process_constructor = MockServerProcess
         driver = Driver(port, 0, pixel_tests=True)
         driver.start(True, [], None)
-        last_tmpdir = port._filesystem.last_tmpdir
+        last_tmpdir = port.host.filesystem.last_tmpdir
         driver._start(True, [])
-        self.assertFalse(port._filesystem.isdir(last_tmpdir))
+        self.assertFalse(port.host.filesystem.isdir(last_tmpdir))
 
     def test_start_actually_starts(self):
-        port = TestWebKitPort()
-        port._server_process_constructor = MockServerProcess
+        port = self.make_port()
+        port.server_process_constructor = MockServerProcess
         driver = Driver(port, 0, pixel_tests=True)
         driver.start(True, [], None)
         self.assertTrue(driver._server_process.started)

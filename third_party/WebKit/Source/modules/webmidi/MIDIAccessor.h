@@ -31,44 +31,62 @@
 #ifndef MIDIAccessor_h
 #define MIDIAccessor_h
 
+#include <memory>
+#include "media/midi/midi_service.mojom-blink.h"
+#include "platform/wtf/Allocator.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessorClient.h"
-#include "wtf/Allocator.h"
-#include <memory>
 
 namespace blink {
 
 class MIDIAccessorClient;
 
 class MIDIAccessor final : public WebMIDIAccessorClient {
-    USING_FAST_MALLOC(MIDIAccessor);
-public:
-    static std::unique_ptr<MIDIAccessor> create(MIDIAccessorClient*);
+  USING_FAST_MALLOC(MIDIAccessor);
 
-    ~MIDIAccessor() override { }
+ public:
+  static std::unique_ptr<MIDIAccessor> Create(MIDIAccessorClient*);
 
-    void startSession();
-    void sendMIDIData(unsigned portIndex, const unsigned char* data, size_t length, double timeStamp);
-    // MIDIAccessInitializer and MIDIAccess are both MIDIAccessClient.
-    // MIDIAccessInitializer is the first client and MIDIAccess takes over it
-    // once the initialization successfully finishes.
-    void setClient(MIDIAccessorClient* client) { m_client = client; }
+  ~MIDIAccessor() override {}
 
-    // WebMIDIAccessorClient
-    void didAddInputPort(const WebString& id, const WebString& manufacturer, const WebString& name, const WebString& version, MIDIPortState) override;
-    void didAddOutputPort(const WebString& id, const WebString& manufacturer, const WebString& name, const WebString& version, MIDIPortState) override;
-    void didSetInputPortState(unsigned portIndex, MIDIPortState) override;
-    void didSetOutputPortState(unsigned portIndex, MIDIPortState) override;
-    void didStartSession(bool success, const WebString& error, const WebString& message) override;
-    void didReceiveMIDIData(unsigned portIndex, const unsigned char* data, size_t length, double timeStamp) override;
+  void StartSession();
+  void SendMIDIData(unsigned port_index,
+                    const unsigned char* data,
+                    size_t length,
+                    double time_stamp);
+  // MIDIAccessInitializer and MIDIAccess are both MIDIAccessClient.
+  // MIDIAccessInitializer is the first client and MIDIAccess takes over it
+  // once the initialization successfully finishes.
+  void SetClient(MIDIAccessorClient* client) { client_ = client; }
 
-private:
-    explicit MIDIAccessor(MIDIAccessorClient*);
+  // WebMIDIAccessorClient
+  void DidAddInputPort(const WebString& id,
+                       const WebString& manufacturer,
+                       const WebString& name,
+                       const WebString& version,
+                       midi::mojom::PortState) override;
+  void DidAddOutputPort(const WebString& id,
+                        const WebString& manufacturer,
+                        const WebString& name,
+                        const WebString& version,
+                        midi::mojom::PortState) override;
+  void DidSetInputPortState(unsigned port_index,
+                            midi::mojom::PortState) override;
+  void DidSetOutputPortState(unsigned port_index,
+                             midi::mojom::PortState) override;
+  void DidStartSession(midi::mojom::Result) override;
+  void DidReceiveMIDIData(unsigned port_index,
+                          const unsigned char* data,
+                          size_t length,
+                          double time_stamp) override;
 
-    MIDIAccessorClient* m_client;
-    std::unique_ptr<WebMIDIAccessor> m_accessor;
+ private:
+  explicit MIDIAccessor(MIDIAccessorClient*);
+
+  MIDIAccessorClient* client_;
+  std::unique_ptr<WebMIDIAccessor> accessor_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MIDIAccessor_h
+#endif  // MIDIAccessor_h

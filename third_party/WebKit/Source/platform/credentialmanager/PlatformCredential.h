@@ -7,38 +7,44 @@
 
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT PlatformCredential : public GarbageCollectedFinalized<PlatformCredential> {
-    WTF_MAKE_NONCOPYABLE(PlatformCredential);
-public:
-    static PlatformCredential* create(const String& id, const String& name, const KURL& iconURL);
-    virtual ~PlatformCredential();
+class PLATFORM_EXPORT PlatformCredential
+    : public GarbageCollectedFinalized<PlatformCredential> {
+  WTF_MAKE_NONCOPYABLE(PlatformCredential);
 
-    const String& id() const { return m_id; }
-    const String& name() const { return m_name; }
-    const KURL& iconURL() const { return m_iconURL; }
-    const String& type() const { return m_type; }
+ public:
+  static PlatformCredential* Create(const String& id,
+                                    const String& name,
+                                    const KURL& icon_url);
+  virtual ~PlatformCredential();
 
-    virtual bool isPassword() { return false; }
-    virtual bool isFederated() { return false; }
+  const String& Id() const { return id_; }
+  const String& GetName() const { return name_; }
+  const KURL& GetIconURL() const { return icon_url_; }
+  const String& GetType() const { return type_; }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+  virtual bool IsPassword() { return false; }
+  virtual bool IsFederated() { return false; }
 
-protected:
-    PlatformCredential(const String& id, const String& name, const KURL& iconURL);
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-    void setType(const String& type) { m_type = type; }
+ protected:
+  PlatformCredential(const String& id,
+                     const String& name,
+                     const KURL& icon_url);
 
-private:
-    String m_id;
-    String m_name;
-    KURL m_iconURL;
-    String m_type;
+  void SetType(const String& type) { type_ = type; }
+
+ private:
+  String id_;
+  String name_;
+  KURL icon_url_;
+  String type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PlatformCredential_h
+#endif  // PlatformCredential_h

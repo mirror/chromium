@@ -35,25 +35,22 @@
 
 namespace blink {
 
-void SVGAnimatedNumber::synchronizeAttribute()
-{
-    if (m_parentNumberOptionalNumber) {
-        m_parentNumberOptionalNumber->synchronizeAttribute();
-        return;
-    }
+void SVGAnimatedNumber::SynchronizeAttribute() {
+  if (parent_number_optional_number_) {
+    parent_number_optional_number_->SynchronizeAttribute();
+    return;
+  }
 
-    SVGAnimatedProperty<SVGNumber>::synchronizeAttribute();
+  SVGAnimatedProperty<SVGNumber>::SynchronizeAttribute();
 }
 
-DEFINE_TRACE(SVGAnimatedNumber)
-{
-    visitor->trace(m_parentNumberOptionalNumber);
-    SVGAnimatedProperty<SVGNumber>::trace(visitor);
+DEFINE_TRACE(SVGAnimatedNumber) {
+  visitor->Trace(parent_number_optional_number_);
+  SVGAnimatedProperty<SVGNumber>::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(SVGAnimatedNumber)
-{
-    visitor->traceWrappers(contextElement());
+DEFINE_TRACE_WRAPPERS(SVGAnimatedNumber) {
+  visitor->TraceWrappers(contextElement());
 }
 
-} // namespace blink
+}  // namespace blink

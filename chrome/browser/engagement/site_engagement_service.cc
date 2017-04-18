@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <utility>
-#include <vector>
 
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -20,7 +19,7 @@
 #include "base/values.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
-#include "chrome/browser/engagement/site_engagement_eviction_policy.h"
+#include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "chrome/browser/engagement/site_engagement_score.h"
 #include "chrome/browser/engagement/site_engagement_service_factory.h"
@@ -33,8 +32,14 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "url/gurl.h"
+
+#if defined(OS_ANDROID)
+#include "chrome/browser/engagement/site_engagement_service_android.h"
+#endif
 
 namespace {
 
@@ -46,13 +51,36 @@ bool g_updated_from_variations = false;
 // Length of time between metrics logging.
 const int kMetricsIntervalInMinutes = 60;
 
-std::unique_ptr<ContentSettingsForOneType> GetEngagementContentSettings(
-    HostContentSettingsMap* settings_map) {
-  std::unique_ptr<ContentSettingsForOneType> engagement_settings(
-      new ContentSettingsForOneType);
-  settings_map->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT,
-                                      std::string(), engagement_settings.get());
-  return engagement_settings;
+// Helper for fetching content settings for one type.
+ContentSettingsForOneType GetContentSettingsFromProfile(
+    Profile* profile,
+    ContentSettingsType type) {
+  ContentSettingsForOneType content_settings;
+  HostContentSettingsMapFactory::GetForProfile(profile)->GetSettingsForOneType(
+      type, content_settings::ResourceIdentifier(), &content_settings);
+  return content_settings;
+}
+
+// Returns the combined list of origins which either have site engagement
+// data stored, or have other settings that would provide a score bonus.
+std::set<GURL> GetEngagementOriginsFromContentSettings(Profile* profile) {
+  std::set<GURL> urls;
+
+  // Fetch URLs of sites with engagement details stored.
+  for (const auto& site : GetContentSettingsFromProfile(
+           profile, CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT)) {
+    urls.insert(GURL(site.primary_pattern.ToString()));
+  }
+
+  // Fetch URLs of sites for which notifications are allowed.
+  for (const auto& site : GetContentSettingsFromProfile(
+           profile, CONTENT_SETTINGS_TYPE_NOTIFICATIONS)) {
+    if (site.setting != CONTENT_SETTING_ALLOW)
+      continue;
+    urls.insert(GURL(site.primary_pattern.ToString()));
+  }
+
+  return urls;
 }
 
 // Only accept a navigation event for engagement if it is one of:
@@ -87,27 +115,22 @@ double SiteEngagementService::GetMaxPoints() {
 
 // static
 bool SiteEngagementService::IsEnabled() {
-  // If the engagement service or any of its dependencies are force-enabled,
-  // return true immediately.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableSiteEngagementService) ||
-      SiteEngagementEvictionPolicy::IsEnabled() ||
-      AppBannerSettingsHelper::ShouldUseSiteEngagementScore()) {
-    return true;
-  }
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableSiteEngagementService)) {
-    return false;
-  }
   const std::string group_name =
       base::FieldTrialList::FindFullName(kEngagementParams);
   return !base::StartsWith(group_name, "Disabled",
                            base::CompareCase::SENSITIVE);
 }
 
+// static
+double SiteEngagementService::GetScoreFromSettings(
+    HostContentSettingsMap* settings,
+    const GURL& origin) {
+  auto clock = base::MakeUnique<base::DefaultClock>();
+  return SiteEngagementScore(clock.get(), origin, settings).GetTotalScore();
+}
+
 SiteEngagementService::SiteEngagementService(Profile* profile)
-    : SiteEngagementService(profile, base::WrapUnique(new base::DefaultClock)) {
+    : SiteEngagementService(profile, base::MakeUnique<base::DefaultClock>()) {
   content::BrowserThread::PostAfterStartupTask(
       FROM_HERE, content::BrowserThread::GetTaskRunnerForThread(
                      content::BrowserThread::UI),
@@ -120,49 +143,60 @@ SiteEngagementService::SiteEngagementService(Profile* profile)
   }
 }
 
-SiteEngagementService::~SiteEngagementService() {
+SiteEngagementService::~SiteEngagementService() = default;
+
+void SiteEngagementService::Shutdown() {
   history::HistoryService* history = HistoryServiceFactory::GetForProfile(
       profile_, ServiceAccessType::IMPLICIT_ACCESS);
   if (history)
     history->RemoveObserver(this);
 }
 
-SiteEngagementService::EngagementLevel
+blink::mojom::EngagementLevel
 SiteEngagementService::GetEngagementLevel(const GURL& url) const {
-  DCHECK_LT(SiteEngagementScore::GetMediumEngagementBoundary(),
-            SiteEngagementScore::GetHighEngagementBoundary());
-  double score = GetScore(url);
-  if (score == 0)
-    return ENGAGEMENT_LEVEL_NONE;
+  if (IsLastEngagementStale())
+    CleanupEngagementScores(true);
 
-  if (score < SiteEngagementScore::GetMediumEngagementBoundary())
-    return ENGAGEMENT_LEVEL_LOW;
+  return CreateEngagementScore(url).GetEngagementLevel();
+}
 
-  if (score < SiteEngagementScore::GetHighEngagementBoundary())
-    return ENGAGEMENT_LEVEL_MEDIUM;
+std::vector<mojom::SiteEngagementDetails> SiteEngagementService::GetAllDetails()
+    const {
+  std::set<GURL> origins = GetEngagementOriginsFromContentSettings(profile_);
 
-  if (score < SiteEngagementScore::kMaxPoints)
-    return ENGAGEMENT_LEVEL_HIGH;
+  std::vector<mojom::SiteEngagementDetails> details;
+  details.reserve(origins.size());
+  for (const GURL& origin : origins) {
+    if (!origin.is_valid())
+      continue;
+    details.push_back(GetDetails(origin));
+  }
 
-  return ENGAGEMENT_LEVEL_MAX;
+  return details;
 }
 
 std::map<GURL, double> SiteEngagementService::GetScoreMap() const {
-  HostContentSettingsMap* settings_map =
-      HostContentSettingsMapFactory::GetForProfile(profile_);
-  std::unique_ptr<ContentSettingsForOneType> engagement_settings =
-      GetEngagementContentSettings(settings_map);
-
   std::map<GURL, double> score_map;
-  for (const auto& site : *engagement_settings) {
-    GURL origin(site.primary_pattern.ToString());
+  for (const GURL& origin : GetEngagementOriginsFromContentSettings(profile_)) {
     if (!origin.is_valid())
       continue;
-
     score_map[origin] = GetScore(origin);
   }
-
   return score_map;
+}
+
+void SiteEngagementService::HandleNotificationInteraction(const GURL& url) {
+  if (!ShouldRecordEngagement(url))
+    return;
+
+  SiteEngagementMetrics::RecordEngagement(
+      SiteEngagementMetrics::ENGAGEMENT_NOTIFICATION_INTERACTION);
+  AddPoints(url, SiteEngagementScore::GetNotificationInteractionPoints());
+
+  RecordMetrics();
+  double score = GetScore(url);
+  for (SiteEngagementObserver& observer : observer_list_)
+    observer.OnEngagementIncreased(nullptr /* web_contents */, url, score);
 }
 
 bool SiteEngagementService::IsBootstrapped() const {
@@ -170,21 +204,24 @@ bool SiteEngagementService::IsBootstrapped() const {
          SiteEngagementScore::GetBootstrapPoints();
 }
 
-bool SiteEngagementService::IsEngagementAtLeast(const GURL& url,
-                                                EngagementLevel level) const {
+bool SiteEngagementService::IsEngagementAtLeast(
+    const GURL& url,
+    blink::mojom::EngagementLevel level) const {
   DCHECK_LT(SiteEngagementScore::GetMediumEngagementBoundary(),
             SiteEngagementScore::GetHighEngagementBoundary());
   double score = GetScore(url);
   switch (level) {
-    case ENGAGEMENT_LEVEL_NONE:
+    case blink::mojom::EngagementLevel::NONE:
       return true;
-    case ENGAGEMENT_LEVEL_LOW:
+    case blink::mojom::EngagementLevel::MINIMAL:
       return score > 0;
-    case ENGAGEMENT_LEVEL_MEDIUM:
+    case blink::mojom::EngagementLevel::LOW:
+      return score >= 1;
+    case blink::mojom::EngagementLevel::MEDIUM:
       return score >= SiteEngagementScore::GetMediumEngagementBoundary();
-    case ENGAGEMENT_LEVEL_HIGH:
+    case blink::mojom::EngagementLevel::HIGH:
       return score >= SiteEngagementScore::GetHighEngagementBoundary();
-    case ENGAGEMENT_LEVEL_MAX:
+    case blink::mojom::EngagementLevel::MAX:
       return score == SiteEngagementScore::kMaxPoints;
   }
   NOTREACHED();
@@ -199,7 +236,8 @@ void SiteEngagementService::RemoveObserver(SiteEngagementObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
-void SiteEngagementService::ResetScoreForURL(const GURL& url, double score) {
+void SiteEngagementService::ResetBaseScoreForURL(const GURL& url,
+                                                 double score) {
   SiteEngagementScore engagement_score = CreateEngagementScore(url);
   engagement_score.Reset(score, clock_->Now());
   engagement_score.Commit();
@@ -223,13 +261,28 @@ void SiteEngagementService::SetLastShortcutLaunchTime(const GURL& url) {
   score.Commit();
 }
 
+void SiteEngagementService::HelperCreated(
+    SiteEngagementService::Helper* helper) {
+  helpers_.insert(helper);
+}
+
+void SiteEngagementService::HelperDeleted(
+    SiteEngagementService::Helper* helper) {
+  helpers_.erase(helper);
+}
+
 double SiteEngagementService::GetScore(const GURL& url) const {
+  return GetDetails(url).total_score;
+}
+
+mojom::SiteEngagementDetails SiteEngagementService::GetDetails(
+    const GURL& url) const {
   // Ensure that if engagement is stale, we clean things up before fetching the
   // score.
   if (IsLastEngagementStale())
     CleanupEngagementScores(true);
 
-  return CreateEngagementScore(url).GetScore();
+  return CreateEngagementScore(url).GetDetails();
 }
 
 double SiteEngagementService::GetTotalEngagementPoints() const {
@@ -242,6 +295,17 @@ double SiteEngagementService::GetTotalEngagementPoints() const {
   return total_score;
 }
 
+#if defined(OS_ANDROID)
+SiteEngagementServiceAndroid* SiteEngagementService::GetAndroidService() const {
+  return android_service_.get();
+}
+
+void SiteEngagementService::SetAndroidService(
+    std::unique_ptr<SiteEngagementServiceAndroid> android_service) {
+  android_service_ = std::move(android_service);
+}
+#endif
+
 SiteEngagementService::SiteEngagementService(Profile* profile,
                                              std::unique_ptr<base::Clock> clock)
     : profile_(profile), clock_(std::move(clock)), weak_factory_(this) {
@@ -253,6 +317,9 @@ SiteEngagementService::SiteEngagementService(Profile* profile,
 }
 
 void SiteEngagementService::AddPoints(const GURL& url, double points) {
+  if (points == 0)
+    return;
+
   // Trigger a cleanup and date adjustment if it has been a substantial length
   // of time since *any* engagement was recorded by the service. This will
   // ensure that we do not decay scores when the user did not use the browser.
@@ -260,10 +327,16 @@ void SiteEngagementService::AddPoints(const GURL& url, double points) {
     CleanupEngagementScores(true);
 
   SiteEngagementScore score = CreateEngagementScore(url);
+  blink::mojom::EngagementLevel old_level = score.GetEngagementLevel();
+
   score.AddPoints(points);
   score.Commit();
 
   SetLastEngagementTime(score.last_engagement_time());
+
+  blink::mojom::EngagementLevel new_level = score.GetEngagementLevel();
+  if (old_level != new_level)
+    SendLevelChangeToHelpers(url, new_level);
 }
 
 void SiteEngagementService::AfterStartupTask() {
@@ -277,51 +350,72 @@ void SiteEngagementService::AfterStartupTask() {
 
 void SiteEngagementService::CleanupEngagementScores(
     bool update_last_engagement_time) const {
-  // This method should not be called with |update_last_engagement_time| = true
-  // if the last engagement time isn't stale.
-  DCHECK(!update_last_engagement_time || IsLastEngagementStale());
-
-  HostContentSettingsMap* settings_map =
-      HostContentSettingsMapFactory::GetForProfile(profile_);
-  std::unique_ptr<ContentSettingsForOneType> engagement_settings =
-      GetEngagementContentSettings(settings_map);
-
   // We want to rebase last engagement times relative to MaxDecaysPerScore
   // periods of decay in the past.
   base::Time now = clock_->Now();
   base::Time last_engagement_time = GetLastEngagementTime();
   base::Time rebase_time = now - GetMaxDecayPeriod();
   base::Time new_last_engagement_time;
-  for (const auto& site : *engagement_settings) {
+
+  // If |update_last_engagement_time| is true, we must have either:
+  //   a) last_engagement_time is in the future; OR
+  //   b) last_engagement_time < rebase_time < now
+  DCHECK(!update_last_engagement_time || last_engagement_time >= now ||
+         (last_engagement_time < rebase_time && rebase_time < now));
+
+  // Cap |last_engagement_time| at |now| if it is in the future. This ensures
+  // that we use sane offsets when a user has adjusted their clock backwards and
+  // have a mix of scores prior to and after |now|.
+  if (last_engagement_time > now)
+    last_engagement_time = now;
+
+  HostContentSettingsMap* settings_map =
+      HostContentSettingsMapFactory::GetForProfile(profile_);
+  for (const auto& site : GetContentSettingsFromProfile(
+           profile_, CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT)) {
     GURL origin(site.primary_pattern.ToString());
 
     if (origin.is_valid()) {
       SiteEngagementScore score = CreateEngagementScore(origin);
       if (update_last_engagement_time) {
-        // Work out the offset between this score's last engagement time and the
-        // last time the service recorded any engagement. Set the score's last
-        // engagement time to rebase_time - offset to preserve its state,
-        // relative to the rebase date. This ensures that the score will decay
-        // the next time it is used, but will not decay too much.
-        DCHECK_LE(score.last_engagement_time(), rebase_time);
-        base::TimeDelta offset =
-            last_engagement_time - score.last_engagement_time();
-        base::Time rebase_score_time = rebase_time - offset;
-        score.set_last_engagement_time(rebase_score_time);
-        if (rebase_score_time > new_last_engagement_time)
-          new_last_engagement_time = rebase_score_time;
+        // Catch cases of users moving their clocks, or a potential race where
+        // a score content setting is written out to prefs, but the updated
+        // |last_engagement_time| was not written, as both are lossy
+        // preferences. |rebase_time| is strictly in the past, so any score with
+        // a last updated time in the future is caught by this branch.
+        if (score.last_engagement_time() > rebase_time) {
+          score.set_last_engagement_time(now);
+        } else if (score.last_engagement_time() > last_engagement_time) {
+          // This score is newer than |last_engagement_time|, but older than
+          // |rebase_time|. It should still be rebased with no offset as we
+          // don't accurately know what the offset should be.
+          score.set_last_engagement_time(rebase_time);
+        } else {
+          // Work out the offset between this score's last engagement time and
+          // the last time the service recorded any engagement. Set the score's
+          // last engagement time to rebase_time - offset to preserve its state,
+          // relative to the rebase date. This ensures that the score will decay
+          // the next time it is used, but will not decay too much.
+          base::TimeDelta offset =
+              last_engagement_time - score.last_engagement_time();
+          base::Time rebase_score_time = rebase_time - offset;
+          score.set_last_engagement_time(rebase_score_time);
+        }
 
+        if (score.last_engagement_time() > new_last_engagement_time)
+          new_last_engagement_time = score.last_engagement_time();
         score.Commit();
       }
 
-      if (score.GetScore() > SiteEngagementScore::GetScoreCleanupThreshold())
+      if (score.GetTotalScore() >
+          SiteEngagementScore::GetScoreCleanupThreshold())
         continue;
     }
 
     // This origin has a score of 0. Wipe it from content settings.
     settings_map->SetWebsiteSettingDefaultScope(
-        origin, GURL(), CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT, std::string(),
-        nullptr);
+        origin, GURL(), CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT,
+        content_settings::ResourceIdentifier(), nullptr);
   }
 
   // Set the last engagement time to be consistent with the scores. This will
@@ -332,36 +426,43 @@ void SiteEngagementService::CleanupEngagementScores(
 
 void SiteEngagementService::RecordMetrics() {
   base::Time now = clock_->Now();
-  if (last_metrics_time_.is_null() ||
-      (now - last_metrics_time_).InMinutes() >= kMetricsIntervalInMinutes) {
-    last_metrics_time_ = now;
-    std::map<GURL, double> score_map = GetScoreMap();
-
-    int origins_with_max_engagement = OriginsWithMaxEngagement(score_map);
-    int total_origins = score_map.size();
-    int percent_origins_with_max_engagement =
-        (total_origins == 0
-             ? 0
-             : (origins_with_max_engagement * 100) / total_origins);
-
-    double total_engagement = GetTotalEngagementPoints();
-    double mean_engagement =
-        (total_origins == 0 ? 0 : total_engagement / total_origins);
-
-    SiteEngagementMetrics::RecordTotalOriginsEngaged(total_origins);
-    SiteEngagementMetrics::RecordTotalSiteEngagement(total_engagement);
-    SiteEngagementMetrics::RecordMeanEngagement(mean_engagement);
-    SiteEngagementMetrics::RecordMedianEngagement(
-        GetMedianEngagement(score_map));
-    SiteEngagementMetrics::RecordEngagementScores(score_map);
-
-    SiteEngagementMetrics::RecordOriginsWithMaxDailyEngagement(
-        OriginsWithMaxDailyEngagement());
-    SiteEngagementMetrics::RecordOriginsWithMaxEngagement(
-        origins_with_max_engagement);
-    SiteEngagementMetrics::RecordPercentOriginsWithMaxEngagement(
-        percent_origins_with_max_engagement);
+  if (profile_->IsOffTheRecord() ||
+      (!last_metrics_time_.is_null() &&
+       (now - last_metrics_time_).InMinutes() < kMetricsIntervalInMinutes)) {
+    return;
   }
+
+  last_metrics_time_ = now;
+  std::map<GURL, double> score_map = GetScoreMap();
+
+  int origins_with_max_engagement = OriginsWithMaxEngagement(score_map);
+  int total_origins = score_map.size();
+  int percent_origins_with_max_engagement =
+      (total_origins == 0
+           ? 0
+           : (origins_with_max_engagement * 100) / total_origins);
+
+  double total_engagement = GetTotalEngagementPoints();
+  double mean_engagement =
+      (total_origins == 0 ? 0 : total_engagement / total_origins);
+
+  SiteEngagementMetrics::RecordTotalOriginsEngaged(total_origins);
+  SiteEngagementMetrics::RecordTotalSiteEngagement(total_engagement);
+  SiteEngagementMetrics::RecordMeanEngagement(mean_engagement);
+  SiteEngagementMetrics::RecordMedianEngagement(
+      GetMedianEngagement(score_map));
+  SiteEngagementMetrics::RecordEngagementScores(score_map);
+
+  SiteEngagementMetrics::RecordOriginsWithMaxDailyEngagement(
+      OriginsWithMaxDailyEngagement());
+  SiteEngagementMetrics::RecordOriginsWithMaxEngagement(
+      origins_with_max_engagement);
+  SiteEngagementMetrics::RecordPercentOriginsWithMaxEngagement(
+      percent_origins_with_max_engagement);
+}
+
+bool SiteEngagementService::ShouldRecordEngagement(const GURL& url) const {
+  return url.SchemeIsHTTPOrHTTPS();
 }
 
 base::Time SiteEngagementService::GetLastEngagementTime() const {
@@ -411,7 +512,10 @@ double SiteEngagementService::GetMedianEngagement(
 void SiteEngagementService::HandleMediaPlaying(
     content::WebContents* web_contents,
     bool is_hidden) {
-  const GURL& url = web_contents->GetVisibleURL();
+  const GURL& url = web_contents->GetLastCommittedURL();
+  if (!ShouldRecordEngagement(url))
+    return;
+
   SiteEngagementMetrics::RecordEngagement(
       is_hidden ? SiteEngagementMetrics::ENGAGEMENT_MEDIA_HIDDEN
                 : SiteEngagementMetrics::ENGAGEMENT_MEDIA_VISIBLE);
@@ -419,47 +523,60 @@ void SiteEngagementService::HandleMediaPlaying(
                            : SiteEngagementScore::GetVisibleMediaPoints());
 
   RecordMetrics();
-  FOR_EACH_OBSERVER(
-      SiteEngagementObserver, observer_list_,
-      OnEngagementIncreased(web_contents, url, GetScore(url)));
+  double score = GetScore(url);
+  for (SiteEngagementObserver& observer : observer_list_)
+    observer.OnEngagementIncreased(web_contents, url, score);
 }
 
 void SiteEngagementService::HandleNavigation(content::WebContents* web_contents,
                                              ui::PageTransition transition) {
-  if (IsEngagementNavigation(transition)) {
-    const GURL& url = web_contents->GetLastCommittedURL();
-    SiteEngagementMetrics::RecordEngagement(
-        SiteEngagementMetrics::ENGAGEMENT_NAVIGATION);
-    AddPoints(url, SiteEngagementScore::GetNavigationPoints());
+  const GURL& url = web_contents->GetLastCommittedURL();
+  if (!IsEngagementNavigation(transition) || !ShouldRecordEngagement(url))
+    return;
 
-    RecordMetrics();
-    FOR_EACH_OBSERVER(
-        SiteEngagementObserver, observer_list_,
-        OnEngagementIncreased(web_contents, url, GetScore(url)));
-  }
+  SiteEngagementMetrics::RecordEngagement(
+      SiteEngagementMetrics::ENGAGEMENT_NAVIGATION);
+  AddPoints(url, SiteEngagementScore::GetNavigationPoints());
+
+  RecordMetrics();
+  double score = GetScore(url);
+  for (SiteEngagementObserver& observer : observer_list_)
+    observer.OnEngagementIncreased(web_contents, url, score);
 }
 
 void SiteEngagementService::HandleUserInput(
     content::WebContents* web_contents,
     SiteEngagementMetrics::EngagementType type) {
-  const GURL& url = web_contents->GetVisibleURL();
+  const GURL& url = web_contents->GetLastCommittedURL();
+  if (!ShouldRecordEngagement(url))
+    return;
+
   SiteEngagementMetrics::RecordEngagement(type);
   AddPoints(url, SiteEngagementScore::GetUserInputPoints());
 
   RecordMetrics();
-  FOR_EACH_OBSERVER(
-      SiteEngagementObserver, observer_list_,
-      OnEngagementIncreased(web_contents, url, GetScore(url)));
+  double score = GetScore(url);
+  for (SiteEngagementObserver& observer : observer_list_)
+    observer.OnEngagementIncreased(web_contents, url, score);
+}
+
+void SiteEngagementService::SendLevelChangeToHelpers(
+    const GURL& url,
+    blink::mojom::EngagementLevel level) {
+  for (SiteEngagementService::Helper* helper : helpers_)
+    helper->OnEngagementLevelChanged(url, level);
 }
 
 bool SiteEngagementService::IsLastEngagementStale() const {
-  // This only happens when Chrome is first run and the user has never recorded
-  // any engagement.
+  // Only happens on first run when no engagement has ever been recorded.
   base::Time last_engagement_time = GetLastEngagementTime();
   if (last_engagement_time.is_null())
     return false;
 
-  return (clock_->Now() - last_engagement_time) >= GetStalePeriod();
+  // Stale is either too *far* back, or any amount *forward* in time. This could
+  // occur due to a changed clock, or extended non-use of the browser.
+  return (clock_->Now() - last_engagement_time) >= GetStalePeriod() ||
+         (clock_->Now() < last_engagement_time);
 }
 
 void SiteEngagementService::OnURLsDeleted(
@@ -483,22 +600,22 @@ void SiteEngagementService::OnURLsDeleted(
 
 SiteEngagementScore SiteEngagementService::CreateEngagementScore(
     const GURL& origin) const {
+  // If we are in incognito, |settings| will automatically have the data from
+  // the original profile migrated in, so all engagement scores in incognito
+  // will be initialised to the values from the original profile.
   return SiteEngagementScore(
       clock_.get(), origin,
       HostContentSettingsMapFactory::GetForProfile(profile_));
 }
 
 int SiteEngagementService::OriginsWithMaxDailyEngagement() const {
-  HostContentSettingsMap* settings_map =
-      HostContentSettingsMapFactory::GetForProfile(profile_);
-  std::unique_ptr<ContentSettingsForOneType> engagement_settings =
-      GetEngagementContentSettings(settings_map);
-
   int total_origins = 0;
 
   // We cannot call GetScoreMap as we need the score objects, not raw scores.
-  for (const auto& site : *engagement_settings) {
+  for (const auto& site : GetContentSettingsFromProfile(
+           profile_, CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT)) {
     GURL origin(site.primary_pattern.ToString());
+
     if (!origin.is_valid())
       continue;
 
@@ -565,9 +682,11 @@ void SiteEngagementService::GetCountsAndLastVisitForOriginsComplete(
     // engagement is next accessed, it will decay back to the proportionally
     // reduced value rather than being decayed once here, and then once again
     // when it is next accessed.
+    // TODO(703848): Move the proportional decay logic into SiteEngagementScore,
+    // so it can decay raw_score_ directly, without the double-decay issue.
     SiteEngagementScore engagement_score = CreateEngagementScore(origin);
 
-    double new_score = proportion_remaining * engagement_score.GetScore();
+    double new_score = proportion_remaining * engagement_score.GetTotalScore();
     int hours_since_engagement = (now - last_visit).InHours();
     int periods =
         hours_since_engagement / SiteEngagementScore::GetDecayPeriodInHours();

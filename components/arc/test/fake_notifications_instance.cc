@@ -10,14 +10,23 @@ FakeNotificationsInstance::FakeNotificationsInstance() = default;
 FakeNotificationsInstance::~FakeNotificationsInstance() = default;
 
 void FakeNotificationsInstance::SendNotificationEventToAndroid(
-    const mojo::String& key,
+    const std::string& key,
     mojom::ArcNotificationEvent event) {
   events_.emplace_back(key, event);
 }
 
+void FakeNotificationsInstance::CreateNotificationWindow(
+    const std::string& key) {}
+
+void FakeNotificationsInstance::CloseNotificationWindow(
+    const std::string& key) {}
+
+void FakeNotificationsInstance::OpenNotificationSettings(
+    const std::string& key) {}
+
 void FakeNotificationsInstance::Init(mojom::NotificationsHostPtr host_ptr) {}
 
-const std::vector<std::pair<mojo::String, mojom::ArcNotificationEvent>>&
+const std::vector<std::pair<std::string, mojom::ArcNotificationEvent>>&
 FakeNotificationsInstance::events() const {
   return events_;
 }

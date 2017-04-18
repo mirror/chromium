@@ -51,10 +51,12 @@ fi
 combined_config="$(cat $header_file $asm_file | grep -E ' +[01] *$')"
 
 # Extra filtering for known exceptions.
+combined_config="$(echo "$combined_config" | grep -v WIDE_REFERENCE)"
+combined_config="$(echo "$combined_config" | grep -v ARCHITECTURE)"
 combined_config="$(echo "$combined_config" | grep -v DO1STROUNDING)"
 
 # Remove all spaces.
-combined_config="$(echo "$combined_config" | sed 's/[ \t]//g')"
+combined_config="$(echo "$combined_config" | sed 's/[[:space:]]//g')"
 
 # Remove #define in the header file.
 combined_config="$(echo "$combined_config" | sed 's/.*define//')"
@@ -62,9 +64,10 @@ combined_config="$(echo "$combined_config" | sed 's/.*define//')"
 # Remove equ in the ASM file.
 combined_config="$(echo "$combined_config" | sed 's/\.equ//')" # gas style
 combined_config="$(echo "$combined_config" | sed 's/equ//')" # rvds style
+combined_config="$(echo "$combined_config" | sed 's/\.set//')" # apple style
 
 # Remove %define in YASM ASM files.
-combined_config="$(echo "$combined_config" | sed 's/%define\s *//')" # yasm style
+combined_config="$(echo "$combined_config" | sed 's/%define[[:space:]]*//')"
 
 # Remove useless comma in gas style assembly file.
 combined_config="$(echo "$combined_config" | sed 's/,//')"

@@ -13,8 +13,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
+#include "printing/native_drawing_context.h"
 #include "printing/print_settings.h"
-#include "ui/gfx/native_widget_types.h"
 
 namespace base {
 class RefCountedMemory;
@@ -63,7 +63,7 @@ class PRINTING_EXPORT PrintedDocument
   // Note: locks for a short amount of time in debug only.
 #if defined(OS_WIN) || defined(OS_MACOSX) && !defined(USE_AURA)
   void RenderPrintedPage(const PrintedPage& page,
-                         gfx::NativeDrawingContext context) const;
+                         skia::NativeDrawingContext context) const;
 #elif defined(OS_POSIX)
   void RenderPrintedPage(const PrintedPage& page,
                          PrintingContext* context) const;

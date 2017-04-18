@@ -33,63 +33,62 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLBaseElement::HTMLBaseElement(Document& document)
-    : HTMLElement(baseTag, document)
-{
-}
+    : HTMLElement(baseTag, document) {}
 
 DEFINE_NODE_FACTORY(HTMLBaseElement)
 
-void HTMLBaseElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == hrefAttr || name == targetAttr)
-        document().processBaseElement();
-    else
-        HTMLElement::parseAttribute(name, oldValue, value);
+void HTMLBaseElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == hrefAttr || params.name == targetAttr)
+    GetDocument().ProcessBaseElement();
+  else
+    HTMLElement::ParseAttribute(params);
 }
 
-Node::InsertionNotificationRequest HTMLBaseElement::insertedInto(ContainerNode* insertionPoint)
-{
-    HTMLElement::insertedInto(insertionPoint);
-    if (insertionPoint->isConnected())
-        document().processBaseElement();
-    return InsertionDone;
+Node::InsertionNotificationRequest HTMLBaseElement::InsertedInto(
+    ContainerNode* insertion_point) {
+  HTMLElement::InsertedInto(insertion_point);
+  if (insertion_point->isConnected())
+    GetDocument().ProcessBaseElement();
+  return kInsertionDone;
 }
 
-void HTMLBaseElement::removedFrom(ContainerNode* insertionPoint)
-{
-    HTMLElement::removedFrom(insertionPoint);
-    if (insertionPoint->isConnected())
-        document().processBaseElement();
+void HTMLBaseElement::RemovedFrom(ContainerNode* insertion_point) {
+  HTMLElement::RemovedFrom(insertion_point);
+  if (insertion_point->isConnected())
+    GetDocument().ProcessBaseElement();
 }
 
-bool HTMLBaseElement::isURLAttribute(const Attribute& attribute) const
-{
-    return attribute.name().localName() == hrefAttr || HTMLElement::isURLAttribute(attribute);
+bool HTMLBaseElement::IsURLAttribute(const Attribute& attribute) const {
+  return attribute.GetName().LocalName() == hrefAttr ||
+         HTMLElement::IsURLAttribute(attribute);
 }
 
-KURL HTMLBaseElement::href() const
-{
-    // This does not use the getURLAttribute function because that will resolve relative to the document's base URL;
-    // base elements like this one can be used to set that base URL. Thus we need to resolve relative to the document's
-    // URL and ignore the base URL.
+KURL HTMLBaseElement::href() const {
+  // This does not use the getURLAttribute function because that will resolve
+  // relative to the document's base URL; base elements like this one can be
+  // used to set that base URL. Thus we need to resolve relative to the
+  // document's URL and ignore the base URL.
 
-    const AtomicString& attributeValue = fastGetAttribute(hrefAttr);
-    if (attributeValue.isNull())
-        return document().url();
+  const AtomicString& attribute_value = FastGetAttribute(hrefAttr);
+  if (attribute_value.IsNull())
+    return GetDocument().Url();
 
-    KURL url = document().encoding().isValid() ?
-        KURL(document().url(), stripLeadingAndTrailingHTMLSpaces(attributeValue)) :
-        KURL(document().url(), stripLeadingAndTrailingHTMLSpaces(attributeValue), document().encoding());
+  KURL url = GetDocument().Encoding().IsValid()
+                 ? KURL(GetDocument().Url(),
+                        StripLeadingAndTrailingHTMLSpaces(attribute_value))
+                 : KURL(GetDocument().Url(),
+                        StripLeadingAndTrailingHTMLSpaces(attribute_value),
+                        GetDocument().Encoding());
 
-    if (!url.isValid())
-        return KURL();
+  if (!url.IsValid())
+    return KURL();
 
-    return url;
+  return url;
 }
 
-void HTMLBaseElement::setHref(const AtomicString& value)
-{
-    setAttribute(hrefAttr, value);
+void HTMLBaseElement::setHref(const AtomicString& value) {
+  setAttribute(hrefAttr, value);
 }
 
-} // namespace blink
+}  // namespace blink

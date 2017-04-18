@@ -11,10 +11,14 @@
 #include "base/memory/weak_ptr.h"
 #include "media/base/decode_status.h"
 #include "media/mojo/interfaces/video_decoder.mojom.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
+
+namespace gpu {
+struct SyncToken;
+};
 
 namespace media {
 
+class DecoderBuffer;
 class MojoDecoderBufferReader;
 class MojoMediaClient;
 class VideoDecoder;
@@ -24,28 +28,36 @@ class VideoFrame;
 // and wraps a media::VideoDecoder.
 class MojoVideoDecoderService : public mojom::VideoDecoder {
  public:
-  MojoVideoDecoderService(mojo::InterfaceRequest<mojom::VideoDecoder> request,
-                          MojoMediaClient* mojo_media_client);
+  explicit MojoVideoDecoderService(MojoMediaClient* mojo_media_client);
   ~MojoVideoDecoderService() final;
 
   // mojom::VideoDecoder implementation
-  void Construct(mojom::VideoDecoderClientPtr client,
-                 mojo::ScopedDataPipeConsumerHandle decoder_buffer_pipe) final;
+  void Construct(mojom::VideoDecoderClientAssociatedPtrInfo client,
+                 mojo::ScopedDataPipeConsumerHandle decoder_buffer_pipe,
+                 mojom::CommandBufferIdPtr command_buffer_id) final;
   void Initialize(mojom::VideoDecoderConfigPtr config,
                   bool low_delay,
                   const InitializeCallback& callback) final;
   void Decode(mojom::DecoderBufferPtr buffer,
               const DecodeCallback& callback) final;
   void Reset(const ResetCallback& callback) final;
+  void OnReleaseMailbox(const base::UnguessableToken& release_token,
+                        const gpu::SyncToken& release_sync_token) final;
 
  private:
+  // Helper methods so that we can bind them with a weak pointer to avoid
+  // running mojom::VideoDecoder callbacks after connection error happens and
+  // |this| is deleted. It's not safe to run the callbacks after a connection
+  // error.
   void OnDecoderInitialized(const InitializeCallback& callback, bool success);
+  void OnDecoderRead(const DecodeCallback& callback,
+                     scoped_refptr<DecoderBuffer> buffer);
   void OnDecoderDecoded(const DecodeCallback& callback, DecodeStatus status);
-  void OnDecoderOutput(const scoped_refptr<VideoFrame>& frame);
   void OnDecoderReset(const ResetCallback& callback);
 
-  mojo::StrongBinding<mojom::VideoDecoder> binding_;
-  mojom::VideoDecoderClientPtr client_;
+  void OnDecoderOutput(const scoped_refptr<VideoFrame>& frame);
+
+  mojom::VideoDecoderClientAssociatedPtr client_;
   std::unique_ptr<MojoDecoderBufferReader> mojo_decoder_buffer_reader_;
 
   MojoMediaClient* mojo_media_client_;

@@ -16,20 +16,23 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/process/kill.h"
+#include "base/strings/string16.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "cc/ipc/mojo_compositor_frame_sink.mojom.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/surfaces/surface_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
 #include "content/common/content_export.h"
 #include "content/common/input/input_event_ack_state.h"
-#include "content/public/browser/readback_types.h"
 #include "content/public/browser/render_widget_host_view.h"
+#include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "third_party/WebKit/public/web/WebPopupType.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
+#include "ui/accessibility/ax_tree_id_registry.h"
 #include "ui/base/ime/text_input_mode.h"
 #include "ui/base/ime/text_input_type.h"
 #include "ui/display/display.h"
@@ -40,15 +43,18 @@
 
 class SkBitmap;
 
-struct AccessibilityHostMsg_EventParams;
 struct ViewHostMsg_SelectionBounds_Params;
+
+namespace cc {
+struct BeginFrameAck;
+class SurfaceInfo;
+}  // namespace cc
 
 namespace media {
 class VideoFrame;
 }
 
 namespace blink {
-struct WebScreenInfo;
 class WebMouseEvent;
 class WebMouseWheelEvent;
 }
@@ -59,17 +65,17 @@ class SurfaceHittestDelegate;
 
 namespace ui {
 class LatencyInfo;
+struct DidOverscrollParams;
 }
 
 namespace content {
 class BrowserAccessibilityDelegate;
 class BrowserAccessibilityManager;
+class RenderWidgetHostImpl;
 class RenderWidgetHostViewBaseObserver;
-class SyntheticGesture;
 class SyntheticGestureTarget;
 class TextInputManager;
 class WebCursor;
-struct DidOverscrollParams;
 struct NativeWebKeyboardEvent;
 struct TextInputState;
 
@@ -83,19 +89,31 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
     return current_device_scale_factor_;
   }
 
+  // Returns the focused RenderWidgetHost inside this |view|'s RWH.
+  RenderWidgetHostImpl* GetFocusedWidget() const;
+
   // RenderWidgetHostView implementation.
-  void SetBackgroundColor(SkColor color) override;
+  RenderWidgetHost* GetRenderWidgetHost() const override;
   void SetBackgroundColorToDefault() final;
-  bool GetBackgroundOpaque() override;
   ui::TextInputClient* GetTextInputClient() override;
   void WasUnOccluded() override {}
   void WasOccluded() override {}
   bool IsShowingContextMenu() const override;
   void SetShowingContextMenu(bool showing_menu) override;
+  void SetIsInVR(bool is_in_vr) override;
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;
   gfx::Size GetVisibleViewportSize() const override;
   void SetInsets(const gfx::Insets& insets) override;
+  bool IsSurfaceAvailableForCopy() const override;
+  void CopyFromSurface(const gfx::Rect& src_rect,
+                       const gfx::Size& output_size,
+                       const ReadbackRequestCallback& callback,
+                       const SkColorType color_type) override;
+  void CopyFromSurfaceToVideoFrame(
+      const gfx::Rect& src_rect,
+      scoped_refptr<media::VideoFrame> target,
+      const base::Callback<void(const gfx::Rect&, bool)>& callback) override;
   void BeginFrameSubscription(
       std::unique_ptr<RenderWidgetHostViewFrameSubscriber> subscriber) override;
   void EndFrameSubscription() override;
@@ -155,10 +173,13 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // Whether or not Blink's viewport size should be shrunk by the height of the
   // URL-bar.
-  virtual bool DoTopControlsShrinkBlinkSize() const;
+  virtual bool DoBrowserControlsShrinkBlinkSize() const;
 
-  // The height of the URL-bar top controls.
+  // The height of the URL-bar browser controls.
   virtual float GetTopControlsHeight() const;
+
+  // The height of the bottom bar.
+  virtual float GetBottomControlsHeight() const;
 
   // Called prior to forwarding input event messages to the renderer, giving
   // the view a chance to perform in-process event filtering or processing.
@@ -193,12 +214,24 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   virtual gfx::Point AccessibilityOriginInScreen(const gfx::Rect& bounds);
   virtual gfx::AcceleratedWidget AccessibilityGetAcceleratedWidget();
   virtual gfx::NativeViewAccessible AccessibilityGetNativeViewAccessible();
-
+  virtual void SetMainFrameAXTreeID(ui::AXTreeIDRegistry::AXTreeID id) {}
   // Informs that the focused DOM node has changed.
-  virtual void FocusedNodeChanged(bool is_editable_node) {}
+  virtual void FocusedNodeChanged(bool is_editable_node,
+                                  const gfx::Rect& node_bounds_in_screen) {}
 
-  virtual void OnSwapCompositorFrame(uint32_t output_surface_id,
-                                     cc::CompositorFrame frame) {}
+  // This method is called by RenderWidgetHostImpl when a new
+  // RendererCompositorFrameSink is created in the renderer. The view is
+  // expected not to return resources belonging to the old
+  // RendererCompositorFrameSink after this method finishes.
+  virtual void DidCreateNewRendererCompositorFrameSink(
+      cc::mojom::MojoCompositorFrameSinkClient*
+          renderer_compositor_frame_sink) = 0;
+
+  virtual void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
+                                     cc::CompositorFrame frame) = 0;
+
+  virtual void OnBeginFrameDidNotSwap(const cc::BeginFrameAck& ack) {}
+  virtual void OnSurfaceChanged(const cc::SurfaceInfo& surface_info) {}
 
   // This method exists to allow removing of displayed graphics, after a new
   // page has been loaded, to prevent the displayed URL from being out of sync
@@ -213,22 +246,23 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   virtual void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                                       InputEventAckState ack_result) {}
 
-  virtual void DidOverscroll(const DidOverscrollParams& params) {}
+  virtual void DidOverscroll(const ui::DidOverscrollParams& params) {}
 
   virtual void DidStopFlinging() {}
 
   // Returns the compositing surface ID namespace, or 0 if Surfaces are not
   // enabled.
-  virtual uint32_t GetSurfaceClientId();
+  virtual cc::FrameSinkId GetFrameSinkId();
 
   // When there are multiple RenderWidgetHostViews for a single page, input
   // events need to be targeted to the correct one for handling. The following
   // methods are invoked on the RenderWidgetHostView that should be able to
   // properly handle the event (i.e. it has focus for keyboard events, or has
   // been identified by hit testing mouse, touch or gesture events).
-  virtual uint32_t SurfaceClientIdAtPoint(cc::SurfaceHittestDelegate* delegate,
-                                          const gfx::Point& point,
-                                          gfx::Point* transformed_point);
+  virtual cc::FrameSinkId FrameSinkIdAtPoint(
+      cc::SurfaceHittestDelegate* delegate,
+      const gfx::Point& point,
+      gfx::Point* transformed_point);
   virtual void ProcessKeyboardEvent(const NativeWebKeyboardEvent& event) {}
   virtual void ProcessMouseEvent(const blink::WebMouseEvent& event,
                                  const ui::LatencyInfo& latency) {}
@@ -241,15 +275,43 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // Transform a point that is in the coordinate space of a Surface that is
   // embedded within the RenderWidgetHostViewBase's Surface to the
-  // coordinate space of the embedding Surface. Typically this means that a
-  // point was received from an out-of-process iframe's RenderWidget and needs
-  // to be translated to viewport coordinates for the root RWHV, in which case
-  // this method is called on the root RWHV with the out-of-process iframe's
-  // SurfaceId.
-  virtual void TransformPointToLocalCoordSpace(
+  // coordinate space of an embedding, or embedded, Surface. Typically this
+  // means that a point was received from an out-of-process iframe's
+  // RenderWidget and needs to be translated to viewport coordinates for the
+  // root RWHV, in which case this method is called on the root RWHV with the
+  // out-of-process iframe's SurfaceId.
+  // Returns false when this attempts to transform a point between coordinate
+  // spaces of surfaces where one does not contain the other. To transform
+  // between sibling surfaces, the point must be transformed to the root's
+  // coordinate space as an intermediate step.
+  virtual bool TransformPointToLocalCoordSpace(
       const gfx::Point& point,
       const cc::SurfaceId& original_surface,
       gfx::Point* transformed_point);
+
+  // Transform a point that is in the coordinate space for the current
+  // RenderWidgetHostView to the coordinate space of the target_view.
+  virtual bool TransformPointToCoordSpaceForView(
+      const gfx::Point& point,
+      RenderWidgetHostViewBase* target_view,
+      gfx::Point* transformed_point);
+
+  // TODO(kenrb, wjmaclean): This is a temporary subclass identifier for
+  // RenderWidgetHostViewGuests that is needed for special treatment during
+  // input event routing. It can be removed either when RWHVGuests properly
+  // support direct mouse event routing, or when RWHVGuest is removed
+  // entirely, which comes first.
+  virtual bool IsRenderWidgetHostViewGuest();
+
+  // Subclass identifier for RenderWidgetHostViewChildFrames. This is useful
+  // to be able to know if this RWHV is embedded within another RWHV. If
+  // other kinds of embeddable RWHVs are created, this should be renamed to
+  // a more generic term -- in which case, static casts to RWHVChildFrame will
+  // need to also be resolved.
+  virtual bool IsRenderWidgetHostViewChildFrame();
+
+  // Returns true if the current view is in virtual reality mode.
+  virtual bool IsInVR() const;
 
   //----------------------------------------------------------------------------
   // The following methods are related to IME.
@@ -276,11 +338,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   virtual void ImeCompositionRangeChanged(
       const gfx::Range& range,
       const std::vector<gfx::Rect>& character_bounds);
-
-  //----------------------------------------------------------------------------
-  // The following static methods are implemented by each platform.
-
-  static void GetDefaultScreenInfo(blink::WebScreenInfo* results);
 
   //----------------------------------------------------------------------------
   // The following pure virtual methods are implemented by derived classes.
@@ -313,57 +370,18 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // the page has changed.
   virtual void SetTooltipText(const base::string16& tooltip_text) = 0;
 
-  // Copies the contents of the compositing surface, providing a new SkBitmap
-  // result via an asynchronously-run |callback|. |src_subrect| is specified in
-  // layer space coordinates for the current platform (e.g., DIP for Aura/Mac,
-  // physical for Android), and is the region to be copied from this view. When
-  // |src_subrect| is empty then the whole surface will be copied. The copy is
-  // then scaled to a SkBitmap of size |dst_size|. If |dst_size| is empty then
-  // output will be unscaled. |callback| is run with true on success,
-  // false otherwise. A smaller region than |src_subrect| may be copied
-  // if the underlying surface is smaller than |src_subrect|.
-  virtual void CopyFromCompositingSurface(
-      const gfx::Rect& src_subrect,
-      const gfx::Size& dst_size,
-      const ReadbackRequestCallback& callback,
-      const SkColorType preferred_color_type) = 0;
-
-  // Copies the contents of the compositing surface, populating the given
-  // |target| with YV12 image data. |src_subrect| is specified in layer space
-  // coordinates for the current platform (e.g., DIP for Aura/Mac, physical for
-  // Android), and is the region to be copied from this view. The copy is then
-  // scaled and letterboxed with black borders to fit |target|. Finally,
-  // |callback| is asynchronously run with true/false for
-  // success/failure. |target| must point to an allocated, YV12 video frame of
-  // the intended size. This operation will fail if there is no available
-  // compositing surface.
-  virtual void CopyFromCompositingSurfaceToVideoFrame(
-      const gfx::Rect& src_subrect,
-      const scoped_refptr<media::VideoFrame>& target,
-      const base::Callback<void(const gfx::Rect&, bool)>& callback) = 0;
-
-  // Returns true if CopyFromCompositingSurfaceToVideoFrame() is likely to
-  // succeed.
-  //
-  // TODO(nick): When VideoFrame copies are broadly implemented, this method
-  // should be renamed to HasCompositingSurface(), or unified with
-  // IsSurfaceAvailableForCopy() and HasAcceleratedSurface().
-  virtual bool CanCopyToVideoFrame() const = 0;
-
   // Return true if the view has an accelerated surface that contains the last
   // presented frame for the view. If |desired_size| is non-empty, true is
   // returned only if the accelerated surface size matches.
   virtual bool HasAcceleratedSurface(const gfx::Size& desired_size) = 0;
 
   // Compute the orientation type of the display assuming it is a mobile device.
-  static blink::WebScreenOrientationType GetOrientationTypeForMobile(
+  static ScreenOrientationValues GetOrientationTypeForMobile(
       const display::Display& display);
 
   // Compute the orientation type of the display assuming it is a desktop.
-  static blink::WebScreenOrientationType GetOrientationTypeForDesktop(
+  static ScreenOrientationValues GetOrientationTypeForDesktop(
       const display::Display& display);
-
-  virtual void GetScreenInfo(blink::WebScreenInfo* results) = 0;
 
   // Gets the bounds of the window, in screen coordinates.
   virtual gfx::Rect GetBoundsInRootWindow() = 0;
@@ -377,25 +395,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // main frame.
   virtual void OnDidNavigateMainFrameToNewPage();
 
-  // Instructs the view to not drop the surface even when the view is hidden.
-  virtual void LockCompositingSurface() = 0;
-  virtual void UnlockCompositingSurface() = 0;
-
   // Add and remove observers for lifetime event notifications. The order in
   // which notifications are sent to observers is undefined. Clients must be
   // sure to remove the observer before they go away.
   void AddObserver(RenderWidgetHostViewBaseObserver* observer);
   void RemoveObserver(RenderWidgetHostViewBaseObserver* observer);
-
-  // Exposed for testing.
-  virtual bool IsChildFrameForTesting() const;
-  virtual cc::SurfaceId SurfaceIdForTesting() const;
-
- protected:
-  // Interface class only, do not construct.
-  RenderWidgetHostViewBase();
-
-  void NotifyObserversAboutShutdown();
 
   // Returns a reference to the current instance of TextInputManager. The
   // reference is obtained from RenderWidgetHostDelegate. The first time a non-
@@ -409,12 +413,24 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // |text_input_manager_|.
   TextInputManager* GetTextInputManager();
 
+  bool is_fullscreen() { return is_fullscreen_; }
+
+  // Exposed for testing.
+  virtual bool IsChildFrameForTesting() const;
+  virtual cc::SurfaceId SurfaceIdForTesting() const;
+
+ protected:
+  // Interface class only, do not construct.
+  RenderWidgetHostViewBase();
+
+  void NotifyObserversAboutShutdown();
+
+  // Is this a fullscreen view?
+  bool is_fullscreen_;
+
   // Whether this view is a popup and what kind of popup it is (select,
   // autofill...).
   blink::WebPopupType popup_type_;
-
-  // The background color of the web content.
-  SkColor background_color_;
 
   // While the mouse is locked, the cursor is hidden from the user. Mouse events
   // are still generated. However, the position they report is the last known
@@ -426,31 +442,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Whether we are showing a context menu.
   bool showing_context_menu_;
 
-// TODO(ekaramad): In aura, text selection tracking for IME is done through the
-// TextInputManager. We still need the following variables for other platforms.
-// Remove them when tracking is done by TextInputManager on all platforms
-// (https://crbug.com/578168 and https://crbug.com/602427).
-#if !defined(USE_AURA)
-  // A buffer containing the text inside and around the current selection range.
-  base::string16 selection_text_;
-
-  // The offset of the text stored in |selection_text_| relative to the start of
-  // the web page.
-  size_t selection_text_offset_;
-
-  // The current selection range relative to the start of the web page.
-  gfx::Range selection_range_;
-#endif
-
   // The scale factor of the display the renderer is currently on.
   float current_device_scale_factor_;
 
   // The orientation of the display the renderer is currently on.
   display::Display::Rotation current_display_rotation_;
-
-  // Whether pinch-to-zoom should be enabled and pinch events forwarded to the
-  // renderer.
-  bool pinch_zoom_enabled_;
 
   // A reference to current TextInputManager instance this RWHV is registered
   // with. This is initially nullptr until the first time the view calls

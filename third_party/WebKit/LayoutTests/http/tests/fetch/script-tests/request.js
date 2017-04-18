@@ -129,6 +129,32 @@ test(function() {
                   'Request.headers should match');
     assert_equals(request3.headers.getAll('X-Fetch-Bar')[0], 'bar',
                   'Request.headers should match');
+    var request4 = new Request(URL,
+                               {headers: {'X-Fetch-Foo': 'foo1',
+                                          'X-Fetch-Foo': 'foo2',
+                                          'X-Fetch-Bar': 'bar'}});
+    assert_equals(request4.headers.getAll('X-Fetch-Foo')[0], 'foo2',
+                  'Request.headers should match');
+    assert_equals(request4.headers.getAll('X-Fetch-Bar')[0], 'bar',
+                  'Request.headers should match');
+    // https://github.com/whatwg/fetch/issues/479
+    var request5 = new Request(request, {headers: undefined});
+    assert_equals(request5.headers.getAll('X-Fetch-Foo')[0], 'foo1',
+                  'Request.headers should match');
+    assert_equals(request5.headers.getAll('X-Fetch-Foo')[1], 'foo2',
+                  'Request.headers should match');
+    assert_equals(request5.headers.getAll('X-Fetch-Bar')[0], 'bar',
+                  'Request.headers should match');
+    var request6 = new Request(request, {});
+    assert_equals(request6.headers.getAll('X-Fetch-Foo')[0], 'foo1',
+                  'Request.headers should match');
+    assert_equals(request6.headers.getAll('X-Fetch-Foo')[1], 'foo2',
+                  'Request.headers should match');
+    assert_equals(request6.headers.getAll('X-Fetch-Bar')[0], 'bar',
+                  'Request.headers should match');
+    assert_throws(new TypeError(),
+                  () => { new Request(request, {headers: null}) },
+                  'null cannot be converted to a HeaderInit');
   }, 'Request header test');
 
 test(function() {
@@ -198,7 +224,7 @@ test(function() {
               });
           });
       });
-  }, 'Request header test');
+  }, 'Request method test');
 
 test(function() {
     var request1 = {};
@@ -371,7 +397,7 @@ test(function() {
       {name: 'TypeError'},
       function() { new Request(req); },
       'Request construction should throw if used.');
-  }, 'Request construction without body behavior regardning "bodyUsed"');
+  }, 'POST Request construction without body behavior regardning "bodyUsed"');
 
 test(function() {
     var req = new Request(URL, {method: 'POST', body: 'hello'});
@@ -401,6 +427,19 @@ test(function() {
     assert_equals(new Request(URL).referrer, 'about:client');
     assert_equals(new Request(URL).referrerPolicy, '');
   }, 'Request without RequestInit.');
+
+test(function() {
+  assert_equals(new Request(URL, {referrer: undefined}).referrer,
+               'about:client');
+  assert_equals(new Request(URL).referrerPolicy, '');
+}, 'Request with referrer equals to undefined.');
+
+test(function() {
+  var expected = location.href.slice(0, location.href.lastIndexOf('/')) +
+    '/null';
+  assert_equals(new Request(URL, {referrer: null}).referrer, expected);
+  assert_equals(new Request(URL).referrerPolicy, '');
+}, 'Request with referrer equals to null.');
 
 test(function() {
     var req = new Request(URL, {referrer: 'about:client'});
@@ -505,7 +544,7 @@ test(() => {
 // Spec: https://fetch.spec.whatwg.org/#dom-request
 // Step 21:
 // If request's method is `GET` or `HEAD`, throw a TypeError.
-promise_test(function() {
+test(function() {
     var headers = new Headers;
     headers.set('Content-Language', 'ja');
     ['GET', 'HEAD'].forEach(function(method) {
@@ -682,7 +721,7 @@ async_test(function(t) {
 
 test(function() {
     // https://fetch.spec.whatwg.org/#dom-request
-    // Step 20:
+    // Step 32:
     // Fill r's Headers object with headers. Rethrow any exceptions.
     INVALID_HEADER_NAMES.forEach(function(name) {
         assert_throws(

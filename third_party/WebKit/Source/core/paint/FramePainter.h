@@ -17,25 +17,27 @@ class IntRect;
 class Scrollbar;
 
 class FramePainter {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(FramePainter);
-public:
-    explicit FramePainter(const FrameView& frameView) : m_frameView(&frameView) { }
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(FramePainter);
 
-    void paint(GraphicsContext&, const GlobalPaintFlags, const CullRect&);
-    void paintScrollbars(GraphicsContext&, const IntRect&);
-    void paintContents(GraphicsContext&, const GlobalPaintFlags, const IntRect&);
-    void paintScrollCorner(GraphicsContext&, const IntRect& cornerRect);
+ public:
+  explicit FramePainter(const FrameView& frame_view)
+      : frame_view_(&frame_view) {}
 
-private:
-    void paintScrollbar(GraphicsContext&, Scrollbar&, const IntRect&);
+  void Paint(GraphicsContext&, const GlobalPaintFlags, const CullRect&);
+  void PaintScrollbars(GraphicsContext&, const IntRect&);
+  void PaintContents(GraphicsContext&, const GlobalPaintFlags, const IntRect&);
+  void PaintScrollCorner(GraphicsContext&, const IntRect& corner_rect);
 
-    const FrameView& frameView();
+ private:
+  void PaintScrollbar(GraphicsContext&, Scrollbar&, const IntRect&);
 
-    Member<const FrameView> m_frameView;
-    static bool s_inPaintContents;
+  const FrameView& GetFrameView();
+
+  Member<const FrameView> frame_view_;
+  static bool in_paint_contents_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FramePainter_h
+#endif  // FramePainter_h

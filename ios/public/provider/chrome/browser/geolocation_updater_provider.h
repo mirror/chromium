@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_PUBLIC_PROVIDER_CHROME_BROWSER_GEOLOCATION_UPDATER_H
-#define IOS_PUBLIC_PROVIDER_CHROME_BROWSER_GEOLOCATION_UPDATER_H
+#ifndef IOS_PUBLIC_PROVIDER_CHROME_BROWSER_GEOLOCATION_UPDATER_PROVIDER_H_
+#define IOS_PUBLIC_PROVIDER_CHROME_BROWSER_GEOLOCATION_UPDATER_PROVIDER_H_
 
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
@@ -57,7 +57,8 @@ class GeolocationUpdaterProvider {
   // Creates a new GeolocationUpdater.
   // The returned object is retained and it is the responsability of the caller
   // to release it.
-  virtual id<GeolocationUpdater> CreateGeolocationUpdater(bool enabled);
+  virtual id<GeolocationUpdater> CreateGeolocationUpdater(bool enabled)
+      NS_RETURNS_RETAINED;
 
   // Notification names:
 
@@ -86,4 +87,4 @@ class GeolocationUpdaterProvider {
 
 }  // namespace ios
 
-#endif  // IOS_PUBLIC_PROVIDER_CHROME_BROWSER_GEOLOCATION_UPDATER_H
+#endif  // IOS_PUBLIC_PROVIDER_CHROME_BROWSER_GEOLOCATION_UPDATER_PROVIDER_H_

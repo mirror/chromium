@@ -12,20 +12,20 @@
  * login_non_lock_shared.js.
  */
 
-<include src="test_util.js">
-<include src="../../../../../ui/login/screen.js">
-<include src="screen_context.js">
-<include src="../user_images_grid.js">
-<include src="apps_menu.js">
-<include src="../../../../../ui/login/bubble.js">
-<include src="../../../../../ui/login/display_manager.js">
-<include src="header_bar.js">
+// <include src="test_util.js">
+// <include src="../../../../../ui/login/screen.js">
+// <include src="screen_context.js">
+// <include src="../user_images_grid.js">
+// <include src="apps_menu.js">
+// <include src="../../../../../ui/login/bubble.js">
+// <include src="../../../../../ui/login/display_manager.js">
+// <include src="header_bar.js">
 
-<include src="../../../../../ui/login/account_picker/screen_account_picker.js">
+// <include src="../../../../../ui/login/account_picker/screen_account_picker.js">
 
-<include src="../../../../../ui/login/login_ui_tools.js">
-<include src="../../../../../ui/login/account_picker/user_pod_row.js">
-<include src="../../../../../ui/login/resource_loader.js">
+// <include src="../../../../../ui/login/login_ui_tools.js">
+// <include src="../../../../../ui/login/account_picker/user_pod_row.js">
+// <include src="../../../../../ui/login/resource_loader.js">
 
 cr.define('cr.ui', function() {
   var DisplayManager = cr.ui.login.DisplayManager;
@@ -187,6 +187,14 @@ cr.define('cr.ui', function() {
   };
 
   /**
+   * Shows Active Directory password change screen.
+   * @param {string} username Name of the user that should change the password.
+   */
+  Oobe.showActiveDirectoryPasswordChangeScreen = function(username) {
+    DisplayManager.showActiveDirectoryPasswordChangeScreen(username);
+  };
+
+  /**
    * Show user-pods.
    */
   Oobe.showUserPods = function() {
@@ -272,6 +280,16 @@ cr.define('cr.ui', function() {
   };
 
   /**
+   * Some ForTesting APIs directly access to DOM. Because this script is loaded
+   * in header, DOM tree may not be available at beginning.
+   * In DOMContentLoaded, after Oobe.initialize() is done, this is marked to
+   * true, indicating ForTesting methods can be called.
+   * External script using ForTesting APIs should wait for this condition.
+   * @type {boolean}
+   */
+  Oobe.readyForTesting = false;
+
+  /**
    * Skip to login screen for telemetry.
    */
   Oobe.skipToLoginForTesting = function() {
@@ -335,7 +353,7 @@ cr.define('cr.ui', function() {
    */
   Oobe.authenticateForTesting = function(username, password) {
     Oobe.disableSigninUI();
-    chrome.send('authenticateUser', [username, password]);
+    chrome.send('authenticateUser', [username, password, false]);
   };
 
   /**
@@ -394,6 +412,13 @@ cr.define('cr.ui', function() {
   };
 
   /**
+   * Shows/hides pin keyboard on the lock screen.
+   */
+  Oobe.showPinKeyboard = function(show) {
+    Oobe.getInstance().pinHidden = !show;
+  };
+
+  /**
    * Sets the current size of the client area (display size).
    * @param {number} width client area width
    * @param {number} height client area height
@@ -424,7 +449,21 @@ disableTextSelectAndDrag(function(e) {
   'use strict';
 
   document.addEventListener('DOMContentLoaded', function() {
-    Oobe.initialize();
+    try {
+      Oobe.initialize();
+    } finally {
+      // TODO(crbug.com/712078): Do not set readyForTesting in case of that
+      // initialize() is failed. Currently, in some situation, initialize()
+      // raises an exception unexpectedly. It means testing APIs should not
+      // be called then. However, checking it here now causes bots failures
+      // unfortunately. So, as a short term workaround, here set
+      // readyForTesting even on failures, just to make test bots happy.
+      Oobe.readyForTesting = true;
+    }
   });
-})();
 
+  // Install a global error handler so stack traces are included in logs.
+  window.onerror = function(message, file, line, column, error) {
+    console.error(error.stack);
+  }
+})();

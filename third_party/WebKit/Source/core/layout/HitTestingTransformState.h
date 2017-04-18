@@ -31,65 +31,67 @@
 #include "platform/geometry/IntSize.h"
 #include "platform/transforms/AffineTransform.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
-// FIXME: Now that TransformState lazily creates its TransformationMatrix it takes up less space.
-// So there's really no need for a ref counted version. So This class should be removed and replaced
-// with TransformState. There are some minor differences (like the way translate() works slightly
-// differently than move()) so care has to be taken when this is done.
+// FIXME: Now that TransformState lazily creates its TransformationMatrix it
+// takes up less space.
+// So there's really no need for a ref counted version. So This class should be
+// removed and replaced with TransformState. There are some minor differences
+// (like the way translate() works slightly differently than move()) so care has
+// to be taken when this is done.
 class HitTestingTransformState : public RefCounted<HitTestingTransformState> {
-public:
-    static PassRefPtr<HitTestingTransformState> create(const FloatPoint& p, const FloatQuad& quad, const FloatQuad& area)
-    {
-        return adoptRef(new HitTestingTransformState(p, quad, area));
-    }
+ public:
+  static PassRefPtr<HitTestingTransformState> Create(const FloatPoint& p,
+                                                     const FloatQuad& quad,
+                                                     const FloatQuad& area) {
+    return AdoptRef(new HitTestingTransformState(p, quad, area));
+  }
 
-    static PassRefPtr<HitTestingTransformState> create(const HitTestingTransformState& other)
-    {
-        return adoptRef(new HitTestingTransformState(other));
-    }
+  static PassRefPtr<HitTestingTransformState> Create(
+      const HitTestingTransformState& other) {
+    return AdoptRef(new HitTestingTransformState(other));
+  }
 
-    enum TransformAccumulation { FlattenTransform, AccumulateTransform };
-    void translate(int x, int y, TransformAccumulation);
-    void applyTransform(const TransformationMatrix& transformFromContainer, TransformAccumulation);
+  enum TransformAccumulation { kFlattenTransform, kAccumulateTransform };
+  void Translate(int x, int y, TransformAccumulation);
+  void ApplyTransform(const TransformationMatrix& transform_from_container,
+                      TransformAccumulation);
 
-    FloatPoint mappedPoint() const;
-    FloatQuad mappedQuad() const;
-    FloatQuad mappedArea() const;
-    LayoutRect boundsOfMappedArea() const;
-    void flatten();
+  FloatPoint MappedPoint() const;
+  FloatQuad MappedQuad() const;
+  FloatQuad MappedArea() const;
+  LayoutRect BoundsOfMappedArea() const;
+  void Flatten();
 
-    FloatPoint m_lastPlanarPoint;
-    FloatQuad m_lastPlanarQuad;
-    FloatQuad m_lastPlanarArea;
-    TransformationMatrix m_accumulatedTransform;
-    bool m_accumulatingTransform;
+  FloatPoint last_planar_point_;
+  FloatQuad last_planar_quad_;
+  FloatQuad last_planar_area_;
+  TransformationMatrix accumulated_transform_;
+  bool accumulating_transform_;
 
-private:
-    HitTestingTransformState(const FloatPoint& p, const FloatQuad& quad, const FloatQuad& area)
-        : m_lastPlanarPoint(p)
-        , m_lastPlanarQuad(quad)
-        , m_lastPlanarArea(area)
-        , m_accumulatingTransform(false)
-    {
-    }
+ private:
+  HitTestingTransformState(const FloatPoint& p,
+                           const FloatQuad& quad,
+                           const FloatQuad& area)
+      : last_planar_point_(p),
+        last_planar_quad_(quad),
+        last_planar_area_(area),
+        accumulating_transform_(false) {}
 
-    HitTestingTransformState(const HitTestingTransformState& other)
-        : RefCounted<HitTestingTransformState>()
-        , m_lastPlanarPoint(other.m_lastPlanarPoint)
-        , m_lastPlanarQuad(other.m_lastPlanarQuad)
-        , m_lastPlanarArea(other.m_lastPlanarArea)
-        , m_accumulatedTransform(other.m_accumulatedTransform)
-        , m_accumulatingTransform(other.m_accumulatingTransform)
-    {
-    }
+  HitTestingTransformState(const HitTestingTransformState& other)
+      : RefCounted<HitTestingTransformState>(),
+        last_planar_point_(other.last_planar_point_),
+        last_planar_quad_(other.last_planar_quad_),
+        last_planar_area_(other.last_planar_area_),
+        accumulated_transform_(other.accumulated_transform_),
+        accumulating_transform_(other.accumulating_transform_) {}
 
-    void flattenWithTransform(const TransformationMatrix&);
+  void FlattenWithTransform(const TransformationMatrix&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HitTestingTransformState_h
+#endif  // HitTestingTransformState_h

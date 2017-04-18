@@ -79,8 +79,6 @@ class Typical25PageSet(story.StorySet):
       'http://www.fifa.com/',
       # Why: Alexa shopping #41
       'http://www.gamestop.com/ps3',
-      # Why: Alexa shopping #25
-      'http://www.barnesandnoble.com/u/books-bestselling-books/379003057/',
       # Why: Alexa news #55
       ('http://www.economist.com/news/science-and-technology/21573529-small-'
        'models-cosmic-phenomena-are-shedding-light-real-thing-how-build'),
@@ -91,7 +89,6 @@ class Typical25PageSet(story.StorySet):
       'http://allrecipes.com/Recipe/Pull-Apart-Hot-Cross-Buns/Detail.aspx',
       'http://www.html5rocks.com/en/',
       'http://www.mlb.com/',
-      # pylint: disable=line-too-long
       'http://gawker.com/5939683/based-on-a-true-story-is-a-rotten-lie-i-hope-you-never-believe',
       'http://www.imdb.com/title/tt0910970/',
       'http://www.flickr.com/search/?q=monkeys&f=hp',

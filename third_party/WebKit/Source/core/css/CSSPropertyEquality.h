@@ -6,18 +6,27 @@
 #define CSSPropertyEquality_h
 
 #include "core/CSSPropertyNames.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class ComputedStyle;
 
 class CSSPropertyEquality {
-    STATIC_ONLY(CSSPropertyEquality);
-public:
-    static bool propertiesEqual(CSSPropertyID, const ComputedStyle&, const ComputedStyle&);
+  STATIC_ONLY(CSSPropertyEquality);
+
+ public:
+  static bool PropertiesEqual(CSSPropertyID,
+                              const ComputedStyle&,
+                              const ComputedStyle&);
+
+  static bool RegisteredCustomPropertiesEqual(
+      const WTF::AtomicString& property_name,
+      const ComputedStyle&,
+      const ComputedStyle&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSPropertyEquality_h
+#endif  // CSSPropertyEquality_h

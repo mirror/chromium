@@ -99,7 +99,6 @@ std::list<LinkedPtrEventResponseDelta> WebRequestRulesRegistry::CreateDeltas(
   // for rules of that extension. Initially, this priority is -infinite and
   // will be increased when the rules are processed and raise the bar via
   // WebRequestIgnoreRulesActions.
-  typedef std::string ExtensionId;
   typedef std::map<ExtensionId, WebRequestRule::Priority> MinPriorities;
   typedef std::map<ExtensionId, std::set<std::string> > IgnoreTags;
   MinPriorities min_priorities;
@@ -130,7 +129,7 @@ std::list<LinkedPtrEventResponseDelta> WebRequestRulesRegistry::CreateDeltas(
     if (!rule->tags().empty() && !ignore_tags[extension_id].empty()) {
       bool ignore_rule = false;
       for (const std::string& tag : rule->tags())
-        ignore_rule |= ContainsKey(ignore_tags[extension_id], tag);
+        ignore_rule |= base::ContainsKey(ignore_tags[extension_id], tag);
       if (ignore_rule)
         continue;
     }
@@ -218,13 +217,6 @@ std::string WebRequestRulesRegistry::AddRulesImpl(
 
   ClearCacheOnNavigation();
 
-  if (browser_context_ && !registered_rules.empty()) {
-    content::BrowserThread::PostTask(
-        content::BrowserThread::UI, FROM_HERE,
-        base::Bind(&extension_web_request_api_helpers::NotifyWebRequestAPIUsed,
-                   browser_context_, extension->id()));
-  }
-
   return std::string();
 }
 
@@ -296,8 +288,8 @@ bool WebRequestRulesRegistry::IsEmpty() const {
     return false;
 
   // Now all the registered rules for each extensions.
-  for (const std::pair<WebRequestRule::ExtensionId, RulesMap>&
-           extension_id_rules_map_pair : webrequest_rules_) {
+  for (const std::pair<ExtensionId, RulesMap>& extension_id_rules_map_pair :
+       webrequest_rules_) {
     if (!extension_id_rules_map_pair.second.empty())
       return false;
   }
@@ -381,7 +373,7 @@ void WebRequestRulesRegistry::AddTriggeredRules(
   for (url_matcher::URLMatcherConditionSet::ID url_match : url_matches) {
     RuleTriggers::const_iterator rule_trigger = rule_triggers_.find(url_match);
     CHECK(rule_trigger != rule_triggers_.end());
-    if (!ContainsKey(*result, rule_trigger->second) &&
+    if (!base::ContainsKey(*result, rule_trigger->second) &&
         rule_trigger->second->conditions().IsFulfilled(url_match, request_data))
       result->insert(rule_trigger->second);
   }

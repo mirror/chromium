@@ -11,28 +11,26 @@
 namespace blink {
 
 class CORE_EXPORT VideoTrackList final : public TrackListBase<VideoTrack> {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static VideoTrackList* create(HTMLMediaElement&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~VideoTrackList() override;
+ public:
+  static VideoTrackList* Create(HTMLMediaElement&);
 
-    int selectedIndex() const;
+  ~VideoTrackList() override;
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
+  int selectedIndex() const;
 
-    void trackSelected(WebMediaPlayer::TrackId selectedTrackId);
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
 
-    DEFINE_INLINE_TRACE()
-    {
-        TrackListBase<VideoTrack>::trace(visitor);
-    }
+  void TrackSelected(WebMediaPlayer::TrackId selected_track_id);
 
-private:
-    explicit VideoTrackList(HTMLMediaElement&);
+  DEFINE_INLINE_TRACE() { TrackListBase<VideoTrack>::Trace(visitor); }
+
+ private:
+  explicit VideoTrackList(HTMLMediaElement&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VideoTrackList_h
+#endif  // VideoTrackList_h

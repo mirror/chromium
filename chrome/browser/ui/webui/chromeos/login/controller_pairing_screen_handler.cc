@@ -6,11 +6,11 @@
 
 #include "base/command_line.h"
 #include "base/strings/string_util.h"
-#include "chrome/browser/ui/webui/chromeos/login/oobe_screen.h"
+#include "chrome/browser/chromeos/login/oobe_screen.h"
+#include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/login/localized_values_builder.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/generated_resources.h"
 
 namespace chromeos {
 
@@ -31,12 +31,13 @@ bool IsBootstrappingMaster() {
 }  // namespace
 
 ControllerPairingScreenHandler::ControllerPairingScreenHandler()
-    : BaseScreenHandler(kJsScreenPath), delegate_(NULL), show_on_init_(false) {
+    : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
 }
 
 ControllerPairingScreenHandler::~ControllerPairingScreenHandler() {
   if (delegate_)
-    delegate_->OnActorDestroyed(this);
+    delegate_->OnViewDestroyed(this);
 }
 
 void ControllerPairingScreenHandler::HandleUserActed(
@@ -150,7 +151,7 @@ void ControllerPairingScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_OOBE_CONTROLLER_PAIRING);
+  ShowScreen(kScreenId);
 }
 
 void ControllerPairingScreenHandler::Hide() {

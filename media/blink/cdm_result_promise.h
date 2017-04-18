@@ -8,8 +8,6 @@
 #include <stdint.h>
 
 #include "base/macros.h"
-#include "media/base/cdm_promise.h"
-#include "media/base/media_keys.h"
 #include "media/blink/cdm_result_promise_helper.h"
 #include "third_party/WebKit/public/platform/WebContentDecryptionModuleResult.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -32,7 +30,7 @@ class CdmResultPromise : public CdmPromiseTemplate<T...> {
 
   // CdmPromiseTemplate<T> implementation.
   void resolve(const T&... result) override;
-  void reject(MediaKeys::Exception exception_code,
+  void reject(CdmPromise::Exception exception_code,
               uint32_t system_code,
               const std::string& error_message) override;
 
@@ -68,19 +66,19 @@ template <>
 inline void CdmResultPromise<>::resolve() {
   MarkPromiseSettled();
   ReportCdmResultUMA(uma_name_, SUCCESS);
-  web_cdm_result_.complete();
+  web_cdm_result_.Complete();
 }
 
 template <typename... T>
-void CdmResultPromise<T...>::reject(MediaKeys::Exception exception_code,
+void CdmResultPromise<T...>::reject(CdmPromise::Exception exception_code,
                                     uint32_t system_code,
                                     const std::string& error_message) {
   MarkPromiseSettled();
   ReportCdmResultUMA(uma_name_,
                      ConvertCdmExceptionToResultForUMA(exception_code));
-  web_cdm_result_.completeWithError(ConvertCdmException(exception_code),
+  web_cdm_result_.CompleteWithError(ConvertCdmException(exception_code),
                                     system_code,
-                                    blink::WebString::fromUTF8(error_message));
+                                    blink::WebString::FromUTF8(error_message));
 }
 
 }  // namespace media

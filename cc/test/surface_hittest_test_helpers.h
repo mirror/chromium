@@ -10,8 +10,8 @@
 
 #include "base/macros.h"
 #include "cc/quads/render_pass.h"
-#include "cc/surfaces/surface_factory_client.h"
 #include "cc/surfaces/surface_hittest_delegate.h"
+#include "cc/surfaces/surface_id.h"
 #include "ui/gfx/geometry/insets.h"
 
 namespace gfx {
@@ -21,16 +21,8 @@ class Transform;
 namespace cc {
 
 class CompositorFrame;
-class RenderPassDrawQuad;
-class SolidColorDrawQuad;
 
 namespace test {
-
-class EmptySurfaceFactoryClient : public SurfaceFactoryClient {
- public:
-  void ReturnResources(const ReturnedResourceArray& resources) override {}
-  void SetBeginFrameSource(BeginFrameSource* begin_frame_source) override {}
-};
 
 void CreateSharedQuadState(RenderPass* pass,
                            const gfx::Transform& transform,
@@ -45,7 +37,7 @@ void CreateRenderPassDrawQuad(RenderPass* pass,
                               const gfx::Transform& transform,
                               const gfx::Rect& root_rect,
                               const gfx::Rect& quad_rect,
-                              const RenderPassId& render_pass_id);
+                              int render_pass_id);
 
 void CreateSurfaceDrawQuad(RenderPass* pass,
                            const gfx::Transform& transform,
@@ -53,7 +45,7 @@ void CreateSurfaceDrawQuad(RenderPass* pass,
                            const gfx::Rect& quad_rect,
                            SurfaceId surface_id);
 
-void CreateRenderPass(const RenderPassId& render_pass_id,
+void CreateRenderPass(int render_pass_id,
                       const gfx::Rect& rect,
                       const gfx::Transform& transform_to_root_target,
                       RenderPassList* render_pass_list);

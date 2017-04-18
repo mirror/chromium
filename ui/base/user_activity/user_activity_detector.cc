@@ -21,8 +21,8 @@ UserActivityDetector* g_instance = nullptr;
 // Returns a string describing |event|.
 std::string GetEventDebugString(const ui::Event* event) {
   std::string details = base::StringPrintf(
-      "type=%d name=%s flags=%d time=%" PRId64, event->type(),
-      event->name().c_str(), event->flags(),
+      "type=%d name=%s flags=%d time=%" PRId64, event->type(), event->GetName(),
+      event->flags(),
       (event->time_stamp() - base::TimeTicks()).InMilliseconds());
 
   if (event->IsKeyEvent()) {
@@ -53,7 +53,6 @@ UserActivityDetector::UserActivityDetector() {
 
   ui::PlatformEventSource* platform_event_source =
       ui::PlatformEventSource::GetInstance();
-  // TODO(sad): Need a PES for mus.
   if (platform_event_source)
     platform_event_source->AddPlatformEventObserver(this);
 }
@@ -89,6 +88,10 @@ void UserActivityDetector::OnDisplayPowerChanging() {
       base::TimeDelta::FromMilliseconds(kDisplayPowerChangeIgnoreMouseMs);
 }
 
+void UserActivityDetector::HandleExternalUserActivity() {
+  HandleActivity(nullptr);
+}
+
 void UserActivityDetector::DidProcessEvent(
     const PlatformEvent& platform_event) {
   std::unique_ptr<ui::Event> event(ui::EventFromNative(platform_event));
@@ -117,13 +120,14 @@ void UserActivityDetector::ProcessReceivedEvent(const ui::Event* event) {
 void UserActivityDetector::HandleActivity(const ui::Event* event) {
   base::TimeTicks now = GetCurrentTime();
   last_activity_time_ = now;
-  last_activity_name_ = event->name();
+  last_activity_name_ = event ? event->GetName() : std::string();
   if (last_observer_notification_time_.is_null() ||
       (now - last_observer_notification_time_).InMillisecondsF() >=
       kNotifyIntervalMs) {
-    if (VLOG_IS_ON(1))
+    if (VLOG_IS_ON(1) && event)
       VLOG(1) << "Reporting user activity: " << GetEventDebugString(event);
-    FOR_EACH_OBSERVER(UserActivityObserver, observers_, OnUserActivity(event));
+    for (UserActivityObserver& observer : observers_)
+      observer.OnUserActivity(event);
     last_observer_notification_time_ = now;
   }
 }

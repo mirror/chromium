@@ -27,112 +27,97 @@
 #ifndef ElementShadow_h
 #define ElementShadow_h
 
+#include "bindings/core/v8/ScriptWrappable.h"
+#include "bindings/core/v8/TraceWrapperMember.h"
 #include "core/CoreExport.h"
-#include "core/dom/shadow/InsertionPoint.h"
-#include "core/dom/shadow/SelectRuleFeatureSet.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "platform/heap/Handle.h"
-#include "wtf/HashMap.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class CORE_EXPORT ElementShadow final : public GarbageCollectedFinalized<ElementShadow> {
-    WTF_MAKE_NONCOPYABLE(ElementShadow);
-public:
-    static ElementShadow* create();
-    ~ElementShadow();
+class ElementShadowV0;
 
-    Element& host() const;
-    ShadowRoot& youngestShadowRoot() const;
-    ShadowRoot* oldestShadowRoot() const { return m_shadowRoot; }
-    ElementShadow* containingShadow() const;
+class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
+                                        public TraceWrapperBase {
+  WTF_MAKE_NONCOPYABLE(ElementShadow);
 
-    ShadowRoot& addShadowRoot(Element& shadowHost, ShadowRootType);
+ public:
+  static ElementShadow* Create();
 
-    bool hasSameStyles(const ElementShadow*) const;
+  Element& Host() const {
+    DCHECK(shadow_root_);
+    return shadow_root_->host();
+  }
 
-    void attach(const Node::AttachContext&);
-    void detach(const Node::AttachContext&);
+  // TODO(hayato): Remove youngestShadowRoot() and oldestShadowRoot() from
+  // ElementShadow
+  ShadowRoot& YoungestShadowRoot() const;
+  ShadowRoot& OldestShadowRoot() const {
+    DCHECK(shadow_root_);
+    return *shadow_root_;
+  }
 
-    void willAffectSelector();
-    const SelectRuleFeatureSet& ensureSelectFeatureSet();
+  ElementShadow* ContainingShadow() const;
 
-    void distributeIfNeeded();
-    void setNeedsDistributionRecalc();
-    bool needsDistributionRecalc() const { return m_needsDistributionRecalc; }
+  ShadowRoot& AddShadowRoot(Element& shadow_host, ShadowRootType);
 
-    const InsertionPoint* finalDestinationInsertionPointFor(const Node*) const;
-    const DestinationInsertionPoints* destinationInsertionPointsFor(const Node*) const;
+  bool HasSameStyles(const ElementShadow&) const;
 
-    void didDistributeNode(const Node*, InsertionPoint*);
+  void Attach(const Node::AttachContext&);
+  void Detach(const Node::AttachContext&);
 
-    bool isV1() const { return youngestShadowRoot().isV1(); };
-    bool isOpenOrV0() const { return youngestShadowRoot().isOpenOrV0(); };
+  void DistributeIfNeeded();
 
-    DECLARE_TRACE();
-    DECLARE_TRACE_WRAPPERS();
+  void SetNeedsDistributionRecalc();
+  bool NeedsDistributionRecalc() const { return needs_distribution_recalc_; }
 
-private:
-    ElementShadow();
+  bool IsV1() const { return YoungestShadowRoot().IsV1(); }
+  bool IsOpenOrV0() const { return YoungestShadowRoot().IsOpenOrV0(); }
 
-    void appendShadowRoot(ShadowRoot&);
+  ElementShadowV0& V0() const {
+    DCHECK(element_shadow_v0_);
+    return *element_shadow_v0_;
+  }
 
-    void distribute();
-    void clearDistribution();
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
-    void distributeV0();
-    void distributeV1();
+ private:
+  ElementShadow();
 
-    void collectSelectFeatureSetFrom(ShadowRoot&);
-    void distributeNodeChildrenTo(InsertionPoint*, ContainerNode*);
+  void AppendShadowRoot(ShadowRoot&);
+  void Distribute();
 
-    bool needsSelectFeatureSet() const { return m_needsSelectFeatureSet; }
-    void setNeedsSelectFeatureSet() { m_needsSelectFeatureSet = true; }
-
-    using NodeToDestinationInsertionPoints = HeapHashMap<Member<const Node>, Member<DestinationInsertionPoints>>;
-    NodeToDestinationInsertionPoints m_nodeToInsertionPoints;
-
-    SelectRuleFeatureSet m_selectFeatures;
-    Member<ShadowRoot> m_shadowRoot;
-    bool m_needsDistributionRecalc;
-    bool m_needsSelectFeatureSet;
+  TraceWrapperMember<ElementShadowV0> element_shadow_v0_;
+  TraceWrapperMember<ShadowRoot> shadow_root_;
+  bool needs_distribution_recalc_;
 };
 
-inline Element& ElementShadow::host() const
-{
-    DCHECK(m_shadowRoot);
-    return m_shadowRoot->host();
+inline ShadowRoot* Node::YoungestShadowRoot() const {
+  if (!IsElementNode())
+    return nullptr;
+  return ToElement(this)->YoungestShadowRoot();
 }
 
-inline ShadowRoot* Node::youngestShadowRoot() const
-{
-    if (!isElementNode())
-        return 0;
-    return toElement(this)->youngestShadowRoot();
+inline ShadowRoot* Element::YoungestShadowRoot() const {
+  if (ElementShadow* shadow = this->Shadow())
+    return &shadow->YoungestShadowRoot();
+  return nullptr;
 }
 
-inline ShadowRoot* Element::youngestShadowRoot() const
-{
-    if (ElementShadow* shadow = this->shadow())
-        return &shadow->youngestShadowRoot();
-    return 0;
+inline ElementShadow* ElementShadow::ContainingShadow() const {
+  if (ShadowRoot* parent_root = Host().ContainingShadowRoot())
+    return parent_root->Owner();
+  return nullptr;
 }
 
-inline ElementShadow* ElementShadow::containingShadow() const
-{
-    if (ShadowRoot* parentRoot = host().containingShadowRoot())
-        return parentRoot->owner();
-    return 0;
+inline void ElementShadow::DistributeIfNeeded() {
+  if (needs_distribution_recalc_)
+    Distribute();
+  needs_distribution_recalc_ = false;
 }
 
-inline void ElementShadow::distributeIfNeeded()
-{
-    if (m_needsDistributionRecalc)
-        distribute();
-    m_needsDistributionRecalc = false;
-}
-
-} // namespace blink
+}  // namespace blink
 
 #endif

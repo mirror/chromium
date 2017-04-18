@@ -16,60 +16,71 @@ namespace blink {
 
 class Color;
 
-namespace protocol {
-class Value;
-}
-
 struct CORE_EXPORT InspectorHighlightConfig {
-    USING_FAST_MALLOC(InspectorHighlightConfig);
-public:
-    InspectorHighlightConfig();
+  USING_FAST_MALLOC(InspectorHighlightConfig);
 
-    Color content;
-    Color contentOutline;
-    Color padding;
-    Color border;
-    Color margin;
-    Color eventTarget;
-    Color shape;
-    Color shapeMargin;
+ public:
+  InspectorHighlightConfig();
 
-    bool showInfo;
-    bool showRulers;
-    bool showExtensionLines;
-    bool displayAsMaterial;
+  Color content;
+  Color content_outline;
+  Color padding;
+  Color border;
+  Color margin;
+  Color event_target;
+  Color shape;
+  Color shape_margin;
 
-    String selectorList;
+  bool show_info;
+  bool show_rulers;
+  bool show_extension_lines;
+  bool display_as_material;
+
+  String selector_list;
 };
 
 class CORE_EXPORT InspectorHighlight {
-    STACK_ALLOCATED();
-public:
-    InspectorHighlight(Node*, const InspectorHighlightConfig&, bool appendElementInfo);
-    explicit InspectorHighlight(float scale);
-    ~InspectorHighlight();
+  STACK_ALLOCATED();
 
-    static bool getBoxModel(Node*, std::unique_ptr<protocol::DOM::BoxModel>*);
-    static InspectorHighlightConfig defaultConfig();
-    static bool buildNodeQuads(Node*, FloatQuad* content, FloatQuad* padding, FloatQuad* border, FloatQuad* margin);
+ public:
+  InspectorHighlight(Node*,
+                     const InspectorHighlightConfig&,
+                     bool append_element_info);
+  explicit InspectorHighlight(float scale);
+  ~InspectorHighlight();
 
-    void appendPath(std::unique_ptr<protocol::ListValue> path, const Color& fillColor, const Color& outlineColor, const String& name = String());
-    void appendQuad(const FloatQuad&, const Color& fillColor, const Color& outlineColor = Color::transparent, const String& name = String());
-    void appendEventTargetQuads(Node* eventTargetNode, const InspectorHighlightConfig&);
-    std::unique_ptr<protocol::DictionaryValue> asProtocolValue() const;
+  static bool GetBoxModel(Node*, std::unique_ptr<protocol::DOM::BoxModel>*);
+  static InspectorHighlightConfig DefaultConfig();
+  static bool BuildNodeQuads(Node*,
+                             FloatQuad* content,
+                             FloatQuad* padding,
+                             FloatQuad* border,
+                             FloatQuad* margin);
 
-private:
-    void appendNodeHighlight(Node*, const InspectorHighlightConfig&);
-    void appendPathsForShapeOutside(Node*, const InspectorHighlightConfig&);
+  void AppendPath(std::unique_ptr<protocol::ListValue> path,
+                  const Color& fill_color,
+                  const Color& outline_color,
+                  const String& name = String());
+  void AppendQuad(const FloatQuad&,
+                  const Color& fill_color,
+                  const Color& outline_color = Color::kTransparent,
+                  const String& name = String());
+  void AppendEventTargetQuads(Node* event_target_node,
+                              const InspectorHighlightConfig&);
+  std::unique_ptr<protocol::DictionaryValue> AsProtocolValue() const;
 
-    std::unique_ptr<protocol::DictionaryValue> m_elementInfo;
-    std::unique_ptr<protocol::ListValue> m_highlightPaths;
-    bool m_showRulers;
-    bool m_showExtensionLines;
-    bool m_displayAsMaterial;
-    float m_scale;
+ private:
+  void AppendNodeHighlight(Node*, const InspectorHighlightConfig&);
+  void AppendPathsForShapeOutside(Node*, const InspectorHighlightConfig&);
+
+  std::unique_ptr<protocol::DictionaryValue> element_info_;
+  std::unique_ptr<protocol::ListValue> highlight_paths_;
+  bool show_rulers_;
+  bool show_extension_lines_;
+  bool display_as_material_;
+  float scale_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InspectorHighlight_h
+#endif  // InspectorHighlight_h

@@ -11,6 +11,7 @@
 #include "gin/converter.h"
 #include "gin/handle.h"
 #include "gin/wrappable.h"
+#include "mojo/edk/js/js_export.h"
 #include "mojo/public/cpp/system/core.h"
 
 namespace mojo {
@@ -21,7 +22,7 @@ class HandleCloseObserver;
 
 // Wrapper for mojo Handles exposed to JavaScript. This ensures the Handle
 // is Closed when its JS object is garbage collected.
-class HandleWrapper : public gin::Wrappable<HandleWrapper> {
+class MOJO_JS_EXPORT HandleWrapper : public gin::Wrappable<HandleWrapper> {
  public:
   static gin::WrapperInfo kWrapperInfo;
 
@@ -56,35 +57,36 @@ namespace gin {
 // MojoHandle, since that will do a simple int32_t conversion. It's unfortunate
 // there's no way to prevent against accidental use.
 // TODO(mpcomplete): define converters for all Handle subtypes.
-template<>
-struct Converter<mojo::Handle> {
-  static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
-                                    const mojo::Handle& val);
-  static bool FromV8(v8::Isolate* isolate, v8::Handle<v8::Value> val,
+template <>
+struct MOJO_JS_EXPORT Converter<mojo::Handle> {
+  static v8::Local<v8::Value> ToV8(v8::Isolate* isolate,
+                                   const mojo::Handle& val);
+  static bool FromV8(v8::Isolate* isolate,
+                     v8::Local<v8::Value> val,
                      mojo::Handle* out);
 };
 
-template<>
-struct Converter<mojo::MessagePipeHandle> {
-  static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
-                                    mojo::MessagePipeHandle val);
+template <>
+struct MOJO_JS_EXPORT Converter<mojo::MessagePipeHandle> {
+  static v8::Local<v8::Value> ToV8(v8::Isolate* isolate,
+                                   mojo::MessagePipeHandle val);
   static bool FromV8(v8::Isolate* isolate,
-                     v8::Handle<v8::Value> val,
+                     v8::Local<v8::Value> val,
                      mojo::MessagePipeHandle* out);
 };
 
 // We need to specialize the normal gin::Handle converter in order to handle
 // converting |null| to a wrapper for an empty mojo::Handle.
 template <>
-struct Converter<gin::Handle<mojo::edk::js::HandleWrapper>> {
-  static v8::Handle<v8::Value> ToV8(
+struct MOJO_JS_EXPORT Converter<gin::Handle<mojo::edk::js::HandleWrapper>> {
+  static v8::Local<v8::Value> ToV8(
       v8::Isolate* isolate,
       const gin::Handle<mojo::edk::js::HandleWrapper>& val) {
     return val.ToV8();
   }
 
   static bool FromV8(v8::Isolate* isolate,
-                     v8::Handle<v8::Value> val,
+                     v8::Local<v8::Value> val,
                      gin::Handle<mojo::edk::js::HandleWrapper>* out) {
     if (val->IsNull()) {
       *out = mojo::edk::js::HandleWrapper::Create(isolate, MOJO_HANDLE_INVALID);

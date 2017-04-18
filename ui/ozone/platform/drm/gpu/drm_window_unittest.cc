@@ -4,6 +4,7 @@
 
 #include "ui/ozone/platform/drm/gpu/drm_window.h"
 
+#include <drm_fourcc.h>
 #include <stdint.h>
 
 #include <memory>
@@ -126,8 +127,8 @@ TEST_F(DrmWindowTest, SetCursorImage) {
   EXPECT_EQ(2u, cursor_buffers.size());
 
   // Buffers 1 is the cursor backbuffer we just drew in.
-  cursor.setInfo(cursor_buffers[1]->getCanvas()->imageInfo());
-  EXPECT_TRUE(cursor_buffers[1]->getCanvas()->readPixels(&cursor, 0, 0));
+  cursor.allocPixels(cursor_buffers[1]->getCanvas()->imageInfo());
+  EXPECT_TRUE(cursor_buffers[1]->getCanvas()->readPixels(cursor, 0, 0));
 
   // Check that the frontbuffer is displaying the right image as set above.
   for (int i = 0; i < cursor.height(); ++i) {
@@ -169,7 +170,7 @@ TEST_F(DrmWindowTest, CheckCallbackOnFailedSwap) {
   ui::MockDumbBufferGenerator buffer_generator;
   ui::DrmWindow* window = screen_manager_->GetWindow(kDefaultWidgetHandle);
   ui::OverlayPlane plane(
-      buffer_generator.Create(drm_, gfx::BufferFormat::BGRX_8888, window_size));
+      buffer_generator.Create(drm_, DRM_FORMAT_XRGB8888, window_size));
 
   drm_->set_page_flip_expectation(false);
 

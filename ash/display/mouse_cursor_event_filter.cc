@@ -7,24 +7,25 @@
 #include <cmath>
 
 #include "ash/display/cursor_window_controller.h"
-#include "ash/display/display_manager.h"
+#include "ash/display/display_util.h"
 #include "ash/display/mouse_warp_controller.h"
+
 #include "ash/shell.h"
 #include "ui/events/event.h"
 
 namespace ash {
 
 MouseCursorEventFilter::MouseCursorEventFilter() : mouse_warp_enabled_(true) {
-  Shell::GetInstance()->window_tree_host_manager()->AddObserver(this);
+  Shell::Get()->window_tree_host_manager()->AddObserver(this);
 }
 
 MouseCursorEventFilter::~MouseCursorEventFilter() {
-  Shell::GetInstance()->window_tree_host_manager()->RemoveObserver(this);
+  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
 }
 
 void MouseCursorEventFilter::ShowSharedEdgeIndicator(aura::Window* from) {
   mouse_warp_controller_ =
-      Shell::GetInstance()->display_manager()->CreateMouseWarpController(from);
+      ash::CreateMouseWarpController(Shell::Get()->display_manager(), from);
 }
 
 void MouseCursorEventFilter::HideSharedEdgeIndicator() {
@@ -37,8 +38,7 @@ void MouseCursorEventFilter::OnDisplaysInitialized() {
 
 void MouseCursorEventFilter::OnDisplayConfigurationChanged() {
   mouse_warp_controller_ =
-      Shell::GetInstance()->display_manager()->CreateMouseWarpController(
-          nullptr);
+      ash::CreateMouseWarpController(Shell::Get()->display_manager(), nullptr);
 }
 
 void MouseCursorEventFilter::OnMouseEvent(ui::MouseEvent* event) {
@@ -54,7 +54,7 @@ void MouseCursorEventFilter::OnMouseEvent(ui::MouseEvent* event) {
     return;
   }
 
-  Shell::GetInstance()
+  Shell::Get()
       ->window_tree_host_manager()
       ->cursor_window_controller()
       ->UpdateLocation();

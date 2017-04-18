@@ -45,7 +45,6 @@ ChromeNativeAppWindowViewsAura::GetRestorableState(
     case ui::SHOW_STATE_DEFAULT:
     case ui::SHOW_STATE_MINIMIZED:
     case ui::SHOW_STATE_INACTIVE:
-    case ui::SHOW_STATE_DOCKED:
     case ui::SHOW_STATE_END:
       return ui::SHOW_STATE_NORMAL;
   }
@@ -63,7 +62,7 @@ void ChromeNativeAppWindowViewsAura::OnBeforeWidgetInit(
   // Set up a custom WM_CLASS for app windows. This allows task switchers in
   // X11 environments to distinguish them from main browser windows.
   init_params->wm_class_name = web_app::GetWMClassFromAppName(app_name);
-  init_params->wm_class_class = shell_integration_linux::GetProgramClassName();
+  init_params->wm_class_class = shell_integration_linux::GetProgramClassClass();
   const char kX11WindowRoleApp[] = "app";
   init_params->wm_role_name = std::string(kX11WindowRoleApp);
 #endif
@@ -93,10 +92,6 @@ ChromeNativeAppWindowViewsAura::CreateNonStandardAppFrame() {
 }
 
 ui::WindowShowState ChromeNativeAppWindowViewsAura::GetRestoredState() const {
-  // Use kRestoreShowStateKey in case a window is minimized/hidden.
-  ui::WindowShowState restore_state = widget()->GetNativeWindow()->GetProperty(
-      aura::client::kRestoreShowStateKey);
-
   // First normal states are checked.
   if (IsMaximized())
     return ui::SHOW_STATE_MAXIMIZED;
@@ -104,13 +99,9 @@ ui::WindowShowState ChromeNativeAppWindowViewsAura::GetRestoredState() const {
     return ui::SHOW_STATE_FULLSCREEN;
   }
 
-  if (widget()->GetNativeWindow()->GetProperty(
-          aura::client::kShowStateKey) == ui::SHOW_STATE_DOCKED ||
-      widget()->GetNativeWindow()->GetProperty(
-          aura::client::kRestoreShowStateKey) == ui::SHOW_STATE_DOCKED) {
-    return ui::SHOW_STATE_DOCKED;
-  }
-
+  // Use kPreMinimizedShowStateKey in case a window is minimized/hidden.
+  ui::WindowShowState restore_state = widget()->GetNativeWindow()->GetProperty(
+      aura::client::kPreMinimizedShowStateKey);
   return GetRestorableState(restore_state);
 }
 

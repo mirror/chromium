@@ -26,24 +26,25 @@
 namespace blink {
 
 class SVGTitleElement final : public SVGElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGTitleElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    void setText(const String&);
+ public:
+  DECLARE_NODE_FACTORY(SVGTitleElement);
 
-private:
-    explicit SVGTitleElement(Document&);
+  void SetText(const String&);
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
-    void childrenChanged(const ChildrenChange&) override;
+ private:
+  explicit SVGTitleElement(Document&);
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override { return false; }
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+  void ChildrenChanged(const ChildrenChange&) override;
 
-    bool m_ignoreTitleUpdatesWhenChildrenChange;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override { return false; }
+
+  bool ignore_title_updates_when_children_change_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGTitleElement_h
+#endif  // SVGTitleElement_h

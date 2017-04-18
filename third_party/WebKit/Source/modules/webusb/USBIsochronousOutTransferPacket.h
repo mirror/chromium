@@ -7,36 +7,40 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/GarbageCollected.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class USBIsochronousOutTransferPacket final : public GarbageCollectedFinalized<USBIsochronousOutTransferPacket>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static USBIsochronousOutTransferPacket* create(const String& status, unsigned bytesWritten)
-    {
-        return new USBIsochronousOutTransferPacket(status, bytesWritten);
-    }
+class USBIsochronousOutTransferPacket final
+    : public GarbageCollectedFinalized<USBIsochronousOutTransferPacket>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    USBIsochronousOutTransferPacket(const String& status, unsigned bytesWritten)
-        : m_status(status)
-        , m_bytesWritten(bytesWritten)
-    {
-    }
+ public:
+  static USBIsochronousOutTransferPacket* Create(const String& status) {
+    return new USBIsochronousOutTransferPacket(status, 0);
+  }
 
-    virtual ~USBIsochronousOutTransferPacket() {}
+  static USBIsochronousOutTransferPacket* Create(const String& status,
+                                                 unsigned bytes_written) {
+    return new USBIsochronousOutTransferPacket(status, bytes_written);
+  }
 
-    String status() const { return m_status; }
-    unsigned bytesWritten() const { return m_bytesWritten; }
+  USBIsochronousOutTransferPacket(const String& status, unsigned bytes_written)
+      : status_(status), bytes_written_(bytes_written) {}
 
-    DEFINE_INLINE_TRACE() {}
+  virtual ~USBIsochronousOutTransferPacket() {}
 
-private:
-    const String m_status;
-    const unsigned m_bytesWritten;
+  String status() const { return status_; }
+  unsigned bytesWritten() const { return bytes_written_; }
+
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  const String status_;
+  const unsigned bytes_written_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // USBIsochronousOutTransferPacket_h
+#endif  // USBIsochronousOutTransferPacket_h

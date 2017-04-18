@@ -33,6 +33,7 @@
 
 #include "public/platform/WebCString.h"
 #include "public/platform/WebCommon.h"
+#include "public/platform/WebSecurityStyle.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
@@ -47,276 +48,266 @@ class WebURL;
 class WebURLLoadTiming;
 
 class WebURLResponse {
-public:
-    enum HTTPVersion { HTTPVersionUnknown,
-        HTTPVersion_0_9,
-        HTTPVersion_1_0,
-        HTTPVersion_1_1,
-        HTTPVersion_2_0 };
-    enum SecurityStyle {
-        SecurityStyleUnknown,
-        SecurityStyleUnauthenticated,
-        SecurityStyleAuthenticationBroken,
-        SecurityStyleWarning,
-        SecurityStyleAuthenticated
-    };
+ public:
+  enum HTTPVersion {
+    kHTTPVersionUnknown,
+    kHTTPVersion_0_9,
+    kHTTPVersion_1_0,
+    kHTTPVersion_1_1,
+    kHTTPVersion_2_0
+  };
 
-    struct SignedCertificateTimestamp {
-        SignedCertificateTimestamp() {}
-        SignedCertificateTimestamp(
-            WebString status,
-            WebString origin,
-            WebString logDescription,
-            WebString logId,
-            int64_t timestamp,
-            WebString hashAlgorithm,
-            WebString signatureAlgorithm,
-            WebString signatureData)
-            : status(status)
-            , origin(origin)
-            , logDescription(logDescription)
-            , logId(logId)
-            , timestamp(timestamp)
-            , hashAlgorithm(hashAlgorithm)
-            , signatureAlgorithm(signatureAlgorithm)
-            , signatureData(signatureData)
-        {
-        }
-        WebString status;
-        WebString origin;
-        WebString logDescription;
-        WebString logId;
-        int64_t timestamp;
-        WebString hashAlgorithm;
-        WebString signatureAlgorithm;
-        WebString signatureData;
-    };
+  struct SignedCertificateTimestamp {
+    SignedCertificateTimestamp() {}
+    SignedCertificateTimestamp(WebString status,
+                               WebString origin,
+                               WebString log_description,
+                               WebString log_id,
+                               int64_t timestamp,
+                               WebString hash_algorithm,
+                               WebString signature_algorithm,
+                               WebString signature_data)
+        : status(status),
+          origin(origin),
+          log_description(log_description),
+          log_id(log_id),
+          timestamp(timestamp),
+          hash_algorithm(hash_algorithm),
+          signature_algorithm(signature_algorithm),
+          signature_data(signature_data) {}
+    WebString status;
+    WebString origin;
+    WebString log_description;
+    WebString log_id;
+    int64_t timestamp;
+    WebString hash_algorithm;
+    WebString signature_algorithm;
+    WebString signature_data;
+  };
 
-    using SignedCertificateTimestampList = WebVector<SignedCertificateTimestamp>;
+  using SignedCertificateTimestampList = WebVector<SignedCertificateTimestamp>;
 
-    struct WebSecurityDetails {
-        WebSecurityDetails(const WebString& protocol,
-            const WebString& keyExchange,
-            const WebString& cipher,
-            const WebString& mac,
-            int certId,
-            size_t numUnknownScts,
-            size_t numInvalidScts,
-            size_t numValidScts,
-            const SignedCertificateTimestampList& sctList)
-            : protocol(protocol)
-            , keyExchange(keyExchange)
-            , cipher(cipher)
-            , mac(mac)
-            , certId(certId)
-            , numUnknownScts(numUnknownScts)
-            , numInvalidScts(numInvalidScts)
-            , numValidScts(numValidScts)
-            , sctList(sctList)
-        {
-        }
-        // All strings are human-readable values.
-        WebString protocol;
-        WebString keyExchange;
-        WebString cipher;
-        // mac is the empty string when the connection cipher suite does not
-        // have a separate MAC value (i.e. if the cipher suite is AEAD).
-        WebString mac;
-        int certId;
-        size_t numUnknownScts;
-        size_t numInvalidScts;
-        size_t numValidScts;
-        SignedCertificateTimestampList sctList;
-    };
+  struct WebSecurityDetails {
+    WebSecurityDetails(const WebString& protocol,
+                       const WebString& key_exchange,
+                       const WebString& key_exchange_group,
+                       const WebString& cipher,
+                       const WebString& mac,
+                       const WebString& subject_name,
+                       const WebVector<WebString>& san_list,
+                       const WebString& issuer,
+                       double valid_from,
+                       double valid_to,
+                       const WebVector<WebString>& certificate,
+                       const SignedCertificateTimestampList& sct_list)
+        : protocol(protocol),
+          key_exchange(key_exchange),
+          key_exchange_group(key_exchange_group),
+          cipher(cipher),
+          mac(mac),
+          subject_name(subject_name),
+          san_list(san_list),
+          issuer(issuer),
+          valid_from(valid_from),
+          valid_to(valid_to),
+          certificate(certificate),
+          sct_list(sct_list) {}
+    // All strings are human-readable values.
+    WebString protocol;
+    // keyExchange is the empty string if not applicable for the connection's
+    // protocol.
+    WebString key_exchange;
+    // keyExchangeGroup is the empty string if not applicable for the
+    // connection's key exchange.
+    WebString key_exchange_group;
+    WebString cipher;
+    // mac is the empty string when the connection cipher suite does not
+    // have a separate MAC value (i.e. if the cipher suite is AEAD).
+    WebString mac;
+    WebString subject_name;
+    WebVector<WebString> san_list;
+    WebString issuer;
+    double valid_from;
+    double valid_to;
+    // DER-encoded X509Certificate certificate chain.
+    WebVector<WebString> certificate;
+    SignedCertificateTimestampList sct_list;
+  };
 
-    class ExtraData {
-    public:
-        virtual ~ExtraData() { }
-    };
+  class ExtraData {
+   public:
+    virtual ~ExtraData() {}
+  };
 
-    BLINK_PLATFORM_EXPORT ~WebURLResponse();
+  BLINK_PLATFORM_EXPORT ~WebURLResponse();
 
-    BLINK_PLATFORM_EXPORT WebURLResponse();
-    BLINK_PLATFORM_EXPORT WebURLResponse(const WebURLResponse&);
-    BLINK_PLATFORM_EXPORT explicit WebURLResponse(const WebURL&);
-    BLINK_PLATFORM_EXPORT WebURLResponse& operator=(const WebURLResponse&);
+  BLINK_PLATFORM_EXPORT WebURLResponse();
+  BLINK_PLATFORM_EXPORT WebURLResponse(const WebURLResponse&);
+  BLINK_PLATFORM_EXPORT explicit WebURLResponse(const WebURL&);
+  BLINK_PLATFORM_EXPORT WebURLResponse& operator=(const WebURLResponse&);
 
-    BLINK_PLATFORM_EXPORT bool isNull() const;
+  BLINK_PLATFORM_EXPORT bool IsNull() const;
 
-    BLINK_PLATFORM_EXPORT WebURL url() const;
-    BLINK_PLATFORM_EXPORT void setURL(const WebURL&);
+  BLINK_PLATFORM_EXPORT WebURL Url() const;
+  BLINK_PLATFORM_EXPORT void SetURL(const WebURL&);
 
-    BLINK_PLATFORM_EXPORT unsigned connectionID() const;
-    BLINK_PLATFORM_EXPORT void setConnectionID(unsigned);
+  BLINK_PLATFORM_EXPORT void SetConnectionID(unsigned);
 
-    BLINK_PLATFORM_EXPORT bool connectionReused() const;
-    BLINK_PLATFORM_EXPORT void setConnectionReused(bool);
+  BLINK_PLATFORM_EXPORT void SetConnectionReused(bool);
 
-    BLINK_PLATFORM_EXPORT WebURLLoadTiming loadTiming();
-    BLINK_PLATFORM_EXPORT void setLoadTiming(const WebURLLoadTiming&);
+  BLINK_PLATFORM_EXPORT void SetLoadTiming(const WebURLLoadTiming&);
 
-    BLINK_PLATFORM_EXPORT WebHTTPLoadInfo httpLoadInfo();
-    BLINK_PLATFORM_EXPORT void setHTTPLoadInfo(const WebHTTPLoadInfo&);
+  BLINK_PLATFORM_EXPORT void SetHTTPLoadInfo(const WebHTTPLoadInfo&);
 
-    BLINK_PLATFORM_EXPORT void setResponseTime(long long);
+  BLINK_PLATFORM_EXPORT void SetResponseTime(long long);
 
-    BLINK_PLATFORM_EXPORT WebString mimeType() const;
-    BLINK_PLATFORM_EXPORT void setMIMEType(const WebString&);
+  BLINK_PLATFORM_EXPORT WebString MimeType() const;
+  BLINK_PLATFORM_EXPORT void SetMIMEType(const WebString&);
 
-    BLINK_PLATFORM_EXPORT long long expectedContentLength() const;
-    BLINK_PLATFORM_EXPORT void setExpectedContentLength(long long);
+  BLINK_PLATFORM_EXPORT long long ExpectedContentLength() const;
+  BLINK_PLATFORM_EXPORT void SetExpectedContentLength(long long);
 
-    BLINK_PLATFORM_EXPORT WebString textEncodingName() const;
-    BLINK_PLATFORM_EXPORT void setTextEncodingName(const WebString&);
+  BLINK_PLATFORM_EXPORT void SetTextEncodingName(const WebString&);
 
-    BLINK_PLATFORM_EXPORT WebString suggestedFileName() const;
-    BLINK_PLATFORM_EXPORT void setSuggestedFileName(const WebString&);
+  BLINK_PLATFORM_EXPORT HTTPVersion HttpVersion() const;
+  BLINK_PLATFORM_EXPORT void SetHTTPVersion(HTTPVersion);
 
-    BLINK_PLATFORM_EXPORT HTTPVersion httpVersion() const;
-    BLINK_PLATFORM_EXPORT void setHTTPVersion(HTTPVersion);
+  BLINK_PLATFORM_EXPORT int HttpStatusCode() const;
+  BLINK_PLATFORM_EXPORT void SetHTTPStatusCode(int);
 
-    BLINK_PLATFORM_EXPORT int httpStatusCode() const;
-    BLINK_PLATFORM_EXPORT void setHTTPStatusCode(int);
+  BLINK_PLATFORM_EXPORT WebString HttpStatusText() const;
+  BLINK_PLATFORM_EXPORT void SetHTTPStatusText(const WebString&);
 
-    BLINK_PLATFORM_EXPORT WebString httpStatusText() const;
-    BLINK_PLATFORM_EXPORT void setHTTPStatusText(const WebString&);
+  BLINK_PLATFORM_EXPORT WebString HttpHeaderField(const WebString& name) const;
+  BLINK_PLATFORM_EXPORT void SetHTTPHeaderField(const WebString& name,
+                                                const WebString& value);
+  BLINK_PLATFORM_EXPORT void AddHTTPHeaderField(const WebString& name,
+                                                const WebString& value);
+  BLINK_PLATFORM_EXPORT void ClearHTTPHeaderField(const WebString& name);
+  BLINK_PLATFORM_EXPORT void VisitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
 
-    BLINK_PLATFORM_EXPORT WebString httpHeaderField(const WebString& name) const;
-    BLINK_PLATFORM_EXPORT void setHTTPHeaderField(const WebString& name, const WebString& value);
-    BLINK_PLATFORM_EXPORT void addHTTPHeaderField(const WebString& name, const WebString& value);
-    BLINK_PLATFORM_EXPORT void clearHTTPHeaderField(const WebString& name);
-    BLINK_PLATFORM_EXPORT void visitHTTPHeaderFields(WebHTTPHeaderVisitor*) const;
+  BLINK_PLATFORM_EXPORT long long AppCacheID() const;
+  BLINK_PLATFORM_EXPORT void SetAppCacheID(long long);
 
-    BLINK_PLATFORM_EXPORT double lastModifiedDate() const;
-    BLINK_PLATFORM_EXPORT void setLastModifiedDate(double);
+  BLINK_PLATFORM_EXPORT WebURL AppCacheManifestURL() const;
+  BLINK_PLATFORM_EXPORT void SetAppCacheManifestURL(const WebURL&);
 
-    BLINK_PLATFORM_EXPORT long long appCacheID() const;
-    BLINK_PLATFORM_EXPORT void setAppCacheID(long long);
+  BLINK_PLATFORM_EXPORT void SetHasMajorCertificateErrors(bool);
 
-    BLINK_PLATFORM_EXPORT WebURL appCacheManifestURL() const;
-    BLINK_PLATFORM_EXPORT void setAppCacheManifestURL(const WebURL&);
+  BLINK_PLATFORM_EXPORT void SetSecurityStyle(WebSecurityStyle);
 
-    // A consumer controlled value intended to be used to record opaque
-    // security info related to this request.
-    BLINK_PLATFORM_EXPORT WebCString securityInfo() const;
-    BLINK_PLATFORM_EXPORT void setSecurityInfo(const WebCString&);
-
-    BLINK_PLATFORM_EXPORT void setHasMajorCertificateErrors(bool);
-
-    BLINK_PLATFORM_EXPORT SecurityStyle getSecurityStyle() const;
-    BLINK_PLATFORM_EXPORT void setSecurityStyle(SecurityStyle);
-
-    BLINK_PLATFORM_EXPORT void setSecurityDetails(const WebSecurityDetails&);
+  BLINK_PLATFORM_EXPORT void SetSecurityDetails(const WebSecurityDetails&);
 
 #if INSIDE_BLINK
-    BLINK_PLATFORM_EXPORT ResourceResponse& toMutableResourceResponse();
-    BLINK_PLATFORM_EXPORT const ResourceResponse& toResourceResponse() const;
+  BLINK_PLATFORM_EXPORT const ResourceResponse& ToResourceResponse() const;
 #endif
 
-    // Flag whether this request was served from the disk cache entry.
-    BLINK_PLATFORM_EXPORT bool wasCached() const;
-    BLINK_PLATFORM_EXPORT void setWasCached(bool);
+  // Flag whether this request was served from the disk cache entry.
+  BLINK_PLATFORM_EXPORT void SetWasCached(bool);
 
-    // Flag whether this request was loaded via the SPDY protocol or not.
-    // SPDY is an experimental web protocol, see http://dev.chromium.org/spdy
-    BLINK_PLATFORM_EXPORT bool wasFetchedViaSPDY() const;
-    BLINK_PLATFORM_EXPORT void setWasFetchedViaSPDY(bool);
+  // Flag whether this request was loaded via the SPDY protocol or not.
+  // SPDY is an experimental web protocol, see http://dev.chromium.org/spdy
+  BLINK_PLATFORM_EXPORT void SetWasFetchedViaSPDY(bool);
 
-    // Flag whether this request was loaded after the TLS/Next-Protocol-Negotiation was used.
-    // This is related to SPDY.
-    BLINK_PLATFORM_EXPORT bool wasNpnNegotiated() const;
-    BLINK_PLATFORM_EXPORT void setWasNpnNegotiated(bool);
+  // Flag whether this request was loaded via a ServiceWorker. See
+  // ServiceWorkerResponseInfo::was_fetched_via_service_worker() for details.
+  BLINK_PLATFORM_EXPORT bool WasFetchedViaServiceWorker() const;
+  BLINK_PLATFORM_EXPORT void SetWasFetchedViaServiceWorker(bool);
 
-    // Flag whether this request was made when "Alternate-Protocol: xxx"
-    // is present in server's response.
-    BLINK_PLATFORM_EXPORT bool wasAlternateProtocolAvailable() const;
-    BLINK_PLATFORM_EXPORT void setWasAlternateProtocolAvailable(bool);
+  // Flag whether this request was loaded using a foreign fetch service worker.
+  BLINK_PLATFORM_EXPORT void SetWasFetchedViaForeignFetch(bool);
 
-    // Flag whether this request was loaded via an explicit proxy (HTTP, SOCKS, etc).
-    BLINK_PLATFORM_EXPORT bool wasFetchedViaProxy() const;
-    BLINK_PLATFORM_EXPORT void setWasFetchedViaProxy(bool);
+  // Flag whether the fallback request with skip service worker flag was
+  // required. See ServiceWorkerResponseInfo::was_fallback_required() for
+  // details.
+  BLINK_PLATFORM_EXPORT void SetWasFallbackRequiredByServiceWorker(bool);
 
-    // Flag whether this request was loaded via a ServiceWorker.
-    BLINK_PLATFORM_EXPORT bool wasFetchedViaServiceWorker() const;
-    BLINK_PLATFORM_EXPORT void setWasFetchedViaServiceWorker(bool);
+  // The type of the response which was served by the ServiceWorker.
+  BLINK_PLATFORM_EXPORT void SetServiceWorkerResponseType(
+      WebServiceWorkerResponseType);
 
-    // Flag whether the fallback request with skip service worker flag was
-    // required.
-    BLINK_PLATFORM_EXPORT bool wasFallbackRequiredByServiceWorker() const;
-    BLINK_PLATFORM_EXPORT void setWasFallbackRequiredByServiceWorker(bool);
+  // The URL list of the Response object the ServiceWorker passed to
+  // respondWith(). See ServiceWorkerResponseInfo::url_list_via_service_worker()
+  // for details.
+  BLINK_PLATFORM_EXPORT void SetURLListViaServiceWorker(
+      const WebVector<WebURL>&);
 
-    // The type of the response which was fetched by the ServiceWorker.
-    BLINK_PLATFORM_EXPORT WebServiceWorkerResponseType serviceWorkerResponseType() const;
-    BLINK_PLATFORM_EXPORT void setServiceWorkerResponseType(WebServiceWorkerResponseType);
+  // Returns the last URL of the URL list of the Response object the
+  // ServiceWorker passed to respondWith() if it did. Otherwise returns an empty
+  // URL.
+  BLINK_PLATFORM_EXPORT WebURL OriginalURLViaServiceWorker() const;
 
-    // The original URL of the response which was fetched by the ServiceWorker.
-    // This may be empty if the response was created inside the ServiceWorker.
-    BLINK_PLATFORM_EXPORT WebURL originalURLViaServiceWorker() const;
-    BLINK_PLATFORM_EXPORT void setOriginalURLViaServiceWorker(const WebURL&);
+  // The boundary of the response. Set only when this is a multipart response.
+  BLINK_PLATFORM_EXPORT void SetMultipartBoundary(const char* bytes,
+                                                  size_t /* size */);
 
-    // The boundary of the response. Set only when this is a multipart response.
-    BLINK_PLATFORM_EXPORT void setMultipartBoundary(const char* bytes, size_t /* size */);
+  // The cache name of the CacheStorage from where the response is served via
+  // the ServiceWorker. Null if the response isn't from the CacheStorage.
+  BLINK_PLATFORM_EXPORT void SetCacheStorageCacheName(const WebString&);
 
-    // The cache name of the CacheStorage from where the response is served via
-    // the ServiceWorker. Null if the response isn't from the CacheStorage.
-    BLINK_PLATFORM_EXPORT WebString cacheStorageCacheName() const;
-    BLINK_PLATFORM_EXPORT void setCacheStorageCacheName(const WebString&);
+  // The headers that should be exposed according to CORS. Only guaranteed
+  // to be set if the response was served by a ServiceWorker.
+  BLINK_PLATFORM_EXPORT void SetCorsExposedHeaderNames(
+      const WebVector<WebString>&);
 
-    // The headers that should be exposed according to CORS. Only guaranteed
-    // to be set if the response was fetched by a ServiceWorker.
-    BLINK_PLATFORM_EXPORT WebVector<WebString> corsExposedHeaderNames() const;
-    BLINK_PLATFORM_EXPORT void setCorsExposedHeaderNames(const WebVector<WebString>&);
+  // Whether service worker navigation preload occurred.
+  // See ServiceWorkerResponseInfo::did_navigation_preload() for
+  // details.
+  BLINK_PLATFORM_EXPORT void SetDidServiceWorkerNavigationPreload(bool);
 
-    // This indicates the location of a downloaded response if the
-    // WebURLRequest had the downloadToFile flag set to true. This file path
-    // remains valid for the lifetime of the WebURLLoader used to create it.
-    BLINK_PLATFORM_EXPORT WebString downloadFilePath() const;
-    BLINK_PLATFORM_EXPORT void setDownloadFilePath(const WebString&);
+  // This indicates the location of a downloaded response if the
+  // WebURLRequest had the downloadToFile flag set to true. This file path
+  // remains valid for the lifetime of the WebURLLoader used to create it.
+  BLINK_PLATFORM_EXPORT WebString DownloadFilePath() const;
+  BLINK_PLATFORM_EXPORT void SetDownloadFilePath(const WebString&);
 
-    // Remote IP address of the socket which fetched this resource.
-    BLINK_PLATFORM_EXPORT WebString remoteIPAddress() const;
-    BLINK_PLATFORM_EXPORT void setRemoteIPAddress(const WebString&);
+  // Remote IP address of the socket which fetched this resource.
+  BLINK_PLATFORM_EXPORT WebString RemoteIPAddress() const;
+  BLINK_PLATFORM_EXPORT void SetRemoteIPAddress(const WebString&);
 
-    // Remote port number of the socket which fetched this resource.
-    BLINK_PLATFORM_EXPORT unsigned short remotePort() const;
-    BLINK_PLATFORM_EXPORT void setRemotePort(unsigned short);
+  // Remote port number of the socket which fetched this resource.
+  BLINK_PLATFORM_EXPORT unsigned short RemotePort() const;
+  BLINK_PLATFORM_EXPORT void SetRemotePort(unsigned short);
 
-    // Original size of the response body before decompression.
-    BLINK_PLATFORM_EXPORT long long encodedBodyLength() const;
-    BLINK_PLATFORM_EXPORT void addToEncodedBodyLength(long long);
+  // Original size of the response before decompression.
+  BLINK_PLATFORM_EXPORT void SetEncodedDataLength(long long);
 
-    // Size of the response body after removing any content encoding.
-    BLINK_PLATFORM_EXPORT long long decodedBodyLength() const;
-    BLINK_PLATFORM_EXPORT void addToDecodedBodyLength(long long);
+  // Original size of the response body before decompression.
+  BLINK_PLATFORM_EXPORT void AddToEncodedBodyLength(long long);
 
-    // Extra data associated with the underlying resource response. Resource
-    // responses can be copied. If non-null, each copy of a resource response
-    // holds a pointer to the extra data, and the extra data pointer will be
-    // deleted when the last resource response is destroyed. Setting the extra
-    // data pointer will cause the underlying resource response to be
-    // dissociated from any existing non-null extra data pointer.
-    BLINK_PLATFORM_EXPORT ExtraData* getExtraData() const;
-    BLINK_PLATFORM_EXPORT void setExtraData(ExtraData*);
+  // Size of the response body after removing any content encoding.
+  BLINK_PLATFORM_EXPORT void AddToDecodedBodyLength(long long);
+
+  // Extra data associated with the underlying resource response. Resource
+  // responses can be copied. If non-null, each copy of a resource response
+  // holds a pointer to the extra data, and the extra data pointer will be
+  // deleted when the last resource response is destroyed. Setting the extra
+  // data pointer will cause the underlying resource response to be
+  // dissociated from any existing non-null extra data pointer.
+  BLINK_PLATFORM_EXPORT ExtraData* GetExtraData() const;
+  BLINK_PLATFORM_EXPORT void SetExtraData(ExtraData*);
+
+  BLINK_PLATFORM_EXPORT void AppendRedirectResponse(const WebURLResponse&);
 
 #if INSIDE_BLINK
-protected:
-    // Permit subclasses to set arbitrary ResourceResponse pointer as
-    // |m_resourceResponse|. |m_ownedResourceResponse| is not set in this case.
-    BLINK_PLATFORM_EXPORT explicit WebURLResponse(ResourceResponse&);
+ protected:
+  // Permit subclasses to set arbitrary ResourceResponse pointer as
+  // |m_resourceResponse|. |m_ownedResourceResponse| is not set in this case.
+  BLINK_PLATFORM_EXPORT explicit WebURLResponse(ResourceResponse&);
 #endif
 
-private:
-    struct ResourceResponseContainer;
+ private:
+  struct ResourceResponseContainer;
 
-    // If this instance owns a ResourceResponse then |m_ownedResourceResponse|
-    // is non-null and |m_resourceResponse| points to the ResourceResponse
-    // instance it contains.
-    std::unique_ptr<ResourceResponseContainer> m_ownedResourceResponse;
+  // If this instance owns a ResourceResponse then |m_ownedResourceResponse|
+  // is non-null and |m_resourceResponse| points to the ResourceResponse
+  // instance it contains.
+  std::unique_ptr<ResourceResponseContainer> owned_resource_response_;
 
-    // Should never be null.
-    ResourceResponse* m_resourceResponse;
+  // Should never be null.
+  ResourceResponse* resource_response_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

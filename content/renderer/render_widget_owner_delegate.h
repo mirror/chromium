@@ -8,7 +8,6 @@
 #include "content/common/content_export.h"
 
 namespace blink {
-class WebGestureEvent;
 class WebMouseEvent;
 }
 
@@ -26,23 +25,12 @@ namespace content {
 //  are disentangled; see http://crbug.com/583347 and http://crbug.com/478281.
 class CONTENT_EXPORT RenderWidgetOwnerDelegate {
  public:
-  // The RenderWidget set a color profile.
-  virtual void RenderWidgetDidSetColorProfile(
-      const std::vector<char>& color_profile) = 0;
-
   // As in RenderWidgetInputHandlerDelegate.
   virtual void RenderWidgetFocusChangeComplete() = 0;
   virtual bool DoesRenderWidgetHaveTouchEventHandlersAt(
       const gfx::Point& point) const = 0;
-  virtual void RenderWidgetDidHandleKeyEvent() = 0;
-  virtual bool RenderWidgetWillHandleGestureEvent(
-      const blink::WebGestureEvent& event) = 0;
   virtual bool RenderWidgetWillHandleMouseEvent(
       const blink::WebMouseEvent& event) = 0;
-
-  // Painting notifications. DidFlushPaint happens once we've received the ACK
-  // that the screen has been updated.
-  virtual void RenderWidgetDidFlushPaint() = 0;
 
  protected:
   virtual ~RenderWidgetOwnerDelegate() {}

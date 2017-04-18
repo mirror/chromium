@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 2013 Google, Inc.
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+ * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -34,50 +35,57 @@ class RuleSet;
 class SpaceSplitString;
 class StyleResolver;
 
-class SharedStyleFinder {
-    STACK_ALLOCATED();
-public:
-    // RuleSets are passed non-const as the act of matching against them can cause them
-    // to be compacted. :(
-    SharedStyleFinder(const ElementResolveContext& context,
-        const RuleFeatureSet& features, RuleSet* siblingRuleSet,
-        RuleSet* uncommonAttributeRuleSet, StyleResolver& styleResolver)
-        : m_elementAffectedByClassRules(false)
-        , m_features(features)
-        , m_siblingRuleSet(siblingRuleSet)
-        , m_uncommonAttributeRuleSet(uncommonAttributeRuleSet)
-        , m_styleResolver(&styleResolver)
-        , m_context(context)
-    { }
+class CORE_EXPORT SharedStyleFinder {
+  STACK_ALLOCATED();
 
-    ComputedStyle* findSharedStyle();
+ public:
+  // RuleSets are passed non-const as the act of matching against them can cause
+  // them to be compacted. :(
+  SharedStyleFinder(const ElementResolveContext& context,
+                    const RuleFeatureSet& features,
+                    RuleSet* sibling_rule_set,
+                    RuleSet* uncommon_attribute_rule_set,
+                    StyleResolver& style_resolver)
+      : element_affected_by_class_rules_(false),
+        features_(features),
+        sibling_rule_set_(sibling_rule_set),
+        uncommon_attribute_rule_set_(uncommon_attribute_rule_set),
+        style_resolver_(&style_resolver),
+        context_(context) {}
 
-private:
-    Element* findElementForStyleSharing() const;
+  ComputedStyle* FindSharedStyle();
 
-    // Only used when we're collecting stats on styles.
-    bool documentContainsValidCandidate() const;
+ private:
+  Element* FindElementForStyleSharing() const;
 
-    bool classNamesAffectedByRules(const SpaceSplitString&) const;
+  // Only used when we're collecting stats on styles.
+  bool DocumentContainsValidCandidate() const;
 
-    bool canShareStyleWithElement(Element& candidate) const;
-    bool canShareStyleWithControl(Element& candidate) const;
-    bool sharingCandidateHasIdenticalStyleAffectingAttributes(Element& candidate) const;
-    bool sharingCandidateCanShareHostStyles(Element& candidate) const;
-    bool sharingCandidateDistributedToSameInsertionPoint(Element& candidate) const;
-    bool matchesRuleSet(RuleSet*);
+  bool ClassNamesAffectedByRules(const SpaceSplitString&) const;
 
-    Element& element() const { return *m_context.element(); }
-    Document& document() const { return element().document(); }
+  bool CanShareStyleWithElement(Element& candidate) const;
+  bool CanShareStyleWithControl(Element& candidate) const;
+  bool SharingCandidateHasIdenticalStyleAffectingAttributes(
+      Element& candidate) const;
+  bool SharingCandidateCanShareHostStyles(Element& candidate) const;
+  bool SharingCandidateAssignedToSameSlot(Element& candidate) const;
+  bool SharingCandidateDistributedToSameInsertionPoint(
+      Element& candidate) const;
+  bool MatchesRuleSet(RuleSet*);
 
-    bool m_elementAffectedByClassRules;
-    const RuleFeatureSet& m_features;
-    Member<RuleSet> m_siblingRuleSet;
-    Member<RuleSet> m_uncommonAttributeRuleSet;
-    Member<StyleResolver> m_styleResolver;
-    const ElementResolveContext& m_context;
+  Element& GetElement() const { return *context_.GetElement(); }
+  Document& GetDocument() const { return GetElement().GetDocument(); }
+
+  bool element_affected_by_class_rules_;
+  const RuleFeatureSet& features_;
+  Member<RuleSet> sibling_rule_set_;
+  Member<RuleSet> uncommon_attribute_rule_set_;
+  Member<StyleResolver> style_resolver_;
+  const ElementResolveContext& context_;
+
+  friend class SharedStyleFinderTest;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SharedStyleFinder_h
+#endif  // SharedStyleFinder_h

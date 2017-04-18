@@ -82,52 +82,55 @@ bool StreamParserTestBase::AppendDataInPieces(const uint8_t* data,
 void StreamParserTestBase::OnInitDone(
     const StreamParser::InitParameters& params) {
   EXPECT_TRUE(params.auto_update_timestamp_offset);
-  DVLOG(1) << __FUNCTION__ << "(" << params.duration.InMilliseconds() << ", "
+  DVLOG(1) << __func__ << "(" << params.duration.InMilliseconds() << ", "
            << params.auto_update_timestamp_offset << ")";
 }
 
 bool StreamParserTestBase::OnNewConfig(
     std::unique_ptr<MediaTracks> tracks,
     const StreamParser::TextTrackConfigMap& text_config) {
-  DVLOG(1) << __FUNCTION__ << ": got " << tracks->tracks().size() << " tracks";
+  DVLOG(1) << __func__ << ": got " << tracks->tracks().size() << " tracks";
   EXPECT_EQ(tracks->tracks().size(), 1u);
   const auto& track = tracks->tracks()[0];
   EXPECT_EQ(track->type(), MediaTrack::Audio);
+  audio_track_id_ = track->bytestream_track_id();
   last_audio_config_ = tracks->getAudioConfig(track->bytestream_track_id());
   EXPECT_TRUE(last_audio_config_.IsValidConfig());
   return true;
 }
 
 bool StreamParserTestBase::OnNewBuffers(
-    const StreamParser::BufferQueue& audio_buffers,
-    const StreamParser::BufferQueue& video_buffers,
-    const StreamParser::TextBufferQueueMap& text_map) {
+    const StreamParser::BufferQueueMap& buffer_queue_map) {
+  EXPECT_EQ(1u, buffer_queue_map.size());
+  const auto& itr_audio = buffer_queue_map.find(audio_track_id_);
+  EXPECT_NE(buffer_queue_map.end(), itr_audio);
+  const StreamParser::BufferQueue& audio_buffers = itr_audio->second;
   EXPECT_FALSE(audio_buffers.empty());
-  EXPECT_TRUE(video_buffers.empty());
 
-  // TODO(wolenetz/acolwell): Add text track support to more MSE parsers. See
-  // http://crbug.com/336926.
-  EXPECT_TRUE(text_map.empty());
+  // Ensure that track ids are properly assigned on all emitted buffers.
+  for (const auto& buf : audio_buffers) {
+    EXPECT_EQ(audio_track_id_, buf->track_id());
+  }
 
   const std::string buffers_str = BufferQueueToString(audio_buffers);
-  DVLOG(1) << __FUNCTION__ << " : " << buffers_str;
+  DVLOG(1) << __func__ << " : " << buffers_str;
   results_stream_ << buffers_str;
   return true;
 }
 
 void StreamParserTestBase::OnKeyNeeded(EmeInitDataType type,
                                        const std::vector<uint8_t>& init_data) {
-  DVLOG(1) << __FUNCTION__ << "(" << static_cast<int>(type) << ", "
+  DVLOG(1) << __func__ << "(" << static_cast<int>(type) << ", "
            << init_data.size() << ")";
 }
 
 void StreamParserTestBase::OnNewSegment() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   results_stream_ << "NewSegment";
 }
 
 void StreamParserTestBase::OnEndOfSegment() {
-  DVLOG(1) << __FUNCTION__;
+  DVLOG(1) << __func__;
   results_stream_ << "EndOfSegment";
 }
 

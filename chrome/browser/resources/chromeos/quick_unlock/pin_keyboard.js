@@ -12,16 +12,41 @@
  *           the PIN keyboard's value.
  *
  * Events:
- *    pin-change: Fired when the PIN value has changed. The pin is available at
+ *    pin-change: Fired when the PIN value has changed. The PIN is available at
  *                event.detail.pin.
- *    submit: Fired when the PIN is submitted. The pin is available at
+ *    submit: Fired when the PIN is submitted. The PIN is available at
  *            event.detail.pin.
  *
  * Example:
- *    <pin-keyboard on-pin-change="onPinChange" on-submit="onPinSubmit"
- *                  value="{{pinValue}}">
+ *    <pin-keyboard on-pin-change="onPinChange" on-submit="onPinSubmit">
  *    </pin-keyboard>
  */
+
+(function() {
+
+/**
+ * Once auto backspace starts, the time between individual backspaces.
+ * @type {number}
+ * @const
+ */
+var REPEAT_BACKSPACE_DELAY_MS = 150;
+
+/**
+ * How long the backspace button must be held down before auto backspace
+ * starts.
+ * @type {number}
+ * @const
+ */
+var INITIAL_BACKSPACE_DELAY_MS = 500;
+
+/**
+ * The key codes of the keys allowed to be used on the pin input, in addition to
+ * number keys. Currently we allow backspace(8), tab(9), left(37) and right(39).
+ * @type {Array<number>}
+ * @const
+ */
+var PIN_INPUT_ALLOWED_NON_NUMBER_KEY_CODES = [8, 9, 37, 39];
+
 Polymer({
   is: 'pin-keyboard',
 
@@ -33,42 +58,133 @@ Polymer({
     /**
      * Whether or not the keyboard's input element should be numerical
      * or password.
+     * @private
      */
     enablePassword: {
       type: Boolean,
       value: false
     },
 
-    /** The value stored in the keyboard's input element. */
+    /**
+     * The password element the pin keyboard is associated with. If this is not
+     * set, then a default input element is shown and used.
+     * @type {?Element}
+     * @private
+     */
+    passwordElement: {
+      type: Object,
+      value: function() { return this.$$('#pin-input'); },
+      observer: 'onPasswordElementAttached_'
+    },
+
+    /**
+     * The value stored in the keyboard's input element.
+     * @private
+     */
     value: {
       type: String,
       notify: true,
       value: '',
       observer: 'onPinValueChange_'
+    },
+
+    /**
+     * The intervalID used for the backspace button set/clear interval.
+     * @private
+     */
+    repeatBackspaceIntervalId_: {
+      type: Number,
+      value: 0
+    },
+
+    /**
+     * The timeoutID used for the auto backspace.
+     * @private
+     */
+    startAutoBackspaceId_: {
+      type: Number,
+      value: 0
     }
   },
 
   /**
-   * Gets the container holding the password field.
-   * @type {!HTMLInputElement}
+   * Called when a password element is attached to the pin keyboard.
+   * @param {HTMLInputElement} inputElement The PIN keyboard's input element.
+   * @private
    */
-  get inputElement() {
-    return this.$$('#pin-input');
+  onPasswordElementAttached_: function(inputElement) {
+    if (inputElement != this.$$('#pin-input'))
+      this.$$('#pin-input').hidden = true;
+    inputElement.addEventListener('input',
+        this.handleInputChanged_.bind(this));
+  },
+
+  /**
+   * Called when the user uses the keyboard to enter a value into the input
+   * element.
+   * @param {Event} event The event object.
+   * @private
+   */
+  handleInputChanged_: function(event) {
+    this.value = event.target.value;
+  },
+
+  /**
+   * Gets the selection start of the input field.
+   * @type {number}
+   * @private
+   */
+  get selectionStart_() {
+    return this.passwordElement.selectionStart;
+  },
+
+  /**
+   * Gets the selection end of the input field.
+   * @type {number}
+   * @private
+   */
+  get selectionEnd_() {
+    return this.passwordElement.selectionEnd;
+  },
+
+  /**
+   * Sets the selection start of the input field.
+   * @param {number} start The new selection start of the input element.
+   * @private
+   */
+  set selectionStart_(start) {
+    this.passwordElement.selectionStart = start;
+  },
+
+  /**
+   * Sets the selection end of the input field.
+   * @param {number} end The new selection end of the input element.
+   * @private
+   */
+  set selectionEnd_(end) {
+    this.passwordElement.selectionEnd = end;
   },
 
   /** Transfers focus to the input element. */
   focus: function() {
-    this.$$('#pin-input').focus();
+    this.passwordElement.focus();
   },
 
   /**
    * Called when a keypad number has been tapped.
-   * @param {!{target: !PaperButtonElement}} event
+   * @param {Event} event The event object.
    * @private
    */
-  onNumberTap_: function(event, detail) {
+  onNumberTap_: function(event) {
     var numberValue = event.target.getAttribute('value');
-    this.value += numberValue;
+
+    // Add the number where the caret is, then update the selection range of the
+    // input element.
+    var selectionStart = this.selectionStart_;
+    this.value = this.value.substring(0, this.selectionStart_) + numberValue +
+        this.value.substring(this.selectionEnd_);
+    this.selectionStart_ = selectionStart + 1;
+    this.selectionEnd_ = this.selectionStart_;
 
     // If a number button is clicked, we do not want to switch focus to the
     // button, therefore we transfer focus back to the input, but if a number
@@ -76,6 +192,7 @@ Polymer({
     // spacebar/return to enter their PIN.
     if (!event.target.receivedFocusFromKeyboard)
       this.focus();
+    event.preventDefault();
   },
 
   /** Fires a submit event with the current PIN value. */
@@ -90,18 +207,125 @@ Polymer({
    * @param {string} previous
    */
   onPinValueChange_: function(value, previous) {
-    if (value != previous)
+    if (value != previous) {
+      this.passwordElement.value = this.value;
       this.fire('pin-change', { pin: value });
+    }
   },
 
-  /** Called when the user wants to erase the last character of the entered
-   *  PIN value.
+  /**
+   * Called when the user wants to erase the last character of the entered
+   * PIN value.
+   * @private
    */
   onPinClear_: function() {
-    this.value = this.value.substring(0, this.value.length - 1);
+    // If the input is shown, clear the text based on the caret location or
+    // selected region of the input element. If it is just a caret, remove the
+    // character in front of the caret.
+    var selectionStart = this.selectionStart_;
+    var selectionEnd = this.selectionEnd_;
+    if (selectionStart == selectionEnd)
+      selectionStart--;
+
+    this.value = this.value.substring(0, selectionStart) +
+        this.value.substring(selectionEnd);
+
+    // Move the caret or selected region to the correct new place.
+    this.selectionStart_ = selectionStart;
+    this.selectionEnd_ = selectionStart;
   },
 
-  /** Called when a key event is pressed while the input element has focus. */
+  /**
+   * Called when the user presses or touches the backspace button. Starts a
+   * timer which starts an interval to repeatedly backspace the pin value until
+   * the interval is cleared.
+   * @param {Event} event The event object.
+   * @private
+   */
+  onBackspacePointerDown_: function(event) {
+    this.startAutoBackspaceId_ = setTimeout(function() {
+        this.repeatBackspaceIntervalId_ = setInterval(
+            this.onPinClear_.bind(this), REPEAT_BACKSPACE_DELAY_MS);
+    }.bind(this), INITIAL_BACKSPACE_DELAY_MS);
+
+    if (!event.target.receivedFocusFromKeyboard)
+      this.focus();
+    event.preventDefault();
+  },
+
+  /**
+   * Helper function which clears the timer / interval ids and resets them.
+   * @private
+   */
+  clearAndReset_: function() {
+    clearInterval(this.repeatBackspaceIntervalId_);
+    this.repeatBackspaceIntervalId_ = 0;
+    clearTimeout(this.startAutoBackspaceId_);
+    this.startAutoBackspaceId_ = 0;
+  },
+
+  /**
+   * Called when the user exits the backspace button. Stops the interval
+   * callback.
+   * @param {Event} event The event object.
+   * @private
+   */
+  onBackspacePointerOut_: function(event) {
+    this.clearAndReset_();
+
+    if (!event.target.receivedFocusFromKeyboard)
+      this.focus();
+    event.preventDefault();
+  },
+
+  /**
+   * Called when the user unpresses or untouches the backspace button. Stops the
+   * interval callback and fires a backspace event if there is no interval
+   * running.
+   * @param {Event} event The event object.
+   * @private
+   */
+  onBackspacePointerUp_: function(event) {
+    // If an interval has started, do not fire event on pointer up.
+    if (!this.repeatBackspaceIntervalId_)
+      this.onPinClear_();
+    this.clearAndReset_();
+
+    if (!event.target.receivedFocusFromKeyboard)
+      this.focus();
+    event.preventDefault();
+  },
+
+  /**
+   * Helper function to check whether a given |event| should be processed by
+   * the numeric only input.
+   * @param {Event} event The event object.
+   * @private
+   */
+  isValidEventForInput_: function(event) {
+    // Valid if the key is a number, and shift is not pressed.
+    if ((event.keyCode >= 48 && event.keyCode <= 57) && !event.shiftKey)
+      return true;
+
+    // Valid if the key is one of the selected special keys defined in
+    // |PIN_INPUT_ALLOWED_NON_NUMBER_KEY_CODES|.
+    if (PIN_INPUT_ALLOWED_NON_NUMBER_KEY_CODES.indexOf(event.keyCode) > -1)
+      return true;
+
+    // Valid if the key is CTRL+A to allow users to quickly select the entire
+    // PIN.
+    if (event.keyCode == 65 && event.ctrlKey)
+      return true;
+
+    // The rest of the keys are invalid.
+    return false;
+  },
+
+  /**
+   * Called when a key event is pressed while the input element has focus.
+   * @param {Event} event The event object.
+   * @private
+   */
   onInputKeyDown_: function(event) {
     // Up/down pressed, swallow the event to prevent the input value from
     // being incremented or decremented.
@@ -116,39 +340,42 @@ Polymer({
       event.preventDefault();
       return;
     }
+
+    // Do not pass events that are not numbers or special keys we care about. We
+    // use this instead of input type number because there are several issues
+    // with input type number, such as no selectionStart/selectionEnd and
+    // entered non numbers causes the caret to jump to the left.
+    if (!this.isValidEventForInput_(event)) {
+      event.preventDefault();
+      return;
+    }
   },
 
   /**
-   * Changes the color of the submit button if PIN is ready.
+   * Disables the backspace button if nothing is entered.
    * @param {string} value
-   */
-  computeSubmitClass_: function(value) {
-    return value.length > 0 ? 'ready-background' : '';
-  },
-
-  /**
-   * Computes whether the input type for the pin input should be password or
-   * numerical.
    * @private
    */
-  computeInputType_: function(enablePassword) {
-    return enablePassword ? 'password' : 'number';
+  hasInput_: function(value) {
+    return value.length > 0;
   },
 
   /**
    * Computes the value of the pin input placeholder.
+   * @param {boolean} enablePassword
    * @private
    */
-  computeInputPlaceholder_: function(enablePassword) {
+  getInputPlaceholder_: function(enablePassword) {
     return enablePassword ? this.i18n('pinKeyboardPlaceholderPinPassword') :
                             this.i18n('pinKeyboardPlaceholderPin');
   },
 
   /**
    * Computes the direction of the pin input.
+   * @param {string} password
    * @private
    */
-  computeInputClass_: function(password) {
+  isInputRtl_: function(password) {
     // +password will convert a string to a number or to NaN if that's not
     // possible. Number.isInteger will verify the value is not a NaN and that it
     // does not contain decimals.
@@ -157,7 +384,7 @@ Polymer({
     // Since we still support users entering their passwords through the PIN
     // keyboard, we swap the input box to rtl when we think it is a password
     // (just numbers), if the document direction is rtl.
-    var enableRtl = (document.dir == 'rtl') && !Number.isInteger(+password);
-    return enableRtl ? 'input-non-pin' : '';
-  }
+    return (document.dir == 'rtl') && !Number.isInteger(+password);
+  },
 });
+})();

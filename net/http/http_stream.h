@@ -22,7 +22,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/net_export.h"
 #include "net/base/request_priority.h"
-#include "net/base/upload_progress.h"
+#include "net/ssl/token_binding.h"
 
 namespace crypto {
 class ECPrivateKey;
@@ -30,7 +30,7 @@ class ECPrivateKey;
 
 namespace net {
 
-class BoundNetLog;
+struct AlternativeService;
 class HttpNetworkSession;
 class HttpRequestHeaders;
 struct HttpRequestInfo;
@@ -38,6 +38,7 @@ class HttpResponseInfo;
 class IOBuffer;
 class IPEndPoint;
 struct LoadTimingInfo;
+class NetLogWithSource;
 class SSLCertRequestInfo;
 class SSLInfo;
 
@@ -47,11 +48,13 @@ class NET_EXPORT_PRIVATE HttpStream {
   virtual ~HttpStream() {}
 
   // Initialize stream.  Must be called before calling SendRequest().
-  // |request_info| must outlive the HttpStream.
+  // The consumer should ensure that request_info points to a valid value till
+  // final response headers are received; after that point, the HttpStream
+  // will not access |*request_info| and it may be deleted.
   // Returns a net error code, possibly ERR_IO_PENDING.
   virtual int InitializeStream(const HttpRequestInfo* request_info,
                                RequestPriority priority,
-                               const BoundNetLog& net_log,
+                               const NetLogWithSource& net_log,
                                const CompletionCallback& callback) = 0;
 
   // Writes the headers and uploads body data to the underlying socket.
@@ -148,6 +151,11 @@ class NET_EXPORT_PRIVATE HttpStream {
   // undefined.
   virtual void GetSSLInfo(SSLInfo* ssl_info) = 0;
 
+  // Returns true and populates |alternative_service| if an alternative service
+  // was used to for this stream. Otherwise returns false.
+  virtual bool GetAlternativeService(
+      AlternativeService* alternative_service) const = 0;
+
   // Get the SSLCertRequestInfo associated with this stream's connection.
   // This should only be called for streams over SSL sockets, otherwise the
   // behavior is undefined.
@@ -158,10 +166,12 @@ class NET_EXPORT_PRIVATE HttpStream {
   // and does not modify |endpoint| if it is unavailable.
   virtual bool GetRemoteEndpoint(IPEndPoint* endpoint) = 0;
 
-  // Signs the EKM value for Token Binding from the TLS layer using |*key| and
-  // puts the result in |*out|. Returns OK or ERR_FAILED.
-  virtual Error GetSignedEKMForTokenBinding(crypto::ECPrivateKey* key,
-                                            std::vector<uint8_t>* out) = 0;
+  // Generates the signature used in Token Binding using |*key| and for a Token
+  // Binding of type |tb_type|, putting the signature in |*out|. Returns OK or
+  // ERR_FAILED.
+  virtual Error GetTokenBindingSignature(crypto::ECPrivateKey* key,
+                                         TokenBindingType tb_type,
+                                         std::vector<uint8_t>* out) = 0;
 
   // In the case of an HTTP error or redirect, flush the response body (usually
   // a simple error or "this page has moved") so that we can re-use the
@@ -176,9 +186,6 @@ class NET_EXPORT_PRIVATE HttpStream {
 
   // Called when the priority of the parent transaction changes.
   virtual void SetPriority(RequestPriority priority) = 0;
-
-  // Queries the UploadDataStream for its progress (bytes sent).
-  virtual UploadProgress GetUploadProgress() const = 0;
 
   // Returns a new (not initialized) stream using the same underlying
   // connection and invalidates the old stream - no further methods should be

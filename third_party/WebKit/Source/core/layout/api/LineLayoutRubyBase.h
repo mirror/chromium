@@ -11,35 +11,27 @@
 namespace blink {
 
 class LineLayoutRubyBase : public LineLayoutBlockFlow {
-public:
-    explicit LineLayoutRubyBase(LayoutRubyBase* layoutRubyBase)
-        : LineLayoutBlockFlow(layoutRubyBase)
-    {
-    }
+ public:
+  explicit LineLayoutRubyBase(LayoutRubyBase* layout_ruby_base)
+      : LineLayoutBlockFlow(layout_ruby_base) {}
 
-    explicit LineLayoutRubyBase(const LineLayoutItem& item)
-        : LineLayoutBlockFlow(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isRubyBase());
-    }
+  explicit LineLayoutRubyBase(const LineLayoutItem& item)
+      : LineLayoutBlockFlow(item) {
+    SECURITY_DCHECK(!item || item.IsRubyBase());
+  }
 
-    explicit LineLayoutRubyBase(std::nullptr_t) : LineLayoutBlockFlow(nullptr) { }
+  explicit LineLayoutRubyBase(std::nullptr_t) : LineLayoutBlockFlow(nullptr) {}
 
-    LineLayoutRubyBase() { }
+  LineLayoutRubyBase() {}
 
+ private:
+  LayoutRubyBase* ToRubyBase() { return ToLayoutRubyBase(GetLayoutObject()); }
 
-private:
-    LayoutRubyBase* toRubyBase()
-    {
-        return toLayoutRubyBase(layoutObject());
-    }
-
-    const LayoutRubyBase* toRubyBase() const
-    {
-        return toLayoutRubyBase(layoutObject());
-    }
+  const LayoutRubyBase* ToRubyBase() const {
+    return ToLayoutRubyBase(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineLayoutRubyBase_h
+#endif  // LineLayoutRubyBase_h

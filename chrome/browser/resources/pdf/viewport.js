@@ -15,6 +15,36 @@ function getIntersectionHeight(rect1, rect2) {
 }
 
 /**
+ * Makes sure that the scale level doesn't get out of the limits.
+ * @param {number} scale The new scale level.
+ * @return {number} The scale clamped within the limits.
+ */
+function clampScale(scale) {
+  return Math.min(5, Math.max(0.25, scale));
+}
+
+/**
+ * Computes vector between two points.
+ * @param {!Object} p1 The first point.
+ * @param {!Object} p2 The second point.
+ * @return {!Object} The vector.
+ */
+function vectorDelta(p1, p2) {
+  return {
+    x: p2.x - p1.x,
+    y: p2.y - p1.y
+  };
+}
+
+function frameToPluginCoordinate(coordinateInFrame) {
+  var container = $('plugin');
+  return {
+    x: coordinateInFrame.x - container.getBoundingClientRect().left,
+    y: coordinateInFrame.y - container.getBoundingClientRect().top
+  };
+}
+
+/**
  * Create a new viewport.
  * @constructor
  * @param {Window} window the window
@@ -42,13 +72,19 @@ function Viewport(window,
   this.beforeZoomCallback_ = beforeZoomCallback;
   this.afterZoomCallback_ = afterZoomCallback;
   this.allowedToChangeZoom_ = false;
-  this.zoom_ = 1;
+  this.internalZoom_ = 1;
+  this.zoomManager_ = new InactiveZoomManager(this, 1);
   this.documentDimensions_ = null;
   this.pageDimensions_ = [];
   this.scrollbarWidth_ = scrollbarWidth;
   this.fittingType_ = Viewport.FittingType.NONE;
   this.defaultZoom_ = defaultZoom;
   this.topToolbarHeight_ = topToolbarHeight;
+  this.prevScale_ = 1;
+  this.pinchPhase_ = Viewport.PinchPhase.PINCH_NONE;
+  this.pinchPanVector_ = null;
+  this.pinchCenter_ = null;
+  this.firstPinchCenterInFrame_ = null;
 
   window.addEventListener('scroll', this.updateViewport_.bind(this));
   window.addEventListener('resize', this.resize_.bind(this));
@@ -65,6 +101,19 @@ Viewport.FittingType = {
 };
 
 /**
+ * Enumeration of pinch states.
+ * This should match PinchPhase enum in pdf/out_of_process_instance.h
+ * @enum {number}
+ */
+Viewport.PinchPhase = {
+  PINCH_NONE: 0,
+  PINCH_START: 1,
+  PINCH_UPDATE_ZOOM_OUT: 2,
+  PINCH_UPDATE_ZOOM_IN: 3,
+  PINCH_END: 4
+};
+
+/**
  * The increment to scroll a page by in pixels when up/down/left/right arrow
  * keys are pressed. Usually we just let the browser handle scrolling on the
  * window when these keys are pressed but in certain cases we need to simulate
@@ -74,11 +123,12 @@ Viewport.SCROLL_INCREMENT = 40;
 
 /**
  * Predefined zoom factors to be used when zooming in/out. These are in
- * ascending order. This should match the list in
- * components/ui/zoom/page_zoom_constants.h
+ * ascending order. This should match the lists in
+ * components/ui/zoom/page_zoom_constants.h and
+ * chrome/browser/resources/settings/appearance_page/appearance_page.js
  */
-Viewport.ZOOM_FACTORS = [0.25, 0.333, 0.5, 0.666, 0.75, 0.9, 1,
-                         1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5];
+Viewport.ZOOM_FACTORS = [0.25, 1 / 3, 0.5, 2 / 3, 0.75, 0.8, 0.9,
+                         1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5];
 
 /**
  * The minimum and maximum range to be used to clip zoom factor.
@@ -150,7 +200,7 @@ Viewport.prototype = {
    *     respectively.
    */
   documentHasScrollbars: function() {
-    return this.documentNeedsScrollbars_(this.zoom_);
+    return this.documentNeedsScrollbars_(this.zoom);
   },
 
   /**
@@ -158,7 +208,7 @@ Viewport.prototype = {
    * Helper function called when the zoomed document size changes.
    */
   contentSizeChanged_: function() {
-    var zoomedDimensions = this.getZoomedDocumentDimensions_(this.zoom_);
+    var zoomedDimensions = this.getZoomedDocumentDimensions_(this.zoom);
     if (zoomedDimensions) {
       this.sizer_.style.width = zoomedDimensions.width + 'px';
       this.sizer_.style.height = zoomedDimensions.height +
@@ -209,7 +259,7 @@ Viewport.prototype = {
    * @type {Object} the size of the viewport excluding scrollbars.
    */
   get size() {
-    var needsScrollbars = this.documentNeedsScrollbars_(this.zoom_);
+    var needsScrollbars = this.documentNeedsScrollbars_(this.zoom);
     var scrollbarWidth = needsScrollbars.vertical ? this.scrollbarWidth_ : 0;
     var scrollbarHeight = needsScrollbars.horizontal ? this.scrollbarWidth_ : 0;
     return {
@@ -222,7 +272,38 @@ Viewport.prototype = {
    * @type {number} the zoom level of the viewport.
    */
   get zoom() {
-    return this.zoom_;
+    return this.zoomManager_.applyBrowserZoom(this.internalZoom_);
+  },
+
+  /**
+   * Set the zoom manager.
+   * @type {ZoomManager} manager the zoom manager to set.
+   */
+  set zoomManager(manager) {
+    this.zoomManager_ = manager;
+  },
+
+  /**
+   * @type {Viewport.PinchPhase} The phase of the current pinch gesture for
+   *    the viewport.
+   */
+  get pinchPhase() {
+    return this.pinchPhase_;
+  },
+
+  /**
+   * @type {Object} The panning caused by the current pinch gesture (as
+   *    the deltas of the x and y coordinates).
+   */
+  get pinchPanVector() {
+    return this.pinchPanVector_;
+  },
+
+  /**
+   * @type {Object} The coordinates of the center of the current pinch gesture.
+   */
+  get pinchCenter() {
+    return this.pinchCenter_;
   },
 
   /**
@@ -252,15 +333,63 @@ Viewport.prototype = {
     }
     // Record the scroll position (relative to the top-left of the window).
     var currentScrollPos = {
-      x: this.position.x / this.zoom_,
-      y: this.position.y / this.zoom_
+      x: this.position.x / this.zoom,
+      y: this.position.y / this.zoom
     };
-    this.zoom_ = newZoom;
+    this.internalZoom_ = newZoom;
     this.contentSizeChanged_();
     // Scroll to the scaled scroll position.
     this.position = {
-      x: currentScrollPos.x * newZoom,
-      y: currentScrollPos.y * newZoom
+      x: currentScrollPos.x * this.zoom,
+      y: currentScrollPos.y * this.zoom
+    };
+  },
+
+  /**
+   * @private
+   * Sets the zoom of the viewport.
+   * Same as setZoomInternal_ but for pinch zoom we have some more operations.
+   * @param {number} scaleDelta The zoom delta.
+   * @param {!Object} center The pinch center in content coordinates.
+   */
+  setPinchZoomInternal_: function(scaleDelta, center) {
+    assert(this.allowedToChangeZoom_,
+        'Called Viewport.setPinchZoomInternal_ without calling ' +
+        'Viewport.mightZoom_.');
+    this.internalZoom_ = clampScale(this.internalZoom_ * scaleDelta);
+
+    var newCenterInContent = this.frameToContent(center);
+    var delta = {
+      x: (newCenterInContent.x - this.oldCenterInContent.x),
+      y: (newCenterInContent.y - this.oldCenterInContent.y)
+    };
+
+    // Record the scroll position (relative to the pinch center).
+    var currentScrollPos = {
+      x: this.position.x - delta.x * this.zoom,
+      y: this.position.y - delta.y * this.zoom
+    };
+
+    this.contentSizeChanged_();
+    // Scroll to the scaled scroll position.
+    this.position = {
+      x: currentScrollPos.x,
+      y: currentScrollPos.y
+    };
+  },
+
+  /**
+   *  @private
+   *  Converts a point from frame to content coordinates.
+   *  @param {!Object} framePoint The frame coordinates.
+   *  @return {!Object} The content coordinates.
+   */
+  frameToContent: function(framePoint) {
+    // TODO(mcnee) Add a helper Point class to avoid duplicating operations
+    // on plain {x,y} objects.
+    return {
+      x: (framePoint.x + this.position.x) / this.zoom,
+      y: (framePoint.y + this.position.y) / this.zoom
     };
   },
 
@@ -274,6 +403,29 @@ Viewport.prototype = {
                        Math.min(newZoom, Viewport.ZOOM_FACTOR_RANGE.max));
     this.mightZoom_(function() {
       this.setZoomInternal_(newZoom);
+      this.updateViewport_();
+    }.bind(this));
+  },
+
+  /**
+   * Gets notified of the browser zoom changing seperately from the
+   * internal zoom.
+   * @param {number} oldBrowserZoom the previous value of the browser zoom.
+   */
+  updateZoomFromBrowserChange: function(oldBrowserZoom) {
+    this.mightZoom_(function() {
+      // Record the scroll position (relative to the top-left of the window).
+      var oldZoom = oldBrowserZoom * this.internalZoom_;
+      var currentScrollPos = {
+        x: this.position.x / oldZoom,
+        y: this.position.y / oldZoom
+      };
+      this.contentSizeChanged_();
+      // Scroll to the scaled scroll position.
+      this.position = {
+        x: currentScrollPos.x * this.zoom,
+        y: currentScrollPos.y * this.zoom
+      };
       this.updateViewport_();
     }.bind(this));
   },
@@ -328,15 +480,15 @@ Viewport.prototype = {
    * @return {int} the index of the most visible page.
    */
   getMostVisiblePage: function() {
-    var firstVisiblePage = this.getPageAtY_(this.position.y / this.zoom_);
+    var firstVisiblePage = this.getPageAtY_(this.position.y / this.zoom);
     if (firstVisiblePage == this.pageDimensions_.length - 1)
       return firstVisiblePage;
 
     var viewportRect = {
-      x: this.position.x / this.zoom_,
-      y: this.position.y / this.zoom_,
-      width: this.size.width / this.zoom_,
-      height: this.size.height / this.zoom_
+      x: this.position.x / this.zoom,
+      y: this.position.y / this.zoom,
+      width: this.size.width / this.zoom,
+      height: this.size.height / this.zoom
     };
     var firstVisiblePageVisibility = getIntersectionHeight(
         this.pageDimensions_[firstVisiblePage], viewportRect) /
@@ -357,7 +509,7 @@ Viewport.prototype = {
    * @param {Object} pageDimensions the dimensions of a given page
    * @param {boolean} widthOnly a bool indicating whether fit-to-page or
    *     fit-to-width should be computed.
-   * @return {number} the zoom to use
+   * @return {number} the internal zoom to set
    */
   computeFittingZoom_: function(pageDimensions, widthOnly) {
     // First compute the zoom without scrollbars.
@@ -408,7 +560,7 @@ Viewport.prototype = {
       zoomHeight = windowWithScrollbars.height / pageDimensions.height;
       zoom = Math.min(zoomWidth, zoomHeight);
     }
-    return zoom;
+    return this.zoomManager_.internalZoomComponent(zoom);
   },
 
   /**
@@ -450,7 +602,7 @@ Viewport.prototype = {
       if (scrollToTopOfPage) {
         this.position = {
           x: 0,
-          y: this.pageDimensions_[page].y * this.zoom_
+          y: this.pageDimensions_[page].y * this.zoom
         };
       }
       this.updateViewport_();
@@ -473,7 +625,7 @@ Viewport.prototype = {
       this.fittingType_ = Viewport.FittingType.NONE;
       var nextZoom = Viewport.ZOOM_FACTORS[0];
       for (var i = 0; i < Viewport.ZOOM_FACTORS.length; i++) {
-        if (Viewport.ZOOM_FACTORS[i] < this.zoom_)
+        if (Viewport.ZOOM_FACTORS[i] < this.internalZoom_)
           nextZoom = Viewport.ZOOM_FACTORS[i];
       }
       this.setZoomInternal_(nextZoom);
@@ -489,12 +641,86 @@ Viewport.prototype = {
       this.fittingType_ = Viewport.FittingType.NONE;
       var nextZoom = Viewport.ZOOM_FACTORS[Viewport.ZOOM_FACTORS.length - 1];
       for (var i = Viewport.ZOOM_FACTORS.length - 1; i >= 0; i--) {
-        if (Viewport.ZOOM_FACTORS[i] > this.zoom_)
+        if (Viewport.ZOOM_FACTORS[i] > this.internalZoom_)
           nextZoom = Viewport.ZOOM_FACTORS[i];
       }
       this.setZoomInternal_(nextZoom);
       this.updateViewport_();
     }.bind(this));
+  },
+
+  /**
+   * Pinch zoom event handler.
+   * @param {!Object} e The pinch event.
+   */
+  pinchZoom: function(e) {
+    this.mightZoom_(function() {
+      this.pinchPhase_ = e.direction == 'out' ?
+                         Viewport.PinchPhase.PINCH_UPDATE_ZOOM_OUT :
+                         Viewport.PinchPhase.PINCH_UPDATE_ZOOM_IN;
+
+      var scaleDelta = e.startScaleRatio / this.prevScale_;
+      this.pinchPanVector_ =
+          vectorDelta(e.center, this.firstPinchCenterInFrame_);
+
+      var needsScrollbars = this.documentNeedsScrollbars_(
+          this.zoomManager_.applyBrowserZoom(
+              clampScale(this.internalZoom_ * scaleDelta)));
+
+      this.pinchCenter_ = e.center;
+
+      // If there's no horizontal scrolling, keep the content centered so the
+      // user can't zoom in on the non-content area.
+      // TODO(mcnee) Investigate other ways of scaling when we don't have
+      // horizontal scrolling. We want to keep the document centered,
+      // but this causes a potentially awkward transition when we start
+      // using the gesture center.
+      if (!needsScrollbars.horizontal) {
+        this.pinchCenter_ = {
+          x: this.window_.innerWidth / 2,
+          y: this.window_.innerHeight / 2
+        };
+      } else if (this.keepContentCentered_) {
+        this.oldCenterInContent =
+            this.frameToContent(frameToPluginCoordinate(e.center));
+        this.keepContentCentered_ = false;
+      }
+
+      this.setPinchZoomInternal_(
+          scaleDelta, frameToPluginCoordinate(e.center));
+      this.updateViewport_();
+      this.prevScale_ = e.startScaleRatio;
+    }.bind(this));
+  },
+
+  pinchZoomStart: function(e) {
+    this.pinchPhase_ = Viewport.PinchPhase.PINCH_START;
+    this.prevScale_ = 1;
+    this.oldCenterInContent =
+        this.frameToContent(frameToPluginCoordinate(e.center));
+
+    var needsScrollbars = this.documentNeedsScrollbars_(this.zoom);
+    this.keepContentCentered_ = !needsScrollbars.horizontal;
+    // We keep track of begining of the pinch.
+    // By doing so we will be able to compute the pan distance.
+    this.firstPinchCenterInFrame_ = e.center;
+  },
+
+  pinchZoomEnd: function(e) {
+    this.mightZoom_(function() {
+      this.pinchPhase_ = Viewport.PinchPhase.PINCH_END;
+      var scaleDelta = e.startScaleRatio / this.prevScale_;
+      this.pinchCenter_ = e.center;
+
+      this.setPinchZoomInternal_(
+          scaleDelta, frameToPluginCoordinate(e.center));
+      this.updateViewport_();
+    }.bind(this));
+
+    this.pinchPhase_ = Viewport.PinchPhase.PINCH_NONE;
+    this.pinchPanVector_ = null;
+    this.pinchCenter_ = null;
+    this.firstPinchCenterInFrame_ = null;
   },
 
   /**
@@ -517,8 +743,8 @@ Viewport.prototype = {
       if (this.fittingType_ != Viewport.FittingType.FIT_TO_PAGE)
         toolbarOffset = this.topToolbarHeight_;
       this.position = {
-        x: dimensions.x * this.zoom_,
-        y: dimensions.y * this.zoom_ - toolbarOffset
+        x: dimensions.x * this.zoom,
+        y: dimensions.y * this.zoom - toolbarOffset
       };
       this.updateViewport_();
     }.bind(this));
@@ -585,14 +811,14 @@ Viewport.prototype = {
     // Compute the space on the left of the document if the document fits
     // completely in the screen.
     var spaceOnLeft = (this.size.width -
-        this.documentDimensions_.width * this.zoom_) / 2;
+        this.documentDimensions_.width * this.zoom) / 2;
     spaceOnLeft = Math.max(spaceOnLeft, 0);
 
     return {
-      x: x * this.zoom_ + spaceOnLeft - this.window_.pageXOffset,
-      y: insetDimensions.y * this.zoom_ - this.window_.pageYOffset,
-      width: insetDimensions.width * this.zoom_,
-      height: insetDimensions.height * this.zoom_
+      x: x * this.zoom + spaceOnLeft - this.window_.pageXOffset,
+      y: insetDimensions.y * this.zoom - this.window_.pageYOffset,
+      width: insetDimensions.width * this.zoom,
+      height: insetDimensions.height * this.zoom
     };
   }
 };

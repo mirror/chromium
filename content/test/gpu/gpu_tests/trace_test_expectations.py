@@ -9,12 +9,10 @@ from gpu_tests.gpu_test_expectations import GpuTestExpectations
 class TraceTestExpectations(GpuTestExpectations):
   def SetExpectations(self):
     # Sample Usage:
-    # self.Fail('TraceTest.Canvas2DRedBox',
+    # self.Fail('trace_test.Canvas2DRedBox',
     #     ['mac', 'amd', ('nvidia', 0x1234)], bug=123)
-    pass
+    # TODO(kbr): flakily timing out on this configuration.
+    self.Flaky('TraceTest_*', ['linux', 'intel', 'debug'], bug=648369)
 
-
-class DeviceTraceTestExpectations(GpuTestExpectations):
-  def SetExpectations(self):
     # Device traces are not supported on all machines.
-    self.Skip('*')
+    self.Skip('DeviceTraceTest_*')

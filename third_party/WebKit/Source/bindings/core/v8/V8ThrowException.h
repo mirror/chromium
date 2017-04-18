@@ -10,52 +10,67 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef V8ThrowException_h
 #define V8ThrowException_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
-#include <v8.h>
+#include "core/dom/ExceptionCode.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
+// Provides utility functions to create and/or throw a V8 exception.
+// Mostly a set of wrapper functions for v8::Exception class.
 class CORE_EXPORT V8ThrowException {
-    STATIC_ONLY(V8ThrowException);
-public:
+  STATIC_ONLY(V8ThrowException);
 
-    static v8::Local<v8::Value> createDOMException(v8::Isolate* isolate, int ec, const String& message, const v8::Local<v8::Object>& creationContext)
-    {
-        return createDOMException(isolate, ec, message, String(), creationContext);
-    }
-    static v8::Local<v8::Value> createDOMException(v8::Isolate*, int, const String& sanitizedMessage, const String& unsanitizedMessage, const v8::Local<v8::Object>& creationContext);
+ public:
+  // Creates and returns an exception object, or returns an empty handle if
+  // failed.  |unsanitizedMessage| should not be specified unless it's
+  // SecurityError.
+  static v8::Local<v8::Value> CreateDOMException(
+      v8::Isolate*,
+      ExceptionCode,
+      const String& sanitized_message,
+      const String& unsanitized_message = String());
 
-    static v8::Local<v8::Value> throwException(v8::Local<v8::Value>, v8::Isolate*);
+  static void ThrowException(v8::Isolate* isolate,
+                             v8::Local<v8::Value> exception) {
+    if (!isolate->IsExecutionTerminating())
+      isolate->ThrowException(exception);
+  }
 
-    static v8::Local<v8::Value> createGeneralError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> throwGeneralError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> createTypeError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> throwTypeError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> createRangeError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> throwRangeError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> createSyntaxError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> throwSyntaxError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> createReferenceError(v8::Isolate*, const String&);
-    static v8::Local<v8::Value> throwReferenceError(v8::Isolate*, const String&);
+  static v8::Local<v8::Value> CreateError(v8::Isolate*, const String& message);
+  static v8::Local<v8::Value> CreateRangeError(v8::Isolate*,
+                                               const String& message);
+  static v8::Local<v8::Value> CreateReferenceError(v8::Isolate*,
+                                                   const String& message);
+  static v8::Local<v8::Value> CreateSyntaxError(v8::Isolate*,
+                                                const String& message);
+  static v8::Local<v8::Value> CreateTypeError(v8::Isolate*,
+                                              const String& message);
+
+  static void ThrowError(v8::Isolate*, const String& message);
+  static void ThrowRangeError(v8::Isolate*, const String& message);
+  static void ThrowReferenceError(v8::Isolate*, const String& message);
+  static void ThrowSyntaxError(v8::Isolate*, const String& message);
+  static void ThrowTypeError(v8::Isolate*, const String& message);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8ThrowException_h
+#endif  // V8ThrowException_h

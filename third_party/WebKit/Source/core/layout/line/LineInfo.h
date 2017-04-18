@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2000 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc. All right reserved.
+ * Copyright (C) 2003, 2004, 2006, 2007, 2008, 2009, 2010, 2011 Apple Inc.
+                 All right reserved.
  * Copyright (C) 2010 Google Inc. All rights reserved.
  * Copyright (C) 2013 Adobe Systems Incorporated.
  *
@@ -25,43 +26,53 @@
 #define LineInfo_h
 
 #include "core/layout/line/LineWidth.h"
-#include "wtf/Allocator.h"
+#include "core/style/ComputedStyleConstants.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class LineInfo {
-    STACK_ALLOCATED();
-public:
-    LineInfo()
-        : m_isFirstLine(true)
-        , m_isLastLine(false)
-        , m_isEmpty(true)
-        , m_previousLineBrokeCleanly(true)
-        , m_runsFromLeadingWhitespace(0)
-    { }
+  STACK_ALLOCATED();
 
-    bool isFirstLine() const { return m_isFirstLine; }
-    bool isLastLine() const { return m_isLastLine; }
-    bool isEmpty() const { return m_isEmpty; }
-    bool previousLineBrokeCleanly() const { return m_previousLineBrokeCleanly; }
-    unsigned runsFromLeadingWhitespace() const { return m_runsFromLeadingWhitespace; }
-    void resetRunsFromLeadingWhitespace() { m_runsFromLeadingWhitespace = 0; }
-    void incrementRunsFromLeadingWhitespace() { m_runsFromLeadingWhitespace++; }
+ public:
+  LineInfo()
+      : is_first_line_(true),
+        is_last_line_(false),
+        is_empty_(true),
+        previous_line_broke_cleanly_(true),
+        runs_from_leading_whitespace_(0),
+        text_align_(ETextAlign::kLeft) {}
 
-    void setFirstLine(bool firstLine) { m_isFirstLine = firstLine; }
-    void setLastLine(bool lastLine) { m_isLastLine = lastLine; }
-    void setEmpty(bool empty) { m_isEmpty = empty; }
+  bool IsFirstLine() const { return is_first_line_; }
+  bool IsLastLine() const { return is_last_line_; }
+  bool IsEmpty() const { return is_empty_; }
+  bool PreviousLineBrokeCleanly() const { return previous_line_broke_cleanly_; }
+  unsigned RunsFromLeadingWhitespace() const {
+    return runs_from_leading_whitespace_;
+  }
+  void ResetRunsFromLeadingWhitespace() { runs_from_leading_whitespace_ = 0; }
+  void IncrementRunsFromLeadingWhitespace() { runs_from_leading_whitespace_++; }
 
-    void setPreviousLineBrokeCleanly(bool previousLineBrokeCleanly) { m_previousLineBrokeCleanly = previousLineBrokeCleanly; }
+  void SetFirstLine(bool first_line) { is_first_line_ = first_line; }
+  void SetLastLine(bool last_line) { is_last_line_ = last_line; }
+  void SetEmpty(bool empty) { is_empty_ = empty; }
 
-private:
-    bool m_isFirstLine;
-    bool m_isLastLine;
-    bool m_isEmpty;
-    bool m_previousLineBrokeCleanly;
-    unsigned m_runsFromLeadingWhitespace;
+  void SetPreviousLineBrokeCleanly(bool previous_line_broke_cleanly) {
+    previous_line_broke_cleanly_ = previous_line_broke_cleanly;
+  }
+
+  ETextAlign GetTextAlign() const { return text_align_; }
+  void SetTextAlign(ETextAlign text_align) { text_align_ = text_align; }
+
+ private:
+  bool is_first_line_;
+  bool is_last_line_;
+  bool is_empty_;
+  bool previous_line_broke_cleanly_;
+  unsigned runs_from_leading_whitespace_;
+  ETextAlign text_align_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineInfo_h
+#endif  // LineInfo_h

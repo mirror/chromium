@@ -13,10 +13,10 @@
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/ui/cocoa/cocoa_test_helper.h"
 #import "chrome/browser/ui/cocoa/passwords/account_avatar_fetcher_manager.h"
 #import "chrome/browser/ui/cocoa/passwords/account_chooser_view_controller.h"
 #import "chrome/browser/ui/cocoa/passwords/credential_item_button.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/browser/ui/passwords/password_dialog_controller_mock.h"
 #include "components/autofill/core/common/password_form.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -145,8 +145,10 @@ TEST_F(AccountChooserViewControllerTest, ConfiguresViews) {
 TEST_F(AccountChooserViewControllerTest, ConfiguresFederatedCredential) {
   const char federation[] = "https://google.com/idp";
   const char name[] = "Peter the Great";
+  const char username[] = "pete";
+
   PasswordDialogController::FormsVector local_forms;
-  local_forms.push_back(Credential("pizza"));
+  local_forms.push_back(Credential(username));
   local_forms.back()->federation_origin = url::Origin(GURL(federation));
   local_forms.back()->display_name = base::ASCIIToUTF16(name);
   SetUpAccountChooser(&local_forms);
@@ -158,6 +160,7 @@ TEST_F(AccountChooserViewControllerTest, ConfiguresFederatedCredential) {
       base::SysNSStringToUTF8([base::mac::ObjCCastStrict<CredentialItemButton>(
           [buttons objectAtIndex:0]) title]);
   EXPECT_THAT(title, testing::HasSubstr(name));
+  EXPECT_THAT(title, testing::HasSubstr(username));
   EXPECT_THAT(title, testing::HasSubstr(GURL(federation).host()));
 }
 

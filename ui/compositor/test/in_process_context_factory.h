@@ -10,15 +10,13 @@
 
 #include "base/macros.h"
 #include "cc/surfaces/display.h"
+#include "cc/surfaces/frame_sink_id_allocator.h"
 #include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_image_factory.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_task_graph_runner.h"
+#include "gpu/ipc/common/surface_handle.h"
 #include "ui/compositor/compositor.h"
-
-namespace base {
-class Thread;
-}
 
 namespace cc {
 class SurfaceManager;
@@ -27,7 +25,8 @@ class SurfaceManager;
 namespace ui {
 class InProcessContextProvider;
 
-class InProcessContextFactory : public ContextFactory {
+class InProcessContextFactory : public ContextFactory,
+                                public ContextFactoryPrivate {
  public:
   // surface_manager is owned by the creator of this and must outlive the
   // context factory.
@@ -46,7 +45,7 @@ class InProcessContextFactory : public ContextFactory {
   void SendOnLostResources();
 
   // ContextFactory implementation
-  void CreateOutputSurface(base::WeakPtr<Compositor> compositor) override;
+  void CreateCompositorFrameSink(base::WeakPtr<Compositor> compositor) override;
 
   std::unique_ptr<Reflector> CreateReflector(Compositor* mirrored_compositor,
                                              Layer* mirroring_layer) override;
@@ -57,15 +56,17 @@ class InProcessContextFactory : public ContextFactory {
   bool DoesCreateTestContexts() override;
   uint32_t GetImageTextureTarget(gfx::BufferFormat format,
                                  gfx::BufferUsage usage) override;
-  cc::SharedBitmapManager* GetSharedBitmapManager() override;
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
-  uint32_t AllocateSurfaceClientId() override;
+  cc::FrameSinkId AllocateFrameSinkId() override;
   cc::SurfaceManager* GetSurfaceManager() override;
+  void SetDisplayVisible(ui::Compositor* compositor, bool visible) override;
   void ResizeDisplay(ui::Compositor* compositor,
                      const gfx::Size& size) override;
-  void SetDisplayColorSpace(ui::Compositor* compositor,
-                            const gfx::ColorSpace& color_space) override {}
+  void SetDisplayColorSpace(
+      ui::Compositor* compositor,
+      const gfx::ColorSpace& blending_color_space,
+      const gfx::ColorSpace& output_color_space) override {}
   void SetAuthoritativeVSyncInterval(ui::Compositor* compositor,
                                      base::TimeDelta interval) override {}
   void SetDisplayVSyncParameters(ui::Compositor* compositor,
@@ -76,20 +77,25 @@ class InProcessContextFactory : public ContextFactory {
   void RemoveObserver(ContextFactoryObserver* observer) override;
 
  private:
+  struct PerCompositorData;
+
+  PerCompositorData* CreatePerCompositorData(ui::Compositor* compositor);
+
   scoped_refptr<InProcessContextProvider> shared_main_thread_contexts_;
   scoped_refptr<InProcessContextProvider> shared_worker_context_provider_;
   cc::TestSharedBitmapManager shared_bitmap_manager_;
   cc::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   cc::TestImageFactory image_factory_;
   cc::TestTaskGraphRunner task_graph_runner_;
-  uint32_t next_surface_client_id_;
+  cc::FrameSinkIdAllocator frame_sink_id_allocator_;
   bool use_test_surface_;
   bool context_factory_for_test_;
   cc::SurfaceManager* surface_manager_;
   base::ObserverList<ContextFactoryObserver> observer_list_;
 
-  base::hash_map<Compositor*, std::unique_ptr<cc::Display>>
-      per_compositor_data_;
+  using PerCompositorDataMap =
+      base::hash_map<ui::Compositor*, std::unique_ptr<PerCompositorData>>;
+  PerCompositorDataMap per_compositor_data_;
 
   DISALLOW_COPY_AND_ASSIGN(InProcessContextFactory);
 };

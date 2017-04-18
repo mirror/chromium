@@ -16,7 +16,7 @@
 #include "chrome/browser/chooser_controller/chooser_controller.h"
 #include "device/usb/public/interfaces/chooser_service.mojom.h"
 #include "device/usb/usb_service.h"
-#include "mojo/public/cpp/bindings/array.h"
+#include "url/gurl.h"
 
 namespace content {
 class RenderFrameHost;
@@ -24,8 +24,10 @@ class RenderFrameHost;
 
 namespace device {
 class UsbDevice;
-class UsbDeviceFilter;
+struct UsbDeviceFilter;
 }
+
+class UsbChooserContext;
 
 // UsbChooserController creates a chooser for WebUSB.
 // It is owned by ChooserBubbleDelegate.
@@ -33,9 +35,8 @@ class UsbChooserController : public ChooserController,
                              public device::UsbService::Observer {
  public:
   UsbChooserController(
-      content::RenderFrameHost* owner,
-      mojo::Array<device::usb::DeviceFilterPtr> device_filters,
       content::RenderFrameHost* render_frame_host,
+      const std::vector<device::UsbDeviceFilter>& device_filters,
       const device::usb::ChooserService::GetPermissionCallback& callback);
   ~UsbChooserController() override;
 
@@ -44,9 +45,10 @@ class UsbChooserController : public ChooserController,
   base::string16 GetOkButtonLabel() const override;
   size_t NumOptions() const override;
   base::string16 GetOption(size_t index) const override;
+  bool IsPaired(size_t index) const override;
   void RefreshOptions() override;
   base::string16 GetStatus() const override;
-  void Select(size_t index) override;
+  void Select(const std::vector<size_t>& indices) override;
   void Cancel() override;
   void Close() override;
   void OpenHelpCenterUrl() const override;
@@ -60,11 +62,16 @@ class UsbChooserController : public ChooserController,
       const std::vector<scoped_refptr<device::UsbDevice>>& devices);
   bool DisplayDevice(scoped_refptr<device::UsbDevice> device) const;
 
-  content::RenderFrameHost* const render_frame_host_;
+  std::vector<device::UsbDeviceFilter> filters_;
   device::usb::ChooserService::GetPermissionCallback callback_;
+  GURL requesting_origin_;
+  GURL embedding_origin_;
+  bool is_embedded_frame_;
+
+  base::WeakPtr<UsbChooserContext> chooser_context_;
   ScopedObserver<device::UsbService, device::UsbService::Observer>
       usb_service_observer_;
-  std::vector<device::UsbDeviceFilter> filters_;
+
   // Each pair is a (device, device name).
   std::vector<std::pair<scoped_refptr<device::UsbDevice>, base::string16>>
       devices_;

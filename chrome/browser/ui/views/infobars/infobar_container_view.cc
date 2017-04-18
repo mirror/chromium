@@ -4,15 +4,16 @@
 
 #include "chrome/browser/ui/views/infobars/infobar_container_view.h"
 
+#include "cc/paint/paint_flags.h"
+#include "cc/paint/paint_shader.h"
 #include "chrome/browser/ui/infobar_container_delegate.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/infobars/infobar_view.h"
 #include "chrome/grit/generated_resources.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/canvas.h"
-#include "ui/gfx/skia_util.h"
+#include "ui/gfx/skia_paint_util.h"
 #include "ui/views/view_targeter.h"
 
 namespace {
@@ -27,7 +28,7 @@ const SkAlpha kLargeShadowAlpha = 0x1A;
 class ContentShadow : public views::View {
  public:
   ContentShadow() {
-    SetPaintToLayer(true);
+    SetPaintToLayer();
     layer()->SetFillsBoundsOpaquely(false);
   }
   ~ContentShadow() override {}
@@ -36,22 +37,22 @@ class ContentShadow : public views::View {
   // views::View:
   void OnPaint(gfx::Canvas* canvas) override {
     // The first shader (small shadow) blurs from 0 to kSmallShadowHeight.
-    SkPaint paint;
-    paint.setShader(gfx::CreateGradientShader(
+    cc::PaintFlags flags;
+    flags.setShader(gfx::CreateGradientShader(
         0, kSmallShadowHeight, SkColorSetA(SK_ColorBLACK, kSmallShadowAlpha),
         SkColorSetA(SK_ColorBLACK, SK_AlphaTRANSPARENT)));
     gfx::Rect small_shadow_bounds = GetLocalBounds();
     small_shadow_bounds.set_height(kSmallShadowHeight);
-    canvas->DrawRect(small_shadow_bounds, paint);
+    canvas->DrawRect(small_shadow_bounds, flags);
 
     // The second shader (large shadow) is solid from 0 to kSmallShadowHeight
     // (blending with the first shader) and then blurs from kSmallShadowHeight
     // to kLargeShadowHeight.
-    paint.setShader(gfx::CreateGradientShader(
+    flags.setShader(gfx::CreateGradientShader(
         kSmallShadowHeight, height(),
         SkColorSetA(SK_ColorBLACK, kLargeShadowAlpha),
         SkColorSetA(SK_ColorBLACK, SK_AlphaTRANSPARENT)));
-    canvas->DrawRect(GetLocalBounds(), paint);
+    canvas->DrawRect(GetLocalBounds(), flags);
   }
 
  private:
@@ -64,12 +65,10 @@ class ContentShadow : public views::View {
 const char InfoBarContainerView::kViewClassName[] = "InfoBarContainerView";
 
 InfoBarContainerView::InfoBarContainerView(Delegate* delegate)
-    : infobars::InfoBarContainer(delegate), content_shadow_(nullptr) {
+    : infobars::InfoBarContainer(delegate),
+      content_shadow_(new ContentShadow()) {
   set_id(VIEW_ID_INFO_BAR_CONTAINER);
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    content_shadow_ = new ContentShadow();
-    AddChildView(content_shadow_);
-  }
+  AddChildView(content_shadow_);
 }
 
 InfoBarContainerView::~InfoBarContainerView() {
@@ -83,8 +82,7 @@ gfx::Size InfoBarContainerView::GetPreferredSize() const {
 
   // No need to reserve space for the bottom bar's separator; the shadow is good
   // enough.
-  if (ui::MaterialDesignController::IsModeMaterial())
-    total_height -= InfoBarContainerDelegate::kSeparatorLineHeight;
+  total_height -= InfoBarContainerDelegate::kSeparatorLineHeight;
 
   gfx::Size size(0, total_height);
   for (int i = 0; i < child_count(); ++i)
@@ -110,21 +108,26 @@ void InfoBarContainerView::Layout() {
     // Trim off the bottom bar's separator; the shadow is good enough.
     // The last infobar is the second to last child overall (followed by
     // |content_shadow_|).
-    if (ui::MaterialDesignController::IsModeMaterial() &&
-        i == child_count() - 2) {
+    if (i == child_count() - 2)
       child_height -= InfoBarContainerDelegate::kSeparatorLineHeight;
-    }
     child->SetBounds(0, top, width(), child_height);
     top += child_height;
   }
 
-  if (ui::MaterialDesignController::IsModeMaterial())
-    content_shadow_->SetBounds(0, top, width(), kLargeShadowHeight);
+  content_shadow_->SetBounds(0, top, width(), kLargeShadowHeight);
 }
 
-void InfoBarContainerView::GetAccessibleState(ui::AXViewState* state) {
-  state->role = ui::AX_ROLE_GROUP;
-  state->name = l10n_util::GetStringUTF16(IDS_ACCNAME_INFOBAR_CONTAINER);
+void InfoBarContainerView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  node_data->role = ui::AX_ROLE_GROUP;
+  node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_INFOBAR_CONTAINER));
+}
+
+void InfoBarContainerView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
+  // Infobars must be redrawn when the NativeTheme changes because
+  // they have a border with color COLOR_TOOLBAR_BOTTOM_SEPARATOR,
+  // which might have changed.
+  for (int i = 0; i < child_count(); ++i)
+    child_at(i)->SchedulePaint();
 }
 
 void InfoBarContainerView::PlatformSpecificAddInfoBar(

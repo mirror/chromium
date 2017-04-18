@@ -22,7 +22,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #ifndef TextDocumentParser_h
 #define TextDocumentParser_h
 
@@ -31,22 +30,22 @@
 namespace blink {
 
 class TextDocumentParser final : public HTMLDocumentParser {
-public:
-    static TextDocumentParser* create(HTMLDocument& document, ParserSynchronizationPolicy syncPolicy)
-    {
-        return new TextDocumentParser(document, syncPolicy);
-    }
-    ~TextDocumentParser() override;
+ public:
+  static TextDocumentParser* Create(HTMLDocument& document,
+                                    ParserSynchronizationPolicy sync_policy) {
+    return new TextDocumentParser(document, sync_policy);
+  }
+  ~TextDocumentParser() override;
 
-private:
-    explicit TextDocumentParser(HTMLDocument&, ParserSynchronizationPolicy);
+ private:
+  explicit TextDocumentParser(HTMLDocument&, ParserSynchronizationPolicy);
 
-    void appendBytes(const char*, size_t) override;
-    void insertFakePreElement();
+  void AppendBytes(const char*, size_t) override;
+  void InsertFakePreElement();
 
-    bool m_haveInsertedFakePreElement;
+  bool have_inserted_fake_pre_element_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

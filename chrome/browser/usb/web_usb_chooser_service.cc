@@ -8,7 +8,7 @@
 
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/chrome_bubble_manager.h"
-#include "chrome/browser/ui/website_settings/chooser_bubble_delegate.h"
+#include "chrome/browser/ui/permission_bubble/chooser_bubble_delegate.h"
 #include "chrome/browser/usb/usb_chooser_controller.h"
 #include "components/bubble/bubble_controller.h"
 #include "content/public/browser/browser_thread.h"
@@ -29,14 +29,13 @@ WebUsbChooserService::~WebUsbChooserService() {
 }
 
 void WebUsbChooserService::GetPermission(
-    mojo::Array<device::usb::DeviceFilterPtr> device_filters,
+    const std::vector<device::UsbDeviceFilter>& device_filters,
     const GetPermissionCallback& callback) {
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host_);
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   std::unique_ptr<UsbChooserController> usb_chooser_controller(
-      new UsbChooserController(render_frame_host_, std::move(device_filters),
-                               render_frame_host_, callback));
+      new UsbChooserController(render_frame_host_, device_filters, callback));
   std::unique_ptr<ChooserBubbleDelegate> chooser_bubble_delegate(
       new ChooserBubbleDelegate(render_frame_host_,
                                 std::move(usb_chooser_controller)));

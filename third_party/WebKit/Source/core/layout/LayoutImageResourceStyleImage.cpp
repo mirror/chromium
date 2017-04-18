@@ -4,7 +4,8 @@
  * Copyright (C) 2000 Dirk Mueller <mueller@kde.org>
  * Copyright (C) 2006 Allan Sandfeld Jensen <kde@carewolf.com>
  * Copyright (C) 2006 Samuel Weinig <sam.weinig@gmail.com>
- * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2008, 2009, 2010 Apple Inc.
+ *               All rights reserved.
  * Copyright (C) 2010 Google Inc. All rights reserved.
  * Copyright (C) 2010 Patrick Gansterer <paroga@paroga.com>
  *
@@ -27,58 +28,55 @@
 
 #include "core/layout/LayoutImageResourceStyleImage.h"
 
-#include "core/fetch/ImageResource.h"
 #include "core/layout/LayoutReplaced.h"
 #include "core/style/StyleFetchedImage.h"
 
 namespace blink {
 
-LayoutImageResourceStyleImage::LayoutImageResourceStyleImage(StyleImage* styleImage)
-    : m_styleImage(styleImage)
-{
-    ASSERT(m_styleImage);
+LayoutImageResourceStyleImage::LayoutImageResourceStyleImage(
+    StyleImage* style_image)
+    : style_image_(style_image) {
+  DCHECK(style_image_);
 }
 
-LayoutImageResourceStyleImage::~LayoutImageResourceStyleImage()
-{
-    ASSERT(!m_cachedImage);
+LayoutImageResourceStyleImage::~LayoutImageResourceStyleImage() {
+  DCHECK(!cached_image_);
 }
 
-void LayoutImageResourceStyleImage::initialize(LayoutObject* layoutObject)
-{
-    LayoutImageResource::initialize(layoutObject);
+void LayoutImageResourceStyleImage::Initialize(LayoutObject* layout_object) {
+  LayoutImageResource::Initialize(layout_object);
 
-    if (m_styleImage->isImageResource())
-        m_cachedImage = toStyleFetchedImage(m_styleImage)->cachedImage();
+  if (style_image_->IsImageResource())
+    cached_image_ = ToStyleFetchedImage(style_image_)->CachedImage();
 
-    m_styleImage->addClient(m_layoutObject);
+  style_image_->AddClient(layout_object_);
 }
 
-void LayoutImageResourceStyleImage::shutdown()
-{
-    ASSERT(m_layoutObject);
-    m_styleImage->removeClient(m_layoutObject);
-    m_cachedImage = nullptr;
+void LayoutImageResourceStyleImage::Shutdown() {
+  DCHECK(layout_object_);
+  style_image_->RemoveClient(layout_object_);
+  cached_image_ = nullptr;
 }
 
-PassRefPtr<Image> LayoutImageResourceStyleImage::image(const IntSize& size, float zoom) const
-{
-    // Generated content may trigger calls to image() while we're still pending, don't assert but gracefully exit.
-    if (m_styleImage->isPendingImage())
-        return nullptr;
-    return m_styleImage->image(*m_layoutObject, size, zoom);
+PassRefPtr<Image> LayoutImageResourceStyleImage::GetImage(const IntSize& size,
+                                                          float zoom) const {
+  // Generated content may trigger calls to image() while we're still pending,
+  // don't assert but gracefully exit.
+  if (style_image_->IsPendingImage())
+    return nullptr;
+  return style_image_->GetImage(*layout_object_, size, zoom);
 }
 
-LayoutSize LayoutImageResourceStyleImage::imageSize(float multiplier) const
-{
-    // TODO(davve): Find out the correct default object size in this context.
-    return m_styleImage->imageSize(*m_layoutObject, multiplier, LayoutSize(LayoutReplaced::defaultWidth, LayoutReplaced::defaultHeight));
+LayoutSize LayoutImageResourceStyleImage::ImageSize(float multiplier) const {
+  // TODO(davve): Find out the correct default object size in this context.
+  return style_image_->ImageSize(*layout_object_, multiplier,
+                                 LayoutSize(LayoutReplaced::kDefaultWidth,
+                                            LayoutReplaced::kDefaultHeight));
 }
 
-DEFINE_TRACE(LayoutImageResourceStyleImage)
-{
-    visitor->trace(m_styleImage);
-    LayoutImageResource::trace(visitor);
+DEFINE_TRACE(LayoutImageResourceStyleImage) {
+  visitor->Trace(style_image_);
+  LayoutImageResource::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

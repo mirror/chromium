@@ -59,11 +59,21 @@ def lower_first(name):
 
 
 def upper_first(name):
-    """Return name with first letter or initial acronym uppercased."""
+    """Return name with first letter or initial acronym uppercased.
+       The acronym must have a capital letter following it to be considered.
+    """
     for acronym in ACRONYMS:
         if name.startswith(acronym.lower()):
-            return name.replace(acronym.lower(), acronym, 1)
+            if len(name) == len(acronym) or name[len(acronym)].isupper():
+                return name.replace(acronym.lower(), acronym, 1)
     return upper_first_letter(name)
+
+
+def lower_first_letter(name):
+    """Return name with first letter lowercased."""
+    if not name:
+        return ''
+    return name[0].lower() + name[1:]
 
 
 def upper_first_letter(name):
@@ -71,14 +81,6 @@ def upper_first_letter(name):
     if not name:
         return ''
     return name[0].upper() + name[1:]
-
-
-def camel_case(css_name):
-    """Convert hyphen-separated-name to UpperCamelCase.
-
-    E.g., '-foo-bar' becomes 'FooBar'.
-    """
-    return ''.join(upper_first_letter(word) for word in css_name.split('-'))
 
 
 def to_macro_style(name):
@@ -90,17 +92,77 @@ def script_name(entry):
     return os.path.basename(entry['name'])
 
 
+def cpp_bool(value):
+    if value is True:
+        return 'true'
+    if value is False:
+        return 'false'
+    # Return value as is, which for example may be a platform-dependent constant
+    # such as "defaultSelectTrailingWhitespaceEnabled".
+    return value
+
+
 def cpp_name(entry):
     return entry['ImplementedAs'] or script_name(entry)
 
 
 def enum_for_css_keyword(keyword):
-    return 'CSSValue' + ''.join(camel_case(keyword))
+    return 'CSSValue' + upper_camel_case(keyword)
 
 
 def enum_for_css_property(property_name):
-    return 'CSSProperty' + ''.join(camel_case(property_name))
+    return 'CSSProperty' + upper_camel_case(property_name)
 
 
 def enum_for_css_property_alias(property_name):
-    return 'CSSPropertyAlias' + camel_case(property_name)
+    return 'CSSPropertyAlias' + upper_camel_case(property_name)
+
+# TODO(shend): Merge these with the above methods.
+# and update all the generators to use these ones.
+# TODO(shend): Switch external callers of these methods to use the high level
+# API below instead.
+
+
+def split_name(name):
+    """Splits a name in some format to a list of words"""
+    return re.findall(r'(?:[A-Z][a-z]*)|[a-z]+|(?:\d+[a-z]*)', upper_first_letter(name))
+
+
+def upper_camel_case(name):
+    return ''.join(upper_first_letter(word) for word in split_name(name))
+
+
+def lower_camel_case(name):
+    return lower_first_letter(upper_camel_case(name))
+
+
+def snake_case(name):
+    return '_'.join(word.lower() for word in split_name(name))
+
+
+# Use these high level naming functions which describe the semantics of the name,
+# rather than a particular style.
+
+
+def enum_type_name(name):
+    return upper_camel_case(name)
+
+
+def enum_value_name(name):
+    return 'k' + upper_camel_case(name)
+
+
+def class_member_name(name):
+    return snake_case(name) + "_"
+
+
+def method_name(name):
+    return upper_camel_case(name)
+
+
+def join_name(*names):
+    """Given a list of names, join them into a single space-separated name."""
+    result = []
+    for name in names:
+        result.extend(split_name(name))
+    return ' '.join(result)

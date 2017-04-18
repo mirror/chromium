@@ -22,7 +22,7 @@ function test()
 {
     var requestName;
     var nextStep;
-    var blockedSetting = WebInspector.settingForTest("blockedURLs");
+    SDK.multitargetNetworkManager.setBlockingEnabled(true);
 
     function onRequest(event)
     {
@@ -34,13 +34,14 @@ function test()
         nextStep();
     }
 
-    InspectorTest.networkManager.addEventListener(WebInspector.NetworkManager.EventTypes.RequestFinished, onRequest);
+    InspectorTest.networkManager.addEventListener(SDK.NetworkManager.Events.RequestFinished, onRequest);
 
     function testBlockedURL(patterns, url, next)
     {
         InspectorTest.addResult("Blocked patterns: " + patterns.join(";"));
         InspectorTest.addResult("Request: " + url);
-        blockedSetting.set(patterns);
+        var blockedPatterns = patterns.map(p => ({url: p, enabled: true}));
+        SDK.multitargetNetworkManager.setBlockedPatterns(blockedPatterns);
         nextStep = next;
         InspectorTest.deprecatedRunAfterPendingDispatches(addScript);
 

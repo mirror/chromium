@@ -24,32 +24,31 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/svg/SVGFEMergeNodeElement.h"
 #include "core/svg/graphics/filters/SVGFilterBuilder.h"
-#include "platform/graphics/filters/FilterEffect.h"
+#include "platform/graphics/filters/FEMerge.h"
 
 namespace blink {
 
 inline SVGFEMergeElement::SVGFEMergeElement(Document& document)
-    : SVGFilterPrimitiveStandardAttributes(SVGNames::feMergeTag, document)
-{
-}
+    : SVGFilterPrimitiveStandardAttributes(SVGNames::feMergeTag, document) {}
 
 DEFINE_NODE_FACTORY(SVGFEMergeElement)
 
-FilterEffect* SVGFEMergeElement::build(SVGFilterBuilder* filterBuilder, Filter* filter)
-{
-    FilterEffect* effect = FEMerge::create(filter);
-    FilterEffectVector& mergeInputs = effect->inputEffects();
-    for (SVGFEMergeNodeElement* element = Traversal<SVGFEMergeNodeElement>::firstChild(*this); element; element = Traversal<SVGFEMergeNodeElement>::nextSibling(*element)) {
-        FilterEffect* mergeEffect = filterBuilder->getEffectById(AtomicString(element->in1()->currentValue()->value()));
-        ASSERT(mergeEffect);
-        mergeInputs.append(mergeEffect);
-    }
-    return effect;
+FilterEffect* SVGFEMergeElement::Build(SVGFilterBuilder* filter_builder,
+                                       Filter* filter) {
+  FilterEffect* effect = FEMerge::Create(filter);
+  FilterEffectVector& merge_inputs = effect->InputEffects();
+  for (SVGFEMergeNodeElement& merge_node :
+       Traversal<SVGFEMergeNodeElement>::ChildrenOf(*this)) {
+    FilterEffect* merge_effect = filter_builder->GetEffectById(
+        AtomicString(merge_node.in1()->CurrentValue()->Value()));
+    DCHECK(merge_effect);
+    merge_inputs.push_back(merge_effect);
+  }
+  return effect;
 }
 
-bool SVGFEMergeElement::taintsOrigin(bool inputsTaintOrigin) const
-{
-    return inputsTaintOrigin;
+bool SVGFEMergeElement::TaintsOrigin(bool inputs_taint_origin) const {
+  return inputs_taint_origin;
 }
 
-} // namespace blink
+}  // namespace blink

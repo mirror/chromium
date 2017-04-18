@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
@@ -136,17 +138,22 @@ class MockComponentUpdateService : public ComponentUpdateService,
     return false;
   }
 
+  std::unique_ptr<ComponentInfo> GetComponentForMimeType(
+      const std::string& mime_type) const override {
+    return nullptr;
+  }
+
   // OnDemandUpdater implementation:
-  bool OnDemandUpdate(const std::string& crx_id) override {
+  void OnDemandUpdate(const std::string& crx_id,
+                      const Callback& callback) override {
     on_demand_update_called_ = true;
 
     if (!component_) {
       ADD_FAILURE() << "Trying to update unregistered component " << crx_id;
-      return false;
+      return;
     }
 
     EXPECT_EQ(GetCrxComponentID(*component_), crx_id);
-    return true;
   }
 
  private:
@@ -231,13 +238,13 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     std::unique_ptr<base::DictionaryValue> whitelist_dict(
         new base::DictionaryValue);
     whitelist_dict->SetString("sites", kWhitelistFile);
-    manifest_.Set("whitelisted_content", whitelist_dict.release());
+    manifest_.Set("whitelisted_content", std::move(whitelist_dict));
 
     large_icon_path_ = whitelist_version_directory_.AppendASCII(kLargeIconFile);
     std::unique_ptr<base::DictionaryValue> icons_dict(
         new base::DictionaryValue);
     icons_dict->SetString("128", kLargeIconFile);
-    manifest_.Set("icons", icons_dict.release());
+    manifest_.Set("icons", std::move(icons_dict));
 
     manifest_.SetString("version", kVersion);
 
@@ -246,8 +253,8 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     std::unique_ptr<base::ListValue> clients(new base::ListValue);
     clients->AppendString(kClientId);
     clients->AppendString(kOtherClientId);
-    crx_dict->Set("clients", clients.release());
-    pref_.Set(kCrxId, crx_dict.release());
+    crx_dict->Set("clients", std::move(clients));
+    pref_.Set(kCrxId, std::move(crx_dict));
   }
 
  protected:
@@ -340,13 +347,15 @@ TEST_F(SupervisedUserWhitelistInstallerTest, InstallNewWhitelist) {
 
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
-  base::FilePath unpacked_path = temp_dir.path();
+  base::FilePath unpacked_path = temp_dir.GetPath();
   ASSERT_NO_FATAL_FAILURE(PrepareWhitelistDirectory(unpacked_path));
 
   const CrxComponent* component =
       component_update_service_.registered_component();
   ASSERT_TRUE(component);
-  EXPECT_TRUE(component->installer->Install(manifest_, unpacked_path));
+  const auto result = component->installer->Install(manifest_, unpacked_path);
+  EXPECT_EQ(0, result.error);
+  EXPECT_EQ(0, result.extended_error);
 
   observer.Wait();
   EXPECT_EQ(whitelist_path_.value(), observer.whitelist_path().value());

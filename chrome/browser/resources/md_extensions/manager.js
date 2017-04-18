@@ -11,6 +11,7 @@ var Page = {
   ITEM_LIST: '0',
   DETAIL_VIEW: '1',
   KEYBOARD_SHORTCUTS: '2',
+  ERROR_PAGE: '3',
 };
 
 cr.define('extensions', function() {
@@ -49,6 +50,9 @@ cr.define('extensions', function() {
       /** @type {extensions.Sidebar} */
       sidebar: Object,
 
+      /** @type {extensions.Toolbar} */
+      toolbar: Object,
+
       /** @type {extensions.ItemDelegate} */
       itemDelegate: Object,
 
@@ -61,6 +65,23 @@ cr.define('extensions', function() {
         type: String,
         value: '',
       },
+
+      /**
+       * The item currently displayed in the error subpage. We use a separate
+       * item for different pages (rather than a single subpageItem_ property)
+       * so that hidden subpages don't update when an item updates. That is, we
+       * don't want the details view subpage to update when the item shown in
+       * the errors page updates, and vice versa.
+       * @private {!chrome.developerPrivate.ExtensionInfo|undefined}
+       */
+      errorPageItem_: Object,
+
+      /**
+       * The item currently displayed in the details view subpage. See also
+       * errorPageItem_.
+       * @private {!chrome.developerPrivate.ExtensionInfo|undefined}
+       */
+      detailViewItem_: Object,
 
       /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
       extensions: {
@@ -76,7 +97,8 @@ cr.define('extensions', function() {
     },
 
     listeners: {
-      'items-list.extension-item-show-details': 'showItemDetails_',
+      'items-list.extension-item-show-details': 'onShouldShowItemDetails_',
+      'items-list.extension-item-show-errors': 'onShouldShowItemErrors_',
     },
 
     created: function() {
@@ -87,9 +109,41 @@ cr.define('extensions', function() {
       /** @type {extensions.Sidebar} */
       this.sidebar =
           /** @type {extensions.Sidebar} */(this.$$('extensions-sidebar'));
+      this.toolbar =
+          /** @type {extensions.Toolbar} */(this.$$('extensions-toolbar'));
       this.listHelper_ = new ListHelper(this);
       this.sidebar.setListDelegate(this.listHelper_);
       this.readyPromiseResolver.resolve();
+    },
+
+    get keyboardShortcuts() {
+      return this.$['keyboard-shortcuts'];
+    },
+
+    get packDialog() {
+      return this.$['pack-dialog'];
+    },
+
+    get loadError() {
+      return this.$['load-error'];
+    },
+
+    get optionsDialog() {
+      return this.$['options-dialog'];
+    },
+
+    get errorPage() {
+      return this.$['error-page'];
+    },
+
+    /**
+     * Shows the details view for a given item.
+     * @param {!chrome.developerPrivate.ExtensionInfo} data
+     */
+    showItemDetails: function(data) {
+      this.$['items-list'].willShowItemSubpage(data.id);
+      this.detailViewItem_ = data;
+      this.changePage(Page.DETAIL_VIEW);
     },
 
     /**
@@ -98,6 +152,10 @@ cr.define('extensions', function() {
      */
     onFilterChanged_: function(event) {
       this.filter = /** @type {string} */ (event.detail);
+    },
+
+    onMenuButtonTap_: function() {
+      this.$.drawer.toggle();
     },
 
     /**
@@ -175,6 +233,19 @@ cr.define('extensions', function() {
       // We should never try and update a non-existent item.
       assert(index >= 0);
       this.set([listId, index], item);
+
+      // Update the subpage if it is open and displaying the item. If it's not
+      // open, we don't update the data even if it's displaying that item. We'll
+      // set the item correctly before opening the page. It's a little weird
+      // that the DOM will have stale data, but there's no point in causing the
+      // extra work.
+      if (this.detailViewItem_ && this.detailViewItem_.id == item.id &&
+          this.$.pages.selected == Page.DETAIL_VIEW) {
+        this.detailViewItem_ = item;
+      } else if (this.errorPageItem_ && this.errorPageItem_.id == item.id &&
+                 this.$.pages.selected == Page.ERROR_PAGE) {
+        this.errorPageItem_ = item;
+      }
     },
 
     /**
@@ -204,6 +275,8 @@ cr.define('extensions', function() {
           return this.$['details-view'];
         case Page.KEYBOARD_SHORTCUTS:
           return this.$['keyboard-shortcuts'];
+        case Page.ERROR_PAGE:
+          return this.$['error-page'];
       }
       assertNotReached();
     },
@@ -213,41 +286,70 @@ cr.define('extensions', function() {
      * @param {Page} toPage
      */
     changePage: function(toPage) {
+      this.$.drawer.closeDrawer();
       var fromPage = this.$.pages.selected;
       if (fromPage == toPage)
         return;
       var entry;
       var exit;
-      if (fromPage == Page.ITEM_LIST && toPage == Page.DETAIL_VIEW) {
-        entry = extensions.Animation.HERO;
-        exit = extensions.Animation.HERO;
+      if (fromPage == Page.ITEM_LIST && (toPage == Page.DETAIL_VIEW ||
+                                         toPage == Page.ERROR_PAGE)) {
+        entry = [extensions.Animation.HERO];
+        // The item grid can be larger than the detail view that we're
+        // hero'ing into, so we want to also fade out to avoid any jarring.
+        exit = [extensions.Animation.HERO, extensions.Animation.FADE_OUT];
       } else if (toPage == Page.ITEM_LIST) {
-        entry = extensions.Animation.FADE_IN;
-        exit = extensions.Animation.SCALE_DOWN;
+        entry = [extensions.Animation.FADE_IN];
+        exit = [extensions.Animation.SCALE_DOWN];
       } else {
         assert(toPage == Page.DETAIL_VIEW ||
                toPage == Page.KEYBOARD_SHORTCUTS);
-        entry = extensions.Animation.FADE_IN;
-        exit = extensions.Animation.FADE_OUT;
+        entry = [extensions.Animation.FADE_IN];
+        exit = [extensions.Animation.FADE_OUT];
       }
-      this.getPage_(fromPage).animationHelper.setExitAnimation(exit);
-      this.getPage_(toPage).animationHelper.setEntryAnimation(entry);
+      this.getPage_(fromPage).animationHelper.setExitAnimations(exit);
+      this.getPage_(toPage).animationHelper.setEntryAnimations(entry);
       this.$.pages.selected = toPage;
     },
 
     /**
-     * Shows the detailed view for a given item.
-     * @param {CustomEvent} e
+     * Handles the event for the user clicking on a details button.
+     * @param {!CustomEvent} e
      * @private
      */
-    showItemDetails_: function(e) {
-      this.$['details-view'].set('data', assert(e.detail.element.data));
-      this.changePage(Page.DETAIL_VIEW);
+    onShouldShowItemDetails_: function(e) {
+      this.showItemDetails(e.detail.data);
+    },
+
+    /**
+     * Handles the event for the user clicking on the errors button.
+     * @param {!CustomEvent} e
+     * @private
+     */
+    onShouldShowItemErrors_: function(e) {
+      var data = e.detail.data;
+      this.$['items-list'].willShowItemSubpage(data.id);
+      this.errorPageItem_ = data;
+      this.changePage(Page.ERROR_PAGE);
     },
 
     /** @private */
     onDetailsViewClose_: function() {
+      // Note: we don't reset detailViewItem_ here because doing so just causes
+      // extra work for the data-bound details view.
       this.changePage(Page.ITEM_LIST);
+    },
+
+    /** @private */
+    onErrorPageClose_: function() {
+      // Note: we don't reset errorPageItem_ here because doing so just causes
+      // extra work for the data-bound error page.
+      this.changePage(Page.ITEM_LIST);
+    },
+
+    /** @private */
+    onPackTap_: function() {
+      this.$['pack-dialog'].show();
     }
   });
 
@@ -273,7 +375,7 @@ cr.define('extensions', function() {
           break;
       }
 
-      this.manager_.$['items-list'].set('items', assert(items));
+      this.manager_.$/* hack */ ['items-list'].set('items', assert(items));
       this.manager_.changePage(Page.ITEM_LIST);
     },
 
@@ -281,11 +383,6 @@ cr.define('extensions', function() {
     showKeyboardShortcuts: function() {
       this.manager_.changePage(Page.KEYBOARD_SHORTCUTS);
     },
-
-    /** @override */
-    showPackDialog: function() {
-      this.manager_.$['pack-dialog'].show();
-    }
   };
 
   return {Manager: Manager};

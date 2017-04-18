@@ -39,53 +39,51 @@
 namespace blink {
 
 class CORE_EXPORT SmartClipData {
-    STACK_ALLOCATED();
-public:
-    SmartClipData()
-        : m_isEmpty(true)
-    {
-    }
+  STACK_ALLOCATED();
 
-    SmartClipData(Node* node, IntRect rect, String string)
-        : m_isEmpty(!node)
-        , m_rectInViewport(rect)
-        , m_string(string)
-    {
-    }
+ public:
+  SmartClipData() : is_empty_(true) {}
 
-    IntRect rectInViewport() const;
-    const String& clipData() const;
+  SmartClipData(Node* node, IntRect rect, String string)
+      : is_empty_(!node), rect_in_viewport_(rect), string_(string) {}
 
-private:
-    bool m_isEmpty;
-    IntRect m_rectInViewport;
-    String m_string;
+  IntRect RectInViewport() const;
+  const String& ClipData() const;
+
+ private:
+  bool is_empty_;
+  IntRect rect_in_viewport_;
+  String string_;
 };
 
 // SmartClip implements support for the copy operation
 // with an S-Pen on Samsung devices. The behavior of this
 // class is quirky and poorly tested. It's approximately
-// trying to do a poor-mans implementation of columnar
-// selection followed by a copy operation.
+// trying to do an implementation of columnar selection
+// followed by a copy operation.
 class CORE_EXPORT SmartClip {
-    STACK_ALLOCATED();
-public:
-    explicit SmartClip(LocalFrame*);
+  STACK_ALLOCATED();
 
-    SmartClipData dataForRect(const IntRect&);
+ public:
+  explicit SmartClip(LocalFrame*);
 
-private:
-    float pageScaleFactor();
+  SmartClipData DataForRect(const IntRect&);
 
-    Node* minNodeContainsNodes(Node* minNode, Node* newNode);
-    Node* findBestOverlappingNode(Node*, const IntRect& cropRectInViewport);
-    bool shouldSkipBackgroundImage(Node*);
-    void collectOverlappingChildNodes(Node* parentNode, const IntRect& cropRectInViewport, HeapVector<Member<Node>>& overlappingNodeInfoTable);
-    String extractTextFromNode(Node*);
+ private:
+  float PageScaleFactor();
 
-    Member<LocalFrame> m_frame;
+  Node* MinNodeContainsNodes(Node* min_node, Node* new_node);
+  Node* FindBestOverlappingNode(Node*, const IntRect& crop_rect_in_viewport);
+  bool ShouldSkipBackgroundImage(Node*);
+  void CollectOverlappingChildNodes(
+      Node* parent_node,
+      const IntRect& crop_rect_in_viewport,
+      HeapVector<Member<Node>>& overlapping_node_info_table);
+  String ExtractTextFromNode(Node*);
+
+  Member<LocalFrame> frame_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SmartClip_h
+#endif  // SmartClip_h

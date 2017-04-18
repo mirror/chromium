@@ -4,18 +4,20 @@
 
 #include "chrome/browser/ui/webui/chromeos/first_run/first_run_ui.h"
 
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
+#include "ash/shell_port.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/chromeos/first_run/first_run_handler.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
-#include "grit/browser_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/webui/web_ui_util.h"
 
@@ -61,9 +63,24 @@ void SetLocalizedStrings(base::DictionaryValue* localized_strings) {
       "transitionsEnabled",
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableFirstRunUITransitions));
-  const std::string& shelf_alignment =
-      ash::Shelf::ForPrimaryDisplay()->SelectValueForShelfAlignment(
-          kShelfAlignmentBottom, kShelfAlignmentLeft, kShelfAlignmentRight);
+  localized_strings->SetString(
+      "accessibleTitle",
+      l10n_util::GetStringUTF16(IDS_FIRST_RUN_STEP_ACCESSIBLE_TITLE));
+  ash::WmShelf* shelf =
+      ash::WmShelf::ForWindow(ash::ShellPort::Get()->GetPrimaryRootWindow());
+  std::string shelf_alignment;
+  switch (shelf->alignment()) {
+    case ash::SHELF_ALIGNMENT_BOTTOM:
+    case ash::SHELF_ALIGNMENT_BOTTOM_LOCKED:
+      shelf_alignment = kShelfAlignmentBottom;
+      break;
+    case ash::SHELF_ALIGNMENT_LEFT:
+      shelf_alignment = kShelfAlignmentLeft;
+      break;
+    case ash::SHELF_ALIGNMENT_RIGHT:
+      shelf_alignment = kShelfAlignmentRight;
+      break;
+  }
   localized_strings->SetString("shelfAlignment", shelf_alignment);
 }
 
@@ -88,11 +105,10 @@ namespace chromeos {
 FirstRunUI::FirstRunUI(content::WebUI* web_ui)
     : WebUIController(web_ui),
       actor_(NULL) {
-  FirstRunHandler* handler = new FirstRunHandler();
-  actor_ = handler;
-  web_ui->AddMessageHandler(handler);
+  auto handler = base::MakeUnique<FirstRunHandler>();
+  actor_ = handler.get();
+  web_ui->AddMessageHandler(std::move(handler));
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), CreateDataSource());
 }
 
 }  // namespace chromeos
-

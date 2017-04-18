@@ -18,7 +18,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/suggestions/proto/suggestions.pb.h"
 #include "components/suggestions/suggestions_store.h"
-#include "components/syncable_prefs/testing_pref_service_syncable.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/search_result.h"
 
@@ -61,7 +61,7 @@ class SuggestionsSearchProviderTest : public AppListTestBase {
     suggestions_search_.reset(
         new SuggestionsSearchProvider(profile_.get(), NULL));
 
-    syncable_prefs::TestingPrefServiceSyncable* pref_service =
+    sync_preferences::TestingPrefServiceSyncable* pref_service =
         profile_->GetTestingPrefService();
     suggestions_store_.reset(new SuggestionsStore(pref_service));
   }
@@ -76,9 +76,10 @@ class SuggestionsSearchProviderTest : public AppListTestBase {
     suggestions_search_->Start(false, base::UTF8ToUTF16(query));
 
     // Sort results from most to least relevant.
-    std::vector<SearchResult*> sorted_results(
-        suggestions_search_->results().begin(),
-        suggestions_search_->results().end());
+    std::vector<SearchResult*> sorted_results;
+    sorted_results.reserve(suggestions_search_->results().size());
+    for (const auto& result : suggestions_search_->results())
+      sorted_results.emplace_back(result.get());
     std::sort(sorted_results.begin(), sorted_results.end(), &MostRelevant);
 
     std::string result_str;

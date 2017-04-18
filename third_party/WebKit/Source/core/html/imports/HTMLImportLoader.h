@@ -31,12 +31,12 @@
 #ifndef HTMLImportLoader_h
 #define HTMLImportLoader_h
 
-#include "core/dom/DocumentParserClient.h"
-#include "core/fetch/RawResource.h"
-#include "core/fetch/ResourceOwner.h"
-#include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
 #include <memory>
+#include "core/dom/DocumentParserClient.h"
+#include "platform/heap/Handle.h"
+#include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceOwner.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -46,83 +46,92 @@ class DocumentWriter;
 class HTMLImportChild;
 class HTMLImportsController;
 
+// Owning imported Document lifetime. It also implements ResourceClient through
+// ResourceOwner to feed fetched bytes to the DocumentWriter of the imported
+// document.  HTMLImportLoader is owned by HTMLImportsController.
+class HTMLImportLoader final
+    : public GarbageCollectedFinalized<HTMLImportLoader>,
+      public ResourceOwner<RawResource>,
+      public DocumentParserClient {
+  USING_GARBAGE_COLLECTED_MIXIN(HTMLImportLoader);
 
-// Owning imported Document lifetime. It also implements ResourceClient through ResourceOwner
-// to feed fetched bytes to the DocumentWriter of the imported document.
-// HTMLImportLoader is owned by HTMLImportsController.
-class HTMLImportLoader final : public GarbageCollectedFinalized<HTMLImportLoader>, public ResourceOwner<RawResource>, public DocumentParserClient {
-    USING_GARBAGE_COLLECTED_MIXIN(HTMLImportLoader);
-public:
-    enum State {
-        StateLoading,
-        StateWritten,
-        StateParsed,
-        StateLoaded,
-        StateError
-    };
+ public:
+  enum State {
+    kStateLoading,
+    kStateWritten,
+    kStateParsed,
+    kStateLoaded,
+    kStateError
+  };
 
-    static HTMLImportLoader* create(HTMLImportsController* controller)
-    {
-        return new HTMLImportLoader(controller);
-    }
+  static HTMLImportLoader* Create(HTMLImportsController* controller) {
+    return new HTMLImportLoader(controller);
+  }
 
-    ~HTMLImportLoader() override;
-    void dispose();
+  ~HTMLImportLoader() override;
+  void Dispose();
 
-    Document* document() const { return m_document.get(); }
-    void addImport(HTMLImportChild*);
-    void removeImport(HTMLImportChild*);
+  Document* GetDocument() const { return document_.Get(); }
+  void AddImport(HTMLImportChild*);
+  void RemoveImport(HTMLImportChild*);
 
-    void moveToFirst(HTMLImportChild*);
-    HTMLImportChild* firstImport() const { return m_imports[0]; }
-    bool isFirstImport(const HTMLImportChild* child) const { return m_imports.size() ? firstImport() == child : false; }
+  void MoveToFirst(HTMLImportChild*);
+  HTMLImportChild* FirstImport() const { return imports_[0]; }
+  bool IsFirstImport(const HTMLImportChild* child) const {
+    return imports_.size() ? FirstImport() == child : false;
+  }
 
-    bool isDone() const { return m_state == StateLoaded || m_state == StateError; }
-    bool hasError() const { return m_state == StateError; }
-    bool shouldBlockScriptExecution() const;
+  bool IsDone() const {
+    return state_ == kStateLoaded || state_ == kStateError;
+  }
+  bool HasError() const { return state_ == kStateError; }
+  bool ShouldBlockScriptExecution() const;
 
-    void startLoading(RawResource*);
+  void StartLoading(RawResource*);
 
-    // Tells the loader that all of the import's stylesheets finished
-    // loading.
-    // Called by Document::didRemoveAllPendingStylesheet.
-    void didRemoveAllPendingStylesheet();
+  // Tells the loader that all of the import's stylesheets finished
+  // loading.
+  // Called by Document::didRemoveAllPendingStylesheet.
+  void DidRemoveAllPendingStylesheet();
 
-    V0CustomElementSyncMicrotaskQueue* microtaskQueue() const;
+  V0CustomElementSyncMicrotaskQueue* MicrotaskQueue() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    HTMLImportLoader(HTMLImportsController*);
+ private:
+  HTMLImportLoader(HTMLImportsController*);
 
-    // RawResourceClient
-    void responseReceived(Resource*, const ResourceResponse&, std::unique_ptr<WebDataConsumerHandle>) override;
-    void dataReceived(Resource*, const char* data, size_t length) override;
-    void notifyFinished(Resource*) override;
-    String debugName() const override { return "HTMLImportLoader"; }
+  // RawResourceClient
+  void ResponseReceived(Resource*,
+                        const ResourceResponse&,
+                        std::unique_ptr<WebDataConsumerHandle>) override;
+  void DataReceived(Resource*, const char* data, size_t length) override;
+  void NotifyFinished(Resource*) override;
+  String DebugName() const override { return "HTMLImportLoader"; }
 
-    // DocumentParserClient
+  // DocumentParserClient
 
-    // Called after document parse is complete after DOMContentLoaded was dispatched.
-    void notifyParserStopped() override;
+  // Called after document parse is complete after DOMContentLoaded was
+  // dispatched.
+  void NotifyParserStopped() override;
 
-    State startWritingAndParsing(const ResourceResponse&);
-    State finishWriting();
-    State finishParsing();
-    State finishLoading();
+  State StartWritingAndParsing(const ResourceResponse&);
+  State FinishWriting();
+  State FinishParsing();
+  State FinishLoading();
 
-    void setState(State);
-    void didFinishLoading();
-    bool hasPendingResources() const;
+  void SetState(State);
+  void DidFinishLoading();
+  bool HasPendingResources() const;
 
-    Member<HTMLImportsController> m_controller;
-    HeapVector<Member<HTMLImportChild>> m_imports;
-    State m_state;
-    Member<Document> m_document;
-    Member<DocumentWriter> m_writer;
-    Member<V0CustomElementSyncMicrotaskQueue> m_microtaskQueue;
+  Member<HTMLImportsController> controller_;
+  HeapVector<Member<HTMLImportChild>> imports_;
+  State state_;
+  Member<Document> document_;
+  Member<DocumentWriter> writer_;
+  Member<V0CustomElementSyncMicrotaskQueue> microtask_queue_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLImportLoader_h
+#endif  // HTMLImportLoader_h

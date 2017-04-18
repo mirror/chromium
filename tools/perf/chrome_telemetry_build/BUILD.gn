@@ -4,29 +4,6 @@
 
 import("//build/config/compiler/compiler.gni")
 
-if (is_win) {
-  action("copy_cdb_to_output") {
-    script = "//build/win/copy_cdb_to_output.py"
-    inputs = [
-      script,
-    ]
-    outputs = [
-      "$root_out_dir/cdb/cdb.exe",
-      "$root_out_dir/cdb/dbgeng.dll",
-      "$root_out_dir/cdb/dbghelp.dll",
-      "$root_out_dir/cdb/dbgmodel.dll",
-      "$root_out_dir/cdb/winext/ext.dll",
-      "$root_out_dir/cdb/winext/uext.dll",
-      "$root_out_dir/cdb/winxp/exts.dll",
-      "$root_out_dir/cdb/winxp/ntsdexts.dll",
-    ]
-    args = [
-      rebase_path("$root_out_dir/cdb", root_out_dir),
-      current_cpu,
-    ]
-  }
-}
-
 group("telemetry_chrome_test") {
   testonly = true
 
@@ -53,10 +30,7 @@ group("telemetry_chrome_test") {
   }
 
   if (is_linux) {
-    data_deps += [
-      "//tools/xdisplaycheck",
-      "//breakpad:dump_syms($host_toolchain)",
-    ]
+    data_deps += [ "//breakpad:dump_syms($host_toolchain)" ]
   }
 
   if (is_mac) {
@@ -70,7 +44,7 @@ group("telemetry_chrome_test") {
 
   if (is_win && (symbol_level == 1 || symbol_level == 2)) {
     data_deps += [
-      ":copy_cdb_to_output",
+      "//build/win:copy_cdb_to_output",
       "//third_party/crashpad/crashpad/tools:crashpad_database_util",
     ]
 

@@ -28,14 +28,17 @@ EventConverterEvdev::EventConverterEvdev(int fd,
                                          uint16_t product_id)
     : fd_(fd),
       path_(path),
-      input_device_(id, type, name, GetInputPathInSys(path), vendor_id,
-                    product_id) {}
+      input_device_(id,
+                    type,
+                    name,
+                    GetInputPathInSys(path),
+                    vendor_id,
+                    product_id),
+      controller_(FROM_HERE) {}
 
 EventConverterEvdev::~EventConverterEvdev() {
   DCHECK(!enabled_);
   DCHECK(!watching_);
-  if (fd_ >= 0)
-    close(fd_);
 }
 
 void EventConverterEvdev::Start() {
@@ -96,6 +99,10 @@ bool EventConverterEvdev::HasTouchscreen() const {
   return false;
 }
 
+bool EventConverterEvdev::HasPen() const {
+  return false;
+}
+
 bool EventConverterEvdev::HasCapsLockLed() const {
   return false;
 }
@@ -145,9 +152,15 @@ void EventConverterEvdev::SetCapsLockLed(bool enabled) {
 void EventConverterEvdev::SetTouchEventLoggingEnabled(bool enabled) {
 }
 
+void EventConverterEvdev::SetPalmSuppressionCallback(
+    const base::Callback<void(bool)>& callback) {}
+
 base::TimeTicks EventConverterEvdev::TimeTicksFromInputEvent(
     const input_event& event) {
-  return ui::EventTimeStampFromSeconds(event.time.tv_sec) +
+  base::TimeTicks timestamp =
+      ui::EventTimeStampFromSeconds(event.time.tv_sec) +
       base::TimeDelta::FromMicroseconds(event.time.tv_usec);
+  ValidateEventTimeClock(&timestamp);
+  return timestamp;
 }
 }  // namespace ui

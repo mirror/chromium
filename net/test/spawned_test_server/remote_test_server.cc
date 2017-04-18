@@ -13,7 +13,9 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/json/json_writer.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -26,6 +28,31 @@
 namespace net {
 
 namespace {
+
+// Based on how the Android runner sets things up, it is only valid for one
+// RemoteTestServer to be active on the device at a time.
+class RemoteTestServerTracker {
+ public:
+  void StartingServer() {
+    base::AutoLock l(lock_);
+    CHECK_EQ(count_, 0);
+    count_++;
+  }
+
+  void StoppingServer() {
+    base::AutoLock l(lock_);
+    CHECK_EQ(count_, 1);
+    count_--;
+  }
+
+ private:
+  // |lock_| protects access to |count_|.
+  base::Lock lock_;
+  int count_ = 0;
+};
+
+base::LazyInstance<RemoteTestServerTracker>::Leaky tracker =
+    LAZY_INSTANCE_INITIALIZER;
 
 // To reduce the running time of tests, tests may be sharded across several
 // devices. This means that it may be necessary to support multiple instances
@@ -92,13 +119,16 @@ RemoteTestServer::~RemoteTestServer() {
 bool RemoteTestServer::Start() {
   if (spawner_communicator_.get())
     return true;
+
+  tracker.Get().StartingServer();
+
   spawner_communicator_.reset(new SpawnerCommunicator(spawner_server_port_));
 
   base::DictionaryValue arguments_dict;
   if (!GenerateArguments(&arguments_dict))
     return false;
 
-  arguments_dict.Set("on-remote-server", base::Value::CreateNullValue());
+  arguments_dict.Set("on-remote-server", base::MakeUnique<base::Value>());
 
   // Append the 'server-type' argument which is used by spawner server to
   // pass right server type to Python test server.
@@ -148,8 +178,15 @@ bool RemoteTestServer::BlockUntilStarted() {
 bool RemoteTestServer::Stop() {
   if (!spawner_communicator_.get())
     return true;
+
+  tracker.Get().StoppingServer();
+
   CleanUpWhenStoppingServer();
   bool stopped = spawner_communicator_->StopServer();
+
+  if (!stopped)
+    LOG(ERROR) << "Failed stopping RemoteTestServer";
+
   // Explicitly reset |spawner_communicator_| to avoid reusing the stopped one.
   spawner_communicator_.reset(NULL);
   return stopped;
@@ -212,4 +249,3 @@ bool RemoteTestServer::Init(const base::FilePath& document_root) {
 }
 
 }  // namespace net
-

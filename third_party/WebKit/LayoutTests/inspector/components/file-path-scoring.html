@@ -16,7 +16,7 @@ function test()
         ["cssnfv", "./Source/devtools/front_end/CSSNamedFlowView.pl"],
         ["jssf", "./Source/devtools/front_end/JavaScriptSourceFrame.pl"],
         ["sofrapl", "./Source/devtools/front_end/SourceFrame.pl"],
-        ["inspeins", "./Source/core/inspector/InspectorInstrumentation.bpp"],
+        ["inspeins", "./Source/core/inspector/InspectorInstrumentation.z"],
         ["froscr", "./Source/devtools/front_end/Script.pl"],
         ["adscon", "./Source/devtools/front_end/AdvancedSearchController.pl"]
     ];
@@ -42,10 +42,10 @@ function test()
 
     function runQuery(paths, query, expected)
     {
-        var scorer = new WebInspector.FilePathScoreFunction(query);
+        var scorer = new Sources.FilePathScoreFunction(query);
         var bestScore = -1;
         var bestIndex = -1;
-        var filter = WebInspector.FilteredListWidget.filterRegex(query);
+        var filter = QuickOpen.FilteredListWidget.filterRegex(query);
         for(var i = 0; i < paths.length; ++i) {
             if (!filter.test(paths[i]))
                 continue;

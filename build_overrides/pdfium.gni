@@ -8,5 +8,15 @@ pdf_enable_v8_override = true
 # Disable XFA forms in Chromium builds.
 pdf_enable_xfa_override = false
 
+# Build PDFium either using the bundled FreeType, or using a third-party
+# FreeType, configured by the embedder in //build/config/freetype.
+pdf_bundle_freetype_override = !is_linux && !is_win
+
 # Disable use of Skia backend.
 pdf_use_skia_override = false
+
+# Disable use of Skia backend, paths only (experimental)
+pdf_use_skia_paths_override = false
+
+# Enable experimental win32 GDI APIs.
+pdf_use_win32_gdi_override = true

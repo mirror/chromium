@@ -8,18 +8,17 @@
 
 #include <limits>
 
-#include "ash/common/display/display_info.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/display/display_manager.h"
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
-#include "base/callback.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/paint_recorder.h"
+#include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/managed_display_info.h"
 #include "ui/gfx/canvas.h"
 
 namespace chromeos {
@@ -40,13 +39,13 @@ void DrawTriangle(int x_offset,
                   double rotation_degree,
                   gfx::Canvas* canvas) {
   // Draw triangular arrows.
-  SkPaint content_paint;
-  content_paint.setStyle(SkPaint::kFill_Style);
-  content_paint.setColor(SkColorSetA(
+  cc::PaintFlags content_flags;
+  content_flags.setStyle(cc::PaintFlags::kFill_Style);
+  content_flags.setColor(SkColorSetA(
       SK_ColorBLACK, std::numeric_limits<uint8_t>::max() * kArrowOpacity));
-  SkPaint border_paint;
-  border_paint.setStyle(SkPaint::kStroke_Style);
-  border_paint.setColor(SkColorSetA(
+  cc::PaintFlags border_flags;
+  border_flags.setStyle(cc::PaintFlags::kStroke_Style);
+  border_flags.setColor(SkColorSetA(
       SK_ColorWHITE, std::numeric_limits<uint8_t>::max() * kArrowOpacity));
 
   SkPath base_path;
@@ -65,8 +64,8 @@ void DrawTriangle(int x_offset,
   rotate_transform.ConcatTransform(move_transform);
   base_path.transform(rotate_transform.matrix(), &path);
 
-  canvas->DrawPath(path, content_paint);
-  canvas->DrawPath(path, border_paint);
+  canvas->DrawPath(path, content_flags);
+  canvas->DrawPath(path, border_flags);
 }
 
 }  // namespace
@@ -79,16 +78,15 @@ OverscanCalibrator::OverscanCalibrator(const display::Display& target_display,
       committed_(false) {
   // Undo the overscan calibration temporarily so that the user can see
   // dark boundary and current overscan region.
-  ash::Shell::GetInstance()->window_tree_host_manager()->SetOverscanInsets(
+  ash::Shell::Get()->window_tree_host_manager()->SetOverscanInsets(
       display_.id(), gfx::Insets());
 
-  ash::DisplayInfo info =
-      ash::Shell::GetInstance()->display_manager()->GetDisplayInfo(
-          display_.id());
+  display::ManagedDisplayInfo info =
+      ash::Shell::Get()->display_manager()->GetDisplayInfo(display_.id());
 
-  aura::Window* root = ash::Shell::GetInstance()
-                           ->window_tree_host_manager()
-                           ->GetRootWindowForDisplayId(display_.id());
+  aura::Window* root =
+      ash::Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
+          display_.id());
   ui::Layer* parent_layer =
       ash::Shell::GetContainer(root, ash::kShellWindowId_OverlayContainer)
           ->layer();
@@ -104,13 +102,13 @@ OverscanCalibrator::~OverscanCalibrator() {
   // Overscan calibration has finished without commit, so the display has to
   // be the original offset.
   if (!committed_) {
-    ash::Shell::GetInstance()->window_tree_host_manager()->SetOverscanInsets(
+    ash::Shell::Get()->window_tree_host_manager()->SetOverscanInsets(
         display_.id(), initial_insets_);
   }
 }
 
 void OverscanCalibrator::Commit() {
-  ash::Shell::GetInstance()->window_tree_host_manager()->SetOverscanInsets(
+  ash::Shell::Get()->window_tree_host_manager()->SetOverscanInsets(
       display_.id(), insets_);
   committed_ = true;
 }
@@ -135,8 +133,7 @@ void OverscanCalibrator::OnPaintLayer(const ui::PaintContext& context) {
   gfx::Rect inner_bounds = full_bounds;
   inner_bounds.Inset(insets_);
   recorder.canvas()->FillRect(full_bounds, SK_ColorBLACK);
-  recorder.canvas()->FillRect(inner_bounds, kTransparent,
-                              SkXfermode::kClear_Mode);
+  recorder.canvas()->FillRect(inner_bounds, kTransparent, SkBlendMode::kClear);
 
   gfx::Point center = inner_bounds.CenterPoint();
   int vertical_offset = inner_bounds.height() / 2 - kArrowGapWidth;
@@ -157,10 +154,6 @@ void OverscanCalibrator::OnDeviceScaleFactorChanged(
     float device_scale_factor) {
   // TODO(mukai): Cancel the overscan calibration when the device
   // configuration has changed.
-}
-
-base::Closure OverscanCalibrator::PrepareForLayerBoundsChange() {
-  return base::Closure();
 }
 
 }  // namespace chromeos

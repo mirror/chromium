@@ -29,15 +29,15 @@
 #ifndef ReverbConvolver_h
 #define ReverbConvolver_h
 
+#include <memory>
 #include "platform/audio/AudioArray.h"
 #include "platform/audio/DirectConvolver.h"
 #include "platform/audio/FFTConvolver.h"
 #include "platform/audio/ReverbAccumulationBuffer.h"
 #include "platform/audio/ReverbConvolverStage.h"
 #include "platform/audio/ReverbInputBuffer.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -45,45 +45,57 @@ class AudioChannel;
 class WebThread;
 
 class PLATFORM_EXPORT ReverbConvolver {
-    USING_FAST_MALLOC(ReverbConvolver);
-    WTF_MAKE_NONCOPYABLE(ReverbConvolver);
-public:
-    // maxFFTSize can be adjusted (from say 2048 to 32768) depending on how much precision is necessary.
-    // For certain tweaky de-convolving applications the phase errors add up quickly and lead to non-sensical results with
-    // larger FFT sizes and single-precision floats.  In these cases 2048 is a good size.
-    // If not doing multi-threaded convolution, then should not go > 8192.
-    ReverbConvolver(AudioChannel* impulseResponse, size_t renderSliceSize, size_t maxFFTSize, size_t convolverRenderPhase, bool useBackgroundThreads);
-    ~ReverbConvolver();
+  USING_FAST_MALLOC(ReverbConvolver);
+  WTF_MAKE_NONCOPYABLE(ReverbConvolver);
 
-    void process(const AudioChannel* sourceChannel, AudioChannel* destinationChannel, size_t framesToProcess);
-    void reset();
+ public:
+  // maxFFTSize can be adjusted (from say 2048 to 32768) depending on how much
+  // precision is necessary.  For certain tweaky de-convolving applications the
+  // phase errors add up quickly and lead to non-sensical results with larger
+  // FFT sizes and single-precision floats.  In these cases 2048 is a good
+  // size.  If not doing multi-threaded convolution, then should not go > 8192.
+  ReverbConvolver(AudioChannel* impulse_response,
+                  size_t render_slice_size,
+                  size_t max_fft_size,
+                  size_t convolver_render_phase,
+                  bool use_background_threads);
+  ~ReverbConvolver();
 
-    ReverbInputBuffer* inputBuffer() { return &m_inputBuffer; }
+  void Process(const AudioChannel* source_channel,
+               AudioChannel* destination_channel,
+               size_t frames_to_process);
+  void Reset();
 
-    size_t latencyFrames() const;
-private:
-    void processInBackground();
+  ReverbInputBuffer* InputBuffer() { return &input_buffer_; }
 
-    Vector<std::unique_ptr<ReverbConvolverStage>> m_stages;
-    Vector<std::unique_ptr<ReverbConvolverStage>> m_backgroundStages;
-    size_t m_impulseResponseLength;
+  size_t LatencyFrames() const;
 
-    ReverbAccumulationBuffer m_accumulationBuffer;
+ private:
+  void ProcessInBackground();
 
-    // One or more background threads read from this input buffer which is fed from the realtime thread.
-    ReverbInputBuffer m_inputBuffer;
+  Vector<std::unique_ptr<ReverbConvolverStage>> stages_;
+  Vector<std::unique_ptr<ReverbConvolverStage>> background_stages_;
+  size_t impulse_response_length_;
 
-    // First stage will be of size m_minFFTSize.  Each next stage will be twice as big until we hit m_maxFFTSize.
-    size_t m_minFFTSize;
-    size_t m_maxFFTSize;
+  ReverbAccumulationBuffer accumulation_buffer_;
 
-    // But don't exceed this size in the real-time thread (if we're doing background processing).
-    size_t m_maxRealtimeFFTSize;
+  // One or more background threads read from this input buffer which is fed
+  // from the realtime thread.
+  ReverbInputBuffer input_buffer_;
 
-    // Background thread and synchronization
-    std::unique_ptr<WebThread> m_backgroundThread;
+  // First stage will be of size m_minFFTSize.  Each next stage will be twice as
+  // big until we hit m_maxFFTSize.
+  size_t min_fft_size_;
+  size_t max_fft_size_;
+
+  // But don't exceed this size in the real-time thread (if we're doing
+  // background processing).
+  size_t max_realtime_fft_size_;
+
+  // Background thread and synchronization
+  std::unique_ptr<WebThread> background_thread_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ReverbConvolver_h
+#endif  // ReverbConvolver_h

@@ -4,6 +4,8 @@
 
 #include "base/threading/worker_pool.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
@@ -16,21 +18,23 @@ namespace base {
 
 namespace {
 
-base::LazyInstance<ThreadLocalBoolean>::Leaky
-    g_worker_pool_running_on_this_thread = LAZY_INSTANCE_INITIALIZER;
+ThreadLocalBoolean* GetWorkerPoolRunningOnThisThread() {
+  static auto* thread_local_boolean = new ThreadLocalBoolean();
+  return thread_local_boolean;
+}
 
 DWORD CALLBACK WorkItemCallback(void* param) {
   PendingTask* pending_task = static_cast<PendingTask*>(param);
   TRACE_TASK_EXECUTION("WorkerThread::ThreadMain::Run", *pending_task);
 
-  g_worker_pool_running_on_this_thread.Get().Set(true);
+  GetWorkerPoolRunningOnThisThread()->Set(true);
 
   tracked_objects::TaskStopwatch stopwatch;
   stopwatch.Start();
-  pending_task->task.Run();
+  std::move(pending_task->task).Run();
   stopwatch.Stop();
 
-  g_worker_pool_running_on_this_thread.Get().Set(false);
+  GetWorkerPoolRunningOnThisThread()->Set(false);
 
   tracked_objects::ThreadData::TallyRunOnWorkerThreadIfTracking(
       pending_task->birth_tally, pending_task->time_posted, stopwatch);
@@ -41,6 +45,10 @@ DWORD CALLBACK WorkItemCallback(void* param) {
 
 // Takes ownership of |pending_task|
 bool PostTaskInternal(PendingTask* pending_task, bool task_is_slow) {
+  // Use CHECK instead of DCHECK to crash earlier. See http://crbug.com/711167
+  // for details.
+  CHECK(pending_task->task);
+
   ULONG flags = 0;
   if (task_is_slow)
     flags |= WT_EXECUTELONGFUNCTION;
@@ -58,14 +66,15 @@ bool PostTaskInternal(PendingTask* pending_task, bool task_is_slow) {
 
 // static
 bool WorkerPool::PostTask(const tracked_objects::Location& from_here,
-                          const base::Closure& task, bool task_is_slow) {
-  PendingTask* pending_task = new PendingTask(from_here, task);
+                          base::OnceClosure task,
+                          bool task_is_slow) {
+  PendingTask* pending_task = new PendingTask(from_here, std::move(task));
   return PostTaskInternal(pending_task, task_is_slow);
 }
 
 // static
 bool WorkerPool::RunsTasksOnCurrentThread() {
-  return g_worker_pool_running_on_this_thread.Get().Get();
+  return GetWorkerPoolRunningOnThisThread()->Get();
 }
 
 }  // namespace base

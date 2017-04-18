@@ -28,39 +28,43 @@
 
 #include "core/html/track/TextTrack.h"
 #include "platform/heap/Handle.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
 class HTMLTrackElement;
 
 class LoadableTextTrack final : public TextTrack {
-public:
-    static LoadableTextTrack* create(HTMLTrackElement* track)
-    {
-        return new LoadableTextTrack(track);
-    }
-    ~LoadableTextTrack() override;
+ public:
+  static LoadableTextTrack* Create(HTMLTrackElement* track) {
+    return new LoadableTextTrack(track);
+  }
+  ~LoadableTextTrack() override;
 
-    // TextTrack method.
-    void setMode(const AtomicString&) override;
+  // TextTrack method.
+  void setMode(const AtomicString&) override;
 
-    void addRegions(const HeapVector<Member<VTTRegion>>&);
-    using TextTrack::addListOfCues;
+  using TextTrack::AddListOfCues;
 
-    size_t trackElementIndex() const;
-    HTMLTrackElement* trackElement() { return m_trackElement; }
+  size_t TrackElementIndex() const;
+  HTMLTrackElement* TrackElement() { return track_element_; }
 
-    bool isDefault() const override;
+  bool IsDefault() const override;
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit LoadableTextTrack(HTMLTrackElement*);
+ private:
+  explicit LoadableTextTrack(HTMLTrackElement*);
 
-    Member<HTMLTrackElement> m_trackElement;
+  Member<HTMLTrackElement> track_element_;
 };
 
-} // namespace blink
+DEFINE_TYPE_CASTS(LoadableTextTrack,
+                  TextTrack,
+                  track,
+                  track->TrackType() == TextTrack::kTrackElement,
+                  track.TrackType() == TextTrack::kTrackElement);
 
-#endif // LoadableTextTrack_h
+}  // namespace blink
+
+#endif  // LoadableTextTrack_h

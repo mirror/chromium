@@ -6,8 +6,13 @@
 
 #include <stddef.h>
 
+#include <memory>
+#include <utility>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -24,15 +29,14 @@
 #include "chrome/browser/ui/webui/chromeos/login/l10n_util.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_type.h"
 #include "content/public/browser/navigation_controller.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_url_handlers.h"
-#include "grit/components_strings.h"
 #include "ui/base/ime/chromeos/component_extension_ime_manager.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
@@ -90,7 +94,7 @@ void CrosLanguageOptionsHandler::GetLocalizedValues(
           IDS_OPTIONS_SETTINGS_LANGUAGES_ACTIVATE_IME_MENU));
 
   // GetSupportedInputMethods() never returns NULL.
-  localized_strings->Set("languageList", GetAcceptLanguageList().release());
+  localized_strings->Set("languageList", GetAcceptLanguageList());
   localized_strings->Set("inputMethodList", GetInputMethodList());
 
   input_method::InputMethodManager* manager =
@@ -98,10 +102,10 @@ void CrosLanguageOptionsHandler::GetLocalizedValues(
   input_method::InputMethodDescriptors ext_ime_descriptors;
   manager->GetActiveIMEState()->GetInputMethodExtensions(&ext_ime_descriptors);
 
-  base::ListValue* ext_ime_list = ConvertInputMethodDescriptorsToIMEList(
-      ext_ime_descriptors);
-  AddImeProvider(ext_ime_list);
-  localized_strings->Set("extensionImeList", ext_ime_list);
+  std::unique_ptr<base::ListValue> ext_ime_list =
+      ConvertInputMethodDescriptorsToIMEList(ext_ime_descriptors);
+  AddImeProvider(ext_ime_list.get());
+  localized_strings->Set("extensionImeList", std::move(ext_ime_list));
 
   ComponentExtensionIMEManager* component_extension_manager =
       input_method::InputMethodManager::Get()
@@ -130,14 +134,15 @@ void CrosLanguageOptionsHandler::RegisterMessages() {
 }
 
 // static
-base::ListValue* CrosLanguageOptionsHandler::GetInputMethodList() {
+std::unique_ptr<base::ListValue>
+CrosLanguageOptionsHandler::GetInputMethodList() {
   input_method::InputMethodManager* manager =
       input_method::InputMethodManager::Get();
   // GetSupportedInputMethods() never return NULL.
   std::unique_ptr<input_method::InputMethodDescriptors> descriptors(
       manager->GetSupportedInputMethods());
 
-  base::ListValue* input_method_list = new base::ListValue();
+  auto input_method_list = base::MakeUnique<base::ListValue>();
 
   for (size_t i = 0; i < descriptors->size(); ++i) {
     const input_method::InputMethodDescriptor& descriptor =
@@ -145,27 +150,27 @@ base::ListValue* CrosLanguageOptionsHandler::GetInputMethodList() {
     const std::string display_name =
         manager->GetInputMethodUtil()->GetInputMethodDisplayNameFromId(
             descriptor.id());
-    base::DictionaryValue* dictionary = new base::DictionaryValue();
+    auto dictionary = base::MakeUnique<base::DictionaryValue>();
     dictionary->SetString("id", descriptor.id());
     dictionary->SetString("displayName", display_name);
 
     // One input method can be associated with multiple languages, hence
     // we use a dictionary here.
-    base::DictionaryValue* languages = new base::DictionaryValue();
+    auto languages = base::MakeUnique<base::DictionaryValue>();
     for (size_t i = 0; i < descriptor.language_codes().size(); ++i) {
       languages->SetBoolean(descriptor.language_codes().at(i), true);
     }
-    dictionary->Set("languageCodeSet", languages);
+    dictionary->Set("languageCodeSet", std::move(languages));
 
-    input_method_list->Append(dictionary);
+    input_method_list->Append(std::move(dictionary));
   }
 
   return input_method_list;
 }
 
-base::ListValue*
-    CrosLanguageOptionsHandler::ConvertInputMethodDescriptorsToIMEList(
-        const input_method::InputMethodDescriptors& descriptors) {
+std::unique_ptr<base::ListValue>
+CrosLanguageOptionsHandler::ConvertInputMethodDescriptorsToIMEList(
+    const input_method::InputMethodDescriptors& descriptors) {
   input_method::InputMethodUtil* util =
       input_method::InputMethodManager::Get()->GetInputMethodUtil();
   std::unique_ptr<base::ListValue> ime_ids_list(new base::ListValue());
@@ -181,10 +186,10 @@ base::ListValue*
         new base::DictionaryValue());
     for (size_t i = 0; i < descriptor.language_codes().size(); ++i)
       language_codes->SetBoolean(descriptor.language_codes().at(i), true);
-    dictionary->Set("languageCodeSet", language_codes.release());
-    ime_ids_list->Append(dictionary.release());
+    dictionary->Set("languageCodeSet", std::move(language_codes));
+    ime_ids_list->Append(std::move(dictionary));
   }
-  return ime_ids_list.release();
+  return ime_ids_list;
 }
 
 void CrosLanguageOptionsHandler::SetApplicationLocale(
@@ -196,7 +201,7 @@ void CrosLanguageOptionsHandler::SetApplicationLocale(
   const user_manager::User* user =
       ProfileHelper::Get()->GetUserByProfile(profile);
   if (user &&
-      user->email() == user_manager->GetPrimaryUser()->email() &&
+      user->GetAccountId() == user_manager->GetPrimaryUser()->GetAccountId() &&
       user->GetType() != user_manager::USER_TYPE_PUBLIC_ACCOUNT) {
     profile->ChangeAppLocale(language_code,
                              Profile::APP_LOCALE_CHANGED_VIA_SETTINGS);
@@ -204,7 +209,7 @@ void CrosLanguageOptionsHandler::SetApplicationLocale(
 }
 
 void CrosLanguageOptionsHandler::RestartCallback(const base::ListValue* args) {
-  content::RecordAction(UserMetricsAction("LanguageOptions_SignOut"));
+  base::RecordAction(UserMetricsAction("LanguageOptions_SignOut"));
   chrome::AttemptUserExit();
 }
 
@@ -214,7 +219,7 @@ void CrosLanguageOptionsHandler::InputMethodDisableCallback(
       base::UTF16ToASCII(ExtractStringValue(args));
   const std::string action = base::StringPrintf(
       "LanguageOptions_DisableInputMethod_%s", input_method_id.c_str());
-  content::RecordComputedAction(action);
+  base::RecordComputedAction(action);
 }
 
 void CrosLanguageOptionsHandler::InputMethodEnableCallback(
@@ -223,7 +228,7 @@ void CrosLanguageOptionsHandler::InputMethodEnableCallback(
       base::UTF16ToASCII(ExtractStringValue(args));
   const std::string action = base::StringPrintf(
       "LanguageOptions_EnableInputMethod_%s", input_method_id.c_str());
-  content::RecordComputedAction(action);
+  base::RecordComputedAction(action);
 }
 
 void CrosLanguageOptionsHandler::InputMethodOptionsOpenCallback(
@@ -244,11 +249,9 @@ void CrosLanguageOptionsHandler::InputMethodOptionsOpenCallback(
 
   Browser* browser = chrome::FindBrowserWithWebContents(
       web_ui()->GetWebContents());
-  content::OpenURLParams params(ime->options_page_url(),
-      content::Referrer(),
-      SINGLETON_TAB,
-      ui::PAGE_TRANSITION_LINK,
-      false);
+  content::OpenURLParams params(ime->options_page_url(), content::Referrer(),
+                                WindowOpenDisposition::SINGLETON_TAB,
+                                ui::PAGE_TRANSITION_LINK, false);
   browser->OpenURL(params);
 }
 

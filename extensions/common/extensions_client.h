@@ -23,13 +23,9 @@ namespace extensions {
 
 class APIPermissionSet;
 class Extension;
-class ExtensionAPI;
 class FeatureProvider;
 class JSONFeatureProviderSource;
-class ManifestPermissionSet;
-class PermissionMessage;
 class PermissionMessageProvider;
-class SimpleFeature;
 class URLPatternSet;
 
 // Sets up global state for the extensions system. Should be Set() once in each
@@ -93,10 +89,6 @@ class ExtensionsClient {
   // Gets the generated API schema named |name|.
   virtual base::StringPiece GetAPISchema(const std::string& name) const = 0;
 
-  // Register non-generated API schema resources with the global ExtensionAPI.
-  // Called when the ExtensionAPI is lazily initialized.
-  virtual void RegisterAPISchemaResources(ExtensionAPI* api) const = 0;
-
   // Determines if certain fatal extensions errors should be surpressed
   // (i.e., only logged) or allowed (i.e., logged before crashing).
   virtual bool ShouldSuppressFatalErrors() const = 0;
@@ -107,10 +99,10 @@ class ExtensionsClient {
   virtual void RecordDidSuppressFatalError() = 0;
 
   // Returns the base webstore URL prefix.
-  virtual std::string GetWebstoreBaseURL() const = 0;
+  virtual const GURL& GetWebstoreBaseURL() const = 0;
 
   // Returns the URL to use for update manifest queries.
-  virtual std::string GetWebstoreUpdateURL() const = 0;
+  virtual const GURL& GetWebstoreUpdateURL() const = 0;
 
   // Returns a flag indicating whether or not a given URL is a valid
   // extension blacklist URL.

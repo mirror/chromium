@@ -4,366 +4,416 @@
 
 #include "platform/graphics/RecordingImageBufferSurface.h"
 
+#include <memory>
 #include "platform/Histogram.h"
 #include "platform/graphics/CanvasMetrics.h"
 #include "platform/graphics/ExpensiveCanvasHeuristicParameters.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/ImageBuffer.h"
-#include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/core/SkPictureRecorder.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/graphics/paint/PaintRecorder.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-RecordingImageBufferSurface::RecordingImageBufferSurface(const IntSize& size, std::unique_ptr<RecordingImageBufferFallbackSurfaceFactory> fallbackFactory, OpacityMode opacityMode)
-    : ImageBufferSurface(size, opacityMode)
-    , m_imageBuffer(0)
-    , m_currentFramePixelCount(0)
-    , m_previousFramePixelCount(0)
-    , m_frameWasCleared(true)
-    , m_didRecordDrawCommandsInCurrentFrame(false)
-    , m_currentFrameHasExpensiveOp(false)
-    , m_previousFrameHasExpensiveOp(false)
-    , m_fallbackFactory(std::move(fallbackFactory))
-{
-    initializeCurrentFrame();
+RecordingImageBufferSurface::RecordingImageBufferSurface(
+    const IntSize& size,
+    std::unique_ptr<RecordingImageBufferFallbackSurfaceFactory>
+        fallback_factory,
+    OpacityMode opacity_mode,
+    sk_sp<SkColorSpace> color_space,
+    SkColorType color_type)
+    : ImageBufferSurface(size,
+                         opacity_mode,
+                         std::move(color_space),
+                         color_type),
+      image_buffer_(0),
+      current_frame_pixel_count_(0),
+      previous_frame_pixel_count_(0),
+      frame_was_cleared_(true),
+      did_record_draw_commands_in_current_frame_(false),
+      current_frame_has_expensive_op_(false),
+      previous_frame_has_expensive_op_(false),
+      fallback_factory_(std::move(fallback_factory)) {
+  InitializeCurrentFrame();
 }
 
-RecordingImageBufferSurface::~RecordingImageBufferSurface()
-{ }
+RecordingImageBufferSurface::~RecordingImageBufferSurface() {}
 
-void RecordingImageBufferSurface::initializeCurrentFrame()
-{
-    static SkRTreeFactory rTreeFactory;
-    m_currentFrame = wrapUnique(new SkPictureRecorder);
-    m_currentFrame->beginRecording(size().width(), size().height(), &rTreeFactory);
-    if (m_imageBuffer) {
-        m_imageBuffer->resetCanvas(m_currentFrame->getRecordingCanvas());
-    }
-    m_didRecordDrawCommandsInCurrentFrame = false;
-    m_currentFrameHasExpensiveOp = false;
-    m_currentFramePixelCount = 0;
+void RecordingImageBufferSurface::InitializeCurrentFrame() {
+  current_frame_ = WTF::WrapUnique(new PaintRecorder);
+  PaintCanvas* canvas =
+      current_frame_->beginRecording(size().Width(), size().Height());
+  // Always save an initial frame, to support resetting the top level matrix
+  // and clip.
+  canvas->save();
+
+  if (image_buffer_) {
+    image_buffer_->ResetCanvas(canvas);
+  }
+  did_record_draw_commands_in_current_frame_ = false;
+  current_frame_has_expensive_op_ = false;
+  current_frame_pixel_count_ = 0;
 }
 
-void RecordingImageBufferSurface::setImageBuffer(ImageBuffer* imageBuffer)
-{
-    m_imageBuffer = imageBuffer;
-    if (m_currentFrame && m_imageBuffer) {
-        m_imageBuffer->resetCanvas(m_currentFrame->getRecordingCanvas());
-    }
-    if (m_fallbackSurface) {
-        m_fallbackSurface->setImageBuffer(imageBuffer);
-    }
+void RecordingImageBufferSurface::SetImageBuffer(ImageBuffer* image_buffer) {
+  image_buffer_ = image_buffer;
+  if (current_frame_ && image_buffer_) {
+    image_buffer_->ResetCanvas(current_frame_->getRecordingCanvas());
+  }
+  if (fallback_surface_) {
+    fallback_surface_->SetImageBuffer(image_buffer);
+  }
 }
 
-bool RecordingImageBufferSurface::writePixels(const SkImageInfo& origInfo, const void* pixels, size_t rowBytes, int x, int y)
-{
-    if (!m_fallbackSurface) {
-        if (x <= 0 && y <= 0 && x + origInfo.width() >= size().width() && y + origInfo.height() >= size().height()) {
-            willOverwriteCanvas();
-        }
-        fallBackToRasterCanvas(FallbackReasonWritePixels);
+bool RecordingImageBufferSurface::WritePixels(const SkImageInfo& orig_info,
+                                              const void* pixels,
+                                              size_t row_bytes,
+                                              int x,
+                                              int y) {
+  if (!fallback_surface_) {
+    if (x <= 0 && y <= 0 && x + orig_info.width() >= size().Width() &&
+        y + orig_info.height() >= size().Height()) {
+      WillOverwriteCanvas();
     }
-    return m_fallbackSurface->writePixels(origInfo, pixels, rowBytes, x, y);
+    FallBackToRasterCanvas(kFallbackReasonWritePixels);
+  }
+  return fallback_surface_->WritePixels(orig_info, pixels, row_bytes, x, y);
 }
 
-void RecordingImageBufferSurface::fallBackToRasterCanvas(FallbackReason reason)
-{
-    ASSERT(m_fallbackFactory);
-    CHECK(reason != FallbackReasonUnknown);
+void RecordingImageBufferSurface::FallBackToRasterCanvas(
+    FallbackReason reason) {
+  DCHECK(fallback_factory_);
+  CHECK(reason != kFallbackReasonUnknown);
 
-    if (m_fallbackSurface) {
-        ASSERT(!m_currentFrame);
-        return;
-    }
+  if (fallback_surface_) {
+    DCHECK(!current_frame_);
+    return;
+  }
 
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, canvasFallbackHistogram, new EnumerationHistogram("Canvas.DisplayListFallbackReason", FallbackReasonCount));
-    canvasFallbackHistogram.count(reason);
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, canvas_fallback_histogram,
+      new EnumerationHistogram("Canvas.DisplayListFallbackReason",
+                               kFallbackReasonCount));
+  canvas_fallback_histogram.Count(reason);
 
-    m_fallbackSurface = m_fallbackFactory->createSurface(size(), getOpacityMode());
-    m_fallbackSurface->setImageBuffer(m_imageBuffer);
+  fallback_surface_ = fallback_factory_->CreateSurface(
+      size(), GetOpacityMode(), ColorSpace(), ColorType());
+  fallback_surface_->SetImageBuffer(image_buffer_);
 
-    if (m_previousFrame) {
-        m_previousFrame->playback(m_fallbackSurface->canvas());
-        m_previousFrame.clear();
-    }
+  if (previous_frame_) {
+    fallback_surface_->Canvas()->PlaybackPaintRecord(previous_frame_);
+    previous_frame_.reset();
+  }
 
-    if (m_currentFrame) {
-        m_currentFrame->finishRecordingAsPicture()->playback(m_fallbackSurface->canvas());
-        m_currentFrame.reset();
-    }
+  if (current_frame_) {
+    sk_sp<PaintRecord> record = current_frame_->finishRecordingAsPicture();
+    if (record)
+      fallback_surface_->Canvas()->PlaybackPaintRecord(record);
+    current_frame_.reset();
+  }
 
-    if (m_imageBuffer) {
-        m_imageBuffer->resetCanvas(m_fallbackSurface->canvas());
-    }
+  if (image_buffer_) {
+    image_buffer_->ResetCanvas(fallback_surface_->Canvas());
+  }
 
-    CanvasMetrics::countCanvasContextUsage(CanvasMetrics::DisplayList2DCanvasFallbackToRaster);
+  CanvasMetrics::CountCanvasContextUsage(
+      CanvasMetrics::kDisplayList2DCanvasFallbackToRaster);
 }
 
-static RecordingImageBufferSurface::FallbackReason snapshotReasonToFallbackReason(SnapshotReason reason)
-{
-    switch (reason) {
-    case SnapshotReasonUnknown:
-        return RecordingImageBufferSurface::FallbackReasonUnknown;
-    case SnapshotReasonGetImageData:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForGetImageData;
-    case SnapshotReasonCopyToWebGLTexture:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForCopyToWebGLTexture;
-    case SnapshotReasonPaint:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForPaint;
-    case SnapshotReasonToDataURL:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForToDataURL;
-    case SnapshotReasonToBlob:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForToBlob;
-    case SnapshotReasonCanvasListenerCapture:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForCanvasListenerCapture;
-    case SnapshotReasonDrawImage:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForDrawImage;
-    case SnapshotReasonCreatePattern:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForCreatePattern;
-    case SnapshotReasonTransferToImageBitmap:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForTransferToImageBitmap;
-    case SnapshotReasonUnitTests:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotForUnitTests;
-    case SnapshotReasonGetCopiedImage:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotGetCopiedImage;
-    case SnapshotReasonWebGLDrawImageIntoBuffer:
-        return RecordingImageBufferSurface::FallbackReasonSnapshotWebGLDrawImageIntoBuffer;
-    }
-    ASSERT_NOT_REACHED();
-    return RecordingImageBufferSurface::FallbackReasonUnknown;
+static RecordingImageBufferSurface::FallbackReason
+SnapshotReasonToFallbackReason(SnapshotReason reason) {
+  switch (reason) {
+    case kSnapshotReasonUnknown:
+      return RecordingImageBufferSurface::kFallbackReasonUnknown;
+    case kSnapshotReasonGetImageData:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForGetImageData;
+    case kSnapshotReasonPaint:
+      return RecordingImageBufferSurface::kFallbackReasonSnapshotForPaint;
+    case kSnapshotReasonToDataURL:
+      return RecordingImageBufferSurface::kFallbackReasonSnapshotForToDataURL;
+    case kSnapshotReasonToBlob:
+      return RecordingImageBufferSurface::kFallbackReasonSnapshotForToBlob;
+    case kSnapshotReasonCanvasListenerCapture:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForCanvasListenerCapture;
+    case kSnapshotReasonDrawImage:
+      return RecordingImageBufferSurface::kFallbackReasonSnapshotForDrawImage;
+    case kSnapshotReasonCreatePattern:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForCreatePattern;
+    case kSnapshotReasonTransferToImageBitmap:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForTransferToImageBitmap;
+    case kSnapshotReasonUnitTests:
+      return RecordingImageBufferSurface::kFallbackReasonSnapshotForUnitTests;
+    case kSnapshotReasonGetCopiedImage:
+      return RecordingImageBufferSurface::kFallbackReasonSnapshotGetCopiedImage;
+    case kSnapshotReasonWebGLDrawImageIntoBuffer:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotWebGLDrawImageIntoBuffer;
+    case kSnapshotReasonWebGLTexImage2D:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForWebGLTexImage2D;
+    case kSnapshotReasonWebGLTexSubImage2D:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForWebGLTexSubImage2D;
+    case kSnapshotReasonWebGLTexImage3D:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForWebGLTexImage3D;
+    case kSnapshotReasonWebGLTexSubImage3D:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForWebGLTexSubImage3D;
+    case kSnapshotReasonCopyToClipboard:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForCopyToClipboard;
+    case kSnapshotReasonCreateImageBitmap:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSnapshotForCreateImageBitmap;
+  }
+  NOTREACHED();
+  return RecordingImageBufferSurface::kFallbackReasonUnknown;
 }
 
-PassRefPtr<SkImage> RecordingImageBufferSurface::newImageSnapshot(AccelerationHint hint, SnapshotReason reason)
-{
-    if (!m_fallbackSurface)
-        fallBackToRasterCanvas(snapshotReasonToFallbackReason(reason));
-    return m_fallbackSurface->newImageSnapshot(hint, reason);
+sk_sp<SkImage> RecordingImageBufferSurface::NewImageSnapshot(
+    AccelerationHint hint,
+    SnapshotReason reason) {
+  if (!fallback_surface_)
+    FallBackToRasterCanvas(SnapshotReasonToFallbackReason(reason));
+  return fallback_surface_->NewImageSnapshot(hint, reason);
 }
 
-SkCanvas* RecordingImageBufferSurface::canvas()
-{
-    if (m_fallbackSurface)
-        return m_fallbackSurface->canvas();
+PaintCanvas* RecordingImageBufferSurface::Canvas() {
+  if (fallback_surface_)
+    return fallback_surface_->Canvas();
 
-    ASSERT(m_currentFrame->getRecordingCanvas());
-    return m_currentFrame->getRecordingCanvas();
+  DCHECK(current_frame_->getRecordingCanvas());
+  return current_frame_->getRecordingCanvas();
 }
 
-static RecordingImageBufferSurface::FallbackReason disableDeferralReasonToFallbackReason(DisableDeferralReason reason)
-{
-    switch (reason) {
-    case DisableDeferralReasonUnknown:
-        return RecordingImageBufferSurface::FallbackReasonUnknown;
-    case DisableDeferralReasonExpensiveOverdrawHeuristic:
-        return RecordingImageBufferSurface::FallbackReasonExpensiveOverdrawHeuristic;
-    case DisableDeferralReasonUsingTextureBackedPattern:
-        return RecordingImageBufferSurface::FallbackReasonTextureBackedPattern;
-    case DisableDeferralReasonDrawImageOfVideo:
-        return RecordingImageBufferSurface::FallbackReasonDrawImageOfVideo;
-    case DisableDeferralReasonDrawImageOfAnimated2dCanvas:
-        return RecordingImageBufferSurface::FallbackReasonDrawImageOfAnimated2dCanvas;
-    case DisableDeferralReasonSubPixelTextAntiAliasingSupport:
-        return RecordingImageBufferSurface::FallbackReasonSubPixelTextAntiAliasingSupport;
-    case DisableDeferralDrawImageWithTextureBackedSourceImage:
-        return RecordingImageBufferSurface::FallbackReasonDrawImageWithTextureBackedSourceImage;
-    case DisableDeferralReasonCount:
-        ASSERT_NOT_REACHED();
-        break;
-    }
-    ASSERT_NOT_REACHED();
-    return RecordingImageBufferSurface::FallbackReasonUnknown;
+static RecordingImageBufferSurface::FallbackReason
+DisableDeferralReasonToFallbackReason(DisableDeferralReason reason) {
+  switch (reason) {
+    case kDisableDeferralReasonUnknown:
+      return RecordingImageBufferSurface::kFallbackReasonUnknown;
+    case kDisableDeferralReasonExpensiveOverdrawHeuristic:
+      return RecordingImageBufferSurface::
+          kFallbackReasonExpensiveOverdrawHeuristic;
+    case kDisableDeferralReasonUsingTextureBackedPattern:
+      return RecordingImageBufferSurface::kFallbackReasonTextureBackedPattern;
+    case kDisableDeferralReasonDrawImageOfVideo:
+      return RecordingImageBufferSurface::kFallbackReasonDrawImageOfVideo;
+    case kDisableDeferralReasonDrawImageOfAnimated2dCanvas:
+      return RecordingImageBufferSurface::
+          kFallbackReasonDrawImageOfAnimated2dCanvas;
+    case kDisableDeferralReasonSubPixelTextAntiAliasingSupport:
+      return RecordingImageBufferSurface::
+          kFallbackReasonSubPixelTextAntiAliasingSupport;
+    case kDisableDeferralDrawImageWithTextureBackedSourceImage:
+      return RecordingImageBufferSurface::
+          kFallbackReasonDrawImageWithTextureBackedSourceImage;
+    case kDisableDeferralReasonCount:
+      NOTREACHED();
+      break;
+  }
+  NOTREACHED();
+  return RecordingImageBufferSurface::kFallbackReasonUnknown;
 }
 
-void RecordingImageBufferSurface::disableDeferral(DisableDeferralReason reason)
-{
-    if (!m_fallbackSurface)
-        fallBackToRasterCanvas(disableDeferralReasonToFallbackReason(reason));
+void RecordingImageBufferSurface::DisableDeferral(
+    DisableDeferralReason reason) {
+  if (!fallback_surface_)
+    FallBackToRasterCanvas(DisableDeferralReasonToFallbackReason(reason));
 }
 
-PassRefPtr<SkPicture> RecordingImageBufferSurface::getPicture()
-{
-    if (m_fallbackSurface)
-        return nullptr;
-
-    FallbackReason fallbackReason = FallbackReasonUnknown;
-    bool canUsePicture = finalizeFrameInternal(&fallbackReason);
-    m_imageBuffer->didFinalizeFrame();
-
-    ASSERT(canUsePicture || m_fallbackFactory);
-
-    if (canUsePicture) {
-        return m_previousFrame;
-    }
-
-    if (!m_fallbackSurface)
-        fallBackToRasterCanvas(fallbackReason);
+sk_sp<PaintRecord> RecordingImageBufferSurface::GetRecord() {
+  if (fallback_surface_)
     return nullptr;
+
+  FallbackReason fallback_reason = kFallbackReasonUnknown;
+  bool can_use_record = FinalizeFrameInternal(&fallback_reason);
+
+  DCHECK(can_use_record || fallback_factory_);
+
+  if (can_use_record) {
+    return previous_frame_;
+  }
+
+  if (!fallback_surface_)
+    FallBackToRasterCanvas(fallback_reason);
+  return nullptr;
 }
 
-void RecordingImageBufferSurface::finalizeFrame(const FloatRect &dirtyRect)
-{
-    if (m_fallbackSurface) {
-        m_fallbackSurface->finalizeFrame(dirtyRect);
-        return;
-    }
+void RecordingImageBufferSurface::FinalizeFrame() {
+  if (fallback_surface_) {
+    fallback_surface_->FinalizeFrame();
+    return;
+  }
 
-    FallbackReason fallbackReason = FallbackReasonUnknown;
-    if (!finalizeFrameInternal(&fallbackReason))
-        fallBackToRasterCanvas(fallbackReason);
+  FallbackReason fallback_reason = kFallbackReasonUnknown;
+  if (!FinalizeFrameInternal(&fallback_reason))
+    FallBackToRasterCanvas(fallback_reason);
 }
 
-static RecordingImageBufferSurface::FallbackReason flushReasonToFallbackReason(FlushReason reason)
-{
-    switch (reason) {
-    case FlushReasonUnknown:
-        return RecordingImageBufferSurface::FallbackReasonUnknown;
-    case FlushReasonInitialClear:
-        return RecordingImageBufferSurface::FallbackReasonFlushInitialClear;
-    case FlushReasonDrawImageOfWebGL:
-        return RecordingImageBufferSurface::FallbackReasonFlushForDrawImageOfWebGL;
-    }
-    ASSERT_NOT_REACHED();
-    return RecordingImageBufferSurface::FallbackReasonUnknown;
+void RecordingImageBufferSurface::DoPaintInvalidation(
+    const FloatRect& dirty_rect) {
+  if (fallback_surface_) {
+    fallback_surface_->DoPaintInvalidation(dirty_rect);
+  }
 }
 
-void RecordingImageBufferSurface::flush(FlushReason reason)
-{
-    if (!m_fallbackSurface)
-        fallBackToRasterCanvas(flushReasonToFallbackReason(reason));
-    m_fallbackSurface->flush(reason);
+static RecordingImageBufferSurface::FallbackReason FlushReasonToFallbackReason(
+    FlushReason reason) {
+  switch (reason) {
+    case kFlushReasonUnknown:
+      return RecordingImageBufferSurface::kFallbackReasonUnknown;
+    case kFlushReasonInitialClear:
+      return RecordingImageBufferSurface::kFallbackReasonFlushInitialClear;
+    case kFlushReasonDrawImageOfWebGL:
+      return RecordingImageBufferSurface::
+          kFallbackReasonFlushForDrawImageOfWebGL;
+  }
+  NOTREACHED();
+  return RecordingImageBufferSurface::kFallbackReasonUnknown;
 }
 
-void RecordingImageBufferSurface::willOverwriteCanvas()
-{
-    m_frameWasCleared = true;
-    m_previousFrame.clear();
-    m_previousFrameHasExpensiveOp = false;
-    m_previousFramePixelCount = 0;
-    if (m_didRecordDrawCommandsInCurrentFrame) {
-        // Discard previous draw commands
-        m_currentFrame->finishRecordingAsPicture();
-        initializeCurrentFrame();
-    }
+void RecordingImageBufferSurface::Flush(FlushReason reason) {
+  if (!fallback_surface_)
+    FallBackToRasterCanvas(FlushReasonToFallbackReason(reason));
+  fallback_surface_->Flush(reason);
 }
 
-void RecordingImageBufferSurface::didDraw(const FloatRect& rect)
-{
-    m_didRecordDrawCommandsInCurrentFrame = true;
-    IntRect pixelBounds = enclosingIntRect(rect);
-    m_currentFramePixelCount += pixelBounds.width() * pixelBounds.height();
+void RecordingImageBufferSurface::WillOverwriteCanvas() {
+  frame_was_cleared_ = true;
+  previous_frame_.reset();
+  previous_frame_has_expensive_op_ = false;
+  previous_frame_pixel_count_ = 0;
+  if (did_record_draw_commands_in_current_frame_) {
+    // Discard previous draw commands
+    current_frame_->finishRecordingAsPicture();
+    InitializeCurrentFrame();
+  }
 }
 
-bool RecordingImageBufferSurface::finalizeFrameInternal(FallbackReason* fallbackReason)
-{
-    CHECK(!m_fallbackSurface);
-    CHECK(m_currentFrame);
-    ASSERT(m_currentFrame->getRecordingCanvas());
-    ASSERT(fallbackReason);
-    ASSERT(*fallbackReason == FallbackReasonUnknown);
+void RecordingImageBufferSurface::DidDraw(const FloatRect& rect) {
+  did_record_draw_commands_in_current_frame_ = true;
+  IntRect pixel_bounds = EnclosingIntRect(rect);
+  current_frame_pixel_count_ += pixel_bounds.Width() * pixel_bounds.Height();
+}
 
-    if (!m_imageBuffer->isDirty()) {
-        if (!m_previousFrame) {
-            // Create an initial blank frame
-            m_previousFrame = fromSkSp(m_currentFrame->finishRecordingAsPicture());
-            initializeCurrentFrame();
-        }
-        CHECK(m_currentFrame);
-        return true;
+bool RecordingImageBufferSurface::FinalizeFrameInternal(
+    FallbackReason* fallback_reason) {
+  CHECK(!fallback_surface_);
+  CHECK(current_frame_);
+  DCHECK(current_frame_->getRecordingCanvas());
+  DCHECK(fallback_reason);
+  DCHECK(*fallback_reason == kFallbackReasonUnknown);
+  if (!did_record_draw_commands_in_current_frame_) {
+    if (!previous_frame_) {
+      // Create an initial blank frame
+      previous_frame_ = current_frame_->finishRecordingAsPicture();
+      InitializeCurrentFrame();
     }
-
-    if (!m_frameWasCleared) {
-        *fallbackReason = FallbackReasonCanvasNotClearedBetweenFrames;
-        return false;
-    }
-
-    if (m_fallbackFactory && m_currentFrame->getRecordingCanvas()->getSaveCount() > ExpensiveCanvasHeuristicParameters::ExpensiveRecordingStackDepth) {
-        *fallbackReason = FallbackReasonRunawayStateStack;
-        return false;
-    }
-
-    m_previousFrame = fromSkSp(m_currentFrame->finishRecordingAsPicture());
-    m_previousFrameHasExpensiveOp = m_currentFrameHasExpensiveOp;
-    m_previousFramePixelCount = m_currentFramePixelCount;
-    initializeCurrentFrame();
-
-    m_frameWasCleared = false;
+    CHECK(current_frame_);
     return true;
-}
+  }
 
-void RecordingImageBufferSurface::draw(GraphicsContext& context, const FloatRect& destRect, const FloatRect& srcRect, SkXfermode::Mode op)
-{
-    if (m_fallbackSurface) {
-        m_fallbackSurface->draw(context, destRect, srcRect, op);
-        return;
-    }
-
-    RefPtr<SkPicture> picture = getPicture();
-    if (picture) {
-        context.compositePicture(picture.get(), destRect, srcRect, op);
-    } else {
-        ImageBufferSurface::draw(context, destRect, srcRect, op);
-    }
-}
-
-bool RecordingImageBufferSurface::isExpensiveToPaint()
-{
-    if (m_fallbackSurface)
-        return m_fallbackSurface->isExpensiveToPaint();
-
-    if (m_didRecordDrawCommandsInCurrentFrame) {
-        if (m_currentFrameHasExpensiveOp)
-            return true;
-
-        if (m_currentFramePixelCount >= (size().width() * size().height() * ExpensiveCanvasHeuristicParameters::ExpensiveOverdrawThreshold))
-            return true;
-
-        if (m_frameWasCleared)
-            return false; // early exit because previous frame is overdrawn
-    }
-
-    if (m_previousFrame) {
-        if (m_previousFrameHasExpensiveOp)
-            return true;
-
-        if (m_previousFramePixelCount >= (size().width() * size().height() * ExpensiveCanvasHeuristicParameters::ExpensiveOverdrawThreshold))
-            return true;
-    }
-
+  if (!frame_was_cleared_) {
+    *fallback_reason = kFallbackReasonCanvasNotClearedBetweenFrames;
     return false;
+  }
+
+  if (fallback_factory_ &&
+      current_frame_->getRecordingCanvas()->getSaveCount() - 1 >
+          ExpensiveCanvasHeuristicParameters::kExpensiveRecordingStackDepth) {
+    // (getSaveCount() decremented to account  for the intial recording canvas
+    // save frame.)
+    *fallback_reason = kFallbackReasonRunawayStateStack;
+    return false;
+  }
+
+  previous_frame_ = current_frame_->finishRecordingAsPicture();
+  previous_frame_has_expensive_op_ = current_frame_has_expensive_op_;
+  previous_frame_pixel_count_ = current_frame_pixel_count_;
+  InitializeCurrentFrame();
+
+  frame_was_cleared_ = false;
+  return true;
+}
+
+void RecordingImageBufferSurface::Draw(GraphicsContext& context,
+                                       const FloatRect& dest_rect,
+                                       const FloatRect& src_rect,
+                                       SkBlendMode op) {
+  if (fallback_surface_) {
+    fallback_surface_->Draw(context, dest_rect, src_rect, op);
+    return;
+  }
+
+  sk_sp<PaintRecord> record = GetRecord();
+  if (record) {
+    context.CompositeRecord(std::move(record), dest_rect, src_rect, op);
+  } else {
+    ImageBufferSurface::Draw(context, dest_rect, src_rect, op);
+  }
+}
+
+bool RecordingImageBufferSurface::IsExpensiveToPaint() {
+  if (fallback_surface_)
+    return fallback_surface_->IsExpensiveToPaint();
+
+  if (did_record_draw_commands_in_current_frame_) {
+    if (current_frame_has_expensive_op_)
+      return true;
+
+    if (current_frame_pixel_count_ >=
+        (size().Width() * size().Height() *
+         ExpensiveCanvasHeuristicParameters::kExpensiveOverdrawThreshold))
+      return true;
+
+    if (frame_was_cleared_)
+      return false;  // early exit because previous frame is overdrawn
+  }
+
+  if (previous_frame_) {
+    if (previous_frame_has_expensive_op_)
+      return true;
+
+    if (previous_frame_pixel_count_ >=
+        (size().Width() * size().Height() *
+         ExpensiveCanvasHeuristicParameters::kExpensiveOverdrawThreshold))
+      return true;
+  }
+
+  return false;
 }
 
 // Fallback passthroughs
 
-bool RecordingImageBufferSurface::restore()
-{
-    if (m_fallbackSurface)
-        return m_fallbackSurface->restore();
-    return ImageBufferSurface::restore();
+bool RecordingImageBufferSurface::Restore() {
+  if (fallback_surface_)
+    return fallback_surface_->Restore();
+  return ImageBufferSurface::Restore();
 }
 
-WebLayer* RecordingImageBufferSurface::layer() const
-{
-    if (m_fallbackSurface)
-        return m_fallbackSurface->layer();
-    return ImageBufferSurface::layer();
+WebLayer* RecordingImageBufferSurface::Layer() const {
+  if (fallback_surface_)
+    return fallback_surface_->Layer();
+  return ImageBufferSurface::Layer();
 }
 
-bool RecordingImageBufferSurface::isAccelerated() const
-{
-    if (m_fallbackSurface)
-        return m_fallbackSurface->isAccelerated();
-    return ImageBufferSurface::isAccelerated();
+bool RecordingImageBufferSurface::IsAccelerated() const {
+  if (fallback_surface_)
+    return fallback_surface_->IsAccelerated();
+  return ImageBufferSurface::IsAccelerated();
 }
 
-void RecordingImageBufferSurface::setIsHidden(bool hidden)
-{
-    if (m_fallbackSurface)
-        m_fallbackSurface->setIsHidden(hidden);
-    else
-        ImageBufferSurface::setIsHidden(hidden);
+void RecordingImageBufferSurface::SetIsHidden(bool hidden) {
+  if (fallback_surface_)
+    fallback_surface_->SetIsHidden(hidden);
+  else
+    ImageBufferSurface::SetIsHidden(hidden);
 }
 
-} // namespace blink
+}  // namespace blink

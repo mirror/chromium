@@ -8,11 +8,12 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/debug/dump_without_crashing.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/metrics/histogram.h"
-#include "base/stl_util.h"
+#include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "content/browser/site_instance_impl.h"
@@ -67,6 +68,31 @@ enum ChildProcessSecurityGrants {
   DELETE_FILE_GRANT            = DELETE_FILE_PERMISSION,
 };
 
+// https://crbug.com/646278 Valid blob URLs should contain canonically
+// serialized origins.
+bool IsMalformedBlobUrl(const GURL& url) {
+  if (!url.SchemeIsBlob())
+    return false;
+
+  // If the part after blob: survives a roundtrip through url::Origin, then
+  // it's a normal blob URL.
+  std::string canonical_origin = url::Origin(url).Serialize();
+  canonical_origin.append(1, '/');
+  if (base::StartsWith(url.GetContent(), canonical_origin,
+                       base::CompareCase::INSENSITIVE_ASCII))
+    return false;
+
+  // blob:blobinternal:// is used by blink for stream URLs. This doesn't survive
+  // url::Origin canonicalization -- blobinternal is a fake scheme -- but allow
+  // it anyway. TODO(nick): Added speculatively, might be unnecessary.
+  if (base::StartsWith(url.GetContent(), "blobinternal://",
+                       base::CompareCase::INSENSITIVE_ASCII))
+    return false;
+
+  // This is a malformed blob URL.
+  return true;
+}
+
 }  // namespace
 
 // The SecurityState class is used to maintain per-child process security state
@@ -79,7 +105,6 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
       can_send_midi_sysex_(false) { }
 
   ~SecurityState() {
-    scheme_policy_.clear();
     storage::IsolatedContext* isolated_context =
         storage::IsolatedContext::GetInstance();
     for (FileSystemMap::iterator iter = filesystem_permissions_.begin();
@@ -97,14 +122,7 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   }
 
   // Grant permission to request URLs with the specified scheme.
-  void GrantScheme(const std::string& scheme) {
-    scheme_policy_[scheme] = true;
-  }
-
-  // Revoke permission to request URLs with the specified scheme.
-  void RevokeScheme(const std::string& scheme) {
-    scheme_policy_[scheme] = false;
-  }
+  void GrantScheme(const std::string& scheme) { scheme_policy_.insert(scheme); }
 
   // Grant certain permissions to a file.
   void GrantPermissionsForFile(const base::FilePath& file, int permissions) {
@@ -129,7 +147,7 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   // Grant certain permissions to a file.
   void GrantPermissionsForFileSystem(const std::string& filesystem_id,
                                      int permissions) {
-    if (!ContainsKey(filesystem_permissions_, filesystem_id))
+    if (!base::ContainsKey(filesystem_permissions_, filesystem_id))
       storage::IsolatedContext::GetInstance()->AddReference(filesystem_id);
     filesystem_permissions_[filesystem_id] |= permissions;
   }
@@ -175,16 +193,22 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
     can_send_midi_sysex_ = true;
   }
 
+  bool CanCommitOrigin(const url::Origin& origin) {
+    return base::ContainsKey(origin_set_, origin);
+  }
+
   // Determine whether permission has been granted to commit |url|.
   bool CanCommitURL(const GURL& url) {
+    DCHECK(!url.SchemeIsBlob() && !url.SchemeIsFileSystem())
+        << "inner_url extraction should be done already.";
     // Having permission to a scheme implies permission to all of its URLs.
-    SchemeMap::const_iterator scheme_judgment(
+    SchemeSet::const_iterator scheme_judgment(
         scheme_policy_.find(url.scheme()));
     if (scheme_judgment != scheme_policy_.end())
-      return scheme_judgment->second;
+      return true;
 
     // Otherwise, check for permission for specific origin.
-    if (ContainsKey(origin_set_, url::Origin(url)))
+    if (CanCommitOrigin(url::Origin(url)))
       return true;
 
     // file:// URLs are more granular.  The child may have been given
@@ -192,7 +216,7 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
     if (url.SchemeIs(url::kFileScheme)) {
       base::FilePath path;
       if (net::FileURLToFilePath(url, &path))
-        return ContainsKey(request_file_set_, path);
+        return base::ContainsKey(request_file_set_, path);
     }
 
     return false;  // Unmentioned schemes are disallowed.
@@ -255,7 +279,7 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   }
 
  private:
-  typedef std::map<std::string, bool> SchemeMap;
+  typedef std::set<std::string> SchemeSet;
   typedef std::set<url::Origin> OriginSet;
 
   typedef int FilePermissionFlags;  // bit-set of base::File::Flags
@@ -263,12 +287,10 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   typedef std::map<std::string, FilePermissionFlags> FileSystemMap;
   typedef std::set<base::FilePath> FileSet;
 
-  // Maps URL schemes to whether permission has been granted or revoked:
-  //   |true| means the scheme has been granted.
-  //   |false| means the scheme has been revoked.
-  // If a scheme is not present in the map, then it has never been granted
-  // or revoked.
-  SchemeMap scheme_policy_;
+  // Maps URL schemes to whether permission has been granted, containment means
+  // that the scheme has been granted, otherwise, it has never been granted.
+  // There is no provision for revoking.
+  SchemeSet scheme_policy_;
 
   // The set of URL origins to which the child process has been granted
   // permission.
@@ -301,6 +323,10 @@ ChildProcessSecurityPolicyImpl::ChildProcessSecurityPolicyImpl() {
   RegisterWebSafeScheme(url::kFtpScheme);
   RegisterWebSafeScheme(url::kDataScheme);
   RegisterWebSafeScheme("feed");
+
+  // TODO(nick): https://crbug.com/651534 blob: and filesystem: schemes embed
+  // other origins, so we should not treat them as web safe. Remove callers of
+  // IsWebSafeScheme(), and then eliminate the next two lines.
   RegisterWebSafeScheme(url::kBlobScheme);
   RegisterWebSafeScheme(url::kFileSystemScheme);
 
@@ -308,14 +334,11 @@ ChildProcessSecurityPolicyImpl::ChildProcessSecurityPolicyImpl() {
   RegisterPseudoScheme(url::kAboutScheme);
   RegisterPseudoScheme(url::kJavaScriptScheme);
   RegisterPseudoScheme(kViewSourceScheme);
+  RegisterPseudoScheme(url::kHttpSuboriginScheme);
+  RegisterPseudoScheme(url::kHttpsSuboriginScheme);
 }
 
 ChildProcessSecurityPolicyImpl::~ChildProcessSecurityPolicyImpl() {
-  web_safe_schemes_.clear();
-  pseudo_schemes_.clear();
-  STLDeleteContainerPairSecondPointers(security_state_.begin(),
-                                       security_state_.end());
-  security_state_.clear();
 }
 
 // static
@@ -341,37 +364,50 @@ void ChildProcessSecurityPolicyImpl::AddWorker(int child_id,
 
 void ChildProcessSecurityPolicyImpl::Remove(int child_id) {
   base::AutoLock lock(lock_);
-  SecurityStateMap::iterator it = security_state_.find(child_id);
-  if (it == security_state_.end())
-    return;  // May be called multiple times.
-
-  delete it->second;
-  security_state_.erase(it);
+  security_state_.erase(child_id);
   worker_map_.erase(child_id);
 }
 
 void ChildProcessSecurityPolicyImpl::RegisterWebSafeScheme(
     const std::string& scheme) {
   base::AutoLock lock(lock_);
-  DCHECK_EQ(0U, web_safe_schemes_.count(scheme)) << "Add schemes at most once.";
+  DCHECK_EQ(0U, schemes_okay_to_request_in_any_process_.count(scheme))
+      << "Add schemes at most once.";
   DCHECK_EQ(0U, pseudo_schemes_.count(scheme))
       << "Web-safe implies not pseudo.";
 
-  web_safe_schemes_.insert(scheme);
+  schemes_okay_to_request_in_any_process_.insert(scheme);
+  schemes_okay_to_commit_in_any_process_.insert(scheme);
+}
+
+void ChildProcessSecurityPolicyImpl::RegisterWebSafeIsolatedScheme(
+    const std::string& scheme,
+    bool always_allow_in_origin_headers) {
+  base::AutoLock lock(lock_);
+  DCHECK_EQ(0U, schemes_okay_to_request_in_any_process_.count(scheme))
+      << "Add schemes at most once.";
+  DCHECK_EQ(0U, pseudo_schemes_.count(scheme))
+      << "Web-safe implies not pseudo.";
+
+  schemes_okay_to_request_in_any_process_.insert(scheme);
+  if (always_allow_in_origin_headers)
+    schemes_okay_to_appear_as_origin_headers_.insert(scheme);
 }
 
 bool ChildProcessSecurityPolicyImpl::IsWebSafeScheme(
     const std::string& scheme) {
   base::AutoLock lock(lock_);
 
-  return ContainsKey(web_safe_schemes_, scheme);
+  return base::ContainsKey(schemes_okay_to_request_in_any_process_, scheme);
 }
 
 void ChildProcessSecurityPolicyImpl::RegisterPseudoScheme(
     const std::string& scheme) {
   base::AutoLock lock(lock_);
   DCHECK_EQ(0U, pseudo_schemes_.count(scheme)) << "Add schemes at most once.";
-  DCHECK_EQ(0U, web_safe_schemes_.count(scheme))
+  DCHECK_EQ(0U, schemes_okay_to_request_in_any_process_.count(scheme))
+      << "Pseudo implies not web-safe.";
+  DCHECK_EQ(0U, schemes_okay_to_commit_in_any_process_.count(scheme))
       << "Pseudo implies not web-safe.";
 
   pseudo_schemes_.insert(scheme);
@@ -381,7 +417,7 @@ bool ChildProcessSecurityPolicyImpl::IsPseudoScheme(
     const std::string& scheme) {
   base::AutoLock lock(lock_);
 
-  return ContainsKey(pseudo_schemes_, scheme);
+  return base::ContainsKey(pseudo_schemes_, scheme);
 }
 
 void ChildProcessSecurityPolicyImpl::GrantRequestURL(
@@ -395,6 +431,10 @@ void ChildProcessSecurityPolicyImpl::GrantRequestURL(
 
   if (IsPseudoScheme(url.scheme())) {
     return;  // Can't grant the capability to request pseudo schemes.
+  }
+
+  if (url.SchemeIsBlob() || url.SchemeIsFileSystem()) {
+    return;  // Don't grant blanket access to blob: or filesystem: schemes.
   }
 
   {
@@ -576,8 +616,9 @@ bool ChildProcessSecurityPolicyImpl::CanRequestURL(
     return false;  // Can't request invalid URLs.
 
   if (IsPseudoScheme(url.scheme())) {
-    // Every child process can request <about:blank>.
-    if (base::LowerCaseEqualsASCII(url.spec(), url::kAboutBlankURL))
+    // Every child process can request <about:blank>, <about:blank?foo>,
+    // <about:blank/#foo> and <about:srcdoc>.
+    if (url.IsAboutBlank() || url == kAboutSrcDocURL)
       return true;
     // URLs like <about:version>, <about:crash>, <view-source:...> shouldn't be
     // requestable by any child process.  Also, this case covers
@@ -585,6 +626,20 @@ bool ChildProcessSecurityPolicyImpl::CanRequestURL(
     // not kicked up to the browser.
     return false;
   }
+
+  // Blob and filesystem URLs require special treatment, since they embed an
+  // inner origin.
+  if (url.SchemeIsBlob() || url.SchemeIsFileSystem()) {
+    if (IsMalformedBlobUrl(url))
+      return false;
+
+    url::Origin origin(url);
+    return origin.unique() || IsWebSafeScheme(origin.scheme()) ||
+           CanCommitURL(child_id, GURL(origin.Serialize()));
+  }
+
+  if (IsWebSafeScheme(url.scheme()))
+    return true;
 
   // If the process can commit the URL, it can request it.
   if (CanCommitURL(child_id, url))
@@ -600,19 +655,37 @@ bool ChildProcessSecurityPolicyImpl::CanCommitURL(int child_id,
   if (!url.is_valid())
     return false;  // Can't commit invalid URLs.
 
-  // Of all the pseudo schemes, only about:blank is allowed to commit.
+  // Of all the pseudo schemes, only about:blank and about:srcdoc are allowed to
+  // commit.
   if (IsPseudoScheme(url.scheme()))
-    return base::LowerCaseEqualsASCII(url.spec(), url::kAboutBlankURL);
+    return url == url::kAboutBlankURL || url == kAboutSrcDocURL;
 
-  // TODO(creis): Tighten this for Site Isolation, so that a URL from a site
-  // that is isolated can only be committed in a process dedicated to that site.
-  // CanRequestURL should still allow all web-safe schemes. See
-  // https://crbug.com/515309.
-  if (IsWebSafeScheme(url.scheme()))
-    return true;  // The scheme has been white-listed for every child process.
+  // Blob and filesystem URLs require special treatment; validate the inner
+  // origin they embed.
+  if (url.SchemeIsBlob() || url.SchemeIsFileSystem()) {
+    if (IsMalformedBlobUrl(url))
+      return false;
+
+    url::Origin origin(url);
+    return origin.unique() || CanCommitURL(child_id, GURL(origin.Serialize()));
+  }
 
   {
     base::AutoLock lock(lock_);
+
+    // Most schemes can commit in any process. Note that we check
+    // schemes_okay_to_commit_in_any_process_ here, which is stricter than
+    // IsWebSafeScheme().
+    //
+    // TODO(creis, nick): https://crbug.com/515309: in generalized Site
+    // Isolation and/or --site-per-process, there will be no such thing as a
+    // scheme that is okay to commit in any process. Instead, an URL from a site
+    // that is isolated may only be committed in a process dedicated to that
+    // site, so CanCommitURL will need to rely on explicit, per-process grants.
+    // Note how today, even with extension isolation, the line below does not
+    // enforce that http pages cannot commit in an extension process.
+    if (base::ContainsKey(schemes_okay_to_commit_in_any_process_, url.scheme()))
+      return true;
 
     SecurityStateMap::iterator state = security_state_.find(child_id);
     if (state == security_state_.end())
@@ -622,6 +695,39 @@ bool ChildProcessSecurityPolicyImpl::CanCommitURL(int child_id,
     // allowed to commit the URL.
     return state->second->CanCommitURL(url);
   }
+}
+
+bool ChildProcessSecurityPolicyImpl::CanSetAsOriginHeader(int child_id,
+                                                          const GURL& url) {
+  if (!url.is_valid())
+    return false;  // Can't set invalid URLs as origin headers.
+
+  // Suborigin URLs are a special case and are allowed to be an origin header.
+  if (url.scheme() == url::kHttpSuboriginScheme ||
+      url.scheme() == url::kHttpsSuboriginScheme) {
+    DCHECK(IsPseudoScheme(url.scheme()));
+    return true;
+  }
+
+  // about:srcdoc cannot be used as an origin
+  if (url == kAboutSrcDocURL)
+    return false;
+
+  // If this process can commit |url|, it can use |url| as an origin for
+  // outbound requests.
+  if (CanCommitURL(child_id, url))
+    return true;
+
+  // Allow schemes which may come from scripts executing in isolated worlds;
+  // XHRs issued by such scripts reflect the script origin rather than the
+  // document origin.
+  {
+    base::AutoLock lock(lock_);
+    if (base::ContainsKey(schemes_okay_to_appear_as_origin_headers_,
+                          url.scheme()))
+      return true;
+  }
+  return false;
 }
 
 bool ChildProcessSecurityPolicyImpl::CanReadFile(int child_id,
@@ -686,30 +792,40 @@ bool ChildProcessSecurityPolicyImpl::HasPermissionsForFile(
 
 bool ChildProcessSecurityPolicyImpl::HasPermissionsForFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url,
+    const storage::FileSystemURL& filesystem_url,
     int permissions) {
-  if (!url.is_valid())
+  if (!filesystem_url.is_valid())
     return false;
 
-  if (url.path().ReferencesParent())
+  // If |filesystem_url.origin()| is not committable in this process, then this
+  // page should not be able to place content in that origin via the filesystem
+  // API either.
+  if (!CanCommitURL(child_id, filesystem_url.origin())) {
+    UMA_HISTOGRAM_BOOLEAN("FileSystem.OriginFailedCanCommitURL", true);
+    // TODO(nick): Temporary instrumentation for https://crbug.com/654479.
+    base::debug::DumpWithoutCrashing();
+    return false;
+  }
+
+  if (filesystem_url.path().ReferencesParent())
     return false;
 
   // Any write access is disallowed on the root path.
-  if (storage::VirtualPath::IsRootPath(url.path()) &&
+  if (storage::VirtualPath::IsRootPath(filesystem_url.path()) &&
       (permissions & ~READ_FILE_GRANT)) {
     return false;
   }
 
-  if (url.mount_type() == storage::kFileSystemTypeIsolated) {
+  if (filesystem_url.mount_type() == storage::kFileSystemTypeIsolated) {
     // When Isolated filesystems is overlayed on top of another filesystem,
     // its per-filesystem permission overrides the underlying filesystem
     // permissions).
     return HasPermissionsForFileSystem(
-        child_id, url.mount_filesystem_id(), permissions);
+        child_id, filesystem_url.mount_filesystem_id(), permissions);
   }
 
   FileSystemPermissionPolicyMap::iterator found =
-      file_system_policy_map_.find(url.type());
+      file_system_policy_map_.find(filesystem_url.type());
   if (found == file_system_policy_map_.end())
     return false;
 
@@ -719,7 +835,7 @@ bool ChildProcessSecurityPolicyImpl::HasPermissionsForFileSystemFile(
   }
 
   if (found->second & storage::FILE_PERMISSION_USE_FILE_PERMISSION)
-    return HasPermissionsForFile(child_id, url.path(), permissions);
+    return HasPermissionsForFile(child_id, filesystem_url.path(), permissions);
 
   if (found->second & storage::FILE_PERMISSION_SANDBOX)
     return true;
@@ -729,39 +845,44 @@ bool ChildProcessSecurityPolicyImpl::HasPermissionsForFileSystemFile(
 
 bool ChildProcessSecurityPolicyImpl::CanReadFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url) {
-  return HasPermissionsForFileSystemFile(child_id, url, READ_FILE_GRANT);
+    const storage::FileSystemURL& filesystem_url) {
+  return HasPermissionsForFileSystemFile(child_id, filesystem_url,
+                                         READ_FILE_GRANT);
 }
 
 bool ChildProcessSecurityPolicyImpl::CanWriteFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url) {
-  return HasPermissionsForFileSystemFile(child_id, url, WRITE_FILE_GRANT);
+    const storage::FileSystemURL& filesystem_url) {
+  return HasPermissionsForFileSystemFile(child_id, filesystem_url,
+                                         WRITE_FILE_GRANT);
 }
 
 bool ChildProcessSecurityPolicyImpl::CanCreateFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url) {
-  return HasPermissionsForFileSystemFile(child_id, url, CREATE_NEW_FILE_GRANT);
+    const storage::FileSystemURL& filesystem_url) {
+  return HasPermissionsForFileSystemFile(child_id, filesystem_url,
+                                         CREATE_NEW_FILE_GRANT);
 }
 
 bool ChildProcessSecurityPolicyImpl::CanCreateReadWriteFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url) {
-  return HasPermissionsForFileSystemFile(child_id, url,
+    const storage::FileSystemURL& filesystem_url) {
+  return HasPermissionsForFileSystemFile(child_id, filesystem_url,
                                          CREATE_READ_WRITE_FILE_GRANT);
 }
 
 bool ChildProcessSecurityPolicyImpl::CanCopyIntoFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url) {
-  return HasPermissionsForFileSystemFile(child_id, url, COPY_INTO_FILE_GRANT);
+    const storage::FileSystemURL& filesystem_url) {
+  return HasPermissionsForFileSystemFile(child_id, filesystem_url,
+                                         COPY_INTO_FILE_GRANT);
 }
 
 bool ChildProcessSecurityPolicyImpl::CanDeleteFileSystemFile(
     int child_id,
-    const storage::FileSystemURL& url) {
-  return HasPermissionsForFileSystemFile(child_id, url, DELETE_FILE_GRANT);
+    const storage::FileSystemURL& filesystem_url) {
+  return HasPermissionsForFileSystemFile(child_id, filesystem_url,
+                                         DELETE_FILE_GRANT);
 }
 
 bool ChildProcessSecurityPolicyImpl::HasWebUIBindings(int child_id) {
@@ -790,7 +911,7 @@ void ChildProcessSecurityPolicyImpl::AddChild(int child_id) {
     return;
   }
 
-  security_state_[child_id] = new SecurityState();
+  security_state_[child_id] = base::MakeUnique<SecurityState>();
 }
 
 bool ChildProcessSecurityPolicyImpl::ChildProcessHasPermissionsForFile(
@@ -811,6 +932,16 @@ bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
     return true;
   }
   return state->second->CanAccessDataForOrigin(gurl);
+}
+
+bool ChildProcessSecurityPolicyImpl::HasSpecificPermissionForOrigin(
+    int child_id,
+    const url::Origin& origin) {
+  base::AutoLock lock(lock_);
+  SecurityStateMap::iterator state = security_state_.find(child_id);
+  if (state == security_state_.end())
+    return false;
+  return state->second->CanCommitOrigin(origin);
 }
 
 void ChildProcessSecurityPolicyImpl::LockToOrigin(int child_id,

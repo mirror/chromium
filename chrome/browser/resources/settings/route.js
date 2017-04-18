@@ -6,20 +6,29 @@ cr.define('settings', function() {
   /**
    * Class for navigable routes. May only be instantiated within this file.
    * @constructor
-   * @param {string} url
+   * @param {string} path
    * @private
    */
-  var Route = function(url) {
-    this.url = url;
+  var Route = function(path) {
+    this.path = path;
 
-    /** @private {?settings.Route} */
-    this.parent_ = null;
+    /** @type {?settings.Route} */
+    this.parent = null;
+
+    /** @type {number} */
+    this.depth = 0;
+
+    /**
+     * @type {boolean} Whether this route corresponds to a navigable
+     *     dialog. Those routes don't belong to a "section".
+     */
+    this.isNavigableDialog = false;
 
     // Below are all legacy properties to provide compatibility with the old
-    // routing system. TODO(tommycli): Remove once routing refactor complete.
-    this.page = '';
+    // routing system.
+
+    /** @type {string} */
     this.section = '';
-    /** @type {!Array<string>} */ this.subpage = [];
   };
 
   Route.prototype = {
@@ -27,68 +36,58 @@ cr.define('settings', function() {
      * Returns a new Route instance that's a child of this route.
      * @param {string} path Extends this route's path if it doesn't contain a
      *     leading slash.
-     * @param {string=} opt_subpageName
      * @return {!settings.Route}
      * @private
      */
-    createChild: function(path, opt_subpageName) {
+    createChild: function(path) {
       assert(path);
 
       // |path| extends this route's path if it doesn't have a leading slash.
       // If it does have a leading slash, it's just set as the new route's URL.
-      var newUrl = path[0] == '/' ? path : this.url + '/' + path;
+      var newUrl = path[0] == '/' ? path : this.path + '/' + path;
 
       var route = new Route(newUrl);
-      route.parent_ = this;
-      route.page = this.page;
+      route.parent = this;
       route.section = this.section;
-      route.subpage = this.subpage.slice();  // Shallow copy.
+      route.depth = this.depth + 1;
 
-      if (opt_subpageName)
-        route.subpage.push(opt_subpageName);
-
-      return route;
-    },
-
-    /**
-     * Returns a new Route instance that's a child dialog of this route.
-     * @param {string} url
-     * @param {string} dialogName
-     * @return {!settings.Route}
-     * @private
-     */
-    createDialog: function(url, dialogName) {
-      var route = this.createChild(url);
-      route.dialog = dialogName;
       return route;
     },
 
     /**
      * Returns a new Route instance that's a child section of this route.
      * TODO(tommycli): Remove once we've obsoleted the concept of sections.
-     * @param {string} url
+     * @param {string} path
      * @param {string} section
      * @return {!settings.Route}
      * @private
      */
-    createSection: function(url, section) {
-      var route = this.createChild(url);
+    createSection: function(path, section) {
+      var route = this.createChild(path);
       route.section = section;
       return route;
     },
 
     /**
-     * Returns true if this route is a descendant of the parameter.
+     * Returns true if this route matches or is an ancestor of the parameter.
      * @param {!settings.Route} route
      * @return {boolean}
      */
-    isDescendantOf: function(route) {
-      for (var parent = this.parent_; parent != null; parent = parent.parent_) {
-        if (route == parent)
+    contains: function(route) {
+      for (var r = route; r != null; r = r.parent) {
+        if (this == r)
           return true;
       }
-
       return false;
+    },
+
+    /**
+     * Returns true if this route is a subpage of a section.
+     * @return {boolean}
+     */
+    isSubpage: function() {
+      return !!this.parent && !!this.section &&
+          this.parent.section == this.section;
     },
   };
 
@@ -97,172 +96,340 @@ cr.define('settings', function() {
 
   // Root pages.
   r.BASIC = new Route('/');
-  r.BASIC.page = 'basic';
   r.ADVANCED = new Route('/advanced');
-  r.ADVANCED.page = 'advanced';
   r.ABOUT = new Route('/help');
-  r.ABOUT.page = 'about';
 
-<if expr="chromeos">
+  // Navigable dialogs. These are the only non-section children of root pages.
+  // These are disfavored. If we add anymore, we should add explicit support.
+  r.IMPORT_DATA = r.BASIC.createChild('/importData');
+  r.IMPORT_DATA.isNavigableDialog = true;
+  r.SIGN_OUT = r.BASIC.createChild('/signOut');
+  r.SIGN_OUT.isNavigableDialog = true;
+  r.CLEAR_BROWSER_DATA = r.ADVANCED.createChild('/clearBrowserData');
+  r.CLEAR_BROWSER_DATA.isNavigableDialog = true;
+  r.RESET_DIALOG = r.ADVANCED.createChild('/resetProfileSettings');
+  r.RESET_DIALOG.isNavigableDialog = true;
+  r.TRIGGERED_RESET_DIALOG =
+      r.ADVANCED.createChild('/triggeredResetProfileSettings');
+  r.TRIGGERED_RESET_DIALOG.isNavigableDialog = true;
+
+// <if expr="chromeos">
   r.INTERNET = r.BASIC.createSection('/internet', 'internet');
-  r.NETWORK_DETAIL = r.INTERNET.createChild('/networkDetail', 'network-detail');
-  r.KNOWN_NETWORKS = r.INTERNET.createChild('/knownNetworks', 'known-networks');
-</if>
+  r.INTERNET_NETWORKS = r.INTERNET.createChild('/networks');
+  r.NETWORK_DETAIL = r.INTERNET.createChild('/networkDetail');
+  r.KNOWN_NETWORKS = r.INTERNET.createChild('/knownNetworks');
+  r.BLUETOOTH = r.BASIC.createSection('/bluetooth', 'bluetooth');
+  r.BLUETOOTH_DEVICES = r.BLUETOOTH.createChild('/bluetoothDevices');
+// </if>
 
   r.APPEARANCE = r.BASIC.createSection('/appearance', 'appearance');
-  r.FONTS = r.APPEARANCE.createChild('/fonts', 'appearance-fonts');
+  r.FONTS = r.APPEARANCE.createChild('/fonts');
 
   r.DEFAULT_BROWSER =
       r.BASIC.createSection('/defaultBrowser', 'defaultBrowser');
 
   r.SEARCH = r.BASIC.createSection('/search', 'search');
-  r.SEARCH_ENGINES = r.SEARCH.createChild('/searchEngines', 'search-engines');
+  r.SEARCH_ENGINES = r.SEARCH.createChild('/searchEngines');
+
+// <if expr="chromeos">
+  r.ANDROID_APPS = r.BASIC.createSection('/androidApps', 'androidApps');
+  r.ANDROID_APPS_DETAILS = r.ANDROID_APPS.createChild('/androidApps/details');
+// </if>
 
   r.ON_STARTUP = r.BASIC.createSection('/onStartup', 'onStartup');
 
   r.PEOPLE = r.BASIC.createSection('/people', 'people');
-  r.SYNC = r.PEOPLE.createChild('/syncSetup', 'sync');
-<if expr="not chromeos">
-  r.MANAGE_PROFILE = r.PEOPLE.createChild('/manageProfile', 'manageProfile');
-</if>
-<if expr="chromeos">
-  r.CHANGE_PICTURE = r.PEOPLE.createChild('/changePicture', 'changePicture');
-  r.QUICK_UNLOCK_AUTHENTICATE =
-      r.PEOPLE.createChild('/quickUnlock/authenticate',
-                           'quick-unlock-authenticate');
-  r.QUICK_UNLOCK_CHOOSE_METHOD =
-      r.PEOPLE.createChild('/quickUnlock/chooseMethod',
-                           'quick-unlock-choose-method');
-  r.QUICK_UNLOCK_SETUP_PIN =
-      r.QUICK_UNLOCK_CHOOSE_METHOD.createChild('/quickUnlock/setupPin',
-                                               'quick-unlock-setup-pin');
-  r.ACCOUNTS = r.PEOPLE.createChild('/accounts', 'users');
+  r.SYNC = r.PEOPLE.createChild('/syncSetup');
+// <if expr="not chromeos">
+  r.MANAGE_PROFILE = r.PEOPLE.createChild('/manageProfile');
+// </if>
+// <if expr="chromeos">
+  r.CHANGE_PICTURE = r.PEOPLE.createChild('/changePicture');
+  r.ACCOUNTS = r.PEOPLE.createChild('/accounts');
+  r.LOCK_SCREEN = r.PEOPLE.createChild('/lockScreen');
+  r.FINGERPRINT = r.LOCK_SCREEN.createChild('/lockScreen/fingerprint');
 
   r.DEVICE = r.BASIC.createSection('/device', 'device');
-  r.POINTERS = r.DEVICE.createChild('/pointer-overlay', 'pointers');
-  r.KEYBARD = r.DEVICE.createChild('/keyboard-overlay', 'keyboard');
-  r.DISPLAY = r.DEVICE.createChild('/display', 'display');
-</if>
+  r.POINTERS = r.DEVICE.createChild('/pointer-overlay');
+  r.KEYBOARD = r.DEVICE.createChild('/keyboard-overlay');
+  r.STYLUS = r.DEVICE.createChild('/stylus');
+  r.DISPLAY = r.DEVICE.createChild('/display');
+  r.STORAGE = r.DEVICE.createChild('/storage');
+  r.POWER = r.DEVICE.createChild('/power');
+// </if>
 
   r.PRIVACY = r.ADVANCED.createSection('/privacy', 'privacy');
-  r.CERTIFICATES =
-      r.PRIVACY.createChild('/certificates', 'manage-certificates');
-  r.CLEAR_BROWSER_DATA =
-      r.PRIVACY.createDialog('/clearBrowserData', 'clear-browsing-data');
-  r.SITE_SETTINGS = r.PRIVACY.createChild('/siteSettings', 'site-settings');
-  r.SITE_SETTINGS_ALL = r.SITE_SETTINGS.createChild('all', 'all-sites');
-  r.SITE_SETTINGS_ALL_DETAILS =
-      r.SITE_SETTINGS_ALL.createChild('details', 'site-details');
+  r.CERTIFICATES = r.PRIVACY.createChild('/certificates');
 
-  r.SITE_SETTINGS_HANDLERS = r.SITE_SETTINGS.createChild(
-      'handlers', 'protocol-handlers');
+  r.SITE_SETTINGS = r.PRIVACY.createChild('/content');
 
-  // TODO(tommicli): Find a way to refactor these repetitive category routes.
-  r.SITE_SETTINGS_AUTOMATIC_DOWNLOADS = r.SITE_SETTINGS.createChild(
-      'automaticDownloads', 'site-settings-category-automatic-downloads');
-  r.SITE_SETTINGS_BACKGROUND_SYNC = r.SITE_SETTINGS.createChild(
-      'backgroundSync', 'site-settings-category-background-sync');
-  r.SITE_SETTINGS_CAMERA = r.SITE_SETTINGS.createChild(
-      'camera', 'site-settings-category-camera');
-  r.SITE_SETTINGS_COOKIES = r.SITE_SETTINGS.createChild(
-      'cookies', 'site-settings-category-cookies');
-  r.SITE_SETTINGS_IMAGES = r.SITE_SETTINGS.createChild(
-      'images', 'site-settings-category-images');
-  r.SITE_SETTINGS_JAVASCRIPT = r.SITE_SETTINGS.createChild(
-      'javascript', 'site-settings-category-javascript');
-  r.SITE_SETTINGS_KEYGEN = r.SITE_SETTINGS.createChild(
-      'keygen', 'site-settings-category-keygen');
-  r.SITE_SETTINGS_LOCATION = r.SITE_SETTINGS.createChild(
-      'location', 'site-settings-category-location');
-  r.SITE_SETTINGS_MICROPHONE = r.SITE_SETTINGS.createChild(
-      'microphone', 'site-settings-category-microphone');
-  r.SITE_SETTINGS_NOTIFICATIONS = r.SITE_SETTINGS.createChild(
-      'notifications', 'site-settings-category-notifications');
-  r.SITE_SETTINGS_PLUGINS = r.SITE_SETTINGS.createChild(
-      'plugins', 'site-settings-category-plugins');
-  r.SITE_SETTINGS_POPUPS = r.SITE_SETTINGS.createChild(
-      'popups', 'site-settings-category-popups');
-  r.SITE_SETTINGS_UNSANDBOXED_PLUGINS = r.SITE_SETTINGS.createChild(
-      'unsandboxedPlugins', 'site-settings-category-unsandboxed-plugins');
+  if (loadTimeData.getBoolean('enableSiteSettings')) {
+    r.SITE_SETTINGS_ALL = r.SITE_SETTINGS.createChild('all');
+    r.SITE_SETTINGS_SITE_DETAILS =
+        r.SITE_SETTINGS_ALL.createChild('/content/siteDetails');
+  }
 
-  r.SITE_SETTINGS_AUTOMATIC_DOWNLOADS_DETAILS =
-      r.SITE_SETTINGS_AUTOMATIC_DOWNLOADS.createChild('details',
-                                                      'site-details');
-  r.SITE_SETTINGS_BACKGROUND_SYNC_DETAILS =
-      r.SITE_SETTINGS_BACKGROUND_SYNC.createChild('details', 'site-details');
-  r.SITE_SETTINGS_CAMERA_DETAILS =
-      r.SITE_SETTINGS_CAMERA.createChild('details', 'site-details');
-  r.SITE_SETTINGS_COOKIES_DETAILS =
-      r.SITE_SETTINGS_COOKIES.createChild('details', 'site-details');
-  r.SITE_SETTINGS_IMAGES_DETAILS =
-      r.SITE_SETTINGS_IMAGES.createChild('details', 'site-details');
-  r.SITE_SETTINGS_JAVASCRIPT_DETAILS =
-      r.SITE_SETTINGS_JAVASCRIPT.createChild('details', 'site-details');
-  r.SITE_SETTINGS_KEYGEN_DETAILS =
-      r.SITE_SETTINGS_KEYGEN.createChild('details', 'site-details');
-  r.SITE_SETTINGS_LOCATION_DETAILS =
-      r.SITE_SETTINGS_LOCATION.createChild('details', 'site-details');
-  r.SITE_SETTINGS_MICROPHONE_DETAILS =
-      r.SITE_SETTINGS_MICROPHONE.createChild('details', 'site-details');
-  r.SITE_SETTINGS_NOTIFICATIONS_DETAILS =
-      r.SITE_SETTINGS_NOTIFICATIONS.createChild('details', 'site-details');
-  r.SITE_SETTINGS_PLUGINS_DETAILS =
-      r.SITE_SETTINGS_PLUGINS.createChild('details', 'site-details');
-  r.SITE_SETTINGS_POPUPS_DETAILS =
-      r.SITE_SETTINGS_POPUPS.createChild('details', 'site-details');
-  r.SITE_SETTINGS_UNSANDBOXED_PLUGINS_DETAILS =
-      r.SITE_SETTINGS_UNSANDBOXED_PLUGINS.createChild('details',
-                                                      'site-details');
+  r.SITE_SETTINGS_HANDLERS = r.SITE_SETTINGS.createChild('/handlers');
 
-<if expr="chromeos">
+  // TODO(tommycli): Find a way to refactor these repetitive category routes.
+  r.SITE_SETTINGS_AUTOMATIC_DOWNLOADS =
+      r.SITE_SETTINGS.createChild('automaticDownloads');
+  r.SITE_SETTINGS_BACKGROUND_SYNC =
+      r.SITE_SETTINGS.createChild('backgroundSync');
+  r.SITE_SETTINGS_CAMERA = r.SITE_SETTINGS.createChild('camera');
+  r.SITE_SETTINGS_COOKIES = r.SITE_SETTINGS.createChild('cookies');
+  r.SITE_SETTINGS_DATA_DETAILS =
+      r.SITE_SETTINGS_COOKIES.createChild('/cookies/detail');
+  r.SITE_SETTINGS_IMAGES = r.SITE_SETTINGS.createChild('images');
+  r.SITE_SETTINGS_JAVASCRIPT = r.SITE_SETTINGS.createChild('javascript');
+  r.SITE_SETTINGS_LOCATION = r.SITE_SETTINGS.createChild('location');
+  r.SITE_SETTINGS_MICROPHONE = r.SITE_SETTINGS.createChild('microphone');
+  r.SITE_SETTINGS_NOTIFICATIONS = r.SITE_SETTINGS.createChild('notifications');
+  r.SITE_SETTINGS_FLASH = r.SITE_SETTINGS.createChild('flash');
+  r.SITE_SETTINGS_POPUPS = r.SITE_SETTINGS.createChild('popups');
+  r.SITE_SETTINGS_UNSANDBOXED_PLUGINS =
+      r.SITE_SETTINGS.createChild('unsandboxedPlugins');
+  r.SITE_SETTINGS_MIDI_DEVICES = r.SITE_SETTINGS.createChild('midiDevices');
+  r.SITE_SETTINGS_USB_DEVICES = r.SITE_SETTINGS.createChild('usbDevices');
+  r.SITE_SETTINGS_ZOOM_LEVELS = r.SITE_SETTINGS.createChild('zoomLevels');
+  r.SITE_SETTINGS_PDF_DOCUMENTS = r.SITE_SETTINGS.createChild('pdfDocuments');
+  r.SITE_SETTINGS_PROTECTED_CONTENT =
+      r.SITE_SETTINGS.createChild('protectedContent');
+  r.SITE_SETTINGS_SUBRESOURCE_FILTER =
+      r.SITE_SETTINGS.createChild('subresourceFilter');
+
+// <if expr="chromeos">
   r.DATETIME = r.ADVANCED.createSection('/dateTime', 'dateTime');
+// </if>
 
-  r.BLUETOOTH = r.ADVANCED.createSection('/bluetooth', 'bluetooth');
-  r.BLUETOOTH_ADD_DEVICE =
-      r.BLUETOOTH.createChild('/bluetoothAddDevice', 'bluetooth-add-device');
-  r.BLUETOOTH_PAIR_DEVICE = r.BLUETOOTH_ADD_DEVICE.createChild(
-      'bluetoothPairDevice', 'bluetooth-pair-device');
-</if>
-
-  r.PASSWORDS = r.ADVANCED.createSection('/passwords', 'passwordsAndForms');
-  r.AUTOFILL = r.PASSWORDS.createChild('/autofill', 'manage-autofill');
-  r.MANAGE_PASSWORDS =
-      r.PASSWORDS.createChild('/managePasswords', 'manage-passwords');
+  r.PASSWORDS =
+      r.ADVANCED.createSection('/passwordsAndForms', 'passwordsAndForms');
+  r.AUTOFILL = r.PASSWORDS.createChild('/autofill');
+  r.MANAGE_PASSWORDS = r.PASSWORDS.createChild('/passwords');
 
   r.LANGUAGES = r.ADVANCED.createSection('/languages', 'languages');
-  r.LANGUAGES_DETAIL = r.LANGUAGES.createChild('edit', 'language-detail');
-  r.MANAGE_LANGUAGES =
-      r.LANGUAGES.createChild('/manageLanguages', 'manage-languages');
-<if expr="chromeos">
-  r.INPUT_METHODS =
-      r.LANGUAGES.createChild('/inputMethods', 'manage-input-methods');
-</if>
-<if expr="not is_macosx">
-  r.EDIT_DICTIONARY =
-      r.LANGUAGES.createChild('/editDictionary', 'edit-dictionary');
-</if>
+// <if expr="chromeos">
+  r.INPUT_METHODS = r.LANGUAGES.createChild('/inputMethods');
+// </if>
+// <if expr="not is_macosx">
+  r.EDIT_DICTIONARY = r.LANGUAGES.createChild('/editDictionary');
+// </if>
 
-  r.DOWNLOADS = r.ADVANCED.createSection('/downloadsDirectory', 'downloads');
+  r.DOWNLOADS = r.ADVANCED.createSection('/downloads', 'downloads');
 
   r.PRINTING = r.ADVANCED.createSection('/printing', 'printing');
-  r.CLOUD_PRINTERS = r.PRINTING.createChild('/cloudPrinters', 'cloud-printers');
-<if expr="chromeos">
-  r.CUPS_PRINTERS = r.PRINTING.createChild('/cupsPrinters', 'cups-printers');
-</if>
+  r.CLOUD_PRINTERS = r.PRINTING.createChild('/cloudPrinters');
+// <if expr="chromeos">
+  r.CUPS_PRINTERS = r.PRINTING.createChild('/cupsPrinters');
+  r.CUPS_PRINTER_DETAIL = r.CUPS_PRINTERS.createChild('/cupsPrinterDetails');
+// </if>
 
   r.ACCESSIBILITY = r.ADVANCED.createSection('/accessibility', 'a11y');
+// <if expr="chromeos">
+  r.MANAGE_ACCESSIBILITY = r.ACCESSIBILITY.createChild('/manageAccessibility');
+// </if>
+
   r.SYSTEM = r.ADVANCED.createSection('/system', 'system');
   r.RESET = r.ADVANCED.createSection('/reset', 'reset');
 
-<if expr="chromeos">
-  r.INPUT_METHODS =
-      r.LANGUAGES.createChild('/inputMethods', 'manage-input-methods');
-  r.DETAILED_BUILD_INFO =
-      r.ABOUT.createChild('/help/details', 'detailed-build-info');
-  r.DETAILED_BUILD_INFO.section = 'about';
-</if>
+// <if expr="chromeos">
+  // "About" is the only section in About, but we still need to create the route
+  // in order to show the subpage on Chrome OS.
+  r.ABOUT_ABOUT = r.ABOUT.createSection('/help/about', 'about');
+  r.DETAILED_BUILD_INFO = r.ABOUT_ABOUT.createChild('/help/details');
+// </if>
+
+  var routeObservers_ = new Set();
+
+  /** @polymerBehavior */
+  var RouteObserverBehavior = {
+    /** @override */
+    attached: function() {
+      assert(!routeObservers_.has(this));
+      routeObservers_.add(this);
+
+      // Emulating Polymer data bindings, the observer is called when the
+      // element starts observing the route.
+      this.currentRouteChanged(currentRoute_, undefined);
+    },
+
+    /** @override */
+    detached: function() {
+      assert(routeObservers_.delete(this));
+    },
+
+    /**
+     * @param {!settings.Route|undefined} opt_newRoute
+     * @param {!settings.Route|undefined} opt_oldRoute
+     * @abstract
+     */
+    currentRouteChanged: function(opt_newRoute, opt_oldRoute) {
+      assertNotReached();
+    },
+  };
+
+  /**
+   * Regular expression that captures the leading slash, the content and the
+   * trailing slash in three different groups.
+   * @const {!RegExp}
+   */
+  var CANONICAL_PATH_REGEX = /(^\/)([\/-\w]+)(\/$)/;
+
+  /**
+   * @param {string} path
+   * @return {?settings.Route} The matching canonical route, or null if none
+   *     matches.
+   */
+  var getRouteForPath = function(path) {
+    // Allow trailing slash in paths.
+    var canonicalPath = path.replace(CANONICAL_PATH_REGEX, '$1$2');
+
+    // TODO(tommycli): Use Object.values once Closure compilation supports it.
+    var matchingKey = Object.keys(Route).find(function(key) {
+      return Route[key].path == canonicalPath;
+    });
+
+    return !!matchingKey ? Route[matchingKey] : null;
+  };
+
+  /**
+   * The current active route. This updated is only by settings.navigateTo or
+   * settings.initializeRouteFromUrl.
+   * @private {!settings.Route}
+   */
+  var currentRoute_ = Route.BASIC;
+
+  /**
+   * The current query parameters. This is updated only by settings.navigateTo
+   * or settings.initializeRouteFromUrl.
+   * @private {!URLSearchParams}
+   */
+  var currentQueryParameters_ = new URLSearchParams();
+
+  /** @private {boolean} */
+  var lastRouteChangeWasPopstate_ = false;
+
+  /** @private */
+  var initializeRouteFromUrlCalled_ = false;
+
+  /**
+   * Initialize the route and query params from the URL.
+   */
+  var initializeRouteFromUrl = function() {
+    assert(!initializeRouteFromUrlCalled_);
+    initializeRouteFromUrlCalled_ = true;
+
+    var route = getRouteForPath(window.location.pathname);
+    // Never allow direct navigation to ADVANCED.
+    if (route && route != Route.ADVANCED) {
+      currentRoute_ = route;
+      currentQueryParameters_ = new URLSearchParams(window.location.search);
+    } else {
+      window.history.replaceState(undefined, '', Route.BASIC.path);
+    }
+  };
+
+  function resetRouteForTesting() {
+    initializeRouteFromUrlCalled_ = false;
+    lastRouteChangeWasPopstate_ = false;
+    currentRoute_ = Route.BASIC;
+    currentQueryParameters_ = new URLSearchParams();
+  }
+
+  /**
+   * Helper function to set the current route and notify all observers.
+   * @param {!settings.Route} route
+   * @param {!URLSearchParams} queryParameters
+   * @param {boolean} isPopstate
+   */
+  var setCurrentRoute = function(route, queryParameters, isPopstate) {
+    var oldRoute = currentRoute_;
+    currentRoute_ = route;
+    currentQueryParameters_ = queryParameters;
+    lastRouteChangeWasPopstate_ = isPopstate;
+    routeObservers_.forEach(function(observer) {
+      observer.currentRouteChanged(currentRoute_, oldRoute);
+    });
+  };
+
+  /** @return {!settings.Route} */
+  var getCurrentRoute = function() { return currentRoute_; };
+
+  /** @return {!URLSearchParams} */
+  var getQueryParameters = function() {
+    return new URLSearchParams(currentQueryParameters_);  // Defensive copy.
+  };
+
+  /** @return {boolean} */
+  var lastRouteChangeWasPopstate = function() {
+    return lastRouteChangeWasPopstate_;
+  };
+
+  /**
+   * Navigates to a canonical route and pushes a new history entry.
+   * @param {!settings.Route} route
+   * @param {URLSearchParams=} opt_dynamicParameters Navigations to the same
+   *     URL parameters in a different order will still push to history.
+   * @param {boolean=} opt_removeSearch Whether to strip the 'search' URL
+   *     parameter during navigation. Defaults to false.
+   */
+  var navigateTo = function(route, opt_dynamicParameters, opt_removeSearch) {
+    // The ADVANCED route only serves as a parent of subpages, and should not
+    // be possible to navigate to it directly.
+    if (route == settings.Route.ADVANCED)
+      route = settings.Route.BASIC;
+
+    var params = opt_dynamicParameters || new URLSearchParams();
+    var removeSearch = !!opt_removeSearch;
+
+    var oldSearchParam = getQueryParameters().get('search') || '';
+    var newSearchParam = params.get('search') || '';
+
+    if (!removeSearch && oldSearchParam && !newSearchParam)
+      params.append('search', oldSearchParam);
+
+    var url = route.path;
+    var queryString = params.toString();
+    if (queryString)
+      url += '?' + queryString;
+
+    // History serializes the state, so we don't push the actual route object.
+    window.history.pushState(currentRoute_.path, '', url);
+    setCurrentRoute(route, params, false);
+  };
+
+  /**
+   * Navigates to the previous route if it has an equal or lesser depth.
+   * If there is no previous route in history meeting those requirements,
+   * this navigates to the immediate parent. This will never exit Settings.
+   */
+  var navigateToPreviousRoute = function() {
+    var previousRoute =
+        window.history.state &&
+        assert(getRouteForPath(/** @type {string} */ (window.history.state)));
+
+    if (previousRoute && previousRoute.depth <= currentRoute_.depth)
+      window.history.back();
+    else
+      navigateTo(currentRoute_.parent || Route.BASIC);
+  };
+
+  window.addEventListener('popstate', function(event) {
+    // On pop state, do not push the state onto the window.history again.
+    setCurrentRoute(getRouteForPath(window.location.pathname) || Route.BASIC,
+                    new URLSearchParams(window.location.search), true);
+  });
 
   return {
     Route: Route,
+    RouteObserverBehavior: RouteObserverBehavior,
+    getRouteForPath: getRouteForPath,
+    initializeRouteFromUrl: initializeRouteFromUrl,
+    resetRouteForTesting: resetRouteForTesting,
+    getCurrentRoute: getCurrentRoute,
+    getQueryParameters: getQueryParameters,
+    lastRouteChangeWasPopstate: lastRouteChangeWasPopstate,
+    navigateTo: navigateTo,
+    navigateToPreviousRoute: navigateToPreviousRoute,
   };
 });

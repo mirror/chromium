@@ -8,18 +8,20 @@
 #include <string>
 
 #include "base/macros.h"
-#include "net/quic/crypto/crypto_handshake.h"
-#include "net/quic/crypto/crypto_protocol.h"
-#include "net/quic/crypto/proof_verifier_chromium.h"
-#include "net/quic/quic_client_session_base.h"
-#include "net/quic/quic_crypto_client_stream.h"
-#include "net/quic/quic_server_id.h"
-#include "net/quic/quic_session.h"
+#include "net/quic/chromium/crypto/proof_verifier_chromium.h"
+#include "net/quic/core/crypto/crypto_handshake.h"
+#include "net/quic/core/crypto/crypto_protocol.h"
+#include "net/quic/core/quic_client_session_base.h"
+#include "net/quic/core/quic_crypto_client_stream.h"
+#include "net/quic/core/quic_server_id.h"
+#include "net/quic/core/quic_session.h"
 
 namespace net {
 
 class MockCryptoClientStream : public QuicCryptoClientStream {
  public:
+  // TODO(zhongyi): might consider move HandshakeMode up to
+  // MockCryptoClientStreamFactory.
   // HandshakeMode enumerates the handshake mode MockCryptoClientStream should
   // mock in CryptoConnect.
   enum HandshakeMode {
@@ -35,12 +37,18 @@ class MockCryptoClientStream : public QuicCryptoClientStream {
     // COLD_START indicates that CryptoConnect will neither establish encryption
     // nor confirm the handshake
     COLD_START,
+
+    // USE_DEFAULT_CRYPTO_STREAM indicates that MockCryptoClientStreamFactory
+    // will create a QuicCryptoClientStream instead of a
+    // MockCryptoClientStream.
+    USE_DEFAULT_CRYPTO_STREAM,
   };
 
   MockCryptoClientStream(
       const QuicServerId& server_id,
       QuicClientSessionBase* session,
       ProofVerifyContext* verify_context,
+      const QuicConfig& config,
       QuicCryptoClientConfig* crypto_config,
       HandshakeMode handshake_mode,
       const ProofVerifyDetailsChromium* proof_verify_details_);
@@ -50,7 +58,7 @@ class MockCryptoClientStream : public QuicCryptoClientStream {
   void OnHandshakeMessage(const CryptoHandshakeMessage& message) override;
 
   // QuicCryptoClientStream implementation.
-  void CryptoConnect() override;
+  bool CryptoConnect() override;
 
   // Invokes the sessions's CryptoHandshakeEvent method with the specified
   // event.
@@ -63,6 +71,7 @@ class MockCryptoClientStream : public QuicCryptoClientStream {
 
   const QuicServerId server_id_;
   const ProofVerifyDetailsChromium* proof_verify_details_;
+  const QuicConfig config_;
 
   DISALLOW_COPY_AND_ASSIGN(MockCryptoClientStream);
 };

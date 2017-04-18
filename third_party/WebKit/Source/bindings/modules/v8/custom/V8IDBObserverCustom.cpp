@@ -8,42 +8,53 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8DOMWrapper.h"
-#include "bindings/modules/v8/V8IDBObserverCallback.h"
-#include "bindings/modules/v8/V8IDBObserverInit.h"
+#include "bindings/core/v8/V8PrivateProperty.h"
+#include "bindings/modules/v8/IDBObserverCallback.h"
 
 namespace blink {
 
-void V8IDBObserver::constructorCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    if (UNLIKELY(info.Length() < 1)) {
-        V8ThrowException::throwException(createMinimumArityTypeErrorForConstructor(info.GetIsolate(), "IDBObserver", 1, info.Length()), info.GetIsolate());
-        return;
-    }
+void V8IDBObserver::constructorCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  v8::Isolate* isolate = info.GetIsolate();
+  ExceptionState exception_state(isolate, ExceptionState::kConstructionContext,
+                                 "IDBObserver");
 
-    v8::Local<v8::Object> wrapper = info.Holder();
+  if (UNLIKELY(info.Length() < 1)) {
+    exception_state.ThrowTypeError(
+        ExceptionMessages::NotEnoughArguments(1, info.Length()));
+    return;
+  }
 
-    if (!info[0]->IsFunction()) {
-        V8ThrowException::throwTypeError(info.GetIsolate(), ExceptionMessages::failedToConstruct("IDBObserver", "The callback provided as parameter 1 is not a function."));
-        return;
-    }
+  v8::Local<v8::Object> wrapper = info.Holder();
 
-    if (info.Length() > 1 && !isUndefinedOrNull(info[1]) && !info[1]->IsObject()) {
-        V8ThrowException::throwTypeError(info.GetIsolate(), ExceptionMessages::failedToConstruct("IDBObserver", "IDBObserverInit (parameter 2) is not an object."));
-        return;
-    }
+  if (!info[0]->IsFunction()) {
+    exception_state.ThrowTypeError(
+        "The callback provided as parameter 1 is not a function.");
+    return;
+  }
 
-    IDBObserverInit idbObserverInit;
-    ExceptionState exceptionState(ExceptionState::ConstructionContext, "IDBObserver", info.Holder(), info.GetIsolate());
-    V8IDBObserverInit::toImpl(info.GetIsolate(), info[1], idbObserverInit, exceptionState);
-    if (exceptionState.throwIfNeeded())
-        return;
+  if (info.Length() > 1 && !IsUndefinedOrNull(info[1]) &&
+      !info[1]->IsObject()) {
+    exception_state.ThrowTypeError("parameter 2 ('options') is not an object.");
+    return;
+  }
 
-    IDBObserverCallback* callback = new V8IDBObserverCallback(v8::Local<v8::Function>::Cast(info[0]), wrapper, ScriptState::current(info.GetIsolate()));
-    IDBObserver* observer = IDBObserver::create(*callback, idbObserverInit);
-    if (exceptionState.throwIfNeeded())
-        return;
-    DCHECK(observer);
-    v8SetReturnValue(info, V8DOMWrapper::associateObjectWithWrapper(info.GetIsolate(), observer, &wrapperTypeInfo, wrapper));
+  if (exception_state.HadException())
+    return;
+
+  ScriptState* script_state = ScriptState::ForReceiverObject(info);
+  v8::Local<v8::Function> v8_callback = v8::Local<v8::Function>::Cast(info[0]);
+  IDBObserverCallback* callback =
+      IDBObserverCallback::Create(script_state, v8_callback);
+  IDBObserver* observer = IDBObserver::Create(callback);
+  if (exception_state.HadException())
+    return;
+  DCHECK(observer);
+  // TODO(bashi): Don't set private property (and remove this custom
+  // constructor) when we can trace correctly.
+  V8PrivateProperty::GetIDBObserverCallback(isolate).Set(wrapper, v8_callback);
+  V8SetReturnValue(info, V8DOMWrapper::AssociateObjectWithWrapper(
+                             isolate, observer, &wrapperTypeInfo, wrapper));
 }
 
-} // namespace blink
+}  // namespace blink

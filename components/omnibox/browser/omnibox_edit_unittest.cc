@@ -80,15 +80,13 @@ class TestingOmniboxView : public OmniboxView {
   }
   gfx::NativeView GetNativeView() const override { return nullptr; }
   gfx::NativeView GetRelativeWindowForPopup() const override { return nullptr; }
-  void SetGrayTextAutocompletion(const base::string16& input) override {}
-  base::string16 GetGrayTextAutocompletion() const override {
-    return base::string16();
-  }
   int GetTextWidth() const override { return 0; }
   int GetWidth() const override { return 0; }
   bool IsImeComposing() const override { return false; }
   int GetOmniboxTextLength() const override { return 0; }
   void EmphasizeURLComponents() override {}
+  void SetEmphasis(bool emphasize, const gfx::Range& range) override {}
+  void UpdateSchemeStyle(const gfx::Range& range) override {}
 
   const base::string16& inline_autocomplete_text() const {
     return inline_autocomplete_text_;
@@ -110,7 +108,6 @@ class TestingOmniboxEditController : public OmniboxEditController {
   // OmniboxEditController:
   void OnInputInProgress(bool in_progress) override {}
   void OnChanged() override {}
-  void ShowURL() override {}
   ToolbarModel* GetToolbarModel() override { return toolbar_model_; }
   const ToolbarModel* GetToolbarModel() const override {
     return toolbar_model_;
@@ -155,56 +152,13 @@ class TestingOmniboxClient : public OmniboxClient {
     alternate_nav_match_ = alternate_nav_match;
     return nullptr;
   }
-  bool CurrentPageExists() const override { return true; }
-  const GURL& GetURL() const override { return GURL::EmptyGURL(); }
-  const base::string16& GetTitle() const override {
-    return base::EmptyString16();
-  }
-  gfx::Image GetFavicon() const override { return gfx::Image(); }
-  bool IsInstantNTP() const override { return false; }
-  bool IsSearchResultsPage() const override { return false; }
-  bool IsLoading() const override { return false; }
-  bool IsPasteAndGoEnabled() const override { return false; }
-  bool IsNewTabPage(const std::string& url) const override { return false; }
-  bool IsHomePage(const std::string& url) const override { return false; }
   const SessionID& GetSessionID() const override { return session_id_; }
-  bookmarks::BookmarkModel* GetBookmarkModel() override { return nullptr; }
-  TemplateURLService* GetTemplateURLService() override { return nullptr; }
   const AutocompleteSchemeClassifier& GetSchemeClassifier() const override {
     return scheme_classifier_;
   }
   AutocompleteClassifier* GetAutocompleteClassifier() override {
     return &autocomplete_classifier_;
   }
-  gfx::Image GetIconIfExtensionMatch(
-      const AutocompleteMatch& match) const override {
-    return gfx::Image();
-  }
-  bool ProcessExtensionKeyword(TemplateURL* template_url,
-                               const AutocompleteMatch& match,
-                               WindowOpenDisposition disposition,
-                               OmniboxNavigationObserver* observer) override {
-    return false;
-  }
-  void OnInputStateChanged() override {}
-  void OnFocusChanged(OmniboxFocusState state,
-                      OmniboxFocusChangeReason reason) override {}
-  void OnResultChanged(const AutocompleteResult& result,
-                       bool default_match_changed,
-                       const base::Callback<void(const SkBitmap& bitmap)>&
-                           on_bitmap_fetched) override {}
-  void OnCurrentMatchChanged(const AutocompleteMatch& match) override {}
-  void OnTextChanged(const AutocompleteMatch& current_match,
-                     bool user_input_in_progress,
-                     base::string16& user_text,
-                     const AutocompleteResult& result,
-                     bool is_popup_open,
-                     bool has_focus) override {}
-  void OnInputAccepted(const AutocompleteMatch& match) override {}
-  void OnRevert() override {}
-  void OnURLOpenedFromOmnibox(OmniboxLog* log) override {}
-  void OnBookmarkLaunched() override {}
-  void DiscardNonCommittedNavigations() override {}
 
  private:
   SessionID session_id_;
@@ -217,11 +171,11 @@ class TestingOmniboxClient : public OmniboxClient {
 
 TestingOmniboxClient::TestingOmniboxClient()
     : autocomplete_classifier_(
-          base::WrapUnique(new AutocompleteController(
+          base::MakeUnique<AutocompleteController>(
               CreateAutocompleteProviderClient(),
               nullptr,
-              AutocompleteClassifier::kDefaultOmniboxProviders)),
-          base::WrapUnique(new TestingSchemeClassifier())) {}
+              AutocompleteClassifier::DefaultOmniboxProviders()),
+          base::MakeUnique<TestingSchemeClassifier>()) {}
 
 TestingOmniboxClient::~TestingOmniboxClient() {
   autocomplete_classifier_.Shutdown();
@@ -280,57 +234,45 @@ TEST_F(OmniboxEditTest, AdjustTextForCopy) {
     const char* expected_output;
     const bool write_url;
     const char* expected_url;
-    const bool extracted_search_terms;
   } input[] = {
     // Test that http:// is inserted if all text is selected.
-    { "a.de/b", 0, true, "a.de/b", "http://a.de/b", true, "http://a.de/b",
-      false },
+    { "a.de/b", 0, true, "a.de/b", "http://a.de/b", true, "http://a.de/b", },
 
     // Test that http:// is inserted if the host is selected.
-    { "a.de/b", 0, false, "a.de/", "http://a.de/", true, "http://a.de/",
-      false },
+    { "a.de/b", 0, false, "a.de/", "http://a.de/", true, "http://a.de/" },
 
     // Tests that http:// is inserted if the path is modified.
-    { "a.de/b", 0, false, "a.de/c", "http://a.de/c", true, "http://a.de/c",
-      false },
+    { "a.de/b", 0, false, "a.de/c", "http://a.de/c", true, "http://a.de/c" },
 
     // Tests that http:// isn't inserted if the host is modified.
-    { "a.de/b", 0, false, "a.com/b", "a.com/b", false, "", false },
+    { "a.de/b", 0, false, "a.com/b", "a.com/b", false, "" },
 
     // Tests that http:// isn't inserted if the start of the selection is 1.
-    { "a.de/b", 1, false, "a.de/b", "a.de/b", false, "", false },
+    { "a.de/b", 1, false, "a.de/b", "a.de/b", false, "" },
 
     // Tests that http:// isn't inserted if a portion of the host is selected.
-    { "a.de/", 0, false, "a.d", "a.d", false, "", false },
+    { "a.de/", 0, false, "a.d", "a.d", false, "" },
 
     // Tests that http:// isn't inserted for an https url after the user nukes
     // https.
-    { "https://a.com/", 0, false, "a.com/", "a.com/", false, "", false },
+    { "https://a.com/", 0, false, "a.com/", "a.com/", false, "" },
 
     // Tests that http:// isn't inserted if the user adds to the host.
-    { "a.de/", 0, false, "a.de.com/", "a.de.com/", false, "", false },
+    { "a.de/", 0, false, "a.de.com/", "a.de.com/", false, "" },
 
     // Tests that we don't get double http if the user manually inserts http.
-    { "a.de/", 0, false, "http://a.de/", "http://a.de/", true, "http://a.de/",
-      false },
+    { "a.de/", 0, false, "http://a.de/", "http://a.de/", true, "http://a.de/" },
 
     // Makes sure intranet urls get 'http://' prefixed to them.
-    { "b/foo", 0, true, "b/foo", "http://b/foo", true, "http://b/foo", false },
+    { "b/foo", 0, true, "b/foo", "http://b/foo", true, "http://b/foo" },
 
     // Verifies a search term 'foo' doesn't end up with http.
-    { "www.google.com/search?", 0, false, "foo", "foo", false, "", false },
-
-    // Makes sure extracted search terms are not modified.
-    { "www.google.com/webhp?", 0, true, "hello world", "hello world", false,
-      "", true },
+    { "www.google.com/search?", 0, false, "foo", "foo", false, "" },
   };
 
   for (size_t i = 0; i < arraysize(input); ++i) {
     toolbar_model()->set_text(base::ASCIIToUTF16(input[i].perm_text));
     model()->UpdatePermanentText();
-
-    toolbar_model()->set_perform_search_term_replacement(
-        input[i].extracted_search_terms);
 
     base::string16 result = base::ASCIIToUTF16(input[i].input);
     GURL url;
@@ -391,18 +333,18 @@ TEST_F(OmniboxEditTest, AlternateNavHasHTTP) {
   const AutocompleteMatch match(
       model()->autocomplete_controller()->search_provider(), 0, false,
       AutocompleteMatchType::SEARCH_WHAT_YOU_TYPED);
-  const GURL alternate_nav_url("http://ab%20cd/");
+  const GURL alternate_nav_url("http://abcd/");
 
   model()->OnSetFocus(false);  // Avoids DCHECK in OpenMatch().
-  model()->SetUserText(base::ASCIIToUTF16("http://ab cd"));
-  model()->OpenMatch(match, CURRENT_TAB, alternate_nav_url, base::string16(),
-                     0);
+  model()->SetUserText(base::ASCIIToUTF16("http://abcd"));
+  model()->OpenMatch(match, WindowOpenDisposition::CURRENT_TAB,
+                     alternate_nav_url, base::string16(), 0);
   EXPECT_TRUE(AutocompleteInput::HasHTTPScheme(
       client->alternate_nav_match().fill_into_edit));
 
-  model()->SetUserText(base::ASCIIToUTF16("ab cd"));
-  model()->OpenMatch(match, CURRENT_TAB, alternate_nav_url, base::string16(),
-                     0);
+  model()->SetUserText(base::ASCIIToUTF16("abcd"));
+  model()->OpenMatch(match, WindowOpenDisposition::CURRENT_TAB,
+                     alternate_nav_url, base::string16(), 0);
   EXPECT_TRUE(AutocompleteInput::HasHTTPScheme(
       client->alternate_nav_match().fill_into_edit));
 }

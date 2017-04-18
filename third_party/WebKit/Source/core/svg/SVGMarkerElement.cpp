@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann <zimmermann@kde.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann
+ * <zimmermann@kde.org>
  * Copyright (C) 2004, 2005, 2006, 2007 Rob Buis <buis@kde.org>
  * Copyright (C) Research In Motion Limited 2009-2010. All rights reserved.
  *
@@ -27,116 +28,139 @@
 
 namespace blink {
 
-template<> const SVGEnumerationStringEntries& getStaticStringEntries<SVGMarkerUnitsType>()
-{
-    DEFINE_STATIC_LOCAL(SVGEnumerationStringEntries, entries, ());
-    if (entries.isEmpty()) {
-        entries.append(std::make_pair(SVGMarkerUnitsUserSpaceOnUse, "userSpaceOnUse"));
-        entries.append(std::make_pair(SVGMarkerUnitsStrokeWidth, "strokeWidth"));
-    }
-    return entries;
+template <>
+const SVGEnumerationStringEntries&
+GetStaticStringEntries<SVGMarkerUnitsType>() {
+  DEFINE_STATIC_LOCAL(SVGEnumerationStringEntries, entries, ());
+  if (entries.IsEmpty()) {
+    entries.push_back(
+        std::make_pair(kSVGMarkerUnitsUserSpaceOnUse, "userSpaceOnUse"));
+    entries.push_back(
+        std::make_pair(kSVGMarkerUnitsStrokeWidth, "strokeWidth"));
+  }
+  return entries;
 }
-
 
 inline SVGMarkerElement::SVGMarkerElement(Document& document)
-    : SVGElement(SVGNames::markerTag, document)
-    , SVGFitToViewBox(this)
-    , m_refX(SVGAnimatedLength::create(this, SVGNames::refXAttr, SVGLength::create(SVGLengthMode::Width)))
-    , m_refY(SVGAnimatedLength::create(this, SVGNames::refYAttr, SVGLength::create(SVGLengthMode::Height)))
-    , m_markerWidth(SVGAnimatedLength::create(this, SVGNames::markerWidthAttr, SVGLength::create(SVGLengthMode::Width)))
-    , m_markerHeight(SVGAnimatedLength::create(this, SVGNames::markerHeightAttr, SVGLength::create(SVGLengthMode::Height)))
-    , m_orientAngle(SVGAnimatedAngle::create(this))
-    , m_markerUnits(SVGAnimatedEnumeration<SVGMarkerUnitsType>::create(this, SVGNames::markerUnitsAttr, SVGMarkerUnitsStrokeWidth))
-{
-    // Spec: If the markerWidth/markerHeight attribute is not specified, the effect is as if a value of "3" were specified.
-    m_markerWidth->setDefaultValueAsString("3");
-    m_markerHeight->setDefaultValueAsString("3");
+    : SVGElement(SVGNames::markerTag, document),
+      SVGFitToViewBox(this),
+      ref_x_(
+          SVGAnimatedLength::Create(this,
+                                    SVGNames::refXAttr,
+                                    SVGLength::Create(SVGLengthMode::kWidth))),
+      ref_y_(
+          SVGAnimatedLength::Create(this,
+                                    SVGNames::refYAttr,
+                                    SVGLength::Create(SVGLengthMode::kHeight))),
+      marker_width_(
+          SVGAnimatedLength::Create(this,
+                                    SVGNames::markerWidthAttr,
+                                    SVGLength::Create(SVGLengthMode::kWidth))),
+      marker_height_(
+          SVGAnimatedLength::Create(this,
+                                    SVGNames::markerHeightAttr,
+                                    SVGLength::Create(SVGLengthMode::kHeight))),
+      orient_angle_(SVGAnimatedAngle::Create(this)),
+      marker_units_(SVGAnimatedEnumeration<SVGMarkerUnitsType>::Create(
+          this,
+          SVGNames::markerUnitsAttr,
+          kSVGMarkerUnitsStrokeWidth)) {
+  // Spec: If the markerWidth/markerHeight attribute is not specified, the
+  // effect is as if a value of "3" were specified.
+  marker_width_->SetDefaultValueAsString("3");
+  marker_height_->SetDefaultValueAsString("3");
 
-    addToPropertyMap(m_refX);
-    addToPropertyMap(m_refY);
-    addToPropertyMap(m_markerWidth);
-    addToPropertyMap(m_markerHeight);
-    addToPropertyMap(m_orientAngle);
-    addToPropertyMap(m_markerUnits);
+  AddToPropertyMap(ref_x_);
+  AddToPropertyMap(ref_y_);
+  AddToPropertyMap(marker_width_);
+  AddToPropertyMap(marker_height_);
+  AddToPropertyMap(orient_angle_);
+  AddToPropertyMap(marker_units_);
 }
 
-DEFINE_TRACE(SVGMarkerElement)
-{
-    visitor->trace(m_refX);
-    visitor->trace(m_refY);
-    visitor->trace(m_markerWidth);
-    visitor->trace(m_markerHeight);
-    visitor->trace(m_orientAngle);
-    visitor->trace(m_markerUnits);
-    SVGElement::trace(visitor);
-    SVGFitToViewBox::trace(visitor);
+DEFINE_TRACE(SVGMarkerElement) {
+  visitor->Trace(ref_x_);
+  visitor->Trace(ref_y_);
+  visitor->Trace(marker_width_);
+  visitor->Trace(marker_height_);
+  visitor->Trace(orient_angle_);
+  visitor->Trace(marker_units_);
+  SVGElement::Trace(visitor);
+  SVGFitToViewBox::Trace(visitor);
 }
 
 DEFINE_NODE_FACTORY(SVGMarkerElement)
 
-AffineTransform SVGMarkerElement::viewBoxToViewTransform(float viewWidth, float viewHeight) const
-{
-    return SVGFitToViewBox::viewBoxToViewTransform(viewBox()->currentValue()->value(), preserveAspectRatio()->currentValue(), viewWidth, viewHeight);
+AffineTransform SVGMarkerElement::ViewBoxToViewTransform(
+    float view_width,
+    float view_height) const {
+  return SVGFitToViewBox::ViewBoxToViewTransform(
+      viewBox()->CurrentValue()->Value(), preserveAspectRatio()->CurrentValue(),
+      view_width, view_height);
 }
 
-void SVGMarkerElement::svgAttributeChanged(const QualifiedName& attrName)
-{
-    bool isLengthAttr = attrName == SVGNames::refXAttr
-        || attrName == SVGNames::refYAttr
-        || attrName == SVGNames::markerWidthAttr
-        || attrName == SVGNames::markerHeightAttr;
+void SVGMarkerElement::SvgAttributeChanged(const QualifiedName& attr_name) {
+  bool viewbox_attribute_changed = SVGFitToViewBox::IsKnownAttribute(attr_name);
+  bool length_attribute_changed = attr_name == SVGNames::refXAttr ||
+                                  attr_name == SVGNames::refYAttr ||
+                                  attr_name == SVGNames::markerWidthAttr ||
+                                  attr_name == SVGNames::markerHeightAttr;
+  if (length_attribute_changed)
+    UpdateRelativeLengthsInformation();
 
-    if (isLengthAttr)
-        updateRelativeLengthsInformation();
-
-    if (isLengthAttr || attrName == SVGNames::markerUnitsAttr
-        || attrName == SVGNames::orientAttr
-        || SVGFitToViewBox::isKnownAttribute(attrName)) {
-        SVGElement::InvalidationGuard invalidationGuard(this);
-        LayoutSVGResourceContainer* layoutObject = toLayoutSVGResourceContainer(this->layoutObject());
-        if (layoutObject)
-            layoutObject->invalidateCacheAndMarkForLayout();
-
-        return;
+  if (viewbox_attribute_changed || length_attribute_changed ||
+      attr_name == SVGNames::markerUnitsAttr ||
+      attr_name == SVGNames::orientAttr) {
+    SVGElement::InvalidationGuard invalidation_guard(this);
+    auto* resource_container = ToLayoutSVGResourceContainer(GetLayoutObject());
+    if (resource_container) {
+      // The marker transform depends on both viewbox attributes, and the marker
+      // size attributes (width, height).
+      if (viewbox_attribute_changed || length_attribute_changed)
+        resource_container->SetNeedsTransformUpdate();
+      resource_container->InvalidateCacheAndMarkForLayout();
     }
 
-    SVGElement::svgAttributeChanged(attrName);
+    return;
+  }
+
+  SVGElement::SvgAttributeChanged(attr_name);
 }
 
-void SVGMarkerElement::childrenChanged(const ChildrenChange& change)
-{
-    SVGElement::childrenChanged(change);
+void SVGMarkerElement::ChildrenChanged(const ChildrenChange& change) {
+  SVGElement::ChildrenChanged(change);
 
-    if (change.byParser)
-        return;
+  if (change.by_parser)
+    return;
 
-    if (LayoutObject* object = layoutObject())
-        object->setNeedsLayoutAndFullPaintInvalidation(LayoutInvalidationReason::ChildChanged);
+  if (LayoutObject* object = GetLayoutObject())
+    object->SetNeedsLayoutAndFullPaintInvalidation(
+        LayoutInvalidationReason::kChildChanged);
 }
 
-void SVGMarkerElement::setOrientToAuto()
-{
-    setAttribute(SVGNames::orientAttr, "auto");
+void SVGMarkerElement::setOrientToAuto() {
+  setAttribute(SVGNames::orientAttr, "auto");
 }
 
-void SVGMarkerElement::setOrientToAngle(SVGAngleTearOff* angle)
-{
-    ASSERT(angle);
-    SVGAngle* target = angle->target();
-    setAttribute(SVGNames::orientAttr, AtomicString(target->valueAsString()));
+void SVGMarkerElement::setOrientToAngle(SVGAngleTearOff* angle) {
+  DCHECK(angle);
+  SVGAngle* target = angle->Target();
+  setAttribute(SVGNames::orientAttr, AtomicString(target->ValueAsString()));
 }
 
-LayoutObject* SVGMarkerElement::createLayoutObject(const ComputedStyle&)
-{
-    return new LayoutSVGResourceMarker(this);
+LayoutObject* SVGMarkerElement::CreateLayoutObject(const ComputedStyle&) {
+  return new LayoutSVGResourceMarker(this);
 }
 
-bool SVGMarkerElement::selfHasRelativeLengths() const
-{
-    return m_refX->currentValue()->isRelative()
-        || m_refY->currentValue()->isRelative()
-        || m_markerWidth->currentValue()->isRelative()
-        || m_markerHeight->currentValue()->isRelative();
+bool SVGMarkerElement::SelfHasRelativeLengths() const {
+  return ref_x_->CurrentValue()->IsRelative() ||
+         ref_y_->CurrentValue()->IsRelative() ||
+         marker_width_->CurrentValue()->IsRelative() ||
+         marker_height_->CurrentValue()->IsRelative();
 }
 
-} // namespace blink
+bool SVGMarkerElement::LayoutObjectIsNeeded(const ComputedStyle&) {
+  return IsValid() && HasSVGParent();
+}
+
+}  // namespace blink

@@ -21,6 +21,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/app_mode/startup_app_launcher.h"
+#include "chrome/browser/chromeos/login/enterprise_user_session_metrics.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
@@ -36,6 +37,7 @@
 #include "content/public/browser/notification_service.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
+#include "extensions/common/features/feature_session_type.h"
 #include "net/base/network_change_notifier.h"
 
 namespace chromeos {
@@ -57,9 +59,9 @@ enum KioskLaunchType {
 const int kAppInstallSplashScreenMinTimeMS = 3000;
 
 bool IsEnterpriseManaged() {
-  policy::BrowserPolicyConnectorChromeOS* connector =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  return connector->IsEnterpriseManaged();
+  return g_browser_process->platform_part()
+      ->browser_policy_connector_chromeos()
+      ->IsEnterpriseManaged();
 }
 
 void RecordKioskLaunchUMA(bool is_auto_launch) {
@@ -72,6 +74,13 @@ void RecordKioskLaunchUMA(bool is_auto_launch) {
 
   UMA_HISTOGRAM_ENUMERATION("Kiosk.LaunchType", launch_type,
                             KIOSK_LAUNCH_TYPE_COUNT);
+
+  if (IsEnterpriseManaged()) {
+    enterprise_user_session_metrics::RecordSignInEvent(
+        is_auto_launch
+            ? enterprise_user_session_metrics::SignInEventType::AUTOMATIC_KIOSK
+            : enterprise_user_session_metrics::SignInEventType::MANUAL_KIOSK);
+  }
 }
 
 }  // namespace
@@ -141,11 +150,11 @@ AppLaunchController::AppLaunchController(const std::string& app_id,
       diagnostic_mode_(diagnostic_mode),
       host_(host),
       oobe_ui_(oobe_ui),
-      app_launch_splash_screen_actor_(
-          oobe_ui_->GetAppLaunchSplashScreenActor()) {}
+      app_launch_splash_screen_view_(oobe_ui_->GetAppLaunchSplashScreenView()) {
+}
 
 AppLaunchController::~AppLaunchController() {
-  app_launch_splash_screen_actor_->SetDelegate(NULL);
+  app_launch_splash_screen_view_->SetDelegate(NULL);
 }
 
 void AppLaunchController::StartAppLaunch(bool is_auto_launch) {
@@ -164,25 +173,33 @@ void AppLaunchController::StartAppLaunch(bool is_auto_launch) {
   launch_splash_start_time_ = base::TimeTicks::Now().ToInternalValue();
 
   // TODO(tengs): Add a loading profile app launch state.
-  app_launch_splash_screen_actor_->SetDelegate(this);
-  app_launch_splash_screen_actor_->Show(app_id_);
+  app_launch_splash_screen_view_->SetDelegate(this);
+  app_launch_splash_screen_view_->Show(app_id_);
 
   KioskAppManager::App app;
   CHECK(KioskAppManager::Get());
   CHECK(KioskAppManager::Get()->GetApp(app_id_, &app));
 
+  int auto_launch_delay = -1;
   if (is_auto_launch) {
-    int delay;
     if (!CrosSettings::Get()->GetInteger(
-            kAccountsPrefDeviceLocalAccountAutoLoginDelay, &delay)) {
-      delay = 0;
+            kAccountsPrefDeviceLocalAccountAutoLoginDelay,
+            &auto_launch_delay)) {
+      auto_launch_delay = 0;
     }
-    DCHECK_EQ(0, delay) << "Kiosks do not support non-zero auto-login delays";
+    DCHECK_EQ(0, auto_launch_delay)
+        << "Kiosks do not support non-zero auto-login delays";
 
     // If we are launching a kiosk app with zero delay, mark it appropriately.
-    if (delay == 0)
+    if (auto_launch_delay == 0)
       KioskAppManager::Get()->SetAppWasAutoLaunchedWithZeroDelay(app_id_);
   }
+
+  extensions::SetCurrentFeatureSessionType(
+      is_auto_launch && auto_launch_delay == 0
+          ? extensions::FeatureSessionType::AUTOLAUNCHED_KIOSK
+          : extensions::FeatureSessionType::KIOSK);
+
   kiosk_profile_loader_.reset(
       new KioskProfileLoader(app.account_id, false, this));
   kiosk_profile_loader_->Start();
@@ -263,8 +280,8 @@ void AppLaunchController::OnNetworkConfigRequested(bool requested) {
   if (requested) {
     MaybeShowNetworkConfigureUI();
   } else {
-    app_launch_splash_screen_actor_->UpdateAppLaunchState(
-        AppLaunchSplashScreenActor::APP_LAUNCH_STATE_PREPARING_NETWORK);
+    app_launch_splash_screen_view_->UpdateAppLaunchState(
+        AppLaunchSplashScreenView::APP_LAUNCH_STATE_PREPARING_NETWORK);
     startup_app_launcher_->RestartLauncher();
   }
 }
@@ -364,28 +381,28 @@ void AppLaunchController::MaybeShowNetworkConfigureUI() {
       if (network_config_requested_)
         OnConfigureNetwork();
       else
-        app_launch_splash_screen_actor_->ToggleNetworkConfig(true);
+        app_launch_splash_screen_view_->ToggleNetworkConfig(true);
     } else {
       ShowNetworkConfigureUIWhenReady();
     }
   } else {
-    app_launch_splash_screen_actor_->UpdateAppLaunchState(
-        AppLaunchSplashScreenActor::APP_LAUNCH_STATE_NETWORK_WAIT_TIMEOUT);
+    app_launch_splash_screen_view_->UpdateAppLaunchState(
+        AppLaunchSplashScreenView::APP_LAUNCH_STATE_NETWORK_WAIT_TIMEOUT);
   }
 }
 
 void AppLaunchController::ShowNetworkConfigureUIWhenReady() {
   if (!profile_) {
     show_network_config_ui_after_profile_load_ = true;
-    app_launch_splash_screen_actor_->UpdateAppLaunchState(
-        AppLaunchSplashScreenActor::
+    app_launch_splash_screen_view_->UpdateAppLaunchState(
+        AppLaunchSplashScreenView::
             APP_LAUNCH_STATE_SHOWING_NETWORK_CONFIGURE_UI);
     return;
   }
 
   show_network_config_ui_after_profile_load_ = false;
   showing_network_dialog_ = true;
-  app_launch_splash_screen_actor_->ShowNetworkConfigureUI();
+  app_launch_splash_screen_view_->ShowNetworkConfigureUI();
 }
 
 void AppLaunchController::InitializeNetwork() {
@@ -397,35 +414,39 @@ void AppLaunchController::InitializeNetwork() {
       base::TimeDelta::FromSeconds(network_wait_time_),
       this, &AppLaunchController::OnNetworkWaitTimedout);
 
-  app_launch_splash_screen_actor_->UpdateAppLaunchState(
-      AppLaunchSplashScreenActor::APP_LAUNCH_STATE_PREPARING_NETWORK);
+  app_launch_splash_screen_view_->UpdateAppLaunchState(
+      AppLaunchSplashScreenView::APP_LAUNCH_STATE_PREPARING_NETWORK);
 }
 
 bool AppLaunchController::IsNetworkReady() {
-  return app_launch_splash_screen_actor_->IsNetworkReady();
+  return app_launch_splash_screen_view_->IsNetworkReady();
+}
+
+bool AppLaunchController::ShouldSkipAppInstallation() {
+  return false;
 }
 
 void AppLaunchController::OnLoadingOAuthFile() {
-  app_launch_splash_screen_actor_->UpdateAppLaunchState(
-      AppLaunchSplashScreenActor::APP_LAUNCH_STATE_LOADING_AUTH_FILE);
+  app_launch_splash_screen_view_->UpdateAppLaunchState(
+      AppLaunchSplashScreenView::APP_LAUNCH_STATE_LOADING_AUTH_FILE);
 }
 
 void AppLaunchController::OnInitializingTokenService() {
-  app_launch_splash_screen_actor_->UpdateAppLaunchState(
-      AppLaunchSplashScreenActor::APP_LAUNCH_STATE_LOADING_TOKEN_SERVICE);
+  app_launch_splash_screen_view_->UpdateAppLaunchState(
+      AppLaunchSplashScreenView::APP_LAUNCH_STATE_LOADING_TOKEN_SERVICE);
 }
 
 void AppLaunchController::OnInstallingApp() {
-  app_launch_splash_screen_actor_->UpdateAppLaunchState(
-      AppLaunchSplashScreenActor::APP_LAUNCH_STATE_INSTALLING_APPLICATION);
+  app_launch_splash_screen_view_->UpdateAppLaunchState(
+      AppLaunchSplashScreenView::APP_LAUNCH_STATE_INSTALLING_APPLICATION);
 
   ClearNetworkWaitTimer();
-  app_launch_splash_screen_actor_->ToggleNetworkConfig(false);
+  app_launch_splash_screen_view_->ToggleNetworkConfig(false);
 
   // We have connectivity at this point, so we can skip the network
   // configuration dialog if it is being shown.
   if (showing_network_dialog_) {
-    app_launch_splash_screen_actor_->Show(app_id_);
+    app_launch_splash_screen_view_->Show(app_id_);
     showing_network_dialog_ = false;
     launch_splash_start_time_ = base::TimeTicks::Now().ToInternalValue();
   }
@@ -467,17 +488,25 @@ void AppLaunchController::OnReadyToLaunch() {
 
 void AppLaunchController::OnLaunchSucceeded() {
   DVLOG(1) << "Kiosk launch succeeded, wait for app window.";
-  app_launch_splash_screen_actor_->UpdateAppLaunchState(
-      AppLaunchSplashScreenActor::APP_LAUNCH_STATE_WAITING_APP_WINDOW);
+  app_launch_splash_screen_view_->UpdateAppLaunchState(
+      AppLaunchSplashScreenView::APP_LAUNCH_STATE_WAITING_APP_WINDOW);
 
   DCHECK(!app_window_watcher_);
   app_window_watcher_.reset(new AppWindowWatcher(this, app_id_));
 }
 
 void AppLaunchController::OnLaunchFailed(KioskAppLaunchError::Error error) {
-  LOG(ERROR) << "Kiosk launch failed. Will now shut down."
-             << ", error=" << error;
   DCHECK_NE(KioskAppLaunchError::NONE, error);
+  LOG(ERROR) << "Kiosk launch failed, error=" << error;
+
+  // Reboot on the recoverable cryptohome errors.
+  if (error == KioskAppLaunchError::CRYPTOHOMED_NOT_RUNNING ||
+      error == KioskAppLaunchError::ALREADY_MOUNTED) {
+    // Do not save the error because saved errors would stop app from launching
+    // on the next run.
+    chrome::AttemptRelaunch();
+    return;
+  }
 
   // Saves the error and ends the session to go back to login screen.
   KioskAppLaunchError::Save(error);

@@ -8,13 +8,16 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "cc/layers/layer_iterator.h"
+#include "cc/layers/effect_tree_layer_list_iterator.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
+#include "cc/output/direct_renderer.h"
+#include "cc/surfaces/display.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_picture_layer.h"
 #include "cc/test/layer_tree_test.h"
+#include "cc/test/test_compositor_frame_sink.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "gpu/GLES2/gl2extchromium.h"
 
@@ -52,12 +55,12 @@ class LayerTreeHostCopyRequestTestMultipleRequests
   void WaitForCallback() {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
-        base::Bind(&LayerTreeHostCopyRequestTestMultipleRequests::NextStep,
-                   base::Unretained(this)));
+        base::BindOnce(&LayerTreeHostCopyRequestTestMultipleRequests::NextStep,
+                       base::Unretained(this)));
   }
 
   void NextStep() {
-    int frame = layer_tree_host()->source_frame_number();
+    int frame = layer_tree_host()->SourceFrameNumber();
     switch (frame) {
       case 1:
         child->RequestCopyOfOutput(CopyOutputRequest::CreateBitmapRequest(
@@ -116,7 +119,7 @@ class LayerTreeHostCopyRequestTestMultipleRequests
   }
 
   void CopyOutputCallback(size_t id, std::unique_ptr<CopyOutputResult> result) {
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
     EXPECT_TRUE(result->HasBitmap());
     std::unique_ptr<SkBitmap> bitmap = result->TakeBitmap();
     EXPECT_EQ(result->size().ToString(),
@@ -126,19 +129,20 @@ class LayerTreeHostCopyRequestTestMultipleRequests
 
   void AfterTest() override { EXPECT_EQ(4u, callbacks_.size()); }
 
-  std::unique_ptr<OutputSurface> CreateOutputSurface() override {
+  std::unique_ptr<OutputSurface> CreateDisplayOutputSurfaceOnThread(
+      scoped_refptr<ContextProvider> compositor_context_provider) override {
     if (!use_gl_renderer_) {
       return FakeOutputSurface::CreateSoftware(
           base::WrapUnique(new SoftwareOutputDevice));
     }
 
-    std::unique_ptr<FakeOutputSurface> output_surface =
-        FakeOutputSurface::Create3d(TestContextProvider::Create(),
-                                    TestContextProvider::CreateWorker());
-    TestContextSupport* context_support = static_cast<TestContextSupport*>(
-        output_surface->context_provider()->ContextSupport());
+    scoped_refptr<TestContextProvider> display_context_provider =
+        TestContextProvider::Create();
+    TestContextSupport* context_support = display_context_provider->support();
     context_support->set_out_of_order_callbacks(out_of_order_callbacks_);
-    return std::move(output_surface);
+    display_context_provider->BindToCurrentThread();
+
+    return FakeOutputSurface::Create3d(std::move(display_context_provider));
   }
 
   bool use_gl_renderer_;
@@ -150,43 +154,42 @@ class LayerTreeHostCopyRequestTestMultipleRequests
   scoped_refptr<FakePictureLayer> grand_child;
 };
 
-// Readback can't be done with a delegating renderer.
 TEST_F(LayerTreeHostCopyRequestTestMultipleRequests,
        GLRenderer_RunSingleThread) {
   use_gl_renderer_ = true;
-  RunTest(CompositorMode::SINGLE_THREADED, false);
+  RunTest(CompositorMode::SINGLE_THREADED);
 }
 
 TEST_F(LayerTreeHostCopyRequestTestMultipleRequests,
        GLRenderer_RunMultiThread) {
   use_gl_renderer_ = true;
-  RunTest(CompositorMode::THREADED, false);
+  RunTest(CompositorMode::THREADED);
 }
 
 TEST_F(LayerTreeHostCopyRequestTestMultipleRequests,
        GLRenderer_RunSingleThread_OutOfOrderCallbacks) {
   use_gl_renderer_ = true;
   out_of_order_callbacks_ = true;
-  RunTest(CompositorMode::SINGLE_THREADED, false);
+  RunTest(CompositorMode::SINGLE_THREADED);
 }
 
 TEST_F(LayerTreeHostCopyRequestTestMultipleRequests,
        GLRenderer_RunMultiThread_OutOfOrderCallbacks) {
   use_gl_renderer_ = true;
   out_of_order_callbacks_ = true;
-  RunTest(CompositorMode::THREADED, false);
+  RunTest(CompositorMode::THREADED);
 }
 
 TEST_F(LayerTreeHostCopyRequestTestMultipleRequests,
        SoftwareRenderer_RunSingleThread) {
   use_gl_renderer_ = false;
-  RunTest(CompositorMode::SINGLE_THREADED, false);
+  RunTest(CompositorMode::SINGLE_THREADED);
 }
 
 TEST_F(LayerTreeHostCopyRequestTestMultipleRequests,
        SoftwareRenderer_RunMultiThread) {
   use_gl_renderer_ = false;
-  RunTest(CompositorMode::THREADED, false);
+  RunTest(CompositorMode::THREADED);
 }
 
 // TODO(crbug.com/564832): Remove this test when the workaround it tests is no
@@ -212,7 +215,7 @@ class LayerTreeHostCopyRequestCompletionCausesCommit
   }
 
   void DidCommit() override {
-    int frame = layer_tree_host()->source_frame_number();
+    int frame = layer_tree_host()->SourceFrameNumber();
     switch (frame) {
       case 1:
         layer_->RequestCopyOfOutput(CopyOutputRequest::CreateBitmapRequest(
@@ -240,8 +243,7 @@ class LayerTreeHostCopyRequestCompletionCausesCommit
   scoped_refptr<FakePictureLayer> layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestCompletionCausesCommit);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestCompletionCausesCommit);
 
 class LayerTreeHostCopyRequestTestLayerDestroyed
     : public LayerTreeHostCopyRequestTest {
@@ -269,7 +271,7 @@ class LayerTreeHostCopyRequestTestLayerDestroyed
   }
 
   void DidCommit() override {
-    int frame = layer_tree_host()->source_frame_number();
+    int frame = layer_tree_host()->SourceFrameNumber();
     switch (frame) {
       case 1:
         main_destroyed_->RequestCopyOfOutput(
@@ -320,7 +322,7 @@ class LayerTreeHostCopyRequestTestLayerDestroyed
   }
 
   void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
     EXPECT_TRUE(result->IsEmpty());
     ++callback_count_;
   }
@@ -378,7 +380,7 @@ class LayerTreeHostCopyRequestTestInHiddenSubtree
 
   void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {
     ++callback_count_;
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
     EXPECT_EQ(copy_layer_->bounds().ToString(), result->size().ToString())
         << callback_count_;
     switch (callback_count_) {
@@ -433,8 +435,7 @@ class LayerTreeHostCopyRequestTestInHiddenSubtree
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestInHiddenSubtree);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestInHiddenSubtree);
 
 class LayerTreeHostTestHiddenSurfaceNotAllocatedForSubtreeCopyRequest
     : public LayerTreeHostCopyRequestTest {
@@ -463,8 +464,17 @@ class LayerTreeHostTestHiddenSurfaceNotAllocatedForSubtreeCopyRequest
     client_.set_bounds(root_->bounds());
   }
 
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
+      scoped_refptr<ContextProvider> compositor_context_provider,
+      scoped_refptr<ContextProvider> worker_context_provider) override {
+    auto frame_sink = LayerTreeHostCopyRequestTest::CreateCompositorFrameSink(
+        std::move(compositor_context_provider),
+        std::move(worker_context_provider));
+    frame_sink_ = frame_sink.get();
+    return frame_sink;
+  }
+
   void BeginTest() override {
-    did_draw_ = false;
     PostSetNeedsCommitToMainThread();
 
     copy_layer_->RequestCopyOfOutput(
@@ -475,50 +485,65 @@ class LayerTreeHostTestHiddenSurfaceNotAllocatedForSubtreeCopyRequest
   }
 
   void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
     EXPECT_EQ(copy_layer_->bounds().ToString(), result->size().ToString());
     EndTest();
   }
 
-  void DrawLayersOnThread(LayerTreeHostImpl* host_impl) override {
-    Renderer* renderer = host_impl->renderer();
+  void DisplayWillDrawAndSwapOnThread(
+      bool will_draw_and_swap,
+      const RenderPassList& render_passes) override {
+    EXPECT_TRUE(will_draw_and_swap) << did_swap_;
+    if (did_swap_) {
+      // TODO(crbug.com/564832): Ignore the extra frame that occurs due to copy
+      // completion. This can be removed when the extra commit is removed.
+      EXPECT_EQ(1u, render_passes.size());
+      return;
+    }
 
-    LayerImpl* parent =
-        host_impl->active_tree()->LayerById(parent_layer_->id());
-    LayerImpl* copy_layer =
-        host_impl->active_tree()->LayerById(copy_layer_->id());
+    EXPECT_EQ(2u, render_passes.size());
+    // The root pass is the back of the list.
+    copy_layer_render_pass_id = render_passes[0]->id;
+    parent_render_pass_id = render_passes[1]->id;
+  }
+
+  void DisplayDidDrawAndSwapOnThread() override {
+    DirectRenderer* renderer = frame_sink_->display()->renderer_for_testing();
 
     // |parent| owns a surface, but it was hidden and not part of the copy
     // request so it should not allocate any resource.
-    EXPECT_FALSE(renderer->HasAllocatedResourcesForTesting(
-        parent->render_surface()->GetRenderPassId()));
+    EXPECT_FALSE(
+        renderer->HasAllocatedResourcesForTesting(parent_render_pass_id));
 
-    // |copy_layer| should have been rendered to a texture since it was needed
-    // for a copy request.
-    if (did_draw_) {
-      // TODO(crbug.com/564832): Ignore the extra frame that occurs due to copy
-      // completion. This can be removed when the extra commit is removed.
-      EXPECT_FALSE(copy_layer->render_surface());
+    // TODO(crbug.com/564832): Ignore the extra frame that occurs due to copy
+    // completion. This can be removed when the extra commit is removed.
+    if (did_swap_) {
+      EXPECT_FALSE(
+          renderer->HasAllocatedResourcesForTesting(copy_layer_render_pass_id));
     } else {
-      EXPECT_TRUE(renderer->HasAllocatedResourcesForTesting(
-          copy_layer->render_surface()->GetRenderPassId()));
+      // |copy_layer| should have been rendered to a texture since it was needed
+      // for a copy request.
+      EXPECT_TRUE(
+          renderer->HasAllocatedResourcesForTesting(copy_layer_render_pass_id));
     }
 
-    did_draw_ = true;
+    did_swap_ = true;
   }
 
-  void AfterTest() override { EXPECT_TRUE(did_draw_); }
+  void AfterTest() override { EXPECT_TRUE(did_swap_); }
 
+  int parent_render_pass_id = 0;
+  int copy_layer_render_pass_id = 0;
+  TestCompositorFrameSink* frame_sink_ = nullptr;
+  bool did_swap_ = false;
   FakeContentLayerClient client_;
-  bool did_draw_;
   scoped_refptr<FakePictureLayer> root_;
   scoped_refptr<FakePictureLayer> grand_parent_layer_;
   scoped_refptr<FakePictureLayer> parent_layer_;
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
 
-// No output to copy for delegated renderers.
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
+SINGLE_AND_MULTI_THREAD_TEST_F(
     LayerTreeHostTestHiddenSurfaceNotAllocatedForSubtreeCopyRequest);
 
 class LayerTreeHostCopyRequestTestClippedOut
@@ -554,7 +579,7 @@ class LayerTreeHostCopyRequestTestClippedOut
   void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {
     // We should still get the content even if the copy requested layer was
     // completely clipped away.
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
     EXPECT_EQ(gfx::Size(10, 10).ToString(), result->size().ToString());
     EndTest();
   }
@@ -567,12 +592,15 @@ class LayerTreeHostCopyRequestTestClippedOut
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestClippedOut);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestClippedOut);
 
 class LayerTreeHostCopyRequestTestScaledLayer
     : public LayerTreeHostCopyRequestTest {
  protected:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->layer_transforms_should_scale_layer_contents = true;
+  }
+
   void SetupTree() override {
     root_ = Layer::Create();
     root_->SetBounds(gfx::Size(20, 20));
@@ -620,8 +648,7 @@ class LayerTreeHostCopyRequestTestScaledLayer
   scoped_refptr<FakePictureLayer> child_layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestScaledLayer);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestScaledLayer);
 
 class LayerTreeHostTestAsyncTwoReadbacksWithoutDraw
     : public LayerTreeHostCopyRequestTest {
@@ -665,7 +692,7 @@ class LayerTreeHostTestAsyncTwoReadbacksWithoutDraw
   }
 
   void DidCommit() override {
-    if (layer_tree_host()->source_frame_number() == 1) {
+    if (layer_tree_host()->SourceFrameNumber() == 1) {
       // Allow drawing.
       layer_tree_host()->SetViewportSize(gfx::Size(root_->bounds()));
 
@@ -674,7 +701,7 @@ class LayerTreeHostTestAsyncTwoReadbacksWithoutDraw
   }
 
   void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
 
     // The first frame can't be drawn.
     switch (callback_count_) {
@@ -704,21 +731,16 @@ class LayerTreeHostTestAsyncTwoReadbacksWithoutDraw
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostTestAsyncTwoReadbacksWithoutDraw);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestAsyncTwoReadbacksWithoutDraw);
 
-class LayerTreeHostCopyRequestTestLostOutputSurface
+class LayerTreeHostCopyRequestTestDeleteTexture
     : public LayerTreeHostCopyRequestTest {
  protected:
-  std::unique_ptr<OutputSurface> CreateOutputSurface() override {
-    if (!first_context_provider_) {
-      first_context_provider_ = TestContextProvider::Create();
-      return FakeOutputSurface::Create3d(first_context_provider_);
-    }
-
-    EXPECT_FALSE(second_context_provider_);
-    second_context_provider_ = TestContextProvider::Create();
-    return FakeOutputSurface::Create3d(second_context_provider_);
+  std::unique_ptr<OutputSurface> CreateDisplayOutputSurfaceOnThread(
+      scoped_refptr<ContextProvider> compositor_context_provider) override {
+    display_context_provider_ = TestContextProvider::Create();
+    display_context_provider_->BindToCurrentThread();
+    return FakeOutputSurface::Create3d(display_context_provider_);
   }
 
   void SetupTree() override {
@@ -738,7 +760,7 @@ class LayerTreeHostCopyRequestTestLostOutputSurface
 
   void ReceiveCopyRequestOutputAndCommit(
       std::unique_ptr<CopyOutputResult> result) {
-    EXPECT_TRUE(layer_tree_host()->task_runner_provider()->IsMainThread());
+    EXPECT_TRUE(layer_tree_host()->GetTaskRunnerProvider()->IsMainThread());
     EXPECT_EQ(gfx::Size(10, 10).ToString(), result->size().ToString());
     EXPECT_TRUE(result->HasTexture());
 
@@ -752,7 +774,7 @@ class LayerTreeHostCopyRequestTestLostOutputSurface
 
   void InsertCopyRequest() {
     copy_layer_->RequestCopyOfOutput(CopyOutputRequest::CreateRequest(
-        base::Bind(&LayerTreeHostCopyRequestTestLostOutputSurface::
+        base::Bind(&LayerTreeHostCopyRequestTestDeleteTexture::
                        ReceiveCopyRequestOutputAndCommit,
                    base::Unretained(this))));
   }
@@ -762,108 +784,120 @@ class LayerTreeHostCopyRequestTestLostOutputSurface
     result_ = nullptr;
 
     ImplThreadTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&LayerTreeHostCopyRequestTestLostOutputSurface::
-                                  CheckNumTexturesAfterReadbackDestroyed,
-                              base::Unretained(this)));
+        FROM_HERE, base::BindOnce(&LayerTreeHostCopyRequestTestDeleteTexture::
+                                      CheckNumTexturesAfterReadbackDestroyed,
+                                  base::Unretained(this)));
   }
 
   void CheckNumTexturesAfterReadbackDestroyed() {
-    // After the loss we had |num_textures_after_loss_| many textures, but
-    // releasing the copy output request will cause the texture in the request
-    // to be released, so we should have 1 less by now.
-    EXPECT_EQ(num_textures_after_loss_ - 1,
-              first_context_provider_->TestContext3d()->NumTextures());
+    // After the copy we had |num_textures_after_readback_| many textures, but
+    // releasing the copy output request should cause the texture in the request
+    // to be destroyed by the compositor, so we should have 1 less by now.
+    EXPECT_EQ(num_textures_after_readback_ - 1,
+              display_context_provider_->TestContext3d()->NumTextures());
+
+    // Drop the reference to the context provider on the compositor thread.
+    display_context_provider_ = nullptr;
     EndTest();
   }
 
-  void SwapBuffersCompleteOnThread() override {
+  void DisplayDidDrawAndSwapOnThread() override {
     switch (num_swaps_++) {
       case 0:
-        // The layers have been drawn, so their textures have been allocated.
+        // The layers have been drawn, so any textures required for drawing have
+        // been allocated.
         EXPECT_FALSE(result_);
         num_textures_without_readback_ =
-            first_context_provider_->TestContext3d()->NumTextures();
+            display_context_provider_->TestContext3d()->NumTextures();
 
         // Request a copy of the layer. This will use another texture.
         MainThreadTaskRunner()->PostTask(
             FROM_HERE,
-            base::Bind(&LayerTreeHostCopyRequestTestLostOutputSurface::
-                           InsertCopyRequest,
-                       base::Unretained(this)));
+            base::BindOnce(
+                &LayerTreeHostCopyRequestTestDeleteTexture::InsertCopyRequest,
+                base::Unretained(this)));
         break;
       case 1:
-        // We did a readback, so there will be a readback texture around now.
-        EXPECT_LT(num_textures_without_readback_,
-                  first_context_provider_->TestContext3d()->NumTextures());
-
-        // The copy request will be serviced and the result sent to
-        // ReceiveCopyRequestOutputAndCommit, which posts a new commit causing
-        // the test to advance to the next case.
+        // Copy requests cause a followup commit and draw without the separate
+        // RenderPass required. This changes the number of active textures. So
+        // wait for that draw before counting textures and proceeding.
         break;
       case 2:
-        // The readback texture is collected.
-        EXPECT_TRUE(result_);
-
-        // Lose the output surface.
-        first_context_provider_->TestContext3d()->loseContextCHROMIUM(
-            GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
-        break;
-      case 3:
-        // The output surface has been recreated.
-        EXPECT_TRUE(second_context_provider_);
-
-        num_textures_after_loss_ =
-            first_context_provider_->TestContext3d()->NumTextures();
+        // We did a readback, so there will be a readback texture around now.
+        num_textures_after_readback_ =
+            display_context_provider_->TestContext3d()->NumTextures();
+        EXPECT_LT(num_textures_without_readback_, num_textures_after_readback_);
 
         // Now destroy the CopyOutputResult, releasing the texture inside back
         // to the compositor. Then check the resulting number of allocated
         // textures.
         MainThreadTaskRunner()->PostTask(
             FROM_HERE,
-            base::Bind(&LayerTreeHostCopyRequestTestLostOutputSurface::
-                           DestroyCopyResultAndCheckNumTextures,
-                       base::Unretained(this)));
+            base::BindOnce(&LayerTreeHostCopyRequestTestDeleteTexture::
+                               DestroyCopyResultAndCheckNumTextures,
+                           base::Unretained(this)));
         break;
     }
   }
 
   void AfterTest() override {}
 
-  scoped_refptr<TestContextProvider> first_context_provider_;
-  scoped_refptr<TestContextProvider> second_context_provider_;
+  scoped_refptr<TestContextProvider> display_context_provider_;
   int num_swaps_ = 0;
   size_t num_textures_without_readback_ = 0;
-  size_t num_textures_after_loss_ = 0;
+  size_t num_textures_after_readback_ = 0;
   FakeContentLayerClient client_;
   scoped_refptr<FakePictureLayer> root_;
   scoped_refptr<FakePictureLayer> copy_layer_;
   std::unique_ptr<CopyOutputResult> result_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestLostOutputSurface);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestDeleteTexture);
 
 class LayerTreeHostCopyRequestTestCountTextures
     : public LayerTreeHostCopyRequestTest {
  protected:
-  std::unique_ptr<OutputSurface> CreateOutputSurface() override {
-    context_provider_ = TestContextProvider::Create();
-    return FakeOutputSurface::Create3d(context_provider_);
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    // Always allocate only a single texture at a time through ResourceProvider.
+    settings->renderer_settings.texture_id_allocation_chunk_size = 1;
+  }
+
+  std::unique_ptr<OutputSurface> CreateDisplayOutputSurfaceOnThread(
+      scoped_refptr<ContextProvider> compositor_context_provider) override {
+    // These tests expect the LayerTreeHostImpl to share a context with
+    // the Display so that sync points are not needed and the texture counts
+    // are visible together.
+    // Since this test does not override CreateCompositorFrameSink, the
+    // |compositor_context_provider| will be a TestContextProvider.
+    display_context_provider_ =
+        static_cast<TestContextProvider*>(compositor_context_provider.get());
+    return FakeOutputSurface::Create3d(std::move(compositor_context_provider));
   }
 
   void SetupTree() override {
-    client_.set_fill_with_nonsolid_color(true);
+    // The layers in this test have solid color content, so they don't
+    // actually allocate any textures, making counting easier.
 
-    root_ = FakePictureLayer::Create(&client_);
+    root_ = FakePictureLayer::Create(&root_client_);
     root_->SetBounds(gfx::Size(20, 20));
+    root_client_.set_bounds(root_->bounds());
 
-    copy_layer_ = FakePictureLayer::Create(&client_);
+    copy_layer_ = FakePictureLayer::Create(&copy_client_);
     copy_layer_->SetBounds(gfx::Size(10, 10));
+    copy_client_.set_bounds(copy_layer_->bounds());
+    PaintFlags flags;
+    flags.setColor(SK_ColorRED);
+    // Ensure the layer isn't completely transparent so the RenderPass isn't
+    // optimized away.
+    copy_client_.add_draw_rect(gfx::Rect(0, 0, 10, 10), flags);
+    // Doing a copy makes the layer have a render surface which can cause
+    // texture allocations. So get those allocations out of the way in the
+    // first frame by forcing it to have a render surface.
+    copy_layer_->SetForceRenderSurfaceForTesting(true);
     root_->AddChild(copy_layer_);
 
     layer_tree_host()->SetRootLayer(root_);
     LayerTreeHostCopyRequestTest::SetupTree();
-    client_.set_bounds(root_->bounds());
   }
 
   void BeginTest() override {
@@ -874,45 +908,51 @@ class LayerTreeHostCopyRequestTestCountTextures
   virtual void RequestCopy(Layer* layer) = 0;
 
   void DidCommit() override {
-    switch (layer_tree_host()->source_frame_number()) {
+    switch (layer_tree_host()->SourceFrameNumber()) {
       case 1:
-        // The layers have been pushed to the impl side. The layer textures have
-        // been allocated.
+        // The layers have been pushed to the impl side and drawn. Any textures
+        // that are created in that process will have been allocated.
         RequestCopy(copy_layer_.get());
         break;
     }
   }
 
-  void SwapBuffersCompleteOnThread() override {
+  void DisplayDidDrawAndSwapOnThread() override {
     switch (num_swaps_++) {
       case 0:
-        // The layers have been drawn, so their textures have been allocated.
+        // The first frame has been drawn, so textures for drawing have been
+        // allocated.
         num_textures_without_readback_ =
-            context_provider_->TestContext3d()->NumTextures();
+            display_context_provider_->TestContext3d()->NumTextures();
         break;
       case 1:
         // We did a readback, so there will be a readback texture around now.
         num_textures_with_readback_ =
-            context_provider_->TestContext3d()->NumTextures();
+            display_context_provider_->TestContext3d()->NumTextures();
         waited_sync_token_after_readback_ =
-            context_provider_->TestContext3d()->last_waited_sync_token();
+            display_context_provider_->TestContext3d()
+                ->last_waited_sync_token();
 
+        // End the test after main thread has a chance to hear about the
+        // readback.
         MainThreadTaskRunner()->PostTask(
             FROM_HERE,
-            base::Bind(&LayerTreeHostCopyRequestTestCountTextures::DoEndTest,
-                       base::Unretained(this)));
+            base::BindOnce(
+                &LayerTreeHostCopyRequestTestCountTextures::DoEndTest,
+                base::Unretained(this)));
         break;
     }
   }
 
   virtual void DoEndTest() { EndTest(); }
 
-  scoped_refptr<TestContextProvider> context_provider_;
+  scoped_refptr<TestContextProvider> display_context_provider_;
   int num_swaps_ = 0;
   size_t num_textures_without_readback_ = 0;
   size_t num_textures_with_readback_ = 0;
   gpu::SyncToken waited_sync_token_after_readback_;
-  FakeContentLayerClient client_;
+  FakeContentLayerClient root_client_;
+  FakeContentLayerClient copy_client_;
   scoped_refptr<FakePictureLayer> root_;
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
@@ -949,8 +989,7 @@ class LayerTreeHostCopyRequestTestCreatesTexture
   std::unique_ptr<SingleReleaseCallback> release_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestCreatesTexture);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestCreatesTexture);
 
 class LayerTreeHostCopyRequestTestProvideTexture
     : public LayerTreeHostCopyRequestTestCountTextures {
@@ -1006,8 +1045,7 @@ class LayerTreeHostCopyRequestTestProvideTexture
   gpu::SyncToken sync_token_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestProvideTexture);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestProvideTexture);
 
 class LayerTreeHostCopyRequestTestDestroyBeforeCopy
     : public LayerTreeHostCopyRequestTest {
@@ -1038,12 +1076,13 @@ class LayerTreeHostCopyRequestTestDestroyBeforeCopy
   void DidActivateTreeOnThread(LayerTreeHostImpl* impl) override {
     MainThreadTaskRunner()->PostTask(
         FROM_HERE,
-        base::Bind(&LayerTreeHostCopyRequestTestDestroyBeforeCopy::DidActivate,
-                   base::Unretained(this)));
+        base::BindOnce(
+            &LayerTreeHostCopyRequestTestDestroyBeforeCopy::DidActivate,
+            base::Unretained(this)));
   }
 
   void DidActivate() {
-    switch (layer_tree_host()->source_frame_number()) {
+    switch (layer_tree_host()->SourceFrameNumber()) {
       case 1: {
         EXPECT_EQ(0, callback_count_);
         // Put a copy request on the layer, but then don't allow any
@@ -1084,8 +1123,7 @@ class LayerTreeHostCopyRequestTestDestroyBeforeCopy
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestDestroyBeforeCopy);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestDestroyBeforeCopy);
 
 class LayerTreeHostCopyRequestTestShutdownBeforeCopy
     : public LayerTreeHostCopyRequestTest {
@@ -1116,12 +1154,13 @@ class LayerTreeHostCopyRequestTestShutdownBeforeCopy
   void DidActivateTreeOnThread(LayerTreeHostImpl* impl) override {
     MainThreadTaskRunner()->PostTask(
         FROM_HERE,
-        base::Bind(&LayerTreeHostCopyRequestTestShutdownBeforeCopy::DidActivate,
-                   base::Unretained(this)));
+        base::BindOnce(
+            &LayerTreeHostCopyRequestTestShutdownBeforeCopy::DidActivate,
+            base::Unretained(this)));
   }
 
   void DidActivate() {
-    switch (layer_tree_host()->source_frame_number()) {
+    switch (layer_tree_host()->SourceFrameNumber()) {
       case 1: {
         EXPECT_EQ(0, callback_count_);
         // Put a copy request on the layer, but then don't allow any
@@ -1142,8 +1181,9 @@ class LayerTreeHostCopyRequestTestShutdownBeforeCopy
         // the main thread.
         MainThreadTaskRunner()->PostTask(
             FROM_HERE,
-            base::Bind(&LayerTreeHostCopyRequestTestShutdownBeforeCopy::EndTest,
-                       base::Unretained(this)));
+            base::BindOnce(
+                &LayerTreeHostCopyRequestTestShutdownBeforeCopy::EndTest,
+                base::Unretained(this)));
         break;
     }
   }
@@ -1156,8 +1196,7 @@ class LayerTreeHostCopyRequestTestShutdownBeforeCopy
   scoped_refptr<FakePictureLayer> copy_layer_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
-    LayerTreeHostCopyRequestTestShutdownBeforeCopy);
+SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostCopyRequestTestShutdownBeforeCopy);
 
 class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
     : public LayerTreeHostCopyRequestTest {
@@ -1185,7 +1224,7 @@ class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
 
   void DidCommit() override {
     // Send a copy request after the first commit.
-    if (layer_tree_host()->source_frame_number() == 1) {
+    if (layer_tree_host()->SourceFrameNumber() == 1) {
       child_->RequestCopyOfOutput(
           CopyOutputRequest::CreateBitmapRequest(base::Bind(
               &LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest::
@@ -1202,14 +1241,12 @@ class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
 
     bool saw_root = false;
     bool saw_child = false;
-    for (LayerIterator it =
-             LayerIterator::Begin(frame_data->render_surface_layer_list);
-         it != LayerIterator::End(frame_data->render_surface_layer_list);
-         ++it) {
-      if (it.represents_itself()) {
-        if (*it == root)
+    for (EffectTreeLayerListIterator it(host_impl->active_tree());
+         it.state() != EffectTreeLayerListIterator::State::END; ++it) {
+      if (it.state() == EffectTreeLayerListIterator::State::LAYER) {
+        if (it.current_layer() == root)
           saw_root = true;
-        else if (*it == child)
+        else if (it.current_layer() == child)
           saw_child = true;
         else
           NOTREACHED();
@@ -1230,7 +1267,8 @@ class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
         EXPECT_TRUE(saw_root);
         EXPECT_TRUE(saw_child);
         // Make another draw happen after doing the copy request.
-        host_impl->SetNeedsRedrawRect(gfx::Rect(1, 1));
+        host_impl->SetViewportDamage(gfx::Rect(1, 1));
+        host_impl->SetNeedsRedraw();
         break;
       case 3:
         // If LayerTreeHostImpl does the wrong thing, it will try to draw the
@@ -1240,13 +1278,12 @@ class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
 
         // End the test! Don't race with copy request callbacks, so post the end
         // to the main thread.
-        draw_happened_ = true;
         MainThreadTaskRunner()->PostTask(
             FROM_HERE,
-            base::Bind(
+            base::BindOnce(
                 &LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest::
                     TryEndTest,
-                base::Unretained(this)));
+                base::Unretained(this), WhatHappened::DRAW));
         break;
     }
     return draw_result;
@@ -1254,11 +1291,23 @@ class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
 
   void CopyOutputCallback(std::unique_ptr<CopyOutputResult> result) {
     EXPECT_FALSE(TestEnded());
-    copy_happened_ = true;
-    TryEndTest();
+    TryEndTest(WhatHappened::COPY);
   }
 
-  void TryEndTest() {
+  enum class WhatHappened {
+    DRAW,
+    COPY,
+  };
+
+  void TryEndTest(WhatHappened what) {
+    switch (what) {
+      case WhatHappened::DRAW:
+        draw_happened_ = true;
+        break;
+      case WhatHappened::COPY:
+        copy_happened_ = true;
+        break;
+    }
     if (draw_happened_ && copy_happened_)
       EndTest();
   }
@@ -1272,7 +1321,7 @@ class LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest
   bool draw_happened_;
 };
 
-SINGLE_AND_MULTI_THREAD_DIRECT_RENDERER_TEST_F(
+SINGLE_AND_MULTI_THREAD_TEST_F(
     LayerTreeHostCopyRequestTestMultipleDrawsHiddenCopyRequest);
 
 }  // namespace

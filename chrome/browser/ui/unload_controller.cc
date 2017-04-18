@@ -17,6 +17,12 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/features/features.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "extensions/browser/extension_registry.h"
+#include "extensions/common/constants.h"
+#endif  // (ENABLE_EXTENSIONS)
 
 namespace chrome {
 
@@ -51,6 +57,19 @@ bool UnloadController::ShouldRunUnloadEventsHelper(
 }
 
 bool UnloadController::RunUnloadEventsHelper(content::WebContents* contents) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  // Don't run for extensions that are disabled or uninstalled; the tabs will
+  // be killed if they make any network requests, and the extension shouldn't
+  // be doing any work if it's removed.
+  GURL url = contents->GetLastCommittedURL();
+  if (url.SchemeIs(extensions::kExtensionScheme) &&
+      !extensions::ExtensionRegistry::Get(browser_->profile())
+           ->enabled_extensions()
+           .GetExtensionOrAppByURL(url)) {
+    return false;
+  }
+#endif  // (ENABLE_EXTENSIONS)
+
   // Special case for when we quit an application. The devtools window can
   // close if it's beforeunload event has already fired which will happen due
   // to the interception of it's content's beforeunload.
@@ -101,7 +120,7 @@ bool UnloadController::BeforeUnloadFired(content::WebContents* contents,
     // Now that beforeunload has fired, put the tab on the queue to fire
     // unload.
     tabs_needing_unload_fired_.insert(contents);
-    ProcessPendingTabs();
+    ProcessPendingTabs(false);
     // We want to handle firing the unload event ourselves since we want to
     // fire all the beforeunload events before attempting to fire the unload
     // events should the user cancel closing the browser.
@@ -144,11 +163,12 @@ bool UnloadController::ShouldCloseWindow() {
 
   // Cases 2 and 3.
   on_close_confirmed_.Reset();
-  ProcessPendingTabs();
+  ProcessPendingTabs(false);
   return false;
 }
 
-bool UnloadController::CallBeforeUnloadHandlers(
+bool UnloadController::TryToCloseWindow(
+    bool skip_beforeunload,
     const base::Callback<void(bool)>& on_close_confirmed) {
   // The devtools browser gets its beforeunload events as the results of
   // intercepting events from the inspected tab, so don't send them here as
@@ -160,11 +180,11 @@ bool UnloadController::CallBeforeUnloadHandlers(
   is_attempting_to_close_browser_ = true;
   on_close_confirmed_ = on_close_confirmed;
 
-  ProcessPendingTabs();
-  return true;
+  ProcessPendingTabs(skip_beforeunload);
+  return !skip_beforeunload;
 }
 
-void UnloadController::ResetBeforeUnloadHandlers() {
+void UnloadController::ResetTryToCloseWindow() {
   if (!is_calling_before_unload_handlers())
     return;
   CancelWindowClose();
@@ -225,7 +245,8 @@ void UnloadController::Observe(int type,
 ////////////////////////////////////////////////////////////////////////////////
 // UnloadController, TabStripModelObserver implementation:
 
-void UnloadController::TabInsertedAt(content::WebContents* contents,
+void UnloadController::TabInsertedAt(TabStripModel* tab_strip_model,
+                                     content::WebContents* contents,
                                      int index,
                                      bool foreground) {
   TabAttachedImpl(contents);
@@ -270,7 +291,10 @@ void UnloadController::TabDetachedImpl(content::WebContents* contents) {
                     content::Source<content::WebContents>(contents));
 }
 
-void UnloadController::ProcessPendingTabs() {
+void UnloadController::ProcessPendingTabs(bool skip_beforeunload) {
+  // Cancel posted/queued ProcessPendingTabs task if there is any.
+  weak_factory_.InvalidateWeakPtrs();
+
   if (!is_attempting_to_close_browser_) {
     // Because we might invoke this after a delay it's possible for the value of
     // is_attempting_to_close_browser_ to have changed since we scheduled the
@@ -278,11 +302,17 @@ void UnloadController::ProcessPendingTabs() {
     return;
   }
 
-  if (HasCompletedUnloadProcessing()) {
+  if (HasCompletedUnloadProcessing() && !TabsNeedBeforeUnloadFired()) {
     // We've finished all the unload events and can proceed to close the
     // browser.
     browser_->OnWindowClosing();
     return;
+  }
+
+  if (skip_beforeunload) {
+    tabs_needing_unload_fired_.insert(tabs_needing_before_unload_fired_.begin(),
+                                      tabs_needing_before_unload_fired_.end());
+    tabs_needing_before_unload_fired_.clear();
   }
 
   // Process beforeunload tabs first. When that queue is empty, process
@@ -309,7 +339,8 @@ void UnloadController::ProcessPendingTabs() {
     // is complete.
     if (tabs_needing_unload_fired_.empty())
       on_close_confirmed_.Reset();
-    on_close_confirmed.Run(true);
+    if (!skip_beforeunload)
+      on_close_confirmed.Run(true);
   } else if (!tabs_needing_unload_fired_.empty()) {
     // We've finished firing all beforeunload events and can proceed with unload
     // events.
@@ -357,11 +388,14 @@ void UnloadController::ClearUnloadState(content::WebContents* web_contents,
     RemoveFromSet(&tabs_needing_before_unload_fired_, web_contents);
     RemoveFromSet(&tabs_needing_unload_fired_, web_contents);
     if (process_now) {
-      ProcessPendingTabs();
+      ProcessPendingTabs(false);
     } else {
+      // Do not post a new task if there is already any.
+      if (weak_factory_.HasWeakPtrs())
+        return;
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(&UnloadController::ProcessPendingTabs,
-                                weak_factory_.GetWeakPtr()));
+                                weak_factory_.GetWeakPtr(), false));
     }
   }
 }

@@ -5,6 +5,7 @@
 import json
 import sys
 
+import fieldtrial_to_struct
 
 def _hex(ch):
   hv = hex(ord(ch)).replace('0x', '')
@@ -31,58 +32,66 @@ def _FindDuplicates(entries):
   return duplicates
 
 def _CheckForDuplicateFeatures(enable_features, disable_features):
+  enable_features = [f.split('<')[0] for f in enable_features]
   enable_features_set = set(enable_features)
   if len(enable_features_set) != len(enable_features):
     raise Exception('Duplicate feature(s) in enable_features: ' +
                     ', '.join(_FindDuplicates(enable_features)))
+
+  disable_features = [f.split('<')[0] for f in disable_features]
   disable_features_set = set(disable_features)
   if len(disable_features_set) != len(disable_features):
     raise Exception('Duplicate feature(s) in disable_features: ' +
                     ', '.join(_FindDuplicates(disable_features)))
+
   features_in_both = enable_features_set.intersection(disable_features_set)
   if len(features_in_both) > 0:
     raise Exception('Conflicting features set as both enabled and disabled: ' +
                     ', '.join(features_in_both))
 
-# Generate a list of command-line switches to enable field trials defined in
-# fieldtrial_testing_config_*.json.
-def GenerateArgs(config_path):
+# Generate a list of command-line switches to enable field trials for the
+# provided config_path and platform.
+def GenerateArgs(config_path, platform):
   try:
-    with open(config_path, 'r') as base_file:
-      variations = json.load(base_file)
+    with open(config_path, 'r') as config_file:
+      config = json.load(config_file)
   except (IOError, ValueError):
     return []
 
-  field_trials = []
+  platform_studies = fieldtrial_to_struct.ConfigToStudies(config, platform)
+
+  studies = []
   params = []
   enable_features = []
   disable_features = []
-  for trial, groups in variations.iteritems():
-    if not len(groups):
-      continue
-    # For now, only take the first group.
-    group = groups[0]
-    trial_group = [trial, group['group_name']]
-    field_trials.extend(trial_group)
+
+  for study in platform_studies:
+    study_name = study['name']
+    experiments = study['experiments']
+    # For now, only take the first experiment.
+    experiment = experiments[0]
+    selected_study = [study_name, experiment['name']]
+    studies.extend(selected_study)
     param_list = []
-    if 'params' in group:
-      for key, value in group['params'].iteritems():
-        param_list.append(key)
-        param_list.append(value)
+    if 'params' in experiment:
+      for param in experiment['params']:
+        param_list.append(param['key'])
+        param_list.append(param['value'])
     if len(param_list):
        # Escape the variables for the command-line.
-       trial_group = [_escape(x) for x in trial_group]
+       selected_study = [_escape(x) for x in selected_study]
        param_list = [_escape(x) for x in param_list]
-       param = '%s:%s' % ('.'.join(trial_group), '/'.join(param_list))
+       param = '%s:%s' % ('.'.join(selected_study), '/'.join(param_list))
        params.append(param)
-    if 'enable_features' in group:
-      enable_features.extend(group['enable_features'])
-    if 'disable_features' in group:
-      disable_features.extend(group['disable_features'])
-  if not len(field_trials):
+    for feature in experiment.get('enable_features', []):
+      enable_features.append(feature + '<' + study_name)
+    for feature in experiment.get('disable_features', []):
+      disable_features.append(feature + '<' + study_name)
+
+  if not len(studies):
     return []
   _CheckForDuplicateFeatures(enable_features, disable_features)
-  args = ['--force-fieldtrials=%s' % '/'.join(field_trials)]
+  args = ['--force-fieldtrials=%s' % '/'.join(studies)]
   if len(params):
     args.append('--force-fieldtrial-params=%s' % ','.join(params))
   if len(enable_features):
@@ -93,8 +102,15 @@ def GenerateArgs(config_path):
 
 def main():
   if len(sys.argv) < 3:
-    print 'Usage: fieldtrial_util.py [base_config_path] [platform_config_path]'
+    print 'Usage: fieldtrial_util.py [config_path] [platform]'
     exit(-1)
+
+  supported_platforms = ['android', 'chromeos', 'ios', 'linux', 'mac', 'win']
+  if sys.argv[2] not in supported_platforms:
+    print ('\'%s\' is an unknown platform. Supported platforms: %s' %
+        (sys.argv[2], supported_platforms))
+    exit(-1)
+
   print GenerateArgs(sys.argv[1], sys.argv[2])
 
 if __name__ == '__main__':

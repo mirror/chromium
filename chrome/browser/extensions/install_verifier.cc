@@ -12,7 +12,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -271,12 +271,12 @@ base::Time InstallVerifier::SignatureTimestamp() {
 }
 
 bool InstallVerifier::IsKnownId(const std::string& id) const {
-  return signature_.get() && (ContainsKey(signature_->ids, id) ||
-                              ContainsKey(signature_->invalid_ids, id));
+  return signature_.get() && (base::ContainsKey(signature_->ids, id) ||
+                              base::ContainsKey(signature_->invalid_ids, id));
 }
 
 bool InstallVerifier::IsInvalid(const std::string& id) const {
-  return ((signature_.get() && ContainsKey(signature_->invalid_ids, id)));
+  return ((signature_.get() && base::ContainsKey(signature_->invalid_ids, id)));
 }
 
 void InstallVerifier::VerifyExtension(const std::string& extension_id) {
@@ -300,11 +300,11 @@ void InstallVerifier::AddMany(const ExtensionIdSet& ids, OperationType type) {
     }
   }
 
-  InstallVerifier::PendingOperation* operation =
-      new InstallVerifier::PendingOperation(type);
+  std::unique_ptr<InstallVerifier::PendingOperation> operation(
+      new InstallVerifier::PendingOperation(type));
   operation->ids.insert(ids.begin(), ids.end());
 
-  operation_queue_.push(linked_ptr<PendingOperation>(operation));
+  operation_queue_.push(std::move(operation));
 
   // If there are no ongoing pending requests, we need to kick one off.
   if (operation_queue_.size() == 1)
@@ -328,8 +328,8 @@ void InstallVerifier::RemoveMany(const ExtensionIdSet& ids) {
 
   bool found_any = false;
   for (ExtensionIdSet::const_iterator i = ids.begin(); i != ids.end(); ++i) {
-    if (ContainsKey(signature_->ids, *i) ||
-        ContainsKey(signature_->invalid_ids, *i)) {
+    if (base::ContainsKey(signature_->ids, *i) ||
+        base::ContainsKey(signature_->invalid_ids, *i)) {
       found_any = true;
       break;
     }
@@ -337,11 +337,11 @@ void InstallVerifier::RemoveMany(const ExtensionIdSet& ids) {
   if (!found_any)
     return;
 
-  InstallVerifier::PendingOperation* operation =
-      new InstallVerifier::PendingOperation(InstallVerifier::REMOVE);
+  std::unique_ptr<InstallVerifier::PendingOperation> operation(
+      new InstallVerifier::PendingOperation(InstallVerifier::REMOVE));
   operation->ids = ids;
 
-  operation_queue_.push(linked_ptr<PendingOperation>(operation));
+  operation_queue_.push(std::move(operation));
   if (operation_queue_.size() == 1)
     BeginFetch();
 }
@@ -406,7 +406,8 @@ bool InstallVerifier::MustRemainDisabled(const Extension* extension,
 
   bool verified = true;
   MustRemainDisabledOutcome outcome = VERIFIED;
-  if (ContainsKey(InstallSigner::GetForcedNotFromWebstore(), extension->id())) {
+  if (base::ContainsKey(InstallSigner::GetForcedNotFromWebstore(),
+                        extension->id())) {
     verified = false;
     outcome = FORCED_NOT_VERIFIED;
   } else if (!IsFromStore(*extension)) {
@@ -421,7 +422,7 @@ bool InstallVerifier::MustRemainDisabled(const Extension* extension,
     outcome = NO_SIGNATURE;
   } else if (!IsVerified(extension->id())) {
     if (signature_.get() &&
-        !ContainsKey(signature_->invalid_ids, extension->id())) {
+        !base::ContainsKey(signature_->invalid_ids, extension->id())) {
       outcome = NOT_VERIFIED_BUT_UNKNOWN_ID;
     } else {
       verified = false;
@@ -548,8 +549,8 @@ void InstallVerifier::GarbageCollect() {
 }
 
 bool InstallVerifier::IsVerified(const std::string& id) const {
-  return ((signature_.get() && ContainsKey(signature_->ids, id)) ||
-          ContainsKey(provisional_, id));
+  return ((signature_.get() && base::ContainsKey(signature_->ids, id)) ||
+          base::ContainsKey(provisional_, id));
 }
 
 void InstallVerifier::BeginFetch() {
@@ -568,7 +569,7 @@ void InstallVerifier::BeginFetch() {
   if (operation.type == InstallVerifier::REMOVE) {
     for (ExtensionIdSet::const_iterator i = operation.ids.begin();
          i != operation.ids.end(); ++i) {
-      if (ContainsKey(ids_to_sign, *i))
+      if (base::ContainsKey(ids_to_sign, *i))
         ids_to_sign.erase(*i);
     }
   } else {  // All other operation types are some form of "ADD".
@@ -627,7 +628,8 @@ void GetSignatureResultHistogram(CallbackResult result) {
 
 void InstallVerifier::SignatureCallback(
     std::unique_ptr<InstallSignature> signature) {
-  linked_ptr<PendingOperation> operation = operation_queue_.front();
+  std::unique_ptr<PendingOperation> operation =
+      std::move(operation_queue_.front());
   operation_queue_.pop();
 
   bool success = false;

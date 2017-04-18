@@ -37,20 +37,25 @@
 
 namespace blink {
 
-class SVGAnimatedEnumerationBase : public SVGAnimatedProperty<SVGEnumerationBase>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~SVGAnimatedEnumerationBase() override;
+class SVGAnimatedEnumerationBase
+    : public SVGAnimatedProperty<SVGEnumerationBase>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    void setBaseVal(unsigned short, ExceptionState&);
+ public:
+  ~SVGAnimatedEnumerationBase() override;
 
-protected:
-    SVGAnimatedEnumerationBase(SVGElement* contextElement, const QualifiedName& attributeName, SVGEnumerationBase* initialValue)
-        : SVGAnimatedProperty<SVGEnumerationBase>(contextElement, attributeName, initialValue)
-    {
-    }
+  void setBaseVal(unsigned short, ExceptionState&);
+
+ protected:
+  SVGAnimatedEnumerationBase(SVGElement* context_element,
+                             const QualifiedName& attribute_name,
+                             SVGEnumerationBase* initial_value)
+      : SVGAnimatedProperty<SVGEnumerationBase>(context_element,
+                                                attribute_name,
+                                                initial_value) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAnimatedEnumerationBase_h
+#endif  // SVGAnimatedEnumerationBase_h

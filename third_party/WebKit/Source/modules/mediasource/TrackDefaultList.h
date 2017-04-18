@@ -13,27 +13,30 @@ namespace blink {
 
 class ExceptionState;
 
-class TrackDefaultList final : public GarbageCollected<TrackDefaultList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static TrackDefaultList* create(); // Creates an empty TrackDefaultList.
+class TrackDefaultList final : public GarbageCollected<TrackDefaultList>,
+                               public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Implement the IDL
-    static TrackDefaultList* create(const HeapVector<Member<TrackDefault>>&, ExceptionState&);
+ public:
+  static TrackDefaultList* Create();  // Creates an empty TrackDefaultList.
 
-    unsigned length() const { return m_trackDefaults.size(); }
-    TrackDefault* item(unsigned) const;
+  // Implement the IDL
+  static TrackDefaultList* Create(const HeapVector<Member<TrackDefault>>&,
+                                  ExceptionState&);
 
-    DECLARE_TRACE();
+  unsigned length() const { return track_defaults_.size(); }
+  TrackDefault* item(unsigned) const;
 
-private:
-    TrackDefaultList();
+  DECLARE_TRACE();
 
-    explicit TrackDefaultList(const HeapVector<Member<TrackDefault>>&);
+ private:
+  TrackDefaultList();
 
-    const HeapVector<Member<TrackDefault>> m_trackDefaults;
+  explicit TrackDefaultList(const HeapVector<Member<TrackDefault>>&);
+
+  const HeapVector<Member<TrackDefault>> track_defaults_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TrackDefaultList_h
+#endif  // TrackDefaultList_h

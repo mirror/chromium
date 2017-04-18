@@ -10,41 +10,47 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/events/EventTarget.h"
+#include "core/frame/Navigator.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/HashSet.h"
 #include "public/platform/modules/webshare/webshare.mojom-blink.h"
-#include "wtf/HashSet.h"
 
 namespace blink {
 
 class Navigator;
+class ShareData;
 
-class NavigatorShare final : public GarbageCollectedFinalized<NavigatorShare>, public Supplement<Navigator> {
-    USING_GARBAGE_COLLECTED_MIXIN(NavigatorShare);
-public:
-    ~NavigatorShare();
+class NavigatorShare final : public GarbageCollectedFinalized<NavigatorShare>,
+                             public Supplement<Navigator> {
+  USING_GARBAGE_COLLECTED_MIXIN(NavigatorShare);
 
-    // Gets, or creates, NavigatorShare supplement on Navigator.
-    // See platform/Supplementable.h
-    static NavigatorShare& from(Navigator&);
+ public:
+  ~NavigatorShare();
 
-    // Navigator partial interface
-    ScriptPromise share(ScriptState*, const String& title, const String& text);
-    static ScriptPromise share(ScriptState*, Navigator&, const String& title, const String& text);
+  // Gets, or creates, NavigatorShare supplement on Navigator.
+  // See platform/Supplementable.h
+  static NavigatorShare& From(Navigator&);
 
-    DECLARE_TRACE();
+  // Navigator partial interface
+  ScriptPromise share(ScriptState*, const ShareData&);
+  static ScriptPromise share(ScriptState*, Navigator&, const ShareData&);
 
-private:
-    class ShareClientImpl;
+  DECLARE_TRACE();
 
-    NavigatorShare();
-    static const char* supplementName();
+ private:
+  class ShareClientImpl;
 
-    blink::mojom::blink::ShareServicePtr m_service;
+  NavigatorShare();
+  static const char* SupplementName();
 
-    HeapHashSet<Member<ShareClientImpl>> m_clients;
+  void OnConnectionError();
+
+  blink::mojom::blink::ShareServicePtr service_;
+
+  HeapHashSet<Member<ShareClientImpl>> clients_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorShare_h
+#endif  // NavigatorShare_h

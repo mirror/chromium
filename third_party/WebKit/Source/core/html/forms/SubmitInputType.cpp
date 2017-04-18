@@ -40,57 +40,49 @@
 
 namespace blink {
 
-InputType* SubmitInputType::create(HTMLInputElement& element)
-{
-    UseCounter::count(element.document(), UseCounter::InputTypeSubmit);
-    return new SubmitInputType(element);
+InputType* SubmitInputType::Create(HTMLInputElement& element) {
+  UseCounter::Count(element.GetDocument(), UseCounter::kInputTypeSubmit);
+  return new SubmitInputType(element);
 }
 
-const AtomicString& SubmitInputType::formControlType() const
-{
-    return InputTypeNames::submit;
+const AtomicString& SubmitInputType::FormControlType() const {
+  return InputTypeNames::submit;
 }
 
-void SubmitInputType::appendToFormData(FormData& formData) const
-{
-    if (element().isActivatedSubmit())
-        formData.append(element().name(), element().valueWithDefault());
+void SubmitInputType::AppendToFormData(FormData& form_data) const {
+  if (GetElement().IsActivatedSubmit())
+    form_data.append(GetElement().GetName(),
+                     GetElement().ValueOrDefaultLabel());
 }
 
-bool SubmitInputType::supportsRequired() const
-{
-    return false;
+bool SubmitInputType::SupportsRequired() const {
+  return false;
 }
 
-void SubmitInputType::handleDOMActivateEvent(Event* event)
-{
-    if (element().isDisabledFormControl() || !element().form())
-        return;
-    element().setActivatedSubmit(true);
-    element().form()->prepareForSubmission(event); // Event handlers can run.
-    element().setActivatedSubmit(false);
-    event->setDefaultHandled();
+void SubmitInputType::HandleDOMActivateEvent(Event* event) {
+  if (GetElement().IsDisabledFormControl() || !GetElement().Form())
+    return;
+  GetElement().Form()->PrepareForSubmission(
+      event, &GetElement());  // Event handlers can run.
+  event->SetDefaultHandled();
 }
 
-bool SubmitInputType::canBeSuccessfulSubmitButton()
-{
-    return true;
+bool SubmitInputType::CanBeSuccessfulSubmitButton() {
+  return true;
 }
 
-String SubmitInputType::defaultValue() const
-{
-    return locale().queryString(WebLocalizedString::SubmitButtonDefaultLabel);
+String SubmitInputType::DefaultLabel() const {
+  return GetLocale().QueryString(WebLocalizedString::kSubmitButtonDefaultLabel);
 }
 
-bool SubmitInputType::isTextButton() const
-{
-    return true;
+bool SubmitInputType::IsTextButton() const {
+  return true;
 }
 
-void SubmitInputType::valueAttributeChanged()
-{
-    UseCounter::count(element().document(), UseCounter::InputTypeSubmitWithValue);
-    BaseButtonInputType::valueAttributeChanged();
+void SubmitInputType::ValueAttributeChanged() {
+  UseCounter::Count(GetElement().GetDocument(),
+                    UseCounter::kInputTypeSubmitWithValue);
+  BaseButtonInputType::ValueAttributeChanged();
 }
 
-} // namespace blink
+}  // namespace blink

@@ -4,10 +4,10 @@
 
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/wm/window_positioner.h"
-#include "ash/common/wm/window_state.h"
 #include "ash/shell.h"
+#include "ash/wm/window_positioner.h"
+#include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -18,7 +18,7 @@
 
 bool WindowSizer::GetBrowserBoundsAsh(gfx::Rect* bounds,
                                       ui::WindowShowState* show_state) const {
-  if (!chrome::ShouldOpenAshOnStartup() || !browser_)
+  if (!ash_util::ShouldOpenAshOnStartup() || !browser_)
     return false;
 
   bool determined = false;
@@ -46,8 +46,7 @@ bool WindowSizer::GetBrowserBoundsAsh(gfx::Rect* bounds,
     // In case of a popup with an 'unspecified' location in ash, we are
     // looking for a good screen location. We are interpreting (0,0) as an
     // unspecified location.
-    *bounds = ash::Shell::GetInstance()->window_positioner()->
-        GetPopupPosition(*bounds);
+    *bounds = ash::Shell::Get()->window_positioner()->GetPopupPosition(*bounds);
     determined = true;
   }
 
@@ -111,6 +110,6 @@ void WindowSizer::GetTabbedBrowserBoundsAsh(
       browser_->window() ? browser_->window()->GetNativeWindow() : NULL;
 
   ash::WindowPositioner::GetBoundsAndShowStateForNewWindow(
-      ash::WmWindowAura::Get(browser_window), is_saved_bounds,
-      passed_show_state, bounds_in_screen, show_state);
+      ash::WmWindow::Get(browser_window), is_saved_bounds, passed_show_state,
+      bounds_in_screen, show_state);
 }

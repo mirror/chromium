@@ -40,54 +40,55 @@ class ExceptionState;
 class SliderThumbElement;
 
 class RangeInputType final : public InputType, public InputTypeView {
-    USING_GARBAGE_COLLECTED_MIXIN(RangeInputType);
+  USING_GARBAGE_COLLECTED_MIXIN(RangeInputType);
 
-public:
-    static InputType* create(HTMLInputElement&);
-    DECLARE_VIRTUAL_TRACE();
-    using InputType::element;
+ public:
+  static InputType* Create(HTMLInputElement&);
+  DECLARE_VIRTUAL_TRACE();
+  using InputType::GetElement;
 
-private:
-    RangeInputType(HTMLInputElement&);
-    InputTypeView* createView() override;
-    void countUsage() override;
-    const AtomicString& formControlType() const override;
-    double valueAsDouble() const override;
-    void setValueAsDouble(double, TextFieldEventBehavior, ExceptionState&) const override;
-    bool typeMismatchFor(const String&) const override;
-    bool supportsRequired() const override;
-    StepRange createStepRange(AnyStepHandling) const override;
-    bool isSteppable() const override;
-    void handleMouseDownEvent(MouseEvent*) override;
-    void handleTouchEvent(TouchEvent*) override;
-    bool hasTouchEventHandler() const override;
-    void handleKeydownEvent(KeyboardEvent*) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) const override;
-    void createShadowSubtree() override;
-    Decimal parseToNumber(const String&, const Decimal&) const override;
-    String serialize(const Decimal&) const override;
-    void accessKeyAction(bool sendMouseEvents) override;
-    void sanitizeValueInResponseToMinOrMaxAttributeChange() override;
-    void warnIfValueIsInvalid(const String&) const override;
-    void setValue(const String&, bool valueChanged, TextFieldEventBehavior) override;
-    String fallbackValue() const override;
-    String sanitizeValue(const String& proposedValue) const override;
-    bool shouldRespectListAttribute() override;
-    void disabledAttributeChanged() override;
-    void listAttributeTargetChanged() override;
-    Decimal findClosestTickMarkValue(const Decimal&) override;
+ private:
+  RangeInputType(HTMLInputElement&);
+  InputTypeView* CreateView() override;
+  ValueMode GetValueMode() const override;
+  void CountUsage() override;
+  const AtomicString& FormControlType() const override;
+  double ValueAsDouble() const override;
+  void SetValueAsDouble(double,
+                        TextFieldEventBehavior,
+                        ExceptionState&) const override;
+  bool TypeMismatchFor(const String&) const override;
+  bool SupportsRequired() const override;
+  StepRange CreateStepRange(AnyStepHandling) const override;
+  bool IsSteppable() const override;
+  void HandleMouseDownEvent(MouseEvent*) override;
+  void HandleKeydownEvent(KeyboardEvent*) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) const override;
+  void CreateShadowSubtree() override;
+  Decimal ParseToNumber(const String&, const Decimal&) const override;
+  String Serialize(const Decimal&) const override;
+  void AccessKeyAction(bool send_mouse_events) override;
+  void SanitizeValueInResponseToMinOrMaxAttributeChange() override;
+  void StepAttributeChanged() override;
+  void WarnIfValueIsInvalid(const String&) const override;
+  void DidSetValue(const String&, bool value_changed) override;
+  String SanitizeValue(const String& proposed_value) const override;
+  bool ShouldRespectListAttribute() override;
+  void DisabledAttributeChanged() override;
+  void ListAttributeTargetChanged() override;
+  Decimal FindClosestTickMarkValue(const Decimal&) override;
 
-    SliderThumbElement* sliderThumbElement() const;
-    Element* sliderTrackElement() const;
-    void updateTickMarkValues();
+  SliderThumbElement* GetSliderThumbElement() const;
+  Element* SliderTrackElement() const;
+  void UpdateTickMarkValues();
 
-    // InputTypeView function:
-    void updateView() override;
+  // InputTypeView function:
+  void UpdateView() override;
 
-    bool m_tickMarkValuesDirty;
-    Vector<Decimal> m_tickMarkValues;
+  bool tick_mark_values_dirty_;
+  Vector<Decimal> tick_mark_values_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // RangeInputType_h
+#endif  // RangeInputType_h

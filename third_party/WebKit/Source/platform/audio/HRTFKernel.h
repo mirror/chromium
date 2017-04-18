@@ -29,71 +29,80 @@
 #ifndef HRTFKernel_h
 #define HRTFKernel_h
 
-#include "platform/audio/FFTFrame.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/Vector.h"
 #include <memory>
+#include "platform/audio/FFTFrame.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class AudioChannel;
 
 // HRTF stands for Head-Related Transfer Function.
-// HRTFKernel is a frequency-domain representation of an impulse-response used as part of the spatialized panning system.
-// For a given azimuth / elevation angle there will be one HRTFKernel for the left ear transfer function, and one for the right ear.
-// The leading delay (average group delay) for each impulse response is extracted:
-//      m_fftFrame is the frequency-domain representation of the impulse response with the delay removed
+// HRTFKernel is a frequency-domain representation of an impulse-response used
+// as part of the spatialized panning system.  For a given azimuth / elevation
+// angle there will be one HRTFKernel for the left ear transfer function, and
+// one for the right ear.  The leading delay (average group delay) for each
+// impulse response is extracted:
+//      m_fftFrame is the frequency-domain representation of the impulse
+//      response with the delay removed
 //      m_frameDelay is the leading delay of the original impulse response.
 class PLATFORM_EXPORT HRTFKernel {
-    USING_FAST_MALLOC(HRTFKernel);
-    WTF_MAKE_NONCOPYABLE(HRTFKernel);
-public:
-    // Note: this is destructive on the passed in AudioChannel.
-    // The length of channel must be a power of two.
-    static std::unique_ptr<HRTFKernel> create(AudioChannel* channel, size_t fftSize, float sampleRate)
-    {
-        return wrapUnique(new HRTFKernel(channel, fftSize, sampleRate));
-    }
+  USING_FAST_MALLOC(HRTFKernel);
+  WTF_MAKE_NONCOPYABLE(HRTFKernel);
 
-    static std::unique_ptr<HRTFKernel> create(std::unique_ptr<FFTFrame> fftFrame, float frameDelay, float sampleRate)
-    {
-        return wrapUnique(new HRTFKernel(std::move(fftFrame), frameDelay, sampleRate));
-    }
+ public:
+  // Note: this is destructive on the passed in AudioChannel.
+  // The length of channel must be a power of two.
+  static std::unique_ptr<HRTFKernel> Create(AudioChannel* channel,
+                                            size_t fft_size,
+                                            float sample_rate) {
+    return WTF::WrapUnique(new HRTFKernel(channel, fft_size, sample_rate));
+  }
 
-    // Given two HRTFKernels, and an interpolation factor x: 0 -> 1, returns an interpolated HRTFKernel.
-    static std::unique_ptr<HRTFKernel> createInterpolatedKernel(HRTFKernel* kernel1, HRTFKernel* kernel2, float x);
+  static std::unique_ptr<HRTFKernel> Create(std::unique_ptr<FFTFrame> fft_frame,
+                                            float frame_delay,
+                                            float sample_rate) {
+    return WTF::WrapUnique(
+        new HRTFKernel(std::move(fft_frame), frame_delay, sample_rate));
+  }
 
-    FFTFrame* fftFrame() { return m_fftFrame.get(); }
+  // Given two HRTFKernels, and an interpolation factor x: 0 -> 1, returns an
+  // interpolated HRTFKernel.
+  static std::unique_ptr<HRTFKernel>
+  CreateInterpolatedKernel(HRTFKernel* kernel1, HRTFKernel* kernel2, float x);
 
-    size_t fftSize() const { return m_fftFrame->fftSize(); }
-    float frameDelay() const { return m_frameDelay; }
+  FFTFrame* FftFrame() { return fft_frame_.get(); }
 
-    float sampleRate() const { return m_sampleRate; }
-    double nyquist() const { return 0.5 * sampleRate(); }
+  size_t FftSize() const { return fft_frame_->FftSize(); }
+  float FrameDelay() const { return frame_delay_; }
 
-    // Converts back into impulse-response form.
-    std::unique_ptr<AudioChannel> createImpulseResponse();
+  float SampleRate() const { return sample_rate_; }
+  double Nyquist() const { return 0.5 * SampleRate(); }
 
-private:
-    // Note: this is destructive on the passed in AudioChannel.
-    HRTFKernel(AudioChannel*, size_t fftSize, float sampleRate);
+  // Converts back into impulse-response form.
+  std::unique_ptr<AudioChannel> CreateImpulseResponse();
 
-    HRTFKernel(std::unique_ptr<FFTFrame> fftFrame, float frameDelay, float sampleRate)
-        : m_fftFrame(std::move(fftFrame))
-        , m_frameDelay(frameDelay)
-        , m_sampleRate(sampleRate)
-    {
-    }
+ private:
+  // Note: this is destructive on the passed in AudioChannel.
+  HRTFKernel(AudioChannel*, size_t fft_size, float sample_rate);
 
-    std::unique_ptr<FFTFrame> m_fftFrame;
-    float m_frameDelay;
-    float m_sampleRate;
+  HRTFKernel(std::unique_ptr<FFTFrame> fft_frame,
+             float frame_delay,
+             float sample_rate)
+      : fft_frame_(std::move(fft_frame)),
+        frame_delay_(frame_delay),
+        sample_rate_(sample_rate) {}
+
+  std::unique_ptr<FFTFrame> fft_frame_;
+  float frame_delay_;
+  float sample_rate_;
 };
 
 typedef Vector<std::unique_ptr<HRTFKernel>> HRTFKernelList;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HRTFKernel_h
+#endif  // HRTFKernel_h

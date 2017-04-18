@@ -27,7 +27,7 @@ class InputHandlerWrapper : public ui::InputHandlerProxyClient {
       int routing_id,
       const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
       const base::WeakPtr<cc::InputHandler>& input_handler,
-      const base::WeakPtr<RenderViewImpl>& render_view_impl,
+      const base::WeakPtr<RenderWidget>& render_widget,
       bool enable_smooth_scrolling);
   ~InputHandlerWrapper() override;
 
@@ -36,20 +36,23 @@ class InputHandlerWrapper : public ui::InputHandlerProxyClient {
     return &input_handler_proxy_;
   }
 
+  void NeedsMainFrame();
+
   // InputHandlerProxyClient implementation.
   void WillShutdown() override;
   void TransferActiveWheelFlingAnimation(
       const blink::WebActiveWheelFlingParameters& params) override;
+  void DispatchNonBlockingEventToMainThread(
+      ui::WebScopedInputEvent event,
+      const ui::LatencyInfo& latency_info) override;
   blink::WebGestureCurve* CreateFlingAnimationCurve(
       blink::WebGestureDevice deviceSource,
       const blink::WebFloatPoint& velocity,
       const blink::WebSize& cumulativeScroll) override;
-  void DidOverscroll(
-        const gfx::Vector2dF& accumulated_overscroll,
-        const gfx::Vector2dF& latest_overscroll_delta,
-        const gfx::Vector2dF& current_fling_velocity,
-        const gfx::PointF& causal_event_viewport_point) override;
-  void DidStartFlinging() override;
+  void DidOverscroll(const gfx::Vector2dF& accumulated_overscroll,
+                     const gfx::Vector2dF& latest_overscroll_delta,
+                     const gfx::Vector2dF& current_fling_velocity,
+                     const gfx::PointF& causal_event_viewport_point) override;
   void DidStopFlinging() override;
   void DidAnimateForInput() override;
 
@@ -60,7 +63,7 @@ class InputHandlerWrapper : public ui::InputHandlerProxyClient {
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
 
   // Can only be accessed on the main thread.
-  base::WeakPtr<RenderViewImpl> render_view_impl_;
+  base::WeakPtr<RenderWidget> render_widget_;
 
   DISALLOW_COPY_AND_ASSIGN(InputHandlerWrapper);
 };

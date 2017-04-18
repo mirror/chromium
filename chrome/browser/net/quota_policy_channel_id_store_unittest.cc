@@ -10,14 +10,12 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_vector.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
-#include "content/public/test/mock_special_storage_policy.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/cookies/cookie_util.h"
 #include "net/ssl/ssl_client_cert_type.h"
@@ -25,6 +23,7 @@
 #include "net/test/channel_id_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "sql/statement.h"
+#include "storage/browser/test/mock_special_storage_policy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 const base::FilePath::CharType kTestChannelIDFilename[] =
@@ -56,9 +55,8 @@ class QuotaPolicyChannelIDStoreTest : public testing::Test {
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     store_ = new QuotaPolicyChannelIDStore(
-        temp_dir_.path().Append(kTestChannelIDFilename),
-        base::ThreadTaskRunnerHandle::Get(),
-        NULL);
+        temp_dir_.GetPath().Append(kTestChannelIDFilename),
+        base::ThreadTaskRunnerHandle::Get(), NULL);
     std::vector<std::unique_ptr<net::DefaultChannelIDStore::ChannelID>>
         channel_ids;
     Load(&channel_ids);
@@ -96,9 +94,8 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPersistence) {
   // Make sure we wait until the destructor has run.
   base::RunLoop().RunUntilIdle();
   store_ = new QuotaPolicyChannelIDStore(
-      temp_dir_.path().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(),
-      NULL);
+      temp_dir_.GetPath().Append(kTestChannelIDFilename),
+      base::ThreadTaskRunnerHandle::Get(), NULL);
 
   // Reload and test for persistence
   Load(&channel_ids);
@@ -127,9 +124,8 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPersistence) {
   base::RunLoop().RunUntilIdle();
   channel_ids.clear();
   store_ = new QuotaPolicyChannelIDStore(
-      temp_dir_.path().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(),
-      NULL);
+      temp_dir_.GetPath().Append(kTestChannelIDFilename),
+      base::ThreadTaskRunnerHandle::Get(), NULL);
 
   // Reload and check if the channel ID has been removed.
   Load(&channel_ids);
@@ -160,9 +156,8 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPolicy) {
       net::cookie_util::CookieOriginToURL("nonpersistent.com", true));
   // Reload store, it should still have both channel IDs.
   store_ = new QuotaPolicyChannelIDStore(
-      temp_dir_.path().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(),
-      storage_policy);
+      temp_dir_.GetPath().Append(kTestChannelIDFilename),
+      base::ThreadTaskRunnerHandle::Get(), storage_policy);
   Load(&channel_ids);
   ASSERT_EQ(2U, channel_ids.size());
 
@@ -185,9 +180,8 @@ TEST_F(QuotaPolicyChannelIDStoreTest, TestPolicy) {
   base::RunLoop().RunUntilIdle();
   channel_ids.clear();
   store_ = new QuotaPolicyChannelIDStore(
-      temp_dir_.path().Append(kTestChannelIDFilename),
-      base::ThreadTaskRunnerHandle::Get(),
-      NULL);
+      temp_dir_.GetPath().Append(kTestChannelIDFilename),
+      base::ThreadTaskRunnerHandle::Get(), NULL);
 
   // Reload and check that the nonpersistent.com channel IDs have been removed.
   Load(&channel_ids);

@@ -3,6 +3,8 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/compiler/compiler.gni")
+import("//services/service_manager/public/service_manifest.gni")
 
 # This file builds nacl64.exe, which is a 64-bit x86 Windows executable
 # used only in the 32-bit x86 Windows build.  The :broker code runs both
@@ -26,7 +28,9 @@ source_set("broker") {
     "//components/nacl/common:switches",
     "//content/public/common:static_switches",
     "//ipc",
+    "//mojo/edk/system",
     "//sandbox",
+    "//services/service_manager/public/cpp",
   ]
 
   if (current_cpu == target_cpu) {
@@ -67,6 +71,9 @@ if (current_cpu == "x86") {
     sources = [
       "$nacl64_out_dir/nacl64.exe",
     ]
+    if (symbol_level != 0) {
+      sources += [ "$nacl64_out_dir/nacl64.exe.pdb" ]
+    }
     outputs = [
       "$root_out_dir/{{source_file_part}}",
     ]
@@ -102,8 +109,10 @@ if (current_cpu == "x86") {
       "//breakpad:breakpad_handler",
       "//build/win:default_exe_manifest",
       "//chrome:nacl64_exe_version",
+      "//chrome/install_static:install_static_util",
       "//components/crash/content/app:app_breakpad_mac_win_to_be_deleted",
       "//components/nacl/loader:nacl_helper_win_64",
+      "//content/public/common:static_features",
       "//content/public/common:static_switches",
       "//ppapi/proxy:ipc",
       "//sandbox",
@@ -155,10 +164,15 @@ if (current_cpu == "x86") {
       "//chrome/installer/util:with_no_strings",
       "//components/browser_watcher:browser_watcher_client",
       "//components/flags_ui:switches",
-      "//components/policy",
+      "//components/policy:generated",
       "//content/public/common:static_switches",
+      "//gpu/config:crash_keys",
       "//ipc",
-      "//third_party/kasko",
     ]
   }
+}
+
+service_manifest("nacl_broker_manifest") {
+  name = "nacl_broker"
+  source = "nacl_broker_manifest.json"
 }

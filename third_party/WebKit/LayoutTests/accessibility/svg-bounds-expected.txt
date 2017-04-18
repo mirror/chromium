@@ -25,7 +25,7 @@ NoseY: 206
 
 Mouth role: AXRole: AXButton
 Mouth label: smile
-MouthX: 114
+MouthX: 113
 MouthY: 274
 
 

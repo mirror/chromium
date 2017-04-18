@@ -11,9 +11,12 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "media/base/encryption_scheme.h"
+#include "media/base/hdr_metadata.h"
 #include "media/base/media_export.h"
 #include "media/base/video_codecs.h"
+#include "media/base/video_color_space.h"
 #include "media/base/video_types.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -83,6 +86,7 @@ class MEDIA_EXPORT VideoDecoderConfig {
   // the bitstream.
   ColorSpace color_space() const { return color_space_; }
 
+  // Deprecated. TODO(wolenetz): Remove. See https://crbug.com/665539.
   // Width and height of video frame immediately post-decode. Not all pixels
   // in this region are valid.
   gfx::Size coded_size() const { return coded_size_; }
@@ -95,7 +99,8 @@ class MEDIA_EXPORT VideoDecoderConfig {
   gfx::Size natural_size() const { return natural_size_; }
 
   // Optional byte data required to initialize video decoders, such as H.264
-  // AAVC data.
+  // AVCC data.
+  void SetExtraData(const std::vector<uint8_t>& extra_data);
   const std::vector<uint8_t>& extra_data() const { return extra_data_; }
 
   // Whether the video stream is potentially encrypted.
@@ -108,20 +113,39 @@ class MEDIA_EXPORT VideoDecoderConfig {
     return encryption_scheme_;
   }
 
+  void set_color_space_info(const VideoColorSpace& color_space_info);
+  VideoColorSpace color_space_info() const;
+
+  void set_hdr_metadata(const HDRMetadata& hdr_metadata);
+  base::Optional<HDRMetadata> hdr_metadata() const;
+
+  // Sets the config to be encrypted or not encrypted manually. This can be
+  // useful for decryptors that decrypts an encrypted stream to a clear stream,
+  // or for decoder selectors that wants to select decrypting decoders instead
+  // of clear decoders.
+  void SetIsEncrypted(bool is_encrypted);
+
  private:
   VideoCodec codec_;
   VideoCodecProfile profile_;
 
   VideoPixelFormat format_;
+
+  // TODO(servolk): Deprecated, use color_space_info_ instead.
   ColorSpace color_space_;
 
+  // Deprecated. TODO(wolenetz): Remove. See https://crbug.com/665539.
   gfx::Size coded_size_;
+
   gfx::Rect visible_rect_;
   gfx::Size natural_size_;
 
   std::vector<uint8_t> extra_data_;
 
   EncryptionScheme encryption_scheme_;
+
+  VideoColorSpace color_space_info_;
+  base::Optional<HDRMetadata> hdr_metadata_;
 
   // Not using DISALLOW_COPY_AND_ASSIGN here intentionally to allow the compiler
   // generated copy constructor and assignment operator. Since the extra data is

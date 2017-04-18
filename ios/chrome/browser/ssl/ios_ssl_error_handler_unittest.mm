@@ -13,6 +13,10 @@
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
 namespace {
 const char kTestCertFileName[] = "ok_cert.pem";
 const char kTestHostName[] = "https://chromium.test/";
@@ -31,6 +35,10 @@ class IOSSSLErrorHandlerTest : public web::WebTestWithWebState {
     web::WebTestWithWebState::SetUp();
     ASSERT_TRUE(cert_);
     ASSERT_FALSE(web_state()->IsShowingWebInterstitial());
+
+    // Transient item can only be added for pending non-app-specific loads.
+    AddPendingItem(GURL(kTestHostName),
+                   ui::PageTransition::PAGE_TRANSITION_TYPED);
   }
   web::BrowserState* GetBrowserState() override { return browser_state_.get(); }
 
@@ -51,7 +59,7 @@ TEST_F(IOSSSLErrorHandlerTest, NonOverridable) {
   __block bool do_not_proceed_callback_called = false;
   IOSSSLErrorHandler::HandleSSLError(
       web_state(), net::ERR_CERT_AUTHORITY_INVALID, ssl_info, url, false,
-      base::BindBlock(^(bool proceed) {
+      base::BindBlockArc(^(bool proceed) {
         EXPECT_FALSE(proceed);
         do_not_proceed_callback_called = true;
       }));
@@ -67,14 +75,15 @@ TEST_F(IOSSSLErrorHandlerTest, NonOverridable) {
 }
 
 // Tests proceed with overridable error.
-TEST_F(IOSSSLErrorHandlerTest, OverridableProceed) {
+// Flaky: http://crbug.com/660343.
+TEST_F(IOSSSLErrorHandlerTest, DISABLED_OverridableProceed) {
   net::SSLInfo ssl_info;
   ssl_info.cert = cert();
   GURL url(kTestHostName);
   __block bool proceed_callback_called = false;
   IOSSSLErrorHandler::HandleSSLError(
       web_state(), net::ERR_CERT_AUTHORITY_INVALID, ssl_info, url, true,
-      base::BindBlock(^(bool proceed) {
+      base::BindBlockArc(^(bool proceed) {
         EXPECT_TRUE(proceed);
         proceed_callback_called = true;
       }));
@@ -97,7 +106,7 @@ TEST_F(IOSSSLErrorHandlerTest, OverridableDontProceed) {
   __block bool do_not_proceed_callback_called = false;
   IOSSSLErrorHandler::HandleSSLError(
       web_state(), net::ERR_CERT_AUTHORITY_INVALID, ssl_info, url, true,
-      base::BindBlock(^(bool proceed) {
+      base::BindBlockArc(^(bool proceed) {
         EXPECT_FALSE(proceed);
         do_not_proceed_callback_called = true;
       }));

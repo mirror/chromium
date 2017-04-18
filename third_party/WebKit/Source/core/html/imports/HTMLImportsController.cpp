@@ -31,127 +31,128 @@
 #include "core/html/imports/HTMLImportsController.h"
 
 #include "core/dom/Document.h"
-#include "core/fetch/ResourceFetcher.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/imports/HTMLImportChild.h"
 #include "core/html/imports/HTMLImportChildClient.h"
 #include "core/html/imports/HTMLImportLoader.h"
 #include "core/html/imports/HTMLImportTreeRoot.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 
 namespace blink {
 
 HTMLImportsController::HTMLImportsController(Document& master)
-    : m_root(HTMLImportTreeRoot::create(&master))
-{
-    UseCounter::count(master, UseCounter::HTMLImports);
+    : root_(HTMLImportTreeRoot::Create(&master)) {
+  UseCounter::Count(master, UseCounter::kHTMLImports);
 }
 
-void HTMLImportsController::dispose()
-{
-    if (m_root) {
-        m_root->dispose();
-        m_root.clear();
-    }
+void HTMLImportsController::Dispose() {
+  if (root_) {
+    root_->Dispose();
+    root_.Clear();
+  }
 
-    for (size_t i = 0; i < m_loaders.size(); ++i)
-        m_loaders[i]->dispose();
-    m_loaders.clear();
+  for (const auto& loader : loaders_)
+    loader->Dispose();
+  loaders_.Clear();
 }
 
-static bool makesCycle(HTMLImport* parent, const KURL& url)
-{
-    for (HTMLImport* ancestor = parent; ancestor; ancestor = ancestor->parent()) {
-        if (!ancestor->isRoot() && equalIgnoringFragmentIdentifier(toHTMLImportChild(parent)->url(), url))
-            return true;
-    }
+static bool MakesCycle(HTMLImport* parent, const KURL& url) {
+  for (HTMLImport* ancestor = parent; ancestor; ancestor = ancestor->Parent()) {
+    if (!ancestor->IsRoot() &&
+        EqualIgnoringFragmentIdentifier(ToHTMLImportChild(parent)->Url(), url))
+      return true;
+  }
 
-    return false;
+  return false;
 }
 
-HTMLImportChild* HTMLImportsController::createChild(const KURL& url, HTMLImportLoader* loader, HTMLImport* parent, HTMLImportChildClient* client)
-{
-    HTMLImport::SyncMode mode = client->isSync() && !makesCycle(parent, url) ? HTMLImport::Sync : HTMLImport::Async;
-    if (mode == HTMLImport::Async)
-        UseCounter::count(root()->document(), UseCounter::HTMLImportsAsyncAttribute);
+HTMLImportChild* HTMLImportsController::CreateChild(
+    const KURL& url,
+    HTMLImportLoader* loader,
+    HTMLImport* parent,
+    HTMLImportChildClient* client) {
+  HTMLImport::SyncMode mode = client->IsSync() && !MakesCycle(parent, url)
+                                  ? HTMLImport::kSync
+                                  : HTMLImport::kAsync;
+  if (mode == HTMLImport::kAsync)
+    UseCounter::Count(Root()->GetDocument(),
+                      UseCounter::kHTMLImportsAsyncAttribute);
 
-    HTMLImportChild* child = new HTMLImportChild(url, loader, mode);
-    child->setClient(client);
-    parent->appendImport(child);
-    loader->addImport(child);
-    return root()->add(child);
+  HTMLImportChild* child = new HTMLImportChild(url, loader, mode);
+  child->SetClient(client);
+  parent->AppendImport(child);
+  loader->AddImport(child);
+  return Root()->Add(child);
 }
 
-HTMLImportChild* HTMLImportsController::load(HTMLImport* parent, HTMLImportChildClient* client, FetchRequest request)
-{
-    ASSERT(!request.url().isEmpty() && request.url().isValid());
-    ASSERT(parent == root() || toHTMLImportChild(parent)->loader()->isFirstImport(toHTMLImportChild(parent)));
+HTMLImportChild* HTMLImportsController::Load(HTMLImport* parent,
+                                             HTMLImportChildClient* client,
+                                             FetchParameters params) {
+  DCHECK(!params.Url().IsEmpty());
+  DCHECK(params.Url().IsValid());
+  DCHECK(parent == Root() || ToHTMLImportChild(parent)->Loader()->IsFirstImport(
+                                 ToHTMLImportChild(parent)));
 
-    if (HTMLImportChild* childToShareWith = root()->find(request.url())) {
-        HTMLImportLoader* loader = childToShareWith->loader();
-        ASSERT(loader);
-        HTMLImportChild* child = createChild(request.url(), loader, parent, client);
-        child->didShareLoader();
-        return child;
-    }
-
-    request.setCrossOriginAccessControl(master()->getSecurityOrigin(), CrossOriginAttributeAnonymous);
-    RawResource* resource = RawResource::fetchImport(request, parent->document()->fetcher());
-    if (!resource)
-        return nullptr;
-
-    HTMLImportLoader* loader = createLoader();
-    HTMLImportChild* child = createChild(request.url(), loader, parent, client);
-    // We set resource after the import tree is built since
-    // Resource::addClient() immediately calls back to feed the bytes when the resource is cached.
-    loader->startLoading(resource);
-    child->didStartLoading();
+  if (HTMLImportChild* child_to_share_with = Root()->Find(params.Url())) {
+    HTMLImportLoader* loader = child_to_share_with->Loader();
+    DCHECK(loader);
+    HTMLImportChild* child = CreateChild(params.Url(), loader, parent, client);
+    child->DidShareLoader();
     return child;
-}
+  }
 
-Document* HTMLImportsController::master() const
-{
-    return root() ? root()->document() : nullptr;
-}
-
-bool HTMLImportsController::shouldBlockScriptExecution(const Document& document) const
-{
-    ASSERT(document.importsController() == this);
-    if (HTMLImportLoader* loader = loaderFor(document))
-        return loader->shouldBlockScriptExecution();
-    return root()->state().shouldBlockScriptExecution();
-}
-
-HTMLImportLoader* HTMLImportsController::createLoader()
-{
-    m_loaders.append(HTMLImportLoader::create(this));
-    return m_loaders.last().get();
-}
-
-HTMLImportLoader* HTMLImportsController::loaderFor(const Document& document) const
-{
-    for (size_t i = 0; i < m_loaders.size(); ++i) {
-        if (m_loaders[i]->document() == &document)
-            return m_loaders[i].get();
-    }
-
+  params.SetCrossOriginAccessControl(Master()->GetSecurityOrigin(),
+                                     kCrossOriginAttributeAnonymous);
+  RawResource* resource =
+      RawResource::FetchImport(params, parent->GetDocument()->Fetcher());
+  if (!resource)
     return nullptr;
+
+  HTMLImportLoader* loader = CreateLoader();
+  HTMLImportChild* child = CreateChild(params.Url(), loader, parent, client);
+  // We set resource after the import tree is built since
+  // Resource::addClient() immediately calls back to feed the bytes when the
+  // resource is cached.
+  loader->StartLoading(resource);
+  child->DidStartLoading();
+  return child;
 }
 
-Document* HTMLImportsController::loaderDocumentAt(size_t i) const
-{
-    return loaderAt(i)->document();
+Document* HTMLImportsController::Master() const {
+  return Root() ? Root()->GetDocument() : nullptr;
 }
 
-DEFINE_TRACE(HTMLImportsController)
-{
-    visitor->trace(m_root);
-    visitor->trace(m_loaders);
+bool HTMLImportsController::ShouldBlockScriptExecution(
+    const Document& document) const {
+  DCHECK_EQ(document.ImportsController(), this);
+  if (HTMLImportLoader* loader = LoaderFor(document))
+    return loader->ShouldBlockScriptExecution();
+  return Root()->GetState().ShouldBlockScriptExecution();
 }
 
-DEFINE_TRACE_WRAPPERS(HTMLImportsController)
-{
-    visitor->traceWrappers(master());
+HTMLImportLoader* HTMLImportsController::CreateLoader() {
+  loaders_.push_back(HTMLImportLoader::Create(this));
+  return loaders_.back().Get();
 }
 
-} // namespace blink
+HTMLImportLoader* HTMLImportsController::LoaderFor(
+    const Document& document) const {
+  for (const auto& loader : loaders_) {
+    if (loader->GetDocument() == &document)
+      return loader.Get();
+  }
+
+  return nullptr;
+}
+
+DEFINE_TRACE(HTMLImportsController) {
+  visitor->Trace(root_);
+  visitor->Trace(loaders_);
+}
+
+DEFINE_TRACE_WRAPPERS(HTMLImportsController) {
+  visitor->TraceWrappers(Master());
+}
+
+}  // namespace blink

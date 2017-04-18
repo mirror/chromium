@@ -35,276 +35,251 @@
 namespace blink {
 
 AudioListener::AudioListener(BaseAudioContext& context)
-    : m_positionX(AudioParam::create(context, ParamTypeAudioListenerPositionX, 0.0))
-    , m_positionY(AudioParam::create(context, ParamTypeAudioListenerPositionY, 0.0))
-    , m_positionZ(AudioParam::create(context, ParamTypeAudioListenerPositionZ, 0.0))
-    , m_forwardX(AudioParam::create(context, ParamTypeAudioListenerForwardX, 0.0))
-    , m_forwardY(AudioParam::create(context, ParamTypeAudioListenerForwardY, 0.0))
-    , m_forwardZ(AudioParam::create(context, ParamTypeAudioListenerForwardZ, -1.0))
-    , m_upX(AudioParam::create(context, ParamTypeAudioListenerUpX, 0.0))
-    , m_upY(AudioParam::create(context, ParamTypeAudioListenerUpY, 1.0))
-    , m_upZ(AudioParam::create(context, ParamTypeAudioListenerUpZ, 0.0))
-    , m_dopplerFactor(1)
-    , m_speedOfSound(343.3)
-    , m_lastUpdateTime(-1)
-    , m_isListenerDirty(false)
-    , m_positionXValues(AudioUtilities::kRenderQuantumFrames)
-    , m_positionYValues(AudioUtilities::kRenderQuantumFrames)
-    , m_positionZValues(AudioUtilities::kRenderQuantumFrames)
-    , m_forwardXValues(AudioUtilities::kRenderQuantumFrames)
-    , m_forwardYValues(AudioUtilities::kRenderQuantumFrames)
-    , m_forwardZValues(AudioUtilities::kRenderQuantumFrames)
-    , m_upXValues(AudioUtilities::kRenderQuantumFrames)
-    , m_upYValues(AudioUtilities::kRenderQuantumFrames)
-    , m_upZValues(AudioUtilities::kRenderQuantumFrames)
-{
-    // Initialize the cached values with the current values.  Thus, we don't need to notify any
-    // panners because we haved moved.
-    m_lastPosition = position();
-    m_lastForward = orientation();
-    m_lastUp = upVector();
+    : position_x_(
+          AudioParam::Create(context, kParamTypeAudioListenerPositionX, 0.0)),
+      position_y_(
+          AudioParam::Create(context, kParamTypeAudioListenerPositionY, 0.0)),
+      position_z_(
+          AudioParam::Create(context, kParamTypeAudioListenerPositionZ, 0.0)),
+      forward_x_(
+          AudioParam::Create(context, kParamTypeAudioListenerForwardX, 0.0)),
+      forward_y_(
+          AudioParam::Create(context, kParamTypeAudioListenerForwardY, 0.0)),
+      forward_z_(
+          AudioParam::Create(context, kParamTypeAudioListenerForwardZ, -1.0)),
+      up_x_(AudioParam::Create(context, kParamTypeAudioListenerUpX, 0.0)),
+      up_y_(AudioParam::Create(context, kParamTypeAudioListenerUpY, 1.0)),
+      up_z_(AudioParam::Create(context, kParamTypeAudioListenerUpZ, 0.0)),
+      last_update_time_(-1),
+      is_listener_dirty_(false),
+      position_x_values_(AudioUtilities::kRenderQuantumFrames),
+      position_y_values_(AudioUtilities::kRenderQuantumFrames),
+      position_z_values_(AudioUtilities::kRenderQuantumFrames),
+      forward_x_values_(AudioUtilities::kRenderQuantumFrames),
+      forward_y_values_(AudioUtilities::kRenderQuantumFrames),
+      forward_z_values_(AudioUtilities::kRenderQuantumFrames),
+      up_x_values_(AudioUtilities::kRenderQuantumFrames),
+      up_y_values_(AudioUtilities::kRenderQuantumFrames),
+      up_z_values_(AudioUtilities::kRenderQuantumFrames) {
+  // Initialize the cached values with the current values.  Thus, we don't need
+  // to notify any panners because we haved moved.
+  last_position_ = GetPosition();
+  last_forward_ = Orientation();
+  last_up_ = UpVector();
 }
 
-AudioListener::~AudioListener()
-{
+AudioListener::~AudioListener() {}
+
+DEFINE_TRACE(AudioListener) {
+  visitor->Trace(position_x_);
+  visitor->Trace(position_y_);
+  visitor->Trace(position_z_);
+
+  visitor->Trace(forward_x_);
+  visitor->Trace(forward_y_);
+  visitor->Trace(forward_z_);
+
+  visitor->Trace(up_x_);
+  visitor->Trace(up_y_);
+  visitor->Trace(up_z_);
 }
 
-DEFINE_TRACE(AudioListener)
-{
-    visitor->trace(m_positionX);
-    visitor->trace(m_positionY);
-    visitor->trace(m_positionZ);
-
-    visitor->trace(m_forwardX);
-    visitor->trace(m_forwardY);
-    visitor->trace(m_forwardZ);
-
-    visitor->trace(m_upX);
-    visitor->trace(m_upY);
-    visitor->trace(m_upZ);
+void AudioListener::AddPanner(PannerHandler& panner) {
+  DCHECK(IsMainThread());
+  panners_.insert(&panner);
 }
 
-void AudioListener::addPanner(PannerHandler& panner)
-{
-    ASSERT(isMainThread());
-    m_panners.add(&panner);
+void AudioListener::RemovePanner(PannerHandler& panner) {
+  DCHECK(IsMainThread());
+  DCHECK(panners_.Contains(&panner));
+  panners_.erase(&panner);
 }
 
-void AudioListener::removePanner(PannerHandler& panner)
-{
-    ASSERT(isMainThread());
-    ASSERT(m_panners.contains(&panner));
-    m_panners.remove(&panner);
+bool AudioListener::HasSampleAccurateValues() const {
+  return positionX()->Handler().HasSampleAccurateValues() ||
+         positionY()->Handler().HasSampleAccurateValues() ||
+         positionZ()->Handler().HasSampleAccurateValues() ||
+         forwardX()->Handler().HasSampleAccurateValues() ||
+         forwardY()->Handler().HasSampleAccurateValues() ||
+         forwardZ()->Handler().HasSampleAccurateValues() ||
+         upX()->Handler().HasSampleAccurateValues() ||
+         upY()->Handler().HasSampleAccurateValues() ||
+         upZ()->Handler().HasSampleAccurateValues();
 }
 
-bool AudioListener::hasSampleAccurateValues() const
-{
-    return positionX()->handler().hasSampleAccurateValues()
-        || positionY()->handler().hasSampleAccurateValues()
-        || positionZ()->handler().hasSampleAccurateValues()
-        || forwardX()->handler().hasSampleAccurateValues()
-        || forwardY()->handler().hasSampleAccurateValues()
-        || forwardZ()->handler().hasSampleAccurateValues()
-        || upX()->handler().hasSampleAccurateValues()
-        || upY()->handler().hasSampleAccurateValues()
-        || upZ()->handler().hasSampleAccurateValues();
+void AudioListener::UpdateValuesIfNeeded(size_t frames_to_process) {
+  double current_time =
+      positionX()->Handler().DestinationHandler().CurrentTime();
+  if (last_update_time_ != current_time) {
+    // Time has changed. Update all of the automation values now.
+    last_update_time_ = current_time;
+
+    bool sizes_are_good = frames_to_process <= position_x_values_.size() &&
+                          frames_to_process <= position_y_values_.size() &&
+                          frames_to_process <= position_z_values_.size() &&
+                          frames_to_process <= forward_x_values_.size() &&
+                          frames_to_process <= forward_y_values_.size() &&
+                          frames_to_process <= forward_z_values_.size() &&
+                          frames_to_process <= up_x_values_.size() &&
+                          frames_to_process <= up_y_values_.size() &&
+                          frames_to_process <= up_z_values_.size();
+
+    DCHECK(sizes_are_good);
+    if (!sizes_are_good)
+      return;
+
+    positionX()->Handler().CalculateSampleAccurateValues(
+        position_x_values_.Data(), frames_to_process);
+    positionY()->Handler().CalculateSampleAccurateValues(
+        position_y_values_.Data(), frames_to_process);
+    positionZ()->Handler().CalculateSampleAccurateValues(
+        position_z_values_.Data(), frames_to_process);
+
+    forwardX()->Handler().CalculateSampleAccurateValues(
+        forward_x_values_.Data(), frames_to_process);
+    forwardY()->Handler().CalculateSampleAccurateValues(
+        forward_y_values_.Data(), frames_to_process);
+    forwardZ()->Handler().CalculateSampleAccurateValues(
+        forward_z_values_.Data(), frames_to_process);
+
+    upX()->Handler().CalculateSampleAccurateValues(up_x_values_.Data(),
+                                                   frames_to_process);
+    upY()->Handler().CalculateSampleAccurateValues(up_y_values_.Data(),
+                                                   frames_to_process);
+    upZ()->Handler().CalculateSampleAccurateValues(up_z_values_.Data(),
+                                                   frames_to_process);
+  }
 }
 
-void AudioListener::updateValuesIfNeeded(size_t framesToProcess)
-{
-    double currentTime = positionX()->handler().destinationHandler().currentTime();
-    if (m_lastUpdateTime != currentTime) {
-        // Time has changed. Update all of the automation values now.
-        m_lastUpdateTime = currentTime;
+const float* AudioListener::GetPositionXValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return position_x_values_.Data();
+}
 
-        bool sizesAreGood = framesToProcess <= m_positionXValues.size()
-            && framesToProcess <= m_positionYValues.size()
-            && framesToProcess <= m_positionZValues.size()
-            && framesToProcess <= m_forwardXValues.size()
-            && framesToProcess <= m_forwardYValues.size()
-            && framesToProcess <= m_forwardZValues.size()
-            && framesToProcess <= m_upXValues.size()
-            && framesToProcess <= m_upYValues.size()
-            && framesToProcess <= m_upZValues.size();
+const float* AudioListener::GetPositionYValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return position_y_values_.Data();
+}
 
-        DCHECK(sizesAreGood);
-        if (!sizesAreGood)
-            return;
+const float* AudioListener::GetPositionZValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return position_z_values_.Data();
+}
 
-        positionX()->handler().calculateSampleAccurateValues(m_positionXValues.data(), framesToProcess);
-        positionY()->handler().calculateSampleAccurateValues(m_positionYValues.data(), framesToProcess);
-        positionZ()->handler().calculateSampleAccurateValues(m_positionZValues.data(), framesToProcess);
+const float* AudioListener::GetForwardXValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return forward_x_values_.Data();
+}
 
-        forwardX()->handler().calculateSampleAccurateValues(m_forwardXValues.data(), framesToProcess);
-        forwardY()->handler().calculateSampleAccurateValues(m_forwardYValues.data(), framesToProcess);
-        forwardZ()->handler().calculateSampleAccurateValues(m_forwardZValues.data(), framesToProcess);
+const float* AudioListener::GetForwardYValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return forward_y_values_.Data();
+}
 
-        upX()->handler().calculateSampleAccurateValues(m_upXValues.data(), framesToProcess);
-        upY()->handler().calculateSampleAccurateValues(m_upYValues.data(), framesToProcess);
-        upZ()->handler().calculateSampleAccurateValues(m_upZValues.data(), framesToProcess);
+const float* AudioListener::GetForwardZValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return forward_z_values_.Data();
+}
+
+const float* AudioListener::GetUpXValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return up_x_values_.Data();
+}
+
+const float* AudioListener::GetUpYValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return up_y_values_.Data();
+}
+
+const float* AudioListener::GetUpZValues(size_t frames_to_process) {
+  UpdateValuesIfNeeded(frames_to_process);
+  return up_z_values_.Data();
+}
+
+void AudioListener::UpdateState() {
+  // This must be called from the audio thread in pre or post render phase of
+  // the graph processing.  (AudioListener doesn't have access to the context
+  // to check for the audio thread.)
+  DCHECK(!IsMainThread());
+
+  MutexTryLocker try_locker(listener_lock_);
+  if (try_locker.Locked()) {
+    FloatPoint3D current_position = GetPosition();
+    FloatPoint3D current_forward = Orientation();
+    FloatPoint3D current_up = UpVector();
+
+    is_listener_dirty_ = current_position != last_position_ ||
+                         current_forward != last_forward_ ||
+                         current_up != last_up_;
+
+    if (is_listener_dirty_) {
+      last_position_ = current_position;
+      last_forward_ = current_forward;
+      last_up_ = current_up;
     }
+  } else {
+    // Main thread must be updating the position, forward, or up vector;
+    // just assume the listener is dirty.  At worst, we'll do a little more
+    // work than necessary for one rendering quantum.
+    is_listener_dirty_ = true;
+  }
 }
 
-const float* AudioListener::getPositionXValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_positionXValues.data();
+void AudioListener::CreateAndLoadHRTFDatabaseLoader(float sample_rate) {
+  DCHECK(IsMainThread());
+
+  if (!hrtf_database_loader_)
+    hrtf_database_loader_ =
+        HRTFDatabaseLoader::CreateAndLoadAsynchronouslyIfNecessary(sample_rate);
 }
 
-const float* AudioListener::getPositionYValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_positionYValues.data();
+bool AudioListener::IsHRTFDatabaseLoaded() {
+  return hrtf_database_loader_ && hrtf_database_loader_->IsLoaded();
 }
 
-const float* AudioListener::getPositionZValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_positionZValues.data();
+void AudioListener::WaitForHRTFDatabaseLoaderThreadCompletion() {
+  if (hrtf_database_loader_)
+    hrtf_database_loader_->WaitForLoaderThreadCompletion();
 }
 
-const float* AudioListener::getForwardXValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_forwardXValues.data();
+void AudioListener::MarkPannersAsDirty(unsigned type) {
+  DCHECK(IsMainThread());
+  for (PannerHandler* panner : panners_)
+    panner->MarkPannerAsDirty(type);
 }
 
-const float* AudioListener::getForwardYValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_forwardYValues.data();
+void AudioListener::setPosition(const FloatPoint3D& position) {
+  DCHECK(IsMainThread());
+
+  // This synchronizes with panner's process().
+  MutexLocker listener_locker(listener_lock_);
+  position_x_->setValue(position.X());
+  position_y_->setValue(position.Y());
+  position_z_->setValue(position.Z());
+  MarkPannersAsDirty(PannerHandler::kAzimuthElevationDirty |
+                     PannerHandler::kDistanceConeGainDirty);
 }
 
-const float* AudioListener::getForwardZValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_forwardZValues.data();
+void AudioListener::setOrientation(const FloatPoint3D& orientation) {
+  DCHECK(IsMainThread());
+
+  // This synchronizes with panner's process().
+  MutexLocker listener_locker(listener_lock_);
+  forward_x_->setValue(orientation.X());
+  forward_y_->setValue(orientation.Y());
+  forward_z_->setValue(orientation.Z());
+  MarkPannersAsDirty(PannerHandler::kAzimuthElevationDirty);
 }
 
-const float* AudioListener::getUpXValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_upXValues.data();
+void AudioListener::SetUpVector(const FloatPoint3D& up_vector) {
+  DCHECK(IsMainThread());
+
+  // This synchronizes with panner's process().
+  MutexLocker listener_locker(listener_lock_);
+  up_x_->setValue(up_vector.X());
+  up_y_->setValue(up_vector.Y());
+  up_z_->setValue(up_vector.Z());
+  MarkPannersAsDirty(PannerHandler::kAzimuthElevationDirty);
 }
 
-const float* AudioListener::getUpYValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_upYValues.data();
-}
-
-const float* AudioListener::getUpZValues(size_t framesToProcess)
-{
-    updateValuesIfNeeded(framesToProcess);
-    return m_upZValues.data();
-}
-
-void AudioListener::updateState()
-{
-    // This must be called from the audio thread in pre or post render phase of
-    // the graph processing.  (AudioListener doesn't have access to the context
-    // to check for the audio thread.)
-    DCHECK(!isMainThread());
-
-    MutexTryLocker tryLocker(m_listenerLock);
-    if (tryLocker.locked()) {
-        FloatPoint3D currentPosition = position();
-        FloatPoint3D currentForward = orientation();
-        FloatPoint3D currentUp = upVector();
-
-        m_isListenerDirty = currentPosition != m_lastPosition
-            || currentForward != m_lastForward
-            || currentUp != m_lastUp;
-
-        if (m_isListenerDirty) {
-            m_lastPosition = currentPosition;
-            m_lastForward = currentForward;
-            m_lastUp = currentUp;
-        }
-    } else {
-        // Main thread must be updating the position, forward, or up vector;
-        // just assume the listener is dirty.  At worst, we'll do a little more
-        // work than necessary for one rendering quantum.
-        m_isListenerDirty = true;
-    }
-}
-
-void AudioListener::createAndLoadHRTFDatabaseLoader(float sampleRate)
-{
-    DCHECK(isMainThread());
-
-    if (!m_hrtfDatabaseLoader)
-        m_hrtfDatabaseLoader = HRTFDatabaseLoader::createAndLoadAsynchronouslyIfNecessary(sampleRate);
-}
-
-bool AudioListener::isHRTFDatabaseLoaded()
-{
-    return m_hrtfDatabaseLoader && m_hrtfDatabaseLoader->isLoaded();
-}
-
-void AudioListener::waitForHRTFDatabaseLoaderThreadCompletion()
-{
-    if (m_hrtfDatabaseLoader)
-        m_hrtfDatabaseLoader->waitForLoaderThreadCompletion();
-}
-
-void AudioListener::markPannersAsDirty(unsigned type)
-{
-    DCHECK(isMainThread());
-    for (PannerHandler* panner : m_panners)
-        panner->markPannerAsDirty(type);
-}
-
-void AudioListener::setPosition(const FloatPoint3D& position)
-{
-    DCHECK(isMainThread());
-
-    // This synchronizes with panner's process().
-    MutexLocker listenerLocker(m_listenerLock);
-    m_positionX->setValue(position.x());
-    m_positionY->setValue(position.y());
-    m_positionZ->setValue(position.z());
-    markPannersAsDirty(PannerHandler::AzimuthElevationDirty | PannerHandler::DistanceConeGainDirty);
-}
-
-void AudioListener::setOrientation(const FloatPoint3D& orientation)
-{
-    DCHECK(isMainThread());
-
-    // This synchronizes with panner's process().
-    MutexLocker listenerLocker(m_listenerLock);
-    m_forwardX->setValue(orientation.x());
-    m_forwardY->setValue(orientation.y());
-    m_forwardZ->setValue(orientation.z());
-    markPannersAsDirty(PannerHandler::AzimuthElevationDirty);
-}
-
-void AudioListener::setUpVector(const FloatPoint3D& upVector)
-{
-    DCHECK(isMainThread());
-
-    // This synchronizes with panner's process().
-    MutexLocker listenerLocker(m_listenerLock);
-    m_upX->setValue(upVector.x());
-    m_upY->setValue(upVector.y());
-    m_upZ->setValue(upVector.z());
-    markPannersAsDirty(PannerHandler::AzimuthElevationDirty);
-}
-
-void AudioListener::setVelocity(float x, float y, float z)
-{
-    // The velocity is not used internally and cannot be read back by scripts,
-    // so it can be ignored entirely.
-}
-
-void AudioListener::setDopplerFactor(double dopplerFactor)
-{
-    m_dopplerFactor = dopplerFactor;
-}
-
-void AudioListener::setSpeedOfSound(double speedOfSound)
-{
-    m_speedOfSound = speedOfSound;
-}
-
-} // namespace blink
+}  // namespace blink

@@ -4,115 +4,180 @@
 
 #include "core/loader/MixedContentChecker.h"
 
+#include <base/macros.h>
+#include <memory>
 #include "core/frame/Settings.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
-#include "platform/network/ResourceResponse.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/RefPtr.h"
+#include "public/platform/WebMixedContent.h"
+#include "public/platform/WebMixedContentContextType.h"
 #include "testing/gmock/include/gmock/gmock-generated-function-mockers.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/RefPtr.h"
-#include <base/macros.h>
-#include <memory>
 
 namespace blink {
 
-TEST(MixedContentCheckerTest, IsMixedContent)
-{
-    struct TestCase {
-        const char* origin;
-        const char* target;
-        bool expectation;
-    } cases[] = {
-        {"http://example.com/foo", "http://example.com/foo", false},
-        {"http://example.com/foo", "https://example.com/foo", false},
-        {"http://example.com/foo", "data:text/html,<p>Hi!</p>", false},
-        {"http://example.com/foo", "about:blank", false},
-        {"https://example.com/foo", "https://example.com/foo", false},
-        {"https://example.com/foo", "wss://example.com/foo", false},
-        {"https://example.com/foo", "data:text/html,<p>Hi!</p>", false},
-        {"https://example.com/foo", "http://127.0.0.1/", false},
-        {"https://example.com/foo", "http://[::1]/", false},
+// Tests that MixedContentChecker::isMixedContent correctly detects or ignores
+// many cases where there is or there is not mixed content, respectively.
+// Note: Renderer side version of
+// MixedContentNavigationThrottleTest.IsMixedContent. Must be kept in sync
+// manually!
+TEST(MixedContentCheckerTest, IsMixedContent) {
+  struct TestCase {
+    const char* origin;
+    const char* target;
+    bool expectation;
+  } cases[] = {
+      {"http://example.com/foo", "http://example.com/foo", false},
+      {"http://example.com/foo", "https://example.com/foo", false},
+      {"http://example.com/foo", "data:text/html,<p>Hi!</p>", false},
+      {"http://example.com/foo", "about:blank", false},
+      {"https://example.com/foo", "https://example.com/foo", false},
+      {"https://example.com/foo", "wss://example.com/foo", false},
+      {"https://example.com/foo", "data:text/html,<p>Hi!</p>", false},
+      {"https://example.com/foo", "http://127.0.0.1/", false},
+      {"https://example.com/foo", "http://[::1]/", false},
+      {"https://example.com/foo", "blob:https://example.com/foo", false},
+      {"https://example.com/foo", "blob:http://example.com/foo", false},
+      {"https://example.com/foo", "blob:null/foo", false},
+      {"https://example.com/foo", "filesystem:https://example.com/foo", false},
+      {"https://example.com/foo", "filesystem:http://example.com/foo", false},
 
-        {"https://example.com/foo", "http://example.com/foo", true},
-        {"https://example.com/foo", "http://google.com/foo", true},
-        {"https://example.com/foo", "ws://example.com/foo", true},
-        {"https://example.com/foo", "ws://google.com/foo", true},
-        {"https://example.com/foo", "http://192.168.1.1/", true},
-        {"https://example.com/foo", "http://localhost/", true},
-    };
+      {"https://example.com/foo", "http://example.com/foo", true},
+      {"https://example.com/foo", "http://google.com/foo", true},
+      {"https://example.com/foo", "ws://example.com/foo", true},
+      {"https://example.com/foo", "ws://google.com/foo", true},
+      {"https://example.com/foo", "http://192.168.1.1/", true},
+      {"https://example.com/foo", "http://localhost/", true},
+  };
 
-    for (const auto& test : cases) {
-        SCOPED_TRACE(::testing::Message() << "Origin: " << test.origin << ", Target: " << test.target << ", Expectation: " << test.expectation);
-        KURL originUrl(KURL(), test.origin);
-        RefPtr<SecurityOrigin> securityOrigin(SecurityOrigin::create(originUrl));
-        KURL targetUrl(KURL(), test.target);
-        EXPECT_EQ(test.expectation, MixedContentChecker::isMixedContent(securityOrigin.get(), targetUrl));
-    }
+  for (const auto& test : cases) {
+    SCOPED_TRACE(::testing::Message() << "Origin: " << test.origin
+                                      << ", Target: " << test.target
+                                      << ", Expectation: " << test.expectation);
+    KURL origin_url(KURL(), test.origin);
+    RefPtr<SecurityOrigin> security_origin(SecurityOrigin::Create(origin_url));
+    KURL target_url(KURL(), test.target);
+    EXPECT_EQ(test.expectation, MixedContentChecker::IsMixedContent(
+                                    security_origin.Get(), target_url));
+  }
 }
 
-TEST(MixedContentCheckerTest, ContextTypeForInspector)
-{
-    std::unique_ptr<DummyPageHolder> dummyPageHolder = DummyPageHolder::create(IntSize(1, 1));
-    dummyPageHolder->frame().document()->setSecurityOrigin(SecurityOrigin::createFromString("http://example.test"));
+TEST(MixedContentCheckerTest, ContextTypeForInspector) {
+  std::unique_ptr<DummyPageHolder> dummy_page_holder =
+      DummyPageHolder::Create(IntSize(1, 1));
+  dummy_page_holder->GetFrame().GetDocument()->SetSecurityOrigin(
+      SecurityOrigin::CreateFromString("http://example.test"));
 
-    ResourceRequest notMixedContent("https://example.test/foo.jpg");
-    notMixedContent.setFrameType(WebURLRequest::FrameTypeAuxiliary);
-    notMixedContent.setRequestContext(WebURLRequest::RequestContextScript);
-    EXPECT_EQ(WebMixedContent::ContextType::NotMixedContent, MixedContentChecker::contextTypeForInspector(&dummyPageHolder->frame(), notMixedContent));
+  ResourceRequest not_mixed_content("https://example.test/foo.jpg");
+  not_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
+  not_mixed_content.SetRequestContext(WebURLRequest::kRequestContextScript);
+  EXPECT_EQ(WebMixedContentContextType::kNotMixedContent,
+            MixedContentChecker::ContextTypeForInspector(
+                &dummy_page_holder->GetFrame(), not_mixed_content));
 
-    dummyPageHolder->frame().document()->setSecurityOrigin(SecurityOrigin::createFromString("https://example.test"));
-    EXPECT_EQ(WebMixedContent::ContextType::NotMixedContent, MixedContentChecker::contextTypeForInspector(&dummyPageHolder->frame(), notMixedContent));
+  dummy_page_holder->GetFrame().GetDocument()->SetSecurityOrigin(
+      SecurityOrigin::CreateFromString("https://example.test"));
+  EXPECT_EQ(WebMixedContentContextType::kNotMixedContent,
+            MixedContentChecker::ContextTypeForInspector(
+                &dummy_page_holder->GetFrame(), not_mixed_content));
 
-    ResourceRequest blockableMixedContent("http://example.test/foo.jpg");
-    blockableMixedContent.setFrameType(WebURLRequest::FrameTypeAuxiliary);
-    blockableMixedContent.setRequestContext(WebURLRequest::RequestContextScript);
-    EXPECT_EQ(WebMixedContent::ContextType::Blockable, MixedContentChecker::contextTypeForInspector(&dummyPageHolder->frame(), blockableMixedContent));
+  ResourceRequest blockable_mixed_content("http://example.test/foo.jpg");
+  blockable_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
+  blockable_mixed_content.SetRequestContext(
+      WebURLRequest::kRequestContextScript);
+  EXPECT_EQ(WebMixedContentContextType::kBlockable,
+            MixedContentChecker::ContextTypeForInspector(
+                &dummy_page_holder->GetFrame(), blockable_mixed_content));
 
-    ResourceRequest optionallyBlockableMixedContent("http://example.test/foo.jpg");
-    blockableMixedContent.setFrameType(WebURLRequest::FrameTypeAuxiliary);
-    blockableMixedContent.setRequestContext(WebURLRequest::RequestContextImage);
-    EXPECT_EQ(WebMixedContent::ContextType::OptionallyBlockable, MixedContentChecker::contextTypeForInspector(&dummyPageHolder->frame(), blockableMixedContent));
+  ResourceRequest optionally_blockable_mixed_content(
+      "http://example.test/foo.jpg");
+  blockable_mixed_content.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
+  blockable_mixed_content.SetRequestContext(
+      WebURLRequest::kRequestContextImage);
+  EXPECT_EQ(WebMixedContentContextType::kOptionallyBlockable,
+            MixedContentChecker::ContextTypeForInspector(
+                &dummy_page_holder->GetFrame(), blockable_mixed_content));
 }
 
 namespace {
 
-    class MockFrameLoaderClient : public EmptyFrameLoaderClient {
-    public:
-        MockFrameLoaderClient()
-            : EmptyFrameLoaderClient()
-        {
-        }
-        MOCK_METHOD2(didDisplayContentWithCertificateErrors, void(const KURL&, const CString&));
-        MOCK_METHOD2(didRunContentWithCertificateErrors, void(const KURL&, const CString&));
-    };
+class MockLocalFrameClient : public EmptyLocalFrameClient {
+ public:
+  MockLocalFrameClient() : EmptyLocalFrameClient() {}
+  MOCK_METHOD0(DidContainInsecureFormAction, void());
+  MOCK_METHOD1(DidDisplayContentWithCertificateErrors, void(const KURL&));
+  MOCK_METHOD1(DidRunContentWithCertificateErrors, void(const KURL&));
+};
 
-} // namespace
+}  // namespace
 
-TEST(MixedContentCheckerTest, HandleCertificateError)
-{
-    MockFrameLoaderClient* client = new MockFrameLoaderClient;
-    std::unique_ptr<DummyPageHolder> dummyPageHolder = DummyPageHolder::create(IntSize(1, 1), nullptr, client);
+TEST(MixedContentCheckerTest, HandleCertificateError) {
+  MockLocalFrameClient* client = new MockLocalFrameClient;
+  std::unique_ptr<DummyPageHolder> dummy_page_holder =
+      DummyPageHolder::Create(IntSize(1, 1), nullptr, client);
 
-    KURL mainResourceUrl(KURL(), "https://example.test");
-    KURL displayedUrl(KURL(), "https://example-displayed.test");
-    KURL ranUrl(KURL(), "https://example-ran.test");
+  KURL main_resource_url(KURL(), "https://example.test");
+  KURL displayed_url(KURL(), "https://example-displayed.test");
+  KURL ran_url(KURL(), "https://example-ran.test");
 
-    dummyPageHolder->frame().document()->setURL(mainResourceUrl);
-    ResourceResponse response1;
-    response1.setURL(ranUrl);
-    response1.setSecurityInfo("security info1");
-    EXPECT_CALL(*client, didRunContentWithCertificateErrors(ranUrl, response1.getSecurityInfo()));
-    MixedContentChecker::handleCertificateError(&dummyPageHolder->frame(), response1, WebURLRequest::FrameTypeNone, WebURLRequest::RequestContextScript);
+  dummy_page_holder->GetFrame().GetDocument()->SetURL(main_resource_url);
+  ResourceResponse response1;
+  response1.SetURL(ran_url);
+  EXPECT_CALL(*client, DidRunContentWithCertificateErrors(ran_url));
+  MixedContentChecker::HandleCertificateError(
+      &dummy_page_holder->GetFrame(), response1, WebURLRequest::kFrameTypeNone,
+      WebURLRequest::kRequestContextScript);
 
-    ResourceResponse response2;
-    WebURLRequest::RequestContext requestContext = WebURLRequest::RequestContextImage;
-    ASSERT_EQ(WebMixedContent::ContextType::OptionallyBlockable, WebMixedContent::contextTypeFromRequestContext(requestContext, dummyPageHolder->frame().settings()->strictMixedContentCheckingForPlugin()));
-    response2.setURL(displayedUrl);
-    response2.setSecurityInfo("security info2");
-    EXPECT_CALL(*client, didDisplayContentWithCertificateErrors(displayedUrl, response2.getSecurityInfo()));
-    MixedContentChecker::handleCertificateError(&dummyPageHolder->frame(), response2, WebURLRequest::FrameTypeNone, requestContext);
+  ResourceResponse response2;
+  WebURLRequest::RequestContext request_context =
+      WebURLRequest::kRequestContextImage;
+  ASSERT_EQ(
+      WebMixedContentContextType::kOptionallyBlockable,
+      WebMixedContent::ContextTypeFromRequestContext(
+          request_context, dummy_page_holder->GetFrame()
+                               .GetSettings()
+                               ->GetStrictMixedContentCheckingForPlugin()));
+  response2.SetURL(displayed_url);
+  EXPECT_CALL(*client, DidDisplayContentWithCertificateErrors(displayed_url));
+  MixedContentChecker::HandleCertificateError(
+      &dummy_page_holder->GetFrame(), response2, WebURLRequest::kFrameTypeNone,
+      request_context);
 }
 
-} // namespace blink
+TEST(MixedContentCheckerTest, DetectMixedForm) {
+  MockLocalFrameClient* client = new MockLocalFrameClient;
+  std::unique_ptr<DummyPageHolder> dummy_page_holder =
+      DummyPageHolder::Create(IntSize(1, 1), nullptr, client);
+
+  KURL main_resource_url(KURL(), "https://example.test/");
+
+  KURL http_form_action_url(KURL(), "http://example-action.test/");
+  KURL https_form_action_url(KURL(), "https://example-action.test/");
+  KURL javascript_form_action_url(KURL(), "javascript:void(0);");
+  KURL mailto_form_action_url(KURL(), "mailto:action@example-action.test");
+
+  dummy_page_holder->GetFrame().GetDocument()->SetSecurityOrigin(
+      SecurityOrigin::Create(main_resource_url));
+
+  // mailto and http are non-secure form targets.
+  EXPECT_CALL(*client, DidContainInsecureFormAction()).Times(2);
+
+  EXPECT_TRUE(MixedContentChecker::IsMixedFormAction(
+      &dummy_page_holder->GetFrame(), http_form_action_url,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+  EXPECT_FALSE(MixedContentChecker::IsMixedFormAction(
+      &dummy_page_holder->GetFrame(), https_form_action_url,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+  EXPECT_FALSE(MixedContentChecker::IsMixedFormAction(
+      &dummy_page_holder->GetFrame(), javascript_form_action_url,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+  EXPECT_TRUE(MixedContentChecker::IsMixedFormAction(
+      &dummy_page_holder->GetFrame(), mailto_form_action_url,
+      SecurityViolationReportingPolicy::kSuppressReporting));
+}
+
+}  // namespace blink

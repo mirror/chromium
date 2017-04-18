@@ -1,7 +1,8 @@
 include_rules = [
   "+components/keyed_service/core",
+  "+components/sync",
+  "+mojo/public/cpp",
   "+skia",
-  "+sync",
   "+third_party/google_toolbox_for_mac/src",
   "+third_party/skia",
   "+ui/accessibility",

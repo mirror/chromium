@@ -12,8 +12,7 @@
 #include "components/zoom/zoom_controller.h"
 #include "components/zoom/zoom_observer.h"
 #include "content/public/browser/host_zoom_map.h"
-#include "content/public/browser/navigation_details.h"
-#include "content/public/common/frame_navigate_params.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/test/test_renderer_host.h"
 #include "content/public/test/test_utils.h"
 #include "ipc/ipc_message.h"
@@ -32,7 +31,7 @@ class ZoomControllerTest : public ChromeRenderViewHostTestHarness {
     // This call is needed so that the RenderViewHost reports being alive. This
     // is only important for tests that call ZoomController::SetZoomLevel().
     content::RenderViewHostTester::For(rvh())->CreateTestRenderView(
-        base::string16(), MSG_ROUTING_NONE, MSG_ROUTING_NONE, -1, false);
+        base::string16(), MSG_ROUTING_NONE, MSG_ROUTING_NONE, false);
   }
 
   void TearDown() override {
@@ -54,8 +53,10 @@ TEST_F(ZoomControllerTest, DidNavigateMainFrame) {
       false);
   ZoomChangedWatcher zoom_change_watcher(zoom_controller_.get(),
                                          zoom_change_data);
-  zoom_controller_->DidNavigateMainFrame(content::LoadCommittedDetails(),
-                                         content::FrameNavigateParams());
+  std::unique_ptr<content::NavigationHandle> navigation_handle =
+      content::NavigationHandle::CreateNavigationHandleForTesting(
+          GURL(), rvh()->GetMainFrame(), true);
+  zoom_controller_->DidFinishNavigation(navigation_handle.get());
   zoom_change_watcher.Wait();
 }
 

@@ -39,29 +39,21 @@ namespace blink {
 class TextRun;
 
 struct WebTextRun {
-    WebTextRun(const WebString& t, bool isRTL, bool hasDirectionalOverride)
-        : text(t)
-        , rtl(isRTL)
-        , directionalOverride(hasDirectionalOverride)
-    {
-    }
-    WebTextRun()
-        : rtl(false)
-        , directionalOverride(false)
-    {
-    }
+  WebTextRun(const WebString& t, bool is_rtl, bool has_directional_override)
+      : text(t), rtl(is_rtl), directional_override(has_directional_override) {}
+  WebTextRun() : rtl(false), directional_override(false) {}
 
-    WebString text;
-    bool rtl;
-    bool directionalOverride;
+  WebString text;
+  bool rtl;
+  bool directional_override;
 
 #if INSIDE_BLINK
-    // The resulting blink::TextRun will refer to the text in this
-    // struct, so "this" must outlive the WebCore text run.
-    BLINK_PLATFORM_EXPORT operator TextRun() const;
+  // The resulting blink::TextRun will refer to the text in this
+  // struct, so "this" must outlive the WebCore text run.
+  BLINK_PLATFORM_EXPORT operator TextRun() const;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

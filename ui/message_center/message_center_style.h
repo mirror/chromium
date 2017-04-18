@@ -12,6 +12,10 @@
 #include "ui/gfx/geometry/size.h"
 #include "ui/message_center/message_center_export.h"
 
+namespace gfx {
+class ImageSkia;
+}
+
 namespace message_center {
 
 // Exported values /////////////////////////////////////////////////////////////
@@ -32,7 +36,7 @@ const size_t kMaxVisiblePopupNotifications = 3;
 
 // DIP dimension; H size of the whole card.
 const int kNotificationWidth = 360;
-const int kMinScrollViewHeight = 100;
+const int kMinScrollViewHeight = 77;
 
 // Colors.
 const SkColor kMessageCenterBorderColor = SkColorSetRGB(0xC7, 0xCA, 0xCE);
@@ -58,7 +62,6 @@ const int kCheckboxSizeWithPadding = 24;
 
 // DIP dimensions (H = horizontal, V = vertical).
 
-const int kControlButtonSize = 29;  // Square size of close & expand buttons.
 const int kIconToTextPadding = 16;  // H space between icon & title/message.
 const int kTextTopPadding = 12;     // V space between text elements.
 const int kIconBottomPadding = 16;  // Minimum non-zero V space between icon
@@ -68,6 +71,9 @@ const int kTextRightPadding = 23;
 const int kTextLeftPadding = kNotificationIconSize + kIconToTextPadding;
 const int kContextMessageViewWidth =
     kNotificationWidth - kTextLeftPadding - kTextRightPadding;
+// space between buttons and frame.
+const int kControlButtonPadding = 2;
+const int kControlButtonBorderSize = 6;
 
 // Text sizes.
 const int kTitleFontSize = 14;             // For title only.
@@ -80,7 +86,7 @@ const int kMessageLineHeight = 18;         // In DIPs.
 // Background of the card.
 const SkColor kNotificationBackgroundColor = SK_ColorWHITE;
 // Background of the image.
-const SkColor kImageBackgroundColor = SkColorSetRGB(0x22, 0x22, 0x22);
+const SkColor kImageBackgroundColor = kNotificationBackgroundColor;
 // Title, message, ...
 const SkColor kRegularTextColor = SkColorSetRGB(0x33, 0x33, 0x33);
 const SkColor kDimTextColor = SkColorSetRGB(0x7f, 0x7f, 0x7f);
@@ -90,6 +96,9 @@ const SkColor kFocusBorderColor = SkColorSetRGB(64, 128, 250);
 const SkColor kSmallImageMaskForegroundColor = SK_ColorWHITE;
 // Background of small icon image.
 const SkColor kSmallImageMaskBackgroundColor = SkColorSetRGB(0xa3, 0xa3, 0xa3);
+// Background of the close button and the settings button
+const SkColor kControlButtonBackgroundColor =
+    SkColorSetA(SK_ColorWHITE, 0.9 * 0xff);
 
 // Limits.
 
@@ -121,17 +130,23 @@ const SkColor kHoveredButtonBackgroundColor = SkColorSetRGB(243, 243, 243);
 #endif
 
 // Progress bar.
-const int kProgressBarThickness = 5;
 const int kProgressBarTopPadding = 16;
+#if defined(OS_MACOSX)
+const int kProgressBarThickness = 5;
 const int kProgressBarCornerRadius = 3;
 const SkColor kProgressBarBackgroundColor = SkColorSetARGB(26, 0, 0, 0);
 const SkColor kProgressBarSliceColor = SkColorSetRGB(26, 194, 34);
+#endif
 
 // Line limits.
 const int kMaxTitleLines = 2;
 const int kMessageCollapsedLineLimit = 2;
 const int kMessageExpandedLineLimit = 5;
 const int kContextMessageLineLimit = 1;
+
+// Icons.
+MESSAGE_CENTER_EXPORT gfx::ImageSkia GetCloseIcon();
+MESSAGE_CENTER_EXPORT gfx::ImageSkia GetSettingsIcon();
 
 // Around notifications ////////////////////////////////////////////////////////
 

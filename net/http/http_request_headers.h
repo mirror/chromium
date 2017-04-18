@@ -10,15 +10,21 @@
 #ifndef NET_HTTP_HTTP_REQUEST_HEADERS_H_
 #define NET_HTTP_HTTP_REQUEST_HEADERS_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
-#include "net/log/net_log.h"
+
+namespace base {
+class Value;
+}
 
 namespace net {
+
+class NetLogCaptureMode;
 
 class NET_EXPORT HttpRequestHeaders {
  public:
@@ -67,9 +73,11 @@ class NET_EXPORT HttpRequestHeaders {
   static const char kCookie[];
   static const char kContentLength[];
   static const char kHost[];
+  static const char kIfMatch[];
   static const char kIfModifiedSince[];
   static const char kIfNoneMatch[];
   static const char kIfRange[];
+  static const char kIfUnmodifiedSince[];
   static const char kOrigin[];
   static const char kPragma[];
   static const char kProxyAuthorization[];
@@ -100,6 +108,8 @@ class NET_EXPORT HttpRequestHeaders {
   // Sets the header value pair for |key| and |value|.  If |key| already exists,
   // then the header value is modified, but the key is untouched, and the order
   // in the vector remains the same.  When comparing |key|, case is ignored.
+  // The caller must ensure that |key| passes HttpUtil::IsValidHeaderName() and
+  // |value| passes HttpUtil::IsValidHeaderValue().
   void SetHeader(const base::StringPiece& key, const base::StringPiece& value);
 
   // Sets the header value pair for |key| and |value|, if |key| does not exist.

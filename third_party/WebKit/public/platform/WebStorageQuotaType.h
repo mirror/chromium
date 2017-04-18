@@ -34,10 +34,10 @@
 namespace blink {
 
 enum WebStorageQuotaType {
-    WebStorageQuotaTypeTemporary,
-    WebStorageQuotaTypePersistent,
+  kWebStorageQuotaTypeTemporary,
+  kWebStorageQuotaTypePersistent,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebStorageQuotaType_h
+#endif  // WebStorageQuotaType_h

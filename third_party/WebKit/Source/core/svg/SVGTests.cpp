@@ -22,59 +22,59 @@
 
 #include "core/SVGNames.h"
 #include "core/svg/SVGElement.h"
+#include "core/svg/SVGStaticStringList.h"
 #include "platform/Language.h"
 
 namespace blink {
 
-SVGTests::SVGTests(SVGElement* contextElement)
-    : m_requiredFeatures(SVGStaticStringList::create(contextElement, SVGNames::requiredFeaturesAttr))
-    , m_requiredExtensions(SVGStaticStringList::create(contextElement, SVGNames::requiredExtensionsAttr))
-    , m_systemLanguage(SVGStaticStringList::create(contextElement, SVGNames::systemLanguageAttr))
-{
-    ASSERT(contextElement);
+SVGTests::SVGTests(SVGElement* context_element)
+    : required_extensions_(
+          SVGStaticStringList::Create(context_element,
+                                      SVGNames::requiredExtensionsAttr)),
+      system_language_(
+          SVGStaticStringList::Create(context_element,
+                                      SVGNames::systemLanguageAttr)) {
+  DCHECK(context_element);
 
-    contextElement->addToPropertyMap(m_requiredFeatures);
-    contextElement->addToPropertyMap(m_requiredExtensions);
-    contextElement->addToPropertyMap(m_systemLanguage);
+  context_element->AddToPropertyMap(required_extensions_);
+  context_element->AddToPropertyMap(system_language_);
 }
 
-DEFINE_TRACE(SVGTests)
-{
-    visitor->trace(m_requiredFeatures);
-    visitor->trace(m_requiredExtensions);
-    visitor->trace(m_systemLanguage);
+DEFINE_TRACE(SVGTests) {
+  visitor->Trace(required_extensions_);
+  visitor->Trace(system_language_);
 }
 
-bool SVGTests::isValid() const
-{
-    // No need to check requiredFeatures since hasFeature always returns true.
+SVGStringListTearOff* SVGTests::requiredExtensions() {
+  return required_extensions_->TearOff();
+}
 
-    if (m_systemLanguage->isSpecified()) {
-        bool matchFound = false;
+SVGStringListTearOff* SVGTests::systemLanguage() {
+  return system_language_->TearOff();
+}
 
-        const Vector<String>& systemLanguage = m_systemLanguage->value()->values();
-        for (const auto& value : systemLanguage) {
-            if (value == defaultLanguage().getString().substring(0, 2)) {
-                matchFound = true;
-                break;
-            }
-        }
-
-        if (!matchFound)
-            return false;
+bool SVGTests::IsValid() const {
+  if (system_language_->IsSpecified()) {
+    bool match_found = false;
+    for (const auto& value : system_language_->Value()->Values()) {
+      if (value.length() == 2 && DefaultLanguage().StartsWith(value)) {
+        match_found = true;
+        break;
+      }
     }
+    if (!match_found)
+      return false;
+  }
 
-    if (!m_requiredExtensions->value()->values().isEmpty())
-        return false;
+  if (!required_extensions_->Value()->Values().IsEmpty())
+    return false;
 
-    return true;
+  return true;
 }
 
-bool SVGTests::isKnownAttribute(const QualifiedName& attrName)
-{
-    return attrName == SVGNames::requiredFeaturesAttr
-        || attrName == SVGNames::requiredExtensionsAttr
-        || attrName == SVGNames::systemLanguageAttr;
+bool SVGTests::IsKnownAttribute(const QualifiedName& attr_name) {
+  return attr_name == SVGNames::requiredExtensionsAttr ||
+         attr_name == SVGNames::systemLanguageAttr;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -3,19 +3,15 @@
 // found in the LICENSE file.
 
 // This features file defines manifest keys implemented under src/extensions.
-// See extensions/common/features/* to understand this file, in particular
-// feature.h, simple_feature.h, and base_feature_provider.h.
-
-// To add a new whitelisted ID, SHA-1 it and force it to uppercase. In Bash:
-//
-// $ echo -n "aaaabbbbccccddddeeeeffffgggghhhh" | \
-// sha1sum | tr '[:lower:]' '[:upper:]'
-// 9A0417016F345C934A1A88F55CA17C05014EEEBA  -
-//
-// Google employees: please update http://go/chrome-api-whitelist to map
-// hashes back to ids.
+// See chrome/common/extensions/api/_features.md to understand this file, as
+// well as feature.h, simple_feature.h, and feature_provider.h.
 
 {
+  "action_handlers": {
+    "channel": "stable",
+    "extension_types": ["platform_app"],
+    "platforms": ["chromeos"]
+  },
   "app": {
     "channel": "stable",
     "extension_types": ["legacy_packaged_app", "hosted_app", "platform_app"]
@@ -182,6 +178,10 @@
     "channel": "stable",
     "extension_types": ["platform_app"]
   },
+  "kiosk.always_update": {
+    "channel": "stable",
+    "extension_types": ["platform_app"]
+  },
   "kiosk.required_platform_version": {
     "channel": "stable",
     "extension_types": ["platform_app"]
@@ -289,6 +289,12 @@
   "options_ui": {
     "channel": "stable",
     "extension_types": ["extension", "legacy_packaged_app"]
+  },
+  "permissions": {
+    "channel": "stable",
+    "extension_types": [
+      "extension", "legacy_packaged_app", "hosted_app", "platform_app"
+    ]
   },
   "sandbox": {
     "channel": "stable",

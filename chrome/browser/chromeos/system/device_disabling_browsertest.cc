@@ -29,10 +29,10 @@
 #include "chromeos/dbus/shill_manager_client.h"
 #include "chromeos/dbus/shill_service_client.h"
 #include "chromeos/settings/cros_settings_names.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "dbus/object_path.h"
-#include "policy/proto/device_management_backend.pb.h"
 
 namespace chromeos {
 namespace system {
@@ -59,7 +59,7 @@ class DeviceDisablingTest
   std::string GetCurrentScreenName(content::WebContents* web_contents);
 
  protected:
-  base::RunLoop network_state_change_wait_run_loop_;
+  std::unique_ptr<base::RunLoop> network_state_change_wait_run_loop_;
 
  private:
   // OobeBaseTest:
@@ -121,6 +121,8 @@ void DeviceDisablingTest::SetUpInProcessBrowserTestFixture() {
 }
 
 void DeviceDisablingTest::SetUpOnMainThread() {
+  network_state_change_wait_run_loop_.reset(new base::RunLoop);
+
   OobeBaseTest::SetUpOnMainThread();
 
   // Set up fake networks.
@@ -129,7 +131,7 @@ void DeviceDisablingTest::SetUpOnMainThread() {
 }
 
 void DeviceDisablingTest::UpdateState(NetworkError::ErrorReason reason) {
-  network_state_change_wait_run_loop_.Quit();
+  network_state_change_wait_run_loop_->Quit();
 }
 
 IN_PROC_BROWSER_TEST_F(DeviceDisablingTest, DisableDuringNormalOperation) {
@@ -140,8 +142,7 @@ IN_PROC_BROWSER_TEST_F(DeviceDisablingTest, DisableDuringNormalOperation) {
   WizardController* const wizard_controller =
       WizardController::default_controller();
   ASSERT_TRUE(wizard_controller);
-  EXPECT_EQ(wizard_controller->GetScreen(
-                WizardController::kDeviceDisabledScreenName),
+  EXPECT_EQ(wizard_controller->GetScreen(OobeScreen::SCREEN_DEVICE_DISABLED),
             wizard_controller->current_screen());
 }
 
@@ -202,11 +203,11 @@ IN_PROC_BROWSER_TEST_F(DeviceDisablingTest, DisableWithEphemeralUsers) {
   ASSERT_TRUE(network_state_informer);
   network_state_informer->AddObserver(this);
   SigninScreenHandler* const signin_screen_handler =
-      oobe_ui->signin_screen_handler_for_test();
+      oobe_ui->signin_screen_handler();
   ASSERT_TRUE(signin_screen_handler);
   signin_screen_handler->ZeroOfflineTimeoutForTesting();
   SimulateNetworkOffline();
-  network_state_change_wait_run_loop_.Run();
+  network_state_change_wait_run_loop_->Run();
   network_state_informer->RemoveObserver(this);
   base::RunLoop().RunUntilIdle();
 

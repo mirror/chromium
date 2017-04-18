@@ -21,23 +21,16 @@
 #include "core/css/CSSInitialValue.h"
 
 #include "core/css/CSSValuePool.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-CSSInitialValue* CSSInitialValue::create()
-{
-    return cssValuePool().explicitInitialValue();
+CSSInitialValue* CSSInitialValue::Create() {
+  return CssValuePool().InitialValue();
 }
 
-CSSInitialValue* CSSInitialValue::createLegacyImplicit()
-{
-    return cssValuePool().implicitInitialValue();
+String CSSInitialValue::CustomCSSText() const {
+  return "initial";
 }
 
-String CSSInitialValue::customCSSText() const
-{
-    return "initial";
-}
-
-} // namespace blink
+}  // namespace blink

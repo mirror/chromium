@@ -237,28 +237,7 @@ AutomationUtil.isInSameTree = function(a, b) {
 
   // Given two non-desktop roots, consider them in the "same" tree.
   return a.root === b.root ||
-      (a.root.role == b.root.role && a.root.role == RoleType.rootWebArea);
-};
-
-/**
- * Determines whether the two given nodes come from the same webpage.
- * @param {AutomationNode} a
- * @param {AutomationNode} b
- * @return {boolean}
- */
-AutomationUtil.isInSameWebpage = function(a, b) {
-  if (!a || !b)
-    return false;
-
-  a = a.root;
-  while (a && a.parent && AutomationUtil.isInSameTree(a.parent, a))
-    a = a.parent.root;
-
-  b = b.root;
-  while (b && b.parent && AutomationUtil.isInSameTree(b.parent, b))
-    b = b.parent.root;
-
-  return a == b;
+      (a.root.role == b.root.role && a.root.role == RoleType.ROOT_WEB_AREA);
 };
 
 /**
@@ -306,16 +285,46 @@ AutomationUtil.hitTest = function(node, point) {
  */
 AutomationUtil.getTopLevelRoot = function(node) {
   var root = node.root;
-  if (!root || root.role == RoleType.desktop)
+  if (!root || root.role == RoleType.DESKTOP)
     return null;
 
   while (root &&
       root.parent &&
       root.parent.root &&
-      root.parent.root.role != RoleType.desktop) {
+      root.parent.root.role != RoleType.DESKTOP) {
     root = root.parent.root;
   }
   return root;
+};
+
+/**
+ * @param {!AutomationNode} prevNode
+ * @param {!AutomationNode} node
+ * @return {AutomationNode}
+ */
+AutomationUtil.getLeastCommonAncestor = function(prevNode, node) {
+  if (prevNode == node)
+    return node;
+
+  var prevAncestors = AutomationUtil.getAncestors(prevNode);
+  var ancestors = AutomationUtil.getAncestors(node);
+  var divergence = AutomationUtil.getDivergence(prevAncestors, ancestors);
+  return ancestors[divergence - 1];
+};
+
+/**
+ * Gets the accessible text for this node based on its role.
+ * This text is suitable for caret navigation and selection in the node.
+ * @param {AutomationNode} node
+ * @return {string}
+ */
+AutomationUtil.getText = function(node) {
+  if (!node)
+    return '';
+
+  if (node.role === RoleType.TEXT_FIELD)
+    return node.value || '';
+  return node.name || '';
 };
 
 });  // goog.scope

@@ -5,9 +5,9 @@
 #ifndef COMPONENTS_DOM_DISTILLER_CONTENT_BROWSER_DISTILLER_JAVASCRIPT_SERVICE_IMPL_H_
 #define COMPONENTS_DOM_DISTILLER_CONTENT_BROWSER_DISTILLER_JAVASCRIPT_SERVICE_IMPL_H_
 
+#include "base/macros.h"
 #include "components/dom_distiller/content/browser/distiller_ui_handle.h"
 #include "components/dom_distiller/content/common/distiller_javascript_service.mojom.h"
-#include "mojo/public/cpp/bindings/string.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace dom_distiller {
@@ -16,20 +16,11 @@ namespace dom_distiller {
 class DistillerJavaScriptServiceImpl
     : public mojom::DistillerJavaScriptService {
  public:
-  DistillerJavaScriptServiceImpl(
-      content::RenderFrameHost* render_frame_host,
-      DistillerUIHandle* distiller_ui_handle,
-      mojo::InterfaceRequest<mojom::DistillerJavaScriptService> request);
+  DistillerJavaScriptServiceImpl(content::RenderFrameHost* render_frame_host,
+                                 DistillerUIHandle* distiller_ui_handle);
   ~DistillerJavaScriptServiceImpl() override;
 
   // Mojo mojom::DistillerJavaScriptService implementation.
-
-  // Echo implementation, this call does not actually return as it would be
-  // blocking.
-  void HandleDistillerEchoCall(const mojo::String& message) override;
-
-  // Send UMA feedback and start the external feedback reporter if one exists.
-  void HandleDistillerFeedbackCall(bool good) override;
 
   // Make a call into Android to close the overlay panel containing reader mode.
   void HandleDistillerClosePanelCall(bool animate) override;
@@ -38,9 +29,10 @@ class DistillerJavaScriptServiceImpl
   void HandleDistillerOpenSettingsCall() override;
 
  private:
-  mojo::StrongBinding<mojom::DistillerJavaScriptService> binding_;
   content::RenderFrameHost* render_frame_host_;
   DistillerUIHandle* distiller_ui_handle_;
+
+  DISALLOW_COPY_AND_ASSIGN(DistillerJavaScriptServiceImpl);
 };
 
 // static

@@ -4,8 +4,7 @@
 
 #include "platform/geometry/DoubleSize.h"
 #include "platform/geometry/LayoutSize.h"
-
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 #include <limits>
 #include <math.h>
@@ -13,21 +12,15 @@
 namespace blink {
 
 DoubleSize::DoubleSize(const LayoutSize& size)
-    : m_width(size.width().toDouble())
-    , m_height(size.height().toDouble())
-{
+    : width_(size.Width().ToDouble()), height_(size.Height().ToDouble()) {}
+
+bool DoubleSize::IsZero() const {
+  return fabs(width_) < std::numeric_limits<double>::epsilon() &&
+         fabs(height_) < std::numeric_limits<double>::epsilon();
 }
 
-bool DoubleSize::isZero() const
-{
-    return fabs(m_width) < std::numeric_limits<double>::epsilon() && fabs(m_height) < std::numeric_limits<double>::epsilon();
+String DoubleSize::ToString() const {
+  return String::Format("%lgx%lg", Width(), Height());
 }
 
-#ifndef NDEBUG
-String DoubleSize::toString() const
-{
-    return String::format("%fx%f", width(), height());
-}
-#endif
-
-} // namespace blink
+}  // namespace blink

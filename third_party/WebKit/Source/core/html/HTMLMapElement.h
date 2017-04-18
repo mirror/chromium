@@ -28,33 +28,34 @@
 
 namespace blink {
 
-class HitTestResult;
 class HTMLImageElement;
 
 class CORE_EXPORT HTMLMapElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLMapElement);
-    ~HTMLMapElement() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    const AtomicString& getName() const { return m_name; }
+ public:
+  DECLARE_NODE_FACTORY(HTMLMapElement);
+  ~HTMLMapElement() override;
 
-    HTMLAreaElement* areaForPoint(const LayoutPoint&, const LayoutObject* containerObject);
+  const AtomicString& GetName() const { return name_; }
 
-    HTMLImageElement* imageElement();
-    HTMLCollection* areas();
+  HTMLAreaElement* AreaForPoint(const LayoutPoint&,
+                                const LayoutObject* container_object);
 
-private:
-    explicit HTMLMapElement(Document&);
+  HTMLImageElement* ImageElement();
+  HTMLCollection* areas();
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
+ private:
+  explicit HTMLMapElement(Document&);
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
 
-    AtomicString m_name;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+
+  AtomicString name_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLMapElement_h
+#endif  // HTMLMapElement_h

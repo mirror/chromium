@@ -42,9 +42,9 @@
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/native_library.h"
 #include "base/path_service.h"
-#include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
@@ -172,7 +172,7 @@ void UseLocalCacheOfNSSDatabaseIfNFS(const base::FilePath& database_dir) {
 // singleton.
 class NSPRInitSingleton {
  private:
-  friend struct base::DefaultLazyInstanceTraits<NSPRInitSingleton>;
+  friend struct base::LazyInstanceTraitsBase<NSPRInitSingleton>;
 
   NSPRInitSingleton() {
     PR_Init(PR_USER_THREAD, PR_PRIORITY_NORMAL, 0);
@@ -264,13 +264,13 @@ class ChromeOSUserData {
 };
 
 class ScopedChapsLoadFixup {
-  public:
-    ScopedChapsLoadFixup();
-    ~ScopedChapsLoadFixup();
+ public:
+  ScopedChapsLoadFixup();
+  ~ScopedChapsLoadFixup();
 
-  private:
+ private:
 #if defined(COMPONENT_BUILD)
-    void *chaps_handle_;
+  void* chaps_handle_;
 #endif
 };
 
@@ -368,14 +368,11 @@ class NSSInitSingleton {
     if (base::WorkerPool::PostTaskAndReply(
             FROM_HERE,
             base::Bind(&NSSInitSingleton::InitializeTPMTokenOnWorkerThread,
-                       system_slot_id,
-                       tpm_args_ptr),
+                       system_slot_id, tpm_args_ptr),
             base::Bind(&NSSInitSingleton::OnInitializedTPMTokenAndSystemSlot,
                        base::Unretained(this),  // NSSInitSingleton is leaky
-                       callback,
-                       base::Passed(&tpm_args)),
-            true /* task_is_slow */
-            )) {
+                       callback, base::Passed(&tpm_args)),
+            true /* task_is_slow */)) {
       initializing_tpm_token_ = true;
     } else {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -493,7 +490,7 @@ class NSSInitSingleton {
         "%s %s", kUserNSSDatabaseName, username_hash.c_str());
     ScopedPK11Slot public_slot(OpenPersistentNSSDBForPath(db_name, path));
     chromeos_user_map_[username_hash] =
-        new ChromeOSUserData(std::move(public_slot));
+        base::MakeUnique<ChromeOSUserData>(std::move(public_slot));
     return true;
   }
 
@@ -530,15 +527,12 @@ class NSSInitSingleton {
     TPMModuleAndSlot* tpm_args_ptr = tpm_args.get();
     base::WorkerPool::PostTaskAndReply(
         FROM_HERE,
-        base::Bind(&NSSInitSingleton::InitializeTPMTokenOnWorkerThread,
-                   slot_id,
+        base::Bind(&NSSInitSingleton::InitializeTPMTokenOnWorkerThread, slot_id,
                    tpm_args_ptr),
         base::Bind(&NSSInitSingleton::OnInitializedTPMForChromeOSUser,
                    base::Unretained(this),  // NSSInitSingleton is leaky
-                   username_hash,
-                   base::Passed(&tpm_args)),
-        true /* task_is_slow */
-        );
+                   username_hash, base::Passed(&tpm_args)),
+        true /* task_is_slow */);
   }
 
   void OnInitializedTPMForChromeOSUser(
@@ -600,9 +594,8 @@ class NSSInitSingleton {
 
   void CloseChromeOSUserForTesting(const std::string& username_hash) {
     DCHECK(thread_checker_.CalledOnValidThread());
-    ChromeOSUserMap::iterator i = chromeos_user_map_.find(username_hash);
+    auto i = chromeos_user_map_.find(username_hash);
     DCHECK(i != chromeos_user_map_.end());
-    delete i->second;
     chromeos_user_map_.erase(i);
   }
 
@@ -664,7 +657,7 @@ class NSSInitSingleton {
   }
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<NSSInitSingleton>;
+  friend struct base::LazyInstanceTraitsBase<NSSInitSingleton>;
 
   NSSInitSingleton()
       : tpm_token_enabled_for_nss_(false),
@@ -752,7 +745,7 @@ class NSSInitSingleton {
   // down.
   ~NSSInitSingleton() {
 #if defined(OS_CHROMEOS)
-    STLDeleteValues(&chromeos_user_map_);
+    chromeos_user_map_.clear();
 #endif
     tpm_slot_.reset();
     if (root_) {
@@ -822,8 +815,7 @@ class NSSInitSingleton {
   crypto::ScopedPK11Slot tpm_slot_;
   SECMODModule* root_;
 #if defined(OS_CHROMEOS)
-  typedef std::map<std::string, ChromeOSUserData*> ChromeOSUserMap;
-  ChromeOSUserMap chromeos_user_map_;
+  std::map<std::string, std::unique_ptr<ChromeOSUserData>> chromeos_user_map_;
   ScopedPK11Slot test_system_slot_;
 #endif
   // TODO(davidben): When https://bugzilla.mozilla.org/show_bug.cgi?id=564011

@@ -8,32 +8,11 @@ import("//testing/test.gni")
 component("blink") {
   output_name = "media_blink"
 
-  deps = [
-    "//base",
-    "//cc",
-    "//cc/blink",
-    "//gpu",
-    "//media",
-    "//media:shared_memory_support",
-    "//net",
-    "//skia",
-    "//third_party/WebKit/public:blink",
-    "//ui/gfx",
-    "//ui/gfx/geometry",
-    "//url",
-  ]
-
-  defines = [ "MEDIA_BLINK_IMPLEMENTATION" ]
-
   sources = [
     "active_loader.cc",
     "active_loader.h",
-    "buffered_data_source.cc",
-    "buffered_data_source.h",
     "buffered_data_source_host_impl.cc",
     "buffered_data_source_host_impl.h",
-    "buffered_resource_loader.cc",
-    "buffered_resource_loader.h",
     "cache_util.cc",
     "cache_util.h",
     "cdm_result_promise.h",
@@ -62,6 +41,8 @@ component("blink") {
     "url_index.h",
     "video_frame_compositor.cc",
     "video_frame_compositor.h",
+    "watch_time_reporter.cc",
+    "watch_time_reporter.h",
     "webaudiosourceprovider_impl.cc",
     "webaudiosourceprovider_impl.h",
     "webcontentdecryptionmodule_impl.cc",
@@ -74,6 +55,8 @@ component("blink") {
     "webencryptedmediaclient_impl.h",
     "webinbandtexttrack_impl.cc",
     "webinbandtexttrack_impl.h",
+    "webmediacapabilitiesclient_impl.cc",
+    "webmediacapabilitiesclient_impl.h",
     "webmediaplayer_delegate.h",
     "webmediaplayer_params.cc",
     "webmediaplayer_params.h",
@@ -83,6 +66,24 @@ component("blink") {
     "webmediasource_impl.h",
     "websourcebuffer_impl.cc",
     "websourcebuffer_impl.h",
+  ]
+
+  defines = [ "MEDIA_BLINK_IMPLEMENTATION" ]
+
+  deps = [
+    "//base",
+    "//cc",
+    "//cc/blink",
+    "//gpu",
+    "//media",
+    "//media:shared_memory_support",
+    "//net",
+    "//ppapi/features",
+    "//skia",
+    "//third_party/WebKit/public:blink",
+    "//ui/gfx",
+    "//ui/gfx/geometry",
+    "//url",
   ]
 
   if (media_use_ffmpeg || !is_android) {
@@ -107,16 +108,16 @@ test("media_blink_unittests") {
     "//base/test:test_support",
     "//cc",
     "//cc/blink",
-    "//components/scheduler:scheduler",
-    "//components/scheduler:test_support",
     "//gin",
     "//media",
     "//media:shared_memory_support",
     "//media/base:test_support",
+    "//mojo/edk/system",
     "//net",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
+    "//third_party/WebKit/public:test_support",
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
     "//url",
@@ -129,15 +130,12 @@ test("media_blink_unittests") {
 
   sources = [
     "buffered_data_source_host_impl_unittest.cc",
-    "buffered_data_source_unittest.cc",
-    "buffered_resource_loader_unittest.cc",
     "cache_util_unittest.cc",
     "interval_map_unittest.cc",
     "key_system_config_selector_unittest.cc",
     "lru_unittest.cc",
-    "mock_webframeclient.h",
-    "mock_weburlloader.cc",
-    "mock_weburlloader.h",
+    "mock_webassociatedurlloader.cc",
+    "mock_webassociatedurlloader.h",
     "multibuffer_data_source_unittest.cc",
     "multibuffer_unittest.cc",
     "resource_multibuffer_data_provider_unittest.cc",
@@ -146,13 +144,13 @@ test("media_blink_unittests") {
     "test_response_generator.h",
     "url_index_unittest.cc",
     "video_frame_compositor_unittest.cc",
+    "watch_time_reporter_unittest.cc",
     "webaudiosourceprovider_impl_unittest.cc",
     "webmediaplayer_impl_unittest.cc",
   ]
 
   if (is_android) {
     deps += [
-      "//media/base/android",
       "//media/base/android:media_java",
       "//v8:v8_external_startup_data_assets",
     ]

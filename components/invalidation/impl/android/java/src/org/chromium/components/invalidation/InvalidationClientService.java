@@ -7,9 +7,12 @@ package org.chromium.components.invalidation;
 import android.accounts.Account;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.ipc.invalidation.external.client.InvalidationListener.RegistrationState;
 import com.google.ipc.invalidation.external.client.contrib.AndroidListener;
@@ -19,22 +22,26 @@ import com.google.ipc.invalidation.external.client.types.ObjectId;
 import com.google.protos.ipc.invalidation.Types.ClientType;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.BuildInfo;
 import org.chromium.base.CollectionUtil;
+import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.sync.AndroidSyncSettings;
-import org.chromium.sync.ModelTypeHelper;
-import org.chromium.sync.SyncConstants;
-import org.chromium.sync.notifier.InvalidationClientNameProvider;
-import org.chromium.sync.notifier.InvalidationIntentProtocol;
-import org.chromium.sync.notifier.InvalidationPreferences;
-import org.chromium.sync.notifier.InvalidationPreferences.EditContext;
-import org.chromium.sync.signin.AccountManagerHelper;
-import org.chromium.sync.signin.ChromeSigninController;
+import org.chromium.components.signin.AccountManagerHelper;
+import org.chromium.components.signin.ChromeSigninController;
+import org.chromium.components.sync.AndroidSyncSettings;
+import org.chromium.components.sync.ModelTypeHelper;
+import org.chromium.components.sync.SyncConstants;
+import org.chromium.components.sync.notifier.InvalidationClientNameProvider;
+import org.chromium.components.sync.notifier.InvalidationIntentProtocol;
+import org.chromium.components.sync.notifier.InvalidationPreferences;
+import org.chromium.components.sync.notifier.InvalidationPreferences.EditContext;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 
@@ -61,7 +68,8 @@ public class InvalidationClientService extends AndroidListener {
     @VisibleForTesting
     static final int CLIENT_TYPE = ClientType.CHROME_SYNC_ANDROID;
 
-    private static final String TAG = "cr.invalidation";
+    private static final String TAG = "cr_invalidation";
+    private static final String CLIENT_SERVICE_KEY = "ipc.invalidation.ticl.listener_service_class";
 
     /**
      * Whether the underlying notification client has been started. This boolean is updated when a
@@ -75,6 +83,43 @@ public class InvalidationClientService extends AndroidListener {
      * true if the client has not yet gone ready.
      */
     @Nullable private static byte[] sClientId;
+
+    private static AtomicReference<Class<? extends InvalidationClientService>> sServiceClass =
+            new AtomicReference<>();
+
+    private static Class<? extends InvalidationClientService>
+            findRegisteredInvalidationClientService() {
+        Context context = ContextUtils.getApplicationContext();
+        PackageManager packageManager = context.getPackageManager();
+        ApplicationInfo appInfo;
+        try {
+            appInfo = packageManager.getApplicationInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA);
+            if (appInfo.metaData != null) {
+                String serviceMetadata = appInfo.metaData.getString(CLIENT_SERVICE_KEY, null);
+                if (serviceMetadata == null) return InvalidationClientService.class;
+
+                Class<?> foundClass = Class.forName(serviceMetadata);
+                Class<? extends InvalidationClientService> serviceClass =
+                        foundClass.asSubclass(InvalidationClientService.class);
+                return serviceClass;
+            }
+        } catch (NameNotFoundException | ClassNotFoundException | ClassCastException e) {
+            Log.e(TAG, "Unable to find registered client service", e);
+        }
+        return InvalidationClientService.class;
+    }
+
+    /**
+     * @return The registered {@link InvalidationClientService} class reference to use for
+     *         interacting with the service.
+     */
+    public static Class<? extends InvalidationClientService> getRegisteredClass() {
+        if (sServiceClass.get() == null) {
+            sServiceClass.compareAndSet(null, findRegisteredInvalidationClientService());
+        }
+        return sServiceClass.get();
+    }
 
     @Override
     public void onHandleIntent(Intent intent) {
@@ -197,7 +242,8 @@ public class InvalidationClientService extends AndroidListener {
     @Override
     public void requestAuthToken(final PendingIntent pendingIntent,
             @Nullable String invalidAuthToken) {
-        @Nullable Account account = ChromeSigninController.get(this).getSignedInUser();
+        @Nullable
+        Account account = ChromeSigninController.get().getSignedInUser();
         if (account == null) {
             // This should never happen, because this code should only be run if a user is
             // signed-in.
@@ -207,7 +253,7 @@ public class InvalidationClientService extends AndroidListener {
 
         // Attempt to retrieve a token for the user. This method will also invalidate
         // invalidAuthToken if it is non-null.
-        AccountManagerHelper.get(this).getNewAuthToken(account, invalidAuthToken,
+        AccountManagerHelper.get().getNewAuthToken(account, invalidAuthToken,
                 getOAuth2ScopeWithType(), new AccountManagerHelper.GetAuthTokenCallback() {
                     @Override
                     public void tokenAvailable(String token) {
@@ -273,13 +319,13 @@ public class InvalidationClientService extends AndroidListener {
     private void startClient() {
         byte[] clientName = InvalidationClientNameProvider.get().getInvalidatorClientName();
         Intent startIntent = AndroidListener.createStartIntent(this, CLIENT_TYPE, clientName);
-        startService(startIntent);
+        startServiceIfPossible(startIntent);
         setIsClientStarted(true);
     }
 
     /** Stops the notification client. */
     private void stopClient() {
-        startService(AndroidListener.createStopIntent(this));
+        startServiceIfPossible(AndroidListener.createStopIntent(this));
         setIsClientStarted(false);
         setClientId(null);
     }
@@ -433,7 +479,7 @@ public class InvalidationClientService extends AndroidListener {
         }
         Bundle bundle =
                 PendingInvalidation.createBundle(objectName, objectSource, version, payload);
-        Account account = ChromeSigninController.get(this).getSignedInUser();
+        Account account = ChromeSigninController.get().getSignedInUser();
         String contractAuthority = AndroidSyncSettings.getContractAuthority(this);
         requestSyncFromContentResolver(bundle, account, contractAuthority);
     }
@@ -495,5 +541,19 @@ public class InvalidationClientService extends AndroidListener {
 
     private static void setIsClientStarted(boolean isStarted) {
         sIsClientStarted = isStarted;
+    }
+
+    private void startServiceIfPossible(Intent intent) {
+        // The use of background services is restricted when the application is not in foreground
+        // for O. See crbug.com/680812.
+        if (BuildInfo.isAtLeastO()) {
+            try {
+                startService(intent);
+            } catch (IllegalStateException exception) {
+                Log.e(TAG, "Failed to start service from exception: ", exception);
+            }
+        } else {
+            startService(intent);
+        }
     }
 }

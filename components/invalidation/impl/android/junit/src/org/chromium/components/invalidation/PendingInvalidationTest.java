@@ -4,18 +4,22 @@
 
 package org.chromium.components.invalidation;
 
-import android.os.Bundle;
-
 import static org.junit.Assert.assertEquals;
+
+import android.os.Bundle;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
+
+import org.robolectric.annotation.Config;
+
+import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /**
  * Tests for {@link PendingInvalidation}.
  */
-@RunWith(BlockJUnit4ClassRunner.class)
+@RunWith(LocalRobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
 public class PendingInvalidationTest {
     private static String sObjecId = "ObjectId";
     private static int sObjectSource = 4;
@@ -38,6 +42,19 @@ public class PendingInvalidationTest {
 
     @Test
     public void testParseToAndFromProtocolBuffer() {
+        PendingInvalidation invalidation =
+                new PendingInvalidation(sObjecId, sObjectSource, sVersion, sPayload);
+        PendingInvalidation parsedInvalidation =
+                PendingInvalidation.decodeToPendingInvalidation(invalidation.encodeToString());
+        assertEquals(sObjecId, parsedInvalidation.mObjectId);
+        assertEquals(sObjectSource, parsedInvalidation.mObjectSource);
+        assertEquals(sVersion, parsedInvalidation.mVersion);
+        assertEquals(sPayload, parsedInvalidation.mPayload);
+        assertEquals(invalidation, parsedInvalidation);
+    }
+
+    @Test
+    public void testParseToAndFromProtocolBufferThroughBundle() {
         PendingInvalidation invalidation =
                 new PendingInvalidation(sObjecId, sObjectSource, sVersion, sPayload);
         Bundle bundle = PendingInvalidation.decodeToBundle(invalidation.encodeToString());

@@ -8,10 +8,12 @@
 
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "base/mac/scoped_nsobject.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
-#include "chrome/browser/media/media_capture_devices_dispatcher.h"
+#include "chrome/browser/download/download_request_limiter.h"
+#include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/ui/browser.h"
-#import "chrome/browser/ui/cocoa/cocoa_test_helper.h"
+#import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/content_settings/content_setting_image_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -20,8 +22,6 @@
 #include "content/public/common/media_stream_request.h"
 #include "testing/gtest_mac.h"
 #include "ui/base/l10n/l10n_util.h"
-
-namespace {
 
 class ContentSettingBubbleControllerTest : public InProcessBrowserTest {
  protected:
@@ -55,11 +55,12 @@ ContentSettingBubbleControllerTest::CreateBubbleController(
   [parent_ setReleasedWhenClosed:NO];
   [parent_ orderFront:nil];
 
-  ContentSettingBubbleController* controller = [ContentSettingBubbleController
-      showForModel:bubble
-       webContents:web_contents()
-      parentWindow:parent_
-        anchoredAt:NSMakePoint(50, 20)];
+  ContentSettingBubbleController* controller =
+      [ContentSettingBubbleController showForModel:bubble
+                                       webContents:web_contents()
+                                      parentWindow:parent_
+                                        decoration:nullptr
+                                        anchoredAt:NSMakePoint(50, 20)];
 
   EXPECT_TRUE(controller);
   EXPECT_TRUE([[controller window] isVisible]);
@@ -71,9 +72,16 @@ ContentSettingBubbleControllerTest::CreateBubbleController(
 IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest, Init) {
   TabSpecificContentSettings::FromWebContents(web_contents())->
       BlockAllContentForTesting();
-  ScopedVector<ContentSettingImageModel> models =
+
+  // Automatic downloads are handled by DownloadRequestLimiter.
+  g_browser_process->download_request_limiter()
+      ->GetDownloadState(web_contents(), web_contents(), true)
+      ->SetDownloadStatusAndNotify(
+          DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED);
+
+  std::vector<std::unique_ptr<ContentSettingImageModel>> models =
       ContentSettingImageModel::GenerateContentSettingImageModels();
-  for (ContentSettingImageModel* model : models.get()) {
+  for (const auto& model : models) {
     ContentSettingBubbleModel* bubble =
         model->CreateBubbleModel(nullptr, web_contents(), profile());
     ContentSettingBubbleController* controller = CreateBubbleController(bubble);
@@ -109,5 +117,3 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest, MediaStreamBubble) {
 
  [parent_ close];
 }
-
-}  // namespace

@@ -27,41 +27,50 @@
 #define StyleScrollSnapData_h
 
 #include "platform/LengthPoint.h"
-#include "wtf/Allocator.h"
-#include "wtf/RefCounted.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 struct ScrollSnapPoints {
-    DISALLOW_NEW();
-    Length repeatOffset;
-    bool hasRepeat;
-    bool usesElements;
-    ScrollSnapPoints();
+  DISALLOW_NEW();
+  Length repeat_offset;
+  bool has_repeat;
+  bool uses_elements;
+  ScrollSnapPoints();
 };
 
 bool operator==(const ScrollSnapPoints&, const ScrollSnapPoints&);
-inline bool operator!=(const ScrollSnapPoints& a, const ScrollSnapPoints& b) { return !(a == b); }
+inline bool operator!=(const ScrollSnapPoints& a, const ScrollSnapPoints& b) {
+  return !(a == b);
+}
 
 class StyleScrollSnapData : public RefCounted<StyleScrollSnapData> {
-public:
-    static PassRefPtr<StyleScrollSnapData> create() { return adoptRef(new StyleScrollSnapData); }
-    PassRefPtr<StyleScrollSnapData> copy() { return adoptRef(new StyleScrollSnapData(*this)); }
+ public:
+  static PassRefPtr<StyleScrollSnapData> Create() {
+    return AdoptRef(new StyleScrollSnapData);
+  }
+  PassRefPtr<StyleScrollSnapData> Copy() {
+    return AdoptRef(new StyleScrollSnapData(*this));
+  }
 
-    ScrollSnapPoints m_xPoints;
-    ScrollSnapPoints m_yPoints;
-    LengthPoint m_destination;
-    Vector<LengthPoint> m_coordinates;
+  ScrollSnapPoints x_points_;
+  ScrollSnapPoints y_points_;
+  LengthPoint destination_;
+  Vector<LengthPoint> coordinates_;
 
-private:
-    StyleScrollSnapData();
-    StyleScrollSnapData(const StyleScrollSnapData&);
+ private:
+  StyleScrollSnapData();
+  StyleScrollSnapData(const StyleScrollSnapData&);
 };
 
 bool operator==(const StyleScrollSnapData&, const StyleScrollSnapData&);
-inline bool operator!=(const StyleScrollSnapData& a, const StyleScrollSnapData& b) { return !(a == b); }
+inline bool operator!=(const StyleScrollSnapData& a,
+                       const StyleScrollSnapData& b) {
+  return !(a == b);
+}
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleScrollSnapData_h
+#endif  // StyleScrollSnapData_h

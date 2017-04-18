@@ -14,6 +14,7 @@
 #include "content/public/renderer/render_thread.h"
 #include "media/base/eme_constants.h"
 #include "media/base/media_switches.h"
+#include "media/media_features.h"
 
 #include "widevine_cdm_version.h"  // In SHARED_INTERMEDIATE_DIR.
 
@@ -48,11 +49,11 @@ class AndroidPlatformKeySystemProperties : public KeySystemProperties {
       case EmeInitDataType::WEBM:
         return (supported_codecs_ & media::EME_CODEC_WEBM_ALL) != 0;
       case EmeInitDataType::CENC:
-#if defined(USE_PROPRIETARY_CODECS)
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
         return (supported_codecs_ & media::EME_CODEC_MP4_ALL) != 0;
 #else
         return false;
-#endif  // defined(USE_PROPRIETARY_CODECS)
+#endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
       case EmeInitDataType::KEYIDS:
       case EmeInitDataType::UNKNOWN:
         return false;
@@ -91,9 +92,7 @@ class AndroidPlatformKeySystemProperties : public KeySystemProperties {
   const SupportedCodecs supported_codecs_;
 };
 
-}  // namespace
-
-static SupportedKeySystemResponse QueryKeySystemSupport(
+SupportedKeySystemResponse QueryKeySystemSupport(
     const std::string& key_system) {
   SupportedKeySystemRequest request;
   SupportedKeySystemResponse response;
@@ -109,27 +108,36 @@ static SupportedKeySystemResponse QueryKeySystemSupport(
   return response;
 }
 
+}  // namespace
+
 void AddAndroidWidevine(
     std::vector<std::unique_ptr<KeySystemProperties>>* concrete_key_systems) {
   SupportedKeySystemResponse response = QueryKeySystemSupport(
       kWidevineKeySystem);
 
   // Since we do not control the implementation of the MediaDrm API on Android,
-  // we assume that it can and will make use of persistence even though no
-  // persistence-based features are supported.
+  // we assume that it can and will make use of persistence no matter whether
+  // persistence-based features are supported or not.
+
+  const EmeSessionTypeSupport persistent_license_support =
+      response.is_persistent_license_supported
+          ? EmeSessionTypeSupport::SUPPORTED_WITH_IDENTIFIER
+          : EmeSessionTypeSupport::NOT_SUPPORTED;
 
   if (response.compositing_codecs != media::EME_CODEC_NONE) {
+    DVLOG(3) << __func__ << " Widevine supported.";
     concrete_key_systems->emplace_back(new WidevineKeySystemProperties(
         response.compositing_codecs,           // Regular codecs.
         response.non_compositing_codecs,       // Hardware-secure codecs.
         Robustness::HW_SECURE_CRYPTO,          // Max audio robustness.
         Robustness::HW_SECURE_ALL,             // Max video robustness.
-        EmeSessionTypeSupport::NOT_SUPPORTED,  // persistent-license.
+        persistent_license_support,            // persistent-license.
         EmeSessionTypeSupport::NOT_SUPPORTED,  // persistent-release-message.
         EmeFeatureSupport::ALWAYS_ENABLED,     // Persistent state.
         EmeFeatureSupport::ALWAYS_ENABLED));   // Distinctive identifier.
   } else {
     // It doesn't make sense to support secure codecs but not regular codecs.
+    DVLOG(3) << __func__ << " Widevine NOT supported.";
     DCHECK(response.non_compositing_codecs == media::EME_CODEC_NONE);
   }
 }

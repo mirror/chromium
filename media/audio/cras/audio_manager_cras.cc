@@ -12,17 +12,19 @@
 #include "base/environment.h"
 #include "base/logging.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/nix/xdg_util.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/sys_info.h"
 #include "chromeos/audio/audio_device.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "media/audio/audio_device_description.h"
+#include "media/audio/audio_features.h"
 #include "media/audio/cras/cras_input.h"
 #include "media/audio/cras/cras_unified.h"
 #include "media/base/channel_layout.h"
-#include "media/base/media_resources.h"
+#include "media/base/localized_strings.h"
 
 // cras_util.h headers pull in min/max macros...
 // TODO(dgreid): Fix headers such that these aren't imported.
@@ -47,6 +49,9 @@ const int kDefaultInputBufferSize = 1024;
 
 const char kBeamformingOnDeviceId[] = "default-beamforming-on";
 const char kBeamformingOffDeviceId[] = "default-beamforming-off";
+
+const char kInternalInputDevice[] = "Built-in-mic";
+const char kInternalOutputDevice[] = "Built-in-speaker";
 
 enum CrosBeamformingDeviceState {
   BEAMFORMING_DEFAULT_ENABLED = 0,
@@ -158,13 +163,43 @@ void AudioManagerCras::GetAudioDeviceNamesImpl(bool is_input,
   if (is_input && mic_positions_.size() > 1)
     AddBeamformingDevices(device_names);
   else
-    device_names->push_back(media::AudioDeviceName::CreateDefault());
-  chromeos::AudioDeviceList devices;
-  chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
-  for (const auto& device : devices) {
-    if (device.is_input == is_input && device.is_for_simple_usage()) {
-      device_names->emplace_back(device.display_name,
-                                 base::Uint64ToString(device.id));
+    device_names->push_back(AudioDeviceName::CreateDefault());
+
+  if (base::FeatureList::IsEnabled(features::kEnumerateAudioDevices)) {
+    chromeos::AudioDeviceList devices;
+    chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
+
+    int internal_input_dev_index = 0;
+    int internal_output_dev_index = 0;
+    for (const auto& device : devices) {
+      if (device.type == chromeos::AUDIO_TYPE_INTERNAL_MIC)
+        internal_input_dev_index = dev_index_of(device.id);
+      else if (device.type == chromeos::AUDIO_TYPE_INTERNAL_SPEAKER)
+        internal_output_dev_index = dev_index_of(device.id);
+    }
+
+    bool has_internal_input = false;
+    bool has_internal_output = false;
+    for (const auto& device : devices) {
+      if (device.is_input == is_input && device.is_for_simple_usage()) {
+        int dev_index = dev_index_of(device.id);
+        if (dev_index == internal_input_dev_index) {
+          if (!has_internal_input) {
+            device_names->emplace_back(kInternalInputDevice,
+                                       base::Uint64ToString(device.id));
+            has_internal_input = true;
+          }
+        } else if (dev_index == internal_output_dev_index) {
+          if (!has_internal_output) {
+            device_names->emplace_back(kInternalOutputDevice,
+                                       base::Uint64ToString(device.id));
+            has_internal_output = true;
+          }
+        } else {
+          device_names->emplace_back(device.display_name,
+                                     base::Uint64ToString(device.id));
+        }
+      }
     }
   }
 }
@@ -224,21 +259,25 @@ AudioParameters AudioManagerCras::GetInputStreamParameters(
   return params;
 }
 
+const char* AudioManagerCras::GetName() {
+  return "CRAS";
+}
+
 AudioOutputStream* AudioManagerCras::MakeLinearOutputStream(
     const AudioParameters& params,
     const LogCallback& log_callback) {
   DCHECK_EQ(AudioParameters::AUDIO_PCM_LINEAR, params.format());
-  return MakeOutputStream(params);
+  // Pinning stream is not supported for MakeLinearOutputStream.
+  return MakeOutputStream(params, AudioDeviceDescription::kDefaultDeviceId);
 }
 
 AudioOutputStream* AudioManagerCras::MakeLowLatencyOutputStream(
     const AudioParameters& params,
     const std::string& device_id,
     const LogCallback& log_callback) {
-  DLOG_IF(ERROR, !device_id.empty()) << "Not implemented!";
   DCHECK_EQ(AudioParameters::AUDIO_PCM_LOW_LATENCY, params.format());
   // TODO(dgreid): Open the correct input device for unified IO.
-  return MakeOutputStream(params);
+  return MakeOutputStream(params, device_id);
 }
 
 AudioInputStream* AudioManagerCras::MakeLinearInputStream(
@@ -257,14 +296,23 @@ AudioInputStream* AudioManagerCras::MakeLowLatencyInputStream(
   return MakeInputStream(params, device_id);
 }
 
+int AudioManagerCras::GetMinimumOutputBufferSizePerBoard() {
+  // On faster boards we can use smaller buffer size for lower latency.
+  // On slower boards we should use larger buffer size to prevent underrun.
+  std::string board = base::SysInfo::GetLsbReleaseBoard();
+  if (board == "kevin")
+    return 768;
+  else if (board == "samus")
+    return 256;
+  return kMinimumOutputBufferSize;
+}
+
 AudioParameters AudioManagerCras::GetPreferredOutputStreamParameters(
     const std::string& output_device_id,
     const AudioParameters& input_params) {
-  // TODO(tommi): Support |output_device_id|.
-  DLOG_IF(ERROR, !output_device_id.empty()) << "Not implemented!";
   ChannelLayout channel_layout = CHANNEL_LAYOUT_STEREO;
   int sample_rate = kDefaultSampleRate;
-  int buffer_size = kMinimumOutputBufferSize;
+  int buffer_size = GetMinimumOutputBufferSizePerBoard();
   int bits_per_sample = 16;
   if (input_params.IsValid()) {
     sample_rate = input_params.sample_rate();
@@ -284,8 +332,9 @@ AudioParameters AudioManagerCras::GetPreferredOutputStreamParameters(
 }
 
 AudioOutputStream* AudioManagerCras::MakeOutputStream(
-    const AudioParameters& params) {
-  return new CrasUnifiedStream(params, this);
+    const AudioParameters& params,
+    const std::string& device_id) {
+  return new CrasUnifiedStream(params, this, device_id);
 }
 
 AudioInputStream* AudioManagerCras::MakeInputStream(
@@ -306,6 +355,14 @@ snd_pcm_format_t AudioManagerCras::BitsToFormat(int bits_per_sample) {
     default:
       return SND_PCM_FORMAT_UNKNOWN;
   }
+}
+
+bool AudioManagerCras::IsDefault(const std::string& device_id, bool is_input) {
+  AudioDeviceNames device_names;
+  GetAudioDeviceNamesImpl(is_input, &device_names);
+  DCHECK(!device_names.empty());
+  const AudioDeviceName& device_name = device_names.front();
+  return device_name.unique_id == device_id;
 }
 
 }  // namespace media

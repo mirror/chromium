@@ -14,9 +14,8 @@
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
-#include "components/prefs/pref_change_registrar.h"
 
 namespace base {
 class ListValue;
@@ -30,8 +29,7 @@ namespace settings {
 
 // Chrome browser startup settings handler.
 class ClearBrowsingDataHandler : public SettingsPageUIHandler,
-                                 public BrowsingDataRemover::Observer,
-                                 public sync_driver::SyncServiceObserver {
+                                 public syncer::SyncServiceObserver {
  public:
   explicit ClearBrowsingDataHandler(content::WebUI* webui);
   ~ClearBrowsingDataHandler() override;
@@ -42,21 +40,25 @@ class ClearBrowsingDataHandler : public SettingsPageUIHandler,
   void OnJavascriptDisallowed() override;
 
  private:
+  // Observes one |remover| task initiated from ClearBrowsingDataHandler.
+  // Calls |callback| when the task is finished.
+  class TaskObserver;
+
   // Clears browsing data, called by Javascript.
   void HandleClearBrowsingData(const base::ListValue* value);
 
-  // BrowsingDataRemover::Observer implementation.
-  void OnBrowsingDataRemoving(bool is_removing) override;
-
-  // Updates UI when the pref to allow clearing history changes.
-  virtual void OnBrowsingHistoryPrefChanged();
+  // Called when a clearing task finished. |webui_callback_id| is provided
+  // by the WebUI action that initiated it.
+  void OnClearingTaskFinished(const std::string& webui_callback_id);
 
   // Initializes the dialog UI. Called by JavaScript when the DOM is ready.
   void HandleInitialize(const base::ListValue* args);
 
-  // Implementation of SyncServiceObserver. Updates the footer of the dialog
-  // when the sync state changes.
-  void OnStateChanged() override;
+  // Implementation of SyncServiceObserver.
+  void OnStateChanged(syncer::SyncService* sync) override;
+
+  // Updates the footer of the dialog when the sync state changes.
+  void UpdateSyncState();
 
   // Finds out whether we should show notice about other forms of history stored
   // in user's account.
@@ -84,22 +86,13 @@ class ClearBrowsingDataHandler : public SettingsPageUIHandler,
   // Counters that calculate the data volume for individual data types.
   std::vector<std::unique_ptr<browsing_data::BrowsingDataCounter>> counters_;
 
+  // Observes the currently active data clearing task.
+  std::unique_ptr<TaskObserver> task_observer_;
+
   // ProfileSyncService to observe sync state changes.
-  ProfileSyncService* sync_service_;
-  ScopedObserver<ProfileSyncService, sync_driver::SyncServiceObserver>
+  browser_sync::ProfileSyncService* sync_service_;
+  ScopedObserver<browser_sync::ProfileSyncService, syncer::SyncServiceObserver>
       sync_service_observer_;
-
-  // Observe the remover progress.
-  BrowsingDataRemover* remover_;
-  ScopedObserver<BrowsingDataRemover, BrowsingDataRemover::Observer>
-      remover_observer_;
-
-  // The WebUI callback ID of the last performClearBrowserData request. There
-  // can only be one such request in-flight.
-  std::string webui_callback_id_;
-
-  // Used to listen for pref changes to allow / disallow deleting browsing data.
-  PrefChangeRegistrar profile_pref_registrar_;
 
   // Whether the sentence about other forms of history stored in user's account
   // should be displayed in the footer. This value is retrieved asynchronously,

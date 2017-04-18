@@ -11,11 +11,10 @@
 namespace blink {
 
 class MODULES_EXPORT ModulesInitializer : public CoreInitializer {
-public:
-    void initialize() override;
-    void shutdown() override;
+ public:
+  void Initialize() override;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ModulesInitializer_h
+#endif  // ModulesInitializer_h

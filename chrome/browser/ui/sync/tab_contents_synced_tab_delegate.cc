@@ -7,21 +7,25 @@
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
+#include "chrome/browser/sync/sessions/sync_sessions_router_tab_helper.h"
+#include "chrome/common/features.h"
 #include "components/sessions/content/content_serialized_navigation_builder.h"
 #include "components/sync_sessions/sync_sessions_client.h"
 #include "components/sync_sessions/synced_window_delegate.h"
 #include "components/sync_sessions/synced_window_delegates_getter.h"
+#include "components/sync_sessions/tab_node_pool.h"
 #include "content/public/browser/favicon_status.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/features/features.h"
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/tab_helper.h"
 #include "extensions/common/extension.h"
 #endif
 
-#if defined(ENABLE_SUPERVISED_USERS)
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
 #include "chrome/browser/supervised_user/supervised_user_navigation_observer.h"
 #endif
 
@@ -45,7 +49,8 @@ NavigationEntry* GetPossiblyPendingEntryAtIndex(
 
 TabContentsSyncedTabDelegate::TabContentsSyncedTabDelegate(
     content::WebContents* web_contents)
-    : web_contents_(web_contents), sync_session_id_(0) {}
+    : web_contents_(web_contents),
+      sync_session_id_(sync_sessions::TabNodePool::kInvalidTabNodeID) {}
 
 TabContentsSyncedTabDelegate::~TabContentsSyncedTabDelegate() {}
 
@@ -62,7 +67,7 @@ bool TabContentsSyncedTabDelegate::IsBeingDestroyed() const {
 }
 
 std::string TabContentsSyncedTabDelegate::GetExtensionAppId() const {
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   const scoped_refptr<const extensions::Extension> extension_app(
       extensions::TabHelper::FromWebContents(web_contents_)->extension_app());
   if (extension_app.get())
@@ -90,22 +95,29 @@ GURL TabContentsSyncedTabDelegate::GetVirtualURLAtIndex(int i) const {
 
 GURL TabContentsSyncedTabDelegate::GetFaviconURLAtIndex(int i) const {
   NavigationEntry* entry = GetPossiblyPendingEntryAtIndex(web_contents_, i);
-  return (entry->GetFavicon().valid ? entry->GetFavicon().url : GURL());
+  return entry ? (entry->GetFavicon().valid ? entry->GetFavicon().url : GURL())
+               : GURL();
 }
 
 ui::PageTransition TabContentsSyncedTabDelegate::GetTransitionAtIndex(
     int i) const {
   NavigationEntry* entry = GetPossiblyPendingEntryAtIndex(web_contents_, i);
-  return entry->GetTransitionType();
+  // If we don't have an entry, there's not a coherent PageTransition we can
+  // supply. There's no PageTransition::Unknown, so we just use the default,
+  // which is PageTransition::LINK.
+  return entry ? entry->GetTransitionType()
+               : ui::PageTransition::PAGE_TRANSITION_LINK;
 }
 
 void TabContentsSyncedTabDelegate::GetSerializedNavigationAtIndex(
     int i,
     sessions::SerializedNavigationEntry* serialized_entry) const {
   NavigationEntry* entry = GetPossiblyPendingEntryAtIndex(web_contents_, i);
-  *serialized_entry =
-      sessions::ContentSerializedNavigationBuilder::FromNavigationEntry(i,
-                                                                        *entry);
+  if (entry) {
+    *serialized_entry =
+        sessions::ContentSerializedNavigationBuilder::FromNavigationEntry(
+            i, *entry);
+  }
 }
 
 bool TabContentsSyncedTabDelegate::ProfileIsSupervised() const {
@@ -113,16 +125,16 @@ bool TabContentsSyncedTabDelegate::ProfileIsSupervised() const {
       ->IsSupervised();
 }
 
-const std::vector<const sessions::SerializedNavigationEntry*>*
+const std::vector<std::unique_ptr<const sessions::SerializedNavigationEntry>>*
 TabContentsSyncedTabDelegate::GetBlockedNavigations() const {
-#if defined(ENABLE_SUPERVISED_USERS)
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   SupervisedUserNavigationObserver* navigation_observer =
       SupervisedUserNavigationObserver::FromWebContents(web_contents_);
   DCHECK(navigation_observer);
-  return navigation_observer->blocked_navigations();
+  return &navigation_observer->blocked_navigations();
 #else
   NOTREACHED();
-  return NULL;
+  return nullptr;
 #endif
 }
 
@@ -161,4 +173,11 @@ bool TabContentsSyncedTabDelegate::ShouldSync(
       return true;
   }
   return false;
+}
+
+SessionID::id_type TabContentsSyncedTabDelegate::GetSourceTabID() const {
+  sync_sessions::SyncSessionsRouterTabHelper* helper =
+      sync_sessions::SyncSessionsRouterTabHelper::FromWebContents(
+          web_contents_);
+  return helper->source_tab_id();
 }

@@ -7,100 +7,93 @@
 #include "core/frame/FrameView.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
+#include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/graphics/ContentLayerDelegate.h"
+#include "platform/graphics/GraphicsLayer.h"
+#include "platform/wtf/CurrentTime.h"
 #include "public/platform/WebRect.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebViewImpl.h"
 #include "web/tests/sim/SimDisplayItemList.h"
-#include "wtf/CurrentTime.h"
 
 namespace blink {
 
-static void paintLayers(PaintLayer& layer, SimDisplayItemList& displayList)
-{
-    if (layer.isAllowedToQueryCompositingState() && layer.compositingState() == PaintsIntoOwnBacking) {
-        CompositedLayerMapping* mapping = layer.compositedLayerMapping();
-        GraphicsLayer* graphicsLayer = mapping->mainGraphicsLayer();
-        if (graphicsLayer->hasTrackedPaintInvalidations()) {
-            ContentLayerDelegate* delegate = graphicsLayer->contentLayerDelegateForTesting();
-            delegate->paintContents(&displayList);
-            graphicsLayer->resetTrackedPaintInvalidations();
-        }
-    }
-    for (PaintLayer* child = layer.firstChild(); child; child = child->nextSibling())
-        paintLayers(*child, displayList);
+static void PaintLayers(GraphicsLayer& layer,
+                        SimDisplayItemList& display_list) {
+  if (layer.DrawsContent() && layer.HasTrackedRasterInvalidations()) {
+    ContentLayerDelegate* delegate = layer.ContentLayerDelegateForTesting();
+    delegate->PaintContents(&display_list);
+    layer.ResetTrackedRasterInvalidations();
+  }
+
+  if (GraphicsLayer* mask_layer = layer.MaskLayer())
+    PaintLayers(*mask_layer, display_list);
+  if (GraphicsLayer* contents_clipping_mask_layer =
+          layer.ContentsClippingMaskLayer())
+    PaintLayers(*contents_clipping_mask_layer, display_list);
+
+  for (auto child : layer.Children())
+    PaintLayers(*child, display_list);
 }
 
-static void paintFrames(LocalFrame& root, SimDisplayItemList& displayList)
-{
-    for (Frame* frame = &root; frame; frame = frame->tree().traverseNext(&root)) {
-        if (!frame->isLocalFrame())
-            continue;
-        PaintLayer* layer = toLocalFrame(frame)->view()->layoutViewItem().layer();
-        paintLayers(*layer, displayList);
-    }
+static void PaintFrames(LocalFrame& root, SimDisplayItemList& display_list) {
+  GraphicsLayer* layer =
+      root.View()->GetLayoutViewItem().Compositor()->RootGraphicsLayer();
+  PaintLayers(*layer, display_list);
 }
 
 SimCompositor::SimCompositor()
-    : m_needsAnimate(false)
-    , m_deferCommits(true)
-    , m_hasSelection(false)
-    , m_webViewImpl(0)
-    , m_lastFrameTimeMonotonic(0)
-{
-    FrameView::setInitialTracksPaintInvalidationsForTesting(true);
+    : needs_begin_frame_(false),
+      defer_commits_(true),
+      has_selection_(false),
+      web_view_impl_(0),
+      last_frame_time_monotonic_(0) {
+  FrameView::SetInitialTracksPaintInvalidationsForTesting(true);
 }
 
-SimCompositor::~SimCompositor()
-{
-    FrameView::setInitialTracksPaintInvalidationsForTesting(false);
+SimCompositor::~SimCompositor() {
+  FrameView::SetInitialTracksPaintInvalidationsForTesting(false);
 }
 
-void SimCompositor::setWebViewImpl(WebViewImpl& webViewImpl)
-{
-    m_webViewImpl = &webViewImpl;
+void SimCompositor::SetWebViewImpl(WebViewImpl& web_view_impl) {
+  web_view_impl_ = &web_view_impl;
 }
 
-void SimCompositor::setNeedsAnimate()
-{
-    m_needsAnimate = true;
+void SimCompositor::SetNeedsBeginFrame() {
+  needs_begin_frame_ = true;
 }
 
-void SimCompositor::setDeferCommits(bool deferCommits)
-{
-    m_deferCommits = deferCommits;
+void SimCompositor::SetDeferCommits(bool defer_commits) {
+  defer_commits_ = defer_commits;
 }
 
-void SimCompositor::registerSelection(const WebSelection&)
-{
-    m_hasSelection = true;
+void SimCompositor::RegisterSelection(const WebSelection&) {
+  has_selection_ = true;
 }
 
-void SimCompositor::clearSelection()
-{
-    m_hasSelection = false;
+void SimCompositor::ClearSelection() {
+  has_selection_ = false;
 }
 
-SimDisplayItemList SimCompositor::beginFrame()
-{
-    DCHECK(m_webViewImpl);
-    DCHECK(!m_deferCommits);
-    DCHECK(m_needsAnimate);
-    m_needsAnimate = false;
+SimDisplayItemList SimCompositor::BeginFrame(double time_delta_in_seconds) {
+  DCHECK(web_view_impl_);
+  DCHECK(!defer_commits_);
+  DCHECK(needs_begin_frame_);
+  DCHECK_GT(time_delta_in_seconds, 0);
+  needs_begin_frame_ = false;
 
-    // Always advance the time as if the compositor was running at 60fps.
-    m_lastFrameTimeMonotonic = monotonicallyIncreasingTime() + 0.016;
+  last_frame_time_monotonic_ += time_delta_in_seconds;
 
-    m_webViewImpl->beginFrame(m_lastFrameTimeMonotonic);
-    m_webViewImpl->updateAllLifecyclePhases();
+  web_view_impl_->BeginFrame(last_frame_time_monotonic_);
+  web_view_impl_->UpdateAllLifecyclePhases();
 
-    LocalFrame* root = m_webViewImpl->mainFrameImpl()->frame();
+  LocalFrame* root = web_view_impl_->MainFrameImpl()->GetFrame();
 
-    SimDisplayItemList displayList;
-    paintFrames(*root, displayList);
+  SimDisplayItemList display_list;
+  PaintFrames(*root, display_list);
 
-    return displayList;
+  return display_list;
 }
 
-} // namespace blink
+}  // namespace blink

@@ -31,10 +31,6 @@ WebViewImpl.setupElement = function(proto) {
   // Public-facing API methods.
   var apiMethods = WebViewImpl.getApiMethods();
 
-  // Add the experimental API methods, if available.
-  var experimentalApiMethods = WebViewImpl.maybeGetExperimentalApiMethods();
-  apiMethods = $Array.concat(apiMethods, experimentalApiMethods);
-
   // Create default implementations for undefined API methods.
   var createDefaultApiMethod = function(m) {
     return function(var_args) {
@@ -95,9 +91,9 @@ WebViewImpl.prototype.setupElementProperties = function() {
   // We cannot use {writable: true} property descriptor because we want a
   // dynamic getter value.
   Object.defineProperty(this.element, 'contentWindow', {
-    get: function() {
+    get: $Function.bind(function() {
       return this.guest.getContentWindow();
-    }.bind(this),
+    }, this),
     // No setter.
     enumerable: true
   });
@@ -140,9 +136,9 @@ WebViewImpl.prototype.onSizeChanged = function(webViewEvent) {
 };
 
 WebViewImpl.prototype.createGuest = function() {
-  this.guest.create(this.buildParams(), function() {
+  this.guest.create(this.buildParams(), $Function.bind(function() {
     this.attachWindow$();
-  }.bind(this));
+  }, this));
 };
 
 WebViewImpl.prototype.onFrameNameChanged = function(name) {
@@ -216,18 +212,13 @@ WebViewImpl.prototype.executeCode = function(func, args) {
 
 // Requests the <webview> element wihtin the embedder to enter fullscreen.
 WebViewImpl.prototype.makeElementFullscreen = function() {
-  GuestViewInternalNatives.RunWithGesture(function() {
+  GuestViewInternalNatives.RunWithGesture($Function.bind(function() {
     this.element.webkitRequestFullScreen();
-  }.bind(this));
+  }, this));
 };
 
 // Implemented when the ChromeWebView API is available.
 WebViewImpl.prototype.maybeSetupContextMenus = function() {};
-
-// Implemented when the experimental WebView API is available.
-WebViewImpl.maybeGetExperimentalApiMethods = function() {
-  return [];
-};
 
 GuestViewContainer.registerElement(WebViewImpl);
 

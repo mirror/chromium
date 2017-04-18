@@ -27,12 +27,14 @@
 
 #include <float.h>
 
-using namespace blink;
+namespace blink {
 
-SMILTime blink::operator*(const SMILTime& a,  const SMILTime& b)
-{
-    // Equal operators have to be used instead of negation here to make NaN work as well.
-    if (a.value() == 0 || b.value() == 0)
-        return SMILTime(0);
-    return a.value() * b.value();
+SMILTime operator*(const SMILTime& a, const SMILTime& b) {
+  // Equal operators have to be used instead of negation here to make NaN work
+  // as well.
+  if (a.Value() == 0 || b.Value() == 0)
+    return SMILTime(0);
+  return a.Value() * b.Value();
 }
+
+}  // namespace blink

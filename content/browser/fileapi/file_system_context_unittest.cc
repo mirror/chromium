@@ -9,14 +9,15 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "content/browser/quota/mock_quota_manager.h"
-#include "content/public/test/mock_special_storage_policy.h"
-#include "content/public/test/test_file_system_options.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_backend.h"
 #include "storage/browser/fileapi/isolated_context.h"
+#include "storage/browser/test/mock_quota_manager.h"
+#include "storage/browser/test/mock_special_storage_policy.h"
+#include "storage/browser/test/test_file_system_options.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #define FPL(x) FILE_PATH_LITERAL(x)
@@ -59,7 +60,7 @@ class FileSystemContextTest : public testing::Test {
     storage_policy_ = new MockSpecialStoragePolicy();
 
     mock_quota_manager_ = new MockQuotaManager(
-        false /* is_incognito */, data_dir_.path(),
+        false /* is_incognito */, data_dir_.GetPath(),
         base::ThreadTaskRunnerHandle::Get().get(),
         base::ThreadTaskRunnerHandle::Get().get(), storage_policy_.get());
   }
@@ -71,8 +72,8 @@ class FileSystemContextTest : public testing::Test {
         base::ThreadTaskRunnerHandle::Get().get(),
         base::ThreadTaskRunnerHandle::Get().get(), external_mount_points,
         storage_policy_.get(), mock_quota_manager_->proxy(),
-        ScopedVector<FileSystemBackend>(),
-        std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.path(),
+        std::vector<std::unique_ptr<FileSystemBackend>>(),
+        std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.GetPath(),
         CreateAllowFileAccessOptions());
   }
 
@@ -96,7 +97,7 @@ class FileSystemContextTest : public testing::Test {
 
  private:
   base::ScopedTempDir data_dir_;
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   scoped_refptr<storage::SpecialStoragePolicy> storage_policy_;
   scoped_refptr<MockQuotaManager> mock_quota_manager_;
 };

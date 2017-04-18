@@ -26,16 +26,17 @@
 #ifndef IDBCursor_h
 #define IDBCursor_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBRequest.h"
 #include "modules/indexeddb/IndexedDB.h"
+#include "platform/wtf/Compiler.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include <memory>
 
 namespace blink {
 
@@ -45,64 +46,80 @@ class IDBTransaction;
 class IDBValue;
 class ScriptState;
 
-class IDBCursor : public GarbageCollectedFinalized<IDBCursor>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static WebIDBCursorDirection stringToDirection(const String& modeString);
+class IDBCursor : public GarbageCollectedFinalized<IDBCursor>,
+                  public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static IDBCursor* create(std::unique_ptr<WebIDBCursor>, WebIDBCursorDirection, IDBRequest*, IDBAny* source, IDBTransaction*);
-    virtual ~IDBCursor();
-    DECLARE_TRACE();
-    void contextWillBeDestroyed() { m_backend.reset(); }
+ public:
+  static WebIDBCursorDirection StringToDirection(const String& mode_string);
 
-    v8::Local<v8::Object> associateWithWrapper(v8::Isolate*, const WrapperTypeInfo*, v8::Local<v8::Object> wrapper) override WARN_UNUSED_RETURN;
+  static IDBCursor* Create(std::unique_ptr<WebIDBCursor>,
+                           WebIDBCursorDirection,
+                           IDBRequest*,
+                           IDBAny* source,
+                           IDBTransaction*);
+  virtual ~IDBCursor();
+  DECLARE_TRACE();
+  void ContextWillBeDestroyed() { backend_.reset(); }
 
-    // Implement the IDL
-    const String& direction() const;
-    ScriptValue key(ScriptState*);
-    ScriptValue primaryKey(ScriptState*);
-    ScriptValue value(ScriptState*);
-    ScriptValue source(ScriptState*) const;
+  WARN_UNUSED_RESULT v8::Local<v8::Object> AssociateWithWrapper(
+      v8::Isolate*,
+      const WrapperTypeInfo*,
+      v8::Local<v8::Object> wrapper) override;
 
-    IDBRequest* update(ScriptState*, const ScriptValue&, ExceptionState&);
-    void advance(unsigned, ExceptionState&);
-    void continueFunction(ScriptState*, const ScriptValue& key, ExceptionState&);
-    void continuePrimaryKey(ScriptState*, const ScriptValue& key, const ScriptValue& primaryKey, ExceptionState&);
-    IDBRequest* deleteFunction(ScriptState*, ExceptionState&);
+  // Implement the IDL
+  const String& direction() const;
+  ScriptValue key(ScriptState*);
+  ScriptValue primaryKey(ScriptState*);
+  ScriptValue value(ScriptState*);
+  ScriptValue source(ScriptState*) const;
 
-    bool isKeyDirty() const { return m_keyDirty; }
-    bool isPrimaryKeyDirty() const { return m_primaryKeyDirty; }
-    bool isValueDirty() const { return m_valueDirty; }
+  IDBRequest* update(ScriptState*, const ScriptValue&, ExceptionState&);
+  void advance(unsigned, ExceptionState&);
+  void continueFunction(ScriptState*, const ScriptValue& key, ExceptionState&);
+  void continuePrimaryKey(ScriptState*,
+                          const ScriptValue& key,
+                          const ScriptValue& primary_key,
+                          ExceptionState&);
+  IDBRequest* deleteFunction(ScriptState*, ExceptionState&);
 
-    void continueFunction(IDBKey*, IDBKey* primaryKey, ExceptionState&);
-    void postSuccessHandlerCallback();
-    bool isDeleted() const;
-    void close();
-    void setValueReady(IDBKey*, IDBKey* primaryKey, PassRefPtr<IDBValue>);
-    IDBKey* idbPrimaryKey() const { return m_primaryKey; }
-    virtual bool isKeyCursor() const { return true; }
-    virtual bool isCursorWithValue() const { return false; }
+  bool isKeyDirty() const { return key_dirty_; }
+  bool isPrimaryKeyDirty() const { return primary_key_dirty_; }
+  bool isValueDirty() const { return value_dirty_; }
 
-protected:
-    IDBCursor(std::unique_ptr<WebIDBCursor>, WebIDBCursorDirection, IDBRequest*, IDBAny* source, IDBTransaction*);
+  void Continue(IDBKey*, IDBKey* primary_key, ExceptionState&);
+  void PostSuccessHandlerCallback();
+  bool IsDeleted() const;
+  void Close();
+  void SetValueReady(IDBKey*, IDBKey* primary_key, PassRefPtr<IDBValue>);
+  IDBKey* IdbPrimaryKey() const { return primary_key_; }
+  virtual bool IsKeyCursor() const { return true; }
+  virtual bool IsCursorWithValue() const { return false; }
 
-private:
-    IDBObjectStore* effectiveObjectStore() const;
+ protected:
+  IDBCursor(std::unique_ptr<WebIDBCursor>,
+            WebIDBCursorDirection,
+            IDBRequest*,
+            IDBAny* source,
+            IDBTransaction*);
 
-    std::unique_ptr<WebIDBCursor> m_backend;
-    Member<IDBRequest> m_request;
-    const WebIDBCursorDirection m_direction;
-    Member<IDBAny> m_source;
-    Member<IDBTransaction> m_transaction;
-    bool m_gotValue = false;
-    bool m_keyDirty = true;
-    bool m_primaryKeyDirty = true;
-    bool m_valueDirty = true;
-    Member<IDBKey> m_key;
-    Member<IDBKey> m_primaryKey;
-    RefPtr<IDBValue> m_value;
+ private:
+  IDBObjectStore* EffectiveObjectStore() const;
+
+  std::unique_ptr<WebIDBCursor> backend_;
+  Member<IDBRequest> request_;
+  const WebIDBCursorDirection direction_;
+  Member<IDBAny> source_;
+  Member<IDBTransaction> transaction_;
+  bool got_value_ = false;
+  bool key_dirty_ = true;
+  bool primary_key_dirty_ = true;
+  bool value_dirty_ = true;
+  Member<IDBKey> key_;
+  Member<IDBKey> primary_key_;
+  RefPtr<IDBValue> value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IDBCursor_h
+#endif  // IDBCursor_h

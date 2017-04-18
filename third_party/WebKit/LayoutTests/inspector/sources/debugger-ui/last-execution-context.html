@@ -1,16 +1,20 @@
 <html>
 <head>
 <script src="../../../http/tests/inspector/inspector-test.js"></script>
-<script src="../../../http/tests/inspector/workspace-test.js"></script>
 <script>
 
 function test()
 {
-    InspectorTest.createWorkspace(true);
-    var context = new WebInspector.Context();
-    context.addFlavorChangeListener(WebInspector.ExecutionContext, executionContextChanged, this);
-    context.addFlavorChangeListener(WebInspector.Target, targetChanged, this);
-    new WebInspector.ExecutionContextSelector(InspectorTest.testTargetManager, context);
+    var mockTargetId = 1;
+    function createMockTarget(name, capabilities, dontAttachToMain)
+    {
+        return SDK.targetManager.createTarget('mock-target-' + mockTargetId++, name, capabilities, params => new SDK.StubConnection(params), dontAttachToMain ? null : InspectorTest.mainTarget);
+    }
+
+    var context = new UI.Context();
+    context.addFlavorChangeListener(SDK.ExecutionContext, executionContextChanged, this);
+    context.addFlavorChangeListener(SDK.Target, targetChanged, this);
+    new Main.ExecutionContextSelector(SDK.targetManager, context);
 
     function executionContextChanged(event)
     {
@@ -23,70 +27,75 @@ function test()
         InspectorTest.addResult("Target selected: " + event.data.name());
     }
 
+    InspectorTest.runtimeModel._executionContextsCleared();
+
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Adding page target");
-    var pageTarget = InspectorTest.createMockTarget("page-target");
-    pageTarget.runtimeModel._executionContextCreated({id: "cs1", isDefault: false, origin: "origin", name: "contentScript1", frameId: "42"});
-    pageTarget.runtimeModel._executionContextCreated({id: "if1", isDefault: true, origin: "origin", name: "iframeContext1", frameId: "iframe1"});
-    pageTarget.runtimeModel._executionContextCreated({id: "p1", isDefault: true, origin: "origin", name: "pageContext1Name", frameId: "42"});
+    var pageTarget = createMockTarget("page-target", SDK.Target.Capability.AllForTests, true /* dontAttachToMain */);
+    var pageRuntimeModel = pageTarget.model(SDK.RuntimeModel);
+    pageTarget.model(SDK.ResourceTreeModel)._frameAttached('42', '');
+    pageTarget.model(SDK.ResourceTreeModel)._frameNavigated({id: '42', parentId: '', loaderId: '', name: 'mock-frame', url: 'mock-url.com/frame.html', securityOrigin: 'mock-security-origin', mineType: 'mimeType'});
+    pageRuntimeModel._executionContextCreated({id: "cs1", auxData: { isDefault: false, frameId: "42" }, origin: "origin", name: "contentScript1"});
+    pageRuntimeModel._executionContextCreated({id: "if1", auxData: { isDefault: true, frameId: "iframe1" }, origin: "origin", name: "iframeContext1"});
+    pageRuntimeModel._executionContextCreated({id: "p1", auxData: { isDefault: true, frameId: "42" }, origin: "origin", name: "pageContext1Name"});
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Adding sw target");
-    var swTarget = InspectorTest.createMockTarget("sw-target", null, WebInspector.Target.Capability.Network | WebInspector.Target.Capability.Worker);
-    swTarget.runtimeModel._executionContextCreated({id: "sw1", isDefault: true, origin: "origin", name: "swContext1Name", frameId: ""});
+    var swTarget = createMockTarget("sw-target", SDK.Target.Capability.Network | SDK.Target.Capability.Worker | SDK.Target.Capability.JS);
+    swTarget.model(SDK.RuntimeModel)._executionContextCreated({id: "sw1", auxData: { isDefault: true, frameId: "" }, origin: "origin", name: "swContext1Name"});
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Removing page main frame");
-    pageTarget.runtimeModel._executionContextDestroyed("p1");
+    pageRuntimeModel._executionContextDestroyed("p1");
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Readding page main frame");
-    pageTarget.runtimeModel._executionContextCreated({id: "p2", isDefault: true, origin: "origin", name: "pageContext1Name", frameId: "42"});
+    pageRuntimeModel._executionContextCreated({id: "p2", auxData: { isDefault: true, frameId: "42" }, origin: "origin", name: "pageContext1Name"});
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to sw target");
-    context.setFlavor(WebInspector.Target, swTarget);
+    context.setFlavor(SDK.Target, swTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to page target");
-    context.setFlavor(WebInspector.Target, pageTarget);
+    context.setFlavor(SDK.Target, pageTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("User selected content script");
-    context.setFlavor(WebInspector.ExecutionContext, pageTarget.runtimeModel.executionContexts()[2]);
+    context.setFlavor(SDK.ExecutionContext, pageRuntimeModel.executionContexts()[2]);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to sw target");
-    context.setFlavor(WebInspector.Target, swTarget);
+    context.setFlavor(SDK.Target, swTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to page target");
-    context.setFlavor(WebInspector.Target, pageTarget);
+    context.setFlavor(SDK.Target, pageTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("User selected iframe1");
-    context.setFlavor(WebInspector.ExecutionContext, pageTarget.runtimeModel.executionContexts()[0]);
+    context.setFlavor(SDK.ExecutionContext, pageRuntimeModel.executionContexts()[0]);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to sw target");
-    context.setFlavor(WebInspector.Target, swTarget);
+    context.setFlavor(SDK.Target, swTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to page target");
-    context.setFlavor(WebInspector.Target, pageTarget);
+    context.setFlavor(SDK.Target, pageTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Switching to sw target");
-    context.setFlavor(WebInspector.Target, swTarget);
+    context.setFlavor(SDK.Target, swTarget);
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Removing page main frame");
-    pageTarget.runtimeModel._executionContextDestroyed("p2");
+    pageRuntimeModel._executionContextDestroyed("p2");
 
     InspectorTest.addResult("");
     InspectorTest.addResult("Readding page main frame");
-    pageTarget.runtimeModel._executionContextCreated({id: "p3", isDefault: true, origin: "origin", name: "pageContext1Name", frameId: "42"});
+    pageRuntimeModel._executionContextCreated({id: "p3", auxData: { isDefault: true, frameId: "42" }, origin: "origin", name: "pageContext1Name"});
 
     InspectorTest.completeTest();
 }

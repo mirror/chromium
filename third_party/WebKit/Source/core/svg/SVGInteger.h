@@ -37,37 +37,41 @@
 namespace blink {
 
 class SVGInteger final : public SVGPropertyHelper<SVGInteger> {
-public:
-    typedef void TearOffType;
-    typedef int PrimitiveType;
+ public:
+  typedef void TearOffType;
+  typedef int PrimitiveType;
 
-    static SVGInteger* create(int value = 0)
-    {
-        return new SVGInteger(value);
-    }
+  static SVGInteger* Create(int value = 0) { return new SVGInteger(value); }
 
-    virtual SVGInteger* clone() const;
+  virtual SVGInteger* Clone() const;
 
-    int value() const { return m_value; }
-    void setValue(int value) { m_value = value; }
+  int Value() const { return value_; }
+  void SetValue(int value) { value_ = value; }
 
-    String valueAsString() const override;
-    SVGParsingError setValueAsString(const String&);
+  String ValueAsString() const override;
+  SVGParsingError SetValueAsString(const String&);
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDurationValue, SVGElement* contextElement) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement* contextElement) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from,
+                              SVGPropertyBase* to,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement* context_element) override;
+  float CalculateDistance(SVGPropertyBase* to,
+                          SVGElement* context_element) override;
 
-    static AnimatedPropertyType classType() { return AnimatedInteger; }
+  static AnimatedPropertyType ClassType() { return kAnimatedInteger; }
 
-protected:
-    explicit SVGInteger(int);
+ protected:
+  explicit SVGInteger(int);
 
-    int m_value;
+  int value_;
 };
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGInteger);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGInteger_h
+#endif  // SVGInteger_h

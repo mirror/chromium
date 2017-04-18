@@ -54,6 +54,12 @@ var GetAnchorOffset = requireNative('automationInternal').GetAnchorOffset;
 
 /**
  * @param {number} axTreeID The id of the accessibility tree.
+ * @return {?string} The selection anchor affinity.
+ */
+var GetAnchorAffinity = requireNative('automationInternal').GetAnchorAffinity;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
  * @return {?number} The ID of the selection focus object.
  */
 var GetFocusObjectID = requireNative('automationInternal').GetFocusObjectID;
@@ -63,6 +69,12 @@ var GetFocusObjectID = requireNative('automationInternal').GetFocusObjectID;
  * @return {?number} The selection focus offset.
  */
 var GetFocusOffset = requireNative('automationInternal').GetFocusOffset;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @return {?string} The selection focus affinity.
+ */
+var GetFocusAffinity = requireNative('automationInternal').GetFocusAffinity;
 
 /**
  * @param {number} axTreeID The id of the accessibility tree.
@@ -92,6 +104,14 @@ var GetChildIDAtIndex = requireNative('automationInternal').GetChildIDAtIndex;
 /**
  * @param {number} axTreeID The id of the accessibility tree.
  * @param {number} nodeID The id of a node.
+ * @return {?number} The ids of the children of the node, or undefined
+ *     if the tree or node wasn't found.
+ */
+var GetChildIds = requireNative('automationInternal').GetChildIDs;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
  * @return {?Object} An object mapping html attributes to values.
  */
 var GetHtmlAttributes = requireNative('automationInternal').GetHtmlAttributes;
@@ -111,6 +131,13 @@ var GetIndexInParent = requireNative('automationInternal').GetIndexInParent;
  *     or undefined if the tree or node or node parent wasn't found.
  */
 var GetState = requireNative('automationInternal').GetState;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
+ * @return {string} The checked state, as undefined, "true", "false" or "mixed".
+ */
+var GetChecked = requireNative('automationInternal').GetChecked;
 
 /**
  * @param {number} axTreeID The id of the accessibility tree.
@@ -138,6 +165,16 @@ var GetLocation = requireNative('automationInternal').GetLocation;
  *     the tree or node wasn't found.
  */
 var GetBoundsForRange = requireNative('automationInternal').GetBoundsForRange;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
+ * @return {!Array.<number>} The text offset where each line starts, or an empty
+ *     array if this node has no text content, or undefined if the tree or node
+ *     was not found.
+ */
+var GetLineStartOffsets = requireNative(
+    'automationInternal').GetLineStartOffsets;
 
 /**
  * @param {number} axTreeID The id of the accessibility tree.
@@ -194,9 +231,15 @@ var GetIntListAttribute =
  */
 var GetHtmlAttribute = requireNative('automationInternal').GetHtmlAttribute;
 
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
+ * @return {automation.NameFromType} The source of the node's name.
+ */
+var GetNameFrom = requireNative('automationInternal').GetNameFrom;
+
 var lastError = require('lastError');
 var logging = requireNative('logging');
-var schema = requireNative('automationInternal').GetSchemaAdditions();
 var utils = require('utils');
 
 /**
@@ -247,6 +290,10 @@ AutomationNodeImpl.prototype = {
     return GetRole(this.treeID, this.id);
   },
 
+  get checked() {
+    return GetChecked(this.treeID, this.id);
+  },
+
   get location() {
     return GetLocation(this.treeID, this.id);
   },
@@ -257,6 +304,10 @@ AutomationNodeImpl.prototype = {
 
   get indexInParent() {
     return GetIndexInParent(this.treeID, this.id);
+  },
+
+  get lineStartOffsets() {
+    return GetLineStartOffsets(this.treeID, this.id);
   },
 
   get childTree() {
@@ -296,9 +347,9 @@ AutomationNodeImpl.prototype = {
       return [this.childTree];
 
     var children = [];
-    var count = GetChildCount(this.treeID, this.id);
-    for (var i = 0; i < count; ++i) {
-      var childID = GetChildIDAtIndex(this.treeID, this.id, i);
+    var childIds = GetChildIds(this.treeID, this.id);
+    for (var i = 0; i < childIds.length; ++i) {
+      var childID = childIds[i];
       var child = this.rootImpl.get(childID);
       $Array.push(children, child);
     }
@@ -307,18 +358,26 @@ AutomationNodeImpl.prototype = {
 
   get previousSibling() {
     var parent = this.parent;
+    if (!parent)
+      return undefined;
+    parent = privates(parent).impl;
     var indexInParent = GetIndexInParent(this.treeID, this.id);
-    if (parent && indexInParent > 0)
-      return parent.children[indexInParent - 1];
-    return undefined;
+    return this.rootImpl.get(
+        GetChildIDAtIndex(parent.treeID, parent.id, indexInParent - 1));
   },
 
   get nextSibling() {
     var parent = this.parent;
+    if (!parent)
+      return undefined;
+    parent = privates(parent).impl;
     var indexInParent = GetIndexInParent(this.treeID, this.id);
-    if (parent && indexInParent < parent.children.length)
-      return parent.children[indexInParent + 1];
-    return undefined;
+    return this.rootImpl.get(
+        GetChildIDAtIndex(parent.treeID, parent.id, indexInParent + 1));
+  },
+
+  get nameFrom() {
+    return GetNameFrom(this.treeID, this.id);
   },
 
   doDefault: function() {
@@ -329,8 +388,27 @@ AutomationNodeImpl.prototype = {
     this.performAction_('focus');
   },
 
+  getImageData: function(maxWidth, maxHeight) {
+    this.performAction_('getImageData',
+                        { maxWidth: maxWidth,
+                          maxHeight: maxHeight });
+  },
+
+  hitTest: function(x, y, eventToFire) {
+    // Convert from global to tree-relative coordinates.
+    var location = GetLocation(this.treeID, GetRootID(this.treeID));
+    this.performAction_('hitTest',
+                        { x: x - location.left,
+                          y: y - location.top,
+                          eventToFire: eventToFire });
+  },
+
   makeVisible: function() {
     this.performAction_('makeVisible');
+  },
+
+  resumeMedia: function() {
+    this.performAction_('resumeMedia');
   },
 
   setSelection: function(startIndex, endIndex) {
@@ -342,8 +420,24 @@ AutomationNodeImpl.prototype = {
     }
   },
 
+  setSequentialFocusNavigationStartingPoint: function() {
+    this.performAction_('setSequentialFocusNavigationStartingPoint');
+  },
+
   showContextMenu: function() {
     this.performAction_('showContextMenu');
+  },
+
+  startDuckingMedia: function() {
+    this.performAction_('startDuckingMedia');
+  },
+
+  stopDuckingMedia: function() {
+    this.performAction_('stopDuckingMedia');
+  },
+
+  suspendMedia: function() {
+    this.performAction_('suspendMedia');
   },
 
   domQuerySelector: function(selector, callback) {
@@ -397,14 +491,16 @@ AutomationNodeImpl.prototype = {
              attributes: this.attributes };
   },
 
-  dispatchEvent: function(eventType) {
+  dispatchEvent: function(eventType, eventFrom, mouseX, mouseY) {
     var path = [];
     var parent = this.parent;
     while (parent) {
       $Array.push(path, parent);
       parent = parent.parent;
     }
-    var event = new AutomationEvent(eventType, this.wrapper);
+    var event = new AutomationEvent(eventType, this.wrapper, eventFrom);
+    event.mouseX = mouseX;
+    event.mouseY = mouseY;
 
     // Dispatch the event through the propagation path in three phases:
     // - capturing: starting from the root and going down to the target's parent
@@ -603,47 +699,33 @@ AutomationNodeImpl.prototype = {
 
 var stringAttributes = [
     'accessKey',
-    'action',
     'ariaInvalidValue',
-    'autoComplete',
     'containerLiveRelevant',
     'containerLiveStatus',
     'description',
     'display',
-    'dropeffect',
-    'help',
-    'htmlTag',
+    'imageDataUrl',
     'language',
     'liveRelevant',
     'liveStatus',
     'name',
     'placeholder',
-    'shortcut',
     'textInputType',
     'url',
     'value'];
 
 var boolAttributes = [
     'ariaReadonly',
-    'buttonMixed',
-    'canSetValue',
-    'canvasHasFallback',
     'containerLiveAtomic',
     'containerLiveBusy',
-    'grabbed',
-    'isAxTreeHost',
     'liveAtomic',
-    'liveBusy',
-    'updateLocationOnly'];
+    'liveBusy'];
 
 var intAttributes = [
     'backgroundColor',
     'color',
     'colorValue',
-    'descriptionFrom',
     'hierarchicalLevel',
-    'invalidState',
-    'nameFrom',
     'posInSet',
     'scrollX',
     'scrollXMax',
@@ -652,7 +734,6 @@ var intAttributes = [
     'scrollYMax',
     'scrollYMin',
     'setSize',
-    'sortDirection',
     'tableCellColumnIndex',
     'tableCellColumnSpan',
     'tableCellRowIndex',
@@ -661,37 +742,36 @@ var intAttributes = [
     'tableColumnIndex',
     'tableRowCount',
     'tableRowIndex',
-    'textDirection',
     'textSelEnd',
-    'textSelStart',
-    'textStyle'];
+    'textSelStart'];
 
 var nodeRefAttributes = [
     ['activedescendantId', 'activeDescendant'],
+    ['inPageLinkTargetId', 'inPageLinkTarget'],
+    ['nextOnLineId', 'nextOnLine'],
+    ['previousOnLineId', 'previousOnLine'],
     ['tableColumnHeaderId', 'tableColumnHeader'],
     ['tableHeaderId', 'tableHeader'],
-    ['tableRowHeaderId', 'tableRowHeader'],
-    ['titleUiElement', 'titleUIElement']];
+    ['tableRowHeaderId', 'tableRowHeader']];
 
 var intListAttributes = [
-    'characterOffsets',
     'lineBreaks',
+    'markerEnds',
+    'markerStarts',
+    'markerTypes',
     'wordEnds',
     'wordStarts'];
 
 var nodeRefListAttributes = [
-    ['cellIds', 'cells'],
     ['controlsIds', 'controls'],
     ['describedbyIds', 'describedBy'],
     ['flowtoIds', 'flowTo'],
-    ['labelledbyIds', 'labelledBy'],
-    ['uniqueCellIds', 'uniqueCells']];
+    ['labelledbyIds', 'labelledBy']];
 
 var floatAttributes = [
     'valueForRange',
     'minValueForRange',
-    'maxValueForRange',
-    'fontSize'];
+    'maxValueForRange'];
 
 var htmlAttributes = [
     ['type', 'inputType']];
@@ -878,6 +958,10 @@ AutomationRootNodeImpl.prototype = {
     return result;
   },
 
+  get chromeChannel() {
+    return GetStringAttribute(this.treeID, this.id, 'chromeChannel');
+  },
+
   get docUrl() {
     return GetDocURL(this.treeID);
   },
@@ -908,6 +992,12 @@ AutomationRootNodeImpl.prototype = {
       return GetAnchorOffset(this.treeID);
   },
 
+  get anchorAffinity() {
+    var id = GetAnchorObjectID(this.treeID);
+    if (id && id != -1)
+      return GetAnchorAffinity(this.treeID);
+  },
+
   get focusObject() {
     var id = GetFocusObjectID(this.treeID);
     if (id && id != -1)
@@ -920,6 +1010,12 @@ AutomationRootNodeImpl.prototype = {
     var id = GetFocusObjectID(this.treeID);
     if (id && id != -1)
       return GetFocusOffset(this.treeID);
+  },
+
+  get focusAffinity() {
+    var id = GetFocusObjectID(this.treeID);
+    if (id && id != -1)
+      return GetFocusAffinity(this.treeID);
   },
 
   get: function(id) {
@@ -948,7 +1044,7 @@ AutomationRootNodeImpl.prototype = {
   },
 
   destroy: function() {
-    this.dispatchEvent(schema.EventType.destroyed);
+    this.dispatchEvent('destroyed', 'none');
     for (var id in this.axNodeDataCache_)
       this.remove(id);
     this.detach();
@@ -962,7 +1058,9 @@ AutomationRootNodeImpl.prototype = {
     var targetNode = this.get(eventParams.targetID);
     if (targetNode) {
       var targetNodeImpl = privates(targetNode).impl;
-      targetNodeImpl.dispatchEvent(eventParams.eventType);
+      targetNodeImpl.dispatchEvent(
+          eventParams.eventType, eventParams.eventFrom,
+          eventParams.mouseX, eventParams.mouseY);
     } else {
       logging.WARNING('Got ' + eventParams.eventType +
                       ' event on unknown node: ' + eventParams.targetID +
@@ -999,10 +1097,17 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
     'find',
     'findAll',
     'focus',
+    'getImageData',
+    'hitTest',
     'makeVisible',
     'matches',
+    'resumeMedia',
     'setSelection',
+    'setSequentialFocusNavigationStartingPoint',
     'showContextMenu',
+    'startDuckingMedia',
+    'stopDuckingMedia',
+    'suspendMedia',
     'addEventListener',
     'removeEventListener',
     'domQuerySelector',
@@ -1018,11 +1123,14 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
       'nextSibling',
       'isRootNode',
       'role',
+      'checked',
       'state',
       'location',
       'indexInParent',
+      'lineStartOffsets',
       'root',
       'htmlAttributes',
+      'nameFrom',
   ]),
 });
 
@@ -1032,14 +1140,17 @@ function AutomationRootNode() {
 utils.expose(AutomationRootNode, AutomationRootNodeImpl, {
   superclass: AutomationNode,
   readonly: [
+    'chromeChannel',
     'docTitle',
     'docUrl',
     'docLoaded',
     'docLoadingProgress',
     'anchorObject',
     'anchorOffset',
+    'anchorAffinity',
     'focusObject',
     'focusOffset',
+    'focusAffinity',
   ],
 });
 

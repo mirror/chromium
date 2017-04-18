@@ -34,40 +34,36 @@
 #include "core/css/RuleSet.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
+#include "platform/wtf/text/WTFString.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
-CSSTestHelper::~CSSTestHelper()
-{
+CSSTestHelper::~CSSTestHelper() {}
+
+CSSTestHelper::CSSTestHelper() {
+  document_ = Document::Create();
+  TextPosition position;
+  style_sheet_ =
+      CSSStyleSheet::CreateInline(*document_, KURL(), position, "UTF-8");
 }
 
-CSSTestHelper::CSSTestHelper()
-{
-    m_document = Document::create();
-    TextPosition position;
-    m_styleSheet = CSSStyleSheet::createInline(m_document.get(), KURL(), position, "UTF-8");
+CSSRuleList* CSSTestHelper::CssRules() {
+  return style_sheet_->cssRules();
 }
 
-CSSRuleList* CSSTestHelper::cssRules()
-{
-    return m_styleSheet->cssRules();
+RuleSet& CSSTestHelper::GetRuleSet() {
+  RuleSet& rule_set = style_sheet_->Contents()->EnsureRuleSet(
+      MediaQueryEvaluator(), kRuleHasNoSpecialState);
+  rule_set.CompactRulesIfNeeded();
+  return rule_set;
 }
 
-RuleSet& CSSTestHelper::ruleSet()
-{
-    RuleSet& ruleSet = m_styleSheet->contents()->ensureRuleSet(MediaQueryEvaluator(), RuleHasNoSpecialState);
-    ruleSet.compactRulesIfNeeded();
-    return ruleSet;
+void CSSTestHelper::AddCSSRules(const char* css_text) {
+  TextPosition position;
+  unsigned sheet_length = style_sheet_->length();
+  style_sheet_->Contents()->ParseStringAtPosition(css_text, position);
+  ASSERT_TRUE(style_sheet_->length() > sheet_length);
 }
 
-void CSSTestHelper::addCSSRules(const char* cssText)
-{
-    TextPosition position;
-    unsigned sheetLength = m_styleSheet->length();
-    m_styleSheet->contents()->parseStringAtPosition(cssText, position);
-    ASSERT_TRUE(m_styleSheet->length() > sheetLength);
-}
-
-} // namespace blink
+}  // namespace blink

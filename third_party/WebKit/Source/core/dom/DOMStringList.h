@@ -29,52 +29,42 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class ExecutionContext;
+// FIXME: Some consumers of this class may benefit from lazily fetching items
+// rather than creating the list statically as is currently the only option.
+class CORE_EXPORT DOMStringList final
+    : public GarbageCollectedFinalized<DOMStringList>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-// FIXME: Some consumers of this class may benefit from lazily fetching items rather
-//        than creating the list statically as is currently the only option.
-class CORE_EXPORT DOMStringList final : public GarbageCollectedFinalized<DOMStringList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    // We would like to remove DOMStringList from the platform if possible.
-    // Track the source of each instance so we can measure the use of methods
-    // not present on Arrays and determine the feasibility of removal and
-    // what path it should take. http://crbug.com/460726
-    enum Source { IndexedDB, Location };
+ public:
+  static DOMStringList* Create() { return new DOMStringList(); }
 
-    static DOMStringList* create(Source source)
-    {
-        return new DOMStringList(source);
-    }
+  bool IsEmpty() const { return strings_.IsEmpty(); }
+  void Clear() { strings_.Clear(); }
+  void Append(const String& string) { strings_.push_back(string); }
+  void Sort();
 
-    bool isEmpty() const { return m_strings.isEmpty(); }
-    void clear() { m_strings.clear(); }
-    void append(const String& string) { m_strings.append(string); }
-    void sort();
+  // Implements the IDL.
+  size_t length() const { return strings_.size(); }
 
-    // Implements the IDL.
-    size_t length() const { return m_strings.size(); }
-    String anonymousIndexedGetter(unsigned index) const;
+  String item(unsigned index) const;
+  bool contains(const String&) const;
 
-    String item(ExecutionContext*, unsigned index) const;
-    bool contains(ExecutionContext*, const String&) const;
+  operator const Vector<String>&() const { return strings_; }
 
-    operator const Vector<String>&() const { return m_strings; }
+  DEFINE_INLINE_TRACE() {}
 
-    DEFINE_INLINE_TRACE() { }
+ private:
+  explicit DOMStringList() {}
 
-private:
-    explicit DOMStringList(Source source) : m_source(source) { }
-
-    Vector<String> m_strings;
-    Source m_source;
+  Vector<String> strings_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMStringList_h
+#endif  // DOMStringList_h

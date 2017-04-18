@@ -6,7 +6,6 @@
 
 namespace remoting {
 
-const char kDaemonPipeSwitchName[] = "daemon-pipe";
 const char kElevateSwitchName[] = "elevate";
 const char kHelpSwitchName[] = "help";
 const char kProcessTypeSwitchName[] = "type";
@@ -18,5 +17,12 @@ const char kProcessTypeDaemon[] = "daemon";
 const char kProcessTypeDesktop[] = "desktop";
 const char kProcessTypeHost[] = "host";
 const char kProcessTypeRdpDesktopSession[] = "rdp_desktop_session";
+
+const char kParentWindowSwitchName[] = "parent-window";
+
+const char kInputSwitchName[] = "input";
+const char kOutputSwitchName[] = "output";
+
+const char kMojoPipeToken[] = "mojo-pipe-token";
 
 }  // namespace remoting

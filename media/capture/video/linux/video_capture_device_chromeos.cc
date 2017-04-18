@@ -17,6 +17,11 @@
 
 namespace media {
 
+static CameraConfigChromeOS* GetCameraConfig() {
+  static CameraConfigChromeOS* config = new CameraConfigChromeOS();
+  return config;
+}
+
 // This is a delegate class used to transfer Display change events from the UI
 // thread to the media thread.
 class VideoCaptureDeviceChromeOS::ScreenObserverDelegate
@@ -96,14 +101,66 @@ class VideoCaptureDeviceChromeOS::ScreenObserverDelegate
 
 VideoCaptureDeviceChromeOS::VideoCaptureDeviceChromeOS(
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    const Name& device_name)
-    : VideoCaptureDeviceLinux(device_name),
+    const VideoCaptureDeviceDescriptor& device_descriptor)
+    : VideoCaptureDeviceLinux(device_descriptor),
       screen_observer_delegate_(
-          new ScreenObserverDelegate(this, ui_task_runner)) {
-}
+          new ScreenObserverDelegate(this, ui_task_runner)),
+      lens_facing_(
+          GetCameraConfig()->GetCameraFacing(device_descriptor.device_id,
+                                             device_descriptor.model_id)),
+      camera_orientation_(
+          GetCameraConfig()->GetOrientation(device_descriptor.device_id,
+                                            device_descriptor.model_id)),
+      // External cameras have lens_facing as MEDIA_VIDEO_FACING_NONE.
+      // We don't want to rotate the frame even if the device rotates.
+      rotates_with_device_(lens_facing_ !=
+                           VideoFacingMode::MEDIA_VIDEO_FACING_NONE) {}
 
 VideoCaptureDeviceChromeOS::~VideoCaptureDeviceChromeOS() {
   screen_observer_delegate_->RemoveObserver();
+}
+
+void VideoCaptureDeviceChromeOS::SetRotation(int rotation) {
+  if (!rotates_with_device_) {
+    rotation = 0;
+  } else if (lens_facing_ == VideoFacingMode::MEDIA_VIDEO_FACING_ENVIRONMENT) {
+    // Original frame when |rotation| = 0
+    // -----------------------
+    // |          *          |
+    // |         * *         |
+    // |        *   *        |
+    // |       *******       |
+    // |      *       *      |
+    // |     *         *     |
+    // -----------------------
+    //
+    // |rotation| = 90, this is what back camera sees
+    // -----------------------
+    // |    ********         |
+    // |       *   ****      |
+    // |       *      ***    |
+    // |       *      ***    |
+    // |       *   ****      |
+    // |    ********         |
+    // -----------------------
+    //
+    // |rotation| = 90, this is what front camera sees
+    // -----------------------
+    // |         ********    |
+    // |      ****   *       |
+    // |    ***      *       |
+    // |    ***      *       |
+    // |      ****   *       |
+    // |         ********    |
+    // -----------------------
+    //
+    // Therefore, for back camera, we need to rotate (360 - |rotation|).
+    rotation = (360 - rotation) % 360;
+  }
+  // Take into account camera orientation w.r.t. the display. External cameras
+  // would have camera_orientation_ as 0.
+  rotation = (rotation + camera_orientation_) % 360;
+  VideoCaptureDeviceLinux::SetRotation(rotation);
 }
 
 void VideoCaptureDeviceChromeOS::SetDisplayRotation(

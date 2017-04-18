@@ -11,7 +11,7 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
-#include "sync/api/string_ordinal.h"
+#include "components/sync/model/string_ordinal.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -82,10 +82,6 @@ class APP_LIST_EXPORT AppListItem {
 
   // Returns the number of child items if it has any (e.g. is a folder) or 0.
   virtual size_t ChildItemCount() const;
-
-  // Called when the extension preference changed. Used by ExtensionAppItem
-  // to update icon overlays.
-  virtual void OnExtensionPreferenceChanged();
 
   // Utility functions for sync integration tests.
   virtual bool CompareForTest(const AppListItem* other) const;

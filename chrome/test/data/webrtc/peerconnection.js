@@ -17,10 +17,34 @@ var gPeerConnection = null;
 var gIceCandidates = [];
 
 /**
+ * This stores last ICE gathering state emitted on this side.
+ * @private
+ */
+var gIceGatheringState = 'no-gathering-state';
+
+/**
  * Keeps track of whether we have seen crypto information in the SDP.
  * @private
  */
 var gHasSeenCryptoInSdp = 'no-crypto-seen';
+
+/**
+ * The default audio codec that should be used when creating an offer.
+ * @private
+ */
+var gDefaultAudioCodec = null;
+
+/**
+ * The default video codec that should be used when creating an offer.
+ * @private
+ */
+var gDefaultVideoCodec = null;
+
+/**
+ * Flag to indicate if Opus Dtx should be enabled.
+ * @private
+ */
+var gOpusDtx = false;
 
 // Public interface to tests. These are expected to be called with
 // ExecuteJavascript invocations from the browser tests and will return answers
@@ -68,25 +92,72 @@ function preparePeerConnectionWithCertificate(certificate) {
 }
 
 /**
+ * Sets the flag to force Opus Dtx to be used when creating an offer.
+ */
+function forceOpusDtx() {
+  gOpusDtx = true;
+  returnToTest('ok-forced');
+}
+
+/**
+ * Sets the default audio codec to be used when creating an offer and returns
+ * "ok" to test.
+ * @param {string} audioCodec promotes the specified codec to be the default
+ *     audio codec, e.g. the first one in the list on the 'm=audio' SDP offer
+ *     line. |audioCodec| is the case-sensitive codec name, e.g. 'opus' or
+ *     'ISAC'.
+ */
+function setDefaultAudioCodec(audioCodec) {
+  gDefaultAudioCodec = audioCodec;
+  returnToTest('ok');
+}
+
+/**
+ * Sets the default video codec to be used when creating an offer and returns
+ * "ok" to test.
+ * @param {string} videoCodec promotes the specified codec to be the default
+ *     video codec, e.g. the first one in the list on the 'm=video' SDP offer
+ *     line. |videoCodec| is the case-sensitive codec name, e.g. 'VP8' or
+ *     'H264'.
+ */
+function setDefaultVideoCodec(videoCodec) {
+  gDefaultVideoCodec = videoCodec;
+  returnToTest('ok');
+}
+
+/**
+ * Creates a data channel with the specified label.
+ * Returns 'ok-created' to test.
+ */
+function createDataChannel(label) {
+  peerConnection_().createDataChannel(label);
+  returnToTest('ok-created');
+}
+
+/**
  * Asks this page to create a local offer.
  *
  * Returns a string on the format ok-(JSON encoded session description).
  *
  * @param {!Object} constraints Any createOffer constraints.
- * @param {string} videoCodec If not null, promotes the specified codec to be
- *     the default video codec, e.g. the first one in the list on the 'm=video'
- *     SDP offer line. |videoCodec| is the case-sensitive codec name, e.g.
- *     'VP8' or 'H264'.
  */
-function createLocalOffer(constraints, videoCodec = null) {
+function createLocalOffer(constraints) {
   peerConnection_().createOffer(
       function(localOffer) {
         success('createOffer');
 
         setLocalDescription(peerConnection, localOffer);
-        if (videoCodec !== null)
-          localOffer.sdp = setSdpDefaultVideoCodec(localOffer.sdp, videoCodec);
-
+        if (gDefaultAudioCodec !== null) {
+          localOffer.sdp = setSdpDefaultAudioCodec(localOffer.sdp,
+                                                   gDefaultAudioCodec);
+        }
+        if (gDefaultVideoCodec !== null) {
+          localOffer.sdp = setSdpDefaultVideoCodec(localOffer.sdp,
+                                                   gDefaultVideoCodec);
+        }
+        if (gOpusDtx) {
+          localOffer.sdp = setOpusDtxEnabled(localOffer.sdp);
+        }
         returnToTest('ok-' + JSON.stringify(localOffer));
       },
       function(error) { failure('createOffer', error); },
@@ -119,6 +190,9 @@ function receiveOfferFromPeer(sessionDescJson, constraints) {
       function(answer) {
         success('createAnswer');
         setLocalDescription(peerConnection, answer);
+        if (gOpusDtx) {
+          answer.sdp = setOpusDtxEnabled(answer.sdp);
+        }
         returnToTest('ok-' + JSON.stringify(answer));
       },
       function(error) { failure('createAnswer', error); },
@@ -126,29 +200,47 @@ function receiveOfferFromPeer(sessionDescJson, constraints) {
 }
 
 /**
- * Verifies that the specified codec is the default video codec, e.g. the first
- * one in the list on the 'm=video' SDP answer line. If this is not the case,
- * |failure| occurs.
+ * Verifies that the codec previously set using setDefault[Audio/Video]Codec()
+ * is the default audio/video codec, e.g. the first one in the list on the
+ * 'm=audio'/'m=video' SDP answer line. If this is not the case, |failure|
+ * occurs. If no codec was previously set using setDefault[Audio/Video]Codec(),
+ * this function will return 'ok-no-defaults-set'.
  *
  * @param {!string} sessionDescJson A JSON-encoded session description.
- * @param {!string} expectedVideoCodec The case-sensitive codec name, e.g.
- *     'VP8' or 'H264'.
  */
-function verifyDefaultVideoCodec(sessionDescJson, expectedVideoCodec) {
-  var sessionDesc = parseJson_(sessionDescJson);
+function verifyDefaultCodecs(sessionDescJson) {
+  let sessionDesc = parseJson_(sessionDescJson);
   if (!sessionDesc.type) {
-    failure('verifyDefaultVideoCodec',
+    failure('verifyDefaultCodecs',
              'Invalid session description: ' + sessionDescJson);
   }
-  var defaultVideoCodec = getSdpDefaultVideoCodec(sessionDesc.sdp);
-  if (defaultVideoCodec === null) {
-    failure('verifyDefaultVideoCodec',
-             'Could not determine default video codec.');
+  if (gDefaultAudioCodec !== null && gDefaultVideoCodec !== null) {
+    returnToTest('ok-no-defaults-set');
+    return;
   }
-  if (expectedVideoCodec !== defaultVideoCodec) {
-    failure('verifyDefaultVideoCodec',
-             'Expected default video codec ' + expectedVideoCodec +
-             ', got ' + defaultVideoCodec + '.');
+  if (gDefaultAudioCodec !== null) {
+    let defaultAudioCodec = getSdpDefaultAudioCodec(sessionDesc.sdp);
+    if (defaultAudioCodec === null) {
+      failure('verifyDefaultCodecs',
+               'Could not determine default audio codec.');
+    }
+    if (gDefaultAudioCodec !== defaultAudioCodec) {
+      failure('verifyDefaultCodecs',
+               'Expected default audio codec ' + gDefaultAudioCodec +
+               ', got ' + defaultAudioCodec + '.');
+    }
+  }
+  if (gDefaultVideoCodec !== null) {
+    let defaultVideoCodec = getSdpDefaultVideoCodec(sessionDesc.sdp);
+    if (defaultVideoCodec === null) {
+      failure('verifyDefaultCodecs',
+               'Could not determine default video codec.');
+    }
+    if (gDefaultVideoCodec !== defaultVideoCodec) {
+      failure('verifyDefaultCodecs',
+               'Expected default video codec ' + gDefaultVideoCodec +
+               ', got ' + defaultVideoCodec + '.');
+    }
   }
   returnToTest('ok-verified');
 }
@@ -289,6 +381,55 @@ function hasSeenCryptoInSdp() {
   returnToTest(gHasSeenCryptoInSdp);
 }
 
+/**
+ * Verifies that the legacy |RTCPeerConnection.getStats| returns stats and
+ * verifies that each stats member is a string.
+ *
+ * Returns ok-got-stats on success.
+ */
+function verifyStatsGenerated() {
+  peerConnection_().getStats(
+    function(response) {
+      var reports = response.result();
+      var numStats = 0;
+      for (var i = 0; i < reports.length; i++) {
+        var statNames = reports[i].names();
+        numStats += statNames.length;
+        for (var j = 0; j < statNames.length; j++) {
+          var statValue = reports[i].stat(statNames[j]);
+          if (typeof statValue != 'string')
+            throw failTest('A stat was returned that is not a string.');
+        }
+      }
+      if (numStats === 0)
+        throw failTest('No stats was returned by getStats.');
+      returnToTest('ok-got-stats');
+    });
+}
+
+/**
+ * Measures the performance of the legacy (callback-based)
+ * |RTCPeerConnection.getStats| and returns the time it took in milliseconds as
+ * a double (DOMHighResTimeStamp, accurate to one thousandth of a millisecond).
+ *
+ * Returns "ok-" followed by a double.
+ */
+function measureGetStatsCallbackPerformance() {
+  let t0 = performance.now();
+  peerConnection_().getStats(
+    function(response) {
+      let t1 = performance.now();
+      returnToTest('ok-' + (t1 - t0));
+    });
+}
+
+/**
+ * Returns the last iceGatheringState emitted from icegatheringstatechange.
+ */
+function getLastGatheringState() {
+  returnToTest(gIceGatheringState);
+}
+
 // Internals.
 
 /** @private */
@@ -301,6 +442,7 @@ function createPeerConnection_(rtcConfig) {
   peerConnection.onaddstream = addStreamCallback_;
   peerConnection.onremovestream = removeStreamCallback_;
   peerConnection.onicecandidate = iceCallback_;
+  peerConnection.onicegatheringstatechange = iceGatheringCallback_;
   return peerConnection;
 }
 
@@ -316,6 +458,12 @@ function iceCallback_(event) {
   if (event.candidate)
     gIceCandidates.push(event.candidate);
 }
+
+/** @private */
+function iceGatheringCallback_() {
+  gIceGatheringState = peerConnection.iceGatheringState;
+}
+
 
 /** @private */
 function setLocalDescription(peerConnection, sessionDescription) {

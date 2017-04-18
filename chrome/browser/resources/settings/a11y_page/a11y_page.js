@@ -4,20 +4,22 @@
 
 /**
  * @fileoverview
- * 'settings-a11y-page' is the settings page containing accessibility
- * settings.
- *
- * Example:
- *
- *    <iron-animated-pages>
- *      <settings-a11y-page prefs="{{prefs}}"></settings-a11y-page>
- *      ... other pages ...
- *    </iron-animated-pages>
+ * 'settings-a11y-page' is the small section of advanced settings with
+ * a link to the web store accessibility page on most platforms, and
+ * a subpage with lots of other settings on Chrome OS.
  */
 Polymer({
   is: 'settings-a11y-page',
 
   properties: {
+    /**
+     * The current active route.
+     */
+    currentRoute: {
+      type: Object,
+      notify: true,
+    },
+
     /**
      * Preferences state.
      */
@@ -26,38 +28,27 @@ Polymer({
       notify: true,
     },
 
-<if expr="chromeos">
-    autoClickDelayOptions_: {
-      readOnly: true,
-      type: Array,
+    /** @private {!Map<string, string>} */
+    focusConfig_: {
+      type: Object,
       value: function() {
-        return [
-          {value: 600,
-           name: loadTimeData.getString('delayBeforeClickExtremelyShort')},
-          {value: 800,
-           name: loadTimeData.getString('delayBeforeClickVeryShort')},
-          {value: 1000,
-           name: loadTimeData.getString('delayBeforeClickShort')},
-          {value: 2000,
-           name: loadTimeData.getString('delayBeforeClickLong')},
-          {value: 4000,
-           name: loadTimeData.getString('delayBeforeClickVeryLong')},
-        ];
+        var map = new Map();
+// <if expr="chromeos">
+        map.set(
+            settings.Route.MANAGE_ACCESSIBILITY.path,
+            '#subpage-trigger .subpage-arrow');
+// </if>
+        return map;
       },
     },
-
-    /**
-     * Whether to show experimental accessibility features.
-     * @private {boolean}
-     */
-    showExperimentalFeatures_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('showExperimentalA11yFeatures');
-      },
-    }
-</if>
   },
+
+// <if expr="chromeos">
+  /** @private */
+  onManageAccessibilityFeaturesTap_: function() {
+    settings.navigateTo(settings.Route.MANAGE_ACCESSIBILITY);
+  },
+// </if>
 
   /** @private */
   onMoreFeaturesTap_: function() {

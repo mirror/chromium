@@ -11,6 +11,7 @@
 #include <set>
 #include <string>
 
+#include "base/callback_forward.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -27,6 +28,10 @@ class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
   explicit InputMethodChromeOS(internal::InputMethodDelegate* delegate);
   ~InputMethodChromeOS() override;
 
+  using AckCallback = base::Callback<void(bool)>;
+  void DispatchKeyEvent(ui::KeyEvent* event,
+                        std::unique_ptr<AckCallback> ack_callback);
+
   // Overridden from InputMethod:
   bool OnUntranslatedIMEMessage(const base::NativeEvent& event,
                                 NativeEventResult* result) override;
@@ -34,8 +39,6 @@ class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
   void OnTextInputTypeChanged(const TextInputClient* client) override;
   void OnCaretBoundsChanged(const TextInputClient* client) override;
   void CancelComposition(const TextInputClient* client) override;
-  void OnInputLocaleChanged() override;
-  std::string GetInputLocale() override;
   bool IsCandidatePopupOpen() const override;
 
  protected:
@@ -102,7 +105,9 @@ class UI_BASE_IME_EXPORT InputMethodChromeOS : public InputMethodBase {
   void HidePreeditText();
 
   // Callback function for IMEEngineHandlerInterface::ProcessKeyEvent.
-  void ProcessKeyEventDone(ui::KeyEvent* event, bool is_handled);
+  void ProcessKeyEventDone(ui::KeyEvent* event,
+                           std::unique_ptr<AckCallback> ack_callback,
+                           bool is_handled);
 
   // Returns whether an non-password input field is focused.
   bool IsNonPasswordInputFieldFocused();

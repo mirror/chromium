@@ -7,44 +7,46 @@
 
 #include "core/animation/SVGPathSegInterpolationFunctions.h"
 #include "core/svg/SVGPathData.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class InterpolatedSVGPathSource {
-    WTF_MAKE_NONCOPYABLE(InterpolatedSVGPathSource);
-    STACK_ALLOCATED();
-public:
-    InterpolatedSVGPathSource(const InterpolableList& listValue, const Vector<SVGPathSegType>& pathSegTypes)
-        : m_currentIndex(0)
-        , m_interpolablePathSegs(listValue)
-        , m_pathSegTypes(pathSegTypes)
-    {
-        ASSERT(m_interpolablePathSegs.length() == m_pathSegTypes.size());
-    }
+  WTF_MAKE_NONCOPYABLE(InterpolatedSVGPathSource);
+  STACK_ALLOCATED();
 
-    bool hasMoreData() const;
-    PathSegmentData parseSegment();
+ public:
+  InterpolatedSVGPathSource(const InterpolableList& list_value,
+                            const Vector<SVGPathSegType>& path_seg_types)
+      : current_index_(0),
+        interpolable_path_segs_(list_value),
+        path_seg_types_(path_seg_types) {
+    DCHECK_EQ(interpolable_path_segs_.length(), path_seg_types_.size());
+  }
 
-private:
-    PathCoordinates m_currentCoordinates;
-    size_t m_currentIndex;
-    const InterpolableList& m_interpolablePathSegs;
-    const Vector<SVGPathSegType>& m_pathSegTypes;
+  bool HasMoreData() const;
+  PathSegmentData ParseSegment();
+
+ private:
+  PathCoordinates current_coordinates_;
+  size_t current_index_;
+  const InterpolableList& interpolable_path_segs_;
+  const Vector<SVGPathSegType>& path_seg_types_;
 };
 
-bool InterpolatedSVGPathSource::hasMoreData() const
-{
-    return m_currentIndex < m_interpolablePathSegs.length();
+bool InterpolatedSVGPathSource::HasMoreData() const {
+  return current_index_ < interpolable_path_segs_.length();
 }
 
-PathSegmentData InterpolatedSVGPathSource::parseSegment()
-{
-    PathSegmentData segment = SVGPathSegInterpolationFunctions::consumeInterpolablePathSeg(*m_interpolablePathSegs.get(m_currentIndex), m_pathSegTypes.at(m_currentIndex), m_currentCoordinates);
-    m_currentIndex++;
-    return segment;
+PathSegmentData InterpolatedSVGPathSource::ParseSegment() {
+  PathSegmentData segment =
+      SVGPathSegInterpolationFunctions::ConsumeInterpolablePathSeg(
+          *interpolable_path_segs_.Get(current_index_),
+          path_seg_types_.at(current_index_), current_coordinates_);
+  current_index_++;
+  return segment;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InterpolatedSVGPathSource_h
+#endif  // InterpolatedSVGPathSource_h

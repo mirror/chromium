@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights
+ * reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -32,59 +33,60 @@ class ExceptionState;
 class LayoutText;
 
 class CORE_EXPORT Text : public CharacterData {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static const unsigned defaultLengthLimit = 1 << 16;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static Text* create(Document&, const String&);
-    static Text* createEditingText(Document&, const String&);
+ public:
+  static const unsigned kDefaultLengthLimit = 1 << 16;
 
-    LayoutText* layoutObject() const;
+  static Text* Create(Document&, const String&);
+  static Text* CreateEditingText(Document&, const String&);
 
-    // mergeNextSiblingNodesIfPossible() merges next sibling nodes if possible
-    // then returns a node not merged.
-    Node* mergeNextSiblingNodesIfPossible();
-    Text* splitText(unsigned offset, ExceptionState&);
+  LayoutText* GetLayoutObject() const;
 
-    // DOM Level 3: http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-1312295772
+  // mergeNextSiblingNodesIfPossible() merges next sibling nodes if possible
+  // then returns a node not merged.
+  Node* MergeNextSiblingNodesIfPossible();
+  Text* splitText(unsigned offset, ExceptionState&);
 
-    String wholeText() const;
-    Text* replaceWholeText(const String&);
+  // DOM Level 3: http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-1312295772
 
-    void recalcTextStyle(StyleRecalcChange, Text* nextTextSibling);
-    bool textLayoutObjectIsNeeded(const ComputedStyle&, const LayoutObject& parent) const;
-    LayoutText* createTextLayoutObject(const ComputedStyle&);
-    void updateTextLayoutObject(unsigned offsetOfReplacedData, unsigned lengthOfReplacedData);
+  String wholeText() const;
+  Text* ReplaceWholeText(const String&);
 
-    void attachLayoutTree(const AttachContext& = AttachContext()) final;
-    void reattachIfNeeded(const AttachContext& = AttachContext());
+  void RecalcTextStyle(StyleRecalcChange);
+  void RebuildTextLayoutTree(Text* next_text_sibling);
+  bool TextLayoutObjectIsNeeded(const ComputedStyle&,
+                                const LayoutObject& parent) const;
+  LayoutText* CreateTextLayoutObject(const ComputedStyle&);
+  void UpdateTextLayoutObject(unsigned offset_of_replaced_data,
+                              unsigned length_of_replaced_data);
 
-    bool canContainRangeEndPoint() const final { return true; }
-    NodeType getNodeType() const override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) final;
+  void ReattachLayoutTreeIfNeeded(const AttachContext& = AttachContext());
 
-    DECLARE_VIRTUAL_TRACE();
+  bool CanContainRangeEndPoint() const final { return true; }
+  NodeType getNodeType() const override;
 
-protected:
-    Text(TreeScope& treeScope, const String& data, ConstructionType type)
-        : CharacterData(treeScope, data, type) { }
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    String nodeName() const override;
-    Node* cloneNode(bool deep) final;
+ protected:
+  Text(TreeScope& tree_scope, const String& data, ConstructionType type)
+      : CharacterData(tree_scope, data, type) {}
 
-    bool isTextNode() const = delete; // This will catch anyone doing an unnecessary check.
+ private:
+  String nodeName() const override;
+  Node* cloneNode(bool deep, ExceptionState&) final;
 
-    bool needsWhitespaceLayoutObject();
+  bool IsTextNode() const =
+      delete;  // This will catch anyone doing an unnecessary check.
 
-    virtual Text* cloneWithData(const String&);
+  bool NeedsWhitespaceLayoutObject();
 
-#ifndef NDEBUG
-    void formatForDebugger(char* buffer, unsigned length) const override;
-#endif
+  virtual Text* CloneWithData(const String&);
 };
 
-DEFINE_NODE_TYPE_CASTS(Text, isTextNode());
+DEFINE_NODE_TYPE_CASTS(Text, IsTextNode());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Text_h
+#endif  // Text_h

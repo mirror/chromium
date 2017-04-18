@@ -4,7 +4,7 @@
 
 package org.chromium.android_webview.test;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 import android.util.Pair;
 
 import org.chromium.android_webview.AwContents;
@@ -12,9 +12,9 @@ import org.chromium.android_webview.AwWebResourceResponse;
 import org.chromium.android_webview.test.util.AwTestTouchUtils;
 import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.android_webview.test.util.JSUtils;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.TestFileUtil;
-import org.chromium.content.browser.test.util.CallbackHelper;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnReceivedErrorHelper;
 import org.chromium.net.test.util.TestWebServer;
 
@@ -43,7 +43,7 @@ public class AwContentsClientShouldInterceptRequestTest extends AwTestBase {
             private ConcurrentHashMap<String, AwWebResourceRequest> mRequestsByUrls =
                     new ConcurrentHashMap<String, AwWebResourceRequest>();
             // This is read on another thread, so needs to be marked volatile.
-            private volatile AwWebResourceResponse mShouldInterceptRequestReturnValue = null;
+            private volatile AwWebResourceResponse mShouldInterceptRequestReturnValue;
             void setReturnValue(AwWebResourceResponse value) {
                 mShouldInterceptRequestReturnValue = value;
             }
@@ -826,7 +826,14 @@ public class AwContentsClientShouldInterceptRequestTest extends AwTestBase {
         loadDataWithBaseUrlAsync(mAwContents, pageHtml, "text/html", false, baseUrl, null);
         mShouldInterceptRequestHelper.waitForCallback(callCount, 1);
         assertEquals(1, mShouldInterceptRequestHelper.getUrls().size());
-        assertEquals(imageUrl, mShouldInterceptRequestHelper.getUrls().get(0));
+        if (!mShouldInterceptRequestHelper.getUrls().get(0).equals(imageUrl)) {
+            // With PlzNavigate, data URLs are intercepted so wait for the next request.
+            // See https://codereview.chromium.org/2235303002/.
+            callCount = mShouldInterceptRequestHelper.getCallCount();
+            mShouldInterceptRequestHelper.waitForCallback(callCount, 1);
+            assertEquals(imageUrl, mShouldInterceptRequestHelper.getUrls().get(1));
+        }
+
         Map<String, String> headers =
                 mShouldInterceptRequestHelper.getRequestsForUrl(imageUrl).requestHeaders;
         assertTrue(headers.containsKey(refererHeaderName));

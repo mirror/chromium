@@ -325,16 +325,20 @@ class WebSocketStreamCreateUMATest : public ::testing::Test {
 
 // Confirm that the basic case works as expected.
 TEST_F(WebSocketStreamCreateTest, SimpleSuccess) {
+  EXPECT_FALSE(url_request_);
   CreateAndConnectStandard("ws://localhost/", "localhost", "/",
                            NoSubProtocols(), LocalhostOrigin(), LocalhostUrl(),
                            "", "", "");
   EXPECT_FALSE(request_info_);
   EXPECT_FALSE(response_info_);
+  EXPECT_TRUE(url_request_);
   WaitUntilConnectDone();
   EXPECT_FALSE(has_failed());
   EXPECT_TRUE(stream_);
   EXPECT_TRUE(request_info_);
   EXPECT_TRUE(response_info_);
+  EXPECT_EQ(ERR_WS_UPGRADE,
+            url_request_context_host_.network_delegate().last_error());
 }
 
 TEST_F(WebSocketStreamCreateTest, HandshakeInfo) {
@@ -481,6 +485,8 @@ TEST_F(WebSocketStreamCreateTest, UnsolicitedSubProtocol) {
             "Response must not include 'Sec-WebSocket-Protocol' header "
             "if not present in request: chatv20.chromium.org",
             failure_message());
+  EXPECT_EQ(ERR_INVALID_RESPONSE,
+            url_request_context_host_.network_delegate().last_error());
 }
 
 // Missing sub-protocol response is rejected.
@@ -688,7 +694,8 @@ TEST_F(WebSocketStreamCreateTest, RedirectsRejected) {
 
 // Malformed responses should be rejected. HttpStreamParser will accept just
 // about any garbage in the middle of the headers. To make it give up, the junk
-// has to be at the start of the response.
+// has to be at the start of the response. Even then, it just gets treated as an
+// HTTP/0.9 response.
 TEST_F(WebSocketStreamCreateTest, MalformedResponse) {
   static const char kMalformedResponse[] =
       "220 mx.google.com ESMTP\r\n"
@@ -702,7 +709,7 @@ TEST_F(WebSocketStreamCreateTest, MalformedResponse) {
                                  LocalhostUrl(), "", "", kMalformedResponse);
   WaitUntilConnectDone();
   EXPECT_TRUE(has_failed());
-  EXPECT_EQ("Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+  EXPECT_EQ("Error during WebSocket handshake: Invalid status line",
             failure_message());
 }
 
@@ -1045,8 +1052,8 @@ TEST_F(WebSocketStreamCreateTest, NoResponse) {
 }
 
 TEST_F(WebSocketStreamCreateTest, SelfSignedCertificateFailure) {
-  ssl_data_.push_back(base::WrapUnique(
-      new SSLSocketDataProvider(ASYNC, ERR_CERT_AUTHORITY_INVALID)));
+  ssl_data_.push_back(base::MakeUnique<SSLSocketDataProvider>(
+      ASYNC, ERR_CERT_AUTHORITY_INVALID));
   ssl_data_[0]->cert =
       ImportCertFromFile(GetTestCertsDirectory(), "unittest.selfsigned.der");
   ASSERT_TRUE(ssl_data_[0]->cert.get());

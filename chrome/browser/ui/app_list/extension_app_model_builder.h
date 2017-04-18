@@ -24,8 +24,6 @@ class ExtensionAppItem;
 
 namespace extensions {
 class Extension;
-class ExtensionRegistry;
-class ExtensionSet;
 class InstallTracker;
 }
 
@@ -65,11 +63,6 @@ class ExtensionAppModelBuilder : public AppListModelBuilder,
   void OnAppUninstalled(content::BrowserContext* browser_context,
                         const std::string& app_id) override;
 
-  // AppListItemListObserver.
-  void OnListItemMoved(size_t from_index,
-                       size_t to_index,
-                       app_list::AppListItem* item) override;
-
   std::unique_ptr<ExtensionAppItem> CreateAppItem(
       const std::string& extension_id,
       const std::string& extension_name,
@@ -91,14 +84,8 @@ class ExtensionAppModelBuilder : public AppListModelBuilder,
   // Handles profile prefs changes.
   void OnProfilePreferenceChanged();
 
-  // Handles extension prefs changes.
-  void OnExtensionPreferenceChanged();
-
   // Registrar used to monitor the profile prefs.
   PrefChangeRegistrar profile_pref_change_registrar_;
-
-  // Registrar used to monitor the extension prefs.
-  PrefChangeRegistrar extension_pref_change_registrar_;
 
   // We listen to this to show app installing progress.
   extensions::InstallTracker* tracker_ = nullptr;

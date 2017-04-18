@@ -430,18 +430,19 @@ function FileListContext(fileFilter, metadataModel) {
 FileListContext.createPrefetchPropertyNames_ = function() {
   var set = {};
   for (var i = 0;
-       i < ListContainer.METADATA_PREFETCH_PROPERTY_NAMES.length;
+       i < constants.LIST_CONTAINER_METADATA_PREFETCH_PROPERTY_NAMES.length;
        i++) {
-    set[ListContainer.METADATA_PREFETCH_PROPERTY_NAMES[i]] = true;
-  }
-  for (var i = 0; i < ActionsModel.METADATA_PREFETCH_PROPERTY_NAMES.length;
-       i++) {
-    set[ActionsModel.METADATA_PREFETCH_PROPERTY_NAMES[i]] = true;
+    set[constants.LIST_CONTAINER_METADATA_PREFETCH_PROPERTY_NAMES[i]] = true;
   }
   for (var i = 0;
-       i < FileSelection.METADATA_PREFETCH_PROPERTY_NAMES.length;
+       i < constants.ACTIONS_MODEL_METADATA_PREFETCH_PROPERTY_NAMES.length;
        i++) {
-    set[FileSelection.METADATA_PREFETCH_PROPERTY_NAMES[i]] = true;
+    set[constants.ACTIONS_MODEL_METADATA_PREFETCH_PROPERTY_NAMES[i]] = true;
+  }
+  for (var i = 0;
+       i < constants.FILE_SELECTION_METADATA_PREFETCH_PROPERTY_NAMES.length;
+       i++) {
+    set[constants.FILE_SELECTION_METADATA_PREFETCH_PROPERTY_NAMES[i]] = true;
   }
   return Object.keys(set);
 };
@@ -563,7 +564,7 @@ DirectoryContents.prototype.replaceContextFileList = function() {
       for (var i = 0; i < entries.length; i++) {
         var url = entries[i].toURL();
         var newMetadata = newMetadatas[i];
-        // If Files.app fails to obtain both old and new modificationTime,
+        // If the Files app fails to obtain both old and new modificationTime,
         // regard the entry as not updated.
         if ((this.metadataSnapshot_[url] &&
              this.metadataSnapshot_[url].modificationTime &&

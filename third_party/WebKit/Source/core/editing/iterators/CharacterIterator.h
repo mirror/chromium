@@ -30,7 +30,7 @@
 #include "core/dom/Range.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/iterators/TextIterator.h"
-#include "core/editing/iterators/TextIteratorFlags.h"
+#include "core/editing/iterators/TextIteratorBehavior.h"
 #include "platform/heap/Heap.h"
 
 namespace blink {
@@ -39,52 +39,67 @@ namespace blink {
 // character at a time, or faster, as needed. Useful for searching.
 template <typename Strategy>
 class CORE_EXPORT CharacterIteratorAlgorithm {
-    STACK_ALLOCATED();
-public:
-    CharacterIteratorAlgorithm(const PositionTemplate<Strategy>& start, const PositionTemplate<Strategy>& end, TextIteratorBehaviorFlags = TextIteratorDefaultBehavior);
-    explicit CharacterIteratorAlgorithm(const EphemeralRangeTemplate<Strategy>&, TextIteratorBehaviorFlags = TextIteratorDefaultBehavior);
+  STACK_ALLOCATED();
 
-    void advance(int numCharacters);
+ public:
+  CharacterIteratorAlgorithm(
+      const PositionTemplate<Strategy>& start,
+      const PositionTemplate<Strategy>& end,
+      const TextIteratorBehavior& = TextIteratorBehavior());
+  explicit CharacterIteratorAlgorithm(
+      const EphemeralRangeTemplate<Strategy>&,
+      const TextIteratorBehavior& = TextIteratorBehavior());
 
-    bool atBreak() const { return m_atBreak; }
-    bool atEnd() const { return m_textIterator.atEnd(); }
+  void Advance(int num_characters);
 
-    int length() const { return m_textIterator.length() - m_runOffset; }
-    UChar characterAt(unsigned index) const { return m_textIterator.characterAt(m_runOffset + index); }
+  bool AtBreak() const { return at_break_; }
+  bool AtEnd() const { return text_iterator_.AtEnd(); }
 
-    void copyTextTo(ForwardsTextBuffer* output);
+  int length() const { return text_iterator_.length() - run_offset_; }
+  UChar CharacterAt(unsigned index) const {
+    return text_iterator_.CharacterAt(run_offset_ + index);
+  }
 
-    int characterOffset() const { return m_offset; }
-    EphemeralRangeTemplate<Strategy> range() const;
+  void CopyTextTo(ForwardsTextBuffer* output);
 
-    bool isInTextSecurityMode() const { return m_textIterator.isInTextSecurityMode(); }
+  int CharacterOffset() const { return offset_; }
+  EphemeralRangeTemplate<Strategy> Range() const;
 
-    Document* ownerDocument() const;
-    Node* currentContainer() const;
-    int startOffset() const;
-    int endOffset() const;
-    PositionTemplate<Strategy> startPosition() const;
-    PositionTemplate<Strategy> endPosition() const;
+  bool IsInTextSecurityMode() const {
+    return text_iterator_.IsInTextSecurityMode();
+  }
 
-    EphemeralRangeTemplate<Strategy> calculateCharacterSubrange(int offset, int length);
+  Document* OwnerDocument() const;
+  Node* CurrentContainer() const;
+  int StartOffset() const;
+  int EndOffset() const;
+  PositionTemplate<Strategy> StartPosition() const;
+  PositionTemplate<Strategy> EndPosition() const;
 
-private:
-    void initialize();
+  EphemeralRangeTemplate<Strategy> CalculateCharacterSubrange(int offset,
+                                                              int length);
 
-    int m_offset;
-    int m_runOffset;
-    bool m_atBreak;
+ private:
+  void Initialize();
 
-    TextIteratorAlgorithm<Strategy> m_textIterator;
+  int offset_;
+  int run_offset_;
+  bool at_break_;
+
+  TextIteratorAlgorithm<Strategy> text_iterator_;
 };
 
-extern template class CORE_EXTERN_TEMPLATE_EXPORT CharacterIteratorAlgorithm<EditingStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    CharacterIteratorAlgorithm<EditingStrategy>;
 using CharacterIterator = CharacterIteratorAlgorithm<EditingStrategy>;
 
-extern template class CORE_EXTERN_TEMPLATE_EXPORT CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    CharacterIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
-CORE_EXPORT EphemeralRange calculateCharacterSubrange(const EphemeralRange&, int characterOffset, int characterCount);
+CORE_EXPORT EphemeralRange CalculateCharacterSubrange(const EphemeralRange&,
+                                                      int character_offset,
+                                                      int character_count);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CharacterIterator_h
+#endif  // CharacterIterator_h

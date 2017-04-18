@@ -31,20 +31,21 @@
 #ifndef URLMediaStream_h
 #define URLMediaStream_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class MediaStream;
-class ExecutionContext;
+class ScriptState;
 
 class URLMediaStream {
-    STATIC_ONLY(URLMediaStream);
-public:
-    static String createObjectURL(ExecutionContext*, MediaStream*);
+  STATIC_ONLY(URLMediaStream);
+
+ public:
+  static String createObjectURL(ScriptState*, MediaStream*);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -11,41 +11,40 @@
 
 namespace blink {
 
-LockOrientationCallback::LockOrientationCallback(ScriptPromiseResolver* resolver)
-    : m_resolver(resolver)
-{
+LockOrientationCallback::LockOrientationCallback(
+    ScriptPromiseResolver* resolver)
+    : resolver_(resolver) {}
+
+LockOrientationCallback::~LockOrientationCallback() {}
+
+void LockOrientationCallback::OnSuccess() {
+  resolver_->Resolve();
 }
 
-LockOrientationCallback::~LockOrientationCallback()
-{
+void LockOrientationCallback::OnError(WebLockOrientationError error) {
+  ExceptionCode code = 0;
+  String msg = "";
+
+  switch (error) {
+    case kWebLockOrientationErrorNotAvailable:
+      code = kNotSupportedError;
+      msg = "screen.orientation.lock() is not available on this device.";
+      break;
+    case kWebLockOrientationErrorFullscreenRequired:
+      code = kSecurityError;
+      msg =
+          "The page needs to be fullscreen in order to call "
+          "screen.orientation.lock().";
+      break;
+    case kWebLockOrientationErrorCanceled:
+      code = kAbortError;
+      msg =
+          "A call to screen.orientation.lock() or screen.orientation.unlock() "
+          "canceled this call.";
+      break;
+  }
+
+  resolver_->Reject(DOMException::Create(code, msg));
 }
 
-void LockOrientationCallback::onSuccess()
-{
-    m_resolver->resolve();
-}
-
-void LockOrientationCallback::onError(WebLockOrientationError error)
-{
-    ExceptionCode code = 0;
-    String msg = "";
-
-    switch (error) {
-    case WebLockOrientationErrorNotAvailable:
-        code = NotSupportedError;
-        msg = "screen.orientation.lock() is not available on this device.";
-        break;
-    case WebLockOrientationErrorFullScreenRequired:
-        code = SecurityError;
-        msg = "The page needs to be fullscreen in order to call screen.orientation.lock().";
-        break;
-    case WebLockOrientationErrorCanceled:
-        code = AbortError;
-        msg = "A call to screen.orientation.lock() or screen.orientation.unlock() canceled this call.";
-        break;
-    }
-
-    m_resolver->reject(DOMException::create(code, msg));
-}
-
-} // namespace blink
+}  // namespace blink

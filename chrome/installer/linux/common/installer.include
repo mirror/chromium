@@ -58,7 +58,6 @@ process_template() (
     -e "s#@@VERSION@@#${VERSION}#g" \
     -e "s#@@PACKAGE_RELEASE@@#${PACKAGE_RELEASE}#g" \
     -e "s#@@VERSIONFULL@@#${VERSIONFULL}#g" \
-    -e "s#@@INSTALLDIRPREFIX@@#${INSTALLDIRPREFIX}#g" \
     -e "s#@@INSTALLDIR@@#${INSTALLDIR}#g" \
     -e "s#@@BUILDDIR@@#${BUILDDIR}#g" \
     -e "s#@@STAGEDIR@@#${STAGEDIR}#g" \
@@ -88,6 +87,7 @@ prep_staging_common() {
   install -m 755 -d "${STAGEDIR}/${INSTALLDIR}" \
     "${STAGEDIR}/usr/bin" \
     "${STAGEDIR}/usr/share/applications" \
+    "${STAGEDIR}/usr/share/appdata" \
     "${STAGEDIR}/usr/share/gnome-control-center/default-apps" \
     "${STAGEDIR}/usr/share/man/man1"
 }
@@ -169,15 +169,6 @@ stage_install_common() {
     install -m 644 "${BUILDDIR}/libEGL.so" "${STAGEDIR}/${INSTALLDIR}/"
   fi
 
-  # Pepper Flash.
-  PEPPERFLASH_SRCDIR="${BUILDDIR}/PepperFlash"
-  PEPPERFLASH_DESTDIR="${STAGEDIR}/${INSTALLDIR}/PepperFlash"
-  install -m 755 -d "${PEPPERFLASH_DESTDIR}"
-  install -m 644 -s "${PEPPERFLASH_SRCDIR}/libpepflashplayer.so" \
-    "${PEPPERFLASH_DESTDIR}/"
-  install -m 644 "${PEPPERFLASH_SRCDIR}/manifest.json" \
-    "${PEPPERFLASH_DESTDIR}/"
-
   # libc++
   if [ -f "${BUILDDIR}/lib/libc++.so" ]; then
     install -m 755 -d "${STAGEDIR}/${INSTALLDIR}/lib/"
@@ -226,6 +217,8 @@ stage_install_common() {
     ln -sn "${INSTALLDIR}/${PACKAGE}" \
       "${STAGEDIR}/${INSTALLDIR}/google-chrome"
   fi
+  ln -snf "${INSTALLDIR}/${PACKAGE}" \
+    "${STAGEDIR}/usr/bin/${USR_BIN_SYMLINK_NAME}"
 
   # app icons
   install -m 644 \
@@ -236,6 +229,16 @@ stage_install_common() {
   # desktop integration
   install -m 755 "${BUILDDIR}/xdg-mime" "${STAGEDIR}${INSTALLDIR}/"
   install -m 755 "${BUILDDIR}/xdg-settings" "${STAGEDIR}${INSTALLDIR}/"
+
+  if [ ${PACKAGE:0:6} = google ]; then
+    process_template "${BUILDDIR}/installer/common/google-chrome.appdata.xml.template" \
+      "${STAGEDIR}/usr/share/appdata/${PACKAGE}.appdata.xml"
+    chmod 644 "${STAGEDIR}/usr/share/appdata/${PACKAGE}.appdata.xml"
+  else
+    install -m 644 "${BUILDDIR}/installer/common/chromium-browser.appdata.xml" \
+      "${STAGEDIR}/usr/share/appdata/${PACKAGE}.appdata.xml"
+  fi
+
   process_template "${BUILDDIR}/installer/common/desktop.template" \
     "${STAGEDIR}/usr/share/applications/${PACKAGE}.desktop"
   chmod 644 "${STAGEDIR}/usr/share/applications/${PACKAGE}.desktop"

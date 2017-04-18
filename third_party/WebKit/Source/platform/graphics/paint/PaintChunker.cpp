@@ -8,98 +8,106 @@
 
 namespace blink {
 
-PaintChunker::PaintChunker()
-{
+PaintChunker::PaintChunker() {}
+
+PaintChunker::~PaintChunker() {}
+
+void PaintChunker::UpdateCurrentPaintChunkProperties(
+    const PaintChunk::Id* chunk_id,
+    const PaintChunkProperties& properties) {
+  DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+
+  current_chunk_id_ = WTF::kNullopt;
+  if (chunk_id)
+    current_chunk_id_.emplace(*chunk_id);
+  current_properties_ = properties;
 }
 
-PaintChunker::~PaintChunker()
-{
+bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
+  DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+
+#if DCHECK_IS_ON()
+  // Property nodes should never be null because they should either be set to
+  // properties created by a LayoutObject/FrameView, or be set to a non-null
+  // root node. If these DCHECKs are hit we are missing a call to update the
+  // properties. See: ScopedPaintChunkProperties.
+  DCHECK(current_properties_.property_tree_state.Transform());
+  DCHECK(current_properties_.property_tree_state.Clip());
+  DCHECK(current_properties_.property_tree_state.Effect());
+#endif
+
+  ItemBehavior behavior;
+  Optional<PaintChunk::Id> new_chunk_id;
+  if (DisplayItem::IsForeignLayerType(item.GetType())) {
+    behavior = kRequiresSeparateChunk;
+    // Use null chunkId if we are skipping cache, so that the chunk will not
+    // match any old chunk and will be treated as brand new.
+    if (!item.SkippedCache())
+      new_chunk_id.emplace(item.GetId());
+
+    // Clear m_currentChunkId so that any display items after the foreign layer
+    // without a new chunk id will be treated as having no id to avoid the chunk
+    // from using the same id as the chunk before the foreign layer chunk.
+    current_chunk_id_ = WTF::kNullopt;
+  } else {
+    behavior = kDefaultBehavior;
+    if (!item.SkippedCache() && current_chunk_id_)
+      new_chunk_id.emplace(*current_chunk_id_);
+  }
+
+  if (chunks_.IsEmpty()) {
+    PaintChunk new_chunk(0, 1, new_chunk_id ? &*new_chunk_id : nullptr,
+                         current_properties_);
+    chunks_.push_back(new_chunk);
+    chunk_behavior_.push_back(behavior);
+    return true;
+  }
+
+  auto& last_chunk = chunks_.back();
+  bool can_continue_chunk = current_properties_ == last_chunk.properties &&
+                            behavior != kRequiresSeparateChunk &&
+                            chunk_behavior_.back() != kRequiresSeparateChunk;
+  if (can_continue_chunk) {
+    last_chunk.end_index++;
+    return false;
+  }
+
+  PaintChunk new_chunk(last_chunk.end_index, last_chunk.end_index + 1,
+                       new_chunk_id ? &*new_chunk_id : nullptr,
+                       current_properties_);
+  chunks_.push_back(new_chunk);
+  chunk_behavior_.push_back(behavior);
+  return true;
 }
 
-void PaintChunker::updateCurrentPaintChunkProperties(const PaintChunk::Id* chunkId, const PaintChunkProperties& properties)
-{
-    ASSERT(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+void PaintChunker::DecrementDisplayItemIndex() {
+  DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+  DCHECK(!chunks_.IsEmpty());
 
-    m_currentChunkId = WTF::nullopt;
-    if (chunkId)
-        m_currentChunkId.emplace(*chunkId);
-    m_currentProperties = properties;
+  auto& last_chunk = chunks_.back();
+  if ((last_chunk.end_index - last_chunk.begin_index) > 1) {
+    last_chunk.end_index--;
+    return;
+  }
+
+  chunks_.pop_back();
+  chunk_behavior_.pop_back();
 }
 
-void PaintChunker::incrementDisplayItemIndex(const DisplayItem& item)
-{
-    ASSERT(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
-
-    ItemBehavior behavior;
-    Optional<PaintChunk::Id> newChunkId;
-    if (DisplayItem::isForeignLayerType(item.getType())) {
-        behavior = RequiresSeparateChunk;
-        // Use null chunkId if we are skipping cache, so that the chunk will not
-        // match any old chunk and will be treated as brand new.
-        if (!item.skippedCache())
-            newChunkId.emplace(item.getId());
-
-        // Clear m_currentChunkId so that any display items after the foreign layer
-        // without a new chunk id will be treated as having no id to avoid the chunk
-        // from using the same id as the chunk before the foreign layer chunk.
-        m_currentChunkId = WTF::nullopt;
-    } else {
-        behavior = DefaultBehavior;
-        if (!item.skippedCache() && m_currentChunkId)
-            newChunkId.emplace(*m_currentChunkId);
-    }
-
-    if (m_chunks.isEmpty()) {
-        PaintChunk newChunk(0, 1, newChunkId ? &*newChunkId : nullptr, m_currentProperties);
-        m_chunks.append(newChunk);
-        m_chunkBehavior.append(behavior);
-        return;
-    }
-
-    auto& lastChunk = m_chunks.last();
-    bool canContinueChunk = m_currentProperties == lastChunk.properties
-        && behavior != RequiresSeparateChunk
-        && m_chunkBehavior.last() != RequiresSeparateChunk;
-    if (canContinueChunk) {
-        lastChunk.endIndex++;
-        return;
-    }
-
-    PaintChunk newChunk(lastChunk.endIndex, lastChunk.endIndex + 1, newChunkId ? &*newChunkId : nullptr, m_currentProperties);
-    m_chunks.append(newChunk);
-    m_chunkBehavior.append(behavior);
+void PaintChunker::Clear() {
+  chunks_.Clear();
+  chunk_behavior_.Clear();
+  current_chunk_id_ = WTF::kNullopt;
+  current_properties_ = PaintChunkProperties();
 }
 
-void PaintChunker::decrementDisplayItemIndex()
-{
-    ASSERT(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
-    ASSERT(!m_chunks.isEmpty());
-
-    auto& lastChunk = m_chunks.last();
-    if ((lastChunk.endIndex - lastChunk.beginIndex) > 1) {
-        lastChunk.endIndex--;
-    } else {
-        m_chunks.removeLast();
-        m_chunkBehavior.removeLast();
-    }
+Vector<PaintChunk> PaintChunker::ReleasePaintChunks() {
+  Vector<PaintChunk> chunks;
+  chunks.Swap(chunks_);
+  chunk_behavior_.Clear();
+  current_chunk_id_ = WTF::kNullopt;
+  current_properties_ = PaintChunkProperties();
+  return chunks;
 }
 
-void PaintChunker::clear()
-{
-    m_chunks.clear();
-    m_chunkBehavior.clear();
-    m_currentChunkId = WTF::nullopt;
-    m_currentProperties = PaintChunkProperties();
-}
-
-Vector<PaintChunk> PaintChunker::releasePaintChunks()
-{
-    Vector<PaintChunk> chunks;
-    chunks.swap(m_chunks);
-    m_chunkBehavior.clear();
-    m_currentChunkId = WTF::nullopt;
-    m_currentProperties = PaintChunkProperties();
-    return chunks;
-}
-
-} // namespace blink
+}  // namespace blink

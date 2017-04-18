@@ -4,6 +4,8 @@
 
 #include "ui/message_center/notification_delegate.h"
 
+#include "base/logging.h"
+
 namespace message_center {
 
 // NotificationDelegate:
@@ -18,7 +20,14 @@ void NotificationDelegate::Click() {}
 
 void NotificationDelegate::ButtonClick(int button_index) {}
 
-void NotificationDelegate::SettingsClick() {}
+void NotificationDelegate::ButtonClickWithReply(int button_index,
+                                                const base::string16& reply) {
+  NOTIMPLEMENTED();
+}
+
+bool NotificationDelegate::SettingsClick() {
+  return false;
+}
 
 bool NotificationDelegate::ShouldDisplaySettingsButton() {
   return false;
@@ -55,6 +64,10 @@ HandleNotificationButtonClickDelegate::
 void HandleNotificationButtonClickDelegate::ButtonClick(int button_index) {
   if (!button_callback_.is_null())
     button_callback_.Run(button_index);
+}
+
+bool NotificationDelegate::ShouldDisplayOverFullscreen() const {
+  return false;
 }
 
 }  // namespace message_center

@@ -5,10 +5,9 @@
 #ifndef SVGShapePainter_h
 #define SVGShapePainter_h
 
+#include "platform/graphics/paint/PaintFlags.h"
+#include "platform/wtf/Allocator.h"
 #include "third_party/skia/include/core/SkPath.h"
-#include "wtf/Allocator.h"
-
-class SkPaint;
 
 namespace blink {
 
@@ -20,22 +19,27 @@ struct MarkerPosition;
 struct PaintInfo;
 
 class SVGShapePainter {
-    STACK_ALLOCATED();
-public:
-    SVGShapePainter(const LayoutSVGShape& layoutSVGShape) : m_layoutSVGShape(layoutSVGShape) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&);
+ public:
+  SVGShapePainter(const LayoutSVGShape& layout_svg_shape)
+      : layout_svg_shape_(layout_svg_shape) {}
 
-private:
-    void fillShape(GraphicsContext&, const SkPaint&, SkPath::FillType);
-    void strokeShape(GraphicsContext&, const SkPaint&);
+  void Paint(const PaintInfo&);
 
-    void paintMarkers(const PaintInfo&, const FloatRect& boundingBox);
-    void paintMarker(const PaintInfo&, const LayoutSVGResourceMarker&, const MarkerPosition&, float);
+ private:
+  void FillShape(GraphicsContext&, const PaintFlags&, SkPath::FillType);
+  void StrokeShape(GraphicsContext&, const PaintFlags&);
 
-    const LayoutSVGShape& m_layoutSVGShape;
+  void PaintMarkers(const PaintInfo&, const FloatRect& bounding_box);
+  void PaintMarker(const PaintInfo&,
+                   const LayoutSVGResourceMarker&,
+                   const MarkerPosition&,
+                   float stroke_width);
+
+  const LayoutSVGShape& layout_svg_shape_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGShapePainter_h
+#endif  // SVGShapePainter_h

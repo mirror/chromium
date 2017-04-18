@@ -7,13 +7,11 @@
 #include <stddef.h>
 
 #include "cc/layers/picture_layer_impl.h"
-#include "cc/playback/display_item_list_settings.h"
-#include "cc/playback/drawing_display_item.h"
+#include "cc/paint/drawing_display_item.h"
+#include "cc/paint/paint_canvas.h"
+#include "cc/paint/paint_recorder.h"
 #include "cc/trees/layer_tree_host.h"
-#include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/core/SkImage.h"
-#include "third_party/skia/include/core/SkPictureRecorder.h"
-#include "ui/gfx/skia_util.h"
+#include "cc/trees/layer_tree_settings.h"
 
 namespace cc {
 
@@ -29,7 +27,7 @@ PictureImageLayer::~PictureImageLayer() {
 
 std::unique_ptr<LayerImpl> PictureImageLayer::CreateLayerImpl(
     LayerTreeImpl* tree_impl) {
-  auto layer_impl = PictureLayerImpl::Create(tree_impl, id(), is_mask());
+  auto layer_impl = PictureLayerImpl::Create(tree_impl, id(), mask_type());
   layer_impl->set_is_directly_composited_image(true);
   return std::move(layer_impl);
 }
@@ -62,14 +60,10 @@ scoped_refptr<DisplayItemList> PictureImageLayer::PaintContentsToDisplayList(
   DCHECK_GT(image_->height(), 0);
   DCHECK(layer_tree_host());
 
-  DisplayItemListSettings settings;
-  settings.use_cached_picture =
-      layer_tree_host()->settings().use_cached_picture_raster;
-  scoped_refptr<DisplayItemList> display_list =
-      DisplayItemList::Create(PaintableRegion(), settings);
+  auto display_list = make_scoped_refptr(new DisplayItemList);
 
-  SkPictureRecorder recorder;
-  SkCanvas* canvas =
+  PaintRecorder recorder;
+  PaintCanvas* canvas =
       recorder.beginRecording(gfx::RectToSkRect(PaintableRegion()));
 
   SkScalar content_to_layer_scale_x =
@@ -81,9 +75,12 @@ scoped_refptr<DisplayItemList> PictureImageLayer::PaintContentsToDisplayList(
   // Because Android WebView resourceless software draw mode rasters directly
   // to the root canvas, this draw must use the kSrcOver_Mode so that
   // transparent images blend correctly.
-  canvas->drawImage(image_.get(), 0, 0);
+  // TODO(vmpstr): Plumb animation type and completion states to here.
+  canvas->drawImage(PaintImage(image_, PaintImage::AnimationType::UNKNOWN,
+                               PaintImage::CompletionState::UNKNOWN),
+                    0, 0);
 
-  display_list->CreateAndAppendItem<DrawingDisplayItem>(
+  display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       PaintableRegion(), recorder.finishRecordingAsPicture());
 
   display_list->Finalize();

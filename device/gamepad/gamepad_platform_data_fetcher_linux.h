@@ -13,6 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "device/gamepad/gamepad_data_fetcher.h"
+#include "device/gamepad/public/cpp/gamepads.h"
 
 extern "C" {
 struct udev_device;
@@ -27,20 +28,27 @@ namespace device {
 class DEVICE_GAMEPAD_EXPORT GamepadPlatformDataFetcherLinux
     : public GamepadDataFetcher {
  public:
+  typedef GamepadDataFetcherFactoryImpl<GamepadPlatformDataFetcherLinux,
+                                        GAMEPAD_SOURCE_LINUX_UDEV>
+      Factory;
+
   GamepadPlatformDataFetcherLinux();
   ~GamepadPlatformDataFetcherLinux() override;
 
+  GamepadSource source() override;
+
   // GamepadDataFetcher implementation.
-  void GetGamepadData(blink::WebGamepads* pads,
-                      bool devices_changed_hint) override;
+  void GetGamepadData(bool devices_changed_hint) override;
 
  private:
+  void OnAddedToProvider() override;
+
   void RefreshDevice(udev_device* dev);
   void EnumerateDevices();
   void ReadDeviceData(size_t index);
 
   // File descriptor for the /dev/input/js* devices. -1 if not in use.
-  int device_fd_[blink::WebGamepads::itemsLengthCap];
+  int device_fd_[Gamepads::kItemsLengthCap];
 
   std::unique_ptr<device::UdevLinux> udev_;
 

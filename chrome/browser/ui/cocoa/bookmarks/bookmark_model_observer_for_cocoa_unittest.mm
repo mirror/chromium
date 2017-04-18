@@ -11,7 +11,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
-#import "chrome/browser/ui/cocoa/cocoa_profile_test.h"
+#import "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/test/base/testing_profile.h"
 
 using bookmarks::BookmarkModel;
@@ -24,7 +24,7 @@ class BookmarkModelObserverForCocoaTest : public CocoaProfileTest {
 
 
 TEST_F(BookmarkModelObserverForCocoaTest, TestCallback) {
-  BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   const BookmarkNode* node = model->AddURL(model->bookmark_bar_node(),
                                            0, base::ASCIIToUTF16("super"),
                                            GURL("http://www.google.com"));

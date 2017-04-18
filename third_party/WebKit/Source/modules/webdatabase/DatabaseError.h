@@ -29,11 +29,11 @@
 namespace blink {
 
 enum class DatabaseError {
-    None = 0,
-    GenericSecurityError,
-    InvalidDatabaseState
+  kNone = 0,
+  kGenericSecurityError,
+  kInvalidDatabaseState
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DatabaseError_h
+#endif  // DatabaseError_h

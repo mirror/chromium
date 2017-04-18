@@ -4,9 +4,10 @@
 
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 
-#include <memory>
+#include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller_delegate.h"
 #include "chrome/browser/chromeos/policy/policy_cert_service.h"
 #include "chrome/browser/chromeos/policy/policy_cert_service_factory.h"
@@ -17,7 +18,7 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
-#include "components/syncable_prefs/pref_service_syncable.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -97,10 +98,11 @@ MultiProfileUserController::GetPrimaryUserPolicy() {
     return ALLOWED;
 
   // Don't allow any secondary profiles if the primary profile is tainted.
-  if (policy::PolicyCertServiceFactory::UsedPolicyCertificates(user->email())) {
+  if (policy::PolicyCertServiceFactory::UsedPolicyCertificates(
+          user->GetAccountId().GetUserEmail())) {
     // Check directly in local_state before checking if the primary user has
-    // a PolicyCertService. His profile may have been tainted previously though
-    // he didn't get a PolicyCertService created for this session.
+    // a PolicyCertService. Their profile may have been tainted previously
+    // though they didn't get a PolicyCertService created for this session.
     return NOT_ALLOWED_PRIMARY_POLICY_CERT_TAINTED;
   }
 
@@ -134,7 +136,7 @@ bool MultiProfileUserController::IsUserAllowedInSession(
   const user_manager::User* primary_user = user_manager->GetPrimaryUser();
   std::string primary_user_email;
   if (primary_user)
-    primary_user_email = primary_user->email();
+    primary_user_email = primary_user->GetAccountId().GetUserEmail();
 
   // Always allow if there is no primary user or user being checked is the
   // primary user.
@@ -169,7 +171,7 @@ void MultiProfileUserController::StartObserving(Profile* user_profile) {
       base::Bind(&MultiProfileUserController::OnUserPrefChanged,
                  base::Unretained(this),
                  user_profile));
-  pref_watchers_.push_back(registrar.release());
+  pref_watchers_.push_back(std::move(registrar));
 
   OnUserPrefChanged(user_profile);
 }
@@ -208,8 +210,8 @@ void MultiProfileUserController::CheckSessionUsers() {
   for (user_manager::UserList::const_iterator it = users.begin();
        it != users.end();
        ++it) {
-    if (!IsUserAllowedInSession((*it)->email(), NULL)) {
-      delegate_->OnUserNotAllowed((*it)->email());
+    if (!IsUserAllowedInSession((*it)->GetAccountId().GetUserEmail(), NULL)) {
+      delegate_->OnUserNotAllowed((*it)->GetAccountId().GetUserEmail());
       return;
     }
   }

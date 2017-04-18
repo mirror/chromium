@@ -80,7 +80,7 @@ public class TabStripUtils {
         base.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                manager.click(0, x, y, false, 0);
+                manager.simulateClick(x, y, false, 0);
             }
         });
     }
@@ -98,7 +98,7 @@ public class TabStripUtils {
         base.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                manager.click(0, x, y, false, 0);
+                manager.simulateClick(x, y, false, 0);
             }
         });
     }
@@ -116,7 +116,7 @@ public class TabStripUtils {
         base.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                manager.onLongPress(0, x, y);
+                manager.simulateLongPress(x, y);
             }
         });
     }
@@ -124,8 +124,7 @@ public class TabStripUtils {
     /**
      * @param tabStrip The tab strip to wait for.
      */
-    public static void settleDownCompositor(final StripLayoutHelper tabStrip) throws
-            InterruptedException {
+    public static void settleDownCompositor(final StripLayoutHelper tabStrip) {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {

@@ -2,12 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/test.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 component("tracing") {
   sources = [
-    "child/child_memory_dump_manager_delegate_impl.cc",
-    "child/child_memory_dump_manager_delegate_impl.h",
     "child/child_trace_message_filter.cc",
     "child/child_trace_message_filter.h",
     "common/graphics_memory_dump_provider_android.cc",
@@ -16,6 +15,7 @@ component("tracing") {
     "common/process_metrics_memory_dump_provider.h",
     "common/tracing_messages.cc",
     "common/tracing_messages.h",
+    "core/proto_utils.cc",
     "core/proto_utils.h",
     "core/proto_zero_message.cc",
     "core/proto_zero_message.h",
@@ -23,6 +23,8 @@ component("tracing") {
     "core/proto_zero_message_handle.h",
     "core/scattered_stream_writer.cc",
     "core/scattered_stream_writer.h",
+    "core/trace_buffer_writer.cc",
+    "core/trace_buffer_writer.h",
     "core/trace_ring_buffer.cc",
     "core/trace_ring_buffer.h",
     "tracing_export.h",
@@ -35,6 +37,10 @@ component("tracing") {
     "//ipc",
   ]
 
+  public_deps = [
+    "//components/tracing/proto:protos",
+  ]
+
   if (is_nacl) {
     sources -= [ "common/process_metrics_memory_dump_provider.cc" ]
   }
@@ -42,8 +48,10 @@ component("tracing") {
 
 component("startup_tracing") {
   sources = [
-    "browser/trace_config_file.cc",
-    "browser/trace_config_file.h",
+    "common/trace_config_file.cc",
+    "common/trace_config_file.h",
+    "common/trace_startup.cc",
+    "common/trace_startup.h",
     "common/trace_to_console.cc",
     "common/trace_to_console.h",
     "common/tracing_switches.cc",
@@ -63,31 +71,19 @@ proto_library("proto_zero_testing_messages") {
   visibility = [ "//components/tracing/*" ]
 
   sources = [
-    "test/example_messages.proto",
+    "test/example_proto/library.proto",
+    "test/example_proto/library_internals/galaxies.proto",
+    "test/example_proto/test_messages.proto",
+    "test/example_proto/upper_import.proto",
   ]
+
+  proto_in_dir = "test/example_proto"
 
   generator_plugin_label = "tools/proto_zero_plugin:proto_zero_plugin"
   generator_plugin_suffix = ".pbzero"
-  generate_cc = false
+  generator_plugin_options = "wrapper_namespace=pbzero"
+  generate_cc = true
   generate_python = false
-
-  # TODO(kraynov) Move away this complex path evaluation and dependency
-  # injection to proto_library.gni. All lines below should be removed.
-  # The problem is that root_out_dir and root_build_dir may differ in case of
-  # cross compilation. Also .exe will be appended on Windows.
-
-  plugin_host_label = generator_plugin_label + "($host_toolchain)"
-  generator_plugin =
-      rebase_path(get_label_info(plugin_host_label, "root_out_dir") + "/" +
-                      get_label_info(plugin_host_label, "name"),
-                  root_build_dir)
-  if (is_win) {
-    generator_plugin += ".exe"
-  }
-
-  deps = [
-    plugin_host_label,
-  ]
 }
 
 source_set("unit_tests") {
@@ -100,8 +96,10 @@ source_set("unit_tests") {
     "core/proto_utils_unittest.cc",
     "core/proto_zero_message_unittest.cc",
     "core/scattered_stream_writer_unittest.cc",
+    "core/trace_buffer_writer_unittest.cc",
     "core/trace_ring_buffer_unittest.cc",
     "test/fake_scattered_buffer.cc",
+    "test/fake_scattered_buffer.h",
     "test/proto_zero_generation_unittest.cc",
   ]
 
@@ -109,13 +107,41 @@ source_set("unit_tests") {
     ":proto_zero_testing_messages",
     ":tracing",
     "//base/test:test_support",
+    "//components/tracing/proto:golden_protos_for_tests",
     "//ipc",
     "//testing/gmock:gmock",
     "//testing/gtest",
   ]
 
   if (!is_android) {
-    sources += [ "browser/trace_config_file_unittest.cc" ]
+    sources += [ "common/trace_config_file_unittest.cc" ]
     deps += [ ":startup_tracing" ]
+  }
+}
+
+test("tracing_perftests") {
+  sources = [
+    "test/perf_test_helpers.cc",
+    "test/perf_test_helpers.h",
+    "test/trace_event_perftest.cc",
+  ]
+  deps = [
+    "//base:base",
+    "//base/test:test_support",
+    "//base/test:test_support_perf",
+    "//testing/gtest",
+    "//testing/perf",
+  ]
+
+  data = [
+    # Needed for isolate script to execute.
+    "//testing/scripts/common.py",
+    "//testing/xvfb.py",
+    "//testing/scripts/run_gtest_perf_test.py",
+    "//tools/perf/generate_legacy_perf_dashboard_json.py",
+  ]
+
+  if (is_android) {
+    deps += [ "//testing/android/native_test:native_test_native_code" ]
   }
 }

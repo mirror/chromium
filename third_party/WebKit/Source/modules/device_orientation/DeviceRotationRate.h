@@ -32,25 +32,27 @@
 
 namespace blink {
 
-class DeviceRotationRate final : public GarbageCollected<DeviceRotationRate>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DeviceRotationRate* create(DeviceMotionData::RotationRate* rotationRate)
-    {
-        return new DeviceRotationRate(rotationRate);
-    }
-    DECLARE_TRACE();
+class DeviceRotationRate final : public GarbageCollected<DeviceRotationRate>,
+                                 public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    double alpha(bool& isNull) const;
-    double beta(bool& isNull) const;
-    double gamma(bool& isNull) const;
+ public:
+  static DeviceRotationRate* Create(
+      DeviceMotionData::RotationRate* rotation_rate) {
+    return new DeviceRotationRate(rotation_rate);
+  }
+  DECLARE_TRACE();
 
-private:
-    explicit DeviceRotationRate(DeviceMotionData::RotationRate*);
+  double alpha(bool& is_null) const;
+  double beta(bool& is_null) const;
+  double gamma(bool& is_null) const;
 
-    Member<DeviceMotionData::RotationRate> m_rotationRate;
+ private:
+  explicit DeviceRotationRate(DeviceMotionData::RotationRate*);
+
+  Member<DeviceMotionData::RotationRate> rotation_rate_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DeviceRotationRate_h
+#endif  // DeviceRotationRate_h

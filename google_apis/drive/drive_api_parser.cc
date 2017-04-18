@@ -28,11 +28,18 @@ bool CreateFileResourceFromValue(const base::Value* value,
   return !!*file;
 }
 
+bool CreateTeamDriveResourceFromValue(
+    const base::Value* value,
+    std::unique_ptr<TeamDriveResource>* file) {
+  *file = TeamDriveResource::CreateFrom(*value);
+  return !!*file;
+}
+
 // Converts |url_string| to |result|.  Always returns true to be used
 // for JSONValueConverter::RegisterCustomField method.
 // TODO(mukai): make it return false in case of invalid |url_string|.
 bool GetGURLFromString(const base::StringPiece& url_string, GURL* result) {
-  *result = GURL(url_string.as_string());
+  *result = GURL(url_string);
   return true;
 }
 
@@ -97,6 +104,7 @@ const char kId[] = "id";
 const char kETag[] = "etag";
 const char kItems[] = "items";
 const char kLargestChangeId[] = "largestChangeId";
+const char kNextPageToken[] = "nextPageToken";
 
 // About Resource
 // https://developers.google.com/drive/v2/reference/about
@@ -154,6 +162,7 @@ const char kImageMediaMetadata[] = "imageMediaMetadata";
 const char kShared[] = "shared";
 // These 5 flags are defined under |labels|.
 const char kLabelTrashed[] = "trashed";
+const char kLabelStarred[] = "starred";
 // These 3 flags are defined under |imageMediaMetadata|.
 const char kImageMediaMetadataWidth[] = "width";
 const char kImageMediaMetadataHeight[] = "height";
@@ -163,6 +172,26 @@ const char kShareLink[] = "shareLink";
 
 const char kDriveFolderMimeType[] = "application/vnd.google-apps.folder";
 
+// Team Drive
+const char kTeamDriveKind[] = "drive#teamDrive";
+const char kTeamDriveListKind[] = "drive#teamDriveList";
+const char kCapabilities[] = "capabilities";
+
+// Team Drive capabilities.
+const char kCanAddChildren[] = "canAddChildren";
+const char kCanComment[] = "canComment";
+const char kCanCopy[] = "canCopy";
+const char kCanDeleteTeamDrive[] = "canDeleteTeamDrive";
+const char kCanDownload[] = "canDownload";
+const char kCanEdit[] = "canEdit";
+const char kCanListChildren[] = "canListChildren";
+const char kCanManageMembers[] = "canManageMembers";
+const char kCanReadRevisions[] = "canReadRevisions";
+const char kCanRemoveChildren[] = "canRemoveChildren";
+const char kCanRename[] = "canRename";
+const char kCanRenameTeamDrive[] = "canRenameTeamDrive";
+const char kCanShare[] = "canShare";
+
 // Files List
 // https://developers.google.com/drive/v2/reference/files/list
 const char kFileListKind[] = "drive#fileList";
@@ -171,13 +200,27 @@ const char kNextLink[] = "nextLink";
 // Change Resource
 // https://developers.google.com/drive/v2/reference/changes
 const char kChangeKind[] = "drive#change";
+const char kType[] = "type";
 const char kFileId[] = "fileId";
 const char kDeleted[] = "deleted";
 const char kFile[] = "file";
+const char kTeamDrive[] = "teamDrive";
+const char kTeamDriveId[] = "teamDriveId";
 
 // Changes List
 // https://developers.google.com/drive/v2/reference/changes/list
 const char kChangeListKind[] = "drive#changeList";
+
+// Maps category name to enum ChangeType.
+struct ChangeTypeMap {
+  ChangeResource::ChangeType type;
+  const char* type_name;
+};
+
+constexpr ChangeTypeMap kChangeTypeMap[] = {
+  { ChangeResource::FILE, "file" },
+  { ChangeResource::TEAM_DRIVE, "teamDrive" },
+};
 
 // Maps category name to enum IconCategory.
 struct AppIconCategoryMap {
@@ -185,7 +228,7 @@ struct AppIconCategoryMap {
   const char* category_name;
 };
 
-const AppIconCategoryMap kAppIconCategoryMap[] = {
+constexpr AppIconCategoryMap kAppIconCategoryMap[] = {
   { DriveAppIcon::DOCUMENT, "document" },
   { DriveAppIcon::APPLICATION, "application" },
   { DriveAppIcon::SHARED_DOCUMENT, "documentShared" },
@@ -391,6 +434,135 @@ bool AppList::Parse(const base::Value& value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// TeamDriveCapabilities implementation
+
+TeamDriveCapabilities::TeamDriveCapabilities()
+    : can_add_children_(false),
+      can_comment_(false),
+      can_copy_(false),
+      can_delete_team_drive_(false),
+      can_download_(false),
+      can_edit_(false),
+      can_list_children_(false),
+      can_manage_members_(false),
+      can_read_revisions_(false),
+      can_remove_children_(false),
+      can_rename_(false),
+      can_rename_team_drive_(false),
+      can_share_(false) {
+}
+
+TeamDriveCapabilities::TeamDriveCapabilities(const TeamDriveCapabilities& src) =
+    default;
+
+TeamDriveCapabilities::~TeamDriveCapabilities(){}
+
+// static
+void TeamDriveCapabilities::RegisterJSONConverter(
+    base::JSONValueConverter<TeamDriveCapabilities>* converter) {
+  converter->RegisterBoolField(kCanAddChildren,
+                               &TeamDriveCapabilities::can_add_children_);
+  converter->RegisterBoolField(kCanComment,
+                               &TeamDriveCapabilities::can_comment_);
+  converter->RegisterBoolField(kCanCopy, &TeamDriveCapabilities::can_copy_);
+  converter->RegisterBoolField(kCanDeleteTeamDrive,
+                               &TeamDriveCapabilities::can_delete_team_drive_);
+  converter->RegisterBoolField(kCanDownload,
+                               &TeamDriveCapabilities::can_download_);
+  converter->RegisterBoolField(kCanEdit, &TeamDriveCapabilities::can_edit_);
+  converter->RegisterBoolField(kCanListChildren,
+                               &TeamDriveCapabilities::can_list_children_);
+  converter->RegisterBoolField(kCanManageMembers,
+                               &TeamDriveCapabilities::can_manage_members_);
+  converter->RegisterBoolField(kCanReadRevisions,
+                               &TeamDriveCapabilities::can_read_revisions_);
+  converter->RegisterBoolField(kCanRemoveChildren,
+                               &TeamDriveCapabilities::can_remove_children_);
+  converter->RegisterBoolField(kCanRename, &TeamDriveCapabilities::can_rename_);
+  converter->RegisterBoolField(kCanRenameTeamDrive,
+                               &TeamDriveCapabilities::can_rename_team_drive_);
+  converter->RegisterBoolField(kCanShare, &TeamDriveCapabilities::can_share_);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// TeamDriveResource implementation
+
+TeamDriveResource::TeamDriveResource() {}
+
+TeamDriveResource::~TeamDriveResource() {}
+
+// static
+std::unique_ptr<TeamDriveResource> TeamDriveResource::CreateFrom(
+    const base::Value& value) {
+  std::unique_ptr<TeamDriveResource> resource(new TeamDriveResource());
+  if (!IsResourceKindExpected(value, kTeamDriveKind) ||
+      !resource->Parse(value)) {
+    LOG(ERROR) << "Unable to create: Invalid Team Drive resource JSON!";
+    return std::unique_ptr<TeamDriveResource>();
+  }
+  return resource;
+}
+
+// static
+void TeamDriveResource::RegisterJSONConverter(
+    base::JSONValueConverter<TeamDriveResource>* converter) {
+  converter->RegisterStringField(kId, &TeamDriveResource::id_);
+  converter->RegisterStringField(kName, &TeamDriveResource::name_);
+  converter->RegisterNestedField(kCapabilities,
+                                 &TeamDriveResource::capabilities_);
+}
+
+bool TeamDriveResource::Parse(const base::Value& value) {
+  base::JSONValueConverter<TeamDriveResource> converter;
+  if (!converter.Convert(value, this)) {
+    LOG(ERROR) << "Unable to parse: Invalid Team Drive resource JSON!";
+    return false;
+  }
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// TeamDriveList implementation
+
+TeamDriveList::TeamDriveList() {}
+
+TeamDriveList::~TeamDriveList() {}
+
+// static
+void TeamDriveList::RegisterJSONConverter(
+    base::JSONValueConverter<TeamDriveList>* converter) {
+  converter->RegisterStringField(kNextPageToken,
+                                 &TeamDriveList::next_page_token_);
+  converter->RegisterRepeatedMessage<TeamDriveResource>(kItems,
+                                                        &TeamDriveList::items_);
+}
+
+// static
+bool TeamDriveList::HasTeamDriveListKind(const base::Value& value) {
+  return IsResourceKindExpected(value, kTeamDriveListKind);
+}
+
+// static
+std::unique_ptr<TeamDriveList> TeamDriveList::CreateFrom(
+    const base::Value& value) {
+  std::unique_ptr<TeamDriveList> resource(new TeamDriveList());
+  if (!HasTeamDriveListKind(value) || !resource->Parse(value)) {
+    LOG(ERROR) << "Unable to create: Invalid TeamDriveList JSON!";
+    return std::unique_ptr<TeamDriveList>();
+  }
+  return resource;
+}
+
+bool TeamDriveList::Parse(const base::Value& value) {
+  base::JSONValueConverter<TeamDriveList> converter;
+  if (!converter.Convert(value, this)) {
+    LOG(ERROR) << "Unable to parse: Invalid TeamDriveList";
+    return false;
+  }
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // ParentReference implementation
 
 ParentReference::ParentReference() {}
@@ -553,7 +725,8 @@ bool FileList::Parse(const base::Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // ChangeResource implementation
 
-ChangeResource::ChangeResource() : change_id_(0), deleted_(false) {}
+ChangeResource::ChangeResource()
+    : change_id_(0), type_(UNKNOWN), deleted_(false) {}
 
 ChangeResource::~ChangeResource() {}
 
@@ -562,6 +735,8 @@ void ChangeResource::RegisterJSONConverter(
     base::JSONValueConverter<ChangeResource>* converter) {
   converter->RegisterCustomField<int64_t>(kId, &ChangeResource::change_id_,
                                           &base::StringToInt64);
+  converter->RegisterCustomField<ChangeType>(kType, &ChangeResource::type_,
+                                             &ChangeResource::GetType);
   converter->RegisterStringField(kFileId, &ChangeResource::file_id_);
   converter->RegisterBoolField(kDeleted, &ChangeResource::deleted_);
   converter->RegisterCustomValueField(kFile, &ChangeResource::file_,
@@ -569,6 +744,9 @@ void ChangeResource::RegisterJSONConverter(
   converter->RegisterCustomField<base::Time>(
       kModificationDate, &ChangeResource::modification_date_,
       &util::GetTimeFromString);
+  converter->RegisterStringField(kTeamDriveId, &ChangeResource::team_drive_id_);
+  converter->RegisterCustomValueField(kTeamDrive, &ChangeResource::team_drive_,
+                                      &CreateTeamDriveResourceFromValue);
 }
 
 // static
@@ -589,6 +767,19 @@ bool ChangeResource::Parse(const base::Value& value) {
     return false;
   }
   return true;
+}
+
+// static
+bool ChangeResource::GetType(const base::StringPiece& type_name,
+                             ChangeResource::ChangeType* result) {
+  for (size_t i = 0; i < arraysize(kChangeTypeMap); i++) {
+    if (type_name == kChangeTypeMap[i].type_name) {
+      *result = kChangeTypeMap[i].type;
+      return true;
+    }
+  }
+  DVLOG(1) << "Unknown change type" << type_name;
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -638,7 +829,9 @@ bool ChangeList::Parse(const base::Value& value) {
 ////////////////////////////////////////////////////////////////////////////////
 // FileLabels implementation
 
-FileLabels::FileLabels() : trashed_(false) {}
+FileLabels::FileLabels()
+    : trashed_(false),
+      starred_(false) {}
 
 FileLabels::~FileLabels() {}
 
@@ -646,6 +839,7 @@ FileLabels::~FileLabels() {}
 void FileLabels::RegisterJSONConverter(
     base::JSONValueConverter<FileLabels>* converter) {
   converter->RegisterBoolField(kLabelTrashed, &FileLabels::trashed_);
+  converter->RegisterBoolField(kLabelStarred, &FileLabels::starred_);
 }
 
 // static

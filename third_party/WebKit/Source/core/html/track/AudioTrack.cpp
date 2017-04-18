@@ -8,77 +8,65 @@
 
 namespace blink {
 
-AudioTrack::AudioTrack(const String& id, const AtomicString& kind, const AtomicString& label, const AtomicString& language, bool enabled)
-    : TrackBase(WebMediaPlayer::AudioTrack, kind, label, language, id)
-    , m_enabled(enabled)
-{
+AudioTrack::AudioTrack(const String& id,
+                       const AtomicString& kind,
+                       const AtomicString& label,
+                       const AtomicString& language,
+                       bool enabled)
+    : TrackBase(WebMediaPlayer::kAudioTrack, kind, label, language, id),
+      enabled_(enabled) {}
+
+AudioTrack::~AudioTrack() {}
+
+DEFINE_TRACE(AudioTrack) {
+  TrackBase::Trace(visitor);
 }
 
-AudioTrack::~AudioTrack()
-{
+void AudioTrack::setEnabled(bool enabled) {
+  if (enabled == enabled_)
+    return;
+
+  enabled_ = enabled;
+
+  if (MediaElement())
+    MediaElement()->AudioTrackChanged(this);
 }
 
-DEFINE_TRACE(AudioTrack)
-{
-    TrackBase::trace(visitor);
+const AtomicString& AudioTrack::AlternativeKeyword() {
+  DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("alternative"));
+  return keyword;
 }
 
-void AudioTrack::setEnabled(bool enabled)
-{
-    if (enabled == m_enabled)
-        return;
-
-    m_enabled = enabled;
-
-    if (mediaElement())
-        mediaElement()->audioTrackChanged(id(), enabled);
+const AtomicString& AudioTrack::DescriptionsKeyword() {
+  DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("descriptions"));
+  return keyword;
 }
 
-const AtomicString& AudioTrack::alternativeKeyword()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("alternative"));
-    return keyword;
+const AtomicString& AudioTrack::MainKeyword() {
+  DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("main"));
+  return keyword;
 }
 
-const AtomicString& AudioTrack::descriptionsKeyword()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("descriptions"));
-    return keyword;
+const AtomicString& AudioTrack::MainDescriptionsKeyword() {
+  DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("main-desc"));
+  return keyword;
 }
 
-const AtomicString& AudioTrack::mainKeyword()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("main"));
-    return keyword;
+const AtomicString& AudioTrack::TranslationKeyword() {
+  DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("translation"));
+  return keyword;
 }
 
-const AtomicString& AudioTrack::mainDescriptionsKeyword()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("main-desc"));
-    return keyword;
+const AtomicString& AudioTrack::CommentaryKeyword() {
+  DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("commentary"));
+  return keyword;
 }
 
-const AtomicString& AudioTrack::translationKeyword()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("translation"));
-    return keyword;
+bool AudioTrack::IsValidKindKeyword(const String& kind) {
+  return kind == AlternativeKeyword() || kind == DescriptionsKeyword() ||
+         kind == MainKeyword() || kind == MainDescriptionsKeyword() ||
+         kind == TranslationKeyword() || kind == CommentaryKeyword() ||
+         kind == g_empty_atom;
 }
 
-const AtomicString& AudioTrack::commentaryKeyword()
-{
-    DEFINE_STATIC_LOCAL(const AtomicString, keyword, ("commentary"));
-    return keyword;
-}
-
-bool AudioTrack::isValidKindKeyword(const String& kind)
-{
-    return kind == alternativeKeyword()
-        || kind == descriptionsKeyword()
-        || kind == mainKeyword()
-        || kind == mainDescriptionsKeyword()
-        || kind == translationKeyword()
-        || kind == commentaryKeyword()
-        || kind == emptyAtom;
-}
-
-} // namespace blink
+}  // namespace blink

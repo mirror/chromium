@@ -11,9 +11,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "remoting/base/constants.h"
+#include "remoting/base/name_value_map.h"
 #include "remoting/protocol/authenticator.h"
-#include "remoting/protocol/name_value_map.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 using buzz::QName;
 using buzz::XmlElement;

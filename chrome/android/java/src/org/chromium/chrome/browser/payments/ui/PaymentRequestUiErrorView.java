@@ -11,8 +11,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -30,12 +28,13 @@ public class PaymentRequestUiErrorView extends BoundedLinearLayout {
     /**
      * Initializes the view with the correct strings.
      *
-     * @param title   Title of the webpage.
-     * @param origin  Origin of the webpage.
+     * @param title         Title of the webpage.
+     * @param origin        Origin of the webpage.
+     * @param securityLevel The security level of the page that invoked PaymentRequest.
      */
-    public void initialize(String title, String origin) {
-        ((TextView) findViewById(R.id.page_title)).setText(title);
-        ((TextView) findViewById(R.id.hostname)).setText(origin);
+    public void initialize(String title, String origin, int securityLevel) {
+        ((PaymentRequestHeader) findViewById(R.id.header))
+                .setTitleAndOrigin(title, origin, securityLevel);
 
         // Remove the close button, then expand the page information to take up the space formerly
         // occupied by the X.
@@ -79,7 +78,7 @@ public class PaymentRequestUiErrorView extends BoundedLinearLayout {
      * @param bitmap Icon to display.
      */
     public void setBitmap(Bitmap bitmap) {
-        ((ImageView) findViewById(R.id.icon_view)).setImageBitmap(bitmap);
+        ((PaymentRequestHeader) findViewById(R.id.header)).setTitleBitmap(bitmap);
     }
 
     /**

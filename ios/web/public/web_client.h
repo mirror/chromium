@@ -11,6 +11,8 @@
 #include "base/callback.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "ios/web/public/user_agent.h"
 #include "ui/base/layout.h"
 #include "url/url_util.h"
 
@@ -70,14 +72,6 @@ class WebClient {
   // browser would return true for "chrome://about" URL.
   virtual bool IsAppSpecificURL(const GURL& url) const;
 
-  // Returns true if web views can be created using an alloc, init call.
-  // Web view creation using an alloc, init call is disabled by default.
-  // If this is disallowed all web view creation must happen through the
-  // web view creation utils methods that vend a web view.
-  // This is called once (only in debug builds) before the first web view is
-  // created and not called repeatedly.
-  virtual bool AllowWebViewAllocInit() const;
-
   // Returns text to be displayed for an unsupported plugin.
   virtual base::string16 GetPluginNotSupportedText() const;
 
@@ -85,9 +79,8 @@ class WebClient {
   // form "productname/version".  Used as part of the user agent string.
   virtual std::string GetProduct() const;
 
-  // Returns the user agent. |desktop_user_agent| is true if desktop user agent
-  // is requested.
-  virtual std::string GetUserAgent(bool desktop_user_agent) const;
+  // Returns the user agent string for the specified type.
+  virtual std::string GetUserAgent(UserAgentType type) const;
 
   // Returns a string resource given its id.
   virtual base::string16 GetLocalizedString(int message_id) const;
@@ -114,7 +107,10 @@ class WebClient {
 
   // Gives the embedder a chance to provide the JavaScript to be injected into
   // the web view as early as possible. Result must not be nil.
-  virtual NSString* GetEarlyPageScript() const;
+  //
+  // TODO(crbug.com/703964): Change the return value to NSArray<NSString*> to
+  // improve performance.
+  virtual NSString* GetEarlyPageScript(BrowserState* browser_state) const;
 
   // Informs the embedder that a certificate error has occurred. If
   // |overridable| is true, the user can ignore the error and continue. The
@@ -127,6 +123,14 @@ class WebClient {
       const GURL& request_url,
       bool overridable,
       const base::Callback<void(bool)>& callback);
+
+  // Provides parameters for initializing the global task scheduler. Default
+  // params are used if this returns nullptr.
+  virtual std::unique_ptr<base::TaskScheduler::InitParams>
+  GetTaskSchedulerInitParams();
+
+  // Performs any necessary PostTask API redirection to the task scheduler.
+  virtual void PerformExperimentalTaskSchedulerRedirections() {}
 };
 
 }  // namespace web

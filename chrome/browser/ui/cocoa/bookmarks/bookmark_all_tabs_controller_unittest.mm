@@ -8,7 +8,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_all_tabs_controller.h"
-#include "chrome/browser/ui/cocoa/cocoa_profile_test.h"
+#include "chrome/browser/ui/cocoa/test/cocoa_profile_test.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -44,7 +44,8 @@ class BookmarkAllTabsControllerTest : public CocoaProfileTest {
   const BookmarkNode* folder_a_;
 
   void CreateModel() {
-    BookmarkModel* model = BookmarkModelFactory::GetForProfile(profile());
+    BookmarkModel* model =
+        BookmarkModelFactory::GetForBrowserContext(profile());
     const BookmarkNode* root = model->bookmark_bar_node();
     folder_a_ = model->AddFolder(root, 0, ASCIIToUTF16("a"));
     model->AddURL(folder_a_, 0, ASCIIToUTF16("a-0"), GURL("http://a-0.com"));

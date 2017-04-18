@@ -31,77 +31,62 @@
 
 #include "public/platform/WebCString.h"
 
-#include "public/platform/WebString.h"
-#include "wtf/text/CString.h"
 #include <string.h>
+#include "platform/wtf/text/CString.h"
+#include "public/platform/WebString.h"
 
 namespace blink {
 
-int WebCString::compare(const WebCString& other) const
-{
-    // A null string is always less than a non null one.
-    if (isNull() != other.isNull())
-        return isNull() ? -1 : 1;
+int WebCString::Compare(const WebCString& other) const {
+  // A null string is always less than a non null one.
+  if (IsNull() != other.IsNull())
+    return IsNull() ? -1 : 1;
 
-    if (isNull())
-        return 0; // Both WebStrings are null.
+  if (IsNull())
+    return 0;  // Both WebStrings are null.
 
-    return strcmp(m_private->data(), other.m_private->data());
+  return strcmp(private_->Data(), other.private_->Data());
 }
 
-void WebCString::reset()
-{
-    m_private.reset();
+void WebCString::Reset() {
+  private_.Reset();
 }
 
-void WebCString::assign(const WebCString& other)
-{
-    assign(other.m_private.get());
+void WebCString::Assign(const WebCString& other) {
+  Assign(other.private_.Get());
 }
 
-void WebCString::assign(const char* data, size_t length)
-{
-    char* newData;
-    RefPtr<WTF::CStringBuffer> buffer =
-        WTF::CString::newUninitialized(length, newData).buffer();
-    memcpy(newData, data, length);
-    assign(buffer.get());
+void WebCString::Assign(const char* data, size_t length) {
+  Assign(WTF::CString(data, length).Impl());
 }
 
-size_t WebCString::length() const
-{
-    return m_private.isNull() ? 0 : m_private->length();
+size_t WebCString::length() const {
+  return private_.IsNull() ? 0 : private_->length();
 }
 
-const char* WebCString::data() const
-{
-    return m_private.isNull() ? 0 : m_private->data();
+const char* WebCString::Data() const {
+  return private_.IsNull() ? 0 : private_->Data();
 }
 
-WebString WebCString::utf16() const
-{
-    return WebString::fromUTF8(data(), length());
+WebString WebCString::Utf16() const {
+  return WebString::FromUTF8(Data(), length());
 }
 
-WebCString::WebCString(const WTF::CString& s)
-{
-    assign(s.buffer());
+WebCString::WebCString(const WTF::CString& s) {
+  Assign(s.Impl());
 }
 
-WebCString& WebCString::operator=(const WTF::CString& s)
-{
-    assign(s.buffer());
-    return *this;
+WebCString& WebCString::operator=(const WTF::CString& s) {
+  Assign(s.Impl());
+  return *this;
 }
 
-WebCString::operator WTF::CString() const
-{
-    return m_private.get();
+WebCString::operator WTF::CString() const {
+  return private_.Get();
 }
 
-void WebCString::assign(WTF::CStringBuffer* p)
-{
-    m_private = p;
+void WebCString::Assign(WTF::CStringImpl* p) {
+  private_ = p;
 }
 
-} // namespace blink
+}  // namespace blink

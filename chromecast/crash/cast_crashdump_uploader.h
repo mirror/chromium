@@ -6,6 +6,7 @@
 #define CHROMECAST_CRASH_CAST_CRASHDUMP_UPLOADER_H_
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "base/macros.h"
@@ -36,20 +37,21 @@ struct CastCrashdumpData {
 
 class CastCrashdumpUploader {
  public:
-  // Does not take ownership of |http_layer|.
-  CastCrashdumpUploader(const CastCrashdumpData& data,
-                        google_breakpad::LibcurlWrapper* http_layer);
+  CastCrashdumpUploader(
+      const CastCrashdumpData& data,
+      std::unique_ptr<google_breakpad::LibcurlWrapper> http_layer);
   explicit CastCrashdumpUploader(const CastCrashdumpData& data);
   ~CastCrashdumpUploader();
 
-  bool AddAttachment(const std::string& label, const std::string& filename);
-  void SetParameter(const std::string& key, const std::string& value);
-  bool Upload(std::string* response);
+  virtual bool AddAttachment(const std::string& label,
+                             const std::string& filename);
+  virtual void SetParameter(const std::string& key, const std::string& value);
+  virtual bool Upload(std::string* response);
 
  private:
   bool CheckRequiredParametersArePresent();
 
-  google_breakpad::LibcurlWrapper* http_layer_;
+  std::unique_ptr<google_breakpad::LibcurlWrapper> http_layer_;
   CastCrashdumpData data_;
 
   // Holds the following mapping for attachments: <label, filepath>

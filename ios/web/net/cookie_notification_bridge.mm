@@ -2,14 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/web/net/cookie_notification_bridge.h"
+#import "ios/web/net/cookie_notification_bridge.h"
 
 #import <Foundation/Foundation.h>
 
 #include "base/bind.h"
 #include "base/location.h"
-#include "ios/net/cookies/cookie_store_ios.h"
+#import "ios/net/cookies/cookie_store_ios.h"
 #include "ios/web/public/web_thread.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace web {
 
@@ -21,7 +25,7 @@ CookieNotificationBridge::CookieNotificationBridge() {
               usingBlock:^(NSNotification* notification) {
                 OnNotificationReceived(notification);
               }];
-  observer_.reset([observer retain]);
+  observer_.reset(observer);
 }
 
 CookieNotificationBridge::~CookieNotificationBridge() {
@@ -30,7 +34,6 @@ CookieNotificationBridge::~CookieNotificationBridge() {
 
 void CookieNotificationBridge::OnNotificationReceived(
     NSNotification* notification) {
-  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK([[notification name]
       isEqualToString:NSHTTPCookieManagerCookiesChangedNotification]);
   web::WebThread::PostTask(

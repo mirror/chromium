@@ -31,13 +31,13 @@
 #ifndef ImageQualityController_h
 #define ImageQualityController_h
 
+#include <memory>
 #include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
 #include "platform/Timer.h"
 #include "platform/geometry/LayoutSize.h"
 #include "platform/graphics/Image.h"
-#include "wtf/HashMap.h"
-#include <memory>
+#include "platform/wtf/HashMap.h"
 
 namespace blink {
 
@@ -46,57 +46,78 @@ class LayoutObject;
 typedef HashMap<const void*, LayoutSize> LayerSizeMap;
 
 struct ObjectResizeInfo {
-    LayerSizeMap layerSizeMap;
-    bool isResizing;
+  LayerSizeMap layer_size_map;
+  bool is_resizing;
 };
 
 typedef HashMap<const LayoutObject*, ObjectResizeInfo> ObjectLayerSizeMap;
 
 class CORE_EXPORT ImageQualityController final {
-    WTF_MAKE_NONCOPYABLE(ImageQualityController); USING_FAST_MALLOC(ImageQualityController);
-public:
-    ~ImageQualityController();
+  WTF_MAKE_NONCOPYABLE(ImageQualityController);
+  USING_FAST_MALLOC(ImageQualityController);
 
-    static ImageQualityController* imageQualityController();
+ public:
+  ~ImageQualityController();
 
-    static void remove(LayoutObject&);
+  static ImageQualityController* GetImageQualityController();
 
-    InterpolationQuality chooseInterpolationQuality(const LayoutObject&, Image*, const void* layer, const LayoutSize&);
+  static void Remove(LayoutObject&);
 
-private:
-    static const double cLowQualityTimeThreshold;
-    static const double cTimerRestartThreshold;
+  InterpolationQuality ChooseInterpolationQuality(const LayoutObject&,
+                                                  Image*,
+                                                  const void* layer,
+                                                  const LayoutSize&);
 
-    ImageQualityController();
+ private:
+  static const double kCLowQualityTimeThreshold;
+  static const double kCTimerRestartThreshold;
 
-    static bool has(const LayoutObject&);
-    void set(const LayoutObject&, LayerSizeMap* innerMap, const void* layer, const LayoutSize&, bool isResizing);
+  ImageQualityController();
 
-    bool shouldPaintAtLowQuality(const LayoutObject&, Image*, const void* layer, const LayoutSize&, double lastFrameTimeMonotonic);
-    void removeLayer(const LayoutObject&, LayerSizeMap* innerMap, const void* layer);
-    void objectDestroyed(const LayoutObject&);
-    bool isEmpty() { return m_objectLayerSizeMap.isEmpty(); }
+  static bool Has(const LayoutObject&);
+  void Set(const LayoutObject&,
+           LayerSizeMap* inner_map,
+           const void* layer,
+           const LayoutSize&,
+           bool is_resizing);
 
-    void highQualityRepaintTimerFired(Timer<ImageQualityController>*);
-    void restartTimer(double lastFrameTimeMonotonic);
+  bool ShouldPaintAtLowQuality(const LayoutObject&,
+                               Image*,
+                               const void* layer,
+                               const LayoutSize&,
+                               double last_frame_time_monotonic);
+  void RemoveLayer(const LayoutObject&,
+                   LayerSizeMap* inner_map,
+                   const void* layer);
+  void ObjectDestroyed(const LayoutObject&);
+  bool IsEmpty() { return object_layer_size_map_.IsEmpty(); }
 
-    // Only for use in testing.
-    void setTimer(Timer<ImageQualityController>*);
+  void HighQualityRepaintTimerFired(TimerBase*);
+  void RestartTimer(double last_frame_time_monotonic);
 
-    ObjectLayerSizeMap m_objectLayerSizeMap;
-    std::unique_ptr<Timer<ImageQualityController>> m_timer;
-    double m_frameTimeWhenTimerStarted;
+  // Only for use in testing.
+  void SetTimer(std::unique_ptr<TimerBase>);
 
-    // For calling set().
-    FRIEND_TEST_ALL_PREFIXES(LayoutPartTest, DestroyUpdatesImageQualityController);
+  ObjectLayerSizeMap object_layer_size_map_;
+  std::unique_ptr<TimerBase> timer_;
+  double frame_time_when_timer_started_;
 
-    // For calling setTimer(),
-    FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest, LowQualityFilterForResizingImage);
-    FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest, MediumQualityFilterForNotAnimatedWhileAnotherAnimates);
-    FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest, DontKickTheAnimationTimerWhenPaintingAtTheSameSize);
-    FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest, DontRestartTimerUnlessAdvanced);
+  // For calling set().
+  FRIEND_TEST_ALL_PREFIXES(LayoutPartTest,
+                           DestroyUpdatesImageQualityController);
+
+  // For calling setTimer(),
+  FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest,
+                           LowQualityFilterForResizingImage);
+  FRIEND_TEST_ALL_PREFIXES(
+      ImageQualityControllerTest,
+      MediumQualityFilterForNotAnimatedWhileAnotherAnimates);
+  FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest,
+                           DontKickTheAnimationTimerWhenPaintingAtTheSameSize);
+  FRIEND_TEST_ALL_PREFIXES(ImageQualityControllerTest,
+                           DontRestartTimerUnlessAdvanced);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

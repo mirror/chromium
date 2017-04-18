@@ -5,14 +5,16 @@
 package org.chromium.android_webview.test;
 
 import android.content.Context;
-import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.MediumTest;
+import android.support.test.filters.SmallTest;
 import android.webkit.GeolocationPermissions;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.RetryOnFailure;
+import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.device.geolocation.LocationProviderFactory;
 import org.chromium.device.geolocation.MockLocationProvider;
 
@@ -134,7 +136,8 @@ public class GeolocationTest extends AwTestBase {
         @Override
         public AwSettings createAwSettings(Context context, boolean supportLegacyQuirks) {
             return new AwSettings(context, false /* isAccessFromFileURLsGrantedByDefault */,
-                    supportLegacyQuirks, false /* allowEmptyDocumentPersistence */, mAllow);
+                    supportLegacyQuirks, false /* allowEmptyDocumentPersistence */, mAllow,
+                    false /* doNotUpdateSelectionOnMutatingSelectionRange */);
         }
     }
 
@@ -146,7 +149,8 @@ public class GeolocationTest extends AwTestBase {
     public void testGetPosition() throws Throwable {
         initAwContents(new GrantPermisionAwContentClient());
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "https://google.com/", "about:blank");
+                "text/html", false, "https://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
@@ -171,10 +175,12 @@ public class GeolocationTest extends AwTestBase {
      */
     @MediumTest
     @Feature({"AndroidWebView"})
+    @RetryOnFailure
     public void testWatchPosition() throws Throwable {
         initAwContents(new GrantPermisionAwContentClient());
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "https://google.com/", "about:blank");
+                "text/html", false, "https://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_watchPosition();", null);
 
@@ -192,7 +198,8 @@ public class GeolocationTest extends AwTestBase {
         initAwContents(new GrantPermisionAwContentClient());
         // Start a watch going.
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "https://google.com/", "about:blank");
+                "text/html", false, "https://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_watchPosition();", null);
 
@@ -251,7 +258,8 @@ public class GeolocationTest extends AwTestBase {
 
         // Start a watch going.
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "https://google.com/", "about:blank");
+                "text/html", false, "https://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_watchPosition();", null);
 
@@ -288,7 +296,8 @@ public class GeolocationTest extends AwTestBase {
         });
 
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "https://google.com/", "about:blank");
+                "text/html", false, "https://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
@@ -302,10 +311,12 @@ public class GeolocationTest extends AwTestBase {
 
     @Feature({"AndroidWebView"})
     @SmallTest
+    @RetryOnFailure
     public void testDenyAccessByDefault() throws Throwable {
         initAwContents(new DefaultPermisionAwContentClient());
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "https://google.com/", "about:blank");
+                "text/html", false, "https://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
@@ -321,11 +332,13 @@ public class GeolocationTest extends AwTestBase {
 
     @Feature({"AndroidWebView"})
     @SmallTest
+    @RetryOnFailure
     public void testDenyOnInsecureOrigins() throws Throwable {
         mOverridenFactory = new GeolocationOnInsecureOriginsTestDependencyFactory(false);
         initAwContents(new GrantPermisionAwContentClient());
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "http://google.com/", "about:blank");
+                "text/html", false, "http://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 
@@ -344,7 +357,8 @@ public class GeolocationTest extends AwTestBase {
     public void testAllowOnInsecureOriginsByDefault() throws Throwable {
         initAwContents(new GrantPermisionAwContentClient());
         loadDataWithBaseUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), RAW_HTML,
-                "text/html", false, "http://google.com/", "about:blank");
+                "text/html", false, "http://google.com/",
+                ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
 
         mAwContents.evaluateJavaScriptForTests("initiate_getCurrentPosition();", null);
 

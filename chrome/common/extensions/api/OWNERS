@@ -3,7 +3,6 @@
 
 # For documentation.
 mkearney@chromium.org
-mkwst@chromium.org
 
 per-file input_method_private.json=shuchen@chromium.org
 per-file webview*.json=paulmeyer@chromium.org
@@ -17,5 +16,6 @@ per-file automation*.idl=aboxhall@chromium.org
 per-file automation*.idl=dmazzoni@chromium.org
 per-file automation*.idl=dtseng@chromium.org
 per-file file_manager_private*.idl=mtomasz@chromium.org
-per-file gcd_private.idl=vitalybuka@chromium.org
 per-file resources_private.idl=tsergeant@chromium.org
+
+# COMPONENT: Platform>Extensions>API

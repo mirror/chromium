@@ -190,6 +190,7 @@ TEST_F('NetInternalsTest', 'netInternalsLogViewPainterPrintAsText', function() {
   runTestCase(painterTestHexEncodedBytes());
   runTestCase(painterTestCertVerifierJob());
   runTestCase(painterTestCertVerifyResult());
+  runTestCase(painterTestCheckedCert());
   runTestCase(painterTestProxyConfigOneProxyAllSchemes());
   runTestCase(painterTestProxyConfigTwoProxiesAllSchemes());
   runTestCase(painterTestDontStripCookiesURLRequest());
@@ -217,7 +218,8 @@ function painterTestURLRequest() {
   var testCase = {};
   testCase.tickOffset = '1337911098446';
   testCase.logCreationTime = 1338864634013;
-  testCase.loadFlags = LoadFlag.MAIN_FRAME | LoadFlag.MAYBE_USER_GESTURE |
+  testCase.loadFlags = LoadFlag.MAIN_FRAME_DEPRECATED |
+                       LoadFlag.MAYBE_USER_GESTURE |
                        LoadFlag.VERIFY_EV_CERT;
 
   testCase.logEntries = [
@@ -765,7 +767,7 @@ function painterTestURLRequest() {
 't=1338864633238 [st= 14]    URL_REQUEST_START_JOB  [dt=8]\n' +
 '                            --> load_flags = ' +
     testCase.loadFlags.toString() +
-    ' (MAIN_FRAME | MAYBE_USER_GESTURE ' +
+    ' (MAIN_FRAME_DEPRECATED | MAYBE_USER_GESTURE ' +
     '| VERIFY_EV_CERT)\n' +
 '                            --> method = "GET"\n' +
 '                            --> priority = 4\n' +
@@ -773,7 +775,7 @@ function painterTestURLRequest() {
 't=1338864633248 [st= 24]   +URL_REQUEST_START_JOB  [dt=279]\n' +
 '                            --> load_flags = ' +
     testCase.loadFlags.toString() +
-    ' (MAIN_FRAME | MAYBE_USER_GESTURE ' +
+    ' (MAIN_FRAME_DEPRECATED | MAYBE_USER_GESTURE ' +
     '| VERIFY_EV_CERT)\n' +
 '                            --> method = "GET"\n' +
 '                            --> priority = 4\n' +
@@ -925,7 +927,8 @@ function painterTestURLRequestIncompleteFromLoadedLogSingleEvent() {
 function painterTestNetError() {
   var testCase = {};
   testCase.tickOffset = '1337911098446';
-  testCase.loadFlags = LoadFlag.MAIN_FRAME | LoadFlag.MAYBE_USER_GESTURE |
+  testCase.loadFlags = LoadFlag.MAIN_FRAME_DEPRECATED |
+                       LoadFlag.MAYBE_USER_GESTURE |
                        LoadFlag.VERIFY_EV_CERT;
 
   testCase.logEntries = [
@@ -1101,7 +1104,7 @@ function painterTestNetError() {
 't=1338864773901 [st=  7]    URL_REQUEST_START_JOB  [dt=5]\n' +
 '                            --> load_flags = ' +
         testCase.loadFlags.toString() +
-        ' (MAIN_FRAME | MAYBE_USER_GESTURE ' +
+        ' (MAIN_FRAME_DEPRECATED | MAYBE_USER_GESTURE ' +
         '| VERIFY_EV_CERT)\n' +
 '                            --> method = "GET"\n' +
 '                            --> priority = 4\n' +
@@ -1109,7 +1112,7 @@ function painterTestNetError() {
 't=1338864773906 [st= 12]   +URL_REQUEST_START_JOB  [dt=245]\n' +
 '                            --> load_flags = ' +
         testCase.loadFlags.toString() +
-        ' (MAIN_FRAME | MAYBE_USER_GESTURE ' +
+        ' (MAIN_FRAME_DEPRECATED | MAYBE_USER_GESTURE ' +
         '| VERIFY_EV_CERT)\n' +
 '                            --> method = "GET"\n' +
 '                            --> priority = 4\n' +
@@ -1307,7 +1310,7 @@ function painterTestHexEncodedBytes() {
       'params': {
         'source_dependency': {
           'id': 634,
-          'type': EventSourceType.CONNECT_JOB
+          'type': EventSourceType.TRANSPORT_CONNECT_JOB
         }
       },
       'phase': EventPhase.PHASE_BEGIN,
@@ -1414,7 +1417,8 @@ function painterTestHexEncodedBytes() {
 
   testCase.expectedText =
 't=1338865016932 [st=  0] +SOCKET_ALIVE  [dt=?]\n' +
-'                          --> source_dependency = 634 (CONNECT_JOB)\n' +
+'                          --> source_dependency = 634 (TRANSPORT_CONNECT_JOB' +
+    ')\n' +
 't=1338865016933 [st=  1]   +TCP_CONNECT  [dt=5]\n' +
 '                            --> address_list = ["184.30.253.15:80"]\n' +
 't=1338865016934 [st=  2]      TCP_CONNECT_ATTEMPT  [dt=3]\n' +
@@ -1580,6 +1584,47 @@ function painterTestCertVerifyResult() {
     '                         --> is_issued_by_additional_trust_anchor =' +
     ' false\n                         --> common_name_fallback_used = true\n' +
     '                         --> public_key_hashes = ["hash1","hash2"]';
+
+  return testCase;
+}
+
+/**
+ * Tests the formatting of checked certificates
+ */
+function painterTestCheckedCert() {
+  var testCase = {};
+  testCase.tickOffset = '1337911098481';
+
+  testCase.logEntries = [
+    {
+      'params': {
+        'certificate': {
+          'certificates': [
+            '-----BEGIN CERTIFICATE-----\n1\n-----END CERTIFICATE-----\n',
+            '-----BEGIN CERTIFICATE-----\n2\n-----END CERTIFICATE-----\n'
+          ]
+        }
+      },
+      'phase': EventPhase.PHASE_NONE,
+      'source': {
+        'id': 752,
+        'type': EventSourceType.SOCKET
+      },
+      'time': '954124697',
+      'type': EventType.CERT_CT_COMPLIANCE_CHECKED
+    }
+  ];
+
+  testCase.expectedText =
+  't=1338865223178 [st=0]  CERT_CT_COMPLIANCE_CHECKED\n' +
+  '                        --> certificate =\n' +
+  '                               -----BEGIN CERTIFICATE-----\n' +
+  '                               1\n' +
+  '                               -----END CERTIFICATE-----\n' +
+  '                               \n' +
+  '                               -----BEGIN CERTIFICATE-----\n' +
+  '                               2\n' +
+  '                               -----END CERTIFICATE-----';
 
   return testCase;
 }
@@ -2088,7 +2133,8 @@ function painterTestSSLVersionFallback() {
 function painterTestInProgressURLRequest() {
   var testCase = {};
   testCase.tickOffset = '1337911098446';
-  testCase.loadFlags = LoadFlag.MAIN_FRAME | LoadFlag.MAYBE_USER_GESTURE |
+  testCase.loadFlags = LoadFlag.MAIN_FRAME_DEPRECATED |
+                       LoadFlag.MAYBE_USER_GESTURE |
                        LoadFlag.VERIFY_EV_CERT;
 
   testCase.logEntries = [
@@ -2140,7 +2186,7 @@ function painterTestInProgressURLRequest() {
 't=1338864773994 [st=  0] +REQUEST_ALIVE  [dt=375]\n' +
 '                          --> load_flags = ' +
     testCase.loadFlags.toString() +
-    ' (MAIN_FRAME | MAYBE_USER_GESTURE ' +
+    ' (MAIN_FRAME_DEPRECATED | MAYBE_USER_GESTURE ' +
     '| VERIFY_EV_CERT)\n' +
 '                          --> load_state = ' + LoadState.READING_RESPONSE +
     ' (READING_RESPONSE)\n' +

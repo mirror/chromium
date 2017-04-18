@@ -1,8 +1,1 @@
-# These tests currently fail when they run with --isolate-sites-for-testing=*.is
-
-# https://crbug.com/585194 - back/forward lists look different with --site-per-process
-http/tests/navigation/back-to-dynamic-iframe.html [ Failure Timeout ]
-
-# https://crbug.com/602493 - Layout tests harness doesn't support history dump across OOPIFs
-# https://crbug.com/582522 - extra mixedContent checks reported
-http/tests/security/mixedContent/insecure-iframe-in-main-frame.html [ Failure ]
+# Any tests below fail when they run with --isolate-sites-for-testing=*.is

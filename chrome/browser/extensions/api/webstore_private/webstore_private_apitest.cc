@@ -7,7 +7,6 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -21,6 +20,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/features.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/notification_observer.h"
@@ -31,12 +31,13 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/install/extension_install_ui.h"
 #include "gpu/config/gpu_feature_type.h"
-#include "gpu/config/gpu_info.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/gl/gl_switches.h"
 
-using gpu::GpuFeatureType;
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+#include "chrome/browser/supervised_user/supervised_user_constants.h"
+#endif  // BUILDFLAG(ENABLE_SUPERVISED_USERS)
 
 namespace utils = extension_function_test_utils;
 
@@ -106,24 +107,20 @@ class ExtensionWebstorePrivateApiTest : public ExtensionApiTest {
         "http://www.example.com/extensions/api_test");
   }
 
-  void SetUpInProcessBrowserTestFixture() override {
-    ExtensionApiTest::SetUpInProcessBrowserTestFixture();
+  void SetUpOnMainThread() override {
+    ExtensionApiTest::SetUpOnMainThread();
 
     // Start up the test server and get us ready for calling the install
     // API functions.
     host_resolver()->AddRule("www.example.com", "127.0.0.1");
     ASSERT_TRUE(StartEmbeddedTestServer());
     extensions::ExtensionInstallUI::set_disable_failure_ui_for_tests();
-  }
-
-  void SetUpOnMainThread() override {
-    ExtensionApiTest::SetUpOnMainThread();
 
     auto_confirm_install_.reset(
         new ScopedTestDialogAutoConfirm(ScopedTestDialogAutoConfirm::ACCEPT));
 
     ASSERT_TRUE(webstore_install_dir_.CreateUniqueTempDir());
-    webstore_install_dir_copy_ = webstore_install_dir_.path();
+    webstore_install_dir_copy_ = webstore_install_dir_.GetPath();
     WebstoreInstaller::SetDownloadDirectoryForTests(
         &webstore_install_dir_copy_);
   }
@@ -345,6 +342,44 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebstorePrivateApiTest, EmptyCrx) {
   ASSERT_TRUE(RunInstallTest("empty.html", "empty.crx"));
 }
 
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+
+class ExtensionWebstorePrivateApiTestSupervised
+    : public ExtensionWebstorePrivateApiTest {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ExtensionWebstorePrivateApiTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kSupervisedUserId, "not_empty");
+  }
+};
+
+// Tests that extension installation is blocked for supervised users.
+// Note: This will have to be updated if we enable SU-initiated installs.
+IN_PROC_BROWSER_TEST_F(ExtensionWebstorePrivateApiTestSupervised,
+                       InstallBlocked) {
+  ASSERT_TRUE(
+      RunInstallTest("begin_install_fail_supervised.html", "extension.crx"));
+}
+
+class ExtensionWebstorePrivateApiTestChild
+    : public ExtensionWebstorePrivateApiTest {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ExtensionWebstorePrivateApiTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kSupervisedUserId,
+                                    supervised_users::kChildAccountSUID);
+  }
+};
+
+// Tests that extension installation is blocked for child accounts, and
+// attempting to do so produces a special error code.
+// Note: This will have to be updated when we enable child-initiated installs.
+IN_PROC_BROWSER_TEST_F(ExtensionWebstorePrivateApiTestChild, InstallBlocked) {
+  ASSERT_TRUE(RunInstallTest("begin_install_fail_child.html", "extension.crx"));
+}
+
+#endif  // BUILDFLAG(ENABLE_SUPERVISED_USERS)
+
 class ExtensionWebstoreGetWebGLStatusTest : public InProcessBrowserTest {
  protected:
   void RunTest(bool webgl_allowed) {
@@ -360,7 +395,7 @@ class ExtensionWebstoreGetWebGLStatusTest : public InProcessBrowserTest {
     std::unique_ptr<base::Value> result(utils::RunFunctionAndReturnSingleResult(
         function.get(), kEmptyArgs, browser()));
     ASSERT_TRUE(result);
-    EXPECT_EQ(base::Value::TYPE_STRING, result->GetType());
+    EXPECT_EQ(base::Value::Type::STRING, result->GetType());
     std::string webgl_status;
     EXPECT_TRUE(result->GetAsString(&webgl_status));
     EXPECT_STREQ(webgl_allowed ? kWebGLStatusAllowed : kWebGLStatusBlocked,
@@ -376,24 +411,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebstoreGetWebGLStatusTest, Allowed) {
 
 // Tests getWebGLStatus function when WebGL is blacklisted.
 IN_PROC_BROWSER_TEST_F(ExtensionWebstoreGetWebGLStatusTest, Blocked) {
-  static const std::string json_blacklist =
-      "{\n"
-      "  \"name\": \"gpu blacklist\",\n"
-      "  \"version\": \"1.0\",\n"
-      "  \"entries\": [\n"
-      "    {\n"
-      "      \"id\": 1,\n"
-      "      \"features\": [\n"
-      "        \"webgl\"\n"
-      "      ]\n"
-      "    }\n"
-      "  ]\n"
-      "}";
-  gpu::GPUInfo gpu_info;
-  content::GpuDataManager::GetInstance()->InitializeForTesting(
-      json_blacklist, gpu_info);
+  content::GpuDataManager::GetInstance()->BlacklistWebGLForTesting();
   EXPECT_TRUE(content::GpuDataManager::GetInstance()->IsFeatureBlacklisted(
-      gpu::GPU_FEATURE_TYPE_WEBGL));
+      gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL));
 
   bool webgl_allowed = false;
   RunTest(webgl_allowed);

@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -60,10 +61,10 @@ class FakeTaskRunner : public base::TaskRunner {
 
   // base::TaskRunner overrides:
   bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       const base::Closure& task,
+                       base::OnceClosure task,
                        base::TimeDelta delay) override {
     delays_->push_back(delay.InMilliseconds());
-    base::ThreadTaskRunnerHandle::Get()->PostTask(from_here, task);
+    base::ThreadTaskRunnerHandle::Get()->PostTask(from_here, std::move(task));
     return true;
   }
   bool RunsTasksOnCurrentThread() const override { return true; }
@@ -259,7 +260,7 @@ class SystemTPMTokenInfoGetterTest : public testing::Test {
 class UserTPMTokenInfoGetterTest : public testing::Test {
  public:
   UserTPMTokenInfoGetterTest()
-      : account_id_(AccountId::FromUserEmail("user")) {}
+      : account_id_(AccountId::FromUserEmail("user@gmail.com")) {}
   ~UserTPMTokenInfoGetterTest() override {}
 
   void SetUp() override {

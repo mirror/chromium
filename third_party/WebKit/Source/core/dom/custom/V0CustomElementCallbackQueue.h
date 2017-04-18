@@ -34,45 +34,48 @@
 #include "core/dom/Element.h"
 #include "core/dom/custom/V0CustomElementProcessingStep.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 // FIXME: Rename this because it contains resolution and upgrade as
 // well as callbacks.
-class V0CustomElementCallbackQueue : public GarbageCollected<V0CustomElementCallbackQueue> {
-    WTF_MAKE_NONCOPYABLE(V0CustomElementCallbackQueue);
-public:
-    static V0CustomElementCallbackQueue* create(Element*);
+class V0CustomElementCallbackQueue
+    : public GarbageCollected<V0CustomElementCallbackQueue> {
+  WTF_MAKE_NONCOPYABLE(V0CustomElementCallbackQueue);
 
-    typedef int ElementQueueId;
-    ElementQueueId owner() const { return m_owner; }
+ public:
+  static V0CustomElementCallbackQueue* Create(Element*);
 
-    void setOwner(ElementQueueId newOwner)
-    {
-        // ElementCallbackQueues only migrate towards the top of the
-        // processing stack.
-        DCHECK_GE(newOwner, m_owner);
-        m_owner = newOwner;
-    }
+  typedef int ElementQueueId;
+  ElementQueueId Owner() const { return owner_; }
 
-    bool processInElementQueue(ElementQueueId);
+  void SetOwner(ElementQueueId new_owner) {
+    // ElementCallbackQueues only migrate towards the top of the
+    // processing stack.
+    DCHECK_GE(new_owner, owner_);
+    owner_ = new_owner;
+  }
 
-    void append(V0CustomElementProcessingStep* invocation) { m_queue.append(invocation); }
-    bool inCreatedCallback() const { return m_inCreatedCallback; }
+  bool ProcessInElementQueue(ElementQueueId);
 
-    DECLARE_TRACE();
+  void Append(V0CustomElementProcessingStep* invocation) {
+    queue_.push_back(invocation);
+  }
+  bool InCreatedCallback() const { return in_created_callback_; }
 
-private:
-    explicit V0CustomElementCallbackQueue(Element*);
+  DECLARE_TRACE();
 
-    Member<Element> m_element;
-    HeapVector<Member<V0CustomElementProcessingStep>> m_queue;
-    ElementQueueId m_owner;
-    size_t m_index;
-    bool m_inCreatedCallback;
+ private:
+  explicit V0CustomElementCallbackQueue(Element*);
+
+  Member<Element> element_;
+  HeapVector<Member<V0CustomElementProcessingStep>> queue_;
+  ElementQueueId owner_;
+  size_t index_;
+  bool in_created_callback_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V0CustomElementCallbackQueue_h
+#endif  // V0CustomElementCallbackQueue_h

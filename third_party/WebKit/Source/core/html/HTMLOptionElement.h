@@ -33,93 +33,92 @@ namespace blink {
 class ExceptionState;
 class HTMLDataListElement;
 class HTMLSelectElement;
-class ComputedStyle;
 
 class CORE_EXPORT HTMLOptionElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLOptionElement* create(Document&);
-    static HTMLOptionElement* createForJSConstructor(Document&, const String& data, const AtomicString& value,
-        bool defaultSelected, bool selected, ExceptionState&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    // A text to be shown to users.  The difference from |label()| is |label()|
-    // returns an empty string if |label| content attribute is empty.
-    // |displayLabel()| returns the value string in that case.
-    String displayLabel() const;
+ public:
+  static HTMLOptionElement* Create(Document&);
+  static HTMLOptionElement* CreateForJSConstructor(Document&,
+                                                   const String& data,
+                                                   const AtomicString& value,
+                                                   bool default_selected,
+                                                   bool selected,
+                                                   ExceptionState&);
 
-    // |text| IDL attribute implementations.
-    String text() const;
-    void setText(const String&, ExceptionState&);
+  // A text to be shown to users.  The difference from |label()| is |label()|
+  // returns an empty string if |label| content attribute is empty.
+  // |displayLabel()| returns the value string in that case.
+  String DisplayLabel() const;
 
-    int index() const;
+  // |text| IDL attribute implementations.
+  String text() const;
+  void setText(const String&, ExceptionState&);
 
-    String value() const;
-    void setValue(const AtomicString&);
+  int index() const;
 
-    bool selected() const;
-    void setSelected(bool);
-    bool selectedForBinding() const;
-    void setSelectedForBinding(bool);
+  String value() const;
+  void setValue(const AtomicString&);
 
-    HTMLDataListElement* ownerDataListElement() const;
-    HTMLSelectElement* ownerSelectElement() const;
+  bool Selected() const;
+  void SetSelected(bool);
+  bool selectedForBinding() const;
+  void setSelectedForBinding(bool);
 
-    String label() const;
-    void setLabel(const AtomicString&);
+  HTMLDataListElement* OwnerDataListElement() const;
+  HTMLSelectElement* OwnerSelectElement() const;
 
-    bool ownElementDisabled() const;
+  String label() const;
+  void setLabel(const AtomicString&);
 
-    bool isDisabledFormControl() const override;
-    String defaultToolTip() const override;
+  bool OwnElementDisabled() const;
 
-    String textIndentedToRespectGroupLabel() const;
+  bool IsDisabledFormControl() const override;
+  String DefaultToolTip() const override;
 
-    // Update 'selectedness'.
-    void setSelectedState(bool);
-    // Update 'dirtiness'.
-    void setDirty(bool);
+  String TextIndentedToRespectGroupLabel() const;
 
-    HTMLFormElement* form() const;
-    bool spatialNavigationFocused() const;
+  // Update 'selectedness'.
+  void SetSelectedState(bool);
+  // Update 'dirtiness'.
+  void SetDirty(bool);
 
-    bool isDisplayNone() const;
+  HTMLFormElement* form() const;
+  bool SpatialNavigationFocused() const;
 
-    int listIndex() const;
+  bool IsDisplayNone() const;
 
-private:
-    explicit HTMLOptionElement(Document&);
-    ~HTMLOptionElement();
+  int ListIndex() const;
 
-    bool supportsFocus() const override;
-    bool matchesDefaultPseudoClass() const override;
-    bool matchesEnabledPseudoClass() const override;
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
-    void detachLayoutTree(const AttachContext& = AttachContext()) override;
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
-    void accessKeyAction(bool) override;
-    void childrenChanged(const ChildrenChange&) override;
+ private:
+  explicit HTMLOptionElement(Document&);
+  ~HTMLOptionElement();
 
-    // <option> never has a layoutObject so we manually manage a cached style.
-    void updateNonComputedStyle();
-    ComputedStyle* nonLayoutObjectComputedStyle() const override;
-    PassRefPtr<ComputedStyle> customStyleForLayoutObject() override;
-    void didAddUserAgentShadowRoot(ShadowRoot&) override;
+  bool SupportsFocus() const override;
+  bool MatchesDefaultPseudoClass() const override;
+  bool MatchesEnabledPseudoClass() const override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
+  void AccessKeyAction(bool) override;
+  void ChildrenChanged(const ChildrenChange&) override;
+  String innerText() override;
 
-    String collectOptionInnerText() const;
+  void DidAddUserAgentShadowRoot(ShadowRoot&) override;
 
-    void updateLabel();
+  String CollectOptionInnerText() const;
 
-    // Represents 'selectedness'.
-    // https://html.spec.whatwg.org/multipage/forms.html#concept-option-selectedness
-    bool m_isSelected;
-    // Represents 'dirtiness'.
-    // https://html.spec.whatwg.org/multipage/forms.html#concept-option-dirtiness
-    bool m_isDirty = false;
-    RefPtr<ComputedStyle> m_style;
+  void UpdateLabel();
+
+  // Represents 'selectedness'.
+  // https://html.spec.whatwg.org/multipage/forms.html#concept-option-selectedness
+  bool is_selected_;
+  // Represents 'dirtiness'.
+  // https://html.spec.whatwg.org/multipage/forms.html#concept-option-dirtiness
+  bool is_dirty_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLOptionElement_h
+#endif  // HTMLOptionElement_h

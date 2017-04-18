@@ -30,41 +30,49 @@
 #include "platform/Timer.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class FrameView;
 class WebViewImpl;
 
-class ValidationMessageClientImpl final : public GarbageCollectedFinalized<ValidationMessageClientImpl>, public ValidationMessageClient {
-    USING_GARBAGE_COLLECTED_MIXIN(ValidationMessageClientImpl);
-public:
-    static ValidationMessageClientImpl* create(WebViewImpl&);
-    ~ValidationMessageClientImpl() override;
+class ValidationMessageClientImpl final
+    : public GarbageCollectedFinalized<ValidationMessageClientImpl>,
+      public ValidationMessageClient {
+  USING_GARBAGE_COLLECTED_MIXIN(ValidationMessageClientImpl);
 
-    DECLARE_VIRTUAL_TRACE();
+ public:
+  static ValidationMessageClientImpl* Create(WebViewImpl&);
+  ~ValidationMessageClientImpl() override;
 
-private:
-    ValidationMessageClientImpl(WebViewImpl&);
-    void checkAnchorStatus(Timer<ValidationMessageClientImpl>*);
-    FrameView* currentView();
+  DECLARE_VIRTUAL_TRACE();
 
-    void showValidationMessage(const Element& anchor, const String& message, TextDirection messageDir, const String& subMessage, TextDirection subMessageDir) override;
-    void hideValidationMessage(const Element& anchor) override;
-    bool isValidationMessageVisible(const Element& anchor) override;
-    void documentDetached(const Document&) override;
-    void willBeDestroyed() override;
+ private:
+  ValidationMessageClientImpl(WebViewImpl&);
+  void CheckAnchorStatus(TimerBase*);
+  FrameView* CurrentView();
 
-    WebViewImpl& m_webView;
-    Member<const Element> m_currentAnchor;
-    String m_message;
-    IntRect m_lastAnchorRectInScreen;
-    float m_lastPageScaleFactor;
-    double m_finishTime;
-    Timer<ValidationMessageClientImpl> m_timer;
+  void ShowValidationMessage(const Element& anchor,
+                             const String& message,
+                             TextDirection message_dir,
+                             const String& sub_message,
+                             TextDirection sub_message_dir) override;
+  void HideValidationMessage(const Element& anchor) override;
+  bool IsValidationMessageVisible(const Element& anchor) override;
+  void WillUnloadDocument(const Document&) override;
+  void DocumentDetached(const Document&) override;
+  void WillBeDestroyed() override;
+
+  WebViewImpl& web_view_;
+  Member<const Element> current_anchor_;
+  String message_;
+  IntRect last_anchor_rect_in_screen_;
+  float last_page_scale_factor_;
+  double finish_time_;
+  std::unique_ptr<TimerBase> timer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

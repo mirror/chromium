@@ -26,7 +26,7 @@ AutomationUtilE2ETest.prototype = {
 
     /** Filters nodes not rooted by desktop. */
     function filterNonDesktopRoot(node) {
-      return node.root.role != RoleType.desktop;
+      return node.root.role != RoleType.DESKTOP;
     }
 
     window.getNonDesktopAncestors = function(node) {
@@ -42,7 +42,7 @@ AutomationUtilE2ETest.prototype = {
 
   basicDoc: function() {/*!
     <p><a href='#'></a>hello</p>
-    <h1><ul><li>a</ul><button></h1>
+    <h1><ul><li>a</ul><div role="group"><button></button></div></h1>
   */},
 
   secondDoc: function() {/*!
@@ -72,7 +72,7 @@ TEST_F('AutomationUtilE2ETest', 'GetAncestors', function() {
     }
   });
 });
-  
+
 TEST_F('AutomationUtilE2ETest', 'GetUniqueAncestors', function() {
   this.runWithLoadedTree(this.basicDoc, function(root) {
     var leftmost = root, rightmost = root;
@@ -83,8 +83,8 @@ TEST_F('AutomationUtilE2ETest', 'GetUniqueAncestors', function() {
 
     var leftAncestors = getNonDesktopAncestors(leftmost);
     var rightAncestors = getNonDesktopAncestors(rightmost);
-    assertEquals(RoleType.link, leftmost.role);
-    assertEquals(RoleType.button, rightmost.role);
+    assertEquals(RoleType.LINK, leftmost.role);
+    assertEquals(RoleType.BUTTON, rightmost.role);
     assertEquals(
         1, AutomationUtil.getDivergence(leftAncestors, rightAncestors));
 
@@ -97,17 +97,17 @@ TEST_F('AutomationUtilE2ETest', 'GetUniqueAncestors', function() {
         getNonDesktopUniqueAncestors(leftmost, rightmost);
 
     assertEquals(2, uniqueAncestorsLeft.length);
-    assertEquals(RoleType.paragraph,
+    assertEquals(RoleType.PARAGRAPH,
         uniqueAncestorsLeft[0].role);
-    assertEquals(RoleType.link,
+    assertEquals(RoleType.LINK,
         uniqueAncestorsLeft[1].role);
 
     assertEquals(3, uniqueAncestorsRight.length);
-    assertEquals(RoleType.heading,
+    assertEquals(RoleType.HEADING,
         uniqueAncestorsRight[0].role);
-    assertEquals(RoleType.group,
+    assertEquals(RoleType.GROUP,
         uniqueAncestorsRight[1].role);
-    assertEquals(RoleType.button,
+    assertEquals(RoleType.BUTTON,
         uniqueAncestorsRight[2].role);
 
     assertEquals(
@@ -135,62 +135,6 @@ TEST_F('AutomationUtilE2ETest', 'GetDirection', function() {
     assertEquals(Dir.BACKWARD, AutomationUtil.getDirection(right, left));
     assertEquals(Dir.FORWARD, AutomationUtil.getDirection(left, right));
   });
-});
-
-TEST_F('AutomationUtilE2ETest', 'IsInSameWebpage', function() {
-  this.runWithLoadedTree(this.basicDoc, function(root) {
-    this.runWithLoadedTree(this.secondDoc, function(root2) {
-      chrome.automation.getDesktop(this.newCallback(function(desktop) {
-        assertTrue(AutomationUtil.isInSameWebpage(root, root));
-        assertTrue(AutomationUtil.isInSameWebpage(root.firstChild, root));
-        assertTrue(AutomationUtil.isInSameWebpage(root, root.firstChild));
-
-        assertTrue(AutomationUtil.isInSameWebpage(root2, root2));
-        assertTrue(AutomationUtil.isInSameWebpage(root2.firstChild, root2));
-        assertTrue(AutomationUtil.isInSameWebpage(root2, root2.firstChild));
-
-        assertFalse(AutomationUtil.isInSameWebpage(root, root2));
-        assertFalse(AutomationUtil.isInSameWebpage(root.firstChild, root2));
-        assertFalse(AutomationUtil.isInSameWebpage(root2.firstChild));
-        assertFalse(AutomationUtil.isInSameWebpage(
-            root.firstChild, root2.firstChild));
-
-        assertFalse(AutomationUtil.isInSameWebpage(root, desktop));
-        assertFalse(AutomationUtil.isInSameWebpage(root2, desktop));
-      }.bind(this)));
-    }.bind(this));
-  }.bind(this));
-});
-
-TEST_F('AutomationUtilE2ETest', 'IsInSameWebpageIframe', function() {
-  // Wait for load complete on both outer frame and iframe.
-  var outerFrame;
-  var innerFrame;
-  var desktop;
-  var onSuccess = this.newCallback(function() {
-    assertTrue(AutomationUtil.isInSameWebpage(outerFrame, innerFrame));
-    assertFalse(AutomationUtil.isInSameWebpage(outerFrame, desktop));
-    assertFalse(AutomationUtil.isInSameWebpage(innerFrame, desktop));
-    assertFalse(AutomationUtil.isInSameWebpage(outerFrame.parent, innerFrame));
-  }.bind(this));
-
-  chrome.automation.getDesktop(function(r) {
-    desktop = r;
-    this.runWithTab(this.iframeDoc, function(newTabUrl) {
-      var listener = function(evt) {
-        if (evt.target.docUrl == newTabUrl)
-          outerFrame = evt.target;
-	if (evt.target.docUrl.indexOf('data:text/html') == 0)
-	  innerFrame = evt.target;
-
-        if (outerFrame && innerFrame) {
-          desktop.removeEventListener('loadComplete', listener, true);
-          onSuccess();
-        }
-      }.bind(this);
-      desktop.addEventListener('loadComplete', listener, true);
-    }.bind(this));
-  }.bind(this));
 });
 
 TEST_F('AutomationUtilE2ETest', 'VisitContainer', function() {

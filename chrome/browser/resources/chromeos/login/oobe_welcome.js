@@ -11,20 +11,85 @@ Polymer({
 
   properties: {
     /**
-     * Currently selected system language.
+     * Currently selected system language (display name).
      */
     currentLanguage: {
       type: String,
-      value: 'English (US)',
+      value: '',
     },
 
     /**
-     * Flag that switches Welcome screen to Network Selection screen.
+     * Currently selected input method (display name).
      */
-    networkSelectionScreenShown: {
+    currentKeyboard: {
+      type: String,
+      value: '',
+    },
+
+    /**
+     * List of languages for language selector dropdown.
+     * @type {!Array<OobeTypes.LanguageDsc>}
+     */
+    languages: {
+      type: Array,
+      observer: "onLanguagesChanged_",
+    },
+
+    /**
+     * List of keyboards for keyboard selector dropdown.
+     * @type {!Array<OobeTypes.IMEDsc>}
+     */
+    keyboards: {
+      type: Array,
+      observer: "onKeyboardsChanged_",
+    },
+
+    /**
+     * Flag that enables MD-OOBE.
+     */
+    enabled: {
       type: Boolean,
       value: false,
     },
+
+    /**
+     * Accessibility options status.
+     * @type {!OobeTypes.A11yStatuses}
+     */
+    a11yStatus: {
+      type: Object,
+    },
+
+    /**
+     * A list of timezones for Timezone Selection screen.
+     * @type {!Array<OobeTypes.TimezoneDsc>}
+     */
+    timezones: {
+      type: Object,
+      value: [],
+    },
+
+    /**
+     * If UI uses forced keyboard navigation.
+     */
+    highlightStrength: {
+      type: String,
+      value: '',
+    },
+
+    /**
+     * True when connected to a network.
+     * @private
+     */
+    isConnected_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
+     * Controls displaying of "Enable debugging features" link.
+     */
+     debuggingLinkVisible: Boolean,
   },
 
   /**
@@ -34,11 +99,93 @@ Polymer({
    */
   networkLastSelectedGuid_: '',
 
+  /** @override */
+  ready: function() {
+    this.updateLocalizedContent();
+  },
+
   /**
-   * Sets proper focus.
+   * This is called when UI strings are changed.
    */
+  updateLocalizedContent: function() {
+    CrOncStrings = {
+      OncTypeCellular: loadTimeData.getString('OncTypeCellular'),
+      OncTypeEthernet: loadTimeData.getString('OncTypeEthernet'),
+      OncTypeVPN: loadTimeData.getString('OncTypeVPN'),
+      OncTypeWiFi: loadTimeData.getString('OncTypeWiFi'),
+      OncTypeWiMAX: loadTimeData.getString('OncTypeWiMAX'),
+      networkDisabled: loadTimeData.getString('networkDisabled'),
+      networkListItemConnected:
+          loadTimeData.getString('networkListItemConnected'),
+      networkListItemConnecting:
+          loadTimeData.getString('networkListItemConnecting'),
+      networkListItemConnectingTo:
+          loadTimeData.getString('networkListItemConnectingTo'),
+      networkListItemNotConnected:
+          loadTimeData.getString('networkListItemNotConnected'),
+      vpnNameTemplate: loadTimeData.getString('vpnNameTemplate'),
+
+      // Additional strings for custom items.
+      addMobileNetworkMenuName:
+          loadTimeData.getString('addMobileNetworkMenuName'),
+      addWiFiNetworkMenuName: loadTimeData.getString('addWiFiNetworkMenuName'),
+      proxySettingsMenuName: loadTimeData.getString('proxySettingsMenuName'),
+    };
+  },
+
+  /**
+   * Hides all screens to help switching from one screen to another.
+   * @private
+   */
+  hideAllScreens_: function() {
+    this.$.welcomeScreen.hidden = true;
+
+    var screens = Polymer.dom(this.root).querySelectorAll('oobe-dialog')
+    for (var i = 0; i < screens.length; ++i) {
+      screens[i].hidden = true;
+    }
+  },
+
+  /**
+   * Shows given screen.
+   * @param id String Screen ID.
+   * @private
+   */
+  showScreen_: function(id) {
+    this.hideAllScreens_();
+
+    var screen = this.$[id];
+    assert(screen);
+    screen.hidden = false;
+    screen.show();
+  },
+
+  /**
+   * Returns active screen object.
+   * @private
+   */
+  getActiveScreen_: function() {
+    var screens = Polymer.dom(this.root).querySelectorAll('oobe-dialog')
+    for (var i = 0; i < screens.length; ++i) {
+      if (!screens[i].hidden)
+        return screens[i];
+    }
+    return this.$.welcomeScreen;
+  },
+
   focus: function() {
-    this.$.welcomeNextButton.focus();
+    this.getActiveScreen_().focus();
+  },
+
+  /** @private */
+  onNetworkSelectionScreenShown_: function() {
+    // After #networkSelect is stamped, trigger a refresh so that the list
+    // will be updated with the currently visible networks and sized
+    // appropriately.
+    this.async(function() {
+      this.$.networkSelect.refreshNetworks();
+      this.$.networkSelect.focus();
+    }.bind(this));
   },
 
   /**
@@ -51,27 +198,28 @@ Polymer({
 
   /**
    * Returns custom items for network selector.
+   * @private
    */
-  _getNetworkCustomItems: function() {
+  getNetworkCustomItems_: function() {
     var self = this;
     return [
       {
         customItemName: 'proxySettingsMenuName',
-        polymerIcon: 'oobe-welcome:add',
+        polymerIcon: 'oobe-welcome-20:add-proxy',
         customData: {
           onTap: function() { self.OpenProxySettingsDialog_(); },
         },
       },
       {
         customItemName: 'addWiFiNetworkMenuName',
-        polymerIcon: 'oobe-welcome:add',
+        polymerIcon: 'oobe-welcome-20:add-wifi',
         customData: {
           onTap: function() { self.OpenAddWiFiNetworkDialog_(); },
         },
       },
       {
         customItemName: 'addMobileNetworkMenuName',
-        polymerIcon: 'oobe-welcome:add',
+        polymerIcon: 'oobe-welcome-20:add-cellular',
         customData: {
           onTap: function() { self.OpenAddWiFiNetworkDialog_(); },
         },
@@ -80,12 +228,47 @@ Polymer({
   },
 
   /**
+   * Returns true if timezone button should be visible.
+   * @private
+   */
+  isTimezoneButtonVisible_: function(highlightStrength) {
+    return highlightStrength === 'strong';
+  },
+
+  /**
    * Handle "Next" button for "Welcome" screen.
    *
    * @private
    */
   onWelcomeNextButtonClicked_: function() {
-    this.networkSelectionScreenShown = true;
+    this.showScreen_('networkSelectionScreen');
+  },
+
+  /**
+   * Handle "Language" button for "Welcome" screen.
+   *
+   * @private
+   */
+  onWelcomeSelectLanguageButtonClicked_: function() {
+    this.showScreen_('languageScreen');
+  },
+
+  /**
+   * Handle "Accessibility" button for "Welcome" screen.
+   *
+   * @private
+   */
+  onWelcomeAccessibilityButtonClicked_: function() {
+    this.showScreen_('accessibilityScreen');
+  },
+
+  /**
+   * Handle "Timezone" button for "Welcome" screen.
+   *
+   * @private
+   */
+  onWelcomeTimezoneButtonClicked_: function() {
+    this.showScreen_('timezoneScreen');
   },
 
   /**
@@ -121,21 +304,25 @@ Polymer({
    * @private
    */
   onSelectedNetworkConnected_: function() {
-    $('oobe-connect').hidden = false;
-    $('oobe-welcome-md').hidden = true;
+    this.networkLastSelectedGuid_ = '';
+    chrome.send('login.NetworkScreen.userActed', ['continue']);
   },
 
   /**
-   * This gets called when a network enters the 'Connected' state.
-   *
-   * @param {!{detail: !CrOnc.NetworkStateProperties}} event
+   * This gets called whenever the default network changes.
+   * @param {!{detail: ?CrOnc.NetworkStateProperties}} event
    * @private
    */
-  onNetworkConnected_: function(event) {
+  onDefaultNetworkChanged_: function(event) {
     var state = event.detail;
-    if (state.GUID != this.networkLastSelectedGuid_)
+    this.isConnected_ =
+        !!state && state.ConnectionState == CrOnc.ConnectionState.CONNECTED;
+    if (!state || state.GUID != this.networkLastSelectedGuid_)
       return;
 
+    // Duplicate asynchronous event may be delivered to some other screen,
+    // so disable it.
+    this.networkLastSelectedGuid_ = '';
     this.onSelectedNetworkConnected_();
   },
 
@@ -168,21 +355,139 @@ Polymer({
       if (!lastError)
         return;
 
-      if (lastError.message == 'connected') {
-        self.onNetworkConnected_({'detail': networkStateCopy});
+      if (lastError.message == 'connected' || lastError.message == 'connecting')
         return;
-      }
 
-      if (lastError.message != 'connecting')
-        console.error('networkingPrivate.startConnect error: ' + lastError);
+      console.error('networkingPrivate.startConnect error: ' + lastError);
     });
   },
 
   /**
    * @param {!Event} event
+   * @private
    */
   onNetworkListCustomItemSelected_: function(e) {
     var itemState = e.detail;
     itemState.customData.onTap();
+  },
+
+  /**
+   * Handle "<- Back" button on network selection screen.
+   *
+   * @private
+   */
+  onNetworkSelectionBackButtonPressed_: function() {
+    this.networkLastSelectedGuid_ = '';
+    this.showScreen_('welcomeScreen');
+  },
+
+  /**
+   * Handle language selection.
+   *
+   * @param {!{detail: {!OobeTypes.LanguageDsc}}} event
+   * @private
+   */
+  onLanguageSelected_: function(event) {
+    var item = event.detail;
+    var languageId = item.value;
+    this.currentLanguage = item.title;
+    this.screen.onLanguageSelected_(languageId);
+  },
+
+  /**
+   * Handle keyboard layout selection.
+   *
+   * @param {!{detail: {!OobeTypes.IMEDsc}}} event
+   * @private
+   */
+  onKeyboardSelected_: function(event) {
+    var item = event.detail;
+    var inputMethodId = item.value;
+    this.currentKeyboard = item.title;
+    this.screen.onKeyboardSelected_(inputMethodId);
+  },
+
+  onLanguagesChanged_: function() {
+    this.currentLanguage = Oobe.getSelectedTitle(this.languages);
+  },
+
+  setSelectedKeyboard: function(keyboard_id) {
+    var found = false;
+    for (var i = 0; i < this.keyboards.length; ++i) {
+      if (this.keyboards[i].value != keyboard_id) {
+        this.keyboards[i].selected = false;
+        continue;
+      }
+      this.keyboards[i].selected = true;
+      found = true;
+    }
+    if (!found)
+      return;
+
+    // Force i18n-dropdown to refresh.
+    this.keyboards = this.keyboards.slice();
+    this.onKeyboardsChanged_();
+  },
+
+  onKeyboardsChanged_: function() {
+    this.currentKeyboard = Oobe.getSelectedTitle(this.keyboards);
+  },
+
+  /**
+   * Handle "OK" button for "LanguageSelection" screen.
+   *
+   * @private
+   */
+  closeLanguageSection_: function() {
+    this.showScreen_('welcomeScreen');
+  },
+
+  /** ******************** Accessibility section ******************* */
+
+  /**
+   * Handle "OK" button for "Accessibility Options" screen.
+   *
+   * @private
+   */
+  closeAccessibilitySection_: function() {
+    this.showScreen_('welcomeScreen');
+  },
+
+  /**
+   * Handle all accessibility buttons.
+   * Note that each <oobe-a11y-option> has chromeMessage attribute
+   * containing Chromium callback name.
+   *
+   * @private
+   * @param {!Event} event
+   */
+  onA11yOptionChanged_: function(event) {
+    chrome.send(
+        event.currentTarget.chromeMessage, [event.currentTarget.checked]);
+  },
+
+  /** ******************** Timezone section ******************* */
+
+  /**
+   * Handle "OK" button for "Timezone Selection" screen.
+   *
+   * @private
+   */
+  closeTimezoneSection_: function() {
+    this.showScreen_('welcomeScreen');
+  },
+
+  /**
+   * Handle timezone selection.
+   *
+   * @param {!{detail: {!OobeTypes.Timezone}}} event
+   * @private
+   */
+  onTimezoneSelected_: function(event) {
+    var item = event.detail;
+    if (!item)
+      return;
+
+    this.screen.onTimezoneSelected_(item.value);
   },
 });

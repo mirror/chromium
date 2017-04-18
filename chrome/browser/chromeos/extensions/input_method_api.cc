@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/extensions/input_method_api.h"
 
 #include <stddef.h>
+#include <memory>
 #include <set>
 #include <string>
 #include <utility>
@@ -30,7 +31,7 @@
 #include "chrome/common/extensions/api/input_method_private.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
 #include "extensions/browser/extension_function_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -97,7 +98,7 @@ InputMethodPrivateGetCurrentInputMethodFunction::Run() {
 #else
   chromeos::input_method::InputMethodManager* manager =
       chromeos::input_method::InputMethodManager::Get();
-  return RespondNow(OneArgument(base::MakeUnique<base::StringValue>(
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(
       manager->GetActiveIMEState()->GetCurrentInputMethod().id())));
 #endif
 }
@@ -142,11 +143,11 @@ InputMethodPrivateGetInputMethodsFunction::Run() {
   for (size_t i = 0; i < input_methods->size(); ++i) {
     const chromeos::input_method::InputMethodDescriptor& input_method =
         (*input_methods)[i];
-    base::DictionaryValue* val = new base::DictionaryValue();
+    auto val = base::MakeUnique<base::DictionaryValue>();
     val->SetString("id", input_method.id());
     val->SetString("name", util->GetInputMethodLongName(input_method));
     val->SetString("indicator", util->GetInputMethodShortName(input_method));
-    output->Append(val);
+    output->Append(std::move(val));
   }
   return RespondNow(OneArgument(std::move(output)));
 #endif
@@ -211,13 +212,13 @@ InputMethodPrivateGetEncryptSyncEnabledFunction::Run() {
 #if !defined(OS_CHROMEOS)
   EXTENSION_FUNCTION_VALIDATE(false);
 #else
-  ProfileSyncService* profile_sync_service =
+  browser_sync::ProfileSyncService* profile_sync_service =
       ProfileSyncServiceFactory::GetForProfile(
           Profile::FromBrowserContext(browser_context()));
   if (!profile_sync_service)
     return RespondNow(Error("Sync service is not ready for current profile."));
-  std::unique_ptr<base::Value> ret(new base::FundamentalValue(
-      profile_sync_service->IsEncryptEverythingEnabled()));
+  std::unique_ptr<base::Value> ret(
+      new base::Value(profile_sync_service->IsEncryptEverythingEnabled()));
   return RespondNow(OneArgument(std::move(ret)));
 #endif
 }
@@ -256,7 +257,7 @@ InputMethodPrivateShowInputViewFunction::Run() {
   // Forcibly enables the a11y onscreen keyboard if there is on keyboard enabled
   // for now. And re-disables it after showing once.
   keyboard::SetAccessibilityKeyboardEnabled(true);
-  ash::Shell::GetInstance()->CreateKeyboard();
+  ash::Shell::Get()->CreateKeyboard();
   keyboard_controller = keyboard::KeyboardController::GetInstance();
   if (!keyboard_controller) {
     keyboard::SetAccessibilityKeyboardEnabled(false);
@@ -289,8 +290,8 @@ InputMethodPrivateOpenOptionsPageFunction::Run() {
     if (!options_page_url.is_empty()) {
       Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
       content::OpenURLParams url_params(options_page_url, content::Referrer(),
-                                        SINGLETON_TAB, ui::PAGE_TRANSITION_LINK,
-                                        false);
+                                        WindowOpenDisposition::SINGLETON_TAB,
+                                        ui::PAGE_TRANSITION_LINK, false);
       browser->OpenURL(url_params);
     }
   }
@@ -366,8 +367,9 @@ void InputMethodAPI::OnListenerAdded(
   }
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<InputMethodAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<InputMethodAPI>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<InputMethodAPI>*

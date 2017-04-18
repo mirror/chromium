@@ -5,36 +5,53 @@
 #ifndef SimTest_h
 #define SimTest_h
 
+#include <gtest/gtest.h>
 #include "web/tests/FrameTestHelpers.h"
 #include "web/tests/sim/SimCompositor.h"
 #include "web/tests/sim/SimNetwork.h"
+#include "web/tests/sim/SimPage.h"
+#include "web/tests/sim/SimWebFrameClient.h"
 #include "web/tests/sim/SimWebViewClient.h"
-#include <gtest/gtest.h>
 
 namespace blink {
 
 class WebViewImpl;
+class WebLocalFrameImpl;
 class Document;
+class LocalDOMWindow;
 
 class SimTest : public ::testing::Test {
-protected:
-    SimTest();
-    ~SimTest() override;
+ protected:
+  SimTest();
+  ~SimTest() override;
 
-    void loadURL(const String& url);
+  void LoadURL(const String& url);
 
-    Document& document();
-    WebViewImpl& webView();
-    const SimWebViewClient& webViewClient() const;
-    SimCompositor& compositor();
+  LocalDOMWindow& Window();
+  SimPage& Page();
+  Document& GetDocument();
+  WebViewImpl& WebView();
+  WebLocalFrameImpl& MainFrame();
+  const SimWebViewClient& WebViewClient() const;
+  SimCompositor& Compositor();
 
-private:
-    SimNetwork m_network;
-    SimCompositor m_compositor;
-    SimWebViewClient m_webViewClient;
-    FrameTestHelpers::WebViewHelper m_webViewHelper;
+  Vector<String>& ConsoleMessages() { return console_messages_; }
+
+ private:
+  friend class SimWebFrameClient;
+
+  void AddConsoleMessage(const String&);
+
+  SimNetwork network_;
+  SimCompositor compositor_;
+  SimWebViewClient web_view_client_;
+  SimWebFrameClient web_frame_client_;
+  SimPage page_;
+  FrameTestHelpers::WebViewHelper web_view_helper_;
+
+  Vector<String> console_messages_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

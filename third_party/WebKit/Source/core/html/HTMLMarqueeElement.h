@@ -23,25 +23,88 @@
 #ifndef HTMLMarqueeElement_h
 #define HTMLMarqueeElement_h
 
+#include "core/animation/Animation.h"
+#include "core/animation/KeyframeEffectModel.h"
 #include "core/html/HTMLElement.h"
 
 namespace blink {
 
 class HTMLMarqueeElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLMarqueeElement* create(Document&);
+  DEFINE_WRAPPERTYPEINFO();
 
-    void attributeChanged(const QualifiedName&, const AtomicString& oldValue, const AtomicString& newValue, AttributeModificationReason) final;
-    InsertionNotificationRequest insertedInto(ContainerNode*) final;
-    void removedFrom(ContainerNode*) final;
+ public:
+  DECLARE_VIRTUAL_TRACE();
 
-    bool isHorizontal() const;
+  static HTMLMarqueeElement* Create(Document&);
 
-private:
-    explicit HTMLMarqueeElement(Document&);
+  InsertionNotificationRequest InsertedInto(ContainerNode*) final;
+  void RemovedFrom(ContainerNode*) final;
+
+  bool IsHorizontal() const;
+
+  int scrollAmount() const;
+  void setScrollAmount(int, ExceptionState&);
+
+  int scrollDelay() const;
+  void setScrollDelay(int, ExceptionState&);
+
+  int loop() const;
+  void setLoop(int, ExceptionState&);
+
+  void start();
+  void stop();
+
+ private:
+  explicit HTMLMarqueeElement(Document&);
+  void DidAddUserAgentShadowRoot(ShadowRoot&) override;
+
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+
+  class RequestAnimationFrameCallback;
+  class AnimationFinished;
+
+  struct AnimationParameters {
+    String transform_begin;
+    String transform_end;
+    double distance;
+  };
+
+  struct Metrics {
+    double content_width;
+    double content_height;
+    double marquee_width;
+    double marquee_height;
+  };
+
+  StringKeyframeEffectModel* CreateEffectModel(const AnimationParameters&);
+
+  void ContinueAnimation();
+  bool ShouldContinue();
+
+  enum Behavior { kScroll, kSlide, kAlternate };
+  Behavior GetBehavior() const;
+
+  enum Direction { kLeft, kRight, kUp, kDown };
+  Direction GetDirection() const;
+
+  Metrics GetMetrics();
+  AnimationParameters GetAnimationParameters();
+  AtomicString CreateTransform(double value) const;
+
+  static const int kDefaultScrollAmount = 6;
+  static const int kDefaultScrollDelayMS = 85;
+  static const int kMinimumScrollDelayMS = 60;
+  static const int kDefaultLoopLimit = -1;
+
+  int continue_callback_request_id_ = 0;
+  int loop_count_ = 0;
+  Member<Element> mover_;
+  Member<Animation> player_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLMarqueeElement_h
+#endif  // HTMLMarqueeElement_h

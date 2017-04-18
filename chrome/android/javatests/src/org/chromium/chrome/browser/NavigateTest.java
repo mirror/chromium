@@ -4,9 +4,8 @@
 
 package org.chromium.chrome.browser;
 
-import android.os.Environment;
-import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.Smoke;
+import android.content.pm.ActivityInfo;
+import android.support.test.filters.MediumTest;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.KeyEvent;
@@ -18,6 +17,7 @@ import org.chromium.base.test.util.DisableIf;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
@@ -59,8 +59,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mTestServer = EmbeddedTestServer.createAndStartFileServer(
-                getInstrumentation().getContext(), Environment.getExternalStorageDirectory());
+        mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
     }
 
     @Override
@@ -140,16 +139,16 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
     /**
      * Verify Selection on the Location Bar.
      */
-    @Smoke
     @MediumTest
     @Feature({"Navigation", "Main"})
+    @RetryOnFailure
     public void testNavigate() throws Exception {
         String url = mTestServer.getURL("/chrome/test/data/android/navigate/simple.html");
         String result = typeInOmniboxAndNavigate(url, "Simple");
         assertEquals(expectedLocation(url), result);
     }
 
-    @DisabledTest // https://crbug.com/516018
+    @DisabledTest(message = "crbug.com/516018")
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_TABLET)
     @MediumTest
     @Feature({"Navigation"})
@@ -175,9 +174,9 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
      */
     @MediumTest
     @Feature({"Navigation"})
+    @RetryOnFailure
     public void testNavigateLandscape() throws Exception {
-        // '0' is Landscape Mode. '1' is Portrait.
-        getActivity().setRequestedOrientation(0);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         String url = mTestServer.getURL("/chrome/test/data/android/navigate/simple.html");
         String result = typeInOmniboxAndNavigate(url, "Simple");
         assertEquals(expectedLocation(url), result);
@@ -188,6 +187,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
      */
     @MediumTest
     @Feature({"Navigation"})
+    @RetryOnFailure
     public void testOpenAndNavigate() throws Exception {
         final String url =
                 mTestServer.getURL("/chrome/test/data/android/navigate/simple.html");
@@ -208,6 +208,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
      */
     @MediumTest
     @Feature({"Navigation"})
+    @RetryOnFailure
     public void testOpenLink() throws Exception {
         String url1 = mTestServer.getURL("/chrome/test/data/android/google.html");
         String url2 = mTestServer.getURL("/chrome/test/data/android/about.html");
@@ -217,7 +218,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
 
         Tab tab = getActivity().getActivityTab();
 
-        DOMUtils.clickNode(this, tab.getContentViewCore(), "aboutLink");
+        DOMUtils.clickNode(tab.getContentViewCore(), "aboutLink");
         ChromeTabUtils.waitForTabPageLoaded(tab, url2);
         assertEquals("Desired Link not open", url2, getActivity().getActivityTab().getUrl());
     }
@@ -227,6 +228,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
      */
     @MediumTest
     @Feature({"Navigation"})
+    @RetryOnFailure
     public void testTabObserverOnPageLoadStarted() throws Exception {
         final String url1 = mTestServer.getURL("/chrome/test/data/android/google.html");
         final String url2 = mTestServer.getURL("/chrome/test/data/android/about.html");
@@ -244,7 +246,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
         };
         Tab tab = getActivity().getActivityTab();
         tab.addObserver(onPageLoadStartedObserver);
-        DOMUtils.clickNode(this, tab.getContentViewCore(), "aboutLink");
+        DOMUtils.clickNode(tab.getContentViewCore(), "aboutLink");
         ChromeTabUtils.waitForTabPageLoaded(tab, url2);
         assertEquals("Desired Link not open", url2, getActivity().getActivityTab().getUrl());
     }
@@ -415,7 +417,7 @@ public class NavigateTest extends ChromeTabbedActivityTestBase {
             assertWaitForPageScaleFactorMatch(0.5f);
 
             // Click the page, which triggers the URL load.
-            DOMUtils.clickNode(this, getActivity().getCurrentContentViewCore(), "body");
+            DOMUtils.clickNode(getActivity().getCurrentContentViewCore(), "body");
 
             // Wait for the proper URL to be served.
             assertTrue(urlServedSemaphore.tryAcquire(5, TimeUnit.SECONDS));

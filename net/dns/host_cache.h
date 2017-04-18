@@ -79,6 +79,9 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
 
     base::TimeTicks expires() const { return expires_; }
 
+    // Public for the net-internals UI.
+    int network_changes() const { return network_changes_; }
+
    private:
     friend class HostCache;
 
@@ -87,7 +90,6 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
           base::TimeDelta ttl,
           int network_changes);
 
-    int network_changes() const { return network_changes_; }
     int total_hits() const { return total_hits_; }
     int stale_hits() const { return stale_hits_; }
 
@@ -113,6 +115,7 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
   };
 
   using EntryMap = std::map<Key, Entry>;
+  using EvictionCallback = base::Callback<void(const Key&, const Entry&)>;
 
   // Constructs a HostCache that stores up to |max_entries|.
   explicit HostCache(size_t max_entries);
@@ -141,15 +144,23 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
   // Marks all entries as stale on account of a network change.
   void OnNetworkChange();
 
-  // Empties the cache
+  void set_eviction_callback(const EvictionCallback& callback) {
+    eviction_callback_ = callback;
+  }
+
+  // Empties the cache.
   void clear();
+
+  // Clears hosts matching |host_filter| from the cache.
+  void ClearForHosts(
+      const base::Callback<bool(const std::string&)>& host_filter);
 
   // Returns the number of entries in the cache.
   size_t size() const;
 
   // Following are used by net_internals UI.
   size_t max_entries() const;
-
+  int network_changes() const { return network_changes_; }
   const EntryMap& entries() const { return entries_; }
 
   // Creates a default cache.
@@ -186,6 +197,7 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
   EntryMap entries_;
   size_t max_entries_;
   int network_changes_;
+  EvictionCallback eviction_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(HostCache);
 };

@@ -27,67 +27,69 @@
 #define LayoutMedia_h
 
 #include "core/layout/LayoutImage.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
 class HTMLMediaElement;
 
 class LayoutMedia : public LayoutImage {
-public:
-    explicit LayoutMedia(HTMLMediaElement*);
-    ~LayoutMedia() override;
+ public:
+  explicit LayoutMedia(HTMLMediaElement*);
+  ~LayoutMedia() override;
 
-    LayoutObject* firstChild() const { ASSERT(children() == virtualChildren()); return children()->firstChild(); }
-    LayoutObject* lastChild() const { ASSERT(children() == virtualChildren()); return children()->lastChild(); }
+  LayoutObject* FirstChild() const {
+    DCHECK_EQ(Children(), VirtualChildren());
+    return Children()->FirstChild();
+  }
+  LayoutObject* LastChild() const {
+    DCHECK_EQ(Children(), VirtualChildren());
+    return Children()->LastChild();
+  }
 
-    // If you have a LayoutMedia, use firstChild or lastChild instead.
-    void slowFirstChild() const = delete;
-    void slowLastChild() const = delete;
+  // If you have a LayoutMedia, use firstChild or lastChild instead.
+  void SlowFirstChild() const = delete;
+  void SlowLastChild() const = delete;
 
-    const LayoutObjectChildList* children() const { return &m_children; }
-    LayoutObjectChildList* children() { return &m_children; }
+  const LayoutObjectChildList* Children() const { return &children_; }
+  LayoutObjectChildList* Children() { return &children_; }
 
-    HTMLMediaElement* mediaElement() const;
+  HTMLMediaElement* MediaElement() const;
 
-    const char* name() const override { return "LayoutMedia"; }
+  const char* GetName() const override { return "LayoutMedia"; }
 
-    // Temporary callback for crbug.com/587345,402044
-    void notifyPositionMayHaveChanged(const IntRect&);
+ protected:
+  void UpdateLayout() override;
 
-    // Change whether we want or don't want to receive position change
-    // notifications.  This will cause us to start / stop receiving change
-    // notifications if possible.
-    // Temporary method for crbug.com/587345,402044
-    void setRequestPositionUpdates(bool);
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectMedia || LayoutImage::IsOfType(type);
+  }
 
-protected:
-    // Temporary overrides for crbug.com/587345,402044
-    void willBeDestroyed() override;
-    void insertedIntoTree() override;
+ private:
+  LayoutObjectChildList* VirtualChildren() final { return Children(); }
+  const LayoutObjectChildList* VirtualChildren() const final {
+    return Children();
+  }
 
-    void layout() override;
+  PaintLayerType LayerTypeRequired() const override {
+    return kNormalPaintLayer;
+  }
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectMedia || LayoutImage::isOfType(type); }
+  bool CanHaveChildren() const final { return true; }
+  bool IsChildAllowed(LayoutObject*, const ComputedStyle&) const final;
 
-private:
-    LayoutObjectChildList* virtualChildren() final { return children(); }
-    const LayoutObjectChildList* virtualChildren() const final { return children(); }
+  bool IsImage() const final { return false; }
+  void PaintReplaced(const PaintInfo&, const LayoutPoint&) const override;
 
-    PaintLayerType layerTypeRequired() const override { return NormalPaintLayer; }
+  bool BackgroundShouldAlwaysBeClipped() const final { return false; }
 
-    bool canHaveChildren() const final { return true; }
-    bool isChildAllowed(LayoutObject*, const ComputedStyle&) const final;
+  LayoutUnit ComputePanelWidth(const LayoutRect& media_width) const;
 
-    bool isImage() const final { return false; }
-    void paintReplaced(const PaintInfo&, const LayoutPoint&) const override;
-
-    bool backgroundShouldAlwaysBeClipped() const final { return false; }
-
-    LayoutObjectChildList m_children;
+  LayoutObjectChildList children_;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutMedia, isMedia());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutMedia, IsMedia());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutMedia_h
+#endif  // LayoutMedia_h

@@ -31,33 +31,37 @@
 #ifndef MediaStreamWebAudioSource_h
 #define MediaStreamWebAudioSource_h
 
-#include "platform/audio/AudioSourceProvider.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/build_config.h"
 #include <memory>
+#include "platform/audio/AudioSourceProvider.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/build_config.h"
 
 namespace blink {
 
 class WebAudioSourceProvider;
 
 class MediaStreamWebAudioSource : public AudioSourceProvider {
-    WTF_MAKE_NONCOPYABLE(MediaStreamWebAudioSource);
-public:
-    static std::unique_ptr<MediaStreamWebAudioSource> create(std::unique_ptr<WebAudioSourceProvider> provider) { return wrapUnique(new MediaStreamWebAudioSource(std::move(provider))); }
+  WTF_MAKE_NONCOPYABLE(MediaStreamWebAudioSource);
 
-    ~MediaStreamWebAudioSource() override;
+ public:
+  static std::unique_ptr<MediaStreamWebAudioSource> Create(
+      std::unique_ptr<WebAudioSourceProvider> provider) {
+    return WTF::WrapUnique(new MediaStreamWebAudioSource(std::move(provider)));
+  }
 
-private:
-    explicit MediaStreamWebAudioSource(std::unique_ptr<WebAudioSourceProvider>);
+  ~MediaStreamWebAudioSource() override;
 
-    // blink::AudioSourceProvider implementation.
-    void provideInput(AudioBus*, size_t framesToProcess) override;
+ private:
+  explicit MediaStreamWebAudioSource(std::unique_ptr<WebAudioSourceProvider>);
 
-    std::unique_ptr<WebAudioSourceProvider> m_webAudioSourceProvider;
+  // blink::AudioSourceProvider implementation.
+  void ProvideInput(AudioBus*, size_t frames_to_process) override;
+
+  std::unique_ptr<WebAudioSourceProvider> web_audio_source_provider_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaStreamWebAudioSource_h
+#endif  // MediaStreamWebAudioSource_h

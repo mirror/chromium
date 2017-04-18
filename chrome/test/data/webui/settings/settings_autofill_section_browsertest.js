@@ -9,10 +9,7 @@ var ROOT_PATH = '../../../../../';
 
 // Polymer BrowserTest fixture.
 GEN_INCLUDE([
-    ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
-    ROOT_PATH +
-        'chrome/test/data/webui/settings/passwords_and_autofill_fake_data.js',
-    ROOT_PATH + 'ui/webui/resources/js/load_time_data.js',
+  ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
 ]);
 
 /**
@@ -21,14 +18,15 @@ GEN_INCLUDE([
  * @constructor
  */
 function CountryDetailManagerTestImpl() {}
+
 CountryDetailManagerTestImpl.prototype = {
   /** @override */
   getCountryList: function() {
     return new Promise(function(resolve) {
       resolve([
-          {name: 'United States', countryCode: 'US'},  // Default test country.
-          {name: 'Israel', countryCode: 'IL'},
-          {name: 'United Kingdom', countryCode: 'GB'},
+        {name: 'United States', countryCode: 'US'},  // Default test country.
+        {name: 'Israel', countryCode: 'IL'},
+        {name: 'United Kingdom', countryCode: 'GB'},
       ]);
     });
   },
@@ -49,7 +47,7 @@ CountryDetailManagerTestImpl.prototype = {
  * @return {!Promise}
  */
 function asyncForEach(items, loopBody) {
-  return new Promise(function(finish) {
+  return new Promise(function(resolve) {
     var index = 0;
 
     function loop() {
@@ -57,7 +55,7 @@ function asyncForEach(items, loopBody) {
       if (item)
         loopBody(item).then(loop);
       else
-        finish();
+        resolve();
     };
 
     loop();
@@ -98,7 +96,11 @@ SettingsAutofillSectionBrowserTest.prototype = {
       'chrome://md-settings/passwords_and_forms_page/autofill_section.html',
 
   /** @override */
-  extraLibraries: PolymerTest.getLibraries(ROOT_PATH),
+  extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
+    'passwords_and_autofill_fake_data.js',
+    'test_util.js',
+    'ensure_lazy_loaded.js',
+  ]),
 
   /**
    * TODO(hcarmona): Increases speed, but disables A11y checks. Enable checks
@@ -107,13 +109,6 @@ SettingsAutofillSectionBrowserTest.prototype = {
    */
   runAccessibilityChecks: false,
 
-  i18nStrings: {
-    addAddressTitle: 'add-title',
-    addCreditCardTitle: 'add-title',
-    editAddressTitle: 'edit-title',
-    editCreditCardTitle: 'edit-title',
-  },
-
   /** @override */
   setUp: function() {
     PolymerTest.prototype.setUp.call(this);
@@ -121,11 +116,7 @@ SettingsAutofillSectionBrowserTest.prototype = {
     // Test is run on an individual element that won't have a page language.
     this.accessibilityAuditConfig.auditRulesToIgnore.push('humanLangMissing');
 
-    // Faking 'strings.js' for this test.
-    loadTimeData.data = this.i18nStrings;
-
-    settings.address.CountryDetailManagerImpl.instance_ =
-        new CountryDetailManagerTestImpl();
+    settings.ensureLazyLoaded();
   },
 
   /**
@@ -136,9 +127,13 @@ SettingsAutofillSectionBrowserTest.prototype = {
    * @private
    */
   createAutofillSection_: function(addresses, creditCards) {
+    // Override the AutofillManagerImpl for testing.
+    this.autofillManager = new TestAutofillManager();
+    this.autofillManager.data.addresses = addresses;
+    this.autofillManager.data.creditCards = creditCards;
+    AutofillManagerImpl.instance_ = this.autofillManager;
+
     var section = document.createElement('settings-autofill-section');
-    section.addresses = addresses;
-    section.creditCards = creditCards;
     document.body.appendChild(section);
     Polymer.dom.flush();
     return section;
@@ -155,7 +150,7 @@ SettingsAutofillSectionBrowserTest.prototype = {
       var section = document.createElement('settings-address-edit-dialog');
       section.address = address;
       document.body.appendChild(section);
-      section.addEventListener('iron-overlay-opened', function() {
+      section.addEventListener('on-update-address-wrapper', function() {
         resolve(section);
       });
     });
@@ -175,10 +170,51 @@ SettingsAutofillSectionBrowserTest.prototype = {
   },
 };
 
+TEST_F('SettingsAutofillSectionBrowserTest', 'uiTest', function() {
+  suite('AutofillSection', function() {
+    test('testAutofillExtensionIndicator', function() {
+      // Initializing with fake prefs
+      var section = document.createElement('settings-autofill-section');
+      section.prefs = {autofill: {enabled: {}}};
+      document.body.appendChild(section);
+
+      assertFalse(!!section.$$('#autofillExtensionIndicator'));
+      section.set('prefs.autofill.enabled.extensionId', 'test-id');
+      Polymer.dom.flush();
+
+      assertTrue(!!section.$$('#autofillExtensionIndicator'));
+    });
+  });
+
+  mocha.run();
+});
+
 TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
   var self = this;
 
   suite('AutofillSection', function() {
+    suiteSetup(function() {
+      settings.address.CountryDetailManagerImpl.instance_ =
+          new CountryDetailManagerTestImpl();
+    });
+
+    setup(function() {
+      PolymerTest.clearBody();
+    });
+
+    test('verifyCreditCardCount', function() {
+      var section = self.createAutofillSection_([], []);
+      assertTrue(!!section);
+
+      var creditCardList = section.$.creditCardList;
+      assertTrue(!!creditCardList);
+      // +1 for the template element.
+      assertEquals(1, creditCardList.children.length);
+
+      assertFalse(section.$.noCreditCardsLabel.hidden);
+      assertTrue(section.$.creditCardsHeading.hidden);
+    });
+
     test('verifyCreditCardCount', function() {
       var creditCards = [
         FakeDataMaker.creditCardEntry(),
@@ -196,6 +232,9 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       assertTrue(!!creditCardList);
       // +1 for the template element.
       assertEquals(creditCards.length + 1, creditCardList.children.length);
+
+      assertTrue(section.$.noCreditCardsLabel.hidden);
+      assertFalse(section.$.creditCardsHeading.hidden);
     });
 
     test('verifyCreditCardFields', function() {
@@ -211,6 +250,32 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
                    row.querySelector('#creditCardExpiration').textContent);
     });
 
+    test('verifyCreditCardRowButtonIsDropdownWhenLocal', function() {
+      var creditCard = FakeDataMaker.creditCardEntry();
+      creditCard.metadata.isLocal = true;
+      var section = self.createAutofillSection_([], [creditCard]);
+      var creditCardList = section.$.creditCardList;
+      var row = creditCardList.children[0];
+      assertTrue(!!row);
+      var menuButton = row.querySelector('#creditCardMenu');
+      assertTrue(!!menuButton);
+      var outlinkButton = row.querySelector('[is="paper-icon-button-light"');
+      assertFalse(!!outlinkButton);
+    });
+
+    test('verifyCreditCardRowButtonIsOutlinkWhenRemote', function() {
+      var creditCard = FakeDataMaker.creditCardEntry();
+      creditCard.metadata.isLocal = false;
+      var section = self.createAutofillSection_([], [creditCard]);
+      var creditCardList = section.$.creditCardList;
+      var row = creditCardList.children[0];
+      assertTrue(!!row);
+      var menuButton = row.querySelector('#creditCardMenu');
+      assertFalse(!!menuButton);
+      var outlinkButton = row.querySelector('[is="paper-icon-button-light"');
+      assertTrue(!!outlinkButton);
+    });
+
     test('verifyAddVsEditCreditCardTitle', function() {
       var newCreditCard = FakeDataMaker.emptyCreditCardEntry();
       var newCreditCardDialog = self.createCreditCardDialog_(newCreditCard);
@@ -220,6 +285,12 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       assertNotEquals(oldCreditCardDialog.title_, newCreditCardDialog.title_);
       assertNotEquals('', newCreditCardDialog.title_);
       assertNotEquals('', oldCreditCardDialog.title_);
+
+      // Wait for dialogs to open before finishing test.
+      return Promise.all([
+        test_util.whenAttributeIs(newCreditCardDialog.$.dialog, 'open', true),
+        test_util.whenAttributeIs(oldCreditCardDialog.$.dialog, 'open', true),
+      ]);
     });
 
     test('verifyExpiredCreditCardYear', function() {
@@ -230,15 +301,20 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       creditCard.expirationYear = twentyFifteen.toString();
 
       var creditCardDialog = self.createCreditCardDialog_(creditCard);
-      var selectableYears = creditCardDialog.$.yearList.items;
-      var firstSelectableYear = selectableYears[0];
-      var lastSelectableYear = selectableYears[selectableYears.length - 1];
 
-      var now = new Date();
-      var maxYear = now.getFullYear() + 9;
+      return test_util.whenAttributeIs(
+          creditCardDialog.$.dialog, 'open', true).then(function() {
+        var now = new Date();
+        var maxYear = now.getFullYear() + 9;
+        var yearOptions = creditCardDialog.$.year.options;
 
-      assertEquals('2015', firstSelectableYear.textContent.trim());
-      assertEquals(maxYear.toString(), lastSelectableYear.textContent.trim());
+        assertEquals('2015', yearOptions[0].textContent.trim());
+        assertEquals(
+            maxYear.toString(),
+            yearOptions[yearOptions.length -1].textContent.trim());
+        assertEquals(
+            creditCard.expirationYear, creditCardDialog.$.year.value);
+      });
     });
 
     test('verifyVeryFutureCreditCardYear', function() {
@@ -250,14 +326,20 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       creditCard.expirationYear = farFutureYear.toString();
 
       var creditCardDialog = self.createCreditCardDialog_(creditCard);
-      var selectableYears = creditCardDialog.$.yearList.items;
-      var firstSelectableYear = selectableYears[0];
-      var lastSelectableYear = selectableYears[selectableYears.length - 1];
 
-      assertEquals(now.getFullYear().toString(),
-          firstSelectableYear.textContent.trim());
-      assertEquals(farFutureYear.toString(),
-          lastSelectableYear.textContent.trim());
+      return test_util.whenAttributeIs(
+          creditCardDialog.$.dialog, 'open', true).then(function() {
+        var yearOptions = creditCardDialog.$.year.options;
+
+        assertEquals(
+            now.getFullYear().toString(),
+            yearOptions[0].textContent.trim());
+        assertEquals(
+            farFutureYear.toString(),
+            yearOptions[yearOptions.length -1].textContent.trim());
+        assertEquals(
+            creditCard.expirationYear, creditCardDialog.$.year.value);
+      });
     });
 
     test('verifyVeryNormalCreditCardYear', function() {
@@ -270,46 +352,86 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       var maxYear = now.getFullYear() + 9;
 
       var creditCardDialog = self.createCreditCardDialog_(creditCard);
-      var selectableYears = creditCardDialog.$.yearList.items;
-      var firstSelectableYear = selectableYears[0];
-      var lastSelectableYear = selectableYears[selectableYears.length - 1];
 
-      assertEquals(now.getFullYear().toString(),
-          firstSelectableYear.textContent.trim());
-      assertEquals(maxYear.toString(), lastSelectableYear.textContent.trim());
+      return test_util.whenAttributeIs(
+          creditCardDialog.$.dialog, 'open', true).then(function() {
+        var yearOptions = creditCardDialog.$.year.options;
+
+        assertEquals(
+            now.getFullYear().toString(),
+            yearOptions[0].textContent.trim());
+        assertEquals(
+            maxYear.toString(),
+            yearOptions[yearOptions.length -1].textContent.trim());
+        assertEquals(
+            creditCard.expirationYear, creditCardDialog.$.year.value);
+      });
+    });
+
+    test('verify save disabled for expired credit card', function() {
+      var creditCard = FakeDataMaker.emptyCreditCardEntry();
+
+      var now = new Date();
+      creditCard.expirationYear = now.getFullYear() - 2;
+      // works fine for January.
+      creditCard.expirationMonth = now.getMonth() - 1;
+
+      var creditCardDialog = self.createCreditCardDialog_(creditCard);
+
+      return test_util.whenAttributeIs(
+          creditCardDialog.$.dialog, 'open', true).then(function() {
+        assertTrue(creditCardDialog.$.saveButton.disabled);
+      });
     });
 
     // Test will timeout if event is not received.
-    test('verifySaveCreditCardEdit', function(done) {
+    test('verify save new credit card', function(done) {
       var creditCard = FakeDataMaker.emptyCreditCardEntry();
       var creditCardDialog = self.createCreditCardDialog_(creditCard);
 
-      creditCardDialog.addEventListener('save-credit-card', function(event) {
-        assertEquals(creditCard.guid, event.detail.guid);
-        done();
-      });
+      return test_util.whenAttributeIs(
+          creditCardDialog.$.dialog, 'open', true).then(function() {
+        // Not expired, but still can't be saved, because there's no name.
+        assertTrue(creditCardDialog.$.expired.hidden);
+        assertTrue(creditCardDialog.$.saveButton.disabled);
 
-      MockInteractions.tap(creditCardDialog.$.saveButton);
+        // Add a name and trigger the on-input handler.
+        creditCardDialog.set('creditCard.name', 'Jane Doe');
+        creditCardDialog.onCreditCardNameOrNumberChanged_();
+        Polymer.dom.flush();
+
+        assertTrue(creditCardDialog.$.expired.hidden);
+        assertFalse(creditCardDialog.$.saveButton.disabled);
+
+        creditCardDialog.addEventListener('save-credit-card', function(event) {
+          assertEquals(creditCard.guid, event.detail.guid);
+          done();
+        });
+        MockInteractions.tap(creditCardDialog.$.saveButton);
+      });
     });
 
     test('verifyCancelCreditCardEdit', function(done) {
       var creditCard = FakeDataMaker.emptyCreditCardEntry();
       var creditCardDialog = self.createCreditCardDialog_(creditCard);
 
-      creditCardDialog.addEventListener('save-credit-card', function() {
-        // Fail the test because the save event should not be called when cancel
-        // is clicked.
-        assertTrue(false);
-        done();
-      });
+      return test_util.whenAttributeIs(
+          creditCardDialog.$.dialog, 'open', true).then(function() {
+        creditCardDialog.addEventListener('save-credit-card', function() {
+          // Fail the test because the save event should not be called when
+          // cancel is clicked.
+          assertTrue(false);
+          done();
+        });
 
-      creditCardDialog.addEventListener('iron-overlay-closed', function() {
-        // Test is |done| in a timeout in order to ensure that
-        // 'save-credit-card' is NOT fired after this test.
-        window.setTimeout(done, 100);
-      });
+        creditCardDialog.addEventListener('close', function() {
+          // Test is |done| in a timeout in order to ensure that
+          // 'save-credit-card' is NOT fired after this test.
+          window.setTimeout(done, 100);
+        });
 
-      MockInteractions.tap(creditCardDialog.$.cancelButton);
+        MockInteractions.tap(creditCardDialog.$.cancelButton);
+      });
     });
   });
 
@@ -319,7 +441,29 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
 TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
   var self = this;
 
+
   suite('AutofillSection', function() {
+    suiteSetup(function() {
+      settings.address.CountryDetailManagerImpl.instance_ =
+          new CountryDetailManagerTestImpl();
+    });
+
+    setup(function() {
+      PolymerTest.clearBody();
+    });
+
+    test('verifyNoAddresses', function() {
+      var section = self.createAutofillSection_([], []);
+      assertTrue(!!section);
+
+      var addressList = section.$.addressList;
+      assertTrue(!!addressList);
+      // 1 for the template element.
+      assertEquals(1, addressList.children.length);
+
+      assertFalse(section.$.noAddressesLabel.hidden);
+    });
+
     test('verifyAddressCount', function() {
       var addresses = [
         FakeDataMaker.addressEntry(),
@@ -336,6 +480,8 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
       assertTrue(!!addressList);
       // +1 for the template element.
       assertEquals(addresses.length + 1, addressList.children.length);
+
+      assertTrue(section.$.noAddressesLabel.hidden);
     });
 
     test('verifyAddressFields', function() {
@@ -348,15 +494,49 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
       var addressSummary = address.metadata.summaryLabel +
                            address.metadata.summarySublabel;
 
-      assertEquals(addressSummary,
-                   row.querySelector('#addressSummary').textContent);
+      var actualSummary = '';
+
+      // Eliminate white space between nodes!
+      var addressPieces = row.querySelector('#addressSummary').children;
+      for (var i = 0; i < addressPieces.length; ++i) {
+        actualSummary += addressPieces[i].textContent.trim();
+      }
+
+      assertEquals(addressSummary, actualSummary);
+    });
+
+    test('verifyAddressRowButtonIsDropdownWhenLocal', function() {
+      var address = FakeDataMaker.addressEntry();
+      address.metadata.isLocal = true;
+      var section = self.createAutofillSection_([address], []);
+      var addressList = section.$.addressList;
+      var row = addressList.children[0];
+      assertTrue(!!row);
+      var menuButton = row.querySelector('#addressMenu')
+      assertTrue(!!menuButton);
+      var outlinkButton = row.querySelector('[is="paper-icon-button-light"]');
+      assertFalse(!!outlinkButton);
+    });
+
+    test('verifyAddressRowButtonIsOutlinkWhenRemote', function() {
+      var address = FakeDataMaker.addressEntry();
+      address.metadata.isLocal = false;
+      var section = self.createAutofillSection_([address], []);
+      var addressList = section.$.addressList;
+      var row = addressList.children[0];
+      assertTrue(!!row);
+      var menuButton = row.querySelector('#addressMenu')
+      assertFalse(!!menuButton);
+      var outlinkButton = row.querySelector('[is="paper-icon-button-light"]');
+      assertTrue(!!outlinkButton);
     });
 
     test('verifyAddAddressDialog', function() {
       return self.createAddressDialog_(
           FakeDataMaker.emptyAddressEntry()).then(function(dialog) {
         var title = dialog.$$('.title');
-        assertEquals(self.i18nStrings.addAddressTitle, title.textContent);
+        assertEquals(loadTimeData.getString('addAddressTitle'),
+            title.textContent);
         // Shouldn't be possible to save until something is typed in.
         assertTrue(dialog.$.saveButton.disabled);
       });
@@ -366,7 +546,8 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
       return self.createAddressDialog_(
           FakeDataMaker.addressEntry()).then(function(dialog) {
         var title = dialog.$$('.title');
-        assertEquals(self.i18nStrings.editAddressTitle, title.textContent);
+        assertEquals(
+            loadTimeData.getString('editAddressTitle'), title.textContent);
         // Should be possible to save when editing because fields are populated.
         assertFalse(dialog.$.saveButton.disabled);
       });
@@ -375,11 +556,13 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
     test('verifyCountryIsSaved', function() {
       var address = FakeDataMaker.emptyAddressEntry();
       return self.createAddressDialog_(address).then(function(dialog) {
-        assertEquals(undefined, dialog.$.countryList.selected);
+        var countrySelect = dialog.$$('select');
+        assertEquals('', countrySelect.value);
         assertEquals(undefined, address.countryCode);
-        dialog.$.countryList.selected = 'US';
+        countrySelect.value = 'US';
+        countrySelect.dispatchEvent(new CustomEvent('change'));
         Polymer.dom.flush();
-        assertEquals('US', dialog.$.countryList.selected);
+        assertEquals('US', countrySelect.value);
         assertEquals('US', address.countryCode);
       });
     });
@@ -469,20 +652,30 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
 
     // Setting the country should allow the address to be saved.
     test('verifySaveIsNotClickableIfCountryNotSet', function() {
-      return self.createAddressDialog_(
-          FakeDataMaker.emptyAddressEntry()).then(function(dialog) {
-        var saveButton = dialog.$.saveButton;
-        var countries = dialog.$.countryList;
+      var dialog = null;
 
-        return expectEvent(dialog, 'on-update-can-save', function() {
-          assertTrue(saveButton.disabled);
-          countries.selected = 'US';
-        }).then(function() {
-            assertFalse(saveButton.disabled);
-            countries.selected = '';
-        }).then(function() {
-          assertTrue(saveButton.disabled);
-        });
+      var simulateCountryChange = function(countryCode) {
+        var countrySelect = dialog.$$('select');
+        countrySelect.value = countryCode;
+        countrySelect.dispatchEvent(new CustomEvent('change'));
+      };
+
+      return self.createAddressDialog_(
+          FakeDataMaker.emptyAddressEntry()).then(function(d) {
+        dialog = d;
+        assertTrue(dialog.$.saveButton.disabled);
+
+        return expectEvent(
+            dialog, 'on-update-can-save',
+            simulateCountryChange.bind(null, 'US'));
+      }).then(function() {
+        assertFalse(dialog.$.saveButton.disabled);
+
+        return expectEvent(
+            dialog, 'on-update-can-save',
+            simulateCountryChange.bind(null, ''));
+      }).then(function() {
+        assertTrue(dialog.$.saveButton.disabled);
       });
     });
 
@@ -509,10 +702,9 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
           // Fail the test because the save event should not be called when
           // cancel is clicked.
           assertTrue(false);
-          done();
         });
 
-        dialog.addEventListener('iron-overlay-closed', function() {
+        dialog.addEventListener('close', function() {
           // Test is |done| in a timeout in order to ensure that
           // 'save-address' is NOT fired after this test.
           window.setTimeout(done, 100);
@@ -530,6 +722,15 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
   var self = this;
 
   suite('AutofillSection', function() {
+    suiteSetup(function() {
+      settings.address.CountryDetailManagerImpl.instance_ =
+          new CountryDetailManagerTestImpl();
+    });
+
+    setup(function() {
+      PolymerTest.clearBody();
+    });
+
     // US address has 3 fields on the same line.
     test('verifyEditingUSAddress', function() {
       var address = FakeDataMaker.emptyAddressEntry();
@@ -572,9 +773,11 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
         assertEquals(address.postalCode, cols[2].value);
         // Country
         row = rows[4];
-        cols = row.querySelectorAll('.address-column');
-        assertEquals(1, cols.length);
-        assertEquals('United States', cols[0].value);
+        var countrySelect = row.querySelector('select');
+        assertTrue(!!countrySelect);
+        assertEquals(
+            'United States',
+            countrySelect.selectedOptions[0].textContent.trim());
         // Phone, Email
         row = rows[5];
         cols = row.querySelectorAll('.address-column');
@@ -592,7 +795,6 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
       address.companyName = 'Organization';
       address.addressLines = 'Street address';
       address.addressLevel2 = 'Post town';
-      address.addressLevel1 = 'County';
       address.postalCode = 'Postal code';
       address.countryCode = 'GB';
       address.phoneNumbers = [ 'Phone' ];
@@ -600,7 +802,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
 
       return self.createAddressDialog_(address).then(function(dialog) {
         var rows = dialog.$.dialog.querySelectorAll('.address-row');
-        assertEquals(8, rows.length);
+        assertEquals(7, rows.length);
 
         // Name
         var row = rows[0];
@@ -622,23 +824,20 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
         cols = row.querySelectorAll('.address-column');
         assertEquals(1, cols.length);
         assertEquals(address.addressLevel2, cols[0].value);
-        // County
-        row = rows[4];
-        cols = row.querySelectorAll('.address-column');
-        assertEquals(1, cols.length);
-        assertEquals(address.addressLevel1, cols[0].value);
         // Postal code
-        row = rows[5];
+        row = rows[4];
         cols = row.querySelectorAll('.address-column');
         assertEquals(1, cols.length);
         assertEquals(address.postalCode, cols[0].value);
         // Country
-        row = rows[6];
-        cols = row.querySelectorAll('.address-column');
-        assertEquals(1, cols.length);
-        assertEquals('United Kingdom', cols[0].value);
+        row = rows[5];
+        var countrySelect = row.querySelector('select');
+        assertTrue(!!countrySelect);
+        assertEquals(
+            'United Kingdom',
+            countrySelect.selectedOptions[0].textContent.trim());
         // Phone, Email
-        row = rows[7];
+        row = rows[6];
         cols = row.querySelectorAll('.address-column');
         assertEquals(2, cols.length);
         assertEquals(address.phoneNumbers[0], cols[0].value);
@@ -687,9 +886,10 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
         assertEquals(address.postalCode, cols[1].value);
         // Country
         row = rows[4];
-        cols = row.querySelectorAll('.address-column');
-        assertEquals(1, cols.length);
-        assertEquals('Israel', cols[0].value);
+        var countrySelect = row.querySelector('select');
+        assertTrue(!!countrySelect);
+        assertEquals(
+            'Israel', countrySelect.selectedOptions[0].textContent.trim());
         // Phone, Email
         row = rows[5];
         cols = row.querySelectorAll('.address-column');
@@ -709,6 +909,7 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
         var city = 'Los Angeles';
         var state = 'CA';
         var zip = '90291';
+        var countrySelect = dialog.$$('select');
 
         return expectEvent(dialog, 'on-update-address-wrapper', function() {
           // US:
@@ -723,7 +924,8 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
           cols[1].value = state;
           cols[2].value = zip;
 
-          dialog.$.countryList.selected = 'IL';
+          countrySelect.value = 'IL';
+          countrySelect.dispatchEvent(new CustomEvent('change'));
         }).then(function() {
           return expectEvent(dialog, 'on-update-address-wrapper', function() {
             // IL:
@@ -737,7 +939,8 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
             assertEquals(city, cols[0].value);
             assertEquals(zip, cols[1].value);
 
-            dialog.$.countryList.selected = 'US';
+            countrySelect.value = 'US';
+            countrySelect.dispatchEvent(new CustomEvent('change'));
           });
         }).then(function() {
           // US:

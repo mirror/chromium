@@ -9,11 +9,11 @@
 #include <algorithm>
 
 #include "base/memory/ptr_util.h"
+#include "cc/base/filter_operations.h"
 #include "cc/base/math_util.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/render_surface_impl.h"
-#include "cc/output/filter_operations.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -28,20 +28,6 @@ DamageTracker::DamageTracker()
   : mailboxId_(0) {}
 
 DamageTracker::~DamageTracker() {}
-
-static inline void ExpandDamageRectInsideRectWithFilters(
-    gfx::Rect* damage_rect,
-    const gfx::Rect& pre_filter_rect,
-    const FilterOperations& filters) {
-  // Compute the pixels in the background of the surface that could be affected
-  // by the damage in the content below.
-  gfx::Rect expanded_damage_rect = filters.MapRect(*damage_rect, SkMatrix::I());
-
-  // Restrict it to the rectangle in which the background filter is shown.
-  expanded_damage_rect.Intersect(pre_filter_rect);
-
-  damage_rect->Union(expanded_damage_rect);
-}
 
 void DamageTracker::UpdateDamageTrackingState(
     const LayerImplList& layer_list,
@@ -122,29 +108,40 @@ void DamageTracker::UpdateDamageTrackingState(
   // These functions cannot be bypassed with early-exits, even if we know what
   // the damage will be for this frame, because we need to update the damage
   // tracker state to correctly track the next frame.
-  gfx::Rect damage_from_active_layers =
+  DamageAccumulator damage_from_active_layers =
       TrackDamageFromActiveLayers(layer_list, target_surface);
-  gfx::Rect damage_from_surface_mask =
+  DamageAccumulator damage_from_surface_mask =
       TrackDamageFromSurfaceMask(target_surface_mask_layer);
-  gfx::Rect damage_from_leftover_rects = TrackDamageFromLeftoverRects();
+  DamageAccumulator damage_from_leftover_rects = TrackDamageFromLeftoverRects();
 
-  gfx::Rect damage_rect_for_this_update;
+  DamageAccumulator damage_for_this_update;
 
   if (target_surface_property_changed_only_from_descendant) {
-    damage_rect_for_this_update = target_surface_content_rect;
+    damage_for_this_update.Union(target_surface_content_rect);
   } else {
     // TODO(shawnsingh): can we clamp this damage to the surface's content rect?
     // (affects performance, but not correctness)
-    damage_rect_for_this_update = damage_from_active_layers;
-    damage_rect_for_this_update.Union(damage_from_surface_mask);
-    damage_rect_for_this_update.Union(damage_from_leftover_rects);
-    damage_rect_for_this_update =
-        filters.MapRect(damage_rect_for_this_update, SkMatrix::I());
+    damage_for_this_update.Union(damage_from_active_layers);
+    damage_for_this_update.Union(damage_from_surface_mask);
+    damage_for_this_update.Union(damage_from_leftover_rects);
+
+    gfx::Rect damage_rect;
+    bool is_rect_valid = damage_for_this_update.GetAsRect(&damage_rect);
+    if (is_rect_valid) {
+      damage_rect =
+          filters.MapRect(damage_rect, target_surface->SurfaceScale().matrix());
+      damage_for_this_update = DamageAccumulator();
+      damage_for_this_update.Union(damage_rect);
+    }
   }
 
   // Damage accumulates until we are notified that we actually did draw on that
   // frame.
-  current_damage_rect_.Union(damage_rect_for_this_update);
+  current_damage_.Union(damage_for_this_update);
+}
+
+bool DamageTracker::GetDamageRectIfValid(gfx::Rect* rect) {
+  return current_damage_.GetAsRect(rect);
 }
 
 DamageTracker::LayerRectMapData& DamageTracker::RectDataForLayer(
@@ -180,10 +177,10 @@ DamageTracker::SurfaceRectMapData& DamageTracker::RectDataForSurface(
   return *it;
 }
 
-gfx::Rect DamageTracker::TrackDamageFromActiveLayers(
+DamageTracker::DamageAccumulator DamageTracker::TrackDamageFromActiveLayers(
     const LayerImplList& layer_list,
     const RenderSurfaceImpl* target_surface) {
-  gfx::Rect damage_rect;
+  DamageAccumulator damage;
 
   for (size_t layer_index = 0; layer_index < layer_list.size(); ++layer_index) {
     // Visit layers in back-to-front order.
@@ -195,43 +192,44 @@ gfx::Rect DamageTracker::TrackDamageFromActiveLayers(
     if (layer == layer->layer_tree_impl()->hud_layer())
       continue;
 
-    if (layer->render_surface() && layer->render_surface() != target_surface)
-      ExtendDamageForRenderSurface(layer->render_surface(), &damage_rect);
+    RenderSurfaceImpl* render_surface = layer->GetRenderSurface();
+    if (render_surface && render_surface != target_surface)
+      ExtendDamageForRenderSurface(render_surface, &damage);
     else
-      ExtendDamageForLayer(layer, &damage_rect);
+      ExtendDamageForLayer(layer, &damage);
   }
 
-  return damage_rect;
+  return damage;
 }
 
-gfx::Rect DamageTracker::TrackDamageFromSurfaceMask(
+DamageTracker::DamageAccumulator DamageTracker::TrackDamageFromSurfaceMask(
     LayerImpl* target_surface_mask_layer) {
-  gfx::Rect damage_rect;
+  DamageAccumulator damage;
 
   if (!target_surface_mask_layer)
-    return damage_rect;
+    return damage;
 
   // Currently, if there is any change to the mask, we choose to damage the
   // entire surface. This could potentially be optimized later, but it is not
   // expected to be a common case.
   if (target_surface_mask_layer->LayerPropertyChanged() ||
       !target_surface_mask_layer->update_rect().IsEmpty()) {
-    damage_rect = gfx::Rect(target_surface_mask_layer->bounds());
+    damage.Union(gfx::Rect(target_surface_mask_layer->bounds()));
   }
 
-  return damage_rect;
+  return damage;
 }
 
 void DamageTracker::PrepareRectHistoryForUpdate() {
   mailboxId_++;
 }
 
-gfx::Rect DamageTracker::TrackDamageFromLeftoverRects() {
+DamageTracker::DamageAccumulator DamageTracker::TrackDamageFromLeftoverRects() {
   // After computing damage for all active layers, any leftover items in the
   // current rect history correspond to layers/surfaces that no longer exist.
   // So, these regions are now exposed on the target surface.
 
-  gfx::Rect damage_rect;
+  DamageAccumulator damage;
   SortedRectMapForLayers::iterator layer_cur_pos =
       rect_history_for_layers_.begin();
   SortedRectMapForLayers::iterator layer_copy_pos = layer_cur_pos;
@@ -240,7 +238,7 @@ gfx::Rect DamageTracker::TrackDamageFromLeftoverRects() {
   SortedRectMapForSurfaces::iterator surface_copy_pos = surface_cur_pos;
 
   // Loop below basically implements std::remove_if loop with and extra
-  // processing (adding deleted rect to damage_rect) for deleted items.
+  // processing (adding deleted rect to damage) for deleted items.
   // cur_pos iterator runs through all elements of the vector, but copy_pos
   // always points to the element after the last not deleted element. If new
   // not deleted element found then it is copied to the *copy_pos and copy_pos
@@ -254,7 +252,7 @@ gfx::Rect DamageTracker::TrackDamageFromLeftoverRects() {
 
       ++layer_copy_pos;
     } else {
-      damage_rect.Union(layer_cur_pos->rect_);
+      damage.Union(layer_cur_pos->rect_);
     }
 
     ++layer_cur_pos;
@@ -267,7 +265,7 @@ gfx::Rect DamageTracker::TrackDamageFromLeftoverRects() {
 
       ++surface_copy_pos;
     } else {
-      damage_rect.Union(surface_cur_pos->rect_);
+      damage.Union(surface_cur_pos->rect_);
     }
 
     ++surface_cur_pos;
@@ -289,11 +287,32 @@ gfx::Rect DamageTracker::TrackDamageFromLeftoverRects() {
     SortedRectMapForSurfaces(rect_history_for_surfaces_)
         .swap(rect_history_for_surfaces_);
 
-  return damage_rect;
+  return damage;
+}
+
+void DamageTracker::ExpandDamageInsideRectWithFilters(
+    const gfx::Rect& pre_filter_rect,
+    const FilterOperations& filters,
+    DamageAccumulator* damage) {
+  gfx::Rect damage_rect;
+  bool is_valid_rect = damage->GetAsRect(&damage_rect);
+  // If the input isn't a valid rect, then there is no point in trying to make
+  // it bigger.
+  if (!is_valid_rect)
+    return;
+
+  // Compute the pixels in the background of the surface that could be affected
+  // by the damage in the content below.
+  gfx::Rect expanded_damage_rect = filters.MapRect(damage_rect, SkMatrix::I());
+
+  // Restrict it to the rectangle in which the background filter is shown.
+  expanded_damage_rect.Intersect(pre_filter_rect);
+
+  damage->Union(expanded_damage_rect);
 }
 
 void DamageTracker::ExtendDamageForLayer(LayerImpl* layer,
-                                         gfx::Rect* target_damage_rect) {
+                                         DamageAccumulator* target_damage) {
   // There are two ways that a layer can damage a region of the target surface:
   //   1. Property change (e.g. opacity, position, transforms):
   //        - the entire region of the layer itself damages the surface.
@@ -322,11 +341,11 @@ void DamageTracker::ExtendDamageForLayer(LayerImpl* layer,
   if (layer_is_new || layer->LayerPropertyChanged()) {
     // If a layer is new or has changed, then its entire layer rect affects the
     // target surface.
-    target_damage_rect->Union(rect_in_target_space);
+    target_damage->Union(rect_in_target_space);
 
     // The layer's old region is now exposed on the target surface, too.
     // Note old_rect_in_target_space is already in target space.
-    target_damage_rect->Union(old_rect_in_target_space);
+    target_damage->Union(old_rect_in_target_space);
     return;
   }
 
@@ -338,13 +357,13 @@ void DamageTracker::ExtendDamageForLayer(LayerImpl* layer,
   if (!damage_rect.IsEmpty()) {
     gfx::Rect damage_rect_in_target_space =
         MathUtil::MapEnclosingClippedRect(layer->DrawTransform(), damage_rect);
-    target_damage_rect->Union(damage_rect_in_target_space);
+    target_damage->Union(damage_rect_in_target_space);
   }
 }
 
 void DamageTracker::ExtendDamageForRenderSurface(
     RenderSurfaceImpl* render_surface,
-    gfx::Rect* target_damage_rect) {
+    DamageAccumulator* target_damage) {
   // There are two ways a "descendant surface" can damage regions of the "target
   // surface":
   //   1. Property change:
@@ -362,63 +381,34 @@ void DamageTracker::ExtendDamageForRenderSurface(
 
   bool surface_is_new = false;
   SurfaceRectMapData& data =
-      RectDataForSurface(render_surface->OwningLayerId(), &surface_is_new);
+      RectDataForSurface(render_surface->id(), &surface_is_new);
   gfx::Rect old_surface_rect = data.rect_;
 
-  // The drawableContextRect() already includes the replica if it exists.
   gfx::Rect surface_rect_in_target_space =
       gfx::ToEnclosingRect(render_surface->DrawableContentRect());
   data.Update(surface_rect_in_target_space, mailboxId_);
 
   if (surface_is_new || render_surface->SurfacePropertyChanged()) {
     // The entire surface contributes damage.
-    target_damage_rect->Union(surface_rect_in_target_space);
+    target_damage->Union(surface_rect_in_target_space);
 
     // The surface's old region is now exposed on the target surface, too.
-    target_damage_rect->Union(old_surface_rect);
+    target_damage->Union(old_surface_rect);
   } else {
     // Only the surface's damage_rect will damage the target surface.
-    gfx::Rect damage_rect_in_local_space =
-        render_surface->damage_tracker()->current_damage_rect();
-
-    // If there was damage, transform it to target space, and possibly
-    // contribute its reflection if needed.
-    if (!damage_rect_in_local_space.IsEmpty()) {
+    gfx::Rect damage_rect_in_local_space;
+    bool is_valid_rect = render_surface->damage_tracker()->GetDamageRectIfValid(
+        &damage_rect_in_local_space);
+    if (is_valid_rect && !damage_rect_in_local_space.IsEmpty()) {
+      // If there was damage, transform it to target space, and possibly
+      // contribute its reflection if needed.
       const gfx::Transform& draw_transform = render_surface->draw_transform();
       gfx::Rect damage_rect_in_target_space = MathUtil::MapEnclosingClippedRect(
           draw_transform, damage_rect_in_local_space);
-      target_damage_rect->Union(damage_rect_in_target_space);
-
-      if (render_surface->HasReplica()) {
-        const gfx::Transform& replica_draw_transform =
-            render_surface->replica_draw_transform();
-        target_damage_rect->Union(MathUtil::MapEnclosingClippedRect(
-            replica_draw_transform, damage_rect_in_local_space));
-      }
+      target_damage->Union(damage_rect_in_target_space);
+    } else if (!is_valid_rect) {
+      target_damage->Union(surface_rect_in_target_space);
     }
-  }
-
-  // If there was damage on the replica's mask, then the target surface receives
-  // that damage as well.
-  if (render_surface->HasReplicaMask()) {
-    LayerImpl* replica_mask_layer = render_surface->ReplicaMaskLayer();
-
-    bool replica_is_new = false;
-    LayerRectMapData& data =
-        RectDataForLayer(replica_mask_layer->id(), &replica_is_new);
-
-    const gfx::Transform& replica_draw_transform =
-        render_surface->replica_draw_transform();
-    gfx::Rect replica_mask_layer_rect = MathUtil::MapEnclosingClippedRect(
-        replica_draw_transform, gfx::Rect(replica_mask_layer->bounds()));
-    data.Update(replica_mask_layer_rect, mailboxId_);
-
-    // In the current implementation, a change in the replica mask damages the
-    // entire replica region.
-    if (replica_is_new ||
-        replica_mask_layer->LayerPropertyChanged() ||
-        !replica_mask_layer->update_rect().IsEmpty())
-      target_damage_rect->Union(replica_mask_layer_rect);
   }
 
   // If the layer has a background filter, this may cause pixels in our surface
@@ -430,9 +420,29 @@ void DamageTracker::ExtendDamageForRenderSurface(
   const FilterOperations& background_filters =
       render_surface->BackgroundFilters();
   if (background_filters.HasFilterThatMovesPixels()) {
-    ExpandDamageRectInsideRectWithFilters(
-        target_damage_rect, surface_rect_in_target_space, background_filters);
+    ExpandDamageInsideRectWithFilters(surface_rect_in_target_space,
+                                      background_filters, target_damage);
   }
+}
+
+bool DamageTracker::DamageAccumulator::GetAsRect(gfx::Rect* rect) {
+  if (!is_valid_rect_)
+    return false;
+
+  base::CheckedNumeric<int> width = right_;
+  width -= x_;
+  base::CheckedNumeric<int> height = bottom_;
+  height -= y_;
+  if (!width.IsValid() || !height.IsValid()) {
+    is_valid_rect_ = false;
+    return false;
+  }
+
+  rect->set_x(x_);
+  rect->set_y(y_);
+  rect->set_width(width.ValueOrDie());
+  rect->set_height(height.ValueOrDie());
+  return true;
 }
 
 }  // namespace cc

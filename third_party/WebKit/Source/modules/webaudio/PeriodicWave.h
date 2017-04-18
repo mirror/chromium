@@ -29,85 +29,102 @@
 #ifndef PeriodicWave_h
 #define PeriodicWave_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/dom/DOMTypedArray.h"
+#include "core/dom/NotShared.h"
 #include "platform/audio/AudioArray.h"
-#include "wtf/Forward.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class BaseAudioContext;
 class ExceptionState;
+class PeriodicWaveOptions;
 
-class PeriodicWave final : public GarbageCollectedFinalized<PeriodicWave>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PeriodicWave* createSine(float sampleRate);
-    static PeriodicWave* createSquare(float sampleRate);
-    static PeriodicWave* createSawtooth(float sampleRate);
-    static PeriodicWave* createTriangle(float sampleRate);
+class PeriodicWave final : public GarbageCollectedFinalized<PeriodicWave>,
+                           public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Creates an arbitrary periodic wave given the frequency components (Fourier coefficients).
-    static PeriodicWave* create(
-        BaseAudioContext&,
-        DOMFloat32Array* real,
-        DOMFloat32Array* imag,
-        bool normalize,
-        ExceptionState&);
+ public:
+  static PeriodicWave* CreateSine(float sample_rate);
+  static PeriodicWave* CreateSquare(float sample_rate);
+  static PeriodicWave* CreateSawtooth(float sample_rate);
+  static PeriodicWave* CreateTriangle(float sample_rate);
 
-    virtual ~PeriodicWave();
+  // Creates an arbitrary periodic wave given the frequency components (Fourier
+  // coefficients).
+  static PeriodicWave* Create(BaseAudioContext&,
+                              const Vector<float>& real,
+                              const Vector<float>& imag,
+                              bool normalize,
+                              ExceptionState&);
 
-    // Returns pointers to the lower and higher wave data for the pitch range containing
-    // the given fundamental frequency. These two tables are in adjacent "pitch" ranges
-    // where the higher table will have the maximum number of partials which won't alias when played back
-    // at this fundamental frequency. The lower wave is the next range containing fewer partials than the higher wave.
-    // Interpolation between these two tables can be made according to tableInterpolationFactor.
-    // Where values from 0 -> 1 interpolate between lower -> higher.
-    void waveDataForFundamentalFrequency(float, float*& lowerWaveData, float*& higherWaveData, float& tableInterpolationFactor);
+  static PeriodicWave* Create(BaseAudioContext*,
+                              const PeriodicWaveOptions&,
+                              ExceptionState&);
 
-    // Returns the scalar multiplier to the oscillator frequency to calculate wave buffer phase increment.
-    float rateScale() const { return m_rateScale; }
+  virtual ~PeriodicWave();
 
-    // The size of the FFT to use based on the sampling rate.
-    unsigned periodicWaveSize() const;
+  // Returns pointers to the lower and higher wave data for the pitch range
+  // containing the given fundamental frequency. These two tables are in
+  // adjacent "pitch" ranges where the higher table will have the maximum number
+  // of partials which won't alias when played back at this fundamental
+  // frequency. The lower wave is the next range containing fewer partials than
+  // the higher wave.  Interpolation between these two tables can be made
+  // according to tableInterpolationFactor.
+  // Where values from 0 -> 1 interpolate between lower -> higher.
+  void WaveDataForFundamentalFrequency(float,
+                                       float*& lower_wave_data,
+                                       float*& higher_wave_data,
+                                       float& table_interpolation_factor);
 
-    // The number of ranges needed for the given sampling rate and FFT size.
-    unsigned numberOfRanges() const { return m_numberOfRanges; }
+  // Returns the scalar multiplier to the oscillator frequency to calculate wave
+  // buffer phase increment.
+  float RateScale() const { return rate_scale_; }
 
-    DEFINE_INLINE_TRACE() { }
+  // The size of the FFT to use based on the sampling rate.
+  unsigned PeriodicWaveSize() const;
 
-private:
-    explicit PeriodicWave(float sampleRate);
+  // The number of ranges needed for the given sampling rate and FFT size.
+  unsigned NumberOfRanges() const { return number_of_ranges_; }
 
-    void generateBasicWaveform(int);
+  DEFINE_INLINE_TRACE() {}
 
-    size_t m_v8ExternalMemory;
+ private:
+  explicit PeriodicWave(float sample_rate);
 
-    float m_sampleRate;
-    unsigned m_numberOfRanges;
-    float m_centsPerRange;
+  void GenerateBasicWaveform(int);
 
-    // The lowest frequency (in Hertz) where playback will include all of the partials.
-    // Playing back lower than this frequency will gradually lose more high-frequency information.
-    // This frequency is quite low (~10Hz @ 44.1KHz)
-    float m_lowestFundamentalFrequency;
+  size_t v8_external_memory_;
 
-    float m_rateScale;
+  float sample_rate_;
+  unsigned number_of_ranges_;
+  float cents_per_range_;
 
-    // Maximum possible number of partials (before culling).
-    unsigned maxNumberOfPartials() const;
+  // The lowest frequency (in Hertz) where playback will include all of the
+  // partials.  Playing back lower than this frequency will gradually lose more
+  // high-frequency information.  This frequency is quite low (~10Hz @ 44.1KHz)
+  float lowest_fundamental_frequency_;
 
-    unsigned numberOfPartialsForRange(unsigned rangeIndex) const;
+  float rate_scale_;
 
-    void adjustV8ExternalMemory(int delta);
+  // Maximum possible number of partials (before culling).
+  unsigned MaxNumberOfPartials() const;
 
-    // Creates tables based on numberOfComponents Fourier coefficients.
-    void createBandLimitedTables(const float* real, const float* imag, unsigned numberOfComponents, bool disableNormalization);
-    Vector<std::unique_ptr<AudioFloatArray>> m_bandLimitedTables;
+  unsigned NumberOfPartialsForRange(unsigned range_index) const;
+
+  void AdjustV8ExternalMemory(int delta);
+
+  // Creates tables based on numberOfComponents Fourier coefficients.
+  void CreateBandLimitedTables(const float* real,
+                               const float* imag,
+                               unsigned number_of_components,
+                               bool disable_normalization);
+  Vector<std::unique_ptr<AudioFloatArray>> band_limited_tables_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PeriodicWave_h
+#endif  // PeriodicWave_h

@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "chrome/renderer/prerender/prerender_extra_data.h"
+#include "chrome/renderer/prerender/prerender_helper.h"
 #include "content/public/renderer/render_view.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -19,19 +20,22 @@ PrerendererClient::PrerendererClient(content::RenderView* render_view)
     : content::RenderViewObserver(render_view) {
   DCHECK(render_view);
   DVLOG(5) << "PrerendererClient::PrerendererClient()";
-  render_view->GetWebView()->setPrerendererClient(this);
+  render_view->GetWebView()->SetPrerendererClient(this);
 }
 
 PrerendererClient::~PrerendererClient() {
 }
 
-void PrerendererClient::willAddPrerender(
-    blink::WebPrerender* prerender) {
+void PrerendererClient::WillAddPrerender(blink::WebPrerender* prerender) {
   DVLOG(3) << "PrerendererClient::willAddPrerender url = "
-           << prerender->url().string().utf8();
-  prerender->setExtraData(new PrerenderExtraData(++s_last_prerender_id,
-                                                 routing_id(),
-                                                 render_view()->GetSize()));
+           << prerender->Url().GetString().Utf8();
+  prerender->SetExtraData(new PrerenderExtraData(
+      ++s_last_prerender_id, routing_id(), render_view()->GetSize()));
+}
+
+bool PrerendererClient::IsPrefetchOnly() {
+  return PrerenderHelper::GetPrerenderMode(
+             render_view()->GetMainRenderFrame()) == PREFETCH_ONLY;
 }
 
 void PrerendererClient::OnDestruct() {

@@ -30,6 +30,7 @@
 
 #include "modules/filesystem/DataTransferItemFileSystem.h"
 
+#include "bindings/core/v8/ScriptState.h"
 #include "core/clipboard/DataObject.h"
 #include "core/clipboard/DataTransfer.h"
 #include "core/clipboard/DataTransferItem.h"
@@ -47,35 +48,40 @@
 namespace blink {
 
 // static
-Entry* DataTransferItemFileSystem::webkitGetAsEntry(ExecutionContext* executionContext, DataTransferItem& item)
-{
-    if (!item.getDataObjectItem()->isFilename())
-        return 0;
+Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
+                                                    DataTransferItem& item) {
+  if (!item.GetDataObjectItem()->IsFilename())
+    return 0;
 
-    // For dragged files getAsFile must be pretty lightweight.
-    Blob* file = item.getAsFile();
-    // The clipboard may not be in a readable state.
-    if (!file)
-        return 0;
-    ASSERT(file->isFile());
+  // For dragged files getAsFile must be pretty lightweight.
+  Blob* file = item.getAsFile();
+  // The clipboard may not be in a readable state.
+  if (!file)
+    return 0;
+  DCHECK(file->IsFile());
 
-    DOMFileSystem* domFileSystem = DraggedIsolatedFileSystemImpl::getDOMFileSystem(item.getDataTransfer()->dataObject(), executionContext);
-    if (!domFileSystem) {
-        // IsolatedFileSystem may not be enabled.
-        return 0;
-    }
+  DOMFileSystem* dom_file_system =
+      DraggedIsolatedFileSystemImpl::GetDOMFileSystem(
+          item.GetDataTransfer()->GetDataObject(),
+          ExecutionContext::From(script_state), *item.GetDataObjectItem());
+  if (!dom_file_system) {
+    // IsolatedFileSystem may not be enabled.
+    return 0;
+  }
 
-    // The dropped entries are mapped as top-level entries in the isolated filesystem.
-    String virtualPath = DOMFilePath::append("/", toFile(file)->name());
+  // The dropped entries are mapped as top-level entries in the isolated
+  // filesystem.
+  String virtual_path = DOMFilePath::Append("/", ToFile(file)->name());
 
-    // FIXME: This involves synchronous file operation. Consider passing file type data when we dispatch drag event.
-    FileMetadata metadata;
-    if (!getFileMetadata(toFile(file)->path(), metadata))
-        return 0;
+  // FIXME: This involves synchronous file operation. Consider passing file type
+  // data when we dispatch drag event.
+  FileMetadata metadata;
+  if (!GetFileMetadata(ToFile(file)->GetPath(), metadata))
+    return 0;
 
-    if (metadata.type == FileMetadata::TypeDirectory)
-        return DirectoryEntry::create(domFileSystem, virtualPath);
-    return FileEntry::create(domFileSystem, virtualPath);
+  if (metadata.type == FileMetadata::kTypeDirectory)
+    return DirectoryEntry::Create(dom_file_system, virtual_path);
+  return FileEntry::Create(dom_file_system, virtual_path);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -23,13 +23,13 @@
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/in_memory_history_backend.h"
 #include "components/history/core/test/test_history_database.h"
-#include "sync/api/fake_sync_change_processor.h"
-#include "sync/api/sync_change_processor_wrapper_for_test.h"
-#include "sync/api/sync_error.h"
-#include "sync/api/sync_error_factory_mock.h"
-#include "sync/internal_api/public/attachments/attachment_service_proxy_for_test.h"
-#include "sync/protocol/sync.pb.h"
-#include "sync/protocol/typed_url_specifics.pb.h"
+#include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
+#include "components/sync/model/fake_sync_change_processor.h"
+#include "components/sync/model/sync_change_processor_wrapper_for_test.h"
+#include "components/sync/model/sync_error.h"
+#include "components/sync/model/sync_error_factory_mock.h"
+#include "components/sync/protocol/sync.pb.h"
+#include "components/sync/protocol/typed_url_specifics.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using history::HistoryBackend;
@@ -151,7 +151,8 @@ class TestHistoryBackendDelegate : public HistoryBackend::Delegate {
  public:
   TestHistoryBackendDelegate() {}
 
-  void NotifyProfileError(sql::InitStatus init_status) override {}
+  void NotifyProfileError(sql::InitStatus init_status,
+                          const std::string& diagnostics) override {}
   void SetInMemoryBackend(
       std::unique_ptr<InMemoryHistoryBackend> backend) override{};
   void NotifyFaviconsChanged(const std::set<GURL>& page_urls,
@@ -218,11 +219,15 @@ class TypedUrlSyncableServiceTest : public testing::Test {
   void SetUp() override {
     fake_history_backend_ = new TestHistoryBackend();
     ASSERT_TRUE(test_dir_.CreateUniqueTempDir());
-    fake_history_backend_->Init(false,
-        TestHistoryDatabaseParamsForPath(test_dir_.path()));
+    fake_history_backend_->Init(
+        false, TestHistoryDatabaseParamsForPath(test_dir_.GetPath()));
     typed_url_sync_service_ =
         fake_history_backend_->GetTypedUrlSyncableService();
     fake_change_processor_.reset(new syncer::FakeSyncChangeProcessor);
+  }
+
+  void TearDown() override {
+    fake_history_backend_->Closing();
   }
 
   // Starts sync for |typed_url_sync_service_| with |initial_data| as the
@@ -257,7 +262,7 @@ class TypedUrlSyncableServiceTest : public testing::Test {
   void AddObserver();
 
   // Fills |specifics| with the sync data for |url| and |visits|.
-  static void WriteToTypedUrlSpecifics(const URLRow& url,
+  static bool WriteToTypedUrlSpecifics(const URLRow& url,
                                        const VisitVector& visits,
                                        sync_pb::TypedUrlSpecifics* specifics);
 
@@ -384,11 +389,12 @@ void TypedUrlSyncableServiceTest::AddObserver() {
 }
 
 // Static.
-void TypedUrlSyncableServiceTest::WriteToTypedUrlSpecifics(
+bool TypedUrlSyncableServiceTest::WriteToTypedUrlSpecifics(
     const URLRow& url,
     const VisitVector& visits,
     sync_pb::TypedUrlSpecifics* specifics) {
-  TypedUrlSyncableService::WriteToTypedUrlSpecifics(url, visits, specifics);
+  return TypedUrlSyncableService::WriteToTypedUrlSpecifics(url, visits,
+                                                           specifics);
 }
 
 // Static.
@@ -893,6 +899,28 @@ TEST_F(TypedUrlSyncableServiceTest, MergeUrlNoChange) {
   GetSyncedUrls(&sync_state);
   EXPECT_FALSE(sync_state.empty());
   EXPECT_EQ(sync_state.count(row.url()), 1U);
+}
+
+// Add a corupted typed url locally, has typed url count 1, but no real typed
+// url visit. Starting sync should not pick up this url.
+TEST_F(TypedUrlSyncableServiceTest, MergeUrlNoTypedUrl) {
+  // Add a url to backend.
+  VisitVector visits;
+  URLRow row = MakeTypedUrlRow(kURL, kTitle, 0, 3, false, &visits);
+
+  // Mark typed_count to 1 even when there is no typed url visit.
+  row.set_typed_count(1);
+  fake_history_backend_->SetVisitsForUrl(row, visits);
+
+  StartSyncing(syncer::SyncDataList());
+  syncer::SyncChangeList& changes = fake_change_processor_->changes();
+  EXPECT_TRUE(changes.empty());
+
+  // Check that the local cache was is still correct.
+  std::set<GURL> sync_state;
+  GetSyncedUrls(&sync_state);
+  EXPECT_TRUE(sync_state.empty());
+  EXPECT_EQ(sync_state.count(row.url()), 0U);
 }
 
 // Starting sync with no sync data should just push the local url to sync.
@@ -1409,21 +1437,15 @@ TEST_F(TypedUrlSyncableServiceTest, TooManyTypedVisits) {
   }
 }
 
-// Create a typed url without visit, check WriteToTypedUrlSpecifics will create
-// a RELOAD visit for it.
+// Create a typed url without visit, check WriteToTypedUrlSpecifics will return
+// false for it.
 TEST_F(TypedUrlSyncableServiceTest, NoTypedVisits) {
   history::VisitVector visits;
   history::URLRow url(MakeTypedUrlRow(kURL, kTitle, 0, 1000, false, &visits));
   sync_pb::TypedUrlSpecifics typed_url;
-  WriteToTypedUrlSpecifics(url, visits, &typed_url);
-  // URLs with no typed URL visits should be translated to a URL with one
-  // reload visit.
-  EXPECT_EQ(1, typed_url.visits_size());
-  EXPECT_EQ(typed_url.visit_transitions_size(), typed_url.visits_size());
-
-  EXPECT_EQ(1000, typed_url.visits(0));
-  EXPECT_EQ(static_cast<int32_t>(ui::PAGE_TRANSITION_RELOAD),
-            typed_url.visit_transitions(0));
+  EXPECT_FALSE(WriteToTypedUrlSpecifics(url, visits, &typed_url));
+  // URLs with no typed URL visits should not been written to specifics.
+  EXPECT_EQ(0, typed_url.visits_size());
 }
 
 TEST_F(TypedUrlSyncableServiceTest, MergeUrls) {
@@ -1543,6 +1565,52 @@ TEST_F(TypedUrlSyncableServiceTest, MergeUrlsAfterExpiration) {
   EXPECT_EQ(2U, history_visits[0].visit_time.ToInternalValue());
   EXPECT_EQ(3U, history_visits[1].visit_time.ToInternalValue());
   EXPECT_EQ(4U, history_visits[2].visit_time.ToInternalValue());
+}
+
+// Create a local typed URL with one expired TYPED visit,
+// MergeDataAndStartSyncing should not pass it to sync. And then add a non
+// expired visit, OnURLsModified should only send the non expired visit to sync.
+TEST_F(TypedUrlSyncableServiceTest, LocalExpiredTypedUrlDoNotSync) {
+  URLRow row;
+  URLRows changed_urls;
+  VisitVector visits;
+
+  // Add an expired typed URL to local.
+  row = MakeTypedUrlRow(kURL, kTitle, 1, kExpiredVisit, false, &visits);
+  fake_history_backend_->SetVisitsForUrl(row, visits);
+
+  StartSyncing(syncer::SyncDataList());
+
+  // Check change processor did not receive expired typed URL.
+  syncer::SyncChangeList& changes = fake_change_processor_->changes();
+  ASSERT_EQ(0U, changes.size());
+
+  // Add a non expired typed URL to local.
+  row = MakeTypedUrlRow(kURL, kTitle, 2, 1, false, &visits);
+  fake_history_backend_->SetVisitsForUrl(row, visits);
+
+  changed_urls.push_back(row);
+  // Notify typed url sync service of the update.
+  typed_url_sync_service_->OnURLsModified(fake_history_backend_.get(),
+                                          changed_urls);
+
+  // Check change processor did not receive expired typed URL.
+  ASSERT_EQ(1U, changes.size());
+  ASSERT_TRUE(changes[0].IsValid());
+  EXPECT_EQ(syncer::TYPED_URLS, changes[0].sync_data().GetDataType());
+  EXPECT_EQ(syncer::SyncChange::ACTION_ADD, changes[0].change_type());
+
+  // Get typed url specifics. Verify only a non-expired visit received.
+  sync_pb::TypedUrlSpecifics url_specifics =
+      changes[0].sync_data().GetSpecifics().typed_url();
+
+  EXPECT_TRUE(URLsEqual(row, url_specifics));
+  ASSERT_EQ(1, url_specifics.visits_size());
+  ASSERT_EQ(static_cast<const int>(visits.size() - 1),
+            url_specifics.visits_size());
+  EXPECT_EQ(visits[1].visit_time.ToInternalValue(), url_specifics.visits(0));
+  EXPECT_EQ(static_cast<const int>(visits[1].transition),
+            url_specifics.visit_transitions(0));
 }
 
 }  // namespace history

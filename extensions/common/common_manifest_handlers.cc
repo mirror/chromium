@@ -23,15 +23,24 @@
 #include "extensions/common/manifest_handlers/nacl_modules_handler.h"
 #include "extensions/common/manifest_handlers/oauth2_manifest_handler.h"
 #include "extensions/common/manifest_handlers/offline_enabled_info.h"
+#include "extensions/common/manifest_handlers/plugins_handler.h"
+#include "extensions/common/manifest_handlers/requirements_info.h"
 #include "extensions/common/manifest_handlers/sandboxed_page_info.h"
 #include "extensions/common/manifest_handlers/shared_module_info.h"
 #include "extensions/common/manifest_handlers/web_accessible_resources_info.h"
 #include "extensions/common/manifest_handlers/webview_info.h"
 
+#if defined(OS_CHROMEOS)
+#include "extensions/common/manifest_handlers/action_handlers_handler.h"
+#endif
+
 namespace extensions {
 
 void RegisterCommonManifestHandlers() {
   DCHECK(!ManifestHandler::IsRegistrationFinalized());
+#if defined(OS_CHROMEOS)
+  (new ActionHandlersHandler)->Register();
+#endif
   (new BackgroundManifestHandler)->Register();
   (new BluetoothManifestHandler)->Register();
   (new ContentCapabilitiesHandler)->Register();
@@ -51,6 +60,8 @@ void RegisterCommonManifestHandlers() {
 #endif
   (new OAuth2ManifestHandler)->Register();
   (new OfflineEnabledHandler)->Register();
+  (new PluginsHandler)->Register();
+  (new RequirementsHandler)->Register();  // Depends on plugins.
   (new SandboxedPageHandler)->Register();
   (new SharedModuleHandler)->Register();
   (new SocketsManifestHandler)->Register();

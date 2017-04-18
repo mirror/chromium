@@ -16,15 +16,12 @@
 
 #include "jni/GamepadList_jni.h"
 
-#include "third_party/WebKit/public/platform/WebGamepads.h"
-
 using base::android::AttachCurrentThread;
 using base::android::CheckException;
 using base::android::ClearException;
 using base::android::ConvertJavaStringToUTF8;
+using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
-using blink::WebGamepad;
-using blink::WebGamepads;
 
 namespace device {
 
@@ -34,25 +31,29 @@ bool GamepadPlatformDataFetcherAndroid::
 }
 
 GamepadPlatformDataFetcherAndroid::GamepadPlatformDataFetcherAndroid() {
-  PauseHint(false);
 }
 
 GamepadPlatformDataFetcherAndroid::~GamepadPlatformDataFetcherAndroid() {
   PauseHint(true);
 }
 
+GamepadSource GamepadPlatformDataFetcherAndroid::source() {
+  return Factory::static_source();
+}
+
+void GamepadPlatformDataFetcherAndroid::OnAddedToProvider() {
+  PauseHint(false);
+}
+
 void GamepadPlatformDataFetcherAndroid::GetGamepadData(
-    blink::WebGamepads* pads,
     bool devices_changed_hint) {
   TRACE_EVENT0("GAMEPAD", "GetGamepadData");
-
-  pads->length = 0;
 
   JNIEnv* env = AttachCurrentThread();
   if (!env)
     return;
 
-  Java_GamepadList_updateGamepadData(env, reinterpret_cast<intptr_t>(pads));
+  Java_GamepadList_updateGamepadData(env, reinterpret_cast<intptr_t>(this));
 }
 
 void GamepadPlatformDataFetcherAndroid::PauseHint(bool paused) {
@@ -65,7 +66,7 @@ void GamepadPlatformDataFetcherAndroid::PauseHint(bool paused) {
 
 static void SetGamepadData(JNIEnv* env,
                            const JavaParamRef<jobject>& obj,
-                           jlong gamepads,
+                           jlong data_fetcher,
                            jint index,
                            jboolean mapping,
                            jboolean connected,
@@ -73,73 +74,73 @@ static void SetGamepadData(JNIEnv* env,
                            jlong timestamp,
                            const JavaParamRef<jfloatArray>& jaxes,
                            const JavaParamRef<jfloatArray>& jbuttons) {
-  DCHECK(gamepads);
-  blink::WebGamepads* pads = reinterpret_cast<WebGamepads*>(gamepads);
-  DCHECK_EQ(pads->length, unsigned(index));
-  DCHECK_LT(index, static_cast<int>(blink::WebGamepads::itemsLengthCap));
-
-  ++pads->length;
-
-  blink::WebGamepad& pad = pads->items[index];
-
-  pad.connected = connected;
-
-  pad.timestamp = timestamp;
+  DCHECK(data_fetcher);
+  GamepadPlatformDataFetcherAndroid* fetcher =
+      reinterpret_cast<GamepadPlatformDataFetcherAndroid*>(data_fetcher);
+  DCHECK_LT(index, static_cast<int>(Gamepads::kItemsLengthCap));
 
   // Do not set gamepad parameters for all the gamepad devices that are not
   // attached.
   if (!connected)
     return;
 
-  // Map the Gamepad DeviceName String to the WebGamepad Id. Ideally it should
-  // be mapped to vendor and product information but it is only available at
-  // kernel level and it can not be queried using class
-  // android.hardware.input.InputManager.
-  // TODO(SaurabhK): Store a cached WebGamePad object in
-  // GamepadPlatformDataFetcherAndroid and only update constant WebGamepad
-  // values when a device has changed.
-  base::string16 device_name;
-  base::android::ConvertJavaStringToUTF16(env, devicename, &device_name);
-  const size_t name_to_copy =
-      std::min(device_name.size(), WebGamepad::idLengthCap - 1);
-  memcpy(pad.id, device_name.data(),
-         name_to_copy * sizeof(base::string16::value_type));
-  pad.id[name_to_copy] = 0;
+  PadState* state = fetcher->GetPadState(index);
 
-  base::string16 mapping_name = base::UTF8ToUTF16(mapping ? "standard" : "");
-  const size_t mapping_to_copy =
-      std::min(mapping_name.size(), WebGamepad::mappingLengthCap - 1);
-  memcpy(pad.mapping, mapping_name.data(),
-         mapping_to_copy * sizeof(base::string16::value_type));
-  pad.mapping[mapping_to_copy] = 0;
+  if (!state)
+    return;
 
+  Gamepad& pad = state->data;
+
+  // Is this the first time we've seen this device?
+  if (state->active_state == GAMEPAD_NEWLY_ACTIVE) {
+    // Map the Gamepad DeviceName String to the Gamepad Id. Ideally it should
+    // be mapped to vendor and product information but it is only available at
+    // kernel level and it can not be queried using class
+    // android.hardware.input.InputManager.
+    base::string16 device_name;
+    base::android::ConvertJavaStringToUTF16(env, devicename, &device_name);
+    const size_t name_to_copy =
+        std::min(device_name.size(), Gamepad::kIdLengthCap - 1);
+    memcpy(pad.id, device_name.data(),
+           name_to_copy * sizeof(base::string16::value_type));
+    pad.id[name_to_copy] = 0;
+
+    base::string16 mapping_name = base::UTF8ToUTF16(mapping ? "standard" : "");
+    const size_t mapping_to_copy =
+        std::min(mapping_name.size(), Gamepad::kMappingLengthCap - 1);
+    memcpy(pad.mapping, mapping_name.data(),
+           mapping_to_copy * sizeof(base::string16::value_type));
+    pad.mapping[mapping_to_copy] = 0;
+  }
+
+  pad.connected = true;
   pad.timestamp = timestamp;
 
   std::vector<float> axes;
   base::android::JavaFloatArrayToFloatVector(env, jaxes, &axes);
 
-  // Set WebGamepad axeslength to total number of axes on the gamepad device.
+  // Set Gamepad axeslength to total number of axes on the gamepad device.
   // Only return the first axesLengthCap if axeslength captured by GamepadList
   // is larger than axesLengthCap.
-  pad.axesLength = std::min(static_cast<int>(axes.size()),
-                            static_cast<int>(WebGamepad::axesLengthCap));
+  pad.axes_length = std::min(static_cast<int>(axes.size()),
+                             static_cast<int>(Gamepad::kAxesLengthCap));
 
-  // Copy axes state to the WebGamepad axes[].
-  for (unsigned int i = 0; i < pad.axesLength; i++) {
+  // Copy axes state to the Gamepad axes[].
+  for (unsigned int i = 0; i < pad.axes_length; i++) {
     pad.axes[i] = static_cast<double>(axes[i]);
   }
 
   std::vector<float> buttons;
   base::android::JavaFloatArrayToFloatVector(env, jbuttons, &buttons);
 
-  // Set WebGamepad buttonslength to total number of axes on the gamepad
+  // Set Gamepad buttonslength to total number of axes on the gamepad
   // device. Only return the first buttonsLengthCap if axeslength captured by
   // GamepadList is larger than buttonsLengthCap.
-  pad.buttonsLength = std::min(static_cast<int>(buttons.size()),
-                               static_cast<int>(WebGamepad::buttonsLengthCap));
+  pad.buttons_length = std::min(static_cast<int>(buttons.size()),
+                                static_cast<int>(Gamepad::kButtonsLengthCap));
 
-  // Copy buttons state to the WebGamepad buttons[].
-  for (unsigned int j = 0; j < pad.buttonsLength; j++) {
+  // Copy buttons state to the Gamepad buttons[].
+  for (unsigned int j = 0; j < pad.buttons_length; j++) {
     pad.buttons[j].pressed = buttons[j];
     pad.buttons[j].value = buttons[j];
   }

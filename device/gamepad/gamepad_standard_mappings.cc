@@ -6,32 +6,37 @@
 
 namespace device {
 
-blink::WebGamepadButton AxisToButton(float input) {
+GamepadButton AxisToButton(float input) {
   float value = (input + 1.f) / 2.f;
-  return blink::WebGamepadButton(value > kDefaultButtonPressedThreshold, value);
+  bool pressed = value > kDefaultButtonPressedThreshold;
+  bool touched = value > 0.0f;
+  return GamepadButton(pressed, touched, value);
 }
 
-blink::WebGamepadButton AxisNegativeAsButton(float input) {
+GamepadButton AxisNegativeAsButton(float input) {
   float value = (input < -0.5f) ? 1.f : 0.f;
-  return blink::WebGamepadButton(value > kDefaultButtonPressedThreshold, value);
+  bool pressed = value > kDefaultButtonPressedThreshold;
+  bool touched = value > 0.0f;
+  return GamepadButton(pressed, touched, value);
 }
 
-blink::WebGamepadButton AxisPositiveAsButton(float input) {
+GamepadButton AxisPositiveAsButton(float input) {
   float value = (input > 0.5f) ? 1.f : 0.f;
-  return blink::WebGamepadButton(value > kDefaultButtonPressedThreshold, value);
+  bool pressed = value > kDefaultButtonPressedThreshold;
+  bool touched = value > 0.0f;
+  return GamepadButton(pressed, touched, value);
 }
 
-blink::WebGamepadButton ButtonFromButtonAndAxis(blink::WebGamepadButton button,
-                                                float axis) {
+GamepadButton ButtonFromButtonAndAxis(GamepadButton button, float axis) {
   float value = (axis + 1.f) / 2.f;
-  return blink::WebGamepadButton(button.pressed, value);
+  return GamepadButton(button.pressed, button.touched, value);
 }
 
-blink::WebGamepadButton NullButton() {
-  return blink::WebGamepadButton(false, 0.0);
+GamepadButton NullButton() {
+  return GamepadButton(false, false, 0.0);
 }
 
-void DpadFromAxis(blink::WebGamepad* mapped, float dir) {
+void DpadFromAxis(Gamepad* mapped, float dir) {
   bool up = false;
   bool right = false;
   bool down = false;
@@ -49,12 +54,16 @@ void DpadFromAxis(blink::WebGamepad* mapped, float dir) {
   }
 
   mapped->buttons[BUTTON_INDEX_DPAD_UP].pressed = up;
+  mapped->buttons[BUTTON_INDEX_DPAD_UP].touched = up;
   mapped->buttons[BUTTON_INDEX_DPAD_UP].value = up ? 1.f : 0.f;
   mapped->buttons[BUTTON_INDEX_DPAD_RIGHT].pressed = right;
+  mapped->buttons[BUTTON_INDEX_DPAD_RIGHT].touched = right;
   mapped->buttons[BUTTON_INDEX_DPAD_RIGHT].value = right ? 1.f : 0.f;
   mapped->buttons[BUTTON_INDEX_DPAD_DOWN].pressed = down;
+  mapped->buttons[BUTTON_INDEX_DPAD_DOWN].touched = down;
   mapped->buttons[BUTTON_INDEX_DPAD_DOWN].value = down ? 1.f : 0.f;
   mapped->buttons[BUTTON_INDEX_DPAD_LEFT].pressed = left;
+  mapped->buttons[BUTTON_INDEX_DPAD_LEFT].touched = left;
   mapped->buttons[BUTTON_INDEX_DPAD_LEFT].value = left ? 1.f : 0.f;
 }
 

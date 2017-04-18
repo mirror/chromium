@@ -12,14 +12,18 @@
 #include "base/json/json_value_converter.h"
 #include "base/json/json_writer.h"
 #include "base/path_service.h"
+#include "base/run_loop.h"
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
+#include "chrome/browser/chromeos/file_manager/app_id.h"
 #include "chrome/browser/chromeos/file_manager/mount_test_util.h"
 #include "chrome/browser/chromeos/file_manager/path_util.h"
 #include "chrome/browser/chromeos/file_manager/volume_manager.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/extensions/component_loader.h"
+#include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/common/chrome_switches.h"
@@ -29,6 +33,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/api/test/test_api.h"
+#include "extensions/browser/extension_system.h"
 #include "extensions/browser/notification_types.h"
 #include "google_apis/drive/drive_api_parser.h"
 #include "google_apis/drive/test_util.h"
@@ -160,7 +165,7 @@ struct AddEntriesMessage {
   TargetVolume volume;
 
   // Entries to be added.
-  ScopedVector<TestEntryInfo> entries;
+  std::vector<std::unique_ptr<TestEntryInfo>> entries;
 
   // Registers the member information to the given converter.
   static void RegisterJSONConverter(
@@ -183,16 +188,20 @@ class TestVolume {
   virtual ~TestVolume() {}
 
   bool CreateRootDirectory(const Profile* profile) {
-    const base::FilePath path = profile->GetPath().Append(name_);
-    return root_.path() == path || root_.Set(path);
+    if (root_initialized_)
+      return true;
+
+    root_initialized_ = root_.Set(profile->GetPath().Append(name_));
+    return root_initialized_;
   }
 
-  const std::string& name() { return name_; }
-  const base::FilePath root_path() { return root_.path(); }
+  const std::string& name() const { return name_; }
+  const base::FilePath& root_path() const { return root_.GetPath(); }
 
  private:
   std::string name_;
   base::ScopedTempDir root_;
+  bool root_initialized_ = false;
 };
 
 // Listener to obtain the test relative messages synchronously.
@@ -410,14 +419,14 @@ class DriveTestVolume : public TestVolume {
     fake_drive_service_->AddNewDirectory(
         parent_id, target_name, drive::AddNewDirectoryOptions(),
         google_apis::test_util::CreateCopyResultCallback(&error, &entry));
-    base::MessageLoop::current()->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
     ASSERT_EQ(google_apis::HTTP_CREATED, error);
     ASSERT_TRUE(entry);
 
     fake_drive_service_->SetLastModifiedTime(
         entry->file_id(), modification_time,
         google_apis::test_util::CreateCopyResultCallback(&error, &entry));
-    base::MessageLoop::current()->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
     ASSERT_TRUE(error == google_apis::HTTP_SUCCESS);
     ASSERT_TRUE(entry);
     CheckForUpdates();
@@ -443,14 +452,14 @@ class DriveTestVolume : public TestVolume {
     fake_drive_service_->AddNewFile(
         mime_type, content_data, parent_id, target_name, shared_with_me,
         google_apis::test_util::CreateCopyResultCallback(&error, &entry));
-    base::MessageLoop::current()->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
     ASSERT_EQ(google_apis::HTTP_CREATED, error);
     ASSERT_TRUE(entry);
 
     fake_drive_service_->SetLastModifiedTime(
         entry->file_id(), modification_time,
         google_apis::test_util::CreateCopyResultCallback(&error, &entry));
-    base::MessageLoop::current()->RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
     ASSERT_EQ(google_apis::HTTP_SUCCESS, error);
     ASSERT_TRUE(entry);
 
@@ -519,6 +528,18 @@ void FileManagerBrowserTestBase::SetUp() {
 void FileManagerBrowserTestBase::SetUpOnMainThread() {
   ExtensionApiTest::SetUpOnMainThread();
   ASSERT_TRUE(local_volume_->Mount(profile()));
+
+  // The file manager component app should have been added for loading into the
+  // user profile, but not into the sign-in profile.
+  ASSERT_TRUE(extensions::ExtensionSystem::Get(profile())
+                  ->extension_service()
+                  ->component_loader()
+                  ->Exists(kFileManagerAppId));
+  ASSERT_FALSE(extensions::ExtensionSystem::Get(
+                   chromeos::ProfileHelper::GetSigninProfile())
+                   ->extension_service()
+                   ->component_loader()
+                   ->Exists(kFileManagerAppId));
 
   if (GetGuestModeParam() != IN_GUEST_MODE) {
     // Install the web server to serve the mocked share dialog.

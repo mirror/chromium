@@ -6,11 +6,11 @@
 #define ScriptRunIterator_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Deque.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
-#include "wtf/dtoa/utils.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/dtoa/utils.h"
 
 #include <unicode/uchar.h>
 #include <unicode/uscript.h>
@@ -20,97 +20,97 @@ namespace blink {
 class ScriptData;
 
 class PLATFORM_EXPORT ScriptRunIterator {
-    USING_FAST_MALLOC(ScriptRunIterator);
-    WTF_MAKE_NONCOPYABLE(ScriptRunIterator);
-public:
-    ScriptRunIterator(const UChar* text, size_t length);
+  USING_FAST_MALLOC(ScriptRunIterator);
+  WTF_MAKE_NONCOPYABLE(ScriptRunIterator);
 
-    // This maintains a reference to data. It must exist for the lifetime of
-    // this object. Typically data is a singleton that exists for the life of
-    // the process.
-    ScriptRunIterator(const UChar* text, size_t length, const ScriptData*);
+ public:
+  ScriptRunIterator(const UChar* text, size_t length);
 
-    bool consume(unsigned& limit, UScriptCode&);
+  // This maintains a reference to data. It must exist for the lifetime of
+  // this object. Typically data is a singleton that exists for the life of
+  // the process.
+  ScriptRunIterator(const UChar* text, size_t length, const ScriptData*);
 
-private:
-    struct BracketRec {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-        UChar32 ch;
-        UScriptCode script;
-    };
-    void openBracket(UChar32);
-    void closeBracket(UChar32);
-    bool mergeSets();
-    void fixupStack(UScriptCode resolvedScript);
-    bool fetch(size_t* pos, UChar32*);
+  bool Consume(unsigned& limit, UScriptCode&);
 
-    UScriptCode resolveCurrentScript() const;
+ private:
+  struct BracketRec {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    UChar32 ch;
+    UScriptCode script;
+  };
+  void OpenBracket(UChar32);
+  void CloseBracket(UChar32);
+  bool MergeSets();
+  void FixupStack(UScriptCode resolved_script);
+  bool Fetch(size_t* pos, UChar32*);
 
-    const UChar* m_text;
-    const size_t m_length;
+  UScriptCode ResolveCurrentScript() const;
 
-    Deque<BracketRec> m_brackets;
-    size_t m_bracketsFixupDepth;
-    // Limit max brackets so that the bracket tracking buffer does not grow
-    // excessively large when processing long runs of text.
-    static const int kMaxBrackets = 32;
+  const UChar* text_;
+  const size_t length_;
 
-    Vector<UScriptCode> m_currentSet;
-    Vector<UScriptCode> m_nextSet;
-    Vector<UScriptCode> m_aheadSet;
+  Deque<BracketRec> brackets_;
+  size_t brackets_fixup_depth_;
+  // Limit max brackets so that the bracket tracking buffer does not grow
+  // excessively large when processing long runs of text.
+  static const int kMaxBrackets = 32;
 
-    UChar32 m_aheadCharacter;
-    size_t m_aheadPos;
+  Vector<UScriptCode> current_set_;
+  Vector<UScriptCode> next_set_;
+  Vector<UScriptCode> ahead_set_;
 
-    UScriptCode m_commonPreferred;
+  UChar32 ahead_character_;
+  size_t ahead_pos_;
 
-    const ScriptData* m_scriptData;
+  UScriptCode common_preferred_;
+
+  const ScriptData* script_data_;
 };
 
 // ScriptData is a wrapper which returns a set of scripts for a particular
-// character retrieved from the character's primary script and script extensions,
-// as per ICU / Unicode data. ScriptData maintains a certain priority order of
-// the returned values, which are essential for mergeSets method to work
-// correctly.
+// character retrieved from the character's primary script and script
+// extensions, as per ICU / Unicode data. ScriptData maintains a certain
+// priority order of the returned values, which are essential for mergeSets
+// method to work correctly.
 class PLATFORM_EXPORT ScriptData {
-    USING_FAST_MALLOC(ScriptData);
-    WTF_MAKE_NONCOPYABLE(ScriptData);
-protected:
-    ScriptData() = default;
+  USING_FAST_MALLOC(ScriptData);
+  WTF_MAKE_NONCOPYABLE(ScriptData);
 
-public:
-    virtual ~ScriptData();
+ protected:
+  ScriptData() = default;
 
-    enum PairedBracketType {
-        BracketTypeNone,
-        BracketTypeOpen,
-        BracketTypeClose,
-        BracketTypeCount
-    };
+ public:
+  virtual ~ScriptData();
 
-    static const int kMaxScriptCount;
+  enum PairedBracketType {
+    kBracketTypeNone,
+    kBracketTypeOpen,
+    kBracketTypeClose,
+    kBracketTypeCount
+  };
 
-    virtual void getScripts(UChar32, Vector<UScriptCode>& dst) const = 0;
+  static const int kMaxScriptCount;
 
-    virtual UChar32 getPairedBracket(UChar32) const = 0;
+  virtual void GetScripts(UChar32, Vector<UScriptCode>& dst) const = 0;
 
-    virtual PairedBracketType getPairedBracketType(UChar32) const = 0;
+  virtual UChar32 GetPairedBracket(UChar32) const = 0;
+
+  virtual PairedBracketType GetPairedBracketType(UChar32) const = 0;
 };
 
 class PLATFORM_EXPORT ICUScriptData : public ScriptData {
-public:
-    ~ICUScriptData() override
-    {
-    }
+ public:
+  ~ICUScriptData() override {}
 
-    static const ICUScriptData* instance();
+  static const ICUScriptData* Instance();
 
-    void getScripts(UChar32, Vector<UScriptCode>& dst) const override;
+  void GetScripts(UChar32, Vector<UScriptCode>& dst) const override;
 
-    UChar32 getPairedBracket(UChar32) const override;
+  UChar32 GetPairedBracket(UChar32) const override;
 
-    PairedBracketType getPairedBracketType(UChar32) const override;
+  PairedBracketType GetPairedBracketType(UChar32) const override;
 };
-} // namespace blink
+}  // namespace blink
 
 #endif

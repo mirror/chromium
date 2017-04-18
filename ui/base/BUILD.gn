@@ -23,10 +23,10 @@ build_ime = !is_ios
 # the host to load datapack and generate output in a format defined
 # by the platform (this is to support notifications).
 #
-# Introduce a standalone target that build on both 'host' and 'target'
-# toolset that just build the support to load datapack. The dependency
+# Introduce a standalone target that can build on both 'host' and 'target'
+# toolchains that just builds the support to load datapacks. The dependencies
 # should be kept minimal to have to build too many targets with multiple
-# toolsets.
+# toolchains.
 component("ui_data_pack") {
   sources = [
     "resource/data_pack.cc",
@@ -49,7 +49,12 @@ component("ui_data_pack") {
 
 buildflag_header("ui_features") {
   header = "ui_features.h"
-  flags = [ "ENABLE_HIDPI=$enable_hidpi" ]
+  flags = [
+    "ENABLE_HIDPI=$enable_hidpi",
+    "USE_XKBCOMMON=$use_xkbcommon",
+    "MAC_VIEWS_BROWSER=$mac_views_browser",
+    "HAS_NATIVE_ACCESSIBILITY=$has_native_accessibility",
+  ]
 }
 
 component("base") {
@@ -63,6 +68,8 @@ component("base") {
     "accelerators/platform_accelerator_cocoa.mm",
     "android/ui_base_jni_registrar.cc",
     "android/ui_base_jni_registrar.h",
+    "class_property.cc",
+    "class_property.h",
     "clipboard/clipboard_android.cc",
     "clipboard/clipboard_android.h",
     "clipboard/clipboard_mac.h",
@@ -75,6 +82,8 @@ component("base") {
     "clipboard/clipboard_win.cc",
     "clipboard/clipboard_win.h",
     "clipboard/custom_data_helper_mac.mm",
+    "cocoa/a11y_util.h",
+    "cocoa/a11y_util.mm",
     "cocoa/animation_utils.h",
     "cocoa/appkit_utils.h",
     "cocoa/appkit_utils.mm",
@@ -96,6 +105,8 @@ component("base") {
     "cocoa/controls/hyperlink_button_cell.mm",
     "cocoa/controls/hyperlink_text_view.h",
     "cocoa/controls/hyperlink_text_view.mm",
+    "cocoa/defaults_utils.h",
+    "cocoa/defaults_utils.mm",
     "cocoa/find_pasteboard.h",
     "cocoa/find_pasteboard.mm",
     "cocoa/flipped_view.h",
@@ -114,8 +125,6 @@ component("base") {
     "cocoa/menu_controller.mm",
     "cocoa/nib_loading.h",
     "cocoa/nib_loading.mm",
-    "cocoa/nscolor_additions.h",
-    "cocoa/nscolor_additions.mm",
     "cocoa/nsgraphics_context_additions.h",
     "cocoa/nsgraphics_context_additions.mm",
     "cocoa/nsview_additions.h",
@@ -128,6 +137,7 @@ component("base") {
     "cocoa/three_part_image.mm",
     "cocoa/tool_tip_base_view.h",
     "cocoa/tool_tip_base_view.mm",
+    "cocoa/touch_bar_forward_declarations.h",
     "cocoa/tracking_area.h",
     "cocoa/tracking_area.mm",
     "cocoa/underlay_opengl_hosting_window.h",
@@ -140,13 +150,14 @@ component("base") {
     "cursor/cursor.cc",
     "cursor/cursor.h",
     "cursor/cursor_android.cc",
+    "cursor/cursor_data.cc",
+    "cursor/cursor_data.h",
     "cursor/cursor_loader.h",
     "cursor/cursor_win.cc",
     "default_style.h",
     "default_theme_provider_mac.mm",
     "device_form_factor.h",
     "device_form_factor_android.cc",
-    "device_form_factor_android.h",
     "device_form_factor_desktop.cc",
     "device_form_factor_ios.mm",
     "dragdrop/drag_drop_types.h",
@@ -221,9 +232,13 @@ component("base") {
     "nine_image_painter_factory.h",
     "page_transition_types.cc",
     "page_transition_types.h",
+    "platform_window_defaults.cc",
+    "platform_window_defaults.h",
+    "property_data.h",
     "resource/resource_bundle.cc",
     "resource/resource_bundle.h",
     "resource/resource_bundle_android.cc",
+    "resource/resource_bundle_android.h",
     "resource/resource_bundle_auralinux.cc",
     "resource/resource_bundle_ios.mm",
     "resource/resource_bundle_mac.mm",
@@ -238,8 +253,6 @@ component("base") {
     "touch/touch_device.h",
     "touch/touch_editing_controller.cc",
     "touch/touch_editing_controller.h",
-    "touch/touch_enabled.cc",
-    "touch/touch_enabled.h",
     "ui_base_export.h",
     "ui_base_exports.cc",
     "ui_base_paths.cc",
@@ -361,11 +374,10 @@ component("base") {
   defines = [ "UI_BASE_IMPLEMENTATION" ]
 
   public_deps = [
+    ":ui_data_pack",
     ":ui_features",
     "//base",
     "//skia",
-    "//ui/events:events_base",
-    "//ui/events/platform",
     "//ui/gfx",
     "//ui/gfx/geometry",
   ]
@@ -376,7 +388,6 @@ component("base") {
     "//net",
     "//third_party/icu",
     "//third_party/zlib:zlib",
-    "//ui/base:ui_data_pack",
     "//ui/display",
     "//ui/events",
     "//ui/events/devices",
@@ -385,12 +396,22 @@ component("base") {
     "//url",
   ]
 
+  if (!is_ios) {
+    # iOS does not use Chromium-specific code for event handling.
+    public_deps += [
+      "//ui/events:events_base",
+      "//ui/events/platform",
+    ]
+  }
+
   if (is_ios) {
     set_sources_assignment_filter([])
     sources += [
       "l10n/l10n_util_mac.h",
       "l10n/l10n_util_mac.mm",
     ]
+    public_deps += [ "//ui/events:event_constants" ]
+
     set_sources_assignment_filter(sources_assignment_filter)
   }
 
@@ -460,6 +481,11 @@ component("base") {
 
   if (use_glib) {
     configs += [ "//build/config/linux:glib" ]
+    sources += [
+      "glib/glib_integers.h",
+      "glib/glib_signal.h",
+      "glib/scoped_gobject.h",
+    ]
   }
 
   if (is_linux) {
@@ -569,10 +595,7 @@ component("base") {
   }
 
   if (is_android) {
-    deps += [
-      ":ui_base_jni_headers",
-      "//ui/android:ui_java",
-    ]
+    deps += [ ":ui_base_jni_headers" ]
 
     libs += [ "jnigraphics" ]
   }
@@ -599,7 +622,7 @@ component("base") {
 
   # Aura clipboard.
   if (use_aura) {
-    if (use_clipboard_aurax11) {
+    if (use_x11 && is_desktop_linux) {
       sources += [
         "clipboard/clipboard_aurax11.cc",
         "clipboard/clipboard_aurax11.h",
@@ -625,10 +648,12 @@ static_library("test_support") {
     "test/material_design_controller_test_api.h",
     "test/ui_controls.h",
     "test/ui_controls_aura.cc",
+    "test/ui_controls_aura.h",
     "test/ui_controls_internal_win.cc",
     "test/ui_controls_internal_win.h",
     "test/ui_controls_mac.mm",
     "test/ui_controls_win.cc",
+    "test/user_interactive_test_case.h",
   ]
 
   if (!is_ios) {
@@ -652,8 +677,23 @@ static_library("test_support") {
     sources += [
       "test/ios/keyboard_appearance_listener.h",
       "test/ios/keyboard_appearance_listener.mm",
+      "test/ios/ui_image_test_utils.h",
+      "test/ios/ui_image_test_utils.mm",
       "test/ios/ui_view_test_utils.h",
       "test/ios/ui_view_test_utils.mm",
+    ]
+  }
+
+  if (is_mac) {
+    sources += [ "test/user_interactive_test_case_mac.mm" ]
+  } else {
+    sources += [ "test/user_interactive_test_case.cc" ]
+  }
+
+  if (is_chromeos) {
+    sources += [
+      "ime/chromeos/mock_input_method_manager.cc",
+      "ime/chromeos/mock_input_method_manager.h",
     ]
   }
 
@@ -687,7 +727,10 @@ static_library("test_support") {
   }
 
   if (!use_aura) {
-    sources -= [ "test/ui_controls_aura.cc" ]
+    sources -= [
+      "test/ui_controls_aura.cc",
+      "test/ui_controls_aura.h",
+    ]
   } else if (is_win) {
     sources -= [ "test/ui_controls_win.cc" ]
   }
@@ -718,9 +761,10 @@ bundle_data("ui_base_unittests_bundle_data") {
   ]
 }
 
-# GYP version: ui/base/ui_base_tests.gyp:ui_base_unittests
 test("ui_base_unittests") {
   sources = [
+    "class_property_unittest.cc",
+    "clipboard/clipboard_mac_unittest.mm",
     "clipboard/clipboard_util_mac_unittest.mm",
     "l10n/l10n_util_mac_unittest.mm",
     "l10n/l10n_util_unittest.cc",
@@ -755,7 +799,10 @@ test("ui_base_unittests") {
   if (is_ios) {
     # Compile this Mac file on iOS as well.
     set_sources_assignment_filter([])
-    sources += [ "l10n/l10n_util_mac_unittest.mm" ]
+    sources += [
+      "l10n/l10n_util_mac_unittest.mm",
+      "test/ios/ui_image_test_utils_unittest.mm",
+    ]
     set_sources_assignment_filter(sources_assignment_filter)
   } else {  # !is_ios
     sources += [
@@ -774,7 +821,6 @@ test("ui_base_unittests") {
       "cocoa/fullscreen_window_manager_unittest.mm",
       "cocoa/hover_image_button_unittest.mm",
       "cocoa/menu_controller_unittest.mm",
-      "cocoa/nscolor_additions_unittest.mm",
       "cocoa/nsgraphics_context_additions_unittest.mm",
       "cocoa/nsview_additions_unittest.mm",
       "cocoa/three_part_image_unittest.mm",
@@ -800,9 +846,6 @@ test("ui_base_unittests") {
     ]
     if (is_linux && use_aura && !is_chromeos) {
       sources += [ "ime/input_method_auralinux_unittest.cc" ]
-    }
-    if (is_mac) {
-      sources += [ "resource/resource_bundle_mac_unittest.mm" ]
     }
     if (use_x11) {
       sources += [ "ime/composition_text_util_pango_unittest.cc" ]
@@ -844,6 +887,8 @@ test("ui_base_unittests") {
 
   if (is_ios) {
     deps += [ "//ui/resources:ui_test_pak_bundle_data" ]
+  } else {
+    deps += [ "//ui/base/accelerators/mojo:unittests" ]
   }
 
   if (is_win) {
@@ -890,8 +935,6 @@ test("ui_base_unittests") {
       "//ui/events/platform/x11",
       "//ui/gfx/x",
     ]
-
-    data_deps += [ "//tools/xdisplaycheck" ]
   }
 
   if (is_mac) {

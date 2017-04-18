@@ -4,7 +4,7 @@
 
 #include "ash/touch/touch_observer_hud.h"
 
-#include "ash/common/shell_window_ids.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/root_window_settings.h"
 #include "ash/shell.h"
@@ -22,7 +22,7 @@ TouchObserverHUD::TouchObserverHUD(aura::Window* initial_root)
       root_window_(initial_root),
       widget_(NULL) {
   const display::Display& display =
-      Shell::GetInstance()->display_manager()->GetDisplayForId(display_id_);
+      Shell::Get()->display_manager()->GetDisplayForId(display_id_);
 
   views::View* content = new views::View;
 
@@ -47,20 +47,14 @@ TouchObserverHUD::TouchObserverHUD(aura::Window* initial_root)
 
   // Observe changes in display size and mode to update touch HUD.
   display::Screen::GetScreen()->AddObserver(this);
-#if defined(OS_CHROMEOS)
-  Shell::GetInstance()->display_configurator()->AddObserver(this);
-#endif  // defined(OS_CHROMEOS)
-
-  Shell::GetInstance()->window_tree_host_manager()->AddObserver(this);
+  Shell::Get()->display_configurator()->AddObserver(this);
+  Shell::Get()->window_tree_host_manager()->AddObserver(this);
   root_window_->AddPreTargetHandler(this);
 }
 
 TouchObserverHUD::~TouchObserverHUD() {
-  Shell::GetInstance()->window_tree_host_manager()->RemoveObserver(this);
-
-#if defined(OS_CHROMEOS)
-  Shell::GetInstance()->display_configurator()->RemoveObserver(this);
-#endif  // defined(OS_CHROMEOS)
+  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+  Shell::Get()->display_configurator()->RemoveObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
 
   widget_->RemoveObserver(this);
@@ -100,14 +94,12 @@ void TouchObserverHUD::OnDisplayMetricsChanged(const display::Display& display,
   widget_->SetSize(display.size());
 }
 
-#if defined(OS_CHROMEOS)
 void TouchObserverHUD::OnDisplayModeChanged(
-    const ui::DisplayConfigurator::DisplayStateList& outputs) {
+    const display::DisplayConfigurator::DisplayStateList& outputs) {
   // Clear touch HUD for any change in display mode (single, dual extended, dual
   // mirrored, ...).
   Clear();
 }
-#endif  // defined(OS_CHROMEOS)
 
 void TouchObserverHUD::OnDisplaysInitialized() {
   OnDisplayConfigurationChanged();
@@ -134,9 +126,9 @@ void TouchObserverHUD::OnDisplayConfigurationChanged() {
   if (root_window_)
     return;
 
-  root_window_ = Shell::GetInstance()
-                     ->window_tree_host_manager()
-                     ->GetRootWindowForDisplayId(display_id_);
+  root_window_ =
+      Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
+          display_id_);
 
   views::Widget::ReparentNativeView(
       widget_->GetNativeView(),

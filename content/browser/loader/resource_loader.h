@@ -7,23 +7,26 @@
 
 #include <memory>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/timer/timer.h"
+#include "base/threading/thread_checker.h"
+#include "base/time/time.h"
+#include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/resource_handler.h"
 #include "content/browser/ssl/ssl_client_auth_handler.h"
 #include "content/browser/ssl/ssl_error_handler.h"
 #include "content/common/content_export.h"
-#include "content/public/browser/resource_controller.h"
 #include "net/url_request/url_request.h"
+#include "url/gurl.h"
 
 namespace net {
 class X509Certificate;
 }
 
 namespace content {
-class CertStore;
 class ResourceDispatcherHostLoginDelegate;
+class ResourceHandler;
 class ResourceLoaderDelegate;
 class ResourceRequestInfoImpl;
 
@@ -33,11 +36,10 @@ class ResourceRequestInfoImpl;
 class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
                                       public SSLErrorHandler::Delegate,
                                       public SSLClientAuthHandler::Delegate,
-                                      public ResourceController {
+                                      public ResourceHandler::Delegate {
  public:
   ResourceLoader(std::unique_ptr<net::URLRequest> request,
                  std::unique_ptr<ResourceHandler> handler,
-                 CertStore* cert_store,
                  ResourceLoaderDelegate* delegate);
   ~ResourceLoader() override;
 
@@ -45,7 +47,7 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   void CancelRequest(bool from_renderer);
 
   bool is_transferring() const { return is_transferring_; }
-  void MarkAsTransferring(const scoped_refptr<ResourceResponse>& response);
+  void MarkAsTransferring(const base::Closure& on_transfer_complete_callback);
   void CompleteTransfer();
 
   net::URLRequest* request() { return request_.get(); }
@@ -53,16 +55,13 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
 
   void ClearLoginDelegate();
 
-  // Returns a pointer to the ResourceResponse for a request that is
-  // being transferred to a new consumer. The response is valid between
-  // the time that the request is marked as transferring via
-  // MarkAsTransferring() and the time that the transfer is completed
-  // via CompleteTransfer().
-  ResourceResponse* transferring_response() {
-    return transferring_response_.get();
-  }
+  // ResourceHandler::Delegate implementation:
+  void OutOfBandCancel(int error_code, bool tell_renderer) override;
 
  private:
+  // ResourceController implementation for the ResourceLoader.
+  class Controller;
+
   // net::URLRequest::Delegate implementation:
   void OnReceivedRedirect(net::URLRequest* request,
                           const net::RedirectInfo& redirect_info,
@@ -85,18 +84,29 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   void ContinueWithCertificate(net::X509Certificate* cert) override;
   void CancelCertificateSelection() override;
 
-  // ResourceController implementation:
-  void Resume() override;
-  void Cancel() override;
-  void CancelAndIgnore() override;
-  void CancelWithError(int error_code) override;
+  // These correspond to Controller's methods.
+  // TODO(mmenke):  Seems like this could be simplified a little.
+
+  // |called_from_resource_controller| is true if called directly from a
+  // ResourceController, in which case |resource_handler_| must not be invoked
+  // or destroyed synchronously to avoid re-entrancy issues, and false
+  // otherwise.
+  void Resume(bool called_from_resource_controller);
+  void Cancel();
+  void CancelAndIgnore();
+  void CancelWithError(int error_code);
 
   void StartRequestInternal();
   void CancelRequestInternal(int error, bool from_renderer);
+  void FollowDeferredRedirectInternal();
   void CompleteResponseStarted();
-  void StartReading(bool is_continuation);
+  // If |handle_result_async| is true, the result of the following read will be
+  // handled asynchronously if it completes synchronously, unless it's EOF or an
+  // error. This is to prevent a single request from blocking the thread for too
+  // long.
+  void PrepareToReadMore(bool handle_result_async);
+  void ReadMore(bool handle_result_async);
   void ResumeReading();
-  void ReadMore(int* bytes_read);
   // Passes a read result to the handler.
   void CompleteRead(int bytes_read);
   void ResponseCompleted();
@@ -113,19 +123,28 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
     STATUS_SUCCESS_FROM_CACHE,
     STATUS_SUCCESS_FROM_NETWORK,
     STATUS_CANCELED,
+    STATUS_SUCCESS_ALREADY_PREFETCHED,
     STATUS_MAX,
   };
 
   enum DeferredStage {
     DEFERRED_NONE,
+    // Magic deferral "stage" which means that the code is currently in a
+    // recursive call from the ResourceLoader. When in this state, Resume() does
+    // nothing but update the deferral state, and when the stack is unwound back
+    // up to the ResourceLoader, the request will be continued. This is used to
+    // prevent the stack from getting too deep.
+    DEFERRED_SYNC,
     DEFERRED_START,
-    DEFERRED_NETWORK_START,
     DEFERRED_REDIRECT,
+    DEFERRED_ON_WILL_READ,
     DEFERRED_READ,
     DEFERRED_RESPONSE_COMPLETE,
     DEFERRED_FINISH
   };
   DeferredStage deferred_stage_;
+
+  class ScopedDeferral;
 
   std::unique_ptr<net::URLRequest> request_;
   std::unique_ptr<ResourceHandler> handler_;
@@ -141,11 +160,8 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   // which point we'll receive a new ResourceHandler.
   bool is_transferring_;
 
-  // Holds the ResourceResponse for a request that is being transferred
-  // to a new consumer. This member is populated when the request is
-  // marked as transferring via MarkAsTransferring(), and it is cleared
-  // when the transfer is completed via CompleteTransfer().
-  scoped_refptr<ResourceResponse> transferring_response_;
+  // Called when a navigation has finished transfer.
+  base::Closure on_transfer_complete_callback_;
 
   // Instrumentation add to investigate http://crbug.com/503306.
   // TODO(mmenke): Remove once bug is fixed.
@@ -153,9 +169,15 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   bool started_request_;
   int times_cancelled_after_request_start_;
 
-  // Allows tests to use a mock CertStore. The CertStore must outlive
-  // the ResourceLoader.
-  CertStore* cert_store_;
+  // Stores the URL from a deferred redirect.
+  GURL deferred_redirect_url_;
+
+  // Read buffer and its size.  Class members as OnWillRead can complete
+  // asynchronously.
+  scoped_refptr<net::IOBuffer> read_buffer_;
+  int read_buffer_size_;
+
+  base::ThreadChecker thread_checker_;
 
   base::WeakPtrFactory<ResourceLoader> weak_ptr_factory_;
 

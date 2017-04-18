@@ -5,6 +5,7 @@
 #include "chrome/browser/captive_portal/captive_portal_tab_helper.h"
 
 #include "base/bind.h"
+#include "base/debug/dump_without_crashing.h"
 #include "chrome/browser/captive_portal/captive_portal_login_detector.h"
 #include "chrome/browser/captive_portal/captive_portal_service_factory.h"
 #include "chrome/browser/captive_portal/captive_portal_tab_reloader.h"
@@ -29,7 +30,6 @@
 #include "net/ssl/ssl_info.h"
 
 using captive_portal::CaptivePortalResult;
-using content::ResourceType;
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(CaptivePortalTabHelper);
 
@@ -58,18 +58,26 @@ CaptivePortalTabHelper::~CaptivePortalTabHelper() {
 void CaptivePortalTabHelper::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!navigation_handle->IsInMainFrame())
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument()) {
     return;
+  }
+
+  // TODO(clamy): Remove this when we understand the root cause behind
+  // crbug.com/704892.
+  if (navigation_handle == navigation_handle_)
+    base::debug::DumpWithoutCrashing();
+
+  bool was_tracking_navigation = !!navigation_handle_;
+  navigation_handle_ = navigation_handle;
 
   // Always track the latest navigation. If a navigation was already tracked,
   // and it committed (either the navigation proper or an error page), it is
   // safe to start tracking the new navigation. Otherwise simulate an abort
   // before reporting the start of the new navigation.
-  if (navigation_handle_ && !navigation_handle_->HasCommitted()) {
+  if (was_tracking_navigation)
     tab_reloader_->OnAbort();
-  }
 
-  navigation_handle_ = navigation_handle;
   tab_reloader_->OnLoadStart(
       navigation_handle->GetURL().SchemeIsCryptographic());
 }
@@ -87,17 +95,29 @@ void CaptivePortalTabHelper::DidRedirectNavigation(
 void CaptivePortalTabHelper::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  // Exclude subframe navigations.
   if (!navigation_handle->IsInMainFrame())
     return;
 
-  if (navigation_handle_ != navigation_handle) {
-    // Another navigation is being tracked, so there is no need to update the
-    // TabReloader.
-    if (!navigation_handle->HasCommitted())
-      return;
-    // An untracked navigation just committed. Simulate its start before
-    // informing the TabReloader of its commit.
-    DidStartNavigation(navigation_handle);
+  // Exclude same-document navigations and aborted navigations that were not
+  // being tracked.
+  if (navigation_handle_ != navigation_handle &&
+      (!navigation_handle->HasCommitted() ||
+       navigation_handle->IsSameDocument())) {
+    return;
+  }
+
+  bool need_to_simulate_start = navigation_handle_ != navigation_handle;
+  bool need_to_simulate_previous_abort =
+      need_to_simulate_start && !!navigation_handle_;
+  navigation_handle_ = nullptr;
+
+  if (need_to_simulate_previous_abort)
+    tab_reloader_->OnAbort();
+
+  if (need_to_simulate_start) {
+    tab_reloader_->OnLoadStart(
+        navigation_handle->GetURL().SchemeIsCryptographic());
   }
 
   if (navigation_handle->HasCommitted()) {
@@ -105,8 +125,6 @@ void CaptivePortalTabHelper::DidFinishNavigation(
   } else {
     tab_reloader_->OnAbort();
   }
-
-  navigation_handle_ = nullptr;
 }
 
 void CaptivePortalTabHelper::DidStopLoading() {

@@ -17,39 +17,46 @@ class PresentationConnectionAvailableEventInit;
 // by the embedder using the default presentation URL and id.
 // See https://code.google.com/p/chromium/issues/detail?id=459001 for details.
 class PresentationConnectionAvailableEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~PresentationConnectionAvailableEvent() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static PresentationConnectionAvailableEvent* create()
-    {
-        return new PresentationConnectionAvailableEvent;
-    }
-    static PresentationConnectionAvailableEvent* create(const AtomicString& eventType, PresentationConnection* connection)
-    {
-        return new PresentationConnectionAvailableEvent(eventType, connection);
-    }
-    static PresentationConnectionAvailableEvent* create(const AtomicString& eventType, const PresentationConnectionAvailableEventInit& initializer)
-    {
-        return new PresentationConnectionAvailableEvent(eventType, initializer);
-    }
+ public:
+  ~PresentationConnectionAvailableEvent() override;
 
-    PresentationConnection* connection() { return m_connection.get(); }
+  static PresentationConnectionAvailableEvent* Create(
+      const AtomicString& event_type,
+      PresentationConnection* connection) {
+    return new PresentationConnectionAvailableEvent(event_type, connection);
+  }
+  static PresentationConnectionAvailableEvent* Create(
+      const AtomicString& event_type,
+      const PresentationConnectionAvailableEventInit& initializer) {
+    return new PresentationConnectionAvailableEvent(event_type, initializer);
+  }
 
-    const AtomicString& interfaceName() const override;
+  PresentationConnection* connection() { return connection_.Get(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    PresentationConnectionAvailableEvent();
-    PresentationConnectionAvailableEvent(const AtomicString& eventType, PresentationConnection*);
-    PresentationConnectionAvailableEvent(const AtomicString& eventType, const PresentationConnectionAvailableEventInit& initializer);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<PresentationConnection> m_connection;
+ private:
+  PresentationConnectionAvailableEvent(const AtomicString& event_type,
+                                       PresentationConnection*);
+  PresentationConnectionAvailableEvent(
+      const AtomicString& event_type,
+      const PresentationConnectionAvailableEventInit& initializer);
+
+  Member<PresentationConnection> connection_;
 };
 
-DEFINE_TYPE_CASTS(PresentationConnectionAvailableEvent, Event, event, event->interfaceName() == EventNames::PresentationConnectionAvailableEvent, event.interfaceName() == EventNames::PresentationConnectionAvailableEvent);
+DEFINE_TYPE_CASTS(PresentationConnectionAvailableEvent,
+                  Event,
+                  event,
+                  event->InterfaceName() ==
+                      EventNames::PresentationConnectionAvailableEvent,
+                  event.InterfaceName() ==
+                      EventNames::PresentationConnectionAvailableEvent);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PresentationConnectionAvailableEvent_h
+#endif  // PresentationConnectionAvailableEvent_h

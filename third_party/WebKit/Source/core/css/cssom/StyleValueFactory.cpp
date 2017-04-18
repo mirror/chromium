@@ -4,40 +4,115 @@
 
 #include "core/css/cssom/StyleValueFactory.h"
 
+#include "core/css/CSSImageValue.h"
 #include "core/css/CSSValue.h"
+#include "core/css/cssom/CSSCalcLength.h"
+#include "core/css/cssom/CSSKeywordValue.h"
+#include "core/css/cssom/CSSNumberValue.h"
+#include "core/css/cssom/CSSOMTypes.h"
 #include "core/css/cssom/CSSSimpleLength.h"
 #include "core/css/cssom/CSSStyleValue.h"
+#include "core/css/cssom/CSSStyleVariableReferenceValue.h"
 #include "core/css/cssom/CSSTransformValue.h"
+#include "core/css/cssom/CSSURLImageValue.h"
+#include "core/css/cssom/CSSUnparsedValue.h"
 #include "core/css/cssom/CSSUnsupportedStyleValue.h"
 
 namespace blink {
 
-CSSStyleValueVector StyleValueFactory::cssValueToStyleValueVector(CSSPropertyID propertyID, const CSSValue& value)
-{
-    CSSStyleValueVector styleValueVector;
+namespace {
 
-    if (value.isPrimitiveValue()) {
-        const CSSPrimitiveValue& primitiveValue = toCSSPrimitiveValue(value);
-        if (primitiveValue.isLength() && !primitiveValue.isCalculated()) {
-            styleValueVector.append(CSSSimpleLength::create(primitiveValue.getDoubleValue(), primitiveValue.typeWithCalcResolved()));
-            return styleValueVector;
-        }
-    }
-
-    CSSStyleValue* styleValue = nullptr;
-    switch (propertyID) {
-    case CSSPropertyTransform:
-        styleValue  = CSSTransformValue::fromCSSValue(value);
-        if (styleValue)
-            styleValueVector.append(styleValue);
-        return styleValueVector;
-    default:
-        // TODO(meade): Implement the rest.
-        break;
-    }
-
-    styleValueVector.append(CSSUnsupportedStyleValue::create(value.cssText()));
-    return styleValueVector;
+CSSStyleValue* CreateStyleValueFromPrimitiveValue(
+    const CSSPrimitiveValue& primitive_value) {
+  if (primitive_value.IsNumber())
+    return CSSNumberValue::Create(primitive_value.GetDoubleValue());
+  if (primitive_value.IsLength() || primitive_value.IsPercentage())
+    return CSSSimpleLength::FromCSSValue(primitive_value);
+  return nullptr;
 }
 
-} // namespace blink
+CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
+                                                    const CSSValue& value) {
+  switch (property_id) {
+    case CSSPropertyTransform:
+      return CSSTransformValue::FromCSSValue(value);
+    default:
+      // TODO(meade): Implement other properties.
+      break;
+  }
+  if (value.IsPrimitiveValue() && ToCSSPrimitiveValue(value).IsCalculated()) {
+    // TODO(meade): Handle other calculated types, e.g. angles here.
+    if (CSSOMTypes::PropertyCanTakeType(property_id,
+                                        CSSStyleValue::kCalcLengthType)) {
+      return CSSCalcLength::FromCSSValue(ToCSSPrimitiveValue(value));
+    }
+  }
+  return nullptr;
+}
+
+CSSStyleValue* CreateStyleValue(const CSSValue& value) {
+  if (value.IsCSSWideKeyword() || value.IsIdentifierValue() ||
+      value.IsCustomIdentValue())
+    return CSSKeywordValue::FromCSSValue(value);
+  if (value.IsPrimitiveValue())
+    return CreateStyleValueFromPrimitiveValue(ToCSSPrimitiveValue(value));
+  if (value.IsVariableReferenceValue())
+    return CSSUnparsedValue::FromCSSValue(ToCSSVariableReferenceValue(value));
+  if (value.IsImageValue()) {
+    return CSSURLImageValue::Create(
+        ToCSSImageValue(value).ValueWithURLMadeAbsolute());
+  }
+  return nullptr;
+}
+
+CSSStyleValue* CreateStyleValueWithProperty(CSSPropertyID property_id,
+                                            const CSSValue& value) {
+  CSSStyleValue* style_value =
+      CreateStyleValueWithPropertyInternal(property_id, value);
+  if (style_value)
+    return style_value;
+  return CreateStyleValue(value);
+}
+
+CSSStyleValueVector UnsupportedCSSValue(const CSSValue& value) {
+  CSSStyleValueVector style_value_vector;
+  style_value_vector.push_back(
+      CSSUnsupportedStyleValue::Create(value.CssText()));
+  return style_value_vector;
+}
+
+}  // namespace
+
+CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
+    CSSPropertyID property_id,
+    const CSSValue& css_value) {
+  CSSStyleValueVector style_value_vector;
+
+  CSSStyleValue* style_value =
+      CreateStyleValueWithProperty(property_id, css_value);
+  if (style_value) {
+    style_value_vector.push_back(style_value);
+    return style_value_vector;
+  }
+
+  if (!css_value.IsValueList()) {
+    return UnsupportedCSSValue(css_value);
+  }
+
+  // If it's a list, we can try it as a list valued property.
+  const CSSValueList& css_value_list = ToCSSValueList(css_value);
+  for (const CSSValue* inner_value : css_value_list) {
+    style_value = CreateStyleValueWithProperty(property_id, *inner_value);
+    if (!style_value)
+      return UnsupportedCSSValue(css_value);
+    style_value_vector.push_back(style_value);
+  }
+  return style_value_vector;
+}
+
+CSSStyleValueVector StyleValueFactory::CssValueToStyleValueVector(
+    const CSSValue& css_value) {
+  return CssValueToStyleValueVector(CSSPropertyInvalid, css_value);
+}
+
+}  // namespace blink

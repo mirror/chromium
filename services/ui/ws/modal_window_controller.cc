@@ -4,6 +4,7 @@
 
 #include "services/ui/ws/modal_window_controller.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "services/ui/ws/event_dispatcher.h"
 #include "services/ui/ws/server_window.h"
@@ -17,7 +18,8 @@ const ServerWindow* GetModalChildForWindowAncestor(const ServerWindow* window) {
   for (const ServerWindow* ancestor = window; ancestor;
        ancestor = ancestor->parent()) {
     for (auto* transient_child : ancestor->transient_children()) {
-      if (transient_child->is_modal() && transient_child->IsDrawn())
+      if (transient_child->modal_type() != MODAL_TYPE_NONE &&
+          transient_child->IsDrawn())
         return transient_child;
     }
   }
@@ -45,12 +47,12 @@ ModalWindowController::~ModalWindowController() {
 
 void ModalWindowController::AddSystemModalWindow(ServerWindow* window) {
   DCHECK(window);
-  DCHECK(!ContainsValue(system_modal_windows_, window));
+  DCHECK(!base::ContainsValue(system_modal_windows_, window));
 
-  window->SetModal();
+  window->SetModalType(ui::MODAL_TYPE_SYSTEM);
   system_modal_windows_.push_back(window);
   window_drawn_trackers_.insert(make_pair(
-      window, base::WrapUnique(new ServerWindowDrawnTracker(window, this))));
+      window, base::MakeUnique<ServerWindowDrawnTracker>(window, this)));
   window->AddObserver(this);
 
   event_dispatcher_->ReleaseCaptureBlockedByModalWindow(window);
@@ -61,8 +63,10 @@ bool ModalWindowController::IsWindowBlockedBy(
     const ServerWindow* modal_window) const {
   DCHECK(window);
   DCHECK(modal_window);
-  if (!modal_window->is_modal() || !modal_window->IsDrawn())
+  if (modal_window->modal_type() == MODAL_TYPE_NONE ||
+      !modal_window->IsDrawn()) {
     return false;
+  }
 
   if (modal_window->transient_parent() &&
       !modal_window->transient_parent()->Contains(window)) {
@@ -74,14 +78,17 @@ bool ModalWindowController::IsWindowBlockedBy(
 
 bool ModalWindowController::IsWindowBlocked(const ServerWindow* window) const {
   DCHECK(window);
-  return GetActiveSystemModalWindow() || GetModalChildForWindowAncestor(window);
+  return GetTargetForWindow(window) != window;
 }
 
 const ServerWindow* ModalWindowController::GetTargetForWindow(
     const ServerWindow* window) const {
+  // TODO(moshayedi): crbug.com/697127. Handle MODAL_TYPE_CHILD.
   ServerWindow* system_modal_window = GetActiveSystemModalWindow();
-  return system_modal_window ? system_modal_window
-                             : GetWindowModalTargetForWindow(window);
+  if (system_modal_window)
+    return system_modal_window->Contains(window) ? window : system_modal_window;
+
+  return window ? GetWindowModalTargetForWindow(window) : nullptr;
 }
 
 ServerWindow* ModalWindowController::GetActiveSystemModalWindow() const {

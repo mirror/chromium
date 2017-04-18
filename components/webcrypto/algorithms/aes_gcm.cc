@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <openssl/evp.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -17,8 +16,8 @@
 #include "components/webcrypto/crypto_data.h"
 #include "components/webcrypto/status.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithmParams.h"
+#include "third_party/boringssl/src/include/openssl/aead.h"
 
 namespace webcrypto {
 
@@ -41,13 +40,13 @@ Status AesGcmEncryptDecrypt(EncryptOrDecrypt mode,
                             const CryptoData& data,
                             std::vector<uint8_t>* buffer) {
   const std::vector<uint8_t>& raw_key = GetSymmetricKeyData(key);
-  const blink::WebCryptoAesGcmParams* params = algorithm.aesGcmParams();
+  const blink::WebCryptoAesGcmParams* params = algorithm.AesGcmParams();
 
   // The WebCrypto spec defines the default value for the tag length, as well as
   // the allowed values for tag length.
   unsigned int tag_length_bits = 128;
-  if (params->hasTagLengthBits()) {
-    tag_length_bits = params->optionalTagLengthBits();
+  if (params->HasTagLengthBits()) {
+    tag_length_bits = params->OptionalTagLengthBits();
     if (tag_length_bits != 32 && tag_length_bits != 64 &&
         tag_length_bits != 96 && tag_length_bits != 104 &&
         tag_length_bits != 112 && tag_length_bits != 120 &&
@@ -57,8 +56,8 @@ Status AesGcmEncryptDecrypt(EncryptOrDecrypt mode,
   }
 
   return AeadEncryptDecrypt(
-      mode, raw_key, data, tag_length_bits / 8, CryptoData(params->iv()),
-      CryptoData(params->optionalAdditionalData()),
+      mode, raw_key, data, tag_length_bits / 8, CryptoData(params->Iv()),
+      CryptoData(params->OptionalAdditionalData()),
       GetAesGcmAlgorithmFromKeySize(raw_key.size()), buffer);
 }
 

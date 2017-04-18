@@ -19,37 +19,28 @@
 namespace {
 
 // Maps an upgrade level to a severity level.
-AppMenuIconPainter::Severity SeverityFromUpgradeLevel(
+AppMenuIconController::Severity SeverityFromUpgradeLevel(
     UpgradeDetector::UpgradeNotificationAnnoyanceLevel level) {
   switch (level) {
     case UpgradeDetector::UPGRADE_ANNOYANCE_NONE:
-      return AppMenuIconPainter::SEVERITY_NONE;
+      return AppMenuIconController::Severity::NONE;
     case UpgradeDetector::UPGRADE_ANNOYANCE_LOW:
-      return AppMenuIconPainter::SEVERITY_LOW;
+      return AppMenuIconController::Severity::LOW;
     case UpgradeDetector::UPGRADE_ANNOYANCE_ELEVATED:
-      return AppMenuIconPainter::SEVERITY_MEDIUM;
+      return AppMenuIconController::Severity::MEDIUM;
     case UpgradeDetector::UPGRADE_ANNOYANCE_HIGH:
-      return AppMenuIconPainter::SEVERITY_HIGH;
     case UpgradeDetector::UPGRADE_ANNOYANCE_SEVERE:
-      return AppMenuIconPainter::SEVERITY_HIGH;
     case UpgradeDetector::UPGRADE_ANNOYANCE_CRITICAL:
-      return AppMenuIconPainter::SEVERITY_HIGH;
+      return AppMenuIconController::Severity::HIGH;
   }
   NOTREACHED();
-  return AppMenuIconPainter::SEVERITY_NONE;
+  return AppMenuIconController::Severity::NONE;
 }
 
 // Checks if the app menu icon should be animated for the given upgrade level.
 bool ShouldAnimateUpgradeLevel(
     UpgradeDetector::UpgradeNotificationAnnoyanceLevel level) {
-  bool should_animate = true;
-  if (level == UpgradeDetector::UPGRADE_ANNOYANCE_LOW) {
-    // Only animate low severity upgrades once.
-    static bool should_animate_low_severity = true;
-    should_animate = should_animate_low_severity;
-    should_animate_low_severity = false;
-  }
-  return should_animate;
+  return level != UpgradeDetector::UPGRADE_ANNOYANCE_NONE;
 }
 
 // Returns true if we should show the upgrade recommended icon.
@@ -66,9 +57,7 @@ bool ShouldShowUpgradeRecommended() {
 // Returns true if we should show the warning for incompatible software.
 bool ShouldShowIncompatibilityWarning() {
 #if defined(OS_WIN)
-  EnumerateModulesModel* loaded_modules = EnumerateModulesModel::GetInstance();
-  loaded_modules->MaybePostScanningTask();
-  return loaded_modules->ShouldShowConflictWarning();
+  return EnumerateModulesModel::GetInstance()->ShouldShowConflictWarning();
 #else
   return false;
 #endif
@@ -88,12 +77,17 @@ AppMenuIconController::AppMenuIconController(Profile* profile,
                  content::Source<Profile>(profile_));
 
 #if defined(OS_WIN)
-  registrar_.Add(this, chrome::NOTIFICATION_MODULE_INCOMPATIBILITY_ICON_CHANGE,
-                 content::NotificationService::AllSources());
+  auto* modules = EnumerateModulesModel::GetInstance();
+  modules->AddObserver(this);
+  modules->MaybePostScanningTask();
 #endif
 }
 
-AppMenuIconController::~AppMenuIconController() {}
+AppMenuIconController::~AppMenuIconController() {
+#if defined(OS_WIN)
+  EnumerateModulesModel::GetInstance()->RemoveObserver(this);
+#endif
+}
 
 void AppMenuIconController::UpdateDelegate() {
   if (ShouldShowUpgradeRecommended()) {
@@ -107,7 +101,7 @@ void AppMenuIconController::UpdateDelegate() {
 
   if (ShouldShowIncompatibilityWarning()) {
     delegate_->UpdateSeverity(IconType::INCOMPATIBILITY_WARNING,
-                              AppMenuIconPainter::SEVERITY_MEDIUM, true);
+                              Severity::MEDIUM, true);
     return;
   }
 
@@ -116,13 +110,23 @@ void AppMenuIconController::UpdateDelegate() {
     // If you change the severity here, make sure to also change the menu icon
     // and the bubble icon.
     delegate_->UpdateSeverity(IconType::GLOBAL_ERROR,
-                              AppMenuIconPainter::SEVERITY_MEDIUM, true);
+                              Severity::MEDIUM, true);
     return;
   }
 
-  delegate_->UpdateSeverity(IconType::NONE,
-                            AppMenuIconPainter::SEVERITY_NONE, true);
+  delegate_->UpdateSeverity(IconType::NONE, Severity::NONE, false);
 }
+
+#if defined(OS_WIN)
+void AppMenuIconController::OnScanCompleted() {
+  UpdateDelegate();
+}
+
+void AppMenuIconController::OnConflictsAcknowledged() {
+  UpdateDelegate();
+}
+#endif
+
 void AppMenuIconController::Observe(
     int type,
     const content::NotificationSource& source,

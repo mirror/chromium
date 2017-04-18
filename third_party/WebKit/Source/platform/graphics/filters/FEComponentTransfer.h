@@ -24,65 +24,73 @@
 #define FEComponentTransfer_h
 
 #include "platform/graphics/filters/FilterEffect.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 enum ComponentTransferType {
-    FECOMPONENTTRANSFER_TYPE_UNKNOWN  = 0,
-    FECOMPONENTTRANSFER_TYPE_IDENTITY = 1,
-    FECOMPONENTTRANSFER_TYPE_TABLE    = 2,
-    FECOMPONENTTRANSFER_TYPE_DISCRETE = 3,
-    FECOMPONENTTRANSFER_TYPE_LINEAR   = 4,
-    FECOMPONENTTRANSFER_TYPE_GAMMA    = 5
+  FECOMPONENTTRANSFER_TYPE_UNKNOWN = 0,
+  FECOMPONENTTRANSFER_TYPE_IDENTITY = 1,
+  FECOMPONENTTRANSFER_TYPE_TABLE = 2,
+  FECOMPONENTTRANSFER_TYPE_DISCRETE = 3,
+  FECOMPONENTTRANSFER_TYPE_LINEAR = 4,
+  FECOMPONENTTRANSFER_TYPE_GAMMA = 5
 };
 
 struct ComponentTransferFunction {
-    DISALLOW_NEW();
-    ComponentTransferFunction()
-        : type(FECOMPONENTTRANSFER_TYPE_UNKNOWN)
-        , slope(0)
-        , intercept(0)
-        , amplitude(0)
-        , exponent(0)
-        , offset(0)
-    {
-    }
+  DISALLOW_NEW();
+  ComponentTransferFunction()
+      : type(FECOMPONENTTRANSFER_TYPE_UNKNOWN),
+        slope(0),
+        intercept(0),
+        amplitude(0),
+        exponent(0),
+        offset(0) {}
 
-    ComponentTransferType type;
+  ComponentTransferType type;
 
-    float slope;
-    float intercept;
-    float amplitude;
-    float exponent;
-    float offset;
+  float slope;
+  float intercept;
+  float amplitude;
+  float exponent;
+  float offset;
 
-    Vector<float> tableValues;
+  Vector<float> table_values;
 };
 
 class PLATFORM_EXPORT FEComponentTransfer final : public FilterEffect {
-public:
-    static FEComponentTransfer* create(Filter*, const ComponentTransferFunction& redFunc, const ComponentTransferFunction& greenFunc,
-        const ComponentTransferFunction& blueFunc, const ComponentTransferFunction& alphaFunc);
+ public:
+  static FEComponentTransfer* Create(
+      Filter*,
+      const ComponentTransferFunction& red_func,
+      const ComponentTransferFunction& green_func,
+      const ComponentTransferFunction& blue_func,
+      const ComponentTransferFunction& alpha_func);
 
-    TextStream& externalRepresentation(TextStream&, int indention) const override;
+  TextStream& ExternalRepresentation(TextStream&, int indention) const override;
 
-private:
-    FEComponentTransfer(Filter*, const ComponentTransferFunction& redFunc, const ComponentTransferFunction& greenFunc,
-        const ComponentTransferFunction& blueFunc, const ComponentTransferFunction& alphaFunc);
+ private:
+  FEComponentTransfer(Filter*,
+                      const ComponentTransferFunction& red_func,
+                      const ComponentTransferFunction& green_func,
+                      const ComponentTransferFunction& blue_func,
+                      const ComponentTransferFunction& alpha_func);
 
-    sk_sp<SkImageFilter> createImageFilter() override;
+  sk_sp<SkImageFilter> CreateImageFilter() override;
 
-    bool affectsTransparentPixels() override;
+  bool AffectsTransparentPixels() const override;
 
-    void getValues(unsigned char rValues[256], unsigned char gValues[256], unsigned char bValues[256], unsigned char aValues[256]);
+  void GetValues(unsigned char r_values[256],
+                 unsigned char g_values[256],
+                 unsigned char b_values[256],
+                 unsigned char a_values[256]);
 
-    ComponentTransferFunction m_redFunc;
-    ComponentTransferFunction m_greenFunc;
-    ComponentTransferFunction m_blueFunc;
-    ComponentTransferFunction m_alphaFunc;
+  ComponentTransferFunction red_func_;
+  ComponentTransferFunction green_func_;
+  ComponentTransferFunction blue_func_;
+  ComponentTransferFunction alpha_func_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FEComponentTransfer_h
+#endif  // FEComponentTransfer_h

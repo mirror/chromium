@@ -15,12 +15,17 @@
 
 namespace net {
 
+class CertErrors;
+
 namespace der {
 class Input;
 }  // namespace der
 
 // The digest algorithm used within a signature.
 enum class DigestAlgorithm {
+  Md2,
+  Md4,
+  Md5,
   Sha1,
   Sha256,
   Sha384,
@@ -47,7 +52,7 @@ enum class SignatureAlgorithmId {
 //         { IDENTIFIER id-sha384 PARAMS TYPE NULL ARE preferredPresent } |
 //         { IDENTIFIER id-sha512 PARAMS TYPE NULL ARE preferredPresent }
 //     }
-WARN_UNUSED_RESULT bool ParseHashAlgorithm(const der::Input input,
+WARN_UNUSED_RESULT bool ParseHashAlgorithm(const der::Input& input,
                                            DigestAlgorithm* out);
 
 // Base class for describing algorithm parameters.
@@ -87,11 +92,14 @@ class NET_EXPORT SignatureAlgorithm {
   DigestAlgorithm digest() const { return digest_; }
 
   // Creates a SignatureAlgorithm by parsing a DER-encoded "AlgorithmIdentifier"
-  // (RFC 5280). Returns nullptr on failure.
-  static std::unique_ptr<SignatureAlgorithm> CreateFromDer(
-      const der::Input& algorithm_identifier);
+  // (RFC 5280). Returns nullptr on failure. If |errors| was non-null then
+  // error/warning information is output to it.
+  static std::unique_ptr<SignatureAlgorithm> Create(
+      const der::Input& algorithm_identifier,
+      CertErrors* errors);
 
   // Creates a new SignatureAlgorithm with the given type and parameters.
+  // Guaranteed to return non-null result.
   static std::unique_ptr<SignatureAlgorithm> CreateRsaPkcs1(
       DigestAlgorithm digest);
   static std::unique_ptr<SignatureAlgorithm> CreateEcdsa(
@@ -109,6 +117,13 @@ class NET_EXPORT SignatureAlgorithm {
   //
   // The returned pointer is non-owned, and has the same lifetime as |this|.
   const RsaPssParameters* ParamsForRsaPss() const;
+
+  bool has_params() const { return !!params_; }
+
+  // Returns true if |alg1_tlv| and |alg2_tlv| represent an equivalent
+  // AlgorithmIdentifier once parsed.
+  static bool IsEquivalent(const der::Input& alg1_tlv,
+                           const der::Input& alg2_tlv);
 
  private:
   SignatureAlgorithm(SignatureAlgorithmId algorithm,

@@ -35,80 +35,88 @@
 
 namespace blink {
 
-GraphicsLayerTreeBuilder::GraphicsLayerTreeBuilder()
-{
+GraphicsLayerTreeBuilder::GraphicsLayerTreeBuilder() {}
+
+GraphicsLayerTreeBuilder::~GraphicsLayerTreeBuilder() {}
+
+static bool ShouldAppendLayer(const PaintLayer& layer) {
+  Node* node = layer.GetLayoutObject().GetNode();
+  if (node && isHTMLVideoElement(*node)) {
+    HTMLVideoElement* element = toHTMLVideoElement(node);
+    if (element->IsFullscreen() && element->UsesOverlayFullscreenVideo())
+      return false;
+  }
+  return true;
 }
 
-GraphicsLayerTreeBuilder::~GraphicsLayerTreeBuilder()
-{
-}
+void GraphicsLayerTreeBuilder::Rebuild(PaintLayer& layer,
+                                       GraphicsLayerVector& child_layers) {
+  // Make the layer compositing if necessary, and set up clipping and content
+  // layers.  Note that we can only do work here that is independent of whether
+  // the descendant layers have been processed. computeCompositingRequirements()
+  // will already have done the paint invalidation if necessary.
 
-static bool shouldAppendLayer(const PaintLayer& layer)
-{
-    Node* node = layer.layoutObject()->node();
-    if (node && isHTMLVideoElement(*node)) {
-        HTMLVideoElement* element = toHTMLVideoElement(node);
-        if (element->isFullscreen() && element->usesOverlayFullscreenVideo())
-            return false;
-    }
-    return true;
-}
+  layer.StackingNode()->UpdateLayerListsIfNeeded();
 
-void GraphicsLayerTreeBuilder::rebuild(PaintLayer& layer, AncestorInfo info)
-{
-    // Make the layer compositing if necessary, and set up clipping and content layers.
-    // Note that we can only do work here that is independent of whether the descendant layers
-    // have been processed. computeCompositingRequirements() will already have done the paint invalidation if necessary.
+  const bool has_composited_layer_mapping = layer.HasCompositedLayerMapping();
+  CompositedLayerMapping* current_composited_layer_mapping =
+      layer.GetCompositedLayerMapping();
 
-    layer.stackingNode()->updateLayerListsIfNeeded();
+  // If this layer has a compositedLayerMapping, then that is where we place
+  // subsequent children GraphicsLayers.  Otherwise children continue to append
+  // to the child list of the enclosing layer.
+  GraphicsLayerVector this_layer_children;
+  GraphicsLayerVector* layer_vector_for_children =
+      has_composited_layer_mapping ? &this_layer_children : &child_layers;
 
-    const bool hasCompositedLayerMapping = layer.hasCompositedLayerMapping();
-    CompositedLayerMapping* currentCompositedLayerMapping = layer.compositedLayerMapping();
-
-    // If this layer has a compositedLayerMapping, then that is where we place subsequent children GraphicsLayers.
-    // Otherwise children continue to append to the child list of the enclosing layer.
-    GraphicsLayerVector layerChildren;
-    AncestorInfo infoForChildren(info);
-    if (hasCompositedLayerMapping) {
-        infoForChildren.childLayersOfEnclosingCompositedLayer = &layerChildren;
-        infoForChildren.enclosingCompositedLayer = &layer;
-    }
-
-#if ENABLE(ASSERT)
-    LayerListMutationDetector mutationChecker(layer.stackingNode());
+#if DCHECK_IS_ON()
+  LayerListMutationDetector mutation_checker(layer.StackingNode());
 #endif
 
-    if (layer.stackingNode()->isStackingContext()) {
-        PaintLayerStackingNodeIterator iterator(*layer.stackingNode(), NegativeZOrderChildren);
-        while (PaintLayerStackingNode* curNode = iterator.next())
-            rebuild(*curNode->layer(), infoForChildren);
+  if (layer.StackingNode()->IsStackingContext()) {
+    PaintLayerStackingNodeIterator iterator(*layer.StackingNode(),
+                                            kNegativeZOrderChildren);
+    while (PaintLayerStackingNode* cur_node = iterator.Next())
+      Rebuild(*cur_node->Layer(), *layer_vector_for_children);
 
-        // If a negative z-order child is compositing, we get a foreground layer which needs to get parented.
-        if (hasCompositedLayerMapping && currentCompositedLayerMapping->foregroundLayer())
-            infoForChildren.childLayersOfEnclosingCompositedLayer->append(currentCompositedLayerMapping->foregroundLayer());
-    }
+    // If a negative z-order child is compositing, we get a foreground layer
+    // which needs to get parented.
+    if (has_composited_layer_mapping &&
+        current_composited_layer_mapping->ForegroundLayer())
+      layer_vector_for_children->push_back(
+          current_composited_layer_mapping->ForegroundLayer());
+  }
 
-    PaintLayerStackingNodeIterator iterator(*layer.stackingNode(), NormalFlowChildren | PositiveZOrderChildren);
-    while (PaintLayerStackingNode* curNode = iterator.next())
-        rebuild(*curNode->layer(), infoForChildren);
+  PaintLayerStackingNodeIterator iterator(
+      *layer.StackingNode(), kNormalFlowChildren | kPositiveZOrderChildren);
+  while (PaintLayerStackingNode* cur_node = iterator.Next())
+    Rebuild(*cur_node->Layer(), *layer_vector_for_children);
 
-    if (hasCompositedLayerMapping) {
-        bool parented = false;
-        if (layer.layoutObject()->isLayoutPart())
-            parented = PaintLayerCompositor::attachFrameContentLayersToIframeLayer(toLayoutPart(layer.layoutObject()));
+  if (has_composited_layer_mapping) {
+    bool parented = false;
+    if (layer.GetLayoutObject().IsLayoutPart())
+      parented = PaintLayerCompositor::AttachFrameContentLayersToIframeLayer(
+          ToLayoutPart(layer.GetLayoutObject()));
 
-        if (!parented)
-            currentCompositedLayerMapping->setSublayers(layerChildren);
+    if (!parented)
+      current_composited_layer_mapping->SetSublayers(this_layer_children);
 
-        if (shouldAppendLayer(layer))
-            info.childLayersOfEnclosingCompositedLayer->append(currentCompositedLayerMapping->childForSuperlayers());
-    }
+    if (ShouldAppendLayer(layer))
+      child_layers.push_back(
+          current_composited_layer_mapping->ChildForSuperlayers());
+  }
 
-    if (layer.scrollParent()
-        && layer.scrollParent()->hasCompositedLayerMapping()
-        && layer.scrollParent()->compositedLayerMapping()->needsToReparentOverflowControls()
-        && layer.scrollParent()->getScrollableArea()->topmostScrollChild() == &layer)
-        info.childLayersOfEnclosingCompositedLayer->append(layer.scrollParent()->compositedLayerMapping()->detachLayerForOverflowControls(*info.enclosingCompositedLayer));
+  if (layer.ScrollParent() &&
+      layer.ScrollParent()->HasCompositedLayerMapping() &&
+      layer.ScrollParent()
+          ->GetCompositedLayerMapping()
+          ->NeedsToReparentOverflowControls() &&
+      layer.ScrollParent()->GetScrollableArea()->TopmostScrollChild() ==
+          &layer) {
+    child_layers.push_back(layer.ScrollParent()
+                               ->GetCompositedLayerMapping()
+                               ->DetachLayerForOverflowControls());
+  }
 }
 
-} // namespace blink
+}  // namespace blink

@@ -11,6 +11,7 @@
 #include "ui/gl/gl_context_egl.h"
 #include "ui/gl/gl_context_osmesa.h"
 #include "ui/gl/gl_context_stub.h"
+#include "ui/gl/gl_egl_api_implementation.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_share_group.h"
 #include "ui/gl/gl_surface.h"
@@ -32,7 +33,7 @@ class GLNonOwnedContext : public GLContextReal {
 
   // Implement GLContext.
   bool Initialize(GLSurface* compatible_surface,
-                  GpuPreference gpu_preference) override;
+                  const GLContextAttribs& attribs) override;
   bool MakeCurrent(GLSurface* surface) override;
   void ReleaseCurrent(GLSurface* surface) override {}
   bool IsCurrent(GLSurface* surface) override { return true; }
@@ -53,14 +54,15 @@ GLNonOwnedContext::GLNonOwnedContext(GLShareGroup* share_group)
     : GLContextReal(share_group), display_(nullptr) {}
 
 bool GLNonOwnedContext::Initialize(GLSurface* compatible_surface,
-                                   GpuPreference gpu_preference) {
+                                   const GLContextAttribs& attribs) {
   display_ = eglGetDisplay(EGL_DEFAULT_DISPLAY);
   return true;
 }
 
 bool GLNonOwnedContext::MakeCurrent(GLSurface* surface) {
+  BindGLApi();
   SetCurrent(surface);
-  SetRealGLApi();
+  InitializeDynamicBindings();
   return true;
 }
 
@@ -74,23 +76,45 @@ std::string GLNonOwnedContext::GetExtensions() {
 
 }  // namespace
 
+std::vector<GLImplementation> GetAllowedGLImplementations() {
+  std::vector<GLImplementation> impls;
+  impls.push_back(kGLImplementationEGLGLES2);
+  impls.push_back(kGLImplementationOSMesaGL);
+  return impls;
+}
+
+bool GetGLWindowSystemBindingInfo(GLWindowSystemBindingInfo* info) {
+  switch (GetGLImplementation()) {
+    case kGLImplementationEGLGLES2:
+      return GetGLWindowSystemBindingInfoEGL(info);
+    default:
+      return false;
+  }
+}
+
 scoped_refptr<GLContext> CreateGLContext(GLShareGroup* share_group,
                                          GLSurface* compatible_surface,
-                                         GpuPreference gpu_preference) {
+                                         const GLContextAttribs& attribs) {
   TRACE_EVENT0("gpu", "gl::init::CreateGLContext");
   switch (GetGLImplementation()) {
     case kGLImplementationMockGL:
       return scoped_refptr<GLContext>(new GLContextStub(share_group));
+    case kGLImplementationStubGL: {
+      scoped_refptr<GLContextStub> stub_context =
+          new GLContextStub(share_group);
+      stub_context->SetUseStubApi(true);
+      return stub_context;
+    }
     case kGLImplementationOSMesaGL:
       return InitializeGLContext(new GLContextOSMesa(share_group),
-                                 compatible_surface, gpu_preference);
+                                 compatible_surface, attribs);
     default:
       if (compatible_surface->GetHandle()) {
         return InitializeGLContext(new GLContextEGL(share_group),
-                                   compatible_surface, gpu_preference);
+                                   compatible_surface, attribs);
       } else {
         return InitializeGLContext(new GLNonOwnedContext(share_group),
-                                   compatible_surface, gpu_preference);
+                                   compatible_surface, attribs);
       }
   }
 }
@@ -103,7 +127,7 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
       return InitializeGLSurface(new GLSurfaceOSMesaHeadless());
     case kGLImplementationEGLGLES2:
       if (window != gfx::kNullAcceleratedWidget) {
-        return InitializeGLSurface(new NativeViewGLSurfaceEGL(window));
+        return InitializeGLSurface(new NativeViewGLSurfaceEGL(window, nullptr));
       } else {
         return InitializeGLSurface(new GLSurfaceStub());
       }
@@ -113,24 +137,28 @@ scoped_refptr<GLSurface> CreateViewGLSurface(gfx::AcceleratedWidget window) {
   }
 }
 
-scoped_refptr<GLSurface> CreateOffscreenGLSurface(const gfx::Size& size) {
+scoped_refptr<GLSurface> CreateOffscreenGLSurfaceWithFormat(
+    const gfx::Size& size, GLSurfaceFormat format) {
   TRACE_EVENT0("gpu", "gl::init::CreateOffscreenGLSurface");
   CHECK_NE(kGLImplementationNone, GetGLImplementation());
   switch (GetGLImplementation()) {
     case kGLImplementationOSMesaGL: {
-      return InitializeGLSurface(
-          new GLSurfaceOSMesa(GLSurface::SURFACE_OSMESA_BGRA, size));
+      format.SetDefaultPixelLayout(GLSurfaceFormat::PIXEL_LAYOUT_BGRA);
+      return InitializeGLSurfaceWithFormat(
+          new GLSurfaceOSMesa(format, size), format);
     }
     case kGLImplementationEGLGLES2: {
-      scoped_refptr<GLSurface> surface;
       if (GLSurfaceEGL::IsEGLSurfacelessContextSupported() &&
           (size.width() == 0 && size.height() == 0)) {
-        return InitializeGLSurface(new SurfacelessEGL(size));
+        return InitializeGLSurfaceWithFormat(
+            new SurfacelessEGL(size), format);
       } else {
-        return InitializeGLSurface(new PbufferGLSurfaceEGL(size));
+        return InitializeGLSurfaceWithFormat(
+            new PbufferGLSurfaceEGL(size), format);
       }
     }
     case kGLImplementationMockGL:
+    case kGLImplementationStubGL:
       return new GLSurfaceStub;
     default:
       NOTREACHED();

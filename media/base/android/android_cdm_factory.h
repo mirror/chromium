@@ -6,9 +6,10 @@
 #define MEDIA_BASE_ANDROID_ANDROID_CDM_FACTORY_H_
 
 #include "base/macros.h"
-#include "media/base/android/provision_fetcher.h"
+#include "media/base/android/media_drm_storage.h"
 #include "media/base/cdm_factory.h"
 #include "media/base/media_export.h"
+#include "media/base/provision_fetcher.h"
 
 namespace media {
 
@@ -16,7 +17,8 @@ struct CdmConfig;
 
 class MEDIA_EXPORT AndroidCdmFactory : public CdmFactory {
  public:
-  AndroidCdmFactory(const CreateFetcherCB& create_fetcher_cb);
+  AndroidCdmFactory(const CreateFetcherCB& create_fetcher_cb,
+                    const CreateStorageCB& create_storage_cb);
   ~AndroidCdmFactory() final;
 
   // CdmFactory implementation.
@@ -25,13 +27,13 @@ class MEDIA_EXPORT AndroidCdmFactory : public CdmFactory {
               const CdmConfig& cdm_config,
               const SessionMessageCB& session_message_cb,
               const SessionClosedCB& session_closed_cb,
-              const LegacySessionErrorCB& legacy_session_error_cb,
               const SessionKeysChangeCB& session_keys_change_cb,
               const SessionExpirationUpdateCB& session_expiration_update_cb,
               const CdmCreatedCB& cdm_created_cb) final;
 
  private:
   CreateFetcherCB create_fetcher_cb_;
+  CreateStorageCB create_storage_cb_;
 
   DISALLOW_COPY_AND_ASSIGN(AndroidCdmFactory);
 };

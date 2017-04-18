@@ -22,39 +22,41 @@
 
 #include "core/layout/api/LineLayoutItem.h"
 #include "core/style/SVGComputedStyleDefs.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/Unicode.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/Unicode.h"
 
 namespace blink {
 
 class Font;
-class LayoutObject;
 class ComputedStyle;
-class SVGComputedStyle;
-class SVGTextMetrics;
 
-// Helper class used by SVGTextLayoutEngine to handle 'alignment-baseline' / 'dominant-baseline' and 'baseline-shift'.
+// Helper class used by SVGTextLayoutEngine to handle 'alignment-baseline' /
+// 'dominant-baseline' and 'baseline-shift'.
 class SVGTextLayoutEngineBaseline {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(SVGTextLayoutEngineBaseline);
-public:
-    SVGTextLayoutEngineBaseline(const Font&, float effectiveZoom);
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SVGTextLayoutEngineBaseline);
 
-    float calculateBaselineShift(const ComputedStyle&) const;
-    float calculateAlignmentBaselineShift(bool isVerticalText, LineLayoutItem) const;
+ public:
+  SVGTextLayoutEngineBaseline(const Font&, float effective_zoom);
 
-private:
-    EAlignmentBaseline dominantBaselineToAlignmentBaseline(bool isVerticalText, LineLayoutItem) const;
+  float CalculateBaselineShift(const ComputedStyle&) const;
+  float CalculateAlignmentBaselineShift(bool is_vertical_text,
+                                        LineLayoutItem) const;
 
-    const Font& m_font;
+ private:
+  EAlignmentBaseline DominantBaselineToAlignmentBaseline(bool is_vertical_text,
+                                                         LineLayoutItem) const;
 
-    // Everything we read from the m_font's font descriptor during layout is scaled by the effective
-    // zoom, as fonts always are in computed style. Since layout inside SVG takes place in unzoomed
-    // coordinates we have to compensate for zoom when reading values from the font descriptor.
-    float m_effectiveZoom;
+  const Font& font_;
+
+  // Everything we read from the m_font's font descriptor during layout is
+  // scaled by the effective zoom, as fonts always are in computed style. Since
+  // layout inside SVG takes place in unzoomed coordinates we have to compensate
+  // for zoom when reading values from the font descriptor.
+  float effective_zoom_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -34,15 +34,22 @@ NSEvent* g_current_event = nil;
 
 namespace {
 
+// Return the current owner of the EventGeneratorDelegate. May be null.
+ui::test::EventGenerator* GetActiveGenerator();
+
 NSPoint ConvertRootPointToTarget(NSWindow* target,
                                  const gfx::Point& point_in_root) {
-  // Normally this would do ui::ConvertPointFromScreenToWindow. However, Cocoa
-  // can reposition the window on screen and make things flaky. Initially, just
-  // assume that the contentRect of |target| is at the top-left corner of the
-  // screen.
-  NSRect content_rect = [target contentRectForFrameRect:[target frame]];
-  return NSMakePoint(point_in_root.x(),
-                     NSHeight(content_rect) - point_in_root.y());
+  DCHECK(GetActiveGenerator());
+  gfx::Point point = point_in_root;
+
+  if (GetActiveGenerator()->assume_window_at_origin()) {
+    // When assuming the window is at the origin, ignore the titlebar as well.
+    NSRect content_rect = [target contentRectForFrameRect:[target frame]];
+    return NSMakePoint(point.x(), NSHeight(content_rect) - point.y());
+  }
+
+  point -= gfx::ScreenRectFromNSRect([target frame]).OffsetFromOrigin();
+  return NSMakePoint(point.x(), NSHeight([target frame]) - point.y());
 }
 
 // Inverse of ui::EventFlagsFromModifiers().
@@ -217,6 +224,17 @@ NSEvent* CreateMouseEventInWindow(NSWindow* window,
                             pressure:1.0];
 }
 
+NSEvent* CreateMouseWheelEventInWindow(NSWindow* window,
+                                       const ui::MouseEvent* mouse_event) {
+  DCHECK_EQ(mouse_event->type(), ui::ET_MOUSEWHEEL);
+  const ui::MouseWheelEvent* mouse_wheel_event =
+      mouse_event->AsMouseWheelEvent();
+  return cocoa_test_event_utils::TestScrollEvent(
+      ConvertRootPointToTarget(window, mouse_wheel_event->location()), window,
+      mouse_wheel_event->x_offset(), mouse_wheel_event->y_offset(), false,
+      NSEventPhaseNone, NSEventPhaseNone);
+}
+
 // Implementation of ui::test::EventGeneratorDelegate for Mac. Everything
 // defined inline is just a stub. Interesting overrides are defined below the
 // class.
@@ -248,12 +266,16 @@ class EventGeneratorDelegateMac : public ui::EventTarget,
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnKeyEvent(ui::KeyEvent* event) override;
   void OnTouchEvent(ui::TouchEvent* event) override;
+  void OnScrollEvent(ui::ScrollEvent* event) override;
 
   // Overridden from ui::EventSource:
-  ui::EventProcessor* GetEventProcessor() override { return this; }
+  ui::EventSink* GetEventSink() override { return this; }
 
   // Overridden from ui::EventProcessor:
-  ui::EventTarget* GetRootTarget() override { return this; }
+  ui::EventTarget* GetRootForEvent(ui::Event* event) override { return this; }
+  ui::EventTargeter* GetDefaultEventTargeter() override {
+    return this->GetEventTargeter();
+  }
 
   // Overridden from ui::EventDispatcherDelegate (via ui::EventProcessor):
   bool CanDispatchToTarget(EventTarget* target) override { return true; }
@@ -307,6 +329,14 @@ class EventGeneratorDelegateMac : public ui::EventTarget,
   std::unique_ptr<base::mac::ScopedObjCClassSwizzler> swizzle_current_event_;
   base::scoped_nsobject<NSMenu> fake_menu_;
 
+  // Mac always sends trackpad scroll events between begin/end phase event
+  // markers. If |in_trackpad_scroll| is false, a phase begin event is sent
+  // before any trackpad scroll update.
+  bool in_trackpad_scroll = false;
+
+  // Timestamp on the last scroll update, used to simulate scroll momentum.
+  base::TimeTicks last_scroll_timestamp_;
+
   DISALLOW_COPY_AND_ASSIGN(EventGeneratorDelegateMac);
 };
 
@@ -349,14 +379,24 @@ EventGeneratorDelegateMac::GetChildIterator() const {
 }
 
 void EventGeneratorDelegateMac::OnMouseEvent(ui::MouseEvent* event) {
-  NSEvent* ns_event = CreateMouseEventInWindow(window_,
-                                               event->type(),
-                                               event->location(),
-                                               event->changed_button_flags());
-  if (owner_->targeting_application())
-    [NSApp sendEvent:ns_event];
-  else
-    EmulateSendEvent(window_, ns_event);
+  NSEvent* ns_event =
+      event->type() == ui::ET_MOUSEWHEEL
+          ? CreateMouseWheelEventInWindow(window_, event)
+          : CreateMouseEventInWindow(window_, event->type(), event->location(),
+                                     event->flags());
+
+  using Target = ui::test::EventGenerator::Target;
+  switch (owner_->target()) {
+    case Target::APPLICATION:
+      [NSApp sendEvent:ns_event];
+      break;
+    case Target::WINDOW:
+      [window_ sendEvent:ns_event];
+      break;
+    case Target::WIDGET:
+      EmulateSendEvent(window_, ns_event);
+      break;
+  }
 }
 
 void EventGeneratorDelegateMac::OnKeyEvent(ui::KeyEvent* event) {
@@ -364,19 +404,114 @@ void EventGeneratorDelegateMac::OnKeyEvent(ui::KeyEvent* event) {
   NSEvent* ns_event = cocoa_test_event_utils::SynthesizeKeyEvent(
       window_, event->type() == ui::ET_KEY_PRESSED, event->key_code(),
       modifiers, event->is_char() ? event->GetDomKey() : ui::DomKey::NONE);
-  if (owner_->targeting_application()) {
-    [NSApp sendEvent:ns_event];
-    return;
+
+  using Target = ui::test::EventGenerator::Target;
+  switch (owner_->target()) {
+    case Target::APPLICATION:
+      [NSApp sendEvent:ns_event];
+      break;
+    case Target::WINDOW:
+      // -[NSApp sendEvent:] sends -performKeyEquivalent: if Command or Control
+      // modifiers are pressed. Emulate that behavior.
+      if ([ns_event type] == NSKeyDown &&
+          ([ns_event modifierFlags] & (NSControlKeyMask | NSCommandKeyMask)) &&
+          [window_ performKeyEquivalent:ns_event])
+        break;  // Handled by performKeyEquivalent:.
+
+      [window_ sendEvent:ns_event];
+      break;
+    case Target::WIDGET:
+      if ([fake_menu_ performKeyEquivalent:ns_event])
+        return;
+
+      EmulateSendEvent(window_, ns_event);
+      break;
   }
-
-  if ([fake_menu_ performKeyEquivalent:ns_event])
-    return;
-
-  EmulateSendEvent(window_, ns_event);
 }
 
 void EventGeneratorDelegateMac::OnTouchEvent(ui::TouchEvent* event) {
   NOTREACHED() << "Touchscreen events not supported on Chrome Mac.";
+}
+
+void EventGeneratorDelegateMac::OnScrollEvent(ui::ScrollEvent* event) {
+  // Ignore FLING_CANCEL. Cocoa provides a continuous stream of events during a
+  // fling. For now, this method simulates a momentum stream using a single
+  // update with a momentum phase (plus begin/end phase events), triggered when
+  // the EventGenerator requests a FLING_START.
+  if (event->type() == ui::ET_SCROLL_FLING_CANCEL)
+    return;
+
+  NSPoint location = ConvertRootPointToTarget(window_, event->location());
+
+  // MAY_BEGIN/END comes from the EventGenerator for trackpad rests.
+  if (event->momentum_phase() == ui::EventMomentumPhase::MAY_BEGIN ||
+      event->momentum_phase() == ui::EventMomentumPhase::END) {
+    DCHECK_EQ(0, event->x_offset());
+    DCHECK_EQ(0, event->y_offset());
+    NSEventPhase phase =
+        event->momentum_phase() == ui::EventMomentumPhase::MAY_BEGIN
+            ? NSEventPhaseMayBegin
+            : NSEventPhaseCancelled;
+
+    NSEvent* rest = cocoa_test_event_utils::TestScrollEvent(
+        location, window_, 0, 0, true, phase, NSEventPhaseNone);
+    EmulateSendEvent(window_, rest);
+
+    // Allow the next ScrollSequence to skip the "begin".
+    in_trackpad_scroll = phase == NSEventPhaseMayBegin;
+    return;
+  }
+
+  NSEventPhase event_phase = NSEventPhaseBegan;
+  NSEventPhase momentum_phase = NSEventPhaseNone;
+
+  // Treat FLING_START as the beginning of a momentum phase.
+  if (event->type() == ui::ET_SCROLL_FLING_START) {
+    DCHECK(in_trackpad_scroll);
+    // First end the non-momentum phase.
+    NSEvent* end = cocoa_test_event_utils::TestScrollEvent(
+        location, window_, 0, 0, true, NSEventPhaseEnded, NSEventPhaseNone);
+    EmulateSendEvent(window_, end);
+    in_trackpad_scroll = false;
+
+    // Assume a zero time delta means no fling. Just end the event phase.
+    if (event->time_stamp() == last_scroll_timestamp_)
+      return;
+
+    // Otherwise, switch phases for the "fling".
+    std::swap(event_phase, momentum_phase);
+  }
+
+  // Send a begin for the current event phase, unless it's already in progress.
+  if (!in_trackpad_scroll) {
+    NSEvent* begin = cocoa_test_event_utils::TestScrollEvent(
+        location, window_, 0, 0, true, event_phase, momentum_phase);
+    EmulateSendEvent(window_, begin);
+    in_trackpad_scroll = true;
+  }
+
+  if (event->type() == ui::ET_SCROLL) {
+    NSEvent* update = cocoa_test_event_utils::TestScrollEvent(
+        location, window_, -event->x_offset(), -event->y_offset(), true,
+        NSEventPhaseChanged, NSEventPhaseNone);
+    EmulateSendEvent(window_, update);
+  } else {
+    DCHECK_EQ(event->type(), ui::ET_SCROLL_FLING_START);
+    // Mac generates a stream of events. For the purposes of testing, just
+    // generate one.
+    NSEvent* update = cocoa_test_event_utils::TestScrollEvent(
+        location, window_, -event->x_offset(), -event->y_offset(), true,
+        NSEventPhaseNone, NSEventPhaseChanged);
+    EmulateSendEvent(window_, update);
+
+    // Never leave the momentum part hanging.
+    NSEvent* end = cocoa_test_event_utils::TestScrollEvent(
+        location, window_, 0, 0, true, NSEventPhaseNone, NSEventPhaseEnded);
+    EmulateSendEvent(window_, end);
+    in_trackpad_scroll = false;
+  }
+
+  last_scroll_timestamp_ = event->time_stamp();
 }
 
 void EventGeneratorDelegateMac::SetContext(ui::test::EventGenerator* owner,
@@ -433,7 +568,6 @@ gfx::Point EventGeneratorDelegateMac::CenterOfWindow(
   return gfx::Point(NSWidth([window frame]) / 2, NSHeight([window frame]) / 2);
 }
 
-// Return the current owner of the EventGeneratorDelegate. May be null.
 ui::test::EventGenerator* GetActiveGenerator() {
   return EventGeneratorDelegateMac::GetInstance()->owner();
 }

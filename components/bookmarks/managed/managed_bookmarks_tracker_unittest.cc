@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
@@ -23,7 +24,7 @@
 #include "components/bookmarks/test/test_bookmark_client.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -62,7 +63,7 @@ class ManagedBookmarksTrackerTest : public testing::Test {
                       : IDS_BOOKMARK_BAR_MANAGED_FOLDER_DEFAULT_NAME));
 
     BookmarkPermanentNodeList extra_nodes;
-    extra_nodes.push_back(managed_node);
+    extra_nodes.push_back(base::WrapUnique(managed_node));
 
     std::unique_ptr<TestBookmarkClient> client(new TestBookmarkClient);
     client->SetExtraNodesToLoad(std::move(extra_nodes));
@@ -98,32 +99,33 @@ class ManagedBookmarksTrackerTest : public testing::Test {
     return node && node->HasAncestor(managed_node_);
   }
 
-  static base::DictionaryValue* CreateBookmark(const std::string& title,
-                                               const std::string& url) {
+  static std::unique_ptr<base::DictionaryValue> CreateBookmark(
+      const std::string& title,
+      const std::string& url) {
     EXPECT_TRUE(GURL(url).is_valid());
-    base::DictionaryValue* dict = new base::DictionaryValue();
+    std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
     dict->SetString("name", title);
     dict->SetString("url", GURL(url).spec());
     return dict;
   }
 
-  static base::DictionaryValue* CreateFolder(const std::string& title,
-                                             base::ListValue* children) {
-    base::DictionaryValue* dict = new base::DictionaryValue();
+  static std::unique_ptr<base::DictionaryValue> CreateFolder(
+      const std::string& title,
+      std::unique_ptr<base::ListValue> children) {
+    std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
     dict->SetString("name", title);
-    dict->Set("children", children);
+    dict->Set("children", std::move(children));
     return dict;
   }
 
-  static base::ListValue* CreateTestTree() {
-    base::ListValue* folder = new base::ListValue();
-    base::ListValue* empty = new base::ListValue();
-    folder->Append(CreateFolder("Empty", empty));
+  static std::unique_ptr<base::ListValue> CreateTestTree() {
+    auto folder = base::MakeUnique<base::ListValue>();
+    folder->Append(CreateFolder("Empty", base::MakeUnique<base::ListValue>()));
     folder->Append(CreateBookmark("Youtube", "http://youtube.com/"));
 
-    base::ListValue* list = new base::ListValue();
+    auto list = base::MakeUnique<base::ListValue>();
     list->Append(CreateBookmark("Google", "http://google.com/"));
-    list->Append(CreateFolder("Folder", folder));
+    list->Append(CreateFolder("Folder", std::move(folder)));
 
     return list;
   }
@@ -137,7 +139,7 @@ class ManagedBookmarksTrackerTest : public testing::Test {
         IDS_BOOKMARK_BAR_MANAGED_FOLDER_DEFAULT_NAME);
   }
 
-  static base::DictionaryValue* CreateExpectedTree() {
+  static std::unique_ptr<base::DictionaryValue> CreateExpectedTree() {
     return CreateFolder(GetManagedFolderTitle(), CreateTestTree());
   }
 
@@ -162,7 +164,7 @@ class ManagedBookmarksTrackerTest : public testing::Test {
       }
     } else if (node->is_url()) {
       std::string url;
-      if (!dict->GetString("url", &url) || node->url() != GURL(url))
+      if (!dict->GetString("url", &url) || node->url() != url)
         return false;
     } else {
       return false;
@@ -245,12 +247,12 @@ TEST_F(ManagedBookmarksTrackerTest, SwapNodes) {
   // These two nodes should just be swapped.
   const BookmarkNode* parent = managed_node();
   EXPECT_CALL(observer_, BookmarkNodeMoved(model_.get(), parent, 1, parent, 0));
-  prefs_.SetManagedPref(prefs::kManagedBookmarks, updated->DeepCopy());
+  prefs_.SetManagedPref(prefs::kManagedBookmarks, updated->CreateDeepCopy());
   Mock::VerifyAndClearExpectations(&observer_);
 
   // Verify the final tree.
   std::unique_ptr<base::DictionaryValue> expected(
-      CreateFolder(GetManagedFolderTitle(), updated.release()));
+      CreateFolder(GetManagedFolderTitle(), std::move(updated)));
   EXPECT_TRUE(NodeMatchesValue(managed_node(), expected.get()));
 }
 
@@ -264,12 +266,12 @@ TEST_F(ManagedBookmarksTrackerTest, RemoveNode) {
 
   const BookmarkNode* parent = managed_node();
   EXPECT_CALL(observer_, BookmarkNodeRemoved(model_.get(), parent, 1, _, _));
-  prefs_.SetManagedPref(prefs::kManagedBookmarks, updated->DeepCopy());
+  prefs_.SetManagedPref(prefs::kManagedBookmarks, updated->CreateDeepCopy());
   Mock::VerifyAndClearExpectations(&observer_);
 
   // Verify the final tree.
   std::unique_ptr<base::DictionaryValue> expected(
-      CreateFolder(GetManagedFolderTitle(), updated.release()));
+      CreateFolder(GetManagedFolderTitle(), std::move(updated)));
   EXPECT_TRUE(NodeMatchesValue(managed_node(), expected.get()));
 }
 
@@ -287,12 +289,12 @@ TEST_F(ManagedBookmarksTrackerTest, CreateNewNodes) {
   const BookmarkNode* parent = managed_node();
   EXPECT_CALL(observer_, BookmarkNodeRemoved(model_.get(), parent, 1, _, _))
       .Times(2);
-  prefs_.SetManagedPref(prefs::kManagedBookmarks, updated->DeepCopy());
+  prefs_.SetManagedPref(prefs::kManagedBookmarks, updated->CreateDeepCopy());
   Mock::VerifyAndClearExpectations(&observer_);
 
   // Verify the final tree.
   std::unique_ptr<base::DictionaryValue> expected(
-      CreateFolder(GetManagedFolderTitle(), updated.release()));
+      CreateFolder(GetManagedFolderTitle(), std::move(updated)));
   EXPECT_TRUE(NodeMatchesValue(managed_node(), expected.get()));
 }
 

@@ -31,53 +31,56 @@
 #ifndef DOMFilePath_h
 #define DOMFilePath_h
 
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 // DOMFileSystem path utilities. All methods in this class are static.
 class DOMFilePath {
-    STATIC_ONLY(DOMFilePath);
-public:
-    static const char separator;
-    static const char root[];
+  STATIC_ONLY(DOMFilePath);
 
-    // Returns the name part from the given path.
-    static String getName(const String& path);
+ public:
+  static const char kSeparator;
+  static const char kRoot[];
 
-    // Returns the parent directory path of the given path.
-    static String getDirectory(const String& path);
+  // Returns the name part from the given path.
+  static String GetName(const String& path);
 
-    // Checks if a given path is a parent of mayBeChild. This method assumes given paths are absolute and do not have extra references to a parent (i.e. "../").
-    static bool isParentOf(const String& path, const String& mayBeChild);
+  // Returns the parent directory path of the given path.
+  static String GetDirectory(const String& path);
 
-    // Appends the separator at the end of the path if it's not there already.
-    static String ensureDirectoryPath(const String& path);
+  // Checks if a given path is a parent of mayBeChild. This method assumes given
+  // paths are absolute and do not have extra references to a parent (i.e.
+  // "../").
+  static bool IsParentOf(const String& path, const String& may_be_child);
 
-    // Returns a new path by appending a separator and the supplied path component to the path.
-    static String append(const String& path, const String& component);
+  // Appends the separator at the end of the path if it's not there already.
+  static String EnsureDirectoryPath(const String& path);
 
-    static bool isAbsolute(const String& path)
-    {
-        return path.startsWith(DOMFilePath::root);
-    }
+  // Returns a new path by appending a separator and the supplied path component
+  // to the path.
+  static String Append(const String& path, const String& component);
 
-    static bool endsWithSeparator(const String& path)
-    {
-        return path[path.length() - 1] == DOMFilePath::separator;
-    }
+  static bool IsAbsolute(const String& path) {
+    return path.StartsWith(DOMFilePath::kRoot);
+  }
 
-    // Evaluates all "../" and "./" segments. Note that "/../" expands to "/", so you can't ever refer to anything above the root directory.
-    static String removeExtraParentReferences(const String& path);
+  static bool EndsWithSeparator(const String& path) {
+    return path[path.length() - 1] == DOMFilePath::kSeparator;
+  }
 
-    // Checks if the given path follows the FileSystem API naming restrictions.
-    static bool isValidPath(const String& path);
+  // Evaluates all "../" and "./" segments. Note that "/../" expands to "/", so
+  // you can't ever refer to anything above the root directory.
+  static String RemoveExtraParentReferences(const String& path);
 
-    // Checks if the given name follows the FileSystem API naming restrictions.
-    static bool isValidName(const String& name);
+  // Checks if the given path follows the FileSystem API naming restrictions.
+  static bool IsValidPath(const String& path);
+
+  // Checks if the given name follows the FileSystem API naming restrictions.
+  static bool IsValidName(const String& name);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMFilePath_h
+#endif  // DOMFilePath_h

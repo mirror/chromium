@@ -5,12 +5,12 @@
 #ifndef CompositorAnimation_h
 #define CompositorAnimation_h
 
+#include <memory>
 #include "cc/animation/animation.h"
 #include "platform/PlatformExport.h"
 #include "platform/animation/CompositorTargetProperty.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace cc {
 class Animation;
@@ -23,58 +23,66 @@ class CompositorFloatAnimationCurve;
 
 // A compositor driven animation.
 class PLATFORM_EXPORT CompositorAnimation {
-    WTF_MAKE_NONCOPYABLE(CompositorAnimation);
-public:
-    using Direction = cc::Animation::Direction;
-    using FillMode = cc::Animation::FillMode;
+  WTF_MAKE_NONCOPYABLE(CompositorAnimation);
 
-    static std::unique_ptr<CompositorAnimation> create(const blink::CompositorAnimationCurve& curve, CompositorTargetProperty::Type target, int groupId, int animationId)
-    {
-        return wrapUnique(new CompositorAnimation(curve, target, animationId, groupId));
-    }
+ public:
+  using Direction = cc::Animation::Direction;
+  using FillMode = cc::Animation::FillMode;
 
-    ~CompositorAnimation();
+  static std::unique_ptr<CompositorAnimation> Create(
+      const blink::CompositorAnimationCurve& curve,
+      CompositorTargetProperty::Type target,
+      int group_id,
+      int animation_id) {
+    return WTF::WrapUnique(
+        new CompositorAnimation(curve, target, animation_id, group_id));
+  }
 
-    // An id must be unique.
-    int id() const;
-    int group() const;
+  ~CompositorAnimation();
 
-    CompositorTargetProperty::Type targetProperty() const;
+  // An id must be unique.
+  int Id() const;
+  int Group() const;
 
-    // This is the number of times that the animation will play. If this
-    // value is zero the animation will not play. If it is negative, then
-    // the animation will loop indefinitely.
-    double iterations() const;
-    void setIterations(double);
+  CompositorTargetProperty::Type TargetProperty() const;
 
-    double startTime() const;
-    void setStartTime(double monotonicTime);
+  // This is the number of times that the animation will play. If this
+  // value is zero the animation will not play. If it is negative, then
+  // the animation will loop indefinitely.
+  double Iterations() const;
+  void SetIterations(double);
 
-    double timeOffset() const;
-    void setTimeOffset(double monotonicTime);
+  double StartTime() const;
+  void SetStartTime(double monotonic_time);
 
-    Direction getDirection() const;
-    void setDirection(Direction);
+  double TimeOffset() const;
+  void SetTimeOffset(double monotonic_time);
 
-    double playbackRate() const;
-    void setPlaybackRate(double);
+  Direction GetDirection() const;
+  void SetDirection(Direction);
 
-    FillMode getFillMode() const;
-    void setFillMode(FillMode);
+  double PlaybackRate() const;
+  void SetPlaybackRate(double);
 
-    double iterationStart() const;
-    void setIterationStart(double);
+  FillMode GetFillMode() const;
+  void SetFillMode(FillMode);
 
-    std::unique_ptr<cc::Animation> passAnimation();
+  double IterationStart() const;
+  void SetIterationStart(double);
 
-    std::unique_ptr<CompositorFloatAnimationCurve> floatCurveForTesting() const;
+  std::unique_ptr<cc::Animation> ReleaseCcAnimation();
 
-private:
-    CompositorAnimation(const CompositorAnimationCurve&, CompositorTargetProperty::Type, int animationId, int groupId);
+  std::unique_ptr<CompositorFloatAnimationCurve> FloatCurveForTesting() const;
 
-    std::unique_ptr<cc::Animation> m_animation;
+ private:
+  CompositorAnimation(const CompositorAnimationCurve&,
+                      CompositorTargetProperty::Type,
+                      int animation_id,
+                      int group_id);
+
+  std::unique_ptr<cc::Animation> animation_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CompositorAnimation_h
+#endif  // CompositorAnimation_h

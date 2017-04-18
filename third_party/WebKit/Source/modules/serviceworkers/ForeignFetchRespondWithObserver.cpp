@@ -4,72 +4,113 @@
 
 #include "modules/serviceworkers/ForeignFetchRespondWithObserver.h"
 
-#include "core/fetch/CrossOriginAccessControl.h"
+#include "bindings/modules/v8/V8ForeignFetchResponse.h"
+#include "modules/fetch/Response.h"
 #include "modules/serviceworkers/ForeignFetchResponse.h"
+#include "platform/loader/fetch/CrossOriginAccessControl.h"
 
 namespace blink {
 
-ForeignFetchRespondWithObserver* ForeignFetchRespondWithObserver::create(ExecutionContext* context, int eventID, const KURL& requestURL, WebURLRequest::FetchRequestMode requestMode, WebURLRequest::FrameType frameType, WebURLRequest::RequestContext requestContext, PassRefPtr<SecurityOrigin> requestOrigin, WaitUntilObserver* observer)
-{
-    return new ForeignFetchRespondWithObserver(context, eventID, requestURL, requestMode, frameType, requestContext, requestOrigin, observer);
+ForeignFetchRespondWithObserver* ForeignFetchRespondWithObserver::Create(
+    ExecutionContext* context,
+    int event_id,
+    const KURL& request_url,
+    WebURLRequest::FetchRequestMode request_mode,
+    WebURLRequest::FetchRedirectMode redirect_mode,
+    WebURLRequest::FrameType frame_type,
+    WebURLRequest::RequestContext request_context,
+    PassRefPtr<SecurityOrigin> request_origin,
+    WaitUntilObserver* observer) {
+  return new ForeignFetchRespondWithObserver(
+      context, event_id, request_url, request_mode, redirect_mode, frame_type,
+      request_context, std::move(request_origin), observer);
 }
 
-void ForeignFetchRespondWithObserver::responseWasFulfilled(const ScriptValue& value)
-{
-    ASSERT(getExecutionContext());
-    TrackExceptionState exceptionState;
-    ForeignFetchResponse foreignFetchResponse = ScriptValue::to<ForeignFetchResponse>(toIsolate(getExecutionContext()), value, exceptionState);
-    if (exceptionState.hadException()) {
-        responseWasRejected(WebServiceWorkerResponseErrorNoForeignFetchResponse);
-        return;
+void ForeignFetchRespondWithObserver::OnResponseFulfilled(
+    const ScriptValue& value) {
+  ASSERT(GetExecutionContext());
+  ExceptionState exception_state(value.GetIsolate(),
+                                 ExceptionState::kUnknownContext,
+                                 "ForeignFetchEvent", "respondWith");
+  ForeignFetchResponse foreign_fetch_response =
+      ScriptValue::To<ForeignFetchResponse>(ToIsolate(GetExecutionContext()),
+                                            value, exception_state);
+  if (exception_state.HadException()) {
+    exception_state.ClearException();
+    OnResponseRejected(kWebServiceWorkerResponseErrorNoForeignFetchResponse);
+    return;
+  }
+
+  Response* response = foreign_fetch_response.response();
+  const FetchResponseData* internal_response = response->GetResponse();
+  const bool is_opaque =
+      internal_response->GetType() == FetchResponseData::kOpaqueType ||
+      internal_response->GetType() == FetchResponseData::kOpaqueRedirectType;
+  if (internal_response->GetType() != FetchResponseData::kDefaultType)
+    internal_response = internal_response->InternalResponse();
+
+  if (!foreign_fetch_response.hasOrigin()) {
+    if (foreign_fetch_response.hasHeaders() &&
+        !foreign_fetch_response.headers().IsEmpty()) {
+      OnResponseRejected(
+          kWebServiceWorkerResponseErrorForeignFetchHeadersWithoutOrigin);
+      return;
     }
 
-    Response* response = foreignFetchResponse.response();
-    const FetchResponseData* internalResponse = response->response();
-    const bool isOpaque = internalResponse->getType() == FetchResponseData::OpaqueType || internalResponse->getType() == FetchResponseData::OpaqueRedirectType;
-    if (internalResponse->getType() != FetchResponseData::DefaultType)
-        internalResponse = internalResponse->internalResponse();
-
-    if (!foreignFetchResponse.hasOrigin()) {
-        if (foreignFetchResponse.hasHeaders() && !foreignFetchResponse.headers().isEmpty()) {
-            responseWasRejected(WebServiceWorkerResponseErrorForeignFetchHeadersWithoutOrigin);
-            return;
-        }
-
-        // If response isn't already opaque, make it opaque.
-        if (!isOpaque) {
-            FetchResponseData* opaqueData = internalResponse->createOpaqueFilteredResponse();
-            response = Response::create(getExecutionContext(), opaqueData);
-        }
-    } else if (m_requestOrigin->toString() != foreignFetchResponse.origin()) {
-        responseWasRejected(WebServiceWorkerResponseErrorForeignFetchMismatchedOrigin);
-        return;
-    } else if (!isOpaque) {
-        HTTPHeaderSet headers;
-        if (foreignFetchResponse.hasHeaders()) {
-            for (const String& header : foreignFetchResponse.headers())
-                headers.add(header);
-            if (response->response()->getType() == FetchResponseData::CORSType) {
-                const HTTPHeaderSet& existingHeaders = response->response()->corsExposedHeaderNames();
-                HTTPHeaderSet headersToRemove;
-                for (HTTPHeaderSet::iterator it = headers.begin(); it != headers.end(); ++it) {
-                    if (!existingHeaders.contains(*it))
-                        headersToRemove.add(*it);
-                }
-                headers.removeAll(headersToRemove);
-            }
-        }
-        FetchResponseData* responseData = internalResponse->createCORSFilteredResponse(headers);
-        response = Response::create(getExecutionContext(), responseData);
+    // If response isn't already opaque, make it opaque.
+    if (!is_opaque) {
+      FetchResponseData* opaque_data =
+          internal_response->CreateOpaqueFilteredResponse();
+      response = Response::Create(GetExecutionContext(), opaque_data);
     }
+  } else if (request_origin_->ToString() != foreign_fetch_response.origin()) {
+    OnResponseRejected(
+        kWebServiceWorkerResponseErrorForeignFetchMismatchedOrigin);
+    return;
+  } else if (!is_opaque) {
+    HTTPHeaderSet headers;
+    if (foreign_fetch_response.hasHeaders()) {
+      for (const String& header : foreign_fetch_response.headers())
+        headers.insert(header);
+      if (response->GetResponse()->GetType() == FetchResponseData::kCORSType) {
+        const HTTPHeaderSet& existing_headers =
+            response->GetResponse()->CorsExposedHeaderNames();
+        HTTPHeaderSet headers_to_remove;
+        for (HTTPHeaderSet::iterator it = headers.begin(); it != headers.end();
+             ++it) {
+          if (!existing_headers.Contains(*it))
+            headers_to_remove.insert(*it);
+        }
+        headers.RemoveAll(headers_to_remove);
+      }
+    }
+    FetchResponseData* response_data =
+        internal_response->CreateCORSFilteredResponse(headers);
+    response = Response::Create(GetExecutionContext(), response_data);
+  }
 
-    RespondWithObserver::responseWasFulfilled(ScriptValue::from(value.getScriptState(), response));
+  FetchRespondWithObserver::OnResponseFulfilled(
+      ScriptValue::From(value.GetScriptState(), response));
 }
 
-ForeignFetchRespondWithObserver::ForeignFetchRespondWithObserver(ExecutionContext* context, int eventID, const KURL& requestURL, WebURLRequest::FetchRequestMode requestMode, WebURLRequest::FrameType frameType, WebURLRequest::RequestContext requestContext, PassRefPtr<SecurityOrigin> requestOrigin, WaitUntilObserver* observer)
-    : RespondWithObserver(context, eventID, requestURL, requestMode, frameType, requestContext, observer)
-    , m_requestOrigin(requestOrigin)
-{
-}
+ForeignFetchRespondWithObserver::ForeignFetchRespondWithObserver(
+    ExecutionContext* context,
+    int event_id,
+    const KURL& request_url,
+    WebURLRequest::FetchRequestMode request_mode,
+    WebURLRequest::FetchRedirectMode redirect_mode,
+    WebURLRequest::FrameType frame_type,
+    WebURLRequest::RequestContext request_context,
+    PassRefPtr<SecurityOrigin> request_origin,
+    WaitUntilObserver* observer)
+    : FetchRespondWithObserver(context,
+                               event_id,
+                               request_url,
+                               request_mode,
+                               redirect_mode,
+                               frame_type,
+                               request_context,
+                               observer),
+      request_origin_(std::move(request_origin)) {}
 
-} // namespace blink
+}  // namespace blink

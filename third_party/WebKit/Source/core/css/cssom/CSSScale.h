@@ -5,51 +5,49 @@
 #ifndef CSSScale_h
 #define CSSScale_h
 
-#include "core/css/cssom/CSSMatrixTransformComponent.h"
+#include "core/css/cssom/CSSMatrixComponent.h"
 #include "core/css/cssom/CSSTransformComponent.h"
 
 namespace blink {
 
 class CORE_EXPORT CSSScale final : public CSSTransformComponent {
-    WTF_MAKE_NONCOPYABLE(CSSScale);
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CSSScale* create(double x, double y)
-    {
-        return new CSSScale(x, y);
-    }
+  WTF_MAKE_NONCOPYABLE(CSSScale);
+  DEFINE_WRAPPERTYPEINFO();
 
-    static CSSScale* create(double x, double y, double z)
-    {
-        return new CSSScale(x, y, z);
-    }
+ public:
+  static CSSScale* Create(double x, double y) { return new CSSScale(x, y); }
 
-    static CSSScale* fromCSSValue(const CSSFunctionValue& value) { return nullptr; }
+  static CSSScale* Create(double x, double y, double z) {
+    return new CSSScale(x, y, z);
+  }
 
-    double x() const { return m_x; }
-    double y() const { return m_y; }
-    double z() const { return m_z; }
+  static CSSScale* FromCSSValue(const CSSFunctionValue&);
 
-    TransformComponentType type() const override { return m_is2D ? ScaleType : Scale3DType; }
+  double x() const { return x_; }
+  double y() const { return y_; }
+  double z() const { return z_; }
 
-    CSSMatrixTransformComponent* asMatrix() const override
-    {
-        return m_is2D ? CSSMatrixTransformComponent::scale(m_x, m_y)
-            : CSSMatrixTransformComponent::scale3d(m_x, m_y, m_z);
-    }
+  TransformComponentType GetType() const override {
+    return is2d_ ? kScaleType : kScale3DType;
+  }
 
-    CSSFunctionValue* toCSSValue() const override;
+  CSSMatrixComponent* asMatrix() const override {
+    return is2d_ ? CSSMatrixComponent::Scale(x_, y_)
+                 : CSSMatrixComponent::Scale3d(x_, y_, z_);
+  }
 
-private:
-    CSSScale(double x, double y) : m_x(x), m_y(y), m_z(1), m_is2D(true) { }
-    CSSScale(double x, double y, double z) : m_x(x), m_y(y), m_z(z), m_is2D(false) { }
+  CSSFunctionValue* ToCSSValue() const override;
 
-    double m_x;
-    double m_y;
-    double m_z;
-    bool m_is2D;
+ private:
+  CSSScale(double x, double y) : x_(x), y_(y), z_(1), is2d_(true) {}
+  CSSScale(double x, double y, double z) : x_(x), y_(y), z_(z), is2d_(false) {}
+
+  double x_;
+  double y_;
+  double z_;
+  bool is2d_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

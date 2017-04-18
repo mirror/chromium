@@ -27,21 +27,46 @@
 #define DictionaryHelperForBindings_h
 
 #include "bindings/core/v8/Dictionary.h"
+#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/V8Binding.h"
 
 namespace blink {
 
 template <template <typename> class PointerType, typename T>
-bool DictionaryHelper::get(const Dictionary& dictionary, const String& key, PointerType<T>& value)
-{
-    v8::Local<v8::Value> v8Value;
-    if (!dictionary.get(key, v8Value))
-        return false;
+bool DictionaryHelper::Get(const Dictionary& dictionary,
+                           const StringView& key,
+                           PointerType<T>& value) {
+  v8::Local<v8::Value> v8_value;
+  if (!dictionary.Get(key, v8_value))
+    return false;
 
-    value = V8TypeOf<T>::Type::toImplWithTypeCheck(dictionary.isolate(), v8Value);
-    return true;
+  value =
+      V8TypeOf<T>::Type::toImplWithTypeCheck(dictionary.GetIsolate(), v8_value);
+  return true;
 }
 
-} // namespace blink
+template <typename T>
+bool DictionaryHelper::Get(const Dictionary& dictionary,
+                           const StringView& key,
+                           Nullable<T>& value) {
+  v8::Local<v8::Value> v8_value;
+  if (!dictionary.Get(key, v8_value))
+    return false;
 
-#endif // DictionaryHelperForBindings_h
+  if (v8_value->IsNull()) {
+    value.Set(nullptr);
+    return true;
+  }
+
+  T inner_value;
+  if (DictionaryHelper::Get(dictionary, key, inner_value)) {
+    value.Set(inner_value);
+    return true;
+  }
+
+  return false;
+}
+
+}  // namespace blink
+
+#endif  // DictionaryHelperForBindings_h

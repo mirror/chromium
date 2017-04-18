@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/json/json_reader.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -33,18 +34,14 @@ bool YearFromNow(double* date_epoch, std::string* date_string) {
   UErrorCode status = U_ZERO_ERROR;
   icu::SimpleDateFormat simple_formatter(icu::UnicodeString(kDateFormat),
                                          icu::Locale("en_US"), status);
-  if (!U_SUCCESS(status))
-    return false;
-
   icu::UnicodeString date_unicode_string;
   simple_formatter.format(static_cast<UDate>(*date_epoch * 1000),
                           date_unicode_string, status);
-  if (!U_SUCCESS(status))
+  if (U_FAILURE(status))
     return false;
 
-  return base::UTF16ToUTF8(date_unicode_string.getBuffer(),
-                           static_cast<size_t>(date_unicode_string.length()),
-                           date_string);
+  date_unicode_string.toUTF8String(*date_string);
+  return true;
 }
 
 }  // namespace
@@ -53,8 +50,8 @@ class NotificationPromoTest : public testing::Test {
  public:
   NotificationPromoTest()
       : notification_promo_(&local_state_),
-        field_trial_list_(
-            new base::FieldTrialList(new base::MockEntropyProvider())),
+        field_trial_list_(base::MakeUnique<base::FieldTrialList>(
+            base::MakeUnique<base::MockEntropyProvider>())),
         received_notification_(false),
         start_(0.0),
         end_(0.0),
@@ -114,7 +111,6 @@ class NotificationPromoTest : public testing::Test {
                                          field_trial_params);
     base::FieldTrialList::CreateFieldTrial("IOSNTPPromotion", "Group1");
 
-    promo_type_ = NotificationPromo::MOBILE_NTP_WHATS_NEW_PROMO;
     promo_text_ = promo_text;
 
     start_ = start;
@@ -136,7 +132,7 @@ class NotificationPromoTest : public testing::Test {
   }
 
   void InitPromoFromJson() {
-    notification_promo_.InitFromJson(*test_json_, promo_type_);
+    notification_promo_.InitFromJson(*test_json_);
 
     // Test the fields.
     TestServerProvidedParameters();
@@ -146,8 +142,8 @@ class NotificationPromoTest : public testing::Test {
     // Check values.
     EXPECT_EQ(notification_promo_.promo_text_, promo_text_);
 
-    EXPECT_EQ(notification_promo_.start_, start_);
-    EXPECT_EQ(notification_promo_.end_, end_);
+    EXPECT_DOUBLE_EQ(notification_promo_.start_, start_);
+    EXPECT_DOUBLE_EQ(notification_promo_.end_, end_);
 
     EXPECT_EQ(notification_promo_.promo_id_, promo_id_);
     EXPECT_EQ(notification_promo_.max_views_, max_views_);
@@ -161,7 +157,7 @@ class NotificationPromoTest : public testing::Test {
     // Initialize promo from saved prefs and server params.
     NotificationPromo first_promo(&local_state_);
     first_promo.InitFromVariations();
-    first_promo.InitFromPrefs(promo_type_);
+    first_promo.InitFromPrefs();
     EXPECT_EQ(first_promo.max_views_ - 2, first_promo.views_);
     EXPECT_TRUE(first_promo.CanShow());
     first_promo.HandleViewed();
@@ -170,14 +166,14 @@ class NotificationPromoTest : public testing::Test {
     // correctly in prefs.
     NotificationPromo second_promo(&local_state_);
     second_promo.InitFromVariations();
-    second_promo.InitFromPrefs(promo_type_);
+    second_promo.InitFromPrefs();
     EXPECT_EQ(second_promo.max_views_ - 1, second_promo.views_);
     EXPECT_TRUE(second_promo.CanShow());
     second_promo.HandleViewed();
 
     NotificationPromo third_promo(&local_state_);
     third_promo.InitFromVariations();
-    third_promo.InitFromPrefs(promo_type_);
+    third_promo.InitFromPrefs();
     EXPECT_EQ(third_promo.max_views_, third_promo.views_);
     EXPECT_FALSE(third_promo.CanShow());
 
@@ -202,7 +198,7 @@ class NotificationPromoTest : public testing::Test {
     // Initialize promo from saved prefs and server params.
     NotificationPromo first_promo(&local_state_);
     first_promo.InitFromVariations();
-    first_promo.InitFromPrefs(promo_type_);
+    first_promo.InitFromPrefs();
     EXPECT_FALSE(first_promo.closed_);
     EXPECT_TRUE(first_promo.CanShow());
     first_promo.HandleClosed();
@@ -211,7 +207,7 @@ class NotificationPromoTest : public testing::Test {
     // recorded correctly in prefs.
     NotificationPromo second_promo(&local_state_);
     second_promo.InitFromVariations();
-    second_promo.InitFromPrefs(promo_type_);
+    second_promo.InitFromPrefs();
     EXPECT_TRUE(second_promo.closed_);
     EXPECT_FALSE(second_promo.CanShow());
 
@@ -274,12 +270,12 @@ class NotificationPromoTest : public testing::Test {
   // Tests that the first view time is recorded properly in prefs when the
   // first view occurs.
   void TestFirstViewTimeRecorded() {
-    EXPECT_EQ(0, notification_promo_.first_view_time_);
+    EXPECT_DOUBLE_EQ(0, notification_promo_.first_view_time_);
     notification_promo_.HandleViewed();
 
     NotificationPromo temp_promo(&local_state_);
     temp_promo.InitFromVariations();
-    temp_promo.InitFromPrefs(promo_type_);
+    temp_promo.InitFromPrefs();
     EXPECT_NE(0, temp_promo.first_view_time_);
 
     notification_promo_.views_ = 0;
@@ -319,8 +315,8 @@ class NotificationPromoTest : public testing::Test {
 
     // Initialize promo and verify that its instance variables match the data
     // saved in the old structure.
-    promo.InitFromPrefs(promo_type_);
-    EXPECT_EQ(first_view_time, promo.first_view_time_);
+    promo.InitFromPrefs();
+    EXPECT_DOUBLE_EQ(first_view_time, promo.first_view_time_);
     EXPECT_EQ(views, promo.views_);
     EXPECT_EQ(closed, promo.closed_);
     EXPECT_FALSE(promo.CanShow());
@@ -346,7 +342,6 @@ class NotificationPromoTest : public testing::Test {
   bool received_notification_;
   std::unique_ptr<base::DictionaryValue> test_json_;
 
-  NotificationPromo::PromoType promo_type_;
   std::string promo_text_;
 
   double start_;

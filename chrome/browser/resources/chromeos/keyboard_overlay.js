@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-<include src="keyboard_overlay_data.js">
+// <include src="keyboard_overlay_data.js">
 
 var BASE_KEYBOARD = {
   top: 0,
@@ -45,9 +45,11 @@ var LABEL_TO_IDENTIFIER = {
   'disabled': 'DISABLED'
 };
 
+// For KeyboardOverlayUIBrowserTest.
 var KEYCODE_TO_LABEL = {
   8: 'backspace',
   9: 'tab',
+  10: 'shift',
   13: 'enter',
   27: 'esc',
   32: 'space',
@@ -87,6 +89,15 @@ var KEYCODE_TO_LABEL = {
   119: 'mute',
   120: 'vol. down',
   121: 'vol. up',
+  152: 'power',
+  166: 'back',
+  167: 'forward',
+  168: 'reload',
+  173: 'mute',
+  174: 'vol. down',
+  175: 'vol. up',
+  183: 'full screen',
+  182: 'switch window',
   186: ';',
   187: '+',
   188: ',',
@@ -94,10 +105,14 @@ var KEYCODE_TO_LABEL = {
   190: '.',
   191: '/',
   192: '`',
+  216: 'bright down',
+  217: 'bright up',
+  218: 'bright down',
   219: '[',
   220: '\\',
   221: ']',
   222: '\'',
+  232: 'bright up',
 };
 
 /**
@@ -210,6 +225,14 @@ function getShortcutData() {
     delete shortcutDataCache['-<>CTRL<>SHIFT'];
     // Reset screen zoom
     delete shortcutDataCache['0<>CTRL<>SHIFT'];
+  }
+
+  if (!loadTimeData.getBoolean('backspaceGoesBackFeatureEnabled')) {
+    // If the "backspace key goes back" experiment is not enabled, then we
+    // clear the shortcuts for Backspace and Shift+Backspace to go back or
+    // forward respectively.
+    delete shortcutDataCache['backspace'];
+    delete shortcutDataCache['backspace<>SHIFT'];
   }
 
   return shortcutDataCache;
@@ -886,7 +909,7 @@ function initKeyboardOverlayId(inputMethodId) {
   var inputMethodIdToOverlayId =
       keyboardOverlayData['inputMethodIdToOverlayId'];
   if (inputMethodId) {
-    if (inputMethodId.indexOf(IME_ID_PREFIX) == 0) {
+    if (inputMethodId.startsWith(IME_ID_PREFIX)) {
       // If the input method is a component extension IME, remove the prefix:
       //   _comp_ime_<ext_id>
       // The extension id is a hash value with 32 characters.

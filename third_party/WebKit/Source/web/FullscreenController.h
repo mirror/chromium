@@ -31,10 +31,11 @@
 #ifndef FullscreenController_h
 #define FullscreenController_h
 
+#include <memory>
+
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/IntSize.h"
-#include "platform/heap/Handle.h"
-#include "wtf/RefPtr.h"
+#include "platform/graphics/Color.h"
 
 namespace blink {
 
@@ -42,47 +43,64 @@ class Element;
 class LocalFrame;
 class WebViewImpl;
 
-class FullscreenController final : public GarbageCollected<FullscreenController> {
-public:
-    static FullscreenController* create(WebViewImpl*);
+class FullscreenController {
+ public:
+  static std::unique_ptr<FullscreenController> Create(WebViewImpl*);
 
-    void didEnterFullscreen();
-    void didExitFullscreen();
+  // Called by Fullscreen (via ChromeClient) to request entering or exiting
+  // fullscreen.
+  void EnterFullscreen(LocalFrame&);
+  void ExitFullscreen(LocalFrame&);
 
-    void enterFullScreenForElement(Element*);
-    void exitFullScreenForElement(Element*);
+  // Called by content::RenderWidget (via WebWidget) to notify that we've
+  // entered or exited fullscreen. This can be because we requested it, or it
+  // can be initiated by the browser directly.
+  void DidEnterFullscreen();
+  void DidExitFullscreen();
 
-    bool isFullscreen() { return m_fullScreenFrame; }
+  // Called by Fullscreen (via ChromeClient) to notify that the fullscreen
+  // element has changed.
+  void FullscreenElementChanged(Element*, Element*);
 
-    void updateSize();
+  bool IsFullscreenOrTransitioning() const { return state_ != State::kInitial; }
 
-    void didUpdateLayout();
+  void UpdateSize();
 
-    DECLARE_TRACE();
+  void DidUpdateLayout();
 
-protected:
-    explicit FullscreenController(WebViewImpl*);
+ protected:
+  explicit FullscreenController(WebViewImpl*);
 
-private:
-    void updatePageScaleConstraints(bool removeConstraints);
+ private:
+  void UpdatePageScaleConstraints(bool remove_constraints);
+  void RestoreBackgroundColorOverride();
 
-    WebViewImpl* m_webViewImpl;
+  WebViewImpl* web_view_impl_;
 
-    bool m_haveEnteredFullscreen;
-    float m_exitFullscreenPageScaleFactor;
-    IntSize m_exitFullscreenScrollOffset;
-    FloatPoint m_exitFullscreenVisualViewportOffset;
-    bool m_needsScrollAndScaleRestore;
+  // State is used to avoid unnecessary enter/exit requests, and to restore the
+  // m_initial* after the first layout upon exiting fullscreen. Typically, the
+  // state goes through every state from Initial to NeedsScrollAndScaleRestore
+  // and then back to Initial, but the are two exceptions:
+  //  1. didExitFullscreen() can transition from any non-Initial state to
+  //     NeedsScrollAndScaleRestore, in case of a browser-intiated exit.
+  //  2. enterFullscreen() can transition from NeedsScrollAndScaleRestore to
+  //     EnteringFullscreen, in case of a quick exit+enter.
+  enum class State {
+    kInitial,
+    kEnteringFullscreen,
+    kFullscreen,
+    kExitingFullscreen,
+    kNeedsScrollAndScaleRestore
+  };
+  State state_ = State::kInitial;
 
-    // If set, the WebView is transitioning to fullscreen for this element.
-    Member<Element> m_provisionalFullScreenElement;
-
-    // If set, the WebView is in fullscreen mode for an element in this frame.
-    Member<LocalFrame> m_fullScreenFrame;
-
-    bool m_isCancelingFullScreen;
+  float initial_page_scale_factor_ = 0.0f;
+  IntSize initial_scroll_offset_;
+  FloatPoint initial_visual_viewport_offset_;
+  bool initial_background_color_override_enabled_ = false;
+  RGBA32 initial_background_color_override_ = Color::kTransparent;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -24,13 +24,13 @@
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_file_system_context.h"
 #include "extensions/browser/extension_registry.h"
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/async_file_util.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_url.h"
+#include "storage/browser/test/test_file_system_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace chromeos {
@@ -125,7 +125,7 @@ class FileSystemProviderProviderAsyncFileUtilTest : public testing::Test {
     async_file_util_.reset(new internal::ProviderAsyncFileUtil);
 
     file_system_context_ =
-        content::CreateFileSystemContextForTesting(NULL, data_dir_.path());
+        content::CreateFileSystemContextForTesting(NULL, data_dir_.GetPath());
 
     Service* service = Service::Get(profile_);  // Owned by its factory.
     service->SetFileSystemFactoryForTesting(
@@ -153,8 +153,8 @@ class FileSystemProviderProviderAsyncFileUtilTest : public testing::Test {
 
   std::unique_ptr<storage::FileSystemOperationContext>
   CreateOperationContext() {
-    return base::WrapUnique(
-        new storage::FileSystemOperationContext(file_system_context_.get()));
+    return base::MakeUnique<storage::FileSystemOperationContext>(
+        file_system_context_.get());
   }
 
   content::TestBrowserThreadBundle thread_bundle_;

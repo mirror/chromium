@@ -28,21 +28,28 @@
 #define DOMWindowWebDatabase_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
-class DOMWindow;
 class Database;
 class DatabaseCallback;
 class ExceptionState;
+class LocalDOMWindow;
 
 class DOMWindowWebDatabase {
-    STATIC_ONLY(DOMWindowWebDatabase);
-public:
-    static Database* openDatabase(DOMWindow&, const String& name, const String& version, const String& displayName, unsigned estimatedSize, DatabaseCallback* creationCallback, ExceptionState&);
+  STATIC_ONLY(DOMWindowWebDatabase);
+
+ public:
+  static Database* openDatabase(LocalDOMWindow&,
+                                const String& name,
+                                const String& version,
+                                const String& display_name,
+                                unsigned estimated_size,
+                                DatabaseCallback* creation_callback,
+                                ExceptionState&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DOMWindowWebDatabase_h
+#endif  // DOMWindowWebDatabase_h

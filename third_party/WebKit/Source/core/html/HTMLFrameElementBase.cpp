@@ -23,18 +23,21 @@
 
 #include "core/html/HTMLFrameElementBase.h"
 
+#include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptEventListener.h"
+#include "bindings/core/v8/V8Binding.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/Document.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 
@@ -42,216 +45,237 @@ namespace blink {
 
 using namespace HTMLNames;
 
-HTMLFrameElementBase::HTMLFrameElementBase(const QualifiedName& tagName, Document& document)
-    : HTMLFrameOwnerElement(tagName, document)
-    , m_scrollingMode(ScrollbarAuto)
-    , m_marginWidth(-1)
-    , m_marginHeight(-1)
-{
-}
+HTMLFrameElementBase::HTMLFrameElementBase(const QualifiedName& tag_name,
+                                           Document& document)
+    : HTMLFrameOwnerElement(tag_name, document),
+      scrolling_mode_(kScrollbarAuto),
+      margin_width_(-1),
+      margin_height_(-1) {}
 
-bool HTMLFrameElementBase::isURLAllowed() const
-{
-    if (m_URL.isEmpty())
-        return true;
-
-    const KURL& completeURL = document().completeURL(m_URL);
-
-    if (protocolIsJavaScript(completeURL)) {
-        if (contentFrame() && !ScriptController::canAccessFromCurrentOrigin(toIsolate(&document()), contentFrame()))
-            return false;
-    }
-
-    LocalFrame* parentFrame = document().frame();
-    if (parentFrame)
-        return parentFrame->isURLAllowed(completeURL);
-
+bool HTMLFrameElementBase::IsURLAllowed() const {
+  if (url_.IsEmpty())
     return true;
+
+  const KURL& complete_url = GetDocument().CompleteURL(url_);
+
+  if (ContentFrame() && complete_url.ProtocolIsJavaScript()) {
+    // Check if the caller can execute script in the context of the content
+    // frame. NB: This check can be invoked without any JS on the stack for some
+    // parser operations. In such case, we use the origin of the frame element's
+    // containing document as the caller context.
+    v8::Isolate* isolate = ToIsolate(&GetDocument());
+    LocalDOMWindow* accessing_window = isolate->InContext()
+                                           ? CurrentDOMWindow(isolate)
+                                           : GetDocument().domWindow();
+    if (!BindingSecurity::ShouldAllowAccessToFrame(
+            accessing_window, ContentFrame(),
+            BindingSecurity::ErrorReportOption::kReport))
+      return false;
+  }
+  return true;
 }
 
-void HTMLFrameElementBase::openURL(bool replaceCurrentItem)
-{
-    if (!isURLAllowed())
-        return;
+void HTMLFrameElementBase::OpenURL(bool replace_current_item) {
+  if (!IsURLAllowed())
+    return;
 
-    if (m_URL.isEmpty())
-        m_URL = AtomicString(blankURL().getString());
+  if (url_.IsEmpty())
+    url_ = AtomicString(BlankURL().GetString());
 
-    LocalFrame* parentFrame = document().frame();
-    if (!parentFrame)
-        return;
+  LocalFrame* parent_frame = GetDocument().GetFrame();
+  if (!parent_frame)
+    return;
 
-    // Support for <frame src="javascript:string">
-    KURL scriptURL;
-    KURL url = document().completeURL(m_URL);
-    if (protocolIsJavaScript(m_URL)) {
-        scriptURL = url;
-        url = blankURL();
-    }
-
-    if (!loadOrRedirectSubframe(url, m_frameName, replaceCurrentItem))
-        return;
-    if (!contentFrame() || scriptURL.isEmpty() || !contentFrame()->isLocalFrame())
-        return;
-    if (contentFrame()->owner()->getSandboxFlags() & SandboxOrigin)
-        return;
-    toLocalFrame(contentFrame())->script().executeScriptIfJavaScriptURL(scriptURL);
-}
-
-void HTMLFrameElementBase::frameOwnerPropertiesChanged()
-{
-    // Don't notify about updates if contentFrame() is null, for example when
-    // the subframe hasn't been created yet.
-    if (contentFrame())
-        document().frame()->loader().client()->didChangeFrameOwnerProperties(this);
-}
-
-void HTMLFrameElementBase::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == srcdocAttr) {
-        if (!value.isNull()) {
-            setLocation(srcdocURL().getString());
-        } else {
-            const AtomicString& srcValue = fastGetAttribute(srcAttr);
-            if (!srcValue.isNull())
-                setLocation(stripLeadingAndTrailingHTMLSpaces(srcValue));
-        }
-    } else if (name == srcAttr && !fastHasAttribute(srcdocAttr)) {
-        setLocation(stripLeadingAndTrailingHTMLSpaces(value));
-    } else if (name == idAttr) {
-        // Important to call through to base for the id attribute so the hasID bit gets set.
-        HTMLFrameOwnerElement::parseAttribute(name, oldValue, value);
-        m_frameName = value;
-    } else if (name == nameAttr) {
-        m_frameName = value;
-        // FIXME: If we are already attached, this doesn't actually change the frame's name.
-        // FIXME: If we are already attached, this doesn't check for frame name
-        // conflicts and generate a unique frame name.
-    } else if (name == marginwidthAttr) {
-        setMarginWidth(value.toInt());
-        // FIXME: If we are already attached, this has no effect.
-    } else if (name == marginheightAttr) {
-        setMarginHeight(value.toInt());
-        // FIXME: If we are already attached, this has no effect.
-    } else if (name == scrollingAttr) {
-        // Auto and yes both simply mean "allow scrolling." No means "don't allow scrolling."
-        if (equalIgnoringCase(value, "auto") || equalIgnoringCase(value, "yes"))
-            setScrollingMode(ScrollbarAuto);
-        else if (equalIgnoringCase(value, "no"))
-            setScrollingMode(ScrollbarAlwaysOff);
-        // FIXME: If we are already attached, this has no effect.
-    } else if (name == onbeforeunloadAttr) {
-        // FIXME: should <frame> elements have beforeunload handlers?
-        setAttributeEventListener(EventTypeNames::beforeunload, createAttributeEventListener(this, name, value, eventParameterName()));
+  // Support for <frame src="javascript:string">
+  KURL script_url;
+  KURL url = GetDocument().CompleteURL(url_);
+  if (url.ProtocolIsJavaScript()) {
+    // We'll set/execute |scriptURL| iff CSP allows us to execute inline
+    // JavaScript. If CSP blocks inline JavaScript, then exit early if
+    // we're trying to execute script in an existing document. If we're
+    // executing JavaScript to create a new document (e.g.
+    // '<iframe src="javascript:...">' then continue loading 'about:blank'
+    // so that the frame is populated with something reasonable.
+    if (ContentSecurityPolicy::ShouldBypassMainWorld(&GetDocument()) ||
+        GetDocument().GetContentSecurityPolicy()->AllowJavaScriptURLs(
+            this, url.GetString(), GetDocument().Url(),
+            OrdinalNumber::First())) {
+      script_url = url;
     } else {
-        HTMLFrameOwnerElement::parseAttribute(name, oldValue, value);
-    }
-}
-
-void HTMLFrameElementBase::setNameAndOpenURL()
-{
-    m_frameName = getNameAttribute();
-    openURL();
-}
-
-Node::InsertionNotificationRequest HTMLFrameElementBase::insertedInto(ContainerNode* insertionPoint)
-{
-    HTMLFrameOwnerElement::insertedInto(insertionPoint);
-    return InsertionShouldCallDidNotifySubtreeInsertions;
-}
-
-void HTMLFrameElementBase::didNotifySubtreeInsertionsToDocument()
-{
-    if (!document().frame())
-        return;
-
-    if (!SubframeLoadingDisabler::canLoadFrame(*this))
-        return;
-
-    setNameAndOpenURL();
-}
-
-void HTMLFrameElementBase::attachLayoutTree(const AttachContext& context)
-{
-    HTMLFrameOwnerElement::attachLayoutTree(context);
-
-    if (layoutPart()) {
-        if (Frame* frame = contentFrame()) {
-            if (frame->isLocalFrame())
-                setWidget(toLocalFrame(frame)->view());
-            else if (frame->isRemoteFrame())
-                setWidget(toRemoteFrame(frame)->view());
-        }
-    }
-}
-
-void HTMLFrameElementBase::setLocation(const String& str)
-{
-    m_URL = AtomicString(str);
-
-    if (isConnected())
-        openURL(false);
-}
-
-bool HTMLFrameElementBase::supportsFocus() const
-{
-    return true;
-}
-
-void HTMLFrameElementBase::setFocus(bool received)
-{
-    HTMLFrameOwnerElement::setFocus(received);
-    if (Page* page = document().page()) {
-        if (received)
-            page->focusController().setFocusedFrame(contentFrame());
-        else if (page->focusController().focusedFrame() == contentFrame()) // Focus may have already been given to another frame, don't take it away.
-            page->focusController().setFocusedFrame(nullptr);
-    }
-}
-
-bool HTMLFrameElementBase::isURLAttribute(const Attribute& attribute) const
-{
-    return attribute.name() == longdescAttr || attribute.name() == srcAttr
-        || HTMLFrameOwnerElement::isURLAttribute(attribute);
-}
-
-bool HTMLFrameElementBase::hasLegalLinkAttribute(const QualifiedName& name) const
-{
-    return name == srcAttr || HTMLFrameOwnerElement::hasLegalLinkAttribute(name);
-}
-
-bool HTMLFrameElementBase::isHTMLContentAttribute(const Attribute& attribute) const
-{
-    return attribute.name() == srcdocAttr || HTMLFrameOwnerElement::isHTMLContentAttribute(attribute);
-}
-
-// FIXME: Remove this code once we have input routing in the browser
-// process. See http://crbug.com/339659.
-void HTMLFrameElementBase::defaultEventHandler(Event* event)
-{
-    if (contentFrame() && contentFrame()->isRemoteFrame()) {
-        toRemoteFrame(contentFrame())->forwardInputEvent(event);
+      if (ContentFrame())
         return;
     }
-    HTMLFrameOwnerElement::defaultEventHandler(event);
+
+    url = BlankURL();
+  }
+
+  if (!LoadOrRedirectSubframe(url, frame_name_, replace_current_item))
+    return;
+  if (!ContentFrame() || script_url.IsEmpty() ||
+      !ContentFrame()->IsLocalFrame())
+    return;
+  if (ContentFrame()->Owner()->GetSandboxFlags() & kSandboxOrigin)
+    return;
+  ToLocalFrame(ContentFrame())
+      ->GetScriptController()
+      .ExecuteScriptIfJavaScriptURL(script_url, this);
 }
 
-void HTMLFrameElementBase::setScrollingMode(ScrollbarMode scrollbarMode)
-{
-    m_scrollingMode = scrollbarMode;
-    frameOwnerPropertiesChanged();
+void HTMLFrameElementBase::ParseAttribute(
+    const AttributeModificationParams& params) {
+  const QualifiedName& name = params.name;
+  const AtomicString& value = params.new_value;
+  if (name == srcdocAttr) {
+    if (!value.IsNull()) {
+      SetLocation(SrcdocURL().GetString());
+    } else {
+      const AtomicString& src_value = FastGetAttribute(srcAttr);
+      if (!src_value.IsNull())
+        SetLocation(StripLeadingAndTrailingHTMLSpaces(src_value));
+    }
+  } else if (name == srcAttr && !FastHasAttribute(srcdocAttr)) {
+    SetLocation(StripLeadingAndTrailingHTMLSpaces(value));
+  } else if (name == idAttr) {
+    // Important to call through to base for the id attribute so the hasID bit
+    // gets set.
+    HTMLFrameOwnerElement::ParseAttribute(params);
+    frame_name_ = value;
+  } else if (name == nameAttr) {
+    frame_name_ = value;
+  } else if (name == marginwidthAttr) {
+    SetMarginWidth(value.ToInt());
+  } else if (name == marginheightAttr) {
+    SetMarginHeight(value.ToInt());
+  } else if (name == scrollingAttr) {
+    // Auto and yes both simply mean "allow scrolling." No means "don't allow
+    // scrolling."
+    if (DeprecatedEqualIgnoringCase(value, "auto") ||
+        DeprecatedEqualIgnoringCase(value, "yes"))
+      SetScrollingMode(kScrollbarAuto);
+    else if (DeprecatedEqualIgnoringCase(value, "no"))
+      SetScrollingMode(kScrollbarAlwaysOff);
+  } else if (name == onbeforeunloadAttr) {
+    // FIXME: should <frame> elements have beforeunload handlers?
+    SetAttributeEventListener(
+        EventTypeNames::beforeunload,
+        CreateAttributeEventListener(this, name, value, EventParameterName()));
+  } else {
+    HTMLFrameOwnerElement::ParseAttribute(params);
+  }
 }
 
-void HTMLFrameElementBase::setMarginWidth(int marginWidth)
-{
-    m_marginWidth = marginWidth;
-    frameOwnerPropertiesChanged();
+void HTMLFrameElementBase::SetNameAndOpenURL() {
+  frame_name_ = GetNameAttribute();
+  OpenURL();
 }
 
-void HTMLFrameElementBase::setMarginHeight(int marginHeight)
-{
-    m_marginHeight = marginHeight;
-    frameOwnerPropertiesChanged();
+Node::InsertionNotificationRequest HTMLFrameElementBase::InsertedInto(
+    ContainerNode* insertion_point) {
+  HTMLFrameOwnerElement::InsertedInto(insertion_point);
+  return kInsertionShouldCallDidNotifySubtreeInsertions;
 }
 
-} // namespace blink
+void HTMLFrameElementBase::DidNotifySubtreeInsertionsToDocument() {
+  if (!GetDocument().GetFrame())
+    return;
+
+  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
+    return;
+
+  // We should never have a content frame at the point where we got inserted
+  // into a tree.
+  SECURITY_CHECK(!ContentFrame());
+
+  SetNameAndOpenURL();
+}
+
+void HTMLFrameElementBase::AttachLayoutTree(const AttachContext& context) {
+  HTMLFrameOwnerElement::AttachLayoutTree(context);
+
+  if (GetLayoutPart()) {
+    if (Frame* frame = ContentFrame()) {
+      if (frame->IsLocalFrame())
+        SetWidget(ToLocalFrame(frame)->View());
+      else if (frame->IsRemoteFrame())
+        SetWidget(ToRemoteFrame(frame)->View());
+    }
+  }
+}
+
+void HTMLFrameElementBase::SetLocation(const String& str) {
+  url_ = AtomicString(str);
+
+  if (isConnected())
+    OpenURL(false);
+}
+
+bool HTMLFrameElementBase::SupportsFocus() const {
+  return true;
+}
+
+void HTMLFrameElementBase::SetFocused(bool received, WebFocusType focus_type) {
+  HTMLFrameOwnerElement::SetFocused(received, focus_type);
+  if (Page* page = GetDocument().GetPage()) {
+    if (received) {
+      page->GetFocusController().SetFocusedFrame(ContentFrame());
+    } else if (page->GetFocusController().FocusedFrame() == ContentFrame()) {
+      // Focus may have already been given to another frame, don't take it away.
+      page->GetFocusController().SetFocusedFrame(nullptr);
+    }
+  }
+}
+
+bool HTMLFrameElementBase::IsURLAttribute(const Attribute& attribute) const {
+  return attribute.GetName() == longdescAttr ||
+         attribute.GetName() == srcAttr ||
+         HTMLFrameOwnerElement::IsURLAttribute(attribute);
+}
+
+bool HTMLFrameElementBase::HasLegalLinkAttribute(
+    const QualifiedName& name) const {
+  return name == srcAttr || HTMLFrameOwnerElement::HasLegalLinkAttribute(name);
+}
+
+bool HTMLFrameElementBase::IsHTMLContentAttribute(
+    const Attribute& attribute) const {
+  return attribute.GetName() == srcdocAttr ||
+         HTMLFrameOwnerElement::IsHTMLContentAttribute(attribute);
+}
+
+void HTMLFrameElementBase::SetScrollingMode(ScrollbarMode scrollbar_mode) {
+  if (scrolling_mode_ == scrollbar_mode)
+    return;
+
+  if (contentDocument()) {
+    contentDocument()->WillChangeFrameOwnerProperties(
+        margin_width_, margin_height_, scrollbar_mode, IsDisplayNone());
+  }
+  scrolling_mode_ = scrollbar_mode;
+  FrameOwnerPropertiesChanged();
+}
+
+void HTMLFrameElementBase::SetMarginWidth(int margin_width) {
+  if (margin_width_ == margin_width)
+    return;
+
+  if (contentDocument()) {
+    contentDocument()->WillChangeFrameOwnerProperties(
+        margin_width, margin_height_, scrolling_mode_, IsDisplayNone());
+  }
+  margin_width_ = margin_width;
+  FrameOwnerPropertiesChanged();
+}
+
+void HTMLFrameElementBase::SetMarginHeight(int margin_height) {
+  if (margin_height_ == margin_height)
+    return;
+
+  if (contentDocument()) {
+    contentDocument()->WillChangeFrameOwnerProperties(
+        margin_width_, margin_height, scrolling_mode_, IsDisplayNone());
+  }
+  margin_height_ = margin_height;
+  FrameOwnerPropertiesChanged();
+}
+
+}  // namespace blink

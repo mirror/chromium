@@ -30,122 +30,127 @@
 
 #include "platform/SharedBuffer.h"
 
-#include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
 #include <algorithm>
 #include <cstdlib>
 #include <memory>
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-TEST(SharedBufferTest, getAsBytes)
-{
-    char testData0[] = "Hello";
-    char testData1[] = "World";
-    char testData2[] = "Goodbye";
+TEST(SharedBufferTest, getAsBytes) {
+  char test_data0[] = "Hello";
+  char test_data1[] = "World";
+  char test_data2[] = "Goodbye";
 
-    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::create(testData0, strlen(testData0));
-    sharedBuffer->append(testData1, strlen(testData1));
-    sharedBuffer->append(testData2, strlen(testData2));
+  RefPtr<SharedBuffer> shared_buffer =
+      SharedBuffer::Create(test_data0, strlen(test_data0));
+  shared_buffer->Append(test_data1, strlen(test_data1));
+  shared_buffer->Append(test_data2, strlen(test_data2));
 
-    const size_t size = sharedBuffer->size();
-    std::unique_ptr<char[]> data = wrapArrayUnique(new char[size]);
-    ASSERT_TRUE(sharedBuffer->getAsBytes(data.get(), size));
+  const size_t size = shared_buffer->size();
+  std::unique_ptr<char[]> data = WrapArrayUnique(new char[size]);
+  shared_buffer->GetAsBytes(data.get(), size);
 
-    char expectedConcatenation[] = "HelloWorldGoodbye";
-    ASSERT_EQ(strlen(expectedConcatenation), size);
-    EXPECT_EQ(0, memcmp(expectedConcatenation, data.get(), strlen(expectedConcatenation)));
+  char expected_concatenation[] = "HelloWorldGoodbye";
+  ASSERT_EQ(strlen(expected_concatenation), size);
+  EXPECT_EQ(0, memcmp(expected_concatenation, data.get(),
+                      strlen(expected_concatenation)));
 }
 
-TEST(SharedBufferTest, getAsBytesLargeSegments)
-{
-    Vector<char> vector0(0x4000);
-    for (size_t i = 0; i < vector0.size(); ++i)
-        vector0[i] = 'a';
-    Vector<char> vector1(0x4000);
-    for (size_t i = 0; i < vector1.size(); ++i)
-        vector1[i] = 'b';
-    Vector<char> vector2(0x4000);
-    for (size_t i = 0; i < vector2.size(); ++i)
-        vector2[i] = 'c';
+TEST(SharedBufferTest, getPartAsBytes) {
+  char test_data0[] = "Hello";
+  char test_data1[] = "World";
+  char test_data2[] = "Goodbye";
 
-    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::adoptVector(vector0);
-    sharedBuffer->append(vector1);
-    sharedBuffer->append(vector2);
+  RefPtr<SharedBuffer> shared_buffer =
+      SharedBuffer::Create(test_data0, strlen(test_data0));
+  shared_buffer->Append(test_data1, strlen(test_data1));
+  shared_buffer->Append(test_data2, strlen(test_data2));
 
-    const size_t size = sharedBuffer->size();
-    std::unique_ptr<char[]> data = wrapArrayUnique(new char[size]);
-    ASSERT_TRUE(sharedBuffer->getAsBytes(data.get(), size));
-
-    ASSERT_EQ(0x4000U + 0x4000U + 0x4000U, size);
-    int position = 0;
-    for (int i = 0; i < 0x4000; ++i) {
-        EXPECT_EQ('a', data[position]);
-        ++position;
-    }
-    for (int i = 0; i < 0x4000; ++i) {
-        EXPECT_EQ('b', data[position]);
-        ++position;
-    }
-    for (int i = 0; i < 0x4000; ++i) {
-        EXPECT_EQ('c', data[position]);
-        ++position;
-    }
+  struct TestData {
+    size_t position;
+    size_t size;
+    const char* expected;
+  } test_data[] = {
+      {0, 17, "HelloWorldGoodbye"}, {0, 7, "HelloWo"}, {4, 7, "oWorldG"},
+  };
+  for (TestData& test : test_data) {
+    std::unique_ptr<char[]> data = WrapArrayUnique(new char[test.size]);
+    ASSERT_TRUE(
+        shared_buffer->GetPartAsBytes(data.get(), test.position, test.size));
+    EXPECT_EQ(0, memcmp(test.expected, data.get(), test.size));
+  }
 }
 
-TEST(SharedBufferTest, copy)
-{
-    Vector<char> testData(10000);
-    std::generate(testData.begin(), testData.end(), &std::rand);
+TEST(SharedBufferTest, getAsBytesLargeSegments) {
+  Vector<char> vector0(0x4000);
+  for (size_t i = 0; i < vector0.size(); ++i)
+    vector0[i] = 'a';
+  Vector<char> vector1(0x4000);
+  for (size_t i = 0; i < vector1.size(); ++i)
+    vector1[i] = 'b';
+  Vector<char> vector2(0x4000);
+  for (size_t i = 0; i < vector2.size(); ++i)
+    vector2[i] = 'c';
 
-    size_t length = testData.size();
-    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::create(testData.data(), length);
-    sharedBuffer->append(testData.data(), length);
-    sharedBuffer->append(testData.data(), length);
-    sharedBuffer->append(testData.data(), length);
-    // sharedBuffer must contain data more than segmentSize (= 0x1000) to check copy().
-    ASSERT_EQ(length * 4, sharedBuffer->size());
+  RefPtr<SharedBuffer> shared_buffer = SharedBuffer::AdoptVector(vector0);
+  shared_buffer->Append(vector1);
+  shared_buffer->Append(vector2);
 
-    RefPtr<SharedBuffer> clone = sharedBuffer->copy();
-    ASSERT_EQ(length * 4, clone->size());
-    ASSERT_EQ(0, memcmp(clone->data(), sharedBuffer->data(), clone->size()));
+  const size_t size = shared_buffer->size();
+  std::unique_ptr<char[]> data = WrapArrayUnique(new char[size]);
+  shared_buffer->GetAsBytes(data.get(), size);
 
-    clone->append(testData.data(), length);
-    ASSERT_EQ(length * 5, clone->size());
+  ASSERT_EQ(0x4000U + 0x4000U + 0x4000U, size);
+  int position = 0;
+  for (int i = 0; i < 0x4000; ++i) {
+    EXPECT_EQ('a', data[position]);
+    ++position;
+  }
+  for (int i = 0; i < 0x4000; ++i) {
+    EXPECT_EQ('b', data[position]);
+    ++position;
+  }
+  for (int i = 0; i < 0x4000; ++i) {
+    EXPECT_EQ('c', data[position]);
+    ++position;
+  }
 }
 
-TEST(SharedBufferTest, constructorWithSizeOnly)
-{
-    size_t length = 10000;
-    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::create(length);
-    ASSERT_EQ(length, sharedBuffer->size());
+TEST(SharedBufferTest, copy) {
+  Vector<char> test_data(10000);
+  std::generate(test_data.begin(), test_data.end(), &std::rand);
 
-    // The internal flat buffer should have been resized to |length| therefore getSomeData() should
-    // directly return the full size.
-    const char* data;
-    ASSERT_EQ(length, sharedBuffer->getSomeData(data, static_cast<size_t>(0u)));
+  size_t length = test_data.size();
+  RefPtr<SharedBuffer> shared_buffer =
+      SharedBuffer::Create(test_data.Data(), length);
+  shared_buffer->Append(test_data.Data(), length);
+  shared_buffer->Append(test_data.Data(), length);
+  shared_buffer->Append(test_data.Data(), length);
+  // sharedBuffer must contain data more than segmentSize (= 0x1000) to check
+  // copy().
+  ASSERT_EQ(length * 4, shared_buffer->size());
+
+  RefPtr<SharedBuffer> clone = shared_buffer->Copy();
+  ASSERT_EQ(length * 4, clone->size());
+  ASSERT_EQ(0, memcmp(clone->Data(), shared_buffer->Data(), clone->size()));
+
+  clone->Append(test_data.Data(), length);
+  ASSERT_EQ(length * 5, clone->size());
 }
 
-TEST(SharedBufferTest, createPurgeable)
-{
-    Vector<char> testData(30000);
-    std::generate(testData.begin(), testData.end(), &std::rand);
+TEST(SharedBufferTest, constructorWithSizeOnly) {
+  size_t length = 10000;
+  RefPtr<SharedBuffer> shared_buffer = SharedBuffer::Create(length);
+  ASSERT_EQ(length, shared_buffer->size());
 
-    size_t length = testData.size();
-    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::createPurgeable(testData.data(), length);
-    ASSERT_EQ(length, sharedBuffer->size());
-    // Merge the segments into a single vector.
-    const char* data = sharedBuffer->data();
-    ASSERT_EQ(0, memcmp(data, testData.data(), length));
-
-    // Do another append + merge the segments again.
-    size_t previousTestDataSize = testData.size();
-    testData.resize(2 * previousTestDataSize);
-    std::generate(testData.begin() + previousTestDataSize, testData.end(), &std::rand);
-    sharedBuffer->append(testData.data() + previousTestDataSize, previousTestDataSize);
-    ASSERT_EQ(0, memcmp(data, testData.data(), length));
+  // The internal flat buffer should have been resized to |length| therefore
+  // getSomeData() should directly return the full size.
+  const char* data;
+  ASSERT_EQ(length, shared_buffer->GetSomeData(data, static_cast<size_t>(0u)));
 }
 
-} // namespace blink
+}  // namespace blink

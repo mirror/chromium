@@ -29,6 +29,7 @@
 
 #include "core/timing/SharedWorkerPerformance.h"
 
+#include "bindings/core/v8/ScriptState.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/loader/DocumentLoadTiming.h"
@@ -37,41 +38,41 @@
 
 namespace blink {
 
-SharedWorkerPerformance::SharedWorkerPerformance()
-    : m_timeOrigin(monotonicallyIncreasingTime())
-{
+SharedWorkerPerformance::SharedWorkerPerformance(SharedWorker& shared_worker)
+    : Supplement<SharedWorker>(shared_worker),
+      time_origin_(MonotonicallyIncreasingTime()) {}
+
+const char* SharedWorkerPerformance::SupplementName() {
+  return "SharedWorkerPerformance";
 }
 
-const char* SharedWorkerPerformance::supplementName()
-{
-    return "SharedWorkerPerformance";
+SharedWorkerPerformance& SharedWorkerPerformance::From(
+    SharedWorker& shared_worker) {
+  SharedWorkerPerformance* supplement = static_cast<SharedWorkerPerformance*>(
+      Supplement<SharedWorker>::From(shared_worker, SupplementName()));
+  if (!supplement) {
+    supplement = new SharedWorkerPerformance(shared_worker);
+    ProvideTo(shared_worker, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-SharedWorkerPerformance& SharedWorkerPerformance::from(SharedWorker& sharedWorker)
-{
-    SharedWorkerPerformance* supplement = static_cast<SharedWorkerPerformance*>(Supplement<SharedWorker>::from(sharedWorker, supplementName()));
-    if (!supplement) {
-        supplement = new SharedWorkerPerformance();
-        provideTo(sharedWorker, supplementName(), supplement);
-    }
-    return *supplement;
+double SharedWorkerPerformance::workerStart(ScriptState* script_state,
+                                            SharedWorker& shared_worker) {
+  return SharedWorkerPerformance::From(shared_worker)
+      .GetWorkerStart(ExecutionContext::From(script_state), shared_worker);
 }
 
-double SharedWorkerPerformance::workerStart(ExecutionContext* context, SharedWorker& sharedWorker)
-{
-    return SharedWorkerPerformance::from(sharedWorker).getWorkerStart(context, sharedWorker);
+double SharedWorkerPerformance::GetWorkerStart(ExecutionContext* context,
+                                               SharedWorker&) const {
+  ASSERT(context);
+  ASSERT(context->IsDocument());
+  Document* document = ToDocument(context);
+  if (!document->Loader())
+    return 0;
+
+  double navigation_start = document->Loader()->GetTiming().NavigationStart();
+  return time_origin_ - navigation_start;
 }
 
-double SharedWorkerPerformance::getWorkerStart(ExecutionContext* context, SharedWorker&) const
-{
-    ASSERT(context);
-    ASSERT(context->isDocument());
-    Document* document = toDocument(context);
-    if (!document->loader())
-        return 0;
-
-    double navigationStart = document->loader()->timing().navigationStart();
-    return m_timeOrigin - navigationStart;
-}
-
-} // namespace blink
+}  // namespace blink

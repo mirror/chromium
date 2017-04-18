@@ -10,12 +10,10 @@
 #include <string>
 
 #include "base/macros.h"
+#include "components/sync/model/string_ordinal.h"
 #include "extensions/common/extension.h"
-#include "sync/api/string_ordinal.h"
 
 namespace extensions {
-
-class ExtensionScopedPrefs;
 
 // An interface that provides a fixed ordering for a set of apps.
 class AppSorting {
@@ -34,6 +32,14 @@ class AppSorting {
   virtual void EnsureValidOrdinals(
       const std::string& extension_id,
       const syncer::StringOrdinal& suggested_page) = 0;
+
+  // Gets the default ordinals for |extension_id|. Returns false if no default
+  // ordinals for |extension_id| is defined. Otherwise, returns true and
+  // ordinals is updated with corresponding ordinals.
+  virtual bool GetDefaultOrdinals(
+      const std::string& extension_id,
+      syncer::StringOrdinal* page_ordinal,
+      syncer::StringOrdinal* app_launch_ordinal) = 0;
 
   // Updates the app launcher value for the moved extension so that it is now
   // located after the given predecessor and before the successor.

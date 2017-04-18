@@ -20,11 +20,9 @@ class NavigationObserver: public WebContentsObserver {
       : WebContentsObserver(web_contents) {}
   ~NavigationObserver() override {}
 
-  void DidCommitProvisionalLoadForFrame(
-      RenderFrameHost* render_frame_host,
-      const GURL& url,
-      ui::PageTransition transition_type) override {
-    navigation_url_ = url;
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
+    if (navigation_handle->HasCommitted())
+      navigation_url_ = navigation_handle->GetURL();
   }
 
   void DidRedirectNavigation(NavigationHandle* handle) override {
@@ -55,8 +53,8 @@ IN_PROC_BROWSER_TEST_F(CrossSiteRedirectorBrowserTest,
                        VerifyCrossSiteRedirectURL) {
   // Map all hosts to localhost and setup the EmbeddedTestServer for redirects.
   host_resolver()->AddRule("*", "127.0.0.1");
-  ASSERT_TRUE(embedded_test_server()->Start());
   SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
 
   // Navigate to http://localhost:<port>/cross-site/foo.com/title2.html and
   // ensure that the redirector forwards the navigation to

@@ -5,8 +5,8 @@
 #include "content/public/browser/native_web_keyboard_event.h"
 
 #include "base/logging.h"
-#include "content/browser/renderer_host/web_input_event_aura.h"
 #include "ui/events/base_event_utils.h"
+#include "ui/events/blink/web_input_event.h"
 #include "ui/events/event.h"
 
 namespace {
@@ -25,20 +25,28 @@ using blink::WebKeyboardEvent;
 
 namespace content {
 
-NativeWebKeyboardEvent::NativeWebKeyboardEvent()
-    : os_event(NULL),
-      skip_in_browser(false) {
-}
+NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
+                                               int modifiers,
+                                               base::TimeTicks timestamp)
+    : NativeWebKeyboardEvent(type,
+                             modifiers,
+                             ui::EventTimeStampToSeconds(timestamp)) {}
+
+NativeWebKeyboardEvent::NativeWebKeyboardEvent(blink::WebInputEvent::Type type,
+                                               int modifiers,
+                                               double timestampSeconds)
+    : WebKeyboardEvent(type, modifiers, timestampSeconds),
+      os_event(nullptr),
+      skip_in_browser(false) {}
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(gfx::NativeEvent native_event)
     : NativeWebKeyboardEvent(static_cast<ui::KeyEvent&>(*native_event)) {
 }
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(const ui::KeyEvent& key_event)
-    : WebKeyboardEvent(MakeWebKeyboardEvent(key_event)),
+    : WebKeyboardEvent(ui::MakeWebKeyboardEvent(key_event)),
       os_event(CopyEvent(&key_event)),
-      skip_in_browser(false) {
-}
+      skip_in_browser(false) {}
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(
     const NativeWebKeyboardEvent& other)
@@ -49,13 +57,13 @@ NativeWebKeyboardEvent::NativeWebKeyboardEvent(
 
 NativeWebKeyboardEvent::NativeWebKeyboardEvent(const ui::KeyEvent& key_event,
                                                base::char16 character)
-    : WebKeyboardEvent(MakeWebKeyboardEvent(key_event)),
-      os_event(NULL),
+    : WebKeyboardEvent(ui::MakeWebKeyboardEvent(key_event)),
+      os_event(nullptr),
       skip_in_browser(false) {
-  type = blink::WebInputEvent::Char;
-  windowsKeyCode = character;
+  type_ = blink::WebInputEvent::kChar;
+  windows_key_code = character;
   text[0] = character;
-  unmodifiedText[0] = character;
+  unmodified_text[0] = character;
 }
 
 NativeWebKeyboardEvent& NativeWebKeyboardEvent::operator=(

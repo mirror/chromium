@@ -25,30 +25,31 @@
 #define HTMLQuoteElement_h
 
 #include "core/html/HTMLElement.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class HTMLQuoteElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLQuoteElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-private:
-    HTMLQuoteElement(const QualifiedName&, Document&);
+ public:
+  DECLARE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLQuoteElement);
 
-    bool isURLAttribute(const Attribute&) const override;
-    bool hasLegalLinkAttribute(const QualifiedName&) const override;
-    const QualifiedName& subResourceAttributeName() const override;
+ private:
+  HTMLQuoteElement(const QualifiedName&, Document&);
+
+  bool IsURLAttribute(const Attribute&) const override;
+  bool HasLegalLinkAttribute(const QualifiedName&) const override;
+  const QualifiedName& SubResourceAttributeName() const override;
 };
 
-inline bool isHTMLQuoteElement(const HTMLElement& element)
-{
-    return element.hasTagName(HTMLNames::qTag) || element.hasTagName(HTMLNames::blockquoteTag);
+inline bool IsHTMLQuoteElement(const HTMLElement& element) {
+  return element.HasTagName(HTMLNames::qTag) ||
+         element.HasTagName(HTMLNames::blockquoteTag);
 }
 
 DEFINE_HTMLELEMENT_TYPE_CASTS_WITH_FUNCTION(HTMLQuoteElement);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLQuoteElement_h
+#endif  // HTMLQuoteElement_h

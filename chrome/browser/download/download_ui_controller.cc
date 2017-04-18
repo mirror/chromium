@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/callback.h"
-#include "base/stl_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/download/download_item_model.h"
@@ -56,9 +55,6 @@ void AndroidUIControllerDelegate::OnNewDownloadReady(
   if (item->GetState() != content::DownloadItem::IN_PROGRESS)
     return;
 
-  // GET downloads without authentication are delegated to the Android
-  // DownloadManager. Chrome is responsible for the rest.  See
-  // InterceptDownloadResourceThrottle::ProcessDownloadRequest().
   DownloadControllerBase::Get()->OnDownloadStarted(item);
 }
 
@@ -121,15 +117,14 @@ DownloadUIController::DownloadUIController(content::DownloadManager* manager,
 #if defined(OS_ANDROID)
   if (!delegate_)
     delegate_.reset(new AndroidUIControllerDelegate());
-#else
-#if defined(OS_CHROMEOS)
-  if (!delegate_ && DownloadNotificationManager::IsEnabled()) {
+#elif defined(OS_CHROMEOS)
+  if (!delegate_) {
     // The Profile is guaranteed to be valid since DownloadUIController is owned
     // by DownloadService, which in turn is a profile keyed service.
     delegate_.reset(new DownloadNotificationManager(
         Profile::FromBrowserContext(manager->GetBrowserContext())));
   }
-#endif  // defined(OS_CHROMEOS)
+#else  // defined(OS_CHROMEOS)
   if (!delegate_) {
     delegate_.reset(new DownloadShelfUIControllerDelegate(
         Profile::FromBrowserContext(manager->GetBrowserContext())));

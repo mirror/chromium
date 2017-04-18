@@ -6,6 +6,7 @@
 #define COMPONENTS_POLICY_CORE_COMMON_CLOUD_COMPONENT_CLOUD_POLICY_SERVICE_H_
 
 #include <memory>
+#include <string>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -38,7 +39,15 @@ class SchemaMap;
 // Manages cloud policy for components.
 //
 // This class takes care of fetching, validating, storing and updating policy
-// for components. The components to manage come from a SchemaRegistry.
+// for components.
+//
+// Note that the policies for all components, as returned by the server, are
+// downloaded and cached, regardless of the current state of the schema
+// registry. However, exposed are only the policies whose components are present
+// in the schema registry.
+//
+// The exposed policies are guaranteed to be conformant to the corresponding
+// schemas. Values that do not pass validation against the schema are dropped.
 class POLICY_EXPORT ComponentCloudPolicyService
     : public CloudPolicyClient::Observer,
       public CloudPolicyCore::Observer,
@@ -56,11 +65,16 @@ class POLICY_EXPORT ComponentCloudPolicyService
     virtual void OnComponentCloudPolicyUpdated() = 0;
   };
 
+  // |policy_type| specifies the policy type that should be fetched. The only
+  // allowed values are: |dm_protocol::kChromeExtensionPolicyType|,
+  // |dm_protocol::kChromeSigninExtensionPolicyType|.
+  //
   // The |delegate| is notified of updates to the downloaded policies and must
   // outlive this object.
   //
-  // |schema_registry| is used to get the list of components to fetch cloud
-  // policy for. It must outlive this object.
+  // |schema_registry| is used to filter the fetched policies against the list
+  // of installed extensions and to validate the policies against corresponding
+  // schemas. It must outlive this object.
   //
   // |core| is used to obtain the CloudPolicyStore and CloudPolicyClient used
   // by this service. The store will be the source of the registration status
@@ -81,6 +95,7 @@ class POLICY_EXPORT ComponentCloudPolicyService
   //
   // |request_context| is used by the background URLFetchers.
   ComponentCloudPolicyService(
+      const std::string& policy_type,
       Delegate* delegate,
       SchemaRegistry* schema_registry,
       CloudPolicyCore* core,
@@ -96,9 +111,9 @@ class POLICY_EXPORT ComponentCloudPolicyService
   // Returns true if |domain| is supported by the service.
   static bool SupportsDomain(PolicyDomain domain);
 
-  // Returns true if the backend is initialized, and the initial policies and
-  // components are being served.
-  bool is_initialized() const { return loaded_initial_policy_; }
+  // Returns true if the backend is initialized, and the initial policies are
+  // being served.
+  bool is_initialized() const { return policy_installed_; }
 
   // Returns the current policies for components.
   const PolicyBundle& policy() const { return policy_; }
@@ -128,11 +143,14 @@ class POLICY_EXPORT ComponentCloudPolicyService
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
   class Backend;
 
-  void InitializeIfReady();
-  void OnBackendInitialized(std::unique_ptr<PolicyBundle> initial_policy);
-  void ReloadSchema();
-  void OnPolicyUpdated(std::unique_ptr<PolicyBundle> policy);
+  void UpdateFromSuperiorStore();
+  void UpdateFromClient();
+  void UpdateFromSchemaRegistry();
+  void Disconnect();
+  void SetPolicy(std::unique_ptr<PolicyBundle> policy);
+  void FilterAndInstallPolicy();
 
+  std::string policy_type_;
   Delegate* delegate_;
   SchemaRegistry* schema_registry_;
   CloudPolicyCore* core_;
@@ -154,35 +172,23 @@ class POLICY_EXPORT ComponentCloudPolicyService
   // |backend_task_runner_|.
   std::unique_ptr<Backend> backend_;
 
-  // The currently registered components for each policy domain. Used to
-  // determine which components changed when a new SchemaMap becomes
-  // available.
+  // The currently registered components for each policy domain. Used for
+  // filtering and validation of the component policies.
   scoped_refptr<SchemaMap> current_schema_map_;
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
   // Contains all the policies loaded from the store, before having been
-  // filtered by the |current_schema_map_|.
+  // filtered and validated by the |current_schema_map_|.
   std::unique_ptr<PolicyBundle> unfiltered_policy_;
 
-  // Contains all the current policies for components, filtered by the
-  // |current_schema_map_|.
+  // Contains all the current policies for components, filtered and validated by
+  // the |current_schema_map_|.
   PolicyBundle policy_;
 
-  // Whether the backend has started initializing asynchronously. Used to
-  // prevent double initialization, since both OnSchemaRegistryUpdated() and
-  // OnStoreLoaded() can happen while the backend is initializing.
-  bool started_loading_initial_policy_;
+  // Whether policies are being served.
+  bool policy_installed_ = false;
 
-  // Whether the backend has been initialized with the initial credentials and
-  // schemas, and this provider is serving the initial policies loaded from the
-  // cache.
-  bool loaded_initial_policy_;
-
-  // True if the backend currently has valid cloud policy credentials. This
-  // can go back to false if the user signs out, and back again to true if the
-  // user signs in again.
-  bool is_registered_for_cloud_policy_;
-
+  // Must be the last member.
   base::WeakPtrFactory<ComponentCloudPolicyService> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ComponentCloudPolicyService);

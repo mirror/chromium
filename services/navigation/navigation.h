@@ -10,46 +10,46 @@
 #include "content/public/common/connection_filter.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/navigation/public/interfaces/view.mojom.h"
-#include "services/shell/public/cpp/interface_factory.h"
-#include "services/shell/public/cpp/service.h"
-#include "services/shell/public/cpp/service_context_ref.h"
-
-namespace content {
-class BrowserContext;
-}
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/public/cpp/interface_factory.h"
+#include "services/service_manager/public/cpp/service.h"
+#include "services/service_manager/public/cpp/service_context_ref.h"
 
 namespace navigation {
 
-class Navigation : public content::ConnectionFilter,
-                   public shell::InterfaceFactory<mojom::ViewFactory>,
-                   public mojom::ViewFactory {
+std::unique_ptr<service_manager::Service> CreateNavigationService();
+
+class Navigation
+    : public service_manager::Service,
+      public mojom::ViewFactory,
+      public service_manager::InterfaceFactory<mojom::ViewFactory> {
  public:
   Navigation();
   ~Navigation() override;
 
  private:
-  // content::ConnectionFilter:
-  bool OnConnect(shell::Connection* connection,
-                 shell::Connector* connector) override;
-
-  // shell::InterfaceFactory<mojom::ViewFactory>:
-  void Create(const shell::Identity& remote_identity,
-              mojom::ViewFactoryRequest request) override;
+  // service_manager::Service:
+  void OnBindInterface(const service_manager::ServiceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override;
 
   // mojom::ViewFactory:
   void CreateView(mojom::ViewClientPtr client,
                   mojom::ViewRequest request) override;
 
+  void Create(const service_manager::Identity& remote_identity,
+              mojom::ViewFactoryRequest request) override;
+
   void ViewFactoryLost();
 
   scoped_refptr<base::SequencedTaskRunner> view_task_runner_;
 
-  shell::Connector* connector_ = nullptr;
   std::string client_user_id_;
 
-  shell::ServiceContextRefFactory ref_factory_;
-  std::set<std::unique_ptr<shell::ServiceContextRef>> refs_;
+  service_manager::ServiceContextRefFactory ref_factory_;
+  std::set<std::unique_ptr<service_manager::ServiceContextRef>> refs_;
 
+  service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::ViewFactory> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(Navigation);

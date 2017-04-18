@@ -18,6 +18,10 @@ bool InMemoryPrefStore::GetValue(const std::string& key,
   return prefs_.GetValue(key, value);
 }
 
+std::unique_ptr<base::DictionaryValue> InMemoryPrefStore::GetValues() const {
+  return prefs_.AsDictionaryValue();
+}
+
 bool InMemoryPrefStore::GetMutableValue(const std::string& key,
                                         base::Value** value) {
   return prefs_.GetValue(key, value);
@@ -72,5 +76,6 @@ PersistentPrefStore::PrefReadError InMemoryPrefStore::ReadPrefs() {
 
 void InMemoryPrefStore::ReportValueChanged(const std::string& key,
                                            uint32_t flags) {
-  FOR_EACH_OBSERVER(Observer, observers_, OnPrefValueChanged(key));
+  for (Observer& observer : observers_)
+    observer.OnPrefValueChanged(key);
 }

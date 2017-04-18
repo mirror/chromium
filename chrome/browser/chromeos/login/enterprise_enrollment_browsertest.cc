@@ -14,6 +14,9 @@
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/enrollment_status_chromeos.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/upstart_client.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 
 using testing::_;
@@ -21,6 +24,20 @@ using testing::Invoke;
 using testing::InvokeWithoutArgs;
 
 namespace chromeos {
+
+namespace {
+
+const char kAdMachineNameInput[] =
+    "document.querySelector('#oauth-enroll-ad-join-ui /deep/ "
+    "#machineNameInput')";
+const char kAdUsernameInput[] =
+    "document.querySelector('#oauth-enroll-ad-join-ui /deep/ #userInput')";
+const char kAdPasswordInput[] =
+    "document.querySelector('#oauth-enroll-ad-join-ui /deep/ #passwordInput')";
+const char kAdTestRealm[] = "test_realm.com";
+const char kAdTestUser[] = "test_user@test_realm.com";
+
+}  // namespace
 
 class EnterpriseEnrollmentTest : public LoginManagerTest {
  public:
@@ -41,7 +58,7 @@ class EnterpriseEnrollmentTest : public LoginManagerTest {
   }
 
   using OnSetupEnrollmentHelper =
-      void (*)(EnterpriseEnrollmentHelperMock* mock);
+      std::function<void(EnterpriseEnrollmentHelperMock*)>;
 
   // The given function will be executed when the next enrollment helper is
   // created.
@@ -75,6 +92,29 @@ class EnterpriseEnrollmentTest : public LoginManagerTest {
                           "}));");
   }
 
+  // Submits Active Directory domain join credentials.
+  void SubmitActiveDirectoryCredentials(const std::string& machine_name,
+                                        const std::string& username,
+                                        const std::string& password) {
+    EXPECT_TRUE(IsStepDisplayed("ad-join"));
+    js_checker().ExpectFalse(std::string(kAdMachineNameInput) + ".hidden");
+    js_checker().ExpectFalse(std::string(kAdUsernameInput) + ".hidden");
+    js_checker().ExpectFalse(std::string(kAdPasswordInput) + ".hidden");
+    const std::string set_machine_name =
+        std::string(kAdMachineNameInput) + ".value = '" + machine_name + "'";
+    const std::string set_username =
+        std::string(kAdUsernameInput) + ".value = '" + username + "'";
+    const std::string set_password =
+        std::string(kAdPasswordInput) + ".value = '" + password + "'";
+    js_checker().ExecuteAsync(set_machine_name);
+    js_checker().ExecuteAsync(set_username);
+    js_checker().ExecuteAsync(set_password);
+    js_checker().Evaluate(
+        "document.querySelector('#oauth-enroll-ad-join-ui /deep/ "
+        "#button').fire('tap')");
+    ExecutePendingJavaScript();
+  }
+
   void DisableAttributePromptUpdate() {
     AddEnrollmentSetupFunction(
         [](EnterpriseEnrollmentHelperMock* enrollment_helper) {
@@ -101,6 +141,47 @@ class EnterpriseEnrollmentTest : public LoginManagerTest {
           EXPECT_CALL(*enrollment_helper,
                       UpdateDeviceAttributes("asset_id", "location"));
         });
+  }
+
+  // Forces the Active Directory domain join flow during enterprise enrollment.
+  void SetupActiveDirectoryJoin() {
+    AddEnrollmentSetupFunction([this](
+        EnterpriseEnrollmentHelperMock* enrollment_helper) {
+      // Causes the attribute-prompt flow to activate.
+      EXPECT_CALL(*enrollment_helper, EnrollUsingAuthCode("test_auth_code", _))
+          .WillOnce(InvokeWithoutArgs([this]() {
+            this->enrollment_screen()->JoinDomain(base::BindOnce([](
+                const std::string& realm) { EXPECT_EQ(kAdTestRealm, realm); }));
+          }));
+    });
+  }
+
+  void SetupActiveDirectoryJSNotifications() {
+    js_checker().Evaluate(
+        "var testShowStep = login.OAuthEnrollmentScreen.showStep;"
+        "login.OAuthEnrollmentScreen.showStep = function(step) {"
+        "  testShowStep(step);"
+        "  if (step == 'working') {"
+        "    window.domAutomationController.setAutomationId(0);"
+        "    window.domAutomationController.send('ShowSpinnerScreen');"
+        "  }"
+        "}");
+    js_checker().Evaluate(
+        "var testInvalidateAd = login.OAuthEnrollmentScreen.invalidateAd;"
+        "login.OAuthEnrollmentScreen.invalidateAd = function(machineName, "
+        "user, errorState) {"
+        "  testInvalidateAd(machineName, user, errorState);"
+        "  window.domAutomationController.setAutomationId(0);"
+        "  window.domAutomationController.send('ShowJoinDomainError');"
+        "}");
+  }
+
+  void WaitForMessage(content::DOMMessageQueue* message_queue,
+                      const std::string& expected_message) {
+    std::string message;
+    do {
+      ASSERT_TRUE(message_queue->WaitForMessage(&message));
+    } while (message != expected_message);
   }
 
   // Fills out the UI with device attribute information and submits it.
@@ -140,7 +221,7 @@ class EnterpriseEnrollmentTest : public LoginManagerTest {
   void ShowEnrollmentScreen() {
     LoginDisplayHost* host = LoginDisplayHost::default_host();
     ASSERT_TRUE(host != nullptr);
-    host->StartWizard(WizardController::kEnrollmentScreenName);
+    host->StartWizard(OobeScreen::SCREEN_OOBE_ENROLLMENT);
     OobeScreenWaiter(OobeScreen::SCREEN_OOBE_ENROLLMENT).Wait();
     ASSERT_TRUE(enrollment_screen() != nullptr);
     ASSERT_TRUE(WizardController::default_controller() != nullptr);
@@ -149,7 +230,8 @@ class EnterpriseEnrollmentTest : public LoginManagerTest {
 
   // Helper method to return the current EnrollmentScreen instance.
   EnrollmentScreen* enrollment_screen() {
-    return EnrollmentScreen::Get(WizardController::default_controller());
+    return EnrollmentScreen::Get(
+        WizardController::default_controller()->screen_manager());
   }
 
  private:
@@ -176,12 +258,13 @@ IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
 
 // Shows the enrollment screen and simulates an enrollment failure. Verifies
 // that the error screen is displayed.
+// TODO(crbug.com/690634): Disabled due to timeout flakiness.
 IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
-                       TestProperPageGetsLoadedOnEnrollmentFailure) {
+                       DISABLED_TestProperPageGetsLoadedOnEnrollmentFailure) {
   ShowEnrollmentScreen();
 
   enrollment_screen()->OnEnrollmentError(policy::EnrollmentStatus::ForStatus(
-      policy::EnrollmentStatus::STATUS_REGISTRATION_FAILED));
+      policy::EnrollmentStatus::REGISTRATION_FAILED));
   ExecutePendingJavaScript();
 
   // Verify that the error page is displayed.
@@ -223,6 +306,82 @@ IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
   EXPECT_FALSE(IsStepDisplayed("error"));
 
   SubmitAttributePromptUpdate();
+
+  // We have to remove the enrollment_helper before the dtor gets called.
+  enrollment_screen()->enrollment_helper_.reset();
+}
+
+// Shows the enrollment screen and mocks the enrollment helper to show Active
+// Directory domain join screen. Verifies the domain join screen is displayed.
+// Submits Active Directory credentials. Verifies that the AuthpolicyClient
+// calls us back with the correct realm.
+IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
+                       TestActiveDirectoryEnrollment_Success) {
+  ShowEnrollmentScreen();
+  DisableAttributePromptUpdate();
+  SetupActiveDirectoryJoin();
+  SubmitEnrollmentCredentials();
+
+  chromeos::DBusThreadManager::Get()
+      ->GetUpstartClient()
+      ->StartAuthPolicyService();
+
+  content::DOMMessageQueue message_queue;
+  SetupActiveDirectoryJSNotifications();
+  SubmitActiveDirectoryCredentials("machine_name", kAdTestUser, "password");
+  WaitForMessage(&message_queue, "\"ShowSpinnerScreen\"");
+  EXPECT_FALSE(IsStepDisplayed("ad-join"));
+
+  CompleteEnrollment();
+  // Verify that the success page is displayed.
+  EXPECT_TRUE(IsStepDisplayed("success"));
+  EXPECT_FALSE(IsStepDisplayed("error"));
+
+  // We have to remove the enrollment_helper before the dtor gets called.
+  enrollment_screen()->enrollment_helper_.reset();
+}
+
+// Shows the enrollment screen and mocks the enrollment helper to show Active
+// Directory domain join screen. Verifies the domain join screen is displayed.
+// Submits Active Directory different incorrect credentials. Verifies that the
+// correct error is displayed.
+IN_PROC_BROWSER_TEST_F(EnterpriseEnrollmentTest,
+                       TestActiveDirectoryEnrollment_UIErrors) {
+  ShowEnrollmentScreen();
+  SetupActiveDirectoryJoin();
+  SubmitEnrollmentCredentials();
+
+  chromeos::DBusThreadManager::Get()
+      ->GetUpstartClient()
+      ->StartAuthPolicyService();
+
+  content::DOMMessageQueue message_queue;
+  // Checking error in case of empty password. Whether password is not empty
+  // being checked in the UI. Machine name length is checked after that in the
+  // authpolicyd.
+  SetupActiveDirectoryJSNotifications();
+  SubmitActiveDirectoryCredentials("too_long_machine_name", kAdTestUser, "");
+  EXPECT_TRUE(IsStepDisplayed("ad-join"));
+  js_checker().ExpectFalse(std::string(kAdMachineNameInput) + ".isInvalid");
+  js_checker().ExpectFalse(std::string(kAdUsernameInput) + ".isInvalid");
+  js_checker().ExpectTrue(std::string(kAdPasswordInput) + ".isInvalid");
+
+  // Checking error in case of too long machine name.
+  SubmitActiveDirectoryCredentials("too_long_machine_name", kAdTestUser,
+                                   "password");
+  WaitForMessage(&message_queue, "\"ShowJoinDomainError\"");
+  EXPECT_TRUE(IsStepDisplayed("ad-join"));
+  js_checker().ExpectTrue(std::string(kAdMachineNameInput) + ".isInvalid");
+  js_checker().ExpectFalse(std::string(kAdUsernameInput) + ".isInvalid");
+  js_checker().ExpectFalse(std::string(kAdPasswordInput) + ".isInvalid");
+
+  // Checking error in case of bad username (without realm).
+  SubmitActiveDirectoryCredentials("machine_name", "test_user", "password");
+  WaitForMessage(&message_queue, "\"ShowJoinDomainError\"");
+  EXPECT_TRUE(IsStepDisplayed("ad-join"));
+  js_checker().ExpectFalse(std::string(kAdMachineNameInput) + ".isInvalid");
+  js_checker().ExpectTrue(std::string(kAdUsernameInput) + ".isInvalid");
+  js_checker().ExpectFalse(std::string(kAdPasswordInput) + ".isInvalid");
 
   // We have to remove the enrollment_helper before the dtor gets called.
   enrollment_screen()->enrollment_helper_.reset();

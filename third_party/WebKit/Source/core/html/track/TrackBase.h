@@ -29,45 +29,51 @@
 #include "core/CoreExport.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebMediaPlayer.h"
-#include "wtf/text/AtomicString.h"
 
 namespace blink {
 
 class HTMLMediaElement;
 
 class CORE_EXPORT TrackBase : public Supplementable<TrackBase> {
-public:
-    virtual ~TrackBase();
+ public:
+  virtual ~TrackBase();
 
-    WebMediaPlayer::TrackId id() const { return m_id; }
+  WebMediaPlayer::TrackId id() const { return id_; }
 
-    WebMediaPlayer::TrackType type() const { return m_type; }
+  WebMediaPlayer::TrackType GetType() const { return type_; }
 
-    const AtomicString& kind() const { return m_kind; }
-    AtomicString label() const { return m_label; }
-    AtomicString language() const { return m_language; }
+  const AtomicString& kind() const { return kind_; }
+  AtomicString label() const { return label_; }
+  AtomicString language() const { return language_; }
 
-    void setMediaElement(HTMLMediaElement* mediaElement) { m_mediaElement = mediaElement; }
-    HTMLMediaElement* mediaElement() const { return m_mediaElement; }
-    Node* owner() const;
+  void SetMediaElement(HTMLMediaElement* media_element) {
+    media_element_ = media_element;
+  }
+  HTMLMediaElement* MediaElement() const { return media_element_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-protected:
-    TrackBase(WebMediaPlayer::TrackType, const AtomicString& kind, const AtomicString& label, const AtomicString& language, const String& id);
+ protected:
+  TrackBase(WebMediaPlayer::TrackType,
+            const AtomicString& kind,
+            const AtomicString& label,
+            const AtomicString& language,
+            const String& id);
 
-    WebMediaPlayer::TrackType m_type;
-    AtomicString m_kind;
-    AtomicString m_label;
-    AtomicString m_language;
-    String m_id;
-    Member<HTMLMediaElement> m_mediaElement;
+  WebMediaPlayer::TrackType type_;
+  AtomicString kind_;
+  AtomicString label_;
+  AtomicString language_;
+  String id_;
+  Member<HTMLMediaElement> media_element_;
 };
 
-#define DEFINE_TRACK_TYPE_CASTS(thisType, predicate) \
-    DEFINE_TYPE_CASTS(thisType, TrackBase, track, track->type() == predicate, track.type() == predicate)
+#define DEFINE_TRACK_TYPE_CASTS(thisType, predicate)                           \
+  DEFINE_TYPE_CASTS(thisType, TrackBase, track, track->GetType() == predicate, \
+                    track.GetType() == predicate)
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TrackBase_h
+#endif  // TrackBase_h

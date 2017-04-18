@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/net_errors.h"
@@ -24,17 +25,17 @@ bool AppendArgumentFromJSONValue(const std::string& key,
                                  base::CommandLine* command_line) {
   std::string argument_name = "--" + key;
   switch (value_node.GetType()) {
-    case base::Value::TYPE_NULL:
+    case base::Value::Type::NONE:
       command_line->AppendArg(argument_name);
       break;
-    case base::Value::TYPE_INTEGER: {
+    case base::Value::Type::INTEGER: {
       int value;
       bool result = value_node.GetAsInteger(&value);
       DCHECK(result);
       command_line->AppendArg(argument_name + "=" + base::IntToString(value));
       break;
     }
-    case base::Value::TYPE_STRING: {
+    case base::Value::Type::STRING: {
       std::string value;
       bool result = value_node.GetAsString(&value);
       if (!result || value.empty())
@@ -42,11 +43,11 @@ bool AppendArgumentFromJSONValue(const std::string& key,
       command_line->AppendArg(argument_name + "=" + value);
       break;
     }
-    case base::Value::TYPE_BOOLEAN:
-    case base::Value::TYPE_DOUBLE:
-    case base::Value::TYPE_LIST:
-    case base::Value::TYPE_DICTIONARY:
-    case base::Value::TYPE_BINARY:
+    case base::Value::Type::BOOLEAN:
+    case base::Value::Type::DOUBLE:
+    case base::Value::Type::LIST:
+    case base::Value::Type::DICTIONARY:
+    case base::Value::Type::BINARY:
     default:
       NOTREACHED() << "improper json type";
       return false;
@@ -94,6 +95,8 @@ bool LocalTestServer::Start() {
 }
 
 bool LocalTestServer::StartInBackground() {
+  base::ThreadRestrictions::ScopedAllowIO allow_io_from_test_code;
+
   // Get path to Python server script.
   base::FilePath testserver_path;
   if (!GetTestServerPath(&testserver_path))
@@ -159,6 +162,8 @@ bool LocalTestServer::Init(const base::FilePath& document_root) {
 }
 
 bool LocalTestServer::SetPythonPath() const {
+  ClearPythonPath();
+
   base::FilePath third_party_dir;
   if (!PathService::Get(base::DIR_SOURCE_ROOT, &third_party_dir)) {
     LOG(ERROR) << "Failed to get DIR_SOURCE_ROOT";
@@ -202,13 +207,13 @@ bool LocalTestServer::AddCommandLineArguments(
     const std::string& key = it.key();
 
     // Add arguments from a list.
-    if (value.IsType(base::Value::TYPE_LIST)) {
+    if (value.IsType(base::Value::Type::LIST)) {
       const base::ListValue* list = NULL;
       if (!value.GetAsList(&list) || !list || list->empty())
         return false;
       for (base::ListValue::const_iterator list_it = list->begin();
            list_it != list->end(); ++list_it) {
-        if (!AppendArgumentFromJSONValue(key, *(*list_it), command_line))
+        if (!AppendArgumentFromJSONValue(key, *list_it, command_line))
           return false;
       }
     } else if (!AppendArgumentFromJSONValue(key, value, command_line)) {

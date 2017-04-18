@@ -479,6 +479,12 @@ static qcms_bool read_tag_vcgtType(qcms_profile *profile, struct mem_source *src
 
 			if (!src->valid)
 				goto invalid_vcgt_tag;
+			if (gamma <= 0)
+				goto invalid_vcgt_tag;
+			if (min <= 0 || min > 1.f)
+				goto invalid_vcgt_tag;
+			if (max <= 0 || max > 1.f || min > max)
+				goto invalid_vcgt_tag;
 
 			for (j = 0; j < profile->vcgt.length; ++j) {
 				*dest++ = 65535.f *
@@ -1162,6 +1168,7 @@ static struct curveType *curve_from_gamma(float gamma)
 	curve = malloc(sizeof(struct curveType) + sizeof(uInt16Number)*num_entries);
 	if (!curve)
 		return NULL;
+	curve->type = CURVE_TYPE;
 	curve->count = num_entries;
 	curve->data[0] = float_to_u8Fixed8Number(gamma);
 	return curve;
@@ -1264,7 +1271,6 @@ qcms_CIE_xyY white_point_from_temp(int temp_K)
 			white_point.Y = -1.0;
 
 			assert(0 && "invalid temp");
-
 			return white_point;
 		}
 	}

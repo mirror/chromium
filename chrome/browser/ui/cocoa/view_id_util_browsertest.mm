@@ -52,11 +52,11 @@ class ViewIDTest : public InProcessBrowserTest {
         DevToolsWindowTesting::OpenDevToolsWindowSync(browser(), true);
 
     // Make sure download shelf is created to test VIEW_ID_DOWNLOAD_SHELF
-    browser()->window()->GetDownloadShelf()->Show();
+    browser()->window()->GetDownloadShelf()->Open();
 
     // Create a bookmark to test VIEW_ID_BOOKMARK_BAR_ELEMENT
     BookmarkModel* bookmark_model =
-        BookmarkModelFactory::GetForProfile(browser()->profile());
+        BookmarkModelFactory::GetForBrowserContext(browser()->profile());
     if (bookmark_model) {
       if (!bookmark_model->loaded())
         bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model);
@@ -115,21 +115,17 @@ IN_PROC_BROWSER_TEST_F(ViewIDTest, Tab) {
   // Open 9 new tabs.
   for (int i = 1; i <= 9; ++i) {
     CheckViewID(static_cast<ViewID>(VIEW_ID_TAB_0 + i), false);
-    browser()->OpenURL(OpenURLParams(GURL(url::kAboutBlankURL),
-                                     Referrer(),
-                                     NEW_BACKGROUND_TAB,
-                                     ui::PAGE_TRANSITION_TYPED,
-                                     false));
+    browser()->OpenURL(OpenURLParams(GURL(url::kAboutBlankURL), Referrer(),
+                                     WindowOpenDisposition::NEW_BACKGROUND_TAB,
+                                     ui::PAGE_TRANSITION_TYPED, false));
     CheckViewID(static_cast<ViewID>(VIEW_ID_TAB_0 + i), true);
     // VIEW_ID_TAB_LAST should always be available.
     CheckViewID(VIEW_ID_TAB_LAST, true);
   }
 
   // Open the 11th tab.
-  browser()->OpenURL(OpenURLParams(GURL(url::kAboutBlankURL),
-                                   Referrer(),
-                                   NEW_BACKGROUND_TAB,
-                                   ui::PAGE_TRANSITION_TYPED,
-                                   false));
+  browser()->OpenURL(OpenURLParams(GURL(url::kAboutBlankURL), Referrer(),
+                                   WindowOpenDisposition::NEW_BACKGROUND_TAB,
+                                   ui::PAGE_TRANSITION_TYPED, false));
   CheckViewID(VIEW_ID_TAB_LAST, true);
 }

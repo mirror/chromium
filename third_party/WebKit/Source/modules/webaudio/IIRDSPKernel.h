@@ -14,28 +14,31 @@ namespace blink {
 class IIRProcessor;
 
 class IIRDSPKernel final : public AudioDSPKernel {
-public:
-    explicit IIRDSPKernel(IIRProcessor* processor)
-        : AudioDSPKernel(processor)
-        , m_iir(processor->feedforward(), processor->feedback())
-    {
-    }
+ public:
+  explicit IIRDSPKernel(IIRProcessor* processor)
+      : AudioDSPKernel(processor),
+        iir_(processor->Feedforward(), processor->Feedback()) {}
 
-    // AudioDSPKernel
-    void process(const float* source, float* dest, size_t framesToProcess) override;
-    void reset() override { m_iir.reset(); }
+  // AudioDSPKernel
+  void Process(const float* source,
+               float* dest,
+               size_t frames_to_process) override;
+  void Reset() override { iir_.Reset(); }
 
-    // Get the magnitude and phase response of the filter at the given
-    // set of frequencies (in Hz). The phase response is in radians.
-    void getFrequencyResponse(int nFrequencies, const float* frequencyHz, float* magResponse, float* phaseResponse);
+  // Get the magnitude and phase response of the filter at the given
+  // set of frequencies (in Hz). The phase response is in radians.
+  void GetFrequencyResponse(int n_frequencies,
+                            const float* frequency_hz,
+                            float* mag_response,
+                            float* phase_response);
 
-    double tailTime() const override;
-    double latencyTime() const override;
+  double TailTime() const override;
+  double LatencyTime() const override;
 
-protected:
-    IIRFilter m_iir;
+ protected:
+  IIRFilter iir_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // IIRDSPKernel_h
+#endif  // IIRDSPKernel_h

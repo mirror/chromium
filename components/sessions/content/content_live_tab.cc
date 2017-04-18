@@ -58,12 +58,8 @@ int ContentLiveTab::GetEntryCount() {
 
 std::unique_ptr<sessions::PlatformSpecificTabData>
 ContentLiveTab::GetPlatformSpecificTabData() {
-  return base::WrapUnique(
-      new sessions::ContentPlatformSpecificTabData(web_contents()));
-}
-
-void ContentLiveTab::LoadIfNecessary() {
-  navigation_controller().LoadIfNecessary();
+  return base::MakeUnique<sessions::ContentPlatformSpecificTabData>(
+      web_contents());
 }
 
 const std::string& ContentLiveTab::GetUserAgentOverride() const {

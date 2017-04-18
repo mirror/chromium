@@ -161,8 +161,8 @@ class HTTPSServer(tlslite.api.TLSSocketServerMixIn,
 
   def __init__(self, server_address, request_hander_class, pem_cert_and_key,
                ssl_client_auth, ssl_client_cas, ssl_client_cert_types,
-               ssl_bulk_ciphers, ssl_key_exchanges, npn_protocols,
-               record_resume_info, tls_intolerant,
+               ssl_bulk_ciphers, ssl_key_exchanges, alpn_protocols,
+               npn_protocols, record_resume_info, tls_intolerant,
                tls_intolerance_type, signed_cert_timestamps,
                fallback_scsv_enabled, ocsp_response,
                alert_after_handshake, disable_channel_id, disable_ems,
@@ -215,6 +215,7 @@ class HTTPSServer(tlslite.api.TLSSocketServerMixIn,
       self.ssl_handshake_settings.enableExtendedMasterSecret = False
     self.ssl_handshake_settings.supportedTokenBindingParams = \
         token_binding_params
+    self.ssl_handshake_settings.alpnProtos=alpn_protocols;
 
     if record_resume_info:
       # If record_resume_info is true then we'll replace the session cache with
@@ -1682,19 +1683,34 @@ class TestPageHandler(testserver_base.BasePageHandler):
 
 class OCSPHandler(testserver_base.BasePageHandler):
   def __init__(self, request, client_address, socket_server):
-    handlers = [self.OCSPResponse]
+    handlers = [self.OCSPResponse, self.CaIssuersResponse]
     self.ocsp_response = socket_server.ocsp_response
+    self.ca_issuers_response = socket_server.ca_issuers_response
     testserver_base.BasePageHandler.__init__(self, request, client_address,
                                              socket_server, [], handlers, [],
                                              handlers, [])
 
   def OCSPResponse(self):
+    if not self._ShouldHandleRequest("/ocsp"):
+      return False
+    print 'handling ocsp request'
     self.send_response(200)
     self.send_header('Content-Type', 'application/ocsp-response')
     self.send_header('Content-Length', str(len(self.ocsp_response)))
     self.end_headers()
 
     self.wfile.write(self.ocsp_response)
+
+  def CaIssuersResponse(self):
+    if not self._ShouldHandleRequest("/ca_issuers"):
+      return False
+    print 'handling ca_issuers request'
+    self.send_response(200)
+    self.send_header('Content-Type', 'application/pkix-cert')
+    self.send_header('Content-Length', str(len(self.ca_issuers_response)))
+    self.end_headers()
+
+    self.wfile.write(self.ca_issuers_response)
 
 
 class TCPEchoHandler(SocketServer.BaseRequestHandler):
@@ -1897,6 +1913,20 @@ class ServerRunner(testserver_base.TestServerRunner):
                 'specified server cert file not found: ' +
                 self.options.cert_and_key_file + ' exiting...')
           pem_cert_and_key = file(self.options.cert_and_key_file, 'r').read()
+        elif self.options.aia_intermediate:
+          self.__ocsp_server = OCSPServer((host, 0), OCSPHandler)
+          print ('AIA server started on %s:%d...' %
+              (host, self.__ocsp_server.server_port))
+
+          (pem_cert_and_key, intermediate_cert_der) = \
+              minica.GenerateCertKeyAndIntermediate(
+                  subject = "127.0.0.1",
+                  ca_issuers_url = ("http://%s:%d/ca_issuers" %
+                                    (host, self.__ocsp_server.server_port)),
+                  serial = self.options.cert_serial)
+
+          self.__ocsp_server.ocsp_response = None
+          self.__ocsp_server.ca_issuers_response = intermediate_cert_der
         else:
           # generate a new certificate and run an OCSP server for it.
           self.__ocsp_server = OCSPServer((host, 0), OCSPHandler)
@@ -1975,6 +2005,7 @@ class ServerRunner(testserver_base.TestServerRunner):
             self.__ocsp_server.ocsp_response = '30030a0103'.decode('hex')
           else:
             self.__ocsp_server.ocsp_response = ocsp_der
+          self.__ocsp_server.ca_issuers_response = None
 
         for ca_cert in self.options.ssl_client_ca:
           if not os.path.isfile(ca_cert):
@@ -1992,6 +2023,7 @@ class ServerRunner(testserver_base.TestServerRunner):
                              self.options.ssl_client_cert_type,
                              self.options.ssl_bulk_cipher,
                              self.options.ssl_key_exchange,
+                             self.options.alpn_protocols,
                              self.options.npn_protocols,
                              self.options.record_resume,
                              self.options.tls_intolerant,
@@ -2135,6 +2167,11 @@ class ServerRunner(testserver_base.TestServerRunner):
                                   'path to the file containing the certificate '
                                   'and private key for the server in PEM '
                                   'format')
+    self.option_parser.add_option('--aia-intermediate', action='store_true',
+                                  dest='aia_intermediate',
+                                  help='generate a certificate chain that '
+                                  'requires AIA cert fetching, and run a '
+                                  'server to respond to the AIA request.')
     self.option_parser.add_option('--ocsp', dest='ocsp', default='ok',
                                   help='The type of OCSP response generated '
                                   'for the automatically generated '
@@ -2156,6 +2193,7 @@ class ServerRunner(testserver_base.TestServerRunner):
                                   'fallback. 1 means all TLS versions will be '
                                   'aborted. 2 means TLS 1.1 or higher will be '
                                   'aborted. 3 means TLS 1.2 or higher will be '
+                                  'aborted. 4 means TLS 1.3 or higher will be '
                                   'aborted.')
     self.option_parser.add_option('--tls-intolerance-type',
                                   dest='tls_intolerance_type',
@@ -2226,9 +2264,13 @@ class ServerRunner(testserver_base.TestServerRunner):
                                   'will be used. This option may appear '
                                   'multiple times, indicating multiple '
                                   'algorithms should be enabled.');
-    # TODO(davidben): Add ALPN support to tlslite.
+    self.option_parser.add_option('--alpn-protocols', action='append',
+                                  help='Specify the list of ALPN protocols.  '
+                                  'The server will not send an ALPN response '
+                                  'if this list does not overlap with the '
+                                  'list of protocols the client advertises.')
     self.option_parser.add_option('--npn-protocols', action='append',
-                                  help='Specify the list of protocols sent in'
+                                  help='Specify the list of protocols sent in '
                                   'an NPN response.  The server will not'
                                   'support NPN if the list is empty.')
     self.option_parser.add_option('--file-root-url', default='/files/',

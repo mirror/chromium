@@ -18,7 +18,6 @@
 #include "components/omnibox/browser/match_compare.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_switches.h"
-#include "components/search/search.h"
 #include "components/url_formatter/url_fixer.h"
 
 // static
@@ -95,7 +94,7 @@ void AutocompleteResult::AppendMatches(const AutocompleteInput& input,
     matches_.push_back(i);
     if (!AutocompleteMatch::IsSearchType(i.type)) {
       const OmniboxFieldTrial::EmphasizeTitlesCondition condition(
-          OmniboxFieldTrial::GetEmphasizeTitlesConditionForInput(input.type()));
+          OmniboxFieldTrial::GetEmphasizeTitlesConditionForInput(input));
       bool emphasize = false;
       switch (condition) {
         case OmniboxFieldTrial::EMPHASIZE_WHEN_NONEMPTY:
@@ -135,17 +134,11 @@ void AutocompleteResult::SortAndCull(
   CompareWithDemoteByType<AutocompleteMatch> comparing_object(
       input.current_page_classification());
   std::sort(matches_.begin(), matches_.end(), comparing_object);
-  if (!matches_.empty() && !matches_.begin()->allowed_to_be_default_match) {
-    // Top match is not allowed to be the default match.  Find the most
-    // relevant legal match and shift it to the front.
-    for (AutocompleteResult::iterator it = matches_.begin() + 1;
-         it != matches_.end(); ++it) {
-      if (it->allowed_to_be_default_match) {
-        std::rotate(matches_.begin(), it, it + 1);
-        break;
-      }
-    }
-  }
+  // Top match is not allowed to be the default match.  Find the most
+  // relevant legal match and shift it to the front.
+  ACMatches::iterator it = FindTopMatch(&matches_);
+  if (it != matches_.end())
+    std::rotate(matches_.begin(), it, it + 1);
   // In the process of trimming, drop all matches with a demoted relevance
   // score of 0.
   size_t num_matches;
@@ -166,11 +159,20 @@ void AutocompleteResult::SortAndCull(
             : base::string16()) +
         base::ASCIIToUTF16(", input=") +
         input.text();
-    DCHECK(default_match_->allowed_to_be_default_match) << debug_info;
-    // If the default match is valid (i.e., not a prompt/placeholder), make
-    // sure the type of destination is what the user would expect given the
-    // input.
-    if (default_match_->destination_url.is_valid()) {
+
+    // We should only get here with an empty omnibox for automatic suggestions
+    // on focus on the NTP; in these cases hitting enter should do nothing, so
+    // there should be no default match.  Otherwise, we're doing automatic
+    // suggestions for the currently visible URL (and hitting enter should
+    // reload it), or the user is typing; in either of these cases, there should
+    // be a default match.
+    DCHECK_NE(input.text().empty(), default_match_->allowed_to_be_default_match)
+        << debug_info;
+
+    // For navigable default matches, make sure the destination type is what the
+    // user would expect given the input.
+    if (default_match_->allowed_to_be_default_match &&
+        default_match_->destination_url.is_valid()) {
       if (AutocompleteMatch::IsSearchType(default_match_->type)) {
         // We shouldn't get query matches for URL inputs.
         DCHECK_NE(metrics::OmniboxInputType::URL, input.type()) << debug_info;
@@ -249,6 +251,23 @@ bool AutocompleteResult::TopMatchIsStandaloneVerbatimMatch() const {
       return !i->IsVerbatimType();
   }
   return true;
+}
+
+// static
+ACMatches::const_iterator AutocompleteResult::FindTopMatch(
+    const ACMatches& matches) {
+  ACMatches::const_iterator it = matches.begin();
+  while ((it != matches.end()) && !it->allowed_to_be_default_match)
+    ++it;
+  return it;
+}
+
+// static
+ACMatches::iterator AutocompleteResult::FindTopMatch(ACMatches* matches) {
+  ACMatches::iterator it = matches->begin();
+  while ((it != matches->end()) && !it->allowed_to_be_default_match)
+    ++it;
+  return it;
 }
 
 void AutocompleteResult::Reset() {

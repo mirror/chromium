@@ -4,37 +4,41 @@
 
 #include "core/animation/PropertyHandle.h"
 
+#include "platform/wtf/text/AtomicStringHash.h"
+
 namespace blink {
 
-bool PropertyHandle::operator==(const PropertyHandle& other) const
-{
-    if (m_handleType != other.m_handleType)
-        return false;
+bool PropertyHandle::operator==(const PropertyHandle& other) const {
+  if (handle_type_ != other.handle_type_)
+    return false;
 
-    switch (m_handleType) {
-    case HandleCSSProperty:
-    case HandlePresentationAttribute:
-        return m_cssProperty == other.m_cssProperty;
-    case HandleSVGAttribute:
-        return m_svgAttribute == other.m_svgAttribute;
+  switch (handle_type_) {
+    case kHandleCSSProperty:
+    case kHandlePresentationAttribute:
+      return css_property_ == other.css_property_;
+    case kHandleCSSCustomProperty:
+      return property_name_ == other.property_name_;
+    case kHandleSVGAttribute:
+      return svg_attribute_ == other.svg_attribute_;
     default:
-        return true;
-    }
+      return true;
+  }
 }
 
-unsigned PropertyHandle::hash() const
-{
-    switch (m_handleType) {
-    case HandleCSSProperty:
-        return m_cssProperty;
-    case HandlePresentationAttribute:
-        return -m_cssProperty;
-    case HandleSVGAttribute:
-        return QualifiedNameHash::hash(*m_svgAttribute);
+unsigned PropertyHandle::GetHash() const {
+  switch (handle_type_) {
+    case kHandleCSSProperty:
+      return css_property_;
+    case kHandleCSSCustomProperty:
+      return AtomicStringHash::GetHash(property_name_);
+    case kHandlePresentationAttribute:
+      return -css_property_;
+    case kHandleSVGAttribute:
+      return QualifiedNameHash::GetHash(*svg_attribute_);
     default:
-        NOTREACHED();
-        return 0;
-    }
+      NOTREACHED();
+      return 0;
+  }
 }
 
-} // namespace blink
+}  // namespace blink

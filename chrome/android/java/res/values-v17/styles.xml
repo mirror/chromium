@@ -16,10 +16,13 @@
             the generated style resources under res_v14_compatibility/values/ (crbug.com/243952).
     -->
 
+    <style name="LauncherTheme" parent="@android:style/Theme.NoDisplay" />
+
     <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColorHighlight">@color/text_highlight_color</item>
         <item name="android:textColorLink">@color/light_active_color</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
         <item name="android:statusBarColor" tools:targetApi="21">@android:color/black</item>
 
         <!--  Overriding AppCompat values -->
@@ -39,16 +42,25 @@
         <item name="android:windowSharedElementExitTransition" tools:targetApi="21">@transition/move_image</item>
     </style>
 
+    <style name="SearchActivityTheme" parent="MainTheme">
+        <item name="android:windowBackground">@color/google_grey_500</item>
+    </style>
+
     <style name="TabbedModeTheme" parent="MainTheme">
         <item name="android:windowBackground">@drawable/window_background</item>
     </style>
 
-    <style name="FullscreenWhiteDialog" parent="Theme.AppCompat.Light" >
+    <style name="FullscreenWhite" parent="Theme.AppCompat.Light" >
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:textColorLink">@color/light_active_color</item>
-        <item name="android:statusBarColor" tools:targetApi="21">@android:color/black</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
         <item name="colorPrimary">@color/light_active_color</item>
         <item name="colorAccent">@color/light_active_color</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="FullscreenWhiteActivityTheme" parent="FullscreenWhite">
+        <item name="windowActionBar">false</item>
     </style>
 
     <!-- Web app themes -->
@@ -65,13 +77,8 @@
         <item name="android:maxLines">2</item>
     </style>
 
-    <!-- A theme for alert dialogs. The colors are copied from MainTheme, and the window
-         dimensions are copied from *.MinWidth theme variants. Sadly there is no
-         AppCompat.Light.Dialog.Alert or even AppCompat.Light.Dialog.MinWidth. -->
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColorHighlight">@color/text_highlight_color</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
 
         <!--  Overriding AppCompat values -->
         <item name="colorAccent">@color/light_active_color</item>
@@ -83,7 +90,7 @@
         <item name="tint">@color/dark_mode_tint</item>
     </style>
 
-    <style name="LightweightFreDialog" parent="AlertDialogTheme">
+    <style name="SimpleDialog" parent="AlertDialogTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -116,7 +123,7 @@
     </style>
     <style name="PreferenceCategoryTextStyle">
         <item name="android:textColor">@color/pref_accent_color</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="PreferenceTitle">
@@ -130,7 +137,7 @@
     </style>
     <style name="PreferenceScreenLayout">
         <item name="android:paddingTop">16dp</item>
-        
+
         <!-- Additional padding is applied to each of the controls inside the layout, making this
              a 16dp padding overall. -->
         <item name="android:paddingStart">@dimen/pref_autofill_content_spacing</item>
@@ -160,6 +167,11 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:background">@color/google_grey_600</item>
+    </style>
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:background">@color/google_grey_300</item>
     </style>
 
     <style name="ThemeWithActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -221,6 +233,13 @@
         <item name="android:listPreferredItemHeightSmall">48dp</item>
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="OverflowMenuButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?attr/listChoiceBackgroundIndicator</item>
+        <item name="android:scaleType">center</item>
+    </style>
     <style name="OverflowMenuAnim">
         <item name="android:windowEnterAnimation">@anim/menu_enter</item>
         <item name="android:windowExitAnimation">@anim/menu_exit</item>
@@ -271,16 +290,16 @@
     </style>
 
     <!-- Bubble styles -->
-    <style name="TabSwitcherCalloutAnimation">
-        <item name="android:windowEnterAnimation">@anim/tab_switcher_callout_in</item>
-        <item name="android:windowExitAnimation">@anim/tab_switcher_callout_out</item>
+    <style name="TextBubbleAnimation">
+        <item name="android:windowEnterAnimation">@anim/textbubble_in</item>
+        <item name="android:windowExitAnimation">@anim/textbubble_out</item>
     </style>
     <style name="FullscreenNotificationBubble" parent="@android:style/Animation.Toast">
         <item name="android:windowEnterAnimation">@anim/fullscreen_notification_in</item>
     </style>
 
-    <!-- Data Saver -->
-    <style name="DataReductionPromoScreenDialog" >
+    <!-- Promo dialogs -->
+    <style name="PromoDialog" >
         <item name="android:background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:clipChildren">false</item>
@@ -295,6 +314,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <!-- Cast and media playback notifications -->
     <style
         name="MediaNotificationTitle"
@@ -319,7 +339,7 @@
         <item name="android:paddingEnd">0dp</item>
         <item name="externalRouteEnabledDrawable">@drawable/ic_cast_dark_chrome</item>
     </style>
-    
+
     <!-- First Run Experience -->
     <style name="FreTitle">
         <item name="android:layout_width">wrap_content</item>
@@ -383,19 +403,8 @@
     <!-- First Run and Bookmark/recent-tabs dialogs -->
     <style name="DialogWhenLarge" parent="Theme.AppCompat.Light.DialogWhenLarge" >
         <item name="android:windowBackground">@drawable/bg_white_dialog</item>
-        <item name="android:statusBarColor" tools:targetApi="21">@android:color/black</item>
+        <item name="android:textColor">@color/default_text_color</item>
         <item name="android:textColorLink">@color/light_active_color</item>
-        <item name="colorPrimary">@color/light_active_color</item>
-        <item name="colorAccent">@color/light_active_color</item>
-
-        <!-- Remove ActionBar -->
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <!-- Drawer layouts -->
-    <style name="DrawerDialog" parent="Theme.AppCompat.Light.DialogWhenLarge">
-        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/black</item>
         <item name="colorAccent">@color/light_active_color</item>
 
@@ -403,8 +412,14 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
-    <style name="DrawerDialogWhite" parent="DrawerDialog">
-      <item name="android:windowBackground">@drawable/bg_white_dialog</item>
+
+    <style name="SigninAlertDialogTheme" parent="AlertDialogTheme">
+        <item name="buttonBarButtonStyle">@style/SigninDialogButtonStyle</item>
+        <item name="android:textColorPrimary">@color/default_text_color</item>
+    </style>
+
+    <style name="SigninDialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/light_active_color</item>
     </style>
 
     <!-- Bookmarks -->
@@ -429,15 +444,6 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <!-- Signin promo dialog-->
-    <style name="SigninPromoDialog" parent="FullscreenWhiteDialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-    </style>
-
     <!-- Contextual Search styles -->
     <style name="ContextualSearchTextViewLayout">
         <item name="android:layout_width">match_parent</item>
@@ -452,6 +458,7 @@
     <style name="ContextualSearchTextView">
         <item name="android:layout_height">match_parent</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#000</item>
         <item name="android:textSize">@dimen/overlay_panel_text_size</item>
@@ -459,10 +466,11 @@
     <style name="ContextualSearchContextTextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:ellipsize">none</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:fadingEdgeLength">30dp</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:requiresFadingEdge">horizontal</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#CCC</item>
@@ -476,6 +484,7 @@
         <item name="android:layout_marginEnd">7dp</item>
         <item name="android:background">#FFF</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">#444</item>
         <item name="android:textSize">@dimen/contextual_search_caption_text_size</item>
@@ -518,6 +527,9 @@
     <style name="PaymentsUiSectionDescriptiveTextEndAligned" parent="PaymentsUiSectionDescriptiveText">
         <item name="android:textAlignment">viewEnd</item>
     </style>
+    <style name="PaymentsUiSectionPendingTextEndAligned" parent="PaymentsUiSectionDescriptiveTextEndAligned">
+        <item name="android:textColor">@color/explanation_text_color</item>
+    </style>
     <style name="PaymentsUiSectionAddButtonLabel">
         <item name="android:textColor">@color/light_active_color</item>
         <item name="android:textSize">14sp</item>
@@ -527,6 +539,12 @@
     <!-- Misc styles -->
     <style name="LocationBarButton">
         <item name="android:background">@null</item>
+    </style>
+    <style name="LocationBarButtonTablet" parent="LocationBarButton">
+        <item name="android:layout_width">@dimen/location_bar_icon_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:layout_gravity">end</item>
     </style>
     <style name="LocationBarMenuButton" parent="LocationBarButton">
         <item name="android:layout_height">match_parent</item>
@@ -557,9 +575,150 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="NumberRollTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="BottomSheetContentTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
 
     <!-- New tab page RecyclerView overscroll color -->
     <style name="NewTabPageRecyclerView">
         <item name="android:colorEdgeEffect">@color/google_grey_300</item>
     </style>
+
+    <!-- History UI -->
+    <style name="HistoryStartIcon">
+        <item name="android:layout_width">@dimen/selectable_list_layout_start_icon_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">center</item>
+    </style>
+    <style name="HistoryEndIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:paddingEnd">@dimen/selectable_list_layout_row_end_padding</item>
+    </style>
+    <style name="PrivacyDisclaimerText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Download Home -->
+    <style name="DownloadHomeStatusText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:minHeight">18dp</item>
+        <item name="android:textColor">@color/google_grey_600</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:ellipsize">start</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="DateView" parent="RobotoMediumStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="DownloadRowContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="DownloadTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/default_text_color</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="DownloadDescriptionStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/google_grey_600</item>
+        <item name="android:ellipsize">start</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="DownloadFileSizeStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:textColor">@color/google_grey_600</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="DownloadIconView">
+        <item name="android:layout_width">@dimen/downloads_item_icon_size</item>
+        <item name="android:layout_height">@dimen/downloads_item_icon_size</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:background">@color/light_active_color</item>
+    </style>
+
+    <!-- Data Reduction -->
+    <style name="DataReductionPrefSecondaryStyle">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="DataUsageBreakdownColumnLabel">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAppearance">@style/RobotoMediumStyle</item>
+    </style>
+    <style name="DataUsageBreakdownColumnItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/data_reduction_breakdown_text_color</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Incognito New Tab Page -->
+    <style name="IncognitoNewTabMessage">
+        <item name="android:maxWidth">660dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+    <style name="IncognitoNewTabLearnMoreLink">
+        <item name="android:background">?attr/listChoiceBackgroundIndicator</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
 </resources>

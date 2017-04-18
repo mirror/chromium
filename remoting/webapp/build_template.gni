@@ -7,6 +7,7 @@
 import("//build/config/chrome_build.gni")
 import("//build/config/features.gni")
 import("//build/util/version.gni")
+import("//remoting/remoting_enable.gni")
 import("//remoting/remoting_locales.gni")
 import("//remoting/remoting_options.gni")
 import("//remoting/remoting_version.gni")
@@ -78,10 +79,10 @@ template("build_webapp_html") {
 
       args = rebase_path(js_files, root_build_dir)
       args += [
-                "--no-single-file",
-                "--out-file",
+                "--no_single_file",
+                "--out_file",
                 rebase_path(target_jscompile_stamp, root_build_dir),
-                "--closure-args",
+                "--closure_args",
               ] + closure_args + extra_closure_args
       args += [ "--externs" ] + rebase_path(externs, root_build_dir)
     }

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-<include src="media_router_data.js">
-<include src="media_router_ui_interface.js">
+// <include src="media_router_data.js">
+// <include src="media_router_ui_interface.js">
 
 // Handles user events for the Media Router UI.
 cr.define('media_router', function() {
@@ -28,13 +28,14 @@ cr.define('media_router', function() {
         ($('media-router-container'));
 
     media_router.ui.setElements(container,
-        /** @type {!MediaRouterHeaderElement} */
-        (container.$['container-header']));
+        /** @type {!MediaRouterHeaderElement} */(container.header));
 
     container.addEventListener('acknowledge-first-run-flow',
                                onAcknowledgeFirstRunFlow);
     container.addEventListener('back-click', onNavigateToSinkList);
     container.addEventListener('cast-mode-selected', onCastModeSelected);
+    container.addEventListener('change-route-source-click',
+                               onChangeRouteSourceClick);
     container.addEventListener('close-dialog', onCloseDialog);
     container.addEventListener('close-route', onCloseRoute);
     container.addEventListener('create-route', onCreateRoute);
@@ -94,6 +95,22 @@ cr.define('media_router', function() {
     /** @type {{castModeType: number}} */
     var detail = event.detail;
     media_router.browserApi.reportSelectedCastMode(detail.castModeType);
+  }
+
+  /**
+   * Reports the route for which the users wants to replace the source and the
+   * cast mode that should be used for the new source.
+   *
+   * @param {!Event} event The event object.
+   * Parameters in |event|.detail:
+   *   route - route to modify.
+   *   selectedCastMode - type of cast mode selected by the user.
+   */
+  function onChangeRouteSourceClick(event) {
+    /** @type {{route: !media_router.Route, selectedCastMode: number}} */
+    var detail = event.detail;
+    media_router.browserApi.changeRouteSource(
+        detail.route, detail.selectedCastMode);
   }
 
   /**
@@ -181,7 +198,7 @@ cr.define('media_router', function() {
    *   helpPageId - the numeric help center ID.
    */
   function onIssueActionClick(event) {
-    /** @type {{id: string, actionType: number, helpPageId: number}} */
+    /** @type {{id: number, actionType: number, helpPageId: number}} */
     var detail = event.detail;
     media_router.browserApi.actOnIssue(detail.id,
                                        detail.actionType,

@@ -25,150 +25,148 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGParserUtilities.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-SVGStringList::SVGStringList()
-{
+SVGStringList::SVGStringList() {}
+
+SVGStringList::~SVGStringList() {}
+
+void SVGStringList::Initialize(const String& item) {
+  values_.Clear();
+  values_.push_back(item);
 }
 
-SVGStringList::~SVGStringList()
-{
+String SVGStringList::GetItem(size_t index, ExceptionState& exception_state) {
+  if (!CheckIndexBound(index, exception_state))
+    return String();
+
+  return values_.at(index);
 }
 
-void SVGStringList::initialize(const String& item)
-{
-    m_values.clear();
-    m_values.append(item);
+void SVGStringList::InsertItemBefore(const String& new_item, size_t index) {
+  // Spec: If the index is greater than or equal to numberOfItems, then the new
+  // item is appended to the end of the list.
+  if (index > values_.size())
+    index = values_.size();
+
+  // Spec: Inserts a new item into the list at the specified position. The index
+  // of the item before which the new item is to be inserted. The first item is
+  // number 0. If the index is equal to 0, then the new item is inserted at the
+  // front of the list.
+  values_.insert(index, new_item);
 }
 
-String SVGStringList::getItem(size_t index, ExceptionState& exceptionState)
-{
-    if (!checkIndexBound(index, exceptionState))
-        return String();
+String SVGStringList::RemoveItem(size_t index,
+                                 ExceptionState& exception_state) {
+  if (!CheckIndexBound(index, exception_state))
+    return String();
 
-    return m_values.at(index);
+  String old_item = values_.at(index);
+  values_.erase(index);
+  return old_item;
 }
 
-void SVGStringList::insertItemBefore(const String& newItem, size_t index)
-{
-    // Spec: If the index is greater than or equal to numberOfItems, then the new item is appended to the end of the list.
-    if (index > m_values.size())
-        index = m_values.size();
-
-    // Spec: Inserts a new item into the list at the specified position. The index of the item before which the new item is to be
-    // inserted. The first item is number 0. If the index is equal to 0, then the new item is inserted at the front of the list.
-    m_values.insert(index, newItem);
+void SVGStringList::AppendItem(const String& new_item) {
+  values_.push_back(new_item);
 }
 
-String SVGStringList::removeItem(size_t index, ExceptionState& exceptionState)
-{
-    if (!checkIndexBound(index, exceptionState))
-        return String();
+void SVGStringList::ReplaceItem(const String& new_item,
+                                size_t index,
+                                ExceptionState& exception_state) {
+  if (!CheckIndexBound(index, exception_state))
+    return;
 
-    String oldItem = m_values.at(index);
-    m_values.remove(index);
-    return oldItem;
+  // Update the value at the desired position 'index'.
+  values_[index] = new_item;
 }
 
-void SVGStringList::appendItem(const String& newItem)
-{
-    m_values.append(newItem);
+template <typename CharType>
+void SVGStringList::ParseInternal(const CharType*& ptr, const CharType* end) {
+  const UChar kDelimiter = ' ';
+
+  while (ptr < end) {
+    const CharType* start = ptr;
+    while (ptr < end && *ptr != kDelimiter && !IsHTMLSpace<CharType>(*ptr))
+      ptr++;
+    if (ptr == start)
+      break;
+    values_.push_back(String(start, ptr - start));
+    SkipOptionalSVGSpacesOrDelimiter(ptr, end, kDelimiter);
+  }
 }
 
-void SVGStringList::replaceItem(const String& newItem, size_t index, ExceptionState& exceptionState)
-{
-    if (!checkIndexBound(index, exceptionState))
-        return;
+SVGParsingError SVGStringList::SetValueAsString(const String& data) {
+  // FIXME: Add more error checking and reporting.
+  values_.Clear();
 
-    // Update the value at the desired position 'index'.
-    m_values[index] = newItem;
+  if (data.IsEmpty())
+    return SVGParseStatus::kNoError;
+
+  if (data.Is8Bit()) {
+    const LChar* ptr = data.Characters8();
+    const LChar* end = ptr + data.length();
+    ParseInternal(ptr, end);
+  } else {
+    const UChar* ptr = data.Characters16();
+    const UChar* end = ptr + data.length();
+    ParseInternal(ptr, end);
+  }
+  return SVGParseStatus::kNoError;
 }
 
-template<typename CharType>
-void SVGStringList::parseInternal(const CharType*& ptr, const CharType* end)
-{
-    const UChar delimiter = ' ';
+String SVGStringList::ValueAsString() const {
+  StringBuilder builder;
 
-    while (ptr < end) {
-        const CharType* start = ptr;
-        while (ptr < end && *ptr != delimiter && !isHTMLSpace<CharType>(*ptr))
-            ptr++;
-        if (ptr == start)
-            break;
-        m_values.append(String(start, ptr - start));
-        skipOptionalSVGSpacesOrDelimiter(ptr, end, delimiter);
+  Vector<String>::const_iterator it = values_.begin();
+  Vector<String>::const_iterator it_end = values_.end();
+  if (it != it_end) {
+    builder.Append(*it);
+    ++it;
+
+    for (; it != it_end; ++it) {
+      builder.Append(' ');
+      builder.Append(*it);
     }
+  }
+
+  return builder.ToString();
 }
 
-SVGParsingError SVGStringList::setValueAsString(const String& data)
-{
-    // FIXME: Add more error checking and reporting.
-    m_values.clear();
+bool SVGStringList::CheckIndexBound(size_t index,
+                                    ExceptionState& exception_state) {
+  if (index >= values_.size()) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError, ExceptionMessages::IndexExceedsMaximumBound(
+                             "index", index, values_.size()));
+    return false;
+  }
 
-    if (data.isEmpty())
-        return SVGParseStatus::NoError;
-
-    if (data.is8Bit()) {
-        const LChar* ptr = data.characters8();
-        const LChar* end = ptr + data.length();
-        parseInternal(ptr, end);
-    } else {
-        const UChar* ptr = data.characters16();
-        const UChar* end = ptr + data.length();
-        parseInternal(ptr, end);
-    }
-    return SVGParseStatus::NoError;
+  return true;
 }
 
-String SVGStringList::valueAsString() const
-{
-    StringBuilder builder;
-
-    Vector<String>::const_iterator it = m_values.begin();
-    Vector<String>::const_iterator itEnd = m_values.end();
-    if (it != itEnd) {
-        builder.append(*it);
-        ++it;
-
-        for (; it != itEnd; ++it) {
-            builder.append(' ');
-            builder.append(*it);
-        }
-    }
-
-    return builder.toString();
+void SVGStringList::Add(SVGPropertyBase* other, SVGElement* context_element) {
+  // SVGStringList is never animated.
+  NOTREACHED();
 }
 
-bool SVGStringList::checkIndexBound(size_t index, ExceptionState& exceptionState)
-{
-    if (index >= m_values.size()) {
-        exceptionState.throwDOMException(IndexSizeError, ExceptionMessages::indexExceedsMaximumBound("index", index, m_values.size()));
-        return false;
-    }
-
-    return true;
+void SVGStringList::CalculateAnimatedValue(SVGAnimationElement*,
+                                           float,
+                                           unsigned,
+                                           SVGPropertyBase*,
+                                           SVGPropertyBase*,
+                                           SVGPropertyBase*,
+                                           SVGElement*) {
+  // SVGStringList is never animated.
+  NOTREACHED();
 }
 
-void SVGStringList::add(SVGPropertyBase* other, SVGElement* contextElement)
-{
-    // SVGStringList is never animated.
-    ASSERT_NOT_REACHED();
+float SVGStringList::CalculateDistance(SVGPropertyBase*, SVGElement*) {
+  // SVGStringList is never animated.
+  NOTREACHED();
+
+  return -1.0f;
 }
 
-void SVGStringList::calculateAnimatedValue(SVGAnimationElement*, float, unsigned, SVGPropertyBase*, SVGPropertyBase*, SVGPropertyBase*, SVGElement*)
-{
-    // SVGStringList is never animated.
-    ASSERT_NOT_REACHED();
-}
-
-float SVGStringList::calculateDistance(SVGPropertyBase*, SVGElement*)
-{
-    // SVGStringList is never animated.
-    ASSERT_NOT_REACHED();
-
-    return -1.0f;
-}
-
-} // namespace blink
+}  // namespace blink

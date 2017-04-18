@@ -14,12 +14,12 @@
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/file_manager/fileapi_util.h"
 #include "chrome/browser/chromeos/fileapi/file_system_backend.h"
-#include "chrome/browser/extensions/api/file_handlers/directory_util.h"
-#include "chrome/browser/extensions/api/file_handlers/mime_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/file_manager_private.h"
 #include "chrome/common/extensions/api/file_manager_private_internal.h"
 #include "content/public/browser/browser_thread.h"
+#include "extensions/browser/api/file_handlers/directory_util.h"
+#include "extensions/browser/api/file_handlers/mime_util.h"
 #include "extensions/browser/entry_info.h"
 #include "net/base/filename_util.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -216,14 +216,16 @@ void FileManagerPrivateInternalGetFileTasksFunction::OnFileTasksListed(
   SendResponse(true);
 }
 
-bool FileManagerPrivateInternalSetDefaultTaskFunction::RunSync() {
+ExtensionFunction::ResponseAction
+FileManagerPrivateInternalSetDefaultTaskFunction::Run() {
   using extensions::api::file_manager_private_internal::SetDefaultTask::Params;
   const std::unique_ptr<Params> params(Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
 
+  Profile* profile = Profile::FromBrowserContext(browser_context());
   const scoped_refptr<storage::FileSystemContext> file_system_context =
       file_manager::util::GetFileSystemContextForRenderFrameHost(
-          GetProfile(), render_frame_host());
+          profile, render_frame_host());
 
   const std::set<std::string> suffixes =
       GetUniqueSuffixes(params->urls, file_system_context.get());
@@ -237,13 +239,12 @@ bool FileManagerPrivateInternalSetDefaultTaskFunction::RunSync() {
   // TODO(gspencer): Fix file manager so that it never tries to set default in
   // cases where extensionless local files are part of the selection.
   if (suffixes.empty() && mime_types.empty()) {
-    SetResult(base::MakeUnique<base::FundamentalValue>(true));
-    return true;
+    return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
   }
 
   file_manager::file_tasks::UpdateDefaultTask(
-      GetProfile()->GetPrefs(), params->task_id, suffixes, mime_types);
-  return true;
+      profile->GetPrefs(), params->task_id, suffixes, mime_types);
+  return RespondNow(NoArguments());
 }
 
 }  // namespace extensions

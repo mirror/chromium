@@ -14,8 +14,7 @@
 #define ARCH_MIPS 0
 #define ARCH_X86 0
 #define ARCH_X86_64 0
-#define HAVE_EDSP 0
-#define HAVE_MEDIA 1
+#define ARCH_PPC 0
 #define HAVE_NEON 1
 #define HAVE_NEON_ASM 1
 #define HAVE_MIPS32 0
@@ -30,6 +29,7 @@
 #define HAVE_SSE4_1 0
 #define HAVE_AVX 0
 #define HAVE_AVX2 0
+#define HAVE_VSX 0
 #define HAVE_VPX_PORTS 1
 #define HAVE_PTHREAD_H 1
 #define HAVE_UNISTD_H 0
@@ -45,7 +45,7 @@
 #define CONFIG_RVCT 0
 #define CONFIG_GCC 1
 #define CONFIG_MSVS 0
-#define CONFIG_PIC 1
+#define CONFIG_PIC 0
 #define CONFIG_BIG_ENDIAN 0
 #define CONFIG_CODEC_SRCS 0
 #define CONFIG_DEBUG_LIBS 0
@@ -74,7 +74,7 @@
 #define CONFIG_SMALL 0
 #define CONFIG_POSTPROC_VISUALIZER 0
 #define CONFIG_OS_SUPPORT 1
-#define CONFIG_UNIT_TESTS 0
+#define CONFIG_UNIT_TESTS 1
 #define CONFIG_WEBM_IO 1
 #define CONFIG_LIBYUV 1
 #define CONFIG_DECODE_PERF_TESTS 0
@@ -90,7 +90,6 @@
 #define CONFIG_SPATIAL_SVC 0
 #define CONFIG_FP_MB_STATS 0
 #define CONFIG_EMULATE_HARDWARE 0
-#define CONFIG_MISC_FIXES 0
 #define DECODE_WIDTH_LIMIT 16384
 #define DECODE_HEIGHT_LIMIT 16384
 #endif /* VPX_CONFIG_H */

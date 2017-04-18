@@ -5,20 +5,20 @@
 #ifndef ContextMenuAllowedScope_h
 #define ContextMenuAllowedScope_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class ContextMenuAllowedScope {
-    STACK_ALLOCATED();
+  STACK_ALLOCATED();
 
-public:
-    ContextMenuAllowedScope();
-    ~ContextMenuAllowedScope();
+ public:
+  ContextMenuAllowedScope();
+  ~ContextMenuAllowedScope();
 
-    static bool isContextMenuAllowed();
+  static bool IsContextMenuAllowed();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ContextMenuAllowedScope_h
+#endif  // ContextMenuAllowedScope_h

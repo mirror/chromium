@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/lazy_instance.h"
 #include "build/build_config.h"
 #include "content/browser/media/audible_metrics.h"
 #include "content/browser/media/audio_stream_monitor.h"
@@ -21,8 +20,10 @@ namespace content {
 
 namespace {
 
-static base::LazyInstance<AudibleMetrics>::Leaky g_audible_metrics =
-    LAZY_INSTANCE_INITIALIZER;
+AudibleMetrics* GetAudibleMetrics() {
+  static AudibleMetrics* metrics = new AudibleMetrics();
+  return metrics;
+}
 
 }  // anonymous namespace
 
@@ -30,25 +31,22 @@ MediaWebContentsObserver::MediaWebContentsObserver(WebContents* web_contents)
     : WebContentsObserver(web_contents),
       session_controllers_manager_(this) {}
 
-MediaWebContentsObserver::~MediaWebContentsObserver() {}
+MediaWebContentsObserver::~MediaWebContentsObserver() = default;
 
 void MediaWebContentsObserver::WebContentsDestroyed() {
-  g_audible_metrics.Get().UpdateAudibleWebContentsState(web_contents(), false);
-#if defined(OS_ANDROID)
-  view_weak_factory_.reset();
-#endif
+  GetAudibleMetrics()->UpdateAudibleWebContentsState(web_contents(), false);
 }
 
 void MediaWebContentsObserver::RenderFrameDeleted(
     RenderFrameHost* render_frame_host) {
   ClearPowerSaveBlockers(render_frame_host);
   session_controllers_manager_.RenderFrameDeleted(render_frame_host);
+
+  if (fullscreen_player_ && fullscreen_player_->first == render_frame_host)
+    fullscreen_player_.reset();
 }
 
 void MediaWebContentsObserver::MaybeUpdateAudibleState() {
-  if (!AudioStreamMonitor::monitoring_available())
-    return;
-
   AudioStreamMonitor* audio_stream_monitor =
       static_cast<WebContentsImpl*>(web_contents())->audio_stream_monitor();
 
@@ -59,15 +57,28 @@ void MediaWebContentsObserver::MaybeUpdateAudibleState() {
     audio_power_save_blocker_.reset();
   }
 
-  g_audible_metrics.Get().UpdateAudibleWebContentsState(
+  GetAudibleMetrics()->UpdateAudibleWebContentsState(
       web_contents(), audio_stream_monitor->IsCurrentlyAudible());
+}
+
+bool MediaWebContentsObserver::HasActiveEffectivelyFullscreenVideo() const {
+  if (!web_contents()->IsFullscreen() || !fullscreen_player_)
+    return false;
+
+  // Check that the player is active.
+  const auto& players = active_video_players_.find(fullscreen_player_->first);
+  if (players == active_video_players_.end())
+    return false;
+  if (players->second.find(fullscreen_player_->second) == players->second.end())
+    return false;
+
+  return true;
 }
 
 bool MediaWebContentsObserver::OnMessageReceived(
     const IPC::Message& msg,
     RenderFrameHost* render_frame_host) {
   bool handled = true;
-  // TODO(dalecurtis): These should no longer be FrameHostMsg.
   IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(MediaWebContentsObserver, msg,
                                    render_frame_host)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMediaDestroyed,
@@ -75,6 +86,9 @@ bool MediaWebContentsObserver::OnMessageReceived(
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMediaPaused, OnMediaPaused)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMediaPlaying,
                         OnMediaPlaying)
+    IPC_MESSAGE_HANDLER(
+        MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChange,
+        OnMediaEffectivelyFullscreenChange)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -91,6 +105,17 @@ void MediaWebContentsObserver::WasHidden() {
   // don't release the power save blocker.
   if (!web_contents()->GetCapturerCount())
     video_power_save_blocker_.reset();
+}
+
+void MediaWebContentsObserver::RequestPersistentVideo(bool value) {
+  if (!fullscreen_player_)
+    return;
+
+  // The message is sent to the renderer even though the video is already the
+  // fullscreen element itself. It will eventually be handled by Blink.
+  Send(new MediaPlayerDelegateMsg_BecamePersistentVideo(
+      fullscreen_player_->first->GetRoutingID(), fullscreen_player_->second,
+      value));
 }
 
 void MediaWebContentsObserver::OnMediaDestroyed(
@@ -112,7 +137,8 @@ void MediaWebContentsObserver::OnMediaPaused(RenderFrameHost* render_frame_host,
   if (removed_audio || removed_video) {
     // Notify observers the player has been "paused".
     static_cast<WebContentsImpl*>(web_contents())
-        ->MediaStoppedPlaying(player_id);
+        ->MediaStoppedPlaying(
+            WebContentsObserver::MediaPlayerInfo(removed_video), player_id);
   }
 
   if (reached_end_of_stream)
@@ -127,7 +153,7 @@ void MediaWebContentsObserver::OnMediaPlaying(
     bool has_video,
     bool has_audio,
     bool is_remote,
-    base::TimeDelta duration) {
+    media::MediaContentType media_content_type) {
   // Ignore the videos playing remotely and don't hold the wake lock for the
   // screen. TODO(dalecurtis): Is this correct? It means observers will not
   // receive play and pause messages.
@@ -135,16 +161,8 @@ void MediaWebContentsObserver::OnMediaPlaying(
     return;
 
   const MediaPlayerId id(render_frame_host, delegate_id);
-  if (has_audio) {
+  if (has_audio)
     AddMediaPlayerEntry(id, &active_audio_players_);
-
-    // If we don't have audio stream monitoring, allocate the audio power save
-    // blocker here instead of during NotifyNavigationStateChanged().
-    if (!audio_power_save_blocker_ &&
-        !AudioStreamMonitor::monitoring_available()) {
-      CreateAudioPowerSaveBlocker();
-    }
-  }
 
   if (has_video) {
     AddMediaPlayerEntry(id, &active_video_players_);
@@ -157,28 +175,50 @@ void MediaWebContentsObserver::OnMediaPlaying(
   }
 
   if (!session_controllers_manager_.RequestPlay(
-      id, has_audio, is_remote, duration)) {
+          id, has_audio, is_remote, media_content_type)) {
     return;
   }
 
   // Notify observers of the new player.
   DCHECK(has_audio || has_video);
-  static_cast<WebContentsImpl*>(web_contents())->MediaStartedPlaying(id);
+  static_cast<WebContentsImpl*>(web_contents())
+      ->MediaStartedPlaying(WebContentsObserver::MediaPlayerInfo(has_video),
+                            id);
+}
+
+void MediaWebContentsObserver::OnMediaEffectivelyFullscreenChange(
+    RenderFrameHost* render_frame_host,
+    int delegate_id,
+    bool is_fullscreen) {
+  const MediaPlayerId id(render_frame_host, delegate_id);
+
+  if (!is_fullscreen) {
+    if (fullscreen_player_ && *fullscreen_player_ == id)
+      fullscreen_player_.reset();
+    return;
+  }
+
+  fullscreen_player_ = id;
 }
 
 void MediaWebContentsObserver::ClearPowerSaveBlockers(
     RenderFrameHost* render_frame_host) {
   std::set<MediaPlayerId> removed_players;
-  RemoveAllMediaPlayerEntries(render_frame_host, &active_audio_players_,
-                              &removed_players);
   RemoveAllMediaPlayerEntries(render_frame_host, &active_video_players_,
+                              &removed_players);
+  std::set<MediaPlayerId> video_players(removed_players);
+  RemoveAllMediaPlayerEntries(render_frame_host, &active_audio_players_,
                               &removed_players);
   MaybeReleasePowerSaveBlockers();
 
   // Notify all observers the player has been "paused".
   WebContentsImpl* wci = static_cast<WebContentsImpl*>(web_contents());
-  for (const auto& id : removed_players)
-    wci->MediaStoppedPlaying(id);
+  for (const auto& id : removed_players) {
+    auto it = video_players.find(id);
+    bool was_video = (it != video_players.end());
+    wci->MediaStoppedPlaying(WebContentsObserver::MediaPlayerInfo(was_video),
+                             id);
+  }
 }
 
 void MediaWebContentsObserver::CreateAudioPowerSaveBlocker() {
@@ -200,23 +240,13 @@ void MediaWebContentsObserver::CreateVideoPowerSaveBlocker() {
       BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE)));
 #if defined(OS_ANDROID)
   if (web_contents()->GetNativeView()) {
-    view_weak_factory_.reset(new base::WeakPtrFactory<ui::ViewAndroid>(
-        web_contents()->GetNativeView()));
     video_power_save_blocker_.get()->InitDisplaySleepBlocker(
-        view_weak_factory_->GetWeakPtr());
+        web_contents()->GetNativeView());
   }
 #endif
 }
 
 void MediaWebContentsObserver::MaybeReleasePowerSaveBlockers() {
-  // If there are no more audio players and we don't have audio stream
-  // monitoring, release the audio power save blocker here instead of during
-  // NotifyNavigationStateChanged().
-  if (active_audio_players_.empty() &&
-      !AudioStreamMonitor::monitoring_available()) {
-    audio_power_save_blocker_.reset();
-  }
-
   // If there are no more video players, clear the video power save blocker.
   if (active_video_players_.empty())
     video_power_save_blocker_.reset();

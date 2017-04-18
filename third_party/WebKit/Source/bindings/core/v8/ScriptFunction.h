@@ -34,7 +34,7 @@
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -50,35 +50,31 @@ namespace blink {
 //         return self->bindToV8Function();
 //     }
 // };
-class CORE_EXPORT ScriptFunction : public GarbageCollectedFinalized<ScriptFunction> {
-public:
-    virtual ~ScriptFunction() { }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+class CORE_EXPORT ScriptFunction
+    : public GarbageCollectedFinalized<ScriptFunction> {
+ public:
+  virtual ~ScriptFunction() {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-protected:
-    explicit ScriptFunction(ScriptState* scriptState)
-        : m_scriptState(scriptState)
-#if ENABLE(ASSERT)
-        , m_bindToV8FunctionAlreadyCalled(false)
-#endif
-    {
-    }
+ protected:
+  explicit ScriptFunction(ScriptState* script_state)
+      : script_state_(script_state) {}
 
-    ScriptState* getScriptState() const { return m_scriptState.get(); }
+  ScriptState* GetScriptState() const { return script_state_.Get(); }
 
-    v8::Local<v8::Function> bindToV8Function();
+  v8::Local<v8::Function> BindToV8Function();
 
-private:
-    virtual ScriptValue call(ScriptValue) = 0;
-    static void callCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+ private:
+  virtual ScriptValue Call(ScriptValue) = 0;
+  static void CallCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 
-    RefPtr<ScriptState> m_scriptState;
-#if ENABLE(ASSERT)
-    // bindToV8Function must not be called twice.
-    bool m_bindToV8FunctionAlreadyCalled;
+  RefPtr<ScriptState> script_state_;
+#if DCHECK_IS_ON()
+  // bindToV8Function must not be called twice.
+  bool bind_to_v8_function_already_called_ = false;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

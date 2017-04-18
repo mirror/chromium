@@ -5,7 +5,7 @@
 #ifndef WebGLVertexArrayObjectBase_h
 #define WebGLVertexArrayObjectBase_h
 
-#include "bindings/core/v8/ScopedPersistent.h"
+#include "bindings/core/v8/TraceWrapperMember.h"
 #include "modules/webgl/WebGLBuffer.h"
 #include "modules/webgl/WebGLContextObject.h"
 #include "platform/heap/Handle.h"
@@ -13,60 +13,58 @@
 namespace blink {
 
 class WebGLVertexArrayObjectBase : public WebGLContextObject {
-public:
-    enum VaoType {
-        VaoTypeDefault,
-        VaoTypeUser,
-    };
+ public:
+  enum VaoType {
+    kVaoTypeDefault,
+    kVaoTypeUser,
+  };
 
-    ~WebGLVertexArrayObjectBase() override;
+  ~WebGLVertexArrayObjectBase() override;
 
-    GLuint object() const { return m_object; }
+  GLuint Object() const { return object_; }
 
-    bool isDefaultObject() const { return m_type == VaoTypeDefault; }
+  bool IsDefaultObject() const { return type_ == kVaoTypeDefault; }
 
-    bool hasEverBeenBound() const { return object() && m_hasEverBeenBound; }
-    void setHasEverBeenBound() { m_hasEverBeenBound = true; }
+  bool HasEverBeenBound() const { return Object() && has_ever_been_bound_; }
+  void SetHasEverBeenBound() { has_ever_been_bound_ = true; }
 
-    WebGLBuffer* boundElementArrayBuffer() const { return m_boundElementArrayBuffer; }
-    void setElementArrayBuffer(WebGLBuffer*);
+  WebGLBuffer* BoundElementArrayBuffer() const {
+    return bound_element_array_buffer_;
+  }
+  void SetElementArrayBuffer(WebGLBuffer*);
 
-    WebGLBuffer* getArrayBufferForAttrib(size_t);
-    void setArrayBufferForAttrib(GLuint, WebGLBuffer*);
-    void setAttribEnabled(GLuint, bool);
-    bool getAttribEnabled(GLuint) const;
-    bool isAllEnabledAttribBufferBound() const { return m_isAllEnabledAttribBufferBound; }
-    void unbindBuffer(WebGLBuffer*);
+  WebGLBuffer* GetArrayBufferForAttrib(size_t);
+  void SetArrayBufferForAttrib(GLuint, WebGLBuffer*);
+  void SetAttribEnabled(GLuint, bool);
+  bool GetAttribEnabled(GLuint) const;
+  bool IsAllEnabledAttribBufferBound() const {
+    return is_all_enabled_attrib_buffer_bound_;
+  }
+  void UnbindBuffer(WebGLBuffer*);
 
-    ScopedPersistent<v8::Array>* getPersistentCache();
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    DECLARE_VIRTUAL_TRACE();
+ protected:
+  WebGLVertexArrayObjectBase(WebGLRenderingContextBase*, VaoType);
 
-protected:
-    WebGLVertexArrayObjectBase(WebGLRenderingContextBase*, VaoType);
+ private:
+  void DispatchDetached(gpu::gles2::GLES2Interface*);
+  bool HasObject() const override { return object_ != 0; }
+  void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
 
-private:
-    void dispatchDetached(gpu::gles2::GLES2Interface*);
-    bool hasObject() const override { return m_object != 0; }
-    void deleteObjectImpl(gpu::gles2::GLES2Interface*) override;
+  void UpdateAttribBufferBoundStatus();
 
-    void updateAttribBufferBoundStatus();
+  GLuint object_;
 
-    GLuint m_object;
-
-    VaoType m_type;
-    bool m_hasEverBeenBound;
-    bool m_destructionInProgress;
-    Member<WebGLBuffer> m_boundElementArrayBuffer;
-    HeapVector<Member<WebGLBuffer>> m_arrayBufferList;
-    Vector<bool> m_attribEnabled;
-    bool m_isAllEnabledAttribBufferBound;
-
-    // For preserving the wrappers of WebGLBuffer objects latched in
-    // via vertexAttribPointer calls.
-    ScopedPersistent<v8::Array> m_arrayBufferWrappers;
+  VaoType type_;
+  bool has_ever_been_bound_;
+  TraceWrapperMember<WebGLBuffer> bound_element_array_buffer_;
+  HeapVector<TraceWrapperMember<WebGLBuffer>> array_buffer_list_;
+  Vector<bool> attrib_enabled_;
+  bool is_all_enabled_attrib_buffer_bound_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLVertexArrayObjectBase_h
+#endif  // WebGLVertexArrayObjectBase_h

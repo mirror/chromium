@@ -12,32 +12,30 @@
 namespace blink {
 
 class LayoutFullScreenItem : public LayoutBlockItem {
-public:
-    explicit LayoutFullScreenItem(LayoutBlock* layoutBlock)
-        : LayoutBlockItem(layoutBlock)
-    {
-    }
+ public:
+  explicit LayoutFullScreenItem(LayoutBlock* layout_block)
+      : LayoutBlockItem(layout_block) {}
 
-    explicit LayoutFullScreenItem(const LayoutBlockItem& item)
-        : LayoutBlockItem(item)
-    {
-        SECURITY_DCHECK(!item || item.isLayoutFullScreen());
-    }
+  explicit LayoutFullScreenItem(const LayoutBlockItem& item)
+      : LayoutBlockItem(item) {
+    SECURITY_DCHECK(!item || item.IsLayoutFullScreen());
+  }
 
-    explicit LayoutFullScreenItem(std::nullptr_t) : LayoutBlockItem(nullptr) { }
+  explicit LayoutFullScreenItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
-    LayoutFullScreenItem() { }
+  LayoutFullScreenItem() {}
 
-    void unwrapLayoutObject()
-    {
-        return toFullScreen()->unwrapLayoutObject();
-    }
+  void UnwrapLayoutObject() { return ToFullScreen()->UnwrapLayoutObject(); }
 
-private:
-    LayoutFullScreen* toFullScreen() { return toLayoutFullScreen(layoutObject()); }
-    const LayoutFullScreen* toFullScreen() const { return toLayoutFullScreen(layoutObject()); }
+ private:
+  LayoutFullScreen* ToFullScreen() {
+    return ToLayoutFullScreen(GetLayoutObject());
+  }
+  const LayoutFullScreen* ToFullScreen() const {
+    return ToLayoutFullScreen(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutFullScreenItem_h
+#endif  // LayoutFullScreenItem_h

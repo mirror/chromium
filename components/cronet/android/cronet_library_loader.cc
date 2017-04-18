@@ -18,8 +18,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "components/cronet/android/chromium_url_request.h"
-#include "components/cronet/android/chromium_url_request_context.h"
+#include "base/metrics/statistics_recorder.h"
 #include "components/cronet/android/cronet_bidirectional_stream_adapter.h"
 #include "components/cronet/android/cronet_upload_data_stream_adapter.h"
 #include "components/cronet/android/cronet_url_request_adapter.h"
@@ -32,19 +31,18 @@
 #include "url/url_features.h"
 #include "url/url_util.h"
 
-#if BUILDFLAG(USE_PLATFORM_ICU_ALTERNATIVES)
-#include "url/android/url_jni_registrar.h"  // nogncheck
-#else
+#if !BUILDFLAG(USE_PLATFORM_ICU_ALTERNATIVES)
 #include "base/i18n/icu_util.h"  // nogncheck
 #endif
+
+using base::android::JavaParamRef;
+using base::android::ScopedJavaLocalRef;
 
 namespace cronet {
 namespace {
 
 const base::android::RegistrationMethod kCronetRegisteredMethods[] = {
     {"BaseAndroid", base::android::RegisterJni},
-    {"ChromiumUrlRequest", ChromiumUrlRequestRegisterJni},
-    {"ChromiumUrlRequestContext", ChromiumUrlRequestContextRegisterJni},
     {"CronetBidirectionalStreamAdapter",
      CronetBidirectionalStreamAdapter::RegisterJni},
     {"CronetLibraryLoader", RegisterNativesImpl},
@@ -53,9 +51,6 @@ const base::android::RegistrationMethod kCronetRegisteredMethods[] = {
     {"CronetUrlRequestContextAdapter",
      CronetUrlRequestContextAdapterRegisterJni},
     {"NetAndroid", net::android::RegisterJni},
-#if BUILDFLAG(USE_PLATFORM_ICU_ALTERNATIVES)
-    {"UrlAndroid", url::android::RegisterJni},
-#endif
 };
 
 // MessageLoop on the main thread, which is where objects that receive Java
@@ -69,8 +64,13 @@ bool RegisterJNI(JNIEnv* env) {
       env, kCronetRegisteredMethods, arraysize(kCronetRegisteredMethods));
 }
 
-bool Init() {
+bool NativeInit() {
+  if (!base::android::OnJNIOnLoadInit())
+    return false;
   url::Initialize();
+  // Initializes the statistics recorder system. This needs to be done before
+  // emitting histograms to prevent memory leaks (crbug.com/707836).
+  base::StatisticsRecorder::Initialize();
   return true;
 }
 
@@ -78,12 +78,10 @@ bool Init() {
 
 // Checks the available version of JNI. Also, caches Java reflection artifacts.
 jint CronetOnLoad(JavaVM* vm, void* reserved) {
-  std::vector<base::android::RegisterCallback> register_callbacks;
-  register_callbacks.push_back(base::Bind(&RegisterJNI));
-  std::vector<base::android::InitCallback> init_callbacks;
-  init_callbacks.push_back(base::Bind(&Init));
-  if (!base::android::OnJNIOnLoadRegisterJNI(vm, register_callbacks) ||
-      !base::android::OnJNIOnLoadInit(init_callbacks)) {
+  base::android::InitVM(vm);
+  JNIEnv* env = base::android::AttachCurrentThread();
+  if (!base::android::OnJNIOnLoadRegisterJNI(env) || !RegisterJNI(env) ||
+      !NativeInit()) {
     return -1;
   }
   return JNI_VERSION_1_6;

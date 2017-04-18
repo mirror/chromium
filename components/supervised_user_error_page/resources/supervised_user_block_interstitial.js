@@ -2,6 +2,40 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+var mobileNav = false;
+
+var showDetails = false;
+
+/**
+ * For small screen mobile the navigation buttons are moved
+ * below the advanced text.
+ */
+function onResize() {
+  var mediaQuery = '(min-width: 240px) and (max-width: 420px) and ' +
+      '(max-height: 736px) and (min-height: 401px) and ' +
+      '(orientation: portrait), (max-width: 736px) and ' +
+      '(max-height: 420px) and (min-height: 240px) and ' +
+      '(min-width: 421px) and (orientation: landscape)';
+
+  // Check for change in nav status.
+  if (mobileNav != window.matchMedia(mediaQuery).matches) {
+    mobileNav = !mobileNav;
+    updateDetails();
+  }
+}
+
+function updateDetails() {
+  $('information-container').hidden = mobileNav && showDetails;
+  $('details').hidden = !showDetails;
+}
+
+function setupMobileNav() {
+  window.addEventListener('resize', onResize);
+  onResize();
+}
+
+document.addEventListener('DOMContentLoaded', setupMobileNav);
+
 function sendCommand(cmd) {
   window.domAutomationController.setAutomationId(1);
   window.domAutomationController.send(cmd);
@@ -15,7 +49,11 @@ function initialize() {
   if (loadTimeData.getBoolean('allowAccessRequests')) {
     $('request-access-button').onclick = function(event) {
       $('request-access-button').hidden = true;
-      sendCommand('request');
+      if (window.domAutomationController) {
+        sendCommand('request');
+      } else {
+        window.webRestrictions.requestPermission(setRequestStatus);
+      }
     };
   } else {
     $('request-access-button').hidden = true;
@@ -48,25 +86,24 @@ function initialize() {
   }
   var showDetailsLink = loadTimeData.getString('showDetailsLink');
   $('show-details-link').hidden = !showDetailsLink;
-  $('back-button').hidden = showDetailsLink;
+  $('back-button').hidden = showDetailsLink || !window.domAutomationController;
   $('back-button').onclick = function(event) {
     sendCommand('back');
   };
   $('show-details-link').onclick = function(event) {
-    $('details').hidden = false;
+    showDetails = true;
     $('show-details-link').hidden = true;
     $('hide-details-link').hidden = false;
-    $('information-container').classList.add('hidden-on-mobile');
-    $('request-access-button').classList.add('hidden-on-mobile');
+    updateDetails();
   };
   $('hide-details-link').onclick = function(event) {
-    $('details').hidden = true;
+    showDetails = false;
     $('show-details-link').hidden = false;
     $('hide-details-link').hidden = true;
-    $('information-container').classList.remove('hidden-on-mobile');
-    $('request-access-button').classList.remove('hidden-on-mobile');
+    updateDetails();
   };
-  if (loadTimeData.getBoolean('showFeedbackLink')) {
+  if (window.domAutomationController &&
+        loadTimeData.getBoolean('showFeedbackLink')) {
     $('feedback-link').onclick = function(event) {
       sendCommand('feedback');
     };
@@ -80,18 +117,23 @@ function initialize() {
  * @param {boolean} isSuccessful Whether the request was successful or not.
  */
 function setRequestStatus(isSuccessful) {
+  console.log('setRequestStatus(' + isSuccessful +')');
+  $('block-page-header').hidden = true;
   $('block-page-message').hidden = true;
+  $('hide-details-link').hidden = true;
+  showDetails = false;
+  updateDetails();
+
   if (isSuccessful) {
     $('request-failed-message').hidden = true;
     $('request-sent-message').hidden = false;
-    $('show-details-link').hidden = true;
-    $('hide-details-link').hidden = true;
-    $('details').hidden = true;
-    $('back-button').hidden = false;
+    $('back-button').hidden = !window.domAutomationController;
     $('request-access-button').hidden = true;
+    $('show-details-link').hidden = true;
   } else {
     $('request-failed-message').hidden = false;
     $('request-access-button').hidden = false;
+    $('show-details-link').hidden = false;
   }
 }
 

@@ -44,8 +44,10 @@ class MockDatabase : public CrashReportDatabase {
                OperationStatus(const UUID&, const Report**));
   MOCK_METHOD3(RecordUploadAttempt,
                OperationStatus(const Report*, bool, const std::string&));
-  MOCK_METHOD1(SkipReportUpload, OperationStatus(const UUID&));
+  MOCK_METHOD2(SkipReportUpload,
+               OperationStatus(const UUID&, Metrics::CrashSkippedReason));
   MOCK_METHOD1(DeleteReport, OperationStatus(const UUID&));
+  MOCK_METHOD1(RequestUpload, OperationStatus(const UUID&));
 };
 
 time_t NDaysAgo(int num_days) {
@@ -183,9 +185,9 @@ TEST(PruneCrashReports, BinaryCondition) {
     auto rhs = new StaticCondition(test.rhs_value);
     BinaryPruneCondition condition(test.op, lhs, rhs);
     CrashReportDatabase::Report report;
-    EXPECT_EQ(test.cond_result, condition.ShouldPruneReport(report));
-    EXPECT_EQ(test.lhs_executed, lhs->did_execute());
-    EXPECT_EQ(test.rhs_executed, rhs->did_execute());
+    EXPECT_EQ(condition.ShouldPruneReport(report), test.cond_result);
+    EXPECT_EQ(lhs->did_execute(), test.lhs_executed);
+    EXPECT_EQ(rhs->did_execute(), test.rhs_executed);
   }
 }
 

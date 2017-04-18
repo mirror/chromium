@@ -10,21 +10,24 @@ _typemap_imports = [
   "//mojo/public/cpp/bindings/tests/blink_typemaps.gni",
   "//third_party/WebKit/Source/platform/mojo/blink_typemaps.gni",
   "//third_party/WebKit/public/blink_typemaps.gni",
+  "//third_party/WebKit/public/public_typemaps.gni",
 ]
 _typemaps = []
 
 foreach(typemap_import, _typemap_imports) {
+  # Avoid reassignment error by assigning to empty scope first.
+  _imported = {
+  }
   _imported = read_file(typemap_import, "scope")
   _typemaps += _imported.typemaps
 }
 
 typemaps = []
 foreach(typemap, _typemaps) {
-  typemaps += [ read_file(typemap, "scope") ]
+  typemaps += [ {
+        filename = typemap
+        config = read_file(typemap, "scope")
+      } ]
 }
 
-blacklist = [
-  # TODO(sammc): Remove the following once |for_blink| bindings support WTF
-  # maps with enum keys. See https://crbug.com/583738.
-  "//mojo/public/interfaces/bindings/tests/validation_test_interfaces.mojom",
-]
+blacklist = []

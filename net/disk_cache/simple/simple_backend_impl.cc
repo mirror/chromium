@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <functional>
+#include <limits>
 
 #include "base/memory/ptr_util.h"
 
@@ -29,10 +30,13 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_usage_estimator.h"
+#include "base/trace_event/process_memory_dump.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/cache_util.h"
 #include "net/disk_cache/simple/simple_entry_format.h"
 #include "net/disk_cache/simple/simple_entry_impl.h"
+#include "net/disk_cache/simple/simple_experiment.h"
 #include "net/disk_cache/simple/simple_histogram_macros.h"
 #include "net/disk_cache/simple/simple_index.h"
 #include "net/disk_cache/simple/simple_index_file.h"
@@ -129,20 +133,19 @@ void MaybeHistogramFdLimit(net::CacheType cache_type) {
 // Detects if the files in the cache directory match the current disk cache
 // backend type and version. If the directory contains no cache, occupies it
 // with the fresh structure.
-bool FileStructureConsistent(const base::FilePath& path) {
+bool FileStructureConsistent(const base::FilePath& path,
+                             const SimpleExperiment& experiment) {
   if (!base::PathExists(path) && !base::CreateDirectory(path)) {
     LOG(ERROR) << "Failed to create directory: " << path.LossyDisplayName();
     return false;
   }
-  return disk_cache::UpgradeSimpleCacheOnDisk(path);
+  return disk_cache::UpgradeSimpleCacheOnDisk(path, experiment);
 }
 
 // A context used by a BarrierCompletionCallback to track state.
 struct BarrierContext {
-  BarrierContext(int expected)
-      : expected(expected),
-        count(0),
-        had_error(false) {}
+  explicit BarrierContext(int expected)
+      : expected(expected), count(0), had_error(false) {}
 
   const int expected;
   int count;
@@ -203,6 +206,13 @@ void RecordIndexLoad(net::CacheType cache_type,
 
 }  // namespace
 
+// Static function which is called by base::trace_event::EstimateMemoryUsage()
+// to estimate the memory of SimpleEntryImpl* type.
+// This needs to be in disk_cache namespace.
+size_t EstimateMemoryUsage(const SimpleEntryImpl* const& entry_impl) {
+  return sizeof(SimpleEntryImpl) + entry_impl->EstimateMemoryUsage();
+}
+
 class SimpleBackendImpl::ActiveEntryProxy
     : public SimpleEntryImpl::ActiveEntryProxy {
  public:
@@ -255,18 +265,16 @@ int SimpleBackendImpl::Init(const CompletionCallback& completion_callback) {
 
   index_.reset(new SimpleIndex(
       base::ThreadTaskRunnerHandle::Get(), this, cache_type_,
-      base::WrapUnique(new SimpleIndexFile(cache_thread_, worker_pool_.get(),
-                                           cache_type_, path_))));
+      base::MakeUnique<SimpleIndexFile>(cache_thread_, worker_pool_.get(),
+                                        cache_type_, path_)));
   index_->ExecuteWhenReady(
       base::Bind(&RecordIndexLoad, cache_type_, base::TimeTicks::Now()));
 
   PostTaskAndReplyWithResult(
-      cache_thread_.get(),
-      FROM_HERE,
-      base::Bind(
-          &SimpleBackendImpl::InitCacheStructureOnDisk, path_, orig_max_size_),
-      base::Bind(&SimpleBackendImpl::InitializeIndex,
-                 AsWeakPtr(),
+      cache_thread_.get(), FROM_HERE,
+      base::Bind(&SimpleBackendImpl::InitCacheStructureOnDisk, path_,
+                 orig_max_size_, GetSimpleExperiment(cache_type_)),
+      base::Bind(&SimpleBackendImpl::InitializeIndex, AsWeakPtr(),
                  completion_callback));
   return net::ERR_IO_PENDING;
 }
@@ -459,6 +467,15 @@ int SimpleBackendImpl::CalculateSizeOfAllEntries(
       &SimpleBackendImpl::IndexReadyForSizeCalculation, AsWeakPtr(), callback));
 }
 
+int SimpleBackendImpl::CalculateSizeOfEntriesBetween(
+    base::Time initial_time,
+    base::Time end_time,
+    const CompletionCallback& callback) {
+  return index_->ExecuteWhenReady(
+      base::Bind(&SimpleBackendImpl::IndexReadyForSizeBetweenCalculation,
+                 AsWeakPtr(), initial_time, end_time, callback));
+}
+
 class SimpleBackendImpl::SimpleIterator final : public Iterator {
  public:
   explicit SimpleIterator(base::WeakPtr<SimpleBackendImpl> backend)
@@ -544,6 +561,21 @@ void SimpleBackendImpl::OnExternalCacheHit(const std::string& key) {
   index_->UseIfExists(simple_util::GetEntryHashKey(key));
 }
 
+size_t SimpleBackendImpl::DumpMemoryStats(
+    base::trace_event::ProcessMemoryDump* pmd,
+    const std::string& parent_absolute_name) const {
+  base::trace_event::MemoryAllocatorDump* dump =
+      pmd->CreateAllocatorDump(parent_absolute_name + "/simple_backend");
+
+  size_t size = base::trace_event::EstimateMemoryUsage(index_) +
+                base::trace_event::EstimateMemoryUsage(active_entries_);
+  // TODO(xunjieli): crbug.com/669108. Track |entries_pending_doom_| once
+  // base::Closure is suppported in memory_usage_estimator.h.
+  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                  base::trace_event::MemoryAllocatorDump::kUnitsBytes, size);
+  return size;
+}
+
 void SimpleBackendImpl::InitializeIndex(const CompletionCallback& callback,
                                         const DiskStatResult& result) {
   if (result.net_error == net::OK) {
@@ -574,13 +606,27 @@ void SimpleBackendImpl::IndexReadyForSizeCalculation(
   callback.Run(result);
 }
 
+void SimpleBackendImpl::IndexReadyForSizeBetweenCalculation(
+    base::Time initial_time,
+    base::Time end_time,
+    const CompletionCallback& callback,
+    int result) {
+  if (result == net::OK) {
+    result =
+        static_cast<int>(index_->GetCacheSizeBetween(initial_time, end_time));
+  }
+  callback.Run(result);
+}
+
+// static
 SimpleBackendImpl::DiskStatResult SimpleBackendImpl::InitCacheStructureOnDisk(
     const base::FilePath& path,
-    uint64_t suggested_max_size) {
+    uint64_t suggested_max_size,
+    const SimpleExperiment& experiment) {
   DiskStatResult result;
   result.max_size = suggested_max_size;
   result.net_error = net::OK;
-  if (!FileStructureConsistent(path)) {
+  if (!FileStructureConsistent(path, experiment)) {
     LOG(ERROR) << "Simple Cache Backend: wrong file structure on disk: "
                << path.LossyDisplayName();
     result.net_error = net::ERR_FAILED;
@@ -591,6 +637,14 @@ SimpleBackendImpl::DiskStatResult SimpleBackendImpl::InitCacheStructureOnDisk(
     if (!result.max_size) {
       int64_t available = base::SysInfo::AmountOfFreeDiskSpace(path);
       result.max_size = disk_cache::PreferredCacheSize(available);
+
+      if (experiment.type == SimpleExperimentType::SIZE) {
+        int64_t adjusted_max_size = (result.max_size * experiment.param) / 100;
+        adjusted_max_size =
+            std::min(static_cast<int64_t>(std::numeric_limits<int32_t>::max()),
+                     adjusted_max_size);
+        result.max_size = adjusted_max_size;
+      }
     }
     DCHECK(result.max_size);
   }
@@ -606,9 +660,8 @@ scoped_refptr<SimpleEntryImpl> SimpleBackendImpl::CreateOrFindActiveEntry(
   EntryMap::iterator& it = insert_result.first;
   const bool did_insert = insert_result.second;
   if (did_insert) {
-    SimpleEntryImpl* entry = it->second =
-        new SimpleEntryImpl(cache_type_, path_, entry_hash,
-                            entry_operations_mode_,this, net_log_);
+    SimpleEntryImpl* entry = it->second = new SimpleEntryImpl(
+        cache_type_, path_, entry_hash, entry_operations_mode_, this, net_log_);
     entry->SetKey(key);
     entry->SetActiveEntryProxy(ActiveEntryProxy::Create(entry_hash, this));
   }

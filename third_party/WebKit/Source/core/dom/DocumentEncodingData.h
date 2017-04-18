@@ -32,40 +32,41 @@
 #define DocumentEncodingData_h
 
 #include "platform/CrossThreadCopier.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/TextEncoding.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
 class TextResourceDecoder;
 
 class DocumentEncodingData {
-    DISALLOW_NEW();
-public:
-    DocumentEncodingData();
-    explicit DocumentEncodingData(const TextResourceDecoder&);
+  DISALLOW_NEW();
 
-    const WTF::TextEncoding& encoding() const { return m_encoding; }
-    void setEncoding(const WTF::TextEncoding&);
-    bool wasDetectedHeuristically() const { return m_wasDetectedHeuristically; }
-    bool sawDecodingError() const { return m_sawDecodingError; }
+ public:
+  DocumentEncodingData();
+  explicit DocumentEncodingData(const TextResourceDecoder&);
 
-private:
-    WTF::TextEncoding m_encoding;
-    bool m_wasDetectedHeuristically;
-    bool m_sawDecodingError;
+  const WTF::TextEncoding& Encoding() const { return encoding_; }
+  void SetEncoding(const WTF::TextEncoding&);
+  bool WasDetectedHeuristically() const { return was_detected_heuristically_; }
+  bool SawDecodingError() const { return saw_decoding_error_; }
+
+ private:
+  WTF::TextEncoding encoding_;
+  bool was_detected_heuristically_;
+  bool saw_decoding_error_;
 };
 
 template <>
-struct CrossThreadCopier<DocumentEncodingData> : public CrossThreadCopierPassThrough<DocumentEncodingData> {
-};
+struct CrossThreadCopier<DocumentEncodingData>
+    : public CrossThreadCopierPassThrough<DocumentEncodingData> {};
 
-inline bool operator!=(const DocumentEncodingData& a, const DocumentEncodingData& b)
-{
-    return a.encoding() != b.encoding()
-        || a.wasDetectedHeuristically() != b.wasDetectedHeuristically()
-        || a.sawDecodingError() != b.sawDecodingError();
+inline bool operator!=(const DocumentEncodingData& a,
+                       const DocumentEncodingData& b) {
+  return a.Encoding() != b.Encoding() ||
+         a.WasDetectedHeuristically() != b.WasDetectedHeuristically() ||
+         a.SawDecodingError() != b.SawDecodingError();
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DocumentEncodingData_h
+#endif  // DocumentEncodingData_h

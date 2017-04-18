@@ -5,16 +5,20 @@
 #include "components/update_client/update_checker.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/version.h"
+#include "build/build_config.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/persisted_data.h"
@@ -40,6 +44,8 @@ base::FilePath test_file(const char* file) {
       .AppendASCII(file);
 }
 
+const char kUpdateItemId[] = "jebgalgnebhfojomionfpkfelancnnkf";
+
 }  // namespace
 
 class UpdateCheckerTest : public testing::Test {
@@ -60,7 +66,7 @@ class UpdateCheckerTest : public testing::Test {
   void RunThreads();
   void RunThreadsUntilIdle();
 
-  CrxUpdateItem BuildCrxUpdateItem();
+  std::unique_ptr<CrxUpdateItem> BuildCrxUpdateItem();
 
   scoped_refptr<TestConfigurator> config_;
   std::unique_ptr<TestingPrefServiceSimple> pref_;
@@ -76,13 +82,14 @@ class UpdateCheckerTest : public testing::Test {
 
  private:
   base::MessageLoopForIO loop_;
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
   base::Closure quit_closure_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateCheckerTest);
 };
 
-UpdateCheckerTest::UpdateCheckerTest() : post_interceptor_(NULL), error_(0) {
-}
+UpdateCheckerTest::UpdateCheckerTest()
+    : post_interceptor_(NULL), error_(0), scoped_task_scheduler_(&loop_) {}
 
 UpdateCheckerTest::~UpdateCheckerTest() {
 }
@@ -147,7 +154,7 @@ void UpdateCheckerTest::UpdateCheckComplete(
   Quit();
 }
 
-CrxUpdateItem UpdateCheckerTest::BuildCrxUpdateItem() {
+std::unique_ptr<CrxUpdateItem> UpdateCheckerTest::BuildCrxUpdateItem() {
   CrxComponent crx_component;
   crx_component.name = "test_jebg";
   crx_component.pk_hash.assign(jebg_hash, jebg_hash + arraysize(jebg_hash));
@@ -155,10 +162,11 @@ CrxUpdateItem UpdateCheckerTest::BuildCrxUpdateItem() {
   crx_component.version = base::Version("0.9");
   crx_component.fingerprint = "fp1";
 
-  CrxUpdateItem crx_update_item;
-  crx_update_item.state = CrxUpdateItem::State::kNew;
-  crx_update_item.id = "jebgalgnebhfojomionfpkfelancnnkf";
-  crx_update_item.component = crx_component;
+  std::unique_ptr<CrxUpdateItem> crx_update_item =
+      base::MakeUnique<CrxUpdateItem>();
+  crx_update_item->state = CrxUpdateItem::State::kNew;
+  crx_update_item->id = kUpdateItemId;
+  crx_update_item->component = crx_component;
 
   return crx_update_item;
 }
@@ -169,13 +177,13 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccess) {
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  item.component.installer_attributes["ap"] = "some_ap";
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  item->component.installer_attributes["ap"] = "some_ap";
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "extra=\"params\"",
+      items_to_check, "extra=\"params\"", true,
       base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
                  base::Unretained(this)));
 
@@ -187,29 +195,41 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccess) {
       << post_interceptor_->GetRequestsAsString();
 
   // Sanity check the request.
+  const auto request = post_interceptor_->GetRequests()[0];
   EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
                               "request protocol=\"3.0\" extra=\"params\""));
   // The request must not contain any "dlpref" in the default case.
-  EXPECT_EQ(string::npos,
-            post_interceptor_->GetRequests()[0].find(" dlpref=\""));
+  EXPECT_EQ(string::npos, request.find(" dlpref=\""));
   EXPECT_NE(
       string::npos,
-      post_interceptor_->GetRequests()[0].find(
-          "<app appid=\"jebgalgnebhfojomionfpkfelancnnkf\" version=\"0.9\" "
-          "brand=\"TEST\" ap=\"some_ap\"><updatecheck /><ping rd=\"-2\" "));
+      request.find(
+          std::string("<app appid=\"") + kUpdateItemId +
+          "\" version=\"0.9\" "
+          "brand=\"TEST\" ap=\"some_ap\"><updatecheck/><ping rd=\"-2\" "));
   EXPECT_NE(string::npos,
-            post_interceptor_->GetRequests()[0].find(
-                "<packages><package fp=\"fp1\"/></packages></app>"));
+            request.find("<packages><package fp=\"fp1\"/></packages></app>"));
 
-  EXPECT_NE(string::npos,
-            post_interceptor_->GetRequests()[0].find("<hw physmemory="));
+  EXPECT_NE(string::npos, request.find("<hw physmemory="));
+
+  // Tests that the progid is injected correctly from the configurator.
+  EXPECT_NE(
+      string::npos,
+      request.find(" version=\"fake_prodid-30.0\" prodversion=\"30.0\" "));
 
   // Sanity check the arguments of the callback after parsing.
   EXPECT_EQ(0, error_);
   EXPECT_EQ(1ul, results_.list.size());
-  EXPECT_STREQ("jebgalgnebhfojomionfpkfelancnnkf",
-               results_.list[0].extension_id.c_str());
+  EXPECT_STREQ(kUpdateItemId, results_.list[0].extension_id.c_str());
   EXPECT_STREQ("1.0", results_.list[0].manifest.version.c_str());
+
+#if (OS_WIN)
+  EXPECT_NE(string::npos, request.find(" domainjoined="));
+#if defined(GOOGLE_CHROME_BUILD)
+  // Check the Omaha updater state data in the request.
+  EXPECT_NE(string::npos, request.find("<updater "));
+  EXPECT_NE(string::npos, request.find(" name=\"Omaha\" "));
+#endif  // GOOGLE_CHROME_BUILD
+#endif  // OS_WINDOWS
 }
 
 // Tests that an invalid "ap" is not serialized.
@@ -219,23 +239,23 @@ TEST_F(UpdateCheckerTest, UpdateCheckInvalidAp) {
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
   // Make "ap" too long.
-  item.component.installer_attributes["ap"] = std::string(257, 'a');
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  item->component.installer_attributes["ap"] = std::string(257, 'a');
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "", base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
-                                     base::Unretained(this)));
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
 
   RunThreads();
 
-  EXPECT_NE(
-      string::npos,
-      post_interceptor_->GetRequests()[0].find(
-          "app appid=\"jebgalgnebhfojomionfpkfelancnnkf\" version=\"0.9\" "
-          "brand=\"TEST\"><updatecheck /><ping rd=\"-2\" "));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
+                              std::string("app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\" "
+                              "brand=\"TEST\"><updatecheck/><ping rd=\"-2\" "));
   EXPECT_NE(string::npos,
             post_interceptor_->GetRequests()[0].find(
                 "<packages><package fp=\"fp1\"/></packages></app>"));
@@ -248,21 +268,21 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccessNoBrand) {
   config_->SetBrand("TOOLONG");   // Sets an invalid brand code.
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "", base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
-                                     base::Unretained(this)));
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
 
   RunThreads();
 
-  EXPECT_NE(
-      string::npos,
-      post_interceptor_->GetRequests()[0].find(
-          "<app appid=\"jebgalgnebhfojomionfpkfelancnnkf\" version=\"0.9\">"
-          "<updatecheck /><ping rd=\"-2\" "));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
+                              std::string("<app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\">"
+                              "<updatecheck/><ping rd=\"-2\" "));
   EXPECT_NE(string::npos,
             post_interceptor_->GetRequests()[0].find(
                 "<packages><package fp=\"fp1\"/></packages></app>"));
@@ -275,13 +295,14 @@ TEST_F(UpdateCheckerTest, UpdateCheckError) {
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "", base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
-                                     base::Unretained(this)));
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
   RunThreads();
 
   EXPECT_EQ(1, post_interceptor_->GetHitCount())
@@ -301,12 +322,12 @@ TEST_F(UpdateCheckerTest, UpdateCheckDownloadPreference) {
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "extra=\"params\"",
+      items_to_check, "extra=\"params\"", true,
       base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
                  base::Unretained(this)));
 
@@ -324,16 +345,17 @@ TEST_F(UpdateCheckerTest, UpdateCheckCupError) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
-  config_->SetUseCupSigning(true);
+  config_->SetEnabledCupSigning(true);
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "", base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
-                                     base::Unretained(this)));
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
 
   RunThreads();
 
@@ -343,11 +365,10 @@ TEST_F(UpdateCheckerTest, UpdateCheckCupError) {
       << post_interceptor_->GetRequestsAsString();
 
   // Sanity check the request.
-  EXPECT_NE(
-      string::npos,
-      post_interceptor_->GetRequests()[0].find(
-          "<app appid=\"jebgalgnebhfojomionfpkfelancnnkf\" version=\"0.9\" "
-          "brand=\"TEST\"><updatecheck /><ping rd=\"-2\" "));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
+                              std::string("<app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\" "
+                              "brand=\"TEST\"><updatecheck/><ping rd=\"-2\" "));
   EXPECT_NE(string::npos,
             post_interceptor_->GetRequests()[0].find(
                 "<packages><package fp=\"fp1\"/></packages></app>"));
@@ -364,14 +385,15 @@ TEST_F(UpdateCheckerTest, UpdateCheckRequiresEncryptionError) {
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  item.component.requires_network_encryption = true;
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  item->component.requires_network_encryption = true;
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   update_checker_->CheckForUpdates(
-      items_to_check, "", base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
-                                     base::Unretained(this)));
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
   RunThreads();
 
   EXPECT_EQ(-1, error_);
@@ -388,19 +410,19 @@ TEST_F(UpdateCheckerTest, UpdateCheckDateLastRollCall) {
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
 
-  CrxUpdateItem item(BuildCrxUpdateItem());
-  std::vector<CrxUpdateItem*> items_to_check;
-  items_to_check.push_back(&item);
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
 
   // Do two update-checks.
   update_checker_->CheckForUpdates(
-      items_to_check, "extra=\"params\"",
+      items_to_check, "extra=\"params\"", true,
       base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
                  base::Unretained(this)));
   RunThreads();
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
   update_checker_->CheckForUpdates(
-      items_to_check, "extra=\"params\"",
+      items_to_check, "extra=\"params\"", true,
       base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
                  base::Unretained(this)));
   RunThreads();
@@ -413,6 +435,84 @@ TEST_F(UpdateCheckerTest, UpdateCheckDateLastRollCall) {
                               "<ping rd=\"-2\" ping_freshness="));
   EXPECT_NE(string::npos, post_interceptor_->GetRequests()[1].find(
                               "<ping rd=\"3383\" ping_freshness="));
+}
+
+TEST_F(UpdateCheckerTest, UpdateCheckUpdateDisabled) {
+  EXPECT_TRUE(post_interceptor_->ExpectRequest(
+      new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
+
+  config_->SetBrand("");
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+
+  std::unique_ptr<CrxUpdateItem> item = BuildCrxUpdateItem();
+  CrxUpdateItem* item_ptr = item.get();
+
+  // Tests the scenario where:
+  //  * the component does not support group policies.
+  //  * the component updates are disabled.
+  // Expects the group policy to be ignored and the update check to not
+  // include the "updatedisabled" attribute.
+  EXPECT_FALSE(
+      item_ptr->component.supports_group_policy_enable_component_updates);
+  IdToCrxUpdateItemMap items_to_check;
+  items_to_check[kUpdateItemId] = std::move(item);
+  update_checker_->CheckForUpdates(
+      items_to_check, "", false,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
+                              std::string("<app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\">"
+                              "<updatecheck/>"));
+
+  // Tests the scenario where:
+  //  * the component supports group policies.
+  //  * the component updates are disabled.
+  // Expects the update check to include the "updatedisabled" attribute.
+  item_ptr->component.supports_group_policy_enable_component_updates = true;
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      items_to_check, "", false,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[1].find(
+                              std::string("<app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\">"
+                              "<updatecheck updatedisabled=\"true\"/>"));
+
+  // Tests the scenario where:
+  //  * the component does not support group policies.
+  //  * the component updates are enabled.
+  // Expects the update check to not include the "updatedisabled" attribute.
+  item_ptr->component.supports_group_policy_enable_component_updates = false;
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[2].find(
+                              std::string("<app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\">"
+                              "<updatecheck/>"));
+
+  // Tests the scenario where:
+  //  * the component supports group policies.
+  //  * the component updates are enabled.
+  // Expects the update check to not include the "updatedisabled" attribute.
+  item_ptr->component.supports_group_policy_enable_component_updates = true;
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      items_to_check, "", true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[3].find(
+                              std::string("<app appid=\"") + kUpdateItemId +
+                              "\" version=\"0.9\">"
+                              "<updatecheck/>"));
 }
 
 }  // namespace update_client

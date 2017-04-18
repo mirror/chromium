@@ -9,7 +9,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/linked_ptr.h"
 #include "base/memory/weak_ptr.h"
 #include "extensions/renderer/object_backed_native_handler.h"
 #include "v8/include/v8.h"
@@ -18,12 +17,8 @@ class CastRtpStream;
 class CastUdpTransport;
 
 namespace base {
-class BinaryValue;
 class DictionaryValue;
-}
-
-namespace blink {
-class WebMediaStream;
+class Value;
 }
 
 namespace net {
@@ -40,11 +35,13 @@ struct FrameReceiverConfig;
 }
 
 namespace extensions {
+class ExtensionBindingsSystem;
 
 // Native code that handle chrome.webrtc custom bindings.
 class CastStreamingNativeHandler : public ObjectBackedNativeHandler {
  public:
-  explicit CastStreamingNativeHandler(ScriptContext* context);
+  CastStreamingNativeHandler(ScriptContext* context,
+                             ExtensionBindingsSystem* bindings_system);
   ~CastStreamingNativeHandler() override;
 
  protected:
@@ -108,7 +105,7 @@ class CastStreamingNativeHandler : public ObjectBackedNativeHandler {
       const std::string& error_message);
 
   void CallGetRawEventsCallback(int transport_id,
-                                std::unique_ptr<base::BinaryValue> raw_events);
+                                std::unique_ptr<base::Value> raw_events);
   void CallGetStatsCallback(int transport_id,
                             std::unique_ptr<base::DictionaryValue> stats);
 
@@ -132,18 +129,19 @@ class CastStreamingNativeHandler : public ObjectBackedNativeHandler {
 
   int last_transport_id_;
 
-  typedef std::map<int, linked_ptr<CastRtpStream> > RtpStreamMap;
+  using RtpStreamMap = std::map<int, std::unique_ptr<CastRtpStream>>;
   RtpStreamMap rtp_stream_map_;
 
-  typedef std::map<int, linked_ptr<CastUdpTransport> > UdpTransportMap;
+  using UdpTransportMap = std::map<int, std::unique_ptr<CastUdpTransport>>;
   UdpTransportMap udp_transport_map_;
 
   v8::Global<v8::Function> create_callback_;
 
-  typedef std::map<int, linked_ptr<v8::Global<v8::Function>>>
-      RtpStreamCallbackMap;
+  using RtpStreamCallbackMap = std::map<int, v8::Global<v8::Function>>;
   RtpStreamCallbackMap get_raw_events_callbacks_;
   RtpStreamCallbackMap get_stats_callbacks_;
+
+  ExtensionBindingsSystem* bindings_system_;
 
   base::WeakPtrFactory<CastStreamingNativeHandler> weak_factory_;
 

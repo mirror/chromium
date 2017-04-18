@@ -30,31 +30,30 @@
 
 #include "core/svg/SVGNumberTearOff.h"
 
-#include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/ExceptionCode.h"
 #include "core/svg/SVGElement.h"
 
 namespace blink {
 
-SVGNumberTearOff::SVGNumberTearOff(SVGNumber* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName)
-    : SVGPropertyTearOff<SVGNumber>(target, contextElement, propertyIsAnimVal, attributeName)
-{
+SVGNumberTearOff::SVGNumberTearOff(SVGNumber* target,
+                                   SVGElement* context_element,
+                                   PropertyIsAnimValType property_is_anim_val,
+                                   const QualifiedName& attribute_name)
+    : SVGPropertyTearOff<SVGNumber>(target,
+                                    context_element,
+                                    property_is_anim_val,
+                                    attribute_name) {}
+
+void SVGNumberTearOff::setValue(float f, ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  Target()->SetValue(f);
+  CommitChange();
 }
 
-void SVGNumberTearOff::setValue(float f, ExceptionState& exceptionState)
-{
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setValue(f);
-    commitChange();
+DEFINE_TRACE_WRAPPERS(SVGNumberTearOff) {
+  visitor->TraceWrappers(contextElement());
 }
 
-DEFINE_TRACE_WRAPPERS(SVGNumberTearOff)
-{
-    visitor->traceWrappers(contextElement());
-}
-
-} // namespace blink
+}  // namespace blink

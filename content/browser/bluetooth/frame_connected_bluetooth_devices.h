@@ -9,7 +9,10 @@
 #include <string>
 #include <unordered_map>
 
+#include "base/optional.h"
+#include "content/common/bluetooth/web_bluetooth_device_id.h"
 #include "content/common/content_export.h"
+#include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
 #include "url/origin.h"
 
 namespace device {
@@ -18,6 +21,7 @@ class BluetoothGattConnection;
 
 namespace content {
 
+struct GATTConnectionAndServerClient;
 class RenderFrameHost;
 class WebContentsImpl;
 
@@ -35,22 +39,23 @@ class CONTENT_EXPORT FrameConnectedBluetoothDevices final {
   ~FrameConnectedBluetoothDevices();
 
   // Returns true if the map holds a connection to |device_id|.
-  bool IsConnectedToDeviceWithId(const std::string& device_id);
+  bool IsConnectedToDeviceWithId(const WebBluetoothDeviceId& device_id);
 
   // If a connection doesn't exist already for |device_id|, adds a connection to
   // the map and increases the WebContents count of connected devices.
-  void Insert(const std::string& device_id,
-              std::unique_ptr<device::BluetoothGattConnection> connection);
+  void Insert(const WebBluetoothDeviceId& device_id,
+              std::unique_ptr<device::BluetoothGattConnection> connection,
+              blink::mojom::WebBluetoothServerClientAssociatedPtr client);
 
   // Deletes the BluetoothGattConnection for |device_id| and decrements the
   // WebContents count of connected devices if |device_id| had a connection.
-  void CloseConnectionToDeviceWithId(const std::string& device_id);
+  void CloseConnectionToDeviceWithId(const WebBluetoothDeviceId& device_id);
 
   // Deletes the BluetoothGattConnection for |device_address| and decrements the
   // WebContents count of connected devices if |device_address| had a
   // connection. Returns the device_id of the device associated with the
   // connection.
-  std::string CloseConnectionToDeviceWithAddress(
+  base::Optional<WebBluetoothDeviceId> CloseConnectionToDeviceWithAddress(
       const std::string& device_address);
 
  private:
@@ -64,12 +69,14 @@ class CONTENT_EXPORT FrameConnectedBluetoothDevices final {
 
   // Keeps the BluetoothGattConnection objects alive so that connections don't
   // get closed.
-  std::unordered_map<std::string,
-                     std::unique_ptr<device::BluetoothGattConnection>>
+  std::unordered_map<WebBluetoothDeviceId,
+                     std::unique_ptr<GATTConnectionAndServerClient>,
+                     WebBluetoothDeviceIdHash>
       device_id_to_connection_map_;
 
   // Keeps track of which device addresses correspond to which ids.
-  std::unordered_map<std::string, std::string> device_address_to_id_map_;
+  std::unordered_map<std::string, WebBluetoothDeviceId>
+      device_address_to_id_map_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameConnectedBluetoothDevices);
 };

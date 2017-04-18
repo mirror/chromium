@@ -7,33 +7,27 @@
 namespace blink {
 
 EXTShaderTextureLOD::EXTShaderTextureLOD(WebGLRenderingContextBase* context)
-    : WebGLExtension(context)
-{
-    context->extensionsUtil()->ensureExtensionEnabled("GL_EXT_shader_texture_lod");
+    : WebGLExtension(context) {
+  context->ExtensionsUtil()->EnsureExtensionEnabled(
+      "GL_EXT_shader_texture_lod");
 }
 
-EXTShaderTextureLOD::~EXTShaderTextureLOD()
-{
+WebGLExtensionName EXTShaderTextureLOD::GetName() const {
+  return kEXTShaderTextureLODName;
 }
 
-WebGLExtensionName EXTShaderTextureLOD::name() const
-{
-    return EXTShaderTextureLODName;
+EXTShaderTextureLOD* EXTShaderTextureLOD::Create(
+    WebGLRenderingContextBase* context) {
+  return new EXTShaderTextureLOD(context);
 }
 
-EXTShaderTextureLOD* EXTShaderTextureLOD::create(WebGLRenderingContextBase* context)
-{
-    return new EXTShaderTextureLOD(context);
+bool EXTShaderTextureLOD::Supported(WebGLRenderingContextBase* context) {
+  return context->ExtensionsUtil()->SupportsExtension(
+      "GL_EXT_shader_texture_lod");
 }
 
-bool EXTShaderTextureLOD::supported(WebGLRenderingContextBase* context)
-{
-    return context->extensionsUtil()->supportsExtension("GL_EXT_shader_texture_lod");
+const char* EXTShaderTextureLOD::ExtensionName() {
+  return "EXT_shader_texture_lod";
 }
 
-const char* EXTShaderTextureLOD::extensionName()
-{
-    return "EXT_shader_texture_lod";
-}
-
-} // namespace blink
+}  // namespace blink

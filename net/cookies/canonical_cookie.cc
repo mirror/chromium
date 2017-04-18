@@ -157,7 +157,8 @@ Time CanonicalCookie::CanonExpiration(const ParsedCookie& pc,
   // Try the Expires attribute.
   if (pc.HasExpires() && !pc.Expires().empty()) {
     // Adjust for clock skew between server and host.
-    base::Time parsed_expiry = cookie_util::ParseCookieTime(pc.Expires());
+    base::Time parsed_expiry =
+        cookie_util::ParseCookieExpirationTime(pc.Expires());
     if (!parsed_expiry.is_null())
       return parsed_expiry + (current - server_time);
   }
@@ -194,8 +195,7 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
   // origins", if the cookie's "secure-only-flag" is "true" and the requesting
   // URL does not have a secure scheme, the cookie should be thrown away.
   // https://tools.ietf.org/html/draft-ietf-httpbis-cookie-alone
-  if (options.enforce_strict_secure() && parsed_cookie.IsSecure() &&
-      !url.SchemeIsCryptographic()) {
+  if (parsed_cookie.IsSecure() && !url.SchemeIsCryptographic()) {
     VLOG(kVlogSetCookies)
         << "Create() is trying to create a secure cookie from an insecure URL";
     return nullptr;
@@ -239,7 +239,6 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
     bool secure,
     bool http_only,
     CookieSameSite same_site,
-    bool enforce_strict_secure,
     CookiePriority priority) {
   // Expect valid attribute tokens and values, as defined by the ParsedCookie
   // logic, otherwise don't create the cookie.
@@ -259,7 +258,7 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
     return nullptr;
   }
 
-  if (enforce_strict_secure && secure && !url.SchemeIsCryptographic())
+  if (secure && !url.SchemeIsCryptographic())
     return nullptr;
 
   std::string parsed_path = ParsedCookie::ParseValueString(path);
@@ -305,7 +304,8 @@ std::unique_ptr<CanonicalCookie> CanonicalCookie::Create(
 bool CanonicalCookie::IsEquivalentForSecureCookieMatching(
     const CanonicalCookie& ecc) const {
   return (name_ == ecc.Name() && (ecc.IsDomainMatch(DomainWithoutDot()) ||
-                                  IsDomainMatch(ecc.DomainWithoutDot())));
+                                  IsDomainMatch(ecc.DomainWithoutDot())) &&
+          ecc.IsOnPath(Path()));
 }
 
 bool CanonicalCookie::IsOnPath(const std::string& url_path) const {

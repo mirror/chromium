@@ -5,7 +5,7 @@
 #include "components/policy/core/browser/cloud/message_util.h"
 
 #include "base/logging.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace policy {
@@ -46,6 +46,11 @@ int GetIDSForDMStatus(DeviceManagementStatus status) {
       return IDS_POLICY_DM_STATUS_SERVICE_DOMAIN_MISMATCH;
     case DM_STATUS_SERVICE_POLICY_NOT_FOUND:
       return IDS_POLICY_DM_STATUS_SERVICE_POLICY_NOT_FOUND;
+    case DM_STATUS_CANNOT_SIGN_REQUEST:
+      return IDS_POLICY_DM_STATUS_CANNOT_SIGN_REQUEST;
+    case DM_STATUS_SERVICE_ARC_DISABLED:
+      // This error is never shown on the UI.
+      return IDS_POLICY_DM_STATUS_UNKNOWN_ERROR;
   }
   NOTREACHED() << "Unhandled DM status " << status;
   return IDS_POLICY_DM_STATUS_UNKNOWN_ERROR;
@@ -69,8 +74,10 @@ int GetIDSForValidationStatus(CloudPolicyValidatorBase::Status status) {
       return IDS_POLICY_VALIDATION_WRONG_SETTINGS_ENTITY_ID;
     case CloudPolicyValidatorBase::VALIDATION_BAD_TIMESTAMP:
       return IDS_POLICY_VALIDATION_BAD_TIMESTAMP;
-    case CloudPolicyValidatorBase::VALIDATION_WRONG_TOKEN:
-      return IDS_POLICY_VALIDATION_WRONG_TOKEN;
+    case CloudPolicyValidatorBase::VALIDATION_BAD_DM_TOKEN:
+      return IDS_POLICY_VALIDATION_BAD_DM_TOKEN;
+    case CloudPolicyValidatorBase::VALIDATION_BAD_DEVICE_ID:
+      return IDS_POLICY_VALIDATION_BAD_DEVICE_ID;
     case CloudPolicyValidatorBase::VALIDATION_BAD_USERNAME:
       return IDS_POLICY_VALIDATION_BAD_USERNAME;
     case CloudPolicyValidatorBase::VALIDATION_POLICY_PARSE_ERROR:

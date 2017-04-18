@@ -12,14 +12,12 @@
 <script src="../../../http/tests/inspector/timeline-test.js"></script>
 <script>
 
-function doActions(callback)
+function doActions()
 {
     var layer = document.createElement("div");
     layer.classList.add("layer");
     document.getElementById("parent-layer").appendChild(layer);
-
-    if (window.testRunner)
-        testRunner.layoutAndPaintAsyncThen(callback);
+    return new Promise((fulfill) => testRunner.layoutAndPaintAsyncThen(fulfill));
 }
 
 function test()
@@ -30,7 +28,7 @@ function test()
         var events = InspectorTest.timelineModel().inspectedTargetEvents();
         for (var i = 0; i < events.length; ++i) {
             var event = events[i];
-            if (events[i].name === WebInspector.TimelineModel.RecordType.UpdateLayerTree) {
+            if (events[i].name === TimelineModel.TimelineModel.RecordType.UpdateLayerTree) {
                 InspectorTest.addResult("Got UpdateLayerTree event, phase: " + events[i].phase);
                 break;
             }

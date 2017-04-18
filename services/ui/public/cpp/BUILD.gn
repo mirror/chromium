@@ -2,45 +2,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/ui.gni")
+
+# This is the public target. It contains only the public headers. The
+# implementation (and private haders) are in 'internal'.
 source_set("cpp") {
   sources = [
-    "bitmap_uploader.h",
-    "context_provider.h",
-    "gles2_context.h",
-    "input_event_handler.h",
-    "lib/bitmap_uploader.cc",
-    "lib/command_buffer_client_impl.cc",
-    "lib/command_buffer_client_impl.h",
-    "lib/context_provider.cc",
-    "lib/gles2_context.cc",
-    "lib/in_flight_change.cc",
-    "lib/in_flight_change.h",
-    "lib/output_surface.cc",
-    "lib/property_type_converters.cc",
-    "lib/scoped_window_ptr.cc",
-    "lib/window.cc",
-    "lib/window_observer.cc",
-    "lib/window_private.cc",
-    "lib/window_private.h",
-    "lib/window_surface.cc",
-    "lib/window_tree_client.cc",
-    "lib/window_tree_client_delegate.cc",
-    "lib/window_tree_host_factory.cc",
-    "output_surface.h",
+    "client_compositor_frame_sink.h",
     "property_type_converters.h",
-    "scoped_window_ptr.h",
-    "window.h",
-    "window_manager_delegate.cc",
-    "window_manager_delegate.h",
-    "window_observer.h",
-    "window_property.h",
-    "window_surface.h",
-    "window_surface_client.h",
-    "window_tracker.h",
-    "window_tree_client.h",
-    "window_tree_client_delegate.h",
-    "window_tree_client_observer.h",
-    "window_tree_host_factory.h",
+    "raster_thread_helper.h",
   ]
 
   public_deps = [
@@ -48,22 +18,18 @@ source_set("cpp") {
     "//cc",
     "//cc/surfaces",
     "//cc/surfaces:surface_id",
-    "//gpu/command_buffer/client",
-    "//gpu/command_buffer/client:gles2_implementation",
-    "//gpu/command_buffer/common",
     "//mojo/public/cpp/bindings",
-    "//mojo/public/cpp/system",
-    "//services/shell/public/interfaces",
+    "//services/service_manager/public/interfaces",
     "//services/ui/common:mus_common",
+    "//services/ui/public/cpp/gpu",
     "//services/ui/public/interfaces",
   ]
 
   deps = [
+    ":internal",
     "//gpu/command_buffer/client:gles2_cmd_helper",
     "//gpu/command_buffer/client:gles2_interface",
-    "//gpu/ipc/client",
-    "//services/shell/public/cpp",
-    "//services/ui/gles2:lib",
+    "//services/service_manager/public/cpp",
     "//services/ui/public/interfaces",
     "//ui/display",
     "//ui/events",
@@ -75,4 +41,49 @@ source_set("cpp") {
   ]
 
   defines = [ "GL_GLEXT_PROTOTYPES" ]
+
+  allow_circular_includes_from = [ ":internal" ]
+}
+
+source_set("internal") {
+  # This target is an implementation detail and is intended only to be used by
+  # the 'cpp' target.
+  visibility = [
+    ":cpp",
+    "//services/ui/demo:lib",
+  ]
+
+  sources = [
+    "client_compositor_frame_sink.cc",
+    "client_compositor_frame_sink.h",
+    "property_type_converters.cc",
+    "raster_thread_helper.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//cc",
+    "//cc/surfaces",
+    "//cc/surfaces:surface_id",
+    "//mojo/public/cpp/bindings",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/interfaces",
+    "//services/ui/common:mus_common",
+    "//services/ui/public/cpp/gpu",
+    "//services/ui/public/interfaces",
+    "//skia/public/interfaces",
+    "//ui/display",
+    "//ui/events",
+    "//ui/gfx/geometry",
+  ]
+
+  data_deps = [
+    "//services/ui",
+  ]
+
+  defines = [ "GL_GLEXT_PROTOTYPES" ]
+
+  if (use_ozone) {
+    deps += [ "//ui/ozone" ]
+  }
 }

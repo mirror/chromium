@@ -746,14 +746,14 @@ cvox.DomUtil.getPrefixText = function(node, opt_index) {
       opt_index == 0 &&
       firstListitem.parentNode.tagName == 'OL' &&
           node == leftmost &&
-      document.defaultView.getComputedStyle(firstListitem.parentNode)
+      document.defaultView.getComputedStyle(firstListitem.parentElement)
           .listStyleType != 'none') {
     var items = cvox.DomUtil.toArray(firstListitem.parentNode.children).filter(
         function(li) { return li.tagName == 'LI'; });
     var position = items.indexOf(firstListitem) + 1;
     // TODO(dtseng): Support all list style types.
     if (document.defaultView.getComputedStyle(
-            firstListitem.parentNode).listStyleType.indexOf('latin') != -1) {
+            firstListitem.parentElement).listStyleType.indexOf('latin') != -1) {
       position--;
       prefix = String.fromCharCode('A'.charCodeAt(0) + position % 26);
     } else {
@@ -1068,7 +1068,7 @@ cvox.DomUtil.computeHasContent_ = function(node) {
   // get stuck.
   // TODO (clchen, dmazzoni): Manually inject ChromeVox for iframes without src.
   if ((node.tagName == 'IFRAME') && (node.src) &&
-      (node.src.indexOf('javascript:') != 0)) {
+      (!node.src.startsWith('javascript:'))) {
     return true;
   }
 
@@ -2555,6 +2555,7 @@ cvox.DomUtil.purgeNodes = function(nodes) {
 
 /**
  * Calculates a hit point for a given node.
+ * @param {Node} node The given node.
  * @return {{x:(number), y:(number)}} The position.
  */
 cvox.DomUtil.elementToPoint = function(node) {

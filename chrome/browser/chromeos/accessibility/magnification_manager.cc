@@ -7,8 +7,7 @@
 #include <limits>
 #include <memory>
 
-#include "ash/common/accessibility_types.h"
-#include "ash/common/session/session_state_observer.h"
+#include "ash/accessibility_types.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/magnifier/partial_magnification_controller.h"
 #include "ash/shell.h"
@@ -22,6 +21,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
+#include "components/user_manager/user_manager.h"
 #include "content/public/browser/focused_node_details.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_observer.h"
@@ -29,17 +29,16 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 
-class AccountId;
-
 namespace chromeos {
 
 namespace {
 static MagnificationManager* g_magnification_manager = NULL;
 }
 
-class MagnificationManagerImpl : public MagnificationManager,
-                                 public content::NotificationObserver,
-                                 public ash::SessionStateObserver {
+class MagnificationManagerImpl
+    : public MagnificationManager,
+      public content::NotificationObserver,
+      public user_manager::UserManager::UserSessionStateObserver {
  public:
   MagnificationManagerImpl()
       : profile_(NULL),
@@ -108,8 +107,8 @@ class MagnificationManagerImpl : public MagnificationManager,
 
   void SetProfileForTest(Profile* profile) override { SetProfile(profile); }
 
-  // SessionStateObserver overrides:
-  void ActiveUserChanged(const AccountId& account_id) override {
+  // user_manager::UserManager::UserSessionStateObserver overrides:
+  void ActiveUserChanged(const user_manager::User* active_user) override {
     SetProfile(ProfileManager::GetActiveUserProfile());
   }
 
@@ -155,11 +154,10 @@ class MagnificationManagerImpl : public MagnificationManager,
     enabled_ = enabled;
 
     if (type_ == ash::MAGNIFIER_FULL) {
-      ash::Shell::GetInstance()->magnification_controller()->SetEnabled(
-          enabled_);
+      ash::Shell::Get()->magnification_controller()->SetEnabled(enabled_);
       MonitorFocusInPageChange();
     } else {
-      ash::Shell::GetInstance()->partial_magnification_controller()->SetEnabled(
+      ash::Shell::Get()->partial_magnification_controller()->SetEnabled(
           enabled_);
     }
   }
@@ -178,9 +176,8 @@ class MagnificationManagerImpl : public MagnificationManager,
     keep_focus_centered_ = keep_focus_centered;
 
     if (type_ == ash::MAGNIFIER_FULL) {
-      ash::Shell::GetInstance()
-          ->magnification_controller()
-          ->SetKeepFocusCentered(keep_focus_centered_);
+      ash::Shell::Get()->magnification_controller()->SetKeepFocusCentered(
+          keep_focus_centered_);
     }
   }
 
@@ -222,8 +219,8 @@ class MagnificationManagerImpl : public MagnificationManager,
 
     if (AccessibilityManager::Get()) {
       AccessibilityManager::Get()->NotifyAccessibilityStatusChanged(details);
-      if (ash::Shell::GetInstance()) {
-        ash::Shell::GetInstance()->SetCursorCompositingEnabled(
+      if (ash::Shell::Get()) {
+        ash::Shell::Get()->SetCursorCompositingEnabled(
             AccessibilityManager::Get()->ShouldEnableCursorCompositing());
       }
     }
@@ -258,9 +255,9 @@ class MagnificationManagerImpl : public MagnificationManager,
         SetProfile(ProfileManager::GetActiveUserProfile());
 
         // Add a session state observer to be able to monitor session changes.
-        if (!session_state_observer_.get() && ash::Shell::HasInstance())
+        if (!session_state_observer_.get())
           session_state_observer_.reset(
-              new ash::ScopedSessionStateObserver(this));
+              new user_manager::ScopedUserSessionStateObserver(this));
         break;
       case chrome::NOTIFICATION_PROFILE_DESTROYED: {
         // Update |profile_| when exiting a session or shutting down.
@@ -272,10 +269,9 @@ class MagnificationManagerImpl : public MagnificationManager,
       case content::NOTIFICATION_FOCUS_CHANGED_IN_PAGE: {
         content::FocusedNodeDetails* node_details =
             content::Details<content::FocusedNodeDetails>(details).ptr();
-        ash::Shell::GetInstance()
-            ->magnification_controller()
-            ->HandleFocusedNodeChanged(node_details->is_editable_node,
-                                       node_details->node_bounds_in_screen);
+        ash::Shell::Get()->magnification_controller()->HandleFocusedNodeChanged(
+            node_details->is_editable_node,
+            node_details->node_bounds_in_screen);
         break;
       }
     }
@@ -294,7 +290,8 @@ class MagnificationManagerImpl : public MagnificationManager,
 
   content::NotificationRegistrar registrar_;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
-  std::unique_ptr<ash::ScopedSessionStateObserver> session_state_observer_;
+  std::unique_ptr<user_manager::ScopedUserSessionStateObserver>
+      session_state_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(MagnificationManagerImpl);
 };

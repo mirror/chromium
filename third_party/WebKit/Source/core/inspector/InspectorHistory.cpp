@@ -31,7 +31,6 @@
 #include "core/inspector/InspectorHistory.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
 #include "core/dom/Node.h"
 
 namespace blink {
@@ -39,127 +38,112 @@ namespace blink {
 namespace {
 
 class UndoableStateMark final : public InspectorHistory::Action {
-public:
-    UndoableStateMark() : InspectorHistory::Action("[UndoableState]") { }
+ public:
+  UndoableStateMark() : InspectorHistory::Action("[UndoableState]") {}
 
-    bool perform(ExceptionState&) override { return true; }
+  bool Perform(ExceptionState&) override { return true; }
 
-    bool undo(ExceptionState&) override { return true; }
+  bool Undo(ExceptionState&) override { return true; }
 
-    bool redo(ExceptionState&) override { return true; }
+  bool Redo(ExceptionState&) override { return true; }
 
-    bool isUndoableStateMark() override { return true; }
+  bool IsUndoableStateMark() override { return true; }
 };
 
-} // namespace
+}  // namespace
 
-InspectorHistory::Action::Action(const String& name) : m_name(name)
-{
+InspectorHistory::Action::Action(const String& name) : name_(name) {}
+
+InspectorHistory::Action::~Action() {}
+
+DEFINE_TRACE(InspectorHistory::Action) {}
+
+String InspectorHistory::Action::ToString() {
+  return name_;
 }
 
-InspectorHistory::Action::~Action()
-{
+bool InspectorHistory::Action::IsUndoableStateMark() {
+  return false;
 }
 
-DEFINE_TRACE(InspectorHistory::Action)
-{
+String InspectorHistory::Action::MergeId() {
+  return "";
 }
 
-String InspectorHistory::Action::toString()
-{
-    return m_name;
-}
+void InspectorHistory::Action::Merge(Action*) {}
 
-bool InspectorHistory::Action::isUndoableStateMark()
-{
+InspectorHistory::InspectorHistory() : after_last_action_index_(0) {}
+
+bool InspectorHistory::Perform(Action* action,
+                               ExceptionState& exception_state) {
+  if (!action->Perform(exception_state))
     return false;
+  AppendPerformedAction(action);
+  return true;
 }
 
-String InspectorHistory::Action::mergeId()
-{
-    return "";
+void InspectorHistory::AppendPerformedAction(Action* action) {
+  if (!action->MergeId().IsEmpty() && after_last_action_index_ > 0 &&
+      action->MergeId() == history_[after_last_action_index_ - 1]->MergeId()) {
+    history_[after_last_action_index_ - 1]->Merge(action);
+    if (history_[after_last_action_index_ - 1]->IsNoop())
+      --after_last_action_index_;
+    history_.Resize(after_last_action_index_);
+  } else {
+    history_.Resize(after_last_action_index_);
+    history_.push_back(action);
+    ++after_last_action_index_;
+  }
 }
 
-void InspectorHistory::Action::merge(Action*)
-{
+void InspectorHistory::MarkUndoableState() {
+  Perform(new UndoableStateMark(), IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-InspectorHistory::InspectorHistory() : m_afterLastActionIndex(0) { }
+bool InspectorHistory::Undo(ExceptionState& exception_state) {
+  while (after_last_action_index_ > 0 &&
+         history_[after_last_action_index_ - 1]->IsUndoableStateMark())
+    --after_last_action_index_;
 
-bool InspectorHistory::perform(Action* action, ExceptionState& exceptionState)
-{
-    if (!action->perform(exceptionState))
-        return false;
-    appendPerformedAction(action);
-    return true;
-}
-
-void InspectorHistory::appendPerformedAction(Action* action)
-{
-    if (!action->mergeId().isEmpty() && m_afterLastActionIndex > 0 && action->mergeId() == m_history[m_afterLastActionIndex - 1]->mergeId()) {
-        m_history[m_afterLastActionIndex - 1]->merge(action);
-        if (m_history[m_afterLastActionIndex - 1]->isNoop())
-            --m_afterLastActionIndex;
-        m_history.resize(m_afterLastActionIndex);
-    } else {
-        m_history.resize(m_afterLastActionIndex);
-        m_history.append(action);
-        ++m_afterLastActionIndex;
+  while (after_last_action_index_ > 0) {
+    Action* action = history_[after_last_action_index_ - 1].Get();
+    if (!action->Undo(exception_state)) {
+      Reset();
+      return false;
     }
+    --after_last_action_index_;
+    if (action->IsUndoableStateMark())
+      break;
+  }
+
+  return true;
 }
 
-void InspectorHistory::markUndoableState()
-{
-    perform(new UndoableStateMark(), IGNORE_EXCEPTION);
-}
+bool InspectorHistory::Redo(ExceptionState& exception_state) {
+  while (after_last_action_index_ < history_.size() &&
+         history_[after_last_action_index_]->IsUndoableStateMark())
+    ++after_last_action_index_;
 
-bool InspectorHistory::undo(ExceptionState& exceptionState)
-{
-    while (m_afterLastActionIndex > 0 && m_history[m_afterLastActionIndex - 1]->isUndoableStateMark())
-        --m_afterLastActionIndex;
-
-    while (m_afterLastActionIndex > 0) {
-        Action* action = m_history[m_afterLastActionIndex - 1].get();
-        if (!action->undo(exceptionState)) {
-            reset();
-            return false;
-        }
-        --m_afterLastActionIndex;
-        if (action->isUndoableStateMark())
-            break;
+  while (after_last_action_index_ < history_.size()) {
+    Action* action = history_[after_last_action_index_].Get();
+    if (!action->Redo(exception_state)) {
+      Reset();
+      return false;
     }
-
-    return true;
+    ++after_last_action_index_;
+    if (action->IsUndoableStateMark())
+      break;
+  }
+  return true;
 }
 
-bool InspectorHistory::redo(ExceptionState& exceptionState)
-{
-    while (m_afterLastActionIndex < m_history.size() && m_history[m_afterLastActionIndex]->isUndoableStateMark())
-        ++m_afterLastActionIndex;
-
-    while (m_afterLastActionIndex < m_history.size()) {
-        Action* action = m_history[m_afterLastActionIndex].get();
-        if (!action->redo(exceptionState)) {
-            reset();
-            return false;
-        }
-        ++m_afterLastActionIndex;
-        if (action->isUndoableStateMark())
-            break;
-    }
-    return true;
+void InspectorHistory::Reset() {
+  after_last_action_index_ = 0;
+  history_.Clear();
 }
 
-void InspectorHistory::reset()
-{
-    m_afterLastActionIndex = 0;
-    m_history.clear();
+DEFINE_TRACE(InspectorHistory) {
+  visitor->Trace(history_);
 }
 
-DEFINE_TRACE(InspectorHistory)
-{
-    visitor->trace(m_history);
-}
-
-} // namespace blink
-
+}  // namespace blink

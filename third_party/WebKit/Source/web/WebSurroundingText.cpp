@@ -10,16 +10,17 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "public/web/WebSurroundingText.h"
@@ -28,66 +29,82 @@
 #include "core/dom/Node.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/SurroundingText.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/layout/LayoutObject.h"
 #include "public/platform/WebPoint.h"
 #include "public/web/WebHitTestResult.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
-WebSurroundingText::WebSurroundingText()
-{
+WebSurroundingText::WebSurroundingText() {}
+
+WebSurroundingText::~WebSurroundingText() {}
+
+void WebSurroundingText::Initialize(const WebNode& web_node,
+                                    const WebPoint& node_point,
+                                    size_t max_length) {
+  const Node* node = web_node.ConstUnwrap<Node>();
+  if (!node)
+    return;
+
+  // VisiblePosition and SurroundingText must be created with clean layout.
+  node->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  DocumentLifecycle::DisallowTransitionScope disallow_transition(
+      node->GetDocument().Lifecycle());
+
+  if (!node->GetLayoutObject())
+    return;
+
+  // TODO(xiaochengh): The followinng SurroundingText can hold a null Range,
+  // in which case we should prevent it from being stored in |m_private|.
+  private_.reset(new SurroundingText(
+      CreateVisiblePosition(node->GetLayoutObject()->PositionForPoint(
+                                static_cast<IntPoint>(node_point)))
+          .DeepEquivalent()
+          .ParentAnchoredEquivalent(),
+      max_length));
 }
 
-WebSurroundingText::~WebSurroundingText()
-{
+void WebSurroundingText::InitializeFromCurrentSelection(WebLocalFrame* frame,
+                                                        size_t max_length) {
+  LocalFrame* web_frame = ToWebLocalFrameImpl(frame)->GetFrame();
+
+  // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  web_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  if (Range* range =
+          CreateRange(web_frame->Selection()
+                          .ComputeVisibleSelectionInDOMTreeDeprecated()
+                          .ToNormalizedEphemeralRange())) {
+    // TODO(xiaochengh): The followinng SurroundingText can hold a null Range,
+    // in which case we should prevent it from being stored in |m_private|.
+    private_.reset(new SurroundingText(*range, max_length));
+  }
 }
 
-void WebSurroundingText::initialize(const WebNode& webNode, const WebPoint& nodePoint, size_t maxLength)
-{
-    const Node* node = webNode.constUnwrap<Node>();
-    if (!node || !node->layoutObject())
-        return;
-
-    m_private.reset(new SurroundingText(createVisiblePosition(node->layoutObject()->positionForPoint(static_cast<IntPoint>(nodePoint))).deepEquivalent().parentAnchoredEquivalent(), maxLength));
+WebString WebSurroundingText::TextContent() const {
+  return private_->Content();
 }
 
-void WebSurroundingText::initialize(const WebRange& webRange, size_t maxLength)
-{
-    if (Range* range = static_cast<Range*>(webRange))
-        m_private.reset(new SurroundingText(*range, maxLength));
+size_t WebSurroundingText::HitOffsetInTextContent() const {
+  DCHECK_EQ(private_->StartOffsetInContent(), private_->EndOffsetInContent());
+  return private_->StartOffsetInContent();
 }
 
-WebString WebSurroundingText::textContent() const
-{
-    return m_private->content();
+size_t WebSurroundingText::StartOffsetInTextContent() const {
+  return private_->StartOffsetInContent();
 }
 
-size_t WebSurroundingText::hitOffsetInTextContent() const
-{
-    DCHECK_EQ(m_private->startOffsetInContent(), m_private->endOffsetInContent());
-    return m_private->startOffsetInContent();
+size_t WebSurroundingText::EndOffsetInTextContent() const {
+  return private_->EndOffsetInContent();
 }
 
-size_t WebSurroundingText::startOffsetInTextContent() const
-{
-    return m_private->startOffsetInContent();
+bool WebSurroundingText::IsNull() const {
+  return !private_.get();
 }
 
-size_t WebSurroundingText::endOffsetInTextContent() const
-{
-    return m_private->endOffsetInContent();
-}
-
-WebRange WebSurroundingText::rangeFromContentOffsets(size_t startOffsetInContent, size_t endOffsetInContent)
-{
-    return m_private->rangeFromContentOffsets(startOffsetInContent, endOffsetInContent);
-}
-
-bool WebSurroundingText::isNull() const
-{
-    return !m_private.get();
-}
-
-} // namespace blink
+}  // namespace blink

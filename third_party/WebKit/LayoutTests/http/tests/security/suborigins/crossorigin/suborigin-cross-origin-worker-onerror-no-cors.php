@@ -4,19 +4,20 @@ header("Suborigin: foobar");
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        window.jsTestIsAsync = true;
-        window.isOnErrorTest = true;
-    </script>
-    <script src="/js-test-resources/js-test.js"></script>
+<meta charset="utf-8">
+<title>Scripts imported into a worker from crossorigin hosts throw SecurityError</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 </head>
 <body>
 <script>
-        description("Ensure that scripts imported into a Worker from cross-origin hosts trigger sanitized onerror messages.");
-
-        var worker;
-        shouldThrow('worker = new Worker("/workers/resources/worker-importscripts-onerror-sameorigin.js")', '"SecurityError: Failed to construct \'Worker\': Script at \'http://127.0.0.1:8000/workers/resources/worker-importscripts-onerror-sameorigin.js\' cannot be accessed from origin \'http://foobar_127.0.0.1:8000\'."');
-        finishJSTest();
-    </script>
+var worker;
+var worker_path =
+    '/workers/resources/worker-importscripts-onerror-sameorigin.js';
+assert_throws('SecurityError', function() {
+    worker = new Worker(worker_path);
+  });
+done();
+</script>
 </body>
 </html>

@@ -6,42 +6,53 @@
 #define TrackDefault_h
 
 #include "bindings/core/v8/ScriptWrappable.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 
-class TrackDefault final : public GarbageCollectedFinalized<TrackDefault>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static const AtomicString& audioKeyword();
-    static const AtomicString& videoKeyword();
-    static const AtomicString& textKeyword();
+class TrackDefault final : public GarbageCollectedFinalized<TrackDefault>,
+                           public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static TrackDefault* create(const AtomicString& type, const String& language, const String& label, const Vector<String>& kinds, const String& byteStreamTrackID, ExceptionState&);
+ public:
+  static const AtomicString& AudioKeyword();
+  static const AtomicString& VideoKeyword();
+  static const AtomicString& TextKeyword();
 
-    virtual ~TrackDefault();
+  static TrackDefault* Create(const AtomicString& type,
+                              const String& language,
+                              const String& label,
+                              const Vector<String>& kinds,
+                              const String& byte_stream_track_id,
+                              ExceptionState&);
 
-    // Implement the IDL
-    AtomicString type() const { return m_type; }
-    String byteStreamTrackID() const { return m_byteStreamTrackID; }
-    String language() const { return m_language; }
-    String label() const { return m_label; }
-    const Vector<String>& kinds() const { return m_kinds; }
+  virtual ~TrackDefault();
 
-    DEFINE_INLINE_TRACE() { }
+  // Implement the IDL
+  AtomicString type() const { return type_; }
+  String byteStreamTrackID() const { return byte_stream_track_id_; }
+  String language() const { return language_; }
+  String label() const { return label_; }
+  const Vector<String>& kinds() const { return kinds_; }
 
-private:
-    TrackDefault(const AtomicString& type, const String& language, const String& label, const Vector<String>& kinds, const String& byteStreamTrackID);
+  DEFINE_INLINE_TRACE() {}
 
-    const AtomicString m_type;
-    const String m_byteStreamTrackID;
-    const String m_language;
-    const String m_label;
-    const Vector<String> m_kinds;
+ private:
+  TrackDefault(const AtomicString& type,
+               const String& language,
+               const String& label,
+               const Vector<String>& kinds,
+               const String& byte_stream_track_id);
+
+  const AtomicString type_;
+  const String byte_stream_track_id_;
+  const String language_;
+  const String label_;
+  const Vector<String> kinds_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TrackDefault_h
+#endif  // TrackDefault_h

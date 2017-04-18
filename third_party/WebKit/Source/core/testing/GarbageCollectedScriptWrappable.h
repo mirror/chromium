@@ -7,24 +7,27 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Heap.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class GarbageCollectedScriptWrappable : public GarbageCollectedFinalized<GarbageCollectedScriptWrappable>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    GarbageCollectedScriptWrappable(const String&);
-    virtual ~GarbageCollectedScriptWrappable();
+class GarbageCollectedScriptWrappable
+    : public GarbageCollectedFinalized<GarbageCollectedScriptWrappable>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    const String& toString() const { return m_string; }
-    DEFINE_INLINE_VIRTUAL_TRACE() { }
+ public:
+  GarbageCollectedScriptWrappable(const String&);
+  virtual ~GarbageCollectedScriptWrappable();
 
-private:
-    String m_string;
+  const String& toString() const { return string_; }
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+ private:
+  String string_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GarbageCollectedScriptWrappable_h
+#endif  // GarbageCollectedScriptWrappable_h

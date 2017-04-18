@@ -31,6 +31,7 @@ CONTENT_EXPORT extern const char kChromeUIAccessibilityHost[];
 CONTENT_EXPORT extern const char kChromeUIAppCacheInternalsHost[];
 CONTENT_EXPORT extern const char kChromeUIBlobInternalsHost[];
 CONTENT_EXPORT extern const char kChromeUIBrowserCrashHost[];
+CONTENT_EXPORT extern const char kChromeUIDinoHost[];
 CONTENT_EXPORT extern const char kChromeUIGpuHost[];
 CONTENT_EXPORT extern const char kChromeUIHistogramHost[];
 CONTENT_EXPORT extern const char kChromeUIIndexedDBInternalsHost[];
@@ -46,6 +47,7 @@ CONTENT_EXPORT extern const char kChromeUIWebRTCInternalsHost[];
 
 // Full about URLs (including schemes).
 CONTENT_EXPORT extern const char kChromeUIBadCastCrashURL[];
+CONTENT_EXPORT extern const char kChromeUICheckCrashURL[];
 CONTENT_EXPORT extern const char kChromeUIBrowserCrashURL[];
 CONTENT_EXPORT extern const char kChromeUIBrowserUIHang[];
 CONTENT_EXPORT extern const char kChromeUICrashURL[];
@@ -61,6 +63,9 @@ CONTENT_EXPORT extern const char kChromeUINetworkErrorsListingURL[];
 CONTENT_EXPORT extern const char kChromeUINetworkErrorURL[];
 CONTENT_EXPORT extern const char kChromeUIPpapiFlashCrashURL[];
 CONTENT_EXPORT extern const char kChromeUIPpapiFlashHangURL[];
+#if defined(OS_ANDROID)
+CONTENT_EXPORT extern const char kChromeUIGpuJavaCrashURL[];
+#endif
 
 // Special URL used to start a navigation to an error page.
 CONTENT_EXPORT extern const char kUnreachableWebDataURL[];

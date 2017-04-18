@@ -7,32 +7,53 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "modules/bluetooth/BluetoothDevice.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/modules/bluetooth/web_bluetooth.mojom-blink.h"
+#include <memory>
 
 namespace blink {
 
-class BluetoothUUIDs;
 class RequestDeviceOptions;
 class ScriptPromise;
 class ScriptState;
 
-class Bluetooth
-    : public GarbageCollected<Bluetooth>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static Bluetooth* create()
-    {
-        return new Bluetooth();
-    }
+class Bluetooth final : public GarbageCollectedFinalized<Bluetooth>,
+                        public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // BluetoothDiscovery interface
-    ScriptPromise requestDevice(ScriptState*, const RequestDeviceOptions&, ExceptionState&);
+ public:
+  static Bluetooth* Create() { return new Bluetooth(); }
 
-    DEFINE_INLINE_TRACE() { }
+  // IDL exposed interface:
+  ScriptPromise requestDevice(ScriptState*,
+                              const RequestDeviceOptions&,
+                              ExceptionState&);
 
+  mojom::blink::WebBluetoothService* Service() { return service_.get(); }
+
+  // Interface required by Garbage Collection:
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  Bluetooth();
+
+  BluetoothDevice* GetBluetoothDeviceRepresentingDevice(
+      mojom::blink::WebBluetoothDevicePtr,
+      ScriptPromiseResolver*);
+
+  void RequestDeviceCallback(ScriptPromiseResolver*,
+                             mojom::blink::WebBluetoothResult,
+                             mojom::blink::WebBluetoothDevicePtr);
+
+  // Map of device ids to BluetoothDevice objects.
+  // Ensures only one BluetoothDevice instance represents each
+  // Bluetooth device inside a single global object.
+  HeapHashMap<String, Member<BluetoothDevice>> device_instance_map_;
+
+  mojom::blink::WebBluetoothServicePtr service_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Bluetooth_h
+#endif  // Bluetooth_h

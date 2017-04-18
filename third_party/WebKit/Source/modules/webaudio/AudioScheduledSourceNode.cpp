@@ -10,272 +10,283 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #include "modules/webaudio/AudioScheduledSourceNode.h"
+
+#include <algorithm>
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/CrossThreadTask.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "modules/EventModules.h"
 #include "modules/webaudio/BaseAudioContext.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/audio/AudioUtilities.h"
-#include "wtf/MathExtras.h"
-#include <algorithm>
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-const double AudioScheduledSourceHandler::UnknownTime = -1;
+const double AudioScheduledSourceHandler::kUnknownTime = -1;
 
-AudioScheduledSourceHandler::AudioScheduledSourceHandler(NodeType nodeType, AudioNode& node, float sampleRate)
-    : AudioHandler(nodeType, node, sampleRate)
-    , m_startTime(0)
-    , m_endTime(UnknownTime)
-    , m_playbackState(UNSCHEDULED_STATE)
-{
-}
+AudioScheduledSourceHandler::AudioScheduledSourceHandler(NodeType node_type,
+                                                         AudioNode& node,
+                                                         float sample_rate)
+    : AudioHandler(node_type, node, sample_rate),
+      start_time_(0),
+      end_time_(kUnknownTime),
+      playback_state_(UNSCHEDULED_STATE) {}
 
-void AudioScheduledSourceHandler::updateSchedulingInfo(
-    size_t quantumFrameSize, AudioBus* outputBus, size_t& quantumFrameOffset, size_t& nonSilentFramesToProcess)
-{
-    ASSERT(outputBus);
-    if (!outputBus)
-        return;
-
-    ASSERT(quantumFrameSize == ProcessingSizeInFrames);
-    if (quantumFrameSize != ProcessingSizeInFrames)
-        return;
-
-    double sampleRate = this->sampleRate();
-
-    // quantumStartFrame     : Start frame of the current time quantum.
-    // quantumEndFrame       : End frame of the current time quantum.
-    // startFrame            : Start frame for this source.
-    // endFrame              : End frame for this source.
-    size_t quantumStartFrame = context()->currentSampleFrame();
-    size_t quantumEndFrame = quantumStartFrame + quantumFrameSize;
-    size_t startFrame = AudioUtilities::timeToSampleFrame(m_startTime, sampleRate);
-    size_t endFrame = m_endTime == UnknownTime ? 0 : AudioUtilities::timeToSampleFrame(m_endTime, sampleRate);
-
-    // If we know the end time and it's already passed, then don't bother doing any more rendering this cycle.
-    if (m_endTime != UnknownTime && endFrame <= quantumStartFrame)
-        finish();
-
-    PlaybackState state = playbackState();
-
-    if (state == UNSCHEDULED_STATE || state == FINISHED_STATE || startFrame >= quantumEndFrame) {
-        // Output silence.
-        outputBus->zero();
-        nonSilentFramesToProcess = 0;
-        return;
-    }
-
-    // Check if it's time to start playing.
-    if (state == SCHEDULED_STATE) {
-        // Increment the active source count only if we're transitioning from SCHEDULED_STATE to PLAYING_STATE.
-        setPlaybackState(PLAYING_STATE);
-    }
-
-    quantumFrameOffset = startFrame > quantumStartFrame ? startFrame - quantumStartFrame : 0;
-    quantumFrameOffset = std::min(quantumFrameOffset, quantumFrameSize); // clamp to valid range
-    nonSilentFramesToProcess = quantumFrameSize - quantumFrameOffset;
-
-    if (!nonSilentFramesToProcess) {
-        // Output silence.
-        outputBus->zero();
-        return;
-    }
-
-    // Handle silence before we start playing.
-    // Zero any initial frames representing silence leading up to a rendering start time in the middle of the quantum.
-    if (quantumFrameOffset) {
-        for (unsigned i = 0; i < outputBus->numberOfChannels(); ++i)
-            memset(outputBus->channel(i)->mutableData(), 0, sizeof(float) * quantumFrameOffset);
-    }
-
-    // Handle silence after we're done playing.
-    // If the end time is somewhere in the middle of this time quantum, then zero out the
-    // frames from the end time to the very end of the quantum.
-    if (m_endTime != UnknownTime && endFrame >= quantumStartFrame && endFrame < quantumEndFrame) {
-        size_t zeroStartFrame = endFrame - quantumStartFrame;
-        size_t framesToZero = quantumFrameSize - zeroStartFrame;
-
-        bool isSafe = zeroStartFrame < quantumFrameSize && framesToZero <= quantumFrameSize && zeroStartFrame + framesToZero <= quantumFrameSize;
-        ASSERT(isSafe);
-
-        if (isSafe) {
-            if (framesToZero > nonSilentFramesToProcess)
-                nonSilentFramesToProcess = 0;
-            else
-                nonSilentFramesToProcess -= framesToZero;
-
-            for (unsigned i = 0; i < outputBus->numberOfChannels(); ++i)
-                memset(outputBus->channel(i)->mutableData() + zeroStartFrame, 0, sizeof(float) * framesToZero);
-        }
-
-        finish();
-    }
-
+void AudioScheduledSourceHandler::UpdateSchedulingInfo(
+    size_t quantum_frame_size,
+    AudioBus* output_bus,
+    size_t& quantum_frame_offset,
+    size_t& non_silent_frames_to_process,
+    double& start_frame_offset) {
+  DCHECK(output_bus);
+  if (!output_bus)
     return;
+
+  DCHECK_EQ(quantum_frame_size,
+            static_cast<size_t>(AudioUtilities::kRenderQuantumFrames));
+  if (quantum_frame_size != AudioUtilities::kRenderQuantumFrames)
+    return;
+
+  double sample_rate = Context()->sampleRate();
+
+  // quantumStartFrame     : Start frame of the current time quantum.
+  // quantumEndFrame       : End frame of the current time quantum.
+  // startFrame            : Start frame for this source.
+  // endFrame              : End frame for this source.
+  size_t quantum_start_frame = Context()->CurrentSampleFrame();
+  size_t quantum_end_frame = quantum_start_frame + quantum_frame_size;
+  size_t start_frame =
+      AudioUtilities::TimeToSampleFrame(start_time_, sample_rate);
+  size_t end_frame =
+      end_time_ == kUnknownTime
+          ? 0
+          : AudioUtilities::TimeToSampleFrame(end_time_, sample_rate);
+
+  // If we know the end time and it's already passed, then don't bother doing
+  // any more rendering this cycle.
+  if (end_time_ != kUnknownTime && end_frame <= quantum_start_frame)
+    Finish();
+
+  PlaybackState state = GetPlaybackState();
+
+  if (state == UNSCHEDULED_STATE || state == FINISHED_STATE ||
+      start_frame >= quantum_end_frame) {
+    // Output silence.
+    output_bus->Zero();
+    non_silent_frames_to_process = 0;
+    return;
+  }
+
+  // Check if it's time to start playing.
+  if (state == SCHEDULED_STATE) {
+    // Increment the active source count only if we're transitioning from
+    // SCHEDULED_STATE to PLAYING_STATE.
+    SetPlaybackState(PLAYING_STATE);
+    // Determine the offset of the true start time from the starting frame.
+    start_frame_offset = start_time_ * sample_rate - start_frame;
+  } else {
+    start_frame_offset = 0;
+  }
+
+  quantum_frame_offset =
+      start_frame > quantum_start_frame ? start_frame - quantum_start_frame : 0;
+  quantum_frame_offset = std::min(quantum_frame_offset,
+                                  quantum_frame_size);  // clamp to valid range
+  non_silent_frames_to_process = quantum_frame_size - quantum_frame_offset;
+
+  if (!non_silent_frames_to_process) {
+    // Output silence.
+    output_bus->Zero();
+    return;
+  }
+
+  // Handle silence before we start playing.
+  // Zero any initial frames representing silence leading up to a rendering
+  // start time in the middle of the quantum.
+  if (quantum_frame_offset) {
+    for (unsigned i = 0; i < output_bus->NumberOfChannels(); ++i)
+      memset(output_bus->Channel(i)->MutableData(), 0,
+             sizeof(float) * quantum_frame_offset);
+  }
+
+  // Handle silence after we're done playing.
+  // If the end time is somewhere in the middle of this time quantum, then zero
+  // out the frames from the end time to the very end of the quantum.
+  if (end_time_ != kUnknownTime && end_frame >= quantum_start_frame &&
+      end_frame < quantum_end_frame) {
+    size_t zero_start_frame = end_frame - quantum_start_frame;
+    size_t frames_to_zero = quantum_frame_size - zero_start_frame;
+
+    bool is_safe = zero_start_frame < quantum_frame_size &&
+                   frames_to_zero <= quantum_frame_size &&
+                   zero_start_frame + frames_to_zero <= quantum_frame_size;
+    DCHECK(is_safe);
+
+    if (is_safe) {
+      if (frames_to_zero > non_silent_frames_to_process)
+        non_silent_frames_to_process = 0;
+      else
+        non_silent_frames_to_process -= frames_to_zero;
+
+      for (unsigned i = 0; i < output_bus->NumberOfChannels(); ++i)
+        memset(output_bus->Channel(i)->MutableData() + zero_start_frame, 0,
+               sizeof(float) * frames_to_zero);
+    }
+
+    Finish();
+  }
+
+  return;
 }
 
-void AudioScheduledSourceHandler::start(double when, ExceptionState& exceptionState)
-{
-    ASSERT(isMainThread());
+void AudioScheduledSourceHandler::Start(double when,
+                                        ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    context()->recordUserGestureState();
+  Context()->MaybeRecordStartAttempt();
 
-    if (playbackState() != UNSCHEDULED_STATE) {
-        exceptionState.throwDOMException(
-            InvalidStateError,
-            "cannot call start more than once.");
-        return;
-    }
+  if (GetPlaybackState() != UNSCHEDULED_STATE) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "cannot call start more than once.");
+    return;
+  }
 
-    if (when < 0) {
-        exceptionState.throwDOMException(
-            InvalidAccessError,
-            ExceptionMessages::indexExceedsMinimumBound(
-                "start time",
-                when,
-                0.0));
-        return;
-    }
+  if (when < 0) {
+    exception_state.ThrowDOMException(
+        kInvalidAccessError,
+        ExceptionMessages::IndexExceedsMinimumBound("start time", when, 0.0));
+    return;
+  }
 
-    // The node is started. Add a reference to keep us alive so that audio will eventually get
-    // played even if Javascript should drop all references to this node. The reference will get
-    // dropped when the source has finished playing.
-    context()->notifySourceNodeStartedProcessing(node());
+  // The node is started. Add a reference to keep us alive so that audio will
+  // eventually get played even if Javascript should drop all references to this
+  // node. The reference will get dropped when the source has finished playing.
+  Context()->NotifySourceNodeStartedProcessing(GetNode());
 
-    // This synchronizes with process(). updateSchedulingInfo will read some of the variables being
-    // set here.
-    MutexLocker processLocker(m_processLock);
+  // This synchronizes with process(). updateSchedulingInfo will read some of
+  // the variables being set here.
+  MutexLocker process_locker(process_lock_);
 
-    // If |when| < currentTime, the source must start now according to the spec.
-    // So just set startTime to currentTime in this case to start the source now.
-    m_startTime = std::max(when, context()->currentTime());
+  // If |when| < currentTime, the source must start now according to the spec.
+  // So just set startTime to currentTime in this case to start the source now.
+  start_time_ = std::max(when, Context()->currentTime());
 
-    setPlaybackState(SCHEDULED_STATE);
+  SetPlaybackState(SCHEDULED_STATE);
 }
 
-void AudioScheduledSourceHandler::stop(double when, ExceptionState& exceptionState)
-{
-    ASSERT(isMainThread());
+void AudioScheduledSourceHandler::Stop(double when,
+                                       ExceptionState& exception_state) {
+  DCHECK(IsMainThread());
 
-    if (playbackState() == UNSCHEDULED_STATE) {
-        exceptionState.throwDOMException(
-            InvalidStateError,
-            "cannot call stop without calling start first.");
-        return;
-    }
+  if (GetPlaybackState() == UNSCHEDULED_STATE) {
+    exception_state.ThrowDOMException(
+        kInvalidStateError, "cannot call stop without calling start first.");
+    return;
+  }
 
-    if (when < 0) {
-        exceptionState.throwDOMException(
-            InvalidAccessError,
-            ExceptionMessages::indexExceedsMinimumBound(
-                "stop time",
-                when,
-                0.0));
-        return;
-    }
+  if (when < 0) {
+    exception_state.ThrowDOMException(
+        kInvalidAccessError,
+        ExceptionMessages::IndexExceedsMinimumBound("stop time", when, 0.0));
+    return;
+  }
 
-    // This synchronizes with process()
-    MutexLocker processLocker(m_processLock);
+  // This synchronizes with process()
+  MutexLocker process_locker(process_lock_);
 
-    // stop() can be called more than once, with the last call to stop taking effect, unless the
-    // source has already stopped due to earlier calls to stop. No exceptions are thrown in any
-    // case.
-    when = std::max(0.0, when);
-    m_endTime = when;
+  // stop() can be called more than once, with the last call to stop taking
+  // effect, unless the source has already stopped due to earlier calls to stop.
+  // No exceptions are thrown in any case.
+  when = std::max(0.0, when);
+  end_time_ = when;
 }
 
-void AudioScheduledSourceHandler::finishWithoutOnEnded()
-{
-    if (playbackState() != FINISHED_STATE) {
-        // Let the context dereference this AudioNode.
-        context()->notifySourceNodeFinishedProcessing(this);
-        setPlaybackState(FINISHED_STATE);
-    }
+void AudioScheduledSourceHandler::FinishWithoutOnEnded() {
+  if (GetPlaybackState() != FINISHED_STATE) {
+    // Let the context dereference this AudioNode.
+    Context()->NotifySourceNodeFinishedProcessing(this);
+    SetPlaybackState(FINISHED_STATE);
+  }
 }
 
-void AudioScheduledSourceHandler::finish()
-{
-    finishWithoutOnEnded();
+void AudioScheduledSourceHandler::Finish() {
+  FinishWithoutOnEnded();
 
-    if (context()->getExecutionContext()) {
-        context()->getExecutionContext()->postTask(BLINK_FROM_HERE, createCrossThreadTask(&AudioScheduledSourceHandler::notifyEnded, PassRefPtr<AudioScheduledSourceHandler>(this)));
-    }
+  if (Context()->GetExecutionContext()) {
+    TaskRunnerHelper::Get(TaskType::kMediaElementEvent,
+                          Context()->GetExecutionContext())
+        ->PostTask(BLINK_FROM_HERE,
+                   CrossThreadBind(&AudioScheduledSourceHandler::NotifyEnded,
+                                   WrapPassRefPtr(this)));
+  }
 }
 
-void AudioScheduledSourceHandler::notifyEnded()
-{
-    ASSERT(isMainThread());
-    if (node())
-        node()->dispatchEvent(Event::create(EventTypeNames::ended));
+void AudioScheduledSourceHandler::NotifyEnded() {
+  DCHECK(IsMainThread());
+  if (GetNode())
+    GetNode()->DispatchEvent(Event::Create(EventTypeNames::ended));
 }
 
 // ----------------------------------------------------------------
 
 AudioScheduledSourceNode::AudioScheduledSourceNode(BaseAudioContext& context)
-    : AudioSourceNode(context)
-    , ActiveScriptWrappable(this)
-{
+    : AudioNode(context) {}
+
+AudioScheduledSourceHandler&
+AudioScheduledSourceNode::GetAudioScheduledSourceHandler() const {
+  return static_cast<AudioScheduledSourceHandler&>(Handler());
 }
 
-AudioScheduledSourceHandler& AudioScheduledSourceNode::audioScheduledSourceHandler() const
-{
-    return static_cast<AudioScheduledSourceHandler&>(handler());
+void AudioScheduledSourceNode::start(ExceptionState& exception_state) {
+  start(0, exception_state);
 }
 
-void AudioScheduledSourceNode::start(ExceptionState& exceptionState)
-{
-    start(0, exceptionState);
+void AudioScheduledSourceNode::start(double when,
+                                     ExceptionState& exception_state) {
+  GetAudioScheduledSourceHandler().Start(when, exception_state);
 }
 
-void AudioScheduledSourceNode::start(double when, ExceptionState& exceptionState)
-{
-    audioScheduledSourceHandler().start(when, exceptionState);
+void AudioScheduledSourceNode::stop(ExceptionState& exception_state) {
+  stop(0, exception_state);
 }
 
-void AudioScheduledSourceNode::stop(ExceptionState& exceptionState)
-{
-    stop(0, exceptionState);
+void AudioScheduledSourceNode::stop(double when,
+                                    ExceptionState& exception_state) {
+  GetAudioScheduledSourceHandler().Stop(when, exception_state);
 }
 
-void AudioScheduledSourceNode::stop(double when, ExceptionState& exceptionState)
-{
-    audioScheduledSourceHandler().stop(when, exceptionState);
+EventListener* AudioScheduledSourceNode::onended() {
+  return GetAttributeEventListener(EventTypeNames::ended);
 }
 
-EventListener* AudioScheduledSourceNode::onended()
-{
-    return getAttributeEventListener(EventTypeNames::ended);
+void AudioScheduledSourceNode::setOnended(EventListener* listener) {
+  SetAttributeEventListener(EventTypeNames::ended, listener);
 }
 
-void AudioScheduledSourceNode::setOnended(EventListener* listener)
-{
-    setAttributeEventListener(EventTypeNames::ended, listener);
+bool AudioScheduledSourceNode::HasPendingActivity() const {
+  // To avoid the leak, a node should be collected regardless of its
+  // playback state if the context is closed.
+  if (context()->IsContextClosed())
+    return false;
+
+  // If a node is scheduled or playing, do not collect the node prematurely
+  // even its reference is out of scope. Then fire onended event if assigned.
+  return GetAudioScheduledSourceHandler().IsPlayingOrScheduled();
 }
 
-bool AudioScheduledSourceNode::hasPendingActivity() const
-{
-    // To avoid the leak, a node should be collected regardless of its
-    // playback state if the context is closed.
-    if (context()->isContextClosed())
-        return false;
-
-    // If a node is scheduled or playing, do not collect the node prematurely
-    // even its reference is out of scope. Then fire onended event if assigned.
-    return audioScheduledSourceHandler().isPlayingOrScheduled();
-}
-
-} // namespace blink
+}  // namespace blink

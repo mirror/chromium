@@ -5,8 +5,9 @@
 package org.chromium.chrome.browser.payments;
 
 import android.content.DialogInterface;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 
+import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.autofill.AutofillTestHelper;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.AutofillProfile;
@@ -19,10 +20,6 @@ import java.util.concurrent.TimeoutException;
  * A payment integration test for removing a billing address that is associated with a credit card.
  */
 public class PaymentRequestRemoveBillingAddressTest extends PaymentRequestTestBase {
-    private static final int DECEMBER = 11;
-    private static final int NEXT_YEAR = 1;
-    private static final int FIRST_BILLING_ADDRESS = 1;
-
     public PaymentRequestRemoveBillingAddressTest() {
         super("payment_request_no_shipping_test.html");
     }
@@ -39,7 +36,7 @@ public class PaymentRequestRemoveBillingAddressTest extends PaymentRequestTestBa
                 "US", "555-555-5555", "jon.doe@google.com", "en-US"));
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Alice",
                 "4111111111111111", "1111", "1", "2050", "visa", R.drawable.pr_visa,
-                billingAddressId));
+                billingAddressId, "" /* serverId */));
         helper.deleteProfile(billingAddressId);
     }
 
@@ -48,6 +45,7 @@ public class PaymentRequestRemoveBillingAddressTest extends PaymentRequestTestBa
      * editor that requires selecting a new billing address.
      */
     @MediumTest
+    @Feature({"Payments"})
     public void testPayWithCard()
             throws InterruptedException, ExecutionException, TimeoutException {
         triggerUIAndWait(mReadyForInput);
@@ -76,6 +74,6 @@ public class PaymentRequestRemoveBillingAddressTest extends PaymentRequestTestBa
         clickCardUnmaskButtonAndWait(DialogInterface.BUTTON_POSITIVE, mDismissed);
         expectResultContains(new String[] {"4111111111111111", "Alice", "12", "123", "Jane Smith",
                 "Google", "1600 Amphitheatre Pkwy", "CA", "Mountain View", "94043", "US",
-                "555-555-5555", "en-US"});
+                "+15555555555", "en-US"});
     }
 }

@@ -1,28 +1,22 @@
 "use strict";
 
-let mockBatteryMonitor = loadMojoModules(
-    'mockBatteryMonitor',
-    ['device/battery/battery_monitor.mojom',
-     'device/battery/battery_status.mojom',
-     'mojo/public/js/router',
-    ]).then(mojo => {
-  let [batteryMonitor, batteryStatus, router] = mojo.modules;
+let mockBatteryMonitor = loadMojoModules('mockBatteryMonitor', [
+                           'device/battery/battery_monitor.mojom',
+                           'device/battery/battery_status.mojom',
+                           'services/device/public/interfaces/constants.mojom',
+                           'mojo/public/js/bindings',
+                         ]).then(mojo => {
+  let [batteryMonitor, batteryStatus, deviceConstants, bindings] = mojo.modules;
 
-  class MockBatteryMonitor extends batteryMonitor.BatteryMonitor.stubClass {
-    constructor(serviceRegistry) {
-      super();
-      serviceRegistry.addServiceOverrideForTesting(
-          batteryMonitor.BatteryMonitor.name,
-          handle => this.connect_(handle));
+  class MockBatteryMonitor {
+    constructor(connector) {
+      connector.addInterfaceOverrideForTesting(
+          deviceConstants.kServiceName, batteryMonitor.BatteryMonitor.name,
+          handle => this.bindingSet_.addBinding(this, handle));
 
-      this.serviceRegistry_ = serviceRegistry;
       this.pendingRequests_ = [];
       this.status_ = null;
-    }
-
-    connect_(handle) {
-      this.router_ = new router.Router(handle);
-      this.router_.setIncomingReceiver(this);
+      this.bindingSet_ = new bindings.BindingSet(batteryMonitor.BatteryMonitor);
     }
 
     queryNextStatus() {
@@ -50,7 +44,7 @@ let mockBatteryMonitor = loadMojoModules(
       this.status_ = null;
     }
   }
-  return new MockBatteryMonitor(mojo.serviceRegistry);
+  return new MockBatteryMonitor(mojo.connector);
 });
 
 let batteryInfo;

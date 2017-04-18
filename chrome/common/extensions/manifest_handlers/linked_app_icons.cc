@@ -19,8 +19,8 @@ namespace errors = manifest_errors;
 
 namespace {
 
-static base::LazyInstance<LinkedAppIcons> g_empty_linked_app_icons =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<LinkedAppIcons>::DestructorAtExit
+    g_empty_linked_app_icons = LAZY_INSTANCE_INITIALIZER;
 
 const LinkedAppIcons& GetInfo(const Extension* extension) {
   LinkedAppIcons* info = static_cast<LinkedAppIcons*>(
@@ -70,7 +70,7 @@ bool LinkedAppIconsHandler::Parse(Extension* extension, base::string16* error) {
 
     for (const auto& icon_value : *icons_list) {
       const base::DictionaryValue* icon_dict = nullptr;
-      if (!icon_value->GetAsDictionary(&icon_dict)) {
+      if (!icon_value.GetAsDictionary(&icon_dict)) {
         *error = base::UTF8ToUTF16(
             extensions::manifest_errors::kInvalidLinkedAppIcon);
         return false;
@@ -101,7 +101,8 @@ bool LinkedAppIconsHandler::Parse(Extension* extension, base::string16* error) {
     }
   }
 
-  extension->SetManifestData(keys::kLinkedAppIcons, linked_app_icons.release());
+  extension->SetManifestData(keys::kLinkedAppIcons,
+                             std::move(linked_app_icons));
   return true;
 }
 

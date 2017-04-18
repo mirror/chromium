@@ -7,10 +7,17 @@ package org.chromium.chrome.browser.ntp;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.ntp.NewTabPageUma.NTPLayoutResult;
+import org.chromium.chrome.browser.ntp.cards.CardsVariationParameters;
+import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
+import org.chromium.chrome.browser.ntp.snippets.SnippetsConfig;
+import org.chromium.chrome.browser.suggestions.TileGridLayout;
 
 /**
  * Layout for the new tab page. This positions the page elements in the correct vertical positions.
@@ -30,25 +37,27 @@ public class NewTabPageLayout extends LinearLayout {
     private final int mMiddleSpacerIdealHeight;
     private final int mBottomSpacerIdealHeight;
     private final int mTotalSpacerIdealHeight;
-    private final int mMostVisitedLayoutBleed;
+    private final int mTileGridLayoutBleed;
     private final int mPeekingCardHeight;
     private final int mTabStripHeight;
+    private final int mFieldTrialLayoutAdjustment;
+    private final int mSearchboxShadowWidth;
 
     private int mParentViewportHeight;
-    private int mSearchboxViewShadowWidth;
 
-    private boolean mCardsUiEnabled;
-    private View mTopSpacer;  // Spacer above search logo.
-    private View mMiddleSpacer;  // Spacer between toolbar and Most Likely.
-    private View mBottomSpacer;  // Spacer below Most Likely.
+    private View mTopSpacer; // Spacer above search logo.
+    private View mMiddleSpacer; // Spacer between toolbar and Most Likely.
+    private View mBottomSpacer; // Spacer below Most Likely.
 
-    // Separate spacer below Most Likely to add enough space so the user can scroll with Most Likely
-    // at the top of the screen.
-    private View mScrollCompensationSpacer;
+    private View mLogoSpacer; // Spacer above the logo.
+    private View mSearchBoxSpacer; // Spacer above the search box.
 
     private LogoView mSearchProviderLogoView;
     private View mSearchBoxView;
-    private MostVisitedLayout mMostVisitedLayout;
+    private TileGridLayout mTileGridLayout;
+
+    private boolean mLayoutResultRecorded;
+
     /**
      * Constructor for inflating from XML.
      */
@@ -60,10 +69,14 @@ public class NewTabPageLayout extends LinearLayout {
         mMiddleSpacerIdealHeight = Math.round(density * MIDDLE_SPACER_HEIGHT_DP);
         mBottomSpacerIdealHeight = Math.round(density * BOTTOM_SPACER_HEIGHT_DP);
         mTotalSpacerIdealHeight = Math.round(density * TOTAL_SPACER_HEIGHT_DP);
-        mMostVisitedLayoutBleed = res.getDimensionPixelSize(R.dimen.most_visited_layout_bleed);
-        mPeekingCardHeight =
-                res.getDimensionPixelSize(R.dimen.snippets_padding_and_peeking_card_height);
+        mTileGridLayoutBleed = res.getDimensionPixelSize(R.dimen.tile_grid_layout_bleed);
+        mPeekingCardHeight = SnippetsConfig.isIncreasedCardVisibilityEnabled()
+                ? res.getDimensionPixelSize(R.dimen.snippets_peeking_card_peek_amount)
+                : res.getDimensionPixelSize(R.dimen.snippets_padding);
         mTabStripHeight = res.getDimensionPixelSize(R.dimen.tab_strip_height);
+        mFieldTrialLayoutAdjustment = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                CardsVariationParameters.getFirstCardOffsetDp(), res.getDisplayMetrics());
+        mSearchboxShadowWidth = res.getDimensionPixelOffset(R.dimen.ntp_search_box_shadow_width);
     }
 
     @Override
@@ -72,11 +85,11 @@ public class NewTabPageLayout extends LinearLayout {
         mTopSpacer = findViewById(R.id.ntp_top_spacer);
         mMiddleSpacer = findViewById(R.id.ntp_middle_spacer);
         mBottomSpacer = findViewById(R.id.ntp_bottom_spacer);
-        mScrollCompensationSpacer = findViewById(R.id.ntp_scroll_spacer);
+        mLogoSpacer = findViewById(R.id.search_provider_logo_spacer);
+        mSearchBoxSpacer = findViewById(R.id.search_box_spacer);
         mSearchProviderLogoView = (LogoView) findViewById(R.id.search_provider_logo);
         mSearchBoxView = findViewById(R.id.search_box);
-        mMostVisitedLayout = (MostVisitedLayout) findViewById(R.id.most_visited_layout);
-        setSearchBoxStyle();
+        mTileGridLayout = (TileGridLayout) findViewById(R.id.tile_grid_layout);
     }
 
     /**
@@ -91,116 +104,108 @@ public class NewTabPageLayout extends LinearLayout {
         mParentViewportHeight = height;
     }
 
-    /**
-     * Sets whether the cards UI is enabled.
-     */
-    public void setUseCardsUiEnabled(boolean useCardsUi) {
-        mCardsUiEnabled = useCardsUi;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // Remove the scroll spacer from the layout so the weighted children can be measured
-        // correctly.
-        mScrollCompensationSpacer.setVisibility(View.GONE);
+        calculateVerticalSpacing(widthMeasureSpec, heightMeasureSpec);
+        unifyElementWidths();
+    }
+
+    /**
+     * Uses the total vertical space to determine and configure the layout. This can be one of:
+     * - If our contents cannot fit on the screen, increase the spacing to push the Most Likely
+     *   partially off the screen, suggesting to users they can scroll.
+     * - If our contents can fit on the screen, increase the spacing to fill the space (minus space
+     *   for the CardsUI Peeking card).
+     */
+    private void calculateVerticalSpacing(int widthMeasureSpec, int heightMeasureSpec) {
+        mLogoSpacer.setVisibility(View.GONE);
+        mSearchBoxSpacer.setVisibility(View.GONE);
+
+        // Remove the extra spacing before measuring because it might not be needed anymore.
+        mTileGridLayout.setExtraVerticalSpacing(0);
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if (getMeasuredHeight() > mParentViewportHeight) {
-            // No scroll spacing needed when using the cards ui.
-            if (!mCardsUiEnabled) {
-                // This layout is bigger than its parent's viewport, so the user will need to scroll
-                // to see all of it. Extra spacing should be added at the bottom so the user can
-                // scroll until Most Visited is at the top.
+        boolean hasSpaceForPeekingCard = false;
+        int spaceToFill = mParentViewportHeight - mPeekingCardHeight - mTabStripHeight;
+        @NTPLayoutResult int layoutResult;
 
-                // The top, middle, and bottom spacers should have a measured height of 0 at this
-                // point since they use weights to set height, and there was no extra space.
-                assert mTopSpacer.getMeasuredHeight() == 0;
-                assert mMiddleSpacer.getMeasuredHeight() == 0;
-                assert mBottomSpacer.getMeasuredHeight() == 0;
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)) {
+            layoutResult = NewTabPageUma.NTP_LAYOUT_CONDENSED;
+        } else if (getMeasuredHeight() > spaceToFill) {
+            // We need to make sure we have just enough space to show the peeking card.
+            layoutResult = NewTabPageUma.NTP_LAYOUT_DOES_NOT_FIT;
 
-                final int topOfMostVisited = calculateTopOfMostVisited();
-                final int belowTheFoldHeight = getMeasuredHeight() - mParentViewportHeight;
-                if (belowTheFoldHeight < topOfMostVisited) {
-                    // Include the scroll spacer in the layout and call super.onMeasure again so it
-                    // is measured.
-                    mScrollCompensationSpacer.getLayoutParams().height =
-                            topOfMostVisited - belowTheFoldHeight;
-
-                    mScrollCompensationSpacer.setVisibility(View.INVISIBLE);
+            // We don't have enough, we will push the peeking card completely below the fold
+            // and let the tile grid get cut to make it clear that the page is scrollable.
+            if (mTileGridLayout.getChildCount() > 0) {
+                // Add some extra space if needed (the 'bleed' is the amount of the layout that
+                // will be cut off by the bottom of the screen).
+                int currentBleed = getMeasuredHeight() - mParentViewportHeight - mTabStripHeight;
+                int minimumBleed = (int) (mTileGridLayout.getChildAt(0).getMeasuredHeight() * 0.44);
+                if (currentBleed < minimumBleed) {
+                    int extraBleed = minimumBleed - currentBleed;
+                    mLogoSpacer.getLayoutParams().height = (int) (extraBleed * 0.25);
+                    mLogoSpacer.setVisibility(View.INVISIBLE);
+                    mSearchBoxSpacer.getLayoutParams().height = (int) (extraBleed * 0.25);
+                    mSearchBoxSpacer.setVisibility(View.INVISIBLE);
+                    mTileGridLayout.setExtraVerticalSpacing((int) (extraBleed * 0.5));
                     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+                    layoutResult = NewTabPageUma.NTP_LAYOUT_DOES_NOT_FIT_PUSH_MOST_LIKELY;
                 }
             }
         } else {
-            // This layout is smaller than or equal to its parent viewport. Redistribute any
-            // weighted space.
-            if (mCardsUiEnabled) {
-                // Call super.onMeasure with mode EXACTLY and the target height to allow the top
-                // spacer (which has a weight of 1) to grow and take up the remaining space.
-                int targetHeight = Math.max(getMeasuredHeight(),
-                        mParentViewportHeight - mPeekingCardHeight - mTabStripHeight);
-                heightMeasureSpec = MeasureSpec.makeMeasureSpec(targetHeight, MeasureSpec.EXACTLY);
-                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            hasSpaceForPeekingCard = true;
+            // We leave more than or just enough space needed for the peeking card. Redistribute
+            // any weighted space.
+
+            // There is a field trial experiment to determine the effect of raising the peeking
+            // card, allowing the user to see some of it's contents when scrolled to the top. This
+            // is achieved by making the NewTabPageLayout smaller.
+            // If there is enough space, reduce the space we are going to fill.
+            if (mFieldTrialLayoutAdjustment != 0f) {
+                if (getMeasuredHeight() < spaceToFill - mFieldTrialLayoutAdjustment) {
+                    spaceToFill -= mFieldTrialLayoutAdjustment;
+                    layoutResult = NewTabPageUma.NTP_LAYOUT_FITS_WITH_FIELD_TRIAL;
+                } else {
+                    layoutResult = NewTabPageUma.NTP_LAYOUT_FITS_WITHOUT_FIELD_TRIAL;
+                }
+            } else {
+                layoutResult = NewTabPageUma.NTP_LAYOUT_FITS_NO_FIELD_TRIAL;
             }
+
+            // Call super.onMeasure with mode EXACTLY and the target height to allow the top
+            // spacer (which has a weight of 1) to grow and take up the remaining space.
+            heightMeasureSpec =
+                    MeasureSpec.makeMeasureSpec(spaceToFill, MeasureSpec.EXACTLY);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
             distributeExtraSpace(mTopSpacer.getMeasuredHeight());
         }
 
-        // Make the search box and logo as wide as the most visited items.
-        if (mMostVisitedLayout.getVisibility() != GONE) {
-            final int width = mMostVisitedLayout.getMeasuredWidth() - mMostVisitedLayoutBleed;
-            measureExactly(mSearchBoxView, width + mSearchboxViewShadowWidth,
-                    mSearchBoxView.getMeasuredHeight());
-            measureExactly(
-                    mSearchProviderLogoView, width, mSearchProviderLogoView.getMeasuredHeight());
+        NewTabPageRecyclerView recyclerView = (NewTabPageRecyclerView) getParent();
+        recyclerView.setHasSpaceForPeekingCard(hasSpaceForPeekingCard);
+
+        // The first few runs of this method occur before the tile grid layout has loaded its
+        // contents. We want to record what the user sees when the layout has stabilized.
+        if (mTileGridLayout.getChildCount() > 0 && !mLayoutResultRecorded) {
+            mLayoutResultRecorded = true;
+            NewTabPageUma.recordNTPLayoutResult(layoutResult);
         }
     }
 
     /**
-     * Calculate the vertical position of Most Visited.
-     * This method does not use mMostVisitedLayout.getTop(), so can be called in onMeasure.
+     * Makes the Search Box and Logo as wide as Most Visited.
      */
-    private int calculateTopOfMostVisited() {
-        // Manually add the heights (and margins) of all children above Most Visited.
-        int top = 0;
-        int mostVisitedIndex = indexOfChild(mMostVisitedLayout);
-        for (int i = 0; i < mostVisitedIndex; i++) {
-            View child = getChildAt(i);
-            MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
-
-            if (child.getVisibility() != View.GONE) {
-                top += params.topMargin + child.getMeasuredHeight() + params.bottomMargin;
-            }
+    private void unifyElementWidths() {
+        if (mTileGridLayout.getVisibility() != GONE) {
+            final int width = mTileGridLayout.getMeasuredWidth() - mTileGridLayoutBleed;
+            measureExactly(mSearchBoxView,
+                    width + mSearchboxShadowWidth, mSearchBoxView.getMeasuredHeight());
+            measureExactly(mSearchProviderLogoView,
+                    width, mSearchProviderLogoView.getMeasuredHeight());
         }
-        top += ((MarginLayoutParams) mMostVisitedLayout.getLayoutParams()).topMargin;
-        return top;
-    }
-
-    /**
-     * Set the search box style, adding a shadow if required.
-     */
-    private void setSearchBoxStyle() {
-        if (!NtpColorUtils.shouldUseMaterialColors()) return;
-
-        Resources resources = getContext().getResources();
-
-        // Adjust the margins to account for the bigger size due to the shadow.
-        MarginLayoutParams layoutParams = (MarginLayoutParams) mSearchBoxView.getLayoutParams();
-        layoutParams.setMargins(
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_margin_left),
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_margin_top),
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_margin_right),
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_margin_bottom));
-        layoutParams.height = resources
-                .getDimensionPixelSize(R.dimen.ntp_search_box_material_height);
-        // Width will be adjusted in onMeasure();
-        mSearchboxViewShadowWidth = resources
-                .getDimensionPixelOffset(R.dimen.ntp_search_box_material_extra_width);
-
-        mSearchBoxView.setBackgroundResource(R.drawable.textbox);
-        mSearchBoxView.setPadding(
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_padding_left),
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_padding_top),
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_padding_right),
-                resources.getDimensionPixelSize(R.dimen.ntp_search_box_material_padding_bottom));
     }
 
     /**

@@ -10,10 +10,9 @@
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_request_id.h"
 #include "components/content_settings/core/common/content_settings.h"
-#include "content/public/browser/permission_type.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 
 class GURL;
-class PermissionContextBase;
 class Profile;
 
 // Default implementation of PermissionRequest, it is assumed that the
@@ -25,7 +24,7 @@ class PermissionRequestImpl : public PermissionRequest {
 
   PermissionRequestImpl(
       const GURL& request_origin,
-      content::PermissionType permission_type,
+      ContentSettingsType content_settings_type,
       Profile* profile,
       bool has_gesture,
       const PermissionDecidedCallback& permission_decided_callback,
@@ -38,8 +37,7 @@ class PermissionRequestImpl : public PermissionRequest {
 
  private:
   // PermissionRequest:
-  gfx::VectorIconId GetVectorIconId() const override;
-  int GetIconId() const override;
+  IconId GetIconId() const override;
   base::string16 GetMessageTextFragment() const override;
   GURL GetOrigin() const override;
   // Remember to call RegisterActionTaken for these methods if you are
@@ -48,11 +46,12 @@ class PermissionRequestImpl : public PermissionRequest {
   void PermissionDenied() override;
   void Cancelled() override;
   void RequestFinished() override;
+  bool ShouldShowPersistenceToggle() const override;
   PermissionRequestType GetPermissionRequestType() const override;
   PermissionRequestGestureType GetGestureType() const override;
 
   GURL request_origin_;
-  content::PermissionType permission_type_;
+  ContentSettingsType content_settings_type_;
   Profile* profile_;
   bool has_gesture_;
 

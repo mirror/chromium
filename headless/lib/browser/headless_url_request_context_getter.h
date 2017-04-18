@@ -6,6 +6,7 @@
 #define HEADLESS_LIB_BROWSER_HEADLESS_URL_REQUEST_CONTEXT_GETTER_H_
 
 #include <memory>
+#include <string>
 
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
@@ -18,21 +19,13 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_job_factory.h"
 
-namespace base {
-class MessageLoop;
-}
-
 namespace net {
 class HostResolver;
-class MappedHostResolver;
-class NetworkDelegate;
-class NetLog;
 class ProxyConfigService;
-class ProxyService;
-class URLRequestContextStorage;
 }
 
 namespace headless {
+class HeadlessBrowserContextOptions;
 
 class HeadlessURLRequestContextGetter : public net::URLRequestContextGetter {
  public:
@@ -42,7 +35,7 @@ class HeadlessURLRequestContextGetter : public net::URLRequestContextGetter {
       content::ProtocolHandlerMap* protocol_handlers,
       ProtocolHandlerMap context_protocol_handlers,
       content::URLRequestInterceptorScopedVector request_interceptors,
-      HeadlessBrowser::Options* options);
+      HeadlessBrowserContextOptions* options);
 
   // net::URLRequestContextGetter implementation:
   net::URLRequestContext* GetURLRequestContext() override;

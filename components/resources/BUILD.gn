@@ -2,13 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//printing/features/features.gni")
 import("//tools/grit/grit_rule.gni")
 import("//third_party/brotli/brotli.gni")
 
 about_credits_file = "$target_gen_dir/about_credits.html"
 about_credits_file_bro = "$target_gen_dir/about_credits.bro"
 
-# GYP version: components/components_resources.gyp:components_resources
 group("resources") {
   public_deps = [
     ":components_resources",
@@ -16,8 +16,6 @@ group("resources") {
   ]
 }
 
-# GYP version: components/components_resources.gyp
-#              (generate_components_resources action)
 grit("components_resources") {
   source = "components_resources.grd"
 
@@ -33,14 +31,13 @@ grit("components_resources") {
     "-E",
     "about_credits_file=" + rebase_path(about_credits_file_bro, root_build_dir),
   ]
+  defines = [ "enable_print_preview=$enable_print_preview" ]
 
   deps = [
     ":compressed_about_credits",
   ]
 }
 
-# GYP version: components/components_resources.gyp
-#              (generate_scaled_components_resources action)
 grit("components_scaled_resources") {
   source = "components_scaled_resources.grd"
 
@@ -65,15 +62,11 @@ compress_file_brotli("compressed_about_credits") {
   ]
 }
 
-# GYP version: components/components_resources.gyp:about_credits
 action("about_credits") {
   script = "//tools/licenses.py"
+  depfile = "$target_gen_dir/$target_name.d"
 
   inputs = [
-    # This is not a complete list. TODO(phajdan.jr, dbeam): licenses.py needs to
-    # generate a .d file with all the licenses/credits that about:credits uses.
-    # Then about:credits will automatically rebuild when one of them changes.
-    # See: depfile in gn's documentation (gn help depfile).
     "../about_ui/resources/about_credits.tmpl",
     "../about_ui/resources/about_credits_entry.tmpl",
   ]
@@ -84,6 +77,8 @@ action("about_credits") {
 
   args = [
     "--target-os=$target_os",
+    "--depfile",
+    rebase_path(depfile, root_build_dir),
     "credits",
     rebase_path(about_credits_file, root_build_dir),
   ]

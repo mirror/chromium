@@ -16,11 +16,11 @@ function clickPseudo()
 
 function test()
 {
-    InspectorTest.domModel.setInspectMode(DOMAgent.InspectMode.SearchForNode, inspectModeEnabled.bind(this));
+    InspectorTest.domModel.setInspectMode(Protocol.DOM.InspectMode.SearchForNode, inspectModeEnabled);
 
     function inspectModeEnabled()
     {
-        WebInspector.notifications.addEventListener(WebInspector.NotificationService.Events.SelectedNodeChanged, selectedNodeChanged, this);
+        UI.context.addFlavorChangeListener(SDK.DOMNode, selectedNodeChanged);
         InspectorTest.evaluateInPage("clickPseudo()");
     }
 
@@ -31,6 +31,7 @@ function test()
             InspectorTest.addResult("<no selected node>");
         else
             InspectorTest.addResult("Selected node pseudo type: " + selectedNode.pseudoType());
+        UI.context.removeFlavorChangeListener(SDK.DOMNode, selectedNodeChanged);
         InspectorTest.completeTest();
     }
 }

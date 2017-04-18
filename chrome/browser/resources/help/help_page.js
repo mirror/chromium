@@ -94,11 +94,11 @@ cr.define('help', function() {
       $('get-help').onclick = function() {
         chrome.send('openHelpPage');
       };
-<if expr="_google_chrome">
+// <if expr="_google_chrome">
       $('report-issue').onclick = function() {
         chrome.send('openFeedbackDialog');
       };
-</if>
+// </if>
 
       this.maybeSetOnClick_($('more-info-expander'),
           this.toggleMoreInfo_.bind(this));
@@ -197,10 +197,12 @@ cr.define('help', function() {
 
       var logo = $('product-logo');
       logo.onclick = function(e) {
-        logo.classList.remove('spin');
-        // Force a style recalc that cancels the animation specified by "spin".
-        getComputedStyle(logo).getPropertyValue('animation-name');
-        logo.classList.add('spin');
+        logo.animate({
+          transform: ['none', 'rotate(-10turn)'],
+        }, /** @type {!KeyframeEffectOptions} */({
+          duration: 500,
+          easing: 'cubic-bezier(1, 0, 0, 1)',
+        }));
       };
 
       // Attempt to update.
@@ -224,7 +226,7 @@ cr.define('help', function() {
 
       moreInfo.classList.toggle('visible', visible);
       moreInfo.style.height = visible ? moreInfo.scrollHeight + 'px' : '';
-      moreInfo.addEventListener('webkitTransitionEnd', function(event) {
+      moreInfo.addEventListener('transitionend', function(event) {
         $('more-info-expander').textContent = visible ?
             loadTimeData.getString('hideMoreInfo') :
             loadTimeData.getString('showMoreInfo');
@@ -319,8 +321,8 @@ cr.define('help', function() {
     },
 
     /**
-     * @param {string} eolStatus: The EndofLife status of the device.
-     * @param {string} eolMessage: The EndofLife message to display.
+     * @param {string} eolStatus The EndofLife status of the device.
+     * @param {string} eolMessage The EndofLife message to display.
      * @private
      */
     updateEolMessage_: function(eolStatus, eolMessage) {

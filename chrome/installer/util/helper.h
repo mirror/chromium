@@ -7,13 +7,7 @@
 #ifndef CHROME_INSTALLER_UTIL_HELPER_H_
 #define CHROME_INSTALLER_UTIL_HELPER_H_
 
-#include <string>
-
-class BrowserDistribution;
-
-namespace base {
-class FilePath;
-}
+#include "base/files/file_path.h"
 
 namespace installer {
 
@@ -22,17 +16,7 @@ namespace installer {
 // system_install: if true, the function returns system wide location
 //                 (ProgramFiles\Google). Otherwise it returns user specific
 //                 location (Document And Settings\<user>\Local Settings...)
-base::FilePath GetChromeInstallPath(bool system_install,
-                                    BrowserDistribution* dist);
-
-// Returns the distribution corresponding to the current process's binaries.
-// In the case of a multi-install product, this will be the CHROME_BINARIES
-// distribution.
-BrowserDistribution* GetBinariesDistribution(bool system_install);
-
-// Returns the app guid under which the current process receives updates from
-// Google Update.
-std::wstring GetAppGuidForUpdates(bool system_install);
+base::FilePath GetChromeInstallPath(bool system_install);
 
 }  // namespace installer
 

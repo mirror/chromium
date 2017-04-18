@@ -18,7 +18,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
-#include "media/base/android/sdk_media_codec_bridge.h"
+#include "media/base/android/media_codec_bridge_impl.h"
 #include "media/gpu/media_gpu_export.h"
 #include "media/video/video_encode_accelerator.h"
 
@@ -55,7 +55,9 @@ class MEDIA_GPU_EXPORT AndroidVideoEncodeAccelerator
   enum {
     // Arbitrary choice.
     INITIAL_FRAMERATE = 30,
-    // Until there are non-realtime users, no need for unrequested I-frames.
+    // Default I-Frame interval in seconds.
+    IFRAME_INTERVAL_H264 = 20,
+    IFRAME_INTERVAL_VPX = 100,
     IFRAME_INTERVAL = INT32_MAX,
   };
 
@@ -76,7 +78,7 @@ class MEDIA_GPU_EXPORT AndroidVideoEncodeAccelerator
   // error triggers.
   std::unique_ptr<base::WeakPtrFactory<Client>> client_ptr_factory_;
 
-  std::unique_ptr<VideoCodecBridge> media_codec_;
+  std::unique_ptr<MediaCodecBridge> media_codec_;
 
   // Bitstream buffers waiting to be populated & returned to the client.
   std::vector<BitstreamBuffer> available_bitstream_buffers_;
@@ -93,15 +95,17 @@ class MEDIA_GPU_EXPORT AndroidVideoEncodeAccelerator
   // The difference between number of buffers queued & dequeued at the codec.
   int32_t num_buffers_at_codec_;
 
-  // A monotonically-growing value, used as a fake timestamp just to keep things
-  // appearing to move forward.
-  base::TimeDelta fake_input_timestamp_;
+  // A monotonically-growing value.
+  base::TimeDelta input_timestamp_;
 
   // Resolution of input stream. Set once in initialization and not allowed to
   // change after.
   gfx::Size frame_size_;
 
   uint32_t last_set_bitrate_;  // In bps.
+
+  // True if there is encoder error.
+  bool error_occurred_;
 
   DISALLOW_COPY_AND_ASSIGN(AndroidVideoEncodeAccelerator);
 };

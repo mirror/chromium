@@ -4,7 +4,8 @@
  *           (C) 1998 Waldo Bastian (bastian@kde.org)
  *           (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2009, 2013 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2009, 2013 Apple Inc.
+ *               All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,8 +34,8 @@ namespace blink {
 // There is a window of opportunity to read |m_rowIndex| before it is set when
 // inserting the LayoutTableRow or during LayoutTableSection::recalcCells.
 // This value is used to detect that case.
-static const unsigned unsetRowIndex = 0x7FFFFFFF;
-static const unsigned maxRowIndex = 0x7FFFFFFE; // 2,147,483,646
+static const unsigned kUnsetRowIndex = 0x7FFFFFFF;
+static const unsigned kMaxRowIndex = 0x7FFFFFFE;  // 2,147,483,646
 
 // LayoutTableRow is used to represent a table row (display: table-row).
 //
@@ -51,7 +52,8 @@ static const unsigned maxRowIndex = 0x7FFFFFFE; // 2,147,483,646
 // allow some layout overflow to occur).
 //
 // LayoutTableRow doesn't establish a containing block for the underlying
-// LayoutTableCells. That's why it inherits from LayoutTableBoxComponent and not LayoutBlock.
+// LayoutTableCells. That's why it inherits from LayoutTableBoxComponent and not
+// LayoutBlock.
 // One oddity is that LayoutTableRow doesn't establish a new coordinate system
 // for its children. LayoutTableCells are positioned with respect to the
 // enclosing LayoutTableSection (this object's parent()). This particularity is
@@ -63,128 +65,140 @@ static const unsigned maxRowIndex = 0x7FFFFFFE; // 2,147,483,646
 // LayoutTableSection. See LayoutTableSection::layoutRows() for the placement
 // logic.
 class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
-public:
-    explicit LayoutTableRow(Element*);
+ public:
+  explicit LayoutTableRow(Element*);
 
-    LayoutTableCell* firstCell() const;
-    LayoutTableCell* lastCell() const;
+  LayoutTableCell* FirstCell() const;
+  LayoutTableCell* LastCell() const;
 
-    LayoutTableRow* previousRow() const;
-    LayoutTableRow* nextRow() const;
+  LayoutTableRow* PreviousRow() const;
+  LayoutTableRow* NextRow() const;
 
-    LayoutTableSection* section() const { return toLayoutTableSection(parent()); }
-    LayoutTable* table() const { return toLayoutTable(parent()->parent()); }
+  LayoutTableSection* Section() const { return ToLayoutTableSection(Parent()); }
+  LayoutTable* Table() const { return ToLayoutTable(Parent()->Parent()); }
 
-    static LayoutTableRow* createAnonymous(Document*);
-    static LayoutTableRow* createAnonymousWithParent(const LayoutObject*);
-    LayoutBox* createAnonymousBoxWithSameTypeAs(const LayoutObject* parent) const override
-    {
-        return createAnonymousWithParent(parent);
-    }
+  static LayoutTableRow* CreateAnonymous(Document*);
+  static LayoutTableRow* CreateAnonymousWithParent(const LayoutObject*);
+  LayoutBox* CreateAnonymousBoxWithSameTypeAs(
+      const LayoutObject* parent) const override {
+    return CreateAnonymousWithParent(parent);
+  }
 
-    void setRowIndex(unsigned rowIndex)
-    {
-        if (UNLIKELY(rowIndex > maxRowIndex))
-            CRASH();
+  void SetRowIndex(unsigned row_index) {
+    if (UNLIKELY(row_index > kMaxRowIndex))
+      CRASH();
 
-        m_rowIndex = rowIndex;
-    }
+    row_index_ = row_index;
+  }
 
-    bool rowIndexWasSet() const { return m_rowIndex != unsetRowIndex; }
-    unsigned rowIndex() const
-    {
-        ASSERT(rowIndexWasSet());
-        ASSERT(!section() || !section()->needsCellRecalc()); // index may be bogus if cells need recalc.
-        return m_rowIndex;
-    }
+  bool RowIndexWasSet() const { return row_index_ != kUnsetRowIndex; }
+  unsigned RowIndex() const {
+    DCHECK(RowIndexWasSet());
+    DCHECK(
+        !Section() ||
+        !Section()
+             ->NeedsCellRecalc());  // index may be bogus if cells need recalc.
+    return row_index_;
+  }
 
-    const BorderValue& borderAdjoiningTableStart() const
-    {
-        if (section()->hasSameDirectionAs(table()))
-            return style()->borderStart();
+  const BorderValue& BorderAdjoiningTableStart() const {
+    if (Section()->HasSameDirectionAs(Table()))
+      return Style()->BorderStart();
 
-        return style()->borderEnd();
-    }
+    return Style()->BorderEnd();
+  }
 
-    const BorderValue& borderAdjoiningTableEnd() const
-    {
-        if (section()->hasSameDirectionAs(table()))
-            return style()->borderEnd();
+  const BorderValue& BorderAdjoiningTableEnd() const {
+    if (Section()->HasSameDirectionAs(Table()))
+      return Style()->BorderEnd();
 
-        return style()->borderStart();
-    }
+    return Style()->BorderStart();
+  }
 
-    const BorderValue& borderAdjoiningStartCell(const LayoutTableCell*) const;
-    const BorderValue& borderAdjoiningEndCell(const LayoutTableCell*) const;
+  const BorderValue& BorderAdjoiningStartCell(const LayoutTableCell*) const;
+  const BorderValue& BorderAdjoiningEndCell(const LayoutTableCell*) const;
 
-    bool nodeAtPoint(HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction) override;
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation& location_in_container,
+                   const LayoutPoint& accumulated_offset,
+                   HitTestAction) override;
 
-    void computeOverflow();
+  PaginationBreakability GetPaginationBreakability() const final;
 
-    const char* name() const override { return "LayoutTableRow"; }
+  void ComputeOverflow();
 
-    // Whether a row has opaque background depends on many factors, e.g. border spacing,
-    // border collapsing, missing cells, etc.
-    // For simplicity, just conservatively assume all table rows are not opaque.
-    bool foregroundIsKnownToBeOpaqueInRect(const LayoutRect&, unsigned) const override { return false; }
-    bool backgroundIsKnownToBeOpaqueInRect(const LayoutRect&) const override { return false; }
+  const char* GetName() const override { return "LayoutTableRow"; }
 
-private:
-    void addOverflowFromCell(const LayoutTableCell*);
+  // Whether a row has opaque background depends on many factors, e.g. border
+  // spacing, border collapsing, missing cells, etc.
+  // For simplicity, just conservatively assume all table rows are not opaque.
+  bool ForegroundIsKnownToBeOpaqueInRect(const LayoutRect&,
+                                         unsigned) const override {
+    return false;
+  }
+  bool BackgroundIsKnownToBeOpaqueInRect(const LayoutRect&) const override {
+    return false;
+  }
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectTableRow || LayoutTableBoxComponent::isOfType(type); }
+  bool IsFirstRowInSectionAfterHeader() const;
 
-    void willBeRemovedFromTree() override;
+ private:
+  void AddOverflowFromCell(const LayoutTableCell*);
 
-    void addChild(LayoutObject* child, LayoutObject* beforeChild = nullptr) override;
-    void layout() override;
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectTableRow ||
+           LayoutTableBoxComponent::IsOfType(type);
+  }
 
-    PaintLayerType layerTypeRequired() const override
-    {
-        if (hasTransformRelatedProperty() || hasHiddenBackface() || hasClipPath() || createsGroup() || style()->shouldCompositeForCurrentAnimations() || isStickyPositioned() || style()->hasCompositorProxy())
-            return NormalPaintLayer;
+  void WillBeRemovedFromTree() override;
 
-        if (hasOverflowClip())
-            return OverflowClipPaintLayer;
+  void AddChild(LayoutObject* child,
+                LayoutObject* before_child = nullptr) override;
+  void UpdateLayout() override;
 
-        return NoPaintLayer;
-    }
+  PaintLayerType LayerTypeRequired() const override {
+    if (HasTransformRelatedProperty() || HasHiddenBackface() || HasClipPath() ||
+        CreatesGroup() || Style()->ShouldCompositeForCurrentAnimations() ||
+        IsStickyPositioned() || Style()->HasCompositorProxy())
+      return kNormalPaintLayer;
 
-    void paint(const PaintInfo&, const LayoutPoint&) const override;
+    if (HasOverflowClip())
+      return kOverflowClipPaintLayer;
 
-    void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) override;
+    return kNoPaintLayer;
+  }
 
-    void nextSibling() const = delete;
-    void previousSibling() const = delete;
+  void Paint(const PaintInfo&, const LayoutPoint&) const override;
 
-    // This field should never be read directly. It should be read through
-    // rowIndex() above instead. This is to ensure that we never read this
-    // value before it is set.
-    unsigned m_rowIndex : 31;
+  void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
+
+  void NextSibling() const = delete;
+  void PreviousSibling() const = delete;
+
+  // This field should never be read directly. It should be read through
+  // rowIndex() above instead. This is to ensure that we never read this
+  // value before it is set.
+  unsigned row_index_ : 31;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTableRow, isTableRow());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTableRow, IsTableRow());
 
-inline LayoutTableRow* LayoutTableRow::previousRow() const
-{
-    return toLayoutTableRow(LayoutObject::previousSibling());
+inline LayoutTableRow* LayoutTableRow::PreviousRow() const {
+  return ToLayoutTableRow(LayoutObject::PreviousSibling());
 }
 
-inline LayoutTableRow* LayoutTableRow::nextRow() const
-{
-    return toLayoutTableRow(LayoutObject::nextSibling());
+inline LayoutTableRow* LayoutTableRow::NextRow() const {
+  return ToLayoutTableRow(LayoutObject::NextSibling());
 }
 
-inline LayoutTableRow* LayoutTableSection::firstRow() const
-{
-    return toLayoutTableRow(firstChild());
+inline LayoutTableRow* LayoutTableSection::FirstRow() const {
+  return ToLayoutTableRow(FirstChild());
 }
 
-inline LayoutTableRow* LayoutTableSection::lastRow() const
-{
-    return toLayoutTableRow(lastChild());
+inline LayoutTableRow* LayoutTableSection::LastRow() const {
+  return ToLayoutTableRow(LastChild());
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutTableRow_h
+#endif  // LayoutTableRow_h

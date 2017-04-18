@@ -20,7 +20,8 @@ OverlayStrategyUnderlay::~OverlayStrategyUnderlay() {}
 
 bool OverlayStrategyUnderlay::Attempt(ResourceProvider* resource_provider,
                                       RenderPass* render_pass,
-                                      OverlayCandidateList* candidate_list) {
+                                      OverlayCandidateList* candidate_list,
+                                      std::vector<gfx::Rect>* content_bounds) {
   QuadList& quad_list = render_pass->quad_list;
   for (auto it = quad_list.begin(); it != quad_list.end(); ++it) {
     OverlayCandidate candidate;
@@ -47,7 +48,19 @@ bool OverlayStrategyUnderlay::Attempt(ResourceProvider* resource_provider,
       replacement->SetAll(shared_quad_state, rect, rect, rect, false,
                           SK_ColorTRANSPARENT, true);
       candidate_list->swap(new_candidate_list);
+
+      // This quad will be promoted.  We clear the promotable hints here, since
+      // we can only promote a single quad.  Otherwise, somebody might try to
+      // back one of the promotable quads with a SurfaceView, and either it or
+      // |candidate| would have to fall back to a texture.
+      candidate_list->promotion_hint_info_map_.clear();
+      candidate_list->AddPromotionHint(candidate);
       return true;
+    } else {
+      // If |candidate| should get a promotion hint, then rememeber that now.
+      candidate_list->promotion_hint_info_map_.insert(
+          new_candidate_list.promotion_hint_info_map_.begin(),
+          new_candidate_list.promotion_hint_info_map_.end());
     }
   }
 

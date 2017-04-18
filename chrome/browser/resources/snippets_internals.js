@@ -5,22 +5,17 @@
 cr.define('chrome.SnippetsInternals', function() {
   'use strict';
 
-  // Stores the list of snippets we received in receiveSnippets.
-  var lastSnippets = [];
+  // Stores the list of suggestions we received in receiveContentSuggestions.
+  var lastSuggestions = [];
 
   function initialize() {
     $('submit-download').addEventListener('click', function(event) {
-      chrome.send('download', [$('hosts-input').value]);
-      event.preventDefault();
-    });
-
-    $('submit-clear').addEventListener('click', function(event) {
-      chrome.send('clear');
+      chrome.send('download');
       event.preventDefault();
     });
 
     $('submit-dump').addEventListener('click', function(event) {
-      downloadJson(JSON.stringify(lastSnippets));
+      downloadJson(JSON.stringify(lastSuggestions, null, 2));
       event.preventDefault();
     });
 
@@ -33,20 +28,13 @@ cr.define('chrome.SnippetsInternals', function() {
       event.preventDefault();
     });
 
-    $('dismissed-snippets-clear').addEventListener('click', function(event) {
-      chrome.send('clearDismissed');
+    $('clear-classification').addEventListener('click', function(event) {
+      chrome.send('clearClassification');
       event.preventDefault();
     });
 
-    $('submit-clear-cached-suggestions')
-        .addEventListener('click', function(event) {
-      chrome.send('clearCachedSuggestions');
-      event.preventDefault();
-    });
-
-    $('submit-clear-dismissed-suggestions')
-        .addEventListener('click', function(event) {
-      chrome.send('clearDismissedSuggestions');
+    $('background-fetch-button').addEventListener('click', function(event) {
+      chrome.send('fetchRemoteSuggestionsInTheBackground');
       event.preventDefault();
     });
 
@@ -56,37 +44,53 @@ cr.define('chrome.SnippetsInternals', function() {
     refreshContent();
   }
 
-  function setHostRestricted(restricted) {
-    receiveProperty('switch-restrict-to-hosts', restricted ? 'True' : 'False');
-    if (!restricted) {
-      $('hosts-restrict').classList.add('hidden');
-    }
-  }
-
   function receiveProperty(propertyId, value) {
     $(propertyId).textContent = value;
   }
 
-  function receiveHosts(hosts) {
-    displayList(hosts, 'hosts');
-
-    $('hosts-input').value = hosts.list.map(
-      function(host) { return host.url;}).join(' ');
-  }
-
-  function receiveSnippets(snippets) {
-    lastSnippets = snippets;
-    displayList(snippets, 'snippets', 'snippet-title');
-  }
-
-  function receiveDismissedSnippets(dismissedSnippets) {
-    displayList(dismissedSnippets, 'dismissed-snippets',
-                'dismissed-snippet-title');
-  }
-
   function receiveContentSuggestions(categoriesList) {
+    lastSuggestions = categoriesList;
     displayList(categoriesList, 'content-suggestions',
-                'content-suggestion-title');
+                'hidden-toggler');
+
+    var clearCachedButtons =
+        document.getElementsByClassName('submit-clear-cached-suggestions');
+    for (var button of clearCachedButtons) {
+      button.addEventListener('click', onClearCachedButtonClicked);
+    }
+
+    var clearDismissedButtons =
+        document.getElementsByClassName('submit-clear-dismissed-suggestions');
+    for (var button of clearDismissedButtons) {
+      button.addEventListener('click', onClearDismissedButtonClicked);
+    }
+
+    var toggleDismissedButtons =
+        document.getElementsByClassName('toggle-dismissed-suggestions');
+    for (var button of toggleDismissedButtons) {
+      button.addEventListener('click', onToggleDismissedButtonClicked);
+    }
+  }
+
+  function onClearCachedButtonClicked(event) {
+    event.preventDefault();
+    var id = parseInt(event.currentTarget.getAttribute('category-id'), 10);
+    chrome.send('clearCachedSuggestions', [id]);
+  }
+
+  function onClearDismissedButtonClicked(event) {
+    event.preventDefault();
+    var id = parseInt(event.currentTarget.getAttribute('category-id'), 10);
+    chrome.send('clearDismissedSuggestions', [id]);
+  }
+
+  function onToggleDismissedButtonClicked(event) {
+    event.preventDefault();
+    var id = parseInt(event.currentTarget.getAttribute('category-id'), 10);
+    var table = $('dismissed-suggestions-' + id);
+    table.classList.toggle('hidden');
+    chrome.send('toggleDismissedSuggestions',
+        [id, !table.classList.contains('hidden')]);
   }
 
   function receiveJson(json) {
@@ -101,13 +105,27 @@ cr.define('chrome.SnippetsInternals', function() {
     }
   }
 
+  function receiveClassification(
+      userClass, timeToOpenNTP, timeToShow, timeToUse) {
+    receiveProperty('user-class', userClass);
+    receiveProperty('avg-time-to-open-ntp', timeToOpenNTP);
+    receiveProperty('avg-time-to-show', timeToShow);
+    receiveProperty('avg-time-to-use', timeToUse);
+  }
+
+  function receiveLastRemoteSuggestionsBackgroundFetchTime(
+      lastRemoteSuggestionsBackgroundFetchTime) {
+    receiveProperty('last-background-fetch-time-label',
+        lastRemoteSuggestionsBackgroundFetchTime);
+  }
+
   function downloadJson(json) {
     // Redirect the browser to download data in |json| as a file "snippets.json"
     // (Setting Content-Disposition: attachment via a data: URL is not possible;
     // create a link with download attribute and simulate a click, instead.)
     var link = document.createElement('a');
     link.download = 'snippets.json';
-    link.href = 'data:,' + json;
+    link.href = 'data:application/json,' + encodeURI(json);
     link.click();
   }
 
@@ -120,7 +138,7 @@ cr.define('chrome.SnippetsInternals', function() {
     $(id).classList.toggle('hidden');
   }
 
-  function displayList(object, domId, titleClass) {
+  function displayList(object, domId, toggleClass) {
     jstProcess(new JsEvalContext(object), $(domId));
 
     var text;
@@ -137,7 +155,7 @@ cr.define('chrome.SnippetsInternals', function() {
     if ($(domId + '-empty')) $(domId + '-empty').textContent = text;
     if ($(domId + '-clear')) $(domId + '-clear').style.display = display;
 
-    var links = document.getElementsByClassName(titleClass);
+    var links = document.getElementsByClassName(toggleClass);
     for (var link of links) {
       link.addEventListener('click', toggleHidden);
     }
@@ -146,13 +164,12 @@ cr.define('chrome.SnippetsInternals', function() {
   // Return an object with all of the exports.
   return {
     initialize: initialize,
-    setHostRestricted: setHostRestricted,
     receiveProperty: receiveProperty,
-    receiveHosts: receiveHosts,
-    receiveSnippets: receiveSnippets,
-    receiveDismissedSnippets: receiveDismissedSnippets,
     receiveContentSuggestions: receiveContentSuggestions,
     receiveJson: receiveJson,
+    receiveClassification: receiveClassification,
+    receiveLastRemoteSuggestionsBackgroundFetchTime:
+        receiveLastRemoteSuggestionsBackgroundFetchTime,
   };
 });
 

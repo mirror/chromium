@@ -3,11 +3,18 @@
 // found in the LICENSE file.
 
 /**
+ * @typedef {{about: boolean, settings: boolean}}
+ */
+var MainPageVisibility;
+
+/**
  * @fileoverview
  * 'settings-main' displays the selected settings page.
  */
 Polymer({
   is: 'settings-main',
+
+  behaviors: [settings.RouteObserverBehavior],
 
   properties: {
     /**
@@ -18,35 +25,37 @@ Polymer({
       notify: true,
     },
 
-    /**
-     * The current active route.
-     * @type {!SettingsRoute}
-     */
-    currentRoute: {
-      type: Object,
-      notify: true,
-      observer: 'currentRouteChanged_',
-    },
-
-    /** @private */
-    advancedToggleExpanded_: {
+    advancedToggleExpanded: {
       type: Boolean,
-      value: false,
+      notify: true,
     },
 
     /** @private */
-    inSubpage_: Boolean,
+    overscroll_: {
+      type: Number,
+      observer: 'overscrollChanged_',
+    },
 
     /**
-     * Controls which main pages are displayed via dom-ifs.
-     * @type {!{about: boolean, basic: boolean, advanced: boolean}}
-     * @private
+     * Controls which main pages are displayed via dom-ifs, based on the current
+     * route.
+     * @private {!MainPageVisibility}
      */
     showPages_: {
       type: Object,
       value: function() {
-        return {about: false, basic: false, advanced: false};
+        return {about: false, settings: false};
       },
+    },
+
+    /**
+     * Whether a search operation is in progress or previous search results are
+     * being displayed.
+     * @private {boolean}
+     */
+    inSearchMode_: {
+      type: Boolean,
+      value: false,
     },
 
     /** @private */
@@ -69,88 +78,135 @@ Polymer({
       type: Object,
       value: function() { return {}; },
     },
-  },
 
-  /** @override */
-  created: function() {
-    /** @private {!PromiseResolver} */
-    this.resolver_ = new PromiseResolver;
-    settings.main.rendered = this.resolver_.promise;
+    showAndroidApps: Boolean,
   },
 
   /** @override */
   attached: function() {
-    document.addEventListener('toggle-advanced-page', function(e) {
-      this.advancedToggleExpanded_ = e.detail;
-      this.currentRoute = {
-        page: this.advancedToggleExpanded_ ? 'advanced' : 'basic',
-        section: '',
-        subpage: [],
-      };
-    }.bind(this));
-
-    doWhenReady(
-        function() {
-          var basicPage = this.$$('settings-basic-page');
-          return !!basicPage && basicPage.scrollHeight > 0;
-        }.bind(this),
-        function() {
-          this.resolver_.resolve();
-        }.bind(this));
+    this.listen(this, 'freeze-scroll', 'onFreezeScroll_');
+    this.listen(this, 'lazy-loaded', 'onLazyLoaded_');
   },
 
-  /**
-   * @param {boolean} opened Whether the menu is expanded.
-   * @return {string} Which icon to use.
-   * @private
-   */
-  arrowState_: function(opened) {
-    return opened ? 'settings:arrow-drop-up' : 'cr:arrow-drop-down';
+  /** @private */
+  onLazyLoaded_: function() {
+    Polymer.dom.flush();
+    this.updateOverscrollForPage_();
   },
 
-  /**
-   * @param {boolean} showBasicPage
-   * @param {boolean} inSubpage
-   * @return {boolean}
-   * @private
-   */
-  showAdvancedToggle_: function(showBasicPage, inSubpage) {
-    return showBasicPage && !inSubpage;
+  /** @override */
+  detached: function() {
+    this.unlisten(this, 'freeze-scroll', 'onFreezeScroll_');
   },
 
-  /**
-   * @param {!SettingsRoute} newRoute
-   * @private
-   */
-  currentRouteChanged_: function(newRoute) {
-    this.inSubpage_ = newRoute.subpage.length > 0;
-    this.style.height = this.inSubpage_ ? '100%' : '';
-
-    if (newRoute.page == 'about') {
-      this.showPages_ = {about: true, basic: false, advanced: false};
-    } else {
-      this.showPages_ = {
-        about: false,
-        basic: newRoute.page == 'basic' || !this.inSubpage_,
-        advanced: newRoute.page == 'advanced' ||
-            (!this.inSubpage_ && this.advancedToggleExpanded_),
-      };
-
-      if (this.showPages_.advanced) {
-        assert(!this.pageVisibility ||
-            this.pageVisibility.advancedSettings !== false);
-        this.advancedToggleExpanded_ = true;
-      }
+  /** @private */
+  overscrollChanged_: function() {
+    if (!this.overscroll_ && this.boundScroll_) {
+      this.offsetParent.removeEventListener('scroll', this.boundScroll_);
+      window.removeEventListener('resize', this.boundScroll_);
+      this.boundScroll_ = null;
+    } else if (this.overscroll_ && !this.boundScroll_) {
+      this.boundScroll_ = function() {
+        if (!this.ignoreScroll_)
+          this.setOverscroll_(0);
+      }.bind(this);
+      this.offsetParent.addEventListener('scroll', this.boundScroll_);
+      window.addEventListener('resize', this.boundScroll_);
     }
-
-    // Wait for any other changes prior to calculating the overflow padding.
-    this.async(function() {
-      this.$.overscroll.style.paddingBottom = this.overscrollHeight_() + 'px';
-    });
   },
 
   /**
-   * Return the height that the over scroll padding should be set to.
+   * Sets the overscroll padding. Never forces a scroll, i.e., always leaves
+   * any currently visible overflow as-is.
+   * @param {number=} opt_minHeight The minimum overscroll height needed.
+   * @private
+   */
+  setOverscroll_: function(opt_minHeight) {
+    var scroller = this.offsetParent;
+    if (!scroller)
+      return;
+    var overscroll = this.$.overscroll;
+    var visibleBottom = scroller.scrollTop + scroller.clientHeight;
+    var overscrollBottom = overscroll.offsetTop + overscroll.scrollHeight;
+    // How much of the overscroll is visible (may be negative).
+    var visibleOverscroll = overscroll.scrollHeight -
+                            (overscrollBottom - visibleBottom);
+    this.overscroll_ =
+        Math.max(opt_minHeight || 0, Math.ceil(visibleOverscroll));
+  },
+
+  /**
+   * Enables or disables user scrolling, via overscroll: hidden. Room for the
+   * hidden scrollbar is added to prevent the page width from changing back and
+   * forth. Also freezes the overscroll height.
+   * @param {!Event} e |e.detail| is true to freeze, false to unfreeze.
+   * @private
+   */
+  onFreezeScroll_: function(e) {
+    if (e.detail) {
+      // Update the overscroll and ignore scroll events.
+      this.setOverscroll_(this.overscrollHeight_());
+      this.ignoreScroll_ = true;
+
+      // Prevent scrolling the container.
+      var scrollerWidth = this.offsetParent.clientWidth;
+      this.offsetParent.style.overflow = 'hidden';
+      var scrollbarWidth = this.offsetParent.clientWidth - scrollerWidth;
+      this.offsetParent.style.width = 'calc(100% - ' + scrollbarWidth + 'px)';
+    } else {
+      this.ignoreScroll_ = false;
+      this.offsetParent.style.overflow = '';
+      this.offsetParent.style.width = '';
+    }
+  },
+
+  /** @param {!settings.Route} newRoute */
+  currentRouteChanged: function(newRoute) {
+    this.updatePagesShown_();
+  },
+
+  /** @private */
+  onSubpageExpand_: function() {
+    this.updatePagesShown_();
+  },
+
+  /**
+   * Updates the hidden state of the about and settings pages based on the
+   * current route.
+   * @private
+   */
+  updatePagesShown_: function() {
+    var inAbout = settings.Route.ABOUT.contains(settings.getCurrentRoute());
+    this.showPages_ = {about: inAbout, settings: !inAbout};
+
+    // Calculate and set the overflow padding.
+    this.updateOverscrollForPage_();
+
+    // Wait for any other changes, then calculate the overflow padding again.
+    setTimeout(function() {
+      // Ensure any dom-if reflects the current properties.
+      Polymer.dom.flush();
+      this.updateOverscrollForPage_();
+    }.bind(this));
+  },
+
+  /**
+   * Calculates the necessary overscroll and sets the overscroll to that value
+   * (at minimum). For the About page, this just zeroes the overscroll.
+   * @private
+   */
+  updateOverscrollForPage_: function() {
+    if (this.showPages_.about) {
+      // Set overscroll directly to remove any existing overscroll that
+      // setOverscroll_ would otherwise preserve.
+      this.overscroll_ = 0;
+      return;
+    }
+    this.setOverscroll_(this.overscrollHeight_());
+  },
+
+  /**
+   * Return the height that the overscroll padding should be set to.
    * This is used to determine how much padding to apply to the end of the
    * content so that the last element may align with the top of the content
    * area.
@@ -158,101 +214,77 @@ Polymer({
    * @private
    */
   overscrollHeight_: function() {
-    if (!this.currentRoute || this.currentRoute.subpage.length != 0 ||
-        this.showPages_.about) {
+    var route = settings.getCurrentRoute();
+    if (!route.section || route.isSubpage() || this.showPages_.about)
       return 0;
-    }
 
-    // Ensure any dom-if reflects the current properties.
-    Polymer.dom.flush();
-
-    /**
-     * @param {!Element} element
-     * @return {number}
-     */
-    var calcHeight = function(element) {
-      var style = getComputedStyle(element);
-      var height = this.parentNode.scrollHeight - element.offsetHeight +
-          parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-      assert(height >= 0);
-      return height;
-    }.bind(this);
-
-    if (this.showPages_.advanced) {
-      var lastSection = this.$$('settings-advanced-page').$$(
-          'settings-section:last-of-type');
-      // |lastSection| may be null in unit tests.
-      if (!lastSection)
-        return 0;
-      return calcHeight(lastSection);
-    }
-
-    assert(this.showPages_.basic);
-    var lastSection = this.$$('settings-basic-page').$$(
-        'settings-section:last-of-type');
-    // |lastSection| may be null in unit tests.
-    if (!lastSection)
+    var page = this.getPage_(route);
+    var section = page && page.getSection(route.section);
+    if (!section || !section.offsetParent)
       return 0;
-    var toggleContainer = this.$$('#toggleContainer');
-    return calcHeight(lastSection) -
-        (toggleContainer ? toggleContainer.offsetHeight : 0);
-  },
 
-  /** @private */
-  toggleAdvancedPage_: function() {
-    this.fire('toggle-advanced-page', !this.advancedToggleExpanded_);
+    // Find the distance from the section's top to the overscroll.
+    var sectionTop = section.offsetParent.offsetTop + section.offsetTop;
+    var distance = this.$.overscroll.offsetTop - sectionTop;
+
+    return Math.max(0, this.offsetParent.clientHeight - distance);
   },
 
   /**
-   * Navigates to the default search page (if necessary).
-   * @private
+   * Returns the root page (if it exists) for a route.
+   * @param {!settings.Route} route
+   * @return {(?SettingsAboutPageElement|?SettingsBasicPageElement)}
    */
-  ensureInDefaultSearchPage_: function() {
-    if (this.currentRoute.page != 'basic' ||
-        this.currentRoute.section != '' ||
-        this.currentRoute.subpage.length != 0) {
-      this.currentRoute = {page: 'basic', section: '', subpage: [], url: ''};
+  getPage_: function(route) {
+    if (settings.Route.ABOUT.contains(route)) {
+      return /** @type {?SettingsAboutPageElement} */(
+          this.$$('settings-about-page'));
     }
+    if (settings.Route.BASIC.contains(route) ||
+        settings.Route.ADVANCED.contains(route)) {
+      return /** @type {?SettingsBasicPageElement} */(
+          this.$$('settings-basic-page'));
+    }
+    assertNotReached();
   },
 
   /**
    * @param {string} query
+   * @return {!Promise} A promise indicating that searching finished.
    */
   searchContents: function(query) {
-    this.ensureInDefaultSearchPage_();
+    // Trigger rendering of the basic and advanced pages and search once ready.
+    this.inSearchMode_ = true;
     this.toolbarSpinnerActive = true;
 
-    // Trigger rendering of the basic and advanced pages and search once ready.
-    this.showPages_ = {about: false, basic: true, advanced: true};
+    return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        var whenSearchDone =
+            assert(this.getPage_(settings.Route.BASIC)).searchContents(query);
+        whenSearchDone.then(function(result) {
+          resolve();
+          if (result.canceled) {
+            // Nothing to do here. A previous search request was canceled
+            // because a new search request was issued with a different query
+            // before the previous completed.
+            return;
+          }
 
-    setTimeout(function() {
-      settings.getSearchManager().search(
-          query, assert(this.$$('settings-basic-page')));
-    }.bind(this), 0);
-    setTimeout(function() {
-      settings.getSearchManager().search(
-          query, assert(this.$$('settings-advanced-page'))).then(
-          function(request) {
-            if (!request.finished) {
-              // Nothing to do here. A previous search request was canceled
-              // because a new search request was issued before the first one
-              // completed.
-              return;
-            }
+          this.toolbarSpinnerActive = false;
+          this.inSearchMode_ = !result.wasClearSearch;
+          this.showNoResultsFound_ =
+              this.inSearchMode_ && result.didFindMatches;
 
-            this.toolbarSpinnerActive = false;
-            this.showNoResultsFound_ =
-                !request.isSame('') && !request.didFindMatches();
-          }.bind(this));
-    }.bind(this), 0);
-  },
-
-  /**
-   * @param {(boolean|undefined)} visibility
-   * @return {boolean} True unless visibility is false.
-   * @private
-   */
-  showAdvancedSettings_: function(visibility) {
-    return visibility !== false;
+          if (this.inSearchMode_) {
+            Polymer.IronA11yAnnouncer.requestAvailability();
+            this.fire('iron-announce', {
+              text: this.showNoResultsFound_ ?
+                  loadTimeData.getString('searchNoResults') :
+                  loadTimeData.getStringF('searchResults', query)
+            });
+          }
+        }.bind(this));
+      }.bind(this), 0);
+    }.bind(this));
   },
 });

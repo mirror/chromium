@@ -17,6 +17,7 @@
 
 namespace net {
 class URLRequest;
+class NetLogEntry;
 }  // namespace net
 
 namespace content {
@@ -29,12 +30,12 @@ struct ResourceResponse;
 // As NetLogObserver shares live data with objects that live on the IO Thread,
 // it must also reside on the IO Thread.  Only OnAddEntry can be called from
 // other threads.
-class NetLogObserver : public net::NetLog::ThreadSafeObserver {
+class CONTENT_EXPORT NetLogObserver : public net::NetLog::ThreadSafeObserver {
   typedef ResourceDevToolsInfo ResourceInfo;
 
  public:
   // net::NetLog::ThreadSafeObserver implementation:
-  void OnAddEntry(const net::NetLog::Entry& entry) override;
+  void OnAddEntry(const net::NetLogEntry& entry) override;
 
   // The NetLog instance is passed in via the |net_log| parameter.
   static void Attach(net::NetLog* net_log);
@@ -54,7 +55,7 @@ class NetLogObserver : public net::NetLog::ThreadSafeObserver {
 
   ResourceInfo* GetResourceInfo(uint32_t id);
 
-  void OnAddURLRequestEntry(const net::NetLog::Entry& entry);
+  void OnAddURLRequestEntry(const net::NetLogEntry& entry);
 
   typedef base::hash_map<uint32_t, scoped_refptr<ResourceInfo>>
       RequestToInfoMap;

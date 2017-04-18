@@ -22,6 +22,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/threading/thread_checker.h"
@@ -32,16 +33,16 @@
 #include "components/history/core/browser/delete_directive_handler.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/keyword_id.h"
+#include "components/history/core/browser/typed_url_sync_bridge.h"
 #include "components/history/core/browser/typed_url_syncable_service.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/sync/model/syncable_service.h"
 #include "sql/init_status.h"
-#include "sync/api/syncable_service.h"
 #include "ui/base/page_transition_types.h"
 
 class GURL;
 class HistoryQuickProviderTest;
 class HistoryURLProvider;
-class HistoryURLProviderTest;
 class InMemoryURLIndexTest;
 class SkBitmap;
 class SyncBookmarkDataTypeControllerTest;
@@ -53,7 +54,7 @@ class Thread;
 }
 
 namespace favicon {
-class FaviconService;
+class FaviconServiceImpl;
 }
 
 namespace history {
@@ -63,13 +64,11 @@ struct HistoryAddPageArgs;
 class HistoryBackend;
 class HistoryClient;
 class HistoryDBTask;
-class HistoryDatabase;
 struct HistoryDatabaseParams;
 class HistoryQueryTest;
 class HistoryServiceObserver;
 class HistoryServiceTest;
 class InMemoryHistoryBackend;
-struct KeywordSearchTermVisit;
 class URLDatabase;
 class VisitDelegate;
 class WebHistoryService;
@@ -130,6 +129,11 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // Following functions get URL information from in-memory database.
   // They return false if database is not available (e.g. not loaded yet) or the
   // URL does not exist.
+
+  // Returns a pointer to the TypedURLSyncBridge owned by HistoryBackend.
+  // This method should only be called from the history thread, because the
+  // returned bridge is intended to be accessed only via the history thread.
+  TypedURLSyncBridge* GetTypedURLSyncBridge() const;
 
   // Returns a pointer to the TypedUrlSyncableService owned by HistoryBackend.
   // This method should only be called from the history thread, because the
@@ -421,7 +425,7 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   // Called to update the history service about the current state of a download.
   // This is a 'fire and forget' query, so just pass the relevant state info to
   // the database with no need for a callback.
-  void UpdateDownload(const DownloadRow& data);
+  void UpdateDownload(const DownloadRow& data, bool should_commit_immediately);
 
   // Permanently remove some downloads from the history system. This is a 'fire
   // and forget' operation.
@@ -546,12 +550,13 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   class BackendDelegate;
   friend class base::RefCountedThreadSafe<HistoryService>;
   friend class BackendDelegate;
-  friend class favicon::FaviconService;
+  friend class favicon::FaviconServiceImpl;
   friend class HistoryBackend;
   friend class HistoryQueryTest;
   friend class ::HistoryQuickProviderTest;
   friend class HistoryServiceTest;
   friend class ::HistoryURLProvider;
+  friend class HQPPerfTestOnePopularURL;
   friend class ::InMemoryURLIndexTest;
   friend class ::SyncBookmarkDataTypeControllerTest;
   friend class ::TestingProfile;
@@ -762,6 +767,20 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
                    const GURL& icon_url,
                    const std::vector<SkBitmap>& bitmaps);
 
+  // Same as SetFavicons with three differences:
+  // 1) It will be a no-op if there is an existing cached favicon for *any* type
+  //    for |page_url|.
+  // 2) If |icon_url| is known to the database, |bitmaps| will be ignored (i.e.
+  //    the icon won't be overwritten) but the mappings from |page_url| to
+  //    |icon_url| will be stored (conditioned to point 1 above).
+  // 3) If |icon_url| is stored, it will be marked as expired.
+  // The callback will receive whether the write actually happened.
+  void SetLastResortFavicons(const GURL& page_url,
+                             favicon_base::IconType icon_type,
+                             const GURL& icon_url,
+                             const std::vector<SkBitmap>& bitmaps,
+                             base::Callback<void(bool)> callback);
+
   // Used by the FaviconService to mark the favicon for the page as being out
   // of date.
   void SetFaviconsOutOfDateForPage(const GURL& page_url);
@@ -777,11 +796,12 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
   void SetInMemoryBackend(std::unique_ptr<InMemoryHistoryBackend> mem_backend);
 
   // Called by our BackendDelegate when there is a problem reading the database.
-  void NotifyProfileError(sql::InitStatus init_status);
+  void NotifyProfileError(sql::InitStatus init_status,
+                          const std::string& diagnostics);
 
   // Call to schedule a given task for running on the history thread with the
   // specified priority. The task will have ownership taken.
-  void ScheduleTask(SchedulePriority priority, const base::Closure& task);
+  void ScheduleTask(SchedulePriority priority, base::OnceClosure task);
 
   // Called when the favicons for the given page URLs (e.g.
   // http://www.google.com) and the given icon URL (e.g.
@@ -793,9 +813,15 @@ class HistoryService : public syncer::SyncableService, public KeyedService {
 
   base::ThreadChecker thread_checker_;
 
-  // The thread used by the history service to run complicated operations.
-  // |thread_| is null once Cleanup() is called.
-  base::Thread* thread_;
+  // The thread used by the history service to run HistoryBackend operations.
+  // Intentionally not a BrowserThread because the sync integration unit tests
+  // need to create multiple HistoryServices which each have their own thread.
+  // Nullptr if TaskScheduler is used for HistoryBackend operations.
+  std::unique_ptr<base::Thread> thread_;
+
+  // The TaskRunner to which HistoryBackend tasks are posted. Nullptr once
+  // Cleanup() is called.
+  scoped_refptr<base::SequencedTaskRunner> backend_task_runner_;
 
   // This class has most of the implementation and runs on the 'thread_'.
   // You MUST communicate with this class ONLY through the thread_'s

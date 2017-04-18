@@ -8,9 +8,8 @@
 
 namespace blink {
 
-DEFINE_TRACE_WRAPPERS(CSSStyleDeclaration)
-{
-    visitor->traceWrappers(parentRule());
+DEFINE_TRACE_WRAPPERS(CSSStyleDeclaration) {
+  visitor->TraceWrappers(parentRule());
 }
 
-} // namespace blink
+}  // namespace blink

@@ -13,37 +13,41 @@ namespace blink {
 class LayoutBoxModelObject;
 
 class LayoutBoxModel : public LayoutItem {
-public:
-    explicit LayoutBoxModel(LayoutBoxModelObject* layoutBox)
-        : LayoutItem(layoutBox)
-    {
-    }
+ public:
+  explicit LayoutBoxModel(LayoutBoxModelObject* layout_box)
+      : LayoutItem(layout_box) {}
 
-    explicit LayoutBoxModel(const LayoutItem& item)
-        : LayoutItem(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isBoxModelObject());
-    }
+  explicit LayoutBoxModel(const LayoutItem& item) : LayoutItem(item) {
+    SECURITY_DCHECK(!item || item.IsBoxModelObject());
+  }
 
-    explicit LayoutBoxModel(std::nullptr_t) : LayoutItem(nullptr) { }
+  explicit LayoutBoxModel(std::nullptr_t) : LayoutItem(nullptr) {}
 
-    LayoutBoxModel() { }
+  LayoutBoxModel() {}
 
-    PaintLayer* layer() const
-    {
-        return toBoxModel()->layer();
-    }
+  PaintLayer* Layer() const { return ToBoxModel()->Layer(); }
 
-    PaintLayerScrollableArea* getScrollableArea() const
-    {
-        return toBoxModel()->getScrollableArea();
-    }
+  PaintLayerScrollableArea* GetScrollableArea() const {
+    return ToBoxModel()->GetScrollableArea();
+  }
 
-private:
-    LayoutBoxModelObject* toBoxModel() { return toLayoutBoxModelObject(layoutObject()); }
-    const LayoutBoxModelObject* toBoxModel() const { return toLayoutBoxModelObject(layoutObject()); }
+  LayoutUnit BorderTop() const { return ToBoxModel()->BorderTop(); }
+
+  LayoutUnit BorderLeft() const { return ToBoxModel()->BorderLeft(); }
+
+  LayoutUnit PaddingTop() const { return ToBoxModel()->PaddingTop(); }
+
+  LayoutUnit PaddingLeft() const { return ToBoxModel()->PaddingLeft(); }
+
+ private:
+  LayoutBoxModelObject* ToBoxModel() {
+    return ToLayoutBoxModelObject(GetLayoutObject());
+  }
+  const LayoutBoxModelObject* ToBoxModel() const {
+    return ToLayoutBoxModelObject(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutBoxModel_h
+#endif  // LayoutBoxModel_h

@@ -31,11 +31,11 @@
 #ifndef BlobRegistry_h
 #define BlobRegistry_h
 
-#include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
 #include <memory>
+#include "platform/PlatformExport.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
@@ -47,25 +47,30 @@ class SecurityOrigin;
 
 // A bridging class for calling blink::WebBlobRegistry methods.
 class PLATFORM_EXPORT BlobRegistry {
-    STATIC_ONLY(BlobRegistry);
-public:
-    // Methods for controlling Blobs.
-    static void registerBlobData(const String& uuid, std::unique_ptr<BlobData>);
-    static void addBlobDataRef(const String& uuid);
-    static void removeBlobDataRef(const String& uuid);
-    static void registerPublicBlobURL(SecurityOrigin*, const KURL&, PassRefPtr<BlobDataHandle>);
-    static void revokePublicBlobURL(const KURL&);
+  STATIC_ONLY(BlobRegistry);
 
-    // Methods for controlling Streams.
-    static void registerStreamURL(const KURL&, const String&);
-    static void registerStreamURL(SecurityOrigin*, const KURL&, const KURL& srcURL);
-    static void addDataToStream(const KURL&, PassRefPtr<RawData>);
-    static void flushStream(const KURL&);
-    static void finalizeStream(const KURL&);
-    static void abortStream(const KURL&);
-    static void unregisterStreamURL(const KURL&);
+ public:
+  // Methods for controlling Blobs.
+  static void RegisterBlobData(const String& uuid, std::unique_ptr<BlobData>);
+  static void AddBlobDataRef(const String& uuid);
+  static void RemoveBlobDataRef(const String& uuid);
+  static void RegisterPublicBlobURL(SecurityOrigin*,
+                                    const KURL&,
+                                    PassRefPtr<BlobDataHandle>);
+  static void RevokePublicBlobURL(const KURL&);
+
+  // Methods for controlling Streams.
+  static void RegisterStreamURL(const KURL&, const String&);
+  static void RegisterStreamURL(SecurityOrigin*,
+                                const KURL&,
+                                const KURL& src_url);
+  static void AddDataToStream(const KURL&, PassRefPtr<RawData>);
+  static void FlushStream(const KURL&);
+  static void FinalizeStream(const KURL&);
+  static void AbortStream(const KURL&);
+  static void UnregisterStreamURL(const KURL&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BlobRegistry_h
+#endif  // BlobRegistry_h

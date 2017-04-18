@@ -30,91 +30,85 @@
 
 #include "core/testing/DummyPageHolder.h"
 
-#include "core/frame/FrameHost.h"
+#include <memory>
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/loader/EmptyClients.h"
-#include "wtf/Assertions.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-void RootLayerScrollsFrameSettingOverride(Settings& settings)
-{
-    settings.setRootLayerScrolls(true);
+std::unique_ptr<DummyPageHolder> DummyPageHolder::Create(
+    const IntSize& initial_view_size,
+    Page::PageClients* page_clients,
+    LocalFrameClient* local_frame_client,
+    FrameSettingOverrideFunction setting_overrider,
+    InterfaceProvider* interface_provider) {
+  return WTF::WrapUnique(
+      new DummyPageHolder(initial_view_size, page_clients, local_frame_client,
+                          setting_overrider, interface_provider));
 }
 
-std::unique_ptr<DummyPageHolder> DummyPageHolder::create(
-    const IntSize& initialViewSize,
-    Page::PageClients* pageClients,
-    FrameLoaderClient* frameLoaderClient,
-    FrameSettingOverrideFunction settingOverrider) {
-    return wrapUnique(new DummyPageHolder(initialViewSize, pageClients, frameLoaderClient, settingOverrider));
+DummyPageHolder::DummyPageHolder(const IntSize& initial_view_size,
+                                 Page::PageClients* page_clients_argument,
+                                 LocalFrameClient* local_frame_client,
+                                 FrameSettingOverrideFunction setting_overrider,
+                                 InterfaceProvider* interface_provider) {
+  Page::PageClients page_clients;
+  if (!page_clients_argument) {
+    FillWithEmptyClients(page_clients);
+  } else {
+    page_clients.chrome_client = page_clients_argument->chrome_client;
+    page_clients.context_menu_client =
+        page_clients_argument->context_menu_client;
+    page_clients.editor_client = page_clients_argument->editor_client;
+    page_clients.spell_checker_client =
+        page_clients_argument->spell_checker_client;
+  }
+  page_ = Page::Create(page_clients);
+  Settings& settings = page_->GetSettings();
+  // FIXME: http://crbug.com/363843. This needs to find a better way to
+  // not create graphics layers.
+  settings.SetAcceleratedCompositingEnabled(false);
+  if (setting_overrider)
+    (*setting_overrider)(settings);
+
+  local_frame_client_ = local_frame_client;
+  if (!local_frame_client_)
+    local_frame_client_ = EmptyLocalFrameClient::Create();
+
+  frame_ = LocalFrame::Create(local_frame_client_.Get(), *page_, nullptr,
+                              interface_provider);
+  frame_->SetView(FrameView::Create(*frame_, initial_view_size));
+  frame_->View()->GetPage()->GetVisualViewport().SetSize(initial_view_size);
+  frame_->Init();
 }
 
-DummyPageHolder::DummyPageHolder(
-    const IntSize& initialViewSize,
-    Page::PageClients* pageClientsArgument,
-    FrameLoaderClient* frameLoaderClient,
-    FrameSettingOverrideFunction settingOverrider)
-{
-    Page::PageClients pageClients;
-    if (!pageClientsArgument) {
-        fillWithEmptyClients(pageClients);
-    } else {
-        pageClients.chromeClient = pageClientsArgument->chromeClient;
-        pageClients.contextMenuClient = pageClientsArgument->contextMenuClient;
-        pageClients.editorClient = pageClientsArgument->editorClient;
-        pageClients.spellCheckerClient = pageClientsArgument->spellCheckerClient;
-    }
-    m_page = Page::create(pageClients);
-    Settings& settings = m_page->settings();
-    // FIXME: http://crbug.com/363843. This needs to find a better way to
-    // not create graphics layers.
-    settings.setAcceleratedCompositingEnabled(false);
-    if (settingOverrider)
-        (*settingOverrider)(settings);
-
-    m_frameLoaderClient = frameLoaderClient;
-    if (!m_frameLoaderClient)
-        m_frameLoaderClient = EmptyFrameLoaderClient::create();
-
-    m_frame = LocalFrame::create(m_frameLoaderClient.get(), &m_page->frameHost(), 0);
-    m_frame->setView(FrameView::create(m_frame.get(), initialViewSize));
-    m_frame->view()->page()->frameHost().visualViewport().setSize(initialViewSize);
-    m_frame->init();
+DummyPageHolder::~DummyPageHolder() {
+  page_->WillBeDestroyed();
+  page_.Clear();
+  frame_.Clear();
 }
 
-DummyPageHolder::~DummyPageHolder()
-{
-    m_page->willBeDestroyed();
-    m_page.clear();
-    m_frame.clear();
+Page& DummyPageHolder::GetPage() const {
+  return *page_;
 }
 
-Page& DummyPageHolder::page() const
-{
-    return *m_page;
+LocalFrame& DummyPageHolder::GetFrame() const {
+  DCHECK(frame_);
+  return *frame_;
 }
 
-LocalFrame& DummyPageHolder::frame() const
-{
-    ASSERT(m_frame);
-    return *m_frame;
+FrameView& DummyPageHolder::GetFrameView() const {
+  return *frame_->View();
 }
 
-FrameView& DummyPageHolder::frameView() const
-{
-    return *m_frame->view();
+Document& DummyPageHolder::GetDocument() const {
+  return *frame_->DomWindow()->document();
 }
 
-Document& DummyPageHolder::document() const
-{
-    return *m_frame->domWindow()->document();
-}
-
-} // namespace blink
+}  // namespace blink

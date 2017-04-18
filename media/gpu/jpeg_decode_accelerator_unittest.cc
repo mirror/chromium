@@ -137,8 +137,7 @@ void JpegClient::CreateJpegDecoder() {
   decoder_.reset(
       new VaapiJpegDecodeAccelerator(base::ThreadTaskRunnerHandle::Get()));
 #elif defined(OS_CHROMEOS) && defined(USE_V4L2_CODEC)
-  scoped_refptr<V4L2Device> device =
-      V4L2Device::Create(V4L2Device::kJpegDecoder);
+  scoped_refptr<V4L2Device> device = V4L2Device::Create();
   if (!device.get()) {
     LOG(ERROR) << "V4L2Device::Create failed";
     SetState(CS_ERROR);
@@ -440,7 +439,7 @@ class JpegDecodeAcceleratorTest : public ::testing::Test {
 };
 
 void JpegDecodeAcceleratorTest::TestDecode(size_t num_concurrent_decoders) {
-  LOG_ASSERT(test_image_files_.size() == expected_status_.size());
+  LOG_ASSERT(test_image_files_.size() >= expected_status_.size());
   base::Thread decoder_thread("DecoderThread");
   ASSERT_TRUE(decoder_thread.Start());
 
@@ -462,8 +461,10 @@ void JpegDecodeAcceleratorTest::TestDecode(size_t num_concurrent_decoders) {
           FROM_HERE, base::Bind(&JpegClient::StartDecode,
                                 base::Unretained(clients[i]), index));
     }
-    for (size_t i = 0; i < num_concurrent_decoders; i++) {
-      ASSERT_EQ(notes[i]->Wait(), expected_status_[index]);
+    if (index < expected_status_.size()) {
+      for (size_t i = 0; i < num_concurrent_decoders; i++) {
+        ASSERT_EQ(notes[i]->Wait(), expected_status_[index]);
+      }
     }
   }
 
@@ -476,7 +477,7 @@ void JpegDecodeAcceleratorTest::TestDecode(size_t num_concurrent_decoders) {
 }
 
 TEST_F(JpegDecodeAcceleratorTest, SimpleDecode) {
-  for (const auto& image : g_env->image_data_user_) {
+  for (auto* image : g_env->image_data_user_) {
     test_image_files_.push_back(image);
     expected_status_.push_back(CS_DECODE_PASS);
   }
@@ -484,7 +485,7 @@ TEST_F(JpegDecodeAcceleratorTest, SimpleDecode) {
 }
 
 TEST_F(JpegDecodeAcceleratorTest, MultipleDecoders) {
-  for (const auto& image : g_env->image_data_user_) {
+  for (auto* image : g_env->image_data_user_) {
     test_image_files_.push_back(image);
     expected_status_.push_back(CS_DECODE_PASS);
   }
@@ -531,6 +532,17 @@ TEST_F(JpegDecodeAcceleratorTest, KeepDecodeAfterFailure) {
   TestDecode(1);
 }
 
+TEST_F(JpegDecodeAcceleratorTest, Abort) {
+  const size_t kNumOfJpegToDecode = 5;
+  for (size_t i = 0; i < kNumOfJpegToDecode; i++)
+    test_image_files_.push_back(g_env->image_data_1280x720_default_.get());
+  // Verify only one decode success to ensure both decoders have started the
+  // decoding. Then destroy the first decoder when it is still decoding. The
+  // kernel should not crash during this test.
+  expected_status_.push_back(CS_DECODE_PASS);
+  TestDecode(2);
+}
+
 }  // namespace
 }  // namespace media
 
@@ -562,7 +574,10 @@ int main(int argc, char** argv) {
     }
     if (it->first == "v" || it->first == "vmodule")
       continue;
-    LOG(FATAL) << "Unexpected switch: " << it->first << ":" << it->second;
+    if (it->first == "h" || it->first == "help")
+      continue;
+    LOG(ERROR) << "Unexpected switch: " << it->first << ":" << it->second;
+    return -EINVAL;
   }
 #if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
   media::VaapiWrapper::PreSandboxInitialization();

@@ -22,10 +22,6 @@ namespace storage {
 class FileSystemContext;
 }
 
-namespace net {
-class URLRequestContextGetter;
-}
-
 namespace content {
 
 class BrowserContext;
@@ -61,8 +57,6 @@ class MediaResourceGetterImpl : public media::MediaResourceGetter {
                             const int64_t offset,
                             const int64_t size,
                             const ExtractMediaMetadataCB& callback) override;
-
-  static bool RegisterMediaResourceGetter(JNIEnv* env);
 
  private:
   // Called when GetAuthCredentials() finishes.

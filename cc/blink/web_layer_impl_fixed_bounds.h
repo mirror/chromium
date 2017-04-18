@@ -17,23 +17,22 @@ namespace cc_blink {
 // can efficiently handle the bounds change of such layers if the bounds
 // is fixed to a given value and the change of bounds are converted to
 // transformation scales.
-class WebLayerImplFixedBounds : public WebLayerImpl {
+class CC_BLINK_EXPORT WebLayerImplFixedBounds : public WebLayerImpl {
  public:
-  CC_BLINK_EXPORT WebLayerImplFixedBounds();
-  CC_BLINK_EXPORT explicit WebLayerImplFixedBounds(
-      scoped_refptr<cc::Layer> layer);
+  WebLayerImplFixedBounds();
+  explicit WebLayerImplFixedBounds(scoped_refptr<cc::Layer> layer);
   ~WebLayerImplFixedBounds() override;
 
   // WebLayerImpl overrides.
-  void invalidateRect(const blink::WebRect& rect) override;
-  void setTransformOrigin(
+  void InvalidateRect(const blink::WebRect& rect) override;
+  void SetTransformOrigin(
       const blink::WebFloatPoint3D& transform_origin) override;
-  void setBounds(const blink::WebSize& bounds) override;
-  blink::WebSize bounds() const override;
-  void setTransform(const SkMatrix44& transform) override;
-  SkMatrix44 transform() const override;
+  void SetBounds(const blink::WebSize& bounds) override;
+  blink::WebSize Bounds() const override;
+  void SetTransform(const SkMatrix44& transform) override;
+  SkMatrix44 Transform() const override;
 
-  CC_BLINK_EXPORT void SetFixedBounds(gfx::Size bounds);
+  void SetFixedBounds(gfx::Size bounds);
 
  protected:
   void SetTransformInternal(const gfx::Transform& transform);

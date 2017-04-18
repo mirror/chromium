@@ -32,132 +32,116 @@
 #include "modules/accessibility/AXObjectCacheImpl.h"
 #include "modules/accessibility/AXTableCell.h"
 
-
 namespace blink {
 
 using namespace HTMLNames;
 
-AXTableColumn::AXTableColumn(AXObjectCacheImpl& axObjectCache)
-    : AXMockObject(axObjectCache)
-{
+AXTableColumn::AXTableColumn(AXObjectCacheImpl& ax_object_cache)
+    : AXMockObject(ax_object_cache) {}
+
+AXTableColumn::~AXTableColumn() {}
+
+AXTableColumn* AXTableColumn::Create(AXObjectCacheImpl& ax_object_cache) {
+  return new AXTableColumn(ax_object_cache);
 }
 
-AXTableColumn::~AXTableColumn()
-{
+void AXTableColumn::SetParent(AXObject* parent) {
+  AXMockObject::SetParent(parent);
+
+  ClearChildren();
 }
 
-AXTableColumn* AXTableColumn::create(AXObjectCacheImpl& axObjectCache)
-{
-    return new AXTableColumn(axObjectCache);
-}
+void AXTableColumn::HeaderObjectsForColumn(AXObjectVector& headers) {
+  if (!parent_)
+    return;
 
+  LayoutObject* layout_object = parent_->GetLayoutObject();
+  if (!layout_object)
+    return;
 
-void AXTableColumn::setParent(AXObject* parent)
-{
-    AXMockObject::setParent(parent);
+  if (!parent_->IsAXTable())
+    return;
 
-    clearChildren();
-}
-
-LayoutRect AXTableColumn::elementRect() const
-{
-    // this will be filled in when addChildren is called
-    return m_columnRect;
-}
-
-void AXTableColumn::headerObjectsForColumn(AXObjectVector& headers)
-{
-    if (!m_parent)
-        return;
-
-    LayoutObject* layoutObject = m_parent->getLayoutObject();
-    if (!layoutObject)
-        return;
-
-    if (!m_parent->isAXTable())
-        return;
-
-    if (toAXTable(m_parent)->isAriaTable()) {
-        for (const auto& cell : children()) {
-            if (cell->roleValue() == ColumnHeaderRole)
-                headers.append(cell);
-        }
-        return;
+  if (ToAXTable(parent_)->IsAriaTable()) {
+    for (const auto& cell : Children()) {
+      if (cell->RoleValue() == kColumnHeaderRole)
+        headers.push_back(cell);
     }
+    return;
+  }
 
-    if (!layoutObject->isTable())
-        return;
+  if (!layout_object->IsTable())
+    return;
 
-    LayoutTable* table = toLayoutTable(layoutObject);
-    LayoutTableSection* tableSection = table->topSection();
-    for (; tableSection; tableSection = table->sectionBelow(tableSection, SkipEmptySections)) {
-        unsigned numCols = tableSection->numEffectiveColumns();
-        if (m_columnIndex >= numCols)
-            continue;
-        unsigned numRows = tableSection->numRows();
-        for (unsigned r = 0; r < numRows; r++) {
-            LayoutTableCell* layoutCell = tableSection->primaryCellAt(r, m_columnIndex);
-            if (!layoutCell)
-                continue;
+  LayoutTable* table = ToLayoutTable(layout_object);
+  LayoutTableSection* table_section = table->TopSection();
+  for (; table_section;
+       table_section = table->SectionBelow(table_section, kSkipEmptySections)) {
+    unsigned num_cols = table_section->NumEffectiveColumns();
+    if (column_index_ >= num_cols)
+      continue;
+    unsigned num_rows = table_section->NumRows();
+    for (unsigned r = 0; r < num_rows; r++) {
+      LayoutTableCell* layout_cell =
+          table_section->PrimaryCellAt(r, column_index_);
+      if (!layout_cell)
+        continue;
 
-            AXObject* cell = axObjectCache().getOrCreate(layoutCell->node());
-            if (!cell || !cell->isTableCell() || headers.contains(cell))
-                continue;
+      AXObject* cell = AxObjectCache().GetOrCreate(layout_cell->GetNode());
+      if (!cell || !cell->IsTableCell() || headers.Contains(cell))
+        continue;
 
-            if (toAXTableCell(cell)->scanToDecideHeaderRole() == ColumnHeaderRole)
-                headers.append(cell);
-        }
+      if (ToAXTableCell(cell)->ScanToDecideHeaderRole() == kColumnHeaderRole)
+        headers.push_back(cell);
     }
+  }
 }
 
-AXObject* AXTableColumn::headerObject()
-{
-    AXObjectVector headers;
-    headerObjectsForColumn(headers);
-    if (!headers.size())
-        return 0;
+AXObject* AXTableColumn::HeaderObject() {
+  AXObjectVector headers;
+  HeaderObjectsForColumn(headers);
+  if (!headers.size())
+    return 0;
 
-    return headers[0].get();
+  return headers[0].Get();
 }
 
-bool AXTableColumn::computeAccessibilityIsIgnored(IgnoredReasons* ignoredReasons) const
-{
-    if (!m_parent)
-        return true;
-
-    if (!m_parent->accessibilityIsIgnored())
-        return false;
-
-    if (ignoredReasons)
-        m_parent->computeAccessibilityIsIgnored(ignoredReasons);
-
+bool AXTableColumn::ComputeAccessibilityIsIgnored(
+    IgnoredReasons* ignored_reasons) const {
+  if (!parent_)
     return true;
+
+  if (!parent_->AccessibilityIsIgnored())
+    return false;
+
+  if (ignored_reasons)
+    parent_->ComputeAccessibilityIsIgnored(ignored_reasons);
+
+  return true;
 }
 
-void AXTableColumn::addChildren()
-{
-    ASSERT(!isDetached());
-    ASSERT(!m_haveChildren);
+void AXTableColumn::AddChildren() {
+  DCHECK(!IsDetached());
+  DCHECK(!have_children_);
 
-    m_haveChildren = true;
-    if (!m_parent || !m_parent->isAXTable())
-        return;
+  have_children_ = true;
+  if (!parent_ || !parent_->IsAXTable())
+    return;
 
-    AXTable* parentTable = toAXTable(m_parent);
-    int numRows = parentTable->rowCount();
+  AXTable* parent_table = ToAXTable(parent_);
+  int num_rows = parent_table->RowCount();
 
-    for (int i = 0; i < numRows; i++) {
-        AXTableCell* cell = parentTable->cellForColumnAndRow(m_columnIndex, i);
-        if (!cell)
-            continue;
+  for (int i = 0; i < num_rows; i++) {
+    AXTableCell* cell = parent_table->CellForColumnAndRow(column_index_, i);
+    if (!cell)
+      continue;
 
-        // make sure the last one isn't the same as this one (rowspan cells)
-        if (m_children.size() > 0 && m_children.last() == cell)
-            continue;
+    // make sure the last one isn't the same as this one (rowspan cells)
+    if (children_.size() > 0 && children_.back() == cell)
+      continue;
 
-        m_children.append(cell);
-        m_columnRect.unite(cell->elementRect());
-    }
+    children_.push_back(cell);
+  }
 }
 
-} // namespace blink
+}  // namespace blink

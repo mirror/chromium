@@ -1,42 +1,8 @@
 var initialize_AccessibilityTest = function() {
 
-/**
- * @return {Promise}
- */
-InspectorTest.showAccessibilityView = function()
+InspectorTest.accessibilitySidebarPane = function()
 {
-    var sidebarPane = _getAccessibilitySidebarPane();
-    if (sidebarPane) {
-        sidebarPane.revealWidget();
-        return InspectorTest.waitForAccessibilityNodeUpdate();
-    } else {
-        return _waitForViewsLoaded()
-            .then(() => {
-                return InspectorTest.showAccessibilityView();
-            });
-    }
-}
-
-
-/**
- * @return {Promise}
- */
-function _waitForViewsLoaded()
-{
-    return new Promise(function(resolve, reject)
-    {
-        InspectorTest.addSniffer(WebInspector.ElementsPanel.prototype,
-                                 "_sidebarViewsLoadedForTest",
-                                 resolve);
-        WebInspector.panels.elements._loadSidebarViews();
-    });
-}
-
-function _getAccessibilitySidebarPane()
-{
-    var sidebarViews = WebInspector.panels.elements._elementsSidebarViews;
-    var sidebarPane = sidebarViews.find((view) => { return view._title === "Accessibility"; });
-    return sidebarPane;
+    return self.runtime.sharedInstance(Accessibility.AccessibilitySidebarView);
 }
 
 /**
@@ -45,16 +11,16 @@ function _getAccessibilitySidebarPane()
  */
 InspectorTest.selectNodeAndWaitForAccessibility = function(idValue)
 {
-    return Promise.all([InspectorTest.waitForAccessibilityNodeUpdateInARIAPane(),
-                        InspectorTest.waitForAccessibilityNodeUpdate(),
-                        new Promise(function(resolve) {
-                            InspectorTest.selectNodeWithId(idValue, resolve);
-                        })]);
+    return new Promise((resolve) => {
+        InspectorTest.selectNodeWithId(idValue, function() {
+            self.runtime.sharedInstance(Accessibility.AccessibilitySidebarView).doUpdate().then(resolve);
+        });
+    });
 }
 
 InspectorTest.dumpSelectedElementAccessibilityNode = function()
 {
-    var sidebarPane = _getAccessibilitySidebarPane();
+    var sidebarPane = InspectorTest.accessibilitySidebarPane();
 
     if (!sidebarPane) {
         InspectorTest.addResult("No sidebarPane in dumpSelectedElementAccessibilityNode");
@@ -65,7 +31,7 @@ InspectorTest.dumpSelectedElementAccessibilityNode = function()
 }
 
 /**
- * @param {!AccessibilityAgent.AXNode} accessibilityNode
+ * @param {!Accessibility.AccessibilityNode} accessibilityNode
  */
 InspectorTest.dumpAccessibilityNode = function(accessibilityNode)
 {
@@ -76,11 +42,11 @@ InspectorTest.dumpAccessibilityNode = function(accessibilityNode)
     }
 
     var builder = [];
-    builder.push(accessibilityNode.role.value);
-    builder.push(accessibilityNode.name ? '"' + accessibilityNode.name.value + '"'
+    builder.push(accessibilityNode.role().value);
+    builder.push(accessibilityNode.name() ? '"' + accessibilityNode.name().value + '"'
                 : "<undefined>");
-    if ("properties" in accessibilityNode) {
-        for (var property of accessibilityNode.properties) {
+    if (accessibilityNode.properties()) {
+        for (var property of accessibilityNode.properties()) {
             if ("value" in property)
                 builder.push(property.name + '="' + property.value.value + '"');
         }
@@ -90,11 +56,11 @@ InspectorTest.dumpAccessibilityNode = function(accessibilityNode)
 
 /**
  * @param {string} attribute
- * @return {?WebInspector.ARIAAttributesTreeElement}
+ * @return {?Accessibility.ARIAAttributesTreeElement}
  */
 InspectorTest.findARIAAttributeTreeElement = function(attribute)
 {
-    var sidebarPane = _getAccessibilitySidebarPane();
+    var sidebarPane = InspectorTest.accessibilitySidebarPane();
 
     if (!sidebarPane) {
         InspectorTest.addResult("Could not get Accessibility sidebar pane.");
@@ -112,25 +78,4 @@ InspectorTest.findARIAAttributeTreeElement = function(attribute)
     return null;
 }
 
-/**
- * @return {Promise}
- */
-InspectorTest.waitForAccessibilityNodeUpdate = function()
-{
-    return new Promise(function(resolve, reject)
-    {
-        InspectorTest.addSniffer(WebInspector.AccessibilitySidebarView.prototype, "_accessibilityNodeUpdatedForTest", resolve);
-    });
-}
-
-/**
- * @return {Promise}
- */
-InspectorTest.waitForAccessibilityNodeUpdateInARIAPane = function()
-{
-    return new Promise(function(resolve, reject)
-    {
-        InspectorTest.addSniffer(WebInspector.ARIAAttributesPane.prototype, "_gotNodeForTest", resolve);
-    });
-}
 };

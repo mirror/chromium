@@ -27,6 +27,8 @@ const uint8_t kTestP256Key[] = {
   0x7F, 0xF2, 0x76, 0xB6, 0x01, 0x20, 0xD8, 0x35, 0xA5, 0xD9, 0x3C, 0x43, 0xFD
 };
 
+const int64_t kInvalidServiceWorkerRegistrationId = -1LL;
+
 static_assert(sizeof(kTestP256Key) == 65,
               "The fake public key must be a valid P-256 uncompressed point.");
 
@@ -42,21 +44,22 @@ blink::WebPushPermissionStatus ToWebPushPermissionStatus(
     blink::mojom::PermissionStatus status) {
   switch (status) {
     case blink::mojom::PermissionStatus::GRANTED:
-      return blink::WebPushPermissionStatusGranted;
+      return blink::kWebPushPermissionStatusGranted;
     case blink::mojom::PermissionStatus::DENIED:
-      return blink::WebPushPermissionStatusDenied;
+      return blink::kWebPushPermissionStatusDenied;
     case blink::mojom::PermissionStatus::ASK:
-      return blink::WebPushPermissionStatusPrompt;
+      return blink::kWebPushPermissionStatusPrompt;
   }
 
   NOTREACHED();
-  return blink::WebPushPermissionStatusLast;
+  return blink::kWebPushPermissionStatusLast;
 }
 
 }  // anonymous namespace
 
-LayoutTestPushMessagingService::LayoutTestPushMessagingService() {
-}
+LayoutTestPushMessagingService::LayoutTestPushMessagingService()
+    : subscribed_service_worker_registration_(
+          kInvalidServiceWorkerRegistrationId) {}
 
 LayoutTestPushMessagingService::~LayoutTestPushMessagingService() {
 }
@@ -72,7 +75,7 @@ void LayoutTestPushMessagingService::SubscribeFromDocument(
     int renderer_id,
     int render_frame_id,
     const PushSubscriptionOptions& options,
-    const PushMessagingService::RegisterCallback& callback) {
+    const RegisterCallback& callback) {
   SubscribeFromWorker(requesting_origin, service_worker_registration_id,
                       options, callback);
 }
@@ -81,14 +84,15 @@ void LayoutTestPushMessagingService::SubscribeFromWorker(
     const GURL& requesting_origin,
     int64_t service_worker_registration_id,
     const PushSubscriptionOptions& options,
-    const PushMessagingService::RegisterCallback& callback) {
+    const RegisterCallback& callback) {
   if (GetPermissionStatus(requesting_origin, options.user_visible_only) ==
-      blink::WebPushPermissionStatusGranted) {
+      blink::kWebPushPermissionStatusGranted) {
     std::vector<uint8_t> p256dh(
         kTestP256Key, kTestP256Key + arraysize(kTestP256Key));
     std::vector<uint8_t> auth(
         kAuthentication, kAuthentication + arraysize(kAuthentication));
 
+    subscribed_service_worker_registration_ = service_worker_registration_id;
     callback.Run("layoutTestRegistrationId", p256dh, auth,
                  PUSH_REGISTRATION_STATUS_SUCCESS_FROM_PUSH_SERVICE);
   } else {
@@ -98,16 +102,18 @@ void LayoutTestPushMessagingService::SubscribeFromWorker(
   }
 }
 
-void LayoutTestPushMessagingService::GetEncryptionInfo(
+void LayoutTestPushMessagingService::GetSubscriptionInfo(
     const GURL& origin,
     int64_t service_worker_registration_id,
-    const EncryptionInfoCallback& callback) {
+    const std::string& sender_id,
+    const std::string& subscription_id,
+    const SubscriptionInfoCallback& callback) {
   std::vector<uint8_t> p256dh(
         kTestP256Key, kTestP256Key + arraysize(kTestP256Key));
   std::vector<uint8_t> auth(
         kAuthentication, kAuthentication + arraysize(kAuthentication));
 
-  callback.Run(true /* success */, p256dh, auth);
+  callback.Run(true /* is_valid */, p256dh, auth);
 }
 
 blink::WebPushPermissionStatus
@@ -124,11 +130,34 @@ bool LayoutTestPushMessagingService::SupportNonVisibleMessages() {
 }
 
 void LayoutTestPushMessagingService::Unsubscribe(
+    PushUnregistrationReason reason,
     const GURL& requesting_origin,
     int64_t service_worker_registration_id,
     const std::string& sender_id,
     const UnregisterCallback& callback) {
-  callback.Run(PUSH_UNREGISTRATION_STATUS_SUCCESS_UNREGISTERED);
+  ClearPushSubscriptionId(
+      LayoutTestContentBrowserClient::Get()->browser_context(),
+      requesting_origin, service_worker_registration_id,
+      base::Bind(callback,
+                 service_worker_registration_id ==
+                         subscribed_service_worker_registration_
+                     ? PUSH_UNREGISTRATION_STATUS_SUCCESS_UNREGISTERED
+                     : PUSH_UNREGISTRATION_STATUS_SUCCESS_WAS_NOT_REGISTERED));
+  if (service_worker_registration_id ==
+      subscribed_service_worker_registration_) {
+    subscribed_service_worker_registration_ =
+        kInvalidServiceWorkerRegistrationId;
+  }
+}
+
+void LayoutTestPushMessagingService::DidDeleteServiceWorkerRegistration(
+    const GURL& origin,
+    int64_t service_worker_registration_id) {
+  if (service_worker_registration_id ==
+      subscribed_service_worker_registration_) {
+    subscribed_service_worker_registration_ =
+        kInvalidServiceWorkerRegistrationId;
+  }
 }
 
 }  // namespace content

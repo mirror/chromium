@@ -5,8 +5,7 @@
 #include "content/browser/devtools/service_worker_devtools_agent_host.h"
 
 #include "base/strings/stringprintf.h"
-#include "content/browser/devtools/devtools_protocol_handler.h"
-#include "content/browser/devtools/protocol/devtools_protocol_dispatcher.h"
+#include "content/browser/devtools/protocol/network_handler.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_version.h"
@@ -58,15 +57,13 @@ ServiceWorkerDevToolsAgentHost::ServiceWorkerDevToolsAgentHost(
     bool is_installed_version)
     : WorkerDevToolsAgentHost(worker_id),
       service_worker_(new ServiceWorkerIdentifier(service_worker)),
-      network_handler_(new devtools::network::NetworkHandler()),
       version_installed_time_(is_installed_version ? base::Time::Now()
                                                    : base::Time()) {
-  DevToolsProtocolDispatcher* dispatcher = protocol_handler()->dispatcher();
-  dispatcher->SetNetworkHandler(network_handler_.get());
+  NotifyCreated();
 }
 
-DevToolsAgentHost::Type ServiceWorkerDevToolsAgentHost::GetType() {
-  return TYPE_SERVICE_WORKER;
+std::string ServiceWorkerDevToolsAgentHost::GetType() {
+  return kTypeServiceWorker;
 }
 
 std::string ServiceWorkerDevToolsAgentHost::GetTitle() {
@@ -83,6 +80,9 @@ GURL ServiceWorkerDevToolsAgentHost::GetURL() {
 
 bool ServiceWorkerDevToolsAgentHost::Activate() {
   return false;
+}
+
+void ServiceWorkerDevToolsAgentHost::Reload() {
 }
 
 bool ServiceWorkerDevToolsAgentHost::Close() {
@@ -114,6 +114,42 @@ void ServiceWorkerDevToolsAgentHost::WorkerVersionInstalled() {
 
 void ServiceWorkerDevToolsAgentHost::WorkerVersionDoomed() {
   version_doomed_time_ = base::Time::Now();
+}
+
+void ServiceWorkerDevToolsAgentHost::NavigationPreloadRequestSent(
+    const std::string& request_id,
+    const ResourceRequest& request) {
+  if (!session())
+    return;
+  if (protocol::NetworkHandler* network_handler =
+          protocol::NetworkHandler::FromSession(session())) {
+    network_handler->NavigationPreloadRequestSent(worker_id().first, request_id,
+                                                  request);
+  }
+}
+
+void ServiceWorkerDevToolsAgentHost::NavigationPreloadResponseReceived(
+    const std::string& request_id,
+    const GURL& url,
+    const ResourceResponseHead& head) {
+  if (!session())
+    return;
+  if (protocol::NetworkHandler* network_handler =
+          protocol::NetworkHandler::FromSession(session())) {
+    network_handler->NavigationPreloadResponseReceived(worker_id().first,
+                                                       request_id, url, head);
+  }
+}
+
+void ServiceWorkerDevToolsAgentHost::NavigationPreloadCompleted(
+    const std::string& request_id,
+    const ResourceRequestCompletionStatus& completion_status) {
+  if (!session())
+    return;
+  if (protocol::NetworkHandler* network_handler =
+          protocol::NetworkHandler::FromSession(session())) {
+    network_handler->NavigationPreloadCompleted(request_id, completion_status);
+  }
 }
 
 int64_t ServiceWorkerDevToolsAgentHost::service_worker_version_id() const {

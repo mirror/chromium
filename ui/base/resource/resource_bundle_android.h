@@ -14,7 +14,7 @@
 namespace ui {
 
 // Loads "resources.apk" from the .apk. Falls back to loading from disk, which
-// is necessary for tests.
+// is necessary for tests. Returns true if it succeeds, false otherwise.
 UI_BASE_EXPORT void LoadMainAndroidPackFile(
     const char* path_within_apk,
     const base::FilePath& disk_file_path);
@@ -41,7 +41,9 @@ UI_BASE_EXPORT void SetLocalePaksStoredInApk(bool value);
 UI_BASE_EXPORT std::string GetPathForAndroidLocalePakWithinApk(
     const std::string& locale);
 
-bool RegisterResourceBundleAndroid(JNIEnv* env);
+// Get the density of the primary display. Use this instead of using Display
+// to avoid initializing Display in child processes.
+float GetPrimaryDisplayScale();
 
 }  // namespace ui
 

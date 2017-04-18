@@ -10,9 +10,10 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/screens/network_error.h"
-#include "chrome/browser/chromeos/net/proxy_config_handler.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
+#include "chromeos/network/proxy/proxy_config_handler.h"
 #include "components/proxy_config/proxy_config_dictionary.h"
 #include "components/proxy_config/proxy_prefs.h"
 #include "net/proxy/proxy_config.h"
@@ -82,6 +83,17 @@ NetworkStateInformer::State GetStateForDefaultNetwork() {
     if (network->is_captive_portal())
       return NetworkStateInformer::CAPTIVE_PORTAL;
   }
+
+  // If there is no connection to the internet report it as online for the
+  // Active Directory devices. These devices does not have to be online to reach
+  // the server.
+  // TODO(rsorokin): Fix reporting network connectivity for Active Directory
+  // devices. (see crbug.com/685691)
+  policy::BrowserPolicyConnectorChromeOS* connector =
+      g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  if (connector->IsActiveDirectoryManaged())
+    return NetworkStateInformer::ONLINE;
+
   return NetworkStateInformer::OFFLINE;
 }
 
@@ -189,8 +201,8 @@ bool NetworkStateInformer::UpdateState() {
   network_type_ = new_network_type;
 
   if (updated && state_ == ONLINE) {
-    FOR_EACH_OBSERVER(NetworkStateInformerObserver, observers_,
-                      OnNetworkReady());
+    for (NetworkStateInformerObserver& observer : observers_)
+      observer.OnNetworkReady();
   }
 
   return updated;
@@ -205,8 +217,8 @@ void NetworkStateInformer::UpdateStateAndNotify() {
 
 void NetworkStateInformer::SendStateToObservers(
     NetworkError::ErrorReason reason) {
-  FOR_EACH_OBSERVER(NetworkStateInformerObserver, observers_,
-      UpdateState(reason));
+  for (NetworkStateInformerObserver& observer : observers_)
+    observer.UpdateState(reason);
 }
 
 }  // namespace chromeos

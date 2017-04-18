@@ -13,8 +13,6 @@
 #include "base/macros.h"
 #include "extensions/common/manifest.h"
 
-class SkBitmap;
-
 namespace base {
 class DictionaryValue;
 }
@@ -34,6 +32,17 @@ class Unpacker {
            int creation_flags);
   ~Unpacker();
 
+  // Returns true if the given base::FilePath should be unzipped.
+  static bool ShouldExtractFile(bool is_theme, const base::FilePath& file_path);
+
+  // Returns true for manifest.json only.
+  static bool IsManifestFile(const base::FilePath& file_path);
+
+  // Parse the manifest.json file inside the extension (not in the header).
+  static std::unique_ptr<base::DictionaryValue> ReadManifest(
+      const base::FilePath& extension_dir,
+      std::string* error);
+
   // Runs the processing steps for the extension. On success, this returns true
   // and the decoded images will be in a file at
   // |working_dir|/kDecodedImagesFilename and the decoded messages will be in a
@@ -43,6 +52,10 @@ class Unpacker {
   const base::string16& error_message() { return error_message_; }
   base::DictionaryValue* parsed_manifest() { return parsed_manifest_.get(); }
   base::DictionaryValue* parsed_catalogs() { return parsed_catalogs_.get(); }
+
+  std::unique_ptr<base::DictionaryValue> TakeParsedManifest() {
+    return std::move(parsed_manifest_);
+  }
 
  private:
   // Write the decoded images to kDecodedImagesFilename.  We do this instead
@@ -55,11 +68,8 @@ class Unpacker {
   // success.
   bool DumpMessageCatalogsToFile();
 
-  // Parse the manifest.json file inside the extension (not in the header).
-  std::unique_ptr<base::DictionaryValue> ReadManifest();
-
   // Parse all _locales/*/messages.json files inside the extension.
-  bool ReadAllMessageCatalogs(const std::string& default_locale);
+  bool ReadAllMessageCatalogs();
 
   // Decodes the image at the given path and puts it in our list of decoded
   // images.

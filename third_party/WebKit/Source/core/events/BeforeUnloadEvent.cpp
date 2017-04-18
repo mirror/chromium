@@ -23,26 +23,18 @@
 
 #include "core/events/BeforeUnloadEvent.h"
 
-
 namespace blink {
 
-BeforeUnloadEvent::BeforeUnloadEvent()
-    : Event(EventTypeNames::beforeunload, false, true)
-{
+BeforeUnloadEvent::BeforeUnloadEvent() {}
+
+BeforeUnloadEvent::~BeforeUnloadEvent() {}
+
+bool BeforeUnloadEvent::IsBeforeUnloadEvent() const {
+  return true;
 }
 
-BeforeUnloadEvent::~BeforeUnloadEvent()
-{
+DEFINE_TRACE(BeforeUnloadEvent) {
+  Event::Trace(visitor);
 }
 
-bool BeforeUnloadEvent::isBeforeUnloadEvent() const
-{
-    return true;
-}
-
-DEFINE_TRACE(BeforeUnloadEvent)
-{
-    Event::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

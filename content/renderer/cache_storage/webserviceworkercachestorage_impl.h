@@ -5,6 +5,8 @@
 #ifndef CONTENT_RENDERER_SERVICE_WORKER_WEB_SERVICE_WORKER_CACHE_STORAGE_IMPL_H_
 #define CONTENT_RENDERER_SERVICE_WORKER_WEB_SERVICE_WORKER_CACHE_STORAGE_IMPL_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "content/child/thread_safe_sender.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -33,15 +35,16 @@ class WebServiceWorkerCacheStorageImpl
   ~WebServiceWorkerCacheStorageImpl() override;
 
   // From WebServiceWorkerCacheStorage:
-  void dispatchHas(CacheStorageCallbacks* callbacks,
+  void DispatchHas(std::unique_ptr<CacheStorageCallbacks> callbacks,
                    const blink::WebString& cacheName) override;
-  void dispatchOpen(CacheStorageWithCacheCallbacks* callbacks,
+  void DispatchOpen(std::unique_ptr<CacheStorageWithCacheCallbacks> callbacks,
                     const blink::WebString& cacheName) override;
-  void dispatchDelete(CacheStorageCallbacks* callbacks,
+  void DispatchDelete(std::unique_ptr<CacheStorageCallbacks> callbacks,
                       const blink::WebString& cacheName) override;
-  void dispatchKeys(CacheStorageKeysCallbacks* callbacks) override;
-  void dispatchMatch(
-      CacheStorageMatchCallbacks* callbacks,
+  void DispatchKeys(
+      std::unique_ptr<CacheStorageKeysCallbacks> callbacks) override;
+  void DispatchMatch(
+      std::unique_ptr<CacheStorageMatchCallbacks> callbacks,
       const blink::WebServiceWorkerRequest& request,
       const blink::WebServiceWorkerCache::QueryParams& query_params) override;
 

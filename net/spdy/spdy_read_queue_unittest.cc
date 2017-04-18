@@ -7,14 +7,17 @@
 #include <algorithm>
 #include <cstddef>
 #include <memory>
-#include <string>
+#include <utility>
 
+#include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "net/spdy/platform/api/spdy_string.h"
 #include "net/spdy/spdy_buffer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
-
+namespace test {
 namespace {
 
 const char kData[] = "SPDY read queue test data.\0Some more data.";
@@ -22,7 +25,7 @@ const size_t kDataSize = arraysize(kData);
 
 // Enqueues |data| onto |queue| in chunks of at most |max_buffer_size|
 // bytes.
-void EnqueueString(const std::string& data,
+void EnqueueString(const SpdyString& data,
                    size_t max_buffer_size,
                    SpdyReadQueue* queue) {
   ASSERT_GT(data.size(), 0u);
@@ -40,8 +43,8 @@ void EnqueueString(const std::string& data,
 
 // Dequeues all bytes in |queue| in chunks of at most
 // |max_buffer_size| bytes and returns the data as a string.
-std::string DrainToString(size_t max_buffer_size, SpdyReadQueue* queue) {
-  std::string data;
+SpdyString DrainToString(size_t max_buffer_size, SpdyReadQueue* queue) {
+  SpdyString data;
 
   // Pad the buffer so we can detect out-of-bound writes.
   size_t padding = std::max(static_cast<size_t>(4096), queue->GetTotalSize());
@@ -76,13 +79,24 @@ std::string DrainToString(size_t max_buffer_size, SpdyReadQueue* queue) {
 // sizes.
 void RunEnqueueDequeueTest(size_t enqueue_max_buffer_size,
                            size_t dequeue_max_buffer_size) {
-  std::string data(kData, kDataSize);
+  SpdyString data(kData, kDataSize);
   SpdyReadQueue read_queue;
   EnqueueString(data, enqueue_max_buffer_size, &read_queue);
-  const std::string& drained_data =
+  const SpdyString& drained_data =
       DrainToString(dequeue_max_buffer_size, &read_queue);
   EXPECT_EQ(data, drained_data);
 }
+
+void OnBufferDiscarded(bool* discarded,
+                       size_t* discarded_bytes,
+                       size_t delta,
+                       SpdyBuffer::ConsumeSource consume_source) {
+  EXPECT_EQ(SpdyBuffer::DISCARD, consume_source);
+  *discarded = true;
+  *discarded_bytes = delta;
+}
+
+}  // namespace
 
 class SpdyReadQueueTest : public ::testing::Test {};
 
@@ -101,6 +115,26 @@ TEST_F(SpdyReadQueueTest, CoprimeBufferSizes) {
   RunEnqueueDequeueTest(3, 2);
 }
 
-}  // namespace
+TEST_F(SpdyReadQueueTest, Clear) {
+  auto buffer = base::MakeUnique<SpdyBuffer>(kData, kDataSize);
+  bool discarded = false;
+  size_t discarded_bytes = 0;
+  buffer->AddConsumeCallback(
+      base::Bind(&OnBufferDiscarded, &discarded, &discarded_bytes));
 
+  SpdyReadQueue read_queue;
+  read_queue.Enqueue(std::move(buffer));
+
+  EXPECT_FALSE(discarded);
+  EXPECT_EQ(0u, discarded_bytes);
+  EXPECT_FALSE(read_queue.IsEmpty());
+
+  read_queue.Clear();
+
+  EXPECT_TRUE(discarded);
+  EXPECT_EQ(kDataSize, discarded_bytes);
+  EXPECT_TRUE(read_queue.IsEmpty());
+}
+
+}  // namespace test
 }  // namespace net

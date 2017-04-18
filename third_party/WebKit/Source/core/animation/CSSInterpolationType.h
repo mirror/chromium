@@ -7,25 +7,82 @@
 
 #include "core/animation/InterpolationEnvironment.h"
 #include "core/animation/InterpolationType.h"
-#include "core/css/CSSPropertyMetadata.h"
 
 namespace blink {
 
+class CSSCustomPropertyDeclaration;
+class PropertyRegistration;
+
 class CSSInterpolationType : public InterpolationType {
-protected:
-    CSSInterpolationType(CSSPropertyID property)
-        : InterpolationType(PropertyHandle(property))
-    { }
+ public:
+  void SetCustomPropertyRegistration(const PropertyRegistration&);
 
-    CSSPropertyID cssProperty() const { return getProperty().cssProperty(); }
+ protected:
+  CSSInterpolationType(PropertyHandle);
 
-    InterpolationValue maybeConvertSingle(const PropertySpecificKeyframe&, const InterpolationEnvironment&, const InterpolationValue& underlying, ConversionCheckers&) const override;
-    virtual InterpolationValue maybeConvertNeutral(const InterpolationValue& underlying, ConversionCheckers&) const = 0;
-    virtual InterpolationValue maybeConvertInitial(const StyleResolverState&, ConversionCheckers&) const = 0;
-    virtual InterpolationValue maybeConvertInherit(const StyleResolverState&, ConversionCheckers&) const = 0;
-    virtual InterpolationValue maybeConvertValue(const CSSValue&, const StyleResolverState&, ConversionCheckers&) const = 0;
+  CSSPropertyID CssProperty() const { return GetProperty().CssProperty(); }
+
+  InterpolationValue MaybeConvertSingle(const PropertySpecificKeyframe&,
+                                        const InterpolationEnvironment&,
+                                        const InterpolationValue& underlying,
+                                        ConversionCheckers&) const final;
+  virtual InterpolationValue MaybeConvertNeutral(
+      const InterpolationValue& underlying,
+      ConversionCheckers&) const = 0;
+  virtual InterpolationValue MaybeConvertInitial(const StyleResolverState&,
+                                                 ConversionCheckers&) const = 0;
+  virtual InterpolationValue MaybeConvertInherit(const StyleResolverState&,
+                                                 ConversionCheckers&) const = 0;
+  virtual InterpolationValue MaybeConvertValue(const CSSValue&,
+                                               const StyleResolverState*,
+                                               ConversionCheckers&) const = 0;
+  virtual void AdditiveKeyframeHook(InterpolationValue&) const {}
+
+  InterpolationValue MaybeConvertUnderlyingValue(
+      const InterpolationEnvironment&) const final;
+  virtual InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
+      const ComputedStyle&) const = 0;
+
+  void Apply(const InterpolableValue&,
+             const NonInterpolableValue*,
+             InterpolationEnvironment&) const final;
+  virtual void ApplyStandardPropertyValue(const InterpolableValue&,
+                                          const NonInterpolableValue*,
+                                          StyleResolverState&) const = 0;
+
+ private:
+  InterpolationValue MaybeConvertSingleInternal(
+      const PropertySpecificKeyframe&,
+      const InterpolationEnvironment&,
+      const InterpolationValue& underlying,
+      ConversionCheckers&) const;
+
+  InterpolationValue MaybeConvertCustomPropertyDeclaration(
+      const CSSCustomPropertyDeclaration&,
+      const StyleResolverState&,
+      ConversionCheckers&) const;
+  InterpolationValue MaybeConvertCustomPropertyDeclarationInternal(
+      const CSSCustomPropertyDeclaration&,
+      const StyleResolverState&,
+      ConversionCheckers&) const;
+
+  virtual const CSSValue* CreateCSSValue(const InterpolableValue&,
+                                         const NonInterpolableValue*,
+                                         const StyleResolverState&) const {
+    // TODO(alancutter): Implement this for all subclasses and make this an
+    // abstract declaration so the return type can be changed to
+    // const CSSValue&.
+    NOTREACHED();
+    return nullptr;
+  }
+
+  void ApplyCustomPropertyValue(const InterpolableValue&,
+                                const NonInterpolableValue*,
+                                StyleResolverState&) const;
+
+  WeakPersistent<const PropertyRegistration> registration_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSInterpolationType_h
+#endif  // CSSInterpolationType_h

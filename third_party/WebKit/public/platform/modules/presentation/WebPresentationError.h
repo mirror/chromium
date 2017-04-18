@@ -10,25 +10,23 @@
 namespace blink {
 
 struct WebPresentationError {
-    enum ErrorType {
-        ErrorTypeNoAvailableScreens = 0,
-        ErrorTypeSessionRequestCancelled,
-        ErrorTypeNoPresentationFound,
-        ErrorTypeAvailabilityNotSupported,
-        ErrorTypeUnknown,
-        ErrorTypeLast = ErrorTypeUnknown
-    };
+  enum ErrorType {
+    kErrorTypeNoAvailableScreens = 0,
+    kErrorTypePresentationRequestCancelled,
+    kErrorTypeNoPresentationFound,
+    kErrorTypeAvailabilityNotSupported,
+    kErrorTypePreviousStartInProgress,
+    kErrorTypeUnknown,
+    kErrorTypeLast = kErrorTypeUnknown
+  };
 
-    WebPresentationError(ErrorType errorType, const WebString& message)
-        : errorType(errorType)
-        , message(message)
-    {
-    }
+  WebPresentationError(ErrorType error_type, const WebString& message)
+      : error_type(error_type), message(message) {}
 
-    ErrorType errorType;
-    WebString message;
+  ErrorType error_type;
+  WebString message;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebPresentationError_h
+#endif  // WebPresentationError_h

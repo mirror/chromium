@@ -33,27 +33,28 @@
 
 #include "core/html/parser/InputStreamPreprocessor.h"
 #include "core/html/track/vtt/VTTToken.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class VTTTokenizer {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(VTTTokenizer);
-public:
-    explicit VTTTokenizer(const String& input);
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(VTTTokenizer);
 
-    bool nextToken(VTTToken&);
+ public:
+  explicit VTTTokenizer(const String& input);
 
-    inline bool shouldSkipNullCharacters() const { return true; }
+  bool NextToken(VTTToken&);
 
-private:
-    SegmentedString m_input;
+  inline bool ShouldSkipNullCharacters() const { return true; }
 
-    // ://www.whatwg.org/specs/web-apps/current-work/#preprocessing-the-input-stream
-    InputStreamPreprocessor<VTTTokenizer> m_inputStreamPreprocessor;
+ private:
+  SegmentedString input_;
+
+  // ://www.whatwg.org/specs/web-apps/current-work/#preprocessing-the-input-stream
+  InputStreamPreprocessor<VTTTokenizer> input_stream_preprocessor_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

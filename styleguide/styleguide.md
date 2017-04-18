@@ -3,8 +3,8 @@
 ## Main style guides
 
   * [Chromium C++ style guide](c++/c++.md)
-  * [Google Objective-C style guide](https://google.github.io/styleguide/objcguide.xml)
-  * [Java style guide for Android](https://sites.google.com/a/chromium.org/dev/developers/coding-style/java)
+  * [Chromium Objective-C style guide](objective-c/objective-c.md)
+  * [Java style guide for Android](java/java.md)
   * [GN style guide](../tools/gn/docs/style_guide.md) for build files
 
 Chromium also uses these languages to a lesser degree:
@@ -12,6 +12,8 @@ Chromium also uses these languages to a lesser degree:
   * [Kernel C style](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/CodingStyle?id=refs/heads/master) for ChromiumOS firmware.
   * [IDL](https://sites.google.com/a/chromium.org/dev/blink/webidl#TOC-Style)
   * [Jinja style guide](https://sites.google.com/a/chromium.org/dev/developers/jinja#TOC-Style) for [Jinja](https://sites.google.com/a/chromium.org/dev/developers/jinja) templates.
+
+Regardless of the language used, please keep code [gender neutral](gender_neutral_code.md).
 
 ## Python
 

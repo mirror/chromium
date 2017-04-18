@@ -5,23 +5,24 @@
 #ifndef NavigatorLanguage_h
 #define NavigatorLanguage_h
 
-#include "wtf/text/AtomicString.h"
+#include "core/CoreExport.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-class NavigatorLanguage {
-public:
-    NavigatorLanguage();
+class CORE_EXPORT NavigatorLanguage {
+ public:
+  NavigatorLanguage();
 
-    AtomicString language();
-    virtual Vector<String> languages() = 0;
-    bool hasLanguagesChanged();
-    void setLanguagesChanged();
+  AtomicString language();
+  virtual Vector<String> languages() = 0;
+  bool hasLanguagesChanged();
+  void SetLanguagesChanged();
 
-private:
-    bool m_languagesChanged;
+ private:
+  bool languages_changed_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NavigatorLanguage_h
+#endif  // NavigatorLanguage_h

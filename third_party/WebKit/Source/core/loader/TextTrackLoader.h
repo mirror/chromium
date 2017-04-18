@@ -26,12 +26,11 @@
 #ifndef TextTrackLoader_h
 #define TextTrackLoader_h
 
-#include "core/fetch/RawResource.h"
-#include "core/fetch/ResourceOwner.h"
 #include "core/html/track/vtt/VTTParser.h"
 #include "platform/CrossOriginAttributeValue.h"
-#include "platform/Timer.h"
 #include "platform/heap/Handle.h"
+#include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
 
@@ -39,61 +38,64 @@ class Document;
 class TextTrackLoader;
 
 class TextTrackLoaderClient : public GarbageCollectedMixin {
-public:
-    virtual ~TextTrackLoaderClient() {}
+ public:
+  virtual ~TextTrackLoaderClient() {}
 
-    virtual void newCuesAvailable(TextTrackLoader*) = 0;
-    virtual void cueLoadingCompleted(TextTrackLoader*, bool loadingFailed) = 0;
-    virtual void newRegionsAvailable(TextTrackLoader*) = 0;
+  virtual void NewCuesAvailable(TextTrackLoader*) = 0;
+  virtual void CueLoadingCompleted(TextTrackLoader*, bool loading_failed) = 0;
 };
 
-class TextTrackLoader final : public GarbageCollectedFinalized<TextTrackLoader>, public ResourceOwner<RawResource>, private VTTParserClient {
-    USING_GARBAGE_COLLECTED_MIXIN(TextTrackLoader);
-public:
-    static TextTrackLoader* create(TextTrackLoaderClient& client, Document& document)
-    {
-        return new TextTrackLoader(client, document);
-    }
-    ~TextTrackLoader() override;
+class TextTrackLoader final : public GarbageCollectedFinalized<TextTrackLoader>,
+                              public ResourceOwner<RawResource>,
+                              private VTTParserClient {
+  USING_GARBAGE_COLLECTED_MIXIN(TextTrackLoader);
 
-    bool load(const KURL&, CrossOriginAttributeValue);
-    void cancelLoad();
+ public:
+  static TextTrackLoader* Create(TextTrackLoaderClient& client,
+                                 Document& document) {
+    return new TextTrackLoader(client, document);
+  }
+  ~TextTrackLoader() override;
 
-    enum State { Idle, Loading, Finished, Failed };
-    State loadState() { return m_state; }
+  bool Load(const KURL&, CrossOriginAttributeValue);
+  void CancelLoad();
 
-    void getNewCues(HeapVector<Member<TextTrackCue>>& outputCues);
-    void getNewRegions(HeapVector<Member<VTTRegion>>& outputRegions);
+  enum State { kIdle, kLoading, kFinished, kFailed };
+  State LoadState() { return state_; }
 
-    DECLARE_TRACE();
+  void GetNewCues(HeapVector<Member<TextTrackCue>>& output_cues);
 
-private:
-    // RawResourceClient
-    void dataReceived(Resource*, const char* data, size_t length) override;
-    void notifyFinished(Resource*) override;
-    String debugName() const override { return "TextTrackLoader"; }
+  DECLARE_TRACE();
 
-    // VTTParserClient
-    void newCuesParsed() override;
-    void newRegionsParsed() override;
-    void fileFailedToParse() override;
+ private:
+  // RawResourceClient
+  bool RedirectReceived(Resource*,
+                        const ResourceRequest&,
+                        const ResourceResponse&) override;
+  void DataReceived(Resource*, const char* data, size_t length) override;
+  void NotifyFinished(Resource*) override;
+  String DebugName() const override { return "TextTrackLoader"; }
 
-    TextTrackLoader(TextTrackLoaderClient&, Document&);
+  // VTTParserClient
+  void NewCuesParsed() override;
+  void FileFailedToParse() override;
 
-    void cueLoadTimerFired(Timer<TextTrackLoader>*);
-    void corsPolicyPreventedLoad(SecurityOrigin*, const KURL&);
+  TextTrackLoader(TextTrackLoaderClient&, Document&);
 
-    Document& document() const { return *m_document; }
+  void CueLoadTimerFired(TimerBase*);
+  void CorsPolicyPreventedLoad(SecurityOrigin*, const KURL&);
 
-    Member<TextTrackLoaderClient> m_client;
-    Member<VTTParser> m_cueParser;
-    // FIXME: Remove this pointer and get the Document from m_client.
-    Member<Document> m_document;
-    Timer<TextTrackLoader> m_cueLoadTimer;
-    State m_state;
-    bool m_newCuesAvailable;
+  Document& GetDocument() const { return *document_; }
+
+  Member<TextTrackLoaderClient> client_;
+  Member<VTTParser> cue_parser_;
+  // FIXME: Remove this pointer and get the Document from m_client.
+  Member<Document> document_;
+  TaskRunnerTimer<TextTrackLoader> cue_load_timer_;
+  State state_;
+  bool new_cues_available_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

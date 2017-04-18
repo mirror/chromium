@@ -32,30 +32,30 @@
 #define CoreInitializer_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class CORE_EXPORT CoreInitializer {
-    USING_FAST_MALLOC(CoreInitializer);
-    WTF_MAKE_NONCOPYABLE(CoreInitializer);
-public:
-    CoreInitializer() : m_isInitialized(false) { }
-    virtual ~CoreInitializer() { }
+  USING_FAST_MALLOC(CoreInitializer);
+  WTF_MAKE_NONCOPYABLE(CoreInitializer);
 
-    // Should be called by clients before trying to create Frames.
-    virtual void initialize();
-    virtual void shutdown();
+ public:
+  CoreInitializer() : is_initialized_(false) {}
+  virtual ~CoreInitializer() {}
 
-protected:
-    bool isInitialized() const { return m_isInitialized; }
+  // Should be called by clients before trying to create Frames.
+  virtual void Initialize();
 
-private:
-    void registerEventFactory();
+ protected:
+  bool IsInitialized() const { return is_initialized_; }
 
-    bool m_isInitialized;
+ private:
+  void RegisterEventFactory();
+
+  bool is_initialized_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CoreInitializer_h
+#endif  // CoreInitializer_h

@@ -4,155 +4,193 @@
 
 package org.chromium.chrome.browser.ntp.snippets;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.media.ThumbnailUtils;
+import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v4.text.BidiFormatter;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.MeasureSpec;
-import android.view.ViewTreeObserver;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.download.DownloadUtils;
+import org.chromium.chrome.browser.download.ui.DownloadFilter;
+import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
+import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
-import org.chromium.chrome.browser.ntp.DisplayStyleObserver;
-import org.chromium.chrome.browser.ntp.NewTabPage;
-import org.chromium.chrome.browser.ntp.NewTabPageView.NewTabPageManager;
-import org.chromium.chrome.browser.ntp.UiConfig;
+import org.chromium.chrome.browser.ntp.ContextMenuManager;
+import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
 import org.chromium.chrome.browser.ntp.cards.CardViewHolder;
-import org.chromium.chrome.browser.ntp.cards.DisplayStyleObserverAdapter;
-import org.chromium.chrome.browser.ntp.cards.NewTabPageListItem;
-import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
-import org.chromium.components.variations.VariationsAssociatedData;
+import org.chromium.chrome.browser.ntp.cards.CardsVariationParameters;
+import org.chromium.chrome.browser.ntp.cards.ImpressionTracker;
+import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
+import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
+import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
+import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
+import org.chromium.chrome.browser.widget.TintedImageView;
+import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserver;
+import org.chromium.chrome.browser.widget.displaystyle.DisplayStyleObserverAdapter;
+import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
+import org.chromium.chrome.browser.widget.displaystyle.VerticalDisplayStyle;
+import org.chromium.ui.mojom.WindowOpenDisposition;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A class that represents the view for a single card snippet.
  */
-public class SnippetArticleViewHolder extends CardViewHolder {
-    private static final String TAG = "NtpSnippets";
+public class SnippetArticleViewHolder extends CardViewHolder implements ImpressionTracker.Listener {
+    /**
+     * A single instance of {@link RefreshOfflineBadgeVisibilityCallback} that can be reused as it
+     * has no state.
+     */
+    public static final RefreshOfflineBadgeVisibilityCallback
+            REFRESH_OFFLINE_BADGE_VISIBILITY_CALLBACK = new RefreshOfflineBadgeVisibilityCallback();
+
     private static final String PUBLISHER_FORMAT_STRING = "%s - %s";
     private static final int FADE_IN_ANIMATION_TIME_MS = 300;
     private static final int[] FAVICON_SERVICE_SUPPORTED_SIZES = {16, 24, 32, 48, 64};
     private static final String FAVICON_SERVICE_FORMAT =
             "https://s2.googleusercontent.com/s2/favicons?domain=%s&src=chrome_newtab_mobile&sz=%d&alt=404";
+    private static final int PUBLISHER_FAVICON_MINIMUM_SIZE_PX = 16;
 
-    // The variation parameter to fetch the value from the favicon service.
-    private static final String PARAMETER_FAVICON_SERVICE_NAME = "favicons_fetch_from_service";
-    private static final String PARAMETER_DISABLED_VALUE = "off";
+    private final SuggestionsUiDelegate mUiDelegate;
+    private final UiConfig mUiConfig;
+    private final ThumbnailProvider mThumbnailProvider;
 
-    private final NewTabPageManager mNewTabPageManager;
-    private final SnippetsBridge mSnippetsBridge;
     private final TextView mHeadlineTextView;
     private final TextView mPublisherTextView;
     private final TextView mArticleSnippetTextView;
-    private final ImageView mThumbnailView;
+    private final TintedImageView mThumbnailView;
+    private final ImageView mOfflineBadge;
+    private final View mPublisherBar;
+
+    /** Total horizontal space occupied by the thumbnail, sum of its size and margin. */
+    private final int mThumbnailFootprintPx;
+    private final boolean mUseFaviconService;
+    private final int mIconBackgroundColor;
+    private final ColorStateList mIconForegroundColorList;
 
     private FetchImageCallback mImageCallback;
-    private SnippetArticleListItem mArticle;
-    private ViewTreeObserver.OnPreDrawListener mPreDrawObserver;
+    private SnippetArticle mArticle;
+    private SuggestionsCategoryInfo mCategoryInfo;
     private int mPublisherFaviconSizePx;
 
-    private final boolean mUseFaviconService;
-
     /**
-     * Constructs a SnippetCardItemView item used to display snippets
-     *
-     * @param parent The ViewGroup that is going to contain the newly created view.
-     * @param manager The NTPManager object used to open an article
-     * @param snippetsBridge The SnippetsBridge used to retrieve the snippet thumbnails.
+     * Constructs a {@link SnippetArticleViewHolder} item used to display snippets.
+     * @param parent The SuggestionsRecyclerView that is going to contain the newly created view.
+     * @param contextMenuManager The manager responsible for the context menu.
+     * @param uiDelegate The delegate object used to open an article, fetch thumbnails, etc.
      * @param uiConfig The NTP UI configuration object used to adjust the article UI.
      */
-    public SnippetArticleViewHolder(NewTabPageRecyclerView parent, NewTabPageManager manager,
-            SnippetsBridge snippetsBridge, UiConfig uiConfig) {
-        super(R.layout.new_tab_page_snippets_card, parent, uiConfig);
+    public SnippetArticleViewHolder(SuggestionsRecyclerView parent,
+            ContextMenuManager contextMenuManager, SuggestionsUiDelegate uiDelegate,
+            UiConfig uiConfig) {
+        super(R.layout.new_tab_page_snippets_card, parent, uiConfig, contextMenuManager);
 
-        mNewTabPageManager = manager;
-        mSnippetsBridge = snippetsBridge;
-        mThumbnailView = (ImageView) itemView.findViewById(R.id.article_thumbnail);
+        mUiDelegate = uiDelegate;
+        mUiConfig = uiConfig;
+
+        mThumbnailView = (TintedImageView) itemView.findViewById(R.id.article_thumbnail);
         mHeadlineTextView = (TextView) itemView.findViewById(R.id.article_headline);
         mPublisherTextView = (TextView) itemView.findViewById(R.id.article_publisher);
         mArticleSnippetTextView = (TextView) itemView.findViewById(R.id.article_snippet);
+        mPublisherBar = itemView.findViewById(R.id.publisher_bar);
+        mOfflineBadge = (ImageView) itemView.findViewById(R.id.offline_icon);
 
-        mPreDrawObserver = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (mArticle != null && !mArticle.impressionTracked()) {
-                    Rect r = new Rect(0, 0, itemView.getWidth(), itemView.getHeight());
-                    itemView.getParent().getChildVisibleRect(itemView, r, null);
-                    // Track impression if at least one third of the snippet is shown.
-                    if (r.height() >= itemView.getHeight() / 3) mArticle.trackImpression();
-                }
-                // Proceed with the current drawing pass.
-                return true;
-            }
-        };
+        mThumbnailFootprintPx =
+                itemView.getResources().getDimensionPixelSize(R.dimen.snippets_thumbnail_size)
+                + itemView.getResources().getDimensionPixelSize(R.dimen.snippets_thumbnail_margin);
+        mUseFaviconService = CardsVariationParameters.isFaviconServiceEnabled();
 
-        // Listen to onPreDraw only if this view is potentially visible (attached to the window).
-        itemView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View v) {
-                itemView.getViewTreeObserver().addOnPreDrawListener(mPreDrawObserver);
-            }
+        mIconBackgroundColor = DownloadUtils.getIconBackgroundColor(parent.getContext());
+        mIconForegroundColorList = DownloadUtils.getIconForegroundColorList(parent.getContext());
+        mThumbnailProvider = new ThumbnailProviderImpl(
+                Math.min(mThumbnailView.getMaxWidth(), mThumbnailView.getMaxHeight()));
 
-            @Override
-            public void onViewDetachedFromWindow(View v) {
-                itemView.getViewTreeObserver().removeOnPreDrawListener(mPreDrawObserver);
-            }
-        });
-
+        new ImpressionTracker(itemView, this);
         new DisplayStyleObserverAdapter(itemView, uiConfig, new DisplayStyleObserver() {
             @Override
-            public void onDisplayStyleChanged(@UiConfig.DisplayStyle int newDisplayStyle) {
-                if (newDisplayStyle == UiConfig.DISPLAY_STYLE_NARROW) {
-                    mHeadlineTextView.setMaxLines(4);
-                    mArticleSnippetTextView.setVisibility(View.GONE);
-                } else {
-                    mHeadlineTextView.setMaxLines(2);
-                    mArticleSnippetTextView.setVisibility(View.VISIBLE);
-                }
+            public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
+                updateLayout();
             }
         });
+    }
 
-        mUseFaviconService =
-                !PARAMETER_DISABLED_VALUE.equals(VariationsAssociatedData.getVariationParamValue(
-                        NewTabPage.FIELD_TRIAL_NAME, PARAMETER_FAVICON_SERVICE_NAME));
+    @Override
+    public void onImpression() {
+        if (mArticle != null && mArticle.trackImpression()) {
+            mUiDelegate.getMetricsReporter().onSuggestionShown(mArticle);
+            mRecyclerView.onSnippetImpression();
+        }
     }
 
     @Override
     public void onCardTapped() {
-        mNewTabPageManager.openSnippet(mArticle.mUrl);
-        mArticle.trackClick();
+        int windowDisposition = WindowOpenDisposition.CURRENT_TAB;
+        mUiDelegate.getMetricsReporter().onSuggestionOpened(mArticle, windowDisposition);
+        mUiDelegate.getNavigationDelegate().openSnippet(windowDisposition, mArticle);
     }
 
     @Override
-    public void onBindViewHolder(NewTabPageListItem article) {
-        super.onBindViewHolder(article);
+    public void openItem(int windowDisposition) {
+        mUiDelegate.getMetricsReporter().onSuggestionOpened(mArticle, windowDisposition);
+        mUiDelegate.getNavigationDelegate().openSnippet(windowDisposition, mArticle);
+    }
 
-        mArticle = (SnippetArticleListItem) article;
+    @Override
+    public String getUrl() {
+        return mArticle.mUrl;
+    }
+
+    @Override
+    public boolean isItemSupported(@ContextMenuItemId int menuItemId) {
+        Boolean isSupported = mCategoryInfo.isContextMenuItemSupported(menuItemId);
+        if (isSupported != null) return isSupported;
+
+        return super.isItemSupported(menuItemId);
+    }
+
+    @Override
+    public void onContextMenuCreated() {
+        mUiDelegate.getMetricsReporter().onSuggestionMenuOpened(mArticle);
+    }
+
+    /**
+     * Updates ViewHolder with data.
+     * @param article The snippet to take the data from.
+     * @param categoryInfo The info of the category which the snippet belongs to.
+     */
+    public void onBindViewHolder(
+            final SnippetArticle article, SuggestionsCategoryInfo categoryInfo) {
+        super.onBindViewHolder();
+
+        mArticle = article;
+        mCategoryInfo = categoryInfo;
+        updateLayout();
 
         mHeadlineTextView.setText(mArticle.mTitle);
+        mPublisherTextView.setText(getAttributionString(mArticle));
 
-        // We format the publisher here so that having a publisher name in an RTL language doesn't
-        // mess up the formatting on an LTR device and vice versa.
-        String publisherAttribution = String.format(PUBLISHER_FORMAT_STRING,
-                BidiFormatter.getInstance().unicodeWrap(mArticle.mPublisher),
-                DateUtils.getRelativeTimeSpanString(mArticle.mPublishTimestampMilliseconds,
-                        System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS));
-        mPublisherTextView.setText(publisherAttribution);
-
-        // The favicon of the publisher should match the textview height.
+        // The favicon of the publisher should match the TextView height.
         int widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         int heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         mPublisherTextView.measure(widthSpec, heightSpec);
@@ -160,56 +198,184 @@ public class SnippetArticleViewHolder extends CardViewHolder {
 
         mArticleSnippetTextView.setText(mArticle.mPreviewText);
 
+        setThumbnail();
+
+        // Set the favicon of the publisher.
+        // We start initialising with the default favicon to reserve the space and prevent the text
+        // from moving later.
+        setDefaultFaviconOnView();
+        try {
+            long faviconFetchStartTimeMs = SystemClock.elapsedRealtime();
+            URI pageUrl = new URI(mArticle.mUrl);
+            if (!article.isArticle() || !SnippetsConfig.isFaviconsFromNewServerEnabled()) {
+                // The old code path. Remove when the experiment is successful.
+                // Currently, we have to use this for non-articles, due to privacy.
+                fetchFaviconFromLocalCache(pageUrl, true, faviconFetchStartTimeMs);
+            } else {
+                // The new code path.
+                fetchFaviconFromLocalCacheOrGoogleServer(faviconFetchStartTimeMs);
+            }
+        } catch (URISyntaxException e) {
+            // Do nothing, stick to the default favicon.
+        }
+
+        mOfflineBadge.setVisibility(View.GONE);
+        refreshOfflineBadgeVisibility();
+    }
+
+    /**
+     * Updates the layout taking into account screen dimensions and the type of snippet displayed.
+     */
+    private void updateLayout() {
+        final int horizontalStyle = mUiConfig.getCurrentDisplayStyle().horizontal;
+        final int verticalStyle = mUiConfig.getCurrentDisplayStyle().vertical;
+        final int layout = mCategoryInfo.getCardLayout();
+
+        boolean showDescription = shouldShowDescription(horizontalStyle, verticalStyle, layout);
+        boolean showThumbnail = shouldShowThumbnail(horizontalStyle, verticalStyle, layout);
+
+        mArticleSnippetTextView.setVisibility(showDescription ? View.VISIBLE : View.GONE);
+        mThumbnailView.setVisibility(showThumbnail ? View.VISIBLE : View.GONE);
+
+        // If we aren't showing the article snippet, reduce the top margin for publisher text.
+        ViewGroup.MarginLayoutParams params =
+                (ViewGroup.MarginLayoutParams) mPublisherBar.getLayoutParams();
+
+        params.topMargin = mPublisherBar.getResources().getDimensionPixelSize(showDescription
+                        ? R.dimen.snippets_publisher_margin_top_with_article_snippet
+                        : R.dimen.snippets_publisher_margin_top_without_article_snippet);
+        ApiCompatibilityUtils.setMarginEnd(params, showThumbnail ? mThumbnailFootprintPx : 0);
+        mPublisherBar.setLayoutParams(params);
+    }
+
+    private boolean shouldShowDescription(int horizontalStyle, int verticalStyle, int layout) {
+        // Minimal cards don't have a description.
+        if (layout == ContentSuggestionsCardLayout.MINIMAL_CARD) return false;
+
+        // When the screen is too small (narrow or flat) we don't show the description to have more
+        // space for the header.
+        if (horizontalStyle == HorizontalDisplayStyle.NARROW) return false;
+        if (verticalStyle == VerticalDisplayStyle.FLAT) return false;
+
+        // When article's description is empty, we do not want empty space.
+        if (mArticle != null && TextUtils.isEmpty(mArticle.mPreviewText)) return false;
+
+        return true;
+    }
+
+    private boolean shouldShowThumbnail(int horizontalStyle, int verticalStyle, int layout) {
+        // Minimal cards don't have a thumbnail
+        if (layout == ContentSuggestionsCardLayout.MINIMAL_CARD) return false;
+
+        return true;
+    }
+
+    private static String getAttributionString(SnippetArticle article) {
+        if (article.mPublishTimestampMilliseconds == 0) return article.mPublisher;
+
+        // DateUtils.getRelativeTimeSpanString(...) calls through to TimeZone.getDefault(). If this
+        // has never been called before it loads the current time zone from disk. In most likelihood
+        // this will have been called previously and the current time zone will have been cached,
+        // but in some cases (eg instrumentation tests) it will cause a strict mode violation.
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+        CharSequence relativeTimeSpan;
+        try {
+            long time = SystemClock.elapsedRealtime();
+            relativeTimeSpan =
+                    DateUtils.getRelativeTimeSpanString(article.mPublishTimestampMilliseconds,
+                            System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
+            RecordHistogram.recordTimesHistogram("Android.StrictMode.SnippetUIBuildTime",
+                    SystemClock.elapsedRealtime() - time, TimeUnit.MILLISECONDS);
+        } finally {
+            StrictMode.setThreadPolicy(oldPolicy);
+        }
+        // We format the publisher here so that having a publisher name in an RTL language
+        // doesn't mess up the formatting on an LTR device and vice versa.
+        return String.format(PUBLISHER_FORMAT_STRING,
+                BidiFormatter.getInstance().unicodeWrap(article.mPublisher), relativeTimeSpan);
+    }
+
+    private void setThumbnailFromBitmap(Bitmap thumbnail) {
+        assert thumbnail != null && !thumbnail.isRecycled();
+        mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mThumbnailView.setBackground(null);
+        mThumbnailView.setImageBitmap(thumbnail);
+        mThumbnailView.setTint(null);
+    }
+
+    private void setThumbnailFromFileType(int fileType) {
+        mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        mThumbnailView.setBackgroundColor(mIconBackgroundColor);
+        mThumbnailView.setImageResource(
+                DownloadUtils.getIconResId(fileType, DownloadUtils.ICON_SIZE_36_DP));
+        mThumbnailView.setTint(mIconForegroundColorList);
+    }
+
+    private void setDownloadThumbnail() {
+        assert mArticle.isDownload();
+        if (mArticle.isAssetDownload()) {
+            int fileType = DownloadFilter.fromMimeType(mArticle.getAssetDownloadMimeType());
+            setThumbnailFromFileType(fileType);
+
+            if (fileType != DownloadFilter.FILTER_IMAGE) return;
+            if (mImageCallback != null) {
+                mThumbnailProvider.cancelRetrieval(mImageCallback);
+                mImageCallback = null;
+            }
+            mImageCallback = new FetchImageCallback(this, mArticle);
+            mArticle.setThumbnailBitmap(null);
+            Bitmap thumbnail = mThumbnailProvider.getThumbnail(mImageCallback);
+            if (thumbnail == null || thumbnail.isRecycled()) return;
+            mArticle.setThumbnailBitmap(thumbnail);
+            setThumbnailFromBitmap(thumbnail);
+
+            return;
+        }
+
+        setThumbnailFromFileType(DownloadFilter.FILTER_PAGE);
+    }
+
+    private void setThumbnail() {
         // If there's still a pending thumbnail fetch, cancel it.
         cancelImageFetch();
 
-        // If the article has a thumbnail already, reuse it. Otherwise start a fetch.
-        if (mArticle.getThumbnailBitmap() != null) {
-            mThumbnailView.setImageBitmap(mArticle.getThumbnailBitmap());
-        } else {
-            mThumbnailView.setImageResource(R.drawable.ic_snippet_thumbnail_placeholder);
-            mImageCallback = new FetchImageCallback(this, mArticle);
-            mSnippetsBridge.fetchSnippetImage(mArticle, mImageCallback);
+        // mThumbnailView's visibility is modified in updateLayout().
+        if (mThumbnailView.getVisibility() != View.VISIBLE) return;
+        if (mArticle.getThumbnailBitmap() != null && !mArticle.getThumbnailBitmap().isRecycled()) {
+            setThumbnailFromBitmap(mArticle.getThumbnailBitmap());
+            return;
         }
 
-        // Set the favicon of the publisher.
-        try {
-            fetchFaviconFromLocalCache(new URI(mArticle.mUrl), true);
-        } catch (URISyntaxException e) {
-            setDefaultFaviconOnView();
+        if (mArticle.isDownload()) {
+            setDownloadThumbnail();
+            return;
         }
+
+        // Temporarily set placeholder and then fetch the thumbnail from a provider.
+        mThumbnailView.setBackground(null);
+        mThumbnailView.setImageResource(R.drawable.ic_snippet_thumbnail_placeholder);
+        mThumbnailView.setTint(null);
+        mImageCallback = new FetchImageCallback(this, mArticle);
+        mUiDelegate.getSuggestionsSource().fetchSuggestionImage(mArticle, mImageCallback);
     }
 
-    private static class FetchImageCallback extends Callback<Bitmap> {
-        private SnippetArticleViewHolder mViewHolder;
-        private final SnippetArticleListItem mSnippet;
-
-        public FetchImageCallback(
-                SnippetArticleViewHolder viewHolder, SnippetArticleListItem snippet) {
-            mViewHolder = viewHolder;
-            mSnippet = snippet;
-        }
-
-        @Override
-        public void onResult(Bitmap image) {
-            if (mViewHolder == null) return;
-            mViewHolder.fadeThumbnailIn(mSnippet, image);
-        }
-
-        public void cancel() {
-            // TODO(treib): Pass the "cancel" on to the actual image fetcher.
-            mViewHolder = null;
-        }
+    /** Updates the visibility of the card's offline badge by checking the bound article's info. */
+    private void refreshOfflineBadgeVisibility() {
+        boolean visible = mArticle.getOfflinePageOfflineId() != null || mArticle.isAssetDownload();
+        if (visible == (mOfflineBadge.getVisibility() == View.VISIBLE)) return;
+        mOfflineBadge.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     private void cancelImageFetch() {
-        if (mImageCallback != null) {
-            mImageCallback.cancel();
-            mImageCallback = null;
+        if (mImageCallback == null) return;
+        mImageCallback.cancel();
+        if (mArticle.isAssetDownload()) {
+            mThumbnailProvider.cancelRetrieval(mImageCallback);
         }
+        mImageCallback = null;
     }
 
-    private void fadeThumbnailIn(SnippetArticleListItem snippet, Bitmap thumbnail) {
+    private void fadeThumbnailIn(SnippetArticle snippet, Bitmap thumbnail) {
         mImageCallback = null;
         if (thumbnail == null) return; // Nothing to do, we keep the placeholder.
 
@@ -224,48 +390,97 @@ public class SnippetArticleViewHolder extends CardViewHolder {
         // Store the bitmap to skip the download task next time we display this snippet.
         snippet.setThumbnailBitmap(scaledThumbnail);
 
-        // Cross-fade between the placeholder and the thumbnail.
+        // Cross-fade between the placeholder and the thumbnail. We cross-fade because the incoming
+        // image may have transparency and we don't want the previous image showing up behind.
         Drawable[] layers = {mThumbnailView.getDrawable(),
                 new BitmapDrawable(mThumbnailView.getResources(), scaledThumbnail)};
         TransitionDrawable transitionDrawable = new TransitionDrawable(layers);
+        mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        mThumbnailView.setBackground(null);
         mThumbnailView.setImageDrawable(transitionDrawable);
+        mThumbnailView.setTint(null);
+        transitionDrawable.setCrossFadeEnabled(true);
         transitionDrawable.startTransition(FADE_IN_ANIMATION_TIME_MS);
     }
 
-    private void fetchFaviconFromLocalCache(final URI snippetUri, final boolean fallbackToService) {
-        mNewTabPageManager.getLocalFaviconImageForURL(
-                getSnippetDomain(snippetUri), mPublisherFaviconSizePx, new FaviconImageCallback() {
+    private void fetchFaviconFromLocalCacheOrGoogleServer(final long faviconFetchStartTimeMs) {
+        // Set the desired size to 0 to specify we do not want to resize in c++, we'll resize here.
+        mUiDelegate.getSuggestionsSource().fetchSuggestionFavicon(mArticle,
+                PUBLISHER_FAVICON_MINIMUM_SIZE_PX, /* desiredSizePx */ 0, new Callback<Bitmap>() {
                     @Override
-                    public void onFaviconAvailable(Bitmap image, String iconUrl) {
-                        if (image == null && fallbackToService) {
-                            fetchFaviconFromService(snippetUri);
-                            return;
-                        }
+                    public void onResult(Bitmap image) {
+                        recordFaviconFetchTime(faviconFetchStartTimeMs);
+                        if (image == null) return;
                         setFaviconOnView(image);
                     }
                 });
     }
 
-    private void fetchFaviconFromService(final URI snippetUri) {
-        // Show the default favicon immediately.
-        setDefaultFaviconOnView();
+    private void recordFaviconFetchTime(long faviconFetchStartTimeMs) {
+        RecordHistogram.recordMediumTimesHistogram(
+                "NewTabPage.ContentSuggestions.ArticleFaviconFetchTime",
+                SystemClock.elapsedRealtime() - faviconFetchStartTimeMs, TimeUnit.MILLISECONDS);
+    }
 
-        if (!mUseFaviconService) return;
+    private void recordFaviconFetchResult(
+            @FaviconFetchResult int result, long faviconFetchStartTimeMs) {
+        // Record the histogram for articles only to have a fair comparision.
+        if (!mArticle.isArticle()) return;
+        RecordHistogram.recordEnumeratedHistogram(
+                "NewTabPage.ContentSuggestions.ArticleFaviconFetchResult", result,
+                FaviconFetchResult.COUNT);
+        recordFaviconFetchTime(faviconFetchStartTimeMs);
+    }
+
+    private void fetchFaviconFromLocalCache(final URI snippetUri, final boolean fallbackToService,
+            final long faviconFetchStartTimeMs) {
+        mUiDelegate.getLocalFaviconImageForURL(
+                getSnippetDomain(snippetUri), mPublisherFaviconSizePx, new FaviconImageCallback() {
+                    @Override
+                    public void onFaviconAvailable(Bitmap image, String iconUrl) {
+                        if (image != null) {
+                            setFaviconOnView(image);
+                            recordFaviconFetchResult(fallbackToService
+                                            ? FaviconFetchResult.SUCCESS_CACHED
+                                            : FaviconFetchResult.SUCCESS_FETCHED,
+                                    faviconFetchStartTimeMs);
+                        } else if (fallbackToService) {
+                            if (!fetchFaviconFromService(snippetUri, faviconFetchStartTimeMs)) {
+                                recordFaviconFetchResult(
+                                        FaviconFetchResult.FAILURE, faviconFetchStartTimeMs);
+                            }
+                        }
+                        // Else do nothing, we already have the placeholder set.
+                    }
+                });
+    }
+
+    // TODO(crbug.com/635567): Fix this properly.
+    @SuppressLint("DefaultLocale")
+    private boolean fetchFaviconFromService(
+            final URI snippetUri, final long faviconFetchStartTimeMs) {
+        if (!mUseFaviconService) return false;
         int sizePx = getFaviconServiceSupportedSize();
-        if (sizePx == 0) return;
+        if (sizePx == 0) return false;
 
         // Replace the default icon by another one from the service when it is fetched.
-        mNewTabPageManager.ensureIconIsAvailable(
+        mUiDelegate.ensureIconIsAvailable(
                 getSnippetDomain(snippetUri), // Store to the cache for the whole domain.
                 String.format(FAVICON_SERVICE_FORMAT, snippetUri.getHost(), sizePx),
                 /*useLargeIcon=*/false, /*isTemporary=*/true, new IconAvailabilityCallback() {
                     @Override
                     public void onIconAvailabilityChecked(boolean newlyAvailable) {
-                        if (!newlyAvailable) return;
+                        if (!newlyAvailable) {
+                            recordFaviconFetchResult(
+                                    FaviconFetchResult.FAILURE, faviconFetchStartTimeMs);
+                            return;
+                        }
                         // The download succeeded, the favicon is in the cache; fetch it.
-                        fetchFaviconFromLocalCache(snippetUri, /*fallbackToService=*/false);
+                        fetchFaviconFromLocalCache(
+                                snippetUri, /*fallbackToService=*/false, faviconFetchStartTimeMs);
                     }
                 });
+        return true;
     }
 
     private int getFaviconServiceSupportedSize() {
@@ -300,8 +515,50 @@ public class SnippetArticleViewHolder extends CardViewHolder {
         mPublisherTextView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public boolean isDismissable() {
-        return !isPeeking();
+    private static class FetchImageCallback
+            extends Callback<Bitmap> implements ThumbnailProvider.ThumbnailRequest {
+        private SnippetArticleViewHolder mViewHolder;
+        private final SnippetArticle mSnippet;
+
+        public FetchImageCallback(SnippetArticleViewHolder viewHolder, SnippetArticle snippet) {
+            mViewHolder = viewHolder;
+            mSnippet = snippet;
+        }
+
+        @Override
+        public void onResult(Bitmap image) {
+            if (mViewHolder == null) return;
+            mViewHolder.fadeThumbnailIn(mSnippet, image);
+        }
+
+        @Override
+        public String getFilePath() {
+            return mSnippet == null ? null : mSnippet.getAssetDownloadFile().getAbsolutePath();
+        }
+
+        @Override
+        public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
+            if (TextUtils.equals(getFilePath(), filePath) && thumbnail != null
+                    && thumbnail.getWidth() > 0 && thumbnail.getHeight() > 0) {
+                assert !thumbnail.isRecycled();
+                onResult(thumbnail);
+            }
+        }
+
+        public void cancel() {
+            // TODO(treib): Pass the "cancel" on to the actual image fetcher.
+            mViewHolder = null;
+        }
+    }
+
+    /**
+     * Callback to refresh the offline badge visibility.
+     */
+    public static class RefreshOfflineBadgeVisibilityCallback extends PartialBindCallback {
+        @Override
+        public void onResult(NewTabPageViewHolder holder) {
+            assert holder instanceof SnippetArticleViewHolder;
+            ((SnippetArticleViewHolder) holder).refreshOfflineBadgeVisibility();
+        }
     }
 }

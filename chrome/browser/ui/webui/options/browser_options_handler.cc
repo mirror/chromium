@@ -17,8 +17,10 @@
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/stl_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/value_conversions.h"
 #include "base/values.h"
@@ -51,6 +53,7 @@
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/signin/signin_ui_util.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/sync_ui_util.h"
 #include "chrome/browser/themes/theme_service.h"
@@ -65,20 +68,23 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
+#include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proximity_auth/switches.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
+#include "components/safe_browsing_db/safe_browsing_prefs.h"
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -96,13 +102,12 @@
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/url_data_source.h"
-#include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/page_zoom.h"
 #include "extensions/browser/extension_registry.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "google_apis/gaia/google_service_auth_error.h"
-#include "policy/policy_constants.h"
+#include "printing/features/features.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/webui/web_ui_util.h"
@@ -113,20 +118,18 @@
 #endif
 
 #if defined(OS_CHROMEOS)
-#include "ash/common/accessibility_types.h"
-#include "ash/common/ash_switches.h"
-#include "ash/common/system/chromeos/devicetype_utils.h"
-#include "ash/desktop_background/user_wallpaper_delegate.h"
-#include "ash/shell.h"
+#include "ash/accessibility_types.h"  // nogncheck
+#include "ash/shell.h"  // nogncheck
+#include "ash/system/devicetype_utils.h"  // nogncheck
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_util.h"
-#include "chrome/browser/chromeos/arc/arc_auth_service.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
+#include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_utils.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/net/wake_on_wifi_manager.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/reset/metrics.h"
-#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/timezone_util.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
@@ -136,18 +139,14 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_util.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "ui/gfx/image/image_skia.h"
 #endif  // defined(OS_CHROMEOS)
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
 #include "chrome/browser/printing/cloud_print/privet_notifications.h"
-#endif
-
-#if defined(USE_ASH)
-#include "ash/shell.h"
 #endif
 
 using base::UserMetricsAction;
@@ -167,7 +166,7 @@ void AppendExtensionData(const std::string& key,
   std::unique_ptr<base::DictionaryValue> details(new base::DictionaryValue);
   details->SetString("id", extension ? extension->id() : std::string());
   details->SetString("name", extension ? extension->name() : std::string());
-  dict->Set(key, details.release());
+  dict->Set(key, std::move(details));
 }
 
 #if !defined(OS_CHROMEOS)
@@ -176,6 +175,24 @@ bool IsDisabledByPolicy(const BooleanPrefMember& pref) {
 }
 #endif  // !defined(OS_CHROMEOS)
 
+std::string GetSyncErrorAction(sync_ui_util::ActionType action_type) {
+  switch (action_type) {
+    case sync_ui_util::REAUTHENTICATE:
+      return "reauthenticate";
+    case sync_ui_util::SIGNOUT_AND_SIGNIN:
+      return "signOutAndSignIn";
+    case sync_ui_util::UPGRADE_CLIENT:
+      return "upgradeClient";
+    case sync_ui_util::ENTER_PASSPHRASE:
+      return "enterPassphrase";
+    default:
+      return "noAction";
+  }
+}
+
+#if defined(OS_CHROMEOS)
+bool g_enable_polymer_preload = true;
+#endif  // defined(OS_CHROMEOS)
 }  // namespace
 
 namespace options {
@@ -198,14 +215,15 @@ BrowserOptionsHandler::BrowserOptionsHandler()
                  weak_ptr_factory_.GetWeakPtr()));
 #endif  // !defined(OS_CHROMEOS)
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   cloud_print_mdns_ui_enabled_ = true;
-#endif  // defined(ENABLE_SERVICE_DISCOVERY)
+#endif
 }
 
 BrowserOptionsHandler::~BrowserOptionsHandler() {
-  ProfileSyncService* sync_service(ProfileSyncServiceFactory::
-      GetInstance()->GetForProfile(Profile::FromWebUI(web_ui())));
+  browser_sync::ProfileSyncService* sync_service(
+      ProfileSyncServiceFactory::GetInstance()->GetForProfile(
+          Profile::FromWebUI(web_ui())));
   if (sync_service)
     sync_service->RemoveObserver(this);
 
@@ -225,318 +243,376 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
 
 #if defined(OS_CHROMEOS)
   const int device_type_resource_id = ash::GetChromeOSDeviceTypeResourceId();
+  const int enable_logging_resource_id =
+      IDS_OPTIONS_ENABLE_LOGGING_DIAGNOSTIC_AND_USAGE_DATA;
 #else
   const int device_type_resource_id = IDS_EASY_UNLOCK_GENERIC_DEVICE_TYPE;
+  const int enable_logging_resource_id = IDS_OPTIONS_ENABLE_LOGGING;
 #endif  // defined(OS_CHROMEOS)
 
   static OptionsStringResource resources[] = {
     // Please keep these in alphabetical order.
-    { "accessibilityFeaturesLink", IDS_OPTIONS_ACCESSIBILITY_FEATURES_LINK },
-    { "accessibilityTitle", IDS_OPTIONS_SETTINGS_SECTION_TITLE_ACCESSIBILITY },
-    { "advancedSectionTitleCertificates",
-      IDS_OPTIONS_ADVANCED_SECTION_TITLE_CERTIFICATES },
-    { "advancedSectionTitleCloudPrint", IDS_GOOGLE_CLOUD_PRINT },
-    { "advancedSectionTitleContent",
-      IDS_OPTIONS_ADVANCED_SECTION_TITLE_CONTENT },
-    { "advancedSectionTitleLanguages",
-      IDS_OPTIONS_ADVANCED_SECTION_TITLE_LANGUAGES },
-    { "advancedSectionTitleNetwork",
-      IDS_OPTIONS_ADVANCED_SECTION_TITLE_NETWORK },
-    { "advancedSectionTitlePrivacy",
-      IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY },
-    { "advancedSectionTitleSystem", IDS_OPTIONS_ADVANCED_SECTION_TITLE_SYSTEM },
-    { "autoOpenFileTypesInfo", IDS_OPTIONS_OPEN_FILE_TYPES_AUTOMATICALLY },
-    { "autoOpenFileTypesResetToDefault",
-      IDS_OPTIONS_AUTOOPENFILETYPES_RESETTODEFAULT },
-    { "autofillEnabled", IDS_OPTIONS_AUTOFILL_ENABLE },
-    { "autologinEnabled", IDS_OPTIONS_PASSWORDS_AUTOLOGIN },
-    { "certificatesManageButton", IDS_OPTIONS_CERTIFICATES_MANAGE_BUTTON },
-    { "changeHomePage", IDS_OPTIONS_CHANGE_HOME_PAGE },
-    { "childLabel", IDS_PROFILES_LIST_CHILD_LABEL },
-    { "currentUserOnly", IDS_OPTIONS_CURRENT_USER_ONLY },
-    { "customizeSync", IDS_OPTIONS_CUSTOMIZE_SYNC_BUTTON_LABEL },
-    { "defaultBrowserUnknown",
-      IDS_OPTIONS_DEFAULTBROWSER_UNKNOWN, IDS_PRODUCT_NAME },
-    { "defaultBrowserUseAsDefault", IDS_OPTIONS_DEFAULTBROWSER_USEASDEFAULT },
-    { "defaultFontSizeLabel", IDS_OPTIONS_DEFAULT_FONT_SIZE_LABEL },
-    { "defaultSearchManageEngines", IDS_OPTIONS_DEFAULTSEARCH_MANAGE_ENGINES },
-    { "defaultZoomFactorLabel", IDS_OPTIONS_DEFAULT_ZOOM_LEVEL_LABEL },
-    { "disableWebServices", IDS_OPTIONS_DISABLE_WEB_SERVICES },
-    { "doNotTrack", IDS_OPTIONS_ENABLE_DO_NOT_TRACK },
-    { "doNotTrackConfirmDisable",
-      IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_DISABLE },
-    { "doNotTrackConfirmEnable",
-      IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_ENABLE },
-    { "doNotTrackConfirmMessage", IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_TEXT },
-    { "downloadLocationAskForSaveLocation",
-      IDS_OPTIONS_DOWNLOADLOCATION_ASKFORSAVELOCATION },
-    { "downloadLocationBrowseTitle",
-      IDS_OPTIONS_DOWNLOADLOCATION_BROWSE_TITLE },
-    { "downloadLocationChangeButton",
-      IDS_OPTIONS_DOWNLOADLOCATION_CHANGE_BUTTON },
-    { "downloadLocationGroupName", IDS_OPTIONS_DOWNLOADLOCATION_GROUP_NAME },
-    { "easyUnlockDescription", IDS_OPTIONS_EASY_UNLOCK_DESCRIPTION,
-      device_type_resource_id },
-    { "easyUnlockRequireProximityLabel",
-      IDS_OPTIONS_EASY_UNLOCK_REQUIRE_PROXIMITY_LABEL,
-      device_type_resource_id },
-    { "easyUnlockSectionTitle", IDS_OPTIONS_EASY_UNLOCK_SECTION_TITLE },
-    { "easyUnlockSetupButton", IDS_OPTIONS_EASY_UNLOCK_SETUP_BUTTON },
-    { "easyUnlockSetupIntro", IDS_OPTIONS_EASY_UNLOCK_SETUP_INTRO,
-      device_type_resource_id },
-    { "enableLogging", IDS_OPTIONS_ENABLE_LOGGING },
-    { "extensionControlled", IDS_OPTIONS_TAB_EXTENSION_CONTROLLED },
-    { "extensionDisable", IDS_OPTIONS_TAB_EXTENSION_CONTROLLED_DISABLE },
-    { "fontSettingsCustomizeFontsButton",
-      IDS_OPTIONS_FONTSETTINGS_CUSTOMIZE_FONTS_BUTTON },
-    { "fontSizeLabelCustom", IDS_OPTIONS_FONT_SIZE_LABEL_CUSTOM },
-    { "fontSizeLabelLarge", IDS_OPTIONS_FONT_SIZE_LABEL_LARGE },
-    { "fontSizeLabelMedium", IDS_OPTIONS_FONT_SIZE_LABEL_MEDIUM },
-    { "fontSizeLabelSmall", IDS_OPTIONS_FONT_SIZE_LABEL_SMALL },
-    { "fontSizeLabelVeryLarge", IDS_OPTIONS_FONT_SIZE_LABEL_VERY_LARGE },
-    { "fontSizeLabelVerySmall", IDS_OPTIONS_FONT_SIZE_LABEL_VERY_SMALL },
-    { "googleNowLauncherEnable", IDS_OPTIONS_ENABLE_GOOGLE_NOW },
-    { "hideAdvancedSettings", IDS_SETTINGS_HIDE_ADVANCED_SETTINGS },
-    { "homePageNtp", IDS_OPTIONS_HOMEPAGE_NTP },
-    { "homePageShowHomeButton", IDS_OPTIONS_TOOLBAR_SHOW_HOME_BUTTON },
-    { "homePageUseNewTab", IDS_OPTIONS_HOMEPAGE_USE_NEWTAB },
-    { "homePageUseURL", IDS_OPTIONS_HOMEPAGE_USE_URL },
-    { "hotwordAlwaysOnAudioHistoryDescription",
-      IDS_HOTWORD_ALWAYS_ON_AUDIO_HISTORY_DESCRIPTION },
-    { "hotwordAlwaysOnDesc", IDS_HOTWORD_SEARCH_ALWAYS_ON_DESCRIPTION },
-    { "hotwordAudioHistoryManage", IDS_HOTWORD_AUDIO_HISTORY_MANAGE_LINK },
-    { "hotwordAudioLoggingEnable", IDS_HOTWORD_AUDIO_LOGGING_ENABLE },
-    { "hotwordConfirmDisable", IDS_HOTWORD_CONFIRM_BUBBLE_DISABLE },
-    { "hotwordConfirmEnable", IDS_HOTWORD_CONFIRM_BUBBLE_ENABLE },
-    { "hotwordConfirmMessage", IDS_HOTWORD_SEARCH_PREF_DESCRIPTION },
-    { "hotwordNoDSPDesc", IDS_HOTWORD_SEARCH_NO_DSP_DESCRIPTION },
-    { "hotwordRetrainLink", IDS_HOTWORD_RETRAIN_LINK },
-    { "hotwordSearchEnable", IDS_HOTWORD_SEARCH_PREF_CHKBOX },
-    { "importData", IDS_OPTIONS_IMPORT_DATA_BUTTON },
-    { "improveBrowsingExperience", IDS_OPTIONS_IMPROVE_BROWSING_EXPERIENCE },
-    { "languageAndSpellCheckSettingsButton",
-      IDS_OPTIONS_SETTINGS_LANGUAGE_AND_INPUT_SETTINGS },
+    {"accessibilityFeaturesLink", IDS_OPTIONS_ACCESSIBILITY_FEATURES_LINK},
+    {"accessibilityTitle", IDS_OPTIONS_SETTINGS_SECTION_TITLE_ACCESSIBILITY},
+    {"advancedSectionTitleCertificates",
+     IDS_OPTIONS_ADVANCED_SECTION_TITLE_CERTIFICATES},
+    {"advancedSectionTitleCloudPrint", IDS_GOOGLE_CLOUD_PRINT},
+    {"advancedSectionTitleContent", IDS_OPTIONS_ADVANCED_SECTION_TITLE_CONTENT},
+    {"advancedSectionTitleLanguages",
+     IDS_OPTIONS_ADVANCED_SECTION_TITLE_LANGUAGES},
+    {"advancedSectionTitleNetwork", IDS_OPTIONS_ADVANCED_SECTION_TITLE_NETWORK},
+    {"advancedSectionTitlePrivacy", IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY},
+    {"advancedSectionTitleSystem", IDS_OPTIONS_ADVANCED_SECTION_TITLE_SYSTEM},
+    {"autoOpenFileTypesInfo", IDS_OPTIONS_OPEN_FILE_TYPES_AUTOMATICALLY},
+    {"autoOpenFileTypesResetToDefault",
+     IDS_OPTIONS_AUTOOPENFILETYPES_RESETTODEFAULT},
+    {"autofillEnabled", IDS_OPTIONS_AUTOFILL_ENABLE},
+    {"autologinEnabled", IDS_OPTIONS_PASSWORDS_AUTOLOGIN},
+    {"certificatesManageButton", IDS_OPTIONS_CERTIFICATES_MANAGE_BUTTON},
+    {"changeHomePage", IDS_OPTIONS_CHANGE_HOME_PAGE},
+    {"childLabel", IDS_PROFILES_LIST_CHILD_LABEL},
+    {"currentUserOnly", IDS_OPTIONS_CURRENT_USER_ONLY},
+    {"customizeSync", IDS_OPTIONS_CUSTOMIZE_SYNC_BUTTON_LABEL},
+    {"defaultBrowserUnknown", IDS_OPTIONS_DEFAULTBROWSER_UNKNOWN,
+     IDS_PRODUCT_NAME},
+    {"defaultBrowserUseAsDefault", IDS_OPTIONS_DEFAULTBROWSER_USEASDEFAULT},
+    {"defaultFontSizeLabel", IDS_OPTIONS_DEFAULT_FONT_SIZE_LABEL},
+    {"defaultSearchManageEngines", IDS_OPTIONS_DEFAULTSEARCH_MANAGE_ENGINES},
+    {"defaultZoomFactorLabel", IDS_OPTIONS_DEFAULT_ZOOM_LEVEL_LABEL},
+    {"disableWebServices", IDS_OPTIONS_DISABLE_WEB_SERVICES},
+    {"doNotTrack", IDS_OPTIONS_ENABLE_DO_NOT_TRACK},
+    {"doNotTrackConfirmDisable",
+     IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_DISABLE},
+    {"doNotTrackConfirmEnable", IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_ENABLE},
+    {"doNotTrackConfirmMessage", IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_TEXT},
+    {"downloadLocationAskForSaveLocation",
+     IDS_OPTIONS_DOWNLOADLOCATION_ASKFORSAVELOCATION},
+    {"downloadLocationBrowseTitle", IDS_OPTIONS_DOWNLOADLOCATION_BROWSE_TITLE},
+    {"downloadLocationChangeButton",
+     IDS_OPTIONS_DOWNLOADLOCATION_CHANGE_BUTTON},
+    {"downloadLocationGroupName", IDS_OPTIONS_DOWNLOADLOCATION_GROUP_NAME},
+    {"easyUnlockDescription", IDS_OPTIONS_EASY_UNLOCK_DESCRIPTION,
+     device_type_resource_id},
+    {"easyUnlockRequireProximityLabel",
+     IDS_OPTIONS_EASY_UNLOCK_REQUIRE_PROXIMITY_LABEL, device_type_resource_id},
+    {"easyUnlockSectionTitle", IDS_OPTIONS_EASY_UNLOCK_SECTION_TITLE},
+    {"easyUnlockSetupButton", IDS_OPTIONS_EASY_UNLOCK_SETUP_BUTTON},
+    {"easyUnlockSetupIntro", IDS_OPTIONS_EASY_UNLOCK_SETUP_INTRO,
+     device_type_resource_id},
+    {"enableLogging", enable_logging_resource_id},
+    {"extensionControlled", IDS_OPTIONS_TAB_EXTENSION_CONTROLLED},
+    {"extensionDisable", IDS_OPTIONS_TAB_EXTENSION_CONTROLLED_DISABLE},
+    {"fontSettingsCustomizeFontsButton",
+     IDS_OPTIONS_FONTSETTINGS_CUSTOMIZE_FONTS_BUTTON},
+    {"fontSizeLabelCustom", IDS_OPTIONS_FONT_SIZE_LABEL_CUSTOM},
+    {"fontSizeLabelLarge", IDS_OPTIONS_FONT_SIZE_LABEL_LARGE},
+    {"fontSizeLabelMedium", IDS_OPTIONS_FONT_SIZE_LABEL_MEDIUM},
+    {"fontSizeLabelSmall", IDS_OPTIONS_FONT_SIZE_LABEL_SMALL},
+    {"fontSizeLabelVeryLarge", IDS_OPTIONS_FONT_SIZE_LABEL_VERY_LARGE},
+    {"fontSizeLabelVerySmall", IDS_OPTIONS_FONT_SIZE_LABEL_VERY_SMALL},
+    {"googleNowLauncherEnable", IDS_OPTIONS_ENABLE_GOOGLE_NOW},
+    {"hideAdvancedSettings", IDS_SETTINGS_HIDE_ADVANCED_SETTINGS},
+    {"homePageNtp", IDS_OPTIONS_HOMEPAGE_NTP},
+    {"homePageShowHomeButton", IDS_OPTIONS_TOOLBAR_SHOW_HOME_BUTTON},
+    {"homePageUseNewTab", IDS_OPTIONS_HOMEPAGE_USE_NEWTAB},
+    {"homePageUseURL", IDS_OPTIONS_HOMEPAGE_USE_URL},
+    {"hotwordAlwaysOnAudioHistoryDescription",
+     IDS_HOTWORD_ALWAYS_ON_AUDIO_HISTORY_DESCRIPTION},
+    {"hotwordAlwaysOnDesc", IDS_HOTWORD_SEARCH_ALWAYS_ON_DESCRIPTION},
+    {"hotwordAudioHistoryManage", IDS_HOTWORD_AUDIO_HISTORY_MANAGE_LINK},
+    {"hotwordAudioLoggingEnable", IDS_HOTWORD_AUDIO_LOGGING_ENABLE},
+    {"hotwordConfirmDisable", IDS_HOTWORD_CONFIRM_BUBBLE_DISABLE},
+    {"hotwordConfirmEnable", IDS_HOTWORD_CONFIRM_BUBBLE_ENABLE},
+    {"hotwordConfirmMessage", IDS_HOTWORD_SEARCH_PREF_DESCRIPTION},
+    {"hotwordNoDSPDesc", IDS_HOTWORD_SEARCH_NO_DSP_DESCRIPTION},
+    {"hotwordRetrainLink", IDS_HOTWORD_RETRAIN_LINK},
+    {"hotwordSearchEnable", IDS_HOTWORD_SEARCH_PREF_CHKBOX},
+    {"importData", IDS_OPTIONS_IMPORT_DATA_BUTTON},
+    {"improveBrowsingExperience", IDS_OPTIONS_IMPROVE_BROWSING_EXPERIENCE},
+    {"languageAndSpellCheckSettingsButton",
+     IDS_OPTIONS_SETTINGS_LANGUAGE_AND_INPUT_SETTINGS},
 #if defined(OS_CHROMEOS)
-    { "languageSectionLabel", IDS_OPTIONS_ADVANCED_LANGUAGE_LABEL,
-      IDS_SHORT_PRODUCT_OS_NAME },
+    {"languageSectionLabel", IDS_OPTIONS_ADVANCED_LANGUAGE_LABEL,
+     IDS_SHORT_PRODUCT_OS_NAME},
 #else
-    { "languageSectionLabel", IDS_OPTIONS_ADVANCED_LANGUAGE_LABEL,
-      IDS_SHORT_PRODUCT_NAME },
+    {"languageSectionLabel", IDS_OPTIONS_ADVANCED_LANGUAGE_LABEL,
+     IDS_SHORT_PRODUCT_NAME},
 #endif
-    { "linkDoctorPref", IDS_OPTIONS_LINKDOCTOR_PREF },
-    { "manageAutofillSettings", IDS_OPTIONS_MANAGE_AUTOFILL_SETTINGS_LINK },
-    { "manageLanguages", IDS_OPTIONS_TRANSLATE_MANAGE_LANGUAGES },
-    { "managePasswords", IDS_OPTIONS_PASSWORDS_MANAGE_PASSWORDS_LINK },
-    { "metricsReportingResetRestart", IDS_OPTIONS_ENABLE_LOGGING_RESTART },
-    { "networkPredictionEnabledDescription",
-      IDS_NETWORK_PREDICTION_ENABLED_DESCRIPTION },
-    { "passwordManagerEnabled", GetPasswordManagerSettingsStringId(
-        ProfileSyncServiceFactory::GetForProfile(Profile::FromWebUI(web_ui())))
-    },
-    { "passwordsAndAutofillGroupName",
-      IDS_OPTIONS_PASSWORDS_AND_FORMS_GROUP_NAME },
-    { "privacyClearDataButton", IDS_OPTIONS_PRIVACY_CLEAR_DATA_BUTTON },
-    { "privacyContentSettingsButton",
-      IDS_OPTIONS_PRIVACY_CONTENT_SETTINGS_BUTTON },
-    { "profileAddPersonEnable", IDS_PROFILE_ADD_PERSON_ENABLE },
-    { "profileBrowserGuestEnable", IDS_PROFILE_BROWSER_GUEST_ENABLE },
-    { "profilesCreate", IDS_PROFILES_CREATE_BUTTON_LABEL },
-    { "profilesDelete", IDS_PROFILES_DELETE_BUTTON_LABEL },
-    { "profilesDeleteSingle", IDS_PROFILES_DELETE_SINGLE_BUTTON_LABEL },
-    { "profilesListItemCurrent", IDS_PROFILES_LIST_ITEM_CURRENT },
-    { "profilesManage", IDS_PROFILES_MANAGE_BUTTON_LABEL },
-    { "profilesSingleUser", IDS_PROFILES_SINGLE_USER_MESSAGE,
-      IDS_PRODUCT_NAME },
-    { "proxiesLabelExtension", IDS_OPTIONS_EXTENSION_PROXIES_LABEL },
-    { "proxiesLabelSystem", IDS_OPTIONS_SYSTEM_PROXIES_LABEL,
-      IDS_PRODUCT_NAME },
-    { "resetProfileSettings", IDS_RESET_PROFILE_SETTINGS_BUTTON },
-    { "resetProfileSettingsDescription",
-      IDS_RESET_PROFILE_SETTINGS_DESCRIPTION },
-    { "resetProfileSettingsSectionTitle",
-      IDS_RESET_PROFILE_SETTINGS_SECTION_TITLE },
-    { "safeBrowsingEnableExtendedReporting",
-      IDS_OPTIONS_SAFEBROWSING_ENABLE_EXTENDED_REPORTING },
-    { "safeBrowsingEnableProtection",
-      IDS_OPTIONS_SAFEBROWSING_ENABLEPROTECTION },
-    { "sectionTitleAppearance", IDS_APPEARANCE_GROUP_NAME },
-    { "sectionTitleDefaultBrowser", IDS_OPTIONS_DEFAULTBROWSER_GROUP_NAME },
-    { "sectionTitleProxy", IDS_OPTIONS_PROXY_GROUP_NAME },
-    { "sectionTitleSearch", IDS_OPTIONS_DEFAULTSEARCH_GROUP_NAME },
-    { "sectionTitleStartup", IDS_OPTIONS_STARTUP_GROUP_NAME },
-    { "sectionTitleSync", IDS_SYNC_OPTIONS_GROUP_NAME },
-    { "sectionTitleUsers", IDS_PROFILES_OPTIONS_GROUP_NAME },
-    { "settingsTitle", IDS_SETTINGS_TITLE },
-    { "showAdvancedSettings", IDS_SETTINGS_SHOW_ADVANCED_SETTINGS },
-    { "spellingConfirmDisable", IDS_CONTENT_CONTEXT_SPELLING_BUBBLE_DISABLE },
-    { "spellingConfirmEnable", IDS_CONTENT_CONTEXT_SPELLING_BUBBLE_ENABLE },
-    { "spellingConfirmMessage", IDS_CONTENT_CONTEXT_SPELLING_BUBBLE_TEXT },
-    { "spellingPref", IDS_OPTIONS_SPELLING_PREF },
-    { "startupRestoreLastSession", IDS_OPTIONS_STARTUP_RESTORE_LAST_SESSION },
-    { "startupSetPages", IDS_OPTIONS_STARTUP_SET_PAGES },
-    { "startupShowNewTab", IDS_OPTIONS_STARTUP_SHOW_NEWTAB },
-    { "startupShowPages", IDS_OPTIONS_STARTUP_SHOW_PAGES },
-    { "suggestPref", IDS_OPTIONS_SUGGEST_PREF },
-    { "supervisedUserLabel", IDS_PROFILES_LIST_LEGACY_SUPERVISED_USER_LABEL },
-    { "syncButtonTextInProgress", IDS_SYNC_NTP_SETUP_IN_PROGRESS },
-    { "syncButtonTextSignIn", IDS_SYNC_START_SYNC_BUTTON_LABEL,
-      IDS_SHORT_PRODUCT_NAME },
-    { "syncButtonTextStop", IDS_SYNC_STOP_SYNCING_BUTTON_LABEL },
-    { "syncOverview", IDS_SYNC_OVERVIEW },
-    { "tabsToLinksPref", IDS_OPTIONS_TABS_TO_LINKS_PREF },
-    { "themesGallery", IDS_THEMES_GALLERY_BUTTON },
-    { "themesGalleryURL", IDS_THEMES_GALLERY_URL },
-    { "themesReset", IDS_THEMES_RESET_BUTTON },
-    { "toolbarShowBookmarksBar", IDS_OPTIONS_TOOLBAR_SHOW_BOOKMARKS_BAR },
-    { "toolbarShowHomeButton", IDS_OPTIONS_TOOLBAR_SHOW_HOME_BUTTON },
-    { "translateEnableTranslate",
-      IDS_OPTIONS_TRANSLATE_ENABLE_TRANSLATE },
+    {"linkDoctorPref", IDS_OPTIONS_LINKDOCTOR_PREF},
+    {"manageAutofillSettings", IDS_OPTIONS_MANAGE_AUTOFILL_SETTINGS_LINK},
+    {"manageLanguages", IDS_OPTIONS_TRANSLATE_MANAGE_LANGUAGES},
+    {"managePasswords", IDS_OPTIONS_PASSWORDS_MANAGE_PASSWORDS_LINK},
+    {"metricsReportingResetRestart", IDS_OPTIONS_ENABLE_LOGGING_RESTART},
+    {"networkPredictionEnabledDescription",
+     IDS_NETWORK_PREDICTION_ENABLED_DESCRIPTION},
+    {"passwordManagerEnabled", GetPasswordManagerSettingsStringId(
+                                   ProfileSyncServiceFactory::GetForProfile(
+                                       Profile::FromWebUI(web_ui())))},
+    {"passwordsAndAutofillGroupName",
+     IDS_OPTIONS_PASSWORDS_AND_FORMS_GROUP_NAME},
+    {"privacyClearDataButton", IDS_OPTIONS_PRIVACY_CLEAR_DATA_BUTTON},
+    {"privacyContentSettingsButton",
+     IDS_OPTIONS_PRIVACY_CONTENT_SETTINGS_BUTTON},
+    {"profileAddPersonEnable", IDS_PROFILE_ADD_PERSON_ENABLE},
+    {"profileBrowserGuestEnable", IDS_PROFILE_BROWSER_GUEST_ENABLE},
+    {"profilesCreate", IDS_PROFILES_CREATE_BUTTON_LABEL},
+    {"profilesDelete", IDS_PROFILES_DELETE_BUTTON_LABEL},
+    {"profilesDeleteSingle", IDS_PROFILES_DELETE_SINGLE_BUTTON_LABEL},
+    {"profilesListItemCurrent", IDS_PROFILES_LIST_ITEM_CURRENT},
+    {"profilesManage", IDS_PROFILES_MANAGE_BUTTON_LABEL},
+    {"profilesSingleUser", IDS_PROFILES_SINGLE_USER_MESSAGE, IDS_PRODUCT_NAME},
+    {"proxiesLabelExtension", IDS_OPTIONS_EXTENSION_PROXIES_LABEL},
+    {"proxiesLabelSystem", IDS_OPTIONS_SYSTEM_PROXIES_LABEL, IDS_PRODUCT_NAME},
+    {"resetProfileSettings", IDS_RESET_PROFILE_SETTINGS_BUTTON},
+    {"resetProfileSettingsDescription", IDS_RESET_PROFILE_SETTINGS_DESCRIPTION},
+    {"resetProfileSettingsSectionTitle",
+     IDS_RESET_PROFILE_SETTINGS_SECTION_TITLE},
+    {"safeBrowsingEnableProtection", IDS_OPTIONS_SAFEBROWSING_ENABLEPROTECTION},
+    {"sectionTitleAppearance", IDS_APPEARANCE_GROUP_NAME},
+    {"sectionTitleDefaultBrowser", IDS_OPTIONS_DEFAULTBROWSER_GROUP_NAME},
+    {"sectionTitleProxy", IDS_OPTIONS_PROXY_GROUP_NAME},
+    {"sectionTitleSearch", IDS_OPTIONS_DEFAULTSEARCH_GROUP_NAME},
+    {"sectionTitleStartup", IDS_OPTIONS_STARTUP_GROUP_NAME},
+    {"sectionTitleSync", IDS_SYNC_OPTIONS_GROUP_NAME},
+    {"sectionTitleUsers", IDS_PROFILES_OPTIONS_GROUP_NAME},
+    {"settingsTitle", IDS_SETTINGS_TITLE},
+    {"showAdvancedSettings", IDS_SETTINGS_SHOW_ADVANCED_SETTINGS},
+    {"spellingConfirmDisable", IDS_CONTENT_CONTEXT_SPELLING_BUBBLE_DISABLE},
+    {"spellingConfirmEnable", IDS_CONTENT_CONTEXT_SPELLING_BUBBLE_ENABLE},
+    {"spellingConfirmMessage", IDS_CONTENT_CONTEXT_SPELLING_BUBBLE_TEXT},
+    {"spellingPref", IDS_OPTIONS_SPELLING_PREF},
+    {"startupRestoreLastSession", IDS_OPTIONS_STARTUP_RESTORE_LAST_SESSION},
+    {"startupSetPages", IDS_OPTIONS_STARTUP_SET_PAGES},
+    {"startupShowNewTab", IDS_OPTIONS_STARTUP_SHOW_NEWTAB},
+    {"startupShowPages", IDS_OPTIONS_STARTUP_SHOW_PAGES},
+    {"suggestPref", IDS_OPTIONS_SUGGEST_PREF},
+    {"supervisedUserLabel", IDS_PROFILES_LIST_LEGACY_SUPERVISED_USER_LABEL},
+    {"syncButtonTextInProgress", IDS_SYNC_NTP_SETUP_IN_PROGRESS},
+    {"syncButtonTextSignIn", IDS_SYNC_START_SYNC_BUTTON_LABEL,
+     IDS_SHORT_PRODUCT_NAME},
+    {"syncButtonTextStop", IDS_SYNC_STOP_SYNCING_BUTTON_LABEL},
+    {"syncOverview", IDS_SYNC_OVERVIEW},
+    {"tabsToLinksPref", IDS_OPTIONS_TABS_TO_LINKS_PREF},
+    {"themesGallery", IDS_THEMES_GALLERY_BUTTON},
+    {"themesGalleryURL", IDS_THEMES_GALLERY_URL},
+    {"themesReset", IDS_THEMES_RESET_BUTTON},
+    {"toolbarShowBookmarksBar", IDS_OPTIONS_TOOLBAR_SHOW_BOOKMARKS_BAR},
+    {"toolbarShowHomeButton", IDS_OPTIONS_TOOLBAR_SHOW_HOME_BUTTON},
+    {"translateEnableTranslate", IDS_OPTIONS_TRANSLATE_ENABLE_TRANSLATE},
 #if defined(OS_CHROMEOS)
-    { "accessibilityAlwaysShowMenu",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SHOULD_ALWAYS_SHOW_MENU },
-    { "accessibilityAutoclick",
-       IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DESCRIPTION },
-    { "accessibilityAutoclickDropdown",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DROPDOWN_DESCRIPTION },
-    { "accessibilityCaretHighlight",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_CARET_HIGHLIGHT_DESCRIPTION },
-    { "accessibilityCursorHighlight",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_CURSOR_HIGHLIGHT_DESCRIPTION },
-    { "accessibilityExplanation",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_EXPLANATION },
-    { "accessibilityFocusHighlight",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_FOCUS_HIGHLIGHT_DESCRIPTION },
-    { "accessibilityHighContrast",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_HIGH_CONTRAST_DESCRIPTION },
-    { "accessibilityLargeCursor",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_LARGE_CURSOR_DESCRIPTION },
-    { "accessibilityScreenMagnifier",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_DESCRIPTION },
-    { "accessibilityScreenMagnifierCenterFocus",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_CENTER_FOCUS },
-    { "accessibilityScreenMagnifierFull",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_FULL },
-    { "accessibilityScreenMagnifierOff",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_OFF },
-    { "accessibilityScreenMagnifierPartial",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_PARTIAL },
-    { "accessibilitySelectToSpeak",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION },
-    { "accessibilitySettings",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SETTINGS },
-    { "accessibilitySpokenFeedback",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SPOKEN_FEEDBACK_DESCRIPTION },
-    { "accessibilityStickyKeys",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_STICKY_KEYS_DESCRIPTION },
-    { "accessibilitySwitchAccess",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_DESCRIPTION },
-    { "accessibilityTapDragging",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_TOUCHPAD_TAP_DRAGGING_DESCRIPTION },
-    { "accessibilityVirtualKeyboard",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_VIRTUAL_KEYBOARD_DESCRIPTION },
-    { "accessibilityMonoAudio",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_MONO_AUDIO_DESCRIPTION},
-    { "androidAppsTitle", IDS_OPTIONS_ARC_TITLE },
-    { "androidAppsEnabled", IDS_OPTIONS_ARC_ENABLE },
-    { "androidAppsSettingsLabel", IDS_OPTIONS_ARC_MANAGE_APPS },
-    { "arcOptOutConfirmOverlayTabTitle", IDS_ARC_OPT_OUT_TAB_TITLE },
-    { "arcOptOutDialogHeader", IDS_ARC_OPT_OUT_DIALOG_HEADER },
-    { "arcOptOutDialogDescription", IDS_ARC_OPT_OUT_DIALOG_DESCRIPTION },
-    { "arcOptOutDialogButtonConfirmDisable",
-      IDS_ARC_OPT_OUT_DIALOG_BUTTON_CONFIRM_DISABLE },
-    { "arcOptOutDialogButtonCancel", IDS_ARC_OPT_OUT_DIALOG_BUTTON_CANCEL },
-    { "autoclickDelayExtremelyShort",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_EXTREMELY_SHORT },
-    { "autoclickDelayLong",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_LONG },
-    { "autoclickDelayShort",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_SHORT },
-    { "autoclickDelayVeryLong",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_VERY_LONG },
-    { "autoclickDelayVeryShort",
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_VERY_SHORT },
-    { "changePicture", IDS_OPTIONS_CHANGE_PICTURE },
-    { "changePictureCaption", IDS_OPTIONS_CHANGE_PICTURE_CAPTION },
-    { "consumerManagementDescription",
-      IDS_OPTIONS_CONSUMER_MANAGEMENT_DESCRIPTION },
-    { "consumerManagementEnrollButton",
-      IDS_OPTIONS_CONSUMER_MANAGEMENT_ENROLL_BUTTON },
-    { "consumerManagementEnrollingButton",
-      IDS_OPTIONS_CONSUMER_MANAGEMENT_ENROLLING_BUTTON },
-    { "consumerManagementUnenrollButton",
-      IDS_OPTIONS_CONSUMER_MANAGEMENT_UNENROLL_BUTTON },
-    { "consumerManagementUnenrollingButton",
-      IDS_OPTIONS_CONSUMER_MANAGEMENT_UNENROLLING_BUTTON },
-    { "datetimeTitle", IDS_OPTIONS_SETTINGS_SECTION_TITLE_DATETIME },
-    { "deviceControlTitle", IDS_OPTIONS_DEVICE_CONTROL_SECTION_TITLE },
-    { "deviceGroupDescription", IDS_OPTIONS_DEVICE_GROUP_DESCRIPTION },
-    { "deviceGroupPointer", IDS_OPTIONS_DEVICE_GROUP_POINTER_SECTION },
-    { "disableGData", IDS_OPTIONS_DISABLE_GDATA },
-    { "displayOptions", IDS_OPTIONS_SETTINGS_DISPLAY_OPTIONS_BUTTON_LABEL },
-    { "enableContentProtectionAttestation",
-      IDS_OPTIONS_ENABLE_CONTENT_PROTECTION_ATTESTATION },
-    { "enableScreenlock", IDS_OPTIONS_ENABLE_SCREENLOCKER_CHECKBOX },
-    { "factoryResetDataRestart", IDS_RELAUNCH_BUTTON },
-    { "factoryResetDescription", IDS_OPTIONS_FACTORY_RESET_DESCRIPTION,
-      IDS_SHORT_PRODUCT_NAME },
-    { "factoryResetHeading", IDS_OPTIONS_FACTORY_RESET_HEADING },
-    { "factoryResetHelpUrl", IDS_FACTORY_RESET_HELP_URL },
-    { "factoryResetRestart", IDS_OPTIONS_FACTORY_RESET_BUTTON },
-    { "factoryResetTitle", IDS_OPTIONS_FACTORY_RESET },
-    { "factoryResetWarning", IDS_OPTIONS_FACTORY_RESET_WARNING },
-    { "internetOptionsButtonTitle", IDS_OPTIONS_INTERNET_OPTIONS_BUTTON_TITLE },
-    { "keyboardSettingsButtonTitle",
-      IDS_OPTIONS_DEVICE_GROUP_KEYBOARD_SETTINGS_BUTTON_TITLE },
-    { "manageAccountsButtonTitle", IDS_OPTIONS_ACCOUNTS_BUTTON_TITLE },
-    { "mouseSpeed", IDS_OPTIONS_SETTINGS_MOUSE_SPEED_DESCRIPTION },
-    { "noPointingDevices", IDS_OPTIONS_NO_POINTING_DEVICES },
-    { "powerSettingsButton",
-      IDS_OPTIONS_DEVICE_GROUP_POWER_SETTINGS_BUTTON },
-    { "resolveTimezoneByGeoLocation",
-      IDS_OPTIONS_RESOLVE_TIMEZONE_BY_GEOLOCATION_DESCRIPTION },
-    { "sectionTitleDevice", IDS_OPTIONS_DEVICE_GROUP_NAME },
-    { "sectionTitleInternet", IDS_OPTIONS_INTERNET_OPTIONS_GROUP_LABEL },
-    { "storageManagerButtonTitle",
-      IDS_OPTIONS_DEVICE_GROUP_STORAGE_MANAGER_BUTTON_TITLE },
-    { "syncButtonTextStart", IDS_SYNC_SETUP_BUTTON_LABEL },
-    { "thirdPartyImeConfirmDisable", IDS_CANCEL },
-    { "thirdPartyImeConfirmEnable", IDS_OK },
-    { "thirdPartyImeConfirmMessage",
-      IDS_OPTIONS_SETTINGS_LANGUAGES_THIRD_PARTY_WARNING_MESSAGE },
-    { "timezone", IDS_OPTIONS_SETTINGS_TIMEZONE_DESCRIPTION },
-    { "touchpadSpeed", IDS_OPTIONS_SETTINGS_TOUCHPAD_SPEED_DESCRIPTION },
-    { "use24HourClock", IDS_OPTIONS_SETTINGS_USE_24HOUR_CLOCK_DESCRIPTION },
-    { "wakeOnWifiLabel", IDS_OPTIONS_SETTINGS_WAKE_ON_WIFI_DESCRIPTION },
+    {"accessibilityAlwaysShowMenu",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SHOULD_ALWAYS_SHOW_MENU},
+    {"accessibilityAutoclick",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DESCRIPTION},
+    {"accessibilityAutoclickDropdown",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DROPDOWN_DESCRIPTION},
+    {"accessibilityCaretHighlight",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_CARET_HIGHLIGHT_DESCRIPTION},
+    {"accessibilityCursorHighlight",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_CURSOR_HIGHLIGHT_DESCRIPTION},
+    {"accessibilityExplanation",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_EXPLANATION},
+    {"accessibilityFocusHighlight",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_FOCUS_HIGHLIGHT_DESCRIPTION},
+    {"accessibilityHighContrast",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_HIGH_CONTRAST_DESCRIPTION},
+    {"accessibilityLargeCursor",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_LARGE_CURSOR_DESCRIPTION},
+    {"accessibilityScreenMagnifier",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_DESCRIPTION},
+    {"accessibilityScreenMagnifierCenterFocus",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_CENTER_FOCUS},
+    {"accessibilityScreenMagnifierFull",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_FULL},
+    {"accessibilityScreenMagnifierOff",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_OFF},
+    {"accessibilityScreenMagnifierPartial",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_PARTIAL},
+    {"accessibilitySelectToSpeak",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION},
+    {"accessibilitySettings", IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SETTINGS},
+    {"accessibilitySpokenFeedback",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SPOKEN_FEEDBACK_DESCRIPTION},
+    {"accessibilityStickyKeys",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_STICKY_KEYS_DESCRIPTION},
+    {"accessibilitySwitchAccess",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_DESCRIPTION},
+    {"accessibilityTalkBackSettings",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_TALKBACK_SETTINGS},
+    {"accessibilityTapDragging",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_TOUCHPAD_TAP_DRAGGING_DESCRIPTION},
+    {"accessibilityVirtualKeyboard",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_VIRTUAL_KEYBOARD_DESCRIPTION},
+    {"accessibilityMonoAudio",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_MONO_AUDIO_DESCRIPTION},
+    {"advancedSectionTitleCupsPrint",
+     IDS_OPTIONS_ADVANCED_SECTION_TITLE_CUPS_PRINT},
+    {"androidAppsTitle", IDS_OPTIONS_ARC_TITLE},
+    {"androidAppsEnabled", IDS_OPTIONS_ARC_ENABLE},
+    {"androidAppsSettingsLabel", IDS_OPTIONS_ARC_MANAGE_APPS},
+    {"arcOptOutConfirmOverlayTabTitle", IDS_ARC_OPT_OUT_TAB_TITLE},
+    {"arcOptOutDialogHeader", IDS_ARC_OPT_OUT_DIALOG_HEADER},
+    {"arcOptOutDialogDescription", IDS_ARC_OPT_OUT_DIALOG_DESCRIPTION},
+    {"arcOptOutDialogButtonConfirmDisable",
+     IDS_ARC_OPT_OUT_DIALOG_BUTTON_CONFIRM_DISABLE},
+    {"arcOptOutDialogButtonCancel", IDS_ARC_OPT_OUT_DIALOG_BUTTON_CANCEL},
+    {"autoclickDelayExtremelyShort",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_EXTREMELY_SHORT},
+    {"autoclickDelayLong",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_LONG},
+    {"autoclickDelayShort",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_SHORT},
+    {"autoclickDelayVeryLong",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_VERY_LONG},
+    {"autoclickDelayVeryShort",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUTOCLICK_DELAY_VERY_SHORT},
+    {"changePicture", IDS_OPTIONS_CHANGE_PICTURE},
+    {"changePictureCaption", IDS_OPTIONS_CHANGE_PICTURE_CAPTION},
+    {"cupsPrintOptionLabel", IDS_OPTIONS_ADVANCED_SECTION_CUPS_PRINT_LABEL},
+    {"cupsPrintersManageButton",
+     IDS_OPTIONS_ADVANCED_SECTION_CUPS_PRINT_MANAGE_BUTTON},
+    {"datetimeTitle", IDS_OPTIONS_SETTINGS_SECTION_TITLE_DATETIME},
+    {"deviceGroupDescription", IDS_OPTIONS_DEVICE_GROUP_DESCRIPTION},
+    {"deviceGroupPointer", IDS_OPTIONS_DEVICE_GROUP_POINTER_SECTION},
+    {"disableGData", IDS_OPTIONS_DISABLE_GDATA},
+    {"displayOptions", IDS_OPTIONS_SETTINGS_DISPLAY_OPTIONS_BUTTON_LABEL},
+    {"enableContentProtectionAttestation",
+     IDS_OPTIONS_ENABLE_CONTENT_PROTECTION_ATTESTATION},
+    {"manageScreenlock", IDS_OPTIONS_MANAGE_SCREENLOCKER},
+    {"factoryResetDataRestart", IDS_RELAUNCH_BUTTON},
+    {"factoryResetDescription", IDS_OPTIONS_FACTORY_RESET_DESCRIPTION,
+     IDS_SHORT_PRODUCT_NAME},
+    {"factoryResetHeading", IDS_OPTIONS_FACTORY_RESET_HEADING},
+    {"factoryResetHelpUrl", IDS_FACTORY_RESET_HELP_URL},
+    {"factoryResetRestart", IDS_OPTIONS_FACTORY_RESET_BUTTON},
+    {"factoryResetTitle", IDS_OPTIONS_FACTORY_RESET},
+    {"factoryResetWarning", IDS_OPTIONS_FACTORY_RESET_WARNING},
+    {"internetOptionsButtonTitle", IDS_OPTIONS_INTERNET_OPTIONS_BUTTON_TITLE},
+    {"keyboardSettingsButtonTitle",
+     IDS_OPTIONS_DEVICE_GROUP_KEYBOARD_SETTINGS_BUTTON_TITLE},
+    {"manageAccountsButtonTitle", IDS_OPTIONS_ACCOUNTS_BUTTON_TITLE},
+    {"mouseSpeed", IDS_OPTIONS_SETTINGS_MOUSE_SPEED_DESCRIPTION},
+    {"noPointingDevices", IDS_OPTIONS_NO_POINTING_DEVICES},
+    {"confirm", IDS_CONFIRM},
+    {"configureFingerprintTitle", IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_TITLE},
+    {"configureFingerprintInstructionLocateScannerStep",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_INSTRUCTION_LOCATE_SCANNER},
+    {"configureFingerprintInstructionMoveFingerStep",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_INSTRUCTION_MOVE_FINGER},
+    {"configureFingerprintInstructionReadyStep",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_INSTRUCTION_READY},
+    {"configureFingerprintLiftFinger",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_LIFT_FINGER},
+    {"configureFingerprintPartialData",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_PARTIAL_DATA},
+    {"configureFingerprintInsufficientData",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_INSUFFICIENT_DATA},
+    {"configureFingerprintSensorDirty",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_SENSOR_DIRTY},
+    {"configureFingerprintTooSlow",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_FINGER_TOO_SLOW},
+    {"configureFingerprintTooFast",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_FINGER_TOO_FAST},
+    {"configureFingerprintCancelButton",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_CANCEL_BUTTON},
+    {"configureFingerprintDoneButton",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_DONE_BUTTON},
+    {"configureFingerprintAddAnotherButton",
+     IDS_SETTINGS_ADD_FINGERPRINT_DIALOG_ADD_ANOTHER_BUTTON},
+    {"configurePinChoosePinTitle",
+     IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_CHOOSE_PIN_TITLE},
+    {"configurePinConfirmPinTitle",
+     IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_CONFIRM_PIN_TITLE},
+    {"configurePinContinueButton",
+     IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_CONTINUE_BUTTON},
+    {"configurePinMismatched", IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_MISMATCHED},
+    {"configurePinTooShort", IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_TOO_SHORT},
+    {"configurePinTooLong", IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_TOO_LONG},
+    {"configurePinWeakPin", IDS_SETTINGS_PEOPLE_CONFIGURE_PIN_WEAK_PIN},
+    {"lockScreenAddFingerprint",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_ADD_FINGERPRINT_BUTTON},
+    {"lockScreenChangePinButton",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_CHANGE_PIN_BUTTON},
+    {"lockScreenEditFingerprints",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_EDIT_FINGERPRINTS},
+    {"lockScreenEditFingerprintsDescription",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_EDIT_FINGERPRINTS_DESCRIPTION},
+    {"lockScreenNumberFingerprints",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_NUM_FINGERPRINTS},
+    {"lockScreenFingerprintEnable",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_ENABLE_FINGERPRINT_CHECKBOX_LABEL},
+    {"lockScreenFingerprintNewName",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_NEW_FINGERPRINT_DEFAULT_NAME},
+    {"lockScreenFingerprintTitle",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_FINGERPRINT_SUBPAGE_TITLE},
+    {"lockScreenFingerprintWarning",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_FINGERPRINT_LESS_SECURE},
+    {"lockScreenNone", IDS_SETTINGS_PEOPLE_LOCK_SCREEN_NONE},
+    {"lockScreenPasswordOnly", IDS_SETTINGS_PEOPLE_LOCK_SCREEN_PASSWORD_ONLY},
+    {"lockScreenPinOrPassword",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_PIN_OR_PASSWORD},
+    {"lockScreenRegisteredFingerprints",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_REGISTERED_FINGERPRINTS_LABEL},
+    {"lockScreenSetupPinButton",
+     IDS_SETTINGS_PEOPLE_LOCK_SCREEN_SETUP_PIN_BUTTON},
+    {"lockScreenTitle", IDS_SETTINGS_PEOPLE_LOCK_SCREEN_TITLE},
+    {"passwordPromptEnterPassword",
+     IDS_SETTINGS_PEOPLE_PASSWORD_PROMPT_ENTER_PASSWORD},
+    {"passwordPromptInvalidPassword",
+     IDS_SETTINGS_PEOPLE_PASSWORD_PROMPT_INVALID_PASSWORD},
+    {"passwordPromptPasswordLabel",
+     IDS_SETTINGS_PEOPLE_PASSWORD_PROMPT_PASSWORD_LABEL},
+    {"passwordPromptTitle", IDS_SETTINGS_PEOPLE_PASSWORD_PROMPT_TITLE},
+    {"pinKeyboardPlaceholderPin", IDS_PIN_KEYBOARD_HINT_TEXT_PIN},
+    {"pinKeyboardPlaceholderPinPassword",
+     IDS_PIN_KEYBOARD_HINT_TEXT_PIN_PASSWORD},
+    {"pinKeyboardDeleteAccessibleName",
+     IDS_LOGIN_POD_PASSWORD_FIELD_ACCESSIBLE_NAME},
+    {"powerSettingsButton", IDS_OPTIONS_DEVICE_GROUP_POWER_SETTINGS_BUTTON},
+    {"resolveTimezoneByGeoLocation",
+     IDS_OPTIONS_RESOLVE_TIMEZONE_BY_GEOLOCATION_DESCRIPTION},
+    {"sectionTitleDevice", IDS_OPTIONS_DEVICE_GROUP_NAME},
+    {"sectionTitleInternet", IDS_OPTIONS_INTERNET_OPTIONS_GROUP_LABEL},
+    {"storageManagerButtonTitle",
+     IDS_OPTIONS_DEVICE_GROUP_STORAGE_MANAGER_BUTTON_TITLE},
+    {"syncButtonTextStart", IDS_SYNC_SETUP_BUTTON_LABEL},
+    {"thirdPartyImeConfirmDisable", IDS_CANCEL},
+    {"thirdPartyImeConfirmEnable", IDS_OK},
+    {"thirdPartyImeConfirmMessage",
+     IDS_OPTIONS_SETTINGS_LANGUAGES_THIRD_PARTY_WARNING_MESSAGE},
+    {"timezone", IDS_OPTIONS_SETTINGS_TIMEZONE_DESCRIPTION},
+    {"touchpadSpeed", IDS_OPTIONS_SETTINGS_TOUCHPAD_SPEED_DESCRIPTION},
+    {"use24HourClock", IDS_OPTIONS_SETTINGS_USE_24HOUR_CLOCK_DESCRIPTION},
+    {"wakeOnWifiLabel", IDS_OPTIONS_SETTINGS_WAKE_ON_WIFI_DESCRIPTION},
 #else
-    { "gpuModeCheckbox",
-      IDS_OPTIONS_SYSTEM_ENABLE_HARDWARE_ACCELERATION_MODE },
-    { "gpuModeResetRestart",
-      IDS_OPTIONS_SYSTEM_ENABLE_HARDWARE_ACCELERATION_MODE_RESTART },
-    { "proxiesConfigureButton", IDS_OPTIONS_PROXIES_CONFIGURE_BUTTON },
-    { "syncButtonTextStart", IDS_SYNC_SETUP_BUTTON_LABEL },
+    {"gpuModeCheckbox", IDS_OPTIONS_SYSTEM_ENABLE_HARDWARE_ACCELERATION_MODE},
+    {"gpuModeResetRestart",
+     IDS_OPTIONS_SYSTEM_ENABLE_HARDWARE_ACCELERATION_MODE_RESTART},
+    {"proxiesConfigureButton", IDS_OPTIONS_PROXIES_CONFIGURE_BUTTON},
+    {"syncButtonTextStart", IDS_SYNC_SETUP_BUTTON_LABEL},
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-    { "showWindowDecorations", IDS_SHOW_WINDOW_DECORATIONS },
-    { "themesNativeButton", IDS_THEMES_GTK_BUTTON },
-    { "themesSetClassic", IDS_THEMES_SET_CLASSIC },
+    {"showWindowDecorations", IDS_SHOW_WINDOW_DECORATIONS},
+    {"themesNativeButton", IDS_THEMES_GTK_BUTTON},
+    {"themesSetClassic", IDS_THEMES_SET_CLASSIC},
 #else
-    { "themes", IDS_THEMES_GROUP_NAME },
+    {"themes", IDS_THEMES_GROUP_NAME},
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
-#if defined(OS_CHROMEOS) && defined(USE_ASH)
-    { "setWallpaper", IDS_SET_WALLPAPER_BUTTON },
-#endif  // defined(OS_CHROMEOS) && defined(USE_ASH)
+#if defined(OS_CHROMEOS)
+    {"setWallpaper", IDS_SET_WALLPAPER_BUTTON},
+#endif  // defined(OS_CHROMEOS)
 
 #if !defined(OS_MACOSX) && !defined(OS_CHROMEOS)
-    { "backgroundModeCheckbox", IDS_OPTIONS_SYSTEM_ENABLE_BACKGROUND_MODE },
+    {"backgroundModeCheckbox", IDS_OPTIONS_SYSTEM_ENABLE_BACKGROUND_MODE},
 #endif  // defined(OS_MACOSX) && !defined(OS_CHROMEOS)
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
-    { "cloudPrintDevicesPageButton", IDS_LOCAL_DISCOVERY_DEVICES_PAGE_BUTTON },
-    { "cloudPrintEnableNotificationsLabel",
-      IDS_LOCAL_DISCOVERY_NOTIFICATIONS_ENABLE_CHECKBOX_LABEL },
-#endif  // defined(ENABLE_SERVICE_DISCOVERY)
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+    {"cloudPrintDevicesPageButton", IDS_LOCAL_DISCOVERY_DEVICES_PAGE_BUTTON},
+    {"cloudPrintEnableNotificationsLabel",
+     IDS_LOCAL_DISCOVERY_NOTIFICATIONS_ENABLE_CHECKBOX_LABEL},
+#endif
   };
 
   RegisterStrings(values, resources, arraysize(resources));
@@ -544,10 +620,17 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
                 IDS_OPTIONS_ENABLE_DO_NOT_TRACK_BUBBLE_TITLE);
   RegisterTitle(values, "spellingConfirmOverlay",
                 IDS_CONTENT_CONTEXT_SPELLING_ASK_GOOGLE);
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   RegisterCloudPrintValues(values);
 #endif
 
+  Profile* profile = Profile::FromWebUI(web_ui());
+  values->SetString(
+      "safeBrowsingEnableExtendedReporting",
+      l10n_util::GetStringUTF16(safe_browsing::ChooseOptInTextResource(
+          *profile->GetPrefs(),
+          IDS_OPTIONS_SAFEBROWSING_ENABLE_EXTENDED_REPORTING,
+          IDS_OPTIONS_SAFEBROWSING_ENABLE_SCOUT_REPORTING)));
   values->SetString("syncLearnMoreURL", chrome::kSyncLearnMoreURL);
   base::string16 omnibox_url = base::ASCIIToUTF16(chrome::kOmniboxLearnMoreURL);
   values->SetString(
@@ -566,13 +649,12 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
           supervised_user_dashboard));
 
 #if defined(OS_CHROMEOS)
-  Profile* profile = Profile::FromWebUI(web_ui());
   std::string username = profile->GetProfileUserName();
   if (username.empty()) {
     const user_manager::User* user =
         chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
     if (user && (user->GetType() != user_manager::USER_TYPE_GUEST))
-      username = user->email();
+      username = user->GetAccountId().GetUserEmail();
   }
   if (!username.empty())
     username = gaia::SanitizeEmail(gaia::CanonicalizeEmail(username));
@@ -580,7 +662,7 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
   values->SetString("username", username);
 #endif
   // Pass along sync status early so it will be available during page init.
-  values->Set("syncData", GetSyncStateDictionary().release());
+  values->Set("syncData", GetSyncStateDictionary());
 
   values->SetString("privacyLearnMoreURL", chrome::kPrivacyLearnMoreURL);
 
@@ -593,7 +675,7 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
 #if defined(OS_CHROMEOS)
   // TODO(pastarmovj): replace this with a call to the CrosSettings list
   // handling functionality to come.
-  values->Set("timezoneList", chromeos::system::GetTimezoneList().release());
+  values->Set("timezoneList", chromeos::system::GetTimezoneList());
 
   values->SetString("accessibilityLearnMoreURL",
                     chrome::kChromeAccessibilityHelpURL);
@@ -615,16 +697,17 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
   option_full->AppendInteger(ash::MAGNIFIER_FULL);
   option_full->AppendString(l10n_util::GetStringUTF16(
       IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_FULL));
-  magnifier_list->Append(option_full.release());
+  magnifier_list->Append(std::move(option_full));
 
   std::unique_ptr<base::ListValue> option_partial(new base::ListValue);
   option_partial->AppendInteger(ash::MAGNIFIER_PARTIAL);
-  option_partial->Append(new base::StringValue(l10n_util::GetStringUTF16(
-      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_PARTIAL)));
-  magnifier_list->Append(option_partial.release());
+  option_partial->AppendString(l10n_util::GetStringUTF16(
+      IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SCREEN_MAGNIFIER_PARTIAL));
+  magnifier_list->Append(std::move(option_partial));
 
-  values->Set("magnifierList", magnifier_list.release());
-#endif
+  values->Set("magnifierList", std::move(magnifier_list));
+  values->SetBoolean("enablePolymerPreload", g_enable_polymer_preload);
+#endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_MACOSX)
   values->SetString("macPasswordsWarning",
@@ -634,20 +717,16 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
 #endif
 
   if (ShouldShowMultiProfilesUserList())
-    values->Set("profilesInfo", GetProfilesInfoList().release());
+    values->Set("profilesInfo", GetProfilesInfoList());
 
-  // Profile deletion is not allowed for any users using Metro mode.
+  // Profile deletion is not allowed for any users in ChromeOS.
   bool allow_deletion = true;
-#if defined(USE_ASH)
+#if defined(OS_CHROMEOS)
   allow_deletion = allow_deletion && !ash::Shell::HasInstance();
 #endif
   values->SetBoolean("allowProfileDeletion", allow_deletion);
-
-  values->SetBoolean("profileIsGuest",
-                     Profile::FromWebUI(web_ui())->IsOffTheRecord());
-
-  values->SetBoolean("profileIsSupervised",
-                     Profile::FromWebUI(web_ui())->IsSupervised());
+  values->SetBoolean("profileIsGuest", profile->IsOffTheRecord());
+  values->SetBoolean("profileIsSupervised", profile->IsSupervised());
 
 #if !defined(OS_CHROMEOS)
   values->SetBoolean(
@@ -655,7 +734,14 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
       g_browser_process->gpu_mode_manager()->initial_gpu_mode_pref());
 #endif
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
+#if defined(OS_CHROMEOS)
+  values->SetBoolean("cupsPrintDisabled",
+                     base::CommandLine::ForCurrentProcess()->HasSwitch(
+                         ::switches::kDisableNativeCups));
+  values->SetString("cupsPrintLearnMoreURL", chrome::kCrosPrintingLearnMoreURL);
+#endif  // defined(OS_CHROMEOS)
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   values->SetBoolean("cloudPrintHideNotificationsCheckbox",
                      !cloud_print::PrivetNotificationService::IsEnabled());
 #endif
@@ -669,18 +755,13 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
                     chrome::kLanguageSettingsLearnMoreUrl);
 
   values->SetBoolean(
-      "easyUnlockAllowed",
-      EasyUnlockService::Get(Profile::FromWebUI(web_ui()))->IsAllowed());
+      "easyUnlockAllowed", EasyUnlockService::Get(profile)->IsAllowed());
   values->SetString("easyUnlockLearnMoreURL", chrome::kEasyUnlockLearnMoreUrl);
   values->SetBoolean("easyUnlockProximityDetectionAllowed",
                      base::CommandLine::ForCurrentProcess()->HasSwitch(
                          proximity_auth::switches::kEnableProximityDetection));
 
 #if defined(OS_CHROMEOS)
-  values->SetBoolean("consumerManagementEnabled",
-                     base::CommandLine::ForCurrentProcess()->HasSwitch(
-                         chromeos::switches::kEnableConsumerManagement));
-
   RegisterTitle(values, "thirdPartyImeConfirmOverlay",
                 IDS_OPTIONS_SETTINGS_LANGUAGES_THIRD_PARTY_WARNING_TITLE);
   values->SetBoolean("usingNewProfilesUI", false);
@@ -697,15 +778,10 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
       "showWakeOnWifi",
       chromeos::WakeOnWifiManager::Get()->WakeOnWifiSupported() &&
       chromeos::switches::WakeOnWifiEnabled());
-  const bool have_disable_time_zone_tracking_option_switch =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kDisableTimeZoneTrackingOption);
   values->SetBoolean("enableTimeZoneTrackingOption",
-                     !have_disable_time_zone_tracking_option_switch &&
-                         !chromeos::system::HasSystemTimezonePolicy());
+                     !chromeos::system::HasSystemTimezonePolicy());
   values->SetBoolean("resolveTimezoneByGeolocationInitialValue",
-                     Profile::FromWebUI(web_ui())->GetPrefs()->GetBoolean(
-                         prefs::kResolveTimezoneByGeolocation));
+      profile->GetPrefs()->GetBoolean(prefs::kResolveTimezoneByGeolocation));
   values->SetBoolean("enableLanguageOptionsImeMenu",
                      base::FeatureList::IsEnabled(features::kOptInImeMenu));
   values->SetBoolean(
@@ -718,13 +794,31 @@ void BrowserOptionsHandler::GetLocalizedValues(base::DictionaryValue* values) {
   cros_settings->GetBoolean(chromeos::kAllowBluetooth, &allow_bluetooth);
   values->SetBoolean("allowBluetooth", allow_bluetooth);
 
-  values->SetBoolean("enableStorageManager",
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kDisableStorageManager));
+  values->SetBoolean("showQuickUnlockSettings",
+                     chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs()));
+  values->SetBoolean("fingerprintUnlockEnabled",
+                     chromeos::quick_unlock::IsFingerprintEnabled());
+  values->SetBoolean("pinUnlockEnabled",
+                     chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs()));
+  if (chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs())) {
+    values->SetString(
+        "enableScreenlock",
+        l10n_util::GetStringUTF16(
+            IDS_OPTIONS_ENABLE_SCREENLOCKER_CHECKBOX_WITH_QUICK_UNLOCK));
+  } else {
+    values->SetString(
+        "enableScreenlock",
+        l10n_util::GetStringUTF16(IDS_OPTIONS_ENABLE_SCREENLOCKER_CHECKBOX));
+  }
+  // Format numbers to be used on the pin keyboard.
+  for (int j = 0; j <= 9; ++j) {
+    values->SetString("pinKeyboard" + base::IntToString(j),
+                      base::FormatNumber(int64_t{j}));
+  }
 #endif
 }
 
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 void BrowserOptionsHandler::RegisterCloudPrintValues(
     base::DictionaryValue* values) {
   values->SetString("cloudPrintOptionLabel",
@@ -732,7 +826,7 @@ void BrowserOptionsHandler::RegisterCloudPrintValues(
                         IDS_CLOUD_PRINT_CHROMEOS_OPTION_LABEL,
                         l10n_util::GetStringUTF16(IDS_GOOGLE_CLOUD_PRINT)));
 }
-#endif  // defined(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 void BrowserOptionsHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -800,6 +894,18 @@ void BrowserOptionsHandler::RegisterMessages() {
       "showAndroidAppsSettings",
       base::Bind(&BrowserOptionsHandler::ShowAndroidAppsSettings,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "showPlayStoreApps",
+      base::Bind(&BrowserOptionsHandler::ShowPlayStoreApps,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "showAccessibilityTalkBackSettings",
+      base::Bind(&BrowserOptionsHandler::ShowAccessibilityTalkBackSettings,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "showCupsPrintDevicesPage",
+      base::Bind(&BrowserOptionsHandler::ShowCupsPrintDevicesPage,
+                 base::Unretained(this)));
 #else
   web_ui()->RegisterMessageCallback(
       "becomeDefaultBrowser",
@@ -815,7 +921,7 @@ void BrowserOptionsHandler::RegisterMessages() {
                  base::Unretained(this)));
 #endif  // defined(OS_CHROMEOS)
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   if (cloud_print_mdns_ui_enabled_) {
     web_ui()->RegisterMessageCallback(
         "showCloudPrintDevicesPage",
@@ -853,6 +959,11 @@ void BrowserOptionsHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback("metricsReportingCheckboxChanged",
       base::Bind(&BrowserOptionsHandler::HandleMetricsReportingChange,
                  base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
+      "safeBrowsingExtendedReportingAction",
+      base::Bind(&BrowserOptionsHandler::HandleSafeBrowsingExtendedReporting,
+                 base::Unretained(this)));
 }
 
 void BrowserOptionsHandler::Uninitialize() {
@@ -863,31 +974,27 @@ void BrowserOptionsHandler::Uninitialize() {
   ExtensionRegistry::Get(Profile::FromWebUI(web_ui()))->RemoveObserver(this);
 #endif
 #if defined(OS_CHROMEOS)
-  policy::ConsumerManagementService* consumer_management =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos()->
-          GetConsumerManagementService();
-  if (consumer_management)
-    consumer_management->RemoveObserver(this);
   ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(
       Profile::FromWebUI(web_ui()));
   if (arc_prefs)
     arc_prefs->RemoveObserver(this);
+  user_manager::UserManager::Get()->RemoveObserver(this);
 #endif
 }
 
-void BrowserOptionsHandler::OnStateChanged() {
+void BrowserOptionsHandler::OnStateChanged(syncer::SyncService* sync) {
   UpdateSyncState();
 }
 
 void BrowserOptionsHandler::GoogleSigninSucceeded(const std::string& account_id,
                                                   const std::string& username,
                                                   const std::string& password) {
-  OnStateChanged();
+  UpdateSyncState();
 }
 
 void BrowserOptionsHandler::GoogleSignedOut(const std::string& account_id,
                                             const std::string& username) {
-  OnStateChanged();
+  UpdateSyncState();
 }
 
 void BrowserOptionsHandler::PageLoadStarted() {
@@ -916,7 +1023,7 @@ void BrowserOptionsHandler::InitializeHandler() {
   g_browser_process->profile_manager()->
       GetProfileAttributesStorage().AddObserver(this);
 
-  ProfileSyncService* sync_service(
+  browser_sync::ProfileSyncService* sync_service(
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile));
   // TODO(blundell): Use a ScopedObserver to observe the PSS so that cleanup on
   // destruction is automatic.
@@ -941,8 +1048,7 @@ void BrowserOptionsHandler::InitializeHandler() {
 #endif
 
 #if defined(OS_CHROMEOS)
-  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_USER_IMAGE_CHANGED,
-                 content::NotificationService::AllSources());
+  user_manager::UserManager::Get()->AddObserver(this);
 #endif
   registrar_.Add(this, chrome::NOTIFICATION_BROWSER_THEME_CHANGED,
                  content::Source<ThemeService>(
@@ -952,11 +1058,11 @@ void BrowserOptionsHandler::InitializeHandler() {
   AddTemplateUrlServiceObserver();
 
 #if defined(OS_WIN)
-  ExtensionRegistry::Get(Profile::FromWebUI(web_ui()))->AddObserver(this);
+  ExtensionRegistry::Get(profile)->AddObserver(this);
 #endif
 
   // No preferences below this point may be modified by guest profiles.
-  if (Profile::FromWebUI(web_ui())->IsGuestSession())
+  if (profile->IsGuestSession())
     return;
 
   auto_open_files_.Init(
@@ -1015,10 +1121,11 @@ void BrowserOptionsHandler::InitializeHandler() {
         base::Bind(&BrowserOptionsHandler::OnWallpaperPolicyChanged,
                    base::Unretained(this)));
   }
-  chromeos::CrosSettings::Get()->AddSettingsObserver(
-      chromeos::kSystemTimezonePolicy,
-      base::Bind(&BrowserOptionsHandler::OnSystemTimezonePolicyChanged,
-                 weak_ptr_factory_.GetWeakPtr()));
+  system_timezone_policy_observer_ =
+      chromeos::CrosSettings::Get()->AddSettingsObserver(
+          chromeos::kSystemTimezonePolicy,
+          base::Bind(&BrowserOptionsHandler::OnSystemTimezonePolicyChanged,
+                     weak_ptr_factory_.GetWeakPtr()));
   local_state_pref_change_registrar_.Init(g_browser_process->local_state());
   local_state_pref_change_registrar_.Add(
       prefs::kSystemTimezoneAutomaticDetectionPolicy,
@@ -1034,6 +1141,15 @@ void BrowserOptionsHandler::InitializeHandler() {
       base::Bind(&BrowserOptionsHandler::SetupProxySettingsSection,
                  base::Unretained(this)));
 #endif  // !defined(OS_CHROMEOS)
+
+  profile_pref_registrar_.Add(
+      prefs::kSafeBrowsingExtendedReportingEnabled,
+      base::Bind(&BrowserOptionsHandler::SetupSafeBrowsingExtendedReporting,
+                 base::Unretained(this)));
+  profile_pref_registrar_.Add(
+      prefs::kSafeBrowsingScoutReportingEnabled,
+      base::Bind(&BrowserOptionsHandler::SetupSafeBrowsingExtendedReporting,
+                 base::Unretained(this)));
 }
 
 void BrowserOptionsHandler::InitializePage() {
@@ -1042,7 +1158,7 @@ void BrowserOptionsHandler::InitializePage() {
   OnTemplateURLServiceChanged();
 
   ObserveThemeChanged();
-  OnStateChanged();
+  UpdateSyncState();
 #if !defined(OS_CHROMEOS)
   UpdateDefaultBrowserState();
 #endif
@@ -1057,6 +1173,7 @@ void BrowserOptionsHandler::InitializePage() {
   SetupManagingSupervisedUsers();
   SetupEasyUnlock();
   SetupExtensionControlledIndicators();
+  SetupSafeBrowsingExtendedReporting();
 
 #if defined(OS_CHROMEOS)
   SetupAccessibilityFeatures();
@@ -1085,21 +1202,12 @@ void BrowserOptionsHandler::InitializePage() {
       chromeos::WallpaperManager::Get()->IsPolicyControlled(
           user->GetAccountId()));
 
-  policy::ConsumerManagementService* consumer_management =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos()->
-          GetConsumerManagementService();
-  if (consumer_management) {
-    OnConsumerManagementStatusChanged();
-    consumer_management->AddObserver(this);
-  }
-
-  if (arc::ArcAuthService::IsAllowedForProfile(profile) &&
-      !arc::ArcAuthService::IsOptInVerificationDisabled()) {
-    base::FundamentalValue is_arc_enabled(
-        arc::ArcAuthService::Get()->IsArcEnabled());
+  if (arc::IsArcAllowedForProfile(profile) &&
+      !arc::IsArcOptInVerificationDisabled()) {
+    base::Value is_play_store_enabled(
+        arc::IsArcPlayStoreEnabledForProfile(profile));
     web_ui()->CallJavascriptFunctionUnsafe(
-        "BrowserOptions.showAndroidAppsSection",
-        is_arc_enabled);
+        "BrowserOptions.showAndroidAppsSection", is_play_store_enabled);
     // Get the initial state of Android Settings app readiness.
     std::unique_ptr<ArcAppListPrefs::AppInfo> app_info =
         ArcAppListPrefs::Get(profile)->GetApp(arc::kSettingsAppId);
@@ -1116,8 +1224,7 @@ bool BrowserOptionsHandler::ShouldShowSetDefaultBrowser() {
   // We're always the default browser on ChromeOS.
   return false;
 #else
-  Profile* profile = Profile::FromWebUI(web_ui());
-  return !profile->IsGuestSession();
+  return !Profile::FromWebUI(web_ui())->IsGuestSession();
 #endif
 }
 
@@ -1126,8 +1233,7 @@ bool BrowserOptionsHandler::ShouldShowMultiProfilesUserList() {
   // On Chrome OS we use different UI for multi-profiles.
   return false;
 #else
-  Profile* profile = Profile::FromWebUI(web_ui());
-  if (profile->IsGuestSession())
+  if (Profile::FromWebUI(web_ui())->IsGuestSession())
     return false;
   return profiles::IsMultipleProfilesEnabled();
 #endif
@@ -1154,7 +1260,7 @@ void BrowserOptionsHandler::BecomeDefaultBrowser(const base::ListValue* args) {
   if (IsDisabledByPolicy(default_browser_policy_))
     return;
 
-  content::RecordAction(UserMetricsAction("Options_SetAsDefaultBrowser"));
+  base::RecordAction(UserMetricsAction("Options_SetAsDefaultBrowser"));
   UMA_HISTOGRAM_COUNTS("Settings.StartSetAsDefault", true);
 
   // Callback takes care of updating UI.
@@ -1191,14 +1297,13 @@ void BrowserOptionsHandler::OnDefaultBrowserWorkerFinished(
 }
 
 void BrowserOptionsHandler::SetDefaultBrowserUIString(int status_string_id) {
-  base::StringValue status_string(
-      l10n_util::GetStringFUTF16(status_string_id,
-                                 l10n_util::GetStringUTF16(IDS_PRODUCT_NAME)));
+  base::Value status_string(l10n_util::GetStringFUTF16(
+      status_string_id, l10n_util::GetStringUTF16(IDS_PRODUCT_NAME)));
 
-  base::FundamentalValue is_default(
-      status_string_id == IDS_OPTIONS_DEFAULTBROWSER_DEFAULT);
+  base::Value is_default(status_string_id ==
+                         IDS_OPTIONS_DEFAULTBROWSER_DEFAULT);
 
-  base::FundamentalValue can_be_default(
+  base::Value can_be_default(
       !IsDisabledByPolicy(default_browser_policy_) &&
       (status_string_id == IDS_OPTIONS_DEFAULTBROWSER_DEFAULT ||
        status_string_id == IDS_OPTIONS_DEFAULTBROWSER_NOTDEFAULT));
@@ -1221,24 +1326,23 @@ void BrowserOptionsHandler::OnTemplateURLServiceChanged() {
   TemplateURLService::TemplateURLVector model_urls(
       template_url_service_->GetTemplateURLs());
   for (size_t i = 0; i < model_urls.size(); ++i) {
-    if (!model_urls[i]->ShowInDefaultList(
-            template_url_service_->search_terms_data()))
+    TemplateURL* t_url = model_urls[i];
+    if (!template_url_service_->ShowInDefaultList(t_url))
       continue;
 
     std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
-    entry->SetString("name", model_urls[i]->short_name());
+    entry->SetString("name", t_url->short_name());
     entry->SetInteger("index", i);
     search_engines.Append(std::move(entry));
-    if (model_urls[i] == default_url)
+    if (t_url == default_url)
       default_index = i;
   }
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.updateSearchEngines", search_engines,
-      base::FundamentalValue(default_index),
-      base::FundamentalValue(
-          template_url_service_->is_default_search_managed() ||
-          template_url_service_->IsExtensionControlledDefaultSearch()));
+      base::Value(default_index),
+      base::Value(template_url_service_->is_default_search_managed() ||
+                  template_url_service_->IsExtensionControlledDefaultSearch()));
 
   SetupExtensionControlledIndicators();
 
@@ -1261,7 +1365,7 @@ void BrowserOptionsHandler::SetDefaultSearchEngine(
     template_url_service_->SetUserSelectedDefaultSearchProvider(
         model_urls[selected_index]);
 
-  content::RecordAction(UserMetricsAction("Options_SearchEngineChanged"));
+  base::RecordAction(UserMetricsAction("Options_SearchEngineChanged"));
 }
 
 void BrowserOptionsHandler::AddTemplateUrlServiceObserver() {
@@ -1301,14 +1405,9 @@ void BrowserOptionsHandler::Observe(
     case chrome::NOTIFICATION_BROWSER_THEME_CHANGED:
       ObserveThemeChanged();
       break;
-#if defined(OS_CHROMEOS)
-    case chrome::NOTIFICATION_LOGIN_USER_IMAGE_CHANGED:
-      UpdateAccountPicture();
-      break;
-#endif
     case chrome::NOTIFICATION_GLOBAL_ERRORS_CHANGED:
       // Update our sync/signin status display.
-      OnStateChanged();
+      UpdateSyncState();
       break;
     default:
       NOTREACHED();
@@ -1409,28 +1508,27 @@ void BrowserOptionsHandler::ObserveThemeChanged() {
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   bool profile_is_supervised = profile->IsSupervised();
   is_system_theme = theme_service->UsingSystemTheme();
-  base::FundamentalValue native_theme_enabled(!is_system_theme &&
-                                              !profile_is_supervised);
+  base::Value native_theme_enabled(!is_system_theme && !profile_is_supervised);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setNativeThemeButtonEnabled", native_theme_enabled);
 #endif
 
   bool is_classic_theme = !is_system_theme &&
                           theme_service->UsingDefaultTheme();
-  base::FundamentalValue enabled(!is_classic_theme);
+  base::Value enabled(!is_classic_theme);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setThemesResetButtonEnabled", enabled);
 }
 
 void BrowserOptionsHandler::ThemesReset(const base::ListValue* args) {
   Profile* profile = Profile::FromWebUI(web_ui());
-  content::RecordAction(UserMetricsAction("Options_ThemesReset"));
+  base::RecordAction(UserMetricsAction("Options_ThemesReset"));
   ThemeServiceFactory::GetForProfile(profile)->UseDefaultTheme();
 }
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
 void BrowserOptionsHandler::ThemesSetNative(const base::ListValue* args) {
-  content::RecordAction(UserMetricsAction("Options_GtkThemeSet"));
+  base::RecordAction(UserMetricsAction("Options_GtkThemeSet"));
   Profile* profile = Profile::FromWebUI(web_ui());
   ThemeServiceFactory::GetForProfile(profile)->UseSystemTheme();
 }
@@ -1438,12 +1536,14 @@ void BrowserOptionsHandler::ThemesSetNative(const base::ListValue* args) {
 
 #if defined(OS_CHROMEOS)
 void BrowserOptionsHandler::UpdateAccountPicture() {
-  std::string email =
-      user_manager::UserManager::Get()->GetLoggedInUser()->email();
+  std::string email = user_manager::UserManager::Get()
+                          ->GetActiveUser()
+                          ->GetAccountId()
+                          .GetUserEmail();
   if (!email.empty()) {
     web_ui()->CallJavascriptFunctionUnsafe(
         "BrowserOptions.updateAccountPicture");
-    base::StringValue email_value(email);
+    base::Value email_value(email);
     web_ui()->CallJavascriptFunctionUnsafe(
         "BrowserOptions.updateAccountPicture", email_value);
     web_ui()->CallJavascriptFunctionUnsafe(
@@ -1453,19 +1553,18 @@ void BrowserOptionsHandler::UpdateAccountPicture() {
 
 void BrowserOptionsHandler::OnAccountPictureManagedChanged(bool managed) {
   web_ui()->CallJavascriptFunctionUnsafe(
-      "BrowserOptions.setAccountPictureManaged",
-      base::FundamentalValue(managed));
+      "BrowserOptions.setAccountPictureManaged", base::Value(managed));
 }
 
 void BrowserOptionsHandler::OnWallpaperManagedChanged(bool managed) {
   web_ui()->CallJavascriptFunctionUnsafe("BrowserOptions.setWallpaperManaged",
-                                         base::FundamentalValue(managed));
+                                         base::Value(managed));
 }
 
 void BrowserOptionsHandler::OnSystemTimezonePolicyChanged() {
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setSystemTimezoneManaged",
-      base::FundamentalValue(chromeos::system::HasSystemTimezonePolicy()));
+      base::Value(chromeos::system::HasSystemTimezonePolicy()));
 }
 
 void BrowserOptionsHandler::OnSystemTimezoneAutomaticDetectionPolicyChanged() {
@@ -1481,7 +1580,7 @@ void BrowserOptionsHandler::OnSystemTimezoneAutomaticDetectionPolicyChanged() {
       prefs->GetInteger(prefs::kSystemTimezoneAutomaticDetectionPolicy);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setSystemTimezoneAutomaticDetectionManaged",
-      base::FundamentalValue(is_managed), base::FundamentalValue(value));
+      base::Value(is_managed), base::Value(value));
 }
 #endif
 
@@ -1509,7 +1608,7 @@ BrowserOptionsHandler::GetSyncStateDictionary() {
       SigninManagerFactory::GetForProfile(profile)->IsSignoutProhibited();
 #endif
 
-  ProfileSyncService* service =
+  browser_sync::ProfileSyncService* service =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
   SigninManagerBase* signin = SigninManagerFactory::GetForProfile(profile);
   DCHECK(signin);
@@ -1523,16 +1622,22 @@ BrowserOptionsHandler::GetSyncStateDictionary() {
 
   base::string16 status_label;
   base::string16 link_label;
+  sync_ui_util::ActionType action_type = sync_ui_util::NO_ACTION;
   bool status_has_error =
       sync_ui_util::GetStatusLabels(profile, service, *signin,
                                     sync_ui_util::WITH_HTML, &status_label,
-                                    &link_label) == sync_ui_util::SYNC_ERROR;
+                                    &link_label, &action_type) ==
+      sync_ui_util::SYNC_ERROR;
   sync_status->SetString("statusText", status_label);
   sync_status->SetString("actionLinkText", link_label);
   sync_status->SetBoolean("hasError", status_has_error);
-
+  sync_status->SetString("statusAction", GetSyncErrorAction(action_type));
   sync_status->SetBoolean("managed", service && service->IsManaged());
   sync_status->SetBoolean("signedIn", signin->IsAuthenticated());
+  sync_status->SetString("accountInfo",
+                         l10n_util::GetStringFUTF16(
+                             IDS_SYNC_ACCOUNT_INFO,
+                             signin_ui_util::GetAuthenticatedUsername(signin)));
   sync_status->SetBoolean("hasUnrecoverableError",
                           service && service->HasUnrecoverableError());
 
@@ -1559,7 +1664,7 @@ void BrowserOptionsHandler::HandleSelectDownloadLocation(
 
 void BrowserOptionsHandler::FileSelected(const base::FilePath& path, int index,
                                          void* params) {
-  content::RecordAction(UserMetricsAction("Options_SetDownloadDirectory"));
+  base::RecordAction(UserMetricsAction("Options_SetDownloadDirectory"));
   PrefService* pref_service = Profile::FromWebUI(web_ui())->GetPrefs();
   pref_service->SetFilePath(prefs::kDownloadDefaultDirectory, path);
   pref_service->SetFilePath(prefs::kSaveFileDefaultDirectory, path);
@@ -1567,13 +1672,13 @@ void BrowserOptionsHandler::FileSelected(const base::FilePath& path, int index,
 
 #if defined(OS_CHROMEOS)
 void BrowserOptionsHandler::TouchpadExists(bool exists) {
-  base::FundamentalValue val(exists);
+  base::Value val(exists);
   web_ui()->CallJavascriptFunctionUnsafe("BrowserOptions.showTouchpadControls",
                                          val);
 }
 
 void BrowserOptionsHandler::MouseExists(bool exists) {
-  base::FundamentalValue val(exists);
+  base::Value val(exists);
   web_ui()->CallJavascriptFunctionUnsafe("BrowserOptions.showMouseControls",
                                          val);
 }
@@ -1604,14 +1709,6 @@ void BrowserOptionsHandler::OnPowerwashDialogShow(
       chromeos::reset::DIALOG_VIEW_TYPE_SIZE);
 }
 
-void BrowserOptionsHandler::OnConsumerManagementStatusChanged() {
-  const std::string& status = g_browser_process->platform_part()->
-      browser_policy_connector_chromeos()->GetConsumerManagementService()->
-          GetStatusString();
-  web_ui()->CallJavascriptFunctionUnsafe(
-      "BrowserOptions.setConsumerManagementStatus", base::StringValue(status));
-}
-
 #endif  // defined(OS_CHROMEOS)
 
 void BrowserOptionsHandler::UpdateSyncState() {
@@ -1621,8 +1718,7 @@ void BrowserOptionsHandler::UpdateSyncState() {
   // A change in sign-in state also affects how hotwording and audio history are
   // displayed. Hide all hotwording and re-display properly.
   web_ui()->CallJavascriptFunctionUnsafe(
-      "BrowserOptions.setAllHotwordSectionsVisible",
-      base::FundamentalValue(false));
+      "BrowserOptions.setAllHotwordSectionsVisible", base::Value(false));
   HandleRequestHotwordAvailable(nullptr);
 }
 
@@ -1631,7 +1727,7 @@ void BrowserOptionsHandler::OnSigninAllowedPrefChange() {
 }
 
 void BrowserOptionsHandler::HandleAutoOpenButton(const base::ListValue* args) {
-  content::RecordAction(UserMetricsAction("Options_ResetAutoOpenFiles"));
+  base::RecordAction(UserMetricsAction("Options_ResetAutoOpenFiles"));
   DownloadManager* manager = BrowserContext::GetDownloadManager(
       web_ui()->GetWebContents()->GetBrowserContext());
   if (manager)
@@ -1673,7 +1769,7 @@ void BrowserOptionsHandler::HandleRequestProfilesInfo(
 #if !defined(OS_CHROMEOS)
 void BrowserOptionsHandler::ShowNetworkProxySettings(
     const base::ListValue* args) {
-  content::RecordAction(UserMetricsAction("Options_ShowProxySettings"));
+  base::RecordAction(UserMetricsAction("Options_ShowProxySettings"));
   settings_utils::ShowNetworkProxySettings(web_ui()->GetWebContents());
 }
 #endif
@@ -1681,23 +1777,32 @@ void BrowserOptionsHandler::ShowNetworkProxySettings(
 #if defined(OS_WIN) || defined(OS_MACOSX)
 void BrowserOptionsHandler::ShowManageSSLCertificates(
     const base::ListValue* args) {
-  content::RecordAction(UserMetricsAction("Options_ManageSSLCertificates"));
+  base::RecordAction(UserMetricsAction("Options_ManageSSLCertificates"));
   settings_utils::ShowManageSSLCertificates(web_ui()->GetWebContents());
 }
 #endif
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
-
-void BrowserOptionsHandler::ShowCloudPrintDevicesPage(
+#if defined(OS_CHROMEOS)
+void BrowserOptionsHandler::ShowCupsPrintDevicesPage(
     const base::ListValue* args) {
-  content::RecordAction(UserMetricsAction("Options_CloudPrintDevicesPage"));
-  // Navigate in current tab to devices page.
-  OpenURLParams params(
-      GURL(chrome::kChromeUIDevicesURL), Referrer(),
-      CURRENT_TAB, ui::PAGE_TRANSITION_LINK, false);
+  // Navigate in current tab to CUPS printers management page.
+  OpenURLParams params(GURL(chrome::kChromeUIMdCupsSettingsURL), Referrer(),
+                       WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                       ui::PAGE_TRANSITION_LINK, false);
   web_ui()->GetWebContents()->OpenURL(params);
 }
+#endif  // defined(OS_CHROMEOS)
 
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+void BrowserOptionsHandler::ShowCloudPrintDevicesPage(
+    const base::ListValue* args) {
+  base::RecordAction(UserMetricsAction("Options_CloudPrintDevicesPage"));
+  // Navigate in current tab to devices page.
+  OpenURLParams params(GURL(chrome::kChromeUIDevicesURL), Referrer(),
+                       WindowOpenDisposition::CURRENT_TAB,
+                       ui::PAGE_TRANSITION_LINK, false);
+  web_ui()->GetWebContents()->OpenURL(params);
+}
 #endif
 
 void BrowserOptionsHandler::SetHotwordAudioHistorySectionVisible(
@@ -1705,8 +1810,8 @@ void BrowserOptionsHandler::SetHotwordAudioHistorySectionVisible(
     bool success, bool logging_enabled) {
   bool visible = logging_enabled && success;
   web_ui()->CallJavascriptFunctionUnsafe(
-      "BrowserOptions.setAudioHistorySectionVisible",
-      base::FundamentalValue(visible), base::StringValue(audio_history_state));
+      "BrowserOptions.setAudioHistorySectionVisible", base::Value(visible),
+      base::Value(audio_history_state));
 }
 
 void BrowserOptionsHandler::HandleRequestGoogleNowAvailable(
@@ -1726,7 +1831,7 @@ void BrowserOptionsHandler::HandleRequestGoogleNowAvailable(
 
   bool should_show = is_search_provider_google && has_field_trial;
   web_ui()->CallJavascriptFunctionUnsafe("BrowserOptions.setNowSectionVisible",
-                                         base::FundamentalValue(should_show));
+                                         base::Value(should_show));
 }
 
 void BrowserOptionsHandler::HandleRequestHotwordAvailable(
@@ -1758,8 +1863,7 @@ void BrowserOptionsHandler::HandleRequestHotwordAvailable(
   // options.
   if (!is_search_provider_google) {
     web_ui()->CallJavascriptFunctionUnsafe(
-        "BrowserOptions.setAllHotwordSectionsVisible",
-        base::FundamentalValue(false));
+        "BrowserOptions.setAllHotwordSectionsVisible", base::Value(false));
     return;
   }
 
@@ -1781,8 +1885,7 @@ void BrowserOptionsHandler::HandleRequestHotwordAvailable(
       if (profile->GetPrefs()->GetBoolean(
               prefs::kHotwordAlwaysOnSearchEnabled)) {
         web_ui()->CallJavascriptFunctionUnsafe(
-            "BrowserOptions.setHotwordRetrainLinkVisible",
-            base::FundamentalValue(true));
+            "BrowserOptions.setHotwordRetrainLinkVisible", base::Value(true));
       }
     } else {
       function_name = "BrowserOptions.showHotwordNoDspSection";
@@ -1815,10 +1918,10 @@ void BrowserOptionsHandler::HandleRequestHotwordAvailable(
     } else {
       base::string16 hotword_help_url =
           base::ASCIIToUTF16(chrome::kHotwordLearnMoreURL);
-      base::StringValue error_message(l10n_util::GetStringUTF16(error));
+      base::Value error_message(l10n_util::GetStringUTF16(error));
       if (error == IDS_HOTWORD_GENERIC_ERROR_MESSAGE) {
-        error_message = base::StringValue(
-            l10n_util::GetStringFUTF16(error, hotword_help_url));
+        error_message =
+            base::Value(l10n_util::GetStringFUTF16(error, hotword_help_url));
       }
       web_ui()->CallJavascriptFunctionUnsafe(function_name, error_message);
     }
@@ -1873,7 +1976,7 @@ void BrowserOptionsHandler::HandleRefreshExtensionControlIndicators(
 #if defined(OS_CHROMEOS)
 void BrowserOptionsHandler::HandleOpenWallpaperManager(
     const base::ListValue* args) {
-  ash::Shell::GetInstance()->user_wallpaper_delegate()->OpenSetWallpaperPage();
+  chromeos::WallpaperManager::Get()->Open();
 }
 
 void BrowserOptionsHandler::VirtualKeyboardChangeCallback(
@@ -1916,8 +2019,12 @@ void BrowserOptionsHandler::OnAppReadyChanged(
   }
 }
 
+void BrowserOptionsHandler::OnUserImageChanged(const user_manager::User& user) {
+  UpdateAccountPicture();
+}
+
 void BrowserOptionsHandler::UpdateAndroidSettingsAppState(bool visible) {
-  base::FundamentalValue is_visible(visible);
+  base::Value is_visible(visible);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setAndroidAppsSettingsVisibility", is_visible);
 }
@@ -1926,17 +2033,48 @@ void BrowserOptionsHandler::ShowAndroidAppsSettings(
     const base::ListValue* args) {
   Profile* profile = Profile::FromWebUI(web_ui());
   // Settings in secondary profile cannot access ARC.
-  if (!arc::ArcAuthService::IsAllowedForProfile(profile)) {
+  if (!arc::IsArcAllowedForProfile(profile)) {
     LOG(ERROR) << "Settings can't be invoked for non-primary profile";
     return;
   }
 
-  arc::LaunchAndroidSettingsApp(profile);
+  // We only care whether the event came from a keyboard or non-keyboard
+  // (mouse/touch). Set the default flags in such a way that it would appear
+  // that it came from a mouse by default.
+  bool activated_from_keyboard = false;
+  args->GetBoolean(0, &activated_from_keyboard);
+  int flags = activated_from_keyboard ? ui::EF_NONE : ui::EF_LEFT_MOUSE_BUTTON;
+
+  arc::LaunchAndroidSettingsApp(profile, flags);
+}
+
+void BrowserOptionsHandler::ShowPlayStoreApps(const base::ListValue* args) {
+  std::string apps_url;
+  args->GetString(0, &apps_url);
+  Profile* profile = Profile::FromWebUI(web_ui());
+  if (!arc::IsArcAllowedForProfile(profile)) {
+    VLOG(1) << "ARC is not enabled for this profile";
+    return;
+  }
+
+  arc::LaunchPlayStoreWithUrl(apps_url);
+}
+
+void BrowserOptionsHandler::ShowAccessibilityTalkBackSettings(
+    const base::ListValue *args) {
+  Profile* profile = Profile::FromWebUI(web_ui());
+  // Settings in secondary profile cannot access ARC.
+  if (!arc::IsArcAllowedForProfile(profile)) {
+    LOG(WARNING) << "Settings can't be invoked for non-primary profile";
+    return;
+  }
+
+  arc::ShowTalkBackSettings();
 }
 
 void BrowserOptionsHandler::SetupAccessibilityFeatures() {
   PrefService* pref_service = g_browser_process->local_state();
-  base::FundamentalValue virtual_keyboard_enabled(
+  base::Value virtual_keyboard_enabled(
       pref_service->GetBoolean(prefs::kAccessibilityVirtualKeyboardEnabled));
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setVirtualKeyboardCheckboxState",
@@ -1948,7 +2086,7 @@ void BrowserOptionsHandler::SetupMetricsReportingSettingVisibility() {
 #if defined(GOOGLE_CHROME_BUILD)
   // Don't show the reporting setting if we are in the guest mode.
   if (Profile::FromWebUI(web_ui())->IsGuestSession()) {
-    base::FundamentalValue visible(false);
+    base::Value visible(false);
     web_ui()->CallJavascriptFunctionUnsafe(
         "BrowserOptions.setMetricsReportingSettingVisibility", visible);
   }
@@ -1988,7 +2126,7 @@ void BrowserOptionsHandler::SetupFontSizeSelector() {
       !default_font_size->IsUserModifiable() ||
       !default_fixed_font_size->IsUserModifiable());
 
-  // This is a poor man's version of CoreOptionsHandler::CreateValueForPref,
+  // This is a simplified version of CoreOptionsHandler::CreateValueForPref,
   // adapted to consider two prefs. It may be better to refactor
   // CreateValueForPref so it can be called from here.
   if (default_font_size->IsManaged() || default_fixed_font_size->IsManaged()) {
@@ -2043,7 +2181,7 @@ void BrowserOptionsHandler::SetupAutoOpenFileTypes() {
       web_ui()->GetWebContents()->GetBrowserContext());
   bool display = manager &&
       DownloadPrefs::FromDownloadManager(manager)->IsAutoOpenUsed();
-  base::FundamentalValue value(display);
+  base::Value value(display);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setAutoOpenFileTypesDisplayed", value);
 }
@@ -2056,9 +2194,8 @@ void BrowserOptionsHandler::SetupProxySettingsSection() {
   bool is_extension_controlled = (proxy_config &&
                                   proxy_config->IsExtensionControlled());
 
-  base::FundamentalValue disabled(proxy_config &&
-                                  !proxy_config->IsUserModifiable());
-  base::FundamentalValue extension_controlled(is_extension_controlled);
+  base::Value disabled(proxy_config && !proxy_config->IsUserModifiable());
+  base::Value extension_controlled(is_extension_controlled);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.setupProxySettingsButton", disabled,
       extension_controlled);
@@ -2073,13 +2210,13 @@ void BrowserOptionsHandler::SetupProxySettingsSection() {
 void BrowserOptionsHandler::SetupManagingSupervisedUsers() {
   bool has_users = !Profile::FromWebUI(web_ui())->
       GetPrefs()->GetDictionary(prefs::kSupervisedUsers)->empty();
-  base::FundamentalValue has_users_value(has_users);
+  base::Value has_users_value(has_users);
   web_ui()->CallJavascriptFunctionUnsafe(
       "BrowserOptions.updateManagesSupervisedUsers", has_users_value);
 }
 
 void BrowserOptionsHandler::SetupEasyUnlock() {
-  base::FundamentalValue is_enabled(
+  base::Value is_enabled(
       EasyUnlockService::Get(Profile::FromWebUI(web_ui()))->IsEnabled());
   web_ui()->CallJavascriptFunctionUnsafe("BrowserOptions.updateEasyUnlock",
                                          is_enabled);
@@ -2088,42 +2225,27 @@ void BrowserOptionsHandler::SetupEasyUnlock() {
 void BrowserOptionsHandler::SetupExtensionControlledIndicators() {
   base::DictionaryValue extension_controlled;
 
+  Profile* profile = Profile::FromWebUI(web_ui());
+
   // Check if an extension is overriding the Search Engine.
   const extensions::Extension* extension =
-      extensions::GetExtensionOverridingSearchEngine(
-          Profile::FromWebUI(web_ui()));
+      extensions::GetExtensionOverridingSearchEngine(profile);
   AppendExtensionData("searchEngine", extension, &extension_controlled);
 
   // Check if an extension is overriding the Home page.
-  extension = extensions::GetExtensionOverridingHomepage(
-      Profile::FromWebUI(web_ui()));
+  extension = extensions::GetExtensionOverridingHomepage(profile);
   AppendExtensionData("homePage", extension, &extension_controlled);
 
   // Check if an extension is overriding the Startup pages.
-  extension = extensions::GetExtensionOverridingStartupPages(
-      Profile::FromWebUI(web_ui()));
+  extension = extensions::GetExtensionOverridingStartupPages(profile);
   AppendExtensionData("startUpPage", extension, &extension_controlled);
 
   // Check if an extension is overriding the NTP page.
-  GURL ntp_url(chrome::kChromeUINewTabURL);
-  bool ignored_param;
-  extension = NULL;
-  content::BrowserURLHandler::GetInstance()->RewriteURLIfNecessary(
-      &ntp_url,
-      web_ui()->GetWebContents()->GetBrowserContext(),
-      &ignored_param);
-  if (ntp_url.SchemeIs("chrome-extension")) {
-    using extensions::ExtensionRegistry;
-    ExtensionRegistry* registry = ExtensionRegistry::Get(
-        Profile::FromWebUI(web_ui()));
-    extension = registry->GetExtensionById(ntp_url.host(),
-                                           ExtensionRegistry::ENABLED);
-  }
+  extension = extensions::GetExtensionOverridingNewTabPage(profile);
   AppendExtensionData("newTabPage", extension, &extension_controlled);
 
   // Check if an extension is overwriting the proxy setting.
-  extension = extensions::GetExtensionOverridingProxy(
-      Profile::FromWebUI(web_ui()));
+  extension = extensions::GetExtensionOverridingProxy(profile);
   AppendExtensionData("proxy", extension, &extension_controlled);
 
   web_ui()->CallJavascriptFunctionUnsafe(
@@ -2159,17 +2281,17 @@ void BrowserOptionsHandler::HandleMetricsReportingChange(
   }
 
 // For Chrome OS updating device settings will notify an observer to update
-// metrics pref, however we still need to call |InitiateMetricsReportingChange|
-// with a proper callback so that UI gets updated in case of failure to update
-// the metrics pref.
-// TODO(gayane): Don't call |InitiateMetricsReportingChange| twice so that
+// metrics pref, however we still need to call
+// |ChangeMetricsReportingStateWithReply| with a proper callback so that UI gets
+// updated in case of failure to update the metrics pref.
+// TODO(gayane): Don't call |ChangeMetricsReportingStateWithReply| twice so that
 // metrics service pref changes only as a result of device settings change for
 // Chrome OS .crbug.com/552550.
 #if defined(OS_CHROMEOS)
   chromeos::CrosSettings::Get()->SetBoolean(chromeos::kStatsReportingPref,
                                             enable);
 #endif  // defined(OS_CHROMEOS)
-  InitiateMetricsReportingChange(
+  ChangeMetricsReportingStateWithReply(
       enable,
       base::Bind(&BrowserOptionsHandler::NotifyUIOfMetricsReportingChange,
                  weak_ptr_factory_.GetWeakPtr()));
@@ -2184,9 +2306,25 @@ void BrowserOptionsHandler::SetMetricsReportingCheckbox(bool checked,
                                                         bool policy_managed,
                                                         bool owner_managed) {
   web_ui()->CallJavascriptFunctionUnsafe(
-      "BrowserOptions.setMetricsReportingCheckboxState",
-      base::FundamentalValue(checked), base::FundamentalValue(policy_managed),
-      base::FundamentalValue(owner_managed));
+      "BrowserOptions.setMetricsReportingCheckboxState", base::Value(checked),
+      base::Value(policy_managed), base::Value(owner_managed));
+}
+
+void BrowserOptionsHandler::SetupSafeBrowsingExtendedReporting() {
+  base::Value is_enabled(safe_browsing::IsExtendedReportingEnabled(
+      *Profile::FromWebUI(web_ui())->GetPrefs()));
+  web_ui()->CallJavascriptFunctionUnsafe(
+      "BrowserOptions.setExtendedReportingEnabledCheckboxState", is_enabled);
+}
+
+void BrowserOptionsHandler::HandleSafeBrowsingExtendedReporting(
+    const base::ListValue* args) {
+  bool checked;
+  if (args->GetBoolean(0, &checked)) {
+    safe_browsing::SetExtendedReportingPrefAndMetric(
+        Profile::FromWebUI(web_ui())->GetPrefs(), checked,
+        safe_browsing::SBER_OPTIN_SITE_CHROME_SETTINGS);
+  }
 }
 
 void BrowserOptionsHandler::OnPolicyUpdated(const policy::PolicyNamespace& ns,
@@ -2194,9 +2332,16 @@ void BrowserOptionsHandler::OnPolicyUpdated(const policy::PolicyNamespace& ns,
                                             const policy::PolicyMap& current) {
   std::set<std::string> different_keys;
   current.GetDifferingKeys(previous, &different_keys);
-  if (ContainsKey(different_keys, policy::key::kMetricsReportingEnabled))
+  if (base::ContainsKey(different_keys, policy::key::kMetricsReportingEnabled))
     SetupMetricsReportingCheckbox();
 }
+
+#if defined(OS_CHROMEOS)
+// static
+void BrowserOptionsHandler::DisablePolymerPreloadForTesting() {
+  g_enable_polymer_preload = false;
+}
+#endif  // defined(OS_CHROMEOS)
 
 bool BrowserOptionsHandler::IsDeviceOwnerProfile() {
 #if defined(OS_CHROMEOS)

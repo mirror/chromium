@@ -27,14 +27,14 @@ function performActions()
 
 function test()
 {
-    WebInspector.context.setFlavor(WebInspector.TimelinePanel, WebInspector.panels.timeline);
+    UI.context.setFlavor(Timeline.TimelinePanel, UI.panels.timeline);
     InspectorTest.evaluateWithTimeline("performActions()", callback);
 
     function callback()
     {
-        InspectorTest.printTimelineRecords("", function(record) {
-            if (record.type() === "UpdateLayoutTree")
-                InspectorTest.addResult(record.type());
+        InspectorTest.timelineModel().mainThreadEvents().forEach(event => {
+            if (event.name === TimelineModel.TimelineModel.RecordType.UpdateLayoutTree)
+                InspectorTest.addResult(event.name);
         });
         InspectorTest.completeTest();
     }

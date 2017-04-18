@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "content/common/pepper_file_util.h"
 #include "content/common/view_messages.h"
 #include "content/renderer/render_thread_impl.h"
@@ -20,7 +21,6 @@
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColorPriv.h"
-#include "third_party/skia/include/core/SkDevice.h"
 #include "third_party/skia/include/core/SkPixmap.h"
 #include "ui/surface/transport_dib.h"
 
@@ -113,17 +113,13 @@ int32_t PPB_ImageData_Impl::GetSharedMemory(base::SharedMemory** shm,
   return backend_->GetSharedMemory(shm, byte_count);
 }
 
-SkCanvas* PPB_ImageData_Impl::GetPlatformCanvas() {
-  return backend_->GetPlatformCanvas();
-}
-
 SkCanvas* PPB_ImageData_Impl::GetCanvas() { return backend_->GetCanvas(); }
 
 void PPB_ImageData_Impl::SetIsCandidateForReuse() {
   // Nothing to do since we don't support image data re-use in-process.
 }
 
-const SkBitmap* PPB_ImageData_Impl::GetMappedBitmap() const {
+SkBitmap PPB_ImageData_Impl::GetMappedBitmap() const {
   return backend_->GetMappedBitmap();
 }
 
@@ -171,8 +167,7 @@ TransportDIB* ImageDataPlatformBackend::GetTransportDIB() const {
 void* ImageDataPlatformBackend::Map() {
   if (!mapped_canvas_) {
     const bool is_opaque = false;
-    mapped_canvas_ =
-        sk_sp<SkCanvas>(dib_->GetPlatformCanvas(width_, height_, is_opaque));
+    mapped_canvas_ = dib_->GetPlatformCanvas(width_, height_, is_opaque);
     if (!mapped_canvas_)
       return NULL;
   }
@@ -199,16 +194,20 @@ int32_t ImageDataPlatformBackend::GetSharedMemory(base::SharedMemory** shm,
   return PP_OK;
 }
 
-SkCanvas* ImageDataPlatformBackend::GetPlatformCanvas() {
-  return mapped_canvas_.get();
-}
-
 SkCanvas* ImageDataPlatformBackend::GetCanvas() { return mapped_canvas_.get(); }
 
-const SkBitmap* ImageDataPlatformBackend::GetMappedBitmap() const {
+SkBitmap ImageDataPlatformBackend::GetMappedBitmap() const {
+  SkBitmap bitmap;
   if (!mapped_canvas_)
-    return NULL;
-  return &skia::GetTopDevice(*mapped_canvas_)->accessBitmap(false);
+    return bitmap;
+
+  SkPixmap pixmap;
+  skia::GetWritablePixels(mapped_canvas_.get(), &pixmap);
+  // SkPixmap does not manage the lifetime of this pointer, so it remains
+  // valid after the object goes out of scope. It will become invalid if
+  // the canvas' backing is destroyed or a pending saveLayer() is resolved.
+  bitmap.installPixels(pixmap);
+  return bitmap;
 }
 
 // ImageDataSimpleBackend ------------------------------------------------------
@@ -242,7 +241,7 @@ void* ImageDataSimpleBackend::Map() {
     skia_bitmap_.setPixels(shared_memory_->memory());
     // Our platform bitmaps are set to opaque by default, which we don't want.
     skia_bitmap_.setAlphaType(kPremul_SkAlphaType);
-    skia_canvas_ = sk_make_sp<SkCanvas>(skia_bitmap_);
+    skia_canvas_ = base::MakeUnique<SkCanvas>(skia_bitmap_);
     return skia_bitmap_.getAddr32(0, 0);
   }
   return shared_memory_->memory();
@@ -260,20 +259,16 @@ int32_t ImageDataSimpleBackend::GetSharedMemory(base::SharedMemory** shm,
   return PP_OK;
 }
 
-SkCanvas* ImageDataSimpleBackend::GetPlatformCanvas() {
-  return NULL;
-}
-
 SkCanvas* ImageDataSimpleBackend::GetCanvas() {
   if (!IsMapped())
     return NULL;
   return skia_canvas_.get();
 }
 
-const SkBitmap* ImageDataSimpleBackend::GetMappedBitmap() const {
+SkBitmap ImageDataSimpleBackend::GetMappedBitmap() const {
   if (!IsMapped())
-    return NULL;
-  return &skia_bitmap_;
+    return SkBitmap();
+  return skia_bitmap_;
 }
 
 }  // namespace content

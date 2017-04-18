@@ -7,15 +7,14 @@ source_set("app") {
     "web_main.h",
     "web_main_delegate.h",
     "web_main_parts.h",
-  ]
-
-  public_deps = [
-    "//ios/web/app",
+    "web_main_runner.h",
   ]
 
   deps = [
     "//base",
+    "//ios/web/app",
   ]
+  configs += [ "//build/config/compiler:enable_arc" ]
 
   allow_circular_includes_from = [ "//ios/web/app" ]
 }

@@ -6,7 +6,7 @@
 
 #include "base/files/file_path.h"
 #include "base/logging.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -102,11 +102,10 @@ bool InMemoryDatabase::InitFromDisk(const base::FilePath& history_name) {
 
   // Insert keyword search related URLs.
   begin_load = base::TimeTicks::Now();
-  if (!db_.Execute(
-      "INSERT OR IGNORE INTO urls SELECT u.id, u.url, u.title, u.visit_count, "
-      "u.typed_count, u.last_visit_time, u.hidden, u.favicon_id "
-      "FROM history.urls u JOIN history.keyword_search_terms kst "
-      "WHERE u.typed_count = 0 AND u.id = kst.url_id")) {
+  if (!db_.Execute("INSERT OR IGNORE INTO urls SELECT u.id, u.url, u.title, "
+                   "u.visit_count, u.typed_count, u.last_visit_time, u.hidden "
+                   "FROM history.urls u JOIN history.keyword_search_terms kst "
+                   "WHERE u.typed_count = 0 AND u.id = kst.url_id")) {
     // Unable to get data from the history database. This is OK, the file may
     // just not exist yet.
   }

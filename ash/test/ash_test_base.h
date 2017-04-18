@@ -10,25 +10,27 @@
 #include <memory>
 #include <string>
 
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/display/display.h"
 #include "ui/wm/public/window_types.h"
 
-#if defined(OS_WIN)
-#include "ui/base/win/scoped_ole_initializer.h"
-#endif
-
 namespace aura {
-class RootWindow;
 class Window;
 class WindowDelegate;
 }  // namespace aura
+
+namespace display {
+class Display;
+class DisplayManager;
+
+namespace test {
+class DisplayManagerTestApi;
+}  // namespace test
+}  // namespace display
 
 namespace gfx {
 class Rect;
@@ -46,18 +48,17 @@ class WidgetDelegate;
 }
 
 namespace ash {
-class DisplayManager;
+class AshTestImplAura;
 class SystemTray;
 class WmShelf;
 
 namespace test {
 
+class AshTestEnvironment;
 class AshTestHelper;
 class TestScreenshotDelegate;
+class TestSessionControllerClient;
 class TestSystemTrayDelegate;
-#if defined(OS_WIN)
-class TestMetroViewerProcessHost;
-#endif
 
 class AshTestBase : public testing::Test {
  public:
@@ -67,6 +68,9 @@ class AshTestBase : public testing::Test {
   // testing::Test:
   void SetUp() override;
   void TearDown() override;
+
+  // Returns the WmShelf for the primary display.
+  static WmShelf* GetPrimaryShelf();
 
   // Returns the system tray on the primary display.
   static SystemTray* GetPrimarySystemTray();
@@ -80,8 +84,8 @@ class AshTestBase : public testing::Test {
   // primary root Window.
   aura::Window* CurrentContext();
 
-  // Creates and shows a widget. See ash/common/shell_window_ids.h for values
-  // for |container_id|.
+  // Creates and shows a widget. See ash/public/cpp/shell_window_ids.h for
+  // values for |container_id|.
   static std::unique_ptr<views::Widget> CreateTestWidget(
       views::WidgetDelegate* delegate,
       int container_id,
@@ -112,6 +116,14 @@ class AshTestBase : public testing::Test {
   // hasn't been created yet.
   ui::test::EventGenerator& GetEventGenerator();
 
+  // Convenience method to return the DisplayManager.
+  display::DisplayManager* display_manager();
+
+  // Test if moving a mouse to |point_in_screen| warps it to another
+  // display.
+  bool TestIfMouseWarpsAt(ui::test::EventGenerator& event_generator,
+                          const gfx::Point& point_in_screen);
+
  protected:
   enum UserSessionBlockReason {
     FIRST_BLOCK_REASON,
@@ -127,15 +139,6 @@ class AshTestBase : public testing::Test {
   // Returns the rotation currently active for the internal display.
   static display::Display::Rotation GetCurrentInternalDisplayRotation();
 
-  // Proxy to AshTestHelper::SupportsMultipleDisplays().
-  static bool SupportsMultipleDisplays();
-
-  // Proxy to AshTestHelper::SupportsHostWindowResize().
-  static bool SupportsHostWindowResize();
-
-  // Returns the WmShelf for the primary display.
-  static WmShelf* GetPrimaryShelf();
-
   void set_start_session(bool start_session) { start_session_ = start_session; }
 
   AshTestHelper* ash_test_helper() { return ash_test_helper_.get(); }
@@ -144,18 +147,16 @@ class AshTestBase : public testing::Test {
 
   TestScreenshotDelegate* GetScreenshotDelegate();
 
+  TestSessionControllerClient* GetSessionControllerClient();
+
   TestSystemTrayDelegate* GetSystemTrayDelegate();
 
   // Utility methods to emulate user logged in or not, session started or not
   // and user able to lock screen or not cases.
   void SetSessionStarted(bool session_started);
-  // Sets the SessionState to active, marking the begining of transitioning to
-  // a user session. The session is considered blocked until SetSessionStarted
-  // is called.
-  void SetSessionStarting();
   void SetUserLoggedIn(bool user_logged_in);
-  void SetCanLockScreen(bool can_lock_screen);
-  void SetShouldLockScreenBeforeSuspending(bool should_lock);
+  void SetCanLockScreen(bool can_lock);
+  void SetShouldLockScreenAutomatically(bool should_lock);
   void SetUserAddingScreenRunning(bool user_adding_screen_running);
 
   // Methods to emulate blocking and unblocking user session with given
@@ -165,17 +166,21 @@ class AshTestBase : public testing::Test {
 
   void DisableIME();
 
+  // Swap the primary display with the secondary.
+  void SwapPrimaryDisplay();
+
+  display::Display GetSecondaryDisplay();
+
  private:
+  friend class ash::AshTestImplAura;
+
   bool setup_called_;
   bool teardown_called_;
   // |SetUp()| doesn't activate session if this is set to false.
   bool start_session_;
-  std::unique_ptr<content::TestBrowserThreadBundle> thread_bundle_;
+  std::unique_ptr<AshTestEnvironment> ash_test_environment_;
   std::unique_ptr<AshTestHelper> ash_test_helper_;
   std::unique_ptr<ui::test::EventGenerator> event_generator_;
-#if defined(OS_WIN)
-  ui::ScopedOleInitializer ole_initializer_;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(AshTestBase);
 };

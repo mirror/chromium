@@ -2,10 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <openssl/ec.h>
-#include <openssl/ec_key.h>
-#include <openssl/ecdsa.h>
-#include <openssl/evp.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -19,11 +15,17 @@
 #include "components/webcrypto/generate_key_result.h"
 #include "components/webcrypto/status.h"
 #include "crypto/openssl_util.h"
-#include "crypto/scoped_openssl_types.h"
 #include "crypto/secure_util.h"
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithmParams.h"
 #include "third_party/WebKit/public/platform/WebCryptoKey.h"
 #include "third_party/WebKit/public/platform/WebCryptoKeyAlgorithm.h"
+#include "third_party/boringssl/src/include/openssl/bn.h"
+#include "third_party/boringssl/src/include/openssl/digest.h"
+#include "third_party/boringssl/src/include/openssl/ec.h"
+#include "third_party/boringssl/src/include/openssl/ec_key.h"
+#include "third_party/boringssl/src/include/openssl/ecdsa.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
+#include "third_party/boringssl/src/include/openssl/mem.h"
 
 namespace webcrypto {
 
@@ -36,7 +38,7 @@ Status GetPKeyAndDigest(const blink::WebCryptoAlgorithm& algorithm,
                         EVP_PKEY** pkey,
                         const EVP_MD** digest) {
   *pkey = GetEVP_PKEY(key);
-  *digest = GetDigest(algorithm.ecdsaParams()->hash());
+  *digest = GetDigest(algorithm.EcdsaParams()->GetHash());
   if (!*digest)
     return Status::ErrorUnsupported();
   return Status::Success();
@@ -46,13 +48,13 @@ Status GetPKeyAndDigest(const blink::WebCryptoAlgorithm& algorithm,
 Status GetEcGroupOrderSize(EVP_PKEY* pkey, size_t* order_size_bytes) {
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
-  crypto::ScopedEC_KEY ec(EVP_PKEY_get1_EC_KEY(pkey));
-  if (!ec.get())
+  EC_KEY* ec = EVP_PKEY_get0_EC_KEY(pkey);
+  if (!ec)
     return Status::ErrorUnexpected();
 
-  const EC_GROUP* group = EC_KEY_get0_group(ec.get());
+  const EC_GROUP* group = EC_KEY_get0_group(ec);
 
-  crypto::ScopedBIGNUM order(BN_new());
+  bssl::UniquePtr<BIGNUM> order(BN_new());
   if (!EC_GROUP_get_order(group, order.get(), NULL))
     return Status::OperationError();
 
@@ -69,7 +71,7 @@ Status ConvertDerSignatureToWebCryptoSignature(
     std::vector<uint8_t>* signature) {
   crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
 
-  crypto::ScopedECDSA_SIG ecdsa_sig(
+  bssl::UniquePtr<ECDSA_SIG> ecdsa_sig(
       ECDSA_SIG_from_bytes(signature->data(), signature->size()));
   if (!ecdsa_sig.get())
     return Status::ErrorUnexpected();
@@ -130,7 +132,7 @@ Status ConvertWebCryptoSignatureToDerSignature(
   *incorrect_length = false;
 
   // Construct an ECDSA_SIG from |signature|.
-  crypto::ScopedECDSA_SIG ecdsa_sig(ECDSA_SIG_new());
+  bssl::UniquePtr<ECDSA_SIG> ecdsa_sig(ECDSA_SIG_new());
   if (!ecdsa_sig)
     return Status::OperationError();
 
@@ -154,17 +156,17 @@ Status ConvertWebCryptoSignatureToDerSignature(
 class EcdsaImplementation : public EcAlgorithm {
  public:
   EcdsaImplementation()
-      : EcAlgorithm(blink::WebCryptoKeyUsageVerify,
-                    blink::WebCryptoKeyUsageSign) {}
+      : EcAlgorithm(blink::kWebCryptoKeyUsageVerify,
+                    blink::kWebCryptoKeyUsageSign) {}
 
   const char* GetJwkAlgorithm(
       const blink::WebCryptoNamedCurve curve) const override {
     switch (curve) {
-      case blink::WebCryptoNamedCurveP256:
+      case blink::kWebCryptoNamedCurveP256:
         return "ES256";
-      case blink::WebCryptoNamedCurveP384:
+      case blink::kWebCryptoNamedCurveP384:
         return "ES384";
-      case blink::WebCryptoNamedCurveP521:
+      case blink::kWebCryptoNamedCurveP521:
         // This is not a typo! ES512 means P-521 with SHA-512.
         return "ES512";
       default:
@@ -176,11 +178,10 @@ class EcdsaImplementation : public EcAlgorithm {
               const blink::WebCryptoKey& key,
               const CryptoData& data,
               std::vector<uint8_t>* buffer) const override {
-    if (key.type() != blink::WebCryptoKeyTypePrivate)
+    if (key.GetType() != blink::kWebCryptoKeyTypePrivate)
       return Status::ErrorUnexpectedKeyType();
 
     crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
-    crypto::ScopedEVP_MD_CTX ctx(EVP_MD_CTX_create());
 
     EVP_PKEY* private_key = NULL;
     const EVP_MD* digest = NULL;
@@ -191,9 +192,9 @@ class EcdsaImplementation : public EcAlgorithm {
     // NOTE: A call to EVP_DigestSignFinal() with a NULL second parameter
     // returns a maximum allocation size, while the call without a NULL returns
     // the real one, which may be smaller.
+    bssl::ScopedEVP_MD_CTX ctx;
     size_t sig_len = 0;
-    if (!ctx.get() ||
-        !EVP_DigestSignInit(ctx.get(), NULL, digest, NULL, private_key) ||
+    if (!EVP_DigestSignInit(ctx.get(), NULL, digest, NULL, private_key) ||
         !EVP_DigestSignUpdate(ctx.get(), data.bytes(), data.byte_length()) ||
         !EVP_DigestSignFinal(ctx.get(), NULL, &sig_len)) {
       return Status::OperationError();
@@ -215,11 +216,10 @@ class EcdsaImplementation : public EcAlgorithm {
                 const CryptoData& signature,
                 const CryptoData& data,
                 bool* signature_match) const override {
-    if (key.type() != blink::WebCryptoKeyTypePublic)
+    if (key.GetType() != blink::kWebCryptoKeyTypePublic)
       return Status::ErrorUnexpectedKeyType();
 
     crypto::OpenSSLErrStackTracer err_tracer(FROM_HERE);
-    crypto::ScopedEVP_MD_CTX ctx(EVP_MD_CTX_create());
 
     EVP_PKEY* public_key = NULL;
     const EVP_MD* digest = NULL;
@@ -239,6 +239,7 @@ class EcdsaImplementation : public EcAlgorithm {
       return Status::Success();
     }
 
+    bssl::ScopedEVP_MD_CTX ctx;
     if (!EVP_DigestVerifyInit(ctx.get(), NULL, digest, NULL, public_key) ||
         !EVP_DigestVerifyUpdate(ctx.get(), data.bytes(), data.byte_length())) {
       return Status::OperationError();

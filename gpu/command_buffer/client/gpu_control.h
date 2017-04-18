@@ -24,8 +24,8 @@ namespace base {
 class Lock;
 }
 
-namespace gfx {
-class GpuMemoryBuffer;
+namespace ui {
+class LatencyInfo;
 }
 
 namespace gpu {
@@ -51,13 +51,6 @@ class GPU_EXPORT GpuControl {
 
   // Destroy an image. The ID must be positive.
   virtual void DestroyImage(int32_t id) = 0;
-
-  // Create a gpu memory buffer backed image with the given dimensions and
-  // format for |usage|. Returns its ID or -1 on error.
-  virtual int32_t CreateGpuMemoryBufferImage(size_t width,
-                                             size_t height,
-                                             unsigned internalformat,
-                                             unsigned usage) = 0;
 
   // Runs |callback| when a query created via glCreateQueryEXT() has cleared
   // passed the glEndQueryEXT() point.
@@ -86,27 +79,50 @@ class GPU_EXPORT GpuControl {
   virtual CommandBufferId GetCommandBufferID() const = 0;
   virtual int32_t GetExtraCommandBufferData() const = 0;
 
-  // Fence Syncs use release counters at a context level, these fence syncs
-  // need to be flushed before they can be shared with other contexts across
-  // channels. Subclasses should implement these functions and take care of
-  // figuring out when a fence sync has been flushed. The difference between
-  // IsFenceSyncFlushed and IsFenceSyncFlushReceived, one is testing is the
-  // client has issued the flush, and the other is testing if the service
-  // has received the flush.
+  // Generates a fence sync which should be inserted into the GL command stream.
+  // When the service executes the fence sync it is released. Fence syncs are
+  // shared with other contexts as sync tokens which encapsulate the fence sync
+  // and the command buffer on which it was generated. Fence syncs need to be
+  // flushed before they can be used by other contexts. Furthermore, the flush
+  // must be verified before sending a sync token across channel boundaries.
   virtual uint64_t GenerateFenceSyncRelease() = 0;
+
+  // Returns true if the fence sync is valid.
   virtual bool IsFenceSyncRelease(uint64_t release) = 0;
+
+  // Returns true if the client has flushed the fence sync.
   virtual bool IsFenceSyncFlushed(uint64_t release) = 0;
+
+  // Returns true if the service has received the fence sync. Used for verifying
+  // sync tokens.
   virtual bool IsFenceSyncFlushReceived(uint64_t release) = 0;
 
-  // Runs |callback| when sync token is signalled.
+  // Returns true if the service has released (executed) the fence sync. Some
+  // implementations may support calling this from any thread without holding
+  // the lock provided by the client.
+  virtual bool IsFenceSyncReleased(uint64_t release) = 0;
+
+  // Runs |callback| when sync token is signaled.
   virtual void SignalSyncToken(const SyncToken& sync_token,
                                const base::Closure& callback) = 0;
 
+  // This allows the command buffer proxy to mark the next flush with sync token
+  // dependencies for the gpu scheduler. This is used in addition to the
+  // WaitSyncToken command in the command buffer which is still needed. For
+  // example, the WaitSyncToken command is used to pull texture updates when
+  // used in conjunction with MailboxManagerSync.
+  virtual void WaitSyncTokenHint(const SyncToken& sync_token) = 0;
+
   // Under some circumstances a sync token may be used which has not been
-  // verified to have been flushed. For example, fence syncs queued on the
-  // same channel as the wait command guarantee that the fence sync will
-  // be enqueued first so does not need to be flushed.
-  virtual bool CanWaitUnverifiedSyncToken(const SyncToken* sync_token) = 0;
+  // verified to have been flushed. For example, fence syncs queued on the same
+  // channel as the wait command guarantee that the fence sync will be enqueued
+  // first so does not need to be flushed.
+  virtual bool CanWaitUnverifiedSyncToken(const SyncToken& sync_token) = 0;
+
+  // Add |latency_info| to be reported and augumented with GPU latency
+  // components next time there is a GPU buffer swap.
+  virtual void AddLatencyInfo(
+      const std::vector<ui::LatencyInfo>& latency_info) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(GpuControl);

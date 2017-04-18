@@ -4,6 +4,9 @@
 
 #include "base/memory/ref_counted.h"
 
+#include <utility>
+
+#include "base/test/gtest_util.h"
 #include "base/test/opaque_ref_counted.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -120,6 +123,16 @@ scoped_refptr<SelfAssign> Overloaded(scoped_refptr<SelfAssign> self_assign) {
   return self_assign;
 }
 
+class InitialRefCountIsOne : public base::RefCounted<InitialRefCountIsOne> {
+ public:
+  REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
+
+  InitialRefCountIsOne() {}
+
+ private:
+  friend class base::RefCounted<InitialRefCountIsOne>;
+  ~InitialRefCountIsOne() {}
+};
 
 }  // end namespace
 
@@ -156,13 +169,34 @@ TEST(RefCountedUnitTest, ScopedRefPtrToSelfMoveAssignment) {
 }
 
 TEST(RefCountedUnitTest, ScopedRefPtrToOpaque) {
-  scoped_refptr<base::OpaqueRefCounted> p = base::MakeOpaqueRefCounted();
-  base::TestOpaqueRefCounted(p);
+  scoped_refptr<base::OpaqueRefCounted> initial = base::MakeOpaqueRefCounted();
+  base::TestOpaqueRefCounted(initial);
 
-  scoped_refptr<base::OpaqueRefCounted> q;
-  q = p;
-  base::TestOpaqueRefCounted(p);
-  base::TestOpaqueRefCounted(q);
+  scoped_refptr<base::OpaqueRefCounted> assigned;
+  assigned = initial;
+
+  scoped_refptr<base::OpaqueRefCounted> copied(initial);
+
+  scoped_refptr<base::OpaqueRefCounted> moved(std::move(initial));
+
+  scoped_refptr<base::OpaqueRefCounted> move_assigned;
+  move_assigned = std::move(moved);
+}
+
+TEST(RefCountedUnitTest, ScopedRefPtrToOpaqueThreadSafe) {
+  scoped_refptr<base::OpaqueRefCountedThreadSafe> initial =
+      base::MakeOpaqueRefCountedThreadSafe();
+  base::TestOpaqueRefCountedThreadSafe(initial);
+
+  scoped_refptr<base::OpaqueRefCountedThreadSafe> assigned;
+  assigned = initial;
+
+  scoped_refptr<base::OpaqueRefCountedThreadSafe> copied(initial);
+
+  scoped_refptr<base::OpaqueRefCountedThreadSafe> moved(std::move(initial));
+
+  scoped_refptr<base::OpaqueRefCountedThreadSafe> move_assigned;
+  move_assigned = std::move(moved);
 }
 
 TEST(RefCountedUnitTest, BooleanTesting) {
@@ -504,4 +538,31 @@ TEST(RefCountedUnitTest, TestOverloadResolutionMove) {
   scoped_refptr<Other> other(new Other);
   scoped_refptr<Other> other2(other);
   EXPECT_EQ(other2, Overloaded(std::move(other)));
+}
+
+TEST(RefCountedUnitTest, TestInitialRefCountIsOne) {
+  scoped_refptr<InitialRefCountIsOne> obj =
+      base::MakeShared<InitialRefCountIsOne>();
+  EXPECT_TRUE(obj->HasOneRef());
+  obj = nullptr;
+
+  scoped_refptr<InitialRefCountIsOne> obj2 =
+      base::AdoptRef(new InitialRefCountIsOne);
+  EXPECT_TRUE(obj2->HasOneRef());
+  obj2 = nullptr;
+
+  scoped_refptr<Other> obj3 = base::MakeShared<Other>();
+  EXPECT_TRUE(obj3->HasOneRef());
+  obj3 = nullptr;
+}
+
+TEST(RefCountedDeathTest, TestAdoptRef) {
+  EXPECT_DCHECK_DEATH(make_scoped_refptr(new InitialRefCountIsOne));
+
+  InitialRefCountIsOne* ptr = nullptr;
+  EXPECT_DCHECK_DEATH(base::AdoptRef(ptr));
+
+  scoped_refptr<InitialRefCountIsOne> obj =
+      base::MakeShared<InitialRefCountIsOne>();
+  EXPECT_DCHECK_DEATH(base::AdoptRef(obj.get()));
 }

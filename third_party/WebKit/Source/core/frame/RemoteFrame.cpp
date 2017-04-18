@@ -12,199 +12,163 @@
 #include "core/frame/RemoteFrameClient.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/layout/api/LayoutPartItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/PluginScriptForbiddenScope.h"
 #include "platform/UserGestureIndicator.h"
 #include "platform/graphics/GraphicsLayer.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "public/platform/WebLayer.h"
 
 namespace blink {
 
-inline RemoteFrame::RemoteFrame(RemoteFrameClient* client, FrameHost* host, FrameOwner* owner)
-    : Frame(client, host, owner)
-    , m_view(nullptr)
-    , m_securityContext(RemoteSecurityContext::create())
-    , m_domWindow(RemoteDOMWindow::create(*this))
-    , m_windowProxyManager(WindowProxyManager::create(*this))
-    , m_remotePlatformLayer(nullptr)
-{
+inline RemoteFrame::RemoteFrame(RemoteFrameClient* client,
+                                Page& page,
+                                FrameOwner* owner)
+    : Frame(client, page, owner, RemoteWindowProxyManager::Create(*this)),
+      security_context_(RemoteSecurityContext::Create()) {
+  dom_window_ = RemoteDOMWindow::Create(*this);
 }
 
-RemoteFrame* RemoteFrame::create(RemoteFrameClient* client, FrameHost* host, FrameOwner* owner)
-{
-    return new RemoteFrame(client, host, owner);
+RemoteFrame* RemoteFrame::Create(RemoteFrameClient* client,
+                                 Page& page,
+                                 FrameOwner* owner) {
+  return new RemoteFrame(client, page, owner);
 }
 
-RemoteFrame::~RemoteFrame()
-{
-    ASSERT(!m_view);
+RemoteFrame::~RemoteFrame() {
+  ASSERT(!view_);
 }
 
-DEFINE_TRACE(RemoteFrame)
-{
-    visitor->trace(m_view);
-    visitor->trace(m_securityContext);
-    visitor->trace(m_domWindow);
-    visitor->trace(m_windowProxyManager);
-    Frame::trace(visitor);
+DEFINE_TRACE(RemoteFrame) {
+  visitor->Trace(view_);
+  visitor->Trace(security_context_);
+  Frame::Trace(visitor);
 }
 
-DOMWindow* RemoteFrame::domWindow() const
-{
-    return m_domWindow.get();
+void RemoteFrame::Navigate(Document& origin_document,
+                           const KURL& url,
+                           bool replace_current_item,
+                           UserGestureStatus user_gesture_status) {
+  FrameLoadRequest frame_request(&origin_document, ResourceRequest(url));
+  frame_request.SetReplacesCurrentItem(replace_current_item);
+  frame_request.GetResourceRequest().SetHasUserGesture(
+      user_gesture_status == UserGestureStatus::kActive);
+  Navigate(frame_request);
 }
 
-WindowProxy* RemoteFrame::windowProxy(DOMWrapperWorld& world)
-{
-    WindowProxy* windowProxy = m_windowProxyManager->windowProxy(world);
-    ASSERT(windowProxy);
-    windowProxy->initializeIfNeeded();
-    return windowProxy;
+void RemoteFrame::Navigate(const FrameLoadRequest& passed_request) {
+  FrameLoadRequest frame_request(passed_request);
+
+  // The process where this frame actually lives won't have sufficient
+  // information to determine correct referrer, since it won't have access to
+  // the originDocument. Set it now.
+  FrameLoader::SetReferrerForFrameRequest(frame_request);
+
+  frame_request.GetResourceRequest().SetHasUserGesture(
+      UserGestureIndicator::ProcessingUserGesture());
+  Client()->Navigate(frame_request.GetResourceRequest(),
+                     frame_request.ReplacesCurrentItem());
 }
 
-void RemoteFrame::navigate(Document& originDocument, const KURL& url, bool replaceCurrentItem, UserGestureStatus userGestureStatus)
-{
-    FrameLoadRequest frameRequest(&originDocument, url);
-    frameRequest.setReplacesCurrentItem(replaceCurrentItem);
-    frameRequest.resourceRequest().setHasUserGesture(userGestureStatus == UserGestureStatus::Active);
-    navigate(frameRequest);
+void RemoteFrame::Reload(FrameLoadType frame_load_type,
+                         ClientRedirectPolicy client_redirect_policy) {
+  Client()->Reload(frame_load_type, client_redirect_policy);
 }
 
-void RemoteFrame::navigate(const FrameLoadRequest& passedRequest)
-{
-    FrameLoadRequest frameRequest(passedRequest);
+void RemoteFrame::Detach(FrameDetachType type) {
+  lifecycle_.AdvanceTo(FrameLifecycle::kDetaching);
 
-    // The process where this frame actually lives won't have sufficient information to determine
-    // correct referrer, since it won't have access to the originDocument. Set it now.
-    FrameLoader::setReferrerForFrameRequest(frameRequest);
+  PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
+  DetachChildren();
+  if (!Client())
+    return;
 
-    frameRequest.resourceRequest().setHasUserGesture(UserGestureIndicator::processingUserGesture());
-    client()->navigate(frameRequest.resourceRequest(), frameRequest.replacesCurrentItem());
+  // Clean up the frame's view if needed. A remote frame only has a view if
+  // the parent is a local frame.
+  if (view_)
+    view_->Dispose();
+  Client()->WillBeDetached();
+  GetWindowProxyManager()->ClearForClose();
+  SetView(nullptr);
+  // ... the RemoteDOMWindow will need to be informed of detachment,
+  // as otherwise it will keep a strong reference back to this RemoteFrame.
+  // That combined with wrappers (owned and kept alive by RemoteFrame) keeping
+  // persistent strong references to RemoteDOMWindow will prevent the GCing
+  // of all these objects. Break the cycle by notifying of detachment.
+  ToRemoteDOMWindow(dom_window_)->FrameDetached();
+  if (web_layer_)
+    SetWebLayer(nullptr);
+  Frame::Detach(type);
+  lifecycle_.AdvanceTo(FrameLifecycle::kDetached);
 }
 
-void RemoteFrame::reload(FrameLoadType frameLoadType, ClientRedirectPolicy clientRedirectPolicy)
-{
-    client()->reload(frameLoadType, clientRedirectPolicy);
+bool RemoteFrame::PrepareForCommit() {
+  DetachChildren();
+  return !!GetPage();
 }
 
-void RemoteFrame::detach(FrameDetachType type)
-{
-    PluginScriptForbiddenScope forbidPluginDestructorScripting;
-    detachChildren();
-    if (!client())
-        return;
-
-    // Clean up the frame's view if needed. A remote frame only has a view if
-    // the parent is a local frame.
-    if (m_view)
-        m_view->dispose();
-    client()->willBeDetached();
-    m_windowProxyManager->clearForClose();
-    setView(nullptr);
-    if (m_remotePlatformLayer)
-        setRemotePlatformLayer(nullptr);
-    Frame::detach(type);
+RemoteSecurityContext* RemoteFrame::GetSecurityContext() const {
+  return security_context_.Get();
 }
 
-bool RemoteFrame::prepareForCommit()
-{
-    detachChildren();
-    return !!host();
+bool RemoteFrame::ShouldClose() {
+  // TODO(nasko): Implement running the beforeunload handler in the actual
+  // LocalFrame running in a different process and getting back a real result.
+  return true;
 }
 
-RemoteSecurityContext* RemoteFrame::securityContext() const
-{
-    return m_securityContext.get();
+void RemoteFrame::SetView(RemoteFrameView* view) {
+  // Oilpan: as RemoteFrameView performs no finalization actions,
+  // no explicit dispose() of it needed here. (cf. FrameView::dispose().)
+  view_ = view;
 }
 
-bool RemoteFrame::shouldClose()
-{
-    // TODO(nasko): Implement running the beforeunload handler in the actual
-    // LocalFrame running in a different process and getting back a real result.
-    return true;
+void RemoteFrame::CreateView() {
+  // If the RemoteFrame does not have a LocalFrame parent, there's no need to
+  // create a widget for it.
+  if (!DeprecatedLocalOwner())
+    return;
+
+  ASSERT(!DeprecatedLocalOwner()->OwnedWidget());
+
+  SetView(RemoteFrameView::Create(this));
+
+  if (!OwnerLayoutItem().IsNull())
+    DeprecatedLocalOwner()->SetWidget(view_);
 }
 
-void RemoteFrame::forwardInputEvent(Event* event)
-{
-    client()->forwardInputEvent(event);
+RemoteFrameClient* RemoteFrame::Client() const {
+  return static_cast<RemoteFrameClient*>(Frame::Client());
 }
 
-void RemoteFrame::frameRectsChanged(const IntRect& frameRect)
-{
-    client()->frameRectsChanged(frameRect);
+void RemoteFrame::SetWebLayer(WebLayer* web_layer) {
+  if (web_layer_)
+    GraphicsLayer::UnregisterContentsLayer(web_layer_);
+  web_layer_ = web_layer;
+  if (web_layer_)
+    GraphicsLayer::RegisterContentsLayer(web_layer_);
+
+  ASSERT(Owner());
+  ToHTMLFrameOwnerElement(Owner())->SetNeedsCompositingUpdate();
 }
 
-void RemoteFrame::visibilityChanged(bool visible)
-{
-    if (client())
-        client()->visibilityChanged(visible);
+void RemoteFrame::AdvanceFocus(WebFocusType type, LocalFrame* source) {
+  Client()->AdvanceFocus(type, source);
 }
 
-void RemoteFrame::setView(RemoteFrameView* view)
-{
-    // Oilpan: as RemoteFrameView performs no finalization actions,
-    // no explicit dispose() of it needed here. (cf. FrameView::dispose().)
-    m_view = view;
-
-    // ... the RemoteDOMWindow will need to be informed of detachment,
-    // as otherwise it will keep a strong reference back to this RemoteFrame.
-    // That combined with wrappers (owned and kept alive by RemoteFrame) keeping
-    // persistent strong references to RemoteDOMWindow will prevent the GCing
-    // of all these objects. Break the cycle by notifying of detachment.
-    if (!m_view)
-        m_domWindow->frameDetached();
+void RemoteFrame::DetachChildren() {
+  using FrameVector = HeapVector<Member<Frame>>;
+  FrameVector children_to_detach;
+  children_to_detach.ReserveCapacity(Tree().ChildCount());
+  for (Frame* child = Tree().FirstChild(); child;
+       child = child->Tree().NextSibling())
+    children_to_detach.push_back(child);
+  for (const auto& child : children_to_detach)
+    child->Detach(FrameDetachType::kRemove);
 }
 
-void RemoteFrame::createView()
-{
-    // If the RemoteFrame does not have a LocalFrame parent, there's no need to
-    // create a widget for it.
-    if (!deprecatedLocalOwner())
-        return;
-
-    ASSERT(!deprecatedLocalOwner()->ownedWidget());
-
-    setView(RemoteFrameView::create(this));
-
-    if (ownerLayoutObject())
-        deprecatedLocalOwner()->setWidget(m_view);
-}
-
-RemoteFrameClient* RemoteFrame::client() const
-{
-    return static_cast<RemoteFrameClient*>(Frame::client());
-}
-
-void RemoteFrame::setRemotePlatformLayer(WebLayer* layer)
-{
-    if (m_remotePlatformLayer)
-        GraphicsLayer::unregisterContentsLayer(m_remotePlatformLayer);
-    m_remotePlatformLayer = layer;
-    if (m_remotePlatformLayer)
-        GraphicsLayer::registerContentsLayer(layer);
-
-    ASSERT(owner());
-    toHTMLFrameOwnerElement(owner())->setNeedsCompositingUpdate();
-}
-
-void RemoteFrame::advanceFocus(WebFocusType type, LocalFrame* source)
-{
-    client()->advanceFocus(type, source);
-}
-
-void RemoteFrame::detachChildren()
-{
-    using FrameVector = HeapVector<Member<Frame>>;
-    FrameVector childrenToDetach;
-    childrenToDetach.reserveCapacity(tree().childCount());
-    for (Frame* child = tree().firstChild(); child; child = child->tree().nextSibling())
-        childrenToDetach.append(child);
-    for (const auto& child : childrenToDetach)
-        child->detach(FrameDetachType::Remove);
-}
-
-} // namespace blink
+}  // namespace blink

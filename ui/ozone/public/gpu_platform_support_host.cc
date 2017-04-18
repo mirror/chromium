@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
-#include "ui/ozone/ozone_export.h"
 
 namespace ui {
 
@@ -16,10 +15,12 @@ namespace {
 class StubGpuPlatformSupportHost : public GpuPlatformSupportHost {
  public:
   // GpuPlatformSupportHost:
-  void OnChannelEstablished(
+  void OnGpuProcessLaunched(
       int host_id,
       scoped_refptr<base::SingleThreadTaskRunner> send_runner,
       const base::Callback<void(IPC::Message*)>& send_callback) override {}
+
+  void OnChannelEstablished() override {}
 
   void OnChannelDestroyed(int host_id) override {}
   bool OnMessageReceived(const IPC::Message&) override { return false; }

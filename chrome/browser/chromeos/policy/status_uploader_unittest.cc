@@ -6,6 +6,9 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/time/time.h"
@@ -53,21 +56,23 @@ class MockDeviceStatusCollector : public policy::DeviceStatusCollector {
       : DeviceStatusCollector(
             local_state,
             nullptr,
-            policy::DeviceStatusCollector::LocationUpdateRequester(),
             policy::DeviceStatusCollector::VolumeInfoFetcher(),
             policy::DeviceStatusCollector::CPUStatisticsFetcher(),
-            policy::DeviceStatusCollector::CPUTempFetcher()) {}
+            policy::DeviceStatusCollector::CPUTempFetcher(),
+            policy::DeviceStatusCollector::AndroidStatusFetcher()) {}
 
-  MOCK_METHOD1(GetDeviceStatus, bool(em::DeviceStatusReportRequest*));
-  MOCK_METHOD1(GetDeviceSessionStatus, bool(em::SessionStatusReportRequest*));
+  MOCK_METHOD1(GetDeviceAndSessionStatusAsync,
+               void(const policy::DeviceStatusCollector::StatusCallback&));
+
+  MOCK_METHOD0(OnSubmittedSuccessfully, void());
 
   // Explicit mock implementation declared here, since gmock::Invoke can't
   // handle returning non-moveable types like scoped_ptr.
   std::unique_ptr<policy::DeviceLocalAccount> GetAutoLaunchedKioskSessionInfo()
       override {
-    return base::WrapUnique(new policy::DeviceLocalAccount(
+    return base::MakeUnique<policy::DeviceLocalAccount>(
         policy::DeviceLocalAccount::TYPE_KIOSK_APP, "account_id", "app_id",
-        "update_url"));
+        "update_url");
   }
 };
 
@@ -87,32 +92,70 @@ class StatusUploaderTest : public testing::Test {
     client_.SetDMToken("dm_token");
     collector_.reset(new MockDeviceStatusCollector(&prefs_));
     settings_helper_.ReplaceProvider(chromeos::kReportUploadFrequency);
+
+    // Keep a pointer to the mock collector because collector_ gets cleared
+    // when it is passed to the StatusUploader constructor.
+    collector_ptr_ = collector_.get();
   }
 
   void TearDown() override {
     content::RunAllBlockingPoolTasksUntilIdle();
   }
 
+  // Given a pending task to upload status, runs the task and returns the
+  // callback waiting to get device status / session status. The status upload
+  // task will be blocked until the test code calls that callback.
+  DeviceStatusCollector::StatusCallback CollectStatusCallback() {
+    // Running the task should pass a callback into
+    // GetDeviceAndSessionStatusAsync. We'll grab this callback.
+    EXPECT_TRUE(task_runner_->HasPendingTask());
+    DeviceStatusCollector::StatusCallback status_callback;
+    EXPECT_CALL(*collector_ptr_, GetDeviceAndSessionStatusAsync(_))
+        .WillOnce(SaveArg<0>(&status_callback));
+    task_runner_->RunPendingTasks();
+    testing::Mock::VerifyAndClearExpectations(&device_management_service_);
+
+    return status_callback;
+  }
+
   // Given a pending task to upload status, mocks out a server response.
   void RunPendingUploadTaskAndCheckNext(const StatusUploader& uploader,
-                                        base::TimeDelta expected_delay) {
-    EXPECT_FALSE(task_runner_->GetPendingTasks().empty());
+                                        base::TimeDelta expected_delay,
+                                        bool upload_success) {
+    DeviceStatusCollector::StatusCallback status_callback =
+        CollectStatusCallback();
+
+    // Running the status collected callback should trigger
+    // CloudPolicyClient::UploadDeviceStatus.
     CloudPolicyClient::StatusCallback callback;
     EXPECT_CALL(client_, UploadDeviceStatus(_, _, _))
         .WillOnce(SaveArg<2>(&callback));
-    task_runner_->RunPendingTasks();
+
+    // Send some "valid" (read: non-nullptr) device/session data to the
+    // callback in order to simulate valid status data.
+    std::unique_ptr<em::DeviceStatusReportRequest> device_status =
+        base::MakeUnique<em::DeviceStatusReportRequest>();
+    std::unique_ptr<em::SessionStatusReportRequest> session_status =
+        base::MakeUnique<em::SessionStatusReportRequest>();
+    status_callback.Run(std::move(device_status), std::move(session_status));
+
     testing::Mock::VerifyAndClearExpectations(&device_management_service_);
 
     // Make sure no status upload is queued up yet (since an upload is in
     // progress).
-    EXPECT_TRUE(task_runner_->GetPendingTasks().empty());
+    EXPECT_FALSE(task_runner_->HasPendingTask());
+
+    // StatusUpdater is only supposed to tell DeviceStatusCollector to clear its
+    // caches if the status upload succeeded.
+    EXPECT_CALL(*collector_ptr_, OnSubmittedSuccessfully())
+        .Times(upload_success ? 1 : 0);
 
     // Now invoke the response.
-    callback.Run(true);
+    callback.Run(upload_success);
 
     // Now that the previous request was satisfied, a task to do the next
     // upload should be queued.
-    EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+    EXPECT_EQ(1U, task_runner_->NumPendingTasks());
 
     CheckPendingTaskDelay(uploader, expected_delay);
   }
@@ -132,6 +175,7 @@ class StatusUploaderTest : public testing::Test {
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   chromeos::ScopedCrosSettingsTestHelper settings_helper_;
   std::unique_ptr<MockDeviceStatusCollector> collector_;
+  MockDeviceStatusCollector* collector_ptr_;
   ui::UserActivityDetector detector_;
   MockCloudPolicyClient client_;
   MockDeviceManagementService device_management_service_;
@@ -139,88 +183,128 @@ class StatusUploaderTest : public testing::Test {
 };
 
 TEST_F(StatusUploaderTest, BasicTest) {
-  EXPECT_TRUE(task_runner_->GetPendingTasks().empty());
+  EXPECT_FALSE(task_runner_->HasPendingTask());
   StatusUploader uploader(&client_, std::move(collector_), task_runner_);
-  EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
   // On startup, first update should happen in 1 minute.
   EXPECT_EQ(base::TimeDelta::FromMinutes(1),
             task_runner_->NextPendingTaskDelay());
 }
 
 TEST_F(StatusUploaderTest, DifferentFrequencyAtStart) {
-  // Keep a pointer to the mock collector because collector_ gets cleared
-  // when it is passed to the StatusUploader constructor below.
-  MockDeviceStatusCollector* const mock_collector = collector_.get();
   const int new_delay = StatusUploader::kDefaultUploadDelayMs * 2;
   settings_helper_.SetInteger(chromeos::kReportUploadFrequency, new_delay);
   const base::TimeDelta expected_delay = base::TimeDelta::FromMilliseconds(
       new_delay);
-  EXPECT_TRUE(task_runner_->GetPendingTasks().empty());
+  EXPECT_FALSE(task_runner_->HasPendingTask());
   StatusUploader uploader(&client_, std::move(collector_), task_runner_);
-  ASSERT_EQ(1U, task_runner_->GetPendingTasks().size());
+  ASSERT_EQ(1U, task_runner_->NumPendingTasks());
   // On startup, first update should happen in 1 minute.
   EXPECT_EQ(base::TimeDelta::FromMinutes(1),
             task_runner_->NextPendingTaskDelay());
 
-  EXPECT_CALL(*mock_collector, GetDeviceStatus(_)).WillRepeatedly(Return(true));
-  EXPECT_CALL(*mock_collector, GetDeviceSessionStatus(_)).WillRepeatedly(
-      Return(true));
   // Second update should use the delay specified in settings.
-  RunPendingUploadTaskAndCheckNext(uploader, expected_delay);
+  RunPendingUploadTaskAndCheckNext(uploader, expected_delay,
+                                   true /* upload_success */);
 }
 
 TEST_F(StatusUploaderTest, ResetTimerAfterStatusCollection) {
-  // Keep a pointer to the mock collector because collector_ gets cleared
-  // when it is passed to the StatusUploader constructor below.
-  MockDeviceStatusCollector* const mock_collector = collector_.get();
   StatusUploader uploader(&client_, std::move(collector_), task_runner_);
-  EXPECT_CALL(*mock_collector, GetDeviceStatus(_)).WillRepeatedly(Return(true));
-  EXPECT_CALL(*mock_collector, GetDeviceSessionStatus(_)).WillRepeatedly(
-      Return(true));
   const base::TimeDelta expected_delay = base::TimeDelta::FromMilliseconds(
       StatusUploader::kDefaultUploadDelayMs);
-  RunPendingUploadTaskAndCheckNext(uploader, expected_delay);
+  RunPendingUploadTaskAndCheckNext(uploader, expected_delay,
+                                   true /* upload_success */);
 
   // Handle this response also, and ensure new task is queued.
-  RunPendingUploadTaskAndCheckNext(uploader, expected_delay);
+  RunPendingUploadTaskAndCheckNext(uploader, expected_delay,
+                                   true /* upload_success */);
 
   // Now that the previous request was satisfied, a task to do the next
   // upload should be queued again.
-  EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
 }
 
 TEST_F(StatusUploaderTest, ResetTimerAfterFailedStatusCollection) {
-  // Keep a pointer to the mock collector because collector_ gets cleared
-  // when it is passed to the StatusUploader constructor below.
-  MockDeviceStatusCollector* mock_collector = collector_.get();
   StatusUploader uploader(&client_, std::move(collector_), task_runner_);
-  EXPECT_CALL(*mock_collector, GetDeviceStatus(_)).WillOnce(Return(false));
-  EXPECT_CALL(*mock_collector, GetDeviceSessionStatus(_)).WillOnce(
-      Return(false));
-  task_runner_->RunPendingTasks();
 
-  // Make sure the next status upload is queued up.
-  EXPECT_EQ(1U, task_runner_->GetPendingTasks().size());
+  // Running the queued task should pass a callback into
+  // GetDeviceAndSessionStatusAsync. We'll grab this callback and send nullptrs
+  // to it in order to simulate failure to get status.
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
+  DeviceStatusCollector::StatusCallback status_callback;
+  EXPECT_CALL(*collector_ptr_, GetDeviceAndSessionStatusAsync(_))
+      .WillOnce(SaveArg<0>(&status_callback));
+  task_runner_->RunPendingTasks();
+  testing::Mock::VerifyAndClearExpectations(&device_management_service_);
+
+  // Running the callback should trigger StatusUploader::OnStatusReceived, which
+  // in turn should recognize the failure to get status and queue another status
+  // upload.
+  std::unique_ptr<em::DeviceStatusReportRequest> invalid_device_status;
+  std::unique_ptr<em::SessionStatusReportRequest> invalid_session_status;
+  status_callback.Run(std::move(invalid_device_status),
+                      std::move(invalid_session_status));
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
+
+  // Check the delay of the queued upload
   const base::TimeDelta expected_delay = base::TimeDelta::FromMilliseconds(
       StatusUploader::kDefaultUploadDelayMs);
   CheckPendingTaskDelay(uploader, expected_delay);
 }
 
-TEST_F(StatusUploaderTest, ChangeFrequency) {
-  // Keep a pointer to the mock collector because collector_ gets cleared
-  // when it is passed to the StatusUploader constructor below.
-  MockDeviceStatusCollector* const mock_collector = collector_.get();
+TEST_F(StatusUploaderTest, ResetTimerAfterUploadError) {
   StatusUploader uploader(&client_, std::move(collector_), task_runner_);
-  EXPECT_CALL(*mock_collector, GetDeviceStatus(_)).WillRepeatedly(Return(true));
-  EXPECT_CALL(*mock_collector, GetDeviceSessionStatus(_)).WillRepeatedly(
-      Return(true));
+
+  const base::TimeDelta expected_delay =
+      base::TimeDelta::FromMilliseconds(StatusUploader::kDefaultUploadDelayMs);
+  // Simulate upload error
+  RunPendingUploadTaskAndCheckNext(uploader, expected_delay,
+                                   false /* upload_success */);
+
+  // Now that the previous request was satisfied, a task to do the next
+  // upload should be queued again.
+  EXPECT_EQ(1U, task_runner_->NumPendingTasks());
+}
+
+TEST_F(StatusUploaderTest, ResetTimerAfterUnregisteredClient) {
+  StatusUploader uploader(&client_, std::move(collector_), task_runner_);
+
+  client_.SetDMToken("");
+  EXPECT_FALSE(client_.is_registered());
+
+  DeviceStatusCollector::StatusCallback status_callback =
+      CollectStatusCallback();
+
+  // Make sure no status upload is queued up yet (since an upload is in
+  // progress).
+  EXPECT_FALSE(task_runner_->HasPendingTask());
+
+  // StatusUploader should not try to upload using an unregistered client
+  EXPECT_CALL(client_, UploadDeviceStatus(_, _, _)).Times(0);
+  std::unique_ptr<em::DeviceStatusReportRequest> device_status =
+      base::MakeUnique<em::DeviceStatusReportRequest>();
+  std::unique_ptr<em::SessionStatusReportRequest> session_status =
+      base::MakeUnique<em::SessionStatusReportRequest>();
+  status_callback.Run(std::move(device_status), std::move(session_status));
+
+  // A task to try again should be queued.
+  ASSERT_EQ(1U, task_runner_->NumPendingTasks());
+
+  const base::TimeDelta expected_delay =
+      base::TimeDelta::FromMilliseconds(StatusUploader::kDefaultUploadDelayMs);
+  CheckPendingTaskDelay(uploader, expected_delay);
+}
+
+TEST_F(StatusUploaderTest, ChangeFrequency) {
+  StatusUploader uploader(&client_, std::move(collector_), task_runner_);
   // Change the frequency. The new frequency should be reflected in the timing
   // used for the next callback.
   const int new_delay = StatusUploader::kDefaultUploadDelayMs * 2;
   settings_helper_.SetInteger(chromeos::kReportUploadFrequency, new_delay);
   const base::TimeDelta expected_delay = base::TimeDelta::FromMilliseconds(
       new_delay);
-  RunPendingUploadTaskAndCheckNext(uploader, expected_delay);
+  RunPendingUploadTaskAndCheckNext(uploader, expected_delay,
+                                   true /* upload_success */);
 }
 
 #if defined(USE_X11) || defined(USE_OZONE)

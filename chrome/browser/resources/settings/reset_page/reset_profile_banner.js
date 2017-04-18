@@ -4,38 +4,35 @@
 
 /**
  * @fileoverview
- * 'settings-reset-profile-banner' is the banner shown for clearing profile
- * settings.
+ * 'settings-reset-profile-banner' is the banner shown for propmting the user to
+ * clear profile settings.
  */
 Polymer({
+  // TODO(dpapad): Rename to settings-reset-warning-dialog.
   is: 'settings-reset-profile-banner',
 
-  properties: {
-    showResetProfileDialog_: {
-      type: Boolean,
-      value: false,
-    },
+  listeners: {
+    'cancel': 'onCancel_',
+  },
+
+  /** @override */
+  attached: function() {
+    this.$.dialog.showModal();
   },
 
   /** @private */
-  onCloseTap_: function() {
+  onOkTap_: function() {
+    this.$.dialog.cancel();
+  },
+
+  /** @private */
+  onCancel_: function() {
     settings.ResetBrowserProxyImpl.getInstance().onHideResetProfileBanner();
-    this.remove();
   },
 
-  /**
-   * Creates and shows a <settings-reset-profile-dialog>.
-   * @private
-   */
-  showDialog_: function(dialogName) {
-    this.showResetProfileDialog_ = true;
-    this.async(function() {
-      var dialog = this.$$('settings-reset-profile-dialog');
-      dialog.open();
-    }.bind(this));
-  },
-
-  onResetDone_: function() {
-    this.showResetProfileDialog_ = false;
+  /** @private */
+  onResetTap_: function() {
+    this.$.dialog.close();
+    settings.navigateTo(settings.Route.RESET_DIALOG);
   },
 });

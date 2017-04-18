@@ -26,81 +26,139 @@
 #ifndef V8ScriptRunner_h
 #define V8ScriptRunner_h
 
+#include <stdint.h>
+
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
-#include "core/fetch/AccessControlStatus.h"
-#include "platform/text/CompressibleString.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/TextPosition.h"
-#include "wtf/text/WTFString.h"
-#include <v8.h>
+#include "platform/loader/fetch/AccessControlStatus.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/TextPosition.h"
+#include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class CachedMetadataHandler;
-class Resource;
 class ScriptResource;
 class ScriptSourceCode;
 class ExecutionContext;
 class ScriptStreamer;
 
 class CORE_EXPORT V8ScriptRunner final {
-    STATIC_ONLY(V8ScriptRunner);
-public:
-    // For the following methods, the caller sites have to hold
-    // a HandleScope and a ContextScope.
-    static v8::MaybeLocal<v8::Script> compileScript(const ScriptSourceCode&, v8::Isolate*, AccessControlStatus = SharableCrossOrigin, V8CacheOptions = V8CacheOptionsDefault);
-    static v8::MaybeLocal<v8::Script> compileScript(const CompressibleString&, const String& fileName, const String& sourceMapUrl, const TextPosition&, v8::Isolate*, CachedMetadataHandler* = nullptr, AccessControlStatus = SharableCrossOrigin, V8CacheOptions = V8CacheOptionsDefault);
-    // CachedMetadataHandler is set when metadata caching is supported. For
-    // normal scripe resources, CachedMetadataHandler is from ScriptResource.
-    // For worker script, ScriptResource is null but CachedMetadataHandler may be
-    // set. When ScriptStreamer is set, ScriptResource must be set.
-    static v8::MaybeLocal<v8::Script> compileScript(v8::Local<v8::String>, const String& fileName, const String& sourceMapUrl, const TextPosition&, v8::Isolate*, ScriptResource* = nullptr, ScriptStreamer* = nullptr, CachedMetadataHandler* = nullptr, AccessControlStatus = SharableCrossOrigin, V8CacheOptions = V8CacheOptionsDefault);
-    static v8::MaybeLocal<v8::Value> runCompiledScript(v8::Isolate*, v8::Local<v8::Script>, ExecutionContext*);
-    static v8::MaybeLocal<v8::Value> compileAndRunInternalScript(v8::Local<v8::String>, v8::Isolate*, const String& = String(), const TextPosition& = TextPosition());
-    static v8::MaybeLocal<v8::Value> runCompiledInternalScript(v8::Isolate*, v8::Local<v8::Script>);
-    static v8::MaybeLocal<v8::Value> callAsConstructor(v8::Isolate*, v8::Local<v8::Object>, ExecutionContext*, int argc = 0, v8::Local<v8::Value> argv[] = 0);
-    static v8::MaybeLocal<v8::Value> callInternalFunction(v8::Local<v8::Function>, v8::Local<v8::Value> receiver, int argc, v8::Local<v8::Value> info[], v8::Isolate*);
-    static v8::MaybeLocal<v8::Value> callFunction(v8::Local<v8::Function>, ExecutionContext*, v8::Local<v8::Value> receiver, int argc, v8::Local<v8::Value> info[], v8::Isolate*);
-    static v8::MaybeLocal<v8::Object> instantiateObject(v8::Isolate*, v8::Local<v8::ObjectTemplate>);
-    static v8::MaybeLocal<v8::Object> instantiateObject(v8::Isolate*, v8::Local<v8::Function>, int argc = 0, v8::Local<v8::Value> argv[] = 0);
-    static v8::MaybeLocal<v8::Object> instantiateObjectInDocument(v8::Isolate*, v8::Local<v8::Function>, ExecutionContext*, int argc = 0, v8::Local<v8::Value> argv[] = 0);
+  STATIC_ONLY(V8ScriptRunner);
 
-    static unsigned tagForParserCache(CachedMetadataHandler*);
-    static unsigned tagForCodeCache(CachedMetadataHandler*);
-    static void setCacheTimeStamp(CachedMetadataHandler*);
+ public:
+  // For the following methods, the caller sites have to hold
+  // a HandleScope and a ContextScope.
+  static v8::MaybeLocal<v8::Script> CompileScript(const ScriptSourceCode&,
+                                                  v8::Isolate*,
+                                                  AccessControlStatus,
+                                                  V8CacheOptions);
+  static v8::MaybeLocal<v8::Script> CompileScript(const String&,
+                                                  const String& file_name,
+                                                  const String& source_map_url,
+                                                  const TextPosition&,
+                                                  v8::Isolate*,
+                                                  CachedMetadataHandler*,
+                                                  AccessControlStatus,
+                                                  V8CacheOptions);
+  // CachedMetadataHandler is set when metadata caching is supported. For
+  // normal scripe resources, CachedMetadataHandler is from ScriptResource.
+  // For worker script, ScriptResource is null but CachedMetadataHandler may be
+  // set. When ScriptStreamer is set, ScriptResource must be set.
+  static v8::MaybeLocal<v8::Script> CompileScript(v8::Local<v8::String>,
+                                                  const String& file_name,
+                                                  const String& source_map_url,
+                                                  const TextPosition&,
+                                                  v8::Isolate*,
+                                                  ScriptResource*,
+                                                  ScriptStreamer*,
+                                                  CachedMetadataHandler*,
+                                                  AccessControlStatus,
+                                                  V8CacheOptions);
+  static v8::MaybeLocal<v8::Module> CompileModule(v8::Isolate*,
+                                                  const String& source,
+                                                  const String& file_name,
+                                                  AccessControlStatus);
+  static v8::MaybeLocal<v8::Value> RunCompiledScript(v8::Isolate*,
+                                                     v8::Local<v8::Script>,
+                                                     ExecutionContext*);
+  static v8::MaybeLocal<v8::Value> CompileAndRunInternalScript(
+      v8::Local<v8::String>,
+      v8::Isolate*,
+      const String& = String(),
+      const TextPosition& = TextPosition());
+  static v8::MaybeLocal<v8::Value> RunCompiledInternalScript(
+      v8::Isolate*,
+      v8::Local<v8::Script>);
+  static v8::MaybeLocal<v8::Value> CallAsConstructor(
+      v8::Isolate*,
+      v8::Local<v8::Object>,
+      ExecutionContext*,
+      int argc = 0,
+      v8::Local<v8::Value> argv[] = 0);
+  static v8::MaybeLocal<v8::Value> CallInternalFunction(
+      v8::Local<v8::Function>,
+      v8::Local<v8::Value> receiver,
+      int argc,
+      v8::Local<v8::Value> info[],
+      v8::Isolate*);
+  static v8::MaybeLocal<v8::Value> CallFunction(v8::Local<v8::Function>,
+                                                ExecutionContext*,
+                                                v8::Local<v8::Value> receiver,
+                                                int argc,
+                                                v8::Local<v8::Value> info[],
+                                                v8::Isolate*);
+  static v8::MaybeLocal<v8::Value> EvaluateModule(v8::Local<v8::Module>,
+                                                  v8::Local<v8::Context>,
+                                                  v8::Isolate*);
 
+  static uint32_t TagForParserCache(CachedMetadataHandler*);
+  static uint32_t TagForCodeCache(CachedMetadataHandler*);
+  static void SetCacheTimeStamp(CachedMetadataHandler*);
 
-    // Utiltiies for calling functions added to the V8 extras binding object.
+  // Utilities for calling functions added to the V8 extras binding object.
 
-    template <size_t N>
-    static v8::MaybeLocal<v8::Value> callExtra(ScriptState* scriptState, const char* name, v8::Local<v8::Value>(&args)[N])
-    {
-        return callExtraHelper(scriptState, name, N, args);
-    }
+  template <size_t N>
+  static v8::MaybeLocal<v8::Value> CallExtra(ScriptState* script_state,
+                                             const char* name,
+                                             v8::Local<v8::Value> (&args)[N]) {
+    return CallExtraHelper(script_state, name, N, args);
+  }
 
-    template <size_t N>
-    static v8::Local<v8::Value> callExtraOrCrash(ScriptState* scriptState, const char* name, v8::Local<v8::Value>(&args)[N])
-    {
-        return v8CallOrCrash(callExtraHelper(scriptState, name, N, args));
-    }
+  template <size_t N>
+  static v8::Local<v8::Value> CallExtraOrCrash(
+      ScriptState* script_state,
+      const char* name,
+      v8::Local<v8::Value> (&args)[N]) {
+    return CallExtraHelper(script_state, name, N, args).ToLocalChecked();
+  }
 
-private:
-    static v8::MaybeLocal<v8::Value> callExtraHelper(ScriptState* scriptState, const char* name, size_t numArgs, v8::Local<v8::Value>* args)
-    {
-        v8::Isolate* isolate = scriptState->isolate();
-        v8::Local<v8::Value> undefined = v8::Undefined(isolate);
-        v8::Local<v8::Value> functionValue = scriptState->getFromExtrasExports(name).v8Value();
-        if (functionValue.IsEmpty())
-            return v8::MaybeLocal<v8::Value>();
-        v8::Local<v8::Function> function = functionValue.As<v8::Function>();
-        return V8ScriptRunner::callInternalFunction(function, undefined, numArgs, args, isolate);
-    }
+  // Use V8ThrowException instead of this function unless absolutely needed.
+  static void ThrowException(v8::Isolate*,
+                             v8::Local<v8::Value> exception,
+                             const v8::ScriptOrigin&);
+
+ private:
+  static v8::MaybeLocal<v8::Value> CallExtraHelper(ScriptState* script_state,
+                                                   const char* name,
+                                                   size_t num_args,
+                                                   v8::Local<v8::Value>* args) {
+    v8::Isolate* isolate = script_state->GetIsolate();
+    v8::Local<v8::Value> undefined = v8::Undefined(isolate);
+    v8::Local<v8::Value> function_value =
+        script_state->GetFromExtrasExports(name).V8Value();
+    if (function_value.IsEmpty())
+      return v8::MaybeLocal<v8::Value>();
+    v8::Local<v8::Function> function = function_value.As<v8::Function>();
+    return V8ScriptRunner::CallInternalFunction(function, undefined, num_args,
+                                                args, isolate);
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8ScriptRunner_h
+#endif  // V8ScriptRunner_h

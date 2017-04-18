@@ -5,11 +5,7 @@
 #ifndef ASH_HOST_WINDOW_TREE_HOST_INIT_PARAMS_H_
 #define ASH_HOST_WINDOW_TREE_HOST_INIT_PARAMS_H_
 
-#include "build/build_config.h"
-
-#if defined(OS_WIN)
-#include <windows.h>
-#endif
+#include <stdint.h>
 
 #include "ash/ash_export.h"
 #include "ui/gfx/geometry/rect.h"
@@ -17,16 +13,12 @@
 namespace ash {
 
 struct ASH_EXPORT AshWindowTreeHostInitParams {
-  AshWindowTreeHostInitParams();
-  ~AshWindowTreeHostInitParams();
-
+  // This corresponds to display::ManagedDisplayInfo::bounds_in_native.
   gfx::Rect initial_bounds;
-
-  bool offscreen;
-
-#if defined(OS_WIN)
-  HWND remote_hwnd;
-#endif
+  bool offscreen = false;
+  int64_t display_id = 0;
+  float device_scale_factor = 0.0f;
+  float ui_scale_factor = 0.0f;
 };
 
 }  // namespace ash

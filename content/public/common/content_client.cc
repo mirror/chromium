@@ -61,6 +61,9 @@ ContentUtilityClient* SetUtilityClientForTesting(ContentUtilityClient* u) {
   return InternalTestInitializer::SetUtility(u);
 }
 
+ContentClient::Schemes::Schemes() = default;
+ContentClient::Schemes::~Schemes() = default;
+
 ContentClient::ContentClient()
     : browser_(NULL),
       gpu_(NULL),
@@ -133,7 +136,7 @@ bool ContentClient::UsingSynchronousCompositing() {
   return false;
 }
 
-media::MediaClientAndroid* ContentClient::GetMediaClientAndroid() {
+media::MediaDrmBridgeClient* ContentClient::GetMediaDrmBridgeClient() {
   return nullptr;
 }
 #endif  // OS_ANDROID

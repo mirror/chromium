@@ -22,86 +22,92 @@
 
 #include "core/SVGNames.h"
 #include "core/svg/graphics/filters/SVGFilterBuilder.h"
-#include "platform/graphics/filters/FilterEffect.h"
 
 namespace blink {
 
-template<> const SVGEnumerationStringEntries& getStaticStringEntries<ColorMatrixType>()
-{
-    DEFINE_STATIC_LOCAL(SVGEnumerationStringEntries, entries, ());
-    if (entries.isEmpty()) {
-        entries.append(std::make_pair(FECOLORMATRIX_TYPE_MATRIX, "matrix"));
-        entries.append(std::make_pair(FECOLORMATRIX_TYPE_SATURATE, "saturate"));
-        entries.append(std::make_pair(FECOLORMATRIX_TYPE_HUEROTATE, "hueRotate"));
-        entries.append(std::make_pair(FECOLORMATRIX_TYPE_LUMINANCETOALPHA, "luminanceToAlpha"));
-    }
-    return entries;
+template <>
+const SVGEnumerationStringEntries& GetStaticStringEntries<ColorMatrixType>() {
+  DEFINE_STATIC_LOCAL(SVGEnumerationStringEntries, entries, ());
+  if (entries.IsEmpty()) {
+    entries.push_back(std::make_pair(FECOLORMATRIX_TYPE_MATRIX, "matrix"));
+    entries.push_back(std::make_pair(FECOLORMATRIX_TYPE_SATURATE, "saturate"));
+    entries.push_back(
+        std::make_pair(FECOLORMATRIX_TYPE_HUEROTATE, "hueRotate"));
+    entries.push_back(std::make_pair(FECOLORMATRIX_TYPE_LUMINANCETOALPHA,
+                                     "luminanceToAlpha"));
+  }
+  return entries;
 }
 
 inline SVGFEColorMatrixElement::SVGFEColorMatrixElement(Document& document)
-    : SVGFilterPrimitiveStandardAttributes(SVGNames::feColorMatrixTag, document)
-    , m_values(SVGAnimatedNumberList::create(this, SVGNames::valuesAttr, SVGNumberList::create()))
-    , m_in1(SVGAnimatedString::create(this, SVGNames::inAttr, SVGString::create()))
-    , m_type(SVGAnimatedEnumeration<ColorMatrixType>::create(this, SVGNames::typeAttr, FECOLORMATRIX_TYPE_MATRIX))
-{
-    addToPropertyMap(m_values);
-    addToPropertyMap(m_in1);
-    addToPropertyMap(m_type);
+    : SVGFilterPrimitiveStandardAttributes(SVGNames::feColorMatrixTag,
+                                           document),
+      values_(SVGAnimatedNumberList::Create(this, SVGNames::valuesAttr)),
+      in1_(SVGAnimatedString::Create(this, SVGNames::inAttr)),
+      type_(SVGAnimatedEnumeration<ColorMatrixType>::Create(
+          this,
+          SVGNames::typeAttr,
+          FECOLORMATRIX_TYPE_MATRIX)) {
+  AddToPropertyMap(values_);
+  AddToPropertyMap(in1_);
+  AddToPropertyMap(type_);
 }
 
-DEFINE_TRACE(SVGFEColorMatrixElement)
-{
-    visitor->trace(m_values);
-    visitor->trace(m_in1);
-    visitor->trace(m_type);
-    SVGFilterPrimitiveStandardAttributes::trace(visitor);
+DEFINE_TRACE(SVGFEColorMatrixElement) {
+  visitor->Trace(values_);
+  visitor->Trace(in1_);
+  visitor->Trace(type_);
+  SVGFilterPrimitiveStandardAttributes::Trace(visitor);
 }
 
 DEFINE_NODE_FACTORY(SVGFEColorMatrixElement)
 
-bool SVGFEColorMatrixElement::setFilterEffectAttribute(FilterEffect* effect, const QualifiedName& attrName)
-{
-    FEColorMatrix* colorMatrix = static_cast<FEColorMatrix*>(effect);
-    if (attrName == SVGNames::typeAttr)
-        return colorMatrix->setType(m_type->currentValue()->enumValue());
-    if (attrName == SVGNames::valuesAttr)
-        return colorMatrix->setValues(m_values->currentValue()->toFloatVector());
+bool SVGFEColorMatrixElement::SetFilterEffectAttribute(
+    FilterEffect* effect,
+    const QualifiedName& attr_name) {
+  FEColorMatrix* color_matrix = static_cast<FEColorMatrix*>(effect);
+  if (attr_name == SVGNames::typeAttr)
+    return color_matrix->SetType(type_->CurrentValue()->EnumValue());
+  if (attr_name == SVGNames::valuesAttr)
+    return color_matrix->SetValues(values_->CurrentValue()->ToFloatVector());
 
-    return SVGFilterPrimitiveStandardAttributes::setFilterEffectAttribute(effect, attrName);
+  return SVGFilterPrimitiveStandardAttributes::SetFilterEffectAttribute(
+      effect, attr_name);
 }
 
-void SVGFEColorMatrixElement::svgAttributeChanged(const QualifiedName& attrName)
-{
-    if (attrName == SVGNames::typeAttr || attrName == SVGNames::valuesAttr) {
-        SVGElement::InvalidationGuard invalidationGuard(this);
-        primitiveAttributeChanged(attrName);
-        return;
-    }
+void SVGFEColorMatrixElement::SvgAttributeChanged(
+    const QualifiedName& attr_name) {
+  if (attr_name == SVGNames::typeAttr || attr_name == SVGNames::valuesAttr) {
+    SVGElement::InvalidationGuard invalidation_guard(this);
+    PrimitiveAttributeChanged(attr_name);
+    return;
+  }
 
-    if (attrName == SVGNames::inAttr) {
-        SVGElement::InvalidationGuard invalidationGuard(this);
-        invalidate();
-        return;
-    }
+  if (attr_name == SVGNames::inAttr) {
+    SVGElement::InvalidationGuard invalidation_guard(this);
+    Invalidate();
+    return;
+  }
 
-    SVGFilterPrimitiveStandardAttributes::svgAttributeChanged(attrName);
+  SVGFilterPrimitiveStandardAttributes::SvgAttributeChanged(attr_name);
 }
 
-FilterEffect* SVGFEColorMatrixElement::build(SVGFilterBuilder* filterBuilder, Filter* filter)
-{
-    FilterEffect* input1 = filterBuilder->getEffectById(AtomicString(m_in1->currentValue()->value()));
-    ASSERT(input1);
+FilterEffect* SVGFEColorMatrixElement::Build(SVGFilterBuilder* filter_builder,
+                                             Filter* filter) {
+  FilterEffect* input1 = filter_builder->GetEffectById(
+      AtomicString(in1_->CurrentValue()->Value()));
+  DCHECK(input1);
 
-    ColorMatrixType filterType = m_type->currentValue()->enumValue();
-    Vector<float> filterValues = m_values->currentValue()->toFloatVector();
-    FilterEffect* effect = FEColorMatrix::create(filter, filterType, filterValues);
-    effect->inputEffects().append(input1);
-    return effect;
+  ColorMatrixType filter_type = type_->CurrentValue()->EnumValue();
+  Vector<float> filter_values = values_->CurrentValue()->ToFloatVector();
+  FilterEffect* effect =
+      FEColorMatrix::Create(filter, filter_type, filter_values);
+  effect->InputEffects().push_back(input1);
+  return effect;
 }
 
-bool SVGFEColorMatrixElement::taintsOrigin(bool inputsTaintOrigin) const
-{
-    return inputsTaintOrigin;
+bool SVGFEColorMatrixElement::TaintsOrigin(bool inputs_taint_origin) const {
+  return inputs_taint_origin;
 }
 
-} // namespace blink
+}  // namespace blink

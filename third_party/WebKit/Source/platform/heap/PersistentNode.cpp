@@ -4,6 +4,7 @@
 
 #include "platform/heap/PersistentNode.h"
 
+#include "base/debug/alias.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -11,162 +12,187 @@ namespace blink {
 namespace {
 
 class DummyGCBase final : public GarbageCollected<DummyGCBase> {
-public:
-    DEFINE_INLINE_TRACE() { }
+ public:
+  DEFINE_INLINE_TRACE() {}
 };
-
 }
 
-PersistentRegion::~PersistentRegion()
-{
-    PersistentNodeSlots* slots = m_slots;
-    while (slots) {
-        PersistentNodeSlots* deadSlots = slots;
-        slots = slots->m_next;
-        delete deadSlots;
-    }
+PersistentRegion::~PersistentRegion() {
+  PersistentNodeSlots* slots = slots_;
+  while (slots) {
+    PersistentNodeSlots* dead_slots = slots;
+    slots = slots->next_;
+    delete dead_slots;
+  }
 }
 
-int PersistentRegion::numberOfPersistents()
-{
-    int persistentCount = 0;
-    for (PersistentNodeSlots* slots = m_slots; slots; slots = slots->m_next) {
-        for (int i = 0; i < PersistentNodeSlots::slotCount; ++i) {
-            if (!slots->m_slot[i].isUnused())
-                ++persistentCount;
-        }
+int PersistentRegion::NumberOfPersistents() {
+  int persistent_count = 0;
+  for (PersistentNodeSlots* slots = slots_; slots; slots = slots->next_) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      if (!slots->slot_[i].IsUnused())
+        ++persistent_count;
     }
-    ASSERT(persistentCount == m_persistentCount);
-    return persistentCount;
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_count_);
+#endif
+  return persistent_count;
 }
 
-void PersistentRegion::ensurePersistentNodeSlots(void* self, TraceCallback trace)
-{
-    ASSERT(!m_freeListHead);
-    PersistentNodeSlots* slots = new PersistentNodeSlots;
-    for (int i = 0; i < PersistentNodeSlots::slotCount; ++i) {
-        PersistentNode* node = &slots->m_slot[i];
-        node->setFreeListNext(m_freeListHead);
-        m_freeListHead = node;
-        ASSERT(node->isUnused());
-    }
-    slots->m_next = m_slots;
-    m_slots = slots;
+void PersistentRegion::EnsurePersistentNodeSlots(void* self,
+                                                 TraceCallback trace) {
+  ASSERT(!free_list_head_);
+  PersistentNodeSlots* slots = new PersistentNodeSlots;
+  for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+    PersistentNode* node = &slots->slot_[i];
+    node->SetFreeListNext(free_list_head_);
+    free_list_head_ = node;
+    ASSERT(node->IsUnused());
+  }
+  slots->next_ = slots_;
+  slots_ = slots;
 }
 
-void PersistentRegion::releasePersistentNode(PersistentNode* persistentNode, ThreadState::PersistentClearCallback callback)
-{
-    ASSERT(!persistentNode->isUnused());
-    // 'self' is in use, containing the persistent wrapper object.
-    void* self = persistentNode->self();
-    if (callback) {
-        (*callback)(self);
-        ASSERT(persistentNode->isUnused());
-        return;
-    }
-    Persistent<DummyGCBase>* persistent = reinterpret_cast<Persistent<DummyGCBase>*>(self);
-    persistent->clear();
-    ASSERT(persistentNode->isUnused());
+void PersistentRegion::ReleasePersistentNode(
+    PersistentNode* persistent_node,
+    ThreadState::PersistentClearCallback callback) {
+  ASSERT(!persistent_node->IsUnused());
+  // 'self' is in use, containing the persistent wrapper object.
+  void* self = persistent_node->Self();
+  if (callback) {
+    (*callback)(self);
+    ASSERT(persistent_node->IsUnused());
+    return;
+  }
+  Persistent<DummyGCBase>* persistent =
+      reinterpret_cast<Persistent<DummyGCBase>*>(self);
+  persistent->Clear();
+  ASSERT(persistent_node->IsUnused());
 }
 
 // This function traces all PersistentNodes. If we encounter
 // a PersistentNodeSlot that contains only freed PersistentNodes,
 // we delete the PersistentNodeSlot. This function rebuilds the free
 // list of PersistentNodes.
-void PersistentRegion::tracePersistentNodes(Visitor* visitor, ShouldTraceCallback shouldTrace)
-{
-    size_t debugMarkedObjectSize = ProcessHeap::totalMarkedObjectSize();
-    base::debug::Alias(&debugMarkedObjectSize);
+void PersistentRegion::TracePersistentNodes(Visitor* visitor,
+                                            ShouldTraceCallback should_trace) {
+  size_t debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
+  base::debug::Alias(&debug_marked_object_size);
 
-    m_freeListHead = nullptr;
-    int persistentCount = 0;
-    PersistentNodeSlots** prevNext = &m_slots;
-    PersistentNodeSlots* slots = m_slots;
-    while (slots) {
-        PersistentNode* freeListNext = nullptr;
-        PersistentNode* freeListLast = nullptr;
-        int freeCount = 0;
-        for (int i = 0; i < PersistentNodeSlots::slotCount; ++i) {
-            PersistentNode* node = &slots->m_slot[i];
-            if (node->isUnused()) {
-                if (!freeListNext)
-                    freeListLast = node;
-                node->setFreeListNext(freeListNext);
-                freeListNext = node;
-                ++freeCount;
-            } else {
-                ++persistentCount;
-                if (!shouldTrace(visitor, node))
-                    continue;
-                node->tracePersistentNode(visitor);
-                debugMarkedObjectSize = ProcessHeap::totalMarkedObjectSize();
-            }
-        }
-        if (freeCount == PersistentNodeSlots::slotCount) {
-            PersistentNodeSlots* deadSlots = slots;
-            *prevNext = slots->m_next;
-            slots = slots->m_next;
-            delete deadSlots;
-        } else {
-            if (freeListLast) {
-                ASSERT(freeListNext);
-                ASSERT(!freeListLast->freeListNext());
-                freeListLast->setFreeListNext(m_freeListHead);
-                m_freeListHead = freeListNext;
-            }
-            prevNext = &slots->m_next;
-            slots = slots->m_next;
-        }
+  free_list_head_ = nullptr;
+  int persistent_count = 0;
+  PersistentNodeSlots** prev_next = &slots_;
+  PersistentNodeSlots* slots = slots_;
+  while (slots) {
+    PersistentNode* free_list_next = nullptr;
+    PersistentNode* free_list_last = nullptr;
+    int free_count = 0;
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      PersistentNode* node = &slots->slot_[i];
+      if (node->IsUnused()) {
+        if (!free_list_next)
+          free_list_last = node;
+        node->SetFreeListNext(free_list_next);
+        free_list_next = node;
+        ++free_count;
+      } else {
+        ++persistent_count;
+        if (!should_trace(visitor, node))
+          continue;
+        node->TracePersistentNode(visitor);
+        debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
+      }
     }
-    ASSERT(persistentCount == m_persistentCount);
-}
-
-bool CrossThreadPersistentRegion::shouldTracePersistentNode(Visitor* visitor, PersistentNode* node)
-{
-    CrossThreadPersistent<DummyGCBase>* persistent = reinterpret_cast<CrossThreadPersistent<DummyGCBase>*>(node->self());
-    DCHECK(persistent);
-    DCHECK(!persistent->isHashTableDeletedValue());
-    Address rawObject = reinterpret_cast<Address>(persistent->get());
-    if (!rawObject)
-        return false;
-    return &visitor->heap() == &ThreadState::fromObject(rawObject)->heap();
-}
-
-void CrossThreadPersistentRegion::prepareForThreadStateTermination(ThreadState* threadState)
-{
-    // For heaps belonging to a thread that's detaching, any cross-thread persistents
-    // pointing into them needs to be disabled. Do that by clearing out the underlying
-    // heap reference.
-    MutexLocker lock(m_mutex);
-
-    // TODO(sof): consider ways of reducing overhead. (e.g., tracking number of active
-    // CrossThreadPersistent<>s pointing into the heaps of each ThreadState and use that
-    // count to bail out early.)
-    PersistentNodeSlots* slots = m_persistentRegion->m_slots;
-    while (slots) {
-        for (int i = 0; i < PersistentNodeSlots::slotCount; ++i) {
-            if (slots->m_slot[i].isUnused())
-                continue;
-
-            // 'self' is in use, containing the cross-thread persistent wrapper object.
-            CrossThreadPersistent<DummyGCBase>* persistent = reinterpret_cast<CrossThreadPersistent<DummyGCBase>*>(slots->m_slot[i].self());
-            ASSERT(persistent);
-            void* rawObject = persistent->atomicGet();
-            if (!rawObject)
-                continue;
-            BasePage* page = pageFromObject(rawObject);
-            ASSERT(page);
-            // The main thread will upon detach just mark its heap pages as orphaned,
-            // but not invalidate its CrossThreadPersistent<>s.
-            if (page->orphaned())
-                continue;
-            if (page->arena()->getThreadState() == threadState) {
-                persistent->clear();
-                ASSERT(slots->m_slot[i].isUnused());
-            }
-        }
-        slots = slots->m_next;
+    if (free_count == PersistentNodeSlots::kSlotCount) {
+      PersistentNodeSlots* dead_slots = slots;
+      *prev_next = slots->next_;
+      slots = slots->next_;
+      delete dead_slots;
+    } else {
+      if (free_list_last) {
+        ASSERT(free_list_next);
+        ASSERT(!free_list_last->FreeListNext());
+        free_list_last->SetFreeListNext(free_list_head_);
+        free_list_head_ = free_list_next;
+      }
+      prev_next = &slots->next_;
+      slots = slots->next_;
     }
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_count_);
+#endif
 }
 
-} // namespace blink
+bool CrossThreadPersistentRegion::ShouldTracePersistentNode(
+    Visitor* visitor,
+    PersistentNode* node) {
+  CrossThreadPersistent<DummyGCBase>* persistent =
+      reinterpret_cast<CrossThreadPersistent<DummyGCBase>*>(node->Self());
+  DCHECK(persistent);
+  DCHECK(!persistent->IsHashTableDeletedValue());
+  Address raw_object = reinterpret_cast<Address>(persistent->Get());
+  if (!raw_object)
+    return false;
+  return &visitor->Heap() == &ThreadState::FromObject(raw_object)->Heap();
+}
+
+void CrossThreadPersistentRegion::PrepareForThreadStateTermination(
+    ThreadState* thread_state) {
+  // For heaps belonging to a thread that's detaching, any cross-thread
+  // persistents pointing into them needs to be disabled. Do that by clearing
+  // out the underlying heap reference.
+  MutexLocker lock(mutex_);
+
+  // TODO(sof): consider ways of reducing overhead. (e.g., tracking number of
+  // active CrossThreadPersistent<>s pointing into the heaps of each ThreadState
+  // and use that count to bail out early.)
+  PersistentNodeSlots* slots = persistent_region_->slots_;
+  while (slots) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      if (slots->slot_[i].IsUnused())
+        continue;
+
+      // 'self' is in use, containing the cross-thread persistent wrapper
+      // object.
+      CrossThreadPersistent<DummyGCBase>* persistent =
+          reinterpret_cast<CrossThreadPersistent<DummyGCBase>*>(
+              slots->slot_[i].Self());
+      ASSERT(persistent);
+      void* raw_object = persistent->AtomicGet();
+      if (!raw_object)
+        continue;
+      BasePage* page = PageFromObject(raw_object);
+      ASSERT(page);
+      if (page->Arena()->GetThreadState() == thread_state) {
+        persistent->Clear();
+        ASSERT(slots->slot_[i].IsUnused());
+      }
+    }
+    slots = slots->next_;
+  }
+}
+
+#if defined(ADDRESS_SANITIZER)
+void CrossThreadPersistentRegion::UnpoisonCrossThreadPersistents() {
+  MutexLocker lock(mutex_);
+  int persistent_count = 0;
+  for (PersistentNodeSlots* slots = persistent_region_->slots_; slots;
+       slots = slots->next_) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      const PersistentNode& node = slots->slot_[i];
+      if (!node.IsUnused()) {
+        ASAN_UNPOISON_MEMORY_REGION(node.Self(),
+                                    sizeof(CrossThreadPersistent<void*>));
+        ++persistent_count;
+      }
+    }
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_region_->persistent_count_);
+#endif
+}
+#endif
+
+}  // namespace blink

@@ -9,6 +9,10 @@
 #include "base/memory/weak_ptr.h"
 #include "content/public/browser/web_ui_message_handler.h"
 
+namespace base {
+class DictionaryValue;
+}
+
 namespace signin_metrics {
 enum class AccessPoint;
 }
@@ -30,6 +34,11 @@ class InlineLoginHandler : public content::WebUIMessageHandler {
     kOfflineAuthMode = 1,
     kDesktopAuthMode = 2
   };
+
+  // Closes the dialog by calling the |inline.login.closeDialog| Javascript
+  // function.
+  // Does nothing if calling Javascript functions is not allowed.
+  void CloseDialogFromJavascript();
 
  private:
   // Record correspond sign in user action for an access point.

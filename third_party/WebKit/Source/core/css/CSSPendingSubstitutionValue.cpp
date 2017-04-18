@@ -6,15 +6,13 @@
 
 namespace blink {
 
-DEFINE_TRACE_AFTER_DISPATCH(CSSPendingSubstitutionValue)
-{
-    CSSValue::traceAfterDispatch(visitor);
-    visitor->trace(m_shorthandValue);
+DEFINE_TRACE_AFTER_DISPATCH(CSSPendingSubstitutionValue) {
+  CSSValue::TraceAfterDispatch(visitor);
+  visitor->Trace(shorthand_value_);
 }
 
-String CSSPendingSubstitutionValue::customCSSText() const
-{
-    return "";
+String CSSPendingSubstitutionValue::CustomCSSText() const {
+  return "";
 }
 
-} // namespace blink
+}  // namespace blink

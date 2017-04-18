@@ -5,26 +5,28 @@
 #ifndef SimDisplayItemList_h
 #define SimDisplayItemList_h
 
+#include "platform/graphics/paint/PaintRecord.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebDisplayItemList.h"
 #include "web/tests/sim/SimCanvas.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class SimDisplayItemList final : public WebDisplayItemList {
-public:
-    SimDisplayItemList();
+ public:
+  SimDisplayItemList();
 
-    void appendDrawingItem(const WebRect&, sk_sp<const SkPicture>) override;
+  void AppendDrawingItem(const WebRect&, sk_sp<const PaintRecord>) override;
 
-    int drawCount() const { return m_commands.size(); }
+  int DrawCount() const { return commands_.size(); }
 
-    bool contains(SimCanvas::CommandType, const String& colorString = String()) const;
+  bool Contains(SimCanvas::CommandType,
+                const String& color_string = String()) const;
 
-private:
-    Vector<SimCanvas::Command> m_commands;
+ private:
+  Vector<SimCanvas::Command> commands_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/supports_user_data.h"
 #include "base/time/time.h"
 #include "content/browser/service_worker/service_worker_url_request_job.h"
@@ -32,11 +33,8 @@ namespace content {
 
 class ResourceContext;
 class ResourceRequestBodyImpl;
-class ServiceWorkerContextCore;
 class ServiceWorkerContextWrapper;
-class ServiceWorkerProviderHost;
 class ServiceWorkerRegistration;
-struct ResourceResponseInfo;
 
 // Class for routing network requests to ServiceWorkers for foreign fetch
 // events. Created one per URLRequest and attached to each request.
@@ -46,6 +44,12 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
     : public base::SupportsUserData::Data,
       public ServiceWorkerURLRequestJob::Delegate {
  public:
+  // Returns true if Foreign Fetch is enabled. Foreign Fetch is considered to be
+  // enabled if an OriginTrialPolicy exists, and that policy doesn't disable the
+  // feature. When the policy does disable the feature, that can be overridden
+  // with the experimental web platform features command line flag.
+  static bool IsForeignFetchEnabled();
+
   // Attaches a newly created handler if the given |request| needs to
   // be handled by a foreign fetch handling ServiceWorker.
   static void InitializeHandler(
@@ -54,7 +58,7 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       storage::BlobStorageContext* blob_storage_context,
       int process_id,
       int provider_id,
-      SkipServiceWorker skip_service_worker,
+      ServiceWorkerMode service_worker_mode,
       FetchRequestMode request_mode,
       FetchCredentialsMode credentials_mode,
       FetchRedirectMode redirect_mode,
@@ -80,6 +84,8 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
                                      ResourceContext* resource_context);
 
  private:
+  friend class ForeignFetchRequestHandlerTest;
+
   ForeignFetchRequestHandler(
       ServiceWorkerContextWrapper* context,
       base::WeakPtr<storage::BlobStorageContext> blob_storage_context,
@@ -89,7 +95,8 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
       ResourceType resource_type,
       RequestContextType request_context_type,
       RequestContextFrameType frame_type,
-      scoped_refptr<ResourceRequestBodyImpl> body);
+      scoped_refptr<ResourceRequestBodyImpl> body,
+      const base::Optional<base::TimeDelta>& timeout);
 
   // Called when a ServiceWorkerRegistration has (or hasn't) been found for the
   // request being handled.
@@ -107,6 +114,12 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
   // that job.
   void ClearJob();
 
+  // Returns true if the version doesn't have origin_trial_tokens entry (this
+  // happens if the existing worker's entry in the database was written by old
+  // version (< M56) Chrome), or the version has valid Origin Trial token.
+  static bool CheckOriginTrialToken(
+      const ServiceWorkerVersion* const active_version);
+
   scoped_refptr<ServiceWorkerContextWrapper> context_;
   base::WeakPtr<storage::BlobStorageContext> blob_storage_context_;
   ResourceType resource_type_;
@@ -116,6 +129,8 @@ class CONTENT_EXPORT ForeignFetchRequestHandler
   RequestContextType request_context_type_;
   RequestContextFrameType frame_type_;
   scoped_refptr<ResourceRequestBodyImpl> body_;
+  ResourceContext* resource_context_;
+  base::Optional<base::TimeDelta> timeout_;
 
   base::WeakPtr<ServiceWorkerURLRequestJob> job_;
   scoped_refptr<ServiceWorkerVersion> target_worker_;

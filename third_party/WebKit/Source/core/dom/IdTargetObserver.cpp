@@ -29,25 +29,20 @@
 
 namespace blink {
 
-IdTargetObserver::IdTargetObserver(IdTargetObserverRegistry& observerRegistry, const AtomicString& id)
-    : m_registry(&observerRegistry)
-    , m_id(id)
-{
-    registry().addObserver(m_id, this);
+IdTargetObserver::IdTargetObserver(IdTargetObserverRegistry& observer_registry,
+                                   const AtomicString& id)
+    : registry_(&observer_registry), id_(id) {
+  Registry().AddObserver(id_, this);
 }
 
-IdTargetObserver::~IdTargetObserver()
-{
+IdTargetObserver::~IdTargetObserver() {}
+
+DEFINE_TRACE(IdTargetObserver) {
+  visitor->Trace(registry_);
 }
 
-DEFINE_TRACE(IdTargetObserver)
-{
-    visitor->trace(m_registry);
+void IdTargetObserver::Unregister() {
+  Registry().RemoveObserver(id_, this);
 }
 
-void IdTargetObserver::unregister()
-{
-    registry().removeObserver(m_id, this);
-}
-
-} // namespace blink
+}  // namespace blink

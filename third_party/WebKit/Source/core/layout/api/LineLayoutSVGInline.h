@@ -11,34 +11,29 @@
 namespace blink {
 
 class LineLayoutSVGInline : public LineLayoutInline {
-public:
-    explicit LineLayoutSVGInline(LayoutSVGInline* layoutSVGInline)
-        : LineLayoutInline(layoutSVGInline)
-    {
-    }
+ public:
+  explicit LineLayoutSVGInline(LayoutSVGInline* layout_svg_inline)
+      : LineLayoutInline(layout_svg_inline) {}
 
-    explicit LineLayoutSVGInline(const LineLayoutItem& item)
-        : LineLayoutInline(item)
-    {
-        ASSERT_WITH_SECURITY_IMPLICATION(!item || item.isSVGInline());
-    }
+  explicit LineLayoutSVGInline(const LineLayoutItem& item)
+      : LineLayoutInline(item) {
+    SECURITY_DCHECK(!item || item.IsSVGInline());
+  }
 
-    explicit LineLayoutSVGInline(std::nullptr_t) : LineLayoutInline(nullptr) { }
+  explicit LineLayoutSVGInline(std::nullptr_t) : LineLayoutInline(nullptr) {}
 
-    LineLayoutSVGInline() { }
+  LineLayoutSVGInline() {}
 
-private:
-    LayoutSVGInline* toSVGInline()
-    {
-        return toLayoutSVGInline(layoutObject());
-    }
+ private:
+  LayoutSVGInline* ToSVGInline() {
+    return ToLayoutSVGInline(GetLayoutObject());
+  }
 
-    const LayoutSVGInline* toSVGInline() const
-    {
-        return toLayoutSVGInline(layoutObject());
-    }
+  const LayoutSVGInline* ToSVGInline() const {
+    return ToLayoutSVGInline(GetLayoutObject());
+  }
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineLayoutSVGInline_h
+#endif  // LineLayoutSVGInline_h

@@ -32,8 +32,8 @@ namespace {
 std::unique_ptr<base::Value> ConvertStringToValue(const std::string& str,
                                                   base::Value::Type type) {
   std::unique_ptr<base::Value> value;
-  if (type == base::Value::TYPE_STRING) {
-    value.reset(new base::StringValue(str));
+  if (type == base::Value::Type::STRING) {
+    value.reset(new base::Value(str));
   } else {
     value = base::JSONReader::Read(str);
   }
@@ -324,7 +324,7 @@ void ShillToONCTranslator::TranslateVPN() {
       shill_dictionary_->GetBooleanWithoutPathExpansion(
           shill::kSaveCredentialsProperty, &save_credentials)) {
     SetNestedOncValue(provider_type_dictionary, ::onc::vpn::kSaveCredentials,
-                      base::FundamentalValue(save_credentials));
+                      base::Value(save_credentials));
   }
 }
 
@@ -583,7 +583,7 @@ void ShillToONCTranslator::TranslateNetworkWithState() {
         ReadDictionaryFromJson(proxy_config_str));
     if (proxy_config_value) {
       std::unique_ptr<base::DictionaryValue> proxy_settings =
-          ConvertProxyConfigToOncProxySettings(*proxy_config_value);
+          ConvertProxyConfigToOncProxySettings(std::move(proxy_config_value));
       if (proxy_settings) {
         onc_object_->SetWithoutPathExpansion(
             ::onc::network_config::kProxySettings, proxy_settings.release());
@@ -672,10 +672,10 @@ void ShillToONCTranslator::TranslateAndAddListOfObjects(
     const base::ListValue& list) {
   const OncFieldSignature* field_signature =
       GetFieldSignature(*onc_signature_, onc_field_name);
-  if (field_signature->value_signature->onc_type != base::Value::TYPE_LIST) {
+  if (field_signature->value_signature->onc_type != base::Value::Type::LIST) {
     LOG(ERROR) << "ONC Field name: '" << onc_field_name << "' has type '"
                << field_signature->value_signature->onc_type
-               << "', expected: base::Value::TYPE_LIST: " << GetName();
+               << "', expected: base::Value::Type::LIST: " << GetName();
     return;
   }
   DCHECK(field_signature->value_signature->onc_array_entry_signature);
@@ -683,7 +683,7 @@ void ShillToONCTranslator::TranslateAndAddListOfObjects(
   for (base::ListValue::const_iterator it = list.begin(); it != list.end();
        ++it) {
     const base::DictionaryValue* shill_value = NULL;
-    if (!(*it)->GetAsDictionary(&shill_value))
+    if (!it->GetAsDictionary(&shill_value))
       continue;
     ShillToONCTranslator nested_translator(
         *shill_value, onc_source_,
@@ -694,7 +694,7 @@ void ShillToONCTranslator::TranslateAndAddListOfObjects(
     // If the nested object couldn't be parsed, simply omit it.
     if (nested_object->empty())
       continue;
-    result->Append(nested_object.release());
+    result->Append(std::move(nested_object));
   }
   // If there are no entries in the list, there is no need to expose this field.
   if (result->empty())

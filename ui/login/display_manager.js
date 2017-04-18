@@ -25,14 +25,18 @@
 /** @const */ var SCREEN_CREATE_SUPERVISED_USER_FLOW =
     'supervised-user-creation';
 /** @const */ var SCREEN_APP_LAUNCH_SPLASH = 'app-launch-splash';
+/** @const */ var SCREEN_ARC_KIOSK_SPLASH = 'arc-kiosk-splash';
 /** @const */ var SCREEN_CONFIRM_PASSWORD = 'confirm-password';
 /** @const */ var SCREEN_FATAL_ERROR = 'fatal-error';
 /** @const */ var SCREEN_KIOSK_ENABLE = 'kiosk-enable';
 /** @const */ var SCREEN_TERMS_OF_SERVICE = 'terms-of-service';
+/** @const */ var SCREEN_ARC_TERMS_OF_SERVICE = 'arc-tos';
 /** @const */ var SCREEN_WRONG_HWID = 'wrong-hwid';
 /** @const */ var SCREEN_DEVICE_DISABLED = 'device-disabled';
 /** @const */ var SCREEN_UNRECOVERABLE_CRYPTOHOME_ERROR =
     'unrecoverable-cryptohome-error';
+/** @const */ var SCREEN_ACTIVE_DIRECTORY_PASSWORD_CHANGE =
+    'ad-password-change';
 
 /* Accelerator identifiers. Must be kept in sync with webui_login_view.cc. */
 /** @const */ var ACCELERATOR_CANCEL = 'cancel';
@@ -42,8 +46,6 @@
 /** @const */ var ACCELERATOR_KIOSK_ENABLE = 'kiosk_enable';
 /** @const */ var ACCELERATOR_VERSION = 'version';
 /** @const */ var ACCELERATOR_RESET = 'reset';
-/** @const */ var ACCELERATOR_FOCUS_PREV = 'focus_prev';
-/** @const */ var ACCELERATOR_FOCUS_NEXT = 'focus_next';
 /** @const */ var ACCELERATOR_DEVICE_REQUISITION = 'device_requisition';
 /** @const */ var ACCELERATOR_DEVICE_REQUISITION_REMORA =
     'device_requisition_remora';
@@ -52,6 +54,7 @@
 /** @const */ var ACCELERATOR_APP_LAUNCH_BAILOUT = 'app_launch_bailout';
 /** @const */ var ACCELERATOR_APP_LAUNCH_NETWORK_CONFIG =
     'app_launch_network_config';
+/** @const */ var ACCELERATOR_BOOTSTRAPPING_SLAVE = "bootstrapping_slave";
 
 /* Signin UI state constants. Used to control header bar UI. */
 /** @const */ var SIGNIN_UI_STATE = {
@@ -86,6 +89,7 @@
   LOCK: 'lock',
   USER_ADDING: 'user-adding',
   APP_LAUNCH_SPLASH: 'app-launch-splash',
+  ARC_KIOSK_SPLASH: 'arc-kiosk-splash',
   DESKTOP_USER_MANAGER: 'login-add-user'
 };
 
@@ -99,7 +103,7 @@ cr.define('cr.ui.login', function() {
    * The value is used as the duration for ensureTransitionEndEvent below.
    * It needs to be inline with the step screen transition duration time
    * defined in css file. The current value in css is 200ms. To avoid emulated
-   * webkitTransitionEnd fired before real one, 250ms is used.
+   * transitionend fired before real one, 250ms is used.
    * @const
    */
   var MAX_SCREEN_TRANSITION_DURATION = 250;
@@ -134,6 +138,7 @@ cr.define('cr.ui.login', function() {
     SCREEN_TPM_ERROR,
     SCREEN_PASSWORD_CHANGED,
     SCREEN_TERMS_OF_SERVICE,
+    SCREEN_ARC_TERMS_OF_SERVICE,
     SCREEN_WRONG_HWID,
     SCREEN_CONFIRM_PASSWORD,
     SCREEN_FATAL_ERROR
@@ -204,6 +209,12 @@ cr.define('cr.ui.login', function() {
     forceKeyboardFlow_: false,
 
     /**
+     * Whether the virtual keyboard is displayed.
+     * @type {boolean}
+     */
+    virtualKeyboardShown: false,
+
+    /**
      * Type of UI.
      * @type {string}
      */
@@ -256,6 +267,11 @@ cr.define('cr.ui.login', function() {
       $('login-header-bar').hidden = hidden;
     },
 
+    set pinHidden(hidden) {
+      this.virtualKeyboardShown = hidden;
+      $('pod-row').setFocusedPodPinVisibility(!hidden);
+    },
+
     /**
      * Sets the current size of the client area (display size).
      * @param {number} width client area width
@@ -285,7 +301,7 @@ cr.define('cr.ui.login', function() {
     set forceKeyboardFlow(value) {
       this.forceKeyboardFlow_ = value;
       if (value) {
-        keyboard.initializeKeyboardFlow();
+        keyboard.initializeKeyboardFlow(false);
         cr.ui.DropDown.enableKeyboardFlow();
         for (var i = 0; i < this.screens_.length; ++i) {
           var screen = $(this.screens_[i]);
@@ -369,20 +385,16 @@ cr.define('cr.ui.login', function() {
       } else if (name == ACCELERATOR_APP_LAUNCH_BAILOUT) {
         if (currentStepId == SCREEN_APP_LAUNCH_SPLASH)
           chrome.send('cancelAppLaunch');
+        if (currentStepId == SCREEN_ARC_KIOSK_SPLASH)
+          chrome.send('cancelArcKioskLaunch');
       } else if (name == ACCELERATOR_APP_LAUNCH_NETWORK_CONFIG) {
         if (currentStepId == SCREEN_APP_LAUNCH_SPLASH)
           chrome.send('networkConfigRequest');
       } else if (name == ACCELERATOR_TOGGLE_EASY_BOOTSTRAP) {
         if (currentStepId == SCREEN_GAIA_SIGNIN)
           chrome.send('toggleEasyBootstrap');
-      }
-
-      // Handle special accelerators for keyboard enhanced navigation flow.
-      if (this.forceKeyboardFlow_) {
-        if (name == ACCELERATOR_FOCUS_PREV)
-          keyboard.raiseKeyFocusPrevious(document.activeElement);
-        else if (name == ACCELERATOR_FOCUS_NEXT)
-          keyboard.raiseKeyFocusNext(document.activeElement);
+      } else if (name == ACCELERATOR_BOOTSTRAPPING_SLAVE) {
+          chrome.send('setOobeBootstrappingSlave');
       }
     },
 
@@ -523,8 +535,8 @@ cr.define('cr.ui.login', function() {
           !oldStep.classList.contains('hidden')) {
         if (oldStep.classList.contains('animated')) {
           innerContainer.classList.add('animation');
-          oldStep.addEventListener('webkitTransitionEnd', function f(e) {
-            oldStep.removeEventListener('webkitTransitionEnd', f);
+          oldStep.addEventListener('transitionend', function f(e) {
+            oldStep.removeEventListener('transitionend', f);
             if (oldStep.classList.contains('faded') ||
                 oldStep.classList.contains('left') ||
                 oldStep.classList.contains('right')) {
@@ -550,8 +562,8 @@ cr.define('cr.ui.login', function() {
         if (this.isOobeUI() && innerContainer.classList.contains('down')) {
           innerContainer.classList.remove('down');
           innerContainer.addEventListener(
-              'webkitTransitionEnd', function f(e) {
-                innerContainer.removeEventListener('webkitTransitionEnd', f);
+              'transitionend', function f(e) {
+                innerContainer.removeEventListener('transitionend', f);
                 outerContainer.classList.remove('down');
                 $('progress-dots').classList.remove('down');
                 chrome.send('loginVisible', ['oobe']);
@@ -609,7 +621,8 @@ cr.define('cr.ui.login', function() {
 
 
       // Show sign-in screen instead of account picker if pod row is empty.
-      if (screenId == SCREEN_ACCOUNT_PICKER && $('pod-row').pods.length == 0) {
+      if (screenId == SCREEN_ACCOUNT_PICKER && $('pod-row').pods.length == 0 &&
+          cr.isChromeOS) {
         // Manually hide 'add-user' header bar, because of the case when
         // 'Cancel' button is used on the offline login page.
         $('add-user-header-bar-item').hidden = true;
@@ -989,6 +1002,15 @@ cr.define('cr.ui.login', function() {
    */
   DisplayManager.showTpmError = function() {
     login.TPMErrorMessageScreen.show();
+  };
+
+  /**
+   * Shows password change screen for Active Directory users.
+   * @param {string} username Display name of the user whose password is being
+   * changed.
+   */
+  DisplayManager.showActiveDirectoryPasswordChangeScreen = function(username) {
+    login.ActiveDirectoryPasswordChangeScreen.show(username);
   };
 
   /**

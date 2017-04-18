@@ -13,6 +13,7 @@
 #include "base/base_export.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/metrics/persistent_memory_allocator.h"
 #include "base/strings/string_piece.h"
 #include "base/synchronization/lock.h"
 
@@ -31,6 +32,8 @@ enum FeatureState {
 // for a given feature name - generally defined as a constant global variable or
 // file static.
 struct BASE_EXPORT Feature {
+  constexpr Feature(const char* name, FeatureState default_state)
+      : name(name), default_state(default_state) {}
   // The name of the feature. This should be unique to each feature and is used
   // for enabling/disabling features via command line flags and experiments.
   const char* const name;
@@ -92,6 +95,11 @@ class BASE_EXPORT FeatureList {
   void InitializeFromCommandLine(const std::string& enable_features,
                                  const std::string& disable_features);
 
+  // Initializes feature overrides through the field trial allocator, which
+  // we're using to store the feature names, their override state, and the name
+  // of the associated field trial.
+  void InitializeFromSharedMemory(PersistentMemoryAllocator* allocator);
+
   // Specifies whether a feature override enables or disables the feature.
   enum OverrideState {
     OVERRIDE_USE_DEFAULT,
@@ -124,6 +132,9 @@ class BASE_EXPORT FeatureList {
                                   OverrideState override_state,
                                   FieldTrial* field_trial);
 
+  // Loops through feature overrides and serializes them all into |allocator|.
+  void AddFeaturesToAllocator(PersistentMemoryAllocator* allocator);
+
   // Returns comma-separated lists of feature names (in the same format that is
   // accepted by InitializeFromCommandLine()) corresponding to features that
   // have been overridden - either through command-line or via FieldTrials. For
@@ -145,9 +156,10 @@ class BASE_EXPORT FeatureList {
   // called after the singleton instance has been registered via SetInstance().
   static FieldTrial* GetFieldTrial(const Feature& feature);
 
-  // Splits a comma-separated string containing feature names into a vector.
-  static std::vector<std::string> SplitFeatureListString(
-      const std::string& input);
+  // Splits a comma-separated string containing feature names into a vector. The
+  // resulting pieces point to parts of |input|.
+  static std::vector<base::StringPiece> SplitFeatureListString(
+      base::StringPiece input);
 
   // Initializes and sets an instance of FeatureList with feature overrides via
   // command-line flags |enable_features| and |disable_features| if one has not
@@ -163,13 +175,27 @@ class BASE_EXPORT FeatureList {
 
   // Registers the given |instance| to be the singleton feature list for this
   // process. This should only be called once and |instance| must not be null.
+  // Note: If you are considering using this for the purposes of testing, take
+  // a look at using base/test/scoped_feature_list.h instead.
   static void SetInstance(std::unique_ptr<FeatureList> instance);
 
-  // Clears the previously-registered singleton instance for tests.
-  static void ClearInstanceForTesting();
+  // Clears the previously-registered singleton instance for tests and returns
+  // the old instance.
+  // Note: Most tests should never call this directly. Instead consider using
+  // base::test::ScopedFeatureList.
+  static std::unique_ptr<FeatureList> ClearInstanceForTesting();
+
+  // Sets a given (initialized) |instance| to be the singleton feature list,
+  // for testing. Existing instance must be null. This is primarily intended
+  // to support base::test::ScopedFeatureList helper class.
+  static void RestoreInstanceForTesting(std::unique_ptr<FeatureList> instance);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(FeatureListTest, CheckFeatureIdentity);
+  FRIEND_TEST_ALL_PREFIXES(FeatureListTest,
+                           StoreAndRetrieveFeaturesFromSharedMemory);
+  FRIEND_TEST_ALL_PREFIXES(FeatureListTest,
+                           StoreAndRetrieveAssociatedFeaturesFromSharedMemory);
 
   struct OverrideEntry {
     // The overridden enable (on/off) state of the feature.

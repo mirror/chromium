@@ -236,22 +236,22 @@ std::string RetrievalMethodToString(
 
 bool ClickElement(const WebDocument& document,
                   const WebElementDescriptor& element_descriptor) {
-  WebString web_descriptor = WebString::fromUTF8(element_descriptor.descriptor);
+  WebString web_descriptor = WebString::FromUTF8(element_descriptor.descriptor);
   blink::WebElement element;
 
   switch (element_descriptor.retrieval_method) {
     case WebElementDescriptor::CSS_SELECTOR: {
-      element = document.querySelector(web_descriptor);
+      element = document.QuerySelector(web_descriptor);
       break;
     }
     case WebElementDescriptor::ID:
-      element = document.getElementById(web_descriptor);
+      element = document.GetElementById(web_descriptor);
       break;
     case WebElementDescriptor::NONE:
       return true;
   }
 
-  if (element.isNull()) {
+  if (element.IsNull()) {
     DVLOG(1) << "Could not find "
              << element_descriptor.descriptor
              << " by "
@@ -260,7 +260,7 @@ bool ClickElement(const WebDocument& document,
     return false;
   }
 
-  element.simulateClick();
+  element.SimulateClick();
   return true;
 }
 
@@ -299,15 +299,15 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     const FormData& form = forms[0];
     EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     EXPECT_EQ(GURL("http://cnn.com"), form.action);
 
     const std::vector<FormFieldData>& fields = form.fields;
     ASSERT_EQ(labels.size(), fields.size());
     for (size_t i = 0; i < labels.size(); ++i) {
-      int max_length = control_types[i] == "text" ?
-                       WebInputElement::defaultMaxLength() : 0;
+      int max_length =
+          control_types[i] == "text" ? WebInputElement::DefaultMaxLength() : 0;
       FormFieldData expected;
       expected.label = labels[i];
       expected.name = names[i];
@@ -384,9 +384,9 @@ class FormAutofillTest : public ChromeRenderViewTest {
       SCOPED_TRACE(base::StringPrintf("Verify initial value for field %s",
                                       field_cases[i].name));
       expected.form_control_type = field_cases[i].form_control_type;
-      expected.max_length =
-          expected.form_control_type == "text" ?
-          WebInputElement::defaultMaxLength() : 0;
+      expected.max_length = expected.form_control_type == "text"
+                                ? WebInputElement::DefaultMaxLength()
+                                : 0;
       expected.name = ASCIIToUTF16(field_cases[i].name);
       expected.value = ASCIIToUTF16(field_cases[i].initial_value);
       if (expected.form_control_type == "text" ||
@@ -419,33 +419,38 @@ class FormAutofillTest : public ChromeRenderViewTest {
                                     field_case.name));
     WebString value;
     WebFormControlElement element =
-        GetFormControlElementById(ASCIIToUTF16(field_case.name));
-    if ((element.formControlType() == "select-one") ||
-        (element.formControlType() == "textarea")) {
+        GetFormControlElementById(WebString::FromASCII(field_case.name));
+    if ((element.FormControlType() == "select-one") ||
+        (element.FormControlType() == "textarea")) {
       value = get_value_function(element);
     } else {
-      ASSERT_TRUE(element.formControlType() == "text" ||
-                  element.formControlType() == "month");
+      ASSERT_TRUE(element.FormControlType() == "text" ||
+                  element.FormControlType() == "month");
       value = get_value_function(element);
     }
 
-    const WebString expected_value = ASCIIToUTF16(field_case.expected_value);
-    if (expected_value.isEmpty())
-      EXPECT_TRUE(value.isEmpty());
+    const WebString expected_value =
+        WebString::FromASCII(field_case.expected_value);
+    if (expected_value.IsEmpty())
+      EXPECT_TRUE(value.IsEmpty());
     else
-      EXPECT_EQ(expected_value.utf8(), value.utf8());
+      EXPECT_EQ(expected_value.Utf8(), value.Utf8());
 
-    EXPECT_EQ(field_case.should_be_autofilled, element.isAutofilled());
+    EXPECT_EQ(field_case.should_be_autofilled, element.IsAutofilled());
   }
 
   WebFormControlElement GetFormControlElementById(const WebString& id) {
-    return GetMainFrame()->document().getElementById(
-        id).to<WebFormControlElement>();
+    return GetMainFrame()
+        ->GetDocument()
+        .GetElementById(id)
+        .To<WebFormControlElement>();
   }
 
   WebInputElement GetInputElementById(const WebString& id) {
-    return GetMainFrame()->document().getElementById(
-        id).to<WebInputElement>();
+    return GetMainFrame()
+        ->GetDocument()
+        .GetElementById(id)
+        .To<WebInputElement>();
   }
 
   void TestFillForm(const char* html, bool unowned, const char* url_override) {
@@ -516,8 +521,8 @@ class FormAutofillTest : public ChromeRenderViewTest {
                           FillForm, &GetValueWrapper);
     // Verify preview selection.
     WebInputElement firstname = GetInputElementById("firstname");
-    EXPECT_EQ(16, firstname.selectionStart());
-    EXPECT_EQ(16, firstname.selectionEnd());
+    EXPECT_EQ(16, firstname.SelectionStart());
+    EXPECT_EQ(16, firstname.SelectionEnd());
   }
 
   void TestPreviewForm(const char* html, bool unowned,
@@ -593,8 +598,8 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Verify preview selection.
     WebInputElement firstname = GetInputElementById("firstname");
-    EXPECT_EQ(0, firstname.selectionStart());
-    EXPECT_EQ(19, firstname.selectionEnd());
+    EXPECT_EQ(0, firstname.SelectionStart());
+    EXPECT_EQ(19, firstname.SelectionEnd());
   }
 
   void TestUnmatchedUnownedForm(const char* html, const char* url_override) {
@@ -628,7 +633,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
@@ -640,7 +645,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     FormFieldData expected;
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("firstname");
     expected.value = ASCIIToUTF16("John");
@@ -676,16 +681,17 @@ class FormAutofillTest : public ChromeRenderViewTest {
     ASSERT_EQ(1U, forms.size());
 
     // Get the textarea element we want to find.
-    WebElement element = web_frame->document().getElementById("street-address");
+    WebElement element =
+        web_frame->GetDocument().GetElementById("street-address");
     WebFormControlElement textarea_element =
-        element.to<WebFormControlElement>();
+        element.To<WebFormControlElement>();
 
     // Find the form and verify it's the correct form.
     FormData form;
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(textarea_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
@@ -701,14 +707,14 @@ class FormAutofillTest : public ChromeRenderViewTest {
     expected.value = ASCIIToUTF16("John");
     expected.label = ASCIIToUTF16("John");
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
 
     expected.name = ASCIIToUTF16("lastname");
     expected.value = ASCIIToUTF16("Smith");
     expected.label = ASCIIToUTF16("Smith");
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[1]);
 
     expected.name = ASCIIToUTF16("email");
@@ -716,7 +722,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     expected.label = ASCIIToUTF16("john@example.com");
     expected.autocomplete_attribute = "off";
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[2]);
     expected.autocomplete_attribute.clear();
 
@@ -746,7 +752,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
@@ -788,7 +794,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field2;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form2, &field2));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form2.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form2.name);
@@ -836,7 +842,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
@@ -848,7 +854,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     FormFieldData expected;
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("firstname");
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
@@ -870,7 +876,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field2;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form2, &field2));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form2.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form2.name);
@@ -910,7 +916,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
@@ -922,7 +928,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     FormFieldData expected;
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("firstname");
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
@@ -944,7 +950,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field2;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form2, &field2));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form2.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form2.name);
@@ -955,7 +961,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     ASSERT_EQ(3U, fields2.size());
 
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("firstname");
     expected.value = ASCIIToUTF16("Wyatt");
@@ -988,7 +994,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_TRUE(form.name.empty());
@@ -1001,7 +1007,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     FormFieldData expected;
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("apple");
     expected.is_autofilled = false;
@@ -1029,7 +1035,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field2;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form2, &field2));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form2.origin);
     if (!unowned) {
       EXPECT_TRUE(form2.name.empty());
@@ -1074,14 +1080,14 @@ class FormAutofillTest : public ChromeRenderViewTest {
     WebInputElement input_element = GetInputElementById("firstname");
 
     // Simulate typing by modifying the field value.
-    input_element.setValue(ASCIIToUTF16("Wy"));
+    input_element.SetValue(WebString::FromASCII("Wy"));
 
     // Find the form that contains the input element.
     FormData form;
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
@@ -1093,7 +1099,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     FormFieldData expected;
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("firstname");
     expected.value = ASCIIToUTF16("Wy");
@@ -1142,8 +1148,8 @@ class FormAutofillTest : public ChromeRenderViewTest {
     form.fields[1].is_autofilled = true;
     form.fields[2].is_autofilled = true;
     PreviewForm(form, input_element);
-    EXPECT_EQ(2, input_element.selectionStart());
-    EXPECT_EQ(5, input_element.selectionEnd());
+    EXPECT_EQ(2, input_element.SelectionStart());
+    EXPECT_EQ(5, input_element.SelectionEnd());
 
     // Fill the form.
     FillForm(form, input_element);
@@ -1153,7 +1159,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     FormFieldData field2;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(input_element, &form2, &field2));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form2.origin);
     if (!unowned) {
       EXPECT_EQ(ASCIIToUTF16("TestForm"), form2.name);
@@ -1200,8 +1206,8 @@ class FormAutofillTest : public ChromeRenderViewTest {
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields2[2]);
 
     // Verify that the cursor position has been updated.
-    EXPECT_EQ(5, input_element.selectionStart());
-    EXPECT_EQ(5, input_element.selectionEnd());
+    EXPECT_EQ(5, input_element.SelectionStart());
+    EXPECT_EQ(5, input_element.SelectionEnd());
   }
 
   void TestClearFormWithNode(const char* html, bool unowned) {
@@ -1215,30 +1221,30 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Set the auto-filled attribute.
     WebInputElement firstname = GetInputElementById("firstname");
-    firstname.setAutofilled(true);
+    firstname.SetAutofilled(true);
     WebInputElement lastname = GetInputElementById("lastname");
-    lastname.setAutofilled(true);
+    lastname.SetAutofilled(true);
     WebInputElement month = GetInputElementById("month");
-    month.setAutofilled(true);
+    month.SetAutofilled(true);
     WebFormControlElement textarea = GetFormControlElementById("textarea");
-    textarea.setAutofilled(true);
+    textarea.SetAutofilled(true);
 
     // Set the value of the disabled text input element.
     WebInputElement notenabled = GetInputElementById("notenabled");
-    notenabled.setValue(WebString::fromUTF8("no clear"));
+    notenabled.SetValue(WebString::FromUTF8("no clear"));
 
     // Clear the form.
     EXPECT_TRUE(form_cache.ClearFormWithElement(firstname));
 
     // Verify that the auto-filled attribute has been turned off.
-    EXPECT_FALSE(firstname.isAutofilled());
+    EXPECT_FALSE(firstname.IsAutofilled());
 
     // Verify the form is cleared.
     FormData form;
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(firstname, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     EXPECT_FALSE(form.origin.is_empty());
     if (!unowned) {
@@ -1251,7 +1257,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     FormFieldData expected;
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
 
     expected.name = ASCIIToUTF16("firstname");
     expected.value.clear();
@@ -1302,8 +1308,8 @@ class FormAutofillTest : public ChromeRenderViewTest {
     expected.autocomplete_attribute.clear();
 
     // Verify that the cursor position has been updated.
-    EXPECT_EQ(0, firstname.selectionStart());
-    EXPECT_EQ(0, firstname.selectionEnd());
+    EXPECT_EQ(0, firstname.SelectionStart());
+    EXPECT_EQ(0, firstname.SelectionEnd());
   }
 
   void TestClearFormWithNodeContainingSelectOne(const char* html,
@@ -1318,28 +1324,28 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Set the auto-filled attribute.
     WebInputElement firstname = GetInputElementById("firstname");
-    firstname.setAutofilled(true);
+    firstname.SetAutofilled(true);
     WebInputElement lastname = GetInputElementById("lastname");
-    lastname.setAutofilled(true);
+    lastname.SetAutofilled(true);
 
     // Set the value and auto-filled attribute of the state element.
     WebSelectElement state =
-        web_frame->document().getElementById("state").to<WebSelectElement>();
-    state.setValue(WebString::fromUTF8("AK"));
-    state.setAutofilled(true);
+        web_frame->GetDocument().GetElementById("state").To<WebSelectElement>();
+    state.SetValue(WebString::FromUTF8("AK"));
+    state.SetAutofilled(true);
 
     // Clear the form.
     EXPECT_TRUE(form_cache.ClearFormWithElement(firstname));
 
     // Verify that the auto-filled attribute has been turned off.
-    EXPECT_FALSE(firstname.isAutofilled());
+    EXPECT_FALSE(firstname.IsAutofilled());
 
     // Verify the form is cleared.
     FormData form;
     FormFieldData field;
     EXPECT_TRUE(
         FindFormAndFieldForFormControlElement(firstname, &form, &field));
-    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+    EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
               form.origin);
     EXPECT_FALSE(form.origin.is_empty());
     if (!unowned) {
@@ -1355,13 +1361,13 @@ class FormAutofillTest : public ChromeRenderViewTest {
     expected.name = ASCIIToUTF16("firstname");
     expected.value.clear();
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
 
     expected.name = ASCIIToUTF16("lastname");
     expected.value.clear();
     expected.form_control_type = "text";
-    expected.max_length = WebInputElement::defaultMaxLength();
+    expected.max_length = WebInputElement::DefaultMaxLength();
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[1]);
 
     expected.name = ASCIIToUTF16("state");
@@ -1371,8 +1377,8 @@ class FormAutofillTest : public ChromeRenderViewTest {
     EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[2]);
 
     // Verify that the cursor position has been updated.
-    EXPECT_EQ(0, firstname.selectionStart());
-    EXPECT_EQ(0, firstname.selectionEnd());
+    EXPECT_EQ(0, firstname.SelectionStart());
+    EXPECT_EQ(0, firstname.SelectionEnd());
   }
 
   void TestClearPreviewedFormWithElement(const char* html) {
@@ -1386,47 +1392,47 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Set the auto-filled attribute.
     WebInputElement firstname = GetInputElementById("firstname");
-    firstname.setAutofilled(true);
+    firstname.SetAutofilled(true);
     WebInputElement lastname = GetInputElementById("lastname");
-    lastname.setAutofilled(true);
+    lastname.SetAutofilled(true);
     WebInputElement email = GetInputElementById("email");
-    email.setAutofilled(true);
+    email.SetAutofilled(true);
     WebInputElement email2 = GetInputElementById("email2");
-    email2.setAutofilled(true);
+    email2.SetAutofilled(true);
     WebInputElement phone = GetInputElementById("phone");
-    phone.setAutofilled(true);
+    phone.SetAutofilled(true);
 
     // Set the suggested values on two of the elements.
-    lastname.setSuggestedValue(ASCIIToUTF16("Earp"));
-    email.setSuggestedValue(ASCIIToUTF16("wyatt@earp.com"));
-    email2.setSuggestedValue(ASCIIToUTF16("wyatt@earp.com"));
-    phone.setSuggestedValue(ASCIIToUTF16("650-777-9999"));
+    lastname.SetSuggestedValue(WebString::FromASCII("Earp"));
+    email.SetSuggestedValue(WebString::FromASCII("wyatt@earp.com"));
+    email2.SetSuggestedValue(WebString::FromASCII("wyatt@earp.com"));
+    phone.SetSuggestedValue(WebString::FromASCII("650-777-9999"));
 
     // Clear the previewed fields.
     EXPECT_TRUE(ClearPreviewedFormWithElement(lastname, false));
 
     // Fields with empty suggestions suggestions are not modified.
-    EXPECT_EQ(ASCIIToUTF16("Wyatt"), firstname.value());
-    EXPECT_TRUE(firstname.suggestedValue().isEmpty());
-    EXPECT_TRUE(firstname.isAutofilled());
+    EXPECT_EQ(ASCIIToUTF16("Wyatt"), firstname.Value().Utf16());
+    EXPECT_TRUE(firstname.SuggestedValue().IsEmpty());
+    EXPECT_TRUE(firstname.IsAutofilled());
 
     // Verify the previewed fields are cleared.
-    EXPECT_TRUE(lastname.value().isEmpty());
-    EXPECT_TRUE(lastname.suggestedValue().isEmpty());
-    EXPECT_FALSE(lastname.isAutofilled());
-    EXPECT_TRUE(email.value().isEmpty());
-    EXPECT_TRUE(email.suggestedValue().isEmpty());
-    EXPECT_FALSE(email.isAutofilled());
-    EXPECT_TRUE(email2.value().isEmpty());
-    EXPECT_TRUE(email2.suggestedValue().isEmpty());
-    EXPECT_FALSE(email2.isAutofilled());
-    EXPECT_TRUE(phone.value().isEmpty());
-    EXPECT_TRUE(phone.suggestedValue().isEmpty());
-    EXPECT_FALSE(phone.isAutofilled());
+    EXPECT_TRUE(lastname.Value().IsEmpty());
+    EXPECT_TRUE(lastname.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(lastname.IsAutofilled());
+    EXPECT_TRUE(email.Value().IsEmpty());
+    EXPECT_TRUE(email.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email.IsAutofilled());
+    EXPECT_TRUE(email2.Value().IsEmpty());
+    EXPECT_TRUE(email2.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email2.IsAutofilled());
+    EXPECT_TRUE(phone.Value().IsEmpty());
+    EXPECT_TRUE(phone.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(phone.IsAutofilled());
 
     // Verify that the cursor position has been updated.
-    EXPECT_EQ(0, lastname.selectionStart());
-    EXPECT_EQ(0, lastname.selectionEnd());
+    EXPECT_EQ(0, lastname.SelectionStart());
+    EXPECT_EQ(0, lastname.SelectionEnd());
   }
 
   void TestClearPreviewedFormWithNonEmptyInitiatingNode(const char* html) {
@@ -1440,47 +1446,46 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Set the auto-filled attribute.
     WebInputElement firstname = GetInputElementById("firstname");
-    firstname.setAutofilled(true);
+    firstname.SetAutofilled(true);
     WebInputElement lastname = GetInputElementById("lastname");
-    lastname.setAutofilled(true);
+    lastname.SetAutofilled(true);
     WebInputElement email = GetInputElementById("email");
-    email.setAutofilled(true);
+    email.SetAutofilled(true);
     WebInputElement email2 = GetInputElementById("email2");
-    email2.setAutofilled(true);
+    email2.SetAutofilled(true);
     WebInputElement phone = GetInputElementById("phone");
-    phone.setAutofilled(true);
-
+    phone.SetAutofilled(true);
 
     // Set the suggested values on all of the elements.
-    firstname.setSuggestedValue(ASCIIToUTF16("Wyatt"));
-    lastname.setSuggestedValue(ASCIIToUTF16("Earp"));
-    email.setSuggestedValue(ASCIIToUTF16("wyatt@earp.com"));
-    email2.setSuggestedValue(ASCIIToUTF16("wyatt@earp.com"));
-    phone.setSuggestedValue(ASCIIToUTF16("650-777-9999"));
+    firstname.SetSuggestedValue(WebString::FromASCII("Wyatt"));
+    lastname.SetSuggestedValue(WebString::FromASCII("Earp"));
+    email.SetSuggestedValue(WebString::FromASCII("wyatt@earp.com"));
+    email2.SetSuggestedValue(WebString::FromASCII("wyatt@earp.com"));
+    phone.SetSuggestedValue(WebString::FromASCII("650-777-9999"));
 
     // Clear the previewed fields.
     EXPECT_TRUE(ClearPreviewedFormWithElement(firstname, false));
 
     // Fields with non-empty values are restored.
-    EXPECT_EQ(ASCIIToUTF16("W"), firstname.value());
-    EXPECT_TRUE(firstname.suggestedValue().isEmpty());
-    EXPECT_FALSE(firstname.isAutofilled());
-    EXPECT_EQ(1, firstname.selectionStart());
-    EXPECT_EQ(1, firstname.selectionEnd());
+    EXPECT_EQ(ASCIIToUTF16("W"), firstname.Value().Utf16());
+    EXPECT_TRUE(firstname.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(firstname.IsAutofilled());
+    EXPECT_EQ(1, firstname.SelectionStart());
+    EXPECT_EQ(1, firstname.SelectionEnd());
 
     // Verify the previewed fields are cleared.
-    EXPECT_TRUE(lastname.value().isEmpty());
-    EXPECT_TRUE(lastname.suggestedValue().isEmpty());
-    EXPECT_FALSE(lastname.isAutofilled());
-    EXPECT_TRUE(email.value().isEmpty());
-    EXPECT_TRUE(email.suggestedValue().isEmpty());
-    EXPECT_FALSE(email.isAutofilled());
-    EXPECT_TRUE(email2.value().isEmpty());
-    EXPECT_TRUE(email2.suggestedValue().isEmpty());
-    EXPECT_FALSE(email2.isAutofilled());
-    EXPECT_TRUE(phone.value().isEmpty());
-    EXPECT_TRUE(phone.suggestedValue().isEmpty());
-    EXPECT_FALSE(phone.isAutofilled());
+    EXPECT_TRUE(lastname.Value().IsEmpty());
+    EXPECT_TRUE(lastname.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(lastname.IsAutofilled());
+    EXPECT_TRUE(email.Value().IsEmpty());
+    EXPECT_TRUE(email.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email.IsAutofilled());
+    EXPECT_TRUE(email2.Value().IsEmpty());
+    EXPECT_TRUE(email2.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email2.IsAutofilled());
+    EXPECT_TRUE(phone.Value().IsEmpty());
+    EXPECT_TRUE(phone.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(phone.IsAutofilled());
   }
 
   void TestClearPreviewedFormWithAutofilledInitiatingNode(const char* html) {
@@ -1494,46 +1499,46 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Set the auto-filled attribute.
     WebInputElement firstname = GetInputElementById("firstname");
-    firstname.setAutofilled(true);
+    firstname.SetAutofilled(true);
     WebInputElement lastname = GetInputElementById("lastname");
-    lastname.setAutofilled(true);
+    lastname.SetAutofilled(true);
     WebInputElement email = GetInputElementById("email");
-    email.setAutofilled(true);
+    email.SetAutofilled(true);
     WebInputElement email2 = GetInputElementById("email2");
-    email2.setAutofilled(true);
+    email2.SetAutofilled(true);
     WebInputElement phone = GetInputElementById("phone");
-    phone.setAutofilled(true);
+    phone.SetAutofilled(true);
 
     // Set the suggested values on all of the elements.
-    firstname.setSuggestedValue(ASCIIToUTF16("Wyatt"));
-    lastname.setSuggestedValue(ASCIIToUTF16("Earp"));
-    email.setSuggestedValue(ASCIIToUTF16("wyatt@earp.com"));
-    email2.setSuggestedValue(ASCIIToUTF16("wyatt@earp.com"));
-    phone.setSuggestedValue(ASCIIToUTF16("650-777-9999"));
+    firstname.SetSuggestedValue(WebString::FromASCII("Wyatt"));
+    lastname.SetSuggestedValue(WebString::FromASCII("Earp"));
+    email.SetSuggestedValue(WebString::FromASCII("wyatt@earp.com"));
+    email2.SetSuggestedValue(WebString::FromASCII("wyatt@earp.com"));
+    phone.SetSuggestedValue(WebString::FromASCII("650-777-9999"));
 
     // Clear the previewed fields.
     EXPECT_TRUE(ClearPreviewedFormWithElement(firstname, true));
 
     // Fields with non-empty values are restored.
-    EXPECT_EQ(ASCIIToUTF16("W"), firstname.value());
-    EXPECT_TRUE(firstname.suggestedValue().isEmpty());
-    EXPECT_TRUE(firstname.isAutofilled());
-    EXPECT_EQ(1, firstname.selectionStart());
-    EXPECT_EQ(1, firstname.selectionEnd());
+    EXPECT_EQ(ASCIIToUTF16("W"), firstname.Value().Utf16());
+    EXPECT_TRUE(firstname.SuggestedValue().IsEmpty());
+    EXPECT_TRUE(firstname.IsAutofilled());
+    EXPECT_EQ(1, firstname.SelectionStart());
+    EXPECT_EQ(1, firstname.SelectionEnd());
 
     // Verify the previewed fields are cleared.
-    EXPECT_TRUE(lastname.value().isEmpty());
-    EXPECT_TRUE(lastname.suggestedValue().isEmpty());
-    EXPECT_FALSE(lastname.isAutofilled());
-    EXPECT_TRUE(email.value().isEmpty());
-    EXPECT_TRUE(email.suggestedValue().isEmpty());
-    EXPECT_FALSE(email.isAutofilled());
-    EXPECT_TRUE(email2.value().isEmpty());
-    EXPECT_TRUE(email2.suggestedValue().isEmpty());
-    EXPECT_FALSE(email2.isAutofilled());
-    EXPECT_TRUE(phone.value().isEmpty());
-    EXPECT_TRUE(phone.suggestedValue().isEmpty());
-    EXPECT_FALSE(phone.isAutofilled());
+    EXPECT_TRUE(lastname.Value().IsEmpty());
+    EXPECT_TRUE(lastname.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(lastname.IsAutofilled());
+    EXPECT_TRUE(email.Value().IsEmpty());
+    EXPECT_TRUE(email.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email.IsAutofilled());
+    EXPECT_TRUE(email2.Value().IsEmpty());
+    EXPECT_TRUE(email2.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email2.IsAutofilled());
+    EXPECT_TRUE(phone.Value().IsEmpty());
+    EXPECT_TRUE(phone.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(phone.IsAutofilled());
   }
 
   void TestClearOnlyAutofilledFields(const char* html) {
@@ -1548,56 +1553,56 @@ class FormAutofillTest : public ChromeRenderViewTest {
 
     // Set the autofilled attribute.
     WebInputElement firstname = GetInputElementById("firstname");
-    firstname.setAutofilled(false);
+    firstname.SetAutofilled(false);
     WebInputElement lastname = GetInputElementById("lastname");
-    lastname.setAutofilled(true);
+    lastname.SetAutofilled(true);
     WebInputElement email = GetInputElementById("email");
-    email.setAutofilled(true);
+    email.SetAutofilled(true);
     WebInputElement phone = GetInputElementById("phone");
-    phone.setAutofilled(true);
+    phone.SetAutofilled(true);
 
     // Clear the fields.
     EXPECT_TRUE(form_cache.ClearFormWithElement(firstname));
 
     // Verify only autofilled fields are cleared.
-    EXPECT_EQ(ASCIIToUTF16("Wyatt"), firstname.value());
-    EXPECT_TRUE(firstname.suggestedValue().isEmpty());
-    EXPECT_FALSE(firstname.isAutofilled());
-    EXPECT_TRUE(lastname.value().isEmpty());
-    EXPECT_TRUE(lastname.suggestedValue().isEmpty());
-    EXPECT_FALSE(lastname.isAutofilled());
-    EXPECT_TRUE(email.value().isEmpty());
-    EXPECT_TRUE(email.suggestedValue().isEmpty());
-    EXPECT_FALSE(email.isAutofilled());
-    EXPECT_TRUE(phone.value().isEmpty());
-    EXPECT_TRUE(phone.suggestedValue().isEmpty());
-    EXPECT_FALSE(phone.isAutofilled());
+    EXPECT_EQ(ASCIIToUTF16("Wyatt"), firstname.Value().Utf16());
+    EXPECT_TRUE(firstname.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(firstname.IsAutofilled());
+    EXPECT_TRUE(lastname.Value().IsEmpty());
+    EXPECT_TRUE(lastname.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(lastname.IsAutofilled());
+    EXPECT_TRUE(email.Value().IsEmpty());
+    EXPECT_TRUE(email.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(email.IsAutofilled());
+    EXPECT_TRUE(phone.Value().IsEmpty());
+    EXPECT_TRUE(phone.SuggestedValue().IsEmpty());
+    EXPECT_FALSE(phone.IsAutofilled());
   }
 
   static void FillFormIncludingNonFocusableElementsWrapper(
       const FormData& form,
       const WebFormControlElement& element) {
-    FillFormIncludingNonFocusableElements(form, element.form());
+    FillFormIncludingNonFocusableElements(form, element.Form());
   }
 
   static WebString GetValueWrapper(WebFormControlElement element) {
-    if (element.formControlType() == "textarea")
-      return element.to<WebFormControlElement>().value();
+    if (element.FormControlType() == "textarea")
+      return element.To<WebFormControlElement>().Value();
 
-    if (element.formControlType() == "select-one")
-      return element.to<WebSelectElement>().value();
+    if (element.FormControlType() == "select-one")
+      return element.To<WebSelectElement>().Value();
 
-    return element.to<WebInputElement>().value();
+    return element.To<WebInputElement>().Value();
   }
 
   static WebString GetSuggestedValueWrapper(WebFormControlElement element) {
-    if (element.formControlType() == "textarea")
-      return element.to<WebFormControlElement>().suggestedValue();
+    if (element.FormControlType() == "textarea")
+      return element.To<WebFormControlElement>().SuggestedValue();
 
-    if (element.formControlType() == "select-one")
-      return element.to<WebSelectElement>().suggestedValue();
+    if (element.FormControlType() == "select-one")
+      return element.To<WebSelectElement>().SuggestedValue();
 
-    return element.to<WebInputElement>().suggestedValue();
+    return element.To<WebInputElement>().SuggestedValue();
   }
 
  private:
@@ -1613,18 +1618,18 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormField) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result1;
-  WebFormControlElementToFormField(element, EXTRACT_NONE, &result1);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_NONE, &result1);
 
   FormFieldData expected;
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.name = ASCIIToUTF16("element");
   expected.value.clear();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result1);
 
   FormFieldData result2;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result2);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result2);
 
   expected.name = ASCIIToUTF16("element");
   expected.value = ASCIIToUTF16("value");
@@ -1641,14 +1646,14 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldAutocompleteOff) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
   expected.value = ASCIIToUTF16("value");
   expected.form_control_type = "text";
   expected.autocomplete_attribute = "off";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result);
 }
 
@@ -1662,7 +1667,7 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldMaxLength) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
@@ -1680,15 +1685,15 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldAutofilled) {
   ASSERT_NE(nullptr, frame);
 
   WebInputElement element = GetInputElementById("element");
-  element.setAutofilled(true);
+  element.SetAutofilled(true);
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
   expected.value = ASCIIToUTF16("value");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   expected.is_autofilled = true;
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result);
 }
@@ -1703,9 +1708,9 @@ TEST_F(FormAutofillTest, WebFormControlElementToClickableFormField) {
   ASSERT_NE(nullptr, frame);
 
   WebInputElement element = GetInputElementById("checkbox");
-  element.setAutofilled(true);
+  element.SetAutofilled(true);
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("checkbox");
@@ -1716,8 +1721,8 @@ TEST_F(FormAutofillTest, WebFormControlElementToClickableFormField) {
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result);
 
   element = GetInputElementById("radio");
-  element.setAutofilled(true);
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  element.SetAutofilled(true);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   expected.name = ASCIIToUTF16("radio");
   expected.value = ASCIIToUTF16("male");
   expected.form_control_type = "radio";
@@ -1738,7 +1743,7 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldSelect) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result1;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result1);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result1);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
@@ -1750,14 +1755,13 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldSelect) {
 
   FormFieldData result2;
   WebFormControlElementToFormField(
-      element,
-      static_cast<ExtractMask>(EXTRACT_VALUE | EXTRACT_OPTION_TEXT),
-      &result2);
+      element, nullptr,
+      static_cast<ExtractMask>(EXTRACT_VALUE | EXTRACT_OPTION_TEXT), &result2);
   expected.value = ASCIIToUTF16("California");
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result2);
 
   FormFieldData result3;
-  WebFormControlElementToFormField(element, EXTRACT_OPTIONS, &result3);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_OPTIONS, &result3);
   expected.value.clear();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result3);
 
@@ -1781,10 +1785,10 @@ TEST_F(FormAutofillTest,
   ASSERT_NE(nullptr, frame);
 
   WebFormControlElement element = GetFormControlElementById("element");
-  element.setAutofilled(true);
+  element.SetAutofilled(true);
 
   FormFieldData result1;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result1);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result1);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
@@ -1817,7 +1821,7 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldLongSelect) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_OPTIONS, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_OPTIONS, &result);
 
   EXPECT_TRUE(result.option_values.empty());
   EXPECT_TRUE(result.option_contents.empty());
@@ -1835,7 +1839,8 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldTextArea) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result_sans_value;
-  WebFormControlElementToFormField(element, EXTRACT_NONE, &result_sans_value);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_NONE,
+                                   &result_sans_value);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
@@ -1844,7 +1849,8 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldTextArea) {
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result_sans_value);
 
   FormFieldData result_with_value;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result_with_value);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE,
+                                   &result_with_value);
   expected.value = ASCIIToUTF16("This element's value\n"
                                 "spans multiple lines.");
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result_with_value);
@@ -1859,7 +1865,8 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldMonthInput) {
 
   WebFormControlElement element = GetFormControlElementById("element");
   FormFieldData result_sans_value;
-  WebFormControlElementToFormField(element, EXTRACT_NONE, &result_sans_value);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_NONE,
+                                   &result_sans_value);
 
   FormFieldData expected;
   expected.name = ASCIIToUTF16("element");
@@ -1868,7 +1875,8 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldMonthInput) {
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result_sans_value);
 
   FormFieldData result_with_value;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result_with_value);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE,
+                                   &result_with_value);
   expected.value = ASCIIToUTF16("2011-12");
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result_with_value);
 }
@@ -1885,7 +1893,7 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldInvalidType) {
 
   WebFormControlElement element = GetFormControlElementById("hidden");
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
 
   FormFieldData expected;
   expected.max_length = 0;
@@ -1895,7 +1903,7 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldInvalidType) {
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result);
 
   element = GetFormControlElementById("submit");
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   expected.name = ASCIIToUTF16("submit");
   expected.form_control_type = "submit";
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, result);
@@ -1912,10 +1920,10 @@ TEST_F(FormAutofillTest, WebFormControlElementToPasswordFormField) {
 
   WebFormControlElement element = GetFormControlElementById("password");
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
 
   FormFieldData expected;
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   expected.name = ASCIIToUTF16("password");
   expected.form_control_type = "password";
   expected.value = ASCIIToUTF16("secret");
@@ -1982,19 +1990,19 @@ TEST_F(FormAutofillTest, WebFormControlElementToFormFieldAutocompletetype) {
     { "malicious", "text", "x-max-data-length-exceeded" },
   };
 
-  WebDocument document = frame->document();
+  WebDocument document = frame->GetDocument();
   for (size_t i = 0; i < arraysize(test_cases); ++i) {
-    WebFormControlElement element =
-        GetFormControlElementById(ASCIIToUTF16(test_cases[i].element_id));
+    WebFormControlElement element = GetFormControlElementById(
+        WebString::FromASCII(test_cases[i].element_id));
     FormFieldData result;
-    WebFormControlElementToFormField(element, EXTRACT_NONE, &result);
+    WebFormControlElementToFormField(element, nullptr, EXTRACT_NONE, &result);
 
     FormFieldData expected;
     expected.name = ASCIIToUTF16(test_cases[i].element_id);
     expected.form_control_type = test_cases[i].form_control_type;
     expected.autocomplete_attribute = test_cases[i].autocomplete_attribute;
     if (test_cases[i].form_control_type == "text")
-      expected.max_length = WebInputElement::defaultMaxLength();
+      expected.max_length = WebInputElement::DefaultMaxLength();
     else
       expected.max_length = 0;
 
@@ -2015,7 +2023,7 @@ TEST_F(FormAutofillTest, DetectTextDirectionFromDirectStyle) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::RIGHT_TO_LEFT, result.text_direction);
 }
 
@@ -2030,7 +2038,7 @@ TEST_F(FormAutofillTest, DetectTextDirectionFromDirectDIRAttribute) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::RIGHT_TO_LEFT, result.text_direction);
 }
 
@@ -2046,7 +2054,7 @@ TEST_F(FormAutofillTest, DetectTextDirectionFromParentStyle) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::RIGHT_TO_LEFT, result.text_direction);
 }
 
@@ -2061,7 +2069,7 @@ TEST_F(FormAutofillTest, DetectTextDirectionFromParentDIRAttribute) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::RIGHT_TO_LEFT, result.text_direction);
 }
 
@@ -2077,7 +2085,7 @@ TEST_F(FormAutofillTest, DetectTextDirectionWhenStyleAndDIRAttributMixed) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::LEFT_TO_RIGHT, result.text_direction);
 }
 
@@ -2094,7 +2102,7 @@ TEST_F(FormAutofillTest, TextAlignOverridesDirection) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::RIGHT_TO_LEFT, result.text_direction);
 
   // text-align: left
@@ -2108,7 +2116,7 @@ TEST_F(FormAutofillTest, TextAlignOverridesDirection) {
 
   element = GetFormControlElementById("element");
 
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::LEFT_TO_RIGHT, result.text_direction);
 }
 
@@ -2125,7 +2133,7 @@ TEST_F(FormAutofillTest,
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::LEFT_TO_RIGHT, result.text_direction);
 }
 
@@ -2142,7 +2150,7 @@ TEST_F(FormAutofillTest, DetectTextDirectionWhenAncestorHasInlineStyle) {
   WebFormControlElement element = GetFormControlElementById("element");
 
   FormFieldData result;
-  WebFormControlElementToFormField(element, EXTRACT_VALUE, &result);
+  WebFormControlElementToFormField(element, nullptr, EXTRACT_VALUE, &result);
   EXPECT_EQ(base::i18n::RIGHT_TO_LEFT, result.text_direction);
 }
 
@@ -2176,20 +2184,17 @@ TEST_F(FormAutofillTest, WebFormElementToFormData) {
   ASSERT_NE(nullptr, frame);
 
   WebVector<WebFormElement> forms;
-  frame->document().forms(forms);
+  frame->GetDocument().Forms(forms);
   ASSERT_EQ(1U, forms.size());
 
   WebInputElement input_element = GetInputElementById("firstname");
 
   FormData form;
   FormFieldData field;
-  EXPECT_TRUE(WebFormElementToFormData(forms[0],
-                                       input_element,
-                                       EXTRACT_VALUE,
-                                       &form,
-                                       &field));
+  EXPECT_TRUE(WebFormElementToFormData(forms[0], input_element, nullptr,
+                                       EXTRACT_VALUE, &form, &field));
   EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(frame->document()), form.origin);
+  EXPECT_EQ(GetCanonicalOriginForDocument(frame->GetDocument()), form.origin);
   EXPECT_FALSE(form.origin.is_empty());
   EXPECT_EQ(GURL("http://cnn.com"), form.action);
 
@@ -2201,14 +2206,14 @@ TEST_F(FormAutofillTest, WebFormElementToFormData) {
   expected.value = ASCIIToUTF16("John");
   expected.label = ASCIIToUTF16("First name:");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
 
   expected.name = ASCIIToUTF16("lastname");
   expected.value = ASCIIToUTF16("Smith");
   expected.label = ASCIIToUTF16("Last name:");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[1]);
 
   expected.name = ASCIIToUTF16("street-address");
@@ -2229,7 +2234,7 @@ TEST_F(FormAutofillTest, WebFormElementToFormData) {
   expected.value = ASCIIToUTF16("secret");
   expected.label = ASCIIToUTF16("Password:");
   expected.form_control_type = "password";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[4]);
 
   expected.name = ASCIIToUTF16("month");
@@ -2251,13 +2256,13 @@ TEST_F(FormAutofillTest, WebFormElementConsiderNonControlLabelableElements) {
   WebFrame* frame = GetMainFrame();
   ASSERT_NE(nullptr, frame);
 
-  WebFormElement web_form = frame->document().getElementById("form")
-      .to<WebFormElement>();
-  ASSERT_FALSE(web_form.isNull());
+  WebFormElement web_form =
+      frame->GetDocument().GetElementById("form").To<WebFormElement>();
+  ASSERT_FALSE(web_form.IsNull());
 
   FormData form;
   EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
-                                       EXTRACT_NONE, &form, nullptr));
+                                       nullptr, EXTRACT_NONE, &form, nullptr));
 
   const std::vector<FormFieldData>& fields = form.fields;
   ASSERT_EQ(1U, fields.size());
@@ -2286,18 +2291,15 @@ TEST_F(FormAutofillTest, MAYBE_WebFormElementToFormDataTooManyFields) {
   ASSERT_NE(nullptr, frame);
 
   WebVector<WebFormElement> forms;
-  frame->document().forms(forms);
+  frame->GetDocument().Forms(forms);
   ASSERT_EQ(1U, forms.size());
 
   WebInputElement input_element = GetInputElementById("firstname");
 
   FormData form;
   FormFieldData field;
-  EXPECT_FALSE(WebFormElementToFormData(forms[0],
-                                        input_element,
-                                        EXTRACT_VALUE,
-                                        &form,
-                                        &field));
+  EXPECT_FALSE(WebFormElementToFormData(forms[0], input_element, nullptr,
+                                        EXTRACT_VALUE, &form, &field));
 }
 
 // Tests that the |should_autocomplete| is set to false for all the fields when
@@ -2318,12 +2320,12 @@ TEST_F(FormAutofillTest, WebFormElementToFormData_AutocompleteOff_OnForm) {
   ASSERT_NE(nullptr, frame);
 
   WebFormElement web_form =
-      frame->document().getElementById("form").to<WebFormElement>();
-  ASSERT_FALSE(web_form.isNull());
+      frame->GetDocument().GetElementById("form").To<WebFormElement>();
+  ASSERT_FALSE(web_form.IsNull());
 
   FormData form;
   EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
-                                       EXTRACT_NONE, &form, nullptr));
+                                       nullptr, EXTRACT_NONE, &form, nullptr));
 
   for (const FormFieldData& field : form.fields) {
     EXPECT_FALSE(field.should_autocomplete);
@@ -2347,12 +2349,12 @@ TEST_F(FormAutofillTest, WebFormElementToFormData_AutocompleteOff_OnField) {
   ASSERT_NE(nullptr, frame);
 
   WebFormElement web_form =
-      frame->document().getElementById("form").to<WebFormElement>();
-  ASSERT_FALSE(web_form.isNull());
+      frame->GetDocument().GetElementById("form").To<WebFormElement>();
+  ASSERT_FALSE(web_form.IsNull());
 
   FormData form;
   EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
-                                       EXTRACT_NONE, &form, nullptr));
+                                       nullptr, EXTRACT_NONE, &form, nullptr));
 
   ASSERT_EQ(3U, form.fields.size());
 
@@ -2375,16 +2377,48 @@ TEST_F(FormAutofillTest, WebFormElementToFormData_CssClasses) {
   ASSERT_NE(nullptr, frame);
 
   WebFormElement web_form =
-      frame->document().getElementById("form").to<WebFormElement>();
-  ASSERT_FALSE(web_form.isNull());
+      frame->GetDocument().GetElementById("form").To<WebFormElement>();
+  ASSERT_FALSE(web_form.IsNull());
 
   FormData form;
   EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
-                                       EXTRACT_NONE, &form, nullptr));
+                                       nullptr, EXTRACT_NONE, &form, nullptr));
 
   EXPECT_EQ(3U, form.fields.size());
   EXPECT_EQ(ASCIIToUTF16("firstname_field"), form.fields[0].css_classes);
   EXPECT_EQ(ASCIIToUTF16("lastname_field"), form.fields[1].css_classes);
+  EXPECT_EQ(base::string16(), form.fields[2].css_classes);
+}
+
+// Tests id attributes are set.
+TEST_F(FormAutofillTest, WebFormElementToFormData_IdAttributes) {
+  LoadHTML(
+      "<FORM name='TestForm' id='form' action='http://cnn.com' method='post' "
+      "autocomplete='off'>"
+      "    <INPUT type='text' name='name1' id='firstname' />"
+      "    <INPUT type='text' name='name2' id='lastname' />"
+      "    <INPUT type='text' name='same' id='same' />"
+      "    <INPUT type='text' id='addressline1' />"
+      "</FORM>");
+
+  WebFrame* frame = GetMainFrame();
+  ASSERT_NE(nullptr, frame);
+
+  WebFormElement web_form =
+      frame->GetDocument().GetElementById("form").To<WebFormElement>();
+  ASSERT_FALSE(web_form.IsNull());
+
+  FormData form;
+  EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
+                                       nullptr, EXTRACT_NONE, &form, nullptr));
+
+  EXPECT_EQ(4U, form.fields.size());
+  EXPECT_EQ(ASCIIToUTF16("firstname"), form.fields[0].id);
+  EXPECT_EQ(ASCIIToUTF16("lastname"), form.fields[1].id);
+  // Don't save the id attribute if its value coincides with the name attribute.
+  EXPECT_TRUE(form.fields[2].id.empty());
+  // Don't save the id attribute because it has been saved in the |name| field.
+  EXPECT_TRUE(form.fields[3].id.empty());
   EXPECT_EQ(base::string16(), form.fields[2].css_classes);
 }
 
@@ -2422,7 +2456,7 @@ TEST_F(FormAutofillTest, ExtractMultipleForms) {
   // First form.
   const FormData& form = forms[0];
   EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+  EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
             form.origin);
   EXPECT_FALSE(form.origin.is_empty());
   EXPECT_EQ(GURL("http://cnn.com"), form.action);
@@ -2432,7 +2466,7 @@ TEST_F(FormAutofillTest, ExtractMultipleForms) {
 
   FormFieldData expected;
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.name = ASCIIToUTF16("firstname");
   expected.value = ASCIIToUTF16("John");
@@ -2452,7 +2486,7 @@ TEST_F(FormAutofillTest, ExtractMultipleForms) {
   // Second form.
   const FormData& form2 = forms[1];
   EXPECT_EQ(ASCIIToUTF16("TestForm2"), form2.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->document()),
+  EXPECT_EQ(GetCanonicalOriginForDocument(web_frame->GetDocument()),
             form2.origin);
   EXPECT_FALSE(form.origin.is_empty());
   EXPECT_EQ(GURL("http://zoo.com"), form2.action);
@@ -2513,7 +2547,7 @@ TEST_F(FormAutofillTest, OnlyExtractNewForms) {
 
   FormFieldData expected;
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.name = ASCIIToUTF16("firstname");
   expected.value = ASCIIToUTF16("John");
@@ -2662,13 +2696,14 @@ TEST_F(FormAutofillTest, WebFormElementToFormDataAutocomplete) {
     ASSERT_NE(nullptr, web_frame);
 
     WebVector<WebFormElement> web_forms;
-    web_frame->document().forms(web_forms);
+    web_frame->GetDocument().Forms(web_forms);
     ASSERT_EQ(1U, web_forms.size());
     WebFormElement web_form = web_forms[0];
 
     FormData form;
     EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
-                                         EXTRACT_NONE, &form, nullptr));
+                                         nullptr, EXTRACT_NONE, &form,
+                                         nullptr));
   }
 }
 
@@ -3951,17 +3986,14 @@ TEST_F(FormAutofillTest, ThreePartPhone) {
   ASSERT_NE(nullptr, frame);
 
   WebVector<WebFormElement> forms;
-  frame->document().forms(forms);
+  frame->GetDocument().Forms(forms);
   ASSERT_EQ(1U, forms.size());
 
   FormData form;
-  EXPECT_TRUE(WebFormElementToFormData(forms[0],
-                                       WebFormControlElement(),
-                                       EXTRACT_VALUE,
-                                       &form,
-                                       nullptr));
+  EXPECT_TRUE(WebFormElementToFormData(forms[0], WebFormControlElement(),
+                                       nullptr, EXTRACT_VALUE, &form, nullptr));
   EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(frame->document()), form.origin);
+  EXPECT_EQ(GetCanonicalOriginForDocument(frame->GetDocument()), form.origin);
   EXPECT_FALSE(form.origin.is_empty());
   EXPECT_EQ(GURL("http://cnn.com"), form.action);
 
@@ -3970,7 +4002,7 @@ TEST_F(FormAutofillTest, ThreePartPhone) {
 
   FormFieldData expected;
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.label = ASCIIToUTF16("Phone:");
   expected.name = ASCIIToUTF16("dayphone1");
@@ -4009,17 +4041,14 @@ TEST_F(FormAutofillTest, MaxLengthFields) {
   ASSERT_NE(nullptr, frame);
 
   WebVector<WebFormElement> forms;
-  frame->document().forms(forms);
+  frame->GetDocument().Forms(forms);
   ASSERT_EQ(1U, forms.size());
 
   FormData form;
-  EXPECT_TRUE(WebFormElementToFormData(forms[0],
-                                       WebFormControlElement(),
-                                       EXTRACT_VALUE,
-                                       &form,
-                                       nullptr));
+  EXPECT_TRUE(WebFormElementToFormData(forms[0], WebFormControlElement(),
+                                       nullptr, EXTRACT_VALUE, &form, nullptr));
   EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(frame->document()), form.origin);
+  EXPECT_EQ(GetCanonicalOriginForDocument(frame->GetDocument()), form.origin);
   EXPECT_EQ(GURL("http://cnn.com"), form.action);
 
   const std::vector<FormFieldData>& fields = form.fields;
@@ -4051,13 +4080,13 @@ TEST_F(FormAutofillTest, MaxLengthFields) {
   // When unspecified |size|, default is returned.
   expected.label.clear();
   expected.name = ASCIIToUTF16("default1");
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[4]);
 
   // When invalid |size|, default is returned.
   expected.label.clear();
   expected.name = ASCIIToUTF16("invalid1");
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[5]);
 }
 
@@ -4315,20 +4344,20 @@ TEST_F(FormAutofillTest, ClickElement) {
   WebElementDescriptor clicker;
   clicker.retrieval_method = WebElementDescriptor::ID;
   clicker.descriptor = "link";
-  EXPECT_TRUE(ClickElement(frame->document(), clicker));
+  EXPECT_TRUE(ClickElement(frame->GetDocument(), clicker));
 
   // Successful retrieval by css selector.
   clicker.retrieval_method = WebElementDescriptor::CSS_SELECTOR;
   clicker.descriptor = "button[name='button']";
-  EXPECT_TRUE(ClickElement(frame->document(), clicker));
+  EXPECT_TRUE(ClickElement(frame->GetDocument(), clicker));
 
   // Unsuccessful retrieval due to invalid CSS selector.
   clicker.descriptor = "^*&";
-  EXPECT_FALSE(ClickElement(frame->document(), clicker));
+  EXPECT_FALSE(ClickElement(frame->GetDocument(), clicker));
 
   // Unsuccessful retrieval because element does not exist.
   clicker.descriptor = "#junk";
-  EXPECT_FALSE(ClickElement(frame->document(), clicker));
+  EXPECT_FALSE(ClickElement(frame->GetDocument(), clicker));
 }
 
 TEST_F(FormAutofillTest, SelectOneAsText) {
@@ -4348,22 +4377,22 @@ TEST_F(FormAutofillTest, SelectOneAsText) {
 
   // Set the value of the select-one.
   WebSelectElement select_element =
-      frame->document().getElementById("country").to<WebSelectElement>();
-  select_element.setValue(WebString::fromUTF8("AL"));
+      frame->GetDocument().GetElementById("country").To<WebSelectElement>();
+  select_element.SetValue(WebString::FromUTF8("AL"));
 
   WebVector<WebFormElement> forms;
-  frame->document().forms(forms);
+  frame->GetDocument().Forms(forms);
   ASSERT_EQ(1U, forms.size());
 
   FormData form;
 
   // Extract the country select-one value as text.
   EXPECT_TRUE(WebFormElementToFormData(
-      forms[0], WebFormControlElement(),
+      forms[0], WebFormControlElement(), nullptr,
       static_cast<ExtractMask>(EXTRACT_VALUE | EXTRACT_OPTION_TEXT), &form,
       nullptr));
   EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(frame->document()), form.origin);
+  EXPECT_EQ(GetCanonicalOriginForDocument(frame->GetDocument()), form.origin);
   EXPECT_EQ(GURL("http://cnn.com"), form.action);
 
   const std::vector<FormFieldData>& fields = form.fields;
@@ -4375,14 +4404,14 @@ TEST_F(FormAutofillTest, SelectOneAsText) {
   expected.value = ASCIIToUTF16("John");
   expected.label = ASCIIToUTF16("John");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
 
   expected.name = ASCIIToUTF16("lastname");
   expected.value = ASCIIToUTF16("Smith");
   expected.label = ASCIIToUTF16("Smith");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[1]);
 
   expected.name = ASCIIToUTF16("country");
@@ -4394,13 +4423,10 @@ TEST_F(FormAutofillTest, SelectOneAsText) {
 
   form.fields.clear();
   // Extract the country select-one value as value.
-  EXPECT_TRUE(WebFormElementToFormData(forms[0],
-                                       WebFormControlElement(),
-                                       EXTRACT_VALUE,
-                                       &form,
-                                       nullptr));
+  EXPECT_TRUE(WebFormElementToFormData(forms[0], WebFormControlElement(),
+                                       nullptr, EXTRACT_VALUE, &form, nullptr));
   EXPECT_EQ(ASCIIToUTF16("TestForm"), form.name);
-  EXPECT_EQ(GetCanonicalOriginForDocument(frame->document()), form.origin);
+  EXPECT_EQ(GetCanonicalOriginForDocument(frame->GetDocument()), form.origin);
   EXPECT_EQ(GURL("http://cnn.com"), form.action);
 
   ASSERT_EQ(3U, fields.size());
@@ -4409,14 +4435,14 @@ TEST_F(FormAutofillTest, SelectOneAsText) {
   expected.value = ASCIIToUTF16("John");
   expected.label = ASCIIToUTF16("John");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[0]);
 
   expected.name = ASCIIToUTF16("lastname");
   expected.value = ASCIIToUTF16("Smith");
   expected.label = ASCIIToUTF16("Smith");
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[1]);
 
   expected.name = ASCIIToUTF16("country");
@@ -4453,17 +4479,17 @@ TEST_F(FormAutofillTest,
   ASSERT_NE(nullptr, frame);
 
   control_elements = GetUnownedAutofillableFormFieldElements(
-      frame->document().all(), &fieldsets);
+      frame->GetDocument().All(), &fieldsets);
   ASSERT_EQ(3U, control_elements.size());
   ASSERT_EQ(2U, fieldsets.size());
 
   FormData form;
   EXPECT_TRUE(UnownedCheckoutFormElementsAndFieldSetsToFormData(
-      fieldsets, control_elements, nullptr, frame->document(), extract_mask,
+      fieldsets, control_elements, nullptr, frame->GetDocument(), extract_mask,
       &form, nullptr));
 
   EXPECT_TRUE(form.name.empty());
-  EXPECT_EQ(frame->document().url(), form.origin);
+  EXPECT_EQ(GURL(frame->GetDocument().Url()), form.origin);
   EXPECT_FALSE(form.action.is_valid());
 
   const std::vector<FormFieldData>& fields = form.fields;
@@ -4471,7 +4497,7 @@ TEST_F(FormAutofillTest,
 
   FormFieldData expected;
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.name = ASCIIToUTF16("firstname");
   expected.value = ASCIIToUTF16("John");
@@ -4513,17 +4539,17 @@ TEST_F(FormAutofillTest,
   ASSERT_NE(nullptr, frame);
 
   control_elements = GetUnownedAutofillableFormFieldElements(
-      frame->document().all(), &fieldsets);
+      frame->GetDocument().All(), &fieldsets);
   ASSERT_EQ(3U, control_elements.size());
   ASSERT_EQ(1U, fieldsets.size());
 
   FormData form;
   EXPECT_TRUE(UnownedCheckoutFormElementsAndFieldSetsToFormData(
-      fieldsets, control_elements, nullptr, frame->document(), extract_mask,
+      fieldsets, control_elements, nullptr, frame->GetDocument(), extract_mask,
       &form, nullptr));
 
   EXPECT_TRUE(form.name.empty());
-  EXPECT_EQ(frame->document().url(), form.origin);
+  EXPECT_EQ(GURL(frame->GetDocument().Url()), form.origin);
   EXPECT_FALSE(form.action.is_valid());
 
   const std::vector<FormFieldData>& fields = form.fields;
@@ -4531,7 +4557,7 @@ TEST_F(FormAutofillTest,
 
   FormFieldData expected;
   expected.form_control_type = "text";
-  expected.max_length = WebInputElement::defaultMaxLength();
+  expected.max_length = WebInputElement::DefaultMaxLength();
 
   expected.name = ASCIIToUTF16("firstname");
   expected.value = ASCIIToUTF16("John");
@@ -4562,13 +4588,13 @@ TEST_F(FormAutofillTest, UnownedFormElementsAndFieldSetsToFormDataWithForm) {
   ASSERT_NE(nullptr, frame);
 
   control_elements = GetUnownedAutofillableFormFieldElements(
-      frame->document().all(), &fieldsets);
+      frame->GetDocument().All(), &fieldsets);
   ASSERT_TRUE(control_elements.empty());
   ASSERT_TRUE(fieldsets.empty());
 
   FormData form;
   EXPECT_FALSE(UnownedCheckoutFormElementsAndFieldSetsToFormData(
-      fieldsets, control_elements, nullptr, frame->document(), extract_mask,
+      fieldsets, control_elements, nullptr, frame->GetDocument(), extract_mask,
       &form, nullptr));
 }
 

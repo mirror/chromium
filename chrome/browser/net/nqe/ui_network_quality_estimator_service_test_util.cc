@@ -9,6 +9,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/io_thread.h"
 #include "content/public/browser/browser_thread.h"
+#include "net/nqe/network_quality_estimator.h"
 
 namespace nqe_test_util {
 
@@ -16,9 +17,8 @@ namespace {
 
 // Reports |type| to all of NetworkQualityEstimator's
 // EffectiveConnectionTypeObservers.
-void OverrideEffectiveConnectionTypeOnIO(
-    net::NetworkQualityEstimator::EffectiveConnectionType type,
-    IOThread* io_thread) {
+void OverrideEffectiveConnectionTypeOnIO(net::EffectiveConnectionType type,
+                                         IOThread* io_thread) {
   if (!io_thread->globals()->network_quality_estimator)
     return;
   net::NetworkQualityEstimator* network_quality_estimator =
@@ -28,10 +28,19 @@ void OverrideEffectiveConnectionTypeOnIO(
   network_quality_estimator->ReportEffectiveConnectionTypeForTesting(type);
 }
 
+void OverrideRTTsAndWaitOnIO(base::TimeDelta rtt, IOThread* io_thread) {
+  if (!io_thread->globals()->network_quality_estimator)
+    return;
+  net::NetworkQualityEstimator* network_quality_estimator =
+      io_thread->globals()->network_quality_estimator.get();
+  if (!network_quality_estimator)
+    return;
+  network_quality_estimator->ReportRTTsAndThroughputForTesting(rtt, rtt, -1);
+}
+
 }  // namespace
 
-void OverrideEffectiveConnectionTypeAndWait(
-    net::NetworkQualityEstimator::EffectiveConnectionType type) {
+void OverrideEffectiveConnectionTypeAndWait(net::EffectiveConnectionType type) {
   // Block |run_loop| until OverrideEffectiveConnectionTypeOnIO has completed.
   // Any UI tasks posted by calling OverrideEffectiveConnectionTypeOnIO will
   // complete before the reply unblocks |run_loop|.
@@ -40,6 +49,18 @@ void OverrideEffectiveConnectionTypeAndWait(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&OverrideEffectiveConnectionTypeOnIO, type,
                  g_browser_process->io_thread()),
+      run_loop.QuitClosure());
+  run_loop.Run();
+}
+
+void OverrideRTTsAndWait(base::TimeDelta rtt) {
+  // Block |run_loop| until OverrideRTTsAndWaitOnIO has completed.
+  // Any UI tasks posted by calling OverrideRTTsAndWaitOnIO will complete before
+  // the reply unblocks |run_loop|.
+  base::RunLoop run_loop;
+  content::BrowserThread::PostTaskAndReply(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(&OverrideRTTsAndWaitOnIO, rtt, g_browser_process->io_thread()),
       run_loop.QuitClosure());
   run_loop.Run();
 }

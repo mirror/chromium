@@ -27,6 +27,7 @@
 #define FormatBlockCommand_h
 
 #include "core/dom/QualifiedName.h"
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/commands/ApplyBlockElementCommand.h"
@@ -35,30 +36,34 @@ namespace blink {
 
 class Document;
 class Element;
-class Range;
 
-class FormatBlockCommand final : public ApplyBlockElementCommand {
-public:
-    static FormatBlockCommand* create(Document& document, const QualifiedName& tagName)
-    {
-        return new FormatBlockCommand(document, tagName);
-    }
+class CORE_EXPORT FormatBlockCommand final : public ApplyBlockElementCommand {
+ public:
+  static FormatBlockCommand* Create(Document& document,
+                                    const QualifiedName& tag_name) {
+    return new FormatBlockCommand(document, tag_name);
+  }
 
-    bool preservesTypingStyle() const override { return true; }
+  bool PreservesTypingStyle() const override { return true; }
 
-    static Element* elementForFormatBlockCommand(Range*);
-    bool didApply() const { return m_didApply; }
+  static Element* ElementForFormatBlockCommand(const EphemeralRange&);
+  bool DidApply() const { return did_apply_; }
 
-private:
-    FormatBlockCommand(Document&, const QualifiedName& tagName);
+ private:
+  FormatBlockCommand(Document&, const QualifiedName& tag_name);
 
-    void formatSelection(const VisiblePosition& startOfSelection, const VisiblePosition& endOfSelection, EditingState*) override;
-    void formatRange(const Position& start, const Position& end, const Position& endOfSelection, HTMLElement*&, EditingState*) override;
-    InputEvent::InputType inputType() const;
+  void FormatSelection(const VisiblePosition& start_of_selection,
+                       const VisiblePosition& end_of_selection,
+                       EditingState*) override;
+  void FormatRange(const Position& start,
+                   const Position& end,
+                   const Position& end_of_selection,
+                   HTMLElement*&,
+                   EditingState*) override;
 
-    bool m_didApply;
+  bool did_apply_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FormatBlockCommand_h
+#endif  // FormatBlockCommand_h

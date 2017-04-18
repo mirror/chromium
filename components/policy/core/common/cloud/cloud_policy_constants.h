@@ -9,10 +9,6 @@
 
 #include "components/policy/policy_export.h"
 
-namespace enterprise_management {
-class PolicyData;
-}
-
 namespace policy {
 
 // Constants related to the device management protocol.
@@ -21,11 +17,14 @@ namespace dm_protocol {
 // Name extern constants for URL query parameters.
 POLICY_EXPORT extern const char kParamAgent[];
 POLICY_EXPORT extern const char kParamAppType[];
+POLICY_EXPORT extern const char kParamCritical[];
 POLICY_EXPORT extern const char kParamDeviceID[];
 POLICY_EXPORT extern const char kParamDeviceType[];
+POLICY_EXPORT extern const char kParamLastError[];
 POLICY_EXPORT extern const char kParamOAuthToken[];
 POLICY_EXPORT extern const char kParamPlatform[];
 POLICY_EXPORT extern const char kParamRequest[];
+POLICY_EXPORT extern const char kParamRetry[];
 
 // String extern constants for the device and app type we report to the server.
 POLICY_EXPORT extern const char kValueAppType[];
@@ -43,12 +42,16 @@ POLICY_EXPORT extern const char kValueRequestDeviceAttributeUpdatePermission[];
 POLICY_EXPORT extern const char kValueRequestDeviceAttributeUpdate[];
 POLICY_EXPORT extern const char kValueRequestGcmIdUpdate[];
 POLICY_EXPORT extern const char kValueRequestCheckAndroidManagement[];
+POLICY_EXPORT extern const char kValueRequestCertBasedRegister[];
+POLICY_EXPORT extern const char kValueRequestActiveDirectoryEnrollPlayUser[];
+POLICY_EXPORT extern const char kValueRequestActiveDirectoryPlayActivity[];
 
 // Policy type strings for the policy_type field in PolicyFetchRequest.
 POLICY_EXPORT extern const char kChromeDevicePolicyType[];
 POLICY_EXPORT extern const char kChromeUserPolicyType[];
 POLICY_EXPORT extern const char kChromePublicAccountPolicyType[];
 POLICY_EXPORT extern const char kChromeExtensionPolicyType[];
+POLICY_EXPORT extern const char kChromeSigninExtensionPolicyType[];
 
 // These codes are sent in the |error_code| field of PolicyFetchResponse.
 enum PolicyFetchStatus {
@@ -61,9 +64,11 @@ enum PolicyFetchStatus {
 // The header used to transmit the policy ID for this client.
 POLICY_EXPORT extern const char kChromePolicyHeader[];
 
-// Information about the verification key used to verify that policy signing
-// keys are valid.
+// Public half of the verification key that is used to verify that policy
+// signing keys are originating from DM server.
 POLICY_EXPORT std::string GetPolicyVerificationKey();
+
+// Corresponding hash.
 POLICY_EXPORT extern const char kPolicyVerificationKeyHash[];
 
 // Status codes for communication errors with the device management service.
@@ -102,8 +107,12 @@ enum DeviceManagementStatus {
   DM_STATUS_SERVICE_DEPROVISIONED = 13,
   // Service error: Device registration for the wrong domain.
   DM_STATUS_SERVICE_DOMAIN_MISMATCH = 14,
+  // Client error: Request could not be signed.
+  DM_STATUS_CANNOT_SIGN_REQUEST = 15,
   // Service error: Policy not found. Error code defined by the DM folks.
   DM_STATUS_SERVICE_POLICY_NOT_FOUND = 902,
+  // Service error: ARC is not enabled on this domain.
+  DM_STATUS_SERVICE_ARC_DISABLED = 904,
 };
 
 // List of modes that the device can be locked into.
@@ -114,6 +123,7 @@ enum DeviceMode {
                                    // device.
   DEVICE_MODE_ENTERPRISE,          // The device is enrolled as an enterprise
                                    // device.
+  DEVICE_MODE_ENTERPRISE_AD,       // The device has joined AD.
   DEVICE_MODE_LEGACY_RETAIL_MODE,  // The device is enrolled as a retail kiosk
                                    // device. Even though retail mode is
                                    // deprecated, we still check for this device
@@ -125,27 +135,6 @@ enum DeviceMode {
                                           // consumer kiosk with ability to auto
                                           // launch a kiosk webapp.
 };
-
-// An enum that indicates if a device that has a local owner, is enterprise-
-// managed, or is consumer-managed. This is a copy of ManagementMode in
-// PolicyData. See device_management_backend.proto for the explanation of each
-// mode.
-enum ManagementMode {
-  MANAGEMENT_MODE_LOCAL_OWNER = 0,
-  MANAGEMENT_MODE_ENTERPRISE_MANAGED = 1,
-  MANAGEMENT_MODE_CONSUMER_MANAGED = 2,
-};
-
-// Sets management mode field in the |policy_data|.
-POLICY_EXPORT void SetManagementMode(
-    enterprise_management::PolicyData& policy_data,
-    ManagementMode mode);
-
-// Returns the management mode of |policy_data|. You should use this function
-// instead of using |management_mode| in |policy_data| to handle legacy
-// |policy_data| that doesn't have |management_mode| set.
-POLICY_EXPORT ManagementMode GetManagementMode(
-    const enterprise_management::PolicyData& policy_data);
 
 }  // namespace policy
 

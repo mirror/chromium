@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/mac/scoped_nsobject.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -17,7 +18,6 @@
 #include "ios/chrome/browser/infobars/infobar.h"
 #import "ios/chrome/browser/passwords/update_password_infobar_controller.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
-#include "ios/chrome/grit/ios_google_chrome_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -58,8 +58,7 @@ bool IOSChromeUpdatePasswordInfoBarDelegate::ShowMultipleAccounts() const {
 
 NSArray* IOSChromeUpdatePasswordInfoBarDelegate::GetAccounts() const {
   NSMutableArray* usernames = [NSMutableArray array];
-  const autofill::PasswordFormMap& matches = form_to_save()->best_matches();
-  for (const auto& match : matches) {
+  for (const auto& match : form_to_save()->best_matches()) {
     [usernames addObject:base::SysUTF16ToNSString(match.first)];
   }
   return usernames;
@@ -69,7 +68,7 @@ base::string16 IOSChromeUpdatePasswordInfoBarDelegate::GetBranding() const {
   return l10n_util::GetStringUTF16(
       is_smart_lock_branding_enabled()
           ? IDS_IOS_PASSWORD_MANAGER_SMART_LOCK_FOR_PASSWORDS
-          : IDS_IOS_PASSWORD_MANAGER_TITLE_BRAND);
+          : IDS_IOS_SHORT_PRODUCT_NAME);
 }
 
 infobars::InfoBarDelegate::InfoBarIdentifier
@@ -86,24 +85,23 @@ base::string16 IOSChromeUpdatePasswordInfoBarDelegate::GetMessageText() const {
                    IDS_IOS_PASSWORD_MANAGER_UPDATE_PASSWORD, GetBranding());
 }
 
+int IOSChromeUpdatePasswordInfoBarDelegate::GetButtons() const {
+  return BUTTON_OK;
+}
+
 base::string16 IOSChromeUpdatePasswordInfoBarDelegate::GetButtonLabel(
     InfoBarButton button) const {
-  return l10n_util::GetStringUTF16(
-      (button == BUTTON_OK) ? IDS_IOS_PASSWORD_MANAGER_UPDATE_BUTTON
-                            : IDS_IOS_PASSWORD_MANAGER_CANCEL_BUTTON);
+  DCHECK_EQ(BUTTON_OK, button);
+  return l10n_util::GetStringUTF16(IDS_IOS_PASSWORD_MANAGER_UPDATE_BUTTON);
 }
 
 bool IOSChromeUpdatePasswordInfoBarDelegate::Accept() {
   DCHECK(form_to_save());
   if (ShowMultipleAccounts()) {
     form_to_save()->Update(
-        *form_to_save()->best_matches().at(selected_account_).get());
+        *form_to_save()->best_matches().at(selected_account_));
   } else {
     form_to_save()->Update(form_to_save()->pending_credentials());
   }
-  return true;
-}
-
-bool IOSChromeUpdatePasswordInfoBarDelegate::Cancel() {
   return true;
 }

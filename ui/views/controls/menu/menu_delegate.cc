@@ -23,20 +23,7 @@ const gfx::FontList* MenuDelegate::GetLabelFontList(int id) const {
   return NULL;
 }
 
-bool MenuDelegate::GetShouldUseDisabledEmphasizedForegroundColor(
-    int command_id) const {
-  return false;
-}
-
-bool MenuDelegate::GetBackgroundColor(int command_id,
-                                      bool is_hovered,
-                                      SkColor* override_color) const {
-  return false;
-}
-
-bool MenuDelegate::GetForegroundColor(int command_id,
-                                      bool is_hovered,
-                                      SkColor* override_color) const {
+bool MenuDelegate::GetShouldUseNormalForegroundColor(int command_id) const {
   return false;
 }
 

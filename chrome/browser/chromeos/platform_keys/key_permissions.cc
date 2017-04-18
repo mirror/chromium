@@ -16,11 +16,11 @@
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service.h"
+#include "components/policy/policy_constants.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "extensions/browser/state_store.h"
-#include "policy/policy_constants.h"
 
 namespace chromeos {
 
@@ -176,7 +176,7 @@ void KeyPermissions::PermissionsForExtension::RegisterKeyForCorporateUsage(
                                                 kPrefKeyUsageCorporate);
 
   update->SetWithoutPathExpansion(public_key_spki_der_b64,
-                                  new_pref_entry.release());
+                                  std::move(new_pref_entry));
 }
 
 void KeyPermissions::PermissionsForExtension::SetUserGrantedPermission(
@@ -247,20 +247,15 @@ void KeyPermissions::PermissionsForExtension::KeyEntriesFromState(
     return;
   }
   for (const auto& entry : *entries) {
-    if (!entry) {
-      LOG(ERROR) << "Found invalid NULL entry in PlatformKeys state store.";
-      continue;
-    }
-
     std::string spki_b64;
     const base::DictionaryValue* dict_entry = nullptr;
-    if (entry->GetAsString(&spki_b64)) {
+    if (entry.GetAsString(&spki_b64)) {
       // This handles the case that the store contained a plain list of base64
       // and DER-encoded SPKIs from an older version of ChromeOS.
       KeyEntry new_entry(spki_b64);
       new_entry.sign_once = true;
       state_store_entries_.push_back(new_entry);
-    } else if (entry->GetAsDictionary(&dict_entry)) {
+    } else if (entry.GetAsDictionary(&dict_entry)) {
       dict_entry->GetStringWithoutPathExpansion(kStateStoreSPKI, &spki_b64);
       KeyEntry new_entry(spki_b64);
       dict_entry->GetBooleanWithoutPathExpansion(kStateStoreSignOnce,
@@ -269,7 +264,7 @@ void KeyPermissions::PermissionsForExtension::KeyEntriesFromState(
                                                  &new_entry.sign_unlimited);
       state_store_entries_.push_back(new_entry);
     } else {
-      LOG(ERROR) << "Found invalid entry of type " << entry->GetType()
+      LOG(ERROR) << "Found invalid entry of type " << entry.GetType()
                  << " in PlatformKeys state store.";
       continue;
     }
@@ -295,7 +290,7 @@ KeyPermissions::PermissionsForExtension::KeyEntriesToState() {
       new_entry->SetBooleanWithoutPathExpansion(kStateStoreSignUnlimited,
                                                 entry.sign_unlimited);
     }
-    new_state->Append(new_entry.release());
+    new_state->Append(std::move(new_entry));
   }
   return std::move(new_state);
 }
@@ -377,9 +372,8 @@ void KeyPermissions::CreatePermissionObjectAndPassToCallback(
     const std::string& extension_id,
     const PermissionsCallback& callback,
     std::unique_ptr<base::Value> value) {
-  callback.Run(base::WrapUnique(
-      new PermissionsForExtension(extension_id, std::move(value),
-                                  profile_prefs_, profile_policies_, this)));
+  callback.Run(base::MakeUnique<PermissionsForExtension>(
+      extension_id, std::move(value), profile_prefs_, profile_policies_, this));
 }
 
 void KeyPermissions::SetPlatformKeysOfExtension(

@@ -26,36 +26,29 @@
 #include "public/web/WebTestingSupport.h"
 
 #include "bindings/modules/v8/V8InternalsPartial.h"
+#include "bindings/modules/v8/V8WorkerInternalsPartial.h"
 #include "core/testing/v8/WebCoreTestSupport.h"
 #include "public/web/WebLocalFrame.h"
-#include <v8/include/v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
-v8::Local<v8::Value> WebTestingSupport::createInternalsObject(v8::Local<v8::Context> context)
-{
-    V8InternalsPartial::initialize();
-    return WebCoreTestSupport::createInternalsObject(context);
+void WebTestingSupport::InjectInternalsObject(WebLocalFrame* frame) {
+  V8InternalsPartial::initialize();
+  v8::HandleScope handle_scope(v8::Isolate::GetCurrent());
+  WebCoreTestSupport::injectInternalsObject(frame->MainWorldScriptContext());
 }
 
-void WebTestingSupport::injectInternalsObject(WebLocalFrame* frame)
-{
-    V8InternalsPartial::initialize();
-    v8::HandleScope handleScope(v8::Isolate::GetCurrent());
-    WebCoreTestSupport::injectInternalsObject(frame->mainWorldScriptContext());
+void WebTestingSupport::ResetInternalsObject(WebLocalFrame* frame) {
+  v8::HandleScope handle_scope(v8::Isolate::GetCurrent());
+  WebCoreTestSupport::resetInternalsObject(frame->MainWorldScriptContext());
 }
 
-void WebTestingSupport::resetInternalsObject(WebLocalFrame* frame)
-{
-    v8::HandleScope handleScope(v8::Isolate::GetCurrent());
-    WebCoreTestSupport::resetInternalsObject(frame->mainWorldScriptContext());
+void WebTestingSupport::InjectInternalsObject(v8::Local<v8::Context> context) {
+  V8InternalsPartial::initialize();
+  V8WorkerInternalsPartial::initialize();
+  v8::HandleScope handle_scope(v8::Isolate::GetCurrent());
+  WebCoreTestSupport::injectInternalsObject(context);
 }
 
-void WebTestingSupport::injectInternalsObject(v8::Local<v8::Context> context)
-{
-    V8InternalsPartial::initialize();
-    v8::HandleScope handleScope(v8::Isolate::GetCurrent());
-    WebCoreTestSupport::injectInternalsObject(context);
-}
-
-} // namespace blink
+}  // namespace blink

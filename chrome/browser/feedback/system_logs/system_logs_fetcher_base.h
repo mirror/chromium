@@ -10,23 +10,23 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/weak_ptr.h"
+#include "components/feedback/feedback_common.h"
 
 namespace system_logs {
 
-typedef std::map<std::string, std::string> SystemLogsResponse;
+using SystemLogsResponse = FeedbackCommon::SystemLogsMap;
 
 // Callback that the data sources use to return data.
-typedef base::Callback<void(SystemLogsResponse* response)>
-    SysLogsSourceCallback;
+using SysLogsSourceCallback = base::Callback<void(SystemLogsResponse*)>;
 
 // Callback that the SystemLogsFetcherBase uses to return data.
-typedef base::Callback<void(std::unique_ptr<SystemLogsResponse> response)>
-    SysLogsFetcherCallback;
+using SysLogsFetcherCallback =
+    base::Callback<void(std::unique_ptr<SystemLogsResponse>)>;
 
 // The SystemLogsSource provides a interface for the data sources that
 // the SystemLogsFetcherBase class uses to fetch logs and other
@@ -83,7 +83,7 @@ class SystemLogsFetcherBase
   void AddResponse(const std::string& source_name,
                    SystemLogsResponse* response);
 
-  ScopedVector<SystemLogsSource> data_sources_;
+  std::vector<std::unique_ptr<SystemLogsSource>> data_sources_;
   SysLogsFetcherCallback callback_;
 
   std::unique_ptr<SystemLogsResponse> response_;  // The actual response data.

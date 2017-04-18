@@ -13,15 +13,17 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
+#include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
+#include "cc/paint/image_id.h"
 #include "cc/tiles/picture_layer_tiling.h"
 #include "cc/tiles/picture_layer_tiling_set.h"
 #include "cc/tiles/tiling_set_eviction_queue.h"
 
 namespace cc {
 
-struct AppendQuadsData;
+class AppendQuadsData;
 class MicroBenchmarkImpl;
 class Tile;
 
@@ -29,14 +31,13 @@ class CC_EXPORT PictureLayerImpl
     : public LayerImpl,
       NON_EXPORTED_BASE(public PictureLayerTilingClient) {
  public:
-  static std::unique_ptr<PictureLayerImpl> Create(LayerTreeImpl* tree_impl,
-                                                  int id,
-                                                  bool is_mask) {
-    return base::WrapUnique(new PictureLayerImpl(tree_impl, id, is_mask));
+  static std::unique_ptr<PictureLayerImpl>
+  Create(LayerTreeImpl* tree_impl, int id, Layer::LayerMaskType mask_type) {
+    return base::WrapUnique(new PictureLayerImpl(tree_impl, id, mask_type));
   }
   ~PictureLayerImpl() override;
 
-  bool is_mask() const { return is_mask_; }
+  Layer::LayerMaskType mask_type() const { return mask_type_; }
 
   // LayerImpl overrides.
   const char* LayerTypeAsString() const override;
@@ -45,13 +46,15 @@ class CC_EXPORT PictureLayerImpl
   void AppendQuads(RenderPass* render_pass,
                    AppendQuadsData* append_quads_data) override;
   void NotifyTileStateChanged(const Tile* tile) override;
+  void ResetRasterScale();
   void DidBeginTracing() override;
   void ReleaseResources() override;
-  void RecreateResources() override;
+  void ReleaseTileResources() override;
+  void RecreateTileResources() override;
   Region GetInvalidationRegionForDebugging() override;
 
   // PictureLayerTilingClient overrides.
-  ScopedTilePtr CreateTile(const Tile::CreateInfo& info) override;
+  std::unique_ptr<Tile> CreateTile(const Tile::CreateInfo& info) override;
   gfx::Size CalculateTileSize(const gfx::Size& content_bounds) const override;
   const Region* GetPendingInvalidation() override;
   const PictureLayerTiling* GetPendingOrActiveTwinTiling(
@@ -77,6 +80,8 @@ class CC_EXPORT PictureLayerImpl
 
   void SetNearestNeighbor(bool nearest_neighbor);
 
+  void SetUseTransformedRasterization(bool use);
+
   size_t GPUMemoryUsageInBytes() const override;
 
   void RunMicroBenchmark(MicroBenchmarkImpl* benchmark) override;
@@ -96,8 +101,12 @@ class CC_EXPORT PictureLayerImpl
     is_directly_composited_image_ = is_directly_composited_image;
   }
 
+  void InvalidateRegionForImages(const ImageIdFlatSet& images_to_invalidate);
+
  protected:
-  PictureLayerImpl(LayerTreeImpl* tree_impl, int id, bool is_mask);
+  PictureLayerImpl(LayerTreeImpl* tree_impl,
+                   int id,
+                   Layer::LayerMaskType mask_type);
   PictureLayerTiling* AddTiling(float contents_scale);
   void RemoveAllTilings();
   void AddTilingsForRasterScale();
@@ -108,12 +117,10 @@ class CC_EXPORT PictureLayerImpl
       const std::vector<PictureLayerTiling*>& used_tilings);
   float MinimumContentsScale() const;
   float MaximumContentsScale() const;
-  void ResetRasterScale();
   void UpdateViewportRectForTilePriorityInContentSpace();
   PictureLayerImpl* GetRecycledTwinLayer() const;
 
   void SanityCheckTilingState() const;
-  bool ShouldAdjustRasterScaleDuringScaleAnimations() const;
 
   void GetDebugBorderProperties(SkColor* color, float* width) const override;
   void GetAllPrioritizedTilesForTracing(
@@ -143,9 +150,10 @@ class CC_EXPORT PictureLayerImpl
 
   bool was_screen_space_transform_animating_;
   bool only_used_low_res_last_append_quads_;
-  const bool is_mask_;
+  const Layer::LayerMaskType mask_type_;
 
   bool nearest_neighbor_;
+  bool use_transformed_rasterization_;
   bool is_directly_composited_image_;
 
   // Use this instead of |visible_layer_rect()| for tiling calculations. This

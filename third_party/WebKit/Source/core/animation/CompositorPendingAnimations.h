@@ -33,9 +33,12 @@
 
 #include "core/CoreExport.h"
 #include "core/animation/Animation.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "platform/Timer.h"
+#include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Optional.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -44,30 +47,36 @@ namespace blink {
 // For CSS Animations, used to synchronize the start of main-thread animations
 // with compositor animations when both classes of CSS Animations are triggered
 // by the same recalc
-class CORE_EXPORT CompositorPendingAnimations final : public GarbageCollectedFinalized<CompositorPendingAnimations> {
-public:
-    CompositorPendingAnimations()
-        : m_timer(this, &CompositorPendingAnimations::timerFired)
-        , m_compositorGroup(1)
-    { }
+class CORE_EXPORT CompositorPendingAnimations final
+    : public GarbageCollectedFinalized<CompositorPendingAnimations> {
+ public:
+  explicit CompositorPendingAnimations(Document& document)
+      : timer_(TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &document),
+               this,
+               &CompositorPendingAnimations::TimerFired),
+        compositor_group_(1) {}
 
-    void add(Animation*);
-    // Returns whether we are waiting for an animation to start and should
-    // service again on the next frame.
-    bool update(bool startOnCompositor = true);
-    void notifyCompositorAnimationStarted(double monotonicAnimationStartTime, int compositorGroup = 0);
+  void Add(Animation*);
+  // Returns whether we are waiting for an animation to start and should
+  // service again on the next frame.
+  bool Update(const Optional<CompositorElementIdSet>&,
+              bool start_on_compositor = true);
+  void NotifyCompositorAnimationStarted(double monotonic_animation_start_time,
+                                        int compositor_group = 0);
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    void timerFired(Timer<CompositorPendingAnimations>*) { update(false); }
+ private:
+  void TimerFired(TimerBase*) {
+    Update(Optional<CompositorElementIdSet>(), false);
+  }
 
-    HeapVector<Member<Animation>> m_pending;
-    HeapVector<Member<Animation>> m_waitingForCompositorAnimationStart;
-    Timer<CompositorPendingAnimations> m_timer;
-    int m_compositorGroup;
+  HeapVector<Member<Animation>> pending_;
+  HeapVector<Member<Animation>> waiting_for_compositor_animation_start_;
+  TaskRunnerTimer<CompositorPendingAnimations> timer_;
+  int compositor_group_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

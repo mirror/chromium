@@ -8,7 +8,8 @@
 test(function() {
     if (!window.internals)
         return;
-    internals.settings.setUnifiedTextCheckerEnabled(true);
+    if (window.testRunner)
+        testRunner.setMockSpellCheckerEnabled(true);
     window.getSelection().selectAllChildren(document.getElementById('foo'));
     document.execCommand('insertParagraph');
 }, 'spelling');

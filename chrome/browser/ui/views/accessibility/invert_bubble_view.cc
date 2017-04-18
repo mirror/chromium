@@ -13,8 +13,8 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/page_navigator.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/window_open_disposition.h"
@@ -82,9 +82,10 @@ void InvertBubbleView::Init() {
   const gfx::FontList& original_font_list =
       rb.GetFontList(ui::ResourceBundle::MediumFont);
 
+  // TODO(tapted): This should be using WidgetDelegate::GetWindowTitle().
   views::Label* title = new views::Label(
-      base::string16(),
-      original_font_list.Derive(2, gfx::Font::NORMAL, gfx::Font::Weight::BOLD));
+      base::string16(), views::Label::CustomFont{original_font_list.Derive(
+                            2, gfx::Font::NORMAL, gfx::Font::Weight::BOLD)});
   title->SetMultiLine(true);
 
   learn_more_ = new views::Link(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
@@ -105,7 +106,6 @@ void InvertBubbleView::Init() {
   close_->set_listener(this);
 
   views::GridLayout* layout = views::GridLayout::CreatePanel(this);
-  SetLayoutManager(layout);
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   for (int i = 0; i < 4; i++) {
@@ -154,7 +154,9 @@ void InvertBubbleView::OpenLink(const std::string& url, int event_flags) {
       ui::DispositionFromEventFlags(event_flags);
   content::OpenURLParams params(
       GURL(url), content::Referrer(),
-      disposition == CURRENT_TAB ? NEW_FOREGROUND_TAB : disposition,
+      disposition == WindowOpenDisposition::CURRENT_TAB
+          ? WindowOpenDisposition::NEW_FOREGROUND_TAB
+          : disposition,
       ui::PAGE_TRANSITION_LINK, false);
   browser_->OpenURL(params);
 }

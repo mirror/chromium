@@ -8,327 +8,487 @@
 #include "core/css/CSSFontFace.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/dom/Document.h"
-#include "core/fetch/ResourceFetcher.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/loader/FrameLoaderClient.h"
-#include "core/page/NetworkStateNotifier.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/fonts/FontCustomPlatformData.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/SimpleFontData.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/network/NetworkStateNotifier.h"
+#include "platform/wtf/CurrentTime.h"
 #include "public/platform/WebEffectiveConnectionType.h"
-#include "wtf/CurrentTime.h"
 
 namespace blink {
 
 namespace {
 
-bool isEffectiveConnectionTypeSlowFor(Document* document)
-{
-    WebEffectiveConnectionType type = document->frame()->loader().client()->getEffectiveConnectionType();
+bool IsEffectiveConnectionTypeSlowFor(Document* document) {
+  WebEffectiveConnectionType type =
+      document->GetFrame()->Loader().Client()->GetEffectiveConnectionType();
 
-    WebEffectiveConnectionType thresholdType = RuntimeEnabledFeatures::webFontsInterventionV2With2GEnabled()
-        ? WebEffectiveConnectionType::Type2G
-        : WebEffectiveConnectionType::TypeSlow2G;
+  WebEffectiveConnectionType threshold_type =
+      WebEffectiveConnectionType::kTypeUnknown;
+  if (RuntimeEnabledFeatures::webFontsInterventionV2With2GEnabled()) {
+    threshold_type = WebEffectiveConnectionType::kType2G;
+  } else if (RuntimeEnabledFeatures::webFontsInterventionV2With3GEnabled()) {
+    threshold_type = WebEffectiveConnectionType::kType3G;
+  } else if (RuntimeEnabledFeatures::
+                 webFontsInterventionV2WithSlow2GEnabled()) {
+    threshold_type = WebEffectiveConnectionType::kTypeSlow2G;
+  }
+  DCHECK_NE(WebEffectiveConnectionType::kTypeUnknown, threshold_type);
 
-    return WebEffectiveConnectionType::TypeOffline <= type && type <= thresholdType;
+  return WebEffectiveConnectionType::kTypeOffline <= type &&
+         type <= threshold_type;
 }
 
-bool isConnectionTypeSlow()
-{
-    return networkStateNotifier().connectionType() == WebConnectionTypeCellular2G;
+bool IsConnectionTypeSlow() {
+  return GetNetworkStateNotifier().ConnectionType() ==
+         kWebConnectionTypeCellular2G;
 }
 
-bool shouldTriggerWebFontsIntervention(Document* document, FontDisplay display, bool isLoadedFromMemoryCache, bool isLoadedFromDataURL)
-{
-    if (RuntimeEnabledFeatures::webFontsInterventionTriggerEnabled())
-        return true;
-    if (isLoadedFromMemoryCache || isLoadedFromDataURL)
-        return false;
-
-    bool isV2Enabled = RuntimeEnabledFeatures::webFontsInterventionV2With2GEnabled() || RuntimeEnabledFeatures::webFontsInterventionV2WithSlow2GEnabled();
-
-    bool networkIsSlow = isV2Enabled ? isEffectiveConnectionTypeSlowFor(document) : isConnectionTypeSlow();
-
-    return networkIsSlow && display == FontDisplayAuto;
+bool IsInterventionV2Enabled() {
+  return RuntimeEnabledFeatures::webFontsInterventionV2With2GEnabled() ||
+         RuntimeEnabledFeatures::webFontsInterventionV2With3GEnabled() ||
+         RuntimeEnabledFeatures::webFontsInterventionV2WithSlow2GEnabled();
 }
 
-} // namespace
+}  // namespace
 
-RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font, CSSFontSelector* fontSelector, FontDisplay display)
-    : m_font(font)
-    , m_fontSelector(fontSelector)
-    , m_display(display)
-    , m_period(display == FontDisplaySwap ? SwapPeriod : BlockPeriod)
-    , m_isInterventionTriggered(false)
-    , m_isLoadedFromMemoryCache(font->isLoaded())
-{
-    ThreadState::current()->registerPreFinalizer(this);
-    m_font->addClient(this);
+RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
+                                           CSSFontSelector* font_selector,
+                                           FontDisplay display)
+    : font_(font),
+      font_selector_(font_selector),
+      display_(display),
+      period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),
+      histograms_(font->Url().ProtocolIsData()
+                      ? FontLoadHistograms::kFromDataURL
+                      : font->IsLoaded() ? FontLoadHistograms::kFromMemoryCache
+                                         : FontLoadHistograms::kFromUnknown,
+                  display_),
+      is_intervention_triggered_(false) {
+  if (ShouldTriggerWebFontsIntervention()) {
+    is_intervention_triggered_ = true;
+    period_ = kSwapPeriod;
+    font_selector_->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kInfoMessageLevel,
+        "Slow network is detected. Fallback font will be used while loading: " +
+            font_->Url().ElidedString()));
+  }
 
-    if (shouldTriggerWebFontsIntervention(m_fontSelector->document(), display, m_isLoadedFromMemoryCache, m_font->url().protocolIsData())) {
+  // Note: this may call notifyFinished() and clear font_.
+  font_->AddClient(this);
+}
 
-        m_isInterventionTriggered = true;
-        m_period = SwapPeriod;
-        m_fontSelector->document()->addConsoleMessage(ConsoleMessage::create(OtherMessageSource, InfoMessageLevel, "Slow network is detected. Fallback font will be used while loading: " + m_font->url().elidedString()));
+RemoteFontFaceSource::~RemoteFontFaceSource() {}
+
+void RemoteFontFaceSource::Dispose() {
+  if (font_) {
+    font_->RemoveClient(this);
+    font_ = nullptr;
+  }
+  PruneTable();
+}
+
+void RemoteFontFaceSource::PruneTable() {
+  if (font_data_table_.IsEmpty())
+    return;
+
+  for (const auto& item : font_data_table_) {
+    SimpleFontData* font_data = item.value.Get();
+    if (font_data && font_data->GetCustomFontData())
+      font_data->GetCustomFontData()->ClearFontFaceSource();
+  }
+  font_data_table_.Clear();
+}
+
+bool RemoteFontFaceSource::IsLoading() const {
+  return font_ && font_->IsLoading();
+}
+
+bool RemoteFontFaceSource::IsLoaded() const {
+  return !font_;
+}
+
+bool RemoteFontFaceSource::IsValid() const {
+  return font_ || custom_font_data_;
+}
+
+void RemoteFontFaceSource::NotifyFinished(Resource* unused_resource) {
+  DCHECK_EQ(unused_resource, font_);
+  histograms_.MaySetDataSource(font_->GetResponse().WasCached()
+                                   ? FontLoadHistograms::kFromDiskCache
+                                   : FontLoadHistograms::kFromNetwork);
+  histograms_.RecordRemoteFont(font_.Get(), is_intervention_triggered_);
+  histograms_.FontLoaded(font_->IsCORSFailed(),
+                         font_->GetStatus() == ResourceStatus::kLoadError,
+                         is_intervention_triggered_);
+
+  custom_font_data_ = font_->GetCustomFontData();
+
+  // FIXME: Provide more useful message such as OTS rejection reason.
+  // See crbug.com/97467
+  if (font_->GetStatus() == ResourceStatus::kDecodeError &&
+      font_selector_->GetDocument()) {
+    font_selector_->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        "Failed to decode downloaded font: " + font_->Url().ElidedString()));
+    if (font_->OtsParsingMessage().length() > 1)
+      font_selector_->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
+          kOtherMessageSource, kWarningMessageLevel,
+          "OTS parsing error: " + font_->OtsParsingMessage()));
+  }
+
+  font_->RemoveClient(this);
+  font_ = nullptr;
+
+  PruneTable();
+  if (face_) {
+    font_selector_->FontFaceInvalidated();
+    face_->FontLoaded(this);
+  }
+}
+
+void RemoteFontFaceSource::FontLoadShortLimitExceeded(FontResource*) {
+  if (IsLoaded())
+    return;
+
+  if (display_ == kFontDisplayFallback)
+    SwitchToSwapPeriod();
+  else if (display_ == kFontDisplayOptional)
+    SwitchToFailurePeriod();
+}
+
+void RemoteFontFaceSource::FontLoadLongLimitExceeded(FontResource*) {
+  if (IsLoaded())
+    return;
+
+  if (display_ == kFontDisplayBlock ||
+      (!is_intervention_triggered_ && display_ == kFontDisplayAuto))
+    SwitchToSwapPeriod();
+  else if (display_ == kFontDisplayFallback)
+    SwitchToFailurePeriod();
+
+  histograms_.LongLimitExceeded(is_intervention_triggered_);
+}
+
+void RemoteFontFaceSource::SwitchToSwapPeriod() {
+  DCHECK_EQ(period_, kBlockPeriod);
+  period_ = kSwapPeriod;
+
+  PruneTable();
+  if (face_) {
+    font_selector_->FontFaceInvalidated();
+    face_->DidBecomeVisibleFallback(this);
+  }
+
+  histograms_.RecordFallbackTime();
+}
+
+void RemoteFontFaceSource::SwitchToFailurePeriod() {
+  if (period_ == kBlockPeriod)
+    SwitchToSwapPeriod();
+  DCHECK_EQ(period_, kSwapPeriod);
+  period_ = kFailurePeriod;
+}
+
+bool RemoteFontFaceSource::ShouldTriggerWebFontsIntervention() {
+  if (RuntimeEnabledFeatures::webFontsInterventionTriggerEnabled())
+    return true;
+  if (histograms_.GetDataSource() == FontLoadHistograms::kFromMemoryCache ||
+      histograms_.GetDataSource() == FontLoadHistograms::kFromDataURL)
+    return false;
+
+  bool network_is_slow =
+      IsInterventionV2Enabled()
+          ? IsEffectiveConnectionTypeSlowFor(font_selector_->GetDocument())
+          : IsConnectionTypeSlow();
+
+  return network_is_slow && display_ == kFontDisplayAuto;
+}
+
+bool RemoteFontFaceSource::IsLowPriorityLoadingAllowedForRemoteFont() const {
+  return is_intervention_triggered_ && IsInterventionV2Enabled();
+}
+
+PassRefPtr<SimpleFontData> RemoteFontFaceSource::CreateFontData(
+    const FontDescription& font_description) {
+  if (period_ == kFailurePeriod || !IsValid())
+    return nullptr;
+  if (!IsLoaded())
+    return CreateLoadingFallbackFontData(font_description);
+  DCHECK(custom_font_data_);
+
+  histograms_.RecordFallbackTime();
+
+  return SimpleFontData::Create(
+      custom_font_data_->GetFontPlatformData(
+          font_description.EffectiveFontSize(),
+          font_description.IsSyntheticBold(),
+          font_description.IsSyntheticItalic(), font_description.Orientation(),
+          font_description.VariationSettings()),
+      CustomFontData::Create());
+}
+
+PassRefPtr<SimpleFontData> RemoteFontFaceSource::CreateLoadingFallbackFontData(
+    const FontDescription& font_description) {
+  // This temporary font is not retained and should not be returned.
+  FontCachePurgePreventer font_cache_purge_preventer;
+  SimpleFontData* temporary_font =
+      FontCache::GetFontCache()->GetNonRetainedLastResortFallbackFont(
+          font_description);
+  if (!temporary_font) {
+    NOTREACHED();
+    return nullptr;
+  }
+  RefPtr<CSSCustomFontData> css_font_data = CSSCustomFontData::Create(
+      this, period_ == kBlockPeriod ? CSSCustomFontData::kInvisibleFallback
+                                    : CSSCustomFontData::kVisibleFallback);
+  return SimpleFontData::Create(temporary_font->PlatformData(), css_font_data);
+}
+
+void RemoteFontFaceSource::BeginLoadIfNeeded() {
+  if (IsLoaded())
+    return;
+  DCHECK(font_);
+
+  if (font_selector_->GetDocument() && font_->StillNeedsLoad()) {
+    if (!font_->Url().ProtocolIsData() && !font_->IsLoaded() &&
+        display_ == kFontDisplayAuto &&
+        font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
+      // Set the loading priority to VeryLow since this font is not required
+      // for painting the text.
+      font_->DidChangePriority(kResourceLoadPriorityVeryLow, 0);
     }
-}
-
-RemoteFontFaceSource::~RemoteFontFaceSource()
-{
-}
-
-void RemoteFontFaceSource::dispose()
-{
-    m_font->removeClient(this);
-    m_font = nullptr;
-    pruneTable();
-}
-
-void RemoteFontFaceSource::pruneTable()
-{
-    if (m_fontDataTable.isEmpty())
-        return;
-
-    for (const auto& item : m_fontDataTable) {
-        SimpleFontData* fontData = item.value.get();
-        if (fontData && fontData->customFontData())
-            fontData->customFontData()->clearFontFaceSource();
+    if (font_selector_->GetDocument()->Fetcher()->StartLoad(font_)) {
+      // Start timers only when load is actually started asynchronously.
+      if (!font_->IsLoaded())
+        font_->StartLoadLimitTimers();
+      histograms_.LoadStarted();
     }
-    m_fontDataTable.clear();
+  }
+
+  if (face_)
+    face_->DidBeginLoad();
 }
 
-bool RemoteFontFaceSource::isLoading() const
-{
-    return m_font->isLoading();
+DEFINE_TRACE(RemoteFontFaceSource) {
+  visitor->Trace(font_);
+  visitor->Trace(font_selector_);
+  CSSFontFaceSource::Trace(visitor);
+  FontResourceClient::Trace(visitor);
 }
 
-bool RemoteFontFaceSource::isLoaded() const
-{
-    return m_font->isLoaded();
+void RemoteFontFaceSource::FontLoadHistograms::LoadStarted() {
+  if (!load_start_time_)
+    load_start_time_ = CurrentTimeMS();
 }
 
-bool RemoteFontFaceSource::isValid() const
-{
-    return !m_font->errorOccurred();
+void RemoteFontFaceSource::FontLoadHistograms::FallbackFontPainted(
+    DisplayPeriod period) {
+  if (period == kBlockPeriod && !blank_paint_time_)
+    blank_paint_time_ = CurrentTimeMS();
 }
 
-void RemoteFontFaceSource::notifyFinished(Resource*)
-{
-    m_histograms.recordRemoteFont(m_font.get());
-    m_histograms.fontLoaded(m_isInterventionTriggered, !m_isLoadedFromMemoryCache && !m_font->url().protocolIsData() && !m_font->response().wasCached());
+void RemoteFontFaceSource::FontLoadHistograms::FontLoaded(
+    bool is_cors_failed,
+    bool load_error,
+    bool is_intervention_triggered) {
+  if (!is_long_limit_exceeded_ && font_display_ == kFontDisplayAuto &&
+      !is_cors_failed && !load_error) {
+    RecordInterventionResult(is_intervention_triggered);
+  }
+}
 
-    m_font->ensureCustomFontData();
-    // FIXME: Provide more useful message such as OTS rejection reason.
-    // See crbug.com/97467
-    if (m_font->getStatus() == Resource::DecodeError && m_fontSelector->document()) {
-        m_fontSelector->document()->addConsoleMessage(ConsoleMessage::create(OtherMessageSource, WarningMessageLevel, "Failed to decode downloaded font: " + m_font->url().elidedString()));
-        if (m_font->otsParsingMessage().length() > 1)
-            m_fontSelector->document()->addConsoleMessage(ConsoleMessage::create(OtherMessageSource, WarningMessageLevel, "OTS parsing error: " + m_font->otsParsingMessage()));
+void RemoteFontFaceSource::FontLoadHistograms::LongLimitExceeded(
+    bool is_intervention_triggered) {
+  is_long_limit_exceeded_ = true;
+  MaySetDataSource(kFromNetwork);
+  if (font_display_ == kFontDisplayAuto)
+    RecordInterventionResult(is_intervention_triggered);
+}
+
+void RemoteFontFaceSource::FontLoadHistograms::RecordFallbackTime() {
+  if (blank_paint_time_ <= 0)
+    return;
+  int duration = static_cast<int>(CurrentTimeMS() - blank_paint_time_);
+  DEFINE_STATIC_LOCAL(CustomCountHistogram, blank_text_shown_time_histogram,
+                      ("WebFont.BlankTextShownTime", 0, 10000, 50));
+  blank_text_shown_time_histogram.Count(duration);
+  blank_paint_time_ = -1;
+}
+
+void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
+    const FontResource* font,
+    bool is_intervention_triggered) {
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, cache_hit_histogram,
+                      ("WebFont.CacheHit", kCacheHitEnumMax));
+  cache_hit_histogram.Count(DataSourceMetricsValue());
+
+  if (data_source_ == kFromDiskCache || data_source_ == kFromNetwork) {
+    DCHECK_NE(load_start_time_, 0);
+    int duration = static_cast<int>(CurrentTimeMS() - load_start_time_);
+    RecordLoadTimeHistogram(font, duration, is_intervention_triggered);
+
+    enum { kCORSFail, kCORSSuccess, kCORSEnumMax };
+    int cors_value = font->IsCORSFailed() ? kCORSFail : kCORSSuccess;
+    DEFINE_STATIC_LOCAL(EnumerationHistogram, cors_histogram,
+                        ("WebFont.CORSSuccess", kCORSEnumMax));
+    cors_histogram.Count(cors_value);
+  }
+}
+
+void RemoteFontFaceSource::FontLoadHistograms::MaySetDataSource(
+    DataSource data_source) {
+  if (data_source_ != kFromUnknown)
+    return;
+  // Classify as memory cache hit if |load_start_time_| is not set, i.e.
+  // this RemoteFontFaceSource instance didn't trigger FontResource
+  // loading.
+  if (load_start_time_ == 0)
+    data_source_ = kFromMemoryCache;
+  else
+    data_source_ = data_source;
+}
+
+void RemoteFontFaceSource::FontLoadHistograms::RecordLoadTimeHistogram(
+    const FontResource* font,
+    int duration,
+    bool is_intervention_triggered) {
+  CHECK_NE(kFromUnknown, data_source_);
+
+  if (font->ErrorOccurred()) {
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, load_error_histogram,
+                        ("WebFont.DownloadTime.LoadError", 0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram, missed_cache_load_error_histogram,
+        ("WebFont.MissedCache.DownloadTime.LoadError", 0, 10000, 50));
+    load_error_histogram.Count(duration);
+    if (data_source_ == kFromNetwork)
+      missed_cache_load_error_histogram.Count(duration);
+    return;
+  }
+
+  unsigned size = font->EncodedSize();
+  if (size < 10 * 1024) {
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, under10k_histogram,
+                        ("WebFont.DownloadTime.0.Under10KB", 0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram, missed_cache_under10k_histogram,
+        ("WebFont.MissedCache.DownloadTime.0.Under10KB", 0, 10000, 50));
+    under10k_histogram.Count(duration);
+    if (data_source_ == kFromNetwork)
+      missed_cache_under10k_histogram.Count(duration);
+    return;
+  }
+  if (size < 50 * 1024) {
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, under50k_histogram,
+                        ("WebFont.DownloadTime.1.10KBTo50KB", 0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram, missed_cache_under50k_histogram,
+        ("WebFont.MissedCache.DownloadTime.1.10KBTo50KB", 0, 10000, 50));
+    // Breakdowns metrics to understand WebFonts intervention.
+    // Now we only cover this 10KBto50KB range because 70% of requests are
+    // covered in this range, and having metrics for all size cases cost.
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram,
+        missed_cache_and_intervention_triggered_under50k_histogram,
+        ("WebFont.MissedCacheAndInterventionTriggered."
+         "DownloadTime.1.10KBTo50KB",
+         0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram,
+        missed_cache_and_intervention_not_triggered_under50k_histogram,
+        ("WebFont.MissedCacheAndInterventionNotTriggered."
+         "DownloadTime.1.10KBTo50KB",
+         0, 10000, 50));
+    under50k_histogram.Count(duration);
+    if (data_source_ == kFromNetwork) {
+      missed_cache_under50k_histogram.Count(duration);
+      if (is_intervention_triggered)
+        missed_cache_and_intervention_triggered_under50k_histogram.Count(
+            duration);
+      else
+        missed_cache_and_intervention_not_triggered_under50k_histogram.Count(
+            duration);
     }
-
-    pruneTable();
-    if (m_face) {
-        m_fontSelector->fontFaceInvalidated();
-        m_face->fontLoaded(this);
-    }
-    // Should not do anything after this line since the m_face->fontLoaded()
-    // above may trigger deleting this object.
+    return;
+  }
+  if (size < 100 * 1024) {
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, under100k_histogram,
+                        ("WebFont.DownloadTime.2.50KBTo100KB", 0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram, missed_cache_under100k_histogram,
+        ("WebFont.MissedCache.DownloadTime.2.50KBTo100KB", 0, 10000, 50));
+    under100k_histogram.Count(duration);
+    if (data_source_ == kFromNetwork)
+      missed_cache_under100k_histogram.Count(duration);
+    return;
+  }
+  if (size < 1024 * 1024) {
+    DEFINE_STATIC_LOCAL(CustomCountHistogram, under1mb_histogram,
+                        ("WebFont.DownloadTime.3.100KBTo1MB", 0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram, missed_cache_under1mb_histogram,
+        ("WebFont.MissedCache.DownloadTime.3.100KBTo1MB", 0, 10000, 50));
+    under1mb_histogram.Count(duration);
+    if (data_source_ == kFromNetwork)
+      missed_cache_under1mb_histogram.Count(duration);
+    return;
+  }
+  DEFINE_STATIC_LOCAL(CustomCountHistogram, over1mb_histogram,
+                      ("WebFont.DownloadTime.4.Over1MB", 0, 10000, 50));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, missed_cache_over1mb_histogram,
+      ("WebFont.MissedCache.DownloadTime.4.Over1MB", 0, 10000, 50));
+  over1mb_histogram.Count(duration);
+  if (data_source_ == kFromNetwork)
+    missed_cache_over1mb_histogram.Count(duration);
 }
 
-void RemoteFontFaceSource::fontLoadShortLimitExceeded(FontResource*)
-{
-    if (m_display == FontDisplayFallback)
-        switchToSwapPeriod();
-    else if (m_display == FontDisplayOptional)
-        switchToFailurePeriod();
+void RemoteFontFaceSource::FontLoadHistograms::RecordInterventionResult(
+    bool is_triggered) {
+  CHECK_NE(kFromUnknown, data_source_);
+
+  // interventionResult takes 0-3 values.
+  int intervention_result = 0;
+  if (is_long_limit_exceeded_)
+    intervention_result |= 1 << 0;
+  if (is_triggered)
+    intervention_result |= 1 << 1;
+  const int kBoundary = 1 << 2;
+
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, intervention_histogram,
+                      ("WebFont.InterventionResult", kBoundary));
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, missed_cache_intervention_histogram,
+                      ("WebFont.InterventionResult.MissedCache", kBoundary));
+  intervention_histogram.Count(intervention_result);
+  if (data_source_ == kFromNetwork)
+    missed_cache_intervention_histogram.Count(intervention_result);
 }
 
-void RemoteFontFaceSource::fontLoadLongLimitExceeded(FontResource*)
-{
-    if (m_display == FontDisplayBlock || (!m_isInterventionTriggered && m_display == FontDisplayAuto))
-        switchToSwapPeriod();
-    else if (m_display == FontDisplayFallback)
-        switchToFailurePeriod();
-
-    m_histograms.longLimitExceeded(m_isInterventionTriggered);
+RemoteFontFaceSource::FontLoadHistograms::CacheHitMetrics
+RemoteFontFaceSource::FontLoadHistograms::DataSourceMetricsValue() {
+  switch (data_source_) {
+    case kFromDataURL:
+      return kDataUrl;
+    case kFromMemoryCache:
+      return kMemoryHit;
+    case kFromDiskCache:
+      return kDiskHit;
+    case kFromNetwork:
+      return kMiss;
+    case kFromUnknown:
+    // Fall through.
+    default:
+      NOTREACHED();
+  }
+  return kMiss;
 }
 
-void RemoteFontFaceSource::switchToSwapPeriod()
-{
-    ASSERT(m_period == BlockPeriod);
-    m_period = SwapPeriod;
-
-    pruneTable();
-    if (m_face) {
-        m_fontSelector->fontFaceInvalidated();
-        m_face->didBecomeVisibleFallback(this);
-    }
-
-    m_histograms.recordFallbackTime(m_font.get());
-}
-
-void RemoteFontFaceSource::switchToFailurePeriod()
-{
-    if (m_period == BlockPeriod)
-        switchToSwapPeriod();
-    ASSERT(m_period == SwapPeriod);
-    m_period = FailurePeriod;
-}
-
-PassRefPtr<SimpleFontData> RemoteFontFaceSource::createFontData(const FontDescription& fontDescription)
-{
-    if (!isLoaded())
-        return createLoadingFallbackFontData(fontDescription);
-
-    if (!m_font->ensureCustomFontData() || m_period == FailurePeriod)
-        return nullptr;
-
-    m_histograms.recordFallbackTime(m_font.get());
-
-    return SimpleFontData::create(
-        m_font->platformDataFromCustomData(fontDescription.effectiveFontSize(),
-            fontDescription.isSyntheticBold(), fontDescription.isSyntheticItalic(),
-            fontDescription.orientation()), CustomFontData::create());
-}
-
-PassRefPtr<SimpleFontData> RemoteFontFaceSource::createLoadingFallbackFontData(const FontDescription& fontDescription)
-{
-    // This temporary font is not retained and should not be returned.
-    FontCachePurgePreventer fontCachePurgePreventer;
-    SimpleFontData* temporaryFont = FontCache::fontCache()->getNonRetainedLastResortFallbackFont(fontDescription);
-    if (!temporaryFont) {
-        ASSERT_NOT_REACHED();
-        return nullptr;
-    }
-    RefPtr<CSSCustomFontData> cssFontData = CSSCustomFontData::create(this, m_period == BlockPeriod ? CSSCustomFontData::InvisibleFallback : CSSCustomFontData::VisibleFallback);
-    return SimpleFontData::create(temporaryFont->platformData(), cssFontData);
-}
-
-void RemoteFontFaceSource::beginLoadIfNeeded()
-{
-    if (m_fontSelector->document() && m_font->stillNeedsLoad()) {
-        m_fontSelector->document()->fetcher()->startLoad(m_font);
-        m_histograms.loadStarted();
-    }
-    m_font->startLoadLimitTimersIfNeeded();
-
-    if (m_face)
-        m_face->didBeginLoad();
-}
-
-DEFINE_TRACE(RemoteFontFaceSource)
-{
-    visitor->trace(m_font);
-    visitor->trace(m_fontSelector);
-    CSSFontFaceSource::trace(visitor);
-    FontResourceClient::trace(visitor);
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::loadStarted()
-{
-    if (!m_loadStartTime)
-        m_loadStartTime = currentTimeMS();
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::fallbackFontPainted(DisplayPeriod period)
-{
-    if (period == BlockPeriod && !m_blankPaintTime)
-        m_blankPaintTime = currentTimeMS();
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::fontLoaded(bool isInterventionTriggered, bool isLoadedFromNetwork)
-{
-    if (!m_isLongLimitExceeded)
-        recordInterventionResult(isInterventionTriggered, isLoadedFromNetwork);
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::longLimitExceeded(bool isInterventionTriggered)
-{
-    m_isLongLimitExceeded = true;
-    recordInterventionResult(isInterventionTriggered, true);
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::recordFallbackTime(const FontResource* font)
-{
-    if (m_blankPaintTime <= 0)
-        return;
-    int duration = static_cast<int>(currentTimeMS() - m_blankPaintTime);
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, blankTextShownTimeHistogram, ("WebFont.BlankTextShownTime", 0, 10000, 50));
-    blankTextShownTimeHistogram.count(duration);
-    m_blankPaintTime = -1;
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::recordRemoteFont(const FontResource* font)
-{
-    if (m_loadStartTime > 0 && font && !font->isLoading()) {
-        int duration = static_cast<int>(currentTimeMS() - m_loadStartTime);
-        recordLoadTimeHistogram(font, duration);
-        m_loadStartTime = -1;
-
-        enum { Miss, Hit, DataUrl, CacheHitEnumMax };
-        int histogramValue = font->url().protocolIsData() ? DataUrl
-            : font->response().wasCached() ? Hit
-            : Miss;
-        DEFINE_STATIC_LOCAL(EnumerationHistogram, cacheHitHistogram, ("WebFont.CacheHit", CacheHitEnumMax));
-        cacheHitHistogram.count(histogramValue);
-
-        enum { CORSFail, CORSSuccess, CORSEnumMax };
-        int corsValue = font->isCORSFailed() ? CORSFail : CORSSuccess;
-        DEFINE_STATIC_LOCAL(EnumerationHistogram, corsHistogram, ("WebFont.CORSSuccess", CORSEnumMax));
-        corsHistogram.count(corsValue);
-    }
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::recordLoadTimeHistogram(const FontResource* font, int duration)
-{
-    if (font->errorOccurred()) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, loadErrorHistogram, ("WebFont.DownloadTime.LoadError", 0, 10000, 50));
-        loadErrorHistogram.count(duration);
-        return;
-    }
-
-    unsigned size = font->encodedSize();
-    if (size < 10 * 1024) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, under10kHistogram, ("WebFont.DownloadTime.0.Under10KB", 0, 10000, 50));
-        under10kHistogram.count(duration);
-        return;
-    }
-    if (size < 50 * 1024) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, under50kHistogram, ("WebFont.DownloadTime.1.10KBTo50KB", 0, 10000, 50));
-        under50kHistogram.count(duration);
-        return;
-    }
-    if (size < 100 * 1024) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, under100kHistogram, ("WebFont.DownloadTime.2.50KBTo100KB", 0, 10000, 50));
-        under100kHistogram.count(duration);
-        return;
-    }
-    if (size < 1024 * 1024) {
-        DEFINE_STATIC_LOCAL(CustomCountHistogram, under1mbHistogram, ("WebFont.DownloadTime.3.100KBTo1MB", 0, 10000, 50));
-        under1mbHistogram.count(duration);
-        return;
-    }
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, over1mbHistogram, ("WebFont.DownloadTime.4.Over1MB", 0, 10000, 50));
-    over1mbHistogram.count(duration);
-}
-
-void RemoteFontFaceSource::FontLoadHistograms::recordInterventionResult(bool isTriggered, bool isLoadedFromNetwork)
-{
-    // interventionResult takes 0-3 values.
-    int interventionResult = 0;
-    if (m_isLongLimitExceeded)
-        interventionResult |= 1 << 0;
-    if (isTriggered)
-        interventionResult |= 1 << 1;
-    const int boundary = 1 << 2;
-
-    DEFINE_STATIC_LOCAL(EnumerationHistogram, interventionHistogram, ("WebFont.InterventionResult", boundary));
-    DEFINE_STATIC_LOCAL(EnumerationHistogram, missedCacheInterventionHistogram, ("WebFont.InterventionResult.MissedCache", boundary));
-    interventionHistogram.count(interventionResult);
-    if (isLoadedFromNetwork)
-        missedCacheInterventionHistogram.count(interventionResult);
-}
-
-} // namespace blink
+}  // namespace blink

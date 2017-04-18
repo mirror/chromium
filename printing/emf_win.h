@@ -57,8 +57,7 @@ class PRINTING_EXPORT Emf : public Metafile {
 
   // Metafile methods.
   bool Init() override;
-  bool InitFromData(const void* src_buffer,
-                    uint32_t src_buffer_size) override;
+  bool InitFromData(const void* src_buffer, size_t src_buffer_size) override;
 
   // Inserts a custom GDICOMMENT records indicating StartPage/EndPage calls
   // (since StartPage and EndPage do not work in a metafile DC). Only valid
@@ -78,8 +77,18 @@ class PRINTING_EXPORT Emf : public Metafile {
 
   unsigned int GetPageCount() const override;
   HDC context() const override;
-  bool Playback(HDC hdc, const RECT* rect) const override;
+
   bool SafePlayback(HDC hdc) const override;
+
+  // "Plays" the EMF buffer in a HDC. It is the same effect as calling the
+  // original GDI function that were called when recording the EMF. |rect| is in
+  // "logical units" and is optional. If |rect| is NULL, the natural EMF bounds
+  // are used.
+  // Note: Windows has been known to have stack buffer overflow in its GDI
+  // functions, whether used directly or indirectly through precompiled EMF
+  // data. We have to accept the risk here. Since it is used only for printing,
+  // it requires user intervention.
+  bool Playback(HDC hdc, const RECT* rect) const;
 
   HENHMETAFILE emf() const { return emf_; }
 

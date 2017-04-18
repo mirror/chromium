@@ -186,8 +186,15 @@ class URLDatabase {
   // History search ------------------------------------------------------------
 
   // Performs a brute force search over the database to find any URLs or titles
-  // which match the |query| string.  Returns any matches in |results|.
+  // which match the |query| string, using the default text matching algorithm.
+  // Returns any matches in |results|.
   bool GetTextMatches(const base::string16& query, URLRows* results);
+
+  // Same as GetTextMatches, using |algorithm| as the text matching
+  // algorithm.
+  bool GetTextMatchesWithAlgorithm(const base::string16& query,
+                                   query_parser::MatchingAlgorithm algorithm,
+                                   URLRows* results);
 
   // Keyword Search Terms ------------------------------------------------------
 
@@ -258,6 +265,9 @@ class URLDatabase {
 
   // Creates the index over URLs so we can quickly look up based on URL.
   bool CreateMainURLIndex();
+
+  // Recreate URL table, and keep all existing contents.
+  bool RecreateURLTableWithAllContents();
 
   // Ensures the keyword search terms table exists.
   bool InitKeywordSearchTermsTable();

@@ -21,57 +21,56 @@
 
 namespace blink {
 
-PathSegmentData SVGPathByteStreamSource::parseSegment()
-{
-    ASSERT(hasMoreData());
-    PathSegmentData segment;
-    segment.command = static_cast<SVGPathSegType>(readSVGSegmentType());
+PathSegmentData SVGPathByteStreamSource::ParseSegment() {
+  DCHECK(HasMoreData());
+  PathSegmentData segment;
+  segment.command = static_cast<SVGPathSegType>(ReadSVGSegmentType());
 
-    switch (segment.command) {
-    case PathSegCurveToCubicRel:
-    case PathSegCurveToCubicAbs:
-        segment.point1 = readFloatPoint();
-        /* fall through */
-    case PathSegCurveToCubicSmoothRel:
-    case PathSegCurveToCubicSmoothAbs:
-        segment.point2 = readFloatPoint();
-        /* fall through */
-    case PathSegMoveToRel:
-    case PathSegMoveToAbs:
-    case PathSegLineToRel:
-    case PathSegLineToAbs:
-    case PathSegCurveToQuadraticSmoothRel:
-    case PathSegCurveToQuadraticSmoothAbs:
-        segment.targetPoint = readFloatPoint();
-        break;
-    case PathSegLineToHorizontalRel:
-    case PathSegLineToHorizontalAbs:
-        segment.targetPoint.setX(readFloat());
-        break;
-    case PathSegLineToVerticalRel:
-    case PathSegLineToVerticalAbs:
-        segment.targetPoint.setY(readFloat());
-        break;
-    case PathSegClosePath:
-        break;
-    case PathSegCurveToQuadraticRel:
-    case PathSegCurveToQuadraticAbs:
-        segment.point1 = readFloatPoint();
-        segment.targetPoint = readFloatPoint();
-        break;
-    case PathSegArcRel:
-    case PathSegArcAbs: {
-        segment.arcRadii() = readFloatPoint();
-        segment.setArcAngle(readFloat());
-        segment.arcLarge = readFlag();
-        segment.arcSweep = readFlag();
-        segment.targetPoint = readFloatPoint();
-        break;
+  switch (segment.command) {
+    case kPathSegCurveToCubicRel:
+    case kPathSegCurveToCubicAbs:
+      segment.point1 = ReadFloatPoint();
+    /* fall through */
+    case kPathSegCurveToCubicSmoothRel:
+    case kPathSegCurveToCubicSmoothAbs:
+      segment.point2 = ReadFloatPoint();
+    /* fall through */
+    case kPathSegMoveToRel:
+    case kPathSegMoveToAbs:
+    case kPathSegLineToRel:
+    case kPathSegLineToAbs:
+    case kPathSegCurveToQuadraticSmoothRel:
+    case kPathSegCurveToQuadraticSmoothAbs:
+      segment.target_point = ReadFloatPoint();
+      break;
+    case kPathSegLineToHorizontalRel:
+    case kPathSegLineToHorizontalAbs:
+      segment.target_point.SetX(ReadFloat());
+      break;
+    case kPathSegLineToVerticalRel:
+    case kPathSegLineToVerticalAbs:
+      segment.target_point.SetY(ReadFloat());
+      break;
+    case kPathSegClosePath:
+      break;
+    case kPathSegCurveToQuadraticRel:
+    case kPathSegCurveToQuadraticAbs:
+      segment.point1 = ReadFloatPoint();
+      segment.target_point = ReadFloatPoint();
+      break;
+    case kPathSegArcRel:
+    case kPathSegArcAbs: {
+      segment.ArcRadii() = ReadFloatPoint();
+      segment.SetArcAngle(ReadFloat());
+      segment.arc_large = ReadFlag();
+      segment.arc_sweep = ReadFlag();
+      segment.target_point = ReadFloatPoint();
+      break;
     }
     default:
-        ASSERT_NOT_REACHED();
-    }
-    return segment;
+      NOTREACHED();
+  }
+  return segment;
 }
 
-} // namespace blink
+}  // namespace blink

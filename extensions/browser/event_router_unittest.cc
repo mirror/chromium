@@ -14,13 +14,18 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/histogram_tester.h"
 #include "base/values.h"
-#include "content/public/browser/notification_service.h"
+#include "content/public/browser/browser_context.h"
+#include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/event_listener_map.h"
 #include "extensions/browser/extensions_test.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using base::DictionaryValue;
+using base::ListValue;
+using base::Value;
 
 namespace extensions {
 
@@ -94,7 +99,7 @@ std::unique_ptr<EventListener> CreateEventListenerForURL(
 scoped_refptr<Extension> CreateExtension(bool component, bool persistent) {
   ExtensionBuilder builder;
   std::unique_ptr<base::DictionaryValue> manifest =
-      base::WrapUnique(new base::DictionaryValue());
+      base::MakeUnique<base::DictionaryValue>();
   manifest->SetString("name", "foo");
   manifest->SetString("version", "1.0.0");
   manifest->SetInteger("manifest_version", 2);
@@ -107,12 +112,24 @@ scoped_refptr<Extension> CreateExtension(bool component, bool persistent) {
   return builder.Build();
 }
 
+std::unique_ptr<DictionaryValue> CreateHostSuffixFilter(
+    const std::string& suffix) {
+  std::unique_ptr<DictionaryValue> filter(new DictionaryValue());
+  std::unique_ptr<ListValue> filter_list(new ListValue());
+  std::unique_ptr<DictionaryValue> filter_dict(new DictionaryValue());
+
+  filter_dict->Set("hostSuffix", base::MakeUnique<Value>(suffix));
+  filter_list->Append(std::move(filter_dict));
+  filter->Set("url", std::move(filter_list));
+
+  return filter;
+}
+
 }  // namespace
 
 class EventRouterTest : public ExtensionsTest {
  public:
-  EventRouterTest()
-      : notification_service_(content::NotificationService::Create()) {}
+  EventRouterTest() {}
 
  protected:
   // Tests adding and removing observers from EventRouter.
@@ -159,11 +176,76 @@ class EventRouterTest : public ExtensionsTest {
   }
 
  private:
-  std::unique_ptr<content::NotificationService> notification_service_;
   content::TestBrowserThreadBundle thread_bundle_;
   base::HistogramTester histogram_tester_;
 
   DISALLOW_COPY_AND_ASSIGN(EventRouterTest);
+};
+
+class EventRouterFilterTest : public ExtensionsTest {
+ public:
+  EventRouterFilterTest() {}
+
+  void SetUp() override {
+    ExtensionsTest::SetUp();
+    render_process_host_.reset(
+        new content::MockRenderProcessHost(browser_context()));
+    ASSERT_TRUE(EventRouter::Get(browser_context()));  // constructs EventRouter
+  }
+
+  void TearDown() override {
+    render_process_host_.reset();
+    ExtensionsTest::TearDown();
+  }
+
+  content::RenderProcessHost* render_process_host() const {
+    return render_process_host_.get();
+  }
+
+  EventRouter* event_router() { return EventRouter::Get(browser_context()); }
+
+  const DictionaryValue* GetFilteredEvents(const std::string& extension_id) {
+    return event_router()->GetFilteredEvents(extension_id);
+  }
+
+  bool ContainsFilter(const std::string& extension_id,
+                      const std::string& event_name,
+                      const DictionaryValue& to_check) {
+    const ListValue* filter_list = GetFilterList(extension_id, event_name);
+    if (!filter_list) {
+      ADD_FAILURE();
+      return false;
+    }
+
+    for (size_t i = 0; i < filter_list->GetSize(); ++i) {
+      const DictionaryValue* filter = nullptr;
+      if (!filter_list->GetDictionary(i, &filter)) {
+        ADD_FAILURE();
+        return false;
+      }
+      if (filter->Equals(&to_check))
+        return true;
+    }
+    return false;
+  }
+
+ private:
+  const ListValue* GetFilterList(const std::string& extension_id,
+                                 const std::string& event_name) {
+    const base::DictionaryValue* filtered_events =
+        GetFilteredEvents(extension_id);
+    DictionaryValue::Iterator iter(*filtered_events);
+    if (iter.key() != event_name)
+      return nullptr;
+
+    const base::ListValue* filter_list = nullptr;
+    iter.value().GetAsList(&filter_list);
+    return filter_list;
+  }
+
+  std::unique_ptr<content::RenderProcessHost> render_process_host_;
+
+  DISALLOW_COPY_AND_ASSIGN(EventRouterFilterTest);
 };
 
 TEST_F(EventRouterTest, GetBaseEventName) {
@@ -276,6 +358,62 @@ TEST_F(EventRouterTest, TestReportEvent) {
   router.ReportEvent(events::HistogramValue::FOR_TEST, component_event.get(),
                      true /** did_enqueue */);
   ExpectHistogramCounts(7, 3, 2, 2, 1, 2);
+}
+
+// Tests adding and removing events with filters.
+TEST_F(EventRouterFilterTest, Basic) {
+  // For the purpose of this test, "." is important in |event_name| as it
+  // exercises the code path that uses |event_name| as a key in DictionaryValue.
+  const std::string kEventName = "webNavigation.onBeforeNavigate";
+
+  const std::string kExtensionId = "mbflcebpggnecokmikipoihdbecnjfoj";
+  const std::string kHostSuffixes[] = {"foo.com", "bar.com", "baz.com"};
+  std::vector<std::unique_ptr<DictionaryValue>> filters;
+  for (size_t i = 0; i < arraysize(kHostSuffixes); ++i) {
+    std::unique_ptr<base::DictionaryValue> filter =
+        CreateHostSuffixFilter(kHostSuffixes[i]);
+    EventRouter::Get(browser_context())
+        ->AddFilteredEventListener(kEventName, render_process_host(),
+                                   kExtensionId, *filter, true);
+    filters.push_back(std::move(filter));
+  }
+
+  const base::DictionaryValue* filtered_events =
+      GetFilteredEvents(kExtensionId);
+  ASSERT_TRUE(filtered_events);
+  ASSERT_EQ(1u, filtered_events->size());
+
+  DictionaryValue::Iterator iter(*filtered_events);
+  ASSERT_EQ(kEventName, iter.key());
+  const base::ListValue* filter_list = nullptr;
+  ASSERT_TRUE(iter.value().GetAsList(&filter_list));
+  ASSERT_TRUE(filter_list);
+  ASSERT_EQ(3u, filter_list->GetSize());
+
+  ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
+  ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
+  ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
+
+  // Remove the second filter.
+  event_router()->RemoveFilteredEventListener(kEventName, render_process_host(),
+                                              kExtensionId, *filters[1], true);
+  ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
+  ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
+  ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
+
+  // Remove the first filter.
+  event_router()->RemoveFilteredEventListener(kEventName, render_process_host(),
+                                              kExtensionId, *filters[0], true);
+  ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
+  ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
+  ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
+
+  // Remove the third filter.
+  event_router()->RemoveFilteredEventListener(kEventName, render_process_host(),
+                                              kExtensionId, *filters[2], true);
+  ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
+  ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
+  ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
 }
 
 }  // namespace extensions

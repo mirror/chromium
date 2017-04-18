@@ -18,6 +18,9 @@ error is: NotSupportedError: Unsupported import key format for algorithm
 
 importKey() with empty usages...
 error is: SyntaxError: Usages cannot be empty when creating a key.
+
+importKey() with extractable=true ...
+error is: SyntaxError: KDF keys must set extractable=false
 PASS successfullyParsed is true
 
 TEST COMPLETE

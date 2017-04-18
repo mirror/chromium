@@ -36,305 +36,301 @@
 #include "platform/graphics/ImageObserver.h"
 #include "platform/testing/HistogramTester.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "platform/wtf/StdLibExtras.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkImage.h"
-#include "wtf/StdLibExtras.h"
 
 namespace blink {
 
 class BitmapImageTest : public ::testing::Test {
-public:
-    class FakeImageObserver : public GarbageCollectedFinalized<FakeImageObserver>, public ImageObserver {
-        USING_GARBAGE_COLLECTED_MIXIN(FakeImageObserver);
-    public:
-        FakeImageObserver()
-            : m_lastDecodedSize(0)
-            , m_lastDecodedSizeChangedDelta(0) { }
+ public:
+  class FakeImageObserver : public GarbageCollectedFinalized<FakeImageObserver>,
+                            public ImageObserver {
+    USING_GARBAGE_COLLECTED_MIXIN(FakeImageObserver);
 
-        virtual void decodedSizeChangedTo(const Image*, size_t newSize)
-        {
-            m_lastDecodedSizeChangedDelta = safeCast<int>(newSize) - safeCast<int>(m_lastDecodedSize);
-            m_lastDecodedSize = newSize;
-        }
-        void didDraw(const Image*) override { }
-        bool shouldPauseAnimation(const Image*) override { return false; }
-        void animationAdvanced(const Image*) override { }
+   public:
+    FakeImageObserver()
+        : last_decoded_size_(0), last_decoded_size_changed_delta_(0) {}
 
-        virtual void changedInRect(const Image*, const IntRect&) { }
-
-        size_t m_lastDecodedSize;
-        int m_lastDecodedSizeChangedDelta;
-    };
-
-    static PassRefPtr<SharedBuffer> readFile(const char* fileName)
-    {
-        String filePath = testing::blinkRootDir();
-        filePath.append(fileName);
-        return testing::readFromFile(filePath);
+    virtual void DecodedSizeChangedTo(const Image*, size_t new_size) {
+      last_decoded_size_changed_delta_ =
+          SafeCast<int>(new_size) - SafeCast<int>(last_decoded_size_);
+      last_decoded_size_ = new_size;
     }
+    bool ShouldPauseAnimation(const Image*) override { return false; }
+    void AnimationAdvanced(const Image*) override {}
 
-    // Accessors to BitmapImage's protected methods.
-    void destroyDecodedData() { m_image->destroyDecodedData(); }
-    size_t frameCount() { return m_image->frameCount(); }
-    PassRefPtr<SkImage> frameAtIndex(size_t index)
-    {
-        return m_image->frameAtIndex(index);
+    virtual void ChangedInRect(const Image*, const IntRect&) {}
+
+    size_t last_decoded_size_;
+    int last_decoded_size_changed_delta_;
+  };
+
+  static PassRefPtr<SharedBuffer> ReadFile(const char* file_name) {
+    String file_path = testing::BlinkRootDir();
+    file_path.Append(file_name);
+    return testing::ReadFromFile(file_path);
+  }
+
+  // Accessors to BitmapImage's protected methods.
+  void DestroyDecodedData() { image_->DestroyDecodedData(); }
+  size_t FrameCount() { return image_->FrameCount(); }
+  sk_sp<SkImage> FrameAtIndex(size_t index) {
+    return image_->FrameAtIndex(index);
+  }
+  void SetCurrentFrame(size_t frame) { image_->current_frame_ = frame; }
+  size_t FrameDecodedSize(size_t frame) {
+    return image_->frames_[frame].frame_bytes_;
+  }
+  size_t DecodedFramesCount() const { return image_->frames_.size(); }
+
+  void SetFirstFrameNotComplete() { image_->frames_[0].is_complete_ = false; }
+
+  void LoadImage(const char* file_name, bool load_all_frames = true) {
+    RefPtr<SharedBuffer> image_data = ReadFile(file_name);
+    ASSERT_TRUE(image_data.Get());
+
+    image_->SetData(image_data, true);
+    EXPECT_EQ(0u, DecodedSize());
+
+    size_t frame_count = image_->FrameCount();
+    if (load_all_frames) {
+      for (size_t i = 0; i < frame_count; ++i)
+        FrameAtIndex(i);
     }
-    void setCurrentFrame(size_t frame) { m_image->m_currentFrame = frame; }
-    size_t frameDecodedSize(size_t frame) { return m_image->m_frames[frame].m_frameBytes; }
-    size_t decodedFramesCount() const { return m_image->m_frames.size(); }
+  }
 
-    void setFirstFrameNotComplete() { m_image->m_frames[0].m_isComplete = false; }
+  size_t DecodedSize() {
+    // In the context of this test, the following loop will give the correct
+    // result, but only because the test forces all frames to be decoded in
+    // loadImage() above. There is no general guarantee that frameDecodedSize()
+    // is up to date. Because of how multi frame images (like GIF) work,
+    // requesting one frame to be decoded may require other previous frames to
+    // be decoded as well. In those cases frameDecodedSize() wouldn't return the
+    // correct thing for the previous frame because the decoded size wouldn't
+    // have propagated upwards to the BitmapImage frame cache.
+    size_t size = 0;
+    for (size_t i = 0; i < DecodedFramesCount(); ++i)
+      size += FrameDecodedSize(i);
+    return size;
+  }
 
-    void loadImage(const char* fileName, bool loadAllFrames = true)
-    {
-        RefPtr<SharedBuffer> imageData = readFile(fileName);
-        ASSERT_TRUE(imageData.get());
+  void AdvanceAnimation() { image_->AdvanceAnimation(0); }
 
-        m_image->setData(imageData, true);
-        EXPECT_EQ(0u, decodedSize());
+  int RepetitionCount() { return image_->RepetitionCount(true); }
 
-        size_t frameCount = m_image->frameCount();
-        if (loadAllFrames) {
-            for (size_t i = 0; i < frameCount; ++i)
-                frameAtIndex(i);
-        }
-    }
+  int AnimationFinished() { return image_->animation_finished_; }
 
-    size_t decodedSize()
-    {
-        // In the context of this test, the following loop will give the correct result, but only because the test
-        // forces all frames to be decoded in loadImage() above. There is no general guarantee that frameDecodedSize()
-        // is up to date. Because of how multi frame images (like GIF) work, requesting one frame to be decoded may
-        // require other previous frames to be decoded as well. In those cases frameDecodedSize() wouldn't return the
-        // correct thing for the previous frame because the decoded size wouldn't have propagated upwards to the
-        // BitmapImage frame cache.
-        size_t size = 0;
-        for (size_t i = 0; i < decodedFramesCount(); ++i)
-            size += frameDecodedSize(i);
-        return size;
-    }
+  PassRefPtr<Image> ImageForDefaultFrame() {
+    return image_->ImageForDefaultFrame();
+  }
 
-    void advanceAnimation()
-    {
-        m_image->advanceAnimation(0);
-    }
+  int LastDecodedSizeChange() {
+    return image_observer_->last_decoded_size_changed_delta_;
+  }
 
-    int repetitionCount()
-    {
-        return m_image->repetitionCount(true);
-    }
+  PassRefPtr<SharedBuffer> Data() { return image_->Data(); }
 
-    int animationFinished()
-    {
-        return m_image->m_animationFinished;
-    }
+ protected:
+  void SetUp() override {
+    image_observer_ = new FakeImageObserver;
+    image_ = BitmapImage::Create(image_observer_.Get());
+  }
 
-    PassRefPtr<Image> imageForDefaultFrame()
-    {
-        return m_image->imageForDefaultFrame();
-    }
-
-    int lastDecodedSizeChange()
-    {
-        return m_imageObserver->m_lastDecodedSizeChangedDelta;
-    }
-
-    PassRefPtr<SharedBuffer> data() { return m_image->data(); }
-
-protected:
-    void SetUp() override
-    {
-        m_imageObserver = new FakeImageObserver;
-        m_image = BitmapImage::create(m_imageObserver.get());
-    }
-
-    Persistent<FakeImageObserver> m_imageObserver;
-    RefPtr<BitmapImage> m_image;
+  Persistent<FakeImageObserver> image_observer_;
+  RefPtr<BitmapImage> image_;
 };
 
-TEST_F(BitmapImageTest, destroyDecodedData)
-{
-    loadImage("/LayoutTests/fast/images/resources/animated-10color.gif");
-    size_t totalSize = decodedSize();
-    EXPECT_GT(totalSize, 0u);
-    destroyDecodedData();
-    EXPECT_EQ(-static_cast<int>(totalSize), lastDecodedSizeChange());
-    EXPECT_EQ(0u, decodedSize());
+TEST_F(BitmapImageTest, destroyDecodedData) {
+  LoadImage("/LayoutTests/images/resources/animated-10color.gif");
+  size_t total_size = DecodedSize();
+  EXPECT_GT(total_size, 0u);
+  DestroyDecodedData();
+  EXPECT_EQ(-static_cast<int>(total_size), LastDecodedSizeChange());
+  EXPECT_EQ(0u, DecodedSize());
 }
 
-TEST_F(BitmapImageTest, maybeAnimated)
-{
-    loadImage("/LayoutTests/fast/images/resources/gif-loop-count.gif");
-    for (size_t i = 0; i < frameCount(); ++i) {
-        EXPECT_TRUE(m_image->maybeAnimated());
-        advanceAnimation();
+TEST_F(BitmapImageTest, maybeAnimated) {
+  LoadImage("/LayoutTests/images/resources/gif-loop-count.gif");
+  for (size_t i = 0; i < FrameCount(); ++i) {
+    EXPECT_TRUE(image_->MaybeAnimated());
+    AdvanceAnimation();
+  }
+  EXPECT_FALSE(image_->MaybeAnimated());
+}
+
+TEST_F(BitmapImageTest, animationRepetitions) {
+  LoadImage("/LayoutTests/images/resources/full2loop.gif");
+  int expected_repetition_count = 2;
+  EXPECT_EQ(expected_repetition_count, RepetitionCount());
+
+  // We actually loop once more than stored repetition count.
+  for (int repeat = 0; repeat < expected_repetition_count + 1; ++repeat) {
+    for (size_t i = 0; i < FrameCount(); ++i) {
+      EXPECT_FALSE(AnimationFinished());
+      AdvanceAnimation();
     }
-    EXPECT_FALSE(m_image->maybeAnimated());
+  }
+  EXPECT_TRUE(AnimationFinished());
 }
 
-TEST_F(BitmapImageTest, animationRepetitions)
-{
-    loadImage("/LayoutTests/fast/images/resources/full2loop.gif");
-    int expectedRepetitionCount = 2;
-    EXPECT_EQ(expectedRepetitionCount, repetitionCount());
+TEST_F(BitmapImageTest, isAllDataReceived) {
+  RefPtr<SharedBuffer> image_data =
+      ReadFile("/LayoutTests/images/resources/green.jpg");
+  ASSERT_TRUE(image_data.Get());
 
-    // We actually loop once more than stored repetition count.
-    for (int repeat = 0; repeat < expectedRepetitionCount + 1; ++repeat) {
-        for (size_t i = 0; i < frameCount(); ++i) {
-            EXPECT_FALSE(animationFinished());
-            advanceAnimation();
-        }
-    }
-    EXPECT_TRUE(animationFinished());
+  RefPtr<BitmapImage> image = BitmapImage::Create();
+  EXPECT_FALSE(image->IsAllDataReceived());
+
+  image->SetData(image_data, false);
+  EXPECT_FALSE(image->IsAllDataReceived());
+
+  image->SetData(image_data, true);
+  EXPECT_TRUE(image->IsAllDataReceived());
+
+  image->SetData(SharedBuffer::Create("data", sizeof("data")), false);
+  EXPECT_FALSE(image->IsAllDataReceived());
+
+  image->SetData(image_data, true);
+  EXPECT_TRUE(image->IsAllDataReceived());
 }
 
-TEST_F(BitmapImageTest, isAllDataReceived)
-{
-    RefPtr<SharedBuffer> imageData = readFile("/LayoutTests/fast/images/resources/green.jpg");
-    ASSERT_TRUE(imageData.get());
-
-    RefPtr<BitmapImage> image = BitmapImage::create();
-    EXPECT_FALSE(image->isAllDataReceived());
-
-    image->setData(imageData, false);
-    EXPECT_FALSE(image->isAllDataReceived());
-
-    image->setData(imageData, true);
-    EXPECT_TRUE(image->isAllDataReceived());
-
-    image->setData(SharedBuffer::create("data", sizeof("data")), false);
-    EXPECT_FALSE(image->isAllDataReceived());
-
-    image->setData(imageData, true);
-    EXPECT_TRUE(image->isAllDataReceived());
+TEST_F(BitmapImageTest, noColorProfile) {
+  LoadImage("/LayoutTests/images/resources/green.jpg");
+  EXPECT_EQ(1u, DecodedFramesCount());
+  EXPECT_EQ(1024u, DecodedSize());
+  EXPECT_FALSE(image_->HasColorProfile());
 }
 
-TEST_F(BitmapImageTest, noColorProfile)
-{
-    loadImage("/LayoutTests/fast/images/resources/green.jpg");
-    EXPECT_EQ(1u, decodedFramesCount());
-    EXPECT_EQ(1024u, decodedSize());
-    EXPECT_FALSE(m_image->hasColorProfile());
+TEST_F(BitmapImageTest, jpegHasColorProfile) {
+  LoadImage("/LayoutTests/images/resources/icc-v2-gbr.jpg");
+  EXPECT_EQ(1u, DecodedFramesCount());
+  EXPECT_EQ(227700u, DecodedSize());
+  EXPECT_TRUE(image_->HasColorProfile());
 }
 
-#if USE(QCMSLIB)
-
-TEST_F(BitmapImageTest, jpegHasColorProfile)
-{
-    loadImage("/LayoutTests/fast/images/resources/icc-v2-gbr.jpg");
-    EXPECT_EQ(1u, decodedFramesCount());
-    EXPECT_EQ(227700u, decodedSize());
-    EXPECT_TRUE(m_image->hasColorProfile());
+TEST_F(BitmapImageTest, pngHasColorProfile) {
+  LoadImage(
+      "/LayoutTests/images/resources/"
+      "palatted-color-png-gamma-one-color-profile.png");
+  EXPECT_EQ(1u, DecodedFramesCount());
+  EXPECT_EQ(65536u, DecodedSize());
+  EXPECT_TRUE(image_->HasColorProfile());
 }
 
-TEST_F(BitmapImageTest, pngHasColorProfile)
-{
-    loadImage("/LayoutTests/fast/images/resources/palatted-color-png-gamma-one-color-profile.png");
-    EXPECT_EQ(1u, decodedFramesCount());
-    EXPECT_EQ(65536u, decodedSize());
-    EXPECT_TRUE(m_image->hasColorProfile());
+TEST_F(BitmapImageTest, webpHasColorProfile) {
+  LoadImage("/LayoutTests/images/resources/webp-color-profile-lossy.webp");
+  EXPECT_EQ(1u, DecodedFramesCount());
+  EXPECT_EQ(2560000u, DecodedSize());
+  EXPECT_TRUE(image_->HasColorProfile());
 }
 
-TEST_F(BitmapImageTest, webpHasColorProfile)
-{
-    loadImage("/LayoutTests/fast/images/resources/webp-color-profile-lossy.webp");
-    EXPECT_EQ(1u, decodedFramesCount());
-    EXPECT_EQ(2560000u, decodedSize());
-    EXPECT_TRUE(m_image->hasColorProfile());
+TEST_F(BitmapImageTest, icoHasWrongFrameDimensions) {
+  LoadImage("/LayoutTests/images/resources/wrong-frame-dimensions.ico");
+  // This call would cause crash without fix for 408026
+  ImageForDefaultFrame();
 }
 
-#endif // USE(QCMSLIB)
-
-TEST_F(BitmapImageTest, icoHasWrongFrameDimensions)
-{
-    loadImage("/LayoutTests/fast/images/resources/wrong-frame-dimensions.ico");
-    // This call would cause crash without fix for 408026
-    imageForDefaultFrame();
+TEST_F(BitmapImageTest, correctDecodedDataSize) {
+  // Requesting any one frame shouldn't result in decoding any other frames.
+  LoadImage("/LayoutTests/images/resources/anim_none.gif", false);
+  FrameAtIndex(1);
+  int frame_size =
+      static_cast<int>(image_->Size().Area() * sizeof(ImageFrame::PixelData));
+  EXPECT_EQ(frame_size, LastDecodedSizeChange());
 }
 
-TEST_F(BitmapImageTest, correctDecodedDataSize)
-{
-    // Requesting any one frame shouldn't result in decoding any other frames.
-    loadImage("/LayoutTests/fast/images/resources/anim_none.gif", false);
-    frameAtIndex(1);
-    int frameSize = static_cast<int>(m_image->size().area() * sizeof(ImageFrame::PixelData));
-    EXPECT_EQ(frameSize, lastDecodedSizeChange());
-}
+TEST_F(BitmapImageTest, recachingFrameAfterDataChanged) {
+  LoadImage("/LayoutTests/images/resources/green.jpg");
+  SetFirstFrameNotComplete();
+  EXPECT_GT(LastDecodedSizeChange(), 0);
+  image_observer_->last_decoded_size_changed_delta_ = 0;
 
-TEST_F(BitmapImageTest, recachingFrameAfterDataChanged)
-{
-    loadImage("/LayoutTests/fast/images/resources/green.jpg");
-    setFirstFrameNotComplete();
-    EXPECT_GT(lastDecodedSizeChange(), 0);
-    m_imageObserver->m_lastDecodedSizeChangedDelta = 0;
-
-    // Calling dataChanged causes the cache to flush, but doesn't affect the
-    // source's decoded frames. It shouldn't affect decoded size.
-    m_image->dataChanged(true);
-    EXPECT_EQ(0, lastDecodedSizeChange());
-    // Recaching the first frame also shouldn't affect decoded size.
-    m_image->imageForCurrentFrame();
-    EXPECT_EQ(0, lastDecodedSizeChange());
+  // Calling dataChanged causes the cache to flush, but doesn't affect the
+  // source's decoded frames. It shouldn't affect decoded size.
+  image_->DataChanged(true);
+  EXPECT_EQ(0, LastDecodedSizeChange());
+  // Recaching the first frame also shouldn't affect decoded size.
+  image_->ImageForCurrentFrame();
+  EXPECT_EQ(0, LastDecodedSizeChange());
 }
 
 template <typename HistogramEnumType>
 struct HistogramTestParams {
-    const char* filename;
-    HistogramEnumType type;
+  const char* filename;
+  HistogramEnumType type;
 };
 
 template <typename HistogramEnumType>
-class BitmapHistogramTest
-    : public BitmapImageTest
-    , public ::testing::WithParamInterface<HistogramTestParams<HistogramEnumType>> {
-protected:
-    void runTest(const char* histogramName)
-    {
-        HistogramTester histogramTester;
-        loadImage(this->GetParam().filename);
-        histogramTester.expectUniqueSample(histogramName, this->GetParam().type, 1);
-    }
+class BitmapHistogramTest : public BitmapImageTest,
+                            public ::testing::WithParamInterface<
+                                HistogramTestParams<HistogramEnumType>> {
+ protected:
+  void RunTest(const char* histogram_name) {
+    HistogramTester histogram_tester;
+    LoadImage(this->GetParam().filename);
+    histogram_tester.ExpectUniqueSample(histogram_name, this->GetParam().type,
+                                        1);
+  }
 };
 
-using DecodedImageTypeHistogramTest = BitmapHistogramTest<BitmapImageMetrics::DecodedImageType>;
+using DecodedImageTypeHistogramTest =
+    BitmapHistogramTest<BitmapImageMetrics::DecodedImageType>;
 
-TEST_P(DecodedImageTypeHistogramTest, ImageType)
-{
-    runTest("Blink.DecodedImageType");
+TEST_P(DecodedImageTypeHistogramTest, ImageType) {
+  RunTest("Blink.DecodedImageType");
 }
 
-DecodedImageTypeHistogramTest::ParamType kDecodedImageTypeHistogramTestParams[] = {
-    {"/LayoutTests/fast/images/resources/green.jpg", BitmapImageMetrics::ImageJPEG},
-    {"/LayoutTests/fast/images/resources/palatted-color-png-gamma-one-color-profile.png", BitmapImageMetrics::ImagePNG},
-    {"/LayoutTests/fast/images/resources/animated-10color.gif", BitmapImageMetrics::ImageGIF},
-    {"/LayoutTests/fast/images/resources/webp-color-profile-lossy.webp", BitmapImageMetrics::ImageWebP},
-    {"/LayoutTests/fast/images/resources/wrong-frame-dimensions.ico", BitmapImageMetrics::ImageICO},
-    {"/LayoutTests/fast/images/resources/lenna.bmp", BitmapImageMetrics::ImageBMP}
-};
+const DecodedImageTypeHistogramTest::ParamType
+    kDecodedImageTypeHistogramTestparams[] = {
+        {"/LayoutTests/images/resources/green.jpg",
+         BitmapImageMetrics::kImageJPEG},
+        {"/LayoutTests/images/resources/"
+         "palatted-color-png-gamma-one-color-profile.png",
+         BitmapImageMetrics::kImagePNG},
+        {"/LayoutTests/images/resources/animated-10color.gif",
+         BitmapImageMetrics::kImageGIF},
+        {"/LayoutTests/images/resources/webp-color-profile-lossy.webp",
+         BitmapImageMetrics::kImageWebP},
+        {"/LayoutTests/images/resources/wrong-frame-dimensions.ico",
+         BitmapImageMetrics::kImageICO},
+        {"/LayoutTests/images/resources/lenna.bmp",
+         BitmapImageMetrics::kImageBMP}};
 
-INSTANTIATE_TEST_CASE_P(DecodedImageTypeHistogramTest, DecodedImageTypeHistogramTest,
-    ::testing::ValuesIn(kDecodedImageTypeHistogramTestParams));
+INSTANTIATE_TEST_CASE_P(
+    DecodedImageTypeHistogramTest,
+    DecodedImageTypeHistogramTest,
+    ::testing::ValuesIn(kDecodedImageTypeHistogramTestparams));
 
-using DecodedImageOrientationHistogramTest = BitmapHistogramTest<ImageOrientationEnum>;
+using DecodedImageOrientationHistogramTest =
+    BitmapHistogramTest<ImageOrientationEnum>;
 
-TEST_P(DecodedImageOrientationHistogramTest, ImageOrientation)
-{
-    runTest("Blink.DecodedImage.Orientation");
+TEST_P(DecodedImageOrientationHistogramTest, ImageOrientation) {
+  RunTest("Blink.DecodedImage.Orientation");
 }
 
-DecodedImageOrientationHistogramTest::ParamType kDecodedImageOrientationHistogramTestParams[] = {
-    {"/LayoutTests/fast/images/resources/exif-orientation-1-ul.jpg", OriginTopLeft},
-    {"/LayoutTests/fast/images/resources/exif-orientation-2-ur.jpg", OriginTopRight},
-    {"/LayoutTests/fast/images/resources/exif-orientation-3-lr.jpg", OriginBottomRight},
-    {"/LayoutTests/fast/images/resources/exif-orientation-4-lol.jpg", OriginBottomLeft},
-    {"/LayoutTests/fast/images/resources/exif-orientation-5-lu.jpg", OriginLeftTop},
-    {"/LayoutTests/fast/images/resources/exif-orientation-6-ru.jpg", OriginRightTop},
-    {"/LayoutTests/fast/images/resources/exif-orientation-7-rl.jpg", OriginRightBottom},
-    {"/LayoutTests/fast/images/resources/exif-orientation-8-llo.jpg", OriginLeftBottom}
-};
+DecodedImageOrientationHistogramTest::ParamType
+    g_k_decoded_image_orientation_histogram_test_params[] = {
+        {"/LayoutTests/images/resources/exif-orientation-1-ul.jpg",
+         kOriginTopLeft},
+        {"/LayoutTests/images/resources/exif-orientation-2-ur.jpg",
+         kOriginTopRight},
+        {"/LayoutTests/images/resources/exif-orientation-3-lr.jpg",
+         kOriginBottomRight},
+        {"/LayoutTests/images/resources/exif-orientation-4-lol.jpg",
+         kOriginBottomLeft},
+        {"/LayoutTests/images/resources/exif-orientation-5-lu.jpg",
+         kOriginLeftTop},
+        {"/LayoutTests/images/resources/exif-orientation-6-ru.jpg",
+         kOriginRightTop},
+        {"/LayoutTests/images/resources/exif-orientation-7-rl.jpg",
+         kOriginRightBottom},
+        {"/LayoutTests/images/resources/exif-orientation-8-llo.jpg",
+         kOriginLeftBottom}};
 
-INSTANTIATE_TEST_CASE_P(DecodedImageOrientationHistogramTest, DecodedImageOrientationHistogramTest,
-    ::testing::ValuesIn(kDecodedImageOrientationHistogramTestParams));
+INSTANTIATE_TEST_CASE_P(
+    DecodedImageOrientationHistogramTest,
+    DecodedImageOrientationHistogramTest,
+    ::testing::ValuesIn(g_k_decoded_image_orientation_histogram_test_params));
 
-} // namespace blink
+}  // namespace blink

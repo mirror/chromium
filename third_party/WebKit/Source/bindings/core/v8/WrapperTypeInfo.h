@@ -34,204 +34,191 @@
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "gin/public/wrapper_info.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class DOMWrapperWorld;
-class EventTarget;
 class ScriptWrappable;
 
-ScriptWrappable* toScriptWrappable(const v8::PersistentBase<v8::Object>& wrapper);
+ScriptWrappable* ToScriptWrappable(
+    const v8::PersistentBase<v8::Object>& wrapper);
+ScriptWrappable* ToScriptWrappable(v8::Local<v8::Object> wrapper);
 
-static const int v8DOMWrapperTypeIndex = static_cast<int>(gin::kWrapperInfoIndex);
-static const int v8DOMWrapperObjectIndex = static_cast<int>(gin::kEncodedValueIndex);
-static const int v8DefaultWrapperInternalFieldCount = static_cast<int>(gin::kNumberOfInternalFields);
-static const int v8PrototypeTypeIndex = 0;
-static const int v8PrototypeInternalFieldcount = 1;
+static const int kV8DOMWrapperTypeIndex =
+    static_cast<int>(gin::kWrapperInfoIndex);
+static const int kV8DOMWrapperObjectIndex =
+    static_cast<int>(gin::kEncodedValueIndex);
+static const int kV8DefaultWrapperInternalFieldCount =
+    static_cast<int>(gin::kNumberOfInternalFields);
+static const int kV8PrototypeTypeIndex = 0;
+static const int kV8PrototypeInternalFieldcount = 1;
 
-typedef v8::Local<v8::FunctionTemplate> (*DomTemplateFunction)(v8::Isolate*, const DOMWrapperWorld&);
+typedef v8::Local<v8::FunctionTemplate> (
+    *DomTemplateFunction)(v8::Isolate*, const DOMWrapperWorld&);
 typedef void (*TraceFunction)(Visitor*, ScriptWrappable*);
 typedef void (*TraceWrappersFunction)(WrapperVisitor*, ScriptWrappable*);
-typedef ActiveScriptWrappable* (*ToActiveScriptWrappableFunction)(v8::Local<v8::Object>);
-typedef void (*ResolveWrapperReachabilityFunction)(v8::Isolate*, ScriptWrappable*, const v8::Persistent<v8::Object>&);
-typedef void (*PreparePrototypeAndInterfaceObjectFunction)(v8::Local<v8::Context>, const DOMWrapperWorld&, v8::Local<v8::Object>, v8::Local<v8::Function>, v8::Local<v8::FunctionTemplate>);
-typedef void (*InstallConditionallyEnabledPropertiesFunction)(v8::Local<v8::Object>, v8::Isolate*);
+typedef ActiveScriptWrappableBase* (*ToActiveScriptWrappableFunction)(
+    v8::Local<v8::Object>);
+typedef void (*ResolveWrapperReachabilityFunction)(
+    v8::Isolate*,
+    ScriptWrappable*,
+    const v8::Persistent<v8::Object>&);
+typedef void (*PreparePrototypeAndInterfaceObjectFunction)(
+    v8::Local<v8::Context>,
+    const DOMWrapperWorld&,
+    v8::Local<v8::Object>,
+    v8::Local<v8::Function>,
+    v8::Local<v8::FunctionTemplate>);
 
-inline void setObjectGroup(v8::Isolate* isolate, ScriptWrappable* scriptWrappable, const v8::Persistent<v8::Object>& wrapper)
-{
-    isolate->SetObjectGroupId(wrapper, v8::UniqueId(reinterpret_cast<intptr_t>(scriptWrappable)));
-}
-
-// This struct provides a way to store a bunch of information that is helpful when unwrapping
-// v8 objects. Each v8 bindings class has exactly one static WrapperTypeInfo member, so
-// comparing pointers is a safe way to determine if types match.
+// This struct provides a way to store a bunch of information that is helpful
+// when unwrapping v8 objects. Each v8 bindings class has exactly one static
+// WrapperTypeInfo member, so comparing pointers is a safe way to determine if
+// types match.
 struct WrapperTypeInfo {
-    DISALLOW_NEW();
-    enum WrapperTypePrototype {
-        WrapperTypeObjectPrototype,
-        WrapperTypeExceptionPrototype,
-    };
+  DISALLOW_NEW();
 
-    enum WrapperClassId {
-        NodeClassId = 1, // NodeClassId must be smaller than ObjectClassId.
-        ObjectClassId,
-    };
+  enum WrapperTypePrototype {
+    kWrapperTypeObjectPrototype,
+    kWrapperTypeExceptionPrototype,
+  };
 
-    enum EventTargetInheritance {
-        NotInheritFromEventTarget,
-        InheritFromEventTarget,
-    };
+  enum WrapperClassId {
+    kNodeClassId = 1,  // NodeClassId must be smaller than ObjectClassId.
+    kObjectClassId,
+  };
 
-    enum Lifetime {
-        Dependent,
-        Independent,
-    };
+  enum ActiveScriptWrappableInheritance {
+    kNotInheritFromActiveScriptWrappable,
+    kInheritFromActiveScriptWrappable,
+  };
 
-    static const WrapperTypeInfo* unwrap(v8::Local<v8::Value> typeInfoWrapper)
-    {
-        return reinterpret_cast<const WrapperTypeInfo*>(v8::External::Cast(*typeInfoWrapper)->Value());
+  enum Lifetime {
+    kDependent,
+    kIndependent,
+  };
+
+  static const WrapperTypeInfo* Unwrap(v8::Local<v8::Value> type_info_wrapper) {
+    return reinterpret_cast<const WrapperTypeInfo*>(
+        v8::External::Cast(*type_info_wrapper)->Value());
+  }
+
+  static void WrapperCreated() {
+    ThreadState::Current()->Heap().HeapStats().IncreaseWrapperCount(1);
+  }
+
+  static void WrapperDestroyed() {
+    ThreadHeapStats& heap_stats = ThreadState::Current()->Heap().HeapStats();
+    heap_stats.DecreaseWrapperCount(1);
+    heap_stats.IncreaseCollectedWrapperCount(1);
+  }
+
+  bool Equals(const WrapperTypeInfo* that) const { return this == that; }
+
+  bool IsSubclass(const WrapperTypeInfo* that) const {
+    for (const WrapperTypeInfo* current = this; current;
+         current = current->parent_class) {
+      if (current == that)
+        return true;
     }
 
-    bool equals(const WrapperTypeInfo* that) const
-    {
-        return this == that;
-    }
+    return false;
+  }
 
-    bool isSubclass(const WrapperTypeInfo* that) const
-    {
-        for (const WrapperTypeInfo* current = this; current; current = current->parentClass) {
-            if (current == that)
-                return true;
-        }
+  void ConfigureWrapper(v8::PersistentBase<v8::Object>* wrapper) const {
+    wrapper->SetWrapperClassId(wrapper_class_id);
+    if (lifetime == kIndependent)
+      wrapper->MarkIndependent();
+  }
 
-        return false;
-    }
+  v8::Local<v8::FunctionTemplate> domTemplate(
+      v8::Isolate* isolate,
+      const DOMWrapperWorld& world) const {
+    return dom_template_function(isolate, world);
+  }
 
-    void configureWrapper(v8::PersistentBase<v8::Object>* wrapper) const
-    {
-        wrapper->SetWrapperClassId(wrapperClassId);
-        if (lifetime == Independent)
-            wrapper->MarkIndependent();
-    }
+  void Trace(Visitor* visitor, ScriptWrappable* script_wrappable) const {
+    DCHECK(trace_function);
+    return trace_function(visitor, script_wrappable);
+  }
 
-    v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) const
-    {
-        return domTemplateFunction(isolate, world);
-    }
+  void TraceWrappers(WrapperVisitor* visitor,
+                     ScriptWrappable* script_wrappable) const {
+    DCHECK(trace_wrappers_function);
+    return trace_wrappers_function(visitor, script_wrappable);
+  }
 
-    void wrapperCreated() const
-    {
-        ThreadState::current()->heap().heapStats().increaseWrapperCount(1);
-    }
+  void PreparePrototypeAndInterfaceObject(
+      v8::Local<v8::Context> context,
+      const DOMWrapperWorld& world,
+      v8::Local<v8::Object> prototype_object,
+      v8::Local<v8::Function> interface_object,
+      v8::Local<v8::FunctionTemplate> interface_template) const {
+    if (prepare_prototype_and_interface_object_function)
+      prepare_prototype_and_interface_object_function(
+          context, world, prototype_object, interface_object,
+          interface_template);
+  }
 
-    void wrapperDestroyed() const
-    {
-        ThreadHeapStats& heapStats = ThreadState::current()->heap().heapStats();
-        heapStats.decreaseWrapperCount(1);
-        heapStats.increaseCollectedWrapperCount(1);
-    }
+  bool IsActiveScriptWrappable() const {
+    return active_script_wrappable_inheritance ==
+           kInheritFromActiveScriptWrappable;
+  }
 
-    void trace(Visitor* visitor, ScriptWrappable* scriptWrappable) const
-    {
-        DCHECK(traceFunction);
-        return traceFunction(visitor, scriptWrappable);
-    }
+  // This field must be the first member of the struct WrapperTypeInfo.
+  // See also static_assert() in .cpp file.
+  const gin::GinEmbedder gin_embedder;
 
-    void traceWrappers(WrapperVisitor* visitor, ScriptWrappable* scriptWrappable) const
-    {
-        DCHECK(traceWrappersFunction);
-        return traceWrappersFunction(visitor, scriptWrappable);
-    }
-
-    void preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) const
-    {
-        if (preparePrototypeAndInterfaceObjectFunction)
-            preparePrototypeAndInterfaceObjectFunction(context, world, prototypeObject, interfaceObject, interfaceTemplate);
-    }
-
-    void installConditionallyEnabledProperties(v8::Local<v8::Object> prototypeObject, v8::Isolate* isolate) const
-    {
-        if (installConditionallyEnabledPropertiesFunction)
-            installConditionallyEnabledPropertiesFunction(prototypeObject, isolate);
-    }
-
-    ActiveScriptWrappable* toActiveScriptWrappable(v8::Local<v8::Object> object) const
-    {
-        if (!toActiveScriptWrappableFunction)
-            return nullptr;
-        return toActiveScriptWrappableFunction(object);
-    }
-
-    bool hasPendingActivity(v8::Local<v8::Object> object) const
-    {
-        return !toActiveScriptWrappableFunction ? false : toActiveScriptWrappableFunction(object)->hasPendingActivity();
-    }
-
-    EventTarget* toEventTarget(v8::Local<v8::Object>) const;
-
-    void visitDOMWrapper(v8::Isolate* isolate, ScriptWrappable* scriptWrappable, const v8::Persistent<v8::Object>& wrapper) const
-    {
-        if (!visitDOMWrapperFunction)
-            setObjectGroup(isolate, scriptWrappable, wrapper);
-        else
-            visitDOMWrapperFunction(isolate, scriptWrappable, wrapper);
-    }
-
-    // This field must be the first member of the struct WrapperTypeInfo. This is also checked by a static_assert() below.
-    const gin::GinEmbedder ginEmbedder;
-
-    DomTemplateFunction domTemplateFunction;
-    const TraceFunction traceFunction;
-    const TraceWrappersFunction traceWrappersFunction;
-    const ToActiveScriptWrappableFunction toActiveScriptWrappableFunction;
-    const ResolveWrapperReachabilityFunction visitDOMWrapperFunction;
-    PreparePrototypeAndInterfaceObjectFunction preparePrototypeAndInterfaceObjectFunction;
-    const InstallConditionallyEnabledPropertiesFunction installConditionallyEnabledPropertiesFunction;
-    const char* const interfaceName;
-    const WrapperTypeInfo* parentClass;
-    const unsigned wrapperTypePrototype : 1; // WrapperTypePrototype
-    const unsigned wrapperClassId : 2; // WrapperClassId
-    const unsigned eventTargetInheritance : 1; // EventTargetInheritance
-    const unsigned lifetime : 1; // Lifetime
+  DomTemplateFunction dom_template_function;
+  const TraceFunction trace_function;
+  const TraceWrappersFunction trace_wrappers_function;
+  PreparePrototypeAndInterfaceObjectFunction
+      prepare_prototype_and_interface_object_function;
+  const char* const interface_name;
+  const WrapperTypeInfo* parent_class;
+  const unsigned wrapper_type_prototype : 1;  // WrapperTypePrototype
+  const unsigned wrapper_class_id : 2;        // WrapperClassId
+  const unsigned  // ActiveScriptWrappableInheritance
+      active_script_wrappable_inheritance : 1;
+  const unsigned lifetime : 1;                // Lifetime
 };
 
-template<typename T, int offset>
-inline T* getInternalField(const v8::PersistentBase<v8::Object>& persistent)
-{
-    ASSERT(offset < v8::Object::InternalFieldCount(persistent));
-    return reinterpret_cast<T*>(v8::Object::GetAlignedPointerFromInternalField(persistent, offset));
+template <typename T, int offset>
+inline T* GetInternalField(const v8::PersistentBase<v8::Object>& persistent) {
+  DCHECK_LT(offset, v8::Object::InternalFieldCount(persistent));
+  return reinterpret_cast<T*>(
+      v8::Object::GetAlignedPointerFromInternalField(persistent, offset));
 }
 
-template<typename T, int offset>
-inline T* getInternalField(v8::Local<v8::Object> wrapper)
-{
-    ASSERT(offset < wrapper->InternalFieldCount());
-    return reinterpret_cast<T*>(wrapper->GetAlignedPointerFromInternalField(offset));
+template <typename T, int offset>
+inline T* GetInternalField(v8::Local<v8::Object> wrapper) {
+  DCHECK_LT(offset, wrapper->InternalFieldCount());
+  return reinterpret_cast<T*>(
+      wrapper->GetAlignedPointerFromInternalField(offset));
 }
 
-inline ScriptWrappable* toScriptWrappable(const v8::PersistentBase<v8::Object>& wrapper)
-{
-    return getInternalField<ScriptWrappable, v8DOMWrapperObjectIndex>(wrapper);
+// The return value can be null if |wrapper| is a global proxy, which points to
+// nothing while a navigation.
+inline ScriptWrappable* ToScriptWrappable(
+    const v8::PersistentBase<v8::Object>& wrapper) {
+  return GetInternalField<ScriptWrappable, kV8DOMWrapperObjectIndex>(wrapper);
 }
 
-inline ScriptWrappable* toScriptWrappable(v8::Local<v8::Object> wrapper)
-{
-    return getInternalField<ScriptWrappable, v8DOMWrapperObjectIndex>(wrapper);
+inline ScriptWrappable* ToScriptWrappable(v8::Local<v8::Object> wrapper) {
+  return GetInternalField<ScriptWrappable, kV8DOMWrapperObjectIndex>(wrapper);
 }
 
-inline const WrapperTypeInfo* toWrapperTypeInfo(const v8::PersistentBase<v8::Object>& wrapper)
-{
-    return getInternalField<WrapperTypeInfo, v8DOMWrapperTypeIndex>(wrapper);
+inline const WrapperTypeInfo* ToWrapperTypeInfo(
+    const v8::PersistentBase<v8::Object>& wrapper) {
+  return GetInternalField<WrapperTypeInfo, kV8DOMWrapperTypeIndex>(wrapper);
 }
 
-inline const WrapperTypeInfo* toWrapperTypeInfo(v8::Local<v8::Object> wrapper)
-{
-    return getInternalField<WrapperTypeInfo, v8DOMWrapperTypeIndex>(wrapper);
+inline const WrapperTypeInfo* ToWrapperTypeInfo(v8::Local<v8::Object> wrapper) {
+  return GetInternalField<WrapperTypeInfo, kV8DOMWrapperTypeIndex>(wrapper);
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WrapperTypeInfo_h
+#endif  // WrapperTypeInfo_h

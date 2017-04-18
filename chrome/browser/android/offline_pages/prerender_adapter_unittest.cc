@@ -31,7 +31,7 @@ class StubPrerenderContents : public PrerenderContents {
   ~StubPrerenderContents() override;
 
   void StartPrerendering(
-      const gfx::Size& size,
+      const gfx::Rect& bounds,
       content::SessionStorageNamespace* session_storage_namespace) override;
 
   void ReportStartEvent() { NotifyPrerenderStart(); }
@@ -53,7 +53,7 @@ StubPrerenderContents::StubPrerenderContents(
 StubPrerenderContents::~StubPrerenderContents() {}
 
 void StubPrerenderContents::StartPrerendering(
-    const gfx::Size& size,
+    const gfx::Rect& bounds,
     content::SessionStorageNamespace* session_storage_namespace) {
   prerendering_has_started_ = true;
 }
@@ -110,10 +110,10 @@ class PrerenderAdapterTest : public testing::Test,
   ~PrerenderAdapterTest() override;
 
   // PrerenderAdapter::Observer implementation:
-  void OnPrerenderStart() override;
   void OnPrerenderStopLoading() override;
   void OnPrerenderDomContentLoaded() override;
   void OnPrerenderStop() override;
+  void OnPrerenderNetworkBytesChanged(int64_t bytes) override;
 
   void SetUp() override;
 
@@ -124,7 +124,6 @@ class PrerenderAdapterTest : public testing::Test,
   }
   Profile* profile() { return &profile_; }
   PrerenderManager* prerender_manager() { return prerender_manager_; }
-  bool observer_start_called() const { return observer_start_called_; }
   bool observer_stop_loading_called() const {
     return observer_stop_loading_called_;
   }
@@ -132,6 +131,9 @@ class PrerenderAdapterTest : public testing::Test,
     return observer_dom_content_loaded_called_;
   }
   bool observer_stop_called() const { return observer_stop_called_; }
+  int64_t observer_network_bytes_changed() const {
+    return observer_network_bytes_changed_;
+  }
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
@@ -139,10 +141,10 @@ class PrerenderAdapterTest : public testing::Test,
   std::unique_ptr<PrerenderAdapter> adapter_;
   StubPrerenderContentsFactory* prerender_contents_factory_;
   PrerenderManager* prerender_manager_;
-  bool observer_start_called_;
   bool observer_stop_loading_called_;
   bool observer_dom_content_loaded_called_;
   bool observer_stop_called_;
+  int64_t observer_network_bytes_changed_;
 
   DISALLOW_COPY_AND_ASSIGN(PrerenderAdapterTest);
 };
@@ -150,14 +152,10 @@ class PrerenderAdapterTest : public testing::Test,
 PrerenderAdapterTest::PrerenderAdapterTest()
     : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
       prerender_manager_(nullptr),
-      observer_start_called_(false),
       observer_stop_loading_called_(false),
       observer_dom_content_loaded_called_(false),
-      observer_stop_called_(false) {}
-
-void PrerenderAdapterTest::OnPrerenderStart() {
-  observer_start_called_ = true;
-}
+      observer_stop_called_(false),
+      observer_network_bytes_changed_(0) {}
 
 PrerenderAdapterTest::~PrerenderAdapterTest() {
   if (prerender_manager_)
@@ -176,33 +174,25 @@ void PrerenderAdapterTest::OnPrerenderStop() {
   observer_stop_called_ = true;
 }
 
+void PrerenderAdapterTest::OnPrerenderNetworkBytesChanged(int64_t bytes) {
+  observer_network_bytes_changed_ = bytes;
+}
+
 void PrerenderAdapterTest::SetUp() {
   if (base::SysInfo::IsLowEndDevice())
     return;
   adapter_.reset(new PrerenderAdapter(this));
   prerender_contents_factory_ = new StubPrerenderContentsFactory();
-  prerender_manager_ = PrerenderManagerFactory::GetForProfile(profile());
+  prerender_manager_ = PrerenderManagerFactory::GetForBrowserContext(profile());
   if (prerender_manager_) {
     prerender_manager_->SetPrerenderContentsFactoryForTest(
         prerender_contents_factory_);
     prerender_manager_->SetMode(PrerenderManager::PRERENDER_MODE_ENABLED);
   }
-  observer_start_called_ = false;
   observer_stop_loading_called_ = false;
   observer_dom_content_loaded_called_ = false;
   observer_stop_called_ = false;
   ASSERT_TRUE(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-}
-
-TEST_F(PrerenderAdapterTest, CanPrerender) {
-  // Skip test on low end device until supported.
-  if (base::SysInfo::IsLowEndDevice())
-    return;
-
-  EXPECT_TRUE(adapter()->CanPrerender());
-
-  prerender_manager()->SetMode(PrerenderManager::PRERENDER_MODE_DISABLED);
-  EXPECT_FALSE(adapter()->CanPrerender());
 }
 
 TEST_F(PrerenderAdapterTest, StartPrerenderFailsForUnsupportedScheme) {
@@ -210,8 +200,9 @@ TEST_F(PrerenderAdapterTest, StartPrerenderFailsForUnsupportedScheme) {
   if (base::SysInfo::IsLowEndDevice())
     return;
 
-  content::WebContents* session_contents = content::WebContents::Create(
-      content::WebContents::CreateParams(profile()));
+  std::unique_ptr<content::WebContents> session_contents(
+      content::WebContents::Create(
+          content::WebContents::CreateParams(profile())));
   content::SessionStorageNamespace* sessionStorageNamespace =
       session_contents->GetController().GetDefaultSessionStorageNamespace();
   gfx::Size renderWindowSize = session_contents->GetContainerBounds().size();
@@ -227,8 +218,9 @@ TEST_F(PrerenderAdapterTest, StartPrerenderSucceeds) {
   if (base::SysInfo::IsLowEndDevice())
     return;
 
-  content::WebContents* session_contents = content::WebContents::Create(
-      content::WebContents::CreateParams(profile()));
+  std::unique_ptr<content::WebContents> session_contents(
+      content::WebContents::Create(
+          content::WebContents::CreateParams(profile())));
   content::SessionStorageNamespace* sessionStorageNamespace =
       session_contents->GetController().GetDefaultSessionStorageNamespace();
   gfx::Size renderWindowSize = session_contents->GetContainerBounds().size();
@@ -238,19 +230,20 @@ TEST_F(PrerenderAdapterTest, StartPrerenderSucceeds) {
   EXPECT_TRUE(prerender_contents_factory()->create_prerender_contents_called());
   EXPECT_NE(nullptr, prerender_contents_factory()->last_prerender_contents());
   EXPECT_TRUE(adapter()->IsActive());
-  EXPECT_FALSE(observer_start_called());
   EXPECT_FALSE(observer_stop_loading_called());
   EXPECT_FALSE(observer_dom_content_loaded_called());
   EXPECT_FALSE(observer_stop_called());
 
   // Exercise observer event call paths.
-  prerender_contents_factory()->last_prerender_contents()->ReportStartEvent();
-  // PumpLoop();
-  EXPECT_TRUE(observer_start_called());
   prerender_contents_factory()
       ->last_prerender_contents()
       ->ReportDomContentEvent();
   EXPECT_TRUE(observer_dom_content_loaded_called());
+
+  // Expect byte count reported to Observer.
+  prerender_contents_factory()->last_prerender_contents()->AddNetworkBytes(153);
+  EXPECT_EQ(153LL, observer_network_bytes_changed());
+
   prerender_contents_factory()->last_prerender_contents()->ReportOnLoadEvent();
   EXPECT_TRUE(observer_stop_loading_called());
   prerender_contents_factory()->last_prerender_contents()->StopWithStatus(

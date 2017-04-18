@@ -8,37 +8,39 @@
 #include "modules/push_messaging/PushError.h"
 #include "modules/push_messaging/PushSubscription.h"
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/push_messaging/WebPushSubscription.h"
-#include "wtf/Assertions.h"
-#include "wtf/PtrUtil.h"
 
 namespace blink {
 
-PushSubscriptionCallbacks::PushSubscriptionCallbacks(ScriptPromiseResolver* resolver, ServiceWorkerRegistration* serviceWorkerRegistration)
-    : m_resolver(resolver)
-    , m_serviceWorkerRegistration(serviceWorkerRegistration)
-{
-    DCHECK(m_resolver);
-    DCHECK(m_serviceWorkerRegistration);
+PushSubscriptionCallbacks::PushSubscriptionCallbacks(
+    ScriptPromiseResolver* resolver,
+    ServiceWorkerRegistration* service_worker_registration)
+    : resolver_(resolver),
+      service_worker_registration_(service_worker_registration) {
+  DCHECK(resolver_);
+  DCHECK(service_worker_registration_);
 }
 
-PushSubscriptionCallbacks::~PushSubscriptionCallbacks()
-{
+PushSubscriptionCallbacks::~PushSubscriptionCallbacks() {}
+
+void PushSubscriptionCallbacks::OnSuccess(
+    std::unique_ptr<WebPushSubscription> web_push_subscription) {
+  if (!resolver_->GetExecutionContext() ||
+      resolver_->GetExecutionContext()->IsContextDestroyed())
+    return;
+
+  resolver_->Resolve(PushSubscription::Take(
+      resolver_.Get(), WTF::WrapUnique(web_push_subscription.release()),
+      service_worker_registration_));
 }
 
-void PushSubscriptionCallbacks::onSuccess(std::unique_ptr<WebPushSubscription> webPushSubscription)
-{
-    if (!m_resolver->getExecutionContext() || m_resolver->getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
-
-    m_resolver->resolve(PushSubscription::take(m_resolver.get(), wrapUnique(webPushSubscription.release()), m_serviceWorkerRegistration));
+void PushSubscriptionCallbacks::OnError(const WebPushError& error) {
+  if (!resolver_->GetExecutionContext() ||
+      resolver_->GetExecutionContext()->IsContextDestroyed())
+    return;
+  resolver_->Reject(PushError::Take(resolver_.Get(), error));
 }
 
-void PushSubscriptionCallbacks::onError(const WebPushError& error)
-{
-    if (!m_resolver->getExecutionContext() || m_resolver->getExecutionContext()->activeDOMObjectsAreStopped())
-        return;
-    m_resolver->reject(PushError::take(m_resolver.get(), error));
-}
-
-} // namespace blink
+}  // namespace blink

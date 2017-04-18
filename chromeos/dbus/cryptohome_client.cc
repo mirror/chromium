@@ -68,6 +68,12 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // CryptohomeClient override.
+  void SetDircryptoMigrationProgressHandler(
+      const DircryptoMigrationProgessHandler& handler) override {
+    dircrypto_migration_progress_handler_ = handler;
+  }
+
+  // CryptohomeClient override.
   void WaitForServiceToBeAvailable(
       const WaitForServiceToBeAvailableCallback& callback) override {
     proxy_->WaitForServiceToBeAvailable(callback);
@@ -81,10 +87,10 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // CryptohomeClient override.
-  bool Unmount(bool* success) override {
+  void Unmount(const BoolDBusMethodCallback& callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomeUnmount);
-    return CallBoolMethodAndBlock(&method_call, success);
+    CallBoolMethod(&method_call, callback);
   }
 
   // CryptohomeClient override.
@@ -883,48 +889,72 @@ class CryptohomeClientImpl : public CryptohomeClient {
 
   void GetBootAttribute(const cryptohome::GetBootAttributeRequest& request,
                         const ProtobufMethodCallback& callback) override {
-    const char* method_name = cryptohome::kCryptohomeGetBootAttribute;
-    dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
-
-    dbus::MessageWriter writer(&method_call);
-    writer.AppendProtoAsArrayOfBytes(request);
-
-    proxy_->CallMethod(&method_call,
-                       kTpmDBusTimeoutMs ,
-                       base::Bind(&CryptohomeClientImpl::OnBaseReplyMethod,
-                                  weak_ptr_factory_.GetWeakPtr(),
-                                  callback));
+    CallCryptohomeMethod(cryptohome::kCryptohomeGetBootAttribute, request,
+                         callback);
   }
 
   void SetBootAttribute(const cryptohome::SetBootAttributeRequest& request,
                         const ProtobufMethodCallback& callback) override {
-    const char* method_name = cryptohome::kCryptohomeSetBootAttribute;
-    dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
-
-    dbus::MessageWriter writer(&method_call);
-    writer.AppendProtoAsArrayOfBytes(request);
-
-    proxy_->CallMethod(&method_call,
-                       kTpmDBusTimeoutMs ,
-                       base::Bind(&CryptohomeClientImpl::OnBaseReplyMethod,
-                                  weak_ptr_factory_.GetWeakPtr(),
-                                  callback));
+    CallCryptohomeMethod(cryptohome::kCryptohomeSetBootAttribute, request,
+                         callback);
   }
 
   void FlushAndSignBootAttributes(
       const cryptohome::FlushAndSignBootAttributesRequest& request,
       const ProtobufMethodCallback& callback) override {
-    const char* method_name = cryptohome::kCryptohomeFlushAndSignBootAttributes;
-    dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
+    CallCryptohomeMethod(cryptohome::kCryptohomeFlushAndSignBootAttributes,
+                         request, callback);
+  }
+
+  void RemoveFirmwareManagementParametersFromTpm(
+      const cryptohome::RemoveFirmwareManagementParametersRequest& request,
+      const ProtobufMethodCallback& callback) override {
+    CallCryptohomeMethod(
+        cryptohome::kCryptohomeRemoveFirmwareManagementParameters, request,
+        callback);
+  }
+
+  void SetFirmwareManagementParametersInTpm(
+      const cryptohome::SetFirmwareManagementParametersRequest& request,
+      const ProtobufMethodCallback& callback) override {
+    CallCryptohomeMethod(cryptohome::kCryptohomeSetFirmwareManagementParameters,
+                         request, callback);
+  }
+
+  void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
+                          const VoidDBusMethodCallback& callback) override {
+    dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
+                                 cryptohome::kCryptohomeMigrateToDircrypto);
+
+    cryptohome::AccountIdentifier id_proto;
+    FillIdentificationProtobuf(cryptohome_id, &id_proto);
 
     dbus::MessageWriter writer(&method_call);
-    writer.AppendProtoAsArrayOfBytes(request);
+    writer.AppendProtoAsArrayOfBytes(id_proto);
 
-    proxy_->CallMethod(&method_call,
-                       kTpmDBusTimeoutMs ,
-                       base::Bind(&CryptohomeClientImpl::OnBaseReplyMethod,
-                                  weak_ptr_factory_.GetWeakPtr(),
-                                  callback));
+    // The migration progress takes unpredicatable time depending on the
+    // user file size and the number. Setting the time limit to infinite.
+    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                       base::Bind(&CryptohomeClientImpl::OnVoidMethod,
+                                  weak_ptr_factory_.GetWeakPtr(), callback));
+  }
+
+  void NeedsDircryptoMigration(
+      const cryptohome::Identification& cryptohome_id,
+      const BoolDBusMethodCallback& callback) override {
+    dbus::MethodCall method_call(
+        cryptohome::kCryptohomeInterface,
+        cryptohome::kCryptohomeNeedsDircryptoMigration);
+
+    cryptohome::AccountIdentifier id_proto;
+    FillIdentificationProtobuf(cryptohome_id, &id_proto);
+
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendProtoAsArrayOfBytes(id_proto);
+
+    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                       base::Bind(&CryptohomeClientImpl::OnBoolMethod,
+                                  weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
  protected:
@@ -954,6 +984,13 @@ class CryptohomeClientImpl : public CryptohomeClient {
                                        weak_ptr_factory_.GetWeakPtr()),
                             base::Bind(&CryptohomeClientImpl::OnSignalConnected,
                                        weak_ptr_factory_.GetWeakPtr()));
+    proxy_->ConnectToSignal(
+        cryptohome::kCryptohomeInterface,
+        cryptohome::kSignalDircryptoMigrationProgress,
+        base::Bind(&CryptohomeClientImpl::OnDircryptoMigrationProgress,
+                   weak_ptr_factory_.GetWeakPtr()),
+        base::Bind(&CryptohomeClientImpl::OnSignalConnected,
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 
  private:
@@ -1187,6 +1224,24 @@ class CryptohomeClientImpl : public CryptohomeClient {
       low_disk_space_handler_.Run(disk_free_bytes);
   }
 
+  // Handles DircryptoMigrationProgess signal.
+  void OnDircryptoMigrationProgress(dbus::Signal* signal) {
+    if (dircrypto_migration_progress_handler_.is_null())
+      return;
+
+    dbus::MessageReader reader(signal);
+    int status = 0;
+    uint64_t current_bytes = 0, total_bytes = 0;
+    if (!reader.PopInt32(&status) || !reader.PopUint64(&current_bytes) ||
+        !reader.PopUint64(&total_bytes)) {
+      LOG(ERROR) << "Invalid signal: " << signal->ToString();
+      return;
+    }
+    dircrypto_migration_progress_handler_.Run(
+        static_cast<cryptohome::DircryptoMigrationStatus>(status),
+        current_bytes, total_bytes);
+  }
+
   // Handles the result of signal connection setup.
   void OnSignalConnected(const std::string& interface,
                          const std::string& signal,
@@ -1195,11 +1250,29 @@ class CryptohomeClientImpl : public CryptohomeClient {
         signal << " failed.";
   }
 
+  // Makes an asynchronous D-Bus call, using cryptohome interface. |method_name|
+  // is the name of the method to be called. |request| is the specific request
+  // for the method, including the data required to be sent. |callback| is
+  // invoked when the response is received.
+  void CallCryptohomeMethod(const std::string& method_name,
+                            const google::protobuf::MessageLite& request,
+                            const ProtobufMethodCallback& callback) {
+    dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
+
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendProtoAsArrayOfBytes(request);
+
+    proxy_->CallMethod(&method_call, kTpmDBusTimeoutMs,
+                       base::Bind(&CryptohomeClientImpl::OnBaseReplyMethod,
+                                  weak_ptr_factory_.GetWeakPtr(), callback));
+  }
+
   dbus::ObjectProxy* proxy_;
   std::unique_ptr<BlockingMethodCaller> blocking_method_caller_;
   AsyncCallStatusHandler async_call_status_handler_;
   AsyncCallStatusWithDataHandler async_call_status_data_handler_;
   LowDiskSpaceHandler low_disk_space_handler_;
+  DircryptoMigrationProgessHandler dircrypto_migration_progress_handler_;
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.

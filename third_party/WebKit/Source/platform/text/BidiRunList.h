@@ -23,233 +23,223 @@
 #ifndef BidiRunList_h
 #define BidiRunList_h
 
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 template <class Run>
 class BidiRunList final {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(BidiRunList);
-public:
-    BidiRunList()
-        : m_firstRun(0)
-        , m_lastRun(0)
-        , m_logicallyLastRun(0)
-        , m_runCount(0)
-    {
-    }
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(BidiRunList);
 
-    // FIXME: Once BidiResolver no longer owns the BidiRunList,
-    // then ~BidiRunList should call deleteRuns() automatically.
+ public:
+  BidiRunList()
+      : first_run_(0), last_run_(0), logically_last_run_(0), run_count_(0) {}
 
-    Run* firstRun() const { return m_firstRun; }
-    Run* lastRun() const { return m_lastRun; }
-    Run* logicallyLastRun() const { return m_logicallyLastRun; }
-    unsigned runCount() const { return m_runCount; }
+  // FIXME: Once BidiResolver no longer owns the BidiRunList,
+  // then ~BidiRunList should call deleteRuns() automatically.
 
-    void addRun(Run*);
-    void prependRun(Run*);
+  Run* FirstRun() const { return first_run_; }
+  Run* LastRun() const { return last_run_; }
+  Run* LogicallyLastRun() const { return logically_last_run_; }
+  unsigned RunCount() const { return run_count_; }
 
-    void moveRunToEnd(Run*);
-    void moveRunToBeginning(Run*);
+  void AddRun(Run*);
+  void PrependRun(Run*);
 
-    void deleteRuns();
-    void reverseRuns(unsigned start, unsigned end);
-    void reorderRunsFromLevels();
+  void MoveRunToEnd(Run*);
+  void MoveRunToBeginning(Run*);
 
-    void setLogicallyLastRun(Run* run) { m_logicallyLastRun = run; }
+  void DeleteRuns();
+  void ReverseRuns(unsigned start, unsigned end);
+  void ReorderRunsFromLevels();
 
-    void replaceRunWithRuns(Run* toReplace, BidiRunList<Run>& newRuns);
+  void SetLogicallyLastRun(Run* run) { logically_last_run_ = run; }
 
-private:
-    void clearWithoutDestroyingRuns();
+  void ReplaceRunWithRuns(Run* to_replace, BidiRunList<Run>& new_runs);
 
-    Run* m_firstRun;
-    Run* m_lastRun;
-    Run* m_logicallyLastRun;
-    unsigned m_runCount;
+ private:
+  void ClearWithoutDestroyingRuns();
+
+  Run* first_run_;
+  Run* last_run_;
+  Run* logically_last_run_;
+  unsigned run_count_;
 };
 
 template <class Run>
-inline void BidiRunList<Run>::addRun(Run* run)
-{
-    if (!m_firstRun)
-        m_firstRun = run;
-    else
-        m_lastRun->m_next = run;
-    m_lastRun = run;
-    m_runCount++;
+inline void BidiRunList<Run>::AddRun(Run* run) {
+  if (!first_run_)
+    first_run_ = run;
+  else
+    last_run_->next_ = run;
+  last_run_ = run;
+  run_count_++;
 }
 
 template <class Run>
-inline void BidiRunList<Run>::prependRun(Run* run)
-{
-    ASSERT(!run->m_next);
+inline void BidiRunList<Run>::PrependRun(Run* run) {
+  DCHECK(!run->next_);
 
-    if (!m_lastRun)
-        m_lastRun = run;
-    else
-        run->m_next = m_firstRun;
-    m_firstRun = run;
-    m_runCount++;
+  if (!last_run_)
+    last_run_ = run;
+  else
+    run->next_ = first_run_;
+  first_run_ = run;
+  run_count_++;
 }
 
 template <class Run>
-inline void BidiRunList<Run>::moveRunToEnd(Run* run)
-{
-    ASSERT(m_firstRun);
-    ASSERT(m_lastRun);
-    ASSERT(run->m_next);
+inline void BidiRunList<Run>::MoveRunToEnd(Run* run) {
+  DCHECK(first_run_);
+  DCHECK(last_run_);
+  DCHECK(run->next_);
 
-    Run* current = 0;
-    Run* next = m_firstRun;
-    while (next != run) {
-        current = next;
-        next = current->next();
-    }
+  Run* current = 0;
+  Run* next = first_run_;
+  while (next != run) {
+    current = next;
+    next = current->Next();
+  }
 
-    if (!current)
-        m_firstRun = run->next();
-    else
-        current->m_next = run->m_next;
+  if (!current)
+    first_run_ = run->Next();
+  else
+    current->next_ = run->next_;
 
-    run->m_next = 0;
-    m_lastRun->m_next = run;
-    m_lastRun = run;
+  run->next_ = 0;
+  last_run_->next_ = run;
+  last_run_ = run;
 }
 
 template <class Run>
-inline void BidiRunList<Run>::moveRunToBeginning(Run* run)
-{
-    ASSERT(m_firstRun);
-    ASSERT(m_lastRun);
-    ASSERT(run != m_firstRun);
+inline void BidiRunList<Run>::MoveRunToBeginning(Run* run) {
+  DCHECK(first_run_);
+  DCHECK(last_run_);
+  DCHECK_NE(run, first_run_);
 
-    Run* current = m_firstRun;
-    Run* next = current->next();
-    while (next != run) {
-        current = next;
-        next = current->next();
-    }
+  Run* current = first_run_;
+  Run* next = current->Next();
+  while (next != run) {
+    current = next;
+    next = current->Next();
+  }
 
-    current->m_next = run->m_next;
-    if (run == m_lastRun)
-        m_lastRun = current;
+  current->next_ = run->next_;
+  if (run == last_run_)
+    last_run_ = current;
 
-    run->m_next = m_firstRun;
-    m_firstRun = run;
+  run->next_ = first_run_;
+  first_run_ = run;
 }
 
 template <class Run>
-void BidiRunList<Run>::replaceRunWithRuns(Run* toReplace, BidiRunList<Run>& newRuns)
-{
-    ASSERT(newRuns.runCount());
-    ASSERT(m_firstRun);
-    ASSERT(toReplace);
+void BidiRunList<Run>::ReplaceRunWithRuns(Run* to_replace,
+                                          BidiRunList<Run>& new_runs) {
+  DCHECK(new_runs.RunCount());
+  DCHECK(first_run_);
+  DCHECK(to_replace);
 
-    if (m_firstRun == toReplace) {
-        m_firstRun = newRuns.firstRun();
-    } else {
-        // Find the run just before "toReplace" in the list of runs.
-        Run* previousRun = m_firstRun;
-        while (previousRun->next() != toReplace)
-            previousRun = previousRun->next();
-        ASSERT(previousRun);
-        previousRun->setNext(newRuns.firstRun());
-    }
+  if (first_run_ == to_replace) {
+    first_run_ = new_runs.FirstRun();
+  } else {
+    // Find the run just before "toReplace" in the list of runs.
+    Run* previous_run = first_run_;
+    while (previous_run->Next() != to_replace)
+      previous_run = previous_run->Next();
+    DCHECK(previous_run);
+    previous_run->SetNext(new_runs.FirstRun());
+  }
 
-    newRuns.lastRun()->setNext(toReplace->next());
+  new_runs.LastRun()->SetNext(to_replace->Next());
 
-    // Fix up any of other pointers which may now be stale.
-    if (m_lastRun == toReplace)
-        m_lastRun = newRuns.lastRun();
-    if (m_logicallyLastRun == toReplace)
-        m_logicallyLastRun = newRuns.logicallyLastRun();
-    m_runCount += newRuns.runCount() - 1; // We added the new runs and removed toReplace.
+  // Fix up any of other pointers which may now be stale.
+  if (last_run_ == to_replace)
+    last_run_ = new_runs.LastRun();
+  if (logically_last_run_ == to_replace)
+    logically_last_run_ = new_runs.LogicallyLastRun();
+  run_count_ +=
+      new_runs.RunCount() - 1;  // We added the new runs and removed toReplace.
 
-    delete toReplace;
-    newRuns.clearWithoutDestroyingRuns();
+  delete to_replace;
+  new_runs.ClearWithoutDestroyingRuns();
 }
 
 template <class Run>
-void BidiRunList<Run>::clearWithoutDestroyingRuns()
-{
-    m_firstRun = 0;
-    m_lastRun = 0;
-    m_logicallyLastRun = 0;
-    m_runCount = 0;
+void BidiRunList<Run>::ClearWithoutDestroyingRuns() {
+  first_run_ = 0;
+  last_run_ = 0;
+  logically_last_run_ = 0;
+  run_count_ = 0;
 }
 
 template <class Run>
-void BidiRunList<Run>::deleteRuns()
-{
-    if (!m_firstRun)
-        return;
+void BidiRunList<Run>::DeleteRuns() {
+  if (!first_run_)
+    return;
 
-    Run* curr = m_firstRun;
-    while (curr) {
-        Run* s = curr->next();
-        delete curr;
-        curr = s;
-    }
+  Run* curr = first_run_;
+  while (curr) {
+    Run* s = curr->Next();
+    delete curr;
+    curr = s;
+  }
 
-    clearWithoutDestroyingRuns();
+  ClearWithoutDestroyingRuns();
 }
 
 template <class Run>
-void BidiRunList<Run>::reverseRuns(unsigned start, unsigned end)
-{
-    ASSERT(m_runCount);
-    if (start >= end)
-        return;
+void BidiRunList<Run>::ReverseRuns(unsigned start, unsigned end) {
+  DCHECK(run_count_);
+  if (start >= end)
+    return;
 
-    ASSERT(end < m_runCount);
+  DCHECK_LT(end, run_count_);
 
-    // Get the item before the start of the runs to reverse and put it in
-    // |beforeStart|. |curr| should point to the first run to reverse.
-    Run* curr = m_firstRun;
-    Run* beforeStart = 0;
-    unsigned i = 0;
-    while (i < start) {
-        i++;
-        beforeStart = curr;
-        curr = curr->next();
-    }
+  // Get the item before the start of the runs to reverse and put it in
+  // |beforeStart|. |curr| should point to the first run to reverse.
+  Run* curr = first_run_;
+  Run* before_start = 0;
+  unsigned i = 0;
+  while (i < start) {
+    i++;
+    before_start = curr;
+    curr = curr->Next();
+  }
 
-    Run* startRun = curr;
-    while (i < end) {
-        i++;
-        curr = curr->next();
-    }
-    Run* endRun = curr;
-    Run* afterEnd = curr->next();
+  Run* start_run = curr;
+  while (i < end) {
+    i++;
+    curr = curr->Next();
+  }
+  Run* end_run = curr;
+  Run* after_end = curr->Next();
 
-    i = start;
-    curr = startRun;
-    Run* newNext = afterEnd;
-    while (i <= end) {
-        // Do the reversal.
-        Run* next = curr->next();
-        curr->m_next = newNext;
-        newNext = curr;
-        curr = next;
-        i++;
-    }
+  i = start;
+  curr = start_run;
+  Run* new_next = after_end;
+  while (i <= end) {
+    // Do the reversal.
+    Run* next = curr->Next();
+    curr->next_ = new_next;
+    new_next = curr;
+    curr = next;
+    i++;
+  }
 
-    // Now hook up beforeStart and afterEnd to the startRun and endRun.
-    if (beforeStart)
-        beforeStart->m_next = endRun;
-    else
-        m_firstRun = endRun;
+  // Now hook up beforeStart and afterEnd to the startRun and endRun.
+  if (before_start)
+    before_start->next_ = end_run;
+  else
+    first_run_ = end_run;
 
-    startRun->m_next = afterEnd;
-    if (!afterEnd)
-        m_lastRun = startRun;
+  start_run->next_ = after_end;
+  if (!after_end)
+    last_run_ = start_run;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BidiRunList
+#endif  // BidiRunList

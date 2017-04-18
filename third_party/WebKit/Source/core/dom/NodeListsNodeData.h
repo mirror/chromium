@@ -28,180 +28,206 @@
 #include "core/dom/TagCollection.h"
 #include "core/html/CollectionType.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
 class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
-    WTF_MAKE_NONCOPYABLE(NodeListsNodeData);
-public:
-    ChildNodeList* childNodeList(ContainerNode& node)
-    {
-        ASSERT_UNUSED(node, !m_childNodeList || node == m_childNodeList->virtualOwnerNode());
-        return toChildNodeList(m_childNodeList);
+  WTF_MAKE_NONCOPYABLE(NodeListsNodeData);
+
+ public:
+  ChildNodeList* GetChildNodeList(ContainerNode& node) {
+    DCHECK(!child_node_list_ || node == child_node_list_->VirtualOwnerNode());
+    return ToChildNodeList(child_node_list_);
+  }
+
+  ChildNodeList* EnsureChildNodeList(ContainerNode& node) {
+    DCHECK(ThreadState::Current()->IsGCForbidden());
+    if (child_node_list_)
+      return ToChildNodeList(child_node_list_);
+    ChildNodeList* list = ChildNodeList::Create(node);
+    child_node_list_ = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
+    return list;
+  }
+
+  EmptyNodeList* EnsureEmptyChildNodeList(Node& node) {
+    DCHECK(ThreadState::Current()->IsGCForbidden());
+    if (child_node_list_)
+      return ToEmptyNodeList(child_node_list_);
+    EmptyNodeList* list = EmptyNodeList::Create(node);
+    child_node_list_ = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
+    return list;
+  }
+
+  struct NodeListAtomicCacheMapEntryHash {
+    STATIC_ONLY(NodeListAtomicCacheMapEntryHash);
+    static unsigned GetHash(
+        const std::pair<unsigned char, StringImpl*>& entry) {
+      return DefaultHash<StringImpl*>::Hash::GetHash(entry.second) +
+             entry.first;
+    }
+    static bool Equal(const std::pair<unsigned char, StringImpl*>& a,
+                      const std::pair<unsigned char, StringImpl*>& b) {
+      return a == b;
+    }
+    static const bool safe_to_compare_to_empty_or_deleted =
+        DefaultHash<StringImpl*>::Hash::safe_to_compare_to_empty_or_deleted;
+  };
+
+  // Oilpan: keep a weak reference to the collection objects.
+  // Object unregistration is handled by GC's weak processing.
+  typedef HeapHashMap<std::pair<unsigned char, StringImpl*>,
+                      WeakMember<LiveNodeListBase>,
+                      NodeListAtomicCacheMapEntryHash>
+      NodeListAtomicNameCacheMap;
+  typedef HeapHashMap<QualifiedName, WeakMember<TagCollection>>
+      TagCollectionCacheNS;
+
+  template <typename T>
+  T* AddCache(ContainerNode& node,
+              CollectionType collection_type,
+              const AtomicString& name) {
+    DCHECK(ThreadState::Current()->IsGCForbidden());
+    NodeListAtomicNameCacheMap::AddResult result = atomic_name_caches_.insert(
+        NamedNodeListKey(collection_type, name), nullptr);
+    if (!result.is_new_entry) {
+      return static_cast<T*>(result.stored_value->value.Get());
     }
 
-    ChildNodeList* ensureChildNodeList(ContainerNode& node)
-    {
-        if (m_childNodeList)
-            return toChildNodeList(m_childNodeList);
-        ChildNodeList* list = ChildNodeList::create(node);
-        m_childNodeList = list;
-        return list;
+    T* list = T::Create(node, collection_type, name);
+    result.stored_value->value = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
+    return list;
+  }
+
+  template <typename T>
+  T* AddCache(ContainerNode& node, CollectionType collection_type) {
+    DCHECK(ThreadState::Current()->IsGCForbidden());
+    NodeListAtomicNameCacheMap::AddResult result = atomic_name_caches_.insert(
+        NamedNodeListKey(collection_type, g_star_atom), nullptr);
+    if (!result.is_new_entry) {
+      return static_cast<T*>(result.stored_value->value.Get());
     }
 
-    EmptyNodeList* ensureEmptyChildNodeList(Node& node)
-    {
-        if (m_childNodeList)
-            return toEmptyNodeList(m_childNodeList);
-        EmptyNodeList* list = EmptyNodeList::create(node);
-        m_childNodeList = list;
-        return list;
+    T* list = T::Create(node, collection_type);
+    result.stored_value->value = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
+    return list;
+  }
+
+  template <typename T>
+  T* Cached(CollectionType collection_type) {
+    return static_cast<T*>(
+        atomic_name_caches_.at(NamedNodeListKey(collection_type, g_star_atom)));
+  }
+
+  TagCollection* AddCache(ContainerNode& node,
+                          const AtomicString& namespace_uri,
+                          const AtomicString& local_name) {
+    DCHECK(ThreadState::Current()->IsGCForbidden());
+    QualifiedName name(g_null_atom, local_name, namespace_uri);
+    TagCollectionCacheNS::AddResult result =
+        tag_collection_cache_ns_.insert(name, nullptr);
+    if (!result.is_new_entry)
+      return result.stored_value->value;
+
+    TagCollection* list =
+        TagCollection::Create(node, namespace_uri, local_name);
+    result.stored_value->value = list;
+    ScriptWrappableVisitor::WriteBarrier(this, list);
+    return list;
+  }
+
+  static NodeListsNodeData* Create() { return new NodeListsNodeData; }
+
+  void InvalidateCaches(const QualifiedName* attr_name = 0);
+
+  bool IsEmpty() const {
+    return !child_node_list_ && atomic_name_caches_.IsEmpty() &&
+           tag_collection_cache_ns_.IsEmpty();
+  }
+
+  void AdoptTreeScope() { InvalidateCaches(); }
+
+  void AdoptDocument(Document& old_document, Document& new_document) {
+    DCHECK_NE(old_document, new_document);
+
+    NodeListAtomicNameCacheMap::const_iterator atomic_name_cache_end =
+        atomic_name_caches_.end();
+    for (NodeListAtomicNameCacheMap::const_iterator it =
+             atomic_name_caches_.begin();
+         it != atomic_name_cache_end; ++it) {
+      LiveNodeListBase* list = it->value;
+      list->DidMoveToDocument(old_document, new_document);
     }
 
-    struct NodeListAtomicCacheMapEntryHash {
-        STATIC_ONLY(NodeListAtomicCacheMapEntryHash);
-        static unsigned hash(const std::pair<unsigned char, StringImpl*>& entry)
-        {
-            return DefaultHash<StringImpl*>::Hash::hash(entry.second) + entry.first;
-        }
-        static bool equal(const std::pair<unsigned char, StringImpl*>& a, const std::pair<unsigned char, StringImpl*>& b) { return a == b; }
-        static const bool safeToCompareToEmptyOrDeleted = DefaultHash<StringImpl*>::Hash::safeToCompareToEmptyOrDeleted;
-    };
-
-    // Oilpan: keep a weak reference to the collection objects.
-    // Object unregistration is handled by GC's weak processing.
-    typedef HeapHashMap<std::pair<unsigned char, StringImpl*>, WeakMember<LiveNodeListBase>, NodeListAtomicCacheMapEntryHash> NodeListAtomicNameCacheMap;
-    typedef HeapHashMap<QualifiedName, WeakMember<TagCollection>> TagCollectionCacheNS;
-
-    template<typename T>
-    T* addCache(ContainerNode& node, CollectionType collectionType, const AtomicString& name)
-    {
-        NodeListAtomicNameCacheMap::AddResult result = m_atomicNameCaches.add(namedNodeListKey(collectionType, name), nullptr);
-        if (!result.isNewEntry) {
-            return static_cast<T*>(result.storedValue->value.get());
-        }
-
-        T* list = T::create(node, collectionType, name);
-        result.storedValue->value = list;
-        return list;
+    TagCollectionCacheNS::const_iterator tag_end =
+        tag_collection_cache_ns_.end();
+    for (TagCollectionCacheNS::const_iterator it =
+             tag_collection_cache_ns_.begin();
+         it != tag_end; ++it) {
+      LiveNodeListBase* list = it->value;
+      DCHECK(!list->IsRootedAtTreeScope());
+      list->DidMoveToDocument(old_document, new_document);
     }
+  }
+  DECLARE_TRACE();
 
-    template<typename T>
-    T* addCache(ContainerNode& node, CollectionType collectionType)
-    {
-        NodeListAtomicNameCacheMap::AddResult result = m_atomicNameCaches.add(namedNodeListKey(collectionType, starAtom), nullptr);
-        if (!result.isNewEntry) {
-            return static_cast<T*>(result.storedValue->value.get());
-        }
+  DECLARE_TRACE_WRAPPERS();
 
-        T* list = T::create(node, collectionType);
-        result.storedValue->value = list;
-        return list;
-    }
+ private:
+  NodeListsNodeData() : child_node_list_(nullptr) {}
 
-    template<typename T>
-    T* cached(CollectionType collectionType)
-    {
-        return static_cast<T*>(m_atomicNameCaches.get(namedNodeListKey(collectionType, starAtom)));
-    }
+  std::pair<unsigned char, StringImpl*> NamedNodeListKey(
+      CollectionType type,
+      const AtomicString& name) {
+    // Holding the raw StringImpl is safe because |name| is retained by the
+    // NodeList and the NodeList is reponsible for removing itself from the
+    // cache on deletion.
+    return std::pair<unsigned char, StringImpl*>(type, name.Impl());
+  }
 
-    TagCollection* addCache(ContainerNode& node, const AtomicString& namespaceURI, const AtomicString& localName)
-    {
-        QualifiedName name(nullAtom, localName, namespaceURI);
-        TagCollectionCacheNS::AddResult result = m_tagCollectionCacheNS.add(name, nullptr);
-        if (!result.isNewEntry)
-            return result.storedValue->value;
-
-        TagCollection* list = TagCollection::create(node, namespaceURI, localName);
-        result.storedValue->value = list;
-        return list;
-    }
-
-    static NodeListsNodeData* create()
-    {
-        return new NodeListsNodeData;
-    }
-
-    void invalidateCaches(const QualifiedName* attrName = 0);
-
-    bool isEmpty() const
-    {
-        return !m_childNodeList && m_atomicNameCaches.isEmpty() && m_tagCollectionCacheNS.isEmpty();
-    }
-
-    void adoptTreeScope()
-    {
-        invalidateCaches();
-    }
-
-    void adoptDocument(Document& oldDocument, Document& newDocument)
-    {
-        DCHECK_NE(oldDocument, newDocument);
-
-        NodeListAtomicNameCacheMap::const_iterator atomicNameCacheEnd = m_atomicNameCaches.end();
-        for (NodeListAtomicNameCacheMap::const_iterator it = m_atomicNameCaches.begin(); it != atomicNameCacheEnd; ++it) {
-            LiveNodeListBase* list = it->value;
-            list->didMoveToDocument(oldDocument, newDocument);
-        }
-
-        TagCollectionCacheNS::const_iterator tagEnd = m_tagCollectionCacheNS.end();
-        for (TagCollectionCacheNS::const_iterator it = m_tagCollectionCacheNS.begin(); it != tagEnd; ++it) {
-            LiveNodeListBase* list = it->value;
-            DCHECK(!list->isRootedAtTreeScope());
-            list->didMoveToDocument(oldDocument, newDocument);
-        }
-    }
-
-    DECLARE_TRACE();
-
-    DECLARE_TRACE_WRAPPERS();
-
-private:
-    NodeListsNodeData()
-        : m_childNodeList(nullptr)
-    { }
-
-    std::pair<unsigned char, StringImpl*> namedNodeListKey(CollectionType type, const AtomicString& name)
-    {
-        // Holding the raw StringImpl is safe because |name| is retained by the NodeList and the NodeList
-        // is reponsible for removing itself from the cache on deletion.
-        return std::pair<unsigned char, StringImpl*>(type, name.impl());
-    }
-
-    // Can be a ChildNodeList or an EmptyNodeList.
-    WeakMember<NodeList> m_childNodeList;
-    NodeListAtomicNameCacheMap m_atomicNameCaches;
-    TagCollectionCacheNS m_tagCollectionCacheNS;
+  // Can be a ChildNodeList or an EmptyNodeList.
+  WeakMember<NodeList> child_node_list_;
+  NodeListAtomicNameCacheMap atomic_name_caches_;
+  TagCollectionCacheNS tag_collection_cache_ns_;
 };
 
+DEFINE_TRAIT_FOR_TRACE_WRAPPERS(NodeListsNodeData);
+
 template <typename Collection>
-inline Collection* ContainerNode::ensureCachedCollection(CollectionType type)
-{
-    return ensureNodeLists().addCache<Collection>(*this, type);
+inline Collection* ContainerNode::EnsureCachedCollection(CollectionType type) {
+  ThreadState::MainThreadGCForbiddenScope gc_forbidden;
+  return EnsureNodeLists().AddCache<Collection>(*this, type);
 }
 
 template <typename Collection>
-inline Collection* ContainerNode::ensureCachedCollection(CollectionType type, const AtomicString& name)
-{
-    return ensureNodeLists().addCache<Collection>(*this, type, name);
+inline Collection* ContainerNode::EnsureCachedCollection(
+    CollectionType type,
+    const AtomicString& name) {
+  ThreadState::MainThreadGCForbiddenScope gc_forbidden;
+  return EnsureNodeLists().AddCache<Collection>(*this, type, name);
 }
 
 template <typename Collection>
-inline Collection* ContainerNode::ensureCachedCollection(CollectionType type, const AtomicString& namespaceURI, const AtomicString& localName)
-{
-    ASSERT_UNUSED(type, type == TagCollectionType);
-    return ensureNodeLists().addCache(*this, namespaceURI, localName);
+inline Collection* ContainerNode::EnsureCachedCollection(
+    CollectionType type,
+    const AtomicString& namespace_uri,
+    const AtomicString& local_name) {
+  DCHECK_EQ(type, kTagCollectionType);
+  ThreadState::MainThreadGCForbiddenScope gc_forbidden;
+  return EnsureNodeLists().AddCache(*this, namespace_uri, local_name);
 }
 
 template <typename Collection>
-inline Collection* ContainerNode::cachedCollection(CollectionType type)
-{
-    NodeListsNodeData* nodeLists = this->nodeLists();
-    return nodeLists ? nodeLists->cached<Collection>(type) : 0;
+inline Collection* ContainerNode::CachedCollection(CollectionType type) {
+  NodeListsNodeData* node_lists = this->NodeLists();
+  return node_lists ? node_lists->Cached<Collection>(type) : 0;
 }
 
-} // namespace blink
+}  // namespace blink
 
-#endif // NodeListsNodeData_h
+#endif  // NodeListsNodeData_h

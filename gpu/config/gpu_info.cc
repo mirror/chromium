@@ -68,21 +68,25 @@ GPUInfo::GPUDevice::~GPUDevice() { }
 GPUInfo::GPUInfo()
     : optimus(false),
       amd_switchable(false),
-      lenovo_dcute(false),
-      adapter_luid(0),
       gl_reset_notification_strategy(0),
-      can_lose_context(false),
       software_rendering(false),
       direct_rendering(true),
       sandboxed(false),
       process_crash_count(0),
       in_process_gpu(true),
+      passthrough_cmd_decoder(false),
       basic_info_state(kCollectInfoNone),
       context_info_state(kCollectInfoNone),
 #if defined(OS_WIN)
       dx_diagnostics_info_state(kCollectInfoNone),
 #endif
-      jpeg_decode_accelerator_supported(false) {
+      jpeg_decode_accelerator_supported(false)
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+      ,
+      system_visual(0),
+      rgba_visual(0)
+#endif
+{
 }
 
 GPUInfo::GPUInfo(const GPUInfo& other) = default;
@@ -94,11 +98,8 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
     base::TimeDelta initialization_time;
     bool optimus;
     bool amd_switchable;
-    bool lenovo_dcute;
-    Version display_link_version;
     GPUDevice gpu;
     std::vector<GPUDevice> secondary_gpus;
-    uint64_t adapter_luid;
     std::string driver_vendor;
     std::string driver_version;
     std::string driver_date;
@@ -115,12 +116,13 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
     std::string gl_ws_version;
     std::string gl_ws_extensions;
     uint32_t gl_reset_notification_strategy;
-    bool can_lose_context;
     bool software_rendering;
     bool direct_rendering;
     bool sandboxed;
     int process_crash_count;
     bool in_process_gpu;
+    bool passthrough_cmd_decoder;
+    bool supports_overlays;
     CollectInfoResult basic_info_state;
     CollectInfoResult context_info_state;
 #if defined(OS_WIN)
@@ -131,6 +133,10 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
     VideoEncodeAcceleratorSupportedProfiles
         video_encode_accelerator_supported_profiles;
     bool jpeg_decode_accelerator_supported;
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+    VisualID system_visual;
+    VisualID rgba_visual;
+#endif
   };
 
   // If this assert fails then most likely something below needs to be updated.
@@ -152,12 +158,6 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
                                      initialization_time);
   enumerator->AddBool("optimus", optimus);
   enumerator->AddBool("amdSwitchable", amd_switchable);
-  enumerator->AddBool("lenovoDcute", lenovo_dcute);
-  if (display_link_version.IsValid()) {
-    enumerator->AddString("displayLinkVersion",
-                          display_link_version.GetString());
-  }
-  enumerator->AddInt64("adapterLuid", adapter_luid);
   enumerator->AddString("driverVendor", driver_vendor);
   enumerator->AddString("driverVersion", driver_version);
   enumerator->AddString("driverDate", driver_date);
@@ -174,13 +174,14 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
   enumerator->AddInt(
       "glResetNotificationStrategy",
       static_cast<int>(gl_reset_notification_strategy));
-  enumerator->AddBool("can_lose_context", can_lose_context);
   // TODO(kbr): add performance_stats.
   enumerator->AddBool("softwareRendering", software_rendering);
   enumerator->AddBool("directRendering", direct_rendering);
   enumerator->AddBool("sandboxed", sandboxed);
   enumerator->AddInt("processCrashCount", process_crash_count);
   enumerator->AddBool("inProcessGpu", in_process_gpu);
+  enumerator->AddBool("passthroughCmdDecoder", passthrough_cmd_decoder);
+  enumerator->AddBool("supportsOverlays", supports_overlays);
   enumerator->AddInt("basicInfoState", basic_info_state);
   enumerator->AddInt("contextInfoState", context_info_state);
 #if defined(OS_WIN)
@@ -196,6 +197,10 @@ void GPUInfo::EnumerateFields(Enumerator* enumerator) const {
     EnumerateVideoEncodeAcceleratorSupportedProfile(profile, enumerator);
   enumerator->AddBool("jpegDecodeAcceleratorSupported",
       jpeg_decode_accelerator_supported);
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
+  enumerator->AddInt64("systemVisual", system_visual);
+  enumerator->AddInt64("rgbaVisual", rgba_visual);
+#endif
   enumerator->EndAuxAttributes();
 }
 

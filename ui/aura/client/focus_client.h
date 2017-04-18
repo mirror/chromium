@@ -6,13 +6,9 @@
 #define UI_AURA_CLIENT_FOCUS_CLIENT_H_
 
 #include "ui/aura/aura_export.h"
-
-namespace ui {
-class Event;
-}
+#include "ui/aura/window.h"
 
 namespace aura {
-class Window;
 namespace client {
 class FocusChangeObserver;
 

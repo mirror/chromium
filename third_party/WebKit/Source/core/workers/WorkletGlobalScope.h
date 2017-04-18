@@ -8,7 +8,6 @@
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/SecurityContext.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
@@ -20,61 +19,89 @@ namespace blink {
 class EventQueue;
 class WorkerOrWorkletScriptController;
 
-class CORE_EXPORT WorkletGlobalScope : public GarbageCollectedFinalized<WorkletGlobalScope>, public SecurityContext, public WorkerOrWorkletGlobalScope, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(WorkletGlobalScope);
-public:
-    ~WorkletGlobalScope() override;
-    virtual void dispose();
+class CORE_EXPORT WorkletGlobalScope
+    : public GarbageCollectedFinalized<WorkletGlobalScope>,
+      public SecurityContext,
+      public WorkerOrWorkletGlobalScope,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(WorkletGlobalScope);
 
-    bool isWorkletGlobalScope() const final { return true; }
+ public:
+  ~WorkletGlobalScope() override;
+  void Dispose() override;
 
-    // WorkerOrWorkletGlobalScope
-    ScriptWrappable* getScriptWrappable() const final { return const_cast<WorkletGlobalScope*>(this); }
-    WorkerOrWorkletScriptController* scriptController() final { return m_scriptController.get(); }
+  bool IsWorkletGlobalScope() const final { return true; }
 
-    // ScriptWrappable
-    v8::Local<v8::Object> wrap(v8::Isolate*, v8::Local<v8::Object> creationContext) final;
-    v8::Local<v8::Object> associateWithWrapper(v8::Isolate*, const WrapperTypeInfo*, v8::Local<v8::Object> wrapper) final;
+  // WorkerOrWorkletGlobalScope
+  ScriptWrappable* GetScriptWrappable() const final {
+    return const_cast<WorkletGlobalScope*>(this);
+  }
+  WorkerOrWorkletScriptController* ScriptController() final {
+    return script_controller_.Get();
+  }
 
-    // ExecutionContext
-    void disableEval(const String& errorMessage) final;
-    String userAgent() const final { return m_userAgent; }
-    SecurityContext& securityContext() final { return *this; }
-    EventQueue* getEventQueue() const final { NOTREACHED(); return nullptr; } // WorkletGlobalScopes don't have an event queue.
-    bool isSecureContext(String& errorMessage, const SecureContextCheck = StandardSecureContextCheck) const final;
+  // Always returns false here as worklets don't have a #close() method on
+  // the global.
+  bool IsClosing() const final { return false; }
 
-    using SecurityContext::getSecurityOrigin;
-    using SecurityContext::contentSecurityPolicy;
+  // ScriptWrappable
+  v8::Local<v8::Object> Wrap(v8::Isolate*,
+                             v8::Local<v8::Object> creation_context) final;
+  v8::Local<v8::Object> AssociateWithWrapper(
+      v8::Isolate*,
+      const WrapperTypeInfo*,
+      v8::Local<v8::Object> wrapper) final;
 
-    DOMTimerCoordinator* timers() final { NOTREACHED(); return nullptr; } // WorkletGlobalScopes don't have timers.
-    void postTask(const WebTraceLocation&, std::unique_ptr<ExecutionContextTask>, const String&) override
-    {
-        // TODO(ikilpatrick): implement.
-        NOTREACHED();
-    }
+  // ExecutionContext
+  void DisableEval(const String& error_message) final;
+  bool IsJSExecutionForbidden() const final;
+  String UserAgent() const final { return user_agent_; }
+  SecurityContext& GetSecurityContext() final { return *this; }
+  EventQueue* GetEventQueue() const final {
+    NOTREACHED();
+    return nullptr;
+  }  // WorkletGlobalScopes don't have an event queue.
+  bool IsSecureContext(
+      String& error_message,
+      const SecureContextCheck = kStandardSecureContextCheck) const final;
 
-    DECLARE_VIRTUAL_TRACE();
+  using SecurityContext::GetSecurityOrigin;
+  using SecurityContext::GetContentSecurityPolicy;
 
-protected:
-    // The url, userAgent and securityOrigin arguments are inherited from the
-    // parent ExecutionContext for Worklets.
-    WorkletGlobalScope(const KURL&, const String& userAgent, PassRefPtr<SecurityOrigin>, v8::Isolate*);
+  DOMTimerCoordinator* Timers() final {
+    NOTREACHED();
+    return nullptr;
+  }  // WorkletGlobalScopes don't have timers.
 
-private:
-    const KURL& virtualURL() const final { return m_url; }
-    KURL virtualCompleteURL(const String&) const final;
+  DECLARE_VIRTUAL_TRACE();
 
-    EventTarget* errorEventTarget() final { return nullptr; }
-    void didUpdateSecurityOrigin() final { }
+ protected:
+  // The url, userAgent and securityOrigin arguments are inherited from the
+  // parent ExecutionContext for Worklets.
+  WorkletGlobalScope(const KURL&,
+                     const String& user_agent,
+                     PassRefPtr<SecurityOrigin>,
+                     v8::Isolate*);
 
-    KURL m_url;
-    String m_userAgent;
-    Member<WorkerOrWorkletScriptController> m_scriptController;
+ private:
+  const KURL& VirtualURL() const final { return url_; }
+  KURL VirtualCompleteURL(const String&) const final;
+
+  EventTarget* ErrorEventTarget() final { return nullptr; }
+  void DidUpdateSecurityOrigin() final {}
+
+  KURL url_;
+  String user_agent_;
+  Member<WorkerOrWorkletScriptController> script_controller_;
 };
 
-DEFINE_TYPE_CASTS(WorkletGlobalScope, ExecutionContext, context, context->isWorkletGlobalScope(), context.isWorkletGlobalScope());
+DEFINE_TYPE_CASTS(WorkletGlobalScope,
+                  ExecutionContext,
+                  context,
+                  context->IsWorkletGlobalScope(),
+                  context.IsWorkletGlobalScope());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WorkletGlobalScope_h
+#endif  // WorkletGlobalScope_h

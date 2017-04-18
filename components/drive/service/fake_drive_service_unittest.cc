@@ -27,11 +27,11 @@ using google_apis::AboutResource;
 using google_apis::AppList;
 using google_apis::ChangeList;
 using google_apis::ChangeResource;
-using google_apis::FileList;
-using google_apis::FileResource;
 using google_apis::DRIVE_NO_CONNECTION;
 using google_apis::DRIVE_OTHER_ERROR;
 using google_apis::DriveApiErrorCode;
+using google_apis::FileList;
+using google_apis::FileResource;
 using google_apis::GetContentCallback;
 using google_apis::HTTP_CREATED;
 using google_apis::HTTP_FORBIDDEN;
@@ -987,7 +987,7 @@ TEST_F(FakeDriveServiceTest, DownloadFile_ExistingFile) {
   std::vector<test_util::ProgressInfo> download_progress_values;
 
   const base::FilePath kOutputFilePath =
-      temp_dir.path().AppendASCII("whatever.txt");
+      temp_dir.GetPath().AppendASCII("whatever.txt");
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   base::FilePath output_file_path;
   test_util::TestGetContentCallback get_content_callback;
@@ -1019,7 +1019,7 @@ TEST_F(FakeDriveServiceTest, DownloadFile_NonexistingFile) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 
   const base::FilePath kOutputFilePath =
-      temp_dir.path().AppendASCII("whatever.txt");
+      temp_dir.GetPath().AppendASCII("whatever.txt");
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   base::FilePath output_file_path;
   fake_service_.DownloadFile(
@@ -1041,7 +1041,7 @@ TEST_F(FakeDriveServiceTest, DownloadFile_Offline) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 
   const base::FilePath kOutputFilePath =
-      temp_dir.path().AppendASCII("whatever.txt");
+      temp_dir.GetPath().AppendASCII("whatever.txt");
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   base::FilePath output_file_path;
   fake_service_.DownloadFile(
@@ -1803,7 +1803,7 @@ TEST_F(FakeDriveServiceTest, ResumeUpload_ExistingFile) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath local_file_path =
-      temp_dir.path().Append(FILE_PATH_LITERAL("File 1.txt"));
+      temp_dir.GetPath().Append(FILE_PATH_LITERAL("File 1.txt"));
   std::string contents("hogefugapiyo");
   ASSERT_TRUE(test_util::WriteStringToFile(local_file_path, contents));
 
@@ -1873,7 +1873,7 @@ TEST_F(FakeDriveServiceTest, ResumeUpload_NewFile) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath local_file_path =
-      temp_dir.path().Append(FILE_PATH_LITERAL("new file.foo"));
+      temp_dir.GetPath().Append(FILE_PATH_LITERAL("new file.foo"));
   std::string contents("hogefugapiyo");
   ASSERT_TRUE(test_util::WriteStringToFile(local_file_path, contents));
 

@@ -5,69 +5,64 @@
 #include "core/frame/PlatformEventDispatcher.h"
 
 #include "core/frame/PlatformEventController.h"
-#include "wtf/AutoReset.h"
+#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
 PlatformEventDispatcher::PlatformEventDispatcher()
-    : m_isDispatching(false)
-    , m_isListening(false)
-{
+    : is_dispatching_(false), is_listening_(false) {}
+
+void PlatformEventDispatcher::AddController(
+    PlatformEventController* controller) {
+  ASSERT(controller);
+  // TODO: If we can avoid to register a same controller twice, we can change
+  // this 'if' to ASSERT.
+  if (controllers_.Contains(controller))
+    return;
+
+  controllers_.insert(controller);
+
+  if (!is_listening_) {
+    StartListening();
+    is_listening_ = true;
+  }
 }
 
-void PlatformEventDispatcher::addController(PlatformEventController* controller)
-{
-    ASSERT(controller);
-    // TODO: If we can avoid to register a same controller twice, we can change
-    // this 'if' to ASSERT.
-    if (m_controllers.contains(controller))
-        return;
+void PlatformEventDispatcher::RemoveController(
+    PlatformEventController* controller) {
+  ASSERT(controllers_.Contains(controller));
 
-    m_controllers.add(controller);
+  controllers_.erase(controller);
+  if (!is_dispatching_ && controllers_.IsEmpty()) {
+    StopListening();
+    is_listening_ = false;
+  }
+}
 
-    if (!m_isListening) {
-        startListening();
-        m_isListening = true;
+void PlatformEventDispatcher::NotifyControllers() {
+  if (controllers_.IsEmpty())
+    return;
+
+  {
+    AutoReset<bool> change_is_dispatching(&is_dispatching_, true);
+    // HashSet m_controllers can be updated during an iteration, and it stops
+    // the iteration.  Thus we store it into a Vector to access all elements.
+    HeapVector<Member<PlatformEventController>> snapshot_vector;
+    CopyToVector(controllers_, snapshot_vector);
+    for (PlatformEventController* controller : snapshot_vector) {
+      if (controllers_.Contains(controller))
+        controller->DidUpdateData();
     }
+  }
+
+  if (controllers_.IsEmpty()) {
+    StopListening();
+    is_listening_ = false;
+  }
 }
 
-void PlatformEventDispatcher::removeController(PlatformEventController* controller)
-{
-    ASSERT(m_controllers.contains(controller));
-
-    m_controllers.remove(controller);
-    if (!m_isDispatching && m_controllers.isEmpty()) {
-        stopListening();
-        m_isListening = false;
-    }
+DEFINE_TRACE(PlatformEventDispatcher) {
+  visitor->Trace(controllers_);
 }
 
-void PlatformEventDispatcher::notifyControllers()
-{
-    if (m_controllers.isEmpty())
-        return;
-
-    {
-        AutoReset<bool> changeIsDispatching(&m_isDispatching, true);
-        // HashSet m_controllers can be updated during an iteration, and it stops the iteration.
-        // Thus we store it into a Vector to access all elements.
-        HeapVector<Member<PlatformEventController>> snapshotVector;
-        copyToVector(m_controllers, snapshotVector);
-        for (PlatformEventController* controller : snapshotVector) {
-            if (m_controllers.contains(controller))
-                controller->didUpdateData();
-        }
-    }
-
-    if (m_controllers.isEmpty()) {
-        stopListening();
-        m_isListening = false;
-    }
-}
-
-DEFINE_TRACE(PlatformEventDispatcher)
-{
-    visitor->trace(m_controllers);
-}
-
-} // namespace blink
+}  // namespace blink

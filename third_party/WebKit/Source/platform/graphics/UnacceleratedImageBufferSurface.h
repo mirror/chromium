@@ -32,26 +32,35 @@
 #define UnacceleratedImageBufferSurface_h
 
 #include "platform/graphics/ImageBufferSurface.h"
-#include "wtf/RefPtr.h"
-
-class SkSurface;
+#include "platform/graphics/paint/PaintCanvas.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT UnacceleratedImageBufferSurface : public ImageBufferSurface {
-    WTF_MAKE_NONCOPYABLE(UnacceleratedImageBufferSurface); USING_FAST_MALLOC(UnacceleratedImageBufferSurface);
-public:
-    UnacceleratedImageBufferSurface(const IntSize&, OpacityMode = NonOpaque, ImageInitializationMode = InitializeImagePixels);
-    ~UnacceleratedImageBufferSurface() override;
+class PLATFORM_EXPORT UnacceleratedImageBufferSurface
+    : public ImageBufferSurface {
+  WTF_MAKE_NONCOPYABLE(UnacceleratedImageBufferSurface);
+  USING_FAST_MALLOC(UnacceleratedImageBufferSurface);
 
-    SkCanvas* canvas() override;
-    bool isValid() const override;
+ public:
+  UnacceleratedImageBufferSurface(
+      const IntSize&,
+      OpacityMode = kNonOpaque,
+      ImageInitializationMode = kInitializeImagePixels,
+      sk_sp<SkColorSpace> = nullptr,
+      SkColorType = kN32_SkColorType);
+  ~UnacceleratedImageBufferSurface() override;
 
-    PassRefPtr<SkImage> newImageSnapshot(AccelerationHint, SnapshotReason) override;
-private:
-    sk_sp<SkSurface> m_surface;
+  PaintCanvas* Canvas() override;
+  bool IsValid() const override;
+
+  sk_sp<SkImage> NewImageSnapshot(AccelerationHint, SnapshotReason) override;
+
+ private:
+  sk_sp<SkSurface> surface_;
+  std::unique_ptr<PaintCanvas> canvas_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

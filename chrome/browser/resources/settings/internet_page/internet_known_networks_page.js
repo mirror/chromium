@@ -21,30 +21,28 @@ Polymer({
     },
 
     /**
-     * The maximum height in pixels for the list of networks.
-     */
-    maxHeight: {
-      type: Number,
-      value: 500
-    },
-
-    /**
-     * List of all network state data for the network type.
-     * @type {!Array<!CrOnc.NetworkStateProperties>}
-     */
-    networkStateList: {
-      type: Array,
-      value: function() { return []; }
-    },
-
-    /**
      * Interface for networkingPrivate calls, passed from internet_page.
      * @type {NetworkingPrivate}
      */
-    networkingPrivate: {
-      type: Object,
+    networkingPrivate: Object,
+
+    /**
+     * List of all network state data for the network type.
+     * @private {!Array<!CrOnc.NetworkStateProperties>}
+     */
+    networkStateList_: {
+      type: Array,
+      value: function() {
+        return [];
+      }
     },
   },
+
+  /** @private {string} */
+  selectedGuid_: '',
+
+  /** @private {boolean} */
+  selectedIsPreferred_: false,
 
   /**
    * Listener function for chrome.networkingPrivate.onNetworksChanged event.
@@ -66,9 +64,7 @@ Polymer({
         this.networksChangedListener_);
   },
 
-  /**
-   * Polymer type changed method.
-   */
+  /** @private */
   networkTypeChanged_: function() {
     this.refreshNetworks_();
   },
@@ -95,43 +91,93 @@ Polymer({
       visible: false,
       configured: true
     };
-    this.networkingPrivate.getNetworks(
-        filter,
-        function(states) { this.networkStateList = states; }.bind(this));
+    this.networkingPrivate.getNetworks(filter, function(states) {
+      this.networkStateList_ = states;
+    }.bind(this));
   },
 
   /**
-   * Event triggered when a cr-network-list item is selected.
-   * @param {!{detail: !CrOnc.NetworkStateProperties}} event
+   * @param {!CrOnc.NetworkStateProperties} state
+   * @return {boolean}
    * @private
    */
-  onListItemSelected_: function(event) {
-    this.fire('show-detail', event.detail);
+  networkIsPreferred_: function(state) {
+    // Currently we treat NetworkStateProperties.Priority as a boolean.
+    return state.Priority > 0;
   },
 
   /**
-   * Event triggered when a cr-network-list item 'remove' button is pressed.
-   * @param {!{detail: !CrOnc.NetworkStateProperties}} event
+   * @param {!CrOnc.NetworkStateProperties} networkState
+   * @return {boolean}
    * @private
    */
-  onRemove_: function(event) {
-    var state = event.detail;
-    if (!state.GUID)
-      return;
-    this.networkingPrivate.forgetNetwork(state.GUID);
+  networkIsNotPreferred_: function(networkState) {
+    return networkState.Priority == 0;
   },
 
   /**
-   * Event triggered when a cr-network-list item 'preferred' button is toggled.
-   * @param {!{detail: !CrOnc.NetworkStateProperties}} event
+   * @return {boolean}
    * @private
    */
-  onTogglePreferred_: function(event) {
-    var state = event.detail;
-    if (!state.GUID)
-      return;
-    var preferred = state.Priority > 0;
-    var onc = {Priority: preferred ? 0 : 1};
-    this.networkingPrivate.setProperties(state.GUID, onc);
+  havePreferred_: function() {
+    return this.networkStateList_.find(function(state) {
+      return this.networkIsPreferred_(state);
+    }.bind(this)) !== undefined;
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  haveNotPreferred_: function() {
+    return this.networkStateList_.find(function(state) {
+      return this.networkIsNotPreferred_(state);
+    }.bind(this)) !== undefined;
+  },
+
+  /**
+   * @param {!Event} event
+   * @private
+   */
+  onMenuButtonTap_: function(event) {
+    var button = /** @type {!HTMLElement} */ (event.target);
+    this.selectedGuid_ =
+        /** @type {!{model: !{item: !CrOnc.NetworkStateProperties}}} */ (event)
+            .model.item.GUID;
+    this.selectedIsPreferred_ = button.hasAttribute('preferred');
+    /** @type {!CrActionMenuElement} */ (this.$.dotsMenu).showAt(button);
+    event.stopPropagation();
+  },
+
+  /** @private */
+  onRemovePreferredTap_: function() {
+    this.networkingPrivate.setProperties(this.selectedGuid_, {Priority: 0});
+    /** @type {!CrActionMenuElement} */ (this.$.dotsMenu).close();
+  },
+
+  /** @private */
+  onAddPreferredTap_: function() {
+    this.networkingPrivate.setProperties(this.selectedGuid_, {Priority: 1});
+    /** @type {!CrActionMenuElement} */ (this.$.dotsMenu).close();
+  },
+
+  /** @private */
+  onForgetTap_: function() {
+    this.networkingPrivate.forgetNetwork(this.selectedGuid_);
+    /** @type {!CrActionMenuElement} */ (this.$.dotsMenu).close();
+  },
+
+  /**
+   * Fires a 'show-details' event with an item containing a |networkStateList_|
+   * entry in the event model.
+   * @param {Event} event
+   * @private
+   */
+  fireShowDetails_: function(event) {
+    var state =
+        /** @type {!{model: !{item: !CrOnc.NetworkStateProperties}}} */ (event)
+            .model.item;
+    this.fire('show-detail', state);
+    event.stopPropagation();
   },
 });

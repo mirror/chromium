@@ -4,15 +4,14 @@
 
 #include "chrome/browser/android/background_sync_launcher_android.h"
 
-#include "base/android/context_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "jni/BackgroundSyncLauncher_jni.h"
 
 using content::BrowserThread;
 
 namespace {
-base::LazyInstance<BackgroundSyncLauncherAndroid> g_background_sync_launcher =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<BackgroundSyncLauncherAndroid>::DestructorAtExit
+    g_background_sync_launcher = LAZY_INSTANCE_INITIALIZER;
 
 // Disables the Play Services version check for testing on Chromium build bots.
 // TODO(iclelland): Remove this once the bots have their play services package
@@ -44,13 +43,7 @@ void BackgroundSyncLauncherAndroid::LaunchBrowserIfStoppedImpl(
 
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_BackgroundSyncLauncher_launchBrowserIfStopped(
-      env, java_launcher_.obj(), base::android::GetApplicationContext(),
-      launch_when_next_online, min_delay_ms);
-}
-
-// static
-bool BackgroundSyncLauncherAndroid::RegisterLauncher(JNIEnv* env) {
-  return RegisterNativesImpl(env);
+      env, java_launcher_, launch_when_next_online, min_delay_ms);
 }
 
 // static
@@ -67,21 +60,19 @@ bool BackgroundSyncLauncherAndroid::ShouldDisableBackgroundSync() {
     return false;
   }
   return Java_BackgroundSyncLauncher_shouldDisableBackgroundSync(
-      base::android::AttachCurrentThread(),
-      base::android::GetApplicationContext());
+      base::android::AttachCurrentThread());
 }
 
 BackgroundSyncLauncherAndroid::BackgroundSyncLauncherAndroid() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   JNIEnv* env = base::android::AttachCurrentThread();
-  java_launcher_.Reset(Java_BackgroundSyncLauncher_create(
-      env, base::android::GetApplicationContext()));
+  java_launcher_.Reset(Java_BackgroundSyncLauncher_create(env));
 }
 
 BackgroundSyncLauncherAndroid::~BackgroundSyncLauncherAndroid() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_BackgroundSyncLauncher_destroy(env, java_launcher_.obj());
+  Java_BackgroundSyncLauncher_destroy(env, java_launcher_);
 }

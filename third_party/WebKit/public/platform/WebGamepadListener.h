@@ -7,19 +7,21 @@
 
 #include "WebPlatformEventListener.h"
 
+namespace device {
+class Gamepad;
+}
+
 namespace blink {
 
-class WebGamepad;
-
 class WebGamepadListener : public WebPlatformEventListener {
-public:
-    virtual void didConnectGamepad(unsigned index, const WebGamepad&) = 0;
-    virtual void didDisconnectGamepad(unsigned index, const WebGamepad&) = 0;
+ public:
+  virtual void DidConnectGamepad(unsigned index, const device::Gamepad&) = 0;
+  virtual void DidDisconnectGamepad(unsigned index, const device::Gamepad&) = 0;
 
-protected:
-    virtual ~WebGamepadListener() { }
+ protected:
+  virtual ~WebGamepadListener() {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

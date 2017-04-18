@@ -9,8 +9,8 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
-#include "chrome/browser/ui/toolbar/app_menu_icon_painter.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/view.h"
@@ -23,16 +23,16 @@ class LabelButtonBorder;
 class MenuListener;
 }
 
+class AppMenuAnimation;
 class ToolbarView;
 
-class AppMenuButton : public views::MenuButton,
-                      public AppMenuIconPainter::Delegate {
+class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
  public:
   explicit AppMenuButton(ToolbarView* toolbar_view);
   ~AppMenuButton() override;
 
   void SetSeverity(AppMenuIconController::IconType type,
-                   AppMenuIconPainter::Severity severity,
+                   AppMenuIconController::Severity severity,
                    bool animate);
 
   // Shows the app menu. |for_drop| indicates whether the menu is opened for a
@@ -55,17 +55,27 @@ class AppMenuButton : public views::MenuButton,
 
   // views::MenuButton:
   gfx::Size GetPreferredSize() const override;
+  void Layout() override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
-  // AppMenuIconPainter::Delegate:
-  void ScheduleAppMenuIconPaint() override;
+  // TabStripObserver:
+  void TabInsertedAt(TabStripModel* tab_strip_model,
+                     content::WebContents* contents,
+                     int index,
+                     bool foreground) override;
 
   // Updates the presentation according to |severity_| and the theme provider.
-  // Only used in MD.
-  void UpdateIcon();
+  // If |should_animate| is true, the icon should animate.
+  void UpdateIcon(bool should_animate);
 
   // Sets |margin_trailing_| when the browser is maximized and updates layout
   // to make the focus rectangle centered.
   void SetTrailingMargin(int margin);
+
+  // Methods called by AppMenuAnimation when the animation has started/ended.
+  // The layer is managed inside these methods.
+  void AppMenuAnimationStarted();
+  void AppMenuAnimationEnded();
 
   // Opens the app menu immediately during a drag-and-drop operation.
   // Used only in testing.
@@ -86,21 +96,12 @@ class AppMenuButton : public views::MenuButton,
   int OnDragUpdated(const ui::DropTargetEvent& event) override;
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
-  void OnPaint(gfx::Canvas* canvas) override;
 
-  // Only used in pre-MD.
-  std::unique_ptr<AppMenuIconPainter> icon_painter_;
-
-  // Only used in MD.
-  AppMenuIconPainter::Severity severity_;
+  AppMenuIconController::Severity severity_;
   AppMenuIconController::IconType type_;
 
   // Our owning toolbar view.
   ToolbarView* toolbar_view_;
-
-  // Whether or not we should allow dragging extension icons onto this button
-  // (in order to open the overflow in the app menu).
-  bool allow_extension_dragging_;
 
   // Listeners to call when the menu opens.
   base::ObserverList<views::MenuListener> menu_listeners_;
@@ -110,6 +111,9 @@ class AppMenuButton : public views::MenuButton,
   // menu should be listed later.
   std::unique_ptr<AppMenuModel> menu_model_;
   std::unique_ptr<AppMenu> menu_;
+
+  // Used for animating and drawing the app menu icon.
+  std::unique_ptr<AppMenuAnimation> animation_;
 
   // Any trailing margin to be applied. Used when the browser is in
   // a maximized state to extend to the full window width.

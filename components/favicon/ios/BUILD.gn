@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 source_set("ios") {
+  configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
     "favicon_url_util.cc",
     "favicon_url_util.h",
@@ -13,6 +14,7 @@ source_set("ios") {
     "//base",
     "//components/favicon/core",
     "//components/favicon_base",
+    "//components/image_fetcher/ios",
     "//ios/web",
     "//ui/gfx",
   ]

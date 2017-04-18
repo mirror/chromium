@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/api/automation_internal/automation_event_router.h"
 
 #include <algorithm>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -12,6 +13,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/common/extensions/api/automation_api_constants.h"
 #include "chrome/common/extensions/api/automation_internal.h"
 #include "chrome/common/extensions/chrome_extension_messages.h"
 #include "content/public/browser/notification_service.h"
@@ -62,7 +64,7 @@ void AutomationEventRouter::RegisterListenerWithDesktopPermission(
   Register(extension_id,
            listener_process_id,
            listener_routing_id,
-           0  /* desktop tree ID */,
+           api::automation::kDesktopTreeID,
            true);
 }
 
@@ -88,9 +90,27 @@ void AutomationEventRouter::DispatchAccessibilityEvent(
   }
 }
 
+void AutomationEventRouter::DispatchAccessibilityLocationChange(
+    const ExtensionMsg_AccessibilityLocationChangeParams& params) {
+  for (const auto& listener : listeners_) {
+    // Skip listeners that don't want to listen to this tree.
+    if (!listener.desktop &&
+        listener.tree_ids.find(params.tree_id) == listener.tree_ids.end()) {
+      continue;
+    }
+
+    content::RenderProcessHost* rph =
+        content::RenderProcessHost::FromID(listener.process_id);
+    rph->Send(new ExtensionMsg_AccessibilityLocationChange(
+        listener.routing_id,
+        params));
+  }
+}
+
 void AutomationEventRouter::DispatchTreeDestroyedEvent(
     int tree_id,
     content::BrowserContext* browser_context) {
+  browser_context = browser_context ? browser_context : active_profile_;
   std::unique_ptr<base::ListValue> args(
       api::automation_internal::OnAccessibilityTreeDestroyed::Create(tree_id));
   std::unique_ptr<Event> event(new Event(

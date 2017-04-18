@@ -30,6 +30,7 @@ enum SubstitutionType {
   SUBSTITUTION_SOURCE_ROOT_RELATIVE_DIR,  // {{root_relative_dir}}
   SUBSTITUTION_SOURCE_GEN_DIR,  // {{source_gen_dir}}
   SUBSTITUTION_SOURCE_OUT_DIR,  // {{source_out_dir}}
+  SUBSTITUTION_SOURCE_TARGET_RELATIVE,  // {{source_target_relative}}
 
   // Valid for all compiler and linker tools. These depend on the target and
   // do not vary on a per-file basis.
@@ -68,6 +69,9 @@ enum SubstitutionType {
   SUBSTITUTION_BUNDLE_RESOURCES_DIR,  // {{bundle_resources_dir}}
   SUBSTITUTION_BUNDLE_EXECUTABLE_DIR,  // {{bundle_executable_dir}}
   SUBSTITUTION_BUNDLE_PLUGINS_DIR,  // {{bundle_plugins_dir}}
+
+  // Valid for compile_xcassets tool.
+  SUBSTITUTION_BUNDLE_PRODUCT_TYPE,  // {{bundle_product_type}}
 
   // Used only for the args of actions.
   SUBSTITUTION_RSP_FILE_NAME,  // {{response_file_name}}
@@ -114,6 +118,8 @@ bool SubstitutionIsInBundleDir(SubstitutionType type);
 // Returns true if the given substitution is valid for the named purpose.
 bool IsValidBundleDataSubstitution(SubstitutionType type);
 bool IsValidSourceSubstitution(SubstitutionType type);
+bool IsValidScriptArgsSubstitution(SubstitutionType type);
+
 // Both compiler and linker tools.
 bool IsValidToolSubstitution(SubstitutionType type);
 bool IsValidCompilerSubstitution(SubstitutionType type);
@@ -124,10 +130,12 @@ bool IsValidALinkSubstitution(SubstitutionType type);
 bool IsValidCopySubstitution(SubstitutionType type);
 bool IsValidCompileXCassetsSubstitution(SubstitutionType type);
 
-// Like the "IsValid..." version above but checks a list of types and sets a
-// an error blaming the given source if the test fails.
-bool EnsureValidSourcesSubstitutions(
+// Validates that each substitution type in the vector passes the given
+// is_valid_subst predicate. Returns true on success. On failure, fills in the
+// error object with an appropriate message and returns false.
+bool EnsureValidSubstitutions(
     const std::vector<SubstitutionType>& types,
+    bool (*is_valid_subst)(SubstitutionType),
     const ParseNode* origin,
     Err* err);
 

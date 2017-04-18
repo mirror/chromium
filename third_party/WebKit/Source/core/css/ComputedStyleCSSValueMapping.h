@@ -7,34 +7,53 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-class LayoutObject;
+class CSSVariableData;
 class ComputedStyle;
 class FilterOperations;
+class LayoutObject;
+class Node;
+class PropertyRegistry;
 class ShadowData;
 class ShadowList;
 class StyleColor;
-class Node;
-class CSSVariableData;
 
 class ComputedStyleCSSValueMapping {
-    STATIC_ONLY(ComputedStyleCSSValueMapping);
-public:
-    // FIXME: Resolve computed auto alignment in applyProperty/ComputedStyle and remove this non-const styledNode parameter.
-    static const CSSValue* get(CSSPropertyID, const ComputedStyle&, const LayoutObject* = nullptr, Node* styledNode = nullptr, bool allowVisitedStyle = false);
-    static const CSSValue* get(const AtomicString customPropertyName, const ComputedStyle&);
-    static std::unique_ptr<HashMap<AtomicString, RefPtr<CSSVariableData>>> getVariables(const ComputedStyle&);
-private:
-    static CSSValue* currentColorOrValidColor(const ComputedStyle&, const StyleColor&);
-    static CSSValue* valueForShadowData(const ShadowData&, const ComputedStyle&, bool useSpread);
-    static CSSValue* valueForShadowList(const ShadowList*, const ComputedStyle&, bool useSpread);
-    static CSSValue* valueForFilter(const ComputedStyle&, const FilterOperations&);
-    static CSSValue* valueForFont(const ComputedStyle&);
+  STATIC_ONLY(ComputedStyleCSSValueMapping);
+
+ public:
+  // FIXME: Resolve computed auto alignment in applyProperty/ComputedStyle and
+  // remove this non-const styledNode parameter.
+  static const CSSValue* Get(CSSPropertyID,
+                             const ComputedStyle&,
+                             const LayoutObject* = nullptr,
+                             Node* styled_node = nullptr,
+                             bool allow_visited_style = false);
+  static const CSSValue* Get(const AtomicString custom_property_name,
+                             const ComputedStyle&,
+                             const PropertyRegistry*);
+  static std::unique_ptr<HashMap<AtomicString, RefPtr<CSSVariableData>>>
+  GetVariables(const ComputedStyle&);
+
+ private:
+  static CSSValue* CurrentColorOrValidColor(const ComputedStyle&,
+                                            const StyleColor&);
+  static CSSValue* ValueForShadowData(const ShadowData&,
+                                      const ComputedStyle&,
+                                      bool use_spread);
+  static CSSValue* ValueForShadowList(const ShadowList*,
+                                      const ComputedStyle&,
+                                      bool use_spread);
+  static CSSValue* ValueForFilter(const ComputedStyle&,
+                                  const FilterOperations&);
+  static CSSValue* ValueForFont(const ComputedStyle&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ComputedStyleCSSValueMapping_h
+#endif  // ComputedStyleCSSValueMapping_h

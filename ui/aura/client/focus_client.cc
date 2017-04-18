@@ -4,19 +4,16 @@
 
 #include "ui/aura/client/focus_client.h"
 
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window_event_dispatcher.h"
-#include "ui/aura/window_property.h"
-
-DECLARE_WINDOW_PROPERTY_TYPE(aura::client::FocusClient*)
+#include "ui/base/class_property.h"
 
 namespace aura {
 namespace client {
 
-DEFINE_WINDOW_PROPERTY_KEY(FocusClient*, kRootWindowFocusClientKey, NULL);
-
 void SetFocusClient(Window* root_window, FocusClient* client) {
   DCHECK_EQ(root_window->GetRootWindow(), root_window);
-  root_window->SetProperty(kRootWindowFocusClientKey, client);
+  root_window->SetProperty(kFocusClientKey, client);
 }
 
 FocusClient* GetFocusClient(Window* window) {
@@ -25,8 +22,7 @@ FocusClient* GetFocusClient(Window* window) {
 
 FocusClient* GetFocusClient(const Window* window) {
   const Window* root_window = window->GetRootWindow();
-  return root_window ?
-      root_window->GetProperty(kRootWindowFocusClientKey) : NULL;
+  return root_window ? root_window->GetProperty(kFocusClientKey) : nullptr;
 }
 
 }  // namespace client

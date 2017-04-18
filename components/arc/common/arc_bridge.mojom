@@ -4,33 +4,45 @@
 
 module arc.mojom;
 
+import "accessibility_helper.mojom";
 import "app.mojom";
 import "audio.mojom";
 import "auth.mojom";
 import "bluetooth.mojom";
+import "boot_phase_monitor.mojom";
 import "clipboard.mojom";
 import "crash_collector.mojom";
 import "enterprise_reporting.mojom";
 import "file_system.mojom";
 import "ime.mojom";
 import "intent_helper.mojom";
+import "kiosk.mojom";
 import "metrics.mojom";
 import "net.mojom";
 import "notifications.mojom";
 import "obb_mounter.mojom";
 import "policy.mojom";
 import "power.mojom";
+import "print.mojom";
 import "process.mojom";
 import "storage_manager.mojom";
+import "tracing.mojom";
+import "tts.mojom";
 import "video.mojom";
+import "voice_interaction_framework.mojom";
+import "wallpaper.mojom";
 
-// Next MinVersion: 16
+// Next MinVersion: 24
 // Deprecated method IDs: 101, 105
-// Next method ID: 123
+// Next method ID: 130
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
   // unique ordinal.
+
+  // Notifies Chrome that the AccessibilityHelperInstance interface is ready.
+  [MinVersion=21] OnAccessibilityHelperInstanceReady@127(
+      AccessibilityHelperInstance instance_ptr);
 
   // Notifies Chrome that the AppInstance interface is ready.
   OnAppInstanceReady@100(AppInstance instance_ptr);
@@ -43,6 +55,10 @@ interface ArcBridgeHost {
 
   // Notifies Chrome that the BluetoothInstance interface is ready.
   [MinVersion=9] OnBluetoothInstanceReady@113(BluetoothInstance instance_ptr);
+
+  // Notifies Chrome that the BootPhaseMonitorInstance interface is ready.
+  [MinVersion=19] OnBootPhaseMonitorInstanceReady@125(
+      BootPhaseMonitorInstance instance_ptr);
 
   // Notifies Chrome that the ClipboardInstance interface is ready.
   [MinVersion=2] OnClipboardInstanceReady@109(ClipboardInstance instance_ptr);
@@ -66,6 +82,9 @@ interface ArcBridgeHost {
   [MinVersion=4] OnIntentHelperInstanceReady@111(
       IntentHelperInstance instance_ptr);
 
+  // Notifies Chrome that the KioskInstance interface is ready.
+  [MinVersion=20] OnKioskInstanceReady@126(KioskInstance instance_ptr);
+
   // Notifies Chrome that the MetricsInstance interface is ready.
   [MinVersion=10] OnMetricsInstanceReady@116(MetricsInstance instance_ptr);
 
@@ -84,14 +103,30 @@ interface ArcBridgeHost {
   // Notifies Chrome that the PowerInstance interface is ready.
   OnPowerInstanceReady@103(PowerInstance instance_ptr);
 
+  // Notifies Chrome that the PrintInstance interface is ready.
+  [MinVersion=16] OnPrintInstanceReady@121(PrintInstance instance_ptr);
+
   // Notifies Chrome that the ProcessInstance interface is ready.
   OnProcessInstanceReady@104(ProcessInstance instance_ptr);
 
   // Notifies Chrome that the StorageManagerInstance interface is ready.
   [MinVersion=12] OnStorageManagerInstanceReady@118(StorageManagerInstance instance_ptr);
 
+  // Notifies Chrome that the TracingInstance interface is ready.
+  [MinVersion=22] OnTracingInstanceReady@128(TracingInstance instance_ptr);
+
+  // Notifies Chrome that the TtsInstance interface is ready.
+  [MinVersion=17] OnTtsInstanceReady@123(TtsInstance instance_ptr);
+
   // Notifies Chrome that the VideoInstance interface is ready.
   [MinVersion=6] OnVideoInstanceReady@107(VideoInstance instance_ptr);
+
+  // Notifies Chrome that the VoiceInteractionFrameworkInstance is ready.
+  [MinVersion=23] OnVoiceInteractionFrameworkInstanceReady@129(
+                      VoiceInteractionFrameworkInstance instance_ptr);
+
+  // Notifies Chrome that the WallpaperInstance interface is ready.
+  [MinVersion=18] OnWallpaperInstanceReady@124(WallpaperInstance instance_ptr);
 };
 
 interface ArcBridgeInstance {

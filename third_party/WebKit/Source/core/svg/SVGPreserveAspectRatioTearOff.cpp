@@ -36,44 +36,53 @@
 
 namespace blink {
 
-void SVGPreserveAspectRatioTearOff::setAlign(unsigned short align, ExceptionState& exceptionState)
-{
-    if (align == SVG_PRESERVEASPECTRATIO_UNKNOWN || align > SVG_PRESERVEASPECTRATIO_XMAXYMAX) {
-        exceptionState.throwDOMException(NotSupportedError, "The alignment provided is invalid.");
-        return;
-    }
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setAlign(static_cast<SVGPreserveAspectRatio::SVGPreserveAspectRatioType>(align));
-    commitChange();
+void SVGPreserveAspectRatioTearOff::setAlign(unsigned short align,
+                                             ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  if (align == kSvgPreserveaspectratioUnknown ||
+      align > kSvgPreserveaspectratioXmaxymax) {
+    exception_state.ThrowDOMException(kNotSupportedError,
+                                      "The alignment provided is invalid.");
+    return;
+  }
+  Target()->SetAlign(
+      static_cast<SVGPreserveAspectRatio::SVGPreserveAspectRatioType>(align));
+  CommitChange();
 }
 
-void SVGPreserveAspectRatioTearOff::setMeetOrSlice(unsigned short meetOrSlice, ExceptionState& exceptionState)
-{
-    if (meetOrSlice == SVG_MEETORSLICE_UNKNOWN || meetOrSlice > SVG_MEETORSLICE_SLICE) {
-        exceptionState.throwDOMException(NotSupportedError, "The meetOrSlice provided is invalid.");
-        return;
-    }
-    if (isImmutable()) {
-        exceptionState.throwDOMException(NoModificationAllowedError, "The attribute is read-only.");
-        return;
-    }
-
-    target()->setMeetOrSlice(static_cast<SVGPreserveAspectRatio::SVGMeetOrSliceType>(meetOrSlice));
-    commitChange();
+void SVGPreserveAspectRatioTearOff::setMeetOrSlice(
+    unsigned short meet_or_slice,
+    ExceptionState& exception_state) {
+  if (IsImmutable()) {
+    ThrowReadOnly(exception_state);
+    return;
+  }
+  if (meet_or_slice == kSvgMeetorsliceUnknown ||
+      meet_or_slice > kSvgMeetorsliceSlice) {
+    exception_state.ThrowDOMException(kNotSupportedError,
+                                      "The meetOrSlice provided is invalid.");
+    return;
+  }
+  Target()->SetMeetOrSlice(
+      static_cast<SVGPreserveAspectRatio::SVGMeetOrSliceType>(meet_or_slice));
+  CommitChange();
 }
 
-SVGPreserveAspectRatioTearOff::SVGPreserveAspectRatioTearOff(SVGPreserveAspectRatio* target, SVGElement* contextElement, PropertyIsAnimValType propertyIsAnimVal, const QualifiedName& attributeName)
-    : SVGPropertyTearOff<SVGPreserveAspectRatio>(target, contextElement, propertyIsAnimVal, attributeName)
-{
+SVGPreserveAspectRatioTearOff::SVGPreserveAspectRatioTearOff(
+    SVGPreserveAspectRatio* target,
+    SVGElement* context_element,
+    PropertyIsAnimValType property_is_anim_val,
+    const QualifiedName& attribute_name)
+    : SVGPropertyTearOff<SVGPreserveAspectRatio>(target,
+                                                 context_element,
+                                                 property_is_anim_val,
+                                                 attribute_name) {}
+
+DEFINE_TRACE_WRAPPERS(SVGPreserveAspectRatioTearOff) {
+  visitor->TraceWrappers(contextElement());
 }
 
-DEFINE_TRACE_WRAPPERS(SVGPreserveAspectRatioTearOff)
-{
-    visitor->traceWrappers(contextElement());
-}
-
-} // namespace blink
+}  // namespace blink

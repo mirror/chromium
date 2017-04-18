@@ -8,8 +8,10 @@
 #include "core/css/CSSFontSelectorClient.h"
 #include "modules/canvas2d/ClipList.h"
 #include "platform/fonts/Font.h"
+#include "platform/graphics/paint/PaintFlags.h"
 #include "platform/transforms/AffineTransform.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
@@ -18,220 +20,240 @@ class CanvasStyle;
 class CSSValue;
 class Element;
 
-class CanvasRenderingContext2DState final : public GarbageCollectedFinalized<CanvasRenderingContext2DState>, public CSSFontSelectorClient {
-    WTF_MAKE_NONCOPYABLE(CanvasRenderingContext2DState);
-    USING_GARBAGE_COLLECTED_MIXIN(CanvasRenderingContext2DState);
-public:
-    static CanvasRenderingContext2DState* create()
-    {
-        return new CanvasRenderingContext2DState;
-    }
+class CanvasRenderingContext2DState final
+    : public GarbageCollectedFinalized<CanvasRenderingContext2DState>,
+      public CSSFontSelectorClient {
+  WTF_MAKE_NONCOPYABLE(CanvasRenderingContext2DState);
+  USING_GARBAGE_COLLECTED_MIXIN(CanvasRenderingContext2DState);
 
-    ~CanvasRenderingContext2DState() override;
+ public:
+  static CanvasRenderingContext2DState* Create() {
+    return new CanvasRenderingContext2DState;
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  ~CanvasRenderingContext2DState() override;
 
-    enum ClipListCopyMode {
-        CopyClipList,
-        DontCopyClipList
-    };
+  DECLARE_VIRTUAL_TRACE();
 
-    enum PaintType {
-        FillPaintType,
-        StrokePaintType,
-        ImagePaintType,
-    };
+  enum ClipListCopyMode { kCopyClipList, kDontCopyClipList };
 
-    static CanvasRenderingContext2DState* create(const CanvasRenderingContext2DState& other, ClipListCopyMode mode)
-    {
-        return new CanvasRenderingContext2DState(other, mode);
-    }
+  enum PaintType {
+    kFillPaintType,
+    kStrokePaintType,
+    kImagePaintType,
+  };
 
-    // CSSFontSelectorClient implementation
-    void fontsNeedUpdate(CSSFontSelector*) override;
+  static CanvasRenderingContext2DState* Create(
+      const CanvasRenderingContext2DState& other,
+      ClipListCopyMode mode) {
+    return new CanvasRenderingContext2DState(other, mode);
+  }
 
-    bool hasUnrealizedSaves() const { return m_unrealizedSaveCount; }
-    void save() { ++m_unrealizedSaveCount; }
-    void restore() { --m_unrealizedSaveCount; }
-    void resetUnrealizedSaveCount() { m_unrealizedSaveCount = 0; }
+  // CSSFontSelectorClient implementation
+  void FontsNeedUpdate(CSSFontSelector*) override;
 
-    void setLineDash(const Vector<double>&);
-    const Vector<double>& lineDash() const { return m_lineDash; }
+  bool HasUnrealizedSaves() const { return unrealized_save_count_; }
+  void Save() { ++unrealized_save_count_; }
+  void Restore() { --unrealized_save_count_; }
+  void ResetUnrealizedSaveCount() { unrealized_save_count_ = 0; }
 
-    void setShouldAntialias(bool);
-    bool shouldAntialias() const;
+  void SetLineDash(const Vector<double>&);
+  const Vector<double>& LineDash() const { return line_dash_; }
 
-    void setLineDashOffset(double);
-    double lineDashOffset() const { return m_lineDashOffset; }
+  void SetShouldAntialias(bool);
+  bool ShouldAntialias() const;
 
-    // setTransform returns true iff transform is invertible;
-    void setTransform(const AffineTransform&);
-    void resetTransform();
-    AffineTransform transform() const { return m_transform; }
-    bool isTransformInvertible() const { return m_isTransformInvertible; }
+  void SetLineDashOffset(double);
+  double LineDashOffset() const { return line_dash_offset_; }
 
-    void clipPath(const SkPath&, AntiAliasingMode);
-    bool hasClip() const { return m_hasClip; }
-    bool hasComplexClip() const { return m_hasComplexClip; }
-    void playbackClips(SkCanvas* canvas) const { m_clipList.playback(canvas); }
-    const SkPath& getCurrentClipPath() const { return m_clipList.getCurrentClipPath(); }
+  // setTransform returns true iff transform is invertible;
+  void SetTransform(const AffineTransform&);
+  void ResetTransform();
+  AffineTransform Transform() const { return transform_; }
+  bool IsTransformInvertible() const { return is_transform_invertible_; }
 
-    void setFont(const Font&, CSSFontSelector*);
-    const Font& font() const;
-    bool hasRealizedFont() const { return m_realizedFont; }
-    void setUnparsedFont(const String& font) { m_unparsedFont = font; }
-    const String& unparsedFont() const { return m_unparsedFont; }
+  void ClipPath(const SkPath&, AntiAliasingMode);
+  bool HasClip() const { return has_clip_; }
+  bool HasComplexClip() const { return has_complex_clip_; }
+  void PlaybackClips(PaintCanvas* canvas) const { clip_list_.Playback(canvas); }
+  const SkPath& GetCurrentClipPath() const {
+    return clip_list_.GetCurrentClipPath();
+  }
 
-    void setFontForFilter(const Font& font) { m_fontForFilter = font; }
+  void SetFont(const Font&, CSSFontSelector*);
+  const Font& GetFont() const;
+  bool HasRealizedFont() const { return realized_font_; }
+  void SetUnparsedFont(const String& font) { unparsed_font_ = font; }
+  const String& UnparsedFont() const { return unparsed_font_; }
 
-    void setFilter(const CSSValue*);
-    void setUnparsedFilter(const String& filterString) { m_unparsedFilter = filterString; }
-    const String& unparsedFilter() const { return m_unparsedFilter; }
-    SkImageFilter* getFilter(Element*, IntSize canvasSize, CanvasRenderingContext2D*) const;
-    bool hasFilter(Element*, IntSize canvasSize, CanvasRenderingContext2D*) const;
-    void clearResolvedFilter() const;
+  void SetFontForFilter(const Font& font) { font_for_filter_ = font; }
 
-    void setStrokeStyle(CanvasStyle*);
-    CanvasStyle* strokeStyle() const { return m_strokeStyle.get(); }
+  void SetFilter(const CSSValue*);
+  void SetUnparsedFilter(const String& filter_string) {
+    unparsed_filter_ = filter_string;
+  }
+  const String& UnparsedFilter() const { return unparsed_filter_; }
+  sk_sp<SkImageFilter> GetFilter(Element*,
+                                 IntSize canvas_size,
+                                 CanvasRenderingContext2D*) const;
+  sk_sp<SkImageFilter> GetFilterForOffscreenCanvas(IntSize canvas_size) const;
+  bool HasFilterForOffscreenCanvas(IntSize canvas_size) const;
+  bool HasFilter(Element*,
+                 IntSize canvas_size,
+                 CanvasRenderingContext2D*) const;
+  void ClearResolvedFilter() const;
 
-    void setFillStyle(CanvasStyle*);
-    CanvasStyle* fillStyle() const { return m_fillStyle.get(); }
+  void SetStrokeStyle(CanvasStyle*);
+  CanvasStyle* StrokeStyle() const { return stroke_style_.Get(); }
 
-    CanvasStyle* style(PaintType) const;
+  void SetFillStyle(CanvasStyle*);
+  CanvasStyle* FillStyle() const { return fill_style_.Get(); }
 
-    enum Direction {
-        DirectionInherit,
-        DirectionRTL,
-        DirectionLTR
-    };
+  CanvasStyle* Style(PaintType) const;
 
-    void setDirection(Direction direction) { m_direction = direction; }
-    Direction getDirection() const { return m_direction; }
+  enum Direction { kDirectionInherit, kDirectionRTL, kDirectionLTR };
 
-    void setTextAlign(TextAlign align) { m_textAlign = align; }
-    TextAlign getTextAlign() const { return m_textAlign; }
+  void SetDirection(Direction direction) { direction_ = direction; }
+  Direction GetDirection() const { return direction_; }
 
-    void setTextBaseline(TextBaseline baseline) { m_textBaseline = baseline; }
-    TextBaseline getTextBaseline() const { return m_textBaseline; }
+  void SetTextAlign(TextAlign align) { text_align_ = align; }
+  TextAlign GetTextAlign() const { return text_align_; }
 
-    void setLineWidth(double lineWidth) { m_strokePaint.setStrokeWidth(lineWidth); }
-    double lineWidth() const { return m_strokePaint.getStrokeWidth(); }
+  void SetTextBaseline(TextBaseline baseline) { text_baseline_ = baseline; }
+  TextBaseline GetTextBaseline() const { return text_baseline_; }
 
-    void setLineCap(LineCap lineCap) { m_strokePaint.setStrokeCap(static_cast<SkPaint::Cap>(lineCap)); }
-    LineCap getLineCap() const { return static_cast<LineCap>(m_strokePaint.getStrokeCap()); }
+  void SetLineWidth(double line_width) {
+    stroke_flags_.setStrokeWidth(line_width);
+  }
+  double LineWidth() const { return stroke_flags_.getStrokeWidth(); }
 
-    void setLineJoin(LineJoin lineJoin) { m_strokePaint.setStrokeJoin(static_cast<SkPaint::Join>(lineJoin)); }
-    LineJoin getLineJoin() const { return static_cast<LineJoin>(m_strokePaint.getStrokeJoin()); }
+  void SetLineCap(LineCap line_cap) {
+    stroke_flags_.setStrokeCap(static_cast<PaintFlags::Cap>(line_cap));
+  }
+  LineCap GetLineCap() const {
+    return static_cast<LineCap>(stroke_flags_.getStrokeCap());
+  }
 
-    void setMiterLimit(double miterLimit) { m_strokePaint.setStrokeMiter(miterLimit); }
-    double miterLimit() const { return m_strokePaint.getStrokeMiter(); }
+  void SetLineJoin(LineJoin line_join) {
+    stroke_flags_.setStrokeJoin(static_cast<PaintFlags::Join>(line_join));
+  }
+  LineJoin GetLineJoin() const {
+    return static_cast<LineJoin>(stroke_flags_.getStrokeJoin());
+  }
 
-    void setShadowOffsetX(double);
-    void setShadowOffsetY(double);
-    const FloatSize& shadowOffset() const { return m_shadowOffset; }
+  void SetMiterLimit(double miter_limit) {
+    stroke_flags_.setStrokeMiter(miter_limit);
+  }
+  double MiterLimit() const { return stroke_flags_.getStrokeMiter(); }
 
-    void setShadowBlur(double);
-    double shadowBlur() const { return m_shadowBlur; }
+  void SetShadowOffsetX(double);
+  void SetShadowOffsetY(double);
+  const FloatSize& ShadowOffset() const { return shadow_offset_; }
 
-    void setShadowColor(SkColor);
-    SkColor shadowColor() const { return m_shadowColor; }
+  void SetShadowBlur(double);
+  double ShadowBlur() const { return shadow_blur_; }
 
-    void setGlobalAlpha(double);
-    double globalAlpha() const { return m_globalAlpha; }
+  void SetShadowColor(SkColor);
+  SkColor ShadowColor() const { return shadow_color_; }
 
-    void setGlobalComposite(SkXfermode::Mode);
-    SkXfermode::Mode globalComposite() const;
+  void SetGlobalAlpha(double);
+  double GlobalAlpha() const { return global_alpha_; }
 
-    void setImageSmoothingEnabled(bool);
-    bool imageSmoothingEnabled() const;
-    void setImageSmoothingQuality(const String&);
-    String imageSmoothingQuality() const;
+  void SetGlobalComposite(SkBlendMode);
+  SkBlendMode GlobalComposite() const;
 
-    void setUnparsedStrokeColor(const String& color) { m_unparsedStrokeColor = color; }
-    const String& unparsedStrokeColor() const { return m_unparsedStrokeColor; }
+  void SetImageSmoothingEnabled(bool);
+  bool ImageSmoothingEnabled() const;
+  void SetImageSmoothingQuality(const String&);
+  String ImageSmoothingQuality() const;
 
-    void setUnparsedFillColor(const String& color) { m_unparsedFillColor = color; }
-    const String& unparsedFillColor() const { return m_unparsedFillColor; }
+  void SetUnparsedStrokeColor(const String& color) {
+    unparsed_stroke_color_ = color;
+  }
+  const String& UnparsedStrokeColor() const { return unparsed_stroke_color_; }
 
-    bool shouldDrawShadows() const;
+  void SetUnparsedFillColor(const String& color) {
+    unparsed_fill_color_ = color;
+  }
+  const String& UnparsedFillColor() const { return unparsed_fill_color_; }
 
-    enum ImageType {
-        NoImage,
-        OpaqueImage,
-        NonOpaqueImage
-    };
+  bool ShouldDrawShadows() const;
 
-    // If paint will not be used for painting a bitmap, set bitmapOpacity to Opaque
-    const SkPaint* getPaint(PaintType, ShadowMode, ImageType = NoImage) const;
+  enum ImageType { kNoImage, kOpaqueImage, kNonOpaqueImage };
 
-private:
-    CanvasRenderingContext2DState();
-    CanvasRenderingContext2DState(const CanvasRenderingContext2DState&, ClipListCopyMode);
+  // If paint will not be used for painting a bitmap, set bitmapOpacity to
+  // Opaque.
+  const PaintFlags* GetFlags(PaintType, ShadowMode, ImageType = kNoImage) const;
 
-    void updateLineDash() const;
-    void updateStrokeStyle() const;
-    void updateFillStyle() const;
-    void updateFilterQuality() const;
-    void updateFilterQualityWithSkFilterQuality(const SkFilterQuality&) const;
-    void shadowParameterChanged();
-    SkDrawLooper* emptyDrawLooper() const;
-    SkDrawLooper* shadowOnlyDrawLooper() const;
-    SkDrawLooper* shadowAndForegroundDrawLooper() const;
-    SkImageFilter* shadowOnlyImageFilter() const;
-    SkImageFilter* shadowAndForegroundImageFilter() const;
+ private:
+  CanvasRenderingContext2DState();
+  CanvasRenderingContext2DState(const CanvasRenderingContext2DState&,
+                                ClipListCopyMode);
 
-    unsigned m_unrealizedSaveCount;
+  void UpdateLineDash() const;
+  void UpdateStrokeStyle() const;
+  void UpdateFillStyle() const;
+  void UpdateFilterQuality() const;
+  void UpdateFilterQualityWithSkFilterQuality(const SkFilterQuality&) const;
+  void ShadowParameterChanged();
+  SkDrawLooper* EmptyDrawLooper() const;
+  SkDrawLooper* ShadowOnlyDrawLooper() const;
+  SkDrawLooper* ShadowAndForegroundDrawLooper() const;
+  sk_sp<SkImageFilter> ShadowOnlyImageFilter() const;
+  sk_sp<SkImageFilter> ShadowAndForegroundImageFilter() const;
 
-    String m_unparsedStrokeColor;
-    String m_unparsedFillColor;
-    Member<CanvasStyle> m_strokeStyle;
-    Member<CanvasStyle> m_fillStyle;
+  unsigned unrealized_save_count_;
 
-    mutable SkPaint m_strokePaint;
-    mutable SkPaint m_fillPaint;
-    mutable SkPaint m_imagePaint;
+  String unparsed_stroke_color_;
+  String unparsed_fill_color_;
+  Member<CanvasStyle> stroke_style_;
+  Member<CanvasStyle> fill_style_;
 
-    FloatSize m_shadowOffset;
-    double m_shadowBlur;
-    SkColor m_shadowColor;
-    mutable RefPtr<SkDrawLooper> m_emptyDrawLooper;
-    mutable RefPtr<SkDrawLooper> m_shadowOnlyDrawLooper;
-    mutable RefPtr<SkDrawLooper> m_shadowAndForegroundDrawLooper;
-    mutable sk_sp<SkImageFilter> m_shadowOnlyImageFilter;
-    mutable sk_sp<SkImageFilter> m_shadowAndForegroundImageFilter;
+  mutable PaintFlags stroke_flags_;
+  mutable PaintFlags fill_flags_;
+  mutable PaintFlags image_flags_;
 
-    double m_globalAlpha;
-    AffineTransform m_transform;
-    Vector<double> m_lineDash;
-    double m_lineDashOffset;
+  FloatSize shadow_offset_;
+  double shadow_blur_;
+  SkColor shadow_color_;
+  mutable sk_sp<SkDrawLooper> empty_draw_looper_;
+  mutable sk_sp<SkDrawLooper> shadow_only_draw_looper_;
+  mutable sk_sp<SkDrawLooper> shadow_and_foreground_draw_looper_;
+  mutable sk_sp<SkImageFilter> shadow_only_image_filter_;
+  mutable sk_sp<SkImageFilter> shadow_and_foreground_image_filter_;
 
-    String m_unparsedFont;
-    Font m_font;
-    Font m_fontForFilter;
+  double global_alpha_;
+  AffineTransform transform_;
+  Vector<double> line_dash_;
+  double line_dash_offset_;
 
-    String m_unparsedFilter;
-    Member<const CSSValue> m_filterValue;
-    mutable sk_sp<SkImageFilter> m_resolvedFilter;
+  String unparsed_font_;
+  Font font_;
+  Font font_for_filter_;
 
-    // Text state.
-    TextAlign m_textAlign;
-    TextBaseline m_textBaseline;
-    Direction m_direction;
+  String unparsed_filter_;
+  Member<const CSSValue> filter_value_;
+  mutable sk_sp<SkImageFilter> resolved_filter_;
 
-    bool m_realizedFont : 1;
-    bool m_isTransformInvertible : 1;
-    bool m_hasClip : 1;
-    bool m_hasComplexClip : 1;
-    mutable bool m_fillStyleDirty : 1;
-    mutable bool m_strokeStyleDirty : 1;
-    mutable bool m_lineDashDirty : 1;
+  // Text state.
+  TextAlign text_align_;
+  TextBaseline text_baseline_;
+  Direction direction_;
 
-    bool m_imageSmoothingEnabled;
-    SkFilterQuality m_imageSmoothingQuality;
+  bool realized_font_ : 1;
+  bool is_transform_invertible_ : 1;
+  bool has_clip_ : 1;
+  bool has_complex_clip_ : 1;
+  mutable bool fill_style_dirty_ : 1;
+  mutable bool stroke_style_dirty_ : 1;
+  mutable bool line_dash_dirty_ : 1;
 
-    ClipList m_clipList;
+  bool image_smoothing_enabled_;
+  SkFilterQuality image_smoothing_quality_;
+
+  ClipList clip_list_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

@@ -38,33 +38,39 @@ namespace blink {
 class HTMLSelectElement;
 
 class LayoutListBox final : public LayoutBlockFlow {
-public:
-    explicit LayoutListBox(Element*);
-    ~LayoutListBox() override;
+ public:
+  explicit LayoutListBox(Element*);
+  ~LayoutListBox() override;
 
-    unsigned size() const;
+  unsigned size() const;
 
-    // Unlike scrollRectToVisible this will not scroll parent boxes.
-    void scrollToRect(const LayoutRect&);
+  // Unlike scrollRectToVisible this will not scroll parent boxes.
+  void ScrollToRect(const LayoutRect&);
 
-    const char* name() const override { return "LayoutListBox"; }
+  const char* GetName() const override { return "LayoutListBox"; }
 
-private:
-    HTMLSelectElement* selectElement() const;
+ private:
+  HTMLSelectElement* SelectElement() const;
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectListBox || LayoutBlockFlow::isOfType(type); }
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectListBox || LayoutBlockFlow::IsOfType(type);
+  }
 
-    void computeLogicalHeight(LayoutUnit logicalHeight, LayoutUnit logicalTop, LogicalExtentComputedValues&) const override;
-    void computeIntrinsicLogicalWidths(LayoutUnit& minLogicalWidth, LayoutUnit& maxLogicalWidth) const override;
+  void ComputeLogicalHeight(LayoutUnit logical_height,
+                            LayoutUnit logical_top,
+                            LogicalExtentComputedValues&) const override;
+  void ComputeIntrinsicLogicalWidths(
+      LayoutUnit& min_logical_width,
+      LayoutUnit& max_logical_width) const override;
 
-    void stopAutoscroll() override;
+  void StopAutoscroll() override;
 
-    LayoutUnit defaultItemHeight() const;
-    LayoutUnit itemHeight() const;
+  LayoutUnit DefaultItemHeight() const;
+  LayoutUnit ItemHeight() const;
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutListBox, isListBox());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutListBox, IsListBox());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutListBox_h
+#endif  // LayoutListBox_h

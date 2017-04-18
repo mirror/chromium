@@ -29,7 +29,7 @@
 
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -43,25 +43,29 @@ namespace XPath {
 class Expression;
 }
 
-class XPathExpression : public GarbageCollected<XPathExpression>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static XPathExpression* create()
-    {
-        return new XPathExpression;
-    }
+class XPathExpression : public GarbageCollected<XPathExpression>,
+                        public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    static XPathExpression* createExpression(const String& expression, XPathNSResolver*, ExceptionState&);
-    XPathResult* evaluate(Node* contextNode, unsigned short type, const ScriptValue&, ExceptionState&);
+ public:
+  static XPathExpression* Create() { return new XPathExpression; }
 
-    DECLARE_TRACE();
+  static XPathExpression* CreateExpression(const String& expression,
+                                           XPathNSResolver*,
+                                           ExceptionState&);
+  XPathResult* evaluate(Node* context_node,
+                        unsigned short type,
+                        const ScriptValue&,
+                        ExceptionState&);
 
-private:
-    XPathExpression();
+  DECLARE_TRACE();
 
-    Member<XPath::Expression> m_topExpression;
+ private:
+  XPathExpression();
+
+  Member<XPath::Expression> top_expression_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XPathExpression_h
+#endif  // XPathExpression_h

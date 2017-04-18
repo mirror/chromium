@@ -36,43 +36,39 @@
 namespace blink {
 
 class AXObjectCacheImpl;
-class LayoutTableSection;
 
 class MODULES_EXPORT AXTableColumn final : public AXMockObject {
-    WTF_MAKE_NONCOPYABLE(AXTableColumn);
+  WTF_MAKE_NONCOPYABLE(AXTableColumn);
 
-private:
-    explicit AXTableColumn(AXObjectCacheImpl&);
+ private:
+  explicit AXTableColumn(AXObjectCacheImpl&);
 
-public:
-    static AXTableColumn* create(AXObjectCacheImpl&);
-    ~AXTableColumn() override;
+ public:
+  static AXTableColumn* Create(AXObjectCacheImpl&);
+  ~AXTableColumn() override;
 
-    // retrieves the topmost "column" header (th)
-    AXObject* headerObject();
-    // retrieves the "column" headers (th, scope) from top to bottom
-    void headerObjectsForColumn(AXObjectVector&);
+  // retrieves the topmost "column" header (th)
+  AXObject* HeaderObject();
+  // retrieves the "column" headers (th, scope) from top to bottom
+  void HeaderObjectsForColumn(AXObjectVector&);
 
-    AccessibilityRole roleValue() const override { return ColumnRole; }
+  AccessibilityRole RoleValue() const override { return kColumnRole; }
 
-    void setColumnIndex(int columnIndex) { m_columnIndex = columnIndex; }
-    int columnIndex() const { return m_columnIndex; }
+  void SetColumnIndex(int column_index) { column_index_ = column_index; }
+  int ColumnIndex() const { return column_index_; }
 
-    void addChildren() override;
-    void setParent(AXObject*) override;
+  void AddChildren() override;
+  void SetParent(AXObject*) override;
 
-    LayoutRect elementRect() const override;
+ private:
+  unsigned column_index_;
 
-private:
-    unsigned m_columnIndex;
-    LayoutRect m_columnRect;
-
-    bool isTableCol() const override { return true; }
-    bool computeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
+  bool IsTableCol() const override { return true; }
+  bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
 };
 
-DEFINE_AX_OBJECT_TYPE_CASTS(AXTableColumn, isTableCol());
+DEFINE_AX_OBJECT_TYPE_CASTS(AXTableColumn, IsTableCol());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AXTableColumn_h
+#endif  // AXTableColumn_h

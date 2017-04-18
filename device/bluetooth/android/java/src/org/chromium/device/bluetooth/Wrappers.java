@@ -24,6 +24,7 @@ import android.os.Build;
 import android.os.ParcelUuid;
 
 import org.chromium.base.Log;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
@@ -41,11 +42,57 @@ import java.util.UUID;
  * pass through to the Android object and instead provide fake implementations.
  */
 @JNINamespace("device")
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+@TargetApi(Build.VERSION_CODES.M)
 class Wrappers {
     private static final String TAG = "Bluetooth";
 
     public static final int DEVICE_CLASS_UNSPECIFIED = 0x1F00;
+
+    /**
+     * Wraps base.ThreadUtils.
+     * base.ThreadUtils has a set of static method to interact with the
+     * UI Thread. To be able to provide a set of test methods, ThreadUtilsWrapper
+     * uses the factory pattern.
+     */
+    static class ThreadUtilsWrapper {
+        private static Factory sFactory;
+
+        private static ThreadUtilsWrapper sInstance;
+
+        protected ThreadUtilsWrapper() {}
+
+        /**
+         * Returns the singleton instance of ThreadUtilsWrapper, creating it if needed.
+         */
+        public static ThreadUtilsWrapper getInstance() {
+            if (sInstance == null) {
+                if (sFactory == null) {
+                    sInstance = new ThreadUtilsWrapper();
+                } else {
+                    sInstance = sFactory.create();
+                }
+            }
+            return sInstance;
+        }
+
+        public void runOnUiThread(Runnable r) {
+            ThreadUtils.runOnUiThread(r);
+        }
+
+        /**
+         * Instantiate this to explain how to create a ThreadUtilsWrapper instance in
+         * ThreadUtilsWrapper.getInstance().
+         */
+        public interface Factory { public ThreadUtilsWrapper create(); }
+
+        /**
+         * Call this to use a different subclass of ThreadUtilsWrapper throughout the program.
+         */
+        public static void setFactory(Factory factory) {
+            sFactory = factory;
+            sInstance = null;
+        }
+    }
 
     /**
      * Wraps android.bluetooth.BluetoothAdapter.
@@ -63,7 +110,7 @@ class Wrappers {
          */
         @CalledByNative("BluetoothAdapterWrapper")
         public static BluetoothAdapterWrapper createWithDefaultAdapter(Context context) {
-            final boolean hasMinAPI = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+            final boolean hasMinAPI = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
             if (!hasMinAPI) {
                 Log.i(TAG, "BluetoothAdapterWrapper.create failed: SDK version (%d) too low.",
                         Build.VERSION.SDK_INT);
@@ -237,8 +284,16 @@ class Wrappers {
             return new BluetoothDeviceWrapper(mScanResult.getDevice());
         }
 
+        public int getRssi() {
+            return mScanResult.getRssi();
+        }
+
         public List<ParcelUuid> getScanRecord_getServiceUuids() {
             return mScanResult.getScanRecord().getServiceUuids();
+        }
+
+        public int getScanRecord_getTxPowerLevel() {
+            return mScanResult.getScanRecord().getTxPowerLevel();
         }
     }
 
@@ -260,11 +315,11 @@ class Wrappers {
                     new HashMap<BluetoothGattDescriptor, BluetoothGattDescriptorWrapper>();
         }
 
-        public BluetoothGattWrapper connectGatt(
-                Context context, boolean autoConnect, BluetoothGattCallbackWrapper callback) {
+        public BluetoothGattWrapper connectGatt(Context context, boolean autoConnect,
+                BluetoothGattCallbackWrapper callback, int transport) {
             return new BluetoothGattWrapper(
                     mDevice.connectGatt(context, autoConnect,
-                            new ForwardBluetoothGattCallbackToWrapper(callback, this)),
+                            new ForwardBluetoothGattCallbackToWrapper(callback, this), transport),
                     this);
         }
 

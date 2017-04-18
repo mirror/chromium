@@ -7,15 +7,18 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "ash/link_handler_model_factory.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
-#include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "components/arc/instance_holder.h"
+#include "components/arc/intent_helper/activity_icon_loader.h"
+#include "components/arc/intent_helper/arc_intent_helper_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace ash {
@@ -26,9 +29,9 @@ class LinkHandlerModel;
 
 namespace arc {
 
-class ActivityIconLoader;
+class ArcBridgeService;
+class IntentFilter;
 class LocalActivityResolver;
-class SetWallpaperDelegate;
 
 // Receives intents from ARC.
 class ArcIntentHelperBridge
@@ -39,23 +42,35 @@ class ArcIntentHelperBridge
  public:
   ArcIntentHelperBridge(
       ArcBridgeService* bridge_service,
-      const scoped_refptr<ActivityIconLoader>& icon_loader,
-      std::unique_ptr<SetWallpaperDelegate> set_wallpaper_delegate,
       const scoped_refptr<LocalActivityResolver>& activity_resolver);
   ~ArcIntentHelperBridge() override;
+
+  void AddObserver(ArcIntentHelperObserver* observer);
+  void RemoveObserver(ArcIntentHelperObserver* observer);
 
   // InstanceHolder<mojom::IntentHelperInstance>::Observer
   void OnInstanceReady() override;
   void OnInstanceClosed() override;
 
-  // arc::mojom::IntentHelperHost
-  void OnIconInvalidated(const mojo::String& package_name) override;
+  // mojom::IntentHelperHost
+  void OnIconInvalidated(const std::string& package_name) override;
   void OnIntentFiltersUpdated(
-      mojo::Array<mojom::IntentFilterPtr> intent_filters) override;
+      std::vector<IntentFilter> intent_filters) override;
   void OnOpenDownloads() override;
-  void OnOpenUrl(const mojo::String& url) override;
+  void OnOpenUrl(const std::string& url) override;
   void OpenWallpaperPicker() override;
-  void SetWallpaper(mojo::Array<uint8_t> jpeg_data) override;
+  void SetWallpaperDeprecated(const std::vector<uint8_t>& jpeg_data) override;
+
+  // Retrieves icons for the |activities| and calls |callback|.
+  // See ActivityIconLoader::GetActivityIcons() for more details.
+  using ActivityName = internal::ActivityIconLoader::ActivityName;
+  // A part of OnIconsReadyCallback signature.
+  using ActivityToIconsMap = internal::ActivityIconLoader::ActivityToIconsMap;
+  using OnIconsReadyCallback =
+      internal::ActivityIconLoader::OnIconsReadyCallback;
+  using GetResult = internal::ActivityIconLoader::GetResult;
+  GetResult GetActivityIcons(const std::vector<ActivityName>& activities,
+                             const OnIconsReadyCallback& callback);
 
   // ash::LinkHandlerModelFactory
   std::unique_ptr<ash::LinkHandlerModel> CreateModel(const GURL& url) override;
@@ -65,16 +80,22 @@ class ArcIntentHelperBridge
 
   // Filters out handlers that belong to the intent_helper apk and returns
   // a new array.
-  static mojo::Array<mojom::UrlHandlerInfoPtr> FilterOutIntentHelper(
-      mojo::Array<mojom::UrlHandlerInfoPtr> handlers);
+  static std::vector<mojom::IntentHandlerInfoPtr> FilterOutIntentHelper(
+      std::vector<mojom::IntentHandlerInfoPtr> handlers);
+
+  // For supporting ArcServiceManager::GetService<T>().
+  static const char kArcServiceName[];
+
+  static const char kArcIntentHelperPackageName[];
 
  private:
   mojo::Binding<mojom::IntentHelperHost> binding_;
-  scoped_refptr<ActivityIconLoader> icon_loader_;
-  std::unique_ptr<SetWallpaperDelegate> set_wallpaper_delegate_;
+  internal::ActivityIconLoader icon_loader_;
   scoped_refptr<LocalActivityResolver> activity_resolver_;
 
   base::ThreadChecker thread_checker_;
+
+  base::ObserverList<ArcIntentHelperObserver> observer_list_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcIntentHelperBridge);
 };

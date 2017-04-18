@@ -6,52 +6,60 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSPrimitiveValue.h"
-#include "wtf/MathExtras.h"
+#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 
-CSSAngleValue* CSSAngleValue::create(double value, const String& unit, ExceptionState& exceptionState)
-{
-    CSSPrimitiveValue::UnitType primitiveUnit = CSSPrimitiveValue::stringToUnitType(unit);
-    DCHECK(CSSPrimitiveValue::isAngle(primitiveUnit));
-    return new CSSAngleValue(value, primitiveUnit);
+CSSAngleValue* CSSAngleValue::Create(double value,
+                                     CSSPrimitiveValue::UnitType unit) {
+  DCHECK(CSSPrimitiveValue::IsAngle(unit));
+  return new CSSAngleValue(value, unit);
 }
 
-double CSSAngleValue::degrees() const
-{
-    switch (m_unit) {
-    case CSSPrimitiveValue::UnitType::Degrees:
-        return m_value;
-    case CSSPrimitiveValue::UnitType::Radians:
-        return rad2deg(m_value);
-    case CSSPrimitiveValue::UnitType::Gradians:
-        return grad2deg(m_value);
-    case CSSPrimitiveValue::UnitType::Turns:
-        return turn2deg(m_value);
+CSSAngleValue* CSSAngleValue::Create(double value, const String& unit) {
+  CSSPrimitiveValue::UnitType primitive_unit =
+      CSSPrimitiveValue::StringToUnitType(unit);
+  return Create(value, primitive_unit);
+}
+
+CSSAngleValue* CSSAngleValue::FromCSSValue(const CSSPrimitiveValue& value) {
+  DCHECK(value.IsAngle());
+  if (value.IsCalculated())
+    return nullptr;
+  return new CSSAngleValue(value.GetDoubleValue(),
+                           value.TypeWithCalcResolved());
+}
+
+double CSSAngleValue::degrees() const {
+  switch (unit_) {
+    case CSSPrimitiveValue::UnitType::kDegrees:
+      return value_;
+    case CSSPrimitiveValue::UnitType::kRadians:
+      return rad2deg(value_);
+    case CSSPrimitiveValue::UnitType::kGradians:
+      return grad2deg(value_);
+    case CSSPrimitiveValue::UnitType::kTurns:
+      return turn2deg(value_);
     default:
-        NOTREACHED();
-        return 0;
-    }
+      NOTREACHED();
+      return 0;
+  }
 }
 
-double CSSAngleValue::radians() const
-{
-    return deg2rad(degrees());
+double CSSAngleValue::radians() const {
+  return deg2rad(degrees());
 }
 
-double CSSAngleValue::gradians() const
-{
-    return deg2grad(degrees());
+double CSSAngleValue::gradians() const {
+  return deg2grad(degrees());
 }
 
-double CSSAngleValue::turns() const
-{
-    return deg2turn(degrees());
+double CSSAngleValue::turns() const {
+  return deg2turn(degrees());
 }
 
-CSSValue* CSSAngleValue::toCSSValue() const
-{
-    return CSSPrimitiveValue::create(m_value, m_unit);
+CSSValue* CSSAngleValue::ToCSSValue() const {
+  return CSSPrimitiveValue::Create(value_, unit_);
 }
 
-} // namespace blink
+}  // namespace blink

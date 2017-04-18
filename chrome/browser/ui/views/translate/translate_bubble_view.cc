@@ -12,33 +12,35 @@
 
 #include "base/i18n/string_compare.h"
 #include "base/memory/singleton.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
 #include "chrome/browser/translate/translate_service.h"
+#include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/translate/translate_bubble_model_impl.h"
 #include "chrome/browser/ui/translate/translate_bubble_view_state_transition.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/translate/core/browser/translate_ui_delegate.h"
 #include "content/public/browser/web_contents.h"
-#include "grit/components_strings.h"
-#include "grit/ui_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/combobox_model.h"
 #include "ui/base/models/simple_combobox_model.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/blue_button.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/label.h"
@@ -51,36 +53,13 @@
 
 namespace {
 
-views::LabelButton* CreateBlueButton(views::ButtonListener* listener,
-                                     const base::string16& label,
-                                     int id) {
-  views::LabelButton* button = new views::BlueButton(listener, label);
-  button->set_id(id);
-  return button;
-}
-
-views::LabelButton* CreateLabelButton(views::ButtonListener* listener,
-                                      const base::string16& label,
-                                      int id) {
-  views::LabelButton* button = new views::LabelButton(listener, label);
-  button->set_id(id);
-  button->SetStyle(views::Button::STYLE_BUTTON);
-  return button;
-}
-
-views::Link* CreateLink(views::LinkListener* listener,
-                        const base::string16& text,
-                        int id) {
-  views::Link* link = new views::Link(text);
-  link->set_listener(listener);
-  link->set_id(id);
-  return link;
-}
-
 views::Link* CreateLink(views::LinkListener* listener,
                         int resource_id,
                         int id) {
-  return CreateLink(listener, l10n_util::GetStringUTF16(resource_id), id);
+  views::Link* link = new views::Link(l10n_util::GetStringUTF16(resource_id));
+  link->set_listener(listener);
+  link->set_id(id);
+  return link;
 }
 
 // TODO(ftang) Restore icons in CreateViewAfterTranslate and CreateViewError
@@ -210,6 +189,10 @@ void TranslateBubbleView::ButtonPressed(views::Button* sender,
   HandleButtonPressed(static_cast<ButtonID>(sender->id()));
 }
 
+views::View* TranslateBubbleView::GetInitiallyFocusedView() {
+  return GetCurrentView()->GetNextFocusableView();
+}
+
 bool TranslateBubbleView::ShouldShowCloseButton() const {
   return Use2016Q2UI();
 }
@@ -298,11 +281,10 @@ void TranslateBubbleView::OnMenuButtonClicked(views::MenuButton* source,
         DenialMenuItem::NEVER_TRANSLATE_SITE,
         IDS_TRANSLATE_BUBBLE_NEVER_TRANSLATE_SITE);
 
-    denial_menu_runner_.reset(
-        new views::MenuRunner(denial_menu_model_.get(), 0));
+    denial_menu_runner_.reset(new views::MenuRunner(denial_menu_model_.get(),
+                                                    views::MenuRunner::ASYNC));
   }
   gfx::Rect screen_bounds = source->GetBoundsInScreen();
-  screen_bounds.Inset(source->GetInsets());
   denial_menu_runner_->RunMenuAt(source->GetWidget(), source, screen_bounds,
                                  views::MENU_ANCHOR_TOPRIGHT,
                                  ui::MENU_SOURCE_MOUSE);
@@ -384,6 +366,7 @@ TranslateBubbleView::TranslateBubbleView(
   translate_bubble_view_ = this;
   if (web_contents)  // web_contents can be null in unit_tests.
     mouse_handler_.reset(new WebContentMouseHandler(this, web_contents));
+  RecordDialogCreation(chrome::DialogIdentifier::TRANSLATE);
 }
 
 views::View* TranslateBubbleView::GetCurrentView() const {
@@ -465,9 +448,9 @@ void TranslateBubbleView::HandleLinkClicked(
     }
     case LINK_ID_LANGUAGE_SETTINGS: {
       GURL url = chrome::GetSettingsUrl(chrome::kLanguageOptionsSubPage);
-      web_contents()->OpenURL(
-          content::OpenURLParams(url, content::Referrer(), NEW_FOREGROUND_TAB,
-                                 ui::PAGE_TRANSITION_LINK, false));
+      web_contents()->OpenURL(content::OpenURLParams(
+          url, content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+          ui::PAGE_TRANSITION_LINK, false));
       translate::ReportUiAction(translate::SETTINGS_LINK_CLICKED);
       break;
     }
@@ -629,12 +612,11 @@ views::View* TranslateBubbleView::CreateViewBeforeTranslate() {
   layout->StartRow(0, COLUMN_SET_ID_CONTENT);
   views::LabelButton* accept_button =
       Use2016Q2UI()
-          ? CreateBlueButton(
-                this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_ACCEPT),
-                BUTTON_ID_TRANSLATE)
-          : CreateLabelButton(
-                this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_ACCEPT),
-                BUTTON_ID_TRANSLATE);
+          ? views::MdTextButton::CreateSecondaryUiBlueButton(
+                this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_ACCEPT))
+          : views::MdTextButton::CreateSecondaryUiButton(
+                this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_ACCEPT));
+  accept_button->set_id(BUTTON_ID_TRANSLATE);
   layout->AddView(accept_button);
   accept_button->SetIsDefault(true);
   if (Use2016Q2UI()) {
@@ -705,9 +687,10 @@ views::View* TranslateBubbleView::CreateViewTranslating() {
   layout->AddPaddingRow(0, views::kUnrelatedControlVerticalSpacing);
 
   layout->StartRow(0, COLUMN_SET_ID_CONTENT);
-  views::LabelButton* revert_button = CreateLabelButton(
-      this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_REVERT),
-      BUTTON_ID_SHOW_ORIGINAL);
+  views::LabelButton* revert_button =
+      views::MdTextButton::CreateSecondaryUiButton(
+          this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_REVERT));
+  revert_button->set_id(BUTTON_ID_SHOW_ORIGINAL);
   revert_button->SetEnabled(false);
   layout->AddView(revert_button);
 
@@ -753,9 +736,10 @@ views::View* TranslateBubbleView::CreateViewAfterTranslate() {
   layout->AddPaddingRow(0, views::kUnrelatedControlVerticalSpacing);
 
   layout->StartRow(0, COLUMN_SET_ID_CONTENT);
-  layout->AddView(CreateLabelButton(
-      this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_REVERT),
-      BUTTON_ID_SHOW_ORIGINAL));
+  views::LabelButton* button = views::MdTextButton::CreateSecondaryUiButton(
+      this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_REVERT));
+  button->set_id(BUTTON_ID_SHOW_ORIGINAL);
+  layout->AddView(button);
 
   return view;
 }
@@ -799,9 +783,10 @@ views::View* TranslateBubbleView::CreateViewError() {
   layout->AddPaddingRow(0, views::kUnrelatedControlVerticalSpacing);
 
   layout->StartRow(0, COLUMN_SET_ID_CONTENT);
-  layout->AddView(CreateLabelButton(
-      this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_TRY_AGAIN),
-      BUTTON_ID_TRY_AGAIN));
+  views::LabelButton* button = views::MdTextButton::CreateSecondaryUiButton(
+      this, l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_TRY_AGAIN));
+  button->set_id(BUTTON_ID_TRY_AGAIN);
+  layout->AddView(button);
 
   return view;
 }
@@ -889,17 +874,20 @@ views::View* TranslateBubbleView::CreateViewAdvanced() {
   layout->AddPaddingRow(0, views::kUnrelatedControlVerticalSpacing);
 
   layout->StartRow(0, COLUMN_SET_ID_BUTTONS);
+  // TODO(estade): this should use CreateExtraView().
   layout->AddView(CreateLink(this, IDS_TRANSLATE_BUBBLE_LANGUAGE_SETTINGS,
                              LINK_ID_LANGUAGE_SETTINGS));
   advanced_done_button_ =
-      Use2016Q2UI()
-          ? CreateBlueButton(this, l10n_util::GetStringUTF16(IDS_DONE),
-                             BUTTON_ID_DONE)
-          : CreateLabelButton(this, l10n_util::GetStringUTF16(IDS_DONE),
-                              BUTTON_ID_DONE);
+      Use2016Q2UI() ? views::MdTextButton::CreateSecondaryUiBlueButton(
+                          this, l10n_util::GetStringUTF16(IDS_DONE))
+                    : views::MdTextButton::CreateSecondaryUiButton(
+                          this, l10n_util::GetStringUTF16(IDS_DONE));
+  advanced_done_button_->set_id(BUTTON_ID_DONE);
   advanced_done_button_->SetIsDefault(true);
-  advanced_cancel_button_ = CreateLabelButton(
-      this, l10n_util::GetStringUTF16(IDS_CANCEL), BUTTON_ID_CANCEL);
+  advanced_cancel_button_ = views::MdTextButton::CreateSecondaryUiButton(
+      this, l10n_util::GetStringUTF16(IDS_CANCEL));
+  advanced_cancel_button_->set_id(BUTTON_ID_CANCEL);
+  // TODO(estade): this should be using GetDialogButtons().
   layout->AddView(advanced_done_button_);
   layout->AddView(advanced_cancel_button_);
 

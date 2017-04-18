@@ -41,20 +41,23 @@ class MockBrowserTestIndexedDBClassFactory : public IndexedDBClassFactory {
   MockBrowserTestIndexedDBClassFactory();
   ~MockBrowserTestIndexedDBClassFactory() override;
 
-  IndexedDBDatabase* CreateIndexedDBDatabase(
+  scoped_refptr<IndexedDBDatabase> CreateIndexedDBDatabase(
       const base::string16& name,
-      IndexedDBBackingStore* backing_store,
-      IndexedDBFactory* factory,
+      scoped_refptr<IndexedDBBackingStore> backing_store,
+      scoped_refptr<IndexedDBFactory> factory,
       const IndexedDBDatabase::Identifier& unique_identifier) override;
-  IndexedDBTransaction* CreateIndexedDBTransaction(
+  std::unique_ptr<IndexedDBTransaction> CreateIndexedDBTransaction(
       int64_t id,
-      base::WeakPtr<IndexedDBConnection> connection,
+      IndexedDBConnection* connection,
       const std::set<int64_t>& scope,
       blink::WebIDBTransactionMode mode,
       IndexedDBBackingStore::Transaction* backing_store_transaction) override;
-  LevelDBTransaction* CreateLevelDBTransaction(LevelDBDatabase* db) override;
-  LevelDBIteratorImpl* CreateIteratorImpl(
-      std::unique_ptr<leveldb::Iterator> iterator) override;
+  scoped_refptr<LevelDBTransaction> CreateLevelDBTransaction(
+      LevelDBDatabase* db) override;
+  std::unique_ptr<LevelDBIteratorImpl> CreateIteratorImpl(
+      std::unique_ptr<leveldb::Iterator> iterator,
+      LevelDBDatabase* db,
+      const leveldb::Snapshot* snapshot) override;
 
   void FailOperation(FailClass failure_class,
                      FailMethod failure_method,

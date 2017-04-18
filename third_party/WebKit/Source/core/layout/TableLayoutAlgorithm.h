@@ -22,40 +22,40 @@
 #define TableLayoutAlgorithm_h
 
 #include "platform/LayoutUnit.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class LayoutTable;
 
 class TableLayoutAlgorithm {
-    WTF_MAKE_NONCOPYABLE(TableLayoutAlgorithm); USING_FAST_MALLOC(TableLayoutAlgorithm);
-public:
-    explicit TableLayoutAlgorithm(LayoutTable* table)
-        : m_table(table)
-    {
-    }
+  WTF_MAKE_NONCOPYABLE(TableLayoutAlgorithm);
+  USING_FAST_MALLOC(TableLayoutAlgorithm);
 
-    virtual ~TableLayoutAlgorithm() { }
+ public:
+  explicit TableLayoutAlgorithm(LayoutTable* table) : table_(table) {}
 
-    virtual void computeIntrinsicLogicalWidths(LayoutUnit& minWidth, LayoutUnit& maxWidth) = 0;
-    virtual LayoutUnit scaledWidthFromPercentColumns()
-    {
-        return LayoutUnit();
-    }
-    virtual void applyPreferredLogicalWidthQuirks(LayoutUnit& minWidth, LayoutUnit& maxWidth) const = 0;
-    virtual void layout() = 0;
-    virtual void willChangeTableLayout() = 0;
+  virtual ~TableLayoutAlgorithm() {}
 
-protected:
-    // FIXME: Once we enable SATURATED_LAYOUT_ARITHMETHIC, this should just be LayoutUnit::nearlyMax().
-    // Until then though, using nearlyMax causes overflow in some tests, so we just pick a large number.
-    const static int tableMaxWidth = 1000000;
+  virtual void ComputeIntrinsicLogicalWidths(LayoutUnit& min_width,
+                                             LayoutUnit& max_width) = 0;
+  virtual LayoutUnit ScaledWidthFromPercentColumns() { return LayoutUnit(); }
+  virtual void ApplyPreferredLogicalWidthQuirks(
+      LayoutUnit& min_width,
+      LayoutUnit& max_width) const = 0;
+  virtual void UpdateLayout() = 0;
+  virtual void WillChangeTableLayout() = 0;
 
-    LayoutTable* m_table;
+ protected:
+  // FIXME: Once we enable SATURATED_LAYOUT_ARITHMETHIC, this should just be
+  // LayoutUnit::nearlyMax(). Until then though, using nearlyMax causes
+  // overflow in some tests, so we just pick a large number.
+  const static int kTableMaxWidth = 1000000;
+
+  LayoutTable* table_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TableLayoutAlgorithm_h
+#endif  // TableLayoutAlgorithm_h

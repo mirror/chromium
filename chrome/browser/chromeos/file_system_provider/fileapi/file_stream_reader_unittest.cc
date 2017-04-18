@@ -25,13 +25,13 @@
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_file_system_context.h"
 #include "extensions/browser/extension_registry.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "storage/browser/fileapi/async_file_util.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_url.h"
+#include "storage/browser/test/test_file_system_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace chromeos {
@@ -132,7 +132,7 @@ TEST_F(FileSystemProviderFileStreamReader, Read_AllAtOnce) {
   FileStreamReader reader(NULL, file_url_, initial_offset,
                           *fake_file_->metadata->modification_time);
   scoped_refptr<net::IOBuffer> io_buffer(new net::IOBuffer(
-      base::CheckedNumeric<size_t>(*fake_file_->metadata->size).ValueOrDie()));
+      base::checked_cast<size_t>(*fake_file_->metadata->size)));
 
   const int result =
       reader.Read(io_buffer.get(), *fake_file_->metadata->size,
@@ -155,7 +155,7 @@ TEST_F(FileSystemProviderFileStreamReader, Read_WrongFile) {
   FileStreamReader reader(NULL, wrong_file_url_, initial_offset,
                           *fake_file_->metadata->modification_time);
   scoped_refptr<net::IOBuffer> io_buffer(new net::IOBuffer(
-      base::CheckedNumeric<size_t>(*fake_file_->metadata->size).ValueOrDie()));
+      base::checked_cast<size_t>(*fake_file_->metadata->size)));
 
   const int result =
       reader.Read(io_buffer.get(), *fake_file_->metadata->size,
@@ -250,7 +250,7 @@ TEST_F(FileSystemProviderFileStreamReader, Read_ModifiedFile) {
   FileStreamReader reader(NULL, file_url_, initial_offset, base::Time::Max());
 
   scoped_refptr<net::IOBuffer> io_buffer(new net::IOBuffer(
-      base::CheckedNumeric<size_t>(*fake_file_->metadata->size).ValueOrDie()));
+      base::checked_cast<size_t>(*fake_file_->metadata->size)));
   const int result =
       reader.Read(io_buffer.get(), *fake_file_->metadata->size,
                   base::Bind(&EventLogger::OnRead, logger.GetWeakPtr()));
@@ -269,7 +269,7 @@ TEST_F(FileSystemProviderFileStreamReader, Read_ExpectedModificationTimeNull) {
   FileStreamReader reader(NULL, file_url_, initial_offset, base::Time());
 
   scoped_refptr<net::IOBuffer> io_buffer(new net::IOBuffer(
-      base::CheckedNumeric<size_t>(*fake_file_->metadata->size).ValueOrDie()));
+      base::checked_cast<size_t>(*fake_file_->metadata->size)));
   const int result =
       reader.Read(io_buffer.get(), *fake_file_->metadata->size,
                   base::Bind(&EventLogger::OnRead, logger.GetWeakPtr()));

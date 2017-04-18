@@ -31,59 +31,63 @@
 namespace blink {
 
 enum VTTNodeType {
-    VTTNodeTypeNone = 0,
-    VTTNodeTypeClass,
-    VTTNodeTypeItalic,
-    VTTNodeTypeLanguage,
-    VTTNodeTypeBold,
-    VTTNodeTypeUnderline,
-    VTTNodeTypeRuby,
-    VTTNodeTypeRubyText,
-    VTTNodeTypeVoice
+  kVTTNodeTypeNone = 0,
+  kVTTNodeTypeClass,
+  kVTTNodeTypeItalic,
+  kVTTNodeTypeLanguage,
+  kVTTNodeTypeBold,
+  kVTTNodeTypeUnderline,
+  kVTTNodeTypeRuby,
+  kVTTNodeTypeRubyText,
+  kVTTNodeTypeVoice
 };
 
 class VTTElement final : public Element {
-public:
-    static VTTElement* create(const VTTNodeType, Document*);
-    static VTTElement* create(const QualifiedName&, Document*);
-    HTMLElement* createEquivalentHTMLElement(Document&);
+ public:
+  static VTTElement* Create(const VTTNodeType, Document*);
+  static VTTElement* Create(const QualifiedName&, Document*);
+  HTMLElement* CreateEquivalentHTMLElement(Document&);
 
-    Element* cloneElementWithoutAttributesAndChildren() override;
+  Element* CloneElementWithoutAttributesAndChildren() override;
 
-    void setVTTNodeType(VTTNodeType type) { m_webVTTNodeType = static_cast<unsigned>(type); }
-    VTTNodeType webVTTNodeType() const { return static_cast<VTTNodeType>(m_webVTTNodeType); }
+  void SetVTTNodeType(VTTNodeType type) {
+    web_vtt_node_type_ = static_cast<unsigned>(type);
+  }
+  VTTNodeType WebVTTNodeType() const {
+    return static_cast<VTTNodeType>(web_vtt_node_type_);
+  }
 
-    bool isPastNode() const { return m_isPastNode; }
-    void setIsPastNode(bool);
+  bool IsPastNode() const { return is_past_node_; }
+  void SetIsPastNode(bool);
 
-    bool isVTTElement() const override { return true; }
-    AtomicString language() const { return m_language; }
-    void setLanguage(AtomicString value) { m_language = value; }
+  bool IsVTTElement() const override { return true; }
+  AtomicString Language() const { return language_; }
+  void SetLanguage(AtomicString value) { language_ = value; }
 
-    static const QualifiedName& voiceAttributeName()
-    {
-        DEFINE_STATIC_LOCAL(QualifiedName, voiceAttr, (nullAtom, "voice", nullAtom));
-        return voiceAttr;
-    }
+  static const QualifiedName& VoiceAttributeName() {
+    DEFINE_STATIC_LOCAL(QualifiedName, voice_attr,
+                        (g_null_atom, "voice", g_null_atom));
+    return voice_attr;
+  }
 
-    static const QualifiedName& langAttributeName()
-    {
-        DEFINE_STATIC_LOCAL(QualifiedName, voiceAttr, (nullAtom, "lang", nullAtom));
-        return voiceAttr;
-    }
+  static const QualifiedName& LangAttributeName() {
+    DEFINE_STATIC_LOCAL(QualifiedName, voice_attr,
+                        (g_null_atom, "lang", g_null_atom));
+    return voice_attr;
+  }
 
-private:
-    VTTElement(const QualifiedName&, Document*);
-    VTTElement(VTTNodeType, Document*);
+ private:
+  VTTElement(const QualifiedName&, Document*);
+  VTTElement(VTTNodeType, Document*);
 
-    unsigned m_isPastNode : 1;
-    unsigned m_webVTTNodeType : 4;
+  unsigned is_past_node_ : 1;
+  unsigned web_vtt_node_type_ : 4;
 
-    AtomicString m_language;
+  AtomicString language_;
 };
 
-DEFINE_ELEMENT_TYPE_CASTS(VTTElement, isVTTElement());
+DEFINE_ELEMENT_TYPE_CASTS(VTTElement, IsVTTElement());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // VTTElement_h
+#endif  // VTTElement_h

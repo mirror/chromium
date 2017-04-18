@@ -92,14 +92,13 @@ class MockView : public views::View {
 
 class MockImmersiveModeController : public ImmersiveModeController {
  public:
-  MockImmersiveModeController() {}
+  MockImmersiveModeController() : ImmersiveModeController(Type::STUB) {}
   ~MockImmersiveModeController() override {}
 
   // ImmersiveModeController overrides:
   void Init(BrowserView* browser_view) override {}
   void SetEnabled(bool enabled) override {}
   bool IsEnabled() const override { return false; }
-  bool ShouldHideTabIndicators() const override { return false; }
   bool ShouldHideTopViews() const override { return false; }
   bool IsRevealed() const override { return false; }
   int GetTopContainerVerticalOffset(
@@ -112,7 +111,7 @@ class MockImmersiveModeController : public ImmersiveModeController {
   }
   void OnFindBarVisibleBoundsChanged(
       const gfx::Rect& new_visible_bounds) override {}
-  void SetupForTest() override {}
+  views::Widget* GetRevealWidget() override { return nullptr; }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockImmersiveModeController);

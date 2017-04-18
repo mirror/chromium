@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 #include "base/mac/scoped_cftyperef.h"
-#import "base/memory/ref_counted.h"
+#include "base/memory/ref_counted.h"
 #include "ios/web/public/security_style.h"
 #include "net/cert/cert_status_flags.h"
 
@@ -88,10 +88,6 @@ typedef void (^StatusQueryHandler)(web::SecurityStyle, net::CertStatus);
 - (void)allowCert:(scoped_refptr<net::X509Certificate>)cert
           forHost:(NSString*)host
            status:(net::CertStatus)status;
-
-// Invalidates CRWCertVerificationController. Must always be called before
-// object's deallocation.
-- (void)shutDown;
 
 @end
 

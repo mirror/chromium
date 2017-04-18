@@ -26,13 +26,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #ifndef LineBoxList_h
 #define LineBoxList_h
 
 #include "core/layout/api/HitTestAction.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
@@ -40,65 +39,71 @@ class CullRect;
 class HitTestLocation;
 class HitTestResult;
 class InlineFlowBox;
-class LayoutBoxModelObject;
 class LayoutPoint;
-class LayoutRect;
 class LayoutUnit;
 class LineLayoutBoxModel;
 class LineLayoutItem;
-struct PaintInfo;
 
 class LineBoxList {
-    DISALLOW_NEW();
-public:
-    LineBoxList()
-        : m_firstLineBox(nullptr)
-        , m_lastLineBox(nullptr)
-    {
-    }
+  DISALLOW_NEW();
 
-#if ENABLE(ASSERT)
-    ~LineBoxList();
+ public:
+  LineBoxList() : first_line_box_(nullptr), last_line_box_(nullptr) {}
+
+#if DCHECK_IS_ON()
+  ~LineBoxList();
 #endif
 
-    InlineFlowBox* firstLineBox() const { return m_firstLineBox; }
-    InlineFlowBox* lastLineBox() const { return m_lastLineBox; }
+  InlineFlowBox* FirstLineBox() const { return first_line_box_; }
+  InlineFlowBox* LastLineBox() const { return last_line_box_; }
 
-    void checkConsistency() const;
+  void CheckConsistency() const;
 
-    void appendLineBox(InlineFlowBox*);
+  void AppendLineBox(InlineFlowBox*);
 
-    void deleteLineBoxTree();
-    void deleteLineBoxes();
+  void DeleteLineBoxTree();
+  void DeleteLineBoxes();
 
-    void extractLineBox(InlineFlowBox*);
-    void attachLineBox(InlineFlowBox*);
-    void removeLineBox(InlineFlowBox*);
+  void ExtractLineBox(InlineFlowBox*);
+  void AttachLineBox(InlineFlowBox*);
+  void RemoveLineBox(InlineFlowBox*);
 
-    void dirtyLineBoxes();
-    void dirtyLinesFromChangedChild(LineLayoutItem parent, LineLayoutItem child, bool canDirtyAncestors);
+  void DirtyLineBoxes();
+  void DirtyLinesFromChangedChild(LineLayoutItem parent,
+                                  LineLayoutItem child,
+                                  bool can_dirty_ancestors);
 
-    bool hitTest(LineLayoutBoxModel, HitTestResult&, const HitTestLocation& locationInContainer, const LayoutPoint& accumulatedOffset, HitTestAction) const;
-    bool anyLineIntersectsRect(LineLayoutBoxModel, const CullRect&, const LayoutPoint&) const;
-    bool lineIntersectsDirtyRect(LineLayoutBoxModel, InlineFlowBox*, const CullRect&, const LayoutPoint&) const;
+  bool HitTest(LineLayoutBoxModel,
+               HitTestResult&,
+               const HitTestLocation& location_in_container,
+               const LayoutPoint& accumulated_offset,
+               HitTestAction) const;
+  bool AnyLineIntersectsRect(LineLayoutBoxModel,
+                             const CullRect&,
+                             const LayoutPoint&) const;
+  bool LineIntersectsDirtyRect(LineLayoutBoxModel,
+                               InlineFlowBox*,
+                               const CullRect&,
+                               const LayoutPoint&) const;
 
-private:
-    bool rangeIntersectsRect(LineLayoutBoxModel, LayoutUnit logicalTop, LayoutUnit logicalBottom, const CullRect&, const LayoutPoint&) const;
+ private:
+  bool RangeIntersectsRect(LineLayoutBoxModel,
+                           LayoutUnit logical_top,
+                           LayoutUnit logical_bottom,
+                           const CullRect&,
+                           const LayoutPoint&) const;
 
-    // For block flows, each box represents the root inline box for a line in the
-    // paragraph.
-    // For inline flows, each box represents a portion of that inline.
-    InlineFlowBox* m_firstLineBox;
-    InlineFlowBox* m_lastLineBox;
+  // For block flows, each box represents the root inline box for a line in the
+  // paragraph.
+  // For inline flows, each box represents a portion of that inline.
+  InlineFlowBox* first_line_box_;
+  InlineFlowBox* last_line_box_;
 };
 
-
-#if !ENABLE(ASSERT)
-inline void LineBoxList::checkConsistency() const
-{
-}
+#if !DCHECK_IS_ON()
+inline void LineBoxList::CheckConsistency() const {}
 #endif
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LineBoxList_h
+#endif  // LineBoxList_h

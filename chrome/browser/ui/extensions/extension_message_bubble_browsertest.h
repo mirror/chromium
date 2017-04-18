@@ -14,6 +14,8 @@ namespace extensions {
 class TestExtensionDir;
 }
 
+class ToolbarActionsBarBubbleViews;
+
 class ExtensionMessageBubbleBrowserTest
     : public BrowserActionsBarBrowserTest {
  protected:
@@ -24,6 +26,16 @@ class ExtensionMessageBubbleBrowserTest
 
   ExtensionMessageBubbleBrowserTest();
   ~ExtensionMessageBubbleBrowserTest() override;
+
+  // Returns the toolkit-views bubble that is currently attached to |browser|.
+  // Returns null if there is no bubble showing. Implemented in platform files.
+  static ToolbarActionsBarBubbleViews* GetViewsBubbleForBrowser(
+      Browser* browser);
+
+  // Returns the expected test anchor bounds on |browser| which may be a Cocoa
+  // browser or a Views browser. Implemented in platform files.
+  static gfx::Rect GetAnchorReferenceBoundsForBrowser(Browser* browser,
+                                                      AnchorPosition anchor);
 
   // BrowserActionsBarBrowserTest:
   void SetUpCommandLine(base::CommandLine* command_line) override;
@@ -39,7 +51,7 @@ class ExtensionMessageBubbleBrowserTest
   virtual void CheckBubbleNative(Browser* browser, AnchorPosition anchor) = 0;
 
   // Closes the bubble present in the given |browser|.
-  void CloseBubble(Browser* browser);
+  virtual void CloseBubble(Browser* browser);
   // Performs the platform-specific close.
   virtual void CloseBubbleNative(Browser* browser) = 0;
 
@@ -105,6 +117,17 @@ class ExtensionMessageBubbleBrowserTest
   // Tests that the bubble indicating an extension is controlling a user's
   // search engine is shown.
   void TestControlledSearchBubbleShown();
+
+  // Tests that the bubble indicating an extension is controlling a user's
+  // startup pages is shown.
+  void PreTestControlledStartupBubbleShown();
+  void TestControlledStartupBubbleShown();
+
+  // Tests that the startup controlled bubble is *not* shown in the case of a
+  // browser restart, since restarts always result in a session restore rather
+  // than showing the normal startup pages.
+  void PreTestControlledStartupNotShownOnRestart();
+  void TestControlledStartupNotShownOnRestart();
 
   // Tests that having multiple windows, all of which could be vying to show a
   // warning bubble, behaves properly.

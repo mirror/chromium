@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h"
 
 #include "base/mac/bundle_locations.h"
+#include "base/metrics/user_metrics.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_observer.h"
 #include "chrome/browser/ui/browser.h"
@@ -13,6 +14,8 @@
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/bubble_sync_promo_controller.h"
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
+#import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
+#import "chrome/browser/ui/cocoa/location_bar/star_decoration.h"
 #include "chrome/browser/ui/sync/sync_promo_ui.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
@@ -23,7 +26,6 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
-#include "content/public/browser/user_metrics.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
@@ -74,6 +76,9 @@ using bookmarks::BookmarkNode;
 
   Browser* browser = chrome::FindBrowserWithWindow(self.parentWindow);
   if (SyncPromoUI::ShouldShowSyncPromo(browser->profile())) {
+    base::RecordAction(
+        base::UserMetricsAction("Signin_Impression_FromBookmarkBubble"));
+
     syncPromoController_.reset(
         [[BubbleSyncPromoController alloc]
             initWithBrowser:browser
@@ -139,7 +144,7 @@ using bookmarks::BookmarkNode;
       [BrowserWindowController browserWindowControllerForWindow:parentWindow];
 
   InfoBubbleView* bubble = self.bubble;
-  [bubble setArrowLocation:info_bubble::kTopRight];
+  [bubble setArrowLocation:info_bubble::kTopTrailing];
 
   // Insure decent positioning even in the absence of a browser controller,
   // which will occur for some unit tests.
@@ -176,11 +181,14 @@ using bookmarks::BookmarkNode;
   [self registerKeyStateEventTap];
 
   bookmarkBubbleObserver_->OnBookmarkBubbleShown(node_);
+
+  [self decorationForBubble]->SetActive(true);
 }
 
 - (void)close {
   [[BrowserWindowController browserWindowControllerForWindow:self.parentWindow]
-      releaseBarVisibilityForOwner:self withAnimation:YES delay:NO];
+      releaseToolbarVisibilityForOwner:self
+                         withAnimation:YES];
 
   [super close];
 }
@@ -193,7 +201,7 @@ using bookmarks::BookmarkNode;
 }
 
 - (IBAction)edit:(id)sender {
-  content::RecordAction(UserMetricsAction("BookmarkBubble_Edit"));
+  base::RecordAction(UserMetricsAction("BookmarkBubble_Edit"));
   [self showEditor];
 }
 
@@ -216,7 +224,7 @@ using bookmarks::BookmarkNode;
 
 - (IBAction)remove:(id)sender {
   bookmarks::RemoveAllBookmarks(model_, node_->url());
-  content::RecordAction(UserMetricsAction("BookmarkBubble_Unstar"));
+  base::RecordAction(UserMetricsAction("BookmarkBubble_Unstar"));
   node_ = NULL;  // no longer valid
   [self ok:sender];
 }
@@ -233,8 +241,7 @@ using bookmarks::BookmarkNode;
   NSMenuItem* selected = [folderPopUpButton_ selectedItem];
   if ([selected representedObject] ==
       [[self class] chooseAnotherFolderObject]) {
-    content::RecordAction(
-        UserMetricsAction("BookmarkBubble_EditFromCombobox"));
+    base::RecordAction(UserMetricsAction("BookmarkBubble_EditFromCombobox"));
     [self showEditor];
   }
 }
@@ -262,8 +269,7 @@ using bookmarks::BookmarkNode;
   NSString* newTitle = [nameTextField_ stringValue];
   if (![oldTitle isEqual:newTitle]) {
     model_->SetTitle(node_, base::SysNSStringToUTF16(newTitle));
-    content::RecordAction(
-        UserMetricsAction("BookmarkBubble_ChangeTitleInBubble"));
+    base::RecordAction(UserMetricsAction("BookmarkBubble_ChangeTitleInBubble"));
   }
   // Then the parent folder.
   const BookmarkNode* oldParent = node_->parent();
@@ -279,7 +285,7 @@ using bookmarks::BookmarkNode;
   if (oldParent != newParent) {
     int index = newParent->child_count();
     model_->Move(node_, newParent, index);
-    content::RecordAction(UserMetricsAction("BookmarkBubble_ChangeParent"));
+    base::RecordAction(UserMetricsAction("BookmarkBubble_ChangeParent"));
   }
 }
 
@@ -301,6 +307,12 @@ using bookmarks::BookmarkNode;
   NSValue* parentValue = [NSValue valueWithPointer:node_->parent()];
   NSInteger idx = [menu indexOfItemWithRepresentedObject:parentValue];
   [folderPopUpButton_ selectItemAtIndex:idx];
+}
+
+- (LocationBarDecoration*)decorationForBubble {
+  LocationBarViewMac* locationBar =
+      [[[self parentWindow] windowController] locationBarBridge];
+  return locationBar ? locationBar->star_decoration() : nullptr;
 }
 
 @end  // BookmarkBubbleController

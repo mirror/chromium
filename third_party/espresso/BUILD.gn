@@ -4,8 +4,20 @@
 
 import("//build/config/android/rules.gni")
 
+java_group("espresso_all_java") {
+  testonly = true
+  deps = [
+    ":espresso_contrib_java",
+    ":espresso_core_java",
+    ":espresso_idling_java",
+    ":espresso_intents_java",
+    ":espresso_web_java",
+  ]
+}
+
 android_java_prebuilt("espresso_contrib_java") {
-  jar_path = "lib/espresso-contrib-2.2-release-no-dep.jar"
+  testonly = true
+  jar_path = "lib/espresso-contrib-2.2.1-release-no-dep.jar"
   deps = [
     ":espresso_core_java",
     "//third_party/guava:guava_java",
@@ -14,7 +26,8 @@ android_java_prebuilt("espresso_contrib_java") {
 }
 
 android_java_prebuilt("espresso_core_java") {
-  jar_path = "lib/espresso-core-2.2-release-no-dep.jar"
+  testonly = true
+  jar_path = "lib/espresso-core-2.2.1-release-no-dep.jar"
   deps = [
     "//third_party/android_tools:android_support_annotations_java",
     "//third_party/guava:guava_java",
@@ -24,11 +37,13 @@ android_java_prebuilt("espresso_core_java") {
 }
 
 android_java_prebuilt("espresso_idling_java") {
-  jar_path = "lib/espresso-idling-resource-2.2-release-no-dep.jar"
+  testonly = true
+  jar_path = "lib/espresso-idling-resource-2.2.1-release-no-dep.jar"
 }
 
 android_java_prebuilt("espresso_intents_java") {
-  jar_path = "lib/espresso-intents-2.2-release-no-dep.jar"
+  testonly = true
+  jar_path = "lib/espresso-intents-2.2.1-release-no-dep.jar"
   deps = [
     "//third_party/android_support_test_runner:runner_java",
     "//third_party/guava:guava_java",
@@ -37,7 +52,8 @@ android_java_prebuilt("espresso_intents_java") {
 }
 
 android_java_prebuilt("espresso_web_java") {
-  jar_path = "lib/espresso-web-2.2-release-no-dep.jar"
+  testonly = true
+  jar_path = "lib/espresso-web-2.2.1-release-no-dep.jar"
   deps = [
     ":espresso_core_java",
     "//third_party/guava:guava_java",

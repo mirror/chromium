@@ -33,13 +33,14 @@ void ChromeExtensionBluetoothChooser::ShowDiscoveryState(DiscoveryState state) {
   bluetooth_chooser_controller_->OnDiscoveryStateChanged(state);
 }
 
-void ChromeExtensionBluetoothChooser::AddDevice(
+void ChromeExtensionBluetoothChooser::AddOrUpdateDevice(
     const std::string& device_id,
-    const base::string16& device_name) {
-  bluetooth_chooser_controller_->AddDevice(device_id, device_name);
-}
-
-void ChromeExtensionBluetoothChooser::RemoveDevice(
-    const std::string& device_id) {
-  bluetooth_chooser_controller_->RemoveDevice(device_id);
+    bool should_update_name,
+    const base::string16& device_name,
+    bool is_gatt_connected,
+    bool is_paired,
+    int signal_strength_level) {
+  bluetooth_chooser_controller_->AddOrUpdateDevice(
+      device_id, should_update_name, device_name, is_gatt_connected, is_paired,
+      signal_strength_level);
 }

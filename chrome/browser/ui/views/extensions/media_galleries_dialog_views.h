@@ -87,6 +87,9 @@ class MediaGalleriesDialogViews : public MediaGalleriesDialog,
   // In unit tests, it may not.
   bool ControllerHasWebContents() const;
 
+  // Callback for MenuRunner.
+  void OnMenuClosed();
+
   MediaGalleriesDialogController* controller_;
 
   // The contents of the dialog. Owned by the view hierarchy, except in tests.

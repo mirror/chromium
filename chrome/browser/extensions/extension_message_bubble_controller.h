@@ -23,7 +23,6 @@ class Profile;
 
 namespace extensions {
 
-class ExtensionPrefs;
 class ExtensionRegistry;
 
 class ExtensionMessageBubbleController : public chrome::BrowserListObserver {
@@ -69,6 +68,10 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver {
     // Returns true if the bubble should close when the widget deactivates.
     virtual bool ShouldCloseOnDeactivate() const = 0;
 
+    // Returns true if the bubble should be considered acknowledged when the
+    // widget deactivates.
+    virtual bool ShouldAcknowledgeOnDeactivate() const = 0;
+
     // Whether to show a list of extensions in the bubble.
     virtual bool ShouldShowExtensionList() const = 0;
 
@@ -86,6 +89,12 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver {
     // Returns a key unique to the type of bubble that can be used to retrieve
     // state specific to the type (e.g., shown for profiles).
     virtual const char* GetKey() = 0;
+
+    // Returns true if the bubble is informing about a single extension that can
+    // be policy-installed.
+    // E.g. A proxy-type extension can be policy installed, but a developer-type
+    // extension cannot.
+    virtual bool SupportsPolicyIndicator() = 0;
 
     // Whether the "shown for profiles" set should be cleared if an action is
     // taken on the bubble. This defaults to true, since once an action is
@@ -144,6 +153,10 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver {
 
   // Obtains a list of all extensions (by id) the controller knows about.
   const ExtensionIdList& GetExtensionIdList();
+
+  // Checks if each extension entry is installed, and if not, removes it from
+  // the list.
+  void UpdateExtensionIdList();
 
   // Whether to close the bubble when it loses focus.
   bool CloseOnDeactivate();

@@ -5,13 +5,6 @@
 (function() {
   'use strict';
 
-  /**
-   * This is the absolute difference maintained between standard and
-   * fixed-width font sizes. http://crbug.com/91922.
-   * @const @private {number}
-   */
-  var SIZE_DIFFERENCE_FIXED_STANDARD_ = 3;
-
   /** @const @private {!Array<number>} */
   var FONT_SIZE_RANGE_ = [
     9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36,
@@ -26,11 +19,6 @@
   /**
    * 'settings-appearance-fonts-page' is the settings page containing appearance
    * settings.
-   *
-   * Example:
-   *
-   *   <settings-appearance-fonts-page prefs="{{prefs}}">
-   *   </settings-appearance-fonts-page>
    */
   Polymer({
     is: 'settings-appearance-fonts-page',
@@ -39,16 +27,16 @@
 
     properties: {
       /** @private */
-      advancedExtensionInstalled_: Boolean,
-
-      /** @private */
       advancedExtensionSublabel_: String,
 
-      /** @private */
-      advancedExtensionUrl_: String,
+      /** @private {!DropdownMenuOptionList} */
+      fontOptions_: Object,
 
-      /** @private {!settings.FontsBrowserProxy} */
-      browserProxy_: Object,
+      /** @private */
+      isGuest_: {
+        type: Boolean,
+        value: function() { return loadTimeData.getBoolean('isGuest'); }
+      },
 
       /**
        * Common font sizes.
@@ -79,9 +67,14 @@
       },
     },
 
-    observers: [
-      'fontSizeChanged_(prefs.webkit.webprefs.default_font_size.value)',
-    ],
+    /** @private {?settings.FontsBrowserProxy} */
+    browserProxy_: null,
+
+    /** @private {boolean} */
+    advancedExtensionInstalled_: false,
+
+    /** @private {?string} */
+    advancedExtensionUrl_: null,
 
     /** @override */
     created: function() {
@@ -118,7 +111,7 @@
     },
 
     /**
-     * @param {!FontsData} response A list of fonts, encodings and the advanced
+     * @param {!FontsData} response A list of fonts and the advanced
      *     font settings extension URL.
      * @private
      */
@@ -130,44 +123,18 @@
           name: response.fontList[i][1]
         });
       }
-      this.$.standardFont.menuOptions = fontMenuOptions;
-      this.$.serifFont.menuOptions = fontMenuOptions;
-      this.$.sansSerifFont.menuOptions = fontMenuOptions;
-      this.$.fixedFont.menuOptions = fontMenuOptions;
-
-      var encodingMenuOptions = [];
-      for (i = 0; i < response.encodingList.length; ++i) {
-        encodingMenuOptions.push({
-          value: response.encodingList[i][0],
-          name: response.encodingList[i][1]
-        });
-      }
-      this.$.encoding.menuOptions = encodingMenuOptions;
+      this.fontOptions_ = fontMenuOptions;
       this.advancedExtensionUrl_ = response.extensionUrl;
     },
 
     /**
-     * @param {number} value The changed font size slider value.
+     * Get the minimum font size, accounting for unset prefs.
+     * @return {?}
      * @private
      */
-    fontSizeChanged_: function(value) {
-      // TODO(michaelpg): Whitelist this pref in prefs_utils.cc so it is
-      // included in the <settings-prefs> getAllPrefs call, otherwise this path
-      // is invalid and nothing happens. See crbug.com/612535.
-      this.set('prefs.webkit.webprefs.default_fixed_font_size.value',
-          value - SIZE_DIFFERENCE_FIXED_STANDARD_);
-    },
-
-    /**
-     * Creates an html style value.
-     * @param {number} fontSize The font size to use.
-     * @param {string} fontFamily The name of the font family use.
-     * @return {string}
-     * @private
-     */
-    computeStyle_: function(fontSize, fontFamily) {
-      return 'font-size: ' + fontSize + "px; font-family: '" + fontFamily +
-          "';";
+    computeMinimumFontSize_: function() {
+      return this.get('prefs.webkit.webprefs.minimum_font_size.value') ||
+          MINIMUM_FONT_SIZE_RANGE_[0];
     },
   });
 })();

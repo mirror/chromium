@@ -11,12 +11,15 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "chrome/browser/media/android/remote/remote_media_player_bridge.h"
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "media/base/android/media_player_android.h"
 
 struct MediaPlayerHostMsg_Initialize_Params;
+
+namespace blink {
+enum class WebRemotePlaybackAvailability;
+}
 
 namespace remote_media {
 
@@ -34,11 +37,15 @@ class RemoteMediaPlayerManager : public content::BrowserMediaPlayerManager {
   // Callback to trigger when a remote device has been unselected.
   void OnRemoteDeviceUnselected(int player_id);
 
+  // Callback to trigger when the video on a remote device starts playing.
+  void OnRemotePlaybackStarted(int player_id);
+
   // Callback to trigger when the video on a remote device finishes playing.
   void OnRemotePlaybackFinished(int player_id);
 
   // Callback to trigger when the availability of remote routes changes.
-  void OnRouteAvailabilityChanged(int tab_id, bool routes_available);
+  void OnRouteAvailabilityChanged(
+      int player_id, blink::WebRemotePlaybackAvailability availability);
 
   // Callback to trigger when the device picker dialog was dismissed.
   void OnCancelledRemotePlaybackRequest(int player_id);
@@ -78,6 +85,7 @@ class RemoteMediaPlayerManager : public content::BrowserMediaPlayerManager {
   void OnSuspendAndReleaseResources(int player_id) override;
   void OnRequestRemotePlayback(int player_id) override;
   void OnRequestRemotePlaybackControl(int player_id) override;
+  void OnRequestRemotePlaybackStop(int player_id) override;
 
   bool IsPlayingRemotely(int player_id) override;
 
@@ -97,8 +105,8 @@ class RemoteMediaPlayerManager : public content::BrowserMediaPlayerManager {
   int GetTabId();
 
   // Get the player that is not currently selected
-  ScopedVector<media::MediaPlayerAndroid>::iterator GetAlternativePlayer(
-      int player_id);
+  std::vector<std::unique_ptr<media::MediaPlayerAndroid>>::iterator
+  GetAlternativePlayer(int player_id);
 
   // Get the remote player for a given player id, whether or not it is currently
   // playing remotely.
@@ -111,7 +119,7 @@ class RemoteMediaPlayerManager : public content::BrowserMediaPlayerManager {
   // Contains the alternative players that are not currently in use, i.e. the
   // remote players for videos that are playing locally, and the local players
   // for videos that are playing remotely.
-  ScopedVector<media::MediaPlayerAndroid> alternative_players_;
+  std::vector<std::unique_ptr<media::MediaPlayerAndroid>> alternative_players_;
 
   std::set<int> players_playing_remotely_;
   std::unordered_map<int, GURL> poster_urls_;

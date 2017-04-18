@@ -27,38 +27,41 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-Pattern::RepeatMode CanvasPattern::parseRepetitionType(const String& type,
-    ExceptionState& exceptionState)
-{
-    if (type.isEmpty() || type == "repeat")
-        return Pattern::RepeatModeXY;
+Pattern::RepeatMode CanvasPattern::ParseRepetitionType(
+    const String& type,
+    ExceptionState& exception_state) {
+  if (type.IsEmpty() || type == "repeat")
+    return Pattern::kRepeatModeXY;
 
-    if (type == "no-repeat")
-        return Pattern::RepeatModeNone;
+  if (type == "no-repeat")
+    return Pattern::kRepeatModeNone;
 
-    if (type == "repeat-x")
-        return Pattern::RepeatModeX;
+  if (type == "repeat-x")
+    return Pattern::kRepeatModeX;
 
-    if (type == "repeat-y")
-        return Pattern::RepeatModeY;
+  if (type == "repeat-y")
+    return Pattern::kRepeatModeY;
 
-    exceptionState.throwDOMException(SyntaxError, "The provided type ('" + type + "') is not one of 'repeat', 'no-repeat', 'repeat-x', or 'repeat-y'.");
-    return Pattern::RepeatModeNone;
+  exception_state.ThrowDOMException(
+      kSyntaxError,
+      "The provided type ('" + type +
+          "') is not one of 'repeat', 'no-repeat', 'repeat-x', or 'repeat-y'.");
+  return Pattern::kRepeatModeNone;
 }
 
-CanvasPattern::CanvasPattern(PassRefPtr<Image> image, Pattern::RepeatMode repeat, bool originClean)
-    : m_pattern(Pattern::createImagePattern(image, repeat))
-    , m_originClean(originClean)
-{
+CanvasPattern::CanvasPattern(PassRefPtr<Image> image,
+                             Pattern::RepeatMode repeat,
+                             bool origin_clean)
+    : pattern_(Pattern::CreateImagePattern(std::move(image), repeat)),
+      origin_clean_(origin_clean) {}
+
+void CanvasPattern::setTransform(SVGMatrixTearOff* transform) {
+  pattern_transform_ =
+      transform ? transform->Value() : AffineTransform(1, 0, 0, 1, 0, 0);
 }
 
-void CanvasPattern::setTransform(SVGMatrixTearOff* transform)
-{
-    m_patternTransform = transform ? transform->value() : AffineTransform(1, 0, 0, 1, 0, 0);
-}
-
-} // namespace blink
+}  // namespace blink

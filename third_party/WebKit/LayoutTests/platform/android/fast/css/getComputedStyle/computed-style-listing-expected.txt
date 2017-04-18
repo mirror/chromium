@@ -59,7 +59,6 @@ On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE
 -webkit-text-stroke-width: 0px
 -webkit-user-drag: auto
 -webkit-user-modify: read-only
--webkit-user-select: text
 -webkit-writing-mode: horizontal-tb
 align-content: normal
 align-items: start
@@ -203,11 +202,12 @@ max-width: none
 min-height: 0px
 min-width: 0px
 mix-blend-mode: normal
-motion-offset: 0px
-motion-path: none
-motion-rotation: auto 0deg
 object-fit: fill
 object-position: 50% 50%
+offset-distance: 0px
+offset-path: none
+offset-rotate: auto 0deg
+offset-rotation: auto 0deg
 opacity: 1
 order: 0
 orphans: auto
@@ -284,6 +284,7 @@ transition-property: all
 transition-timing-function: ease
 translate: 0px
 unicode-bidi: normal
+user-select: text
 vector-effect: none
 vertical-align: baseline
 visibility: visible

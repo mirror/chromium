@@ -15,10 +15,6 @@
 // Values below IDC_MinimumLabelValue are reserved for dynamic menu items.
 #define IDC_MinimumLabelValue           4000
 
-#define IDC_Messages                    4000
-#define IDC_MessagesAll                 4007
-#define IDC_MessagesNone                4008
-
 // NOTE: Within each of the following sections, the IDs are ordered roughly by
 // how they appear in the GUI/menus (left to right, top to bottom, etc.).
 
@@ -33,10 +29,6 @@
 #define IDC_RELOAD_BYPASSING_CACHE      33007
 #define IDC_LOAD_NEW_TAB_PAGE           33008
 #define IDC_RELOAD_CLEARING_CACHE       33009
-// Temporary commands to capture the old Back/Forward shortcuts and tell users
-// the new shortcut. May also trigger Back/Forward action if the
-// BackspaceGoesBack field trial is enabled.
-// TODO(mgiuca): Remove these in M54 (https://crbug.com/610039).
 #define IDC_BACKSPACE_BACK              33010
 #define IDC_BACKSPACE_FORWARD           33011
 
@@ -85,54 +77,12 @@
 #define IDC_VIEW_SOURCE                 35002
 #define IDC_PRINT                       35003
 #define IDC_SAVE_PAGE                   35004
-#define IDC_ENCODING_MENU               35005
 #define IDC_EMAIL_PAGE_LOCATION         35006
 #define IDC_BASIC_PRINT                 35007
 #define IDC_SAVE_CREDIT_CARD_FOR_PAGE   35008
 #define IDC_TRANSLATE_PAGE              35009
 #define IDC_MANAGE_PASSWORDS_FOR_PAGE   35010
 #define IDC_ROUTE_MEDIA                 35011
-
-// When adding a new encoding to this list, be sure to append it to the
-// EncodingMenuController::kValidEncodingIds array in
-// encoding_menu_controller.cc.
-#define IDC_ENCODING_AUTO_DETECT        35500
-#define IDC_ENCODING_UTF8               35501
-#define IDC_ENCODING_UTF16LE            35502
-#define IDC_ENCODING_WINDOWS1252        35503
-#define IDC_ENCODING_GBK                35504
-#define IDC_ENCODING_GB18030            35505
-#define IDC_ENCODING_BIG5               35506
-#define IDC_ENCODING_KOREAN             35507
-#define IDC_ENCODING_SHIFTJIS           35508
-#define IDC_ENCODING_ISO2022JP          35509
-#define IDC_ENCODING_EUCJP              35510
-#define IDC_ENCODING_THAI               35511
-#define IDC_ENCODING_ISO885915          35512
-#define IDC_ENCODING_MACINTOSH          35513
-#define IDC_ENCODING_ISO88592           35514
-#define IDC_ENCODING_WINDOWS1250        35515
-#define IDC_ENCODING_ISO88595           35516
-#define IDC_ENCODING_WINDOWS1251        35517
-#define IDC_ENCODING_KOI8R              35518
-#define IDC_ENCODING_KOI8U              35519
-#define IDC_ENCODING_ISO88597           35520
-#define IDC_ENCODING_WINDOWS1253        35521
-#define IDC_ENCODING_ISO88594           35522
-#define IDC_ENCODING_ISO885913          35523
-#define IDC_ENCODING_WINDOWS1257        35524
-#define IDC_ENCODING_ISO88593           35525
-#define IDC_ENCODING_ISO885910          35526
-#define IDC_ENCODING_ISO885914          35527
-#define IDC_ENCODING_ISO885916          35528
-#define IDC_ENCODING_WINDOWS1254        35529
-#define IDC_ENCODING_ISO88596           35530
-#define IDC_ENCODING_WINDOWS1256        35531
-#define IDC_ENCODING_ISO88598           35532
-#define IDC_ENCODING_WINDOWS1255        35533
-#define IDC_ENCODING_WINDOWS1258        35534
-#define IDC_ENCODING_ISO88598I          35535
-#define IDC_ENCODING_IBM866             35536
 
 // Clipboard commands
 #define IDC_CUT                         36000
@@ -165,7 +115,6 @@
 
 // Show various bits of UI
 #define IDC_OPEN_FILE                   40000
-#define IDC_CREATE_SHORTCUTS            40001
 #define IDC_CREATE_HOSTED_APP           40002
 #define IDC_DEVELOPER_MENU              40003
 #define IDC_DEV_TOOLS                   40004
@@ -219,8 +168,7 @@
 #define IDC_ELEVATED_RECOVERY_DIALOG    40247
 #define IDC_TAKE_SCREENSHOT             40248
 #define IDC_MORE_TOOLS_MENU             40249
-#define IDC_SHOW_FAST_USER_SWITCHER     40250
-#define IDC_TOGGLE_FULLSCREEN_TOOLBAR   40251
+#define IDC_TOGGLE_FULLSCREEN_TOOLBAR   40250
 
 // Spell-check
 // Insert any additional suggestions before _LAST; these have to be consecutive.
@@ -374,11 +322,11 @@
 #define IDC_MEDIA_ROUTER_HELP 51201
 #define IDC_MEDIA_ROUTER_LEARN_MORE 51202
 #define IDC_MEDIA_ROUTER_REPORT_ISSUE 51203
-#define IDC_MEDIA_ROUTER_REMOVE_TOOLBAR_ACTION 51204
-#if defined(GOOGLE_CHROME_BUILD)
+#define IDC_MEDIA_ROUTER_ALWAYS_SHOW_TOOLBAR_ACTION 51204
 #define IDC_MEDIA_ROUTER_CLOUD_SERVICES_TOGGLE 51205
-#endif  // defined(GOOGLE_CHROME_BUILD)
 #define IDC_MEDIA_ROUTER_MANAGE_DEVICES 51206
+#define IDC_MEDIA_ROUTER_SHOWN_BY_POLICY 51207
+#define IDC_MEDIA_ROUTER_SHOW_IN_TOOLBAR 51208
 
 // Context menu items for media stream status tray
 #define IDC_MEDIA_STREAM_DEVICE_STATUS_TRAY 51300

@@ -16,7 +16,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/fake_async_policy_loader.h"
-#include "policy/policy_constants.h"
+#include "components/policy/policy_constants.h"
 #include "remoting/host/dns_blackhole_checker.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -71,8 +71,8 @@ class PolicyWatcherTest : public testing::Test {
     // Retaining a raw pointer to keep control over policy contents.
     policy_loader_ =
         new policy::FakeAsyncPolicyLoader(base::ThreadTaskRunnerHandle::Get());
-    policy_watcher_ =
-        PolicyWatcher::CreateFromPolicyLoader(base::WrapUnique(policy_loader_));
+    policy_watcher_ = PolicyWatcher::CreateFromPolicyLoaderForTesting(
+        base::WrapUnique(policy_loader_));
 
     nat_true_.SetBoolean(key::kRemoteAccessHostFirewallTraversal, true);
     nat_false_.SetBoolean(key::kRemoteAccessHostFirewallTraversal, false);
@@ -148,6 +148,10 @@ class PolicyWatcherTest : public testing::Test {
     third_party_auth_cert_empty_.MergeDictionary(&third_party_auth_partial_);
     third_party_auth_cert_empty_.SetString(
         key::kRemoteAccessHostTokenValidationCertificateIssuer, "");
+    remote_assistance_uiaccess_true_.SetBoolean(
+        key::kRemoteAccessHostAllowUiAccessForRemoteAssistance, true);
+    remote_assistance_uiaccess_false_.SetBoolean(
+        key::kRemoteAccessHostAllowUiAccessForRemoteAssistance, false);
   }
 
   void TearDown() override {
@@ -238,6 +242,8 @@ class PolicyWatcherTest : public testing::Test {
   base::DictionaryValue third_party_auth_full_;
   base::DictionaryValue third_party_auth_partial_;
   base::DictionaryValue third_party_auth_cert_empty_;
+  base::DictionaryValue remote_assistance_uiaccess_true_;
+  base::DictionaryValue remote_assistance_uiaccess_false_;
 
  private:
   void SetDefaults(base::DictionaryValue& dict) {
@@ -255,6 +261,8 @@ class PolicyWatcherTest : public testing::Test {
     dict.SetString(key::kRemoteAccessHostTokenValidationCertificateIssuer, "");
     dict.SetBoolean(key::kRemoteAccessHostAllowClientPairing, true);
     dict.SetBoolean(key::kRemoteAccessHostAllowGnubbyAuth, true);
+    dict.SetBoolean(key::kRemoteAccessHostAllowUiAccessForRemoteAssistance,
+                    false);
 
     ASSERT_THAT(&dict, IsPolicies(&GetDefaultValues()))
         << "Sanity check that defaults expected by the test code "
@@ -491,6 +499,26 @@ TEST_F(PolicyWatcherTest, GnubbyAuth) {
   SetPolicies(gnubby_auth_true_);
 }
 
+TEST_F(PolicyWatcherTest, RemoteAssistanceUiAccess) {
+  testing::InSequence sequence;
+  EXPECT_CALL(mock_policy_callback_,
+              OnPolicyUpdatePtr(IsPolicies(&nat_true_others_default_)));
+#if defined(OS_WIN)
+  // This setting only affects Windows, it is ignored on other platforms so the
+  // 2 SetPolicies calls won't result in any calls to OnPolicyUpdate.
+  EXPECT_CALL(mock_policy_callback_,
+              OnPolicyUpdatePtr(IsPolicies(&remote_assistance_uiaccess_true_)));
+  EXPECT_CALL(
+      mock_policy_callback_,
+      OnPolicyUpdatePtr(IsPolicies(&remote_assistance_uiaccess_false_)));
+#endif  // defined(OS_WIN)
+
+  SetPolicies(empty_);
+  StartWatching();
+  SetPolicies(remote_assistance_uiaccess_true_);
+  SetPolicies(remote_assistance_uiaccess_false_);
+}
+
 TEST_F(PolicyWatcherTest, Relay) {
   testing::InSequence sequence;
   EXPECT_CALL(mock_policy_callback_,
@@ -616,6 +644,9 @@ TEST_F(PolicyWatcherTest, PolicySchemaAndPolicyWatcherShouldBeInSync) {
   // RemoteAccessHostMatchUsername is marked in policy_templates.json as not
   // supported on Windows and therefore is (by design) excluded from the schema.
   expected_schema.erase(key::kRemoteAccessHostMatchUsername);
+#else  // !defined(OS_WIN)
+  // RemoteAssistanceHostAllowUiAccess does not exist on non-Windows platforms.
+  expected_schema.erase(key::kRemoteAccessHostAllowUiAccessForRemoteAssistance);
 #endif
 
   std::map<std::string, base::Value::Type> actual_schema;
@@ -643,14 +674,14 @@ TEST_F(PolicyWatcherTest, SchemaTypeCheck) {
   const policy::Schema string_schema =
       schema->GetKnownProperty("RemoteAccessHostDomain");
   EXPECT_TRUE(string_schema.valid());
-  EXPECT_EQ(string_schema.type(), base::Value::Type::TYPE_STRING);
+  EXPECT_EQ(string_schema.type(), base::Value::Type::STRING);
 
   // And check one, random "boolean" policy to see if the type propagated
   // correctly from policy_templates.json file.
   const policy::Schema boolean_schema =
       schema->GetKnownProperty("RemoteAccessHostRequireCurtain");
   EXPECT_TRUE(boolean_schema.valid());
-  EXPECT_EQ(boolean_schema.type(), base::Value::Type::TYPE_BOOLEAN);
+  EXPECT_EQ(boolean_schema.type(), base::Value::Type::BOOLEAN);
 }
 
 }  // namespace remoting

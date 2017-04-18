@@ -27,51 +27,50 @@
 #define WebGLRenderbuffer_h
 
 #include "modules/webgl/WebGLSharedPlatform3DObject.h"
-#include "wtf/PassRefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
 class WebGLRenderbuffer final : public WebGLSharedPlatform3DObject {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~WebGLRenderbuffer() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static WebGLRenderbuffer* create(WebGLRenderingContextBase*);
+ public:
+  ~WebGLRenderbuffer() override;
 
-    void setInternalFormat(GLenum internalformat)
-    {
-        m_internalFormat = internalformat;
-    }
-    GLenum internalFormat() const { return m_internalFormat; }
+  static WebGLRenderbuffer* Create(WebGLRenderingContextBase*);
 
-    void setSize(GLsizei width, GLsizei height)
-    {
-        m_width = width;
-        m_height = height;
-    }
-    GLsizei width() const { return m_width; }
-    GLsizei height() const { return m_height; }
+  void SetInternalFormat(GLenum internalformat) {
+    internal_format_ = internalformat;
+  }
+  GLenum InternalFormat() const { return internal_format_; }
 
-    bool hasEverBeenBound() const { return object() && m_hasEverBeenBound; }
+  void SetSize(GLsizei width, GLsizei height) {
+    width_ = width;
+    height_ = height;
+  }
+  GLsizei Width() const { return width_; }
+  GLsizei Height() const { return height_; }
 
-    void setHasEverBeenBound() { m_hasEverBeenBound = true; }
+  bool HasEverBeenBound() const { return Object() && has_ever_been_bound_; }
 
-    DECLARE_VIRTUAL_TRACE();
+  void SetHasEverBeenBound() { has_ever_been_bound_ = true; }
 
-protected:
-    explicit WebGLRenderbuffer(WebGLRenderingContextBase*);
+  DECLARE_VIRTUAL_TRACE();
 
-    void deleteObjectImpl(gpu::gles2::GLES2Interface*) override;
+ protected:
+  explicit WebGLRenderbuffer(WebGLRenderingContextBase*);
 
-private:
-    bool isRenderbuffer() const override { return true; }
+  void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
 
-    GLenum m_internalFormat;
-    GLsizei m_width, m_height;
+ private:
+  bool IsRenderbuffer() const override { return true; }
 
-    bool m_hasEverBeenBound;
+  GLenum internal_format_;
+  GLsizei width_, height_;
+
+  bool has_ever_been_bound_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLRenderbuffer_h
+#endif  // WebGLRenderbuffer_h

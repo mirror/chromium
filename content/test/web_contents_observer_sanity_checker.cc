@@ -201,52 +201,12 @@ void WebContentsObserverSanityChecker::DidFinishNavigation(
   CHECK(!(navigation_handle->HasCommitted() &&
           !navigation_handle->IsErrorPage()) ||
         navigation_handle->GetNetErrorCode() == net::OK);
-  CHECK(!(navigation_handle->HasCommitted() &&
-          navigation_handle->IsErrorPage()) ||
-        navigation_handle->GetNetErrorCode() != net::OK);
   CHECK_EQ(navigation_handle->GetWebContents(), web_contents());
 
   CHECK(!navigation_handle->HasCommitted() ||
         navigation_handle->GetRenderFrameHost() != nullptr);
 
   ongoing_navigations_.erase(navigation_handle);
-}
-
-void WebContentsObserverSanityChecker::DidStartProvisionalLoadForFrame(
-    RenderFrameHost* render_frame_host,
-    const GURL& validated_url,
-    bool is_error_page,
-    bool is_iframe_srcdoc) {
-  AssertRenderFrameExists(render_frame_host);
-}
-
-void WebContentsObserverSanityChecker::DidCommitProvisionalLoadForFrame(
-    RenderFrameHost* render_frame_host,
-    const GURL& url,
-    ui::PageTransition transition_type) {
-  AssertRenderFrameExists(render_frame_host);
-}
-
-void WebContentsObserverSanityChecker::DidFailProvisionalLoad(
-    RenderFrameHost* render_frame_host,
-    const GURL& validated_url,
-    int error_code,
-    const base::string16& error_description,
-    bool was_ignored_by_handler) {
-  AssertRenderFrameExists(render_frame_host);
-}
-
-void WebContentsObserverSanityChecker::DidNavigateMainFrame(
-    const LoadCommittedDetails& details,
-    const FrameNavigateParams& params) {
-  AssertMainFrameExists();
-}
-
-void WebContentsObserverSanityChecker::DidNavigateAnyFrame(
-    RenderFrameHost* render_frame_host,
-    const LoadCommittedDetails& details,
-    const FrameNavigateParams& params) {
-  AssertRenderFrameExists(render_frame_host);
 }
 
 void WebContentsObserverSanityChecker::DocumentAvailableInMainFrame() {
@@ -277,23 +237,20 @@ void WebContentsObserverSanityChecker::DidFailLoad(
   AssertRenderFrameExists(render_frame_host);
 }
 
-void WebContentsObserverSanityChecker::DidGetRedirectForResourceRequest(
-    RenderFrameHost* render_frame_host,
-    const ResourceRedirectDetails& details) {
-  AssertRenderFrameExists(render_frame_host);
-}
-
 void WebContentsObserverSanityChecker::DidOpenRequestedURL(
     WebContents* new_contents,
     RenderFrameHost* source_render_frame_host,
     const GURL& url,
     const Referrer& referrer,
     WindowOpenDisposition disposition,
-    ui::PageTransition transition) {
+    ui::PageTransition transition,
+    bool started_from_context_menu,
+    bool renderer_initiated) {
   AssertRenderFrameExists(source_render_frame_host);
 }
 
 void WebContentsObserverSanityChecker::MediaStartedPlaying(
+    const MediaPlayerInfo& media_info,
     const MediaPlayerId& id) {
   CHECK(!web_contents_destroyed_);
   CHECK(std::find(active_media_players_.begin(), active_media_players_.end(),
@@ -302,6 +259,7 @@ void WebContentsObserverSanityChecker::MediaStartedPlaying(
 }
 
 void WebContentsObserverSanityChecker::MediaStoppedPlaying(
+    const MediaPlayerInfo& media_info,
     const MediaPlayerId& id) {
   CHECK(!web_contents_destroyed_);
   CHECK(std::find(active_media_players_.begin(), active_media_players_.end(),

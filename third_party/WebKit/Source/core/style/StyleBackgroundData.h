@@ -25,43 +25,43 @@
 #ifndef StyleBackgroundData_h
 #define StyleBackgroundData_h
 
+#include "core/css/StyleColor.h"
 #include "core/style/FillLayer.h"
-#include "core/style/OutlineValue.h"
 #include "platform/graphics/Color.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefCounted.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
 
 namespace blink {
 
-class StyleBackgroundData : public RefCounted<StyleBackgroundData> {
-public:
-    static PassRefPtr<StyleBackgroundData> create() { return adoptRef(new StyleBackgroundData); }
-    PassRefPtr<StyleBackgroundData> copy() const { return adoptRef(new StyleBackgroundData(*this)); }
-    ~StyleBackgroundData() { }
+// TODO(sashab): Move this into a private class on ComputedStyle, and remove
+// all methods on it, merging them into copy/creation methods on ComputedStyle
+// instead. Keep the allocation logic, only allocating a new object if needed.
+class CORE_EXPORT StyleBackgroundData : public RefCounted<StyleBackgroundData> {
+ public:
+  static PassRefPtr<StyleBackgroundData> Create() {
+    return AdoptRef(new StyleBackgroundData);
+  }
+  PassRefPtr<StyleBackgroundData> Copy() const {
+    return AdoptRef(new StyleBackgroundData(*this));
+  }
+  ~StyleBackgroundData() {}
 
-    bool operator==(const StyleBackgroundData&) const;
-    bool operator!=(const StyleBackgroundData& o) const
-    {
-        return !(*this == o);
-    }
+  bool operator==(const StyleBackgroundData&) const;
+  bool operator!=(const StyleBackgroundData& o) const { return !(*this == o); }
 
-    bool visuallyEqual(const StyleBackgroundData&) const;
+  const FillLayer& Background() const { return background_; }
+  const StyleColor& GetColor() const { return color_; }
 
-    const FillLayer& background() const { return m_background; }
-    const StyleColor& color() const { return m_color; }
-    const OutlineValue& outline() const { return m_outline; }
+ private:
+  friend class ComputedStyle;
 
-private:
-    friend class ComputedStyle;
+  StyleBackgroundData();
+  StyleBackgroundData(const StyleBackgroundData&);
 
-    StyleBackgroundData();
-    StyleBackgroundData(const StyleBackgroundData&);
-
-    FillLayer m_background;
-    StyleColor m_color;
-    OutlineValue m_outline;
+  FillLayer background_;
+  StyleColor color_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StyleBackgroundData_h
+#endif  // StyleBackgroundData_h

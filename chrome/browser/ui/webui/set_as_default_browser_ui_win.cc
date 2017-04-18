@@ -11,7 +11,7 @@
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/ui/browser.h"
@@ -27,10 +27,10 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
-#include "chrome/installer/util/install_util.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
@@ -38,7 +38,6 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
-#include "grit/browser_resources.h"
 #include "ui/base/l10n/l10n_font_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/font.h"
@@ -75,7 +74,7 @@ content::WebUIDataSource* CreateSetAsDefaultBrowserUIHTMLSource() {
                                   IDS_METRO_FLOW_DESCRIPTION);
   data_source->AddLocalizedString("flowNext", IDS_METRO_FLOW_SET_DEFAULT);
   data_source->AddLocalizedString("chromeLogoString",
-                                  IDS_METRO_FLOW_LOGO_STRING_ALT);
+                                  IDS_SHORT_PRODUCT_LOGO_ALT_TEXT);
   data_source->SetJsonPath("strings.js");
   data_source->AddResourcePath("set_as_default_browser.js",
                                IDR_SET_AS_DEFAULT_BROWSER_JS);

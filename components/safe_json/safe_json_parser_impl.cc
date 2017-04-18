@@ -8,8 +8,8 @@
 #include "base/sequenced_task_runner.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_thread.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace safe_json {
@@ -56,32 +56,23 @@ void SafeJsonParserImpl::OnConnectionError() {
   mojo_json_parser_.reset();
 
   caller_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&SafeJsonParserImpl::ReportResults,
-                            base::Unretained(this), nullptr, "Json error"));
+      FROM_HERE,
+      base::Bind(&SafeJsonParserImpl::ReportResults, base::Unretained(this),
+                 nullptr, "Connection error with the json parser process."));
 }
 
-void SafeJsonParserImpl::OnParseDone(const base::ListValue& wrapper,
-                                     mojo::String error) {
+void SafeJsonParserImpl::OnParseDone(std::unique_ptr<base::Value> result,
+                                     const base::Optional<std::string>& error) {
   DCHECK(io_thread_checker_.CalledOnValidThread());
 
   // Shut down the utility process.
   mojo_json_parser_.reset();
 
-  std::unique_ptr<base::Value> parsed_json;
-  std::string error_message;
-  if (!wrapper.empty()) {
-    const base::Value* value = nullptr;
-    CHECK(wrapper.Get(0, &value));
-    parsed_json.reset(value->DeepCopy());
-  } else {
-    error_message = error.get();
-  }
-
   // Call ReportResults() on caller's thread.
   caller_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&SafeJsonParserImpl::ReportResults, base::Unretained(this),
-                 base::Passed(&parsed_json), error_message));
+                 base::Passed(&result), error.value_or("")));
 }
 
 void SafeJsonParserImpl::ReportResults(std::unique_ptr<base::Value> parsed_json,

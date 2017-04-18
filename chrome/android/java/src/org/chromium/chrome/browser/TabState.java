@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
@@ -12,9 +13,11 @@ import android.util.Pair;
 import org.chromium.base.StreamUtil;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.components.sync.SyncConstants;
 import org.chromium.content.browser.crypto.CipherFactory;
 import org.chromium.content_public.browser.WebContents;
 
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -255,9 +258,9 @@ public class TabState {
             try {
                 tabState.syncId = stream.readLong();
             } catch (EOFException eof) {
-                tabState.syncId = 0;
+                tabState.syncId = SyncConstants.INVALID_TAB_NODE_ID;
                 // Could happen if reading a version of TabState without syncId.
-                Log.w(TAG, "Failed to read syncId from tab state. Assuming syncId is: 0");
+                Log.w(TAG, "Failed to read syncId from tab state. Assuming syncId is: -1");
             }
             try {
                 tabState.shouldPreserve = stream.readBoolean();
@@ -298,9 +301,18 @@ public class TabState {
         // Create the byte array from contentsState before opening the FileOutputStream, in case
         // contentsState.buffer is an instance of MappedByteBuffer that is mapped to
         // the tab state file.
-        state.contentsState.buffer().rewind();
-        byte[] contentsStateBytes = new byte[state.contentsState.buffer().remaining()];
-        state.contentsState.buffer().get(contentsStateBytes);
+        byte[] contentsStateBytes = new byte[state.contentsState.buffer().limit()];
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            state.contentsState.buffer().rewind();
+            state.contentsState.buffer().get(contentsStateBytes);
+        } else {
+            // For JellyBean and below a bug in MappedByteBufferAdapter causes rewind to not be
+            // propagated to the underlying ByteBuffer, and results in an underflow exception. See:
+            // http://b.android.com/53637.
+            for (int i = 0; i < state.contentsState.buffer().limit(); i++) {
+                contentsStateBytes[i] = state.contentsState.buffer().get(i);
+            }
+        }
 
         DataOutputStream dataOutputStream = null;
         FileOutputStream fileOutputStream = null;
@@ -320,7 +332,7 @@ public class TabState {
                     return;
                 }
             } else {
-                dataOutputStream = new DataOutputStream(fileOutputStream);
+                dataOutputStream = new DataOutputStream(new BufferedOutputStream(fileOutputStream));
             }
             if (encrypted) {
                 dataOutputStream.writeLong(KEY_CHECKER);

@@ -8,7 +8,7 @@
 #include "base/win/scoped_comptr.h"
 #include "base/win/scoped_variant.h"
 #include "third_party/iaccessible2/ia2_api_all.h"
-#include "ui/views/accessibility/native_view_accessibility.h"
+#include "ui/views/accessibility/native_view_accessibility_base.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/test/views_test_base.h"
 
@@ -19,10 +19,10 @@ using base::win::ScopedVariant;
 namespace views {
 namespace test {
 
-class NativeViewAcccessibilityWinTest : public ViewsTestBase {
+class NativeViewAccessibilityWinTest : public ViewsTestBase {
  public:
-  NativeViewAcccessibilityWinTest() {}
-  ~NativeViewAcccessibilityWinTest() override {}
+  NativeViewAccessibilityWinTest() {}
+  ~NativeViewAccessibilityWinTest() override {}
 
  protected:
   void GetIAccessible2InterfaceForView(View* view, IAccessible2_2** result) {
@@ -35,7 +35,7 @@ class NativeViewAcccessibilityWinTest : public ViewsTestBase {
   }
 };
 
-TEST_F(NativeViewAcccessibilityWinTest, TextfieldAccessibility) {
+TEST_F(NativeViewAccessibilityWinTest, TextfieldAccessibility) {
   Widget widget;
   Widget::InitParams init_params =
       CreateParams(Widget::InitParams::TYPE_POPUP);
@@ -81,7 +81,7 @@ TEST_F(NativeViewAcccessibilityWinTest, TextfieldAccessibility) {
   ASSERT_STREQ(L"New value", textfield->text().c_str());
 }
 
-TEST_F(NativeViewAcccessibilityWinTest, AuraOwnedWidgets) {
+TEST_F(NativeViewAccessibilityWinTest, AuraOwnedWidgets) {
   Widget widget;
   Widget::InitParams init_params =
       CreateParams(Widget::InitParams::TYPE_WINDOW);
@@ -144,7 +144,7 @@ TEST_F(NativeViewAcccessibilityWinTest, AuraOwnedWidgets) {
 }
 
 // Flaky on Windows: https://crbug.com/461837.
-TEST_F(NativeViewAcccessibilityWinTest, DISABLED_RetrieveAllAlerts) {
+TEST_F(NativeViewAccessibilityWinTest, DISABLED_RetrieveAllAlerts) {
   Widget widget;
   Widget::InitParams init_params =
       CreateParams(Widget::InitParams::TYPE_POPUP);
@@ -206,6 +206,22 @@ TEST_F(NativeViewAcccessibilityWinTest, DISABLED_RetrieveAllAlerts) {
   ASSERT_EQ(1, n_targets);
   ASSERT_TRUE(infobar2_accessible.IsSameObject(targets[0]));
   CoTaskMemFree(targets);
+}
+
+// Test trying to retrieve child widgets during window close does not crash.
+TEST_F(NativeViewAccessibilityWinTest, GetAllOwnedWidgetsCrash) {
+  Widget widget;
+  Widget::InitParams init_params =
+      CreateParams(Widget::InitParams::TYPE_WINDOW);
+  init_params.ownership = Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  widget.Init(init_params);
+  widget.CloseNow();
+
+  LONG child_count = 0;
+  ScopedComPtr<IAccessible> content_accessible(
+      widget.GetRootView()->GetNativeViewAccessible());
+  EXPECT_EQ(S_OK, content_accessible->get_accChildCount(&child_count));
+  EXPECT_EQ(1L, child_count);
 }
 
 }  // namespace test

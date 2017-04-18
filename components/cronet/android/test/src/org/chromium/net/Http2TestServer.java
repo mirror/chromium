@@ -40,7 +40,7 @@ import io.netty.handler.ssl.SupportedCipherSuiteFilter;
 public final class Http2TestServer {
     private static final ConditionVariable sBlock = new ConditionVariable();
     private static Channel sServerChannel;
-    private static final String TAG = "Http2TestServer";
+    private static final String TAG = Http2TestServer.class.getSimpleName();
 
     private static final String HOST = "127.0.0.1";
     // Server port.
@@ -91,6 +91,13 @@ public final class Http2TestServer {
      */
     public static String getEchoTrailersUrl() {
         return getServerUrl() + Http2TestHandler.ECHO_TRAILERS_PATH;
+    }
+
+    /**
+     * @return url of a brotli-encoded server resource.
+     */
+    public static String getServeSimpleBrotliResponse() {
+        return getServerUrl() + Http2TestHandler.SERVE_SIMPLE_BROTLI_RESPONSE;
     }
 
     public static boolean startHttp2TestServer(

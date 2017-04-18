@@ -9,6 +9,7 @@
 
 #include "base/command_line.h"
 #include "base/environment.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -19,9 +20,10 @@
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "chrome/common/chrome_switches.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/os_crypt/os_crypt_switches.h"
+#include "components/password_manager/core/browser/http_data_cleaner.h"
 #include "components/password_manager/core/browser/login_database.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_default.h"
@@ -42,7 +44,7 @@
 #elif defined(OS_CHROMEOS) || defined(OS_ANDROID)
 // Don't do anything. We're going to use the default store.
 #elif defined(USE_X11)
-#include "base/nix/xdg_util.h"
+#include "components/os_crypt/key_storage_util_linux.h"
 #if defined(USE_GNOME_KEYRING)
 #include "chrome/browser/password_manager/native_backend_gnome_x.h"
 #endif
@@ -90,7 +92,7 @@ void PasswordStoreFactory::OnPasswordsSyncedStatePotentiallyChanged(
       GetForProfile(profile, ServiceAccessType::EXPLICIT_ACCESS);
   if (!password_store)
     return;
-  sync_driver::SyncService* sync_service =
+  syncer::SyncService* sync_service =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
   net::URLRequestContextGetter* request_context_getter =
       profile->GetRequestContext();
@@ -183,35 +185,25 @@ PasswordStoreFactory::BuildServiceInstanceFor(
   // the desktop environment currently running, allowing GNOME Keyring in XFCE.
   // (In all cases we fall back on the basic store in case of failure.)
   base::nix::DesktopEnvironment desktop_env = GetDesktopEnvironment();
-  base::nix::DesktopEnvironment used_desktop_env;
   std::string store_type =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kPasswordStore);
   LinuxBackendUsed used_backend = PLAINTEXT;
-  if (store_type == "kwallet") {
-    used_desktop_env = base::nix::DESKTOP_ENVIRONMENT_KDE4;
-  } else if (store_type == "kwallet5") {
-    used_desktop_env = base::nix::DESKTOP_ENVIRONMENT_KDE5;
-  } else if (store_type == "gnome") {
-    used_desktop_env = base::nix::DESKTOP_ENVIRONMENT_GNOME;
-  } else if (store_type == "basic") {
-    used_desktop_env = base::nix::DESKTOP_ENVIRONMENT_OTHER;
-  } else {
-    // Detect the store to use automatically.
-    used_desktop_env = desktop_env;
-    const char* name = base::nix::GetDesktopEnvironmentName(desktop_env);
-    VLOG(1) << "Password storage detected desktop environment: "
-            << (name ? name : "(unknown)");
-  }
 
   PrefService* prefs = profile->GetPrefs();
   LocalProfileId id = GetLocalProfileId(prefs);
 
+  os_crypt::SelectedLinuxBackend selected_backend =
+      os_crypt::SelectBackend(store_type, desktop_env);
+
   std::unique_ptr<PasswordStoreX::NativeBackend> backend;
-  if (used_desktop_env == base::nix::DESKTOP_ENVIRONMENT_KDE4 ||
-      used_desktop_env == base::nix::DESKTOP_ENVIRONMENT_KDE5) {
-    // KDE3 didn't use DBus, which our KWallet store uses.
+  if (selected_backend == os_crypt::SelectedLinuxBackend::KWALLET ||
+      selected_backend == os_crypt::SelectedLinuxBackend::KWALLET5) {
     VLOG(1) << "Trying KWallet for password storage.";
+    base::nix::DesktopEnvironment used_desktop_env =
+        selected_backend == os_crypt::SelectedLinuxBackend::KWALLET
+            ? base::nix::DESKTOP_ENVIRONMENT_KDE4
+            : base::nix::DESKTOP_ENVIRONMENT_KDE5;
     backend.reset(new NativeBackendKWallet(id, used_desktop_env));
     if (backend->Init()) {
       VLOG(1) << "Using KWallet for password storage.";
@@ -219,21 +211,28 @@ PasswordStoreFactory::BuildServiceInstanceFor(
     } else {
       backend.reset();
     }
-  } else if (used_desktop_env == base::nix::DESKTOP_ENVIRONMENT_GNOME ||
-             used_desktop_env == base::nix::DESKTOP_ENVIRONMENT_UNITY ||
-             used_desktop_env == base::nix::DESKTOP_ENVIRONMENT_XFCE) {
+  } else if (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
+             selected_backend ==
+                 os_crypt::SelectedLinuxBackend::GNOME_KEYRING ||
+             selected_backend ==
+                 os_crypt::SelectedLinuxBackend::GNOME_LIBSECRET) {
 #if defined(USE_LIBSECRET)
-    VLOG(1) << "Trying libsecret for password storage.";
-    backend.reset(new NativeBackendLibsecret(id));
-    if (backend->Init()) {
-      VLOG(1) << "Using libsecret keyring for password storage.";
-      used_backend = LIBSECRET;
-    } else {
-      backend.reset();
+    if (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
+        selected_backend == os_crypt::SelectedLinuxBackend::GNOME_LIBSECRET) {
+      VLOG(1) << "Trying libsecret for password storage.";
+      backend.reset(new NativeBackendLibsecret(id));
+      if (backend->Init()) {
+        VLOG(1) << "Using libsecret keyring for password storage.";
+        used_backend = LIBSECRET;
+      } else {
+        backend.reset();
+      }
     }
 #endif  // defined(USE_LIBSECRET)
-    if (!backend.get()) {
 #if defined(USE_GNOME_KEYRING)
+    if (!backend.get() &&
+        (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
+         selected_backend == os_crypt::SelectedLinuxBackend::GNOME_KEYRING)) {
       VLOG(1) << "Trying GNOME keyring for password storage.";
       backend.reset(new NativeBackendGnome(id));
       if (backend->Init()) {
@@ -242,8 +241,8 @@ PasswordStoreFactory::BuildServiceInstanceFor(
       } else {
         backend.reset();
       }
-#endif  // defined(USE_GNOME_KEYRING)
     }
+#endif  // defined(USE_GNOME_KEYRING)
   }
 
   if (!backend.get()) {
@@ -270,6 +269,11 @@ PasswordStoreFactory::BuildServiceInstanceFor(
     LOG(WARNING) << "Could not initialize password store.";
     return nullptr;
   }
+
+  password_manager::DelayCleanObsoleteHttpDataForPasswordStoreAndPrefs(
+      ps.get(), profile->GetPrefs(),
+      make_scoped_refptr(profile->GetRequestContext()));
+
   return ps;
 }
 

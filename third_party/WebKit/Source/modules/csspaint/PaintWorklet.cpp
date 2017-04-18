@@ -5,48 +5,44 @@
 #include "modules/csspaint/PaintWorklet.h"
 
 #include "bindings/core/v8/V8Binding.h"
-#include "core/dom/ExecutionContext.h"
+#include "core/dom/Document.h"
+#include "core/frame/LocalFrame.h"
 #include "modules/csspaint/PaintWorkletGlobalScope.h"
 
 namespace blink {
 
 // static
-PaintWorklet* PaintWorklet::create(LocalFrame* frame, ExecutionContext* executionContext)
-{
-    PaintWorklet* worklet = new PaintWorklet(frame, executionContext);
-    worklet->suspendIfNeeded();
-    return worklet;
+PaintWorklet* PaintWorklet::Create(LocalFrame* frame) {
+  return new PaintWorklet(frame);
 }
 
-PaintWorklet::PaintWorklet(LocalFrame* frame, ExecutionContext* executionContext)
-    : Worklet(executionContext)
-    , m_paintWorkletGlobalScope(PaintWorkletGlobalScope::create(frame, executionContext->url(), executionContext->userAgent(), executionContext->getSecurityOrigin(), toIsolate(executionContext)))
-{
+PaintWorklet::PaintWorklet(LocalFrame* frame)
+    : MainThreadWorklet(frame),
+      paint_worklet_global_scope_(PaintWorkletGlobalScope::Create(
+          frame,
+          frame->GetDocument()->Url(),
+          frame->GetDocument()->UserAgent(),
+          frame->GetDocument()->GetSecurityOrigin(),
+          ToIsolate(frame->GetDocument()))) {}
+
+PaintWorklet::~PaintWorklet() {}
+
+PaintWorkletGlobalScope* PaintWorklet::GetWorkletGlobalScopeProxy() const {
+  return paint_worklet_global_scope_.Get();
 }
 
-PaintWorklet::~PaintWorklet()
-{
+CSSPaintDefinition* PaintWorklet::FindDefinition(const String& name) {
+  return paint_worklet_global_scope_->FindDefinition(name);
 }
 
-PaintWorkletGlobalScope* PaintWorklet::workletGlobalScopeProxy() const
-{
-    return m_paintWorkletGlobalScope.get();
+void PaintWorklet::AddPendingGenerator(const String& name,
+                                       CSSPaintImageGeneratorImpl* generator) {
+  return paint_worklet_global_scope_->AddPendingGenerator(name, generator);
 }
 
-CSSPaintDefinition* PaintWorklet::findDefinition(const String& name)
-{
-    return m_paintWorkletGlobalScope->findDefinition(name);
+DEFINE_TRACE(PaintWorklet) {
+  visitor->Trace(paint_worklet_global_scope_);
+  MainThreadWorklet::Trace(visitor);
 }
 
-void PaintWorklet::addPendingGenerator(const String& name, CSSPaintImageGeneratorImpl* generator)
-{
-    return m_paintWorkletGlobalScope->addPendingGenerator(name, generator);
-}
-
-DEFINE_TRACE(PaintWorklet)
-{
-    visitor->trace(m_paintWorkletGlobalScope);
-    Worklet::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

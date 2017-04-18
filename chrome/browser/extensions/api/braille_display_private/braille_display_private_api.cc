@@ -51,11 +51,12 @@ BrailleDisplayPrivateAPI::~BrailleDisplayPrivateAPI() {
 }
 
 void BrailleDisplayPrivateAPI::Shutdown() {
+  event_delegate_.reset();
 }
 
 static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<BrailleDisplayPrivateAPI> > g_factory =
-    LAZY_INSTANCE_INITIALIZER;
+    BrowserContextKeyedAPIFactory<BrailleDisplayPrivateAPI>>::DestructorAtExit
+    g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<BrailleDisplayPrivateAPI>*
@@ -169,11 +170,15 @@ BrailleDisplayPrivateWriteDotsFunction::
 bool BrailleDisplayPrivateWriteDotsFunction::Prepare() {
   params_ = WriteDots::Params::Create(*args_);
   EXTENSION_FUNCTION_VALIDATE(params_);
+  EXTENSION_FUNCTION_VALIDATE(
+      params_->cells.size() >=
+      static_cast<size_t>(params_->columns * params_->rows));
   return true;
 }
 
 void BrailleDisplayPrivateWriteDotsFunction::Work() {
-  BrailleController::GetInstance()->WriteDots(params_->cells);
+  BrailleController::GetInstance()->WriteDots(params_->cells, params_->columns,
+                                              params_->rows);
 }
 
 bool BrailleDisplayPrivateWriteDotsFunction::Respond() {

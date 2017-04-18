@@ -12,7 +12,6 @@
 #include <utility>
 
 #include "ash/display/window_tree_host_manager.h"
-#include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "base/strings/string_util.h"
 #include "ui/aura/client/cursor_client.h"
@@ -49,19 +48,20 @@ gfx::Point GetMouseLocationInScreen() {
 }
 
 void SetMouseLocationInScreen(const gfx::Point& screen_location) {
-  display::Display display =
-      ash::ScreenUtil::FindDisplayContainingPoint(screen_location);
+  const display::Display& display =
+      Shell::Get()->display_manager()->FindDisplayContainingPoint(
+          screen_location);
   if (!display.is_valid())
     return;
-  aura::Window* root_window = Shell::GetInstance()
-                                  ->window_tree_host_manager()
-                                  ->GetRootWindowForDisplayId(display.id());
+  aura::Window* root_window =
+      Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
+          display.id());
   gfx::Point host_location(screen_location);
   aura::client::ScreenPositionClient* client =
       aura::client::GetScreenPositionClient(root_window);
   if (client)
     client->ConvertPointFromScreen(root_window, &host_location);
-  root_window->GetHost()->MoveCursorTo(host_location);
+  root_window->GetHost()->MoveCursorToLocationInDIP(host_location);
 }
 
 }  // namespace
@@ -88,7 +88,7 @@ ScopedDisableInternalMouseAndKeyboardX11::
           // |touchpad_device_id_| will remain |kDeviceIdNone|.
           touchpad_device_id_ = xi_dev_list[i].deviceid;
           device_data_manager->DisableDevice(touchpad_device_id_);
-          Shell::GetInstance()->cursor_manager()->HideCursor();
+          Shell::Get()->cursor_manager()->HideCursor();
         }
       } else if (device_name == kCoreKeyboardName) {
         core_keyboard_device_id_ = xi_dev_list[i].deviceid;
@@ -123,7 +123,7 @@ ScopedDisableInternalMouseAndKeyboardX11::
           ui::DeviceDataManager::GetInstance());
   if (touchpad_device_id_ != kDeviceIdNone) {
     device_data_manager->EnableDevice(touchpad_device_id_);
-    Shell::GetInstance()->cursor_manager()->ShowCursor();
+    Shell::Get()->cursor_manager()->ShowCursor();
   }
   if (keyboard_device_id_ != kDeviceIdNone)
     device_data_manager->EnableDevice(keyboard_device_id_);

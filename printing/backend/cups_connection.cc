@@ -4,18 +4,31 @@
 
 #include "printing/backend/cups_connection.h"
 
+#include <map>
+#include <set>
 #include <string>
 #include <utility>
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "printing/backend/cups_jobs.h"
 
 namespace printing {
 
 namespace {
 
-const int kTimeoutMs = 3000;
+constexpr int kTimeoutMs = 3000;
+
+// The number of jobs we'll retrieve for a queue.  We expect a user to queue at
+// most 10 jobs per printer.  If they queue more, they won't receive updates for
+// the 11th job until one finishes.
+constexpr int kProcessingJobsLimit = 10;
+
+// The number of completed jobs that are retrieved.  We only need one update for
+// a completed job to confirm its final status.  We could retrieve one but we
+// retrieve the last 3 in case that many finished between queries.
+constexpr int kCompletedJobsLimit = 3;
 
 class DestinationEnumerator {
  public:
@@ -45,6 +58,12 @@ class DestinationEnumerator {
 };
 
 }  // namespace
+
+QueueStatus::QueueStatus() = default;
+
+QueueStatus::QueueStatus(const QueueStatus& other) = default;
+
+QueueStatus::~QueueStatus() = default;
 
 CupsConnection::CupsConnection(const GURL& print_server_url,
                                http_encryption_t encryption,
@@ -124,6 +143,43 @@ std::unique_ptr<CupsPrinter> CupsConnection::GetPrinter(
   return base::MakeUnique<CupsPrinter>(
       cups_http_.get(), std::unique_ptr<cups_dest_t, DestinationDeleter>(dest),
       std::unique_ptr<cups_dinfo_t, DestInfoDeleter>(info));
+}
+
+bool CupsConnection::GetJobs(const std::vector<std::string>& printer_ids,
+                             std::vector<QueueStatus>* queues) {
+  DCHECK(queues);
+  if (!Connect()) {
+    LOG(ERROR) << "Could not establish connection to CUPS";
+    return false;
+  }
+
+  std::vector<QueueStatus> temp_queues;
+
+  for (const std::string& id : printer_ids) {
+    temp_queues.emplace_back();
+    QueueStatus* queue_status = &temp_queues.back();
+
+    if (!GetPrinterStatus(cups_http_.get(), id,
+                          &queue_status->printer_status)) {
+      LOG(WARNING) << "Could not retrieve printer status for " << id;
+      return false;
+    }
+
+    if (!GetCupsJobs(cups_http_.get(), id, kCompletedJobsLimit, COMPLETED,
+                     &queue_status->jobs)) {
+      LOG(WARNING) << "Could not get completed jobs for " << id;
+      return false;
+    }
+
+    if (!GetCupsJobs(cups_http_.get(), id, kProcessingJobsLimit, PROCESSING,
+                     &queue_status->jobs)) {
+      LOG(WARNING) << "Could not get in progress jobs for " << id;
+      return false;
+    }
+  }
+  queues->insert(queues->end(), temp_queues.begin(), temp_queues.end());
+
+  return true;
 }
 
 std::string CupsConnection::server_name() const {

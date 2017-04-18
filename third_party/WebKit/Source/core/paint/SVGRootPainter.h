@@ -5,7 +5,7 @@
 #ifndef SVGRootPainter_h
 #define SVGRootPainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -16,23 +16,27 @@ class LayoutPoint;
 class LayoutSVGRoot;
 
 class SVGRootPainter {
-    STACK_ALLOCATED();
-public:
-    SVGRootPainter(const LayoutSVGRoot& layoutSVGRoot) : m_layoutSVGRoot(layoutSVGRoot) { }
+  STACK_ALLOCATED();
 
-    void paint(const PaintInfo&, const LayoutPoint&);
+ public:
+  SVGRootPainter(const LayoutSVGRoot& layout_svg_root)
+      : layout_svg_root_(layout_svg_root) {}
 
-    // The embedded SVG document uses an unsnapped viewport box for layout, while SVG root's border
-    // box ultimately gets snapped during paint. This translate/scale transform is applied to
-    // compensate the difference, in addition to applying the local to border box transform.
-    AffineTransform transformToPixelSnappedBorderBox(const LayoutPoint& paintOffset) const;
+  void PaintReplaced(const PaintInfo&, const LayoutPoint&);
 
-private:
-    IntRect pixelSnappedSize(const LayoutPoint& paintOffset) const;
+  // The embedded SVG document uses an unsnapped viewport box for layout, while
+  // SVG root's border box ultimately gets snapped during paint. This
+  // translate/scale transform is applied to compensate the difference, in
+  // addition to applying the local to border box transform.
+  AffineTransform TransformToPixelSnappedBorderBox(
+      const LayoutPoint& paint_offset) const;
 
-    const LayoutSVGRoot& m_layoutSVGRoot;
+ private:
+  IntRect PixelSnappedSize(const LayoutPoint& paint_offset) const;
+
+  const LayoutSVGRoot& layout_svg_root_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGRootPainter_h
+#endif  // SVGRootPainter_h

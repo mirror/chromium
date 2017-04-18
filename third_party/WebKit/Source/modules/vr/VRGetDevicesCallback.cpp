@@ -5,28 +5,20 @@
 #include "modules/vr/VRGetDevicesCallback.h"
 
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "modules/vr/VRDisplayCollection.h"
 
 namespace blink {
 
-VRGetDevicesCallback::VRGetDevicesCallback(ScriptPromiseResolver* resolver, VRDisplayCollection* displays)
-    : m_resolver(resolver)
-    , m_displays(displays)
-{
+VRGetDevicesCallback::VRGetDevicesCallback(ScriptPromiseResolver* resolver)
+    : resolver_(resolver) {}
+
+VRGetDevicesCallback::~VRGetDevicesCallback() {}
+
+void VRGetDevicesCallback::OnSuccess(VRDisplayVector displays) {
+  resolver_->Resolve(displays);
 }
 
-VRGetDevicesCallback::~VRGetDevicesCallback()
-{
+void VRGetDevicesCallback::OnError() {
+  resolver_->Reject();
 }
 
-void VRGetDevicesCallback::onSuccess(mojo::WTFArray<device::blink::VRDisplayPtr> displays)
-{
-    m_resolver->resolve(m_displays->updateDisplays(std::move(displays)));
-}
-
-void VRGetDevicesCallback::onError()
-{
-    m_resolver->reject();
-}
-
-} // namespace blink
+}  // namespace blink

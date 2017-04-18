@@ -5,8 +5,9 @@
 package org.chromium.chrome.browser.payments;
 
 import android.content.DialogInterface;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 
+import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.autofill.AutofillTestHelper;
 import org.chromium.chrome.browser.autofill.PersonalDataManager.AutofillProfile;
@@ -39,14 +40,15 @@ public class PaymentRequestUseStatsTest extends PaymentRequestTestBase {
                 "US", "555-555-5555", "", "en-US"));
         mCreditCardId = mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true,
                 "Jon Doe", "4111111111111111", "1111", "12", "2050", "visa", R.drawable.pr_visa,
-                mBillingAddressId));
+                mBillingAddressId, "" /* serverId */));
         // Set specific use stats for the profile and credit card.
         mHelper.setProfileUseStatsForTesting(mBillingAddressId, 20, 5000);
-        mHelper.setCreditCardUseStatsForTesting(mCreditCardId, 10, 5000);
+        mHelper.setCreditCardUseStatsForTesting(mCreditCardId, 1, 5000);
     }
 
     /** Expect that using a profile and credit card to pay updates their usage stats. */
     @MediumTest
+    @Feature({"Payments"})
     public void testLogProfileAndCreditCardUse() throws InterruptedException, ExecutionException,
             TimeoutException {
         triggerUIAndWait(mReadyToPay);
@@ -66,7 +68,7 @@ public class PaymentRequestUseStatsTest extends PaymentRequestTestBase {
         assertEquals(21, mHelper.getProfileUseCountForTesting(mBillingAddressId));
         assertTrue(timeBeforeRecord <= mHelper.getProfileUseDateForTesting(mBillingAddressId));
         assertTrue(timeAfterRecord >= mHelper.getProfileUseDateForTesting(mBillingAddressId));
-        assertEquals(11, mHelper.getCreditCardUseCountForTesting(mCreditCardId));
+        assertEquals(2, mHelper.getCreditCardUseCountForTesting(mCreditCardId));
         assertTrue(timeBeforeRecord <= mHelper.getCreditCardUseDateForTesting(mCreditCardId));
         assertTrue(timeAfterRecord >= mHelper.getCreditCardUseDateForTesting(mCreditCardId));
     }

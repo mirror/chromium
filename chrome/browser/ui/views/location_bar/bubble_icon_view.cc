@@ -5,32 +5,32 @@
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 
 #include "chrome/browser/command_updater.h"
-#include "ui/accessibility/ax_view_state.h"
-#include "ui/base/material_design/material_design_controller.h"
+#include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_view.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/events/event.h"
-#include "ui/gfx/color_palette.h"
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/animation/ink_drop_highlight.h"
+#include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
+
+void BubbleIconView::Init() {
+  AddChildView(image_);
+  image_->set_can_process_events_within_subtree(false);
+  image_->EnableCanvasFlippingForRTLUI(true);
+  SetInkDropMode(InkDropMode::ON);
+  SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
+}
 
 BubbleIconView::BubbleIconView(CommandUpdater* command_updater, int command_id)
     : image_(new views::ImageView()),
       command_updater_(command_updater),
       command_id_(command_id),
       active_(false),
-      suppress_mouse_released_action_(false) {
-  AddChildView(image_);
-  image_->set_interactive(false);
-  image_->EnableCanvasFlippingForRTLUI(true);
-  if (ui::MaterialDesignController::IsModeMaterial()) {
-    SetInkDropMode(InkDropMode::ON);
-    SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
-  } else {
-    image_->SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
-  }
-}
+      suppress_mouse_released_action_(false) {}
 
 BubbleIconView::~BubbleIconView() {}
 
@@ -52,9 +52,9 @@ void BubbleIconView::SetTooltipText(const base::string16& tooltip) {
   image_->SetTooltipText(tooltip);
 }
 
-void BubbleIconView::GetAccessibleState(ui::AXViewState* state) {
-  image_->GetAccessibleState(state);
-  state->role = ui::AX_ROLE_BUTTON;
+void BubbleIconView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  image_->GetAccessibleNodeData(node_data);
+  node_data->role = ui::AX_ROLE_BUTTON;
 }
 
 bool BubbleIconView::GetTooltipText(const gfx::Point& p,
@@ -63,7 +63,13 @@ bool BubbleIconView::GetTooltipText(const gfx::Point& p,
 }
 
 gfx::Size BubbleIconView::GetPreferredSize() const {
-  return image_->GetPreferredSize();
+  gfx::Rect image_rect(image_->GetPreferredSize());
+  image_rect.Inset(-gfx::Insets(LocationBarView::kIconInteriorPadding));
+  DCHECK_EQ(image_rect.height(),
+            GetLayoutConstant(LOCATION_BAR_HEIGHT) -
+                2 * (GetLayoutConstant(LOCATION_BAR_ELEMENT_PADDING) +
+                     BackgroundWith1PxBorder::kLocationBarBorderThicknessDip));
+  return image_rect.size();
 }
 
 void BubbleIconView::Layout() {
@@ -135,23 +141,25 @@ void BubbleIconView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 }
 
 void BubbleIconView::AddInkDropLayer(ui::Layer* ink_drop_layer) {
-  image_->SetPaintToLayer(true);
+  image_->SetPaintToLayer();
   image_->layer()->SetFillsBoundsOpaquely(false);
   views::InkDropHostView::AddInkDropLayer(ink_drop_layer);
 }
 
 void BubbleIconView::RemoveInkDropLayer(ui::Layer* ink_drop_layer) {
   views::InkDropHostView::RemoveInkDropLayer(ink_drop_layer);
-  image_->SetPaintToLayer(false);
+  image_->DestroyLayer();
+}
+
+std::unique_ptr<views::InkDrop> BubbleIconView::CreateInkDrop() {
+  std::unique_ptr<views::InkDropImpl> ink_drop = CreateDefaultInkDropImpl();
+  ink_drop->SetShowHighlightOnFocus(true);
+  return std::move(ink_drop);
 }
 
 SkColor BubbleIconView::GetInkDropBaseColor() const {
   return color_utils::DeriveDefaultIconColor(GetNativeTheme()->GetSystemColor(
       ui::NativeTheme::kColorId_TextfieldDefaultColor));
-}
-
-bool BubbleIconView::ShouldShowInkDropForFocus() const {
-  return true;
 }
 
 void BubbleIconView::OnGestureEvent(ui::GestureEvent* event) {
@@ -179,14 +187,6 @@ void BubbleIconView::ExecuteCommand(ExecuteSource source) {
     command_updater_->ExecuteCommand(command_id_);
 }
 
-gfx::VectorIconId BubbleIconView::GetVectorIcon() const {
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
-}
-
-bool BubbleIconView::SetRasterIcon() {
-  return false;
-}
-
 void BubbleIconView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   views::BubbleDialogDelegateView* bubble = GetBubble();
   if (bubble)
@@ -194,18 +194,14 @@ void BubbleIconView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
 }
 
 void BubbleIconView::UpdateIcon() {
-  if (SetRasterIcon())
-    return;
-
-  const int icon_size =
-      ui::MaterialDesignController::IsModeMaterial() ? 16 : 18;
   const ui::NativeTheme* theme = GetNativeTheme();
   SkColor icon_color =
       active_
-          ? theme->GetSystemColor(ui::NativeTheme::kColorId_CallToActionColor)
+          ? theme->GetSystemColor(
+              ui::NativeTheme::kColorId_ProminentButtonColor)
           : GetInkDropBaseColor();
-  image_->SetImage(
-      gfx::CreateVectorIcon(GetVectorIcon(), icon_size, icon_color));
+  image_->SetImage(gfx::CreateVectorIcon(
+      GetVectorIcon(), LocationBarView::kIconWidth, icon_color));
 }
 
 void BubbleIconView::SetActiveInternal(bool active) {

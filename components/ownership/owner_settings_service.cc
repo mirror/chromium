@@ -32,7 +32,9 @@ using ScopedSGNContext = std::unique_ptr<
 
 std::unique_ptr<em::PolicyFetchResponse> AssembleAndSignPolicy(
     std::unique_ptr<em::PolicyData> policy,
-    SECKEYPrivateKey* private_key) {
+    scoped_refptr<ownership::PrivateKey> private_key) {
+  DCHECK(private_key->key());
+
   // Assemble the policy.
   std::unique_ptr<em::PolicyFetchResponse> policy_response(
       new em::PolicyFetchResponse());
@@ -41,8 +43,8 @@ std::unique_ptr<em::PolicyFetchResponse> AssembleAndSignPolicy(
     return nullptr;
   }
 
-  ScopedSGNContext sign_context(
-      SGN_NewContext(SEC_OID_PKCS1_SHA1_WITH_RSA_ENCRYPTION, private_key));
+  ScopedSGNContext sign_context(SGN_NewContext(
+      SEC_OID_PKCS1_SHA1_WITH_RSA_ENCRYPTION, private_key->key()));
   if (!sign_context) {
     NOTREACHED();
     return nullptr;
@@ -109,35 +111,33 @@ bool OwnerSettingsService::AssembleAndSignPolicyAsync(
   if (!task_runner || !IsOwner())
     return false;
   return base::PostTaskAndReplyWithResult(
-      task_runner,
-      FROM_HERE,
-      base::Bind(
-          &AssembleAndSignPolicy, base::Passed(&policy), private_key_->key()),
+      task_runner, FROM_HERE,
+      base::Bind(&AssembleAndSignPolicy, base::Passed(&policy), private_key_),
       callback);
 }
 
 bool OwnerSettingsService::SetBoolean(const std::string& setting, bool value) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::FundamentalValue in_value(value);
+  base::Value in_value(value);
   return Set(setting, in_value);
 }
 
 bool OwnerSettingsService::SetInteger(const std::string& setting, int value) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::FundamentalValue in_value(value);
+  base::Value in_value(value);
   return Set(setting, in_value);
 }
 
 bool OwnerSettingsService::SetDouble(const std::string& setting, double value) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::FundamentalValue in_value(value);
+  base::Value in_value(value);
   return Set(setting, in_value);
 }
 
 bool OwnerSettingsService::SetString(const std::string& setting,
                                      const std::string& value) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::StringValue in_value(value);
+  base::Value in_value(value);
   return Set(setting, in_value);
 }
 

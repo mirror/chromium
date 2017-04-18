@@ -6,7 +6,9 @@
 
 #include "base/files/file_util.h"
 #include "base/path_service.h"
+#include "net/cert/internal/cert_errors.h"
 #include "net/cert/pem_tokenizer.h"
+#include "net/cert/x509_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace cast_certificate {
@@ -78,6 +80,28 @@ SignatureTestData ReadSignatureTestData(const base::StringPiece& file_name) {
   EXPECT_FALSE(result.signature_sha256.empty());
 
   return result;
+}
+
+std::unique_ptr<net::TrustStoreInMemory> CreateTrustStoreFromFile(
+    const std::string& path) {
+  std::unique_ptr<net::TrustStoreInMemory> trust_store(
+      new net::TrustStoreInMemory());
+  const auto trusted_test_roots =
+      cast_certificate::testing::ReadCertificateChainFromFile(path);
+  for (const auto& trusted_root : trusted_test_roots) {
+    net::CertErrors errors;
+    scoped_refptr<net::ParsedCertificate> cert(net::ParsedCertificate::Create(
+        net::x509_util::CreateCryptoBuffer(trusted_root), {}, &errors));
+    EXPECT_TRUE(cert) << errors.ToDebugString();
+    scoped_refptr<net::TrustAnchor> anchor =
+        net::TrustAnchor::CreateFromCertificateWithConstraints(std::move(cert));
+    trust_store->AddTrustAnchor(std::move(anchor));
+  }
+  return trust_store;
+}
+
+base::Time ConvertUnixTimestampSeconds(uint64_t time) {
+  return base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(time);
 }
 
 }  // namespace testing

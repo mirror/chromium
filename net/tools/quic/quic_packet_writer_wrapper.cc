@@ -4,22 +4,20 @@
 
 #include "net/tools/quic/quic_packet_writer_wrapper.h"
 
-#include "net/quic/quic_types.h"
+#include "net/quic/core/quic_types.h"
 
 namespace net {
 
 QuicPacketWriterWrapper::QuicPacketWriterWrapper() {}
 
-QuicPacketWriterWrapper::QuicPacketWriterWrapper(QuicPacketWriter* writer)
-    : writer_(writer) {}
-
 QuicPacketWriterWrapper::~QuicPacketWriterWrapper() {}
 
-WriteResult QuicPacketWriterWrapper::WritePacket(const char* buffer,
-                                                 size_t buf_len,
-                                                 const IPAddress& self_address,
-                                                 const IPEndPoint& peer_address,
-                                                 PerPacketOptions* options) {
+WriteResult QuicPacketWriterWrapper::WritePacket(
+    const char* buffer,
+    size_t buf_len,
+    const QuicIpAddress& self_address,
+    const QuicSocketAddress& peer_address,
+    PerPacketOptions* options) {
   return writer_->WritePacket(buffer, buf_len, self_address, peer_address,
                               options);
 }
@@ -37,7 +35,7 @@ void QuicPacketWriterWrapper::SetWritable() {
 }
 
 QuicByteCount QuicPacketWriterWrapper::GetMaxPacketSize(
-    const IPEndPoint& peer_address) const {
+    const QuicSocketAddress& peer_address) const {
   return writer_->GetMaxPacketSize(peer_address);
 }
 

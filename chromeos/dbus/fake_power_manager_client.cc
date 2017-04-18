@@ -14,21 +14,12 @@ namespace chromeos {
 
 namespace {
 // Minimum power for a USB power source to be classified as AC.
-const double kUsbMinAcWatts = 24;
+constexpr double kUsbMinAcWatts = 24;
 }
 
-FakePowerManagerClient::FakePowerManagerClient()
-    : num_request_restart_calls_(0),
-      num_request_shutdown_calls_(0),
-      num_set_policy_calls_(0),
-      num_set_is_projecting_calls_(0),
-      num_pending_suspend_readiness_callbacks_(0),
-      is_projecting_(false),
-      weak_ptr_factory_(this) {
-}
+FakePowerManagerClient::FakePowerManagerClient() : weak_ptr_factory_(this) {}
 
-FakePowerManagerClient::~FakePowerManagerClient() {
-}
+FakePowerManagerClient::~FakePowerManagerClient() = default;
 
 void FakePowerManagerClient::Init(dbus::Bus* bus) {
   props_.set_battery_percent(50);
@@ -58,25 +49,19 @@ void FakePowerManagerClient::SetRenderProcessManagerDelegate(
   render_process_manager_delegate_ = delegate;
 }
 
-void FakePowerManagerClient::DecreaseScreenBrightness(bool allow_off) {
-}
+void FakePowerManagerClient::DecreaseScreenBrightness(bool allow_off) {}
 
-void FakePowerManagerClient::IncreaseScreenBrightness() {
-}
+void FakePowerManagerClient::IncreaseScreenBrightness() {}
 
 void FakePowerManagerClient::SetScreenBrightnessPercent(double percent,
-                                                        bool gradual) {
-}
+                                                        bool gradual) {}
 
 void FakePowerManagerClient::GetScreenBrightnessPercent(
-    const GetScreenBrightnessPercentCallback& callback) {
-}
+    const GetScreenBrightnessPercentCallback& callback) {}
 
-void FakePowerManagerClient::DecreaseKeyboardBrightness() {
-}
+void FakePowerManagerClient::DecreaseKeyboardBrightness() {}
 
-void FakePowerManagerClient::IncreaseKeyboardBrightness() {
-}
+void FakePowerManagerClient::IncreaseKeyboardBrightness() {}
 
 void FakePowerManagerClient::RequestStatusUpdate() {
   // RequestStatusUpdate() calls and notifies the observers
@@ -87,8 +72,7 @@ void FakePowerManagerClient::RequestStatusUpdate() {
                             weak_ptr_factory_.GetWeakPtr()));
 }
 
-void FakePowerManagerClient::RequestSuspend() {
-}
+void FakePowerManagerClient::RequestSuspend() {}
 
 void FakePowerManagerClient::RequestRestart() {
   ++num_request_restart_calls_;
@@ -99,8 +83,7 @@ void FakePowerManagerClient::RequestShutdown() {
 }
 
 void FakePowerManagerClient::NotifyUserActivity(
-    power_manager::UserActivityType type) {
-}
+    power_manager::UserActivityType type) {}
 
 void FakePowerManagerClient::NotifyVideoActivity(bool is_fullscreen) {
   video_activity_reports_.push_back(is_fullscreen);
@@ -134,6 +117,23 @@ void FakePowerManagerClient::SetPowerSource(const std::string& id) {
   NotifyObservers();
 }
 
+void FakePowerManagerClient::SetBacklightsForcedOff(bool forced_off) {
+  backlights_forced_off_ = forced_off;
+  ++num_set_backlights_forced_off_calls_;
+}
+
+void FakePowerManagerClient::GetBacklightsForcedOff(
+    const GetBacklightsForcedOffCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, backlights_forced_off_));
+}
+
+void FakePowerManagerClient::GetSwitchStates(
+    const GetSwitchStatesCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, lid_state_, tablet_mode_));
+}
+
 base::Closure FakePowerManagerClient::GetSuspendReadinessCallback() {
   ++num_pending_suspend_readiness_callbacks_;
 
@@ -153,7 +153,8 @@ bool FakePowerManagerClient::PopVideoActivityReport() {
 }
 
 void FakePowerManagerClient::SendSuspendImminent() {
-  FOR_EACH_OBSERVER(Observer, observers_, SuspendImminent());
+  for (auto& observer : observers_)
+    observer.SuspendImminent();
   if (render_process_manager_delegate_)
     render_process_manager_delegate_->SuspendImminent();
 }
@@ -162,18 +163,33 @@ void FakePowerManagerClient::SendSuspendDone() {
   if (render_process_manager_delegate_)
     render_process_manager_delegate_->SuspendDone();
 
-  FOR_EACH_OBSERVER(Observer, observers_, SuspendDone(base::TimeDelta()));
+  for (auto& observer : observers_)
+    observer.SuspendDone(base::TimeDelta());
 }
 
 void FakePowerManagerClient::SendDarkSuspendImminent() {
-  FOR_EACH_OBSERVER(Observer, observers_, DarkSuspendImminent());
+  for (auto& observer : observers_)
+    observer.DarkSuspendImminent();
+}
+
+void FakePowerManagerClient::SendBrightnessChanged(int level,
+                                                   bool user_initiated) {
+  for (auto& observer : observers_)
+    observer.BrightnessChanged(level, user_initiated);
 }
 
 void FakePowerManagerClient::SendPowerButtonEvent(
     bool down,
     const base::TimeTicks& timestamp) {
-  FOR_EACH_OBSERVER(Observer, observers_,
-                    PowerButtonEventReceived(down, timestamp));
+  for (auto& observer : observers_)
+    observer.PowerButtonEventReceived(down, timestamp);
+}
+
+void FakePowerManagerClient::SetLidState(LidState state,
+                                         const base::TimeTicks& timestamp) {
+  lid_state_ = state;
+  for (auto& observer : observers_)
+    observer.LidEventReceived(state, timestamp);
 }
 
 void FakePowerManagerClient::UpdatePowerProperties(
@@ -183,7 +199,8 @@ void FakePowerManagerClient::UpdatePowerProperties(
 }
 
 void FakePowerManagerClient::NotifyObservers() {
-  FOR_EACH_OBSERVER(Observer, observers_, PowerChanged(props_));
+  for (auto& observer : observers_)
+    observer.PowerChanged(props_);
 }
 
 void FakePowerManagerClient::HandleSuspendReadiness() {

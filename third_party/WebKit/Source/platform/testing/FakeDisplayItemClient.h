@@ -6,31 +6,32 @@
 #define FakeDisplayItemClient_h
 
 #include "platform/geometry/LayoutRect.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 // A simple DisplayItemClient implementation suitable for use in unit tests.
 class FakeDisplayItemClient : public DisplayItemClient {
-public:
-    FakeDisplayItemClient(const String& name = "FakeDisplayItemClient", const LayoutRect& visualRect = LayoutRect())
-        : m_name(name), m_visualRect(visualRect)
-    { }
+ public:
+  FakeDisplayItemClient(const String& name = "FakeDisplayItemClient",
+                        const LayoutRect& visual_rect = LayoutRect())
+      : name_(name), visual_rect_(visual_rect) {}
 
-    String debugName() const final { return m_name; }
-    LayoutRect visualRect() const override { return m_visualRect; }
+  String DebugName() const final { return name_; }
+  LayoutRect VisualRect() const override { return visual_rect_; }
 
-    // This simulates a paint without needing a PaintController.
-    void updateCacheGeneration()
-    {
-        setDisplayItemsCached(CacheGenerationOrInvalidationReason::next());
-    }
+  void SetVisualRect(const LayoutRect& r) { visual_rect_ = r; }
 
-private:
-    String m_name;
-    LayoutRect m_visualRect;
+  // This simulates a paint without needing a PaintController.
+  void UpdateCacheGeneration() {
+    SetDisplayItemsCached(CacheGenerationOrInvalidationReason::Next());
+  }
+
+ private:
+  String name_;
+  LayoutRect visual_rect_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FakeDisplayItemClient_h
+#endif  // FakeDisplayItemClient_h

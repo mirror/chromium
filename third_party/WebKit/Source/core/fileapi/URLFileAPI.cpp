@@ -5,34 +5,45 @@
 #include "core/fileapi/URLFileAPI.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptState.h"
 #include "core/dom/DOMURL.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/Blob.h"
+#include "core/frame/UseCounter.h"
 #include "core/html/PublicURLManager.h"
 
 namespace blink {
 
 // static
-String URLFileAPI::createObjectURL(ExecutionContext* executionContext, Blob* blob, ExceptionState& exceptionState)
-{
-    DCHECK(blob);
-    DCHECK(executionContext);
+String URLFileAPI::createObjectURL(ScriptState* script_state,
+                                   Blob* blob,
+                                   ExceptionState& exception_state) {
+  DCHECK(blob);
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
+  DCHECK(execution_context);
 
-    if (blob->isClosed()) {
-        exceptionState.throwDOMException(InvalidStateError, String(blob->isFile() ? "File" : "Blob") + " has been closed.");
-        return String();
-    }
-    return DOMURL::createPublicURL(executionContext, blob, blob->uuid());
+  if (blob->isClosed()) {
+    // TODO(jsbell): The spec doesn't throw, but rather returns a blob: URL
+    // without adding it to the store.
+    exception_state.ThrowDOMException(
+        kInvalidStateError,
+        String(blob->IsFile() ? "File" : "Blob") + " has been closed.");
+    return String();
+  }
+
+  UseCounter::Count(execution_context, UseCounter::kCreateObjectURLBlob);
+  return DOMURL::CreatePublicURL(execution_context, blob, blob->Uuid());
 }
 
 // static
-void URLFileAPI::revokeObjectURL(ExecutionContext* executionContext, const String& urlString)
-{
-    DCHECK(executionContext);
+void URLFileAPI::revokeObjectURL(ScriptState* script_state,
+                                 const String& url_string) {
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
+  DCHECK(execution_context);
 
-    KURL url(KURL(), urlString);
-    executionContext->removeURLFromMemoryCache(url);
-    executionContext->publicURLManager().revoke(url);
+  KURL url(KURL(), url_string);
+  execution_context->RemoveURLFromMemoryCache(url);
+  execution_context->GetPublicURLManager().Revoke(url);
 }
 
-} // namespace blink
+}  // namespace blink

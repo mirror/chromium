@@ -6,8 +6,8 @@
 #define SelfKeepAlive_h
 
 #include "platform/heap/Persistent.h"
-#include "wtf/Allocator.h"
-#include "wtf/Assertions.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
@@ -37,47 +37,38 @@ namespace blink {
 //     SelfKeepAlive m_keepAlive;
 //  };
 //
-// The responsibility to call clear() in a timely fashion resides with the implementation
-// of the object.
+// The responsibility to call clear() in a timely fashion resides with the
+// implementation of the object.
 //
 //
-template<typename Self>
+template <typename Self>
 class SelfKeepAlive final {
-    DISALLOW_NEW();
-public:
-    SelfKeepAlive()
-    {
-    }
+  DISALLOW_NEW();
 
-    explicit SelfKeepAlive(Self* self)
-    {
-        assign(self);
-    }
+ public:
+  SelfKeepAlive() {}
 
-    SelfKeepAlive& operator=(Self* self)
-    {
-        assign(self);
-        return *this;
-    }
+  explicit SelfKeepAlive(Self* self) { Assign(self); }
 
-    void clear()
-    {
-        m_keepAlive.clear();
-    }
+  SelfKeepAlive& operator=(Self* self) {
+    Assign(self);
+    return *this;
+  }
 
-    explicit operator bool() const { return m_keepAlive; }
+  void Clear() { keep_alive_.Clear(); }
 
-private:
-    void assign(Self* self)
-    {
-        ASSERT(!m_keepAlive || m_keepAlive.get() == self);
-        m_keepAlive = self;
-    }
+  explicit operator bool() const { return keep_alive_; }
 
-    GC_PLUGIN_IGNORE("420515")
-    Persistent<Self> m_keepAlive;
+ private:
+  void Assign(Self* self) {
+    ASSERT(!keep_alive_ || keep_alive_.Get() == self);
+    keep_alive_ = self;
+  }
+
+  GC_PLUGIN_IGNORE("420515")
+  Persistent<Self> keep_alive_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SelfKeepAlive_h
+#endif  // SelfKeepAlive_h

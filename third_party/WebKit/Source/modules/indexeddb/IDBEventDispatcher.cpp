@@ -28,57 +28,43 @@
 
 #include "modules/indexeddb/IDBEventDispatcher.h"
 
-#include "core/frame/UseCounter.h"
 #include "modules/EventModules.h"
 #include "modules/EventTargetModules.h"
 
 namespace blink {
 
-DispatchEventResult IDBEventDispatcher::dispatch(Event* event, HeapVector<Member<EventTarget>>& eventTargets)
-{
-    size_t size = eventTargets.size();
-    ASSERT(size);
+DispatchEventResult IDBEventDispatcher::Dispatch(
+    Event* event,
+    HeapVector<Member<EventTarget>>& event_targets) {
+  size_t size = event_targets.size();
+  DCHECK(size);
 
-    event->setEventPhase(Event::CAPTURING_PHASE);
-    for (size_t i = size - 1; i; --i) { // Don't do the first element.
-        event->setCurrentTarget(eventTargets[i].get());
-        eventTargets[i]->fireEventListeners(event);
-        if (event->propagationStopped())
-            goto doneDispatching;
-    }
+  event->SetEventPhase(Event::kCapturingPhase);
+  for (size_t i = size - 1; i; --i) {  // Don't do the first element.
+    event->SetCurrentTarget(event_targets[i].Get());
+    event_targets[i]->FireEventListeners(event);
+    if (event->PropagationStopped())
+      goto doneDispatching;
+  }
 
-    event->setEventPhase(Event::AT_TARGET);
-    event->setCurrentTarget(eventTargets[0].get());
-    eventTargets[0]->fireEventListeners(event);
-    if (event->propagationStopped() || !event->bubbles())
-        goto doneDispatching;
-    if (event->bubbles() && event->cancelBubble()) {
-        for (size_t i = 1; i < size; ++i) { // Don't do the first element.
-            if (eventTargets[i]->hasEventListeners(event->type()))
-                UseCounter::count(eventTargets[i]->getExecutionContext(), UseCounter::EventCancelBubbleAffected);
-        }
-        goto doneDispatching;
-    }
+  event->SetEventPhase(Event::kAtTarget);
+  event->SetCurrentTarget(event_targets[0].Get());
+  event_targets[0]->FireEventListeners(event);
+  if (event->PropagationStopped() || !event->bubbles() || event->cancelBubble())
+    goto doneDispatching;
 
-    event->setEventPhase(Event::BUBBLING_PHASE);
-    for (size_t i = 1; i < size; ++i) { // Don't do the first element.
-        event->setCurrentTarget(eventTargets[i].get());
-        eventTargets[i]->fireEventListeners(event);
-        if (event->propagationStopped())
-            goto doneDispatching;
-        if (event->cancelBubble()) {
-            for (size_t j = i + 1; j < size; ++j) {
-                if (eventTargets[j]->hasEventListeners(event->type()))
-                    UseCounter::count(eventTargets[j]->getExecutionContext(), UseCounter::EventCancelBubbleAffected);
-            }
-            goto doneDispatching;
-        }
-    }
+  event->SetEventPhase(Event::kBubblingPhase);
+  for (size_t i = 1; i < size; ++i) {  // Don't do the first element.
+    event->SetCurrentTarget(event_targets[i].Get());
+    event_targets[i]->FireEventListeners(event);
+    if (event->PropagationStopped() || event->cancelBubble())
+      goto doneDispatching;
+  }
 
 doneDispatching:
-    event->setCurrentTarget(nullptr);
-    event->setEventPhase(Event::NONE);
-    return EventTarget::dispatchEventResult(*event);
+  event->SetCurrentTarget(nullptr);
+  event->SetEventPhase(Event::kNone);
+  return EventTarget::GetDispatchEventResult(*event);
 }
 
-} // namespace blink
+}  // namespace blink

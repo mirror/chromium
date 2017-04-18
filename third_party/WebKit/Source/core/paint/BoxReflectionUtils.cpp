@@ -13,69 +13,69 @@
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/BoxReflection.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "platform/graphics/paint/SkPictureBuilder.h"
+#include "platform/graphics/paint/PaintRecordBuilder.h"
 
 namespace blink {
 
-BoxReflection boxReflectionForPaintLayer(const PaintLayer& layer, const ComputedStyle& style)
-{
-    const StyleReflection* reflectStyle = style.boxReflect();
+BoxReflection BoxReflectionForPaintLayer(const PaintLayer& layer,
+                                         const ComputedStyle& style) {
+  const StyleReflection* reflect_style = style.BoxReflect();
 
-    LayoutRect frameLayoutRect = toLayoutBox(layer.layoutObject())->frameRect();
-    FloatRect frameRect(frameLayoutRect);
-    BoxReflection::ReflectionDirection direction = BoxReflection::VerticalReflection;
-    float offset = 0;
-    switch (reflectStyle->direction()) {
-    case ReflectionAbove:
-        direction = BoxReflection::VerticalReflection;
-        offset = -floatValueForLength(reflectStyle->offset(), frameRect.height());
-        break;
-    case ReflectionBelow:
-        direction = BoxReflection::VerticalReflection;
-        offset = 2 * frameRect.height() + floatValueForLength(reflectStyle->offset(), frameRect.height());
-        break;
-    case ReflectionLeft:
-        direction = BoxReflection::HorizontalReflection;
-        offset = -floatValueForLength(reflectStyle->offset(), frameRect.width());
-        break;
-    case ReflectionRight:
-        direction = BoxReflection::HorizontalReflection;
-        offset = 2 * frameRect.width() + floatValueForLength(reflectStyle->offset(), frameRect.width());
-        break;
+  LayoutRect frame_layout_rect =
+      ToLayoutBox(layer.GetLayoutObject()).FrameRect();
+  FloatRect frame_rect(frame_layout_rect);
+  BoxReflection::ReflectionDirection direction =
+      BoxReflection::kVerticalReflection;
+  float offset = 0;
+  switch (reflect_style->Direction()) {
+    case kReflectionAbove:
+      direction = BoxReflection::kVerticalReflection;
+      offset =
+          -FloatValueForLength(reflect_style->Offset(), frame_rect.Height());
+      break;
+    case kReflectionBelow:
+      direction = BoxReflection::kVerticalReflection;
+      offset =
+          2 * frame_rect.Height() +
+          FloatValueForLength(reflect_style->Offset(), frame_rect.Height());
+      break;
+    case kReflectionLeft:
+      direction = BoxReflection::kHorizontalReflection;
+      offset =
+          -FloatValueForLength(reflect_style->Offset(), frame_rect.Width());
+      break;
+    case kReflectionRight:
+      direction = BoxReflection::kHorizontalReflection;
+      offset = 2 * frame_rect.Width() +
+               FloatValueForLength(reflect_style->Offset(), frame_rect.Width());
+      break;
+  }
+
+  sk_sp<PaintRecord> mask;
+  const NinePieceImage& mask_nine_piece = reflect_style->Mask();
+  if (mask_nine_piece.HasImage()) {
+    LayoutRect mask_rect(LayoutPoint(), frame_layout_rect.Size());
+    LayoutRect mask_bounding_rect(mask_rect);
+    mask_bounding_rect.Expand(style.ImageOutsets(mask_nine_piece));
+    FloatRect mask_bounding_float_rect(mask_bounding_rect);
+
+    // TODO(jbroman): PaintRecordBuilder + DrawingRecorder seems excessive.
+    // If NinePieceImagePainter operated on SkCanvas, we'd only need a
+    // PictureRecorder here.
+    PaintRecordBuilder builder(mask_bounding_float_rect);
+    {
+      GraphicsContext& context = builder.Context();
+      DrawingRecorder drawing_recorder(context, layer.GetLayoutObject(),
+                                       DisplayItem::kReflectionMask,
+                                       mask_bounding_float_rect);
+      NinePieceImagePainter(layer.GetLayoutObject())
+          .Paint(builder.Context(), mask_rect, style, mask_nine_piece,
+                 SkBlendMode::kSrcOver);
     }
+    mask = builder.EndRecording();
+  }
 
-    // Since the filter origin is the corner of the input bounds, which may
-    // include visual overflow (e.g. due to box-shadow), we must adjust the
-    // offset to also account for this offset (this is equivalent to using
-    // SkLocalMatrixImageFilter, but simpler).
-    // The rect used here should match the one used in FilterPainter.
-    LayoutRect filterInputBounds = layer.physicalBoundingBoxIncludingReflectionAndStackingChildren(LayoutPoint());
-    offset -= 2 * (direction == BoxReflection::VerticalReflection ? filterInputBounds.y() : filterInputBounds.x()).toFloat();
-
-    RefPtr<SkPicture> mask;
-    const NinePieceImage& maskNinePiece = reflectStyle->mask();
-    if (maskNinePiece.hasImage()) {
-        LayoutRect maskRect(LayoutPoint(), frameLayoutRect.size());
-        maskRect.moveBy(-filterInputBounds.location());
-
-        LayoutRect maskBoundingRect(maskRect);
-        maskBoundingRect.expand(style.imageOutsets(maskNinePiece));
-        FloatRect maskBoundingFloatRect(maskBoundingRect);
-
-        // TODO(jbroman): SkPictureBuilder + DrawingRecorder seems excessive.
-        // If NinePieceImagePainter operated on SkCanvas, we'd only need an
-        // SkPictureRecorder here.
-        SkPictureBuilder recorder(maskBoundingFloatRect);
-        {
-            GraphicsContext& context = recorder.context();
-            DrawingRecorder drawingRecorder(context, *layer.layoutObject(), DisplayItem::ReflectionMask, maskBoundingFloatRect);
-            NinePieceImagePainter(*layer.layoutObject()).paint(
-                recorder.context(), maskRect, style, maskNinePiece, SkXfermode::kSrcOver_Mode);
-        }
-        mask = recorder.endRecording();
-    }
-
-    return BoxReflection(direction, offset, mask);
+  return BoxReflection(direction, offset, std::move(mask));
 }
 
-} // namespace blink
+}  // namespace blink

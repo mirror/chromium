@@ -27,48 +27,50 @@
 #define TypeAhead_h
 
 #include "core/CoreExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/StringBuilder.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Time.h"
+#include "platform/wtf/text/StringBuilder.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class KeyboardEvent;
 
 class CORE_EXPORT TypeAheadDataSource {
-public:
-    virtual ~TypeAheadDataSource() { }
+ public:
+  virtual ~TypeAheadDataSource() {}
 
-    virtual int indexOfSelectedOption() const = 0;
-    virtual int optionCount() const = 0;
-    virtual String optionAtIndex(int index) const = 0;
+  virtual int IndexOfSelectedOption() const = 0;
+  virtual int OptionCount() const = 0;
+  virtual String OptionAtIndex(int index) const = 0;
 };
 
 class TypeAhead {
-    DISALLOW_NEW();
-public:
-    TypeAhead(TypeAheadDataSource*);
+  DISALLOW_NEW();
 
-    enum ModeFlag {
-        MatchPrefix = 1 << 0,
-        CycleFirstChar = 1 << 1,
-        MatchIndex = 1 << 2,
-    };
-    using MatchModeFlags = unsigned;
+ public:
+  TypeAhead(TypeAheadDataSource*);
 
-    // Returns the index for the matching option.
-    int handleEvent(KeyboardEvent*, MatchModeFlags);
-    bool hasActiveSession(KeyboardEvent*);
-    void resetSession();
+  enum ModeFlag {
+    kMatchPrefix = 1 << 0,
+    kCycleFirstChar = 1 << 1,
+    kMatchIndex = 1 << 2,
+  };
+  using MatchModeFlags = unsigned;
 
-private:
-    TypeAheadDataSource* m_dataSource;
-    // platform timestamp of last keyboard event in seconds
-    double m_lastTypeTime;
-    UChar m_repeatingChar;
-    StringBuilder m_buffer;
+  // Returns the index for the matching option.
+  int HandleEvent(KeyboardEvent*, MatchModeFlags);
+  bool HasActiveSession(KeyboardEvent*);
+  void ResetSession();
+
+ private:
+  TypeAheadDataSource* data_source_;
+  // platform timestamp of last keyboard event in seconds
+  TimeTicks last_type_time_;
+  UChar repeating_char_;
+  StringBuilder buffer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TypeAhead_h
+#endif  // TypeAhead_h

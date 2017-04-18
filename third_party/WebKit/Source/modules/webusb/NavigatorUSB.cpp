@@ -9,41 +9,36 @@
 
 namespace blink {
 
-NavigatorUSB& NavigatorUSB::from(Navigator& navigator)
-{
-    NavigatorUSB* supplement = static_cast<NavigatorUSB*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        supplement = new NavigatorUSB(navigator);
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+NavigatorUSB& NavigatorUSB::From(Navigator& navigator) {
+  NavigatorUSB* supplement = static_cast<NavigatorUSB*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorUSB(navigator);
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
-USB* NavigatorUSB::usb(Navigator& navigator)
-{
-    return NavigatorUSB::from(navigator).usb();
+USB* NavigatorUSB::usb(Navigator& navigator) {
+  return NavigatorUSB::From(navigator).usb();
 }
 
-USB* NavigatorUSB::usb()
-{
-    return m_usb;
+USB* NavigatorUSB::usb() {
+  return usb_;
 }
 
-DEFINE_TRACE(NavigatorUSB)
-{
-    visitor->trace(m_usb);
-    Supplement<Navigator>::trace(visitor);
+DEFINE_TRACE(NavigatorUSB) {
+  visitor->Trace(usb_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-NavigatorUSB::NavigatorUSB(Navigator& navigator)
-{
-    if (navigator.frame())
-        m_usb = USB::create(*navigator.frame());
+NavigatorUSB::NavigatorUSB(Navigator& navigator) {
+  if (navigator.GetFrame())
+    usb_ = USB::Create(*navigator.GetFrame());
 }
 
-const char* NavigatorUSB::supplementName()
-{
-    return "NavigatorUSB";
+const char* NavigatorUSB::SupplementName() {
+  return "NavigatorUSB";
 }
 
-} // namespace blink
+}  // namespace blink

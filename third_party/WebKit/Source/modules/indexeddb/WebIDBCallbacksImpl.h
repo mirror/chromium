@@ -29,10 +29,10 @@
 #ifndef WebIDBCallbacksImpl_h
 #define WebIDBCallbacksImpl_h
 
-#include "public/platform/modules/indexeddb/WebIDBCallbacks.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
 #include <memory>
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "public/platform/modules/indexeddb/WebIDBCallbacks.h"
 
 namespace blink {
 
@@ -45,32 +45,43 @@ struct WebIDBMetadata;
 struct WebIDBValue;
 
 class WebIDBCallbacksImpl final : public WebIDBCallbacks {
-    USING_FAST_MALLOC(WebIDBCallbacksImpl);
-public:
-    static std::unique_ptr<WebIDBCallbacksImpl> create(IDBRequest*);
+  USING_FAST_MALLOC(WebIDBCallbacksImpl);
 
-    ~WebIDBCallbacksImpl() override;
+ public:
+  static std::unique_ptr<WebIDBCallbacksImpl> Create(IDBRequest*);
 
-    // Pointers transfer ownership.
-    void onError(const WebIDBDatabaseError&) override;
-    void onSuccess(const WebVector<WebString>&) override;
-    void onSuccess(WebIDBCursor*, const WebIDBKey&, const WebIDBKey& primaryKey, const WebIDBValue&) override;
-    void onSuccess(WebIDBDatabase*, const WebIDBMetadata&) override;
-    void onSuccess(const WebIDBKey&) override;
-    void onSuccess(const WebIDBValue&) override;
-    void onSuccess(const WebVector<WebIDBValue>&) override;
-    void onSuccess(long long) override;
-    void onSuccess() override;
-    void onSuccess(const WebIDBKey&, const WebIDBKey& primaryKey, const WebIDBValue&) override;
-    void onBlocked(long long oldVersion) override;
-    void onUpgradeNeeded(long long oldVersion, WebIDBDatabase*, const WebIDBMetadata&, unsigned short dataLoss, WebString dataLossMessage) override;
+  ~WebIDBCallbacksImpl() override;
 
-private:
-    explicit WebIDBCallbacksImpl(IDBRequest*);
+  // Pointers transfer ownership.
+  void OnError(const WebIDBDatabaseError&) override;
+  void OnSuccess(const WebVector<WebString>&) override;
+  void OnSuccess(WebIDBCursor*,
+                 const WebIDBKey&,
+                 const WebIDBKey& primary_key,
+                 const WebIDBValue&) override;
+  void OnSuccess(WebIDBDatabase*, const WebIDBMetadata&) override;
+  void OnSuccess(const WebIDBKey&) override;
+  void OnSuccess(const WebIDBValue&) override;
+  void OnSuccess(const WebVector<WebIDBValue>&) override;
+  void OnSuccess(long long) override;
+  void OnSuccess() override;
+  void OnSuccess(const WebIDBKey&,
+                 const WebIDBKey& primary_key,
+                 const WebIDBValue&) override;
+  void OnBlocked(long long old_version) override;
+  void OnUpgradeNeeded(long long old_version,
+                       WebIDBDatabase*,
+                       const WebIDBMetadata&,
+                       unsigned short data_loss,
+                       WebString data_loss_message) override;
+  void Detach() override;
 
-    Persistent<IDBRequest> m_request;
+ private:
+  explicit WebIDBCallbacksImpl(IDBRequest*);
+
+  Persistent<IDBRequest> request_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebIDBCallbacksImpl_h
+#endif  // WebIDBCallbacksImpl_h

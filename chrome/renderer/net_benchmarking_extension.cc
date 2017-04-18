@@ -4,9 +4,11 @@
 
 #include "chrome/renderer/net_benchmarking_extension.h"
 
-#include "chrome/common/benchmarking_messages.h"
+#include "chrome/common/net_benchmarking.mojom.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
-#include "third_party/WebKit/public/web/WebCache.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "third_party/WebKit/public/platform/WebCache.h"
 #include "v8/include/v8.h"
 
 using blink::WebCache;
@@ -62,28 +64,38 @@ class NetBenchmarkingWrapper : public v8::Extension {
     return v8::Local<v8::FunctionTemplate>();
   }
 
+  static chrome::mojom::NetBenchmarking& GetNetBenchmarking() {
+    CR_DEFINE_STATIC_LOCAL(chrome::mojom::NetBenchmarkingPtr, net_benchmarking,
+                           (ConnectToBrowser()));
+    return *net_benchmarking;
+  }
+
+  static chrome::mojom::NetBenchmarkingPtr ConnectToBrowser() {
+    chrome::mojom::NetBenchmarkingPtr net_benchmarking;
+    content::RenderThread::Get()->GetConnector()->BindInterface(
+        content::mojom::kBrowserServiceName, &net_benchmarking);
+    return net_benchmarking;
+  }
+
   static void ClearCache(const v8::FunctionCallbackInfo<v8::Value>& args) {
     int rv;
-    content::RenderThread::Get()->Send(new ChromeViewHostMsg_ClearCache(&rv));
-    WebCache::clear();
+    GetNetBenchmarking().ClearCache(&rv);
+    WebCache::Clear();
   }
 
   static void ClearHostResolverCache(
       const v8::FunctionCallbackInfo<v8::Value>& args) {
-    content::RenderThread::Get()->Send(
-        new ChromeViewHostMsg_ClearHostResolverCache());
+    GetNetBenchmarking().ClearHostResolverCache();
   }
 
   static void ClearPredictorCache(
       const v8::FunctionCallbackInfo<v8::Value>& args) {
-    content::RenderThread::Get()->Send(
-        new ChromeViewHostMsg_ClearPredictorCache());
+    GetNetBenchmarking().ClearPredictorCache();
   }
 
   static void CloseConnections(
       const v8::FunctionCallbackInfo<v8::Value>& args) {
-    content::RenderThread::Get()->Send(
-        new ChromeViewHostMsg_CloseCurrentConnections());
+    GetNetBenchmarking().CloseCurrentConnections();
   }
 };
 

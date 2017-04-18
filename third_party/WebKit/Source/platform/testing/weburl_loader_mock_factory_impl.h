@@ -11,44 +11,42 @@
 #include "base/macros.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/KURLHash.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/WeakPtr.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
-#include "wtf/HashMap.h"
-#include "wtf/WeakPtr.h"
 
 namespace blink {
 
+class TestingPlatformSupport;
 class WebData;
 class WebURLLoader;
 class WebURLLoaderMock;
 class WebURLLoaderTestDelegate;
 
 // A factory that creates WebURLLoaderMock to simulate resource loading in
-// tests.
-// You register files for specific URLs, the content of the file is then served
-// when these URLs are loaded.
-// In order to serve the asynchronous requests, you need to invoke
-// ServeAsynchronousRequest.
+// tests. Since there are restriction and rules to follow, please read comments
+// in WebURLLoaderMockFactory carefully to use this class correctly.
 class WebURLLoaderMockFactoryImpl : public WebURLLoaderMockFactory {
  public:
-  WebURLLoaderMockFactoryImpl();
-  virtual ~WebURLLoaderMockFactoryImpl();
+  WebURLLoaderMockFactoryImpl(TestingPlatformSupport*);
+  ~WebURLLoaderMockFactoryImpl() override;
 
   // WebURLLoaderMockFactory:
-  virtual WebURLLoader* createURLLoader(WebURLLoader* default_loader) override;
-  void registerURL(const WebURL& url,
+  WebURLLoader* CreateURLLoader(WebURLLoader* default_loader) override;
+  void RegisterURL(const WebURL& url,
                    const WebURLResponse& response,
-                   const WebString& filePath = WebString()) override;
-  void registerErrorURL(const WebURL& url,
+                   const WebString& file_path = WebString()) override;
+  void RegisterErrorURL(const WebURL& url,
                         const WebURLResponse& response,
                         const WebURLError& error) override;
-  void unregisterURL(const WebURL& url) override;
-  void unregisterAllURLs() override;
-  void serveAsynchronousRequests() override;
-  void setLoaderDelegate(WebURLLoaderTestDelegate* delegate) override {
+  void UnregisterURL(const WebURL& url) override;
+  void UnregisterAllURLsAndClearMemoryCache() override;
+  void ServeAsynchronousRequests() override;
+  void SetLoaderDelegate(WebURLLoaderTestDelegate* delegate) override {
     delegate_ = delegate;
   }
 
@@ -72,6 +70,8 @@ class WebURLLoaderMockFactoryImpl : public WebURLLoaderMockFactory {
     WebURLResponse response;
     base::FilePath file_path;
   };
+
+  virtual void RunUntilIdle();
 
   // Loads the specified request and populates the response, error and data
   // accordingly.
@@ -98,11 +98,13 @@ class WebURLLoaderMockFactoryImpl : public WebURLLoaderMockFactory {
 
   // Table of the registered URLs and the responses that they should receive.
   using URLToResponseMap = HashMap<KURL, ResponseInfo>;
-  URLToResponseMap url_to_reponse_info_;
+  URLToResponseMap url_to_response_info_;
+
+  TestingPlatformSupport* platform_;
 
   DISALLOW_COPY_AND_ASSIGN(WebURLLoaderMockFactoryImpl);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif  // WebURLLoaderMockFactoryImpl_h

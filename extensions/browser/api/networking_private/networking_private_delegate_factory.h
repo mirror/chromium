@@ -18,10 +18,6 @@ class BrowserContext;
 
 namespace extensions {
 
-#if defined(OS_WIN) || defined(OS_MACOSX)
-class NetworkingPrivateServiceClient;
-#endif
-
 // Factory for creating NetworkingPrivateDelegate instances as a keyed service.
 // NetworkingPrivateDelegate supports the networkingPrivate API.
 class NetworkingPrivateDelegateFactory
@@ -31,18 +27,6 @@ class NetworkingPrivateDelegateFactory
   // additional delegates to the API (in src/extensions). Since this factory is
   // already a singleton, it provides a good place to hold these delegate
   // factories. See NetworkingPrivateDelegate for the delegate declarations.
-
-  class VerifyDelegateFactory {
-   public:
-    VerifyDelegateFactory();
-    virtual ~VerifyDelegateFactory();
-
-    virtual std::unique_ptr<NetworkingPrivateDelegate::VerifyDelegate>
-    CreateDelegate() = 0;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(VerifyDelegateFactory);
-  };
 
   class UIDelegateFactory {
    public:
@@ -57,7 +41,6 @@ class NetworkingPrivateDelegateFactory
   };
 
   // Provide optional factories for creating delegate instances.
-  void SetVerifyDelegateFactory(std::unique_ptr<VerifyDelegateFactory> factory);
   void SetUIDelegateFactory(std::unique_ptr<UIDelegateFactory> factory);
 
   static NetworkingPrivateDelegate* GetForBrowserContext(
@@ -78,7 +61,6 @@ class NetworkingPrivateDelegateFactory
   bool ServiceIsCreatedWithBrowserContext() const override;
   bool ServiceIsNULLWhileTesting() const override;
 
-  std::unique_ptr<VerifyDelegateFactory> verify_factory_;
   std::unique_ptr<UIDelegateFactory> ui_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkingPrivateDelegateFactory);

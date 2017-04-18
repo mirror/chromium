@@ -4,12 +4,13 @@
 
 #include "chrome/browser/extensions/extension_prefs_unittest.h"
 
+#include <utility>
+
 #include "base/files/scoped_temp_dir.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/common/chrome_paths.h"
@@ -17,7 +18,8 @@
 #include "components/prefs/mock_pref_change_callback.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/scoped_user_pref_update.h"
-#include "components/syncable_prefs/pref_service_syncable.h"
+#include "components/sync/model/string_ordinal.h"
+#include "components/sync_preferences/pref_service_syncable.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/test/mock_notification_observer.h"
@@ -29,7 +31,6 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/permissions/permissions_info.h"
-#include "sync/api/string_ordinal.h"
 
 using base::Time;
 using base::TimeDelta;
@@ -573,7 +574,7 @@ class ExtensionPrefsFinishDelayedInstallInfo : public ExtensionPrefsTest {
     manifest.SetString(manifest_keys::kVersion, "0.2");
     std::unique_ptr<base::ListValue> scripts(new base::ListValue);
     scripts->AppendString("test.js");
-    manifest.Set(manifest_keys::kBackgroundScripts, scripts.release());
+    manifest.Set(manifest_keys::kBackgroundScripts, std::move(scripts));
     base::FilePath path =
         prefs_.extensions_dir().AppendASCII("test_0.2");
     std::string errors;

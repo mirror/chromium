@@ -14,7 +14,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/api/autofill_private/autofill_util.h"
 #include "chrome/common/extensions/api/autofill_private.h"
-#include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "extensions/browser/extension_function.h"
@@ -32,6 +31,9 @@ namespace {
 static const char kSettingsOrigin[] = "Chrome settings";
 static const char kErrorDataUnavailable[] = "Autofill data unavailable.";
 
+// TODO(mad): This does basically the same thing as
+//            components/autofill/core/browser/autofill_address_util.cc, we
+//            should refactor to use a single code path for this.
 // Fills |components| with the address UI components that should be used to
 // input an address for |country_code| when UI BCP 47 language code is
 // |ui_language_code|.
@@ -179,10 +181,8 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveAddressFunction::Run() {
   autofill::PersonalDataManager* personal_data =
       autofill::PersonalDataManagerFactory::GetForProfile(
       chrome_details_.GetProfile());
-  if (!personal_data || !personal_data->IsDataLoaded()) {
-    error_ = kErrorDataUnavailable;
-    return RespondNow(NoArguments());
-  }
+  if (!personal_data || !personal_data->IsDataLoaded())
+    return RespondNow(Error(kErrorDataUnavailable));
 
   api::autofill_private::AddressEntry* address = &parameters->address;
 
@@ -216,13 +216,13 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveAddressFunction::Run() {
 
   if (address->address_level1) {
     profile.SetRawInfo(
-        autofill::ADDRESS_HOME_CITY,
+        autofill::ADDRESS_HOME_STATE,
         base::UTF8ToUTF16(*address->address_level1));
   }
 
   if (address->address_level2) {
     profile.SetRawInfo(
-        autofill::ADDRESS_HOME_STATE,
+        autofill::ADDRESS_HOME_CITY,
         base::UTF8ToUTF16(*address->address_level2));
   }
 
@@ -368,10 +368,8 @@ ExtensionFunction::ResponseAction AutofillPrivateSaveCreditCardFunction::Run() {
   autofill::PersonalDataManager* personal_data =
       autofill::PersonalDataManagerFactory::GetForProfile(
       chrome_details_.GetProfile());
-  if (!personal_data || !personal_data->IsDataLoaded()) {
-    error_ = kErrorDataUnavailable;
-    return RespondNow(NoArguments());
-  }
+  if (!personal_data || !personal_data->IsDataLoaded())
+    return RespondNow(Error(kErrorDataUnavailable));
 
   api::autofill_private::CreditCardEntry* card = &parameters->card;
 
@@ -427,10 +425,8 @@ ExtensionFunction::ResponseAction AutofillPrivateRemoveEntryFunction::Run() {
   autofill::PersonalDataManager* personal_data =
       autofill::PersonalDataManagerFactory::GetForProfile(
       chrome_details_.GetProfile());
-  if (!personal_data || !personal_data->IsDataLoaded()) {
-    error_ = kErrorDataUnavailable;
-    return RespondNow(NoArguments());
-  }
+  if (!personal_data || !personal_data->IsDataLoaded())
+    return RespondNow(Error(kErrorDataUnavailable));
 
   personal_data->RemoveByGUID(parameters->guid);
 
@@ -479,10 +475,8 @@ ExtensionFunction::ResponseAction AutofillPrivateMaskCreditCardFunction::Run() {
   autofill::PersonalDataManager* personal_data =
       autofill::PersonalDataManagerFactory::GetForProfile(
       chrome_details_.GetProfile());
-  if (!personal_data || !personal_data->IsDataLoaded()) {
-    error_ = kErrorDataUnavailable;
-    return RespondNow(NoArguments());
-  }
+  if (!personal_data || !personal_data->IsDataLoaded())
+    return RespondNow(Error(kErrorDataUnavailable));
 
   personal_data->ResetFullServerCard(parameters->guid);
 

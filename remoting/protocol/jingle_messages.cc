@@ -7,9 +7,11 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "remoting/base/constants.h"
+#include "remoting/base/name_value_map.h"
+#include "remoting/base/remoting_bot.h"
 #include "remoting/protocol/content_description.h"
-#include "remoting/protocol/name_value_map.h"
-#include "third_party/webrtc/libjingle/xmllite/xmlelement.h"
+#include "remoting/protocol/session_plugin.h"
+#include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 
 using buzz::QName;
 using buzz::XmlElement;
@@ -32,11 +34,6 @@ const char kXmlNamespace[] = "http://www.w3.org/XML/1998/namespace";
 
 const int kPortMin = 1000;
 const int kPortMax = 65535;
-
-const NameMapElement<SignalingAddress::Channel> kChannelTypes[] = {
-    {SignalingAddress::Channel::LCS, "lcs"},
-    {SignalingAddress::Channel::XMPP, "xmpp"},
-};
 
 const NameMapElement<JingleMessage::ActionType> kActionTypes[] = {
   { JingleMessage::SESSION_INITIATE, "session-initiate" },
@@ -148,136 +145,7 @@ XmlElement* FormatIceCandidate(
   return result;
 }
 
-// Represents the XML attrbute names for the various address fields in the
-// iq stanza.
-enum class Field { JID, CHANNEL, ENDPOINT_ID };
-
-buzz::QName GetQNameByField(Field attr, bool from) {
-  std::string attribute_name;
-  switch (attr) {
-    case Field::JID:
-      attribute_name = (from) ? "from" : "to";
-      break;
-    case Field::ENDPOINT_ID:
-      attribute_name = (from) ? "from-endpoint-id" : "to-endpoint-id";
-      break;
-    case Field::CHANNEL:
-      attribute_name = (from) ? "from-channel" : "to-channel";
-      break;
-    default:
-      NOTREACHED();
-  }
-  return QName(kEmptyNamespace, attribute_name);
-}
-
-SignalingAddress ParseAddress(
-    const buzz::XmlElement* iq, bool from, std::string* error) {
-  SignalingAddress empty_instance;
-
-  std::string jid(iq->Attr(GetQNameByField(Field::JID, from)));
-
-  const XmlElement* jingle = iq->FirstNamed(QName(kJingleNamespace, "jingle"));
-
-  if (!jingle) {
-    return SignalingAddress(jid);
-  }
-
-  std::string type(iq->Attr(QName(std::string(), "type")));
-  // For error IQs, flips the |from| flag as the jingle node represents the
-  // original request.
-  if (type == "error") {
-    from = !from;
-  }
-
-  std::string endpoint_id(
-      jingle->Attr(GetQNameByField(Field::ENDPOINT_ID, from)));
-  std::string channel_str(jingle->Attr(GetQNameByField(Field::CHANNEL, from)));
-  SignalingAddress::Channel channel;
-
-  if (channel_str.empty()) {
-    channel = SignalingAddress::Channel::XMPP;
-  } else if (!NameToValue(kChannelTypes, channel_str, &channel)) {
-    *error = "Unknown channel: " + channel_str;
-    return empty_instance;
-  }
-
-  bool isLcs = (channel == SignalingAddress::Channel::LCS);
-
-  if (isLcs == endpoint_id.empty()) {
-    *error = (isLcs ? "Missing |endpoint-id| for LCS channel"
-                    : "|endpoint_id| should be empty for XMPP channel");
-    return empty_instance;
-  }
-
-  return SignalingAddress(jid, endpoint_id, channel);
-}
-
-void SetAddress(buzz::XmlElement* iq,
-                buzz::XmlElement* jingle,
-                const SignalingAddress& address,
-                bool from) {
-  if (address.empty()) {
-    return;
-  }
-
-  // Always set the JID.
-  iq->SetAttr(GetQNameByField(Field::JID, from), address.jid);
-
-  // Do not tamper the routing-info in the jingle tag for error IQ's, as
-  // it corresponds to the original message.
-  std::string type(iq->Attr(QName(std::string(), "type")));
-  if (type == "error") {
-    return;
-  }
-
-  // Start from a fresh slate regardless of the previous address format.
-  jingle->ClearAttr(GetQNameByField(Field::CHANNEL, from));
-  jingle->ClearAttr(GetQNameByField(Field::ENDPOINT_ID, from));
-
-  // Only set the channel and endpoint_id in the LCS channel.
-  if (address.channel == SignalingAddress::Channel::LCS) {
-    jingle->AddAttr(
-        GetQNameByField(Field::ENDPOINT_ID, from), address.endpoint_id);
-    jingle->AddAttr(
-        GetQNameByField(Field::CHANNEL, from),
-        ValueToName(kChannelTypes, address.channel));
-  }
-}
-
 }  // namespace
-
-IceTransportInfo::NamedCandidate::NamedCandidate(
-    const std::string& name,
-    const cricket::Candidate& candidate)
-    : name(name),
-      candidate(candidate) {
-}
-
-IceTransportInfo::IceCredentials::IceCredentials(std::string channel,
-                                              std::string ufrag,
-                                              std::string password)
-    : channel(channel), ufrag(ufrag), password(password) {
-}
-
-SignalingAddress::SignalingAddress()
-    : channel(SignalingAddress::Channel::XMPP) {}
-
-SignalingAddress::SignalingAddress(const std::string& jid)
-    : jid(jid), channel(SignalingAddress::Channel::XMPP) {}
-
-SignalingAddress::SignalingAddress(const std::string& jid,
-                                   const std::string& endpoint_id,
-                                   Channel channel)
-    : jid(jid), endpoint_id(endpoint_id), channel(channel) {}
-
-bool SignalingAddress::operator==(const SignalingAddress& other) {
-  return (other.endpoint_id == endpoint_id) && (other.jid == jid) &&
-         (other.channel == channel);
-}
-
-bool SignalingAddress::operator!=(const SignalingAddress& other) {
-  return !(*this == other);
-}
 
 // static
 bool JingleMessage::IsJingleMessage(const buzz::XmlElement* stanza) {
@@ -314,13 +182,9 @@ bool JingleMessage::ParseXml(const buzz::XmlElement* stanza,
     return false;
   }
 
-  from = ParseAddress(stanza, true, error);
-  if (!error->empty()) {
-    return false;
-  }
-
-  to = ParseAddress(stanza, false, error);
-  if (!error->empty()) {
+  from = SignalingAddress::Parse(stanza, SignalingAddress::FROM, error);
+  to = SignalingAddress::Parse(stanza, SignalingAddress::TO, error);
+  if (from.empty() || to.empty()) {
     return false;
   }
 
@@ -342,15 +206,28 @@ bool JingleMessage::ParseXml(const buzz::XmlElement* stanza,
     return false;
   }
 
+  const XmlElement* attachments_tag =
+      jingle_tag->FirstNamed(QName(kChromotingXmlNamespace, "attachments"));
+  if (attachments_tag) {
+    attachments.reset(new XmlElement(*attachments_tag));
+  } else {
+    attachments.reset();
+  }
+
   if (action == SESSION_INFO) {
     // session-info messages may contain arbitrary information not
     // defined by the Jingle protocol. We don't need to parse it.
     const XmlElement* child = jingle_tag->FirstElement();
+    // Plugin messages are action independent, which should not be considered as
+    // session-info.
+    if (child == attachments_tag) {
+      child = child->NextElement();
+    }
     if (child) {
       // session-info is allowed to be empty.
       info.reset(new XmlElement(*child));
     } else {
-      info.reset(nullptr);
+      info.reset();
     }
     return true;
   }
@@ -374,8 +251,9 @@ bool JingleMessage::ParseXml(const buzz::XmlElement* stanza,
     }
   }
 
-  if (action == SESSION_TERMINATE)
+  if (action == SESSION_TERMINATE) {
     return true;
+  }
 
   const XmlElement* content_tag =
       jingle_tag->FirstNamed(QName(kJingleNamespace, "content"));
@@ -396,7 +274,7 @@ bool JingleMessage::ParseXml(const buzz::XmlElement* stanza,
     transport_info.reset(new buzz::XmlElement(*webrtc_transport_tag));
   }
 
-  description.reset(nullptr);
+  description.reset();
   if (action == SESSION_INITIATE || action == SESSION_ACCEPT) {
     const XmlElement* description_tag = content_tag->FirstNamed(
         QName(kChromotingXmlNamespace, "description"));
@@ -435,22 +313,31 @@ std::unique_ptr<buzz::XmlElement> JingleMessage::ToXml() const {
       new XmlElement(QName(kJingleNamespace, "jingle"), true);
   root->AddElement(jingle_tag);
   jingle_tag->AddAttr(QName(kEmptyNamespace, "sid"), sid);
-  SetAddress(root.get(), jingle_tag, to, false);
-  SetAddress(root.get(), jingle_tag, from, true);
+
+  to.SetInMessage(root.get(), SignalingAddress::TO);
+  if (!from.empty())
+    from.SetInMessage(root.get(), SignalingAddress::FROM);
 
   const char* action_attr = ValueToName(kActionTypes, action);
-  if (!action_attr)
+  if (!action_attr) {
     LOG(FATAL) << "Invalid action value " << action;
+  }
   jingle_tag->AddAttr(QName(kEmptyNamespace, "action"), action_attr);
 
+  if (attachments) {
+    jingle_tag->AddElement(new XmlElement(*attachments));
+  }
+
   if (action == SESSION_INFO) {
-    if (info.get())
+    if (info.get()) {
       jingle_tag->AddElement(new XmlElement(*info.get()));
+    }
     return root;
   }
 
-  if (action == SESSION_INITIATE)
+  if (action == SESSION_INITIATE) {
     jingle_tag->AddAttr(QName(kEmptyNamespace, "initiator"), initiator);
+  }
 
   if (reason != UNKNOWN_REASON) {
     XmlElement* reason_tag = new XmlElement(QName(kJingleNamespace, "reason"));
@@ -475,8 +362,9 @@ std::unique_ptr<buzz::XmlElement> JingleMessage::ToXml() const {
                          ContentDescription::kChromotingContentName);
     content_tag->AddAttr(QName(kEmptyNamespace, "creator"), "initiator");
 
-    if (description)
+    if (description) {
       content_tag->AddElement(description->ToXml());
+    }
 
     if (transport_info) {
       content_tag->AddElement(new XmlElement(*transport_info));
@@ -487,6 +375,15 @@ std::unique_ptr<buzz::XmlElement> JingleMessage::ToXml() const {
   }
 
   return root;
+}
+
+void JingleMessage::AddAttachment(std::unique_ptr<XmlElement> attachment) {
+  DCHECK(attachment);
+  if (!attachments) {
+    attachments.reset(new XmlElement(
+        QName(kChromotingXmlNamespace, "attachments")));
+  }
+  attachments->AddElement(attachment.release());
 }
 
 JingleMessageReply::JingleMessageReply()
@@ -518,22 +415,23 @@ std::unique_ptr<buzz::XmlElement> JingleMessageReply::ToXml(
 
   SignalingAddress original_from;
   std::string error_message;
-  original_from = ParseAddress(request_stanza, true, &error_message);
-  DCHECK(error_message.empty());
+  original_from = SignalingAddress::Parse(
+      request_stanza, SignalingAddress::FROM, &error_message);
+  DCHECK(!original_from.empty());
 
   if (type == REPLY_RESULT) {
     iq->SetAttr(QName(kEmptyNamespace, "type"), "result");
     XmlElement* jingle =
         new XmlElement(QName(kJingleNamespace, "jingle"), true);
     iq->AddElement(jingle);
-    SetAddress(iq.get(), jingle, original_from, false);
+    original_from.SetInMessage(iq.get(), SignalingAddress::TO);
     return iq;
   }
 
   DCHECK_EQ(type, REPLY_ERROR);
 
   iq->SetAttr(QName(kEmptyNamespace, "type"), "error");
-  SetAddress(iq.get(), nullptr, original_from, false);
+  original_from.SetInMessage(iq.get(), SignalingAddress::TO);
 
   for (const buzz::XmlElement* child = request_stanza->FirstElement();
        child != nullptr; child = child->NextElement()) {
@@ -573,8 +471,9 @@ std::unique_ptr<buzz::XmlElement> JingleMessageReply::ToXml(
       NOTREACHED();
   }
 
-  if (!text.empty())
+  if (!text.empty()) {
     error_text = text;
+  }
 
   error->SetAttr(QName(kEmptyNamespace, "type"), type);
 
@@ -599,13 +498,24 @@ std::unique_ptr<buzz::XmlElement> JingleMessageReply::ToXml(
   return iq;
 }
 
+IceTransportInfo::NamedCandidate::NamedCandidate(
+    const std::string& name,
+    const cricket::Candidate& candidate)
+    : name(name), candidate(candidate) {}
+
+IceTransportInfo::IceCredentials::IceCredentials(std::string channel,
+                                                 std::string ufrag,
+                                                 std::string password)
+    : channel(channel), ufrag(ufrag), password(password) {}
+
 IceTransportInfo::IceTransportInfo() {}
 IceTransportInfo::~IceTransportInfo() {}
 
 bool IceTransportInfo::ParseXml(
     const buzz::XmlElement* element) {
-  if (element->Name() != QName(kIceTransportNamespace, "transport"))
+  if (element->Name() != QName(kIceTransportNamespace, "transport")) {
     return false;
+  }
 
   ice_credentials.clear();
   candidates.clear();
@@ -615,8 +525,9 @@ bool IceTransportInfo::ParseXml(
        credentials_tag;
        credentials_tag = credentials_tag->NextNamed(qn_credentials)) {
     IceTransportInfo::IceCredentials credentials;
-    if (!ParseIceCredentials(credentials_tag, &credentials))
+    if (!ParseIceCredentials(credentials_tag, &credentials)) {
       return false;
+    }
     ice_credentials.push_back(credentials);
   }
 
@@ -624,8 +535,9 @@ bool IceTransportInfo::ParseXml(
   for (const XmlElement* candidate_tag = element->FirstNamed(qn_candidate);
        candidate_tag; candidate_tag = candidate_tag->NextNamed(qn_candidate)) {
     IceTransportInfo::NamedCandidate candidate;
-    if (!ParseIceCandidate(candidate_tag, &candidate))
+    if (!ParseIceCandidate(candidate_tag, &candidate)) {
       return false;
+    }
     candidates.push_back(candidate);
   }
 

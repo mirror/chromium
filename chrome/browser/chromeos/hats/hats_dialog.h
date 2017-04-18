@@ -1,4 +1,4 @@
-// Copyright (c) 2016 The Chromium Authors. All rights reserved.
+// Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -7,14 +7,13 @@
 
 #include <string>
 
-#include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/values.h"
-#include "ui/gfx/native_widget_types.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
 
 namespace chromeos {
 
+// Happiness tracking survey dialog. Sometimes appears after login to ask the
+// user how satisfied they are with their Chromebook.
 class HatsDialog : public ui::WebDialogDelegate {
  public:
   HatsDialog();
@@ -22,10 +21,11 @@ class HatsDialog : public ui::WebDialogDelegate {
 
   // Creates an instance of HatsDialog and posts a task to load all the relevant
   // device info before displaying the dialog.
-  static void CreateAndShow();
+  static void CreateAndShow(bool is_google_account);
 
  private:
   static void Show(std::unique_ptr<HatsDialog> hats_dialog,
+                   std::string site_id,
                    std::string site_context);
 
   // ui::WebDialogDelegate implementation.

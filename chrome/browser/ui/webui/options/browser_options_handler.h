@@ -19,30 +19,30 @@
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/ui/webui/options/options_ui.h"
 #include "chrome/browser/ui/zoom/chrome_zoom_level_prefs.h"
+#include "chrome/common/features.h"
 #include "components/policy/core/common/policy_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_member.h"
 #include "components/search_engines/template_url_service_observer.h"
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "components/signin/core/common/signin_pref_names.h"
-#include "components/sync_driver/sync_service_observer.h"
+#include "components/sync/driver/sync_service_observer.h"
 #include "content/public/browser/notification_observer.h"
 #include "extensions/browser/extension_registry_observer.h"
 #include "google_apis/gaia/google_service_auth_error.h"
+#include "printing/features/features.h"
 #include "ui/base/models/table_model_observer.h"
 #include "ui/shell_dialogs/select_file_dialog.h"
 
 #if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/policy/consumer_management_service.h"
+#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/pointer_device_observer.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
+#include "components/user_manager/user_manager.h"
 #else  // defined(OS_CHROMEOS)
 #include "chrome/browser/shell_integration.h"
 #endif  // !defined(OS_CHROMEOS)
 
-class AutocompleteController;
-class CloudPrintSetupHandler;
-class CustomHomePagesTableModel;
 class TemplateURLService;
 
 namespace base {
@@ -59,13 +59,13 @@ namespace options {
 class BrowserOptionsHandler
     : public OptionsPageUIHandler,
       public ProfileAttributesStorage::Observer,
-      public sync_driver::SyncServiceObserver,
+      public syncer::SyncServiceObserver,
       public SigninManagerBase::Observer,
       public ui::SelectFileDialog::Listener,
 #if defined(OS_CHROMEOS)
       public chromeos::system::PointerDeviceObserver::Observer,
-      public policy::ConsumerManagementService::Observer,
       public ArcAppListPrefs::Observer,
+      public user_manager::UserManager::Observer,
 #endif
       public TemplateURLServiceObserver,
       public extensions::ExtensionRegistryObserver,
@@ -83,8 +83,8 @@ class BrowserOptionsHandler
   void RegisterMessages() override;
   void Uninitialize() override;
 
-  // sync_driver::SyncServiceObserver implementation.
-  void OnStateChanged() override;
+  // syncer::SyncServiceObserver implementation.
+  void OnStateChanged(syncer::SyncService* sync) override;
 
   // SigninManagerBase::Observer implementation.
   void GoogleSigninSucceeded(const std::string& account_id,
@@ -108,6 +108,10 @@ class BrowserOptionsHandler
   void OnPolicyUpdated(const policy::PolicyNamespace& ns,
                        const policy::PolicyMap& previous,
                        const policy::PolicyMap& current) override;
+#if defined(OS_CHROMEOS)
+  static void DisablePolymerPreloadForTesting();
+#endif  // defined(OS_CHROMEOS)
+
  private:
   // content::NotificationObserver implementation.
   void Observe(int type,
@@ -122,7 +126,7 @@ class BrowserOptionsHandler
                             const base::string16& old_profile_name) override;
   void OnProfileAvatarChanged(const base::FilePath& profile_path) override;
 
-#if defined(ENABLE_PRINT_PREVIEW) && !defined(OS_CHROMEOS)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OS_CHROMEOS)
   void OnCloudPrintPrefsChanged();
 #endif
 
@@ -147,14 +151,14 @@ class BrowserOptionsHandler
   // Will be called when powerwash dialog is shown.
   void OnPowerwashDialogShow(const base::ListValue* args);
 
-  // ConsumerManagementService::Observer:
-  void OnConsumerManagementStatusChanged() override;
-
   // ArcAppListPrefs::Observer overrides.
   void OnAppReadyChanged(const std::string& app_id, bool ready) override;
   void OnAppRemoved(const std::string& app_id) override;
   void OnAppRegistered(const std::string& app_id,
                        const ArcAppListPrefs::AppInfo& app_info) override;
+
+  // user_manager::UserManager::Observer overrides.
+  void OnUserImageChanged(const user_manager::User& user) override;
 #endif
 
   void UpdateSyncState();
@@ -284,11 +288,15 @@ class BrowserOptionsHandler
   void ShowManageSSLCertificates(const base::ListValue* args);
 #endif
 
-#if defined(ENABLE_SERVICE_DISCOVERY)
+#if defined(OS_CHROMEOS)
+  void ShowCupsPrintDevicesPage(const base::ListValue* args);
+#endif  // defined(OS_CHROMEOS)
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   void ShowCloudPrintDevicesPage(const base::ListValue* args);
 #endif
 
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   // Register localized values used by Cloud Print
   void RegisterCloudPrintValues(base::DictionaryValue* values);
 #endif
@@ -337,6 +345,12 @@ class BrowserOptionsHandler
 
   // Called to show Android apps settings.
   void ShowAndroidAppsSettings(const base::ListValue* args);
+
+  // Called to show apps based on a url for the Play Store.
+  void ShowPlayStoreApps(const base::ListValue* args);
+
+  // Called to show TalkBack settings.
+  void ShowAccessibilityTalkBackSettings(const base::ListValue *args);
 #endif
 
   // Setup the visibility for the metrics reporting setting.
@@ -387,6 +401,15 @@ class BrowserOptionsHandler
   void SetupAccessibilityFeatures();
 #endif
 
+  // Update the Extended Reporting Enabled checkbox based on the current state
+  // of the opt-in.
+  void SetupSafeBrowsingExtendedReporting();
+
+  // Callback for "safeBrowsingExtentedReportingAction" message. This is called
+  // if the user checks or unchecks the Extended Reporting checkbox. |args| is
+  // an array that contains one item, the checked state of the checkbox.
+  void HandleSafeBrowsingExtendedReporting(const base::ListValue* args);
+
   // Returns a newly created dictionary with a number of properties that
   // correspond to the status of sync.
   std::unique_ptr<base::DictionaryValue> GetSyncStateDictionary();
@@ -424,6 +447,9 @@ class BrowserOptionsHandler
   bool enable_factory_reset_;
 
   PrefChangeRegistrar local_state_pref_change_registrar_;
+
+  std::unique_ptr<chromeos::CrosSettings::ObserverSubscription>
+      system_timezone_policy_observer_;
 #endif
 
   ScopedObserver<SigninManagerBase, SigninManagerBase::Observer>

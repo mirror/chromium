@@ -7,51 +7,54 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT InspectedFrames final : public GarbageCollected<InspectedFrames> {
-    WTF_MAKE_NONCOPYABLE(InspectedFrames);
-public:
-    class CORE_EXPORT Iterator {
-        STACK_ALLOCATED();
-    public:
-        Iterator operator++(int);
-        Iterator& operator++();
-        bool operator==(const Iterator& other);
-        bool operator!=(const Iterator& other);
-        LocalFrame* operator*() { return m_current; }
-        LocalFrame* operator->() { return m_current; }
-    private:
-        friend class InspectedFrames;
-        Iterator(LocalFrame* root, LocalFrame* current);
-        Member<LocalFrame> m_root;
-        Member<LocalFrame> m_current;
-    };
+class CORE_EXPORT InspectedFrames final
+    : public GarbageCollected<InspectedFrames> {
+  WTF_MAKE_NONCOPYABLE(InspectedFrames);
 
-    static InspectedFrames* create(LocalFrame* root)
-    {
-        return new InspectedFrames(root);
-    }
+ public:
+  class CORE_EXPORT Iterator {
+    STACK_ALLOCATED();
 
-    LocalFrame* root() { return m_root; }
-    bool contains(LocalFrame*) const;
-    LocalFrame* frameWithSecurityOrigin(const String& originRawString);
-    Iterator begin();
-    Iterator end();
+   public:
+    Iterator operator++(int);
+    Iterator& operator++();
+    bool operator==(const Iterator& other);
+    bool operator!=(const Iterator& other);
+    LocalFrame* operator*() { return current_; }
+    LocalFrame* operator->() { return current_; }
 
-    DECLARE_VIRTUAL_TRACE();
+   private:
+    friend class InspectedFrames;
+    Iterator(LocalFrame* root, LocalFrame* current);
+    Member<LocalFrame> root_;
+    Member<LocalFrame> current_;
+  };
 
-private:
-    explicit InspectedFrames(LocalFrame*);
+  static InspectedFrames* Create(LocalFrame* root) {
+    return new InspectedFrames(root);
+  }
 
-    Member<LocalFrame> m_root;
+  LocalFrame* Root() { return root_; }
+  bool Contains(LocalFrame*) const;
+  LocalFrame* FrameWithSecurityOrigin(const String& origin_raw_string);
+  Iterator begin();
+  Iterator end();
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  explicit InspectedFrames(LocalFrame*);
+
+  Member<LocalFrame> root_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InspectedFrames_h
+#endif  // InspectedFrames_h

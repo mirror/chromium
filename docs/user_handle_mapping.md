@@ -25,6 +25,7 @@ For Chromium contributors that have different nicks on other domains.
 | darin, fishd      | fishd           | darin           |
 | dbeam             | danbeam         | dbeam           |
 | dmurph            | dmurph          | dmurph          |
+| dougt             | dougt           | dft             |
 | eaugusti          | eriq            | eaugustine      |
 | erg               | eglaysher       | erg             |
 | eroman            | eroman          | ericroman       |
@@ -67,6 +68,7 @@ For Chromium contributors that have different nicks on other domains.
 | mmeade            | mmeade          | mmeade          |
 | mednik            | mednik          | mednik          |
 | mgaba             | mgaba           | mgaba           |
+| mlamouri          | mounir          | mlamouri        |
 | mlinck            | dullb0yj4ck     | mlinck          |
 | msw               | msw\_           | msw             |
 | nick              | nickcarter      | ncarter         |
@@ -77,6 +79,7 @@ For Chromium contributors that have different nicks on other domains.
 | patrick           | pjohnson        | pjohnson        |
 | peter             | beverloo        | beverloo        |
 | phajdan.jr        | phajdan-jr      | phajdan         |
+| pwnall            | pwnall          | costan          |
 | rch               | RyanHamilton    | rch             |
 | rdevlin.cronin    | rdcronin        | rdcronin        |
 | reillyg           | reillyeon       | reillyg         |
@@ -87,6 +90,7 @@ For Chromium contributors that have different nicks on other domains.
 | satish            | satish\_        | satish          |
 | scheglov          |                 | scheglov        |
 | scottbyer         | sbyer           | scottbyer       |
+| sdy               | sdy, sidney, Sidnicious | sdy     |
 | shans             |                 | shanestephens   |
 | shrike            | shrike          | shrike          |
 | smut              | Sana            | smut            |

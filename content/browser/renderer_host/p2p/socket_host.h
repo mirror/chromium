@@ -8,13 +8,15 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/common/p2p_socket_type.h"
 #include "content/public/browser/render_process_host.h"
 #include "net/base/ip_endpoint.h"
-#include "net/udp/datagram_socket.h"
+#include "net/socket/datagram_socket.h"
 
 namespace IPC {
 class Sender;
@@ -64,8 +66,9 @@ class CONTENT_EXPORT P2PSocketHost {
                     const rtc::PacketOptions& options,
                     uint64_t packet_id) = 0;
 
-  virtual P2PSocketHost* AcceptIncomingTcpConnection(
-      const net::IPEndPoint& remote_address, int id) = 0;
+  virtual std::unique_ptr<P2PSocketHost> AcceptIncomingTcpConnection(
+      const net::IPEndPoint& remote_address,
+      int id) = 0;
 
   virtual bool SetOption(P2PSocketOption option, int value) = 0;
 

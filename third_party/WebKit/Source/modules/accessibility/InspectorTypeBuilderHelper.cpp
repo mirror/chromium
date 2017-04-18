@@ -13,199 +13,232 @@ namespace blink {
 using namespace HTMLNames;
 using namespace protocol::Accessibility;
 
-std::unique_ptr<AXProperty> createProperty(const String& name, std::unique_ptr<AXValue> value)
-{
-    return AXProperty::create().setName(name).setValue(std::move(value)).build();
+std::unique_ptr<AXProperty> CreateProperty(const String& name,
+                                           std::unique_ptr<AXValue> value) {
+  return AXProperty::create().setName(name).setValue(std::move(value)).build();
 }
 
-String ignoredReasonName(AXIgnoredReason reason)
-{
-    switch (reason) {
-    case AXActiveModalDialog:
-        return "activeModalDialog";
-    case AXAncestorDisallowsChild:
-        return "ancestorDisallowsChild";
-    case AXAncestorIsLeafNode:
-        return "ancestorIsLeafNode";
-    case AXAriaHidden:
-        return "ariaHidden";
-    case AXAriaHiddenRoot:
-        return "ariaHiddenRoot";
-    case AXEmptyAlt:
-        return "emptyAlt";
-    case AXEmptyText:
-        return "emptyText";
-    case AXInert:
-        return "inert";
-    case AXInheritsPresentation:
-        return "inheritsPresentation";
-    case AXLabelContainer:
-        return "labelContainer";
-    case AXLabelFor:
-        return "labelFor";
-    case AXNotRendered:
-        return "notRendered";
-    case AXNotVisible:
-        return "notVisible";
-    case AXPresentationalRole:
-        return "presentationalRole";
-    case AXProbablyPresentational:
-        return "probablyPresentational";
-    case AXStaticTextUsedAsNameFor:
-        return "staticTextUsedAsNameFor";
-    case AXUninteresting:
-        return "uninteresting";
-    }
-    ASSERT_NOT_REACHED();
-    return "";
+String IgnoredReasonName(AXIgnoredReason reason) {
+  switch (reason) {
+    case kAXActiveModalDialog:
+      return "activeModalDialog";
+    case kAXAncestorDisallowsChild:
+      return "ancestorDisallowsChild";
+    case kAXAncestorIsLeafNode:
+      return "ancestorIsLeafNode";
+    case kAXAriaHidden:
+      return "ariaHidden";
+    case kAXAriaHiddenRoot:
+      return "ariaHiddenRoot";
+    case kAXEmptyAlt:
+      return "emptyAlt";
+    case kAXEmptyText:
+      return "emptyText";
+    case kAXInert:
+      return "inert";
+    case kAXInheritsPresentation:
+      return "inheritsPresentation";
+    case kAXLabelContainer:
+      return "labelContainer";
+    case kAXLabelFor:
+      return "labelFor";
+    case kAXNotRendered:
+      return "notRendered";
+    case kAXNotVisible:
+      return "notVisible";
+    case kAXPresentationalRole:
+      return "presentationalRole";
+    case kAXProbablyPresentational:
+      return "probablyPresentational";
+    case kAXStaticTextUsedAsNameFor:
+      return "staticTextUsedAsNameFor";
+    case kAXUninteresting:
+      return "uninteresting";
+  }
+  ASSERT_NOT_REACHED();
+  return "";
 }
 
-std::unique_ptr<AXProperty> createProperty(IgnoredReason reason)
-{
-    if (reason.relatedObject)
-        return createProperty(ignoredReasonName(reason.reason), createRelatedNodeListValue(reason.relatedObject, nullptr, AXValueTypeEnum::Idref));
-    return createProperty(ignoredReasonName(reason.reason), createBooleanValue(true));
+std::unique_ptr<AXProperty> CreateProperty(IgnoredReason reason) {
+  if (reason.related_object)
+    return CreateProperty(
+        IgnoredReasonName(reason.reason),
+        CreateRelatedNodeListValue(*(reason.related_object), nullptr,
+                                   AXValueTypeEnum::Idref));
+  return CreateProperty(IgnoredReasonName(reason.reason),
+                        CreateBooleanValue(true));
 }
 
-std::unique_ptr<AXValue> createValue(const String& value, const String& type)
-{
-    return AXValue::create().setType(type).setValue(protocol::ValueConversions<String>::serialize(value)).build();
+std::unique_ptr<AXValue> CreateValue(const String& value, const String& type) {
+  return AXValue::create()
+      .setType(type)
+      .setValue(protocol::ValueConversions<String>::toValue(value))
+      .build();
 }
 
-std::unique_ptr<AXValue> createValue(int value, const String& type)
-{
-    return AXValue::create().setType(type).setValue(protocol::ValueConversions<int>::serialize(value)).build();
+std::unique_ptr<AXValue> CreateValue(int value, const String& type) {
+  return AXValue::create()
+      .setType(type)
+      .setValue(protocol::ValueConversions<int>::toValue(value))
+      .build();
 }
 
-std::unique_ptr<AXValue> createValue(float value, const String& type)
-{
-    return AXValue::create().setType(type).setValue(protocol::ValueConversions<double>::serialize(value)).build();
+std::unique_ptr<AXValue> CreateValue(float value, const String& type) {
+  return AXValue::create()
+      .setType(type)
+      .setValue(protocol::ValueConversions<double>::toValue(value))
+      .build();
 }
 
-std::unique_ptr<AXValue> createBooleanValue(bool value, const String& type)
-{
-    return AXValue::create().setType(type).setValue(protocol::ValueConversions<bool>::serialize(value)).build();
+std::unique_ptr<AXValue> CreateBooleanValue(bool value, const String& type) {
+  return AXValue::create()
+      .setType(type)
+      .setValue(protocol::ValueConversions<bool>::toValue(value))
+      .build();
 }
 
-std::unique_ptr<AXRelatedNode> relatedNodeForAXObject(const AXObject* axObject, String* name = nullptr)
-{
-    Node* node = axObject->getNode();
-    if (!node)
-        return nullptr;
-    int backendNodeId = DOMNodeIds::idForNode(node);
-    if (!backendNodeId)
-        return nullptr;
-    std::unique_ptr<AXRelatedNode> relatedNode = AXRelatedNode::create().setBackendNodeId(backendNodeId).build();
-    if (!node->isElementNode())
-        return relatedNode;
+std::unique_ptr<AXRelatedNode> RelatedNodeForAXObject(const AXObject& ax_object,
+                                                      String* name = nullptr) {
+  Node* node = ax_object.GetNode();
+  if (!node)
+    return nullptr;
+  int backend_node_id = DOMNodeIds::IdForNode(node);
+  if (!backend_node_id)
+    return nullptr;
+  std::unique_ptr<AXRelatedNode> related_node =
+      AXRelatedNode::create().setBackendDOMNodeId(backend_node_id).build();
+  if (!node->IsElementNode())
+    return related_node;
 
-    Element* element = toElement(node);
-    String idref = element->getIdAttribute();
-    if (!idref.isEmpty())
-        relatedNode->setIdref(idref);
+  Element* element = ToElement(node);
+  String idref = element->GetIdAttribute();
+  if (!idref.IsEmpty())
+    related_node->setIdref(idref);
 
-    if (name)
-        relatedNode->setText(*name);
-    return relatedNode;
+  if (name)
+    related_node->setText(*name);
+  return related_node;
 }
 
-std::unique_ptr<AXValue> createRelatedNodeListValue(const AXObject* axObject, String* name, const String& valueType)
-{
-    std::unique_ptr<protocol::Array<AXRelatedNode>> relatedNodes = protocol::Array<AXRelatedNode>::create();
-    relatedNodes->addItem(relatedNodeForAXObject(axObject, name));
-    return AXValue::create().setType(valueType).setRelatedNodes(std::move(relatedNodes)).build();
+std::unique_ptr<AXValue> CreateRelatedNodeListValue(const AXObject& ax_object,
+                                                    String* name,
+                                                    const String& value_type) {
+  std::unique_ptr<protocol::Array<AXRelatedNode>> related_nodes =
+      protocol::Array<AXRelatedNode>::create();
+  related_nodes->addItem(RelatedNodeForAXObject(ax_object, name));
+  return AXValue::create()
+      .setType(value_type)
+      .setRelatedNodes(std::move(related_nodes))
+      .build();
 }
 
-std::unique_ptr<AXValue> createRelatedNodeListValue(AXRelatedObjectVector& relatedObjects, const String& valueType)
-{
-    std::unique_ptr<protocol::Array<AXRelatedNode>> frontendRelatedNodes = protocol::Array<AXRelatedNode>::create();
-    for (unsigned i = 0; i < relatedObjects.size(); i++) {
-        std::unique_ptr<AXRelatedNode> frontendRelatedNode = relatedNodeForAXObject(relatedObjects[i]->object, &(relatedObjects[i]->text));
-        if (frontendRelatedNode)
-            frontendRelatedNodes->addItem(std::move(frontendRelatedNode));
-    }
-    return AXValue::create().setType(valueType).setRelatedNodes(std::move(frontendRelatedNodes)).build();
+std::unique_ptr<AXValue> CreateRelatedNodeListValue(
+    AXRelatedObjectVector& related_objects,
+    const String& value_type) {
+  std::unique_ptr<protocol::Array<AXRelatedNode>> frontend_related_nodes =
+      protocol::Array<AXRelatedNode>::create();
+  for (unsigned i = 0; i < related_objects.size(); i++) {
+    std::unique_ptr<AXRelatedNode> frontend_related_node =
+        RelatedNodeForAXObject(*(related_objects[i]->object),
+                               &(related_objects[i]->text));
+    if (frontend_related_node)
+      frontend_related_nodes->addItem(std::move(frontend_related_node));
+  }
+  return AXValue::create()
+      .setType(value_type)
+      .setRelatedNodes(std::move(frontend_related_nodes))
+      .build();
 }
 
-std::unique_ptr<AXValue> createRelatedNodeListValue(AXObject::AXObjectVector& axObjects, const String& valueType)
-{
-    std::unique_ptr<protocol::Array<AXRelatedNode>> relatedNodes = protocol::Array<AXRelatedNode>::create();
-    for (unsigned i = 0; i < axObjects.size(); i++) {
-        std::unique_ptr<AXRelatedNode> relatedNode = relatedNodeForAXObject(axObjects[i].get());
-        if (relatedNode)
-            relatedNodes->addItem(std::move(relatedNode));
-    }
-    return AXValue::create().setType(valueType).setRelatedNodes(std::move(relatedNodes)).build();
+std::unique_ptr<AXValue> CreateRelatedNodeListValue(
+    AXObject::AXObjectVector& ax_objects,
+    const String& value_type) {
+  std::unique_ptr<protocol::Array<AXRelatedNode>> related_nodes =
+      protocol::Array<AXRelatedNode>::create();
+  for (unsigned i = 0; i < ax_objects.size(); i++) {
+    std::unique_ptr<AXRelatedNode> related_node =
+        RelatedNodeForAXObject(*(ax_objects[i].Get()));
+    if (related_node)
+      related_nodes->addItem(std::move(related_node));
+  }
+  return AXValue::create()
+      .setType(value_type)
+      .setRelatedNodes(std::move(related_nodes))
+      .build();
 }
 
-String valueSourceType(AXNameFrom nameFrom)
-{
-    switch (nameFrom) {
-    case AXNameFromAttribute:
-    case AXNameFromTitle:
-    case AXNameFromValue:
-        return AXValueSourceTypeEnum::Attribute;
-    case AXNameFromContents:
-        return AXValueSourceTypeEnum::Contents;
-    case AXNameFromPlaceholder:
-        return AXValueSourceTypeEnum::Placeholder;
-    case AXNameFromCaption:
-    case AXNameFromRelatedElement:
-        return AXValueSourceTypeEnum::RelatedElement;
+String ValueSourceType(AXNameFrom name_from) {
+  switch (name_from) {
+    case kAXNameFromAttribute:
+    case kAXNameFromTitle:
+    case kAXNameFromValue:
+      return AXValueSourceTypeEnum::Attribute;
+    case kAXNameFromContents:
+      return AXValueSourceTypeEnum::Contents;
+    case kAXNameFromPlaceholder:
+      return AXValueSourceTypeEnum::Placeholder;
+    case kAXNameFromCaption:
+    case kAXNameFromRelatedElement:
+      return AXValueSourceTypeEnum::RelatedElement;
     default:
-        return AXValueSourceTypeEnum::Implicit; // TODO(aboxhall): what to do here?
-    }
+      return AXValueSourceTypeEnum::Implicit;  // TODO(aboxhall): what to do
+                                               // here?
+  }
 }
 
-String nativeSourceType(AXTextFromNativeHTML nativeSource)
-{
-    switch (nativeSource) {
-    case AXTextFromNativeHTMLFigcaption:
-        return AXValueNativeSourceTypeEnum::Figcaption;
-    case AXTextFromNativeHTMLLabel:
-        return AXValueNativeSourceTypeEnum::Label;
-    case AXTextFromNativeHTMLLabelFor:
-        return AXValueNativeSourceTypeEnum::Labelfor;
-    case AXTextFromNativeHTMLLabelWrapped:
-        return AXValueNativeSourceTypeEnum::Labelwrapped;
-    case AXTextFromNativeHTMLTableCaption:
-        return AXValueNativeSourceTypeEnum::Tablecaption;
-    case AXTextFromNativeHTMLLegend:
-        return AXValueNativeSourceTypeEnum::Legend;
-    case AXTextFromNativeHTMLTitleElement:
-        return AXValueNativeSourceTypeEnum::Title;
+String NativeSourceType(AXTextFromNativeHTML native_source) {
+  switch (native_source) {
+    case kAXTextFromNativeHTMLFigcaption:
+      return AXValueNativeSourceTypeEnum::Figcaption;
+    case kAXTextFromNativeHTMLLabel:
+      return AXValueNativeSourceTypeEnum::Label;
+    case kAXTextFromNativeHTMLLabelFor:
+      return AXValueNativeSourceTypeEnum::Labelfor;
+    case kAXTextFromNativeHTMLLabelWrapped:
+      return AXValueNativeSourceTypeEnum::Labelwrapped;
+    case kAXTextFromNativeHTMLTableCaption:
+      return AXValueNativeSourceTypeEnum::Tablecaption;
+    case kAXTextFromNativeHTMLLegend:
+      return AXValueNativeSourceTypeEnum::Legend;
+    case kAXTextFromNativeHTMLTitleElement:
+      return AXValueNativeSourceTypeEnum::Title;
     default:
-        return AXValueNativeSourceTypeEnum::Other;
-    }
+      return AXValueNativeSourceTypeEnum::Other;
+  }
 }
 
-std::unique_ptr<AXValueSource> createValueSource(NameSource& nameSource)
-{
-    String type = valueSourceType(nameSource.type);
-    std::unique_ptr<AXValueSource> valueSource = AXValueSource::create().setType(type).build();
-    if (!nameSource.relatedObjects.isEmpty()) {
-        if (nameSource.attribute == aria_labelledbyAttr || nameSource.attribute == aria_labeledbyAttr) {
-            std::unique_ptr<AXValue> attributeValue = createRelatedNodeListValue(nameSource.relatedObjects, AXValueTypeEnum::IdrefList);
-            if (!nameSource.attributeValue.isNull())
-                attributeValue->setValue(protocol::StringValue::create(nameSource.attributeValue.getString()));
-            valueSource->setAttributeValue(std::move(attributeValue));
-        } else if (nameSource.attribute == QualifiedName::null()) {
-            valueSource->setNativeSourceValue(createRelatedNodeListValue(nameSource.relatedObjects, AXValueTypeEnum::NodeList));
-        }
-    } else if (!nameSource.attributeValue.isNull()) {
-        valueSource->setAttributeValue(createValue(nameSource.attributeValue));
+std::unique_ptr<AXValueSource> CreateValueSource(NameSource& name_source) {
+  String type = ValueSourceType(name_source.type);
+  std::unique_ptr<AXValueSource> value_source =
+      AXValueSource::create().setType(type).build();
+  if (!name_source.related_objects.IsEmpty()) {
+    if (name_source.attribute == aria_labelledbyAttr ||
+        name_source.attribute == aria_labeledbyAttr) {
+      std::unique_ptr<AXValue> attribute_value = CreateRelatedNodeListValue(
+          name_source.related_objects, AXValueTypeEnum::IdrefList);
+      if (!name_source.attribute_value.IsNull())
+        attribute_value->setValue(protocol::StringValue::create(
+            name_source.attribute_value.GetString()));
+      value_source->setAttributeValue(std::move(attribute_value));
+    } else if (name_source.attribute == QualifiedName::Null()) {
+      value_source->setNativeSourceValue(CreateRelatedNodeListValue(
+          name_source.related_objects, AXValueTypeEnum::NodeList));
     }
-    if (!nameSource.text.isNull())
-        valueSource->setValue(createValue(nameSource.text, AXValueTypeEnum::ComputedString));
-    if (nameSource.attribute != QualifiedName::null())
-        valueSource->setAttribute(nameSource.attribute.localName().getString());
-    if (nameSource.superseded)
-        valueSource->setSuperseded(true);
-    if (nameSource.invalid)
-        valueSource->setInvalid(true);
-    if (nameSource.nativeSource != AXTextFromNativeHTMLUninitialized)
-        valueSource->setNativeSource(nativeSourceType(nameSource.nativeSource));
-    return valueSource;
+  } else if (!name_source.attribute_value.IsNull()) {
+    value_source->setAttributeValue(CreateValue(name_source.attribute_value));
+  }
+  if (!name_source.text.IsNull())
+    value_source->setValue(
+        CreateValue(name_source.text, AXValueTypeEnum::ComputedString));
+  if (name_source.attribute != QualifiedName::Null())
+    value_source->setAttribute(name_source.attribute.LocalName().GetString());
+  if (name_source.superseded)
+    value_source->setSuperseded(true);
+  if (name_source.invalid)
+    value_source->setInvalid(true);
+  if (name_source.native_source != kAXTextFromNativeHTMLUninitialized)
+    value_source->setNativeSource(NativeSourceType(name_source.native_source));
+  return value_source;
 }
 
-} // namespace blink
+}  // namespace blink

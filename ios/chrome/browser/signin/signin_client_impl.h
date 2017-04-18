@@ -15,10 +15,6 @@
 #include "google_apis/gaia/oauth2_token_service.h"
 #include "net/base/network_change_notifier.h"
 
-namespace content_settings {
-class CookieSettings;
-}
-
 namespace ios {
 class ChromeBrowserState;
 }
@@ -58,7 +54,7 @@ class SigninClientImpl
   void RemoveContentSettingsObserver(
       content_settings::Observer* observer) override;
   void DelayNetworkCall(const base::Closure& callback) override;
-  GaiaAuthFetcher* CreateGaiaAuthFetcher(
+  std::unique_ptr<GaiaAuthFetcher> CreateGaiaAuthFetcher(
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;

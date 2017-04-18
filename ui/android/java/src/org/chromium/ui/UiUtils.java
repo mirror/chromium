@@ -8,7 +8,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -22,7 +21,7 @@ import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
-import org.chromium.base.ContentUriUtils;
+import org.chromium.base.ApiCompatibilityUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +56,9 @@ public class UiUtils {
     /** A delegate that allows disabling keyboard visibility detection. */
     private static KeyboardShowingDelegate sKeyboardShowingDelegate;
 
+    /** A delegate for the photo picker. */
+    private static PhotoPickerDelegate sPhotoPickerDelegate;
+
     /**
      * A delegate that can be implemented to override whether or not keyboard detection will be
      * used.
@@ -70,6 +72,59 @@ public class UiUtils {
          */
         boolean disableKeyboardCheck(Context context, View view);
     }
+
+    /**
+     * A delegate interface for the photo picker.
+     */
+    public interface PhotoPickerDelegate {
+        /**
+         * Called to display the photo picker.
+         * @param context  The context to use.
+         * @param listener The listener that will be notified of the action the user took in the
+         *                 picker.
+         * @param allowMultiple Whether the dialog should allow multiple images to be selected.
+         */
+        void showPhotoPicker(Context context, PhotoPickerListener listener, boolean allowMultiple);
+
+        /**
+         * Called when the photo picker dialog should be dismissed.
+         */
+        void dismissPhotoPicker();
+    }
+
+    // PhotoPickerDelegate:
+
+    /**
+     * Allows setting a delegate to override the default Android stock photo picker.
+     * @param delegate A {@link PhotoPickerDelegate} instance.
+     */
+    public static void setPhotoPickerDelegate(PhotoPickerDelegate delegate) {
+        sPhotoPickerDelegate = delegate;
+    }
+
+    /**
+     * Called to display the photo picker.
+     * @param context  The context to use.
+     * @param listener The listener that will be notified of the action the user took in the
+     *                 picker.
+     * @param allowMultiple Whether the dialog should allow multiple images to be selected.
+     */
+    public static boolean showPhotoPicker(
+            Context context, PhotoPickerListener listener, boolean allowMultiple) {
+        if (sPhotoPickerDelegate == null) return false;
+        sPhotoPickerDelegate.showPhotoPicker(context, listener, allowMultiple);
+        return true;
+    }
+
+    /**
+     * Called when the photo picker dialog should be dismissed.
+     */
+    public static void dismissPhotoPicker() {
+        if (sPhotoPickerDelegate == null) return;
+        sPhotoPickerDelegate.dismissPhotoPicker();
+    }
+
+    // KeyboardShowingDelegate:
 
     /**
      * Allows setting a delegate to override the default software keyboard visibility detection.
@@ -94,8 +149,10 @@ public class UiUtils {
                 InputMethodManager imm =
                         (InputMethodManager) view.getContext().getSystemService(
                                 Context.INPUT_METHOD_SERVICE);
-                // Third-party touches disk on showSoftInput call. http://crbug.com/619824
+                // Third-party touches disk on showSoftInput call. http://crbug.com/619824,
+                // http://crbug.com/635118
                 StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+                StrictMode.allowThreadDiskWrites();
                 try {
                     imm.showSoftInput(view, 0);
                 } catch (IllegalArgumentException e) {
@@ -162,7 +219,7 @@ public class UiUtils {
                     imManager.getEnabledInputMethodSubtypeList(enabledMethods.get(i), true);
             if (subtypes == null) continue;
             for (int j = 0; j < subtypes.size(); j++) {
-                String locale = subtypes.get(j).getLocale();
+                String locale = ApiCompatibilityUtils.getLocale(subtypes.get(j));
                 if (!TextUtils.isEmpty(locale)) locales.add(locale);
             }
         }
@@ -319,16 +376,14 @@ public class UiUtils {
     }
 
     /**
-     * Get a URI for |file| which has the image capture. This function assumes that path of |file|
-     * is based on the result of UiUtils.getDirectoryForImageCapture().
+     * Removes the view from its parent {@link ViewGroup}. No-op if the {@link View} is not yet
+     * attached to the view hierarchy.
      *
-     * @param context The application context.
-     * @param file image capture file.
-     * @return URI for |file|.
+     * @param view The view to be removed from the parent.
      */
-    public static Uri getUriForImageCaptureFile(Context context, File file) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
-                ? ContentUriUtils.getContentUriFromFile(context, file)
-                : Uri.fromFile(file);
+    public static void removeViewFromParent(View view) {
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent == null) return;
+        parent.removeView(view);
     }
 }

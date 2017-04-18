@@ -10,16 +10,20 @@
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/web/WebInputEvent.h"
+#include "content/public/browser/readback_types.h"
+#include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "third_party/skia/include/core/SkImageInfo.h"
 #include "ui/gfx/native_widget_types.h"
-
-class GURL;
 
 namespace gfx {
 class Point;
 class Rect;
 class Size;
+}
+
+namespace media {
+class VideoFrame;
 }
 
 namespace ui {
@@ -66,6 +70,9 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Retrieves the last known scroll position.
   virtual gfx::Vector2dF GetLastScrollOffset() const = 0;
 
+  // Sets a flag that indicates if it is in virtual reality mode.
+  virtual void SetIsInVR(bool is_in_vr) = 0;
+
   // Coordinate points received from a renderer process need to be transformed
   // to the top-level frame's coordinate space. For coordinates received from
   // the top-level frame's renderer this is a no-op as they are already
@@ -95,8 +102,6 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual void Focus() = 0;
   // Returns true if the View currently has the focus.
   virtual bool HasFocus() const = 0;
-  // Returns true is the current display surface is available.
-  virtual bool IsSurfaceAvailableForCopy() const = 0;
 
   // Shows/hides the view.  These must always be called together in pairs.
   // It is not legal to call Hide() multiple times in a row.
@@ -127,12 +132,14 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual base::string16 GetSelectedText() = 0;
 
   // Subclasses should override this method to set the background color. |color|
-  // could be transparent or opaque.
+  // has to be either SK_ColorTRANSPARENT or opaque. If set to
+  // SK_ColorTRANSPARENT, the renderer's background color will be overridden to
+  // be fully transparent.
   virtual void SetBackgroundColor(SkColor color) = 0;
+  virtual SkColor background_color() const = 0;
   // Convenience method to fill the background layer with the default color by
   // calling |SetBackgroundColor|.
   virtual void SetBackgroundColorToDefault() = 0;
-  virtual bool GetBackgroundOpaque() = 0;
 
   // Return value indicates whether the mouse is locked successfully or not.
   virtual bool LockMouse() = 0;
@@ -148,6 +155,61 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Set insets for the visible region of the root window. Used to compute the
   // visible viewport.
   virtual void SetInsets(const gfx::Insets& insets) = 0;
+
+  // Returns true if the current display surface is available, a prerequisite
+  // for CopyFromSurface() or CopyFromSurfaceToVideoFrame() to succeed.
+  virtual bool IsSurfaceAvailableForCopy() const = 0;
+
+  // Copies the given subset of the view's surface, optionally scales it, and
+  // returns the result as a bitmap via the provided callback. This is meant for
+  // one-off snapshots. For continuous video capture of the surface, please use
+  // BeginFrameSubscription().
+  //
+  // |src_rect| is either the subset of the view's surface, in view coordinates,
+  // or empty to indicate that all of it should be copied. This is NOT the same
+  // coordinate system as that used GetViewBounds() (https://crbug.com/73362).
+  //
+  // |output_size| is the size of the resulting bitmap, or empty to indicate no
+  // scaling is desired. If an empty size is provided, note that the resulting
+  // bitmap's size may not be the same as |src_rect.size()| due to the pixel
+  // scale used by the underlying device.
+  //
+  // |callback| is always invoked, at some point in the future, with success/
+  // fail status and an SkBitmap containing the copied pixel data. It may be
+  // called sychronously or asynchronously.
+  //
+  // If the view's renderer is suspended (see WasOccluded()), this may result in
+  // copying old data or failing.
+  virtual void CopyFromSurface(const gfx::Rect& src_rect,
+                               const gfx::Size& output_size,
+                               const ReadbackRequestCallback& callback,
+                               const SkColorType color_type) = 0;
+
+  // Copies the given subset of the view's surface, scales/letterboxes it, and
+  // returns the result within the provided media::VideoFrame. This is meant for
+  // one-off snapshots. For continuous video capture of the surface, please use
+  // BeginFrameSubscription().
+  //
+  // |src_rect| is either the subset of the view's surface, in view coordinates,
+  // or empty to indicate that all of it should be copied. This is NOT the same
+  // coordinate system as that used GetViewBounds() (https://crbug.com/73362).
+  //
+  // The |target| must use a pixel format supported by the platform. The size of
+  // the source region and the target together will determine how the content is
+  // positioned and scaled within the video frame. The aspect ratio of the
+  // source region will always be preserved, with letterboxing/pillarboxing
+  // applied to fill the entire frame.
+  //
+  // |callback| is always invoked, at some point in the future, with the region
+  // within |target| where the content was placed and a boolean success/fail
+  // flag. It may be called sychronously or asynchronously.
+  //
+  // If the view's renderer is suspended (see WasOccluded()), this may result in
+  // copying old data or failing.
+  virtual void CopyFromSurfaceToVideoFrame(
+      const gfx::Rect& src_rect,
+      scoped_refptr<media::VideoFrame> target,
+      const base::Callback<void(const gfx::Rect&, bool)>& callback) = 0;
 
   // Begin subscribing for presentation events and captured frames.
   // |subscriber| is now owned by this object, it will be called only on the
@@ -166,6 +228,11 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // an input field, etc.
   virtual void FocusedNodeTouched(const gfx::Point& location_dips_screen,
                                   bool editable) = 0;
+
+  // Informs the view that its associated render widget has frames to draw and
+  // wants to have BeginFrame messages sent to it.  This should only be called
+  // when the value has changed.  Views must initially default to false.
+  virtual void SetNeedsBeginFrames(bool needs_begin_frames) = 0;
 
 #if defined(OS_MACOSX)
   // Return the accelerated widget which hosts the CALayers that draw the

@@ -12,29 +12,32 @@ for more details about the presubmit API built into gcl.
 def _RunUseCounterChecks(input_api, output_api):
     for f in input_api.AffectedFiles():
         if f.LocalPath().endswith('UseCounter.cpp'):
-            useCounterCpp = f
+            use_counter_cpp_file = f
             break
     else:
         return []
 
-    largestFoundBucket = 0
-    maximumBucket = 0
-    # Looking for a line like "case CSSPropertyGrid: return 453;"
-    bucketFinder = input_api.re.compile(r'.*CSSProperty.*return\s*([0-9]+).*')
-    # Looking for a line like "static int maximumCSSSampleId() { return 452; }"
-    maximumFinder = input_api.re.compile(
-        r'static int maximumCSSSampleId\(\) { return ([0-9]+)')
-    for line in useCounterCpp.NewContents():
-        bucketMatch = bucketFinder.match(line)
-        if bucketMatch:
-            bucket = int(bucketMatch.group(1))
-            largestFoundBucket = max(largestFoundBucket, bucket)
-        else:
-            maximumMatch = maximumFinder.match(line)
-            if maximumMatch:
-                maximumBucket = int(maximumMatch.group(1))
+    largest_found_bucket = 0
+    expected_max_bucket = 0
 
-    if largestFoundBucket != maximumBucket:
+    # Looking for a line like "case CSSPropertyGrid: return 453;"
+    bucket_finder = input_api.re.compile(
+        r'case CSSProperty\w*?:\s+?return (\d+);',
+        input_api.re.MULTILINE)
+    # Looking for a line like "constexpr int kMaximumCSSSampleId = 452;"
+    expected_max_finder = input_api.re.compile(
+        r'constexpr int kMaximumCSSSampleId = (\d+);')
+    joined_contents = '\n'.join(use_counter_cpp_file.NewContents())
+
+    expected_max_match = expected_max_finder.search(joined_contents)
+    if expected_max_match:
+        expected_max_bucket = int(expected_max_match.group(1))
+
+    for bucket_match in bucket_finder.finditer(joined_contents):
+        bucket = int(bucket_match.group(1))
+        largest_found_bucket = max(largest_found_bucket, bucket)
+
+    if largest_found_bucket != expected_max_bucket:
         if input_api.is_committing:
             message_type = output_api.PresubmitError
         else:
@@ -42,9 +45,9 @@ def _RunUseCounterChecks(input_api, output_api):
 
         return [message_type(
             'Largest found CSSProperty bucket Id (%d) does not match '
-            'maximumCSSSampleId (%d)' %
-                    (largestFoundBucket, maximumBucket),
-            items=[useCounterCpp.LocalPath()])]
+            'maximumCSSSampleId (%d)' % (
+                largest_found_bucket, expected_max_bucket),
+            items=[use_counter_cpp_file.LocalPath()])]
 
     return []
 
@@ -69,13 +72,20 @@ def _RunUmaHistogramChecks(input_api, output_api):
     else:
         return []
 
-    START_MARKER = '^enum Feature {'
-    END_MARKER = '^NumberOfFeatures'
-    if update_histogram_enum.HistogramNeedsUpdate(
-            histogram_enum_name='FeatureObserver',
-            source_enum_path=source_path,
-            start_marker=START_MARKER,
-            end_marker=END_MARKER):
+    start_marker = '^enum Feature : uint32_t {'
+    end_marker = '^kNumberOfFeatures'
+    should_update_histogram, duplicated_values = update_histogram_enum.HistogramNeedsUpdate(
+        histogram_enum_name='FeatureObserver',
+        source_enum_path=source_path,
+        start_marker=start_marker,
+        end_marker=end_marker,
+        strip_k_prefix=True)
+    if duplicated_values:
+        return [output_api.PresubmitPromptWarning(
+            'UseCounter::Feature has been updated and there exists duplicated '
+            'values between (%s) and (%s)' % duplicated_values,
+            items=[source_path])]
+    if should_update_histogram:
         return [output_api.PresubmitPromptWarning(
             'UseCounter::Feature has been updated and the UMA mapping needs to '
             'be regenerated. Please run update_use_counter_feature_enum.py in '

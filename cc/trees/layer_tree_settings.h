@@ -9,19 +9,17 @@
 
 #include <vector>
 
-#include "cc/base/cc_export.h"
+#include "base/time/time.h"
+#include "cc/cc_export.h"
 #include "cc/debug/layer_tree_debug_state.h"
 #include "cc/output/managed_memory_policy.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/scheduler/scheduler_settings.h"
+#include "cc/tiles/tile_manager_settings.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace cc {
-
-namespace proto {
-class LayerTreeSettings;
-}  // namespace proto
 
 class CC_EXPORT LayerTreeSettings {
  public:
@@ -29,39 +27,34 @@ class CC_EXPORT LayerTreeSettings {
   LayerTreeSettings(const LayerTreeSettings& other);
   virtual ~LayerTreeSettings();
 
-  bool operator==(const LayerTreeSettings& other) const;
-
-  void ToProtobuf(proto::LayerTreeSettings* proto) const;
-  void FromProtobuf(const proto::LayerTreeSettings& proto);
-
   SchedulerSettings ToSchedulerSettings() const;
+  TileManagerSettings ToTileManagerSettings() const;
 
   RendererSettings renderer_settings;
   bool single_thread_proxy_scheduler = true;
-  // TODO(enne): Remove this after everything uses output surface begin frames.
-  bool use_external_begin_frame_source = false;
-  // TODO(enne): Temporary staging for unified begin frame source work.
-  bool use_output_surface_begin_frame_source = false;
   bool main_frame_before_activation_enabled = false;
   bool using_synchronous_renderer_compositor = false;
+  bool enable_latency_recovery = true;
   bool can_use_lcd_text = true;
   bool use_distance_field_text = false;
-  bool gpu_rasterization_enabled = false;
   bool gpu_rasterization_forced = false;
   bool async_worker_context_enabled = false;
   int gpu_rasterization_msaa_sample_count = 0;
   float gpu_rasterization_skewport_target_time_in_seconds = 0.2f;
   bool create_low_res_tiling = false;
+  bool use_stream_video_draw_quad = false;
 
   enum ScrollbarAnimator {
     NO_ANIMATOR,
-    LINEAR_FADE,
-    THINNING,
+    ANDROID_OVERLAY,
+    AURA_OVERLAY,
   };
   ScrollbarAnimator scrollbar_animator = NO_ANIMATOR;
-  int scrollbar_fade_delay_ms = 0;
-  int scrollbar_fade_resize_delay_ms = 0;
-  int scrollbar_fade_duration_ms = 0;
+  base::TimeDelta scrollbar_show_delay;
+  base::TimeDelta scrollbar_fade_out_delay;
+  base::TimeDelta scrollbar_fade_out_resize_delay;
+  base::TimeDelta scrollbar_fade_out_duration;
+  base::TimeDelta scrollbar_thinning_duration;
   SkColor solid_color_scrollbar_color = SK_ColorWHITE;
   bool timeout_and_draw_when_animation_checkerboards = true;
   bool layer_transforms_should_scale_layer_contents = false;
@@ -88,23 +81,35 @@ class CC_EXPORT LayerTreeSettings {
   bool ignore_root_layer_flings = false;
   size_t scheduled_raster_task_limit = 32;
   bool use_occlusion_for_tile_prioritization = false;
-  bool verify_clip_tree_calculations = false;
-  bool verify_transform_tree_calculations = false;
+
+  // TODO(khushalsagar): Enable for all client and remove this flag if possible.
+  // See crbug/com/696864.
   bool image_decode_tasks_enabled = false;
-  bool wait_for_beginframe_interval = true;
-  bool abort_commit_before_output_surface_creation = true;
+
   bool use_layer_lists = false;
   int max_staging_buffer_usage_in_bytes = 32 * 1024 * 1024;
-  ManagedMemoryPolicy memory_policy_;
-  size_t gpu_decoded_image_budget_bytes = 96 * 1024 * 1024;
-  size_t software_decoded_image_budget_bytes = 128 * 1024 * 1024;
+  ManagedMemoryPolicy gpu_memory_policy;
+  ManagedMemoryPolicy software_memory_policy;
+  size_t decoded_image_cache_budget_bytes = 128 * 1024 * 1024;
+  size_t decoded_image_working_set_budget_bytes = 128 * 1024 * 1024;
   int max_preraster_distance_in_screen_pixels = 1000;
 
-  // If set to true, the display item list will internally cache a SkPicture for
-  // raster rather than directly using the display items.
-  bool use_cached_picture_raster = true;
+  bool enable_color_correct_rasterization = false;
+
+  // TODO(sunxd): remove this flag when filter demoting and aa of mask layers
+  // are implemented.
+  bool enable_mask_tiling = false;
+
+  // If set to true, the compositor may selectively defer image decodes to the
+  // Image Decode Service and raster tiles without images until the decode is
+  // ready.
+  bool enable_checker_imaging = false;
 
   LayerTreeDebugState initial_debug_state;
+
+  // Indicates that the LayerTreeHost should defer commits unless it has a valid
+  // LocalSurfaceId set.
+  bool enable_surface_synchronization = false;
 };
 
 }  // namespace cc

@@ -26,200 +26,168 @@
 #define SVGAnimationElement_h
 
 #include "core/CoreExport.h"
-#include "core/svg/SVGAnimatedBoolean.h"
 #include "core/svg/animation/SVGSMILElement.h"
+#include "platform/wtf/Vector.h"
 #include "ui/gfx/geometry/cubic_bezier.h"
-#include "wtf/Functional.h"
-#include "wtf/Vector.h"
 
 namespace blink {
 
 class ExceptionState;
 
 enum AnimationMode {
-    NoAnimation,
-    FromToAnimation,
-    FromByAnimation,
-    ToAnimation,
-    ByAnimation,
-    ValuesAnimation,
-    PathAnimation // Used by AnimateMotion.
-};
-
-// If we have 'inherit' as animation value, we need to grab the value
-// during the animation since the value can be animated itself.
-enum AnimatedPropertyValueType {
-    RegularPropertyValue,
-    InheritValue
+  kNoAnimation,
+  kFromToAnimation,
+  kFromByAnimation,
+  kToAnimation,
+  kByAnimation,
+  kValuesAnimation,
+  kPathAnimation  // Used by AnimateMotion.
 };
 
 enum CalcMode {
-    CalcModeDiscrete,
-    CalcModeLinear,
-    CalcModePaced,
-    CalcModeSpline
+  kCalcModeDiscrete,
+  kCalcModeLinear,
+  kCalcModePaced,
+  kCalcModeSpline
 };
 
 class CORE_EXPORT SVGAnimationElement : public SVGSMILElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    // SVGAnimationElement
-    float getStartTime(ExceptionState&) const;
-    float getCurrentTime() const;
-    float getSimpleDuration(ExceptionState&) const;
+  DEFINE_WRAPPERTYPEINFO();
 
-    void beginElement();
-    void beginElementAt(float offset);
-    void endElement();
-    void endElementAt(float offset);
+ public:
+  // SVGAnimationElement
+  float getStartTime(ExceptionState&) const;
+  float getCurrentTime() const;
+  float getSimpleDuration(ExceptionState&) const;
 
-    DEFINE_MAPPED_ATTRIBUTE_EVENT_LISTENER(begin, beginEvent);
-    DEFINE_MAPPED_ATTRIBUTE_EVENT_LISTENER(end, endEvent);
-    DEFINE_MAPPED_ATTRIBUTE_EVENT_LISTENER(repeat, repeatEvent);
+  void beginElement() { beginElementAt(0); }
+  void beginElementAt(float offset);
+  void endElement() { endElementAt(0); }
+  void endElementAt(float offset);
 
-    static bool isTargetAttributeCSSProperty(SVGElement*, const QualifiedName&);
+  DEFINE_MAPPED_ATTRIBUTE_EVENT_LISTENER(begin, beginEvent);
+  DEFINE_MAPPED_ATTRIBUTE_EVENT_LISTENER(end, endEvent);
+  DEFINE_MAPPED_ATTRIBUTE_EVENT_LISTENER(repeat, repeatEvent);
 
-    virtual bool isAdditive();
-    bool isAccumulated() const;
-    AnimationMode getAnimationMode() const { return m_animationMode; }
-    CalcMode getCalcMode() const { return m_calcMode; }
+  virtual bool IsAdditive();
+  bool IsAccumulated() const;
+  AnimationMode GetAnimationMode() const { return animation_mode_; }
+  CalcMode GetCalcMode() const { return calc_mode_; }
 
-    enum ShouldApplyAnimationType {
-        DontApplyAnimation,
-        ApplyCSSAnimation,
-        ApplyXMLAnimation,
-        ApplyXMLandCSSAnimation
-    };
-
-    ShouldApplyAnimationType shouldApplyAnimation(SVGElement* targetElement, const QualifiedName& attributeName);
-
-    AnimatedPropertyValueType fromPropertyValueType() const { return m_fromPropertyValueType; }
-    AnimatedPropertyValueType toPropertyValueType() const { return m_toPropertyValueType; }
-
-    template<typename AnimatedType, typename ParseTypeFromStringType>
-    void adjustForInheritance(ParseTypeFromStringType parseTypeFromString, AnimatedPropertyValueType valueType, AnimatedType& animatedType, SVGElement* contextElement)
-    {
-        if (valueType != InheritValue)
-            return;
-        // Replace 'inherit' by its computed property value.
-        String typeString;
-        adjustForInheritance(contextElement, attributeName(), typeString);
-        animatedType = parseTypeFromString(this, typeString);
+  template <typename AnimatedType>
+  void AnimateDiscreteType(float percentage,
+                           const AnimatedType& from_type,
+                           const AnimatedType& to_type,
+                           AnimatedType& animated_type) {
+    if ((GetAnimationMode() == kFromToAnimation && percentage > 0.5) ||
+        GetAnimationMode() == kToAnimation || percentage == 1) {
+      animated_type = AnimatedType(to_type);
+      return;
     }
+    animated_type = AnimatedType(from_type);
+  }
 
-    template<typename AnimatedType>
-    void animateDiscreteType(float percentage, const AnimatedType& fromType, const AnimatedType& toType, AnimatedType& animatedType)
-    {
-        if ((getAnimationMode() == FromToAnimation && percentage > 0.5) || getAnimationMode() == ToAnimation || percentage == 1) {
-            animatedType = AnimatedType(toType);
-            return;
-        }
-        animatedType = AnimatedType(fromType);
-    }
+  void AnimateAdditiveNumber(float percentage,
+                             unsigned repeat_count,
+                             float from_number,
+                             float to_number,
+                             float to_at_end_of_duration_number,
+                             float& animated_number) {
+    float number;
+    if (GetCalcMode() == kCalcModeDiscrete)
+      number = percentage < 0.5 ? from_number : to_number;
+    else
+      number = (to_number - from_number) * percentage + from_number;
 
-    void animateAdditiveNumber(float percentage, unsigned repeatCount, float fromNumber, float toNumber, float toAtEndOfDurationNumber, float& animatedNumber)
-    {
-        float number;
-        if (getCalcMode() == CalcModeDiscrete)
-            number = percentage < 0.5 ? fromNumber : toNumber;
-        else
-            number = (toNumber - fromNumber) * percentage + fromNumber;
+    if (IsAccumulated() && repeat_count)
+      number += to_at_end_of_duration_number * repeat_count;
 
-        if (isAccumulated() && repeatCount)
-            number += toAtEndOfDurationNumber * repeatCount;
+    if (IsAdditive() && GetAnimationMode() != kToAnimation)
+      animated_number += number;
+    else
+      animated_number = number;
+  }
 
-        if (isAdditive() && getAnimationMode() != ToAnimation)
-            animatedNumber += number;
-        else
-            animatedNumber = number;
-    }
+ protected:
+  SVGAnimationElement(const QualifiedName&, Document&);
 
-protected:
-    SVGAnimationElement(const QualifiedName&, Document&);
+  void ParseAttribute(const AttributeModificationParams&) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    void computeCSSPropertyValue(SVGElement*, CSSPropertyID, String& value);
-    void determinePropertyValueTypes(const String& from, const String& to);
+  String ToValue() const;
+  String ByValue() const;
+  String FromValue() const;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    void svgAttributeChanged(const QualifiedName&) override;
+  // from SVGSMILElement
+  void StartedActiveInterval() override;
+  void UpdateAnimation(float percent,
+                       unsigned repeat,
+                       SVGSMILElement* result_element) override;
 
-    enum AttributeType {
-        AttributeTypeCSS,
-        AttributeTypeXML,
-        AttributeTypeAuto
-    };
-    AttributeType getAttributeType() const { return m_attributeType; }
+  virtual void UpdateAnimationMode();
+  void SetAnimationMode(AnimationMode animation_mode) {
+    animation_mode_ = animation_mode;
+  }
+  void SetCalcMode(CalcMode calc_mode) { calc_mode_ = calc_mode; }
 
-    String toValue() const;
-    String byValue() const;
-    String fromValue() const;
+  // Parses a list of values as specified by SVG, stripping leading
+  // and trailing whitespace, and places them in result. If the
+  // format of the string is not valid, parseValues empties result
+  // and returns false. See
+  // http://www.w3.org/TR/SVG/animate.html#ValuesAttribute .
+  static bool ParseValues(const String&, Vector<String>& result);
 
-    // from SVGSMILElement
-    void startedActiveInterval() override;
-    void updateAnimation(float percent, unsigned repeat, SVGSMILElement* resultElement) override;
+  void InvalidatedValuesCache();
+  void AnimationAttributeChanged() override;
 
-    AnimatedPropertyValueType m_fromPropertyValueType;
-    AnimatedPropertyValueType m_toPropertyValueType;
+ private:
+  bool IsValid() const final { return SVGTests::IsValid(); }
 
-    void setTargetElement(SVGElement*) override;
-    void setAttributeName(const QualifiedName&) override;
+  virtual bool CalculateToAtEndOfDurationValue(
+      const String& to_at_end_of_duration_string) = 0;
+  virtual bool CalculateFromAndToValues(const String& from_string,
+                                        const String& to_string) = 0;
+  virtual bool CalculateFromAndByValues(const String& from_string,
+                                        const String& by_string) = 0;
+  virtual void CalculateAnimatedValue(float percent,
+                                      unsigned repeat_count,
+                                      SVGSMILElement* result_element) = 0;
+  virtual float CalculateDistance(const String& /*fromString*/,
+                                  const String& /*toString*/) {
+    return -1.f;
+  }
 
-    bool hasInvalidCSSAttributeType() const { return m_hasInvalidCSSAttributeType; }
+  void CurrentValuesForValuesAnimation(float percent,
+                                       float& effective_percent,
+                                       String& from,
+                                       String& to);
+  void CalculateKeyTimesForCalcModePaced();
+  float CalculatePercentFromKeyPoints(float percent) const;
+  void CurrentValuesFromKeyPoints(float percent,
+                                  float& effective_percent,
+                                  String& from,
+                                  String& to) const;
+  float CalculatePercentForSpline(float percent, unsigned spline_index) const;
+  float CalculatePercentForFromTo(float percent) const;
+  unsigned CalculateKeyTimesIndex(float percent) const;
 
-    virtual void updateAnimationMode();
-    void setAnimationMode(AnimationMode animationMode) { m_animationMode = animationMode; }
-    void setCalcMode(CalcMode calcMode) { m_calcMode = calcMode; }
+  void SetCalcMode(const AtomicString&);
 
-    // Parses a list of values as specified by SVG, stripping leading
-    // and trailing whitespace, and places them in result. If the
-    // format of the string is not valid, parseValues empties result
-    // and returns false. See
-    // http://www.w3.org/TR/SVG/animate.html#ValuesAttribute .
-    static bool parseValues(const String&, Vector<String>& result);
+  bool animation_valid_;
 
-private:
-    bool isValid() const final { return SVGTests::isValid(); }
-
-    void animationAttributeChanged() override;
-    void setAttributeType(const AtomicString&);
-
-    void checkInvalidCSSAttributeType();
-
-    virtual bool calculateToAtEndOfDurationValue(const String& toAtEndOfDurationString) = 0;
-    virtual bool calculateFromAndToValues(const String& fromString, const String& toString) = 0;
-    virtual bool calculateFromAndByValues(const String& fromString, const String& byString) = 0;
-    virtual void calculateAnimatedValue(float percent, unsigned repeatCount, SVGSMILElement* resultElement) = 0;
-    virtual float calculateDistance(const String& /*fromString*/, const String& /*toString*/) { return -1.f; }
-
-    void currentValuesForValuesAnimation(float percent, float& effectivePercent, String& from, String& to);
-    void calculateKeyTimesForCalcModePaced();
-    float calculatePercentFromKeyPoints(float percent) const;
-    void currentValuesFromKeyPoints(float percent, float& effectivePercent, String& from, String& to) const;
-    float calculatePercentForSpline(float percent, unsigned splineIndex) const;
-    float calculatePercentForFromTo(float percent) const;
-    unsigned calculateKeyTimesIndex(float percent) const;
-
-    void adjustForInheritance(SVGElement* targetElement, const QualifiedName& attributeName, String&);
-
-    void setCalcMode(const AtomicString&);
-
-    bool m_animationValid;
-
-    AttributeType m_attributeType;
-    Vector<String> m_values;
-    // FIXME: We should probably use doubles for this, but there's no point
-    // making such a change unless all SVG logic for sampling animations is
-    // changed to use doubles.
-    Vector<float> m_keyTimes;
-    Vector<float> m_keyPoints;
-    Vector<gfx::CubicBezier> m_keySplines;
-    String m_lastValuesAnimationFrom;
-    String m_lastValuesAnimationTo;
-    bool m_hasInvalidCSSAttributeType;
-    CalcMode m_calcMode;
-    AnimationMode m_animationMode;
+  Vector<String> values_;
+  // FIXME: We should probably use doubles for this, but there's no point
+  // making such a change unless all SVG logic for sampling animations is
+  // changed to use doubles.
+  Vector<float> key_times_;
+  Vector<float> key_points_;
+  Vector<gfx::CubicBezier> key_splines_;
+  String last_values_animation_from_;
+  String last_values_animation_to_;
+  CalcMode calc_mode_;
+  AnimationMode animation_mode_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAnimationElement_h
+#endif  // SVGAnimationElement_h

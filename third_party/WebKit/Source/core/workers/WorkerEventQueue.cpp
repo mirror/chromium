@@ -26,121 +26,72 @@
 
 #include "core/workers/WorkerEventQueue.h"
 
-#include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/events/Event.h"
-#include "core/inspector/InspectorInstrumentation.h"
-#include "wtf/PtrUtil.h"
+#include "core/probe/CoreProbes.h"
+#include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerThread.h"
 
 namespace blink {
 
-WorkerEventQueue* WorkerEventQueue::create(ExecutionContext* context)
-{
-    return new WorkerEventQueue(context);
+WorkerEventQueue* WorkerEventQueue::Create(
+    WorkerGlobalScope* worker_global_scope) {
+  return new WorkerEventQueue(worker_global_scope);
 }
 
-WorkerEventQueue::WorkerEventQueue(ExecutionContext* context)
-    : m_executionContext(context)
-    , m_isClosed(false)
-{
+WorkerEventQueue::WorkerEventQueue(WorkerGlobalScope* worker_global_scope)
+    : worker_global_scope_(worker_global_scope), is_closed_(false) {}
+
+WorkerEventQueue::~WorkerEventQueue() {
+  DCHECK(pending_events_.IsEmpty());
 }
 
-WorkerEventQueue::~WorkerEventQueue()
-{
-    DCHECK(m_eventTaskMap.isEmpty());
+DEFINE_TRACE(WorkerEventQueue) {
+  visitor->Trace(worker_global_scope_);
+  visitor->Trace(pending_events_);
+  EventQueue::Trace(visitor);
 }
 
-DEFINE_TRACE(WorkerEventQueue)
-{
-    visitor->trace(m_executionContext);
-    visitor->trace(m_eventTaskMap);
-    EventQueue::trace(visitor);
+bool WorkerEventQueue::EnqueueEvent(Event* event) {
+  if (is_closed_)
+    return false;
+  probe::AsyncTaskScheduled(event->target()->GetExecutionContext(),
+                            event->type(), event);
+  pending_events_.insert(event);
+  worker_global_scope_->GetThread()->PostTask(
+      BLINK_FROM_HERE,
+      WTF::Bind(&WorkerEventQueue::DispatchEvent, WrapPersistent(this),
+                WrapWeakPersistent(event)));
+  return true;
 }
 
-class WorkerEventQueue::EventDispatcherTask : public ExecutionContextTask {
-public:
-    static std::unique_ptr<EventDispatcherTask> create(Event* event, WorkerEventQueue* eventQueue)
-    {
-        return wrapUnique(new EventDispatcherTask(event, eventQueue));
-    }
-
-    ~EventDispatcherTask() override
-    {
-        if (m_event)
-            m_eventQueue->removeEvent(m_event.get());
-    }
-
-    void dispatchEvent(ExecutionContext* context, Event* event)
-    {
-        InspectorInstrumentation::AsyncTask asyncTask(context, event);
-        event->target()->dispatchEvent(event);
-    }
-
-    virtual void performTask(ExecutionContext* context)
-    {
-        if (m_isCancelled)
-            return;
-        m_eventQueue->removeEvent(m_event.get());
-        dispatchEvent(context, m_event);
-        m_event.clear();
-    }
-
-    void cancel()
-    {
-        m_isCancelled = true;
-        m_event.clear();
-    }
-
-private:
-    EventDispatcherTask(Event* event, WorkerEventQueue* eventQueue)
-        : m_event(event)
-        , m_eventQueue(eventQueue)
-        , m_isCancelled(false)
-    {
-    }
-
-    Persistent<Event> m_event;
-    Persistent<WorkerEventQueue> m_eventQueue;
-    bool m_isCancelled;
-};
-
-void WorkerEventQueue::removeEvent(Event* event)
-{
-    InspectorInstrumentation::asyncTaskCanceled(event->target()->getExecutionContext(), event);
-    m_eventTaskMap.remove(event);
+bool WorkerEventQueue::CancelEvent(Event* event) {
+  if (!RemoveEvent(event))
+    return false;
+  probe::AsyncTaskCanceled(event->target()->GetExecutionContext(), event);
+  return true;
 }
 
-bool WorkerEventQueue::enqueueEvent(Event* event)
-{
-    if (m_isClosed)
-        return false;
-    InspectorInstrumentation::asyncTaskScheduled(event->target()->getExecutionContext(), event->type(), event);
-    std::unique_ptr<EventDispatcherTask> task = EventDispatcherTask::create(event, this);
-    m_eventTaskMap.add(event, task.get());
-    m_executionContext->postTask(BLINK_FROM_HERE, std::move(task));
-    return true;
+void WorkerEventQueue::Close() {
+  is_closed_ = true;
+  for (const auto& event : pending_events_)
+    probe::AsyncTaskCanceled(event->target()->GetExecutionContext(), event);
+  pending_events_.Clear();
 }
 
-bool WorkerEventQueue::cancelEvent(Event* event)
-{
-    EventDispatcherTask* task = m_eventTaskMap.get(event);
-    if (!task)
-        return false;
-    task->cancel();
-    removeEvent(event);
-    return true;
+bool WorkerEventQueue::RemoveEvent(Event* event) {
+  auto found = pending_events_.Find(event);
+  if (found == pending_events_.end())
+    return false;
+  pending_events_.erase(found);
+  return true;
 }
 
-void WorkerEventQueue::close()
-{
-    m_isClosed = true;
-    for (const auto& entry : m_eventTaskMap) {
-        Event* event = entry.key.get();
-        EventDispatcherTask* task = entry.value;
-        InspectorInstrumentation::asyncTaskCanceled(event->target()->getExecutionContext(), event);
-        task->cancel();
-    }
-    m_eventTaskMap.clear();
+void WorkerEventQueue::DispatchEvent(Event* event) {
+  if (!event || !RemoveEvent(event))
+    return;
+
+  probe::AsyncTask async_task(worker_global_scope_, event);
+  event->target()->DispatchEvent(event);
 }
 
-} // namespace blink
+}  // namespace blink

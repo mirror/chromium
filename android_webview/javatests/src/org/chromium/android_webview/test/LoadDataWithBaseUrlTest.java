@@ -5,7 +5,7 @@
 package org.chromium.android_webview.test;
 
 import android.graphics.Bitmap;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwSettings;
@@ -15,6 +15,7 @@ import org.chromium.base.test.util.Restriction;
 import org.chromium.content.browser.test.util.HistoryUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.net.test.util.TestWebServer;
 
 import java.io.File;
@@ -167,7 +168,7 @@ public class LoadDataWithBaseUrlTest extends AwTestBase {
         final String pageHtml = "<html><body onload='document.title=document.location.href'>"
                 + "</body></html>";
         loadDataWithBaseUrlSync(pageHtml, "text/html", false, null, null);
-        assertEquals("about:blank", getTitleOnUiThread(mAwContents));
+        assertEquals(ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL, getTitleOnUiThread(mAwContents));
     }
 
     @SmallTest
@@ -189,7 +190,7 @@ public class LoadDataWithBaseUrlTest extends AwTestBase {
                 mContentsClient.getOnPageStartedHelper();
         final int callCount = onPageStartedHelper.getCallCount();
         loadDataWithBaseUrlAsync(mAwContents, CommonResources.ABOUT_HTML, "text/html", false,
-                baseUrl, "about:blank");
+                baseUrl, ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL);
         onPageStartedHelper.waitForCallback(callCount);
         assertEquals(baseUrl, onPageStartedHelper.getUrl());
     }
@@ -208,8 +209,8 @@ public class LoadDataWithBaseUrlTest extends AwTestBase {
                 getInstrumentation(), mWebContents));
 
         loadDataWithBaseUrlSync(pageHtml, "text/html", false, baseUrl, null);
-        assertEquals("about:blank", HistoryUtils.getUrlOnUiThread(
-                getInstrumentation(), mWebContents));
+        assertEquals(ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL,
+                HistoryUtils.getUrlOnUiThread(getInstrumentation(), mWebContents));
     }
 
     @SmallTest
@@ -259,8 +260,8 @@ public class LoadDataWithBaseUrlTest extends AwTestBase {
             assertEquals(page2Title, getTitleOnUiThread(mAwContents));
 
             HistoryUtils.goBackSync(getInstrumentation(), mWebContents, onPageFinishedHelper);
-            // The title of the 'about.html' specified via historyUrl.
-            assertEquals(CommonResources.ABOUT_TITLE, getTitleOnUiThread(mAwContents));
+            // The title of first page loaded with loadDataWithBaseUrl.
+            assertEquals(page1Title, getTitleOnUiThread(mAwContents));
         } finally {
             webServer.shutdown();
         }
@@ -301,8 +302,11 @@ public class LoadDataWithBaseUrlTest extends AwTestBase {
         File tempImage = File.createTempFile("test_image", ".png", cacheDir);
         Bitmap bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
         FileOutputStream fos = new FileOutputStream(tempImage);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        fos.close();
+        try {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } finally {
+            fos.close();
+        }
         String imagePath = tempImage.getAbsolutePath();
 
         AwSettings contentSettings = getAwSettingsOnUiThread(mAwContents);

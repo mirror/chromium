@@ -8,8 +8,10 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/test/test_simple_task_runner.h"
+#include "base/time/time.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/service_worker/embedded_worker_registry.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
@@ -104,6 +106,18 @@ ServiceWorkerUnregisterJob::UnregistrationCallback SaveUnregistration(
   return base::Bind(&SaveUnregistrationCallback, expected_status, called);
 }
 
+ServiceWorkerStatusCode EventResultToStatus(
+    blink::WebServiceWorkerEventResult result) {
+  switch (result) {
+    case blink::kWebServiceWorkerEventResultCompleted:
+      return SERVICE_WORKER_OK;
+    case blink::kWebServiceWorkerEventResultRejected:
+      return SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED;
+  }
+  NOTREACHED() << "Got invalid result: " << result;
+  return SERVICE_WORKER_ERROR_FAILED;
+}
+
 }  // namespace
 
 class ServiceWorkerJobTest : public testing::Test {
@@ -185,13 +199,10 @@ ServiceWorkerJobTest::FindRegistrationForPattern(
 
 std::unique_ptr<ServiceWorkerProviderHost>
 ServiceWorkerJobTest::CreateControllee() {
-  return std::unique_ptr<ServiceWorkerProviderHost>(
-      new ServiceWorkerProviderHost(
-          33 /* dummy render_process id */,
-          MSG_ROUTING_NONE /* render_frame_id */, 1 /* dummy provider_id */,
-          SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          ServiceWorkerProviderHost::FrameSecurityLevel::SECURE,
-          helper_->context()->AsWeakPtr(), NULL));
+  std::unique_ptr<ServiceWorkerProviderHost> host = CreateProviderHostForWindow(
+      33 /* dummy render process id */, 1 /* dummy provider_id */,
+      true /* is_parent_frame_secure */, helper_->context()->AsWeakPtr());
+  return host;
 }
 
 TEST_F(ServiceWorkerJobTest, SameDocumentSameRegistration) {
@@ -372,9 +383,14 @@ class FailToStartWorkerTestHelper : public EmbeddedWorkerTestHelper {
                      int64_t service_worker_version_id,
                      const GURL& scope,
                      const GURL& script_url,
-                     bool pause_after_download) override {
-    EmbeddedWorkerInstance* worker = registry()->GetWorker(embedded_worker_id);
-    registry()->OnWorkerStopped(worker->process_id(), embedded_worker_id);
+                     bool pause_after_download,
+                     mojom::ServiceWorkerEventDispatcherRequest request,
+                     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo
+                         instance_host) override {
+    mojom::EmbeddedWorkerInstanceHostAssociatedPtr instance_host_ptr;
+    instance_host_ptr.Bind(std::move(instance_host));
+    instance_host_ptr->OnStopped();
+    base::RunLoop().RunUntilIdle();
   }
 };
 
@@ -657,6 +673,8 @@ TEST_F(ServiceWorkerJobTest, UnregisterWaitingSetsRedundant) {
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(SERVICE_WORKER_OK, status);
 
+  version->set_fetch_handler_existence(
+      ServiceWorkerVersion::FetchHandlerExistence::EXISTS);
   version->SetStatus(ServiceWorkerVersion::INSTALLED);
   registration->SetWaitingVersion(version);
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version->running_status());
@@ -829,7 +847,10 @@ class UpdateJobTestHelper
                      int64_t version_id,
                      const GURL& scope,
                      const GURL& script,
-                     bool pause_after_download) override {
+                     bool pause_after_download,
+                     mojom::ServiceWorkerEventDispatcherRequest request,
+                     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo
+                         instance_host) override {
     const std::string kMockScriptBody = "mock_script";
     const uint64_t kMockScriptSize = 19284;
     ServiceWorkerVersion* version = context()->GetLiveVersion(version_id);
@@ -856,34 +877,44 @@ class UpdateJobTestHelper
       // Spoof caching the script for the initial version.
       WriteStringResponse(storage(), resource_id, kMockScriptBody);
       version->script_cache_map()->NotifyFinishedCaching(
-          script, kMockScriptSize, net::URLRequestStatus(), std::string());
+          script, kMockScriptSize, net::OK, std::string());
+      version->SetMainScriptHttpResponseInfo(
+          EmbeddedWorkerTestHelper::CreateHttpResponseInfo());
     } else {
       if (script.GetOrigin() == kNoChangeOrigin) {
         // Simulate fetching the updated script and finding it's identical to
         // the incumbent.
-        net::URLRequestStatus status =
-            net::URLRequestStatus::FromError(net::ERR_FILE_EXISTS);
         version->script_cache_map()->NotifyFinishedCaching(
-            script, kMockScriptSize, status, std::string());
-        SimulateWorkerScriptLoaded(embedded_worker_id);
+            script, kMockScriptSize, net::ERR_FILE_EXISTS, std::string());
+        version->SetMainScriptHttpResponseInfo(
+            EmbeddedWorkerTestHelper::CreateHttpResponseInfo());
+
+        mojom::EmbeddedWorkerInstanceHostAssociatedPtr instance_host_ptr;
+        instance_host_ptr.Bind(std::move(instance_host));
+        instance_host_ptr->OnScriptLoaded();
+        base::RunLoop().RunUntilIdle();
         return;
       }
 
       // Spoof caching the script for the new version.
       WriteStringResponse(storage(), resource_id, "mock_different_script");
       version->script_cache_map()->NotifyFinishedCaching(
-          script, kMockScriptSize, net::URLRequestStatus(), std::string());
+          script, kMockScriptSize, net::OK, std::string());
+      version->SetMainScriptHttpResponseInfo(
+          EmbeddedWorkerTestHelper::CreateHttpResponseInfo());
     }
 
     EmbeddedWorkerTestHelper::OnStartWorker(
-        embedded_worker_id, version_id, scope, script, pause_after_download);
+        embedded_worker_id, version_id, scope, script, pause_after_download,
+        std::move(request), std::move(instance_host));
   }
 
   void OnResumeAfterDownload(int embedded_worker_id) override {
     if (!force_start_worker_failure_) {
       EmbeddedWorkerTestHelper::OnResumeAfterDownload(embedded_worker_id);
     } else {
-      SimulateWorkerThreadStarted(GetNextThreadId(), embedded_worker_id);
+      SimulateWorkerThreadStarted(GetNextThreadId(), embedded_worker_id,
+                                  GetNextProviderId());
       SimulateWorkerScriptEvaluated(embedded_worker_id, false);
     }
   }
@@ -935,7 +966,10 @@ class EvictIncumbentVersionHelper : public UpdateJobTestHelper {
                      int64_t version_id,
                      const GURL& scope,
                      const GURL& script,
-                     bool pause_after_download) override {
+                     bool pause_after_download,
+                     mojom::ServiceWorkerEventDispatcherRequest request,
+                     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo
+                         instance_host) override {
     ServiceWorkerVersion* version = context()->GetLiveVersion(version_id);
     ServiceWorkerRegistration* registration =
         context()->GetLiveRegistration(version->registration_id());
@@ -947,8 +981,9 @@ class EvictIncumbentVersionHelper : public UpdateJobTestHelper {
       registration->DeleteVersion(
           make_scoped_refptr(registration->active_version()));
     }
-    UpdateJobTestHelper::OnStartWorker(embedded_worker_id, version_id, scope,
-                                       script, pause_after_download);
+    UpdateJobTestHelper::OnStartWorker(
+        embedded_worker_id, version_id, scope, script, pause_after_download,
+        std::move(request), std::move(instance_host));
   }
 
   void OnRegistrationFailed(ServiceWorkerRegistration* registration) override {
@@ -1433,8 +1468,8 @@ class EventCallbackHelper : public EmbeddedWorkerTestHelper {
  public:
   EventCallbackHelper()
       : EmbeddedWorkerTestHelper(base::FilePath()),
-        install_event_result_(blink::WebServiceWorkerEventResultCompleted),
-        activate_event_result_(blink::WebServiceWorkerEventResultCompleted) {}
+        install_event_result_(blink::kWebServiceWorkerEventResultCompleted),
+        activate_event_result_(blink::kWebServiceWorkerEventResultCompleted) {}
 
   void OnInstallEvent(int embedded_worker_id,
                       int request_id) override {
@@ -1442,12 +1477,14 @@ class EventCallbackHelper : public EmbeddedWorkerTestHelper {
       install_callback_.Run();
     SimulateSend(new ServiceWorkerHostMsg_InstallEventFinished(
         embedded_worker_id, request_id, install_event_result_,
-        has_fetch_handler_));
+        has_fetch_handler_, base::Time::Now()));
   }
-  void OnActivateEvent(int embedded_worker_id, int request_id) override {
-    SimulateSend(
-        new ServiceWorkerHostMsg_ActivateEventFinished(
-            embedded_worker_id, request_id, activate_event_result_));
+
+  void OnActivateEvent(
+      const mojom::ServiceWorkerEventDispatcher::DispatchActivateEventCallback&
+          callback) override {
+    callback.Run(EventResultToStatus(activate_event_result_),
+                 base::Time::Now());
   }
 
   void set_install_callback(const base::Closure& callback) {
@@ -1533,7 +1570,7 @@ TEST_F(ServiceWorkerJobTest, RemoveControlleeDuringRejectedInstall) {
   helper->set_install_callback(
       base::Bind(&ServiceWorkerVersion::RemoveControllee,
                  old_version, host.get()));
-  helper->set_install_event_result(blink::WebServiceWorkerEventResultRejected);
+  helper->set_install_event_result(blink::kWebServiceWorkerEventResultRejected);
   EXPECT_EQ(registration, RunRegisterJob(pattern, script2));
 
   // Verify the registration was uninstalled.
@@ -1569,7 +1606,8 @@ TEST_F(ServiceWorkerJobTest, RemoveControlleeDuringInstall_RejectActivate) {
   helper->set_install_callback(
       base::Bind(&ServiceWorkerVersion::RemoveControllee,
                  old_version, host.get()));
-  helper->set_activate_event_result(blink::WebServiceWorkerEventResultRejected);
+  helper->set_activate_event_result(
+      blink::kWebServiceWorkerEventResultRejected);
   EXPECT_EQ(registration, RunRegisterJob(pattern, script2));
 
   // Verify the registration remains.
@@ -1593,49 +1631,71 @@ TEST_F(ServiceWorkerJobTest, HasFetchHandler) {
   helper->set_has_fetch_handler(true);
   RunRegisterJob(pattern, script);
   registration = FindRegistrationForPattern(pattern);
-  EXPECT_TRUE(registration->active_version()->has_fetch_handler());
+  EXPECT_EQ(ServiceWorkerVersion::FetchHandlerExistence::EXISTS,
+            registration->active_version()->fetch_handler_existence());
   RunUnregisterJob(pattern);
 
   helper->set_has_fetch_handler(false);
   RunRegisterJob(pattern, script);
   registration = FindRegistrationForPattern(pattern);
-  EXPECT_FALSE(registration->active_version()->has_fetch_handler());
+  EXPECT_EQ(ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST,
+            registration->active_version()->fetch_handler_existence());
   RunUnregisterJob(pattern);
 }
+
+class CheckPauseAfterDownloadEmbeddedWorkerInstanceClient
+    : public EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient {
+ public:
+  explicit CheckPauseAfterDownloadEmbeddedWorkerInstanceClient(
+      base::WeakPtr<EmbeddedWorkerTestHelper> helper)
+      : EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient(helper) {}
+  int num_of_startworker() const { return num_of_startworker_; }
+  void set_next_pause_after_download(bool expectation) {
+    next_pause_after_download_ = expectation;
+  }
+
+ protected:
+  void StartWorker(const EmbeddedWorkerStartParams& params,
+                   mojom::ServiceWorkerEventDispatcherRequest request,
+                   mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo
+                       instance_host) override {
+    ASSERT_TRUE(next_pause_after_download_.has_value());
+    EXPECT_EQ(next_pause_after_download_.value(), params.pause_after_download);
+    num_of_startworker_++;
+    EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
+        params, std::move(request), std::move(instance_host));
+  }
+
+ private:
+  base::Optional<bool> next_pause_after_download_;
+  int num_of_startworker_ = 0;
+  DISALLOW_COPY_AND_ASSIGN(CheckPauseAfterDownloadEmbeddedWorkerInstanceClient);
+};
 
 TEST_F(ServiceWorkerJobTest, Update_PauseAfterDownload) {
   UpdateJobTestHelper* update_helper = new UpdateJobTestHelper;
   helper_.reset(update_helper);
-  IPC::TestSink* sink = update_helper->ipc_sink();
+
+  std::vector<CheckPauseAfterDownloadEmbeddedWorkerInstanceClient*> clients;
+  clients.push_back(helper_->CreateAndRegisterMockInstanceClient<
+                    CheckPauseAfterDownloadEmbeddedWorkerInstanceClient>(
+      helper_->AsWeakPtr()));
+  clients.push_back(helper_->CreateAndRegisterMockInstanceClient<
+                    CheckPauseAfterDownloadEmbeddedWorkerInstanceClient>(
+      helper_->AsWeakPtr()));
 
   // The initial version should not pause after download.
+  clients[0]->set_next_pause_after_download(false);
   scoped_refptr<ServiceWorkerRegistration> registration =
       update_helper->SetupInitialRegistration(kNewVersionOrigin);
-  {
-    const IPC::Message* start_msg =
-        sink->GetUniqueMessageMatching(EmbeddedWorkerMsg_StartWorker::ID);
-    ASSERT_TRUE(start_msg);
-    EmbeddedWorkerMsg_StartWorker::Param param;
-    EmbeddedWorkerMsg_StartWorker::Read(start_msg, &param);
-    EmbeddedWorkerMsg_StartWorker_Params start_params = std::get<0>(param);
-    EXPECT_FALSE(start_params.pause_after_download);
-    sink->ClearMessages();
-  }
+  ASSERT_EQ(1, clients[0]->num_of_startworker());
 
   // The updated version should pause after download.
+  clients[1]->set_next_pause_after_download(true);
   registration->AddListener(update_helper);
   registration->active_version()->StartUpdate();
   base::RunLoop().RunUntilIdle();
-  {
-    const IPC::Message* start_msg =
-        sink->GetUniqueMessageMatching(EmbeddedWorkerMsg_StartWorker::ID);
-    ASSERT_TRUE(start_msg);
-    EmbeddedWorkerMsg_StartWorker::Param param;
-    EmbeddedWorkerMsg_StartWorker::Read(start_msg, &param);
-    EmbeddedWorkerMsg_StartWorker_Params start_params = std::get<0>(param);
-    EXPECT_TRUE(start_params.pause_after_download);
-    sink->ClearMessages();
-  }
+  ASSERT_EQ(1, clients[1]->num_of_startworker());
 }
 
 // Test that activation doesn't complete if it's triggered by removing a

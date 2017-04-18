@@ -7,9 +7,12 @@
 
 #include <stdint.h>
 
+#include "base/containers/flat_set.h"
+
 namespace cc {
 
 using ResourceId = uint32_t;
+using ResourceIdSet = base::flat_set<ResourceId>;
 
 }  // namespace cc
 

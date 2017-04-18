@@ -31,43 +31,51 @@
 #ifndef PictureSnapshot_h
 #define PictureSnapshot_h
 
-#include "platform/JSONValues.h"
+#include <memory>
+
 #include "platform/PlatformExport.h"
 #include "platform/graphics/GraphicsContext.h"
+#include "platform/json/JSONValues.h"
+#include "platform/wtf/RefCounted.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
-#include "wtf/RefCounted.h"
-#include <memory>
+#include "third_party/skia/include/core/SkRefCnt.h"
 
 namespace blink {
 
 class FloatRect;
 
 class PLATFORM_EXPORT PictureSnapshot : public RefCounted<PictureSnapshot> {
-WTF_MAKE_NONCOPYABLE(PictureSnapshot);
-public:
-    typedef Vector<Vector<double>> Timings;
+  WTF_MAKE_NONCOPYABLE(PictureSnapshot);
 
-    struct TilePictureStream : RefCounted<TilePictureStream> {
-        FloatPoint layerOffset;
-        Vector<char> data;
-    };
+ public:
+  typedef Vector<Vector<double>> Timings;
 
-    static PassRefPtr<PictureSnapshot> load(const Vector<RefPtr<TilePictureStream>>&);
+  struct TilePictureStream : RefCounted<TilePictureStream> {
+    FloatPoint layer_offset;
+    Vector<char> data;
+  };
 
-    PictureSnapshot(PassRefPtr<const SkPicture>);
+  static PassRefPtr<PictureSnapshot> Load(
+      const Vector<RefPtr<TilePictureStream>>&);
 
-    std::unique_ptr<Vector<char>> replay(unsigned fromStep = 0, unsigned toStep = 0, double scale = 1.0) const;
-    std::unique_ptr<Timings> profile(unsigned minIterations, double minDuration, const FloatRect* clipRect) const;
-    PassRefPtr<JSONArray> snapshotCommandLog() const;
-    bool isEmpty() const;
+  PictureSnapshot(sk_sp<const SkPicture>);
 
-private:
-    std::unique_ptr<SkBitmap> createBitmap() const;
+  std::unique_ptr<Vector<char>> Replay(unsigned from_step = 0,
+                                       unsigned to_step = 0,
+                                       double scale = 1.0) const;
+  std::unique_ptr<Timings> Profile(unsigned min_iterations,
+                                   double min_duration,
+                                   const FloatRect* clip_rect) const;
+  std::unique_ptr<JSONArray> SnapshotCommandLog() const;
+  bool IsEmpty() const;
 
-    RefPtr<const SkPicture> m_picture;
+ private:
+  std::unique_ptr<SkBitmap> CreateBitmap() const;
+
+  sk_sp<const SkPicture> picture_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PictureSnapshot_h
+#endif  // PictureSnapshot_h

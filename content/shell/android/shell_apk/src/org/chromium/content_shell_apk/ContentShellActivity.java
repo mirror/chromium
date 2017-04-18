@@ -42,6 +42,7 @@ public class ContentShellActivity extends Activity {
     private ShellManager mShellManager;
     private ActivityWindowAndroid mWindowAndroid;
     private Intent mLastSentIntent;
+    private String mStartupUrl;
 
     @Override
     @SuppressFBWarnings("DM_EXIT")
@@ -59,9 +60,9 @@ public class ContentShellActivity extends Activity {
         waitForDebuggerIfNeeded();
 
         DeviceUtils.addDeviceSpecificUserAgentSwitch(this);
+
         try {
-            LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER)
-                    .ensureInitialized(getApplicationContext());
+            LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER).ensureInitialized();
         } catch (ProcessInitException e) {
             Log.e(TAG, "ContentView initialization failed.", e);
             // Since the library failed to initialize nothing in the application
@@ -81,14 +82,14 @@ public class ContentShellActivity extends Activity {
         mWindowAndroid.setAnimationPlaceholderView(
                 mShellManager.getContentViewRenderView().getSurfaceView());
 
-        String startupUrl = getUrlFromIntent(getIntent());
-        if (!TextUtils.isEmpty(startupUrl)) {
-            mShellManager.setStartupUrl(Shell.sanitizeUrl(startupUrl));
+        mStartupUrl = getUrlFromIntent(getIntent());
+        if (!TextUtils.isEmpty(mStartupUrl)) {
+            mShellManager.setStartupUrl(Shell.sanitizeUrl(mStartupUrl));
         }
 
         if (CommandLine.getInstance().hasSwitch(ContentSwitches.RUN_LAYOUT_TEST)) {
             try {
-                BrowserStartupController.get(this, LibraryProcessType.PROCESS_BROWSER)
+                BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                         .startBrowserProcessesSync(false);
             } catch (ProcessInitException e) {
                 Log.e(TAG, "Failed to load native library.", e);
@@ -96,7 +97,7 @@ public class ContentShellActivity extends Activity {
             }
         } else {
             try {
-                BrowserStartupController.get(this, LibraryProcessType.PROCESS_BROWSER)
+                BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                         .startBrowserProcessesAsync(
                                 true,
                                 new BrowserStartupController.StartupCallback() {
@@ -118,7 +119,13 @@ public class ContentShellActivity extends Activity {
     }
 
     private void finishInitialization(Bundle savedInstanceState) {
-        String shellUrl = ShellManager.DEFAULT_SHELL_URL;
+        String shellUrl;
+        if (!TextUtils.isEmpty(mStartupUrl)) {
+            shellUrl = mStartupUrl;
+        } else {
+            shellUrl = ShellManager.DEFAULT_SHELL_URL;
+        }
+
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(ACTIVE_SHELL_URL_KEY)) {
             shellUrl = savedInstanceState.getString(ACTIVE_SHELL_URL_KEY);

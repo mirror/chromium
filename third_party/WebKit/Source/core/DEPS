@@ -1,10 +1,13 @@
 include_rules = [
     "+bindings/core",
     "-bindings/modules",
+    "+build/mac",
+    "+build/win",
     "+core",
     "-inspector/v8",
     "+inspector/v8/public",
     "-modules",
+    "+mojo/public/cpp/bindings",
     "+platform",
     "+public/platform",
     "-public/web",

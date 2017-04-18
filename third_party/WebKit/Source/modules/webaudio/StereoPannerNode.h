@@ -9,51 +9,59 @@
 #include "modules/webaudio/AudioNode.h"
 #include "modules/webaudio/AudioParam.h"
 #include "platform/audio/AudioBus.h"
-#include "platform/audio/Spatializer.h"
+#include "platform/audio/StereoPanner.h"
 #include <memory>
 
 namespace blink {
 
 class BaseAudioContext;
+class StereoPannerOptions;
 
 // StereoPannerNode is an AudioNode with one input and one output. It is
 // specifically designed for equal-power stereo panning.
 class StereoPannerHandler final : public AudioHandler {
-public:
-    static PassRefPtr<StereoPannerHandler> create(AudioNode&, float sampleRate, AudioParamHandler& pan);
-    ~StereoPannerHandler() override;
+ public:
+  static PassRefPtr<StereoPannerHandler> Create(AudioNode&,
+                                                float sample_rate,
+                                                AudioParamHandler& pan);
+  ~StereoPannerHandler() override;
 
-    void process(size_t framesToProcess) override;
-    void initialize() override;
+  void Process(size_t frames_to_process) override;
+  void ProcessOnlyAudioParams(size_t frames_to_process) override;
+  void Initialize() override;
 
-    void setChannelCount(unsigned long, ExceptionState&) final;
-    void setChannelCountMode(const String&, ExceptionState&) final;
+  void SetChannelCount(unsigned long, ExceptionState&) final;
+  void SetChannelCountMode(const String&, ExceptionState&) final;
 
-private:
-    StereoPannerHandler(AudioNode&, float sampleRate, AudioParamHandler& pan);
+ private:
+  StereoPannerHandler(AudioNode&, float sample_rate, AudioParamHandler& pan);
 
-    std::unique_ptr<Spatializer> m_stereoPanner;
-    RefPtr<AudioParamHandler> m_pan;
+  std::unique_ptr<StereoPanner> stereo_panner_;
+  RefPtr<AudioParamHandler> pan_;
 
-    AudioFloatArray m_sampleAccuratePanValues;
+  AudioFloatArray sample_accurate_pan_values_;
 
-    FRIEND_TEST_ALL_PREFIXES(StereoPannerNodeTest, StereoPannerLifetime);
+  FRIEND_TEST_ALL_PREFIXES(StereoPannerNodeTest, StereoPannerLifetime);
 };
 
 class StereoPannerNode final : public AudioNode {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static StereoPannerNode* create(BaseAudioContext&, ExceptionState&);
-    DECLARE_VIRTUAL_TRACE();
+  DEFINE_WRAPPERTYPEINFO();
 
-    AudioParam* pan() const;
+ public:
+  static StereoPannerNode* Create(BaseAudioContext&, ExceptionState&);
+  static StereoPannerNode* Create(BaseAudioContext*,
+                                  const StereoPannerOptions&,
+                                  ExceptionState&);
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    StereoPannerNode(BaseAudioContext&);
+  AudioParam* pan() const;
 
-    Member<AudioParam> m_pan;
+ private:
+  StereoPannerNode(BaseAudioContext&);
+
+  Member<AudioParam> pan_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // StereoPannerNode_h
+#endif  // StereoPannerNode_h

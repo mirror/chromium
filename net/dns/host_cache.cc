@@ -11,6 +11,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "net/base/net_errors.h"
+#include "net/base/trace_constants.h"
 #include "net/dns/dns_util.h"
 
 namespace net {
@@ -162,7 +163,7 @@ void HostCache::Set(const Key& key,
                     const Entry& entry,
                     base::TimeTicks now,
                     base::TimeDelta ttl) {
-  TRACE_EVENT0("net", "HostCache::Set");
+  TRACE_EVENT0(kNetTracingCategory, "HostCache::Set");
   DCHECK(CalledOnValidThread());
   if (caching_is_disabled())
     return;
@@ -198,6 +199,28 @@ void HostCache::clear() {
   entries_.clear();
 }
 
+void HostCache::ClearForHosts(
+    const base::Callback<bool(const std::string&)>& host_filter) {
+  DCHECK(CalledOnValidThread());
+
+  if (host_filter.is_null()) {
+    clear();
+    return;
+  }
+
+  base::TimeTicks now = base::TimeTicks::Now();
+  for (EntryMap::iterator it = entries_.begin(); it != entries_.end();) {
+    EntryMap::iterator next_it = std::next(it);
+
+    if (host_filter.Run(it->first.hostname)) {
+      RecordErase(ERASE_CLEAR, now, it->second);
+      entries_.erase(it);
+    }
+
+    it = next_it;
+  }
+}
+
 size_t HostCache::size() const {
   DCHECK(CalledOnValidThread());
   return entries_.size();
@@ -230,10 +253,15 @@ void HostCache::EvictOneEntry(base::TimeTicks now) {
 
   auto oldest_it = entries_.begin();
   for (auto it = entries_.begin(); it != entries_.end(); ++it) {
-    if (it->second.expires() < oldest_it->second.expires())
+    if ((it->second.expires() < oldest_it->second.expires()) &&
+        (it->second.IsStale(now, network_changes_) ||
+         !oldest_it->second.IsStale(now, network_changes_))) {
       oldest_it = it;
+    }
   }
 
+  if (!eviction_callback_.is_null())
+    eviction_callback_.Run(oldest_it->first, oldest_it->second);
   RecordErase(ERASE_EVICT, now, oldest_it->second);
   entries_.erase(oldest_it);
 }

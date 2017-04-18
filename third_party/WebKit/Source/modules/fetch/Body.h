@@ -12,13 +12,12 @@
 #include "core/dom/ContextLifecycleObserver.h"
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class BodyStreamBuffer;
 class ExecutionContext;
-class ReadableByteStream;
 class ScriptState;
 
 // This class represents Body mix-in defined in the fetch spec
@@ -28,47 +27,44 @@ class ScriptState;
 // spec only Response has it and Request has a byte stream defined in the
 // Encoding spec. The spec should be fixed shortly to be aligned with this
 // implementation.
-class MODULES_EXPORT Body
-    : public GarbageCollected<Body>
-    , public ScriptWrappable
-    , public ActiveScriptWrappable
-    , public ContextLifecycleObserver {
-    WTF_MAKE_NONCOPYABLE(Body);
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(Body);
-public:
-    explicit Body(ExecutionContext*);
+class MODULES_EXPORT Body : public GarbageCollected<Body>,
+                            public ScriptWrappable,
+                            public ActiveScriptWrappable<Body>,
+                            public ContextClient {
+  WTF_MAKE_NONCOPYABLE(Body);
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(Body);
 
-    ScriptPromise arrayBuffer(ScriptState*);
-    ScriptPromise blob(ScriptState*);
-    ScriptPromise formData(ScriptState*);
-    ScriptPromise json(ScriptState*);
-    ScriptPromise text(ScriptState*);
-    ScriptValue bodyWithUseCounter(ScriptState*);
-    virtual BodyStreamBuffer* bodyBuffer() = 0;
-    virtual const BodyStreamBuffer* bodyBuffer() const = 0;
+ public:
+  explicit Body(ExecutionContext*);
 
-    virtual bool bodyUsed();
-    bool isBodyLocked();
+  ScriptPromise arrayBuffer(ScriptState*);
+  ScriptPromise blob(ScriptState*);
+  ScriptPromise FormData(ScriptState*);
+  ScriptPromise json(ScriptState*);
+  ScriptPromise text(ScriptState*);
+  ScriptValue body(ScriptState*);
+  virtual BodyStreamBuffer* BodyBuffer() = 0;
+  virtual const BodyStreamBuffer* BodyBuffer() const = 0;
 
-    // ActiveScriptWrappable override.
-    bool hasPendingActivity() const override;
+  virtual bool bodyUsed();
+  bool IsBodyLocked();
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        ContextLifecycleObserver::trace(visitor);
-    }
+  // ScriptWrappable override.
+  bool HasPendingActivity() const override;
 
-private:
-    virtual String mimeType() const = 0;
+  DEFINE_INLINE_VIRTUAL_TRACE() { ContextClient::Trace(visitor); }
 
-    // Body consumption algorithms will reject with a TypeError in a number of
-    // error conditions. This method wraps those up into one call which returns
-    // an empty ScriptPromise if the consumption may proceed, and a
-    // ScriptPromise rejected with a TypeError if it ought to be blocked.
-    ScriptPromise rejectInvalidConsumption(ScriptState*);
+ private:
+  virtual String MimeType() const = 0;
+
+  // Body consumption algorithms will reject with a TypeError in a number of
+  // error conditions. This method wraps those up into one call which returns
+  // an empty ScriptPromise if the consumption may proceed, and a
+  // ScriptPromise rejected with a TypeError if it ought to be blocked.
+  ScriptPromise RejectInvalidConsumption(ScriptState*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Body_h
+#endif  // Body_h

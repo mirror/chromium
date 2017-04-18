@@ -30,23 +30,20 @@
 
 #include "modules/peerconnection/RTCCertificate.h"
 
-#include "wtf/PtrUtil.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 RTCCertificate::RTCCertificate(std::unique_ptr<WebRTCCertificate> certificate)
-    : m_certificate(wrapUnique(certificate.release()))
-{
+    : certificate_(WTF::WrapUnique(certificate.release())) {}
+
+std::unique_ptr<WebRTCCertificate> RTCCertificate::CertificateShallowCopy()
+    const {
+  return certificate_->ShallowCopy();
 }
 
-std::unique_ptr<WebRTCCertificate> RTCCertificate::certificateShallowCopy() const
-{
-    return m_certificate->shallowCopy();
+DOMTimeStamp RTCCertificate::expires() const {
+  return static_cast<DOMTimeStamp>(certificate_->Expires());
 }
 
-DOMTimeStamp RTCCertificate::expires() const
-{
-    return static_cast<DOMTimeStamp>(m_certificate->expires());
-}
-
-} // namespace blink
+}  // namespace blink

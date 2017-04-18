@@ -9,27 +9,31 @@
 #include <stdint.h>
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/metrics/persistent_memory_allocator.h"
 #include "base/observer_list.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_process_host_factory.h"
 #include "ipc/ipc_test_sink.h"
-#include "services/shell/public/cpp/interface_provider.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "media/media_features.h"
+#include "mojo/public/cpp/bindings/associated_interface_ptr.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 class StoragePartition;
 
 namespace content {
 
 class MockRenderProcessHostFactory;
+class RenderWidgetHost;
 
 // A mock render process host that has no corresponding renderer process.  All
 // IPC messages are sent into the message sink for inspection by tests.
 class MockRenderProcessHost : public RenderProcessHost {
  public:
+  using InterfaceBinder = base::Callback<void(mojo::ScopedMessagePipeHandle)>;
+
   explicit MockRenderProcessHost(BrowserContext* browser_context);
   ~MockRenderProcessHost() override;
 
@@ -44,19 +48,20 @@ class MockRenderProcessHost : public RenderProcessHost {
   void SimulateCrash();
 
   // RenderProcessHost implementation (public portion).
-  void EnableSendQueue() override;
   bool Init() override;
+  void EnableSendQueue() override;
   int GetNextRoutingID() override;
   void AddRoute(int32_t routing_id, IPC::Listener* listener) override;
   void RemoveRoute(int32_t routing_id) override;
   void AddObserver(RenderProcessHostObserver* observer) override;
   void RemoveObserver(RenderProcessHostObserver* observer) override;
-  void ShutdownForBadMessage() override;
+  void ShutdownForBadMessage(CrashReportMode crash_report_mode) override;
   void WidgetRestored() override;
   void WidgetHidden() override;
   int VisibleWidgetCount() const override;
-  void AudioStateChanged() override;
   bool IsForGuestsOnly() const override;
+  void OnAudioStreamAdded() override;
+  void OnAudioStreamRemoved() override;
   StoragePartition* GetStoragePartition() const override;
   virtual void AddWord(const base::string16& word);
   bool Shutdown(int exit_code, bool wait) override;
@@ -71,6 +76,8 @@ class MockRenderProcessHost : public RenderProcessHost {
   void Cleanup() override;
   void AddPendingView() override;
   void RemovePendingView() override;
+  void AddWidget(RenderWidgetHost* widget) override;
+  void RemoveWidget(RenderWidgetHost* widget) override;
   void SetSuddenTerminationAllowed(bool allowed) override;
   bool SuddenTerminationAllowed() const override;
   BrowserContext* GetBrowserContext() const override;
@@ -80,11 +87,12 @@ class MockRenderProcessHost : public RenderProcessHost {
   bool FastShutdownForPageCount(size_t count) override;
   base::TimeDelta GetChildProcessIdleTime() const override;
   void FilterURL(bool empty_allowed, GURL* url) override;
-#if defined(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC)
   void EnableAudioDebugRecordings(const base::FilePath& file) override;
   void DisableAudioDebugRecordings() override;
   bool StartWebRTCEventLog(const base::FilePath& file_path) override;
   bool StopWebRTCEventLog() override;
+  void SetEchoCanceller3(bool enable) override;
   void SetWebRtcLogMessageCallback(
       base::Callback<void(const std::string&)> callback) override;
   void ClearWebRtcLogMessageCallback() override;
@@ -94,20 +102,24 @@ class MockRenderProcessHost : public RenderProcessHost {
       const WebRtcRtpPacketCallback& packet_callback) override;
 #endif
   void ResumeDeferredNavigation(const GlobalRequestID& request_id) override;
-  void NotifyTimezoneChange(const std::string& zone_id) override;
-  shell::InterfaceRegistry* GetInterfaceRegistry() override;
-  shell::InterfaceProvider* GetRemoteInterfaces() override;
+  void BindInterface(const std::string& interface_name,
+                     mojo::ScopedMessagePipeHandle interface_pipe) override;
   std::unique_ptr<base::SharedPersistentMemoryAllocator> TakeMetricsAllocator()
       override;
   const base::TimeTicks& GetInitTimeForNavigationMetrics() const override;
-#if defined(ENABLE_BROWSER_CDMS)
-  scoped_refptr<media::MediaKeys> GetCdm(int render_frame_id,
-                                         int cdm_id) const override;
-#endif
   bool IsProcessBackgrounded() const override;
-  void IncrementWorkerRefCount() override;
-  void DecrementWorkerRefCount() override;
+  size_t GetWorkerRefCount() const override;
+  void IncrementServiceWorkerRefCount() override;
+  void DecrementServiceWorkerRefCount() override;
+  void IncrementSharedWorkerRefCount() override;
+  void DecrementSharedWorkerRefCount() override;
+  void ForceReleaseWorkerRefCounts() override;
+  bool IsWorkerRefCountDisabled() override;
   void PurgeAndSuspend() override;
+  void Resume() override;
+  mojom::Renderer* GetRendererInterface() override;
+  void SetIsNeverSuitableForReuse() override;
+  bool MayReuseHost() override;
 
   // IPC::Sender via RenderProcessHost.
   bool Send(IPC::Message* msg) override;
@@ -137,16 +149,8 @@ class MockRenderProcessHost : public RenderProcessHost {
   void GetAudioOutputControllers(
       const GetAudioOutputControllersCallback& callback) const override {}
 
-  int worker_ref_count() const { return worker_ref_count_; }
-
-  void SetInterfaceRegistry(
-      std::unique_ptr<shell::InterfaceRegistry> interface_registry) {
-    interface_registry_ = std::move(interface_registry);
-  }
-  void SetRemoteInterfaces(
-      std::unique_ptr<shell::InterfaceProvider> remote_interfaces) {
-    remote_interfaces_ = std::move(remote_interfaces);
-  }
+  void OverrideBinderForTesting(const std::string& interface_name,
+                                const InterfaceBinder& binder);
 
  private:
   // Stores IPC messages that would have been sent to the renderer.
@@ -158,17 +162,18 @@ class MockRenderProcessHost : public RenderProcessHost {
   BrowserContext* browser_context_;
   base::ObserverList<RenderProcessHostObserver> observers_;
 
-  IDMap<RenderWidgetHost> render_widget_hosts_;
+  IDMap<RenderWidgetHost*> render_widget_hosts_;
   int prev_routing_id_;
-  IDMap<IPC::Listener> listeners_;
+  IDMap<IPC::Listener*> listeners_;
   bool fast_shutdown_started_;
   bool deletion_callback_called_;
   bool is_for_guests_only_;
   bool is_process_backgrounded_;
   std::unique_ptr<base::ProcessHandle> process_handle;
   int worker_ref_count_;
-  std::unique_ptr<shell::InterfaceRegistry> interface_registry_;
-  std::unique_ptr<shell::InterfaceProvider> remote_interfaces_;
+  std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
+      renderer_interface_;
+  std::map<std::string, InterfaceBinder> binder_overrides_;
 
   DISALLOW_COPY_AND_ASSIGN(MockRenderProcessHost);
 };
@@ -191,7 +196,7 @@ class MockRenderProcessHostFactory : public RenderProcessHostFactory {
   // A list of MockRenderProcessHosts created by this object. This list is used
   // for deleting all MockRenderProcessHosts that have not deleted by a test in
   // the destructor and prevent them from being leaked.
-  mutable ScopedVector<MockRenderProcessHost> processes_;
+  mutable std::vector<std::unique_ptr<MockRenderProcessHost>> processes_;
 
   DISALLOW_COPY_AND_ASSIGN(MockRenderProcessHostFactory);
 };

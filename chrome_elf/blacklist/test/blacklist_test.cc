@@ -20,6 +20,7 @@
 #include "base/test/test_reg_util_win.h"
 #include "base/win/registry.h"
 #include "chrome/common/chrome_version.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome_elf/blacklist/blacklist.h"
 #include "chrome_elf/chrome_elf_constants.h"
 #include "chrome_elf/nt_registry/nt_registry.h"
@@ -37,7 +38,6 @@ extern const wchar_t* kEnvVars[];
 namespace {
 
 // Functions we need from blacklist_test_main_dll.dll
-typedef void (*TestDll_AddDllsFromRegistryToBlacklistFunction)();
 typedef bool (*TestDll_AddDllToBlacklistFunction)(const wchar_t* dll_name);
 typedef int (*TestDll_BlacklistSizeFunction)();
 typedef void (*TestDll_BlockedDllFunction)(size_t blocked_index);
@@ -49,8 +49,6 @@ typedef bool (*TestDll_SuccessfullyBlockedFunction)(
     int* size);
 typedef void (*InitTestDllFunction)();
 
-TestDll_AddDllsFromRegistryToBlacklistFunction
-    TestDll_AddDllsFromRegistryToBlacklist = nullptr;
 TestDll_AddDllToBlacklistFunction TestDll_AddDllToBlacklist = nullptr;
 TestDll_BlacklistSizeFunction TestDll_BlacklistSize = nullptr;
 TestDll_BlockedDllFunction TestDll_BlockedDll = nullptr;
@@ -136,20 +134,19 @@ class BlacklistTest : public testing::Test {
   // process-specific environment variables, for our test DLLs to access.
   // This will only work as long as the IPC is within the same process.
   void IpcOverrides() {
-    if (::wcslen(nt::HKCU_override) != 0) {
-      ASSERT_TRUE(
-          ::SetEnvironmentVariableW(L"hkcu_override", nt::HKCU_override));
-    }
-    if (::wcslen(nt::HKLM_override) != 0) {
-      ASSERT_TRUE(
-          ::SetEnvironmentVariableW(L"hklm_override", nt::HKLM_override));
-    }
+    base::string16 temp = nt::GetTestingOverride(nt::HKCU);
+    if (!temp.empty())
+      ASSERT_TRUE(::SetEnvironmentVariableW(L"hkcu_override", temp.c_str()));
+    temp = nt::GetTestingOverride(nt::HKLM);
+    if (!temp.empty())
+      ASSERT_TRUE(::SetEnvironmentVariableW(L"hklm_override", temp.c_str()));
   }
 
   void SetUp() override {
     base::string16 temp;
-    override_manager_.OverrideRegistry(HKEY_CURRENT_USER, &temp);
-    ::wcsncpy(nt::HKCU_override, temp.c_str(), nt::g_kRegMaxPathLen - 1);
+    ASSERT_NO_FATAL_FAILURE(
+        override_manager_.OverrideRegistry(HKEY_CURRENT_USER, &temp));
+    ASSERT_TRUE(nt::SetTestingOverride(nt::HKCU, temp));
 
     // Make the override path available to our test DLL.
     IpcOverrides();
@@ -160,9 +157,6 @@ class BlacklistTest : public testing::Test {
     dll = ::LoadLibraryW(L"blacklist_test_main_dll.dll");
     if (!dll)
       return;
-    TestDll_AddDllsFromRegistryToBlacklist =
-        reinterpret_cast<TestDll_AddDllsFromRegistryToBlacklistFunction>(
-            ::GetProcAddress(dll, "TestDll_AddDllsFromRegistryToBlacklist"));
     TestDll_AddDllToBlacklist =
         reinterpret_cast<TestDll_AddDllToBlacklistFunction>(
             ::GetProcAddress(dll, "TestDll_AddDllToBlacklist"));
@@ -184,11 +178,10 @@ class BlacklistTest : public testing::Test {
             ::GetProcAddress(dll, "TestDll_SuccessfullyBlocked"));
     InitTestDll = reinterpret_cast<InitTestDllFunction>(
         ::GetProcAddress(dll, "InitTestDll"));
-    if (!TestDll_AddDllsFromRegistryToBlacklist || !TestDll_AddDllToBlacklist ||
-        !TestDll_BlacklistSize || !TestDll_BlockedDll ||
-        !TestDll_GetBlacklistIndex || !TestDll_IsBlacklistInitialized ||
-        !TestDll_RemoveDllFromBlacklist || !TestDll_SuccessfullyBlocked ||
-        !InitTestDll)
+    if (!TestDll_AddDllToBlacklist || !TestDll_BlacklistSize ||
+        !TestDll_BlockedDll || !TestDll_GetBlacklistIndex ||
+        !TestDll_IsBlacklistInitialized || !TestDll_RemoveDllFromBlacklist ||
+        !TestDll_SuccessfullyBlocked || !InitTestDll)
       return;
 
     // We have to call this exported function every time this test setup runs.
@@ -199,7 +192,9 @@ class BlacklistTest : public testing::Test {
 
     blacklist_registry_key_.reset(
         new base::win::RegKey(HKEY_CURRENT_USER,
-                              blacklist::kRegistryBeaconPath,
+                              install_static::GetRegistryPath()
+                                  .append(blacklist::kRegistryBeaconKeyName)
+                                  .c_str(),
                               KEY_QUERY_VALUE | KEY_SET_VALUE));
 
     // Find out how many dlls were blocked before the test starts.
@@ -210,10 +205,9 @@ class BlacklistTest : public testing::Test {
     TestDll_RemoveDllFromBlacklist(kTestDllName1);
     TestDll_RemoveDllFromBlacklist(kTestDllName2);
     TestDll_RemoveDllFromBlacklist(kTestDllName3);
-  }
 
-  // A scoped temporary directory to be destroyed with this test.
-  base::ScopedTempDir reg_override_dir_;
+    ASSERT_TRUE(nt::SetTestingOverride(nt::HKCU, base::string16()));
+  }
 };
 
 TEST_F(BlacklistTest, Beacon) {
@@ -293,7 +287,8 @@ TEST_F(BlacklistTest, SuccessfullyBlocked) {
   }
 }
 
-TEST_F(BlacklistTest, LoadBlacklistedLibrary) {
+// Disabled due to flakiness.  https://crbug.com/711651.
+TEST_F(BlacklistTest, DISABLED_LoadBlacklistedLibrary) {
   base::FilePath current_dir;
   ASSERT_TRUE(PathService::Get(base::DIR_EXE, &current_dir));
 
@@ -313,42 +308,6 @@ TEST_F(BlacklistTest, LoadBlacklistedLibrary) {
   for (size_t i = 0; i < arraysize(test_data); ++i) {
     EXPECT_TRUE(TestDll_AddDllToBlacklist(test_data[i].dll_name));
   }
-  CheckBlacklistedDllsNotLoaded();
-}
-
-TEST_F(BlacklistTest, AddDllsFromRegistryToBlacklist) {
-  // Ensure that the blacklist is loaded.
-  ASSERT_TRUE(TestDll_IsBlacklistInitialized());
-
-  // Delete the finch registry key to clear its values.
-  base::win::RegKey key(HKEY_CURRENT_USER,
-                        blacklist::kRegistryFinchListPath,
-                        KEY_QUERY_VALUE | KEY_SET_VALUE);
-  key.DeleteKey(L"");
-
-  // Add the test dlls to the registry.
-  // (REG_MULTI_SZ: eos separated, double null terminated.)
-  base::win::RegKey finch_blacklist_registry_key(
-      HKEY_CURRENT_USER,
-      blacklist::kRegistryFinchListPath,
-      KEY_QUERY_VALUE | KEY_SET_VALUE);
-
-  std::vector<wchar_t>(reg_buffer);
-  for (size_t i = 0; i < arraysize(test_data); ++i) {
-    if (reg_buffer.size() > 0)
-      reg_buffer.push_back(L'\0');
-    const wchar_t* dll = test_data[i].dll_name;
-    // Append the name, not including terminator.
-    reg_buffer.insert(reg_buffer.end(), dll, dll + ::wcslen(dll));
-  }
-  reg_buffer.push_back(L'\0');
-  reg_buffer.push_back(L'\0');
-
-  finch_blacklist_registry_key.WriteValue(
-      blacklist::kRegistryFinchListValueName, reg_buffer.data(),
-      (DWORD)(reg_buffer.size() * sizeof(wchar_t)), REG_MULTI_SZ);
-
-  TestDll_AddDllsFromRegistryToBlacklist();
   CheckBlacklistedDllsNotLoaded();
 }
 

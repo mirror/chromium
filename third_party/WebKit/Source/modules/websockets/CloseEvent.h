@@ -37,58 +37,56 @@
 #include "modules/EventModules.h"
 #include "modules/websockets/CloseEventInit.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CloseEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static CloseEvent* create()
-    {
-        return new CloseEvent();
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    static CloseEvent* create(bool wasClean, unsigned short code, const String& reason)
-    {
-        return new CloseEvent(wasClean, code, reason);
-    }
+ public:
+  static CloseEvent* Create() { return new CloseEvent(); }
 
-    static CloseEvent* create(const AtomicString& type, const CloseEventInit& initializer)
-    {
-        return new CloseEvent(type, initializer);
-    }
+  static CloseEvent* Create(bool was_clean,
+                            unsigned short code,
+                            const String& reason) {
+    return new CloseEvent(was_clean, code, reason);
+  }
 
-    bool wasClean() const { return m_wasClean; }
-    unsigned short code() const { return m_code; }
-    String reason() const { return m_reason; }
+  static CloseEvent* Create(const AtomicString& type,
+                            const CloseEventInit& initializer) {
+    return new CloseEvent(type, initializer);
+  }
 
-    // Event function.
-    const AtomicString& interfaceName() const override { return EventNames::CloseEvent; }
+  bool wasClean() const { return was_clean_; }
+  unsigned short code() const { return code_; }
+  String reason() const { return reason_; }
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { Event::trace(visitor); }
+  // Event function.
+  const AtomicString& InterfaceName() const override {
+    return EventNames::CloseEvent;
+  }
 
-private:
-    CloseEvent()
-        : Event(EventTypeNames::close, false, false)
-        , m_wasClean(false)
-        , m_code(0) { }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
-    CloseEvent(bool wasClean, int code, const String& reason)
-        : Event(EventTypeNames::close, false, false)
-        , m_wasClean(wasClean)
-        , m_code(code)
-        , m_reason(reason) { }
+ private:
+  CloseEvent() : was_clean_(false), code_(0) {}
 
-    CloseEvent(const AtomicString& type, const CloseEventInit& initializer);
+  CloseEvent(bool was_clean, int code, const String& reason)
+      : Event(EventTypeNames::close, false, false),
+        was_clean_(was_clean),
+        code_(code),
+        reason_(reason) {}
 
-    bool m_wasClean;
-    unsigned short m_code;
-    String m_reason;
+  CloseEvent(const AtomicString& type, const CloseEventInit& initializer);
+
+  bool was_clean_;
+  unsigned short code_;
+  String reason_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CloseEvent_h
+#endif  // CloseEvent_h

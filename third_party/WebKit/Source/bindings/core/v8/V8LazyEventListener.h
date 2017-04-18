@@ -32,56 +32,73 @@
 #define V8LazyEventListener_h
 
 #include "bindings/core/v8/V8AbstractEventListener.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/TextPosition.h"
-#include <v8.h>
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/TextPosition.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class Event;
 class Node;
 
-// V8LazyEventListener is a wrapper for a JavaScript code string that is compiled and evaluated when an event is fired.
-// A V8LazyEventListener is either a HTML or SVG event handler.
+// V8LazyEventListener is a wrapper for a JavaScript code string that is
+// compiled and evaluated when an event is fired.  A V8LazyEventListener is
+// either a HTML or SVG event handler.
 class V8LazyEventListener final : public V8AbstractEventListener {
-public:
-    static V8LazyEventListener* create(const AtomicString& functionName, const AtomicString& eventParameterName, const String& code, const String& sourceURL, const TextPosition& position, Node* node, v8::Isolate* isolate)
-    {
-        return new V8LazyEventListener(isolate, functionName, eventParameterName, code, sourceURL, position, node);
-    }
+ public:
+  static V8LazyEventListener* Create(const AtomicString& function_name,
+                                     const AtomicString& event_parameter_name,
+                                     const String& code,
+                                     const String& source_url,
+                                     const TextPosition& position,
+                                     Node* node,
+                                     v8::Isolate* isolate) {
+    return new V8LazyEventListener(isolate, function_name, event_parameter_name,
+                                   code, source_url, position, node);
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_node);
-        V8AbstractEventListener::trace(visitor);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(node_);
+    V8AbstractEventListener::Trace(visitor);
+  }
 
-    const String& code() const { return m_code; }
+  const String& Code() const { return code_; }
 
-protected:
-    void prepareListenerObject(ExecutionContext*) override;
+ protected:
+  v8::Local<v8::Object> GetListenerObjectInternal(ExecutionContext*) override;
 
-private:
-    V8LazyEventListener(v8::Isolate*, const AtomicString& functionName, const AtomicString& eventParameterName, const String& code, const String sourceURL, const TextPosition&, Node*);
+ private:
+  V8LazyEventListener(v8::Isolate*,
+                      const AtomicString& function_name,
+                      const AtomicString& event_parameter_name,
+                      const String& code,
+                      const String source_url,
+                      const TextPosition&,
+                      Node*);
 
-    v8::Local<v8::Value> callListenerFunction(ScriptState*, v8::Local<v8::Value>, Event*) override;
+  v8::Local<v8::Value> CallListenerFunction(ScriptState*,
+                                            v8::Local<v8::Value>,
+                                            Event*) override;
 
-    // Needs to return true for all event handlers implemented in JavaScript so that
-    // the SVG code does not add the event handler in both
-    // SVGUseElement::buildShadowTree and again in
-    // SVGUseElement::transferEventListenersToShadowTree
-    bool wasCreatedFromMarkup() const override { return true; }
+  // Return true, so that event handlers from markup are not cloned twice when
+  // building the shadow tree for SVGUseElements.
+  bool WasCreatedFromMarkup() const override { return true; }
 
-    void fireErrorEvent(v8::Local<v8::Context>, ExecutionContext*, v8::Local<v8::Message>);
+  void CompileScript(ScriptState*, ExecutionContext*);
 
-    AtomicString m_functionName;
-    AtomicString m_eventParameterName;
-    String m_code;
-    String m_sourceURL;
-    Member<Node> m_node;
-    TextPosition m_position;
+  void FireErrorEvent(v8::Local<v8::Context>,
+                      ExecutionContext*,
+                      v8::Local<v8::Message>);
+
+  bool was_compilation_failed_;
+  AtomicString function_name_;
+  AtomicString event_parameter_name_;
+  String code_;
+  String source_url_;
+  Member<Node> node_;
+  TextPosition position_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8LazyEventListener_h
+#endif  // V8LazyEventListener_h

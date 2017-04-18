@@ -30,82 +30,97 @@
 
 namespace blink {
 
-TextEvent* TextEvent::create()
-{
-    return new TextEvent;
+TextEvent* TextEvent::Create() {
+  return new TextEvent;
 }
 
-TextEvent* TextEvent::create(AbstractView* view, const String& data, TextEventInputType inputType)
-{
-    return new TextEvent(view, data, inputType);
+TextEvent* TextEvent::Create(AbstractView* view,
+                             const String& data,
+                             TextEventInputType input_type) {
+  return new TextEvent(view, data, input_type);
 }
 
-TextEvent* TextEvent::createForPlainTextPaste(AbstractView* view, const String& data, bool shouldSmartReplace)
-{
-    return new TextEvent(view, data, nullptr, shouldSmartReplace, false);
+TextEvent* TextEvent::CreateForPlainTextPaste(AbstractView* view,
+                                              const String& data,
+                                              bool should_smart_replace) {
+  return new TextEvent(view, data, nullptr, should_smart_replace, false);
 }
 
-TextEvent* TextEvent::createForFragmentPaste(AbstractView* view, DocumentFragment* data, bool shouldSmartReplace, bool shouldMatchStyle)
-{
-    return new TextEvent(view, "", data, shouldSmartReplace, shouldMatchStyle);
+TextEvent* TextEvent::CreateForFragmentPaste(AbstractView* view,
+                                             DocumentFragment* data,
+                                             bool should_smart_replace,
+                                             bool should_match_style) {
+  return new TextEvent(view, "", data, should_smart_replace,
+                       should_match_style);
 }
 
-TextEvent* TextEvent::createForDrop(AbstractView* view, const String& data)
-{
-    return new TextEvent(view, data, TextEventInputDrop);
+TextEvent* TextEvent::CreateForDrop(AbstractView* view, const String& data) {
+  return new TextEvent(view, data, kTextEventInputDrop);
 }
 
 TextEvent::TextEvent()
-    : m_inputType(TextEventInputKeyboard)
-    , m_shouldSmartReplace(false)
-    , m_shouldMatchStyle(false)
-{
+    : input_type_(kTextEventInputKeyboard),
+      should_smart_replace_(false),
+      should_match_style_(false) {}
+
+TextEvent::TextEvent(AbstractView* view,
+                     const String& data,
+                     TextEventInputType input_type)
+    : UIEvent(EventTypeNames::textInput,
+              true,
+              true,
+              ComposedMode::kComposed,
+              TimeTicks::Now(),
+              view,
+              0,
+              nullptr),
+      input_type_(input_type),
+      data_(data),
+      pasting_fragment_(nullptr),
+      should_smart_replace_(false),
+      should_match_style_(false) {}
+
+TextEvent::TextEvent(AbstractView* view,
+                     const String& data,
+                     DocumentFragment* pasting_fragment,
+                     bool should_smart_replace,
+                     bool should_match_style)
+    : UIEvent(EventTypeNames::textInput,
+              true,
+              true,
+              ComposedMode::kComposed,
+              TimeTicks::Now(),
+              view,
+              0,
+              nullptr),
+      input_type_(kTextEventInputPaste),
+      data_(data),
+      pasting_fragment_(pasting_fragment),
+      should_smart_replace_(should_smart_replace),
+      should_match_style_(should_match_style) {}
+
+TextEvent::~TextEvent() {}
+
+void TextEvent::initTextEvent(const AtomicString& type,
+                              bool can_bubble,
+                              bool cancelable,
+                              AbstractView* view,
+                              const String& data) {
+  if (IsBeingDispatched())
+    return;
+
+  initUIEvent(type, can_bubble, cancelable, view, 0);
+
+  data_ = data;
 }
 
-TextEvent::TextEvent(AbstractView* view, const String& data, TextEventInputType inputType)
-    : UIEvent(EventTypeNames::textInput, true, true, ComposedMode::Composed, view, 0)
-    , m_inputType(inputType)
-    , m_data(data)
-    , m_pastingFragment(nullptr)
-    , m_shouldSmartReplace(false)
-    , m_shouldMatchStyle(false)
-{
+const AtomicString& TextEvent::InterfaceName() const {
+  return EventNames::TextEvent;
 }
 
-TextEvent::TextEvent(AbstractView* view, const String& data, DocumentFragment* pastingFragment,
-                     bool shouldSmartReplace, bool shouldMatchStyle)
-    : UIEvent(EventTypeNames::textInput, true, true, ComposedMode::Composed, view, 0)
-    , m_inputType(TextEventInputPaste)
-    , m_data(data)
-    , m_pastingFragment(pastingFragment)
-    , m_shouldSmartReplace(shouldSmartReplace)
-    , m_shouldMatchStyle(shouldMatchStyle)
-{
+DEFINE_TRACE(TextEvent) {
+  visitor->Trace(pasting_fragment_);
+  UIEvent::Trace(visitor);
 }
 
-TextEvent::~TextEvent()
-{
-}
-
-void TextEvent::initTextEvent(const AtomicString& type, bool canBubble, bool cancelable, AbstractView* view, const String& data)
-{
-    if (isBeingDispatched())
-        return;
-
-    initUIEvent(type, canBubble, cancelable, view, 0);
-
-    m_data = data;
-}
-
-const AtomicString& TextEvent::interfaceName() const
-{
-    return EventNames::TextEvent;
-}
-
-DEFINE_TRACE(TextEvent)
-{
-    visitor->trace(m_pastingFragment);
-    UIEvent::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

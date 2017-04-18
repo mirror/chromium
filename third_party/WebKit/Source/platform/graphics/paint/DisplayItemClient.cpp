@@ -5,79 +5,80 @@
 #include "platform/graphics/paint/DisplayItemClient.h"
 
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
 #endif
 
 namespace blink {
 
-DisplayItemClient::CacheGenerationOrInvalidationReason::ValueType DisplayItemClient::CacheGenerationOrInvalidationReason::s_nextGeneration = kFirstValidGeneration;
+DisplayItemClient::CacheGenerationOrInvalidationReason::ValueType
+    DisplayItemClient::CacheGenerationOrInvalidationReason::next_generation_ =
+        kFirstValidGeneration;
 
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
 
-HashSet<const DisplayItemClient*>* liveDisplayItemClients = nullptr;
-HashMap<const void*, HashMap<const DisplayItemClient*, String>>* displayItemClientsShouldKeepAlive = nullptr;
+HashSet<const DisplayItemClient*>* g_live_display_item_clients = nullptr;
+HashMap<const void*, HashMap<const DisplayItemClient*, String>>*
+    g_display_item_clients_should_keep_alive = nullptr;
 
-DisplayItemClient::DisplayItemClient()
-{
-    if (displayItemClientsShouldKeepAlive) {
-        for (auto item : *displayItemClientsShouldKeepAlive)
-            CHECK(!item.value.contains(this));
+DisplayItemClient::DisplayItemClient() {
+  if (g_display_item_clients_should_keep_alive) {
+    for (const auto& item : *g_display_item_clients_should_keep_alive)
+      CHECK(!item.value.Contains(this));
+  }
+  if (!g_live_display_item_clients)
+    g_live_display_item_clients = new HashSet<const DisplayItemClient*>();
+  g_live_display_item_clients->insert(this);
+}
+
+DisplayItemClient::~DisplayItemClient() {
+  if (g_display_item_clients_should_keep_alive) {
+    for (const auto& item : *g_display_item_clients_should_keep_alive) {
+      CHECK(!item.value.Contains(this))
+          << "Short-lived DisplayItemClient: " << item.value.at(this)
+          << ". See crbug.com/609218.";
     }
-    if (!liveDisplayItemClients)
-        liveDisplayItemClients = new HashSet<const DisplayItemClient*>();
-    liveDisplayItemClients->add(this);
+  }
+  g_live_display_item_clients->erase(this);
+  // In case this object is a subsequence owner.
+  EndShouldKeepAliveAllClients(this);
 }
 
-DisplayItemClient::~DisplayItemClient()
-{
-    if (displayItemClientsShouldKeepAlive) {
-        for (auto& item : *displayItemClientsShouldKeepAlive) {
-            CHECK(!item.value.contains(this))
-                << "Short-lived DisplayItemClient: " << item.value.get(this)
-                << ". See crbug.com/609218.";
-        }
-    }
-    liveDisplayItemClients->remove(this);
-    // In case this object is a subsequence owner.
-    endShouldKeepAliveAllClients(this);
+bool DisplayItemClient::IsAlive() const {
+  return g_live_display_item_clients &&
+         g_live_display_item_clients->Contains(this);
 }
 
-bool DisplayItemClient::isAlive() const
-{
-    return liveDisplayItemClients && liveDisplayItemClients->contains(this);
+void DisplayItemClient::BeginShouldKeepAlive(const void* owner) const {
+  CHECK(IsAlive());
+  if (!g_display_item_clients_should_keep_alive)
+    g_display_item_clients_should_keep_alive =
+        new HashMap<const void*, HashMap<const DisplayItemClient*, String>>();
+  auto add_result =
+      g_display_item_clients_should_keep_alive
+          ->insert(owner, HashMap<const DisplayItemClient*, String>())
+          .stored_value->value.insert(this, "");
+  if (add_result.is_new_entry)
+    add_result.stored_value->value = DebugName();
 }
 
-void DisplayItemClient::beginShouldKeepAlive(const void* owner) const
-{
-    CHECK(isAlive());
-    if (!displayItemClientsShouldKeepAlive)
-        displayItemClientsShouldKeepAlive = new HashMap<const void*, HashMap<const DisplayItemClient*, String>>();
-    auto addResult = displayItemClientsShouldKeepAlive->add(owner, HashMap<const DisplayItemClient*, String>()).storedValue->value.add(this, "");
-    if (addResult.isNewEntry)
-        addResult.storedValue->value = debugName();
+void DisplayItemClient::EndShouldKeepAlive() const {
+  if (g_display_item_clients_should_keep_alive) {
+    for (auto& item : *g_display_item_clients_should_keep_alive)
+      item.value.erase(this);
+  }
 }
 
-void DisplayItemClient::endShouldKeepAlive() const
-{
-    if (displayItemClientsShouldKeepAlive) {
-        for (auto& item : *displayItemClientsShouldKeepAlive)
-            item.value.remove(this);
-    }
+void DisplayItemClient::EndShouldKeepAliveAllClients(const void* owner) {
+  if (g_display_item_clients_should_keep_alive)
+    g_display_item_clients_should_keep_alive->erase(owner);
 }
 
-void DisplayItemClient::endShouldKeepAliveAllClients(const void* owner)
-{
-    if (displayItemClientsShouldKeepAlive)
-        displayItemClientsShouldKeepAlive->remove(owner);
+void DisplayItemClient::EndShouldKeepAliveAllClients() {
+  delete g_display_item_clients_should_keep_alive;
+  g_display_item_clients_should_keep_alive = nullptr;
 }
 
-void DisplayItemClient::endShouldKeepAliveAllClients()
-{
-    delete displayItemClientsShouldKeepAlive;
-    displayItemClientsShouldKeepAlive = nullptr;
-}
+#endif  // CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
 
-#endif // CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
-
-} // namespace blink
+}  // namespace blink

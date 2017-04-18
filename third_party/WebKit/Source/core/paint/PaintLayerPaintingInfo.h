@@ -25,7 +25,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *
  * Alternatively, the contents of this file may be used under the terms
  * of either the Mozilla Public License Version 1.1, found at
@@ -47,60 +47,66 @@
 
 #include "core/paint/PaintPhase.h"
 #include "platform/geometry/LayoutRect.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 class PaintLayer;
-class LayoutObject;
 
 enum PaintLayerFlag {
-    PaintLayerNoFlag = 0,
-    PaintLayerHaveTransparency = 1,
-    PaintLayerAppliedTransform = 1 << 1,
-    PaintLayerUncachedClipRects = 1 << 2,
-    PaintLayerPaintingReflection = 1 << 3,
-    PaintLayerPaintingOverlayScrollbars = 1 << 4,
-    PaintLayerPaintingCompositingBackgroundPhase = 1 << 5,
-    PaintLayerPaintingCompositingForegroundPhase = 1 << 6,
-    PaintLayerPaintingCompositingMaskPhase = 1 << 7,
-    PaintLayerPaintingCompositingScrollingPhase = 1 << 8,
-    PaintLayerPaintingOverflowContents = 1 << 9,
-    PaintLayerPaintingRootBackgroundOnly = 1 << 10,
-    PaintLayerPaintingSkipRootBackground = 1 << 11,
-    PaintLayerPaintingChildClippingMaskPhase = 1 << 12,
-    PaintLayerPaintingRenderingClipPathAsMask = 1 << 13,
-    PaintLayerPaintingCompositingAllPhases = (PaintLayerPaintingCompositingBackgroundPhase | PaintLayerPaintingCompositingForegroundPhase | PaintLayerPaintingCompositingMaskPhase)
+  kPaintLayerNoFlag = 0,
+  kPaintLayerHaveTransparency = 1,
+  kPaintLayerAppliedTransform = 1 << 1,
+  kPaintLayerUncachedClipRects = 1 << 2,
+  kPaintLayerPaintingOverlayScrollbars = 1 << 3,
+  kPaintLayerPaintingCompositingBackgroundPhase = 1 << 4,
+  kPaintLayerPaintingCompositingForegroundPhase = 1 << 5,
+  kPaintLayerPaintingCompositingMaskPhase = 1 << 6,
+  kPaintLayerPaintingCompositingScrollingPhase = 1 << 7,
+  kPaintLayerPaintingOverflowContents = 1 << 8,
+  kPaintLayerPaintingRootBackgroundOnly = 1 << 9,
+  kPaintLayerPaintingSkipRootBackground = 1 << 10,
+  kPaintLayerPaintingChildClippingMaskPhase = 1 << 11,
+  kPaintLayerPaintingAncestorClippingMaskPhase = 1 << 12,
+  kPaintLayerPaintingRenderingClipPathAsMask = 1 << 13,
+  kPaintLayerPaintingCompositingDecorationPhase = 1 << 14,
+  kPaintLayerPaintingRenderingResourceSubtree = 1 << 15,
+  kPaintLayerPaintingCompositingAllPhases =
+      (kPaintLayerPaintingCompositingBackgroundPhase |
+       kPaintLayerPaintingCompositingForegroundPhase |
+       kPaintLayerPaintingCompositingMaskPhase |
+       kPaintLayerPaintingCompositingDecorationPhase)
 };
 
 typedef unsigned PaintLayerFlags;
 
 struct PaintLayerPaintingInfo {
-    STACK_ALLOCATED();
-    PaintLayerPaintingInfo(PaintLayer* inRootLayer, const LayoutRect& inDirtyRect,
-        GlobalPaintFlags globalPaintFlags, const LayoutSize& inSubPixelAccumulation)
-        : rootLayer(inRootLayer)
-        , paintDirtyRect(inDirtyRect)
-        , subPixelAccumulation(inSubPixelAccumulation)
-        , clipToDirtyRect(true)
-        , ancestorHasClipPathClipping(false)
-        , m_globalPaintFlags(globalPaintFlags)
-    { }
+  STACK_ALLOCATED();
+  PaintLayerPaintingInfo(PaintLayer* in_root_layer,
+                         const LayoutRect& in_dirty_rect,
+                         GlobalPaintFlags global_paint_flags,
+                         const LayoutSize& in_sub_pixel_accumulation)
+      : root_layer(in_root_layer),
+        paint_dirty_rect(in_dirty_rect),
+        sub_pixel_accumulation(in_sub_pixel_accumulation),
+        clip_to_dirty_rect(true),
+        ancestor_has_clip_path_clipping(false),
+        global_paint_flags_(global_paint_flags) {}
 
-    GlobalPaintFlags getGlobalPaintFlags() const { return m_globalPaintFlags; }
+  GlobalPaintFlags GetGlobalPaintFlags() const { return global_paint_flags_; }
 
-    // TODO(jchaffraix): We should encapsulate all these fields.
-    PaintLayer* rootLayer;
-    LayoutRect paintDirtyRect; // relative to rootLayer;
-    LayoutSize subPixelAccumulation;
-    IntSize scrollOffsetAccumulation;
-    bool clipToDirtyRect;
-    bool ancestorHasClipPathClipping;
+  // TODO(jchaffraix): We should encapsulate all these fields.
+  PaintLayer* root_layer;
+  LayoutRect paint_dirty_rect;  // relative to rootLayer;
+  LayoutSize sub_pixel_accumulation;
+  IntSize scroll_offset_accumulation;
+  bool clip_to_dirty_rect;
+  bool ancestor_has_clip_path_clipping;
 
-private:
-    const GlobalPaintFlags m_globalPaintFlags;
+ private:
+  const GlobalPaintFlags global_paint_flags_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaintLayerPaintingInfo_h
+#endif  // PaintLayerPaintingInfo_h

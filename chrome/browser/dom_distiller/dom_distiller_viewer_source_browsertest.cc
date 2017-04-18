@@ -35,13 +35,13 @@
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/dom_distiller/core/url_utils.h"
 #include "components/leveldb_proto/testing/fake_db.h"
-#include "content/public/browser/render_view_host.h"
+#include "components/strings/grit/components_strings.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/url_data_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/isolated_world_ids.h"
 #include "content/public/test/browser_test_utils.h"
-#include "grit/components_strings.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -227,9 +227,9 @@ void DomDistillerViewerSourceBrowserTest::ViewSingleDistilledPage(
       browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_TRUE(contents_after_nav != NULL);
   EXPECT_EQ(url, contents_after_nav->GetLastCommittedURL());
-  const content::RenderViewHost* render_view_host =
-      contents_after_nav->GetRenderViewHost();
-  EXPECT_EQ(0, render_view_host->GetEnabledBindings());
+  const content::RenderFrameHost* render_frame_host =
+      contents_after_nav->GetMainFrame();
+  EXPECT_EQ(0, render_frame_host->GetEnabledBindings());
   EXPECT_EQ(expected_mime_type, contents_after_nav->GetContentsMimeType());
 }
 

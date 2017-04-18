@@ -8,7 +8,7 @@ certificate. This is expected to fail because MD5 is too weak."""
 
 import common
 
-# Self-signed root certificate (part of trust store).
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate.
@@ -19,8 +19,15 @@ target = common.create_end_entity_certificate('Target', intermediate)
 target.set_signature_hash('md5')
 
 chain = [target, intermediate]
-trusted = [root]
+trusted = common.TrustAnchor(root, constrained=False)
 time = common.DEFAULT_TIME
+key_purpose = common.DEFAULT_KEY_PURPOSE
 verify_result = False
+errors = """----- Certificate i=0 (CN=Target) -----
+ERROR: Unacceptable signature algorithm
+ERROR: VerifySignedData failed
 
-common.write_test_file(__doc__, chain, trusted, time, verify_result)
+"""
+
+common.write_test_file(__doc__, chain, trusted, time, key_purpose,
+                       verify_result, errors)

@@ -35,9 +35,9 @@
 #include "core/dom/Range.h"
 #include "core/layout/api/LineLayoutText.h"
 #include "core/layout/line/InlineTextBox.h"
-#include "wtf/HashMap.h"
-#include "wtf/RefCounted.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -45,62 +45,61 @@ class InlineTextBox;
 
 // High-level abstraction of InlineTextBox to allow the accessibility module to
 // get information about InlineTextBoxes without tight coupling.
-class CORE_EXPORT AbstractInlineTextBox : public RefCounted<AbstractInlineTextBox> {
-private:
-    AbstractInlineTextBox(LineLayoutText lineLayoutItem, InlineTextBox* inlineTextBox)
-        : m_lineLayoutItem(lineLayoutItem)
-        , m_inlineTextBox(inlineTextBox)
-    {
-    }
+class CORE_EXPORT AbstractInlineTextBox
+    : public RefCounted<AbstractInlineTextBox> {
+ private:
+  AbstractInlineTextBox(LineLayoutText line_layout_item,
+                        InlineTextBox* inline_text_box)
+      : line_layout_item_(line_layout_item),
+        inline_text_box_(inline_text_box) {}
 
-    static PassRefPtr<AbstractInlineTextBox> getOrCreate(LineLayoutText, InlineTextBox*);
-    static void willDestroy(InlineTextBox*);
+  static PassRefPtr<AbstractInlineTextBox> GetOrCreate(LineLayoutText,
+                                                       InlineTextBox*);
+  static void WillDestroy(InlineTextBox*);
 
-    friend class LayoutText;
-    friend class InlineTextBox;
+  friend class LayoutText;
+  friend class InlineTextBox;
 
-public:
-    struct WordBoundaries {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-        WordBoundaries(int startIndex, int endIndex) : startIndex(startIndex), endIndex(endIndex) { }
-        int startIndex;
-        int endIndex;
-    };
+ public:
+  struct WordBoundaries {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    WordBoundaries(int start_index, int end_index)
+        : start_index(start_index), end_index(end_index) {}
+    int start_index;
+    int end_index;
+  };
 
-    enum Direction {
-        LeftToRight,
-        RightToLeft,
-        TopToBottom,
-        BottomToTop
-    };
+  enum Direction { kLeftToRight, kRightToLeft, kTopToBottom, kBottomToTop };
 
-    ~AbstractInlineTextBox();
+  ~AbstractInlineTextBox();
 
-    LineLayoutText getLineLayoutItem() const { return m_lineLayoutItem; }
+  LineLayoutText GetLineLayoutItem() const { return line_layout_item_; }
 
-    PassRefPtr<AbstractInlineTextBox> nextInlineTextBox() const;
-    LayoutRect bounds() const;
-    unsigned len() const;
-    Direction getDirection() const;
-    void characterWidths(Vector<float>&) const;
-    void wordBoundaries(Vector<WordBoundaries>&) const;
-    String text() const;
-    bool isFirst() const;
-    bool isLast() const;
-    PassRefPtr<AbstractInlineTextBox> nextOnLine() const;
-    PassRefPtr<AbstractInlineTextBox> previousOnLine() const;
+  PassRefPtr<AbstractInlineTextBox> NextInlineTextBox() const;
+  LayoutRect LocalBounds() const;
+  unsigned Len() const;
+  Direction GetDirection() const;
+  void CharacterWidths(Vector<float>&) const;
+  void GetWordBoundaries(Vector<WordBoundaries>&) const;
+  String GetText() const;
+  bool IsFirst() const;
+  bool IsLast() const;
+  PassRefPtr<AbstractInlineTextBox> NextOnLine() const;
+  PassRefPtr<AbstractInlineTextBox> PreviousOnLine() const;
 
-private:
-    void detach();
+ private:
+  void Detach();
 
-    // Weak ptrs; these are nulled when InlineTextBox::destroy() calls AbstractInlineTextBox::willDestroy.
-    LineLayoutText m_lineLayoutItem;
-    InlineTextBox* m_inlineTextBox;
+  // Weak ptrs; these are nulled when InlineTextBox::destroy() calls
+  // AbstractInlineTextBox::willDestroy.
+  LineLayoutText line_layout_item_;
+  InlineTextBox* inline_text_box_;
 
-    typedef HashMap<InlineTextBox*, RefPtr<AbstractInlineTextBox>> InlineToAbstractInlineTextBoxHashMap;
-    static InlineToAbstractInlineTextBoxHashMap* gAbstractInlineTextBoxMap;
+  typedef HashMap<InlineTextBox*, RefPtr<AbstractInlineTextBox>>
+      InlineToAbstractInlineTextBoxHashMap;
+  static InlineToAbstractInlineTextBoxHashMap* g_abstract_inline_text_box_map_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AbstractInlineTextBox_h
+#endif  // AbstractInlineTextBox_h

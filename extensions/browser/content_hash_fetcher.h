@@ -8,6 +8,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <utility>
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
@@ -15,13 +16,12 @@
 #include "base/memory/weak_ptr.h"
 #include "extensions/common/extension_id.h"
 
-namespace content {
-class BrowserContext;
+namespace net {
+class URLRequestContextGetter;
 }
 
 namespace extensions {
 class Extension;
-class ExtensionRegistry;
 class ContentHashFetcherJob;
 class ContentVerifierDelegate;
 
@@ -45,7 +45,7 @@ class ContentHashFetcher {
 
   // The consumer of this class needs to ensure that context and delegate
   // outlive this object.
-  ContentHashFetcher(content::BrowserContext* context,
+  ContentHashFetcher(net::URLRequestContextGetter* context_getter,
                      ContentVerifierDelegate* delegate,
                      const FetchCallback& callback);
   virtual ~ContentHashFetcher();
@@ -61,9 +61,9 @@ class ContentHashFetcher {
 
  private:
   // Callback for when a job getting content hashes has completed.
-  void JobFinished(ContentHashFetcherJob* job);
+  void JobFinished(scoped_refptr<ContentHashFetcherJob> job);
 
-  content::BrowserContext* context_;
+  net::URLRequestContextGetter* context_getter_;
   ContentVerifierDelegate* delegate_;
   FetchCallback fetch_callback_;
 

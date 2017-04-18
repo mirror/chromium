@@ -45,7 +45,8 @@ class FileSystem(object):
     """FileSystem interface for webkitpy.
 
     Unless otherwise noted, all paths are allowed to be either absolute
-    or relative."""
+    or relative.
+    """
     sep = os.sep
     pardir = os.pardir
 
@@ -78,7 +79,7 @@ class FileSystem(object):
     def exists(self, path):
         return os.path.exists(path)
 
-    def files_under(self, path, dirs_to_skip=[], file_filter=None):
+    def files_under(self, path, dirs_to_skip=None, file_filter=None):
         """Return the list of all files under the given path in topdown order.
 
         Args:
@@ -89,6 +90,8 @@ class FileSystem(object):
                 each file found. The file is included in the result if the
                 callback returns True.
         """
+        dirs_to_skip = dirs_to_skip or []
+
         def filter_all(fs, dirpath, basename):
             return True
 
@@ -173,8 +176,8 @@ class FileSystem(object):
         """Create the specified directory if it doesn't already exist."""
         try:
             os.makedirs(self.join(*path))
-        except OSError as e:
-            if e.errno != errno.EEXIST:
+        except OSError as error:
+            if error.errno != errno.EEXIST:
                 raise
 
     def move(self, source, destination):
@@ -194,6 +197,9 @@ class FileSystem(object):
 
     def open_binary_file_for_reading(self, path):
         return codecs.open(path, 'rb')
+
+    def open_binary_file_for_writing(self, path):
+        return file(path, 'wb')
 
     def read_binary_file(self, path):
         """Return the contents of the file at the given path as a byte string."""
@@ -217,14 +223,16 @@ class FileSystem(object):
     def read_text_file(self, path):
         """Return the contents of the file at the given path as a Unicode string.
 
-        The file is read assuming it is a UTF-8 encoded file with no BOM."""
+        The file is read assuming it is a UTF-8 encoded file with no BOM.
+        """
         with codecs.open(path, 'r', 'utf8') as f:
             return f.read()
 
     def write_text_file(self, path, contents):
         """Write the contents to the file at the given location.
 
-        The file is written encoded as UTF-8 with no BOM."""
+        The file is written encoded as UTF-8 with no BOM.
+        """
         with codecs.open(path, 'w', 'utf8') as f:
             f.write(contents)
 
@@ -242,7 +250,8 @@ class FileSystem(object):
         """On Windows, if a process was recently killed and it held on to a
         file, the OS will hold on to the file for a short while.  This makes
         attempts to delete the file fail.  To work around that, this method
-        will retry for a few seconds until Windows is done with the file."""
+        will retry for a few seconds until Windows is done with the file.
+        """
         try:
             exceptions.WindowsError
         except AttributeError:
@@ -254,11 +263,11 @@ class FileSystem(object):
             try:
                 osremove(path)
                 return True
-            except exceptions.WindowsError as e:
+            except exceptions.WindowsError:
                 time.sleep(sleep_interval)
                 retry_timeout_sec -= sleep_interval
                 if retry_timeout_sec < 0:
-                    raise e
+                    raise
 
     def rmtree(self, path):
         """Delete the directory rooted at path, whether empty or not."""

@@ -37,26 +37,36 @@
 
 namespace blink {
 
-Database* DOMWindowWebDatabase::openDatabase(DOMWindow& windowArg, const String& name, const String& version, const String& displayName, unsigned estimatedSize, DatabaseCallback* creationCallback, ExceptionState& exceptionState)
-{
-    LocalDOMWindow& window = toLocalDOMWindow(windowArg);
-    if (!window.isCurrentlyDisplayedInFrame())
-        return nullptr;
+Database* DOMWindowWebDatabase::openDatabase(
+    LocalDOMWindow& window,
+    const String& name,
+    const String& version,
+    const String& display_name,
+    unsigned estimated_size,
+    DatabaseCallback* creation_callback,
+    ExceptionState& exception_state) {
+  if (!window.IsCurrentlyDisplayedInFrame())
+    return nullptr;
 
-    Database* database = nullptr;
-    DatabaseManager& dbManager = DatabaseManager::manager();
-    DatabaseError error = DatabaseError::None;
-    if (RuntimeEnabledFeatures::databaseEnabled() && window.document()->getSecurityOrigin()->canAccessDatabase()) {
-        String errorMessage;
-        database = dbManager.openDatabase(window.document(), name, version, displayName, estimatedSize, creationCallback, error, errorMessage);
-        ASSERT(database || error != DatabaseError::None);
-        if (error != DatabaseError::None)
-            DatabaseManager::throwExceptionForDatabaseError(error, errorMessage, exceptionState);
-    } else {
-        exceptionState.throwSecurityError("Access to the WebDatabase API is denied in this context.");
-    }
+  Database* database = nullptr;
+  DatabaseManager& db_manager = DatabaseManager::Manager();
+  DatabaseError error = DatabaseError::kNone;
+  if (RuntimeEnabledFeatures::databaseEnabled() &&
+      window.document()->GetSecurityOrigin()->CanAccessDatabase()) {
+    String error_message;
+    database = db_manager.OpenDatabase(window.document(), name, version,
+                                       display_name, estimated_size,
+                                       creation_callback, error, error_message);
+    DCHECK(database || error != DatabaseError::kNone);
+    if (error != DatabaseError::kNone)
+      DatabaseManager::ThrowExceptionForDatabaseError(error, error_message,
+                                                      exception_state);
+  } else {
+    exception_state.ThrowSecurityError(
+        "Access to the WebDatabase API is denied in this context.");
+  }
 
-    return database;
+  return database;
 }
 
-} // namespace blink
+}  // namespace blink

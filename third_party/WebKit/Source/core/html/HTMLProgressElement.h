@@ -29,48 +29,49 @@ namespace blink {
 class LayoutProgress;
 
 class CORE_EXPORT HTMLProgressElement final : public LabelableElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static const double IndeterminatePosition;
-    static const double InvalidPosition;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static HTMLProgressElement* create(Document&);
+ public:
+  static const double kIndeterminatePosition;
+  static const double kInvalidPosition;
 
-    double value() const;
-    void setValue(double);
+  static HTMLProgressElement* Create(Document&);
 
-    double max() const;
-    void setMax(double);
+  double value() const;
+  void setValue(double);
 
-    double position() const;
+  double max() const;
+  void setMax(double);
 
-    bool canContainRangeEndPoint() const override { return false; }
+  double position() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  bool CanContainRangeEndPoint() const override { return false; }
 
-private:
-    explicit HTMLProgressElement(Document&);
-    ~HTMLProgressElement() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    bool areAuthorShadowsAllowed() const override { return false; }
-    bool shouldAppearIndeterminate() const override;
-    bool supportLabels() const override { return true; }
+ private:
+  explicit HTMLProgressElement(Document&);
+  ~HTMLProgressElement() override;
 
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    LayoutProgress* layoutProgress() const;
+  bool AreAuthorShadowsAllowed() const override { return false; }
+  bool ShouldAppearIndeterminate() const override;
+  bool SupportLabels() const override { return true; }
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  LayoutProgress* GetLayoutProgress() const;
 
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
 
-    void didElementStateChange();
-    void didAddUserAgentShadowRoot(ShadowRoot&) override;
-    bool isDeterminate() const;
-    void setValueWidthPercentage(double) const;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
 
-    Member<Element> m_value;
+  void DidElementStateChange();
+  void DidAddUserAgentShadowRoot(ShadowRoot&) override;
+  bool IsDeterminate() const;
+  void SetValueWidthPercentage(double) const;
+
+  Member<Element> value_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLProgressElement_h
+#endif  // HTMLProgressElement_h

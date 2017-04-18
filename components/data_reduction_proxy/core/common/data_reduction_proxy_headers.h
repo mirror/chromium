@@ -6,6 +6,7 @@
 #define COMPONENTS_DATA_REDUCTION_PROXY_CORE_COMMON_DATA_REDUCTION_PROXY_HEADERS_H_
 
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
@@ -15,14 +16,10 @@
 class GURL;
 
 namespace net {
-
 class HttpResponseHeaders;
-
 }  // namespace net
 
 namespace data_reduction_proxy {
-
-class DataReductionProxyEventCreator;
 
 // Values of the UMA DataReductionProxy.BypassType{Primary|Fallback} and
 // DataReductionProxy.BlockType{Primary|Fallback} histograms. This enum must
@@ -71,17 +68,55 @@ struct DataReductionProxyInfo {
 // Gets the header used for data reduction proxy requests and responses.
 const char* chrome_proxy_header();
 
-// Gets the Chrome-Proxy directive used by data reduction proxy Lo-Fi requests
+// Gets the ChromeProxyAcceptTransform header name.
+const char* chrome_proxy_accept_transform_header();
+
+// Gets the ChromeProxyContentTransform header name.
+const char* chrome_proxy_content_transform_header();
+
+// Gets the directive used by data reduction proxy Lo-Fi requests and
+// responses.
+const char* empty_image_directive();
+
+// Gets the directive used by data reduction proxy Lite-Page requests
 // and responses.
-const char* chrome_proxy_lo_fi_directive();
+const char* lite_page_directive();
 
-// Gets the Chrome-Proxy directive used by data reduction proxy Lo-Fi preview
-// requests and responses.
-const char* chrome_proxy_lo_fi_preview_directive();
+// Gets the directive used by the data reduction proxy to request
+// compressed video.
+const char* compressed_video_directive();
 
-// Gets the Chrome-Proxy directive used by data reduction proxy Lo-Fi preview
-// experiment to ignore the blacklist.
-const char* chrome_proxy_lo_fi_ignore_preview_blacklist_directive();
+// Gets the directive used by the data reduction proxy to request that
+// a resource not be transformed.
+const char* identity_directive();
+
+// Gets the Chrome-Proxy directive used by data reduction proxy lite page
+// preview requests and responses.
+const char* chrome_proxy_lite_page_directive();
+
+// Gets the Chrome-Proxy directive used by data reduction proxy lite page
+// preview experiment to ignore the blacklist.
+const char* chrome_proxy_lite_page_ignore_blacklist_directive();
+
+// Requests a transformation only if the server determines that the page is
+// otherwise heavy (i.e., the associated page load ordinarily requires the
+// network to transfer of a lot of bytes). Added to a previews directive. E.g.,
+// "lite-page;if-heavy".
+const char* if_heavy_qualifier();
+
+// Returns true if the Chrome-Proxy-Content-Transform response header indicates
+// that an empty image has been provided.
+bool IsEmptyImagePreview(const net::HttpResponseHeaders& headers);
+
+// Returns true if the provided value of the Chrome-Proxy-Content-Transform
+// response header that is provided in |content_transform_value| indicates that
+// an empty image has been provided.
+bool IsEmptyImagePreview(const std::string& content_transform_value,
+                         const std::string& chrome_proxy_value);
+
+// Returns true if the Chrome-Proxy-Content-Transform response header indicates
+// that a lite page has been provided.
+bool IsLitePagePreview(const net::HttpResponseHeaders& headers);
 
 // Returns true if the Chrome-Proxy header is present and contains a bypass
 // delay. Sets |proxy_info->bypass_duration| to the specified delay if greater
@@ -89,7 +124,7 @@ const char* chrome_proxy_lo_fi_ignore_preview_blacklist_directive();
 // (as specified in |ProxyList::UpdateRetryInfoOnFallback|) should be used.
 // If all available data reduction proxies should by bypassed, |bypass_all| is
 // set to true. |proxy_info| must be non-NULL.
-bool ParseHeadersForBypassInfo(const net::HttpResponseHeaders* headers,
+bool ParseHeadersForBypassInfo(const net::HttpResponseHeaders& headers,
                                DataReductionProxyInfo* proxy_info);
 
 // Returns true if the response contains the data reduction proxy Via header
@@ -97,14 +132,15 @@ bool ParseHeadersForBypassInfo(const net::HttpResponseHeaders* headers,
 // a Via header after the data reduction proxy, and to false otherwise. Used to
 // check the integrity of data reduction proxy responses and whether there are
 // other middleboxes between the data reduction proxy and the client.
-bool HasDataReductionProxyViaHeader(const net::HttpResponseHeaders* headers,
+bool HasDataReductionProxyViaHeader(const net::HttpResponseHeaders& headers,
                                     bool* has_intermediary);
 
 // Returns the reason why the Chrome proxy should be bypassed or not, and
 // populates |proxy_info| with information on how long to bypass if
-// applicable.
+// applicable. |url_chain| is the chain of URLs traversed by the request.
 DataReductionProxyBypassType GetDataReductionProxyBypassType(
-    const net::HttpResponseHeaders* headers,
+    const std::vector<GURL>& url_chain,
+    const net::HttpResponseHeaders& headers,
     DataReductionProxyInfo* proxy_info);
 
 // Searches for the specified Chrome-Proxy action, and if present saves its

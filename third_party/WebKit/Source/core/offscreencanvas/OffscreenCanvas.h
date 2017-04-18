@@ -8,8 +8,12 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "core/events/EventTarget.h"
 #include "core/html/HTMLCanvasElement.h"
+#include "core/html/canvas/CanvasImageSource.h"
+#include "core/offscreencanvas/ImageEncodeOptions.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/graphics/OffscreenCanvasFrameDispatcher.h"
 #include "platform/heap/Handle.h"
 #include <memory>
 
@@ -17,74 +21,159 @@ namespace blink {
 
 class CanvasContextCreationAttributes;
 class ImageBitmap;
-class OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext;
-typedef OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext OffscreenRenderingContext;
+class
+    OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext;
+typedef OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext
+    OffscreenRenderingContext;
 
-class CORE_EXPORT OffscreenCanvas final : public GarbageCollected<OffscreenCanvas>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static OffscreenCanvas* create(unsigned width, unsigned height);
+class CORE_EXPORT OffscreenCanvas final
+    : public EventTargetWithInlineData,
+      public CanvasImageSource,
+      public ImageBitmapSource,
+      public OffscreenCanvasFrameDispatcherClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_PRE_FINALIZER(OffscreenCanvas, Dispose);
 
-    // IDL attributes
-    unsigned width() const { return m_size.width(); }
-    unsigned height() const { return m_size.height(); }
-    void setWidth(unsigned);
-    void setHeight(unsigned);
+ public:
+  static OffscreenCanvas* Create(unsigned width, unsigned height);
+  ~OffscreenCanvas() override;
+  void Dispose();
 
-    // API Methods
-    ImageBitmap* transferToImageBitmap(ExceptionState&);
+  // IDL attributes
+  unsigned width() const { return size_.Width(); }
+  unsigned height() const { return size_.Height(); }
+  void setWidth(unsigned);
+  void setHeight(unsigned);
 
-    IntSize size() const { return m_size; }
-    void setAssociatedCanvasId(int canvasId) { m_canvasId = canvasId; }
-    int getAssociatedCanvasId() const { return m_canvasId; }
-    bool isNeutered() const { return m_isNeutered; }
-    void setNeutered();
-    CanvasRenderingContext* getCanvasRenderingContext(ScriptState*, const String&, const CanvasContextCreationAttributes&);
-    CanvasRenderingContext* renderingContext() { return m_context; }
+  // API Methods
+  ImageBitmap* transferToImageBitmap(ScriptState*, ExceptionState&);
+  ScriptPromise convertToBlob(ScriptState*,
+                              const ImageEncodeOptions&,
+                              ExceptionState&);
 
-    static void registerRenderingContextFactory(std::unique_ptr<CanvasRenderingContextFactory>);
+  IntSize Size() const { return size_; }
+  void SetSize(const IntSize&);
 
-    bool originClean() const;
-    void setOriginTainted() { m_originClean = false; }
-    // TODO(crbug.com/630356): apply the flag to WebGL context as well
-    void setDisableReadingFromCanvasTrue() { m_disableReadingFromCanvas = true; }
+  void SetPlaceholderCanvasId(int canvas_id) {
+    placeholder_canvas_id_ = canvas_id;
+  }
+  int PlaceholderCanvasId() const { return placeholder_canvas_id_; }
+  bool HasPlaceholderCanvas() {
+    return placeholder_canvas_id_ != kNoPlaceholderCanvas;
+  }
+  bool IsNeutered() const { return is_neutered_; }
+  void SetNeutered();
+  CanvasRenderingContext* GetCanvasRenderingContext(
+      ScriptState*,
+      const String&,
+      const CanvasContextCreationAttributes&);
+  CanvasRenderingContext* RenderingContext() { return context_; }
 
-    void setSurfaceId(uint32_t clientId, uint32_t localId, uint64_t nonce)
-    {
-        m_clientId = clientId;
-        m_localId = localId;
-        m_nonce = nonce;
-    }
-    uint32_t clientId() const { return m_clientId; }
-    uint32_t localId() const { return m_localId; }
-    uint64_t nonce() const { return m_nonce; }
+  static void RegisterRenderingContextFactory(
+      std::unique_ptr<CanvasRenderingContextFactory>);
 
-    DECLARE_VIRTUAL_TRACE();
+  bool OriginClean() const;
+  void SetOriginTainted() { origin_clean_ = false; }
+  // TODO(crbug.com/630356): apply the flag to WebGL context as well
+  void SetDisableReadingFromCanvasTrue() {
+    disable_reading_from_canvas_ = true;
+  }
 
-private:
-    explicit OffscreenCanvas(const IntSize&);
+  void SetFrameSinkId(uint32_t client_id, uint32_t sink_id) {
+    client_id_ = client_id;
+    sink_id_ = sink_id;
+  }
+  uint32_t ClientId() const { return client_id_; }
+  uint32_t SinkId() const { return sink_id_; }
 
-    using ContextFactoryVector = Vector<std::unique_ptr<CanvasRenderingContextFactory>>;
-    static ContextFactoryVector& renderingContextFactories();
-    static CanvasRenderingContextFactory* getRenderingContextFactory(int);
+  void SetExecutionContext(ExecutionContext* context) {
+    execution_context_ = context;
+  }
 
-    Member<CanvasRenderingContext> m_context;
-    int m_canvasId = -1; // DOMNodeIds starts from 0, using -1 to indicate no associated canvas element.
-    IntSize m_size;
-    bool m_isNeutered = false;
+  ScriptPromise Commit(RefPtr<StaticBitmapImage>,
+                       bool is_web_gl_software_rendering,
+                       ScriptState*);
+  void FinalizeFrame();
 
-    bool m_originClean;
-    bool m_disableReadingFromCanvas = false;
+  void DetachContext() { context_ = nullptr; }
 
-    // cc::SurfaceId is broken into three integer components as this can be used
-    // in transfer of OffscreenCanvas across threads
-    // If this object is not created via HTMLCanvasElement.transferControlToOffscreen(),
-    // then the following members would remain as initialized zero values.
-    uint32_t m_clientId = 0;
-    uint32_t m_localId = 0;
-    uint64_t m_nonce = 0;
+  // OffscreenCanvasFrameDispatcherClient implementation
+  void BeginFrame() final;
+
+  // EventTarget implementation
+  const AtomicString& InterfaceName() const final {
+    return EventTargetNames::OffscreenCanvas;
+  }
+  ExecutionContext* GetExecutionContext() const {
+    return execution_context_.Get();
+  }
+
+  // ImageBitmapSource implementation
+  IntSize BitmapSourceSize() const final;
+  ScriptPromise CreateImageBitmap(ScriptState*,
+                                  EventTarget&,
+                                  Optional<IntRect>,
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) final;
+
+  // CanvasImageSource implementation
+  PassRefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                            AccelerationHint,
+                                            SnapshotReason,
+                                            const FloatSize&) const final;
+  bool WouldTaintOrigin(SecurityOrigin*) const final { return !origin_clean_; }
+  bool IsOffscreenCanvas() const final { return true; }
+  FloatSize ElementSize(const FloatSize& default_object_size) const final {
+    return FloatSize(width(), height());
+  }
+  bool IsOpaque() const final;
+  bool IsAccelerated() const final;
+  int SourceWidth() final { return width(); }
+  int SourceHeight() final { return height(); }
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  explicit OffscreenCanvas(const IntSize&);
+  OffscreenCanvasFrameDispatcher* GetOrCreateFrameDispatcher();
+  void DoCommit(RefPtr<StaticBitmapImage>, bool is_web_gl_software_rendering);
+  using ContextFactoryVector =
+      Vector<std::unique_ptr<CanvasRenderingContextFactory>>;
+  static ContextFactoryVector& RenderingContextFactories();
+  static CanvasRenderingContextFactory* GetRenderingContextFactory(int);
+
+  Member<CanvasRenderingContext> context_;
+  WeakMember<ExecutionContext> execution_context_;
+
+  enum {
+    kNoPlaceholderCanvas = -1,  // DOMNodeIds starts from 0, using -1 to
+                                // indicate no associated canvas element.
+  };
+  int placeholder_canvas_id_ = kNoPlaceholderCanvas;
+
+  IntSize size_;
+  bool is_neutered_ = false;
+
+  bool origin_clean_ = true;
+  bool disable_reading_from_canvas_ = false;
+
+  bool IsPaintable() const;
+
+  std::unique_ptr<OffscreenCanvasFrameDispatcher> frame_dispatcher_;
+
+  Member<ScriptPromiseResolver> commit_promise_resolver_;
+  RefPtr<StaticBitmapImage> current_frame_;
+  bool current_frame_is_web_gl_software_rendering_ = false;
+
+  // cc::FrameSinkId is broken into two integer components as this can be used
+  // in transfer of OffscreenCanvas across threads
+  // If this object is not created via
+  // HTMLCanvasElement.transferControlToOffscreen(),
+  // then the following members would remain as initialized zero values.
+  uint32_t client_id_ = 0;
+  uint32_t sink_id_ = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OffscreenCanvas_h
+#endif  // OffscreenCanvas_h

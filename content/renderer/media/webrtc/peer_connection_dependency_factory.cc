@@ -24,6 +24,7 @@
 #include "build/build_config.h"
 #include "content/common/media/media_stream_messages.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/feature_h264_with_openh264_ffmpeg.h"
 #include "content/public/common/features.h"
@@ -61,7 +62,9 @@
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
+#include "third_party/webrtc/api/audio_codecs/builtin_audio_decoder_factory.h"
 #include "third_party/webrtc/api/mediaconstraintsinterface.h"
+#include "third_party/webrtc/api/videosourceproxy.h"
 #include "third_party/webrtc/base/ssladapter.h"
 #include "third_party/webrtc/modules/video_coding/codecs/h264/include/h264.h"
 
@@ -89,6 +92,11 @@ WebRTCIPHandlingPolicy GetWebRTCIPHandlingPolicy(
   if (preference == kWebRTCIPHandlingDisableNonProxiedUdp)
     return DISABLE_NON_PROXIED_UDP;
   return DEFAULT;
+}
+
+bool IsValidPortRange(uint16_t min_port, uint16_t max_port) {
+  DCHECK(min_port <= max_port);
+  return min_port != 0 && max_port != 0;
 }
 
 }  // namespace
@@ -120,26 +128,6 @@ PeerConnectionDependencyFactory::CreateRTCPeerConnectionHandler(
   return new RTCPeerConnectionHandler(client, this);
 }
 
-WebRtcVideoCapturerAdapter*
-PeerConnectionDependencyFactory::CreateVideoCapturer(
-    bool is_screeencast) {
-  // We need to make sure the libjingle thread wrappers have been created
-  // before we can use an instance of a WebRtcVideoCapturerAdapter. This is
-  // since the base class of WebRtcVideoCapturerAdapter is a
-  // cricket::VideoCapturer and it uses the libjingle thread wrappers.
-  if (!GetPcFactory().get())
-    return NULL;
-  return new WebRtcVideoCapturerAdapter(is_screeencast);
-}
-
-scoped_refptr<webrtc::VideoTrackSourceInterface>
-PeerConnectionDependencyFactory::CreateVideoSource(
-    cricket::VideoCapturer* capturer) {
-  scoped_refptr<webrtc::VideoTrackSourceInterface> source =
-      GetPcFactory()->CreateVideoSource(capturer).get();
-  return source;
-}
-
 const scoped_refptr<webrtc::PeerConnectionFactoryInterface>&
 PeerConnectionDependencyFactory::GetPcFactory() {
   if (!pc_factory_.get())
@@ -163,7 +151,7 @@ void PeerConnectionDependencyFactory::CreatePeerConnectionFactory() {
 
   DVLOG(1) << "PeerConnectionDependencyFactory::CreatePeerConnectionFactory()";
 
-#if BUILDFLAG(RTC_USE_H264)
+#if BUILDFLAG(RTC_USE_H264) && !defined(MEDIA_DISABLE_FFMPEG)
   // Building /w |rtc_use_h264|, is the corresponding run-time feature enabled?
   if (base::FeatureList::IsEnabled(kWebRtcH264WithOpenH264FFmpeg)) {
     // |H264DecoderImpl| may be used which depends on FFmpeg, therefore we need
@@ -173,7 +161,9 @@ void PeerConnectionDependencyFactory::CreatePeerConnectionFactory() {
     // Feature is to be disabled, no need to make sure FFmpeg is initialized.
     webrtc::DisableRtcUseH264();
   }
-#endif
+#else
+  webrtc::DisableRtcUseH264();
+#endif  // BUILDFLAG(RTC_USE_H264) && !defined(MEDIA_DISABLE_FFMPEG)
 
   base::MessageLoop::current()->AddDestructionObserver(this);
   // To allow sending to the signaling/worker threads.
@@ -250,8 +240,9 @@ void PeerConnectionDependencyFactory::InitializeSignalingThread(
     if (!cmd_line->HasSwitch(switches::kDisableWebRtcHWDecoding))
       decoder_factory.reset(new RTCVideoDecoderFactory(gpu_factories));
 
-    if (!cmd_line->HasSwitch(switches::kDisableWebRtcHWEncoding))
+    if (!cmd_line->HasSwitch(switches::kDisableWebRtcHWEncoding)) {
       encoder_factory.reset(new RTCVideoEncoderFactory(gpu_factories));
+    }
   }
 
 #if defined(OS_ANDROID)
@@ -261,21 +252,17 @@ void PeerConnectionDependencyFactory::InitializeSignalingThread(
 
   pc_factory_ = webrtc::CreatePeerConnectionFactory(
       worker_thread_, signaling_thread_, audio_device_.get(),
-      encoder_factory.release(), decoder_factory.release());
+      webrtc::CreateBuiltinAudioEncoderFactory(),
+      webrtc::CreateBuiltinAudioDecoderFactory(), encoder_factory.release(),
+      decoder_factory.release());
   CHECK(pc_factory_.get());
 
   webrtc::PeerConnectionFactoryInterface::Options factory_options;
   factory_options.disable_sctp_data_channels = false;
   factory_options.disable_encryption =
       cmd_line->HasSwitch(switches::kDisableWebRtcEncryption);
-
-  // DTLS 1.2 is the default now but could be changed to 1.0 by the experiment.
-  factory_options.ssl_max_version = rtc::SSL_PROTOCOL_DTLS_12;
-  std::string group_name =
-      base::FieldTrialList::FindFullName("WebRTC-PeerConnectionDTLS1.2");
-  if (StartsWith(group_name, "Control", base::CompareCase::SENSITIVE))
-    factory_options.ssl_max_version = rtc::SSL_PROTOCOL_DTLS_10;
-
+  factory_options.crypto_options.enable_gcm_crypto_suites =
+      cmd_line->HasSwitch(switches::kEnableWebRtcSrtpAesGcm);
   pc_factory_->SetOptions(factory_options);
 
   event->Signal();
@@ -297,6 +284,8 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
 
   // Copy the flag from Preference associated with this WebFrame.
   P2PPortAllocator::Config port_config;
+  uint16_t min_port = 0;
+  uint16_t max_port = 0;
 
   // |media_permission| will be called to check mic/camera permission. If at
   // least one of them is granted, P2PPortAllocator is allowed to gather local
@@ -322,9 +311,9 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
     port_config.enable_nonproxied_udp = true;
     VLOG(3) << "WebRTC routing preferences will not be enforced";
   } else {
-    if (web_frame && web_frame->view()) {
+    if (web_frame && web_frame->View()) {
       RenderViewImpl* renderer_view_impl =
-          RenderViewImpl::FromWebView(web_frame->view());
+          RenderViewImpl::FromWebView(web_frame->View());
       if (renderer_view_impl) {
         // TODO(guoweis): |enable_multiple_routes| should be renamed to
         // |request_multiple_routes|. Whether local IP addresses could be
@@ -353,10 +342,17 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
             break;
         }
 
+        min_port =
+            renderer_view_impl->renderer_preferences().webrtc_udp_min_port;
+        max_port =
+            renderer_view_impl->renderer_preferences().webrtc_udp_max_port;
+
         VLOG(3) << "WebRTC routing preferences: "
                 << "policy: " << policy
                 << ", multiple_routes: " << port_config.enable_multiple_routes
-                << ", nonproxied_udp: " << port_config.enable_nonproxied_udp;
+                << ", nonproxied_udp: " << port_config.enable_nonproxied_udp
+                << ", min_udp_port: " << min_port
+                << ", max_udp_port: " << max_port;
       }
     }
     if (port_config.enable_multiple_routes) {
@@ -379,7 +375,7 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
   }
 
   const GURL& requesting_origin =
-      GURL(web_frame->document().url()).GetOrigin();
+      GURL(web_frame->GetDocument().Url()).GetOrigin();
 
   std::unique_ptr<rtc::NetworkManager> network_manager;
   if (port_config.enable_multiple_routes) {
@@ -393,6 +389,8 @@ PeerConnectionDependencyFactory::CreatePeerConnection(
   std::unique_ptr<P2PPortAllocator> port_allocator(new P2PPortAllocator(
       p2p_socket_dispatcher_, std::move(network_manager), socket_factory_.get(),
       port_config, requesting_origin));
+  if (IsValidPortRange(min_port, max_port))
+    port_allocator->SetPortRange(min_port, max_port);
 
   return GetPcFactory()
       ->CreatePeerConnection(config, std::move(port_allocator),
@@ -406,27 +404,24 @@ PeerConnectionDependencyFactory::CreateLocalMediaStream(
   return GetPcFactory()->CreateLocalMediaStream(label).get();
 }
 
+scoped_refptr<webrtc::VideoTrackSourceInterface>
+PeerConnectionDependencyFactory::CreateVideoTrackSourceProxy(
+    webrtc::VideoTrackSourceInterface* source) {
+  // PeerConnectionFactory needs to be instantiated to make sure that
+  // signaling_thread_ and worker_thread_ exist.
+  if (!PeerConnectionFactoryCreated())
+    CreatePeerConnectionFactory();
+
+  return webrtc::VideoTrackSourceProxy::Create(signaling_thread_,
+                                               worker_thread_, source)
+      .get();
+}
+
 scoped_refptr<webrtc::VideoTrackInterface>
 PeerConnectionDependencyFactory::CreateLocalVideoTrack(
     const std::string& id,
     webrtc::VideoTrackSourceInterface* source) {
   return GetPcFactory()->CreateVideoTrack(id, source).get();
-}
-
-scoped_refptr<webrtc::VideoTrackInterface>
-PeerConnectionDependencyFactory::CreateLocalVideoTrack(
-    const std::string& id, cricket::VideoCapturer* capturer) {
-  if (!capturer) {
-    LOG(ERROR) << "CreateLocalVideoTrack called with null VideoCapturer.";
-    return NULL;
-  }
-
-  // Create video source from the |capturer|.
-  scoped_refptr<webrtc::VideoTrackSourceInterface> source =
-      GetPcFactory()->CreateVideoSource(capturer, NULL).get();
-
-  // Create native track from the source.
-  return GetPcFactory()->CreateVideoTrack(id, source.get()).get();
 }
 
 webrtc::SessionDescriptionInterface*

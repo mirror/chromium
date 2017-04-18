@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "cc/base/math_util.h"
+#include "cc/cc_export.h"
 #include "cc/output/bsp_compare_result.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/quad_f.h"
@@ -56,7 +57,10 @@ class CC_EXPORT DrawPolygon {
   bool is_split() const { return is_split_; }
   std::unique_ptr<DrawPolygon> CreateCopy();
 
+  // These are helper functions for testing.
   void RecomputeNormalForTesting();
+  friend bool IsPlanarForTesting(const DrawPolygon& p);
+  friend bool IsConvexForTesting(const DrawPolygon& p);
 
  private:
   void ApplyTransform(const gfx::Transform& transform);

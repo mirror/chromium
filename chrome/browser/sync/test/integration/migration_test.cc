@@ -2,9 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+#include <vector>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/test/integration/bookmarks_helper.h"
 #include "chrome/browser/sync/test/integration/migration_waiter.h"
@@ -13,7 +16,7 @@
 #include "chrome/browser/sync/test/integration/profile_sync_service_harness.h"
 #include "chrome/browser/sync/test/integration/sync_test.h"
 #include "chrome/common/pref_names.h"
-#include "components/browser_sync/browser/profile_sync_service.h"
+#include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/translate/core/browser/translate_prefs.h"
 
@@ -40,7 +43,7 @@ syncer::ModelTypeSet MakeSet(syncer::ModelType type1,
 
 // An ordered list of model types sets to migrate.  Used by
 // RunMigrationTest().
-typedef std::deque<syncer::ModelTypeSet> MigrationList;
+using MigrationList = std::deque<syncer::ModelTypeSet>;
 
 // Utility functions to make a MigrationList out of a small number of
 // model types / model type sets.
@@ -66,7 +69,6 @@ MigrationList MakeList(syncer::ModelType type1,
   return MakeList(MakeSet(type1), MakeSet(type2));
 }
 
-
 class MigrationTest : public SyncTest  {
  public:
   explicit MigrationTest(TestType test_type) : SyncTest(test_type) {}
@@ -82,8 +84,8 @@ class MigrationTest : public SyncTest  {
       return false;
 
     for (int i = 0; i < num_clients(); ++i) {
-      MigrationWatcher* watcher = new MigrationWatcher(GetClient(i));
-      migration_watchers_.push_back(watcher);
+      migration_watchers_.push_back(
+          base::MakeUnique<MigrationWatcher>(GetClient(i)));
     }
     return true;
   }
@@ -91,9 +93,9 @@ class MigrationTest : public SyncTest  {
   syncer::ModelTypeSet GetPreferredDataTypes() {
     // ProfileSyncService must already have been created before we can call
     // GetPreferredDataTypes().
-    DCHECK(GetSyncService((0)));
+    DCHECK(GetSyncService(0));
     syncer::ModelTypeSet preferred_data_types =
-        GetSyncService((0))->GetPreferredDataTypes();
+        GetSyncService(0)->GetPreferredDataTypes();
     preferred_data_types.RemoveAll(syncer::ProxyTypes());
 
     // Supervised user data types will be "unready" during this test, so we
@@ -106,10 +108,14 @@ class MigrationTest : public SyncTest  {
     preferred_data_types.Remove(syncer::AUTOFILL_WALLET_DATA);
     preferred_data_types.Remove(syncer::AUTOFILL_WALLET_METADATA);
 
+    // ARC package will be unready during this test, so we should not request
+    // that it be migrated.
+    preferred_data_types.Remove(syncer::ARC_PACKAGE);
+
     // Make sure all clients have the same preferred data types.
     for (int i = 1; i < num_clients(); ++i) {
       const syncer::ModelTypeSet other_preferred_data_types =
-          GetSyncService((i))->GetPreferredDataTypes();
+          GetSyncService(i)->GetPreferredDataTypes();
       EXPECT_EQ(other_preferred_data_types, preferred_data_types);
     }
     return preferred_data_types;
@@ -156,9 +162,8 @@ class MigrationTest : public SyncTest  {
   // types.
   void AwaitMigration(syncer::ModelTypeSet migrate_types) {
     for (int i = 0; i < num_clients(); ++i) {
-      MigrationWaiter waiter(migrate_types, migration_watchers_[i]);
-      waiter.Wait();
-      ASSERT_FALSE(waiter.TimedOut());
+      ASSERT_TRUE(
+          MigrationWaiter(migrate_types, migration_watchers_[i].get()).Wait());
     }
   }
 
@@ -214,7 +219,7 @@ class MigrationTest : public SyncTest  {
 
  private:
   // Used to keep track of the migration progress for each sync client.
-  ScopedVector<MigrationWatcher> migration_watchers_;
+  std::vector<std::unique_ptr<MigrationWatcher>> migration_watchers_;
 
   DISALLOW_COPY_AND_ASSIGN(MigrationTest);
 };

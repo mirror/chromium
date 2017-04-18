@@ -13,16 +13,19 @@
 #include "base/macros.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/display/types/display_mode.h"
+#include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/size.h"
 
-namespace ui {
+namespace display {
 
 // This class represents the state of a display at one point in time. Platforms
 // will extend this class in order to add platform specific configuration and
 // identifiers required to configure this display.
 class DISPLAY_TYPES_EXPORT DisplaySnapshot {
  public:
+  using DisplayModeList = std::vector<std::unique_ptr<const DisplayMode>>;
+
   DisplaySnapshot(int64_t display_id,
                   const gfx::Point& origin,
                   const gfx::Size& physical_size,
@@ -32,7 +35,7 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
                   bool has_color_correction_matrix,
                   std::string display_name,
                   const base::FilePath& sys_path,
-                  std::vector<std::unique_ptr<const DisplayMode>> modes,
+                  DisplayModeList modes,
                   const std::vector<uint8_t>& edid,
                   const DisplayMode* current_mode,
                   const DisplayMode* native_mode);
@@ -40,7 +43,7 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
 
   const gfx::Point& origin() const { return origin_; }
   const gfx::Size& physical_size() const { return physical_size_; }
-  ui::DisplayConnectionType type() const { return type_; }
+  DisplayConnectionType type() const { return type_; }
   bool is_aspect_preserving_scaling() const {
     return is_aspect_preserving_scaling_;
   }
@@ -55,9 +58,7 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
   int64_t product_id() const { return product_id_; }
   const gfx::Size& maximum_cursor_size() const { return maximum_cursor_size_; }
 
-  const std::vector<std::unique_ptr<const DisplayMode>>& modes() const {
-    return modes_;
-  }
+  const DisplayModeList& modes() const { return modes_; }
   const std::vector<uint8_t>& edid() const { return edid_; }
 
   void set_current_mode(const DisplayMode* mode) { current_mode_ = mode; }
@@ -76,6 +77,9 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
 
   // Used when no product id known.
   static const int64_t kInvalidProductID = -1;
+
+  // Return the buffer format to be used for the primary plane buffer.
+  static gfx::BufferFormat PrimaryFormat();
 
  protected:
   // Display id for this output.
@@ -98,7 +102,7 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
 
   base::FilePath sys_path_;
 
-  std::vector<std::unique_ptr<const DisplayMode>> modes_;
+  DisplayModeList modes_;
 
   // The display's EDID. It can be empty if nothing extracted such as in the
   // case of a virtual display.
@@ -116,9 +120,10 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
   // Maximum supported cursor size on this display.
   gfx::Size maximum_cursor_size_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(DisplaySnapshot);
 };
 
-}  // namespace ui
+}  // namespace display
 
 #endif  // UI_DISPLAY_TYPES_DISPLAY_SNAPSHOT_H_

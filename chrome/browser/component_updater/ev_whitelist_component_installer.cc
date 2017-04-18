@@ -4,6 +4,7 @@
 
 #include "chrome/browser/component_updater/ev_whitelist_component_installer.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -14,6 +15,8 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/version.h"
 #include "components/component_updater/component_updater_paths.h"
 #include "components/packed_ct_ev_whitelist/packed_ct_ev_whitelist.h"
@@ -71,20 +74,22 @@ const uint8_t kPublicKeySHA256[32] = {
 
 const char kEVWhitelistManifestName[] = "EV Certs CT whitelist";
 
-bool EVWhitelistComponentInstallerTraits::CanAutoUpdate() const {
-  return true;
+bool EVWhitelistComponentInstallerTraits::
+    SupportsGroupPolicyEnabledComponentUpdates() const {
+  return false;
 }
 
 bool EVWhitelistComponentInstallerTraits::RequiresNetworkEncryption() const {
   return false;
 }
 
-bool EVWhitelistComponentInstallerTraits::OnCustomInstall(
+update_client::CrxInstaller::Result
+EVWhitelistComponentInstallerTraits::OnCustomInstall(
     const base::DictionaryValue& manifest,
     const base::FilePath& install_dir) {
   VLOG(1) << "Entering EVWhitelistComponentInstallerTraits::OnCustomInstall.";
 
-  return true;  // Nothing custom here.
+  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
 }
 
 base::FilePath EVWhitelistComponentInstallerTraits::GetInstalledPath(
@@ -102,11 +107,11 @@ void EVWhitelistComponentInstallerTraits::ComponentReady(
   VLOG(1) << "Component ready, version " << version.GetString() << " in "
           << install_dir.value();
 
-  if (!content::BrowserThread::PostBlockingPoolTask(
-          FROM_HERE, base::Bind(&LoadWhitelistFromDisk,
-                                GetInstalledPath(install_dir), version))) {
-    NOTREACHED();
-  }
+  base::PostTaskWithTraits(FROM_HERE,
+                           base::TaskTraits().MayBlock().WithPriority(
+                               base::TaskPriority::BACKGROUND),
+                           base::Bind(&LoadWhitelistFromDisk,
+                                      GetInstalledPath(install_dir), version));
 }
 
 // Called during startup and installation before ComponentReady().
@@ -134,6 +139,11 @@ std::string EVWhitelistComponentInstallerTraits::GetName() const {
 update_client::InstallerAttributes
 EVWhitelistComponentInstallerTraits::GetInstallerAttributes() const {
   return update_client::InstallerAttributes();
+}
+
+std::vector<std::string> EVWhitelistComponentInstallerTraits::GetMimeTypes()
+    const {
+  return std::vector<std::string>();
 }
 
 void RegisterEVWhitelistComponent(ComponentUpdateService* cus,

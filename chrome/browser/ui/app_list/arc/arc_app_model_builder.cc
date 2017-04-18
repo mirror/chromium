@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_model_builder.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_item.h"
 
@@ -40,8 +41,8 @@ ArcAppItem* ArcAppModelBuilder::GetArcAppItem(const std::string& app_id) {
 std::unique_ptr<ArcAppItem> ArcAppModelBuilder::CreateApp(
     const std::string& app_id,
     const ArcAppListPrefs::AppInfo& app_info) {
-  return base::WrapUnique(new ArcAppItem(profile(), GetSyncItem(app_id), app_id,
-                                         app_info.name));
+  return base::MakeUnique<ArcAppItem>(profile(), GetSyncItem(app_id), app_id,
+                                      app_info.name);
 }
 
 void ArcAppModelBuilder::OnAppRegistered(
@@ -52,7 +53,10 @@ void ArcAppModelBuilder::OnAppRegistered(
 }
 
 void ArcAppModelBuilder::OnAppRemoved(const std::string& app_id) {
-  RemoveApp(app_id);
+  // Don't sync app removal in case it was caused by disabling Google Play
+  // Store.
+  const bool unsynced_change = !arc::IsArcPlayStoreEnabledForProfile(profile());
+  RemoveApp(app_id, unsynced_change);
 }
 
 void ArcAppModelBuilder::OnAppIconUpdated(const std::string& app_id,

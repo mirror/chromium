@@ -11,6 +11,7 @@ import optparse
 import os
 from string import Template
 import sys
+import textwrap
 import zipfile
 
 from util import build_utils
@@ -26,11 +27,12 @@ ENUM_FIXED_TYPE_WHITELIST = ['char', 'unsigned char',
 
 class EnumDefinition(object):
   def __init__(self, original_enum_name=None, class_name_override=None,
-               enum_package=None, entries=None, fixed_type=None):
+               enum_package=None, entries=None, comments=None, fixed_type=None):
     self.original_enum_name = original_enum_name
     self.class_name_override = class_name_override
     self.enum_package = enum_package
     self.entries = collections.OrderedDict(entries or [])
+    self.comments = collections.OrderedDict(comments or [])
     self.prefix_to_strip = None
     self.fixed_type = fixed_type
 
@@ -38,6 +40,11 @@ class EnumDefinition(object):
     if key in self.entries:
       raise Exception('Multiple definitions of key %s found.' % key)
     self.entries[key] = value
+
+  def AppendEntryComment(self, key, value):
+    if key in self.comments:
+      raise Exception('Multiple definitions of key %s found.' % key)
+    self.comments[key] = value
 
   @property
   def class_name(self):
@@ -47,6 +54,7 @@ class EnumDefinition(object):
     self._Validate()
     self._AssignEntryIndices()
     self._StripPrefix()
+    self._NormalizeNames()
 
   def _Validate(self):
     assert self.class_name
@@ -83,16 +91,58 @@ class EnumDefinition(object):
       if not all([w.startswith(prefix_to_strip) for w in self.entries.keys()]):
         prefix_to_strip = ''
 
-    entries = collections.OrderedDict()
-    for (k, v) in self.entries.iteritems():
-      stripped_key = k.replace(prefix_to_strip, '', 1)
-      if isinstance(v, basestring):
-        stripped_value = v.replace(prefix_to_strip, '', 1)
-      else:
-        stripped_value = v
-      entries[stripped_key] = stripped_value
+    def StripEntries(entries):
+      ret = collections.OrderedDict()
+      for k, v in entries.iteritems():
+        stripped_key = k.replace(prefix_to_strip, '', 1)
+        if isinstance(v, basestring):
+          stripped_value = v.replace(prefix_to_strip, '')
+        else:
+          stripped_value = v
+        ret[stripped_key] = stripped_value
 
-    self.entries = entries
+      return ret
+
+    self.entries = StripEntries(self.entries)
+    self.comments = StripEntries(self.comments)
+
+  def _NormalizeNames(self):
+    self.entries = _TransformKeys(self.entries, _KCamelToShouty)
+    self.comments = _TransformKeys(self.comments, _KCamelToShouty)
+
+
+def _TransformKeys(d, func):
+  """Normalize keys in |d| and update references to old keys in |d| values."""
+  normal_keys = {k: func(k) for k in d}
+  ret = collections.OrderedDict()
+  for k, v in d.iteritems():
+    # Need to transform values as well when the entry value was explicitly set
+    # (since it could contain references to other enum entry values).
+    if isinstance(v, basestring):
+      for normal_key in normal_keys:
+        v = v.replace(normal_key, normal_keys[normal_key])
+    ret[normal_keys[k]] = v
+  return ret
+
+
+def _KCamelToShouty(s):
+  """Convert |s| from kCamelCase or CamelCase to SHOUTY_CASE.
+
+  kFooBar -> FOO_BAR
+  FooBar -> FOO_BAR
+  FooBAR9 -> FOO_BAR9
+  FooBARBaz -> FOO_BAR_BAZ
+  """
+  if not re.match(r'^k?([A-Z][^A-Z]+|[A-Z0-9]+)+$', s):
+    return s
+  # Strip the leading k.
+  s = re.sub(r'^k', '', s)
+  # Add _ between title words and anything else.
+  s = re.sub(r'([^_])([A-Z][^A-Z_0-9]+)', r'\1_\2', s)
+  # Add _ between lower -> upper transitions.
+  s = re.sub(r'([^A-Z_0-9])([A-Z])', r'\1_\2', s)
+  return s.upper()
+
 
 class DirectiveSet(object):
   class_name_override_key = 'CLASS_NAME_OVERRIDE'
@@ -123,34 +173,37 @@ class DirectiveSet(object):
 
 
 class HeaderParser(object):
-  single_line_comment_re = re.compile(r'\s*//')
+  single_line_comment_re = re.compile(r'\s*//\s*([^\n]*)')
   multi_line_comment_start_re = re.compile(r'\s*/\*')
   enum_line_re = re.compile(r'^\s*(\w+)(\s*\=\s*([^,\n]+))?,?')
   enum_end_re = re.compile(r'^\s*}\s*;\.*$')
+  generator_error_re = re.compile(r'^\s*//\s+GENERATED_JAVA_(\w+)\s*:\s*$')
   generator_directive_re = re.compile(
       r'^\s*//\s+GENERATED_JAVA_(\w+)\s*:\s*([\.\w]+)$')
   multi_line_generator_directive_start_re = re.compile(
       r'^\s*//\s+GENERATED_JAVA_(\w+)\s*:\s*\(([\.\w]*)$')
-  multi_line_directive_continuation_re = re.compile(
-      r'^\s*//\s+([\.\w]+)$')
-  multi_line_directive_end_re = re.compile(
-      r'^\s*//\s+([\.\w]*)\)$')
+  multi_line_directive_continuation_re = re.compile(r'^\s*//\s+([\.\w]+)$')
+  multi_line_directive_end_re = re.compile(r'^\s*//\s+([\.\w]*)\)$')
 
   optional_class_or_struct_re = r'(class|struct)?'
   enum_name_re = r'(\w+)'
   optional_fixed_type_re = r'(\:\s*(\w+\s*\w+?))?'
   enum_start_re = re.compile(r'^\s*(?:\[cpp.*\])?\s*enum\s+' +
       optional_class_or_struct_re + '\s*' + enum_name_re + '\s*' +
-      optional_fixed_type_re + '\s*{\s*$')
+      optional_fixed_type_re + '\s*{\s*')
+  enum_single_line_re = re.compile(
+      r'^\s*(?:\[cpp.*\])?\s*enum.*{(?P<enum_entries>.*)}.*$')
 
-  def __init__(self, lines, path=None):
+  def __init__(self, lines, path=''):
     self._lines = lines
     self._path = path
     self._enum_definitions = []
     self._in_enum = False
     self._current_definition = None
+    self._current_comments = []
     self._generator_directives = DirectiveSet()
     self._multi_line_generator_directive = None
+    self._current_enum_entry = ''
 
   def _ApplyGeneratorDirectives(self):
     self._generator_directives.UpdateDefinition(self._current_definition)
@@ -170,22 +223,58 @@ class HeaderParser(object):
       self._ParseEnumLine(line)
 
   def _ParseEnumLine(self, line):
-    if HeaderParser.single_line_comment_re.match(line):
-      return
     if HeaderParser.multi_line_comment_start_re.match(line):
       raise Exception('Multi-line comments in enums are not supported in ' +
                       self._path)
-    enum_end = HeaderParser.enum_end_re.match(line)
-    enum_entry = HeaderParser.enum_line_re.match(line)
-    if enum_end:
-      self._ApplyGeneratorDirectives()
-      self._current_definition.Finalize()
-      self._enum_definitions.append(self._current_definition)
-      self._in_enum = False
-    elif enum_entry:
-      enum_key = enum_entry.groups()[0]
-      enum_value = enum_entry.groups()[2]
-      self._current_definition.AppendEntry(enum_key, enum_value)
+
+    enum_comment = HeaderParser.single_line_comment_re.match(line)
+    if enum_comment:
+      comment = enum_comment.groups()[0]
+      if comment:
+        self._current_comments.append(comment)
+    elif HeaderParser.enum_end_re.match(line):
+      self._FinalizeCurrentEnumDefinition()
+    else:
+      self._AddToCurrentEnumEntry(line)
+      if ',' in line:
+        self._ParseCurrentEnumEntry()
+
+  def _ParseSingleLineEnum(self, line):
+    for entry in line.split(','):
+      self._AddToCurrentEnumEntry(entry)
+      self._ParseCurrentEnumEntry()
+
+    self._FinalizeCurrentEnumDefinition()
+
+  def _ParseCurrentEnumEntry(self):
+    if not self._current_enum_entry:
+      return
+
+    enum_entry = HeaderParser.enum_line_re.match(self._current_enum_entry)
+    if not enum_entry:
+      raise Exception('Unexpected error while attempting to parse %s as enum '
+                      'entry.' % self._current_enum_entry)
+
+    enum_key = enum_entry.groups()[0]
+    enum_value = enum_entry.groups()[2]
+    self._current_definition.AppendEntry(enum_key, enum_value)
+    if self._current_comments:
+      self._current_definition.AppendEntryComment(
+          enum_key, ' '.join(self._current_comments))
+      self._current_comments = []
+    self._current_enum_entry = ''
+
+  def _AddToCurrentEnumEntry(self, line):
+    self._current_enum_entry += ' ' + line.strip()
+
+  def _FinalizeCurrentEnumDefinition(self):
+    if self._current_enum_entry:
+      self._ParseCurrentEnumEntry()
+    self._ApplyGeneratorDirectives()
+    self._current_definition.Finalize()
+    self._enum_definitions.append(self._current_definition)
+    self._current_definition = None
+    self._in_enum = False
 
   def _ParseMultiLineDirectiveLine(self, line):
     multi_line_directive_continuation = (
@@ -208,11 +297,18 @@ class HeaderParser(object):
 
   def _ParseRegularLine(self, line):
     enum_start = HeaderParser.enum_start_re.match(line)
+    generator_directive_error = HeaderParser.generator_error_re.match(line)
     generator_directive = HeaderParser.generator_directive_re.match(line)
     multi_line_generator_directive_start = (
         HeaderParser.multi_line_generator_directive_start_re.match(line))
+    single_line_enum = HeaderParser.enum_single_line_re.match(line)
 
-    if generator_directive:
+    if generator_directive_error:
+      raise Exception('Malformed directive declaration in ' + self._path +
+                      '. Use () for multi-line directives. E.g.\n' +
+                      '// GENERATED_JAVA_ENUM_PACKAGE: (\n' +
+                      '//   foo.package)')
+    elif generator_directive:
       directive_name = generator_directive.groups()[0]
       directive_value = generator_directive.groups()[1]
       self._generator_directives.Update(directive_name, directive_value)
@@ -220,13 +316,15 @@ class HeaderParser(object):
       directive_name = multi_line_generator_directive_start.groups()[0]
       directive_value = multi_line_generator_directive_start.groups()[1]
       self._multi_line_generator_directive = (directive_name, [directive_value])
-    elif enum_start:
+    elif enum_start or single_line_enum:
       if self._generator_directives.empty:
         return
       self._current_definition = EnumDefinition(
           original_enum_name=enum_start.groups()[1],
           fixed_type=enum_start.groups()[3])
       self._in_enum = True
+      if single_line_enum:
+        self._ParseSingleLineEnum(single_line_enum.group('enum_entries'))
 
 def GetScriptName():
   return os.path.basename(os.path.abspath(sys.argv[0]))
@@ -265,25 +363,54 @@ def GenerateOutput(source_path, enum_definition):
 
 package ${PACKAGE};
 
-public class ${CLASS_NAME} {
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@IntDef({
+${INT_DEF}
+})
+@Retention(RetentionPolicy.SOURCE)
+public @interface ${CLASS_NAME} {
 ${ENUM_ENTRIES}
 }
 """)
 
-  enum_template = Template('  public static final int ${NAME} = ${VALUE};')
+  enum_template = Template('  int ${NAME} = ${VALUE};')
   enum_entries_string = []
+  enum_names = []
   for enum_name, enum_value in enum_definition.entries.iteritems():
     values = {
         'NAME': enum_name,
         'VALUE': enum_value,
     }
+    enum_comments = enum_definition.comments.get(enum_name)
+    if enum_comments:
+        enum_comments_indent = '   * '
+        comments_line_wrapper = textwrap.TextWrapper(
+                initial_indent=enum_comments_indent,
+                subsequent_indent=enum_comments_indent,
+                width=100)
+        enum_entries_string.append('  /**')
+        enum_entries_string.append(
+                '\n'.join(comments_line_wrapper.wrap(enum_comments)))
+        enum_entries_string.append('   */')
     enum_entries_string.append(enum_template.substitute(values))
+    enum_names.append(enum_definition.class_name + '.' + enum_name)
   enum_entries_string = '\n'.join(enum_entries_string)
+
+  enum_names_indent = ' ' * 4
+  wrapper = textwrap.TextWrapper(initial_indent = enum_names_indent,
+                                 subsequent_indent = enum_names_indent,
+                                 width = 100)
+  enum_names_string = '\n'.join(wrapper.wrap(', '.join(enum_names)))
 
   values = {
       'CLASS_NAME': enum_definition.class_name,
       'ENUM_ENTRIES': enum_entries_string,
       'PACKAGE': enum_definition.enum_package,
+      'INT_DEF': enum_names_string,
       'SCRIPT_NAME': GetScriptName(),
       'SOURCE_PATH': source_path,
       'YEAR': str(date.today().year)
@@ -291,78 +418,27 @@ ${ENUM_ENTRIES}
   return template.substitute(values)
 
 
-def AssertFilesList(output_paths, assert_files_list):
-  actual = set(output_paths)
-  expected = set(assert_files_list)
-  if not actual == expected:
-    need_to_add = list(actual - expected)
-    need_to_remove = list(expected - actual)
-    raise Exception('Output files list does not match expectations. Please '
-                    'add %s and remove %s.' % (need_to_add, need_to_remove))
-
 def DoMain(argv):
   usage = 'usage: %prog [options] [output_dir] input_file(s)...'
   parser = optparse.OptionParser(usage=usage)
   build_utils.AddDepfileOption(parser)
 
-  parser.add_option('--assert_file', action="append", default=[],
-                    dest="assert_files_list", help='Assert that the given '
-                    'file is an output. There can be multiple occurrences of '
-                    'this flag.')
   parser.add_option('--srcjar',
                     help='When specified, a .srcjar at the given path is '
                     'created instead of individual .java files.')
-  parser.add_option('--print_output_only', help='Only print output paths.',
-                    action='store_true')
-  parser.add_option('--verbose', help='Print more information.',
-                    action='store_true')
 
   options, args = parser.parse_args(argv)
 
-  if options.srcjar:
-    if not args:
-      parser.error('Need to specify at least one input file')
-    input_paths = args
-  else:
-    if len(args) < 2:
-      parser.error(
-          'Need to specify output directory and at least one input file')
-    output_dir = args[0]
-    input_paths = args[1:]
+  if not args:
+    parser.error('Need to specify at least one input file')
+  input_paths = args
+
+  with zipfile.ZipFile(options.srcjar, 'w', zipfile.ZIP_STORED) as srcjar:
+    for output_path, data in DoGenerate(input_paths):
+      build_utils.AddToZipHermetic(srcjar, output_path, data=data)
 
   if options.depfile:
-    python_deps = build_utils.GetPythonDependencies()
-    build_utils.WriteDepfile(options.depfile, input_paths + python_deps)
-
-  if options.srcjar:
-    if options.print_output_only:
-      parser.error('--print_output_only does not work with --srcjar')
-    if options.assert_files_list:
-      parser.error('--assert_file does not work with --srcjar')
-
-    with zipfile.ZipFile(options.srcjar, 'w', zipfile.ZIP_STORED) as srcjar:
-      for output_path, data in DoGenerate(input_paths):
-        build_utils.AddToZipHermetic(srcjar, output_path, data=data)
-  else:
-    # TODO(agrieve): Delete this non-srcjar branch once GYP is gone.
-    output_paths = []
-    for output_path, data in DoGenerate(input_paths):
-      full_path = os.path.join(output_dir, output_path)
-      output_paths.append(full_path)
-      if not options.print_output_only:
-        build_utils.MakeDirectory(os.path.dirname(full_path))
-        with open(full_path, 'w') as out_file:
-          out_file.write(data)
-
-    if options.assert_files_list:
-      AssertFilesList(output_paths, options.assert_files_list)
-
-    if options.verbose:
-      print 'Output paths:'
-      print '\n'.join(output_paths)
-
-    # Used by GYP.
-    return ' '.join(output_paths)
+    build_utils.WriteDepfile(options.depfile, options.srcjar)
 
 
 if __name__ == '__main__':

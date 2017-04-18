@@ -4,30 +4,38 @@
 
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_mus.h"
 
+#include "ash/public/cpp/app_launch_id.h"
+#include "base/strings/string_util.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/ui/ash/launcher/chrome_mash_shelf_controller.h"
+#include "chrome/browser/ui/ash/chrome_launcher_prefs.h"
+#include "chrome/browser/ui/ash/launcher/launcher_controller_helper.h"
+#include "extensions/grit/extensions_browser_resources.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "ui/events/event_constants.h"
 
-// static
-ChromeLauncherController* ChromeLauncherControllerMus::CreateInstance() {
-  DCHECK(!ChromeLauncherController::instance());
-  ChromeLauncherControllerMus* instance = new ChromeLauncherControllerMus();
-  ChromeLauncherController::set_instance(instance);
-  return instance;
+ChromeLauncherControllerMus::ChromeLauncherControllerMus() {
+  AttachProfile(ProfileManager::GetActiveUserProfile());
 }
-
-ChromeLauncherControllerMus::ChromeLauncherControllerMus()
-    : shelf_controller_(new ChromeMashShelfController) {}
 
 ChromeLauncherControllerMus::~ChromeLauncherControllerMus() {}
 
-void ChromeLauncherControllerMus::Init() {}
-
 ash::ShelfID ChromeLauncherControllerMus::CreateAppLauncherItem(
-    LauncherItemController* controller,
-    const std::string& app_id,
+    std::unique_ptr<ash::ShelfItemDelegate> item_delegate,
     ash::ShelfItemStatus status) {
   NOTIMPLEMENTED();
   return ash::TYPE_UNDEFINED;
+}
+
+const ash::ShelfItem* ChromeLauncherControllerMus::GetItem(
+    ash::ShelfID id) const {
+  NOTIMPLEMENTED();
+  return nullptr;
+}
+
+void ChromeLauncherControllerMus::SetItemType(ash::ShelfID id,
+                                              ash::ShelfItemType type) {
+  NOTIMPLEMENTED();
 }
 
 void ChromeLauncherControllerMus::SetItemStatus(ash::ShelfID id,
@@ -35,21 +43,7 @@ void ChromeLauncherControllerMus::SetItemStatus(ash::ShelfID id,
   NOTIMPLEMENTED();
 }
 
-void ChromeLauncherControllerMus::SetItemController(
-    ash::ShelfID id,
-    LauncherItemController* controller) {
-  NOTIMPLEMENTED();
-}
-
 void ChromeLauncherControllerMus::CloseLauncherItem(ash::ShelfID id) {
-  NOTIMPLEMENTED();
-}
-
-void ChromeLauncherControllerMus::Pin(ash::ShelfID id) {
-  NOTIMPLEMENTED();
-}
-
-void ChromeLauncherControllerMus::Unpin(ash::ShelfID id) {
   NOTIMPLEMENTED();
 }
 
@@ -58,20 +52,8 @@ bool ChromeLauncherControllerMus::IsPinned(ash::ShelfID id) {
   return false;
 }
 
-void ChromeLauncherControllerMus::TogglePinned(ash::ShelfID id) {
-  NOTIMPLEMENTED();
-}
-
-bool ChromeLauncherControllerMus::IsPinnable(ash::ShelfID id) const {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-void ChromeLauncherControllerMus::LockV1AppWithID(const std::string& app_id) {
-  NOTIMPLEMENTED();
-}
-
-void ChromeLauncherControllerMus::UnlockV1AppWithID(const std::string& app_id) {
+void ChromeLauncherControllerMus::SetV1AppStatus(const std::string& app_id,
+                                                 ash::ShelfItemStatus status) {
   NOTIMPLEMENTED();
 }
 
@@ -93,44 +75,16 @@ bool ChromeLauncherControllerMus::IsPlatformApp(ash::ShelfID id) {
   return false;
 }
 
-void ChromeLauncherControllerMus::LaunchApp(const std::string& app_id,
-                                            ash::LaunchSource source,
-                                            int event_flags) {
-  shelf_controller_->LaunchItem(app_id);
-}
-
 void ChromeLauncherControllerMus::ActivateApp(const std::string& app_id,
-                                              ash::LaunchSource source,
+                                              ash::ShelfLaunchSource source,
                                               int event_flags) {
   NOTIMPLEMENTED();
-}
-
-extensions::LaunchType ChromeLauncherControllerMus::GetLaunchType(
-    ash::ShelfID id) {
-  NOTIMPLEMENTED();
-  return extensions::LAUNCH_TYPE_INVALID;
 }
 
 void ChromeLauncherControllerMus::SetLauncherItemImage(
     ash::ShelfID shelf_id,
     const gfx::ImageSkia& image) {
   NOTIMPLEMENTED();
-}
-
-bool ChromeLauncherControllerMus::IsWindowedAppInLauncher(
-    const std::string& app_id) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-void ChromeLauncherControllerMus::SetLaunchType(
-    ash::ShelfID id,
-    extensions::LaunchType launch_type) {
-  NOTIMPLEMENTED();
-}
-
-Profile* ChromeLauncherControllerMus::GetProfile() {
-  return ProfileManager::GetActiveUserProfile();
 }
 
 void ChromeLauncherControllerMus::UpdateAppState(content::WebContents* contents,
@@ -149,12 +103,11 @@ void ChromeLauncherControllerMus::SetRefocusURLPatternForTest(ash::ShelfID id,
   NOTIMPLEMENTED();
 }
 
-ash::ShelfItemDelegate::PerformedAction
-ChromeLauncherControllerMus::ActivateWindowOrMinimizeIfActive(
+ash::ShelfAction ChromeLauncherControllerMus::ActivateWindowOrMinimizeIfActive(
     ui::BaseWindow* window,
     bool allow_minimize) {
   NOTIMPLEMENTED();
-  return ash::ShelfItemDelegate::kNoAction;
+  return ash::SHELF_ACTION_NONE;
 }
 
 void ChromeLauncherControllerMus::ActiveUserChanged(
@@ -167,11 +120,10 @@ void ChromeLauncherControllerMus::AdditionalUserAddedToSession(
   NOTIMPLEMENTED();
 }
 
-ChromeLauncherAppMenuItems ChromeLauncherControllerMus::GetApplicationList(
-    const ash::ShelfItem& item,
-    int event_flags) {
+ash::MenuItemList ChromeLauncherControllerMus::GetAppMenuItemsForTesting(
+    const ash::ShelfItem& item) {
   NOTIMPLEMENTED();
-  return ChromeLauncherAppMenuItems();
+  return ash::MenuItemList();
 }
 
 std::vector<content::WebContents*>
@@ -182,7 +134,7 @@ ChromeLauncherControllerMus::GetV1ApplicationsFromAppId(
 }
 
 void ChromeLauncherControllerMus::ActivateShellApp(const std::string& app_id,
-                                                   int index) {
+                                                   int window_index) {
   NOTIMPLEMENTED();
 }
 
@@ -217,15 +169,9 @@ ChromeLauncherControllerMus::GetBrowserShortcutLauncherItemController() {
   return nullptr;
 }
 
-LauncherItemController* ChromeLauncherControllerMus::GetLauncherItemController(
-    const ash::ShelfID id) {
-  NOTIMPLEMENTED();
-  return nullptr;
-}
-
 bool ChromeLauncherControllerMus::ShelfBoundsChangesProbablyWithUser(
-    ash::Shelf* shelf,
-    const std::string& user_id) const {
+    ash::WmShelf* shelf,
+    const AccountId& account_id) const {
   NOTIMPLEMENTED();
   return false;
 }
@@ -238,4 +184,48 @@ ArcAppDeferredLauncherController*
 ChromeLauncherControllerMus::GetArcDeferredLauncher() {
   NOTIMPLEMENTED();
   return nullptr;
+}
+
+const std::string& ChromeLauncherControllerMus::GetLaunchIDForShelfID(
+    ash::ShelfID id) {
+  NOTIMPLEMENTED();
+  return base::EmptyString();
+}
+
+void ChromeLauncherControllerMus::OnAppImageUpdated(
+    const std::string& app_id,
+    const gfx::ImageSkia& image) {
+  if (ConnectToShelfController())
+    shelf_controller()->SetItemImage(app_id, *image.bitmap());
+}
+
+void ChromeLauncherControllerMus::OnInit() {}
+
+void ChromeLauncherControllerMus::PinAppsFromPrefs() {
+  if (!ConnectToShelfController())
+    return;
+
+  std::vector<ash::AppLaunchId> pinned_apps =
+      ash::launcher::GetPinnedAppsFromPrefs(profile()->GetPrefs(),
+                                            launcher_controller_helper());
+
+  for (const auto& app_launch_id : pinned_apps) {
+    const std::string app_id = app_launch_id.app_id();
+    if (app_launch_id.app_id() == ash::launcher::kPinnedAppsPlaceholder)
+      continue;
+
+    ash::mojom::ShelfItemPtr item(ash::mojom::ShelfItem::New());
+    item->app_id = app_id;
+    item->title = launcher_controller_helper()->GetAppTitle(profile(), app_id);
+    ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+    const gfx::Image& image = rb.GetImageNamed(IDR_APP_DEFAULT_ICON);
+    item->image = *image.ToSkBitmap();
+    // TOOD(msw): Actually pin the item and install its delegate; this code is
+    // unused at the moment. See http://crbug.com/647879
+    AppIconLoader* app_icon_loader = GetAppIconLoaderForApp(app_id);
+    if (app_icon_loader) {
+      app_icon_loader->FetchImage(app_id);
+      app_icon_loader->UpdateImage(app_id);
+    }
+  }
 }

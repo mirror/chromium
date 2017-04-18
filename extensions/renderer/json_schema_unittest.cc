@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "extensions/grit/extensions_renderer_resources.h"
 #include "extensions/renderer/module_system_test.h"
 #include "extensions/renderer/v8_schema_registry.h"
 #include "gin/dictionary.h"
-#include "grit/extensions_renderer_resources.h"
 
 namespace extensions {
 
@@ -25,7 +25,7 @@ class JsonSchemaTest : public ModuleSystemTest {
 
  protected:
   void TestFunction(const std::string& test_name) {
-    env()->module_system()->CallModuleMethod("json_schema_test", test_name);
+    env()->module_system()->CallModuleMethodSafe("json_schema_test", test_name);
   }
 
  private:

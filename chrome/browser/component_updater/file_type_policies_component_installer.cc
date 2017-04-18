@@ -4,6 +4,7 @@
 
 #include "chrome/browser/component_updater/file_type_policies_component_installer.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -14,10 +15,10 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/version.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "components/component_updater/component_updater_paths.h"
-#include "content/public/browser/browser_thread.h"
 
 using component_updater::ComponentUpdateService;
 
@@ -55,8 +56,9 @@ void LoadFileTypesFromDisk(const base::FilePath& pb_path) {
 
 namespace component_updater {
 
-bool FileTypePoliciesComponentInstallerTraits::CanAutoUpdate() const {
-  return true;
+bool FileTypePoliciesComponentInstallerTraits::
+    SupportsGroupPolicyEnabledComponentUpdates() const {
+  return false;
 }
 
 bool FileTypePoliciesComponentInstallerTraits::RequiresNetworkEncryption()
@@ -64,10 +66,11 @@ bool FileTypePoliciesComponentInstallerTraits::RequiresNetworkEncryption()
   return false;
 }
 
-bool FileTypePoliciesComponentInstallerTraits::OnCustomInstall(
+update_client::CrxInstaller::Result
+FileTypePoliciesComponentInstallerTraits::OnCustomInstall(
     const base::DictionaryValue& manifest,
     const base::FilePath& install_dir) {
-  return true;  // Nothing custom here.
+  return update_client::CrxInstaller::Result(0);  // Nothing custom here.
 }
 
 base::FilePath FileTypePoliciesComponentInstallerTraits::GetInstalledPath(
@@ -82,11 +85,11 @@ void FileTypePoliciesComponentInstallerTraits::ComponentReady(
   VLOG(1) << "Component ready, version " << version.GetString() << " in "
           << install_dir.value();
 
-  if (!content::BrowserThread::PostBlockingPoolTask(
-          FROM_HERE,
-          base::Bind(&LoadFileTypesFromDisk, GetInstalledPath(install_dir)))) {
-    NOTREACHED();
-  }
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      base::TaskTraits().MayBlock().WithPriority(
+          base::TaskPriority::BACKGROUND),
+      base::Bind(&LoadFileTypesFromDisk, GetInstalledPath(install_dir)));
 }
 
 // Called during startup and installation before ComponentReady().
@@ -116,6 +119,11 @@ std::string FileTypePoliciesComponentInstallerTraits::GetName() const {
 update_client::InstallerAttributes
 FileTypePoliciesComponentInstallerTraits::GetInstallerAttributes() const {
   return update_client::InstallerAttributes();
+}
+
+std::vector<std::string>
+FileTypePoliciesComponentInstallerTraits::GetMimeTypes() const {
+  return std::vector<std::string>();
 }
 
 void RegisterFileTypePoliciesComponent(ComponentUpdateService* cus,

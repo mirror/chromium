@@ -11,6 +11,9 @@
 #include <string>
 #include <vector>
 
+#include "net/cert/internal/parsed_certificate.h"
+#include "net/cert/internal/trust_store.h"
+#include "net/cert/internal/verify_certificate_chain.h"
 #include "net/der/input.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -73,6 +76,40 @@ template <size_t N>
     const PemBlockMapping(&mappings)[N]) {
   return ReadTestDataFromPemFile(file_path_ascii, mappings, N);
 }
+
+// Test cases are comprised of all the parameters to certificate
+// verification, as well as the expected outputs.
+struct VerifyCertChainTest {
+  VerifyCertChainTest();
+  ~VerifyCertChainTest();
+
+  // The chain of certificates (with the zero-th being the target).
+  ParsedCertificateList chain;
+
+  // The trust anchor to use when verifying the chain.
+  scoped_refptr<TrustAnchor> trust_anchor;
+
+  // The time to use when verifying the chain.
+  der::GeneralizedTime time;
+
+  // The Key Purpose to use when verifying the chain.
+  KeyPurpose key_purpose = KeyPurpose::ANY_EKU;
+
+  // The expected result from verification.
+  bool expected_result = false;
+
+  // The expected errors from verification (as a string).
+  std::string expected_errors;
+};
+
+// Reads a test case from |file_path_ascii| (which is relative to //src).
+// Generally |file_path_ascii| will start with:
+//   net/data/verify_certificate_chain_unittest/
+void ReadVerifyCertChainTestFromFile(const std::string& file_path_ascii,
+                                     VerifyCertChainTest* test);
+
+// Reads a data file relative to the src root directory.
+std::string ReadTestFileToString(const std::string& file_path_ascii);
 
 }  // namespace net
 

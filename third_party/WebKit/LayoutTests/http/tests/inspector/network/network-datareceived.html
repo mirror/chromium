@@ -12,24 +12,26 @@ function loadIFrame()
 
 function test()
 {
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "responseReceived", responseReceived);
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "loadingFailed", loadingFailed);
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "loadingFinished", loadingFinished);
-    InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "dataReceived", dataReceived);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "responseReceived", responseReceived);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "loadingFailed", loadingFailed);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "loadingFinished", loadingFinished);
+    InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "dataReceived", dataReceived);
     InspectorTest.evaluateInPage("loadIFrame()");
 
     var encodedBytesReceived = 0;
-    function responseReceived(requestId, time, resourceType, response)
+    function responseReceived(requestId, frameId, loaderId, time, resourceType, response)
     {
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/resource\.php/.exec(request.url))
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/resource\.php/.exec(request.url())) {
             InspectorTest.addResult("Received response.");
+            encodedBytesReceived += response.encodedDataLength;
+        }
     }
 
     function loadingFinished(requestId, finishTime, encodedDataLength)
     {
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/resource\.php/.exec(request.url)) {
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/resource\.php/.exec(request.url())) {
             InspectorTest.assertEquals(encodedBytesReceived, encodedDataLength, "Data length mismatch");
             InspectorTest.addResult("SUCCESS");
             InspectorTest.completeTest();
@@ -38,8 +40,8 @@ function test()
 
     function loadingFailed(requestId, time, localizedDescription, canceled)
     {
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/resource\.php/.exec(request.url)) {
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/resource\.php/.exec(request.url())) {
             InspectorTest.addResult("Loading failed!");
             InspectorTest.completeTest();
         }
@@ -47,9 +49,9 @@ function test()
 
     function dataReceived(requestId, time, dataLength, encodedDataLength)
     {
-        InspectorTest.addSniffer(WebInspector.NetworkDispatcher.prototype, "dataReceived", dataReceived);
-        var request = InspectorTest.networkLog.requestForId(requestId);
-        if (/resource\.php/.exec(request.url))
+        InspectorTest.addSniffer(SDK.NetworkDispatcher.prototype, "dataReceived", dataReceived);
+        var request = InspectorTest.networkLog.requestForId(InspectorTest.networkManager, requestId);
+        if (/resource\.php/.exec(request.url()))
             encodedBytesReceived += encodedDataLength;
     }
 }

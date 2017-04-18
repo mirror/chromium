@@ -23,10 +23,6 @@ class Accelerator;
 class IMEEngineHandlerInterface;
 }  // namespace ui
 
-namespace user_manager {
-class User;
-}  // namespace user_manager
-
 namespace chromeos {
 class ComponentExtensionIMEManager;
 namespace input_method {
@@ -217,6 +213,18 @@ class UI_BASE_IME_EXPORT InputMethodManager {
     virtual bool ReplaceEnabledInputMethods(
         const std::vector<std::string>& new_active_input_method_ids) = 0;
 
+    // Sets the currently allowed input methods (e.g. due to policy). Invalid
+    // input method ids are ignored. Passing an empty vector means that all
+    // input methods are allowed, which is the default.  When allowed input
+    // methods are set, these are also automatically enabled.
+    virtual bool SetAllowedInputMethods(
+        const std::vector<std::string>& allowed_input_method_ids) = 0;
+
+    // Returns the currently allowed input methods, as set by
+    // SetAllowedInputMethodIds. An empty vector means that all input methods
+    // are allowed.
+    virtual const std::vector<std::string>& GetAllowedInputMethods() = 0;
+
    protected:
     friend base::RefCounted<InputMethodManager::State>;
 
@@ -299,6 +307,19 @@ class UI_BASE_IME_EXPORT InputMethodManager {
   virtual void NotifyImeMenuItemsChanged(
       const std::string& engine_id,
       const std::vector<MenuItem>& items) = 0;
+
+  // Notify the IME menu activation changed if the current profile's activation
+  // is different from previous.
+  virtual void MaybeNotifyImeMenuActivationChanged() = 0;
+
+  // Overrides the keyboard url ref (stuff following '#' to the end of the
+  // string) with the given keyset (emoji, hwt or voice). If |keyset| is empty,
+  // it indicates that we should override the url back with the keyboard keyset.
+  virtual void OverrideKeyboardUrlRef(const std::string& keyset) = 0;
+
+  // Returns whether the extra inputs: emoji, handwriting and voice inputs on
+  // opt-in IME menu has been enabled.
+  virtual bool IsEmojiHandwritingVoiceOnImeMenuEnabled() = 0;
 };
 
 }  // namespace input_method

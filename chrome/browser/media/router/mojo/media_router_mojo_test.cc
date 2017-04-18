@@ -29,6 +29,28 @@ MockEventPageTracker::MockEventPageTracker() {}
 
 MockEventPageTracker::~MockEventPageTracker() {}
 
+MockMediaController::MockMediaController() : binding_(this) {}
+
+MockMediaController::~MockMediaController() {}
+
+void MockMediaController::Bind(mojom::MediaControllerRequest request) {
+  binding_.Bind(std::move(request));
+}
+
+mojom::MediaControllerPtr MockMediaController::BindInterfacePtr() {
+  return binding_.CreateInterfacePtrAndBind();
+}
+
+void MockMediaController::CloseBinding() {
+  binding_.Close();
+}
+
+MockMediaRouteControllerObserver::MockMediaRouteControllerObserver(
+    scoped_refptr<MediaRouteController> controller)
+    : MediaRouteController::Observer(controller) {}
+
+MockMediaRouteControllerObserver::~MockMediaRouteControllerObserver() {}
+
 MediaRouterMojoTest::MediaRouterMojoTest()
     : mock_media_router_(new MediaRouterMojoImpl(&mock_event_page_tracker_)) {
   mock_media_router_->Initialize();
@@ -40,14 +62,14 @@ MediaRouterMojoTest::~MediaRouterMojoTest() {}
 
 void MediaRouterMojoTest::ConnectProviderManagerService() {
   // Bind the |media_route_provider| interface to |media_route_provider_|.
-  auto request = mojo::GetProxy(&media_router_proxy_);
+  auto request = mojo::MakeRequest(&media_router_proxy_);
   mock_media_router_->BindToMojoRequest(std::move(request), *extension_);
 
   // Bind the Mojo MediaRouter interface used by |mock_media_router_| to
   // |mock_media_route_provider_service_|.
-  interfaces::MediaRouteProviderPtr mojo_media_router;
-  binding_.reset(new mojo::Binding<interfaces::MediaRouteProvider>(
-      &mock_media_route_provider_, mojo::GetProxy(&mojo_media_router)));
+  mojom::MediaRouteProviderPtr mojo_media_router;
+  binding_.reset(new mojo::Binding<mojom::MediaRouteProvider>(
+      &mock_media_route_provider_, mojo::MakeRequest(&mojo_media_router)));
   media_router_proxy_->RegisterMediaRouteProvider(
       std::move(mojo_media_router),
       base::Bind(&ExpectEqualStrings, kInstanceId));

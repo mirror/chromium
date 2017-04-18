@@ -14,7 +14,7 @@ GEN_INCLUDE(
 /**
  * @constructor
  * @extends {PolymerTest}
-*/
+ */
 function SettingsPageBrowserTest() {}
 
 SettingsPageBrowserTest.prototype = {
@@ -32,29 +32,53 @@ SettingsPageBrowserTest.prototype = {
   /** @override */
   runAccessibilityChecks: false,
 
+  /** @type {?SettingsBasicPageElement} */
+  basicPage: null,
+
   /** @override */
   setUp: function() {
     PolymerTest.prototype.setUp.call(this);
     suiteSetup(function() {
       return CrSettingsPrefs.initialized;
     });
+
+    suiteSetup(function() {
+      return this.getPage('basic').then(function(basicPage) {
+        this.basicPage = basicPage;
+      }.bind(this));
+    }.bind(this));
   },
 
   /**
-   * @param {string} type The settings page type, e.g. 'advanced' or 'basic'.
+   * Toggles the Advanced sections.
+   */
+  toggleAdvanced: function() {
+    var settingsMain = document.querySelector('* /deep/ settings-main');
+    assert(!!settingsMain);
+    settingsMain.advancedToggleExpanded = !settingsMain.advancedToggleExpanded;
+    Polymer.dom.flush();
+  },
+
+  /**
+   * @param {string} type The settings page type, e.g. 'about' or 'basic'.
    * @return {!PolymerElement} The PolymerElement for the page.
    */
   getPage: function(type) {
-    var settings = document.querySelector('cr-settings');
-    assertTrue(!!settings);
-    var settingsUi = settings.$$('settings-ui');
+    var settingsUi = document.querySelector('settings-ui');
     assertTrue(!!settingsUi);
     var settingsMain = settingsUi.$$('settings-main');
     assertTrue(!!settingsMain);
     var pageType = 'settings-' + type + '-page';
     var page = settingsMain.$$(pageType);
-    assertTrue(!!page);
-    return page;
+
+    var idleRender = page && page.$$('template[is=settings-idle-load]');
+    if (!idleRender)
+      return Promise.resolve(page);
+
+    return idleRender.get().then(function() {
+      Polymer.dom.flush();
+      return page;
+    });
   },
 
   /**
@@ -92,15 +116,15 @@ SettingsPageBrowserTest.prototype = {
 
     // The section's main child should be stamped and visible.
     var main = stampedChildren.filter(function(element) {
-      return element.id == 'main';
+      return element.getAttribute('route-path') == 'default';
     });
-    assertEquals(main.length, 1, '#main not found for section ' +
+    assertEquals(main.length, 1, 'default card not found for section ' +
         section.section);
     assertGT(main[0].offsetHeight, 0);
 
     // Any other stamped subpages should not be visible.
     var subpages = stampedChildren.filter(function(element) {
-      return element.id != 'main';
+      return element.getAttribute('route-path') != 'default';
     });
     for (var subpage of subpages) {
       assertEquals(subpage.offsetHeight, 0, 'Expected subpage #' + subpage.id +

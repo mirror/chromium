@@ -28,77 +28,97 @@
 #include "core/css/StyleColor.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/graphics/Color.h"
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
+// In order to conserve memory, the border width uses fixed point,
+// which can be bitpacked.  This fixed point implementation is
+// essentially the same as in LayoutUnit.  Six bits are used for the
+// fraction, which leaves 20 bits for the integer part, making 1048575
+// the largest number.
+
+static const int kBorderWidthFractionalBits = 6;
+static const int kBorderWidthDenominator = 1 << kBorderWidthFractionalBits;
+static const int kMaxForBorderWidth = ((1 << 26) - 1) / kBorderWidthDenominator;
+
 class BorderValue {
-    DISALLOW_NEW();
-friend class ComputedStyle;
-public:
-    BorderValue()
-        : m_color(0)
-        , m_colorIsCurrentColor(true)
-        , m_width(3)
-        , m_style(BorderStyleNone)
-        , m_isAuto(OutlineIsAutoOff)
-    {
-    }
+  DISALLOW_NEW();
+  friend class ComputedStyle;
 
-    bool nonZero() const
-    {
-        return width() && (m_style != BorderStyleNone);
-    }
+ public:
+  BorderValue()
+      : color_(0),
+        color_is_current_color_(true),
+        style_(kBorderStyleNone),
+        is_auto_(kOutlineIsAutoOff) {
+    SetWidth(3);
+  }
 
-    bool isTransparent() const
-    {
-        return !m_colorIsCurrentColor && !m_color.alpha();
-    }
+  bool NonZero() const { return Width() && (style_ != kBorderStyleNone); }
 
-    bool operator==(const BorderValue& o) const
-    {
-        return m_width == o.m_width && m_style == o.m_style && m_color == o.m_color && m_colorIsCurrentColor == o.m_colorIsCurrentColor;
-    }
+  bool IsTransparent() const {
+    return !color_is_current_color_ && !color_.Alpha();
+  }
 
-    // The default width is 3px, but if the style is none we compute a value of 0 (in ComputedStyle itself)
-    bool visuallyEqual(const BorderValue& o) const
-    {
-        if (m_style == BorderStyleNone && o.m_style == BorderStyleNone)
-            return true;
-        if (m_style == BorderStyleHidden && o.m_style == BorderStyleHidden)
-            return true;
-        return *this == o;
-    }
+  bool operator==(const BorderValue& o) const {
+    return width_ == o.width_ && style_ == o.style_ && color_ == o.color_ &&
+           color_is_current_color_ == o.color_is_current_color_;
+  }
 
-    bool operator!=(const BorderValue& o) const
-    {
-        return !(*this == o);
-    }
+  // The default width is 3px, but if the style is none we compute a value of 0
+  // (in ComputedStyle itself)
+  bool VisuallyEqual(const BorderValue& o) const {
+    if (style_ == kBorderStyleNone && o.style_ == kBorderStyleNone)
+      return true;
+    if (style_ == kBorderStyleHidden && o.style_ == kBorderStyleHidden)
+      return true;
+    return *this == o;
+  }
 
-    void setColor(const StyleColor& color)
-    {
-        m_color = color.resolve(Color());
-        m_colorIsCurrentColor = color.isCurrentColor();
-    }
+  bool operator!=(const BorderValue& o) const { return !(*this == o); }
 
-    StyleColor color() const { return m_colorIsCurrentColor ? StyleColor::currentColor() : StyleColor(m_color); }
+  void SetColor(const StyleColor& color) {
+    color_ = color.Resolve(Color());
+    color_is_current_color_ = color.IsCurrentColor();
+  }
 
-    int width() const { return m_width; }
+  StyleColor GetColor() const {
+    return color_is_current_color_ ? StyleColor::CurrentColor()
+                                   : StyleColor(color_);
+  }
 
-    EBorderStyle style() const { return static_cast<EBorderStyle>(m_style); }
-    void setStyle(EBorderStyle style) { m_style = style; }
+  float Width() const {
+    return static_cast<float>(width_) / kBorderWidthDenominator;
+  }
+  void SetWidth(float width) { width_ = WidthToFixedPoint(width); }
 
-protected:
-    Color m_color;
-    unsigned m_colorIsCurrentColor : 1;
+  // Since precision is lost with fixed point, comparisons also have
+  // to be done in fixed point.
+  bool WidthEquals(float width) const {
+    return WidthToFixedPoint(width) == width_;
+  }
 
-    unsigned m_width : 26;
-    unsigned m_style : 4; // EBorderStyle
+  EBorderStyle Style() const { return static_cast<EBorderStyle>(style_); }
+  void SetStyle(EBorderStyle style) { style_ = style; }
 
-    // This is only used by OutlineValue but moved here to keep the bits packed.
-    unsigned m_isAuto : 1; // OutlineIsAuto
+ protected:
+  static unsigned WidthToFixedPoint(float width) {
+    DCHECK_GE(width, 0);
+    return static_cast<unsigned>(std::min<float>(width, kMaxForBorderWidth) *
+                                 kBorderWidthDenominator);
+  }
+
+  Color color_;
+  unsigned color_is_current_color_ : 1;
+
+  unsigned width_ : 26;  // Fixed point width
+  unsigned style_ : 4;   // EBorderStyle
+
+  // This is only used by OutlineValue but moved here to keep the bits packed.
+  unsigned is_auto_ : 1;  // OutlineIsAuto
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BorderValue_h
+#endif  // BorderValue_h

@@ -31,19 +31,19 @@
 namespace blink {
 
 class OESStandardDerivatives final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static OESStandardDerivatives* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~OESStandardDerivatives() override;
-    WebGLExtensionName name() const override;
+ public:
+  static OESStandardDerivatives* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit OESStandardDerivatives(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+
+ private:
+  explicit OESStandardDerivatives(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OESStandardDerivatives_h
+#endif  // OESStandardDerivatives_h

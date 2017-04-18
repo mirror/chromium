@@ -33,55 +33,58 @@
 
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/CoreExport.h"
-#include "core/fetch/ScriptResource.h"
+#include "core/loader/resource/ScriptResource.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/text/TextPosition.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/TextPosition.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CORE_EXPORT ScriptSourceCode final {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-public:
-    ScriptSourceCode();
-    // We lose the encoding information from ScriptResource.
-    // Not sure if that matters.
-    explicit ScriptSourceCode(ScriptResource*);
-    ScriptSourceCode(const String&, const KURL& = KURL(), const TextPosition& startPosition = TextPosition::minimumPosition());
-    ScriptSourceCode(const CompressibleString&, const KURL& = KURL(), const TextPosition& startPosition = TextPosition::minimumPosition());
-    ScriptSourceCode(ScriptStreamer*, ScriptResource*);
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-    ~ScriptSourceCode();
-    DECLARE_TRACE();
+ public:
+  ScriptSourceCode();
+  // We lose the encoding information from ScriptResource.
+  // Not sure if that matters.
+  explicit ScriptSourceCode(ScriptResource*);
+  ScriptSourceCode(
+      const String&,
+      const KURL& = KURL(),
+      const TextPosition& start_position = TextPosition::MinimumPosition());
+  ScriptSourceCode(ScriptStreamer*, ScriptResource*);
 
-    bool isEmpty() const { return m_source.isEmpty(); }
+  ~ScriptSourceCode();
+  DECLARE_TRACE();
 
-    // The null value represents a missing script, created by the nullary
-    // constructor, and differs from the empty script.
-    bool isNull() const { return m_source.isNull(); }
+  bool IsEmpty() const { return source_.IsEmpty(); }
 
-    const CompressibleString& source() const { return m_source; }
-    ScriptResource* resource() const { return m_resource.get(); }
-    const KURL& url() const;
-    int startLine() const { return m_startPosition.m_line.oneBasedInt(); }
-    const TextPosition& startPosition() const { return m_startPosition; }
-    String sourceMapUrl() const;
+  // The null value represents a missing script, created by the nullary
+  // constructor, and differs from the empty script.
+  bool IsNull() const { return source_.IsNull(); }
 
-    ScriptStreamer* streamer() const { return m_streamer.get(); }
+  const String& Source() const { return source_; }
+  ScriptResource* GetResource() const { return resource_; }
+  const KURL& Url() const;
+  int StartLine() const { return start_position_.line_.OneBasedInt(); }
+  const TextPosition& StartPosition() const { return start_position_; }
+  String SourceMapUrl() const;
 
-private:
-    void treatNullSourceAsEmpty();
+  ScriptStreamer* Streamer() const { return streamer_; }
 
-    CompressibleString m_source;
-    Member<ScriptResource> m_resource;
-    Member<ScriptStreamer> m_streamer;
-    mutable KURL m_url;
-    TextPosition m_startPosition;
+ private:
+  void TreatNullSourceAsEmpty();
+
+  String source_;
+  Member<ScriptResource> resource_;
+  Member<ScriptStreamer> streamer_;
+  mutable KURL url_;
+  TextPosition start_position_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 WTF_ALLOW_INIT_WITH_MEM_FUNCTIONS(blink::ScriptSourceCode);
 
-#endif // ScriptSourceCode_h
+#endif  // ScriptSourceCode_h

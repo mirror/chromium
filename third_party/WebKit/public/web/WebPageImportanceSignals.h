@@ -15,28 +15,30 @@ class WebViewClient;
 // This signal is propagated to embedder so that it can prioritize preserving
 // state of certain page over the others.
 class WebPageImportanceSignals {
-public:
-    WebPageImportanceSignals() { reset(); }
+ public:
+  WebPageImportanceSignals() { Reset(); }
 
-    bool hadFormInteraction() const { return m_hadFormInteraction; }
-    void setHadFormInteraction();
-    bool issuedNonGetFetchFromScript() const { return m_issuedNonGetFetchFromScript; }
-    void setIssuedNonGetFetchFromScript();
+  bool HadFormInteraction() const { return had_form_interaction_; }
+  void SetHadFormInteraction();
+  bool IssuedNonGetFetchFromScript() const {
+    return issued_non_get_fetch_from_script_;
+  }
+  void SetIssuedNonGetFetchFromScript();
 
-    BLINK_EXPORT void reset();
+  BLINK_EXPORT void Reset();
 #if BLINK_IMPLEMENTATION
-    void onCommitLoad();
+  void OnCommitLoad();
 #endif
 
-    void setObserver(WebViewClient* observer) { m_observer = observer; }
+  void SetObserver(WebViewClient* observer) { observer_ = observer; }
 
-private:
-    bool m_hadFormInteraction : 1;
-    bool m_issuedNonGetFetchFromScript : 1;
+ private:
+  bool had_form_interaction_ : 1;
+  bool issued_non_get_fetch_from_script_ : 1;
 
-    WebViewClient* m_observer = nullptr;
+  WebViewClient* observer_ = nullptr;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebPageImportancesignals_h
+#endif  // WebPageImportancesignals_h

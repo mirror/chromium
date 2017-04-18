@@ -35,24 +35,33 @@
 namespace blink {
 
 // Abstract interface to the Chromium audio system.
-
 class WebAudioDevice {
-public:
-    class BLINK_PLATFORM_EXPORT RenderCallback {
-    public:
-        virtual void render(const WebVector<float*>& sourceData, const WebVector<float*>& destinationData, size_t numberOfFrames);
+ public:
+  class BLINK_PLATFORM_EXPORT RenderCallback {
+   public:
+    // Note: |delay| and |delayTimestamp| arguments are high-precision
+    // measurements of the state of the system in the recent past. To be clear,
+    // |delay| does *not* represent the point-in-time at which the first
+    // rendered sample will be played out.
+    virtual void Render(const WebVector<float*>& destination_data,
+                        size_t number_of_frames,
+                        double delay,            // Output delay in seconds.
+                        double delay_timestamp,  // System timestamp in seconds
+                                                 // when |delay| was obtained.
+                        size_t prior_frames_skipped);
 
-    protected:
-        virtual ~RenderCallback();
-    };
+   protected:
+    virtual ~RenderCallback();
+  };
 
-    virtual ~WebAudioDevice() { }
+  virtual ~WebAudioDevice() {}
 
-    virtual void start() = 0;
-    virtual void stop() = 0;
-    virtual double sampleRate() = 0;
+  virtual void Start() = 0;
+  virtual void Stop() = 0;
+  virtual double SampleRate() = 0;
+  virtual int FramesPerBuffer() = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebAudioDevice_h
+#endif  // WebAudioDevice_h

@@ -31,85 +31,77 @@
 #ifndef V8BindingMacros_h
 #define V8BindingMacros_h
 
+#include "platform/wtf/Assertions.h"
+#include "v8/include/v8.h"
+
 namespace blink {
 
 // type is an instance of class template V8StringResource<>,
 // but Mode argument varies; using type (not Mode) for consistency
 // with other macros and ease of code generation
 #define TOSTRING_VOID(type, var, value) \
-    type var(value);                    \
-    if (UNLIKELY(!var.prepare()))       \
-        return;
+  type var(value);                      \
+  if (UNLIKELY(!var.Prepare()))         \
+    return;
 
 #define TOSTRING_DEFAULT(type, var, value, retVal) \
-    type var(value);                               \
-    if (UNLIKELY(!var.prepare()))                  \
-        return retVal;
+  type var(value);                                 \
+  if (UNLIKELY(!var.Prepare()))                    \
+    return retVal;
 
 // Checks for a given v8::Value (value) whether it is an ArrayBufferView and
 // below a certain size limit. If below the limit, memory is allocated on the
 // stack to hold the actual payload. Keep the limit in sync with V8's
 // typed_array_max_size.
-#define allocateFlexibleArrayBufferViewStorage(value)                                       \
-    (value->IsArrayBufferView() && (value.As<v8::ArrayBufferView>()->ByteLength() <= 64) ?  \
-        alloca(value.As<v8::ArrayBufferView>()->ByteLength()) : nullptr)
+#define allocateFlexibleArrayBufferViewStorage(value)            \
+  (value->IsArrayBufferView() &&                                 \
+           (value.As<v8::ArrayBufferView>()->ByteLength() <= 64) \
+       ? alloca(value.As<v8::ArrayBufferView>()->ByteLength())   \
+       : nullptr)
 
+// DEPRECATED: These v8Call macros are deprecated.
+// Use To/ToLocal/ToChecked/ToLocalChecked instead.
+// TODO(haraken): Remove these macros.
 template <typename T>
-inline bool v8Call(v8::Maybe<T> maybe, T& outVariable)
-{
-    if (maybe.IsNothing())
-        return false;
-    outVariable = maybe.FromJust();
-    return true;
+inline bool V8Call(v8::Maybe<T> maybe, T& out_variable) {
+  if (maybe.IsNothing())
+    return false;
+  out_variable = maybe.FromJust();
+  return true;
 }
 
-inline bool v8CallBoolean(v8::Maybe<bool> maybe)
-{
-    bool result;
-    return v8Call(maybe, result) && result;
+// DEPRECATED
+inline bool V8CallBoolean(v8::Maybe<bool> maybe) {
+  bool result;
+  return V8Call(maybe, result) && result;
 }
 
+// DEPRECATED
 template <typename T>
-inline bool v8Call(v8::Maybe<T> maybe, T& outVariable, v8::TryCatch& tryCatch)
-{
-    bool success = v8Call(maybe, outVariable);
-    ASSERT(success || tryCatch.HasCaught());
-    return success;
+inline bool V8Call(v8::Maybe<T> maybe,
+                   T& out_variable,
+                   v8::TryCatch& try_catch) {
+  bool success = V8Call(maybe, out_variable);
+  DCHECK(success || try_catch.HasCaught());
+  return success;
 }
 
+// DEPRECATED
 template <typename T>
-inline bool v8Call(v8::MaybeLocal<T> maybeLocal, v8::Local<T>& outVariable)
-{
-    return maybeLocal.ToLocal(&outVariable);
+inline bool V8Call(v8::MaybeLocal<T> maybe_local, v8::Local<T>& out_variable) {
+  return maybe_local.ToLocal(&out_variable);
 }
 
+// DEPRECATED
 template <typename T>
-inline bool v8Call(v8::MaybeLocal<T> maybeLocal, v8::Local<T>& outVariable, v8::TryCatch& tryCatch)
-{
-    bool success = maybeLocal.ToLocal(&outVariable);
-    ASSERT(success || tryCatch.HasCaught());
-    return success;
+inline bool V8Call(v8::MaybeLocal<T> maybe_local,
+                   v8::Local<T>& out_variable,
+                   v8::TryCatch& try_catch) {
+  bool success = maybe_local.ToLocal(&out_variable);
+  DCHECK(success || try_catch.HasCaught());
+  return success;
 }
 
-template <typename T>
-inline T v8CallOrCrash(v8::Maybe<T> maybe)
-{
-    return maybe.FromJust();
-}
+}  // namespace blink
 
-template <typename T>
-inline v8::Local<T> v8CallOrCrash(v8::MaybeLocal<T> maybeLocal)
-{
-    return maybeLocal.ToLocalChecked();
-}
-
-#define V8_CALL(outVariable, handle, methodCall, failureExpression) \
-    do { \
-        if (handle.IsEmpty() || !v8Call(handle->methodCall, outVariable)) { \
-            failureExpression; \
-        } \
-    } while (0)
-
-} // namespace blink
-
-#endif // V8BindingMacros_h
+#endif  // V8BindingMacros_h

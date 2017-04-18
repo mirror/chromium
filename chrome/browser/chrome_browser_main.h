@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROME_BROWSER_MAIN_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
@@ -16,17 +17,15 @@
 #include "chrome/browser/chrome_process_singleton.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/process_singleton.h"
-#include "chrome/browser/stack_sampling_configuration.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
+#include "chrome/common/stack_sampling_configuration.h"
 #include "content/public/browser/browser_main_parts.h"
 #include "content/public/common/main_function_params.h"
 
 class BrowserProcessImpl;
 class ChromeBrowserMainExtraParts;
 class FieldTrialSynchronizer;
-class MetricsService;
 class PrefService;
-class ProcessPowerCollector;
 class Profile;
 class StartupBrowserCreator;
 class StartupTimeBomb;
@@ -70,9 +69,12 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void ServiceManagerConnectionStarted(
+      content::ServiceManagerConnection* connection) override;
   void PreMainMessageLoopRun() override;
   bool MainMessageLoopRun(int* result_code) override;
   void PostMainMessageLoopRun() override;
+  void PreShutdown() override;
   void PostDestroyThreads() override;
 
   // Additional stages for ChromeBrowserMainExtraParts. These stages are called
@@ -100,12 +102,12 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   const PrefService* local_state() const { return local_state_; }
 
  private:
-  // Methods for |SetupMetricsAndFieldTrials()| --------------------------------
+  // Sets up the field trials and related initialization. Call only after
+  // about:flags have been converted to switches.
+  void SetupFieldTrials();
 
-  // Constructs metrics service and does related initialization, including
-  // creation of field trials. Call only after labs have been converted to
-  // switches.
-  void SetupMetricsAndFieldTrials();
+  // Constructs the metrics service and initializes metrics recording.
+  void SetupMetrics();
 
   // Starts recording of metrics. This can only be called after we have a file
   // thread.
@@ -137,25 +139,19 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // it is destroyed last.
   std::unique_ptr<ShutdownWatcherHelper> shutdown_watcher_;
 
-  // Statistical testing infrastructure for the entire browser. NULL until
-  // SetupMetricsAndFieldTrials is called.
+  // Statistical testing infrastructure for the entire browser. nullptr until
+  // |SetupFieldTrials()| is called.
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
   ChromeBrowserFieldTrials browser_field_trials_;
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  // A monitor for attributing power consumption to origins.
-  std::unique_ptr<ProcessPowerCollector> process_power_collector_;
-
   std::unique_ptr<WebUsbDetector> web_usb_detector_;
 #endif
 
   // Vector of additional ChromeBrowserMainExtraParts.
   // Parts are deleted in the inverse order they are added.
   std::vector<ChromeBrowserMainExtraParts*> chrome_extra_parts_;
-
-  // The configuration to use for the stack sampling profiler below.
-  StackSamplingConfiguration sampling_profiler_config_;
 
   // A profiler that periodically samples stack traces. Used to sample startup
   // behavior.
@@ -188,7 +184,7 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   bool run_message_loop_;
   std::unique_ptr<ThreeDAPIObserver> three_d_observer_;
 
-  // Initialized in SetupMetricsAndFieldTrials.
+  // Initialized in |SetupFieldTrials()|.
   scoped_refptr<FieldTrialSynchronizer> field_trial_synchronizer_;
 
   // Members initialized in PreMainMessageLoopRun, needed in

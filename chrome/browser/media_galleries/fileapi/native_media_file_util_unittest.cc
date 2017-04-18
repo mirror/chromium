@@ -14,15 +14,14 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/format_macros.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
-#include "content/public/test/mock_special_storage_policy.h"
 #include "content/public/test/test_browser_thread.h"
-#include "content/public/test/test_file_system_options.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_backend.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -30,6 +29,8 @@
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/browser/fileapi/isolated_context.h"
 #include "storage/browser/fileapi/native_file_util.h"
+#include "storage/browser/test/mock_special_storage_policy.h"
+#include "storage/browser/test/test_file_system_options.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #define FPL(x) FILE_PATH_LITERAL(x)
@@ -127,16 +128,17 @@ class NativeMediaFileUtilTest : public testing::Test {
     scoped_refptr<storage::SpecialStoragePolicy> storage_policy =
         new content::MockSpecialStoragePolicy();
 
-    ScopedVector<storage::FileSystemBackend> additional_providers;
-    additional_providers.push_back(new MediaFileSystemBackend(
-        data_dir_.path(), base::ThreadTaskRunnerHandle::Get().get()));
+    std::vector<std::unique_ptr<storage::FileSystemBackend>>
+        additional_providers;
+    additional_providers.push_back(base::MakeUnique<MediaFileSystemBackend>(
+        data_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
 
     file_system_context_ = new storage::FileSystemContext(
         base::ThreadTaskRunnerHandle::Get().get(),
         base::ThreadTaskRunnerHandle::Get().get(),
         storage::ExternalMountPoints::CreateRefCounted().get(),
         storage_policy.get(), NULL, std::move(additional_providers),
-        std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.path(),
+        std::vector<storage::URLRequestAutoMountHandler>(), data_dir_.GetPath(),
         content::CreateAllowFileAccessOptions());
 
     filesystem_id_ = isolated_context()->RegisterFileSystemForPath(
@@ -167,7 +169,7 @@ class NativeMediaFileUtilTest : public testing::Test {
   }
 
   base::FilePath root_path() {
-    return data_dir_.path().Append(FPL("Media Directory"));
+    return data_dir_.GetPath().Append(FPL("Media Directory"));
   }
 
   base::FilePath GetVirtualPath(
@@ -331,7 +333,8 @@ TEST_F(NativeMediaFileUtilTest, CopyDestFiltering) {
     base::FilePath src_path = root_path().AppendASCII("foo.jpg");
     FileSystemURL src_url = CreateURL(FPL("foo.jpg"));
     static const char kDummyData[] = "dummy";
-    ASSERT_TRUE(base::WriteFile(src_path, kDummyData, strlen(kDummyData)));
+    ASSERT_EQ(static_cast<int>(strlen(kDummyData)),
+              base::WriteFile(src_path, kDummyData, strlen(kDummyData)));
 
     for (size_t i = 0; i < arraysize(kFilteringTestCases); ++i) {
       if (loop_count == 0 && kFilteringTestCases[i].is_directory) {
@@ -443,8 +446,8 @@ TEST_F(NativeMediaFileUtilTest, MoveDestFiltering) {
       base::FilePath src_path = root_path().AppendASCII("foo.jpg");
       FileSystemURL src_url = CreateURL(FPL("foo.jpg"));
       static const char kDummyData[] = "dummy";
-      ASSERT_TRUE(
-          base::WriteFile(src_path, kDummyData, strlen(kDummyData)));
+      ASSERT_EQ(static_cast<int>(strlen(kDummyData)),
+                base::WriteFile(src_path, kDummyData, strlen(kDummyData)));
 
       FileSystemURL root_url = CreateURL(FPL(""));
       FileSystemURL url = CreateURL(kFilteringTestCases[i].path);

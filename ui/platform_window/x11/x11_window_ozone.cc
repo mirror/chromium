@@ -6,6 +6,7 @@
 
 #include <X11/Xlib.h>
 
+#include "base/bind.h"
 #include "ui/events/event.h"
 #include "ui/events/ozone/events_ozone.h"
 #include "ui/events/platform/x11/x11_event_source.h"
@@ -15,21 +16,28 @@
 
 namespace ui {
 
-X11WindowOzone::X11WindowOzone(X11EventSourceLibevent* event_source,
-                               X11WindowManagerOzone* window_manager,
-                               PlatformWindowDelegate* delegate)
-    : X11WindowBase(delegate),
-      event_source_(event_source),
-      window_manager_(window_manager) {
-  DCHECK(event_source_);
+X11WindowOzone::X11WindowOzone(X11WindowManagerOzone* window_manager,
+                               PlatformWindowDelegate* delegate,
+                               const gfx::Rect& bounds)
+    : X11WindowBase(delegate, bounds), window_manager_(window_manager) {
   DCHECK(window_manager);
-  event_source_->AddPlatformEventDispatcher(this);
-  event_source_->AddXEventDispatcher(this);
+  auto* event_source = X11EventSourceLibevent::GetInstance();
+  if (event_source) {
+    event_source->AddPlatformEventDispatcher(this);
+    event_source->AddXEventDispatcher(this);
+  }
 }
 
 X11WindowOzone::~X11WindowOzone() {
-  event_source_->RemovePlatformEventDispatcher(this);
-  event_source_->RemoveXEventDispatcher(this);
+  X11WindowOzone::PrepareForShutdown();
+}
+
+void X11WindowOzone::PrepareForShutdown() {
+  auto* event_source = X11EventSourceLibevent::GetInstance();
+  if (event_source) {
+    event_source->RemovePlatformEventDispatcher(this);
+    event_source->RemoveXEventDispatcher(this);
+  }
 }
 
 void X11WindowOzone::SetCapture() {

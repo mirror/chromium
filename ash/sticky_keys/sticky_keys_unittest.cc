@@ -161,9 +161,16 @@ class StickyKeysTest : public test::AshTestBase {
   // Creates a synthesized MouseEvent that is not backed by a native event.
   ui::MouseEvent* GenerateSynthesizedMouseEventAt(ui::EventType event_type,
                                                   const gfx::Point& location) {
-    ui::MouseEvent* event = new ui::MouseEvent(
-        event_type, location, location, ui::EventTimeForNow(),
-        ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON);
+    ui::MouseEvent* event;
+    if (event_type == ui::ET_MOUSEWHEEL) {
+      event = new ui::MouseWheelEvent(
+          gfx::Vector2d(), location, location, ui::EventTimeForNow(),
+          ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON);
+    } else {
+      event = new ui::MouseEvent(
+          event_type, location, location, ui::EventTimeForNow(),
+          ui::EF_LEFT_MOUSE_BUTTON, ui::EF_LEFT_MOUSE_BUTTON);
+    }
     ui::Event::DispatcherApi dispatcher(event);
     dispatcher.set_target(target_);
     return event;
@@ -198,23 +205,23 @@ class StickyKeysTest : public test::AshTestBase {
     int down_flags = 0;
     std::unique_ptr<ui::KeyEvent> ev;
     ev.reset(GenerateKey(ui::ET_KEY_PRESSED, key_code));
-    handler->HandleKeyEvent(*ev.get(), key_code, &down_flags, &released);
+    handler->HandleKeyEvent(*ev.get(), &down_flags, &released);
     ev.reset(GenerateKey(ui::ET_KEY_RELEASED, key_code));
-    handler->HandleKeyEvent(*ev.get(), key_code, &down_flags, &released);
+    handler->HandleKeyEvent(*ev.get(), &down_flags, &released);
   }
 
   bool HandleKeyEvent(const ui::KeyEvent& key_event,
                       StickyKeysHandler* handler,
                       int* down,
                       bool* up) {
-    return handler->HandleKeyEvent(key_event, key_event.key_code(), down, up);
+    return handler->HandleKeyEvent(key_event, down, up);
   }
 
   int HandleKeyEventForDownFlags(const ui::KeyEvent& key_event,
                                  StickyKeysHandler* handler) {
     bool released = false;
     int down = 0;
-    handler->HandleKeyEvent(key_event, key_event.key_code(), &down, &released);
+    handler->HandleKeyEvent(key_event, &down, &released);
     return down;
   }
 

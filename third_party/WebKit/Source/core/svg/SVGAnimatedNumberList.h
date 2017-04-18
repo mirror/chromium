@@ -37,25 +37,30 @@
 
 namespace blink {
 
-// SVG Spec: http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedNumberList
-class SVGAnimatedNumberList final : public SVGAnimatedProperty<SVGNumberList>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static SVGAnimatedNumberList* create(SVGElement* contextElement, const QualifiedName& attributeName, SVGNumberList* initialValue)
-    {
-        return new SVGAnimatedNumberList(contextElement, attributeName, initialValue);
-    }
+// SVG Spec:
+// http://www.w3.org/TR/SVG11/types.html#InterfaceSVGAnimatedNumberList
+class SVGAnimatedNumberList final : public SVGAnimatedProperty<SVGNumberList>,
+                                    public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS()
-    {
-        visitor->traceWrappers(contextElement());
-    }
+ public:
+  static SVGAnimatedNumberList* Create(SVGElement* context_element,
+                                       const QualifiedName& attribute_name) {
+    return new SVGAnimatedNumberList(context_element, attribute_name);
+  }
 
-protected:
-    SVGAnimatedNumberList(SVGElement* contextElement, const QualifiedName& attributeName, SVGNumberList* initialValue)
-        : SVGAnimatedProperty<SVGNumberList>(contextElement, attributeName, initialValue) { }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    visitor->TraceWrappers(contextElement());
+  }
+
+ protected:
+  SVGAnimatedNumberList(SVGElement* context_element,
+                        const QualifiedName& attribute_name)
+      : SVGAnimatedProperty<SVGNumberList>(context_element,
+                                           attribute_name,
+                                           SVGNumberList::Create()) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

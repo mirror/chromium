@@ -2,44 +2,42 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/arc/arc_auth_service.h"
+#include "chrome/browser/ui/ash/launcher/arc_playstore_shortcut_launcher_item_controller.h"
+
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/arc/arc_support_host.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_launcher.h"
-#include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
-#include "chrome/browser/ui/ash/launcher/arc_playstore_shortcut_launcher_item_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
+#include "ui/events/event_constants.h"
 
 ArcPlaystoreShortcutLauncherItemController::
-    ArcPlaystoreShortcutLauncherItemController(
-        ChromeLauncherController* controller)
-    : AppShortcutLauncherItemController(ArcSupportHost::kHostAppId,
-                                        controller) {}
+    ArcPlaystoreShortcutLauncherItemController()
+    : AppShortcutLauncherItemController(
+          ash::AppLaunchId(ArcSupportHost::kHostAppId)) {}
 
 ArcPlaystoreShortcutLauncherItemController::
     ~ArcPlaystoreShortcutLauncherItemController() {}
 
-ash::ShelfItemDelegate::PerformedAction
-ArcPlaystoreShortcutLauncherItemController::Activate(ash::LaunchSource source) {
-  arc::ArcAuthService* auth_service = arc::ArcAuthService::Get();
-  ArcAppListPrefs* arc_app_prefs =
-      ArcAppListPrefs::Get(controller()->GetProfile());
-  DCHECK(auth_service);
-  DCHECK(arc_app_prefs);
-  DCHECK(auth_service->IsAllowed());
-
-  auth_service->EnableArc();
-
-  // Deferred launcher.
-  if (arc_app_prefs->IsRegistered(arc::kPlayStoreAppId)) {
-    // Known apps can be launched directly or deferred.
-    arc::LaunchApp(controller()->GetProfile(), arc::kPlayStoreAppId, true);
-  } else {
-    // Launch Play Store once its app appears.
-    playstore_launcher_.reset(new ArcAppLauncher(controller()->GetProfile(),
-                                                 arc::kPlayStoreAppId, true));
+void ArcPlaystoreShortcutLauncherItemController::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ash::ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
+  if (!playstore_launcher_) {
+    // Play Store launch request has never been scheduled.
+    std::unique_ptr<ArcAppLauncher> playstore_launcher =
+        base::MakeUnique<ArcAppLauncher>(
+            ChromeLauncherController::instance()->profile(),
+            arc::kPlayStoreAppId, true /* landscape_layout */,
+            true /* deferred_launch_allowed */);
+    // ArcAppLauncher may launch Play Store in case it exists already. In this
+    // case this instance of ArcPlaystoreShortcutLauncherItemController may be
+    // deleted. If Play Store does not exist at this moment, then let
+    // |playstore_launcher_| wait until it appears.
+    if (!playstore_launcher->app_launched())
+      playstore_launcher_ = std::move(playstore_launcher);
   }
-
-  return kNoAction;
+  callback.Run(ash::SHELF_ACTION_NONE, base::nullopt);
 }

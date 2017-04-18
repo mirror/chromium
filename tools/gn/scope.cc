@@ -66,31 +66,54 @@ Scope::Scope(const Scope* parent)
 Scope::~Scope() {
 }
 
+void Scope::DetachFromContaining() {
+  const_containing_ = nullptr;
+  mutable_containing_ = nullptr;
+}
+
+bool Scope::HasValues(SearchNested search_nested) const {
+  DCHECK(search_nested == SEARCH_CURRENT);
+  return !values_.empty();
+}
+
 const Value* Scope::GetValue(const base::StringPiece& ident,
                              bool counts_as_used) {
+  const Scope* found_in_scope = nullptr;
+  return GetValueWithScope(ident, counts_as_used, &found_in_scope);
+}
+
+const Value* Scope::GetValueWithScope(const base::StringPiece& ident,
+                                      bool counts_as_used,
+                                      const Scope** found_in_scope) {
   // First check for programmatically-provided values.
   for (auto* provider : programmatic_providers_) {
     const Value* v = provider->GetProgrammaticValue(ident);
-    if (v)
+    if (v) {
+      *found_in_scope = nullptr;
       return v;
+    }
   }
 
   RecordMap::iterator found = values_.find(ident);
   if (found != values_.end()) {
     if (counts_as_used)
       found->second.used = true;
+    *found_in_scope = this;
     return &found->second.value;
   }
 
   // Search in the parent scope.
   if (const_containing_)
-    return const_containing_->GetValue(ident);
-  if (mutable_containing_)
-    return mutable_containing_->GetValue(ident, counts_as_used);
+    return const_containing_->GetValueWithScope(ident, found_in_scope);
+  if (mutable_containing_) {
+    return mutable_containing_->GetValueWithScope(ident, counts_as_used,
+                                                  found_in_scope);
+  }
   return nullptr;
 }
 
 Value* Scope::GetMutableValue(const base::StringPiece& ident,
+                              SearchNested search_mode,
                               bool counts_as_used) {
   // Don't do programmatic values, which are not mutable.
   RecordMap::iterator found = values_.find(ident);
@@ -100,25 +123,10 @@ Value* Scope::GetMutableValue(const base::StringPiece& ident,
     return &found->second.value;
   }
 
-  // Search in the parent mutable scope, but not const one.
-  if (mutable_containing_)
-    return mutable_containing_->GetMutableValue(ident, counts_as_used);
-  return nullptr;
-}
-
-Value* Scope::GetValueForcedToCurrentScope(const base::StringPiece& ident,
-                                           const ParseNode* set_node) {
-  RecordMap::iterator found = values_.find(ident);
-  if (found != values_.end())
-    return &found->second.value;  // Already have in the current scope.
-
-  // Search in the parent scope.
-  if (containing()) {
-    const Value* in_containing = containing()->GetValue(ident);
-    if (in_containing) {
-      // Promote to current scope.
-      return SetValue(ident, *in_containing, set_node);
-    }
+  // Search in the parent mutable scope if requested, but not const one.
+  if (search_mode == SEARCH_NESTED && mutable_containing_) {
+    return mutable_containing_->GetMutableValue(
+        ident, Scope::SEARCH_NESTED, counts_as_used);
   }
   return nullptr;
 }
@@ -135,19 +143,27 @@ base::StringPiece Scope::GetStorageKey(const base::StringPiece& ident) const {
 }
 
 const Value* Scope::GetValue(const base::StringPiece& ident) const {
+  const Scope *found_in_scope = nullptr;
+  return GetValueWithScope(ident, &found_in_scope);
+}
+
+const Value* Scope::GetValueWithScope(const base::StringPiece& ident,
+                                      const Scope** found_in_scope) const {
   RecordMap::const_iterator found = values_.find(ident);
-  if (found != values_.end())
+  if (found != values_.end()) {
+    *found_in_scope = this;
     return &found->second.value;
+  }
   if (containing())
-    return containing()->GetValue(ident);
+    return containing()->GetValueWithScope(ident, found_in_scope);
   return nullptr;
 }
 
 Value* Scope::SetValue(const base::StringPiece& ident,
-                       const Value& v,
+                       Value v,
                        const ParseNode* set_node) {
   Record& r = values_[ident];  // Clears any existing value.
-  r.value = v;
+  r.value = std::move(v);
   r.value.set_origin(set_node);
   return &r.value;
 }

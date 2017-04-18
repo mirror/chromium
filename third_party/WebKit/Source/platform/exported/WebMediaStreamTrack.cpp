@@ -10,130 +10,123 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "public/platform/WebMediaStreamTrack.h"
 
+#include <memory>
 #include "platform/mediastream/MediaStreamComponent.h"
 #include "platform/mediastream/MediaStreamSource.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebAudioSourceProvider.h"
 #include "public/platform/WebMediaStream.h"
 #include "public/platform/WebMediaStreamSource.h"
 #include "public/platform/WebString.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
 namespace {
 
-    class TrackDataContainer : public MediaStreamComponent::TrackData {
-    public:
-        explicit TrackDataContainer(std::unique_ptr<WebMediaStreamTrack::TrackData> extraData)
-            : m_extraData(std::move(extraData))
-        {
-        }
+class TrackDataContainer : public MediaStreamComponent::TrackData {
+ public:
+  explicit TrackDataContainer(
+      std::unique_ptr<WebMediaStreamTrack::TrackData> extra_data)
+      : extra_data_(std::move(extra_data)) {}
 
-        WebMediaStreamTrack::TrackData* getTrackData() { return m_extraData.get(); }
-        void getSettings(WebMediaStreamTrack::Settings& settings)
-        {
-            m_extraData->getSettings(settings);
-        }
+  WebMediaStreamTrack::TrackData* GetTrackData() { return extra_data_.get(); }
+  void GetSettings(WebMediaStreamTrack::Settings& settings) {
+    extra_data_->GetSettings(settings);
+  }
 
-    private:
-        std::unique_ptr<WebMediaStreamTrack::TrackData> m_extraData;
+ private:
+  std::unique_ptr<WebMediaStreamTrack::TrackData> extra_data_;
 };
 
-} // namespace
+}  // namespace
 
-WebMediaStreamTrack::WebMediaStreamTrack(MediaStreamComponent* mediaStreamComponent)
-    : m_private(mediaStreamComponent)
-{
+WebMediaStreamTrack::WebMediaStreamTrack(
+    MediaStreamComponent* media_stream_component)
+    : private_(media_stream_component) {}
+
+WebMediaStreamTrack& WebMediaStreamTrack::operator=(
+    MediaStreamComponent* media_stream_component) {
+  private_ = media_stream_component;
+  return *this;
 }
 
-WebMediaStreamTrack& WebMediaStreamTrack::operator=(MediaStreamComponent* mediaStreamComponent)
-{
-    m_private = mediaStreamComponent;
-    return *this;
+void WebMediaStreamTrack::Initialize(const WebMediaStreamSource& source) {
+  private_ = MediaStreamComponent::Create(source);
 }
 
-void WebMediaStreamTrack::initialize(const WebMediaStreamSource& source)
-{
-    m_private = MediaStreamComponent::create(source);
+void WebMediaStreamTrack::Initialize(const WebString& id,
+                                     const WebMediaStreamSource& source) {
+  private_ = MediaStreamComponent::Create(id, source);
 }
 
-void WebMediaStreamTrack::initialize(const WebString& id, const WebMediaStreamSource& source)
-{
-    m_private = MediaStreamComponent::create(id, source);
+void WebMediaStreamTrack::Reset() {
+  private_.Reset();
 }
 
-void WebMediaStreamTrack::reset()
-{
-    m_private.reset();
+WebMediaStreamTrack::operator MediaStreamComponent*() const {
+  return private_.Get();
 }
 
-WebMediaStreamTrack::operator MediaStreamComponent*() const
-{
-    return m_private.get();
+bool WebMediaStreamTrack::IsEnabled() const {
+  DCHECK(!private_.IsNull());
+  return private_->Enabled();
 }
 
-bool WebMediaStreamTrack::isEnabled() const
-{
-    ASSERT(!m_private.isNull());
-    return m_private->enabled();
+bool WebMediaStreamTrack::IsMuted() const {
+  DCHECK(!private_.IsNull());
+  return private_->Muted();
 }
 
-bool WebMediaStreamTrack::isMuted() const
-{
-    ASSERT(!m_private.isNull());
-    return m_private->muted();
+WebMediaStreamTrack::ContentHintType WebMediaStreamTrack::ContentHint() const {
+  DCHECK(!private_.IsNull());
+  return private_->ContentHint();
 }
 
-WebString WebMediaStreamTrack::id() const
-{
-    ASSERT(!m_private.isNull());
-    return m_private->id();
+WebString WebMediaStreamTrack::Id() const {
+  DCHECK(!private_.IsNull());
+  return private_->Id();
 }
 
-WebMediaStreamSource WebMediaStreamTrack::source() const
-{
-    ASSERT(!m_private.isNull());
-    return WebMediaStreamSource(m_private->source());
+WebMediaStreamSource WebMediaStreamTrack::Source() const {
+  DCHECK(!private_.IsNull());
+  return WebMediaStreamSource(private_->Source());
 }
 
-WebMediaStreamTrack::TrackData* WebMediaStreamTrack::getTrackData() const
-{
-    MediaStreamComponent::TrackData* data = m_private->getTrackData();
-    if (!data)
-        return 0;
-    return static_cast<TrackDataContainer*>(data)->getTrackData();
+WebMediaStreamTrack::TrackData* WebMediaStreamTrack::GetTrackData() const {
+  MediaStreamComponent::TrackData* data = private_->GetTrackData();
+  if (!data)
+    return 0;
+  return static_cast<TrackDataContainer*>(data)->GetTrackData();
 }
 
-void WebMediaStreamTrack::setTrackData(TrackData* extraData)
-{
-    ASSERT(!m_private.isNull());
+void WebMediaStreamTrack::SetTrackData(TrackData* extra_data) {
+  DCHECK(!private_.IsNull());
 
-    m_private->setTrackData(wrapUnique(new TrackDataContainer(wrapUnique(extraData))));
+  private_->SetTrackData(
+      WTF::WrapUnique(new TrackDataContainer(WTF::WrapUnique(extra_data))));
 }
 
-void WebMediaStreamTrack::setSourceProvider(WebAudioSourceProvider* provider)
-{    ASSERT(!m_private.isNull());
-    m_private->setSourceProvider(provider);
+void WebMediaStreamTrack::SetSourceProvider(WebAudioSourceProvider* provider) {
+  DCHECK(!private_.IsNull());
+  private_->SetSourceProvider(provider);
 }
 
-void WebMediaStreamTrack::assign(const WebMediaStreamTrack& other)
-{
-    m_private = other.m_private;
+void WebMediaStreamTrack::Assign(const WebMediaStreamTrack& other) {
+  private_ = other.private_;
 }
 
-} // namespace blink
+}  // namespace blink

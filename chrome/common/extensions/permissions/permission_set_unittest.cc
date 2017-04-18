@@ -33,7 +33,6 @@
 #include "extensions/common/permissions/permissions_info.h"
 #include "extensions/common/permissions/socket_permission.h"
 #include "extensions/common/value_builder.h"
-#include "extensions/strings/grit/extensions_strings.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -757,7 +756,6 @@ TEST(PermissionsTest, PermissionMessages) {
   skip.insert(APIPermission::kInlineInstallPrivate);
   skip.insert(APIPermission::kIdltest);
   skip.insert(APIPermission::kLogPrivate);
-  skip.insert(APIPermission::kNotificationProvider);
   skip.insert(APIPermission::kOverrideEscFullscreen);
   skip.insert(APIPermission::kPointerLock);
   skip.insert(APIPermission::kPower);
@@ -783,7 +781,6 @@ TEST(PermissionsTest, PermissionMessages) {
   // TODO(erikkay) add a string for this permission.
   skip.insert(APIPermission::kBackground);
 
-  skip.insert(APIPermission::kClipboardWrite);
   skip.insert(APIPermission::kClipboard);
 
   // The cookie permission does nothing unless you have associated host
@@ -834,7 +831,6 @@ TEST(PermissionsTest, PermissionMessages) {
   skip.insert(APIPermission::kFileBrowserHandlerInternal);
   skip.insert(APIPermission::kFileManagerPrivate);
   skip.insert(APIPermission::kFirstRunPrivate);
-  skip.insert(APIPermission::kGcdPrivate);
   skip.insert(APIPermission::kHotwordPrivate);
   skip.insert(APIPermission::kIdentityPrivate);
   skip.insert(APIPermission::kInputMethodPrivate);
@@ -842,6 +838,7 @@ TEST(PermissionsTest, PermissionMessages) {
   skip.insert(APIPermission::kMediaPlayerPrivate);
   skip.insert(APIPermission::kMediaRouterPrivate);
   skip.insert(APIPermission::kMetricsPrivate);
+  skip.insert(APIPermission::kNetworkingCastPrivate);
   skip.insert(APIPermission::kPreferencesPrivate);
   skip.insert(APIPermission::kImageWriterPrivate);
   skip.insert(APIPermission::kResourcesPrivate);
@@ -871,6 +868,7 @@ TEST(PermissionsTest, PermissionMessages) {
   skip.insert(APIPermission::kFileSystemWrite);
   skip.insert(APIPermission::kSocket);
   skip.insert(APIPermission::kUsb);
+  skip.insert(APIPermission::kVirtualKeyboard);
   skip.insert(APIPermission::kLauncherSearchProvider);
 
   // We already have a generic message for declaring externally_connectable.

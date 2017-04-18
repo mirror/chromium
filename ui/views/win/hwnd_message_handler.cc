@@ -18,10 +18,10 @@
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "base/win/scoped_gdi_object.h"
 #include "base/win/windows_version.h"
-#include "ui/base/touch/touch_enabled.h"
 #include "ui/base/view_prop.h"
 #include "ui/base/win/internal_constants.h"
 #include "ui/base/win/lock_state.h"
@@ -31,6 +31,7 @@
 #include "ui/display/win/dpi.h"
 #include "ui/display/win/screen_win.h"
 #include "ui/events/event.h"
+#include "ui/events/event_constants.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/keycodes/keyboard_code_conversion_win.h"
 #include "ui/events/win/system_event_state_lookup.h"
@@ -44,7 +45,6 @@
 #include "ui/gfx/win/rendering_window_manager.h"
 #include "ui/native_theme/native_theme_win.h"
 #include "ui/views/views_delegate.h"
-#include "ui/views/widget/monitor_win.h"
 #include "ui/views/widget/widget_hwnd_utils.h"
 #include "ui/views/win/fullscreen_handler.h"
 #include "ui/views/win/hwnd_message_handler_delegate.h"
@@ -257,6 +257,20 @@ const int kSynthesizedMouseTouchMessagesTimeDifference = 500;
 // it doesn't guard against direct visiblility changes, and multiple locks may
 // exist simultaneously to handle certain nested Windows messages.
 //
+// This lock is disabled when DirectComposition is used and there's a child
+// rendering window, as the WS_CLIPCHILDREN on the parent window should
+// prevent the glitched rendering and making the window contents non-visible
+// can cause a them to disappear for a frame.
+//
+// We normally skip locked updates when Aero is on for two reasons:
+// 1. Because it isn't necessary. However, for windows without WS_CAPTION a
+//    close button may still be drawn, so the resize lock remains enabled for
+//    them. See http://crrev.com/130323
+// 2. Because toggling the WS_VISIBLE flag may occur while the GPU process is
+//    attempting to present a child window's backbuffer onscreen. When these
+//    two actions race with one another, the child window will either flicker
+//    or will simply stop updating entirely.
+//
 // IMPORTANT: Do not use this scoping object for large scopes or periods of
 //            time! IT WILL PREVENT THE WINDOW FROM BEING REDRAWN! (duh).
 //
@@ -265,18 +279,20 @@ const int kSynthesizedMouseTouchMessagesTimeDifference = 500;
 class HWNDMessageHandler::ScopedRedrawLock {
  public:
   explicit ScopedRedrawLock(HWNDMessageHandler* owner)
-    : owner_(owner),
-      hwnd_(owner_->hwnd()),
-      was_visible_(owner_->IsVisible()),
-      cancel_unlock_(false),
-      force_(!(GetWindowLong(hwnd_, GWL_STYLE) & WS_CAPTION)) {
-    if (was_visible_ && ::IsWindow(hwnd_))
-      owner_->LockUpdates(force_);
+      : owner_(owner),
+        hwnd_(owner_->hwnd()),
+        cancel_unlock_(false),
+        should_lock_(owner_->IsVisible() && !owner->HasChildRenderingWindow() &&
+                     ::IsWindow(hwnd_) &&
+                     (!(GetWindowLong(hwnd_, GWL_STYLE) & WS_CAPTION) ||
+                      !ui::win::IsAeroGlassEnabled())) {
+    if (should_lock_)
+      owner_->LockUpdates();
   }
 
   ~ScopedRedrawLock() {
-    if (!cancel_unlock_ && was_visible_ && ::IsWindow(hwnd_))
-      owner_->UnlockUpdates(force_);
+    if (!cancel_unlock_ && should_lock_ && ::IsWindow(hwnd_))
+      owner_->UnlockUpdates();
   }
 
   // Cancel the unlock operation, call this if the Widget is being destroyed.
@@ -287,19 +303,18 @@ class HWNDMessageHandler::ScopedRedrawLock {
   HWNDMessageHandler* owner_;
   // The owner's HWND, cached to avoid action after window destruction.
   HWND hwnd_;
-  // Records the HWND visibility at the time of creation.
-  bool was_visible_;
   // A flag indicating that the unlock operation was canceled.
   bool cancel_unlock_;
-  // If true, perform the redraw lock regardless of Aero state.
-  bool force_;
+  // If false, don't use redraw lock.
+  const bool should_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedRedrawLock);
 };
 
 // static HWNDMessageHandler member initialization.
-base::LazyInstance<HWNDMessageHandler::FullscreenWindowMonitorMap>
-    HWNDMessageHandler::fullscreen_monitor_map_ = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<HWNDMessageHandler::FullscreenWindowMonitorMap>::
+    DestructorAtExit HWNDMessageHandler::fullscreen_monitor_map_ =
+        LAZY_INSTANCE_INITIALIZER;
 
 ////////////////////////////////////////////////////////////////////////////////
 // HWNDMessageHandler, public:
@@ -316,6 +331,7 @@ HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate)
       current_cursor_(NULL),
       previous_cursor_(NULL),
       dpi_(0),
+      called_enable_non_client_dpi_scaling_(false),
       active_mouse_tracking_flags_(0),
       is_right_mouse_pressed_on_caption_(false),
       lock_updates_count_(0),
@@ -348,6 +364,22 @@ void HWNDMessageHandler::Init(HWND parent, const gfx::Rect& bounds) {
 
   // Create the window.
   WindowImpl::Init(parent, bounds);
+
+  if (!called_enable_non_client_dpi_scaling_ &&
+      delegate_->HasFrame() &&
+      base::win::IsProcessPerMonitorDpiAware()) {
+    static auto enable_child_window_dpi_message_func = []() {
+      // Derived signature; not available in headers.
+      // This call gets Windows to scale the non-client area when WM_DPICHANGED
+      // is fired.
+      using EnableChildWindowDpiMessagePtr = LRESULT (WINAPI*)(HWND, BOOL);
+      return reinterpret_cast<EnableChildWindowDpiMessagePtr>(
+                 GetProcAddress(GetModuleHandle(L"user32.dll"),
+                                "EnableChildWindowDpiMessage"));
+    }();
+    if (enable_child_window_dpi_message_func)
+      enable_child_window_dpi_message_func(hwnd(), TRUE);
+  }
 
   prop_window_target_.reset(new ui::ViewProp(hwnd(),
                             ui::WindowEventTarget::kWin32InputEventTarget,
@@ -772,8 +804,7 @@ void HWNDMessageHandler::SetCursor(HCURSOR cursor) {
 }
 
 void HWNDMessageHandler::FrameTypeChanged() {
-  if (!custom_window_region_.is_valid() &&
-      delegate_->GetFrameMode() == FrameMode::SYSTEM_DRAWN)
+  if (!custom_window_region_.is_valid() && IsFrameSystemDrawn())
     dwm_transition_desired_ = true;
   if (!dwm_transition_desired_ || !IsFullscreen())
     PerformDwmTransition();
@@ -798,10 +829,6 @@ void HWNDMessageHandler::SetWindowIcons(const gfx::ImageSkia& window_icon,
 void HWNDMessageHandler::SetFullscreen(bool fullscreen) {
   background_fullscreen_hack_ = false;
   fullscreen_handler()->SetFullscreen(fullscreen);
-  // If we are out of fullscreen and there was a pending DWM transition for the
-  // window, then go ahead and do it now.
-  if (!fullscreen && dwm_transition_desired_)
-    PerformDwmTransition();
 
   // Add the fullscreen window to the fullscreen window map which is used to
   // handle window activations.
@@ -814,6 +841,10 @@ void HWNDMessageHandler::SetFullscreen(bool fullscreen) {
     if (iter != fullscreen_monitor_map_.Get().end())
       fullscreen_monitor_map_.Get().erase(iter);
   }
+  // If we are out of fullscreen and there was a pending DWM transition for the
+  // window, then go ahead and do it now.
+  if (!fullscreen && dwm_transition_desired_)
+    PerformDwmTransition();
 }
 
 void HWNDMessageHandler::SizeConstraintsChanged() {
@@ -940,6 +971,16 @@ LRESULT HWNDMessageHandler::HandleTouchMessage(unsigned int message,
                                                bool* handled) {
   base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
   LRESULT ret = OnTouchEvent(message, w_param, l_param);
+  *handled = IsMsgHandled();
+  return ret;
+}
+
+LRESULT HWNDMessageHandler::HandlePointerMessage(unsigned int message,
+                                                 WPARAM w_param,
+                                                 LPARAM l_param,
+                                                 bool* handled) {
+  base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
+  LRESULT ret = OnPointerEvent(message, w_param, l_param);
   *handled = IsMsgHandled();
   return ret;
 }
@@ -1103,6 +1144,9 @@ void HWNDMessageHandler::ClientAreaSizeChanged() {
     return;
   gfx::Size s = GetClientAreaBounds().size();
   delegate_->HandleClientSizeChanged(s);
+
+  current_window_size_message_++;
+  sent_window_size_changing_ = false;
 }
 
 bool HWNDMessageHandler::GetClientAreaInsets(gfx::Insets* insets) const {
@@ -1139,8 +1183,7 @@ void HWNDMessageHandler::ResetWindowRegion(bool force, bool redraw) {
   // the delegate to allow for a custom hit mask.
   if ((window_ex_style() & WS_EX_COMPOSITED) == 0 &&
       !custom_window_region_.is_valid() &&
-      (delegate_->GetFrameMode() == FrameMode::SYSTEM_DRAWN ||
-       !delegate_->HasNonClientView())) {
+      (IsFrameSystemDrawn() || !delegate_->HasNonClientView())) {
     if (force)
       SetWindowRgn(hwnd(), NULL, redraw);
     return;
@@ -1210,21 +1253,15 @@ LRESULT HWNDMessageHandler::DefWindowProcWithRedrawLock(UINT message,
   return result;
 }
 
-void HWNDMessageHandler::LockUpdates(bool force) {
-  // We skip locked updates when Aero is on for two reasons:
-  // 1. Because it isn't necessary
-  // 2. Because toggling the WS_VISIBLE flag may occur while the GPU process is
-  //    attempting to present a child window's backbuffer onscreen. When these
-  //    two actions race with one another, the child window will either flicker
-  //    or will simply stop updating entirely.
-  if ((force || !ui::win::IsAeroGlassEnabled()) && ++lock_updates_count_ == 1) {
+void HWNDMessageHandler::LockUpdates() {
+  if (++lock_updates_count_ == 1) {
     SetWindowLong(hwnd(), GWL_STYLE,
                   GetWindowLong(hwnd(), GWL_STYLE) & ~WS_VISIBLE);
   }
 }
 
-void HWNDMessageHandler::UnlockUpdates(bool force) {
-  if ((force || !ui::win::IsAeroGlassEnabled()) && --lock_updates_count_ <= 0) {
+void HWNDMessageHandler::UnlockUpdates() {
+  if (--lock_updates_count_ <= 0) {
     SetWindowLong(hwnd(), GWL_STYLE,
                   GetWindowLong(hwnd(), GWL_STYLE) | WS_VISIBLE);
     lock_updates_count_ = 0;
@@ -1246,9 +1283,14 @@ void HWNDMessageHandler::ForceRedrawWindow(int attempts) {
   InvalidateRect(hwnd(), NULL, FALSE);
 }
 
+bool HWNDMessageHandler::IsFrameSystemDrawn() const {
+  FrameMode frame_mode = delegate_->GetFrameMode();
+  return frame_mode == FrameMode::SYSTEM_DRAWN ||
+         frame_mode == FrameMode::SYSTEM_DRAWN_NO_CONTROLS;
+}
+
 bool HWNDMessageHandler::HasSystemFrame() const {
-  return delegate_->HasFrame() &&
-         delegate_->GetFrameMode() == FrameMode::SYSTEM_DRAWN;
+  return delegate_->HasFrame() && IsFrameSystemDrawn();
 }
 
 // Message handlers ------------------------------------------------------------
@@ -1324,8 +1366,7 @@ LRESULT HWNDMessageHandler::OnCreate(CREATESTRUCT* create_struct) {
   // Get access to a modifiable copy of the system menu.
   GetSystemMenu(hwnd(), false);
 
-  if (ui::AreTouchEventsEnabled())
-    RegisterTouchWindow(hwnd(), TWF_WANTPALM);
+  RegisterTouchWindow(hwnd(), TWF_WANTPALM);
 
   // We need to allow the delegate to size its contents since the window may not
   // receive a size notification when its initial bounds are specified at window
@@ -1612,6 +1653,119 @@ LRESULT HWNDMessageHandler::OnPointerActivate(UINT message,
   return -1;
 }
 
+LRESULT HWNDMessageHandler::OnPointerEvent(UINT message,
+                                           WPARAM w_param,
+                                           LPARAM l_param) {
+  // WM_POINTER is not supported on Windows 7 or lower.
+  if (base::win::GetVersion() <= base::win::VERSION_WIN7) {
+    SetMsgHandled(FALSE);
+    return -1;
+  }
+
+  UINT32 pointer_id = GET_POINTERID_WPARAM(w_param);
+  using GetPointerTypeFn = BOOL(WINAPI*)(UINT32, POINTER_INPUT_TYPE*);
+  POINTER_INPUT_TYPE pointer_type;
+  static GetPointerTypeFn get_pointer_type = reinterpret_cast<GetPointerTypeFn>(
+      GetProcAddress(GetModuleHandleA("user32.dll"), "GetPointerType"));
+  // If the WM_POINTER messages are not sent from a stylus device, then we do
+  // not handle them to make sure we do not change the current behavior of
+  // touch and mouse inputs.
+  if (!get_pointer_type || !get_pointer_type(pointer_id, &pointer_type) ||
+      pointer_type != PT_PEN) {
+    SetMsgHandled(FALSE);
+    return -1;
+  }
+
+  using GetPointerPenInfoFn = BOOL(WINAPI*)(UINT32, POINTER_PEN_INFO*);
+  POINTER_PEN_INFO pointer_pen_info;
+  static GetPointerPenInfoFn get_pointer_pen_info =
+      reinterpret_cast<GetPointerPenInfoFn>(
+          GetProcAddress(GetModuleHandleA("user32.dll"), "GetPointerPenInfo"));
+  if (!get_pointer_pen_info ||
+      !get_pointer_pen_info(pointer_id, &pointer_pen_info)) {
+    SetMsgHandled(FALSE);
+    return -1;
+  }
+
+  // We are now creating a fake mouse event with pointer type of pen from
+  // the WM_POINTER message and then setting up an associated pointer
+  // details in the MouseEvent which contains the pen's information.
+  ui::EventPointerType input_type = ui::EventPointerType::POINTER_TYPE_PEN;
+  // TODO(lanwei): penFlags of PEN_FLAG_INVERTED may also indicate we are using
+  // an eraser, but it is under debate. Please see
+  // https://github.com/w3c/pointerevents/issues/134/.
+  if (pointer_pen_info.penFlags & PEN_FLAG_ERASER)
+    input_type = ui::EventPointerType::POINTER_TYPE_ERASER;
+
+  float pressure = static_cast<float>(pointer_pen_info.pressure) / 1024;
+  float rotation = pointer_pen_info.rotation;
+  int tilt_x = pointer_pen_info.tiltX;
+  int tilt_y = pointer_pen_info.tiltY;
+  POINT client_point = pointer_pen_info.pointerInfo.ptPixelLocationRaw;
+  ScreenToClient(hwnd(), &client_point);
+  gfx::Point point = gfx::Point(client_point.x, client_point.y);
+  ui::EventType event_type = ui::ET_MOUSE_MOVED;
+  int flag = 0;
+  int click_count = 0;
+  switch (message) {
+    case WM_POINTERDOWN:
+      event_type = ui::ET_MOUSE_PRESSED;
+      if (pointer_pen_info.pointerInfo.ButtonChangeType ==
+          POINTER_CHANGE_SECONDBUTTON_DOWN) {
+        flag = ui::EF_RIGHT_MOUSE_BUTTON;
+      } else {
+        flag = ui::EF_LEFT_MOUSE_BUTTON;
+      }
+      click_count = 1;
+      break;
+    case WM_POINTERUP:
+      event_type = ui::ET_MOUSE_RELEASED;
+      if (pointer_pen_info.pointerInfo.ButtonChangeType ==
+          POINTER_CHANGE_SECONDBUTTON_UP) {
+        flag = ui::EF_RIGHT_MOUSE_BUTTON;
+      } else {
+        flag = ui::EF_LEFT_MOUSE_BUTTON;
+      }
+      click_count = 1;
+      break;
+    case WM_POINTERUPDATE:
+      event_type = ui::ET_MOUSE_DRAGGED;
+      if (pointer_pen_info.pointerInfo.pointerFlags &
+          POINTER_FLAG_FIRSTBUTTON) {
+        flag = ui::EF_LEFT_MOUSE_BUTTON;
+      } else if (pointer_pen_info.pointerInfo.pointerFlags &
+                 POINTER_FLAG_SECONDBUTTON) {
+        flag = ui::EF_RIGHT_MOUSE_BUTTON;
+      } else {
+        event_type = ui::ET_MOUSE_MOVED;
+      }
+      break;
+    case WM_POINTERENTER:
+      event_type = ui::ET_MOUSE_ENTERED;
+      break;
+    case WM_POINTERLEAVE:
+      event_type = ui::ET_MOUSE_EXITED;
+      break;
+    default:
+      NOTREACHED();
+  }
+  ui::PointerDetails pointer_details(
+      input_type, pointer_id, /* radius_x */ 0.0f, /* radius_y */ 0.0f,
+      pressure, tilt_x, tilt_y, /* tangential_pressure */ 0.0f, rotation);
+  ui::MouseEvent event(event_type, point, point, base::TimeTicks::Now(), flag,
+                       flag, pointer_details);
+  event.SetClickCount(click_count);
+
+  // There are cases where the code handling the message destroys the
+  // window, so use the weak ptr to check if destruction occured or not.
+  base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
+  bool handled = delegate_->HandleMouseEvent(event);
+
+  if (ref)
+    SetMsgHandled(handled);
+  return 0;
+}
+
 void HWNDMessageHandler::OnMove(const gfx::Point& point) {
   delegate_->HandleMove();
   SetMsgHandled(FALSE);
@@ -1731,7 +1885,7 @@ LRESULT HWNDMessageHandler::OnNCCalcSize(BOOL mode, LPARAM l_param) {
     if (autohide_edges & ViewsDelegate::EDGE_LEFT)
       client_rect->left += kAutoHideTaskbarThicknessPx;
     if (autohide_edges & ViewsDelegate::EDGE_TOP) {
-      if (delegate_->GetFrameMode() == FrameMode::SYSTEM_DRAWN) {
+      if (IsFrameSystemDrawn()) {
         // Tricky bit.  Due to a bug in DwmDefWindowProc()'s handling of
         // WM_NCHITTEST, having any nonclient area atop the window causes the
         // caption buttons to draw onscreen but not respond to mouse
@@ -1769,6 +1923,21 @@ LRESULT HWNDMessageHandler::OnNCCalcSize(BOOL mode, LPARAM l_param) {
   return mode ? WVR_REDRAW : 0;
 }
 
+LRESULT HWNDMessageHandler::OnNCCreate(LPCREATESTRUCT lpCreateStruct) {
+  SetMsgHandled(FALSE);
+  if (delegate_->HasFrame() && base::win::IsProcessPerMonitorDpiAware()) {
+    static auto enable_non_client_dpi_scaling_func = []() {
+      return reinterpret_cast<decltype(::EnableNonClientDpiScaling)*>(
+                 GetProcAddress(GetModuleHandle(L"user32.dll"),
+                                "EnableNonClientDpiScaling"));
+    }();
+    called_enable_non_client_dpi_scaling_ =
+        !!(enable_non_client_dpi_scaling_func &&
+           enable_non_client_dpi_scaling_func(hwnd()));
+  }
+  return FALSE;
+}
+
 LRESULT HWNDMessageHandler::OnNCHitTest(const gfx::Point& point) {
   if (!delegate_->HasNonClientView()) {
     SetMsgHandled(FALSE);
@@ -1792,7 +1961,8 @@ LRESULT HWNDMessageHandler::OnNCHitTest(const gfx::Point& point) {
 
   // If the DWM is rendering the window controls, we need to give the DWM's
   // default window procedure first chance to handle hit testing.
-  if (HasSystemFrame()) {
+  if (HasSystemFrame() &&
+      delegate_->GetFrameMode() != FrameMode::SYSTEM_DRAWN_NO_CONTROLS) {
     LRESULT result;
     if (DwmDefWindowProc(hwnd(), WM_NCHITTEST, 0,
                          MAKELPARAM(point.x(), point.y()), &result)) {
@@ -1836,8 +2006,7 @@ void HWNDMessageHandler::OnNCPaint(HRGN rgn) {
   // We only do non-client painting if we're not using the system frame.
   // It's required to avoid some native painting artifacts from appearing when
   // the window is resized.
-  if (!delegate_->HasNonClientView() ||
-      delegate_->GetFrameMode() == FrameMode::SYSTEM_DRAWN) {
+  if (!delegate_->HasNonClientView() || IsFrameSystemDrawn()) {
     if (ui::win::IsAeroGlassEnabled()) {
       // The default WM_NCPAINT handler under Aero Glass doesn't clear the
       // nonclient area, so it'll remain the default white color. That area is
@@ -2120,7 +2289,14 @@ void HWNDMessageHandler::OnSysCommand(UINT notification_code,
 }
 
 void HWNDMessageHandler::OnThemeChanged() {
-  ui::NativeThemeWin::instance()->CloseHandles();
+  ui::NativeThemeWin::CloseHandles();
+}
+
+void HWNDMessageHandler::OnTimeChange() {
+  // Call NowFromSystemTime() to force base::Time to re-initialize the clock
+  // from system time. Otherwise base::Time::Now() might continue to reflect the
+  // old system clock for some amount of time. See https://crbug.com/672906#c5
+  base::Time::NowFromSystemTime();
 }
 
 LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
@@ -2207,12 +2383,47 @@ void HWNDMessageHandler::OnWindowPosChanging(WINDOWPOS* window_pos) {
     }
   } else if (!GetParent(hwnd())) {
     RECT window_rect;
+    const bool have_new_window_rect =
+        !(window_pos->flags & SWP_NOMOVE) && !(window_pos->flags & SWP_NOSIZE);
+    if (have_new_window_rect) {
+      // We should use new window rect for detecting monitor and it's
+      // parameters, if it is available. If we use |GetWindowRect()| instead,
+      // we can break our same monitor detection logic (see |same_monitor|
+      // below) and consequently Windows "Move to other monitor" shortcuts
+      // (Win+Shift+Arrows). See crbug.com/656001.
+      window_rect.left = window_pos->x;
+      window_rect.top = window_pos->y;
+      window_rect.right = window_pos->x + window_pos->cx - 1;
+      window_rect.bottom = window_pos->y + window_pos->cy - 1;
+    }
+
     HMONITOR monitor;
     gfx::Rect monitor_rect, work_area;
-    if (GetWindowRect(hwnd(), &window_rect) &&
+    if ((have_new_window_rect || GetWindowRect(hwnd(), &window_rect)) &&
         GetMonitorAndRects(window_rect, &monitor, &monitor_rect, &work_area)) {
       bool work_area_changed = (monitor_rect == last_monitor_rect_) &&
                                (work_area != last_work_area_);
+      const bool same_monitor = monitor && (monitor == last_monitor_);
+
+      gfx::Rect expected_maximized_bounds = work_area;
+      if (IsMaximized()) {
+        // Windows automatically adds a standard width border to all sides when
+        // window is maximized. We should take this into account.
+        gfx::Insets client_area_insets;
+        if (GetClientAreaInsets(&client_area_insets))
+          expected_maximized_bounds.Inset(client_area_insets.Scale(-1));
+      }
+      // Sometimes Windows incorrectly changes bounds of maximized windows after
+      // attaching or detaching additional displays. In this case user can see
+      // non-client area of the window (that should be hidden in normal case).
+      // We should restore window position if problem occurs.
+      const bool incorrect_maximized_bounds =
+          IsMaximized() && have_new_window_rect &&
+          (expected_maximized_bounds.x() != window_pos->x ||
+           expected_maximized_bounds.y() != window_pos->y ||
+           expected_maximized_bounds.width() != window_pos->cx ||
+           expected_maximized_bounds.height() != window_pos->cy);
+
       // If the size of a background fullscreen window changes again, then we
       // should reset the |background_fullscreen_hack_| flag.
       if (background_fullscreen_hack_ &&
@@ -2220,8 +2431,11 @@ void HWNDMessageHandler::OnWindowPosChanging(WINDOWPOS* window_pos) {
             (monitor_rect.height() - window_pos->cy != 1))) {
           background_fullscreen_hack_ = false;
       }
-      if (monitor && (monitor == last_monitor_) &&
-          ((IsFullscreen() && !background_fullscreen_hack_) ||
+      const bool fullscreen_without_hack =
+          IsFullscreen() && !background_fullscreen_hack_;
+
+      if (same_monitor &&
+          (incorrect_maximized_bounds || fullscreen_without_hack ||
            work_area_changed)) {
         // A rect for the monitor we're on changed.  Normally Windows notifies
         // us about this (and thus we're reaching here due to the SetWindowPos()
@@ -2235,9 +2449,7 @@ void HWNDMessageHandler::OnWindowPosChanging(WINDOWPOS* window_pos) {
         if (IsFullscreen()) {
           new_window_rect = monitor_rect;
         } else if (IsMaximized()) {
-          new_window_rect = work_area;
-          int border_thickness = GetSystemMetrics(SM_CXSIZEFRAME);
-          new_window_rect.Inset(-border_thickness, -border_thickness);
+          new_window_rect = expected_maximized_bounds;
         } else {
           new_window_rect = gfx::Rect(window_rect);
           new_window_rect.AdjustToFit(work_area);
@@ -2274,6 +2486,12 @@ void HWNDMessageHandler::OnWindowPosChanging(WINDOWPOS* window_pos) {
       window_pos->flags & SWP_FRAMECHANGED) {
     delegate_->HandleWindowSizeChanging();
     sent_window_size_changing_ = true;
+
+    // It's possible that if Aero snap is being entered then the window size
+    // won't actually change. Post a message to ensure swaps will be re-enabled
+    // in that case.
+    PostMessage(hwnd(), WM_WINDOWSIZINGFINISHED, ++current_window_size_message_,
+                0);
   }
 
   if (ScopedFullscreenVisibility::IsHiddenForFullscreen(hwnd())) {
@@ -2307,11 +2525,22 @@ void HWNDMessageHandler::OnWindowPosChanged(WINDOWPOS* window_pos) {
     if (direct_manipulation_helper_)
       direct_manipulation_helper_->Deactivate(hwnd());
   }
-  if (sent_window_size_changing_) {
-    sent_window_size_changing_ = false;
-    delegate_->HandleWindowSizeChanged();
-  }
+
   SetMsgHandled(FALSE);
+}
+
+LRESULT HWNDMessageHandler::OnWindowSizingFinished(UINT message,
+                                                   WPARAM w_param,
+                                                   LPARAM l_param) {
+  // Check if a newer WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED have been
+  // received after this message was posted.
+  if (current_window_size_message_ != w_param)
+    return 0;
+
+  delegate_->HandleWindowSizeUnchanged();
+  sent_window_size_changing_ = false;
+
+  return 0;
 }
 
 void HWNDMessageHandler::OnSessionChange(WPARAM status_code) {
@@ -2507,7 +2736,7 @@ void HWNDMessageHandler::PerformDwmTransition() {
   // The non-client view needs to update too.
   delegate_->HandleFrameChanged();
 
-  if (IsVisible() && delegate_->GetFrameMode() == FrameMode::SYSTEM_DRAWN) {
+  if (IsVisible() && IsFrameSystemDrawn()) {
     // For some reason, we need to hide the window after we change from a custom
     // frame to a native frame.  If we don't, the client area will be filled
     // with black.  This seems to be related to an interaction between DWM and
@@ -2529,7 +2758,9 @@ void HWNDMessageHandler::GenerateTouchEvent(ui::EventType event_type,
                                             unsigned int id,
                                             base::TimeTicks time_stamp,
                                             TouchEvents* touch_events) {
-  ui::TouchEvent event(event_type, point, id, time_stamp);
+  ui::TouchEvent event(
+      event_type, point, time_stamp,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, id));
 
   event.set_flags(ui::GetModifiersFromKeyState());
 
@@ -2618,8 +2849,13 @@ bool HWNDMessageHandler::HandleMouseInputForCaption(unsigned int message,
       break;
     }
 
-    case WM_NCMOUSELEAVE:
+    case WM_NCMOUSELEAVE: {
+      // If the DWM is rendering the window controls, we need to give the DWM's
+      // default window procedure the chance to repaint the window border icons
+      if (HasSystemFrame())
+        handled = DwmDefWindowProc(hwnd(), WM_NCMOUSELEAVE, 0, 0, NULL) != 0;
       break;
+    }
 
     default:
       left_button_down_on_caption_ = false;

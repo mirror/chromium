@@ -36,9 +36,10 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "net/base/filename_util.h"
+#include "printing/features/features.h"
 #include "ui/base/resource/resource_handle.h"
 
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 #include "chrome/browser/printing/print_preview_dialog_controller.h"
 #endif
 
@@ -49,7 +50,7 @@ using content::WebUIMessageHandler;
 
 namespace {
 
-base::LazyInstance<std::vector<std::string> > error_messages_ =
+base::LazyInstance<std::vector<std::string>>::DestructorAtExit error_messages_ =
     LAZY_INSTANCE_INITIALIZER;
 
 // Intercepts all log messages.
@@ -125,8 +126,8 @@ bool WebUIBrowserTest::RunJavascriptTestF(bool is_async,
                                           const std::string& test_fixture,
                                           const std::string& test_name) {
   ConstValueVector args;
-  args.push_back(new base::StringValue(test_fixture));
-  args.push_back(new base::StringValue(test_name));
+  args.push_back(new base::Value(test_fixture));
+  args.push_back(new base::Value(test_name));
 
   if (is_async)
     return RunJavascriptAsyncTest("RUN_TEST_F", args);
@@ -206,8 +207,8 @@ void WebUIBrowserTest::PreLoadJavascriptLibraries(
     RenderViewHost* preload_host) {
   ASSERT_FALSE(libraries_preloaded_);
   ConstValueVector args;
-  args.push_back(new base::StringValue(preload_test_fixture));
-  args.push_back(new base::StringValue(preload_test_name));
+  args.push_back(new base::Value(preload_test_fixture));
+  args.push_back(new base::Value(preload_test_name));
   RunJavascriptUsingHandler(
       "preloadJavascriptLibraries", args, false, false, preload_host);
   libraries_preloaded_ = true;
@@ -221,12 +222,13 @@ void WebUIBrowserTest::BrowsePreload(const GURL& browse_to) {
   content::TestNavigationObserver navigation_observer(web_contents);
   chrome::NavigateParams params(
       browser(), GURL(browse_to), ui::PAGE_TRANSITION_TYPED);
-  params.disposition = CURRENT_TAB;
+  params.disposition = WindowOpenDisposition::CURRENT_TAB;
+
   chrome::Navigate(&params);
   navigation_observer.Wait();
 }
 
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 // This custom ContentBrowserClient is used to get notified when a WebContents
 // for the print preview dialog gets created.
@@ -269,7 +271,7 @@ class PrintContentBrowserClient : public ChromeContentBrowserClient {
 #endif
 
 void WebUIBrowserTest::BrowsePrintPreload(const GURL& browse_to) {
-#if defined(ENABLE_PRINT_PREVIEW)
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   ui_test_utils::NavigateToURL(browser(), browse_to);
 
   PrintContentBrowserClient new_client(
@@ -329,8 +331,7 @@ class MockWebUIDataSource : public content::URLDataSource {
 
   void StartDataRequest(
       const std::string& path,
-      int render_process_id,
-      int render_frame_id,
+      const content::ResourceRequestInfo::WebContentsGetter& wc_getter,
       const content::URLDataSource::GotDataCallback& callback) override {
     std::string dummy_html = "<html><body>Dummy</body></html>";
     scoped_refptr<base::RefCountedString> response =
@@ -364,7 +365,7 @@ class MockWebUIProvider
   DISALLOW_COPY_AND_ASSIGN(MockWebUIProvider);
 };
 
-base::LazyInstance<MockWebUIProvider> mock_provider_ =
+base::LazyInstance<MockWebUIProvider>::DestructorAtExit mock_provider_ =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

@@ -4,58 +4,29 @@
 
 #include "chrome/installer/util/product.h"
 
-#include <algorithm>
+#include <string>
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/process/launch.h"
 #include "base/win/registry.h"
-#include "chrome/installer/util/chrome_binaries_operations.h"
+#include "chrome/install_static/install_util.h"
+#include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/chrome_browser_operations.h"
-#include "chrome/installer/util/chrome_browser_sxs_operations.h"
-#include "chrome/installer/util/chrome_frame_operations.h"
 #include "chrome/installer/util/google_update_constants.h"
-#include "chrome/installer/util/helper.h"
 #include "chrome/installer/util/install_util.h"
-#include "chrome/installer/util/master_preferences.h"
-#include "chrome/installer/util/master_preferences_constants.h"
 #include "chrome/installer/util/product_operations.h"
 
 using base::win::RegKey;
-using installer::MasterPreferences;
 
 namespace installer {
 
 Product::Product(BrowserDistribution* distribution)
-    : distribution_(distribution) {
-  switch (distribution->GetType()) {
-    case BrowserDistribution::CHROME_BROWSER:
-      operations_.reset(InstallUtil::IsChromeSxSProcess() ?
-          new ChromeBrowserSxSOperations() :
-          new ChromeBrowserOperations());
-      break;
-    case BrowserDistribution::CHROME_FRAME:
-      operations_.reset(new ChromeFrameOperations());
-      break;
-    case BrowserDistribution::CHROME_BINARIES:
-      operations_.reset(new ChromeBinariesOperations());
-      break;
-    default:
-      NOTREACHED() << "Unsupported BrowserDistribution::Type: "
-                   << distribution->GetType();
-  }
-}
+    : distribution_(distribution),
+      operations_(base::MakeUnique<ChromeBrowserOperations>()) {}
 
 Product::~Product() {
-}
-
-void Product::InitializeFromPreferences(const MasterPreferences& prefs) {
-  operations_->ReadOptions(prefs, &options_);
-}
-
-void Product::InitializeFromUninstallCommand(
-    const base::CommandLine& uninstall_command) {
-  operations_->ReadOptions(uninstall_command, &options_);
 }
 
 bool Product::LaunchChrome(const base::FilePath& application_path) const {
@@ -127,28 +98,8 @@ bool Product::SetMsiMarker(bool system_install, bool set) const {
   return true;
 }
 
-bool Product::ShouldCreateUninstallEntry() const {
-  return operations_->ShouldCreateUninstallEntry(options_);
-}
-
 void Product::AddKeyFiles(std::vector<base::FilePath>* key_files) const {
-  operations_->AddKeyFiles(options_, key_files);
-}
-
-void Product::AddComDllList(std::vector<base::FilePath>* com_dll_list) const {
-  operations_->AddComDllList(options_, com_dll_list);
-}
-
-void Product::AppendProductFlags(base::CommandLine* command_line) const {
-  operations_->AppendProductFlags(options_, command_line);
-}
-
-void Product::AppendRenameFlags(base::CommandLine* command_line) const {
-  operations_->AppendRenameFlags(options_, command_line);
-}
-
-bool Product::SetChannelFlags(bool set, ChannelInfo* channel_info) const {
-  return operations_->SetChannelFlags(options_, set, channel_info);
+  operations_->AddKeyFiles(key_files);
 }
 
 void Product::AddDefaultShortcutProperties(
@@ -161,12 +112,14 @@ void Product::AddDefaultShortcutProperties(
 void Product::LaunchUserExperiment(const base::FilePath& setup_path,
                                    InstallStatus status,
                                    bool system_level) const {
-  if (distribution_->HasUserExperiments()) {
+  // Assert that this is only called with the one relevant distribution.
+  // TODO(grt): Remove this when BrowserDistribution goes away.
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), distribution_);
+  if (install_static::SupportsRetentionExperiments()) {
     VLOG(1) << "LaunchUserExperiment status: " << status << " product: "
             << distribution_->GetDisplayName()
             << " system_level: " << system_level;
-    operations_->LaunchUserExperiment(
-        setup_path, options_, status, system_level);
+    operations_->LaunchUserExperiment(setup_path, status, system_level);
   }
 }
 

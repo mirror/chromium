@@ -28,30 +28,27 @@
 
 #include "core/timing/PerformanceEntry.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CORE_EXPORT PerformanceMark final : public PerformanceEntry {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static PerformanceMark* create(const String& name, double startTime)
-    {
-        return new PerformanceMark(name, startTime);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        PerformanceEntry::trace(visitor);
-    }
+ public:
+  static PerformanceMark* Create(const String& name, double start_time) {
+    return new PerformanceMark(name, start_time);
+  }
 
-private:
-    PerformanceMark(const String& name, double startTime)
-        : PerformanceEntry(name, "mark", startTime, startTime) { }
+  DEFINE_INLINE_VIRTUAL_TRACE() { PerformanceEntry::Trace(visitor); }
 
-    ~PerformanceMark() override { }
+ private:
+  PerformanceMark(const String& name, double start_time)
+      : PerformanceEntry(name, "mark", start_time, start_time) {}
+
+  ~PerformanceMark() override {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PerformanceMark_h
+#endif  // PerformanceMark_h

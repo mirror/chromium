@@ -24,7 +24,7 @@
 #include "core/svg/properties/SVGProperty.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/transforms/AffineTransform.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -32,87 +32,94 @@ class FloatSize;
 class SVGTransformTearOff;
 
 enum SVGTransformType {
-    SVG_TRANSFORM_UNKNOWN = 0,
-    SVG_TRANSFORM_MATRIX = 1,
-    SVG_TRANSFORM_TRANSLATE = 2,
-    SVG_TRANSFORM_SCALE = 3,
-    SVG_TRANSFORM_ROTATE = 4,
-    SVG_TRANSFORM_SKEWX = 5,
-    SVG_TRANSFORM_SKEWY = 6
+  kSvgTransformUnknown = 0,
+  kSvgTransformMatrix = 1,
+  kSvgTransformTranslate = 2,
+  kSvgTransformScale = 3,
+  kSvgTransformRotate = 4,
+  kSvgTransformSkewx = 5,
+  kSvgTransformSkewy = 6
 };
 
 class SVGTransform final : public SVGPropertyBase {
-public:
-    typedef SVGTransformTearOff TearOffType;
+ public:
+  typedef SVGTransformTearOff TearOffType;
 
-    enum ConstructionMode {
-        ConstructIdentityTransform,
-        ConstructZeroTransform
-    };
+  enum ConstructionMode {
+    kConstructIdentityTransform,
+    kConstructZeroTransform
+  };
 
-    static SVGTransform* create()
-    {
-        return new SVGTransform();
-    }
+  static SVGTransform* Create() { return new SVGTransform(); }
 
-    static SVGTransform* create(SVGTransformType type, ConstructionMode mode = ConstructIdentityTransform)
-    {
-        return new SVGTransform(type, mode);
-    }
+  static SVGTransform* Create(
+      SVGTransformType type,
+      ConstructionMode mode = kConstructIdentityTransform) {
+    return new SVGTransform(type, mode);
+  }
 
-    static SVGTransform* create(const AffineTransform& affineTransform)
-    {
-        return new SVGTransform(affineTransform);
-    }
+  static SVGTransform* Create(const AffineTransform& affine_transform) {
+    return new SVGTransform(affine_transform);
+  }
 
-    ~SVGTransform() override;
+  ~SVGTransform() override;
 
-    SVGTransform* clone() const;
-    SVGPropertyBase* cloneForAnimation(const String&) const override;
+  SVGTransform* Clone() const;
+  SVGPropertyBase* CloneForAnimation(const String&) const override;
 
-    SVGTransformType transformType() const { return m_transformType; }
+  SVGTransformType TransformType() const { return transform_type_; }
 
-    const AffineTransform& matrix() const { return m_matrix; }
+  const AffineTransform& Matrix() const { return matrix_; }
 
-    // |onMatrixChange| must be called after modifications via |mutableMatrix|.
-    AffineTransform* mutableMatrix() { return &m_matrix; }
-    void onMatrixChange();
+  // |onMatrixChange| must be called after modifications via |mutableMatrix|.
+  AffineTransform* MutableMatrix() { return &matrix_; }
+  void OnMatrixChange();
 
-    float angle() const { return m_angle; }
-    FloatPoint rotationCenter() const { return m_center; }
+  float Angle() const { return angle_; }
+  FloatPoint RotationCenter() const { return center_; }
 
-    void setMatrix(const AffineTransform&);
-    void setTranslate(float tx, float ty);
-    void setScale(float sx, float sy);
-    void setRotate(float angle, float cx, float cy);
-    void setSkewX(float angle);
-    void setSkewY(float angle);
+  void SetMatrix(const AffineTransform&);
+  void SetTranslate(float tx, float ty);
+  void SetScale(float sx, float sy);
+  void SetRotate(float angle, float cx, float cy);
+  void SetSkewX(float angle);
+  void SetSkewY(float angle);
 
-    // Internal use only (animation system)
-    FloatPoint translate() const;
-    FloatSize scale() const;
+  // Internal use only (animation system)
+  FloatPoint Translate() const;
+  FloatSize Scale() const;
 
-    String valueAsString() const override;
+  String ValueAsString() const override;
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* from, SVGPropertyBase* to, SVGPropertyBase* toAtEndOfDurationValue, SVGElement* contextElement) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement* contextElement) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from,
+                              SVGPropertyBase* to,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement* context_element) override;
+  float CalculateDistance(SVGPropertyBase* to,
+                          SVGElement* context_element) override;
 
-    static AnimatedPropertyType classType() { return AnimatedTransform; }
-    AnimatedPropertyType type() const override { return classType(); }
+  static AnimatedPropertyType ClassType() { return kAnimatedTransform; }
+  AnimatedPropertyType GetType() const override { return ClassType(); }
 
-private:
-    SVGTransform();
-    SVGTransform(SVGTransformType, ConstructionMode);
-    explicit SVGTransform(const AffineTransform&);
-    SVGTransform(SVGTransformType, float, const FloatPoint&, const AffineTransform&);
+ private:
+  SVGTransform();
+  SVGTransform(SVGTransformType, ConstructionMode);
+  explicit SVGTransform(const AffineTransform&);
+  SVGTransform(SVGTransformType,
+               float,
+               const FloatPoint&,
+               const AffineTransform&);
 
-    SVGTransformType m_transformType;
-    float m_angle;
-    FloatPoint m_center;
-    AffineTransform m_matrix;
+  SVGTransformType transform_type_;
+  float angle_;
+  FloatPoint center_;
+  AffineTransform matrix_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGTransform_h
+#endif  // SVGTransform_h

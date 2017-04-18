@@ -6,50 +6,50 @@
 #define ASH_WM_WINDOW_MIRROR_VIEW_H_
 
 #include <memory>
-#include <vector>
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "ui/views/view.h"
-#include "ui/wm/core/window_util.h"
+
+namespace ui {
+class LayerTreeOwner;
+}
 
 namespace ash {
 
-class WmWindowAura;
+class WmWindow;
 
 namespace wm {
 
-class ForwardingLayerDelegate;
-
-// A view that mirrors a single window. Layers are lifted from the underlying
-// window (which gets new ones in their place). New paint calls, if any, are
-// forwarded to the underlying window.
-class WindowMirrorView : public views::View, public ::wm::LayerDelegateFactory {
+// A view that mirrors the client area of a single window.
+class WindowMirrorView : public views::View {
  public:
-  explicit WindowMirrorView(WmWindowAura* window);
+  explicit WindowMirrorView(WmWindow* window);
   ~WindowMirrorView() override;
-
-  void Init();
 
   // views::View:
   gfx::Size GetPreferredSize() const override;
   void Layout() override;
-
-  // ::wm::LayerDelegateFactory:
-  ui::LayerDelegate* CreateDelegate(ui::LayerDelegate* delegate) override;
+  bool GetNeedsNotificationWhenVisibleBoundsChange() const override;
+  void OnVisibleBoundsChanged() override;
 
  private:
+  void InitLayerOwner();
+
   // Gets the root of the layer tree that was lifted from |target_| (and is now
   // a child of |this->layer()|).
   ui::Layer* GetMirrorLayer();
 
+  // Calculates the bounds of the client area of the Window in the widget
+  // coordinate space.
+  gfx::Rect GetClientAreaBounds() const;
+
   // The original window that is being represented by |this|.
-  WmWindowAura* target_;
+  WmWindow* target_;
 
-  // Retains ownership of the mirror layer tree.
+  // Retains ownership of the mirror layer tree. This is lazily initialized
+  // the first time the view becomes visible.
   std::unique_ptr<ui::LayerTreeOwner> layer_owner_;
-
-  std::vector<std::unique_ptr<ForwardingLayerDelegate>> delegates_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowMirrorView);
 };

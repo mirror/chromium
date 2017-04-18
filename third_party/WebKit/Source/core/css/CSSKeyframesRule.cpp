@@ -25,195 +25,181 @@
 
 #include "core/css/CSSKeyframesRule.h"
 
+#include <memory>
 #include "core/css/CSSKeyframeRule.h"
 #include "core/css/CSSRuleList.h"
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/frame/UseCounter.h"
-#include "wtf/text/StringBuilder.h"
-#include <memory>
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 StyleRuleKeyframes::StyleRuleKeyframes()
-    : StyleRuleBase(Keyframes)
-    , m_version(0)
-{
-}
+    : StyleRuleBase(kKeyframes), version_(0) {}
 
 StyleRuleKeyframes::StyleRuleKeyframes(const StyleRuleKeyframes& o)
-    : StyleRuleBase(o)
-    , m_keyframes(o.m_keyframes)
-    , m_name(o.m_name)
-    , m_version(o.m_version)
-    , m_isPrefixed(o.m_isPrefixed)
-{
+    : StyleRuleBase(o),
+      keyframes_(o.keyframes_),
+      name_(o.name_),
+      version_(o.version_),
+      is_prefixed_(o.is_prefixed_) {}
+
+StyleRuleKeyframes::~StyleRuleKeyframes() {}
+
+void StyleRuleKeyframes::ParserAppendKeyframe(StyleRuleKeyframe* keyframe) {
+  if (!keyframe)
+    return;
+  keyframes_.push_back(keyframe);
 }
 
-StyleRuleKeyframes::~StyleRuleKeyframes()
-{
+void StyleRuleKeyframes::WrapperAppendKeyframe(StyleRuleKeyframe* keyframe) {
+  keyframes_.push_back(keyframe);
+  StyleChanged();
 }
 
-void StyleRuleKeyframes::parserAppendKeyframe(StyleRuleKeyframe* keyframe)
-{
-    if (!keyframe)
-        return;
-    m_keyframes.append(keyframe);
+void StyleRuleKeyframes::WrapperRemoveKeyframe(unsigned index) {
+  keyframes_.erase(index);
+  StyleChanged();
 }
 
-void StyleRuleKeyframes::wrapperAppendKeyframe(StyleRuleKeyframe* keyframe)
-{
-    m_keyframes.append(keyframe);
-    styleChanged();
-}
-
-void StyleRuleKeyframes::wrapperRemoveKeyframe(unsigned index)
-{
-    m_keyframes.remove(index);
-    styleChanged();
-}
-
-int StyleRuleKeyframes::findKeyframeIndex(const String& key) const
-{
-    std::unique_ptr<Vector<double>> keys = CSSParser::parseKeyframeKeyList(key);
-    if (!keys)
-        return -1;
-    for (size_t i = m_keyframes.size(); i--; ) {
-        if (m_keyframes[i]->keys() == *keys)
-            return i;
-    }
+int StyleRuleKeyframes::FindKeyframeIndex(const String& key) const {
+  std::unique_ptr<Vector<double>> keys = CSSParser::ParseKeyframeKeyList(key);
+  if (!keys)
     return -1;
+  for (size_t i = keyframes_.size(); i--;) {
+    if (keyframes_[i]->Keys() == *keys)
+      return i;
+  }
+  return -1;
 }
 
-DEFINE_TRACE_AFTER_DISPATCH(StyleRuleKeyframes)
-{
-    visitor->trace(m_keyframes);
-    StyleRuleBase::traceAfterDispatch(visitor);
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleKeyframes) {
+  visitor->Trace(keyframes_);
+  StyleRuleBase::TraceAfterDispatch(visitor);
 }
 
-CSSKeyframesRule::CSSKeyframesRule(StyleRuleKeyframes* keyframesRule, CSSStyleSheet* parent)
-    : CSSRule(parent)
-    , m_keyframesRule(keyframesRule)
-    , m_childRuleCSSOMWrappers(keyframesRule->keyframes().size())
-    , m_isPrefixed(keyframesRule->isVendorPrefixed())
-{
+CSSKeyframesRule::CSSKeyframesRule(StyleRuleKeyframes* keyframes_rule,
+                                   CSSStyleSheet* parent)
+    : CSSRule(parent),
+      keyframes_rule_(keyframes_rule),
+      child_rule_cssom_wrappers_(keyframes_rule->Keyframes().size()),
+      is_prefixed_(keyframes_rule->IsVendorPrefixed()) {}
+
+CSSKeyframesRule::~CSSKeyframesRule() {}
+
+void CSSKeyframesRule::setName(const String& name) {
+  CSSStyleSheet::RuleMutationScope mutation_scope(this);
+
+  keyframes_rule_->SetName(name);
 }
 
-CSSKeyframesRule::~CSSKeyframesRule()
-{
+void CSSKeyframesRule::appendRule(const String& rule_text) {
+  DCHECK_EQ(child_rule_cssom_wrappers_.size(),
+            keyframes_rule_->Keyframes().size());
+
+  CSSStyleSheet* style_sheet = parentStyleSheet();
+  CSSParserContext* context =
+      CSSParserContext::CreateWithStyleSheet(ParserContext(), style_sheet);
+  StyleRuleKeyframe* keyframe =
+      CSSParser::ParseKeyframeRule(context, rule_text);
+  if (!keyframe)
+    return;
+
+  CSSStyleSheet::RuleMutationScope mutation_scope(this);
+
+  keyframes_rule_->WrapperAppendKeyframe(keyframe);
+
+  child_rule_cssom_wrappers_.Grow(length());
 }
 
-void CSSKeyframesRule::setName(const String& name)
-{
-    CSSStyleSheet::RuleMutationScope mutationScope(this);
+void CSSKeyframesRule::deleteRule(const String& s) {
+  DCHECK_EQ(child_rule_cssom_wrappers_.size(),
+            keyframes_rule_->Keyframes().size());
 
-    m_keyframesRule->setName(name);
+  int i = keyframes_rule_->FindKeyframeIndex(s);
+  if (i < 0)
+    return;
+
+  CSSStyleSheet::RuleMutationScope mutation_scope(this);
+
+  keyframes_rule_->WrapperRemoveKeyframe(i);
+
+  if (child_rule_cssom_wrappers_[i])
+    child_rule_cssom_wrappers_[i]->SetParentRule(0);
+  child_rule_cssom_wrappers_.erase(i);
 }
 
-void CSSKeyframesRule::appendRule(const String& ruleText)
-{
-    ASSERT(m_childRuleCSSOMWrappers.size() == m_keyframesRule->keyframes().size());
-
-    CSSStyleSheet* styleSheet = parentStyleSheet();
-    CSSParserContext context(parserContext(), UseCounter::getFrom(styleSheet));
-    StyleRuleKeyframe* keyframe = CSSParser::parseKeyframeRule(context, ruleText);
-    if (!keyframe)
-        return;
-
-    CSSStyleSheet::RuleMutationScope mutationScope(this);
-
-    m_keyframesRule->wrapperAppendKeyframe(keyframe);
-
-    m_childRuleCSSOMWrappers.grow(length());
+CSSKeyframeRule* CSSKeyframesRule::findRule(const String& s) {
+  int i = keyframes_rule_->FindKeyframeIndex(s);
+  return (i >= 0) ? Item(i) : nullptr;
 }
 
-void CSSKeyframesRule::deleteRule(const String& s)
-{
-    ASSERT(m_childRuleCSSOMWrappers.size() == m_keyframesRule->keyframes().size());
+String CSSKeyframesRule::cssText() const {
+  StringBuilder result;
+  if (IsVendorPrefixed())
+    result.Append("@-webkit-keyframes ");
+  else
+    result.Append("@keyframes ");
+  result.Append(name());
+  result.Append(" { \n");
 
-    int i = m_keyframesRule->findKeyframeIndex(s);
-    if (i < 0)
-        return;
-
-    CSSStyleSheet::RuleMutationScope mutationScope(this);
-
-    m_keyframesRule->wrapperRemoveKeyframe(i);
-
-    if (m_childRuleCSSOMWrappers[i])
-        m_childRuleCSSOMWrappers[i]->setParentRule(0);
-    m_childRuleCSSOMWrappers.remove(i);
+  unsigned size = length();
+  for (unsigned i = 0; i < size; ++i) {
+    result.Append("  ");
+    result.Append(keyframes_rule_->Keyframes()[i]->CssText());
+    result.Append('\n');
+  }
+  result.Append('}');
+  return result.ToString();
 }
 
-CSSKeyframeRule* CSSKeyframesRule::findRule(const String& s)
-{
-    int i = m_keyframesRule->findKeyframeIndex(s);
-    return (i >= 0) ? item(i) : nullptr;
+unsigned CSSKeyframesRule::length() const {
+  return keyframes_rule_->Keyframes().size();
 }
 
-String CSSKeyframesRule::cssText() const
-{
-    StringBuilder result;
-    if (isVendorPrefixed())
-        result.append("@-webkit-keyframes ");
-    else
-        result.append("@keyframes ");
-    result.append(name());
-    result.append(" { \n");
+CSSKeyframeRule* CSSKeyframesRule::Item(unsigned index) const {
+  if (index >= length())
+    return nullptr;
 
-    unsigned size = length();
-    for (unsigned i = 0; i < size; ++i) {
-        result.append("  ");
-        result.append(m_keyframesRule->keyframes()[i]->cssText());
-        result.append('\n');
-    }
-    result.append('}');
-    return result.toString();
+  DCHECK_EQ(child_rule_cssom_wrappers_.size(),
+            keyframes_rule_->Keyframes().size());
+  Member<CSSKeyframeRule>& rule = child_rule_cssom_wrappers_[index];
+  if (!rule)
+    rule = new CSSKeyframeRule(keyframes_rule_->Keyframes()[index].Get(),
+                               const_cast<CSSKeyframesRule*>(this));
+
+  return rule.Get();
 }
 
-unsigned CSSKeyframesRule::length() const
-{
-    return m_keyframesRule->keyframes().size();
+CSSKeyframeRule* CSSKeyframesRule::AnonymousIndexedGetter(
+    unsigned index) const {
+  const Document* parent_document =
+      CSSStyleSheet::SingleOwnerDocument(parentStyleSheet());
+  if (parent_document) {
+    UseCounter::Count(*parent_document,
+                      UseCounter::kCSSKeyframesRuleAnonymousIndexedGetter);
+  }
+  return Item(index);
 }
 
-CSSKeyframeRule* CSSKeyframesRule::item(unsigned index) const
-{
-    if (index >= length())
-        return nullptr;
-
-    ASSERT(m_childRuleCSSOMWrappers.size() == m_keyframesRule->keyframes().size());
-    Member<CSSKeyframeRule>& rule = m_childRuleCSSOMWrappers[index];
-    if (!rule)
-        rule = new CSSKeyframeRule(m_keyframesRule->keyframes()[index].get(), const_cast<CSSKeyframesRule*>(this));
-
-    return rule.get();
+CSSRuleList* CSSKeyframesRule::cssRules() const {
+  if (!rule_list_cssom_wrapper_)
+    rule_list_cssom_wrapper_ = LiveCSSRuleList<CSSKeyframesRule>::Create(
+        const_cast<CSSKeyframesRule*>(this));
+  return rule_list_cssom_wrapper_.Get();
 }
 
-CSSKeyframeRule* CSSKeyframesRule::anonymousIndexedGetter(unsigned index) const
-{
-    if (UseCounter* useCounter = UseCounter::getFrom(parentStyleSheet()))
-        useCounter->count(UseCounter::CSSKeyframesRuleAnonymousIndexedGetter);
-    return item(index);
+void CSSKeyframesRule::Reattach(StyleRuleBase* rule) {
+  DCHECK(rule);
+  keyframes_rule_ = ToStyleRuleKeyframes(rule);
 }
 
-CSSRuleList* CSSKeyframesRule::cssRules() const
-{
-    if (!m_ruleListCSSOMWrapper)
-        m_ruleListCSSOMWrapper = LiveCSSRuleList<CSSKeyframesRule>::create(const_cast<CSSKeyframesRule*>(this));
-    return m_ruleListCSSOMWrapper.get();
+DEFINE_TRACE(CSSKeyframesRule) {
+  CSSRule::Trace(visitor);
+  visitor->Trace(child_rule_cssom_wrappers_);
+  visitor->Trace(keyframes_rule_);
+  visitor->Trace(rule_list_cssom_wrapper_);
 }
 
-void CSSKeyframesRule::reattach(StyleRuleBase* rule)
-{
-    ASSERT(rule);
-    m_keyframesRule = toStyleRuleKeyframes(rule);
-}
-
-DEFINE_TRACE(CSSKeyframesRule)
-{
-    CSSRule::trace(visitor);
-    visitor->trace(m_childRuleCSSOMWrappers);
-    visitor->trace(m_keyframesRule);
-    visitor->trace(m_ruleListCSSOMWrapper);
-}
-
-} // namespace blink
+}  // namespace blink

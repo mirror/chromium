@@ -6,38 +6,37 @@
 #define KURLStructTraits_h
 
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/WTFString.h"
 #include "url/mojo/url.mojom-blink.h"
 #include "url/url_constants.h"
-#include "wtf/text/WTFString.h"
 
 namespace mojo {
 
 template <>
-struct StructTraits<url::mojom::blink::Url, ::blink::KURL> {
-    static WTF::String url(const ::blink::KURL& blinkUrl)
-    {
-        if (!blinkUrl.isValid() || blinkUrl.getString().length() > url::kMaxURLChars) {
-            return emptyString();
-        }
-
-        return blinkUrl.getString();
+struct StructTraits<url::mojom::blink::Url::DataView, ::blink::KURL> {
+  static WTF::String url(const ::blink::KURL& blinkUrl) {
+    if (!blinkUrl.IsValid() ||
+        blinkUrl.GetString().length() > url::kMaxURLChars) {
+      return g_empty_string;
     }
-    static bool Read(url::mojom::blink::UrlDataView data, ::blink::KURL* out)
-    {
-        WTF::String urlString;
-        if (!data.ReadUrl(&urlString))
-            return false;
 
-        if (urlString.length() > url::kMaxURLChars)
-            return false;
+    return blinkUrl.GetString();
+  }
+  static bool Read(url::mojom::blink::Url::DataView data, ::blink::KURL* out) {
+    WTF::String urlString;
+    if (!data.ReadUrl(&urlString))
+      return false;
 
-        *out = ::blink::KURL(::blink::KURL(), urlString);
-        if (!urlString.isEmpty() && !out->isValid())
-            return false;
+    if (urlString.length() > url::kMaxURLChars)
+      return false;
 
-        return true;
-    }
+    *out = ::blink::KURL(::blink::KURL(), urlString);
+    if (!urlString.IsEmpty() && !out->IsValid())
+      return false;
+
+    return true;
+  }
 };
 }
 
-#endif // KURLStructTraits_h
+#endif  // KURLStructTraits_h

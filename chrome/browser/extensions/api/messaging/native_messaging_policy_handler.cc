@@ -11,9 +11,9 @@
 #include "chrome/browser/extensions/external_policy_loader.h"
 #include "components/policy/core/browser/policy_error_map.h"
 #include "components/policy/core/common/policy_map.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
-#include "grit/components_strings.h"
-#include "policy/policy_constants.h"
+#include "components/strings/grit/components_strings.h"
 
 namespace extensions {
 
@@ -21,7 +21,7 @@ NativeMessagingHostListPolicyHandler::NativeMessagingHostListPolicyHandler(
     const char* policy_name,
     const char* pref_path,
     bool allow_wildcards)
-    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::TYPE_LIST),
+    : policy::TypeCheckingPolicyHandler(policy_name, base::Value::Type::LIST),
       pref_path_(pref_path),
       allow_wildcards_(allow_wildcards) {}
 
@@ -68,10 +68,10 @@ bool NativeMessagingHostListPolicyHandler::CheckAndGetList(
   for (base::ListValue::const_iterator entry(list_value->begin());
        entry != list_value->end(); ++entry) {
     std::string name;
-    if (!(*entry)->GetAsString(&name)) {
+    if (!entry->GetAsString(&name)) {
       errors->AddError(policy_name(), entry - list_value->begin(),
                        IDS_POLICY_TYPE_ERROR,
-                       base::Value::GetTypeName(base::Value::TYPE_STRING));
+                       base::Value::GetTypeName(base::Value::Type::STRING));
       continue;
     }
     if (!(allow_wildcards_ && name == "*") &&

@@ -13,6 +13,7 @@
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "base/trace_event/trace_config_memory_test_util.h"
+#include "base/trace_event/trace_log.h"
 #include "content/public/browser/tracing_controller.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
@@ -41,9 +42,10 @@ class MockDumpProvider : public base::trace_event::MemoryDumpProvider {
 
 class MemoryTracingTest : public ContentBrowserTest {
  public:
-  void DoRequestGlobalDump(const MemoryDumpType& dump_type,
-                           const MemoryDumpLevelOfDetail& level_of_detail,
-                           const base::trace_event::MemoryDumpCallback& cb) {
+  void DoRequestGlobalDump(
+      const MemoryDumpType& dump_type,
+      const MemoryDumpLevelOfDetail& level_of_detail,
+      const base::trace_event::GlobalMemoryDumpCallback& cb) {
     MemoryDumpManager::GetInstance()->RequestGlobalDump(dump_type,
                                                         level_of_detail, cb);
   }
@@ -77,7 +79,7 @@ class MemoryTracingTest : public ContentBrowserTest {
       const MemoryDumpLevelOfDetail& level_of_detail,
       const base::Closure& closure) {
     uint32_t request_index = next_request_index_++;
-    base::trace_event::MemoryDumpCallback callback = base::Bind(
+    base::trace_event::GlobalMemoryDumpCallback callback = base::Bind(
         &MemoryTracingTest::OnGlobalMemoryDumpDone, base::Unretained(this),
         base::ThreadTaskRunnerHandle::Get(), closure, request_index);
     if (from_renderer_thread) {
@@ -102,13 +104,19 @@ class MemoryTracingTest : public ContentBrowserTest {
   }
 
   void TearDown() override {
-    MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
-        mock_dump_provider_.get());
+    MemoryDumpManager::GetInstance()->UnregisterAndDeleteDumpProviderSoon(
+        std::move(mock_dump_provider_));
     mock_dump_provider_.reset();
     ContentBrowserTest::TearDown();
   }
 
   void EnableMemoryTracing() {
+    // Re-enabling tracing could crash these tests https://crbug.com/657628 .
+    if (base::trace_event::TraceLog::GetInstance()->IsEnabled()) {
+      FAIL() << "Tracing seems to be already enabled. "
+                "Very likely this is because the startup tracing file "
+                "has been leaked from a previous test.";
+    }
     // Enable tracing without periodic dumps.
     base::trace_event::TraceConfig trace_config(
         base::trace_event::TraceConfigMemoryTestUtil::
@@ -295,7 +303,8 @@ IN_PROC_BROWSER_TEST_F(SingleProcessMemoryTracingTest, QueuedDumps) {
 #endif  // !defined(GOOGLE_CHROME_BUILD)
 
 // Non-deterministic races under TSan. crbug.com/529678
-#if defined(THREAD_SANITIZER)
+// Flaky on Linux. crbug.com/709524
+#if defined(THREAD_SANITIZER) || defined(OS_LINUX)
 #define MAYBE_BrowserInitiatedDump DISABLED_BrowserInitiatedDump
 #else
 #define MAYBE_BrowserInitiatedDump BrowserInitiatedDump

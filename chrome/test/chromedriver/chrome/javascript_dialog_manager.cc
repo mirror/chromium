@@ -27,6 +27,14 @@ Status JavaScriptDialogManager::GetDialogMessage(std::string* message) {
   return Status(kOk);
 }
 
+Status JavaScriptDialogManager::GetTypeOfDialog(std::string* type) {
+  if (!IsDialogOpen())
+    return Status(kNoAlertOpen);
+
+  *type = dialog_type_queue_.front();
+  return Status(kOk);
+}
+
 Status JavaScriptDialogManager::HandleDialog(bool accept,
                                              const std::string* text) {
   if (!IsDialogOpen())
@@ -37,19 +45,29 @@ Status JavaScriptDialogManager::HandleDialog(bool accept,
   if (text)
     params.SetString("promptText", *text);
   Status status = client_->SendCommand("Page.handleJavaScriptDialog", params);
-  if (status.IsError())
-    return status;
+  if (status.IsError()) {
+    // Retry once to work around
+    // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1500
+    status = client_->SendCommand("Page.handleJavaScriptDialog", params);
+    if (status.IsError())
+      return status;
+  }
 
   // Remove a dialog from the queue. Need to check the queue is not empty here,
   // because it could have been cleared during waiting for the command
   // response.
   if (unhandled_dialog_queue_.size())
     unhandled_dialog_queue_.pop_front();
+
+  if (dialog_type_queue_.size())
+    dialog_type_queue_.pop_front();
+
   return Status(kOk);
 }
 
 Status JavaScriptDialogManager::OnConnected(DevToolsClient* client) {
   unhandled_dialog_queue_.clear();
+  dialog_type_queue_.clear();
   base::DictionaryValue params;
   return client_->SendCommand("Page.enable", params);
 }
@@ -63,10 +81,17 @@ Status JavaScriptDialogManager::OnEvent(DevToolsClient* client,
       return Status(kUnknownError, "dialog event missing or invalid 'message'");
 
     unhandled_dialog_queue_.push_back(message);
+
+    std::string type;
+    if (!params.GetString("type", &type))
+      return Status(kUnknownError, "dialog has invalid 'type'");
+
+    dialog_type_queue_.push_back(type);
   } else if (method == "Page.javascriptDialogClosed") {
     // Inspector only sends this event when all dialogs have been closed.
     // Clear the unhandled queue in case the user closed a dialog manually.
     unhandled_dialog_queue_.clear();
+    dialog_type_queue_.clear();
   }
   return Status(kOk);
 }

@@ -1,30 +1,110 @@
 {
-  "manifest_version": 1,
-  "name": "exe:content_browser",
-  "process-group": "browser",
-  "display_name": "Content Browser",
-  "capabilities": {
-    "required": {
-      "*": { "classes": [ "app" ] },
-
-      // We allow the browser to connect to any interfaces exposed by its child
-      // processes.
-      "exe:content_renderer": { "classes": [ "all_interfaces" ] },
-      "exe:content_gpu": { "classes": [ "all_interfaces" ] },
-      "exe:content_utility": { "classes": [ "all_interfaces" ] },
-
-      "mojo:shell": {
-        "classes": [
-          "shell:client_process",
-          "shell:instance_name",
-          "shell:user_id"
+  "name": "content_browser",
+  "display_name": "Content (browser process)",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "gpu": [
+          "content::mojom::FieldTrialRecorder",
+          "media::mojom::AndroidOverlayProvider",
+          "memory_instrumentation::mojom::Coordinator"
+        ],
+        "plugin": [
+          "discardable_memory::mojom::DiscardableSharedMemoryManager",
+          "ui::mojom::Gpu"
+        ],
+        "renderer": [
+          "blink::mojom::BackgroundFetchService",
+          "blink::mojom::BackgroundSyncService",
+          "blink::mojom::BroadcastChannelProvider",
+          "blink::mojom::BudgetService",
+          "blink::mojom::Hyphenation",
+          "blink::mojom::MimeRegistry",
+          "blink::mojom::NotificationService",
+          "blink::mojom::OffscreenCanvasProvider",
+          "blink::mojom::PermissionService",
+          "blink::mojom::WebSocket",
+          "content::mojom::FieldTrialRecorder",
+          "content::mojom::MemoryCoordinatorHandle",
+          "content::mojom::PushMessaging",
+          "content::mojom::FrameSinkProvider",
+          "content::mojom::ServiceWorkerDispatcherHost",
+          "content::mojom::StoragePartitionService",
+          "content::mojom::URLLoaderFactory",
+          "content::mojom::VideoCaptureHost",
+          "device::mojom::GamepadMonitor",
+          "discardable_memory::mojom::DiscardableSharedMemoryManager",
+          "media::mojom::ImageCapture",
+          "memory_coordinator::mojom::MemoryCoordinatorHandle",
+          "memory_instrumentation::mojom::Coordinator",
+          "payments::mojom::PaymentManager",
+          "shape_detection::mojom::BarcodeDetection",
+          "shape_detection::mojom::FaceDetectionProvider",
+          "shape_detection::mojom::TextDetection",
+          "ui::mojom::Gpu"
+        ],
+        "service_manager:service_factory": [
+          "service_manager::mojom::ServiceFactory"
         ]
       },
-      "mojo:user": {
-        "interfaces": [
-          "leveldb::mojom::LevelDBService",
-          "user_service::UserService"
-         ]
+      "requires": {
+        "*": [ "app" ],
+        // In classic ash, the browser supplies ash interfaces to itself.
+        "content_browser": [ "ash" ],
+        "content_gpu": [ "browser" ],
+        "content_plugin": [ "browser" ],
+        "content_renderer": [ "browser" ],
+        "content_utility": [ "browser" ],
+        "data_decoder": [ "image_decoder" ],
+        "device": [ "device:wake_lock" ],
+        "file": [ "file:filesystem", "file:leveldb" ],
+        "media": [ "media:media" ],
+        "network": [ "url_loader" ],
+        "ui": [ "display_output_protection" ],
+        "service_manager": [
+          "service_manager:client_process",
+          "service_manager:instance_name",
+          "service_manager:user_id"
+        ],
+        "shape_detection": [
+          "barcode_detection",
+          "face_detection",
+          "text_detection"
+        ]
+      }
+    },
+    "navigation:frame": {
+      "provides": {
+        "renderer": [
+          // TODO(beng): these belong in //chrome's overlay, but there are some
+          // issues with mash browser_tests's manifest config that make this
+          // impossible this week. Remove once sky/ken fix this.
+          "autofill::mojom::AutofillDriver",
+          "autofill::mojom::PasswordManagerDriver",
+          "blink::mojom::MediaSessionService",
+          "blink::mojom::PermissionService",
+          "blink::mojom::PresentationService",
+          "blink::mojom::SensitiveInputVisibilityService",
+          "blink::mojom::WebBluetoothService",
+          "blink::mojom::WebSocket",
+          // TODO(beng): figure out how to overlay test interfaces like this.
+          "content::mojom::BrowserTarget",
+          "device::mojom::VRService",
+          "device::mojom::GeolocationService",
+          "device::mojom::WakeLockService",
+          "device::nfc::mojom::NFC",
+          "device::usb::DeviceManager",
+          "discardable_memory::mojom::DiscardableSharedMemoryManager",
+          "media::mojom::InterfaceFactory",
+          "media::mojom::RemoterFactory",
+          "media::mojom::Renderer",
+          "mojom::MediaDevicesDispatcherHost",
+          "payments::mojom::PaymentRequest",
+          "ui::mojom::Gpu"
+        ]
+      },
+      "requires": {
+        "content_renderer": [ "browser" ]
       }
     }
   }

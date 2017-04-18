@@ -12,39 +12,40 @@
 
 namespace blink {
 
-IndexedDBClient::IndexedDBClient()
-{
+IndexedDBClient::IndexedDBClient(LocalFrame& frame)
+    : Supplement<LocalFrame>(frame) {}
+
+IndexedDBClient::IndexedDBClient(WorkerClients& clients)
+    : Supplement<WorkerClients>(clients) {}
+
+IndexedDBClient* IndexedDBClient::From(ExecutionContext* context) {
+  if (context->IsDocument())
+    return static_cast<IndexedDBClient*>(Supplement<LocalFrame>::From(
+        ToDocument(*context).GetFrame(), SupplementName()));
+
+  WorkerClients* clients = ToWorkerGlobalScope(*context).Clients();
+  DCHECK(clients);
+  return static_cast<IndexedDBClient*>(
+      Supplement<WorkerClients>::From(clients, SupplementName()));
 }
 
-IndexedDBClient* IndexedDBClient::from(ExecutionContext* context)
-{
-    if (context->isDocument())
-        return static_cast<IndexedDBClient*>(Supplement<LocalFrame>::from(toDocument(*context).frame(), supplementName()));
-
-    WorkerClients* clients = toWorkerGlobalScope(*context).clients();
-    ASSERT(clients);
-    return static_cast<IndexedDBClient*>(Supplement<WorkerClients>::from(clients, supplementName()));
+const char* IndexedDBClient::SupplementName() {
+  return "IndexedDBClient";
 }
 
-const char* IndexedDBClient::supplementName()
-{
-    return "IndexedDBClient";
+DEFINE_TRACE(IndexedDBClient) {
+  Supplement<LocalFrame>::Trace(visitor);
+  Supplement<WorkerClients>::Trace(visitor);
 }
 
-DEFINE_TRACE(IndexedDBClient)
-{
-    Supplement<LocalFrame>::trace(visitor);
-    Supplement<WorkerClients>::trace(visitor);
+void ProvideIndexedDBClientTo(LocalFrame& frame, IndexedDBClient* client) {
+  Supplement<LocalFrame>::ProvideTo(frame, IndexedDBClient::SupplementName(),
+                                    client);
 }
 
-void provideIndexedDBClientTo(LocalFrame& frame, IndexedDBClient* client)
-{
-    frame.provideSupplement(IndexedDBClient::supplementName(), client);
+void ProvideIndexedDBClientToWorker(WorkerClients* clients,
+                                    IndexedDBClient* client) {
+  clients->ProvideSupplement(IndexedDBClient::SupplementName(), client);
 }
 
-void provideIndexedDBClientToWorker(WorkerClients* clients, IndexedDBClient* client)
-{
-    clients->provideSupplement(IndexedDBClient::supplementName(), client);
-}
-
-} // namespace blink
+}  // namespace blink

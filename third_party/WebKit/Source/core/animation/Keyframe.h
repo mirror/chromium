@@ -6,14 +6,14 @@
 #define Keyframe_h
 
 #include "core/CoreExport.h"
-#include "core/animation/AnimationEffect.h"
+#include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/EffectModel.h"
 #include "core/animation/PropertyHandle.h"
 #include "core/animation/animatable/AnimatableValue.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include "wtf/RefCounted.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
@@ -26,93 +26,115 @@ class ComputedStyle;
 // http://w3c.github.io/web-animations/#keyframe
 // FIXME: Make Keyframe immutable
 class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
-    USING_FAST_MALLOC(Keyframe);
-    WTF_MAKE_NONCOPYABLE(Keyframe);
-public:
-    virtual ~Keyframe() { }
+  USING_FAST_MALLOC(Keyframe);
+  WTF_MAKE_NONCOPYABLE(Keyframe);
 
-    void setOffset(double offset) { m_offset = offset; }
-    double offset() const { return m_offset; }
+ public:
+  virtual ~Keyframe() {}
 
-    void setComposite(EffectModel::CompositeOperation composite) { m_composite = composite; }
-    EffectModel::CompositeOperation composite() const { return m_composite; }
+  void SetOffset(double offset) { offset_ = offset; }
+  double Offset() const { return offset_; }
 
-    void setEasing(PassRefPtr<TimingFunction> easing) { m_easing = easing; }
-    TimingFunction& easing() const { return *m_easing; }
+  void SetComposite(EffectModel::CompositeOperation composite) {
+    composite_ = composite;
+  }
+  EffectModel::CompositeOperation Composite() const { return composite_; }
 
-    static bool compareOffsets(const RefPtr<Keyframe>& a, const RefPtr<Keyframe>& b)
-    {
-        return a->offset() < b->offset();
+  void SetEasing(PassRefPtr<TimingFunction> easing) {
+    easing_ = std::move(easing);
+  }
+  TimingFunction& Easing() const { return *easing_; }
+
+  static bool CompareOffsets(const RefPtr<Keyframe>& a,
+                             const RefPtr<Keyframe>& b) {
+    return a->Offset() < b->Offset();
+  }
+
+  virtual PropertyHandleSet Properties() const = 0;
+
+  virtual PassRefPtr<Keyframe> Clone() const = 0;
+  PassRefPtr<Keyframe> CloneWithOffset(double offset) const {
+    RefPtr<Keyframe> the_clone = Clone();
+    the_clone->SetOffset(offset);
+    return the_clone.Release();
+  }
+
+  virtual bool IsAnimatableValueKeyframe() const { return false; }
+  virtual bool IsStringKeyframe() const { return false; }
+  virtual bool IsTransitionKeyframe() const { return false; }
+
+  // Represents a property-value pair in a keyframe.
+  class PropertySpecificKeyframe : public RefCounted<PropertySpecificKeyframe> {
+    USING_FAST_MALLOC(PropertySpecificKeyframe);
+    WTF_MAKE_NONCOPYABLE(PropertySpecificKeyframe);
+
+   public:
+    virtual ~PropertySpecificKeyframe() {}
+    double Offset() const { return offset_; }
+    TimingFunction& Easing() const { return *easing_; }
+    EffectModel::CompositeOperation Composite() const { return composite_; }
+    double UnderlyingFraction() const {
+      return composite_ == EffectModel::kCompositeReplace ? 0 : 1;
     }
+    virtual bool IsNeutral() const = 0;
+    virtual PassRefPtr<PropertySpecificKeyframe> CloneWithOffset(
+        double offset) const = 0;
 
-    virtual PropertyHandleSet properties() const = 0;
-
-    virtual PassRefPtr<Keyframe> clone() const = 0;
-    PassRefPtr<Keyframe> cloneWithOffset(double offset) const
-    {
-        RefPtr<Keyframe> theClone = clone();
-        theClone->setOffset(offset);
-        return theClone.release();
+    // FIXME: Remove this once CompositorAnimations no longer depends on
+    // AnimatableValues
+    virtual bool PopulateAnimatableValue(
+        CSSPropertyID,
+        Element&,
+        const ComputedStyle& base_style,
+        const ComputedStyle* parent_style) const {
+      return false;
     }
+    virtual PassRefPtr<AnimatableValue> GetAnimatableValue() const = 0;
 
-    virtual bool isAnimatableValueKeyframe() const { return false; }
-    virtual bool isStringKeyframe() const { return false; }
-
-    // Represents a property-value pair in a keyframe.
-    class PropertySpecificKeyframe : public RefCounted<PropertySpecificKeyframe> {
-        USING_FAST_MALLOC(PropertySpecificKeyframe);
-        WTF_MAKE_NONCOPYABLE(PropertySpecificKeyframe);
-    public:
-        virtual ~PropertySpecificKeyframe() { }
-        double offset() const { return m_offset; }
-        TimingFunction& easing() const { return *m_easing; }
-        EffectModel::CompositeOperation composite() const { return m_composite; }
-        double underlyingFraction() const { return m_composite == EffectModel::CompositeReplace ? 0 : 1; }
-        virtual bool isNeutral() const { NOTREACHED(); return false; }
-        virtual PassRefPtr<PropertySpecificKeyframe> cloneWithOffset(double offset) const = 0;
-
-        // FIXME: Remove this once CompositorAnimations no longer depends on AnimatableValues
-        virtual bool populateAnimatableValue(CSSPropertyID, Element&, const ComputedStyle& baseStyle, const ComputedStyle* parentStyle) const { return false; }
-        virtual const PassRefPtr<AnimatableValue> getAnimatableValue() const = 0;
-
-        virtual bool isAnimatableValuePropertySpecificKeyframe() const { return false; }
-        virtual bool isCSSPropertySpecificKeyframe() const { return false; }
-        virtual bool isSVGPropertySpecificKeyframe() const { return false; }
-
-        virtual PassRefPtr<PropertySpecificKeyframe> neutralKeyframe(double offset, PassRefPtr<TimingFunction> easing) const = 0;
-        virtual PassRefPtr<Interpolation> createInterpolation(PropertyHandle, const Keyframe::PropertySpecificKeyframe& end) const;
-
-    protected:
-        PropertySpecificKeyframe(double offset, PassRefPtr<TimingFunction> easing, EffectModel::CompositeOperation);
-
-        double m_offset;
-        RefPtr<TimingFunction> m_easing;
-        EffectModel::CompositeOperation m_composite;
-    };
-
-    virtual PassRefPtr<PropertySpecificKeyframe> createPropertySpecificKeyframe(PropertyHandle) const = 0;
-
-protected:
-    Keyframe()
-        : m_offset(nullValue())
-        , m_composite(EffectModel::CompositeReplace)
-        , m_easing(LinearTimingFunction::shared())
-    {
+    virtual bool IsAnimatableValuePropertySpecificKeyframe() const {
+      return false;
     }
-    Keyframe(double offset, EffectModel::CompositeOperation composite, PassRefPtr<TimingFunction> easing)
-        : m_offset(offset)
-        , m_composite(composite)
-        , m_easing(easing)
-    {
-    }
+    virtual bool IsCSSPropertySpecificKeyframe() const { return false; }
+    virtual bool IsSVGPropertySpecificKeyframe() const { return false; }
+    virtual bool IsTransitionPropertySpecificKeyframe() const { return false; }
 
-    double m_offset;
-    EffectModel::CompositeOperation m_composite;
-    RefPtr<TimingFunction> m_easing;
+    virtual PassRefPtr<PropertySpecificKeyframe> NeutralKeyframe(
+        double offset,
+        PassRefPtr<TimingFunction> easing) const = 0;
+    virtual PassRefPtr<Interpolation> CreateInterpolation(
+        const PropertyHandle&,
+        const Keyframe::PropertySpecificKeyframe& end) const;
+
+   protected:
+    PropertySpecificKeyframe(double offset,
+                             PassRefPtr<TimingFunction> easing,
+                             EffectModel::CompositeOperation);
+
+    double offset_;
+    RefPtr<TimingFunction> easing_;
+    EffectModel::CompositeOperation composite_;
+  };
+
+  virtual PassRefPtr<PropertySpecificKeyframe> CreatePropertySpecificKeyframe(
+      const PropertyHandle&) const = 0;
+
+ protected:
+  Keyframe()
+      : offset_(NullValue()),
+        composite_(EffectModel::kCompositeReplace),
+        easing_(LinearTimingFunction::Shared()) {}
+  Keyframe(double offset,
+           EffectModel::CompositeOperation composite,
+           PassRefPtr<TimingFunction> easing)
+      : offset_(offset), composite_(composite), easing_(std::move(easing)) {}
+
+  double offset_;
+  EffectModel::CompositeOperation composite_;
+  RefPtr<TimingFunction> easing_;
 };
 
 using PropertySpecificKeyframe = Keyframe::PropertySpecificKeyframe;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Keyframe_h
+#endif  // Keyframe_h

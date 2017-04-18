@@ -3,10 +3,13 @@
 # found in the LICENSE file.
 
 from page_sets.system_health import platforms
+from page_sets.system_health import story_tags
 from page_sets.system_health import system_health_story
 
 from page_sets.login_helpers import dropbox_login
 from page_sets.login_helpers import google_login
+
+from telemetry import decorators
 
 
 class _LoadingStory(system_health_story.SystemHealthStory):
@@ -17,16 +20,18 @@ class _LoadingStory(system_health_story.SystemHealthStory):
 ################################################################################
 # Search and e-commerce.
 ################################################################################
+# TODO(petrcermak): Split these into 'portal' and 'shopping' stories.
 
 
 class LoadGoogleStory(_LoadingStory):
   NAME = 'load:search:google'
-  URL = 'https://www.google.com/#hl=en&q=science'
+  URL = 'https://www.google.co.uk/'
 
 
 class LoadBaiduStory(_LoadingStory):
   NAME = 'load:search:baidu'
   URL = 'https://www.baidu.com/s?word=google'
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadYahooStory(_LoadingStory):
@@ -34,15 +39,17 @@ class LoadYahooStory(_LoadingStory):
   URL = 'https://search.yahoo.com/search;_ylt=?p=google'
 
 
-class LoadAmazonStory(_LoadingStory):
+class LoadAmazonDesktopStory(_LoadingStory):
   NAME = 'load:search:amazon'
   URL = 'https://www.amazon.com/s/?field-keywords=nexus'
+  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
 
 
 class LoadTaobaoDesktopStory(_LoadingStory):
   NAME = 'load:search:taobao'
   URL = 'https://world.taobao.com/'
   SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadTaobaoMobileStory(_LoadingStory):
@@ -50,11 +57,13 @@ class LoadTaobaoMobileStory(_LoadingStory):
   # "ali_trackid" in the URL suppresses "Download app" interstitial.
   URL = 'http://m.intl.taobao.com/?ali_trackid'
   SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadYandexStory(_LoadingStory):
   NAME = 'load:search:yandex'
   URL = 'https://yandex.ru/touchsearch?text=science'
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadEbayStory(_LoadingStory):
@@ -87,22 +96,26 @@ class LoadVkStory(_LoadingStory):
   # indefinitely on mobile
   # (see https://github.com/chromium/web-page-replay/issues/71).
   SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
-class LoadInstagramStory(_LoadingStory):
+class LoadInstagramDesktopStory(_LoadingStory):
   NAME = 'load:social:instagram'
   URL = 'https://www.instagram.com/selenagomez/'
+  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
 
 
 class LoadPinterestStory(_LoadingStory):
   NAME = 'load:social:pinterest'
   URL = 'https://uk.pinterest.com/categories/popular/'
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
 
 
 class LoadTumblrStory(_LoadingStory):
   NAME = 'load:social:tumblr'
   # Redirects to the "http://" version.
   URL = 'https://50thousand.tumblr.com/'
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
 
 
 ################################################################################
@@ -120,9 +133,10 @@ class LoadCnnStory(_LoadingStory):
   NAME = 'load:news:cnn'
   # Using "https://" shows "Your connection is not private".
   URL = 'http://edition.cnn.com'
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
 
 
-class LoadFacebookStory(_LoadingStory):
+class LoadFlipboardStory(_LoadingStory):
   NAME = 'load:news:flipboard'
   URL = 'https://flipboard.com/explore'
 
@@ -148,6 +162,7 @@ class LoadQqMobileStory(_LoadingStory):
   NAME = 'load:news:qq'
   # Using "https://" hangs and shows "This site can't be reached".
   URL = 'http://news.qq.com'
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadRedditDesktopStory(_LoadingStory):
@@ -162,7 +177,7 @@ class LoadRedditMobileStory(_LoadingStory):
   SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
 
 
-class LoadSohuStory(_LoadingStory):
+class LoadSohuMobileStory(_LoadingStory):
   NAME = 'load:news:sohu'
   # Using "https://" leads to missing images and scripts on mobile (due to
   # mixed content).
@@ -171,6 +186,7 @@ class LoadSohuStory(_LoadingStory):
   # always fails to completely load due to
   # https://github.com/chromium/web-page-replay/issues/74.
   SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadWashingtonPostMobileStory(_LoadingStory):
@@ -185,7 +201,8 @@ class LoadWashingtonPostMobileStory(_LoadingStory):
     # to phone" button. So on tablets we run with the popup window open. The
     # popup is transparent, so this is mostly an aesthetical issue.
     has_button = action_runner.EvaluateJavaScript(
-        '!!document.querySelector("%s")' % self._CLOSE_BUTTON_SELECTOR)
+        '!!document.querySelector({{ selector }})',
+        selector=self._CLOSE_BUTTON_SELECTOR)
     if has_button:
       action_runner.ClickElement(selector=self._CLOSE_BUTTON_SELECTOR)
 
@@ -193,10 +210,18 @@ class LoadWashingtonPostMobileStory(_LoadingStory):
 class LoadWikipediaStory(_LoadingStory):
   NAME = 'load:news:wikipedia'
   URL = 'https://en.wikipedia.org/wiki/Science'
+  TAGS = [story_tags.EMERGING_MARKET]
+
+
+class LoadIrctcStory(_LoadingStory):
+  NAME = 'load:news:irctc'
+  URL = 'https://www.irctc.co.in'
+  SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  TAGS = [story_tags.EMERGING_MARKET]
 
 
 ################################################################################
-# Audio and video.
+# Audio, images, and video.
 ################################################################################
 
 
@@ -204,6 +229,8 @@ class LoadYouTubeStory(_LoadingStory):
   # No way to disable autoplay on desktop.
   NAME = 'load:media:youtube'
   URL = 'https://www.youtube.com/watch?v=QGfhS1hfTWw&autoplay=false'
+  PLATFORM_SPECIFIC = True
+  TAGS = [story_tags.EMERGING_MARKET]
 
 
 class LoadDailymotionStory(_LoadingStory):
@@ -231,7 +258,7 @@ class Load9GagStory(_LoadingStory):
   URL = 'https://www.9gag.com/'
 
 
-class LoadFlickr(_LoadingStory):
+class LoadFlickrStory(_LoadingStory):
   NAME = 'load:media:flickr'
   URL = 'https://www.flickr.com/photos/tags/farm'
 
@@ -241,6 +268,28 @@ class LoadFlickr(_LoadingStory):
         document.querySelector(
             '.search-photos-everyone-trending-view .photo-list-view')
                 !== null''')
+
+
+class LoadImgurStory(_LoadingStory):
+  NAME = 'load:media:imgur'
+  URL = 'http://imgur.com/gallery/5UlBN'
+
+
+class LoadFacebookPhotosMobileStory(_LoadingStory):
+  NAME = 'load:media:facebook_photos'
+  URL = (
+      'https://m.facebook.com/rihanna/photos/a.207477806675.138795.10092511675/10153911739606676/?type=3&source=54&ref=page_internal')
+  SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  TAGS = [story_tags.EMERGING_MARKET]
+
+
+class LoadFacebookPhotosDesktopStory(_LoadingStory):
+  NAME = 'load:media:facebook_photos'
+  URL = (
+      'https://www.facebook.com/rihanna/photos/a.207477806675.138795.10092511675/10153911739606676/?type=3&theater')
+  # Recording currently does not work. The page gets stuck in the
+  # theater viewer.
+  SUPPORTED_PLATFORMS = platforms.NO_PLATFORMS
 
 
 ################################################################################
@@ -257,7 +306,7 @@ class LoadDocsStory(_LoadingStory):
 class _LoadGmailBaseStory(_LoadingStory):
   NAME = 'load:tools:gmail'
   URL = 'https://mail.google.com/mail/'
-  SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  ABSTRACT_STORY = True
 
   def _Login(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest',
@@ -269,6 +318,7 @@ class _LoadGmailBaseStory(_LoadingStory):
     # navigate to a sub-URL to set up the session and hit the resulting
     # redirection loop. Afterwards, we can safely navigate to
     # https://mail.google.com.
+    action_runner.tab.WaitForDocumentReadyStateToBeComplete()
     action_runner.Navigate(
         'https://mail.google.com/mail/mu/mp/872/trigger_redirection_loop')
     action_runner.tab.WaitForDocumentReadyStateToBeComplete()
@@ -282,24 +332,16 @@ class LoadGmailDesktopStory(_LoadGmailBaseStory):
     action_runner.WaitForJavaScriptCondition(
         'document.getElementById("loading").style.display === "none"')
 
+
+@decorators.Disabled('android')  # crbug.com/657433
 class LoadGmailMobileStory(_LoadGmailBaseStory):
   SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
 
   def _DidLoadDocument(self, action_runner):
-    # Close the "Get Inbox by Gmail" interstitial.
-    action_runner.WaitForJavaScriptCondition(
-        'document.querySelector("#isppromo a") !== null')
-    action_runner.ExecuteJavaScript(
-        'document.querySelector("#isppromo a").click()')
     # Wait until the UI loads.
+    action_runner.WaitForElement('#apploadingdiv')
     action_runner.WaitForJavaScriptCondition(
         'document.getElementById("apploadingdiv").style.height === "0px"')
-
-
-class LoadMapsStory(_LoadingStory):
-  NAME = 'load:tools:maps'
-  URL = 'https://www.google.com/maps/place/London,+UK/'
-
 
 class LoadStackOverflowStory(_LoadingStory):
   NAME = 'load:tools:stackoverflow'
@@ -318,11 +360,13 @@ class LoadDropboxStory(_LoadingStory):
 class LoadWeatherStory(_LoadingStory):
   NAME = 'load:tools:weather'
   URL = 'https://weather.com/en-GB/weather/today/l/USCA0286:1:US'
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
 
 
 class LoadDriveStory(_LoadingStory):
   NAME = 'load:tools:drive'
   URL = 'https://drive.google.com/drive/my-drive'
+  TAGS = [story_tags.JAVASCRIPT_HEAVY]
 
   def _Login(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'googletest',
@@ -363,16 +407,15 @@ class LoadSpyChaseStory(_LoadingStory):
         'document.querySelector("#game canvas").style.background !== ""')
 
 
+@decorators.Disabled('mac') # crbug.com/664661
 class LoadMiniclipStory(_LoadingStory):
   NAME = 'load:games:miniclip'
   # Using "https://" causes "404 Not Found" during WPR recording.
   URL = 'http://www.miniclip.com/games/en/'
-  # Desktop only (requires Flash).
-  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY  # Requires Flash.
 
 
 class LoadAlphabettyStory(_LoadingStory):
   NAME = 'load:games:alphabetty'
   URL = 'https://king.com/play/alphabetty'
-  # Desktop only (requires Flash).
-  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY  # Requires Flash.

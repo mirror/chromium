@@ -8,8 +8,8 @@
 
 #include "base/trace_event/trace_event.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
-#include "cc/proto/layer.pb.h"
 #include "cc/trees/layer_tree_host.h"
+#include "cc/trees/layer_tree_settings.h"
 
 namespace cc {
 
@@ -40,13 +40,8 @@ void HeadsUpDisplayLayer::PrepareForCalculateDrawProperties(
   gfx::Transform matrix;
   matrix.MakeIdentity();
 
-  if (layer_tree_host()->debug_state().ShowHudRects()) {
-    int max_texture_size =
-        layer_tree_host()->GetRendererCapabilities().max_texture_size;
-    bounds.SetSize(std::min(max_texture_size,
-                            device_viewport_in_layout_pixels.width()),
-                   std::min(max_texture_size,
-                            device_viewport_in_layout_pixels.height()));
+  if (layer_tree_host()->GetDebugState().ShowHudRects()) {
+    bounds = device_viewport_in_layout_pixels;
   } else {
     int size = 256;
     bounds.SetSize(size, size);
@@ -64,11 +59,6 @@ bool HeadsUpDisplayLayer::HasDrawableContent() const {
 std::unique_ptr<LayerImpl> HeadsUpDisplayLayer::CreateLayerImpl(
     LayerTreeImpl* tree_impl) {
   return HeadsUpDisplayLayerImpl::Create(tree_impl, id());
-}
-
-void HeadsUpDisplayLayer::SetTypeForProtoSerialization(
-    proto::LayerNode* proto) const {
-  proto->set_type(proto::LayerNode::HEADS_UP_DISPLAY_LAYER);
 }
 
 void HeadsUpDisplayLayer::PushPropertiesTo(LayerImpl* layer) {

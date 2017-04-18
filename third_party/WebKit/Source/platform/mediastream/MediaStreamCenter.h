@@ -31,13 +31,13 @@
 #ifndef MediaStreamCenter_h
 #define MediaStreamCenter_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebMediaStreamCenterClient.h"
-#include "wtf/Allocator.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
@@ -46,36 +46,41 @@ class MediaStreamComponent;
 class MediaStreamDescriptor;
 class WebMediaStream;
 class WebMediaStreamCenter;
-class WebMediaStreamTrack;
 
-class PLATFORM_EXPORT MediaStreamCenter final : public WebMediaStreamCenterClient {
-    USING_FAST_MALLOC(MediaStreamCenter);
-    WTF_MAKE_NONCOPYABLE(MediaStreamCenter);
-public:
-    ~MediaStreamCenter() override;
+class PLATFORM_EXPORT MediaStreamCenter final
+    : public WebMediaStreamCenterClient {
+  USING_FAST_MALLOC(MediaStreamCenter);
+  WTF_MAKE_NONCOPYABLE(MediaStreamCenter);
 
-    static MediaStreamCenter& instance();
+ public:
+  ~MediaStreamCenter() override;
 
-    void didCreateMediaStreamTrack(MediaStreamComponent*);
-    void didSetMediaStreamTrackEnabled(MediaStreamComponent*);
-    bool didStopMediaStreamTrack(MediaStreamComponent*);
-    std::unique_ptr<AudioSourceProvider> createWebAudioSourceFromMediaStreamTrack(MediaStreamComponent*);
+  static MediaStreamCenter& Instance();
 
-    void didCreateMediaStream(MediaStreamDescriptor*);
-    void didCreateMediaStreamAndTracks(MediaStreamDescriptor*);
-    bool didAddMediaStreamTrack(MediaStreamDescriptor*, MediaStreamComponent*);
-    bool didRemoveMediaStreamTrack(MediaStreamDescriptor*, MediaStreamComponent*);
-    void didStopLocalMediaStream(MediaStreamDescriptor*);
+  void DidCreateMediaStreamTrack(MediaStreamComponent*);
+  void DidCloneMediaStreamTrack(MediaStreamComponent* original,
+                                MediaStreamComponent* clone);
+  void DidSetMediaStreamTrackEnabled(MediaStreamComponent*);
+  void DidSetContentHint(MediaStreamComponent*);
+  bool DidStopMediaStreamTrack(MediaStreamComponent*);
+  std::unique_ptr<AudioSourceProvider> CreateWebAudioSourceFromMediaStreamTrack(
+      MediaStreamComponent*);
 
-    // blink::WebMediaStreamCenterClient
-    void stopLocalMediaStream(const WebMediaStream&) override;
+  void DidCreateMediaStream(MediaStreamDescriptor*);
+  void DidCreateMediaStreamAndTracks(MediaStreamDescriptor*);
+  bool DidAddMediaStreamTrack(MediaStreamDescriptor*, MediaStreamComponent*);
+  bool DidRemoveMediaStreamTrack(MediaStreamDescriptor*, MediaStreamComponent*);
+  void DidStopLocalMediaStream(MediaStreamDescriptor*);
 
-private:
-    MediaStreamCenter();
+  // blink::WebMediaStreamCenterClient
+  void StopLocalMediaStream(const WebMediaStream&) override;
 
-    std::unique_ptr<WebMediaStreamCenter> m_private;
+ private:
+  MediaStreamCenter();
+
+  std::unique_ptr<WebMediaStreamCenter> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaStreamCenter_h
+#endif  // MediaStreamCenter_h

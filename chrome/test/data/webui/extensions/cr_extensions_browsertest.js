@@ -19,7 +19,7 @@ GEN('#include "chrome/browser/ui/webui/extensions/' +
  * extensions.
  * @constructor
  * @extends {PolymerTest}
-*/
+ */
 function CrExtensionsBrowserTest() {}
 
 CrExtensionsBrowserTest.prototype = {
@@ -30,20 +30,26 @@ CrExtensionsBrowserTest.prototype = {
 
   /** @override */
   commandLineSwitches: [{
-    switchName: 'enable-md-extensions',
+    switchName: 'enable-features',
+    switchValue: 'MaterialDesignExtensions',
   }],
 
   /** @override */
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
     'extension_test_util.js',
     'extension_detail_view_test.js',
+    'extension_code_section_test.js',
+    'extension_error_page_test.js',
     'extension_item_test.js',
     'extension_item_list_test.js',
+    'extension_load_error_test.js',
     'extension_keyboard_shortcuts_test.js',
+    'extension_options_dialog_test.js',
     'extension_pack_dialog_test.js',
     'extension_service_test.js',
     'extension_shortcut_input_test.js',
     'extension_sidebar_test.js',
+    'extension_toolbar_test.js',
     'extension_manager_test.js',
     '../mock_controller.js',
     '../../../../../ui/webui/resources/js/promise_resolver.js',
@@ -72,6 +78,20 @@ CrExtensionsBrowserTestWithInstalledExtension.prototype = {
 };
 
 /**
+ * Test fixture that navigates to chrome://extensions/?id=<id>.
+ * @constructor
+ * @extends {CrExtensionsBrowserTestWithInstalledExtension}
+ */
+function CrExtensionsBrowserTestWithIdQueryParam() {}
+
+CrExtensionsBrowserTestWithIdQueryParam.prototype = {
+  __proto__: CrExtensionsBrowserTestWithInstalledExtension.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://extensions/?id=ldnnhddmnhbkjipkidpdiheffobcpfmf',
+};
+
+/**
  * Test fixture with multiple installed extensions of different types.
  * @constructor
  * @extends {CrExtensionsBrowserTest}
@@ -93,14 +113,25 @@ CrExtensionsBrowserTestWithMultipleExtensionTypesInstalled.prototype = {
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Sidebar Tests
 
-TEST_F('CrExtensionsBrowserTest', 'ExtensionSidebarLayoutTest', function() {
+TEST_F('CrExtensionsBrowserTest',
+       'ExtensionSidebarLayoutAndClickHandlersTest', function() {
   extension_sidebar_tests.registerTests();
-  mocha.grep(assert(extension_sidebar_tests.TestNames.Layout)).run();
+  mocha.grep(
+      assert(extension_sidebar_tests.TestNames.LayoutAndClickHandlers)).run();
 });
-TEST_F('CrExtensionsBrowserTest', 'ExtensionSidebarClickHandlerTest',
-       function() {
-  extension_sidebar_tests.registerTests();
-  mocha.grep(assert(extension_sidebar_tests.TestNames.ClickHandlers)).run();
+
+////////////////////////////////////////////////////////////////////////////////
+// Extension Sidebar Tests
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionToolbarLayoutTest', function() {
+  extension_toolbar_tests.registerTests();
+  mocha.grep(assert(extension_toolbar_tests.TestNames.Layout)).run();
+});
+
+TEST_F('CrExtensionsBrowserTest',
+       'ExtensionToolbarClickHandlersTest', function() {
+  extension_toolbar_tests.registerTests();
+  mocha.grep(assert(extension_toolbar_tests.TestNames.ClickHandlers)).run();
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,6 +194,21 @@ TEST_F('CrExtensionsBrowserTest', 'ExtensionItemList', function() {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
+// Extension Load Error Tests
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionLoadErrorInteractionTest',
+       function() {
+  extension_load_error_tests.registerTests();
+  mocha.grep(assert(extension_load_error_tests.TestNames.Interaction)).run();
+});
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionLoadErrorCodeSectionTest',
+       function() {
+  extension_load_error_tests.registerTests();
+  mocha.grep(assert(extension_load_error_tests.TestNames.CodeSection)).run();
+});
+
+////////////////////////////////////////////////////////////////////////////////
 // Extension Service Tests
 
 TEST_F('CrExtensionsBrowserTestWithInstalledExtension',
@@ -214,6 +260,19 @@ TEST_F('CrExtensionsBrowserTestWithMultipleExtensionTypesInstalled',
   mocha.grep(assert(extension_manager_tests.TestNames.ChangePages)).run();
 });
 
+TEST_F('CrExtensionsBrowserTestWithIdQueryParam',
+       'ExtensionManagerNavigationToDetailsTest', function() {
+  extension_manager_tests.registerTests();
+  mocha.grep(
+      assert(extension_manager_tests.TestNames.UrlNavigationToDetails)).run();
+});
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionManagerUpdateItemDataTest',
+       function() {
+  extension_manager_tests.registerTests();
+  mocha.grep(assert(extension_manager_tests.TestNames.UpdateItemData)).run();
+});
+
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Keyboard Shortcuts Tests
 
@@ -242,4 +301,43 @@ TEST_F('CrExtensionsBrowserTest', 'ExtensionPackDialogInteractionTest',
        function() {
   extension_pack_dialog_tests.registerTests();
   mocha.grep(assert(extension_pack_dialog_tests.TestNames.Interaction)).run();
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Extension Options Dialog Tests
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionOptionsDialogInteractionTest',
+       function() {
+  extension_options_dialog_tests.registerTests();
+  mocha.grep(assert(extension_options_dialog_tests.TestNames.Layout)).run();
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Extension Error Page Tests
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionErrorPageLayoutTest',
+       function() {
+  extension_error_page_tests.registerTests();
+  mocha.grep(assert(extension_error_page_tests.TestNames.Layout)).run();
+});
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionErrorPageCodeSectionTest',
+       function() {
+  extension_error_page_tests.registerTests();
+  mocha.grep(assert(extension_error_page_tests.TestNames.CodeSection)).run();
+});
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionErrorPageErrorSelectionTest',
+       function() {
+  extension_error_page_tests.registerTests();
+  mocha.grep(assert(extension_error_page_tests.TestNames.ErrorSelection)).run();
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Extension Code Section Tests
+
+TEST_F('CrExtensionsBrowserTest', 'ExtensionCodeSectionLayoutTest',
+       function() {
+  extension_code_section_tests.registerTests();
+  mocha.grep(assert(extension_code_section_tests.TestNames.Layout)).run();
 });

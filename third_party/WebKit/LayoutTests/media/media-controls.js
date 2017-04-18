@@ -9,6 +9,30 @@ const controlsFadeOutDurationMs = 300;
 // in MediaControls.cpp.
 const controlsMouseMovementTimeoutMs = 3000;
 
+function castButton(videoElement) {
+    var controlID = '-internal-media-controls-cast-button';
+    var button = mediaControlsElement(window.internals.shadowRoot(videoElement).firstChild, controlID);
+    if (!button)
+        throw 'Failed to find cast button';
+    return button;
+}
+
+function downloadButton(videoElement) {
+    var controlID = '-internal-media-controls-download-button';
+    var button = mediaControlsElement(window.internals.shadowRoot(videoElement).firstChild, controlID);
+    if (!button)
+        throw 'Failed to find download button';
+    return button;
+}
+
+function fullscreenButton(videoElement) {
+    var controlID = '-webkit-media-controls-fullscreen-button';
+    var button = mediaControlsElement(window.internals.shadowRoot(videoElement).firstChild, controlID);
+    if (!button)
+        throw 'Failed to find fullscreen button';
+    return button;
+}
+
 function overlayCastButton(videoElement)
 {
     var controlID = '-internal-media-controls-overlay-cast-button';
@@ -55,6 +79,14 @@ function elementCoordinates(element)
     return new Array(x, y);
 }
 
+function coordinatesOutsideElement(element)
+{
+    var elementBoundingRect = element.getBoundingClientRect();
+    var x = elementBoundingRect.left - 1;
+    var y = elementBoundingRect.top - 1;
+    return new Array(x, y);
+}
+
 function mediaControlsButtonCoordinates(element, id)
 {
     var button = mediaControlsButton(element, id);
@@ -73,13 +105,8 @@ function textTrackContainerElement(parentElement) {
         "-webkit-media-text-track-container");
 }
 
-function textTrackCueDisplayElement(parentElement) {
-    var containerElement = textTrackContainerElement(parentElement);
-    return mediaControlsElement(containerElement.firstChild, "-webkit-media-text-track-display");
-}
-
 function textTrackCueElementByIndex(parentElement, cueIndex) {
-    var displayElement = textTrackCueDisplayElement(parentElement);
+    var displayElement = textTrackDisplayElement(parentElement);
     if (displayElement) {
         for (i = 0; i < cueIndex; i++)
             displayElement = displayElement.nextSibling;
@@ -88,37 +115,22 @@ function textTrackCueElementByIndex(parentElement, cueIndex) {
     return displayElement;
 }
 
-// TODO(srirama.m): Phase out the uses of this function and
-// replace with more specific functions at each call site.
-// For ex: textTrackDisplayElement(video, 'region') => textTrackRegionElement(video) and
-// textTrackDisplayElement(video, 'region-container') => textTrackRegionContainerElement(video).
-function textTrackDisplayElement(parentElement, id, cueNumber)
+function textTrackRegionElement(parentElement)
 {
     var containerElement = textTrackContainerElement(parentElement);
+    return mediaControlsElement(containerElement.firstChild, "-webkit-media-text-track-region");
+}
 
-    if (!containerElement)
-        throw "Failed to find text track container element";
+function textTrackRegionContainerElement(parentElement)
+{
+    var containerElement = textTrackContainerElement(parentElement);
+    return mediaControlsElement(containerElement.firstChild, "-webkit-media-text-track-region-container");
+}
 
-    if (!id)
-        return containerElement;
-
-    var controlID = id;
-    if (controlID != 'cue')
-        controlID = "-webkit-media-text-track-" + id;
-
-    var displayElement = mediaControlsElement(containerElement.firstChild, controlID);
-    if (!displayElement)
-        throw "No text track cue with display id '" + controlID + "' is currently visible";
-
-    if (cueNumber) {
-        for (i = 0; i < cueNumber; i++)
-            displayElement = displayElement.nextSibling;
-
-        if (!displayElement)
-            throw "There are not " + cueNumber + " text track cues visible";
-    }
-
-    return displayElement;
+function textTrackDisplayElement(parentElement)
+{
+    var containerElement = textTrackContainerElement(parentElement);
+    return mediaControlsElement(containerElement.firstChild, "-webkit-media-text-track-display");
 }
 
 function isClosedCaptionsButtonVisible(currentMediaElement)
@@ -135,31 +147,6 @@ function isClosedCaptionsButtonVisible(currentMediaElement)
     return false;
 }
 
-function testClosedCaptionsButtonVisibility(expected)
-{
-    try {
-        captionsButtonElement = mediaControlsButton(mediaElement, "toggle-closed-captions-button");
-        captionsButtonCoordinates = mediaControlsButtonCoordinates(mediaElement, "toggle-closed-captions-button");
-    } catch (exception) {
-        consoleWrite("Failed to find a closed captions button or its coordinates: " + exception);
-        if (expected)
-            failTest();
-        return;
-    }
-
-    consoleWrite("");
-    if (expected == true) {
-        consoleWrite("** Caption button should be visible and enabled.");
-        testExpected("captionsButtonCoordinates[0]", 0, ">");
-        testExpected("captionsButtonCoordinates[1]", 0, ">");
-        testExpected("captionsButtonElement.disabled", false);
-    } else {
-        consoleWrite("** Caption button should not be visible.");
-        testExpected("captionsButtonCoordinates[0]", 0, "<=");
-        testExpected("captionsButtonCoordinates[1]", 0, "<=");
-    }
-}
-
 function clickAtCoordinates(x, y)
 {
     eventSender.mouseMoveTo(x, y);
@@ -167,16 +154,11 @@ function clickAtCoordinates(x, y)
     eventSender.mouseUp();
 }
 
-function clickCCButton()
-{
-    consoleWrite("*** Click the CC button.");
-    clickAtCoordinates(captionsButtonCoordinates[0], captionsButtonCoordinates[1]);
-}
-
 function textTrackListItemAtIndex(video, index)
 {
     var textTrackListElementID = "-internal-media-controls-text-track-list";
-    var textTrackListElement = mediaControlsElement(internals.shadowRoot(video).firstChild, textTrackListElementID);
+    var textTrackListElement = mediaControlsElement(
+            internals.shadowRoot(video).firstChild, textTrackListElementID);
     if (!textTrackListElement)
         throw "Failed to find text track list element";
 
@@ -188,18 +170,16 @@ function textTrackListItemAtIndex(video, index)
     }
 }
 
-function selectTextTrack(video, index)
+function clickCaptionButton(video)
 {
-    clickCCButton();
-    var trackListItemElement = textTrackListItemAtIndex(video, index);
-    var trackListItemCoordinates = elementCoordinates(trackListItemElement);
-    clickAtCoordinates(trackListItemCoordinates[0], trackListItemCoordinates[1]);
+    var captionsButtonCoordinates =
+            mediaControlsButtonCoordinates(video, "toggle-closed-captions-button");
+    clickAtCoordinates(captionsButtonCoordinates[0], captionsButtonCoordinates[1]);
 }
 
 function clickTextTrackAtIndex(video, index)
 {
-    var captionsButtonCoordinates = mediaControlsButtonCoordinates(video, "toggle-closed-captions-button");
-    clickAtCoordinates(captionsButtonCoordinates[0], captionsButtonCoordinates[1]);
+    clickCaptionButton(video);
     var trackListItemElement = textTrackListItemAtIndex(video, index);
     var trackListItemCoordinates = elementCoordinates(trackListItemElement);
     clickAtCoordinates(trackListItemCoordinates[0], trackListItemCoordinates[1]);
@@ -208,6 +188,18 @@ function clickTextTrackAtIndex(video, index)
 function turnClosedCaptionsOff(video)
 {
     clickTextTrackAtIndex(video, -1);
+}
+
+function checkCaptionsVisible(video, captions)
+{
+    for (var i = 0; i < captions.length; i++) {
+      assert_equals(textTrackCueElementByIndex(video, i).innerText, captions[i]);
+    }
+}
+
+function checkCaptionsHidden(video)
+{
+    assert_equals(textTrackDisplayElement(video), null);
 }
 
 function runAfterHideMediaControlsTimerFired(func, mediaElement)
@@ -224,4 +216,21 @@ function runAfterHideMediaControlsTimerFired(func, mediaElement)
         throw "The media will end before the controls have been hidden";
 
     setTimeout(func, hideTimeoutMs);
+}
+
+function hasFullscreenButton(element)
+{
+    var size = mediaControlsButtonDimensions(element, "fullscreen-button");
+    return size[0] > 0 && size[1] > 0;
+}
+
+function isControlsPanelVisible(element)
+{
+    return getComputedStyle(mediaControlsButton(element, "panel")).opacity == "1";
+}
+
+function isVisible(button) {
+    var computedStyle = getComputedStyle(button);
+    return computedStyle.display !== "none" &&
+           computedStyle.visibility === "visible";
 }

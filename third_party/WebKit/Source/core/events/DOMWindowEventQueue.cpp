@@ -26,132 +26,128 @@
 
 #include "core/events/DOMWindowEventQueue.h"
 
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/SuspendableTimer.h"
-#include "core/inspector/InspectorInstrumentation.h"
+#include "core/probe/CoreProbes.h"
 
 namespace blink {
 
-class DOMWindowEventQueueTimer final : public GarbageCollectedFinalized<DOMWindowEventQueueTimer>, public SuspendableTimer {
-    USING_GARBAGE_COLLECTED_MIXIN(DOMWindowEventQueueTimer);
-    WTF_MAKE_NONCOPYABLE(DOMWindowEventQueueTimer);
-public:
-    DOMWindowEventQueueTimer(DOMWindowEventQueue* eventQueue, ExecutionContext* context)
-        : SuspendableTimer(context)
-        , m_eventQueue(eventQueue)
-    {
-    }
+class DOMWindowEventQueueTimer final
+    : public GarbageCollectedFinalized<DOMWindowEventQueueTimer>,
+      public SuspendableTimer {
+  USING_GARBAGE_COLLECTED_MIXIN(DOMWindowEventQueueTimer);
+  WTF_MAKE_NONCOPYABLE(DOMWindowEventQueueTimer);
 
-    // Eager finalization is needed to promptly stop this timer object.
-    // (see DOMTimer comment for more.)
-    EAGERLY_FINALIZE();
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_eventQueue);
-        SuspendableTimer::trace(visitor);
-    }
+ public:
+  DOMWindowEventQueueTimer(DOMWindowEventQueue* event_queue,
+                           ExecutionContext* context)
+      // This queue is unthrottled because throttling IndexedDB events may break
+      // scenarios where several tabs, some of which are backgrounded, access
+      // the same database concurrently.
+      : SuspendableTimer(context, TaskType::kUnthrottled),
+        event_queue_(event_queue) {}
 
-private:
-    virtual void fired() { m_eventQueue->pendingEventTimerFired(); }
+  // Eager finalization is needed to promptly stop this timer object.
+  // (see DOMTimer comment for more.)
+  EAGERLY_FINALIZE();
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(event_queue_);
+    SuspendableTimer::Trace(visitor);
+  }
 
-    Member<DOMWindowEventQueue> m_eventQueue;
+ private:
+  virtual void Fired() { event_queue_->PendingEventTimerFired(); }
+
+  Member<DOMWindowEventQueue> event_queue_;
 };
 
-DOMWindowEventQueue* DOMWindowEventQueue::create(ExecutionContext* context)
-{
-    return new DOMWindowEventQueue(context);
+DOMWindowEventQueue* DOMWindowEventQueue::Create(ExecutionContext* context) {
+  return new DOMWindowEventQueue(context);
 }
 
 DOMWindowEventQueue::DOMWindowEventQueue(ExecutionContext* context)
-    : m_pendingEventTimer(new DOMWindowEventQueueTimer(this, context))
-    , m_isClosed(false)
-{
-    m_pendingEventTimer->suspendIfNeeded();
+    : pending_event_timer_(new DOMWindowEventQueueTimer(this, context)),
+      is_closed_(false) {
+  pending_event_timer_->SuspendIfNeeded();
 }
 
-DOMWindowEventQueue::~DOMWindowEventQueue()
-{
+DOMWindowEventQueue::~DOMWindowEventQueue() {}
+
+DEFINE_TRACE(DOMWindowEventQueue) {
+  visitor->Trace(pending_event_timer_);
+  visitor->Trace(queued_events_);
+  EventQueue::Trace(visitor);
 }
 
-DEFINE_TRACE(DOMWindowEventQueue)
-{
-    visitor->trace(m_pendingEventTimer);
-    visitor->trace(m_queuedEvents);
-    EventQueue::trace(visitor);
+bool DOMWindowEventQueue::EnqueueEvent(Event* event) {
+  if (is_closed_)
+    return false;
+
+  DCHECK(event->target());
+  probe::AsyncTaskScheduled(event->target()->GetExecutionContext(),
+                            event->type(), event);
+
+  bool was_added = queued_events_.insert(event).is_new_entry;
+  DCHECK(was_added);  // It should not have already been in the list.
+
+  if (!pending_event_timer_->IsActive())
+    pending_event_timer_->StartOneShot(0, BLINK_FROM_HERE);
+
+  return true;
 }
 
-bool DOMWindowEventQueue::enqueueEvent(Event* event)
-{
-    if (m_isClosed)
-        return false;
-
-    ASSERT(event->target());
-    InspectorInstrumentation::asyncTaskScheduled(event->target()->getExecutionContext(), event->type(), event);
-
-    bool wasAdded = m_queuedEvents.add(event).isNewEntry;
-    ASSERT_UNUSED(wasAdded, wasAdded); // It should not have already been in the list.
-
-    if (!m_pendingEventTimer->isActive())
-        m_pendingEventTimer->startOneShot(0, BLINK_FROM_HERE);
-
-    return true;
+bool DOMWindowEventQueue::CancelEvent(Event* event) {
+  HeapListHashSet<Member<Event>, 16>::iterator it = queued_events_.Find(event);
+  bool found = it != queued_events_.end();
+  if (found) {
+    probe::AsyncTaskCanceled(event->target()->GetExecutionContext(), event);
+    queued_events_.erase(it);
+  }
+  if (queued_events_.IsEmpty())
+    pending_event_timer_->Stop();
+  return found;
 }
 
-bool DOMWindowEventQueue::cancelEvent(Event* event)
-{
-    HeapListHashSet<Member<Event>, 16>::iterator it = m_queuedEvents.find(event);
-    bool found = it != m_queuedEvents.end();
-    if (found) {
-        InspectorInstrumentation::asyncTaskCanceled(event->target()->getExecutionContext(), event);
-        m_queuedEvents.remove(it);
+void DOMWindowEventQueue::Close() {
+  is_closed_ = true;
+  pending_event_timer_->Stop();
+  for (const auto& queued_event : queued_events_) {
+    if (queued_event) {
+      probe::AsyncTaskCanceled(queued_event->target()->GetExecutionContext(),
+                               queued_event);
     }
-    if (m_queuedEvents.isEmpty())
-        m_pendingEventTimer->stop();
-    return found;
+  }
+  queued_events_.clear();
 }
 
-void DOMWindowEventQueue::close()
-{
-    m_isClosed = true;
-    m_pendingEventTimer->stop();
-    if (InspectorInstrumentation::hasFrontends()) {
-        for (const auto& queuedEvent : m_queuedEvents) {
-            if (queuedEvent)
-                InspectorInstrumentation::asyncTaskCanceled(queuedEvent->target()->getExecutionContext(), queuedEvent);
-        }
-    }
-    m_queuedEvents.clear();
+void DOMWindowEventQueue::PendingEventTimerFired() {
+  DCHECK(!pending_event_timer_->IsActive());
+  DCHECK(!queued_events_.IsEmpty());
+
+  // Insert a marker for where we should stop.
+  DCHECK(!queued_events_.Contains(nullptr));
+  bool was_added = queued_events_.insert(nullptr).is_new_entry;
+  DCHECK(was_added);  // It should not have already been in the list.
+
+  while (!queued_events_.IsEmpty()) {
+    HeapListHashSet<Member<Event>, 16>::iterator iter = queued_events_.begin();
+    Event* event = *iter;
+    queued_events_.erase(iter);
+    if (!event)
+      break;
+    DispatchEvent(event);
+  }
 }
 
-void DOMWindowEventQueue::pendingEventTimerFired()
-{
-    ASSERT(!m_pendingEventTimer->isActive());
-    ASSERT(!m_queuedEvents.isEmpty());
-
-    // Insert a marker for where we should stop.
-    ASSERT(!m_queuedEvents.contains(nullptr));
-    bool wasAdded = m_queuedEvents.add(nullptr).isNewEntry;
-    ASSERT_UNUSED(wasAdded, wasAdded); // It should not have already been in the list.
-
-    while (!m_queuedEvents.isEmpty()) {
-        HeapListHashSet<Member<Event>, 16>::iterator iter = m_queuedEvents.begin();
-        Event* event = *iter;
-        m_queuedEvents.remove(iter);
-        if (!event)
-            break;
-        dispatchEvent(event);
-    }
+void DOMWindowEventQueue::DispatchEvent(Event* event) {
+  EventTarget* event_target = event->target();
+  probe::AsyncTask async_task(event_target->GetExecutionContext(), event);
+  if (LocalDOMWindow* window = event_target->ToLocalDOMWindow())
+    window->DispatchEvent(event, nullptr);
+  else
+    event_target->DispatchEvent(event);
 }
 
-void DOMWindowEventQueue::dispatchEvent(Event* event)
-{
-    EventTarget* eventTarget = event->target();
-    InspectorInstrumentation::AsyncTask asyncTask(eventTarget->getExecutionContext(), event);
-    if (LocalDOMWindow* window = eventTarget->toLocalDOMWindow())
-        window->dispatchEvent(event, nullptr);
-    else
-        eventTarget->dispatchEvent(event);
-}
-
-} // namespace blink
+}  // namespace blink

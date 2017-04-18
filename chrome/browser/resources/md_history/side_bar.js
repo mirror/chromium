@@ -5,34 +5,40 @@
 Polymer({
   is: 'history-side-bar',
 
+  behaviors: [Polymer.IronA11yKeysBehavior],
+
   properties: {
     selectedPage: {
       type: String,
-      notify: true
+      notify: true,
     },
 
-    route: Object,
+    /** @private */
+    guestSession_: {
+      type: Boolean,
+      value: loadTimeData.getBoolean('isGuestSession'),
+    },
 
     showFooter: Boolean,
   },
 
-  toggle: function() {
-    this.$.drawer.toggle();
+  keyBindings: {
+    'space:keydown': 'onSpacePressed_',
   },
 
-  /** @private */
-  onDrawerFocus_: function() {
-    // The desired behavior is for the app-drawer to focus the currently
-    // selected menu item on opening. However, it will always focus the first
-    // focusable child. Therefore, we set tabindex=0 on the app-drawer so that
-    // it will focus itself and then immediately delegate focus to the selected
-    // item in this listener.
-    this.$.menu.selectedItem.focus();
+  /**
+   * @param {CustomEvent} e
+   * @private
+   */
+  onSpacePressed_: function(e) {
+    e.detail.keyboardEvent.path[0].click();
   },
 
-  /** @private */
+  /**
+   * @private
+   */
   onSelectorActivate_: function() {
-    this.$.drawer.close();
+    this.fire('history-close-drawer');
   },
 
   /**
@@ -41,15 +47,27 @@ Polymer({
    * @private
    */
   onClearBrowsingDataTap_: function(e) {
-    md_history.BrowserService.getInstance().openClearBrowsingData();
+    var browserService = md_history.BrowserService.getInstance();
+    browserService.recordAction('InitClearBrowsingData');
+    browserService.openClearBrowsingData();
+    /** @type {PaperRippleElement} */ (this.$['cbd-ripple']).upAction();
     e.preventDefault();
   },
 
   /**
-   * @param {Object} route
+   * @return {number}
    * @private
    */
-  getQueryString_: function(route) {
-    return window.location.search;
-  }
+  computeClearBrowsingDataTabIndex_: function() {
+    return this.guestSession_ ? -1 : 0;
+  },
+
+  /**
+   * Prevent clicks on sidebar items from navigating. These are only links for
+   * accessibility purposes, taps are handled separately by <iron-selector>.
+   * @private
+   */
+  onItemClick_: function(e) {
+    e.preventDefault();
+  },
 });

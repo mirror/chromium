@@ -38,6 +38,7 @@ static_library("courgette_lib") {
     "ensemble_apply.cc",
     "ensemble_create.cc",
     "image_utils.h",
+    "instruction_utils.h",
     "label_manager.cc",
     "label_manager.h",
     "memory_allocator.cc",
@@ -62,7 +63,6 @@ static_library("courgette_lib") {
     "third_party/bsdiff/bsdiff_create.cc",
     "third_party/bsdiff/bsdiff_search.h",
     "third_party/bsdiff/paged_array.h",
-    "third_party/bsdiff/qsufsort.h",
     "third_party/divsufsort/divsufsort.cc",
     "third_party/divsufsort/divsufsort.h",
     "third_party/divsufsort/divsufsort_private.h",
@@ -134,7 +134,13 @@ if (!is_ios) {
       # Make sure that we have a copy of courgette64.exe in the root out
       # directory.
       copy("copy_courgette_binaries") {
-        courgette64_label = ":courgette(//build/toolchain/win:x64)"
+        if (is_clang) {
+          courgette64_toolchain = "//build/toolchain/win:clang_x64"
+        } else {
+          courgette64_toolchain = "//build/toolchain/win:x64"
+        }
+        courgette64_label = ":courgette($courgette64_toolchain)"
+
         courgette64_out_dir = get_label_info(courgette64_label, "root_out_dir")
         sources = [
           "$courgette64_out_dir/courgette64.exe",
@@ -172,7 +178,6 @@ test("courgette_unittests") {
     "streams_unittest.cc",
     "third_party/bsdiff/bsdiff_search_unittest.cc",
     "third_party/bsdiff/paged_array_unittest.cc",
-    "third_party/bsdiff/qsufsort_unittest.cc",
     "third_party/divsufsort/divsufsort_unittest.cc",
     "typedrva_unittest.cc",
     "versioning_unittest.cc",

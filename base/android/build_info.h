@@ -26,7 +26,8 @@ enum SdkVersion {
   SDK_VERSION_KITKAT_WEAR = 20,
   SDK_VERSION_LOLLIPOP = 21,
   SDK_VERSION_LOLLIPOP_MR1 = 22,
-  SDK_VERSION_MARSHMALLOW = 23
+  SDK_VERSION_MARSHMALLOW = 23,
+  SDK_VERSION_NOUGAT = 24
 };
 
 // BuildInfo is a singleton class that stores android build and device
@@ -109,8 +110,6 @@ class BASE_EXPORT BuildInfo {
   void SetJavaExceptionInfo(const std::string& info);
 
   void ClearJavaExceptionInfo();
-
-  static bool RegisterBindings(JNIEnv* env);
 
  private:
   friend struct BuildInfoSingletonTraits;

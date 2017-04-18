@@ -9,46 +9,30 @@
 
 namespace blink {
 
-OpenedFrameTracker::OpenedFrameTracker()
-{
+OpenedFrameTracker::OpenedFrameTracker() {}
+
+OpenedFrameTracker::~OpenedFrameTracker() {
+  DCHECK(IsEmpty());
 }
 
-OpenedFrameTracker::~OpenedFrameTracker()
-{
+bool OpenedFrameTracker::IsEmpty() const {
+  return opened_frames_.IsEmpty();
 }
 
-bool OpenedFrameTracker::isEmpty() const
-{
-    return m_openedFrames.isEmpty();
+void OpenedFrameTracker::Add(WebFrame* frame) {
+  opened_frames_.insert(frame);
 }
 
-void OpenedFrameTracker::add(WebFrame* frame)
-{
-    m_openedFrames.add(frame);
+void OpenedFrameTracker::Remove(WebFrame* frame) {
+  opened_frames_.erase(frame);
 }
 
-void OpenedFrameTracker::remove(WebFrame* frame)
-{
-    m_openedFrames.remove(frame);
+void OpenedFrameTracker::TransferTo(WebFrame* opener) {
+  // Copy the set of opened frames, since changing the owner will mutate this
+  // set.
+  HashSet<WebFrame*> frames(opened_frames_);
+  for (WebFrame* frame : frames)
+    frame->SetOpener(opener);
 }
 
-void OpenedFrameTracker::transferTo(WebFrame* opener)
-{
-    // Copy the set of opened frames, since changing the owner will mutate this set.
-    HashSet<WebFrame*> frames(m_openedFrames);
-    for (WebFrame* frame : frames)
-        frame->setOpener(opener);
-}
-
-template <typename VisitorDispatcher>
-ALWAYS_INLINE void OpenedFrameTracker::traceFramesImpl(VisitorDispatcher visitor)
-{
-    HashSet<WebFrame*>::iterator end = m_openedFrames.end();
-    for (HashSet<WebFrame*>::iterator it = m_openedFrames.begin(); it != end; ++it)
-        WebFrame::traceFrame(visitor, *it);
-}
-
-void OpenedFrameTracker::traceFrames(Visitor* visitor) { traceFramesImpl(visitor); }
-void OpenedFrameTracker::traceFrames(InlinedGlobalMarkingVisitor visitor) { traceFramesImpl(visitor); }
-
-} // namespace blink
+}  // namespace blink

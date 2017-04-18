@@ -32,11 +32,35 @@ def GetSystemHealthBenchmarksToSmokeTest():
 
 
 _DISABLED_TESTS = frozenset({
-  # crbug.com/622409
+  # crbug.com/702455
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.browse:media:youtube',  # pylint: disable=line-too-long
+  # crbug.com/637230
   'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.browse:news:cnn',  # pylint: disable=line-too-long
-  # crbug.com/629123
-  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_mobile.browse:news:hackernews',  # pylint: disable=line-too-long
-  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_mobile.browse:news:nytimes',  # pylint: disable=line-too-long
+  # Permenently disabled from smoke test for being long-running.
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_mobile.long_running:tools:gmail-foreground',  # pylint: disable=line-too-long
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_mobile.long_running:tools:gmail-background',  # pylint: disable=line-too-long
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.long_running:tools:gmail-foreground',  # pylint: disable=line-too-long
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.long_running:tools:gmail-background',  # pylint: disable=line-too-long
+
+  # Disable media tests in CQ. crbug.com/649392
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.play:media:soundcloud',  # pylint: disable=line-too-long
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.play:media:google_play_music',  # pylint: disable=line-too-long
+
+  # crbug.com/
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.browse:news:nytimes',  # pylint: disable=line-too-long
+
+  # crbug.com/688190
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_mobile.browse:news:washingtonpost',  # pylint: disable=line-too-long
+
+  # crbug.com/696824
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.load:news:qq',  # pylint: disable=line-too-long
+
+  # crbug.com/698006
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.load:tools:drive',  # pylint: disable=line-too-long
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.load:tools:gmail',  # pylint: disable=line-too-long
+
+  # crbug.com/699966
+  'benchmarks.system_health_smoke_test.SystemHealthBenchmarkSmokeTest.system_health.memory_desktop.multitab:misc:typical24', # pylint: disable=line-too-long
 })
 
 
@@ -55,8 +79,11 @@ def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test):
       def CreateStorySet(self, options):
         # pylint: disable=super-on-old-class
         story_set = super(SinglePageBenchmark, self).CreateStorySet(options)
-        assert story_to_smoke_test in story_set.stories
-        story_set.stories = [story_to_smoke_test]
+        stories_to_remove = [s for s in story_set.stories if s !=
+                             story_to_smoke_test]
+        for s in stories_to_remove:
+          story_set.RemoveStory(s)
+        assert story_set.stories
         return story_set
 
     options = GenerateBenchmarkOptions(benchmark_class)
@@ -90,7 +117,7 @@ def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test):
 def GenerateBenchmarkOptions(benchmark_class):
   # Set the benchmark's default arguments.
   options = options_for_unittests.GetCopy()
-  options.output_format = 'none'
+  options.output_formats = ['none']
   parser = options.CreateParser()
 
   # TODO(nednguyen): probably this logic of setting up the benchmark options
@@ -105,9 +132,11 @@ def GenerateBenchmarkOptions(benchmark_class):
   benchmark_module.ProcessCommandLineArgs(None, options)
   # Only measure a single story so that this test cycles reasonably quickly.
   options.pageset_repeat = 1
-  options.page_repeat = 1
-  # Enable browser logging in the smoke test only (crbug.com/625172).
-  options.logging_verbosity = 'non-verbose'
+
+  # Enable browser logging in the smoke test only. Hopefully, this will detect
+  # all crashes and hence remove the need to enable logging in actual perf
+  # benchmarks.
+  options.browser_options.logging_verbosity = 'non-verbose'
   return options
 
 
@@ -124,8 +153,14 @@ def load_tests(loader, standard_tests, pattern):
     # Since none of our system health benchmarks creates stories based on
     # command line options, it should be ok to pass options=None to
     # CreateStorySet.
-    for story_to_smoke_test in (
-        benchmark_class().CreateStorySet(options=None).stories):
+    stories_set = benchmark_class().CreateStorySet(options=None)
+
+    # Prefetch WPR archive needed by the stories set to avoid race condition
+    # when feching them when tests are run in parallel.
+    # See crbug.com/700426 for more details.
+    stories_set.wpr_archive_info.DownloadArchivesIfNeeded()
+
+    for story_to_smoke_test in stories_set.stories:
       suite.addTest(
           _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test))
 

@@ -14,43 +14,47 @@ class HTMLSelectElement;
 class HTMLOptionElement;
 
 class CORE_EXPORT OptionListIterator final {
-    STACK_ALLOCATED();
-public:
-    explicit OptionListIterator(const HTMLSelectElement* select) : m_select(select)
-    {
-        if (m_select)
-            advance(nullptr);
-    }
-    HTMLOptionElement* operator*() { return m_current; }
-    void operator++()
-    {
-        if (m_current)
-            advance(m_current);
-    }
-    bool operator==(const OptionListIterator& other) const { return m_current == other.m_current; }
-    bool operator!=(const OptionListIterator& other) const { return !(*this == other); }
+  STACK_ALLOCATED();
 
-private:
-    void advance(HTMLOptionElement* current);
+ public:
+  explicit OptionListIterator(const HTMLSelectElement* select)
+      : select_(select) {
+    if (select_)
+      Advance(nullptr);
+  }
+  HTMLOptionElement* operator*() { return current_; }
+  void operator++() {
+    if (current_)
+      Advance(current_);
+  }
+  bool operator==(const OptionListIterator& other) const {
+    return current_ == other.current_;
+  }
+  bool operator!=(const OptionListIterator& other) const {
+    return !(*this == other);
+  }
 
-    Member<const HTMLSelectElement> m_select;
-    Member<HTMLOptionElement> m_current; // nullptr means we reached to the end.
+ private:
+  void Advance(HTMLOptionElement* current);
+
+  Member<const HTMLSelectElement> select_;
+  Member<HTMLOptionElement> current_;  // nullptr means we reached to the end.
 };
 
 // OptionList class is a lightweight version of HTMLOptionsCollection.
 class OptionList final {
-    STACK_ALLOCATED();
-public:
-    explicit OptionList(const HTMLSelectElement& select) : m_select(select) {}
-    using Iterator = OptionListIterator;
-    Iterator begin() { return Iterator(m_select); }
-    Iterator end() { return Iterator(nullptr); }
+  STACK_ALLOCATED();
 
-private:
-    Member<const HTMLSelectElement> m_select;
+ public:
+  explicit OptionList(const HTMLSelectElement& select) : select_(select) {}
+  using Iterator = OptionListIterator;
+  Iterator begin() { return Iterator(select_); }
+  Iterator end() { return Iterator(nullptr); }
+
+ private:
+  Member<const HTMLSelectElement> select_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif
-

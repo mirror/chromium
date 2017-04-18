@@ -20,7 +20,14 @@ settings.EDIT_STARTUP_URL_EVENT = 'edit-startup-url';
 Polymer({
   is: 'settings-startup-url-entry',
 
+  behaviors: [FocusRowBehavior],
+
   properties: {
+    editable: {
+      type: Boolean,
+      reflectToAttribute: true,
+    },
+
     /** @type {!StartupPageInfo} */
     model: Object,
   },
@@ -31,19 +38,33 @@ Polymer({
    * @private
    */
   getIconSet_: function(url) {
-    return cr.icon.getFaviconImageSet(url);
+    return cr.icon.getFavicon(url);
   },
 
   /** @private */
   onRemoveTap_: function() {
-    this.$$('iron-dropdown').close();
+    this.$$('dialog[is=cr-action-menu]').close();
     settings.StartupUrlsPageBrowserProxyImpl.getInstance().removeStartupPage(
         this.model.modelIndex);
   },
 
+  /**
+   * @param {!Event} e
+   * @private
+   */
+  onEditTap_: function(e) {
+    e.preventDefault();
+    this.$$('dialog[is=cr-action-menu]').close();
+    this.fire(settings.EDIT_STARTUP_URL_EVENT, {
+      model: this.model,
+      anchor: this.$$('#dots'),
+    });
+  },
+
   /** @private */
-  onEditTap_: function() {
-    this.$$('iron-dropdown').close();
-    this.fire(settings.EDIT_STARTUP_URL_EVENT, this.model);
+  onDotsTap_: function() {
+    var actionMenu = /** @type {!CrActionMenuElement} */(
+        this.$$('#menu').get());
+    actionMenu.showAt(assert(this.$$('#dots')));
   },
 });

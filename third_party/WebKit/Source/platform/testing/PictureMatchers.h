@@ -5,6 +5,7 @@
 #ifndef PictureMatchers_h
 #define PictureMatchers_h
 
+#include "platform/geometry/FloatRect.h"
 #include "platform/graphics/Color.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
@@ -15,10 +16,25 @@ namespace blink {
 class FloatRect;
 
 // Matches if the picture draws exactly one rectangle, which (after accounting
-// for the total transformation matrix) matches the rect provided, and whose
-// paint has the color requested.
-::testing::Matcher<const SkPicture&> drawsRectangle(const FloatRect&, Color);
+// for the total transformation matrix and applying any clips inside that
+// transform) matches the rect provided, and whose paint has the color
+// requested.
+// Note that clips which appear outside of a transform are not currently
+// supported.
+::testing::Matcher<const SkPicture&> DrawsRectangle(const FloatRect&, Color);
 
-} // namespace blink
+struct RectWithColor {
+  RectWithColor(const FloatRect& rect_arg, const Color& color_arg)
+      : rect(rect_arg), color(color_arg) {}
+  FloatRect rect;
+  Color color;
+};
 
-#endif // PictureMatchers_h
+// Same as above, but matches a number of rectangles equal to the size of the
+// given vector.
+::testing::Matcher<const SkPicture&> DrawsRectangles(
+    const Vector<RectWithColor>&);
+
+}  // namespace blink
+
+#endif  // PictureMatchers_h

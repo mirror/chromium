@@ -29,6 +29,7 @@
 #define HTMLCanvasElement_h
 
 #include "bindings/core/v8/ScriptValue.h"
+#include "bindings/core/v8/ScriptWrappableVisitor.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMTypedArray.h"
@@ -45,10 +46,11 @@
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/GraphicsTypes3D.h"
 #include "platform/graphics/ImageBufferClient.h"
+#include "platform/graphics/OffscreenCanvasPlaceholder.h"
 #include "platform/heap/Handle.h"
 #include <memory>
 
-#define CanvasDefaultInterpolationQuality InterpolationLow
+#define CanvasDefaultInterpolationQuality kInterpolationLow
 
 namespace blink {
 
@@ -57,6 +59,7 @@ class CanvasContextCreationAttributes;
 class CanvasRenderingContext;
 class CanvasRenderingContextFactory;
 class GraphicsContext;
+class HitTestCanvasResult;
 class HTMLCanvasElement;
 class Image;
 class ImageBitmapOptions;
@@ -65,208 +68,265 @@ class ImageBufferSurface;
 class ImageData;
 class IntSize;
 
-class CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext;
-typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext RenderingContext;
+class
+    CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext;
+typedef CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext
+    RenderingContext;
 
-class CORE_EXPORT HTMLCanvasElement final : public HTMLElement, public ContextLifecycleObserver, public PageVisibilityObserver, public CanvasImageSource, public ImageBufferClient, public ImageBitmapSource {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(HTMLCanvasElement);
-    USING_PRE_FINALIZER(HTMLCanvasElement, dispose);
-public:
-    using Node::getExecutionContext;
+class CORE_EXPORT HTMLCanvasElement final
+    : public HTMLElement,
+      public ContextLifecycleObserver,
+      public PageVisibilityObserver,
+      public CanvasImageSource,
+      public CanvasSurfaceLayerBridgeObserver,
+      public ImageBufferClient,
+      public ImageBitmapSource,
+      public OffscreenCanvasPlaceholder {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(HTMLCanvasElement);
+  USING_PRE_FINALIZER(HTMLCanvasElement, Dispose);
 
-    DECLARE_NODE_FACTORY(HTMLCanvasElement);
-    ~HTMLCanvasElement() override;
+ public:
+  using Node::GetExecutionContext;
 
-    // Attributes and functions exposed to script
-    int width() const { return size().width(); }
-    int height() const { return size().height(); }
+  DECLARE_NODE_FACTORY(HTMLCanvasElement);
+  ~HTMLCanvasElement() override;
 
-    const IntSize& size() const { return m_size; }
+  // Attributes and functions exposed to script
+  int width() const { return size().Width(); }
+  int height() const { return size().Height(); }
 
-    void setWidth(int);
-    void setHeight(int);
+  const IntSize& size() const { return size_; }
 
-    void setSize(const IntSize& newSize)
-    {
-        if (newSize == size())
-            return;
-        m_ignoreReset = true;
-        setWidth(newSize.width());
-        setHeight(newSize.height());
-        m_ignoreReset = false;
-        reset();
-    }
+  void setWidth(int, ExceptionState&);
+  void setHeight(int, ExceptionState&);
 
-    // Called by Document::getCSSCanvasContext as well as above getContext().
-    CanvasRenderingContext* getCanvasRenderingContext(const String&, const CanvasContextCreationAttributes&);
+  void SetSize(const IntSize& new_size);
 
-    bool isPaintable() const;
+  // Called by Document::getCSSCanvasContext as well as above getContext().
+  CanvasRenderingContext* GetCanvasRenderingContext(
+      const String&,
+      const CanvasContextCreationAttributes&);
 
-    enum EncodeReason {
-        EncodeReasonToDataURL = 0,
-        EncodeReasonToBlobCallback = 1,
-        NumberOfEncodeReasons
-    };
-    static String toEncodingMimeType(const String& mimeType, const EncodeReason);
-    String toDataURL(const String& mimeType, const ScriptValue& qualityArgument, ExceptionState&) const;
-    String toDataURL(const String& mimeType, ExceptionState& exceptionState) const { return toDataURL(mimeType, ScriptValue(), exceptionState); }
+  bool IsPaintable() const;
 
-    void toBlob(BlobCallback*, const String& mimeType, const ScriptValue& qualityArgument, ExceptionState&);
-    void toBlob(BlobCallback* callback, const String& mimeType, ExceptionState& exceptionState) { return toBlob(callback, mimeType, ScriptValue(), exceptionState); }
+  String toDataURL(const String& mime_type,
+                   const ScriptValue& quality_argument,
+                   ExceptionState&) const;
+  String toDataURL(const String& mime_type,
+                   ExceptionState& exception_state) const {
+    return toDataURL(mime_type, ScriptValue(), exception_state);
+  }
 
-    // Used for canvas capture.
-    void addListener(CanvasDrawListener*);
-    void removeListener(CanvasDrawListener*);
+  void toBlob(BlobCallback*,
+              const String& mime_type,
+              const ScriptValue& quality_argument,
+              ExceptionState&);
+  void toBlob(BlobCallback* callback,
+              const String& mime_type,
+              ExceptionState& exception_state) {
+    return toBlob(callback, mime_type, ScriptValue(), exception_state);
+  }
 
-    // Used for rendering
-    void didDraw(const FloatRect&);
+  // Used for canvas capture.
+  void AddListener(CanvasDrawListener*);
+  void RemoveListener(CanvasDrawListener*);
 
-    void paint(GraphicsContext&, const LayoutRect&);
+  // Used for rendering
+  void DidDraw(const FloatRect&);
+  void DidDraw();
 
-    SkCanvas* drawingCanvas() const;
-    void disableDeferral(DisableDeferralReason) const;
-    SkCanvas* existingDrawingCanvas() const;
+  void Paint(GraphicsContext&, const LayoutRect&);
 
-    CanvasRenderingContext* renderingContext() const { return m_context.get(); }
+  PaintCanvas* DrawingCanvas() const;
+  void DisableDeferral(DisableDeferralReason) const;
+  PaintCanvas* ExistingDrawingCanvas() const;
 
-    void ensureUnacceleratedImageBuffer();
-    ImageBuffer* buffer() const;
-    PassRefPtr<Image> copiedImage(SourceDrawingBuffer, AccelerationHint) const;
-    void clearCopiedImage();
+  CanvasRenderingContext* RenderingContext() const { return context_.Get(); }
 
-    SecurityOrigin* getSecurityOrigin() const;
-    bool originClean() const;
-    void setOriginTainted() { m_originClean = false; }
+  void EnsureUnacceleratedImageBuffer();
+  ImageBuffer* Buffer() const;
+  PassRefPtr<Image> CopiedImage(SourceDrawingBuffer,
+                                AccelerationHint,
+                                SnapshotReason) const;
+  void ClearCopiedImage();
 
-    AffineTransform baseTransform() const;
+  SecurityOrigin* GetSecurityOrigin() const;
+  bool OriginClean() const;
+  void SetOriginTainted() { origin_clean_ = false; }
 
-    bool is3D() const;
-    bool isAnimated2D() const;
+  AffineTransform BaseTransform() const;
 
-    bool hasImageBuffer() const { return m_imageBuffer.get(); }
-    void discardImageBuffer();
+  bool Is3d() const;
+  bool Is2d() const;
+  bool IsAnimated2d() const;
 
-    bool shouldAccelerate(const IntSize&) const;
+  bool HasImageBuffer() const { return image_buffer_.get(); }
+  void DiscardImageBuffer();
 
-    bool shouldBeDirectComposited() const;
+  bool ShouldBeDirectComposited() const;
 
-    void prepareSurfaceForPaintingIfNeeded() const;
+  void PrepareSurfaceForPaintingIfNeeded() const;
 
-    const AtomicString imageSourceURL() const override;
+  const AtomicString ImageSourceURL() const override;
 
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
 
-    // ContextLifecycleObserver (and PageVisibilityObserver!!!) implementation
-    void contextDestroyed() override;
+  bool IsDirty() { return !dirty_rect_.IsEmpty(); }
 
-    // PageVisibilityObserver implementation
-    void pageVisibilityChanged() override;
+  void DoDeferredPaintInvalidation();
 
-    // CanvasImageSource implementation
-    PassRefPtr<Image> getSourceImageForCanvas(SourceImageStatus*, AccelerationHint, SnapshotReason, const FloatSize&) const override;
-    bool wouldTaintOrigin(SecurityOrigin*) const override;
-    FloatSize elementSize(const FloatSize&) const override;
-    bool isCanvasElement() const override { return true; }
-    bool isOpaque() const override;
-    int sourceWidth() override { return m_size.width(); }
-    int sourceHeight() override { return m_size.height(); }
+  void FinalizeFrame();
 
-    // ImageBufferClient implementation
-    void notifySurfaceInvalid() override;
-    bool isDirty() override { return !m_dirtyRect.isEmpty(); }
-    void didDisableAcceleration() override;
-    void didFinalizeFrame() override;
-    void restoreCanvasMatrixClipStack(SkCanvas*) const override;
+  // ContextLifecycleObserver and PageVisibilityObserver implementation
+  void ContextDestroyed(ExecutionContext*) override;
 
-    void doDeferredPaintInvalidation();
+  // PageVisibilityObserver implementation
+  void PageVisibilityChanged() override;
 
-    // ImageBitmapSource implementation
-    IntSize bitmapSourceSize() const override;
-    ScriptPromise createImageBitmap(ScriptState*, EventTarget&, Optional<IntRect> cropRect, const ImageBitmapOptions&, ExceptionState&) override;
+  // CanvasImageSource implementation
+  PassRefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                            AccelerationHint,
+                                            SnapshotReason,
+                                            const FloatSize&) const override;
+  bool WouldTaintOrigin(SecurityOrigin*) const override;
+  FloatSize ElementSize(const FloatSize&) const override;
+  bool IsCanvasElement() const override { return true; }
+  bool IsOpaque() const override;
+  bool IsAccelerated() const override;
+  int SourceWidth() override { return size_.Width(); }
+  int SourceHeight() override { return size_.Height(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  // CanvasSurfaceLayerBridgeObserver implementation
+  void OnWebLayerReplaced() override;
 
-    DECLARE_VIRTUAL_TRACE_WRAPPERS();
+  // ImageBufferClient implementation
+  void NotifySurfaceInvalid() override;
+  void DidDisableAcceleration() override;
+  void RestoreCanvasMatrixClipStack(PaintCanvas*) const override;
+  void SetNeedsCompositingUpdate() override;
 
-    void createImageBufferUsingSurfaceForTesting(std::unique_ptr<ImageBufferSurface>);
+  // ImageBitmapSource implementation
+  IntSize BitmapSourceSize() const override;
+  ScriptPromise CreateImageBitmap(ScriptState*,
+                                  EventTarget&,
+                                  Optional<IntRect> crop_rect,
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) override;
 
-    static void registerRenderingContextFactory(std::unique_ptr<CanvasRenderingContextFactory>);
-    void updateExternallyAllocatedMemory() const;
+  // OffscreenCanvasPlaceholder implementation.
+  void SetPlaceholderFrame(RefPtr<StaticBitmapImage>,
+                           WeakPtr<OffscreenCanvasFrameDispatcher>,
+                           RefPtr<WebTaskRunner>,
+                           unsigned resource_id) override;
+  DECLARE_VIRTUAL_TRACE();
 
-    void styleDidChange(const ComputedStyle* oldStyle, const ComputedStyle& newStyle);
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-    void notifyListenersCanvasChanged();
+  void CreateImageBufferUsingSurfaceForTesting(
+      std::unique_ptr<ImageBufferSurface>);
 
-    // For Canvas HitRegions
-    bool isSupportedInteractiveCanvasFallback(const Element&);
-    std::pair<Element*, String> getControlAndIdIfHitRegionExists(const LayoutPoint&);
-    String getIdFromControl(const Element*);
+  static void RegisterRenderingContextFactory(
+      std::unique_ptr<CanvasRenderingContextFactory>);
+  void UpdateExternallyAllocatedMemory() const;
 
-    // For OffscreenCanvas that controls this html canvas element
-    CanvasSurfaceLayerBridge* surfaceLayerBridge() const { return m_surfaceLayerBridge.get(); }
-    bool createSurfaceLayer();
+  void StyleDidChange(const ComputedStyle* old_style,
+                      const ComputedStyle& new_style);
 
-    void detachContext() { m_context = nullptr; }
+  void NotifyListenersCanvasChanged();
 
-protected:
-    void didMoveToNewDocument(Document& oldDocument) override;
+  // For Canvas HitRegions
+  bool IsSupportedInteractiveCanvasFallback(const Element&);
+  HitTestCanvasResult* GetControlAndIdIfHitRegionExists(const LayoutPoint&);
+  String GetIdFromControl(const Element*);
 
-private:
-    explicit HTMLCanvasElement(Document&);
-    void dispose();
+  // For OffscreenCanvas that controls this html canvas element
+  CanvasSurfaceLayerBridge* SurfaceLayerBridge() const {
+    return surface_layer_bridge_.get();
+  }
+  void CreateLayer();
 
-    using ContextFactoryVector = Vector<std::unique_ptr<CanvasRenderingContextFactory>>;
-    static ContextFactoryVector& renderingContextFactories();
-    static CanvasRenderingContextFactory* getRenderingContextFactory(int);
+  void DetachContext() { context_ = nullptr; }
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    bool areAuthorShadowsAllowed() const override { return false; }
+  void WillDrawImageTo2DContext(CanvasImageSource*);
 
-    void reset();
+ protected:
+  void DidMoveToNewDocument(Document& old_document) override;
 
-    std::unique_ptr<ImageBufferSurface> createImageBufferSurface(const IntSize& deviceSize, int* msaaSampleCount);
-    void createImageBuffer();
-    void createImageBufferInternal(std::unique_ptr<ImageBufferSurface> externalSurface);
-    bool shouldUseDisplayList(const IntSize& deviceSize);
+ private:
+  explicit HTMLCanvasElement(Document&);
+  void Dispose();
 
-    void setSurfaceSize(const IntSize&);
+  using ContextFactoryVector =
+      Vector<std::unique_ptr<CanvasRenderingContextFactory>>;
+  static ContextFactoryVector& RenderingContextFactories();
+  static CanvasRenderingContextFactory* GetRenderingContextFactory(int);
 
-    bool paintsIntoCanvasBuffer() const;
+  enum AccelerationCriteria {
+    kNormalAccelerationCriteria,
+    kIgnoreResourceLimitCriteria,
+  };
+  bool ShouldAccelerate(AccelerationCriteria) const;
 
-    ImageData* toImageData(SourceDrawingBuffer, SnapshotReason) const;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  bool AreAuthorShadowsAllowed() const override { return false; }
 
-    String toDataURLInternal(const String& mimeType, const double& quality, SourceDrawingBuffer) const;
+  void Reset();
 
-    HeapHashSet<WeakMember<CanvasDrawListener>> m_listeners;
+  std::unique_ptr<ImageBufferSurface> CreateWebGLImageBufferSurface(
+      OpacityMode);
+  std::unique_ptr<ImageBufferSurface> CreateAcceleratedImageBufferSurface(
+      OpacityMode,
+      int* msaa_sample_count);
+  std::unique_ptr<ImageBufferSurface> CreateUnacceleratedImageBufferSurface(
+      OpacityMode);
+  void CreateImageBuffer();
+  void CreateImageBufferInternal(
+      std::unique_ptr<ImageBufferSurface> external_surface);
+  bool ShouldUseDisplayList();
 
-    IntSize m_size;
+  void SetSurfaceSize(const IntSize&);
 
-    Member<CanvasRenderingContext> m_context;
+  bool PaintsIntoCanvasBuffer() const;
 
-    bool m_ignoreReset;
-    FloatRect m_dirtyRect;
+  ImageData* ToImageData(SourceDrawingBuffer, SnapshotReason) const;
 
-    mutable intptr_t m_externallyAllocatedMemory;
+  String ToDataURLInternal(const String& mime_type,
+                           const double& quality,
+                           SourceDrawingBuffer) const;
 
-    bool m_originClean;
+  HeapHashSet<WeakMember<CanvasDrawListener>> listeners_;
 
-    // It prevents HTMLCanvasElement::buffer() from continuously re-attempting to allocate an imageBuffer
-    // after the first attempt failed.
-    mutable bool m_didFailToCreateImageBuffer;
-    bool m_imageBufferIsClear;
-    std::unique_ptr<ImageBuffer> m_imageBuffer;
+  IntSize size_;
 
-    mutable RefPtr<Image> m_copiedImage; // FIXME: This is temporary for platforms that have to copy the image buffer to render (and for CSSCanvasValue).
+  TraceWrapperMember<CanvasRenderingContext> context_;
 
-    // Used for OffscreenCanvas that controls this HTML canvas element
-    std::unique_ptr<CanvasSurfaceLayerBridge> m_surfaceLayerBridge;
+  bool ignore_reset_;
+  FloatRect dirty_rect_;
 
-    int m_numFramesSinceLastRenderingModeSwitch;
-    bool m_pendingRenderingModeSwitch;
+  mutable intptr_t externally_allocated_memory_;
+
+  bool origin_clean_;
+
+  // It prevents HTMLCanvasElement::buffer() from continuously re-attempting to
+  // allocate an imageBuffer after the first attempt failed.
+  mutable bool did_fail_to_create_image_buffer_;
+  bool image_buffer_is_clear_;
+  std::unique_ptr<ImageBuffer> image_buffer_;
+
+  // FIXME: This is temporary for platforms that have to copy the image buffer
+  // to render (and for CSSCanvasValue).
+  mutable RefPtr<Image> copied_image_;
+
+  // Used for OffscreenCanvas that controls this HTML canvas element
+  std::unique_ptr<CanvasSurfaceLayerBridge> surface_layer_bridge_;
+
+  int num_frames_since_last_rendering_mode_switch_;
+  bool pending_rendering_mode_switch_;
+  bool did_notify_listeners_for_current_frame_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLCanvasElement_h
+#endif  // HTMLCanvasElement_h

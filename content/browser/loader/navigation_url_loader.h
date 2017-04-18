@@ -12,11 +12,13 @@
 
 namespace content {
 
-class BrowserContext;
+class AppCacheNavigationHandle;
+class NavigationUIData;
 class NavigationURLLoaderDelegate;
 class NavigationURLLoaderFactory;
-class ServiceWorkerContextWrapper;
-struct CommonNavigationParams;
+class ResourceContext;
+class ServiceWorkerNavigationHandle;
+class StoragePartition;
 struct NavigationRequestInfo;
 
 // PlzNavigate: The navigation logic's UI thread entry point into the resource
@@ -34,9 +36,12 @@ class CONTENT_EXPORT NavigationURLLoader {
   // structure. Information like has_user_gesture and
   // should_replace_current_entry shouldn't be needed at this layer.
   static std::unique_ptr<NavigationURLLoader> Create(
-      BrowserContext* browser_context,
+      ResourceContext* resource_context,
+      StoragePartition* storage_partition,
       std::unique_ptr<NavigationRequestInfo> request_info,
-      ServiceWorkerContextWrapper* service_worker_context_wrapper,
+      std::unique_ptr<NavigationUIData> navigation_ui_data,
+      ServiceWorkerNavigationHandle* service_worker_handle,
+      AppCacheNavigationHandle* appcache_handle,
       NavigationURLLoaderDelegate* delegate);
 
   // For testing purposes; sets the factory for use in testing.

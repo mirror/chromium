@@ -4,17 +4,13 @@
 
 #include "chrome/browser/custom_handlers/register_protocol_handler_permission_request.h"
 
+#include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/custom_handlers/protocol_handler_registry.h"
 #include "chrome/grit/generated_resources.h"
-#include "content/public/browser/user_metrics.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/vector_icons_public.h"
-
-#if defined(OS_MACOSX)
-#include "grit/theme_resources.h"
-#endif
+#include "ui/vector_icons/vector_icons.h"
 
 namespace {
 
@@ -42,21 +38,9 @@ RegisterProtocolHandlerPermissionRequest
 RegisterProtocolHandlerPermissionRequest::
 ~RegisterProtocolHandlerPermissionRequest() {}
 
-gfx::VectorIconId RegisterProtocolHandlerPermissionRequest::GetVectorIconId()
+PermissionRequest::IconId RegisterProtocolHandlerPermissionRequest::GetIconId()
     const {
-#if defined(OS_MACOSX)
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
-#else
-  return gfx::VectorIconId::PROTOCOL_HANDLER;
-#endif
-}
-
-int RegisterProtocolHandlerPermissionRequest::GetIconId() const {
-#if defined(OS_MACOSX)
-  return IDR_REGISTER_PROTOCOL_HANDLER;
-#else
-  return 0;
-#endif
+  return ui::kProtocolHandlerIcon;
 }
 
 base::string16
@@ -77,19 +61,19 @@ GURL RegisterProtocolHandlerPermissionRequest::GetOrigin() const {
 }
 
 void RegisterProtocolHandlerPermissionRequest::PermissionGranted() {
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("RegisterProtocolHandler.Infobar_Accept"));
   registry_->OnAcceptRegisterProtocolHandler(handler_);
 }
 
 void RegisterProtocolHandlerPermissionRequest::PermissionDenied() {
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("RegisterProtocolHandler.InfoBar_Deny"));
   registry_->OnIgnoreRegisterProtocolHandler(handler_);
 }
 
 void RegisterProtocolHandlerPermissionRequest::Cancelled() {
-  content::RecordAction(
+  base::RecordAction(
       base::UserMetricsAction("RegisterProtocolHandler.InfoBar_Deny"));
   registry_->OnIgnoreRegisterProtocolHandler(handler_);
 }

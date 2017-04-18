@@ -2,7 +2,6 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 import os
-import re
 
 from core import path_util
 from core import perf_benchmark
@@ -15,8 +14,8 @@ from measurements import v8_gc_times
 import page_sets
 from telemetry import benchmark
 from telemetry import story
-from telemetry.timeline import chrome_trace_config
 from telemetry.timeline import chrome_trace_category_filter
+from telemetry.timeline import chrome_trace_config
 from telemetry.web_perf import timeline_based_measurement
 
 
@@ -31,6 +30,7 @@ def CreateV8TimelineBasedMeasurementOptions():
 
 
 @benchmark.Disabled('win')        # crbug.com/416502
+@benchmark.Owner(emails=['hpayer@chromium.org', 'rmcilroy@chromium.org'])
 class V8Top25(perf_benchmark.PerfBenchmark):
   """Measures V8 GC metrics on the while scrolling down the top 25 web pages.
 
@@ -39,16 +39,12 @@ class V8Top25(perf_benchmark.PerfBenchmark):
   page_set = page_sets.V8Top25SmoothPageSet
 
   @classmethod
-  def ShouldDisable(cls, possible_browser):  # http://crbug.com/597656
-    return (possible_browser.browser_type == 'reference' and
-            possible_browser.platform.GetDeviceTypeName() == 'Nexus 5X')
-
-  @classmethod
   def Name(cls):
     return 'v8.top_25_smooth'
 
 
 @benchmark.Enabled('android')
+@benchmark.Owner(emails=['hpayer@chromium.org', 'rmcilroy@chromium.org'])
 class V8KeyMobileSites(perf_benchmark.PerfBenchmark):
   """Measures V8 GC metrics on the while scrolling down key mobile sites.
 
@@ -59,11 +55,6 @@ class V8KeyMobileSites(perf_benchmark.PerfBenchmark):
   @classmethod
   def Name(cls):
     return 'v8.key_mobile_sites_smooth'
-
-  @classmethod
-  def ShouldDisable(cls, possible_browser):  # http://crbug.com/597656
-      return (possible_browser.browser_type == 'reference' and
-              possible_browser.platform.GetDeviceTypeName() == 'Nexus 5X')
 
 
 class V8DetachedContextAgeInGC(perf_benchmark.PerfBenchmark):
@@ -77,6 +68,13 @@ class V8DetachedContextAgeInGC(perf_benchmark.PerfBenchmark):
   def Name(cls):
     return 'v8.detached_context_age_in_gc'
 
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    # http://crbug.com/685350
+    if possible_browser.platform.GetDeviceTypeName() == 'Nexus 9':
+      return True
+    return False
+
 
 class _InfiniteScrollBenchmark(perf_benchmark.PerfBenchmark):
   """ Base class for infinite scroll benchmarks.
@@ -84,39 +82,52 @@ class _InfiniteScrollBenchmark(perf_benchmark.PerfBenchmark):
 
   def SetExtraBrowserOptions(self, options):
     options.AppendExtraBrowserArgs([
-        # TODO(perezju): Temporary workaround to disable periodic memory dumps.
-        # See: http://crbug.com/513692
-        '--enable-memory-benchmarking',
         # Disable push notifications for Facebook.
         '--disable-notifications',
     ])
     v8_helper.AppendJSFlags(options, '--heap-growing-percent=10')
 
   def CreateTimelineBasedMeasurementOptions(self):
-    v8_categories = [
-        'blink.console', 'disabled-by-default-v8.gc',
-        'renderer.scheduler', 'v8', 'webkit.console']
-    smoothness_categories = [
-        'webkit.console', 'blink.console', 'benchmark', 'trace_event_overhead']
-    memory_categories = ['blink.console', 'disabled-by-default-memory-infra']
+    categories = [
+      # Disable all categories by default.
+      '-*',
+      # Memory categories.
+      'disabled-by-default-memory-infra',
+      # EQT categories.
+      'blink.user_timing',
+      'loading',
+      'navigation',
+      'toplevel',
+      # V8 categories.
+      'blink.console',
+      'disabled-by-default-v8.compile',
+      'disabled-by-default-v8.gc',
+      'renderer.scheduler',
+      'v8',
+      'webkit.console'
+    ]
     category_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter(
-        ','.join(['-*'] + v8_categories +
-                 smoothness_categories + memory_categories))
+        ','.join(categories))
     options = timeline_based_measurement.Options(category_filter)
     # TODO(ulan): Add frame time discrepancy once it is ported to TBMv2,
     # see crbug.com/606841.
-    options.SetTimelineBasedMetrics(['v8AndMemoryMetrics'])
+    options.SetTimelineBasedMetrics([
+      'expectedQueueingTimeMetric', 'v8AndMemoryMetrics'])
+    # Setting an empty memory dump config disables periodic dumps.
+    options.config.chrome_trace_config.SetMemoryDumpConfig(
+        chrome_trace_config.MemoryDumpConfig())
     return options
 
   @classmethod
   def ValueCanBeAddedPredicate(cls, value, _):
-    return 'v8' in value.name
+    return ('v8' in value.name) or ('eqt' in value.name)
 
   @classmethod
   def ShouldTearDownStateAfterEachStoryRun(cls):
     return True
 
 
+@benchmark.Owner(emails=['jochen@chromium.org'])
 class V8TodoMVC(perf_benchmark.PerfBenchmark):
   """Measures V8 Execution metrics on the TodoMVC examples."""
   page_set = page_sets.TodoMVCPageSet
@@ -129,144 +140,132 @@ class V8TodoMVC(perf_benchmark.PerfBenchmark):
     return 'v8.todomvc'
 
   @classmethod
+  def ShouldDisable(cls, possible_browser):
+    # This benchmark is flaky on Samsung Galaxy S5s.
+    # http://crbug.com/644826
+    return possible_browser.platform.GetDeviceTypeName() == 'SM-G900H'
+
+  @classmethod
   def ShouldTearDownStateAfterEachStoryRun(cls):
     return True
 
+@benchmark.Disabled('all')
+@benchmark.Owner(emails=['mvstaton@chromium.org'])
+class V8TodoMVCTurbo(V8TodoMVC):
+  """Measures V8 Execution metrics on the TodoMVC examples
+  using Ignition+TurboFan."""
 
-# Disabled on reference builds because they don't support the new
-# Tracing.requestMemoryDump DevTools API. See http://crbug.com/540022.
-@benchmark.Disabled('reference')
-class V8TodoMVCIgnition(V8TodoMVC):
-  """Measures V8 Execution metrics on the TodoMVC examples using ignition."""
   page_set = page_sets.TodoMVCPageSet
 
   def SetExtraBrowserOptions(self, options):
-    super(V8TodoMVCIgnition, self).SetExtraBrowserOptions(options)
-    v8_helper.EnableIgnition(options)
+    super(V8TodoMVCTurbo, self).SetExtraBrowserOptions(options)
+    v8_helper.EnableTurbo(options)
 
   @classmethod
   def Name(cls):
-    return 'v8.todomvc-ignition'
+    return 'v8.todomvc-turbo'
 
 
-# Disabled on reference builds because they don't support the new
-# Tracing.requestMemoryDump DevTools API. See http://crbug.com/540022.
-@benchmark.Disabled('reference')
+@benchmark.Owner(emails=['hablich@chromium.org'])
+class V8TodoMVCClassic(V8TodoMVC):
+  """Measures V8 Execution metrics on the TodoMVC examples
+  using the Classic pipeline."""
+
+  page_set = page_sets.TodoMVCPageSet
+
+  def SetExtraBrowserOptions(self, options):
+    super(V8TodoMVCClassic, self).SetExtraBrowserOptions(options)
+    v8_helper.EnableClassic(options)
+
+  @classmethod
+  def Name(cls):
+    return 'v8.todomvc-classic'
+
+
+@benchmark.Owner(emails=['ulan@chromium.org'])
 class V8InfiniteScroll(_InfiniteScrollBenchmark):
   """Measures V8 GC metrics and memory usage while scrolling the top web pages.
   http://www.chromium.org/developers/design-documents/rendering-benchmarks"""
 
-  page_set = page_sets.InfiniteScrollPageSet
+  page_set = page_sets.InfiniteScrollStorySet
 
   @classmethod
   def Name(cls):
     return 'v8.infinite_scroll_tbmv2'
 
-
-# Disabled on reference builds because they don't support the new
-# Tracing.requestMemoryDump DevTools API. See http://crbug.com/540022.
-@benchmark.Disabled('reference')  # crbug.com/579546
-class V8InfiniteScrollIgnition(V8InfiniteScroll):
-  """Measures V8 GC metrics using Ignition."""
+@benchmark.Disabled('all')
+@benchmark.Owner(emails=['mvstaton@chromium.org'])
+class V8InfiniteScrollTurbo(V8InfiniteScroll):
+  """Measures V8 GC metrics using Ignition+TurboFan."""
 
   def SetExtraBrowserOptions(self, options):
-    super(V8InfiniteScrollIgnition, self).SetExtraBrowserOptions(options)
-    v8_helper.EnableIgnition(options)
+    super(V8InfiniteScrollTurbo, self).SetExtraBrowserOptions(options)
+    v8_helper.EnableTurbo(options)
 
   @classmethod
   def Name(cls):
-    return 'v8.infinite_scroll-ignition_tbmv2'
+    return 'v8.infinite_scroll-turbo_tbmv2'
+
+
+@benchmark.Owner(emails=['hablich@chromium.org'])
+class V8InfiniteScrollClassic(V8InfiniteScroll):
+  """Measures V8 GC metrics using the Classic pipeline."""
+
+  def SetExtraBrowserOptions(self, options):
+    super(V8InfiniteScrollClassic, self).SetExtraBrowserOptions(options)
+    v8_helper.EnableClassic(options)
+
+  @classmethod
+  def Name(cls):
+    return 'v8.infinite_scroll-classic_tbmv2'
 
 
 @benchmark.Enabled('android')
+@benchmark.Owner(emails=['ulan@chromium.org'])
 class V8MobileInfiniteScroll(_InfiniteScrollBenchmark):
   """Measures V8 GC metrics and memory usage while scrolling the top mobile
   web pages.
   http://www.chromium.org/developers/design-documents/rendering-benchmarks"""
 
-  page_set = page_sets.MobileInfiniteScrollPageSet
+  page_set = page_sets.MobileInfiniteScrollStorySet
 
   @classmethod
   def Name(cls):
     return 'v8.mobile_infinite_scroll_tbmv2'
 
-  @classmethod
-  def ShouldDisable(cls, possible_browser):  # http://crbug.com/597656
-      return (possible_browser.browser_type == 'reference' and
-              possible_browser.platform.GetDeviceTypeName() == 'Nexus 5X')
 
-
-class _V8MemoryAndCodeSizeBenchmark(perf_benchmark.PerfBenchmark):
-  """Base class for benchmarks measuring code size."""
-
-  _IGNORED_V8_STATS_RE = re.compile(
-      r'(?<!dump)(?<!process)_(std|count|min|sum|pct_\d{4}(_\d+)?)$')
-
-  def CreateTimelineBasedMeasurementOptions(self):
-    category_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter(
-        '-*, disabled-by-default-memory-infra,'
-        # TODO(crbug.com/616441, primiano): Remove this temporary workaround,
-        # which enables memory-infra V8 code stats in V8 code size benchmarks
-        # only (to not slow down detailed memory dumps in other benchmarks).
-        'disabled-by-default-memory-infra.v8.code_stats')
-    options = timeline_based_measurement.Options(category_filter)
-    # Trigger periodic light memory dumps every 20 ms.
-    memory_dump_config = chrome_trace_config.MemoryDumpConfig()
-    memory_dump_config.AddTrigger('light', 20)
-    options.config.chrome_trace_config.SetMemoryDumpConfig(memory_dump_config)
-    options.SetTimelineBasedMetrics(['memoryMetric'])
-    return options
-
-  page_set = page_sets.Top10MobileMemoryPageSet
-
-  @classmethod
-  def ShouldTearDownStateAfterEachStoryRun(cls):
-    return True
-
-  @classmethod
-  def ValueCanBeAddedPredicate(cls, value, is_first_result):
-    # TODO(crbug.com/610962): Remove this stopgap when the perf dashboard
-    # is able to cope with the data load generated by TBMv2 metrics.
-    if 'memory' not in value.name:
-      return True  # Keep all non-memory values.
-    # TODO(petrcermak): Remove the 'subsystem' disjunct once
-    # https://codereview.chromium.org/2018503002/ lands in Catapult and rolls
-    # into Chromium.
-    if (('subsystem' in value.name or 'reported_by_chrome' in value.name) and
-        'v8' not in value.name):
-      return False  # Drop non-V8 values reported by Chrome.
-    # Keep dump counts and average+max of process counts, vmstats and v8.
-    return not cls._IGNORED_V8_STATS_RE.search(value.name)
-
-
-@benchmark.Disabled('reference')
-class V8MobileCodeSizeIgnition(_V8MemoryAndCodeSizeBenchmark):
-  """Measures V8 heap and code size with ignition enabled on mobile web pages.
-
-  http://www.chromium.org/developers/design-documents/rendering-benchmarks
-  """
+@benchmark.Disabled('all') # was enabled only on android
+@benchmark.Owner(emails=['mvstaton@chromium.org'])
+class V8MobileInfiniteScrollTurbo(V8MobileInfiniteScroll):
+  """Measures V8 GC metrics and memory usage while scrolling the top mobile
+  web pages and running Ignition+TurboFan.
+  http://www.chromium.org/developers/design-documents/rendering-benchmarks"""
 
   def SetExtraBrowserOptions(self, options):
-    super(V8MobileCodeSizeIgnition, self).SetExtraBrowserOptions(options)
-    v8_helper.EnableIgnition(options)
+    super(V8MobileInfiniteScrollTurbo, self).SetExtraBrowserOptions(options)
+    v8_helper.EnableTurbo(options)
 
   @classmethod
   def Name(cls):
-    return 'top_10_mobile_memory_ignition'
+    return 'v8.mobile_infinite_scroll-turbo_tbmv2'
 
 
-@benchmark.Disabled('reference')
-class V8MobileCodeSize(_V8MemoryAndCodeSizeBenchmark):
-  """Measures V8 heap and code size on mobile web pages.
+@benchmark.Enabled('android')
+@benchmark.Owner(emails=['hablich@chromium.org'])
+class V8MobileInfiniteScrollClassic(V8MobileInfiniteScroll):
+  """Measures V8 GC metrics and memory usage while scrolling the top mobile
+  web pages and running the Classic pipeline.
+  http://www.chromium.org/developers/design-documents/rendering-benchmarks"""
 
-  http://www.chromium.org/developers/design-documents/rendering-benchmarks
-  """
+  def SetExtraBrowserOptions(self, options):
+    super(V8MobileInfiniteScrollClassic, self).SetExtraBrowserOptions(options)
+    v8_helper.EnableClassic(options)
 
   @classmethod
   def Name(cls):
-    return 'top_10_mobile_memory'
+    return 'v8.mobile_infinite_scroll-classic_tbmv2'
 
-
+@benchmark.Owner(emails=['hablich@chromium.org'])
 class V8Adword(perf_benchmark.PerfBenchmark):
   """Measures V8 Execution metrics on the Adword page."""
 
@@ -304,3 +303,63 @@ class V8Adword(perf_benchmark.PerfBenchmark):
   @classmethod
   def ShouldTearDownStateAfterEachStoryRun(cls):
     return True
+
+
+class _Top25RuntimeStats(perf_benchmark.PerfBenchmark):
+  options = {'pageset_repeat': 3}
+
+  def CreateTimelineBasedMeasurementOptions(self):
+    # TODO(fmeawad): most of the cat_filter information is extracted from
+    # page_cycler_v2 TimelineBasedMeasurementOptionsForLoadingMetric because
+    # used by the loadingMetric because the runtimeStatsMetric uses the
+    # interactive time calculated internally by the loadingMetric.
+    # It is better to share the code so that we can keep them in sync.
+    cat_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter()
+
+    # "blink.console" is used for marking ranges in
+    # cache_temperature.MarkTelemetryInternal.
+    cat_filter.AddIncludedCategory('blink.console')
+
+    # "navigation" and "blink.user_timing" are needed to capture core
+    # navigation events.
+    cat_filter.AddIncludedCategory('navigation')
+    cat_filter.AddIncludedCategory('blink.user_timing')
+
+    # "loading" is needed for first-meaningful-paint computation.
+    cat_filter.AddIncludedCategory('loading')
+
+    # "toplevel" category is used to capture TaskQueueManager events
+    # necessary to compute time-to-interactive.
+    cat_filter.AddIncludedCategory('toplevel')
+
+    # V8 needed categories
+    cat_filter.AddIncludedCategory('v8')
+    cat_filter.AddDisabledByDefault('disabled-by-default-v8.runtime_stats')
+
+    tbm_options = timeline_based_measurement.Options(
+        overhead_level=cat_filter)
+    tbm_options.SetTimelineBasedMetrics(['runtimeStatsMetric'])
+    return tbm_options
+
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    if possible_browser.browser_type == 'reference':
+      return True
+    return False
+
+
+@benchmark.Disabled('android', 'win', 'reference')  # crbug.com/664318
+@benchmark.Owner(emails=['cbruni@chromium.org'])
+class V8Top25RuntimeStats(_Top25RuntimeStats):
+  """Runtime Stats benchmark for a 25 top V8 web pages.
+
+  Designed to represent a mix between top websites and a set of pages that
+  have unique V8 characteristics.
+  """
+
+  @classmethod
+  def Name(cls):
+    return 'v8.runtime_stats.top_25'
+
+  def CreateStorySet(self, options):
+    return page_sets.V8Top25StorySet()

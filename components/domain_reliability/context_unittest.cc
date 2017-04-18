@@ -13,6 +13,7 @@
 
 #include "base/bind.h"
 #include "base/json/json_reader.h"
+#include "base/strings/string_piece.h"
 #include "components/domain_reliability/beacon.h"
 #include "components/domain_reliability/dispatcher.h"
 #include "components/domain_reliability/scheduler.h"
@@ -60,8 +61,8 @@ std::unique_ptr<DomainReliabilityBeacon> MakeBeacon(MockableTime* time) {
 }
 
 template <typename ValueType,
-          bool (DictionaryValue::* GetValueType)(const std::string&,
-                                                 ValueType*) const>
+          bool (DictionaryValue::*GetValueType)(base::StringPiece, ValueType*)
+              const>
 struct HasValue {
   bool operator()(const DictionaryValue& dict,
                   const std::string& key,
@@ -535,6 +536,19 @@ TEST_F(DomainReliabilityContextTest, SampleNoBeacons) {
   context_->OnBeacon(std::move(beacon));
   context_->GetQueuedBeaconsForTesting(&beacons);
   EXPECT_EQ(0u, beacons.size());
+}
+
+TEST_F(DomainReliabilityContextTest, ExpiredBeaconDoesNotUpload) {
+  InitContext(MakeTestConfig());
+  std::unique_ptr<DomainReliabilityBeacon> beacon = MakeBeacon(&time_);
+  time_.Advance(base::TimeDelta::FromHours(2));
+  context_->OnBeacon(std::move(beacon));
+
+  time_.Advance(max_delay());
+  EXPECT_FALSE(upload_pending());
+  BeaconVector beacons;
+  context_->GetQueuedBeaconsForTesting(&beacons);
+  EXPECT_TRUE(beacons.empty());
 }
 
 // TODO(juliatuttle): Add beacon_unittest.cc to test serialization.

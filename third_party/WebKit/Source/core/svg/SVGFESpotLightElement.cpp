@@ -26,15 +26,16 @@
 namespace blink {
 
 inline SVGFESpotLightElement::SVGFESpotLightElement(Document& document)
-    : SVGFELightElement(SVGNames::feSpotLightTag, document)
-{
-}
+    : SVGFELightElement(SVGNames::feSpotLightTag, document) {}
 
 DEFINE_NODE_FACTORY(SVGFESpotLightElement)
 
-PassRefPtr<LightSource> SVGFESpotLightElement::lightSource(Filter* filter) const
-{
-    return SpotLightSource::create(filter->resolve3dPoint(position()), filter->resolve3dPoint(pointsAt()), specularExponent()->currentValue()->value(), limitingConeAngle()->currentValue()->value());
+PassRefPtr<LightSource> SVGFESpotLightElement::GetLightSource(
+    Filter* filter) const {
+  return SpotLightSource::Create(filter->Resolve3dPoint(GetPosition()),
+                                 filter->Resolve3dPoint(PointsAt()),
+                                 specularExponent()->CurrentValue()->Value(),
+                                 limitingConeAngle()->CurrentValue()->Value());
 }
 
-} // namespace blink
+}  // namespace blink

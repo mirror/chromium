@@ -25,7 +25,7 @@
 
 #include "core/css/CSSRule.h"
 #include "core/css/StyleRule.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -33,33 +33,34 @@ class ExceptionState;
 class CSSRuleList;
 
 class CSSGroupingRule : public CSSRule {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~CSSGroupingRule() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    void reattach(StyleRuleBase*) override;
+ public:
+  ~CSSGroupingRule() override;
 
-    CSSRuleList* cssRules() const override;
+  void Reattach(StyleRuleBase*) override;
 
-    unsigned insertRule(const String& rule, unsigned index, ExceptionState&);
-    void deleteRule(unsigned index, ExceptionState&);
+  CSSRuleList* cssRules() const override;
 
-    // For CSSRuleList
-    unsigned length() const;
-    CSSRule* item(unsigned index) const;
+  unsigned insertRule(const String& rule, unsigned index, ExceptionState&);
+  void deleteRule(unsigned index, ExceptionState&);
 
-    DECLARE_VIRTUAL_TRACE();
+  // For CSSRuleList
+  unsigned length() const;
+  CSSRule* Item(unsigned index) const;
 
-protected:
-    CSSGroupingRule(StyleRuleGroup* groupRule, CSSStyleSheet* parent);
+  DECLARE_VIRTUAL_TRACE();
 
-    void appendCSSTextForItems(StringBuilder&) const;
+ protected:
+  CSSGroupingRule(StyleRuleGroup* group_rule, CSSStyleSheet* parent);
 
-    Member<StyleRuleGroup> m_groupRule;
-    mutable HeapVector<Member<CSSRule>> m_childRuleCSSOMWrappers;
-    mutable Member<CSSRuleList> m_ruleListCSSOMWrapper;
+  void AppendCSSTextForItems(StringBuilder&) const;
+
+  Member<StyleRuleGroup> group_rule_;
+  mutable HeapVector<Member<CSSRule>> child_rule_cssom_wrappers_;
+  mutable Member<CSSRuleList> rule_list_cssom_wrapper_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSGroupingRule_h
+#endif  // CSSGroupingRule_h

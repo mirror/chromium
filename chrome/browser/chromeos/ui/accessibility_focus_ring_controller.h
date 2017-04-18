@@ -5,14 +5,17 @@
 #ifndef CHROME_BROWSER_CHROMEOS_UI_ACCESSIBILITY_FOCUS_RING_CONTROLLER_H_
 #define CHROME_BROWSER_CHROMEOS_UI_ACCESSIBILITY_FOCUS_RING_CONTROLLER_H_
 
+#include <memory>
 #include <vector>
 
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/memory/scoped_vector.h"
 #include "base/memory/singleton.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/ui/accessibility_cursor_ring_layer.h"
 #include "chrome/browser/chromeos/ui/accessibility_focus_ring_layer.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace chromeos {
@@ -26,17 +29,24 @@ class AccessibilityFocusRingController : public FocusRingLayerDelegate {
 
   enum FocusRingBehavior { FADE_OUT_FOCUS_RING, PERSIST_FOCUS_RING };
 
+  // Set the focus ring color, or reset it back to the default.
+  void SetFocusRingColor(SkColor color);
+  void ResetFocusRingColor();
+
   // Draw a focus ring around the given set of rects, in global screen
   // coordinates. Use |focus_ring_behavior| to specify whether the focus
   // ring should persist or fade out.
   void SetFocusRing(const std::vector<gfx::Rect>& rects,
                     FocusRingBehavior focus_ring_behavior);
+  void HideFocusRing();
 
   // Draw a ring around the mouse cursor. It fades out automatically.
   void SetCursorRing(const gfx::Point& location);
+  void HideCursorRing();
 
   // Draw a ring around the text caret. It fades out automatically.
   void SetCaretRing(const gfx::Point& location);
+  void HideCaretRing();
 
   // Don't fade in / out, for testing.
   void SetNoFadeForTesting();
@@ -56,6 +66,9 @@ class AccessibilityFocusRingController : public FocusRingLayerDelegate {
   virtual int GetMargin() const;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(AccessibilityFocusRingControllerTest,
+                           CursorWorksOnMultipleDisplays);
+
   // FocusRingLayerDelegate overrides.
   void OnDeviceScaleFactorChanged() override;
   void OnAnimationStep(base::TimeTicks timestamp) override;
@@ -91,8 +104,9 @@ class AccessibilityFocusRingController : public FocusRingLayerDelegate {
   std::vector<gfx::Rect> focus_rects_;
   std::vector<AccessibilityFocusRing> previous_focus_rings_;
   std::vector<AccessibilityFocusRing> focus_rings_;
-  ScopedVector<AccessibilityFocusRingLayer> focus_layers_;
+  std::vector<std::unique_ptr<AccessibilityFocusRingLayer>> focus_layers_;
   FocusRingBehavior focus_ring_behavior_ = FADE_OUT_FOCUS_RING;
+  base::Optional<SkColor> focus_ring_color_;
 
   LayerAnimationInfo cursor_animation_info_;
   gfx::Point cursor_location_;

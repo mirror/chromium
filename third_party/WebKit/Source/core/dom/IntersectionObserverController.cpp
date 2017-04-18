@@ -5,101 +5,102 @@
 #include "core/dom/IntersectionObserverController.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/IdleRequestOptions.h"
-#include "platform/TraceEvent.h"
+#include "core/dom/Element.h"
+#include "core/dom/TaskRunnerHelper.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
 
-IntersectionObserverController* IntersectionObserverController::create(Document* document)
-{
-    IntersectionObserverController* result = new IntersectionObserverController(document);
-    result->suspendIfNeeded();
-    return result;
+IntersectionObserverController* IntersectionObserverController::Create(
+    Document* document) {
+  IntersectionObserverController* result =
+      new IntersectionObserverController(document);
+  result->SuspendIfNeeded();
+  return result;
 }
 
-IntersectionObserverController::IntersectionObserverController(Document* document)
-    : ActiveDOMObject(document)
-    , m_callbackID(0)
-    , m_callbackFiredWhileSuspended(false)
-{
+IntersectionObserverController::IntersectionObserverController(
+    Document* document)
+    : SuspendableObject(document),
+      weak_ptr_factory_(this),
+      callback_fired_while_suspended_(false) {}
+
+IntersectionObserverController::~IntersectionObserverController() {}
+
+void IntersectionObserverController::PostTaskToDeliverObservations() {
+  if (!weak_ptr_factory_.HasWeakPtrs()) {
+    // TODO(ojan): These tasks decide whether to throttle a subframe, so they
+    // need to be unthrottled, but we should throttle all the other tasks
+    // (e.g. ones coming from the web page).
+    TaskRunnerHelper::Get(TaskType::kUnthrottled, GetExecutionContext())
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&IntersectionObserverController::
+                                 DeliverIntersectionObservations,
+                             weak_ptr_factory_.CreateWeakPtr()));
+  }
 }
 
-IntersectionObserverController::~IntersectionObserverController() { }
-
-void IntersectionObserverController::scheduleIntersectionObserverForDelivery(IntersectionObserver& observer)
-{
-    m_pendingIntersectionObservers.add(&observer);
-    if (m_callbackID)
-        return;
-    Document* document = toDocument(getExecutionContext());
-    if (!document)
-        return;
-    IdleRequestOptions options;
-    // The IntersectionObserver spec mandates that notifications be sent within 100ms.
-    options.setTimeout(100);
-    m_callbackID = document->requestIdleCallback(this, options);
+void IntersectionObserverController::ScheduleIntersectionObserverForDelivery(
+    IntersectionObserver& observer) {
+  pending_intersection_observers_.insert(&observer);
+  PostTaskToDeliverObservations();
 }
 
-void IntersectionObserverController::resume()
-{
-    // If the callback fired while DOM objects were suspended, notifications might be late, so deliver
-    // them right away (rather than waiting to fire again).
-    if (m_callbackFiredWhileSuspended) {
-        m_callbackFiredWhileSuspended = false;
-        deliverIntersectionObservations();
-    }
+void IntersectionObserverController::Resume() {
+  // If the callback fired while DOM objects were suspended, notifications might
+  // be late, so deliver them right away (rather than waiting to fire again).
+  if (callback_fired_while_suspended_) {
+    callback_fired_while_suspended_ = false;
+    PostTaskToDeliverObservations();
+  }
 }
 
-void IntersectionObserverController::handleEvent(IdleDeadline*)
-{
-    DCHECK(m_callbackID);
-    m_callbackID = 0;
-    deliverIntersectionObservations();
+void IntersectionObserverController::DeliverIntersectionObservations() {
+  ExecutionContext* context = GetExecutionContext();
+  if (!context) {
+    pending_intersection_observers_.Clear();
+    return;
+  }
+  if (context->IsContextSuspended()) {
+    callback_fired_while_suspended_ = true;
+    return;
+  }
+  HeapHashSet<Member<IntersectionObserver>> observers;
+  pending_intersection_observers_.Swap(observers);
+  for (auto& observer : observers)
+    observer->Deliver();
 }
 
-void IntersectionObserverController::deliverIntersectionObservations()
-{
-    if (getExecutionContext()->activeDOMObjectsAreSuspended()) {
-        m_callbackFiredWhileSuspended = true;
-        return;
-    }
-    HeapHashSet<Member<IntersectionObserver>> observers;
-    m_pendingIntersectionObservers.swap(observers);
-    for (auto& observer : observers)
-        observer->deliver();
+void IntersectionObserverController::ComputeTrackedIntersectionObservations() {
+  TRACE_EVENT0(
+      "blink",
+      "IntersectionObserverController::computeTrackedIntersectionObservations");
+  for (auto& observer : tracked_intersection_observers_) {
+    observer->ComputeIntersectionObservations();
+    if (observer->HasEntries())
+      ScheduleIntersectionObserverForDelivery(*observer);
+  }
 }
 
-void IntersectionObserverController::computeTrackedIntersectionObservations()
-{
-    TRACE_EVENT0("blink", "IntersectionObserverController::computeTrackedIntersectionObservations");
-    for (auto& observer : m_trackedIntersectionObservers) {
-        observer->computeIntersectionObservations();
-        if (observer->hasEntries())
-            scheduleIntersectionObserverForDelivery(*observer);
-    }
+void IntersectionObserverController::AddTrackedObserver(
+    IntersectionObserver& observer) {
+  tracked_intersection_observers_.insert(&observer);
 }
 
-void IntersectionObserverController::addTrackedObserver(IntersectionObserver& observer)
-{
-    m_trackedIntersectionObservers.add(&observer);
+void IntersectionObserverController::RemoveTrackedObserversForRoot(
+    const Node& root) {
+  HeapVector<Member<IntersectionObserver>> to_remove;
+  for (auto& observer : tracked_intersection_observers_) {
+    if (observer->root() == &root)
+      to_remove.push_back(observer);
+  }
+  tracked_intersection_observers_.RemoveAll(to_remove);
 }
 
-void IntersectionObserverController::removeTrackedObserversForRoot(const Node& root)
-{
-    HeapVector<Member<IntersectionObserver>> toRemove;
-    for (auto& observer : m_trackedIntersectionObservers) {
-        if (observer->rootNode() == &root)
-            toRemove.append(observer);
-    }
-    m_trackedIntersectionObservers.removeAll(toRemove);
+DEFINE_TRACE(IntersectionObserverController) {
+  visitor->Trace(tracked_intersection_observers_);
+  visitor->Trace(pending_intersection_observers_);
+  SuspendableObject::Trace(visitor);
 }
 
-DEFINE_TRACE(IntersectionObserverController)
-{
-    visitor->trace(m_trackedIntersectionObservers);
-    visitor->trace(m_pendingIntersectionObservers);
-    ActiveDOMObject::trace(visitor);
-    IdleRequestCallback::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

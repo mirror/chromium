@@ -29,8 +29,10 @@
 #include "base/macros.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "media/audio/audio_io.h"
 #include "media/audio/audio_manager.h"
+#include "media/audio/mac/scoped_audio_unit.h"
 #include "media/base/audio_parameters.h"
 
 namespace media {
@@ -90,7 +92,9 @@ class AUHALStream : public AudioOutputStream {
 
   AudioDeviceID device_id() const { return device_; }
   size_t requested_buffer_size() const { return number_of_frames_; }
-  AudioUnit audio_unit() const { return audio_unit_; }
+  AudioUnit audio_unit() const {
+    return audio_unit_ ? audio_unit_->audio_unit() : nullptr;
+  }
 
  private:
   // AUHAL callback.
@@ -110,29 +114,17 @@ class AUHALStream : public AudioOutputStream {
   // Called by either |audio_fifo_| or Render() to provide audio data.
   void ProvideInput(int frame_delay, AudioBus* dest);
 
-  // Sets the stream format on the AUHAL to PCM Float32 non-interleaved
-  // for the given number of channels on the given scope and element.
-  // The created stream description will be stored in |desc|.
-  bool SetStreamFormat(AudioStreamBasicDescription* desc,
-                       int channels,
-                       UInt32 scope,
-                       UInt32 element);
-
   // Creates the AUHAL, sets its stream format, buffer-size, etc.
   bool ConfigureAUHAL();
-
-  // Uninitializes audio_unit_ if needed.
-  void CloseAudioUnit();
 
   // Creates the input and output busses.
   void CreateIOBusses();
 
-  // Gets the fixed playout device hardware latency and stores it. Returns 0
-  // if not available.
-  double GetHardwareLatency();
+  // Returns the fixed hardware latency, or zero if not available.
+  base::TimeDelta GetHardwareLatency();
 
-  // Gets the current playout latency value.
-  double GetPlayoutLatency(const AudioTimeStamp* output_time_stamp);
+  // Returns the playout time for a given AudioTimeStamp.
+  base::TimeTicks GetPlayoutTime(const AudioTimeStamp* output_time_stamp);
 
   // Updates playout timestamp, current lost frames, and total lost frames and
   // glitches.
@@ -145,8 +137,6 @@ class AUHALStream : public AudioOutputStream {
   AudioManagerMac* const manager_;
 
   const AudioParameters params_;
-  // For convenience - same as in params_.
-  const int output_channels_;
 
   // Size of audio buffer requested at construction. The actual buffer size
   // is given by |actual_io_buffer_frame_size_| and it can differ from the
@@ -173,13 +163,13 @@ class AUHALStream : public AudioOutputStream {
   const AudioDeviceID device_;
 
   // The AUHAL Audio Unit which talks to |device_|.
-  AudioUnit audio_unit_;
+  std::unique_ptr<ScopedAudioUnit> audio_unit_;
 
   // Volume level from 0 to 1.
   float volume_;
 
-  // Fixed playout hardware latency in frames.
-  double hardware_latency_frames_;
+  // Fixed playout hardware latency.
+  base::TimeDelta hardware_latency_;
 
   // This flag will be set to false while we're actively receiving callbacks.
   bool stopped_;
@@ -191,8 +181,8 @@ class AUHALStream : public AudioOutputStream {
   // sizes.
   std::unique_ptr<AudioPullFifo> audio_fifo_;
 
-  // Current buffer delay.  Set by Render().
-  uint32_t current_hardware_pending_bytes_;
+  // Current playout time.  Set by Render().
+  base::TimeTicks current_playout_time_;
 
   // Lost frames not yet reported to the provider. Increased in
   // UpdatePlayoutTimestamp() if any lost frame since last time. Forwarded to

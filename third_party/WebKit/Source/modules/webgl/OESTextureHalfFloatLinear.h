@@ -31,19 +31,19 @@
 namespace blink {
 
 class OESTextureHalfFloatLinear final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static OESTextureHalfFloatLinear* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~OESTextureHalfFloatLinear() override;
-    WebGLExtensionName name() const override;
+ public:
+  static OESTextureHalfFloatLinear* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit OESTextureHalfFloatLinear(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+
+ private:
+  explicit OESTextureHalfFloatLinear(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OESTextureHalfFloatLinear_h
+#endif  // OESTextureHalfFloatLinear_h

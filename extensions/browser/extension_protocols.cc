@@ -23,12 +23,13 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram.h"
-#include "base/metrics/sparse_histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/timer/elapsed_timer.h"
@@ -36,6 +37,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/resource_type.h"
 #include "crypto/secure_hash.h"
 #include "crypto/sha2.h"
 #include "extensions/browser/content_verifier.h"
@@ -65,12 +67,13 @@
 
 using content::BrowserThread;
 using content::ResourceRequestInfo;
-using content::ResourceType;
 using extensions::Extension;
 using extensions::SharedModuleInfo;
 
 namespace extensions {
 namespace {
+
+ExtensionProtocolTestHandler* g_test_handler = nullptr;
 
 class GeneratedBackgroundPageJob : public net::URLRequestSimpleJob {
  public:
@@ -152,10 +155,8 @@ void ReadResourceFilePathAndLastModifiedTime(
   int64_t delta_seconds = (*last_modified_time - dir_creation_time).InSeconds();
   if (delta_seconds >= 0) {
     UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.ResourceLastModifiedDelta",
-                                delta_seconds,
-                                0,
-                                base::TimeDelta::FromDays(30).InSeconds(),
-                                50);
+                                delta_seconds, 1,
+                                base::TimeDelta::FromDays(30).InSeconds(), 50);
   } else {
     UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.ResourceLastModifiedNegativeDelta",
                                 -delta_seconds,
@@ -209,18 +210,16 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
     request_timer_.reset(new base::ElapsedTimer());
     base::FilePath* read_file_path = new base::FilePath;
     base::Time* last_modified_time = new base::Time();
-    bool posted = BrowserThread::PostBlockingPoolTaskAndReply(
-        FROM_HERE,
-        base::Bind(&ReadResourceFilePathAndLastModifiedTime,
-                   resource_,
-                   directory_path_,
-                   base::Unretained(read_file_path),
+
+    // Inherit task priority from the calling context.
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, base::TaskTraits().MayBlock(),
+        base::Bind(&ReadResourceFilePathAndLastModifiedTime, resource_,
+                   directory_path_, base::Unretained(read_file_path),
                    base::Unretained(last_modified_time)),
         base::Bind(&URLRequestExtensionJob::OnFilePathAndLastModifiedTimeRead,
-                   weak_factory_.GetWeakPtr(),
-                   base::Owned(read_file_path),
+                   weak_factory_.GetWeakPtr(), base::Owned(read_file_path),
                    base::Owned(last_modified_time)));
-    DCHECK(posted);
   }
 
   bool IsRedirectResponse(GURL* location, int* http_status_code) override {
@@ -236,6 +235,20 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
         verify_job_ = NULL;
     }
     URLRequestFileJob::SetExtraRequestHeaders(headers);
+  }
+
+  void OnOpenComplete(int result) override {
+    if (result < 0) {
+      // This can happen when the file is unreadable (which can happen during
+      // corruption or third-party interaction). We need to be sure to inform
+      // the verification job that we've finished reading so that it can
+      // proceed; see crbug.com/703888.
+      if (verify_job_.get()) {
+        std::string tmp;
+        verify_job_->BytesRead(0, base::string_as_array(&tmp));
+        verify_job_->DoneReading();
+      }
+    }
   }
 
   void OnSeekComplete(int64_t result) override {
@@ -255,12 +268,15 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
                                   -result);
     if (result > 0) {
       bytes_read_ += result;
-      if (verify_job_.get()) {
+      if (verify_job_.get())
         verify_job_->BytesRead(result, buffer->data());
-        if (!remaining_bytes())
-          verify_job_->DoneReading();
-      }
     }
+  }
+
+  void DoneReading() override {
+    URLRequestFileJob::DoneReading();
+    if (verify_job_.get())
+      verify_job_->DoneReading();
   }
 
  private:
@@ -393,11 +409,12 @@ bool URLIsForExtensionIcon(const GURL& url, const Extension* extension) {
   if (!extension)
     return false;
 
-  std::string path = url.path();
   DCHECK_EQ(url.host(), extension->id());
+  base::StringPiece path = url.path_piece();
   DCHECK(path.length() > 0 && path[0] == '/');
-  path = path.substr(1);
-  return extensions::IconsInfo::GetIcons(extension).ContainsPath(path);
+  base::StringPiece path_without_slash = path.substr(1);
+  return extensions::IconsInfo::GetIcons(extension).ContainsPath(
+      path_without_slash);
 }
 
 class ExtensionProtocolHandler
@@ -524,6 +541,14 @@ ExtensionProtocolHandler::MaybeCreateJob(
       return NULL;
     }
   }
+
+  if (g_test_handler) {
+    net::URLRequestJob* test_job =
+        g_test_handler->Run(request, network_delegate, relative_path);
+    if (test_job)
+      return test_job;
+  }
+
   ContentVerifyJob* verify_job = NULL;
   ContentVerifier* verifier = extension_info_map_->content_verifier();
   if (verifier) {
@@ -587,8 +612,12 @@ net::HttpResponseHeaders* BuildHttpHeaders(
 std::unique_ptr<net::URLRequestJobFactory::ProtocolHandler>
 CreateExtensionProtocolHandler(bool is_incognito,
                                extensions::InfoMap* extension_info_map) {
-  return base::WrapUnique(
-      new ExtensionProtocolHandler(is_incognito, extension_info_map));
+  return base::MakeUnique<ExtensionProtocolHandler>(is_incognito,
+                                                    extension_info_map);
+}
+
+void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler) {
+  g_test_handler = handler;
 }
 
 }  // namespace extensions

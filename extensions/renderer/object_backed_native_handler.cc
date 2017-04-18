@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "base/logging.h"
-#include "base/memory/linked_ptr.h"
 #include "content/public/child/worker_thread.h"
 #include "extensions/common/extension_api.h"
 #include "extensions/renderer/console.h"
@@ -22,8 +21,8 @@ namespace extensions {
 
 namespace {
 // Key for the base::Bound routed function.
-const char* kHandlerFunction = "handler_function";
-const char* kFeatureName = "feature_name";
+const char kHandlerFunction[] = "handler_function";
+const char kFeatureName[] = "feature_name";
 }  // namespace
 
 ObjectBackedNativeHandler::ObjectBackedNativeHandler(ScriptContext* context)
@@ -58,8 +57,10 @@ void ObjectBackedNativeHandler::Router(
       !feature_name_value->IsString()) {
     ScriptContext* script_context =
         ScriptContextSet::GetContextByV8Context(context);
-    console::Error(script_context ? script_context->GetRenderFrame() : nullptr,
-                   "Extension view no longer exists");
+    console::AddMessage(
+        script_context ? script_context->GetRenderFrame() : nullptr,
+        content::CONSOLE_MESSAGE_LEVEL_ERROR,
+        "Extension view no longer exists");
     return;
   }
 
@@ -173,7 +174,7 @@ bool ObjectBackedNativeHandler::ContextCanAccessObject(
   if (!other_script_context || !other_script_context->web_frame())
     return allow_null_context;
 
-  return blink::WebFrame::scriptCanAccess(other_script_context->web_frame());
+  return blink::WebFrame::ScriptCanAccess(other_script_context->web_frame());
 }
 
 void ObjectBackedNativeHandler::SetPrivate(v8::Local<v8::Object> obj,

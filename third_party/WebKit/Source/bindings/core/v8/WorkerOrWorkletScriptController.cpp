@@ -30,298 +30,340 @@
 
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/SourceLocation.h"
-#include "bindings/core/v8/V8DedicatedWorkerGlobalScope.h"
+#include "bindings/core/v8/V8DOMWrapper.h"
 #include "bindings/core/v8/V8ErrorHandler.h"
 #include "bindings/core/v8/V8Initializer.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
-#include "bindings/core/v8/V8SharedWorkerGlobalScope.h"
-#include "bindings/core/v8/V8WorkerGlobalScope.h"
 #include "bindings/core/v8/WrapperTypeInfo.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/events/ErrorEvent.h"
-#include "core/frame/DOMTimer.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/InspectorTraceEvents.h"
 #include "core/inspector/WorkerThreadDebugger.h"
-#include "core/workers/MainThreadWorkletGlobalScope.h"
+#include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/heap/ThreadState.h"
 #include "public/platform/Platform.h"
-#include <memory>
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class WorkerOrWorkletScriptController::ExecutionState final {
-    STACK_ALLOCATED();
-public:
-    explicit ExecutionState(WorkerOrWorkletScriptController* controller)
-        : hadException(false)
-        , m_controller(controller)
-        , m_outerState(controller->m_executionState)
-    {
-        m_controller->m_executionState = this;
-    }
+  STACK_ALLOCATED();
 
-    ~ExecutionState()
-    {
-        m_controller->m_executionState = m_outerState;
-    }
+ public:
+  explicit ExecutionState(WorkerOrWorkletScriptController* controller)
+      : had_exception(false),
+        controller_(controller),
+        outer_state_(controller->execution_state_) {
+    controller_->execution_state_ = this;
+  }
 
-    DEFINE_INLINE_TRACE()
-    {
-        visitor->trace(m_errorEventFromImportedScript);
-        visitor->trace(m_controller);
-    }
+  ~ExecutionState() { controller_->execution_state_ = outer_state_; }
 
-    bool hadException;
-    String errorMessage;
-    std::unique_ptr<SourceLocation> m_location;
-    ScriptValue exception;
-    Member<ErrorEvent> m_errorEventFromImportedScript;
+  bool had_exception;
+  String error_message;
+  std::unique_ptr<SourceLocation> location_;
+  ScriptValue exception;
+  Member<ErrorEvent> error_event_from_imported_script_;
 
-    // A ExecutionState context is stack allocated by
-    // WorkerOrWorkletScriptController::evaluate(), with the contoller using it
-    // during script evaluation. To handle nested evaluate() uses,
-    // ExecutionStates are chained together;
-    // |m_outerState| keeps a pointer to the context object one level out
-    // (or 0, if outermost.) Upon return from evaluate(), the
-    // WorkerOrWorkletScriptController's ExecutionState is popped and the
-    // previous one restored (see above dtor.)
-    //
-    // With Oilpan, |m_outerState| isn't traced. It'll be "up the stack"
-    // and its fields will be traced when scanning the stack.
-    Member<WorkerOrWorkletScriptController> m_controller;
-    ExecutionState* m_outerState;
+  // A ExecutionState context is stack allocated by
+  // WorkerOrWorkletScriptController::evaluate(), with the contoller using it
+  // during script evaluation. To handle nested evaluate() uses,
+  // ExecutionStates are chained together;
+  // |m_outerState| keeps a pointer to the context object one level out
+  // (or 0, if outermost.) Upon return from evaluate(), the
+  // WorkerOrWorkletScriptController's ExecutionState is popped and the
+  // previous one restored (see above dtor.)
+  //
+  // With Oilpan, |m_outerState| isn't traced. It'll be "up the stack"
+  // and its fields will be traced when scanning the stack.
+  Member<WorkerOrWorkletScriptController> controller_;
+  ExecutionState* outer_state_;
 };
 
-WorkerOrWorkletScriptController* WorkerOrWorkletScriptController::create(WorkerOrWorkletGlobalScope* globalScope, v8::Isolate* isolate)
-{
-    return new WorkerOrWorkletScriptController(globalScope, isolate);
+WorkerOrWorkletScriptController* WorkerOrWorkletScriptController::Create(
+    WorkerOrWorkletGlobalScope* global_scope,
+    v8::Isolate* isolate) {
+  return new WorkerOrWorkletScriptController(global_scope, isolate);
 }
 
-WorkerOrWorkletScriptController::WorkerOrWorkletScriptController(WorkerOrWorkletGlobalScope* globalScope, v8::Isolate* isolate)
-    : m_globalScope(globalScope)
-    , m_isolate(isolate)
-    , m_executionForbidden(false)
-    , m_executionScheduledToTerminate(false)
-    , m_rejectedPromises(RejectedPromises::create())
-    , m_executionState(0)
-{
-    ASSERT(isolate);
-    m_world = DOMWrapperWorld::create(isolate, WorkerWorldId);
+WorkerOrWorkletScriptController::WorkerOrWorkletScriptController(
+    WorkerOrWorkletGlobalScope* global_scope,
+    v8::Isolate* isolate)
+    : global_scope_(global_scope),
+      isolate_(isolate),
+      execution_forbidden_(false),
+      rejected_promises_(RejectedPromises::Create()),
+      execution_state_(0) {
+  DCHECK(isolate);
+  world_ =
+      DOMWrapperWorld::Create(isolate, DOMWrapperWorld::WorldType::kWorker);
 }
 
-WorkerOrWorkletScriptController::~WorkerOrWorkletScriptController()
-{
-    ASSERT(!m_rejectedPromises);
+WorkerOrWorkletScriptController::~WorkerOrWorkletScriptController() {
+  DCHECK(!rejected_promises_);
 }
 
-void WorkerOrWorkletScriptController::dispose()
-{
-    m_rejectedPromises->dispose();
-    m_rejectedPromises.release();
+void WorkerOrWorkletScriptController::Dispose() {
+  rejected_promises_->Dispose();
+  rejected_promises_.Release();
 
-    m_world->dispose();
+  world_->Dispose();
 
-    disposeContextIfNeeded();
+  DisposeContextIfNeeded();
 }
 
-void WorkerOrWorkletScriptController::disposeContextIfNeeded()
-{
-    if (!isContextInitialized())
-        return;
+void WorkerOrWorkletScriptController::DisposeContextIfNeeded() {
+  if (!IsContextInitialized())
+    return;
 
-    if (m_globalScope->isWorkerGlobalScope()) {
-        WorkerThreadDebugger* debugger = WorkerThreadDebugger::from(m_isolate);
-        if (debugger) {
-            ScriptState::Scope scope(m_scriptState.get());
-            debugger->contextWillBeDestroyed(m_scriptState->context());
-        }
-    }
-    m_scriptState->disposePerContextData();
+  if (global_scope_->IsWorkerGlobalScope() ||
+      global_scope_->IsThreadedWorkletGlobalScope()) {
+    ScriptState::Scope scope(script_state_.Get());
+    WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(isolate_);
+    debugger->ContextWillBeDestroyed(global_scope_->GetThread(),
+                                     script_state_->GetContext());
+  }
+  script_state_->DisposePerContextData();
 }
 
-bool WorkerOrWorkletScriptController::initializeContextIfNeeded()
-{
-    v8::HandleScope handleScope(m_isolate);
+bool WorkerOrWorkletScriptController::InitializeContextIfNeeded() {
+  v8::HandleScope handle_scope(isolate_);
 
-    if (isContextInitialized())
-        return true;
-
-    // Create a new v8::Context with the worker/worklet as the global object
-    // (aka the inner global).
-    ScriptWrappable* scriptWrappable = m_globalScope->getScriptWrappable();
-    const WrapperTypeInfo* wrapperTypeInfo = scriptWrappable->wrapperTypeInfo();
-    v8::Local<v8::FunctionTemplate> globalInterfaceTemplate = wrapperTypeInfo->domTemplate(m_isolate, *m_world);
-    if (globalInterfaceTemplate.IsEmpty())
-        return false;
-    v8::Local<v8::ObjectTemplate> globalTemplate = globalInterfaceTemplate->InstanceTemplate();
-    v8::Local<v8::Context> context;
-    {
-        // Initialize V8 extensions before creating the context.
-        Vector<const char*> extensionNames;
-        if (m_globalScope->isServiceWorkerGlobalScope() && Platform::current()->allowScriptExtensionForServiceWorker(toWorkerGlobalScope(m_globalScope.get())->url())) {
-            const V8Extensions& extensions = ScriptController::registeredExtensions();
-            extensionNames.reserveInitialCapacity(extensions.size());
-            for (const auto* extension : extensions)
-                extensionNames.append(extension->name());
-        }
-        v8::ExtensionConfiguration extensionConfiguration(extensionNames.size(), extensionNames.data());
-
-        V8PerIsolateData::UseCounterDisabledScope useCounterDisabled(V8PerIsolateData::from(m_isolate));
-        context = v8::Context::New(m_isolate, &extensionConfiguration, globalTemplate);
-    }
-    if (context.IsEmpty())
-        return false;
-
-    m_scriptState = ScriptState::create(context, m_world);
-
-    ScriptState::Scope scope(m_scriptState.get());
-
-    // Name new context for debugging. For main thread worklet global scopes
-    // this is done once the context is initialized.
-    if (m_globalScope->isWorkerGlobalScope()) {
-        WorkerThreadDebugger* debugger = WorkerThreadDebugger::from(m_isolate);
-        if (debugger)
-            debugger->contextCreated(context);
-    }
-
-    // The global proxy object.  Note this is not the global object.
-    v8::Local<v8::Object> globalProxy = context->Global();
-    // The global object, aka worker/worklet wrapper object.
-    v8::Local<v8::Object> globalObject = globalProxy->GetPrototype().As<v8::Object>();
-    globalObject = V8DOMWrapper::associateObjectWithWrapper(m_isolate, scriptWrappable, wrapperTypeInfo, globalObject);
-
+  if (IsContextInitialized())
     return true;
+
+  // Create a new v8::Context with the worker/worklet as the global object
+  // (aka the inner global).
+  ScriptWrappable* script_wrappable = global_scope_->GetScriptWrappable();
+  const WrapperTypeInfo* wrapper_type_info =
+      script_wrappable->GetWrapperTypeInfo();
+  v8::Local<v8::FunctionTemplate> global_interface_template =
+      wrapper_type_info->domTemplate(isolate_, *world_);
+  if (global_interface_template.IsEmpty())
+    return false;
+  v8::Local<v8::ObjectTemplate> global_template =
+      global_interface_template->InstanceTemplate();
+  v8::Local<v8::Context> context;
+  {
+    // Initialize V8 extensions before creating the context.
+    Vector<const char*> extension_names;
+    if (global_scope_->IsServiceWorkerGlobalScope() &&
+        Platform::Current()->AllowScriptExtensionForServiceWorker(
+            ToWorkerGlobalScope(global_scope_.Get())->Url())) {
+      const V8Extensions& extensions = ScriptController::RegisteredExtensions();
+      extension_names.ReserveInitialCapacity(extensions.size());
+      for (const auto* extension : extensions)
+        extension_names.push_back(extension->name());
+    }
+    v8::ExtensionConfiguration extension_configuration(extension_names.size(),
+                                                       extension_names.Data());
+
+    V8PerIsolateData::UseCounterDisabledScope use_counter_disabled(
+        V8PerIsolateData::From(isolate_));
+    context =
+        v8::Context::New(isolate_, &extension_configuration, global_template);
+  }
+  if (context.IsEmpty())
+    return false;
+
+  script_state_ = ScriptState::Create(context, world_);
+
+  ScriptState::Scope scope(script_state_.Get());
+
+  // Associate the global proxy object, the global object and the worker
+  // instance (C++ object) as follows.
+  //
+  //   global proxy object <====> worker or worklet instance
+  //                               ^
+  //                               |
+  //   global object       --------+
+  //
+  // Per HTML spec, there is no corresponding object for workers to WindowProxy.
+  // However, V8 always creates the global proxy object, we associate these
+  // objects in the same manner as WindowProxy and Window.
+  //
+  // a) worker or worklet instance --> global proxy object
+  // As we shouldn't expose the global object to author scripts, we map the
+  // worker or worklet instance to the global proxy object.
+  // b) global proxy object --> worker or worklet instance
+  // Blink's callback functions are called by V8 with the global proxy object,
+  // we need to map the global proxy object to the worker or worklet instance.
+  // c) global object --> worker or worklet instance
+  // The global proxy object is NOT considered as a wrapper object of the
+  // worker or worklet instance because it's not an instance of
+  // v8::FunctionTemplate of worker or worklet, especially note that
+  // v8::Object::FindInstanceInPrototypeChain skips the global proxy object.
+  // Thus we need to map the global object to the worker or worklet instance.
+
+  // The global proxy object.  Note this is not the global object.
+  v8::Local<v8::Object> global_proxy = context->Global();
+  v8::Local<v8::Object> associated_wrapper =
+      V8DOMWrapper::AssociateObjectWithWrapper(isolate_, script_wrappable,
+                                               wrapper_type_info, global_proxy);
+  CHECK(global_proxy == associated_wrapper);
+
+  // The global object, aka worker/worklet wrapper object.
+  v8::Local<v8::Object> global_object =
+      global_proxy->GetPrototype().As<v8::Object>();
+  V8DOMWrapper::SetNativeInfo(isolate_, global_object, wrapper_type_info,
+                              script_wrappable);
+
+  // All interfaces must be registered to V8PerContextData.
+  // So we explicitly call constructorForType for the global object.
+  V8PerContextData::From(context)->ConstructorForType(wrapper_type_info);
+
+  // Name new context for debugging. For main thread worklet global scopes
+  // this is done once the context is initialized.
+  if (global_scope_->IsWorkerGlobalScope() ||
+      global_scope_->IsThreadedWorkletGlobalScope()) {
+    WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(isolate_);
+    debugger->ContextCreated(global_scope_->GetThread(), context);
+  }
+
+  return true;
 }
 
-ScriptValue WorkerOrWorkletScriptController::evaluate(const CompressibleString& script, const String& fileName, const TextPosition& scriptStartPosition, CachedMetadataHandler* cacheHandler, V8CacheOptions v8CacheOptions)
-{
-    if (!initializeContextIfNeeded())
-        return ScriptValue();
+ScriptValue WorkerOrWorkletScriptController::Evaluate(
+    const String& script,
+    const String& file_name,
+    const TextPosition& script_start_position,
+    CachedMetadataHandler* cache_handler,
+    V8CacheOptions v8_cache_options) {
+  TRACE_EVENT1("devtools.timeline", "EvaluateScript", "data",
+               InspectorEvaluateScriptEvent::Data(nullptr, file_name,
+                                                  script_start_position));
+  if (!InitializeContextIfNeeded())
+    return ScriptValue();
 
-    ScriptState::Scope scope(m_scriptState.get());
+  ScriptState::Scope scope(script_state_.Get());
 
-    if (!m_disableEvalPending.isEmpty()) {
-        m_scriptState->context()->AllowCodeGenerationFromStrings(false);
-        m_scriptState->context()->SetErrorMessageForCodeGenerationFromStrings(v8String(m_isolate, m_disableEvalPending));
-        m_disableEvalPending = String();
-    }
+  if (!disable_eval_pending_.IsEmpty()) {
+    script_state_->GetContext()->AllowCodeGenerationFromStrings(false);
+    script_state_->GetContext()->SetErrorMessageForCodeGenerationFromStrings(
+        V8String(isolate_, disable_eval_pending_));
+    disable_eval_pending_ = String();
+  }
 
-    v8::TryCatch block(m_isolate);
+  v8::TryCatch block(isolate_);
 
-    v8::Local<v8::Script> compiledScript;
-    v8::MaybeLocal<v8::Value> maybeResult;
-    if (v8Call(V8ScriptRunner::compileScript(script, fileName, String(), scriptStartPosition, m_isolate, cacheHandler, SharableCrossOrigin, v8CacheOptions), compiledScript, block))
-        maybeResult = V8ScriptRunner::runCompiledScript(m_isolate, compiledScript, m_globalScope);
+  v8::Local<v8::Script> compiled_script;
+  v8::MaybeLocal<v8::Value> maybe_result;
+  if (V8Call(V8ScriptRunner::CompileScript(
+                 script, file_name, String(), script_start_position, isolate_,
+                 cache_handler, kSharableCrossOrigin, v8_cache_options),
+             compiled_script, block))
+    maybe_result = V8ScriptRunner::RunCompiledScript(isolate_, compiled_script,
+                                                     global_scope_);
 
-    if (!block.CanContinue()) {
-        forbidExecution();
-        return ScriptValue();
-    }
+  if (!block.CanContinue()) {
+    ForbidExecution();
+    return ScriptValue();
+  }
 
-    if (block.HasCaught()) {
-        v8::Local<v8::Message> message = block.Message();
-        m_executionState->hadException = true;
-        m_executionState->errorMessage = toCoreString(message->Get());
-        m_executionState->m_location = SourceLocation::fromMessage(m_isolate, message, m_scriptState->getExecutionContext());
-        m_executionState->exception = ScriptValue(m_scriptState.get(), block.Exception());
-        block.Reset();
+  if (block.HasCaught()) {
+    v8::Local<v8::Message> message = block.Message();
+    execution_state_->had_exception = true;
+    execution_state_->error_message = ToCoreString(message->Get());
+    execution_state_->location_ = SourceLocation::FromMessage(
+        isolate_, message, ExecutionContext::From(script_state_.Get()));
+    execution_state_->exception =
+        ScriptValue(script_state_.Get(), block.Exception());
+    block.Reset();
+  } else {
+    execution_state_->had_exception = false;
+  }
+
+  v8::Local<v8::Value> result;
+  if (!maybe_result.ToLocal(&result) || result->IsUndefined())
+    return ScriptValue();
+
+  return ScriptValue(script_state_.Get(), result);
+}
+
+bool WorkerOrWorkletScriptController::Evaluate(
+    const ScriptSourceCode& source_code,
+    ErrorEvent** error_event,
+    CachedMetadataHandler* cache_handler,
+    V8CacheOptions v8_cache_options) {
+  if (IsExecutionForbidden())
+    return false;
+
+  ExecutionState state(this);
+  Evaluate(source_code.Source(), source_code.Url().GetString(),
+           source_code.StartPosition(), cache_handler, v8_cache_options);
+  if (IsExecutionForbidden())
+    return false;
+  if (state.had_exception) {
+    if (error_event) {
+      if (state.error_event_from_imported_script_) {
+        // Propagate inner error event outwards.
+        *error_event = state.error_event_from_imported_script_.Release();
+        return false;
+      }
+      if (global_scope_->ShouldSanitizeScriptError(state.location_->Url(),
+                                                   kNotSharableCrossOrigin)) {
+        *error_event = ErrorEvent::CreateSanitizedError(world_.Get());
+      } else {
+        *error_event =
+            ErrorEvent::Create(state.error_message, state.location_->Clone(),
+                               state.exception, world_.Get());
+      }
+      V8ErrorHandler::StoreExceptionOnErrorEventWrapper(
+          script_state_.Get(), *error_event, state.exception.V8Value(),
+          script_state_->GetContext()->Global());
     } else {
-        m_executionState->hadException = false;
+      DCHECK(!global_scope_->ShouldSanitizeScriptError(
+          state.location_->Url(), kNotSharableCrossOrigin));
+      ErrorEvent* event = nullptr;
+      if (state.error_event_from_imported_script_) {
+        event = state.error_event_from_imported_script_.Release();
+      } else {
+        event =
+            ErrorEvent::Create(state.error_message, state.location_->Clone(),
+                               state.exception, world_.Get());
+      }
+      global_scope_->DispatchErrorEvent(event, kNotSharableCrossOrigin);
     }
-
-    v8::Local<v8::Value> result;
-    if (!maybeResult.ToLocal(&result) || result->IsUndefined())
-        return ScriptValue();
-
-    return ScriptValue(m_scriptState.get(), result);
+    return false;
+  }
+  return true;
 }
 
-bool WorkerOrWorkletScriptController::evaluate(const ScriptSourceCode& sourceCode, ErrorEvent** errorEvent, CachedMetadataHandler* cacheHandler, V8CacheOptions v8CacheOptions)
-{
-    if (isExecutionForbidden())
-        return false;
-
-    ExecutionState state(this);
-    evaluate(sourceCode.source(), sourceCode.url().getString(), sourceCode.startPosition(), cacheHandler, v8CacheOptions);
-    if (isExecutionForbidden())
-        return false;
-    if (state.hadException) {
-        if (errorEvent) {
-            if (state.m_errorEventFromImportedScript) {
-                // Propagate inner error event outwards.
-                *errorEvent = state.m_errorEventFromImportedScript.release();
-                return false;
-            }
-            if (m_globalScope->shouldSanitizeScriptError(state.m_location->url(), NotSharableCrossOrigin))
-                *errorEvent = ErrorEvent::createSanitizedError(m_world.get());
-            else
-                *errorEvent = ErrorEvent::create(state.errorMessage, state.m_location->clone(), m_world.get());
-            V8ErrorHandler::storeExceptionOnErrorEventWrapper(m_scriptState.get(), *errorEvent, state.exception.v8Value(), m_scriptState->context()->Global());
-        } else {
-            DCHECK(!m_globalScope->shouldSanitizeScriptError(state.m_location->url(), NotSharableCrossOrigin));
-            ErrorEvent* event = nullptr;
-            if (state.m_errorEventFromImportedScript)
-                event = state.m_errorEventFromImportedScript.release();
-            else
-                event = ErrorEvent::create(state.errorMessage, state.m_location->clone(), m_world.get());
-            m_globalScope->reportException(event, NotSharableCrossOrigin);
-        }
-        return false;
-    }
-    return true;
+void WorkerOrWorkletScriptController::ForbidExecution() {
+  DCHECK(global_scope_->IsContextThread());
+  execution_forbidden_ = true;
 }
 
-void WorkerOrWorkletScriptController::willScheduleExecutionTermination()
-{
-    // The mutex provides a memory barrier to ensure that once
-    // termination is scheduled, isExecutionTerminating will
-    // accurately reflect that state when called from another thread.
-    MutexLocker locker(m_scheduledTerminationMutex);
-    m_executionScheduledToTerminate = true;
+bool WorkerOrWorkletScriptController::IsExecutionForbidden() const {
+  DCHECK(global_scope_->IsContextThread());
+  return execution_forbidden_;
 }
 
-bool WorkerOrWorkletScriptController::isExecutionTerminating() const
-{
-    // See comments in willScheduleExecutionTermination regarding mutex usage.
-    MutexLocker locker(m_scheduledTerminationMutex);
-    return m_executionScheduledToTerminate;
+void WorkerOrWorkletScriptController::DisableEval(const String& error_message) {
+  disable_eval_pending_ = error_message;
 }
 
-void WorkerOrWorkletScriptController::forbidExecution()
-{
-    ASSERT(m_globalScope->isContextThread());
-    m_executionForbidden = true;
+void WorkerOrWorkletScriptController::RethrowExceptionFromImportedScript(
+    ErrorEvent* error_event,
+    ExceptionState& exception_state) {
+  const String& error_message = error_event->message();
+  if (execution_state_)
+    execution_state_->error_event_from_imported_script_ = error_event;
+  exception_state.RethrowV8Exception(
+      V8ThrowException::CreateError(isolate_, error_message));
 }
 
-bool WorkerOrWorkletScriptController::isExecutionForbidden() const
-{
-    ASSERT(m_globalScope->isContextThread());
-    return m_executionForbidden;
+DEFINE_TRACE(WorkerOrWorkletScriptController) {
+  visitor->Trace(global_scope_);
 }
 
-void WorkerOrWorkletScriptController::disableEval(const String& errorMessage)
-{
-    m_disableEvalPending = errorMessage;
-}
-
-void WorkerOrWorkletScriptController::rethrowExceptionFromImportedScript(ErrorEvent* errorEvent, ExceptionState& exceptionState)
-{
-    const String& errorMessage = errorEvent->message();
-    if (m_executionState)
-        m_executionState->m_errorEventFromImportedScript = errorEvent;
-    exceptionState.rethrowV8Exception(V8ThrowException::createGeneralError(m_isolate, errorMessage));
-}
-
-DEFINE_TRACE(WorkerOrWorkletScriptController)
-{
-    visitor->trace(m_globalScope);
-}
-
-} // namespace blink
+}  // namespace blink

@@ -4,7 +4,7 @@
 
 #include "ash/shelf/shelf_button_pressed_metric_tracker.h"
 
-#include "ash/common/wm_shell.h"
+#include "ash/shell_port.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_tick_clock.h"
 #include "ui/views/controls/button/button.h"
@@ -25,15 +25,15 @@ ShelfButtonPressedMetricTracker::~ShelfButtonPressedMetricTracker() {}
 void ShelfButtonPressedMetricTracker::ButtonPressed(
     const ui::Event& event,
     const views::Button* sender,
-    ShelfItemDelegate::PerformedAction performed_action) {
+    ShelfAction performed_action) {
   RecordButtonPressedSource(event);
   RecordButtonPressedAction(performed_action);
 
   switch (performed_action) {
-    case ShelfItemDelegate::kExistingWindowMinimized:
+    case SHELF_ACTION_WINDOW_MINIMIZED:
       SetMinimizedData(sender);
       break;
-    case ShelfItemDelegate::kExistingWindowActivated:
+    case SHELF_ACTION_WINDOW_ACTIVATED:
       if (IsSubsequentActivationEvent(sender))
         RecordTimeBetweenMinimizedAndActivated();
       break;
@@ -41,35 +41,35 @@ void ShelfButtonPressedMetricTracker::ButtonPressed(
       break;
   }
 
-  if (performed_action != ShelfItemDelegate::kExistingWindowMinimized)
+  if (performed_action != SHELF_ACTION_WINDOW_MINIMIZED)
     ResetMinimizedData();
 }
 
 void ShelfButtonPressedMetricTracker::RecordButtonPressedSource(
     const ui::Event& event) {
   if (event.IsMouseEvent()) {
-    WmShell::Get()->RecordUserMetricsAction(
+    ShellPort::Get()->RecordUserMetricsAction(
         UMA_LAUNCHER_BUTTON_PRESSED_WITH_MOUSE);
   } else if (event.IsGestureEvent()) {
-    WmShell::Get()->RecordUserMetricsAction(
+    ShellPort::Get()->RecordUserMetricsAction(
         UMA_LAUNCHER_BUTTON_PRESSED_WITH_TOUCH);
   }
 }
 
 void ShelfButtonPressedMetricTracker::RecordButtonPressedAction(
-    ShelfItemDelegate::PerformedAction performed_action) {
+    ShelfAction performed_action) {
   switch (performed_action) {
-    case ShelfItemDelegate::kNoAction:
-    case ShelfItemDelegate::kAppListMenuShown:
+    case SHELF_ACTION_NONE:
+    case SHELF_ACTION_APP_LIST_SHOWN:
       break;
-    case ShelfItemDelegate::kNewWindowCreated:
-      WmShell::Get()->RecordUserMetricsAction(UMA_LAUNCHER_LAUNCH_TASK);
+    case SHELF_ACTION_NEW_WINDOW_CREATED:
+      ShellPort::Get()->RecordUserMetricsAction(UMA_LAUNCHER_LAUNCH_TASK);
       break;
-    case ShelfItemDelegate::kExistingWindowActivated:
-      WmShell::Get()->RecordUserMetricsAction(UMA_LAUNCHER_SWITCH_TASK);
+    case SHELF_ACTION_WINDOW_ACTIVATED:
+      ShellPort::Get()->RecordUserMetricsAction(UMA_LAUNCHER_SWITCH_TASK);
       break;
-    case ShelfItemDelegate::kExistingWindowMinimized:
-      WmShell::Get()->RecordUserMetricsAction(UMA_LAUNCHER_MINIMIZE_TASK);
+    case SHELF_ACTION_WINDOW_MINIMIZED:
+      ShellPort::Get()->RecordUserMetricsAction(UMA_LAUNCHER_MINIMIZE_TASK);
       break;
   }
 }

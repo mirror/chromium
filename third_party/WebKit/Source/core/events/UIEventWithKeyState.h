@@ -27,47 +27,68 @@
 #include "core/CoreExport.h"
 #include "core/events/EventModifierInit.h"
 #include "core/events/UIEvent.h"
+#include "public/platform/WebInputEvent.h"
 
 namespace blink {
 
 class CORE_EXPORT UIEventWithKeyState : public UIEvent {
-public:
-    bool ctrlKey() const { return m_modifiers & PlatformEvent::CtrlKey; }
-    bool shiftKey() const { return m_modifiers & PlatformEvent::ShiftKey; }
-    bool altKey() const { return m_modifiers & PlatformEvent::AltKey; }
-    bool metaKey() const { return m_modifiers & PlatformEvent::MetaKey; }
+ public:
+  bool ctrlKey() const { return modifiers_ & WebInputEvent::kControlKey; }
+  bool shiftKey() const { return modifiers_ & WebInputEvent::kShiftKey; }
+  bool altKey() const { return modifiers_ & WebInputEvent::kAltKey; }
+  bool metaKey() const { return modifiers_ & WebInputEvent::kMetaKey; }
 
-    // We ignore the new tab modifiers (ctrl or meta, depending on OS) set by JavaScript when processing events.
-    // However, scripts running in isolated worlds (aka content scripts) are not subject to this restriction. Since it is possible that an event created by a content script is caught and recreated by the web page's script, we resort to a global flag.
-    static bool newTabModifierSetFromIsolatedWorld() { return s_newTabModifierSetFromIsolatedWorld; }
-    static void clearNewTabModifierSetFromIsolatedWorld() { s_newTabModifierSetFromIsolatedWorld = false; }
-    static void didCreateEventInIsolatedWorld(bool ctrlKey, bool shiftKey, bool altKey, bool metaKey);
+  // We ignore the new tab modifiers (ctrl or meta, depending on OS) set by
+  // JavaScript when processing events.  However, scripts running in isolated
+  // worlds (aka content scripts) are not subject to this restriction. Since it
+  // is possible that an event created by a content script is caught and
+  // recreated by the web page's script, we resort to a global flag.
+  static bool NewTabModifierSetFromIsolatedWorld() {
+    return new_tab_modifier_set_from_isolated_world_;
+  }
+  static void ClearNewTabModifierSetFromIsolatedWorld() {
+    new_tab_modifier_set_from_isolated_world_ = false;
+  }
+  static void DidCreateEventInIsolatedWorld(bool ctrl_key,
+                                            bool shift_key,
+                                            bool alt_key,
+                                            bool meta_key);
 
-    static void setFromPlatformModifiers(EventModifierInit&, const PlatformEvent::Modifiers);
+  static void SetFromWebInputEventModifiers(EventModifierInit&,
+                                            WebInputEvent::Modifiers);
 
-    bool getModifierState(const String& keyIdentifier) const;
+  bool getModifierState(const String& key_identifier) const;
 
-    PlatformEvent::Modifiers modifiers() const { return static_cast<PlatformEvent::Modifiers>(m_modifiers); }
+  WebInputEvent::Modifiers GetModifiers() const {
+    return static_cast<WebInputEvent::Modifiers>(modifiers_);
+  }
 
-protected:
-    UIEventWithKeyState()
-        : m_modifiers(0)
-    {
-    }
+ protected:
+  UIEventWithKeyState() : modifiers_(0) {}
 
-    UIEventWithKeyState(const AtomicString& type, bool canBubble, bool cancelable, AbstractView*,
-        int detail, PlatformEvent::Modifiers, double platformTimeStamp, InputDeviceCapabilities* sourceCapabilities = nullptr);
-    UIEventWithKeyState(const AtomicString& type, const EventModifierInit& initializer);
-    void initModifiers(bool ctrlKey, bool altKey, bool shiftKey, bool metaKey);
+  UIEventWithKeyState(const AtomicString& type,
+                      bool can_bubble,
+                      bool cancelable,
+                      AbstractView*,
+                      int detail,
+                      WebInputEvent::Modifiers,
+                      TimeTicks platform_time_stamp,
+                      InputDeviceCapabilities* source_capabilities = nullptr);
+  UIEventWithKeyState(const AtomicString& type,
+                      const EventModifierInit& initializer);
+  void InitModifiers(bool ctrl_key,
+                     bool alt_key,
+                     bool shift_key,
+                     bool meta_key);
 
-    unsigned m_modifiers;
+  unsigned modifiers_;
 
-private:
-    static bool s_newTabModifierSetFromIsolatedWorld;
+ private:
+  static bool new_tab_modifier_set_from_isolated_world_;
 };
 
-UIEventWithKeyState* findEventWithKeyState(Event*);
+UIEventWithKeyState* FindEventWithKeyState(Event*);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // UIEventWithKeyState_h
+#endif  // UIEventWithKeyState_h

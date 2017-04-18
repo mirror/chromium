@@ -10,7 +10,10 @@
 
 class PrefService;
 class Profile;
-class EasyUnlockServiceRegular;
+
+namespace cryptauth {
+class CryptAuthService;
+}  // namespace cryptauth
 
 // A Chrome-specific implementation of the ProximityAuthClient interface.
 // There is one |ChromeProximityAuthClient| per |Profile|.
@@ -24,15 +27,15 @@ class ChromeProximityAuthClient : public proximity_auth::ProximityAuthClient {
   void UpdateScreenlockState(proximity_auth::ScreenlockState state) override;
   void FinalizeUnlock(bool success) override;
   PrefService* GetPrefService() override;
-  std::unique_ptr<proximity_auth::SecureMessageDelegate>
+  std::unique_ptr<cryptauth::SecureMessageDelegate>
   CreateSecureMessageDelegate() override;
-  std::unique_ptr<proximity_auth::CryptAuthClientFactory>
+  std::unique_ptr<cryptauth::CryptAuthClientFactory>
   CreateCryptAuthClientFactory() override;
   cryptauth::DeviceClassifier GetDeviceClassifier() override;
   std::string GetAccountId() override;
-  proximity_auth::CryptAuthEnrollmentManager* GetCryptAuthEnrollmentManager()
+  cryptauth::CryptAuthEnrollmentManager* GetCryptAuthEnrollmentManager()
       override;
-  proximity_auth::CryptAuthDeviceManager* GetCryptAuthDeviceManager() override;
+  cryptauth::CryptAuthDeviceManager* GetCryptAuthDeviceManager() override;
   void FinalizeSignin(const std::string& secret) override;
   void GetChallengeForUserAndDevice(
       const std::string& user_id,
@@ -41,8 +44,7 @@ class ChromeProximityAuthClient : public proximity_auth::ProximityAuthClient {
       base::Callback<void(const std::string& challenge)> callback) override;
 
  private:
-  // Returns the EasyUnlockService instance used inside user sessions.
-  EasyUnlockServiceRegular* GetEasyUnlockServiceRegular();
+  cryptauth::CryptAuthService* GetCryptAuthService();
 
   Profile* const profile_;
 

@@ -13,25 +13,36 @@ const char kGLImplementationAppleName[]       = "apple";
 const char kGLImplementationEGLName[]         = "egl";
 const char kGLImplementationANGLEName[]       = "angle";
 const char kGLImplementationSwiftShaderName[] = "swiftshader";
+const char kGLImplementationSwiftShaderForWebGLName[] = "swiftshader-webgl";
 const char kGLImplementationMockName[]        = "mock";
+const char kGLImplementationStubName[] = "stub";
 
 const char kANGLEImplementationDefaultName[]  = "default";
 const char kANGLEImplementationD3D9Name[]     = "d3d9";
 const char kANGLEImplementationD3D11Name[]    = "d3d11";
 const char kANGLEImplementationOpenGLName[]   = "gl";
 const char kANGLEImplementationOpenGLESName[] = "gles";
+const char kANGLEImplementationNullName[]     = "null";
 
 }  // namespace gl
 
 namespace switches {
 
+// Ask the GLX driver for the default context instead of trying to get the
+// highest version possible.
+const char kCreateDefaultGLContext[] = "create-default-gl-context";
+
 // Disables use of D3D11.
 const char kDisableD3D11[]                  = "disable-d3d11";
 
+// Disables use of ES3 backend (use ES2 backend instead).
+const char kDisableES3GLContext[]           = "disable-es3-gl-context";
+
 // Stop the GPU from synchronizing on the vsync before presenting.
 // We can select from the options below:
-//  beginframe : Next frame can start without any delay on cc::scheduler.
-//  gpu : Disable gpu vsync.
+//  beginframe: Next frame can start without any delay on cc::scheduler in
+//              renderer compositors.
+//  gpu: Disable display and browser vsync.
 //  default: Set both flags.
 const char kDisableGpuVsync[]               = "disable-gpu-vsync";
 
@@ -57,9 +68,8 @@ const char kUseANGLE[]                      = "use-angle";
 //  egl: whatever EGL / GLES2 the user has installed (Windows default - actually
 //       ANGLE).
 //  osmesa: The OSMesa software renderer.
+//  swiftshader: The SwiftShader software renderer.
 const char kUseGL[]                         = "use-gl";
-
-const char kSwiftShaderPath[]               = "swiftshader-path";
 
 // Inform Chrome that a GPU context will not be lost in power saving mode,
 // screen saving mode, etc.  Note that this flag does not ensure that a GPU
@@ -79,19 +89,38 @@ const char kTestGLLib[]                     = "test-gl-lib";
 // Use hardware gpu, if available, for tests.
 const char kUseGpuInTests[] = "use-gpu-in-tests";
 
-// Enable OpenGL ES 3 APIs without proper service side validation.
-const char kEnableUnsafeES3APIs[] = "enable-unsafe-es3-apis";
+// Enable OpenGL ES 3 APIs.
+const char kEnableES3APIs[] = "enable-es3-apis";
+
+// Disable OpenGL ES 3 APIs. This in turn will disable WebGL2.
+const char kDisableES3APIs[] = "disable-es3-apis";
+
+// Enable use of the SGI_video_sync extension, which can have
+// driver/sandbox/window manager compatibility issues.
+const char kEnableSgiVideoSync[] = "enable-sgi-video-sync";
 
 // Disables GL drawing operations which produce pixel output. With this
 // the GL output will not be correct but tests will run faster.
 const char kDisableGLDrawingForTests[] = "disable-gl-drawing-for-tests";
 
-// Forces the use of OSMesa instead of hardware gpu.
-const char kOverrideUseGLWithOSMesaForTests[] =
-    "override-use-gl-with-osmesa-for-tests";
+// Forces the use of software GL instead of hardware gpu.
+const char kOverrideUseSoftwareGLForTests[] =
+    "override-use-software-gl-for-tests";
 
 // Disables specified comma separated GL Extensions if found.
 const char kDisableGLExtensions[] = "disable-gl-extensions";
+
+// Enables SwapBuffersWithBounds if it is supported.
+const char kEnableSwapBuffersWithBounds[] = "enable-swap-buffers-with-bounds";
+
+// Enables using DirectComposition layers, even if hardware overlays aren't
+// supported.
+const char kEnableDirectCompositionLayers[] =
+    "enable-direct-composition-layers";
+
+// Disables using DirectComposition layers.
+const char kDisableDirectCompositionLayers[] =
+    "disable-direct-composition-layers";
 
 // This is the list of switches passed from this file that are passed from the
 // GpuProcessHost to the GPU Process. Add your switch to this list if you need
@@ -101,15 +130,38 @@ const char* kGLSwitchesCopiedFromGpuProcessHost[] = {
     kDisableD3D11,
     kEnableGPUServiceLogging,
     kEnableGPUServiceTracing,
-    kEnableUnsafeES3APIs,
+    kEnableSgiVideoSync,
     kGpuNoContextLost,
     kDisableGLDrawingForTests,
-    kOverrideUseGLWithOSMesaForTests,
+    kOverrideUseSoftwareGLForTests,
     kUseANGLE,
     kDisableDirectComposition,
+    kEnableSwapBuffersWithBounds,
+    kEnableDirectCompositionLayers,
+    kDisableDirectCompositionLayers,
 };
 const int kGLSwitchesCopiedFromGpuProcessHostNumSwitches =
     arraysize(kGLSwitchesCopiedFromGpuProcessHost);
 
 }  // namespace switches
 
+namespace features {
+
+#if defined(OS_WIN)
+// Wait for D3D VSync signals in GPU process (as opposed to delay based VSync
+// generated in Browser process based on VSync parameters).
+const base::Feature kD3DVsync{"D3DVsync", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined(OS_WIN)
+
+// Allow putting a video swapchain underneath the main swapchain, so overlays
+// can be used even if there are controls on top of the video. This requires
+// the DirectCompositionOverlays feature to be enabled.
+const base::Feature kDirectCompositionUnderlays{
+    "DirectCompositionUnderlays", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Allow putting content with complex transforms (e.g. rotations) into an
+// overlay.
+const base::Feature kDirectCompositionComplexOverlays{
+    "DirectCompositionComplexOverlays", base::FEATURE_DISABLED_BY_DEFAULT};
+
+}  // namespace features

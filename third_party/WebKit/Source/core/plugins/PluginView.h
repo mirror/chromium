@@ -12,57 +12,70 @@
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef PluginView_h
 #define PluginView_h
 
 #include "core/CoreExport.h"
-#include "platform/Widget.h"
+#include "core/frame/FrameOrPlugin.h"
+#include "platform/geometry/IntRect.h"
 #include "platform/scroll/ScrollTypes.h"
-#include "wtf/text/WTFString.h"
-#include <v8.h>
-
-namespace blink { class WebLayer; }
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebFocusType.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
-class ResourceError;
+class Event;
+class FrameView;
 class ResourceResponse;
+class WebLayer;
 
-class CORE_EXPORT PluginView : public Widget {
-public:
-    bool isPluginView() const final { return true; }
+// TODO(joelhockey): Remove this class.
+// The only implementation of this class is web/WebPluginContainerImpl.
+// It can be used directly.
+class CORE_EXPORT PluginView : public FrameOrPlugin {
+ public:
+  virtual ~PluginView() {}
 
-    virtual WebLayer* platformLayer() const { return 0; }
-    virtual v8::Local<v8::Object> scriptableObject(v8::Isolate*) { return v8::Local<v8::Object>(); }
-    virtual bool wantsWheelEvents() { return false; }
-    virtual bool supportsKeyboardFocus() const { return false; }
-    virtual bool supportsInputMethod() const { return false; }
-    virtual bool canProcessDrag() const { return false; }
+  virtual void SetParent(FrameView*) = 0;
+  virtual FrameView* Parent() const = 0;
+  virtual void SetParentVisible(bool) = 0;
+  virtual void SetFocused(bool, WebFocusType) = 0;
+  virtual void FrameRectsChanged() = 0;
+  virtual void GeometryMayHaveChanged() = 0;
+  virtual void HandleEvent(Event*) = 0;
+  virtual void EventListenersRemoved() = 0;
+  virtual bool IsPluginContainer() const { return false; }
 
-    virtual void didReceiveResponse(const ResourceResponse&) { }
-    virtual void didReceiveData(const char*, int) { }
+  virtual WebLayer* PlatformLayer() const { return 0; }
+  virtual v8::Local<v8::Object> ScriptableObject(v8::Isolate*) {
+    return v8::Local<v8::Object>();
+  }
+  virtual bool WantsWheelEvents() { return false; }
+  virtual bool SupportsKeyboardFocus() const { return false; }
+  virtual bool SupportsInputMethod() const { return false; }
+  virtual bool CanProcessDrag() const { return false; }
 
-    virtual void updateAllLifecyclePhases() { }
-    virtual void invalidatePaintIfNeeded() { }
+  virtual void DidReceiveResponse(const ResourceResponse&) {}
+  virtual void DidReceiveData(const char*, int) {}
 
-protected:
-    PluginView() : Widget() { }
+  virtual void UpdateAllLifecyclePhases() {}
+  virtual void InvalidatePaintIfNeeded() {}
 };
 
-DEFINE_TYPE_CASTS(PluginView, Widget, widget, widget->isPluginView(), widget.isPluginView());
+}  // namespace blink
 
-} // namespace blink
-
-#endif // PluginView_h
+#endif  // PluginView_h

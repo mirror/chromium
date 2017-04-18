@@ -5,7 +5,7 @@
 #ifndef TablePainter_h
 #define TablePainter_h
 
-#include "wtf/Allocator.h"
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -14,18 +14,19 @@ class LayoutTable;
 struct PaintInfo;
 
 class TablePainter {
-    STACK_ALLOCATED();
-public:
-    TablePainter(const LayoutTable& layoutTable) : m_layoutTable(layoutTable) { }
+  STACK_ALLOCATED();
 
-    void paintObject(const PaintInfo&, const LayoutPoint&);
-    void paintBoxDecorationBackground(const PaintInfo&, const LayoutPoint&);
-    void paintMask(const PaintInfo&, const LayoutPoint&);
+ public:
+  TablePainter(const LayoutTable& layout_table) : layout_table_(layout_table) {}
 
-private:
-    const LayoutTable& m_layoutTable;
+  void PaintObject(const PaintInfo&, const LayoutPoint&);
+  void PaintBoxDecorationBackground(const PaintInfo&, const LayoutPoint&);
+  void PaintMask(const PaintInfo&, const LayoutPoint&);
+
+ private:
+  const LayoutTable& layout_table_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TablePainter_h
+#endif  // TablePainter_h

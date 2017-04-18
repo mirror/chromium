@@ -4,30 +4,37 @@
 
 #include "components/leveldb/leveldb_app.h"
 
-#include "base/message_loop/message_loop.h"
 #include "components/leveldb/leveldb_service_impl.h"
-#include "services/shell/public/cpp/connection.h"
+#include "services/service_manager/public/cpp/service_context.h"
 
 namespace leveldb {
 
-LevelDBApp::LevelDBApp() {}
+LevelDBApp::LevelDBApp() : file_thread_("LevelDBFile") {
+  registry_.AddInterface<mojom::LevelDBService>(this);
+}
 
 LevelDBApp::~LevelDBApp() {}
 
-void LevelDBApp::OnStart(const shell::Identity& identity) {
-  tracing_.Initialize(connector(), identity.name());
+void LevelDBApp::OnStart() {
+  tracing_.Initialize(context()->connector(), context()->identity().name());
 }
 
-bool LevelDBApp::OnConnect(shell::Connection* connection) {
-  connection->AddInterface<mojom::LevelDBService>(this);
-  return true;
+void LevelDBApp::OnBindInterface(
+    const service_manager::ServiceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  registry_.BindInterface(source_info.identity, interface_name,
+                          std::move(interface_pipe));
 }
 
-void LevelDBApp::Create(const shell::Identity& remote_identity,
+void LevelDBApp::Create(const service_manager::Identity& remote_identity,
                         leveldb::mojom::LevelDBServiceRequest request) {
-  if (!service_)
+  if (!service_) {
+    if (!file_thread_.IsRunning())
+      file_thread_.Start();
     service_.reset(
-        new LevelDBServiceImpl(base::MessageLoop::current()->task_runner()));
+        new LevelDBServiceImpl(file_thread_.message_loop()->task_runner()));
+  }
   bindings_.AddBinding(service_.get(), std::move(request));
 }
 

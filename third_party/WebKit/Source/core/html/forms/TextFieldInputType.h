@@ -33,79 +33,77 @@
 
 #include "core/html/forms/InputType.h"
 #include "core/html/forms/InputTypeView.h"
-#include "core/html/shadow/SpinButtonElement.h"
+#include "core/html/forms/SpinButtonElement.h"
 
 namespace blink {
 
-class FormDataList;
-
 // The class represents types of which UI contain text fields.
 // It supports not only the types for BaseTextInputType but also type=number.
-class TextFieldInputType
-    : public InputType
-    , public InputTypeView
-    , protected SpinButtonElement::SpinButtonOwner {
-    USING_GARBAGE_COLLECTED_MIXIN(TextFieldInputType);
-public:
-    DECLARE_VIRTUAL_TRACE();
-    using InputType::element;
+class TextFieldInputType : public InputType,
+                           public InputTypeView,
+                           protected SpinButtonElement::SpinButtonOwner {
+  USING_GARBAGE_COLLECTED_MIXIN(TextFieldInputType);
 
-protected:
-    TextFieldInputType(HTMLInputElement&);
-    ~TextFieldInputType() override;
-    bool canSetSuggestedValue() override;
-    void handleKeydownEvent(KeyboardEvent*) override;
+ public:
+  DECLARE_VIRTUAL_TRACE();
+  using InputType::GetElement;
 
-    void createShadowSubtree() override;
-    void destroyShadowSubtree() override;
-    void attributeChanged() override;
-    void disabledAttributeChanged() override;
-    void readonlyAttributeChanged() override;
-    bool supportsReadOnly() const override;
-    void handleFocusEvent(Element* oldFocusedNode, WebFocusType) final;
-    void handleBlurEvent() final;
-    String sanitizeValue(const String&) const override;
-    void setValue(const String&, bool valueChanged, TextFieldEventBehavior) override;
-    void updateView() override;
+ protected:
+  TextFieldInputType(HTMLInputElement&);
+  ~TextFieldInputType() override;
+  bool CanSetSuggestedValue() override;
+  void HandleKeydownEvent(KeyboardEvent*) override;
 
-    virtual bool needsContainer() const { return false; }
-    virtual String convertFromVisibleValue(const String&) const;
-    enum ValueChangeState {
-        ValueChangeStateNone,
-        ValueChangeStateChanged
-    };
-    virtual void didSetValueByUserEdit(ValueChangeState);
+  void CreateShadowSubtree() override;
+  void DestroyShadowSubtree() override;
+  void AttributeChanged() override;
+  void DisabledAttributeChanged() override;
+  void ReadonlyAttributeChanged() override;
+  bool SupportsReadOnly() const override;
+  void HandleFocusEvent(Element* old_focused_node, WebFocusType) final;
+  void HandleBlurEvent() final;
+  String SanitizeValue(const String&) const override;
+  void SetValue(const String&,
+                bool value_changed,
+                TextFieldEventBehavior,
+                TextControlSetValueSelection) override;
+  void UpdateView() override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) const override;
 
-    void handleKeydownEventForSpinButton(KeyboardEvent*);
-    bool shouldHaveSpinButton() const;
-    Element* containerElement() const;
+  virtual bool NeedsContainer() const { return false; }
+  virtual String ConvertFromVisibleValue(const String&) const;
+  virtual void DidSetValueByUserEdit();
 
-private:
-    InputTypeView* createView() override;
-    bool shouldShowFocusRingOnMouseFocus() const final;
-    bool isTextField() const final;
-    bool valueMissing(const String&) const override;
-    void handleBeforeTextInsertedEvent(BeforeTextInsertedEvent*) override;
-    void forwardEvent(Event*) final;
-    bool shouldSubmitImplicitly(Event*) final;
-    LayoutObject* createLayoutObject(const ComputedStyle&) const override;
-    bool shouldRespectListAttribute() override;
-    void listAttributeTargetChanged() override;
-    void updatePlaceholderText() final;
-    void appendToFormData(FormData&) const override;
-    void subtreeHasChanged() final;
+  void HandleKeydownEventForSpinButton(KeyboardEvent*);
+  bool ShouldHaveSpinButton() const;
+  Element* ContainerElement() const;
 
-    // SpinButtonElement::SpinButtonOwner functions.
-    void focusAndSelectSpinButtonOwner() final;
-    bool shouldSpinButtonRespondToMouseEvents() final;
-    bool shouldSpinButtonRespondToWheelEvents() final;
-    void spinButtonStepDown() final;
-    void spinButtonStepUp() final;
-    void spinButtonDidReleaseMouseCapture(SpinButtonElement::EventDispatch) final;
+ private:
+  InputTypeView* CreateView() override;
+  ValueMode GetValueMode() const override;
+  bool ShouldShowFocusRingOnMouseFocus() const final;
+  bool IsTextField() const final;
+  bool ValueMissing(const String&) const override;
+  void HandleBeforeTextInsertedEvent(BeforeTextInsertedEvent*) override;
+  void ForwardEvent(Event*) final;
+  bool ShouldSubmitImplicitly(Event*) final;
+  bool ShouldRespectListAttribute() override;
+  void ListAttributeTargetChanged() override;
+  void UpdatePlaceholderText() final;
+  void AppendToFormData(FormData&) const override;
+  void SubtreeHasChanged() final;
 
-    SpinButtonElement* spinButtonElement() const;
+  // SpinButtonElement::SpinButtonOwner functions.
+  void FocusAndSelectSpinButtonOwner() final;
+  bool ShouldSpinButtonRespondToMouseEvents() final;
+  bool ShouldSpinButtonRespondToWheelEvents() final;
+  void SpinButtonStepDown() final;
+  void SpinButtonStepUp() final;
+  void SpinButtonDidReleaseMouseCapture(SpinButtonElement::EventDispatch) final;
+
+  SpinButtonElement* GetSpinButtonElement() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TextFieldInputType_h
+#endif  // TextFieldInputType_h

@@ -34,6 +34,10 @@ class PushMessagingAppIdentifier {
   // Register profile-specific prefs.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
+  // Returns whether the modern InstanceID API should be used with this app_id
+  // (rather than legacy GCM registration).
+  static bool UseInstanceID(const std::string& app_id);
+
   // Generates a new app identifier, with partially random app_id.
   static PushMessagingAppIdentifier Generate(
       const GURL& origin,
@@ -53,6 +57,10 @@ class PushMessagingAppIdentifier {
   // Returns all the PushMessagingAppIdentifiers currently registered for the
   // given |profile|.
   static std::vector<PushMessagingAppIdentifier> GetAll(Profile* profile);
+
+  // Deletes all PushMessagingAppIdentifiers currently registered for the given
+  // |profile|.
+  static void DeleteAllFromPrefs(Profile* profile);
 
   // Returns the number of PushMessagingAppIdentifiers currently registered for
   // the given |profile|.
@@ -91,7 +99,18 @@ class PushMessagingAppIdentifier {
 
  private:
   friend class PushMessagingAppIdentifierTest;
+  friend class PushMessagingBrowserTest;
   FRIEND_TEST_ALL_PREFIXES(PushMessagingAppIdentifierTest, FindLegacy);
+
+  // Generates a new app identifier for legacy GCM (not modern InstanceID).
+  static PushMessagingAppIdentifier LegacyGenerateForTesting(
+      const GURL& origin,
+      int64_t service_worker_registration_id);
+
+  static PushMessagingAppIdentifier GenerateInternal(
+      const GURL& origin,
+      int64_t service_worker_registration_id,
+      bool use_instance_id);
 
   // Constructs an invalid app identifier.
   PushMessagingAppIdentifier();

@@ -6,24 +6,25 @@ package org.chromium.chrome.browser.tabmodel;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.filters.MediumTest;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.FlakyTest;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.Restriction;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.UrlUtils;
-import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity2;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtilsTest;
-import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
 import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
 import org.chromium.chrome.test.util.ChromeRestriction;
-import org.chromium.content.browser.test.util.CallbackHelper;
+import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -87,27 +88,6 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
                         TabLaunchType.FROM_CHROME_UI, null);
             }
         });
-    }
-
-    private void createFullyLoadedTabOnUiThread(final ChromeTabbedActivity activity,
-            final String url) {
-        final CallbackHelper tabCallbackHelper = new CallbackHelper();
-        final TabLoadedObserver observer = new TabLoadedObserver(tabCallbackHelper);
-
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                activity.getTabCreator(false).createNewTab(new LoadUrlParams(url),
-                        TabLaunchType.FROM_CHROME_UI, null).addObserver(observer);
-            }
-        });
-
-        // Must wait for the page to be fully loaded.
-        try {
-            tabCallbackHelper.waitForCallback(0);
-        } catch (TimeoutException | InterruptedException e) {
-            fail("Failed to load the tab.");
-        }
     }
 
     private void selectTabOnUiThread(final TabModel model, final Tab tab) {
@@ -365,20 +345,6 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
         });
     }
 
-    // Helper class that notifies when a page load is finished.
-    private static class TabLoadedObserver extends EmptyTabObserver {
-        private CallbackHelper mLoadedCallback;
-
-        public TabLoadedObserver(CallbackHelper loadCallback) {
-            super();
-            mLoadedCallback = loadCallback;
-        }
-        @Override
-        public void onPageLoadFinished(Tab tab) {
-            mLoadedCallback.notifyCalled();
-        }
-    }
-
     // Helper class that notifies after the tab is closed, and a tab restore service entry has been
     // created in tab restore service.
     private static class TabClosedObserver extends EmptyTabModelObserver {
@@ -411,6 +377,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @RetryOnFailure
     public void testSingleTab() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -503,6 +470,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
     // TODO(jbudorick): Replace with DisableIf when it supports filtering by device type.
     // Flaky on tablets, crbug.com/620014.
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE)
+    @RetryOnFailure
     public void testTwoTabs() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -650,6 +618,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @RetryOnFailure
     public void testInOrderRestore() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -809,6 +778,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE) // See crbug.com/633607
     public void testReverseOrderRestore() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -960,6 +930,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @RetryOnFailure
     public void testOutOfOrder1() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -1172,6 +1143,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @DisabledTest(message = "crbug.com/633607")
     public void testCloseAll() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -1292,6 +1264,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @RetryOnFailure
     public void testMoveTab() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -1340,7 +1313,10 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * 8.  CreateTab(5)               [ 5s ]             -                 [ 5s ]
      * @throws InterruptedException
      */
-    @MediumTest
+    //@MediumTest
+    //@Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE) // See crbug.com/633607
+    // Disabled due to flakiness on linux_android_rel_ng (crbug.com/661429)
+    @DisabledTest
     public void testAddTab() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(false);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(false);
@@ -1413,6 +1389,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @RetryOnFailure
     public void testUndoNotSupported() throws InterruptedException {
         TabModel model = getActivity().getTabModelSelector().getModel(true);
         ChromeTabCreator tabCreator = getActivity().getTabCreator(true);
@@ -1458,6 +1435,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * 3.  SaveState                  [ 1s ]             -                 [ 1s ]
      */
     @MediumTest
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE) // See crbug.com/633607
     public void testSaveStateCommitsUndos() throws InterruptedException {
         TabModelSelector selector = getActivity().getTabModelSelector();
         TabModel model = selector.getModel(false);
@@ -1489,6 +1467,7 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
      * @throws InterruptedException
      */
     @MediumTest
+    @RetryOnFailure
     public void testOpenRecentlyClosedTab() throws InterruptedException {
         TabModelSelector selector = getActivity().getTabModelSelector();
         TabModel model = selector.getModel(false);
@@ -1517,10 +1496,10 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
         final TabModelSelector selector = getActivity().getTabModelSelector();
         final TabModel model = selector.getModel(false);
 
-        // Create new tab and attach observer to listen to loaded event.
+        // Create new tab and wait until it's loaded.
         // Native can only successfully recover the tab after a page load has finished and
         // it has navigation history.
-        createFullyLoadedTabOnUiThread(getActivity(), TEST_URL_0);
+        ChromeTabUtils.fullyLoadUrlInNewTab(getInstrumentation(), getActivity(), TEST_URL_0, false);
 
         // Close the tab, and commit pending closure.
         assertEquals(model.getCount(), 2);
@@ -1575,8 +1554,9 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
         final TabModel secondModel = secondActivity.getTabModelSelector().getModel(false);
 
         // Create tabs.
-        createFullyLoadedTabOnUiThread(getActivity(), TEST_URL_0);
-        createFullyLoadedTabOnUiThread(secondActivity, TEST_URL_1);
+        ChromeTabUtils.fullyLoadUrlInNewTab(getInstrumentation(), getActivity(), TEST_URL_0, false);
+        ChromeTabUtils.fullyLoadUrlInNewTab(
+                getInstrumentation(), secondActivity, TEST_URL_1, false);
 
         assertEquals("Unexpected number of tabs in first window.", 2, firstModel.getCount());
         assertEquals("Unexpected number of tabs in second window.", 2, secondModel.getCount());
@@ -1646,7 +1626,8 @@ public class UndoTabModelTest extends ChromeTabbedActivityTestBase {
         final TabModel secondModel = secondActivity.getTabModelSelector().getModel(false);
 
         // Create tab on second window.
-        createFullyLoadedTabOnUiThread(secondActivity, TEST_URL_1);
+        ChromeTabUtils.fullyLoadUrlInNewTab(
+                getInstrumentation(), secondActivity, TEST_URL_1, false);
         assertEquals("Window 2 should have 2 tab.", 2, secondModel.getCount());
 
         // Close tab in second window, wait until tab restore service history is created.

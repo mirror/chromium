@@ -27,45 +27,56 @@
 #define FilterEffectBuilder_h
 
 #include "core/CoreExport.h"
-#include "platform/graphics/filters/FilterEffect.h"
+#include "platform/geometry/FloatRect.h"
+#include "platform/graphics/paint/PaintFlags.h"
 #include "platform/heap/Handle.h"
-
-class SkPaint;
+#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-class Element;
+class CompositorFilterOperations;
+class Filter;
+class FilterEffect;
 class FilterOperations;
+class FloatRect;
+class Node;
 class ReferenceFilterOperation;
 class SVGFilterElement;
 class SVGFilterGraphNodeMap;
 
-class CORE_EXPORT FilterEffectBuilder final : public GarbageCollectedFinalized<FilterEffectBuilder> {
-public:
-    static FilterEffectBuilder* create()
-    {
-        return new FilterEffectBuilder();
-    }
+class CORE_EXPORT FilterEffectBuilder final {
+  STACK_ALLOCATED();
 
-    virtual ~FilterEffectBuilder();
-    DECLARE_TRACE();
+ public:
+  FilterEffectBuilder(const FloatRect& zoomed_reference_box,
+                      float zoom,
+                      const PaintFlags* fill_flags = nullptr,
+                      const PaintFlags* stroke_flags = nullptr);
+  FilterEffectBuilder(Node*,
+                      const FloatRect& zoomed_reference_box,
+                      float zoom,
+                      const PaintFlags* fill_flags = nullptr,
+                      const PaintFlags* stroke_flags = nullptr);
 
-    static Filter* buildReferenceFilter(const ReferenceFilterOperation&, const FloatSize* zoomedReferenceBoxSize, const SkPaint* fillPaint, const SkPaint* strokePaint, Element&, FilterEffect* previousEffect, float zoom);
-    static Filter* buildReferenceFilter(SVGFilterElement&, const FloatRect& referenceBox, const SkPaint* fillPaint, const SkPaint* strokePaint, FilterEffect* previousEffect, float zoom, SVGFilterGraphNodeMap* = nullptr);
+  Filter* BuildReferenceFilter(SVGFilterElement&,
+                               FilterEffect* previous_effect,
+                               SVGFilterGraphNodeMap* = nullptr) const;
 
-    bool build(Element*, const FilterOperations&, float zoom, const FloatSize* zoomedReferenceBoxSize = nullptr, const SkPaint* fillPaint = nullptr, const SkPaint* strokePaint = nullptr);
+  FilterEffect* BuildFilterEffect(const FilterOperations&) const;
+  CompositorFilterOperations BuildFilterOperations(
+      const FilterOperations&) const;
 
-    FilterEffect* lastEffect() const
-    {
-        return m_lastEffect;
-    }
+ private:
+  Filter* BuildReferenceFilter(const ReferenceFilterOperation&,
+                               FilterEffect* previous_effect) const;
 
-private:
-    FilterEffectBuilder();
-
-    Member<FilterEffect> m_lastEffect;
+  Member<Node> target_context_;
+  FloatRect reference_box_;
+  float zoom_;
+  const PaintFlags* fill_flags_;
+  const PaintFlags* stroke_flags_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FilterEffectBuilder_h
+#endif  // FilterEffectBuilder_h

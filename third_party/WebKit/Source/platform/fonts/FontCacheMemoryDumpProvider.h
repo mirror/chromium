@@ -8,26 +8,29 @@
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class PLATFORM_EXPORT FontCacheMemoryDumpProvider final : public base::trace_event::MemoryDumpProvider {
-    USING_FAST_MALLOC(FontCacheMemoryDumpProvider);
-public:
-    static FontCacheMemoryDumpProvider* instance();
-    ~FontCacheMemoryDumpProvider() override { }
+class PLATFORM_EXPORT FontCacheMemoryDumpProvider final
+    : public base::trace_event::MemoryDumpProvider {
+  USING_FAST_MALLOC(FontCacheMemoryDumpProvider);
 
-    // base::trace_event::MemoryDumpProvider implementation.
-    bool OnMemoryDump(const base::trace_event::MemoryDumpArgs&, base::trace_event::ProcessMemoryDump*) override;
+ public:
+  static FontCacheMemoryDumpProvider* Instance();
+  ~FontCacheMemoryDumpProvider() override {}
 
-private:
-    FontCacheMemoryDumpProvider() { }
+  // base::trace_event::MemoryDumpProvider implementation.
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs&,
+                    base::trace_event::ProcessMemoryDump*) override;
 
-    WTF_MAKE_NONCOPYABLE(FontCacheMemoryDumpProvider);
+ private:
+  FontCacheMemoryDumpProvider() {}
+
+  WTF_MAKE_NONCOPYABLE(FontCacheMemoryDumpProvider);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FontCacheMemoryDumpProvider_h
+#endif  // FontCacheMemoryDumpProvider_h

@@ -13,13 +13,19 @@
 
 namespace cc {
 
-OverlayStrategyFullscreen::OverlayStrategyFullscreen() {}
+OverlayStrategyFullscreen::OverlayStrategyFullscreen(
+    OverlayCandidateValidator* capability_checker)
+    : capability_checker_(capability_checker) {
+  DCHECK(capability_checker);
+}
 
 OverlayStrategyFullscreen::~OverlayStrategyFullscreen() {}
 
-bool OverlayStrategyFullscreen::Attempt(ResourceProvider* resource_provider,
-                                        RenderPass* render_pass,
-                                        OverlayCandidateList* candidate_list) {
+bool OverlayStrategyFullscreen::Attempt(
+    ResourceProvider* resource_provider,
+    RenderPass* render_pass,
+    OverlayCandidateList* candidate_list,
+    std::vector<gfx::Rect>* content_bounds) {
   QuadList* quad_list = &render_pass->quad_list;
   // First quad of quad_list is the top most quad.
   auto front = quad_list->begin();
@@ -32,8 +38,12 @@ bool OverlayStrategyFullscreen::Attempt(ResourceProvider* resource_provider,
   if (front == quad_list->end())
     return false;
 
+  const DrawQuad* quad = *front;
+  if (quad->ShouldDrawWithBlending())
+    return false;
+
   OverlayCandidate candidate;
-  if (!OverlayCandidate::FromDrawQuad(resource_provider, *front, &candidate)) {
+  if (!OverlayCandidate::FromDrawQuad(resource_provider, quad, &candidate)) {
     return false;
   }
 
@@ -48,10 +58,17 @@ bool OverlayStrategyFullscreen::Attempt(ResourceProvider* resource_provider,
     return false;
   }
 
-  candidate.plane_z_order = 1;
+  candidate.plane_z_order = 0;
   candidate.overlay_handled = true;
-  candidate_list->push_back(candidate);
-  quad_list->EraseAndInvalidateAllPointers(quad_list->begin());
+  OverlayCandidateList new_candidate_list;
+  new_candidate_list.push_back(candidate);
+  capability_checker_->CheckOverlaySupport(&new_candidate_list);
+  if (!new_candidate_list.front().overlay_handled)
+    return false;
+
+  candidate_list->swap(new_candidate_list);
+
+  render_pass->quad_list = QuadList();  // Remove all the quads
   return true;
 }
 

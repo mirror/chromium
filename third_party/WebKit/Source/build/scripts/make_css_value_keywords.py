@@ -5,10 +5,9 @@ import re
 import subprocess
 import sys
 
-from in_file import InFile
 from name_utilities import enum_for_css_keyword
 from name_utilities import upper_first_letter
-import in_generator
+import json5_generator
 import license
 
 
@@ -53,6 +52,12 @@ GPERF_TEMPLATE = """
 #pragma warning(disable : 4302 4311)
 #endif
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+// TODO(thakis): Remove once we use a gperf that no longer produces "register".
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
+
 namespace blink {
 static const char valueListStringPool[] = {
 %(value_keyword_strings)s
@@ -72,53 +77,52 @@ struct Value;
 %%define class-name %(class_name)sHash
 %%define lookup-function-name findValueImpl
 %%define hash-function-name value_hash_function
-%%define slot-name nameOffset
+%%define slot-name name_offset
 %%define word-array-name value_word_list
 %%pic
 %%enum
 %%%%
 %(value_keyword_to_enum_map)s
 %%%%
-const Value* findValue(register const char* str, register unsigned int len)
-{
-    return CSSValueKeywordsHash::findValueImpl(str, len);
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
+
+const Value* FindValue(const char* str, unsigned int len) {
+  return CSSValueKeywordsHash::findValueImpl(str, len);
 }
 
-const char* getValueName(CSSValueID id)
-{
-    ASSERT(id > 0 && id < numCSSValueKeywords);
-    return valueListStringPool + valueListStringOffsets[id - 1];
+const char* getValueName(CSSValueID id) {
+  ASSERT(id > 0 && id < numCSSValueKeywords);
+  return valueListStringPool + valueListStringOffsets[id - 1];
 }
 
-bool isValueAllowedInMode(unsigned short id, CSSParserMode mode)
-{
-    switch (id) {
-        %(ua_sheet_mode_values_keywords)s
-            return isUASheetBehavior(mode);
-        %(quirks_mode_or_ua_sheet_mode_values_keywords)s
-            return isUASheetBehavior(mode) || isQuirksModeBehavior(mode);
-        default:
-            return true;
-    }
+bool isValueAllowedInMode(unsigned short id, CSSParserMode mode) {
+  switch (id) {
+    %(ua_sheet_mode_values_keywords)s
+      return IsUASheetBehavior(mode);
+    %(quirks_mode_or_ua_sheet_mode_values_keywords)s
+      return IsUASheetBehavior(mode) || IsQuirksModeBehavior(mode);
+    default:
+      return true;
+  }
 }
 
 } // namespace blink
 """
 
 
-class CSSValueKeywordsWriter(in_generator.Writer):
+class CSSValueKeywordsWriter(json5_generator.Writer):
     class_name = "CSSValueKeywords"
-    defaults = {
-        'mode': None,
-    }
 
     def __init__(self, file_paths):
-        in_generator.Writer.__init__(self, file_paths)
+        json5_generator.Writer.__init__(self, file_paths)
         self._outputs = {(self.class_name + ".h"): self.generate_header,
                          (self.class_name + ".cpp"): self.generate_implementation,
                         }
 
-        self._value_keywords = self.in_file.name_dictionaries
+        self._value_keywords = self.json5_file.name_dictionaries
         first_keyword_id = 1
         for offset, keyword in enumerate(self._value_keywords):
             keyword['lower_name'] = keyword['name'].lower()
@@ -169,9 +173,17 @@ class CSSValueKeywordsWriter(in_generator.Writer):
         gperf_args = [self.gperf_path, '--key-positions=*', '-P', '-n']
         gperf_args.extend(['-m', '50'])  # Pick best of 50 attempts.
         gperf_args.append('-D')  # Allow duplicate hashes -> More compact code.
-        gperf = subprocess.Popen(gperf_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True)
-        return gperf.communicate(gperf_input)[0]
+
+        # If gperf isn't in the path we get an OSError. We don't want to use
+        # the normal solution of shell=True (as this has to run on many
+        # platforms), so instead we catch the error and raise a
+        # CalledProcessError like subprocess would do when shell=True is set.
+        try:
+            gperf = subprocess.Popen(gperf_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True)
+            return gperf.communicate(gperf_input)[0]
+        except OSError:
+            raise subprocess.CalledProcessError(127, gperf_args, output='Command not found.')
 
 
 if __name__ == "__main__":
-    in_generator.Maker(CSSValueKeywordsWriter).main(sys.argv)
+    json5_generator.Maker(CSSValueKeywordsWriter).main()

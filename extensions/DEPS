@@ -12,10 +12,11 @@ include_rules = [
   "+content/public/test",
   "+crypto",
   "-extensions/components",
+  "+extensions/grit/extensions_renderer_resources.h",
+  "+extensions/grit/extensions_resources.h",
   "+extensions/test",
-  "+grit/extensions_renderer_resources.h",
-  "+grit/extensions_resources.h",
   "+mojo/public",
+  "+services/service_manager/public",
   "+testing",
   "+third_party/skia/include",
 
@@ -36,6 +37,7 @@ include_rules = [
 specific_include_rules = {
   ".*(test|test_util)\.(cc|h)$": [
     "+content/public/test",
+    "+storage/browser/test",
 
     # Temporarily allowed testing includes.  See above.
     # TODO(jamescook): Remove these. http://crbug.com/162530

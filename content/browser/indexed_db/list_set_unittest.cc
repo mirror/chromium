@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -43,6 +44,23 @@ TEST(ListSetTest, ListSetConstIterator) {
 
   list_set<int>::const_iterator it = ref.begin();
   for (int i = 5; i > 0; --i) {
+    EXPECT_EQ(i, *it);
+    ++it;
+  }
+  EXPECT_EQ(ref.end(), it);
+}
+
+TEST(ListSetTest, ListSetInsertFront) {
+  list_set<int> set;
+  for (int i = 5; i > 0; --i)
+    set.insert(i);
+  for (int i = 6; i <= 10; ++i)
+    set.insert_front(i);
+
+  const list_set<int>& ref = set;
+
+  list_set<int>::const_iterator it = ref.begin();
+  for (int i = 10; i > 0; --i) {
     EXPECT_EQ(i, *it);
     ++it;
   }
@@ -148,9 +166,9 @@ TEST(ListSetTest, ListSetObject) {
 }
 
 TEST(ListSetTest, ListSetPointer) {
-  std::unique_ptr<Wrapped<int>> w0(new Wrapped<int>(0));
-  std::unique_ptr<Wrapped<int>> w1(new Wrapped<int>(1));
-  std::unique_ptr<Wrapped<int>> w2(new Wrapped<int>(2));
+  std::unique_ptr<Wrapped<int>> w0 = base::MakeUnique<Wrapped<int>>(0);
+  std::unique_ptr<Wrapped<int>> w1 = base::MakeUnique<Wrapped<int>>(1);
+  std::unique_ptr<Wrapped<int>> w2 = base::MakeUnique<Wrapped<int>>(2);
 
   list_set<Wrapped<int>*> set;
   EXPECT_EQ(0u, set.size());

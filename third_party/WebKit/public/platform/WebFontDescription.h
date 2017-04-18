@@ -38,66 +38,64 @@ namespace blink {
 class FontDescription;
 
 struct WebFontDescription {
-    enum GenericFamily {
-        GenericFamilyNone,
-        GenericFamilyStandard,
-        GenericFamilySerif,
-        GenericFamilySansSerif,
-        GenericFamilyMonospace,
-        GenericFamilyCursive,
-        GenericFamilyFantasy
-    };
+  enum GenericFamily {
+    kGenericFamilyNone,
+    kGenericFamilyStandard,
+    kGenericFamilySerif,
+    kGenericFamilySansSerif,
+    kGenericFamilyMonospace,
+    kGenericFamilyCursive,
+    kGenericFamilyFantasy
+  };
 
-    enum Smoothing {
-        SmoothingAuto,
-        SmoothingNone,
-        SmoothingGrayscale,
-        SmoothingSubpixel
-    };
+  enum Smoothing {
+    kSmoothingAuto,
+    kSmoothingNone,
+    kSmoothingGrayscale,
+    kSmoothingSubpixel
+  };
 
-    enum Weight {
-        Weight100,
-        Weight200,
-        Weight300,
-        Weight400,
-        Weight500,
-        Weight600,
-        Weight700,
-        Weight800,
-        Weight900,
-        WeightNormal = Weight400,
-        WeightBold = Weight700
-    };
+  enum Weight {
+    kWeight100,
+    kWeight200,
+    kWeight300,
+    kWeight400,
+    kWeight500,
+    kWeight600,
+    kWeight700,
+    kWeight800,
+    kWeight900,
+    kWeightNormal = kWeight400,
+    kWeightBold = kWeight700
+  };
 
-    WebFontDescription()
-        : genericFamily(GenericFamilyNone)
-        , size(0)
-        , italic(false)
-        , smallCaps(false)
-        , weight(WeightNormal)
-        , smoothing(SmoothingAuto)
-        , letterSpacing(0)
-        , wordSpacing(0)
-    {
-    }
+  WebFontDescription()
+      : generic_family(kGenericFamilyNone),
+        size(0),
+        italic(false),
+        small_caps(false),
+        weight(kWeightNormal),
+        smoothing(kSmoothingAuto),
+        letter_spacing(0),
+        word_spacing(0) {}
 
-    WebString family;
-    GenericFamily genericFamily;
-    float size;
-    bool italic;
-    bool smallCaps;
-    Weight weight;
-    Smoothing smoothing;
+  WebString family;
+  GenericFamily generic_family;
+  float size;
+  bool italic;
+  bool small_caps;
+  Weight weight;
+  Smoothing smoothing;
 
-    short letterSpacing;
-    short wordSpacing;
+  short letter_spacing;
+  short word_spacing;
 
 #if INSIDE_BLINK
-    BLINK_PLATFORM_EXPORT WebFontDescription(const FontDescription&);
-    BLINK_PLATFORM_EXPORT operator FontDescription() const;
+  BLINK_PLATFORM_EXPORT WebFontDescription(const FontDescription&);
+  BLINK_PLATFORM_EXPORT operator FontDescription() const;
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

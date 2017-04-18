@@ -28,13 +28,13 @@
 #define SQLiteDatabase_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/Threading.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Threading.h"
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/WTFString.h"
 
 #if COMPILER(MSVC)
-#pragma warning(disable: 4800)
+#pragma warning(disable : 4800)
 #endif
 
 struct sqlite3;
@@ -44,102 +44,114 @@ namespace blink {
 class DatabaseAuthorizer;
 class SQLiteTransaction;
 
-extern const int SQLResultDone;
-extern const int SQLResultOk;
-extern const int SQLResultRow;
-extern const int SQLResultFull;
-extern const int SQLResultInterrupt;
-extern const int SQLResultConstraint;
+extern const int kSQLResultDone;
+extern const int kSQLResultOk;
+extern const int kSQLResultRow;
+extern const int kSQLResultFull;
+extern const int kSQLResultInterrupt;
+extern const int kSQLResultConstraint;
 
 class SQLiteDatabase {
-    DISALLOW_NEW();
-    WTF_MAKE_NONCOPYABLE(SQLiteDatabase);
-    friend class SQLiteTransaction;
-public:
-    SQLiteDatabase();
-    ~SQLiteDatabase();
+  DISALLOW_NEW();
+  WTF_MAKE_NONCOPYABLE(SQLiteDatabase);
+  friend class SQLiteTransaction;
 
-    bool open(const String& filename);
-    bool isOpen() const { return m_db; }
-    void close();
+ public:
+  SQLiteDatabase();
+  ~SQLiteDatabase();
 
-    void updateLastChangesCount();
+  bool Open(const String& filename);
+  bool IsOpen() const { return db_; }
+  void Close();
 
-    bool executeCommand(const String&);
+  void UpdateLastChangesCount();
 
-    bool tableExists(const String&);
-    int runVacuumCommand();
-    int runIncrementalVacuumCommand();
+  bool ExecuteCommand(const String&);
 
-    bool transactionInProgress() const { return m_transactionInProgress; }
+  bool TableExists(const String&);
+  int RunVacuumCommand();
+  int RunIncrementalVacuumCommand();
 
-    int64_t lastInsertRowID();
-    int lastChanges();
+  bool TransactionInProgress() const { return transaction_in_progress_; }
 
-    void setBusyTimeout(int ms);
+  int64_t LastInsertRowID();
+  int LastChanges();
 
-    // Sets the maximum size in bytes
-    // Depending on per-database attributes, the size will only be settable in units that are the page size of the database, which is established at creation
-    // These chunks will never be anything other than 512, 1024, 2048, 4096, 8192, 16384, or 32768 bytes in size.
-    // setMaximumSize() will round the size down to the next smallest chunk if the passed size doesn't align.
-    void setMaximumSize(int64_t);
+  void SetBusyTimeout(int ms);
 
-    // Gets the number of unused bytes in the database file.
-    int64_t freeSpaceSize();
-    int64_t totalSize();
+  // Sets the maximum size in bytes.
+  // Depending on per-database attributes, the size will only be settable in
+  // units that are the page size of the database, which is established at
+  // creation.  These chunks will never be anything other than 512, 1024, 2048,
+  // 4096, 8192, 16384, or 32768 bytes in size.  setMaximumSize() will round the
+  // size down to the next smallest chunk if the passed size doesn't align.
+  void SetMaximumSize(int64_t);
 
-    int lastError();
-    const char* lastErrorMsg();
+  // Gets the number of unused bytes in the database file.
+  int64_t FreeSpaceSize();
+  int64_t TotalSize();
 
-    sqlite3* sqlite3Handle() const {
-        ASSERT(m_sharable || currentThread() == m_openingThread || !m_db);
-        return m_db;
-    }
+  int LastError();
+  const char* LastErrorMsg();
 
-    void setAuthorizer(DatabaseAuthorizer*);
+  sqlite3* Sqlite3Handle() const {
+    DCHECK_EQ(sharable_ || CurrentThread(), opening_thread_ || !db_);
+    return db_;
+  }
 
-    bool isAutoCommitOn() const;
+  void SetAuthorizer(DatabaseAuthorizer*);
 
-    // The SQLite AUTO_VACUUM pragma can be either NONE, FULL, or INCREMENTAL.
-    // NONE - SQLite does not do any vacuuming
-    // FULL - SQLite moves all empty pages to the end of the DB file and truncates
-    //        the file to remove those pages after every transaction. This option
-    //        requires SQLite to store additional information about each page in
-    //        the database file.
-    // INCREMENTAL - SQLite stores extra information for each page in the database
-    //               file, but removes the empty pages only when PRAGMA INCREMANTAL_VACUUM
-    //               is called.
-    enum AutoVacuumPragma { AutoVacuumNone = 0, AutoVacuumFull = 1, AutoVacuumIncremental = 2 };
-    bool turnOnIncrementalAutoVacuum();
+  bool IsAutoCommitOn() const;
 
-    DEFINE_INLINE_TRACE() { }
+  // The SQLite AUTO_VACUUM pragma can be either NONE, FULL, or INCREMENTAL.
+  // NONE - SQLite does not do any vacuuming
+  // FULL - SQLite moves all empty pages to the end of the DB file and truncates
+  //        the file to remove those pages after every transaction. This option
+  //        requires SQLite to store additional information about each page in
+  //        the database file.
+  // INCREMENTAL - SQLite stores extra information for each page in the database
+  //               file, but removes the empty pages only when PRAGMA
+  //               INCREMANTAL_VACUUM is called.
+  enum AutoVacuumPragma {
+    kAutoVacuumNone = 0,
+    kAutoVacuumFull = 1,
+    kAutoVacuumIncremental = 2
+  };
+  bool TurnOnIncrementalAutoVacuum();
 
-private:
-    static int authorizerFunction(void*, int, const char*, const char*, const char*, const char*);
+  DEFINE_INLINE_TRACE() {}
 
-    void enableAuthorizer(bool enable);
+ private:
+  static int AuthorizerFunction(void*,
+                                int,
+                                const char*,
+                                const char*,
+                                const char*,
+                                const char*);
 
-    int pageSize();
+  void EnableAuthorizer(bool enable);
 
-    sqlite3* m_db;
-    int m_pageSize;
+  int PageSize();
 
-    bool m_transactionInProgress;
-    bool m_sharable;
+  sqlite3* db_;
+  int page_size_;
 
-    Mutex m_authorizerLock;
-    CrossThreadPersistent<DatabaseAuthorizer> m_authorizer;
+  bool transaction_in_progress_;
+  bool sharable_;
 
-    ThreadIdentifier m_openingThread;
+  Mutex authorizer_lock_;
+  CrossThreadPersistent<DatabaseAuthorizer> authorizer_;
 
-    Mutex m_databaseClosingMutex;
+  ThreadIdentifier opening_thread_;
 
-    int m_openError;
-    CString m_openErrorMessage;
+  Mutex database_closing_mutex_;
 
-    int m_lastChangesCount;
+  int open_error_;
+  CString open_error_message_;
+
+  int last_changes_count_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

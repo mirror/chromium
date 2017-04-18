@@ -35,26 +35,27 @@
 namespace blink {
 
 class HTMLUnknownElement final : public HTMLElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLUnknownElement* create(const QualifiedName& tagName, Document& document)
-    {
-        return new HTMLUnknownElement(tagName, document);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-private:
-    HTMLUnknownElement(const QualifiedName&, Document&);
+ public:
+  static HTMLUnknownElement* Create(const QualifiedName& tag_name,
+                                    Document& document) {
+    return new HTMLUnknownElement(tag_name, document);
+  }
 
-    bool isHTMLUnknownElement() const override { return true; }
+ private:
+  HTMLUnknownElement(const QualifiedName&, Document&);
+
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsHTMLUnknownElement() const override { return true; }
 };
 
-inline bool isHTMLUnknownElement(const HTMLElement& element)
-{
-    return element.isHTMLUnknownElement();
+inline bool IsHTMLUnknownElement(const HTMLElement& element) {
+  return element.IsHTMLUnknownElement();
 }
 
 DEFINE_HTMLELEMENT_TYPE_CASTS_WITH_FUNCTION(HTMLUnknownElement);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLUnknownElement_h
+#endif  // HTMLUnknownElement_h

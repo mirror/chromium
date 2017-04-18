@@ -28,7 +28,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/NodeTraversal.h"
+#include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/events/Event.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/UseCounter.h"
@@ -39,172 +39,180 @@ namespace blink {
 
 using namespace HTMLNames;
 
-// This function chooses the focused element when show() or showModal() is invoked, as described in their spec.
-static void setFocusForDialog(HTMLDialogElement* dialog)
-{
-    Element* focusableDescendant = 0;
-    Node* next = 0;
-    for (Node* node = dialog->firstChild(); node; node = next) {
-        if (isHTMLDialogElement(*node))
-            next = NodeTraversal::nextSkippingChildren(*node, dialog);
-        else
-            next = NodeTraversal::next(*node, dialog);
+// This function chooses the focused element when show() or showModal() is
+// invoked, as described in their spec.
+static void SetFocusForDialog(HTMLDialogElement* dialog) {
+  Element* focusable_descendant = nullptr;
+  Node* next = nullptr;
 
-        if (!node->isElementNode())
-            continue;
-        Element* element = toElement(node);
-        if (element->isFormControlElement()) {
-            HTMLFormControlElement* control = toHTMLFormControlElement(node);
-            if (control->isAutofocusable() && control->isFocusable()) {
-                control->focus();
-                return;
-            }
-        }
-        if (!focusableDescendant && element->isFocusable())
-            focusableDescendant = element;
-    }
+  // TODO(kochi): How to find focusable element inside Shadow DOM is not
+  // currently specified.  This may change at any time.
+  // See crbug/383230 and https://github.com/whatwg/html/issue/2393 .
+  for (Node* node = FlatTreeTraversal::FirstChild(*dialog); node; node = next) {
+    next = isHTMLDialogElement(*node)
+               ? FlatTreeTraversal::NextSkippingChildren(*node, dialog)
+               : FlatTreeTraversal::Next(*node, dialog);
 
-    if (focusableDescendant) {
-        focusableDescendant->focus();
+    if (!node->IsElementNode())
+      continue;
+    Element* element = ToElement(node);
+    if (element->IsFormControlElement()) {
+      HTMLFormControlElement* control = ToHTMLFormControlElement(node);
+      if (control->IsAutofocusable() && control->IsFocusable()) {
+        control->focus();
         return;
+      }
     }
+    if (!focusable_descendant && element->IsFocusable())
+      focusable_descendant = element;
+  }
 
-    if (dialog->isFocusable()) {
-        dialog->focus();
-        return;
-    }
+  if (focusable_descendant) {
+    focusable_descendant->focus();
+    return;
+  }
 
-    dialog->document().clearFocusedElement();
+  if (dialog->IsFocusable()) {
+    dialog->focus();
+    return;
+  }
+
+  dialog->GetDocument().ClearFocusedElement();
 }
 
-static void inertSubtreesChanged(Document& document)
-{
-    // When a modal dialog opens or closes, nodes all over the accessibility
-    // tree can change inertness which means they must be added or removed from
-    // the tree. The most foolproof way is to clear the entire tree and rebuild
-    // it, though a more clever way is probably possible.
-    document.clearAXObjectCache();
-    if (AXObjectCache* cache = document.axObjectCache())
-        cache->childrenChanged(&document);
+static void InertSubtreesChanged(Document& document) {
+  // When a modal dialog opens or closes, nodes all over the accessibility
+  // tree can change inertness which means they must be added or removed from
+  // the tree. The most foolproof way is to clear the entire tree and rebuild
+  // it, though a more clever way is probably possible.
+  document.ClearAXObjectCache();
+  if (AXObjectCache* cache = document.AxObjectCache())
+    cache->ChildrenChanged(&document);
 }
 
 inline HTMLDialogElement::HTMLDialogElement(Document& document)
-    : HTMLElement(dialogTag, document)
-    , m_centeringMode(NotCentered)
-    , m_centeredPosition(0)
-    , m_returnValue("")
-{
-    UseCounter::count(document, UseCounter::DialogElement);
+    : HTMLElement(dialogTag, document),
+      centering_mode_(kNotCentered),
+      centered_position_(0),
+      return_value_("") {
+  UseCounter::Count(document, UseCounter::kDialogElement);
 }
 
 DEFINE_NODE_FACTORY(HTMLDialogElement)
 
-void HTMLDialogElement::close(const String& returnValue, ExceptionState& exceptionState)
-{
-    if (!fastHasAttribute(openAttr)) {
-        exceptionState.throwDOMException(InvalidStateError, "The element does not have an 'open' attribute, and therefore cannot be closed.");
-        return;
-    }
-    closeDialog(returnValue);
+void HTMLDialogElement::close(const String& return_value,
+                              ExceptionState& exception_state) {
+  if (!FastHasAttribute(openAttr)) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "The element does not have an 'open' "
+                                      "attribute, and therefore cannot be "
+                                      "closed.");
+    return;
+  }
+  CloseDialog(return_value);
 }
 
-void HTMLDialogElement::closeDialog(const String& returnValue)
-{
-    if (!fastHasAttribute(openAttr))
-        return;
-    setBooleanAttribute(openAttr, false);
+void HTMLDialogElement::CloseDialog(const String& return_value) {
+  if (!FastHasAttribute(openAttr))
+    return;
+  SetBooleanAttribute(openAttr, false);
 
-    HTMLDialogElement* activeModalDialog = document().activeModalDialog();
-    document().removeFromTopLayer(this);
-    if (activeModalDialog == this)
-        inertSubtreesChanged(document());
+  HTMLDialogElement* active_modal_dialog = GetDocument().ActiveModalDialog();
+  GetDocument().RemoveFromTopLayer(this);
+  if (active_modal_dialog == this)
+    InertSubtreesChanged(GetDocument());
 
-    if (!returnValue.isNull())
-        m_returnValue = returnValue;
+  if (!return_value.IsNull())
+    return_value_ = return_value;
 
-    dispatchScopedEvent(Event::create(EventTypeNames::close));
+  ScheduleCloseEvent();
 }
 
-void HTMLDialogElement::forceLayoutForCentering()
-{
-    m_centeringMode = NeedsCentering;
-    document().updateStyleAndLayoutIgnorePendingStylesheets();
-    if (m_centeringMode == NeedsCentering)
-        setNotCentered();
+void HTMLDialogElement::ForceLayoutForCentering() {
+  centering_mode_ = kNeedsCentering;
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  if (centering_mode_ == kNeedsCentering)
+    SetNotCentered();
 }
 
-void HTMLDialogElement::show()
-{
-    if (fastHasAttribute(openAttr))
-        return;
-    setBooleanAttribute(openAttr, true);
-
-    // The layout must be updated here because setFocusForDialog calls
-    // Element::isFocusable, which requires an up-to-date layout.
-    document().updateStyleAndLayoutIgnorePendingStylesheets();
-
-    setFocusForDialog(this);
+void HTMLDialogElement::ScheduleCloseEvent() {
+  Event* event = Event::Create(EventTypeNames::close);
+  event->SetTarget(this);
+  GetDocument().EnqueueAnimationFrameEvent(event);
 }
 
-void HTMLDialogElement::showModal(ExceptionState& exceptionState)
-{
-    if (fastHasAttribute(openAttr)) {
-        exceptionState.throwDOMException(InvalidStateError, "The element already has an 'open' attribute, and therefore cannot be opened modally.");
-        return;
-    }
-    if (!isConnected()) {
-        exceptionState.throwDOMException(InvalidStateError, "The element is not in a Document.");
-        return;
-    }
+void HTMLDialogElement::show() {
+  if (FastHasAttribute(openAttr))
+    return;
+  SetBooleanAttribute(openAttr, true);
 
-    document().addToTopLayer(this);
-    setBooleanAttribute(openAttr, true);
+  // The layout must be updated here because setFocusForDialog calls
+  // Element::isFocusable, which requires an up-to-date layout.
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-    // Throw away the AX cache first, so the subsequent steps don't have a chance of queuing up
-    // AX events on objects that would be invalidated when the cache is thrown away.
-    inertSubtreesChanged(document());
-
-    forceLayoutForCentering();
-    setFocusForDialog(this);
+  SetFocusForDialog(this);
 }
 
-void HTMLDialogElement::removedFrom(ContainerNode* insertionPoint)
-{
-    HTMLElement::removedFrom(insertionPoint);
-    setNotCentered();
-    // FIXME: We should call inertSubtreesChanged() here.
+void HTMLDialogElement::showModal(ExceptionState& exception_state) {
+  if (FastHasAttribute(openAttr)) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "The element already has an 'open' "
+                                      "attribute, and therefore cannot be "
+                                      "opened modally.");
+    return;
+  }
+  if (!isConnected()) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "The element is not in a Document.");
+    return;
+  }
+
+  GetDocument().AddToTopLayer(this);
+  SetBooleanAttribute(openAttr, true);
+
+  // Throw away the AX cache first, so the subsequent steps don't have a chance
+  // of queuing up AX events on objects that would be invalidated when the cache
+  // is thrown away.
+  InertSubtreesChanged(GetDocument());
+
+  ForceLayoutForCentering();
+  SetFocusForDialog(this);
 }
 
-void HTMLDialogElement::setCentered(LayoutUnit centeredPosition)
-{
-    ASSERT(m_centeringMode == NeedsCentering);
-    m_centeredPosition = centeredPosition;
-    m_centeringMode = Centered;
+void HTMLDialogElement::RemovedFrom(ContainerNode* insertion_point) {
+  HTMLElement::RemovedFrom(insertion_point);
+  SetNotCentered();
+  // FIXME: We should call inertSubtreesChanged() here.
 }
 
-void HTMLDialogElement::setNotCentered()
-{
-    m_centeringMode = NotCentered;
+void HTMLDialogElement::SetCentered(LayoutUnit centered_position) {
+  DCHECK_EQ(centering_mode_, kNeedsCentering);
+  centered_position_ = centered_position;
+  centering_mode_ = kCentered;
 }
 
-bool HTMLDialogElement::isPresentationAttribute(const QualifiedName& name) const
-{
-    // FIXME: Workaround for <https://bugs.webkit.org/show_bug.cgi?id=91058>: modifying an attribute for which there is an attribute selector
-    // in html.css sometimes does not trigger a style recalc.
-    if (name == openAttr)
-        return true;
-
-    return HTMLElement::isPresentationAttribute(name);
+void HTMLDialogElement::SetNotCentered() {
+  centering_mode_ = kNotCentered;
 }
 
-void HTMLDialogElement::defaultEventHandler(Event* event)
-{
-    if (event->type() == EventTypeNames::cancel) {
-        closeDialog();
-        event->setDefaultHandled();
-        return;
-    }
-    HTMLElement::defaultEventHandler(event);
+bool HTMLDialogElement::IsPresentationAttribute(
+    const QualifiedName& name) const {
+  // FIXME: Workaround for <https://bugs.webkit.org/show_bug.cgi?id=91058>:
+  // modifying an attribute for which there is an attribute selector in html.css
+  // sometimes does not trigger a style recalc.
+  if (name == openAttr)
+    return true;
+
+  return HTMLElement::IsPresentationAttribute(name);
 }
 
-} // namespace blink
+void HTMLDialogElement::DefaultEventHandler(Event* event) {
+  if (event->type() == EventTypeNames::cancel) {
+    CloseDialog();
+    event->SetDefaultHandled();
+    return;
+  }
+  HTMLElement::DefaultEventHandler(event);
+}
+
+}  // namespace blink

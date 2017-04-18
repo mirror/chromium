@@ -31,206 +31,182 @@
 
 namespace blink {
 
-WebIDBKey WebIDBKey::createArray(const WebVector<WebIDBKey>& array)
-{
-    WebIDBKey key;
-    key.assignArray(array);
-    return key;
+WebIDBKey WebIDBKey::CreateArray(const WebVector<WebIDBKey>& array) {
+  WebIDBKey key;
+  key.AssignArray(array);
+  return key;
 }
 
-WebIDBKey WebIDBKey::createBinary(const WebData& binary)
-{
-    WebIDBKey key;
-    key.assignBinary(binary);
-    return key;
+WebIDBKey WebIDBKey::CreateBinary(const WebData& binary) {
+  WebIDBKey key;
+  key.AssignBinary(binary);
+  return key;
 }
 
-WebIDBKey WebIDBKey::createString(const WebString& string)
-{
-    WebIDBKey key;
-    key.assignString(string);
-    return key;
+WebIDBKey WebIDBKey::CreateString(const WebString& string) {
+  WebIDBKey key;
+  key.AssignString(string);
+  return key;
 }
 
-WebIDBKey WebIDBKey::createDate(double date)
-{
-    WebIDBKey key;
-    key.assignDate(date);
-    return key;
+WebIDBKey WebIDBKey::CreateDate(double date) {
+  WebIDBKey key;
+  key.AssignDate(date);
+  return key;
 }
 
-WebIDBKey WebIDBKey::createNumber(double number)
-{
-    WebIDBKey key;
-    key.assignNumber(number);
-    return key;
+WebIDBKey WebIDBKey::CreateNumber(double number) {
+  WebIDBKey key;
+  key.AssignNumber(number);
+  return key;
 }
 
-WebIDBKey WebIDBKey::createInvalid()
-{
-    WebIDBKey key;
-    key.assignInvalid();
-    return key;
+WebIDBKey WebIDBKey::CreateInvalid() {
+  WebIDBKey key;
+  key.AssignInvalid();
+  return key;
 }
 
-WebIDBKey WebIDBKey::createNull()
-{
-    WebIDBKey key;
-    key.assignNull();
-    return key;
+WebIDBKey WebIDBKey::CreateNull() {
+  WebIDBKey key;
+  key.AssignNull();
+  return key;
 }
 
-void WebIDBKey::reset()
-{
-    m_private.reset();
+void WebIDBKey::Reset() {
+  private_.Reset();
 }
 
-void WebIDBKey::assign(const WebIDBKey& value)
-{
-    m_private = value.m_private;
+void WebIDBKey::Assign(const WebIDBKey& value) {
+  private_ = value.private_;
 }
 
-static IDBKey* convertFromWebIDBKeyArray(const WebVector<WebIDBKey>& array)
-{
-    IDBKey::KeyArray keys;
-    keys.reserveCapacity(array.size());
-    for (size_t i = 0; i < array.size(); ++i) {
-        switch (array[i].keyType()) {
-        case WebIDBKeyTypeArray:
-            keys.append(convertFromWebIDBKeyArray(array[i].array()));
-            break;
-        case WebIDBKeyTypeBinary:
-            keys.append(IDBKey::createBinary(array[i].binary()));
-            break;
-        case WebIDBKeyTypeString:
-            keys.append(IDBKey::createString(array[i].string()));
-            break;
-        case WebIDBKeyTypeDate:
-            keys.append(IDBKey::createDate(array[i].date()));
-            break;
-        case WebIDBKeyTypeNumber:
-            keys.append(IDBKey::createNumber(array[i].number()));
-            break;
-        case WebIDBKeyTypeInvalid:
-            keys.append(IDBKey::createInvalid());
-            break;
-        case WebIDBKeyTypeNull:
-        case WebIDBKeyTypeMin:
-            NOTREACHED();
-            break;
-        }
+static IDBKey* ConvertFromWebIDBKeyArray(const WebVector<WebIDBKey>& array) {
+  IDBKey::KeyArray keys;
+  keys.ReserveCapacity(array.size());
+  for (size_t i = 0; i < array.size(); ++i) {
+    switch (array[i].KeyType()) {
+      case kWebIDBKeyTypeArray:
+        keys.push_back(ConvertFromWebIDBKeyArray(array[i].Array()));
+        break;
+      case kWebIDBKeyTypeBinary:
+        keys.push_back(IDBKey::CreateBinary(array[i].Binary()));
+        break;
+      case kWebIDBKeyTypeString:
+        keys.push_back(IDBKey::CreateString(array[i].GetString()));
+        break;
+      case kWebIDBKeyTypeDate:
+        keys.push_back(IDBKey::CreateDate(array[i].Date()));
+        break;
+      case kWebIDBKeyTypeNumber:
+        keys.push_back(IDBKey::CreateNumber(array[i].Number()));
+        break;
+      case kWebIDBKeyTypeInvalid:
+        keys.push_back(IDBKey::CreateInvalid());
+        break;
+      case kWebIDBKeyTypeNull:
+      case kWebIDBKeyTypeMin:
+        NOTREACHED();
+        break;
     }
-    return IDBKey::createArray(keys);
+  }
+  return IDBKey::CreateArray(keys);
 }
 
-static void convertToWebIDBKeyArray(const IDBKey::KeyArray& array, WebVector<WebIDBKey>& result)
-{
-    WebVector<WebIDBKey> keys(array.size());
-    WebVector<WebIDBKey> subkeys;
-    for (size_t i = 0; i < array.size(); ++i) {
-        IDBKey* key = array[i];
-        switch (key->getType()) {
-        case IDBKey::ArrayType:
-            convertToWebIDBKeyArray(key->array(), subkeys);
-            keys[i] = WebIDBKey::createArray(subkeys);
-            break;
-        case IDBKey::BinaryType:
-            keys[i] = WebIDBKey::createBinary(key->binary());
-            break;
-        case IDBKey::StringType:
-            keys[i] = WebIDBKey::createString(key->string());
-            break;
-        case IDBKey::DateType:
-            keys[i] = WebIDBKey::createDate(key->date());
-            break;
-        case IDBKey::NumberType:
-            keys[i] = WebIDBKey::createNumber(key->number());
-            break;
-        case IDBKey::InvalidType:
-            keys[i] = WebIDBKey::createInvalid();
-            break;
-        case IDBKey::MinType:
-            NOTREACHED();
-            break;
-        }
+static void ConvertToWebIDBKeyArray(const IDBKey::KeyArray& array,
+                                    WebVector<WebIDBKey>& result) {
+  WebVector<WebIDBKey> keys(array.size());
+  WebVector<WebIDBKey> subkeys;
+  for (size_t i = 0; i < array.size(); ++i) {
+    IDBKey* key = array[i];
+    switch (key->GetType()) {
+      case IDBKey::kArrayType:
+        ConvertToWebIDBKeyArray(key->Array(), subkeys);
+        keys[i] = WebIDBKey::CreateArray(subkeys);
+        break;
+      case IDBKey::kBinaryType:
+        keys[i] = WebIDBKey::CreateBinary(key->Binary());
+        break;
+      case IDBKey::kStringType:
+        keys[i] = WebIDBKey::CreateString(key->GetString());
+        break;
+      case IDBKey::kDateType:
+        keys[i] = WebIDBKey::CreateDate(key->Date());
+        break;
+      case IDBKey::kNumberType:
+        keys[i] = WebIDBKey::CreateNumber(key->Number());
+        break;
+      case IDBKey::kInvalidType:
+        keys[i] = WebIDBKey::CreateInvalid();
+        break;
+      case IDBKey::kTypeEnumMax:
+        NOTREACHED();
+        break;
     }
-    result.swap(keys);
+  }
+  result.Swap(keys);
 }
 
-void WebIDBKey::assignArray(const WebVector<WebIDBKey>& array)
-{
-    m_private = convertFromWebIDBKeyArray(array);
+void WebIDBKey::AssignArray(const WebVector<WebIDBKey>& array) {
+  private_ = ConvertFromWebIDBKeyArray(array);
 }
 
-void WebIDBKey::assignBinary(const WebData& binary)
-{
-    m_private = IDBKey::createBinary(binary);
+void WebIDBKey::AssignBinary(const WebData& binary) {
+  private_ = IDBKey::CreateBinary(binary);
 }
 
-void WebIDBKey::assignString(const WebString& string)
-{
-    m_private = IDBKey::createString(string);
+void WebIDBKey::AssignString(const WebString& string) {
+  private_ = IDBKey::CreateString(string);
 }
 
-void WebIDBKey::assignDate(double date)
-{
-    m_private = IDBKey::createDate(date);
+void WebIDBKey::AssignDate(double date) {
+  private_ = IDBKey::CreateDate(date);
 }
 
-void WebIDBKey::assignNumber(double number)
-{
-    m_private = IDBKey::createNumber(number);
+void WebIDBKey::AssignNumber(double number) {
+  private_ = IDBKey::CreateNumber(number);
 }
 
-void WebIDBKey::assignInvalid()
-{
-    m_private = IDBKey::createInvalid();
+void WebIDBKey::AssignInvalid() {
+  private_ = IDBKey::CreateInvalid();
 }
 
-void WebIDBKey::assignNull()
-{
-    m_private.reset();
+void WebIDBKey::AssignNull() {
+  private_.Reset();
 }
 
-WebIDBKeyType WebIDBKey::keyType() const
-{
-    if (!m_private.get())
-        return WebIDBKeyTypeNull;
-    return static_cast<WebIDBKeyType>(m_private->getType());
+WebIDBKeyType WebIDBKey::KeyType() const {
+  if (!private_.Get())
+    return kWebIDBKeyTypeNull;
+  return static_cast<WebIDBKeyType>(private_->GetType());
 }
 
-bool WebIDBKey::isValid() const
-{
-    if (!m_private.get())
-        return false;
-    return m_private->isValid();
+bool WebIDBKey::IsValid() const {
+  if (!private_.Get())
+    return false;
+  return private_->IsValid();
 }
 
-WebVector<WebIDBKey> WebIDBKey::array() const
-{
-    WebVector<WebIDBKey> keys;
-    convertToWebIDBKeyArray(m_private->array(), keys);
-    return keys;
+WebVector<WebIDBKey> WebIDBKey::Array() const {
+  WebVector<WebIDBKey> keys;
+  ConvertToWebIDBKeyArray(private_->Array(), keys);
+  return keys;
 }
 
-WebData WebIDBKey::binary() const
-{
-    return m_private->binary();
+WebData WebIDBKey::Binary() const {
+  return private_->Binary();
 }
 
-WebString WebIDBKey::string() const
-{
-    return m_private->string();
+WebString WebIDBKey::GetString() const {
+  return private_->GetString();
 }
 
-double WebIDBKey::date() const
-{
-    return m_private->date();
+double WebIDBKey::Date() const {
+  return private_->Date();
 }
 
-double WebIDBKey::number() const
-{
-    return m_private->number();
+double WebIDBKey::Number() const {
+  return private_->Number();
 }
 
-} // namespace blink
+}  // namespace blink

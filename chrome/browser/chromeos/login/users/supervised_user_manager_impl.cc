@@ -6,6 +6,7 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -18,11 +19,11 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/supervised_user/supervised_user_service.h"
 #include "chrome/browser/supervised_user/supervised_user_service_factory.h"
-#include "chromeos/login/user_names.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "components/user_manager/user_names.h"
 #include "components/user_manager/user_type.h"
 #include "content/public/browser/browser_thread.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -146,8 +147,8 @@ std::string SupervisedUserManagerImpl::GenerateUserId() {
   std::string id;
   bool user_exists;
   do {
-    id = base::StringPrintf(
-        "%d@%s", counter, chromeos::login::kSupervisedUserDomain);
+    id = base::StringPrintf("%d@%s", counter,
+                            user_manager::kSupervisedUserDomain);
     counter++;
     user_exists = (nullptr != owner_->FindUser(AccountId::FromUserEmail(id)));
     DCHECK(!user_exists);
@@ -170,7 +171,7 @@ bool SupervisedUserManagerImpl::HasSupervisedUsers(
        it != users.end();
        ++it) {
     if ((*it)->GetType() == user_manager::USER_TYPE_SUPERVISED) {
-      if (manager_id == GetManagerUserId((*it)->email()))
+      if (manager_id == GetManagerUserId((*it)->GetAccountId().GetUserEmail()))
         return true;
     }
   }
@@ -207,16 +208,18 @@ const user_manager::User* SupervisedUserManagerImpl::CreateUserRecord(
       local_state,
       kSupervisedUserManagerDisplayEmails);
 
-  prefs_new_users_update->Insert(0, new base::StringValue(local_user_id));
+  prefs_new_users_update->Insert(0,
+                                 base::MakeUnique<base::Value>(local_user_id));
 
-  sync_id_update->SetWithoutPathExpansion(local_user_id,
-      new base::StringValue(sync_user_id));
-  manager_update->SetWithoutPathExpansion(local_user_id,
-      new base::StringValue(manager->email()));
-  manager_name_update->SetWithoutPathExpansion(local_user_id,
-      new base::StringValue(manager->GetDisplayName()));
-  manager_email_update->SetWithoutPathExpansion(local_user_id,
-      new base::StringValue(manager->display_email()));
+  sync_id_update->SetWithoutPathExpansion(
+      local_user_id, base::MakeUnique<base::Value>(sync_user_id));
+  manager_update->SetWithoutPathExpansion(
+      local_user_id,
+      base::MakeUnique<base::Value>(manager->GetAccountId().GetUserEmail()));
+  manager_name_update->SetWithoutPathExpansion(
+      local_user_id, base::MakeUnique<base::Value>(manager->GetDisplayName()));
+  manager_email_update->SetWithoutPathExpansion(
+      local_user_id, base::MakeUnique<base::Value>(manager->display_email()));
 
   owner_->SaveUserDisplayName(AccountId::FromUserEmail(local_user_id),
                               display_name);
@@ -380,7 +383,7 @@ const user_manager::User* SupervisedUserManagerImpl::FindBySyncId(
        it != users.end();
        ++it) {
     if (((*it)->GetType() == user_manager::USER_TYPE_SUPERVISED) &&
-        (GetUserSyncId((*it)->email()) == sync_id)) {
+        (GetUserSyncId((*it)->GetAccountId().GetUserEmail()) == sync_id)) {
       return *it;
     }
   }
@@ -435,8 +438,7 @@ void SupervisedUserManagerImpl::RollbackUserCreationTransaction() {
     return;
   }
 
-  if (gaia::ExtractDomainName(user_id) !=
-      chromeos::login::kSupervisedUserDomain) {
+  if (gaia::ExtractDomainName(user_id) != user_manager::kSupervisedUserDomain) {
     LOG(WARNING) << "Clean up transaction for  non-supervised user found :"
                  << user_id << ", will not remove data";
     prefs->ClearPref(kSupervisedUserCreationTransactionDisplayName);
@@ -456,7 +458,7 @@ void SupervisedUserManagerImpl::RemoveNonCryptohomeData(
     const std::string& user_id) {
   PrefService* prefs = g_browser_process->local_state();
   ListPrefUpdate prefs_new_users_update(prefs, kSupervisedUsersFirstRun);
-  prefs_new_users_update->Remove(base::StringValue(user_id), NULL);
+  prefs_new_users_update->Remove(base::Value(user_id), NULL);
 
   CleanPref(user_id, kSupervisedUserSyncId);
   CleanPref(user_id, kSupervisedUserManagers);
@@ -479,7 +481,7 @@ void SupervisedUserManagerImpl::CleanPref(const std::string& user_id,
 bool SupervisedUserManagerImpl::CheckForFirstRun(const std::string& user_id) {
   ListPrefUpdate prefs_new_users_update(g_browser_process->local_state(),
                                         kSupervisedUsersFirstRun);
-  return prefs_new_users_update->Remove(base::StringValue(user_id), NULL);
+  return prefs_new_users_update->Remove(base::Value(user_id), NULL);
 }
 
 void SupervisedUserManagerImpl::UpdateManagerName(const std::string& manager_id,
@@ -498,8 +500,7 @@ void SupervisedUserManagerImpl::UpdateManagerName(const std::string& manager_id,
     DCHECK(has_manager_id);
     if (user_id == manager_id) {
       manager_name_update->SetWithoutPathExpansion(
-          it.key(),
-          new base::StringValue(new_display_name));
+          it.key(), base::MakeUnique<base::Value>(new_display_name));
     }
   }
 }

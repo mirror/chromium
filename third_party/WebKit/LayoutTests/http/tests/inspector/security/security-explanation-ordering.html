@@ -5,7 +5,8 @@
 <script>
 function test()
 {
-    var mixedContentStatus = { ranInsecureContent: false, displayedInsecureContent: false};
+    /** @type {!Protocol.Security.InsecureContentStatus} */
+    var insecureContentStatus = { ranMixedContent: false, displayedMixedContent: false, ranContentWithCertErrors: false, displayedContentWithCertErrors: false, ranInsecureContentStyle: Protocol.Security.SecurityState.Insecure, displayedInsecureContentStyle: Protocol.Security.SecurityState.Neutral };
 
     // Explanations from https://cbc.badssl.com/ as of 2016-06-13.
     // We explicitly place the explanation with the security state "info"
@@ -17,19 +18,25 @@ function test()
             "summary": "Public-Key Pinning Bypassed"
         },
         {
-            "certificateId": 1,
+            "hasCertificate": "true",
             "description": "The connection to this site is using a valid, trusted server certificate.",
             "securityState": "secure",
             "summary": "Valid Certificate"
+        },
+        {
+            "description": "The connection to this site uses a strong protocol (TLS 1.2), a strong key exchange (ECDHE_RSA), and an obsolete cipher (AES_256_CBC with HMAC-SHA1).",
+            "securityState": "secure",
+            "summary": "Obsolete Connection Settings"
+
         }
     ];
 
-    InspectorTest.mainTarget.model(WebInspector.SecurityModel).dispatchEventToListeners(WebInspector.SecurityModel.EventTypes.SecurityStateChanged, new WebInspector.PageSecurityState(SecurityAgent.SecurityState.Secure, explanations, mixedContentStatus, true));
+    InspectorTest.mainTarget.model(Security.SecurityModel).dispatchEventToListeners(Security.SecurityModel.Events.SecurityStateChanged, new Security.PageSecurityState(Protocol.Security.SecurityState.Secure, true, explanations, insecureContentStatus, null));
 
-    var request = new WebInspector.NetworkRequest(InspectorTest.mainTarget, 0, "http://foo.test", "https://foo.test", 0, 0, null);
+    var request = new SDK.NetworkRequest(InspectorTest.mainTarget, 0, "http://foo.test", "https://foo.test", 0, 0, null);
     InspectorTest.dispatchRequestFinished(request);
 
-    var explanations = WebInspector.SecurityPanel._instance()._mainView.contentElement.getElementsByClassName("security-explanation");
+    var explanations = Security.SecurityPanel._instance()._mainView.contentElement.getElementsByClassName("security-explanation");
     for (var i = 0; i < explanations.length; i++)
         InspectorTest.dumpDeepInnerHTML(explanations[i]);
     InspectorTest.completeTest();

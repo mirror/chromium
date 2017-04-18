@@ -27,47 +27,48 @@
 #define CSSReflectValue_h
 
 #include "core/css/CSSValue.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
+class CSSIdentifierValue;
 class CSSPrimitiveValue;
 
 class CSSReflectValue : public CSSValue {
-public:
-    static CSSReflectValue* create(CSSPrimitiveValue* direction,
-        CSSPrimitiveValue* offset, CSSValue* mask)
-    {
-        return new CSSReflectValue(direction, offset, mask);
-    }
+ public:
+  static CSSReflectValue* Create(CSSIdentifierValue* direction,
+                                 CSSPrimitiveValue* offset,
+                                 CSSValue* mask) {
+    return new CSSReflectValue(direction, offset, mask);
+  }
 
-    CSSPrimitiveValue* direction() const { return m_direction.get(); }
-    CSSPrimitiveValue* offset() const { return m_offset.get(); }
-    CSSValue* mask() const { return m_mask.get(); }
+  CSSIdentifierValue* Direction() const { return direction_.Get(); }
+  CSSPrimitiveValue* Offset() const { return offset_.Get(); }
+  CSSValue* Mask() const { return mask_.Get(); }
 
-    String customCSSText() const;
+  String CustomCSSText() const;
 
-    bool equals(const CSSReflectValue&) const;
+  bool Equals(const CSSReflectValue&) const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-private:
-    CSSReflectValue(CSSPrimitiveValue* direction, CSSPrimitiveValue* offset, CSSValue* mask)
-        : CSSValue(ReflectClass)
-        , m_direction(direction)
-        , m_offset(offset)
-        , m_mask(mask)
-    {
-    }
+ private:
+  CSSReflectValue(CSSIdentifierValue* direction,
+                  CSSPrimitiveValue* offset,
+                  CSSValue* mask)
+      : CSSValue(kReflectClass),
+        direction_(direction),
+        offset_(offset),
+        mask_(mask) {}
 
-    Member<CSSPrimitiveValue> m_direction;
-    Member<CSSPrimitiveValue> m_offset;
-    Member<CSSValue> m_mask;
+  Member<CSSIdentifierValue> direction_;
+  Member<CSSPrimitiveValue> offset_;
+  Member<CSSValue> mask_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSReflectValue, isReflectValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSReflectValue, IsReflectValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSReflectValue_h
+#endif  // CSSReflectValue_h

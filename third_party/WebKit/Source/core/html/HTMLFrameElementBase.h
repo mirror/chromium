@@ -26,67 +26,60 @@
 
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "public/platform/WebFocusType.h"
 
 namespace blink {
 
 class CORE_EXPORT HTMLFrameElementBase : public HTMLFrameOwnerElement {
-public:
-    bool canContainRangeEndPoint() const final { return false; }
+ public:
+  bool CanContainRangeEndPoint() const final { return false; }
 
-    // FrameOwner overrides:
-    ScrollbarMode scrollingMode() const override { return m_scrollingMode; }
-    int marginWidth() const override { return m_marginWidth; }
-    int marginHeight() const override { return m_marginHeight; }
+  // FrameOwner overrides:
+  ScrollbarMode ScrollingMode() const final { return scrolling_mode_; }
+  int MarginWidth() const final { return margin_width_; }
+  int MarginHeight() const final { return margin_height_; }
 
-protected:
-    HTMLFrameElementBase(const QualifiedName&, Document&);
+ protected:
+  HTMLFrameElementBase(const QualifiedName&, Document&);
 
-    bool isURLAllowed() const;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void DidNotifySubtreeInsertionsToDocument() final;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void didNotifySubtreeInsertionsToDocument() final;
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
+  void SetScrollingMode(ScrollbarMode);
+  void SetMarginWidth(int);
+  void SetMarginHeight(int);
 
-    // FIXME: Remove this method once we have input routing in the browser
-    // process. See http://crbug.com/339659.
-    void defaultEventHandler(Event*) override;
+ private:
+  bool SupportsFocus() const final;
+  void SetFocused(bool, WebFocusType) final;
 
-    void setScrollingMode(ScrollbarMode);
-    void setMarginWidth(int);
-    void setMarginHeight(int);
+  bool IsURLAttribute(const Attribute&) const final;
+  bool HasLegalLinkAttribute(const QualifiedName&) const final;
+  bool IsHTMLContentAttribute(const Attribute&) const final;
 
-    void frameOwnerPropertiesChanged();
+  bool AreAuthorShadowsAllowed() const final { return false; }
 
-private:
-    bool supportsFocus() const final;
-    void setFocus(bool) final;
+  void SetLocation(const String&);
+  void SetNameAndOpenURL();
+  bool IsURLAllowed() const;
+  void OpenURL(bool replace_current_item = true);
 
-    bool isURLAttribute(const Attribute&) const final;
-    bool hasLegalLinkAttribute(const QualifiedName&) const final;
-    bool isHTMLContentAttribute(const Attribute&) const final;
+  ScrollbarMode scrolling_mode_;
+  int margin_width_;
+  int margin_height_;
 
-    bool areAuthorShadowsAllowed() const final { return false; }
-
-    void setLocation(const String&);
-    void setNameAndOpenURL();
-    void openURL(bool replaceCurrentItem = true);
-
-    ScrollbarMode m_scrollingMode;
-    int m_marginWidth;
-    int m_marginHeight;
-
-    AtomicString m_URL;
-    AtomicString m_frameName;
+  AtomicString url_;
+  AtomicString frame_name_;
 };
 
-inline bool isHTMLFrameElementBase(const HTMLElement& element)
-{
-    return isHTMLFrameElement(element) || isHTMLIFrameElement(element);
+inline bool IsHTMLFrameElementBase(const HTMLElement& element) {
+  return isHTMLFrameElement(element) || isHTMLIFrameElement(element);
 }
 
 DEFINE_HTMLELEMENT_TYPE_CASTS_WITH_FUNCTION(HTMLFrameElementBase);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLFrameElementBase_h
+#endif  // HTMLFrameElementBase_h

@@ -7,17 +7,18 @@ enum VREye {
     "right"
 };
 
-// http://mozvr.github.io/webvr-spec/webvr.html#vrdisplay
+// https://w3c.github.io/webvr/#interface-vrdisplay
 [
-    RuntimeEnabled=WebVR
-] interface VRDisplay {
+    ActiveScriptWrappable,
+    DependentLifetime,
+    OriginTrialEnabled=WebVR
+] interface VRDisplay : EventTarget {
     // An identifier for this device unique across VRDisplays.
     readonly attribute unsigned long displayId;
 
     // A user-readable name identifying the device.
-    readonly attribute DOMString displayName;
+    [MeasureAs=VRDisplayDisplayName] readonly attribute DOMString displayName;
 
-    readonly attribute boolean isConnected;
     readonly attribute boolean isPresenting;
 
     // [Constant]?
@@ -25,9 +26,10 @@ enum VREye {
 
     readonly attribute VRStageParameters stageParameters;
 
-    VRPose getPose();
-    VRPose getImmediatePose();
-    void resetPose();
+    boolean getFrameData(VRFrameData frameData);
+
+    attribute double depthNear;
+    attribute double depthFar;
 
     VREyeParameters getEyeParameters(VREye whichEye);
 
@@ -48,5 +50,5 @@ enum VREye {
     // in the HMD. Calling this function has the same effect on the source
     // canvas as any other operation that uses its source image, and canvases
     // created without preserveDrawingBuffer set to true will be cleared.
-    void submitFrame(optional VRPose pose = null);
+    void submitFrame();
 };

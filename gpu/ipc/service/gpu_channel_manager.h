@@ -10,25 +10,24 @@
 #include <deque>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
-#include "base/containers/scoped_ptr_hash_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
+#include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/command_buffer/common/constants.h"
+#include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/config/gpu_driver_bug_workarounds.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/service/gpu_memory_manager.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gl/gl_surface.h"
 #include "url/gurl.h"
-
-namespace base {
-class WaitableEvent;
-}
 
 namespace gl {
 class GLShareGroup;
@@ -37,7 +36,6 @@ class GLShareGroup;
 namespace gpu {
 struct GpuPreferences;
 class PreemptionFlag;
-class SyncPointClient;
 class SyncPointManager;
 struct SyncToken;
 namespace gles2 {
@@ -48,15 +46,11 @@ class ShaderTranslatorCache;
 }
 }
 
-namespace IPC {
-struct ChannelHandle;
-}
-
 namespace gpu {
 class GpuChannel;
 class GpuChannelManagerDelegate;
 class GpuMemoryBufferFactory;
-class GpuWatchdog;
+class GpuWatchdogThread;
 
 // A GpuChannelManager is a thread responsible for issuing rendering commands
 // managing the lifetimes of GPU channels and forwarding IPC requests from the
@@ -65,21 +59,20 @@ class GPU_EXPORT GpuChannelManager {
  public:
   GpuChannelManager(const GpuPreferences& gpu_preferences,
                     GpuChannelManagerDelegate* delegate,
-                    GpuWatchdog* watchdog,
-                    base::SingleThreadTaskRunner* task_runner,
-                    base::SingleThreadTaskRunner* io_task_runner,
-                    base::WaitableEvent* shutdown_event,
+                    GpuWatchdogThread* watchdog,
+                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
                     SyncPointManager* sync_point_manager,
-                    GpuMemoryBufferFactory* gpu_memory_buffer_factory);
-  virtual ~GpuChannelManager();
+                    GpuMemoryBufferFactory* gpu_memory_buffer_factory,
+                    const GpuFeatureInfo& gpu_feature_info,
+                    GpuProcessActivityFlags activity_flags);
+  ~GpuChannelManager();
 
   GpuChannelManagerDelegate* delegate() const { return delegate_; }
 
-  IPC::ChannelHandle EstablishChannel(int client_id,
-                                      uint64_t client_tracing_id,
-                                      bool preempts,
-                                      bool allow_view_command_buffers,
-                                      bool allow_real_time_streams);
+  GpuChannel* EstablishChannel(int client_id,
+                               uint64_t client_tracing_id,
+                               bool is_gpu_host);
 
   void PopulateShaderCache(const std::string& shader);
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
@@ -96,12 +89,11 @@ class GPU_EXPORT GpuChannelManager {
   void LoseAllContexts();
   void MaybeExitOnContextLost();
 
-  const GpuPreferences& gpu_preferences() const {
-    return gpu_preferences_;
-  }
+  const GpuPreferences& gpu_preferences() const { return gpu_preferences_; }
   const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds() const {
     return gpu_driver_bug_workarounds_;
   }
+  const GpuFeatureInfo& gpu_feature_info() const { return gpu_feature_info_; }
   gles2::ProgramCache* program_cache();
   gles2::ShaderTranslatorCache* shader_translator_cache();
   gles2::FramebufferCompletenessCache* framebuffer_completeness_cache();
@@ -116,49 +108,17 @@ class GPU_EXPORT GpuChannelManager {
     return gpu_memory_buffer_factory_;
   }
 
-  // Returns the maximum order number for unprocessed IPC messages across all
-  // channels.
-  uint32_t GetUnprocessedOrderNum() const;
-
-  // Returns the maximum order number for processed IPC messages across all
-  // channels.
-  uint32_t GetProcessedOrderNum() const;
-
 #if defined(OS_ANDROID)
   void DidAccessGpu();
 #endif
 
-  bool is_exiting_for_lost_context() {
-    return exiting_for_lost_context_;
-  }
+  bool is_exiting_for_lost_context() { return exiting_for_lost_context_; }
 
- protected:
-  virtual std::unique_ptr<GpuChannel> CreateGpuChannel(
-      int client_id,
-      uint64_t client_tracing_id,
-      bool preempts,
-      bool allow_view_command_buffers,
-      bool allow_real_time_streams);
-
-  SyncPointManager* sync_point_manager() const {
-    return sync_point_manager_;
-  }
-
-  gl::GLShareGroup* share_group() const { return share_group_.get(); }
   gles2::MailboxManager* mailbox_manager() const {
     return mailbox_manager_.get();
   }
-  PreemptionFlag* preemption_flag() const {
-    return preemption_flag_.get();
-  }
 
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
-
-  // These objects manage channels to individual renderer processes there is
-  // one channel for each renderer process that has connected to this GPU
-  // process.
-  base::ScopedPtrHashMap<int32_t, std::unique_ptr<GpuChannel>> gpu_channels_;
+  gl::GLShareGroup* share_group() const { return share_group_.get(); }
 
  private:
   void InternalDestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id, int client_id);
@@ -169,14 +129,20 @@ class GPU_EXPORT GpuChannelManager {
   void DoWakeUpGpu();
 #endif
 
-  const GpuPreferences& gpu_preferences_;
+  // These objects manage channels to individual renderer processes. There is
+  // one channel for each renderer process that has connected to this GPU
+  // process.
+  std::unordered_map<int32_t, std::unique_ptr<GpuChannel>> gpu_channels_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+
+  const GpuPreferences gpu_preferences_;
   GpuDriverBugWorkarounds gpu_driver_bug_workarounds_;
 
   GpuChannelManagerDelegate* const delegate_;
 
-  GpuWatchdog* watchdog_;
-
-  base::WaitableEvent* shutdown_event_;
+  GpuWatchdogThread* watchdog_;
 
   scoped_refptr<gl::GLShareGroup> share_group_;
   scoped_refptr<gles2::MailboxManager> mailbox_manager_;
@@ -184,13 +150,13 @@ class GPU_EXPORT GpuChannelManager {
   GpuMemoryManager gpu_memory_manager_;
   // SyncPointManager guaranteed to outlive running MessageLoop.
   SyncPointManager* sync_point_manager_;
-  std::unique_ptr<SyncPointClient> sync_point_client_waiter_;
   std::unique_ptr<gles2::ProgramCache> program_cache_;
   scoped_refptr<gles2::ShaderTranslatorCache> shader_translator_cache_;
   scoped_refptr<gles2::FramebufferCompletenessCache>
       framebuffer_completeness_cache_;
   scoped_refptr<gl::GLSurface> default_offscreen_surface_;
   GpuMemoryBufferFactory* const gpu_memory_buffer_factory_;
+  GpuFeatureInfo gpu_feature_info_;
 #if defined(OS_ANDROID)
   // Last time we know the GPU was powered on. Global for tracking across all
   // transport surfaces.
@@ -200,6 +166,10 @@ class GPU_EXPORT GpuChannelManager {
 
   // Set during intentional GPU process shutdown.
   bool exiting_for_lost_context_;
+
+  // Flags which indicate GPU process activity. Read by the browser process
+  // on GPU process crash.
+  GpuProcessActivityFlags activity_flags_;
 
   // Member variables should appear before the WeakPtrFactory, to ensure
   // that any WeakPtrs to Controller are invalidated before its members

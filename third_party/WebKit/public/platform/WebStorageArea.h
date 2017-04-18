@@ -39,58 +39,65 @@ namespace blink {
 class WebURL;
 
 class WebStorageArea {
-public:
-    virtual ~WebStorageArea() { }
+ public:
+  virtual ~WebStorageArea() {}
 
-    enum Result {
-        ResultOK = 0,
-        ResultBlockedByQuota,
-        ResultLast = ResultBlockedByQuota
-    };
+  enum Result {
+    kResultOK = 0,
+    kResultBlockedByQuota,
+    kResultLast = kResultBlockedByQuota
+  };
 
-    // The number of key/value pairs in the storage area.
-    virtual unsigned length() = 0;
+  // The number of key/value pairs in the storage area.
+  virtual unsigned length() = 0;
 
-    // Get a value for a specific key. Valid key indices are 0 through length() - 1.
-    // Indexes may change on any set/removeItem call. Will return null if the index
-    // provided is out of range.
-    virtual WebString key(unsigned index) = 0;
+  // Get a value for a specific key. Valid key indices are 0 through
+  // length() - 1.  Indexes may change on any set/removeItem call. Will return
+  // null if the index provided is out of range.
+  virtual WebString Key(unsigned index) = 0;
 
-    // Get the value that corresponds to a specific key. This returns null if there is
-    // no entry for that key.
-    virtual WebString getItem(const WebString& key) = 0;
+  // Get the value that corresponds to a specific key. This returns null if
+  // there is no entry for that key.
+  virtual WebString GetItem(const WebString& key) = 0;
 
-    // Set the value that corresponds to a specific key. Result will either be ResultOK
-    // or some particular error. The value is NOT set when there's an error. |pageUrl| is the
-    // url that should be used if a storage event fires.
-    virtual void setItem(const WebString& key, const WebString& newValue, const WebURL& pageUrl, Result& result)
-    {
-        WebString unused;
-        setItem(key, newValue, pageUrl, result, unused);
-    }
+  // Set the value that corresponds to a specific key. Result will either be
+  // ResultOK or some particular error. The value is NOT set when there's an
+  // error.  |pageUrl| is the url that should be used if a storage event fires.
+  virtual void SetItem(const WebString& key,
+                       const WebString& new_value,
+                       const WebURL& page_url,
+                       Result& result) {
+    WebString unused;
+    SetItem(key, new_value, page_url, result, unused);
+  }
 
+  // Remove the value associated with a particular key. |pageUrl| is the url
+  // that should be used if a storage event fires.
+  virtual void RemoveItem(const WebString& key, const WebURL& page_url) {
+    WebString unused;
+    RemoveItem(key, page_url, unused);
+  }
 
-    // Remove the value associated with a particular key. |pageUrl| is the url that should be used
-    // if a storage event fires.
-    virtual void removeItem(const WebString& key, const WebURL& pageUrl)
-    {
-        WebString unused;
-        removeItem(key, pageUrl, unused);
-    }
+  // Clear all key/value pairs. |pageUrl| is the url that should be used if a
+  // storage event fires.
+  virtual void Clear(const WebURL& page_url) {
+    bool unused;
+    Clear(page_url, unused);
+  }
 
-    // Clear all key/value pairs. |pageUrl| is the url that should be used if a storage event fires.
-    virtual void clear(const WebURL& pageUrl)
-    {
-        bool unused;
-        clear(pageUrl, unused);
-    }
-
-    // DEPRECATED - being replaced by the async variants above which do not return oldValues or block until completion.
-    virtual void setItem(const WebString& key, const WebString& newValue, const WebURL&, Result&, WebString& oldValue) { }
-    virtual void removeItem(const WebString& key, const WebURL& pageUrl, WebString& oldValue)  { }
-    virtual void clear(const WebURL& pageUrl, bool& somethingCleared)  { }
+  // DEPRECATED - being replaced by the async variants above which do not return
+  // oldValues or block until completion.
+  virtual void SetItem(const WebString& key,
+                       const WebString& new_value,
+                       const WebURL&,
+                       Result&,
+                       WebString& old_value) {}
+  virtual void RemoveItem(const WebString& key,
+                          const WebURL& page_url,
+                          WebString& old_value) {}
+  virtual void Clear(const WebURL& page_url, bool& something_cleared) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebStorageArea_h
+#endif  // WebStorageArea_h

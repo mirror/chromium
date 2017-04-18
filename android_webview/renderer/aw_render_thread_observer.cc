@@ -6,8 +6,8 @@
 
 #include "android_webview/common/render_view_messages.h"
 #include "ipc/ipc_message_macros.h"
-#include "third_party/WebKit/public/web/WebCache.h"
-#include "third_party/WebKit/public/web/WebNetworkStateNotifier.h"
+#include "third_party/WebKit/public/platform/WebCache.h"
+#include "third_party/WebKit/public/platform/WebNetworkStateNotifier.h"
 
 namespace android_webview {
 
@@ -22,6 +22,7 @@ bool AwRenderThreadObserver::OnControlMessageReceived(
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(AwRenderThreadObserver, message)
     IPC_MESSAGE_HANDLER(AwViewMsg_ClearCache, OnClearCache)
+    IPC_MESSAGE_HANDLER(AwViewMsg_KillProcess, OnKillProcess)
     IPC_MESSAGE_HANDLER(AwViewMsg_SetJsOnlineProperty, OnSetJsOnlineProperty)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -29,11 +30,16 @@ bool AwRenderThreadObserver::OnControlMessageReceived(
 }
 
 void AwRenderThreadObserver::OnClearCache() {
-  blink::WebCache::clear();
+  blink::WebCache::Clear();
+}
+
+void AwRenderThreadObserver::OnKillProcess() {
+  LOG(ERROR) << "Killing process (" << getpid() << ") upon request.";
+  kill(getpid(), SIGKILL);
 }
 
 void AwRenderThreadObserver::OnSetJsOnlineProperty(bool network_up) {
-  blink::WebNetworkStateNotifier::setOnLine(network_up);
+  blink::WebNetworkStateNotifier::SetOnLine(network_up);
 }
 
 }  // nanemspace android_webview

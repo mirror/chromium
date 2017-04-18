@@ -14,6 +14,7 @@
 #include "content/common/accessibility_messages.h"
 #include "content/public/common/content_client.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/accessibility/platform/ax_android_constants.h"
 
 namespace {
 
@@ -144,22 +145,32 @@ bool BrowserAccessibilityAndroid::IsCheckable() const {
       is_aria_pressed_defined) {
     checkable = true;
   }
-  if (HasState(ui::AX_STATE_CHECKED))
+  // TODO(aleventhal) does this ever happen when checkable is not true yet?
+  if (HasIntAttribute(ui::AX_ATTR_CHECKED_STATE))
     checkable = true;
   return checkable;
 }
 
 bool BrowserAccessibilityAndroid::IsChecked() const {
-  return (HasState(ui::AX_STATE_CHECKED) || HasState(ui::AX_STATE_PRESSED));
+  const auto checked_state = static_cast<ui::AXCheckedState>(
+      GetIntAttribute(ui::AX_ATTR_CHECKED_STATE));
+  return (checked_state == ui::AX_CHECKED_STATE_TRUE ||
+          HasState(ui::AX_STATE_PRESSED));
 }
 
 bool BrowserAccessibilityAndroid::IsClickable() const {
-  if (!PlatformIsLeaf())
-    return false;
+  // If it has a default action, it's definitely clickable.
+  if (HasIntAttribute(ui::AX_ATTR_ACTION))
+    return true;
 
-  // We are very aggressive about returning true with IsClickable on Android
-  // because there is no way to know for sure what might have a click handler.
-  return IsFocusable() || !GetText().empty();
+  // Otherwise return true if it's focusable, but skip web areas and iframes.
+  if (IsIframe() || (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA))
+    return false;
+  return IsFocusable();
+}
+
+bool BrowserAccessibilityAndroid::IsCollapsed() const {
+  return HasState(ui::AX_STATE_COLLAPSED);
 }
 
 bool BrowserAccessibilityAndroid::IsCollection() const {
@@ -198,13 +209,20 @@ bool BrowserAccessibilityAndroid::IsEnabled() const {
   return !HasState(ui::AX_STATE_DISABLED);
 }
 
+bool BrowserAccessibilityAndroid::IsExpanded() const {
+  return HasState(ui::AX_STATE_EXPANDED);
+}
+
 bool BrowserAccessibilityAndroid::IsFocusable() const {
-  bool focusable = HasState(ui::AX_STATE_FOCUSABLE);
+  // If it's an iframe element, or the root element of a child frame,
+  // only mark it as focusable if the element has an explicit name.
+  // Otherwise mark it as not focusable to avoid the user landing on
+  // empty container elements in the tree.
   if (IsIframe() ||
-      GetRole() == ui::AX_ROLE_WEB_AREA) {
-    focusable = false;
-  }
-  return focusable;
+      (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA && PlatformGetParent()))
+    return HasStringAttribute(ui::AX_ATTR_NAME);
+
+  return HasState(ui::AX_STATE_FOCUSABLE);
 }
 
 bool BrowserAccessibilityAndroid::IsFocused() const {
@@ -213,7 +231,7 @@ bool BrowserAccessibilityAndroid::IsFocused() const {
 
 bool BrowserAccessibilityAndroid::IsHeading() const {
   BrowserAccessibilityAndroid* parent =
-      static_cast<BrowserAccessibilityAndroid*>(GetParent());
+      static_cast<BrowserAccessibilityAndroid*>(PlatformGetParent());
   if (parent && parent->IsHeading())
     return true;
 
@@ -265,6 +283,48 @@ bool BrowserAccessibilityAndroid::IsVisibleToUser() const {
   return !HasState(ui::AX_STATE_INVISIBLE);
 }
 
+bool BrowserAccessibilityAndroid::IsInterestingOnAndroid() const {
+  // The root is not interesting if it doesn't have a title, even
+  // though it's focusable.
+  if (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA && GetText().empty())
+    return false;
+
+  // Focusable nodes are always interesting. Note that IsFocusable()
+  // already skips over things like iframes and child frames that are
+  // technically focusable but shouldn't be exposed as focusable on Android.
+  if (IsFocusable())
+    return true;
+
+  // If it's not focusable but has a control role, then it's interesting.
+  if (IsControl())
+    return true;
+
+  // Otherwise, the interesting nodes are leaf nodes with non-whitespace text.
+  return PlatformIsLeaf() &&
+      !base::ContainsOnlyChars(GetText(), base::kWhitespaceUTF16);
+}
+
+const BrowserAccessibilityAndroid*
+    BrowserAccessibilityAndroid::GetSoleInterestingNodeFromSubtree() const {
+  if (IsInterestingOnAndroid())
+    return this;
+
+  const BrowserAccessibilityAndroid* sole_interesting_node = nullptr;
+  for (uint32_t i = 0; i < PlatformChildCount(); ++i) {
+    const BrowserAccessibilityAndroid* interesting_node =
+        static_cast<const BrowserAccessibilityAndroid*>(PlatformGetChild(i))->
+            GetSoleInterestingNodeFromSubtree();
+    if (interesting_node && sole_interesting_node) {
+      // If there are two interesting nodes, return nullptr.
+      return nullptr;
+    } else if (interesting_node) {
+      sole_interesting_node = interesting_node;
+    }
+  }
+
+  return sole_interesting_node;
+}
+
 bool BrowserAccessibilityAndroid::CanOpenPopup() const {
   return HasState(ui::AX_STATE_HASPOPUP);
 }
@@ -276,69 +336,69 @@ const char* BrowserAccessibilityAndroid::GetClassName() const {
     case ui::AX_ROLE_SEARCH_BOX:
     case ui::AX_ROLE_SPIN_BUTTON:
     case ui::AX_ROLE_TEXT_FIELD:
-      class_name = "android.widget.EditText";
+      class_name = ui::kAXEditTextClassname;
       break;
     case ui::AX_ROLE_SLIDER:
-      class_name = "android.widget.SeekBar";
+      class_name = ui::kAXSeekBarClassname;
       break;
     case ui::AX_ROLE_COLOR_WELL:
     case ui::AX_ROLE_COMBO_BOX:
     case ui::AX_ROLE_DATE:
     case ui::AX_ROLE_POP_UP_BUTTON:
     case ui::AX_ROLE_INPUT_TIME:
-      class_name = "android.widget.Spinner";
+      class_name = ui::kAXSpinnerClassname;
       break;
     case ui::AX_ROLE_BUTTON:
     case ui::AX_ROLE_MENU_BUTTON:
-      class_name = "android.widget.Button";
+      class_name = ui::kAXButtonClassname;
       break;
     case ui::AX_ROLE_CHECK_BOX:
     case ui::AX_ROLE_SWITCH:
-      class_name = "android.widget.CheckBox";
+      class_name = ui::kAXCheckBoxClassname;
       break;
     case ui::AX_ROLE_RADIO_BUTTON:
-      class_name = "android.widget.RadioButton";
+      class_name = ui::kAXRadioButtonClassname;
       break;
     case ui::AX_ROLE_TOGGLE_BUTTON:
-      class_name = "android.widget.ToggleButton";
+      class_name = ui::kAXToggleButtonClassname;
       break;
     case ui::AX_ROLE_CANVAS:
     case ui::AX_ROLE_IMAGE:
     case ui::AX_ROLE_SVG_ROOT:
-      class_name = "android.widget.Image";
+      class_name = ui::kAXImageClassname;
       break;
     case ui::AX_ROLE_METER:
     case ui::AX_ROLE_PROGRESS_INDICATOR:
-      class_name = "android.widget.ProgressBar";
+      class_name = ui::kAXProgressBarClassname;
       break;
     case ui::AX_ROLE_TAB_LIST:
-      class_name = "android.widget.TabWidget";
+      class_name = ui::kAXTabWidgetClassname;
       break;
     case ui::AX_ROLE_GRID:
     case ui::AX_ROLE_TABLE:
-      class_name = "android.widget.GridView";
+      class_name = ui::kAXGridViewClassname;
       break;
     case ui::AX_ROLE_LIST:
     case ui::AX_ROLE_LIST_BOX:
     case ui::AX_ROLE_DESCRIPTION_LIST:
-      class_name = "android.widget.ListView";
+      class_name = ui::kAXListViewClassname;
       break;
     case ui::AX_ROLE_DIALOG:
-      class_name = "android.app.Dialog";
+      class_name = ui::kAXDialogClassname;
       break;
     case ui::AX_ROLE_ROOT_WEB_AREA:
-      if (GetParent() == nullptr)
-        class_name = "android.webkit.WebView";
+      if (PlatformGetParent() == nullptr)
+        class_name = ui::kAXWebViewClassname;
       else
-        class_name = "android.view.View";
+        class_name = ui::kAXViewClassname;
       break;
     case ui::AX_ROLE_MENU_ITEM:
     case ui::AX_ROLE_MENU_ITEM_CHECK_BOX:
     case ui::AX_ROLE_MENU_ITEM_RADIO:
-      class_name = "android.view.MenuItem";
+      class_name = ui::kAXMenuItemClassname;
       break;
     default:
-      class_name = "android.view.View";
+      class_name = ui::kAXViewClassname;
       break;
   }
 
@@ -378,6 +438,8 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
       case ui::AX_ROLE_POP_UP_BUTTON:
       case ui::AX_ROLE_TEXT_FIELD:
         return value;
+      default:
+        break;
     }
   }
 
@@ -403,6 +465,13 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
 
   if (text.empty())
     text = value;
+
+  // If this is the root element, give up now, allow it to have no
+  // accessible text. For almost all other focusable nodes we try to
+  // get text from contents, but for the root element that's redundant
+  // and often way too verbose.
+  if (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA)
+    return text;
 
   // This is called from PlatformIsLeaf, so don't call PlatformChildCount
   // from within this!
@@ -464,6 +533,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
     case ui::AX_ROLE_ALERT:
       message_id = IDS_AX_ROLE_ALERT;
       break;
+    case ui::AX_ROLE_ANCHOR:
+      // No role description.
+      break;
     case ui::AX_ROLE_ANNOTATION:
       // No role description.
       break;
@@ -472,6 +544,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
       break;
     case ui::AX_ROLE_ARTICLE:
       message_id = IDS_AX_ROLE_ARTICLE;
+      break;
+    case ui::AX_ROLE_AUDIO:
+      message_id = IDS_AX_MEDIA_AUDIO_ELEMENT;
       break;
     case ui::AX_ROLE_BANNER:
       message_id = IDS_AX_ROLE_BANNER;
@@ -562,6 +637,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
       break;
     case ui::AX_ROLE_EMBEDDED_OBJECT:
       message_id = IDS_AX_ROLE_EMBEDDED_OBJECT;
+      break;
+    case ui::AX_ROLE_FEED:
+      message_id = IDS_AX_ROLE_FEED;
       break;
     case ui::AX_ROLE_FIGCAPTION:
       // No role description.
@@ -655,6 +733,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
     case ui::AX_ROLE_MATH:
       message_id = IDS_AX_ROLE_MATH;
       break;
+    case ui::AX_ROLE_MENU:
+      message_id = IDS_AX_ROLE_MENU;
+      break;
     case ui::AX_ROLE_MENU_BAR:
       message_id = IDS_AX_ROLE_MENU_BAR;
       break;
@@ -675,9 +756,6 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
       break;
     case ui::AX_ROLE_MENU_LIST_POPUP:
       // No role description.
-      break;
-    case ui::AX_ROLE_MENU:
-      message_id = IDS_AX_ROLE_MENU;
       break;
     case ui::AX_ROLE_METER:
       message_id = IDS_AX_ROLE_METER;
@@ -793,6 +871,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
     case ui::AX_ROLE_TABLE:
       message_id = IDS_AX_ROLE_TABLE;
       break;
+    case ui::AX_ROLE_TERM:
+      message_id = IDS_AX_ROLE_DESCRIPTION_TERM;
+      break;
     case ui::AX_ROLE_TEXT_FIELD:
       // No role description.
       break;
@@ -826,6 +907,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
     case ui::AX_ROLE_TOOLTIP:
       message_id = IDS_AX_ROLE_TOOLTIP;
       break;
+    case ui::AX_ROLE_VIDEO:
+      message_id = IDS_AX_MEDIA_VIDEO_ELEMENT;
+      break;
     case ui::AX_ROLE_WEB_AREA:
       // No role description.
       break;
@@ -833,6 +917,9 @@ base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
       // No role description.
       break;
     case ui::AX_ROLE_WINDOW:
+      // No role description.
+      break;
+    case ui::AX_ROLE_NONE:
       // No role description.
       break;
   }
@@ -862,6 +949,8 @@ int BrowserAccessibilityAndroid::GetItemIndex() const {
         index = static_cast<int>(((value - min)) * 100 / (max - min));
       break;
     }
+    default:
+      break;
   }
   return index;
 }
@@ -880,6 +969,8 @@ int BrowserAccessibilityAndroid::GetItemCount() const {
       // seek control, so we return a percentage. The real range is returned
       // in RangeMin and RangeMax.
       count = 100;
+      break;
+    default:
       break;
   }
   return count;
@@ -962,28 +1053,28 @@ bool BrowserAccessibilityAndroid::Scroll(int direction) const {
   // Figure out the bounding box of the visible portion of this scrollable
   // view so we know how much to scroll by.
   gfx::Rect bounds;
-  if (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA && !GetParent()) {
+  if (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA && !PlatformGetParent()) {
     // If this is the root web area, use the bounds of the view to determine
     // how big one page is.
     if (!manager()->delegate())
       return false;
     bounds = manager()->delegate()->AccessibilityGetViewBounds();
-  } else if (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA && GetParent()) {
+  } else if (GetRole() == ui::AX_ROLE_ROOT_WEB_AREA && PlatformGetParent()) {
     // If this is a web area inside of an iframe, try to use the bounds of
     // the containing element.
-    BrowserAccessibility* parent = GetParent();
-    while (parent && (parent->GetLocation().width() == 0 ||
-                      parent->GetLocation().height() == 0)) {
-      parent = parent->GetParent();
+    BrowserAccessibility* parent = PlatformGetParent();
+    while (parent && (parent->GetPageBoundsRect().width() == 0 ||
+                      parent->GetPageBoundsRect().height() == 0)) {
+      parent = parent->PlatformGetParent();
     }
     if (parent)
-      bounds = parent->GetLocation();
+      bounds = parent->GetPageBoundsRect();
     else
-      bounds = GetLocation();
+      bounds = GetPageBoundsRect();
   } else {
     // Otherwise this is something like a scrollable div, just use the
     // bounds of this object itself.
-    bounds = GetLocation();
+    bounds = GetPageBoundsRect();
   }
 
   // Scroll by 80% of one page.
@@ -1249,7 +1340,7 @@ void BrowserAccessibilityAndroid::GetLineBoundaries(
       CHECK_EQ(ui::AX_ROLE_INLINE_TEXT_BOX, child->GetRole());
       // TODO(dmazzoni): replace this with a proper API to determine
       // if two inline text boxes are on the same line. http://crbug.com/421771
-      int y = child->GetLocation().y();
+      int y = child->GetPageBoundsRect().y();
       if (i == 0) {
         line_starts->push_back(offset);
       } else if (y != last_y) {
@@ -1333,6 +1424,10 @@ bool BrowserAccessibilityAndroid::HasFocusableChild() const {
       return true;
   }
   return false;
+}
+
+bool BrowserAccessibilityAndroid::HasNonEmptyValue() const {
+  return IsEditableText() && !GetValue().empty();
 }
 
 bool BrowserAccessibilityAndroid::HasOnlyTextChildren() const {

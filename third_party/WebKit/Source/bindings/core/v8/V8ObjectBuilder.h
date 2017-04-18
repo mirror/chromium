@@ -5,11 +5,11 @@
 #ifndef V8ObjectBuilder_h
 #define V8ObjectBuilder_h
 
-#include "bindings/core/v8/ToV8.h"
+#include "bindings/core/v8/ToV8ForCore.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
-#include <v8.h>
+#include "platform/wtf/text/WTFString.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -17,36 +17,40 @@ class ScriptState;
 class ScriptValue;
 
 class CORE_EXPORT V8ObjectBuilder final {
-    STACK_ALLOCATED();
-public:
-    explicit V8ObjectBuilder(ScriptState*);
+  STACK_ALLOCATED();
 
-    ScriptState* getScriptState() const { return m_scriptState.get(); }
+ public:
+  explicit V8ObjectBuilder(ScriptState*);
 
-    V8ObjectBuilder& add(const String& name, const V8ObjectBuilder&);
+  ScriptState* GetScriptState() const { return script_state_.Get(); }
 
-    V8ObjectBuilder& addNull(const String& name);
-    V8ObjectBuilder& addBoolean(const String& name, bool value);
-    V8ObjectBuilder& addNumber(const String& name, double value);
-    V8ObjectBuilder& addString(const String& name, const String& value);
+  V8ObjectBuilder& Add(const StringView& name, const V8ObjectBuilder&);
 
-    template <typename T>
-    V8ObjectBuilder& add(const String& name, const T& value)
-    {
-        addInternal(name, v8::Local<v8::Value>(toV8(value, m_scriptState->context()->Global(), m_scriptState->isolate())));
-        return *this;
-    }
+  V8ObjectBuilder& AddNull(const StringView& name);
+  V8ObjectBuilder& AddBoolean(const StringView& name, bool value);
+  V8ObjectBuilder& AddNumber(const StringView& name, double value);
+  V8ObjectBuilder& AddString(const StringView& name, const StringView& value);
+  V8ObjectBuilder& AddStringOrNull(const StringView& name,
+                                   const StringView& value);
 
-    ScriptValue scriptValue() const;
-    v8::Local<v8::Object> v8Value() const { return m_object; }
+  template <typename T>
+  V8ObjectBuilder& Add(const StringView& name, const T& value) {
+    AddInternal(name, v8::Local<v8::Value>(
+                          ToV8(value, script_state_->GetContext()->Global(),
+                               script_state_->GetIsolate())));
+    return *this;
+  }
 
-private:
-    void addInternal(const String& name, v8::Local<v8::Value>);
+  ScriptValue GetScriptValue() const;
+  v8::Local<v8::Object> V8Value() const { return object_; }
 
-    RefPtr<ScriptState> m_scriptState;
-    v8::Local<v8::Object> m_object;
+ private:
+  void AddInternal(const StringView& name, v8::Local<v8::Value>);
+
+  RefPtr<ScriptState> script_state_;
+  v8::Local<v8::Object> object_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8ObjectBuilder_h
+#endif  // V8ObjectBuilder_h

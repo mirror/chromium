@@ -21,9 +21,9 @@
 #ifndef LayoutSVGTextPath_h
 #define LayoutSVGTextPath_h
 
-#include "core/layout/svg/LayoutSVGInline.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "core/layout/svg/LayoutSVGInline.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -31,44 +31,46 @@ namespace blink {
 // (2D) point on the path and provides the normal (angle from the x-axis) for
 // said point.
 class PathPositionMapper {
-    USING_FAST_MALLOC(PathPositionMapper);
-public:
-    static std::unique_ptr<PathPositionMapper> create(const Path& path)
-    {
-        return wrapUnique(new PathPositionMapper(path));
-    }
+  USING_FAST_MALLOC(PathPositionMapper);
 
-    enum PositionType {
-        OnPath,
-        BeforePath,
-        AfterPath,
-    };
-    PositionType pointAndNormalAtLength(float length, FloatPoint&, float& angle);
-    float length() const { return m_pathLength; }
+ public:
+  static std::unique_ptr<PathPositionMapper> Create(const Path& path) {
+    return WTF::WrapUnique(new PathPositionMapper(path));
+  }
 
-private:
-    explicit PathPositionMapper(const Path&);
+  enum PositionType {
+    kOnPath,
+    kBeforePath,
+    kAfterPath,
+  };
+  PositionType PointAndNormalAtLength(float length, FloatPoint&, float& angle);
+  float length() const { return path_length_; }
 
-    Path::PositionCalculator m_positionCalculator;
-    float m_pathLength;
+ private:
+  explicit PathPositionMapper(const Path&);
+
+  Path::PositionCalculator position_calculator_;
+  float path_length_;
 };
 
 class LayoutSVGTextPath final : public LayoutSVGInline {
-public:
-    explicit LayoutSVGTextPath(Element*);
+ public:
+  explicit LayoutSVGTextPath(Element*);
 
-    std::unique_ptr<PathPositionMapper> layoutPath() const;
-    float calculateStartOffset(float) const;
+  std::unique_ptr<PathPositionMapper> LayoutPath() const;
+  float CalculateStartOffset(float) const;
 
-    bool isChildAllowed(LayoutObject*, const ComputedStyle&) const override;
+  bool IsChildAllowed(LayoutObject*, const ComputedStyle&) const override;
 
-    bool isOfType(LayoutObjectType type) const override { return type == LayoutObjectSVGTextPath || LayoutSVGInline::isOfType(type); }
+  bool IsOfType(LayoutObjectType type) const override {
+    return type == kLayoutObjectSVGTextPath || LayoutSVGInline::IsOfType(type);
+  }
 
-    const char* name() const override { return "LayoutSVGTextPath"; }
+  const char* GetName() const override { return "LayoutSVGTextPath"; }
 };
 
-DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutSVGTextPath, isSVGTextPath());
+DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutSVGTextPath, IsSVGTextPath());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutSVGTextPath_h
+#endif  // LayoutSVGTextPath_h

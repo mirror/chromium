@@ -7,46 +7,49 @@
 
 #include "core/animation/Animation.h"
 #include "core/animation/Interpolation.h"
-#include "core/animation/KeyframeEffect.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "core/animation/KeyframeEffectReadOnly.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class SVGElement;
-
-// Associates the results of sampling an EffectModel with metadata used for effect ordering and managing composited animations.
+// Associates the results of sampling an EffectModel with metadata used for
+// effect ordering and managing composited animations.
 class SampledEffect : public GarbageCollectedFinalized<SampledEffect> {
-    WTF_MAKE_NONCOPYABLE(SampledEffect);
-public:
-    static SampledEffect* create(KeyframeEffect* animation)
-    {
-        return new SampledEffect(animation);
-    }
+  WTF_MAKE_NONCOPYABLE(SampledEffect);
 
-    void clear();
+ public:
+  static SampledEffect* Create(KeyframeEffectReadOnly* animation) {
+    return new SampledEffect(animation);
+  }
 
-    const Vector<RefPtr<Interpolation>>& interpolations() const { return m_interpolations; }
-    Vector<RefPtr<Interpolation>>& mutableInterpolations() { return m_interpolations; }
+  void Clear();
 
-    KeyframeEffect* effect() const { return m_effect; }
-    unsigned sequenceNumber() const { return m_sequenceNumber; }
-    KeyframeEffect::Priority priority() const { return m_priority; }
-    bool willNeverChange() const;
-    void removeReplacedInterpolations(const HashSet<PropertyHandle>&);
-    void updateReplacedProperties(HashSet<PropertyHandle>&);
+  const Vector<RefPtr<Interpolation>>& Interpolations() const {
+    return interpolations_;
+  }
+  Vector<RefPtr<Interpolation>>& MutableInterpolations() {
+    return interpolations_;
+  }
 
-    DECLARE_TRACE();
+  KeyframeEffectReadOnly* Effect() const { return effect_; }
+  unsigned SequenceNumber() const { return sequence_number_; }
+  KeyframeEffectReadOnly::Priority GetPriority() const { return priority_; }
+  bool WillNeverChange() const;
+  void RemoveReplacedInterpolations(const HashSet<PropertyHandle>&);
+  void UpdateReplacedProperties(HashSet<PropertyHandle>&);
 
-private:
-    SampledEffect(KeyframeEffect*);
+  DECLARE_TRACE();
 
-    WeakMember<KeyframeEffect> m_effect;
-    Vector<RefPtr<Interpolation>> m_interpolations;
-    const unsigned m_sequenceNumber;
-    KeyframeEffect::Priority m_priority;
+ private:
+  SampledEffect(KeyframeEffectReadOnly*);
+
+  WeakMember<KeyframeEffectReadOnly> effect_;
+  Vector<RefPtr<Interpolation>> interpolations_;
+  const unsigned sequence_number_;
+  KeyframeEffectReadOnly::Priority priority_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SampledEffect_h
+#endif  // SampledEffect_h

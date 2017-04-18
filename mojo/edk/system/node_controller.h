@@ -73,7 +73,7 @@ class NodeController : public ports::NodeDelegate,
 
   // Connects this node to a child node. This node will initiate a handshake.
   void ConnectToChild(base::ProcessHandle process_handle,
-                      ScopedPlatformHandle platform_handle,
+                      ConnectionParams connection_params,
                       const std::string& child_token,
                       const ProcessErrorCallback& process_error_callback);
 
@@ -81,14 +81,23 @@ class NodeController : public ports::NodeDelegate,
   // |child_token|.
   void CloseChildPorts(const std::string& child_token);
 
+  // Close a connection to a peer associated with |peer_token|.
+  void ClosePeerConnection(const std::string& peer_token);
+
   // Connects this node to a parent node. The parent node will initiate a
   // handshake.
-  void ConnectToParent(ScopedPlatformHandle platform_handle);
+  void ConnectToParent(ConnectionParams connection_params);
+
+  // Connects this node to a peer node. On success, |port| will be merged with
+  // the corresponding port in the peer node.
+  void ConnectToPeer(ConnectionParams connection_params,
+                     const ports::PortRef& port,
+                     const std::string& peer_token);
 
   // Sets a port's observer. If |observer| is null the port's current observer
   // is removed.
   void SetPortObserver(const ports::PortRef& port,
-                       const scoped_refptr<PortObserver>& observer);
+                       scoped_refptr<PortObserver> observer);
 
   // Closes a port. Use this in lieu of calling Node::ClosePort() directly, as
   // it ensures the port's observer has also been removed.
@@ -139,12 +148,36 @@ class NodeController : public ports::NodeDelegate,
     const std::string child_token;
   };
 
+  struct PeerConnection {
+    PeerConnection();
+    PeerConnection(const PeerConnection& other);
+    PeerConnection(PeerConnection&& other);
+    PeerConnection(scoped_refptr<NodeChannel> channel,
+                   const ports::PortRef& local_port,
+                   const std::string& peer_token);
+    ~PeerConnection();
+
+    PeerConnection& operator=(const PeerConnection& other);
+    PeerConnection& operator=(PeerConnection&& other);
+
+
+    scoped_refptr<NodeChannel> channel;
+    ports::PortRef local_port;
+    std::string peer_token;
+  };
+
   void ConnectToChildOnIOThread(
       base::ProcessHandle process_handle,
-      ScopedPlatformHandle platform_handle,
+      ConnectionParams connection_params,
       ports::NodeName token,
       const ProcessErrorCallback& process_error_callback);
-  void ConnectToParentOnIOThread(ScopedPlatformHandle platform_handle);
+  void ConnectToParentOnIOThread(ConnectionParams connection_params);
+
+  void ConnectToPeerOnIOThread(ConnectionParams connection_params,
+                               ports::NodeName token,
+                               ports::PortRef port,
+                               const std::string& peer_token);
+  void ClosePeerConnectionOnIOThread(const std::string& node_name);
 
   scoped_refptr<NodeChannel> GetPeerChannel(const ports::NodeName& name);
   scoped_refptr<NodeChannel> GetParentChannel();
@@ -206,11 +239,20 @@ class NodeController : public ports::NodeDelegate,
                                const ports::NodeName& source_node,
                                Channel::MessagePtr message) override;
 #endif
+  void OnAcceptPeer(const ports::NodeName& from_node,
+                    const ports::NodeName& token,
+                    const ports::NodeName& peer_name,
+                    const ports::PortName& port_name) override;
   void OnChannelError(const ports::NodeName& from_node,
                       NodeChannel* channel) override;
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   MachPortRelay* GetMachPortRelay() override;
 #endif
+
+  // Cancels all pending port merges. These are merges which are supposed to
+  // be requested from the parent ASAP, and they may be cancelled if the
+  // connection to the parent is broken or never established.
+  void CancelPendingPortMerges();
 
   // Marks this NodeController for destruction when the IO thread shuts down.
   // This is used in case Core is torn down before the IO thread. Must only be
@@ -286,6 +328,8 @@ class NodeController : public ports::NodeDelegate,
   // Ensures that there is only one incoming messages task posted to the IO
   // thread.
   bool incoming_messages_task_posted_ = false;
+  // Flag to fast-path checking |incoming_messages_|.
+  AtomicFlag incoming_messages_flag_;
 
   // Guards |shutdown_callback_|.
   base::Lock shutdown_lock_;
@@ -303,12 +347,19 @@ class NodeController : public ports::NodeDelegate,
   // Channels to children during handshake.
   NodeMap pending_children_;
 
+  using PeerNodeMap =
+      std::unordered_map<ports::NodeName, PeerConnection>;
+  PeerNodeMap peer_connections_;
+
+  // Maps from peer token to node name, pending or not.
+  std::unordered_map<std::string, ports::NodeName> peers_by_token_;
+
   // Indicates whether this object should delete itself on IO thread shutdown.
   // Must only be accessed from the IO thread.
   bool destroy_on_io_thread_shutdown_ = false;
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_NACL_SFI)
-  // Broker for sync shared buffer creation (non-Mac posix-only) in children.
+#if !defined(OS_MACOSX) && !defined(OS_NACL_SFI)
+  // Broker for sync shared buffer creation in children.
   std::unique_ptr<Broker> broker_;
 #endif
 

@@ -7,9 +7,9 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
-#include "wtf/Allocator.h"
-#include "wtf/Forward.h"
-#include <v8.h>
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -21,37 +21,37 @@ class LocalFrame;
 class Page;
 
 class ScriptStateForTesting : public ScriptState {
-public:
-    static PassRefPtr<ScriptStateForTesting> create(v8::Local<v8::Context>, PassRefPtr<DOMWrapperWorld>);
-    ExecutionContext* getExecutionContext() const override;
-    void setExecutionContext(ExecutionContext*) override;
-private:
-    ScriptStateForTesting(v8::Local<v8::Context>, PassRefPtr<DOMWrapperWorld>);
-    Persistent<ExecutionContext> m_executionContext;
+ public:
+  static PassRefPtr<ScriptStateForTesting> Create(v8::Local<v8::Context>,
+                                                  PassRefPtr<DOMWrapperWorld>);
+ private:
+  ScriptStateForTesting(v8::Local<v8::Context>, PassRefPtr<DOMWrapperWorld>);
 };
 
 class V8TestingScope {
-    STACK_ALLOCATED();
-public:
-    V8TestingScope();
-    ScriptState* getScriptState() const;
-    ExecutionContext* getExecutionContext() const;
-    v8::Isolate* isolate() const;
-    v8::Local<v8::Context> context() const;
-    ExceptionState& getExceptionState();
-    Page& page();
-    LocalFrame& frame();
-    Document& document();
-    ~V8TestingScope();
+  STACK_ALLOCATED();
 
-private:
-    std::unique_ptr<DummyPageHolder> m_holder;
-    v8::HandleScope m_handleScope;
-    v8::Local<v8::Context> m_context;
-    v8::Context::Scope m_contextScope;
-    TrackExceptionState m_exceptionState;
+ public:
+  V8TestingScope();
+  ScriptState* GetScriptState() const;
+  ExecutionContext* GetExecutionContext() const;
+  v8::Isolate* GetIsolate() const;
+  v8::Local<v8::Context> GetContext() const;
+  ExceptionState& GetExceptionState();
+  Page& GetPage();
+  LocalFrame& GetFrame();
+  Document& GetDocument();
+  ~V8TestingScope();
+
+ private:
+  std::unique_ptr<DummyPageHolder> holder_;
+  v8::HandleScope handle_scope_;
+  v8::Local<v8::Context> context_;
+  v8::Context::Scope context_scope_;
+  v8::TryCatch try_catch_;
+  DummyExceptionStateForTesting exception_state_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // V8BindingForTesting_h
+#endif  // V8BindingForTesting_h

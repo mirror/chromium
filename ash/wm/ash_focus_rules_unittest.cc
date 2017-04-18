@@ -2,20 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/shell_window_ids.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test/test_session_state_delegate.h"
-#include "ash/test/test_shell_delegate.h"
+#include "ash/test/test_session_controller_client.h"
 #include "ash/wm/lock_state_controller.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
 #include "ash/wm/window_util.h"
+#include "base/memory/ptr_util.h"
+#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
-#include "ui/aura/client/window_tree_client.h"
+#include "ui/aura/client/window_parenting_client.h"
 #include "ui/views/test/widget_test.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -25,27 +25,32 @@ namespace test {
 
 namespace {
 
-// Defines a |SessionStateDelegate| that is used to create and destroy the
+// Defines a |SessionControllerClient| that is used to create and destroy the
 // test lock screen widget.
-class LockScreenSessionStateDelegate : public TestSessionStateDelegate {
+class LockScreenSessionControllerClient : public TestSessionControllerClient {
  public:
-  LockScreenSessionStateDelegate() {}
-  ~LockScreenSessionStateDelegate() override {}
+  explicit LockScreenSessionControllerClient(SessionController* controller)
+      : TestSessionControllerClient(controller) {
+    InitializeAndBind();
+    CreatePredefinedUserSessions(1);
+  }
+  ~LockScreenSessionControllerClient() override {}
 
-  void LockScreen() override {
-    TestSessionStateDelegate::LockScreen();
+  // TestSessionControllerClient:
+  void RequestLockScreen() override {
+    TestSessionControllerClient::RequestLockScreen();
     CreateLockScreen();
-    Shell::GetInstance()->UpdateShelfVisibility();
+    Shell::Get()->UpdateShelfVisibility();
   }
 
   void UnlockScreen() override {
-    TestSessionStateDelegate::UnlockScreen();
+    TestSessionControllerClient::UnlockScreen();
     if (lock_screen_widget_.get()) {
       lock_screen_widget_->Close();
       lock_screen_widget_.reset(nullptr);
     }
 
-    Shell::GetInstance()->UpdateShelfVisibility();
+    Shell::Get()->UpdateShelfVisibility();
   }
 
  private:
@@ -72,24 +77,7 @@ class LockScreenSessionStateDelegate : public TestSessionStateDelegate {
 
   std::unique_ptr<views::Widget> lock_screen_widget_;
 
-  DISALLOW_COPY_AND_ASSIGN(LockScreenSessionStateDelegate);
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-// Defines a |ShellDelegate| that is used to construct our lock screen
-// |SessionStateDelegate|.
-class LockScreenShellDelegate : public test::TestShellDelegate {
- public:
-  LockScreenShellDelegate() {}
-  ~LockScreenShellDelegate() override {}
-
-  TestSessionStateDelegate* CreateSessionStateDelegate() override {
-    return new LockScreenSessionStateDelegate();
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(LockScreenShellDelegate);
+  DISALLOW_COPY_AND_ASSIGN(LockScreenSessionControllerClient);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -102,8 +90,10 @@ class LockScreenAshFocusRulesTest : public AshTestBase {
   ~LockScreenAshFocusRulesTest() override {}
 
   void SetUp() override {
-    ash_test_helper()->set_test_shell_delegate(new LockScreenShellDelegate);
     AshTestBase::SetUp();
+    ash_test_helper()->set_test_session_controller_client(
+        base::MakeUnique<LockScreenSessionControllerClient>(
+            Shell::Get()->session_controller()));
   }
 
   void TearDown() override { AshTestBase::TearDown(); }
@@ -132,10 +122,14 @@ class LockScreenAshFocusRulesTest : public AshTestBase {
     aura::client::ParentWindowWithContext(window, container,
                                           gfx::Rect(0, 0, 400, 400));
 
-    window->SetProperty(aura::client::kCanMaximizeKey, true);
-    window->SetProperty(aura::client::kCanMinimizeKey, true);
+    window->SetProperty(aura::client::kResizeBehaviorKey,
+                        ui::mojom::kResizeBehaviorCanMaximize |
+                            ui::mojom::kResizeBehaviorCanMinimize |
+                            ui::mojom::kResizeBehaviorCanResize);
     return window;
   }
+
+  std::unique_ptr<LockScreenSessionControllerClient> session_controller_client_;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreenAshFocusRulesTest);
 };
@@ -168,7 +162,7 @@ TEST_F(LockScreenAshFocusRulesTest, RegainFocusAfterUnlock) {
 
   BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
 
-  EXPECT_TRUE(WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked());
+  EXPECT_TRUE(Shell::Get()->session_controller()->IsScreenLocked());
   EXPECT_FALSE(normal_window->HasFocus());
   EXPECT_FALSE(always_on_top_window->HasFocus());
   EXPECT_FALSE(normal_window_state->IsMinimized());
@@ -178,7 +172,7 @@ TEST_F(LockScreenAshFocusRulesTest, RegainFocusAfterUnlock) {
 
   UnblockUserSession();
 
-  EXPECT_FALSE(WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked());
+  EXPECT_FALSE(Shell::Get()->session_controller()->IsScreenLocked());
   EXPECT_FALSE(normal_window_state->IsMinimized());
   EXPECT_FALSE(always_on_top_window_state->IsMinimized());
   EXPECT_TRUE(normal_window_state->CanActivate());
@@ -191,7 +185,7 @@ TEST_F(LockScreenAshFocusRulesTest, RegainFocusAfterUnlock) {
 // view doesn't get focused if the widget shows behind the lock screen.
 TEST_F(LockScreenAshFocusRulesTest, PreventFocusChangeWithLockScreenPresent) {
   BlockUserSession(BLOCKED_BY_LOCK_SCREEN);
-  EXPECT_TRUE(WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked());
+  EXPECT_TRUE(Shell::Get()->session_controller()->IsScreenLocked());
 
   views::test::TestInitialFocusWidgetDelegate delegate(CurrentContext());
   EXPECT_FALSE(delegate.view()->HasFocus());
@@ -200,7 +194,7 @@ TEST_F(LockScreenAshFocusRulesTest, PreventFocusChangeWithLockScreenPresent) {
   EXPECT_FALSE(delegate.view()->HasFocus());
 
   UnblockUserSession();
-  EXPECT_FALSE(WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked());
+  EXPECT_FALSE(Shell::Get()->session_controller()->IsScreenLocked());
   EXPECT_TRUE(delegate.GetWidget()->IsActive());
   EXPECT_TRUE(delegate.view()->HasFocus());
 }

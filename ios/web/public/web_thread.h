@@ -6,12 +6,15 @@
 #define IOS_WEB_PUBLIC_WEB_THREAD_H_
 
 #include <string>
+#include <utility>
 
-#include "base/callback_forward.h"
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
 
 namespace base {
@@ -98,35 +101,35 @@ class WebThread {
   // They return true iff the thread existed and the task was posted.
   static bool PostTask(ID identifier,
                        const tracked_objects::Location& from_here,
-                       const base::Closure& task);
+                       base::OnceClosure task);
   static bool PostDelayedTask(ID identifier,
                               const tracked_objects::Location& from_here,
-                              const base::Closure& task,
+                              base::OnceClosure task,
                               base::TimeDelta delay);
   static bool PostNonNestableTask(ID identifier,
                                   const tracked_objects::Location& from_here,
-                                  const base::Closure& task);
+                                  base::OnceClosure task);
   static bool PostNonNestableDelayedTask(
       ID identifier,
       const tracked_objects::Location& from_here,
-      const base::Closure& task,
+      base::OnceClosure task,
       base::TimeDelta delay);
 
   static bool PostTaskAndReply(ID identifier,
                                const tracked_objects::Location& from_here,
-                               const base::Closure& task,
-                               const base::Closure& reply);
+                               base::OnceClosure task,
+                               base::OnceClosure reply);
 
   template <typename ReturnType, typename ReplyArgType>
   static bool PostTaskAndReplyWithResult(
       ID identifier,
       const tracked_objects::Location& from_here,
-      const base::Callback<ReturnType(void)>& task,
-      const base::Callback<void(ReplyArgType)>& reply) {
+      base::OnceCallback<ReturnType()> task,
+      base::OnceCallback<void(ReplyArgType)> reply) {
     scoped_refptr<base::SingleThreadTaskRunner> task_runner =
         GetTaskRunnerForThread(identifier);
-    return base::PostTaskAndReplyWithResult(task_runner.get(), from_here, task,
-                                            reply);
+    return base::PostTaskAndReplyWithResult(task_runner.get(), from_here,
+                                            std::move(task), std::move(reply));
   }
 
   template <class T>
@@ -158,29 +161,19 @@ class WebThread {
   // base::PostTaskAndReplyWithResult() with GetBlockingPool() as the task
   // runner.
   static bool PostBlockingPoolTask(const tracked_objects::Location& from_here,
-                                   const base::Closure& task);
+                                   base::OnceClosure task);
   static bool PostBlockingPoolTaskAndReply(
       const tracked_objects::Location& from_here,
-      const base::Closure& task,
-      const base::Closure& reply);
+      base::OnceClosure task,
+      base::OnceClosure reply);
   static bool PostBlockingPoolSequencedTask(
       const std::string& sequence_token_name,
       const tracked_objects::Location& from_here,
-      const base::Closure& task);
+      base::OnceClosure task);
 
   // Returns the thread pool used for blocking file I/O. Use this object to
   // perform random blocking operations such as file writes.
   static base::SequencedWorkerPool* GetBlockingPool() WARN_UNUSED_RESULT;
-
-  // Returns a pointer to the thread's message loop, which will become
-  // invalid during shutdown, so you probably shouldn't hold onto it.
-  //
-  // This must not be called before the thread is started, or after
-  // the thread is stopped, or it will DCHECK.
-  //
-  // Ownership remains with the WebThread implementation, so you must not
-  // delete the pointer.
-  static base::MessageLoop* UnsafeGetMessageLoopForThread(ID identifier);
 
   // Callable on any thread.  Returns whether the given well-known thread is
   // initialized.

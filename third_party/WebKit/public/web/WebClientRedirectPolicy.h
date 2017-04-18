@@ -10,10 +10,10 @@ namespace blink {
 // WebClientRedirectPolicy will affect loading, e.g. ClientRedirect will
 // update HTTP referrer header.
 enum class WebClientRedirectPolicy {
-    NotClientRedirect,
-    ClientRedirect,
+  kNotClientRedirect,
+  kClientRedirect,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebClientRedirectPolicy_h
+#endif  // WebClientRedirectPolicy_h

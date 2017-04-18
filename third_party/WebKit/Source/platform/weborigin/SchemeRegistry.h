@@ -28,111 +28,123 @@
 #define SchemeRegistry_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-using URLSchemesSet = HashSet<String, CaseFoldingHash>;
+using URLSchemesSet = HashSet<String>;
 
 template <typename T>
-using URLSchemesMap = HashMap<String, T, CaseFoldingHash>;
+using URLSchemesMap = HashMap<String, T>;
 
 class PLATFORM_EXPORT SchemeRegistry {
-    STATIC_ONLY(SchemeRegistry);
-public:
-    static void initialize();
+  STATIC_ONLY(SchemeRegistry);
 
-    static void registerURLSchemeAsLocal(const String&);
-    static bool shouldTreatURLSchemeAsLocal(const String&);
+ public:
+  static void Initialize();
 
-    static void registerURLSchemeAsRestrictingMixedContent(const String&);
-    static bool shouldTreatURLSchemeAsRestrictingMixedContent(const String&);
+  static void RegisterURLSchemeAsLocal(const String&);
+  static bool ShouldTreatURLSchemeAsLocal(const String&);
 
-    // Subresources transported by secure schemes do not trigger mixed content
-    // warnings. For example, https and data are secure schemes because they
-    // cannot be corrupted by active network attackers.
-    static void registerURLSchemeAsSecure(const String&);
-    static bool shouldTreatURLSchemeAsSecure(const String&);
+  static bool ShouldTreatURLSchemeAsRestrictingMixedContent(const String&);
 
-    static void registerURLSchemeAsNoAccess(const String&);
-    static bool shouldTreatURLSchemeAsNoAccess(const String&);
+  // Subresources transported by secure schemes do not trigger mixed content
+  // warnings. For example, https and data are secure schemes because they
+  // cannot be corrupted by active network attackers.
+  static void RegisterURLSchemeAsSecure(const String&);
+  static bool ShouldTreatURLSchemeAsSecure(const String&);
 
-    // Display-isolated schemes can only be displayed (in the sense of
-    // SecurityOrigin::canDisplay) by documents from the same scheme.
-    static void registerURLSchemeAsDisplayIsolated(const String&);
-    static bool shouldTreatURLSchemeAsDisplayIsolated(const String&);
+  static void RegisterURLSchemeAsNoAccess(const String&);
+  static bool ShouldTreatURLSchemeAsNoAccess(const String&);
 
-    static void registerURLSchemeAsEmptyDocument(const String&);
-    static bool shouldLoadURLSchemeAsEmptyDocument(const String&);
+  // Display-isolated schemes can only be displayed (in the sense of
+  // SecurityOrigin::canDisplay) by documents from the same scheme.
+  static void RegisterURLSchemeAsDisplayIsolated(const String&);
+  static bool ShouldTreatURLSchemeAsDisplayIsolated(const String&);
 
-    static void setDomainRelaxationForbiddenForURLScheme(bool forbidden, const String&);
-    static bool isDomainRelaxationForbiddenForURLScheme(const String&);
+  static bool ShouldLoadURLSchemeAsEmptyDocument(const String&);
 
-    // Such schemes should delegate to SecurityOrigin::canRequest for any URL
-    // passed to SecurityOrigin::canDisplay.
-    static bool canDisplayOnlyIfCanRequest(const String& scheme);
+  static void SetDomainRelaxationForbiddenForURLScheme(bool forbidden,
+                                                       const String&);
+  static bool IsDomainRelaxationForbiddenForURLScheme(const String&);
 
-    // Schemes against which javascript: URLs should not be allowed to run (stop
-    // bookmarklets from running on sensitive pages).
-    static void registerURLSchemeAsNotAllowingJavascriptURLs(const String& scheme);
-    static bool shouldTreatURLSchemeAsNotAllowingJavascriptURLs(const String& scheme);
+  // Such schemes should delegate to SecurityOrigin::canRequest for any URL
+  // passed to SecurityOrigin::canDisplay.
+  static bool CanDisplayOnlyIfCanRequest(const String& scheme);
 
-    // Allow non-HTTP schemes to be registered to allow CORS requests.
-    static void registerURLSchemeAsCORSEnabled(const String& scheme);
-    static bool shouldTreatURLSchemeAsCORSEnabled(const String& scheme);
+  // Schemes against which javascript: URLs should not be allowed to run (stop
+  // bookmarklets from running on sensitive pages).
+  static void RegisterURLSchemeAsNotAllowingJavascriptURLs(
+      const String& scheme);
+  static bool ShouldTreatURLSchemeAsNotAllowingJavascriptURLs(
+      const String& scheme);
 
-    // Serialize the registered schemes in a comma-separated list.
-    static String listOfCORSEnabledURLSchemes();
+  // Allow non-HTTP schemes to be registered to allow CORS requests.
+  static void RegisterURLSchemeAsCORSEnabled(const String& scheme);
+  static bool ShouldTreatURLSchemeAsCORSEnabled(const String& scheme);
 
-    // "Legacy" schemes (e.g. 'ftp:', 'gopher:') which we might want to treat differently from "webby" schemes.
-    static bool shouldTreatURLSchemeAsLegacy(const String& scheme);
+  // Serialize the registered schemes in a comma-separated list.
+  static String ListOfCORSEnabledURLSchemes();
 
-    // Schemes that can register a service worker.
-    static void registerURLSchemeAsAllowingServiceWorkers(const String& scheme);
-    static bool shouldTreatURLSchemeAsAllowingServiceWorkers(const String& scheme);
+  // "Legacy" schemes (e.g. 'ftp:', 'gopher:') which we might want to treat
+  // differently from "webby" schemes.
+  static bool ShouldTreatURLSchemeAsLegacy(const String& scheme);
 
-    // HTTP-like schemes that are treated as supporting the Fetch API.
-    static void registerURLSchemeAsSupportingFetchAPI(const String& scheme);
-    static bool shouldTreatURLSchemeAsSupportingFetchAPI(const String& scheme);
+  // Does the scheme represent a location relevant to web compatibility metrics?
+  static bool ShouldTrackUsageMetricsForScheme(const String& scheme);
 
-    // Schemes which override the first-/third-party checks on a Document.
-    static void registerURLSchemeAsFirstPartyWhenTopLevel(const String& scheme);
-    static void removeURLSchemeAsFirstPartyWhenTopLevel(const String& scheme);
-    static bool shouldTreatURLSchemeAsFirstPartyWhenTopLevel(const String& scheme);
+  // Schemes that can register a service worker.
+  static void RegisterURLSchemeAsAllowingServiceWorkers(const String& scheme);
+  static bool ShouldTreatURLSchemeAsAllowingServiceWorkers(
+      const String& scheme);
 
-    // Schemes that can be used in a referrer.
-    static void registerURLSchemeAsAllowedForReferrer(const String& scheme);
-    static void removeURLSchemeAsAllowedForReferrer(const String& scheme);
-    static bool shouldTreatURLSchemeAsAllowedForReferrer(const String& scheme);
+  // HTTP-like schemes that are treated as supporting the Fetch API.
+  static void RegisterURLSchemeAsSupportingFetchAPI(const String& scheme);
+  static bool ShouldTreatURLSchemeAsSupportingFetchAPI(const String& scheme);
 
-    // Allow resources from some schemes to load on a page, regardless of its
-    // Content Security Policy.
-    // This enum should be kept in sync with public/web/WebSecurityPolicy.h.
-    // Enforced in AssertMatchingEnums.cpp.
-    enum PolicyAreas : uint32_t {
-        PolicyAreaNone = 0,
-        PolicyAreaImage = 1 << 0,
-        PolicyAreaStyle = 1 << 1,
-        // Add more policy areas as needed by clients.
-        PolicyAreaAll = ~static_cast<uint32_t>(0),
-    };
-    static void registerURLSchemeAsBypassingContentSecurityPolicy(const String& scheme, PolicyAreas = PolicyAreaAll);
-    static void removeURLSchemeRegisteredAsBypassingContentSecurityPolicy(const String& scheme);
-    static bool schemeShouldBypassContentSecurityPolicy(const String& scheme, PolicyAreas = PolicyAreaAll);
+  // Schemes which override the first-/third-party checks on a Document.
+  static void RegisterURLSchemeAsFirstPartyWhenTopLevel(const String& scheme);
+  static void RemoveURLSchemeAsFirstPartyWhenTopLevel(const String& scheme);
+  static bool ShouldTreatURLSchemeAsFirstPartyWhenTopLevel(
+      const String& scheme);
 
-    // Schemes which bypass Secure Context checks defined in
-    // https://w3c.github.io/webappsec/specs/powerfulfeatures/#is-origin-trustworthy.
-    static void registerURLSchemeBypassingSecureContextCheck(const String& scheme);
-    static bool schemeShouldBypassSecureContextCheck(const String& scheme);
+  // Schemes that can be used in a referrer.
+  static void RegisterURLSchemeAsAllowedForReferrer(const String& scheme);
+  static void RemoveURLSchemeAsAllowedForReferrer(const String& scheme);
+  static bool ShouldTreatURLSchemeAsAllowedForReferrer(const String& scheme);
 
-private:
-    static const URLSchemesSet& localSchemes();
+  // Allow resources from some schemes to load on a page, regardless of its
+  // Content Security Policy.
+  enum PolicyAreas : uint32_t {
+    kPolicyAreaNone = 0,
+    kPolicyAreaImage = 1 << 0,
+    kPolicyAreaStyle = 1 << 1,
+    // Add more policy areas as needed by clients.
+    kPolicyAreaAll = ~static_cast<uint32_t>(0),
+  };
+  static void RegisterURLSchemeAsBypassingContentSecurityPolicy(
+      const String& scheme,
+      PolicyAreas = kPolicyAreaAll);
+  static void RemoveURLSchemeRegisteredAsBypassingContentSecurityPolicy(
+      const String& scheme);
+  static bool SchemeShouldBypassContentSecurityPolicy(
+      const String& scheme,
+      PolicyAreas = kPolicyAreaAll);
+
+  // Schemes which bypass Secure Context checks defined in
+  // https://w3c.github.io/webappsec/specs/powerfulfeatures/#is-origin-trustworthy.
+  static void RegisterURLSchemeBypassingSecureContextCheck(
+      const String& scheme);
+  static bool SchemeShouldBypassSecureContextCheck(const String& scheme);
+
+ private:
+  static const URLSchemesSet& LocalSchemes();
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SchemeRegistry_h
+#endif  // SchemeRegistry_h

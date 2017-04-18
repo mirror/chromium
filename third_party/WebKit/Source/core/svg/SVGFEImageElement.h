@@ -21,9 +21,7 @@
 #ifndef SVGFEImageElement_h
 #define SVGFEImageElement_h
 
-#include "core/SVGNames.h"
-#include "core/fetch/ImageResource.h"
-#include "core/fetch/ResourceClient.h"
+#include "core/loader/resource/ImageResourceObserver.h"
 #include "core/svg/SVGAnimatedPreserveAspectRatio.h"
 #include "core/svg/SVGFilterPrimitiveStandardAttributes.h"
 #include "core/svg/SVGURIReference.h"
@@ -31,44 +29,51 @@
 
 namespace blink {
 
+class ImageResourceContent;
+
 class SVGFEImageElement final : public SVGFilterPrimitiveStandardAttributes,
                                 public SVGURIReference,
-                                public ResourceClient {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(SVGFEImageElement);
-public:
-    DECLARE_NODE_FACTORY(SVGFEImageElement);
+                                public ImageResourceObserver {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(SVGFEImageElement);
 
-    bool currentFrameHasSingleSecurityOrigin() const;
+ public:
+  DECLARE_NODE_FACTORY(SVGFEImageElement);
 
-    ~SVGFEImageElement() override;
-    SVGAnimatedPreserveAspectRatio* preserveAspectRatio() { return m_preserveAspectRatio.get(); }
+  bool CurrentFrameHasSingleSecurityOrigin() const;
 
-    // Promptly remove as a ImageResource client.
-    EAGERLY_FINALIZE();
-    DECLARE_VIRTUAL_TRACE();
+  ~SVGFEImageElement() override;
+  SVGAnimatedPreserveAspectRatio* preserveAspectRatio() {
+    return preserve_aspect_ratio_.Get();
+  }
 
-private:
-    explicit SVGFEImageElement(Document&);
+  // Promptly remove as a ImageResource client.
+  EAGERLY_FINALIZE();
+  DECLARE_VIRTUAL_TRACE();
 
-    void svgAttributeChanged(const QualifiedName&) override;
-    void notifyFinished(Resource*) override;
-    String debugName() const override { return "SVGFEImageElement"; }
+ private:
+  explicit SVGFEImageElement(Document&);
 
-    FilterEffect* build(SVGFilterBuilder*, Filter*) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
+  void ImageNotifyFinished(ImageResourceContent*) override;
+  String DebugName() const override { return "SVGFEImageElement"; }
 
-    void clearResourceReferences();
-    void fetchImageResource();
+  FilterEffect* Build(SVGFilterBuilder*, Filter*) override;
 
-    void buildPendingResource() override;
-    InsertionNotificationRequest insertedInto(ContainerNode*) override;
-    void removedFrom(ContainerNode*) override;
+  void ClearResourceReferences();
+  void FetchImageResource();
+  void ClearImageResource();
 
-    Member<SVGAnimatedPreserveAspectRatio> m_preserveAspectRatio;
+  void BuildPendingResource() override;
+  InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    Member<ImageResource> m_cachedImage;
+  Member<SVGAnimatedPreserveAspectRatio> preserve_aspect_ratio_;
+
+  Member<ImageResourceContent> cached_image_;
+  Member<IdTargetObserver> target_id_observer_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGFEImageElement_h
+#endif  // SVGFEImageElement_h

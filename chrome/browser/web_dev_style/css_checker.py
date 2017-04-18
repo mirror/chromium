@@ -29,41 +29,42 @@ class CSSChecker(object):
       return s[0] == s[1] == s[2] if len(s) == 3 else s[0:2] == s[2:4] == s[4:6]
 
     def _remove_all(s):
-      s = _remove_grit(s)
+      s = _remove_grit(s)  # Must be done first.
       s = _remove_ats(s)
       s = _remove_comments(s)
+      s = _remove_mixins_and_valid_vars(s)
       s = _remove_template_expressions(s)
-      s = _remove_mixins(s)
       return s
 
     def _extract_inline_style(s):
       return '\n'.join(re.findall(r'<style\b[^>]*>([^<]*)<\/style>', s))
 
     def _remove_ats(s):
-      at_reg = re.compile(r"""
-          @(?!\d+x\b)\w+[^'"]*?{  # @at-keyword selector junk {, not @2x
+      return re.sub(r"""
+          @(?!apply)(?!\d+x\b)    # @at-keyword, not (apply|2x)
+          \w+[^'"]*?{             # selector junk {
           (.*{.*?})+              # inner { curly } blocks, rules, and selector
           .*?}                    # stuff up to the first end curly }
-          """,
-          re.DOTALL | re.VERBOSE)
-      return at_reg.sub('\\1', s)
+          """, r'\1', s, flags=re.DOTALL | re.VERBOSE)
 
     def _remove_comments(s):
-      return re.sub(re.compile(r'/\*.*?\*/', re.DOTALL), '', s)
-
-    def _remove_mixins(s):
-      return re.sub(re.compile(r'--[\d\w-]+: {.*?};', re.DOTALL), '', s)
-
-    def _remove_template_expressions(s):
-      return re.sub(re.compile(r'\$i18n(Raw)?{[^}]*}', re.DOTALL), '', s)
+      return re.sub(r'/\*.*?\*/', '', s, flags=re.DOTALL)
 
     def _remove_grit(s):
-      grit_reg = re.compile(r"""
+      return re.sub(r"""
           <if[^>]+>.*?<\s*/\s*if[^>]*>|  # <if> contents </if>
           <include[^>]+>                 # <include>
-          """,
-          re.DOTALL | re.VERBOSE)
-      return re.sub(grit_reg, '', s)
+          """, '', s, flags=re.DOTALL | re.VERBOSE)
+
+    mixin_shim_reg = r'[\w-]+_-_[\w-]+'
+
+    def _remove_mixins_and_valid_vars(s):
+      valid_vars = r'--(?!' + mixin_shim_reg + r')[\w-]+:\s*'
+      mixin_or_value = r'({.*?}|[^;}]+);?\s*'
+      return re.sub(valid_vars + mixin_or_value, '', s, flags=re.DOTALL)
+
+    def _remove_template_expressions(s):
+      return re.sub(r'\$i18n(Raw)?{[^}]*}', '', s, flags=re.DOTALL)
 
     def _rgb_from_hex(s):
       if len(s) == 3:
@@ -168,6 +169,9 @@ class CSSChecker(object):
     def no_data_uris_in_source_files(line):
       return re.search(r'\(\s*\s*data:', line)
 
+    def no_mixin_shims(line):
+      return re.search(r'--' + mixin_shim_reg + r'\s*:', line)
+
     def no_quotes_in_url(line):
       return re.search('url\s*\(\s*["\']', line, re.IGNORECASE)
 
@@ -206,7 +210,6 @@ class CSSChecker(object):
                          'inner-spin-button',
                          'input-placeholder',
                          'input-speech-button',
-                         'keygen-select',
                          'media-slider-container',
                          'media-slider-thumb',
                          'meter-bar',
@@ -345,6 +348,10 @@ class CSSChecker(object):
         { 'desc': "Don't use data URIs in source files. Use grit instead.",
           'test': no_data_uris_in_source_files,
         },
+        { 'desc': "Don't override custom properties created by Polymer's mixin "
+                  "shim. Set mixins or documented custom properties directly.",
+          'test': no_mixin_shims,
+        },
         { 'desc': "Don't use quotes in url().",
           'test': no_quotes_in_url,
         },
@@ -378,18 +385,21 @@ class CSSChecker(object):
                                                   file_filter=self.file_filter)
     files = []
     for f in affected_files:
-      file_contents = '\n'.join(f.NewContents())
       path = f.LocalPath()
+
+      is_html = path.endswith('.html')
+      if not is_html and not path.endswith('.css'):
+        continue
+
+      # Remove all /*comments*/, @at-keywords, and grit <if|include> tags; we're
+      # not using a real parser. TODO(dbeam): Check alpha in <if> blocks.
+      file_contents = _remove_all('\n'.join(f.NewContents()))
+
       # Handle CSS files and HTML files with inline styles.
-      if path.endswith('.html'):
+      if is_html:
         file_contents = _extract_inline_style(file_contents)
 
-      if path.endswith('.html') or path.endswith('.css'):
-        # Remove all /*comments*/, @at-keywords, and grit <if|include> tags;
-        # we're not using a real parser. TODO(dbeam): Check alpha in <if>
-        # blocks.
-        file_contents = _remove_all(file_contents)
-        files.append((path, file_contents))
+      files.append((path, file_contents))
 
     for f in files:
       file_errors = []

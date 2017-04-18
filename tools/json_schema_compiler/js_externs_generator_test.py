@@ -47,9 +47,23 @@ namespace fakeApi {
     ArrayBuffer arrayBuff;
   };
 
+  dictionary Qux {
+    long notOptionalLong;
+    long? optionalLong;
+
+    // A map from string to number.
+    // <jsexterns>@type {Object<string, number>}</jsexterns>
+    object dict;
+
+    static void go();
+    static void stop();
+  };
+
   callback VoidCallback = void();
 
   callback BazGreekCallback = void(Baz baz, Greek greek);
+
+  callback OptionalParamCallback = void(optional Qux qux);
 
   interface Functions {
     // Does something exciting! And what's more, this is a multiline function
@@ -63,6 +77,8 @@ namespace fakeApi {
     static void bazGreek(optional BazGreekCallback callback);
 
     [deprecated="Use a new method."] static DOMString returnString();
+
+    static void optionalParam(optional OptionalParamCallback callback);
   };
 
   interface Events {
@@ -132,6 +148,43 @@ chrome.fakeApi.Bar;
 chrome.fakeApi.Baz;
 
 /**
+ * @constructor
+ * @private
+ * @see https://developer.chrome.com/extensions/fakeApi#type-Qux
+ */
+chrome.fakeApi.Qux = function() {};
+
+/**
+ * @type {number}
+ * @see https://developer.chrome.com/extensions/fakeApi#type-notOptionalLong
+ */
+chrome.fakeApi.Qux.prototype.notOptionalLong;
+
+/**
+ * @type {(number|undefined)}
+ * @see https://developer.chrome.com/extensions/fakeApi#type-optionalLong
+ */
+chrome.fakeApi.Qux.prototype.optionalLong;
+
+/**
+ * A map from string to number.
+ * @type {Object<string, number>}
+ * @see https://developer.chrome.com/extensions/fakeApi#type-dict
+ */
+chrome.fakeApi.Qux.prototype.dict;
+
+/**
+ * @see https://developer.chrome.com/extensions/fakeApi#method-go
+ */
+chrome.fakeApi.Qux.prototype.go = function() {};
+
+/**
+ * @see https://developer.chrome.com/extensions/fakeApi#method-stop
+ */
+chrome.fakeApi.Qux.prototype.stop = function() {};
+
+
+/**
  * Does something exciting! And what's more, this is a multiline function
  * comment! It goes onto multiple lines!
  * @param {!chrome.fakeApi.Baz} baz The baz to use.
@@ -154,6 +207,12 @@ chrome.fakeApi.bazGreek = function(callback) {};
  * @see https://developer.chrome.com/extensions/fakeApi#method-returnString
  */
 chrome.fakeApi.returnString = function() {};
+
+/**
+ * @param {function((!chrome.fakeApi.Qux|undefined)):void=} callback
+ * @see https://developer.chrome.com/extensions/fakeApi#method-optionalParam
+ */
+chrome.fakeApi.optionalParam = function(callback) {};
 
 /**
  * Fired when we realize it's a trap!

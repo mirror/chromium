@@ -11,6 +11,7 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -465,7 +466,7 @@ jobject CoerceJavaScriptListToArray(JNIEnv* env,
   if (!result) {
     return NULL;
   }
-  std::unique_ptr<base::Value> null_value = base::Value::CreateNullValue();
+  auto null_value = base::MakeUnique<base::Value>();
   for (jsize i = 0; i < length; ++i) {
     const base::Value* value_element = null_value.get();
     list_value->Get(i, &value_element);
@@ -515,13 +516,13 @@ jobject CoerceJavaScriptDictionaryToArray(JNIEnv* env,
   // If the length property does not have numeric type, or is outside the valid
   // range for a Java array length, return null.
   jsize length = -1;
-  if (length_value->IsType(base::Value::TYPE_INTEGER)) {
+  if (length_value->IsType(base::Value::Type::INTEGER)) {
     int int_length;
     length_value->GetAsInteger(&int_length);
     if (int_length >= 0 && int_length <= std::numeric_limits<int32_t>::max()) {
       length = static_cast<jsize>(int_length);
     }
-  } else if (length_value->IsType(base::Value::TYPE_DOUBLE)) {
+  } else if (length_value->IsType(base::Value::Type::DOUBLE)) {
     double double_length;
     length_value->GetAsDouble(&double_length);
     if (double_length >= 0.0 &&
@@ -537,7 +538,7 @@ jobject CoerceJavaScriptDictionaryToArray(JNIEnv* env,
   if (!result) {
     return NULL;
   }
-  std::unique_ptr<base::Value> null_value = base::Value::CreateNullValue();
+  auto null_value = base::MakeUnique<base::Value>();
   for (jsize i = 0; i < length; ++i) {
     const std::string key(base::IntToString(i));
     const base::Value* value_element = null_value.get();
@@ -629,10 +630,10 @@ jvalue CoerceJavaScriptObjectToJavaValue(JNIEnv* env,
       result.z = JNI_FALSE;
       break;
     case JavaType::TypeArray:
-      if (value->IsType(base::Value::TYPE_DICTIONARY)) {
+      if (value->IsType(base::Value::Type::DICTIONARY)) {
         result.l = CoerceJavaScriptDictionaryToArray(
             env, value, target_type, object_refs, error);
-      } else if (value->IsType(base::Value::TYPE_LIST)) {
+      } else if (value->IsType(base::Value::Type::LIST)) {
         result.l = CoerceJavaScriptListToArray(
             env, value, target_type, object_refs, error);
       } else {
@@ -698,28 +699,28 @@ jvalue CoerceJavaScriptValueToJavaValue(JNIEnv* env,
   // always be explicitly set, as jvalue does not initialize its fields.
 
   switch (value->GetType()) {
-    case base::Value::TYPE_INTEGER:
+    case base::Value::Type::INTEGER:
       return CoerceJavaScriptIntegerToJavaValue(
           env, value, target_type, coerce_to_string, error);
-    case base::Value::TYPE_DOUBLE: {
+    case base::Value::Type::DOUBLE: {
       double double_value;
       value->GetAsDouble(&double_value);
       return CoerceJavaScriptDoubleToJavaValue(
           env, double_value, target_type, coerce_to_string, error);
     }
-    case base::Value::TYPE_BOOLEAN:
+    case base::Value::Type::BOOLEAN:
       return CoerceJavaScriptBooleanToJavaValue(
           env, value, target_type, coerce_to_string, error);
-    case base::Value::TYPE_STRING:
+    case base::Value::Type::STRING:
       return CoerceJavaScriptStringToJavaValue(env, value, target_type, error);
-    case base::Value::TYPE_DICTIONARY:
-    case base::Value::TYPE_LIST:
+    case base::Value::Type::DICTIONARY:
+    case base::Value::Type::LIST:
       return CoerceJavaScriptObjectToJavaValue(
           env, value, target_type, coerce_to_string, object_refs, error);
-    case base::Value::TYPE_NULL:
+    case base::Value::Type::NONE:
       return CoerceJavaScriptNullOrUndefinedToJavaValue(
           env, value, target_type, coerce_to_string, error);
-    case base::Value::TYPE_BINARY:
+    case base::Value::Type::BINARY:
       return CoerceGinJavaBridgeValueToJavaValue(
           env, value, target_type, coerce_to_string, object_refs, error);
   }

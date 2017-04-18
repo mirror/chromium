@@ -12,26 +12,23 @@
 
 namespace blink {
 
-AudioOutputDeviceClientImpl* AudioOutputDeviceClientImpl::create()
-{
-    return new AudioOutputDeviceClientImpl();
+AudioOutputDeviceClientImpl::AudioOutputDeviceClientImpl(LocalFrame& frame)
+    : AudioOutputDeviceClient(frame) {}
+
+AudioOutputDeviceClientImpl::~AudioOutputDeviceClientImpl() {}
+
+void AudioOutputDeviceClientImpl::CheckIfAudioSinkExistsAndIsAuthorized(
+    ExecutionContext* context,
+    const WebString& sink_id,
+    std::unique_ptr<WebSetSinkIdCallbacks> callbacks) {
+  DCHECK(context);
+  DCHECK(context->IsDocument());
+  Document* document = ToDocument(context);
+  WebLocalFrameImpl* web_frame =
+      WebLocalFrameImpl::FromFrame(document->GetFrame());
+  web_frame->Client()->CheckIfAudioSinkExistsAndIsAuthorized(
+      sink_id, WebSecurityOrigin(context->GetSecurityOrigin()),
+      callbacks.release());
 }
 
-AudioOutputDeviceClientImpl::AudioOutputDeviceClientImpl()
-{
-}
-
-AudioOutputDeviceClientImpl::~AudioOutputDeviceClientImpl()
-{
-}
-
-void AudioOutputDeviceClientImpl::checkIfAudioSinkExistsAndIsAuthorized(ExecutionContext* context, const WebString& sinkId, std::unique_ptr<WebSetSinkIdCallbacks> callbacks)
-{
-    DCHECK(context);
-    DCHECK(context->isDocument());
-    Document* document = toDocument(context);
-    WebLocalFrameImpl* webFrame = WebLocalFrameImpl::fromFrame(document->frame());
-    webFrame->client()->checkIfAudioSinkExistsAndIsAuthorized(sinkId, WebSecurityOrigin(context->getSecurityOrigin()), callbacks.release());
-}
-
-} // namespace blink
+}  // namespace blink

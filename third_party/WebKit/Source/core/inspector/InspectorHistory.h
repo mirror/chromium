@@ -32,56 +32,57 @@
 #define InspectorHistory_h
 
 #include "platform/heap/Handle.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 
 class InspectorHistory final : public GarbageCollected<InspectorHistory> {
-    WTF_MAKE_NONCOPYABLE(InspectorHistory);
-public:
-    class Action : public GarbageCollectedFinalized<Action> {
-    public:
-        explicit Action(const String& name);
-        virtual ~Action();
-        DECLARE_VIRTUAL_TRACE();
-        virtual String toString();
+  WTF_MAKE_NONCOPYABLE(InspectorHistory);
 
-        virtual String mergeId();
-        virtual void merge(Action*);
+ public:
+  class Action : public GarbageCollectedFinalized<Action> {
+   public:
+    explicit Action(const String& name);
+    virtual ~Action();
+    DECLARE_VIRTUAL_TRACE();
+    virtual String ToString();
 
-        virtual bool perform(ExceptionState&) = 0;
+    virtual String MergeId();
+    virtual void Merge(Action*);
 
-        virtual bool undo(ExceptionState&) = 0;
-        virtual bool redo(ExceptionState&) = 0;
+    virtual bool Perform(ExceptionState&) = 0;
 
-        virtual bool isNoop() { return false; }
+    virtual bool Undo(ExceptionState&) = 0;
+    virtual bool Redo(ExceptionState&) = 0;
 
-        virtual bool isUndoableStateMark();
-    private:
-        String m_name;
-    };
+    virtual bool IsNoop() { return false; }
 
-    InspectorHistory();
-    DECLARE_TRACE();
+    virtual bool IsUndoableStateMark();
 
-    bool perform(Action*, ExceptionState&);
-    void appendPerformedAction(Action*);
-    void markUndoableState();
+   private:
+    String name_;
+  };
 
-    bool undo(ExceptionState&);
-    bool redo(ExceptionState&);
-    void reset();
+  InspectorHistory();
+  DECLARE_TRACE();
 
-private:
-    HeapVector<Member<Action>> m_history;
-    size_t m_afterLastActionIndex;
+  bool Perform(Action*, ExceptionState&);
+  void AppendPerformedAction(Action*);
+  void MarkUndoableState();
+
+  bool Undo(ExceptionState&);
+  bool Redo(ExceptionState&);
+  void Reset();
+
+ private:
+  HeapVector<Member<Action>> history_;
+  size_t after_last_action_index_;
 };
 
+}  // namespace blink
 
-} // namespace blink
-
-#endif // !defined(InspectorHistory_h)
+#endif  // !defined(InspectorHistory_h)

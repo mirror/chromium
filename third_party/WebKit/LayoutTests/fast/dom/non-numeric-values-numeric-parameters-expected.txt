@@ -1,4 +1,3 @@
-CONSOLE WARNING: line 1: Calling CSSStyleSheet.insertRule() with one argument is deprecated. Please pass the index argument as well: insertRule(x, 0).
 This tests the behavior of non-numeric values in contexts where the DOM has a numeric parameter.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
@@ -25,7 +24,7 @@ PASS nonNumericPolicy('document.body.scrollLeft = x') is 'any type allowed'
 PASS nonNumericPolicy('document.body.scrollTop = x') is 'any type allowed'
 PASS nonNumericPolicy('document.images.item(x)') is 'any type allowed (but not omitted)'
 PASS nonNumericPolicy('document.createElement("input").setSelectionRange(x, 0)') is 'any type allowed'
-PASS nonNumericPolicy('document.createElement("input").setSelectionRange(0, x)') is 'any type allowed'
+PASS nonNumericPolicy('document.createElement("input").setSelectionRange(0, x)') is 'any type allowed (but not omitted)'
 PASS nonNumericPolicy('createHTMLOptionsCollection().add(document.createElement("option"), x)') is 'any type allowed'
 PASS nonNumericPolicy('createHTMLOptionsCollection().remove(x)') is 'any type allowed (but not omitted)'
 PASS nonNumericPolicy('createHTMLSelectElement().remove(x)') is 'any type allowed'
@@ -37,7 +36,7 @@ PASS nonNumericPolicy('createHTMLTableRowElement().deleteCell(x)') is 'any type 
 PASS nonNumericPolicy('createHTMLTableSectionElement().insertRow(x)') is 'any type allowed'
 PASS nonNumericPolicy('createHTMLTableSectionElement().deleteRow(x)') is 'any type allowed (but not omitted)'
 PASS nonNumericPolicy('document.createElement("textarea").setSelectionRange(x, 0)') is 'any type allowed'
-PASS nonNumericPolicy('document.createElement("textarea").setSelectionRange(0, x)') is 'any type allowed'
+PASS nonNumericPolicy('document.createElement("textarea").setSelectionRange(0, x)') is 'any type allowed (but not omitted)'
 PASS nonNumericPolicy('createCanvasElement().getContext(x)') is 'any type allowed (but not omitted)'
 PASS nonNumericPolicy('document.createEvent("KeyboardEvent").initKeyboardEvent("a", false, false, null, "b", x, false, false, false, false, false)') is 'any type allowed'
 PASS nonNumericPolicy('createMediaList().item(x)') is 'any type allowed (but not omitted)'

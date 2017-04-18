@@ -22,8 +22,8 @@
 #include "content/common/content_export.h"
 #include "content/common/p2p_socket_type.h"
 #include "net/base/ip_endpoint.h"
-#include "net/udp/diff_serv_code_point.h"
-#include "net/udp/udp_server_socket.h"
+#include "net/socket/diff_serv_code_point.h"
+#include "net/socket/udp_server_socket.h"
 #include "third_party/webrtc/base/asyncpacketsocket.h"
 
 namespace content {
@@ -52,7 +52,7 @@ class CONTENT_EXPORT P2PSocketHostUdp : public P2PSocketHost {
             const std::vector<char>& data,
             const rtc::PacketOptions& options,
             uint64_t packet_id) override;
-  P2PSocketHost* AcceptIncomingTcpConnection(
+  std::unique_ptr<P2PSocketHost> AcceptIncomingTcpConnection(
       const net::IPEndPoint& remote_address,
       int id) override;
   bool SetOption(P2PSocketOption option, int value) override;

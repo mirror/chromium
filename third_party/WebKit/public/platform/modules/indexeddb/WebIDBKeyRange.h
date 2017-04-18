@@ -35,57 +35,56 @@ class IDBKeyRange;
 class WebIDBKey;
 
 class WebIDBKeyRange {
-public:
-    ~WebIDBKeyRange() { reset(); }
+ public:
+  ~WebIDBKeyRange() { Reset(); }
 
-    WebIDBKeyRange() {}
-    WebIDBKeyRange(const WebIDBKeyRange& keyRange) { assign(keyRange); }
-    WebIDBKeyRange(const WebIDBKey& lower, const WebIDBKey& upper, bool lowerOpen, bool upperOpen) { assign(lower, upper, lowerOpen, upperOpen); }
+  WebIDBKeyRange() {}
+  WebIDBKeyRange(const WebIDBKeyRange& key_range) { Assign(key_range); }
+  WebIDBKeyRange(const WebIDBKey& lower,
+                 const WebIDBKey& upper,
+                 bool lower_open,
+                 bool upper_open) {
+    Assign(lower, upper, lower_open, upper_open);
+  }
 
-    BLINK_EXPORT WebIDBKey lower() const;
-    BLINK_EXPORT WebIDBKey upper() const;
-    BLINK_EXPORT bool lowerOpen() const;
-    BLINK_EXPORT bool upperOpen() const;
+  BLINK_EXPORT WebIDBKey Lower() const;
+  BLINK_EXPORT WebIDBKey Upper() const;
+  BLINK_EXPORT bool LowerOpen() const;
+  BLINK_EXPORT bool UpperOpen() const;
 
-    BLINK_EXPORT void assign(const WebIDBKeyRange&);
-    BLINK_EXPORT void assign(const WebIDBKey& lower, const WebIDBKey& upper, bool lowerOpen, bool upperOpen);
+  BLINK_EXPORT void Assign(const WebIDBKeyRange&);
+  BLINK_EXPORT void Assign(const WebIDBKey& lower,
+                           const WebIDBKey& upper,
+                           bool lower_open,
+                           bool upper_open);
 
-    WebIDBKeyRange& operator=(const WebIDBKeyRange& e)
-    {
-        assign(e);
-        return *this;
-    }
+  WebIDBKeyRange& operator=(const WebIDBKeyRange& e) {
+    Assign(e);
+    return *this;
+  }
 
 // FIXME: when compiling core or modules, use inline for reset.
 // when compiling WebIDBKeyRange.cpp, don't use inline to avoid redefinition.
-#if !BLINK_WEB_IMPLEMENTATION && BLINK_IMPLEMENTATION && defined(COMPONENT_BUILD)
-    BLINK_EXPORT void reset()
-    {
-        m_private.reset();
-    }
+#if !BLINK_WEB_IMPLEMENTATION && BLINK_IMPLEMENTATION && \
+    defined(COMPONENT_BUILD)
+  BLINK_EXPORT void Reset() { private_.Reset(); }
 #else
-    BLINK_EXPORT void reset();
+  BLINK_EXPORT void Reset();
 #endif
 
 #if BLINK_IMPLEMENTATION
-    WebIDBKeyRange(IDBKeyRange* value)
-        : m_private(value)
-    { }
-    WebIDBKeyRange& operator=(IDBKeyRange* value)
-    {
-        m_private = value;
-        return *this;
-    }
-    operator IDBKeyRange*() const
-    {
-        return m_private.get();
-    }
+  WebIDBKeyRange(IDBKeyRange* value) : private_(value) {}
+  WebIDBKeyRange& operator=(IDBKeyRange* value) {
+    private_ = value;
+    return *this;
+  }
+  operator IDBKeyRange*() const { return private_.Get(); }
 #endif
 
-private:
-    WebPrivatePtr<IDBKeyRange> m_private;
+ private:
+  WebPrivatePtr<IDBKeyRange> private_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebIDBKeyRange_h
+#endif  // WebIDBKeyRange_h

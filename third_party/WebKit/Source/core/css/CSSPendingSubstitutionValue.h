@@ -12,40 +12,41 @@
 namespace blink {
 
 class CSSPendingSubstitutionValue : public CSSValue {
-public:
-    static CSSPendingSubstitutionValue* create(CSSPropertyID shorthandPropertyId, CSSVariableReferenceValue* shorthandValue)
-    {
-        return new CSSPendingSubstitutionValue(shorthandPropertyId, shorthandValue);
-    }
+ public:
+  static CSSPendingSubstitutionValue* Create(
+      CSSPropertyID shorthand_property_id,
+      CSSVariableReferenceValue* shorthand_value) {
+    return new CSSPendingSubstitutionValue(shorthand_property_id,
+                                           shorthand_value);
+  }
 
-    CSSVariableReferenceValue* shorthandValue() const
-    {
-        return m_shorthandValue.get();
-    }
+  CSSVariableReferenceValue* ShorthandValue() const {
+    return shorthand_value_.Get();
+  }
 
-    CSSPropertyID shorthandPropertyId() const
-    {
-        return m_shorthandPropertyId;
-    }
+  CSSPropertyID ShorthandPropertyId() const { return shorthand_property_id_; }
 
-    bool equals(const CSSPendingSubstitutionValue& other) const { return m_shorthandValue == other.m_shorthandValue; }
-    String customCSSText() const;
+  bool Equals(const CSSPendingSubstitutionValue& other) const {
+    return shorthand_value_ == other.shorthand_value_;
+  }
+  String CustomCSSText() const;
 
-    DECLARE_TRACE_AFTER_DISPATCH();
-private:
-    CSSPendingSubstitutionValue(CSSPropertyID shorthandPropertyId, CSSVariableReferenceValue* shorthandValue)
-        : CSSValue(PendingSubstitutionValueClass)
-        , m_shorthandPropertyId(shorthandPropertyId)
-        , m_shorthandValue(shorthandValue)
-    {
-    }
+  DECLARE_TRACE_AFTER_DISPATCH();
 
-    CSSPropertyID m_shorthandPropertyId;
-    Member<CSSVariableReferenceValue> m_shorthandValue;
+ private:
+  CSSPendingSubstitutionValue(CSSPropertyID shorthand_property_id,
+                              CSSVariableReferenceValue* shorthand_value)
+      : CSSValue(kPendingSubstitutionValueClass),
+        shorthand_property_id_(shorthand_property_id),
+        shorthand_value_(shorthand_value) {}
+
+  CSSPropertyID shorthand_property_id_;
+  Member<CSSVariableReferenceValue> shorthand_value_;
 };
 
-DEFINE_CSS_VALUE_TYPE_CASTS(CSSPendingSubstitutionValue, isPendingSubstitutionValue());
+DEFINE_CSS_VALUE_TYPE_CASTS(CSSPendingSubstitutionValue,
+                            IsPendingSubstitutionValue());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSPendingSubstitutionValue_h
+#endif  // CSSPendingSubstitutionValue_h

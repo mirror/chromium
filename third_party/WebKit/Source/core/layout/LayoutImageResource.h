@@ -3,7 +3,8 @@
  * Copyright (C) 1999 Antti Koivisto <koivisto@kde.org>
  * Copyright (C) 2006 Allan Sandfeld Jensen <kde@carewolf.com>
  * Copyright (C) 2006 Samuel Weinig <sam.weinig@gmail.com>
- * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010 Apple Inc.
+ *               All rights reserved.
  * Copyright (C) 2010 Patrick Gansterer <paroga@paroga.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -26,50 +27,53 @@
 #ifndef LayoutImageResource_h
 #define LayoutImageResource_h
 
-#include "core/fetch/ImageResource.h"
+#include "core/loader/resource/ImageResourceContent.h"
 #include "core/style/StyleImage.h"
 
 namespace blink {
 
 class LayoutObject;
 
-class LayoutImageResource : public GarbageCollectedFinalized<LayoutImageResource> {
-    WTF_MAKE_NONCOPYABLE(LayoutImageResource);
-public:
-    virtual ~LayoutImageResource();
+class LayoutImageResource
+    : public GarbageCollectedFinalized<LayoutImageResource> {
+  WTF_MAKE_NONCOPYABLE(LayoutImageResource);
 
-    static LayoutImageResource* create()
-    {
-        return new LayoutImageResource;
-    }
+ public:
+  virtual ~LayoutImageResource();
 
-    virtual void initialize(LayoutObject*);
-    virtual void shutdown();
+  static LayoutImageResource* Create() { return new LayoutImageResource; }
 
-    void setImageResource(ImageResource*);
-    ImageResource* cachedImage() const { return m_cachedImage.get(); }
-    virtual bool hasImage() const { return m_cachedImage; }
+  virtual void Initialize(LayoutObject*);
+  virtual void Shutdown();
 
-    void resetAnimation();
-    bool maybeAnimated() const;
+  void SetImageResource(ImageResourceContent*);
+  ImageResourceContent* CachedImage() const { return cached_image_.Get(); }
+  virtual bool HasImage() const { return cached_image_; }
 
-    virtual PassRefPtr<Image> image(const IntSize&, float) const;
-    virtual bool errorOccurred() const { return m_cachedImage && m_cachedImage->errorOccurred(); }
+  void ResetAnimation();
+  bool MaybeAnimated() const;
 
-    virtual bool imageHasRelativeSize() const { return m_cachedImage ? m_cachedImage->imageHasRelativeSize() : false; }
+  virtual PassRefPtr<Image> GetImage(const IntSize&, float) const;
+  virtual bool ErrorOccurred() const {
+    return cached_image_ && cached_image_->ErrorOccurred();
+  }
 
-    virtual LayoutSize imageSize(float multiplier) const;
+  virtual bool ImageHasRelativeSize() const {
+    return cached_image_ ? cached_image_->ImageHasRelativeSize() : false;
+  }
 
-    virtual WrappedImagePtr imagePtr() const { return m_cachedImage.get(); }
+  virtual LayoutSize ImageSize(float multiplier) const;
 
-    DEFINE_INLINE_VIRTUAL_TRACE() { visitor->trace(m_cachedImage); }
+  virtual WrappedImagePtr ImagePtr() const { return cached_image_.Get(); }
 
-protected:
-    LayoutImageResource();
-    LayoutObject* m_layoutObject;
-    Member<ImageResource> m_cachedImage;
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(cached_image_); }
+
+ protected:
+  LayoutImageResource();
+  LayoutObject* layout_object_;
+  Member<ImageResourceContent> cached_image_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutImage_h
+#endif  // LayoutImage_h

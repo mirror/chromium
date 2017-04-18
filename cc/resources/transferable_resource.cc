@@ -10,10 +10,16 @@ namespace cc {
 TransferableResource::TransferableResource()
     : id(0),
       format(RGBA_8888),
+      buffer_format(gfx::BufferFormat::RGBA_8888),
       filter(0),
       read_lock_fences_enabled(false),
       is_software(false),
-      is_overlay_candidate(false) {}
+#if defined(OS_ANDROID)
+      is_backed_by_surface_texture(false),
+      wants_promotion_hint(false),
+#endif
+      is_overlay_candidate(false) {
+}
 
 TransferableResource::TransferableResource(const TransferableResource& other) =
     default;

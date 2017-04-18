@@ -17,13 +17,14 @@ class TabDialogsViews : public TabDialogs {
   // TabDialogs:
   gfx::NativeView GetDialogParentView() const override;
   void ShowCollectedCookies() override;
-  void ShowHungRendererDialog() override;
+  void ShowHungRendererDialog(
+      const content::WebContentsUnresponsiveState& unresponsive_state) override;
   void HideHungRendererDialog() override;
   void ShowProfileSigninConfirmation(
       Browser* browser,
       Profile* profile,
       const std::string& username,
-      ui::ProfileSigninConfirmationDelegate* delegate) override;
+      std::unique_ptr<ui::ProfileSigninConfirmationDelegate> delegate) override;
   void ShowManagePasswordsBubble(bool user_action) override;
   void HideManagePasswordsBubble() override;
   base::WeakPtr<ValidationMessageBubble> ShowValidationMessage(

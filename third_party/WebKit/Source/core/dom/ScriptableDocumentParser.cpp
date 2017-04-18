@@ -30,16 +30,15 @@
 
 namespace blink {
 
-ScriptableDocumentParser::ScriptableDocumentParser(Document& document, ParserContentPolicy parserContentPolicy)
-    : DecodedDataDocumentParser(document)
-    , m_wasCreatedByScript(false)
-    , m_parserContentPolicy(parserContentPolicy)
-{
+ScriptableDocumentParser::ScriptableDocumentParser(
+    Document& document,
+    ParserContentPolicy parser_content_policy)
+    : DecodedDataDocumentParser(document),
+      was_created_by_script_(false),
+      parser_content_policy_(parser_content_policy) {}
+
+bool ScriptableDocumentParser::IsParsingAtLineNumber() const {
+  return IsParsing() && !IsWaitingForScripts() && !IsExecutingScript();
 }
 
-bool ScriptableDocumentParser::isParsingAtLineNumber() const
-{
-    return isParsing() && !isWaitingForScripts() && !isExecutingScript();
-}
-
-} // namespace blink
+}  // namespace blink

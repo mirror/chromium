@@ -74,6 +74,12 @@ cr.define('print_preview', function() {
     this.provisionalDestinationResolver_ = null;
 
     /**
+     * The destination that is currently in configuration.
+     * @private {?print_preview.Destination}
+     */
+    this.destinationInConfiguring_ = null;
+
+    /**
      * Search box used to search through the destination lists.
      * @type {!print_preview.SearchBox}
      * @private
@@ -98,7 +104,8 @@ cr.define('print_preview', function() {
     this.localList_ = new print_preview.DestinationList(
         this,
         loadTimeData.getString('localDestinationsTitle'),
-        cr.isChromeOS ? null : loadTimeData.getString('manage'));
+        loadTimeData.getBoolean('showLocalManageButton') ?
+            loadTimeData.getString('manage') : null);
     this.addChild(this.localList_);
 
     /**
@@ -220,6 +227,10 @@ cr.define('print_preview', function() {
           this.searchBox_,
           print_preview.SearchBox.EventType.SEARCH,
           this.onSearch_.bind(this));
+      this.tracker.add(
+          this,
+          print_preview.DestinationListItem.EventType.CONFIGURE_REQUEST,
+          this.onDestinationConfigureRequest_.bind(this));
       this.tracker.add(
           this,
           print_preview.DestinationListItem.EventType.SELECT,
@@ -557,21 +568,77 @@ cr.define('print_preview', function() {
     /**
      * Called when a destination search should be executed. Filters the
      * destination lists with the given query.
-     * @param {Event} evt Contains the search query.
+     * @param {!Event} event Contains the search query.
      * @private
      */
-    onSearch_: function(evt) {
-      this.filterLists_(evt.queryRegExp);
+    onSearch_: function(event) {
+      this.filterLists_(event.queryRegExp);
+    },
+
+    /**
+     * Handler for {@code print_preview.DestinationListItem.EventType.
+     * CONFIGURE_REQUEST} event, which is called to check a destination list
+     * item needs to be setup on Chrome OS before being selected. Note we do not
+     * allow configuring more than one destination at the same time.
+     * @param {!CustomEvent} event Contains the destination needs to be setup.
+     * @private
+     */
+    onDestinationConfigureRequest_: function(event) {
+      var destination = event.detail.destination;
+      var destinationItem = destination.isLocal ?
+          this.localList_.getDestinationItem(destination.id) :
+          this.cloudList_.getDestinationItem(destination.id);
+      assert(destinationItem != null,
+            'User does not select a valid destination item.');
+
+      // Another printer setup is in process or the printer doesn't need to be
+      // set up. Reject the setup request directly.
+      if (this.destinationInConfiguring_ != null ||
+          destination.origin != print_preview.Destination.Origin.CROS ||
+          destination.capabilities != null) {
+        destinationItem.onConfigureRequestRejected(
+            this.destinationInConfiguring_ != null);
+      } else {
+        destinationItem.onConfigureRequestAccepted();
+        this.handleConfigureDestination_(destination);
+      }
+    },
+
+    /**
+     * Called When a destination needs to be setup.
+     * @param {!print_preview.Destination} destination The destination needs to
+     *     be setup.
+     * @private
+     */
+    handleConfigureDestination_: function(destination) {
+      assert(destination.origin == print_preview.Destination.Origin.CROS,
+             'Only local printer on Chrome OS requires setup.');
+      this.destinationInConfiguring_ = destination;
+      this.destinationStore_.resolveCrosDestination(destination).then(
+          /**
+           * @param {!print_preview.PrinterSetupResponse} response.
+           */
+          function(response) {
+            this.destinationInConfiguring_ = null;
+            this.localList_.getDestinationItem(destination.id)
+                .onConfigureResolved(response);
+          }.bind(this),
+          function() {
+            this.destinationInConfiguring_ = null;
+            this.localList_.getDestinationItem(destination.id)
+                .onConfigureResolved({printerId: destination.id,
+                                      success: false});
+          }.bind(this));
     },
 
     /**
      * Handler for {@code print_preview.DestinationListItem.EventType.SELECT}
-     * event, which is called when a destinationi list item is selected.
-     * @param {Event} evt Contains the selected destination.
+     * event, which is called when a destination list item is selected.
+     * @param {Event} event Contains the selected destination.
      * @private
      */
-    onDestinationSelect_: function(evt) {
-      this.handleOnDestinationSelect_(evt.destination);
+    onDestinationSelect_: function(event) {
+      this.handleOnDestinationSelect_(event.destination);
     },
 
     /**
@@ -593,8 +660,8 @@ cr.define('print_preview', function() {
 
         var lastFocusedElement = document.activeElement;
         this.addChild(this.provisionalDestinationResolver_);
-        this.provisionalDestinationResolver_.run(this.getElement())
-            .then(
+        this.provisionalDestinationResolver_.run(this.getElement()).
+            then(
                 /**
                  * @param {!print_preview.Destination} resolvedDestination
                  *    Destination to which the provisional destination was
@@ -602,13 +669,13 @@ cr.define('print_preview', function() {
                  */
                 function(resolvedDestination) {
                   this.handleOnDestinationSelect_(resolvedDestination);
-                }.bind(this))
-            .catch(
+                }.bind(this)).
+            catch(
                 function() {
                   console.log('Failed to resolve provisional destination: ' +
                               destination.id);
-                })
-            .then(
+                }).
+            then(
                 function() {
                   this.removeChild(this.provisionalDestinationResolver_);
                   this.provisionalDestinationResolver_ = null;

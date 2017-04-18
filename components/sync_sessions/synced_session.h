@@ -6,6 +6,7 @@
 #define COMPONENTS_SYNC_SESSIONS_SYNCED_SESSION_H_
 
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 
@@ -13,21 +14,32 @@
 #include "base/time/time.h"
 #include "components/sessions/core/session_id.h"
 #include "components/sessions/core/session_types.h"
-#include "sync/protocol/session_specifics.pb.h"
+#include "components/sync/protocol/session_specifics.pb.h"
 
-namespace sessions {
-struct SessionWindow;
-}
+namespace sync_sessions {
 
-namespace sync_driver {
+// A Sync wrapper for a SessionWindow.
+struct SyncedSessionWindow {
+  SyncedSessionWindow();
+  ~SyncedSessionWindow();
+
+  // Convert this object into its sync protocol buffer equivalent.
+  sync_pb::SessionWindow ToSessionWindowProto() const;
+
+  // Type of the window. See session_specifics.proto.
+  sync_pb::SessionWindow::BrowserType window_type;
+
+  // The SessionWindow this object wraps.
+  sessions::SessionWindow wrapped_window;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SyncedSessionWindow);
+};
 
 // Defines a synced session for use by session sync. A synced session is a
 // list of windows along with a unique session identifer (tag) and meta-data
 // about the device being synced.
 struct SyncedSession {
-  typedef std::map<SessionID::id_type, sessions::SessionWindow*>
-      SyncedWindowMap;
-
   // The type of device.
   // Please keep in sync with ForeignSessionHelper.java
   enum DeviceType {
@@ -56,9 +68,8 @@ struct SyncedSession {
   // and all children tab mtimes.
   base::Time modified_time;
 
-  // Map of windows that make up this session. Windowws are owned by the session
-  // itself and free'd on destruction.
-  SyncedWindowMap windows;
+  // Map of windows that make up this session.
+  std::map<SessionID::id_type, std::unique_ptr<SyncedSessionWindow>> windows;
 
   // A tab node id is part of the identifier for the sync tab objects. Tab node
   // ids are not used for interacting with the model/browser tabs. However, when
@@ -97,12 +108,12 @@ struct SyncedSession {
 
   // Convert this object to its protocol buffer equivalent. Shallow conversion,
   // does not create SessionTab protobufs.
-  sync_pb::SessionHeader ToSessionHeader() const;
+  sync_pb::SessionHeader ToSessionHeaderProto() const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SyncedSession);
 };
 
-}  // namespace sync_driver
+}  // namespace sync_sessions
 
 #endif  // COMPONENTS_SYNC_SESSIONS_SYNCED_SESSION_H_

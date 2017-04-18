@@ -4,12 +4,11 @@
 
 #include "chrome/browser/chromeos/login/ui/user_adding_screen.h"
 
-#include "ash/common/system/tray/system_tray.h"
 #include "ash/shell.h"
+#include "ash/system/tray/system_tray.h"
 #include "base/bind.h"
 #include "base/memory/singleton.h"
 #include "base/observer_list.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
 #include "chrome/browser/chromeos/login/ui/user_adding_screen_input_methods_controller.h"
@@ -55,16 +54,17 @@ void UserAddingScreenImpl::Start() {
       base::Bind(&UserAddingScreenImpl::OnDisplayHostCompletion,
                  base::Unretained(this)));
 
-  g_browser_process->platform_part()->SessionManager()->SetSessionState(
-      session_manager::SESSION_STATE_LOGIN_SECONDARY);
-  FOR_EACH_OBSERVER(Observer, observers_, OnUserAddingStarted());
+  session_manager::SessionManager::Get()->SetSessionState(
+      session_manager::SessionState::LOGIN_SECONDARY);
+  for (auto& observer : observers_)
+    observer.OnUserAddingStarted();
 }
 
 void UserAddingScreenImpl::Cancel() {
   CHECK(IsRunning());
 
   // Make sure that system tray is enabled after this flow.
-  ash::Shell::GetInstance()->GetPrimarySystemTray()->SetEnabled(true);
+  ash::Shell::Get()->GetPrimarySystemTray()->SetEnabled(true);
   display_host_->CancelUserAdding();
 
   // Reset wallpaper if cancel adding user from multiple user sign in page.
@@ -90,9 +90,10 @@ void UserAddingScreenImpl::OnDisplayHostCompletion() {
   CHECK(IsRunning());
   display_host_ = NULL;
 
-  g_browser_process->platform_part()->SessionManager()->SetSessionState(
-      session_manager::SESSION_STATE_ACTIVE);
-  FOR_EACH_OBSERVER(Observer, observers_, OnUserAddingFinished());
+  session_manager::SessionManager::Get()->SetSessionState(
+      session_manager::SessionState::ACTIVE);
+  for (auto& observer : observers_)
+    observer.OnUserAddingFinished();
 }
 
 // static
@@ -117,4 +118,3 @@ UserAddingScreen* UserAddingScreen::Get() {
 }
 
 }  // namespace chromeos
-

@@ -83,12 +83,12 @@ bool AppendReferencedFilesFromDocumentState(
   if (document_state.empty())
     return true;
 
-  // This algorithm is adapted from Blink's core/html/FormController.cpp code.
+  // This algorithm is adapted from Blink's FormController code.
   // We only care about how that code worked when this code snapshot was taken
   // as this code is only needed for backwards compat.
   //
-  // For reference, see FormController::formStatesFromStateVector at:
-  // http://src.chromium.org/viewvc/blink/trunk/Source/core/html/FormController.cpp?pathrev=152274
+  // For reference, see FormController::formStatesFromStateVector in
+  // third_party/WebKit/Source/core/html/forms/FormController.cpp.
 
   size_t index = 0;
 
@@ -191,17 +191,18 @@ struct SerializeObject {
 // 18: Add referrer policy.
 // 19: Remove target frame id, which was a bad idea, and original url string,
 //         which is no longer used.
-// 20: Add pinch viewport scroll offset, the offset of the pinched zoomed
+// 20: Add visual viewport scroll offset, the offset of the pinched zoomed
 //     viewport within the unzoomed main frame.
 // 21: Add frame sequence number.
 // 22: Add scroll restoration type.
 // 23: Remove frame sequence number, there are easier ways.
+// 24: Add did save scroll or scale state.
 //
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
 //
 const int kMinVersion = 11;
-const int kCurrentVersion = 23;
+const int kCurrentVersion = 24;
 
 // A bunch of convenience functions to read/write to SerializeObjects.  The
 // de-serializers assume the input data will be in the correct format and fall
@@ -398,11 +399,11 @@ void WriteResourceRequestBody(const ResourceRequestBodyImpl& request_body,
   for (const auto& element : *request_body.elements()) {
     switch (element.type()) {
       case ResourceRequestBodyImpl::Element::TYPE_BYTES:
-        WriteInteger(blink::WebHTTPBody::Element::TypeData, obj);
+        WriteInteger(blink::WebHTTPBody::Element::kTypeData, obj);
         WriteData(element.bytes(), static_cast<int>(element.length()), obj);
         break;
       case ResourceRequestBodyImpl::Element::TYPE_FILE:
-        WriteInteger(blink::WebHTTPBody::Element::TypeFile, obj);
+        WriteInteger(blink::WebHTTPBody::Element::kTypeFile, obj);
         WriteString(
             base::NullableString16(element.path().AsUTF16Unsafe(), false), obj);
         WriteInteger64(static_cast<int64_t>(element.offset()), obj);
@@ -410,14 +411,14 @@ void WriteResourceRequestBody(const ResourceRequestBodyImpl& request_body,
         WriteReal(element.expected_modification_time().ToDoubleT(), obj);
         break;
       case ResourceRequestBodyImpl::Element::TYPE_FILE_FILESYSTEM:
-        WriteInteger(blink::WebHTTPBody::Element::TypeFileSystemURL, obj);
+        WriteInteger(blink::WebHTTPBody::Element::kTypeFileSystemURL, obj);
         WriteGURL(element.filesystem_url(), obj);
         WriteInteger64(static_cast<int64_t>(element.offset()), obj);
         WriteInteger64(static_cast<int64_t>(element.length()), obj);
         WriteReal(element.expected_modification_time().ToDoubleT(), obj);
         break;
       case ResourceRequestBodyImpl::Element::TYPE_BLOB:
-        WriteInteger(blink::WebHTTPBody::Element::TypeBlob, obj);
+        WriteInteger(blink::WebHTTPBody::Element::kTypeBlob, obj);
         WriteStdString(element.blob_uuid(), obj);
         break;
       case ResourceRequestBodyImpl::Element::TYPE_BYTES_DESCRIPTION:
@@ -436,7 +437,7 @@ void ReadResourceRequestBody(
   int num_elements = ReadInteger(obj);
   for (int i = 0; i < num_elements; ++i) {
     int type = ReadInteger(obj);
-    if (type == blink::WebHTTPBody::Element::TypeData) {
+    if (type == blink::WebHTTPBody::Element::kTypeData) {
       const void* data;
       int length = -1;
       ReadData(obj, &data, &length);
@@ -444,21 +445,21 @@ void ReadResourceRequestBody(
         AppendDataToRequestBody(request_body, static_cast<const char*>(data),
                                 length);
       }
-    } else if (type == blink::WebHTTPBody::Element::TypeFile) {
+    } else if (type == blink::WebHTTPBody::Element::kTypeFile) {
       base::NullableString16 file_path = ReadString(obj);
       int64_t file_start = ReadInteger64(obj);
       int64_t file_length = ReadInteger64(obj);
       double file_modification_time = ReadReal(obj);
       AppendFileRangeToRequestBody(request_body, file_path, file_start,
                                    file_length, file_modification_time);
-    } else if (type == blink::WebHTTPBody::Element::TypeFileSystemURL) {
+    } else if (type == blink::WebHTTPBody::Element::kTypeFileSystemURL) {
       GURL url = ReadGURL(obj);
       int64_t file_start = ReadInteger64(obj);
       int64_t file_length = ReadInteger64(obj);
       double file_modification_time = ReadReal(obj);
       AppendURLRangeToRequestBody(request_body, url, file_start, file_length,
                                   file_modification_time);
-    } else if (type == blink::WebHTTPBody::Element::TypeBlob) {
+    } else if (type == blink::WebHTTPBody::Element::kTypeBlob) {
       if (obj->version >= 16) {
         std::string blob_uuid = ReadStdString(obj);
         AppendBlobToRequestBody(request_body, blob_uuid);
@@ -505,18 +506,28 @@ void WriteFrameState(
 
   WriteString(state.url_string, obj);
   WriteString(state.target, obj);
-  WriteInteger(state.scroll_offset.x(), obj);
-  WriteInteger(state.scroll_offset.y(), obj);
+  WriteBoolean(state.did_save_scroll_or_scale_state, obj);
+
+  if (state.did_save_scroll_or_scale_state) {
+    WriteInteger(state.scroll_offset.x(), obj);
+    WriteInteger(state.scroll_offset.y(), obj);
+  }
+
   WriteString(state.referrer, obj);
 
   WriteStringVector(state.document_state, obj);
 
-  WriteReal(state.page_scale_factor, obj);
+  if (state.did_save_scroll_or_scale_state)
+    WriteReal(state.page_scale_factor, obj);
+
   WriteInteger64(state.item_sequence_number, obj);
   WriteInteger64(state.document_sequence_number, obj);
-  WriteInteger(state.referrer_policy, obj);
-  WriteReal(state.visual_viewport_scroll_offset.x(), obj);
-  WriteReal(state.visual_viewport_scroll_offset.y(), obj);
+  WriteInteger(static_cast<int>(state.referrer_policy), obj);
+
+  if (state.did_save_scroll_or_scale_state) {
+    WriteReal(state.visual_viewport_scroll_offset.x(), obj);
+    WriteReal(state.visual_viewport_scroll_offset.y(), obj);
+  }
 
   WriteInteger(state.scroll_restoration_type, obj);
 
@@ -557,9 +568,17 @@ void ReadFrameState(SerializeObject* obj, bool is_top,
     ReadReal(obj);    // Skip obsolete visited time field.
   }
 
-  int x = ReadInteger(obj);
-  int y = ReadInteger(obj);
-  state->scroll_offset = gfx::Point(x, y);
+  if (obj->version >= 24) {
+    state->did_save_scroll_or_scale_state = ReadBoolean(obj);
+  } else {
+    state->did_save_scroll_or_scale_state = true;
+  }
+
+  if (state->did_save_scroll_or_scale_state) {
+    int x = ReadInteger(obj);
+    int y = ReadInteger(obj);
+    state->scroll_offset = gfx::Point(x, y);
+  }
 
   if (obj->version < 15) {
     ReadBoolean(obj);  // Skip obsolete target item flag.
@@ -569,7 +588,9 @@ void ReadFrameState(SerializeObject* obj, bool is_top,
 
   ReadStringVector(obj, &state->document_state);
 
-  state->page_scale_factor = ReadReal(obj);
+  if (state->did_save_scroll_or_scale_state)
+    state->page_scale_factor = ReadReal(obj);
+
   state->item_sequence_number = ReadInteger64(obj);
   state->document_sequence_number = ReadInteger64(obj);
   if (obj->version >= 21 && obj->version < 23)
@@ -583,7 +604,7 @@ void ReadFrameState(SerializeObject* obj, bool is_top,
         static_cast<blink::WebReferrerPolicy>(ReadInteger(obj));
   }
 
-  if (obj->version >= 20) {
+  if (obj->version >= 20 && state->did_save_scroll_or_scale_state) {
     double x = ReadReal(obj);
     double y = ReadReal(obj);
     state->visual_viewport_scroll_offset = gfx::PointF(x, y);
@@ -688,12 +709,12 @@ ExplodedHttpBody::~ExplodedHttpBody() {
 }
 
 ExplodedFrameState::ExplodedFrameState()
-    : scroll_restoration_type(blink::WebHistoryScrollRestorationAuto),
+    : scroll_restoration_type(blink::kWebHistoryScrollRestorationAuto),
+      did_save_scroll_or_scale_state(true),
       item_sequence_number(0),
       document_sequence_number(0),
       page_scale_factor(0.0),
-      referrer_policy(blink::WebReferrerPolicyDefault) {
-}
+      referrer_policy(blink::kWebReferrerPolicyDefault) {}
 
 ExplodedFrameState::ExplodedFrameState(const ExplodedFrameState& other) {
   assign(other);
@@ -714,6 +735,7 @@ void ExplodedFrameState::assign(const ExplodedFrameState& other) {
   state_object = other.state_object;
   document_state = other.document_state;
   scroll_restoration_type = other.scroll_restoration_type;
+  did_save_scroll_or_scale_state = other.did_save_scroll_or_scale_state;
   visual_viewport_scroll_offset = other.visual_viewport_scroll_offset;
   scroll_offset = other.scroll_offset;
   item_sequence_number = other.item_sequence_number;
@@ -765,6 +787,10 @@ scoped_refptr<ResourceRequestBodyImpl> DecodeResourceRequestBody(
   scoped_refptr<ResourceRequestBodyImpl> result = new ResourceRequestBodyImpl();
   SerializeObject obj(data, static_cast<int>(size));
   ReadResourceRequestBody(&obj, result);
+  // Please see the EncodeResourceRequestBody() function below for information
+  // about why the contains_sensitive_info() field is being explicitly
+  // deserialized.
+  result->set_contains_sensitive_info(ReadBoolean(&obj));
   return obj.parse_error ? nullptr : result;
 }
 
@@ -773,6 +799,11 @@ std::string EncodeResourceRequestBody(
   SerializeObject obj;
   obj.version = kCurrentVersion;
   WriteResourceRequestBody(resource_request_body, &obj);
+  // EncodeResourceRequestBody() is different from WriteResourceRequestBody()
+  // because it covers additional data (e.g.|contains_sensitive_info|) which
+  // is marshaled between native code and java. WriteResourceRequestBody()
+  // serializes data which needs to be saved out to disk.
+  WriteBoolean(resource_request_body.contains_sensitive_info(), &obj);
   return obj.GetAsString();
 }
 

@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.ntp.snippets;
 
 import org.chromium.chrome.browser.ChromeFeatureList;
-import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 
 /**
  * Provides configuration details for NTP snippets.
@@ -13,8 +12,13 @@ import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 public final class SnippetsConfig {
     private SnippetsConfig() {}
 
-    public static boolean isEnabled() {
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SNIPPETS)
-                && PrefServiceBridge.getInstance().isSearchSuggestEnabled();
+    /** https://crbug.com/660837 */
+    public static boolean isIncreasedCardVisibilityEnabled() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SNIPPETS_INCREASED_VISIBILITY);
+    }
+
+    public static boolean isFaviconsFromNewServerEnabled() {
+        return ChromeFeatureList.isEnabled(
+                ChromeFeatureList.CONTENT_SUGGESTIONS_FAVICONS_FROM_NEW_SERVER);
     }
 }

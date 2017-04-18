@@ -13,5 +13,14 @@ bool IsMultiTaskingSupported() {
   return [[UIDevice currentDevice] isMultitaskingSupported];
 }
 
+CriticalClosure::CriticalClosure(OnceClosure closure)
+    : closure_(std::move(closure)) {}
+
+CriticalClosure::~CriticalClosure() {}
+
+void CriticalClosure::Run() {
+  std::move(closure_).Run();
+}
+
 }  // namespace internal
 }  // namespace base

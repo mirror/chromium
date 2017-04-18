@@ -15,7 +15,6 @@
 #include "base/callback_forward.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/observer_list.h"
 #include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/speech_ui_model.h"
 
@@ -32,9 +31,6 @@ class AppListTestViewDelegate : public AppListViewDelegate {
 
   int dismiss_count() { return dismiss_count_; }
   int open_search_result_count() { return open_search_result_count_; }
-  void SetUsers(const Users& users) {
-    users_ = users;
-  }
   std::map<size_t, int> open_search_result_counts() {
     return open_search_result_counts_;
   }
@@ -52,13 +48,8 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   int GetStopSpeechRecognitionCountAndReset();
 
   // AppListViewDelegate overrides:
-  bool ForceNativeDesktop() const override;
-  void SetProfileByPath(const base::FilePath& profile_path) override;
   AppListModel* GetModel() override;
   SpeechUIModel* GetSpeechUI() override;
-  void GetShortcutPathForApp(
-      const std::string& app_id,
-      const base::Callback<void(const base::FilePath&)>& callback) override;
   void StartSearch() override {}
   void StopSearch() override {}
   void OpenSearchResult(SearchResult* result,
@@ -72,23 +63,14 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   void ViewInitialized() override {}
   void Dismiss() override;
   void ViewClosing() override {}
-  void OpenHelp() override {}
-  void OpenFeedback() override {}
   void StartSpeechRecognition() override {}
   void StopSpeechRecognition() override;
-  void ShowForProfileByPath(const base::FilePath& profile_path) override {}
-#if defined(TOOLKIT_VIEWS)
   views::View* CreateStartPageWebView(const gfx::Size& size) override;
   std::vector<views::View*> CreateCustomPageWebViews(
       const gfx::Size& size) override;
   void CustomLauncherPageAnimationChanged(double progress) override {}
   void CustomLauncherPagePopSubpage() override {}
-#endif
   bool IsSpeechRecognitionEnabled() override;
-  const Users& GetUsers() const override;
-  bool ShouldCenterWindow() const override;
-  void AddObserver(AppListViewDelegateObserver* observer) override;
-  void RemoveObserver(AppListViewDelegateObserver* observer) override;
 
   // Do a bulk replacement of the items in the model.
   void ReplaceTestModel(int item_count);
@@ -102,9 +84,7 @@ class AppListTestViewDelegate : public AppListViewDelegate {
   int open_search_result_count_;
   int next_profile_app_count_;
   std::map<size_t, int> open_search_result_counts_;
-  Users users_;
   std::unique_ptr<AppListTestModel> model_;
-  base::ObserverList<AppListViewDelegateObserver> observers_;
   SpeechUIModel speech_ui_;
   base::TimeDelta auto_launch_timeout_;
 

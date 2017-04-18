@@ -19,6 +19,11 @@
       "matches": ["*://maps.google.com/*"],
       "js": ["should_run_twice.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.maps.google.com/*"],
+      "js": ["should_run_once.js"],
+      "run_at": "document_end"
     }
   ]
 }

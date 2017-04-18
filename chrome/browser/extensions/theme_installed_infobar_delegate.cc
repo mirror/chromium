@@ -10,6 +10,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -19,13 +20,12 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/infobars/core/infobar.h"
 #include "content/public/browser/notification_source.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/extension.h"
-#include "grit/theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/gfx/vector_icons_public.h"
 
 // static
 void ThemeInstalledInfoBarDelegate::Create(
@@ -116,16 +116,8 @@ ThemeInstalledInfoBarDelegate::GetIdentifier() const {
   return THEME_INSTALLED_INFOBAR_DELEGATE;
 }
 
-int ThemeInstalledInfoBarDelegate::GetIconId() const {
-  return IDR_INFOBAR_THEME;
-}
-
-gfx::VectorIconId ThemeInstalledInfoBarDelegate::GetVectorIconId() const {
-#if defined(OS_MACOSX)
-  return gfx::VectorIconId::VECTOR_ICON_NONE;
-#else
-  return gfx::VectorIconId::PAINTBRUSH;
-#endif
+const gfx::VectorIcon& ThemeInstalledInfoBarDelegate::GetVectorIcon() const {
+  return kPaintbrushIcon;
 }
 
 ThemeInstalledInfoBarDelegate*

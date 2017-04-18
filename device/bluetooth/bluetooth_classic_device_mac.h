@@ -42,9 +42,9 @@ class BluetoothClassicDeviceMac : public BluetoothDeviceMac {
   bool IsGattConnected() const override;
   bool IsConnectable() const override;
   bool IsConnecting() const override;
-  UUIDList GetUUIDs() const override;
-  int16_t GetInquiryRSSI() const override;
-  int16_t GetInquiryTxPower() const override;
+  UUIDSet GetUUIDs() const override;
+  base::Optional<int8_t> GetInquiryRSSI() const override;
+  base::Optional<int8_t> GetInquiryTxPower() const override;
   bool ExpectingPinCode() const override;
   bool ExpectingPasskey() const override;
   bool ExpectingConfirmation() const override;
@@ -73,7 +73,7 @@ class BluetoothClassicDeviceMac : public BluetoothDeviceMac {
       const GattConnectionCallback& callback,
       const ConnectErrorCallback& error_callback) override;
 
-  base::Time GetLastUpdateTime() const;
+  base::Time GetLastUpdateTime() const override;
 
   // Returns the Bluetooth address for the |device|. The returned address has a
   // normalized format (see below).

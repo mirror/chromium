@@ -31,26 +31,32 @@
 namespace blink {
 
 class InsertNodeBeforeCommand final : public SimpleEditCommand {
-public:
-    static InsertNodeBeforeCommand* create(Node* childToInsert, Node* childToInsertBefore,
-        ShouldAssumeContentIsAlwaysEditable shouldAssumeContentIsAlwaysEditable)
-    {
-        return new InsertNodeBeforeCommand(childToInsert, childToInsertBefore, shouldAssumeContentIsAlwaysEditable);
-    }
+ public:
+  static InsertNodeBeforeCommand* Create(
+      Node* child_to_insert,
+      Node* child_to_insert_before,
+      ShouldAssumeContentIsAlwaysEditable
+          should_assume_content_is_always_editable) {
+    return new InsertNodeBeforeCommand(
+        child_to_insert, child_to_insert_before,
+        should_assume_content_is_always_editable);
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    InsertNodeBeforeCommand(Node* childToInsert, Node* childToInsertBefore, ShouldAssumeContentIsAlwaysEditable);
+ private:
+  InsertNodeBeforeCommand(Node* child_to_insert,
+                          Node* child_to_insert_before,
+                          ShouldAssumeContentIsAlwaysEditable);
 
-    void doApply(EditingState*) override;
-    void doUnapply() override;
+  void DoApply(EditingState*) override;
+  void DoUnapply() override;
 
-    Member<Node> m_insertChild;
-    Member<Node> m_refChild;
-    ShouldAssumeContentIsAlwaysEditable m_shouldAssumeContentIsAlwaysEditable;
+  Member<Node> insert_child_;
+  Member<Node> ref_child_;
+  ShouldAssumeContentIsAlwaysEditable should_assume_content_is_always_editable_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InsertNodeBeforeCommand_h
+#endif  // InsertNodeBeforeCommand_h

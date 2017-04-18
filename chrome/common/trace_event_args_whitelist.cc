@@ -23,6 +23,8 @@ const char* const kMemoryDumpAllowedArgs[] = {"dumps", nullptr};
 
 const WhitelistEntry kEventArgsWhitelist[] = {
     {"__metadata", "thread_name", nullptr},
+    {"__metadata", "process_name", nullptr},
+    {"__metadata", "process_uptime_seconds", nullptr},
     {"ipc", "SyncChannel::Send", nullptr},
     {"toplevel", "*", nullptr},
     {"latencyInfo", "*", kInputLatencyAllowedArgs},
@@ -73,7 +75,7 @@ bool IsTraceEventArgsWhitelisted(
       const WhitelistEntry& whitelist_entry = kEventArgsWhitelist[i];
       DCHECK(whitelist_entry.event_name);
 
-      if (base::MatchPattern(category_group_token.c_str(),
+      if (base::MatchPattern(category_group_token,
                              whitelist_entry.category_name) &&
           base::MatchPattern(event_name, whitelist_entry.event_name)) {
         if (whitelist_entry.arg_name_filter) {
@@ -89,7 +91,7 @@ bool IsTraceEventArgsWhitelisted(
 }
 
 bool IsMetadataWhitelisted(const std::string& metadata_name) {
-  for (auto key : kMetadataWhitelist) {
+  for (auto* key : kMetadataWhitelist) {
     if (base::MatchPattern(metadata_name, key)) {
       return true;
     }

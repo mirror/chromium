@@ -12,14 +12,13 @@
 #include "WebSize.h"
 #include "WebVector.h"
 
+#include "cc/paint/paint_record.h"
+#include "third_party/skia/include/core/SkBlendMode.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
-#include "third_party/skia/include/core/SkRegion.h"
-#include "third_party/skia/include/core/SkXfermode.h"
 
 class SkColorFilter;
-class SkImageFilter;
 class SkMatrix44;
-class SkPicture;
+class SkPath;
 struct SkRect;
 class SkRRect;
 
@@ -34,35 +33,42 @@ namespace blink {
 // (stored in 'clip', 'transform', 'filter', etc...). For more details see:
 // http://dev.chromium.org/blink/slimming-paint.
 class WebDisplayItemList {
-public:
-    virtual ~WebDisplayItemList() { }
+ public:
+  virtual ~WebDisplayItemList() {}
 
-    virtual void appendDrawingItem(const WebRect& visualRect, sk_sp<const SkPicture>) { }
+  virtual void AppendDrawingItem(const WebRect& visual_rect,
+                                 sk_sp<const cc::PaintRecord>) {}
 
-    virtual void appendClipItem(const WebRect& visualRect, const WebRect& clipRect, const WebVector<SkRRect>& roundedClipRects) { }
-    virtual void appendEndClipItem(const WebRect& visualRect) { }
-    virtual void appendClipPathItem(const WebRect& visualRect, const SkPath&, SkRegion::Op, bool antialias) { }
-    virtual void appendEndClipPathItem(const WebRect& visualRect) { }
-    virtual void appendFloatClipItem(const WebRect& visualRect, const WebFloatRect& clipRect) { }
-    virtual void appendEndFloatClipItem(const WebRect& visualRect) { }
-    virtual void appendTransformItem(const WebRect& visualRect, const SkMatrix44&) { }
-    virtual void appendEndTransformItem(const WebRect& visualRect) { }
-    virtual void appendCompositingItem(const WebRect& visualRect, float opacity,
-        SkXfermode::Mode, SkRect* bounds, SkColorFilter*) { }
-    virtual void appendEndCompositingItem(const WebRect& visualRect) { }
+  virtual void AppendClipItem(const WebRect& clip_rect,
+                              const WebVector<SkRRect>& rounded_clip_rects) {}
+  virtual void AppendEndClipItem() {}
+  virtual void AppendClipPathItem(const SkPath&, bool antialias) {}
+  virtual void AppendEndClipPathItem() {}
+  virtual void AppendFloatClipItem(const WebFloatRect& clip_rect) {}
+  virtual void AppendEndFloatClipItem() {}
+  virtual void AppendTransformItem(const SkMatrix44&) {}
+  virtual void AppendEndTransformItem() {}
+  virtual void AppendCompositingItem(float opacity,
+                                     SkBlendMode,
+                                     SkRect* bounds,
+                                     SkColorFilter*) {}
+  virtual void AppendEndCompositingItem() {}
 
-    // TODO(loyso): This should use CompositorFilterOperation. crbug.com/584551
-    virtual void appendFilterItem(const WebRect& visualRect, const cc::FilterOperations&, const WebFloatRect& bounds) { }
-    virtual void appendEndFilterItem(const WebRect& visualRect) { }
+  // TODO(loyso): This should use CompositorFilterOperation. crbug.com/584551
+  virtual void AppendFilterItem(const cc::FilterOperations&,
+                                const WebFloatRect& filter_bounds,
+                                const WebFloatPoint& origin) {}
+  virtual void AppendEndFilterItem() {}
 
-    // Scroll containers are identified by an opaque pointer.
-    using ScrollContainerId = const void*;
-    virtual void appendScrollItem(const WebRect& visualRect, const WebSize& scrollOffset, ScrollContainerId) { }
-    virtual void appendEndScrollItem(const WebRect& visualRect) { }
+  // Scroll containers are identified by an opaque pointer.
+  using ScrollContainerId = const void*;
+  virtual void AppendScrollItem(const WebSize& scroll_offset,
+                                ScrollContainerId) {}
+  virtual void AppendEndScrollItem() {}
 
-    virtual void setIsSuitableForGpuRasterization(bool isSuitable) { }
+  virtual void SetIsSuitableForGpuRasterization(bool is_suitable) {}
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebDisplayItemList_h
+#endif  // WebDisplayItemList_h

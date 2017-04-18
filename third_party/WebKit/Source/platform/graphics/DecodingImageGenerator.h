@@ -28,12 +28,12 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/image-decoders/SegmentReader.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 #include "third_party/skia/include/core/SkImageGenerator.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
-#include "wtf/Allocator.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
 
 class SkData;
 
@@ -41,42 +41,50 @@ namespace blink {
 
 class ImageFrameGenerator;
 
-// Implements SkImageGenerator, used by SkPixelRef to populate a discardable memory
-// with a decoded image frame. ImageFrameGenerator does the actual decoding.
-//
+// Implements SkImageGenerator, used by SkPixelRef to populate a discardable
+// memory with a decoded image frame. ImageFrameGenerator does the actual
+// decoding.
 class PLATFORM_EXPORT DecodingImageGenerator final : public SkImageGenerator {
-    USING_FAST_MALLOC(DecodingImageGenerator);
-    WTF_MAKE_NONCOPYABLE(DecodingImageGenerator);
-public:
-    // Make SkImageGenerator::kNeedNewImageUniqueID accessible.
-    enum {
-        kNeedNewImageUniqueID = SkImageGenerator::kNeedNewImageUniqueID
-    };
+  USING_FAST_MALLOC(DecodingImageGenerator);
+  WTF_MAKE_NONCOPYABLE(DecodingImageGenerator);
 
-    static SkImageGenerator* create(SkData*);
+ public:
+  // Make SkImageGenerator::kNeedNewImageUniqueID accessible.
+  enum { kNeedNewImageUniqueID = SkImageGenerator::kNeedNewImageUniqueID };
 
-    DecodingImageGenerator(PassRefPtr<ImageFrameGenerator>, const SkImageInfo&, PassRefPtr<SegmentReader>, bool allDataReceived, size_t index, uint32_t uniqueID = kNeedNewImageUniqueID);
-    ~DecodingImageGenerator() override;
+  static SkImageGenerator* Create(SkData*);
 
-    void setCanYUVDecode(bool yes) { m_canYUVDecode = yes; }
+  DecodingImageGenerator(PassRefPtr<ImageFrameGenerator>,
+                         const SkImageInfo&,
+                         PassRefPtr<SegmentReader>,
+                         bool all_data_received,
+                         size_t index,
+                         uint32_t unique_id = kNeedNewImageUniqueID);
+  ~DecodingImageGenerator() override;
 
-protected:
-    SkData* onRefEncodedData(GrContext* ctx) override;
+  void SetCanYUVDecode(bool yes) { can_yuv_decode_ = yes; }
 
-    bool onGetPixels(const SkImageInfo&, void* pixels, size_t rowBytes, SkPMColor table[], int* tableCount) override;
+ protected:
+  SkData* onRefEncodedData(GrContext* ctx) override;
 
-    bool onQueryYUV8(SkYUVSizeInfo*, SkYUVColorSpace*) const override;
+  bool onGetPixels(const SkImageInfo&,
+                   void* pixels,
+                   size_t row_bytes,
+                   SkPMColor table[],
+                   int* table_count) override;
 
-    bool onGetYUV8Planes(const SkYUVSizeInfo&, void* planes[3]) override;
+  bool onQueryYUV8(SkYUVSizeInfo*, SkYUVColorSpace*) const override;
 
-private:
-    RefPtr<ImageFrameGenerator> m_frameGenerator;
-    const RefPtr<SegmentReader> m_data; // Data source.
-    const bool m_allDataReceived;
-    const size_t m_frameIndex;
-    bool m_canYUVDecode;
+  bool onGetYUV8Planes(const SkYUVSizeInfo&, void* planes[3]) override;
+
+ private:
+  RefPtr<ImageFrameGenerator> frame_generator_;
+  const RefPtr<SegmentReader> data_;  // Data source.
+  const bool all_data_received_;
+  const size_t frame_index_;
+  bool can_yuv_decode_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DecodingImageGenerator_h_
+#endif  // DecodingImageGenerator_h_

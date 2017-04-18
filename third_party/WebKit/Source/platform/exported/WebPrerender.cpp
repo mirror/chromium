@@ -30,110 +30,95 @@
 
 #include "public/platform/WebPrerender.h"
 
-#include "platform/Prerender.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/Prerender.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 namespace {
 
 class ExtraDataContainer : public Prerender::ExtraData {
-public:
-    static PassRefPtr<ExtraDataContainer> create(WebPrerender::ExtraData* extraData) { return adoptRef(new ExtraDataContainer(extraData)); }
+ public:
+  static PassRefPtr<ExtraDataContainer> Create(
+      WebPrerender::ExtraData* extra_data) {
+    return AdoptRef(new ExtraDataContainer(extra_data));
+  }
 
-    ~ExtraDataContainer() override {}
+  ~ExtraDataContainer() override {}
 
-    WebPrerender::ExtraData* getExtraData() const { return m_extraData.get(); }
+  WebPrerender::ExtraData* GetExtraData() const { return extra_data_.get(); }
 
-private:
-    explicit ExtraDataContainer(WebPrerender::ExtraData* extraData)
-        : m_extraData(wrapUnique(extraData))
-    {
-    }
+ private:
+  explicit ExtraDataContainer(WebPrerender::ExtraData* extra_data)
+      : extra_data_(WTF::WrapUnique(extra_data)) {}
 
-    std::unique_ptr<WebPrerender::ExtraData> m_extraData;
+  std::unique_ptr<WebPrerender::ExtraData> extra_data_;
 };
 
-} // namespace
+}  // namespace
 
-WebPrerender::WebPrerender(Prerender* prerender)
-    : m_private(prerender)
-{
+WebPrerender::WebPrerender(Prerender* prerender) : private_(prerender) {}
+
+const Prerender* WebPrerender::ToPrerender() const {
+  return private_.Get();
 }
 
-const Prerender* WebPrerender::toPrerender() const
-{
-    return m_private.get();
+void WebPrerender::Reset() {
+  private_.Reset();
 }
 
-void WebPrerender::reset()
-{
-    m_private.reset();
+void WebPrerender::Assign(const WebPrerender& other) {
+  private_ = other.private_;
 }
 
-void WebPrerender::assign(const WebPrerender& other)
-{
-    m_private = other.m_private;
+bool WebPrerender::IsNull() const {
+  return private_.IsNull();
 }
 
-bool WebPrerender::isNull() const
-{
-    return m_private.isNull();
+WebURL WebPrerender::Url() const {
+  return WebURL(private_->Url());
 }
 
-WebURL WebPrerender::url() const
-{
-    return WebURL(m_private->url());
+unsigned WebPrerender::RelTypes() const {
+  return private_->RelTypes();
 }
 
-unsigned WebPrerender::relTypes() const
-{
-    return m_private->relTypes();
+WebString WebPrerender::GetReferrer() const {
+  return private_->GetReferrer();
 }
 
-WebString WebPrerender::referrer() const
-{
-    return m_private->referrer();
+WebReferrerPolicy WebPrerender::GetReferrerPolicy() const {
+  return static_cast<WebReferrerPolicy>(private_->GetReferrerPolicy());
 }
 
-WebReferrerPolicy WebPrerender::referrerPolicy() const
-{
-    return static_cast<WebReferrerPolicy>(m_private->getReferrerPolicy());
+void WebPrerender::SetExtraData(WebPrerender::ExtraData* extra_data) {
+  private_->SetExtraData(ExtraDataContainer::Create(extra_data));
 }
 
-void WebPrerender::setExtraData(WebPrerender::ExtraData* extraData)
-{
-    m_private->setExtraData(ExtraDataContainer::create(extraData));
+const WebPrerender::ExtraData* WebPrerender::GetExtraData() const {
+  RefPtr<Prerender::ExtraData> webcore_extra_data = private_->GetExtraData();
+  if (!webcore_extra_data)
+    return 0;
+  return static_cast<ExtraDataContainer*>(webcore_extra_data.Get())
+      ->GetExtraData();
 }
 
-const WebPrerender::ExtraData* WebPrerender::getExtraData() const
-{
-    RefPtr<Prerender::ExtraData> webcoreExtraData = m_private->getExtraData();
-    if (!webcoreExtraData)
-        return 0;
-    return static_cast<ExtraDataContainer*>(webcoreExtraData.get())->getExtraData();
+void WebPrerender::DidStartPrerender() {
+  private_->DidStartPrerender();
 }
 
-void WebPrerender::didStartPrerender()
-{
-    m_private->didStartPrerender();
+void WebPrerender::DidStopPrerender() {
+  private_->DidStopPrerender();
 }
 
-void WebPrerender::didStopPrerender()
-{
-    m_private->didStopPrerender();
+void WebPrerender::DidSendLoadForPrerender() {
+  private_->DidSendLoadForPrerender();
 }
 
-void WebPrerender::didSendLoadForPrerender()
-{
-    m_private->didSendLoadForPrerender();
+void WebPrerender::DidSendDOMContentLoadedForPrerender() {
+  private_->DidSendDOMContentLoadedForPrerender();
 }
 
-void WebPrerender::didSendDOMContentLoadedForPrerender()
-{
-    m_private->didSendDOMContentLoadedForPrerender();
-}
-
-} // namespace blink
+}  // namespace blink

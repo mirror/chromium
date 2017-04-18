@@ -227,8 +227,9 @@ void AlarmManager::SetClockForTesting(base::Clock* clock) {
   clock_.reset(clock);
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<AlarmManager>>
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<AlarmManager>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<AlarmManager>*
@@ -309,7 +310,7 @@ void AlarmManager::WriteToStorage(const std::string& extension_id) {
   if (list != alarms_.end())
     alarms = AlarmsToValue(list->second);
   else
-    alarms.reset(AlarmsToValue(AlarmList()).release());
+    alarms = AlarmsToValue(AlarmList());
   storage->SetExtensionValue(extension_id, kRegisteredAlarms,
                              std::move(alarms));
 }

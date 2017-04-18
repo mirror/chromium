@@ -11,6 +11,8 @@
 #include <string>
 
 #include "base/base_export.h"
+#include "base/debug/debugging_flags.h"
+#include "base/macros.h"
 #include "build/build_config.h"
 
 #if defined(OS_POSIX)
@@ -20,14 +22,6 @@
 #if defined(OS_WIN)
 struct _EXCEPTION_POINTERS;
 struct _CONTEXT;
-#endif
-
-#if defined(OS_POSIX) && ( \
-    defined(__i386__) || defined(__x86_64__) || \
-    (defined(__arm__) && !defined(__thumb__)))
-#define HAVE_TRACE_STACK_FRAME_POINTERS 1
-#else
-#define HAVE_TRACE_STACK_FRAME_POINTERS 0
 #endif
 
 namespace base {
@@ -44,6 +38,11 @@ namespace debug {
 // done in official builds because it has security implications).
 BASE_EXPORT bool EnableInProcessStackDumping();
 
+// Returns end of the stack, or 0 if we couldn't get it.
+#if BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
+BASE_EXPORT uintptr_t GetStackEnd();
+#endif
+
 // A stacktrace can be helpful in debugging. For example, you can include a
 // stacktrace member in a object (probably around #ifndef NDEBUG) so that you
 // can later see where the given object was created from.
@@ -52,9 +51,13 @@ class BASE_EXPORT StackTrace {
   // Creates a stacktrace from the current location.
   StackTrace();
 
+  // Creates a stacktrace from the current location, of up to |count| entries.
+  // |count| will be limited to at most |kMaxTraces|.
+  explicit StackTrace(size_t count);
+
   // Creates a stacktrace from an existing array of instruction
   // pointers (such as returned by Addresses()).  |count| will be
-  // trimmed to |kMaxTraces|.
+  // limited to at most |kMaxTraces|.
   StackTrace(const void* const* trace, size_t count);
 
 #if defined(OS_WIN)
@@ -66,8 +69,6 @@ class BASE_EXPORT StackTrace {
 #endif
 
   // Copying and assignment are allowed with the default functions.
-
-  ~StackTrace();
 
   // Gets an array of instruction pointer values. |*count| will be set to the
   // number of elements in the returned array.
@@ -101,7 +102,7 @@ class BASE_EXPORT StackTrace {
   size_t count_;
 };
 
-#if HAVE_TRACE_STACK_FRAME_POINTERS
+#if BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
 // Traces the stack by using frame pointers. This function is faster but less
 // reliable than StackTrace. It should work for debug and profiling builds,
 // but not for release builds (although there are some exceptions).
@@ -113,7 +114,58 @@ class BASE_EXPORT StackTrace {
 BASE_EXPORT size_t TraceStackFramePointers(const void** out_trace,
                                            size_t max_depth,
                                            size_t skip_initial);
-#endif  // HAVE_TRACE_STACK_FRAME_POINTERS
+
+// Links stack frame |fp| to |parent_fp|, so that during stack unwinding
+// TraceStackFramePointers() visits |parent_fp| after visiting |fp|.
+// Both frame pointers must come from __builtin_frame_address().
+// Destructor restores original linkage of |fp| to avoid corrupting caller's
+// frame register on return.
+//
+// This class can be used to repair broken stack frame chain in cases
+// when execution flow goes into code built without frame pointers:
+//
+// void DoWork() {
+//   Call_SomeLibrary();
+// }
+// static __thread void*  g_saved_fp;
+// void Call_SomeLibrary() {
+//   g_saved_fp = __builtin_frame_address(0);
+//   some_library_call(...); // indirectly calls SomeLibrary_Callback()
+// }
+// void SomeLibrary_Callback() {
+//   ScopedStackFrameLinker linker(__builtin_frame_address(0), g_saved_fp);
+//   ...
+//   TraceStackFramePointers(...);
+// }
+//
+// This produces the following trace:
+//
+// #0 SomeLibrary_Callback()
+// #1 <address of the code inside SomeLibrary that called #0>
+// #2 DoWork()
+// ...rest of the trace...
+//
+// SomeLibrary doesn't use frame pointers, so when SomeLibrary_Callback()
+// is called, stack frame register contains bogus value that becomes callback'
+// parent frame address. Without ScopedStackFrameLinker unwinding would've
+// stopped at that bogus frame address yielding just two first frames (#0, #1).
+// ScopedStackFrameLinker overwrites callback's parent frame address with
+// Call_SomeLibrary's frame, so unwinder produces full trace without even
+// noticing that stack frame chain was broken.
+class BASE_EXPORT ScopedStackFrameLinker {
+ public:
+  ScopedStackFrameLinker(void* fp, void* parent_fp);
+  ~ScopedStackFrameLinker();
+
+ private:
+  void* fp_;
+  void* parent_fp_;
+  void* original_parent_fp_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedStackFrameLinker);
+};
+
+#endif  // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
 
 namespace internal {
 

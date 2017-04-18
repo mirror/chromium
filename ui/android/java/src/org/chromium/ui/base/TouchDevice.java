@@ -49,12 +49,14 @@ public class TouchDevice {
     }
 
     /**
-     * @return the pointer-types supported by the device, as the union (bitwise OR) of PointerType
-     *         bits.
+     * @return an array of two ints: result[0] represents the pointer-types and result[1] represents
+     *         the hover-types supported by the device, where each int is the union (bitwise OR) of
+     *         corresponding type (PointerType/HoverType) bits.
      */
     @CalledByNative
-    private static int availablePointerTypes(Context context) {
-        int pointerTypesVal = 0;
+    private static int[] availablePointerAndHoverTypes(Context context) {
+        int[] result = new int[2];
+        result[0] = result[1] = 0;
 
         for (int deviceId : InputDevice.getDeviceIds()) {
             InputDevice inputDevice = InputDevice.getDevice(deviceId);
@@ -66,47 +68,28 @@ public class TouchDevice {
                     || hasSource(sources, InputDevice.SOURCE_STYLUS)
                     || hasSource(sources, InputDevice.SOURCE_TOUCHPAD)
                     || hasSource(sources, InputDevice.SOURCE_TRACKBALL)) {
-                pointerTypesVal |= PointerType.FINE;
+                result[0] |= PointerType.FINE;
             } else if (hasSource(sources, InputDevice.SOURCE_TOUCHSCREEN)) {
-                pointerTypesVal |= PointerType.COARSE;
+                result[0] |= PointerType.COARSE;
             }
-            // Remaining InputDevice sources: SOURCE_DPAD, SOURCE_GAMEPAD, SOURCE_JOYSTICK,
-            // SOURCE_KEYBOARD, SOURCE_TOUCH_NAVIGATION, SOURCE_UNKNOWN
-        }
-
-        if (pointerTypesVal == 0) pointerTypesVal = PointerType.NONE;
-
-        return pointerTypesVal;
-    }
-
-    /**
-     * @return the hover-types supported by the device, as the union (bitwise OR) of HoverType bits.
-     */
-    @CalledByNative
-    private static int availableHoverTypes(Context context) {
-        int hoverTypesVal = 0;
-
-        for (int deviceId : InputDevice.getDeviceIds()) {
-            InputDevice inputDevice = InputDevice.getDevice(deviceId);
-            if (inputDevice == null) continue;
-
-            int sources = inputDevice.getSources();
 
             if (hasSource(sources, InputDevice.SOURCE_MOUSE)
                     || hasSource(sources, InputDevice.SOURCE_TOUCHPAD)
                     || hasSource(sources, InputDevice.SOURCE_TRACKBALL)) {
-                hoverTypesVal |= HoverType.HOVER;
+                result[1] |= HoverType.HOVER;
             } else if (hasSource(sources, InputDevice.SOURCE_STYLUS)
                     || hasSource(sources, InputDevice.SOURCE_TOUCHSCREEN)) {
-                hoverTypesVal |= HoverType.ON_DEMAND;
+                result[1] |= HoverType.NONE;
             }
+
             // Remaining InputDevice sources: SOURCE_DPAD, SOURCE_GAMEPAD, SOURCE_JOYSTICK,
             // SOURCE_KEYBOARD, SOURCE_TOUCH_NAVIGATION, SOURCE_UNKNOWN
         }
 
-        if (hoverTypesVal == 0) hoverTypesVal = HoverType.NONE;
+        if (result[0] == 0) result[0] = PointerType.NONE;
+        if (result[1] == 0) result[1] = HoverType.NONE;
 
-        return hoverTypesVal;
+        return result;
     }
 
     private static boolean hasSource(int sources, int inputDeviceSource) {

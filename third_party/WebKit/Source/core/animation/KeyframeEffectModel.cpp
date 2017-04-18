@@ -30,271 +30,299 @@
 
 #include "core/animation/KeyframeEffectModel.h"
 
-#include "core/animation/AnimationEffect.h"
+#include "core/animation/AnimationEffectReadOnly.h"
 #include "core/animation/CompositorAnimations.h"
 #include "core/animation/css/CSSAnimatableValueFactory.h"
 #include "core/css/CSSPropertyEquality.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/Document.h"
+#include "core/frame/UseCounter.h"
 #include "platform/animation/AnimationUtilities.h"
 #include "platform/geometry/FloatBox.h"
 #include "platform/transforms/TransformationMatrix.h"
-#include "wtf/PtrUtil.h"
-#include "wtf/text/StringHash.h"
+#include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/StringHash.h"
 
 namespace blink {
 
-PropertyHandleSet KeyframeEffectModelBase::properties() const
-{
-    PropertyHandleSet result;
-    for (const auto& keyframe : m_keyframes) {
-        for (const auto& property : keyframe->properties())
-            result.add(property);
+PropertyHandleSet KeyframeEffectModelBase::Properties() const {
+  PropertyHandleSet result;
+  for (const auto& keyframe : keyframes_) {
+    for (const auto& property : keyframe->Properties())
+      result.insert(property);
+  }
+  return result;
+}
+
+void KeyframeEffectModelBase::SetFrames(KeyframeVector& keyframes) {
+  // TODO(samli): Should also notify/invalidate the animation
+  keyframes_ = keyframes;
+  keyframe_groups_ = nullptr;
+  interpolation_effect_.Clear();
+  last_fraction_ = std::numeric_limits<double>::quiet_NaN();
+}
+
+bool KeyframeEffectModelBase::Sample(
+    int iteration,
+    double fraction,
+    double iteration_duration,
+    Vector<RefPtr<Interpolation>>& result) const {
+  DCHECK_GE(iteration, 0);
+  DCHECK(!IsNull(fraction));
+  EnsureKeyframeGroups();
+  EnsureInterpolationEffectPopulated();
+
+  bool changed = iteration != last_iteration_ || fraction != last_fraction_ ||
+                 iteration_duration != last_iteration_duration_;
+  last_iteration_ = iteration;
+  last_fraction_ = fraction;
+  last_iteration_duration_ = iteration_duration;
+  interpolation_effect_.GetActiveInterpolations(fraction, iteration_duration,
+                                                result);
+  return changed;
+}
+
+bool KeyframeEffectModelBase::SnapshotNeutralCompositorKeyframes(
+    Element& element,
+    const ComputedStyle& old_style,
+    const ComputedStyle& new_style,
+    const ComputedStyle* parent_style) const {
+  bool updated = false;
+  EnsureKeyframeGroups();
+  for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
+    if (CSSPropertyEquality::PropertiesEqual(property, old_style, new_style))
+      continue;
+    PropertySpecificKeyframeGroup* keyframe_group =
+        keyframe_groups_->at(PropertyHandle(property));
+    if (!keyframe_group)
+      continue;
+    for (auto& keyframe : keyframe_group->keyframes_) {
+      if (keyframe->IsNeutral())
+        updated |= keyframe->PopulateAnimatableValue(property, element,
+                                                     new_style, parent_style);
     }
+  }
+  return updated;
+}
+
+bool KeyframeEffectModelBase::SnapshotAllCompositorKeyframes(
+    Element& element,
+    const ComputedStyle& base_style,
+    const ComputedStyle* parent_style) const {
+  needs_compositor_keyframes_snapshot_ = false;
+  bool updated = false;
+  bool has_neutral_compositable_keyframe = false;
+  EnsureKeyframeGroups();
+  for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
+    PropertySpecificKeyframeGroup* keyframe_group =
+        keyframe_groups_->at(PropertyHandle(property));
+    if (!keyframe_group)
+      continue;
+    for (auto& keyframe : keyframe_group->keyframes_) {
+      updated |= keyframe->PopulateAnimatableValue(property, element,
+                                                   base_style, parent_style);
+      has_neutral_compositable_keyframe |= keyframe->IsNeutral();
+    }
+  }
+  if (updated && has_neutral_compositable_keyframe) {
+    UseCounter::Count(element.GetDocument(),
+                      UseCounter::kSyntheticKeyframesInCompositedCSSAnimation);
+  }
+  return updated;
+}
+
+KeyframeEffectModelBase::KeyframeVector
+KeyframeEffectModelBase::NormalizedKeyframes(const KeyframeVector& keyframes) {
+  double last_offset = 0;
+  KeyframeVector result;
+  result.ReserveCapacity(keyframes.size());
+
+  for (const auto& keyframe : keyframes) {
+    double offset = keyframe->Offset();
+    if (!IsNull(offset)) {
+      DCHECK_GE(offset, 0);
+      DCHECK_LE(offset, 1);
+      DCHECK_GE(offset, last_offset);
+      last_offset = offset;
+    }
+    result.push_back(keyframe->Clone());
+  }
+
+  if (result.IsEmpty())
     return result;
+
+  if (IsNull(result.back()->Offset()))
+    result.back()->SetOffset(1);
+
+  if (result.size() > 1 && IsNull(result[0]->Offset()))
+    result.front()->SetOffset(0);
+
+  size_t last_index = 0;
+  last_offset = result.front()->Offset();
+  for (size_t i = 1; i < result.size(); ++i) {
+    double offset = result[i]->Offset();
+    if (!IsNull(offset)) {
+      for (size_t j = 1; j < i - last_index; ++j)
+        result[last_index + j]->SetOffset(
+            last_offset + (offset - last_offset) * j / (i - last_index));
+      last_index = i;
+      last_offset = offset;
+    }
+  }
+
+  return result;
 }
 
-void KeyframeEffectModelBase::setFrames(KeyframeVector& keyframes)
-{
-    // TODO(samli): Should also notify/invalidate the animation
-    m_keyframes = keyframes;
-    m_keyframeGroups = nullptr;
-    m_interpolationEffect.clear();
-    m_lastFraction = std::numeric_limits<double>::quiet_NaN();
+bool KeyframeEffectModelBase::IsTransformRelatedEffect() const {
+  return Affects(PropertyHandle(CSSPropertyTransform)) ||
+         Affects(PropertyHandle(CSSPropertyRotate)) ||
+         Affects(PropertyHandle(CSSPropertyScale)) ||
+         Affects(PropertyHandle(CSSPropertyTranslate));
 }
 
-bool KeyframeEffectModelBase::sample(int iteration, double fraction, double iterationDuration, Vector<RefPtr<Interpolation>>& result) const
-{
-    ASSERT(iteration >= 0);
-    ASSERT(!isNull(fraction));
-    ensureKeyframeGroups();
-    ensureInterpolationEffectPopulated();
+void KeyframeEffectModelBase::EnsureKeyframeGroups() const {
+  if (keyframe_groups_)
+    return;
 
-    bool changed = iteration != m_lastIteration || fraction != m_lastFraction || iterationDuration != m_lastIterationDuration;
-    m_lastIteration = iteration;
-    m_lastFraction = fraction;
-    m_lastIterationDuration = iterationDuration;
-    m_interpolationEffect.getActiveInterpolations(fraction, iterationDuration, result);
-    return changed;
+  keyframe_groups_ = WTF::WrapUnique(new KeyframeGroupMap);
+  RefPtr<TimingFunction> zero_offset_easing = default_keyframe_easing_;
+  for (const auto& keyframe : NormalizedKeyframes(GetFrames())) {
+    if (keyframe->Offset() == 0)
+      zero_offset_easing = &keyframe->Easing();
+
+    for (const PropertyHandle& property : keyframe->Properties()) {
+      KeyframeGroupMap::iterator group_iter = keyframe_groups_->Find(property);
+      PropertySpecificKeyframeGroup* group;
+      if (group_iter == keyframe_groups_->end()) {
+        group = keyframe_groups_
+                    ->insert(property,
+                             WTF::WrapUnique(new PropertySpecificKeyframeGroup))
+                    .stored_value->value.get();
+      } else {
+        group = group_iter->value.get();
+      }
+
+      group->AppendKeyframe(keyframe->CreatePropertySpecificKeyframe(property));
+    }
+  }
+
+  // Add synthetic keyframes.
+  has_synthetic_keyframes_ = false;
+  for (const auto& entry : *keyframe_groups_) {
+    if (entry.value->AddSyntheticKeyframeIfRequired(zero_offset_easing))
+      has_synthetic_keyframes_ = true;
+
+    entry.value->RemoveRedundantKeyframes();
+  }
 }
 
-bool KeyframeEffectModelBase::snapshotNeutralCompositorKeyframes(Element& element, const ComputedStyle& oldStyle, const ComputedStyle& newStyle, const ComputedStyle* parentStyle) const
-{
-    bool updated = false;
-    ensureKeyframeGroups();
-    for (CSSPropertyID property : CompositorAnimations::compositableProperties) {
-        if (CSSPropertyEquality::propertiesEqual(property, oldStyle, newStyle))
-            continue;
-        PropertySpecificKeyframeGroup* keyframeGroup = m_keyframeGroups->get(PropertyHandle(property));
-        if (!keyframeGroup)
-            continue;
-        for (auto& keyframe : keyframeGroup->m_keyframes) {
-            if (keyframe->isNeutral())
-                updated |= keyframe->populateAnimatableValue(property, element, newStyle, parentStyle);
+void KeyframeEffectModelBase::EnsureInterpolationEffectPopulated() const {
+  if (interpolation_effect_.IsPopulated())
+    return;
+
+  for (const auto& entry : *keyframe_groups_) {
+    const PropertySpecificKeyframeVector& keyframes = entry.value->Keyframes();
+    for (size_t i = 0; i < keyframes.size() - 1; i++) {
+      size_t start_index = i;
+      size_t end_index = i + 1;
+      double start_offset = keyframes[start_index]->Offset();
+      double end_offset = keyframes[end_index]->Offset();
+      double apply_from = start_offset;
+      double apply_to = end_offset;
+
+      if (i == 0) {
+        apply_from = -std::numeric_limits<double>::infinity();
+        DCHECK_EQ(start_offset, 0.0);
+        if (end_offset == 0.0) {
+          DCHECK_NE(keyframes[end_index + 1]->Offset(), 0.0);
+          end_index = start_index;
         }
-    }
-    return updated;
-}
-
-bool KeyframeEffectModelBase::snapshotAllCompositorKeyframes(Element& element, const ComputedStyle& baseStyle, const ComputedStyle* parentStyle) const
-{
-    m_needsCompositorKeyframesSnapshot = false;
-    bool updated = false;
-    ensureKeyframeGroups();
-    for (CSSPropertyID property : CompositorAnimations::compositableProperties) {
-        PropertySpecificKeyframeGroup* keyframeGroup = m_keyframeGroups->get(PropertyHandle(property));
-        if (!keyframeGroup)
-            continue;
-        for (auto& keyframe : keyframeGroup->m_keyframes)
-            updated |= keyframe->populateAnimatableValue(property, element, baseStyle, parentStyle);
-    }
-    return updated;
-}
-
-KeyframeEffectModelBase::KeyframeVector KeyframeEffectModelBase::normalizedKeyframes(const KeyframeVector& keyframes)
-{
-    double lastOffset = 0;
-    KeyframeVector result;
-    result.reserveCapacity(keyframes.size());
-
-    for (const auto& keyframe : keyframes) {
-        double offset = keyframe->offset();
-        if (!isNull(offset)) {
-            ASSERT(offset >= 0);
-            ASSERT(offset <= 1);
-            ASSERT(offset >= lastOffset);
-            lastOffset = offset;
+      }
+      if (i == keyframes.size() - 2) {
+        apply_to = std::numeric_limits<double>::infinity();
+        DCHECK_EQ(end_offset, 1.0);
+        if (start_offset == 1.0) {
+          DCHECK_NE(keyframes[start_index - 1]->Offset(), 1.0);
+          start_index = end_index;
         }
-        result.append(keyframe->clone());
+      }
+
+      if (apply_from != apply_to) {
+        interpolation_effect_.AddInterpolationsFromKeyframes(
+            entry.key, *keyframes[start_index], *keyframes[end_index],
+            apply_from, apply_to);
+      }
+      // else the interpolation will never be used in sampling
     }
+  }
 
-    if (result.isEmpty())
-        return result;
-
-    if (isNull(result.last()->offset()))
-        result.last()->setOffset(1);
-
-    if (result.size() > 1 && isNull(result[0]->offset()))
-        result.first()->setOffset(0);
-
-    size_t lastIndex = 0;
-    lastOffset = result.first()->offset();
-    for (size_t i = 1; i < result.size(); ++i) {
-        double offset = result[i]->offset();
-        if (!isNull(offset)) {
-            for (size_t j = 1; j < i - lastIndex; ++j)
-                result[lastIndex + j]->setOffset(lastOffset + (offset - lastOffset) * j / (i - lastIndex));
-            lastIndex = i;
-            lastOffset = offset;
-        }
-    }
-
-    return result;
+  interpolation_effect_.SetPopulated();
 }
 
-bool KeyframeEffectModelBase::isTransformRelatedEffect() const
-{
-    return affects(PropertyHandle(CSSPropertyTransform))
-        || affects(PropertyHandle(CSSPropertyRotate))
-        || affects(PropertyHandle(CSSPropertyScale))
-        || affects(PropertyHandle(CSSPropertyTranslate));
-}
-
-void KeyframeEffectModelBase::ensureKeyframeGroups() const
-{
-    if (m_keyframeGroups)
-        return;
-
-    m_keyframeGroups = wrapUnique(new KeyframeGroupMap);
-    RefPtr<TimingFunction> zeroOffsetEasing = m_defaultKeyframeEasing;
-    for (const auto& keyframe : normalizedKeyframes(getFrames())) {
-        if (keyframe->offset() == 0)
-            zeroOffsetEasing = &keyframe->easing();
-
-        for (const PropertyHandle& property : keyframe->properties()) {
-            KeyframeGroupMap::iterator groupIter = m_keyframeGroups->find(property);
-            PropertySpecificKeyframeGroup* group;
-            if (groupIter == m_keyframeGroups->end())
-                group = m_keyframeGroups->add(property, wrapUnique(new PropertySpecificKeyframeGroup)).storedValue->value.get();
-            else
-                group = groupIter->value.get();
-
-            group->appendKeyframe(keyframe->createPropertySpecificKeyframe(property));
-        }
+bool KeyframeEffectModelBase::IsReplaceOnly() {
+  EnsureKeyframeGroups();
+  for (const auto& entry : *keyframe_groups_) {
+    for (const auto& keyframe : entry.value->Keyframes()) {
+      if (keyframe->Composite() != EffectModel::kCompositeReplace)
+        return false;
     }
-
-    // Add synthetic keyframes.
-    m_hasSyntheticKeyframes = false;
-    for (const auto& entry : *m_keyframeGroups) {
-        if (entry.value->addSyntheticKeyframeIfRequired(zeroOffsetEasing))
-            m_hasSyntheticKeyframes = true;
-
-        entry.value->removeRedundantKeyframes();
-    }
+  }
+  return true;
 }
 
-void KeyframeEffectModelBase::ensureInterpolationEffectPopulated() const
-{
-    if (m_interpolationEffect.isPopulated())
-        return;
-
-    for (const auto& entry : *m_keyframeGroups) {
-        const PropertySpecificKeyframeVector& keyframes = entry.value->keyframes();
-        for (size_t i = 0; i < keyframes.size() - 1; i++) {
-            size_t startIndex = i;
-            size_t endIndex = i+1;
-            double startOffset = keyframes[startIndex]->offset();
-            double endOffset = keyframes[endIndex]->offset();
-            double applyFrom = startOffset;
-            double applyTo = endOffset;
-
-            if (i == 0) {
-                applyFrom = -std::numeric_limits<double>::infinity();
-                ASSERT(startOffset == 0.0);
-                if (endOffset == 0.0) {
-                    ASSERT(keyframes[endIndex + 1]->offset() != 0.0);
-                    endIndex = startIndex;
-                }
-            }
-            if (i == keyframes.size() - 2) {
-                applyTo = std::numeric_limits<double>::infinity();
-                ASSERT(endOffset == 1.0);
-                if (startOffset == 1.0) {
-                    ASSERT(keyframes[startIndex - 1]->offset() != 1.0);
-                    startIndex = endIndex;
-                }
-            }
-
-            if (applyFrom != applyTo) {
-                m_interpolationEffect.addInterpolationsFromKeyframes(
-                    entry.key, *keyframes[startIndex], *keyframes[endIndex], applyFrom, applyTo);
-            }
-            // else the interpolation will never be used in sampling
-        }
-    }
-
-    m_interpolationEffect.setPopulated();
+Keyframe::PropertySpecificKeyframe::PropertySpecificKeyframe(
+    double offset,
+    PassRefPtr<TimingFunction> easing,
+    EffectModel::CompositeOperation composite)
+    : offset_(offset), easing_(std::move(easing)), composite_(composite) {
+  DCHECK(!IsNull(offset));
 }
 
-bool KeyframeEffectModelBase::isReplaceOnly()
-{
-    ensureKeyframeGroups();
-    for (const auto& entry : *m_keyframeGroups) {
-        for (const auto& keyframe : entry.value->keyframes()) {
-            if (keyframe->composite() != EffectModel::CompositeReplace)
-                return false;
-        }
-    }
-    return true;
+void KeyframeEffectModelBase::PropertySpecificKeyframeGroup::AppendKeyframe(
+    PassRefPtr<Keyframe::PropertySpecificKeyframe> keyframe) {
+  DCHECK(keyframes_.IsEmpty() ||
+         keyframes_.back()->Offset() <= keyframe->Offset());
+  keyframes_.push_back(std::move(keyframe));
 }
 
-Keyframe::PropertySpecificKeyframe::PropertySpecificKeyframe(double offset, PassRefPtr<TimingFunction> easing, EffectModel::CompositeOperation composite)
-    : m_offset(offset)
-    , m_easing(easing)
-    , m_composite(composite)
-{
-    ASSERT(!isNull(offset));
+void KeyframeEffectModelBase::PropertySpecificKeyframeGroup::
+    RemoveRedundantKeyframes() {
+  // As an optimization, removes interior keyframes that have the same offset
+  // as both their neighbours, as they will never be used by sample().
+  // Note that synthetic keyframes must be added before this method is
+  // called.
+  DCHECK_GE(keyframes_.size(), 2U);
+  for (int i = keyframes_.size() - 2; i > 0; --i) {
+    double offset = keyframes_[i]->Offset();
+    bool has_same_offset_as_previous_neighbor =
+        keyframes_[i - 1]->Offset() == offset;
+    bool has_same_offset_as_next_neighbor =
+        keyframes_[i + 1]->Offset() == offset;
+    if (has_same_offset_as_previous_neighbor &&
+        has_same_offset_as_next_neighbor)
+      keyframes_.erase(i);
+  }
+  DCHECK_GE(keyframes_.size(), 2U);
 }
 
-void KeyframeEffectModelBase::PropertySpecificKeyframeGroup::appendKeyframe(PassRefPtr<Keyframe::PropertySpecificKeyframe> keyframe)
-{
-    ASSERT(m_keyframes.isEmpty() || m_keyframes.last()->offset() <= keyframe->offset());
-    m_keyframes.append(keyframe);
+bool KeyframeEffectModelBase::PropertySpecificKeyframeGroup::
+    AddSyntheticKeyframeIfRequired(
+        PassRefPtr<TimingFunction> zero_offset_easing) {
+  DCHECK(!keyframes_.IsEmpty());
+
+  bool added_synthetic_keyframe = false;
+
+  if (keyframes_.front()->Offset() != 0.0) {
+    keyframes_.insert(0, keyframes_.front()->NeutralKeyframe(
+                             0, std::move(zero_offset_easing)));
+    added_synthetic_keyframe = true;
+  }
+  if (keyframes_.back()->Offset() != 1.0) {
+    AppendKeyframe(keyframes_.back()->NeutralKeyframe(1, nullptr));
+    added_synthetic_keyframe = true;
+  }
+
+  return added_synthetic_keyframe;
 }
 
-void KeyframeEffectModelBase::PropertySpecificKeyframeGroup::removeRedundantKeyframes()
-{
-    // As an optimization, removes interior keyframes that have the same offset
-    // as both their neighbours, as they will never be used by sample().
-    // Note that synthetic keyframes must be added before this method is
-    // called.
-    ASSERT(m_keyframes.size() >= 2);
-    for (int i = m_keyframes.size() - 2; i > 0; --i) {
-        double offset = m_keyframes[i]->offset();
-        bool hasSameOffsetAsPreviousNeighbor = m_keyframes[i - 1]->offset() == offset;
-        bool hasSameOffsetAsNextNeighbor = m_keyframes[i + 1]->offset() == offset;
-        if (hasSameOffsetAsPreviousNeighbor && hasSameOffsetAsNextNeighbor)
-            m_keyframes.remove(i);
-    }
-    ASSERT(m_keyframes.size() >= 2);
-}
-
-bool KeyframeEffectModelBase::PropertySpecificKeyframeGroup::addSyntheticKeyframeIfRequired(PassRefPtr<TimingFunction> zeroOffsetEasing)
-{
-    ASSERT(!m_keyframes.isEmpty());
-
-    bool addedSyntheticKeyframe = false;
-
-    if (m_keyframes.first()->offset() != 0.0) {
-        m_keyframes.insert(0, m_keyframes.first()->neutralKeyframe(0, zeroOffsetEasing));
-        addedSyntheticKeyframe = true;
-    }
-    if (m_keyframes.last()->offset() != 1.0) {
-        appendKeyframe(m_keyframes.last()->neutralKeyframe(1, nullptr));
-        addedSyntheticKeyframe = true;
-    }
-
-    return addedSyntheticKeyframe;
-}
-
-} // namespace blink
+}  // namespace blink

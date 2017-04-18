@@ -10,7 +10,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
-#include "chrome/browser/extensions/chrome_requirements_checker.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/launch_util.h"
@@ -61,7 +60,7 @@ class ManagementSetEnabledFunctionInstallPromptDelegate
                        OnInstallPromptDone,
                    weak_factory_.GetWeakPtr()),
         extension, nullptr,
-        base::WrapUnique(new ExtensionInstallPrompt::Prompt(type)),
+        base::MakeUnique<ExtensionInstallPrompt::Prompt>(type),
         ExtensionInstallPrompt::GetDefaultShowDialogCallback());
   }
   ~ManagementSetEnabledFunctionInstallPromptDelegate() override {}
@@ -171,7 +170,7 @@ ChromeManagementAPIDelegate::ChromeManagementAPIDelegate() {
 ChromeManagementAPIDelegate::~ChromeManagementAPIDelegate() {
 }
 
-bool ChromeManagementAPIDelegate::LaunchAppFunctionDelegate(
+void ChromeManagementAPIDelegate::LaunchAppFunctionDelegate(
     const extensions::Extension* extension,
     content::BrowserContext* context) const {
   // Look at prefs to find the right launch container.
@@ -179,13 +178,12 @@ bool ChromeManagementAPIDelegate::LaunchAppFunctionDelegate(
   // returned.
   extensions::LaunchContainer launch_container =
       GetLaunchContainer(extensions::ExtensionPrefs::Get(context), extension);
-  OpenApplication(AppLaunchParams(
-      Profile::FromBrowserContext(context), extension, launch_container,
-      NEW_FOREGROUND_TAB, extensions::SOURCE_MANAGEMENT_API));
+  OpenApplication(AppLaunchParams(Profile::FromBrowserContext(context),
+                                  extension, launch_container,
+                                  WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                  extensions::SOURCE_MANAGEMENT_API));
   extensions::RecordAppLaunchType(extension_misc::APP_LAUNCH_EXTENSION_API,
                                   extension->GetType());
-
-  return true;
 }
 
 GURL ChromeManagementAPIDelegate::GetFullLaunchURL(
@@ -226,11 +224,6 @@ ChromeManagementAPIDelegate::SetEnabledFunctionDelegate(
           web_contents, browser_context, extension, callback));
 }
 
-std::unique_ptr<extensions::RequirementsChecker>
-ChromeManagementAPIDelegate::CreateRequirementsChecker() const {
-  return base::WrapUnique(new extensions::ChromeRequirementsChecker());
-}
-
 std::unique_ptr<extensions::UninstallDialogDelegate>
 ChromeManagementAPIDelegate::UninstallFunctionDelegate(
     extensions::ManagementUninstallFunctionBase* function,
@@ -243,13 +236,13 @@ ChromeManagementAPIDelegate::UninstallFunctionDelegate(
 
 bool ChromeManagementAPIDelegate::CreateAppShortcutFunctionDelegate(
     extensions::ManagementCreateAppShortcutFunction* function,
-    const extensions::Extension* extension) const {
+    const extensions::Extension* extension,
+    std::string* error) const {
   Browser* browser = chrome::FindBrowserWithProfile(
       Profile::FromBrowserContext(function->browser_context()));
   if (!browser) {
     // Shouldn't happen if we have user gesture.
-    function->SetError(
-        extension_management_api_constants::kNoBrowserToCreateShortcut);
+    *error = extension_management_api_constants::kNoBrowserToCreateShortcut;
     return false;
   }
 
@@ -339,8 +332,7 @@ GURL ChromeManagementAPIDelegate::GetIconURL(
     const extensions::Extension* extension,
     int icon_size,
     ExtensionIconSet::MatchType match,
-    bool grayscale,
-    bool* exists) const {
+    bool grayscale) const {
   return extensions::ExtensionIconSource::GetIconURL(extension, icon_size,
-                                                     match, grayscale, exists);
+                                                     match, grayscale);
 }

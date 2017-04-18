@@ -13,10 +13,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/process/process.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_message_macros.h"
-#include "ipc/ipc_platform_file.h"
 #include "remoting/base/auto_thread_task_runner.h"
 #include "remoting/host/chromoting_messages.h"
 #include "remoting/host/desktop_session.h"
@@ -74,7 +75,7 @@ class MockDaemonProcess : public DaemonProcess {
   MOCK_METHOD1(Sent, void(const IPC::Message&));
 
   MOCK_METHOD3(OnDesktopSessionAgentAttached,
-               bool(int, base::ProcessHandle, IPC::PlatformFileForTransit));
+               bool(int, int, const IPC::ChannelHandle&));
 
   MOCK_METHOD1(DoCreateDesktopSessionPtr, DesktopSession*(int));
   MOCK_METHOD1(DoCrashNetworkProcess, void(const tracked_objects::Location&));
@@ -186,7 +187,7 @@ void DaemonProcessTest::SetUp() {
 
 void DaemonProcessTest::TearDown() {
   daemon_process_->Stop();
-  message_loop_.Run();
+  base::RunLoop().Run();
 }
 
 DesktopSession* DaemonProcessTest::DoCreateDesktopSession(int terminal_id) {

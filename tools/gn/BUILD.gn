@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//testing/test.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
 
 defines = [ "GN_BUILD" ]
 
@@ -14,6 +15,8 @@ static_library("gn_lib") {
     "action_target_generator.h",
     "action_values.cc",
     "action_values.h",
+    "analyzer.cc",
+    "analyzer.h",
     "args.cc",
     "args.h",
     "binary_target_generator.cc",
@@ -32,11 +35,13 @@ static_library("gn_lib") {
     "bundle_file_rule.h",
     "c_include_iterator.cc",
     "c_include_iterator.h",
+    "command_analyze.cc",
     "command_args.cc",
     "command_check.cc",
     "command_clean.cc",
     "command_desc.cc",
     "command_format.cc",
+    "command_format.h",
     "command_gen.cc",
     "command_help.cc",
     "command_ls.cc",
@@ -273,6 +278,7 @@ executable("gn") {
 test("gn_unittests") {
   sources = [
     "action_target_generator_unittest.cc",
+    "analyzer_unittest.cc",
     "args_unittest.cc",
     "builder_unittest.cc",
     "c_include_iterator_unittest.cc",
@@ -289,6 +295,7 @@ test("gn_unittests") {
     "function_get_target_outputs_unittest.cc",
     "function_process_file_template_unittest.cc",
     "function_rebase_path_unittest.cc",
+    "function_template_unittest.cc",
     "function_toolchain_unittest.cc",
     "function_write_file_unittest.cc",
     "functions_target_unittest.cc",
@@ -343,5 +350,14 @@ test("gn_unittests") {
     "//base/test:run_all_unittests",
     "//base/test:test_support",
     "//testing/gtest",
+  ]
+}
+
+fuzzer_test("gn_parser_fuzzer") {
+  sources = [
+    "parser_fuzzer.cc",
+  ]
+  deps = [
+    ":gn_lib",
   ]
 }

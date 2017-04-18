@@ -11,287 +11,408 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "modules/mediastream/MediaStreamTrack.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionMessages.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/events/Event.h"
 #include "core/frame/Deprecation.h"
+#include "modules/imagecapture/ImageCapture.h"
 #include "modules/mediastream/MediaConstraintsImpl.h"
 #include "modules/mediastream/MediaStream.h"
-#include "modules/mediastream/MediaStreamTrackSourcesCallback.h"
-#include "modules/mediastream/MediaStreamTrackSourcesRequestImpl.h"
+#include "modules/mediastream/MediaTrackCapabilities.h"
+#include "modules/mediastream/MediaTrackConstraints.h"
 #include "modules/mediastream/MediaTrackSettings.h"
 #include "modules/mediastream/UserMediaController.h"
 #include "platform/mediastream/MediaStreamCenter.h"
 #include "platform/mediastream/MediaStreamComponent.h"
+#include "platform/wtf/Assertions.h"
 #include "public/platform/WebMediaStreamTrack.h"
-#include "public/platform/WebSourceInfo.h"
-#include "wtf/Assertions.h"
-#include <memory>
 
 namespace blink {
 
-MediaStreamTrack* MediaStreamTrack::create(ExecutionContext* context, MediaStreamComponent* component)
-{
-    MediaStreamTrack* track = new MediaStreamTrack(context, component);
-    track->suspendIfNeeded();
-    return track;
+namespace {
+static const char kContentHintStringNone[] = "";
+static const char kContentHintStringAudioSpeech[] = "speech";
+static const char kContentHintStringAudioMusic[] = "music";
+static const char kContentHintStringVideoMotion[] = "motion";
+static const char kContentHintStringVideoDetail[] = "detail";
+}  // namespace
+
+MediaStreamTrack* MediaStreamTrack::Create(ExecutionContext* context,
+                                           MediaStreamComponent* component) {
+  return new MediaStreamTrack(context, component);
 }
 
-MediaStreamTrack::MediaStreamTrack(ExecutionContext* context, MediaStreamComponent* component)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(context)
-    , m_readyState(MediaStreamSource::ReadyStateLive)
-    , m_isIteratingRegisteredMediaStreams(false)
-    , m_stopped(false)
-    , m_component(component)
-    // The source's constraints aren't yet initialized at creation time.
-    , m_constraints()
-{
-    m_component->source()->addObserver(this);
+MediaStreamTrack::MediaStreamTrack(ExecutionContext* context,
+                                   MediaStreamComponent* component)
+    : ContextLifecycleObserver(context),
+      ready_state_(MediaStreamSource::kReadyStateLive),
+      is_iterating_registered_media_streams_(false),
+      stopped_(false),
+      component_(component),
+      // The source's constraints aren't yet initialized at creation time.
+      constraints_() {
+  component_->Source()->AddObserver(this);
+
+  if (component_->Source() &&
+      component_->Source()->GetType() == MediaStreamSource::kTypeVideo) {
+    // ImageCapture::create() only throws if |this| track is not of video type.
+    NonThrowableExceptionState exception_state;
+    image_capture_ = ImageCapture::Create(context, this, exception_state);
+  }
 }
 
-MediaStreamTrack::~MediaStreamTrack()
-{
+MediaStreamTrack::~MediaStreamTrack() {}
+
+String MediaStreamTrack::kind() const {
+  DEFINE_STATIC_LOCAL(String, audio_kind, ("audio"));
+  DEFINE_STATIC_LOCAL(String, video_kind, ("video"));
+
+  switch (component_->Source()->GetType()) {
+    case MediaStreamSource::kTypeAudio:
+      return audio_kind;
+    case MediaStreamSource::kTypeVideo:
+      return video_kind;
+  }
+
+  NOTREACHED();
+  return audio_kind;
 }
 
-String MediaStreamTrack::kind() const
-{
-    DEFINE_STATIC_LOCAL(String, audioKind, ("audio"));
-    DEFINE_STATIC_LOCAL(String, videoKind, ("video"));
-
-    switch (m_component->source()->type()) {
-    case MediaStreamSource::TypeAudio:
-        return audioKind;
-    case MediaStreamSource::TypeVideo:
-        return videoKind;
-    }
-
-    NOTREACHED();
-    return audioKind;
+String MediaStreamTrack::id() const {
+  return component_->Id();
 }
 
-String MediaStreamTrack::id() const
-{
-    return m_component->id();
+String MediaStreamTrack::label() const {
+  return component_->Source()->GetName();
 }
 
-String MediaStreamTrack::label() const
-{
-    return m_component->source()->name();
+bool MediaStreamTrack::enabled() const {
+  return component_->Enabled();
 }
 
-bool MediaStreamTrack::enabled() const
-{
-    return m_component->enabled();
+void MediaStreamTrack::setEnabled(bool enabled) {
+  if (enabled == component_->Enabled())
+    return;
+
+  component_->SetEnabled(enabled);
+
+  if (!Ended())
+    MediaStreamCenter::Instance().DidSetMediaStreamTrackEnabled(
+        component_.Get());
 }
 
-void MediaStreamTrack::setEnabled(bool enabled)
-{
-    if (enabled == m_component->enabled())
+bool MediaStreamTrack::muted() const {
+  return component_->Muted();
+}
+
+String MediaStreamTrack::ContentHint() const {
+  WebMediaStreamTrack::ContentHintType hint = component_->ContentHint();
+  switch (hint) {
+    case WebMediaStreamTrack::ContentHintType::kNone:
+      return kContentHintStringNone;
+    case WebMediaStreamTrack::ContentHintType::kAudioSpeech:
+      return kContentHintStringAudioSpeech;
+    case WebMediaStreamTrack::ContentHintType::kAudioMusic:
+      return kContentHintStringAudioMusic;
+    case WebMediaStreamTrack::ContentHintType::kVideoMotion:
+      return kContentHintStringVideoMotion;
+    case WebMediaStreamTrack::ContentHintType::kVideoDetail:
+      return kContentHintStringVideoDetail;
+  }
+
+  NOTREACHED();
+  return String();
+}
+
+void MediaStreamTrack::SetContentHint(const String& hint) {
+  WebMediaStreamTrack::ContentHintType translated_hint =
+      WebMediaStreamTrack::ContentHintType::kNone;
+  switch (component_->Source()->GetType()) {
+    case MediaStreamSource::kTypeAudio:
+      if (hint == kContentHintStringNone) {
+        translated_hint = WebMediaStreamTrack::ContentHintType::kNone;
+      } else if (hint == kContentHintStringAudioSpeech) {
+        translated_hint = WebMediaStreamTrack::ContentHintType::kAudioSpeech;
+      } else if (hint == kContentHintStringAudioMusic) {
+        translated_hint = WebMediaStreamTrack::ContentHintType::kAudioMusic;
+      } else {
+        // TODO(pbos): Log warning?
+        // Invalid values for audio are to be ignored (similar to invalid enum
+        // values).
         return;
-
-    m_component->setEnabled(enabled);
-
-    if (!ended())
-        MediaStreamCenter::instance().didSetMediaStreamTrackEnabled(m_component.get());
-}
-
-bool MediaStreamTrack::muted() const
-{
-    return m_component->muted();
-}
-
-bool MediaStreamTrack::remote() const
-{
-    return m_component->source()->remote();
-}
-
-String MediaStreamTrack::readyState() const
-{
-    if (ended())
-        return "ended";
-
-    switch (m_readyState) {
-    case MediaStreamSource::ReadyStateLive:
-        return "live";
-    case MediaStreamSource::ReadyStateMuted:
-        return "muted";
-    case MediaStreamSource::ReadyStateEnded:
-        return "ended";
-    }
-
-    NOTREACHED();
-    return String();
-}
-
-void MediaStreamTrack::getSources(ExecutionContext* context, MediaStreamTrackSourcesCallback* callback, ExceptionState& exceptionState)
-{
-    LocalFrame* frame = toDocument(context)->frame();
-    UserMediaController* userMedia = UserMediaController::from(frame);
-    if (!userMedia) {
-        exceptionState.throwDOMException(NotSupportedError, "No sources controller available; is this a detached window?");
+      }
+      break;
+    case MediaStreamSource::kTypeVideo:
+      if (hint == kContentHintStringNone) {
+        translated_hint = WebMediaStreamTrack::ContentHintType::kNone;
+      } else if (hint == kContentHintStringVideoMotion) {
+        translated_hint = WebMediaStreamTrack::ContentHintType::kVideoMotion;
+      } else if (hint == kContentHintStringVideoDetail) {
+        translated_hint = WebMediaStreamTrack::ContentHintType::kVideoDetail;
+      } else {
+        // TODO(pbos): Log warning?
+        // Invalid values for video are to be ignored (similar to invalid enum
+        // values).
         return;
-    }
-    Deprecation::countDeprecation(context, UseCounter::MediaStreamTrackGetSources);
-    MediaStreamTrackSourcesRequest* request = MediaStreamTrackSourcesRequestImpl::create(*context, callback);
-    userMedia->requestSources(request);
+      }
+  }
+
+  component_->SetContentHint(translated_hint);
 }
 
-void MediaStreamTrack::stopTrack(ExceptionState& exceptionState)
-{
-    if (ended())
-        return;
+String MediaStreamTrack::readyState() const {
+  if (Ended())
+    return "ended";
 
-    m_readyState = MediaStreamSource::ReadyStateEnded;
-    MediaStreamCenter::instance().didStopMediaStreamTrack(component());
-    dispatchEvent(Event::create(EventTypeNames::ended));
-    propagateTrackEnded();
+  switch (ready_state_) {
+    case MediaStreamSource::kReadyStateLive:
+      return "live";
+    case MediaStreamSource::kReadyStateMuted:
+      return "muted";
+    case MediaStreamSource::kReadyStateEnded:
+      return "ended";
+  }
+
+  NOTREACHED();
+  return String();
 }
 
-MediaStreamTrack* MediaStreamTrack::clone(ExecutionContext* context)
-{
-    MediaStreamComponent* clonedComponent = MediaStreamComponent::create(component()->source());
-    MediaStreamTrack* clonedTrack = MediaStreamTrack::create(context, clonedComponent);
-    MediaStreamCenter::instance().didCreateMediaStreamTrack(clonedComponent);
-    return clonedTrack;
+void MediaStreamTrack::stopTrack(ExceptionState& exception_state) {
+  if (Ended())
+    return;
+
+  ready_state_ = MediaStreamSource::kReadyStateEnded;
+  MediaStreamCenter::Instance().DidStopMediaStreamTrack(Component());
+  DispatchEvent(Event::Create(EventTypeNames::ended));
+  PropagateTrackEnded();
 }
 
-void MediaStreamTrack::getConstraints(MediaTrackConstraints& constraints)
-{
-    MediaConstraintsImpl::convertConstraints(m_constraints, constraints);
+MediaStreamTrack* MediaStreamTrack::clone(ScriptState* script_state) {
+  // TODO(pbos): Make sure m_readyState and m_stopped carries over on cloned
+  // tracks.
+  MediaStreamComponent* cloned_component = Component()->Clone();
+  MediaStreamTrack* cloned_track = MediaStreamTrack::Create(
+      ExecutionContext::From(script_state), cloned_component);
+  MediaStreamCenter::Instance().DidCloneMediaStreamTrack(Component(),
+                                                         cloned_component);
+  return cloned_track;
 }
 
-void MediaStreamTrack::setConstraints(const WebMediaConstraints& constraints)
-{
-    m_constraints = constraints;
+void MediaStreamTrack::SetConstraints(const WebMediaConstraints& constraints) {
+  constraints_ = constraints;
 }
 
-void MediaStreamTrack::getSettings(MediaTrackSettings& settings)
-{
-    WebMediaStreamTrack::Settings platformSettings;
-    m_component->getSettings(platformSettings);
-    if (platformSettings.hasFrameRate()) {
-        settings.setFrameRate(platformSettings.frameRate);
-    }
-    if (platformSettings.hasWidth()) {
-        settings.setWidth(platformSettings.width);
-    }
-    if (platformSettings.hasHeight()) {
-        settings.setHeight(platformSettings.height);
-    }
-    settings.setDeviceId(platformSettings.deviceId);
+void MediaStreamTrack::getCapabilities(MediaTrackCapabilities& capabilities) {
+  if (image_capture_)
+    capabilities = image_capture_->GetMediaTrackCapabilities();
 }
 
-bool MediaStreamTrack::ended() const
-{
-    return m_stopped || (m_readyState == MediaStreamSource::ReadyStateEnded);
+void MediaStreamTrack::getConstraints(MediaTrackConstraints& constraints) {
+  MediaConstraintsImpl::ConvertConstraints(constraints_, constraints);
+
+  if (!image_capture_)
+    return;
+  HeapVector<MediaTrackConstraintSet> vector;
+  if (constraints.hasAdvanced())
+    vector = constraints.advanced();
+  // TODO(mcasas): consider consolidating this code in MediaContraintsImpl.
+  auto image_capture_constraints = image_capture_->GetMediaTrackConstraints();
+  // TODO(mcasas): add |torch|, https://crbug.com/700607.
+  if (image_capture_constraints.hasWhiteBalanceMode() ||
+      image_capture_constraints.hasExposureMode() ||
+      image_capture_constraints.hasFocusMode() ||
+      image_capture_constraints.hasExposureCompensation() ||
+      image_capture_constraints.hasColorTemperature() ||
+      image_capture_constraints.hasIso() ||
+      image_capture_constraints.hasBrightness() ||
+      image_capture_constraints.hasContrast() ||
+      image_capture_constraints.hasSaturation() ||
+      image_capture_constraints.hasSharpness() ||
+      image_capture_constraints.hasZoom()) {
+    // Add image capture constraints, if any, as another entry to advanced().
+    vector.emplace_back(image_capture_constraints);
+    constraints.setAdvanced(vector);
+  }
 }
 
-void MediaStreamTrack::sourceChangedState()
-{
-    if (ended())
-        return;
-
-    m_readyState = m_component->source()->getReadyState();
-    switch (m_readyState) {
-    case MediaStreamSource::ReadyStateLive:
-        m_component->setMuted(false);
-        dispatchEvent(Event::create(EventTypeNames::unmute));
+void MediaStreamTrack::getSettings(MediaTrackSettings& settings) {
+  WebMediaStreamTrack::Settings platform_settings;
+  component_->GetSettings(platform_settings);
+  if (platform_settings.HasFrameRate())
+    settings.setFrameRate(platform_settings.frame_rate);
+  if (platform_settings.HasWidth())
+    settings.setWidth(platform_settings.width);
+  if (platform_settings.HasHeight())
+    settings.setHeight(platform_settings.height);
+  if (RuntimeEnabledFeatures::mediaCaptureDepthEnabled() &&
+      component_->Source()->GetType() == MediaStreamSource::kTypeVideo) {
+    if (platform_settings.HasVideoKind())
+      settings.setVideoKind(platform_settings.video_kind);
+    if (platform_settings.HasDepthNear())
+      settings.setDepthNear(platform_settings.depth_near);
+    if (platform_settings.HasDepthFar())
+      settings.setDepthFar(platform_settings.depth_far);
+    if (platform_settings.HasFocalLengthX())
+      settings.setFocalLengthX(platform_settings.focal_length_x);
+    if (platform_settings.HasFocalLengthY())
+      settings.setFocalLengthY(platform_settings.focal_length_y);
+  }
+  settings.setDeviceId(platform_settings.device_id);
+  if (platform_settings.HasFacingMode()) {
+    switch (platform_settings.facing_mode) {
+      case WebMediaStreamTrack::FacingMode::kUser:
+        settings.setFacingMode("user");
         break;
-    case MediaStreamSource::ReadyStateMuted:
-        m_component->setMuted(true);
-        dispatchEvent(Event::create(EventTypeNames::mute));
+      case WebMediaStreamTrack::FacingMode::kEnvironment:
+        settings.setFacingMode("environment");
         break;
-    case MediaStreamSource::ReadyStateEnded:
-        dispatchEvent(Event::create(EventTypeNames::ended));
-        propagateTrackEnded();
+      case WebMediaStreamTrack::FacingMode::kLeft:
+        settings.setFacingMode("left");
+        break;
+      case WebMediaStreamTrack::FacingMode::kRight:
+        settings.setFacingMode("right");
+        break;
+      default:
+        // None, or unknown facing mode. Ignore.
         break;
     }
+  }
+  if (image_capture_)
+    image_capture_->GetMediaTrackSettings(settings);
 }
 
-void MediaStreamTrack::propagateTrackEnded()
-{
-    CHECK(!m_isIteratingRegisteredMediaStreams);
-    m_isIteratingRegisteredMediaStreams = true;
-    for (HeapHashSet<Member<MediaStream>>::iterator iter = m_registeredMediaStreams.begin(); iter != m_registeredMediaStreams.end(); ++iter)
-        (*iter)->trackEnded();
-    m_isIteratingRegisteredMediaStreams = false;
+ScriptPromise MediaStreamTrack::applyConstraints(
+    ScriptState* script_state,
+    const MediaTrackConstraints& constraints) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  // TODO(mcasas): Until https://crbug.com/338503 is landed, we only support
+  // ImageCapture-related constraints.
+  if (!image_capture_ ||
+      image_capture_->HasNonImageCaptureConstraints(constraints)) {
+    resolver->Reject(DOMException::Create(
+        kNotSupportedError,
+        "Only Image-Capture constraints supported (https://crbug.com/338503)"));
+    return promise;
+  }
+
+  // |constraints| empty means "remove/clear all current constraints".
+  if (!constraints.hasAdvanced())
+    image_capture_->ClearMediaTrackConstraints(resolver);
+  else
+    image_capture_->SetMediaTrackConstraints(resolver, constraints.advanced());
+
+  return promise;
 }
 
-void MediaStreamTrack::stop()
-{
-    m_stopped = true;
+bool MediaStreamTrack::Ended() const {
+  return stopped_ || (ready_state_ == MediaStreamSource::kReadyStateEnded);
 }
 
-bool MediaStreamTrack::hasPendingActivity() const
-{
-    // If 'ended' listeners exist and the object hasn't yet reached
-    // that state, keep the object alive.
-    //
-    // An otherwise unreachable MediaStreamTrack object in an non-ended
-    // state will otherwise indirectly be transitioned to the 'ended' state
-    // while finalizing m_component. Which dispatches an 'ended' event,
-    // referring to this object as the target. If this object is then GCed
-    // at the same time, v8 objects will retain (wrapper) references to
-    // this dead MediaStreamTrack object. Bad.
-    //
-    // Hence insisting on keeping this object alive until the 'ended'
-    // state has been reached & handled.
-    return !ended() && hasEventListeners(EventTypeNames::ended);
+void MediaStreamTrack::SourceChangedState() {
+  if (Ended())
+    return;
+
+  ready_state_ = component_->Source()->GetReadyState();
+  switch (ready_state_) {
+    case MediaStreamSource::kReadyStateLive:
+      component_->SetMuted(false);
+      DispatchEvent(Event::Create(EventTypeNames::unmute));
+      break;
+    case MediaStreamSource::kReadyStateMuted:
+      component_->SetMuted(true);
+      DispatchEvent(Event::Create(EventTypeNames::mute));
+      break;
+    case MediaStreamSource::kReadyStateEnded:
+      DispatchEvent(Event::Create(EventTypeNames::ended));
+      PropagateTrackEnded();
+      break;
+  }
 }
 
-std::unique_ptr<AudioSourceProvider> MediaStreamTrack::createWebAudioSource()
-{
-    return MediaStreamCenter::instance().createWebAudioSourceFromMediaStreamTrack(component());
+void MediaStreamTrack::PropagateTrackEnded() {
+  CHECK(!is_iterating_registered_media_streams_);
+  is_iterating_registered_media_streams_ = true;
+  for (HeapHashSet<Member<MediaStream>>::iterator iter =
+           registered_media_streams_.begin();
+       iter != registered_media_streams_.end(); ++iter)
+    (*iter)->TrackEnded();
+  is_iterating_registered_media_streams_ = false;
 }
 
-void MediaStreamTrack::registerMediaStream(MediaStream* mediaStream)
-{
-    CHECK(!m_isIteratingRegisteredMediaStreams);
-    CHECK(!m_registeredMediaStreams.contains(mediaStream));
-    m_registeredMediaStreams.add(mediaStream);
+void MediaStreamTrack::ContextDestroyed(ExecutionContext*) {
+  stopped_ = true;
 }
 
-void MediaStreamTrack::unregisterMediaStream(MediaStream* mediaStream)
-{
-    CHECK(!m_isIteratingRegisteredMediaStreams);
-    HeapHashSet<Member<MediaStream>>::iterator iter = m_registeredMediaStreams.find(mediaStream);
-    CHECK(iter != m_registeredMediaStreams.end());
-    m_registeredMediaStreams.remove(iter);
+bool MediaStreamTrack::HasPendingActivity() const {
+  // If 'ended' listeners exist and the object hasn't yet reached
+  // that state, keep the object alive.
+  //
+  // An otherwise unreachable MediaStreamTrack object in an non-ended
+  // state will otherwise indirectly be transitioned to the 'ended' state
+  // while finalizing m_component. Which dispatches an 'ended' event,
+  // referring to this object as the target. If this object is then GCed
+  // at the same time, v8 objects will retain (wrapper) references to
+  // this dead MediaStreamTrack object. Bad.
+  //
+  // Hence insisting on keeping this object alive until the 'ended'
+  // state has been reached & handled.
+  return !Ended() && HasEventListeners(EventTypeNames::ended);
 }
 
-const AtomicString& MediaStreamTrack::interfaceName() const
-{
-    return EventTargetNames::MediaStreamTrack;
+std::unique_ptr<AudioSourceProvider> MediaStreamTrack::CreateWebAudioSource() {
+  return MediaStreamCenter::Instance().CreateWebAudioSourceFromMediaStreamTrack(
+      Component());
 }
 
-ExecutionContext* MediaStreamTrack::getExecutionContext() const
-{
-    return ActiveDOMObject::getExecutionContext();
+void MediaStreamTrack::RegisterMediaStream(MediaStream* media_stream) {
+  CHECK(!is_iterating_registered_media_streams_);
+  CHECK(!registered_media_streams_.Contains(media_stream));
+  registered_media_streams_.insert(media_stream);
 }
 
-DEFINE_TRACE(MediaStreamTrack)
-{
-    visitor->trace(m_registeredMediaStreams);
-    visitor->trace(m_component);
-    EventTargetWithInlineData::trace(visitor);
-    ActiveDOMObject::trace(visitor);
+void MediaStreamTrack::UnregisterMediaStream(MediaStream* media_stream) {
+  CHECK(!is_iterating_registered_media_streams_);
+  HeapHashSet<Member<MediaStream>>::iterator iter =
+      registered_media_streams_.Find(media_stream);
+  CHECK(iter != registered_media_streams_.end());
+  registered_media_streams_.erase(iter);
 }
 
-} // namespace blink
+const AtomicString& MediaStreamTrack::InterfaceName() const {
+  return EventTargetNames::MediaStreamTrack;
+}
+
+ExecutionContext* MediaStreamTrack::GetExecutionContext() const {
+  return ContextLifecycleObserver::GetExecutionContext();
+}
+
+DEFINE_TRACE(MediaStreamTrack) {
+  visitor->Trace(registered_media_streams_);
+  visitor->Trace(component_);
+  visitor->Trace(image_capture_);
+  EventTargetWithInlineData::Trace(visitor);
+  ContextLifecycleObserver::Trace(visitor);
+}
+
+}  // namespace blink

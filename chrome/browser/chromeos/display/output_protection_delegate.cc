@@ -4,14 +4,14 @@
 
 #include "chrome/browser/chromeos/display/output_protection_delegate.h"
 
-#include "ash/shell.h"
-#include "build/build_config.h"
-#include "chrome/browser/media/media_capture_devices_dispatcher.h"
+#include "chrome/browser/chromeos/display/output_protection_controller_ash.h"
+#include "chrome/browser/chromeos/display/output_protection_controller_mus.h"
+#include "chrome/browser/ui/ash/ash_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
-#include "content/public/browser/web_contents.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/display/types/display_constants.h"
 
 namespace chromeos {
 
@@ -26,7 +26,7 @@ bool GetCurrentDisplayId(content::RenderFrameHost* rfh, int64_t* display_id) {
   if (!screen)
     return false;
   display::Display display =
-      screen->GetDisplayNearestWindow(rfh->GetNativeView());
+      screen->GetDisplayNearestView(rfh->GetNativeView());
   *display_id = display.id();
   return true;
 }
@@ -36,122 +36,81 @@ void DoNothing(bool status) {
 
 }  // namespace
 
+OutputProtectionDelegate::Controller::Controller() {}
+
+OutputProtectionDelegate::Controller::~Controller() {}
+
 OutputProtectionDelegate::OutputProtectionDelegate(int render_process_id,
                                                    int render_frame_id)
     : render_process_id_(render_process_id),
       render_frame_id_(render_frame_id),
       window_(nullptr),
-      client_id_(ui::DisplayConfigurator::kInvalidClientId),
-      display_id_(0),
+      display_id_(display::kInvalidDisplayId),
       weak_ptr_factory_(this) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  // This can be constructed on IO or UI thread.
 }
 
 OutputProtectionDelegate::~OutputProtectionDelegate() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  ui::DisplayConfigurator* configurator =
-      ash::Shell::GetInstance()->display_configurator();
-  configurator->UnregisterContentProtectionClient(client_id_);
-
   if (window_)
     window_->RemoveObserver(this);
-}
-
-ui::DisplayConfigurator::ContentProtectionClientId
-OutputProtectionDelegate::GetClientId() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (client_id_ == ui::DisplayConfigurator::kInvalidClientId) {
-    content::RenderFrameHost* rfh =
-        content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
-    if (!rfh || !GetCurrentDisplayId(rfh, &display_id_))
-      return ui::DisplayConfigurator::kInvalidClientId;
-
-    aura::Window* window = rfh->GetNativeView();
-    if (!window)
-      return ui::DisplayConfigurator::kInvalidClientId;
-
-    ui::DisplayConfigurator* configurator =
-        ash::Shell::GetInstance()->display_configurator();
-    client_id_ = configurator->RegisterContentProtectionClient();
-
-    if (client_id_ != ui::DisplayConfigurator::kInvalidClientId) {
-      window->AddObserver(this);
-      window_ = window;
-    }
-  }
-  return client_id_;
 }
 
 void OutputProtectionDelegate::QueryStatus(
     const QueryStatusCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  content::RenderFrameHost* rfh =
-      content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
-  if (!rfh) {
-    LOG(WARNING) << "RenderFrameHost is not alive.";
+  if (!InitializeControllerIfNecessary()) {
     callback.Run(false, 0, 0);
     return;
   }
 
-  ui::DisplayConfigurator* configurator =
-      ash::Shell::GetInstance()->display_configurator();
-  configurator->QueryContentProtectionStatus(
-      GetClientId(), display_id_,
-      base::Bind(&OutputProtectionDelegate::QueryStatusComplete,
-                 weak_ptr_factory_.GetWeakPtr(), callback));
+  controller_->QueryStatus(display_id_, callback);
 }
 
-void OutputProtectionDelegate::EnableProtection(
+void OutputProtectionDelegate::SetProtection(
     uint32_t desired_method_mask,
-    const EnableProtectionCallback& callback) {
+    const SetProtectionCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  ui::DisplayConfigurator* configurator =
-      ash::Shell::GetInstance()->display_configurator();
-  configurator->EnableContentProtection(
-      GetClientId(), display_id_, desired_method_mask,
-      base::Bind(&OutputProtectionDelegate::EnableProtectionComplete,
-                 weak_ptr_factory_.GetWeakPtr(), callback));
+  if (!InitializeControllerIfNecessary()) {
+    callback.Run(false);
+    return;
+  }
+  controller_->SetProtection(display_id_, desired_method_mask, callback);
   desired_method_mask_ = desired_method_mask;
 }
 
-void OutputProtectionDelegate::QueryStatusComplete(
-    const QueryStatusCallback& callback,
-    const ui::DisplayConfigurator::QueryProtectionResponse& response) {
+bool OutputProtectionDelegate::InitializeControllerIfNecessary() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  if (controller_)
+    return true;
 
   content::RenderFrameHost* rfh =
       content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
-  // TODO(xjz): Investigate whether this check (and the other one above) should
-  // be removed.
   if (!rfh) {
-    LOG(WARNING) << "RenderFrameHost is not alive.";
-    callback.Run(false, 0, 0);
-    return;
+    DLOG(WARNING) << "RenderFrameHost is not alive.";
+    return false;
   }
 
-  uint32_t link_mask = response.link_mask;
-  // If we successfully retrieved the device level status, check for capturers.
-  if (response.success) {
-    const bool insecure_capture_detected =
-        MediaCaptureDevicesDispatcher::GetInstance()
-            ->IsInsecureCapturingInProgress(render_process_id_,
-                                            render_frame_id_);
-    if (insecure_capture_detected)
-      link_mask |= ui::DISPLAY_CONNECTION_TYPE_NETWORK;
-  }
+  int64_t display_id = display::kInvalidDisplayId;
+  if (!GetCurrentDisplayId(rfh, &display_id))
+    return false;
 
-  callback.Run(response.success, link_mask, response.protection_mask);
-}
+  aura::Window* window = rfh->GetNativeView();
+  if (!window)
+    return false;
 
-void OutputProtectionDelegate::EnableProtectionComplete(
-    const EnableProtectionCallback& callback,
-    bool success) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (ash_util::IsRunningInMash())
+    controller_ = base::MakeUnique<OutputProtectionControllerMus>();
+  else
+    controller_ = base::MakeUnique<OutputProtectionControllerAsh>();
 
-  callback.Run(success);
+  display_id_ = display_id;
+  window_ = window;
+  window_->AddObserver(this);
+  return true;
 }
 
 void OutputProtectionDelegate::OnWindowHierarchyChanged(
@@ -159,26 +118,24 @@ void OutputProtectionDelegate::OnWindowHierarchyChanged(
   content::RenderFrameHost* rfh =
       content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
   if (!rfh) {
-    LOG(WARNING) << "RenderFrameHost is not alive.";
+    DLOG(WARNING) << "RenderFrameHost is not alive.";
     return;
   }
 
-  int64_t new_display_id = 0;
+  int64_t new_display_id = display::kInvalidDisplayId;
   if (!GetCurrentDisplayId(rfh, &new_display_id))
     return;
+
   if (display_id_ == new_display_id)
     return;
 
-  if (desired_method_mask_ != ui::CONTENT_PROTECTION_METHOD_NONE) {
-    // Display changed and should enable output protections on new display.
-    ui::DisplayConfigurator* configurator =
-        ash::Shell::GetInstance()->display_configurator();
-    configurator->EnableContentProtection(GetClientId(), new_display_id,
-                                          desired_method_mask_,
-                                          base::Bind(&DoNothing));
-    configurator->EnableContentProtection(GetClientId(), display_id_,
-                                          ui::CONTENT_PROTECTION_METHOD_NONE,
-                                          base::Bind(&DoNothing));
+  if (desired_method_mask_ != display::CONTENT_PROTECTION_METHOD_NONE) {
+    DCHECK(controller_);
+    controller_->SetProtection(new_display_id, desired_method_mask_,
+                               base::Bind(&DoNothing));
+    controller_->SetProtection(display_id_,
+                               display::CONTENT_PROTECTION_METHOD_NONE,
+                               base::Bind(&DoNothing));
   }
   display_id_ = new_display_id;
 }

@@ -11,6 +11,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/aura/accessibility/ax_tree_source_aura.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/accessibility/ax_action_data.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_serializable_tree.h"
@@ -55,8 +56,8 @@ class AXTreeSourceAuraTest : public ash::test::AshTestBase {
     AshTestBase::SetUp();
 
     widget_ = new Widget();
-    Widget::InitParams init_params(Widget::InitParams::TYPE_POPUP);
-    init_params.parent = CurrentContext();
+    Widget::InitParams init_params(Widget::InitParams::TYPE_WINDOW_FRAMELESS);
+    init_params.context = CurrentContext();
     widget_->Init(init_params);
 
     content_ = new View();
@@ -98,7 +99,7 @@ TEST_F(AXTreeSourceAuraTest, Accessors) {
   ASSERT_EQ(cached_textfield, textfield);
   std::vector<AXAuraObjWrapper*> textfield_children;
   ax_tree.GetChildren(textfield, &textfield_children);
-  ASSERT_EQ(0U, textfield_children.size());
+  ASSERT_EQ(1U, textfield_children.size());
 
   ASSERT_EQ(content, textfield->GetParent());
 
@@ -119,7 +120,10 @@ TEST_F(AXTreeSourceAuraTest, DoDefault) {
 
   // Click and verify focus.
   ASSERT_FALSE(textfield_->HasFocus());
-  textfield_wrapper->DoDefault();
+  ui::AXActionData action_data;
+  action_data.action = ui::AX_ACTION_DO_DEFAULT;
+  action_data.target_node_id = textfield_wrapper->GetID();
+  textfield_wrapper->HandleAccessibleAction(action_data);
   ASSERT_TRUE(textfield_->HasFocus());
 }
 
@@ -132,7 +136,10 @@ TEST_F(AXTreeSourceAuraTest, Focus) {
 
   // Focus and verify.
   ASSERT_FALSE(textfield_->HasFocus());
-  textfield_wrapper->Focus();
+  ui::AXActionData action_data;
+  action_data.action = ui::AX_ACTION_FOCUS;
+  action_data.target_node_id = textfield_wrapper->GetID();
+  textfield_wrapper->HandleAccessibleAction(action_data);
   ASSERT_TRUE(textfield_->HasFocus());
 }
 
@@ -144,9 +151,9 @@ TEST_F(AXTreeSourceAuraTest, Serialize) {
   // This is the initial serialization.
   ax_serializer.SerializeChanges(ax_tree.GetRoot(), &out_update);
 
-  // The update should just be the desktop node since no events have been fired
-  // on any controls, so no windows have been cached.
-  ASSERT_EQ(1U, out_update.nodes.size());
+  // The update should just be the desktop node and the fake alert window we use
+  // to handle posting text alerts.
+  ASSERT_EQ(2U, out_update.nodes.size());
 
   // Try removing some child views and re-adding which should fire some events.
   content_->RemoveAllChildViews(false /* delete_children */);

@@ -13,9 +13,9 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/weak_ptr.h"
-#include "base/single_thread_task_runner.h"
+#include "base/sequenced_task_runner.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_restrictions.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
@@ -125,7 +125,8 @@ void TestURLFetcher::SetRequestContext(
     URLRequestContextGetter* request_context_getter) {
 }
 
-void TestURLFetcher::SetInitiatorURL(const GURL& initiator) {}
+void TestURLFetcher::SetInitiator(
+    const base::Optional<url::Origin>& initiator) {}
 
 void TestURLFetcher::SetURLRequestUserData(
     const void* key,
@@ -188,7 +189,7 @@ void TestURLFetcher::SaveResponseWithWriter(
                                        fake_response_string_.size(),
                                        CompletionCallback());
     DCHECK_EQ(static_cast<int>(fake_response_string_.size()), response);
-    response = response_writer_->Finish(CompletionCallback());
+    response = response_writer_->Finish(OK, CompletionCallback());
     DCHECK_EQ(OK, response);
   } else if (fake_response_destination_ == TEMP_FILE) {
     // SaveResponseToFileAtPath() should be called instead of this method to
@@ -388,7 +389,7 @@ FakeURLFetcher::~FakeURLFetcher() {}
 
 void FakeURLFetcher::Start() {
   TestURLFetcher::Start();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeURLFetcher::RunDelegate, weak_factory_.GetWeakPtr()));
 }
@@ -398,7 +399,7 @@ void FakeURLFetcher::RunDelegate() {
   // this with a weak pointer, and only call OnURLFetchComplete if this still
   // exists.
   auto weak_this = weak_factory_.GetWeakPtr();
-  delegate()->OnURLFetchDownloadProgress(this, response_bytes_,
+  delegate()->OnURLFetchDownloadProgress(this, response_bytes_, response_bytes_,
                                          response_bytes_);
   if (weak_this.get())
     delegate()->OnURLFetchComplete(this);

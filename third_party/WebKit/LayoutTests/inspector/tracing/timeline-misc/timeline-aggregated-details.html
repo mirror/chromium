@@ -32,7 +32,15 @@ function test()
     },
     {
         "args": {
-            "sessionId": sessionId
+            "data": {
+                "page": "0x2f7b63884000",
+                "sessionId": sessionId,
+                "frames": [
+                    {"frame": "0x2f7b63884000", "url": "top-page-url", "name": "top-page-name"},
+                    {"frame": "0x2f7b63884100", "url": "subframe-url1", "name": "subframe-name1"},
+                    {"frame": "0x2f7b63884200", "url": "about:blank", "name": "subframe-name2"}
+                ]
+            }
         },
         "cat": "disabled-by-default-devtools.timeline",
         "name": "TracingStartedInPage",
@@ -41,6 +49,22 @@ function test()
         "tid": 23,
         "ts": 100000,
         "tts": 606543
+    },
+    {
+        "args": {
+            "data": {
+                "frame": "0x2f7b63884300",
+                "url": "subframe-url3",
+                "name": "subframe-name3"
+            }
+        },
+        "cat": "disabled-by-default-devtools.timeline",
+        "name": "CommitLoad",
+        "ph": "I",
+        "pid": 17851,
+        "tid": 23,
+        "ts": 100010,
+        "tts": 606544
     },
     {
         "args": {},
@@ -71,7 +95,7 @@ function test()
         "tts": 1758056
     },
     {
-        "args": {},
+        "args": { "data": { "frame": "0x2f7b63884100" } },
         "cat": "disabled-by-default-devtools.timeline",
         "name": "FunctionCall",
         "ph": "X",
@@ -133,8 +157,8 @@ function test()
     },
     {
         "args": {
-            "frame": "0x2f7b63884000",
             "data": {
+                "frame": "0x2f7b63884000",
                 "stackTrace": [
                     { "functionName": "b", "callUID": "b", "scriptId": 1 },
                     { "functionName": "a", "callUID": "a", "scriptId": 1 }
@@ -170,8 +194,8 @@ function test()
     },
     {
         "args": {
-            "frame": "0x2f7b63884000",
             "data": {
+                "frame": "0x2f7b63884000",
                 "stackTrace": [
                     { "functionName": "b", "callUID": "b", "scriptId": 1 },
                     { "functionName": "a", "callUID": "a", "scriptId": 1 }
@@ -226,6 +250,15 @@ function test()
         "tts": 1758056
     },
     {
+        "name": "TimeStamp",
+        "ts": 227130,
+        "ph": "I",
+        "tid": 23,
+        "pid": 17851,
+        "cat":"disabled-by-default-devtools.timeline",
+        "args": {"data":{"message":"foo05"}}
+    },
+    {
         "args": {
             "data": {
                 "stackTrace": [
@@ -265,6 +298,7 @@ function test()
     {
         "args": {
             "beginData": {
+                "frame": "0x2f7b63884200",
                 "stackTrace": [
                     { "functionName": "a", "callUID": "a", "scriptId": 1 },
                     { "functionName": "l", "callUID": "l", "scriptId": 1 },
@@ -319,7 +353,7 @@ function test()
         "ts": 230125
     },
     {
-        "args": {},
+        "args": { "data": {"frame": "0x2f7b63884300" } },
         "cat": "disabled-by-default-devtools.timeline",
         "name": "FunctionCall",
         "ph": "X",
@@ -568,32 +602,39 @@ function test()
     }
     ];
 
-    var timeline = WebInspector.panels.timeline;
-    InspectorTest.setTraceEvents(InspectorTest.timelineModel(), InspectorTest.tracingModel(), rawTraceEvents);
+    var timeline = UI.panels.timeline;
+    timeline._setModel(InspectorTest.createPerformanceModelWithEvents(rawTraceEvents));
 
     timeline.requestWindowTimes(0, Infinity);
-    for (var grouping in WebInspector.TimelineAggregator.GroupBy) {
-        var groupingValue = WebInspector.TimelineAggregator.GroupBy[grouping];
-        testEventTree(WebInspector.TimelinePanel.DetailsTab.CallTree, groupingValue);
-        testEventTree(WebInspector.TimelinePanel.DetailsTab.BottomUp, groupingValue);
+    var groupByEnum = Timeline.AggregatedTimelineTreeView.GroupBy;
+    for (var grouping in groupByEnum) {
+        var groupingValue = groupByEnum[grouping];
+        testEventTree("CallTree", groupingValue);
+        testEventTree("BottomUp", groupingValue);
     }
 
-    testEventTree(WebInspector.TimelinePanel.DetailsTab.Events);
+    testEventTree("EventLog");
     InspectorTest.completeTest();
 
     function testEventTree(type, grouping)
     {
         InspectorTest.addResult("");
-        timeline._detailsView.selectTab(type, true);
-        var callTree = timeline._detailsView._rangeDetailViews.get(type);
+        var tree;
+        if (timeline._tabbedPane) {
+            timeline._tabbedPane.selectTab(type, true);
+            tree = timeline._currentView._treeView;
+        } else {
+            timeline._currentView._detailsView._tabbedPane.selectTab(type, true);
+            tree = timeline._currentView._detailsView._tabbedPane.visibleView;
+        }
         if (grouping) {
             InspectorTest.addResult(type + "  Group by: " + grouping);
-            callTree._groupByCombobox.select(callTree._groupByCombobox.options().find((x) => x.value === grouping));
-            callTree._onGroupByChanged();
+            tree._groupByCombobox.select(tree._groupByCombobox.options().find(x => x.value === grouping));
+            tree._onGroupByChanged();
         } else {
             InspectorTest.addResult(type);
         }
-        var rootNode = callTree._dataGrid.rootNode();
+        var rootNode = tree._dataGrid.rootNode();
         for (var node of rootNode.children)
             printEventTree(1, node._profileNode, node._treeView);
     }
@@ -604,12 +645,12 @@ function test()
         if (node.isGroupNode()) {
            name = treeView._displayInfoForGroupNode(node).name;
         } else {
-           name = node.event.name === WebInspector.TimelineModel.RecordType.JSFrame
-                      ? WebInspector.beautifyFunctionName(node.event.args["data"]["functionName"])
-                      : WebInspector.TimelineUIUtils.eventTitle(node.event);
+           name = node.event.name === TimelineModel.TimelineModel.RecordType.JSFrame
+                      ? UI.beautifyFunctionName(node.event.args["data"]["functionName"])
+                      : Timeline.TimelineUIUtils.eventTitle(node.event);
         }
-        InspectorTest.addResult("  ".repeat(padding) + name + ": " + [node.selfTime, node.totalTime].map(function (t) { return t.toFixed(3); }).join("  "));
-        (node.children || new Map()).forEach(printEventTree.bind(null, padding + 1));
+        InspectorTest.addResult("  ".repeat(padding) + `${name}: ${node.selfTime.toFixed(3)}  ${node.totalTime.toFixed(3)}`);
+        node.children().forEach(printEventTree.bind(null, padding + 1));
     }
 }
 

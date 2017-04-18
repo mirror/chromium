@@ -15,6 +15,8 @@
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "content/browser/frame_host/frame_tree_node.h"
+#include "content/browser/frame_host/navigation_controller_impl.h"
+#include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/render_frame_host_factory.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
@@ -103,11 +105,11 @@ FrameTree::FrameTree(Navigator* navigator,
                               nullptr,
                               // The top-level frame must always be in a
                               // document scope.
-                              blink::WebTreeScopeType::Document,
+                              blink::WebTreeScopeType::kDocument,
                               std::string(),
                               std::string(),
                               FrameOwnerProperties())),
-      focused_frame_tree_node_id_(-1),
+      focused_frame_tree_node_id_(FrameTreeNode::kFrameTreeNodeInvalidId),
       load_progress_(0.0) {}
 
 FrameTree::~FrameTree() {
@@ -192,6 +194,15 @@ bool FrameTree::AddFrame(FrameTreeNode* parent,
           frame_unique_name, frame_owner_properties)),
       process_id, new_routing_id);
 
+  // The last committed NavigationEntry may have a FrameNavigationEntry with the
+  // same |frame_unique_name|, since we don't remove FrameNavigationEntries if
+  // their frames are deleted.  If there is a stale one, remove it to avoid
+  // conflicts on future updates.
+  NavigationEntryImpl* last_committed_entry = static_cast<NavigationEntryImpl*>(
+      parent->navigator()->GetController()->GetLastCommittedEntry());
+  if (last_committed_entry)
+    last_committed_entry->ClearStaleFrameEntriesForNewFrame(added_node);
+
   // Set sandbox flags and make them effective immediately, since initial
   // sandbox flags should apply to the initial empty document in the frame.
   added_node->SetPendingSandboxFlags(sandbox_flags);
@@ -252,6 +263,7 @@ FrameTreeNode* FrameTree::GetFocusedFrame() {
 void FrameTree::SetFocusedFrame(FrameTreeNode* node, SiteInstance* source) {
   if (node == GetFocusedFrame())
     return;
+
 
   std::set<SiteInstance*> frame_tree_site_instances =
       CollectSiteInstances(this);
@@ -357,7 +369,7 @@ void FrameTree::ReleaseRenderViewHostRef(RenderViewHostImpl* render_view_host) {
 
 void FrameTree::FrameRemoved(FrameTreeNode* frame) {
   if (frame->frame_tree_node_id() == focused_frame_tree_node_id_)
-    focused_frame_tree_node_id_ = -1;
+    focused_frame_tree_node_id_ = FrameTreeNode::kFrameTreeNodeInvalidId;
 
   // No notification for the root frame.
   if (!frame->parent()) {
@@ -394,7 +406,7 @@ void FrameTree::UpdateLoadProgress() {
         // Ignore the current frame if it has not started loading,
         // if the frame is cross-origin, or about:blank.
         if (!node->has_started_loading() || !node->HasSameOrigin(*root_) ||
-            node->current_url() == GURL(url::kAboutBlankURL))
+            node->current_url() == url::kAboutBlankURL)
           continue;
         progress += node->loading_progress();
         frame_count++;

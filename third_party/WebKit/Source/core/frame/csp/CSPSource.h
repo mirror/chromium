@@ -8,9 +8,10 @@
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/heap/Handle.h"
-#include "platform/network/ResourceRequest.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebContentSecurityPolicyStruct.h"
 
 namespace blink {
 
@@ -18,34 +19,99 @@ class ContentSecurityPolicy;
 class KURL;
 
 class CORE_EXPORT CSPSource : public GarbageCollectedFinalized<CSPSource> {
-public:
-    enum WildcardDisposition {
-        HasWildcard,
-        NoWildcard
-    };
+ public:
+  enum WildcardDisposition { kNoWildcard, kHasWildcard };
 
-    CSPSource(ContentSecurityPolicy*, const String& scheme, const String& host, int port, const String& path, WildcardDisposition hostWildcard, WildcardDisposition portWildcard);
-    bool matches(const KURL&, ResourceRequest::RedirectStatus = ResourceRequest::RedirectStatus::NoRedirect) const;
+  // NotMatching is the only negative member, the rest are different types of
+  // matches. NotMatching should always be 0 to let if statements work nicely
+  enum class PortMatchingResult {
+    kNotMatching,
+    kMatchingWildcard,
+    kMatchingUpgrade,
+    kMatchingExact
+  };
 
-    DECLARE_TRACE();
+  enum class SchemeMatchingResult {
+    kNotMatching,
+    kMatchingUpgrade,
+    kMatchingExact
+  };
 
-private:
-    bool schemeMatches(const KURL&) const;
-    bool hostMatches(const KURL&) const;
-    bool pathMatches(const KURL&) const;
-    bool portMatches(const KURL&) const;
-    bool isSchemeOnly() const;
+  CSPSource(ContentSecurityPolicy*,
+            const String& scheme,
+            const String& host,
+            int port,
+            const String& path,
+            WildcardDisposition host_wildcard,
+            WildcardDisposition port_wildcard);
+  bool IsSchemeOnly() const;
+  const String& GetScheme() { return scheme_; };
+  bool Matches(const KURL&,
+               ResourceRequest::RedirectStatus =
+                   ResourceRequest::RedirectStatus::kNoRedirect) const;
 
-    Member<ContentSecurityPolicy> m_policy;
-    String m_scheme;
-    String m_host;
-    int m_port;
-    String m_path;
+  // Returns true if this CSPSource subsumes the other, as defined by the
+  // algorithm at https://w3c.github.io/webappsec-csp/embedded/#subsume-policy
+  bool Subsumes(CSPSource*) const;
+  // Retrieve the most restrictive information from the two CSPSources if
+  // isSimilar is true for the two. Otherwise, return nullptr.
+  CSPSource* Intersect(CSPSource*) const;
+  // Returns true if the first list subsumes the second, as defined by the
+  // algorithm at
+  // https://w3c.github.io/webappsec-csp/embedded/#subsume-source-list
+  static bool FirstSubsumesSecond(const HeapVector<Member<CSPSource>>&,
+                                  const HeapVector<Member<CSPSource>>&);
 
-    WildcardDisposition m_hostWildcard;
-    WildcardDisposition m_portWildcard;
+  WebContentSecurityPolicySourceExpression ExposeForNavigationalChecks() const;
+
+  DECLARE_TRACE();
+
+ private:
+  FRIEND_TEST_ALL_PREFIXES(CSPSourceTest, IsSimilar);
+  FRIEND_TEST_ALL_PREFIXES(CSPSourceTest, Intersect);
+  FRIEND_TEST_ALL_PREFIXES(CSPSourceTest, IntersectSchemesOnly);
+  FRIEND_TEST_ALL_PREFIXES(SourceListDirectiveTest, GetIntersectCSPSources);
+  FRIEND_TEST_ALL_PREFIXES(SourceListDirectiveTest,
+                           GetIntersectCSPSourcesSchemes);
+  FRIEND_TEST_ALL_PREFIXES(CSPDirectiveListTest, GetSourceVector);
+  FRIEND_TEST_ALL_PREFIXES(CSPDirectiveListTest, OperativeDirectiveGivenType);
+  FRIEND_TEST_ALL_PREFIXES(SourceListDirectiveTest, SubsumesWithSelf);
+  FRIEND_TEST_ALL_PREFIXES(SourceListDirectiveTest, GetSources);
+
+  SchemeMatchingResult SchemeMatches(const String&) const;
+  bool HostMatches(const String&) const;
+  bool PathMatches(const String&) const;
+  // Protocol is necessary to determine default port if it is zero.
+  PortMatchingResult PortMatches(int port, const String& protocol) const;
+  bool IsSimilar(CSPSource* other) const;
+
+  // Helper inline functions for Port and Scheme MatchingResult enums
+  bool inline RequiresUpgrade(const PortMatchingResult result) const {
+    return result == PortMatchingResult::kMatchingUpgrade;
+  }
+  bool inline RequiresUpgrade(const SchemeMatchingResult result) const {
+    return result == SchemeMatchingResult::kMatchingUpgrade;
+  }
+
+  bool inline CanUpgrade(const PortMatchingResult result) const {
+    return result == PortMatchingResult::kMatchingUpgrade ||
+           result == PortMatchingResult::kMatchingWildcard;
+  }
+
+  bool inline CanUpgrade(const SchemeMatchingResult result) const {
+    return result == SchemeMatchingResult::kMatchingUpgrade;
+  }
+
+  Member<ContentSecurityPolicy> policy_;
+  String scheme_;
+  String host_;
+  int port_;
+  String path_;
+
+  WildcardDisposition host_wildcard_;
+  WildcardDisposition port_wildcard_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

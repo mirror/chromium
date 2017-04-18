@@ -22,6 +22,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_status.h"
@@ -48,7 +49,6 @@ IntranetRedirectDetector::IntranetRedirectDetector()
 
 IntranetRedirectDetector::~IntranetRedirectDetector() {
   net::NetworkChangeNotifier::RemoveIPAddressObserver(this);
-  STLDeleteElements(&fetchers_);
 }
 
 // static
@@ -68,7 +68,7 @@ void IntranetRedirectDetector::FinishSleep() {
   in_sleep_ = false;
 
   // If another fetch operation is still running, cancel it.
-  STLDeleteElements(&fetchers_);
+  fetchers_.clear();
   resulting_origins_.clear();
 
   const base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
@@ -76,6 +76,29 @@ void IntranetRedirectDetector::FinishSleep() {
     return;
 
   DCHECK(fetchers_.empty() && resulting_origins_.empty());
+
+  // Create traffic annotation tag.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("intranet_redirect_detector", R"(
+        semantics {
+          sender: "Intranet Redirect Detector"
+          description:
+            "This component sends requests to three randomly generated, and "
+            "thus likely nonexistent, hostnames.  If at least two redirect to "
+            "the same hostname, this suggests the ISP is hijacking NXDOMAIN, "
+            "and the omnibox should treat similar redirected navigations as "
+            "'failed' when deciding whether to prompt the user with a 'did you "
+            "mean to navigate' infobar for certain search inputs."
+          trigger: "On startup and when IP address of the computer changes."
+          data: "None, this is just an empty request."
+          destination: OTHER
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification:
+              "Not implemented, considered not useful."
+        })");
 
   // Start three fetchers on random hostnames.
   for (size_t i = 0; i < 3; ++i) {
@@ -85,9 +108,8 @@ void IntranetRedirectDetector::FinishSleep() {
     for (int j = 0; j < num_chars; ++j)
       url_string += ('a' + base::RandInt(0, 'z' - 'a'));
     GURL random_url(url_string + '/');
-    net::URLFetcher* fetcher =
-        net::URLFetcher::Create(random_url, net::URLFetcher::HEAD, this)
-            .release();
+    std::unique_ptr<net::URLFetcher> fetcher = net::URLFetcher::Create(
+        random_url, net::URLFetcher::HEAD, this, traffic_annotation);
     // We don't want these fetches to affect existing state in the profile.
     fetcher->SetLoadFlags(net::LOAD_DISABLE_CACHE |
                           net::LOAD_DO_NOT_SAVE_COOKIES |
@@ -95,18 +117,18 @@ void IntranetRedirectDetector::FinishSleep() {
                           net::LOAD_DO_NOT_SEND_AUTH_DATA);
     fetcher->SetRequestContext(g_browser_process->system_request_context());
     fetcher->Start();
-    fetchers_.insert(fetcher);
+    net::URLFetcher* fetcher_ptr = fetcher.get();
+    fetchers_[fetcher_ptr] = std::move(fetcher);
   }
 }
 
 void IntranetRedirectDetector::OnURLFetchComplete(
     const net::URLFetcher* source) {
   // Delete the fetcher on this function's exit.
-  Fetchers::iterator fetcher = fetchers_.find(
-      const_cast<net::URLFetcher*>(source));
-  DCHECK(fetcher != fetchers_.end());
-  std::unique_ptr<net::URLFetcher> clean_up_fetcher(*fetcher);
-  fetchers_.erase(fetcher);
+  auto it = fetchers_.find(const_cast<net::URLFetcher*>(source));
+  DCHECK(it != fetchers_.end());
+  std::unique_ptr<net::URLFetcher> fetcher = std::move(it->second);
+  fetchers_.erase(it);
 
   // If any two fetches result in the same domain/host, we set the redirect
   // origin to that; otherwise we set it to nothing.
@@ -133,7 +155,6 @@ void IntranetRedirectDetector::OnURLFetchComplete(
       if (!fetchers_.empty()) {
         // Cancel remaining fetch, we don't need it.
         DCHECK(fetchers_.size() == 1);
-        delete (*fetchers_.begin());
         fetchers_.clear();
       }
     }

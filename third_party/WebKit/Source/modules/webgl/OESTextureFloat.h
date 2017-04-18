@@ -31,19 +31,19 @@
 namespace blink {
 
 class OESTextureFloat final : public WebGLExtension {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static OESTextureFloat* create(WebGLRenderingContextBase*);
-    static bool supported(WebGLRenderingContextBase*);
-    static const char* extensionName();
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~OESTextureFloat() override;
-    WebGLExtensionName name() const override;
+ public:
+  static OESTextureFloat* Create(WebGLRenderingContextBase*);
+  static bool Supported(WebGLRenderingContextBase*);
+  static const char* ExtensionName();
 
-private:
-    explicit OESTextureFloat(WebGLRenderingContextBase*);
+  WebGLExtensionName GetName() const override;
+
+ private:
+  explicit OESTextureFloat(WebGLRenderingContextBase*);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OESTextureFloat_h
+#endif  // OESTextureFloat_h

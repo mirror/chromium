@@ -9,78 +9,92 @@
 #include "bindings/core/v8/ScriptState.h"
 #include "core/CoreExport.h"
 #include "core/dom/custom/CustomElementDefinition.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/RefPtr.h"
 #include "v8.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/RefPtr.h"
 
 namespace blink {
 
 class CustomElementDescriptor;
-class CustomElementsRegistry;
+class CustomElementRegistry;
 
-class CORE_EXPORT ScriptCustomElementDefinition final :
-    public CustomElementDefinition {
-    WTF_MAKE_NONCOPYABLE(ScriptCustomElementDefinition);
-public:
-    static ScriptCustomElementDefinition* forConstructor(
-        ScriptState*,
-        CustomElementsRegistry*,
-        const v8::Local<v8::Value>& constructor);
+class CORE_EXPORT ScriptCustomElementDefinition final
+    : public CustomElementDefinition {
+  WTF_MAKE_NONCOPYABLE(ScriptCustomElementDefinition);
 
-    static ScriptCustomElementDefinition* create(
-        ScriptState*,
-        CustomElementsRegistry*,
-        const CustomElementDescriptor&,
-        const v8::Local<v8::Object>& constructor,
-        const v8::Local<v8::Object>& prototype,
-        const v8::Local<v8::Function>& connectedCallback,
-        const v8::Local<v8::Function>& disconnectedCallback,
-        const v8::Local<v8::Function>& attributeChangedCallback,
-        const HashSet<AtomicString>& observedAttributes);
+ public:
+  static ScriptCustomElementDefinition* ForConstructor(
+      ScriptState*,
+      CustomElementRegistry*,
+      const v8::Local<v8::Value>& constructor);
 
-    virtual ~ScriptCustomElementDefinition() = default;
+  static ScriptCustomElementDefinition* Create(
+      ScriptState*,
+      CustomElementRegistry*,
+      const CustomElementDescriptor&,
+      const v8::Local<v8::Object>& constructor,
+      const v8::Local<v8::Function>& connected_callback,
+      const v8::Local<v8::Function>& disconnected_callback,
+      const v8::Local<v8::Function>& adopted_callback,
+      const v8::Local<v8::Function>& attribute_changed_callback,
+      const HashSet<AtomicString>& observed_attributes);
 
-    v8::Local<v8::Object> constructor() const;
-    v8::Local<v8::Object> prototype() const;
+  virtual ~ScriptCustomElementDefinition() = default;
 
-    HTMLElement* createElementSync(Document&, const QualifiedName&) override;
-    HTMLElement* createElementSync(Document&, const QualifiedName&, ExceptionState&) override;
+  v8::Local<v8::Object> Constructor() const;
 
-    bool hasConnectedCallback() const override;
-    bool hasDisconnectedCallback() const override;
+  HTMLElement* CreateElementSync(Document&, const QualifiedName&) override;
 
-    void runConnectedCallback(Element*) override;
-    void runDisconnectedCallback(Element*) override;
-    void runAttributeChangedCallback(Element*, const QualifiedName&,
-        const AtomicString& oldValue, const AtomicString& newValue) override;
+  bool HasConnectedCallback() const override;
+  bool HasDisconnectedCallback() const override;
+  bool HasAdoptedCallback() const override;
 
-private:
-    ScriptCustomElementDefinition(
-        ScriptState*,
-        const CustomElementDescriptor&,
-        const v8::Local<v8::Object>& constructor,
-        const v8::Local<v8::Object>& prototype,
-        const v8::Local<v8::Function>& connectedCallback,
-        const v8::Local<v8::Function>& disconnectedCallback,
-        const v8::Local<v8::Function>& attributeChangedCallback,
-        const HashSet<AtomicString>& observedAttributes);
+  void RunConnectedCallback(Element*) override;
+  void RunDisconnectedCallback(Element*) override;
+  void RunAdoptedCallback(Element*,
+                          Document* old_owner,
+                          Document* new_owner) override;
+  void RunAttributeChangedCallback(Element*,
+                                   const QualifiedName&,
+                                   const AtomicString& old_value,
+                                   const AtomicString& new_value) override;
 
-    // Implementations of |CustomElementDefinition|
-    ScriptValue getConstructorForScript() final;
-    bool runConstructor(Element*) override;
-    Element* runConstructor();
+ private:
+  ScriptCustomElementDefinition(
+      ScriptState*,
+      const CustomElementDescriptor&,
+      const v8::Local<v8::Object>& constructor,
+      const v8::Local<v8::Function>& connected_callback,
+      const v8::Local<v8::Function>& disconnected_callback,
+      const v8::Local<v8::Function>& adopted_callback,
+      const v8::Local<v8::Function>& attribute_changed_callback,
+      const HashSet<AtomicString>& observed_attributes);
 
-    void runCallback(v8::Local<v8::Function>, Element*,
-        int argc = 0, v8::Local<v8::Value> argv[] = nullptr);
+  // Implementations of |CustomElementDefinition|
+  ScriptValue GetConstructorForScript() final;
+  bool RunConstructor(Element*) override;
 
-    RefPtr<ScriptState> m_scriptState;
-    ScopedPersistent<v8::Object> m_constructor;
-    ScopedPersistent<v8::Object> m_prototype;
-    ScopedPersistent<v8::Function> m_connectedCallback;
-    ScopedPersistent<v8::Function> m_disconnectedCallback;
-    ScopedPersistent<v8::Function> m_attributeChangedCallback;
+  // Calls the constructor. The script scope, etc. must already be set up.
+  Element* CallConstructor();
+
+  void RunCallback(v8::Local<v8::Function>,
+                   Element*,
+                   int argc = 0,
+                   v8::Local<v8::Value> argv[] = nullptr);
+
+  HTMLElement* HandleCreateElementSyncException(Document&,
+                                                const QualifiedName& tag_name,
+                                                v8::Isolate*,
+                                                ExceptionState&);
+
+  RefPtr<ScriptState> script_state_;
+  ScopedPersistent<v8::Object> constructor_;
+  ScopedPersistent<v8::Function> connected_callback_;
+  ScopedPersistent<v8::Function> disconnected_callback_;
+  ScopedPersistent<v8::Function> adopted_callback_;
+  ScopedPersistent<v8::Function> attribute_changed_callback_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptCustomElementDefinition_h
+#endif  // ScriptCustomElementDefinition_h

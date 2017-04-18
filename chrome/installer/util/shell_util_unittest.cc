@@ -27,6 +27,7 @@
 #include "base/win/registry.h"
 #include "base/win/shortcut.h"
 #include "base/win/windows_version.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/product.h"
 #include "chrome/installer/util/util_constants.h"
@@ -61,16 +62,16 @@ class ShellUtilShortcutTest : public testing::Test {
     product_.reset(new installer::Product(dist_));
 
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    chrome_exe_ = temp_dir_.path().Append(installer::kChromeExe);
+    chrome_exe_ = temp_dir_.GetPath().Append(installer::kChromeExe);
     EXPECT_EQ(0, base::WriteFile(chrome_exe_, "", 0));
 
-    manganese_exe_ = temp_dir_.path().Append(kManganeseExe);
+    manganese_exe_ = temp_dir_.GetPath().Append(kManganeseExe);
     EXPECT_EQ(0, base::WriteFile(manganese_exe_, "", 0));
 
-    iron_exe_ = temp_dir_.path().Append(kIronExe);
+    iron_exe_ = temp_dir_.GetPath().Append(kIronExe);
     EXPECT_EQ(0, base::WriteFile(iron_exe_, "", 0));
 
-    other_ico_ = temp_dir_.path().Append(kOtherIco);
+    other_ico_ = temp_dir_.GetPath().Append(kOtherIco);
     EXPECT_EQ(0, base::WriteFile(other_ico_, "", 0));
 
     ASSERT_TRUE(fake_user_desktop_.CreateUniqueTempDir());
@@ -79,24 +80,19 @@ class ShellUtilShortcutTest : public testing::Test {
     ASSERT_TRUE(fake_default_user_quick_launch_.CreateUniqueTempDir());
     ASSERT_TRUE(fake_start_menu_.CreateUniqueTempDir());
     ASSERT_TRUE(fake_common_start_menu_.CreateUniqueTempDir());
-    user_desktop_override_.reset(
-        new base::ScopedPathOverride(base::DIR_USER_DESKTOP,
-                                     fake_user_desktop_.path()));
-    common_desktop_override_.reset(
-        new base::ScopedPathOverride(base::DIR_COMMON_DESKTOP,
-                                     fake_common_desktop_.path()));
-    user_quick_launch_override_.reset(
-        new base::ScopedPathOverride(base::DIR_USER_QUICK_LAUNCH,
-                                     fake_user_quick_launch_.path()));
-    start_menu_override_.reset(
-        new base::ScopedPathOverride(base::DIR_START_MENU,
-                                     fake_start_menu_.path()));
-    common_start_menu_override_.reset(
-        new base::ScopedPathOverride(base::DIR_COMMON_START_MENU,
-                                     fake_common_start_menu_.path()));
+    user_desktop_override_.reset(new base::ScopedPathOverride(
+        base::DIR_USER_DESKTOP, fake_user_desktop_.GetPath()));
+    common_desktop_override_.reset(new base::ScopedPathOverride(
+        base::DIR_COMMON_DESKTOP, fake_common_desktop_.GetPath()));
+    user_quick_launch_override_.reset(new base::ScopedPathOverride(
+        base::DIR_USER_QUICK_LAUNCH, fake_user_quick_launch_.GetPath()));
+    start_menu_override_.reset(new base::ScopedPathOverride(
+        base::DIR_START_MENU, fake_start_menu_.GetPath()));
+    common_start_menu_override_.reset(new base::ScopedPathOverride(
+        base::DIR_COMMON_START_MENU, fake_common_start_menu_.GetPath()));
 
     base::FilePath icon_path;
-    base::CreateTemporaryFileInDir(temp_dir_.path(), &icon_path);
+    base::CreateTemporaryFileInDir(temp_dir_.GetPath(), &icon_path);
     test_properties_.set_target(chrome_exe_);
     test_properties_.set_arguments(L"--test --chrome");
     test_properties_.set_description(L"Makes polar bears dance.");
@@ -113,19 +109,22 @@ class ShellUtilShortcutTest : public testing::Test {
     base::FilePath expected_path;
     switch (location) {
       case ShellUtil::SHORTCUT_LOCATION_DESKTOP:
-        expected_path = (properties.level == ShellUtil::CURRENT_USER) ?
-            fake_user_desktop_.path() : fake_common_desktop_.path();
+        expected_path = (properties.level == ShellUtil::CURRENT_USER)
+                            ? fake_user_desktop_.GetPath()
+                            : fake_common_desktop_.GetPath();
         break;
       case ShellUtil::SHORTCUT_LOCATION_QUICK_LAUNCH:
-        expected_path = fake_user_quick_launch_.path();
+        expected_path = fake_user_quick_launch_.GetPath();
         break;
       case ShellUtil::SHORTCUT_LOCATION_START_MENU_ROOT:
-        expected_path = (properties.level == ShellUtil::CURRENT_USER) ?
-            fake_start_menu_.path() : fake_common_start_menu_.path();
+        expected_path = (properties.level == ShellUtil::CURRENT_USER)
+                            ? fake_start_menu_.GetPath()
+                            : fake_common_start_menu_.GetPath();
         break;
       case ShellUtil::SHORTCUT_LOCATION_START_MENU_CHROME_DIR_DEPRECATED:
-        expected_path = (properties.level == ShellUtil::CURRENT_USER) ?
-            fake_start_menu_.path() : fake_common_start_menu_.path();
+        expected_path = (properties.level == ShellUtil::CURRENT_USER)
+                            ? fake_start_menu_.GetPath()
+                            : fake_common_start_menu_.GetPath();
         expected_path = expected_path.Append(
             dist_->GetStartMenuShortcutSubfolder(
                 BrowserDistribution::SUBFOLDER_CHROME));
@@ -175,7 +174,7 @@ class ShellUtilShortcutTest : public testing::Test {
     if (properties.has_icon()) {
       expected_properties.set_icon(properties.icon, properties.icon_index);
     } else {
-      int icon_index = dist->GetIconIndex();
+      int icon_index = install_static::GetIconResourceIndex();
       expected_properties.set_icon(chrome_exe_, icon_index);
     }
 
@@ -183,7 +182,7 @@ class ShellUtilShortcutTest : public testing::Test {
       expected_properties.set_app_id(properties.app_id);
     } else {
       // Tests are always seen as user-level installs in ShellUtil.
-      expected_properties.set_app_id(ShellUtil::GetBrowserModelId(dist, true));
+      expected_properties.set_app_id(ShellUtil::GetBrowserModelId(true));
     }
 
     base::win::ValidateShortcut(expected_path, expected_properties);
@@ -221,15 +220,15 @@ TEST_F(ShellUtilShortcutTest, GetShortcutPath) {
 
   ShellUtil::GetShortcutPath(ShellUtil::SHORTCUT_LOCATION_DESKTOP, dist_,
                              ShellUtil::CURRENT_USER, &path);
-  EXPECT_EQ(fake_user_desktop_.path(), path);
+  EXPECT_EQ(fake_user_desktop_.GetPath(), path);
 
   ShellUtil::GetShortcutPath(ShellUtil::SHORTCUT_LOCATION_DESKTOP, dist_,
                              ShellUtil::SYSTEM_LEVEL, &path);
-  EXPECT_EQ(fake_common_desktop_.path(), path);
+  EXPECT_EQ(fake_common_desktop_.GetPath(), path);
 
   ShellUtil::GetShortcutPath(ShellUtil::SHORTCUT_LOCATION_QUICK_LAUNCH, dist_,
                              ShellUtil::CURRENT_USER, &path);
-  EXPECT_EQ(fake_user_quick_launch_.path(), path);
+  EXPECT_EQ(fake_user_quick_launch_.GetPath(), path);
 
   base::string16 start_menu_subfolder =
       dist_->GetStartMenuShortcutSubfolder(
@@ -237,13 +236,12 @@ TEST_F(ShellUtilShortcutTest, GetShortcutPath) {
   ShellUtil::GetShortcutPath(
       ShellUtil::SHORTCUT_LOCATION_START_MENU_CHROME_DIR_DEPRECATED,
       dist_, ShellUtil::CURRENT_USER, &path);
-  EXPECT_EQ(fake_start_menu_.path().Append(start_menu_subfolder),
-            path);
+  EXPECT_EQ(fake_start_menu_.GetPath().Append(start_menu_subfolder), path);
 
   ShellUtil::GetShortcutPath(
       ShellUtil::SHORTCUT_LOCATION_START_MENU_CHROME_DIR_DEPRECATED,
       dist_, ShellUtil::SYSTEM_LEVEL, &path);
-  EXPECT_EQ(fake_common_start_menu_.path().Append(start_menu_subfolder),
+  EXPECT_EQ(fake_common_start_menu_.GetPath().Append(start_menu_subfolder),
             path);
 }
 
@@ -364,15 +362,15 @@ TEST_F(ShellUtilShortcutTest, CreateIfNoSystemLevelWithSystemLevelPresent) {
   ASSERT_TRUE(ShellUtil::CreateOrUpdateShortcut(
                   ShellUtil::SHORTCUT_LOCATION_DESKTOP, dist_, test_properties_,
                   ShellUtil::SHELL_SHORTCUT_CREATE_ALWAYS));
-  ASSERT_TRUE(base::PathExists(
-      fake_common_desktop_.path().Append(shortcut_name)));
+  ASSERT_TRUE(
+      base::PathExists(fake_common_desktop_.GetPath().Append(shortcut_name)));
 
   test_properties_.level = ShellUtil::CURRENT_USER;
   ASSERT_TRUE(ShellUtil::CreateOrUpdateShortcut(
                   ShellUtil::SHORTCUT_LOCATION_DESKTOP, dist_, test_properties_,
                   ShellUtil::SHELL_SHORTCUT_CREATE_IF_NO_SYSTEM_LEVEL));
-  ASSERT_FALSE(base::PathExists(
-      fake_user_desktop_.path().Append(shortcut_name)));
+  ASSERT_FALSE(
+      base::PathExists(fake_user_desktop_.GetPath().Append(shortcut_name)));
 }
 
 TEST_F(ShellUtilShortcutTest, CreateIfNoSystemLevelStartMenu) {
@@ -392,15 +390,15 @@ TEST_F(ShellUtilShortcutTest, CreateAlwaysUserWithSystemLevelPresent) {
   ASSERT_TRUE(ShellUtil::CreateOrUpdateShortcut(
                   ShellUtil::SHORTCUT_LOCATION_DESKTOP, dist_, test_properties_,
                   ShellUtil::SHELL_SHORTCUT_CREATE_ALWAYS));
-  ASSERT_TRUE(base::PathExists(
-      fake_common_desktop_.path().Append(shortcut_name)));
+  ASSERT_TRUE(
+      base::PathExists(fake_common_desktop_.GetPath().Append(shortcut_name)));
 
   test_properties_.level = ShellUtil::CURRENT_USER;
   ASSERT_TRUE(ShellUtil::CreateOrUpdateShortcut(
                   ShellUtil::SHORTCUT_LOCATION_DESKTOP, dist_, test_properties_,
                   ShellUtil::SHELL_SHORTCUT_CREATE_ALWAYS));
-  ASSERT_TRUE(base::PathExists(
-      fake_user_desktop_.path().Append(shortcut_name)));
+  ASSERT_TRUE(
+      base::PathExists(fake_user_desktop_.GetPath().Append(shortcut_name)));
 }
 
 TEST_F(ShellUtilShortcutTest, RemoveChromeShortcut) {
@@ -730,13 +728,11 @@ TEST_F(ShellUtilShortcutTest, CreateMultipleStartMenuShortcutsAndRemoveFolder) {
                   ShellUtil::SHELL_SHORTCUT_CREATE_ALWAYS));
 
   base::FilePath chrome_shortcut_folder(
-      fake_start_menu_.path().Append(
-          dist_->GetStartMenuShortcutSubfolder(
-              BrowserDistribution::SUBFOLDER_CHROME)));
+      fake_start_menu_.GetPath().Append(dist_->GetStartMenuShortcutSubfolder(
+          BrowserDistribution::SUBFOLDER_CHROME)));
   base::FilePath chrome_apps_shortcut_folder(
-      fake_start_menu_.path().Append(
-          dist_->GetStartMenuShortcutSubfolder(
-              BrowserDistribution::SUBFOLDER_APPS)));
+      fake_start_menu_.GetPath().Append(dist_->GetStartMenuShortcutSubfolder(
+          BrowserDistribution::SUBFOLDER_APPS)));
 
   base::FileEnumerator chrome_file_counter(chrome_shortcut_folder, false,
                                            base::FileEnumerator::FILES);
@@ -775,16 +771,16 @@ TEST_F(ShellUtilShortcutTest,
 
   base::string16 shortcut_name(dist_->GetShortcutName() + installer::kLnkExt);
   base::FilePath shortcut_path(
-      fake_start_menu_.path().Append(shortcut_name));
+      fake_start_menu_.GetPath().Append(shortcut_name));
 
-  ASSERT_TRUE(base::PathExists(fake_start_menu_.path()));
+  ASSERT_TRUE(base::PathExists(fake_start_menu_.GetPath()));
   ASSERT_TRUE(base::PathExists(shortcut_path));
   ASSERT_TRUE(ShellUtil::RemoveShortcuts(
       ShellUtil::SHORTCUT_LOCATION_START_MENU_ROOT, dist_,
       ShellUtil::CURRENT_USER, chrome_exe_));
   // The shortcut should be removed but the "Start Menu" root directory should
   // remain.
-  ASSERT_TRUE(base::PathExists(fake_start_menu_.path()));
+  ASSERT_TRUE(base::PathExists(fake_start_menu_.GetPath()));
   ASSERT_FALSE(base::PathExists(shortcut_path));
 }
 
@@ -792,7 +788,7 @@ TEST_F(ShellUtilShortcutTest, DontRemoveChromeShortcutIfPointsToAnotherChrome) {
   base::ScopedTempDir other_exe_dir;
   ASSERT_TRUE(other_exe_dir.CreateUniqueTempDir());
   base::FilePath other_chrome_exe =
-      other_exe_dir.path().Append(installer::kChromeExe);
+      other_exe_dir.GetPath().Append(installer::kChromeExe);
   EXPECT_EQ(0, base::WriteFile(other_chrome_exe, "", 0));
 
   test_properties_.set_target(other_chrome_exe);
@@ -801,7 +797,8 @@ TEST_F(ShellUtilShortcutTest, DontRemoveChromeShortcutIfPointsToAnotherChrome) {
                   ShellUtil::SHELL_SHORTCUT_CREATE_ALWAYS));
 
   base::string16 shortcut_name(dist_->GetShortcutName() + installer::kLnkExt);
-  base::FilePath shortcut_path(fake_user_desktop_.path().Append(shortcut_name));
+  base::FilePath shortcut_path(
+      fake_user_desktop_.GetPath().Append(shortcut_name));
   ASSERT_TRUE(base::PathExists(shortcut_path));
 
   // The shortcut shouldn't be removed as it was installed pointing to
@@ -820,7 +817,8 @@ class ShellUtilRegistryTest : public testing::Test {
 
  protected:
   void SetUp() override {
-    registry_overrides_.OverrideRegistry(HKEY_CURRENT_USER);
+    ASSERT_NO_FATAL_FAILURE(
+        registry_overrides_.OverrideRegistry(HKEY_CURRENT_USER));
 
     // .test2 files already have a default application.
     base::win::RegKey key;
@@ -941,16 +939,15 @@ TEST_F(ShellUtilRegistryTest, DeleteFileAssociations) {
 
 TEST(ShellUtilTest, BuildAppModelIdBasic) {
   std::vector<base::string16> components;
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  const base::string16 base_app_id(dist->GetBaseAppId());
+  const base::string16 base_app_id(install_static::GetBaseAppId());
   components.push_back(base_app_id);
   ASSERT_EQ(base_app_id, ShellUtil::BuildAppModelId(components));
 }
 
 TEST(ShellUtilTest, BuildAppModelIdManySmall) {
   std::vector<base::string16> components;
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  const base::string16 suffixed_app_id(dist->GetBaseAppId().append(L".gab"));
+  const base::string16 suffixed_app_id(install_static::GetBaseAppId() +
+                                       base::string16(L".gab"));
   components.push_back(suffixed_app_id);
   components.push_back(L"Default");
   components.push_back(L"Test");

@@ -12,8 +12,8 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
 #include "ui/views/border.h"
-#include "ui/views/controls/button/blue_button.h"
 #include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/layout/box_layout.h"
 
 namespace app_list {
@@ -66,7 +66,7 @@ bool SearchResultActionsView::IsValidActionIndex(int action_index) const {
 void SearchResultActionsView::CreateImageButton(
     const SearchResult::Action& action) {
   views::ImageButton* button = new views::ImageButton(this);
-  button->SetBorder(views::Border::CreateEmptyBorder(0, 9, 0, 9));
+  button->SetBorder(views::CreateEmptyBorder(0, 9, 0, 9));
   button->SetAccessibleName(action.tooltip_text);
   button->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
                             views::ImageButton::ALIGN_MIDDLE);
@@ -79,11 +79,10 @@ void SearchResultActionsView::CreateImageButton(
 
 void SearchResultActionsView::CreateBlueButton(
     const SearchResult::Action& action) {
-  views::BlueButton* button = new views::BlueButton(this, action.label_text);
-  button->SetAccessibleName(action.label_text);
+  views::MdTextButton* button =
+      views::MdTextButton::Create(this, action.label_text);
+  button->SetProminent(true);
   button->SetTooltipText(action.tooltip_text);
-  button->SetFontList(ui::ResourceBundle::GetSharedInstance().GetFontList(
-      ui::ResourceBundle::SmallBoldFont));
   button->SetFocusBehavior(FocusBehavior::NEVER);
   AddChildView(button);
 }

@@ -4,8 +4,10 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #import "base/test/ios/wait_util.h"
+#include "base/threading/thread_task_runner_handle.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/web_ui_ios_data_source.h"
 #include "ios/web/public/webui/web_ui_ios_controller.h"
@@ -17,8 +19,8 @@
 #import "ios/web/web_state/ui/crw_web_controller.h"
 #import "ios/web/web_state/web_state_impl.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "services/shell/public/cpp/identity.h"
-#include "services/shell/public/cpp/interface_registry.h"
+#include "services/service_manager/public/cpp/identity.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 #include "url/gurl.h"
 #include "url/scheme_host_port.h"
 
@@ -37,8 +39,9 @@ const char kTestWebUIURLHost[] = "testwebui";
 // Once "fin" is received |IsFinReceived()| call will return true, indicating
 // that communication was successful. See test WebUI page code here:
 // ios/web/test/data/mojo_test.js
-class TestUIHandler : public TestUIHandlerMojo,
-                      public shell::InterfaceFactory<TestUIHandlerMojo> {
+class TestUIHandler
+    : public TestUIHandlerMojo,
+      public service_manager::InterfaceFactory<TestUIHandlerMojo> {
  public:
   TestUIHandler() {}
   ~TestUIHandler() override {}
@@ -48,16 +51,16 @@ class TestUIHandler : public TestUIHandlerMojo,
 
   // TestUIHandlerMojo overrides.
   void SetClientPage(TestPagePtr page) override { page_ = std::move(page); }
-  void HandleJsMessage(const mojo::String& message) override {
-    if (message.get() == "syn") {
+  void HandleJsMessage(const std::string& message) override {
+    if (message == "syn") {
       // Received "syn" message from WebUI page, send "ack" as reply.
       DCHECK(!syn_received_);
       DCHECK(!fin_received_);
       syn_received_ = true;
       NativeMessageResultMojoPtr result(NativeMessageResultMojo::New());
-      result->message = mojo::String::From("ack");
+      result->message = "ack";
       page_->HandleNativeMessage(std::move(result));
-    } else if (message.get() == "fin") {
+    } else if (message == "fin") {
       // Received "fin" from the WebUI page in response to "ack".
       DCHECK(syn_received_);
       DCHECK(!fin_received_);
@@ -68,8 +71,8 @@ class TestUIHandler : public TestUIHandlerMojo,
   }
 
  private:
-  // shell::InterfaceFactory overrides.
-  void Create(const shell::Identity& remote_identity,
+  // service_manager::InterfaceFactory overrides.
+  void Create(const service_manager::Identity& remote_identity,
               mojo::InterfaceRequest<TestUIHandlerMojo> request) override {
     bindings_.AddBinding(this, std::move(request));
   }
@@ -112,12 +115,12 @@ class TestWebUIControllerFactory : public WebUIIOSControllerFactory {
       : ui_handler_(ui_handler) {}
 
   // WebUIIOSControllerFactory overrides.
-  WebUIIOSController* CreateWebUIIOSControllerForURL(
+  std::unique_ptr<WebUIIOSController> CreateWebUIIOSControllerForURL(
       WebUIIOS* web_ui,
       const GURL& url) const override {
     DCHECK_EQ(url.scheme(), kTestWebUIScheme);
     DCHECK_EQ(url.host(), kTestWebUIURLHost);
-    return new TestUI(web_ui, ui_handler_);
+    return base::MakeUnique<TestUI>(web_ui, ui_handler_);
   }
 
  private:
@@ -129,10 +132,10 @@ class TestWebUIControllerFactory : public WebUIIOSControllerFactory {
 // A test fixture for verifying mojo comminication for WebUI.
 class WebUIMojoTest : public WebIntTest {
  protected:
-  WebUIMojoTest()
-      : web_state_(new WebStateImpl(GetBrowserState())),
-        ui_handler_(new TestUIHandler()) {
-    web_state_->GetNavigationManagerImpl().InitializeSession(nil, nil, NO, 0);
+  WebUIMojoTest() : ui_handler_(new TestUIHandler()) {
+    web::WebState::CreateParams params(GetBrowserState());
+    web_state_ = base::MakeUnique<web::WebStateImpl>(params);
+    web_state_->GetNavigationManagerImpl().InitializeSession();
     WebUIIOSControllerFactory::RegisterFactory(
         new TestWebUIControllerFactory(ui_handler_.get()));
   }
@@ -159,7 +162,16 @@ TEST_F(WebUIMojoTest, MessageExchange) {
 
   // Wait until |TestUIHandler| receives "ack" message from WebUI page.
   base::test::ios::WaitUntilCondition(^{
-    base::RunLoop().RunUntilIdle();
+    // Flush any pending tasks. Don't RunUntilIdle() because
+    // RunUntilIdle() is incompatible with mojo::SimpleWatcher's
+    // automatic arming behavior, which Mojo JS still depends upon.
+    //
+    // TODO(crbug.com/701875): Introduce the full watcher API to JS and get rid
+    // of this hack.
+    base::RunLoop loop;
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  loop.QuitClosure());
+    loop.Run();
     return test_ui_handler()->IsFinReceived();
   });
 }

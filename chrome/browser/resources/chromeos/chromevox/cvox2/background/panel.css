@@ -1,7 +1,6 @@
 /* Copyright 2016 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
- */
+ * found in the LICENSE file. */
 
 body {
   border: 0;
@@ -34,7 +33,7 @@ button {
   min-width: 52px;
 }
 
-#menus_button:hover {
+#menus_button:not([disabled]):hover {
   background-color: rgb(246, 145, 57);
 }
 
@@ -62,7 +61,7 @@ button {
   width: 19px;
 }
 
-#options:hover {
+#options:not([disabled]):hover {
   background-image: url(/images/options-hover-19.png);
 }
 
@@ -102,8 +101,30 @@ button {
 
 #braille-container {
   height: 35px;
+  overflow: hidden;
   position: relative;
   top: -35px;
+}
+
+#braille-container * {
+  border-spacing: 0;
+  color: #fff;
+}
+
+#braille-table-holder-outer {
+  display: flex;
+  height: 100%;
+  overflow: scroll;
+  padding-right: 17px;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.braille-table-holder {
+  flex-grow: 1;
 }
 
 #braille-text {
@@ -212,7 +233,11 @@ button {
 .menu-item-title {
   border: 0;
   margin: 0;
+  max-width: 500px;
+  overflow: hidden;
   padding: 0 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .menu-item-shortcut {
@@ -273,6 +298,10 @@ button {
   font-weight: bold;
 }
 
+#tutorial_main h2:focus {
+  outline: none
+}
+
 #tutorial_main p,
 #tutorial_main a {
   display: block;
@@ -298,4 +327,20 @@ button {
   height: 2em;
   margin: 0 24px;
   width: 8em;
+}
+
+.highlighted-cell {
+  border: 1px solid white;
+}
+
+.unhighlighted-cell {
+  border: 1px solid black;
+}
+
+/*
+ * The html hidden attribute doesn't make elements not focusable by default.
+ * This rule ensures that elements that are hidden truly don't show up.
+ */
+*[hidden] {
+  display: none !important;
 }

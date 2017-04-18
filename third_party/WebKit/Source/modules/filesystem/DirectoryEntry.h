@@ -34,7 +34,7 @@
 #include "modules/ModulesExport.h"
 #include "modules/filesystem/Entry.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -46,27 +46,39 @@ class FileSystemFlags;
 class VoidCallback;
 
 class MODULES_EXPORT DirectoryEntry final : public Entry {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static DirectoryEntry* create(DOMFileSystemBase* fileSystem, const String& fullPath)
-    {
-        return new DirectoryEntry(fileSystem, fullPath);
-    }
-    bool isDirectory() const override { return true; }
+  DEFINE_WRAPPERTYPEINFO();
 
-    DirectoryReader* createReader();
-    void getFile(const String& path, const FileSystemFlags&, EntryCallback* = nullptr, ErrorCallback* = nullptr);
-    void getDirectory(const String& path, const FileSystemFlags&, EntryCallback* = nullptr, ErrorCallback* = nullptr);
-    void removeRecursively(VoidCallback* successCallback = nullptr, ErrorCallback* = nullptr) const;
+ public:
+  static DirectoryEntry* Create(DOMFileSystemBase* file_system,
+                                const String& full_path) {
+    return new DirectoryEntry(file_system, full_path);
+  }
+  bool isDirectory() const override { return true; }
 
-    DECLARE_VIRTUAL_TRACE();
+  DirectoryReader* createReader();
+  void getFile(const String& path,
+               const FileSystemFlags&,
+               EntryCallback* = nullptr,
+               ErrorCallback* = nullptr);
+  void getDirectory(const String& path,
+                    const FileSystemFlags&,
+                    EntryCallback* = nullptr,
+                    ErrorCallback* = nullptr);
+  void removeRecursively(VoidCallback* success_callback = nullptr,
+                         ErrorCallback* = nullptr) const;
 
-private:
-    DirectoryEntry(DOMFileSystemBase*, const String& fullPath);
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  DirectoryEntry(DOMFileSystemBase*, const String& full_path);
 };
 
-DEFINE_TYPE_CASTS(DirectoryEntry, Entry, entry, entry->isDirectory(), entry.isDirectory());
+DEFINE_TYPE_CASTS(DirectoryEntry,
+                  Entry,
+                  entry,
+                  entry->isDirectory(),
+                  entry.isDirectory());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // DirectoryEntry_h
+#endif  // DirectoryEntry_h

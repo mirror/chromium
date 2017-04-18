@@ -16,10 +16,6 @@
 #include "build/build_config.h"
 #include "components/crash/content/app/crash_reporter_client.h"
 
-namespace browser_watcher {
-class CrashReportingMetrics;
-}  // namespace browser_watcher
-
 class ChromeCrashReporterClient : public crash_reporter::CrashReporterClient {
  public:
   ChromeCrashReporterClient();
@@ -39,6 +35,10 @@ class ChromeCrashReporterClient : public crash_reporter::CrashReporterClient {
 
   bool GetCrashDumpLocation(base::FilePath* crash_dir) override;
 
+#if defined(OS_MACOSX)
+  bool GetCrashMetricsLocation(base::FilePath* metrics_dir) override;
+#endif
+
   size_t RegisterCrashKeys() override;
 
   bool IsRunningUnattended() override;
@@ -51,6 +51,10 @@ class ChromeCrashReporterClient : public crash_reporter::CrashReporterClient {
 
 #if defined(OS_ANDROID)
   int GetAndroidMinidumpDescriptor() override;
+#endif
+
+#if defined(OS_MACOSX)
+  bool ShouldMonitorCrashHandlerExpensively() override;
 #endif
 
   bool EnableBreakpadForProcess(const std::string& process_type) override;

@@ -32,22 +32,32 @@
 
 #include "platform/UserGestureIndicator.h"
 #include "public/web/WebUserGestureToken.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
-bool WebUserGestureIndicator::isProcessingUserGesture()
-{
-    return UserGestureIndicator::processingUserGesture();
+bool WebUserGestureIndicator::IsProcessingUserGesture() {
+  return UserGestureIndicator::ProcessingUserGesture();
 }
 
-bool WebUserGestureIndicator::consumeUserGesture()
-{
-    return UserGestureIndicator::consumeUserGesture();
+bool WebUserGestureIndicator::IsProcessingUserGestureThreadSafe() {
+  return UserGestureIndicator::ProcessingUserGestureThreadSafe();
 }
 
-WebUserGestureToken WebUserGestureIndicator::currentUserGestureToken()
-{
-    return WebUserGestureToken(UserGestureIndicator::currentToken());
+// TODO(csharrison): consumeUserGesture() and currentUserGestureToken() use
+// the thread-safe API, which many callers probably do not need. Consider
+// updating them if they are in any sort of critical path or called often.
+bool WebUserGestureIndicator::ConsumeUserGesture() {
+  return UserGestureIndicator::ConsumeUserGestureThreadSafe();
 }
 
-} // namespace blink
+bool WebUserGestureIndicator::ProcessedUserGestureSinceLoad(
+    WebLocalFrame* frame) {
+  return ToWebLocalFrameImpl(frame)->GetFrame()->HasReceivedUserGesture();
+}
+
+WebUserGestureToken WebUserGestureIndicator::CurrentUserGestureToken() {
+  return WebUserGestureToken(UserGestureIndicator::CurrentTokenThreadSafe());
+}
+
+}  // namespace blink

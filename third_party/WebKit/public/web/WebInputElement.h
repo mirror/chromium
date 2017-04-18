@@ -36,76 +36,79 @@
 namespace blink {
 
 class HTMLInputElement;
-class WebElementCollection;
 class WebOptionElement;
 
 // Provides readonly access to some properties of a DOM input element node.
 class WebInputElement final : public WebFormControlElement {
-public:
-    WebInputElement() : WebFormControlElement() { }
-    WebInputElement(const WebInputElement& element) : WebFormControlElement(element) { }
+ public:
+  WebInputElement() : WebFormControlElement() {}
+  WebInputElement(const WebInputElement& element)
+      : WebFormControlElement(element) {}
 
-    WebInputElement& operator=(const WebInputElement& element)
-    {
-        WebFormControlElement::assign(element);
-        return *this;
-    }
-    void assign(const WebInputElement& element) { WebFormControlElement::assign(element); }
+  WebInputElement& operator=(const WebInputElement& element) {
+    WebFormControlElement::Assign(element);
+    return *this;
+  }
+  void Assign(const WebInputElement& element) {
+    WebFormControlElement::Assign(element);
+  }
 
-    // This returns true for all of textfield-looking types such as text,
-    // password, search, email, url, and number.
-    BLINK_EXPORT bool isTextField() const;
-    // This returns true only for type=text.
-    BLINK_EXPORT bool isText() const;
-    BLINK_EXPORT bool isEmailField() const;
-    BLINK_EXPORT bool isPasswordField() const;
-    BLINK_EXPORT bool isImageButton() const;
-    BLINK_EXPORT bool isRadioButton() const;
-    BLINK_EXPORT bool isCheckbox() const;
-    // This has different behavior from 'maxLength' IDL attribute, it returns
-    // HTMLInputElement::maximumLength when no valid has been set,
-    // whereas 'maxLength' IDL attribute returns -1.
-    BLINK_EXPORT int maxLength() const;
-    BLINK_EXPORT void setActivatedSubmit(bool);
-    BLINK_EXPORT int size() const;
-    BLINK_EXPORT void setChecked(bool, bool sendEvents = false);
-    // Sets the value inside the text field without being sanitized. Can't be
-    // used if a renderer doesn't exist or on a non text field type. Caret will
-    // be moved to the end.
-    BLINK_EXPORT void setEditingValue(const WebString&);
-    BLINK_EXPORT bool isValidValue(const WebString&) const;
-    BLINK_EXPORT bool isChecked() const;
-    BLINK_EXPORT bool isMultiple() const;
+  // This returns true for all of textfield-looking types such as text,
+  // password, search, email, url, and number.
+  BLINK_EXPORT bool IsTextField() const;
+  // This returns true only for type=text.
+  BLINK_EXPORT bool IsText() const;
+  BLINK_EXPORT bool IsEmailField() const;
+  BLINK_EXPORT bool IsPasswordField() const;
+  BLINK_EXPORT bool IsImageButton() const;
+  BLINK_EXPORT bool IsRadioButton() const;
+  BLINK_EXPORT bool IsCheckbox() const;
+  // This has different behavior from 'maxLength' IDL attribute, it returns
+  // defaultMaxLength() when no valid has been set, whereas 'maxLength' IDL
+  // attribute returns -1.
+  BLINK_EXPORT int MaxLength() const;
+  BLINK_EXPORT void SetActivatedSubmit(bool);
+  BLINK_EXPORT int size() const;
+  BLINK_EXPORT void SetChecked(bool, bool send_events = false);
+  // Sets the value inside the text field without being sanitized. Can't be
+  // used if a renderer doesn't exist or on a non text field type. Caret will
+  // be moved to the end.
+  BLINK_EXPORT void SetEditingValue(const WebString&);
+  BLINK_EXPORT bool IsValidValue(const WebString&) const;
+  BLINK_EXPORT bool IsChecked() const;
+  BLINK_EXPORT bool IsMultiple() const;
 
-    // Associated <datalist> options which match to the current INPUT value.
-    BLINK_EXPORT WebVector<WebOptionElement> filteredDataListOptions() const;
+  // Associated <datalist> options which match to the current INPUT value.
+  BLINK_EXPORT WebVector<WebOptionElement> FilteredDataListOptions() const;
 
-    // Return the localized value for this input type.
-    BLINK_EXPORT WebString localizeValue(const WebString&) const;
+  // Return the localized value for this input type.
+  BLINK_EXPORT WebString LocalizeValue(const WebString&) const;
 
-    // Exposes the default value of the maxLength attribute.
-    BLINK_EXPORT static int defaultMaxLength();
+  // Exposes the default value of the maxLength attribute.
+  BLINK_EXPORT static int DefaultMaxLength();
 
-    // If true, forces the text of the element to be visible.
-    BLINK_EXPORT void setShouldRevealPassword(bool value);
+  // If true, forces the text of the element to be visible.
+  BLINK_EXPORT void SetShouldRevealPassword(bool value);
+
+  // Returns true if the text of the element should be visible.
+  BLINK_EXPORT bool ShouldRevealPassword() const;
 
 #if BLINK_IMPLEMENTATION
-    WebInputElement(HTMLInputElement*);
-    WebInputElement& operator=(HTMLInputElement*);
-    operator HTMLInputElement*() const;
+  WebInputElement(HTMLInputElement*);
+  WebInputElement& operator=(HTMLInputElement*);
+  operator HTMLInputElement*() const;
 #endif
 };
 
 DECLARE_WEB_NODE_TYPE_CASTS(WebInputElement);
 
 // This returns 0 if the specified WebElement is not a WebInputElement.
-BLINK_EXPORT WebInputElement* toWebInputElement(WebElement*);
+BLINK_EXPORT WebInputElement* ToWebInputElement(WebElement*);
 // This returns 0 if the specified WebElement is not a WebInputElement.
-inline const WebInputElement* toWebInputElement(const WebElement* element)
-{
-    return toWebInputElement(const_cast<WebElement*>(element));
+inline const WebInputElement* ToWebInputElement(const WebElement* element) {
+  return ToWebInputElement(const_cast<WebElement*>(element));
 }
 
-} // namespace blink
+}  // namespace blink
 
 #endif

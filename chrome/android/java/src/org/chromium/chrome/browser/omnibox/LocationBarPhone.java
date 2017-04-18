@@ -4,35 +4,26 @@
 
 package org.chromium.chrome.browser.omnibox;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.text.Selection;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.TouchDelegate;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.WindowDelegate;
-import org.chromium.chrome.browser.appmenu.AppMenuButtonHelper;
 import org.chromium.chrome.browser.ntp.NewTabPage;
-import org.chromium.chrome.browser.omaha.UpdateMenuItemHelper;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.chrome.browser.util.ColorUtils;
-import org.chromium.chrome.browser.util.FeatureUtilities;
-import org.chromium.chrome.browser.widget.TintedImageButton;
+import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.ui.UiUtils;
 
 /**
@@ -44,20 +35,20 @@ public class LocationBarPhone extends LocationBarLayout {
 
     private static final int ACTION_BUTTON_TOUCH_OVERFLOW_LEFT = 15;
 
+    private static final Interpolator GOOGLE_G_FADE_INTERPOLATOR =
+            new FastOutLinearInInterpolator();
+
     private View mFirstVisibleFocusedView;
     private View mIncognitoBadge;
+    private View mGoogleGContainer;
+    private View mGoogleG;
     private View mUrlActionsContainer;
-    private TintedImageButton mMenuButton;
-    private ImageView mMenuBadge;
-    private View mMenuButtonWrapper;
     private int mIncognitoBadgePadding;
+    private int mGoogleGWidth;
+    private int mGoogleGMargin;
     private float mUrlFocusChangePercent;
     private Runnable mKeyboardResizeModeTask;
     private ObjectAnimator mOmniboxBackgroundAnimator;
-
-    private boolean mShowMenuBadge;
-    private AnimatorSet mMenuBadgeAnimatorSet;
-    private boolean mIsMenuBadgeAnimationRunning;
 
     /**
      * Constructor used to inflate from XML.
@@ -75,6 +66,11 @@ public class LocationBarPhone extends LocationBarLayout {
         mIncognitoBadgePadding =
                 getResources().getDimensionPixelSize(R.dimen.location_bar_incognito_badge_padding);
 
+        mGoogleGContainer = findViewById(R.id.google_g_container);
+        mGoogleG = findViewById(R.id.google_g);
+        mGoogleGWidth = getResources().getDimensionPixelSize(R.dimen.location_bar_google_g_width);
+        mGoogleGMargin = getResources().getDimensionPixelSize(R.dimen.location_bar_google_g_margin);
+
         mUrlActionsContainer = findViewById(R.id.url_action_container);
         Rect delegateArea = new Rect();
         mUrlActionsContainer.getHitRect(delegateArea);
@@ -82,53 +78,6 @@ public class LocationBarPhone extends LocationBarLayout {
         TouchDelegate touchDelegate = new TouchDelegate(delegateArea, mUrlActionsContainer);
         assert mUrlActionsContainer.getParent() == this;
         setTouchDelegate(touchDelegate);
-
-        mMenuButton = (TintedImageButton) findViewById(R.id.document_menu_button);
-        mMenuBadge = (ImageView) findViewById(R.id.document_menu_badge);
-        mMenuButtonWrapper = findViewById(R.id.document_menu_button_wrapper);
-
-        if (hasVisibleViewsAfterUrlBarWhenUnfocused()) mUrlActionsContainer.setVisibility(VISIBLE);
-        if (!showMenuButtonInOmnibox()) {
-            ((ViewGroup) mMenuButtonWrapper.getParent()).removeView(mMenuButtonWrapper);
-        }
-    }
-
-    @Override
-    public void setMenuButtonHelper(final AppMenuButtonHelper helper) {
-        super.setMenuButtonHelper(helper);
-        mMenuButton.setOnTouchListener(new OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return helper.onTouch(v, event);
-            }
-        });
-        mMenuButton.setOnKeyListener(new OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                    return helper.onEnterKeyPress(view);
-                }
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public View getMenuAnchor() {
-        return mMenuButton;
-    }
-
-    @Override
-    public void getContentRect(Rect outRect) {
-        super.getContentRect(outRect);
-        if (mIncognitoBadge.getVisibility() == View.GONE) return;
-
-        if (!ApiCompatibilityUtils.isLayoutRtl(this)) {
-            outRect.left += mIncognitoBadge.getWidth();
-        } else {
-            outRect.right -= mIncognitoBadge.getWidth();
-        }
     }
 
     /**
@@ -139,42 +88,20 @@ public class LocationBarPhone extends LocationBarLayout {
     }
 
     /**
-     * @return Whether there are visible views that are aligned following the Url Bar when it
-     *         does not have foucs.
-     */
-    public boolean hasVisibleViewsAfterUrlBarWhenUnfocused() {
-        return showMenuButtonInOmnibox();
-    }
-
-    /**
-     * @return Whether the menu should be shown in the omnibox instead of outside of it.
-     */
-    public boolean showMenuButtonInOmnibox() {
-        // When we show tab switching button, we prefer to show menu right to the tab switcher
-        // button.
-        return FeatureUtilities.isDocumentMode(getContext());
-    }
-
-    /**
      * Updates percentage of current the URL focus change animation.
      * @param percent 1.0 is 100% focused, 0 is completely unfocused.
      */
     public void setUrlFocusChangePercent(float percent) {
         mUrlFocusChangePercent = percent;
 
-        if (percent > 0f && !hasVisibleViewsAfterUrlBarWhenUnfocused()) {
+        if (percent > 0f) {
             mUrlActionsContainer.setVisibility(VISIBLE);
-        } else if (percent == 0f && !isUrlFocusChangeInProgress()
-                && !hasVisibleViewsAfterUrlBarWhenUnfocused()) {
+        } else if (percent == 0f && !isUrlFocusChangeInProgress()) {
             // If a URL focus change is in progress, then it will handle setting the visibility
             // correctly after it completes.  If done here, it would cause the URL to jump due
             // to a badly timed layout call.
             mUrlActionsContainer.setVisibility(GONE);
         }
-
-        mDeleteButton.setAlpha(percent);
-        mMicButton.setAlpha(percent);
-        if (showMenuButtonInOmnibox()) mMenuButtonWrapper.setAlpha(1f - percent);
 
         updateButtonVisibility();
     }
@@ -242,7 +169,9 @@ public class LocationBarPhone extends LocationBarLayout {
             //     by a command line intent)
             // 3.) Simultaneously moving one of the selection handles left and right.  This will
             //     occasionally throw an AssertionError on the bounds of the selection.
-            Selection.setSelection(mUrlBar.getText(), 0);
+            if (!mUrlBar.scrollToTLD()) {
+                Selection.setSelection(mUrlBar.getText(), 0);
+            }
 
             // The animation rendering may not yet be 100% complete and hiding the keyboard makes
             // the animation quite choppy.
@@ -267,18 +196,19 @@ public class LocationBarPhone extends LocationBarLayout {
                 };
                 postDelayed(mKeyboardResizeModeTask, KEYBOARD_MODE_CHANGE_DELAY_MS);
             }
-            if (!hasVisibleViewsAfterUrlBarWhenUnfocused()) {
-                mUrlActionsContainer.setVisibility(GONE);
-            }
+            mUrlActionsContainer.setVisibility(GONE);
         } else {
             if (mKeyboardResizeModeTask != null) {
                 removeCallbacks(mKeyboardResizeModeTask);
                 mKeyboardResizeModeTask = null;
             }
-            if (windowDelegate.getWindowSoftInputMode()
-                    != WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN) {
-                windowDelegate.setWindowSoftInputMode(
-                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+            // TODO(mdjones): SOFT_INPUT_ADJUST_NOTHING breaks omnibox suggestions but fixes a
+            // content jumping bug in Chrome Home. See https://crbug.com/706918
+            int softInputMode = mBottomSheet != null
+                    ? WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
+                    : WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
+            if (windowDelegate.getWindowSoftInputMode() != softInputMode) {
+                windowDelegate.setWindowSoftInputMode(softInputMode);
             }
             UiUtils.showKeyboard(mUrlBar);
             // As the position of the navigation icon has changed, ensure the suggestions are
@@ -290,15 +220,55 @@ public class LocationBarPhone extends LocationBarLayout {
         setUrlFocusChangeInProgress(false);
 
         NewTabPage ntp = getToolbarDataProvider().getNewTabPageForCurrentTab();
-        if (hasFocus && ntp != null && ntp.isLocationBarShownInNTP()) {
-            fadeInOmniboxResultsContainerBackground();
+        if (hasFocus && ntp != null && ntp.isLocationBarShownInNTP() && mBottomSheet == null) {
+            if (mFadingView == null) initFadingOverlayView();
+            mFadingView.showFadingOverlay();
         }
     }
 
     @Override
     protected void updateButtonVisibility() {
-        updateDeleteButtonVisibility();
-        updateMicButtonVisiblity(mUrlFocusChangePercent);
+        super.updateButtonVisibility();
+        updateMicButtonVisibility(mUrlFocusChangePercent);
+        updateGoogleG();
+    }
+
+    private void updateGoogleG() {
+        NewTabPage ntp = getToolbarDataProvider().getNewTabPageForCurrentTab();
+
+        // If the default search engine is not Google, isLocationBarShownInNTP() will return false.
+        if (ntp == null || !ntp.isLocationBarShownInNTP()
+                || !ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX)) {
+            mGoogleGContainer.setVisibility(View.GONE);
+            return;
+        }
+
+        mGoogleGContainer.setVisibility(View.VISIBLE);
+        float animationProgress =
+                GOOGLE_G_FADE_INTERPOLATOR.getInterpolation(mUrlFocusChangePercent);
+
+        final float finalGScale = 0.3f;
+        // How much we have reduced the size of the G, 0 at the beginning, 0.7 at the end.
+        final float shrinkingProgress = animationProgress * (1 - finalGScale);
+
+        FrameLayout.LayoutParams layoutParams =
+                (FrameLayout.LayoutParams) mGoogleG.getLayoutParams();
+        layoutParams.width = Math.round(mGoogleGWidth * (1f - shrinkingProgress));
+
+        // Shrink the margin down to 50% minus half of the G width (in the end state).
+        final float finalGoogleGMargin = (mGoogleGMargin - mGoogleGWidth * finalGScale) / 2f;
+        ApiCompatibilityUtils.setMarginEnd(layoutParams, Math.round(MathUtils.interpolate(
+                mGoogleGMargin, finalGoogleGMargin, animationProgress)));
+        // Just calling requestLayout() would not resolve the end margin.
+        mGoogleG.setLayoutParams(layoutParams);
+
+        // We want the G to be fully transparent when it is 45% of its size.
+        final float scaleWhenTransparent = 0.45f;
+        assert scaleWhenTransparent >= finalGScale;
+
+        // How much we have faded out the G, 0 at the beginning, 1 when we've reduced size to 0.45.
+        final float fadingProgress = Math.min(1, shrinkingProgress / (1 - scaleWhenTransparent));
+        mGoogleG.setAlpha(1 - fadingProgress);
     }
 
     @Override
@@ -328,20 +298,6 @@ public class LocationBarPhone extends LocationBarLayout {
         boolean isIncognito = tab != null && tab.isIncognito();
         mIncognitoBadge.setVisibility(isIncognito ? VISIBLE : GONE);
         updateIncognitoBadgePadding();
-
-        if (showMenuButtonInOmnibox()) {
-            boolean useLightDrawables = shouldUseLightDrawables();
-            ColorStateList dark = ApiCompatibilityUtils.getColorStateList(getResources(),
-                    R.color.dark_mode_tint);
-            ColorStateList white = ApiCompatibilityUtils.getColorStateList(getResources(),
-                    R.color.light_mode_tint);
-            mMenuButton.setTint(useLightDrawables ? white : dark);
-
-            if (mShowMenuBadge) {
-                mMenuBadge.setImageResource(useLightDrawables ? R.drawable.badge_update_light
-                        : R.drawable.badge_update_dark);
-            }
-        }
     }
 
     @Override
@@ -353,109 +309,5 @@ public class LocationBarPhone extends LocationBarLayout {
     public void setLayoutDirection(int layoutDirection) {
         super.setLayoutDirection(layoutDirection);
         updateIncognitoBadgePadding();
-    }
-
-    /**
-     * Displays the update app menu badge.
-     */
-    public void showAppMenuUpdateBadge(boolean animate) {
-        if (!showMenuButtonInOmnibox()) return;
-
-        mShowMenuBadge = true;
-        mMenuBadge.setImageResource(shouldUseLightDrawables()
-                ? R.drawable.badge_update_light : R.drawable.badge_update_dark);
-        mMenuButton.setContentDescription(getResources().getString(
-                R.string.accessibility_toolbar_btn_menu_update));
-
-        if (!animate || mIsMenuBadgeAnimationRunning) {
-            mMenuBadge.setVisibility(View.VISIBLE);
-            return;
-        }
-
-        // Set initial states.
-        mMenuBadge.setAlpha(0.f);
-        mMenuBadge.setVisibility(View.VISIBLE);
-
-        mMenuBadgeAnimatorSet = UpdateMenuItemHelper.createShowUpdateBadgeAnimation(
-                mMenuButton, mMenuBadge);
-
-        mMenuBadgeAnimatorSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mIsMenuBadgeAnimationRunning = true;
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                // animator#cancel() will trigger onAnimationEnd() as well.
-                mIsMenuBadgeAnimationRunning = false;
-            }
-        });
-
-        mMenuBadgeAnimatorSet.start();
-    }
-
-    /**
-     * Remove the update menu app menu badge.
-     */
-    public void removeAppMenuUpdateBadge(boolean animate) {
-        boolean wasShowingMenuBadge = mShowMenuBadge;
-        mShowMenuBadge = false;
-        mMenuButton.setContentDescription(getResources().getString(
-                R.string.accessibility_toolbar_btn_menu));
-
-        if (!animate || !wasShowingMenuBadge) {
-            if (showMenuButtonInOmnibox()) {
-                mMenuBadge.setVisibility(View.GONE);
-            }
-            return;
-        }
-
-        if (mIsMenuBadgeAnimationRunning && mMenuBadgeAnimatorSet != null) {
-            mMenuBadgeAnimatorSet.cancel();
-        }
-
-        // Set initial states.
-        mMenuButton.setAlpha(0.f);
-
-        mMenuBadgeAnimatorSet = UpdateMenuItemHelper.createHideUpdateBadgeAnimation(
-                mMenuButton, mMenuBadge);
-
-        mMenuBadgeAnimatorSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mIsMenuBadgeAnimationRunning = true;
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mIsMenuBadgeAnimationRunning = false;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                mIsMenuBadgeAnimationRunning = false;
-            }
-        });
-
-        mMenuBadgeAnimatorSet.start();
-    }
-
-    public void cancelAppMenuUpdateBadgeAnimation() {
-        if (mIsMenuBadgeAnimationRunning && mMenuBadgeAnimatorSet != null) {
-            mMenuBadgeAnimatorSet.cancel();
-        }
-    }
-
-    private boolean shouldUseLightDrawables() {
-        Tab tab = getCurrentTab();
-        boolean isIncognito = tab != null && tab.isIncognito();
-        boolean useLightDrawables = isIncognito;
-        if (getToolbarDataProvider().isUsingBrandColor()) {
-            int currentPrimaryColor = getToolbarDataProvider().getPrimaryColor();
-            useLightDrawables |=
-                    ColorUtils.shouldUseLightForegroundOnBackground(currentPrimaryColor);
-        }
-        return useLightDrawables;
     }
 }

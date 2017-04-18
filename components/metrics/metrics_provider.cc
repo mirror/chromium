@@ -24,6 +24,9 @@ void MetricsProvider::OnRecordingEnabled() {
 void MetricsProvider::OnRecordingDisabled() {
 }
 
+void MetricsProvider::OnAppEnterBackground() {
+}
+
 void MetricsProvider::ProvideSystemProfileMetrics(
     SystemProfileProto* system_profile_proto) {
 }
@@ -45,9 +48,6 @@ void MetricsProvider::ClearSavedStabilityMetrics() {
 
 void MetricsProvider::ProvideGeneralMetrics(
     ChromeUserMetricsExtension* uma_proto) {
-}
-
-void MetricsProvider::MergeHistogramDeltas() {
 }
 
 void MetricsProvider::RecordHistogramSnapshots(

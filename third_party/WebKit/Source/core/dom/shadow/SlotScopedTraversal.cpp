@@ -10,76 +10,140 @@
 
 namespace blink {
 
-HTMLSlotElement* SlotScopedTraversal::findScopeOwnerSlot(const Element& current)
-{
-    if (Element* nearestAncestorAssignedToSlot = SlotScopedTraversal::nearestAncestorAssignedToSlot(current))
-        return nearestAncestorAssignedToSlot->assignedSlot();
-    return nullptr;
+namespace {
+Element* NextSkippingChildrenOfShadowHost(const Element& start,
+                                          const Element& scope) {
+  DCHECK(scope.AssignedSlot());
+  if (!start.AuthorShadowRoot()) {
+    if (Element* first = ElementTraversal::FirstChild(start))
+      return first;
+  }
+
+  for (const Element* current = &start; current != scope;
+       current = current->parentElement()) {
+    if (Element* next_sibling = ElementTraversal::NextSibling(*current))
+      return next_sibling;
+  }
+  return nullptr;
 }
 
-Element* SlotScopedTraversal::nearestAncestorAssignedToSlot(const Element& current)
-{
-    // nearestAncestorAssignedToSlot returns an ancestor element of current which is directly assigned to a slot.
-    Element* element = const_cast<Element*>(&current);
-    for (; element; element = element->parentElement()) {
-        if (element->assignedSlot())
-            break;
-    }
-    return element;
+Element* LastWithinOrSelfSkippingChildrenOfShadowHost(const Element& scope) {
+  Element* current = const_cast<Element*>(&scope);
+  while (!current->AuthorShadowRoot()) {
+    Element* last_child = ElementTraversal::LastChild(*current);
+    if (!last_child)
+      break;
+    current = last_child;
+  }
+  return current;
 }
 
-Element* SlotScopedTraversal::next(const Element& current)
-{
-    // current.assignedSlot returns a slot only when current is assigned explicitly
-    // If current is assigned to a slot, return a descendant of current, which is in the assigned scope of the same slot as current.
-    HTMLSlotElement* slot = current.assignedSlot();
-    Element* nearestAncestorAssignedToSlot = SlotScopedTraversal::nearestAncestorAssignedToSlot(current);
-    if (slot) {
-        if (Element* next = ElementTraversal::next(current, &current))
-            return next;
-    } else {
-        // If current is in assigned scope, find an assigned ancestor.
-        DCHECK(nearestAncestorAssignedToSlot);
-        if (Element* next = ElementTraversal::next(current, nearestAncestorAssignedToSlot))
-            return next;
-        slot = nearestAncestorAssignedToSlot->assignedSlot();
-        DCHECK(slot);
-    }
-    HeapVector<Member<Node>> assignedNodes = slot->assignedNodes();
-    size_t currentIndex = assignedNodes.find(*nearestAncestorAssignedToSlot);
-    DCHECK_NE(currentIndex, kNotFound);
-    for (++currentIndex; currentIndex < assignedNodes.size(); ++currentIndex) {
-        if (assignedNodes[currentIndex]->isElementNode())
-            return toElement(assignedNodes[currentIndex]);
-    }
-    return nullptr;
+Element* PreviousSkippingChildrenOfShadowHost(const Element& start,
+                                              const Element& scope) {
+  DCHECK(scope.AssignedSlot());
+  DCHECK_NE(start, &scope);
+  if (Element* previous_sibling = ElementTraversal::PreviousSibling(start))
+    return LastWithinOrSelfSkippingChildrenOfShadowHost(*previous_sibling);
+  return start.parentElement();
+}
+}  // namespace
+
+HTMLSlotElement* SlotScopedTraversal::FindScopeOwnerSlot(
+    const Element& current) {
+  if (Element* nearest_inclusive_ancestor_assigned_to_slot =
+          SlotScopedTraversal::NearestInclusiveAncestorAssignedToSlot(current))
+    return nearest_inclusive_ancestor_assigned_to_slot->AssignedSlot();
+  return nullptr;
 }
 
-Element* SlotScopedTraversal::previous(const Element& current)
-{
-    Element* nearestAncestorAssignedToSlot = SlotScopedTraversal::nearestAncestorAssignedToSlot(current);
-    DCHECK(nearestAncestorAssignedToSlot);
-    // NodeTraversal within nearestAncestorAssignedToSlot
-    if (Element* previous = ElementTraversal::previous(current, nearestAncestorAssignedToSlot))
-        return previous;
-    // If null, jump to previous assigned node's descendant
-    const HeapVector<Member<Node>> assignedNodes = nearestAncestorAssignedToSlot->assignedSlot()->assignedNodes();
-    size_t currentIndex = assignedNodes.reverseFind(*nearestAncestorAssignedToSlot);
-    DCHECK_NE(currentIndex, kNotFound);
-    for (; currentIndex > 0; --currentIndex) {
-        const Member<Node> assignedPrevious = assignedNodes[currentIndex - 1];
-        if (assignedPrevious->isElementNode()) {
-            if (Element* last = ElementTraversal::lastWithin(*toElement(assignedPrevious)))
-                return last;
-            return toElement(assignedPrevious);
-        }
-    }
-    return nullptr;
+Element* SlotScopedTraversal::NearestInclusiveAncestorAssignedToSlot(
+    const Element& current) {
+  Element* element = const_cast<Element*>(&current);
+  for (; element; element = element->parentElement()) {
+    if (element->AssignedSlot())
+      break;
+  }
+  return element;
 }
 
-bool SlotScopedTraversal::isSlotScoped(const Element& current)
-{
-    return SlotScopedTraversal::nearestAncestorAssignedToSlot(current);
+Element* SlotScopedTraversal::Next(const Element& current) {
+  Element* nearest_inclusive_ancestor_assigned_to_slot =
+      SlotScopedTraversal::NearestInclusiveAncestorAssignedToSlot(current);
+  DCHECK(nearest_inclusive_ancestor_assigned_to_slot);
+  // Search within children of an element which is assigned to a slot.
+  if (Element* next = NextSkippingChildrenOfShadowHost(
+          current, *nearest_inclusive_ancestor_assigned_to_slot))
+    return next;
+
+  // Seek to the next element assigned to the same slot.
+  HTMLSlotElement* slot =
+      nearest_inclusive_ancestor_assigned_to_slot->AssignedSlot();
+  DCHECK(slot);
+  const HeapVector<Member<Node>>& assigned_nodes = slot->AssignedNodes();
+  size_t current_index =
+      assigned_nodes.Find(*nearest_inclusive_ancestor_assigned_to_slot);
+  DCHECK_NE(current_index, kNotFound);
+  for (++current_index; current_index < assigned_nodes.size();
+       ++current_index) {
+    if (assigned_nodes[current_index]->IsElementNode())
+      return ToElement(assigned_nodes[current_index]);
+  }
+  return nullptr;
 }
 
-} // namespace blink
+Element* SlotScopedTraversal::Previous(const Element& current) {
+  Element* nearest_inclusive_ancestor_assigned_to_slot =
+      SlotScopedTraversal::NearestInclusiveAncestorAssignedToSlot(current);
+  DCHECK(nearest_inclusive_ancestor_assigned_to_slot);
+
+  if (current != nearest_inclusive_ancestor_assigned_to_slot) {
+    // Search within children of an element which is assigned to a slot.
+    Element* previous = PreviousSkippingChildrenOfShadowHost(
+        current, *nearest_inclusive_ancestor_assigned_to_slot);
+    DCHECK(previous);
+    return previous;
+  }
+
+  // Seek to the previous element assigned to the same slot.
+  const HeapVector<Member<Node>>& assigned_nodes =
+      nearest_inclusive_ancestor_assigned_to_slot->AssignedSlot()
+          ->AssignedNodes();
+  size_t current_index =
+      assigned_nodes.ReverseFind(*nearest_inclusive_ancestor_assigned_to_slot);
+  DCHECK_NE(current_index, kNotFound);
+  for (; current_index > 0; --current_index) {
+    const Member<Node> assigned_node = assigned_nodes[current_index - 1];
+    if (!assigned_node->IsElementNode())
+      continue;
+    return LastWithinOrSelfSkippingChildrenOfShadowHost(
+        *ToElement(assigned_node));
+  }
+  return nullptr;
+}
+
+Element* SlotScopedTraversal::FirstAssignedToSlot(HTMLSlotElement& slot) {
+  const HeapVector<Member<Node>>& assigned_nodes = slot.AssignedNodes();
+  for (auto assigned_node : assigned_nodes) {
+    if (assigned_node->IsElementNode())
+      return ToElement(assigned_node);
+  }
+  return nullptr;
+}
+
+Element* SlotScopedTraversal::LastAssignedToSlot(HTMLSlotElement& slot) {
+  const HeapVector<Member<Node>>& assigned_nodes = slot.AssignedNodes();
+  for (auto assigned_node = assigned_nodes.rbegin();
+       assigned_node != assigned_nodes.rend(); ++assigned_node) {
+    if (!(*assigned_node)->IsElementNode())
+      continue;
+    return LastWithinOrSelfSkippingChildrenOfShadowHost(
+        *ToElement(*assigned_node));
+  }
+  return nullptr;
+}
+
+bool SlotScopedTraversal::IsSlotScoped(const Element& current) {
+  return SlotScopedTraversal::NearestInclusiveAncestorAssignedToSlot(current);
+}
+
+}  // namespace blink

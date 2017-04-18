@@ -39,38 +39,42 @@ namespace blink {
 
 class SVGPointListTearOff;
 
-class SVGPointList final : public SVGListPropertyHelper<SVGPointList, SVGPoint> {
-public:
-    typedef SVGPointListTearOff TearOffType;
+class SVGPointList final
+    : public SVGListPropertyHelper<SVGPointList, SVGPoint> {
+ public:
+  typedef SVGPointListTearOff TearOffType;
 
-    static SVGPointList* create()
-    {
-        return new SVGPointList();
-    }
+  static SVGPointList* Create() { return new SVGPointList(); }
 
-    ~SVGPointList() override;
+  ~SVGPointList() override;
 
-    SVGParsingError setValueAsString(const String&);
+  SVGParsingError SetValueAsString(const String&);
 
-    // SVGPropertyBase:
-    String valueAsString() const override;
+  // SVGPropertyBase:
+  String ValueAsString() const override;
 
-    void add(SVGPropertyBase*, SVGElement*) override;
-    void calculateAnimatedValue(SVGAnimationElement*, float percentage, unsigned repeatCount, SVGPropertyBase* fromValue, SVGPropertyBase* toValue, SVGPropertyBase* toAtEndOfDurationValue, SVGElement*) override;
-    float calculateDistance(SVGPropertyBase* to, SVGElement*) override;
+  void Add(SVGPropertyBase*, SVGElement*) override;
+  void CalculateAnimatedValue(SVGAnimationElement*,
+                              float percentage,
+                              unsigned repeat_count,
+                              SVGPropertyBase* from_value,
+                              SVGPropertyBase* to_value,
+                              SVGPropertyBase* to_at_end_of_duration_value,
+                              SVGElement*) override;
+  float CalculateDistance(SVGPropertyBase* to, SVGElement*) override;
 
-    static AnimatedPropertyType classType() { return AnimatedPoints; }
-    AnimatedPropertyType type() const override { return classType(); }
+  static AnimatedPropertyType ClassType() { return kAnimatedPoints; }
+  AnimatedPropertyType GetType() const override { return ClassType(); }
 
-private:
-    SVGPointList();
+ private:
+  SVGPointList();
 
-    template <typename CharType>
-    SVGParsingError parse(const CharType*& ptr, const CharType* end);
+  template <typename CharType>
+  SVGParsingError Parse(const CharType*& ptr, const CharType* end);
 };
 
 DEFINE_SVG_PROPERTY_TYPE_CASTS(SVGPointList);
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGPointList_h
+#endif  // SVGPointList_h

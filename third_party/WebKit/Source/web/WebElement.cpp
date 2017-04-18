@@ -30,144 +30,128 @@
 
 #include "public/web/WebElement.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Element.h"
 #include "core/dom/custom/V0CustomElementProcessingStack.h"
 #include "core/editing/EditingUtilities.h"
-#include "core/html/HTMLTextFormControlElement.h"
+#include "core/html/TextControlElement.h"
 #include "platform/graphics/Image.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/text/AtomicString.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebRect.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/text/AtomicString.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-bool WebElement::isFormControlElement() const
-{
-    return constUnwrap<Element>()->isFormControlElement();
+bool WebElement::IsFormControlElement() const {
+  return ConstUnwrap<Element>()->IsFormControlElement();
 }
 
-bool WebElement::isTextFormControlElement() const
-{
-    return constUnwrap<Element>()->isTextFormControl();
+// TODO(dglazkov): Remove. Consumers of this code should use
+// Node:hasEditableStyle.  http://crbug.com/612560
+bool WebElement::IsEditable() const {
+  const Element* element = ConstUnwrap<Element>();
+
+  element->GetDocument().UpdateStyleAndLayoutTree();
+  if (HasEditableStyle(*element))
+    return true;
+
+  if (element->IsTextControl()) {
+    if (!ToTextControlElement(element)->IsDisabledOrReadOnly())
+      return true;
+  }
+
+  return EqualIgnoringASCIICase(element->getAttribute(roleAttr), "textbox");
 }
 
-// TODO(dglazkov): Remove. Consumers of this code should use Node:hasEditableStyle.
-// http://crbug.com/612560
-bool WebElement::isEditable() const
-{
-    const Element* element = constUnwrap<Element>();
-
-    if (blink::isContentEditable(*element))
-        return true;
-
-    if (element->isTextFormControl()) {
-        const HTMLTextFormControlElement* input = toHTMLTextFormControlElement(element);
-        if (!input->isDisabledOrReadOnly())
-            return true;
-    }
-
-    return equalIgnoringCase(element->getAttribute(roleAttr), "textbox");
+WebString WebElement::TagName() const {
+  return ConstUnwrap<Element>()->tagName();
 }
 
-WebString WebElement::tagName() const
-{
-    return constUnwrap<Element>()->tagName();
+bool WebElement::HasHTMLTagName(const WebString& tag_name) const {
+  // How to create                     class              nodeName localName
+  // createElement('input')            HTMLInputElement   INPUT    input
+  // createElement('INPUT')            HTMLInputElement   INPUT    input
+  // createElementNS(xhtmlNS, 'input') HTMLInputElement   INPUT    input
+  // createElementNS(xhtmlNS, 'INPUT') HTMLUnknownElement INPUT    INPUT
+  const Element* element = ConstUnwrap<Element>();
+  return HTMLNames::xhtmlNamespaceURI == element->namespaceURI() &&
+         element->localName() == String(tag_name).DeprecatedLower();
 }
 
-bool WebElement::hasHTMLTagName(const WebString& tagName) const
-{
-    // How to create                     class              nodeName localName
-    // createElement('input')            HTMLInputElement   INPUT    input
-    // createElement('INPUT')            HTMLInputElement   INPUT    input
-    // createElementNS(xhtmlNS, 'input') HTMLInputElement   INPUT    input
-    // createElementNS(xhtmlNS, 'INPUT') HTMLUnknownElement INPUT    INPUT
-    const Element* element = constUnwrap<Element>();
-    return HTMLNames::xhtmlNamespaceURI == element->namespaceURI() && element->localName() == String(tagName).lower();
+bool WebElement::HasAttribute(const WebString& attr_name) const {
+  return ConstUnwrap<Element>()->hasAttribute(attr_name);
 }
 
-bool WebElement::hasAttribute(const WebString& attrName) const
-{
-    return constUnwrap<Element>()->hasAttribute(attrName);
+WebString WebElement::GetAttribute(const WebString& attr_name) const {
+  return ConstUnwrap<Element>()->getAttribute(attr_name);
 }
 
-WebString WebElement::getAttribute(const WebString& attrName) const
-{
-    return constUnwrap<Element>()->getAttribute(attrName);
+void WebElement::SetAttribute(const WebString& attr_name,
+                              const WebString& attr_value) {
+  // TODO: Custom element callbacks need to be called on WebKit API methods that
+  // mutate the DOM in any way.
+  V0CustomElementProcessingStack::CallbackDeliveryScope
+      deliver_custom_element_callbacks;
+  Unwrap<Element>()->setAttribute(attr_name, attr_value,
+                                  IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-void WebElement::setAttribute(const WebString& attrName, const WebString& attrValue)
-{
-    // TODO: Custom element callbacks need to be called on WebKit API methods that
-    // mutate the DOM in any way.
-    V0CustomElementProcessingStack::CallbackDeliveryScope deliverCustomElementCallbacks;
-    unwrap<Element>()->setAttribute(attrName, attrValue, IGNORE_EXCEPTION);
+unsigned WebElement::AttributeCount() const {
+  if (!ConstUnwrap<Element>()->hasAttributes())
+    return 0;
+  return ConstUnwrap<Element>()->Attributes().size();
 }
 
-unsigned WebElement::attributeCount() const
-{
-    if (!constUnwrap<Element>()->hasAttributes())
-        return 0;
-    return constUnwrap<Element>()->attributes().size();
+WebString WebElement::AttributeLocalName(unsigned index) const {
+  if (index >= AttributeCount())
+    return WebString();
+  return ConstUnwrap<Element>()->Attributes().at(index).LocalName();
 }
 
-WebString WebElement::attributeLocalName(unsigned index) const
-{
-    if (index >= attributeCount())
-        return WebString();
-    return constUnwrap<Element>()->attributes().at(index).localName();
+WebString WebElement::AttributeValue(unsigned index) const {
+  if (index >= AttributeCount())
+    return WebString();
+  return ConstUnwrap<Element>()->Attributes().at(index).Value();
 }
 
-WebString WebElement::attributeValue(unsigned index) const
-{
-    if (index >= attributeCount())
-        return WebString();
-    return constUnwrap<Element>()->attributes().at(index).value();
+WebString WebElement::TextContent() const {
+  return ConstUnwrap<Element>()->textContent();
 }
 
-WebString WebElement::textContent() const
-{
-    return constUnwrap<Element>()->textContent();
+WebString WebElement::InnerHTML() const {
+  return ConstUnwrap<Element>()->innerHTML();
 }
 
-bool WebElement::hasNonEmptyLayoutSize() const
-{
-    return constUnwrap<Element>()->hasNonEmptyLayoutSize();
+bool WebElement::HasNonEmptyLayoutSize() const {
+  return ConstUnwrap<Element>()->HasNonEmptyLayoutSize();
 }
 
-WebRect WebElement::boundsInViewport() const
-{
-    return constUnwrap<Element>()->boundsInViewport();
+WebRect WebElement::BoundsInViewport() const {
+  return ConstUnwrap<Element>()->BoundsInViewport();
 }
 
-WebImage WebElement::imageContents()
-{
-    if (isNull())
-        return WebImage();
+WebImage WebElement::ImageContents() {
+  if (IsNull())
+    return WebImage();
 
-    return WebImage(unwrap<Element>()->imageContents());
+  return WebImage(Unwrap<Element>()->ImageContents());
 }
 
-WebElement::WebElement(Element* elem)
-    : WebNode(elem)
-{
+WebElement::WebElement(Element* elem) : WebNode(elem) {}
+
+DEFINE_WEB_NODE_TYPE_CASTS(WebElement, IsElementNode());
+
+WebElement& WebElement::operator=(Element* elem) {
+  private_ = elem;
+  return *this;
 }
 
-DEFINE_WEB_NODE_TYPE_CASTS(WebElement, isElementNode());
-
-WebElement& WebElement::operator=(Element* elem)
-{
-    m_private = elem;
-    return *this;
+WebElement::operator Element*() const {
+  return ToElement(private_.Get());
 }
 
-WebElement::operator Element*() const
-{
-    return toElement(m_private.get());
-}
-
-} // namespace blink
+}  // namespace blink

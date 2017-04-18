@@ -6,17 +6,17 @@ package org.chromium.chrome.browser;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.support.test.filters.LargeTest;
 import android.test.MoreAsserts;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.components.location.LocationUtils;
@@ -35,6 +35,7 @@ import java.util.concurrent.Callable;
 /**
  * Tests for the BluetoothChooserDialog class.
  */
+@RetryOnFailure
 public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     /**
      * Works like the BluetoothChooserDialog class, but records calls to native methods instead of
@@ -63,17 +64,27 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
 
         @Override
         void nativeRestartSearch(long nativeBluetoothChooserAndroid) {
+            assertTrue(mNativeBluetoothChooserDialogPtr != 0);
             mRestartSearchCount++;
         }
 
         @Override
-        void nativeShowBluetoothOverviewLink(long nativeBluetoothChooserAndroid) {}
+        void nativeShowBluetoothOverviewLink(long nativeBluetoothChooserAndroid) {
+            // We shouldn't be running native functions if the native class has been destroyed.
+            assertTrue(mNativeBluetoothChooserDialogPtr != 0);
+        }
 
         @Override
-        void nativeShowBluetoothAdapterOffLink(long nativeBluetoothChooserAndroid) {}
+        void nativeShowBluetoothAdapterOffLink(long nativeBluetoothChooserAndroid) {
+            // We shouldn't be running native functions if the native class has been destroyed.
+            assertTrue(mNativeBluetoothChooserDialogPtr != 0);
+        }
 
         @Override
-        void nativeShowNeedLocationPermissionLink(long nativeBluetoothChooserAndroid) {}
+        void nativeShowNeedLocationPermissionLink(long nativeBluetoothChooserAndroid) {
+            // We shouldn't be running native functions if the native class has been destroyed.
+            assertTrue(mNativeBluetoothChooserDialogPtr != 0);
+        }
     }
 
     private ActivityWindowAndroid mWindowAndroid;
@@ -127,7 +138,7 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
     }
 
     private static void selectItem(final BluetoothChooserDialogWithFakeNatives chooserDialog,
-            int position) throws InterruptedException {
+            int position) {
         final Dialog dialog = chooserDialog.mItemChooserDialog.getDialogForTesting();
         final ListView items = (ListView) dialog.findViewById(R.id.items);
         final Button button = (Button) dialog.findViewById(R.id.positive);
@@ -170,8 +181,8 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         return message.replaceAll("</?[^>]*link[^>]*>", "");
     }
 
-    @SmallTest
-    public void testCancel() throws InterruptedException {
+    @LargeTest
+    public void testCancel() {
         ItemChooserDialog itemChooser = mChooserDialog.mItemChooserDialog;
         Dialog dialog = itemChooser.getDialogForTesting();
         assertTrue(dialog.isShowing());
@@ -202,8 +213,8 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         assertEquals("", mChooserDialog.mFinishedDeviceId);
     }
 
-    @SmallTest
-    public void testSelectItem() throws InterruptedException {
+    @LargeTest
+    public void testSelectItem() {
         Dialog dialog = mChooserDialog.mItemChooserDialog.getDialogForTesting();
 
         TextViewWithClickableSpans statusView =
@@ -215,8 +226,8 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mChooserDialog.addDevice("id-1", "Name 1");
-                mChooserDialog.addDevice("id-2", "Name 2");
+                mChooserDialog.addOrUpdateDevice("id-1", "Name 1", false /* isGATTConnected */);
+                mChooserDialog.addOrUpdateDevice("id-2", "Name 2", true /* isGATTConnected */);
             }
         });
 
@@ -224,11 +235,18 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         // the progress spinner should disappear, the Commit button should still
         // be disabled (since nothing's selected), and the list view should
         // show.
-        assertEquals(removeLinkTags(getActivity().getString(R.string.bluetooth_not_seeing_it)),
+        assertEquals(removeLinkTags(getActivity().getString(R.string.bluetooth_searching)),
                 statusView.getText().toString());
         assertFalse(button.isEnabled());
         assertEquals(View.VISIBLE, items.getVisibility());
         assertEquals(View.GONE, progress.getVisibility());
+
+        ItemChooserDialog.ItemAdapter itemAdapter =
+                mChooserDialog.mItemChooserDialog.getItemAdapterForTesting();
+        assertTrue(itemAdapter.getItem(0).hasSameContents(
+                "id-1", "Name 1", null /* icon */, null /* iconDescription */));
+        assertTrue(itemAdapter.getItem(1).hasSameContents("id-2", "Name 2",
+                mChooserDialog.mConnectedIcon, mChooserDialog.mConnectedIconDescription));
 
         selectItem(mChooserDialog, 2);
 
@@ -237,8 +255,8 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         assertEquals("id-2", mChooserDialog.mFinishedDeviceId);
     }
 
-    @SmallTest
-    public void testNoLocationPermission() throws InterruptedException {
+    @LargeTest
+    public void testNoLocationPermission() {
         ItemChooserDialog itemChooser = mChooserDialog.mItemChooserDialog;
         Dialog dialog = itemChooser.getDialogForTesting();
         assertTrue(dialog.isShowing());
@@ -252,7 +270,7 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         final View progress = dialog.findViewById(R.id.progress);
 
         final TestAndroidPermissionDelegate permissionDelegate =
-                new TestAndroidPermissionDelegate();
+                new TestAndroidPermissionDelegate(dialog);
         mWindowAndroid.setAndroidPermissionDelegate(permissionDelegate);
 
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -298,12 +316,11 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         assertEquals(1, mChooserDialog.mRestartSearchCount);
         assertEquals(removeLinkTags(getActivity().getString(R.string.bluetooth_searching)),
                 statusView.getText().toString());
-
         mChooserDialog.closeDialog();
     }
 
-    @SmallTest
-    public void testNoLocationServices() throws InterruptedException {
+    @LargeTest
+    public void testNoLocationServices() {
         ItemChooserDialog itemChooser = mChooserDialog.mItemChooserDialog;
         Dialog dialog = itemChooser.getDialogForTesting();
         assertTrue(dialog.isShowing());
@@ -317,7 +334,7 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         final View progress = dialog.findViewById(R.id.progress);
 
         final TestAndroidPermissionDelegate permissionDelegate =
-                new TestAndroidPermissionDelegate();
+                new TestAndroidPermissionDelegate(dialog);
         mWindowAndroid.setAndroidPermissionDelegate(permissionDelegate);
 
         // Grant permissions, and turn off location services.
@@ -362,9 +379,60 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
 
     // TODO(jyasskin): Test when the user denies Chrome the ability to ask for permission.
 
+    @LargeTest
+    public void testTurnOnAdapter() {
+        final ItemChooserDialog itemChooser = mChooserDialog.mItemChooserDialog;
+        Dialog dialog = itemChooser.getDialogForTesting();
+        assertTrue(dialog.isShowing());
+
+        final TextViewWithClickableSpans statusView =
+                (TextViewWithClickableSpans) dialog.findViewById(R.id.status);
+        final TextViewWithClickableSpans errorView =
+                (TextViewWithClickableSpans) dialog.findViewById(R.id.not_found_message);
+        final View items = dialog.findViewById(R.id.items);
+        final Button button = (Button) dialog.findViewById(R.id.positive);
+        final View progress = dialog.findViewById(R.id.progress);
+
+        // Turn off adapter.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mChooserDialog.notifyAdapterTurnedOff();
+            }
+        });
+
+        assertEquals(removeLinkTags(getActivity().getString(R.string.bluetooth_adapter_off)),
+                errorView.getText().toString());
+        assertEquals(removeLinkTags(getActivity().getString(R.string.bluetooth_adapter_off_help)),
+                statusView.getText().toString());
+        assertFalse(button.isEnabled());
+        assertEquals(View.VISIBLE, errorView.getVisibility());
+        assertEquals(View.GONE, items.getVisibility());
+        assertEquals(View.GONE, progress.getVisibility());
+
+        // Turn on adapter.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                itemChooser.signalInitializingAdapter();
+            }
+        });
+
+        assertEquals(View.GONE, errorView.getVisibility());
+        assertEquals(View.GONE, items.getVisibility());
+        assertEquals(View.VISIBLE, progress.getVisibility());
+
+        mChooserDialog.closeDialog();
+    }
+
     private static class TestAndroidPermissionDelegate implements AndroidPermissionDelegate {
+        Dialog mDialog = null;
         PermissionCallback mCallback = null;
         String[] mPermissionsRequested = null;
+
+        public TestAndroidPermissionDelegate(Dialog dialog) {
+            mDialog = dialog;
+        }
 
         @Override
         public boolean hasPermission(String permission) {
@@ -375,12 +443,16 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         public boolean canRequestPermission(String permission) {
             return true;
         }
+
         @Override
         public boolean isPermissionRevokedByPolicy(String permission) {
             return false;
         }
+
         @Override
         public void requestPermissions(String[] permissions, PermissionCallback callback) {
+            // Requesting for permission takes away focus from the window.
+            mDialog.onWindowFocusChanged(false /* hasFocus */);
             mPermissionsRequested = permissions;
             if (permissions.length == 1
                     && permissions[0].equals(Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -393,14 +465,14 @@ public class BluetoothChooserDialogTest extends ChromeActivityTestCaseBase<Chrom
         public boolean mLocationGranted = false;
 
         @Override
-        public boolean hasAndroidLocationPermission(Context context) {
+        public boolean hasAndroidLocationPermission() {
             return mLocationGranted;
         }
 
         public boolean mSystemLocationSettingsEnabled = true;
 
         @Override
-        public boolean isSystemLocationSettingEnabled(Context context) {
+        public boolean isSystemLocationSettingEnabled() {
             return mSystemLocationSettingsEnabled;
         }
     }

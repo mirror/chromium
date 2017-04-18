@@ -8,6 +8,7 @@
 namespace content {
 
 // Push registration success/error codes for internal use & reporting in UMA.
+// Enum values can be added, but must never be renumbered or deleted and reused.
 enum PushRegistrationStatus {
   // New successful registration (there was not yet a registration cached in
   // Service Worker storage, so the browser successfully registered with the
@@ -56,16 +57,70 @@ enum PushRegistrationStatus {
   // empty.
   PUSH_REGISTRATION_STATUS_MANIFEST_EMPTY_OR_MISSING = 12,
 
+  // Registration failed because a subscription with a different sender id
+  // already exists.
+  PUSH_REGISTRATION_STATUS_SENDER_ID_MISMATCH = 13,
+
+  // Registration failed because storage was corrupt. It will be retried
+  // automatically after unsubscribing to fix the corruption.
+  PUSH_REGISTRATION_STATUS_STORAGE_CORRUPT = 14,
+
+  // Registration failed because the renderer was shut down.
+  PUSH_REGISTRATION_STATUS_RENDERER_SHUTDOWN = 15,
+
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
   // in tools/metrics/histograms/histograms.xml to keep it in sync, and
   // update PUSH_REGISTRATION_STATUS_LAST below.
 
-  PUSH_REGISTRATION_STATUS_LAST =
-      PUSH_REGISTRATION_STATUS_MANIFEST_EMPTY_OR_MISSING
+  PUSH_REGISTRATION_STATUS_LAST = PUSH_REGISTRATION_STATUS_RENDERER_SHUTDOWN
+};
+
+// Push unregistration reason for reporting in UMA. Enum values can be added,
+// but must never be renumbered or deleted and reused.
+enum PushUnregistrationReason {
+  // Should never happen.
+  PUSH_UNREGISTRATION_REASON_UNKNOWN = 0,
+
+  // Unregistering because the website called the unsubscribe API.
+  PUSH_UNREGISTRATION_REASON_JAVASCRIPT_API = 1,
+
+  // Unregistering because the user manually revoked permission.
+  PUSH_UNREGISTRATION_REASON_PERMISSION_REVOKED = 2,
+
+  // Automatic - incoming message's app id was unknown.
+  PUSH_UNREGISTRATION_REASON_DELIVERY_UNKNOWN_APP_ID = 3,
+
+  // Automatic - incoming message's origin no longer has permission.
+  PUSH_UNREGISTRATION_REASON_DELIVERY_PERMISSION_DENIED = 4,
+
+  // Automatic - incoming message's service worker was not found.
+  PUSH_UNREGISTRATION_REASON_DELIVERY_NO_SERVICE_WORKER = 5,
+
+  // Automatic - GCM Store reset due to corruption.
+  PUSH_UNREGISTRATION_REASON_GCM_STORE_RESET = 6,
+
+  // Unregistering because the service worker was unregistered.
+  PUSH_UNREGISTRATION_REASON_SERVICE_WORKER_UNREGISTERED = 7,
+
+  // Website called subscribe API and the stored subscription was corrupt, so
+  // it is being unsubscribed in order to attempt a clean subscription.
+  PUSH_UNREGISTRATION_REASON_SUBSCRIBE_STORAGE_CORRUPT = 8,
+
+  // Website called getSubscription API and the stored subscription was corrupt.
+  PUSH_UNREGISTRATION_REASON_GET_SUBSCRIPTION_STORAGE_CORRUPT = 9,
+
+  // NOTE: Do not renumber these as that would confuse interpretation of
+  // previously logged data. When making changes, also update the enum list
+  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // update PUSH_UNREGISTRATION_REASON_LAST below.
+
+  PUSH_UNREGISTRATION_REASON_LAST =
+      PUSH_UNREGISTRATION_REASON_GET_SUBSCRIPTION_STORAGE_CORRUPT
 };
 
 // Push unregistration success/error codes for internal use & reporting in UMA.
+// Enum values can be added, but must never be renumbered or deleted and reused.
 enum PushUnregistrationStatus {
   // The unregistration was successful.
   PUSH_UNREGISTRATION_STATUS_SUCCESS_UNREGISTERED = 0,
@@ -102,6 +157,7 @@ enum PushUnregistrationStatus {
 };
 
 // Push getregistration success/error codes for internal use & reporting in UMA.
+// Enum values can be added, but must never be renumbered or deleted and reused.
 enum PushGetRegistrationStatus {
   // Getting the registration was successful.
   PUSH_GETREGISTRATION_STATUS_SUCCESS = 0,
@@ -119,8 +175,14 @@ enum PushGetRegistrationStatus {
   // incognito, but we tell JS registration not found to not reveal incognito.
   PUSH_GETREGISTRATION_STATUS_INCOGNITO_REGISTRATION_NOT_FOUND = 4,
 
-  // Registration failed because the public key could not be retrieved.
-  PUSH_GETREGISTRATION_STATUS_PUBLIC_KEY_UNAVAILABLE = 5,
+  // Getting the registration failed because public key could not be retrieved.
+  // PUSH_GETREGISTRATION_STATUS_PUBLIC_KEY_UNAVAILABLE = 5,
+
+  // Getting the registration failed because storage was corrupt.
+  PUSH_GETREGISTRATION_STATUS_STORAGE_CORRUPT = 6,
+
+  // Getting the registration failed because the renderer was shut down.
+  PUSH_GETREGISTRATION_STATUS_RENDERER_SHUTDOWN = 7,
 
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
@@ -128,10 +190,11 @@ enum PushGetRegistrationStatus {
   // update PUSH_GETREGISTRATION_STATUS_LAST below.
 
   PUSH_GETREGISTRATION_STATUS_LAST =
-      PUSH_GETREGISTRATION_STATUS_PUBLIC_KEY_UNAVAILABLE
+      PUSH_GETREGISTRATION_STATUS_RENDERER_SHUTDOWN
 };
 
 // Push message event success/error codes for internal use & reporting in UMA.
+// Enum values can be added, but must never be renumbered or deleted and reused.
 enum PushDeliveryStatus {
   // The message was successfully delivered.
   PUSH_DELIVERY_STATUS_SUCCESS = 0,
@@ -152,15 +215,19 @@ enum PushDeliveryStatus {
   // event.waitUntil that got rejected.
   PUSH_DELIVERY_STATUS_EVENT_WAITUNTIL_REJECTED = 6,
 
+  // The message was delivered, but the Service Worker timed out processing it.
+  PUSH_DELIVERY_STATUS_TIMEOUT = 7,
+
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
   // in tools/metrics/histograms/histograms.xml to keep it in sync, and
   // update PUSH_DELIVERY_STATUS_LAST below.
 
-  PUSH_DELIVERY_STATUS_LAST = PUSH_DELIVERY_STATUS_EVENT_WAITUNTIL_REJECTED
+  PUSH_DELIVERY_STATUS_LAST = PUSH_DELIVERY_STATUS_TIMEOUT
 };
 
-// Push message user visible tracking for reporting in UMA.
+// Push message user visible tracking for reporting in UMA. Enum values can be
+// added, but must never be renumbered or deleted and reused.
 enum PushUserVisibleStatus {
   // A notification was required and one (or more) were shown.
   PUSH_USER_VISIBLE_STATUS_REQUIRED_AND_SHOWN = 0,

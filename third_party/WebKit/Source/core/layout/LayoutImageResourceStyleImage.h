@@ -3,7 +3,8 @@
  * Copyright (C) 1999 Antti Koivisto <koivisto@kde.org>
  * Copyright (C) 2006 Allan Sandfeld Jensen <kde@carewolf.com>
  * Copyright (C) 2006 Samuel Weinig <sam.weinig@gmail.com>
- * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010 Apple Inc.
+ *               All rights reserved.
  * Copyright (C) 2010 Patrick Gansterer <paroga@paroga.com>
  *
  * This library is free software; you can redistribute it and/or
@@ -28,38 +29,39 @@
 
 #include "core/layout/LayoutImageResource.h"
 #include "core/style/StyleImage.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class LayoutObject;
 
 class LayoutImageResourceStyleImage final : public LayoutImageResource {
-public:
-    ~LayoutImageResourceStyleImage() override;
+ public:
+  ~LayoutImageResourceStyleImage() override;
 
-    static LayoutImageResource* create(StyleImage* styleImage)
-    {
-        return new LayoutImageResourceStyleImage(styleImage);
-    }
-    void initialize(LayoutObject*) override;
-    void shutdown() override;
+  static LayoutImageResource* Create(StyleImage* style_image) {
+    return new LayoutImageResourceStyleImage(style_image);
+  }
+  void Initialize(LayoutObject*) override;
+  void Shutdown() override;
 
-    bool hasImage() const override { return true; }
-    PassRefPtr<Image> image(const IntSize&, float) const override;
-    bool errorOccurred() const override { return m_styleImage->errorOccurred(); }
+  bool HasImage() const override { return true; }
+  PassRefPtr<Image> GetImage(const IntSize&, float) const override;
+  bool ErrorOccurred() const override { return style_image_->ErrorOccurred(); }
 
-    bool imageHasRelativeSize() const override { return m_styleImage->imageHasRelativeSize(); }
-    LayoutSize imageSize(float multiplier) const override;
-    WrappedImagePtr imagePtr() const override { return m_styleImage->data(); }
+  bool ImageHasRelativeSize() const override {
+    return style_image_->ImageHasRelativeSize();
+  }
+  LayoutSize ImageSize(float multiplier) const override;
+  WrappedImagePtr ImagePtr() const override { return style_image_->Data(); }
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
 
-private:
-    explicit LayoutImageResourceStyleImage(StyleImage*);
-    Member<StyleImage> m_styleImage;
+ private:
+  explicit LayoutImageResourceStyleImage(StyleImage*);
+  Member<StyleImage> style_image_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // LayoutImageStyleImage_h
+#endif  // LayoutImageStyleImage_h

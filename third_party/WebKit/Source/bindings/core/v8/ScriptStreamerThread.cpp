@@ -4,92 +4,75 @@
 
 #include "bindings/core/v8/ScriptStreamerThread.h"
 
+#include <memory>
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "platform/TraceEvent.h"
+#include "platform/WebTaskRunner.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebTaskRunner.h"
 #include "public/platform/WebTraceLocation.h"
-#include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
-static ScriptStreamerThread* s_sharedThread = 0;
+static ScriptStreamerThread* g_shared_thread = 0;
 // Guards s_sharedThread. s_sharedThread is initialized and deleted in the main
 // thread, but also used by the streamer thread. Races can occur during
 // shutdown.
-static Mutex* s_mutex = 0;
+static Mutex* g_mutex = 0;
 
-void ScriptStreamerThread::init()
-{
-    ASSERT(!s_sharedThread);
-    ASSERT(isMainThread());
-    // This is called in the main thread before any tasks are created, so no
-    // locking is needed.
-    s_mutex = new Mutex();
-    s_sharedThread = new ScriptStreamerThread();
+void ScriptStreamerThread::Init() {
+  DCHECK(!g_shared_thread);
+  DCHECK(IsMainThread());
+  // This is called in the main thread before any tasks are created, so no
+  // locking is needed.
+  g_mutex = new Mutex();
+  g_shared_thread = new ScriptStreamerThread();
 }
 
-void ScriptStreamerThread::shutdown()
-{
-    ASSERT(s_sharedThread);
-    ScriptStreamerThread* toDelete;
-    {
-        MutexLocker locker(*s_mutex);
-        toDelete = s_sharedThread;
-        // The background thread can now safely check s_sharedThread; if it's
-        // not 0, we're not shutting down.
-        s_sharedThread = 0;
-    }
-    // This will run the pending tasks into completion. We shouldn't hold the
-    // mutex while doing that.
-    delete toDelete;
-    // Now it's safe to delete s_mutex, since there are no tasks that could
-    // access it later.
-    delete s_mutex;
+ScriptStreamerThread* ScriptStreamerThread::Shared() {
+  return g_shared_thread;
 }
 
-ScriptStreamerThread* ScriptStreamerThread::shared()
-{
-    return s_sharedThread;
+void ScriptStreamerThread::PostTask(std::unique_ptr<CrossThreadClosure> task) {
+  DCHECK(IsMainThread());
+  MutexLocker locker(mutex_);
+  DCHECK(!running_task_);
+  running_task_ = true;
+  PlatformThread().GetWebTaskRunner()->PostTask(BLINK_FROM_HERE,
+                                                std::move(task));
 }
 
-void ScriptStreamerThread::postTask(std::unique_ptr<CrossThreadClosure> task)
-{
-    ASSERT(isMainThread());
-    MutexLocker locker(m_mutex);
-    ASSERT(!m_runningTask);
-    m_runningTask = true;
-    platformThread().getWebTaskRunner()->postTask(BLINK_FROM_HERE, std::move(task));
+void ScriptStreamerThread::TaskDone() {
+  MutexLocker locker(mutex_);
+  DCHECK(running_task_);
+  running_task_ = false;
 }
 
-void ScriptStreamerThread::taskDone()
-{
-    MutexLocker locker(m_mutex);
-    ASSERT(m_runningTask);
-    m_runningTask = false;
+WebThread& ScriptStreamerThread::PlatformThread() {
+  if (!IsRunning()) {
+    thread_ = WTF::WrapUnique(
+        Platform::Current()->CreateThread("ScriptStreamerThread"));
+  }
+  return *thread_;
 }
 
-WebThread& ScriptStreamerThread::platformThread()
-{
-    if (!isRunning())
-        m_thread = wrapUnique(Platform::current()->createThread("ScriptStreamerThread"));
-    return *m_thread;
+void ScriptStreamerThread::RunScriptStreamingTask(
+    std::unique_ptr<v8::ScriptCompiler::ScriptStreamingTask> task,
+    ScriptStreamer* streamer) {
+  TRACE_EVENT1(
+      "v8,devtools.timeline", "v8.parseOnBackground", "data",
+      InspectorParseScriptEvent::Data(streamer->ScriptResourceIdentifier(),
+                                      streamer->ScriptURLString()));
+  // Running the task can and will block: SourceStream::GetSomeData will get
+  // called and it will block and wait for data from the network.
+  task->Run();
+  streamer->StreamingCompleteOnBackgroundThread();
+  MutexLocker locker(*g_mutex);
+  ScriptStreamerThread* thread = Shared();
+  if (thread)
+    thread->TaskDone();
+  // If thread is 0, we're shutting down.
 }
 
-void ScriptStreamerThread::runScriptStreamingTask(std::unique_ptr<v8::ScriptCompiler::ScriptStreamingTask> task, ScriptStreamer* streamer)
-{
-    TRACE_EVENT1("v8,devtools.timeline", "v8.parseOnBackground", "data", InspectorParseScriptEvent::data(streamer->scriptResourceIdentifier(), streamer->scriptURLString()));
-    // Running the task can and will block: SourceStream::GetSomeData will get
-    // called and it will block and wait for data from the network.
-    task->Run();
-    streamer->streamingCompleteOnBackgroundThread();
-    MutexLocker locker(*s_mutex);
-    ScriptStreamerThread* thread = shared();
-    if (thread)
-        thread->taskDone();
-    // If thread is 0, we're shutting down.
-}
-
-} // namespace blink
+}  // namespace blink

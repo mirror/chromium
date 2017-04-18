@@ -15,31 +15,13 @@ namespace master_preferences {
 // is specified in master preference as well as command line, the command line
 // value takes precedence.
 
-// Boolean. This is to be a Chrome install. (When using MultiInstall)
-extern const char kChrome[];
-// Boolean. This is a legacy preference and should no longer be used; it is
-// kept around so that old master_preferences which specify
-// "create_all_shortcuts":false still enforce the new
-// "do_not_create_(desktop|quick_launch)_shortcut" preferences. Setting this to
-// true no longer has any impact.
-extern const char kCreateAllShortcuts[];
 // Boolean pref that disables all logging.
 extern const char kDisableLogging[];
 // Name of the dictionary that holds the distribution values.
 extern const char kDistroDict[];
-// Boolean pref that triggers silent import of the default browser bookmarks.
-extern const char kDistroImportBookmarksPref[];
 // String pref that triggers silent import of bookmarks from the html file at
 // given path.
 extern const char kDistroImportBookmarksFromFilePref[];
-// Boolean pref that triggers silent import of the default browser history.
-extern const char kDistroImportHistoryPref[];
-// Boolean pref that triggers silent import of the default browser homepage.
-extern const char kDistroImportHomePagePref[];
-// Boolean pref that triggers silent import of the default search engine.
-extern const char kDistroImportSearchPref[];
-// Integer. RLZ ping delay in seconds.
-extern const char kDistroPingDelay[];
 // String of Chrome version for which the "set as default browser" infobar will
 // never be shown.
 extern const char kDistroSuppressDefaultBrowserPromptPref[];
@@ -77,8 +59,6 @@ extern const char kMsi[];
 // String. The MSI Product ID under which the MSI stores its information.  This
 // is used to update the DisplayVersion to match Chrome's version number.
 extern const char kMsiProductId[];
-// Boolean. Support installing multiple products at once.
-extern const char kMultiInstall[];
 // Boolean. Show EULA dialog before install.
 extern const char kRequireEula[];
 // Boolean. Indicates that the first-run 'set-as-default' dialog should not be

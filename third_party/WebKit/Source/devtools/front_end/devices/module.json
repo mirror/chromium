@@ -1,12 +1,13 @@
 {
     "extensions": [
         {
-            "type": "drawer-view",
-            "name": "remote-devices",
+            "type": "view",
+            "location": "drawer-view",
+            "id": "remote-devices",
             "title": "Remote devices",
             "persistence": "closeable",
             "order": 50,
-            "className": "WebInspector.DevicesView",
+            "className": "Devices.DevicesView",
             "tags": "usb, android, mobile"
         }
     ],

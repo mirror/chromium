@@ -4,28 +4,38 @@
 
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 
-#include "base/time/time.h"
-
 namespace base {
-namespace internal {
 
 SchedulerWorkerPoolParams::SchedulerWorkerPoolParams(
     const std::string& name,
-    ThreadPriority thread_priority,
-    IORestriction io_restriction,
+    ThreadPriority priority_hint,
+    StandbyThreadPolicy standby_thread_policy,
     int max_threads,
-    const TimeDelta& suggested_reclaim_time)
+    TimeDelta suggested_reclaim_time,
+    SchedulerBackwardCompatibility backward_compatibility)
     : name_(name),
-      thread_priority_(thread_priority),
-      io_restriction_(io_restriction),
+      priority_hint_(priority_hint),
+      standby_thread_policy_(standby_thread_policy),
       max_threads_(max_threads),
-      suggested_reclaim_time_(suggested_reclaim_time) {}
+      suggested_reclaim_time_(suggested_reclaim_time),
+      backward_compatibility_(backward_compatibility) {}
 
 SchedulerWorkerPoolParams::SchedulerWorkerPoolParams(
-    SchedulerWorkerPoolParams&& other) = default;
+    StandbyThreadPolicy standby_thread_policy,
+    int max_threads,
+    TimeDelta suggested_reclaim_time,
+    SchedulerBackwardCompatibility backward_compatibility)
+    : SchedulerWorkerPoolParams(std::string(),
+                                ThreadPriority::NORMAL,
+                                standby_thread_policy,
+                                max_threads,
+                                suggested_reclaim_time,
+                                backward_compatibility) {}
+
+SchedulerWorkerPoolParams::SchedulerWorkerPoolParams(
+    const SchedulerWorkerPoolParams& other) = default;
 
 SchedulerWorkerPoolParams& SchedulerWorkerPoolParams::operator=(
-    SchedulerWorkerPoolParams&& other) = default;
+    const SchedulerWorkerPoolParams& other) = default;
 
-}  // namespace internal
 }  // namespace base

@@ -11,7 +11,9 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/single_thread_task_runner.h"
 #include "remoting/host/desktop_environment.h"
+#include "remoting/host/desktop_environment_options.h"
 #include "remoting/host/fake_mouse_cursor_monitor.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/host/screen_controls.h"
@@ -71,7 +73,9 @@ class FakeDesktopEnvironment
     : public DesktopEnvironment,
       public base::SupportsWeakPtr<FakeDesktopEnvironment> {
  public:
-  FakeDesktopEnvironment();
+  explicit FakeDesktopEnvironment(
+      scoped_refptr<base::SingleThreadTaskRunner> capture_thread,
+      const DesktopEnvironmentOptions& options);
   ~FakeDesktopEnvironment() override;
 
   // Sets frame generator to be used for protocol::FakeDesktopCapturer created
@@ -80,6 +84,8 @@ class FakeDesktopEnvironment
       protocol::FakeDesktopCapturer::FrameGenerator frame_generator) {
     frame_generator_ = frame_generator;
   }
+
+  const DesktopEnvironmentOptions& options() const;
 
   // DesktopEnvironment implementation.
   std::unique_ptr<AudioCapturer> CreateAudioCapturer() override;
@@ -97,16 +103,20 @@ class FakeDesktopEnvironment
   }
 
  private:
+  scoped_refptr<base::SingleThreadTaskRunner> capture_thread_;
   protocol::FakeDesktopCapturer::FrameGenerator frame_generator_;
 
   base::WeakPtr<FakeInputInjector> last_input_injector_;
+
+  const DesktopEnvironmentOptions options_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeDesktopEnvironment);
 };
 
 class FakeDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
  public:
-  FakeDesktopEnvironmentFactory();
+  explicit FakeDesktopEnvironmentFactory(
+      scoped_refptr<base::SingleThreadTaskRunner> capture_thread);
   ~FakeDesktopEnvironmentFactory() override;
 
   // Sets frame generator to be used for protocol::FakeDesktopCapturer created
@@ -118,8 +128,8 @@ class FakeDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
 
   // DesktopEnvironmentFactory implementation.
   std::unique_ptr<DesktopEnvironment> Create(
-      base::WeakPtr<ClientSessionControl> client_session_control) override;
-  void SetEnableCurtaining(bool enable) override;
+      base::WeakPtr<ClientSessionControl> client_session_control,
+      const DesktopEnvironmentOptions& options) override;
   bool SupportsAudioCapture() const override;
 
   base::WeakPtr<FakeDesktopEnvironment> last_desktop_environment() {
@@ -127,6 +137,7 @@ class FakeDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
   }
 
  private:
+  scoped_refptr<base::SingleThreadTaskRunner> capture_thread_;
   protocol::FakeDesktopCapturer::FrameGenerator frame_generator_;
 
   base::WeakPtr<FakeDesktopEnvironment> last_desktop_environment_;

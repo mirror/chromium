@@ -7,8 +7,11 @@ var test = function()
 {
     function printExceptionDetails(exceptionDetails)
     {
-        InspectorTest.addResult("exceptionDetails:")
-        InspectorTest.addResult("   " + exceptionDetails.text);
+        InspectorTest.addResult("exceptionDetails:");
+        var text = exceptionDetails.text;
+        if (exceptionDetails.exception)
+            text += " " + exceptionDetails.exception.description;
+        InspectorTest.addResult("   " + text);
         InspectorTest.addResult("   line: " + exceptionDetails.lineNumber + ", column: " + exceptionDetails.columnNumber);
 
         var stack = exceptionDetails.stackTrace ? exceptionDetails.stackTrace.callFrames : null;
@@ -24,7 +27,7 @@ var test = function()
         }
     }
 
-    var contextId = WebInspector.context.flavor(WebInspector.ExecutionContext).id;
+    var contextId = UI.context.flavor(SDK.ExecutionContext).id;
     InspectorTest.runDebuggerTestSuite([
         function testSuccessfulCompileAndRun(next)
         {
@@ -43,9 +46,8 @@ var test = function()
 
             function runCallback(error, result, exceptionDetails)
             {
-                var wasThrown = !!exceptionDetails;
                 InspectorTest.assertTrue(!error);
-                InspectorTest.assertTrue(!wasThrown);
+                InspectorTest.assertTrue(!exceptionDetails);
                 InspectorTest.addResult("Script result: " + result.value);
                 next();
             }
@@ -68,9 +70,8 @@ var test = function()
 
             function runCallback(error, result, exceptionDetails)
             {
-                var wasThrown = !!exceptionDetails;
                 InspectorTest.assertTrue(!error);
-                InspectorTest.assertTrue(wasThrown);
+                InspectorTest.assertTrue(!!exceptionDetails);
                 printExceptionDetails(exceptionDetails);
                 next();
             }

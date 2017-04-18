@@ -3,35 +3,39 @@
 # found in the LICENSE file.
 
 import("//chromecast/chromecast.gni")
+import("//media/media_options.gni")
 
-# GYP target: chromecast/media.gyp:media_cdm
 source_set("cdm") {
   sources = [
-    "cast_cdm.cc",
-    "cast_cdm.h",
-    "cast_cdm_context.cc",
-    "cast_cdm_context.h",
-    "cast_cdm_proxy.cc",
-    "cast_cdm_proxy.h",
     "chromecast_init_data.cc",
     "chromecast_init_data.h",
   ]
 
-  configs += [ "//media/mojo/services:mojo_media_config" ]
-
   deps = [
     "//base",
-    "//chromecast/media/base",
     "//media",
-    "//url:url",
   ]
+
+  if (is_cast_using_cma_backend) {
+    sources += [
+      "cast_cdm.cc",
+      "cast_cdm.h",
+      "cast_cdm_context.cc",
+      "cast_cdm_context.h",
+      "cast_cdm_factory.cc",
+      "cast_cdm_factory.h",
+    ]
+
+    deps += [
+      "//chromecast/media/base",
+      "//url:url",
+    ]
+  }
 
   if (is_android && use_playready) {
     sources += [
       "playready_drm_delegate_android.cc",
       "playready_drm_delegate_android.h",
     ]
-
-    deps += [ "//media/base/android" ]
   }
 }

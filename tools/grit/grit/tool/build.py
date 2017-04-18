@@ -17,6 +17,7 @@ import sys
 from grit import grd_reader
 from grit import shortcuts
 from grit import util
+from grit.format import minifier
 from grit.node import include
 from grit.node import message
 from grit.node import structure
@@ -43,7 +44,7 @@ _format_modules = {
 _format_modules.update(
     (type, 'policy_templates.template_formatter') for type in
         [ 'adm', 'admx', 'adml', 'reg', 'doc', 'json',
-          'plist', 'plist_strings', 'ios_plist', 'android_policy' ])
+          'plist', 'plist_strings', 'android_policy' ])
 
 
 def GetFormatter(type):
@@ -83,6 +84,17 @@ Options:
 
   -o OUTPUTDIR      Specify what directory output paths are relative to.
                     Defaults to the current directory.
+
+  -p FILE           Specify a file containing a pre-determined mapping from
+                    resource names to resource ids which will be used to assign
+                    resource ids to those resources. Resources not found in this
+                    file will be assigned ids normally. The motivation is to run
+                    your app's startup and have it dump the resources it loads,
+                    and then pass these via this flag. This will pack startup
+                    resources together, thus reducing paging while all other
+                    resources are unperturbed. The file should have the format:
+                      RESOURCE_ONE_NAME 123
+                      RESOURCE_TWO_NAME 124
 
   -D NAME[=VAL]     Specify a C-preprocessor-like define NAME with optional
                     value VAL (defaults to 1) which will be used to control
@@ -126,6 +138,12 @@ Options:
                     generated will depend on a stampfile instead of the first
                     output in the input .grd file.
 
+  --js-minifier     A command to run the Javascript minifier. If not set then
+                    Javascript won't be minified. The command should read the
+                    original Javascript from standard input, and output the
+                    minified Javascript to standard output. A non-zero exit
+                    status will be taken as indicating failure.
+
 Conditional inclusion of resources only affects the output of files which
 control which resources get linked into a binary, e.g. it affects .rc files
 meant for compilation but it does not affect resource header files (that define
@@ -139,6 +157,7 @@ are exported to translation interchange files (e.g. XMB files), etc.
   def Run(self, opts, args):
     self.output_directory = '.'
     first_ids_file = None
+    predetermined_ids_file = None
     whitelist_filenames = []
     assert_output_files = []
     target_platform = None
@@ -148,13 +167,15 @@ are exported to translation interchange files (e.g. XMB files), etc.
     output_all_resource_defines = None
     write_only_new = False
     depend_on_stamp = False
+    js_minifier = None
     replace_ellipsis = True
-    (own_opts, args) = getopt.getopt(args, 'a:o:D:E:f:w:t:h:',
+    (own_opts, args) = getopt.getopt(args, 'a:p:o:D:E:f:w:t:h:',
         ('depdir=','depfile=','assert-file-list=',
          'output-all-resource-defines',
          'no-output-all-resource-defines',
          'no-replace-ellipsis',
          'depend-on-stamp',
+         'js-minifier=',
          'write-only-new='))
     for (key, val) in own_opts:
       if key == '-a':
@@ -183,6 +204,8 @@ are exported to translation interchange files (e.g. XMB files), etc.
         output_all_resource_defines = False
       elif key == '--no-replace-ellipsis':
         replace_ellipsis = False
+      elif key == '-p':
+        predetermined_ids_file = val
       elif key == '-t':
         target_platform = val
       elif key == '-h':
@@ -195,6 +218,8 @@ are exported to translation interchange files (e.g. XMB files), etc.
         write_only_new = val != '0'
       elif key == '--depend-on-stamp':
         depend_on_stamp = True
+      elif key == '--js-minifier':
+        js_minifier = val
 
     if len(args):
       print 'This tool takes no tool-specific arguments.'
@@ -214,11 +239,15 @@ are exported to translation interchange files (e.g. XMB files), etc.
         whitelist_contents = util.ReadFile(whitelist_filename, util.RAW_TEXT)
         self.whitelist_names.update(whitelist_contents.strip().split('\n'))
 
+    if js_minifier:
+      minifier.SetJsMinifier(js_minifier)
+
     self.write_only_new = write_only_new
 
     self.res = grd_reader.Parse(opts.input,
                                 debug=opts.extra_verbose,
                                 first_ids_file=first_ids_file,
+                                predetermined_ids_file=predetermined_ids_file,
                                 defines=self.defines,
                                 target_platform=target_platform)
 
@@ -323,7 +352,7 @@ are exported to translation interchange files (e.g. XMB files), etc.
     else:
       for output in self.res.GetOutputFiles():
         output.output_filename = os.path.abspath(os.path.join(
-          self.output_directory, output.GetFilename()))
+          self.output_directory, output.GetOutputFilename()))
 
     # If there are whitelisted names, tag the tree once up front, this way
     # while looping through the actual output, it is just an attribute check.
@@ -331,7 +360,7 @@ are exported to translation interchange files (e.g. XMB files), etc.
       self.AddWhitelistTags(self.res, self.whitelist_names)
 
     for output in self.res.GetOutputFiles():
-      self.VerboseOut('Creating %s...' % output.GetFilename())
+      self.VerboseOut('Creating %s...' % output.GetOutputFilename())
 
       # Microsoft's RC compiler can only deal with single-byte or double-byte
       # files (no UTF-8), so we make all RC files UTF-16 to support all
@@ -422,7 +451,8 @@ are exported to translation interchange files (e.g. XMB files), etc.
     # Compare the absolute path names, sorted.
     asserted = sorted([os.path.abspath(i) for i in assert_output_files])
     actual = sorted([
-        os.path.abspath(os.path.join(self.output_directory, i.GetFilename()))
+        os.path.abspath(os.path.join(self.output_directory,
+                                     i.GetOutputFilename()))
         for i in self.res.GetOutputFiles()])
 
     if asserted != actual:
@@ -490,7 +520,7 @@ Extra output files:
       # Get the first output file relative to the depdir.
       outputs = self.res.GetOutputFiles()
       output_file = os.path.join(self.output_directory,
-                                 outputs[0].GetFilename())
+                                 outputs[0].GetOutputFilename())
 
     output_file = os.path.relpath(output_file, depdir)
     # The path prefix to prepend to dependencies in the depfile.

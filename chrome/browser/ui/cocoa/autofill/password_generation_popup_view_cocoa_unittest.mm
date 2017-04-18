@@ -10,7 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
-#import "chrome/browser/ui/cocoa/cocoa_test_helper.h"
+#import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "components/autofill/core/browser/suggestion.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -62,8 +62,8 @@ class MockPasswordGenerationPopupController
   MOCK_CONST_METHOD0(element_bounds, gfx::RectF&());
   MOCK_CONST_METHOD0(IsRTL, bool());
   MOCK_METHOD0(GetSuggestions, const std::vector<autofill::Suggestion>());
-  MOCK_METHOD1(GetElidedValueWidthForRow, int(size_t));
-  MOCK_METHOD1(GetElidedLabelWidthForRow, int(size_t));
+  MOCK_METHOD1(GetElidedValueWidthForRow, int(int));
+  MOCK_METHOD1(GetElidedLabelWidthForRow, int(int));
 
  private:
   base::string16 help_text_;

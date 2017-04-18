@@ -5,10 +5,12 @@
 #include <stdint.h>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/system/wait.h"
 #include "mojo/public/cpp/test_support/test_utils.h"
 #include "mojo/public/interfaces/bindings/tests/sample_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -56,8 +58,8 @@ int ImportedInterfaceImpl::do_something_count_ = 0;
 
 class SampleNamedObjectImpl : public sample::NamedObject {
  public:
-  explicit SampleNamedObjectImpl(InterfaceRequest<sample::NamedObject> request)
-      : binding_(this, std::move(request)) {}
+  SampleNamedObjectImpl() {}
+
   void SetName(const std::string& name) override { name_ = name; }
 
   void GetName(const GetNameCallback& callback) override {
@@ -66,7 +68,6 @@ class SampleNamedObjectImpl : public sample::NamedObject {
 
  private:
   std::string name_;
-  StrongBinding<sample::NamedObject> binding_;
 };
 
 class SampleFactoryImpl : public sample::Factory {
@@ -95,9 +96,7 @@ class SampleFactoryImpl : public sample::Factory {
       EXPECT_TRUE(WriteTextMessage(pipe1_.get(), text2));
     }
 
-    sample::ResponsePtr response(sample::Response::New());
-    response->x = 2;
-    response->pipe = std::move(pipe0);
+    sample::ResponsePtr response(sample::Response::New(2, std::move(pipe0)));
     callback.Run(std::move(response), text1);
 
     if (request->obj)
@@ -113,9 +112,8 @@ class SampleFactoryImpl : public sample::Factory {
 
     MojoHandleSignalsState state;
     ASSERT_EQ(MOJO_RESULT_OK,
-              MojoWait(pipe.get().value(), MOJO_HANDLE_SIGNAL_READABLE,
-                       MOJO_DEADLINE_INDEFINITE, &state));
-    ASSERT_EQ(MOJO_HANDLE_SIGNAL_READABLE, state.satisfied_signals);
+              mojo::Wait(pipe.get(), MOJO_HANDLE_SIGNAL_READABLE, &state));
+    ASSERT_TRUE(state.satisfied_signals & MOJO_HANDLE_SIGNAL_READABLE);
     ASSERT_EQ(MOJO_RESULT_OK,
               ReadDataRaw(
                   pipe.get(), nullptr, &data_size, MOJO_READ_DATA_FLAG_QUERY));
@@ -133,7 +131,8 @@ class SampleFactoryImpl : public sample::Factory {
   void CreateNamedObject(
       InterfaceRequest<sample::NamedObject> object_request) override {
     EXPECT_TRUE(object_request.is_pending());
-    new SampleNamedObjectImpl(std::move(object_request));
+    MakeStrongBinding(base::MakeUnique<SampleNamedObjectImpl>(),
+                      std::move(object_request));
   }
 
   // These aren't called or implemented, but exist here to test that the
@@ -200,7 +199,7 @@ void DoStuff2(bool* got_response,
 
 TEST_F(HandlePassingTest, Basic) {
   sample::FactoryPtr factory;
-  SampleFactoryImpl factory_impl(GetProxy(&factory));
+  SampleFactoryImpl factory_impl(MakeRequest(&factory));
 
   MessagePipe pipe0;
   EXPECT_TRUE(WriteTextMessage(pipe0.handle1.get(), kText1));
@@ -210,13 +209,11 @@ TEST_F(HandlePassingTest, Basic) {
 
   imported::ImportedInterfacePtr imported;
   base::RunLoop run_loop;
-  ImportedInterfaceImpl imported_impl(GetProxy(&imported),
+  ImportedInterfaceImpl imported_impl(MakeRequest(&imported),
                                       run_loop.QuitClosure());
 
-  sample::RequestPtr request(sample::Request::New());
-  request->x = 1;
-  request->pipe = std::move(pipe1.handle0);
-  request->obj = std::move(imported);
+  sample::RequestPtr request(sample::Request::New(
+      1, std::move(pipe1.handle0), base::nullopt, std::move(imported)));
   bool got_response = false;
   std::string got_text_reply;
   base::RunLoop run_loop2;
@@ -237,10 +234,11 @@ TEST_F(HandlePassingTest, Basic) {
 
 TEST_F(HandlePassingTest, PassInvalid) {
   sample::FactoryPtr factory;
-  SampleFactoryImpl factory_impl(GetProxy(&factory));
+  SampleFactoryImpl factory_impl(MakeRequest(&factory));
 
-  sample::RequestPtr request(sample::Request::New());
-  request->x = 1;
+  sample::RequestPtr request(
+      sample::Request::New(1, ScopedMessagePipeHandle(), base::nullopt,
+                           imported::ImportedInterfacePtr()));
   bool got_response = false;
   std::string got_text_reply;
   base::RunLoop run_loop;
@@ -258,7 +256,7 @@ TEST_F(HandlePassingTest, PassInvalid) {
 // Verifies DataPipeConsumer can be passed and read from.
 TEST_F(HandlePassingTest, DataPipe) {
   sample::FactoryPtr factory;
-  SampleFactoryImpl factory_impl(GetProxy(&factory));
+  SampleFactoryImpl factory_impl(MakeRequest(&factory));
 
   // Writes a string to a data pipe and passes the data pipe (consumer) to the
   // factory.
@@ -296,7 +294,7 @@ TEST_F(HandlePassingTest, DataPipe) {
 
 TEST_F(HandlePassingTest, PipesAreClosed) {
   sample::FactoryPtr factory;
-  SampleFactoryImpl factory_impl(GetProxy(&factory));
+  SampleFactoryImpl factory_impl(MakeRequest(&factory));
 
   MessagePipe extra_pipe;
 
@@ -322,12 +320,12 @@ TEST_F(HandlePassingTest, PipesAreClosed) {
 
 TEST_F(HandlePassingTest, CreateNamedObject) {
   sample::FactoryPtr factory;
-  SampleFactoryImpl factory_impl(GetProxy(&factory));
+  SampleFactoryImpl factory_impl(MakeRequest(&factory));
 
   sample::NamedObjectPtr object1;
   EXPECT_FALSE(object1);
 
-  InterfaceRequest<sample::NamedObject> object1_request = GetProxy(&object1);
+  InterfaceRequest<sample::NamedObject> object1_request(&object1);
   EXPECT_TRUE(object1_request.is_pending());
   factory->CreateNamedObject(std::move(object1_request));
   EXPECT_FALSE(object1_request.is_pending());  // We've passed the request.
@@ -336,7 +334,7 @@ TEST_F(HandlePassingTest, CreateNamedObject) {
   object1->SetName("object1");
 
   sample::NamedObjectPtr object2;
-  factory->CreateNamedObject(GetProxy(&object2));
+  factory->CreateNamedObject(MakeRequest(&object2));
   object2->SetName("object2");
 
   base::RunLoop run_loop, run_loop2;

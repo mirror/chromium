@@ -9,43 +9,38 @@
 
 namespace blink {
 
-NavigatorPresentation::NavigatorPresentation()
-{
+NavigatorPresentation::NavigatorPresentation() {}
+
+// static
+const char* NavigatorPresentation::SupplementName() {
+  return "NavigatorPresentation";
 }
 
 // static
-const char* NavigatorPresentation::supplementName()
-{
-    return "NavigatorPresentation";
+NavigatorPresentation& NavigatorPresentation::From(Navigator& navigator) {
+  NavigatorPresentation* supplement = static_cast<NavigatorPresentation*>(
+      Supplement<Navigator>::From(navigator, SupplementName()));
+  if (!supplement) {
+    supplement = new NavigatorPresentation();
+    ProvideTo(navigator, SupplementName(), supplement);
+  }
+  return *supplement;
 }
 
 // static
-NavigatorPresentation& NavigatorPresentation::from(Navigator& navigator)
-{
-    NavigatorPresentation* supplement = static_cast<NavigatorPresentation*>(Supplement<Navigator>::from(navigator, supplementName()));
-    if (!supplement) {
-        supplement = new NavigatorPresentation();
-        provideTo(navigator, supplementName(), supplement);
-    }
-    return *supplement;
+Presentation* NavigatorPresentation::presentation(Navigator& navigator) {
+  NavigatorPresentation& self = NavigatorPresentation::From(navigator);
+  if (!self.presentation_) {
+    if (!navigator.GetFrame())
+      return nullptr;
+    self.presentation_ = Presentation::Create(navigator.GetFrame());
+  }
+  return self.presentation_;
 }
 
-// static
-Presentation* NavigatorPresentation::presentation(Navigator& navigator)
-{
-    NavigatorPresentation& self = NavigatorPresentation::from(navigator);
-    if (!self.m_presentation) {
-        if (!navigator.frame())
-            return nullptr;
-        self.m_presentation = Presentation::create(navigator.frame());
-    }
-    return self.m_presentation;
+DEFINE_TRACE(NavigatorPresentation) {
+  visitor->Trace(presentation_);
+  Supplement<Navigator>::Trace(visitor);
 }
 
-DEFINE_TRACE(NavigatorPresentation)
-{
-    visitor->trace(m_presentation);
-    Supplement<Navigator>::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

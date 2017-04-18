@@ -6,45 +6,40 @@
 
 namespace blink {
 
-SampledEffect::SampledEffect(KeyframeEffect* effect)
-    : m_effect(effect)
-    , m_sequenceNumber(effect->animation()->sequenceNumber())
-    , m_priority(effect->getPriority())
-{
+SampledEffect::SampledEffect(KeyframeEffectReadOnly* effect)
+    : effect_(effect),
+      sequence_number_(effect->GetAnimation()->SequenceNumber()),
+      priority_(effect->GetPriority()) {}
+
+void SampledEffect::Clear() {
+  effect_ = nullptr;
+  interpolations_.Clear();
 }
 
-void SampledEffect::clear()
-{
-    m_effect = nullptr;
-    m_interpolations.clear();
+bool SampledEffect::WillNeverChange() const {
+  return !effect_ || !effect_->GetAnimation();
 }
 
-bool SampledEffect::willNeverChange() const
-{
-    return !m_effect || !m_effect->animation();
+void SampledEffect::RemoveReplacedInterpolations(
+    const HashSet<PropertyHandle>& replaced_properties) {
+  size_t new_size = 0;
+  for (auto& interpolation : interpolations_) {
+    if (!replaced_properties.Contains(interpolation->GetProperty()))
+      interpolations_[new_size++].Swap(interpolation);
+  }
+  interpolations_.Shrink(new_size);
 }
 
-void SampledEffect::removeReplacedInterpolations(const HashSet<PropertyHandle>& replacedProperties)
-{
-    size_t newSize = 0;
-    for (auto& interpolation : m_interpolations) {
-        if (!replacedProperties.contains(interpolation->getProperty()))
-            m_interpolations[newSize++].swap(interpolation);
-    }
-    m_interpolations.shrink(newSize);
+void SampledEffect::UpdateReplacedProperties(
+    HashSet<PropertyHandle>& replaced_properties) {
+  for (const auto& interpolation : interpolations_) {
+    if (!interpolation->DependsOnUnderlyingValue())
+      replaced_properties.insert(interpolation->GetProperty());
+  }
 }
 
-void SampledEffect::updateReplacedProperties(HashSet<PropertyHandle>& replacedProperties)
-{
-    for (const auto& interpolation : m_interpolations) {
-        if (!interpolation->dependsOnUnderlyingValue())
-            replacedProperties.add(interpolation->getProperty());
-    }
+DEFINE_TRACE(SampledEffect) {
+  visitor->Trace(effect_);
 }
 
-DEFINE_TRACE(SampledEffect)
-{
-    visitor->trace(m_effect);
-}
-
-} // namespace blink
+}  // namespace blink

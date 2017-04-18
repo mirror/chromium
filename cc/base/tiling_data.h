@@ -8,17 +8,21 @@
 #include <utility>
 
 #include "base/logging.h"
-#include "cc/base/cc_export.h"
+#include "cc/base/base_export.h"
+#include "cc/base/index_rect.h"
+#include "cc/base/reverse_spiral_iterator.h"
+#include "cc/base/spiral_iterator.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace gfx {
+class RectF;
 class Vector2d;
 }
 
 namespace cc {
 
-class CC_EXPORT TilingData {
+class CC_BASE_EXPORT TilingData {
  public:
   TilingData();
   TilingData(const gfx::Size& max_texture_size,
@@ -50,6 +54,8 @@ class CC_EXPORT TilingData {
   // Return the highest tile index whose border texels include src_position.
   int LastBorderTileXIndexFromSrcCoord(int src_position) const;
   int LastBorderTileYIndexFromSrcCoord(int src_position) const;
+  // Return the tile indices around the given rect.
+  IndexRect TileAroundIndexRect(const gfx::Rect& center_rect) const;
 
   gfx::Rect ExpandRectIgnoringBordersToTileBounds(const gfx::Rect& rect) const;
   gfx::Rect ExpandRectToTileBounds(const gfx::Rect& rect) const;
@@ -61,10 +67,12 @@ class CC_EXPORT TilingData {
   int TileSizeX(int x_index) const;
   int TileSizeY(int y_index) const;
 
+  gfx::RectF TexelExtent(int i, int j) const;
+
   // Difference between TileBound's and TileBoundWithBorder's origin().
   gfx::Vector2d TextureOffset(int x_index, int y_index) const;
 
-  class CC_EXPORT BaseIterator {
+  class CC_BASE_EXPORT BaseIterator {
    public:
     operator bool() const { return index_x_ != -1 && index_y_ != -1; }
 
@@ -86,7 +94,7 @@ class CC_EXPORT TilingData {
   };
 
   // Iterate through tiles whose bounds + optional border intersect with |rect|.
-  class CC_EXPORT Iterator : public BaseIterator {
+  class CC_BASE_EXPORT Iterator : public BaseIterator {
    public:
     Iterator();
     Iterator(const TilingData* tiling_data,
@@ -95,12 +103,10 @@ class CC_EXPORT TilingData {
     Iterator& operator++();
 
    private:
-    int left_;
-    int right_;
-    int bottom_;
+    IndexRect index_rect_;
   };
 
-  class CC_EXPORT BaseDifferenceIterator : public BaseIterator {
+  class CC_BASE_EXPORT BaseDifferenceIterator : public BaseIterator {
    protected:
     BaseDifferenceIterator();
     BaseDifferenceIterator(const TilingData* tiling_data,
@@ -108,28 +114,14 @@ class CC_EXPORT TilingData {
                            const gfx::Rect& ignore_rect);
 
     bool HasConsiderRect() const;
-    bool in_consider_rect() const {
-      return index_x_ >= consider_left_ && index_x_ <= consider_right_ &&
-             index_y_ >= consider_top_ && index_y_ <= consider_bottom_;
-    }
-    bool in_ignore_rect() const {
-      return index_x_ >= ignore_left_ && index_x_ <= ignore_right_ &&
-             index_y_ >= ignore_top_ && index_y_ <= ignore_bottom_;
-    }
 
-    int consider_left_;
-    int consider_top_;
-    int consider_right_;
-    int consider_bottom_;
-    int ignore_left_;
-    int ignore_top_;
-    int ignore_right_;
-    int ignore_bottom_;
+    IndexRect consider_index_rect_;
+    IndexRect ignore_index_rect_;
   };
 
   // Iterate through all indices whose bounds (not including borders) intersect
   // with |consider| but which also do not intersect with |ignore|.
-  class CC_EXPORT DifferenceIterator : public BaseDifferenceIterator {
+  class CC_BASE_EXPORT DifferenceIterator : public BaseDifferenceIterator {
    public:
     DifferenceIterator();
     DifferenceIterator(const TilingData* tiling_data,
@@ -141,7 +133,8 @@ class CC_EXPORT TilingData {
   // Iterate through all indices whose bounds + border intersect with
   // |consider| but which also do not intersect with |ignore|. The iterator
   // order is a counterclockwise spiral around the given center.
-  class CC_EXPORT SpiralDifferenceIterator : public BaseDifferenceIterator {
+  class CC_BASE_EXPORT SpiralDifferenceIterator
+      : public BaseDifferenceIterator {
    public:
     SpiralDifferenceIterator();
     SpiralDifferenceIterator(const TilingData* tiling_data,
@@ -151,32 +144,10 @@ class CC_EXPORT TilingData {
     SpiralDifferenceIterator& operator++();
 
    private:
-    bool valid_column() const {
-      return index_x_ >= consider_left_ && index_x_ <= consider_right_;
-    }
-    bool valid_row() const {
-      return index_y_ >= consider_top_ && index_y_ <= consider_bottom_;
-    }
-
-    int current_step_count() const {
-      return (direction_ == UP || direction_ == DOWN) ? vertical_step_count_
-                                                      : horizontal_step_count_;
-    }
-
-    bool needs_direction_switch() const;
-    void switch_direction();
-
-    enum Direction { UP, LEFT, DOWN, RIGHT };
-
-    Direction direction_;
-    int delta_x_;
-    int delta_y_;
-    int current_step_;
-    int horizontal_step_count_;
-    int vertical_step_count_;
+    SpiralIterator spiral_iterator_;
   };
 
-  class CC_EXPORT ReverseSpiralDifferenceIterator
+  class CC_BASE_EXPORT ReverseSpiralDifferenceIterator
       : public BaseDifferenceIterator {
    public:
     ReverseSpiralDifferenceIterator();
@@ -187,38 +158,7 @@ class CC_EXPORT TilingData {
     ReverseSpiralDifferenceIterator& operator++();
 
    private:
-    bool in_around_rect() const {
-      return index_x_ >= around_left_ && index_x_ <= around_right_ &&
-             index_y_ >= around_top_ && index_y_ <= around_bottom_;
-    }
-    bool valid_column() const {
-      return index_x_ >= consider_left_ && index_x_ <= consider_right_;
-    }
-    bool valid_row() const {
-      return index_y_ >= consider_top_ && index_y_ <= consider_bottom_;
-    }
-
-    int current_step_count() const {
-      return (direction_ == UP || direction_ == DOWN) ? vertical_step_count_
-                                                      : horizontal_step_count_;
-    }
-
-    bool needs_direction_switch() const;
-    void switch_direction();
-
-    int around_left_;
-    int around_top_;
-    int around_right_;
-    int around_bottom_;
-
-    enum Direction { LEFT, UP, RIGHT, DOWN };
-
-    Direction direction_;
-    int delta_x_;
-    int delta_y_;
-    int current_step_;
-    int horizontal_step_count_;
-    int vertical_step_count_;
+    ReverseSpiralIterator reverse_spiral_iterator_;
   };
 
  private:

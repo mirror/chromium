@@ -9,12 +9,11 @@
 #include <string>
 #include <vector>
 
-#include "base/callback.h"
-#include "net/base/completion_callback.h"
-#include "net/base/net_errors.h"
 #include "net/base/net_export.h"
-#include "net/cert/internal/completion_status.h"
+#include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parsed_certificate.h"
+#include "net/cert/internal/trust_store.h"
+#include "net/cert/internal/verify_certificate_chain.h"
 #include "net/der/input.h"
 #include "net/der/parse_values.h"
 
@@ -26,8 +25,32 @@ struct GeneralizedTime;
 
 class CertPathIter;
 class CertIssuerSource;
-class TrustStore;
 class SignaturePolicy;
+
+// CertPath describes a chain of certificates in the "forward" direction.
+//
+// By convention:
+//   certs[0] is the target certificate
+//   certs[i] was issued by certs[i+1]
+//   certs.back() was issued by trust_anchor
+//
+// TODO(eroman): The current code doesn't allow for the target certificate to
+//               be the trust anchor. Should it?
+struct NET_EXPORT CertPath {
+  CertPath();
+  ~CertPath();
+
+  scoped_refptr<TrustAnchor> trust_anchor;
+
+  // Path in the forward direction (path[0] is the target cert).
+  ParsedCertificateList certs;
+
+  // Resets the path to empty path (same as if default constructed).
+  void Clear();
+
+  // TODO(eroman): Can we remove this? Unclear on how this relates to validity.
+  bool IsEmpty() const;
+};
 
 // Checks whether a certificate is trusted by building candidate paths to trust
 // anchors and verifying those paths according to RFC 5280. Each instance of
@@ -42,22 +65,17 @@ class NET_EXPORT CertPathBuilder {
     ResultPath();
     ~ResultPath();
 
-    // Returns true if this path was successfully verified.
-    bool is_success() const { return error == OK; }
+    // Returns true if the candidate path is valid, false otherwise.
+    bool IsValid() const;
 
-    // The candidate path, in forward direction.
-    //   * path[0] is the target certificate.
-    //   * path[i+1] is a candidate issuer of path[i]. The subject matches
-    //   path[i]'s issuer, but nothing else is guaranteed unless is_success() is
-    //   true.
-    //   * path[N-1] will be a trust anchor if is_success() is true, otherwise
-    //   it may or may not be a trust anchor.
-    ParsedCertificateList path;
+    // The (possibly partial) certificate path. Consumers must always test
+    // |errors.IsValid()| before using |path|. When invalid,
+    // |path.trust_anchor| may be null, and the path may be incomplete.
+    CertPath path;
 
-    // A net error code result of attempting to verify this path.
-    // TODO(mattm): may want to have an independent result enum, which caller
-    // can map to a net error if they want.
-    int error = ERR_UNEXPECTED;
+    // The errors/warnings from this path. Use |IsValid()| to determine if the
+    // path is valid.
+    CertPathErrors errors;
   };
 
   // Provides the overall result of path building. This includes the paths that
@@ -67,21 +85,18 @@ class NET_EXPORT CertPathBuilder {
     ~Result();
 
     // Returns true if there was a valid path.
-    bool is_success() const { return error() == OK; }
+    bool HasValidPath() const;
 
-    // Returns the net error code of the overall best result.
-    int error() const {
-      if (paths.empty())
-        return ERR_CERT_AUTHORITY_INVALID;
-      return paths[best_result_index]->error;
-    }
+    // Returns the ResultPath for the best valid path, or nullptr if there
+    // was none.
+    const ResultPath* GetBestValidPath() const;
 
     // List of paths that were attempted and the result for each.
     std::vector<std::unique_ptr<ResultPath>> paths;
 
     // Index into |paths|. Before use, |paths.empty()| must be checked.
-    // NOTE: currently the definition of "best" is fairly limited. Successful is
-    // better than unsuccessful, but otherwise nothing is guaranteed.
+    // NOTE: currently the definition of "best" is fairly limited. Valid is
+    // better than invalid, but otherwise nothing is guaranteed.
     size_t best_result_index = 0;
 
    private:
@@ -90,6 +105,9 @@ class NET_EXPORT CertPathBuilder {
 
   // TODO(mattm): allow caller specified hook/callback to extend path
   // verification.
+  //
+  // TODO(eroman): The assumption is that |result| is default initialized. Can
+  // probably just internalize |result| into CertPathBuilder.
   //
   // Creates a CertPathBuilder that attempts to find a path from |cert| to a
   // trust anchor in |trust_store|, which satisfies |signature_policy| and is
@@ -101,6 +119,7 @@ class NET_EXPORT CertPathBuilder {
                   const TrustStore* trust_store,
                   const SignaturePolicy* signature_policy,
                   const der::GeneralizedTime& time,
+                  KeyPurpose key_purpose,
                   Result* result);
   ~CertPathBuilder();
 
@@ -113,24 +132,12 @@ class NET_EXPORT CertPathBuilder {
   // it is a trust anchor or is directly signed by a trust anchor.)
   void AddCertIssuerSource(CertIssuerSource* cert_issuer_source);
 
-  // Begins verification of the target certificate.
+  // Executes verification of the target certificate.
   //
-  // If the return value is SYNC then the verification is complete and the
-  // |result| value can be inspected for the status, and |callback| will not be
-  // called.
-  // If the return value is ASYNC, the |callback| will be called asynchronously
-  // once the verification is complete. |result| should not be examined or
-  // modified until the |callback| is run.
-  //
-  // If |callback| is null, verification always completes synchronously, even if
-  // it fails to find a valid path and one could have been found asynchronously.
-  //
-  // The CertPathBuilder may be deleted while an ASYNC verification is pending,
-  // in which case the verification is cancelled, |callback| will not be called,
-  // and the output Result will be in an undefined state.
-  // It is safe to delete the CertPathBuilder during the |callback|.
-  // Run must not be called more than once on each CertPathBuilder instance.
-  CompletionStatus Run(const base::Closure& callback);
+  // Upon return results are written to the |result| object passed into the
+  // constructor. Run must not be called more than once on each CertPathBuilder
+  // instance.
+  void Run();
 
  private:
   enum State {
@@ -139,27 +146,23 @@ class NET_EXPORT CertPathBuilder {
     STATE_GET_NEXT_PATH_COMPLETE,
   };
 
-  CompletionStatus DoLoop(bool allow_async);
+  void DoGetNextPath();
+  void DoGetNextPathComplete();
 
-  CompletionStatus DoGetNextPath(bool allow_async);
-  void HandleGotNextPath();
-  CompletionStatus DoGetNextPathComplete();
-
-  void AddResultPath(const ParsedCertificateList& path, bool is_success);
-
-  base::Closure callback_;
+  void AddResultPath(std::unique_ptr<ResultPath> result_path);
 
   std::unique_ptr<CertPathIter> cert_path_iter_;
-  const TrustStore* trust_store_;
   const SignaturePolicy* signature_policy_;
   const der::GeneralizedTime time_;
+  const KeyPurpose key_purpose_;
 
   // Stores the next complete path to attempt verification on. This is filled in
   // by |cert_path_iter_| during the STATE_GET_NEXT_PATH step, and thus should
   // only be accessed during the STATE_GET_NEXT_PATH_COMPLETE step.
   // (Will be empty if all paths have been tried, otherwise will be a candidate
-  // path starting with the target cert and ending with a trust anchor.)
-  ParsedCertificateList next_path_;
+  // path starting with the target cert and ending with a
+  // certificate issued by trust anchor.)
+  CertPath next_path_;
   State next_state_;
 
   Result* out_result_;

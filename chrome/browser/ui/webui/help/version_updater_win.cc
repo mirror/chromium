@@ -6,6 +6,7 @@
 
 #include "base/memory/weak_ptr.h"
 #include "base/task_runner_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
 #include "chrome/browser/browser_process.h"
@@ -115,6 +116,8 @@ void VersionUpdaterWin::OnError(GoogleUpdateErrorCode error_code,
 
 void VersionUpdaterWin::BeginUpdateCheckOnFileThread(
     bool install_update_if_possible) {
+  // Disconnect from any previous attempts to avoid redundant callbacks.
+  weak_factory_.InvalidateWeakPtrs();
   BeginUpdateCheck(content::BrowserThread::GetTaskRunnerForThread(
                        content::BrowserThread::FILE),
                    g_browser_process->GetApplicationLocale(),

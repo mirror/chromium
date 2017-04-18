@@ -4,7 +4,7 @@
 
 import unittest
 
-from webkitpy.common.system.outputcapture import OutputCapture
+from webkitpy.common.system.output_capture import OutputCapture
 from webkitpy.tool.webkit_patch import WebKitPatch
 
 
@@ -30,7 +30,7 @@ class WebKitPatchTest(unittest.TestCase):
         self.assertEqual(tool.command_by_name('help').name, 'help')
         self.assertIsNone(tool.command_by_name('non-existent'))
 
-    def test_help(self):
+    def test_help_command(self):
         oc = OutputCapture()
         oc.capture_output()
         tool = WebKitPatch('path')
@@ -40,7 +40,16 @@ class WebKitPatchTest(unittest.TestCase):
         self.assertEqual('', err)
         self.assertEqual('', logs)
 
-    def test_constructor_calls_bind_to_tool(self):
+    def test_help_argument(self):
+        oc = OutputCapture()
+        oc.capture_output()
         tool = WebKitPatch('path')
-        self.assertEqual(tool.commands[0]._tool, tool)
-        self.assertEqual(tool.commands[1]._tool, tool)
+        try:
+            tool.main(['tool', '--help'])
+        except SystemExit:
+            pass  # optparse calls sys.exit after showing help.
+        finally:
+            out, err, logs = oc.restore_output()
+        self.assertTrue(out.startswith('Usage: '))
+        self.assertEqual('', err)
+        self.assertEqual('', logs)

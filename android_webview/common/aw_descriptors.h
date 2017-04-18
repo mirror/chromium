@@ -10,7 +10,9 @@
 enum {
   kAndroidWebViewLocalePakDescriptor = kContentIPCDescriptorMax + 1,
   kAndroidWebViewMainPakDescriptor,
+  kAndroidWebView100PercentPakDescriptor,
   kAndroidWebViewCrashSignalDescriptor,
+  kAndroidMinidumpDescriptor,
 };
 
 #endif  // ANDROID_WEBVIEW_COMMON_AW_DESCRIPTORS_H_

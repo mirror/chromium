@@ -1,0 +1,18 @@
+Test that the command menu is properly filled.
+
+Categories active:
+Has category: Appearance
+Has category: Console
+Has category: Debugger
+Has category: DevTools
+Has category: Drawer
+Has category: Elements
+Has category: Mobile
+Has category: Network
+Has category: Panel
+Has category: Settings
+Has category: Sources
+
+Switching to console panel
+Current panel: console
+

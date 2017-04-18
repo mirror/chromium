@@ -8,23 +8,29 @@
 
 namespace blink {
 
-IntersectionObserverEntry::IntersectionObserverEntry(DOMHighResTimeStamp time, double intersectionRatio, const IntRect& boundingClientRect, const IntRect* rootBounds, const IntRect& intersectionRect, Element* target)
-    : m_time(time)
-    , m_intersectionRatio(intersectionRatio)
-    , m_boundingClientRect(ClientRect::create(boundingClientRect))
-    , m_rootBounds(rootBounds ? ClientRect::create(*rootBounds) : nullptr)
-    , m_intersectionRect(ClientRect::create(intersectionRect))
-    , m_target(target)
+IntersectionObserverEntry::IntersectionObserverEntry(
+    DOMHighResTimeStamp time,
+    double intersection_ratio,
+    const IntRect& bounding_client_rect,
+    const IntRect* root_bounds,
+    const IntRect& intersection_rect,
+    bool is_intersecting,
+    Element* target)
+    : time_(time),
+      intersection_ratio_(intersection_ratio),
+      bounding_client_rect_(ClientRect::Create(bounding_client_rect)),
+      root_bounds_(root_bounds ? ClientRect::Create(*root_bounds) : nullptr),
+      intersection_rect_(ClientRect::Create(intersection_rect)),
+      target_(target),
+      is_intersecting_(is_intersecting)
 
-{
+{}
+
+DEFINE_TRACE(IntersectionObserverEntry) {
+  visitor->Trace(bounding_client_rect_);
+  visitor->Trace(root_bounds_);
+  visitor->Trace(intersection_rect_);
+  visitor->Trace(target_);
 }
 
-DEFINE_TRACE(IntersectionObserverEntry)
-{
-    visitor->trace(m_boundingClientRect);
-    visitor->trace(m_rootBounds);
-    visitor->trace(m_intersectionRect);
-    visitor->trace(m_target);
-}
-
-} // namespace blink
+}  // namespace blink

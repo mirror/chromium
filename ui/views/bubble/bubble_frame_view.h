@@ -19,7 +19,6 @@ class FontList;
 namespace views {
 
 class Label;
-class LabelButton;
 class BubbleBorder;
 class ImageView;
 
@@ -35,9 +34,9 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   ~BubbleFrameView() override;
 
   // Creates a close button used in the corner of the dialog.
-  static LabelButton* CreateCloseButton(ButtonListener* listener);
+  static Button* CreateCloseButton(ButtonListener* listener);
 
-  // NonClientFrameView overrides:
+  // NonClientFrameView:
   gfx::Rect GetBoundsForClientView() const override;
   gfx::Rect GetWindowBoundsForClientBounds(
       const gfx::Rect& client_bounds) const override;
@@ -53,7 +52,7 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   // Caller must arrange to update the layout to have the call take effect.
   void SetTitleFontList(const gfx::FontList& font_list);
 
-  // View overrides:
+  // View:
   const char* GetClassName() const override;
   gfx::Insets GetInsets() const override;
   gfx::Size GetPreferredSize() const override;
@@ -65,7 +64,7 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   void OnThemeChanged() override;
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
-  // Overridden from ButtonListener:
+  // ButtonListener:
   void ButtonPressed(Button* sender, const ui::Event& event) override;
 
   // Use bubble_border() and SetBubbleBorder(), not border() and SetBorder().
@@ -80,12 +79,12 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   // of the bubble window. The bubble's arrow location may change if the bubble
   // does not fit on the monitor and |adjust_if_offscreen| is true.
   gfx::Rect GetUpdatedWindowBounds(const gfx::Rect& anchor_rect,
-                                   gfx::Size client_size,
+                                   const gfx::Size& client_size,
                                    bool adjust_if_offscreen);
 
   bool close_button_clicked() const { return close_button_clicked_; }
 
-  LabelButton* GetCloseButtonForTest() { return close_; }
+  Button* GetCloseButtonForTest() { return close_; }
 
  protected:
   // Returns the available screen bounds if the frame were to show in |rect|.
@@ -125,7 +124,7 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
   // The optional title icon, title, and (x) close button.
   views::ImageView* title_icon_;
   Label* title_;
-  LabelButton* close_;
+  Button* close_;
 
   // A view to contain the footnote view, if it exists.
   View* footnote_container_;

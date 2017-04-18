@@ -34,12 +34,12 @@ class ShellContentBrowserClient : public ContentBrowserClient {
   BrowserMainParts* CreateBrowserMainParts(
       const MainFunctionParams& parameters) override;
   bool DoesSiteRequireDedicatedProcess(BrowserContext* browser_context,
-                                       const GURL& effective_url) override;
+                                       const GURL& effective_site_url) override;
   bool IsHandledURL(const GURL& url) override;
-  void RegisterInProcessMojoApplications(
-      StaticMojoApplicationMap* apps) override;
-  void RegisterOutOfProcessMojoApplications(
-      OutOfProcessMojoApplicationMap* apps) override;
+  void RegisterInProcessServices(StaticServiceMap* services) override;
+  void RegisterOutOfProcessServices(OutOfProcessServiceMap* services) override;
+  std::unique_ptr<base::Value> GetServiceManifestOverlay(
+      base::StringPiece name) override;
   void AppendExtraCommandLineSwitches(base::CommandLine* command_line,
                                       int child_process_id) override;
   void ResourceDispatcherHostCreated() override;
@@ -47,15 +47,18 @@ class ShellContentBrowserClient : public ContentBrowserClient {
   WebContentsViewDelegate* GetWebContentsViewDelegate(
       WebContents* web_contents) override;
   QuotaPermissionContext* CreateQuotaPermissionContext() override;
+  void GetQuotaSettings(
+      content::BrowserContext* context,
+      content::StoragePartition* partition,
+      const storage::OptionalQuotaSettingsCallback& callback) override;
   void SelectClientCertificate(
       WebContents* web_contents,
       net::SSLCertRequestInfo* cert_request_info,
       std::unique_ptr<ClientCertificateDelegate> delegate) override;
-
   SpeechRecognitionManagerDelegate* CreateSpeechRecognitionManagerDelegate()
       override;
   net::NetLog* GetNetLog() override;
-  bool ShouldSwapProcessesForRedirect(ResourceContext* resource_context,
+  bool ShouldSwapProcessesForRedirect(BrowserContext* browser_context,
                                       const GURL& current_url,
                                       const GURL& new_url) override;
   DevToolsManagerDelegate* GetDevToolsManagerDelegate() override;
@@ -64,18 +67,12 @@ class ShellContentBrowserClient : public ContentBrowserClient {
                const OpenURLParams& params,
                const base::Callback<void(WebContents*)>& callback) override;
 
-#if defined(OS_ANDROID)
-  void GetAdditionalMappedFilesForChildProcess(
-      const base::CommandLine& command_line,
-      int child_process_id,
-      content::FileDescriptorInfo* mappings,
-      std::map<int, base::MemoryMappedFile::Region>* regions) override;
-#elif defined(OS_POSIX) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
   void GetAdditionalMappedFilesForChildProcess(
       const base::CommandLine& command_line,
       int child_process_id,
       content::FileDescriptorInfo* mappings) override;
-#endif  // defined(OS_ANDROID)
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
 #if defined(OS_WIN)
   bool PreSpawnRenderer(sandbox::TargetPolicy* policy) override;
 #endif

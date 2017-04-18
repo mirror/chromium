@@ -8,12 +8,12 @@
 #include <string>
 #include <vector>
 
-#include <openssl/base.h>
 #include <stddef.h>
 #include <stdint.h>
 
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithm.h"
 #include "third_party/WebKit/public/platform/WebCryptoKey.h"
+#include "third_party/boringssl/src/include/openssl/base.h"
 
 // This file contains miscellaneous helpers that don't belong in any of the
 // other *_util.h
@@ -21,7 +21,6 @@
 namespace webcrypto {
 
 class CryptoData;
-class GenerateKeyResult;
 class Status;
 
 // Returns the EVP_MD that corresponds with |hash_algorithm|, or nullptr on
@@ -52,19 +51,10 @@ T NumBitsToBytes(T x) {
   return (x / 8) + (7 + (x % 8)) / 8;
 }
 
-enum class EmptyUsagePolicy {
-  // Allow keys to have empty usages.
-  ALLOW_EMPTY,
-
-  // Do not allow keys to have empty usages.
-  REJECT_EMPTY,
-};
-
 // Verifies whether a key can be created using |actual_usages| when the
 // algorithm supports |all_possible_usages|.
 Status CheckKeyCreationUsages(blink::WebCryptoKeyUsageMask all_possible_usages,
-                              blink::WebCryptoKeyUsageMask actual_usages,
-                              EmptyUsagePolicy empty_usage_policy);
+                              blink::WebCryptoKeyUsageMask actual_usages);
 
 // TODO(eroman): This doesn't really belong in this file. Move it into Blink
 // instead.

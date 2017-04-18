@@ -36,12 +36,12 @@ class CONTENT_EXPORT CategorizedWorkerPool : public base::TaskRunner,
 
   // Overridden from base::TaskRunner:
   bool PostDelayedTask(const tracked_objects::Location& from_here,
-                       const base::Closure& task,
+                       base::OnceClosure task,
                        base::TimeDelta delay) override;
   bool RunsTasksOnCurrentThread() const override;
 
   // Overridden from cc::TaskGraphRunner:
-  cc::NamespaceToken GetNamespaceToken() override;
+  cc::NamespaceToken GenerateNamespaceToken() override;
   void ScheduleTasks(cc::NamespaceToken token, cc::TaskGraph* graph) override;
   void WaitForTasksToFinishRunning(cc::NamespaceToken token) override;
   void CollectCompletedTasks(cc::NamespaceToken token,
@@ -69,6 +69,10 @@ class CONTENT_EXPORT CategorizedWorkerPool : public base::TaskRunner,
   // Create a new sequenced task graph runner.
   scoped_refptr<base::SequencedTaskRunner> CreateSequencedTaskRunner();
 
+  base::PlatformThreadId background_worker_thread_id() const {
+    return threads_.back()->tid();
+  }
+
  protected:
   ~CategorizedWorkerPool() override;
 
@@ -81,7 +85,7 @@ class CONTENT_EXPORT CategorizedWorkerPool : public base::TaskRunner,
   // |task_graph_runner_|.
   class ClosureTask : public cc::Task {
    public:
-    explicit ClosureTask(const base::Closure& closure);
+    explicit ClosureTask(base::OnceClosure closure);
 
     // Overridden from cc::Task:
     void RunOnWorkerThread() override;
@@ -90,7 +94,7 @@ class CONTENT_EXPORT CategorizedWorkerPool : public base::TaskRunner,
     ~ClosureTask() override;
 
    private:
-    base::Closure closure_;
+    base::OnceClosure closure_;
 
     DISALLOW_COPY_AND_ASSIGN(ClosureTask);
   };

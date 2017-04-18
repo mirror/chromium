@@ -8,10 +8,10 @@
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
-#include "wtf/text/StringHash.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringHash.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -20,71 +20,78 @@ class EventTarget;
 class ScriptState;
 
 class CORE_EXPORT HostsUsingFeatures {
-    DISALLOW_NEW();
-public:
-    ~HostsUsingFeatures();
+  DISALLOW_NEW();
 
-    // Features for RAPPOR. Do not reorder or remove!
-    enum class Feature {
-        ElementCreateShadowRoot,
-        DocumentRegisterElement,
-        EventPath,
-        DeviceMotionInsecureHost,
-        DeviceOrientationInsecureHost,
-        FullscreenInsecureHost,
-        GeolocationInsecureHost,
-        GetUserMediaInsecureHost,
-        GetUserMediaSecureHost,
-        ElementAttachShadow,
-        ApplicationCacheManifestSelectInsecureHost,
-        ApplicationCacheAPIInsecureHost,
-        RTCPeerConnectionAudio,
-        RTCPeerConnectionVideo,
-        RTCPeerConnectionDataChannel,
+ public:
+  ~HostsUsingFeatures();
 
-        NumberOfFeatures // This must be the last item.
-    };
+  // Features for RAPPOR. Do not reorder or remove!
+  enum class Feature {
+    kElementCreateShadowRoot,
+    kDocumentRegisterElement,
+    kEventPath,
+    kDeviceMotionInsecureHost,
+    kDeviceOrientationInsecureHost,
+    kFullscreenInsecureHost,
+    kGeolocationInsecureHost,
+    kGetUserMediaInsecureHost,
+    kGetUserMediaSecureHost,
+    kElementAttachShadow,
+    kApplicationCacheManifestSelectInsecureHost,
+    kApplicationCacheAPIInsecureHost,
+    kRTCPeerConnectionAudio,
+    kRTCPeerConnectionVideo,
+    kRTCPeerConnectionDataChannel,
+    kRTCPeerConnectionUsed,  // Used to compute the "unconnected PCs" feature
 
-    static void countAnyWorld(Document&, Feature);
-    static void countMainWorldOnly(const ScriptState*, Document&, Feature);
-    static void countHostOrIsolatedWorldHumanReadableName(const ScriptState*, EventTarget&, Feature);
+    kNumberOfFeatures  // This must be the last item.
+  };
 
-    void documentDetached(Document&);
-    void updateMeasurementsAndClear();
+  static void CountAnyWorld(Document&, Feature);
+  static void CountMainWorldOnly(const ScriptState*, Document&, Feature);
+  static void CountHostOrIsolatedWorldHumanReadableName(const ScriptState*,
+                                                        EventTarget&,
+                                                        Feature);
 
-    class CORE_EXPORT Value {
-        DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-    public:
-        Value();
+  void DocumentDetached(Document&);
+  void UpdateMeasurementsAndClear();
 
-        bool isEmpty() const { return !m_countBits; }
-        void clear() { m_countBits = 0; }
+  class CORE_EXPORT Value {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-        void count(Feature);
-        bool get(Feature feature) const { return m_countBits & (1 << static_cast<unsigned>(feature)); }
+   public:
+    Value();
 
-        void aggregate(Value);
-        void recordHostToRappor(const String& host);
-        void recordNameToRappor(const String& name);
-        void recordETLDPlus1ToRappor(const KURL&);
+    bool IsEmpty() const { return !count_bits_; }
+    void Clear() { count_bits_ = 0; }
 
-    private:
-        unsigned m_countBits : static_cast<unsigned>(Feature::NumberOfFeatures);
-    };
+    void Count(Feature);
+    bool Get(Feature feature) const {
+      return count_bits_ & (1 << static_cast<unsigned>(feature));
+    }
 
-    void countName(Feature, const String&);
-    HashMap<String, Value>& valueByName() { return m_valueByName; }
-    void clear();
+    void Aggregate(Value);
+    void RecordHostToRappor(const String& host);
+    void RecordNameToRappor(const String& name);
+    void RecordETLDPlus1ToRappor(const KURL&);
 
-private:
-    void recordHostToRappor();
-    void recordNamesToRappor();
-    void recordETLDPlus1ToRappor();
+   private:
+    unsigned count_bits_ : static_cast<unsigned>(Feature::kNumberOfFeatures);
+  };
 
-    Vector<std::pair<KURL, HostsUsingFeatures::Value>, 1> m_urlAndValues;
-    HashMap<String, HostsUsingFeatures::Value> m_valueByName;
+  void CountName(Feature, const String&);
+  HashMap<String, Value>& ValueByName() { return value_by_name_; }
+  void Clear();
+
+ private:
+  void RecordHostToRappor();
+  void RecordNamesToRappor();
+  void RecordETLDPlus1ToRappor();
+
+  Vector<std::pair<KURL, HostsUsingFeatures::Value>, 1> url_and_values_;
+  HashMap<String, HostsUsingFeatures::Value> value_by_name_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HostsUsingFeatures_h
+#endif  // HostsUsingFeatures_h

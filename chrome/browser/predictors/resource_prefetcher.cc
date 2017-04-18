@@ -4,11 +4,14 @@
 
 #include "chrome/browser/predictors/resource_prefetcher.h"
 
+#include <algorithm>
 #include <iterator>
 #include <utility>
 
-#include "base/stl_util.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/trace_event/trace_event.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/referrer.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
@@ -24,53 +27,59 @@ static const size_t kResourceBufferSizeBytes = 50000;
 
 namespace predictors {
 
-ResourcePrefetcher::Request::Request(const GURL& i_resource_url)
-    : resource_url(i_resource_url),
-      prefetch_status(PREFETCH_STATUS_NOT_STARTED),
-      usage_status(USAGE_STATUS_NOT_REQUESTED) {
-}
+ResourcePrefetcher::PrefetchedRequestStats::PrefetchedRequestStats(
+    const GURL& resource_url,
+    bool was_cached,
+    size_t total_received_bytes)
+    : resource_url(resource_url),
+      was_cached(was_cached),
+      total_received_bytes(total_received_bytes) {}
 
-ResourcePrefetcher::Request::Request(const Request& other)
-    : resource_url(other.resource_url),
-      prefetch_status(other.prefetch_status),
-      usage_status(other.usage_status) {
-}
+ResourcePrefetcher::PrefetchedRequestStats::~PrefetchedRequestStats() {}
+
+ResourcePrefetcher::PrefetcherStats::PrefetcherStats(const GURL& url)
+    : url(url) {}
+
+ResourcePrefetcher::PrefetcherStats::~PrefetcherStats() {}
+
+ResourcePrefetcher::PrefetcherStats::PrefetcherStats(
+    const PrefetcherStats& other)
+    : url(other.url),
+      start_time(other.start_time),
+      requests_stats(other.requests_stats) {}
 
 ResourcePrefetcher::ResourcePrefetcher(
     Delegate* delegate,
     const ResourcePrefetchPredictorConfig& config,
-    const NavigationID& navigation_id,
-    PrefetchKeyType key_type,
-    std::unique_ptr<RequestVector> requests)
+    const GURL& main_frame_url,
+    const std::vector<GURL>& urls)
     : state_(INITIALIZED),
       delegate_(delegate),
       config_(config),
-      navigation_id_(navigation_id),
-      key_type_(key_type),
-      request_vector_(std::move(requests)) {
+      main_frame_url_(main_frame_url),
+      prefetched_count_(0),
+      prefetched_bytes_(0),
+      stats_(base::MakeUnique<PrefetcherStats>(main_frame_url)) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  DCHECK(request_vector_.get());
 
-  std::copy(request_vector_->begin(), request_vector_->end(),
-            std::back_inserter(request_queue_));
+  std::copy(urls.begin(), urls.end(), std::back_inserter(request_queue_));
 }
 
-ResourcePrefetcher::~ResourcePrefetcher() {
-  // Delete any pending net::URLRequests.
-  STLDeleteContainerPairFirstPointers(inflight_requests_.begin(),
-                                      inflight_requests_.end());
-}
+ResourcePrefetcher::~ResourcePrefetcher() {}
 
 void ResourcePrefetcher::Start() {
+  TRACE_EVENT_ASYNC_BEGIN0("browser", "ResourcePrefetcher::Prefetch", this);
   DCHECK(thread_checker_.CalledOnValidThread());
 
   CHECK_EQ(state_, INITIALIZED);
   state_ = RUNNING;
 
+  stats_->start_time = base::TimeTicks::Now();
   TryToLaunchPrefetchRequests();
 }
 
 void ResourcePrefetcher::Stop() {
+  TRACE_EVENT_ASYNC_END0("browser", "ResourcePrefetcher::Prefetch", this);
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (state_ == FINISHED)
@@ -93,9 +102,9 @@ void ResourcePrefetcher::TryToLaunchPrefetchRequests() {
     while ((inflight_requests_.size() <
                 config_.max_prefetches_inflight_per_navigation) &&
            request_available) {
-      std::list<Request*>::iterator request_it = request_queue_.begin();
+      auto request_it = request_queue_.begin();
       for (; request_it != request_queue_.end(); ++request_it) {
-        const std::string& host = (*request_it)->resource_url.host();
+        const std::string& host = request_it->host();
 
         std::map<std::string, size_t>::iterator host_it =
             host_inflight_counts_.find(host);
@@ -113,42 +122,50 @@ void ResourcePrefetcher::TryToLaunchPrefetchRequests() {
     }
   }
 
-  // If the inflight_requests_ is empty, we cant launch any more. Finish.
+  // If the inflight_requests_ is empty, we can't launch any more. Finish.
   if (inflight_requests_.empty()) {
     CHECK(host_inflight_counts_.empty());
     CHECK(request_queue_.empty() || state_ == STOPPED);
 
+    UMA_HISTOGRAM_COUNTS_100(
+        internal::kResourcePrefetchPredictorPrefetchedCountHistogram,
+        prefetched_count_);
+    UMA_HISTOGRAM_COUNTS_10000(
+        internal::kResourcePrefetchPredictorPrefetchedSizeHistogram,
+        prefetched_bytes_ / 1024);
+
     state_ = FINISHED;
-    delegate_->ResourcePrefetcherFinished(this, request_vector_.release());
+    delegate_->ResourcePrefetcherFinished(this, std::move(stats_));
   }
 }
 
-void ResourcePrefetcher::SendRequest(Request* request) {
-  request->prefetch_status = Request::PREFETCH_STATUS_STARTED;
-
-  net::URLRequest* url_request =
-      delegate_->GetURLRequestContext()->CreateRequest(
-          request->resource_url, net::LOW, this).release();
-
-  inflight_requests_[url_request] = request;
-  host_inflight_counts_[url_request->original_url().host()] += 1;
+void ResourcePrefetcher::SendRequest(const GURL& url) {
+  std::unique_ptr<net::URLRequest> url_request =
+      delegate_->GetURLRequestContext()->CreateRequest(url, net::IDLE, this);
+  host_inflight_counts_[url.host()] += 1;
 
   url_request->set_method("GET");
-  url_request->set_first_party_for_cookies(navigation_id_.main_frame_url);
-  url_request->set_initiator(url::Origin(navigation_id_.main_frame_url));
-  url_request->SetReferrer(navigation_id_.main_frame_url.spec());
+  url_request->set_first_party_for_cookies(main_frame_url_);
+  url_request->set_initiator(url::Origin(main_frame_url_));
+
+  content::Referrer referrer(main_frame_url_, blink::kWebReferrerPolicyDefault);
+  content::Referrer sanitized_referrer =
+      content::Referrer::SanitizeForRequest(url, referrer);
+  content::Referrer::SetReferrerForRequest(url_request.get(),
+                                           sanitized_referrer);
+
   url_request->SetLoadFlags(url_request->load_flags() | net::LOAD_PREFETCH);
-  StartURLRequest(url_request);
+  StartURLRequest(url_request.get());
+  inflight_requests_.insert(
+      std::make_pair(url_request.get(), std::move(url_request)));
 }
 
 void ResourcePrefetcher::StartURLRequest(net::URLRequest* request) {
   request->Start();
 }
 
-void ResourcePrefetcher::FinishRequest(net::URLRequest* request,
-                                       Request::PrefetchStatus status) {
-  std::map<net::URLRequest*, Request*>::iterator request_it =
-      inflight_requests_.find(request);
+void ResourcePrefetcher::FinishRequest(net::URLRequest* request) {
+  auto request_it = inflight_requests_.find(request);
   CHECK(request_it != inflight_requests_.end());
 
   const std::string host = request->original_url().host();
@@ -159,71 +176,72 @@ void ResourcePrefetcher::FinishRequest(net::URLRequest* request,
   if (host_it->second == 0)
     host_inflight_counts_.erase(host);
 
-  request_it->second->prefetch_status = status;
   inflight_requests_.erase(request_it);
-
-  delete request;
 
   TryToLaunchPrefetchRequests();
 }
 
 void ResourcePrefetcher::ReadFullResponse(net::URLRequest* request) {
-  bool status = true;
-  while (status) {
-    int bytes_read = 0;
+  int bytes_read = 0;
+  do {
     scoped_refptr<net::IOBuffer> buffer(new net::IOBuffer(
         kResourceBufferSizeBytes));
-    status = request->Read(buffer.get(), kResourceBufferSizeBytes, &bytes_read);
-
-    if (status) {
-      status = ShouldContinueReadingRequest(request, bytes_read);
-    } else if (request->status().error()) {
-      FinishRequest(request, Request::PREFETCH_STATUS_FAILED);
+    bytes_read = request->Read(buffer.get(), kResourceBufferSizeBytes);
+    if (bytes_read == net::ERR_IO_PENDING) {
+      return;
+    } else if (bytes_read <= 0) {
+      if (bytes_read == 0)
+        RequestComplete(request);
+      FinishRequest(request);
       return;
     }
-  }
+  } while (bytes_read > 0);
 }
 
-bool ResourcePrefetcher::ShouldContinueReadingRequest(net::URLRequest* request,
-                                                      int bytes_read) {
-  if (bytes_read == 0) {  // When bytes_read == 0, no more data.
-    if (request->was_cached())
-      FinishRequest(request, Request::PREFETCH_STATUS_FROM_CACHE);
-    else
-      FinishRequest(request, Request::PREFETCH_STATUS_FROM_NETWORK);
-    return false;
-  }
+void ResourcePrefetcher::RequestComplete(net::URLRequest* request) {
+  ++prefetched_count_;
+  int64_t total_received_bytes = request->GetTotalReceivedBytes();
+  prefetched_bytes_ += total_received_bytes;
 
-  return true;
+  UMA_HISTOGRAM_ENUMERATION(
+      internal::kResourcePrefetchPredictorCachePatternHistogram,
+      request->response_info().cache_entry_status,
+      net::HttpResponseInfo::CacheEntryStatus::ENTRY_MAX);
+
+  stats_->requests_stats.emplace_back(request->url(), request->was_cached(),
+                                      total_received_bytes);
 }
 
 void ResourcePrefetcher::OnReceivedRedirect(
     net::URLRequest* request,
     const net::RedirectInfo& redirect_info,
     bool* defer_redirect) {
-  FinishRequest(request, Request::PREFETCH_STATUS_REDIRECTED);
+  FinishRequest(request);
 }
 
 void ResourcePrefetcher::OnAuthRequired(net::URLRequest* request,
                                         net::AuthChallengeInfo* auth_info) {
-  FinishRequest(request, Request::PREFETCH_STATUS_AUTH_REQUIRED);
+  FinishRequest(request);
 }
 
 void ResourcePrefetcher::OnCertificateRequested(
     net::URLRequest* request,
     net::SSLCertRequestInfo* cert_request_info) {
-  FinishRequest(request, Request::PREFETCH_STATUS_CERT_REQUIRED);
+  FinishRequest(request);
 }
 
 void ResourcePrefetcher::OnSSLCertificateError(net::URLRequest* request,
                                                const net::SSLInfo& ssl_info,
                                                bool fatal) {
-  FinishRequest(request, Request::PREFETCH_STATUS_CERT_ERROR);
+  FinishRequest(request);
 }
 
-void ResourcePrefetcher::OnResponseStarted(net::URLRequest* request) {
-  if (request->status().error()) {
-    FinishRequest(request, Request::PREFETCH_STATUS_FAILED);
+void ResourcePrefetcher::OnResponseStarted(net::URLRequest* request,
+                                           int net_error) {
+  DCHECK_NE(net::ERR_IO_PENDING, net_error);
+
+  if (net_error != net::OK) {
+    FinishRequest(request);
     return;
   }
 
@@ -233,12 +251,14 @@ void ResourcePrefetcher::OnResponseStarted(net::URLRequest* request) {
 
 void ResourcePrefetcher::OnReadCompleted(net::URLRequest* request,
                                          int bytes_read) {
-  if (request->status().error()) {
-    FinishRequest(request, Request::PREFETCH_STATUS_FAILED);
+  DCHECK_NE(net::ERR_IO_PENDING, bytes_read);
+
+  if (bytes_read <= 0) {
+    FinishRequest(request);
     return;
   }
 
-  if (ShouldContinueReadingRequest(request, bytes_read))
+  if (bytes_read > 0)
     ReadFullResponse(request);
 }
 

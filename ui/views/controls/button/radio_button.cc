@@ -5,14 +5,14 @@
 #include "ui/views/controls/button/radio_button.h"
 
 #include "base/logging.h"
-#include "ui/accessibility/ax_view_state.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/events/event_utils.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/resources/grit/views_resources.h"
+#include "ui/views/vector_icons.h"
 #include "ui/views/widget/widget.h"
 
 namespace views {
@@ -67,47 +67,13 @@ RadioButton::RadioButton(const base::string16& label, int group_id)
 RadioButton::~RadioButton() {
 }
 
-void RadioButton::SetChecked(bool checked) {
-  if (checked == RadioButton::checked())
-    return;
-  if (checked) {
-    // We can't just get the root view here because sometimes the radio
-    // button isn't attached to a root view (e.g., if it's part of a tab page
-    // that is currently not active).
-    View* container = parent();
-    while (container && container->parent())
-      container = container->parent();
-    if (container) {
-      Views other;
-      container->GetViewsInGroup(GetGroup(), &other);
-      for (Views::iterator i(other.begin()); i != other.end(); ++i) {
-        if (*i != this) {
-          if (strcmp((*i)->GetClassName(), kViewClassName)) {
-            NOTREACHED() << "radio-button-nt has same group as other non "
-                            "radio-button-nt views.";
-            continue;
-          }
-          RadioButton* peer = static_cast<RadioButton*>(*i);
-          peer->SetChecked(false);
-        }
-      }
-    }
-  }
-  Checkbox::SetChecked(checked);
-}
-
-void RadioButton::PaintFocusRing(gfx::Canvas* canvas, const SkPaint& paint) {
-  canvas->DrawCircle(gfx::PointF(image()->bounds().CenterPoint()),
-                     image()->width() / 2 + .5f, paint);
-}
-
 const char* RadioButton::GetClassName() const {
   return kViewClassName;
 }
 
-void RadioButton::GetAccessibleState(ui::AXViewState* state) {
-  Checkbox::GetAccessibleState(state);
-  state->role = ui::AX_ROLE_RADIO_BUTTON;
+void RadioButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  Checkbox::GetAccessibleNodeData(node_data);
+  node_data->role = ui::AX_ROLE_RADIO_BUTTON;
 }
 
 View* RadioButton::GetSelectedViewForGroup(int group) {
@@ -152,16 +118,43 @@ ui::NativeTheme::Part RadioButton::GetThemePart() const {
   return ui::NativeTheme::kRadio;
 }
 
-gfx::ImageSkia RadioButton::GetImage(ButtonState for_state) const {
-  if (!UseMd())
-    return Checkbox::GetImage(for_state);
+void RadioButton::SetChecked(bool checked) {
+  if (checked == RadioButton::checked())
+    return;
+  if (checked) {
+    // We can't just get the root view here because sometimes the radio
+    // button isn't attached to a root view (e.g., if it's part of a tab page
+    // that is currently not active).
+    View* container = parent();
+    while (container && container->parent())
+      container = container->parent();
+    if (container) {
+      Views other;
+      container->GetViewsInGroup(GetGroup(), &other);
+      for (Views::iterator i(other.begin()); i != other.end(); ++i) {
+        if (*i != this) {
+          if (strcmp((*i)->GetClassName(), kViewClassName)) {
+            NOTREACHED() << "radio-button-nt has same group as other non "
+                            "radio-button-nt views.";
+            continue;
+          }
+          RadioButton* peer = static_cast<RadioButton*>(*i);
+          peer->SetChecked(false);
+        }
+      }
+    }
+  }
+  Checkbox::SetChecked(checked);
+}
 
-  return gfx::CreateVectorIcon(
-      checked() ? gfx::VectorIconId::RADIO_BUTTON_ACTIVE
-                : gfx::VectorIconId::RADIO_BUTTON_NORMAL,
-      16, GetNativeTheme()->GetSystemColor(
-              checked() ? ui::NativeTheme::kColorId_FocusedBorderColor
-                        : ui::NativeTheme::kColorId_UnfocusedBorderColor));
+void RadioButton::PaintFocusRing(gfx::Canvas* canvas,
+                                 const cc::PaintFlags& flags) {
+  canvas->DrawCircle(gfx::RectF(image()->bounds()).CenterPoint(),
+                     image()->width() / 2, flags);
+}
+
+const gfx::VectorIcon& RadioButton::GetVectorIcon() const {
+  return checked() ? kRadioButtonActiveIcon : kRadioButtonNormalIcon;
 }
 
 }  // namespace views

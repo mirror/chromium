@@ -21,6 +21,15 @@ Prerequisites:
 3. cronet_perf_test_apk has been built for the Android device, e.g. via:
      ./components/cronet/tools/cr_cronet.py gn -r
      ninja -C out/Release cronet_perf_test_apk
+4. If "sudo ufw status" doesn't say "Status: inactive", run "sudo ufw disable".
+5. sudo apt-get install lighttpd
+6. If the usb0 interface on the host keeps losing it's IPv4 address
+   (WaitFor(HasHostAddress) will keep failing), NetworkManager may need to be
+   told to leave usb0 alone with these commands:
+     sudo bash -c "printf \"\\n[keyfile]\
+         \\nunmanaged-devices=interface-name:usb0\\n\" \
+         >> /etc/NetworkManager/NetworkManager.conf"
+     sudo service network-manager restart
 
 Invocation:
 ./run.py
@@ -33,6 +42,7 @@ Benchmark timings are output by telemetry to stdout and written to
 
 import json
 import os
+import posixpath
 import shutil
 import subprocess
 import sys
@@ -139,9 +149,10 @@ class CronetPerfTestAndroidStory(android.AndroidStory):
 
   def __init__(self, device):
     self._device = device
-    device.RunShellCommand('rm %s' % DONE_FILE)
+    device.RemovePath(DONE_FILE, force=True)
     config = BENCHMARK_CONFIG
     config['HOST_IP'] = GetServersHost(device)
+    self.url ='http://dummy/?'+urllib.urlencode(config)
     start_intent = intent.Intent(
         package=APP_PACKAGE,
         activity=APP_ACTIVITY,
@@ -149,7 +160,7 @@ class CronetPerfTestAndroidStory(android.AndroidStory):
         # |config| maps from configuration value names to the configured values.
         # |config| is encoded as URL parameter names and values and passed to
         # the Cronet perf test app via the Intent data field.
-        data='http://dummy/?'+urllib.urlencode(config),
+        data=self.url,
         extras=None,
         category=None)
     super(CronetPerfTestAndroidStory, self).__init__(
@@ -218,8 +229,11 @@ class QuicServer(object):
     self._quic_server_doc_root = quic_server_doc_root
 
   def StartupQuicServer(self, device):
+    # Chromium's presubmit checks aren't smart enough to understand
+    # the redirect done in build/android/pylib/pexpect.py.
+    # pylint: disable=no-member
     self._process = pexpect.spawn(QUIC_SERVER,
-                                  ['--quic_in_memory_cache_dir=%s' %
+                                  ['--quic_response_cache_dir=%s' %
                                       self._quic_server_doc_root,
                                    '--certificate_file=%s' % QUIC_CERT,
                                    '--key_file=%s' % QUIC_KEY,
@@ -235,8 +249,9 @@ class QuicServer(object):
       assert waited_s < 5, "quic_server failed to start after %fs" % waited_s
     # Push certificate to device.
     cert = open(QUIC_CERT, 'r').read()
-    device_cert_path = os.path.join(device.GetExternalStoragePath(), CERT_PATH)
-    device.RunShellCommand('mkdir -p %s' % device_cert_path)
+    device_cert_path = posixpath.join(
+        device.GetExternalStoragePath(), CERT_PATH)
+    device.RunShellCommand(['mkdir', '-p', device_cert_path], check_return=True)
     device.WriteFile(os.path.join(device_cert_path, QUIC_CERT_FILENAME), cert)
 
   def ShutdownQuicServer(self):

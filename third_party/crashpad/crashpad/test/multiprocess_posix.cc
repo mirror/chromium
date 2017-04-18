@@ -60,7 +60,7 @@ Multiprocess::Multiprocess()
 }
 
 void Multiprocess::Run() {
-  ASSERT_EQ(nullptr, info_);
+  ASSERT_EQ(info_, nullptr);
   std::unique_ptr<internal::MultiprocessInfo> info(
       new internal::MultiprocessInfo);
   base::AutoReset<internal::MultiprocessInfo*> reset_info(&info_, info.get());
@@ -90,7 +90,7 @@ void Multiprocess::Run() {
 
     int status;
     pid_t wait_pid = HANDLE_EINTR(waitpid(pid, &status, 0));
-    ASSERT_EQ(pid, wait_pid) << ErrnoMessage("waitpid");
+    ASSERT_EQ(wait_pid, pid) << ErrnoMessage("waitpid");
 
     TerminationReason reason;
     int code;
@@ -98,12 +98,12 @@ void Multiprocess::Run() {
     if (WIFEXITED(status)) {
       reason = kTerminationNormal;
       code = WEXITSTATUS(status);
-      message = base::StringPrintf("Child exited with code %d, expected", code);
+      message = base::StringPrintf("Child exited with code %d", code);
     } else if (WIFSIGNALED(status)) {
       reason = kTerminationSignal;
       code = WTERMSIG(status);
       message =
-          base::StringPrintf("Child terminated by signal %d (%s)%s, expected",
+          base::StringPrintf("Child terminated by signal %d (%s)%s",
                              code,
                              strsignal(code),
                              WCOREDUMP(status) ? " (core dumped)" : "");
@@ -112,9 +112,11 @@ void Multiprocess::Run() {
     }
 
     if (reason_ == kTerminationNormal) {
-      message += base::StringPrintf(" exit with code %d", code_);
-    } else if (reason == kTerminationSignal) {
-      message += base::StringPrintf(" termination by signal %d", code_);
+      message += base::StringPrintf(", expected exit with code %d", code_);
+    } else if (reason_ == kTerminationSignal) {
+      message += base::StringPrintf(", expected termination by signal %d (%s)",
+                                    code_,
+                                    strsignal(code_));
     }
 
     if (reason != reason_ || code != code_) {
@@ -137,21 +139,21 @@ Multiprocess::~Multiprocess() {
 void Multiprocess::PreFork() {
   int pipe_fds_c2p[2];
   int rv = pipe(pipe_fds_c2p);
-  ASSERT_EQ(0, rv) << ErrnoMessage("pipe");
+  ASSERT_EQ(rv, 0) << ErrnoMessage("pipe");
 
   info_->pipe_c2p_read.reset(pipe_fds_c2p[0]);
   info_->pipe_c2p_write.reset(pipe_fds_c2p[1]);
 
   int pipe_fds_p2c[2];
   rv = pipe(pipe_fds_p2c);
-  ASSERT_EQ(0, rv) << ErrnoMessage("pipe");
+  ASSERT_EQ(rv, 0) << ErrnoMessage("pipe");
 
   info_->pipe_p2c_read.reset(pipe_fds_p2c[0]);
   info_->pipe_p2c_write.reset(pipe_fds_p2c[1]);
 }
 
 pid_t Multiprocess::ChildPID() const {
-  EXPECT_NE(0, info_->child_pid);
+  EXPECT_NE(info_->child_pid, 0);
   return info_->child_pid;
 }
 

@@ -1,4 +1,4 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -13,6 +13,10 @@ class HeadlessContentRendererClient : public content::ContentRendererClient {
  public:
   HeadlessContentRendererClient();
   ~HeadlessContentRendererClient() override;
+
+ private:
+  void RenderFrameCreated(content::RenderFrame* render_frame) override;
+  void RunScriptsAtDocumentStart(content::RenderFrame* render_frame) override;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessContentRendererClient);
 };

@@ -10,17 +10,14 @@
 
 namespace base {
 
-WaitableEventWatcher::WaitableEventWatcher()
-    : event_(NULL) {
-}
+WaitableEventWatcher::WaitableEventWatcher() = default;
 
 WaitableEventWatcher::~WaitableEventWatcher() {
 }
 
-bool WaitableEventWatcher::StartWatching(
-    WaitableEvent* event,
-    const EventCallback& callback) {
-  callback_ = callback;
+bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
+                                         EventCallback callback) {
+  callback_ = std::move(callback);
   event_ = event;
   return watcher_.StartWatchingOnce(event->handle(), this);
 }
@@ -31,18 +28,13 @@ void WaitableEventWatcher::StopWatching() {
   watcher_.StopWatching();
 }
 
-WaitableEvent* WaitableEventWatcher::GetWatchedEvent() {
-  return event_;
-}
-
 void WaitableEventWatcher::OnObjectSignaled(HANDLE h) {
   WaitableEvent* event = event_;
-  EventCallback callback = callback_;
+  EventCallback callback = std::move(callback_);
   event_ = NULL;
-  callback_.Reset();
   DCHECK(event);
 
-  callback.Run(event);
+  std::move(callback).Run(event);
 }
 
 }  // namespace base

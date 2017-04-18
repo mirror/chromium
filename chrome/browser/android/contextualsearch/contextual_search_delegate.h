@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <memory>
+#include <string>
 
 #include "base/callback.h"
 #include "base/gtest_prod_util.h"
@@ -18,6 +19,10 @@
 #include "chrome/browser/android/contextualsearch/resolved_search_term.h"
 #include "content/public/browser/android/content_view_core.h"
 #include "net/url_request/url_fetcher_delegate.h"
+
+namespace content {
+class WebContents;
+}
 
 namespace net {
 class URLRequestContextGetter;
@@ -38,11 +43,6 @@ class ContextualSearchDelegate
   // Provides the Resolved Search Term, called when the Resolve Request returns.
   typedef base::Callback<void(const ResolvedSearchTerm&)>
       SearchTermResolutionCallback;
-  // Provides the surrounding text and selection start/end when Blink gathers
-  // surrounding text for the Context.
-  typedef base::Callback<
-      void(const base::string16&, int, int)>
-      HandleSurroundingsCallback;
   // Provides limited surrounding text for icing.
   typedef base::Callback<
       void(const std::string&, const base::string16&, size_t, size_t)>
@@ -61,25 +61,19 @@ class ContextualSearchDelegate
       const IcingCallback& icing_callback);
   ~ContextualSearchDelegate() override;
 
-  // Gathers surrounding text and starts an asynchronous search term resolution
-  // request. The "search term" is the best query to issue for a section of text
-  // in the context of a web page. When the response is available the callback
-  // specified in the constructor is run.
+  // Gathers surrounding text and saves it locally in the given context.
+  void GatherAndSaveSurroundingText(
+      base::WeakPtr<ContextualSearchContext> contextual_search_context,
+      content::WebContents* web_contents);
+
+  // Starts an asynchronous search term resolution request.
+  // The given context includes some content from a web page and must be able
+  // to resolve.
+  // When the response is available the callback specified in the constructor
+  // is run.
   void StartSearchTermResolutionRequest(
-      const std::string& selection,
-      bool use_resolved_search_term,
-      content::ContentViewCore* content_view_core,
-      bool may_send_base_page_url);
-
-  // Gathers surrounding text and saves it locally for a future query.
-  void GatherAndSaveSurroundingText(const std::string& selection,
-                                    bool use_resolved_search_term,
-                                    content::ContentViewCore* content_view_core,
-                                    bool may_send_base_page_url);
-
-  // Continues making a Search Term Resolution request, once the surrounding
-  // text has been gathered.
-  void ContinueSearchTermResolutionRequest();
+      base::WeakPtr<ContextualSearchContext> contextual_search_context,
+      content::WebContents* web_contents);
 
   // Gets the target language for translation purposes for this user.
   std::string GetTargetLanguage();
@@ -87,12 +81,12 @@ class ContextualSearchDelegate
   // Returns the accept languages preference string.
   std::string GetAcceptLanguages();
 
-  // For testing.
-  void set_context_for_testing(ContextualSearchContext* context) {
-    context_.reset(context);
-  }
-
  private:
+  // Friend our test which allows our private methods to be used in helper
+  // functions.  FRIEND_TEST_ALL_PREFIXES just friends individual prefixes.
+  // Needed for |ResolveSearchTermFromContext|.
+  friend class ContextualSearchDelegateTest;
+  // TODO(donnd): consider removing the following since the above covers this.
   FRIEND_TEST_ALL_PREFIXES(ContextualSearchDelegateTest,
                            SurroundingTextHighMaximum);
   FRIEND_TEST_ALL_PREFIXES(ContextualSearchDelegateTest,
@@ -114,12 +108,9 @@ class ContextualSearchDelegate
   // net::URLFetcherDelegate:
   void OnURLFetchComplete(const net::URLFetcher* source) override;
 
-  // Builds the ContextualSearchContext in the current context from
-  // the given parameters.
-  void BuildContext(const std::string& selection,
-                    bool use_resolved_search_term,
-                    content::ContentViewCore* content_view_core,
-                    bool may_send_base_page_url);
+  // Resolves the search term specified by the current context.
+  // Only needed for tests.  TODO(donnd): make private and friend?
+  void ResolveSearchTermFromContext();
 
   // Builds and returns the search term resolution request URL.
   // |selection| is used as the default query.
@@ -132,18 +123,9 @@ class ContextualSearchDelegate
       const std::string& base_page_url,
       const bool may_send_base_page_url);
 
-  // Will gather the surrounding text from the |content_view_core| and call the
-  // |callback|.
-  void GatherSurroundingTextWithCallback(
-      const std::string& selection,
-      bool use_resolved_search_term,
-      content::ContentViewCore* content_view_core,
-      bool may_send_base_page_url,
-      HandleSurroundingsCallback callback);
-
-  // Callback for GatherSurroundingTextWithCallback(). Will start the search
-  // term resolution request.
-  void StartSearchTermRequestFromSelection(
+  // Callback for GatherAndSaveSurroundingText, called when surrounding text is
+  // available.
+  void OnTextSurroundingSelectionAvailable(
       const base::string16& surrounding_text,
       int start_offset,
       int end_offset);
@@ -180,14 +162,20 @@ class ContextualSearchDelegate
       const std::string& json_string);
 
   // Decodes the given json response string and extracts parameters.
-  void DecodeSearchTermFromJsonResponse(const std::string& response,
-                                        std::string* search_term,
-                                        std::string* display_text,
-                                        std::string* alternate_term,
-                                        std::string* prevent_preload,
-                                        int* mention_start,
-                                        int* mention_end,
-                                        std::string* context_language);
+  void DecodeSearchTermFromJsonResponse(
+      const std::string& response,
+      std::string* search_term,
+      std::string* display_text,
+      std::string* alternate_term,
+      std::string* mid,
+      std::string* prevent_preload,
+      int* mention_start,
+      int* mention_end,
+      std::string* context_language,
+      std::string* thumbnail_url,
+      std::string* caption,
+      std::string* quick_action_uri,
+      QuickActionCategory* quick_action_category);
 
   // Extracts the start and end location from a mentions list, and sets the
   // integers referenced by |startResult| and |endResult|.
@@ -212,6 +200,12 @@ class ContextualSearchDelegate
                                          size_t* start,
                                          size_t* end);
 
+  // For testing.
+  void SetContextForTesting(
+      const base::WeakPtr<ContextualSearchContext>& context) {
+    context_ = context;
+  }
+
   // The current request in progress, or NULL.
   std::unique_ptr<net::URLFetcher> search_term_fetcher_;
 
@@ -234,7 +228,8 @@ class ContextualSearchDelegate
   IcingCallback icing_callback_;
 
   // Used to hold the context until an upcoming search term request is started.
-  std::unique_ptr<ContextualSearchContext> context_;
+  // Owned by the Java ContextualSearchContext.
+  base::WeakPtr<ContextualSearchContext> context_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchDelegate);
 };

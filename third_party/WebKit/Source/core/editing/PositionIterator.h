@@ -26,6 +26,7 @@
 #ifndef PositionIterator_h
 #define PositionIterator_h
 
+#include "core/CoreExport.h"
 #include "core/dom/Node.h"
 #include "core/editing/EditingStrategy.h"
 #include "core/editing/EditingUtilities.h"
@@ -39,57 +40,66 @@ namespace blink {
 // Conversion to Position is O(1).
 // PositionIteratorAlgorithm must be used without DOM tree change.
 template <typename Strategy>
-class PositionIteratorAlgorithm {
-    STACK_ALLOCATED();
-public:
-    explicit PositionIteratorAlgorithm(const PositionTemplate<Strategy>&);
-    PositionIteratorAlgorithm();
+class CORE_TEMPLATE_CLASS_EXPORT PositionIteratorAlgorithm {
+  STACK_ALLOCATED();
 
-    // Since |deprecatedComputePosition()| is slow, new code should use
-    // |computePosition()| instead.
-    PositionTemplate<Strategy> deprecatedComputePosition() const;
-    PositionTemplate<Strategy> computePosition() const;
+ public:
+  explicit PositionIteratorAlgorithm(const PositionTemplate<Strategy>&);
+  PositionIteratorAlgorithm();
 
-    // increment() takes O(1) other than incrementing to a element that has
-    // new parent.
-    // In the later case, it takes time of O(<number of childlen>) but the case
-    // happens at most depth-of-the-tree times over whole tree traversal.
-    void increment();
-    // decrement() takes O(1) other than decrement into new node that has
-    // childlen.
-    // In the later case, it takes time of O(<number of childlen>).
-    void decrement();
+  // Since |deprecatedComputePosition()| is slow, new code should use
+  // |computePosition()| instead.
+  PositionTemplate<Strategy> DeprecatedComputePosition() const;
+  PositionTemplate<Strategy> ComputePosition() const;
 
-    Node* node() const { return m_anchorNode; }
-    int offsetInLeafNode() const { return m_offsetInAnchor; }
+  // increment() takes O(1) other than incrementing to a element that has
+  // new parent.
+  // In the later case, it takes time of O(<number of childlen>) but the case
+  // happens at most depth-of-the-tree times over whole tree traversal.
+  void Increment();
+  // decrement() takes O(1) other than decrement into new node that has
+  // childlen.
+  // In the later case, it takes time of O(<number of childlen>).
+  void Decrement();
 
-    bool atStart() const;
-    bool atEnd() const;
-    bool atStartOfNode() const;
-    bool atEndOfNode() const;
+  Node* GetNode() const { return anchor_node_; }
+  int OffsetInLeafNode() const { return offset_in_anchor_; }
 
-private:
-    PositionIteratorAlgorithm(Node* anchorNode, int offsetInAnchorNode);
+  bool AtStart() const;
+  bool AtEnd() const;
+  bool AtStartOfNode() const;
+  bool AtEndOfNode() const;
 
-    bool isValid() const { return !m_anchorNode || m_domTreeVersion == m_anchorNode->document().domTreeVersion(); }
+ private:
+  PositionIteratorAlgorithm(Node* anchor_node, int offset_in_anchoror_node);
 
-    Member<Node> m_anchorNode;
-    Member<Node> m_nodeAfterPositionInAnchor; // If this is non-null, Strategy::parent(*m_nodeAfterPositionInAnchor) == m_anchorNode;
-    int m_offsetInAnchor;
-    size_t m_depthToAnchorNode;
-    // If |m_nodeAfterPositionInAnchor| is not null,
-    // m_offsetsInAnchorNode[m_depthToAnchorNode] ==
-    //    Strategy::index(m_nodeAfterPositionInAnchor).
-    Vector<int> m_offsetsInAnchorNode;
-    uint64_t m_domTreeVersion;
+  bool IsValid() const {
+    return !anchor_node_ ||
+           dom_tree_version_ == anchor_node_->GetDocument().DomTreeVersion();
+  }
+
+  Member<Node> anchor_node_;
+  // If this is non-null, Strategy::parent(*m_nodeAfterPositionInAnchor) ==
+  // m_anchorNode;
+  Member<Node> node_after_position_in_anchor_;
+  int offset_in_anchor_;
+  size_t depth_to_anchor_node_;
+  // If |m_nodeAfterPositionInAnchor| is not null,
+  // m_offsetsInAnchorNode[m_depthToAnchorNode] ==
+  //    Strategy::index(m_nodeAfterPositionInAnchor).
+  Vector<int> offsets_in_anchor_node_;
+  uint64_t dom_tree_version_;
 };
 
-extern template class PositionIteratorAlgorithm<EditingStrategy>;
-extern template class PositionIteratorAlgorithm<EditingInFlatTreeStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    PositionIteratorAlgorithm<EditingStrategy>;
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    PositionIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
 using PositionIterator = PositionIteratorAlgorithm<EditingStrategy>;
-using PositionIteratorInFlatTree = PositionIteratorAlgorithm<EditingInFlatTreeStrategy>;
+using PositionIteratorInFlatTree =
+    PositionIteratorAlgorithm<EditingInFlatTreeStrategy>;
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PositionIterator_h
+#endif  // PositionIterator_h

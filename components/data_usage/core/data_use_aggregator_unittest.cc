@@ -25,6 +25,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/base/network_delegate_impl.h"
 #include "net/socket/socket_test_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -278,8 +279,8 @@ class DataUseAggregatorTest : public testing::Test {
     mock_socket_factory_->AddSocketDataProvider(&socket);
 
     net::TestDelegate delegate;
-    std::unique_ptr<net::URLRequest> request =
-        context_->CreateRequest(url, net::IDLE, &delegate);
+    std::unique_ptr<net::URLRequest> request = context_->CreateRequest(
+        url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
     request->set_first_party_for_cookies(first_party_for_cookies);
 
     ReportingNetworkDelegate::DataUseContextMap data_use_context_map;
@@ -289,7 +290,7 @@ class DataUseAggregatorTest : public testing::Test {
     reporting_network_delegate_->set_data_use_context_map(data_use_context_map);
 
     request->Start();
-    loop_.RunUntilIdle();
+    base::RunLoop().RunUntilIdle();
 
     return request;
   }
@@ -364,7 +365,7 @@ TEST_F(DataUseAggregatorTest, ReportDataUse) {
     // First, the |foo_request| data use should have happened.
     int64_t observed_foo_tx_bytes = 0, observed_foo_rx_bytes = 0;
     while (data_use_it != test_observer()->observed_data_use().end() &&
-           data_use_it->url == GURL("http://foo.com")) {
+           data_use_it->url == "http://foo.com/") {
       EXPECT_EQ(GetRequestStart(*foo_request), data_use_it->request_start);
       EXPECT_EQ(GURL("http://foofirstparty.com"),
                 data_use_it->first_party_for_cookies);

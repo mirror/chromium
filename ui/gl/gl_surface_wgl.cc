@@ -192,7 +192,7 @@ NativeViewGLSurfaceWGL::~NativeViewGLSurfaceWGL() {
   Destroy();
 }
 
-bool NativeViewGLSurfaceWGL::Initialize(GLSurface::Format format) {
+bool NativeViewGLSurfaceWGL::Initialize(GLSurfaceFormat format) {
   DCHECK(!device_context_);
 
   RECT rect;
@@ -320,6 +320,10 @@ void* NativeViewGLSurfaceWGL::GetHandle() {
   return device_context_;
 }
 
+GLSurfaceFormat NativeViewGLSurfaceWGL::GetFormat() {
+  return GLSurfaceFormat();
+}
+
 PbufferGLSurfaceWGL::PbufferGLSurfaceWGL(const gfx::Size& size)
     : size_(size),
       device_context_(NULL),
@@ -334,7 +338,7 @@ PbufferGLSurfaceWGL::~PbufferGLSurfaceWGL() {
   Destroy();
 }
 
-bool PbufferGLSurfaceWGL::Initialize(GLSurface::Format format) {
+bool PbufferGLSurfaceWGL::Initialize(GLSurfaceFormat format) {
   DCHECK(!device_context_);
 
   if (!g_driver_wgl.fn.wglCreatePbufferARBFn) {
@@ -392,6 +396,10 @@ gfx::Size PbufferGLSurfaceWGL::GetSize() {
 
 void* PbufferGLSurfaceWGL::GetHandle() {
   return device_context_;
+}
+
+GLSurfaceFormat PbufferGLSurfaceWGL::GetFormat() {
+  return GLSurfaceFormat();
 }
 
 }  // namespace gl

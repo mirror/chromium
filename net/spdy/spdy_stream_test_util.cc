@@ -23,12 +23,10 @@ ClosingDelegate::ClosingDelegate(
 
 ClosingDelegate::~ClosingDelegate() {}
 
-void ClosingDelegate::OnRequestHeadersSent() {}
+void ClosingDelegate::OnHeadersSent() {}
 
-SpdyResponseHeadersStatus ClosingDelegate::OnResponseHeadersUpdated(
-    const SpdyHeaderBlock& response_headers) {
-  return RESPONSE_HEADERS_ARE_COMPLETE;
-}
+void ClosingDelegate::OnHeadersReceived(
+    const SpdyHeaderBlock& response_headers) {}
 
 void ClosingDelegate::OnDataReceived(std::unique_ptr<SpdyBuffer> buffer) {}
 
@@ -42,6 +40,10 @@ void ClosingDelegate::OnClose(int status) {
   // The |stream_| may still be alive (if it is our delegate).
 }
 
+NetLogSource ClosingDelegate::source_dependency() const {
+  return NetLogSource();
+}
+
 StreamDelegateBase::StreamDelegateBase(
     const base::WeakPtr<SpdyStream>& stream)
     : stream_(stream),
@@ -52,17 +54,16 @@ StreamDelegateBase::StreamDelegateBase(
 StreamDelegateBase::~StreamDelegateBase() {
 }
 
-void StreamDelegateBase::OnRequestHeadersSent() {
+void StreamDelegateBase::OnHeadersSent() {
   stream_id_ = stream_->stream_id();
   EXPECT_NE(stream_id_, 0u);
   send_headers_completed_ = true;
 }
 
-SpdyResponseHeadersStatus StreamDelegateBase::OnResponseHeadersUpdated(
+void StreamDelegateBase::OnHeadersReceived(
     const SpdyHeaderBlock& response_headers) {
   EXPECT_EQ(stream_->type() != SPDY_PUSH_STREAM, send_headers_completed_);
   response_headers_ = response_headers.Clone();
-  return RESPONSE_HEADERS_ARE_COMPLETE;
 }
 
 void StreamDelegateBase::OnDataReceived(std::unique_ptr<SpdyBuffer> buffer) {
@@ -82,27 +83,30 @@ void StreamDelegateBase::OnClose(int status) {
   callback_.callback().Run(status);
 }
 
+NetLogSource StreamDelegateBase::source_dependency() const {
+  return NetLogSource();
+}
+
 int StreamDelegateBase::WaitForClose() {
   int result = callback_.WaitForResult();
   EXPECT_TRUE(!stream_.get());
   return result;
 }
 
-std::string StreamDelegateBase::TakeReceivedData() {
+SpdyString StreamDelegateBase::TakeReceivedData() {
   size_t len = received_data_queue_.GetTotalSize();
-  std::string received_data(len, '\0');
+  SpdyString received_data(len, '\0');
   if (len > 0) {
-    EXPECT_EQ(
-        len,
-        received_data_queue_.Dequeue(string_as_array(&received_data), len));
+    EXPECT_EQ(len, received_data_queue_.Dequeue(
+                       base::string_as_array(&received_data), len));
   }
   return received_data;
 }
 
-std::string StreamDelegateBase::GetResponseHeaderValue(
-    const std::string& name) const {
+SpdyString StreamDelegateBase::GetResponseHeaderValue(
+    const SpdyString& name) const {
   SpdyHeaderBlock::const_iterator it = response_headers_.find(name);
-  return (it == response_headers_.end()) ? std::string()
+  return (it == response_headers_.end()) ? SpdyString()
                                          : it->second.as_string();
 }
 
@@ -115,35 +119,31 @@ StreamDelegateDoNothing::~StreamDelegateDoNothing() {
 
 StreamDelegateSendImmediate::StreamDelegateSendImmediate(
     const base::WeakPtr<SpdyStream>& stream,
-    base::StringPiece data)
-    : StreamDelegateBase(stream),
-      data_(data) {}
+    SpdyStringPiece data)
+    : StreamDelegateBase(stream), data_(data) {}
 
 StreamDelegateSendImmediate::~StreamDelegateSendImmediate() {
 }
 
-SpdyResponseHeadersStatus StreamDelegateSendImmediate::OnResponseHeadersUpdated(
+void StreamDelegateSendImmediate::OnHeadersReceived(
     const SpdyHeaderBlock& response_headers) {
-  SpdyResponseHeadersStatus status =
-      StreamDelegateBase::OnResponseHeadersUpdated(response_headers);
+  StreamDelegateBase::OnHeadersReceived(response_headers);
   if (data_.data()) {
     scoped_refptr<StringIOBuffer> buf(new StringIOBuffer(data_.as_string()));
     stream()->SendData(buf.get(), buf->size(), MORE_DATA_TO_SEND);
   }
-  return status;
 }
 
 StreamDelegateWithBody::StreamDelegateWithBody(
     const base::WeakPtr<SpdyStream>& stream,
-    base::StringPiece data)
-    : StreamDelegateBase(stream),
-      buf_(new StringIOBuffer(data.as_string())) {}
+    SpdyStringPiece data)
+    : StreamDelegateBase(stream), buf_(new StringIOBuffer(data.as_string())) {}
 
 StreamDelegateWithBody::~StreamDelegateWithBody() {
 }
 
-void StreamDelegateWithBody::OnRequestHeadersSent() {
-  StreamDelegateBase::OnRequestHeadersSent();
+void StreamDelegateWithBody::OnHeadersSent() {
+  StreamDelegateBase::OnHeadersSent();
   stream()->SendData(buf_.get(), buf_->size(), NO_MORE_DATA_TO_SEND);
 }
 
@@ -155,13 +155,11 @@ StreamDelegateCloseOnHeaders::StreamDelegateCloseOnHeaders(
 StreamDelegateCloseOnHeaders::~StreamDelegateCloseOnHeaders() {
 }
 
-SpdyResponseHeadersStatus
-StreamDelegateCloseOnHeaders::OnResponseHeadersUpdated(
+void StreamDelegateCloseOnHeaders::OnHeadersReceived(
     const SpdyHeaderBlock& response_headers) {
   stream()->Cancel();
-  return RESPONSE_HEADERS_ARE_COMPLETE;
 }
 
-} // namespace test
+}  // namespace test
 
-} // namespace net
+}  // namespace net

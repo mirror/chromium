@@ -9,16 +9,12 @@
 #include <string>
 
 #include "base/macros.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/layers/layer.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkTypeface.h"
 
 namespace cc {
-
-namespace proto {
-class LayerNode;
-}  // namespace proto
 
 class CC_EXPORT HeadsUpDisplayLayer : public Layer {
  public:
@@ -28,8 +24,6 @@ class CC_EXPORT HeadsUpDisplayLayer : public Layer {
       const gfx::Size& device_viewport, float device_scale_factor);
 
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
-
-  void SetTypeForProtoSerialization(proto::LayerNode* proto) const override;
 
   // Layer overrides.
   void PushPropertiesTo(LayerImpl* layer) override;

@@ -16,6 +16,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -25,6 +26,7 @@
 #include "content/browser/appcache/mock_appcache_service.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
+#include "net/http/http_util.h"
 #include "net/url_request/url_request_error_job.h"
 #include "net/url_request/url_request_job_factory_impl.h"
 #include "net/url_request/url_request_test_job.h"
@@ -401,17 +403,13 @@ class RetryRequestTestJob : public net::URLRequestTestJob {
     ++num_requests_;
     if (num_retries_ > 0 && request->original_url() == kRetryUrl) {
       --num_retries_;
-      return new RetryRequestTestJob(
-          request, network_delegate, RetryRequestTestJob::retry_headers(), 503);
+      return new RetryRequestTestJob(request, network_delegate,
+                                     RetryRequestTestJob::retry_headers());
     } else {
-      return new RetryRequestTestJob(
-          request,
-          network_delegate,
-          RetryRequestTestJob::manifest_headers(), 200);
+      return new RetryRequestTestJob(request, network_delegate,
+                                     RetryRequestTestJob::manifest_headers());
     }
   }
-
-  int GetResponseCode() const override { return response_code_; }
 
  private:
   ~RetryRequestTestJob() override {}
@@ -455,14 +453,12 @@ class RetryRequestTestJob : public net::URLRequestTestJob {
 
   RetryRequestTestJob(net::URLRequest* request,
                       net::NetworkDelegate* network_delegate,
-                      const std::string& headers,
-                      int response_code)
-      : net::URLRequestTestJob(
-            request, network_delegate, headers, data(), true),
-        response_code_(response_code) {
-  }
-
-  int response_code_;
+                      const std::string& headers)
+      : net::URLRequestTestJob(request,
+                               network_delegate,
+                               headers,
+                               data(),
+                               true) {}
 
   static int num_requests_;
   static int num_retries_;
@@ -3047,8 +3043,8 @@ class AppCacheUpdateJobTest : public testing::Test,
     // Clean up everything that was created on the IO thread.
     protect_newest_cache_ = NULL;
     group_ = NULL;
-    STLDeleteContainerPointers(hosts_.begin(), hosts_.end());
-    STLDeleteContainerPointers(frontends_.begin(), frontends_.end());
+    hosts_.clear();
+    frontends_.clear();
     response_infos_.clear();
     service_.reset(NULL);
 
@@ -3087,9 +3083,9 @@ class AppCacheUpdateJobTest : public testing::Test,
   }
 
   AppCacheHost* MakeHost(int host_id, AppCacheFrontend* frontend) {
-    AppCacheHost* host = new AppCacheHost(host_id, frontend, service_.get());
-    hosts_.push_back(host);
-    return host;
+    hosts_.push_back(
+        base::MakeUnique<AppCacheHost>(host_id, frontend, service_.get()));
+    return hosts_.back().get();
   }
 
   AppCacheResponseInfo* MakeAppCacheResponseInfo(
@@ -3106,9 +3102,8 @@ class AppCacheUpdateJobTest : public testing::Test,
   }
 
   MockFrontend* MakeMockFrontend() {
-    MockFrontend* frontend = new MockFrontend();
-    frontends_.push_back(frontend);
-    return frontend;
+    frontends_.push_back(base::MakeUnique<MockFrontend>());
+    return frontends_.back().get();
   }
 
   // Verifies conditions about the group and notifications after an update
@@ -3193,7 +3188,7 @@ class AppCacheUpdateJobTest : public testing::Test,
 
     // Check expected events.
     for (size_t i = 0; i < frontends_.size(); ++i) {
-      MockFrontend* frontend = frontends_[i];
+      MockFrontend* frontend = frontends_[i].get();
 
       MockFrontend::RaisedEvents& expected_events = frontend->expected_events_;
       MockFrontend::RaisedEvents& actual_events = frontend->raised_events_;
@@ -3430,7 +3425,7 @@ class AppCacheUpdateJobTest : public testing::Test,
 
   // Hosts used by an async test that need to live until update job finishes.
   // Otherwise, test can put host on the stack instead of here.
-  std::vector<AppCacheHost*> hosts_;
+  std::vector<std::unique_ptr<AppCacheHost>> hosts_;
 
   // Response infos used by an async test that need to live until update job
   // finishes.
@@ -3448,7 +3443,8 @@ class AppCacheUpdateJobTest : public testing::Test,
   AppCache* expect_old_cache_;
   AppCache* expect_newest_cache_;
   bool expect_non_null_update_time_;
-  std::vector<MockFrontend*> frontends_;  // to check expected events
+  std::vector<std::unique_ptr<MockFrontend>>
+      frontends_;  // to check expected events
   TestedManifest tested_manifest_;
   const char* tested_manifest_path_override_;
   AppCache::EntryMap expect_extra_entries_;

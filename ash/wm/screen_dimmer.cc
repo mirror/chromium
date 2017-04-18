@@ -4,65 +4,38 @@
 
 #include "ash/wm/screen_dimmer.h"
 
-#include "ash/common/wm_shell.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
-#include "ash/wm/dim_window.h"
-#include "base/time/time.h"
-#include "ui/aura/window_event_dispatcher.h"
-#include "ui/aura/window_property.h"
-#include "ui/compositor/layer.h"
-#include "ui/compositor/scoped_layer_animation_settings.h"
-#include "ui/gfx/geometry/rect.h"
-#include "ui/gfx/geometry/size.h"
-
-DECLARE_WINDOW_PROPERTY_TYPE(ash::ScreenDimmer*);
+#include "ash/window_user_data.h"
+#include "ash/wm/container_finder.h"
+#include "ash/wm/window_dimmer.h"
+#include "ash/wm_window.h"
+#include "base/memory/ptr_util.h"
+#include "ui/aura/window.h"
 
 namespace ash {
 namespace {
-DEFINE_OWNED_WINDOW_PROPERTY_KEY(ScreenDimmer, kScreenDimmerKey, nullptr);
 
 // Opacity when it's dimming the entire screen.
 const float kDimmingLayerOpacityForRoot = 0.4f;
 
-const int kRootWindowMagicId = -100;
-
-std::vector<aura::Window*> GetAllContainers(int container_id) {
-  return container_id == kRootWindowMagicId
-             ? Shell::GetAllRootWindows()
-             : Shell::GetContainersFromAllRootWindows(container_id, nullptr);
-}
+// Opacity for lock screen.
+const float kDimmingLayerOpacityForLockScreen = 0.5f;
 
 }  // namespace
 
-// static
-ScreenDimmer* ScreenDimmer::GetForContainer(int container_id) {
-  aura::Window* primary_container = FindContainer(container_id);
-  ScreenDimmer* dimmer = primary_container->GetProperty(kScreenDimmerKey);
-  if (!dimmer) {
-    dimmer = new ScreenDimmer(container_id);
-    primary_container->SetProperty(kScreenDimmerKey, dimmer);
-  }
-  return dimmer;
-}
-
-// static
-ScreenDimmer* ScreenDimmer::GetForRoot() {
-  ScreenDimmer* dimmer = GetForContainer(kRootWindowMagicId);
-  // Root window's dimmer
-  dimmer->target_opacity_ = kDimmingLayerOpacityForRoot;
-  return dimmer;
-}
-
-ScreenDimmer::ScreenDimmer(int container_id)
-    : container_id_(container_id),
-      target_opacity_(0.5f),
+ScreenDimmer::ScreenDimmer(Container container)
+    : container_(container),
       is_dimming_(false),
-      at_bottom_(false) {
-  WmShell::Get()->AddShellObserver(this);
+      at_bottom_(false),
+      window_dimmers_(base::MakeUnique<WindowUserData<WindowDimmer>>()) {
+  Shell::Get()->AddShellObserver(this);
 }
 
 ScreenDimmer::~ScreenDimmer() {
-  WmShell::Get()->RemoveShellObserver(this);
+  // Usage in chrome results in ScreenDimmer outliving the shell.
+  if (Shell::HasInstance())
+    Shell::Get()->RemoveShellObserver(this);
 }
 
 void ScreenDimmer::SetDimming(bool should_dim) {
@@ -73,16 +46,11 @@ void ScreenDimmer::SetDimming(bool should_dim) {
   Update(should_dim);
 }
 
-ScreenDimmer* ScreenDimmer::FindForTest(int container_id) {
-  return FindContainer(container_id)->GetProperty(kScreenDimmerKey);
-}
-
-// static
-aura::Window* ScreenDimmer::FindContainer(int container_id) {
-  aura::Window* primary = Shell::GetPrimaryRootWindow();
-  return container_id == kRootWindowMagicId
-             ? primary
-             : primary->GetChildById(container_id);
+aura::Window::Windows ScreenDimmer::GetAllContainers() {
+  return container_ == Container::ROOT
+             ? Shell::GetAllRootWindows()
+             : wm::GetContainersFromAllRootWindows(
+                   ash::kShellWindowId_LockScreenContainersContainer);
 }
 
 void ScreenDimmer::OnRootWindowAdded(WmWindow* root_window) {
@@ -90,23 +58,24 @@ void ScreenDimmer::OnRootWindowAdded(WmWindow* root_window) {
 }
 
 void ScreenDimmer::Update(bool should_dim) {
-  for (aura::Window* container : GetAllContainers(container_id_)) {
-    DimWindow* dim = DimWindow::Get(container);
+  for (aura::Window* container : GetAllContainers()) {
+    WindowDimmer* window_dimmer = window_dimmers_->Get(container);
     if (should_dim) {
-      if (!dim) {
-        dim = new DimWindow(container);
-        dim->SetDimOpacity(target_opacity_);
+      if (!window_dimmer) {
+        window_dimmers_->Set(container,
+                             base::MakeUnique<WindowDimmer>(container));
+        window_dimmer = window_dimmers_->Get(container);
+        window_dimmer->SetDimOpacity(container_ == Container::ROOT
+                                         ? kDimmingLayerOpacityForRoot
+                                         : kDimmingLayerOpacityForLockScreen);
       }
       if (at_bottom_)
-        dim->parent()->StackChildAtBottom(dim);
+        container->StackChildAtBottom(window_dimmer->window());
       else
-        dim->parent()->StackChildAtTop(dim);
-      dim->Show();
-    } else {
-      if (dim) {
-        dim->Hide();
-        delete dim;
-      }
+        container->StackChildAtTop(window_dimmer->window());
+      window_dimmer->window()->Show();
+    } else if (window_dimmer) {
+      window_dimmers_->Set(container, nullptr);
     }
   }
 }

@@ -57,7 +57,7 @@ cvox.TtsBackground = function(opt_enableMath) {
   // specified.
   if (this.ttsProperties['lang'] == undefined) {
     this.ttsProperties['lang'] =
-        chrome.i18n.getMessage('@@ui_locale').replace('_', '-');
+        chrome.i18n.getUILanguage();
   }
 
   this.lastEventType = 'end';
@@ -216,6 +216,10 @@ cvox.TtsBackground.prototype.speak = function(
     textString, queueMode, properties) {
   goog.base(this, 'speak', textString, queueMode, properties);
 
+  if (this.ttsProperties[cvox.AbstractTts.VOLUME] === 0) {
+    return this;
+  }
+
   if (!properties) {
     properties = {};
   }
@@ -252,29 +256,6 @@ cvox.TtsBackground.prototype.speak = function(
   // TODO(dtseng): Google TTS has bad performance when speaking numbers. This
   // pattern causes ChromeVox to read numbers as digits rather than words.
   textString = this.getNumberAsDigits_(textString);
-
-  // TODO(plundblad): Google TTS doesn't handle strings that don't produce
-  // any speech very well. Handle empty and whitespace only strings (including
-  // non-breaking space) here to mitigate the issue somewhat.
-  if (/^[\s\u00a0]*$/.test(textString)) {
-    // We still want to callback for listeners in our content script.
-    if (properties['startCallback']) {
-      try {
-        properties['startCallback']();
-      } catch (e) {
-      }
-    }
-    if (properties['endCallback']) {
-      try {
-        properties['endCallback']();
-      } catch (e) {
-      }
-    }
-    if (queueMode === cvox.QueueMode.FLUSH) {
-      this.stop();
-    }
-    return this;
-  }
 
   var mergedProperties = this.mergeProperties(properties);
 
@@ -326,19 +307,6 @@ cvox.TtsBackground.prototype.speakUsingQueue_ = function(utterance, queueMode) {
   // Next, add the new utterance to the queue.
   this.utteranceQueue_.push(utterance);
 
-  // Update the caption panel.
-  if (utterance.properties &&
-      utterance.properties['pitch'] &&
-      utterance.properties['pitch'] < this.ttsProperties['pitch']) {
-    (new PanelCommand(
-        PanelCommandType.ADD_ANNOTATION_SPEECH,
-        utterance.textString)).send();
-  } else {
-    (new PanelCommand(
-        PanelCommandType.ADD_NORMAL_SPEECH,
-        utterance.textString)).send();
-  }
-
   // Now start speaking the next item in the queue.
   this.startSpeakingNextItemInQueue_();
 };
@@ -365,9 +333,10 @@ cvox.TtsBackground.prototype.startSpeakingNextItemInQueue_ = function() {
   }
 
   this.currentUtterance_ = this.utteranceQueue_.shift();
-  var utteranceId = this.currentUtterance_.id;
+  var utterance = this.currentUtterance_;
+  var utteranceId = utterance.id;
 
-  this.currentUtterance_.properties['onEvent'] = goog.bind(function(event) {
+  utterance.properties['onEvent'] = goog.bind(function(event) {
             this.onTtsEvent_(event, utteranceId);
           },
   this);
@@ -375,13 +344,25 @@ cvox.TtsBackground.prototype.startSpeakingNextItemInQueue_ = function() {
   var validatedProperties = {};
   for (var i = 0; i < cvox.TtsBackground.ALLOWED_PROPERTIES_.length; i++) {
     var p = cvox.TtsBackground.ALLOWED_PROPERTIES_[i];
-    if (this.currentUtterance_.properties[p]) {
-      validatedProperties[p] = this.currentUtterance_.properties[p];
+    if (utterance.properties[p]) {
+      validatedProperties[p] = utterance.properties[p];
     }
   }
 
-  chrome.tts.speak(this.currentUtterance_.textString,
-                   validatedProperties);
+  // Update the caption panel.
+  if (utterance.properties &&
+      utterance.properties['pitch'] &&
+      utterance.properties['pitch'] < this.ttsProperties['pitch']) {
+    (new PanelCommand(
+        PanelCommandType.ADD_ANNOTATION_SPEECH,
+        utterance.textString)).send();
+  } else {
+    (new PanelCommand(
+        PanelCommandType.ADD_NORMAL_SPEECH,
+        utterance.textString)).send();
+  }
+
+  chrome.tts.speak(utterance.textString, validatedProperties);
 };
 
 /**
@@ -437,6 +418,9 @@ cvox.TtsBackground.prototype.onTtsEvent_ = function(event, utteranceId) {
         this.cancelUtterance_(this.utteranceQueue_[i]);
       }
       this.utteranceQueue_.length = 0;
+      this.capturingTtsEventListeners_.forEach(function(listener) {
+        listener.onTtsInterrupted();
+      });
       break;
     case 'error':
       this.onError_(event['errorMessage']);
@@ -521,6 +505,10 @@ cvox.TtsBackground.prototype.stop = function() {
 
   (new PanelCommand(PanelCommandType.CLEAR_SPEECH)).send();
   chrome.tts.stop();
+
+  this.capturingTtsEventListeners_.forEach(function(listener) {
+    listener.onTtsInterrupted();
+  });
 };
 
 /** @override */
@@ -586,6 +574,29 @@ cvox.TtsBackground.prototype.preprocess = function(text, properties) {
   text = text.replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
 
   return text;
+};
+
+
+/** @override */
+cvox.TtsBackground.prototype.toggleSpeechOnOrOff = function() {
+  var previousValue = this.ttsProperties[cvox.AbstractTts.VOLUME];
+  var toggle = function() {
+    if (previousValue == 0) {
+      this.ttsProperties[cvox.AbstractTts.VOLUME] = 1;
+    } else {
+      this.ttsProperties[cvox.AbstractTts.VOLUME] = 0;
+    }
+  }.bind(this);
+
+  if (previousValue == 0) {
+    toggle();
+  } else {
+    // Let the caller make any last minute announcements in the current call
+    // stack.
+    setTimeout(toggle, 0);
+  }
+
+  return previousValue == 0;
 };
 
 
@@ -703,24 +714,30 @@ cvox.TtsBackground.prototype.clearTimeout_ = function() {
  * Update the current voice used to speak based upon values in storage. If that
  * does not succeed, fallback to use system locale when picking a voice.
  * @param {string} voiceName Voice name to set.
+ * @param {function(string) : void=} opt_callback Called when the voice is
+ * determined.
  * @private
  */
-cvox.TtsBackground.prototype.updateVoice_ = function(voiceName) {
+cvox.TtsBackground.prototype.updateVoice_ = function(voiceName, opt_callback) {
   chrome.tts.getVoices(goog.bind(function(voices) {
-    var currentLocale = chrome.i18n.getMessage('@@ui_locale').replace('_', '-');
+    chrome.i18n.getAcceptLanguages(goog.bind(function(acceptLanguages) {
+      var currentLocale = acceptLanguages[0] ||
+          chrome.i18n.getUILanguage() || '';
+      var match = voices.find.bind(voices);
+      var newVoice =
+          match(function(v) { return v.voiceName == voiceName; }) ||
+          match(function(v) { return v.lang === currentLocale; }) ||
+          match(function(v) { return currentLocale.startsWith(v.lang); }) ||
+          match(function(v) { return v.lang &&
+              v.lang.startsWith(currentLocale); }) ||
+          voices[0];
 
-    // TODO(dtseng): Prefer voices having the default property once we switch to
-    // web speech. See crbug.com/544139.
-
-    var newVoice = voices.find(
-            function(v) { return v.voiceName == voiceName; }) ||
-        voices.find(function(v) { return v.lang === currentLocale; }) ||
-        voices.find(function(v) { return currentLocale.startsWith(v.lang); }) ||
-        voices[0];
-
-    if (newVoice) {
-      this.currentVoice = newVoice.voiceName;
-      this.startSpeakingNextItemInQueue_();
-    }
+      if (newVoice) {
+        this.currentVoice = newVoice.voiceName;
+        this.startSpeakingNextItemInQueue_();
+      }
+      if (opt_callback)
+        opt_callback(this.currentVoice);
+    }, this));
   }, this));
 };

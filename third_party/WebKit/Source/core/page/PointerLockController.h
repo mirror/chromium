@@ -10,16 +10,17 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef PointerLockController_h
@@ -27,47 +28,50 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
-#include "wtf/RefPtr.h"
-#include "wtf/text/AtomicString.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class Element;
 class Document;
 class Page;
-class PlatformMouseEvent;
+class WebMouseEvent;
 
-class CORE_EXPORT PointerLockController final : public GarbageCollected<PointerLockController> {
-    WTF_MAKE_NONCOPYABLE(PointerLockController);
-public:
-    static PointerLockController* create(Page*);
+class CORE_EXPORT PointerLockController final
+    : public GarbageCollected<PointerLockController> {
+  WTF_MAKE_NONCOPYABLE(PointerLockController);
 
-    void requestPointerLock(Element* target);
-    void requestPointerUnlock();
-    void elementRemoved(Element*);
-    void documentDetached(Document*);
-    bool lockPending() const;
-    Element* element() const;
+ public:
+  static PointerLockController* Create(Page*);
 
-    void didAcquirePointerLock();
-    void didNotAcquirePointerLock();
-    void didLosePointerLock();
-    void dispatchLockedMouseEvent(const PlatformMouseEvent&, const AtomicString& eventType);
+  void RequestPointerLock(Element* target);
+  void RequestPointerUnlock();
+  void ElementRemoved(Element*);
+  void DocumentDetached(Document*);
+  bool LockPending() const;
+  Element* GetElement() const;
 
-    DECLARE_TRACE();
+  void DidAcquirePointerLock();
+  void DidNotAcquirePointerLock();
+  void DidLosePointerLock();
+  void DispatchLockedMouseEvent(const WebMouseEvent&,
+                                const AtomicString& event_type);
 
-private:
-    explicit PointerLockController(Page*);
-    void clearElement();
-    void enqueueEvent(const AtomicString& type, Element*);
-    void enqueueEvent(const AtomicString& type, Document*);
+  DECLARE_TRACE();
 
-    Member<Page> m_page;
-    bool m_lockPending;
-    Member<Element> m_element;
-    Member<Document> m_documentOfRemovedElementWhileWaitingForUnlock;
+ private:
+  explicit PointerLockController(Page*);
+  void ClearElement();
+  void EnqueueEvent(const AtomicString& type, Element*);
+  void EnqueueEvent(const AtomicString& type, Document*);
+
+  Member<Page> page_;
+  bool lock_pending_;
+  Member<Element> element_;
+  Member<Document> document_of_removed_element_while_waiting_for_unlock_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PointerLockController_h
+#endif  // PointerLockController_h

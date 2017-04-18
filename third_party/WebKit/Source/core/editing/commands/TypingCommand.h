@@ -30,115 +30,175 @@
 
 namespace blink {
 
-class TypingCommand final : public CompositeEditCommand {
-public:
-    enum ETypingCommand {
-        DeleteSelection,
-        DeleteKey,
-        ForwardDeleteKey,
-        InsertText,
-        InsertLineBreak,
-        InsertParagraphSeparator,
-        InsertParagraphSeparatorInQuotedContent
-    };
+class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
+ public:
+  enum ETypingCommand {
+    kDeleteSelection,
+    kDeleteKey,
+    kForwardDeleteKey,
+    kInsertText,
+    kInsertLineBreak,
+    kInsertParagraphSeparator,
+    kInsertParagraphSeparatorInQuotedContent
+  };
 
-    enum TextCompositionType {
-        TextCompositionNone,
-        TextCompositionUpdate,
-        TextCompositionConfirm
-    };
+  enum TextCompositionType {
+    kTextCompositionNone,
+    kTextCompositionUpdate,
+    kTextCompositionConfirm,
+    kTextCompositionCancel
+  };
 
-    enum Option {
-        SelectInsertedText = 1 << 0,
-        KillRing = 1 << 1,
-        RetainAutocorrectionIndicator = 1 << 2,
-        PreventSpellChecking = 1 << 3,
-        SmartDelete = 1 << 4
-    };
-    typedef unsigned Options;
+  enum Option {
+    kSelectInsertedText = 1 << 0,
+    kKillRing = 1 << 1,
+    kRetainAutocorrectionIndicator = 1 << 2,
+    kPreventSpellChecking = 1 << 3,
+    kSmartDelete = 1 << 4
+  };
+  typedef unsigned Options;
 
-    static void deleteSelection(Document&, Options = 0);
-    static void deleteKeyPressed(Document&, Options, TextGranularity = CharacterGranularity);
-    static void forwardDeleteKeyPressed(Document&, EditingState*, Options = 0, TextGranularity = CharacterGranularity);
-    static void insertText(Document&, const String&, Options, TextCompositionType = TextCompositionNone);
-    static void insertText(Document&, const String&, const VisibleSelection&, Options, TextCompositionType = TextCompositionNone);
-    static bool insertLineBreak(Document&);
-    static bool insertParagraphSeparator(Document&);
-    static bool insertParagraphSeparatorInQuotedContent(Document&);
-    static void closeTyping(LocalFrame*);
+  static void DeleteSelection(Document&, Options = 0);
+  static void DeleteKeyPressed(Document&,
+                               Options,
+                               TextGranularity = kCharacterGranularity);
+  static void ForwardDeleteKeyPressed(Document&,
+                                      EditingState*,
+                                      Options = 0,
+                                      TextGranularity = kCharacterGranularity);
+  static void InsertText(Document&,
+                         const String&,
+                         Options,
+                         TextCompositionType = kTextCompositionNone,
+                         const bool is_incremental_insertion = false);
+  static void InsertText(
+      Document&,
+      const String&,
+      const SelectionInDOMTree&,
+      Options,
+      TextCompositionType = kTextCompositionNone,
+      const bool is_incremental_insertion = false,
+      InputEvent::InputType = InputEvent::InputType::kInsertText);
+  static bool InsertLineBreak(Document&);
+  static bool InsertParagraphSeparator(Document&);
+  static bool InsertParagraphSeparatorInQuotedContent(Document&);
+  static void CloseTyping(LocalFrame*);
 
-    void insertText(const String &text, bool selectInsertedText, EditingState*);
-    void insertTextRunWithoutNewlines(const String &text, bool selectInsertedText, EditingState*);
-    void insertLineBreak(EditingState*);
-    void insertParagraphSeparatorInQuotedContent(EditingState*);
-    void insertParagraphSeparator(EditingState*);
-    void deleteKeyPressed(TextGranularity, bool killRing, EditingState*);
-    void forwardDeleteKeyPressed(TextGranularity, bool killRing, EditingState*);
-    void deleteSelection(bool smartDelete, EditingState*);
-    void setCompositionType(TextCompositionType type) { m_compositionType = type; }
+  static TypingCommand* LastTypingCommandIfStillOpenForTyping(LocalFrame*);
 
-    TextCompositionType compositionType() const { return m_compositionType; }
-    // |TypingCommand| may contain multiple |InsertTextCommand|, should return |textDataForInputEvent()| of the last one.
-    String textDataForInputEvent() const final;
+  void InsertText(const String& text, bool select_inserted_text, EditingState*);
+  void InsertTextRunWithoutNewlines(const String& text,
+                                    bool select_inserted_text,
+                                    EditingState*);
+  void InsertLineBreak(EditingState*);
+  void InsertParagraphSeparatorInQuotedContent(EditingState*);
+  void InsertParagraphSeparator(EditingState*);
+  void DeleteKeyPressed(TextGranularity, bool kill_ring, EditingState*);
+  void ForwardDeleteKeyPressed(TextGranularity, bool kill_ring, EditingState*);
+  void DeleteSelection(bool smart_delete, EditingState*);
+  void SetCompositionType(TextCompositionType type) {
+    composition_type_ = type;
+  }
+  void AdjustSelectionAfterIncrementalInsertion(LocalFrame*,
+                                                const size_t text_length);
 
-private:
-    static TypingCommand* create(Document& document, ETypingCommand command, const String& text = "", Options options = 0, TextGranularity granularity = CharacterGranularity)
-    {
-        return new TypingCommand(document, command, text, options, granularity, TextCompositionNone);
-    }
+  ETypingCommand CommandTypeOfOpenCommand() const { return command_type_; }
+  TextCompositionType CompositionType() const { return composition_type_; }
+  // |TypingCommand| may contain multiple |InsertTextCommand|, should return
+  // |textDataForInputEvent()| of the last one.
+  String TextDataForInputEvent() const final;
 
-    static TypingCommand* create(Document& document, ETypingCommand command, const String& text, Options options, TextCompositionType compositionType)
-    {
-        return new TypingCommand(document, command, text, options, CharacterGranularity, compositionType);
-    }
+ private:
+  static TypingCommand* Create(
+      Document& document,
+      ETypingCommand command,
+      const String& text = "",
+      Options options = 0,
+      TextGranularity granularity = kCharacterGranularity) {
+    return new TypingCommand(document, command, text, options, granularity,
+                             kTextCompositionNone);
+  }
 
-    TypingCommand(Document&, ETypingCommand, const String& text, Options, TextGranularity, TextCompositionType);
+  static TypingCommand* Create(Document& document,
+                               ETypingCommand command,
+                               const String& text,
+                               Options options,
+                               TextCompositionType composition_type) {
+    return new TypingCommand(document, command, text, options,
+                             kCharacterGranularity, composition_type);
+  }
 
-    void setSmartDelete(bool smartDelete) { m_smartDelete = smartDelete; }
-    bool isOpenForMoreTyping() const { return m_openForMoreTyping; }
-    void closeTyping() { m_openForMoreTyping = false; }
+  TypingCommand(Document&,
+                ETypingCommand,
+                const String& text,
+                Options,
+                TextGranularity,
+                TextCompositionType);
 
-    static TypingCommand* lastTypingCommandIfStillOpenForTyping(LocalFrame*);
+  void SetSmartDelete(bool smart_delete) { smart_delete_ = smart_delete; }
+  bool IsOpenForMoreTyping() const { return open_for_more_typing_; }
+  void CloseTyping() { open_for_more_typing_ = false; }
 
-    void doApply(EditingState*) override;
-    InputEvent::InputType inputType() const override;
-    bool isTypingCommand() const override;
-    bool preservesTypingStyle() const override { return m_preservesTypingStyle; }
-    void setShouldRetainAutocorrectionIndicator(bool retain) override { m_shouldRetainAutocorrectionIndicator = retain; }
-    bool shouldStopCaretBlinking() const override { return true; }
-    void setShouldPreventSpellChecking(bool prevent) { m_shouldPreventSpellChecking = prevent; }
+  void DoApply(EditingState*) override;
+  InputEvent::InputType GetInputType() const override;
+  bool IsTypingCommand() const override;
+  bool PreservesTypingStyle() const override { return preserves_typing_style_; }
+  void SetShouldRetainAutocorrectionIndicator(bool retain) override {
+    should_retain_autocorrection_indicator_ = retain;
+  }
+  void SetShouldPreventSpellChecking(bool prevent) {
+    should_prevent_spell_checking_ = prevent;
+  }
 
-    static void updateSelectionIfDifferentFromCurrentSelection(TypingCommand*, LocalFrame*);
+  static void UpdateSelectionIfDifferentFromCurrentSelection(TypingCommand*,
+                                                             LocalFrame*);
 
-    void updatePreservesTypingStyle(ETypingCommand);
-    void markMisspellingsAfterTyping(ETypingCommand);
-    void typingAddedToOpenCommand(ETypingCommand);
-    bool makeEditableRootEmpty(EditingState*);
+  void UpdatePreservesTypingStyle(ETypingCommand);
+  void TypingAddedToOpenCommand(ETypingCommand);
+  bool MakeEditableRootEmpty(EditingState*);
 
-    void updateCommandTypeOfOpenCommand(ETypingCommand typingCommand) { m_commandType = typingCommand; }
-    ETypingCommand commandTypeOfOpenCommand() const { return m_commandType; }
+  void UpdateCommandTypeOfOpenCommand(ETypingCommand typing_command) {
+    command_type_ = typing_command;
+  }
 
-    ETypingCommand m_commandType;
-    String m_textToInsert;
-    bool m_openForMoreTyping;
-    bool m_selectInsertedText;
-    bool m_smartDelete;
-    TextGranularity m_granularity;
-    TextCompositionType m_compositionType;
-    bool m_killRing;
-    bool m_preservesTypingStyle;
+  bool IsIncrementalInsertion() const { return is_incremental_insertion_; }
 
-    // Undoing a series of backward deletes will restore a selection around all of the
-    // characters that were deleted, but only if the typing command being undone
-    // was opened with a backward delete.
-    bool m_openedByBackwardDelete;
+  void DeleteSelectionIfRange(const VisibleSelection&,
+                              EditingState*,
+                              bool smart_delete = false,
+                              bool merge_blocks_after_delete = true,
+                              bool expand_for_special_elements = true,
+                              bool sanitize_markup = true);
 
-    bool m_shouldRetainAutocorrectionIndicator;
-    bool m_shouldPreventSpellChecking;
+  ETypingCommand command_type_;
+  String text_to_insert_;
+  bool open_for_more_typing_;
+  bool select_inserted_text_;
+  bool smart_delete_;
+  TextGranularity granularity_;
+  TextCompositionType composition_type_;
+  bool kill_ring_;
+  bool preserves_typing_style_;
+
+  // Undoing a series of backward deletes will restore a selection around all of
+  // the characters that were deleted, but only if the typing command being
+  // undone was opened with a backward delete.
+  bool opened_by_backward_delete_;
+
+  bool should_retain_autocorrection_indicator_;
+  bool should_prevent_spell_checking_;
+
+  bool is_incremental_insertion_;
+  size_t selection_start_;
+  InputEvent::InputType input_type_;
 };
 
-DEFINE_TYPE_CASTS(TypingCommand, CompositeEditCommand, command, command->isTypingCommand(), command.isTypingCommand());
+DEFINE_TYPE_CASTS(TypingCommand,
+                  CompositeEditCommand,
+                  command,
+                  command->IsTypingCommand(),
+                  command.IsTypingCommand());
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TypingCommand_h
+#endif  // TypingCommand_h

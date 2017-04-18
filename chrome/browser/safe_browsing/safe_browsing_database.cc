@@ -16,17 +16,17 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/process/process_handle.h"
 #include "base/process/process_metrics.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/safe_browsing/safe_browsing_store_file.h"
 #include "components/safe_browsing_db/prefix_set.h"
+#include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "crypto/sha2.h"
 #include "net/base/ip_address.h"
@@ -289,7 +289,7 @@ class SafeBrowsingDatabaseFactoryImpl : public SafeBrowsingDatabaseFactory {
       bool enable_ip_blacklist,
       bool enable_unwanted_software_list,
       bool enable_module_whitelist) override {
-    return base::WrapUnique(new SafeBrowsingDatabaseNew(
+    return base::MakeUnique<SafeBrowsingDatabaseNew>(
         db_task_runner, CreateStore(true, db_task_runner),  // browse_store
         CreateStore(enable_download_protection, db_task_runner),
         CreateStore(enable_client_side_whitelist, db_task_runner),
@@ -298,7 +298,7 @@ class SafeBrowsingDatabaseFactoryImpl : public SafeBrowsingDatabaseFactory {
         CreateStore(enable_ip_blacklist, db_task_runner),
         CreateStore(enable_unwanted_software_list, db_task_runner),
         CreateStore(enable_module_whitelist, db_task_runner),
-        CreateStore(true, db_task_runner)));  // resource_blacklist_store
+        CreateStore(true, db_task_runner));  // resource_blacklist_store
   }
 
   SafeBrowsingDatabaseFactoryImpl() {}
@@ -958,12 +958,9 @@ bool SafeBrowsingDatabaseNew::ContainsExtensionPrefixes(
 
 bool SafeBrowsingDatabaseNew::ContainsMalwareIP(const std::string& ip_address) {
   net::IPAddress address;
-  if (!address.AssignFromIPLiteral(ip_address))
+  if (!V4ProtocolManagerUtil::GetIPV6AddressFromString(ip_address, &address)) {
     return false;
-  if (address.IsIPv4())
-    address = net::ConvertIPv4ToIPv4MappedIPv6(address);
-  if (!address.IsIPv6())
-    return false;  // better safe than sorry.
+  }
 
   std::unique_ptr<ReadTransaction> txn = state_manager_.BeginReadTransaction();
   const IPBlacklist* ip_blacklist = txn->ip_blacklist();

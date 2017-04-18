@@ -10,7 +10,7 @@
 #include "base/task_scheduler/scheduler_worker.h"
 #include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/task_tracker.h"
-#include "base/task_scheduler/test_utils.h"
+#include "base/test/gtest_util.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -26,8 +26,11 @@ class MockSchedulerWorkerDelegate : public SchedulerWorker::Delegate {
   scoped_refptr<Sequence> GetWork(SchedulerWorker* worker) override {
     return nullptr;
   }
+  void DidRunTask() override {
+    ADD_FAILURE() << "Unexpected call to DidRunTask()";
+  }
   void ReEnqueueSequence(scoped_refptr<Sequence> sequence) override {
-    ADD_FAILURE() << "This delegate not expect to have sequences to reenqueue.";
+    ADD_FAILURE() << "Unexpected call to ReEnqueueSequence()";
   }
   TimeDelta GetSleepTimeout() override {
     return TimeDelta::Max();
@@ -35,6 +38,7 @@ class MockSchedulerWorkerDelegate : public SchedulerWorker::Delegate {
   bool CanDetach(SchedulerWorker* worker) override {
     return false;
   }
+  void OnDetach() override { ADD_FAILURE() << "Unexpected call to OnDetach()"; }
 };
 
 class TaskSchedulerWorkerStackTest : public testing::Test {
@@ -63,9 +67,9 @@ class TaskSchedulerWorkerStackTest : public testing::Test {
     worker_c_->JoinForTesting();
   }
 
-  std::unique_ptr<SchedulerWorker> worker_a_;
-  std::unique_ptr<SchedulerWorker> worker_b_;
-  std::unique_ptr<SchedulerWorker> worker_c_;
+  scoped_refptr<SchedulerWorker> worker_a_;
+  scoped_refptr<SchedulerWorker> worker_b_;
+  scoped_refptr<SchedulerWorker> worker_c_;
 
  private:
   TaskTracker task_tracker_;
@@ -248,7 +252,7 @@ TEST_F(TaskSchedulerWorkerStackTest, PushAfterRemove) {
 TEST_F(TaskSchedulerWorkerStackTest, PushTwice) {
   SchedulerWorkerStack stack;
   stack.Push(worker_a_.get());
-  EXPECT_DCHECK_DEATH({ stack.Push(worker_a_.get()); }, "");
+  EXPECT_DCHECK_DEATH({ stack.Push(worker_a_.get()); });
 }
 
 }  // namespace internal

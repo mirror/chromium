@@ -350,15 +350,21 @@ def main():
   assert os.path.exists(mini_installer_path), ('Could not find file %s' %
                                                mini_installer_path)
 
+  next_version_mini_installer_path = os.path.join(
+      args.build_dir, args.target, 'next_version_mini_installer.exe')
+  assert os.path.exists(next_version_mini_installer_path), (
+      'Could not find file %s' % next_version_mini_installer_path)
+
   suite = unittest.TestSuite()
 
-  variable_expander = VariableExpander(mini_installer_path)
+  variable_expander = VariableExpander(mini_installer_path,
+                                       next_version_mini_installer_path)
   config = ParseConfigFile(args.config, variable_expander)
 
   RunCleanCommand(args.force_clean, variable_expander)
   for test in config.tests:
     # If tests were specified via |tests|, their names are formatted like so:
-    test_name = '%s/%s/%s' % (InstallerTest.__module__,
+    test_name = '%s.%s.%s' % (InstallerTest.__module__,
                               InstallerTest.__name__,
                               test['name'])
     if not args.test or test_name in args.test:

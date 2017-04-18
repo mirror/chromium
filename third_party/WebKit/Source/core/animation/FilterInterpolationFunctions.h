@@ -17,14 +17,17 @@ class StyleResolverState;
 
 namespace FilterInterpolationFunctions {
 
-InterpolationValue maybeConvertCSSFilter(const CSSValue&);
-InterpolationValue maybeConvertFilter(const FilterOperation&, double zoom);
-std::unique_ptr<InterpolableValue> createNoneValue(const NonInterpolableValue&);
-bool filtersAreCompatible(const NonInterpolableValue&, const NonInterpolableValue&);
-FilterOperation* createFilter(const InterpolableValue&, const NonInterpolableValue&, const StyleResolverState&);
+InterpolationValue MaybeConvertCSSFilter(const CSSValue&);
+InterpolationValue MaybeConvertFilter(const FilterOperation&, double zoom);
+std::unique_ptr<InterpolableValue> CreateNoneValue(const NonInterpolableValue&);
+bool FiltersAreCompatible(const NonInterpolableValue&,
+                          const NonInterpolableValue&);
+FilterOperation* CreateFilter(const InterpolableValue&,
+                              const NonInterpolableValue&,
+                              const StyleResolverState&);
 
-} // namespace FilterInterpolationFunctions
+}  // namespace FilterInterpolationFunctions
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FilterInterpolationFunctions_h
+#endif  // FilterInterpolationFunctions_h

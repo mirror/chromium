@@ -12,17 +12,10 @@
 
 class GURL;
 
-namespace base {
-class FilePath;
-}
-
 namespace history {
 
-class HistoryBackend;
 class HistoryBackendClient;
-class HistoryDatabase;
 class HistoryService;
-class ThumbnailDatabase;
 
 // This class abstracts operations that depend on the embedder's environment,
 // e.g. Chrome.
@@ -42,7 +35,8 @@ class HistoryClient {
   virtual bool CanAddURL(const GURL& url) = 0;
 
   // Notifies the embedder that there was a problem reading the database.
-  virtual void NotifyProfileError(sql::InitStatus init_status) = 0;
+  virtual void NotifyProfileError(sql::InitStatus init_status,
+                                  const std::string& diagnostics) = 0;
 
   // Returns a new HistoryBackendClient instance.
   virtual std::unique_ptr<HistoryBackendClient> CreateBackendClient() = 0;

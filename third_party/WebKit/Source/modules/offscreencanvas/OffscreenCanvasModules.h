@@ -8,22 +8,25 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "modules/ModulesExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class CanvasContextCreationAttributes;
 class OffscreenCanvas;
-class OffscreenCanvasRenderingContext2D;
 
 class MODULES_EXPORT OffscreenCanvasModules {
-    STATIC_ONLY(OffscreenCanvasModules)
-public:
-    static void getContext(ScriptState*, OffscreenCanvas&, const String&, const CanvasContextCreationAttributes&, ExceptionState&, OffscreenRenderingContext&);
+  STATIC_ONLY(OffscreenCanvasModules)
+ public:
+  static void getContext(ScriptState*,
+                         OffscreenCanvas&,
+                         const String&,
+                         const CanvasContextCreationAttributes&,
+                         ExceptionState&,
+                         OffscreenRenderingContext&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // OffscreenCanvasModules_h
-
+#endif  // OffscreenCanvasModules_h

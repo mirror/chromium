@@ -4,80 +4,123 @@
 
 #include "modules/vr/VRController.h"
 
+#include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMException.h"
+#include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
+#include "modules/vr/NavigatorVR.h"
 #include "modules/vr/VRGetDevicesCallback.h"
-#include "platform/RuntimeEnabledFeatures.h"
-#include "platform/mojo/MojoHelper.h"
-#include "public/platform/ServiceRegistry.h"
+#include "public/platform/InterfaceProvider.h"
+
+#include "platform/wtf/Assertions.h"
 
 namespace blink {
 
-VRController::~VRController()
-{
+VRController::VRController(NavigatorVR* navigator_vr)
+    : ContextLifecycleObserver(navigator_vr->GetDocument()),
+      navigator_vr_(navigator_vr),
+      display_synced_(false),
+      binding_(this) {
+  navigator_vr->GetDocument()->GetFrame()->GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&service_));
+  service_.set_connection_error_handler(ConvertToBaseCallback(
+      WTF::Bind(&VRController::Dispose, WrapWeakPersistent(this))));
+  service_->SetClient(
+      binding_.CreateInterfacePtrAndBind(),
+      ConvertToBaseCallback(
+          WTF::Bind(&VRController::OnDisplaysSynced, WrapPersistent(this))));
 }
 
-void VRController::provideTo(LocalFrame& frame, ServiceRegistry* registry)
-{
-    ASSERT(RuntimeEnabledFeatures::webVREnabled());
-    Supplement<LocalFrame>::provideTo(frame, supplementName(), registry ? new VRController(frame, registry) : nullptr);
+VRController::~VRController() {}
+
+void VRController::GetDisplays(ScriptPromiseResolver* resolver) {
+  // If we've previously synced the VRDisplays or no longer have a valid service
+  // connection just return the current list. In the case of the service being
+  // disconnected this will be an empty array.
+  if (!service_ || display_synced_) {
+    resolver->Resolve(displays_);
+    return;
+  }
+
+  // Otherwise we're still waiting for the full list of displays to be populated
+  // so queue up the promise for resolution when onDisplaysSynced is called.
+  pending_get_devices_callbacks_.push_back(
+      WTF::MakeUnique<VRGetDevicesCallback>(resolver));
 }
 
-VRController* VRController::from(LocalFrame& frame)
-{
-    return static_cast<VRController*>(Supplement<LocalFrame>::from(frame, supplementName()));
+void VRController::SetListeningForActivate(bool listening) {
+  if (service_)
+    service_->SetListeningForActivate(listening);
 }
 
-VRController::VRController(LocalFrame& frame, ServiceRegistry* registry)
-{
-    ASSERT(!m_service.is_bound());
-    registry->connectToRemoteService(mojo::GetProxy(&m_service));
+// Each time a new VRDisplay is connected we'll recieve a VRDisplayPtr for it
+// here. Upon calling SetClient in the constructor we should receive one call
+// for each VRDisplay that was already connected at the time.
+void VRController::OnDisplayConnected(
+    device::mojom::blink::VRDisplayPtr display,
+    device::mojom::blink::VRDisplayClientRequest request,
+    device::mojom::blink::VRDisplayInfoPtr display_info) {
+  VRDisplay* vr_display =
+      new VRDisplay(navigator_vr_, std::move(display), std::move(request));
+  vr_display->Update(display_info);
+  vr_display->OnConnected();
+  vr_display->FocusChanged();
+  displays_.push_back(vr_display);
+
+  if (displays_.size() == number_of_synced_displays_) {
+    display_synced_ = true;
+    OnGetDisplays();
+  }
 }
 
-const char* VRController::supplementName()
-{
-    return "VRController";
+void VRController::FocusChanged() {
+  for (const auto& display : displays_)
+    display->FocusChanged();
 }
 
-void VRController::getDisplays(std::unique_ptr<VRGetDevicesCallback> callback)
-{
-    if (!m_service) {
-        callback->onError();
-        return;
-    }
-
-    m_pendingGetDevicesCallbacks.append(std::move(callback));
-    m_service->GetDisplays(convertToBaseCallback(WTF::bind(&VRController::onGetDisplays, wrapPersistent(this))));
+// Called when the VRService has called OnDisplayConnected for all active
+// VRDisplays.
+void VRController::OnDisplaysSynced(unsigned number_of_displays) {
+  number_of_synced_displays_ = number_of_displays;
+  if (number_of_synced_displays_ == displays_.size()) {
+    display_synced_ = true;
+    OnGetDisplays();
+  }
 }
 
-device::blink::VRPosePtr VRController::getPose(unsigned index)
-{
-    if (!m_service)
-        return nullptr;
-
-    device::blink::VRPosePtr pose;
-    m_service->GetPose(index, &pose);
-    return pose;
+void VRController::OnGetDisplays() {
+  while (!pending_get_devices_callbacks_.IsEmpty()) {
+    std::unique_ptr<VRGetDevicesCallback> callback =
+        pending_get_devices_callbacks_.TakeFirst();
+    callback->OnSuccess(displays_);
+  }
 }
 
-void VRController::resetPose(unsigned index)
-{
-    if (!m_service)
-        return;
-    m_service->ResetPose(index);
+void VRController::ContextDestroyed(ExecutionContext*) {
+  Dispose();
 }
 
-void VRController::onGetDisplays(mojo::WTFArray<device::blink::VRDisplayPtr> displays)
-{
-    std::unique_ptr<VRGetDevicesCallback> callback = m_pendingGetDevicesCallbacks.takeFirst();
-    if (!callback)
-        return;
+void VRController::Dispose() {
+  // If the document context was destroyed, shut down the client connection
+  // and never call the mojo service again.
+  service_.reset();
+  binding_.Close();
 
-    callback->onSuccess(std::move(displays));
+  // Shutdown all displays' message pipe
+  for (const auto& display : displays_)
+    display->Dispose();
+
+  displays_.Clear();
+
+  // Ensure that any outstanding getDisplays promises are resolved.
+  OnGetDisplays();
 }
 
-DEFINE_TRACE(VRController)
-{
-    Supplement<LocalFrame>::trace(visitor);
+DEFINE_TRACE(VRController) {
+  visitor->Trace(navigator_vr_);
+  visitor->Trace(displays_);
+
+  ContextLifecycleObserver::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

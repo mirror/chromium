@@ -26,6 +26,7 @@
 </if>  <!-- chromeos -->
 
     <div id="sync-status" class="settings-row" hidden>
+      <span id="account-info" hidden></span>
       <span id="sync-status-text"></span>
       <a is="action-link" id="sync-action-link"></a>
     </div>
@@ -44,6 +45,9 @@
             pref="settings.enable_screen_lock"></span>
        </span>
       </label>
+      <a is="action-link" id="manage-screenlock"
+        i18n-content="manageScreenlock" hidden>
+      </a>
     </div>
   </div>
 </if>  <!-- chromeos -->

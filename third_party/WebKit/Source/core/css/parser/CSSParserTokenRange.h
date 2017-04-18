@@ -7,80 +7,73 @@
 
 #include "core/CoreExport.h"
 #include "core/css/parser/CSSParserToken.h"
-#include "wtf/Allocator.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
-CORE_EXPORT extern const CSSParserToken& staticEOFToken;
+CORE_EXPORT extern const CSSParserToken& g_static_eof_token;
 
-// A CSSParserTokenRange is an iterator over a subrange of a vector of CSSParserTokens.
-// Accessing outside of the range will return an endless stream of EOF tokens.
-// This class refers to half-open intervals [first, last).
+// A CSSParserTokenRange is an iterator over a subrange of a vector of
+// CSSParserTokens. Accessing outside of the range will return an endless stream
+// of EOF tokens. This class refers to half-open intervals [first, last).
 class CORE_EXPORT CSSParserTokenRange {
-    DISALLOW_NEW();
-public:
-    template<size_t inlineBuffer>
-    CSSParserTokenRange(const Vector<CSSParserToken, inlineBuffer>& vector)
-    : m_first(vector.begin())
-    , m_last(vector.end())
-    {
-    }
+  DISALLOW_NEW();
 
-    // This should be called on a range with tokens returned by that range.
-    CSSParserTokenRange makeSubRange(const CSSParserToken* first, const CSSParserToken* last) const;
+ public:
+  template <size_t inlineBuffer>
+  CSSParserTokenRange(const Vector<CSSParserToken, inlineBuffer>& vector)
+      : first_(vector.begin()), last_(vector.end()) {}
 
-    bool atEnd() const { return m_first == m_last; }
-    const CSSParserToken* end() const { return m_last; }
+  // This should be called on a range with tokens returned by that range.
+  CSSParserTokenRange MakeSubRange(const CSSParserToken* first,
+                                   const CSSParserToken* last) const;
 
-    const CSSParserToken& peek(unsigned offset = 0) const
-    {
-        if (m_first + offset >= m_last)
-            return staticEOFToken;
-        return *(m_first + offset);
-    }
+  bool AtEnd() const { return first_ == last_; }
+  const CSSParserToken* end() const { return last_; }
 
-    const CSSParserToken& consume()
-    {
-        if (m_first == m_last)
-            return staticEOFToken;
-        return *m_first++;
-    }
+  const CSSParserToken& Peek(unsigned offset = 0) const {
+    if (first_ + offset >= last_)
+      return g_static_eof_token;
+    return *(first_ + offset);
+  }
 
-    const CSSParserToken& consumeIncludingWhitespace()
-    {
-        const CSSParserToken& result = consume();
-        consumeWhitespace();
-        return result;
-    }
+  const CSSParserToken& Consume() {
+    if (first_ == last_)
+      return g_static_eof_token;
+    return *first_++;
+  }
 
-    // The returned range doesn't include the brackets
-    CSSParserTokenRange consumeBlock();
+  const CSSParserToken& ConsumeIncludingWhitespace() {
+    const CSSParserToken& result = Consume();
+    ConsumeWhitespace();
+    return result;
+  }
 
-    void consumeComponentValue();
+  // The returned range doesn't include the brackets
+  CSSParserTokenRange ConsumeBlock();
 
-    void consumeWhitespace()
-    {
-        while (peek().type() == WhitespaceToken)
-            ++m_first;
-    }
+  void ConsumeComponentValue();
 
-    String serialize() const;
+  void ConsumeWhitespace() {
+    while (Peek().GetType() == kWhitespaceToken)
+      ++first_;
+  }
 
-    const CSSParserToken* begin() const { return m_first; }
+  String Serialize() const;
 
-    static void initStaticEOFToken();
+  const CSSParserToken* begin() const { return first_; }
 
-private:
-    CSSParserTokenRange(const CSSParserToken* first, const CSSParserToken* last)
-    : m_first(first)
-    , m_last(last)
-    { }
+  static void InitStaticEOFToken();
 
-    const CSSParserToken* m_first;
-    const CSSParserToken* m_last;
+ private:
+  CSSParserTokenRange(const CSSParserToken* first, const CSSParserToken* last)
+      : first_(first), last_(last) {}
+
+  const CSSParserToken* first_;
+  const CSSParserToken* last_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // CSSParserTokenRange_h
+#endif  // CSSParserTokenRange_h

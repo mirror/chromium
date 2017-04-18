@@ -5,6 +5,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -14,6 +15,7 @@
 #include "mojo/public/cpp/bindings/tests/struct_with_traits_impl.h"
 #include "mojo/public/cpp/bindings/tests/struct_with_traits_impl_traits.h"
 #include "mojo/public/cpp/bindings/tests/variant_test_util.h"
+#include "mojo/public/cpp/system/wait.h"
 #include "mojo/public/interfaces/bindings/tests/struct_with_traits.mojom.h"
 #include "mojo/public/interfaces/bindings/tests/test_native_types.mojom-blink.h"
 #include "mojo/public/interfaces/bindings/tests/test_native_types.mojom.h"
@@ -70,6 +72,11 @@ class ChromiumRectServiceImpl : public RectService {
     callback.Run(largest_rect_);
   }
 
+  void PassSharedRect(const SharedRect& r,
+                      const PassSharedRectCallback& callback) override {
+    callback.Run(r);
+  }
+
  private:
   RectChromium largest_rect_;
 };
@@ -91,6 +98,11 @@ class BlinkRectServiceImpl : public blink::RectService {
 
   void GetLargestRect(const GetLargestRectCallback& callback) override {
     callback.Run(largest_rect_);
+  }
+
+  void PassSharedRect(const SharedRect& r,
+                      const PassSharedRectCallback& callback) override {
+    callback.Run(r);
   }
 
  private:
@@ -146,15 +158,34 @@ class StructTraitsTest : public testing::Test,
     callback.Run(std::move(s));
   }
 
+  void EchoNullableMoveOnlyStructWithTraits(
+      base::Optional<MoveOnlyStructWithTraitsImpl> s,
+      const EchoNullableMoveOnlyStructWithTraitsCallback& callback) override {
+    callback.Run(std::move(s));
+  }
+
   void EchoEnumWithTraits(EnumWithTraitsImpl e,
                           const EchoEnumWithTraitsCallback& callback) override {
     callback.Run(e);
   }
 
-  void EchoStructWithTraitsForUniquePtrTest(
+  void EchoStructWithTraitsForUniquePtr(
       std::unique_ptr<int> e,
-      const EchoStructWithTraitsForUniquePtrTestCallback& callback) override {
+      const EchoStructWithTraitsForUniquePtrCallback& callback) override {
     callback.Run(std::move(e));
+  }
+
+  void EchoNullableStructWithTraitsForUniquePtr(
+      std::unique_ptr<int> e,
+      const EchoNullableStructWithTraitsForUniquePtrCallback& callback)
+      override {
+    callback.Run(std::move(e));
+  }
+
+  void EchoUnionWithTraits(
+      std::unique_ptr<test::UnionWithTraitsBase> u,
+      const EchoUnionWithTraitsCallback& callback) override {
+    callback.Run(std::move(u));
   }
 
   base::MessageLoop loop_;
@@ -172,7 +203,7 @@ class StructTraitsTest : public testing::Test,
 
 TEST_F(StructTraitsTest, ChromiumProxyToChromiumService) {
   RectServicePtr chromium_proxy;
-  BindToChromiumService(GetProxy(&chromium_proxy));
+  BindToChromiumService(MakeRequest(&chromium_proxy));
   {
     base::RunLoop loop;
     chromium_proxy->AddRect(RectChromium(1, 1, 4, 5));
@@ -181,17 +212,31 @@ TEST_F(StructTraitsTest, ChromiumProxyToChromiumService) {
         ExpectResult(RectChromium(1, 1, 4, 5), loop.QuitClosure()));
     loop.Run();
   }
+  {
+    base::RunLoop loop;
+    chromium_proxy->PassSharedRect(
+        {1, 2, 3, 4},
+        ExpectResult(SharedRect({1, 2, 3, 4}), loop.QuitClosure()));
+    loop.Run();
+  }
 }
 
 TEST_F(StructTraitsTest, ChromiumToBlinkService) {
   RectServicePtr chromium_proxy;
-  BindToBlinkService(GetProxy(&chromium_proxy));
+  BindToBlinkService(MakeRequest(&chromium_proxy));
   {
     base::RunLoop loop;
     chromium_proxy->AddRect(RectChromium(1, 1, 4, 5));
     chromium_proxy->AddRect(RectChromium(2, 2, 5, 5));
     chromium_proxy->GetLargestRect(
         ExpectResult(RectChromium(2, 2, 5, 5), loop.QuitClosure()));
+    loop.Run();
+  }
+  {
+    base::RunLoop loop;
+    chromium_proxy->PassSharedRect(
+        {1, 2, 3, 4},
+        ExpectResult(SharedRect({1, 2, 3, 4}), loop.QuitClosure()));
     loop.Run();
   }
   // The Blink service should drop our connection because RectBlink's
@@ -208,7 +253,7 @@ TEST_F(StructTraitsTest, ChromiumToBlinkService) {
 
 TEST_F(StructTraitsTest, BlinkProxyToBlinkService) {
   blink::RectServicePtr blink_proxy;
-  BindToBlinkService(GetProxy(&blink_proxy));
+  BindToBlinkService(MakeRequest(&blink_proxy));
   {
     base::RunLoop loop;
     blink_proxy->AddRect(RectBlink(1, 1, 4, 5));
@@ -217,17 +262,31 @@ TEST_F(StructTraitsTest, BlinkProxyToBlinkService) {
         ExpectResult(RectBlink(10, 10, 20, 20), loop.QuitClosure()));
     loop.Run();
   }
+  {
+    base::RunLoop loop;
+    blink_proxy->PassSharedRect(
+        {4, 3, 2, 1},
+        ExpectResult(SharedRect({4, 3, 2, 1}), loop.QuitClosure()));
+    loop.Run();
+  }
 }
 
 TEST_F(StructTraitsTest, BlinkProxyToChromiumService) {
   blink::RectServicePtr blink_proxy;
-  BindToChromiumService(GetProxy(&blink_proxy));
+  BindToChromiumService(MakeRequest(&blink_proxy));
   {
     base::RunLoop loop;
     blink_proxy->AddRect(RectBlink(1, 1, 4, 5));
     blink_proxy->AddRect(RectBlink(10, 10, 2, 2));
     blink_proxy->GetLargestRect(
         ExpectResult(RectBlink(1, 1, 4, 5), loop.QuitClosure()));
+    loop.Run();
+  }
+  {
+    base::RunLoop loop;
+    blink_proxy->PassSharedRect(
+        {4, 3, 2, 1},
+        ExpectResult(SharedRect({4, 3, 2, 1}), loop.QuitClosure()));
     loop.Run();
   }
 }
@@ -255,6 +314,8 @@ TEST_F(StructTraitsTest, EchoStructWithTraits) {
   input.set_uint64(42);
   input.set_string("hello world!");
   input.get_mutable_string_array().assign({"hello", "world!"});
+  input.get_mutable_string_set().insert("hello");
+  input.get_mutable_string_set().insert("world!");
   input.get_mutable_struct().value = 42;
   input.get_mutable_struct_array().resize(2);
   input.get_mutable_struct_array()[0].value = 1;
@@ -331,8 +392,7 @@ TEST_F(StructTraitsTest, EchoMoveOnlyStructWithTraits) {
             WriteMessageRaw(mp.handle1.get(), kHello, kHelloSize, nullptr, 0,
                             MOJO_WRITE_MESSAGE_FLAG_NONE));
 
-  EXPECT_EQ(MOJO_RESULT_OK, Wait(received.get(), MOJO_HANDLE_SIGNAL_READABLE,
-                                 MOJO_DEADLINE_INDEFINITE, nullptr));
+  EXPECT_EQ(MOJO_RESULT_OK, Wait(received.get(), MOJO_HANDLE_SIGNAL_READABLE));
 
   char buffer[10] = {0};
   uint32_t buffer_size = static_cast<uint32_t>(sizeof(buffer));
@@ -341,6 +401,27 @@ TEST_F(StructTraitsTest, EchoMoveOnlyStructWithTraits) {
                            nullptr, MOJO_READ_MESSAGE_FLAG_NONE));
   EXPECT_EQ(kHelloSize, buffer_size);
   EXPECT_STREQ(kHello, buffer);
+}
+
+void CaptureNullableMoveOnlyStructWithTraitsImpl(
+    base::Optional<MoveOnlyStructWithTraitsImpl>* storage,
+    const base::Closure& closure,
+    base::Optional<MoveOnlyStructWithTraitsImpl> passed) {
+  *storage = std::move(passed);
+  closure.Run();
+}
+
+TEST_F(StructTraitsTest, EchoNullableMoveOnlyStructWithTraits) {
+  base::RunLoop loop;
+  TraitsTestServicePtr proxy = GetTraitsTestProxy();
+
+  base::Optional<MoveOnlyStructWithTraitsImpl> received;
+  proxy->EchoNullableMoveOnlyStructWithTraits(
+      base::nullopt, base::Bind(&CaptureNullableMoveOnlyStructWithTraitsImpl,
+                                &received, loop.QuitClosure()));
+  loop.Run();
+
+  EXPECT_FALSE(received);
 }
 
 void ExpectEnumWithTraits(EnumWithTraitsImpl expected_value,
@@ -368,7 +449,9 @@ TEST_F(StructTraitsTest, SerializeStructWithTraits) {
   input.set_uint32(7);
   input.set_uint64(42);
   input.set_string("hello world!");
-  input.get_mutable_string_array().assign({"hello", "world!"});
+  input.get_mutable_string_array().assign({ "hello", "world!" });
+  input.get_mutable_string_set().insert("hello");
+  input.get_mutable_string_set().insert("world!");
   input.get_mutable_struct().value = 42;
   input.get_mutable_struct_array().resize(2);
   input.get_mutable_struct_array()[0].value = 1;
@@ -376,7 +459,7 @@ TEST_F(StructTraitsTest, SerializeStructWithTraits) {
   input.get_mutable_struct_map()["hello"] = NestedStructWithTraitsImpl(1024);
   input.get_mutable_struct_map()["world"] = NestedStructWithTraitsImpl(2048);
 
-  mojo::Array<uint8_t> data = StructWithTraits::Serialize(&input);
+  auto data = StructWithTraits::Serialize(&input);
   StructWithTraitsImpl output;
   ASSERT_TRUE(StructWithTraits::Deserialize(std::move(data), &output));
 
@@ -386,26 +469,84 @@ TEST_F(StructTraitsTest, SerializeStructWithTraits) {
   EXPECT_EQ(input.get_uint64(), output.get_uint64());
   EXPECT_EQ(input.get_string(), output.get_string());
   EXPECT_EQ(input.get_string_array(), output.get_string_array());
+  EXPECT_EQ(input.get_string_set(), output.get_string_set());
   EXPECT_EQ(input.get_struct(), output.get_struct());
   EXPECT_EQ(input.get_struct_array(), output.get_struct_array());
   EXPECT_EQ(input.get_struct_map(), output.get_struct_map());
 }
 
-void ExpectUniquePtr(int expected,
+void ExpectUniquePtr(std::unique_ptr<int> expected,
                      const base::Closure& closure,
                      std::unique_ptr<int> value) {
-  EXPECT_EQ(expected, *value);
+  ASSERT_EQ(!expected, !value);
+  if (expected)
+    EXPECT_EQ(*expected, *value);
   closure.Run();
 }
 
 TEST_F(StructTraitsTest, TypemapUniquePtr) {
-  base::RunLoop loop;
   TraitsTestServicePtr proxy = GetTraitsTestProxy();
 
-  proxy->EchoStructWithTraitsForUniquePtrTest(
-      base::MakeUnique<int>(12345),
-      base::Bind(&ExpectUniquePtr, 12345, loop.QuitClosure()));
-  loop.Run();
+  {
+    base::RunLoop loop;
+    proxy->EchoStructWithTraitsForUniquePtr(
+        base::MakeUnique<int>(12345),
+        base::Bind(&ExpectUniquePtr, base::Passed(base::MakeUnique<int>(12345)),
+                   loop.QuitClosure()));
+    loop.Run();
+  }
+  {
+    base::RunLoop loop;
+    proxy->EchoNullableStructWithTraitsForUniquePtr(
+        nullptr, base::Bind(&ExpectUniquePtr, nullptr, loop.QuitClosure()));
+    loop.Run();
+  }
+}
+
+TEST_F(StructTraitsTest, EchoUnionWithTraits) {
+  TraitsTestServicePtr proxy = GetTraitsTestProxy();
+
+  {
+    std::unique_ptr<test::UnionWithTraitsBase> input(
+        new test::UnionWithTraitsInt32(1234));
+    base::RunLoop loop;
+    proxy->EchoUnionWithTraits(
+        std::move(input),
+        base::Bind(
+            [](const base::Closure& quit_closure,
+               std::unique_ptr<test::UnionWithTraitsBase> passed) {
+              ASSERT_EQ(test::UnionWithTraitsBase::Type::INT32, passed->type());
+              EXPECT_EQ(1234,
+                        static_cast<test::UnionWithTraitsInt32*>(passed.get())
+                            ->value());
+              quit_closure.Run();
+
+            },
+            loop.QuitClosure()));
+    loop.Run();
+  }
+
+  {
+    std::unique_ptr<test::UnionWithTraitsBase> input(
+        new test::UnionWithTraitsStruct(4321));
+    base::RunLoop loop;
+    proxy->EchoUnionWithTraits(
+        std::move(input),
+        base::Bind(
+            [](const base::Closure& quit_closure,
+               std::unique_ptr<test::UnionWithTraitsBase> passed) {
+              ASSERT_EQ(test::UnionWithTraitsBase::Type::STRUCT,
+                        passed->type());
+              EXPECT_EQ(4321,
+                        static_cast<test::UnionWithTraitsStruct*>(passed.get())
+                            ->get_struct()
+                            .value);
+              quit_closure.Run();
+
+            },
+            loop.QuitClosure()));
+    loop.Run();
+  }
 }
 
 }  // namespace test

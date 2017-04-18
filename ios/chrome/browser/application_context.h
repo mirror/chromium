@@ -41,12 +41,16 @@ namespace network_time {
 class NetworkTimeTracker;
 }
 
-namespace rappor {
-class RapporService;
+namespace physical_web {
+class PhysicalWebDataSource;
 }
 
-namespace safe_browsing {
-class SafeBrowsingService;
+namespace rappor {
+class RapporServiceImpl;
+}
+
+namespace ukm {
+class UkmService;
 }
 
 namespace variations {
@@ -99,11 +103,14 @@ class ApplicationContext {
   // Gets the MetricsService used by this application.
   virtual metrics::MetricsService* GetMetricsService() = 0;
 
+  // Gets the UkmService used by this application.
+  virtual ukm::UkmService* GetUkmService() = 0;
+
   // Gets the VariationsService used by this application.
   virtual variations::VariationsService* GetVariationsService() = 0;
 
-  // Gets the RapporService. May return null.
-  virtual rappor::RapporService* GetRapporService() = 0;
+  // Gets the RapporServiceImpl. May return null.
+  virtual rappor::RapporServiceImpl* GetRapporServiceImpl() = 0;
 
   // Gets the ChromeNetLog.
   virtual net_log::ChromeNetLog* GetNetLog() = 0;
@@ -123,6 +130,9 @@ class ApplicationContext {
 
   // Gets the CRLSetFetcher.
   virtual CRLSetFetcher* GetCRLSetFetcher() = 0;
+
+  // Gets the PhysicalWebDataSource.
+  virtual physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() = 0;
 
  protected:
   // Sets the global ApplicationContext instance.

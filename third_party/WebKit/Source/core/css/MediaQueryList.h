@@ -23,10 +23,10 @@
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "core/CoreExport.h"
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/events/EventTarget.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -35,60 +35,69 @@ class MediaQueryListListener;
 class MediaQueryMatcher;
 class MediaQuerySet;
 
-// MediaQueryList interface is specified at http://dev.w3.org/csswg/cssom-view/#the-mediaquerylist-interface
-// The objects of this class are returned by window.matchMedia. They may be used to
-// retrieve the current value of the given media query and to add/remove listeners that
-// will be called whenever the value of the query changes.
+// MediaQueryList interface is specified at
+// http://dev.w3.org/csswg/cssom-view/#the-mediaquerylist-interface
+// The objects of this class are returned by window.matchMedia. They may be used
+// to retrieve the current value of the given media query and to add/remove
+// listeners that will be called whenever the value of the query changes.
 
-class CORE_EXPORT MediaQueryList final : public EventTargetWithInlineData, public ActiveScriptWrappable, public ActiveDOMObject {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(MediaQueryList);
-    WTF_MAKE_NONCOPYABLE(MediaQueryList);
-public:
-    static MediaQueryList* create(ExecutionContext*, MediaQueryMatcher*, MediaQuerySet*);
-    ~MediaQueryList() override;
+class CORE_EXPORT MediaQueryList final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappable<MediaQueryList>,
+      public ContextLifecycleObserver {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(MediaQueryList);
+  WTF_MAKE_NONCOPYABLE(MediaQueryList);
 
-    String media() const;
-    bool matches();
+ public:
+  static MediaQueryList* Create(ExecutionContext*,
+                                MediaQueryMatcher*,
+                                MediaQuerySet*);
+  ~MediaQueryList() override;
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
+  String media() const;
+  bool matches();
 
-    // These two functions are provided for compatibility with JS code
-    // written before the change listener became a DOM event.
-    void addDeprecatedListener(EventListener*);
-    void removeDeprecatedListener(EventListener*);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(change);
 
-    // C++ code can use these functions to listen to changes instead of having to use DOM event listeners.
-    void addListener(MediaQueryListListener*);
-    void removeListener(MediaQueryListListener*);
+  // These two functions are provided for compatibility with JS code
+  // written before the change listener became a DOM event.
+  void addDeprecatedListener(EventListener*);
+  void removeDeprecatedListener(EventListener*);
 
-    // Will return true if a DOM event should be scheduled.
-    bool mediaFeaturesChanged(HeapVector<Member<MediaQueryListListener>>* listenersToNotify);
+  // C++ code can use these functions to listen to changes instead of having to
+  // use DOM event listeners.
+  void AddListener(MediaQueryListListener*);
+  void RemoveListener(MediaQueryListListener*);
 
-    DECLARE_VIRTUAL_TRACE();
+  // Will return true if a DOM event should be scheduled.
+  bool MediaFeaturesChanged(
+      HeapVector<Member<MediaQueryListListener>>* listeners_to_notify);
 
-    // From ActiveScriptWrappable
-    bool hasPendingActivity() const final;
+  DECLARE_VIRTUAL_TRACE();
 
-    // From ActiveDOMObject
-    void stop() override;
+  // From ScriptWrappable
+  bool HasPendingActivity() const final;
 
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  // From ContextLifecycleObserver
+  void ContextDestroyed(ExecutionContext*) override;
 
-private:
-    MediaQueryList(ExecutionContext*, MediaQueryMatcher*, MediaQuerySet*);
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    bool updateMatches();
+ private:
+  MediaQueryList(ExecutionContext*, MediaQueryMatcher*, MediaQuerySet*);
 
-    Member<MediaQueryMatcher> m_matcher;
-    Member<MediaQuerySet> m_media;
-    using ListenerList = HeapListHashSet<Member<MediaQueryListListener>>;
-    ListenerList m_listeners;
-    bool m_matchesDirty;
-    bool m_matches;
+  bool UpdateMatches();
+
+  Member<MediaQueryMatcher> matcher_;
+  Member<MediaQuerySet> media_;
+  using ListenerList = HeapListHashSet<Member<MediaQueryListListener>>;
+  ListenerList listeners_;
+  bool matches_dirty_;
+  bool matches_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // MediaQueryList_h
+#endif  // MediaQueryList_h

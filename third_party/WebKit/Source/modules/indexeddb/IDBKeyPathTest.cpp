@@ -28,99 +28,92 @@
 #include "bindings/core/v8/SerializedScriptValue.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "modules/indexeddb/IDBKey.h"
+#include "platform/wtf/Vector.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "wtf/Vector.h"
 
 namespace blink {
 namespace {
 
-void checkKeyPath(const String& keyPath, const Vector<String>& expected, int parserError)
-{
-    IDBKeyPath idbKeyPath(keyPath);
-    ASSERT_EQ(idbKeyPath.getType(), IDBKeyPath::StringType);
-    ASSERT_EQ(idbKeyPath.isValid(), (parserError == IDBKeyPathParseErrorNone));
+void CheckKeyPath(const String& key_path,
+                  const Vector<String>& expected,
+                  int parser_error) {
+  IDBKeyPath idb_key_path(key_path);
+  ASSERT_EQ(idb_key_path.GetType(), IDBKeyPath::kStringType);
+  ASSERT_EQ(idb_key_path.IsValid(),
+            (parser_error == kIDBKeyPathParseErrorNone));
 
-    IDBKeyPathParseError error;
-    Vector<String> keyPathElements;
-    IDBParseKeyPath(keyPath, keyPathElements, error);
-    ASSERT_EQ(parserError, error);
-    if (error != IDBKeyPathParseErrorNone)
-        return;
-    ASSERT_EQ(expected.size(), keyPathElements.size());
-    for (size_t i = 0; i < expected.size(); ++i)
-        ASSERT_TRUE(expected[i] == keyPathElements[i]) << i;
+  IDBKeyPathParseError error;
+  Vector<String> key_path_elements;
+  IDBParseKeyPath(key_path, key_path_elements, error);
+  ASSERT_EQ(parser_error, error);
+  if (error != kIDBKeyPathParseErrorNone)
+    return;
+  ASSERT_EQ(expected.size(), key_path_elements.size());
+  for (size_t i = 0; i < expected.size(); ++i)
+    ASSERT_TRUE(expected[i] == key_path_elements[i]) << i;
 }
 
-TEST(IDBKeyPathTest, ValidKeyPath0)
-{
-    Vector<String> expected;
-    String keyPath("");
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorNone);
+TEST(IDBKeyPathTest, ValidKeyPath0) {
+  Vector<String> expected;
+  String key_path("");
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorNone);
 }
 
-TEST(IDBKeyPathTest, ValidKeyPath1)
-{
-    Vector<String> expected;
-    String keyPath("foo");
-    expected.append(String("foo"));
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorNone);
+TEST(IDBKeyPathTest, ValidKeyPath1) {
+  Vector<String> expected;
+  String key_path("foo");
+  expected.push_back(String("foo"));
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorNone);
 }
 
-TEST(IDBKeyPathTest, ValidKeyPath2)
-{
-    Vector<String> expected;
-    String keyPath("foo.bar.baz");
-    expected.append(String("foo"));
-    expected.append(String("bar"));
-    expected.append(String("baz"));
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorNone);
+TEST(IDBKeyPathTest, ValidKeyPath2) {
+  Vector<String> expected;
+  String key_path("foo.bar.baz");
+  expected.push_back(String("foo"));
+  expected.push_back(String("bar"));
+  expected.push_back(String("baz"));
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorNone);
 }
 
-TEST(IDBKeyPathTest, InvalidKeyPath0)
-{
-    Vector<String> expected;
-    String keyPath(" ");
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorIdentifier);
+TEST(IDBKeyPathTest, InvalidKeyPath0) {
+  Vector<String> expected;
+  String key_path(" ");
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorIdentifier);
 }
 
-TEST(IDBKeyPathTest, InvalidKeyPath1)
-{
-    Vector<String> expected;
-    String keyPath("+foo.bar.baz");
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorIdentifier);
+TEST(IDBKeyPathTest, InvalidKeyPath1) {
+  Vector<String> expected;
+  String key_path("+foo.bar.baz");
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorIdentifier);
 }
 
-TEST(IDBKeyPathTest, InvalidKeyPath2)
-{
-    Vector<String> expected;
-    String keyPath("foo bar baz");
-    expected.append(String("foo"));
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorIdentifier);
+TEST(IDBKeyPathTest, InvalidKeyPath2) {
+  Vector<String> expected;
+  String key_path("foo bar baz");
+  expected.push_back(String("foo"));
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorIdentifier);
 }
 
-TEST(IDBKeyPathTest, InvalidKeyPath3)
-{
-    Vector<String> expected;
-    String keyPath("foo .bar .baz");
-    expected.append(String("foo"));
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorIdentifier);
+TEST(IDBKeyPathTest, InvalidKeyPath3) {
+  Vector<String> expected;
+  String key_path("foo .bar .baz");
+  expected.push_back(String("foo"));
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorIdentifier);
 }
 
-TEST(IDBKeyPathTest, InvalidKeyPath4)
-{
-    Vector<String> expected;
-    String keyPath("foo. bar. baz");
-    expected.append(String("foo"));
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorIdentifier);
+TEST(IDBKeyPathTest, InvalidKeyPath4) {
+  Vector<String> expected;
+  String key_path("foo. bar. baz");
+  expected.push_back(String("foo"));
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorIdentifier);
 }
 
-TEST(IDBKeyPathTest, InvalidKeyPath5)
-{
-    Vector<String> expected;
-    String keyPath("foo..bar..baz");
-    expected.append(String("foo"));
-    checkKeyPath(keyPath, expected, IDBKeyPathParseErrorIdentifier);
+TEST(IDBKeyPathTest, InvalidKeyPath5) {
+  Vector<String> expected;
+  String key_path("foo..bar..baz");
+  expected.push_back(String("foo"));
+  CheckKeyPath(key_path, expected, kIDBKeyPathParseErrorIdentifier);
 }
 
-} // namespace
-} // namespace blink
+}  // namespace
+}  // namespace blink

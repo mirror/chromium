@@ -30,33 +30,32 @@
 
 namespace blink {
 
-NodeIteratorBase::NodeIteratorBase(Node* rootNode, unsigned whatToShow, NodeFilter* nodeFilter)
-    : m_root(rootNode)
-    , m_whatToShow(whatToShow)
-    , m_filter(nodeFilter)
-{
+NodeIteratorBase::NodeIteratorBase(void* child_this,
+                                   Node* root_node,
+                                   unsigned what_to_show,
+                                   NodeFilter* node_filter)
+    : root_(root_node),
+      what_to_show_(what_to_show),
+      filter_(child_this, node_filter) {}
+
+unsigned NodeIteratorBase::AcceptNode(Node* node,
+                                      ExceptionState& exception_state) const {
+  // The bit twiddling here is done to map DOM node types, which are given as
+  // integers from 1 through 14, to whatToShow bit masks.
+  if (!(((1 << (node->getNodeType() - 1)) & what_to_show_)))
+    return NodeFilter::kFilterSkip;
+  if (!filter_)
+    return NodeFilter::kFilterAccept;
+  return filter_->acceptNode(node, exception_state);
 }
 
-unsigned NodeIteratorBase::acceptNode(Node* node, ExceptionState& exceptionState) const
-{
-    // The bit twiddling here is done to map DOM node types, which are given as integers from
-    // 1 through 14, to whatToShow bit masks.
-    if (!(((1 << (node->getNodeType() - 1)) & m_whatToShow)))
-        return NodeFilter::FILTER_SKIP;
-    if (!m_filter)
-        return NodeFilter::FILTER_ACCEPT;
-    return m_filter->acceptNode(node, exceptionState);
+DEFINE_TRACE(NodeIteratorBase) {
+  visitor->Trace(root_);
+  visitor->Trace(filter_);
 }
 
-DEFINE_TRACE(NodeIteratorBase)
-{
-    visitor->trace(m_root);
-    visitor->trace(m_filter);
+DEFINE_TRACE_WRAPPERS(NodeIteratorBase) {
+  visitor->TraceWrappers(filter_);
 }
 
-DEFINE_TRACE_WRAPPERS(NodeIteratorBase)
-{
-    visitor->traceWrappers(m_filter);
-}
-
-} // namespace blink
+}  // namespace blink

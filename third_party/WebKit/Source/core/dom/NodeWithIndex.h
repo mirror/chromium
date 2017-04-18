@@ -34,32 +34,29 @@ namespace blink {
 // For use when you want to get the index for a node repeatedly and
 // only want to walk the child list to figure out the index once.
 class NodeWithIndex {
-    STACK_ALLOCATED();
-public:
-    explicit NodeWithIndex(Node& node)
-        : m_node(node)
-        , m_index(-1)
-    {
-    }
+  STACK_ALLOCATED();
 
-    Node& node() const { return *m_node; }
+ public:
+  explicit NodeWithIndex(Node& node) : node_(node), index_(-1) {}
 
-    int index() const
-    {
-        if (!hasIndex())
-            m_index = node().nodeIndex();
-        DCHECK(hasIndex());
-        DCHECK_EQ(m_index, static_cast<int>(node().nodeIndex()));
-        return m_index;
-    }
+  Node& GetNode() const { return *node_; }
 
-private:
-    bool hasIndex() const { return m_index >= 0; }
+  // TODO(tkent): Should be unsigned.
+  int Index() const {
+    if (!HasIndex())
+      index_ = GetNode().NodeIndex();
+    DCHECK(HasIndex());
+    DCHECK_EQ(index_, static_cast<int>(GetNode().NodeIndex()));
+    return index_;
+  }
 
-    Member<Node> m_node;
-    mutable int m_index;
+ private:
+  bool HasIndex() const { return index_ >= 0; }
+
+  Member<Node> node_;
+  mutable int index_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

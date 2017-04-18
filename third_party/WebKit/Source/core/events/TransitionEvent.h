@@ -33,41 +33,46 @@
 namespace blink {
 
 class TransitionEvent final : public Event {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static TransitionEvent* create()
-    {
-        return new TransitionEvent;
-    }
-    static TransitionEvent* create(const AtomicString& type, const String& propertyName, double elapsedTime, const String& pseudoElement)
-    {
-        return new TransitionEvent(type, propertyName, elapsedTime, pseudoElement);
-    }
-    static TransitionEvent* create(const AtomicString& type, const TransitionEventInit& initializer)
-    {
-        return new TransitionEvent(type, initializer);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    ~TransitionEvent() override;
+ public:
+  static TransitionEvent* Create() { return new TransitionEvent; }
+  static TransitionEvent* Create(const AtomicString& type,
+                                 const String& property_name,
+                                 double elapsed_time,
+                                 const String& pseudo_element) {
+    return new TransitionEvent(type, property_name, elapsed_time,
+                               pseudo_element);
+  }
+  static TransitionEvent* Create(const AtomicString& type,
+                                 const TransitionEventInit& initializer) {
+    return new TransitionEvent(type, initializer);
+  }
 
-    const String& propertyName() const;
-    double elapsedTime() const;
-    const String& pseudoElement() const;
+  ~TransitionEvent() override;
 
-    const AtomicString& interfaceName() const override;
+  const String& propertyName() const;
+  double elapsedTime() const;
+  const String& pseudoElement() const;
 
-    DECLARE_VIRTUAL_TRACE();
+  const AtomicString& InterfaceName() const override;
 
-private:
-    TransitionEvent();
-    TransitionEvent(const AtomicString& type, const String& propertyName, double elapsedTime, const String& pseudoElement);
-    TransitionEvent(const AtomicString& type, const TransitionEventInit& initializer);
+  DECLARE_VIRTUAL_TRACE();
 
-    String m_propertyName;
-    double m_elapsedTime;
-    String m_pseudoElement;
+ private:
+  TransitionEvent();
+  TransitionEvent(const AtomicString& type,
+                  const String& property_name,
+                  double elapsed_time,
+                  const String& pseudo_element);
+  TransitionEvent(const AtomicString& type,
+                  const TransitionEventInit& initializer);
+
+  String property_name_;
+  double elapsed_time_;
+  String pseudo_element_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // TransitionEvent_h
+#endif  // TransitionEvent_h

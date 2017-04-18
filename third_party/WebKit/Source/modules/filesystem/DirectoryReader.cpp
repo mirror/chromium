@@ -39,115 +39,107 @@
 namespace blink {
 
 class DirectoryReader::EntriesCallbackHelper final : public EntriesCallback {
-public:
-    explicit EntriesCallbackHelper(DirectoryReader* reader)
-        : m_reader(reader)
-    {
-    }
+ public:
+  explicit EntriesCallbackHelper(DirectoryReader* reader) : reader_(reader) {}
 
-    void handleEvent(const EntryHeapVector& entries) override
-    {
-        m_reader->addEntries(entries);
-    }
+  void handleEvent(const EntryHeapVector& entries) override {
+    reader_->AddEntries(entries);
+  }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_reader);
-        EntriesCallback::trace(visitor);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(reader_);
+    EntriesCallback::Trace(visitor);
+  }
 
-private:
-    // FIXME: This Member keeps the reader alive until all of the readDirectory results are received. crbug.com/350285
-    Member<DirectoryReader> m_reader;
+ private:
+  // FIXME: This Member keeps the reader alive until all of the readDirectory
+  // results are received. crbug.com/350285
+  Member<DirectoryReader> reader_;
 };
 
 class DirectoryReader::ErrorCallbackHelper final : public ErrorCallbackBase {
-public:
-    explicit ErrorCallbackHelper(DirectoryReader* reader)
-        : m_reader(reader)
-    {
-    }
+ public:
+  explicit ErrorCallbackHelper(DirectoryReader* reader) : reader_(reader) {}
 
-    void invoke(FileError::ErrorCode error) override
-    {
-        m_reader->onError(error);
-    }
+  void Invoke(FileError::ErrorCode error) override { reader_->OnError(error); }
 
-    DEFINE_INLINE_VIRTUAL_TRACE()
-    {
-        visitor->trace(m_reader);
-        ErrorCallbackBase::trace(visitor);
-    }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(reader_);
+    ErrorCallbackBase::Trace(visitor);
+  }
 
-private:
-    Member<DirectoryReader> m_reader;
+ private:
+  Member<DirectoryReader> reader_;
 };
 
-DirectoryReader::DirectoryReader(DOMFileSystemBase* fileSystem, const String& fullPath)
-    : DirectoryReaderBase(fileSystem, fullPath)
-    , m_isReading(false)
-{
-}
+DirectoryReader::DirectoryReader(DOMFileSystemBase* file_system,
+                                 const String& full_path)
+    : DirectoryReaderBase(file_system, full_path), is_reading_(false) {}
 
-DirectoryReader::~DirectoryReader()
-{
-}
+DirectoryReader::~DirectoryReader() {}
 
-void DirectoryReader::readEntries(EntriesCallback* entriesCallback, ErrorCallback* errorCallback)
-{
-    if (!m_isReading) {
-        m_isReading = true;
-        filesystem()->readDirectory(this, m_fullPath, new EntriesCallbackHelper(this), new ErrorCallbackHelper(this));
+void DirectoryReader::readEntries(EntriesCallback* entries_callback,
+                                  ErrorCallback* error_callback) {
+  if (!is_reading_) {
+    is_reading_ = true;
+    Filesystem()->ReadDirectory(this, full_path_,
+                                new EntriesCallbackHelper(this),
+                                new ErrorCallbackHelper(this));
+  }
+
+  if (error_) {
+    Filesystem()->ReportError(ScriptErrorCallback::Wrap(error_callback),
+                              error_);
+    return;
+  }
+
+  if (entries_callback_) {
+    // Non-null m_entriesCallback means multiple readEntries() calls are made
+    // concurrently. We don't allow doing it.
+    Filesystem()->ReportError(ScriptErrorCallback::Wrap(error_callback),
+                              FileError::kInvalidStateErr);
+    return;
+  }
+
+  if (!has_more_entries_ || !entries_.IsEmpty()) {
+    if (entries_callback) {
+      DOMFileSystem::ScheduleCallback(
+          Filesystem()->GetExecutionContext(),
+          WTF::Bind(&EntriesCallback::handleEvent,
+                    WrapPersistent(entries_callback),
+                    PersistentHeapVector<Member<Entry>>(entries_)));
     }
+    entries_.Clear();
+    return;
+  }
 
-    if (m_error) {
-        filesystem()->reportError(ScriptErrorCallback::wrap(errorCallback), m_error);
-        return;
-    }
-
-    if (m_entriesCallback) {
-        // Non-null m_entriesCallback means multiple readEntries() calls are made concurrently. We don't allow doing it.
-        filesystem()->reportError(ScriptErrorCallback::wrap(errorCallback), FileError::INVALID_STATE_ERR);
-        return;
-    }
-
-    if (!m_hasMoreEntries || !m_entries.isEmpty()) {
-        if (entriesCallback)
-            DOMFileSystem::scheduleCallback(filesystem()->getExecutionContext(), createSameThreadTask(&EntriesCallback::handleEvent, wrapPersistent(entriesCallback), PersistentHeapVector<Member<Entry>>(m_entries)));
-        m_entries.clear();
-        return;
-    }
-
-    m_entriesCallback = entriesCallback;
-    m_errorCallback = errorCallback;
+  entries_callback_ = entries_callback;
+  error_callback_ = error_callback;
 }
 
-void DirectoryReader::addEntries(const EntryHeapVector& entries)
-{
-    m_entries.appendVector(entries);
-    m_errorCallback = nullptr;
-    if (m_entriesCallback) {
-        EntriesCallback* entriesCallback = m_entriesCallback.release();
-        EntryHeapVector entries;
-        entries.swap(m_entries);
-        entriesCallback->handleEvent(entries);
-    }
+void DirectoryReader::AddEntries(const EntryHeapVector& entries) {
+  entries_.AppendVector(entries);
+  error_callback_ = nullptr;
+  if (entries_callback_) {
+    EntriesCallback* entries_callback = entries_callback_.Release();
+    EntryHeapVector entries;
+    entries.Swap(entries_);
+    entries_callback->handleEvent(entries);
+  }
 }
 
-void DirectoryReader::onError(FileError::ErrorCode error)
-{
-    m_error = error;
-    m_entriesCallback = nullptr;
-    if (m_errorCallback)
-        m_errorCallback->handleEvent(FileError::createDOMException(error));
+void DirectoryReader::OnError(FileError::ErrorCode error) {
+  error_ = error;
+  entries_callback_ = nullptr;
+  if (error_callback_)
+    error_callback_->handleEvent(FileError::CreateDOMException(error));
 }
 
-DEFINE_TRACE(DirectoryReader)
-{
-    visitor->trace(m_entries);
-    visitor->trace(m_entriesCallback);
-    visitor->trace(m_errorCallback);
-    DirectoryReaderBase::trace(visitor);
+DEFINE_TRACE(DirectoryReader) {
+  visitor->Trace(entries_);
+  visitor->Trace(entries_callback_);
+  visitor->Trace(error_callback_);
+  DirectoryReaderBase::Trace(visitor);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -31,11 +31,11 @@
 #ifndef AudioDSPKernelProcessor_h
 #define AudioDSPKernelProcessor_h
 
+#include <memory>
 #include "platform/audio/AudioBus.h"
 #include "platform/audio/AudioProcessor.h"
-#include "wtf/ThreadingPrimitives.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
@@ -44,35 +44,40 @@ class AudioDSPKernel;
 class AudioProcessor;
 
 // AudioDSPKernelProcessor processes one input -> one output (N channels each)
-// It uses one AudioDSPKernel object per channel to do the processing, thus there is no cross-channel processing.
-// Despite this limitation it turns out to be a very common and useful type of processor.
+// It uses one AudioDSPKernel object per channel to do the processing, thus
+// there is no cross-channel processing.  Despite this limitation it turns out
+// to be a very common and useful type of processor.
 
 class PLATFORM_EXPORT AudioDSPKernelProcessor : public AudioProcessor {
-public:
-    // numberOfChannels may be later changed if object is not yet in an "initialized" state
-    AudioDSPKernelProcessor(float sampleRate, unsigned numberOfChannels);
+ public:
+  // numberOfChannels may be later changed if object is not yet in an
+  // "initialized" state
+  AudioDSPKernelProcessor(float sample_rate, unsigned number_of_channels);
 
-    // Subclasses create the appropriate type of processing kernel here.
-    // We'll call this to create a kernel for each channel.
-    virtual std::unique_ptr<AudioDSPKernel> createKernel() = 0;
+  // Subclasses create the appropriate type of processing kernel here.
+  // We'll call this to create a kernel for each channel.
+  virtual std::unique_ptr<AudioDSPKernel> CreateKernel() = 0;
 
-    // AudioProcessor methods
-    void initialize() override;
-    void uninitialize() override;
-    void process(const AudioBus* source, AudioBus* destination, size_t framesToProcess) override;
-    void reset() override;
-    void setNumberOfChannels(unsigned) override;
-    unsigned numberOfChannels() const override { return m_numberOfChannels; }
+  // AudioProcessor methods
+  void Initialize() override;
+  void Uninitialize() override;
+  void Process(const AudioBus* source,
+               AudioBus* destination,
+               size_t frames_to_process) override;
+  void ProcessOnlyAudioParams(size_t frames_to_process) override;
+  void Reset() override;
+  void SetNumberOfChannels(unsigned) override;
+  unsigned NumberOfChannels() const override { return number_of_channels_; }
 
-    double tailTime() const override;
-    double latencyTime() const override;
+  double TailTime() const override;
+  double LatencyTime() const override;
 
-protected:
-    Vector<std::unique_ptr<AudioDSPKernel>> m_kernels;
-    mutable Mutex m_processLock;
-    bool m_hasJustReset;
+ protected:
+  Vector<std::unique_ptr<AudioDSPKernel>> kernels_;
+  mutable Mutex process_lock_;
+  bool has_just_reset_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // AudioDSPKernelProcessor_h
+#endif  // AudioDSPKernelProcessor_h

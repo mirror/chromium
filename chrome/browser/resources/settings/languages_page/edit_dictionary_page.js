@@ -9,7 +9,21 @@
 Polymer({
   is: 'settings-edit-dictionary-page',
 
+  behaviors: [settings.GlobalScrollTargetBehavior],
+
   properties: {
+    /** @private {string} */
+    newWordValue_: String,
+
+    /**
+     * Needed by GlobalScrollTargetBehavior.
+     * @override
+     */
+    subpageRoute: {
+      type: Object,
+      value: settings.Route.EDIT_DICTIONARY,
+    },
+
     /** @private {!Array<string>} */
     words_: {
       type: Array,
@@ -17,18 +31,35 @@ Polymer({
     },
   },
 
+  /** @type {LanguageSettingsPrivate} */
+  languageSettingsPrivate: null,
+
   ready: function() {
-    chrome.languageSettingsPrivate.getSpellcheckWords(function(words) {
+    this.languageSettingsPrivate =
+        settings.languageSettingsPrivateApiForTest ||
+        /** @type {!LanguageSettingsPrivate} */(chrome.languageSettingsPrivate);
+
+    this.languageSettingsPrivate.getSpellcheckWords(function(words) {
       this.words_ = words;
     }.bind(this));
 
     // Updates are applied locally so they appear immediately, but we should
     // listen for changes in case they come from elsewhere.
-    chrome.languageSettingsPrivate.onCustomDictionaryChanged.addListener(
+    this.languageSettingsPrivate.onCustomDictionaryChanged.addListener(
         this.onCustomDictionaryChanged_.bind(this));
 
     // Add a key handler for the paper-input.
     this.$.keys.target = this.$.newWord;
+  },
+
+  /**
+   * Check if the new word text-field is empty.
+   * @private
+   * @param {string} value
+   * @return {boolean} true if value is empty, false otherwise.
+   */
+  validateWord_: function(value) {
+    return !!value.trim();
   },
 
   /**
@@ -72,7 +103,7 @@ Polymer({
    * @param {!{model: !{item: string}}} e
    */
   onRemoveWordTap_: function(e) {
-    chrome.languageSettingsPrivate.removeSpellcheckWord(e.model.item);
+    this.languageSettingsPrivate.removeSpellcheckWord(e.model.item);
     this.arrayDelete('words_', e.model.item);
   },
 
@@ -82,19 +113,33 @@ Polymer({
    */
   addWordFromInput_: function() {
     // Spaces are allowed, but removing leading and trailing whitespace.
-    var word = this.$.newWord.value.trim();
-    this.$.newWord.value = '';
+    var word = this.newWordValue_.trim();
+    this.newWordValue_ = '';
     if (!word)
       return;
 
     var index = this.words_.indexOf(word);
     if (index == -1) {
-      chrome.languageSettingsPrivate.addSpellcheckWord(word);
-      this.push('words_', word);
+      this.languageSettingsPrivate.addSpellcheckWord(word);
+      this.unshift('words_', word);
+      if (this.words_.length == 1) {
+        // When adding a word to an _empty_ list, the template is expanded. This
+        // is a workaround to resize the iron-list as well.
+        // TODO(dschuyler): Remove this hack after iron-list no longer needs
+        // this workaround to update the list at the same time the template
+        // wrapping the list is expanded.
+        Polymer.dom.flush();
+        this.$$('#list').notifyResize();
+      }
     }
-
-    // Scroll to the word (usually the bottom, or to the index if the word
-    // is already present).
-    this.$.list.scrollToIndex(index);
   },
+
+  /**
+   * Checks if any words exists in the dictionary.
+   * @private
+   * @return {boolean}
+   */
+  hasWords_: function() {
+    return this.words_.length > 0;
+  }
 });

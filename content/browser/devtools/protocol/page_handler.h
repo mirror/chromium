@@ -7,41 +7,48 @@
 
 #include <stddef.h>
 
+#include <map>
+#include <memory>
+#include <string>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "cc/output/compositor_frame_metadata.h"
-#include "content/browser/devtools/protocol/devtools_protocol_dispatcher.h"
+#include "content/browser/devtools/protocol/devtools_domain_handler.h"
+#include "content/browser/devtools/protocol/page.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/readback_types.h"
 
 class SkBitmap;
 
+namespace gfx {
+class Image;
+}  // namespace gfx
+
 namespace content {
 
+class DevToolsSession;
 class NavigationHandle;
+class PageNavigationThrottle;
 class RenderFrameHostImpl;
 class WebContentsImpl;
 
-namespace devtools {
-class PageNavigationThrottle;
+namespace protocol {
 
-namespace page {
-
-class ColorPicker;
-
-class PageHandler : public NotificationObserver {
+class PageHandler : public DevToolsDomainHandler,
+                    public Page::Backend,
+                    public NotificationObserver {
  public:
-  typedef DevToolsProtocolClient::Response Response;
-
   PageHandler();
   ~PageHandler() override;
 
-  void SetRenderFrameHost(RenderFrameHostImpl* host);
-  void SetClient(std::unique_ptr<Client> client);
-  void Detached();
+  static PageHandler* FromSession(DevToolsSession* session);
+
+  void Wire(UberDispatcher* dispatcher) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
   void OnSwapCompositorFrame(cc::CompositorFrameMetadata frame_metadata);
   void OnSynchronousSwapCompositorFrame(
       cc::CompositorFrameMetadata frame_metadata);
@@ -49,41 +56,44 @@ class PageHandler : public NotificationObserver {
   void DidDetachInterstitialPage();
   bool screencast_enabled() const { return enabled_ && screencast_enabled_; }
 
-  Response Enable();
-  Response Disable();
+  Response Enable() override;
+  Response Disable() override;
 
-  Response Reload(const bool* bypassCache,
-                  const std::string* script_to_evaluate_on_load,
-                  const std::string* script_preprocessor = NULL);
+  Response Reload(Maybe<bool> bypassCache,
+                  Maybe<std::string> script_to_evaluate_on_load) override;
+  Response Navigate(const std::string& url,
+                    Maybe<std::string> referrer,
+                    Page::FrameId* frame_id) override;
+  Response StopLoading() override;
 
-  Response Navigate(const std::string& url, FrameId* frame_id);
+  using NavigationEntries = protocol::Array<Page::NavigationEntry>;
+  Response GetNavigationHistory(
+      int* current_index,
+      std::unique_ptr<NavigationEntries>* entries) override;
+  Response NavigateToHistoryEntry(int entry_id) override;
 
-  using NavigationEntries = std::vector<scoped_refptr<NavigationEntry>>;
-  Response GetNavigationHistory(int* current_index,
-                                NavigationEntries* entries);
+  void CaptureScreenshot(
+      Maybe<std::string> format,
+      Maybe<int> quality,
+      Maybe<bool> from_surface,
+      std::unique_ptr<CaptureScreenshotCallback> callback) override;
+  void PrintToPDF(std::unique_ptr<PrintToPDFCallback> callback) override;
+  Response StartScreencast(Maybe<std::string> format,
+                           Maybe<int> quality,
+                           Maybe<int> max_width,
+                           Maybe<int> max_height,
+                           Maybe<int> every_nth_frame) override;
+  Response StopScreencast() override;
+  Response ScreencastFrameAck(int session_id) override;
 
-  Response NavigateToHistoryEntry(int entry_id);
+  Response HandleJavaScriptDialog(bool accept,
+                                  Maybe<std::string> prompt_text) override;
 
-  Response CaptureScreenshot(DevToolsCommandId command_id);
+  Response RequestAppBanner() override;
 
-  Response StartScreencast(const std::string* format,
-                           const int* quality,
-                           const int* max_width,
-                           const int* max_height,
-                           const int* every_nth_frame);
-  Response StopScreencast();
-  Response ScreencastFrameAck(int session_id);
-
-  Response HandleJavaScriptDialog(bool accept, const std::string* prompt_text);
-
-  Response QueryUsageAndQuota(DevToolsCommandId command_id,
-                              const std::string& security_origin);
-
-  Response SetColorPickerEnabled(bool enabled);
-  Response RequestAppBanner();
-
-  Response SetControlNavigations(bool enabled);
-  Response ProcessNavigation(const std::string& response, int navigation_id);
+  Response SetControlNavigations(bool enabled) override;
+  Response ProcessNavigation(const std::string& response,
+                             int navigation_id) override;
 
   std::unique_ptr<PageNavigationThrottle> CreateThrottleForNavigation(
       NavigationHandle* navigation_handle);
@@ -92,6 +102,8 @@ class PageHandler : public NotificationObserver {
   void NavigationRequested(const PageNavigationThrottle* throttle);
 
  private:
+  enum EncodingFormat { PNG, JPEG };
+
   WebContentsImpl* GetWebContents();
   void NotifyScreencastVisibility(bool visible);
   void InnerSwapCompositorFrame();
@@ -102,12 +114,10 @@ class PageHandler : public NotificationObserver {
                               const base::Time& timestamp,
                               const std::string& data);
 
-  void ScreenshotCaptured(
-      DevToolsCommandId command_id,
-      const unsigned char* png_data,
-      size_t png_size);
-
-  void OnColorPicked(int r, int g, int b, int a);
+  void ScreenshotCaptured(std::unique_ptr<CaptureScreenshotCallback> callback,
+                          const std::string& format,
+                          int quality,
+                          const gfx::Image& image);
 
   // NotificationObserver overrides.
   void Observe(int type,
@@ -130,22 +140,19 @@ class PageHandler : public NotificationObserver {
   int frame_counter_;
   int frames_in_flight_;
 
-  std::unique_ptr<ColorPicker> color_picker_;
-
   bool navigation_throttle_enabled_;
   int next_navigation_id_;
   std::map<int, PageNavigationThrottle*> navigation_throttles_;
 
   RenderFrameHostImpl* host_;
-  std::unique_ptr<Client> client_;
+  std::unique_ptr<Page::Frontend> frontend_;
   NotificationRegistrar registrar_;
   base::WeakPtrFactory<PageHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PageHandler);
 };
 
-}  // namespace page
-}  // namespace devtools
+}  // namespace protocol
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_DEVTOOLS_PROTOCOL_PAGE_HANDLER_H_

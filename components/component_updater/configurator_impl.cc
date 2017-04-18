@@ -9,6 +9,7 @@
 #include <algorithm>
 
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/version.h"
@@ -53,6 +54,9 @@ const char kSwitchDisableDeltaUpdates[] = "disable-delta-updates";
 // Disables background downloads.
 const char kSwitchDisableBackgroundDownloads[] = "disable-background-downloads";
 #endif  // defined(OS_WIN)
+
+const base::Feature kAlternateComponentUrls{"AlternateComponentUrls",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Returns true if and only if |test| is contained in |vec|.
 bool HasSwitchValue(const std::vector<std::string>& vec, const char* test) {
@@ -126,11 +130,7 @@ int ConfiguratorImpl::InitialDelay() const {
 }
 
 int ConfiguratorImpl::NextCheckDelay() const {
-  return 6 * kDelayOneHour;
-}
-
-int ConfiguratorImpl::StepDelay() const {
-  return fast_update_ ? 1 : 1;
+  return 5 * kDelayOneHour;
 }
 
 int ConfiguratorImpl::OnDemandDelay() const {
@@ -148,8 +148,14 @@ std::vector<GURL> ConfiguratorImpl::UpdateUrl() const {
     return urls;
   }
 
-  urls.push_back(GURL(kUpdaterDefaultUrl));
-  urls.push_back(GURL(kUpdaterFallbackUrl));
+  if (base::FeatureList::IsEnabled(kAlternateComponentUrls)) {
+    urls.push_back(GURL(kUpdaterDefaultUrlAlt));
+    urls.push_back(GURL(kUpdaterFallbackUrlAlt));
+  } else {
+    urls.push_back(GURL(kUpdaterDefaultUrl));
+    urls.push_back(GURL(kUpdaterFallbackUrl));
+  }
+
   if (require_encryption_)
     update_client::RemoveUnsecureUrls(&urls);
 
@@ -180,15 +186,19 @@ net::URLRequestContextGetter* ConfiguratorImpl::RequestContext() const {
   return url_request_getter_;
 }
 
-bool ConfiguratorImpl::DeltasEnabled() const {
+bool ConfiguratorImpl::EnabledDeltas() const {
   return deltas_enabled_;
 }
 
-bool ConfiguratorImpl::UseBackgroundDownloader() const {
+bool ConfiguratorImpl::EnabledComponentUpdates() const {
+  return true;
+}
+
+bool ConfiguratorImpl::EnabledBackgroundDownloader() const {
   return background_downloads_enabled_;
 }
 
-bool ConfiguratorImpl::UseCupSigning() const {
+bool ConfiguratorImpl::EnabledCupSigning() const {
   return true;
 }
 

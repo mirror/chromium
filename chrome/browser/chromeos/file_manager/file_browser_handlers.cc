@@ -14,6 +14,7 @@
 #include "base/files/file_util.h"
 #include "base/i18n/case_conversion.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/file_manager/app_id.h"
@@ -21,7 +22,6 @@
 #include "chrome/browser/chromeos/file_manager/open_with_browser.h"
 #include "chrome/browser/chromeos/fileapi/file_system_backend.h"
 #include "chrome/browser/extensions/extension_service.h"
-#include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/common/extensions/api/file_browser_handlers/file_browser_handler.h"
@@ -387,27 +387,27 @@ void FileBrowserHandlerExecutor::SetupPermissionsAndDispatchEvent(
       file_definition_list.get(), extension_.get(), handler_pid);
 
   std::unique_ptr<base::ListValue> event_args(new base::ListValue());
-  event_args->Append(new base::StringValue(action_id_));
-  base::DictionaryValue* details = new base::DictionaryValue();
-  event_args->Append(details);
+  event_args->AppendString(action_id_);
+  auto details = base::MakeUnique<base::DictionaryValue>();
   // Get file definitions. These will be replaced with Entry instances by
   // dispatchEvent() method from event_binding.js.
-  base::ListValue* file_entries = new base::ListValue();
-  details->Set("entries", file_entries);
+  auto file_entries = base::MakeUnique<base::ListValue>();
 
   for (EntryDefinitionList::const_iterator iter =
            entry_definition_list->begin();
        iter != entry_definition_list->end();
        ++iter) {
-    base::DictionaryValue* file_def = new base::DictionaryValue();
-    file_entries->Append(file_def);
+    auto file_def = base::MakeUnique<base::DictionaryValue>();
     file_def->SetString("fileSystemName", iter->file_system_name);
     file_def->SetString("fileSystemRoot", iter->file_system_root_url);
     file_def->SetString("fileFullPath",
                         "/" + iter->full_path.AsUTF8Unsafe());
     file_def->SetBoolean("fileIsDirectory", iter->is_directory);
+    file_entries->Append(std::move(file_def));
   }
 
+  details->Set("entries", std::move(file_entries));
+  event_args->Append(std::move(details));
   std::unique_ptr<extensions::Event> event(new extensions::Event(
       extensions::events::FILE_BROWSER_HANDLER_ON_EXECUTE,
       "fileBrowserHandler.onExecute", std::move(event_args)));
@@ -520,7 +520,7 @@ FileBrowserHandlerList FindFileBrowserHandlers(
 
       for (FileBrowserHandlerList::const_iterator itr = handlers.begin();
            itr != handlers.end(); ++itr) {
-        if (ContainsKey(common_handler_set, *itr))
+        if (base::ContainsKey(common_handler_set, *itr))
           intersection.push_back(*itr);
       }
 

@@ -30,59 +30,70 @@
 #include "core/page/DragActions.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/HashMap.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class DataObject;
 class DocumentFragment;
 class LocalFrame;
-class Range;
 
 enum DragApplicationFlags {
-    DragApplicationNone = 0,
-    DragApplicationIsModal = 1,
-    DragApplicationIsSource = 2,
-    DragApplicationHasAttachedSheet = 4,
-    DragApplicationIsCopyKeyDown = 8
+  kDragApplicationNone = 0,
+  kDragApplicationIsModal = 1,
+  kDragApplicationIsSource = 2,
+  kDragApplicationHasAttachedSheet = 4,
+  kDragApplicationIsCopyKeyDown = 8
 };
 
 class CORE_EXPORT DragData {
-    STACK_ALLOCATED();
-public:
-    enum FilenameConversionPolicy { DoNotConvertFilenames, ConvertFilenames };
+  STACK_ALLOCATED();
 
-    // clientPosition is taken to be the position of the drag event within the target window, with (0,0) at the top left
-    DragData(DataObject*, const IntPoint& clientPosition, const IntPoint& globalPosition, DragOperation, DragApplicationFlags = DragApplicationNone);
-    const IntPoint& clientPosition() const { return m_clientPosition; }
-    const IntPoint& globalPosition() const { return m_globalPosition; }
-    DragApplicationFlags flags() const { return m_applicationFlags; }
-    DataObject* platformData() const { return m_platformDragData; }
-    DragOperation draggingSourceOperationMask() const { return m_draggingSourceOperationMask; }
-    bool containsURL(FilenameConversionPolicy filenamePolicy = ConvertFilenames) const;
-    bool containsPlainText() const;
-    bool containsCompatibleContent() const;
-    String asURL(FilenameConversionPolicy filenamePolicy = ConvertFilenames, String* title = nullptr) const;
-    String asPlainText() const;
-    void asFilePaths(Vector<String>&) const;
-    unsigned numberOfFiles() const;
-    DocumentFragment* asFragment(LocalFrame*) const;
-    bool canSmartReplace() const;
-    bool containsFiles() const;
-    int modifiers() const;
+ public:
+  enum FilenameConversionPolicy { kDoNotConvertFilenames, kConvertFilenames };
 
-    String droppedFileSystemId() const;
+  // clientPosition is taken to be the position of the drag event within the
+  // target window, with (0,0) at the top left.
+  DragData(DataObject*,
+           const IntPoint& client_position,
+           const IntPoint& global_position,
+           DragOperation,
+           DragApplicationFlags = kDragApplicationNone);
+  const IntPoint& ClientPosition() const { return client_position_; }
+  const IntPoint& GlobalPosition() const { return global_position_; }
+  DragApplicationFlags Flags() const { return application_flags_; }
+  DataObject* PlatformData() const { return platform_drag_data_; }
+  DragOperation DraggingSourceOperationMask() const {
+    return dragging_source_operation_mask_;
+  }
+  bool ContainsURL(
+      FilenameConversionPolicy filename_policy = kConvertFilenames) const;
+  bool ContainsPlainText() const;
+  bool ContainsCompatibleContent() const;
+  String AsURL(FilenameConversionPolicy filename_policy = kConvertFilenames,
+               String* title = nullptr) const;
+  String AsPlainText() const;
+  void AsFilePaths(Vector<String>&) const;
+  unsigned NumberOfFiles() const;
+  DocumentFragment* AsFragment(LocalFrame*) const;
+  bool CanSmartReplace() const;
+  bool ContainsFiles() const;
+  int GetModifiers() const;
 
-private:
-    IntPoint m_clientPosition;
-    IntPoint m_globalPosition;
-    Member<DataObject> m_platformDragData;
-    DragOperation m_draggingSourceOperationMask;
-    DragApplicationFlags m_applicationFlags;
+  String DroppedFileSystemId() const;
+
+ private:
+  const IntPoint client_position_;
+  const IntPoint global_position_;
+  const Member<DataObject> platform_drag_data_;
+  const DragOperation dragging_source_operation_mask_;
+  const DragApplicationFlags application_flags_;
+
+  bool ContainsHTML() const;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !DragData_h
+#endif  // !DragData_h

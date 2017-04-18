@@ -4,35 +4,36 @@
 
 #include "public/platform/WebDataConsumerHandle.h"
 
-#include "platform/heap/Handle.h"
-#include "wtf/PtrUtil.h"
+#include <string.h>
 #include <algorithm>
 #include <memory>
-#include <string.h>
+#include "platform/heap/Handle.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-WebDataConsumerHandle::WebDataConsumerHandle()
-{
-    ASSERT(ThreadState::current());
+WebDataConsumerHandle::WebDataConsumerHandle() {
+  DCHECK(ThreadState::Current());
 }
 
-WebDataConsumerHandle::~WebDataConsumerHandle()
-{
-    ASSERT(ThreadState::current());
+WebDataConsumerHandle::~WebDataConsumerHandle() {
+  DCHECK(ThreadState::Current());
 }
 
-WebDataConsumerHandle::Result WebDataConsumerHandle::Reader::read(void* data, size_t size, Flags flags, size_t* readSize)
-{
-    *readSize = 0;
-    const void* src = nullptr;
-    size_t available;
-    Result r = beginRead(&src, flags, &available);
-    if (r != WebDataConsumerHandle::Ok)
-        return r;
-    *readSize = std::min(available, size);
-    memcpy(data, src, *readSize);
-    return endRead(*readSize);
+WebDataConsumerHandle::Result WebDataConsumerHandle::Reader::Read(
+    void* data,
+    size_t size,
+    Flags flags,
+    size_t* read_size) {
+  *read_size = 0;
+  const void* src = nullptr;
+  size_t available;
+  Result r = BeginRead(&src, flags, &available);
+  if (r != WebDataConsumerHandle::kOk)
+    return r;
+  *read_size = std::min(available, size);
+  memcpy(data, src, *read_size);
+  return EndRead(*read_size);
 }
 
-} // namespace blink
+}  // namespace blink

@@ -14,17 +14,19 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
-#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
+#include "net/base/load_flags.h"
 #include "net/base/mime_util.h"
 #include "net/base/network_delegate.h"
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_config_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
@@ -308,8 +310,50 @@ void TraceCrashServiceUploader::CreateAndStartURLFetcher(
   content_type.append("; boundary=");
   content_type.append(kMultipartBoundary);
 
-  url_fetcher_ =
-      net::URLFetcher::Create(GURL(upload_url), net::URLFetcher::POST, this);
+  // Create traffic annotation tag.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("background_performance_tracer", R"(
+        semantics {
+          sender: "Background Performance Traces"
+          description:
+            "Under certain conditions, Chromium will send anonymized "
+            "performance timeline data to Google for the purposes of improving "
+            "Chromium performance. We can set up a percentage of the "
+            "population to send back trace reports when a certain UMA "
+            "histogram bucket is incremented, for example, 'For 1% of the Beta "
+            "population, send us a trace if it ever takes more than 1 seconds "
+            "for the Omnibox to respond to a typed character'. The possible "
+            "types of triggers right now are UMA histograms, and manually "
+            "triggered events from code (think of them like asserts, that'll "
+            "cause a report to be sent if enabled for that population)."
+          trigger:
+            "Google-controlled triggering conditions, usually when a bad "
+            "performance situation occurs."
+          data: "An anonymized Chromium trace (see about://tracing)."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "You can enable or disable this feature via 'Automatically send "
+            "usage statistics and crash reports to Google' in Chromium's "
+            "settings under Advanced, Privacy. This feature is enabled by "
+            "default."
+          chrome_policy {
+            MetricsReportingEnabled {
+              policy_options {mode: MANDATORY}
+              MetricsReportingEnabled: false
+            }
+          }
+        })");
+
+  url_fetcher_ = net::URLFetcher::Create(
+      GURL(upload_url), net::URLFetcher::POST, this, traffic_annotation);
+  data_use_measurement::DataUseUserData::AttachToFetcher(
+      url_fetcher_.get(),
+      data_use_measurement::DataUseUserData::TRACING_UPLOADER);
+  url_fetcher_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
+                             net::LOAD_DO_NOT_SEND_COOKIES);
   url_fetcher_->SetRequestContext(request_context_);
   url_fetcher_->SetUploadData(content_type, post_data);
   url_fetcher_->Start();

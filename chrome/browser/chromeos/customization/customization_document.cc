@@ -16,13 +16,14 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/strings/pattern.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/customization/customization_wallpaper_downloader.h"
@@ -146,7 +147,6 @@ std::string GetLocaleSpecificStringImpl(
 }
 
 void CheckWallpaperCacheExists(const base::FilePath& path, bool* exists) {
-  DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
   DCHECK(exists);
   *exists = base::PathExists(path);
 }
@@ -230,21 +230,25 @@ bool CustomizationDocument::LoadManifestFromString(
       manifest, base::JSON_ALLOW_TRAILING_COMMAS, &error_code, &error);
   if (error_code != base::JSONReader::JSON_NO_ERROR)
     LOG(ERROR) << error;
-  DCHECK(root.get() != NULL);
-  if (root.get() == NULL)
+  if (!root) {
+    NOTREACHED();
     return false;
-  DCHECK(root->GetType() == base::Value::TYPE_DICTIONARY);
-  if (root->GetType() == base::Value::TYPE_DICTIONARY) {
-    root_.reset(static_cast<base::DictionaryValue*>(root.release()));
-    std::string result;
-    if (root_->GetString(kVersionAttr, &result) &&
-        result == accepted_version_)
-      return true;
-
-    LOG(ERROR) << "Wrong customization manifest version";
-    root_.reset(NULL);
   }
-  return false;
+
+  root_ = base::DictionaryValue::From(std::move(root));
+  if (!root_) {
+    NOTREACHED();
+    return false;
+  }
+
+  std::string result;
+  if (!root_->GetString(kVersionAttr, &result) || result != accepted_version_) {
+    LOG(ERROR) << "Wrong customization manifest version";
+    root_.reset();
+    return false;
+  }
+
+  return true;
 }
 
 std::string CustomizationDocument::GetLocaleSpecificString(
@@ -862,10 +866,10 @@ void ServicesCustomizationDocument::CheckAndApplyWallpaper() {
       &ServicesCustomizationDocument::OnCheckedWallpaperCacheExists,
       weak_ptr_factory_.GetWeakPtr(), base::Passed(std::move(exists)),
       base::Passed(std::move(applying)));
-  if (!content::BrowserThread::PostBlockingPoolTaskAndReply(
-          FROM_HERE, check_file_exists, on_checked_closure)) {
-    LOG(WARNING) << "Failed to start check Wallpaper cache exists.";
-  }
+  base::PostTaskWithTraitsAndReply(FROM_HERE,
+                                   base::TaskTraits().MayBlock().WithPriority(
+                                       base::TaskPriority::BACKGROUND),
+                                   check_file_exists, on_checked_closure);
 }
 
 void ServicesCustomizationDocument::OnCheckedWallpaperCacheExists(

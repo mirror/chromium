@@ -8,7 +8,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <string>
+#include <utility>
 
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -174,15 +176,27 @@ bool PrintSettingsFromJobSettings(const base::DictionaryValue& job_settings,
   base::string16 device_name;
   bool collate = false;
   int copies = 1;
+  int scale_factor = 100;
+  bool rasterize_pdf = false;
 
   if (!job_settings.GetBoolean(kSettingCollate, &collate) ||
       !job_settings.GetInteger(kSettingCopies, &copies) ||
       !job_settings.GetInteger(kSettingColor, &color) ||
       !job_settings.GetInteger(kSettingDuplexMode, &duplex_mode) ||
       !job_settings.GetBoolean(kSettingLandscape, &landscape) ||
-      !job_settings.GetString(kSettingDeviceName, &device_name)) {
+      !job_settings.GetString(kSettingDeviceName, &device_name) ||
+      !job_settings.GetInteger(kSettingScaleFactor, &scale_factor) ||
+      !job_settings.GetBoolean(kSettingRasterizePdf, &rasterize_pdf)) {
     return false;
   }
+#if defined(OS_WIN)
+  int dpi_horizontal = 0;
+  int dpi_vertical = 0;
+  if (!job_settings.GetInteger(kSettingDpiHorizontal, &dpi_horizontal) ||
+      !job_settings.GetInteger(kSettingDpiVertical, &dpi_vertical)) {
+    return false;
+  }
+#endif
 
   settings->set_collate(collate);
   settings->set_copies(copies);
@@ -190,6 +204,15 @@ bool PrintSettingsFromJobSettings(const base::DictionaryValue& job_settings,
   settings->set_device_name(device_name);
   settings->set_duplex_mode(static_cast<DuplexMode>(duplex_mode));
   settings->set_color(static_cast<ColorModel>(color));
+  settings->set_scale_factor(static_cast<double>(scale_factor) / 100.0);
+  settings->set_rasterize_pdf(rasterize_pdf);
+#if defined(OS_WIN)
+  // Modifiable implies HTML and not other formats like PDF.
+  bool can_modify = false;
+  if (job_settings.GetBoolean(kSettingPreviewModifiable, &can_modify))
+    settings->set_print_text_with_gdi(can_modify);
+  settings->set_dpi_xy(dpi_horizontal, dpi_vertical);
+#endif
 
   return true;
 }
@@ -209,10 +232,10 @@ void PrintSettingsToJobSettingsDebug(const PrintSettings& settings,
     base::ListValue* page_range_array = new base::ListValue;
     job_settings->Set(kSettingPageRange, page_range_array);
     for (size_t i = 0; i < settings.ranges().size(); ++i) {
-      base::DictionaryValue* dict = new base::DictionaryValue;
-      page_range_array->Append(dict);
+      std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
       dict->SetInteger(kSettingPageRangeFrom, settings.ranges()[i].from + 1);
       dict->SetInteger(kSettingPageRangeTo, settings.ranges()[i].to + 1);
+      page_range_array->Append(std::move(dict));
     }
   }
 
@@ -227,11 +250,10 @@ void PrintSettingsToJobSettingsDebug(const PrintSettings& settings,
   // common public constants. So just serialize in "debug" section.
   base::DictionaryValue* debug = new base::DictionaryValue;
   job_settings->Set("debug", debug);
-  debug->SetInteger("desiredDpi", settings.desired_dpi());
   debug->SetInteger("dpi", settings.dpi());
   debug->SetInteger("deviceUnitsPerInch", settings.device_units_per_inch());
   debug->SetBoolean("support_alpha_blend", settings.should_print_backgrounds());
-  debug->SetString("media_vendor_od", settings.requested_media().vendor_id);
+  debug->SetString("media_vendor_id", settings.requested_media().vendor_id);
   SetSizeToJobSettings(
       "media_size", settings.requested_media().size_microns, debug);
   SetMarginsToJobSettings("requested_custom_margins_in_points",

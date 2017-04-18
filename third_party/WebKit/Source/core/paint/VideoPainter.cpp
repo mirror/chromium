@@ -16,51 +16,64 @@
 
 namespace blink {
 
-void VideoPainter::paintReplaced(const PaintInfo& paintInfo, const LayoutPoint& paintOffset)
-{
-    WebMediaPlayer* mediaPlayer = m_layoutVideo.mediaElement()->webMediaPlayer();
-    bool displayingPoster = m_layoutVideo.videoElement()->shouldDisplayPosterImage();
-    if (!displayingPoster && !mediaPlayer)
-        return;
+void VideoPainter::PaintReplaced(const PaintInfo& paint_info,
+                                 const LayoutPoint& paint_offset) {
+  WebMediaPlayer* media_player =
+      layout_video_.MediaElement()->GetWebMediaPlayer();
+  bool displaying_poster =
+      layout_video_.VideoElement()->ShouldDisplayPosterImage();
+  if (!displaying_poster && !media_player)
+    return;
 
-    LayoutRect rect(m_layoutVideo.videoBox());
-    if (rect.isEmpty())
-        return;
-    rect.moveBy(paintOffset);
+  LayoutRect replaced_rect(layout_video_.ReplacedContentRect());
+  replaced_rect.MoveBy(paint_offset);
+  IntRect snapped_replaced_rect = PixelSnappedIntRect(replaced_rect);
 
-    if (LayoutObjectDrawingRecorder::useCachedDrawingIfPossible(paintInfo.context, m_layoutVideo, paintInfo.phase))
-        return;
+  if (snapped_replaced_rect.IsEmpty())
+    return;
 
-    GraphicsContext& context = paintInfo.context;
-    LayoutRect contentRect = m_layoutVideo.contentBoxRect();
-    contentRect.moveBy(paintOffset);
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+          paint_info.context, layout_video_, paint_info.phase))
+    return;
 
-    // Video frames are only painted in software for printing or capturing node images via web APIs.
-    bool forceSoftwareVideoPaint = paintInfo.getGlobalPaintFlags() & GlobalPaintFlattenCompositingLayers;
+  GraphicsContext& context = paint_info.context;
+  LayoutRect content_rect = layout_video_.ContentBoxRect();
+  content_rect.MoveBy(paint_offset);
 
-    bool paintWithForeignLayer =
-        !displayingPoster && !forceSoftwareVideoPaint
-        && RuntimeEnabledFeatures::slimmingPaintV2Enabled();
-    if (paintWithForeignLayer) {
-        if (WebLayer* layer = m_layoutVideo.mediaElement()->platformLayer()) {
-            IntRect pixelSnappedRect = pixelSnappedIntRect(contentRect);
-            recordForeignLayer(
-                context, m_layoutVideo, DisplayItem::ForeignLayerVideo, layer,
-                pixelSnappedRect.location(), pixelSnappedRect.size());
-            return;
-        }
+  // Video frames are only painted in software for printing or capturing node
+  // images via web APIs.
+  bool force_software_video_paint =
+      paint_info.GetGlobalPaintFlags() & kGlobalPaintFlattenCompositingLayers;
+
+  bool paint_with_foreign_layer =
+      !displaying_poster && !force_software_video_paint &&
+      RuntimeEnabledFeatures::slimmingPaintV2Enabled();
+  if (paint_with_foreign_layer) {
+    if (WebLayer* layer = layout_video_.MediaElement()->PlatformLayer()) {
+      IntRect pixel_snapped_rect = PixelSnappedIntRect(content_rect);
+      RecordForeignLayer(
+          context, layout_video_, DisplayItem::kForeignLayerVideo, layer,
+          pixel_snapped_rect.Location(), pixel_snapped_rect.Size());
+      return;
     }
+  }
 
-    LayoutObjectDrawingRecorder drawingRecorder(context, m_layoutVideo, paintInfo.phase, contentRect);
+  // TODO(trchen): Video rect could overflow the content rect due to object-fit.
+  // Should apply a clip here like EmbeddedObjectPainter does.
+  LayoutObjectDrawingRecorder drawing_recorder(context, layout_video_,
+                                               paint_info.phase, content_rect);
 
-    if (displayingPoster || !forceSoftwareVideoPaint) {
-        // This will display the poster image, if one is present, and otherwise paint nothing.
-        ImagePainter(m_layoutVideo).paintIntoRect(context, rect, contentRect);
-    } else {
-        SkPaint videoPaint = context.fillPaint();
-        videoPaint.setColor(SK_ColorBLACK);
-        m_layoutVideo.videoElement()->paintCurrentFrame(context.canvas(), pixelSnappedIntRect(rect), &videoPaint);
-    }
+  if (displaying_poster || !force_software_video_paint) {
+    // This will display the poster image, if one is present, and otherwise
+    // paint nothing.
+    ImagePainter(layout_video_)
+        .PaintIntoRect(context, replaced_rect, content_rect);
+  } else {
+    PaintFlags video_flags = context.FillFlags();
+    video_flags.setColor(SK_ColorBLACK);
+    layout_video_.VideoElement()->PaintCurrentFrame(
+        context.Canvas(), snapped_replaced_rect, &video_flags);
+  }
 }
 
-} // namespace blink
+}  // namespace blink

@@ -32,9 +32,9 @@
 #define CompositionUnderlineVectorBuilder_h
 
 #include "core/editing/CompositionUnderline.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebVector.h"
 #include "public/web/WebCompositionUnderline.h"
-#include "wtf/Vector.h"
 
 namespace blink {
 
@@ -42,10 +42,10 @@ namespace blink {
 // to Vector<CompositionUnderline>.
 
 class CompositionUnderlineVectorBuilder : public Vector<CompositionUnderline> {
-public:
-    CompositionUnderlineVectorBuilder(const WebVector<WebCompositionUnderline>&);
+ public:
+  CompositionUnderlineVectorBuilder(const WebVector<WebCompositionUnderline>&);
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

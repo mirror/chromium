@@ -5,10 +5,14 @@
 #include "headless/lib/browser/headless_url_request_context_getter.h"
 
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "content/public/browser/browser_thread.h"
+#include "headless/lib/browser/headless_browser_context_options.h"
+#include "headless/lib/browser/headless_network_delegate.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request_context.h"
@@ -22,23 +26,18 @@ HeadlessURLRequestContextGetter::HeadlessURLRequestContextGetter(
     content::ProtocolHandlerMap* protocol_handlers,
     ProtocolHandlerMap context_protocol_handlers,
     content::URLRequestInterceptorScopedVector request_interceptors,
-    HeadlessBrowser::Options* options)
+    HeadlessBrowserContextOptions* options)
     : io_task_runner_(std::move(io_task_runner)),
       file_task_runner_(std::move(file_task_runner)),
-      user_agent_(options->user_agent),
-      host_resolver_rules_(options->host_resolver_rules),
-      proxy_server_(options->proxy_server),
+      user_agent_(options->user_agent()),
+      host_resolver_rules_(options->host_resolver_rules()),
+      proxy_server_(options->proxy_server()),
       request_interceptors_(std::move(request_interceptors)) {
   // Must first be created on the UI thread.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   std::swap(protocol_handlers_, *protocol_handlers);
-  for (auto& pair : options->protocol_handlers) {
-    protocol_handlers_[pair.first] =
-        linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
-            pair.second.release());
-  }
-  options->protocol_handlers.clear();
+
   for (auto& pair : context_protocol_handlers) {
     protocol_handlers_[pair.first] =
         linked_ptr<net::URLRequestJobFactory::ProtocolHandler>(
@@ -75,6 +74,7 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
     } else {
       builder.set_proxy_config_service(std::move(proxy_config_service_));
     }
+    builder.set_network_delegate(base::MakeUnique<HeadlessNetworkDelegate>());
 
     if (!host_resolver_rules_.empty()) {
       std::unique_ptr<net::HostResolver> host_resolver(
@@ -90,14 +90,7 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
                                  base::WrapUnique(pair.second.release()));
     }
     protocol_handlers_.clear();
-
-    std::vector<std::unique_ptr<net::URLRequestInterceptor>>
-        request_interceptors;
-    for (auto it : request_interceptors_) {
-      request_interceptors.push_back(base::WrapUnique(it));
-    }
-    request_interceptors_.weak_clear();
-    builder.SetInterceptors(std::move(request_interceptors));
+    builder.SetInterceptors(std::move(request_interceptors_));
 
     url_request_context_ = builder.Build();
   }

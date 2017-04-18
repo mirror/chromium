@@ -6,34 +6,53 @@
 #define ScriptForbiddenScope_h
 
 #include "platform/PlatformExport.h"
-#include "wtf/Allocator.h"
-#include "wtf/AutoReset.h"
-#include "wtf/Optional.h"
+#include "platform/wtf/Allocator.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/Optional.h"
 
 namespace blink {
 
 // Scoped disabling of script execution on the main thread,
 // and only to be used by the main thread.
 class PLATFORM_EXPORT ScriptForbiddenScope final {
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScriptForbiddenScope);
+
+ public:
+  ScriptForbiddenScope() { Enter(); }
+  ~ScriptForbiddenScope() { Exit(); }
+
+  class PLATFORM_EXPORT AllowUserAgentScript final {
     STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(ScriptForbiddenScope);
-public:
-    ScriptForbiddenScope();
-    ~ScriptForbiddenScope();
+    WTF_MAKE_NONCOPYABLE(AllowUserAgentScript);
 
-    class PLATFORM_EXPORT AllowUserAgentScript final {
-        STACK_ALLOCATED();
-        WTF_MAKE_NONCOPYABLE(AllowUserAgentScript);
-    public:
-        AllowUserAgentScript();
-        ~AllowUserAgentScript();
-    private:
-        Optional<AutoReset<unsigned>> m_change;
-    };
+   public:
+    AllowUserAgentScript() {
+      if (IsMainThread())
+        change_.emplace(&script_forbidden_count_, 0);
+    }
+    ~AllowUserAgentScript() {
+      DCHECK(!IsMainThread() || !script_forbidden_count_);
+    }
 
-    static void enter();
-    static void exit();
-    static bool isScriptForbidden();
+   private:
+    Optional<AutoReset<unsigned>> change_;
+  };
+
+  static void Enter() {
+    DCHECK(IsMainThread());
+    ++script_forbidden_count_;
+  }
+  static void Exit() {
+    DCHECK(script_forbidden_count_);
+    --script_forbidden_count_;
+  }
+  static bool IsScriptForbidden() {
+    return IsMainThread() && script_forbidden_count_;
+  }
+
+ private:
+  static unsigned script_forbidden_count_;
 };
 
 // Scoped disabling of script execution on the main thread,
@@ -44,13 +63,22 @@ public:
 // this scope object perform the is-main-thread check on
 // its behalf.
 class PLATFORM_EXPORT ScriptForbiddenIfMainThreadScope final {
-    STACK_ALLOCATED();
-    WTF_MAKE_NONCOPYABLE(ScriptForbiddenIfMainThreadScope);
-public:
-    ScriptForbiddenIfMainThreadScope();
-    ~ScriptForbiddenIfMainThreadScope();
+  STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(ScriptForbiddenIfMainThreadScope);
+
+ public:
+  ScriptForbiddenIfMainThreadScope() {
+    is_main_thread_ = IsMainThread();
+    if (is_main_thread_)
+      ScriptForbiddenScope::Enter();
+  }
+  ~ScriptForbiddenIfMainThreadScope() {
+    if (is_main_thread_)
+      ScriptForbiddenScope::Exit();
+  }
+  bool is_main_thread_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ScriptForbiddenScope_h
+#endif  // ScriptForbiddenScope_h

@@ -11,8 +11,9 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/test/scoped_task_scheduler.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "media/base/media.h"
@@ -22,6 +23,7 @@
 #include "media/base/timestamp_constants.h"
 #include "media/filters/ffmpeg_demuxer.h"
 #include "media/filters/file_data_source.h"
+#include "media/media_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/perf/perf_test.h"
 
@@ -47,20 +49,19 @@ class DemuxerHostImpl : public media::DemuxerHost {
   DISALLOW_COPY_AND_ASSIGN(DemuxerHostImpl);
 };
 
-static void QuitLoopWithStatus(base::MessageLoop* message_loop,
+static void QuitLoopWithStatus(base::Closure quit_cb,
                                media::PipelineStatus status) {
   CHECK_EQ(status, media::PIPELINE_OK);
-  message_loop->task_runner()->PostTask(
-      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
+  quit_cb.Run();
 }
 
 static void OnEncryptedMediaInitData(EmeInitDataType init_data_type,
                                      const std::vector<uint8_t>& init_data) {
-  VLOG(0) << "File is encrypted.";
+  DVLOG(1) << "File is encrypted.";
 }
 
 static void OnMediaTracksUpdated(std::unique_ptr<MediaTracks> tracks) {
-  VLOG(0) << "Got media tracks info, tracks = " << tracks->tracks().size();
+  DVLOG(1) << "Got media tracks info, tracks = " << tracks->tracks().size();
 }
 
 typedef std::vector<media::DemuxerStream* > Streams;
@@ -83,7 +84,8 @@ class StreamReader {
   const std::vector<int>& counts() { return counts_; }
 
  private:
-  void OnReadDone(base::MessageLoop* message_loop,
+  void OnReadDone(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                  const base::Closure& quit_when_idle_closure,
                   bool* end_of_stream,
                   base::TimeDelta* timestamp,
                   media::DemuxerStream::Status status,
@@ -100,23 +102,13 @@ class StreamReader {
 
 StreamReader::StreamReader(media::Demuxer* demuxer,
                            bool enable_bitstream_converter) {
-  media::DemuxerStream* stream =
-      demuxer->GetStream(media::DemuxerStream::AUDIO);
-  if (stream) {
+  std::vector<media::DemuxerStream*> streams = demuxer->GetAllStreams();
+  for (auto* stream : streams) {
     streams_.push_back(stream);
     end_of_stream_.push_back(false);
     last_read_timestamp_.push_back(media::kNoTimestamp);
     counts_.push_back(0);
-  }
-
-  stream = demuxer->GetStream(media::DemuxerStream::VIDEO);
-  if (stream) {
-    streams_.push_back(stream);
-    end_of_stream_.push_back(false);
-    last_read_timestamp_.push_back(media::kNoTimestamp);
-    counts_.push_back(0);
-
-    if (enable_bitstream_converter)
+    if (enable_bitstream_converter && stream->type() == DemuxerStream::VIDEO)
       stream->EnableBitstreamConverter();
   }
 }
@@ -128,10 +120,12 @@ void StreamReader::Read() {
   bool end_of_stream = false;
   base::TimeDelta timestamp;
 
-  streams_[index]->Read(base::Bind(
-      &StreamReader::OnReadDone, base::Unretained(this),
-      base::MessageLoop::current(), &end_of_stream, &timestamp));
-  base::RunLoop().Run();
+  base::RunLoop run_loop;
+  streams_[index]->Read(
+      base::Bind(&StreamReader::OnReadDone, base::Unretained(this),
+                 base::ThreadTaskRunnerHandle::Get(),
+                 run_loop.QuitWhenIdleClosure(), &end_of_stream, &timestamp));
+  run_loop.Run();
 
   CHECK(end_of_stream || timestamp != media::kNoTimestamp);
   end_of_stream_[index] = end_of_stream;
@@ -148,7 +142,8 @@ bool StreamReader::IsDone() {
 }
 
 void StreamReader::OnReadDone(
-    base::MessageLoop* message_loop,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    const base::Closure& quit_when_idle_closure,
     bool* end_of_stream,
     base::TimeDelta* timestamp,
     media::DemuxerStream::Status status,
@@ -157,8 +152,7 @@ void StreamReader::OnReadDone(
   CHECK(buffer.get());
   *end_of_stream = buffer->end_of_stream();
   *timestamp = *end_of_stream ? media::kNoTimestamp : buffer->timestamp();
-  message_loop->task_runner()->PostTask(
-      FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
+  task_runner->PostTask(FROM_HERE, quit_when_idle_closure);
 }
 
 int StreamReader::GetNextStreamIndexToRead() {
@@ -183,10 +177,10 @@ int StreamReader::GetNextStreamIndexToRead() {
 
 static void RunDemuxerBenchmark(const std::string& filename) {
   base::FilePath file_path(GetTestDataFilePath(filename));
-  double total_time = 0.0;
+  base::TimeDelta total_time;
   for (int i = 0; i < kBenchmarkIterations; ++i) {
     // Setup.
-    base::MessageLoop message_loop;
+    base::test::ScopedTaskScheduler scoped_task_scheduler;
     DemuxerHostImpl demuxer_host;
     FileDataSource data_source;
     ASSERT_TRUE(data_source.Initialize(file_path));
@@ -195,34 +189,32 @@ static void RunDemuxerBenchmark(const std::string& filename) {
         base::Bind(&OnEncryptedMediaInitData);
     Demuxer::MediaTracksUpdatedCB tracks_updated_cb =
         base::Bind(&OnMediaTracksUpdated);
-    FFmpegDemuxer demuxer(message_loop.task_runner(), &data_source,
+    FFmpegDemuxer demuxer(base::ThreadTaskRunnerHandle::Get(), &data_source,
                           encrypted_media_init_data_cb, tracks_updated_cb,
                           new MediaLog());
 
-    demuxer.Initialize(&demuxer_host,
-                       base::Bind(&QuitLoopWithStatus, &message_loop),
-                       false);
-    base::RunLoop().Run();
+    {
+      base::RunLoop run_loop;
+      demuxer.Initialize(
+          &demuxer_host,
+          base::Bind(&QuitLoopWithStatus, run_loop.QuitClosure()), false);
+      run_loop.Run();
+    }
+
     StreamReader stream_reader(&demuxer, false);
 
     // Benchmark.
     base::TimeTicks start = base::TimeTicks::Now();
-    while (!stream_reader.IsDone()) {
+    while (!stream_reader.IsDone())
       stream_reader.Read();
-    }
-    base::TimeTicks end = base::TimeTicks::Now();
-    total_time += (end - start).InSecondsF();
+    total_time += base::TimeTicks::Now() - start;
     demuxer.Stop();
-    QuitLoopWithStatus(&message_loop, PIPELINE_OK);
-    base::RunLoop().Run();
+    base::RunLoop().RunUntilIdle();
   }
 
-  perf_test::PrintResult("demuxer_bench",
-                         "",
-                         filename,
-                         kBenchmarkIterations / total_time,
-                         "runs/s",
-                         true);
+  perf_test::PrintResult("demuxer_bench", "", filename,
+                         kBenchmarkIterations / total_time.InSecondsF(),
+                         "runs/s", true);
 }
 
 #if defined(OS_WIN)
@@ -235,14 +227,12 @@ TEST(DemuxerPerfTest, MAYBE_Demuxer) {
   RunDemuxerBenchmark("bear.ogv");
   RunDemuxerBenchmark("bear-640x360.webm");
   RunDemuxerBenchmark("sfx_s16le.wav");
-#if defined(USE_PROPRIETARY_CODECS)
+  RunDemuxerBenchmark("bear.flac");
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
   RunDemuxerBenchmark("bear-1280x720.mp4");
   RunDemuxerBenchmark("sfx.mp3");
 #endif
-#if defined(OS_CHROMEOS)
-  RunDemuxerBenchmark("bear.flac");
-#endif
-#if defined(USE_PROPRIETARY_CODECS) && defined(OS_CHROMEOS)
+#if BUILDFLAG(USE_PROPRIETARY_CODECS) && defined(OS_CHROMEOS)
   RunDemuxerBenchmark("bear.avi");
 #endif
 }

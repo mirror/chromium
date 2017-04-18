@@ -33,40 +33,46 @@
 
 #include "core/inspector/InspectorFrontendClient.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/web/WebDevToolsFrontend.h"
-#include "wtf/HashMap.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class DevToolsHost;
 class WebLocalFrameImpl;
 
-class WebDevToolsFrontendImpl final : public WebDevToolsFrontend, public InspectorFrontendClient {
-    WTF_MAKE_NONCOPYABLE(WebDevToolsFrontendImpl);
-public:
-    WebDevToolsFrontendImpl(WebLocalFrameImpl*, WebDevToolsFrontendClient*);
-    ~WebDevToolsFrontendImpl() override;
+class WebDevToolsFrontendImpl final : public WebDevToolsFrontend,
+                                      public InspectorFrontendClient {
+  WTF_MAKE_NONCOPYABLE(WebDevToolsFrontendImpl);
 
-    void didClearWindowObject(WebLocalFrameImpl*);
+ public:
+  WebDevToolsFrontendImpl(WebLocalFrameImpl*, WebDevToolsFrontendClient*);
+  ~WebDevToolsFrontendImpl() override;
 
-    void sendMessageToEmbedder(const WTF::String&) override;
+  void DidClearWindowObject(WebLocalFrameImpl*);
 
-    bool isUnderTest() override;
+  void SendMessageToEmbedder(const WTF::String&) override;
 
-    void showContextMenu(LocalFrame*, float x, float y, ContextMenuProvider*) override;
+  bool IsUnderTest() override;
 
-    void setInjectedScriptForOrigin(const String& origin, const String& source) override;
+  void ShowContextMenu(LocalFrame*,
+                       float x,
+                       float y,
+                       ContextMenuProvider*) override;
 
-private:
-    Persistent<WebLocalFrameImpl> m_webFrame;
-    WebDevToolsFrontendClient* m_client;
-    Persistent<DevToolsHost> m_devtoolsHost;
-    typedef HashMap<String, String> InjectedScriptForOriginMap;
-    InjectedScriptForOriginMap m_injectedScriptForOrigin;
+  void SetInjectedScriptForOrigin(const String& origin,
+                                  const String& source) override;
+
+ private:
+  Persistent<WebLocalFrameImpl> web_frame_;
+  WebDevToolsFrontendClient* client_;
+  Persistent<DevToolsHost> devtools_host_;
+  typedef HashMap<String, String> InjectedScriptForOriginMap;
+  InjectedScriptForOriginMap injected_script_for_origin_;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

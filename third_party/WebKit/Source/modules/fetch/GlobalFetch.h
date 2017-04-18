@@ -12,30 +12,42 @@
 namespace blink {
 
 class Dictionary;
-class DOMWindow;
+class LocalDOMWindow;
 class ExceptionState;
 class ScriptState;
 class WorkerGlobalScope;
 
 class GlobalFetch {
-    STATIC_ONLY(GlobalFetch);
-public:
-    class MODULES_EXPORT ScopedFetcher : public GarbageCollectedMixin {
-    public:
-        virtual ~ScopedFetcher();
+  STATIC_ONLY(GlobalFetch);
 
-        virtual ScriptPromise fetch(ScriptState*, const RequestInfo&, const Dictionary&, ExceptionState&) = 0;
+ public:
+  class MODULES_EXPORT ScopedFetcher : public GarbageCollectedMixin {
+   public:
+    virtual ~ScopedFetcher();
 
-        static ScopedFetcher* from(DOMWindow&);
-        static ScopedFetcher* from(WorkerGlobalScope&);
+    virtual ScriptPromise Fetch(ScriptState*,
+                                const RequestInfo&,
+                                const Dictionary&,
+                                ExceptionState&) = 0;
 
-        DECLARE_VIRTUAL_TRACE();
-    };
+    static ScopedFetcher* From(LocalDOMWindow&);
+    static ScopedFetcher* From(WorkerGlobalScope&);
 
-    static ScriptPromise fetch(ScriptState*, DOMWindow&, const RequestInfo&, const Dictionary&, ExceptionState&);
-    static ScriptPromise fetch(ScriptState*, WorkerGlobalScope&, const RequestInfo&, const Dictionary&, ExceptionState&);
+    DECLARE_VIRTUAL_TRACE();
+  };
+
+  static ScriptPromise fetch(ScriptState*,
+                             LocalDOMWindow&,
+                             const RequestInfo&,
+                             const Dictionary&,
+                             ExceptionState&);
+  static ScriptPromise fetch(ScriptState*,
+                             WorkerGlobalScope&,
+                             const RequestInfo&,
+                             const Dictionary&,
+                             ExceptionState&);
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // GlobalFetch_h
+#endif  // GlobalFetch_h

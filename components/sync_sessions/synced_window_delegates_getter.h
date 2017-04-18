@@ -5,12 +5,12 @@
 #ifndef COMPONENTS_SYNC_SESSIONS_SYNCED_WINDOW_DELEGATES_GETTER_H_
 #define COMPONENTS_SYNC_SESSIONS_SYNCED_WINDOW_DELEGATES_GETTER_H_
 
-#include <set>
+#include <map>
 
 #include "base/macros.h"
 #include "components/sessions/core/session_id.h"
 
-namespace browser_sync {
+namespace sync_sessions {
 
 class SyncedWindowDelegate;
 
@@ -18,11 +18,14 @@ class SyncedWindowDelegate;
 // how this is done on different platforms.
 class SyncedWindowDelegatesGetter {
  public:
+  using SyncedWindowDelegateMap =
+      std::map<SessionID::id_type, const SyncedWindowDelegate*>;
+
   SyncedWindowDelegatesGetter();
   virtual ~SyncedWindowDelegatesGetter();
 
   // Returns all SyncedWindowDelegate instances.
-  virtual std::set<const SyncedWindowDelegate*> GetSyncedWindowDelegates() = 0;
+  virtual SyncedWindowDelegateMap GetSyncedWindowDelegates() = 0;
 
   // Find a SyncedWindowDelegate given its window's id.
   virtual const SyncedWindowDelegate* FindById(SessionID::id_type id) = 0;
@@ -31,6 +34,6 @@ class SyncedWindowDelegatesGetter {
   DISALLOW_COPY_AND_ASSIGN(SyncedWindowDelegatesGetter);
 };
 
-}  // namespace browser_sync
+}  // namespace sync_sessions
 
 #endif  // COMPONENTS_SYNC_SESSIONS_SYNCED_WINDOW_DELEGATES_GETTER_H_

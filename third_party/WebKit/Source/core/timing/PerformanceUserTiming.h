@@ -29,47 +29,50 @@
 #include "core/timing/PerformanceBase.h"
 #include "core/timing/PerformanceTiming.h"
 #include "platform/heap/Handle.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 class PerformanceBase;
 
-typedef unsigned long long (PerformanceTiming::*NavigationTimingFunction)() const;
+typedef unsigned long long (
+    PerformanceTiming::*NavigationTimingFunction)() const;
 using PerformanceEntryMap = HeapHashMap<String, PerformanceEntryVector>;
 
 class UserTiming final : public GarbageCollected<UserTiming> {
-public:
-    static UserTiming* create(PerformanceBase& performance)
-    {
-        return new UserTiming(performance);
-    }
+ public:
+  static UserTiming* Create(PerformanceBase& performance) {
+    return new UserTiming(performance);
+  }
 
-    PerformanceEntry* mark(const String& markName, ExceptionState&);
-    void clearMarks(const String& markName);
+  PerformanceEntry* Mark(const String& mark_name, ExceptionState&);
+  void ClearMarks(const String& mark_name);
 
-    PerformanceEntry* measure(const String& measureName, const String& startMark, const String& endMark, ExceptionState&);
-    void clearMeasures(const String& measureName);
+  PerformanceEntry* Measure(const String& measure_name,
+                            const String& start_mark,
+                            const String& end_mark,
+                            ExceptionState&);
+  void ClearMeasures(const String& measure_name);
 
-    PerformanceEntryVector getMarks() const;
-    PerformanceEntryVector getMeasures() const;
+  PerformanceEntryVector GetMarks() const;
+  PerformanceEntryVector GetMeasures() const;
 
-    PerformanceEntryVector getMarks(const String& name) const;
-    PerformanceEntryVector getMeasures(const String& name) const;
+  PerformanceEntryVector GetMarks(const String& name) const;
+  PerformanceEntryVector GetMeasures(const String& name) const;
 
-    DECLARE_TRACE();
+  DECLARE_TRACE();
 
-private:
-    explicit UserTiming(PerformanceBase&);
+ private:
+  explicit UserTiming(PerformanceBase&);
 
-    double findExistingMarkStartTime(const String& markName, ExceptionState&);
+  double FindExistingMarkStartTime(const String& mark_name, ExceptionState&);
 
-    Member<PerformanceBase> m_performance;
-    PerformanceEntryMap m_marksMap;
-    PerformanceEntryMap m_measuresMap;
+  Member<PerformanceBase> performance_;
+  PerformanceEntryMap marks_map_;
+  PerformanceEntryMap measures_map_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // !defined(PerformanceUserTiming_h)
+#endif  // !defined(PerformanceUserTiming_h)

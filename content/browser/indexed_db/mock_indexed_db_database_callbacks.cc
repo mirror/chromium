@@ -4,12 +4,14 @@
 
 #include "content/browser/indexed_db/mock_indexed_db_database_callbacks.h"
 
+#include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
 
 MockIndexedDBDatabaseCallbacks::MockIndexedDBDatabaseCallbacks()
-    : IndexedDBDatabaseCallbacks(NULL, 0, 0),
+    : IndexedDBDatabaseCallbacks(scoped_refptr<IndexedDBContextImpl>(nullptr),
+                                 nullptr),
       abort_called_(false),
       forced_close_called_(false) {}
 
@@ -18,7 +20,7 @@ void MockIndexedDBDatabaseCallbacks::OnForcedClose() {
 }
 
 void MockIndexedDBDatabaseCallbacks::OnAbort(
-    int64_t transaction_id,
+    const IndexedDBTransaction& transaction,
     const IndexedDBDatabaseError& error) {
   abort_called_ = true;
 }

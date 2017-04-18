@@ -23,18 +23,30 @@
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class Node;
 
-bool findBestClickableCandidate(Node*& targetNode, IntPoint& targetPoint, const IntPoint& touchHotspot, const IntRect& touchArea, const HeapVector<Member<Node>>&);
-bool findBestContextMenuCandidate(Node*& targetNode, IntPoint& targetPoint, const IntPoint& touchHotspot, const IntRect& touchArea, const HeapVector<Member<Node>>&);
-bool findBestZoomableArea(Node*& targetNode, IntRect& targetArea, const IntPoint& touchHotspot, const IntRect& touchArea, const HeapVector<Member<Node>>&);
+bool FindBestClickableCandidate(Node*& target_node,
+                                IntPoint& target_point,
+                                const IntPoint& touch_hotspot,
+                                const IntRect& touch_area,
+                                const HeapVector<Member<Node>>&);
+bool FindBestContextMenuCandidate(Node*& target_node,
+                                  IntPoint& target_point,
+                                  const IntPoint& touch_hotspot,
+                                  const IntRect& touch_area,
+                                  const HeapVector<Member<Node>>&);
+bool FindBestZoomableArea(Node*& target_node,
+                          IntRect& target_area,
+                          const IntPoint& touch_hotspot,
+                          const IntRect& touch_area,
+                          const HeapVector<Member<Node>>&);
 // FIXME: Implement the similar functions for other gestures here as well.
 
-} // namespace blink
+}  // namespace blink
 
 #endif

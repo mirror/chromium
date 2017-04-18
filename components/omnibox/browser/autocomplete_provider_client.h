@@ -38,6 +38,10 @@ namespace net {
 class URLRequestContextGetter;
 }
 
+namespace physical_web {
+class PhysicalWebDataSource;
+}
+
 class SearchTermsData;
 class TemplateURLService;
 
@@ -61,6 +65,7 @@ class AutocompleteProviderClient {
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackendIfExists() = 0;
   virtual std::unique_ptr<KeywordExtensionsDelegate>
   GetKeywordExtensionsDelegate(KeywordProvider* keyword_provider) = 0;
+  virtual physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() = 0;
 
   // The value to use for Accept-Languages HTTP header when making an HTTP
   // request.

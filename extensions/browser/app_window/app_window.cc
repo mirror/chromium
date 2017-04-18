@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "base/callback_helpers.h"
-#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -23,13 +22,13 @@
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/invalidate_type.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
-#include "content/public/common/content_switches.h"
 #include "content/public/common/media_stream_request.h"
 #include "extensions/browser/app_window/app_delegate.h"
 #include "extensions/browser/app_window/app_web_contents_helper.h"
@@ -50,13 +49,13 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
 #include "extensions/common/permissions/permissions_data.h"
-#include "extensions/common/switches.h"
 #include "extensions/grit/extensions_browser_resources.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/gfx/image/image_skia_operations.h"
 
 #if !defined(OS_MACOSX)
 #include "components/prefs/pref_service.h"
@@ -82,7 +81,7 @@ void SetConstraintProperty(const std::string& name,
   if (value != SizeConstraints::kUnboundedSize)
     bounds_properties->SetInteger(name, value);
   else
-    bounds_properties->Set(name, base::Value::CreateNullValue());
+    bounds_properties->Set(name, base::MakeUnique<base::Value>());
 }
 
 void SetBoundsProperties(const gfx::Rect& bounds,
@@ -246,12 +245,8 @@ AppWindow::AppWindow(BrowserContext* context,
       window_type_(WINDOW_TYPE_DEFAULT),
       app_delegate_(app_delegate),
       fullscreen_types_(FULLSCREEN_TYPE_NONE),
-      show_on_first_paint_(false),
-      first_paint_complete_(false),
       has_been_shown_(false),
-      can_send_events_(false),
       is_hidden_(false),
-      delayed_show_type_(SHOW_ACTIVE),
       cached_always_on_top_(false),
       requested_alpha_enabled_(false),
       is_ime_window_(false),
@@ -298,6 +293,7 @@ void AppWindow::Init(const GURL& url,
   requested_alpha_enabled_ = new_params.alpha_enabled;
   is_ime_window_ = params.is_ime_window;
   show_in_shelf_ = params.show_in_shelf;
+  window_icon_url_ = params.window_icon_url;
 
   AppWindowClient* app_window_client = AppWindowClient::Get();
   native_app_window_.reset(
@@ -307,6 +303,10 @@ void AppWindow::Init(const GURL& url,
       browser_context_, extension_id_, web_contents(), app_delegate_.get()));
 
   UpdateExtensionAppIcon();
+  // Download showInShelf=true window icon.
+  if (window_icon_url_.is_valid())
+    SetAppIconUrl(window_icon_url_);
+
   AppWindowRegistry::Get(browser_context_)->AddAppWindow(this);
 
   if (new_params.hidden) {
@@ -338,17 +338,6 @@ void AppWindow::Init(const GURL& url,
                  base::Unretained(native_app_window_.get())));
 
   app_window_contents_->LoadContents(new_params.creator_process_id);
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          extensions::switches::kEnableAppsShowOnFirstPaint)) {
-    // We want to show the window only when the content has been painted. For
-    // that to happen, we need to define a size for the content, otherwise the
-    // layout will happen in a 0x0 area.
-    gfx::Insets frame_insets = native_app_window_->GetFrameInsets();
-    gfx::Rect initial_bounds = new_params.GetInitialWindowBounds(frame_insets);
-    initial_bounds.Inset(frame_insets);
-    app_delegate_->ResizeWebContents(web_contents(), initial_bounds.size());
-  }
 }
 
 AppWindow::~AppWindow() {
@@ -391,13 +380,12 @@ void AppWindow::AddNewContents(WebContents* source,
                                 was_blocked);
 }
 
-bool AppWindow::PreHandleKeyboardEvent(
+content::KeyboardEventProcessingResult AppWindow::PreHandleKeyboardEvent(
     content::WebContents* source,
-    const content::NativeWebKeyboardEvent& event,
-    bool* is_keyboard_shortcut) {
+    const content::NativeWebKeyboardEvent& event) {
   const Extension* extension = GetExtension();
   if (!extension)
-    return false;
+    return content::KeyboardEventProcessingResult::NOT_HANDLED;
 
   // Here, we can handle a key event before the content gets it. When we are
   // fullscreen and it is not forced, we want to allow the user to leave
@@ -407,15 +395,15 @@ bool AppWindow::PreHandleKeyboardEvent(
   // ::HandleKeyboardEvent() will only be called if the KeyEvent's default
   // action is not prevented.
   // Thus, we should handle the KeyEvent here only if the permission is not set.
-  if (event.windowsKeyCode == ui::VKEY_ESCAPE && IsFullscreen() &&
+  if (event.windows_key_code == ui::VKEY_ESCAPE && IsFullscreen() &&
       !IsForcedFullscreen() &&
       !extension->permissions_data()->HasAPIPermission(
           APIPermission::kOverrideEscFullscreen)) {
     Restore();
-    return true;
+    return content::KeyboardEventProcessingResult::HANDLED;
   }
 
-  return false;
+  return content::KeyboardEventProcessingResult::NOT_HANDLED;
 }
 
 void AppWindow::HandleKeyboardEvent(
@@ -424,7 +412,7 @@ void AppWindow::HandleKeyboardEvent(
   // If the window is currently fullscreen and not forced, ESC should leave
   // fullscreen.  If this code is being called for ESC, that means that the
   // KeyEvent's default behavior was not prevented by the content.
-  if (event.windowsKeyCode == ui::VKEY_ESCAPE && IsFullscreen() &&
+  if (event.windows_key_code == ui::VKEY_ESCAPE && IsFullscreen() &&
       !IsForcedFullscreen()) {
     Restore();
     return;
@@ -456,23 +444,20 @@ void AppWindow::RenderViewCreated(content::RenderViewHost* render_view_host) {
   app_delegate_->RenderViewCreated(render_view_host);
 }
 
-void AppWindow::DidFirstVisuallyNonEmptyPaint() {
-  first_paint_complete_ = true;
-  if (show_on_first_paint_) {
-    DCHECK(delayed_show_type_ == SHOW_ACTIVE ||
-           delayed_show_type_ == SHOW_INACTIVE);
-    Show(delayed_show_type_);
-  }
-}
-
 void AppWindow::SetOnFirstCommitCallback(const base::Closure& callback) {
   DCHECK(on_first_commit_callback_.is_null());
   on_first_commit_callback_ = callback;
 }
 
 void AppWindow::OnReadyToCommitFirstNavigation() {
-  CHECK(content::IsBrowserSideNavigationEnabled());
-  WindowEventsReady();
+  if (!content::IsBrowserSideNavigationEnabled())
+    return;
+
+  // PlzNavigate: execute renderer-side setup now that there is a renderer
+  // process assigned to the navigation. With renderer-side navigation, this
+  // would happen before the navigation starts, but PlzNavigate must wait until
+  // this point in time in the navigation.
+
   if (on_first_commit_callback_.is_null())
     return;
   // It is important that the callback executes after the calls to
@@ -576,14 +561,22 @@ base::string16 AppWindow::GetTitle() const {
   return title;
 }
 
+bool AppWindow::HasCustomIcon() const {
+  return window_icon_url_.is_valid() || app_icon_url_.is_valid();
+}
+
 void AppWindow::SetAppIconUrl(const GURL& url) {
   // Avoid using any previous icons that were being downloaded.
   image_loader_ptr_factory_.InvalidateWeakPtrs();
 
   // Reset |app_icon_image_| to abort pending image load (if any).
-  app_icon_image_.reset();
+  if (!show_in_shelf_) {
+    app_icon_image_.reset();
+    app_icon_url_ = url;
+  } else {
+    window_icon_url_ = url;
+  }
 
-  app_icon_url_ = url;
   web_contents()->DownloadImage(
       url,
       true,   // is a favicon
@@ -603,9 +596,36 @@ void AppWindow::UpdateDraggableRegions(
 }
 
 void AppWindow::UpdateAppIcon(const gfx::Image& image) {
-  if (image.IsEmpty())
-    return;
-  app_icon_ = image;
+  // Set the showInShelf=true window icon and add the app_icon_image_
+  // as a badge. If the image is empty, set the default app icon placeholder
+  // as the base image.
+  if (window_icon_url_.is_valid() && app_icon_image_ &&
+      !app_icon_image_->image().IsEmpty()) {
+    gfx::Image base_image =
+        !image.IsEmpty()
+            ? image
+            : gfx::Image(*ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+                  IDR_APP_DEFAULT_ICON));
+    // Scale the icon to EXTENSION_ICON_LARGE.
+    const int large_icon_size = extension_misc::EXTENSION_ICON_LARGE;
+    if (base_image.Width() != large_icon_size ||
+        base_image.Height() != large_icon_size) {
+      gfx::ImageSkia resized_image =
+          gfx::ImageSkiaOperations::CreateResizedImage(
+              base_image.AsImageSkia(), skia::ImageOperations::RESIZE_BEST,
+              gfx::Size(large_icon_size, large_icon_size));
+      app_icon_ = gfx::Image(gfx::ImageSkiaOperations::CreateIconWithBadge(
+          resized_image, app_icon_image_->image_skia()));
+    } else {
+      app_icon_ = gfx::Image(gfx::ImageSkiaOperations::CreateIconWithBadge(
+          base_image.AsImageSkia(), app_icon_image_->image_skia()));
+    }
+  } else {
+    if (image.IsEmpty())
+      return;
+
+    app_icon_ = image;
+  }
   native_app_window_->UpdateWindowIcon();
   AppWindowRegistry::Get(browser_context_)->AppWindowIconChanged(this);
 }
@@ -691,16 +711,6 @@ void AppWindow::Show(ShowType show_type) {
   bool was_hidden = is_hidden_ || !has_been_shown_;
   is_hidden_ = false;
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAppsShowOnFirstPaint)) {
-    show_on_first_paint_ = true;
-
-    if (!first_paint_complete_) {
-      delayed_show_type_ = show_type;
-      return;
-    }
-  }
-
   switch (show_type) {
     case SHOW_ACTIVE:
       GetBaseWindow()->Show();
@@ -710,18 +720,11 @@ void AppWindow::Show(ShowType show_type) {
       break;
   }
   AppWindowRegistry::Get(browser_context_)->AppWindowShown(this, was_hidden);
-
   has_been_shown_ = true;
-  SendOnWindowShownIfShown();
 }
 
 void AppWindow::Hide() {
-  // This is there to prevent race conditions with Hide() being called before
-  // there was a non-empty paint. It should have no effect in a non-racy
-  // scenario where the application is hiding then showing a window: the second
-  // show will not be delayed.
   is_hidden_ = true;
-  show_on_first_paint_ = false;
   GetBaseWindow()->Hide();
   AppWindowRegistry::Get(browser_context_)->AppWindowHidden(this);
   app_delegate_->OnHide();
@@ -747,11 +750,6 @@ bool AppWindow::IsAlwaysOnTop() const { return cached_always_on_top_; }
 void AppWindow::RestoreAlwaysOnTop() {
   if (cached_always_on_top_)
     UpdateNativeAlwaysOnTop();
-}
-
-void AppWindow::WindowEventsReady() {
-  can_send_events_ = true;
-  SendOnWindowShownIfShown();
 }
 
 void AppWindow::NotifyRenderViewReady() {
@@ -814,8 +812,10 @@ void AppWindow::DidDownloadFavicon(
     const GURL& image_url,
     const std::vector<SkBitmap>& bitmaps,
     const std::vector<gfx::Size>& original_bitmap_sizes) {
-  if (image_url != app_icon_url_ || bitmaps.empty())
+  if (((image_url != app_icon_url_) && (image_url != window_icon_url_)) ||
+      bitmaps.empty()) {
     return;
+  }
 
   // Bitmaps are ordered largest to smallest. Choose the smallest bitmap
   // whose height >= the preferred size.
@@ -832,7 +832,9 @@ void AppWindow::DidDownloadFavicon(
 void AppWindow::OnExtensionIconImageChanged(IconImage* image) {
   DCHECK_EQ(app_icon_image_.get(), image);
 
-  UpdateAppIcon(gfx::Image(app_icon_image_->image_skia()));
+  // Update app_icon if no valid window icon url is set.
+  if (!window_icon_url_.is_valid())
+    UpdateAppIcon(gfx::Image(app_icon_image_->image_skia()));
 }
 
 void AppWindow::UpdateExtensionAppIcon() {
@@ -900,16 +902,6 @@ void AppWindow::UpdateNativeAlwaysOnTop() {
     // When exiting fullscreen and moving away from the taskbar, reinstate
     // always-on-top.
     native_app_window_->SetAlwaysOnTop(true);
-  }
-}
-
-void AppWindow::SendOnWindowShownIfShown() {
-  if (!can_send_events_ || !has_been_shown_)
-    return;
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          ::switches::kTestType)) {
-    app_window_contents_->DispatchWindowShownForTests();
   }
 }
 
@@ -985,8 +977,8 @@ bool AppWindow::IsFullscreenForTabOrPending(const content::WebContents* source)
 
 blink::WebDisplayMode AppWindow::GetDisplayMode(
     const content::WebContents* source) const {
-  return IsFullscreen() ? blink::WebDisplayModeFullscreen
-                        : blink::WebDisplayModeStandalone;
+  return IsFullscreen() ? blink::kWebDisplayModeFullscreen
+                        : blink::kWebDisplayModeStandalone;
 }
 
 WindowController* AppWindow::GetExtensionWindowController() const {

@@ -13,7 +13,8 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ * USA
  */
 
 #ifndef ExceptionCode_h
@@ -27,78 +28,78 @@ namespace blink {
 // an exception of any type can be expressed with a single integer.
 typedef int ExceptionCode;
 
-
-// This list must be in sync with the |domExceptions| in PrivateScriptRunner.js and |coreExceptions| in DOMExceptions.cpp.
+// This list must be in sync with |coreExceptions| in DOMExceptions.cpp.
 // Some of these are considered historical since they have been
 // changed or removed from the specifications.
 enum {
-    IndexSizeError = 1,
-    HierarchyRequestError,
-    WrongDocumentError,
-    InvalidCharacterError,
-    NoModificationAllowedError,
-    NotFoundError,
-    NotSupportedError,
-    InUseAttributeError, // Historical. Only used in setAttributeNode etc which have been removed from the DOM specs.
+  kIndexSizeError = 1,
+  kHierarchyRequestError,
+  kWrongDocumentError,
+  kInvalidCharacterError,
+  kNoModificationAllowedError,
+  kNotFoundError,
+  kNotSupportedError,
+  kInUseAttributeError,  // Historical. Only used in setAttributeNode etc which
+                         // have been removed from the DOM specs.
 
-    // Introduced in DOM Level 2:
-    InvalidStateError,
-    SyntaxError,
-    InvalidModificationError,
-    NamespaceError,
-    InvalidAccessError,
+  // Introduced in DOM Level 2:
+  kInvalidStateError,
+  kSyntaxError,
+  kInvalidModificationError,
+  kNamespaceError,
+  kInvalidAccessError,
 
-    // Introduced in DOM Level 3:
-    TypeMismatchError, // Historical; use TypeError instead
+  // Introduced in DOM Level 3:
+  kTypeMismatchError,  // Historical; use TypeError instead
 
-    // XMLHttpRequest extension:
-    SecurityError,
+  // XMLHttpRequest extension:
+  kSecurityError,
 
-    // Others introduced in HTML5:
-    NetworkError,
-    AbortError,
-    URLMismatchError,
-    QuotaExceededError,
-    TimeoutError,
-    InvalidNodeTypeError,
-    DataCloneError,
+  // Others introduced in HTML5:
+  kNetworkError,
+  kAbortError,
+  kURLMismatchError,
+  kQuotaExceededError,
+  kTimeoutError,
+  kInvalidNodeTypeError,
+  kDataCloneError,
 
-    // These are IDB-specific.
-    UnknownError,
-    ConstraintError,
-    DataError,
-    TransactionInactiveError,
-    ReadOnlyError,
-    VersionError,
+  // These are IDB-specific.
+  kUnknownError,
+  kConstraintError,
+  kDataError,
+  kTransactionInactiveError,
+  kReadOnlyError,
+  kVersionError,
 
-    // File system
-    NotReadableError,
-    EncodingError,
-    PathExistsError,
+  // File system
+  kNotReadableError,
+  kEncodingError,
+  kPathExistsError,
 
-    // SQL
-    SQLDatabaseError, // Naming conflict with DatabaseError class.
+  // SQL
+  kSQLDatabaseError,  // Naming conflict with DatabaseError class.
 
-    // Web Crypto
-    OperationError,
+  // Web Crypto
+  kOperationError,
 
-    // Push API
-    PermissionDeniedError,
+  // Push API
+  kPermissionDeniedError,
 
-    NotAllowedError,
+  kNotAllowedError,
 
-    // Pointer Events
-    InvalidPointerId,
+  // Pointer Events
+  kInvalidPointerId,
 };
 
 enum V8ErrorType {
-    V8GeneralError = 1000,
-    V8TypeError,
-    V8RangeError,
-    V8SyntaxError,
-    V8ReferenceError,
+  kV8Error = 1000,
+  kV8TypeError,
+  kV8RangeError,
+  kV8SyntaxError,
+  kV8ReferenceError,
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // ExceptionCode_h
+#endif  // ExceptionCode_h

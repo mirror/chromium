@@ -12,7 +12,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "device/core/device_client.h"
+#include "device/base/device_client.h"
 #include "device/hid/hid_device_filter.h"
 #include "device/hid/hid_device_info.h"
 #include "device/hid/hid_service.h"
@@ -22,7 +22,6 @@
 #include "device/usb/usb_service.h"
 #include "extensions/browser/api/device_permissions_manager.h"
 #include "extensions/common/extension.h"
-#include "extensions/strings/grit/extensions_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
@@ -48,7 +47,7 @@ void NoopUsbCallback(const std::vector<scoped_refptr<device::UsbDevice>>&) {}
 
 class UsbDeviceInfo : public DevicePermissionsPrompt::Prompt::DeviceInfo {
  public:
-  UsbDeviceInfo(scoped_refptr<UsbDevice> device) : device_(device) {
+  explicit UsbDeviceInfo(scoped_refptr<UsbDevice> device) : device_(device) {
     name_ = DevicePermissionsManager::GetPermissionMessage(
         device->vendor_id(), device->product_id(),
         device->manufacturer_string(), device->product_string(),
@@ -99,11 +98,6 @@ class UsbDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
     }
   }
 
-  base::string16 GetHeading() const override {
-    return l10n_util::GetSingleOrMultipleStringUTF16(
-        IDS_USB_DEVICE_PERMISSIONS_PROMPT_TITLE, multiple());
-  }
-
   void Dismissed() override {
     DevicePermissionsManager* permissions_manager =
         DevicePermissionsManager::Get(browser_context());
@@ -126,9 +120,8 @@ class UsbDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
 
   // device::UsbService::Observer implementation:
   void OnDeviceAdded(scoped_refptr<UsbDevice> device) override {
-    if (!(filters_.empty() || UsbDeviceFilter::MatchesAny(device, filters_))) {
+    if (!UsbDeviceFilter::MatchesAny(*device, filters_))
       return;
-    }
 
     std::unique_ptr<DeviceInfo> device_info(new UsbDeviceInfo(device));
     device->CheckUsbAccess(
@@ -141,10 +134,11 @@ class UsbDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
       const UsbDeviceInfo* entry =
           static_cast<const UsbDeviceInfo*>((*it).get());
       if (entry->device() == device) {
+        size_t index = it - devices_.begin();
+        base::string16 device_name = (*it)->name();
         devices_.erase(it);
-        if (observer()) {
-          observer()->OnDevicesChanged();
-        }
+        if (observer())
+          observer()->OnDeviceRemoved(index, device_name);
         return;
       }
     }
@@ -164,7 +158,8 @@ class UsbDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
 
 class HidDeviceInfo : public DevicePermissionsPrompt::Prompt::DeviceInfo {
  public:
-  HidDeviceInfo(scoped_refptr<device::HidDeviceInfo> device) : device_(device) {
+  explicit HidDeviceInfo(scoped_refptr<device::HidDeviceInfo> device)
+      : device_(device) {
     name_ = DevicePermissionsManager::GetPermissionMessage(
         device->vendor_id(), device->product_id(),
         base::string16(),  // HID devices include manufacturer in product name.
@@ -214,11 +209,6 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
     }
   }
 
-  base::string16 GetHeading() const override {
-    return l10n_util::GetSingleOrMultipleStringUTF16(
-        IDS_HID_DEVICE_PERMISSIONS_PROMPT_TITLE, multiple());
-  }
-
   void Dismissed() override {
     DevicePermissionsManager* permissions_manager =
         DevicePermissionsManager::Get(browser_context());
@@ -265,10 +255,11 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
       const HidDeviceInfo* entry =
           static_cast<const HidDeviceInfo*>((*it).get());
       if (entry->device() == device) {
+        size_t index = it - devices_.begin();
+        base::string16 device_name = (*it)->name();
         devices_.erase(it);
-        if (observer()) {
-          observer()->OnDevicesChanged();
-        }
+        if (observer())
+          observer()->OnDeviceRemoved(index, device_name);
         return;
       }
     }
@@ -316,12 +307,6 @@ void DevicePermissionsPrompt::Prompt::SetObserver(Observer* observer) {
   observer_ = observer;
 }
 
-base::string16 DevicePermissionsPrompt::Prompt::GetPromptMessage() const {
-  return base::i18n::MessageFormatter::FormatWithNumberedArgs(
-      l10n_util::GetStringUTF16(IDS_DEVICE_PERMISSIONS_PROMPT),
-      multiple_ ? "multiple" : "single", extension_->name());
-}
-
 base::string16 DevicePermissionsPrompt::Prompt::GetDeviceName(
     size_t index) const {
   DCHECK_LT(index, devices_.size());
@@ -346,10 +331,10 @@ void DevicePermissionsPrompt::Prompt::AddCheckedDevice(
     std::unique_ptr<DeviceInfo> device,
     bool allowed) {
   if (allowed) {
+    base::string16 device_name = device->name();
     devices_.push_back(std::move(device));
-    if (observer_) {
-      observer_->OnDevicesChanged();
-    }
+    if (observer_)
+      observer_->OnDeviceAdded(devices_.size() - 1, device_name);
   }
 }
 

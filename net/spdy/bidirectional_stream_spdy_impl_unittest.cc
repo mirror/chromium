@@ -5,22 +5,22 @@
 #include "net/spdy/bidirectional_stream_spdy_impl.h"
 
 #include <memory>
-#include <string>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/string_piece.h"
 #include "base/time/time.h"
 #include "base/timer/mock_timer.h"
+#include "net/base/load_timing_info.h"
+#include "net/base/load_timing_info_test_util.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_request_info.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
-#include "net/log/net_log.h"
 #include "net/log/test_net_log.h"
 #include "net/socket/socket_test_util.h"
+#include "net/spdy/platform/api/spdy_string.h"
 #include "net/spdy/spdy_session.h"
 #include "net/spdy/spdy_test_util_common.h"
 #include "net/test/cert_test_util.h"
@@ -41,12 +41,34 @@ const size_t kBodyDataSize = arraysize(kBodyData);
 // Size of the buffer to be allocated for each read.
 const size_t kReadBufferSize = 4096;
 
+// Tests the load timing of a stream that's connected and is not the first
+// request sent on a connection.
+void TestLoadTimingReused(const LoadTimingInfo& load_timing_info) {
+  EXPECT_TRUE(load_timing_info.socket_reused);
+  EXPECT_NE(NetLogSource::kInvalidId, load_timing_info.socket_log_id);
+
+  ExpectConnectTimingHasNoTimes(load_timing_info.connect_timing);
+  ExpectLoadTimingHasOnlyConnectionTimes(load_timing_info);
+}
+
+// Tests the load timing of a stream that's connected and using a fresh
+// connection.
+void TestLoadTimingNotReused(const LoadTimingInfo& load_timing_info) {
+  EXPECT_FALSE(load_timing_info.socket_reused);
+  EXPECT_NE(NetLogSource::kInvalidId, load_timing_info.socket_log_id);
+
+  ExpectConnectTimingHasTimes(
+      load_timing_info.connect_timing,
+      CONNECT_TIMING_HAS_SSL_TIMES | CONNECT_TIMING_HAS_DNS_TIMES);
+  ExpectLoadTimingHasOnlyConnectionTimes(load_timing_info);
+}
+
 class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
  public:
   TestDelegateBase(base::WeakPtr<SpdySession> session,
                    IOBuffer* read_buf,
                    int read_buf_len)
-      : stream_(new BidirectionalStreamSpdyImpl(session)),
+      : stream_(new BidirectionalStreamSpdyImpl(session, NetLogSource())),
         read_buf_(read_buf),
         read_buf_len_(read_buf_len),
         loop_(nullptr),
@@ -108,10 +130,10 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
   }
 
   void Start(const BidirectionalStreamRequestInfo* request,
-             const BoundNetLog& net_log) {
+             const NetLogWithSource& net_log) {
     stream_->Start(request, net_log,
                    /*send_request_headers_automatically=*/false, this,
-                   base::WrapUnique(new base::Timer(false, false)));
+                   base::MakeUnique<base::Timer>(false, false));
     not_expect_callback_ = false;
   }
 
@@ -134,6 +156,9 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
     run_until_completion_ = run_until_completion;
     loop_.reset(new base::RunLoop);
   }
+
+  // Wait until the stream reaches completion.
+  void WaitUntilCompletion() { loop_->Run(); }
 
   // Starts or continues read data from |stream_| until there is no more
   // byte can be read synchronously.
@@ -159,13 +184,19 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
   NextProto GetProtocol() const { return stream_->GetProtocol(); }
 
   int64_t GetTotalReceivedBytes() const {
-    return stream_->GetTotalReceivedBytes();
+      return stream_->GetTotalReceivedBytes();
   }
 
-  int64_t GetTotalSentBytes() const { return stream_->GetTotalSentBytes(); }
+  int64_t GetTotalSentBytes() const {
+      return stream_->GetTotalSentBytes();
+  }
+
+  bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const {
+    return stream_->GetLoadTimingInfo(load_timing_info);
+  }
 
   // Const getters for internal states.
-  const std::string& data_received() const { return data_received_; }
+  const SpdyString& data_received() const { return data_received_; }
   int bytes_read() const { return bytes_read_; }
   int error() const { return error_; }
   const SpdyHeaderBlock& response_headers() const { return response_headers_; }
@@ -179,14 +210,11 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
     do_not_start_read_ = do_not_start_read;
   }
 
-  // Cancels |stream_|.
-  void CancelStream() { stream_->Cancel(); }
-
  private:
   std::unique_ptr<BidirectionalStreamSpdyImpl> stream_;
   scoped_refptr<IOBuffer> read_buf_;
   int read_buf_len_;
-  std::string data_received_;
+  SpdyString data_received_;
   std::unique_ptr<base::RunLoop> loop_;
   SpdyHeaderBlock response_headers_;
   SpdyHeaderBlock trailers_;
@@ -204,14 +232,14 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
 
 }  // namespace
 
-class BidirectionalStreamSpdyImplTest : public testing::Test {
+class BidirectionalStreamSpdyImplTest : public testing::TestWithParam<bool> {
  public:
   BidirectionalStreamSpdyImplTest()
       : default_url_(kDefaultUrl),
         host_port_pair_(HostPortPair::FromURL(default_url_)),
         key_(host_port_pair_, ProxyServer::Direct(), PRIVACY_MODE_DISABLED),
         ssl_data_(SSLSocketDataProvider(ASYNC, OK)) {
-    ssl_data_.SetNextProto(kProtoHTTP2);
+    ssl_data_.next_proto = kProtoHTTP2;
     ssl_data_.cert = ImportCertFromFile(GetTestCertsDirectory(), "ok_cert.pem");
   }
 
@@ -253,11 +281,109 @@ class BidirectionalStreamSpdyImplTest : public testing::Test {
   SSLSocketDataProvider ssl_data_;
 };
 
+TEST_F(BidirectionalStreamSpdyImplTest, SimplePostRequest) {
+  SpdySerializedFrame req(spdy_util_.ConstructSpdyPost(
+      kDefaultUrl, 1, kBodyDataSize, LOW, nullptr, 0));
+  SpdySerializedFrame data_frame(spdy_util_.ConstructSpdyDataFrame(
+      1, kBodyData, kBodyDataSize, /*fin=*/true));
+  MockWrite writes[] = {
+      CreateMockWrite(req, 0), CreateMockWrite(data_frame, 3),
+  };
+  SpdySerializedFrame resp(spdy_util_.ConstructSpdyPostReply(nullptr, 0));
+  SpdySerializedFrame response_body_frame(
+      spdy_util_.ConstructSpdyDataFrame(1, /*fin=*/true));
+  MockRead reads[] = {
+      CreateMockRead(resp, 1),
+      MockRead(ASYNC, ERR_IO_PENDING, 2),  // Force a pause.
+      CreateMockRead(response_body_frame, 4), MockRead(ASYNC, 0, 5),
+  };
+  InitSession(reads, arraysize(reads), writes, arraysize(writes));
+
+  BidirectionalStreamRequestInfo request_info;
+  request_info.method = "POST";
+  request_info.url = default_url_;
+  request_info.extra_headers.SetHeader(net::HttpRequestHeaders::kContentLength,
+                                       base::SizeTToString(kBodyDataSize));
+
+  scoped_refptr<IOBuffer> read_buffer(new IOBuffer(kReadBufferSize));
+  std::unique_ptr<TestDelegateBase> delegate(
+      new TestDelegateBase(session_, read_buffer.get(), kReadBufferSize));
+  delegate->SetRunUntilCompletion(true);
+  delegate->Start(&request_info, net_log_.bound());
+  sequenced_data_->RunUntilPaused();
+
+  scoped_refptr<StringIOBuffer> write_buffer(
+      new StringIOBuffer(SpdyString(kBodyData, kBodyDataSize)));
+  delegate->SendData(write_buffer.get(), write_buffer->size(), true);
+  sequenced_data_->Resume();
+  base::RunLoop().RunUntilIdle();
+  delegate->WaitUntilCompletion();
+  LoadTimingInfo load_timing_info;
+  EXPECT_TRUE(delegate->GetLoadTimingInfo(&load_timing_info));
+  TestLoadTimingNotReused(load_timing_info);
+
+  EXPECT_EQ(1, delegate->on_data_read_count());
+  EXPECT_EQ(1, delegate->on_data_sent_count());
+  EXPECT_EQ(kProtoHTTP2, delegate->GetProtocol());
+  EXPECT_EQ(CountWriteBytes(writes, arraysize(writes)),
+            delegate->GetTotalSentBytes());
+  EXPECT_EQ(CountReadBytes(reads, arraysize(reads)),
+            delegate->GetTotalReceivedBytes());
+}
+
+TEST_F(BidirectionalStreamSpdyImplTest, LoadTimingTwoRequests) {
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, /*stream_id=*/1, LOW, true));
+  SpdySerializedFrame req2(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, /*stream_id=*/3, LOW, true));
+  MockWrite writes[] = {
+      CreateMockWrite(req, 0), CreateMockWrite(req2, 2),
+  };
+  SpdySerializedFrame resp(
+      spdy_util_.ConstructSpdyGetReply(nullptr, 0, /*stream_id=*/1));
+  SpdySerializedFrame resp2(
+      spdy_util_.ConstructSpdyGetReply(nullptr, 0, /*stream_id=*/3));
+  SpdySerializedFrame resp_body(
+      spdy_util_.ConstructSpdyDataFrame(/*stream_id=*/1, /*fin=*/true));
+  SpdySerializedFrame resp_body2(
+      spdy_util_.ConstructSpdyDataFrame(/*stream_id=*/3, /*fin=*/true));
+  MockRead reads[] = {CreateMockRead(resp, 1), CreateMockRead(resp_body, 3),
+                      CreateMockRead(resp2, 4), CreateMockRead(resp_body2, 5),
+                      MockRead(ASYNC, 0, 6)};
+  InitSession(reads, arraysize(reads), writes, arraysize(writes));
+
+  BidirectionalStreamRequestInfo request_info;
+  request_info.method = "GET";
+  request_info.url = default_url_;
+  request_info.end_stream_on_headers = true;
+
+  scoped_refptr<IOBuffer> read_buffer(new IOBuffer(kReadBufferSize));
+  scoped_refptr<IOBuffer> read_buffer2(new IOBuffer(kReadBufferSize));
+  std::unique_ptr<TestDelegateBase> delegate(
+      new TestDelegateBase(session_, read_buffer.get(), kReadBufferSize));
+  std::unique_ptr<TestDelegateBase> delegate2(
+      new TestDelegateBase(session_, read_buffer2.get(), kReadBufferSize));
+  delegate->SetRunUntilCompletion(true);
+  delegate2->SetRunUntilCompletion(true);
+  delegate->Start(&request_info, net_log_.bound());
+  delegate2->Start(&request_info, net_log_.bound());
+
+  base::RunLoop().RunUntilIdle();
+  delegate->WaitUntilCompletion();
+  delegate2->WaitUntilCompletion();
+  LoadTimingInfo load_timing_info;
+  EXPECT_TRUE(delegate->GetLoadTimingInfo(&load_timing_info));
+  TestLoadTimingNotReused(load_timing_info);
+  LoadTimingInfo load_timing_info2;
+  EXPECT_TRUE(delegate2->GetLoadTimingInfo(&load_timing_info2));
+  TestLoadTimingReused(load_timing_info2);
+}
+
 TEST_F(BidirectionalStreamSpdyImplTest, SendDataAfterStreamFailed) {
   SpdySerializedFrame req(spdy_util_.ConstructSpdyPost(
       kDefaultUrl, 1, kBodyDataSize * 3, LOW, nullptr, 0));
   SpdySerializedFrame rst(
-      spdy_util_.ConstructSpdyRstStream(1, RST_STREAM_PROTOCOL_ERROR));
+      spdy_util_.ConstructSpdyRstStream(1, ERROR_CODE_PROTOCOL_ERROR));
 
   MockWrite writes[] = {
       CreateMockWrite(req, 0), CreateMockWrite(rst, 2),
@@ -304,70 +430,91 @@ TEST_F(BidirectionalStreamSpdyImplTest, SendDataAfterStreamFailed) {
             delegate->GetTotalReceivedBytes());
 }
 
-TEST_F(BidirectionalStreamSpdyImplTest, SendDataAfterCancelStream) {
+INSTANTIATE_TEST_CASE_P(BidirectionalStreamSpdyImplTests,
+                        BidirectionalStreamSpdyImplTest,
+                        ::testing::Bool());
+
+// Tests that when received RST_STREAM with NO_ERROR, BidirectionalStream does
+// not crash when processing pending writes. See crbug.com/650438.
+TEST_P(BidirectionalStreamSpdyImplTest, RstWithNoErrorBeforeSendIsComplete) {
+  bool is_test_sendv = GetParam();
   SpdySerializedFrame req(spdy_util_.ConstructSpdyPost(
-      kDefaultUrl, 1, kBodyDataSize * 3, LOWEST, nullptr, 0));
-  SpdySerializedFrame data_frame(
-      spdy_util_.ConstructSpdyDataFrame(1, kBodyData, kBodyDataSize,
-                                        /*fin=*/false));
+      kDefaultUrl, 1, kBodyDataSize * 3, LOW, nullptr, 0));
+  MockWrite writes[] = {CreateMockWrite(req, 0)};
+
+  SpdySerializedFrame resp(spdy_util_.ConstructSpdyPostReply(nullptr, 0));
   SpdySerializedFrame rst(
-      spdy_util_.ConstructSpdyRstStream(1, RST_STREAM_CANCEL));
-
-  MockWrite writes[] = {
-      CreateMockWrite(req, 0), CreateMockWrite(data_frame, 3),
-      CreateMockWrite(rst, 5),
-  };
-
-  SpdySerializedFrame resp(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
-  SpdySerializedFrame response_body_frame(
-      spdy_util_.ConstructSpdyDataFrame(1, false));
-
-  MockRead reads[] = {
-      CreateMockRead(resp, 1),
-      MockRead(ASYNC, ERR_IO_PENDING, 2),  // Force a pause.
-      MockRead(ASYNC, ERR_IO_PENDING, 4),  // Force a pause.
-      MockRead(ASYNC, 0, 6),
-  };
+      spdy_util_.ConstructSpdyRstStream(1, ERROR_CODE_NO_ERROR));
+  MockRead reads[] = {CreateMockRead(resp, 1),
+                      MockRead(ASYNC, ERR_IO_PENDING, 2),  // Force a pause.
+                      CreateMockRead(rst, 3), MockRead(ASYNC, 0, 4)};
 
   InitSession(reads, arraysize(reads), writes, arraysize(writes));
 
   BidirectionalStreamRequestInfo request_info;
   request_info.method = "POST";
   request_info.url = default_url_;
-  request_info.priority = LOWEST;
   request_info.extra_headers.SetHeader(net::HttpRequestHeaders::kContentLength,
                                        base::SizeTToString(kBodyDataSize * 3));
 
   scoped_refptr<IOBuffer> read_buffer(new IOBuffer(kReadBufferSize));
   std::unique_ptr<TestDelegateBase> delegate(
       new TestDelegateBase(session_, read_buffer.get(), kReadBufferSize));
-  delegate->set_do_not_start_read(true);
+  delegate->SetRunUntilCompletion(true);
   delegate->Start(&request_info, net_log_.bound());
-  // Send the request and receive response headers.
   sequenced_data_->RunUntilPaused();
-  EXPECT_EQ(kProtoHTTP2, delegate->GetProtocol());
-
-  // Send a DATA frame.
-  scoped_refptr<StringIOBuffer> buf(
-      new StringIOBuffer(std::string(kBodyData, kBodyDataSize)));
-  delegate->SendData(buf.get(), buf->size(), false);
-  sequenced_data_->Resume();
-  base::RunLoop().RunUntilIdle();
-  // Cancel the stream.
-  delegate->CancelStream();
+  // Make a write pending before receiving RST_STREAM.
+  scoped_refptr<StringIOBuffer> write_buffer(
+      new StringIOBuffer(SpdyString(kBodyData, kBodyDataSize)));
+  delegate->SendData(write_buffer.get(), write_buffer->size(), false);
   sequenced_data_->Resume();
   base::RunLoop().RunUntilIdle();
 
-  // Try to send data after Cancel(), should not get called back.
-  delegate->SendData(buf.get(), buf->size(), false);
-  base::RunLoop().RunUntilIdle();
+  // Make sure OnClose() without an error completes any pending write().
+  EXPECT_EQ(1, delegate->on_data_sent_count());
   EXPECT_FALSE(delegate->on_failed_called());
 
-  EXPECT_EQ("200", delegate->response_headers().find(":status")->second);
-  EXPECT_EQ(0, delegate->on_data_read_count());
+  if (is_test_sendv) {
+    std::vector<scoped_refptr<IOBuffer>> three_buffers = {
+        write_buffer.get(), write_buffer.get(), write_buffer.get()};
+    std::vector<int> three_lengths = {
+        write_buffer->size(), write_buffer->size(), write_buffer->size()};
+    delegate->SendvData(three_buffers, three_lengths, /*end_of_stream=*/true);
+    base::RunLoop().RunUntilIdle();
+  } else {
+    for (size_t j = 0; j < 3; j++) {
+      delegate->SendData(write_buffer.get(), write_buffer->size(),
+                         /*end_of_stream=*/j == 2);
+      base::RunLoop().RunUntilIdle();
+    }
+  }
+  delegate->WaitUntilCompletion();
+  LoadTimingInfo load_timing_info;
+  EXPECT_TRUE(delegate->GetLoadTimingInfo(&load_timing_info));
+  TestLoadTimingNotReused(load_timing_info);
+
+  EXPECT_THAT(delegate->error(), IsError(OK));
+  EXPECT_EQ(1, delegate->on_data_read_count());
+  EXPECT_EQ(is_test_sendv ? 2 : 4, delegate->on_data_sent_count());
   EXPECT_EQ(kProtoHTTP2, delegate->GetProtocol());
-  EXPECT_EQ(0, delegate->GetTotalSentBytes());
-  EXPECT_EQ(0, delegate->GetTotalReceivedBytes());
+  EXPECT_EQ(CountWriteBytes(writes, 1), delegate->GetTotalSentBytes());
+  // Should not count RST stream.
+  EXPECT_EQ(CountReadBytes(reads, arraysize(reads) - 2),
+            delegate->GetTotalReceivedBytes());
+
+  // Now call SendData again should produce an error because end of stream
+  // flag has been written.
+  if (is_test_sendv) {
+    std::vector<scoped_refptr<IOBuffer>> buffer = {write_buffer.get()};
+    std::vector<int> buffer_size = {write_buffer->size()};
+    delegate->SendvData(buffer, buffer_size, true);
+  } else {
+    delegate->SendData(write_buffer.get(), write_buffer->size(), true);
+  }
+  base::RunLoop().RunUntilIdle();
+  EXPECT_THAT(delegate->error(), IsError(ERR_UNEXPECTED));
+  EXPECT_TRUE(delegate->on_failed_called());
+  EXPECT_EQ(is_test_sendv ? 2 : 4, delegate->on_data_sent_count());
 }
 
 }  // namespace net

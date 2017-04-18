@@ -4,18 +4,19 @@
 
 #include "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.h"
 
-#include "ash/aura/wm_window_aura.h"
-#include "ash/common/wm/mru_window_tracker.h"
-#include "ash/common/wm/window_positioner.h"
-#include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
-#include "ash/desktop_background/user_wallpaper_delegate.h"
 #include "ash/root_window_controller.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/wallpaper/wallpaper_delegate.h"
+#include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/window_positioner.h"
+#include "ash/wm/window_state.h"
 #include "ash/wm/window_state_aura.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
@@ -23,6 +24,7 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/layer_tree_owner.h"
+#include "ui/display/display.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_client.h"
 
@@ -39,12 +41,12 @@ class UserChangeActionDisabler {
  public:
   UserChangeActionDisabler() {
     ash::WindowPositioner::DisableAutoPositioning(true);
-    ash::WmShell::Get()->mru_window_tracker()->SetIgnoreActivations(true);
+    ash::Shell::Get()->mru_window_tracker()->SetIgnoreActivations(true);
   }
 
   ~UserChangeActionDisabler() {
     ash::WindowPositioner::DisableAutoPositioning(false);
-    ash::WmShell::Get()->mru_window_tracker()->SetIgnoreActivations(false);
+    ash::Shell::Get()->mru_window_tracker()->SetIgnoreActivations(false);
   }
  private:
 
@@ -113,7 +115,7 @@ UserSwitchAnimatorChromeOS::UserSwitchAnimatorChromeOS(
       animation_step_(ANIMATION_STEP_HIDE_OLD_USER),
       screen_cover_(GetScreenCover(NULL)),
       windows_by_account_id_() {
-  ash::WmShell::Get()->DismissAppList();
+  ash::Shell::Get()->DismissAppList();
   BuildUserToWindowsListMap();
   AdvanceUserTransitionAnimation();
 
@@ -188,8 +190,8 @@ void UserSwitchAnimatorChromeOS::FinalizeAnimation() {
 void UserSwitchAnimatorChromeOS::TransitionWallpaper(
     AnimationStep animation_step) {
   // Handle the wallpaper switch.
-  ash::UserWallpaperDelegate* wallpaper_delegate =
-      ash::Shell::GetInstance()->user_wallpaper_delegate();
+  ash::WallpaperDelegate* wallpaper_delegate =
+      ash::Shell::Get()->wallpaper_delegate();
   if (animation_step == ANIMATION_STEP_HIDE_OLD_USER) {
     // Set the wallpaper cross dissolve animation duration to our complete
     // animation cycle for a fade in and fade out.
@@ -229,8 +231,8 @@ void UserSwitchAnimatorChromeOS::TransitionUserShelf(
       chrome_launcher_controller->ActiveUserChanged(
           new_account_id_.GetUserEmail());
     // Hide the black rectangle on top of each shelf again.
-    for (aura::Window* window : ash::Shell::GetAllRootWindows()) {
-      ash::ShelfWidget* shelf = ash::Shelf::ForWindow(window)->shelf_widget();
+    for (ash::WmWindow* window : ash::ShellPort::Get()->GetAllRootWindows()) {
+      ash::ShelfWidget* shelf = ash::WmShelf::ForWindow(window)->shelf_widget();
       shelf->HideShelfBehindBlackBar(false, duration_override);
     }
     // We kicked off the shelf animation above and the override can be
@@ -244,7 +246,7 @@ void UserSwitchAnimatorChromeOS::TransitionUserShelf(
   // Note: The animation duration override will be set before the old user gets
   // hidden and reset after the animations for the new user got kicked off.
   ash::Shell::RootWindowControllerList controller =
-      ash::Shell::GetInstance()->GetAllRootWindowControllers();
+      ash::Shell::Get()->GetAllRootWindowControllers();
   for (ash::Shell::RootWindowControllerList::iterator iter = controller.begin();
        iter != controller.end(); ++iter) {
     (*iter)->GetShelfLayoutManager()->SetAnimationDurationOverride(
@@ -262,11 +264,11 @@ void UserSwitchAnimatorChromeOS::TransitionUserShelf(
     // CPU usage and therefore effect jank, we should avoid hiding the shelf if
     // the start and end location are the same and cover the shelf instead with
     // a black rectangle on top.
-    ash::Shelf* shelf = ash::Shelf::ForWindow(window);
+    ash::WmShelf* shelf = ash::WmShelf::ForWindow(ash::WmWindow::Get(window));
     if (GetScreenCover(window) != NO_USER_COVERS_SCREEN &&
         (!chrome_launcher_controller ||
          !chrome_launcher_controller->ShelfBoundsChangesProbablyWithUser(
-             shelf, new_account_id_.GetUserEmail()))) {
+             shelf, new_account_id_))) {
       shelf->shelf_widget()->HideShelfBehindBlackBar(true, duration_override);
     } else {
       // This shelf change is only part of the animation and will be updated by
@@ -330,7 +332,7 @@ void UserSwitchAnimatorChromeOS::TransitionWindows(
             // window we encounter.
             found_foreground_maximized_window = true;
             ui::LayerTreeOwner* old_layer =
-                wm::RecreateLayers(window, nullptr).release();
+                wm::RecreateLayers(window).release();
             window->layer()->parent()->StackAtBottom(old_layer->root());
             new MaximizedWindowAnimationWatcher(window->layer()->GetAnimator(),
                                                 old_layer);
@@ -363,8 +365,8 @@ void UserSwitchAnimatorChromeOS::TransitionWindows(
     }
     case ANIMATION_STEP_FINALIZE: {
       // Reactivate the MRU window of the new user.
-      aura::Window::Windows mru_list = ash::WmWindowAura::ToAuraWindows(
-          ash::WmShell::Get()->mru_window_tracker()->BuildMruWindowList());
+      aura::Window::Windows mru_list = ash::WmWindow::ToAuraWindows(
+          ash::Shell::Get()->mru_window_tracker()->BuildMruWindowList());
       if (!mru_list.empty()) {
         aura::Window* window = mru_list[0];
         ash::wm::WindowState* window_state = ash::wm::GetWindowState(window);

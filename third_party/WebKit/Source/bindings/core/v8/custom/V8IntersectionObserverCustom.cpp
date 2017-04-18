@@ -11,52 +11,53 @@
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/V8IntersectionObserverCallback.h"
 #include "bindings/core/v8/V8IntersectionObserverInit.h"
+#include "core/dom/Element.h"
 
 namespace blink {
 
-void V8IntersectionObserver::constructorCustom(const v8::FunctionCallbackInfo<v8::Value>& info)
-{
-    if (UNLIKELY(info.Length() < 1)) {
-        V8ThrowException::throwException(createMinimumArityTypeErrorForMethod(info.GetIsolate(), "createIntersectionObserver", "Intersection", 1, info.Length()), info.GetIsolate());
-        return;
-    }
+void V8IntersectionObserver::constructorCustom(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  ExceptionState exception_state(info.GetIsolate(),
+                                 ExceptionState::kConstructionContext,
+                                 "IntersectionObserver");
 
-    v8::Local<v8::Object> wrapper = info.Holder();
+  if (UNLIKELY(info.Length() < 1)) {
+    exception_state.ThrowTypeError(
+        ExceptionMessages::NotEnoughArguments(1, info.Length()));
+    return;
+  }
 
-    if (!info[0]->IsFunction()) {
-        V8ThrowException::throwTypeError(info.GetIsolate(), ExceptionMessages::failedToExecute("createIntersectionObserver", "Intersection", "The callback provided as parameter 1 is not a function."));
-        return;
-    }
+  v8::Local<v8::Object> wrapper = info.Holder();
 
-    if (info.Length() > 1 && !isUndefinedOrNull(info[1]) && !info[1]->IsObject()) {
-        V8ThrowException::throwTypeError(info.GetIsolate(), ExceptionMessages::failedToExecute("createIntersectionObserver", "Intersection", "IntersectionObserverInit (parameter 2) is not an object."));
-        return;
-    }
+  if (!info[0]->IsFunction()) {
+    exception_state.ThrowTypeError(
+        "The callback provided as parameter 1 is not a function.");
+    return;
+  }
 
-    IntersectionObserverInit intersectionObserverInit;
-    ExceptionState exceptionState(ExceptionState::ConstructionContext, "Intersection", info.Holder(), info.GetIsolate());
-    V8IntersectionObserverInit::toImpl(info.GetIsolate(), info[1], intersectionObserverInit, exceptionState);
-    if (exceptionState.throwIfNeeded())
-        return;
+  if (info.Length() > 1 && !IsUndefinedOrNull(info[1]) &&
+      !info[1]->IsObject()) {
+    exception_state.ThrowTypeError("parameter 2 ('options') is not an object.");
+    return;
+  }
 
-    IntersectionObserverCallback* callback = new V8IntersectionObserverCallback(v8::Local<v8::Function>::Cast(info[0]), wrapper, ScriptState::current(info.GetIsolate()));
-    IntersectionObserver* observer = IntersectionObserver::create(intersectionObserverInit, *callback, exceptionState);
-    if (exceptionState.throwIfNeeded())
-        return;
-    ASSERT(observer);
-    v8SetReturnValue(info, V8DOMWrapper::associateObjectWithWrapper(info.GetIsolate(), observer, &wrapperTypeInfo, wrapper));
+  IntersectionObserverInit intersection_observer_init;
+  V8IntersectionObserverInit::toImpl(
+      info.GetIsolate(), info[1], intersection_observer_init, exception_state);
+  if (exception_state.HadException())
+    return;
+
+  IntersectionObserverCallback* callback = new V8IntersectionObserverCallback(
+      v8::Local<v8::Function>::Cast(info[0]), wrapper,
+      ScriptState::Current(info.GetIsolate()));
+  IntersectionObserver* observer = IntersectionObserver::Create(
+      intersection_observer_init, *callback, exception_state);
+  if (exception_state.HadException())
+    return;
+  DCHECK(observer);
+  V8SetReturnValue(info,
+                   V8DOMWrapper::AssociateObjectWithWrapper(
+                       info.GetIsolate(), observer, &wrapperTypeInfo, wrapper));
 }
 
-void V8IntersectionObserver::visitDOMWrapper(v8::Isolate* isolate, ScriptWrappable* scriptWrappable, const v8::Persistent<v8::Object>& wrapper)
-{
-    IntersectionObserver* observer = scriptWrappable->toImpl<IntersectionObserver>();
-    for (auto& observation : observer->observations()) {
-        Element* target = observation->target();
-        if (!target)
-            continue;
-        v8::UniqueId id(reinterpret_cast<intptr_t>(V8GCController::opaqueRootForGC(isolate, target)));
-        isolate->SetReferenceFromGroup(id, wrapper);
-    }
-}
-
-} // namespace blink
+}  // namespace blink

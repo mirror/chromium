@@ -16,7 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
-#include "cc/base/cc_export.h"
+#include "cc/cc_export.h"
 #include "cc/resources/release_callback_impl.h"
 #include "cc/resources/resource_format.h"
 #include "cc/resources/texture_mailbox.h"
@@ -43,12 +43,6 @@ class CC_EXPORT VideoFrameExternalResources {
     RGBA_RESOURCE,
     STREAM_TEXTURE_RESOURCE,
 
-#if defined(VIDEO_HOLE)
-    // TODO(danakj): Implement this with a solid color layer instead of a video
-    // frame and video layer.
-    HOLE,
-#endif  // defined(VIDEO_HOLE)
-
     // TODO(danakj): Remove this and abstract TextureMailbox into
     // "ExternalResource" that can hold a hardware or software backing.
     SOFTWARE_RESOURCE
@@ -67,6 +61,7 @@ class CC_EXPORT VideoFrameExternalResources {
   // After a lookup, subtract offset and multiply by multiplier.
   float offset;
   float multiplier;
+  uint32_t bits_per_channel;
 
   VideoFrameExternalResources();
   VideoFrameExternalResources(const VideoFrameExternalResources& other);
@@ -79,11 +74,13 @@ class CC_EXPORT VideoResourceUpdater
     : public base::SupportsWeakPtr<VideoResourceUpdater> {
  public:
   VideoResourceUpdater(ContextProvider* context_provider,
-                       ResourceProvider* resource_provider);
+                       ResourceProvider* resource_provider,
+                       bool use_stream_video_draw_quad);
   ~VideoResourceUpdater();
 
   VideoFrameExternalResources CreateExternalResourcesFromVideoFrame(
       scoped_refptr<media::VideoFrame> video_frame);
+
 
  private:
   class PlaneResource {
@@ -135,12 +132,31 @@ class CC_EXPORT VideoResourceUpdater
   // This needs to be a container where iterators can be erased without
   // invalidating other iterators.
   typedef std::list<PlaneResource> ResourceList;
+
+  // Obtain a resource of the right format by either recycling an
+  // unreferenced but appropriately formatted resource, or by
+  // allocating a new resource.
+  // Additionally, if the |unique_id| and |plane_index| match, then
+  // it is assumed that the resource has the right data already and will only be
+  // used for reading, and so is returned even if it is still referenced.
+  // Passing -1 for |plane_index| avoids returning referenced
+  // resources.
+  ResourceList::iterator RecycleOrAllocateResource(
+      const gfx::Size& resource_size,
+      ResourceFormat resource_format,
+      const gfx::ColorSpace& color_space,
+      bool software_resource,
+      bool immutable_hint,
+      int unique_id,
+      int plane_index);
   ResourceList::iterator AllocateResource(const gfx::Size& plane_size,
                                           ResourceFormat format,
+                                          const gfx::ColorSpace& color_space,
                                           bool has_mailbox,
                                           bool immutable_hint);
   void DeleteResource(ResourceList::iterator resource_it);
   void CopyPlaneTexture(media::VideoFrame* video_frame,
+                        const gfx::ColorSpace& resource_color_space,
                         const gpu::MailboxHolder& mailbox_holder,
                         VideoFrameExternalResources* external_resources);
   VideoFrameExternalResources CreateForHardwarePlanes(
@@ -161,6 +177,7 @@ class CC_EXPORT VideoResourceUpdater
 
   ContextProvider* context_provider_;
   ResourceProvider* resource_provider_;
+  const bool use_stream_video_draw_quad_;
   std::unique_ptr<media::SkCanvasVideoRenderer> video_renderer_;
   std::vector<uint8_t> upload_pixels_;
 

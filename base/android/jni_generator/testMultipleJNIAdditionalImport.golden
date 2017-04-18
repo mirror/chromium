@@ -27,23 +27,24 @@ base::subtle::AtomicWord g_Foo_clazz __attribute__((unused)) = 0;
 
 // Step 2: method stubs.
 
-static void DoSomething(JNIEnv* env, const JavaParamRef<jclass>& jcaller,
-    const JavaParamRef<jobject>& callback1,
-    const JavaParamRef<jobject>& callback2);
+static void DoSomething(JNIEnv* env, const base::android::JavaParamRef<jclass>&
+    jcaller,
+    const base::android::JavaParamRef<jobject>& callback1,
+    const base::android::JavaParamRef<jobject>& callback2);
 
-extern "C" __attribute__((visibility("default")))
-void Java_org_chromium_foo_Foo_nativeDoSomething(JNIEnv* env, jclass jcaller,
+JNI_GENERATOR_EXPORT void Java_org_chromium_foo_Foo_nativeDoSomething(JNIEnv*
+    env, jclass jcaller,
     jobject callback1,
     jobject callback2) {
-  return DoSomething(env, JavaParamRef<jclass>(env, jcaller),
-      JavaParamRef<jobject>(env, callback1), JavaParamRef<jobject>(env,
-      callback2));
+  return DoSomething(env, base::android::JavaParamRef<jclass>(env, jcaller),
+      base::android::JavaParamRef<jobject>(env, callback1),
+      base::android::JavaParamRef<jobject>(env, callback2));
 }
 
 static base::subtle::AtomicWord g_Foo_calledByNative = 0;
-static void Java_Foo_calledByNative(JNIEnv* env, jobject callback1,
-    jobject callback2) {
-  /* Must call RegisterNativesImpl()  */
+static void Java_Foo_calledByNative(JNIEnv* env, const
+    base::android::JavaRefOrBare<jobject>& callback1,
+    const base::android::JavaRefOrBare<jobject>& callback2) {
   CHECK_CLAZZ(env, Foo_clazz(env),
       Foo_clazz(env));
   jmethodID method_id =
@@ -51,7 +52,6 @@ static void Java_Foo_calledByNative(JNIEnv* env, jobject callback1,
       base::android::MethodID::TYPE_STATIC>(
       env, Foo_clazz(env),
       "calledByNative",
-
 "("
 "Lorg/chromium/foo/Bar1$Callback;"
 "Lorg/chromium/foo/Bar2$Callback;"
@@ -60,9 +60,8 @@ static void Java_Foo_calledByNative(JNIEnv* env, jobject callback1,
       &g_Foo_calledByNative);
 
      env->CallStaticVoidMethod(Foo_clazz(env),
-          method_id, callback1, callback2);
+          method_id, callback1.obj(), callback2.obj());
   jni_generator::CheckException(env);
-
 }
 
 // Step 3: RegisterNatives.
@@ -77,7 +76,8 @@ static const JNINativeMethod kMethodsFoo[] = {
 };
 
 static bool RegisterNativesImpl(JNIEnv* env) {
-  if (base::android::IsManualJniRegistrationDisabled()) return true;
+  if (jni_generator::ShouldSkipJniRegistration(false))
+    return true;
 
   const int kMethodsFooSize = arraysize(kMethodsFoo);
 

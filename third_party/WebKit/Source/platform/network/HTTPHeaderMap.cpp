@@ -30,39 +30,35 @@
 
 #include "platform/network/HTTPHeaderMap.h"
 
-#include "wtf/PtrUtil.h"
 #include <memory>
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-HTTPHeaderMap::HTTPHeaderMap()
-{
+HTTPHeaderMap::HTTPHeaderMap() {}
+
+HTTPHeaderMap::~HTTPHeaderMap() {}
+
+std::unique_ptr<CrossThreadHTTPHeaderMapData> HTTPHeaderMap::CopyData() const {
+  std::unique_ptr<CrossThreadHTTPHeaderMapData> data =
+      WTF::MakeUnique<CrossThreadHTTPHeaderMapData>();
+  data->ReserveInitialCapacity(size());
+
+  HTTPHeaderMap::const_iterator end_it = end();
+  for (HTTPHeaderMap::const_iterator it = begin(); it != end_it; ++it)
+    data->UncheckedAppend(std::make_pair(it->key.GetString().IsolatedCopy(),
+                                         it->value.GetString().IsolatedCopy()));
+
+  return data;
 }
 
-HTTPHeaderMap::~HTTPHeaderMap()
-{
+void HTTPHeaderMap::Adopt(std::unique_ptr<CrossThreadHTTPHeaderMapData> data) {
+  Clear();
+  size_t data_size = data->size();
+  for (size_t index = 0; index < data_size; ++index) {
+    std::pair<String, String>& header = (*data)[index];
+    Set(AtomicString(header.first), AtomicString(header.second));
+  }
 }
 
-std::unique_ptr<CrossThreadHTTPHeaderMapData> HTTPHeaderMap::copyData() const
-{
-    std::unique_ptr<CrossThreadHTTPHeaderMapData> data = wrapUnique(new CrossThreadHTTPHeaderMapData());
-    data->reserveInitialCapacity(size());
-
-    HTTPHeaderMap::const_iterator endIt = end();
-    for (HTTPHeaderMap::const_iterator it = begin(); it != endIt; ++it)
-        data->uncheckedAppend(std::make_pair(it->key.getString().isolatedCopy(), it->value.getString().isolatedCopy()));
-
-    return data;
-}
-
-void HTTPHeaderMap::adopt(std::unique_ptr<CrossThreadHTTPHeaderMapData> data)
-{
-    clear();
-    size_t dataSize = data->size();
-    for (size_t index = 0; index < dataSize; ++index) {
-        std::pair<String, String>& header = (*data)[index];
-        set(AtomicString(header.first), AtomicString(header.second));
-    }
-}
-
-} // namespace blink
+}  // namespace blink

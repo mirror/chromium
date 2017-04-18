@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/background/background_mode_manager.h"
 #include "chrome/browser/browser_process.h"
@@ -34,6 +35,8 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/md_history_ui.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
@@ -405,7 +408,8 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, PRE_SessionCookies) {
   StoreDataWithPage("session_cookies.html");
 }
 
-IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, SessionCookies) {
+// Flaky(crbug.com/700696)
+IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, DISABLED_SessionCookies) {
   // The browsing session will be continued; just wait for the page to reload
   // and check the stored data.
   CheckReloadedPageRestored();
@@ -415,7 +419,8 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, PRE_SessionStorage) {
   StoreDataWithPage("session_storage.html");
 }
 
-IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, SessionStorage) {
+// Flaky(crbug.com/700699)
+IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, DISABLED_SessionStorage) {
   CheckReloadedPageRestored();
 }
 
@@ -433,7 +438,14 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
       ->SetDefaultCookieSetting(CONTENT_SETTING_SESSION_ONLY);
 }
 
-IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, LocalStorageClearedOnExit) {
+// Crashes on Mac only. http://crbug.com/656211
+#if defined(OS_MACOSX)
+#define MAYBE_LocalStorageClearedOnExit DISABLED_LocalStorageClearedOnExit
+#else
+#define MAYBE_LocalStorageClearedOnExit LocalStorageClearedOnExit
+#endif
+IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
+                       MAYBE_LocalStorageClearedOnExit) {
   CheckReloadedPageNotRestored();
 }
 
@@ -450,7 +462,13 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, PRE_CookiesClearedOnExit) {
       ->SetDefaultCookieSetting(CONTENT_SETTING_SESSION_ONLY);
 }
 
-IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, CookiesClearedOnExit) {
+// Flaky on Mac. http://crbug.com/656211.
+#if defined(OS_MACOSX)
+#define MAYBE_CookiesClearedOnExit DISABLED_CookiesClearedOnExit
+#else
+#define MAYBE_CookiesClearedOnExit CookiesClearedOnExit
+#endif
+IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, MAYBE_CookiesClearedOnExit) {
   CheckReloadedPageNotRestored();
 }
 
@@ -482,6 +500,48 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, SessionCookiesBrowserClose) {
   CheckReloadedPageRestored(new_browser);
 }
 
+// Test that switching MD History on behaves correctly with session restore.
+IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest, MDHistoryUpgrade) {
+  MdHistoryUI::use_test_title_ = true;
+  Browser* current_browser = browser();
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndDisableFeature(features::kMaterialDesignHistory);
+    content::WebContents* web_contents =
+        current_browser->tab_strip_model()->GetActiveWebContents();
+    content::TitleWatcher title_watcher(web_contents,
+                                        base::ASCIIToUTF16("History"));
+    ui_test_utils::NavigateToURL(current_browser, GURL("chrome://history"));
+    base::string16 final_title = title_watcher.WaitAndGetTitle();
+    EXPECT_EQ(3u, current_browser->tab_strip_model()
+                     ->GetActiveWebContents()
+                     ->GetAllFrames()
+                     .size());
+  }
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndEnableFeature(features::kMaterialDesignHistory);
+    current_browser = QuitBrowserAndRestore(browser(), false);
+    // The new history page should have loaded.
+    CheckTitle(current_browser, base::ASCIIToUTF16("MD History"));
+    EXPECT_EQ(1u, current_browser->tab_strip_model()
+                     ->GetActiveWebContents()
+                     ->GetAllFrames()
+                     .size());
+  }
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndDisableFeature(features::kMaterialDesignHistory);
+    current_browser = QuitBrowserAndRestore(current_browser, false);
+    // The old history page should have loaded.
+    CheckTitle(current_browser, base::ASCIIToUTF16("History"));
+    EXPECT_EQ(3u, current_browser->tab_strip_model()
+                     ->GetActiveWebContents()
+                     ->GetAllFrames()
+                     .size());
+  }
+}
+
 // Test that leaving a popup open will not prevent session restore.
 IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
                        SessionCookiesBrowserCloseWithPopupOpen) {
@@ -489,7 +549,7 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
   // which stores a session cookie.
   StoreDataWithPage("session_cookies.html");
   Browser* popup = new Browser(
-      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile()));
+      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile(), true));
   popup->window()->Show();
 
   Browser* new_browser = QuitBrowserAndRestore(browser(), false);
@@ -534,9 +594,16 @@ IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
   CheckFormRestored(new_browser, false, false);
 }
 
+// Flaky on Mac: https://crbug.com/709504
+#if defined(OS_MACOSX)
+#define MAYBE_SessionCookiesCloseAllBrowsers \
+  DISABLED_SessionCookiesCloseAllBrowsers
+#else
+#define MAYBE_SessionCookiesCloseAllBrowsers SessionCookiesCloseAllBrowsers
+#endif
 // Check that session cookies are cleared on a wrench menu quit.
 IN_PROC_BROWSER_TEST_F(ContinueWhereILeftOffTest,
-                       SessionCookiesCloseAllBrowsers) {
+                       MAYBE_SessionCookiesCloseAllBrowsers) {
   // Set the startup preference to "continue where I left off" and visit a page
   // which stores a session cookie.
   StoreDataWithPage("session_cookies.html");
@@ -768,7 +835,7 @@ IN_PROC_BROWSER_TEST_F(NoSessionRestoreTest,
                        SessionCookiesBrowserCloseWithPopupOpen) {
   StoreDataWithPage("session_cookies.html");
   Browser* popup = new Browser(
-      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile()));
+      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile(), true));
   popup->window()->Show();
   Browser* new_browser = QuitBrowserAndRestore(browser(), false);
   NavigateAndCheckStoredData(new_browser, "session_cookies.html");
@@ -780,7 +847,7 @@ IN_PROC_BROWSER_TEST_F(NoSessionRestoreTest,
                        SessionCookiesBrowserClosePopupLast) {
   StoreDataWithPage("session_cookies.html");
   Browser* popup = new Browser(
-      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile()));
+      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile(), true));
   popup->window()->Show();
   CloseBrowserSynchronously(browser());
   Browser* new_browser = QuitBrowserAndRestore(popup, false);

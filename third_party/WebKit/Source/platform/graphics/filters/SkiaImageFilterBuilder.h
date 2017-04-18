@@ -28,34 +28,37 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/graphics/ColorSpace.h"
+#include "platform/graphics/paint/PaintRecord.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkImageFilter;
-class SkPicture;
 
 namespace blink {
 
-class AffineTransform;
 class BoxReflection;
-class CompositorFilterOperations;
 class FilterEffect;
-class FilterOperations;
-class Image;
 
 namespace SkiaImageFilterBuilder {
 
-PLATFORM_EXPORT sk_sp<SkImageFilter> build(FilterEffect*, ColorSpace, bool requiresPMColorValidation = true);
-PLATFORM_EXPORT void buildFilterOperations(const FilterOperations&, CompositorFilterOperations*);
-PLATFORM_EXPORT sk_sp<SkImageFilter> buildTransform(const AffineTransform&, sk_sp<SkImageFilter> input);
+PLATFORM_EXPORT sk_sp<SkImageFilter>
+Build(FilterEffect*, ColorSpace, bool requires_pm_color_validation = true);
 
-PLATFORM_EXPORT sk_sp<SkImageFilter> transformColorSpace(
-    sk_sp<SkImageFilter> input, ColorSpace srcColorSpace, ColorSpace dstColorSpace);
+PLATFORM_EXPORT sk_sp<SkImageFilter> TransformColorSpace(
+    sk_sp<SkImageFilter> input,
+    ColorSpace src_color_space,
+    ColorSpace dst_color_space);
 
-PLATFORM_EXPORT void buildSourceGraphic(FilterEffect*, sk_sp<SkPicture>);
+PLATFORM_EXPORT void PopulateSourceGraphicImageFilters(
+    FilterEffect* source_graphic,
+    sk_sp<SkImageFilter> input,
+    ColorSpace input_color_space);
+PLATFORM_EXPORT void BuildSourceGraphic(FilterEffect*, sk_sp<PaintRecord>);
 
-PLATFORM_EXPORT sk_sp<SkImageFilter> buildBoxReflectFilter(const BoxReflection&, sk_sp<SkImageFilter> input);
+PLATFORM_EXPORT sk_sp<SkImageFilter> BuildBoxReflectFilter(
+    const BoxReflection&,
+    sk_sp<SkImageFilter> input);
 
-} // namespace SkiaImageFilterBuilder
-} // namespace blink
+}  // namespace SkiaImageFilterBuilder
+}  // namespace blink
 
 #endif

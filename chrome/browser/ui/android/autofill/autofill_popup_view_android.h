@@ -12,10 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/autofill/autofill_popup_view.h"
-
-namespace gfx {
-class Rect;
-}
+#include "ui/android/view_android.h"
 
 namespace autofill {
 
@@ -49,8 +46,9 @@ class AutofillPopupViewAndroid : public AutofillPopupView {
   // AutofillPopupView implementation.
   void Show() override;
   void Hide() override;
-  void InvalidateRow(size_t row) override;
-  void UpdateBoundsAndRedrawPopup() override;
+  void OnSelectedRowChanged(base::Optional<int> previous_row_selection,
+                            base::Optional<int> current_row_selection) override;
+  void OnSuggestionsChanged() override;
 
  private:
   ~AutofillPopupViewAndroid() override;
@@ -63,6 +61,9 @@ class AutofillPopupViewAndroid : public AutofillPopupView {
 
   // The corresponding java object.
   base::android::ScopedJavaGlobalRef<jobject> java_object_;
+
+  // Popup view
+  ui::ViewAndroid::ScopedAnchorView popup_view_;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillPopupViewAndroid);
 };

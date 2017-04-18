@@ -5,20 +5,18 @@
 #ifndef BluetoothRemoteGATTService_h
 #define BluetoothRemoteGATTService_h
 
+#include <memory>
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/modules/v8/StringOrUnsignedLong.h"
 #include "modules/bluetooth/BluetoothDevice.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Heap.h"
-#include "public/platform/modules/bluetooth/WebBluetoothRemoteGATTService.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/modules/bluetooth/web_bluetooth.mojom-blink.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
 class ScriptPromise;
-class ScriptPromiseResolver;
 class ScriptState;
 
 // Represents a GATT Service within a Bluetooth Peripheral, a collection of
@@ -30,34 +28,52 @@ class ScriptState;
 // "Interface required by CallbackPromiseAdapter" section and the
 // CallbackPromiseAdapter class comments.
 class BluetoothRemoteGATTService final
-    : public GarbageCollectedFinalized<BluetoothRemoteGATTService>
-    , public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    explicit BluetoothRemoteGATTService(std::unique_ptr<WebBluetoothRemoteGATTService>, BluetoothDevice*);
+    : public GarbageCollectedFinalized<BluetoothRemoteGATTService>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    // Interface required by CallbackPromiseAdapter:
-    using WebType = std::unique_ptr<WebBluetoothRemoteGATTService>;
-    static BluetoothRemoteGATTService* take(ScriptPromiseResolver*, std::unique_ptr<WebBluetoothRemoteGATTService>, BluetoothDevice*);
+ public:
+  BluetoothRemoteGATTService(mojom::blink::WebBluetoothRemoteGATTServicePtr,
+                             bool is_primary,
+                             const String& device_instance_id,
+                             BluetoothDevice*);
 
-    // Interface required by garbage collection.
-    DECLARE_VIRTUAL_TRACE();
+  // Interface required by garbage collection.
+  DECLARE_VIRTUAL_TRACE();
 
-    // IDL exposed interface:
-    String uuid() { return m_webService->uuid; }
-    bool isPrimary() { return m_webService->isPrimary; }
-    BluetoothDevice* device() { return m_device; }
-    ScriptPromise getCharacteristic(ScriptState*, const StringOrUnsignedLong& characteristic, ExceptionState&);
-    ScriptPromise getCharacteristics(ScriptState*, const StringOrUnsignedLong& characteristic, ExceptionState&);
-    ScriptPromise getCharacteristics(ScriptState*, ExceptionState&);
+  // IDL exposed interface:
+  String uuid() { return service_->uuid; }
+  bool isPrimary() { return is_primary_; }
+  BluetoothDevice* device() { return device_; }
+  ScriptPromise getCharacteristic(ScriptState*,
+                                  const StringOrUnsignedLong& characteristic,
+                                  ExceptionState&);
+  ScriptPromise getCharacteristics(ScriptState*,
+                                   const StringOrUnsignedLong& characteristic,
+                                   ExceptionState&);
+  ScriptPromise getCharacteristics(ScriptState*, ExceptionState&);
 
-private:
-    ScriptPromise getCharacteristicsImpl(ScriptState*, mojom::blink::WebBluetoothGATTQueryQuantity, String characteristicUUID = String());
+ private:
+  void GetCharacteristicsCallback(
+      const String& service_instance_id,
+      const String& requested_characteristic_uuid,
+      mojom::blink::WebBluetoothGATTQueryQuantity,
+      ScriptPromiseResolver*,
+      mojom::blink::WebBluetoothResult,
+      Optional<Vector<mojom::blink::WebBluetoothRemoteGATTCharacteristicPtr>>
+          characteristics);
 
-    std::unique_ptr<WebBluetoothRemoteGATTService> m_webService;
-    Member<BluetoothDevice> m_device;
+  ScriptPromise GetCharacteristicsImpl(
+      ScriptState*,
+      mojom::blink::WebBluetoothGATTQueryQuantity,
+      const String& characteristic_uuid = String());
+
+  mojom::blink::WebBluetoothRemoteGATTServicePtr service_;
+  const bool is_primary_;
+  const String device_instance_id_;
+  Member<BluetoothDevice> device_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BluetoothRemoteGATTService_h
+#endif  // BluetoothRemoteGATTService_h

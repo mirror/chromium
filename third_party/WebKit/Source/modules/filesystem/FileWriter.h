@@ -32,7 +32,7 @@
 #define FileWriter_h
 
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "core/dom/ActiveDOMObject.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileError.h"
 #include "modules/EventTargetModules.h"
@@ -46,88 +46,89 @@ class Blob;
 class ExceptionState;
 class ExecutionContext;
 
-class FileWriter final
-    : public EventTargetWithInlineData
-    , public FileWriterBase
-    , public ActiveScriptWrappable
-    , public ActiveDOMObject
-    , public WebFileWriterClient {
-    DEFINE_WRAPPERTYPEINFO();
-    USING_GARBAGE_COLLECTED_MIXIN(FileWriter);
-public:
-    static FileWriter* create(ExecutionContext*);
-    ~FileWriter() override;
+class FileWriter final : public EventTargetWithInlineData,
+                         public FileWriterBase,
+                         public ActiveScriptWrappable<FileWriter>,
+                         public ContextLifecycleObserver,
+                         public WebFileWriterClient {
+  DEFINE_WRAPPERTYPEINFO();
+  USING_GARBAGE_COLLECTED_MIXIN(FileWriter);
+  USING_PRE_FINALIZER(FileWriter, Dispose);
 
-    enum ReadyState {
-        INIT = 0,
-        WRITING = 1,
-        DONE = 2
-    };
+ public:
+  static FileWriter* Create(ExecutionContext*);
+  ~FileWriter() override;
 
-    void write(Blob*, ExceptionState&);
-    void seek(long long position, ExceptionState&);
-    void truncate(long long length, ExceptionState&);
-    void abort(ExceptionState&);
-    ReadyState getReadyState() const { return m_readyState; }
-    DOMException* error() const { return m_error.get(); }
+  enum ReadyState { kInit = 0, kWriting = 1, kDone = 2 };
 
-    // WebFileWriterClient
-    void didWrite(long long bytes, bool complete) override;
-    void didTruncate() override;
-    void didFail(WebFileError) override;
+  void write(Blob*, ExceptionState&);
+  void seek(long long position, ExceptionState&);
+  void truncate(long long length, ExceptionState&);
+  void abort(ExceptionState&);
+  ReadyState getReadyState() const { return ready_state_; }
+  DOMException* error() const { return error_.Get(); }
 
-    // ActiveDOMObject
-    void stop() override;
+  // WebFileWriterClient
+  void DidWrite(long long bytes, bool complete) override;
+  void DidTruncate() override;
+  void DidFail(WebFileError) override;
 
-    // ActiveScriptWrappable
-    bool hasPendingActivity() const final;
+  // ContextLifecycleObserver
+  void ContextDestroyed(ExecutionContext*) override;
 
-    // EventTarget
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override { return ActiveDOMObject::getExecutionContext(); }
+  // ScriptWrappable
+  bool HasPendingActivity() const final;
 
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(writestart);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(progress);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(write);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(abort);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(error);
-    DEFINE_ATTRIBUTE_EVENT_LISTENER(writeend);
+  // EventTarget
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override {
+    return ContextLifecycleObserver::GetExecutionContext();
+  }
 
-    DECLARE_VIRTUAL_TRACE();
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(writestart);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(progress);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(write);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(abort);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(error);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(writeend);
 
-private:
-    enum Operation {
-        OperationNone,
-        OperationWrite,
-        OperationTruncate,
-        OperationAbort
-    };
+  DECLARE_VIRTUAL_TRACE();
 
-    explicit FileWriter(ExecutionContext*);
+ private:
+  enum Operation {
+    kOperationNone,
+    kOperationWrite,
+    kOperationTruncate,
+    kOperationAbort
+  };
 
-    void completeAbort();
+  explicit FileWriter(ExecutionContext*);
 
-    void doOperation(Operation);
+  void CompleteAbort();
 
-    void signalCompletion(FileError::ErrorCode);
+  void DoOperation(Operation);
 
-    void fireEvent(const AtomicString& type);
+  void SignalCompletion(FileError::ErrorCode);
 
-    void setError(FileError::ErrorCode, ExceptionState&);
+  void FireEvent(const AtomicString& type);
 
-    Member<DOMException> m_error;
-    ReadyState m_readyState;
-    Operation m_operationInProgress;
-    Operation m_queuedOperation;
-    long long m_bytesWritten;
-    long long m_bytesToWrite;
-    long long m_truncateLength;
-    long long m_numAborts;
-    long long m_recursionDepth;
-    double m_lastProgressNotificationTimeMS;
-    Member<Blob> m_blobBeingWritten;
+  void SetError(FileError::ErrorCode, ExceptionState&);
+
+  void Dispose();
+
+  Member<DOMException> error_;
+  ReadyState ready_state_;
+  Operation operation_in_progress_;
+  Operation queued_operation_;
+  long long bytes_written_;
+  long long bytes_to_write_;
+  long long truncate_length_;
+  long long num_aborts_;
+  long long recursion_depth_;
+  double last_progress_notification_time_ms_;
+  Member<Blob> blob_being_written_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // FileWriter_h
+#endif  // FileWriter_h

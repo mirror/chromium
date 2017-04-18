@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_UI_WEBUI_OPTIONS_MEDIA_DEVICES_SELECTION_HANDLER_H_
 
 #include "base/macros.h"
-#include "chrome/browser/media/media_capture_devices_dispatcher.h"
+#include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/ui/webui/options/options_ui.h"
 #include "content/public/browser/web_contents.h"
 
@@ -46,6 +46,10 @@ class MediaDevicesSelectionHandler
   void UpdateDevicesMenuForType(DeviceType type);
   void UpdateDevicesMenu(DeviceType type,
                          const content::MediaStreamDevices& devices);
+
+  // Gets the human readable name of the device.
+  std::string GetDeviceDisplayName(
+      const content::MediaStreamDevice& device) const;
 
   DISALLOW_COPY_AND_ASSIGN(MediaDevicesSelectionHandler);
 };

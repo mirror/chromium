@@ -11,13 +11,16 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_thread.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/extension_set.h"
+#include "extensions/common/feature_switch.h"
 #include "extensions/renderer/extension_frame_helper.h"
 #include "extensions/renderer/extension_injection_host.h"
 #include "extensions/renderer/programmatic_script_injector.h"
@@ -26,6 +29,7 @@
 #include "extensions/renderer/scripts_run_info.h"
 #include "extensions/renderer/web_ui_injection_host.h"
 #include "ipc/ipc_message_macros.h"
+#include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -77,6 +81,7 @@ class ScriptInjectionManager::RFOHelper : public content::RenderFrameObserver {
   void DidFinishLoad() override;
   void FrameDetached() override;
   void OnDestruct() override;
+  void OnStop() override;
 
   virtual void OnExecuteCode(const ExtensionMsg_ExecuteCode_Params& params);
   virtual void OnExecuteDeclarativeScript(int tab_id,
@@ -185,15 +190,23 @@ void ScriptInjectionManager::RFOHelper::DidFinishDocumentLoad() {
       base::Bind(&ScriptInjectionManager::RFOHelper::RunIdle,
                  weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kScriptIdleTimeoutInMs));
+
+  if (FeatureSwitch::yield_between_content_script_runs()->IsEnabled()) {
+    ExtensionFrameHelper::Get(render_frame())
+        ->ScheduleAtDocumentIdle(
+            base::Bind(&ScriptInjectionManager::RFOHelper::RunIdle,
+                       weak_factory_.GetWeakPtr()));
+  }
 }
 
 void ScriptInjectionManager::RFOHelper::DidFinishLoad() {
   DCHECK(content::RenderThread::Get());
-  // Ensure that we don't block any UI progress by running scripts.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(&ScriptInjectionManager::RFOHelper::RunIdle,
-                 weak_factory_.GetWeakPtr()));
+  if (!FeatureSwitch::yield_between_content_script_runs()->IsEnabled()) {
+    // Ensure that we don't block any UI progress by running scripts.
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&ScriptInjectionManager::RFOHelper::RunIdle,
+                              weak_factory_.GetWeakPtr()));
+  }
 }
 
 void ScriptInjectionManager::RFOHelper::FrameDetached() {
@@ -203,6 +216,15 @@ void ScriptInjectionManager::RFOHelper::FrameDetached() {
 
 void ScriptInjectionManager::RFOHelper::OnDestruct() {
   manager_->RemoveObserver(this);
+}
+
+void ScriptInjectionManager::RFOHelper::OnStop() {
+  // With PlzNavigate, we won't get a provisional load failed notification
+  // for 204/205/downloads since these don't notify the renderer. However the
+  // browser does fire the OnStop IPC. So use that signal instead to avoid
+  // keeping the frame in a START state indefinitely which leads to deadlocks.
+  if (content::IsBrowserSideNavigationEnabled())
+    DidFailProvisionalLoad(blink::WebURLError());
 }
 
 void ScriptInjectionManager::RFOHelper::OnExecuteCode(
@@ -218,7 +240,7 @@ void ScriptInjectionManager::RFOHelper::OnExecuteDeclarativeScript(
   // TODO(markdittmer): URL-checking isn't the best security measure.
   // Begin script injection workflow only if the current URL is identical to
   // the one that matched declarative conditions in the browser.
-  if (render_frame()->GetWebFrame()->document().url() == url) {
+  if (GURL(render_frame()->GetWebFrame()->GetDocument().Url()) == url) {
     manager_->HandleExecuteDeclarativeScript(render_frame(),
                                              tab_id,
                                              extension_id,
@@ -271,7 +293,7 @@ ScriptInjectionManager::~ScriptInjectionManager() {
 
 void ScriptInjectionManager::OnRenderFrameCreated(
     content::RenderFrame* render_frame) {
-  rfo_helpers_.push_back(base::WrapUnique(new RFOHelper(render_frame, this)));
+  rfo_helpers_.push_back(base::MakeUnique<RFOHelper>(render_frame, this));
 }
 
 void ScriptInjectionManager::OnExtensionUnloaded(
@@ -299,8 +321,7 @@ void ScriptInjectionManager::OnInjectionFinished(
 }
 
 void ScriptInjectionManager::OnUserScriptsUpdated(
-    const std::set<HostID>& changed_hosts,
-    const std::vector<UserScript*>& scripts) {
+    const std::set<HostID>& changed_hosts) {
   for (auto iter = pending_injections_.begin();
        iter != pending_injections_.end();) {
     if (changed_hosts.count((*iter)->host_id()) > 0)
@@ -449,8 +470,7 @@ void ScriptInjectionManager::HandleExecuteCode(
   }
 
   std::unique_ptr<ScriptInjection> injection(new ScriptInjection(
-      std::unique_ptr<ScriptInjector>(
-          new ProgrammaticScriptInjector(params, render_frame)),
+      std::unique_ptr<ScriptInjector>(new ProgrammaticScriptInjector(params)),
       render_frame, std::move(injection_host),
       static_cast<UserScript::RunLocation>(params.run_at),
       activity_logging_enabled_));

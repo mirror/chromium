@@ -10,6 +10,7 @@
 #include "content/renderer/render_view_impl.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
 
 using ::testing::_;
 
@@ -55,22 +56,22 @@ class MouseLockDispatcherTest : public RenderViewTest {
 // Test simple use of RenderViewImpl interface to WebKit for pointer lock.
 TEST_F(MouseLockDispatcherTest, BasicWebWidget) {
   // Start unlocked.
-  EXPECT_FALSE(widget()->isPointerLocked());
+  EXPECT_FALSE(widget()->IsPointerLocked());
 
   // Lock.
-  EXPECT_TRUE(widget()->requestPointerLock());
+  EXPECT_TRUE(widget()->RequestPointerLock());
   widget()->OnMessageReceived(ViewMsg_LockMouse_ACK(route_id_, true));
-  EXPECT_TRUE(widget()->isPointerLocked());
+  EXPECT_TRUE(widget()->IsPointerLocked());
 
   // Unlock.
-  widget()->requestPointerUnlock();
+  widget()->RequestPointerUnlock();
   widget()->OnMessageReceived(ViewMsg_MouseLockLost(route_id_));
-  EXPECT_FALSE(widget()->isPointerLocked());
+  EXPECT_FALSE(widget()->IsPointerLocked());
 
   // Attempt a lock, and have it fail.
-  EXPECT_TRUE(widget()->requestPointerLock());
+  EXPECT_TRUE(widget()->RequestPointerLock());
   widget()->OnMessageReceived(ViewMsg_LockMouse_ACK(route_id_, false));
-  EXPECT_FALSE(widget()->isPointerLocked());
+  EXPECT_FALSE(widget()->IsPointerLocked());
 }
 
 // Test simple use of MouseLockDispatcher with a mock LockTarget.

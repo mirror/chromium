@@ -144,8 +144,8 @@ void PluginMetricsProvider::ProvideStabilityMetrics(
   metrics::SystemProfileProto::Stability* stability =
       system_profile_proto->mutable_stability();
   for (const auto& value : *plugin_stats_list) {
-    base::DictionaryValue* plugin_dict;
-    if (!value->GetAsDictionary(&plugin_dict)) {
+    const base::DictionaryValue* plugin_dict;
+    if (!value.GetAsDictionary(&plugin_dict)) {
       NOTREACHED();
       continue;
     }
@@ -210,9 +210,9 @@ void PluginMetricsProvider::RecordCurrentState() {
   base::ListValue* plugins = update.Get();
   DCHECK(plugins);
 
-  for (const auto& value : *plugins) {
+  for (auto& value : *plugins) {
     base::DictionaryValue* plugin_dict;
-    if (!value->GetAsDictionary(&plugin_dict)) {
+    if (!value.GetAsDictionary(&plugin_dict)) {
       NOTREACHED();
       continue;
     }
@@ -334,7 +334,7 @@ PluginMetricsProvider::ChildProcessStats&
 PluginMetricsProvider::GetChildProcessStats(
     const content::ChildProcessData& data) {
   const base::string16& child_name = data.name;
-  if (!ContainsKey(child_process_stats_buffer_, child_name)) {
+  if (!base::ContainsKey(child_process_stats_buffer_, child_name)) {
     child_process_stats_buffer_[child_name] =
         ChildProcessStats(data.process_type);
   }

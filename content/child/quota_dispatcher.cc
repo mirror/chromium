@@ -4,8 +4,12 @@
 
 #include "content/child/quota_dispatcher.h"
 
+#include <memory>
+#include <utility>
+
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/threading/thread_local.h"
 #include "content/child/quota_message_filter.h"
 #include "content/child/thread_safe_sender.h"
@@ -23,7 +27,7 @@ using storage::StorageType;
 
 namespace content {
 
-static base::LazyInstance<base::ThreadLocalPointer<QuotaDispatcher> >::Leaky
+static base::LazyInstance<base::ThreadLocalPointer<QuotaDispatcher>>::Leaky
     g_quota_dispatcher_tls = LAZY_INSTANCE_INITIALIZER;
 
 namespace {
@@ -37,13 +41,13 @@ class WebStorageQuotaDispatcherCallback : public QuotaDispatcher::Callback {
   ~WebStorageQuotaDispatcherCallback() override {}
 
   void DidQueryStorageUsageAndQuota(int64_t usage, int64_t quota) override {
-    callbacks_.didQueryStorageUsageAndQuota(usage, quota);
+    callbacks_.DidQueryStorageUsageAndQuota(usage, quota);
   }
   void DidGrantStorageQuota(int64_t usage, int64_t granted_quota) override {
-    callbacks_.didGrantStorageQuota(usage, granted_quota);
+    callbacks_.DidGrantStorageQuota(usage, granted_quota);
   }
   void DidFail(storage::QuotaStatusCode error) override {
-    callbacks_.didFail(static_cast<WebStorageQuotaError>(error));
+    callbacks_.DidFail(static_cast<WebStorageQuotaError>(error));
   }
 
  private:
@@ -66,7 +70,7 @@ QuotaDispatcher::QuotaDispatcher(ThreadSafeSender* thread_safe_sender,
 }
 
 QuotaDispatcher::~QuotaDispatcher() {
-  IDMap<Callback, IDMapOwnPointer>::iterator iter(&pending_quota_callbacks_);
+  IDMap<std::unique_ptr<Callback>>::iterator iter(&pending_quota_callbacks_);
   while (!iter.IsAtEnd()) {
     iter.GetCurrentValue()->DidFail(storage::kQuotaErrorAbort);
     iter.Advance();
@@ -108,40 +112,40 @@ void QuotaDispatcher::OnMessageReceived(const IPC::Message& msg) {
 void QuotaDispatcher::QueryStorageUsageAndQuota(
     const GURL& origin_url,
     StorageType type,
-    Callback* callback) {
+    std::unique_ptr<Callback> callback) {
   DCHECK(callback);
   int request_id = quota_message_filter_->GenerateRequestID(CurrentWorkerId());
-  pending_quota_callbacks_.AddWithID(callback, request_id);
+  pending_quota_callbacks_.AddWithID(std::move(callback), request_id);
   thread_safe_sender_->Send(new QuotaHostMsg_QueryStorageUsageAndQuota(
       request_id, origin_url, type));
 }
 
-void QuotaDispatcher::RequestStorageQuota(int render_view_id,
+void QuotaDispatcher::RequestStorageQuota(int render_frame_id,
                                           const GURL& origin_url,
                                           StorageType type,
                                           uint64_t requested_size,
-                                          Callback* callback) {
+                                          std::unique_ptr<Callback> callback) {
   DCHECK(callback);
   DCHECK(CurrentWorkerId() == 0);
   int request_id = quota_message_filter_->GenerateRequestID(CurrentWorkerId());
-  pending_quota_callbacks_.AddWithID(callback, request_id);
+  pending_quota_callbacks_.AddWithID(std::move(callback), request_id);
 
   StorageQuotaParams params;
-  params.render_view_id = render_view_id;
+  params.render_frame_id = render_frame_id;
   params.request_id = request_id;
   params.origin_url = origin_url;
   params.storage_type = type;
   params.requested_size = requested_size;
   params.user_gesture =
-      blink::WebUserGestureIndicator::isProcessingUserGesture();
+      blink::WebUserGestureIndicator::IsProcessingUserGesture();
   thread_safe_sender_->Send(new QuotaHostMsg_RequestStorageQuota(params));
 }
 
 // static
-QuotaDispatcher::Callback*
+std::unique_ptr<QuotaDispatcher::Callback>
 QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(
     blink::WebStorageQuotaCallbacks callbacks) {
-  return new WebStorageQuotaDispatcherCallback(callbacks);
+  return base::MakeUnique<WebStorageQuotaDispatcherCallback>(callbacks);
 }
 
 void QuotaDispatcher::DidGrantStorageQuota(int request_id,
@@ -171,17 +175,17 @@ void QuotaDispatcher::DidFail(
   pending_quota_callbacks_.Remove(request_id);
 }
 
-static_assert(int(blink::WebStorageQuotaTypeTemporary) ==
+static_assert(int(blink::kWebStorageQuotaTypeTemporary) ==
                   int(storage::kStorageTypeTemporary),
               "mismatching enums: kStorageTypeTemporary");
-static_assert(int(blink::WebStorageQuotaTypePersistent) ==
+static_assert(int(blink::kWebStorageQuotaTypePersistent) ==
                   int(storage::kStorageTypePersistent),
               "mismatching enums: kStorageTypePersistent");
 
-static_assert(int(blink::WebStorageQuotaErrorNotSupported) ==
+static_assert(int(blink::kWebStorageQuotaErrorNotSupported) ==
                   int(storage::kQuotaErrorNotSupported),
               "mismatching enums: kQuotaErrorNotSupported");
-static_assert(int(blink::WebStorageQuotaErrorAbort) ==
+static_assert(int(blink::kWebStorageQuotaErrorAbort) ==
                   int(storage::kQuotaErrorAbort),
               "mismatching enums: kQuotaErrorAbort");
 

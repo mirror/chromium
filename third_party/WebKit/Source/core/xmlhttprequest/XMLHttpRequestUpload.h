@@ -30,45 +30,48 @@
 #include "core/xmlhttprequest/XMLHttpRequest.h"
 #include "core/xmlhttprequest/XMLHttpRequestEventTarget.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
+#include "platform/wtf/Forward.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
 class ExecutionContext;
 
 class XMLHttpRequestUpload final : public XMLHttpRequestEventTarget {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static XMLHttpRequestUpload* create(XMLHttpRequest* xmlHttpRequest)
-    {
-        return new XMLHttpRequestUpload(xmlHttpRequest);
-    }
+  DEFINE_WRAPPERTYPEINFO();
 
-    XMLHttpRequest* xmlHttpRequest() const { return m_xmlHttpRequest; }
+ public:
+  static XMLHttpRequestUpload* Create(XMLHttpRequest* xml_http_request) {
+    return new XMLHttpRequestUpload(xml_http_request);
+  }
 
-    const AtomicString& interfaceName() const override;
-    ExecutionContext* getExecutionContext() const override;
+  XMLHttpRequest* XmlHttpRequest() const { return xml_http_request_; }
 
-    void dispatchEventAndLoadEnd(const AtomicString&, bool, unsigned long long, unsigned long long);
-    void dispatchProgressEvent(unsigned long long, unsigned long long);
+  const AtomicString& InterfaceName() const override;
+  ExecutionContext* GetExecutionContext() const override;
 
-    void handleRequestError(const AtomicString&);
+  void DispatchEventAndLoadEnd(const AtomicString&,
+                               bool,
+                               unsigned long long,
+                               unsigned long long);
+  void DispatchProgressEvent(unsigned long long, unsigned long long);
 
-    DECLARE_VIRTUAL_TRACE();
+  void HandleRequestError(const AtomicString&);
 
-private:
-    explicit XMLHttpRequestUpload(XMLHttpRequest*);
+  DECLARE_VIRTUAL_TRACE();
 
-    Member<XMLHttpRequest> m_xmlHttpRequest;
+ private:
+  explicit XMLHttpRequestUpload(XMLHttpRequest*);
 
-    // Last progress event values; used when issuing the
-    // required 'progress' event on a request error or abort.
-    unsigned long long m_lastBytesSent;
-    unsigned long long m_lastTotalBytesToBeSent;
+  Member<XMLHttpRequest> xml_http_request_;
+
+  // Last progress event values; used when issuing the
+  // required 'progress' event on a request error or abort.
+  unsigned long long last_bytes_sent_;
+  unsigned long long last_total_bytes_to_be_sent_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XMLHttpRequestUpload_h
+#endif  // XMLHttpRequestUpload_h

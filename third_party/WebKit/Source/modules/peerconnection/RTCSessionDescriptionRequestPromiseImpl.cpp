@@ -13,60 +13,60 @@
 
 namespace blink {
 
-RTCSessionDescriptionRequestPromiseImpl* RTCSessionDescriptionRequestPromiseImpl::create(RTCPeerConnection* requester, ScriptPromiseResolver* resolver)
-{
-    return new RTCSessionDescriptionRequestPromiseImpl(requester, resolver);
+RTCSessionDescriptionRequestPromiseImpl*
+RTCSessionDescriptionRequestPromiseImpl::Create(
+    RTCPeerConnection* requester,
+    ScriptPromiseResolver* resolver) {
+  return new RTCSessionDescriptionRequestPromiseImpl(requester, resolver);
 }
 
-RTCSessionDescriptionRequestPromiseImpl::RTCSessionDescriptionRequestPromiseImpl(RTCPeerConnection* requester, ScriptPromiseResolver* resolver)
-    : m_requester(requester)
-    , m_resolver(resolver)
-{
-    DCHECK(m_requester);
-    DCHECK(m_resolver);
+RTCSessionDescriptionRequestPromiseImpl::
+    RTCSessionDescriptionRequestPromiseImpl(RTCPeerConnection* requester,
+                                            ScriptPromiseResolver* resolver)
+    : requester_(requester), resolver_(resolver) {
+  DCHECK(requester_);
+  DCHECK(resolver_);
 }
 
-RTCSessionDescriptionRequestPromiseImpl::~RTCSessionDescriptionRequestPromiseImpl()
-{
+RTCSessionDescriptionRequestPromiseImpl::
+    ~RTCSessionDescriptionRequestPromiseImpl() {}
+
+void RTCSessionDescriptionRequestPromiseImpl::RequestSucceeded(
+    const WebRTCSessionDescription& web_session_description) {
+  if (requester_ && requester_->ShouldFireDefaultCallbacks()) {
+    resolver_->Resolve(RTCSessionDescription::Create(web_session_description));
+  } else {
+    // This is needed to have the resolver release its internal resources
+    // while leaving the associated promise pending as specified.
+    resolver_->Detach();
+  }
+
+  Clear();
 }
 
-void RTCSessionDescriptionRequestPromiseImpl::requestSucceeded(const WebRTCSessionDescription& webSessionDescription)
-{
-    if (m_requester && m_requester->shouldFireDefaultCallbacks()) {
-        m_resolver->resolve(RTCSessionDescription::create(webSessionDescription));
-    } else {
-        // This is needed to have the resolver release its internal resources
-        // while leaving the associated promise pending as specified.
-        m_resolver->detach();
-    }
+void RTCSessionDescriptionRequestPromiseImpl::RequestFailed(
+    const String& error) {
+  if (requester_ && requester_->ShouldFireDefaultCallbacks()) {
+    // TODO(guidou): The error code should come from the content layer. See
+    // crbug.com/589455
+    resolver_->Reject(DOMException::Create(kOperationError, error));
+  } else {
+    // This is needed to have the resolver release its internal resources
+    // while leaving the associated promise pending as specified.
+    resolver_->Detach();
+  }
 
-    clear();
+  Clear();
 }
 
-void RTCSessionDescriptionRequestPromiseImpl::requestFailed(const String& error)
-{
-    if (m_requester && m_requester->shouldFireDefaultCallbacks()) {
-        // TODO(guidou): The error code should come from the content layer. See crbug.com/589455
-        m_resolver->reject(DOMException::create(OperationError, error));
-    } else {
-        // This is needed to have the resolver release its internal resources
-        // while leaving the associated promise pending as specified.
-        m_resolver->detach();
-    }
-
-    clear();
+void RTCSessionDescriptionRequestPromiseImpl::Clear() {
+  requester_.Clear();
 }
 
-void RTCSessionDescriptionRequestPromiseImpl::clear()
-{
-    m_requester.clear();
+DEFINE_TRACE(RTCSessionDescriptionRequestPromiseImpl) {
+  visitor->Trace(resolver_);
+  visitor->Trace(requester_);
+  RTCSessionDescriptionRequest::Trace(visitor);
 }
 
-DEFINE_TRACE(RTCSessionDescriptionRequestPromiseImpl)
-{
-    visitor->trace(m_resolver);
-    visitor->trace(m_requester);
-    RTCSessionDescriptionRequest::trace(visitor);
-}
-
-} // namespace blink
+}  // namespace blink

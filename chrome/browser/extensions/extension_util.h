@@ -27,14 +27,8 @@ class Profile;
 namespace extensions {
 
 class Extension;
-struct ExtensionInfo;
-class PermissionSet;
 
 namespace util {
-
-// Returns true if |extension_id| can run in an incognito window.
-bool IsIncognitoEnabled(const std::string& extension_id,
-                        content::BrowserContext* context);
 
 // Sets whether |extension_id| can run in an incognito window. Reloads the
 // extension if it's enabled since this permission is applied at loading time
@@ -76,31 +70,6 @@ bool WasInstalledByCustodian(const std::string& extension_id,
 void SetWasInstalledByCustodian(const std::string& extension_id,
                                 content::BrowserContext* context,
                                 bool installed_by_custodian);
-
-// Returns true if the extension with |extension_id| is allowed to execute
-// scripts on all urls (exempting chrome:// urls, etc) without explicit
-// user consent.
-// This should only be used with FeatureSwitch::scripts_require_action()
-// enabled.
-bool AllowedScriptingOnAllUrls(const std::string& extension_id,
-                               content::BrowserContext* context);
-
-// Returns the default value for being allowed to script on all urls.
-bool DefaultAllowedScriptingOnAllUrls();
-
-// Sets whether the extension with |extension_id| is allowed to execute scripts
-// on all urls (exempting chrome:// urls, etc) without explicit user consent.
-// This should only be used with FeatureSwitch::scripts_require_action()
-// enabled.
-void SetAllowedScriptingOnAllUrls(const std::string& extension_id,
-                                  content::BrowserContext* context,
-                                  bool allowed);
-
-// Returns true if the user has set an explicit preference for the specified
-// extension being allowed to script on all urls; this is set to be true
-// whenever SetAllowedScriptingOnAllUrls() is called.
-bool HasSetAllowedScriptingOnAllUrls(const std::string& extension_id,
-                                     content::BrowserContext* context);
 
 // Returns true if |extension_id| can be launched (possibly only after being
 // enabled).
@@ -146,10 +115,6 @@ bool CanHostedAppsOpenInWindows();
 
 // Returns true for custodian-installed extensions in a supervised profile.
 bool IsExtensionSupervised(const Extension* extension, Profile* profile);
-
-// Returns true if supervised users need approval from their custodian for
-// approving escalated permissions on updated extensions.
-bool NeedCustodianApprovalForPermissionIncrease(const Profile* profile);
 
 }  // namespace util
 }  // namespace extensions

@@ -25,6 +25,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
+#include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutListItem.h"
 
 namespace blink {
@@ -32,81 +33,83 @@ namespace blink {
 using namespace HTMLNames;
 
 inline HTMLOListElement::HTMLOListElement(Document& document)
-    : HTMLElement(olTag, document)
-    , m_start(0xBADBEEF)
-    , m_itemCount(0)
-    , m_hasExplicitStart(false)
-    , m_isReversed(false)
-    , m_shouldRecalculateItemCount(false)
-{
-}
+    : HTMLElement(olTag, document),
+      start_(0xBADBEEF),
+      item_count_(0),
+      has_explicit_start_(false),
+      is_reversed_(false),
+      should_recalculate_item_count_(false) {}
 
 DEFINE_NODE_FACTORY(HTMLOListElement)
 
-bool HTMLOListElement::isPresentationAttribute(const QualifiedName& name) const
-{
-    if (name == typeAttr)
-        return true;
-    return HTMLElement::isPresentationAttribute(name);
+bool HTMLOListElement::IsPresentationAttribute(
+    const QualifiedName& name) const {
+  if (name == typeAttr)
+    return true;
+  return HTMLElement::IsPresentationAttribute(name);
 }
 
-void HTMLOListElement::collectStyleForPresentationAttribute(const QualifiedName& name, const AtomicString& value, MutableStylePropertySet* style)
-{
-    if (name == typeAttr) {
-        if (value == "a")
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType, CSSValueLowerAlpha);
-        else if (value == "A")
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType, CSSValueUpperAlpha);
-        else if (value == "i")
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType, CSSValueLowerRoman);
-        else if (value == "I")
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType, CSSValueUpperRoman);
-        else if (value == "1")
-            addPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType, CSSValueDecimal);
-    } else {
-        HTMLElement::collectStyleForPresentationAttribute(name, value, style);
-    }
+void HTMLOListElement::CollectStyleForPresentationAttribute(
+    const QualifiedName& name,
+    const AtomicString& value,
+    MutableStylePropertySet* style) {
+  if (name == typeAttr) {
+    if (value == "a")
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType,
+                                              CSSValueLowerAlpha);
+    else if (value == "A")
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType,
+                                              CSSValueUpperAlpha);
+    else if (value == "i")
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType,
+                                              CSSValueLowerRoman);
+    else if (value == "I")
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType,
+                                              CSSValueUpperRoman);
+    else if (value == "1")
+      AddPropertyToPresentationAttributeStyle(style, CSSPropertyListStyleType,
+                                              CSSValueDecimal);
+  } else {
+    HTMLElement::CollectStyleForPresentationAttribute(name, value, style);
+  }
 }
 
-void HTMLOListElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == startAttr) {
-        int oldStart = start();
-        bool canParse;
-        int parsedStart = value.toInt(&canParse);
-        m_hasExplicitStart = canParse;
-        m_start = canParse ? parsedStart : 0xBADBEEF;
-        if (oldStart == start())
-            return;
-        updateItemValues();
-    } else if (name == reversedAttr) {
-        bool reversed = !value.isNull();
-        if (reversed == m_isReversed)
-            return;
-        m_isReversed = reversed;
-        updateItemValues();
-    } else {
-        HTMLElement::parseAttribute(name, oldValue, value);
-    }
+void HTMLOListElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == startAttr) {
+    int old_start = start();
+    int parsed_start = 0;
+    bool can_parse = ParseHTMLInteger(params.new_value, parsed_start);
+    has_explicit_start_ = can_parse;
+    start_ = can_parse ? parsed_start : 0xBADBEEF;
+    if (old_start == start())
+      return;
+    UpdateItemValues();
+  } else if (params.name == reversedAttr) {
+    bool reversed = !params.new_value.IsNull();
+    if (reversed == is_reversed_)
+      return;
+    is_reversed_ = reversed;
+    UpdateItemValues();
+  } else {
+    HTMLElement::ParseAttribute(params);
+  }
 }
 
-void HTMLOListElement::setStart(int start)
-{
-    setIntegralAttribute(startAttr, start);
+void HTMLOListElement::setStart(int start) {
+  SetIntegralAttribute(startAttr, start);
 }
 
-void HTMLOListElement::updateItemValues()
-{
-    if (!layoutObject())
-        return;
-    updateDistribution();
-    LayoutListItem::updateItemValuesForOrderedList(this);
+void HTMLOListElement::UpdateItemValues() {
+  if (!GetLayoutObject())
+    return;
+  UpdateDistribution();
+  LayoutListItem::UpdateItemValuesForOrderedList(this);
 }
 
-void HTMLOListElement::recalculateItemCount()
-{
-    m_itemCount = LayoutListItem::itemCountForOrderedList(this);
-    m_shouldRecalculateItemCount = false;
+void HTMLOListElement::RecalculateItemCount() {
+  item_count_ = LayoutListItem::ItemCountForOrderedList(this);
+  should_recalculate_item_count_ = false;
 }
 
-} // namespace blink
+}  // namespace blink

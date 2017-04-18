@@ -165,20 +165,12 @@
                 "href": "/devtools/docs/debugging-clients"
               },
               {
-                "title": "Version 1.1 (Stable)",
-                "href": "/devtools/docs/protocol/1.1/index"
+                "title": "Version 1.2 (Stable)",
+                "href": "https://chromedevtools.github.io/debugger-protocol-viewer/1-2/"
               },
               {
                 "title": "Tip-of-tree (Unstable)",
-                "href": "https://chromedevtools.github.io/debugger-protocol-viewer/"
-              },
-              {
-                "title": "Version 1.0",
-                "href": "/devtools/docs/protocol/1.0/index"
-              },
-              {
-                "title": "Version .1",
-                "href": "/devtools/docs/protocol/0.1/index"
+                "href": "https://chromedevtools.github.io/debugger-protocol-viewer/tot/"
               }
             ]
           }
@@ -269,33 +261,15 @@
       },
       {
         "title": "Chrome for iOS",
-        "href": "/multidevice/ios/overview",
+        "href": "/multidevice/ios/links",
         "items": [
-          {
-            "title": "Overview",
-            "href": "/multidevice/ios/overview"
-          },
           {
             "title": "Opening Links in Chrome",
             "href": "/multidevice/ios/links"
           },
           {
-            "title": "Case Studies",
-            "href": "/multidevice/ios/case-studies",
-            "items": [
-              {
-                "title": "Case Studies",
-                "href": "/multidevice/ios/case-studies"
-              },
-              {
-                "title": "Pocket",
-                "href": "/multidevice/ios/pocket"
-              },
-              {
-                "title": "Feedly",
-                "href": "/multidevice/ios/feedly"
-              }
-            ]
+            "title": "User Agent",
+            "href": "/multidevice/user-agent#chrome_for_ios_user_agent"
           }
         ]
       }
@@ -315,6 +289,10 @@
               {
                 "title": "What Are Chrome Apps?",
                 "href": "/apps/about_apps"
+              },
+              {
+                "title": "Transition Overview",
+                "href": "/apps/migration"
               },
               {
                 "title": "Create Your First App",
@@ -593,7 +571,7 @@
           },
           {
             "title": "Develop Extensions",
-            "href": "/extensions/tut_migration_to_manifest_v2",
+            "href": "/extensions",
             "items": [
               {
                 "title": "Accessibility",
@@ -1010,10 +988,6 @@
               {
                 "title": "Using Google Accounts",
                 "href": "/webstore/identify_user"
-              },
-              {
-                "title": "Checking for Payment",
-                "href": "/webstore/check_for_payment"
               },
               {
                 "title": "One-Time Payments",

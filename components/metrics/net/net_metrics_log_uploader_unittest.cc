@@ -18,13 +18,13 @@ class NetMetricsLogUploaderTest : public testing::Test {
 
   void CreateAndOnUploadCompleteReuseUploader() {
     uploader_.reset(new NetMetricsLogUploader(
-        NULL, "http://dummy_server", "dummy_mime",
+        NULL, "http://dummy_server", "dummy_mime", MetricsLogUploader::UMA,
         base::Bind(&NetMetricsLogUploaderTest::OnUploadCompleteReuseUploader,
                    base::Unretained(this))));
     uploader_->UploadLog("initial_dummy_data", "initial_dummy_hash");
   }
 
-  void OnUploadCompleteReuseUploader(int response_code) {
+  void OnUploadCompleteReuseUploader(int response_code, int error_code) {
     ++on_upload_complete_count_;
     if (on_upload_complete_count_ == 1)
       uploader_->UploadLog("dummy_data", "dummy_hash");

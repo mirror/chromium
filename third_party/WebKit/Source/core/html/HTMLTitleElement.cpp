@@ -22,74 +22,71 @@
 
 #include "core/html/HTMLTitleElement.h"
 
-#include "bindings/core/v8/ExceptionStatePlaceholder.h"
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/ChildListMutationScope.h"
 #include "core/dom/Document.h"
 #include "core/dom/Text.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/StyleInheritedData.h"
-#include "wtf/AutoReset.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/wtf/AutoReset.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
 inline HTMLTitleElement::HTMLTitleElement(Document& document)
-    : HTMLElement(titleTag, document)
-    , m_ignoreTitleUpdatesWhenChildrenChange(false)
-{
-}
+    : HTMLElement(titleTag, document),
+      ignore_title_updates_when_children_change_(false) {}
 
 DEFINE_NODE_FACTORY(HTMLTitleElement)
 
-Node::InsertionNotificationRequest HTMLTitleElement::insertedInto(ContainerNode* insertionPoint)
-{
-    HTMLElement::insertedInto(insertionPoint);
-    if (isInDocumentTree())
-        document().setTitleElement(this);
-    return InsertionDone;
+Node::InsertionNotificationRequest HTMLTitleElement::InsertedInto(
+    ContainerNode* insertion_point) {
+  HTMLElement::InsertedInto(insertion_point);
+  if (IsInDocumentTree())
+    GetDocument().SetTitleElement(this);
+  return kInsertionDone;
 }
 
-void HTMLTitleElement::removedFrom(ContainerNode* insertionPoint)
-{
-    HTMLElement::removedFrom(insertionPoint);
-    if (insertionPoint->isInDocumentTree())
-        document().removeTitle(this);
+void HTMLTitleElement::RemovedFrom(ContainerNode* insertion_point) {
+  HTMLElement::RemovedFrom(insertion_point);
+  if (insertion_point->IsInDocumentTree())
+    GetDocument().RemoveTitle(this);
 }
 
-void HTMLTitleElement::childrenChanged(const ChildrenChange& change)
-{
-    HTMLElement::childrenChanged(change);
-    if (isInDocumentTree() && !m_ignoreTitleUpdatesWhenChildrenChange)
-        document().setTitleElement(this);
+void HTMLTitleElement::ChildrenChanged(const ChildrenChange& change) {
+  HTMLElement::ChildrenChanged(change);
+  if (IsInDocumentTree() && !ignore_title_updates_when_children_change_)
+    GetDocument().SetTitleElement(this);
 }
 
-String HTMLTitleElement::text() const
-{
-    StringBuilder result;
+String HTMLTitleElement::text() const {
+  StringBuilder result;
 
-    for (Node *n = firstChild(); n; n = n->nextSibling()) {
-        if (n->isTextNode())
-            result.append(toText(n)->data());
-    }
+  for (Node* n = FirstChild(); n; n = n->nextSibling()) {
+    if (n->IsTextNode())
+      result.Append(ToText(n)->data());
+  }
 
-    return result.toString();
+  return result.ToString();
 }
 
-void HTMLTitleElement::setText(const String &value)
-{
-    ChildListMutationScope mutation(*this);
+void HTMLTitleElement::setText(const String& value) {
+  ChildListMutationScope mutation(*this);
 
-    {
-        // Avoid calling Document::setTitleElement() during intermediate steps.
-        AutoReset<bool> inhibitTitleUpdateScope(&m_ignoreTitleUpdatesWhenChildrenChange, !value.isEmpty());
-        removeChildren(OmitSubtreeModifiedEvent);
-    }
+  {
+    // Avoid calling Document::setTitleElement() during intermediate steps.
+    AutoReset<bool> inhibit_title_update_scope(
+        &ignore_title_updates_when_children_change_, !value.IsEmpty());
+    RemoveChildren(kOmitSubtreeModifiedEvent);
+  }
 
-    if (!value.isEmpty())
-        appendChild(document().createTextNode(value.impl()), IGNORE_EXCEPTION);
+  if (!value.IsEmpty()) {
+    AppendChild(GetDocument().createTextNode(value.Impl()),
+                IGNORE_EXCEPTION_FOR_TESTING);
+  }
 }
 
-} // namespace blink
+}  // namespace blink

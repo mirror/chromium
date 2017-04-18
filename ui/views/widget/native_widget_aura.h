@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/client/focus_change_observer.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_observer.h"
@@ -18,18 +19,15 @@
 #include "ui/views/widget/native_widget_private.h"
 #include "ui/wm/public/activation_change_observer.h"
 #include "ui/wm/public/activation_delegate.h"
-#include "ui/wm/public/drag_drop_delegate.h"
 
 namespace aura {
 class Window;
-}
-namespace gfx {
-class FontList;
 }
 
 namespace views {
 
 class DropHelper;
+class FocusManagerEventHandler;
 class TooltipManagerAura;
 class WindowReorderer;
 
@@ -42,13 +40,27 @@ class VIEWS_EXPORT NativeWidgetAura
       public aura::client::FocusChangeObserver,
       public aura::client::DragDropDelegate {
  public:
-  explicit NativeWidgetAura(internal::NativeWidgetDelegate* delegate);
+  // |is_parallel_widget_in_window_manager| is true only when this
+  // NativeWidgetAura is created in the window manager to represent a client
+  // window, in all other cases it's false.
+  explicit NativeWidgetAura(internal::NativeWidgetDelegate* delegate,
+                            bool is_parallel_widget_in_window_manager = false);
 
   // Called internally by NativeWidgetAura and DesktopNativeWidgetAura to
   // associate |native_widget| with |window|.
   static void RegisterNativeWidgetForWindow(
       internal::NativeWidgetPrivate* native_widget,
       aura::Window* window);
+
+  // Assign an icon to aura window.
+  static void AssignIconToAuraWindow(aura::Window* window,
+                                     const gfx::ImageSkia& window_icon,
+                                     const gfx::ImageSkia& app_icon);
+
+  // If necessary, sets the ShadowElevation of |window| from |params|.
+  static void SetShadowElevationFromInitParams(
+      aura::Window* window,
+      const Widget::InitParams& params);
 
   // Overridden from internal::NativeWidgetPrivate:
   void InitNativeWidget(const Widget::InitParams& params) override;
@@ -88,7 +100,6 @@ class VIEWS_EXPORT NativeWidgetAura
   void SetSize(const gfx::Size& size) override;
   void StackAbove(gfx::NativeView native_view) override;
   void StackAtTop() override;
-  void StackBelow(gfx::NativeView native_view) override;
   void SetShape(std::unique_ptr<SkRegion> shape) override;
   void Close() override;
   void CloseNow() override;
@@ -132,8 +143,6 @@ class VIEWS_EXPORT NativeWidgetAura
   void SetVisibilityAnimationDuration(const base::TimeDelta& duration) override;
   void SetVisibilityAnimationTransition(
       Widget::VisibilityTransition transition) override;
-  ui::NativeTheme* GetNativeTheme() const override;
-  void OnRootViewLayout() override;
   bool IsTranslucentWindowOpacitySupported() const override;
   void OnSizeConstraintsChanged() override;
   void RepostNativeEvent(gfx::NativeEvent native_event) override;
@@ -195,12 +204,13 @@ class VIEWS_EXPORT NativeWidgetAura
   internal::NativeWidgetDelegate* delegate() { return delegate_; }
 
  private:
-  class ActiveWindowObserver;
-
-  bool IsDocked() const;
   void SetInitialFocus(ui::WindowShowState show_state);
 
   internal::NativeWidgetDelegate* delegate_;
+
+  // True if the Widget is created in the window-manager and another client is
+  // embedded in it. When true certain operations are not performed.
+  const bool is_parallel_widget_in_window_manager_;
 
   // WARNING: set to NULL when destroyed. As the Widget is not necessarily
   // destroyed along with |window_| all usage of |window_| should first verify
@@ -215,9 +225,6 @@ class VIEWS_EXPORT NativeWidgetAura
 
   gfx::NativeCursor cursor_;
 
-  // The saved window state for exiting full screen state.
-  ui::WindowShowState saved_window_state_;
-
   std::unique_ptr<TooltipManagerAura> tooltip_manager_;
 
   // Reorders child windows of |window_| associated with a view based on the
@@ -226,6 +233,9 @@ class VIEWS_EXPORT NativeWidgetAura
 
   std::unique_ptr<DropHelper> drop_helper_;
   int last_drop_operation_;
+
+  // Native widget's handler to receive events before the event target.
+  std::unique_ptr<FocusManagerEventHandler> focus_manager_event_handler_;
 
   // The following factory is used for calls to close the NativeWidgetAura
   // instance.

@@ -10,86 +10,100 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef BiquadProcessor_h
 #define BiquadProcessor_h
 
+#include <memory>
 #include "modules/webaudio/AudioNode.h"
 #include "modules/webaudio/AudioParam.h"
 #include "platform/audio/AudioDSPKernel.h"
 #include "platform/audio/AudioDSPKernelProcessor.h"
 #include "platform/audio/Biquad.h"
-#include "wtf/RefPtr.h"
-#include <memory>
+#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 
-// BiquadProcessor is an AudioDSPKernelProcessor which uses Biquad objects to implement several common filters.
+// BiquadProcessor is an AudioDSPKernelProcessor which uses Biquad objects to
+// implement several common filters.
 
 class BiquadProcessor final : public AudioDSPKernelProcessor {
-public:
-    // This values are used in histograms and should not be renumbered or deleted.
-    enum FilterType {
-        LowPass = 0,
-        HighPass = 1,
-        BandPass = 2,
-        LowShelf = 3,
-        HighShelf = 4,
-        Peaking = 5,
-        Notch = 6,
-        Allpass = 7
-    };
+ public:
+  // This values are used in histograms and should not be renumbered or deleted.
+  enum FilterType {
+    kLowPass = 0,
+    kHighPass = 1,
+    kBandPass = 2,
+    kLowShelf = 3,
+    kHighShelf = 4,
+    kPeaking = 5,
+    kNotch = 6,
+    kAllpass = 7
+  };
 
-    BiquadProcessor(float sampleRate, size_t numberOfChannels, AudioParamHandler& frequency, AudioParamHandler& q, AudioParamHandler& gain, AudioParamHandler& detune);
-    ~BiquadProcessor() override;
+  BiquadProcessor(float sample_rate,
+                  size_t number_of_channels,
+                  AudioParamHandler& frequency,
+                  AudioParamHandler& q,
+                  AudioParamHandler& gain,
+                  AudioParamHandler& detune);
+  ~BiquadProcessor() override;
 
-    std::unique_ptr<AudioDSPKernel> createKernel() override;
+  std::unique_ptr<AudioDSPKernel> CreateKernel() override;
 
-    void process(const AudioBus* source, AudioBus* destination, size_t framesToProcess) override;
+  void Process(const AudioBus* source,
+               AudioBus* destination,
+               size_t frames_to_process) override;
 
-    // Get the magnitude and phase response of the filter at the given
-    // set of frequencies (in Hz). The phase response is in radians.
-    void getFrequencyResponse(int nFrequencies, const float* frequencyHz, float* magResponse, float* phaseResponse);
+  void ProcessOnlyAudioParams(size_t frames_to_process) override;
 
-    void checkForDirtyCoefficients();
+  // Get the magnitude and phase response of the filter at the given
+  // set of frequencies (in Hz). The phase response is in radians.
+  void GetFrequencyResponse(int n_frequencies,
+                            const float* frequency_hz,
+                            float* mag_response,
+                            float* phase_response);
 
-    bool filterCoefficientsDirty() const { return m_filterCoefficientsDirty; }
-    bool hasSampleAccurateValues() const { return m_hasSampleAccurateValues; }
+  void CheckForDirtyCoefficients();
 
-    AudioParamHandler& parameter1() { return *m_parameter1; }
-    AudioParamHandler& parameter2() { return *m_parameter2; }
-    AudioParamHandler& parameter3() { return *m_parameter3; }
-    AudioParamHandler& parameter4() { return *m_parameter4; }
+  bool FilterCoefficientsDirty() const { return filter_coefficients_dirty_; }
+  bool HasSampleAccurateValues() const { return has_sample_accurate_values_; }
 
-    FilterType type() const { return m_type; }
-    void setType(FilterType);
+  AudioParamHandler& Parameter1() { return *parameter1_; }
+  AudioParamHandler& Parameter2() { return *parameter2_; }
+  AudioParamHandler& Parameter3() { return *parameter3_; }
+  AudioParamHandler& Parameter4() { return *parameter4_; }
 
-private:
-    FilterType m_type;
+  FilterType GetType() const { return type_; }
+  void SetType(FilterType);
 
-    RefPtr<AudioParamHandler> m_parameter1;
-    RefPtr<AudioParamHandler> m_parameter2;
-    RefPtr<AudioParamHandler> m_parameter3;
-    RefPtr<AudioParamHandler> m_parameter4;
+ private:
+  FilterType type_;
 
-    // so DSP kernels know when to re-compute coefficients
-    bool m_filterCoefficientsDirty;
+  RefPtr<AudioParamHandler> parameter1_;
+  RefPtr<AudioParamHandler> parameter2_;
+  RefPtr<AudioParamHandler> parameter3_;
+  RefPtr<AudioParamHandler> parameter4_;
 
-    // Set to true if any of the filter parameters are sample-accurate.
-    bool m_hasSampleAccurateValues;
+  // so DSP kernels know when to re-compute coefficients
+  bool filter_coefficients_dirty_;
+
+  // Set to true if any of the filter parameters are sample-accurate.
+  bool has_sample_accurate_values_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // BiquadProcessor_h
+#endif  // BiquadProcessor_h

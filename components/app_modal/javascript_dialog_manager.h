@@ -37,16 +37,14 @@ class JavaScriptDialogManager : public content::JavaScriptDialogManager {
   void SetExtensionsClient(
       std::unique_ptr<JavaScriptDialogExtensionsClient> extensions_client);
 
- private:
-  friend struct base::DefaultSingletonTraits<JavaScriptDialogManager>;
-
-  JavaScriptDialogManager();
-  ~JavaScriptDialogManager() override;
+  // Gets the title for a dialog.
+  base::string16 GetTitle(content::WebContents* web_contents,
+                          const GURL& origin_url);
 
   // JavaScriptDialogManager:
   void RunJavaScriptDialog(content::WebContents* web_contents,
                            const GURL& origin_url,
-                           content::JavaScriptMessageType message_type,
+                           content::JavaScriptDialogType dialog_type,
                            const base::string16& message_text,
                            const base::string16& default_prompt_text,
                            const DialogClosedCallback& callback,
@@ -57,13 +55,14 @@ class JavaScriptDialogManager : public content::JavaScriptDialogManager {
   bool HandleJavaScriptDialog(content::WebContents* web_contents,
                               bool accept,
                               const base::string16* prompt_override) override;
-  void CancelActiveAndPendingDialogs(
-      content::WebContents* web_contents) override;
-  void ResetDialogState(content::WebContents* web_contents) override;
+  void CancelDialogs(content::WebContents* web_contents,
+                     bool reset_state) override;
 
-  base::string16 GetTitle(content::WebContents* web_contents,
-                          const GURL& origin_url,
-                          bool is_alert);
+ private:
+  friend struct base::DefaultSingletonTraits<JavaScriptDialogManager>;
+
+  JavaScriptDialogManager();
+  ~JavaScriptDialogManager() override;
 
   // Wrapper around OnDialogClosed; logs UMA stats before continuing on.
   void OnBeforeUnloadDialogClosed(content::WebContents* web_contents,

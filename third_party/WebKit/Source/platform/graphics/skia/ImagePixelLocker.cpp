@@ -11,51 +11,53 @@ namespace blink {
 
 namespace {
 
-bool infoIsCompatible(const SkImageInfo& info, SkAlphaType alphaType, SkColorType colorType)
-{
-    ASSERT(alphaType != kUnknown_SkAlphaType);
+bool InfoIsCompatible(const SkImageInfo& info,
+                      SkAlphaType alpha_type,
+                      SkColorType color_type) {
+  DCHECK_NE(alpha_type, kUnknown_SkAlphaType);
 
-    if (info.colorType() != colorType)
-        return false;
+  if (info.colorType() != color_type)
+    return false;
 
-    // kOpaque_SkAlphaType works regardless of the requested alphaType.
-    return info.alphaType() == alphaType || info.alphaType() == kOpaque_SkAlphaType;
+  // kOpaque_SkAlphaType works regardless of the requested alphaType.
+  return info.alphaType() == alpha_type ||
+         info.alphaType() == kOpaque_SkAlphaType;
 }
 
-} // anonymous namespace
+}  // anonymous namespace
 
-ImagePixelLocker::ImagePixelLocker(PassRefPtr<const SkImage> image, SkAlphaType alphaType,
-    SkColorType colorType)
-    : m_image(image)
-{
-    // If the image has in-RAM pixels and their format matches, use them directly.
-    // TODO(fmalita): All current clients expect packed pixel rows.  Maybe we could update them
-    // to support arbitrary rowBytes, and relax the check below.
-    SkPixmap pixmap;
-    m_image->peekPixels(&pixmap);
-    m_pixels = pixmap.addr();
-    if (m_pixels
-        && infoIsCompatible(pixmap.info(), alphaType, colorType)
-        && pixmap.rowBytes() == pixmap.info().minRowBytes()) {
-        return;
-    }
+ImagePixelLocker::ImagePixelLocker(sk_sp<const SkImage> image,
+                                   SkAlphaType alpha_type,
+                                   SkColorType color_type)
+    : image_(std::move(image)) {
+  // If the image has in-RAM pixels and their format matches, use them directly.
+  // TODO(fmalita): All current clients expect packed pixel rows.  Maybe we
+  // could update them to support arbitrary rowBytes, and relax the check below.
+  SkPixmap pixmap;
+  image_->peekPixels(&pixmap);
+  pixels_ = pixmap.addr();
+  if (pixels_ && InfoIsCompatible(pixmap.info(), alpha_type, color_type) &&
+      pixmap.rowBytes() == pixmap.info().minRowBytes()) {
+    return;
+  }
 
-    m_pixels = nullptr;
+  pixels_ = nullptr;
 
-    // No luck, we need to read the pixels into our local buffer.
-    SkImageInfo info = SkImageInfo::Make(m_image->width(), m_image->height(), colorType, alphaType);
-    size_t rowBytes = info.minRowBytes();
-    size_t size = info.getSafeSize(rowBytes);
-    if (0 == size)
-        return;
+  // No luck, we need to read the pixels into our local buffer.
+  SkImageInfo info = SkImageInfo::Make(image_->width(), image_->height(),
+                                       color_type, alpha_type);
+  size_t row_bytes = info.minRowBytes();
+  size_t size = info.getSafeSize(row_bytes);
+  if (0 == size)
+    return;
 
-    m_pixelStorage.reset(size); // this will throw on failure
-    pixmap.reset(info, m_pixelStorage.get(), rowBytes);
+  pixel_storage_.Resize(size);  // this will throw on failure
+  pixmap.reset(info, pixel_storage_.Data(), row_bytes);
 
-    if (!m_image->readPixels(pixmap, 0, 0))
-        return;
+  if (!image_->readPixels(pixmap, 0, 0))
+    return;
 
-    m_pixels = m_pixelStorage.get();
+  pixels_ = pixel_storage_.Data();
 }
 
-} // namespace blink
+}  // namespace blink

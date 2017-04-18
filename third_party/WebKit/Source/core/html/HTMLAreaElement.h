@@ -23,56 +23,59 @@
 #ifndef HTMLAreaElement_h
 #define HTMLAreaElement_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "platform/geometry/LayoutRect.h"
-#include <memory>
+#include "public/platform/WebFocusType.h"
 
 namespace blink {
 
-class HitTestResult;
 class HTMLImageElement;
 class Path;
 
 class CORE_EXPORT HTMLAreaElement final : public HTMLAnchorElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(HTMLAreaElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool isDefault() const { return m_shape == Default; }
+ public:
+  DECLARE_NODE_FACTORY(HTMLAreaElement);
 
-    // |containerObject| in the following functions is an object (normally a LayoutImage)
-    // which references the containing image map of this area. There might be multiple
-    // objects referencing the same map. For these functions, the effective geometry of
-    // this map will be calculated based on the specified container object, e.g. the
-    // rectangle of the default shape will be the border box rect of the container object,
-    // and effective zoom factor of the container object will be applied on non-default shape.
-    bool pointInArea(const LayoutPoint&, const LayoutObject* containerObject) const;
-    LayoutRect computeAbsoluteRect(const LayoutObject* containerObject) const;
-    Path getPath(const LayoutObject* containerObject) const;
+  bool IsDefault() const { return shape_ == kDefault; }
 
-    // The parent map's image.
-    HTMLImageElement* imageElement() const;
+  // |containerObject| in the following functions is an object (normally a
+  // LayoutImage) which references the containing image map of this area. There
+  // might be multiple objects referencing the same map. For these functions,
+  // the effective geometry of this map will be calculated based on the
+  // specified container object, e.g.  the rectangle of the default shape will
+  // be the border box rect of the container object, and effective zoom factor
+  // of the container object will be applied on non-default shape.
+  bool PointInArea(const LayoutPoint&,
+                   const LayoutObject* container_object) const;
+  LayoutRect ComputeAbsoluteRect(const LayoutObject* container_object) const;
+  Path GetPath(const LayoutObject* container_object) const;
 
-private:
-    explicit HTMLAreaElement(Document&);
-    ~HTMLAreaElement();
+  // The parent map's image.
+  HTMLImageElement* ImageElement() const;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isKeyboardFocusable() const override;
-    bool isMouseFocusable() const override;
-    bool layoutObjectIsFocusable() const override;
-    void updateFocusAppearance(SelectionBehaviorOnFocus) override;
-    void setFocus(bool) override;
+ private:
+  explicit HTMLAreaElement(Document&);
+  ~HTMLAreaElement();
 
-    enum Shape { Default, Poly, Rect, Circle };
-    void invalidateCachedPath();
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsKeyboardFocusable() const override;
+  bool IsMouseFocusable() const override;
+  bool LayoutObjectIsFocusable() const override;
+  void UpdateFocusAppearance(SelectionBehaviorOnFocus) override;
+  void SetFocused(bool, WebFocusType) override;
 
-    mutable std::unique_ptr<Path> m_path;
-    Vector<double> m_coords;
-    Shape m_shape;
+  enum Shape { kDefault, kPoly, kRect, kCircle };
+  void InvalidateCachedPath();
+
+  mutable std::unique_ptr<Path> path_;
+  Vector<double> coords_;
+  Shape shape_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLAreaElement_h
+#endif  // HTMLAreaElement_h

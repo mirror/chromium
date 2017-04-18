@@ -13,11 +13,12 @@
 #include "chrome/browser/ui/tab_modal_confirm_dialog_delegate.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_item.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "url/gurl.h"
 
 using extensions::ExperienceSamplingEvent;
@@ -129,10 +130,10 @@ base::string16 DownloadDangerPromptImpl::GetTitle() {
     case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
     case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
     case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
-    case content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED: {
-      return l10n_util::GetStringUTF16(
-          IDS_RESTORE_KEEP_DANGEROUS_DOWNLOAD_TITLE);
-    }
+    case content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED:
+      return l10n_util::GetStringUTF16(IDS_KEEP_DANGEROUS_DOWNLOAD_TITLE);
+    case content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT:
+      return l10n_util::GetStringUTF16(IDS_KEEP_UNCOMMON_DOWNLOAD_TITLE);
     default: {
       return l10n_util::GetStringUTF16(
           IDS_CONFIRM_KEEP_DANGEROUS_DOWNLOAD_TITLE);
@@ -176,11 +177,10 @@ base::string16 DownloadDangerPromptImpl::GetDialogMessage() {
     switch (download_->GetDangerType()) {
       case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
       case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
-      case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST: {
+      case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
+      case content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED:
+      case content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT: {
         return l10n_util::GetStringUTF16(
-                   IDS_PROMPT_CONFIRM_KEEP_MALICIOUS_DOWNLOAD_LEAD) +
-               base::ASCIIToUTF16("\n\n") +
-               l10n_util::GetStringUTF16(
                    IDS_PROMPT_CONFIRM_KEEP_MALICIOUS_DOWNLOAD_BODY);
       }
       default: {
@@ -196,31 +196,11 @@ base::string16 DownloadDangerPromptImpl::GetDialogMessage() {
 base::string16 DownloadDangerPromptImpl::GetAcceptButtonTitle() {
   if (show_context_)
     return l10n_util::GetStringUTF16(IDS_CONFIRM_DOWNLOAD);
-  switch (download_->GetDangerType()) {
-    case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
-    case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
-    case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
-    case content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED: {
-      return l10n_util::GetStringUTF16(IDS_CONFIRM_DOWNLOAD_AGAIN_MALICIOUS);
-    }
-    default:
-      return l10n_util::GetStringUTF16(IDS_CONFIRM_DOWNLOAD_AGAIN);
-  }
+  return l10n_util::GetStringUTF16(IDS_CONFIRM_DOWNLOAD_AGAIN);
 }
 
 base::string16 DownloadDangerPromptImpl::GetCancelButtonTitle() {
-  if (show_context_)
-    return l10n_util::GetStringUTF16(IDS_CANCEL);
-  switch (download_->GetDangerType()) {
-    case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_URL:
-    case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT:
-    case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
-    case content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED: {
-      return l10n_util::GetStringUTF16(IDS_CONFIRM_CANCEL_AGAIN_MALICIOUS);
-    }
-    default:
-      return l10n_util::GetStringUTF16(IDS_CANCEL);
-  }
+  return l10n_util::GetStringUTF16(IDS_CANCEL);
 }
 
 void DownloadDangerPromptImpl::OnAccepted() {
@@ -277,6 +257,11 @@ DownloadDangerPrompt* DownloadDangerPrompt::Create(
     content::WebContents* web_contents,
     bool show_context,
     const OnDone& done) {
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    return DownloadDangerPrompt::CreateDownloadDangerPromptViews(
+        item, web_contents, show_context, done);
+  }
+
   DownloadDangerPromptImpl* prompt =
       new DownloadDangerPromptImpl(item, web_contents, show_context, done);
   // |prompt| will be deleted when the dialog is done.

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/mac/mac_util.h"
+#include "third_party/skia/include/utils/mac/SkCGUtils.h"
 #include "ui/gfx/canvas_paint_mac.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -21,12 +23,11 @@ CanvasSkiaPaint::CanvasSkiaPaint(NSRect dirtyRect, bool opaque)
 
 CanvasSkiaPaint::~CanvasSkiaPaint() {
   if (!is_empty()) {
-    SkCanvas* canvas = sk_canvas();
-    canvas->restoreToCount(1);
+    sk_canvas()->restoreToCount(1);
 
     // Blit the dirty rect to the current context.
-    CGImageRef image =
-        CGBitmapContextCreateImage(skia::GetBitmapContext(*canvas));
+    CGImageRef image = SkCreateCGImageRefWithColorspace(
+        GetBitmap(), base::mac::GetSystemColorSpace());
     CGRect dest_rect = NSRectToCGRect(rectangle_);
 
     CGContextRef destination_context =
@@ -60,7 +61,7 @@ void CanvasSkiaPaint::Init(bool opaque) {
 
   gfx::Size size(NSWidth(rectangle_), NSHeight(rectangle_));
   RecreateBackingCanvas(size, scale, opaque);
-  SkCanvas* canvas = sk_canvas();
+  cc::PaintCanvas* canvas = sk_canvas();
   canvas->clear(SkColorSetARGB(0, 0, 0, 0));
 
     // Need to translate so that the dirty region appears at the origin of the

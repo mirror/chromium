@@ -14,10 +14,13 @@
 base::android::ScopedJavaLocalRef<jobject> CreateNativeCredential(
     JNIEnv* env,
     const autofill::PasswordForm& password_form,
-    int position,
-    int type) {
+    int position) {
   using base::android::ConvertUTF16ToJavaString;
   using base::android::ConvertUTF8ToJavaString;
+  std::string origin_url =
+      password_form.is_public_suffix_match
+          ? password_form.origin.GetOrigin().spec()
+          : std::string();
   std::string federation =
       password_form.federation_origin.unique()
           ? std::string()
@@ -25,17 +28,14 @@ base::android::ScopedJavaLocalRef<jobject> CreateNativeCredential(
                 IDS_PASSWORDS_VIA_FEDERATION,
                 base::ASCIIToUTF16(password_form.federation_origin.host()));
   return Java_Credential_createCredential(
-      env, ConvertUTF16ToJavaString(env, password_form.username_value).obj(),
-      ConvertUTF16ToJavaString(env, password_form.display_name).obj(),
-      ConvertUTF8ToJavaString(env, federation).obj(), type, position);
+      env, ConvertUTF16ToJavaString(env, password_form.username_value),
+      ConvertUTF16ToJavaString(env, password_form.display_name),
+      ConvertUTF8ToJavaString(env, origin_url),
+      ConvertUTF8ToJavaString(env, federation), position);
 }
 
 base::android::ScopedJavaLocalRef<jobjectArray> CreateNativeCredentialArray(
     JNIEnv* env,
     size_t size) {
   return Java_Credential_createCredentialArray(env, static_cast<int>(size));
-}
-
-bool RegisterCredential(JNIEnv* env) {
-  return RegisterNativesImpl(env);
 }

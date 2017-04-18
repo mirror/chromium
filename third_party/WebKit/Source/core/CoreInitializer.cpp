@@ -36,6 +36,7 @@
 #include "core/EventTypeNames.h"
 #include "core/HTMLNames.h"
 #include "core/HTMLTokenizerNames.h"
+#include "core/InputModeNames.h"
 #include "core/InputTypeNames.h"
 #include "core/MathMLNames.h"
 #include "core/MediaFeatureNames.h"
@@ -49,118 +50,98 @@
 #include "core/dom/Document.h"
 #include "core/dom/StyleChangeReason.h"
 #include "core/events/EventFactory.h"
-#include "core/fetch/FetchInitiatorTypeNames.h"
 #include "core/html/canvas/CanvasRenderingContextFactory.h"
-#include "core/html/parser/HTMLParserThread.h"
 #include "core/workers/WorkerThread.h"
-#include "platform/EventTracer.h"
 #include "platform/FontFamilyNames.h"
 #include "platform/HTTPNames.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityPolicy.h"
-#include "wtf/allocator/Partitions.h"
-#include "wtf/text/AtomicStringTable.h"
+#include "platform/wtf/allocator/Partitions.h"
+#include "platform/wtf/text/AtomicStringTable.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
-void CoreInitializer::registerEventFactory()
-{
-    static bool isRegistered = false;
-    if (isRegistered)
-        return;
-    isRegistered = true;
+void CoreInitializer::RegisterEventFactory() {
+  static bool is_registered = false;
+  if (is_registered)
+    return;
+  is_registered = true;
 
-    Document::registerEventFactory(EventFactory::create());
+  Document::RegisterEventFactory(EventFactory::Create());
 }
 
-void CoreInitializer::initialize()
-{
-    ASSERT(!isInitialized());
-    m_isInitialized = true;
-    // Note: in order to add core static strings for a new module (1)
-    // the value of 'coreStaticStringsCount' must be updated with the
-    // added strings count, (2) if the added strings are quialified names
-    // the 'qualifiedNamesCount' must be updated as well, (3) the strings
-    // 'init()' function call must be added.
-    // TODO(mikhail.pozdnyakov@intel.com): We should generate static strings initialization code.
-    const unsigned qualifiedNamesCount = HTMLNames::HTMLTagsCount + HTMLNames::HTMLAttrsCount
-        + MathMLNames::MathMLTagsCount + MathMLNames::MathMLAttrsCount
-        + SVGNames::SVGTagsCount + SVGNames::SVGAttrsCount
-        + XLinkNames::XLinkAttrsCount
-        + XMLNSNames::XMLNSAttrsCount
-        + XMLNames::XMLAttrsCount;
+void CoreInitializer::Initialize() {
+  ASSERT(!IsInitialized());
+  is_initialized_ = true;
+  // Note: in order to add core static strings for a new module (1)
+  // the value of 'coreStaticStringsCount' must be updated with the
+  // added strings count, (2) if the added strings are quialified names
+  // the 'qualifiedNamesCount' must be updated as well, (3) the strings
+  // 'init()' function call must be added.
+  // TODO(mikhail.pozdnyakov@intel.com): We should generate static strings
+  // initialization code.
+  const unsigned kQualifiedNamesCount =
+      HTMLNames::HTMLTagsCount + HTMLNames::HTMLAttrsCount +
+      MathMLNames::MathMLTagsCount + MathMLNames::MathMLAttrsCount +
+      SVGNames::SVGTagsCount + SVGNames::SVGAttrsCount +
+      XLinkNames::XLinkAttrsCount + XMLNSNames::XMLNSAttrsCount +
+      XMLNames::XMLAttrsCount;
 
-    const unsigned coreStaticStringsCount = qualifiedNamesCount
-        + EventNames::EventNamesCount
-        + EventTargetNames::EventTargetNamesCount
-        + EventTypeNames::EventTypeNamesCount
-        + FetchInitiatorTypeNames::FetchInitiatorTypeNamesCount
-        + FontFamilyNames::FontFamilyNamesCount
-        + HTMLTokenizerNames::HTMLTokenizerNamesCount
-        + HTTPNames::HTTPNamesCount
-        + InputTypeNames::InputTypeNamesCount
-        + MediaFeatureNames::MediaFeatureNamesCount
-        + MediaTypeNames::MediaTypeNamesCount;
+  const unsigned kCoreStaticStringsCount =
+      kQualifiedNamesCount + EventNames::EventNamesCount +
+      EventTargetNames::EventTargetNamesCount +
+      EventTypeNames::EventTypeNamesCount +
+      FetchInitiatorTypeNames::FetchInitiatorTypeNamesCount +
+      FontFamilyNames::FontFamilyNamesCount +
+      HTMLTokenizerNames::HTMLTokenizerNamesCount + HTTPNames::HTTPNamesCount +
+      InputModeNames::InputModeNamesCount +
+      InputTypeNames::InputTypeNamesCount +
+      MediaFeatureNames::MediaFeatureNamesCount +
+      MediaTypeNames::MediaTypeNamesCount;
 
-    StringImpl::reserveStaticStringsCapacityForSize(coreStaticStringsCount + StringImpl::allStaticStrings().size());
-    QualifiedName::initAndReserveCapacityForSize(qualifiedNamesCount);
+  StringImpl::ReserveStaticStringsCapacityForSize(
+      kCoreStaticStringsCount + StringImpl::AllStaticStrings().size());
+  QualifiedName::InitAndReserveCapacityForSize(kQualifiedNamesCount);
 
-    AtomicStringTable::instance().reserveCapacity(coreStaticStringsCount);
+  AtomicStringTable::Instance().ReserveCapacity(kCoreStaticStringsCount);
 
-    HTMLNames::init();
-    SVGNames::init();
-    XLinkNames::init();
-    MathMLNames::init();
-    XMLNSNames::init();
-    XMLNames::init();
+  HTMLNames::init();
+  SVGNames::init();
+  XLinkNames::init();
+  MathMLNames::init();
+  XMLNSNames::init();
+  XMLNames::init();
 
-    EventNames::init();
-    EventTargetNames::init();
-    EventTypeNames::init();
-    FetchInitiatorTypeNames::init();
-    FontFamilyNames::init();
-    HTMLTokenizerNames::init();
-    HTTPNames::init();
-    InputTypeNames::init();
-    MediaFeatureNames::init();
-    MediaTypeNames::init();
+  EventNames::init();
+  EventTargetNames::init();
+  EventTypeNames::init();
+  FetchInitiatorTypeNames::init();
+  FontFamilyNames::init();
+  HTMLTokenizerNames::init();
+  HTTPNames::init();
+  InputModeNames::init();
+  InputTypeNames::init();
+  MediaFeatureNames::init();
+  MediaTypeNames::init();
 
-    MediaQueryEvaluator::init();
-    CSSParserTokenRange::initStaticEOFToken();
+  MediaQueryEvaluator::Init();
+  CSSParserTokenRange::InitStaticEOFToken();
 
-    StyleChangeExtraData::init();
+  StyleChangeExtraData::Init();
 
-    EventTracer::initialize();
-    KURL::initialize();
-    SchemeRegistry::initialize();
-    SecurityPolicy::init();
+  KURL::Initialize();
+  SchemeRegistry::Initialize();
+  SecurityPolicy::Init();
 
-    registerEventFactory();
+  RegisterEventFactory();
 
-    StringImpl::freezeStaticStrings();
+  StringImpl::FreezeStaticStrings();
 
-    // Creates HTMLParserThread::shared and ScriptStreamerThread::shared, but
-    // does not start the threads.
-    if (!RuntimeEnabledFeatures::parseHTMLOnMainThreadEnabled())
-        HTMLParserThread::init();
-    ScriptStreamerThread::init();
+  ScriptStreamerThread::Init();
 }
 
-void CoreInitializer::shutdown()
-{
-    // Shutdown V8-related background threads before V8 is ramped down. Note
-    // that this will wait the thread to stop its operations.
-    ScriptStreamerThread::shutdown();
-
-    // Make sure we stop the HTMLParserThread before Platform::current() is
-    // cleared.
-    ASSERT(Platform::current());
-    if (!RuntimeEnabledFeatures::parseHTMLOnMainThreadEnabled())
-        HTMLParserThread::shutdown();
-
-    WorkerThread::terminateAndWaitForAllWorkers();
-}
-
-} // namespace blink
+}  // namespace blink

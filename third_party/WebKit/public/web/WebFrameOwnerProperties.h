@@ -5,46 +5,60 @@
 #ifndef WebFrameOwnerProperties_h
 #define WebFrameOwnerProperties_h
 
-#include "public/platform/WebVector.h"
-#include "public/platform/modules/permissions/WebPermissionType.h"
+#include "../platform/WebFeaturePolicy.h"
+#include "../platform/WebString.h"
+#include "../platform/WebVector.h"
+
 #include <algorithm>
 
 namespace blink {
 
 struct WebFrameOwnerProperties {
-    enum class ScrollingMode {
-        Auto,
-        AlwaysOff,
-        AlwaysOn,
-        Last = AlwaysOn
-    };
+  enum class ScrollingMode { kAuto, kAlwaysOff, kAlwaysOn, kLast = kAlwaysOn };
 
-    ScrollingMode scrollingMode;
-    int marginWidth;
-    int marginHeight;
-    bool allowFullscreen;
-    WebVector<WebPermissionType> delegatedPermissions;
+  WebString name;  // browsing context container's name
+  ScrollingMode scrolling_mode;
+  int margin_width;
+  int margin_height;
+  bool allow_fullscreen;
+  bool allow_payment_request;
+  bool is_display_none;
+  WebString required_csp;
 
-    WebFrameOwnerProperties()
-        : scrollingMode(ScrollingMode::Auto)
-        , marginWidth(-1)
-        , marginHeight(-1)
-        , allowFullscreen(false)
-    {
-    }
+ public:
+  WebVector<WebFeaturePolicyFeature> allowed_features;
+
+  WebFrameOwnerProperties()
+      : scrolling_mode(ScrollingMode::kAuto),
+        margin_width(-1),
+        margin_height(-1),
+        allow_fullscreen(false),
+        allow_payment_request(false),
+        is_display_none(false) {}
 
 #if INSIDE_BLINK
-    WebFrameOwnerProperties(ScrollbarMode scrollingMode, int marginWidth, int marginHeight, bool allowFullscreen, const WebVector<WebPermissionType>& delegatedPermissions)
-        : scrollingMode(static_cast<ScrollingMode>(scrollingMode))
-        , marginWidth(marginWidth)
-        , marginHeight(marginHeight)
-        , allowFullscreen(allowFullscreen)
-        , delegatedPermissions(delegatedPermissions)
-    {
-    }
+  WebFrameOwnerProperties(
+      const WebString& name,
+      ScrollbarMode scrolling_mode,
+      int margin_width,
+      int margin_height,
+      bool allow_fullscreen,
+      bool allow_payment_request,
+      bool is_display_none,
+      const WebString& required_csp,
+      const WebVector<WebFeaturePolicyFeature>& allowed_features)
+      : name(name),
+        scrolling_mode(static_cast<ScrollingMode>(scrolling_mode)),
+        margin_width(margin_width),
+        margin_height(margin_height),
+        allow_fullscreen(allow_fullscreen),
+        allow_payment_request(allow_payment_request),
+        is_display_none(is_display_none),
+        required_csp(required_csp),
+        allowed_features(allowed_features) {}
 #endif
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif

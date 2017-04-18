@@ -13,13 +13,14 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "content/public/common/previews_state.h"
 #include "content/public/common/resource_devtools_info.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_timing_info.h"
+#include "net/cert/signed_certificate_timestamp_and_status.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
-#include "net/nqe/network_quality_estimator.h"
-#include "net/ssl/signed_certificate_timestamp_and_status.h"
+#include "net/nqe/effective_connection_type.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseType.h"
 #include "url/gurl.h"
 
@@ -49,10 +50,6 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // The character encoding of the response or none if not applicable to the
   // response's mime type.  This may be a derived value.
   std::string charset;
-
-  // An opaque string carrying security information pertaining to this
-  // response.  This may include information about the SSL connection used.
-  std::string security_info;
 
   // True if the resource was loaded in spite of certificate errors.
   bool has_major_certificate_errors;
@@ -93,7 +90,7 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   bool was_fetched_via_spdy;
 
   // True if the response was delivered after NPN is negotiated.
-  bool was_npn_negotiated;
+  bool was_alpn_negotiated;
 
   // True if response could use alternate protocol. However, browser will
   // ignore the alternate protocol when spdy is not enabled on browser side.
@@ -102,15 +99,8 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // Information about the type of connection used to fetch this response.
   net::HttpResponseInfo::ConnectionInfo connection_info;
 
-  // True if the response was fetched via an explicit proxy (as opposed to a
-  // transparent proxy). The proxy could be any type of proxy, HTTP or SOCKS.
-  // Note: we cannot tell if a transparent proxy may have been involved. If
-  // true, |proxy_server| contains the name of the proxy server that was used.
-  bool was_fetched_via_proxy;
-  net::HostPortPair proxy_server;
-
-  // NPN protocol negotiated with the server.
-  std::string npn_negotiated_protocol;
+  // ALPN protocol negotiated with the server.
+  std::string alpn_negotiated_protocol;
 
   // Remote address of the socket which fetched this resource.
   net::HostPortPair socket_address;
@@ -118,15 +108,18 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // True if the response was fetched by a ServiceWorker.
   bool was_fetched_via_service_worker;
 
+  // True if the response was fetched by a foreign fetch ServiceWorker;
+  bool was_fetched_via_foreign_fetch;
+
   // True when the request whoes mode is |CORS| or |CORS-with-forced-preflight|
   // is sent to a ServiceWorker but FetchEvent.respondWith is not called. So the
   // renderer have to resend the request with skip service worker flag
   // considering the CORS preflight logic.
   bool was_fallback_required_by_service_worker;
 
-  // The original URL of the response which was fetched by the ServiceWorker.
-  // This may be empty if the response was created inside the ServiceWorker.
-  GURL original_url_via_service_worker;
+  // The URL list of the response which was served by the ServiceWorker. See
+  // ServiceWorkerResponseInfo::url_list_via_service_worker().
+  std::vector<GURL> url_list_via_service_worker;
 
   // The type of the response which was fetched by the ServiceWorker.
   blink::WebServiceWorkerResponseType response_type_via_service_worker;
@@ -149,13 +142,33 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // the ServiceWorker. Empty if the response isn't from the CacheStorage.
   std::string cache_storage_cache_name;
 
-  // Whether or not the request was for a LoFi version of the resource.
-  bool is_using_lofi;
+  // A bitmask of potentially several Previews optimizations that the resource
+  // could have requested.
+  PreviewsState previews_state;
 
   // Effective connection type when the resource was fetched. This is populated
   // only for responses that correspond to main frame requests.
-  net::NetworkQualityEstimator::EffectiveConnectionType
-      effective_connection_type;
+  net::EffectiveConnectionType effective_connection_type;
+
+  // DER-encoded X509Certificate certificate chain. Only present if the renderer
+  // process set report_raw_headers to true.
+  std::vector<std::string> certificate;
+
+  // Bitmask of status info of the SSL certificate. See cert_status_flags.h for
+  // values. Only present if the renderer process set report_raw_headers to
+  // true.
+  net::CertStatus cert_status;
+
+  // Information about the SSL connection itself. See
+  // ssl_connection_status_flags.h for values. The protocol version,
+  // ciphersuite, and compression in use are encoded within. Only present if
+  // the renderer process set report_raw_headers to true.
+  int ssl_connection_status;
+
+  // The key exchange group used by the SSL connection or zero if unknown or not
+  // applicable. Only present if the renderer process set report_raw_headers to
+  // true.
+  uint16_t ssl_key_exchange_group;
 
   // List of Signed Certificate Timestamps (SCTs) and their corresponding
   // validation status. Only present if the renderer process set
@@ -165,6 +178,10 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // In case this is a CORS response fetched by a ServiceWorker, this is the
   // set of headers that should be exposed.
   std::vector<std::string> cors_exposed_header_names;
+
+  // True if service worker navigation preload was performed due to the request
+  // for this response.
+  bool did_service_worker_navigation_preload;
 };
 
 }  // namespace content

@@ -27,106 +27,92 @@
 #ifndef InProcessWorkerMessagingProxy_h
 #define InProcessWorkerMessagingProxy_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/workers/InProcessWorkerGlobalScopeProxy.h"
+#include "core/dom/MessagePort.h"
+#include "core/workers/ThreadedMessagingProxyBase.h"
 #include "core/workers/WorkerLoaderProxy.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Forward.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include <memory>
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
-class InProcessWorkerObjectProxy;
-class WorkerThread;
 class ExecutionContext;
 class InProcessWorkerBase;
+class InProcessWorkerObjectProxy;
+class SerializedScriptValue;
 class WorkerClients;
-class WorkerInspectorProxy;
 
-// TODO(nhiroki): "MessagingProxy" is not well-defined term among worker
-// components. Probably we should rename this to something more suitable.
-// (http://crbug.com/603785)
 class CORE_EXPORT InProcessWorkerMessagingProxy
-    : public InProcessWorkerGlobalScopeProxy
-    , private WorkerLoaderProxyProvider {
-    WTF_MAKE_NONCOPYABLE(InProcessWorkerMessagingProxy);
-public:
-    // Implementations of InProcessWorkerGlobalScopeProxy.
-    // (Only use these methods in the parent context thread.)
-    void startWorkerGlobalScope(const KURL& scriptURL, const String& userAgent, const String& sourceCode) override;
-    void terminateWorkerGlobalScope() override;
-    void postMessageToWorkerGlobalScope(PassRefPtr<SerializedScriptValue>, std::unique_ptr<MessagePortChannelArray>) override;
-    bool hasPendingActivity() const final;
-    void workerObjectDestroyed() override;
+    : public ThreadedMessagingProxyBase {
+  WTF_MAKE_NONCOPYABLE(InProcessWorkerMessagingProxy);
 
-    // These methods come from worker context thread via
-    // InProcessWorkerObjectProxy and are called on the parent context thread.
-    void postMessageToWorkerObject(PassRefPtr<SerializedScriptValue>, std::unique_ptr<MessagePortChannelArray>);
-    void reportException(const String& errorMessage, std::unique_ptr<SourceLocation>);
-    void reportConsoleMessage(MessageSource, MessageLevel, const String& message, std::unique_ptr<SourceLocation>);
-    void postMessageToPageInspector(const String&);
-    void confirmMessageFromWorkerObject(bool hasPendingActivity);
-    void reportPendingActivity(bool hasPendingActivity);
-    void workerThreadTerminated();
-    void workerThreadCreated();
+ public:
+  // These methods should only be used on the parent context thread.
+  void StartWorkerGlobalScope(const KURL& script_url,
+                              const String& user_agent,
+                              const String& source_code,
+                              const String& referrer_policy);
+  void PostMessageToWorkerGlobalScope(PassRefPtr<SerializedScriptValue>,
+                                      MessagePortChannelArray);
 
-    ExecutionContext* getExecutionContext() const { return m_executionContext.get(); }
+  void WorkerThreadCreated() override;
+  void ParentObjectDestroyed() override;
 
-    // Number of live messaging proxies, used by leak detection.
-    static int proxyCount();
+  bool HasPendingActivity() const;
 
-protected:
-    InProcessWorkerMessagingProxy(InProcessWorkerBase*, WorkerClients*);
-    ~InProcessWorkerMessagingProxy() override;
+  // These methods come from worker context thread via
+  // InProcessWorkerObjectProxy and are called on the parent context thread.
+  void PostMessageToWorkerObject(PassRefPtr<SerializedScriptValue>,
+                                 MessagePortChannelArray);
+  void DispatchErrorEvent(const String& error_message,
+                          std::unique_ptr<SourceLocation>,
+                          int exception_id);
 
-    virtual std::unique_ptr<WorkerThread> createWorkerThread(double originTime) = 0;
+  // 'virtual' for testing.
+  virtual void ConfirmMessageFromWorkerObject();
 
-    PassRefPtr<WorkerLoaderProxy> loaderProxy() { return m_loaderProxy; }
-    InProcessWorkerObjectProxy& workerObjectProxy() { return *m_workerObjectProxy.get(); }
+  // Called from InProcessWorkerObjectProxy when all pending activities on the
+  // worker context are finished. See InProcessWorkerObjectProxy.h for details.
+  virtual void PendingActivityFinished();
 
-private:
-    void workerObjectDestroyedInternal();
-    void terminateInternally();
+ protected:
+  InProcessWorkerMessagingProxy(InProcessWorkerBase*, WorkerClients*);
+  ~InProcessWorkerMessagingProxy() override;
 
-    // WorkerLoaderProxyProvider
-    // These methods are called on different threads to schedule loading
-    // requests and to send callbacks back to WorkerGlobalScope.
-    void postTaskToLoader(std::unique_ptr<ExecutionContextTask>) override;
-    bool postTaskToWorkerGlobalScope(std::unique_ptr<ExecutionContextTask>) override;
+  InProcessWorkerObjectProxy& WorkerObjectProxy() {
+    return *worker_object_proxy_.get();
+  }
 
-    // Returns true if this is called on the parent context thread.
-    bool isParentContextThread() const;
+ private:
+  friend class InProcessWorkerMessagingProxyForTest;
+  InProcessWorkerMessagingProxy(ExecutionContext*,
+                                InProcessWorkerBase*,
+                                WorkerClients*);
 
-    Persistent<ExecutionContext> m_executionContext;
-    std::unique_ptr<InProcessWorkerObjectProxy> m_workerObjectProxy;
-    WeakPersistent<InProcessWorkerBase> m_workerObject;
-    bool m_mayBeDestroyed;
-    std::unique_ptr<WorkerThread> m_workerThread;
+  std::unique_ptr<InProcessWorkerObjectProxy> worker_object_proxy_;
+  WeakPersistent<InProcessWorkerBase> worker_object_;
+  Persistent<WorkerClients> worker_clients_;
 
-    // Unconfirmed messages from the parent context thread to the worker thread.
-    unsigned m_unconfirmedMessageCount;
+  // Tasks are queued here until there's a thread object created.
+  struct QueuedTask;
+  Vector<QueuedTask> queued_early_tasks_;
 
-    // The latest confirmation from worker thread reported that it was still
-    // active.
-    bool m_workerThreadHadPendingActivity;
+  // Unconfirmed messages from the parent context thread to the worker thread.
+  // When this is greater than 0, |m_workerGlobalScopeHasPendingActivity| should
+  // be true.
+  unsigned unconfirmed_message_count_ = 0;
 
-    bool m_askedToTerminate;
+  // Indicates whether there are pending activities (e.g, MessageEvent,
+  // setTimeout) on the worker context.
+  bool worker_global_scope_has_pending_activity_ = false;
 
-    // Tasks are queued here until there's a thread object created.
-    Vector<std::unique_ptr<ExecutionContextTask>> m_queuedEarlyTasks;
-
-    Persistent<WorkerInspectorProxy> m_workerInspectorProxy;
-
-    Persistent<WorkerClients> m_workerClients;
-
-    RefPtr<WorkerLoaderProxy> m_loaderProxy;
+  WeakPtrFactory<InProcessWorkerMessagingProxy> weak_ptr_factory_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // InProcessWorkerMessagingProxy_h
+#endif  // InProcessWorkerMessagingProxy_h

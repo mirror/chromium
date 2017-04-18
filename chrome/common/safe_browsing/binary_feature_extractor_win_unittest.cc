@@ -12,7 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "chrome/common/chrome_paths.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "net/cert/x509_cert_types.h"
 #include "net/cert/x509_certificate.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -36,10 +36,12 @@ class BinaryFeatureExtractorWinTest : public testing::Test {
       const ClientDownloadRequest_CertificateChain& chain,
       std::vector<scoped_refptr<net::X509Certificate> >* certs) {
     for (int i = 0; i < chain.element_size(); ++i) {
-      certs->push_back(
+      scoped_refptr<net::X509Certificate> cert =
           net::X509Certificate::CreateFromBytes(
               chain.element(i).certificate().data(),
-              chain.element(i).certificate().size()));
+              chain.element(i).certificate().size());
+      if (cert)
+        certs->push_back(cert);
     }
   }
 
@@ -65,10 +67,11 @@ TEST_F(BinaryFeatureExtractorWinTest, UntrustedSignedBinary) {
 }
 
 TEST_F(BinaryFeatureExtractorWinTest, TrustedBinary) {
-  // wow_helper.exe is signed using Google's signing certifiacte.
+  // disable_outdated_build_detector.exe is dual signed using Google's signing
+  // certifiacte.
   ClientDownloadRequest_SignatureInfo signature_info;
   binary_feature_extractor_->CheckSignature(
-      testdata_path_.Append(L"wow_helper.exe"),
+      testdata_path_.Append(L"disable_outdated_build_detector.exe"),
       &signature_info);
   ASSERT_EQ(1, signature_info.certificate_chain_size());
   std::vector<scoped_refptr<net::X509Certificate> > certs;
@@ -76,9 +79,9 @@ TEST_F(BinaryFeatureExtractorWinTest, TrustedBinary) {
   ASSERT_EQ(3u, certs.size());
 
   EXPECT_EQ("Google Inc", certs[0]->subject().common_name);
-  EXPECT_EQ("VeriSign Class 3 Code Signing 2009-2 CA",
+  EXPECT_EQ("VeriSign Class 3 Code Signing 2010 CA",
             certs[1]->subject().common_name);
-  EXPECT_EQ("Class 3 Public Primary Certification Authority",
+  EXPECT_EQ("VeriSign Trust Network",
             certs[2]->subject().organization_unit_names[0]);
 
   EXPECT_TRUE(signature_info.trusted());
@@ -198,7 +201,7 @@ TEST_F(BinaryFeatureExtractorWinTest, ExtractImageFeaturesTrustedSigned) {
   ClientDownloadRequest_ImageHeaders image_headers;
   google::protobuf::RepeatedPtrField<std::string> signed_data;
   ASSERT_TRUE(binary_feature_extractor_->ExtractImageFeatures(
-      testdata_path_.AppendASCII("wow_helper.exe"),
+      testdata_path_.AppendASCII("disable_outdated_build_detector.exe"),
       BinaryFeatureExtractor::kDefaultOptions, &image_headers, &signed_data));
   ASSERT_EQ(1, signed_data.size());
   ASSERT_LT(0U, signed_data.Get(0).size());

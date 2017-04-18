@@ -5,82 +5,93 @@
 #ifndef SERVICES_UI_DEMO_MUS_DEMO_H_
 #define SERVICES_UI_DEMO_MUS_DEMO_H_
 
-#include <map>
 #include <memory>
-#include <set>
-#include <string>
-#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/timer/timer.h"
-#include "services/shell/public/cpp/service.h"
-#include "services/ui/public/cpp/window_manager_delegate.h"
-#include "services/ui/public/cpp/window_tree_client_delegate.h"
-#include "third_party/skia/include/core/SkBitmap.h"
+#include "services/service_manager/public/cpp/service.h"
+#include "ui/aura/mus/window_tree_client_delegate.h"
+#include "ui/display/screen_base.h"
+
+namespace aura {
+class Env;
+class PropertyConverter;
+
+namespace client {
+class DefaultCaptureClient;
+}
+}  // namespace aura
+
+namespace wm {
+class WMState;
+}
 
 namespace ui {
-class BitmapUploader;
 namespace demo {
 
-// A simple MUS Demo mojo app. This app connects to the mojo:ui, creates a new
-// window and draws a spinning square in the center of the window. Provides a
-// simple way to demonstrate that the graphic stack works as intended.
-class MusDemo : public shell::Service,
-                public WindowTreeClientDelegate,
-                public WindowManagerDelegate {
+class WindowTreeData;
+
+// A simple MUS Demo service. This service connects to the service:ui, adds a
+// new window to the root Window, and draws a spinning square in the center of
+// the window. Provides a simple way to demonstrate that the graphic stack works
+// as intended.
+class MusDemo : public service_manager::Service,
+                public aura::WindowTreeClientDelegate {
  public:
   MusDemo();
   ~MusDemo() override;
 
+ protected:
+  void AddPrimaryDisplay(const display::Display& display);
+
+  // These functions help to manage the list of WindowTreeData structures.
+  // AppendWindowTreeData is used to add an uninitialized structure at the end
+  // of the list. When a new WindowTreeHostMus is created and is sent to
+  // MusDemo (via OnWmNewDisplay or OnEmbed), the WindowTreeData is initialized
+  // by a call to InitWindowTreeData and the demo starts. When the destruction
+  // of the WindowTreeHostMus is announced to MusDemo (via OnWmDisplayRemoved
+  // or OnEmbedRootDestroyed), the corresponding WindowTreeData is removed by
+  // a call to RemoveWindowTreeData.
+  void AppendWindowTreeData(std::unique_ptr<WindowTreeData> window_tree_data);
+  void InitWindowTreeData(
+      std::unique_ptr<aura::WindowTreeHostMus> window_tree_host);
+  void RemoveWindowTreeData(aura::WindowTreeHostMus* window_tree_host);
+
+  aura::WindowTreeClient* window_tree_client() {
+    return window_tree_client_.get();
+  }
+
  private:
-  // shell::Service:
-  void OnStart(const shell::Identity& identity) override;
-  bool OnConnect(shell::Connection* connection) override;
+  virtual void OnStartImpl() = 0;
+  virtual std::unique_ptr<aura::WindowTreeClient> CreateWindowTreeClient() = 0;
+  bool HasPendingWindowTreeData() const;
 
-  // WindowTreeClientDelegate:
-  void OnEmbed(Window* root) override;
-  void OnDidDestroyClient(WindowTreeClient* client) override;
-  void OnEventObserved(const Event& event, Window* target) override;
+  // service_manager::Service:
+  void OnStart() override;
 
-  // WindowManagerDelegate:
-  void SetWindowManagerClient(WindowManagerClient* client) override;
-  bool OnWmSetBounds(Window* window, gfx::Rect* bounds) override;
-  bool OnWmSetProperty(
-      Window* window,
-      const std::string& name,
-      std::unique_ptr<std::vector<uint8_t>>* new_data) override;
-  Window* OnWmCreateTopLevelWindow(
-      std::map<std::string, std::vector<uint8_t>>* properties) override;
-  void OnWmClientJankinessChanged(const std::set<Window*>& client_windows,
-                                  bool janky) override;
-  void OnWmNewDisplay(Window* window, const display::Display& display) override;
-  void OnWmPerformMoveLoop(Window* window,
-                           mojom::MoveLoopSource source,
-                           const gfx::Point& cursor_location,
-                           const base::Callback<void(bool)>& on_done) override;
-  void OnWmCancelMoveLoop(Window* window) override;
+  // aura::WindowTreeClientDelegate:
+  void OnEmbed(
+      std::unique_ptr<aura::WindowTreeHostMus> window_tree_host) override;
+  void OnUnembed(aura::Window* root) override;
+  void OnEmbedRootDestroyed(aura::WindowTreeHostMus* window_tree_host) override;
+  void OnLostConnection(aura::WindowTreeClient* client) override;
+  void OnPointerEventObserved(const ui::PointerEvent& event,
+                              aura::Window* target) override;
+  aura::PropertyConverter* GetPropertyConverter() override;
 
-  // Allocate a bitmap the same size as the window to draw into.
-  void AllocBitmap();
+  std::unique_ptr<aura::WindowTreeClient> window_tree_client_;
+  std::unique_ptr<aura::Env> env_;
+  std::unique_ptr<display::ScreenBase> screen_;
 
-  // Draws one frame, incrementing the rotation angle.
-  void DrawFrame();
+  std::unique_ptr<aura::client::DefaultCaptureClient> capture_client_;
+  std::unique_ptr<::wm::WMState> wm_state_;
+  std::unique_ptr<aura::PropertyConverter> property_converter_;
 
-  Window* window_ = nullptr;
-  WindowTreeClient* window_tree_client_ = nullptr;
-
-  // Used to send frames to mus.
-  std::unique_ptr<ui::BitmapUploader> uploader_;
-
-  // Bitmap that is the same size as our client window area.
-  SkBitmap bitmap_;
-
-  // Timer for calling DrawFrame().
-  base::RepeatingTimer timer_;
-
-  // Current rotation angle for drawing.
-  double angle_ = 0.0;
+  // List of WindowTreeData structures. When a new window is opened, its data
+  // is appended at the end of that list and it remains uninitialized until the
+  // next call to InitWindowTreeData.
+  std::vector<std::unique_ptr<WindowTreeData>> window_tree_data_list_;
 
   DISALLOW_COPY_AND_ASSIGN(MusDemo);
 };

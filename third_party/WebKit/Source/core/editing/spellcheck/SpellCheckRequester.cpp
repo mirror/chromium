@@ -27,290 +27,261 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
+#include "core/html/TextControlElement.h"
 #include "platform/text/TextCheckerClient.h"
 
 namespace blink {
 
-SpellCheckRequest::SpellCheckRequest(
-    Range* checkingRange,
-    Range* paragraphRange,
-    const String& text,
-    TextCheckingTypeMask mask,
-    TextCheckingProcessType processType,
-    const Vector<uint32_t>& documentMarkersInRange,
-    const Vector<unsigned>& documentMarkerOffsets,
-    int requestNumber)
-    : m_requester(nullptr)
-    , m_checkingRange(checkingRange)
-    , m_paragraphRange(paragraphRange)
-    , m_rootEditableElement(blink::rootEditableElement(*m_checkingRange->startContainer()))
-    , m_requestData(unrequestedTextCheckingSequence, text, mask, processType, documentMarkersInRange, documentMarkerOffsets)
-    , m_requestNumber(requestNumber)
-{
-    DCHECK(m_checkingRange);
-    DCHECK(m_checkingRange->isConnected());
-    DCHECK(m_paragraphRange);
-    DCHECK(m_paragraphRange->isConnected());
-    DCHECK(m_rootEditableElement);
+SpellCheckRequest::SpellCheckRequest(Range* checking_range,
+                                     const String& text,
+                                     int request_number)
+    : requester_(nullptr),
+      checking_range_(checking_range),
+      root_editable_element_(
+          blink::RootEditableElement(*checking_range_->startContainer())),
+      request_data_(text),
+      request_number_(request_number) {
+  DCHECK(checking_range_);
+  DCHECK(checking_range_->IsConnected());
+  DCHECK(root_editable_element_);
 }
 
-SpellCheckRequest::~SpellCheckRequest()
-{
+SpellCheckRequest::~SpellCheckRequest() {}
+
+DEFINE_TRACE(SpellCheckRequest) {
+  visitor->Trace(requester_);
+  visitor->Trace(checking_range_);
+  visitor->Trace(root_editable_element_);
+  TextCheckingRequest::Trace(visitor);
 }
 
-DEFINE_TRACE(SpellCheckRequest)
-{
-    visitor->trace(m_requester);
-    visitor->trace(m_checkingRange);
-    visitor->trace(m_paragraphRange);
-    visitor->trace(m_rootEditableElement);
-    TextCheckingRequest::trace(visitor);
-}
-
-void SpellCheckRequest::dispose()
-{
-    if (m_checkingRange)
-        m_checkingRange->dispose();
-    if (m_paragraphRange && m_paragraphRange != m_checkingRange)
-        m_paragraphRange->dispose();
+void SpellCheckRequest::Dispose() {
+  if (checking_range_)
+    checking_range_->Dispose();
 }
 
 // static
-SpellCheckRequest* SpellCheckRequest::create(TextCheckingTypeMask textCheckingOptions, TextCheckingProcessType processType, const EphemeralRange& checkingRange, const EphemeralRange& paragraphRange, int requestNumber)
-{
-    if (checkingRange.isNull())
-        return nullptr;
-    if (!blink::rootEditableElement(*checkingRange.startPosition().computeContainerNode()))
-        return nullptr;
+SpellCheckRequest* SpellCheckRequest::Create(
+    const EphemeralRange& checking_range,
+    int request_number) {
+  if (checking_range.IsNull())
+    return nullptr;
+  if (!blink::RootEditableElement(
+          *checking_range.StartPosition().ComputeContainerNode()))
+    return nullptr;
 
-    String text = plainText(checkingRange, TextIteratorEmitsObjectReplacementCharacter);
-    if (text.isEmpty())
-        return nullptr;
+  String text =
+      PlainText(checking_range, TextIteratorBehavior::Builder()
+                                    .SetEmitsObjectReplacementCharacter(true)
+                                    .Build());
+  if (text.IsEmpty())
+    return nullptr;
 
-    Range* checkingRangeObject = createRange(checkingRange);
-    Range* paragraphRangeObject = nullptr;
-    // Share identical Range objects.
-    if (checkingRange == paragraphRange)
-        paragraphRangeObject = checkingRangeObject;
-    else
-        paragraphRangeObject = createRange(paragraphRange);
+  Range* checking_range_object = CreateRange(checking_range);
 
-    const DocumentMarkerVector& markers = checkingRangeObject->ownerDocument().markers().markersInRange(checkingRange, DocumentMarker::SpellCheckClientMarkers());
-    Vector<uint32_t> hashes(markers.size());
-    Vector<unsigned> offsets(markers.size());
-    for (size_t i = 0; i < markers.size(); ++i) {
-        hashes[i] = markers[i]->hash();
-        offsets[i] = markers[i]->startOffset();
-    }
-
-    return new SpellCheckRequest(checkingRangeObject, paragraphRangeObject, text, textCheckingOptions, processType, hashes, offsets, requestNumber);
+  return new SpellCheckRequest(checking_range_object, text, request_number);
 }
 
-const TextCheckingRequestData& SpellCheckRequest::data() const
-{
-    return m_requestData;
+const TextCheckingRequestData& SpellCheckRequest::Data() const {
+  return request_data_;
 }
 
-bool SpellCheckRequest::isValid() const
-{
-    return m_checkingRange->isConnected() && m_paragraphRange->isConnected() && m_rootEditableElement->isConnected();
+bool SpellCheckRequest::IsValid() const {
+  return checking_range_->IsConnected() &&
+         root_editable_element_->isConnected();
 }
 
-void SpellCheckRequest::didSucceed(const Vector<TextCheckingResult>& results)
-{
-    if (!m_requester)
-        return;
-    SpellCheckRequester* requester = m_requester;
-    m_requester = nullptr;
-    requester->didCheckSucceed(m_requestData.sequence(), results);
+void SpellCheckRequest::DidSucceed(const Vector<TextCheckingResult>& results) {
+  if (!requester_)
+    return;
+  SpellCheckRequester* requester = requester_;
+  requester_ = nullptr;
+  requester->DidCheckSucceed(request_data_.Sequence(), results);
 }
 
-void SpellCheckRequest::didCancel()
-{
-    if (!m_requester)
-        return;
-    SpellCheckRequester* requester = m_requester;
-    m_requester = nullptr;
-    requester->didCheckCancel(m_requestData.sequence());
+void SpellCheckRequest::DidCancel() {
+  if (!requester_)
+    return;
+  SpellCheckRequester* requester = requester_;
+  requester_ = nullptr;
+  requester->DidCheckCancel(request_data_.Sequence());
 }
 
-void SpellCheckRequest::setCheckerAndSequence(SpellCheckRequester* requester, int sequence)
-{
-    DCHECK(!m_requester);
-    DCHECK_EQ(m_requestData.sequence(), unrequestedTextCheckingSequence);
-    m_requester = requester;
-    m_requestData.m_sequence = sequence;
+void SpellCheckRequest::SetCheckerAndSequence(SpellCheckRequester* requester,
+                                              int sequence) {
+  DCHECK(!requester_);
+  DCHECK_EQ(request_data_.Sequence(), kUnrequestedTextCheckingSequence);
+  requester_ = requester;
+  request_data_.SetSequence(sequence);
 }
 
 SpellCheckRequester::SpellCheckRequester(LocalFrame& frame)
-    : m_frame(&frame)
-    , m_lastRequestSequence(0)
-    , m_lastProcessedSequence(0)
-    , m_timerToProcessQueuedRequest(this, &SpellCheckRequester::timerFiredToProcessQueuedRequest)
-{
+    : frame_(&frame),
+      last_request_sequence_(0),
+      last_processed_sequence_(0),
+      timer_to_process_queued_request_(
+          TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &frame),
+          this,
+          &SpellCheckRequester::TimerFiredToProcessQueuedRequest) {}
+
+SpellCheckRequester::~SpellCheckRequester() {}
+
+TextCheckerClient& SpellCheckRequester::Client() const {
+  return GetFrame().GetSpellChecker().TextChecker();
 }
 
-SpellCheckRequester::~SpellCheckRequester()
-{
+void SpellCheckRequester::TimerFiredToProcessQueuedRequest(TimerBase*) {
+  DCHECK(!request_queue_.IsEmpty());
+  if (request_queue_.IsEmpty())
+    return;
+
+  InvokeRequest(request_queue_.TakeFirst());
 }
 
-TextCheckerClient& SpellCheckRequester::client() const
-{
-    return frame().spellChecker().textChecker();
+void SpellCheckRequester::RequestCheckingFor(const EphemeralRange& range) {
+  RequestCheckingFor(range, 0);
 }
 
-void SpellCheckRequester::timerFiredToProcessQueuedRequest(Timer<SpellCheckRequester>*)
-{
-    DCHECK(!m_requestQueue.isEmpty());
-    if (m_requestQueue.isEmpty())
-        return;
+void SpellCheckRequester::RequestCheckingFor(const EphemeralRange& range,
+                                             int request_num) {
+  SpellCheckRequest* request = SpellCheckRequest::Create(range, request_num);
+  if (!request)
+    return;
 
-    invokeRequest(m_requestQueue.takeFirst());
+  DCHECK_EQ(request->Data().Sequence(), kUnrequestedTextCheckingSequence);
+  int sequence = ++last_request_sequence_;
+  if (sequence == kUnrequestedTextCheckingSequence)
+    sequence = ++last_request_sequence_;
+
+  request->SetCheckerAndSequence(this, sequence);
+
+  if (timer_to_process_queued_request_.IsActive() || processing_request_) {
+    EnqueueRequest(request);
+    return;
+  }
+
+  InvokeRequest(request);
 }
 
-static bool canCheckAsynchronously(const Range* range)
-{
-    if (!range || !range->firstNode() || !range->firstNode()->layoutObject())
-        return false;
-    const Node* node = range->startContainer();
-    if (node && node->isElementNode() && !toElement(node)->isSpellCheckingEnabled())
-        return false;
-    return true;
+void SpellCheckRequester::CancelCheck() {
+  if (processing_request_)
+    processing_request_->DidCancel();
 }
 
-void SpellCheckRequester::requestCheckingFor(SpellCheckRequest* request)
-{
-    if (!request || !canCheckAsynchronously(request->paragraphRange()))
-        return;
+void SpellCheckRequester::PrepareForLeakDetection() {
+  timer_to_process_queued_request_.Stop();
+  // Empty the queue of pending requests to prevent it being a leak source.
+  // Pending spell checker requests are cancellable requests not representing
+  // leaks, just async work items waiting to be processed.
+  //
+  // Rather than somehow wait for this async queue to drain before running
+  // the leak detector, they're all cancelled to prevent flaky leaks being
+  // reported.
+  request_queue_.Clear();
+  // WebSpellCheckClient stores a set of WebTextCheckingCompletion objects,
+  // which may store references to already invoked requests. We should clear
+  // these references to prevent them from being a leak source.
+  Client().CancelAllPendingRequests();
+}
 
-    DCHECK_EQ(request->data().sequence(), unrequestedTextCheckingSequence);
-    int sequence = ++m_lastRequestSequence;
-    if (sequence == unrequestedTextCheckingSequence)
-        sequence = ++m_lastRequestSequence;
+void SpellCheckRequester::InvokeRequest(SpellCheckRequest* request) {
+  DCHECK(!processing_request_);
+  processing_request_ = request;
+  Client().RequestCheckingOfString(processing_request_);
+}
 
-    request->setCheckerAndSequence(this, sequence);
+void SpellCheckRequester::ClearProcessingRequest() {
+  if (!processing_request_)
+    return;
 
-    if (m_timerToProcessQueuedRequest.isActive() || m_processingRequest) {
-        enqueueRequest(request);
-        return;
+  processing_request_->Dispose();
+  processing_request_.Clear();
+}
+
+void SpellCheckRequester::EnqueueRequest(SpellCheckRequest* request) {
+  DCHECK(request);
+  bool continuation = false;
+  if (!request_queue_.IsEmpty()) {
+    SpellCheckRequest* last_request = request_queue_.back();
+    // It's a continuation if the number of the last request got incremented in
+    // the new one and both apply to the same editable.
+    continuation =
+        request->RootEditableElement() == last_request->RootEditableElement() &&
+        request->RequestNumber() == last_request->RequestNumber() + 1;
+  }
+
+  // Spellcheck requests for chunks of text in the same element should not
+  // overwrite each other.
+  if (!continuation) {
+    RequestQueue::const_iterator same_element_request = std::find_if(
+        request_queue_.begin(), request_queue_.end(),
+        [request](const SpellCheckRequest* queued_request) -> bool {
+          return request->RootEditableElement() ==
+                 queued_request->RootEditableElement();
+        });
+    if (same_element_request != request_queue_.end())
+      request_queue_.erase(same_element_request);
+  }
+
+  request_queue_.push_back(request);
+}
+
+void SpellCheckRequester::DidCheck(int sequence,
+                                   const Vector<TextCheckingResult>& results) {
+  DCHECK(processing_request_);
+  DCHECK_EQ(processing_request_->Data().Sequence(), sequence);
+  if (processing_request_->Data().Sequence() != sequence) {
+    request_queue_.Clear();
+    return;
+  }
+
+  if (results.size())
+    GetFrame().GetSpellChecker().MarkAndReplaceFor(processing_request_,
+                                                   results);
+
+  DCHECK_LT(last_processed_sequence_, sequence);
+  last_processed_sequence_ = sequence;
+
+  ClearProcessingRequest();
+  if (!request_queue_.IsEmpty())
+    timer_to_process_queued_request_.StartOneShot(0, BLINK_FROM_HERE);
+}
+
+void SpellCheckRequester::DidCheckSucceed(
+    int sequence,
+    const Vector<TextCheckingResult>& results) {
+  // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  TextCheckingRequestData request_data = processing_request_->Data();
+  if (request_data.Sequence() == sequence) {
+    DocumentMarker::MarkerTypes markers =
+        DocumentMarker::SpellCheckClientMarkers();
+    if (processing_request_->IsValid()) {
+      Range* checking_range = processing_request_->CheckingRange();
+      GetFrame().GetDocument()->Markers().RemoveMarkers(
+          EphemeralRange(checking_range), markers);
     }
-
-    invokeRequest(request);
+  }
+  DidCheck(sequence, results);
 }
 
-void SpellCheckRequester::cancelCheck()
-{
-    if (m_processingRequest)
-        m_processingRequest->didCancel();
+void SpellCheckRequester::DidCheckCancel(int sequence) {
+  Vector<TextCheckingResult> results;
+  DidCheck(sequence, results);
 }
 
-void SpellCheckRequester::prepareForLeakDetection()
-{
-    m_timerToProcessQueuedRequest.stop();
-    // Empty the queue of pending requests to prevent it being a leak source.
-    // Pending spell checker requests are cancellable requests not representing
-    // leaks, just async work items waiting to be processed.
-    //
-    // Rather than somehow wait for this async queue to drain before running
-    // the leak detector, they're all cancelled to prevent flaky leaks being
-    // reported.
-    m_requestQueue.clear();
+DEFINE_TRACE(SpellCheckRequester) {
+  visitor->Trace(frame_);
+  visitor->Trace(processing_request_);
+  visitor->Trace(request_queue_);
 }
 
-void SpellCheckRequester::invokeRequest(SpellCheckRequest* request)
-{
-    DCHECK(!m_processingRequest);
-    m_processingRequest = request;
-    client().requestCheckingOfString(m_processingRequest);
-}
-
-void SpellCheckRequester::clearProcessingRequest()
-{
-    if (!m_processingRequest)
-        return;
-
-    m_processingRequest->dispose();
-    m_processingRequest.clear();
-}
-
-void SpellCheckRequester::enqueueRequest(SpellCheckRequest* request)
-{
-    DCHECK(request);
-    bool continuation = false;
-    if (!m_requestQueue.isEmpty()) {
-        SpellCheckRequest* lastRequest = m_requestQueue.last();
-        // It's a continuation if the number of the last request got incremented in the new one and
-        // both apply to the same editable.
-        continuation = request->rootEditableElement() == lastRequest->rootEditableElement()
-            && request->requestNumber() == lastRequest->requestNumber() + 1;
-    }
-
-    // Spellcheck requests for chunks of text in the same element should not overwrite each other.
-    if (!continuation) {
-        for (auto& requestQueue : m_requestQueue) {
-            if (request->rootEditableElement() != requestQueue->rootEditableElement())
-                continue;
-
-            requestQueue = request;
-            return;
-        }
-    }
-
-    m_requestQueue.append(request);
-}
-
-void SpellCheckRequester::didCheck(int sequence, const Vector<TextCheckingResult>& results)
-{
-    DCHECK(m_processingRequest);
-    DCHECK_EQ(m_processingRequest->data().sequence(), sequence);
-    if (m_processingRequest->data().sequence() != sequence) {
-        m_requestQueue.clear();
-        return;
-    }
-
-    frame().spellChecker().markAndReplaceFor(m_processingRequest, results);
-
-    if (m_lastProcessedSequence < sequence)
-        m_lastProcessedSequence = sequence;
-
-    clearProcessingRequest();
-    if (!m_requestQueue.isEmpty())
-        m_timerToProcessQueuedRequest.startOneShot(0, BLINK_FROM_HERE);
-}
-
-void SpellCheckRequester::didCheckSucceed(int sequence, const Vector<TextCheckingResult>& results)
-{
-    TextCheckingRequestData requestData = m_processingRequest->data();
-    if (requestData.sequence() == sequence) {
-        DocumentMarker::MarkerTypes markers = DocumentMarker::SpellCheckClientMarkers();
-        if (!requestData.maskContains(TextCheckingTypeSpelling))
-            markers.remove(DocumentMarker::Spelling);
-        if (!requestData.maskContains(TextCheckingTypeGrammar))
-            markers.remove(DocumentMarker::Grammar);
-        if (m_processingRequest->isValid()) {
-            Range* checkingRange = m_processingRequest->checkingRange();
-            frame().document()->markers().removeMarkers(EphemeralRange(checkingRange), markers);
-        }
-    }
-    didCheck(sequence, results);
-}
-
-void SpellCheckRequester::didCheckCancel(int sequence)
-{
-    Vector<TextCheckingResult> results;
-    didCheck(sequence, results);
-}
-
-DEFINE_TRACE(SpellCheckRequester)
-{
-    visitor->trace(m_frame);
-    visitor->trace(m_processingRequest);
-    visitor->trace(m_requestQueue);
-}
-
-} // namespace blink
+}  // namespace blink

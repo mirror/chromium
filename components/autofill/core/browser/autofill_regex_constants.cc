@@ -185,11 +185,22 @@ const char kExpirationYearRe[] =
     "|Срок действия карты"  // ru
     "|年|有效期";  // zh-CN
 
-// The "yy" portion of the regex is just looking for two adjacent y's.
+// Used to match a expiration date field with a two digit year.
+// The following conditions must be met:
+//  - Exactly two adjacent y's.
+//  - (optional) Exactly two adjacent m's before the y's.
+//    - (optional) Separated by white-space and/or a dash or slash.
+//  - (optional) Prepended with some text similar to "Expiration Date".
+// Tested in components/autofill/core/common/autofill_regexes_unittest.cc
 const char kExpirationDate2DigitYearRe[] =
-    "(?:exp.*date.*|mm\\s*[-/]\\s*)[^y]yy([^y]|$)";
+    "(?:exp.*date[^y\\n\\r]*|mm\\s*[-/]?\\s*)yy(?:[^y]|$)";
+// Used to match a expiration date field with a four digit year.
+// Same requirements as |kExpirationDate2DigitYearRe| except:
+//  - Exactly four adjacent y's.
+// Tested in components/autofill/core/common/autofill_regexes_unittest.cc
 const char kExpirationDate4DigitYearRe[] =
-    "^mm\\s*[-/]\\syyyy$";
+    "(?:exp.*date[^y\\n\\r]*|mm\\s*[-/]?\\s*)yyyy(?:[^y]|$)";
+// Used to match expiration date fields that do not specify a year length.
 const char kExpirationDateRe[] =
     "expir|exp.*date|^expfield$"
     "|gueltig|gültig"  // de-DE
@@ -298,5 +309,34 @@ const char kPhoneSuffixRe[] =
 const char kPhoneExtensionRe[] =
     "\\bext|ext\\b|extension"
     "|ramal";  // pt-BR, pt-PT
+const char kUPIVirtualPaymentAddressRe[] =
+    "^\\w+@("
+    "upi|"         // BHIM Bharat Interface for Money
+    "allbank|"     // Allahabad Bank UPI
+    "andb|"        // Andhra Bank ONE
+    "axisbank|"    // Axis Pay
+    "barodampay|"  // Baroda MPay
+    "mahb|"        // MAHAUPI
+    "cnrb|"        // Canara Bank UPI - Empower
+    "csbpay|"      // CSB UPI
+    "dcb|"         // DCB Bank
+    "federal|"     // Lotza
+    "hdfcbank|"    // HDFC Bank MobileBanking
+    "pockets|"     // Pockets- ICICI Bank
+    "icici|"       // Pockets- ICICI Bank
+    "idfcbank|"    // IDFC Bank UPI App
+    "indus|"       // Indus Pay
+    "kbl|"         // KBL Smartz
+    "kaypay|"      // KayPay
+    "pnb|"         // PNB UPI
+    "sib|"         // SIB M-Pay (UPI Pay)
+    "sbi|"         // SBI Pay
+    "tjsp|"        // TranZapp
+    "uco|"         // UCO UPI
+    "unionbank|"   // Union Bank UPI
+    "united|"      // United UPI
+    "vijb|"        // Vijaya UPI App
+    "ybl"          // Yes Pay
+    ")$";
 
 }  // namespace autofill

@@ -13,19 +13,17 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "mojo/public/cpp/bindings/array.h"
+#include "base/optional.h"
+#include "cc/ipc/frame_sink_manager.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "services/ui/clipboard/clipboard_impl.h"
 #include "services/ui/public/interfaces/window_manager_window_tree_factory.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
-#include "services/ui/public/interfaces/window_tree_host.mojom.h"
-#include "services/ui/surfaces/surfaces_state.h"
-#include "services/ui/ws/display.h"
-#include "services/ui/ws/display_manager_delegate.h"
+#include "services/ui/ws/gpu_host_delegate.h"
 #include "services/ui/ws/ids.h"
 #include "services/ui/ws/operation.h"
 #include "services/ui/ws/server_window_delegate.h"
 #include "services/ui/ws/server_window_observer.h"
+#include "services/ui/ws/user_display_manager_delegate.h"
 #include "services/ui/ws/user_id_tracker.h"
 #include "services/ui/ws/user_id_tracker_observer.h"
 #include "services/ui/ws/window_manager_window_tree_factory_set.h"
@@ -34,7 +32,9 @@ namespace ui {
 namespace ws {
 
 class AccessPolicy;
+class Display;
 class DisplayManager;
+class GpuHost;
 class ServerWindow;
 class UserActivityMonitor;
 class WindowManagerState;
@@ -46,11 +46,12 @@ class WindowTreeBinding;
 // WindowTrees) as well as providing the root of the hierarchy.
 class WindowServer : public ServerWindowDelegate,
                      public ServerWindowObserver,
-                     public DisplayManagerDelegate,
-                     public UserIdTrackerObserver {
+                     public GpuHostDelegate,
+                     public UserDisplayManagerDelegate,
+                     public UserIdTrackerObserver,
+                     public cc::mojom::FrameSinkManagerClient {
  public:
-  WindowServer(WindowServerDelegate* delegate,
-               const scoped_refptr<ui::SurfacesState>& surfaces_state);
+  explicit WindowServer(WindowServerDelegate* delegate);
   ~WindowServer() override;
 
   WindowServerDelegate* delegate() { return delegate_; }
@@ -62,6 +63,8 @@ class WindowServer : public ServerWindowDelegate,
   const DisplayManager* display_manager() const {
     return display_manager_.get();
   }
+
+  GpuHost* gpu_host() { return gpu_host_.get(); }
 
   // Creates a new ServerWindow. The return value is owned by the caller, but
   // must be destroyed before WindowServer.
@@ -88,7 +91,8 @@ class WindowServer : public ServerWindowDelegate,
   WindowTree* CreateTreeForWindowManager(
       const UserId& user_id,
       mojom::WindowTreeRequest window_tree_request,
-      mojom::WindowTreeClientPtr window_tree_client);
+      mojom::WindowTreeClientPtr window_tree_client,
+      bool automatically_create_display_roots);
   // Invoked when a WindowTree's connection encounters an error.
   void DestroyTree(WindowTree* tree);
 
@@ -101,9 +105,6 @@ class WindowServer : public ServerWindowDelegate,
 
   // Returns the Window identified by |id|.
   ServerWindow* GetWindow(const WindowId& id);
-
-  // Schedules a paint for the specified region in the coordinates of |window|.
-  void SchedulePaint(ServerWindow* window, const gfx::Rect& bounds);
 
   OperationType current_operation_type() const {
     return current_operation_ ? current_operation_->type()
@@ -123,16 +124,12 @@ class WindowServer : public ServerWindowDelegate,
   // Returns true if OnTreeMessagedClient() was invoked for id.
   bool DidTreeMessageClient(ClientSpecificId id) const;
 
-  // Returns the WindowTree that has |id| as a root.
+  // Returns the WindowTree that has |window| as a root.
   WindowTree* GetTreeWithRoot(const ServerWindow* window) {
     return const_cast<WindowTree*>(
         const_cast<const WindowServer*>(this)->GetTreeWithRoot(window));
   }
   const WindowTree* GetTreeWithRoot(const ServerWindow* window) const;
-
-  void OnFirstWindowManagerWindowTreeFactoryReady();
-
-  clipboard::ClipboardImpl* GetClipboardForUser(const UserId& user_id);
 
   UserActivityMonitor* GetUserActivityMonitorForUser(const UserId& user_id);
 
@@ -146,7 +143,6 @@ class WindowServer : public ServerWindowDelegate,
   bool SetFocusedWindow(ServerWindow* window);
   ServerWindow* GetFocusedWindow();
 
-  bool IsActiveUserInHighContrastMode() const;
   void SetHighContrastMode(const UserId& user, bool enabled);
 
   // Returns a change id for the window manager that is associated with
@@ -171,14 +167,17 @@ class WindowServer : public ServerWindowDelegate,
 
   // These functions trivially delegate to all WindowTrees, which in
   // term notify their clients.
-  void ProcessWindowBoundsChanged(const ServerWindow* window,
-                                  const gfx::Rect& old_bounds,
-                                  const gfx::Rect& new_bounds);
+  void ProcessWindowBoundsChanged(
+      const ServerWindow* window,
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
       const std::vector<gfx::Rect>& new_additional_client_areas);
-  void ProcessLostCapture(const ServerWindow* window);
+  void ProcessCaptureChanged(const ServerWindow* new_capture,
+                             const ServerWindow* old_capture);
   void ProcessWillChangeWindowHierarchy(const ServerWindow* window,
                                         const ServerWindow* new_parent,
                                         const ServerWindow* old_parent);
@@ -188,15 +187,18 @@ class WindowServer : public ServerWindowDelegate,
   void ProcessWindowReorder(const ServerWindow* window,
                             const ServerWindow* relative_window,
                             const mojom::OrderDirection direction);
-  void ProcessWindowDeleted(const ServerWindow* window);
+  void ProcessWindowDeleted(ServerWindow* window);
   void ProcessWillChangeWindowPredefinedCursor(ServerWindow* window,
-                                               int32_t cursor_id);
+                                               mojom::CursorType cursor_id);
 
   // Sends an |event| to all WindowTrees belonging to |user_id| that might be
-  // observing events. Skips |ignore_tree| if it is non-null.
-  void SendToEventObservers(const ui::Event& event,
-                            const UserId& user_id,
-                            WindowTree* ignore_tree);
+  // observing events. Skips |ignore_tree| if it is non-null. |target_window| is
+  // the target of the event.
+  void SendToPointerWatchers(const ui::Event& event,
+                             const UserId& user_id,
+                             ServerWindow* target_window,
+                             WindowTree* ignore_tree,
+                             int64_t display_id);
 
   // Sets a callback to be called whenever a ServerWindow is scheduled for
   // a [re]paint. This should only be called in a test configuration.
@@ -213,16 +215,37 @@ class WindowServer : public ServerWindowDelegate,
   gfx::Rect GetCurrentMoveLoopRevertBounds();
   bool in_move_loop() const { return !!current_move_loop_; }
 
+  void StartDragLoop(uint32_t change_id,
+                     ServerWindow* window,
+                     WindowTree* initiator);
+  void EndDragLoop();
+  uint32_t GetCurrentDragLoopChangeId();
+  ServerWindow* GetCurrentDragLoopWindow();
+  WindowTree* GetCurrentDragLoopInitiator();
+  bool in_drag_loop() const { return !!current_drag_loop_; }
+
+  void OnDisplayReady(Display* display, bool is_first);
+  void OnDisplayDestroyed(Display* display);
+  void OnNoMoreDisplays();
+  WindowManagerState* GetWindowManagerStateForUser(const UserId& user_id);
+
+  // ServerWindowDelegate:
+  cc::mojom::FrameSinkManager* GetFrameSinkManager() override;
+
+  // UserDisplayManagerDelegate:
+  bool GetFrameDecorationsForUser(
+      const UserId& user_id,
+      mojom::FrameDecorationValuesPtr* values) override;
+
  private:
   struct CurrentMoveLoopState;
+  struct CurrentDragLoopState;
   friend class Operation;
 
   using WindowTreeMap =
       std::map<ClientSpecificId, std::unique_ptr<WindowTree>>;
   using UserActivityMonitorMap =
       std::map<UserId, std::unique_ptr<UserActivityMonitor>>;
-  using UserClipboardMap =
-      std::map<UserId, std::unique_ptr<ui::clipboard::ClipboardImpl>>;
 
   struct InFlightWindowManagerChange {
     // Identifies the client that initiated the change.
@@ -262,11 +285,15 @@ class WindowServer : public ServerWindowDelegate,
 
   bool IsUserInHighContrastMode(const UserId& user) const;
 
+  // Finds the parent client that will embed |surface_id| and claims ownership
+  // of the temporary reference. If no parent client is found then tell GPU to
+  // immediately drop the temporary reference. |window| is the ServerWindow
+  // that corresponds to |surface_id|.
+  void HandleTemporaryReferenceForNewSurface(const cc::SurfaceId& surface_id,
+                                             ServerWindow* window);
+
   // Overridden from ServerWindowDelegate:
-  ui::SurfacesState* GetSurfacesState() override;
-  void OnScheduleWindowPaint(ServerWindow* window) override;
-  const ServerWindow* GetRootWindow(const ServerWindow* window) const override;
-  void ScheduleSurfaceDestruction(ServerWindow* window) override;
+  ServerWindow* GetRootWindow(const ServerWindow* window) override;
 
   // Overridden from ServerWindowObserver:
   void OnWindowDestroyed(ServerWindow* window) override;
@@ -296,9 +323,9 @@ class WindowServer : public ServerWindowDelegate,
       const std::string& name,
       const std::vector<uint8_t>* new_data) override;
   void OnWindowPredefinedCursorChanged(ServerWindow* window,
-                                       int32_t cursor_id) override;
+                                       mojom::CursorType cursor_id) override;
   void OnWindowNonClientCursorChanged(ServerWindow* window,
-                                      int32_t cursor_id) override;
+                                      mojom::CursorType cursor_id) override;
   void OnWindowTextInputStateChanged(ServerWindow* window,
                                      const ui::TextInputState& state) override;
   void OnTransientWindowAdded(ServerWindow* window,
@@ -306,14 +333,11 @@ class WindowServer : public ServerWindowDelegate,
   void OnTransientWindowRemoved(ServerWindow* window,
                                 ServerWindow* transient_child) override;
 
-  // DisplayManagerDelegate:
-  void OnFirstDisplayReady() override;
-  void OnNoMoreDisplays() override;
-  bool GetFrameDecorationsForUser(
-      const UserId& user_id,
-      mojom::FrameDecorationValuesPtr* values) override;
-  WindowManagerState* GetWindowManagerStateForUser(
-      const UserId& user_id) override;
+  // GpuHostDelegate:
+  void OnGpuServiceInitialized() override;
+
+  // cc::mojom::FrameSinkManagerClient:
+  void OnSurfaceCreated(const cc::SurfaceInfo& surface_info) override;
 
   // UserIdTrackerObserver:
   void OnActiveUserIdChanged(const UserId& previously_active_id,
@@ -325,14 +349,12 @@ class WindowServer : public ServerWindowDelegate,
 
   WindowServerDelegate* delegate_;
 
-  // State for rendering into a Surface.
-  scoped_refptr<ui::SurfacesState> surfaces_state_;
-
   // ID to use for next WindowTree.
   ClientSpecificId next_client_id_;
 
   std::unique_ptr<DisplayManager> display_manager_;
 
+  std::unique_ptr<CurrentDragLoopState> current_drag_loop_;
   std::unique_ptr<CurrentMoveLoopState> current_move_loop_;
 
   // Set of WindowTrees.
@@ -352,12 +374,19 @@ class WindowServer : public ServerWindowDelegate,
   // Next id supplied to the window manager.
   uint32_t next_wm_change_id_;
 
+  std::unique_ptr<GpuHost> gpu_host_;
   base::Callback<void(ServerWindow*)> window_paint_callback_;
 
   UserActivityMonitorMap activity_monitor_map_;
-  UserClipboardMap clipboard_map_;
 
   WindowManagerWindowTreeFactorySet window_manager_window_tree_factory_set_;
+
+  cc::SurfaceId root_surface_id_;
+
+  // Provides interfaces to create and manage FrameSinks.
+  mojo::Binding<cc::mojom::FrameSinkManagerClient>
+      frame_sink_manager_client_binding_;
+  cc::mojom::FrameSinkManagerPtr frame_sink_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowServer);
 };

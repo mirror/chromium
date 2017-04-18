@@ -8,7 +8,6 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_about_handler.h"
@@ -18,7 +17,7 @@
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/tab_contents/tab_util.h"
-#include "chrome/browser/task_management/web_contents_tags.h"
+#include "chrome/browser/task_manager/web_contents_tags.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_instant_controller.h"
@@ -37,6 +36,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/features/features.h"
 
 #if defined(USE_ASH)
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
@@ -47,7 +47,7 @@
 #include "ui/aura/window.h"
 #endif
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "extensions/browser/extension_registry.h"
@@ -65,7 +65,7 @@ class BrowserNavigatorWebContentsAdoption {
     TabHelpers::AttachTabHelpers(contents);
 
     // Make the tab show up in the task manager.
-    task_management::WebContentsTags::CreateForTabContents(contents);
+    task_manager::WebContentsTags::CreateForTabContents(contents);
   }
 };
 
@@ -81,9 +81,10 @@ bool WindowCanOpenTabs(Browser* browser) {
 
 // Finds an existing Browser compatible with |profile|, making a new one if no
 // such Browser is located.
-Browser* GetOrCreateBrowser(Profile* profile) {
+Browser* GetOrCreateBrowser(Profile* profile, bool user_gesture) {
   Browser* browser = chrome::FindTabbedBrowser(profile, false);
-  return browser ? browser : new Browser(Browser::CreateParams(profile));
+  return browser ? browser
+                 : new Browser(Browser::CreateParams(profile, user_gesture));
 }
 
 // Change some of the navigation parameters based on the particular URL.
@@ -102,7 +103,8 @@ bool AdjustNavigateParamsForURL(chrome::NavigateParams* params) {
 
   Profile* profile = params->initiating_profile;
 
-  if (profile->IsOffTheRecord() || params->disposition == OFF_THE_RECORD) {
+  if (profile->IsOffTheRecord() ||
+      params->disposition == WindowOpenDisposition::OFF_THE_RECORD) {
     profile = profile->GetOriginalProfile();
 
     // If incognito is forced, we punt.
@@ -112,8 +114,8 @@ bool AdjustNavigateParamsForURL(chrome::NavigateParams* params) {
       return false;
     }
 
-    params->disposition = SINGLETON_TAB;
-    params->browser = GetOrCreateBrowser(profile);
+    params->disposition = WindowOpenDisposition::SINGLETON_TAB;
+    params->browser = GetOrCreateBrowser(profile, params->user_gesture);
     params->window_action = chrome::NavigateParams::SHOW_WINDOW;
   }
 
@@ -136,26 +138,26 @@ Browser* GetBrowserForDisposition(chrome::NavigateParams* params) {
   Profile* profile = params->initiating_profile;
 
   switch (params->disposition) {
-    case CURRENT_TAB:
+    case WindowOpenDisposition::CURRENT_TAB:
       if (params->browser)
         return params->browser;
       // Find a compatible window and re-execute this command in it. Otherwise
       // re-run with NEW_WINDOW.
-      return GetOrCreateBrowser(profile);
-    case SINGLETON_TAB:
-    case NEW_FOREGROUND_TAB:
-    case NEW_BACKGROUND_TAB:
+      return GetOrCreateBrowser(profile, params->user_gesture);
+    case WindowOpenDisposition::SINGLETON_TAB:
+    case WindowOpenDisposition::NEW_FOREGROUND_TAB:
+    case WindowOpenDisposition::NEW_BACKGROUND_TAB:
       // See if we can open the tab in the window this navigator is bound to.
       if (params->browser && WindowCanOpenTabs(params->browser))
         return params->browser;
       // Find a compatible window and re-execute this command in it. Otherwise
       // re-run with NEW_WINDOW.
-      return GetOrCreateBrowser(profile);
-    case NEW_POPUP: {
+      return GetOrCreateBrowser(profile, params->user_gesture);
+    case WindowOpenDisposition::NEW_POPUP: {
       // Make a new popup window.
       // Coerce app-style if |source| represents an app.
       std::string app_name;
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
       if (!params->extension_app_id.empty()) {
         app_name = web_app::GenerateApplicationNameFromExtensionId(
             params->extension_app_id);
@@ -171,25 +173,28 @@ Browser* GetBrowserForDisposition(chrome::NavigateParams* params) {
       }
 #endif
       if (app_name.empty()) {
-        Browser::CreateParams browser_params(Browser::TYPE_POPUP, profile);
+        Browser::CreateParams browser_params(Browser::TYPE_POPUP, profile,
+                                             params->user_gesture);
         browser_params.trusted_source = params->trusted_source;
         browser_params.initial_bounds = params->window_bounds;
         return new Browser(browser_params);
       }
 
       return new Browser(Browser::CreateParams::CreateForApp(
-          app_name, params->trusted_source, params->window_bounds, profile));
+          app_name, params->trusted_source, params->window_bounds, profile,
+          params->user_gesture));
     }
-    case NEW_WINDOW: {
+    case WindowOpenDisposition::NEW_WINDOW: {
       // Make a new normal browser window.
-      return new Browser(Browser::CreateParams(profile));
+      return new Browser(Browser::CreateParams(profile, params->user_gesture));
     }
-    case OFF_THE_RECORD:
+    case WindowOpenDisposition::OFF_THE_RECORD:
       // Make or find an incognito window.
-      return GetOrCreateBrowser(profile->GetOffTheRecordProfile());
+      return GetOrCreateBrowser(profile->GetOffTheRecordProfile(),
+                                params->user_gesture);
     // The following types result in no navigation.
-    case SAVE_TO_DISK:
-    case IGNORE_ACTION:
+    case WindowOpenDisposition::SAVE_TO_DISK:
+    case WindowOpenDisposition::IGNORE_ACTION:
       return NULL;
     default:
       NOTREACHED();
@@ -202,35 +207,37 @@ Browser* GetBrowserForDisposition(chrome::NavigateParams* params) {
 void NormalizeDisposition(chrome::NavigateParams* params) {
   // Calculate the WindowOpenDisposition if necessary.
   if (params->browser->tab_strip_model()->empty() &&
-      (params->disposition == NEW_BACKGROUND_TAB ||
-       params->disposition == CURRENT_TAB ||
-       params->disposition == SINGLETON_TAB)) {
-    params->disposition = NEW_FOREGROUND_TAB;
+      (params->disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
+       params->disposition == WindowOpenDisposition::CURRENT_TAB ||
+       params->disposition == WindowOpenDisposition::SINGLETON_TAB)) {
+    params->disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   }
   if (params->browser->profile()->IsOffTheRecord() &&
-      params->disposition == OFF_THE_RECORD) {
-    params->disposition = NEW_FOREGROUND_TAB;
+      params->disposition == WindowOpenDisposition::OFF_THE_RECORD) {
+    params->disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   }
-  if (!params->source_contents && params->disposition == CURRENT_TAB)
-    params->disposition = NEW_FOREGROUND_TAB;
+  if (!params->source_contents &&
+      params->disposition == WindowOpenDisposition::CURRENT_TAB)
+    params->disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
 
   switch (params->disposition) {
-    case NEW_BACKGROUND_TAB:
+    case WindowOpenDisposition::NEW_BACKGROUND_TAB:
       // Disposition trumps add types. ADD_ACTIVE is a default, so we need to
       // remove it if disposition implies the tab is going to open in the
       // background.
       params->tabstrip_add_types &= ~TabStripModel::ADD_ACTIVE;
       break;
 
-    case NEW_WINDOW:
-    case NEW_POPUP:
+    case WindowOpenDisposition::NEW_WINDOW:
+    case WindowOpenDisposition::NEW_POPUP: {
       // Code that wants to open a new window typically expects it to be shown
       // automatically.
       if (params->window_action == chrome::NavigateParams::NO_ACTION)
         params->window_action = chrome::NavigateParams::SHOW_WINDOW;
       // Fall-through.
-    case NEW_FOREGROUND_TAB:
-    case SINGLETON_TAB:
+    }
+    case WindowOpenDisposition::NEW_FOREGROUND_TAB:
+    case WindowOpenDisposition::SINGLETON_TAB:
       params->tabstrip_add_types |= TabStripModel::ADD_ACTIVE;
       break;
 
@@ -241,6 +248,15 @@ void NormalizeDisposition(chrome::NavigateParams* params) {
 
 // Obtain the profile used by the code that originated the Navigate() request.
 Profile* GetSourceProfile(chrome::NavigateParams* params) {
+  // |source_site_instance| needs to be checked before |source_contents|. This
+  // might matter when chrome.windows.create is used to open multiple URLs,
+  // which would reuse |params| and modify |params->source_contents| across
+  // navigations.
+  if (params->source_site_instance) {
+    return Profile::FromBrowserContext(
+        params->source_site_instance->GetBrowserContext());
+  }
+
   if (params->source_contents) {
     return Profile::FromBrowserContext(
         params->source_contents->GetBrowserContext());
@@ -255,6 +271,7 @@ void LoadURLInContents(WebContents* target_contents,
   NavigationController::LoadURLParams load_url_params(url);
   load_url_params.source_site_instance = params->source_site_instance;
   load_url_params.referrer = params->referrer;
+  load_url_params.frame_name = params->frame_name;
   load_url_params.frame_tree_node_id = params->frame_tree_node_id;
   load_url_params.redirect_chain = params->redirect_chain;
   load_url_params.transition_type = params->transition;
@@ -262,6 +279,7 @@ void LoadURLInContents(WebContents* target_contents,
   load_url_params.should_replace_current_entry =
       params->should_replace_current_entry;
   load_url_params.is_renderer_initiated = params->is_renderer_initiated;
+  load_url_params.started_from_context_menu = params->started_from_context_menu;
 
   if (params->uses_post) {
     load_url_params.load_type = NavigationController::LOAD_TYPE_HTTP_POST;
@@ -283,11 +301,14 @@ class ScopedBrowserShower {
         chrome::NavigateParams::SHOW_WINDOW_INACTIVE) {
       params_->browser->window()->ShowInactive();
     } else if (params_->window_action == chrome::NavigateParams::SHOW_WINDOW) {
-      params_->browser->window()->Show();
+      BrowserWindow* window = params_->browser->window();
+      window->Show();
       // If a user gesture opened a popup window, focus the contents.
-      if (params_->user_gesture && params_->disposition == NEW_POPUP &&
+      if (params_->user_gesture &&
+          params_->disposition == WindowOpenDisposition::NEW_POPUP &&
           params_->target_contents) {
         params_->target_contents->Focus();
+        window->Activate();
       }
     }
   }
@@ -338,12 +359,13 @@ content::WebContents* CreateTargetContents(const chrome::NavigateParams& params,
       params.source_site_instance
           ? params.source_site_instance
           : tab_util::GetSiteInstanceForNewTab(params.browser->profile(), url));
+  create_params.main_frame_name = params.frame_name;
   if (params.source_contents) {
     create_params.initial_size =
         params.source_contents->GetContainerBounds().size();
     create_params.created_with_opener = params.created_with_opener;
   }
-  if (params.disposition == NEW_BACKGROUND_TAB)
+  if (params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB)
     create_params.initially_hidden = true;
 
 #if defined(USE_AURA)
@@ -360,10 +382,11 @@ content::WebContents* CreateTargetContents(const chrome::NavigateParams& params,
   // tab helpers, so the entire set of tab helpers needs to be set up
   // immediately.
   BrowserNavigatorWebContentsAdoption::AttachTabHelpers(target_contents);
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::TabHelper::FromWebContents(target_contents)->
       SetExtensionAppById(params.extension_app_id);
 #endif
+
   return target_contents;
 }
 
@@ -379,7 +402,7 @@ bool SwapInPrerender(const GURL& url, chrome::NavigateParams* params) {
     return true;
 
   prerender::PrerenderManager* prerender_manager =
-      prerender::PrerenderManagerFactory::GetForProfile(profile);
+      prerender::PrerenderManagerFactory::GetForBrowserContext(profile);
   return prerender_manager &&
       prerender_manager->MaybeUsePrerenderedPage(url, params);
 }
@@ -398,7 +421,7 @@ void Navigate(NavigateParams* params) {
   if (!AdjustNavigateParamsForURL(params))
     return;
 
-#if defined(ENABLE_EXTENSIONS)
+#if BUILDFLAG(ENABLE_EXTENSIONS)
   const extensions::Extension* extension =
     extensions::ExtensionRegistry::Get(params->initiating_profile)->
         enabled_extensions().GetExtensionOrAppByURL(params->url);
@@ -408,9 +431,8 @@ void Navigate(NavigateParams* params) {
 #endif
 
   // The browser window may want to adjust the disposition.
-  if (params->disposition == NEW_POPUP &&
-      source_browser &&
-      source_browser->window()) {
+  if (params->disposition == WindowOpenDisposition::NEW_POPUP &&
+      source_browser && source_browser->window()) {
     params->disposition =
         source_browser->window()->GetDispositionForPopupBounds(
             params->window_bounds);
@@ -448,7 +470,8 @@ void Navigate(NavigateParams* params) {
   if (GetSourceProfile(params) != params->browser->profile()) {
     // A tab is being opened from a link from a different profile, we must reset
     // source information that may cause state to be shared.
-    params->source_contents = NULL;
+    params->source_contents = nullptr;
+    params->source_site_instance = nullptr;
     params->referrer = content::Referrer();
   }
 
@@ -471,7 +494,7 @@ void Navigate(NavigateParams* params) {
 
   // If we create a popup window from a non user-gesture, don't activate it.
   if (params->window_action == NavigateParams::SHOW_WINDOW &&
-      params->disposition == NEW_POPUP &&
+      params->disposition == WindowOpenDisposition::NEW_POPUP &&
       params->user_gesture == false) {
     params->window_action = NavigateParams::SHOW_WINDOW_INACTIVE;
   }
@@ -504,7 +527,7 @@ void Navigate(NavigateParams* params) {
   // exists.
   if (!params->target_contents && singleton_index < 0) {
     DCHECK(!params->url.is_empty());
-    if (params->disposition != CURRENT_TAB) {
+    if (params->disposition != WindowOpenDisposition::CURRENT_TAB) {
       params->target_contents = CreateTargetContents(*params, params->url);
 
       // This function takes ownership of |params->target_contents| until it
@@ -544,17 +567,18 @@ void Navigate(NavigateParams* params) {
   // lose focus, then make sure the focus for the source tab goes away from the
   // omnibox.
   if (params->source_contents &&
-      (params->disposition == NEW_FOREGROUND_TAB ||
-       params->disposition == NEW_WINDOW) &&
+      (params->disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
+       params->disposition == WindowOpenDisposition::NEW_WINDOW) &&
       (params->tabstrip_add_types & TabStripModel::ADD_INHERIT_OPENER))
     params->source_contents->Focus();
 
   if (params->source_contents == params->target_contents ||
-      (swapped_in_prerender && params->disposition == CURRENT_TAB)) {
+      (swapped_in_prerender &&
+       params->disposition == WindowOpenDisposition::CURRENT_TAB)) {
     // The navigation occurred in the source tab.
-    params->browser->UpdateUIForNavigationInTab(params->target_contents,
-                                                params->transition,
-                                                user_initiated);
+    params->browser->UpdateUIForNavigationInTab(
+        params->target_contents, params->transition, params->window_action,
+        user_initiated);
   } else if (singleton_index == -1) {
     // If some non-default value is set for the index, we should tell the
     // TabStripModel to respect it.
@@ -577,7 +601,7 @@ void Navigate(NavigateParams* params) {
         params->browser->tab_strip_model()->GetWebContentsAt(singleton_index);
 
     if (target->IsCrashed()) {
-      target->GetController().Reload(true);
+      target->GetController().Reload(content::ReloadType::NORMAL, true);
     } else if (params->path_behavior == NavigateParams::IGNORE_AND_NAVIGATE &&
         target->GetURL() != params->url) {
       LoadURLInContents(target, params->url, params);
@@ -590,7 +614,7 @@ void Navigate(NavigateParams* params) {
     }
   }
 
-  if (params->disposition != CURRENT_TAB) {
+  if (params->disposition != WindowOpenDisposition::CURRENT_TAB) {
     content::NotificationService::current()->Notify(
         chrome::NOTIFICATION_TAB_ADDED,
         content::Source<content::WebContentsDelegate>(params->browser),
@@ -615,33 +639,33 @@ bool IsURLAllowedInIncognito(const GURL& url,
   // chrome://extensions is on the list because it redirects to
   // chrome://settings.
   if (url.scheme() == content::kChromeUIScheme &&
-      (url.host() == chrome::kChromeUISettingsHost ||
-       url.host() == chrome::kChromeUIMdSettingsHost ||
-       url.host() == chrome::kChromeUISettingsFrameHost ||
-       url.host() == chrome::kChromeUIHelpHost ||
-       url.host() == chrome::kChromeUIHistoryHost ||
-       url.host() == chrome::kChromeUIExtensionsHost ||
-       url.host() == chrome::kChromeUIBookmarksHost ||
+      (url.host_piece() == chrome::kChromeUISettingsHost ||
+       url.host_piece() == chrome::kChromeUIMdSettingsHost ||
+       url.host_piece() == chrome::kChromeUISettingsFrameHost ||
+       url.host_piece() == chrome::kChromeUIHelpHost ||
+       url.host_piece() == chrome::kChromeUIHistoryHost ||
+       url.host_piece() == chrome::kChromeUIExtensionsHost ||
+       url.host_piece() == chrome::kChromeUIBookmarksHost ||
 #if !defined(OS_CHROMEOS)
-       url.host() == chrome::kChromeUIChromeSigninHost ||
+       url.host_piece() == chrome::kChromeUIChromeSigninHost ||
 #endif
-       url.host() == chrome::kChromeUIUberHost ||
-       url.host() == chrome::kChromeUIThumbnailHost ||
-       url.host() == chrome::kChromeUIThumbnailHost2 ||
-       url.host() == chrome::kChromeUIThumbnailListHost ||
-       url.host() == chrome::kChromeUISuggestionsHost ||
+       url.host_piece() == chrome::kChromeUIUberHost ||
+       url.host_piece() == chrome::kChromeUIThumbnailHost ||
+       url.host_piece() == chrome::kChromeUIThumbnailHost2 ||
+       url.host_piece() == chrome::kChromeUIThumbnailListHost ||
+       url.host_piece() == chrome::kChromeUISuggestionsHost ||
 #if defined(OS_CHROMEOS)
-       url.host() == chrome::kChromeUIVoiceSearchHost ||
+       url.host_piece() == chrome::kChromeUIVoiceSearchHost ||
 #endif
-       url.host() == chrome::kChromeUIDevicesHost)) {
+       url.host_piece() == chrome::kChromeUIDevicesHost)) {
     return false;
   }
 
   if (url.scheme() == chrome::kChromeSearchScheme &&
-      (url.host() == chrome::kChromeUIThumbnailHost ||
-       url.host() == chrome::kChromeUIThumbnailHost2 ||
-       url.host() == chrome::kChromeUIThumbnailListHost ||
-       url.host() == chrome::kChromeUISuggestionsHost)) {
+      (url.host_piece() == chrome::kChromeUIThumbnailHost ||
+       url.host_piece() == chrome::kChromeUIThumbnailHost2 ||
+       url.host_piece() == chrome::kChromeUIThumbnailListHost ||
+       url.host_piece() == chrome::kChromeUISuggestionsHost)) {
     return false;
   }
 
@@ -651,8 +675,8 @@ bool IsURLAllowedInIncognito(const GURL& url,
       &rewritten_url, browser_context, &reverse_on_redirect);
 
   // Some URLs are mapped to uber subpages. Do not allow them in incognito.
-  return !(rewritten_url.scheme() == content::kChromeUIScheme &&
-           rewritten_url.host() == chrome::kChromeUIUberHost);
+  return !(rewritten_url.scheme_piece() == content::kChromeUIScheme &&
+           rewritten_url.host_piece() == chrome::kChromeUIUberHost);
 }
 
 }  // namespace chrome

@@ -26,71 +26,71 @@
 #ifndef WebGLProgram_h
 #define WebGLProgram_h
 
-#include "bindings/core/v8/ScopedPersistent.h"
+#include "bindings/core/v8/TraceWrapperMember.h"
 #include "modules/webgl/WebGLShader.h"
 #include "modules/webgl/WebGLSharedPlatform3DObject.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/Vector.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class WebGLProgram final : public WebGLSharedPlatform3DObject {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    ~WebGLProgram() override;
+  DEFINE_WRAPPERTYPEINFO();
 
-    static WebGLProgram* create(WebGLRenderingContextBase*);
+ public:
+  ~WebGLProgram() override;
 
-    bool linkStatus(WebGLRenderingContextBase*);
+  static WebGLProgram* Create(WebGLRenderingContextBase*);
 
-    unsigned linkCount() const { return m_linkCount; }
+  bool LinkStatus(WebGLRenderingContextBase*);
 
-    // This is to be called everytime after the program is successfully linked.
-    // We don't deal with integer overflow here, assuming in reality a program
-    // will never be linked so many times.
-    // Also, we invalidate the cached program info.
-    void increaseLinkCount();
+  unsigned LinkCount() const { return link_count_; }
 
-    unsigned activeTransformFeedbackCount() const { return m_activeTransformFeedbackCount; }
-    void increaseActiveTransformFeedbackCount();
-    void decreaseActiveTransformFeedbackCount();
+  // This is to be called everytime after the program is successfully linked.
+  // We don't deal with integer overflow here, assuming in reality a program
+  // will never be linked so many times.
+  // Also, we invalidate the cached program info.
+  void IncreaseLinkCount();
 
-    WebGLShader* getAttachedShader(GLenum);
-    bool attachShader(WebGLShader*);
-    bool detachShader(WebGLShader*);
+  unsigned ActiveTransformFeedbackCount() const {
+    return active_transform_feedback_count_;
+  }
+  void IncreaseActiveTransformFeedbackCount();
+  void DecreaseActiveTransformFeedbackCount();
 
-    ScopedPersistent<v8::Array>* getPersistentCache();
+  WebGLShader* GetAttachedShader(GLenum);
+  bool AttachShader(WebGLShader*);
+  bool DetachShader(WebGLShader*);
 
-    DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
-protected:
-    explicit WebGLProgram(WebGLRenderingContextBase*);
+ protected:
+  explicit WebGLProgram(WebGLRenderingContextBase*);
 
-    void deleteObjectImpl(gpu::gles2::GLES2Interface*) override;
+  void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
 
-private:
-    bool isProgram() const override { return true; }
+ private:
+  bool IsProgram() const override { return true; }
 
-    void cacheInfoIfNeeded(WebGLRenderingContextBase*);
+  void CacheInfoIfNeeded(WebGLRenderingContextBase*);
 
-    GLint m_linkStatus;
+  GLint link_status_;
 
-    // This is used to track whether a WebGLUniformLocation belongs to this
-    // program or not.
-    unsigned m_linkCount;
+  // This is used to track whether a WebGLUniformLocation belongs to this
+  // program or not.
+  unsigned link_count_;
 
-    // This is used to track the program being used by active transform
-    // feedback objects.
-    unsigned m_activeTransformFeedbackCount;
+  // This is used to track the program being used by active transform
+  // feedback objects.
+  unsigned active_transform_feedback_count_;
 
-    Member<WebGLShader> m_vertexShader;
-    Member<WebGLShader> m_fragmentShader;
+  TraceWrapperMember<WebGLShader> vertex_shader_;
+  TraceWrapperMember<WebGLShader> fragment_shader_;
 
-    bool m_infoValid;
-
-    ScopedPersistent<v8::Array> m_shaderWrappers;
+  bool info_valid_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebGLProgram_h
+#endif  // WebGLProgram_h

@@ -20,7 +20,6 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.library_loader.Linker;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.content.browser.BrowserStartupController;
-import org.chromium.content.browser.ContentViewClient;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_shell.Shell;
 import org.chromium.content_shell.ShellManager;
@@ -118,8 +117,7 @@ public class ChromiumLinkerTestActivity extends Activity {
         // Load the library in the browser process, this will also run the test
         // runner in this process.
         try {
-            LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER)
-                    .ensureInitialized(getApplicationContext());
+            LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER).ensureInitialized();
         } catch (ProcessInitException e) {
             Log.i(TAG, "Cannot load chromium_linker_test:" +  e);
         }
@@ -127,7 +125,7 @@ public class ChromiumLinkerTestActivity extends Activity {
         // Now, start a new renderer process by creating a new view.
         // This will run the test runner in the renderer process.
 
-        BrowserStartupController.get(getApplicationContext(), LibraryProcessType.PROCESS_BROWSER)
+        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                 .initChromiumBrowserProcessForTests();
 
         LayoutInflater inflater =
@@ -140,7 +138,7 @@ public class ChromiumLinkerTestActivity extends Activity {
         mShellManager.setStartupUrl("about:blank");
 
         try {
-            BrowserStartupController.get(this, LibraryProcessType.PROCESS_BROWSER)
+            BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                     .startBrowserProcessesAsync(
                             true,
                             new BrowserStartupController.StartupCallback() {
@@ -166,7 +164,6 @@ public class ChromiumLinkerTestActivity extends Activity {
     private void finishInitialization(Bundle savedInstanceState) {
         String shellUrl = ShellManager.DEFAULT_SHELL_URL;
         mShellManager.launchShell(shellUrl);
-        getActiveContentViewCore().setContentViewClient(new ContentViewClient());
     }
 
     private void initializationFailed() {

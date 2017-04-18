@@ -2,56 +2,39 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import <string>
+#ifndef IOS_WEB_SHELL_TEST_EARL_GREY_SHELL_MATCHERS_H_
+#define IOS_WEB_SHELL_TEST_EARL_GREY_SHELL_MATCHERS_H_
+
+#include <string>
 
 #import <EarlGrey/EarlGrey.h>
 
 namespace web {
 
-// Shorthand for GREYMatchers::matcherForWebViewContainingText.
-id<GREYMatcher> webViewContainingText(const std::string& text);
+// Matcher for WKWebView containing |text|.
+id<GREYMatcher> WebViewContainingText(const std::string& text);
 
-// Shorthand for GREYMatchers::matcherForWebWithCSSSelector.
-id<GREYMatcher> webViewCssSelector(const std::string& selector);
+// Matcher for WKWebView containing an html element which matches |selector|.
+id<GREYMatcher> WebViewCssSelector(const std::string& selector);
 
-// Shorthand for GREYMatchers::matcherForWebViewScrollView.
-id<GREYMatcher> webViewScrollView();
+// Matcher for the WKWebView.
+id<GREYMatcher> WebView();
 
-// Shorthand for GREYMatchers::matcherForAddressFieldEqualToText.
-id<GREYMatcher> addressFieldText(const std::string& text);
+// Matcher for WKWebView's scroll view.
+id<GREYMatcher> WebViewScrollView();
 
-// Shorthand for GREYMatchers::matcherForBackButton.
-id<GREYMatcher> backButton();
+// Matcher for web shell address field text property equal to |text|.
+id<GREYMatcher> AddressFieldText(std::string text);
 
-// Shorthand for GREYMatchers::matcherForForwardButton.
-id<GREYMatcher> forwardButton();
+// Matcher for back button in web shell.
+id<GREYMatcher> BackButton();
 
-// Shorthand for GREYMatchers::matcherForAddressField.
-id<GREYMatcher> addressField();
+// Matcher for forward button in web shell.
+id<GREYMatcher> ForwardButton();
+
+// Matcher for address field in web shell.
+id<GREYMatcher> AddressField();
 
 }  // namespace web
 
-@interface GREYMatchers (WebShellAdditions)
-
-// Matcher for WKWebView containing |text|.
-+ (id<GREYMatcher>)matcherForWebViewContainingText:(const std::string&)text;
-
-// Matcher for WKWebView containing an html element which matches |selector|.
-+ (id<GREYMatcher>)matcherForWebWithCSSSelector:(const std::string&)selector;
-
-// Matcher for WKWebView's scroll view.
-+ (id<GREYMatcher>)matcherForWebViewScrollView;
-
-// Matcher for web shell address field text property equal to |text|.
-+ (id<GREYMatcher>)matcherForAddressFieldEqualToText:(const std::string&)text;
-
-// Matcher for back button in web shell.
-+ (id<GREYMatcher>)matcherForWebShellBackButton;
-
-// Matcher for forward button in web shell.
-+ (id<GREYMatcher>)matcherForWebShellForwardButton;
-
-// Matcher for address field in web shell.
-+ (id<GREYMatcher>)matcherForWebShellAddressField;
-
-@end
+#endif  // IOS_WEB_SHELL_TEST_EARL_GREY_SHELL_MATCHERS_H_

@@ -29,22 +29,24 @@
 namespace blink {
 
 class SVGAnimateTransformElement final : public SVGAnimateElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGAnimateTransformElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    SVGTransformType transformType() const { return m_type; }
+ public:
+  DECLARE_NODE_FACTORY(SVGAnimateTransformElement);
 
-private:
-    explicit SVGAnimateTransformElement(Document&);
+ private:
+  explicit SVGAnimateTransformElement(Document&);
 
-    bool hasValidAttributeType() override;
+  bool HasValidTarget() override;
 
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
 
-    SVGTransformType m_type;
+  void ResolveTargetProperty() override;
+  SVGPropertyBase* CreatePropertyForAnimation(const String&) const override;
+
+  SVGTransformType transform_type_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGAnimateTransformElement_h
+#endif  // SVGAnimateTransformElement_h

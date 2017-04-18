@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/time/time.h"
 #include "content/browser/service_worker/embedded_worker_instance.h"
 #include "content/browser/service_worker/service_worker_register_job_base.h"
 #include "content/browser/service_worker/service_worker_registration.h"
@@ -17,9 +18,6 @@
 #include "url/gurl.h"
 
 namespace content {
-
-class ServiceWorkerJobCoordinator;
-class ServiceWorkerStorage;
 
 // Handles the initial registration of a Service Worker and the
 // subsequent update of existing registrations.
@@ -124,7 +122,8 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   void DispatchInstallEvent();
   void OnInstallFinished(int request_id,
                          blink::WebServiceWorkerEventResult result,
-                         bool has_fetch_handler);
+                         bool has_fetch_handler,
+                         base::Time dispatch_event_time);
   void OnInstallFailed(ServiceWorkerStatusCode status);
   void Complete(ServiceWorkerStatusCode status);
   void Complete(ServiceWorkerStatusCode status,

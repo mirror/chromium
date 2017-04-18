@@ -23,9 +23,11 @@
 #include "chrome/common/safe_browsing/download_file_types.pb.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/mime_util/mime_util.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
+#include "net/base/mime_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/time_format.h"
 #include "ui/base/text/bytes_formatting.h"
@@ -135,6 +137,9 @@ base::string16 InterruptReasonStatusMessage(
     case content::DOWNLOAD_INTERRUPT_REASON_FILE_TOO_SHORT:
       string_id = IDS_DOWNLOAD_INTERRUPTED_STATUS_FILE_TOO_SHORT;
       break;
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_SAME_AS_SOURCE:
+      string_id = IDS_DOWNLOAD_INTERRUPTED_STATUS_FILE_SAME_AS_SOURCE;
+      break;
     case content::DOWNLOAD_INTERRUPT_REASON_NETWORK_INVALID_REQUEST:
     case content::DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED:
       string_id = IDS_DOWNLOAD_INTERRUPTED_STATUS_NETWORK_ERROR;
@@ -219,6 +224,9 @@ base::string16 InterruptReasonMessage(content::DownloadInterruptReason reason) {
       break;
     case content::DOWNLOAD_INTERRUPT_REASON_FILE_TOO_SHORT:
       string_id = IDS_DOWNLOAD_INTERRUPTED_DESCRIPTION_FILE_TOO_SHORT;
+      break;
+    case content::DOWNLOAD_INTERRUPT_REASON_FILE_SAME_AS_SOURCE:
+      string_id = IDS_DOWNLOAD_INTERRUPTED_DESCRIPTION_FILE_SAME_AS_SOURCE;
       break;
     case content::DOWNLOAD_INTERRUPT_REASON_NETWORK_INVALID_REQUEST:
     case content::DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED:
@@ -510,6 +518,23 @@ bool DownloadItemModel::IsMalicious() const {
       return false;
   }
   NOTREACHED();
+  return false;
+}
+
+bool DownloadItemModel::HasSupportedImageMimeType() const {
+  if (mime_util::IsSupportedImageMimeType(download_->GetMimeType())) {
+    return true;
+  }
+
+  std::string mime;
+  base::FilePath::StringType extension_with_dot =
+      download_->GetTargetFilePath().FinalExtension();
+  if (!extension_with_dot.empty() && net::GetWellKnownMimeTypeFromExtension(
+                                         extension_with_dot.substr(1), &mime) &&
+      mime_util::IsSupportedImageMimeType(mime)) {
+    return true;
+  }
+
   return false;
 }
 

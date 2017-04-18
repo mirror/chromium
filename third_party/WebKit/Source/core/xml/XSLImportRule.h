@@ -29,36 +29,40 @@
 namespace blink {
 
 class XSLImportRule final : public GarbageCollectedFinalized<XSLImportRule> {
-public:
-    static XSLImportRule* create(XSLStyleSheet* parentSheet, const String& href)
-    {
-        ASSERT(RuntimeEnabledFeatures::xsltEnabled());
-        return new XSLImportRule(parentSheet, href);
-    }
+ public:
+  static XSLImportRule* Create(XSLStyleSheet* parent_sheet,
+                               const String& href) {
+    DCHECK(RuntimeEnabledFeatures::xsltEnabled());
+    return new XSLImportRule(parent_sheet, href);
+  }
 
-    virtual ~XSLImportRule();
-    DECLARE_VIRTUAL_TRACE();
+  virtual ~XSLImportRule();
+  DECLARE_VIRTUAL_TRACE();
 
-    const String& href() const { return m_strHref; }
-    XSLStyleSheet* styleSheet() const { return m_styleSheet.get(); }
+  const String& Href() const { return str_href_; }
+  XSLStyleSheet* GetStyleSheet() const { return style_sheet_.Get(); }
 
-    XSLStyleSheet* parentStyleSheet() const { return m_parentStyleSheet; }
-    void setParentStyleSheet(XSLStyleSheet* styleSheet) { m_parentStyleSheet = styleSheet; }
+  XSLStyleSheet* ParentStyleSheet() const { return parent_style_sheet_; }
+  void SetParentStyleSheet(XSLStyleSheet* style_sheet) {
+    parent_style_sheet_ = style_sheet;
+  }
 
-    bool isLoading();
-    void loadSheet();
+  bool IsLoading();
+  void LoadSheet();
 
-private:
-    XSLImportRule(XSLStyleSheet* parentSheet, const String& href);
+ private:
+  XSLImportRule(XSLStyleSheet* parent_sheet, const String& href);
 
-    void setXSLStyleSheet(const String& href, const KURL& baseURL, const String& sheet);
+  void SetXSLStyleSheet(const String& href,
+                        const KURL& base_url,
+                        const String& sheet);
 
-    Member<XSLStyleSheet> m_parentStyleSheet;
-    String m_strHref;
-    Member<XSLStyleSheet> m_styleSheet;
-    bool m_loading;
+  Member<XSLStyleSheet> parent_style_sheet_;
+  String str_href_;
+  Member<XSLStyleSheet> style_sheet_;
+  bool loading_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // XSLImportRule_h
+#endif  // XSLImportRule_h

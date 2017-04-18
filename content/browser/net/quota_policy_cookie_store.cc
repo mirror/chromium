@@ -13,6 +13,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/profiler/scoped_tracker.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
 #include "net/cookies/canonical_cookie.h"
@@ -97,14 +98,14 @@ void QuotaPolicyCookieStore::Flush(const base::Closure& callback) {
 
 void QuotaPolicyCookieStore::OnLoad(
     const LoadedCallback& loaded_callback,
-    const std::vector<net::CanonicalCookie*>& cookies) {
-  for (auto* cookie : cookies) {
+    std::vector<std::unique_ptr<net::CanonicalCookie>> cookies) {
+  for (const auto& cookie : cookies) {
     net::SQLitePersistentCookieStore::CookieOrigin origin(
         cookie->Domain(), cookie->IsSecure());
     ++cookies_per_origin_[origin];
   }
 
-  loaded_callback.Run(cookies);
+  loaded_callback.Run(std::move(cookies));
 }
 
 CookieStoreConfig::CookieStoreConfig()

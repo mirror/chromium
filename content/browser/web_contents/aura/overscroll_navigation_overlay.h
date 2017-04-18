@@ -13,11 +13,8 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "ui/gfx/image/image.h"
 
-struct ViewHostMsg_UpdateRect_Params;
-
 namespace content {
 
-class OverscrollWindowDelegate;
 class OverscrollNavigationOverlayTest;
 
 // When a history navigation is triggered at the end of an overscroll
@@ -35,8 +32,6 @@ class CONTENT_EXPORT OverscrollNavigationOverlay
     : public WebContentsObserver,
       public OverscrollWindowAnimation::Delegate {
  public:
-  // Note that this enum is used to back an UMA histogram, so it should be
-  // treated as append-only.
   enum NavigationDirection { NONE, FORWARD, BACK, NAVIGATION_COUNT };
 
   OverscrollNavigationOverlay(WebContentsImpl* web_contents,
@@ -52,6 +47,9 @@ class CONTENT_EXPORT OverscrollNavigationOverlay
   FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest, WithScreenshot);
   FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest, WithoutScreenshot);
   FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest, CannotNavigate);
+  FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest, ForwardNavigation);
+  FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest,
+                           ForwardNavigationCancelled);
   FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest, CancelNavigation);
   FRIEND_TEST_ALL_PREFIXES(OverscrollNavigationOverlayTest,
                            CancelAfterSuccessfulNavigation);

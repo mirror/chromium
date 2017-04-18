@@ -5,54 +5,57 @@
 #ifndef PaymentAddress_h
 #define PaymentAddress_h
 
+#include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/ScriptWrappable.h"
+#include "components/payments/mojom/payment_request.mojom-blink.h"
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
-#include "public/platform/modules/payments/payment_request.mojom-blink.h"
-#include "wtf/Noncopyable.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class MODULES_EXPORT PaymentAddress final : public GarbageCollectedFinalized<PaymentAddress>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-    WTF_MAKE_NONCOPYABLE(PaymentAddress);
+class MODULES_EXPORT PaymentAddress final
+    : public GarbageCollectedFinalized<PaymentAddress>,
+      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+  WTF_MAKE_NONCOPYABLE(PaymentAddress);
 
-public:
-    explicit PaymentAddress(mojom::blink::PaymentAddressPtr);
-    virtual ~PaymentAddress();
+ public:
+  explicit PaymentAddress(payments::mojom::blink::PaymentAddressPtr);
+  virtual ~PaymentAddress();
 
-    const String& country() const { return m_country; }
-    const Vector<String>& addressLine() const { return m_addressLine; }
-    const String& region() const { return m_region; }
-    const String& city() const { return m_city; }
-    const String& dependentLocality() const { return m_dependentLocality; }
-    const String& postalCode() const { return m_postalCode; }
-    const String& sortingCode() const { return m_sortingCode; }
-    const String& languageCode() const { return m_languageCode; }
-    const String& organization() const { return m_organization; }
-    const String& recipient() const { return m_recipient; }
-    const String& careOf() const { return m_careOf; }
-    const String& phone() const { return m_phone; }
+  ScriptValue toJSONForBinding(ScriptState*) const;
 
-    DEFINE_INLINE_TRACE() {}
+  const String& country() const { return country_; }
+  const Vector<String>& addressLine() const { return address_line_; }
+  const String& region() const { return region_; }
+  const String& city() const { return city_; }
+  const String& dependentLocality() const { return dependent_locality_; }
+  const String& postalCode() const { return postal_code_; }
+  const String& sortingCode() const { return sorting_code_; }
+  const String& languageCode() const { return language_code_; }
+  const String& organization() const { return organization_; }
+  const String& recipient() const { return recipient_; }
+  const String& phone() const { return phone_; }
 
-private:
-    String m_country;
-    Vector<String> m_addressLine;
-    String m_region;
-    String m_city;
-    String m_dependentLocality;
-    String m_postalCode;
-    String m_sortingCode;
-    String m_languageCode;
-    String m_organization;
-    String m_recipient;
-    String m_careOf;
-    String m_phone;
+  DEFINE_INLINE_TRACE() {}
+
+ private:
+  String country_;
+  Vector<String> address_line_;
+  String region_;
+  String city_;
+  String dependent_locality_;
+  String postal_code_;
+  String sorting_code_;
+  String language_code_;
+  String organization_;
+  String recipient_;
+  String phone_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // PaymentAddress_h
+#endif  // PaymentAddress_h

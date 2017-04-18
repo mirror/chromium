@@ -5,6 +5,8 @@
 #ifndef CONTENT_CHILD_SERVICE_WORKER_WEB_SERVICE_WORKER_PROVIDER_IMPL_H_
 #define CONTENT_CHILD_SERVICE_WORKER_WEB_SERVICE_WORKER_PROVIDER_IMPL_H_
 
+#include <memory>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -30,17 +32,21 @@ class WebServiceWorkerProviderImpl
                                ServiceWorkerProviderContext* context);
   ~WebServiceWorkerProviderImpl() override;
 
-  void setClient(blink::WebServiceWorkerProviderClient* client) override;
+  void SetClient(blink::WebServiceWorkerProviderClient* client) override;
 
-  void registerServiceWorker(const blink::WebURL& pattern,
-                             const blink::WebURL& script_url,
-                             WebServiceWorkerRegistrationCallbacks*) override;
-  void getRegistration(const blink::WebURL& document_url,
-                       WebServiceWorkerGetRegistrationCallbacks*) override;
-  void getRegistrations(WebServiceWorkerGetRegistrationsCallbacks*) override;
-  void getRegistrationForReady(
-      WebServiceWorkerGetRegistrationForReadyCallbacks*) override;
-  bool validateScopeAndScriptURL(const blink::WebURL& pattern,
+  void RegisterServiceWorker(
+      const blink::WebURL& pattern,
+      const blink::WebURL& script_url,
+      std::unique_ptr<WebServiceWorkerRegistrationCallbacks>) override;
+  void GetRegistration(
+      const blink::WebURL& document_url,
+      std::unique_ptr<WebServiceWorkerGetRegistrationCallbacks>) override;
+  void GetRegistrations(
+      std::unique_ptr<WebServiceWorkerGetRegistrationsCallbacks>) override;
+  void GetRegistrationForReady(
+      std::unique_ptr<WebServiceWorkerGetRegistrationForReadyCallbacks>)
+      override;
+  bool ValidateScopeAndScriptURL(const blink::WebURL& pattern,
                                  const blink::WebURL& script_url,
                                  blink::WebString* error_message) override;
 

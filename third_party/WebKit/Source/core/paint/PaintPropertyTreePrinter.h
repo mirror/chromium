@@ -5,16 +5,33 @@
 #ifndef PaintPropertyTreePrinter_h
 #define PaintPropertyTreePrinter_h
 
-#ifndef NDEBUG
+#include "core/CoreExport.h"
+#include "platform/wtf/text/WTFString.h"
+
+#if DCHECK_IS_ON()
+
 namespace blink {
 
 class FrameView;
 
-void showTransformPropertyTree(const FrameView& rootFrame);
-void showClipPropertyTree(const FrameView& rootFrame);
-void showEffectPropertyTree(const FrameView& rootFrame);
+}  // namespace blink
 
-} // namespace blink
-#endif
+// Outside the blink namespace for ease of invocation from gdb.
+CORE_EXPORT void showAllPropertyTrees(const blink::FrameView& rootFrame);
+CORE_EXPORT void showTransformPropertyTree(const blink::FrameView& rootFrame);
+CORE_EXPORT void showClipPropertyTree(const blink::FrameView& rootFrame);
+CORE_EXPORT void showEffectPropertyTree(const blink::FrameView& rootFrame);
+CORE_EXPORT void showScrollPropertyTree(const blink::FrameView& rootFrame);
+CORE_EXPORT String
+transformPropertyTreeAsString(const blink::FrameView& rootFrame);
+CORE_EXPORT String clipPropertyTreeAsString(const blink::FrameView& rootFrame);
+CORE_EXPORT String
+effectPropertyTreeAsString(const blink::FrameView& rootFrame);
+CORE_EXPORT String
+scrollPropertyTreeAsString(const blink::FrameView& rootFrame);
 
-#endif // PaintPropertyTreePrinter_h
+CORE_EXPORT String paintPropertyTreeGraph(const blink::FrameView&);
+
+#endif  // if DCHECK_IS_ON()
+
+#endif  // PaintPropertyTreePrinter_h

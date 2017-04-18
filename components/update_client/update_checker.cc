@@ -23,6 +23,7 @@
 #include "components/update_client/persisted_data.h"
 #include "components/update_client/request_sender.h"
 #include "components/update_client/update_client.h"
+#include "components/update_client/updater_state.h"
 #include "components/update_client/utils.h"
 #include "url/gurl.h"
 
@@ -47,9 +48,9 @@ update_client::InstallerAttributes SanitizeInstallerAttributes(
 }
 
 // Returns true if at least one item requires network encryption.
-bool IsEncryptionRequired(const std::vector<CrxUpdateItem*>& items) {
-  for (const auto* item : items) {
-    if (item->component.requires_network_encryption)
+bool IsEncryptionRequired(const IdToCrxUpdateItemMap& items) {
+  for (const auto& item : items) {
+    if (item.second->component.requires_network_encryption)
       return true;
   }
   return false;
@@ -64,19 +65,22 @@ bool IsEncryptionRequired(const std::vector<CrxUpdateItem*>& items) {
 // An app element looks like this:
 //    <app appid="hnimpnehoodheedghdeeijklkeaacbdc"
 //         version="0.1.2.3" installsource="ondemand">
-//      <updatecheck />
+//      <updatecheck/>
 //      <packages>
-//        <package fp="abcd" />
+//        <package fp="abcd"/>
 //      </packages>
 //    </app>
-std::string BuildUpdateCheckRequest(const Configurator& config,
-                                    const std::vector<CrxUpdateItem*>& items,
-                                    PersistedData* metadata,
-                                    const std::string& additional_attributes) {
+std::string BuildUpdateCheckRequest(
+    const Configurator& config,
+    const IdToCrxUpdateItemMap& items,
+    PersistedData* metadata,
+    const std::string& additional_attributes,
+    bool enabled_component_updates,
+    const std::unique_ptr<UpdaterState::Attributes>& updater_state_attributes) {
   const std::string brand(SanitizeBrand(config.GetBrand()));
   std::string app_elements;
-  for (size_t i = 0; i != items.size(); ++i) {
-    const CrxUpdateItem* item = items[i];
+  for (const auto& item_pair : items) {
+    const CrxUpdateItem* item = item_pair.second.get();
     const update_client::InstallerAttributes installer_attributes(
         SanitizeInstallerAttributes(item->component.installer_attributes));
     std::string app("<app ");
@@ -86,14 +90,29 @@ std::string BuildUpdateCheckRequest(const Configurator& config,
       base::StringAppendF(&app, " brand=\"%s\"", brand.c_str());
     if (item->on_demand)
       base::StringAppendF(&app, " installsource=\"ondemand\"");
-
-    for (const auto& attr : installer_attributes)
+    for (const auto& attr : installer_attributes) {
       base::StringAppendF(&app, " %s=\"%s\"", attr.first.c_str(),
                           attr.second.c_str());
-
+    }
+    const std::string cohort = metadata->GetCohort(item->id);
+    const std::string cohort_name = metadata->GetCohortName(item->id);
+    const std::string cohort_hint = metadata->GetCohortHint(item->id);
+    if (!cohort.empty())
+      base::StringAppendF(&app, " cohort=\"%s\"", cohort.c_str());
+    if (!cohort_name.empty())
+      base::StringAppendF(&app, " cohortname=\"%s\"", cohort_name.c_str());
+    if (!cohort_hint.empty())
+      base::StringAppendF(&app, " cohorthint=\"%s\"", cohort_hint.c_str());
     base::StringAppendF(&app, ">");
-    base::StringAppendF(&app, "<updatecheck />");
-    base::StringAppendF(&app, "<ping rd=\"%d\" ping_freshness=\"%s\" />",
+
+    base::StringAppendF(&app, "<updatecheck");
+    if (item->component.supports_group_policy_enable_component_updates &&
+        !enabled_component_updates) {
+      base::StringAppendF(&app, " updatedisabled=\"true\"");
+    }
+    base::StringAppendF(&app, "/>");
+
+    base::StringAppendF(&app, "<ping rd=\"%d\" ping_freshness=\"%s\"/>",
                         metadata->GetDateLastRollCall(item->id),
                         metadata->GetPingFreshness(item->id).c_str());
     if (!item->component.fingerprint.empty()) {
@@ -108,10 +127,12 @@ std::string BuildUpdateCheckRequest(const Configurator& config,
     VLOG(1) << "Appending to update request: " << app;
   }
 
+  // Include the updater state in the update check request.
   return BuildProtocolRequest(
-      config.GetBrowserVersion().GetString(), config.GetChannel(),
-      config.GetLang(), config.GetOSLongName(), config.GetDownloadPreference(),
-      app_elements, additional_attributes);
+      config.GetProdId(), config.GetBrowserVersion().GetString(),
+      config.GetChannel(), config.GetLang(), config.GetOSLongName(),
+      config.GetDownloadPreference(), app_elements, additional_attributes,
+      updater_state_attributes);
 }
 
 class UpdateCheckerImpl : public UpdateChecker {
@@ -122,11 +143,17 @@ class UpdateCheckerImpl : public UpdateChecker {
 
   // Overrides for UpdateChecker.
   bool CheckForUpdates(
-      const std::vector<CrxUpdateItem*>& items_to_check,
+      const IdToCrxUpdateItemMap& items_to_check,
       const std::string& additional_attributes,
+      bool enabled_component_updates,
       const UpdateCheckCallback& update_check_callback) override;
 
  private:
+  void ReadUpdaterStateAttributes();
+  void CheckForUpdatesHelper(const IdToCrxUpdateItemMap& items_to_check,
+                             const std::string& additional_attributes,
+                             bool enabled_component_updates);
+
   void OnRequestSenderComplete(
       std::unique_ptr<std::vector<std::string>> ids_checked,
       int error,
@@ -137,6 +164,7 @@ class UpdateCheckerImpl : public UpdateChecker {
   const scoped_refptr<Configurator> config_;
   PersistedData* metadata_;
   UpdateCheckCallback update_check_callback_;
+  std::unique_ptr<UpdaterState::Attributes> updater_state_attributes_;
   std::unique_ptr<RequestSender> request_sender_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateCheckerImpl);
@@ -151,17 +179,33 @@ UpdateCheckerImpl::~UpdateCheckerImpl() {
 }
 
 bool UpdateCheckerImpl::CheckForUpdates(
-    const std::vector<CrxUpdateItem*>& items_to_check,
+    const IdToCrxUpdateItemMap& items_to_check,
     const std::string& additional_attributes,
+    bool enabled_component_updates,
     const UpdateCheckCallback& update_check_callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (request_sender_.get()) {
-    NOTREACHED();
-    return false;  // Another update check is in progress.
-  }
-
   update_check_callback_ = update_check_callback;
+
+  return config_->GetSequencedTaskRunner()->PostTaskAndReply(
+      FROM_HERE, base::Bind(&UpdateCheckerImpl::ReadUpdaterStateAttributes,
+                            base::Unretained(this)),
+      base::Bind(&UpdateCheckerImpl::CheckForUpdatesHelper,
+                 base::Unretained(this), base::ConstRef(items_to_check),
+                 additional_attributes, enabled_component_updates));
+}
+
+// This function runs on the blocking pool task runner.
+void UpdateCheckerImpl::ReadUpdaterStateAttributes() {
+  const bool is_machine_install = !config_->IsPerUserInstall();
+  updater_state_attributes_ = UpdaterState::GetState(is_machine_install);
+}
+
+void UpdateCheckerImpl::CheckForUpdatesHelper(
+    const IdToCrxUpdateItemMap& items_to_check,
+    const std::string& additional_attributes,
+    bool enabled_component_updates) {
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   auto urls(config_->UpdateUrl());
   if (IsEncryptionRequired(items_to_check))
@@ -169,16 +213,16 @@ bool UpdateCheckerImpl::CheckForUpdates(
 
   std::unique_ptr<std::vector<std::string>> ids_checked(
       new std::vector<std::string>());
-  for (auto* crx : items_to_check)
-    ids_checked->push_back(crx->id);
+  for (const auto& item : items_to_check)
+    ids_checked->push_back(item.second->id);
   request_sender_.reset(new RequestSender(config_));
   request_sender_->Send(
-      config_->UseCupSigning(),
+      config_->EnabledCupSigning(),
       BuildUpdateCheckRequest(*config_, items_to_check, metadata_,
-                              additional_attributes),
+                              additional_attributes, enabled_component_updates,
+                              updater_state_attributes_),
       urls, base::Bind(&UpdateCheckerImpl::OnRequestSenderComplete,
                        base::Unretained(this), base::Passed(&ids_checked)));
-  return true;
 }
 
 void UpdateCheckerImpl::OnRequestSenderComplete(
@@ -194,6 +238,17 @@ void UpdateCheckerImpl::OnRequestSenderComplete(
       int daynum = update_response.results().daystart_elapsed_days;
       if (daynum != UpdateResponse::kNoDaystart)
         metadata_->SetDateLastRollCall(*ids_checked, daynum);
+      for (const auto& result : update_response.results().list) {
+        auto entry = result.cohort_attrs.find(UpdateResponse::Result::kCohort);
+        if (entry != result.cohort_attrs.end())
+          metadata_->SetCohort(result.extension_id, entry->second);
+        entry = result.cohort_attrs.find(UpdateResponse::Result::kCohortName);
+        if (entry != result.cohort_attrs.end())
+          metadata_->SetCohortName(result.extension_id, entry->second);
+        entry = result.cohort_attrs.find(UpdateResponse::Result::kCohortHint);
+        if (entry != result.cohort_attrs.end())
+          metadata_->SetCohortHint(result.extension_id, entry->second);
+      }
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(update_check_callback_, error,
                                 update_response.results(), retry_after_sec));

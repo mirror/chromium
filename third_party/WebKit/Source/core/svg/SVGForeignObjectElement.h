@@ -21,45 +21,44 @@
 #define SVGForeignObjectElement_h
 
 #include "core/SVGNames.h"
-#include "core/svg/SVGAnimatedBoolean.h"
 #include "core/svg/SVGAnimatedLength.h"
 #include "core/svg/SVGGraphicsElement.h"
-#include "core/svg/SVGURIReference.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
 class SVGForeignObjectElement final : public SVGGraphicsElement {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    DECLARE_NODE_FACTORY(SVGForeignObjectElement);
+  DEFINE_WRAPPERTYPEINFO();
 
-    SVGAnimatedLength* x() const { return m_x.get(); }
-    SVGAnimatedLength* y() const { return m_y.get(); }
-    SVGAnimatedLength* width() const { return m_width.get(); }
-    SVGAnimatedLength* height() const { return m_height.get(); }
+ public:
+  DECLARE_NODE_FACTORY(SVGForeignObjectElement);
 
-    DECLARE_VIRTUAL_TRACE();
+  SVGAnimatedLength* x() const { return x_.Get(); }
+  SVGAnimatedLength* y() const { return y_.Get(); }
+  SVGAnimatedLength* width() const { return width_.Get(); }
+  SVGAnimatedLength* height() const { return height_.Get(); }
 
-private:
-    explicit SVGForeignObjectElement(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    bool isPresentationAttributeWithSVGDOM(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
-    void svgAttributeChanged(const QualifiedName&) override;
+ private:
+  explicit SVGForeignObjectElement(Document&);
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+  void SvgAttributeChanged(const QualifiedName&) override;
 
-    bool selfHasRelativeLengths() const override;
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
-    Member<SVGAnimatedLength> m_x;
-    Member<SVGAnimatedLength> m_y;
-    Member<SVGAnimatedLength> m_width;
-    Member<SVGAnimatedLength> m_height;
+  bool SelfHasRelativeLengths() const override;
+
+  Member<SVGAnimatedLength> x_;
+  Member<SVGAnimatedLength> y_;
+  Member<SVGAnimatedLength> width_;
+  Member<SVGAnimatedLength> height_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // SVGForeignObjectElement_h
+#endif  // SVGForeignObjectElement_h

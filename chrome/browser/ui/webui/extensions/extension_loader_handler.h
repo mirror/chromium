@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -18,7 +19,7 @@
 #include "base/scoped_observer.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
-#include "content/public/browser/navigation_controller.h"
+#include "content/public/browser/reload_type.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui_message_handler.h"
 
@@ -37,6 +38,12 @@ class ExtensionLoaderHandler : public content::WebUIMessageHandler,
                                public ExtensionErrorReporter::Observer,
                                public content::WebContentsObserver {
  public:
+  using GetManifestErrorCallback =
+      base::Callback<void(const base::FilePath& file_path,
+                          const std::string& error,
+                          size_t line_number,
+                          const std::string& manifest)>;
+
   explicit ExtensionLoaderHandler(Profile* profile);
   ~ExtensionLoaderHandler() override;
 
@@ -45,6 +52,11 @@ class ExtensionLoaderHandler : public content::WebUIMessageHandler,
 
   // WebUIMessageHandler implementation.
   void RegisterMessages() override;
+
+  // TODO(devlin): Move this to developerPrivate.
+  static void GetManifestError(const std::string& error,
+                               const base::FilePath& extension_path,
+                               const GetManifestErrorCallback& callback);
 
  private:
   // Handle the 'extensionLoaderRetry' message.
@@ -65,9 +77,8 @@ class ExtensionLoaderHandler : public content::WebUIMessageHandler,
                      const std::string& error) override;
 
   // content::WebContentsObserver:
-  void DidStartNavigationToPendingEntry(
-      const GURL& url,
-      content::NavigationController::ReloadType reload_type) override;
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
   // Add a failure to |failures_|. If it was a manifest error, |manifest| will
   // hold the manifest contents, and |line_number| will point to the line at

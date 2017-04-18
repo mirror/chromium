@@ -33,46 +33,44 @@
 namespace blink {
 
 class NodeChildRemovalTracker {
-    STACK_ALLOCATED();
-public:
-    explicit NodeChildRemovalTracker(Node&);
-    ~NodeChildRemovalTracker();
+  STACK_ALLOCATED();
 
-    static bool isBeingRemoved(Node*);
+ public:
+  explicit NodeChildRemovalTracker(Node&);
+  ~NodeChildRemovalTracker();
 
-private:
-    Node& node() const { return *m_node; }
-    NodeChildRemovalTracker* previous() { return m_previous; }
+  static bool IsBeingRemoved(Node*);
 
-    Member<Node> m_node;
-    // Using raw pointers are safe because these NodeChildRemovalTrackers are
-    // guaranteed to be on a stack.
-    NodeChildRemovalTracker* m_previous;
-    static NodeChildRemovalTracker* s_last;
+ private:
+  Node& GetNode() const { return *node_; }
+  NodeChildRemovalTracker* Previous() { return previous_; }
+
+  Member<Node> node_;
+  // Using raw pointers are safe because these NodeChildRemovalTrackers are
+  // guaranteed to be on a stack.
+  NodeChildRemovalTracker* previous_;
+  static NodeChildRemovalTracker* last_;
 };
 
 inline NodeChildRemovalTracker::NodeChildRemovalTracker(Node& node)
-    : m_node(node)
-    , m_previous(s_last)
-{
-    s_last = this;
+    : node_(node), previous_(last_) {
+  last_ = this;
 }
 
-inline NodeChildRemovalTracker::~NodeChildRemovalTracker()
-{
-    s_last = m_previous;
+inline NodeChildRemovalTracker::~NodeChildRemovalTracker() {
+  last_ = previous_;
 }
 
-inline bool NodeChildRemovalTracker::isBeingRemoved(Node* node)
-{
-    for (NodeChildRemovalTracker* removal = s_last; removal; removal = removal->previous()) {
-        if (removal->node().isShadowIncludingInclusiveAncestorOf(node))
-            return true;
-    }
+inline bool NodeChildRemovalTracker::IsBeingRemoved(Node* node) {
+  for (NodeChildRemovalTracker* removal = last_; removal;
+       removal = removal->Previous()) {
+    if (removal->GetNode().IsShadowIncludingInclusiveAncestorOf(node))
+      return true;
+  }
 
-    return false;
+  return false;
 }
 
-} // namespace blink
+}  // namespace blink
 
 #endif

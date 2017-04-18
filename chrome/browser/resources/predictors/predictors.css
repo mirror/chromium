@@ -1,8 +1,6 @@
-/*
- * Copyright (c) 2012 The Chromium Authors. All rights reserved.
+/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file.
- */
+ * found in the LICENSE file. */
 
 body {
   margin: 20px;
@@ -37,6 +35,10 @@ td {
   border-style: solid;
   border-width: 1px;
   padding: 3px;
+}
+
+tr td:first-child[rowspan] {
+  background-color: rgb(215, 215, 215);
 }
 
 tbody > td:first-child {

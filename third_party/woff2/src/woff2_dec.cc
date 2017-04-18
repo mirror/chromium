@@ -27,7 +27,7 @@
 #include <memory>
 #include <utility>
 
-#include "./decode.h"
+#include "./brotli/decode.h"
 #include "./buffer.h"
 #include "./port.h"
 #include "./round.h"
@@ -681,6 +681,12 @@ bool ReconstructTransformedHmtx(const uint8_t* transformed_buf,
     return FONT_COMPRESSION_FAILURE();
   }
 
+  // https://www.microsoft.com/typography/otspec/hmtx.htm
+  // "...only one entry need be in the array, but that entry is required."
+  if (PREDICT_FALSE(num_hmetrics < 1)) {
+    return FONT_COMPRESSION_FAILURE();
+  }
+
   for (uint16_t i = 0; i < num_hmetrics; i++) {
     uint16_t advance_width;
     if (PREDICT_FALSE(!hmtx_buff_in.ReadU16(&advance_width))) {
@@ -736,9 +742,10 @@ bool ReconstructTransformedHmtx(const uint8_t* transformed_buf,
 bool Woff2Uncompress(uint8_t* dst_buf, size_t dst_size,
   const uint8_t* src_buf, size_t src_size) {
   size_t uncompressed_size = dst_size;
-  int ok = BrotliDecompressBuffer(src_size, src_buf,
-                                  &uncompressed_size, dst_buf);
-  if (PREDICT_FALSE(!ok || uncompressed_size != dst_size)) {
+  BrotliDecoderResult result = BrotliDecoderDecompress(
+      src_size, src_buf, &uncompressed_size, dst_buf);
+  if (PREDICT_FALSE(result != BROTLI_DECODER_RESULT_SUCCESS ||
+                    uncompressed_size != dst_size)) {
     return FONT_COMPRESSION_FAILURE();
   }
   return true;
@@ -917,7 +924,10 @@ bool ReconstructFont(uint8_t* transformed_buf,
         table.dst_offset = dest_offset;
         checksum = ComputeULongSum(transformed_buf + table.src_offset,
                                    table.src_length);
-        out->Write(transformed_buf + table.src_offset, table.src_length);
+        if (PREDICT_FALSE(!out->Write(transformed_buf + table.src_offset,
+            table.src_length))) {
+          return FONT_COMPRESSION_FAILURE();
+        }
       } else {
         if (table.tag == kGlyfTableTag) {
           table.dst_offset = dest_offset;

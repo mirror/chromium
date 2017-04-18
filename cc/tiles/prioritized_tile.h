@@ -5,8 +5,8 @@
 #ifndef CC_TILES_PRIORITIZED_TILE_H_
 #define CC_TILES_PRIORITIZED_TILE_H_
 
-#include "cc/base/cc_export.h"
-#include "cc/playback/raster_source.h"
+#include "cc/cc_export.h"
+#include "cc/raster/raster_source.h"
 #include "cc/tiles/picture_layer_tiling.h"
 #include "cc/tiles/tile.h"
 #include "cc/tiles/tile_priority.h"
@@ -22,8 +22,9 @@ class CC_EXPORT PrioritizedTile {
   PrioritizedTile();
   PrioritizedTile(Tile* tile,
                   const PictureLayerTiling* source_tiling,
-                  const TilePriority priority,
-                  bool is_occluded);
+                  const TilePriority& priority,
+                  bool is_occluded,
+                  bool is_process_for_images_only);
   ~PrioritizedTile();
 
   Tile* tile() const { return tile_; }
@@ -32,6 +33,9 @@ class CC_EXPORT PrioritizedTile {
   }
   const TilePriority& priority() const { return priority_; }
   bool is_occluded() const { return is_occluded_; }
+  bool is_process_for_images_only() const {
+    return is_process_for_images_only_;
+  }
 
   void AsValueInto(base::trace_event::TracedValue* value) const;
 
@@ -40,6 +44,7 @@ class CC_EXPORT PrioritizedTile {
   const PictureLayerTiling* source_tiling_ = nullptr;
   TilePriority priority_;
   bool is_occluded_ = false;
+  bool is_process_for_images_only_ = false;
 };
 
 }  // namespace cc

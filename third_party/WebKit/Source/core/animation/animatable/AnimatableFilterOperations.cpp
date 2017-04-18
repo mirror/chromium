@@ -34,37 +34,44 @@
 
 namespace blink {
 
-bool AnimatableFilterOperations::usesDefaultInterpolationWith(const AnimatableValue* value) const
-{
-    const AnimatableFilterOperations* target = toAnimatableFilterOperations(value);
-    return !operations().canInterpolateWith(target->operations());
+bool AnimatableFilterOperations::UsesDefaultInterpolationWith(
+    const AnimatableValue* value) const {
+  const AnimatableFilterOperations* target =
+      ToAnimatableFilterOperations(value);
+  return !Operations().CanInterpolateWith(target->Operations());
 }
 
-PassRefPtr<AnimatableValue> AnimatableFilterOperations::interpolateTo(const AnimatableValue* value, double fraction) const
-{
-    if (usesDefaultInterpolationWith(value))
-        return defaultInterpolateTo(this, value, fraction);
+PassRefPtr<AnimatableValue> AnimatableFilterOperations::InterpolateTo(
+    const AnimatableValue* value,
+    double fraction) const {
+  if (UsesDefaultInterpolationWith(value))
+    return DefaultInterpolateTo(this, value, fraction);
 
-    const AnimatableFilterOperations* target = toAnimatableFilterOperations(value);
-    FilterOperations result;
-    size_t fromSize = operations().size();
-    size_t toSize = target->operations().size();
-    size_t size = std::max(fromSize, toSize);
-    for (size_t i = 0; i < size; i++) {
-        FilterOperation* from = (i < fromSize) ? m_operationWrapper->operations().operations()[i].get() : 0;
-        FilterOperation* to = (i < toSize) ? target->m_operationWrapper->operations().operations()[i].get() : 0;
-        FilterOperation* blendedOp = FilterOperation::blend(from, to, fraction);
-        if (blendedOp)
-            result.operations().append(blendedOp);
-        else
-            NOTREACHED();
-    }
-    return AnimatableFilterOperations::create(result);
+  const AnimatableFilterOperations* target =
+      ToAnimatableFilterOperations(value);
+  FilterOperations result;
+  size_t from_size = Operations().size();
+  size_t to_size = target->Operations().size();
+  size_t size = std::max(from_size, to_size);
+  for (size_t i = 0; i < size; i++) {
+    FilterOperation* from =
+        (i < from_size) ? operation_wrapper_->Operations().Operations()[i].Get()
+                        : 0;
+    FilterOperation* to =
+        (i < to_size)
+            ? target->operation_wrapper_->Operations().Operations()[i].Get()
+            : 0;
+    FilterOperation* blended_op = FilterOperation::Blend(from, to, fraction);
+    if (blended_op)
+      result.Operations().push_back(blended_op);
+    else
+      NOTREACHED();
+  }
+  return AnimatableFilterOperations::Create(result);
 }
 
-bool AnimatableFilterOperations::equalTo(const AnimatableValue* value) const
-{
-    return operations() == toAnimatableFilterOperations(value)->operations();
+bool AnimatableFilterOperations::EqualTo(const AnimatableValue* value) const {
+  return Operations() == ToAnimatableFilterOperations(value)->Operations();
 }
 
-} // namespace blink
+}  // namespace blink

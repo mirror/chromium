@@ -11,7 +11,7 @@
 #include "chrome/browser/extensions/chrome_extension_chooser_dialog.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/ui/login/login_handler.h"
-#include "chrome/browser/ui/views/new_task_manager_view.h"
+#include "chrome/browser/ui/views/task_manager_view.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/views/intent_picker_bubble_view.h"
@@ -56,17 +56,12 @@ void ChromeExtensionChooserDialog::ShowDialog(
 
 namespace chrome {
 
-task_management::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
-  return task_management::NewTaskManagerView::Show(browser);
+task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
+  return task_manager::TaskManagerView::Show(browser);
 }
 
 void HideTaskManager() {
-  task_management::NewTaskManagerView::Hide();
-}
-
-bool NotifyOldTaskManagerBytesRead(const net::URLRequest& request,
-                                   int64_t bytes_read) {
-  return false;
+  task_manager::TaskManagerView::Hide();
 }
 
 }  // namespace chrome

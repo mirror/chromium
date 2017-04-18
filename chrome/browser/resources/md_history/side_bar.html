@@ -1,7 +1,7 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-selector/iron-selector.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-ripple/paper-ripple.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/typography.html">
 <link rel="import" href="chrome://history/browser_service.html">
@@ -11,131 +11,116 @@
   <template>
     <style include="shared-style">
       :host {
-        display: block;
+        display: flex;
         height: 100%;
-        padding-top: 5px;
+        overflow-x: hidden;
+        overflow-y: auto;
         width: var(--side-bar-width);
       }
 
-      #drawer-header {
-        align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        display: flex;
-        height: var(--toolbar-height);
-        margin-bottom: 5px;
-      }
-
-      h1 {
-        -webkit-padding-start: 24px;
-        color: rgb(66, 66, 66);
-        font-size: 123%;
-        font-weight: 400;
-      }
-
       div.separator {
-        background-color: rgba(0, 0, 0, 0.08);
+        background-color: var(--separator-color);
+        flex-shrink: 0;
         height: 1px;
         margin: 8px 0;
       }
 
       #clear-browsing-data {
-        text-transform: uppercase;
+        justify-content: space-between;
+      }
+
+      #clear-browsing-data iron-icon {
+        -webkit-margin-end: 20px;
+        color: var(--paper-grey-400);
+        height: 20px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        width: 20px;
       }
 
       iron-selector {
         -webkit-user-select: none;
         background-color: transparent;
-        color: #5a5a5a;
+        color: var(--sidebar-unselected-color);
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding-top: 8px;
       }
 
       iron-selector > a {
-        @apply(--paper-font-subhead);
+        /* Ensure the focus outline appears correctly (crbug.com/655503). */
+        -webkit-margin-end: 4px;
         -webkit-padding-start: 24px;
         align-items: center;
         box-sizing: border-box;
         color: inherit;
         cursor: pointer;
         display: flex;
-        font-size: 14px;
         font-weight: 500;
-        min-height: 48px;
-        outline: none;
+        min-height: 40px;
         position: relative;
         text-decoration: none;
       }
 
-      iron-selector > a:focus {
-        outline: 0;
-        position: relative;
+      iron-selector > a.iron-selected {
+        color: var(--link-color);
       }
 
-      iron-selector > a:focus::before {
-        @apply(--layout-fit);
-
-        background: currentColor;
-        content: '';
-        opacity: var(--dark-divider-opacity);
+      iron-selector > a[disabled] {
+        opacity: 0.65;
         pointer-events: none;
       }
 
-      iron-selector > a.iron-selected {
-        color: var(--google-blue-500);
-        font-weight: 500;
-      }
-
-      iron-selector {
-        -webkit-user-select: none;
-        color: #5a5a5a;
+      #spacer {
+        flex: 1;
       }
 
       #footer {
-        /* This compensates the 120px by which app-drawer protrudes under
-         * the viewport. */
-        bottom: 120px;
-        color: var(--paper-grey-600);
-        position: absolute;
+        color: var(--sidebar-footer-text-color);
         width: var(--side-bar-width);
       }
 
       #footer-text {
         -webkit-padding-end: 16px;
         -webkit-padding-start: 24px;
+        line-height: 20px;
         margin: 24px 0;
       }
 
       #footer a {
-        color: var(--google-blue-700);
         text-decoration: none;
       }
     </style>
 
-    <app-drawer id="drawer" tabindex="0" on-focus="onDrawerFocus_" swipe-open
-        align="start">
-      <div id="drawer-header">
-        <h1>$i18n{title}</h1>
-      </div>
-      <iron-selector id="menu" selected="{{selectedPage}}"
-          selectable=".page-item" attr-for-selected="path"
-          fallback-selection="history"
-          on-iron-activate="onSelectorActivate_">
-        <a href="/[[getQueryString_(route)]]" class="page-item" path="history">
-          $i18n{historyMenuItem}
-        </a>
-        <a href="/syncedTabs[[getQueryString_(route)]]" class="page-item"
-            path="syncedTabs">
-          $i18n{openTabsMenuItem}
-        </a>
+    <iron-selector id="menu" selected="{{selectedPage}}"
+        selectable=".page-item" attr-for-selected="path"
+        on-iron-activate="onSelectorActivate_">
+      <a href="/" class="page-item" path="history" on-click="onItemClick_">
+        $i18n{historyMenuItem}
+        <paper-ripple></paper-ripple>
+      </a>
+      <a href="/syncedTabs" class="page-item" path="syncedTabs"
+          on-click="onItemClick_">
+        $i18n{openTabsMenuItem}
+        <paper-ripple></paper-ripple>
+      </a>
+      <div class="separator"></div>
+      <a id="clear-browsing-data"
+          href="chrome://settings/clearBrowserData"
+          on-tap="onClearBrowsingDataTap_"
+          disabled$="[[guestSession_]]"
+          tabindex$="[[computeClearBrowsingDataTabIndex_(guestSession_)]]">
+        $i18n{clearBrowsingData}
+        <iron-icon icon="cr:open-in-new"></iron-icon>
+        <paper-ripple id="cbd-ripple"></paper-ripple>
+      </a>
+      <div id="spacer"></div>
+      <div id="footer" hidden="[[!showFooter]]">
         <div class="separator"></div>
-        <a href="chrome://settings/clearBrowserData"
-            on-tap="onClearBrowsingDataTap_" id="clear-browsing-data">
-          $i18n{clearBrowsingData}
-        </a>
-        <div id="footer" hidden="[[!showFooter]]">
-          <div class="separator"></div>
-          <div id="footer-text">$i18nRaw{sidebarFooter}</div>
-        </div>
-      </iron-selector>
-    </app-drawer>
+        <div id="footer-text">$i18nRaw{sidebarFooter}</div>
+      </div>
+    </iron-selector>
   </template>
   <script src="chrome://history/side_bar.js"></script>
 </dom-module>

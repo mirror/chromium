@@ -27,121 +27,107 @@
 
 namespace blink {
 
-MediaQueryList* MediaQueryList::create(ExecutionContext* context, MediaQueryMatcher* matcher, MediaQuerySet* media)
-{
-    MediaQueryList* list = new MediaQueryList(context, matcher, media);
-    list->suspendIfNeeded();
-    return list;
+MediaQueryList* MediaQueryList::Create(ExecutionContext* context,
+                                       MediaQueryMatcher* matcher,
+                                       MediaQuerySet* media) {
+  return new MediaQueryList(context, matcher, media);
 }
 
-MediaQueryList::MediaQueryList(ExecutionContext* context, MediaQueryMatcher* matcher, MediaQuerySet* media)
-    : ActiveScriptWrappable(this)
-    , ActiveDOMObject(context)
-    , m_matcher(matcher)
-    , m_media(media)
-    , m_matchesDirty(true)
-    , m_matches(false)
-{
-    m_matcher->addMediaQueryList(this);
-    updateMatches();
+MediaQueryList::MediaQueryList(ExecutionContext* context,
+                               MediaQueryMatcher* matcher,
+                               MediaQuerySet* media)
+    : ContextLifecycleObserver(context),
+      matcher_(matcher),
+      media_(media),
+      matches_dirty_(true),
+      matches_(false) {
+  matcher_->AddMediaQueryList(this);
+  UpdateMatches();
 }
 
-MediaQueryList::~MediaQueryList()
-{
+MediaQueryList::~MediaQueryList() {}
+
+String MediaQueryList::media() const {
+  return media_->MediaText();
 }
 
-String MediaQueryList::media() const
-{
-    return m_media->mediaText();
+void MediaQueryList::addDeprecatedListener(EventListener* listener) {
+  if (!listener)
+    return;
+
+  addEventListener(EventTypeNames::change, listener, false);
 }
 
-void MediaQueryList::addDeprecatedListener(EventListener* listener)
-{
-    if (!listener)
-        return;
+void MediaQueryList::removeDeprecatedListener(EventListener* listener) {
+  if (!listener)
+    return;
 
-    addEventListener(EventTypeNames::change, listener, false);
+  removeEventListener(EventTypeNames::change, listener, false);
 }
 
-void MediaQueryList::removeDeprecatedListener(EventListener* listener)
-{
-    if (!listener)
-        return;
+void MediaQueryList::AddListener(MediaQueryListListener* listener) {
+  if (!listener)
+    return;
 
-    removeEventListener(EventTypeNames::change, listener, false);
+  listeners_.insert(listener);
 }
 
-void MediaQueryList::addListener(MediaQueryListListener* listener)
-{
-    if (!listener)
-        return;
+void MediaQueryList::RemoveListener(MediaQueryListListener* listener) {
+  if (!listener)
+    return;
 
-    m_listeners.add(listener);
+  listeners_.erase(listener);
 }
 
-void MediaQueryList::removeListener(MediaQueryListListener* listener)
-{
-    if (!listener)
-        return;
-
-    m_listeners.remove(listener);
+bool MediaQueryList::HasPendingActivity() const {
+  return GetExecutionContext() &&
+         (listeners_.size() || HasEventListeners(EventTypeNames::change));
 }
 
-bool MediaQueryList::hasPendingActivity() const
-{
-    return m_listeners.size() || hasEventListeners(EventTypeNames::change);
+void MediaQueryList::ContextDestroyed(ExecutionContext*) {
+  listeners_.clear();
+  RemoveAllEventListeners();
 }
 
-void MediaQueryList::stop()
-{
-    m_listeners.clear();
-    removeAllEventListeners();
-}
-
-bool MediaQueryList::mediaFeaturesChanged(HeapVector<Member<MediaQueryListListener>>* listenersToNotify)
-{
-    m_matchesDirty = true;
-    if (!updateMatches())
-        return false;
-    for (const auto& listener : m_listeners) {
-        listenersToNotify->append(listener);
-    }
-    return hasEventListeners(EventTypeNames::change);
-}
-
-bool MediaQueryList::updateMatches()
-{
-    m_matchesDirty = false;
-    if (m_matches != m_matcher->evaluate(m_media.get())) {
-        m_matches = !m_matches;
-        return true;
-    }
+bool MediaQueryList::MediaFeaturesChanged(
+    HeapVector<Member<MediaQueryListListener>>* listeners_to_notify) {
+  matches_dirty_ = true;
+  if (!UpdateMatches())
     return false;
+  for (const auto& listener : listeners_) {
+    listeners_to_notify->push_back(listener);
+  }
+  return HasEventListeners(EventTypeNames::change);
 }
 
-bool MediaQueryList::matches()
-{
-    updateMatches();
-    return m_matches;
+bool MediaQueryList::UpdateMatches() {
+  matches_dirty_ = false;
+  if (matches_ != matcher_->Evaluate(media_.Get())) {
+    matches_ = !matches_;
+    return true;
+  }
+  return false;
 }
 
-DEFINE_TRACE(MediaQueryList)
-{
-    visitor->trace(m_matcher);
-    visitor->trace(m_media);
-    visitor->trace(m_listeners);
-    EventTargetWithInlineData::trace(visitor);
-    ActiveDOMObject::trace(visitor);
+bool MediaQueryList::matches() {
+  UpdateMatches();
+  return matches_;
 }
 
-const AtomicString& MediaQueryList::interfaceName() const
-{
-    return EventTargetNames::MediaQueryList;
+DEFINE_TRACE(MediaQueryList) {
+  visitor->Trace(matcher_);
+  visitor->Trace(media_);
+  visitor->Trace(listeners_);
+  EventTargetWithInlineData::Trace(visitor);
+  ContextLifecycleObserver::Trace(visitor);
 }
 
-ExecutionContext* MediaQueryList::getExecutionContext() const
-{
-    return ActiveDOMObject::getExecutionContext();
+const AtomicString& MediaQueryList::InterfaceName() const {
+  return EventTargetNames::MediaQueryList;
 }
 
-} // namespace blink
+ExecutionContext* MediaQueryList::GetExecutionContext() const {
+  return ContextLifecycleObserver::GetExecutionContext();
+}
+
+}  // namespace blink

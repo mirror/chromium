@@ -30,30 +30,47 @@
 
 #include "platform/text/TextEncodingDetector.h"
 
+#include "platform/weborigin/KURL.h"
+#include "platform/wtf/text/TextEncoding.h"
 #include "third_party/ced/src/compact_enc_det/compact_enc_det.h"
-#include "wtf/text/TextEncoding.h"
 
 namespace blink {
 
-bool detectTextEncoding(const char* data, size_t length,
-    const char* hintEncodingName, WTF::TextEncoding* detectedEncoding)
-{
-    *detectedEncoding = WTF::TextEncoding();
-    int consumedBytes;
-    bool isReliable;
-    Encoding encoding = CompactEncDet::DetectEncoding(
-        data, length, nullptr, nullptr, nullptr,
-        EncodingNameAliasToEncoding(hintEncodingName),
-        UNKNOWN_LANGUAGE,
-        CompactEncDet::WEB_CORPUS,
-        false, // Include 7-bit encodings
-        &consumedBytes,
-        &isReliable);
-    if (encoding != UNKNOWN_ENCODING) {
-        *detectedEncoding = WTF::TextEncoding(MimeEncodingName(encoding));
-        return true;
-    }
+bool DetectTextEncoding(const char* data,
+                        size_t length,
+                        const char* hint_encoding_name,
+                        const KURL& hint_url,
+                        const char* hint_user_language,
+                        WTF::TextEncoding* detected_encoding) {
+  *detected_encoding = WTF::TextEncoding();
+  // In general, do not use language hint. This helps get more
+  // deterministic encoding detection results across devices. Note that local
+  // file resources can still benefit from the hint.
+  Language language = UNKNOWN_LANGUAGE;
+  if (hint_url.Protocol() == "file")
+    LanguageFromCode(hint_user_language, &language);
+  int consumed_bytes;
+  bool is_reliable;
+  Encoding encoding = CompactEncDet::DetectEncoding(
+      data, length, hint_url.GetString().Ascii().Data(), nullptr, nullptr,
+      EncodingNameAliasToEncoding(hint_encoding_name), language,
+      CompactEncDet::WEB_CORPUS,
+      false,  // Include 7-bit encodings to detect ISO-2022-JP
+      &consumed_bytes, &is_reliable);
+
+  // Should return false if the detected encoding is UTF8. This helps prevent
+  // modern web sites from neglecting proper encoding labelling and simply
+  // relying on browser-side encoding detection. Encoding detection is supposed
+  // to work for web sites with legacy encoding only (so this doesn't have to
+  // be applied to local file resources).
+  // Detection failure leads |TextResourceDecoder| to use its default encoding
+  // determined from system locale or TLD.
+  if (encoding == UNKNOWN_ENCODING ||
+      (hint_url.Protocol() != "file" && encoding == UTF8))
     return false;
+
+  *detected_encoding = WTF::TextEncoding(MimeEncodingName(encoding));
+  return true;
 }
 
-} // namespace blink
+}  // namespace blink

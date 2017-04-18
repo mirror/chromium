@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #include "media/base/cdm_factory.h"
 
-namespace shell {
+namespace service_manager {
 namespace mojom {
 class InterfaceProvider;
 }
@@ -18,7 +18,8 @@ namespace media {
 
 class MojoCdmFactory : public CdmFactory {
  public:
-  explicit MojoCdmFactory(shell::mojom::InterfaceProvider* interface_provider);
+  explicit MojoCdmFactory(
+      service_manager::mojom::InterfaceProvider* interface_provider);
   ~MojoCdmFactory() final;
 
   // CdmFactory implementation.
@@ -27,13 +28,12 @@ class MojoCdmFactory : public CdmFactory {
               const CdmConfig& cdm_config,
               const SessionMessageCB& session_message_cb,
               const SessionClosedCB& session_closed_cb,
-              const LegacySessionErrorCB& legacy_session_error_cb,
               const SessionKeysChangeCB& session_keys_change_cb,
               const SessionExpirationUpdateCB& session_expiration_update_cb,
               const CdmCreatedCB& cdm_created_cb) final;
 
  private:
-  shell::mojom::InterfaceProvider* interface_provider_;
+  service_manager::mojom::InterfaceProvider* interface_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoCdmFactory);
 };

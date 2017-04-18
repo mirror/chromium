@@ -14,6 +14,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/browser_test_base.h"
+#include "storage/browser/quota/quota_settings.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/page_transition_types.h"
 
@@ -40,11 +41,7 @@ class Profile;
 class ScopedBundleSwizzlerMac;
 #endif  // defined(OS_MACOSX)
 
-namespace content {
-class ContentRendererClient;
-}
-
-// Base class for tests wanting to bring up a browser in the unit test process.
+// Base class for tests that bring up Browser instances.
 // Writing tests with InProcessBrowserTest is slightly different than that of
 // other tests. This is necessitated by InProcessBrowserTest running a message
 // loop. To use InProcessBrowserTest do the following:
@@ -52,21 +49,20 @@ class ContentRendererClient;
 // . Your test method is invoked on the ui thread. If you need to block until
 //   state changes you'll need to run the message loop from your test method.
 //   For example, if you need to wait till a find bar has completely been shown
-//   you'll need to invoke content::RunMessageLoop. When the message bar is
+//   you'll need to invoke content::RunMessageLoop(). When the message bar is
 //   shown, invoke MessageLoop::current()->QuitWhenIdle() to return control back
 //   to your test method.
-// . If you subclass and override SetUp, be sure and invoke
-//   InProcessBrowserTest::SetUp. (But see also SetUpOnMainThread,
-//   SetUpInProcessBrowserTestFixture and other related hook methods for a
-//   cleaner alternative).
+// . If you subclass and override SetUp(), be sure and invoke
+//   InProcessBrowserTest::SetUp(). (But see also BrowserTestBase's
+//   SetUpOnMainThread(), SetUpInProcessBrowserTestFixture(), and other related
+//   methods for a cleaner alternative).
 //
-// The following four hook methods are called in sequence before calling
-// BrowserMain(), thus no browser has been created yet. They are mainly for
-// setting up the environment for running the browser.
-// . SetUpUserDataDirectory()
+// The following hook methods are called in sequence before BrowserMain(), so
+// no browser has been created yet. They are mainly for setting up the
+// environment for running the browser.
 // . SetUpCommandLine()
 // . SetUpDefaultCommandLine()
-// . SetUpInProcessBrowserTestFixture()
+// . SetUpUserDataDirectory()
 //
 // Default command line switches are added in the default implementation of
 // SetUpDefaultCommandLine(). Addtional command line switches can be simply
@@ -82,13 +78,13 @@ class ContentRendererClient;
 // with a testing page loaded.
 //
 // TearDownOnMainThread() is called just after executing the real test code to
-// do necessary cleanup before the browser is torn down.
+// do necessary clean-up before the browser is torn down.
 //
 // TearDownInProcessBrowserTestFixture() is called after BrowserMain() exits to
-// cleanup things setup for running the browser.
+// clean up things set up for running the browser.
 //
-// By default InProcessBrowserTest creates a single Browser (as returned from
-// the CreateBrowser method). You can obviously create more as needed.
+// By default a single Browser is created in BrowserMain(). You can obviously
+// create more as needed.
 
 // InProcessBrowserTest disables the sandbox when running.
 //
@@ -112,14 +108,25 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   ~InProcessBrowserTest() override;
 
   // Configures everything for an in process browser test, then invokes
-  // BrowserMain. BrowserMain ends up invoking RunTestOnMainThreadLoop.
+  // BrowserMain(). BrowserMain() ends up invoking RunTestOnMainThreadLoop().
   void SetUp() override;
 
-  // Restores state configured in SetUp.
+  // Restores state configured in SetUp().
   void TearDown() override;
 
+  using SetUpBrowserFunction = bool(const Browser*);
+
+  // Sets a function that is called from InProcessBrowserTest::SetUp() with the
+  // first browser. This is intended to set up state applicable to all tests
+  // in the suite. For example, interactive_ui_tests installs a function that
+  // ensures the first browser is in the foreground, active and has focus.
+  static void set_global_browser_set_up_function(
+      SetUpBrowserFunction* set_up_function) {
+    global_browser_set_up_function_ = set_up_function;
+  }
+
  protected:
-  // Returns the browser created by CreateBrowser.
+  // Returns the browser created by BrowserMain().
   Browser* browser() const { return browser_; }
 
   // Closes the given browser and waits for it to release all its resources.
@@ -127,7 +134,7 @@ class InProcessBrowserTest : public content::BrowserTestBase {
 
   // Closes the browser without waiting for it to release all its resources.
   // WARNING: This may leave tasks posted, but not yet run, in the message
-  // loops. Prefer CloseBrowserSynchronously over this method.
+  // loops. Prefer CloseBrowserSynchronously() over this method.
   void CloseBrowserAsynchronously(Browser* browser);
 
   // Closes all browsers. No guarantees are made about the destruction of
@@ -144,8 +151,8 @@ class InProcessBrowserTest : public content::BrowserTestBase {
                      const GURL& url,
                      ui::PageTransition transition);
 
-  // Setups default command line that will be used to launch the child browser
-  // process with an in-process test. Called by SetUp() after SetupCommandLine()
+  // Sets up default command line that will be used to launch the child browser
+  // process with an in-process test. Called by SetUp() after SetUpCommandLine()
   // to add default commandline switches. A default implementation is provided
   // in this class. If a test does not want to use the default implementation,
   // it should override this method.
@@ -172,8 +179,6 @@ class InProcessBrowserTest : public content::BrowserTestBase {
 
   // Creates a browser with a single tab (about:blank), waits for the tab to
   // finish loading and shows the browser.
-  //
-  // This is invoked from Setup.
   Browser* CreateBrowser(Profile* profile);
 
   // Similar to |CreateBrowser|, but creates an incognito browser.
@@ -193,7 +198,7 @@ class InProcessBrowserTest : public content::BrowserTestBase {
 
   // Enables running of accessibility audit for a particular test case.
   //  - Call in test body to enable/disable for one test case.
-  //  - Call in SetUpOnMainThread to enable for all test cases.
+  //  - Call in SetUpOnMainThread() to enable for all test cases.
   void EnableAccessibilityChecksForTestCase(bool enabled) {
     run_accessibility_checks_for_test_case_ = enabled;
   }
@@ -234,7 +239,9 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // Quits all open browsers and waits until there are no more browsers.
   void QuitBrowsers();
 
-  // Browser created from CreateBrowser.
+  static SetUpBrowserFunction* global_browser_set_up_function_;
+
+  // Browser created in BrowserMain().
   Browser* browser_;
 
   // Temporary user data directory. Used only when a user data directory is not
@@ -250,6 +257,9 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // True if the accessibility test should run for a particular test case.
   // This is reset for every test case.
   bool run_accessibility_checks_for_test_case_;
+
+  // We use hardcoded quota settings to have a consistent testing environment.
+  storage::QuotaSettings quota_settings_;
 
 #if defined(OS_MACOSX)
   base::mac::ScopedNSAutoreleasePool* autorelease_pool_;

@@ -5,9 +5,9 @@
 #include "core/svg/SVGParsingError.h"
 
 #include "core/dom/QualifiedName.h"
-#include "platform/JSONValues.h"
-#include "wtf/text/CharacterNames.h"
-#include "wtf/text/StringBuilder.h"
+#include "platform/json/JSONValues.h"
+#include "platform/wtf/text/CharacterNames.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 #include <utility>
 
@@ -15,109 +15,112 @@ namespace blink {
 
 namespace {
 
-void appendErrorContextInfo(StringBuilder& builder, const String& tagName, const QualifiedName& name)
-{
-    builder.append('<');
-    builder.append(tagName);
-    builder.append("> attribute ");
-    builder.append(name.toString());
+void AppendErrorContextInfo(StringBuilder& builder,
+                            const String& tag_name,
+                            const QualifiedName& name) {
+  builder.Append('<');
+  builder.Append(tag_name);
+  builder.Append("> attribute ");
+  builder.Append(name.ToString());
 }
 
-std::pair<const char*, const char*> messageForStatus(SVGParseStatus status)
-{
-    switch (status) {
-    case SVGParseStatus::TrailingGarbage:
-        return std::make_pair("Trailing garbage, ", ".");
-    case SVGParseStatus::ExpectedAngle:
-        return std::make_pair("Expected angle, ", ".");
-    case SVGParseStatus::ExpectedArcFlag:
-        return std::make_pair("Expected arc flag ('0' or '1'), ", ".");
-    case SVGParseStatus::ExpectedBoolean:
-        return std::make_pair("Expected 'true' or 'false', ", ".");
-    case SVGParseStatus::ExpectedEndOfArguments:
-        return std::make_pair("Expected ')', ", ".");
-    case SVGParseStatus::ExpectedEnumeration:
-        return std::make_pair("Unrecognized enumerated value, ", ".");
-    case SVGParseStatus::ExpectedInteger:
-        return std::make_pair("Expected integer, ", ".");
-    case SVGParseStatus::ExpectedLength:
-        return std::make_pair("Expected length, ", ".");
-    case SVGParseStatus::ExpectedMoveToCommand:
-        return std::make_pair("Expected moveto path command ('M' or 'm'), ", ".");
-    case SVGParseStatus::ExpectedNumber:
-        return std::make_pair("Expected number, ", ".");
-    case SVGParseStatus::ExpectedNumberOrPercentage:
-        return std::make_pair("Expected number or percentage, ", ".");
-    case SVGParseStatus::ExpectedPathCommand:
-        return std::make_pair("Expected path command, ", ".");
-    case SVGParseStatus::ExpectedStartOfArguments:
-        return std::make_pair("Expected '(', ", ".");
-    case SVGParseStatus::ExpectedTransformFunction:
-        return std::make_pair("Expected transform function, ", ".");
-    case SVGParseStatus::NegativeValue:
-        return std::make_pair("A negative value is not valid. (", ")");
-    case SVGParseStatus::ZeroValue:
-        return std::make_pair("A value of zero is not valid. (", ")");
-    case SVGParseStatus::ParsingFailed:
-        return std::make_pair("Invalid value, ", ".");
+std::pair<const char*, const char*> MessageForStatus(SVGParseStatus status) {
+  switch (status) {
+    case SVGParseStatus::kTrailingGarbage:
+      return std::make_pair("Trailing garbage, ", ".");
+    case SVGParseStatus::kExpectedAngle:
+      return std::make_pair("Expected angle, ", ".");
+    case SVGParseStatus::kExpectedArcFlag:
+      return std::make_pair("Expected arc flag ('0' or '1'), ", ".");
+    case SVGParseStatus::kExpectedBoolean:
+      return std::make_pair("Expected 'true' or 'false', ", ".");
+    case SVGParseStatus::kExpectedEndOfArguments:
+      return std::make_pair("Expected ')', ", ".");
+    case SVGParseStatus::kExpectedEnumeration:
+      return std::make_pair("Unrecognized enumerated value, ", ".");
+    case SVGParseStatus::kExpectedInteger:
+      return std::make_pair("Expected integer, ", ".");
+    case SVGParseStatus::kExpectedLength:
+      return std::make_pair("Expected length, ", ".");
+    case SVGParseStatus::kExpectedMoveToCommand:
+      return std::make_pair("Expected moveto path command ('M' or 'm'), ", ".");
+    case SVGParseStatus::kExpectedNumber:
+      return std::make_pair("Expected number, ", ".");
+    case SVGParseStatus::kExpectedNumberOrPercentage:
+      return std::make_pair("Expected number or percentage, ", ".");
+    case SVGParseStatus::kExpectedPathCommand:
+      return std::make_pair("Expected path command, ", ".");
+    case SVGParseStatus::kExpectedStartOfArguments:
+      return std::make_pair("Expected '(', ", ".");
+    case SVGParseStatus::kExpectedTransformFunction:
+      return std::make_pair("Expected transform function, ", ".");
+    case SVGParseStatus::kNegativeValue:
+      return std::make_pair("A negative value is not valid. (", ")");
+    case SVGParseStatus::kZeroValue:
+      return std::make_pair("A value of zero is not valid. (", ")");
+    case SVGParseStatus::kParsingFailed:
+      return std::make_pair("Invalid value, ", ".");
     default:
-        ASSERT_NOT_REACHED();
-        break;
-    }
-    return std::make_pair("", "");
+      NOTREACHED();
+      break;
+  }
+  return std::make_pair("", "");
 }
 
-bool disableLocus(SVGParseStatus status)
-{
-    // Disable locus for semantic errors and generic errors (see TODO below).
-    return status == SVGParseStatus::NegativeValue
-        || status == SVGParseStatus::ZeroValue
-        || status == SVGParseStatus::ParsingFailed;
+bool DisableLocus(SVGParseStatus status) {
+  // Disable locus for semantic errors and generic errors (see TODO below).
+  return status == SVGParseStatus::kNegativeValue ||
+         status == SVGParseStatus::kZeroValue ||
+         status == SVGParseStatus::kParsingFailed;
 }
 
-void appendValue(StringBuilder& builder, SVGParsingError error, const AtomicString& value)
-{
-    builder.append('"');
-    if (!error.hasLocus() || disableLocus(error.status())) {
-        escapeStringForJSON(value.getString(), &builder);
-    } else {
-        // Emit a string on the form: '"[...]<before><after>[...]"'
-        unsigned locus = error.locus();
-        ASSERT(locus <= value.length());
+void AppendValue(StringBuilder& builder,
+                 SVGParsingError error,
+                 const AtomicString& value) {
+  builder.Append('"');
+  if (!error.HasLocus() || DisableLocus(error.Status())) {
+    EscapeStringForJSON(value.GetString(), &builder);
+  } else {
+    // Emit a string on the form: '"[...]<before><after>[...]"'
+    unsigned locus = error.Locus();
+    DCHECK_LE(locus, value.length());
 
-        // Amount of context to show before/after the error.
-        const unsigned kContext = 16;
+    // Amount of context to show before/after the error.
+    const unsigned kContext = 16;
 
-        unsigned contextStart = std::max(locus, kContext) - kContext;
-        unsigned contextEnd = std::min(locus + kContext, value.length());
-        ASSERT(contextStart <= contextEnd);
-        ASSERT(contextEnd <= value.length());
-        if (contextStart != 0)
-            builder.append(horizontalEllipsisCharacter);
-        escapeStringForJSON(value.getString().substring(contextStart, contextEnd - contextStart), &builder);
-        if (contextEnd != value.length())
-            builder.append(horizontalEllipsisCharacter);
-    }
-    builder.append('"');
+    unsigned context_start = std::max(locus, kContext) - kContext;
+    unsigned context_end = std::min(locus + kContext, value.length());
+    DCHECK_LE(context_start, context_end);
+    DCHECK_LE(context_end, value.length());
+    if (context_start != 0)
+      builder.Append(kHorizontalEllipsisCharacter);
+    EscapeStringForJSON(
+        value.GetString().Substring(context_start, context_end - context_start),
+        &builder);
+    if (context_end != value.length())
+      builder.Append(kHorizontalEllipsisCharacter);
+  }
+  builder.Append('"');
 }
 
-} // namespace
+}  // namespace
 
-String SVGParsingError::format(const String& tagName, const QualifiedName& name, const AtomicString& value) const
-{
-    StringBuilder builder;
+String SVGParsingError::Format(const String& tag_name,
+                               const QualifiedName& name,
+                               const AtomicString& value) const {
+  StringBuilder builder;
 
-    appendErrorContextInfo(builder, tagName, name);
-    builder.append(": ");
+  AppendErrorContextInfo(builder, tag_name, name);
+  builder.Append(": ");
 
-    if (hasLocus() && locus() == value.length())
-        builder.append("Unexpected end of attribute. ");
+  if (HasLocus() && Locus() == value.length())
+    builder.Append("Unexpected end of attribute. ");
 
-    auto message = messageForStatus(status());
-    builder.append(message.first);
-    appendValue(builder, *this, value);
-    builder.append(message.second);
-    return builder.toString();
+  auto message = MessageForStatus(Status());
+  builder.Append(message.first);
+  AppendValue(builder, *this, value);
+  builder.Append(message.second);
+  return builder.ToString();
 }
 
-} // namespace blink
+}  // namespace blink

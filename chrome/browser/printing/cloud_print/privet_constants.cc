@@ -32,10 +32,6 @@ const char kPrivetErrorInvalidXPrivetToken[] = "invalid_x_privet_token";
 const char kPrivetErrorTimeout[] = "confirmation_timeout";
 const char kPrivetErrorCancel[] = "user_cancel";
 
-const char kPrivetV3ErrorDeviceBusy[] = "deviceBusy";
-const char kPrivetV3ErrorInvalidParams[] = "invalidParams";
-const char kPrivetV3ErrorSetupUnavailable[] = "setupUnavailable";
-
 const char kPrivetActionStart[] = "start";
 const char kPrivetActionGetClaimToken[] = "getClaimToken";
 const char kPrivetActionComplete[] = "complete";
@@ -47,17 +43,10 @@ const char kPrivetTypePrinter[] = "printer";
 
 const char kPrivetTxtKeyName[] = "ty";
 const char kPrivetTxtKeyDescription[] = "note";
-const char kPrivetTxtKeyURL[] = "url";
 const char kPrivetTxtKeyVersion[] = "txtvers";
 const char kPrivetTxtKeyType[] = "type";
 const char kPrivetTxtKeyID[] = "id";
-const char kPrivetTxtKeyConnectionState[] = "cs";
 const char kPrivetTxtKeyGcdID[] = "gcd_id";
 const char kPrivetTxtKeyDevicesClass[] = "class";
-
-const char kPrivetConnectionStatusOnline[] = "online";
-const char kPrivetConnectionStatusOffline[] = "offline";
-const char kPrivetConnectionStatusConnecting[] = "connecting";
-const char kPrivetConnectionStatusNotConfigured[] = "not-configured";
 
 }  // namespace cloud_print

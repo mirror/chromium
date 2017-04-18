@@ -31,106 +31,108 @@
 #include "core/css/parser/CSSParser.h"
 #include "core/dom/QualifiedName.h"
 #include "core/dom/shadow/ElementShadow.h"
+#include "core/dom/shadow/ElementShadowV0.h"
 #include "core/dom/shadow/ShadowRoot.h"
+#include "core/frame/UseCounter.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
-HTMLContentElement* HTMLContentElement::create(Document& document, HTMLContentSelectFilter* filter)
-{
-    return new HTMLContentElement(document, filter);
+HTMLContentElement* HTMLContentElement::Create(
+    Document& document,
+    HTMLContentSelectFilter* filter) {
+  return new HTMLContentElement(document, filter);
 }
 
-inline HTMLContentElement::HTMLContentElement(Document& document, HTMLContentSelectFilter* filter)
-    : InsertionPoint(contentTag, document)
-    , m_shouldParseSelect(false)
-    , m_isValidSelector(true)
-    , m_filter(filter)
-{
+inline HTMLContentElement::HTMLContentElement(Document& document,
+                                              HTMLContentSelectFilter* filter)
+    : InsertionPoint(contentTag, document),
+      should_parse_select_(false),
+      is_valid_selector_(true),
+      filter_(filter) {
+  UseCounter::Count(document, UseCounter::kHTMLContentElement);
 }
 
-HTMLContentElement::~HTMLContentElement()
-{
+HTMLContentElement::~HTMLContentElement() {}
+
+DEFINE_TRACE(HTMLContentElement) {
+  visitor->Trace(filter_);
+  InsertionPoint::Trace(visitor);
 }
 
-DEFINE_TRACE(HTMLContentElement)
-{
-    visitor->trace(m_filter);
-    InsertionPoint::trace(visitor);
+void HTMLContentElement::ParseSelect() {
+  DCHECK(should_parse_select_);
+
+  selector_list_ = CSSParser::ParseSelector(
+      CSSParserContext::Create(GetDocument()), nullptr, select_);
+  should_parse_select_ = false;
+  is_valid_selector_ = ValidateSelect();
+  if (!is_valid_selector_)
+    selector_list_ = CSSSelectorList();
 }
 
-void HTMLContentElement::parseSelect()
-{
-    ASSERT(m_shouldParseSelect);
-
-    m_selectorList = CSSParser::parseSelector(CSSParserContext(document(), nullptr), nullptr, m_select);
-    m_shouldParseSelect = false;
-    m_isValidSelector = validateSelect();
-    if (!m_isValidSelector)
-        m_selectorList = CSSSelectorList();
-}
-
-void HTMLContentElement::parseAttribute(const QualifiedName& name, const AtomicString& oldValue, const AtomicString& value)
-{
-    if (name == selectAttr) {
-        if (ShadowRoot* root = containingShadowRoot()) {
-            if (root->owner())
-                root->owner()->willAffectSelector();
-        }
-        m_shouldParseSelect = true;
-        m_select = value;
-    } else {
-        InsertionPoint::parseAttribute(name, oldValue, value);
+void HTMLContentElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == selectAttr) {
+    if (ShadowRoot* root = ContainingShadowRoot()) {
+      if (!root->IsV1() && root->Owner())
+        root->Owner()->V0().WillAffectSelector();
     }
+    should_parse_select_ = true;
+    select_ = params.new_value;
+  } else {
+    InsertionPoint::ParseAttribute(params);
+  }
 }
 
-static inline bool includesDisallowedPseudoClass(const CSSSelector& selector)
-{
-    if (selector.getPseudoType() == CSSSelector::PseudoNot) {
-        const CSSSelector* subSelector = selector.selectorList()->first();
-        return subSelector->match() == CSSSelector::PseudoClass;
-    }
-    return selector.match() == CSSSelector::PseudoClass;
+static inline bool IncludesDisallowedPseudoClass(const CSSSelector& selector) {
+  if (selector.GetPseudoType() == CSSSelector::kPseudoNot) {
+    const CSSSelector* sub_selector = selector.SelectorList()->First();
+    return sub_selector->Match() == CSSSelector::kPseudoClass;
+  }
+  return selector.Match() == CSSSelector::kPseudoClass;
 }
 
-bool HTMLContentElement::validateSelect() const
-{
-    ASSERT(!m_shouldParseSelect);
+bool HTMLContentElement::ValidateSelect() const {
+  DCHECK(!should_parse_select_);
 
-    if (m_select.isNull() || m_select.isEmpty())
-        return true;
-
-    if (!m_selectorList.isValid())
-        return false;
-
-    for (const CSSSelector* selector = m_selectorList.first(); selector; selector = m_selectorList.next(*selector)) {
-        if (!selector->isCompound())
-            return false;
-        for (const CSSSelector* subSelector = selector; subSelector; subSelector = subSelector->tagHistory()) {
-            if (includesDisallowedPseudoClass(*subSelector))
-                return false;
-        }
-    }
+  if (select_.IsNull() || select_.IsEmpty())
     return true;
+
+  if (!selector_list_.IsValid())
+    return false;
+
+  for (const CSSSelector* selector = selector_list_.First(); selector;
+       selector = selector_list_.Next(*selector)) {
+    if (!selector->IsCompound())
+      return false;
+    for (const CSSSelector* sub_selector = selector; sub_selector;
+         sub_selector = sub_selector->TagHistory()) {
+      if (IncludesDisallowedPseudoClass(*sub_selector))
+        return false;
+    }
+  }
+  return true;
 }
 
 // TODO(esprehn): element should really be const, but matching a selector is not
 // const for some SelectorCheckingModes (mainly ResolvingStyle) where it sets
 // dynamic restyle flags on elements.
-bool HTMLContentElement::matchSelector(Element& element) const
-{
-    SelectorChecker::Init init;
-    init.mode = SelectorChecker::QueryingRules;
-    SelectorChecker checker(init);
-    SelectorChecker::SelectorCheckingContext context(&element, SelectorChecker::VisitedMatchDisabled);
-    for (const CSSSelector* selector = selectorList().first(); selector; selector = CSSSelectorList::next(*selector)) {
-        context.selector = selector;
-        if (checker.match(context))
-            return true;
-    }
-    return false;
+bool HTMLContentElement::MatchSelector(Element& element) const {
+  SelectorChecker::Init init;
+  init.mode = SelectorChecker::kQueryingRules;
+  SelectorChecker checker(init);
+  SelectorChecker::SelectorCheckingContext context(
+      &element, SelectorChecker::kVisitedMatchDisabled);
+  for (const CSSSelector* selector = SelectorList().First(); selector;
+       selector = CSSSelectorList::Next(*selector)) {
+    context.selector = selector;
+    if (checker.Match(context))
+      return true;
+  }
+  return false;
 }
 
-} // namespace blink
+}  // namespace blink

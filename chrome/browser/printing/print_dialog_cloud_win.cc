@@ -74,8 +74,7 @@ class PrintDataSetter : public content::WebContentsObserver {
     if (cloud_devices::IsCloudPrintURL(url)) {
       base::string16 origin = base::UTF8ToUTF16(url.GetOrigin().spec());
       content::MessagePortProvider::PostMessageToFrame(
-          web_contents(), origin, origin, message_data_,
-          std::vector<int>());
+          web_contents(), origin, origin, message_data_);
     }
   }
 
@@ -98,7 +97,7 @@ void CreatePrintDialog(content::BrowserContext* browser_context,
       displayer.browser()->OpenURL(content::OpenURLParams(
           google_util::AppendGoogleLocaleParam(
               url, g_browser_process->GetApplicationLocale()),
-          content::Referrer(), NEW_FOREGROUND_TAB,
+          content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
           ui::PAGE_TRANSITION_AUTO_BOOKMARK, false));
   if (data && data->size()) {
     new PrintDataSetter(web_contents, data, print_job_title, print_ticket,

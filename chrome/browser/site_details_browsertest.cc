@@ -7,7 +7,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <utility>
+#include <vector>
 
 #include "base/bind_helpers.h"
 #include "base/files/file_path.h"
@@ -171,6 +173,7 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
   ~SiteDetailsBrowserTest() override {}
 
   void SetUpOnMainThread() override {
+    ExtensionBrowserTest::SetUpOnMainThread();
     host_resolver()->AddRule("*", "127.0.0.1");
 
     // Add content/test/data so we can use cross_site_iframe_factory.html
@@ -235,9 +238,9 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
                        name.c_str(), iframe_url.c_str(), iframe_url2.c_str()));
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->unpacked_path());
+    const Extension* extension = LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
-    temp_dirs_.push_back(dir.release());
+    temp_dirs_.push_back(std::move(dir));
     return extension;
   }
 
@@ -279,9 +282,9 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
                            name.c_str(), iframe_url.c_str()));
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->unpacked_path());
+    const Extension* extension = LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
-    temp_dirs_.push_back(dir.release());
+    temp_dirs_.push_back(std::move(dir));
   }
 
   const Extension* CreateHostedApp(const std::string& name,
@@ -301,9 +304,9 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
                 .Build());
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->unpacked_path());
+    const Extension* extension = LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
-    temp_dirs_.push_back(dir.release());
+    temp_dirs_.push_back(std::move(dir));
     return extension;
   }
 
@@ -352,7 +355,7 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
   }
 
  private:
-  ScopedVector<TestExtensionDir> temp_dirs_;
+  std::vector<std::unique_ptr<TestExtensionDir>> temp_dirs_;
   DISALLOW_COPY_AND_ASSIGN(SiteDetailsBrowserTest);
 };
 
@@ -655,7 +658,13 @@ IN_PROC_BROWSER_TEST_F(SiteDetailsBrowserTest, ManyIframes) {
   EXPECT_FALSE(IsInTrial("SiteIsolationExtensionsActive"));
 }
 
-IN_PROC_BROWSER_TEST_F(SiteDetailsBrowserTest, IsolateExtensions) {
+// Flaky on Windows and Mac. crbug.com/671891
+#if defined(OS_WIN) || defined(OS_MACOSX)
+#define MAYBE_IsolateExtensions DISABLED_IsolateExtensions
+#else
+#define MAYBE_IsolateExtensions IsolateExtensions
+#endif
+IN_PROC_BROWSER_TEST_F(SiteDetailsBrowserTest, MAYBE_IsolateExtensions) {
   // We start on "about:blank", which should be credited with a process in this
   // case.
   scoped_refptr<TestMemoryDetails> details = new TestMemoryDetails();

@@ -30,179 +30,177 @@
 
 #include "web/WebPepperSocketImpl.h"
 
+#include <memory>
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/Document.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "modules/websockets/DocumentWebSocketChannel.h"
 #include "modules/websockets/WebSocketChannel.h"
+#include "platform/wtf/text/CString.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/web/WebArrayBuffer.h"
 #include "public/web/WebDocument.h"
 #include "web/WebPepperSocketChannelClientProxy.h"
-#include "wtf/text/CString.h"
-#include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
-WebPepperSocketImpl::WebPepperSocketImpl(const WebDocument& document, WebPepperSocketClient* client)
-    : m_client(client)
-    , m_channelProxy(WebPepperSocketChannelClientProxy::create(this))
-    , m_binaryType(BinaryTypeBlob)
-    , m_isClosingOrClosed(false)
-    , m_bufferedAmount(0)
-    , m_bufferedAmountAfterClose(0)
-{
-    Document* coreDocument = document;
-    m_private = DocumentWebSocketChannel::create(coreDocument, m_channelProxy.get(), SourceLocation::capture());
+WebPepperSocketImpl::WebPepperSocketImpl(const WebDocument& document,
+                                         WebPepperSocketClient* client)
+    : client_(client),
+      channel_proxy_(WebPepperSocketChannelClientProxy::Create(this)),
+      binary_type_(kBinaryTypeBlob),
+      is_closing_or_closed_(false),
+      buffered_amount_(0),
+      buffered_amount_after_close_(0) {
+  Document* core_document = document;
+  private_ = DocumentWebSocketChannel::Create(
+      core_document, channel_proxy_.Get(), SourceLocation::Capture());
 }
 
-WebPepperSocketImpl::~WebPepperSocketImpl()
-{
-    m_private->disconnect();
+WebPepperSocketImpl::~WebPepperSocketImpl() {
+  private_->Disconnect();
 }
 
-WebPepperSocket::BinaryType WebPepperSocketImpl::binaryType() const
-{
-    return m_binaryType;
+WebPepperSocket::BinaryType WebPepperSocketImpl::GetBinaryType() const {
+  return binary_type_;
 }
 
-bool WebPepperSocketImpl::setBinaryType(BinaryType binaryType)
-{
-    if (binaryType > BinaryTypeArrayBuffer)
-        return false;
-    m_binaryType = binaryType;
+bool WebPepperSocketImpl::SetBinaryType(BinaryType binary_type) {
+  if (binary_type > kBinaryTypeArrayBuffer)
+    return false;
+  binary_type_ = binary_type;
+  return true;
+}
+
+void WebPepperSocketImpl::Connect(const WebURL& url,
+                                  const WebString& protocol) {
+  private_->Connect(url, protocol);
+}
+
+WebString WebPepperSocketImpl::Subprotocol() {
+  return subprotocol_;
+}
+
+WebString WebPepperSocketImpl::Extensions() {
+  return extensions_;
+}
+
+bool WebPepperSocketImpl::SendText(const WebString& message) {
+  String core_message = message;
+  CString encoded_message = core_message.Utf8();
+  size_t size = encoded_message.length();
+  buffered_amount_ += size;
+  if (is_closing_or_closed_)
+    buffered_amount_after_close_ += size;
+
+  // FIXME: Deprecate this call.
+  client_->DidUpdateBufferedAmount(buffered_amount_);
+
+  if (is_closing_or_closed_)
     return true;
+
+  private_->Send(encoded_message);
+  return true;
 }
 
-void WebPepperSocketImpl::connect(const WebURL& url, const WebString& protocol)
-{
-    m_private->connect(url, protocol);
-}
+bool WebPepperSocketImpl::SendArrayBuffer(
+    const WebArrayBuffer& web_array_buffer) {
+  size_t size = web_array_buffer.ByteLength();
+  buffered_amount_ += size;
+  if (is_closing_or_closed_)
+    buffered_amount_after_close_ += size;
 
-WebString WebPepperSocketImpl::subprotocol()
-{
-    return m_subprotocol;
-}
+  // FIXME: Deprecate this call.
+  client_->DidUpdateBufferedAmount(buffered_amount_);
 
-WebString WebPepperSocketImpl::extensions()
-{
-    return m_extensions;
-}
-
-bool WebPepperSocketImpl::sendText(const WebString& message)
-{
-    String coreMessage = message;
-    CString encodedMessage = coreMessage.utf8();
-    size_t size = encodedMessage.length();
-    m_bufferedAmount += size;
-    if (m_isClosingOrClosed)
-        m_bufferedAmountAfterClose += size;
-
-    // FIXME: Deprecate this call.
-    m_client->didUpdateBufferedAmount(m_bufferedAmount);
-
-    if (m_isClosingOrClosed)
-        return true;
-
-    m_private->send(encodedMessage);
+  if (is_closing_or_closed_)
     return true;
+
+  DOMArrayBuffer* array_buffer = web_array_buffer;
+  private_->Send(*array_buffer, 0, array_buffer->ByteLength());
+  return true;
 }
 
-bool WebPepperSocketImpl::sendArrayBuffer(const WebArrayBuffer& webArrayBuffer)
-{
-    size_t size = webArrayBuffer.byteLength();
-    m_bufferedAmount += size;
-    if (m_isClosingOrClosed)
-        m_bufferedAmountAfterClose += size;
-
-    // FIXME: Deprecate this call.
-    m_client->didUpdateBufferedAmount(m_bufferedAmount);
-
-    if (m_isClosingOrClosed)
-        return true;
-
-    DOMArrayBuffer* arrayBuffer = webArrayBuffer;
-    m_private->send(*arrayBuffer, 0, arrayBuffer->byteLength());
-    return true;
+unsigned long WebPepperSocketImpl::BufferedAmount() const {
+  return buffered_amount_;
 }
 
-unsigned long WebPepperSocketImpl::bufferedAmount() const
-{
-    return m_bufferedAmount;
+void WebPepperSocketImpl::Close(int code, const WebString& reason) {
+  is_closing_or_closed_ = true;
+  private_->Close(code, reason);
 }
 
-void WebPepperSocketImpl::close(int code, const WebString& reason)
-{
-    m_isClosingOrClosed = true;
-    m_private->close(code, reason);
+void WebPepperSocketImpl::Fail(const WebString& reason) {
+  private_->Fail(reason, kErrorMessageLevel,
+                 SourceLocation::Create(String(), 0, 0, nullptr));
 }
 
-void WebPepperSocketImpl::fail(const WebString& reason)
-{
-    m_private->fail(reason, ErrorMessageLevel, SourceLocation::create(String(), 0, 0, nullptr));
+void WebPepperSocketImpl::Disconnect() {
+  private_->Disconnect();
+  client_ = nullptr;
 }
 
-void WebPepperSocketImpl::disconnect()
-{
-    m_private->disconnect();
-    m_client = nullptr;
+void WebPepperSocketImpl::DidConnect(const String& subprotocol,
+                                     const String& extensions) {
+  client_->DidConnect(subprotocol, extensions);
+
+  // FIXME: Deprecate these statements.
+  subprotocol_ = subprotocol;
+  extensions_ = extensions;
+  client_->DidConnect();
 }
 
-void WebPepperSocketImpl::didConnect(const String& subprotocol, const String& extensions)
-{
-    m_client->didConnect(subprotocol, extensions);
-
-    // FIXME: Deprecate these statements.
-    m_subprotocol = subprotocol;
-    m_extensions = extensions;
-    m_client->didConnect();
+void WebPepperSocketImpl::DidReceiveTextMessage(const String& payload) {
+  client_->DidReceiveMessage(WebString(payload));
 }
 
-void WebPepperSocketImpl::didReceiveTextMessage(const String& payload)
-{
-    m_client->didReceiveMessage(WebString(payload));
+void WebPepperSocketImpl::DidReceiveBinaryMessage(
+    std::unique_ptr<Vector<char>> payload) {
+  switch (binary_type_) {
+    case kBinaryTypeBlob:
+      // FIXME: Handle Blob after supporting WebBlob.
+      break;
+    case kBinaryTypeArrayBuffer:
+      client_->DidReceiveArrayBuffer(WebArrayBuffer(
+          DOMArrayBuffer::Create(payload->Data(), payload->size())));
+      break;
+  }
 }
 
-void WebPepperSocketImpl::didReceiveBinaryMessage(std::unique_ptr<Vector<char>> payload)
-{
-    switch (m_binaryType) {
-    case BinaryTypeBlob:
-        // FIXME: Handle Blob after supporting WebBlob.
-        break;
-    case BinaryTypeArrayBuffer:
-        m_client->didReceiveArrayBuffer(WebArrayBuffer(DOMArrayBuffer::create(payload->data(), payload->size())));
-        break;
-    }
+void WebPepperSocketImpl::DidError() {
+  client_->DidReceiveMessageError();
 }
 
-void WebPepperSocketImpl::didError()
-{
-    m_client->didReceiveMessageError();
+void WebPepperSocketImpl::DidConsumeBufferedAmount(unsigned long consumed) {
+  client_->DidConsumeBufferedAmount(consumed);
+
+  // FIXME: Deprecate the following statements.
+  buffered_amount_ -= consumed;
+  client_->DidUpdateBufferedAmount(buffered_amount_);
 }
 
-void WebPepperSocketImpl::didConsumeBufferedAmount(unsigned long consumed)
-{
-    m_client->didConsumeBufferedAmount(consumed);
-
-    // FIXME: Deprecate the following statements.
-    m_bufferedAmount -= consumed;
-    m_client->didUpdateBufferedAmount(m_bufferedAmount);
+void WebPepperSocketImpl::DidStartClosingHandshake() {
+  client_->DidStartClosingHandshake();
 }
 
-void WebPepperSocketImpl::didStartClosingHandshake()
-{
-    m_client->didStartClosingHandshake();
+void WebPepperSocketImpl::DidClose(
+    WebSocketChannelClient::ClosingHandshakeCompletionStatus status,
+    unsigned short code,
+    const String& reason) {
+  is_closing_or_closed_ = true;
+  client_->DidClose(
+      static_cast<WebPepperSocketClient::ClosingHandshakeCompletionStatus>(
+          status),
+      code, WebString(reason));
+
+  // FIXME: Deprecate this call.
+  client_->DidClose(
+      buffered_amount_ - buffered_amount_after_close_,
+      static_cast<WebPepperSocketClient::ClosingHandshakeCompletionStatus>(
+          status),
+      code, WebString(reason));
 }
 
-void WebPepperSocketImpl::didClose(WebSocketChannelClient::ClosingHandshakeCompletionStatus status, unsigned short code, const String& reason)
-{
-    m_isClosingOrClosed = true;
-    m_client->didClose(static_cast<WebPepperSocketClient::ClosingHandshakeCompletionStatus>(status), code, WebString(reason));
-
-    // FIXME: Deprecate this call.
-    m_client->didClose(m_bufferedAmount - m_bufferedAmountAfterClose, static_cast<WebPepperSocketClient::ClosingHandshakeCompletionStatus>(status), code, WebString(reason));
-}
-
-} // namespace blink
+}  // namespace blink

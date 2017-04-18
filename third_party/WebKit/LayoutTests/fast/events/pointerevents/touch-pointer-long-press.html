@@ -28,7 +28,7 @@ function testReceivedEvents(expectedEvents, testLabel) {
 
 function init() {
   var targetDiv = document.getElementById("target");
-  targetEvents = ["mousedown", "mouseup", "mousemove", "contextmenu",
+  var targetEvents = ["mousedown", "mouseup", "mousemove", "contextmenu",
       "mouseenter", "mouseleave", "mouseover", "mouseout",
       "pointerdown", "pointerup", "pointermove", "pointercancel",
       "pointerenter", "pointerleave", "pointerover", "pointerout"];
@@ -44,7 +44,7 @@ function runTests() {
   var rect = document.getElementById("target").getBoundingClientRect();
   eventSender.gestureLongPress(rect.left + 5, rect.top + 5);
   testReceivedEvents([
-    "mouseover", "mouseenter", "mousemove", "mousedown", "contextmenu"
+    "mouseover", "mouseenter", "mousemove", "contextmenu"
   ], "Long press events");
 
 }

@@ -33,8 +33,6 @@
 #include "core/imagebitmap/ImageBitmapSource.h"
 #include "third_party/khronos/GLES2/gl2.h"
 
-class SkPaint;
-
 namespace gpu {
 namespace gles2 {
 class GLES2Interface;
@@ -43,76 +41,145 @@ class GLES2Interface;
 
 namespace blink {
 class ExceptionState;
-class GraphicsContext;
 class ImageBitmapOptions;
+class MediaCustomControlsFullscreenDetector;
+class MediaRemotingInterstitial;
 
-class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement, public CanvasImageSource, public ImageBitmapSource {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    static HTMLVideoElement* create(Document&);
-    DECLARE_VIRTUAL_TRACE();
+class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
+                                           public CanvasImageSource,
+                                           public ImageBitmapSource {
+  DEFINE_WRAPPERTYPEINFO();
 
-    unsigned videoWidth() const;
-    unsigned videoHeight() const;
+ public:
+  static HTMLVideoElement* Create(Document&);
+  DECLARE_VIRTUAL_TRACE();
 
-    // Fullscreen
-    void webkitEnterFullscreen();
-    void webkitExitFullscreen();
-    bool webkitSupportsFullscreen();
-    bool webkitDisplayingFullscreen();
-    bool usesOverlayFullscreenVideo() const override;
+  enum class MediaRemotingStatus { kNotStarted, kStarted, kDisabled };
 
-    // Statistics
-    unsigned webkitDecodedFrameCount() const;
-    unsigned webkitDroppedFrameCount() const;
+  // Node override.
+  Node::InsertionNotificationRequest InsertedInto(ContainerNode*) override;
+  void RemovedFrom(ContainerNode*) override;
 
-    // Used by canvas to gain raw pixel access
-    void paintCurrentFrame(SkCanvas*, const IntRect&, const SkPaint*) const;
+  unsigned videoWidth() const;
+  unsigned videoHeight() const;
 
-    // Used by WebGL to do GPU-GPU textures copy if possible.
-    bool copyVideoTextureToPlatformTexture(gpu::gles2::GLES2Interface*, GLuint texture, GLenum internalFormat, GLenum type, bool premultiplyAlpha, bool flipY);
+  // Fullscreen
+  void webkitEnterFullscreen();
+  void webkitExitFullscreen();
+  bool webkitSupportsFullscreen();
+  bool webkitDisplayingFullscreen();
+  bool UsesOverlayFullscreenVideo() const override;
 
-    bool shouldDisplayPosterImage() const { return getDisplayMode() == Poster; }
+  // Statistics
+  unsigned webkitDecodedFrameCount() const;
+  unsigned webkitDroppedFrameCount() const;
 
-    bool hasAvailableVideoFrame() const;
+  // Used by canvas to gain raw pixel access
+  void PaintCurrentFrame(PaintCanvas*, const IntRect&, const PaintFlags*) const;
 
-    KURL posterImageURL() const override;
+  // Used by WebGL to do GPU-GPU textures copy if possible.
+  bool CopyVideoTextureToPlatformTexture(gpu::gles2::GLES2Interface*,
+                                         GLuint texture,
+                                         GLenum internal_format,
+                                         GLenum format,
+                                         GLenum type,
+                                         bool premultiply_alpha,
+                                         bool flip_y);
 
-    // CanvasImageSource implementation
-    PassRefPtr<Image> getSourceImageForCanvas(SourceImageStatus*, AccelerationHint, SnapshotReason, const FloatSize&) const override;
-    bool isVideoElement() const override { return true; }
-    bool wouldTaintOrigin(SecurityOrigin*) const override;
-    FloatSize elementSize(const FloatSize&) const override;
-    const KURL& sourceURL() const override { return currentSrc(); }
-    bool isHTMLVideoElement() const override { return true; }
-    int sourceWidth() override { return videoWidth(); }
-    int sourceHeight() override { return videoHeight(); }
+  // Used by WebGL to do CPU-GPU texture upload if possible.
+  bool TexImageImpl(WebMediaPlayer::TexImageFunctionID,
+                    GLenum target,
+                    gpu::gles2::GLES2Interface*,
+                    GLint level,
+                    GLint internalformat,
+                    GLenum format,
+                    GLenum type,
+                    GLint xoffset,
+                    GLint yoffset,
+                    GLint zoffset,
+                    bool flip_y,
+                    bool premultiply_alpha);
 
-    // ImageBitmapSource implementation
-    IntSize bitmapSourceSize() const override;
-    ScriptPromise createImageBitmap(ScriptState*, EventTarget&, Optional<IntRect> cropRect, const ImageBitmapOptions&, ExceptionState&) override;
+  bool ShouldDisplayPosterImage() const { return GetDisplayMode() == kPoster; }
 
-private:
-    HTMLVideoElement(Document&);
+  bool HasAvailableVideoFrame() const;
 
-    bool layoutObjectIsNeeded(const ComputedStyle&) override;
-    LayoutObject* createLayoutObject(const ComputedStyle&) override;
-    void attachLayoutTree(const AttachContext& = AttachContext()) override;
-    void parseAttribute(const QualifiedName&, const AtomicString&, const AtomicString&) override;
-    bool isPresentationAttribute(const QualifiedName&) const override;
-    void collectStyleForPresentationAttribute(const QualifiedName&, const AtomicString&, MutableStylePropertySet*) override;
-    bool isURLAttribute(const Attribute&) const override;
-    const AtomicString imageSourceURL() const override;
+  KURL PosterImageURL() const override;
 
-    void updateDisplayState() override;
-    void didMoveToNewDocument(Document& oldDocument) override;
-    void setDisplayMode(DisplayMode) override;
+  // CanvasImageSource implementation
+  PassRefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                            AccelerationHint,
+                                            SnapshotReason,
+                                            const FloatSize&) const override;
+  bool IsVideoElement() const override { return true; }
+  bool WouldTaintOrigin(SecurityOrigin*) const override;
+  FloatSize ElementSize(const FloatSize&) const override;
+  const KURL& SourceURL() const override { return currentSrc(); }
+  bool IsHTMLVideoElement() const override { return true; }
+  int SourceWidth() override { return videoWidth(); }
+  int SourceHeight() override { return videoHeight(); }
+  // Video elements currently always go through RAM when used as a canvas image
+  // source.
+  bool IsAccelerated() const override { return false; }
 
-    Member<HTMLImageLoader> m_imageLoader;
+  // ImageBitmapSource implementation
+  IntSize BitmapSourceSize() const override;
+  ScriptPromise CreateImageBitmap(ScriptState*,
+                                  EventTarget&,
+                                  Optional<IntRect> crop_rect,
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) override;
 
-    AtomicString m_defaultPosterURL;
+  // WebMediaPlayerClient implementation.
+  void OnBecamePersistentVideo(bool) final;
+
+  bool IsPersistent() const;
+
+  MediaRemotingStatus GetMediaRemotingStatus() const {
+    return media_remoting_status_;
+  }
+  void DisableMediaRemoting();
+
+ private:
+  friend class MediaCustomControlsFullscreenDetectorTest;
+  friend class HTMLMediaElementEventListenersTest;
+  friend class HTMLVideoElementPersistentTest;
+
+  HTMLVideoElement(Document&);
+
+  // SuspendableObject functions.
+  void ContextDestroyed(ExecutionContext*) final;
+
+  bool LayoutObjectIsNeeded(const ComputedStyle&) override;
+  LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
+  bool IsPresentationAttribute(const QualifiedName&) const override;
+  void CollectStyleForPresentationAttribute(const QualifiedName&,
+                                            const AtomicString&,
+                                            MutableStylePropertySet*) override;
+  bool IsURLAttribute(const Attribute&) const override;
+  const AtomicString ImageSourceURL() const override;
+
+  void UpdateDisplayState() override;
+  void DidMoveToNewDocument(Document& old_document) override;
+  void SetDisplayMode(DisplayMode) override;
+  void MediaRemotingStarted() final;
+  void MediaRemotingStopped() final;
+
+  Member<HTMLImageLoader> image_loader_;
+  Member<MediaCustomControlsFullscreenDetector>
+      custom_controls_fullscreen_detector_;
+
+  MediaRemotingStatus media_remoting_status_;
+
+  Member<MediaRemotingInterstitial> remoting_interstitial_;
+
+  AtomicString default_poster_url_;
+
+  bool is_persistent_ = false;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // HTMLVideoElement_h
+#endif  // HTMLVideoElement_h

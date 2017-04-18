@@ -31,14 +31,14 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
     private static CastNotificationControl sInstance;
 
     private Bitmap mPosterBitmap;
-    protected MediaRouteController mMediaRouteController = null;
+    protected MediaRouteController mMediaRouteController;
     private MediaNotificationInfo.Builder mNotificationBuilder;
     private Context mContext;
     private PlayerState mState;
     private String mTitle = "";
     private AudioManager mAudioManager;
 
-    private boolean mIsShowing = false;
+    private boolean mIsShowing;
 
     private static final Object LOCK = new Object();
 
@@ -83,7 +83,9 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
         }
         mPosterBitmap = posterBitmap;
         if (mNotificationBuilder == null || mMediaRouteController == null) return;
-        mNotificationBuilder.setLargeIcon(mMediaRouteController.getPoster());
+
+        updateNotificationBuilderIfPosterIsGoodEnough();
+        mNotificationBuilder.setNotificationLargeIcon(mMediaRouteController.getPoster());
         updateNotification();
     }
 
@@ -106,12 +108,13 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
         mNotificationBuilder = new MediaNotificationInfo.Builder()
                 .setPaused(false)
                 .setPrivate(false)
-                .setIcon(R.drawable.ic_notification_media_route)
+                .setNotificationSmallIcon(R.drawable.ic_notification_media_route)
                 .setContentIntent(contentIntent)
-                .setLargeIcon(mMediaRouteController.getPoster())
-                .setDefaultLargeIcon(R.drawable.cast_playing_square)
+                .setDefaultNotificationLargeIcon(R.drawable.cast_playing_square)
                 .setId(R.id.remote_notification)
                 .setListener(this);
+
+        updateNotificationBuilderIfPosterIsGoodEnough();
         mState = initialState;
         updateNotification();
         mIsShowing = true;
@@ -132,10 +135,10 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
             mNotificationBuilder.setPaused(mState != PlayerState.PLAYING);
             mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP
                     | MediaNotificationInfo.ACTION_PLAY_PAUSE);
-            MediaNotificationManager.show(mContext, mNotificationBuilder.build());
+            MediaNotificationManager.show(mNotificationBuilder.build());
         } else if (mState == PlayerState.LOADING) {
             mNotificationBuilder.setActions(MediaNotificationInfo.ACTION_STOP);
-            MediaNotificationManager.show(mContext, mNotificationBuilder.build());
+            MediaNotificationManager.show(mNotificationBuilder.build());
         } else {
             hide();
         }
@@ -145,7 +148,7 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
     // poster changes.
     public void onPosterBitmapChanged() {
         if (mNotificationBuilder == null || mMediaRouteController == null) return;
-        mNotificationBuilder.setLargeIcon(mMediaRouteController.getPoster());
+        updateNotificationBuilderIfPosterIsGoodEnough();
         updateNotification();
     }
 
@@ -217,6 +220,9 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
         mMediaRouteController.release();
     }
 
+    @Override
+    public void onMediaSessionAction(int action) {}
+
     // AudioManager.OnAudioFocusChangeListener methods
     @Override
     public void onAudioFocusChange(int focusChange) {
@@ -231,5 +237,13 @@ public class CastNotificationControl implements MediaRouteController.UiListener,
     @VisibleForTesting
     boolean isShowingForTests() {
         return mIsShowing;
+    }
+
+    private void updateNotificationBuilderIfPosterIsGoodEnough() {
+        Bitmap poster = mMediaRouteController.getPoster();
+        if (MediaNotificationManager.isBitmapSuitableAsMediaImage(poster)) {
+            mNotificationBuilder.setNotificationLargeIcon(poster);
+            mNotificationBuilder.setMediaSessionImage(poster);
+        }
     }
 }

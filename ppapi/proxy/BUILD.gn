@@ -102,7 +102,6 @@ component("proxy") {
     "plugin_var_tracker.h",
     "ppapi_command_buffer_proxy.cc",
     "ppapi_command_buffer_proxy.h",
-    "ppapi_message_utils.h",
     "ppapi_messages.h",
     "ppb_audio_proxy.cc",
     "ppb_audio_proxy.h",
@@ -220,6 +219,8 @@ component("proxy") {
     sources += [
       "audio_input_resource.cc",
       "audio_input_resource.h",
+      "audio_output_resource.cc",
+      "audio_output_resource.h",
       "broker_dispatcher.cc",
       "broker_dispatcher.h",
       "browser_font_singleton_resource.cc",
@@ -275,14 +276,15 @@ component("proxy") {
   ]
 
   public_deps = [
+    "//ipc",
     "//ppapi/proxy:ipc_sources",
   ]
 
   deps = [
+    ":common",
     "//base",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/ipc/common:command_buffer_traits",
-    "//ipc",
     "//media:shared_memory_support",
     "//mojo/edk/system",
     "//ppapi/c",
@@ -306,6 +308,13 @@ component("proxy") {
   }
 }
 
+source_set("common") {
+  sources = [
+    "tcp_socket_resource_constants.h",
+    "udp_socket_resource_constants.h",
+  ]
+}
+
 group("ipc") {
   if (is_component_build) {
     public_deps = [
@@ -322,6 +331,7 @@ source_set("ipc_sources") {
   sources = [
     "nacl_message_scanner.cc",
     "nacl_message_scanner.h",
+    "ppapi_message_utils.h",
     "ppapi_messages.cc",
     "ppapi_messages.h",
     "ppapi_param_traits.cc",
@@ -349,10 +359,14 @@ source_set("ipc_sources") {
   deps = [
     "//base",
     "//gpu/ipc/common:command_buffer_traits",
-    "//ipc",
     "//ppapi/c",
     "//ppapi/shared_impl",
   ]
+
+  public_deps = [
+    "//ipc",
+  ]
+
   if (!is_nacl) {
     deps += [ "//skia" ]
   }

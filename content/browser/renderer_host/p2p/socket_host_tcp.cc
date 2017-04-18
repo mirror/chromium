@@ -10,6 +10,7 @@
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "base/sys_byteorder.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/common/p2p_messages.h"
 #include "ipc/ipc_sender.h"
 #include "jingle/glue/fake_ssl_client_socket.h"
@@ -67,14 +68,15 @@ P2PSocketHostTcpBase::~P2PSocketHostTcpBase() {
   }
 }
 
-bool P2PSocketHostTcpBase::InitAccepted(const net::IPEndPoint& remote_address,
-                                        net::StreamSocket* socket) {
+bool P2PSocketHostTcpBase::InitAccepted(
+    const net::IPEndPoint& remote_address,
+    std::unique_ptr<net::StreamSocket> socket) {
   DCHECK(socket);
   DCHECK_EQ(state_, STATE_UNINITIALIZED);
 
   remote_address_.ip_address = remote_address;
   // TODO(ronghuawu): Add FakeSSLServerSocket.
-  socket_.reset(socket);
+  socket_ = std::move(socket);
   state_ = STATE_OPEN;
   DoRead();
   return state_ != STATE_ERROR;
@@ -110,10 +112,8 @@ bool P2PSocketHostTcpBase::Init(const net::IPEndPoint& local_address,
   // The default SSLConfig is good enough for us for now.
   const net::SSLConfig ssl_config;
   socket_.reset(new jingle_glue::ProxyResolvingClientSocket(
-                    NULL,     // Default socket pool provided by the net::Proxy.
-                    url_context_,
-                    ssl_config,
-                    dest_host_port_pair));
+      nullptr,  // Default socket pool provided by the net::Proxy.
+      url_context_, ssl_config, dest_host_port_pair));
 
   int status = socket_->Connect(
       base::Bind(&P2PSocketHostTcpBase::OnConnected,
@@ -123,9 +123,7 @@ bool P2PSocketHostTcpBase::Init(const net::IPEndPoint& local_address,
     // directly here as the caller may not expect an error/close to
     // happen here.  This is okay, as from the caller's point of view,
     // the connect always happens asynchronously.
-    base::MessageLoop* message_loop = base::MessageLoop::current();
-    CHECK(message_loop);
-    message_loop->task_runner()->PostTask(
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&P2PSocketHostTcpBase::OnConnected,
                               base::Unretained(this), status));
   }
@@ -426,7 +424,7 @@ void P2PSocketHostTcpBase::HandleWriteResult(int result) {
       message_sender_->Send(
           new P2PMsg_OnSendComplete(id_, P2PSendPacketMetrics()));
       if (write_queue_.empty()) {
-        write_buffer_ = NULL;
+        write_buffer_ = nullptr;
       } else {
         write_buffer_ = write_queue_.front();
         write_queue_.pop();
@@ -444,11 +442,13 @@ void P2PSocketHostTcpBase::HandleWriteResult(int result) {
   }
 }
 
-P2PSocketHost* P2PSocketHostTcpBase::AcceptIncomingTcpConnection(
-    const net::IPEndPoint& remote_address, int id) {
+std::unique_ptr<P2PSocketHost>
+P2PSocketHostTcpBase::AcceptIncomingTcpConnection(
+    const net::IPEndPoint& remote_address,
+    int id) {
   NOTREACHED();
   OnError();
-  return NULL;
+  return nullptr;
 }
 
 void P2PSocketHostTcpBase::DidCompleteRead(int result) {

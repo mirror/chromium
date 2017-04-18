@@ -21,9 +21,9 @@
 #include "url/gurl.h"
 
 class GURL;
-class SkBitmap;
 
 @class CRWJSInjectionReceiver;
+@class CRWSessionStorage;
 @protocol CRWScrollableContent;
 @protocol CRWWebViewProxy;
 typedef id<CRWWebViewProxy> CRWWebViewProxyType;
@@ -35,7 +35,7 @@ class DictionaryValue;
 class Value;
 }
 
-namespace shell {
+namespace service_manager {
 class InterfaceRegistry;
 }
 
@@ -43,6 +43,7 @@ namespace web {
 
 class BrowserState;
 class NavigationManager;
+class SessionCertificatePolicyCache;
 class WebInterstitial;
 class WebStateDelegate;
 class WebStateObserver;
@@ -57,7 +58,13 @@ class WebState : public base::SupportsUserData {
     explicit CreateParams(web::BrowserState* browser_state);
     ~CreateParams();
 
+    // The corresponding BrowserState for the new WebState.
     web::BrowserState* browser_state;
+
+    // Whether the WebState is created as the result of a window.open or by
+    // clicking a link with a blank target.  Used to determine whether the
+    // WebState is allowed to be closed via window.close().
+    bool created_with_opener;
   };
 
   // Parameters for the OpenURL() method.
@@ -83,21 +90,14 @@ class WebState : public base::SupportsUserData {
     bool is_renderer_initiated;
   };
 
-  // Callback for |DownloadImage()|.
-  typedef base::Callback<void(
-      int, /* id */
-      int, /* HTTP status code */
-      const GURL&, /* image_url */
-      const std::vector<SkBitmap>&, /* bitmaps */
-      /* The sizes in pixel of the bitmaps before they were resized due to the
-         max bitmap size passed to DownloadImage(). Each entry in the bitmaps
-         vector corresponds to an entry in the sizes vector. If a bitmap was
-         resized, there should be a single returned bitmap. */
-      const std::vector<gfx::Size>&)>
-          ImageDownloadCallback;
-
   // Creates a new WebState.
   static std::unique_ptr<WebState> Create(const CreateParams& params);
+
+  // Creates a new WebState from a serialized representation of the session.
+  // |session_storage| must not be nil.
+  static std::unique_ptr<WebState> CreateWithStorageSession(
+      const CreateParams& params,
+      CRWSessionStorage* session_storage);
 
   ~WebState() override {}
 
@@ -110,8 +110,9 @@ class WebState : public base::SupportsUserData {
   virtual bool IsWebUsageEnabled() const = 0;
   virtual void SetWebUsageEnabled(bool enabled) = 0;
 
-  // Whether or not dialogs (JavaScript dialogs, HTTP auths and window.open)
-  // calls should be suppressed. Default is false.
+  // Whether or not dialogs (JavaScript, geolocation) and window open requests
+  // should be suppressed. Default is false. When dialog is suppressed
+  // |WebStateObserver::DidSuppressDialog| will be called.
   virtual bool ShouldSuppressDialogs() const = 0;
   virtual void SetShouldSuppressDialogs(bool should_suppress) = 0;
 
@@ -127,10 +128,23 @@ class WebState : public base::SupportsUserData {
   // navigation should be recorded in the history system (for example, typed).
   virtual void OpenURL(const OpenURLParams& params) = 0;
 
+  // Stops any pending navigation.
+  virtual void Stop() = 0;
+
   // Gets the NavigationManager associated with this WebState. Can never return
   // null.
   virtual const NavigationManager* GetNavigationManager() const = 0;
   virtual NavigationManager* GetNavigationManager() = 0;
+
+  // Gets the SessionCertificatePolicyCache for this WebState.  Can never return
+  // null.
+  virtual const SessionCertificatePolicyCache*
+  GetSessionCertificatePolicyCache() const = 0;
+  virtual SessionCertificatePolicyCache* GetSessionCertificatePolicyCache() = 0;
+
+  // Creates a serializable representation of the session. The returned value
+  // is autoreleased.
+  virtual CRWSessionStorage* BuildSessionStorage() = 0;
 
   // Gets the CRWJSInjectionReceiver associated with this WebState.
   virtual CRWJSInjectionReceiver* GetJSInjectionReceiver() const = 0;
@@ -138,7 +152,7 @@ class WebState : public base::SupportsUserData {
   // Runs JavaScript in the main frame's context. If a callback is provided, it
   // will be used to return the result, when the result is available or script
   // execution has failed due to an error.
-  // NOTE: Integer values will be returned as TYPE_DOUBLE because of underlying
+  // NOTE: Integer values will be returned as Type::DOUBLE because of underlying
   // library limitation.
   typedef base::Callback<void(const base::Value*)> JavaScriptResultCallback;
   virtual void ExecuteJavaScript(const base::string16& javascript) = 0;
@@ -197,8 +211,15 @@ class WebState : public base::SupportsUserData {
   // Returns the currently visible WebInterstitial if one is shown.
   virtual WebInterstitial* GetWebInterstitial() const = 0;
 
-  // Returns the unique ID to use with web::CertStore.
-  virtual int GetCertGroupId() const = 0;
+  // Called when the WebState has displayed a password field on an HTTP page.
+  // This method modifies the appropriate NavigationEntry's SSLStatus to record
+  // the sensitive input field, so that embedders can adjust the UI if desired.
+  virtual void OnPasswordInputShownOnHttp() = 0;
+
+  // Called when the WebState has displayed a credit card field on an HTTP page.
+  // This method modifies the appropriate NavigationEntry's SSLStatus to record
+  // the sensitive input field, so that embedders can adjust the UI if desired.
+  virtual void OnCreditCardInputShownOnHttp() = 0;
 
   // Callback used to handle script commands.
   // The callback must return true if the command was handled, and false
@@ -223,25 +244,12 @@ class WebState : public base::SupportsUserData {
   // Returns the current CRWWebViewProxy object.
   virtual CRWWebViewProxyType GetWebViewProxy() const = 0;
 
-  // Sends a request to download the given image |url| and returns the unique
-  // id of the download request. When the download is finished, |callback| will
-  // be called with the bitmaps received from the renderer.
-  // If |is_favicon| is true, the cookies are not sent and not accepted during
-  // download.
-  // Bitmaps with pixel sizes larger than |max_bitmap_size| are filtered out
-  // from the bitmap results. If there are no bitmap results <=
-  // |max_bitmap_size|, the smallest bitmap is resized to |max_bitmap_size| and
-  // is the only result. A |max_bitmap_size| of 0 means unlimited.
-  // If |bypass_cache| is true, |url| is requested from the server even if it
-  // is present in the browser cache.
-  virtual int DownloadImage(const GURL& url,
-                            bool is_favicon,
-                            uint32_t max_bitmap_size,
-                            bool bypass_cache,
-                            const ImageDownloadCallback& callback) = 0;
-
   // Returns Mojo interface registry for this WebState.
-  virtual shell::InterfaceRegistry* GetMojoInterfaceRegistry() = 0;
+  virtual service_manager::InterfaceRegistry* GetMojoInterfaceRegistry() = 0;
+
+  // Returns whether this WebState was created with an opener.  See
+  // CreateParams::created_with_opener for more details.
+  virtual bool HasOpener() const = 0;
 
  protected:
   friend class WebStateObserver;

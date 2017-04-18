@@ -35,16 +35,14 @@ class Checker(object):
 
   _MAP_FILE_FORMAT = "%s.map"
 
-  def __init__(self, verbose=False, strict=False):
+  def __init__(self, verbose=False):
     """
     Args:
       verbose: Whether this class should output diagnostic messages.
-      strict: Whether the Closure Compiler should be invoked more strictly.
     """
-    self._runner_jar = os.path.join(_CURRENT_DIR, "runner", "runner.jar")
+    self._compiler_jar = os.path.join(_CURRENT_DIR, "compiler", "compiler.jar")
     self._temp_files = []
     self._verbose = verbose
-    self._strict = strict
     self._error_filter = error_filter.PromiseErrorFilter()
 
   def _nuke_temp_files(self):
@@ -185,7 +183,7 @@ class Checker(object):
       tmp_file.write(contents)
     return tmp_file.name
 
-  def _run_js_check(self, sources, out_file=None, externs=None,
+  def _run_js_check(self, sources, out_file, externs=None,
                     closure_args=None):
     """Check |sources| for type errors.
 
@@ -201,27 +199,27 @@ class Checker(object):
     """
     args = ["--js=%s" % s for s in sources]
 
-    if out_file:
-      out_dir = os.path.dirname(out_file)
-      if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+    assert out_file
+
+    out_dir = os.path.dirname(out_file)
+    if not os.path.exists(out_dir):
+      os.makedirs(out_dir)
+
+    checks_only = 'checks_only' in closure_args
+
+    if not checks_only:
       args += ["--js_output_file=%s" % out_file]
       args += ["--create_source_map=%s" % (self._MAP_FILE_FORMAT % out_file)]
 
     args += ["--externs=%s" % e for e in externs or []]
 
     closure_args = closure_args or []
-    closure_args += ["summary_detail_level=3"]
+    closure_args += ["summary_detail_level=3", "continue_after_errors"]
     args += ["--%s" % arg for arg in closure_args]
 
-    args_file_content = " %s" % " ".join(args)
-    self._log_debug("Args: %s" % args_file_content.strip())
+    self._log_debug("Args: %s" % " ".join(args))
 
-    args_file = self._create_temp_file(args_file_content)
-    self._log_debug("Args file: %s" % args_file)
-
-    runner_args = ["--compiler-args-file=%s" % args_file]
-    _, stderr = self._run_jar(self._runner_jar, runner_args)
+    _, stderr = self._run_jar(self._compiler_jar, args)
 
     errors = stderr.strip().split("\n\n")
     maybe_summary = errors.pop()
@@ -234,11 +232,17 @@ class Checker(object):
       self._nuke_temp_files()
       sys.exit(1)
 
-    if errors and out_file:
+    if errors:
       if os.path.exists(out_file):
         os.remove(out_file)
       if os.path.exists(self._MAP_FILE_FORMAT % out_file):
         os.remove(self._MAP_FILE_FORMAT % out_file)
+    elif checks_only:
+      # Compile succeeded but --checks_only disables --js_output_file from
+      # actually writing a file. Write a file ourselves so incremental builds
+      # still work.
+      with open(out_file, 'w') as f:
+        f.write('')
 
     return errors, stderr
 
@@ -321,24 +325,23 @@ if __name__ == "__main__":
   parser.add_argument("sources", nargs=argparse.ONE_OR_MORE,
                       help="Path to a source file to typecheck")
   single_file_group = parser.add_mutually_exclusive_group()
-  single_file_group.add_argument("--single-file", dest="single_file",
+  single_file_group.add_argument("--single_file", dest="single_file",
                                  action="store_true",
                                  help="Process each source file individually")
-  # TODO(twellington): remove --no-single-file and use len(opts.sources).
-  single_file_group.add_argument("--no-single-file", dest="single_file",
+  # TODO(twellington): remove --no_single_file and use len(opts.sources).
+  single_file_group.add_argument("--no_single_file", dest="single_file",
                                  action="store_false",
                                  help="Process all source files as a group")
   parser.add_argument("-d", "--depends", nargs=argparse.ZERO_OR_MORE)
   parser.add_argument("-e", "--externs", nargs=argparse.ZERO_OR_MORE)
-  parser.add_argument("-o", "--out-file", dest="out_file",
+  parser.add_argument("-o", "--out_file", required=True,
                       help="A file where the compiled output is written to")
-  parser.add_argument("-c", "--closure-args", dest="closure_args",
-                      nargs=argparse.ZERO_OR_MORE,
+  parser.add_argument("-c", "--closure_args", nargs=argparse.ZERO_OR_MORE,
                       help="Arguments passed directly to the Closure compiler")
   parser.add_argument("-v", "--verbose", action="store_true",
                       help="Show more information as this script runs")
 
-  parser.set_defaults(single_file=True, strict=False)
+  parser.set_defaults(single_file=True)
   opts = parser.parse_args()
 
   depends = opts.depends or []
@@ -349,7 +352,7 @@ if __name__ == "__main__":
 
   externs.add(os.path.join(_CURRENT_DIR, "externs", "polymer-1.0.js"))
 
-  checker = Checker(verbose=opts.verbose, strict=opts.strict)
+  checker = Checker(verbose=opts.verbose)
   if opts.single_file:
     for source in sources:
       # Normalize source to the current directory.

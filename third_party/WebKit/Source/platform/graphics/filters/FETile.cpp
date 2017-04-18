@@ -28,38 +28,36 @@
 
 namespace blink {
 
-FETile::FETile(Filter* filter)
-    : FilterEffect(filter)
-{
+FETile::FETile(Filter* filter) : FilterEffect(filter) {}
+
+FETile* FETile::Create(Filter* filter) {
+  return new FETile(filter);
 }
 
-FETile* FETile::create(Filter* filter)
-{
-    return new FETile(filter);
+FloatRect FETile::MapInputs(const FloatRect& rect) const {
+  return AbsoluteBounds();
 }
 
-FloatRect FETile::mapPaintRect(const FloatRect& rect, bool forward) const
-{
-    return forward ? maxEffectRect() : inputEffect(0)->maxEffectRect();
+sk_sp<SkImageFilter> FETile::CreateImageFilter() {
+  sk_sp<SkImageFilter> input(
+      SkiaImageFilterBuilder::Build(InputEffect(0), OperatingColorSpace()));
+  FloatRect src_rect;
+  if (InputEffect(0)->GetFilterEffectType() == kFilterEffectTypeSourceInput)
+    src_rect = GetFilter()->FilterRegion();
+  else
+    src_rect = InputEffect(0)->FilterPrimitiveSubregion();
+  FloatRect dst_rect = FilterPrimitiveSubregion();
+  return SkTileImageFilter::Make(src_rect, dst_rect, std::move(input));
 }
 
-sk_sp<SkImageFilter> FETile::createImageFilter()
-{
-    sk_sp<SkImageFilter> input(SkiaImageFilterBuilder::build(inputEffect(0), operatingColorSpace()));
-    FloatRect srcRect = inputEffect(0)->filterPrimitiveSubregion();
-    FloatRect dstRect = applyEffectBoundaries(getFilter()->filterRegion());
-    return SkTileImageFilter::Make(srcRect, dstRect, std::move(input));
+TextStream& FETile::ExternalRepresentation(TextStream& ts, int indent) const {
+  WriteIndent(ts, indent);
+  ts << "[feTile";
+  FilterEffect::ExternalRepresentation(ts);
+  ts << "]\n";
+  InputEffect(0)->ExternalRepresentation(ts, indent + 1);
+
+  return ts;
 }
 
-TextStream& FETile::externalRepresentation(TextStream& ts, int indent) const
-{
-    writeIndent(ts, indent);
-    ts << "[feTile";
-    FilterEffect::externalRepresentation(ts);
-    ts << "]\n";
-    inputEffect(0)->externalRepresentation(ts, indent + 1);
-
-    return ts;
-}
-
-} // namespace blink
+}  // namespace blink

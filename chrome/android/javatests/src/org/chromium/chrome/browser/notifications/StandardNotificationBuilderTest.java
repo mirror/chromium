@@ -4,39 +4,70 @@
 
 package org.chromium.chrome.browser.notifications;
 
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.test.InstrumentationTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.os.Build;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.filters.SmallTest;
 import android.text.SpannableStringBuilder;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.widget.RoundedIconGenerator;
+import org.chromium.content.browser.test.NativeLibraryTestRule;
 
 /**
  * Instrumentation unit tests for StandardNotificationBuilder.
+ *
+ * Extends NativeLibraryTestBase so that {@link UrlUtilities#getDomainAndRegistry} can access
+ * native GetDomainAndRegistry, when called by {@link RoundedIconGenerator#getIconTextForUrl} during
+ * notification construction.
  */
-// TODO(peter): remove @SuppressLint once crbug.com/501900 is fixed.
-@SuppressLint("NewApi")
-@SuppressWarnings("deprecation") // For |icon| and |largeIcon| properties of Notification.
-public class StandardNotificationBuilderTest extends InstrumentationTestCase {
-    @SmallTest
-    @Feature({"Browser", "Notifications"})
-    public void testSetAll() {
-        Context context = getInstrumentation().getTargetContext();
+@RunWith(BaseJUnit4ClassRunner.class)
+public class StandardNotificationBuilderTest {
+    @Rule
+    public NativeLibraryTestRule mActivityTestRule = new NativeLibraryTestRule();
+
+    @Before
+    public void setUp() throws Exception {
+        // Not initializing the browser process is safe because GetDomainAndRegistry() is
+        // stand-alone.
+        mActivityTestRule.loadNativeLibraryNoBrowserProcess();
+    }
+
+    private NotificationBuilderBase createAllOptionsBuilder(
+            PendingIntent[] outContentAndDeleteIntents) {
+        if (outContentAndDeleteIntents == null || outContentAndDeleteIntents.length != 2)
+            throw new IllegalArgumentException();
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         Intent contentIntent = new Intent("contentIntent");
-        PendingIntent pendingContentIntent = PendingIntent.getBroadcast(
+        outContentAndDeleteIntents[0] = PendingIntent.getBroadcast(
                 context, 0 /* requestCode */, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent deleteIntent = new Intent("deleteIntent");
-        PendingIntent pendingDeleteIntent = PendingIntent.getBroadcast(
+        outContentAndDeleteIntents[1] = PendingIntent.getBroadcast(
                 context, 1 /* requestCode */, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Bitmap image = Bitmap.createBitmap(
+                new int[] {Color.BLUE}, 1 /* width */, 1 /* height */, Bitmap.Config.ARGB_8888);
+        image = image.copy(Bitmap.Config.ARGB_8888, true /* isMutable */);
 
         Bitmap largeIcon = Bitmap.createBitmap(
                 new int[] {Color.RED}, 1 /* width */, 1 /* height */, Bitmap.Config.ARGB_8888);
@@ -46,37 +77,152 @@ public class StandardNotificationBuilderTest extends InstrumentationTestCase {
                 new int[] {Color.GRAY}, 1 /* width */, 1 /* height */, Bitmap.Config.ARGB_8888);
         actionIcon = actionIcon.copy(Bitmap.Config.ARGB_8888, true /* isMutable */);
 
-        Notification notification =
-                new StandardNotificationBuilder(context)
-                        .setSmallIcon(R.drawable.ic_chrome)
-                        .setLargeIcon(largeIcon)
-                        .setTitle("title")
-                        .setBody("body")
-                        .setOrigin("origin")
-                        .setTicker(new SpannableStringBuilder("ticker"))
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setVibrate(new long[] {100L})
-                        .setContentIntent(pendingContentIntent)
-                        .setDeleteIntent(pendingDeleteIntent)
-                        .addAction(actionIcon, "button 1", null /* intent */)
-                        .addAction(actionIcon, "button 2", null /* intent */)
-                        .addSettingsAction(0 /* iconId */, "settings", null /* intent */)
-                        .build();
+        return new StandardNotificationBuilder(context)
+                .setTitle("title")
+                .setBody("body")
+                .setOrigin("origin")
+                .setTicker(new SpannableStringBuilder("ticker"))
+                .setImage(image)
+                .setLargeIcon(largeIcon)
+                .setSmallIcon(R.drawable.ic_chrome)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setVibrate(new long[] {100L})
+                .setContentIntent(outContentAndDeleteIntents[0])
+                .setDeleteIntent(outContentAndDeleteIntents[1])
+                .addButtonAction(actionIcon, "button 1", null /* intent */)
+                .addButtonAction(actionIcon, "button 2", null /* intent */)
+                .addSettingsAction(0 /* iconId */, "settings", null /* intent */);
+    }
 
-        assertEquals(R.drawable.ic_chrome, notification.icon);
-        assertNotNull(notification.largeIcon);
-        assertEquals("title", notification.extras.getString(Notification.EXTRA_TITLE));
-        assertEquals("body", notification.extras.getString(Notification.EXTRA_TEXT));
-        assertEquals("origin", notification.extras.getString(Notification.EXTRA_SUB_TEXT));
-        assertEquals("ticker", notification.tickerText.toString());
-        assertEquals(Notification.DEFAULT_ALL, notification.defaults);
-        assertEquals(1, notification.vibrate.length);
-        assertEquals(100L, notification.vibrate[0]);
-        assertEquals(pendingContentIntent, notification.contentIntent);
-        assertEquals(pendingDeleteIntent, notification.deleteIntent);
-        assertEquals(3, notification.actions.length);
-        assertEquals("button 1", notification.actions[0].title);
-        assertEquals("button 2", notification.actions[1].title);
-        assertEquals("settings", notification.actions[2].title);
+    @Test
+    @SmallTest
+    @Feature({"Browser", "Notifications"})
+    public void testSetAll() {
+        PendingIntent[] contentAndDeleteIntents = new PendingIntent[2];
+        NotificationBuilderBase builder = createAllOptionsBuilder(contentAndDeleteIntents);
+        Notification notification = builder.build();
+
+        Assert.assertEquals("title", NotificationTestUtil.getExtraTitle(notification));
+        Assert.assertEquals("body", NotificationTestUtil.getExtraText(notification));
+        Assert.assertEquals("origin", NotificationTestUtil.getExtraSubText(notification));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            Assert.assertEquals(
+                    NotificationConstants.GROUP_WEB_PREFIX + "origin", notification.getGroup());
+        }
+        Assert.assertEquals("ticker", notification.tickerText.toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // EXTRA_TEMPLATE was added in Android L; style cannot be verified in earlier versions.
+            Assert.assertEquals("android.app.Notification$BigPictureStyle",
+                    notification.extras.getString(Notification.EXTRA_TEMPLATE));
+        }
+        Bitmap picture = NotificationTestUtil.getExtraPicture(notification);
+        Assert.assertNotNull(picture);
+        Assert.assertTrue(picture.getWidth() > 0 && picture.getHeight() > 0);
+
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Bitmap smallIcon =
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chrome);
+        Assert.assertTrue(smallIcon.sameAs(
+                NotificationTestUtil.getSmallIconFromNotification(context, notification)));
+        Assert.assertNotNull(
+                NotificationTestUtil.getLargeIconFromNotification(context, notification));
+
+        Assert.assertEquals(Notification.DEFAULT_ALL, notification.defaults);
+        Assert.assertEquals(1, notification.vibrate.length);
+        Assert.assertEquals(100L, notification.vibrate[0]);
+        Assert.assertEquals(contentAndDeleteIntents[0], notification.contentIntent);
+        Assert.assertEquals(contentAndDeleteIntents[1], notification.deleteIntent);
+        Notification.Action[] actions = NotificationTestUtil.getActions(notification);
+        Assert.assertEquals(3, actions.length);
+        Assert.assertEquals("button 1", NotificationTestUtil.getActionTitle(actions[0]));
+        Assert.assertEquals("button 2", NotificationTestUtil.getActionTitle(actions[1]));
+        Assert.assertEquals("settings", NotificationTestUtil.getActionTitle(actions[2]));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Notification.publicVersion was added in Android L.
+            Assert.assertNotNull(notification.publicVersion);
+            Assert.assertEquals(context.getString(R.string.notification_hidden_text),
+                    NotificationTestUtil.getExtraText(notification.publicVersion));
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            Assert.assertEquals(
+                    "origin", NotificationTestUtil.getExtraSubText(notification.publicVersion));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Assert.assertEquals(
+                    "origin", NotificationTestUtil.getExtraTitle(notification.publicVersion));
+        }
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"Browser", "Notifications"})
+    public void testBigTextStyle() {
+        PendingIntent[] contentAndDeleteIntents = new PendingIntent[2];
+        NotificationBuilderBase builder = createAllOptionsBuilder(contentAndDeleteIntents);
+        builder.setImage(null);
+        Notification notification = builder.build();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // EXTRA_TEMPLATE was added in Android L; style cannot be verified in earlier versions.
+            Assert.assertEquals("android.app.Notification$BigTextStyle",
+                    notification.extras.getString(Notification.EXTRA_TEMPLATE));
+        }
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"Browser", "Notifications"})
+    public void testSetSmallIcon() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        NotificationBuilderBase notificationBuilder = new StandardNotificationBuilder(context);
+
+        Bitmap bitmap =
+                BitmapFactory.decodeResource(context.getResources(), R.drawable.chrome_sync_logo);
+
+        notificationBuilder.setSmallIcon(R.drawable.ic_chrome);
+        notificationBuilder.setSmallIcon(bitmap); // Should override on M+
+
+        Notification notification = notificationBuilder.build();
+
+        Bitmap result = NotificationTestUtil.getSmallIconFromNotification(context, notification);
+
+        Assert.assertNotNull(result);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Check the white overlay was applied.
+            Bitmap expected = bitmap.copy(bitmap.getConfig(), true);
+            NotificationBuilderBase.applyWhiteOverlayToBitmap(expected);
+            Assert.assertTrue(expected.sameAs(result));
+
+            // Check using the same bitmap on another builder gives the same result.
+            NotificationBuilderBase otherBuilder = new StandardNotificationBuilder(context);
+            otherBuilder.setSmallIcon(bitmap);
+            Notification otherNotification = otherBuilder.build();
+            Assert.assertTrue(expected.sameAs(
+                    NotificationTestUtil.getSmallIconFromNotification(context, otherNotification)));
+        } else {
+            Bitmap expected =
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chrome);
+            Assert.assertTrue(expected.sameAs(result));
+        }
+    }
+
+    @Test
+    @MinAndroidSdkLevel(Build.VERSION_CODES.KITKAT_WATCH)
+    @TargetApi(Build.VERSION_CODES.KITKAT_WATCH) // RemoteInputs were only added in KITKAT_WATCH.
+    @SmallTest
+    @Feature({"Browser", "Notifications"})
+    public void testAddTextActionSetsRemoteInput() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        NotificationBuilderBase notificationBuilder = new StandardNotificationBuilder(
+                context).addTextAction(null, "Action Title", null, "Placeholder");
+
+        Notification notification = notificationBuilder.build();
+
+        Assert.assertEquals(1, notification.actions.length);
+        Assert.assertEquals("Action Title", notification.actions[0].title);
+        Assert.assertNotNull(notification.actions[0].getRemoteInputs());
+        Assert.assertEquals(1, notification.actions[0].getRemoteInputs().length);
+        Assert.assertEquals("Placeholder", notification.actions[0].getRemoteInputs()[0].getLabel());
     }
 }

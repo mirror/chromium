@@ -13,12 +13,15 @@ class WebString;
 
 // Interface used by a MediaRecorder to get errors and recorded data delivered.
 class WebMediaRecorderHandlerClient {
-public:
-    virtual void writeData(const char* data, size_t length, bool lastInslice) = 0;
+ public:
+  virtual void WriteData(const char* data,
+                         size_t length,
+                         bool last_inslice,
+                         double timecode) = 0;
 
-    virtual void onError(const WebString& message) = 0;
+  virtual void OnError(const WebString& message) = 0;
 };
 
-} // namespace blink
+}  // namespace blink
 
 #endif  // WebMediaRecorderHandlerClient_h

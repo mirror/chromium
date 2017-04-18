@@ -249,7 +249,37 @@ var allTests = [
     assertTrue(editable !== undefined);
     assertEq('text', editable.htmlAttributes.type);
     chrome.test.succeed();
-  }
+  },
+
+  function testNameFrom() {
+    var link = rootNode.find({ role: 'link' });
+    assertEq(chrome.automation.NameFromType.CONTENTS, link.nameFrom);
+    var textarea = rootNode.find({ attributes: { name: 'textarea' } });
+    assertEq(chrome.automation.NameFromType.ATTRIBUTE, textarea.nameFrom);
+    chrome.test.succeed();
+  },
+
+  function testCheckedAttribute() {
+    // Checkbox can use all 3 checked attribute values: true|false|mixed
+    var checkTest1 = rootNode.find({ attributes: { name: 'check-test-1' } });
+    assertTrue(Boolean(checkTest1));
+    assertEq(checkTest1.checked, 'true');
+
+    var checkTest2 = rootNode.find({ attributes: { name: 'check-test-2' } });
+    assertTrue(Boolean(checkTest2));
+    assertEq(checkTest2.checked, 'false');
+
+    var checkTest3 = rootNode.find({ attributes: { name: 'check-test-3' } });
+    assertTrue(Boolean(checkTest3));
+    assertEq(checkTest3.checked, 'mixed');
+
+    // Uncheckable nodes have a checked attribute of undefined
+    var checkTest4 = rootNode.find({ attributes: { name: 'check-test-4' } });
+    assertTrue(Boolean(checkTest4));
+    assertEq(checkTest4.checked, undefined);
+
+    chrome.test.succeed();
+  },
 ];
 
 setUpAndRunTests(allTests, 'attributes.html');

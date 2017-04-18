@@ -10,6 +10,7 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -17,8 +18,8 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/shell/common/shell_switches.h"
 #include "content/test/content_browser_test_utils_internal.h"
-#include "content/test/test_frame_navigation_observer.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
@@ -31,23 +32,25 @@
 
 namespace content {
 
+namespace {
+
+std::string GetOriginFromRenderer(FrameTreeNode* node) {
+  std::string origin;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      node, "window.domAutomationController.send(document.origin);", &origin));
+  return origin;
+}
+
+}  // namespace
+
 class FrameTreeBrowserTest : public ContentBrowserTest {
  public:
   FrameTreeBrowserTest() {}
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
-    ASSERT_TRUE(embedded_test_server()->Start());
     SetupCrossSiteRedirector(embedded_test_server());
-  }
-
- protected:
-  std::string GetOriginFromRenderer(FrameTreeNode* node) {
-    std::string origin;
-    EXPECT_TRUE(ExecuteScriptAndExtractString(
-        node, "window.domAutomationController.send(document.origin);",
-        &origin));
-    return origin;
+    ASSERT_TRUE(embedded_test_server()->Start());
   }
 
  private:
@@ -319,6 +322,7 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, NavigateGrandchildToBlob) {
   FrameTreeNode* target = root->child_at(0)->child_at(0);
 
   std::string blob_url_string;
+  RenderFrameDeletedObserver deleted_observer(target->current_frame_host());
   EXPECT_TRUE(ExecuteScriptAndExtractString(
       root,
       "function receiveMessage(event) {"
@@ -333,6 +337,9 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, NavigateGrandchildToBlob) {
       "var blob_url = URL.createObjectURL(blob);"
       "frames[0][0].location.href = blob_url;",
       &blob_url_string));
+  // Wait for the RenderFrame to go away, if this will be cross-process.
+  if (AreAllSitesIsolatedForTesting())
+    deleted_observer.WaitUntilDeleted();
   EXPECT_EQ(GURL(blob_url_string), target->current_url());
   EXPECT_EQ(url::kBlobScheme, target->current_url().scheme());
   EXPECT_FALSE(target->current_origin().unique());
@@ -479,7 +486,7 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, ChildFrameWithSrcdoc) {
     EXPECT_EQ(2U, root->child_count());
     observer.Wait();
 
-    EXPECT_EQ(GURL(url::kAboutBlankURL), root->child_at(1)->current_url());
+    EXPECT_EQ(GURL(kAboutSrcDocURL), root->child_at(1)->current_url());
     EXPECT_TRUE(ExecuteScriptAndExtractString(
         root->child_at(1), "domAutomationController.send(document.origin);",
         &frame_origin));
@@ -498,7 +505,7 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, ChildFrameWithSrcdoc) {
     EXPECT_TRUE(ExecuteScript(root, script));
     observer.Wait();
 
-    EXPECT_EQ(GURL(url::kAboutBlankURL), child->current_url());
+    EXPECT_EQ(GURL(kAboutSrcDocURL), child->current_url());
     EXPECT_TRUE(ExecuteScriptAndExtractString(
         child, "domAutomationController.send(document.origin);",
         &frame_origin));
@@ -521,15 +528,15 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, SandboxFlagsSetForChildFrames) {
   // which resets both SandboxFlags::Scripts and
   // SandboxFlags::AutomaticFeatures bits per blink::parseSandboxPolicy(), and
   // third frame has "allow-scripts allow-same-origin".
-  EXPECT_EQ(blink::WebSandboxFlags::None, root->effective_sandbox_flags());
-  EXPECT_EQ(blink::WebSandboxFlags::All,
+  EXPECT_EQ(blink::WebSandboxFlags::kNone, root->effective_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll,
             root->child_at(0)->effective_sandbox_flags());
-  EXPECT_EQ(blink::WebSandboxFlags::All & ~blink::WebSandboxFlags::Scripts &
-                ~blink::WebSandboxFlags::AutomaticFeatures,
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
             root->child_at(1)->effective_sandbox_flags());
-  EXPECT_EQ(blink::WebSandboxFlags::All & ~blink::WebSandboxFlags::Scripts &
-                ~blink::WebSandboxFlags::AutomaticFeatures &
-                ~blink::WebSandboxFlags::Origin,
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures &
+                ~blink::WebSandboxFlags::kOrigin,
             root->child_at(2)->effective_sandbox_flags());
 
   // Sandboxed frames should set a unique origin unless they have the
@@ -542,7 +549,7 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, SandboxFlagsSetForChildFrames) {
   // Navigating to a different URL should not clear sandbox flags.
   GURL frame_url(embedded_test_server()->GetURL("/title1.html"));
   NavigateFrameToURL(root->child_at(0), frame_url);
-  EXPECT_EQ(blink::WebSandboxFlags::All,
+  EXPECT_EQ(blink::WebSandboxFlags::kAll,
             root->child_at(0)->effective_sandbox_flags());
 }
 
@@ -587,8 +594,8 @@ class CrossProcessFrameTreeBrowserTest : public ContentBrowserTest {
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
-    ASSERT_TRUE(embedded_test_server()->Start());
     SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
   }
 
  private:
@@ -689,6 +696,69 @@ IN_PROC_BROWSER_TEST_F(CrossProcessFrameTreeBrowserTest,
   // Navigating to a data URL should set a unique origin.  This is represented
   // as "null" per RFC 6454.
   EXPECT_EQ(root->child_at(1)->current_origin().Serialize(), "null");
+}
+
+// FrameTreeBrowserTest variant where we isolate http://*.is, Iceland's top
+// level domain. This is an analogue to --isolate-extensions that we use inside
+// of content_browsertests, where extensions don't exist. Iceland, like an
+// extension process, is a special place with magical powers; we want to protect
+// it from outsiders.
+class IsolateIcelandFrameTreeBrowserTest : public ContentBrowserTest {
+ public:
+  IsolateIcelandFrameTreeBrowserTest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitchASCII(switches::kIsolateSitesForTesting, "*.is");
+  }
+
+  void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(IsolateIcelandFrameTreeBrowserTest);
+};
+
+// Regression test for https://crbug.com/644966
+IN_PROC_BROWSER_TEST_F(IsolateIcelandFrameTreeBrowserTest,
+                       ProcessSwitchForIsolatedBlob) {
+  // blink suppresses navigations to blob URLs of origins different from the
+  // frame initiating the navigation. We disable those checks for this test, to
+  // test what happens in a compromise scenario.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisableWebSecurity);
+
+  // Set up an iframe.
+  WebContents* contents = shell()->web_contents();
+  FrameTreeNode* root =
+      static_cast<WebContentsImpl*>(contents)->GetFrameTree()->root();
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(a)"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // The navigation targets an invalid blob url; that's intentional to trigger
+  // an error response. The response should commit in a process dedicated to
+  // http://b.is.
+  std::string result;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      root,
+      "var iframe_element = document.getElementsByTagName('iframe')[0];"
+      "iframe_element.onload = () => {"
+      "    domAutomationController.send('done');"
+      "};"
+      "iframe_element.src = 'blob:http://b.is:2932/';",
+      &result));
+  WaitForLoadStop(contents);
+
+  // Make sure we did a process transfer back to "b.is".
+  EXPECT_EQ(
+      " Site A ------------ proxies for B\n"
+      "   +--Site B ------- proxies for A\n"
+      "Where A = http://a.com/\n"
+      "      B = http://b.is/",
+      FrameTreeVisualizer().DepictFrameTree(root));
 }
 
 }  // namespace content

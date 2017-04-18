@@ -26,7 +26,7 @@
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
-#include "wtf/Noncopyable.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -34,49 +34,55 @@ class SourceGraphic;
 class FilterEffect;
 
 class PLATFORM_EXPORT Filter final : public GarbageCollected<Filter> {
-    WTF_MAKE_NONCOPYABLE(Filter);
-public:
-    enum UnitScaling {
-        UserSpace,
-        BoundingBox
-    };
+  WTF_MAKE_NONCOPYABLE(Filter);
 
-    static Filter* create(const FloatRect& referenceBox, const FloatRect& filterRegion, float scale, UnitScaling);
-    static Filter* create(float scale);
+ public:
+  enum UnitScaling { kUserSpace, kBoundingBox };
 
-    DECLARE_TRACE();
+  static Filter* Create(const FloatRect& reference_box,
+                        const FloatRect& filter_region,
+                        float scale,
+                        UnitScaling);
+  static Filter* Create(float scale);
 
-    float scale() const { return m_scale; }
-    FloatRect mapLocalRectToAbsoluteRect(const FloatRect&) const;
-    FloatRect mapAbsoluteRectToLocalRect(const FloatRect&) const;
+  DECLARE_TRACE();
 
-    float applyHorizontalScale(float value) const;
-    float applyVerticalScale(float value) const;
+  float Scale() const { return scale_; }
+  FloatRect MapLocalRectToAbsoluteRect(const FloatRect&) const;
+  FloatRect MapAbsoluteRectToLocalRect(const FloatRect&) const;
 
-    FloatPoint3D resolve3dPoint(const FloatPoint3D&) const;
+  float ApplyHorizontalScale(float value) const;
+  float ApplyVerticalScale(float value) const;
 
-    FloatRect absoluteFilterRegion() const { return mapLocalRectToAbsoluteRect(m_filterRegion); }
+  FloatPoint3D Resolve3dPoint(const FloatPoint3D&) const;
 
-    const FloatRect& filterRegion() const { return m_filterRegion; }
-    const FloatRect& referenceBox() const { return m_referenceBox; }
+  FloatRect AbsoluteFilterRegion() const {
+    return MapLocalRectToAbsoluteRect(filter_region_);
+  }
 
-    void setLastEffect(FilterEffect*);
-    FilterEffect* lastEffect() const { return m_lastEffect.get(); }
+  const FloatRect& FilterRegion() const { return filter_region_; }
+  const FloatRect& ReferenceBox() const { return reference_box_; }
 
-    SourceGraphic* getSourceGraphic() const { return m_sourceGraphic.get(); }
+  void SetLastEffect(FilterEffect*);
+  FilterEffect* LastEffect() const { return last_effect_.Get(); }
 
-private:
-    Filter(const FloatRect& referenceBox, const FloatRect& filterRegion, float scale, UnitScaling);
+  SourceGraphic* GetSourceGraphic() const { return source_graphic_.Get(); }
 
-    FloatRect m_referenceBox;
-    FloatRect m_filterRegion;
-    float m_scale;
-    UnitScaling m_unitScaling;
+ private:
+  Filter(const FloatRect& reference_box,
+         const FloatRect& filter_region,
+         float scale,
+         UnitScaling);
 
-    Member<SourceGraphic> m_sourceGraphic;
-    Member<FilterEffect> m_lastEffect;
+  FloatRect reference_box_;
+  FloatRect filter_region_;
+  float scale_;
+  UnitScaling unit_scaling_;
+
+  Member<SourceGraphic> source_graphic_;
+  Member<FilterEffect> last_effect_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Filter_h
+#endif  // Filter_h

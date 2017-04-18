@@ -20,7 +20,7 @@ namespace browsing_data {
 HistoryCounter::HistoryCounter(
     history::HistoryService* history_service,
     const GetUpdatedWebHistoryServiceCallback& callback,
-    sync_driver::SyncService* sync_service)
+    syncer::SyncService* sync_service)
     : history_service_(history_service),
       web_history_service_callback_(callback),
       sync_service_(sync_service),
@@ -46,7 +46,9 @@ bool HistoryCounter::HasTrackedTasks() {
 }
 
 const char* HistoryCounter::GetPrefName() const {
-  return browsing_data::prefs::kDeleteBrowsingHistory;
+  return GetTab() == ClearBrowsingDataTab::BASIC
+             ? browsing_data::prefs::kDeleteBrowsingHistoryBasic
+             : browsing_data::prefs::kDeleteBrowsingHistory;
 }
 
 void HistoryCounter::Count() {
@@ -147,8 +149,8 @@ void HistoryCounter::MergeResults() {
   if (!local_counting_finished_ || !web_counting_finished_)
     return;
 
-  ReportResult(base::WrapUnique(
-      new HistoryResult(this, local_result_, has_synced_visits_)));
+  ReportResult(
+      base::MakeUnique<HistoryResult>(this, local_result_, has_synced_visits_));
 }
 
 HistoryCounter::HistoryResult::HistoryResult(const HistoryCounter* source,
@@ -158,7 +160,7 @@ HistoryCounter::HistoryResult::HistoryResult(const HistoryCounter* source,
 
 HistoryCounter::HistoryResult::~HistoryResult() {}
 
-void HistoryCounter::OnStateChanged() {
+void HistoryCounter::OnStateChanged(syncer::SyncService* sync) {
   bool history_sync_enabled_new_state = !!web_history_service_callback_.Run();
 
   // If the history sync was just enabled or disabled, restart the counter

@@ -10,16 +10,17 @@
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
  */
 
 #ifndef InspectorCSSAgent_h
@@ -33,18 +34,16 @@
 #include "core/inspector/InspectorDOMAgent.h"
 #include "core/inspector/InspectorStyleSheet.h"
 #include "core/inspector/protocol/CSS.h"
-#include "platform/inspector_protocol/Values.h"
-#include "wtf/HashCountedSet.h"
-#include "wtf/HashMap.h"
-#include "wtf/HashSet.h"
-#include "wtf/PassRefPtr.h"
-#include "wtf/RefPtr.h"
-#include "wtf/Vector.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/HashCountedSet.h"
+#include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-class CSSKeyframeRule;
 class CSSRule;
 class CSSRuleList;
 class CSSStyleRule;
@@ -58,181 +57,306 @@ class InspectorResourceContentLoader;
 class MediaList;
 class Node;
 class LayoutObject;
+class StyleRuleUsageTracker;
 
 class CORE_EXPORT InspectorCSSAgent final
-    : public InspectorBaseAgent<protocol::CSS::Metainfo>
-    , public InspectorDOMAgent::DOMListener
-    , public InspectorStyleSheetBase::Listener {
-    WTF_MAKE_NONCOPYABLE(InspectorCSSAgent);
-    USING_GARBAGE_COLLECTED_MIXIN(InspectorCSSAgent);
-public:
-    enum MediaListSource {
-        MediaListSourceLinkedSheet,
-        MediaListSourceInlineSheet,
-        MediaListSourceMediaRule,
-        MediaListSourceImportRule
-    };
+    : public InspectorBaseAgent<protocol::CSS::Metainfo>,
+      public InspectorDOMAgent::DOMListener,
+      public InspectorStyleSheetBase::Listener {
+  WTF_MAKE_NONCOPYABLE(InspectorCSSAgent);
+  USING_GARBAGE_COLLECTED_MIXIN(InspectorCSSAgent);
 
-    enum StyleSheetsUpdateType {
-        InitialFrontendLoad = 0,
-        ExistingFrontendRefresh,
-    };
+ public:
+  enum MediaListSource {
+    kMediaListSourceLinkedSheet,
+    kMediaListSourceInlineSheet,
+    kMediaListSourceMediaRule,
+    kMediaListSourceImportRule
+  };
 
-    class InlineStyleOverrideScope {
-        STACK_ALLOCATED();
-    public:
-        InlineStyleOverrideScope(SecurityContext* context)
-            : m_contentSecurityPolicy(context->contentSecurityPolicy())
-        {
-            m_contentSecurityPolicy->setOverrideAllowInlineStyle(true);
-        }
+  class InlineStyleOverrideScope {
+    STACK_ALLOCATED();
 
-        ~InlineStyleOverrideScope()
-        {
-            m_contentSecurityPolicy->setOverrideAllowInlineStyle(false);
-        }
-
-    private:
-        Member<ContentSecurityPolicy> m_contentSecurityPolicy;
-    };
-
-    static CSSStyleRule* asCSSStyleRule(CSSRule*);
-    static CSSMediaRule* asCSSMediaRule(CSSRule*);
-
-    static InspectorCSSAgent* create(InspectorDOMAgent* domAgent, InspectedFrames* inspectedFrames, InspectorNetworkAgent* networkAgent, InspectorResourceContentLoader* resourceContentLoader, InspectorResourceContainer* resourceContainer)
-    {
-        return new InspectorCSSAgent(domAgent, inspectedFrames, networkAgent, resourceContentLoader, resourceContainer);
+   public:
+    InlineStyleOverrideScope(SecurityContext* context)
+        : content_security_policy_(context->GetContentSecurityPolicy()) {
+      content_security_policy_->SetOverrideAllowInlineStyle(true);
     }
 
-    static void collectAllDocumentStyleSheets(Document*, HeapVector<Member<CSSStyleSheet>>&);
+    ~InlineStyleOverrideScope() {
+      content_security_policy_->SetOverrideAllowInlineStyle(false);
+    }
 
-    ~InspectorCSSAgent() override;
-    DECLARE_VIRTUAL_TRACE();
+   private:
+    Member<ContentSecurityPolicy> content_security_policy_;
+  };
 
-    bool forcePseudoState(Element*, CSSSelector::PseudoType);
-    void didCommitLoadForLocalFrame(LocalFrame*) override;
-    void restore() override;
-    void flushPendingProtocolNotifications() override;
-    void reset();
-    void mediaQueryResultChanged();
+  static CSSStyleRule* AsCSSStyleRule(CSSRule*);
+  static CSSMediaRule* AsCSSMediaRule(CSSRule*);
 
-    void activeStyleSheetsUpdated(Document*);
-    void documentDetached(Document*);
+  static InspectorCSSAgent* Create(
+      InspectorDOMAgent* dom_agent,
+      InspectedFrames* inspected_frames,
+      InspectorNetworkAgent* network_agent,
+      InspectorResourceContentLoader* resource_content_loader,
+      InspectorResourceContainer* resource_container) {
+    return new InspectorCSSAgent(dom_agent, inspected_frames, network_agent,
+                                 resource_content_loader, resource_container);
+  }
 
-    void enable(ErrorString*, std::unique_ptr<EnableCallback>) override;
-    void disable(ErrorString*) override;
-    void getMatchedStylesForNode(ErrorString*, int nodeId, Maybe<protocol::CSS::CSSStyle>* inlineStyle, Maybe<protocol::CSS::CSSStyle>* attributesStyle, Maybe<protocol::Array<protocol::CSS::RuleMatch>>* matchedCSSRules, Maybe<protocol::Array<protocol::CSS::PseudoElementMatches>>*, Maybe<protocol::Array<protocol::CSS::InheritedStyleEntry>>*, Maybe<protocol::Array<protocol::CSS::CSSKeyframesRule>>*) override;
-    void getInlineStylesForNode(ErrorString*, int nodeId, Maybe<protocol::CSS::CSSStyle>* inlineStyle, Maybe<protocol::CSS::CSSStyle>* attributesStyle) override;
-    void getComputedStyleForNode(ErrorString*, int nodeId, std::unique_ptr<protocol::Array<protocol::CSS::CSSComputedStyleProperty>>*) override;
-    void getPlatformFontsForNode(ErrorString*, int nodeId, std::unique_ptr<protocol::Array<protocol::CSS::PlatformFontUsage>>* fonts) override;
-    void getStyleSheetText(ErrorString*, const String& styleSheetId, String* text) override;
-    void setStyleSheetText(ErrorString*, const String& styleSheetId, const String& text, Maybe<String>* sourceMapURL) override;
-    void setRuleSelector(ErrorString*, const String& styleSheetId, std::unique_ptr<protocol::CSS::SourceRange>, const String& selector, std::unique_ptr<protocol::CSS::SelectorList>*) override;
-    void setKeyframeKey(ErrorString*, const String& styleSheetId, std::unique_ptr<protocol::CSS::SourceRange>, const String& keyText, std::unique_ptr<protocol::CSS::Value>* outKeyText) override;
-    void setStyleTexts(ErrorString*, std::unique_ptr<protocol::Array<protocol::CSS::StyleDeclarationEdit>> edits, std::unique_ptr<protocol::Array<protocol::CSS::CSSStyle>>* styles) override;
-    void setMediaText(ErrorString*, const String& styleSheetId, std::unique_ptr<protocol::CSS::SourceRange>, const String& text, std::unique_ptr<protocol::CSS::CSSMedia>*) override;
-    void createStyleSheet(ErrorString*, const String& frameId, String* styleSheetId) override;
-    void addRule(ErrorString*, const String& styleSheetId, const String& ruleText, std::unique_ptr<protocol::CSS::SourceRange>, std::unique_ptr<protocol::CSS::CSSRule>*) override;
-    void forcePseudoState(ErrorString*, int nodeId, std::unique_ptr<protocol::Array<String>> forcedPseudoClasses) override;
-    void getMediaQueries(ErrorString*, std::unique_ptr<protocol::Array<protocol::CSS::CSSMedia>>*) override;
-    void setEffectivePropertyValueForNode(ErrorString*, int nodeId, const String& propertyName, const String& value) override;
-    void getBackgroundColors(ErrorString*, int nodeId, Maybe<protocol::Array<String>>* backgroundColors) override;
+  static void CollectAllDocumentStyleSheets(Document*,
+                                            HeapVector<Member<CSSStyleSheet>>&);
 
-    void collectMediaQueriesFromRule(CSSRule*, protocol::Array<protocol::CSS::CSSMedia>*);
-    void collectMediaQueriesFromStyleSheet(CSSStyleSheet*, protocol::Array<protocol::CSS::CSSMedia>*);
-    std::unique_ptr<protocol::CSS::CSSMedia> buildMediaObject(const MediaList*, MediaListSource, const String&, CSSStyleSheet*);
-    std::unique_ptr<protocol::Array<protocol::CSS::CSSMedia>> buildMediaListChain(CSSRule*);
+  ~InspectorCSSAgent() override;
+  DECLARE_VIRTUAL_TRACE();
 
-    CSSStyleDeclaration* findEffectiveDeclaration(CSSPropertyID, const HeapVector<Member<CSSStyleDeclaration>>& styles);
-    void setLayoutEditorValue(ErrorString*, Element*, CSSStyleDeclaration*, CSSPropertyID, const String& value, bool forceImportant = false);
-    void layoutEditorItemSelected(Element*, CSSStyleDeclaration*);
+  void ForcePseudoState(Element*, CSSSelector::PseudoType, bool* result);
+  void DidCommitLoadForLocalFrame(LocalFrame*) override;
+  void Restore() override;
+  void FlushPendingProtocolNotifications() override;
+  void Reset();
+  void MediaQueryResultChanged();
 
-    HeapVector<Member<CSSStyleDeclaration>> matchingStyles(Element*);
-    String styleSheetId(CSSStyleSheet*);
-private:
-    class StyleSheetAction;
-    class SetStyleSheetTextAction;
-    class ModifyRuleAction;
-    class SetElementStyleAction;
-    class AddRuleAction;
+  void ActiveStyleSheetsUpdated(Document*);
+  void DocumentDetached(Document*);
+  void FontsUpdated();
+  void SetCoverageEnabled(bool);
 
-    static void collectStyleSheets(CSSStyleSheet*, HeapVector<Member<CSSStyleSheet>>&);
+  void enable(std::unique_ptr<EnableCallback>) override;
+  protocol::Response disable() override;
+  protocol::Response getMatchedStylesForNode(
+      int node_id,
+      protocol::Maybe<protocol::CSS::CSSStyle>* inline_style,
+      protocol::Maybe<protocol::CSS::CSSStyle>* attributes_style,
+      protocol::Maybe<protocol::Array<protocol::CSS::RuleMatch>>*
+          matched_css_rules,
+      protocol::Maybe<protocol::Array<protocol::CSS::PseudoElementMatches>>*,
+      protocol::Maybe<protocol::Array<protocol::CSS::InheritedStyleEntry>>*,
+      protocol::Maybe<protocol::Array<protocol::CSS::CSSKeyframesRule>>*)
+      override;
+  protocol::Response getInlineStylesForNode(
+      int node_id,
+      protocol::Maybe<protocol::CSS::CSSStyle>* inline_style,
+      protocol::Maybe<protocol::CSS::CSSStyle>* attributes_style) override;
+  protocol::Response getComputedStyleForNode(
+      int node_id,
+      std::unique_ptr<
+          protocol::Array<protocol::CSS::CSSComputedStyleProperty>>*) override;
+  protocol::Response getPlatformFontsForNode(
+      int node_id,
+      std::unique_ptr<protocol::Array<protocol::CSS::PlatformFontUsage>>* fonts)
+      override;
+  protocol::Response collectClassNames(
+      const String& style_sheet_id,
+      std::unique_ptr<protocol::Array<String>>* class_names) override;
+  protocol::Response getStyleSheetText(const String& style_sheet_id,
+                                       String* text) override;
+  protocol::Response setStyleSheetText(
+      const String& style_sheet_id,
+      const String& text,
+      protocol::Maybe<String>* source_map_url) override;
+  protocol::Response setRuleSelector(
+      const String& style_sheet_id,
+      std::unique_ptr<protocol::CSS::SourceRange>,
+      const String& selector,
+      std::unique_ptr<protocol::CSS::SelectorList>*) override;
+  protocol::Response setKeyframeKey(
+      const String& style_sheet_id,
+      std::unique_ptr<protocol::CSS::SourceRange>,
+      const String& key_text,
+      std::unique_ptr<protocol::CSS::Value>* out_key_text) override;
+  protocol::Response setStyleTexts(
+      std::unique_ptr<protocol::Array<protocol::CSS::StyleDeclarationEdit>>
+          edits,
+      std::unique_ptr<protocol::Array<protocol::CSS::CSSStyle>>* styles)
+      override;
+  protocol::Response setMediaText(
+      const String& style_sheet_id,
+      std::unique_ptr<protocol::CSS::SourceRange>,
+      const String& text,
+      std::unique_ptr<protocol::CSS::CSSMedia>*) override;
+  protocol::Response createStyleSheet(const String& frame_id,
+                                      String* style_sheet_id) override;
+  protocol::Response addRule(const String& style_sheet_id,
+                             const String& rule_text,
+                             std::unique_ptr<protocol::CSS::SourceRange>,
+                             std::unique_ptr<protocol::CSS::CSSRule>*) override;
+  protocol::Response forcePseudoState(
+      int node_id,
+      std::unique_ptr<protocol::Array<String>> forced_pseudo_classes) override;
+  protocol::Response getMediaQueries(
+      std::unique_ptr<protocol::Array<protocol::CSS::CSSMedia>>*) override;
+  protocol::Response setEffectivePropertyValueForNode(
+      int node_id,
+      const String& property_name,
+      const String& value) override;
+  protocol::Response getBackgroundColors(
+      int node_id,
+      protocol::Maybe<protocol::Array<String>>* background_colors) override;
 
-    InspectorCSSAgent(InspectorDOMAgent*, InspectedFrames*, InspectorNetworkAgent*, InspectorResourceContentLoader*, InspectorResourceContainer*);
+  protocol::Response startRuleUsageTracking() override;
+  protocol::Response takeCoverageDelta(
+      std::unique_ptr<protocol::Array<protocol::CSS::RuleUsage>>* result)
+      override;
+  protocol::Response stopRuleUsageTracking(
+      std::unique_ptr<protocol::Array<protocol::CSS::RuleUsage>>* result)
+      override;
 
-    typedef HeapHashMap<String, Member<InspectorStyleSheet>> IdToInspectorStyleSheet;
-    typedef HeapHashMap<String, Member<InspectorStyleSheetForInlineStyle>> IdToInspectorStyleSheetForInlineStyle;
-    typedef HeapHashMap<Member<Node>, Member<InspectorStyleSheetForInlineStyle>> NodeToInspectorStyleSheet; // bogus "stylesheets" with elements' inline styles
-    typedef HashMap<int, unsigned> NodeIdToForcedPseudoState;
+  void CollectMediaQueriesFromRule(CSSRule*,
+                                   protocol::Array<protocol::CSS::CSSMedia>*);
+  void CollectMediaQueriesFromStyleSheet(
+      CSSStyleSheet*,
+      protocol::Array<protocol::CSS::CSSMedia>*);
+  std::unique_ptr<protocol::CSS::CSSMedia> BuildMediaObject(const MediaList*,
+                                                            MediaListSource,
+                                                            const String&,
+                                                            CSSStyleSheet*);
+  std::unique_ptr<protocol::Array<protocol::CSS::CSSMedia>> BuildMediaListChain(
+      CSSRule*);
 
-    void resourceContentLoaded(std::unique_ptr<EnableCallback>);
-    void wasEnabled();
-    void resetNonPersistentData();
-    InspectorStyleSheetForInlineStyle* asInspectorStyleSheet(Element* element);
-    Element* elementForId(ErrorString*, int nodeId);
+  CSSStyleDeclaration* FindEffectiveDeclaration(
+      CSSPropertyID,
+      const HeapVector<Member<CSSStyleDeclaration>>& styles);
+  protocol::Response getLayoutTreeAndStyles(
+      std::unique_ptr<protocol::Array<String>> style_whitelist,
+      std::unique_ptr<protocol::Array<protocol::CSS::LayoutTreeNode>>*
+          layout_tree_nodes,
+      std::unique_ptr<protocol::Array<protocol::CSS::ComputedStyle>>*
+          computed_styles) override;
 
-    void updateActiveStyleSheets(Document*, StyleSheetsUpdateType);
-    void setActiveStyleSheets(Document*, const HeapVector<Member<CSSStyleSheet>>&, StyleSheetsUpdateType);
-    CSSStyleDeclaration* setStyleText(ErrorString*, InspectorStyleSheetBase*, const SourceRange&, const String&);
-    bool multipleStyleTextsActions(ErrorString*, std::unique_ptr<protocol::Array<protocol::CSS::StyleDeclarationEdit>>, HeapVector<Member<StyleSheetAction>>* actions);
+  HeapVector<Member<CSSStyleDeclaration>> MatchingStyles(Element*);
+  String StyleSheetId(CSSStyleSheet*);
 
-    std::unique_ptr<protocol::Array<protocol::CSS::CSSKeyframesRule>> animationsForNode(Element*);
+ private:
+  class StyleSheetAction;
+  class SetStyleSheetTextAction;
+  class ModifyRuleAction;
+  class SetElementStyleAction;
+  class AddRuleAction;
 
-    void collectPlatformFontsForLayoutObject(LayoutObject*, HashCountedSet<std::pair<int, String>>*);
+  static void CollectStyleSheets(CSSStyleSheet*,
+                                 HeapVector<Member<CSSStyleSheet>>&);
 
-    InspectorStyleSheet* bindStyleSheet(CSSStyleSheet*);
-    String unbindStyleSheet(InspectorStyleSheet*);
-    InspectorStyleSheet* inspectorStyleSheetForRule(CSSStyleRule*);
+  InspectorCSSAgent(InspectorDOMAgent*,
+                    InspectedFrames*,
+                    InspectorNetworkAgent*,
+                    InspectorResourceContentLoader*,
+                    InspectorResourceContainer*);
 
-    InspectorStyleSheet* viaInspectorStyleSheet(Document*, bool createIfAbsent);
-    InspectorStyleSheet* assertInspectorStyleSheetForId(ErrorString*, const String&);
-    InspectorStyleSheetBase* assertStyleSheetForId(ErrorString*, const String&);
-    String detectOrigin(CSSStyleSheet* pageStyleSheet, Document* ownerDocument);
+  typedef HeapHashMap<String, Member<InspectorStyleSheet>>
+      IdToInspectorStyleSheet;
+  typedef HeapHashMap<String, Member<InspectorStyleSheetForInlineStyle>>
+      IdToInspectorStyleSheetForInlineStyle;
+  typedef HeapHashMap<Member<Node>, Member<InspectorStyleSheetForInlineStyle>>
+      NodeToInspectorStyleSheet;  // bogus "stylesheets" with elements' inline
+                                  // styles
+  typedef HashMap<int, unsigned> NodeIdToForcedPseudoState;
 
-    std::unique_ptr<protocol::CSS::CSSRule> buildObjectForRule(CSSStyleRule*);
-    std::unique_ptr<protocol::Array<protocol::CSS::RuleMatch>> buildArrayForMatchedRuleList(CSSRuleList*, Element*, PseudoId);
-    std::unique_ptr<protocol::CSS::CSSStyle> buildObjectForAttributesStyle(Element*);
+  void ResourceContentLoaded(std::unique_ptr<EnableCallback>);
+  void WasEnabled();
+  void ResetNonPersistentData();
+  InspectorStyleSheetForInlineStyle* AsInspectorStyleSheet(Element* element);
 
-    // InspectorDOMAgent::DOMListener implementation
-    void didRemoveDocument(Document*) override;
-    void didRemoveDOMNode(Node*) override;
-    void didModifyDOMAttr(Element*) override;
+  void UpdateActiveStyleSheets(Document*);
+  void SetActiveStyleSheets(Document*,
+                            const HeapVector<Member<CSSStyleSheet>>&);
+  protocol::Response SetStyleText(InspectorStyleSheetBase*,
+                                  const SourceRange&,
+                                  const String&,
+                                  CSSStyleDeclaration*&);
+  protocol::Response MultipleStyleTextsActions(
+      std::unique_ptr<protocol::Array<protocol::CSS::StyleDeclarationEdit>>,
+      HeapVector<Member<StyleSheetAction>>* actions);
 
-    // InspectorStyleSheet::Listener implementation
-    void styleSheetChanged(InspectorStyleSheetBase*) override;
-    void willReparseStyleSheet() override;
-    void didReparseStyleSheet() override;
+  std::unique_ptr<protocol::Array<protocol::CSS::CSSKeyframesRule>>
+  AnimationsForNode(Element*);
 
-    void resetPseudoStates();
+  void CollectPlatformFontsForLayoutObject(
+      LayoutObject*,
+      HashCountedSet<std::pair<int, String>>*);
 
-    Member<InspectorDOMAgent> m_domAgent;
-    Member<InspectedFrames> m_inspectedFrames;
-    Member<InspectorNetworkAgent> m_networkAgent;
-    Member<InspectorResourceContentLoader> m_resourceContentLoader;
-    Member<InspectorResourceContainer> m_resourceContainer;
+  InspectorStyleSheet* BindStyleSheet(CSSStyleSheet*);
+  String UnbindStyleSheet(InspectorStyleSheet*);
+  InspectorStyleSheet* InspectorStyleSheetForRule(CSSStyleRule*);
 
-    IdToInspectorStyleSheet m_idToInspectorStyleSheet;
-    IdToInspectorStyleSheetForInlineStyle m_idToInspectorStyleSheetForInlineStyle;
-    HeapHashMap<Member<CSSStyleSheet>, Member<InspectorStyleSheet>> m_cssStyleSheetToInspectorStyleSheet;
-    typedef HeapHashMap<Member<Document>, Member<HeapHashSet<Member<CSSStyleSheet>>>> DocumentStyleSheets;
-    DocumentStyleSheets m_documentToCSSStyleSheets;
-    HeapHashSet<Member<Document>> m_invalidatedDocuments;
+  InspectorStyleSheet* ViaInspectorStyleSheet(Document*);
+  protocol::Response AssertInspectorStyleSheetForId(const String&,
+                                                    InspectorStyleSheet*&);
+  protocol::Response AssertStyleSheetForId(const String&,
+                                           InspectorStyleSheetBase*&);
+  String DetectOrigin(CSSStyleSheet* page_style_sheet,
+                      Document* owner_document);
 
-    NodeToInspectorStyleSheet m_nodeToInspectorStyleSheet;
-    HeapHashMap<Member<Document>, Member<InspectorStyleSheet>> m_documentToViaInspectorStyleSheet; // "via inspector" stylesheets
-    NodeIdToForcedPseudoState m_nodeIdToForcedPseudoState;
+  std::unique_ptr<protocol::CSS::CSSRule> BuildObjectForRule(CSSStyleRule*);
+  std::unique_ptr<protocol::CSS::RuleUsage> BuildCoverageInfo(CSSStyleRule*,
+                                                              bool);
+  std::unique_ptr<protocol::Array<protocol::CSS::RuleMatch>>
+  BuildArrayForMatchedRuleList(CSSRuleList*, Element*, PseudoId);
+  std::unique_ptr<protocol::CSS::CSSStyle> BuildObjectForAttributesStyle(
+      Element*);
 
-    Member<CSSStyleSheet> m_inspectorUserAgentStyleSheet;
+  // InspectorDOMAgent::DOMListener implementation
+  void DidAddDocument(Document*) override;
+  void DidRemoveDocument(Document*) override;
+  void DidRemoveDOMNode(Node*) override;
+  void DidModifyDOMAttr(Element*) override;
 
-    bool m_creatingViaInspectorStyleSheet;
-    bool m_isSettingStyleSheetText;
-    int m_resourceContentLoaderClientId;
+  // InspectorStyleSheet::Listener implementation
+  void StyleSheetChanged(InspectorStyleSheetBase*) override;
 
-    friend class InspectorResourceContentLoaderCallback;
-    friend class StyleSheetBinder;
+  void ResetPseudoStates();
+
+  struct VectorStringHashTraits;
+  using ComputedStylesMap = WTF::HashMap<Vector<String>,
+                                         int,
+                                         VectorStringHashTraits,
+                                         VectorStringHashTraits>;
+
+  void VisitLayoutTreeNodes(
+      Node*,
+      protocol::Array<protocol::CSS::LayoutTreeNode>& layout_tree_nodes,
+      const Vector<std::pair<String, CSSPropertyID>>& css_property_whitelist,
+      ComputedStylesMap& style_to_index_map,
+      protocol::Array<protocol::CSS::ComputedStyle>& computed_styles);
+
+  // A non-zero index corresponds to a style in |computedStyles|, -1 means an
+  // empty style.
+  int GetStyleIndexForNode(
+      Node*,
+      const Vector<std::pair<String, CSSPropertyID>>& css_property_whitelist,
+      ComputedStylesMap& style_to_index_map,
+      protocol::Array<protocol::CSS::ComputedStyle>& computed_styles);
+
+  Member<InspectorDOMAgent> dom_agent_;
+  Member<InspectedFrames> inspected_frames_;
+  Member<InspectorNetworkAgent> network_agent_;
+  Member<InspectorResourceContentLoader> resource_content_loader_;
+  Member<InspectorResourceContainer> resource_container_;
+
+  IdToInspectorStyleSheet id_to_inspector_style_sheet_;
+  IdToInspectorStyleSheetForInlineStyle
+      id_to_inspector_style_sheet_for_inline_style_;
+  HeapHashMap<Member<CSSStyleSheet>, Member<InspectorStyleSheet>>
+      css_style_sheet_to_inspector_style_sheet_;
+  typedef HeapHashMap<Member<Document>,
+                      Member<HeapHashSet<Member<CSSStyleSheet>>>>
+      DocumentStyleSheets;
+  DocumentStyleSheets document_to_css_style_sheets_;
+  HeapHashSet<Member<Document>> invalidated_documents_;
+
+  NodeToInspectorStyleSheet node_to_inspector_style_sheet_;
+  NodeIdToForcedPseudoState node_id_to_forced_pseudo_state_;
+
+  Member<StyleRuleUsageTracker> tracker_;
+
+  Member<CSSStyleSheet> inspector_user_agent_style_sheet_;
+
+  int resource_content_loader_client_id_;
+
+  friend class InspectorResourceContentLoaderCallback;
+  friend class StyleSheetBinder;
 };
 
+}  // namespace blink
 
-} // namespace blink
-
-#endif // !defined(InspectorCSSAgent_h)
+#endif  // !defined(InspectorCSSAgent_h)

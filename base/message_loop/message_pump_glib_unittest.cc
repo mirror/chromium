@@ -17,6 +17,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/single_thread_task_runner.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -58,27 +59,27 @@ class EventInjector {
   void HandleDispatch() {
     if (events_.empty())
       return;
-    Event event = events_[0];
+    Event event = std::move(events_[0]);
     events_.erase(events_.begin());
     ++processed_events_;
     if (!event.callback.is_null())
-      event.callback.Run();
+      std::move(event.callback).Run();
     else if (!event.task.is_null())
-      event.task.Run();
+      std::move(event.task).Run();
   }
 
   // Adds an event to the queue. When "handled", executes |callback|.
   // delay_ms is relative to the last event if any, or to Now() otherwise.
-  void AddEvent(int delay_ms, const Closure& callback) {
-    AddEventHelper(delay_ms, callback, Closure());
+  void AddEvent(int delay_ms, OnceClosure callback) {
+    AddEventHelper(delay_ms, std::move(callback), OnceClosure());
   }
 
   void AddDummyEvent(int delay_ms) {
-    AddEventHelper(delay_ms, Closure(), Closure());
+    AddEventHelper(delay_ms, OnceClosure(), OnceClosure());
   }
 
-  void AddEventAsTask(int delay_ms, const Closure& task) {
-    AddEventHelper(delay_ms, Closure(), task);
+  void AddEventAsTask(int delay_ms, OnceClosure task) {
+    AddEventHelper(delay_ms, OnceClosure(), std::move(task));
   }
 
   void Reset() {
@@ -91,16 +92,15 @@ class EventInjector {
  private:
   struct Event {
     Time time;
-    Closure callback;
-    Closure task;
+    OnceClosure callback;
+    OnceClosure task;
   };
 
   struct Source : public GSource {
     EventInjector* injector;
   };
 
-  void AddEventHelper(
-      int delay_ms, const Closure& callback, const Closure& task) {
+  void AddEventHelper(int delay_ms, OnceClosure callback, OnceClosure task) {
     Time last_time;
     if (!events_.empty())
       last_time = (events_.end()-1)->time;
@@ -108,8 +108,8 @@ class EventInjector {
       last_time = Time::NowFromSystemTime();
 
     Time future = last_time + TimeDelta::FromMilliseconds(delay_ms);
-    EventInjector::Event event = {future, callback, task};
-    events_.push_back(event);
+    EventInjector::Event event = {future, std::move(callback), std::move(task)};
+    events_.push_back(std::move(event));
   }
 
   static gboolean Prepare(GSource* source, gint* timeout_ms) {
@@ -153,8 +153,8 @@ void ExpectProcessedEvents(EventInjector* injector, int count) {
 
 // Posts a task on the current message loop.
 void PostMessageLoopTask(const tracked_objects::Location& from_here,
-                         const Closure& task) {
-  ThreadTaskRunnerHandle::Get()->PostTask(from_here, task);
+                         OnceClosure task) {
+  ThreadTaskRunnerHandle::Get()->PostTask(from_here, std::move(task));
 }
 
 // Test fixture.
@@ -195,7 +195,7 @@ TEST_F(MessagePumpGLibTest, TestQuit) {
   injector()->Reset();
   // Quit from an event
   injector()->AddEvent(0, MessageLoop::QuitWhenIdleClosure());
-  loop()->Run();
+  RunLoop().Run();
   EXPECT_EQ(1, injector()->processed_events());
 }
 
@@ -207,26 +207,26 @@ TEST_F(MessagePumpGLibTest, TestEventTaskInterleave) {
   // If changes cause this test to fail, it is reasonable to change it, but
   // TestWorkWhileWaitingForEvents and TestEventsWhileWaitingForWork have to be
   // changed accordingly, otherwise they can become flaky.
-  injector()->AddEventAsTask(0, Bind(&DoNothing));
-  Closure check_task =
-      Bind(&ExpectProcessedEvents, Unretained(injector()), 2);
-  Closure posted_task =
-      Bind(&PostMessageLoopTask, FROM_HERE, check_task);
-  injector()->AddEventAsTask(0, posted_task);
-  injector()->AddEventAsTask(0, Bind(&DoNothing));
+  injector()->AddEventAsTask(0, BindOnce(&DoNothing));
+  OnceClosure check_task =
+      BindOnce(&ExpectProcessedEvents, Unretained(injector()), 2);
+  OnceClosure posted_task =
+      BindOnce(&PostMessageLoopTask, FROM_HERE, std::move(check_task));
+  injector()->AddEventAsTask(0, std::move(posted_task));
+  injector()->AddEventAsTask(0, BindOnce(&DoNothing));
   injector()->AddEvent(0, MessageLoop::QuitWhenIdleClosure());
-  loop()->Run();
+  RunLoop().Run();
   EXPECT_EQ(4, injector()->processed_events());
 
   injector()->Reset();
-  injector()->AddEventAsTask(0, Bind(&DoNothing));
-  check_task =
-      Bind(&ExpectProcessedEvents, Unretained(injector()), 2);
-  posted_task = Bind(&PostMessageLoopTask, FROM_HERE, check_task);
-  injector()->AddEventAsTask(0, posted_task);
-  injector()->AddEventAsTask(10, Bind(&DoNothing));
+  injector()->AddEventAsTask(0, BindOnce(&DoNothing));
+  check_task = BindOnce(&ExpectProcessedEvents, Unretained(injector()), 2);
+  posted_task =
+      BindOnce(&PostMessageLoopTask, FROM_HERE, std::move(check_task));
+  injector()->AddEventAsTask(0, std::move(posted_task));
+  injector()->AddEventAsTask(10, BindOnce(&DoNothing));
   injector()->AddEvent(0, MessageLoop::QuitWhenIdleClosure());
-  loop()->Run();
+  RunLoop().Run();
   EXPECT_EQ(4, injector()->processed_events());
 }
 
@@ -235,15 +235,15 @@ TEST_F(MessagePumpGLibTest, TestWorkWhileWaitingForEvents) {
   // Tests that we process tasks while waiting for new events.
   // The event queue is empty at first.
   for (int i = 0; i < 10; ++i) {
-    loop()->PostTask(FROM_HERE, Bind(&IncrementInt, &task_count));
+    loop()->task_runner()->PostTask(FROM_HERE,
+                                    BindOnce(&IncrementInt, &task_count));
   }
   // After all the previous tasks have executed, enqueue an event that will
   // quit.
-  loop()->PostTask(
-      FROM_HERE,
-      Bind(&EventInjector::AddEvent, Unretained(injector()), 0,
-                 MessageLoop::QuitWhenIdleClosure()));
-  loop()->Run();
+  loop()->task_runner()->PostTask(
+      FROM_HERE, BindOnce(&EventInjector::AddEvent, Unretained(injector()), 0,
+                          MessageLoop::QuitWhenIdleClosure()));
+  RunLoop().Run();
   ASSERT_EQ(10, task_count);
   EXPECT_EQ(1, injector()->processed_events());
 
@@ -251,21 +251,20 @@ TEST_F(MessagePumpGLibTest, TestWorkWhileWaitingForEvents) {
   injector()->Reset();
   task_count = 0;
   for (int i = 0; i < 10; ++i) {
-    loop()->PostDelayedTask(
-        FROM_HERE,
-        Bind(&IncrementInt, &task_count),
-        TimeDelta::FromMilliseconds(10*i));
+    loop()->task_runner()->PostDelayedTask(FROM_HERE,
+                                           BindOnce(&IncrementInt, &task_count),
+                                           TimeDelta::FromMilliseconds(10 * i));
   }
   // After all the previous tasks have executed, enqueue an event that will
   // quit.
   // This relies on the fact that delayed tasks are executed in delay order.
   // That is verified in message_loop_unittest.cc.
-  loop()->PostDelayedTask(
+  loop()->task_runner()->PostDelayedTask(
       FROM_HERE,
-      Bind(&EventInjector::AddEvent, Unretained(injector()), 10,
-                 MessageLoop::QuitWhenIdleClosure()),
+      BindOnce(&EventInjector::AddEvent, Unretained(injector()), 10,
+               MessageLoop::QuitWhenIdleClosure()),
       TimeDelta::FromMilliseconds(150));
-  loop()->Run();
+  RunLoop().Run();
   ASSERT_EQ(10, task_count);
   EXPECT_EQ(1, injector()->processed_events());
 }
@@ -279,15 +278,15 @@ TEST_F(MessagePumpGLibTest, TestEventsWhileWaitingForWork) {
   // After all the events have been processed, post a task that will check that
   // the events have been processed (note: the task executes after the event
   // that posted it has been handled, so we expect 11 at that point).
-  Closure check_task =
-      Bind(&ExpectProcessedEvents, Unretained(injector()), 11);
-  Closure posted_task =
-      Bind(&PostMessageLoopTask, FROM_HERE, check_task);
-  injector()->AddEventAsTask(10, posted_task);
+  OnceClosure check_task =
+      BindOnce(&ExpectProcessedEvents, Unretained(injector()), 11);
+  OnceClosure posted_task =
+      BindOnce(&PostMessageLoopTask, FROM_HERE, std::move(check_task));
+  injector()->AddEventAsTask(10, std::move(posted_task));
 
   // And then quit (relies on the condition tested by TestEventTaskInterleave).
   injector()->AddEvent(10, MessageLoop::QuitWhenIdleClosure());
-  loop()->Run();
+  RunLoop().Run();
 
   EXPECT_EQ(12, injector()->processed_events());
 }
@@ -313,7 +312,7 @@ class ConcurrentHelper : public RefCounted<ConcurrentHelper>  {
         MessageLoop::current()->QuitWhenIdle();
     } else {
       ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, Bind(&ConcurrentHelper::FromTask, this));
+          FROM_HERE, BindOnce(&ConcurrentHelper::FromTask, this));
     }
   }
 
@@ -324,8 +323,8 @@ class ConcurrentHelper : public RefCounted<ConcurrentHelper>  {
     if (task_count_ == 0 && event_count_ == 0) {
         MessageLoop::current()->QuitWhenIdle();
     } else {
-      injector_->AddEventAsTask(
-          0, Bind(&ConcurrentHelper::FromEvent, this));
+      injector_->AddEventAsTask(0,
+                                BindOnce(&ConcurrentHelper::FromEvent, this));
     }
   }
 
@@ -357,18 +356,16 @@ TEST_F(MessagePumpGLibTest, TestConcurrentEventPostedTask) {
 
   // Add 2 events to the queue to make sure it is always full (when we remove
   // the event before processing it).
-  injector()->AddEventAsTask(
-      0, Bind(&ConcurrentHelper::FromEvent, helper.get()));
-  injector()->AddEventAsTask(
-      0, Bind(&ConcurrentHelper::FromEvent, helper.get()));
+  injector()->AddEventAsTask(0, BindOnce(&ConcurrentHelper::FromEvent, helper));
+  injector()->AddEventAsTask(0, BindOnce(&ConcurrentHelper::FromEvent, helper));
 
   // Similarly post 2 tasks.
-  loop()->PostTask(
-      FROM_HERE, Bind(&ConcurrentHelper::FromTask, helper.get()));
-  loop()->PostTask(
-      FROM_HERE, Bind(&ConcurrentHelper::FromTask, helper.get()));
+  loop()->task_runner()->PostTask(
+      FROM_HERE, BindOnce(&ConcurrentHelper::FromTask, helper));
+  loop()->task_runner()->PostTask(
+      FROM_HERE, BindOnce(&ConcurrentHelper::FromTask, helper));
 
-  loop()->Run();
+  RunLoop().Run();
   EXPECT_EQ(0, helper->event_count());
   EXPECT_EQ(0, helper->task_count());
 }
@@ -383,8 +380,8 @@ void AddEventsAndDrainGLib(EventInjector* injector) {
   injector->AddEvent(0, MessageLoop::QuitWhenIdleClosure());
 
   // Post a couple of dummy tasks
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, Bind(&DoNothing));
-  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, Bind(&DoNothing));
+  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, BindOnce(&DoNothing));
+  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, BindOnce(&DoNothing));
 
   // Drain the events
   while (g_main_context_pending(NULL)) {
@@ -396,10 +393,9 @@ void AddEventsAndDrainGLib(EventInjector* injector) {
 
 TEST_F(MessagePumpGLibTest, TestDrainingGLib) {
   // Tests that draining events using GLib works.
-  loop()->PostTask(
-      FROM_HERE,
-      Bind(&AddEventsAndDrainGLib, Unretained(injector())));
-  loop()->Run();
+  loop()->task_runner()->PostTask(
+      FROM_HERE, BindOnce(&AddEventsAndDrainGLib, Unretained(injector())));
+  RunLoop().Run();
 
   EXPECT_EQ(3, injector()->processed_events());
 }
@@ -450,18 +446,18 @@ void TestGLibLoopInternal(EventInjector* injector) {
   injector->AddDummyEvent(0);
   // Post a couple of dummy tasks
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          Bind(&IncrementInt, &task_count));
+                                          BindOnce(&IncrementInt, &task_count));
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          Bind(&IncrementInt, &task_count));
+                                          BindOnce(&IncrementInt, &task_count));
   // Delayed events
   injector->AddDummyEvent(10);
   injector->AddDummyEvent(10);
   // Delayed work
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, Bind(&IncrementInt, &task_count),
+      FROM_HERE, BindOnce(&IncrementInt, &task_count),
       TimeDelta::FromMilliseconds(30));
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, Bind(&GLibLoopRunner::Quit, runner.get()),
+      FROM_HERE, BindOnce(&GLibLoopRunner::Quit, runner),
       TimeDelta::FromMilliseconds(40));
 
   // Run a nested, straight GLib message loop.
@@ -483,18 +479,18 @@ void TestGtkLoopInternal(EventInjector* injector) {
   injector->AddDummyEvent(0);
   // Post a couple of dummy tasks
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          Bind(&IncrementInt, &task_count));
+                                          BindOnce(&IncrementInt, &task_count));
   ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                          Bind(&IncrementInt, &task_count));
+                                          BindOnce(&IncrementInt, &task_count));
   // Delayed events
   injector->AddDummyEvent(10);
   injector->AddDummyEvent(10);
   // Delayed work
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, Bind(&IncrementInt, &task_count),
+      FROM_HERE, BindOnce(&IncrementInt, &task_count),
       TimeDelta::FromMilliseconds(30));
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, Bind(&GLibLoopRunner::Quit, runner.get()),
+      FROM_HERE, BindOnce(&GLibLoopRunner::Quit, runner),
       TimeDelta::FromMilliseconds(40));
 
   // Run a nested, straight Gtk message loop.
@@ -512,10 +508,9 @@ TEST_F(MessagePumpGLibTest, TestGLibLoop) {
   // loop is not run by MessageLoop::Run() but by a straight GLib loop.
   // Note that in this case we don't make strong guarantees about niceness
   // between events and posted tasks.
-  loop()->PostTask(
-      FROM_HERE,
-      Bind(&TestGLibLoopInternal, Unretained(injector())));
-  loop()->Run();
+  loop()->task_runner()->PostTask(
+      FROM_HERE, BindOnce(&TestGLibLoopInternal, Unretained(injector())));
+  RunLoop().Run();
 }
 
 TEST_F(MessagePumpGLibTest, TestGtkLoop) {
@@ -523,10 +518,9 @@ TEST_F(MessagePumpGLibTest, TestGtkLoop) {
   // loop is not run by MessageLoop::Run() but by a straight Gtk loop.
   // Note that in this case we don't make strong guarantees about niceness
   // between events and posted tasks.
-  loop()->PostTask(
-      FROM_HERE,
-      Bind(&TestGtkLoopInternal, Unretained(injector())));
-  loop()->Run();
+  loop()->task_runner()->PostTask(
+      FROM_HERE, BindOnce(&TestGtkLoopInternal, Unretained(injector())));
+  RunLoop().Run();
 }
 
 }  // namespace base

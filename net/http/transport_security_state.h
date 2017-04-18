@@ -11,13 +11,16 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/feature_list.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/strings/string_piece.h"
 #include "base/threading/non_thread_safe.h"
 #include "base/time/time.h"
 #include "net/base/expiring_cache.h"
 #include "net/base/hash_value.h"
 #include "net/base/net_export.h"
+#include "net/http/transport_security_state_source.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -25,6 +28,9 @@ namespace net {
 class HostPortPair;
 class SSLInfo;
 class X509Certificate;
+
+void NET_EXPORT_PRIVATE SetTransportSecurityStateSourceForTesting(
+    const TransportSecurityStateSource* source);
 
 // Tracks which hosts have enabled strict transport security and/or public
 // key pins.
@@ -230,6 +236,29 @@ class NET_EXPORT TransportSecurityState
     // The URI to which reports should be sent if valid CT info is not
     // provided.
     GURL report_uri;
+    // True if connections should be closed if they do not comply with the CT
+    // policy. If false, noncompliant connections will be allowed but reports
+    // will be sent about the violation.
+    bool enforce;
+    // The absolute time (UTC) when the Expect-CT state was last observed.
+    base::Time last_observed;
+    // The absolute time (UTC) when the Expect-CT state expires.
+    base::Time expiry;
+  };
+
+  class NET_EXPORT ExpectCTStateIterator {
+   public:
+    explicit ExpectCTStateIterator(const TransportSecurityState& state);
+    ~ExpectCTStateIterator();
+
+    bool HasNext() const { return iterator_ != end_; }
+    void Advance() { ++iterator_; }
+    const std::string& hostname() const { return iterator_->first; }
+    const ExpectCTState& domain_state() const { return iterator_->second; }
+
+   private:
+    std::map<std::string, ExpectCTState>::const_iterator iterator_;
+    std::map<std::string, ExpectCTState>::const_iterator end_;
   };
 
   // An ExpectStapleState describes a site that expects valid OCSP information
@@ -252,11 +281,16 @@ class NET_EXPORT TransportSecurityState
   // An interface for asynchronously sending HPKP violation reports.
   class NET_EXPORT ReportSenderInterface {
    public:
-    // Sends the given serialized |report| to |report_uri|.
-    virtual void Send(const GURL& report_uri, const std::string& report) = 0;
-
-    // Sets a callback to be called when report sending fails.
-    virtual void SetErrorCallback(
+    // Sends the given serialized |report| to |report_uri| with
+    // Content-Type header as specified in
+    // |content_type|. |content_type| should be non-empty.
+    // |report_id| could be any non-negative integer. It's passed back to the
+    // error or success callbacks.
+    virtual void Send(
+        const GURL& report_uri,
+        base::StringPiece content_type,
+        base::StringPiece report,
+        const base::Callback<void()>& success_callback,
         const base::Callback<void(const GURL&, int)>& error_callback) = 0;
 
    protected:
@@ -283,6 +317,10 @@ class NET_EXPORT TransportSecurityState
   // report if a violation is detected.
   enum PublicKeyPinReportStatus { ENABLE_PIN_REPORTS, DISABLE_PIN_REPORTS };
 
+  // Feature that controls whether Expect-CT HTTP headers are parsed, processed,
+  // and stored.
+  static const base::Feature kDynamicExpectCTFeature;
+
   TransportSecurityState();
   ~TransportSecurityState();
 
@@ -308,13 +346,15 @@ class NET_EXPORT TransportSecurityState
   // 1. Sending Expect-Staple reports is enabled (via
   //    |enable_static_expect_staple_|)
   // 2. A report sender was provided via SetReportSender().
-  // 3. The build is timele (i.e. the preload list is fresh).
+  // 3. The build is timely (i.e. the preload list is fresh).
   // 4. The given host is present on the Expect-Staple preload list.
   // 5. |ssl_info| indicates the connection did not provide an OCSP response
   //    indicating a revocation status of GOOD.
+  // 6. The certificate chain in |ssl_info| chains to a known root. Reports
+  //    for OCSP responses behind MITM proxies are not useful to site owners.
   void CheckExpectStaple(const HostPortPair& host_port_pair,
                          const SSLInfo& ssl_info,
-                         const std::string& ocsp_response);
+                         base::StringPiece ocsp_response);
 
   // Returns true if connections to |host|, using the validated certificate
   // |validated_certificate_chain|, are expected to be accompanied with
@@ -370,6 +410,13 @@ class NET_EXPORT TransportSecurityState
   void AddOrUpdateEnabledPKPHosts(const std::string& hashed_host,
                                   const PKPState& state);
 
+  // Inserts |state| into |enabled_expect_ct_hosts_| under the key
+  // |hashed_host|. |hashed_host| is already in the internal representation.
+  // Note: This is only used for serializing/deserializing the
+  // TransportSecurityState.
+  void AddOrUpdateEnabledExpectCTHosts(const std::string& hashed_host,
+                                       const ExpectCTState& state);
+
   // Deletes all dynamic data (e.g. HSTS or HPKP data) created since a given
   // time.
   //
@@ -399,14 +446,15 @@ class NET_EXPORT TransportSecurityState
   // deployed.
   bool IsGooglePinnedHost(const std::string& host) const;
 
-  // Returns true and updates |*result| iff |host| has HSTS (respectively, HPKP)
-  // state. If multiple HSTS (respectively, HPKP) entries match |host|,  the
-  // most specific match determines the HSTS (respectively, HPKP) return value.
+  // Returns true and updates |*result| iff |host| has HSTS/HPKP/Expect-CT
+  // (respectively) state. If multiple entries match |host|, the most specific
+  // match determines the return value.
   //
   // Note that these methods are not const because they opportunistically remove
   // entries that have expired.
   bool GetDynamicSTSState(const std::string& host, STSState* result);
   bool GetDynamicPKPState(const std::string& host, PKPState* result);
+  bool GetDynamicExpectCTState(const std::string& host, ExpectCTState* result);
 
   // Processes an HSTS header value from the host, adding entries to
   // dynamic state if necessary.
@@ -433,6 +481,16 @@ class NET_EXPORT TransportSecurityState
                bool include_subdomains,
                const HashValueVector& hashes,
                const GURL& report_uri);
+
+  // Adds explicitly-specified data as if it was processed from an Expect-CT
+  // header.
+  // Note: This method will persist the Expect-CT data if a Delegate is present.
+  //       Make sure that the delegate is nullptr if the persistence is not
+  //       desired. See |SetDelegate| method for more details.
+  void AddExpectCT(const std::string& host,
+                   const base::Time& expiry,
+                   bool enforce,
+                   const GURL& report_uri);
 
   // Enables or disables public key pinning bypass for local trust anchors.
   // Disabling the bypass for local trust anchors is highly discouraged.
@@ -469,6 +527,7 @@ class NET_EXPORT TransportSecurityState
 
  private:
   friend class TransportSecurityStateTest;
+  friend class TransportSecurityStateStaticFuzzer;
   FRIEND_TEST_ALL_PREFIXES(HttpSecurityHeadersTest, UpdateDynamicPKPOnly);
   FRIEND_TEST_ALL_PREFIXES(HttpSecurityHeadersTest, UpdateDynamicPKPMaxAge0);
   FRIEND_TEST_ALL_PREFIXES(HttpSecurityHeadersTest, NoClobberPins);
@@ -476,6 +535,7 @@ class NET_EXPORT TransportSecurityState
 
   typedef std::map<std::string, STSState> STSStateMap;
   typedef std::map<std::string, PKPState> PKPStateMap;
+  typedef std::map<std::string, ExpectCTState> ExpectCTStateMap;
 
   // Send an UMA report on pin validation failure, if the host is in a
   // statically-defined list of domains.
@@ -520,12 +580,20 @@ class NET_EXPORT TransportSecurityState
                        const HashValueVector& hashes,
                        const GURL& report_uri);
 
+  // Adds Expect-CT state to |host|.
+  void AddExpectCTInternal(const std::string& host,
+                           const base::Time& last_observed,
+                           const base::Time& expiry,
+                           bool enforce,
+                           const GURL& report_uri);
+
   // Enable TransportSecurity for |host|. |state| supercedes any previous
   // state for the |host|, including static entries.
   //
   // The new state for |host| is persisted using the Delegate (if any).
   void EnableSTSHost(const std::string& host, const STSState& state);
   void EnablePKPHost(const std::string& host, const PKPState& state);
+  void EnableExpectCTHost(const std::string& host, const ExpectCTState& state);
 
   // Returns true if a request to |host_port_pair| with the given
   // SubjectPublicKeyInfo |hashes| satisfies the pins in |pkp_state|,
@@ -558,12 +626,13 @@ class NET_EXPORT TransportSecurityState
       ExpectStapleState* expect_staple_result) const;
 
   // The sets of hosts that have enabled TransportSecurity. |domain| will always
-  // be empty for a STSState or PKPState in these maps; the domain
-  // comes from the map keys instead. In addition, |upgrade_mode| in the
+  // be empty for a STSState, PKPState, or ExpectCTState in these maps; the
+  // domain comes from the map keys instead. In addition, |upgrade_mode| in the
   // STSState is never MODE_DEFAULT and |HasPublicKeyPins| in the PKPState
   // always returns true.
   STSStateMap enabled_sts_hosts_;
   PKPStateMap enabled_pkp_hosts_;
+  ExpectCTStateMap enabled_expect_ct_hosts_;
 
   Delegate* delegate_ = nullptr;
 

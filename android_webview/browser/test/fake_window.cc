@@ -161,7 +161,7 @@ void FakeWindow::DrawFunctorOnRT(FakeFunctor* functor,
 }
 
 void FakeWindow::CheckCurrentlyOnUIThread() {
-  DCHECK(ui_checker_.CalledOnValidSequencedThread());
+  DCHECK(ui_checker_.CalledOnValidSequence());
 }
 
 void FakeWindow::CreateRenderThreadIfNeeded() {
@@ -189,8 +189,8 @@ void FakeWindow::InitializeOnRT(base::WaitableEvent* sync) {
   surface_ = gl::init::CreateOffscreenGLSurface(surface_size_);
   DCHECK(surface_);
   DCHECK(surface_->GetHandle());
-  context_ =
-      gl::init::CreateGLContext(nullptr, surface_.get(), gl::PreferDiscreteGpu);
+  context_ = gl::init::CreateGLContext(nullptr, surface_.get(),
+                                       gl::GLContextAttribs());
   DCHECK(context_);
   sync->Signal();
 }
@@ -206,7 +206,7 @@ void FakeWindow::DestroyOnRT(base::WaitableEvent* sync) {
 }
 
 void FakeWindow::CheckCurrentlyOnRT() {
-  DCHECK(rt_checker_.CalledOnValidSequencedThread());
+  DCHECK(rt_checker_.CalledOnValidSequence());
 }
 
 FakeFunctor::FakeFunctor() : window_(nullptr) {}

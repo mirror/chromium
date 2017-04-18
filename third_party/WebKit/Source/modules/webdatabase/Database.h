@@ -31,8 +31,8 @@
 #include "modules/webdatabase/DatabaseError.h"
 #include "modules/webdatabase/sqlite/SQLiteDatabase.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "wtf/Deque.h"
-#include "wtf/text/WTFString.h"
+#include "platform/wtf/Deque.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -48,136 +48,167 @@ class SQLTransactionCoordinator;
 class SQLTransactionErrorCallback;
 class VoidCallback;
 
-class Database final : public GarbageCollectedFinalized<Database>, public ScriptWrappable {
-    DEFINE_WRAPPERTYPEINFO();
-public:
-    virtual ~Database();
-    DECLARE_TRACE();
+class Database final : public GarbageCollectedFinalized<Database>,
+                       public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
 
-    bool openAndVerifyVersion(bool setVersionInNewDatabase, DatabaseError&, String& errorMessage);
-    void close();
+ public:
+  virtual ~Database();
+  DECLARE_TRACE();
 
-    SQLTransactionBackend* runTransaction(SQLTransaction*, bool readOnly, const ChangeVersionData*);
-    void scheduleTransactionStep(SQLTransactionBackend*);
-    void inProgressTransactionCompleted();
+  bool OpenAndVerifyVersion(bool set_version_in_new_database,
+                            DatabaseError&,
+                            String& error_message);
+  void Close();
 
-    SQLTransactionClient* transactionClient() const;
-    SQLTransactionCoordinator* transactionCoordinator() const;
+  SQLTransactionBackend* RunTransaction(SQLTransaction*,
+                                        bool read_only,
+                                        const ChangeVersionData*);
+  void ScheduleTransactionStep(SQLTransactionBackend*);
+  void InProgressTransactionCompleted();
 
-    // Direct support for the DOM API
-    String version() const;
-    void changeVersion(
-        const String& oldVersion,
-        const String& newVersion,
-        SQLTransactionCallback*,
-        SQLTransactionErrorCallback*,
-        VoidCallback* successCallback);
-    void transaction(
-        SQLTransactionCallback*,
-        SQLTransactionErrorCallback*,
-        VoidCallback* successCallback);
-    void readTransaction(
-        SQLTransactionCallback*,
-        SQLTransactionErrorCallback*,
-        VoidCallback* successCallback);
+  SQLTransactionClient* TransactionClient() const;
+  SQLTransactionCoordinator* TransactionCoordinator() const;
 
-    bool opened();
-    bool isNew() const { return m_new; }
+  // Direct support for the DOM API
+  String version() const;
+  void changeVersion(const String& old_version,
+                     const String& new_version,
+                     SQLTransactionCallback*,
+                     SQLTransactionErrorCallback*,
+                     VoidCallback* success_callback);
+  void transaction(SQLTransactionCallback*,
+                   SQLTransactionErrorCallback*,
+                   VoidCallback* success_callback);
+  void readTransaction(SQLTransactionCallback*,
+                       SQLTransactionErrorCallback*,
+                       VoidCallback* success_callback);
 
-    SecurityOrigin* getSecurityOrigin() const;
-    String stringIdentifier() const;
-    String displayName() const;
-    unsigned estimatedSize() const;
-    String fileName() const;
-    SQLiteDatabase& sqliteDatabase() { return m_sqliteDatabase; }
+  bool Opened();
+  bool IsNew() const { return new_; }
 
-    unsigned long long maximumSize() const;
-    void incrementalVacuumIfNeeded();
+  SecurityOrigin* GetSecurityOrigin() const;
+  String StringIdentifier() const;
+  String DisplayName() const;
+  unsigned EstimatedSize() const;
+  String FileName() const;
+  SQLiteDatabase& SqliteDatabase() { return sqlite_database_; }
 
-    void disableAuthorizer();
-    void enableAuthorizer();
-    void setAuthorizerPermissions(int);
-    bool lastActionChangedDatabase();
-    bool lastActionWasInsert();
-    void resetDeletes();
-    bool hadDeletes();
-    void resetAuthorizer();
+  unsigned long long MaximumSize() const;
+  void IncrementalVacuumIfNeeded();
 
-    Vector<String> tableNames();
-    void scheduleTransactionCallback(SQLTransaction*);
-    void closeImmediately();
-    void closeDatabase();
+  void DisableAuthorizer();
+  void EnableAuthorizer();
+  void SetAuthorizerPermissions(int);
+  bool LastActionChangedDatabase();
+  bool LastActionWasInsert();
+  void ResetDeletes();
+  bool HadDeletes();
+  void ResetAuthorizer();
 
-    DatabaseContext* getDatabaseContext() const { return m_databaseContext.get(); }
-    ExecutionContext* getExecutionContext() const;
+  Vector<String> TableNames();
+  void ScheduleTransactionCallback(SQLTransaction*);
+  void CloseImmediately();
+  void CloseDatabase();
 
-private:
-    class DatabaseOpenTask;
-    class DatabaseCloseTask;
-    class DatabaseTransactionTask;
-    class DatabaseTableNamesTask;
+  DatabaseContext* GetDatabaseContext() const {
+    return database_context_.Get();
+  }
+  ExecutionContext* GetExecutionContext() const;
+  WebTaskRunner* GetDatabaseTaskRunner() const;
 
-    Database(DatabaseContext*, const String& name, const String& expectedVersion, const String& displayName, unsigned estimatedSize);
-    bool performOpenAndVerify(bool setVersionInNewDatabase, DatabaseError&, String& errorMessage);
+ private:
+  class DatabaseOpenTask;
+  class DatabaseCloseTask;
+  class DatabaseTransactionTask;
+  class DatabaseTableNamesTask;
 
-    void scheduleTransaction();
+  Database(DatabaseContext*,
+           const String& name,
+           const String& expected_version,
+           const String& display_name,
+           unsigned estimated_size);
+  bool PerformOpenAndVerify(bool set_version_in_new_database,
+                            DatabaseError&,
+                            String& error_message);
 
-    bool getVersionFromDatabase(String& version, bool shouldCacheVersion = true);
-    bool setVersionInDatabase(const String& version, bool shouldCacheVersion = true);
-    void setExpectedVersion(const String&);
-    const String& expectedVersion() const { return m_expectedVersion; }
-    String getCachedVersion()const;
-    void setCachedVersion(const String&);
-    bool getActualVersionForTransaction(String& version);
+  void ScheduleTransaction();
 
-    void runTransaction(
-        SQLTransactionCallback*,
-        SQLTransactionErrorCallback*,
-        VoidCallback* successCallback,
-        bool readOnly,
-        const ChangeVersionData* = 0);
-    Vector<String> performGetTableNames();
+  bool GetVersionFromDatabase(String& version,
+                              bool should_cache_version = true);
+  bool SetVersionInDatabase(const String& version,
+                            bool should_cache_version = true);
+  void SetExpectedVersion(const String&);
+  const String& ExpectedVersion() const { return expected_version_; }
+  String GetCachedVersion() const;
+  void SetCachedVersion(const String&);
+  bool GetActualVersionForTransaction(String& version);
 
-    void reportOpenDatabaseResult(int errorSite, int webSqlErrorCode, int sqliteErrorCode, double duration);
-    void reportChangeVersionResult(int errorSite, int webSqlErrorCode, int sqliteErrorCode);
-    void reportStartTransactionResult(int errorSite, int webSqlErrorCode, int sqliteErrorCode);
-    void reportCommitTransactionResult(int errorSite, int webSqlErrorCode, int sqliteErrorCode);
-    void reportExecuteStatementResult(int errorSite, int webSqlErrorCode, int sqliteErrorCode);
-    void reportVacuumDatabaseResult(int sqliteErrorCode);
-    void logErrorMessage(const String&);
-    static const char* databaseInfoTableName();
-    String databaseDebugName() const { return m_contextThreadSecurityOrigin->toString() + "::" + m_name; }
+  void RunTransaction(SQLTransactionCallback*,
+                      SQLTransactionErrorCallback*,
+                      VoidCallback* success_callback,
+                      bool read_only,
+                      const ChangeVersionData* = 0);
+  Vector<String> PerformGetTableNames();
 
-    RefPtr<SecurityOrigin> m_contextThreadSecurityOrigin;
-    RefPtr<SecurityOrigin> m_databaseThreadSecurityOrigin;
-    Member<DatabaseContext> m_databaseContext; // Associated with m_executionContext.
+  void ReportOpenDatabaseResult(int error_site,
+                                int web_sql_error_code,
+                                int sqlite_error_code,
+                                double duration);
+  void ReportChangeVersionResult(int error_site,
+                                 int web_sql_error_code,
+                                 int sqlite_error_code);
+  void ReportStartTransactionResult(int error_site,
+                                    int web_sql_error_code,
+                                    int sqlite_error_code);
+  void ReportCommitTransactionResult(int error_site,
+                                     int web_sql_error_code,
+                                     int sqlite_error_code);
+  void ReportExecuteStatementResult(int error_site,
+                                    int web_sql_error_code,
+                                    int sqlite_error_code);
+  void ReportVacuumDatabaseResult(int sqlite_error_code);
+  void LogErrorMessage(const String&);
+  static const char* DatabaseInfoTableName();
+  String DatabaseDebugName() const {
+    return context_thread_security_origin_->ToString() + "::" + name_;
+  }
 
-    String m_name;
-    String m_expectedVersion;
-    String m_displayName;
-    unsigned long m_estimatedSize;
-    String m_filename;
+  RefPtr<SecurityOrigin> context_thread_security_origin_;
+  RefPtr<SecurityOrigin> database_thread_security_origin_;
+  Member<DatabaseContext>
+      database_context_;  // Associated with m_executionContext.
+  // TaskRunnerHelper::get is not thread-safe, so we save WebTaskRunner for
+  // TaskType::DatabaseAccess for later use as the constructor runs in the main
+  // thread.
+  RefPtr<WebTaskRunner> database_task_runner_;
 
-    DatabaseGuid m_guid;
-    int m_opened;
-    bool m_new;
+  String name_;
+  String expected_version_;
+  String display_name_;
+  unsigned long estimated_size_;
+  String filename_;
 
-    SQLiteDatabase m_sqliteDatabase;
+  DatabaseGuid guid_;
+  int opened_;
+  bool new_;
 
-    Member<DatabaseAuthorizer> m_databaseAuthorizer;
+  SQLiteDatabase sqlite_database_;
 
-    Deque<CrossThreadPersistent<SQLTransactionBackend>> m_transactionQueue;
-    Mutex m_transactionInProgressMutex;
-    bool m_transactionInProgress;
-    bool m_isTransactionQueueEnabled;
+  Member<DatabaseAuthorizer> database_authorizer_;
 
-    friend class ChangeVersionWrapper;
-    friend class DatabaseManager;
-    friend class SQLStatementBackend;
-    friend class SQLTransaction;
-    friend class SQLTransactionBackend;
+  Deque<CrossThreadPersistent<SQLTransactionBackend>> transaction_queue_;
+  Mutex transaction_in_progress_mutex_;
+  bool transaction_in_progress_;
+  bool is_transaction_queue_enabled_;
+
+  friend class ChangeVersionWrapper;
+  friend class DatabaseManager;
+  friend class SQLStatementBackend;
+  friend class SQLTransaction;
+  friend class SQLTransactionBackend;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // Database_h
+#endif  // Database_h

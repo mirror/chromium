@@ -18,8 +18,8 @@
 #import "ios/chrome/browser/passwords/password_generation_utils.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/web/public/url_scheme_util.h"
-#import "ios/web/public/web_state/crw_web_view_proxy.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
+#import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
 #include "ios/web/public/web_state/url_verification_constants.h"
 #include "ios/web/public/web_state/web_state.h"
 #include "url/gurl.h"
@@ -93,7 +93,6 @@ NSArray* FindDescendantToolbarItemsForActionName(UIView* root,
   return descendants;
 }
 
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
 NSArray* FindDescendantToolbarItemsForActionName(
     UITextInputAssistantItem* inputAssistantItem,
     NSString* actionName) {
@@ -117,7 +116,6 @@ NSArray* FindDescendantToolbarItemsForActionName(
 
   return toolbarItems;
 }
-#endif
 
 // Computes the frame of each part of the accessory view of the keyboard. It is
 // assumed that the keyboard has either two parts (when it is split) or one part
@@ -261,7 +259,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
   // There is no defined relation on the timing of JavaScript events and
   // keyboard showing up. So it is necessary to listen to the keyboard
   // notification to make sure the keyboard is updated.
-  if (base::ios::IsRunningOnIOS9OrLater() && IsIPadIdiom()) {
+  if (IsIPadIdiom()) {
     [[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(keyboardWillOrDidChangeFrame:)
@@ -320,7 +318,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 
 - (void)showCustomInputAccessoryView:(UIView*)view {
   DCHECK(view);
-  if (base::ios::IsRunningOnIOS9OrLater() && IsIPadIdiom()) {
+  if (IsIPadIdiom()) {
     // On iPads running iOS 9 or later, there's no inputAccessoryView available
     // so we attach the custom view directly to the keyboard view instead.
     [_customAccessoryView removeFromSuperview];
@@ -336,7 +334,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
     // If this is a form suggestion view and no suggestions have been triggered
     // yet, don't show the custom view.
     FormSuggestionView* formSuggestionView =
-        base::mac::ObjCCastStrict<FormSuggestionView>(view);
+        base::mac::ObjCCast<FormSuggestionView>(view);
     if (formSuggestionView) {
       int numSuggestions = [[formSuggestionView suggestions] count];
       if (!_suggestionsHaveBeenShown && numSuggestions == 0) {
@@ -404,15 +402,13 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 
 - (BOOL)executeFormAssistAction:(NSString*)actionName {
   NSArray* descendants = nil;
-  if (base::ios::IsRunningOnIOS9OrLater() && IsIPadIdiom()) {
-#if defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
+  if (IsIPadIdiom()) {
     UITextInputAssistantItem* inputAssistantItem =
         [self.webViewProxy inputAssistantItem];
     if (!inputAssistantItem)
       return NO;
     descendants =
         FindDescendantToolbarItemsForActionName(inputAssistantItem, actionName);
-#endif
   } else {
     UIView* inputAccessoryView = [self.webViewProxy keyboardAccessory];
     if (!inputAccessoryView)
@@ -477,7 +473,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 #pragma mark -
 #pragma mark CRWWebStateObserver
 
-- (void)webStateDidLoadPage:(web::WebState*)webState {
+- (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   [self reset];
 }
 
@@ -486,7 +482,6 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
                                fieldName:(const std::string&)fieldName
                                     type:(const std::string&)type
                                    value:(const std::string&)value
-                                 keyCode:(int)keyCode
                             inputMissing:(BOOL)inputMissing {
   web::URLVerificationTrustLevel trustLevel;
   const GURL pageURL(webState->GetCurrentURL(&trustLevel));

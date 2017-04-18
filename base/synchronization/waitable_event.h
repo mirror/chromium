@@ -25,6 +25,7 @@
 namespace base {
 
 class TimeDelta;
+class TimeTicks;
 
 // A WaitableEvent can be a useful thread synchronization tool when you want to
 // allow one thread to wait for another thread to finish some work. For
@@ -86,12 +87,17 @@ class BASE_EXPORT WaitableEvent {
   //   delete e;
   void Wait();
 
-  // Wait up until max_time has passed for the event to be signaled.  Returns
-  // true if the event was signaled.  If this method returns false, then it
-  // does not necessarily mean that max_time was exceeded.
+  // Wait up until wait_delta has passed for the event to be signaled.  Returns
+  // true if the event was signaled.
   //
   // TimedWait can synchronise its own destruction like |Wait|.
-  bool TimedWait(const TimeDelta& max_time);
+  bool TimedWait(const TimeDelta& wait_delta);
+
+  // Wait up until end_time deadline has passed for the event to be signaled.
+  // Return true if the event was signaled.
+  //
+  // TimedWaitUntil can synchronise its own destruction like |Wait|.
+  bool TimedWaitUntil(const TimeTicks& end_time);
 
 #if defined(OS_WIN)
   HANDLE handle() const { return handle_.Get(); }
@@ -106,6 +112,9 @@ class BASE_EXPORT WaitableEvent {
   // You MUST NOT delete any of the WaitableEvent objects while this wait is
   // happening, however WaitMany's return "happens after" the |Signal| call
   // that caused it has completed, like |Wait|.
+  //
+  // If more than one WaitableEvent is signaled to unblock WaitMany, the lowest
+  // index among them is returned.
   static size_t WaitMany(WaitableEvent** waitables, size_t count);
 
   // For asynchronous waiting, see WaitableEventWatcher

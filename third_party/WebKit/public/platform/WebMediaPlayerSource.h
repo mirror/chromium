@@ -12,23 +12,23 @@
 namespace blink {
 
 class BLINK_PLATFORM_EXPORT WebMediaPlayerSource {
-public:
-    WebMediaPlayerSource();
-    explicit WebMediaPlayerSource(const WebURL&);
-    explicit WebMediaPlayerSource(const WebMediaStream&);
-    ~WebMediaPlayerSource();
+ public:
+  WebMediaPlayerSource();
+  explicit WebMediaPlayerSource(const WebURL&);
+  explicit WebMediaPlayerSource(const WebMediaStream&);
+  ~WebMediaPlayerSource();
 
-    bool isURL() const;
-    WebURL getAsURL() const;
+  bool IsURL() const;
+  WebURL GetAsURL() const;
 
-    bool isMediaStream() const;
-    WebMediaStream getAsMediaStream() const;
+  bool IsMediaStream() const;
+  WebMediaStream GetAsMediaStream() const;
 
-private:
-    WebURL m_url;
-    WebMediaStream m_mediaStream;
+ private:
+  WebURL url_;
+  WebMediaStream media_stream_;
 };
 
-} // namespace blink
+}  // namespace blink
 
-#endif // WebMediaPlayerSource_h
+#endif  // WebMediaPlayerSource_h

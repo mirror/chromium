@@ -5,17 +5,18 @@
 #include "content/child/push_messaging/push_provider.h"
 
 #include <memory>
+#include <utility>
 
+#include "base/bind_helpers.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
 #include "base/threading/thread_local.h"
-#include "content/child/push_messaging/push_dispatcher.h"
+#include "content/child/child_thread_impl.h"
 #include "content/child/service_worker/web_service_worker_registration_impl.h"
-#include "content/child/thread_safe_sender.h"
-#include "content/common/push_messaging_messages.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/push_subscription_options.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushSubscription.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushSubscriptionOptions.h"
@@ -33,18 +34,59 @@ int64_t GetServiceWorkerRegistrationId(
     blink::WebServiceWorkerRegistration* service_worker_registration) {
   return static_cast<WebServiceWorkerRegistrationImpl*>(
              service_worker_registration)
-      ->registration_id();
+      ->RegistrationId();
 }
 
 }  // namespace
 
+blink::WebPushError PushRegistrationStatusToWebPushError(
+    PushRegistrationStatus status) {
+  blink::WebPushError::ErrorType error_type =
+      blink::WebPushError::kErrorTypeAbort;
+  switch (status) {
+    case PUSH_REGISTRATION_STATUS_PERMISSION_DENIED:
+      error_type = blink::WebPushError::kErrorTypeNotAllowed;
+      break;
+    case PUSH_REGISTRATION_STATUS_SENDER_ID_MISMATCH:
+      error_type = blink::WebPushError::kErrorTypeInvalidState;
+      break;
+    case PUSH_REGISTRATION_STATUS_SUCCESS_FROM_PUSH_SERVICE:
+    case PUSH_REGISTRATION_STATUS_NO_SERVICE_WORKER:
+    case PUSH_REGISTRATION_STATUS_SERVICE_NOT_AVAILABLE:
+    case PUSH_REGISTRATION_STATUS_LIMIT_REACHED:
+    case PUSH_REGISTRATION_STATUS_SERVICE_ERROR:
+    case PUSH_REGISTRATION_STATUS_NO_SENDER_ID:
+    case PUSH_REGISTRATION_STATUS_STORAGE_ERROR:
+    case PUSH_REGISTRATION_STATUS_SUCCESS_FROM_CACHE:
+    case PUSH_REGISTRATION_STATUS_NETWORK_ERROR:
+    case PUSH_REGISTRATION_STATUS_INCOGNITO_PERMISSION_DENIED:
+    case PUSH_REGISTRATION_STATUS_PUBLIC_KEY_UNAVAILABLE:
+    case PUSH_REGISTRATION_STATUS_MANIFEST_EMPTY_OR_MISSING:
+    case PUSH_REGISTRATION_STATUS_STORAGE_CORRUPT:
+    case PUSH_REGISTRATION_STATUS_RENDERER_SHUTDOWN:
+      error_type = blink::WebPushError::kErrorTypeAbort;
+      break;
+  }
+  return blink::WebPushError(
+      error_type,
+      blink::WebString::FromUTF8(PushRegistrationStatusToString(status)));
+}
+
 static base::LazyInstance<base::ThreadLocalPointer<PushProvider>>::Leaky
     g_push_provider_tls = LAZY_INSTANCE_INITIALIZER;
 
-PushProvider::PushProvider(ThreadSafeSender* thread_safe_sender,
-                           PushDispatcher* push_dispatcher)
-    : thread_safe_sender_(thread_safe_sender),
-      push_dispatcher_(push_dispatcher) {
+PushProvider::PushProvider(const scoped_refptr<base::SingleThreadTaskRunner>&
+                               main_thread_task_runner) {
+  DCHECK(main_thread_task_runner);
+
+  auto request = mojo::MakeRequest(&push_messaging_manager_);
+  if (!main_thread_task_runner->BelongsToCurrentThread()) {
+    main_thread_task_runner->PostTask(
+        FROM_HERE,
+        base::Bind(&PushProvider::GetInterface, base::Passed(&request)));
+  } else {
+    GetInterface(std::move(request));
+  }
   g_push_provider_tls.Pointer()->Set(this);
 }
 
@@ -53,234 +95,190 @@ PushProvider::~PushProvider() {
 }
 
 PushProvider* PushProvider::ThreadSpecificInstance(
-    ThreadSafeSender* thread_safe_sender,
-    PushDispatcher* push_dispatcher) {
+    const scoped_refptr<base::SingleThreadTaskRunner>&
+        main_thread_task_runner) {
   if (g_push_provider_tls.Pointer()->Get())
     return g_push_provider_tls.Pointer()->Get();
 
-  PushProvider* provider =
-      new PushProvider(thread_safe_sender, push_dispatcher);
+  PushProvider* provider = new PushProvider(main_thread_task_runner);
   if (CurrentWorkerId())
     WorkerThread::AddObserver(provider);
   return provider;
+}
+
+// static
+void PushProvider::GetInterface(mojom::PushMessagingRequest request) {
+  if (ChildThreadImpl::current()) {
+    ChildThreadImpl::current()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, std::move(request));
+  }
 }
 
 void PushProvider::WillStopCurrentWorkerThread() {
   delete this;
 }
 
-void PushProvider::subscribe(
+void PushProvider::Subscribe(
     blink::WebServiceWorkerRegistration* service_worker_registration,
     const blink::WebPushSubscriptionOptions& options,
-    blink::WebPushSubscriptionCallbacks* callbacks) {
+    std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks) {
   DCHECK(service_worker_registration);
   DCHECK(callbacks);
-  int request_id = push_dispatcher_->GenerateRequestId(CurrentWorkerId());
-  subscription_callbacks_.AddWithID(callbacks, request_id);
+
   int64_t service_worker_registration_id =
       GetServiceWorkerRegistrationId(service_worker_registration);
   PushSubscriptionOptions content_options;
-  content_options.user_visible_only = options.userVisibleOnly;
+  content_options.user_visible_only = options.user_visible_only;
 
   // Just treat the server key as a string of bytes and pass it to the push
   // service.
-  content_options.sender_info = options.applicationServerKey.latin1();
-  thread_safe_sender_->Send(new PushMessagingHostMsg_Subscribe(
-      ChildProcessHost::kInvalidUniqueID, request_id,
-      service_worker_registration_id, content_options));
+  content_options.sender_info = options.application_server_key.Latin1();
+
+  push_messaging_manager_->Subscribe(
+      ChildProcessHost::kInvalidUniqueID, service_worker_registration_id,
+      content_options,
+      // Safe to use base::Unretained because |push_messaging_manager_ |is owned
+      // by |this|.
+      base::Bind(&PushProvider::DidSubscribe, base::Unretained(this),
+                 base::Passed(&callbacks)));
 }
 
-void PushProvider::unsubscribe(
+void PushProvider::DidSubscribe(
+    std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks,
+    content::PushRegistrationStatus status,
+    const base::Optional<GURL>& endpoint,
+    const base::Optional<content::PushSubscriptionOptions>& options,
+    const base::Optional<std::vector<uint8_t>>& p256dh,
+    const base::Optional<std::vector<uint8_t>>& auth) {
+  DCHECK(callbacks);
+
+  if (status == PUSH_REGISTRATION_STATUS_SUCCESS_FROM_PUSH_SERVICE ||
+      status == PUSH_REGISTRATION_STATUS_SUCCESS_FROM_CACHE) {
+    DCHECK(endpoint);
+    DCHECK(options);
+    DCHECK(p256dh);
+    DCHECK(auth);
+
+    callbacks->OnSuccess(base::MakeUnique<blink::WebPushSubscription>(
+        endpoint.value(), options.value().user_visible_only,
+        blink::WebString::FromLatin1(options.value().sender_info),
+        p256dh.value(), auth.value()));
+  } else {
+    callbacks->OnError(PushRegistrationStatusToWebPushError(status));
+  }
+}
+
+void PushProvider::Unsubscribe(
     blink::WebServiceWorkerRegistration* service_worker_registration,
-    blink::WebPushUnsubscribeCallbacks* callbacks) {
+    std::unique_ptr<blink::WebPushUnsubscribeCallbacks> callbacks) {
   DCHECK(service_worker_registration);
   DCHECK(callbacks);
 
-  int request_id = push_dispatcher_->GenerateRequestId(CurrentWorkerId());
-  unsubscribe_callbacks_.AddWithID(callbacks, request_id);
-
   int64_t service_worker_registration_id =
       GetServiceWorkerRegistrationId(service_worker_registration);
-  thread_safe_sender_->Send(new PushMessagingHostMsg_Unsubscribe(
-      request_id, service_worker_registration_id));
+
+  push_messaging_manager_->Unsubscribe(
+      service_worker_registration_id,
+      // Safe to use base::Unretained because |push_messaging_manager_ |is owned
+      // by |this|.
+      base::Bind(&PushProvider::DidUnsubscribe, base::Unretained(this),
+                 base::Passed(&callbacks)));
 }
 
-void PushProvider::getSubscription(
+void PushProvider::DidUnsubscribe(
+    std::unique_ptr<blink::WebPushUnsubscribeCallbacks> callbacks,
+    blink::WebPushError::ErrorType error_type,
+    bool did_unsubscribe,
+    const base::Optional<std::string>& error_message) {
+  DCHECK(callbacks);
+
+  // ErrorTypeNone indicates success.
+  if (error_type == blink::WebPushError::kErrorTypeNone) {
+    callbacks->OnSuccess(did_unsubscribe);
+  } else {
+    callbacks->OnError(blink::WebPushError(
+        error_type, blink::WebString::FromUTF8(error_message->c_str())));
+  }
+}
+
+void PushProvider::GetSubscription(
     blink::WebServiceWorkerRegistration* service_worker_registration,
-    blink::WebPushSubscriptionCallbacks* callbacks) {
+    std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks) {
   DCHECK(service_worker_registration);
   DCHECK(callbacks);
-  int request_id = push_dispatcher_->GenerateRequestId(CurrentWorkerId());
-  subscription_callbacks_.AddWithID(callbacks, request_id);
+
   int64_t service_worker_registration_id =
       GetServiceWorkerRegistrationId(service_worker_registration);
-  thread_safe_sender_->Send(new PushMessagingHostMsg_GetSubscription(
-      request_id, service_worker_registration_id));
+
+  push_messaging_manager_->GetSubscription(
+      service_worker_registration_id,
+      // Safe to use base::Unretained because |push_messaging_manager_ |is owned
+      // by |this|.
+      base::Bind(&PushProvider::DidGetSubscription, base::Unretained(this),
+                 base::Passed(&callbacks)));
 }
 
-void PushProvider::getPermissionStatus(
+void PushProvider::DidGetSubscription(
+    std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks,
+    content::PushGetRegistrationStatus status,
+    const base::Optional<GURL>& endpoint,
+    const base::Optional<content::PushSubscriptionOptions>& options,
+    const base::Optional<std::vector<uint8_t>>& p256dh,
+    const base::Optional<std::vector<uint8_t>>& auth) {
+  DCHECK(callbacks);
+
+  if (status == PUSH_GETREGISTRATION_STATUS_SUCCESS) {
+    DCHECK(endpoint);
+    DCHECK(options);
+    DCHECK(p256dh);
+    DCHECK(auth);
+
+    callbacks->OnSuccess(base::MakeUnique<blink::WebPushSubscription>(
+        endpoint.value(), options.value().user_visible_only,
+        blink::WebString::FromLatin1(options.value().sender_info),
+        p256dh.value(), auth.value()));
+  } else {
+    // We are only expecting an error if we can't find a registration.
+    callbacks->OnSuccess(nullptr);
+  }
+}
+
+void PushProvider::GetPermissionStatus(
     blink::WebServiceWorkerRegistration* service_worker_registration,
     const blink::WebPushSubscriptionOptions& options,
-    blink::WebPushPermissionStatusCallbacks* callbacks) {
+    std::unique_ptr<blink::WebPushPermissionStatusCallbacks> callbacks) {
   DCHECK(service_worker_registration);
   DCHECK(callbacks);
-  int request_id = push_dispatcher_->GenerateRequestId(CurrentWorkerId());
-  permission_status_callbacks_.AddWithID(callbacks, request_id);
+
   int64_t service_worker_registration_id =
       GetServiceWorkerRegistrationId(service_worker_registration);
-  thread_safe_sender_->Send(new PushMessagingHostMsg_GetPermissionStatus(
-      request_id, service_worker_registration_id, options.userVisibleOnly));
+
+  push_messaging_manager_->GetPermissionStatus(
+      service_worker_registration_id, options.user_visible_only,
+      // Safe to use base::Unretained because |push_messaging_manager_ |is owned
+      // by |this|.
+      base::Bind(&PushProvider::DidGetPermissionStatus, base::Unretained(this),
+                 base::Passed(&callbacks)));
 }
 
-bool PushProvider::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PushProvider, message)
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_SubscribeFromWorkerSuccess,
-                        OnSubscribeFromWorkerSuccess);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_SubscribeFromWorkerError,
-                        OnSubscribeFromWorkerError);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_UnsubscribeSuccess,
-                        OnUnsubscribeSuccess);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_UnsubscribeError, OnUnsubscribeError);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_GetSubscriptionSuccess,
-                        OnGetSubscriptionSuccess);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_GetSubscriptionError,
-                        OnGetSubscriptionError);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_GetPermissionStatusSuccess,
-                        OnGetPermissionStatusSuccess);
-    IPC_MESSAGE_HANDLER(PushMessagingMsg_GetPermissionStatusError,
-                        OnGetPermissionStatusError);
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
-}
-
-void PushProvider::OnSubscribeFromWorkerSuccess(
-    int request_id,
-    const GURL& endpoint,
-    const PushSubscriptionOptions& options,
-    const std::vector<uint8_t>& p256dh,
-    const std::vector<uint8_t>& auth) {
-  blink::WebPushSubscriptionCallbacks* callbacks =
-      subscription_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  callbacks->onSuccess(base::WrapUnique(new blink::WebPushSubscription(
-      endpoint, options.user_visible_only,
-      blink::WebString::fromLatin1(options.sender_info), p256dh, auth)));
-
-  subscription_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnSubscribeFromWorkerError(int request_id,
-                                              PushRegistrationStatus status) {
-  blink::WebPushSubscriptionCallbacks* callbacks =
-      subscription_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  blink::WebPushError::ErrorType error_type =
-      status == PUSH_REGISTRATION_STATUS_PERMISSION_DENIED
-          ? blink::WebPushError::ErrorTypePermissionDenied
-          : blink::WebPushError::ErrorTypeAbort;
-
-  callbacks->onError(blink::WebPushError(
-      error_type,
-      blink::WebString::fromUTF8(PushRegistrationStatusToString(status))));
-
-  subscription_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnUnsubscribeSuccess(int request_id, bool did_unsubscribe) {
-  blink::WebPushUnsubscribeCallbacks* callbacks =
-      unsubscribe_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  callbacks->onSuccess(did_unsubscribe);
-
-  unsubscribe_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnUnsubscribeError(int request_id,
-                                      blink::WebPushError::ErrorType error_type,
-                                      const std::string& error_message) {
-  blink::WebPushUnsubscribeCallbacks* callbacks =
-      unsubscribe_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  callbacks->onError(blink::WebPushError(
-      error_type, blink::WebString::fromUTF8(error_message)));
-
-  unsubscribe_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnGetSubscriptionSuccess(
-    int request_id,
-    const GURL& endpoint,
-    const PushSubscriptionOptions& options,
-    const std::vector<uint8_t>& p256dh,
-    const std::vector<uint8_t>& auth) {
-  blink::WebPushSubscriptionCallbacks* callbacks =
-      subscription_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  callbacks->onSuccess(base::WrapUnique(new blink::WebPushSubscription(
-      endpoint, options.user_visible_only,
-      blink::WebString::fromLatin1(options.sender_info), p256dh, auth)));
-
-  subscription_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnGetSubscriptionError(int request_id,
-                                          PushGetRegistrationStatus status) {
-  blink::WebPushSubscriptionCallbacks* callbacks =
-      subscription_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  // We are only expecting an error if we can't find a registration.
-  callbacks->onSuccess(nullptr);
-
-  subscription_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnGetPermissionStatusSuccess(
-    int request_id,
+void PushProvider::DidGetPermissionStatus(
+    std::unique_ptr<blink::WebPushPermissionStatusCallbacks> callbacks,
+    blink::WebPushError::ErrorType error_type,
     blink::WebPushPermissionStatus status) {
-  blink::WebPushPermissionStatusCallbacks* callbacks =
-      permission_status_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  callbacks->onSuccess(status);
-
-  permission_status_callbacks_.Remove(request_id);
-}
-
-void PushProvider::OnGetPermissionStatusError(
-    int request_id,
-    blink::WebPushError::ErrorType error) {
-  blink::WebPushPermissionStatusCallbacks* callbacks =
-      permission_status_callbacks_.Lookup(request_id);
-  if (!callbacks)
-    return;
-
-  std::string error_message;
-  if (error == blink::WebPushError::ErrorTypeNotSupported) {
-    error_message =
-        "Push subscriptions that don't enable userVisibleOnly are not "
-        "supported.";
+  DCHECK(callbacks);
+  // ErrorTypeNone indicates success.
+  if (error_type == blink::WebPushError::kErrorTypeNone) {
+    callbacks->OnSuccess(status);
+  } else {
+    std::string error_message;
+    if (error_type == blink::WebPushError::kErrorTypeNotSupported) {
+      error_message =
+          "Push subscriptions that don't enable userVisibleOnly are not "
+          "supported.";
+    }
+    callbacks->OnError(blink::WebPushError(
+        error_type, blink::WebString::FromUTF8(error_message)));
   }
-
-  callbacks->onError(
-      blink::WebPushError(error, blink::WebString::fromUTF8(error_message)));
-
-  permission_status_callbacks_.Remove(request_id);
 }
 
 }  // namespace content

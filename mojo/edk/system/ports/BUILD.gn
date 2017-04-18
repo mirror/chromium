@@ -10,6 +10,7 @@ source_set("ports") {
     "event.h",
     "message.cc",
     "message.h",
+    "message_filter.h",
     "message_queue.cc",
     "message_queue.h",
     "name.cc",
@@ -20,6 +21,7 @@ source_set("ports") {
     "port.cc",
     "port.h",
     "port_ref.cc",
+    "port_ref.h",
     "user_data.h",
   ]
 

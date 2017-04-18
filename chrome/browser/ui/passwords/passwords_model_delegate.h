@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "base/memory/weak_ptr.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 
@@ -26,6 +27,9 @@ class GURL;
 // and notify about user actions.
 class PasswordsModelDelegate {
  public:
+  // Returns WebContents* the model is attached to.
+  virtual content::WebContents* GetWebContents() const = 0;
+
   // Returns the URL of the site the current forms are retrieved for.
   virtual const GURL& GetOrigin() const = 0;
 
@@ -42,17 +46,13 @@ class PasswordsModelDelegate {
   virtual bool IsPasswordOverridden() const = 0;
 
   // Returns current local forms for the current page.
-  virtual const std::vector<const autofill::PasswordForm*>&
+  virtual const std::vector<std::unique_ptr<autofill::PasswordForm>>&
   GetCurrentForms() const = 0;
-
-  // Returns possible identity provider's credentials for the current site.
-  virtual const std::vector<const autofill::PasswordForm*>&
-  GetFederatedForms() const = 0;
 
   // For PENDING_PASSWORD_STATE state returns the current statistics for
   // the pending username.
-  virtual password_manager::InteractionsStats* GetCurrentInteractionStats()
-      const = 0;
+  virtual const password_manager::InteractionsStats*
+  GetCurrentInteractionStats() const = 0;
 
   // Called from the model when the bubble is displayed.
   virtual void OnBubbleShown() = 0;
@@ -60,8 +60,8 @@ class PasswordsModelDelegate {
   // Called from the model when the bubble is hidden.
   virtual void OnBubbleHidden() = 0;
 
-  // Called when the user didn't interact with the Update UI.
-  virtual void OnNoInteractionOnUpdate() = 0;
+  // Called when the user didn't interact with UI.
+  virtual void OnNoInteraction() = 0;
 
   // Called when the user chose not to update password.
   virtual void OnNopeUpdateClicked() = 0;
@@ -76,16 +76,15 @@ class PasswordsModelDelegate {
   virtual void UpdatePassword(const autofill::PasswordForm& password_form) = 0;
 
   // Called from the dialog controller when the user chooses a credential.
-  // Everything is passed by value because the controller can be destroyed
-  // inside the method.
+  // Controller can be destroyed inside the method.
   virtual void ChooseCredential(
-      autofill::PasswordForm form,
+      const autofill::PasswordForm& form,
       password_manager::CredentialType credential_type) = 0;
 
-  // Open a new tab pointing to passwords.google.com.
-  virtual void NavigateToExternalPasswordManager() = 0;
   // Open a new tab, pointing to the Smart Lock help article.
   virtual void NavigateToSmartLockHelpPage() = 0;
+  // Open a new tab, pointing to passwords.google.com.
+  virtual void NavigateToPasswordManagerAccountDashboard() = 0;
   // Open a new tab, pointing to the password manager settings page.
   virtual void NavigateToPasswordManagerSettingsPage() = 0;
   // Starts the Chrome Sign in flow.
@@ -98,8 +97,7 @@ class PasswordsModelDelegate {
   virtual ~PasswordsModelDelegate() = default;
 };
 
-// Returns ManagePasswordsUIController instance for |contents|
-PasswordsModelDelegate* PasswordsModelDelegateFromWebContents(
-    content::WebContents* web_contents);
+base::WeakPtr<PasswordsModelDelegate>
+PasswordsModelDelegateFromWebContents(content::WebContents* web_contents);
 
 #endif  // CHROME_BROWSER_UI_PASSWORDS_PASSWORDS_MODEL_DELEGATE_H_
