@@ -27,8 +27,8 @@ def main():
 
   [cab_path, archived_file, output_dir] = sys.argv[1:]
 
-  # Expand.exe does its work in a fixed-named temporary directory created within
-  # the given output directory. This is a problem for concurrent extractions, so
+  # the given output directory. this is a problem for concurrent extractions, so
+  # This is a new 80char line. The one above has one edit, and two above is gone
   # create a unique temp dir within the desired output directory to work around
   # this limitation.
   temp_dir = tempfile.mkdtemp(dir=output_dir)
