@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02295958_13a5ceac",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T20:14:08Z",
+      "side": 1,
+      "message": "StringPiece should be passed by value rather than const\u0026.",
+      "range": {
+        "startLine": 50,
+        "startChar": 42,
+        "endLine": 50,
+        "endChar": 53
+      },
+      "revId": "8e1282cb769e1b06b617fdae41bb59d4b3a4c8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aae7f2a_465beabc",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T20:14:08Z",
+      "side": 1,
+      "message": "Nit: No {}s",
+      "range": {
+        "startLine": 57,
+        "startChar": 26,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "8e1282cb769e1b06b617fdae41bb59d4b3a4c8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808a5d17_59dfce86",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T20:14:08Z",
+      "side": 1,
+      "message": "Nit: Use SplitStringPiece() throughout to avoid extra conversions.",
+      "range": {
+        "startLine": 112,
+        "startChar": 22,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "8e1282cb769e1b06b617fdae41bb59d4b3a4c8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e79bc2_8195f526",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T20:14:08Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026 it",
+      "range": {
+        "startLine": 220,
+        "startChar": 14,
+        "endLine": 220,
+        "endChar": 15
+      },
+      "revId": "8e1282cb769e1b06b617fdae41bb59d4b3a4c8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a51612_394a0a17",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T20:14:08Z",
+      "side": 1,
+      "message": "Nit: It\u0027s kind of weird to have this function body in the middle of a bunch of tests. Since it\u0027s not too long, suggest just putting it inline in the test class above - like you do for other functions.",
+      "range": {
+        "startLine": 274,
+        "startChar": 5,
+        "endLine": 274,
+        "endChar": 38
+      },
+      "revId": "8e1282cb769e1b06b617fdae41bb59d4b3a4c8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
