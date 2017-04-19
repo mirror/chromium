@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "137f7d4c_048dee22",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d41af48_11394c98",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01a9304d_12253f38",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87dcdac_c7ff30f6",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Good idea! Done for all the (now anonymous namespaced) helper methods.",
+      "parentUuid": "01a9304d_12253f38",
+      "range": {
+        "startLine": 47,
+        "startChar": 49,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "609cce65_e559c0de",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cebad81_b0b09170",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888c9d3c_13e66ac8",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e06dc96_5739883e",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888c9d3c_13e66ac8",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7156ea22_252087da",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1100fc8f_eb2193de",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf38340c_958f667a",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263cdffe_76efab1d",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done. Thanks! Forgot this one during the rename-athon to EventConfig.",
+      "parentUuid": "cf38340c_958f667a",
+      "range": {
+        "startLine": 131,
+        "startChar": 40,
+        "endLine": 131,
+        "endChar": 64
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ce973a7a_d3e0adea",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Ouch. Thanks!\nChanged this across the board. Even the one at the top where I haven\u0027t edited the out-param yet, but figured it\u0027d be easier to read for consistency.",
+      "parentUuid": "37658065_e8ab1cd4",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 21
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cd77ac0_fdb4c2a3",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da112403_d25aeb8f",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "has_comparator is only checked if the full for-loop is finished, and if the parsing fails, it does an early return. So I\u0027d rather keep this here to ensure it\u0027s easy to see that it\u0027s only set once.",
+      "parentUuid": "1cd77ac0_fdb4c2a3",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 20
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "b4e31ffa_beaac5bf",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "c8d163ba_beaca154",
+      "range": {
+        "startLine": 205,
+        "startChar": 39,
+        "endLine": 205,
+        "endChar": 45
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70fb6426_f7a20a29",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f068ea79_13be169b",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "gg",
+      "parentUuid": "70fb6426_f7a20a29",
+      "range": {
+        "startLine": 249,
+        "startChar": 21,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "9e3174c1_d8e1b55c",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done for both of these. The tests were easier to read without three consecutive uint32_t, so adding the constructor.",
+      "parentUuid": "2cb6fb3a_075e6ffe",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee6ba6d_f37e651d",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e6402c_4eae5a2b",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee6ba6d_f37e651d",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "27a04518_f77d7a63",
+        "filename": "components/feature_engagement_tracker/internal/configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "af33168c_56b05095",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b3797b6_aa650af3",
         "filename": "components/feature_engagement_tracker/internal/configuration.h",
         "patchSetId": 3
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "2986beac_11e729c2",
+        "filename": "components/feature_engagement_tracker/internal/configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Removed a couple based on what was necessary :-)",
+      "parentUuid": "1b3797b6_aa650af3",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 4
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "220a23e0_9b4cc30b",
         "filename": "components/feature_engagement_tracker/internal/configuration.h",
         "patchSetId": 3
@@ -368,6 +704,30 @@
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cd7449_27810b49",
+        "filename": "components/feature_engagement_tracker/internal/configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-04-19T19:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "220a23e0_9b4cc30b",
+      "range": {
+        "startLine": 111,
+        "startChar": 35,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
