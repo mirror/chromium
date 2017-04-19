@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d41af48_11394c98",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T16:25:36Z",
+      "side": 1,
+      "message": "Use \"const char kComparatorTypeAny[] \u003d\" syntax for all of these.",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a9304d_12253f38",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T16:25:36Z",
+      "side": 1,
+      "message": "Nit: Maybe pass this by StringPiece so that you don\u0027t need to copy the bytes around with substr/trimstring ops?",
+      "range": {
+        "startLine": 47,
+        "startChar": 49,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cebad81_b0b09170",
         "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
         "patchSetId": 3
@@ -133,6 +179,29 @@
         "startChar": 6,
         "endLine": 140,
         "endChar": 20
+      },
+      "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d163ba_beaca154",
+        "filename": "components/feature_engagement_tracker/internal/chrome_variations_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-19T16:25:36Z",
+      "side": 1,
+      "message": "Can this use C++ for loop?",
+      "range": {
+        "startLine": 205,
+        "startChar": 39,
+        "endLine": 205,
+        "endChar": 45
       },
       "revId": "61044016ed1236784e36f18b454ab514d4e757ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
