@@ -2,12 +2,7 @@
 per-file histograms.xml=set noparent
 per-file histograms.xml=file://tools/metrics/OWNERS
 
-# EMEA-based reviewers for Blink UseCounter histogram changes only.
-per-file histograms.xml=jochen@chromium.org
-per-file histograms.xml=mkwst@chromium.org
-
-# APAC-based reviewers for Blink UseCounter histogram changes only.
-per-file histograms.xml=ericwilligers@chromium.org
-per-file histograms.xml=haraken@chromium.org
+# Enum extensions are allowed.
+per-file enums.xml=*
 
 # COMPONENT: Internals>Metrics

@@ -68,7 +68,13 @@ def fixObsoleteOrder(tree):
       histogram.insertBefore(obsoletes[0], histogram.firstChild)
 
 
-def PrettyPrint(raw_xml):
+def DropNodesByTagName(tree, tag):
+  nodes = tree.getElementsByTagName(tag)
+  for node in nodes:
+    node.parentNode.removeChild(node)
+
+
+def PrettyPrintHistograms(raw_xml):
   """Pretty-print the given XML.
 
   Args:
@@ -78,15 +84,29 @@ def PrettyPrint(raw_xml):
     The pretty-printed version.
   """
   tree = xml.dom.minidom.parseString(raw_xml)
+  DropNodesByTagName(tree, 'enums')
   canonicalizeUnits(tree)
   fixObsoleteOrder(tree)
   return print_style.GetPrintStyle().PrettyPrintXml(tree)
 
 
+def PrettyPrintEnums(raw_xml):
+  tree = xml.dom.minidom.parseString(raw_xml)
+  DropNodesByTagName(tree, 'histograms')
+  DropNodesByTagName(tree, 'histogram_suffixes_list')
+  return print_style.GetPrintStyle().PrettyPrintXml(tree)
+
+
 def main():
-  presubmit_util.DoPresubmitMain(sys.argv, 'histograms.xml',
+  status = presubmit_util.DoPresubmit(sys.argv, 'enums.xml',
+                                 'enums.before.pretty-print.xml',
+                                 'pretty_print.py', PrettyPrintEnums)
+  if status:
+    sys.exit(status)
+  status = presubmit_util.DoPresubmit(sys.argv, 'histograms.xml',
                                  'histograms.before.pretty-print.xml',
-                                 'pretty_print.py', PrettyPrint)
+                                 'pretty_print.py', PrettyPrintHistograms)
+  sys.exit(status)
 
 if __name__ == '__main__':
   main()
