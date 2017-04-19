@@ -2070,7 +2070,7 @@ PaintLayerScrollableArea::PreventRelayoutScope::~PreventRelayoutScope() {
         scrollable_area->SetNeedsRelayout(false);
       }
 
-      needs_relayout_->Clear();
+      needs_relayout_->clear();
     }
     layout_scope_ = nullptr;
   }
