@@ -4,11 +4,6 @@
 
 #include "ui/gl/gl_surface_glx.h"
 
-extern "C" {
-#include <X11/Xlib.h>
-}
-#include <memory>
-
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
@@ -42,13 +37,13 @@ bool g_glx_create_context_robustness_supported = false;
 bool g_glx_create_context_profile_supported = false;
 bool g_glx_create_context_profile_es2_supported = false;
 bool g_glx_texture_from_pixmap_supported = false;
-bool g_glx_oml_sync_control_supported = false;
-
 // Track support of glXGetMscRateOML separately from GLX_OML_sync_control as a
 // whole since on some platforms (e.g. crosbug.com/34585), glXGetMscRateOML
 // always fails even though GLX_OML_sync_control is reported as being supported.
+bool g_glx_oml_sync_control_supported = false;
 bool g_glx_get_msc_rate_oml_supported = false;
-
+bool g_glx_ext_swap_control_supported = false;
+bool g_glx_mesa_swap_control_supported = false;
 bool g_glx_sgi_video_sync_supported = false;
 
 // A 24-bit RGB visual and colormap to use when creating offscreen surfaces.
@@ -248,7 +243,7 @@ class SGIVideoSyncProviderThreadShim {
     // Create the context only once for all vsync providers.
     if (!context_) {
       context_ =
-        glXCreateNewContext(display_, config, GLX_RGBA_TYPE, nullptr, True);
+          glXCreateNewContext(display_, config, GLX_RGBA_TYPE, nullptr, True);
       if (!context_)
         LOG(ERROR) << "video_sync: glXCreateNewContext failed";
     }
@@ -381,7 +376,9 @@ GLXContext SGIVideoSyncProviderThreadShim::context_ = 0;
 
 }  // namespace
 
-GLSurfaceGLX::GLSurfaceGLX() {}
+GLSurfaceGLX::GLSurfaceGLX() = default;
+
+GLSurfaceGLX::~GLSurfaceGLX() = default;
 
 bool GLSurfaceGLX::InitializeOneOff() {
   static bool initialized = false;
@@ -423,6 +420,8 @@ bool GLSurfaceGLX::InitializeOneOff() {
       HasGLXExtension("GLX_EXT_texture_from_pixmap");
   g_glx_oml_sync_control_supported = HasGLXExtension("GLX_OML_sync_control");
   g_glx_get_msc_rate_oml_supported = g_glx_oml_sync_control_supported;
+  g_glx_ext_swap_control_supported = HasGLXExtension("GLX_EXT_swap_control");
+  g_glx_mesa_swap_control_supported = HasGLXExtension("GLX_MESA_swap_control");
   g_glx_sgi_video_sync_supported = HasGLXExtension("GLX_SGI_video_sync");
 
   const XVisualInfo& visual_info =
@@ -492,6 +491,16 @@ bool GLSurfaceGLX::IsTextureFromPixmapSupported() {
 }
 
 // static
+bool GLSurfaceGLX::IsEXTSwapControlSupported() {
+  return g_glx_ext_swap_control_supported;
+}
+
+// static
+bool GLSurfaceGLX::IsMESASwapControlSupported() {
+  return g_glx_mesa_swap_control_supported;
+}
+
+// static
 bool GLSurfaceGLX::IsOMLSyncControlSupported() {
   return g_glx_oml_sync_control_supported;
 }
@@ -500,14 +509,8 @@ void* GLSurfaceGLX::GetDisplay() {
   return g_display;
 }
 
-GLSurfaceGLX::~GLSurfaceGLX() {}
-
 NativeViewGLSurfaceGLX::NativeViewGLSurfaceGLX(gfx::AcceleratedWidget window)
-    : parent_window_(window),
-      window_(0),
-      glx_window_(0),
-      config_(nullptr),
-      visual_id_(CopyFromParent) {}
+    : parent_window_(window) {}
 
 GLXDrawable NativeViewGLSurfaceGLX::GetDrawableHandle() const {
   return glx_window_;
@@ -593,7 +596,6 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
 gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
-
   glXSwapBuffers(g_display, GetDrawableHandle());
   return gfx::SwapResult::SWAP_ACK;
 }
@@ -655,7 +657,7 @@ bool NativeViewGLSurfaceGLX::CanHandleEvent(XEvent* event) {
 
 UnmappedNativeViewGLSurfaceGLX::UnmappedNativeViewGLSurfaceGLX(
     const gfx::Size& size)
-    : size_(size), config_(nullptr), window_(0), glx_window_(0) {
+    : size_(size) {
   // Ensure that we don't create a window with zero size.
   if (size_.GetArea() == 0)
     size_.SetSize(1, 1);

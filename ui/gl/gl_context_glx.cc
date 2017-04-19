@@ -149,13 +149,10 @@ GLXContext CreateHighestVersionContext(Display* display,
 }
 
 GLContextGLX::GLContextGLX(GLShareGroup* share_group)
-  : GLContextReal(share_group),
-    context_(nullptr),
-    display_(nullptr) {
-}
+    : GLContextReal(share_group) {}
 
-XDisplay* GLContextGLX::display() {
-  return display_;
+GLContextGLX::~GLContextGLX() {
+  Destroy();
 }
 
 bool GLContextGLX::Initialize(GLSurface* compatible_surface,
@@ -294,20 +291,13 @@ void* GLContextGLX::GetHandle() {
 
 void GLContextGLX::OnSetSwapInterval(int interval) {
   DCHECK(IsCurrent(nullptr));
-  if (HasExtension("GLX_EXT_swap_control") &&
-      g_driver_glx.fn.glXSwapIntervalEXTFn) {
-    glXSwapIntervalEXT(
-        display_,
-        glXGetCurrentDrawable(),
-        interval);
-  } else if (HasExtension("GLX_MESA_swap_control") &&
-             g_driver_glx.fn.glXSwapIntervalMESAFn) {
+  if (GLSurfaceGLX::IsEXTSwapControlSupported()) {
+    glXSwapIntervalEXT(display_, glXGetCurrentDrawable(), interval);
+  } else if (GLSurfaceGLX::IsMESASwapControlSupported()) {
     glXSwapIntervalMESA(interval);
-  } else {
-    if(interval == 0)
-      LOG(WARNING) <<
-          "Could not disable vsync: driver does not "
-          "support GLX_EXT_swap_control";
+  } else if (interval == 0) {
+    LOG(WARNING)
+        << "Could not disable vsync: driver does not support swap control";
   }
 }
 
@@ -323,10 +313,6 @@ std::string GLContextGLX::GetExtensions() {
 
 bool GLContextGLX::WasAllocatedUsingRobustnessExtension() {
   return GLSurfaceGLX::IsCreateContextRobustnessSupported();
-}
-
-GLContextGLX::~GLContextGLX() {
-  Destroy();
 }
 
 }  // namespace gl
