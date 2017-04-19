@@ -43,11 +43,10 @@ class GL_EXPORT GLContextEGL : public GLContextReal {
  private:
   void Destroy();
 
-  EGLContext context_;
-  EGLDisplay display_;
-  EGLConfig config_;
-  bool unbind_fbo_on_makecurrent_;
-  int swap_interval_;
+  EGLContext context_ = nullptr;
+  EGLDisplay display_ = nullptr;
+  EGLConfig config_ = nullptr;
+  bool unbind_fbo_on_makecurrent_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(GLContextEGL);
 };

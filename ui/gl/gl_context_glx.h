@@ -22,7 +22,7 @@ class GL_EXPORT GLContextGLX : public GLContextReal {
  public:
   explicit GLContextGLX(GLShareGroup* share_group);
 
-  XDisplay* display();
+  XDisplay* display() { return display_; }
 
   // Implement GLContext.
   bool Initialize(GLSurface* compatible_surface,
@@ -41,8 +41,8 @@ class GL_EXPORT GLContextGLX : public GLContextReal {
  private:
   void Destroy();
 
-  void* context_;
-  XDisplay* display_;
+  void* context_ = nullptr;
+  XDisplay* display_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(GLContextGLX);
 };
