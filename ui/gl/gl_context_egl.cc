@@ -47,12 +47,10 @@ using ui::GetLastEGLErrorString;
 namespace gl {
 
 GLContextEGL::GLContextEGL(GLShareGroup* share_group)
-    : GLContextReal(share_group),
-      context_(nullptr),
-      display_(nullptr),
-      config_(nullptr),
-      unbind_fbo_on_makecurrent_(false),
-      swap_interval_(1) {
+    : GLContextReal(share_group) {}
+
+GLContextEGL::~GLContextEGL() {
+  Destroy();
 }
 
 bool GLContextEGL::Initialize(GLSurface* compatible_surface,
@@ -211,8 +209,6 @@ bool GLContextEGL::MakeCurrent(GLSurface* surface) {
     return false;
   }
 
-  surface->OnSetSwapInterval(swap_interval_);
-
   release_current.Cancel();
   return true;
 }
@@ -271,9 +267,6 @@ void GLContextEGL::OnSetSwapInterval(int interval) {
   if (!eglSwapInterval(display_, interval)) {
     LOG(ERROR) << "eglSwapInterval failed with error "
                << GetLastEGLErrorString();
-  } else {
-    swap_interval_ = interval;
-    GLSurface::GetCurrent()->OnSetSwapInterval(interval);
   }
 }
 
@@ -288,10 +281,6 @@ std::string GLContextEGL::GetExtensions() {
 
 bool GLContextEGL::WasAllocatedUsingRobustnessExtension() {
   return GLSurfaceEGL::IsCreateContextRobustnessSupported();
-}
-
-GLContextEGL::~GLContextEGL() {
-  Destroy();
 }
 
 }  // namespace gl
