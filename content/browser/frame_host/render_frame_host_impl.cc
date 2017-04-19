@@ -1144,8 +1144,13 @@ void RenderFrameHostImpl::OnCreateNewWindow(
 }
 
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
+  bool changed = !(last_committed_origin_ == origin);
   last_committed_origin_ = origin;
   CSPContext::SetSelf(origin);
+  // If the last committed origin has changed, reset the feature policy in the
+  // RenderFrameHost to a blank policy based on the parent frame.
+  if (changed)
+    ResetFeaturePolicy();
 }
 
 void RenderFrameHostImpl::OnDetach() {

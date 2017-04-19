@@ -671,11 +671,6 @@ void NavigatorImpl::DidNavigate(
   if (!params.url_is_unreachable)
     render_frame_host->set_last_successful_url(params.url);
 
-  // After setting the last committed origin, reset the feature policy in the
-  // RenderFrameHost to a blank policy based on the parent frame.
-  if (did_navigate && !is_navigation_within_page)
-    render_frame_host->ResetFeaturePolicy();
-
   // Send notification about committed provisional loads. This notification is
   // different from the NAV_ENTRY_COMMITTED notification which doesn't include
   // the actual URL navigated to and isn't sent for AUTO_SUBFRAME navigations.
