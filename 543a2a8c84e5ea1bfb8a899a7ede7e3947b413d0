@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a1c39b_cb40b967",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "nit: Please wrap the CL description to 80-col.",
+      "range": {
+        "startLine": 13,
+        "startChar": 104,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011376d4_0df51fd6",
+        "filename": "tools/metrics/histograms/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "Let\u0027s add a note that any enum changes that aren\u0027t strictly appending items at the tail end of the enum list should be reviewed by the metrics team.  Some people will ignore the note, but hopefully most won\u0027t, and generally we do want to review changes that might alter semantics of existing buckets.",
+      "range": {
+        "startLine": 5,
+        "startChar": 30,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb8f0e_c79418ee",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "These run as part of presubmit, right?  Could probably mention that here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7afe9ec_7f8c7305",
+        "filename": "tools/metrics/histograms/merge_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "nit: Please document each of these functions.",
+      "range": {
+        "startLine": 11,
+        "startChar": 37,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ad7e75_bca3872e",
+        "filename": "tools/metrics/histograms/merge_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "nit: Please leave two blank lines between top-level definitions.",
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08bd034_f5417b15",
+        "filename": "tools/metrics/histograms/merge_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "Why does one of the args start with \u0027--\u0027 and the other not?",
+      "range": {
+        "startLine": 37,
+        "startChar": 48,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5936e828_4bc5bfd0",
+        "filename": "tools/metrics/histograms/pretty_print.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "nit: Please add docs",
+      "range": {
+        "startLine": 71,
+        "startChar": 34,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a176ddc_109ba781",
+        "filename": "tools/metrics/histograms/pretty_print.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "The enums file doesn\u0027t have these nodes, right?  Why are we dropping them?  Ditto for line 87 above.",
+      "range": {
+        "startLine": 96,
+        "startChar": 53,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae41b830_bbc69b52",
+        "filename": "tools/metrics/histograms/pretty_print.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "nit: Please fix up the indentation here.",
+      "range": {
+        "startLine": 103,
+        "startChar": 69,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0025f6_fc250be5",
+        "filename": "tools/metrics/histograms/pretty_print.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "Seems like it would be better to run both pretty print scripts prior to bailing, so users will see all of their errors in a single run.  (Or am I misunderstanding how this works?)",
+      "range": {
+        "startLine": 105,
+        "startChar": 20,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630385ae_6b203123",
+        "filename": "tools/metrics/histograms/pretty_print.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-19T20:41:38Z",
+      "side": 1,
+      "message": "nit: Please fix up the indentation here.",
+      "range": {
+        "startLine": 108,
+        "startChar": 74,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "543a2a8c84e5ea1bfb8a899a7ede7e3947b413d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
