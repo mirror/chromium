@@ -22,6 +22,30 @@
       "revId": "5823bf7e476f61bc4a60fce22fdc586dfc79fea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b80dc87_c4e9b655",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-04-19T23:10:17Z",
+      "side": 1,
+      "message": "Oh yeah, those are from Canary. The existing dumps don\u0027t have enough information to tell when the deadline was actually scheduled because that might differ from begin frame\u0027s deadline field (which we were dumping in the begin frame tracker).",
+      "parentUuid": "25411ff2_8af5f269",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "5823bf7e476f61bc4a60fce22fdc586dfc79fea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
