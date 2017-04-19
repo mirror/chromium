@@ -169,8 +169,6 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual bool isClipRect() const = 0;
   virtual const SkMatrix& getTotalMatrix() const = 0;
 
-  virtual bool ToPixmap(SkPixmap* output) = 0;
-
   enum class AnnotationType {
     URL,
     NAMED_DESTINATION,
@@ -187,7 +185,6 @@ class CC_PAINT_EXPORT PaintCanvas {
  protected:
   friend class PaintSurface;
   friend class PaintRecorder;
-  friend CC_PAINT_EXPORT bool ToPixmap(PaintCanvas* canvas, SkPixmap* output);
 };
 
 class CC_PAINT_EXPORT PaintCanvasAutoRestore {
@@ -223,9 +220,6 @@ class CC_PAINT_EXPORT PaintCanvasAutoRestore {
 // separate now to make the transition to concrete types easier by keeping
 // the base PaintCanvas type equivalent to the SkCanvas interface and
 // all these helper functions potentially operating on both.
-
-// PaintCanvas equivalent of skia::GetWritablePixels.
-CC_PAINT_EXPORT bool ToPixmap(PaintCanvas* canvas, SkPixmap* output);
 
 // Following routines are used in print preview workflow to mark the
 // preview metafile.
