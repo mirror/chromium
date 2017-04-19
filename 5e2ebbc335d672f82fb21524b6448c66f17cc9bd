@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97359c51_33ea4ce7",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-04-19T02:33:31Z",
+      "side": 1,
+      "message": "Yes, it\u0027s used on Windows when direct composition is not used (same as before).",
+      "parentUuid": "d06086ae_0b5eb6bf",
+      "range": {
+        "startLine": 145,
+        "startChar": 5,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "5e2ebbc335d672f82fb21524b6448c66f17cc9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70bf058f_3a322b0c",
         "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5e2ebbc335d672f82fb21524b6448c66f17cc9bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf36aacf_edd8b9ad",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-04-19T02:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bf058f_3a322b0c",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "5e2ebbc335d672f82fb21524b6448c66f17cc9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
