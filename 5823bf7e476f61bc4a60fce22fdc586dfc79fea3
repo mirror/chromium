@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25411ff2_8af5f269",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-04-19T22:35:58Z",
+      "side": 1,
+      "message": "These dumps seem to be out of date (for example still have updated_at_us as opposed to updated_at_ms",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "5823bf7e476f61bc4a60fce22fdc586dfc79fea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
