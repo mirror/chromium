@@ -22,6 +22,46 @@
       "revId": "9131e43e0b10bbbb88897c0b5c977239b1f19917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8211a0_e9883739",
+        "filename": "tools/perf/benchmarks/v8_browsing.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-04-19T07:48:36Z",
+      "side": 1,
+      "message": "If I understand correct this was disabled for mac and reference (from the ShouldDisable method in _V8DesktopBrowsingBenchmark). Should we disable them here?",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 1
+      },
+      "revId": "9131e43e0b10bbbb88897c0b5c977239b1f19917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457a4e0e_34436b5a",
+        "filename": "tools/perf/benchmarks/v8_browsing.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-04-19T07:48:36Z",
+      "side": 1,
+      "message": "Also here, should it be disabled it for mac and reference?",
+      "revId": "9131e43e0b10bbbb88897c0b5c977239b1f19917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
