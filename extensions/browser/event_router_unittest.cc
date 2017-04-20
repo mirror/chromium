@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/test/histogram_tester.h"
 #include "base/values.h"
 #include "content/public/browser/browser_context.h"
@@ -243,6 +244,7 @@ class EventRouterFilterTest : public ExtensionsTest {
     return filter_list;
   }
 
+  base::MessageLoop message_loop_;
   std::unique_ptr<content::RenderProcessHost> render_process_host_;
 
   DISALLOW_COPY_AND_ASSIGN(EventRouterFilterTest);

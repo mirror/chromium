@@ -42,6 +42,7 @@
           "blink::mojom::AppBannerController",
           "blink::mojom::EngagementClient",
           "blink::mojom::InstallationService",
+          "blink::mojom::ManifestManager",
           "content::mojom::ImageDownloader",
           "mojom::MediaDevicesListener"
         ]
