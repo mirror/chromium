@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "c4216e78_b4630535",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-20T21:10:09Z",
+      "side": 1,
+      "message": "Right now we hardcode the paths to histograms.xml for git cl format to be able to format these files.\n\nThat\u0027s done here: https://codereview.chromium.org/2674283002/\n\nSo before this split, can you land an update to that to include enums.xml this?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "ea249e38d105af8ee8e014b4b3664d26dfb68205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10722b89_9cb4860c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-04-20T21:10:09Z",
+      "side": 1,
+      "message": "Nit: is describes -\u003e describes",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "ea249e38d105af8ee8e014b4b3664d26dfb68205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2aa3b64d_2fcf8f05",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
