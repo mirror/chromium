@@ -6781,6 +6781,8 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
     GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
         &RenderFrameImpl::OnHostZoomClientRequest, weak_factory_.GetWeakPtr()));
   }
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &ManifestManager::BindToRequest, base::Unretained(manifest_manager_)));
 }
 
 template <typename Interface>
