@@ -410,7 +410,7 @@ def get_interface_exposed_arguments(file_contents):
     return arguments
 
 
-# Workaround for http://crbug.com/611437
+# Workaround for crbug.com/611437 and crbug.com/711464
 # TODO(bashi): Remove this hack once we resolve too-long generated file names.
 def shorten_union_name(union_type):
     aliases = {
@@ -424,6 +424,9 @@ def shorten_union_name(union_type):
     alias = aliases.get(name)
     if alias:
         return alias
+    if len(name) >= 120:
+        raise Exception('crbug.com/7114646: The union name %s is too long. '
+                        'Please add an alias to shorten_union_name()' % name)
     return name
 
 
