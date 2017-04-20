@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c84dfb_d244bd91",
+        "filename": "tools/metrics/histograms/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-20T20:14:13Z",
+      "side": 1,
+      "message": "nit: Please add an extra blank line between top-level definitions",
+      "revId": "ea249e38d105af8ee8e014b4b3664d26dfb68205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa3b64d_2fcf8f05",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-20T20:14:13Z",
+      "side": 1,
+      "message": "nit: s/check/checked",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "ea249e38d105af8ee8e014b4b3664d26dfb68205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
