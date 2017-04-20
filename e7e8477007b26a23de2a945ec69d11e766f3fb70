@@ -22,6 +22,30 @@
       "revId": "e7e8477007b26a23de2a945ec69d11e766f3fb70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc69046_eeb5a166",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-04-20T01:22:53Z",
+      "side": 0,
+      "message": "It was intentional: we don\u0027t want to clear the policy on a fragment navigation. I moved the test into RenderFrameHostImpl::SetLastCommittedOrigin, where I check to see if the origin actually changed -- that shouldn\u0027t happen in an in-document-navigation, as far as I can tell. (Tests will definitely be useful here)",
+      "parentUuid": "3adcb210_aa800ed6",
+      "range": {
+        "startLine": 676,
+        "startChar": 23,
+        "endLine": 676,
+        "endChar": 48
+      },
+      "revId": "e7e8477007b26a23de2a945ec69d11e766f3fb70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
