@@ -1286,4 +1286,25 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   ASSERT_EQ(original_feature_policy, final_feature_policy);
 }
 
+// Feature Policy: Test that the feature policy is set correctly when inserting
+// a new child frame.
+TEST_F(NavigatorTestWithBrowserSideNavigation, FeaturePolicyNewChild) {
+  const GURL kUrl1("http://www.chromium.org/");
+  const GURL kUrl2("http://www.chromium.org/Home");
+
+  contents()->NavigateAndCommit(kUrl1);
+
+  TestRenderFrameHost* sub_frame_rfh =
+      contents()->GetMainFrame()->AppendChild("child");
+  // Simulate the navigation triggered by inserting a child frame into a page.
+  FrameHostMsg_DidCommitProvisionalLoad_Params params;
+  InitNavigateParams(&params, 1, false, kUrl2,
+                     ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  sub_frame_rfh->SendNavigateWithParams(&params);
+
+  FeaturePolicy* sub_frame_feature_policy = sub_frame_rfh->get_feature_policy();
+  ASSERT_TRUE(sub_frame_feature_policy);
+  ASSERT_FALSE(sub_frame_feature_policy->origin_.unique());
+}
+
 }  // namespace content
