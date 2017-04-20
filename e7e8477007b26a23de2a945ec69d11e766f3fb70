@@ -46,6 +46,30 @@
       "revId": "e7e8477007b26a23de2a945ec69d11e766f3fb70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38491ed7_7bd6b605",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-04-20T20:29:22Z",
+      "side": 0,
+      "message": "However, my original approach here went too far -- we *should* reset the policy when the frame navigates, even if the origin hasn\u0027t changed, since the new document could have different HTTP headers than the old one. (There are unit tests for that, which the first patchset failed on). Switching to just \n\n  if (!is_navigation_within_page)\n\nseems to be the right thing to do.",
+      "parentUuid": "acc69046_eeb5a166",
+      "range": {
+        "startLine": 676,
+        "startChar": 23,
+        "endLine": 676,
+        "endChar": 48
+      },
+      "revId": "e7e8477007b26a23de2a945ec69d11e766f3fb70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
