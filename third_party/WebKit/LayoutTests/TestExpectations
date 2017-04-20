@@ -2589,7 +2589,6 @@ crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-allow-empty-value.
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-allow-whitespace-in-value.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-content-type.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-header-allowed.htm [ Failure ]
-crbug.com/626703 external/wpt/html/webappapis/system-state-and-capabilities/the-navigator-object/NavigatorID.html [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/abort-after-stop.htm [ Timeout ]
 crbug.com/626703 external/wpt/XMLHttpRequest/event-readystatechange-loaded.htm [ Failure Timeout ]
 crbug.com/626703 external/wpt/XMLHttpRequest/send-authentication-existing-session-manual.htm [ Skip ]
