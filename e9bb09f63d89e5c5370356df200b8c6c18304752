@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1eed7b9_eafd6b1a",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115885
+      },
+      "writtenOn": "2017-04-21T19:27:15Z",
+      "side": 1,
+      "message": "do we need to call CancelAllDownloads() is num_downloads is zero?",
+      "revId": "e9bb09f63d89e5c5370356df200b8c6c18304752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
