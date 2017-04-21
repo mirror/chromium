@@ -8729,7 +8729,7 @@
             }
           ],
           "expiration": 36000,
-          "hard_timeout": 7200,
+          "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 3600
         }
@@ -8759,7 +8759,7 @@
             }
           ],
           "expiration": 36000,
-          "hard_timeout": 7200,
+          "hard_timeout": 10800,
           "ignore_task_failure": true,
           "io_timeout": 3600
         }
@@ -20426,7 +20426,7 @@
             }
           ],
           "expiration": 36000,
-          "hard_timeout": 7200,
+          "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 3600
         }
@@ -20456,7 +20456,7 @@
             }
           ],
           "expiration": 36000,
-          "hard_timeout": 7200,
+          "hard_timeout": 10800,
           "ignore_task_failure": true,
           "io_timeout": 3600
         }
@@ -32043,7 +32043,7 @@
             }
           ],
           "expiration": 36000,
-          "hard_timeout": 7200,
+          "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 3600
         }
@@ -32073,7 +32073,7 @@
             }
           ],
           "expiration": 36000,
-          "hard_timeout": 7200,
+          "hard_timeout": 10800,
           "ignore_task_failure": true,
           "io_timeout": 3600
         }
