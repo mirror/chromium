@@ -41,10 +41,14 @@ class MockWPTGitHub(object):
 
         self.create_pr_index += 1
 
-        return {}
+        return {'number': 5678}
 
     def delete_remote_branch(self, _):
         self.calls.append('delete_remote_branch')
+
+    def add_label(self, _):
+        self.calls.append('add_label')
+        return {}, 200
 
     def get_pr_branch(self, number):
         self.calls.append('get_pr_branch')
