@@ -62,7 +62,7 @@ class LocalWPT(object):
         self.run(['git', 'clean', '-fdx'])
         self.run(['git', 'checkout', 'origin/master'])
 
-    def create_branch_with_patch(self, branch_name, message, patch, author):
+    def create_branch_with_patch(self, branch_name, message, patch, author, force_push=False):
         """Commits the given patch and pushes to the upstream repo.
 
         Args:
@@ -74,6 +74,11 @@ class LocalWPT(object):
         self.clean()
 
         _log.info('Creating local branch %s', branch_name)
+        try:
+            self.run(['git', 'branch', '-D', branch_name])
+        except ScriptError:
+            # Ignore errors if branch not found
+            pass
         self.run(['git', 'checkout', '-b', branch_name])
 
         # Remove Chromium WPT directory prefix.
@@ -84,7 +89,10 @@ class LocalWPT(object):
         self.run(['git', 'apply', '-'], input=patch)
         self.run(['git', 'add', '.'])
         self.run(['git', 'commit', '--author', author, '-am', message])
-        self.run(['git', 'push', 'origin', branch_name])
+        if force_push:
+            self.run(['git', 'push', '-f', 'origin', branch_name])
+        else:
+            self.run(['git', 'push', 'origin', branch_name])
 
     def test_patch(self, patch, chromium_commit=None):
         """Returns the expected output of a patch against origin/master.
