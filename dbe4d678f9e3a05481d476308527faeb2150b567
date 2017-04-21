@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42528638_8467bea8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Formatting nit: This style/formatting (with closing parens on the next line) isn\u0027t super common.\nAlso, webkitpy doesn\u0027t have an 80-column limit, so you could also just put this on one line:\n\n    cl.post_comment(\u0027The WPT PR for this CL has been merged upstream! {}\u0027.format(pr_url))",
+      "revId": "dbe4d678f9e3a05481d476308527faeb2150b567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

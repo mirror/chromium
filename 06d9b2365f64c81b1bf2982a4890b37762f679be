@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64321574_bdae3cca",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0ad011d_ecf6ed2f",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bee7676c_b93e4e75",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9e7d5146_8be5acea",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bee7676c_b93e4e75",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22c89988_f7394bc0",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 7
@@ -47,6 +83,109 @@
       "writtenOn": "2017-04-21T22:09:04Z",
       "side": 1,
       "message": "Removed functionality from this class and renamed it. Now it\u0027s passed to the GerritCL class (below) which uses it to make requests.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6297f675_fbbc6bba",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Sounds alright - note, you could also just call it Gerrit if you want (note that WPTGitHub currently doesn\u0027t have API as part of its name). But either way sounds good to me.",
+      "parentUuid": "22c89988_f7394bc0",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1b1bc89_47eecbd4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Not part of this change, but it may be more consistent to use an assert here?\nAlso, requried -\u003e required",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36de8a3_a2bdc3d2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "CLs that touch thousands of file usually aren\u0027t accidental -- but I guess we want to avoid making PRs for them because that would be expensive or noisy or likely to fail?",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c341e60_91c5a8ca",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Nit: Get -\u003e Gets",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a1ee59_2bd04ad8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Nit: No need to break this into multiple lines,\n    path \u003d \u0027/changes/{}/revisions/current/patch\u0027.format(self.change_id)\nwould be fine.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f1623c_01c0e108",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Could also just directly `return base64.b64decode(self.api.get(path, raw\u003dTrue))`.",
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "96315cbb_7ec3c5be",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "This seems like a good thing to add as a comment.",
+      "parentUuid": "eee90d08_d1924fbe",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cb9e031_774a980c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 7
@@ -81,6 +238,24 @@
       "writtenOn": "2017-04-21T22:09:04Z",
       "side": 1,
       "message": "We need this to overwrite the existing branch for the PR when we\u0027re updating it with a new patch.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5dacb7_d7ebec5f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Also a good thing to add as a comment in the code, I think.",
+      "parentUuid": "1cb9e031_774a980c",
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "3f4d4e52_eed7c28a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eaebb1ba_3ac953b1",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef531410_0d0ea47b",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 7
@@ -115,6 +308,41 @@
       "writtenOn": "2017-04-21T22:09:04Z",
       "side": 1,
       "message": "We now attach and use the \u0027WPT-Export-Revision:\u0027 footer to know if a CL has a new patch we need to upload to the PR.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d64d517_85571ee3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Possibly consider extracting this string to a global constant.\n\nAlso, what\u0027s the \"PR revision\"? Is it usually a number less than 10, like the idea of \"patchset\" for Rietveld/Gerrit?",
+      "parentUuid": "ef531410_0d0ea47b",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2000e2_50987a11",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Nit: Use periods after comments for consistency :-)",
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +363,24 @@
       "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4290cc9e_ef55a975",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-04-21T23:47:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06c07a5d_ec5f5889",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
