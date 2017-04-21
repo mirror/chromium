@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169adb03_0bfa2c39",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "Extract the success value to a boolean and DCHECK it? Otherwise this would be equivalent to handling a DCHECK failure, which the style guide does not like (https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED) -- although in particular in PrefService there are some existing (and in my defense, fairly old 😉) places where that patterns is used. So please don\u0027t take those as an example 😃",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa243db_eb1a1301",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "Use base::MakeUnique?",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414687de_a036e5f0",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "This could just be RecordSplitPath(split_path), no? And then you have the same as in the loop, so you could just break out of the loop after resizing.",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ff637e_ca7a81ee",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "I\u0027m not super happy about the tight coupling between these classes. Could we have DictionaryValueUpdate know about this one via a delegate interface? And then if we get rid of Insert() (see my other comment), we could even simplify that to just a Callback",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74405cf9_902af65d",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "What happens with these? I only see they\u0027re cleared, and Insert() appends a new one but also returns it. Couldn\u0027t the caller own the returned instance?",
+      "range": {
+        "startLine": 71,
+        "startChar": 54,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d619a850_9d778b37",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "This is a lot of boilerplate. Given that we don\u0027t expect this class to be used extremely often (right?), would it make more sense to just leave it at Set() and Get() and have callers do the appropriate subtyping?",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb97615_2447ad50",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-21T17:16:46Z",
+      "side": 1,
+      "message": "Nit: \"within\"",
+      "range": {
+        "startLine": 111,
+        "startChar": 31,
+        "endLine": 111,
+        "endChar": 38
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
