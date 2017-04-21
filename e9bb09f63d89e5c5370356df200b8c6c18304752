@@ -16,6 +16,24 @@
       "revId": "e9bb09f63d89e5c5370356df200b8c6c18304752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e2fbf1_5d097ed0",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-04-21T19:34:10Z",
+      "side": 1,
+      "message": "DOWNLOAD_CLOSE_BROWSER_SHUTDOWN is returned only if the count was non-zero, so we don\u0027t need to check num_downloads \u003e 0 here.\n\nThe download count is returned so that it can be used to show a prompt if one is necessary. In this case we don\u0027t show a prompt and |num_downloads| is unused.",
+      "parentUuid": "c1eed7b9_eafd6b1a",
+      "revId": "e9bb09f63d89e5c5370356df200b8c6c18304752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
