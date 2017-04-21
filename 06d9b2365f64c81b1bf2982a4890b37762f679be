@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ad011d_ecf6ed2f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "Have been testing in my own repo, will change this before landing.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee7676c_b93e4e75",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "Aggregated all hard-coded URL bits from the exporter into here.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c89988_f7394bc0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "Removed functionality from this class and renamed it. Now it\u0027s passed to the GerritCL class (below) which uses it to make requests.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee90d08_d1924fbe",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "This won\u0027t be exercised in production because wpt-exporter always runs on a clean machine. But it\u0027s useful when running locally since branches stick around.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb9e031_774a980c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "We need this to overwrite the existing branch for the PR when we\u0027re updating it with a new patch.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaebb1ba_3ac953b1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "Temporary for testing - will change before sending to prod.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef531410_0d0ea47b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "We now attach and use the \u0027WPT-Export-Revision:\u0027 footer to know if a CL has a new patch we need to upload to the PR.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c07a5d_ec5f5889",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-04-21T22:09:04Z",
+      "side": 1,
+      "message": "Turning this into a public method since TestExporter needs to use it. Eventually I want to turn PullRequest into its own class and move this method to it.",
+      "revId": "06d9b2365f64c81b1bf2982a4890b37762f679be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
