@@ -84,8 +84,8 @@ class CORE_EXPORT ContainerNode : public Node {
  public:
   ~ContainerNode() override;
 
-  Node* FirstChild() const { return first_child_; }
-  Node* LastChild() const { return last_child_; }
+  Node* firstChild() const { return first_child_; }
+  Node* lastChild() const { return last_child_; }
   bool HasChildren() const { return first_child_; }
 
   bool HasOneChild() const {
@@ -455,13 +455,13 @@ inline unsigned Node::CountChildren() const {
 inline Node* Node::firstChild() const {
   if (!IsContainerNode())
     return nullptr;
-  return ToContainerNode(this)->FirstChild();
+  return ToContainerNode(this)->firstChild();
 }
 
 inline Node* Node::lastChild() const {
   if (!IsContainerNode())
     return nullptr;
-  return ToContainerNode(this)->LastChild();
+  return ToContainerNode(this)->lastChild();
 }
 
 inline ContainerNode* Node::ParentElementOrShadowRoot() const {
@@ -484,7 +484,7 @@ inline bool Node::IsTreeScope() const {
 
 inline void GetChildNodes(ContainerNode& node, NodeVector& nodes) {
   DCHECK(!nodes.size());
-  for (Node* child = node.FirstChild(); child; child = child->nextSibling())
+  for (Node* child = node.firstChild(); child; child = child->nextSibling())
     nodes.push_back(child);
 }
 
