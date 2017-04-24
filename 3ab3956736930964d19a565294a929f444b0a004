@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "ff63103e_861b956a",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-24T09:51:00Z",
+      "side": 1,
+      "message": "I\u0027m still not super happy about that, but okay :) Also you\u0027re aware of the base::Value refactoring, right? (https://docs.google.com/document/d/1uDLu5uTRlCWePxQUEHc8yNQdEoE1BDISYdpggWEABnw)",
+      "parentUuid": "12945eb5_0138c7c0",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb97615_2447ad50",
         "filename": "services/preferences/public/interfaces/preferences.mojom",
         "patchSetId": 3

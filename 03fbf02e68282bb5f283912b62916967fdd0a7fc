@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06a9ad27_2b2dbfcb",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-24T09:51:00Z",
+      "side": 1,
+      "message": "I think I would declare this type inside of DictionaryValueUpdate -- no need to pollute the whole namespace with it.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87726db3_034d23aa",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-24T09:51:00Z",
+      "side": 1,
+      "message": "Nit: s/to a ScopedDictionaryPrefUpdate// now that this class doesn\u0027t know about it anymore. Maybe replace it with \"via a callback\" or something.",
+      "range": {
+        "startLine": 71,
+        "startChar": 3,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33462772_c5cd1f01",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-24T09:51:00Z",
+      "side": 1,
+      "message": "Could you move this class to a separate file now? It does make it a lot easier to infer the filename from the class name.",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f14670_a97aa5a5",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-24T09:51:00Z",
+      "side": 1,
+      "message": "Nit: Pass the callback as const ref.",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
