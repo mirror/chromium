@@ -39,6 +39,29 @@
       "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7011d13e_673bbd9b",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-04-24T21:50:02Z",
+      "side": 1,
+      "message": "I am not sure what you mean by \"stable iterators\".  I tried googling for this term but got no \"official-looking\" hits.  I assume that \"stable iterators\" means that mutating the collection doesn\u0027t invalidate iterators that were created earlier.  Q: Would it make sense to define \"stable iterators\" term within this README.md?\n\nhttp://stackoverflow.com/questions/6438086/iterator-invalidation-rules claims that mutating an std::unordered_map invalidates its iterators after rehashing occurs.  Q: Does this mean there is an error above (i.e. we should say \"No\" in \"stable iterators\" column for std::unordered_map and std::unordered_set)?  Or am I misunderstanding what is meant by \"stable iterators\"?",
+      "range": {
+        "startLine": 61,
+        "startChar": 89,
+        "endLine": 61,
+        "endChar": 92
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
