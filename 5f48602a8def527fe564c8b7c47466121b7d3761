@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a23c639c_b609d7af",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-04-24T16:45:20Z",
+      "side": 1,
+      "message": "nit: subframe_rfh (to be consistent with rest of the file)",
+      "range": {
+        "startLine": 1297,
+        "startChar": 23,
+        "endLine": 1297,
+        "endChar": 37
+      },
+      "revId": "5f48602a8def527fe564c8b7c47466121b7d3761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4542a4_942cbebf",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-04-24T16:45:20Z",
+      "side": 1,
+      "message": "I realize get_feature_policy wasn\u0027t added in this CL, but the naming convention is wrong.  Could you update it to feature_policy()?  (It would be GetFeaturePolicy() if it were nontrivial, but we omit the \"get\" in the trivial/inlineable hacker_case names.)",
+      "range": {
+        "startLine": 1305,
+        "startChar": 59,
+        "endLine": 1305,
+        "endChar": 77
+      },
+      "revId": "5f48602a8def527fe564c8b7c47466121b7d3761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a73183c_765255e1",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-04-24T16:45:20Z",
+      "side": 1,
+      "message": "Same nit: subframe_feature_policy",
+      "range": {
+        "startLine": 1305,
+        "startChar": 17,
+        "endLine": 1305,
+        "endChar": 42
+      },
+      "revId": "5f48602a8def527fe564c8b7c47466121b7d3761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

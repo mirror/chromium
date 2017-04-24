@@ -70,6 +70,30 @@
       "revId": "e7e8477007b26a23de2a945ec69d11e766f3fb70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57b86c8_2bae5743",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-04-24T16:45:20Z",
+      "side": 0,
+      "message": "Thanks!  That reasoning makes sense to me.",
+      "parentUuid": "38491ed7_7bd6b605",
+      "range": {
+        "startLine": 676,
+        "startChar": 23,
+        "endLine": 676,
+        "endChar": 48
+      },
+      "revId": "e7e8477007b26a23de2a945ec69d11e766f3fb70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
