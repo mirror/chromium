@@ -65,7 +65,7 @@ mojom::ConnectResult LaunchAndConnectToProcess(
   std::string token;
   mojo::ScopedMessagePipeHandle pipe =
       pending_process.CreateMessagePipe(&token);
-  child_command_line.AppendSwitchASCII(switches::kPrimordialPipeToken, token);
+  child_command_line.AppendSwitchASCII(switches::kServicePipeToken, token);
 
   service_manager::mojom::ServicePtr client;
   client.Bind(mojo::InterfacePtrInfo<service_manager::mojom::Service>(
