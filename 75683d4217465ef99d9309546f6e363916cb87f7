@@ -16,6 +16,24 @@
       "revId": "75683d4217465ef99d9309546f6e363916cb87f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064924cb_12a0ea23",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPHeaderMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-24T12:16:47Z",
+      "side": 1,
+      "message": "This was actually a mistake in the script. I\u0027ve reverted this to Clear(), since HTTPHeaderMap isn\u0027t that STL-like in the end.\n\n(Thanks for catching this; I went through and audited everything, and verified there\u0027s no other stray changes)",
+      "parentUuid": "b2a45c44_b6e707b2",
+      "revId": "75683d4217465ef99d9309546f6e363916cb87f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
