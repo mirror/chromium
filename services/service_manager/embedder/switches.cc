@@ -4,7 +4,24 @@
 
 #include "services/service_manager/embedder/switches.h"
 
+namespace service_manager {
 namespace switches {
+
+// Controls whether console logging is enabled and optionally configures where
+// it's routed.
+const char kEnableLogging[] = "enable-logging";
+
+// Indicates the type of process to run. This may be "service-manager",
+// "service", or any other arbitrary value supported by the embedder.
+const char kProcessType[] = "type";
+
+// The value of the |kProcessType| switch which tells the executable to assume
+// the role of a standalone Service Manager instance.
+const char kProcessTypeServiceManager[] = "service-manager";
+
+// The value of the |kProcessType| switch which tells the executable to assume
+// the role of a service instance.
+const char kProcessTypeService[] = "service";
 
 // Describes the file descriptors passed to a child process in the following
 // list format:
@@ -18,3 +35,4 @@ namespace switches {
 const char kSharedFiles[] = "shared-files";
 
 }  // namespace switches
+}  // namespace service_manager
