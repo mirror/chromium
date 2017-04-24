@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1e8ee36_7f8e1ec8",
+        "filename": "third_party/WebKit/Source/core/events/CustomEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-04-24T05:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcda6d08_976b5a1b",
+      "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195fddd8_91632833",
         "filename": "third_party/WebKit/Source/core/events/CustomEvent.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-21T12:21:18Z",
       "side": 1,
       "message": "Why is this needed? It looks strange that we need to clear TraceWrapperV8Reference in a pre-finalizer.",
+      "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dccb72d_12d0f2c6",
+        "filename": "third_party/WebKit/Source/core/events/CustomEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-04-24T05:44:30Z",
+      "side": 1,
+      "message": "If I trust the comment in PromiseRejectionEvent::Dispose() probably we need this?\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/events/PromiseRejectionEvent.cpp?q\u003dPromiseRejectionEvent::Dispose\u0026l\u003d31",
+      "parentUuid": "195fddd8_91632833",
       "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45a0c4c_297b92ce",
+        "filename": "third_party/WebKit/Source/core/events/CustomEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-04-24T05:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3096eb1_08242886",
+      "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -97,6 +151,30 @@
       "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed1eb5d_82fc7868",
+        "filename": "third_party/WebKit/Source/core/events/CustomEvent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-04-24T05:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08796b3f_059d9598",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "099ab698fd3215d8e0619a76d5f1469576ada12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
