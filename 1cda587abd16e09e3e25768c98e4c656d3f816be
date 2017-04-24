@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4671fb97_cce274ff",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-04-24T09:15:09Z",
+      "side": 1,
+      "message": "nit: the comment should read 3 hours?",
+      "range": {
+        "startLine": 663,
+        "startChar": 34,
+        "endLine": 663,
+        "endChar": 51
+      },
+      "revId": "1cda587abd16e09e3e25768c98e4c656d3f816be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
