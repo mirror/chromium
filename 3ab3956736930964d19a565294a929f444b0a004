@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12dafb3c_c25000f6",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169adb03_0bfa2c39",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fa243db_eb1a1301",
         "filename": "services/preferences/public/cpp/scoped_pref_update.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ed542f20_c3c0a276",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "Removed Insert().",
+      "parentUuid": "6fa243db_eb1a1301",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "414687de_a036e5f0",
         "filename": "services/preferences/public/cpp/scoped_pref_update.cc",
         "patchSetId": 3
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d6eed1f7_f87e3c04",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "414687de_a036e5f0",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ff637e_ca7a81ee",
         "filename": "services/preferences/public/cpp/scoped_pref_update.h",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "3ab3956736930964d19a565294a929f444b0a004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97549d96_44b5423b",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ff637e_ca7a81ee",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "4fb99147_4bd8dbe6",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74405cf9_902af65d",
+      "range": {
+        "startLine": 71,
+        "startChar": 54,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d619a850_9d778b37",
         "filename": "services/preferences/public/cpp/scoped_pref_update.h",
         "patchSetId": 3
@@ -116,6 +224,24 @@
       "writtenOn": "2017-04-21T17:16:46Z",
       "side": 1,
       "message": "This is a lot of boilerplate. Given that we don\u0027t expect this class to be used extremely often (right?), would it make more sense to just leave it at Set() and Get() and have callers do the appropriate subtyping?",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12945eb5_0138c7c0",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "ScopedDictionaryPrefUpdate is intended to be a mostly drop-in replacement for DictionaryPrefUpdate so DictionaryValueUpdate tries to resemble DictionaryValue whenever reasonable.",
+      "parentUuid": "d619a850_9d778b37",
       "revId": "3ab3956736930964d19a565294a929f444b0a004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +268,30 @@
       "revId": "3ab3956736930964d19a565294a929f444b0a004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45892ce6_4808ef13",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-24T01:49:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb97615_2447ad50",
+      "range": {
+        "startLine": 111,
+        "startChar": 31,
+        "endLine": 111,
+        "endChar": 38
+      },
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
