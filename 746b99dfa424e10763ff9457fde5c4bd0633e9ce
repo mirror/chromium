@@ -62,6 +62,69 @@
       "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20de9bce_5f6cacc0",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-24T22:28:49Z",
+      "side": 1,
+      "message": "nit: s/abvoe/above",
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557d091d_3577ed58",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-24T22:28:49Z",
+      "side": 1,
+      "message": "This first sentence is somewhat confusingly worded.  Mebbe rephrase?",
+      "range": {
+        "startLine": 99,
+        "startChar": 39,
+        "endLine": 99,
+        "endChar": 46
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5a1bac_4a351e70",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-04-24T22:28:49Z",
+      "side": 1,
+      "message": "nit: per-item overhead probably shouldn\u0027t be multiplied by size",
+      "range": {
+        "startLine": 121,
+        "startChar": 72,
+        "endLine": 121,
+        "endChar": 77
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
