@@ -53,7 +53,7 @@ std::unique_ptr<CrossThreadHTTPHeaderMapData> HTTPHeaderMap::CopyData() const {
 }
 
 void HTTPHeaderMap::Adopt(std::unique_ptr<CrossThreadHTTPHeaderMapData> data) {
-  Clear();
+  clear();
   size_t data_size = data->size();
   for (size_t index = 0; index < data_size; ++index) {
     std::pair<String, String>& header = (*data)[index];
