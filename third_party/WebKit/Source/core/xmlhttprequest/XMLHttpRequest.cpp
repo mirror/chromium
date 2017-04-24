@@ -1193,7 +1193,7 @@ void XMLHttpRequest::ClearResponse() {
 }
 
 void XMLHttpRequest::ClearRequest() {
-  request_headers_.Clear();
+  request_headers_.clear();
 }
 
 void XMLHttpRequest::DispatchProgressEvent(const AtomicString& type,
