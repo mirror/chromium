@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b192a8_d2222f8a",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashSet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-25T09:55:58Z",
+      "side": 1,
+      "message": "I intentionally left this Find() method unchanged: as STL doesn\u0027t have any hash translator concept for Find(), there\u0027s no actual equivalent of this method in STL-like containers.",
+      "revId": "26b892445e4e0f9b10924acc14edcc9b1fc58b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1faf03_3efd7756",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-25T09:55:58Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 754,
+        "startChar": 11,
+        "endLine": 754,
+        "endChar": 15
+      },
+      "revId": "26b892445e4e0f9b10924acc14edcc9b1fc58b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
