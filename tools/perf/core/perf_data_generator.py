@@ -25,6 +25,7 @@ from telemetry.core import discover
 from telemetry.util import bot_utils
 
 
+
 SCRIPT_TESTS = [
   {
     'args': [
@@ -575,9 +576,17 @@ def generate_script_tests(master, tester_name, shard):
   return script_tests
 
 
-def get_swarming_dimension(dimension, device_affinity):
+def get_swarming_dimension(dimension, device_affinity=None, device=None):
+  if not (device is not None or device_affinity is not None):
+    raise ValueError("One of 'device' and 'device_affinity' must be given")
+
+  if not device:
+    device = dimension['device_ids'][device_affinity]
+
+  assert device in dimension['device_ids']
+
   complete_dimension = {
-    'id': dimension['device_ids'][device_affinity],
+    'id': device,
     'os': dimension['os'],
     'pool': dimension['pool'],
   }
@@ -597,7 +606,8 @@ def generate_cplusplus_isolate_script_test(dimension):
   ]
 
 
-def generate_telemetry_tests(tester_config, benchmarks, benchmark_sharding_map,
+def generate_telemetry_tests(name, tester_config, benchmarks,
+                             benchmark_sharding_map,
                              benchmark_ref_build_blacklist):
   isolated_scripts = []
   # First determine the browser that you need based on the tester
@@ -618,21 +628,31 @@ def generate_telemetry_tests(tester_config, benchmarks, benchmark_sharding_map,
     swarming_dimensions = []
     for dimension in tester_config['swarming_dimensions']:
       device_affinity = None
+      device = None
       if benchmark_sharding_map:
-        sharding_map = benchmark_sharding_map.get(str(num_shards), None)
+        sharding_map = benchmark_sharding_map.get(name, None)
         if not sharding_map:
-          raise Exception('Invalid number of shards, generate new sharding map')
-        device_affinity = sharding_map.get(benchmark.Name(), None)
+          print 'No sharding map for %s found, using generic sharding map' % (
+              name)
+          sharding_map = benchmark_sharding_map.get(num_shards, None)
+
+          if not sharding_map:
+            raise Exception(
+                'Invalid number of shards, generate new sharding map')
+          device_affinity = sharding_map.get(benchmark.Name(), None)
+        else:
+          device = sharding_map.get(benchmark.Name(), None)
+
       else:
         # No sharding map was provided, default to legacy device
         # affinity algorithm
         device_affinity = bot_utils.GetDeviceAffinity(
           num_shards, benchmark.Name())
-      if device_affinity is None:
+      if device_affinity is None and device is None:
         raise Exception('Device affinity for benchmark %s not found'
           % benchmark.Name())
-      swarming_dimensions.append(
-          get_swarming_dimension(dimension, device_affinity))
+      swarming_dimensions.append(get_swarming_dimension(
+              dimension, device_affinity=device_affinity, device=device))
 
     test = generate_telemetry_test(
       swarming_dimensions, benchmark.Name(), browser_name)
@@ -695,55 +715,14 @@ def current_benchmarks():
   return sorted(all_benchmarks, key=lambda b: b.Name())
 
 
-# Returns a sorted list of (benchmark, avg_runtime) pairs for every
-# benchmark in the all_benchmarks list where avg_runtime is in seconds.  Also
-# returns a list of benchmarks whose run time have not been seen before
-def get_sorted_benchmark_list_by_time(all_benchmarks):
-  runtime_list = []
-  benchmark_avgs = {}
-  new_benchmarks = []
-  timing_file_path = os.path.join(src_dir(), 'tools', 'perf', 'core',
-      'desktop_benchmark_avg_times.json')
-  # Load in the avg times as calculated on Nov 1st, 2016
-  with open(timing_file_path) as f:
-    benchmark_avgs = json.load(f)
-
-  for benchmark in all_benchmarks:
-    benchmark_avg_time = benchmark_avgs.get(benchmark.Name(), None)
-    if benchmark_avg_time is None:
-      # Assume that this is a new benchmark that was added after 11/1/16 when
-      # we generated the benchmarks. Use the old affinity algorithm after
-      # we have given the rest the same distribution, add it to the
-      # new benchmarks list.
-      new_benchmarks.append(benchmark)
-    else:
-      # Need to multiple the seconds by 2 since we will be generating two tests
-      # for each benchmark to be run on the same shard for the reference build
-      runtime_list.append((benchmark, benchmark_avg_time * 2.0))
-
-  # Return a reverse sorted list by runtime
-  runtime_list.sort(key=lambda tup: tup[1], reverse=True)
-  return runtime_list, new_benchmarks
+def load_benchmark_sharding_map(waterfall_name):
+  file_path = os.path.join(
+      os.path.abspath(os.path.dirname(__file__)), 'benchmark_sharding_map.json')
+  with open(file_path) as f:
+    return json.load(f)[waterfall_name]
 
 
-# Returns a map of benchmark name to shard it is on.
-def shard_benchmarks(num_shards, all_benchmarks):
-  benchmark_to_shard_dict = {}
-  shard_execution_times = [0] * num_shards
-  sorted_benchmark_list, new_benchmarks = get_sorted_benchmark_list_by_time(
-    all_benchmarks)
-  # Iterate over in reverse order and add them to the current smallest bucket.
-  for benchmark in sorted_benchmark_list:
-    # Find current smallest bucket
-    min_index = shard_execution_times.index(min(shard_execution_times))
-    benchmark_to_shard_dict[benchmark[0].Name()] = min_index
-    shard_execution_times[min_index] += benchmark[1]
-  # For all the benchmarks that didn't have avg run times, use the default
-  # device affinity algorithm
-  for benchmark in new_benchmarks:
-     device_affinity = bot_utils.GetDeviceAffinity(num_shards, benchmark.Name())
-     benchmark_to_shard_dict[benchmark.Name()] = device_affinity
-  return benchmark_to_shard_dict
+from core.sharding_map_generator import shard_benchmarks
 
 
 def generate_all_tests(waterfall):
@@ -752,11 +731,11 @@ def generate_all_tests(waterfall):
   all_benchmarks = current_benchmarks()
   # Get benchmark sharding according to common sharding configurations
   # Currently we only have bots sharded 5 directions and 1 direction
-  benchmark_sharding_map = {}
-  benchmark_sharding_map['22'] = shard_benchmarks(22, all_benchmarks)
-  benchmark_sharding_map['5'] = shard_benchmarks(5, all_benchmarks)
-  benchmark_sharding_map['1'] = shard_benchmarks(1, all_benchmarks)
-  benchmark_sharding_map['21'] = shard_benchmarks(21, all_benchmarks)
+  benchmark_sharding_map = load_benchmark_sharding_map(waterfall['name'])
+  benchmark_sharding_map[22] = shard_benchmarks(22, all_benchmarks)
+  benchmark_sharding_map[5] = shard_benchmarks(5, all_benchmarks)
+  benchmark_sharding_map[1] = shard_benchmarks(1, all_benchmarks)
+  benchmark_sharding_map[21] = shard_benchmarks(21, all_benchmarks)
 
   for name, config in waterfall['testers'].iteritems():
     benchmark_list = all_benchmarks
@@ -768,7 +747,7 @@ def generate_all_tests(waterfall):
       # Generate benchmarks
       sharding_map = benchmark_sharding_map
       isolated_scripts = generate_telemetry_tests(
-          config, benchmark_list, sharding_map,
+          name, config, benchmark_list, sharding_map,
           BENCHMARK_REF_BUILD_BLACKLIST)
       # Generate swarmed non-telemetry tests if present
       if config['swarming_dimensions'][0].get('perf_tests', False):

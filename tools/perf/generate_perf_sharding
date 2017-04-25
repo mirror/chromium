@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import sys
+
+from core.sharding_map_generator import main
+
+from core.perf_data_generator import get_waterfall_config
+from core.perf_data_generator import get_fyi_waterfall_config
+from core.perf_data_generator import current_benchmarks
+
+
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser(
+      description=('Generate perf test sharding map.'
+                   'This needs to be done anytime you add/remove any existing'
+                   'benchmarks in tools/perf/benchmarks.'))
+
+  parser.add_argument('mode', choices=['regenerate'])
+
+  args = parser.parse_args()
+  benchmarks = current_benchmarks()
+
+  configs = {
+      'chromium.perf': get_waterfall_config(),
+      'chromium.perf.fyi': get_fyi_waterfall_config(),
+  }
+  sys.exit(sharding_map_generator.main(sys.argv[1:], benchmarks, configs))
