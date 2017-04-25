@@ -613,6 +613,15 @@ def generate_telemetry_tests(tester_config, benchmarks, benchmark_sharding_map,
   num_shards = len(tester_config['swarming_dimensions'][0]['device_ids'])
   current_shard = 0
   for benchmark in benchmarks:
+    # If we're not on android, don't run mobile benchmarks. Semi-hacky, but
+    # there is a unittest in ../benchmarks/benchmark_unittest that verifies this
+    # should always be ok to do.
+    if tester_config['platform'] != 'android':
+      enabled_tags = decorators.GetEnabledAttributes(benchmark)
+      disabled_tags = decorators.GetDisabledAttributes(benchmark)
+      if 'all' in disabled_tags or 'android' in enabled_tags:
+        continue
+
     # First figure out swarming dimensions this test needs to be triggered on.
     # For each set of dimensions it is only triggered on one of the devices
     swarming_dimensions = []
