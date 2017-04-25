@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "563c0383_bc792178",
+        "filename": "base/containers/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-04-25T20:07:48Z",
+      "side": 1,
+      "message": "where you",
+      "revId": "f96538ee7eaf8b8a5feb7a7866ff400d3a31f268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1b41a7_0720aa48",
+        "filename": "base/containers/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-04-25T20:07:48Z",
+      "side": 1,
+      "message": "integer division is slow on arm, and stl hash maps are not powers of two, so we\u0027ve found queries can be slower due to doing mod, than in a std::map.",
+      "revId": "f96538ee7eaf8b8a5feb7a7866ff400d3a31f268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
