@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fa30fc33_e752ea53",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-04-25T16:56:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c1eef9_668c5d23",
+      "range": {
+        "startLine": 29,
+        "startChar": 53,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a89570d_0dde196e",
         "filename": "base/containers/README.md",
         "patchSetId": 6
@@ -60,6 +84,24 @@
       "writtenOn": "2017-04-24T21:36:36Z",
       "side": 1,
       "message": "\"large sets\" in the context of map here may be confusing, given that you also talk about flat_set and std::set above and below.\n\nmaybe \"large number of entries\" ?",
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a668a1a7_e7b0710b",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-04-25T16:56:45Z",
+      "side": 1,
+      "message": "I wrote \"large containers\" which I use elsewhere already.",
+      "parentUuid": "4a89570d_0dde196e",
       "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +143,30 @@
       "side": 1,
       "message": "I assume \"stable iterators\" means iterators are kept valid after mutations (insertions and deletions). This is true in any stdlib implementation. Strictly speaking, the C++ spec does not require this semantics (iterators are invalidated on rehash), but the spec has another requirement that essentially enforces the stability of iterators (pointers and references to elements are NOT invalidated on rehash).\n\nDue to this requirement, all stdlib implementations use \"separate chaining\" hashtables, which is known to cause bad cache performance. I assume many of the performance results explained here come from those aspects.",
       "parentUuid": "7011d13e_673bbd9b",
+      "range": {
+        "startLine": 61,
+        "startChar": 89,
+        "endLine": 61,
+        "endChar": 92
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fc4af2_64105765",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-04-25T16:56:45Z",
+      "side": 1,
+      "message": "I\u0027ll define this and fix the unordered_map one, thanks for noticing.",
+      "parentUuid": "73c50873_7f9342f9",
       "range": {
         "startLine": 61,
         "startChar": 89,
@@ -159,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "54ab1884_55cb06f2",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-04-25T16:56:45Z",
+      "side": 1,
+      "message": "I meant red-black tree (From std::map).",
+      "parentUuid": "2a551ef1_24dd1573",
+      "range": {
+        "startLine": 79,
+        "startChar": 21,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20de9bce_5f6cacc0",
         "filename": "base/containers/README.md",
         "patchSetId": 6
@@ -173,6 +263,24 @@
       "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c05999_6e1623c0",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-04-25T16:56:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20de9bce_5f6cacc0",
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +304,30 @@
       "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a337b032_b22e8080",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-04-25T16:56:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "557d091d_3577ed58",
+      "range": {
+        "startLine": 99,
+        "startChar": 39,
+        "endLine": 99,
+        "endChar": 46
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
