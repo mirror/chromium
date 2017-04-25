@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" onload="startTest()">
     <script>
+    if (self.internals)
+        internals.runtimeFlags.overlayScrollbarsEnabled = true;
+	
     function startTest() {
         if (!window.testRunner)
             return;
