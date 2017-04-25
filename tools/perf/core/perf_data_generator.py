@@ -613,6 +613,19 @@ def generate_telemetry_tests(tester_config, benchmarks, benchmark_sharding_map,
   num_shards = len(tester_config['swarming_dimensions'][0]['device_ids'])
   current_shard = 0
   for benchmark in benchmarks:
+    # Don't run benchmarks which are disabled on all platforms.
+    disabled_tags = decorators.GetDisabledAttributes(benchmark)
+    if 'all' in disabled_tags:
+      continue
+
+    # If we're not on android, don't run mobile benchmarks. Semi-hacky, but
+    # there is a unittest in ../benchmarks/benchmark_unittest that verifies this
+    # should always be ok to do.
+    if tester_config['platform'] != 'android':
+      enabled_tags = decorators.GetEnabledAttributes(benchmark)
+      if 'android' in enabled_tags:
+        continue
+
     # First figure out swarming dimensions this test needs to be triggered on.
     # For each set of dimensions it is only triggered on one of the devices
     swarming_dimensions = []
@@ -841,28 +854,29 @@ def src_dir():
 
 
 BenchmarkMetadata = collections.namedtuple(
-    'BenchmarkMetadata', 'emails component')
+    'BenchmarkMetadata', 'emails component disabled')
 NON_TELEMETRY_BENCHMARKS = {
-    'angle_perftests': BenchmarkMetadata('jmadill@chromium.org', None),
-    'cc_perftests': BenchmarkMetadata('enne@chromium.org', None),
-    'gpu_perftests': BenchmarkMetadata('reveman@chromium.org', None),
+    'angle_perftests': BenchmarkMetadata('jmadill@chromium.org', None, False),
+    'cc_perftests': BenchmarkMetadata('enne@chromium.org', None, False),
+    'gpu_perftests': BenchmarkMetadata('reveman@chromium.org', None, False),
     'tracing_perftests': BenchmarkMetadata(
-        'kkraynov@chromium.org, primiano@chromium.org', None),
-    'load_library_perf_tests': BenchmarkMetadata(None, None),
-    'media_perftests': BenchmarkMetadata('crouleau@chromium.org', None),
+        'kkraynov@chromium.org, primiano@chromium.org', None, False),
+    'load_library_perf_tests': BenchmarkMetadata(None, None, False),
+    'media_perftests': BenchmarkMetadata('crouleau@chromium.org', None, False),
     'performance_browser_tests': BenchmarkMetadata(
-        'hubbe@chromium.org, justinlin@chromium.org, miu@chromium.org', None)
+        'hubbe@chromium.org, justinlin@chromium.org, miu@chromium.org', None,
+        False)
 }
 
 
 # If you change this dictionary, run tools/perf/generate_perf_data
 NON_WATERFALL_BENCHMARKS = {
-    'sizes (mac)': BenchmarkMetadata('tapted@chromium.org', None),
-    'sizes (win)': BenchmarkMetadata('grt@chromium.org', None),
-    'sizes (linux)': BenchmarkMetadata('thestig@chromium.org', None),
+    'sizes (mac)': BenchmarkMetadata('tapted@chromium.org', None, False),
+    'sizes (win)': BenchmarkMetadata('grt@chromium.org', None, False),
+    'sizes (linux)': BenchmarkMetadata('thestig@chromium.org', None, False),
     'resource_sizes': BenchmarkMetadata(
         'agrieve@chromium.org, rnephew@chromium.org, perezju@chromium.org',
-        None)
+        None, False)
 }
 
 
@@ -876,11 +890,15 @@ def get_all_benchmarks_metadata(metadata):
   benchmark_list = current_benchmarks()
 
   for benchmark in benchmark_list:
+    disabled = 'all' in decorators.GetDisabledAttributes(benchmark)
+    if disabled:
+      continue
+
     emails = decorators.GetEmails(benchmark)
     if emails:
       emails = ', '.join(emails)
     metadata[benchmark.Name()] = BenchmarkMetadata(
-        emails, decorators.GetComponent(benchmark))
+        emails, decorators.GetComponent(benchmark), disabled)
   return metadata
 
 
@@ -900,6 +918,9 @@ def verify_all_tests_in_benchmark_csv(tests, benchmark_metadata):
     for s in scripts:
       name = s['name']
       name = re.sub('\\.reference$', '', name)
+      test_names.add(name)
+  for name, data in benchmark_metadata.items():
+    if data.disabled:
       test_names.add(name)
 
   error_messages = []
