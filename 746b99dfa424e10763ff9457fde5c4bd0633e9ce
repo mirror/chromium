@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "73c50873_7f9342f9",
+        "filename": "base/containers/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-04-25T06:28:29Z",
+      "side": 1,
+      "message": "I assume \"stable iterators\" means iterators are kept valid after mutations (insertions and deletions). This is true in any stdlib implementation. Strictly speaking, the C++ spec does not require this semantics (iterators are invalidated on rehash), but the spec has another requirement that essentially enforces the stability of iterators (pointers and references to elements are NOT invalidated on rehash).\n\nDue to this requirement, all stdlib implementations use \"separate chaining\" hashtables, which is known to cause bad cache performance. I assume many of the performance results explained here come from those aspects.",
+      "parentUuid": "7011d13e_673bbd9b",
+      "range": {
+        "startLine": 61,
+        "startChar": 89,
+        "endLine": 61,
+        "endChar": 92
+      },
+      "revId": "746b99dfa424e10763ff9457fde5c4bd0633e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20de9bce_5f6cacc0",
         "filename": "base/containers/README.md",
         "patchSetId": 6
