@@ -285,12 +285,12 @@ class WebFrameTest : public ::testing::Test {
     LocalFrame* frame =
         ToLocalFrame(web_view_helper->WebView()->GetPage()->MainFrame());
     DCHECK(frame);
-    Element* element = frame->GetDocument()->GetElementById(testcase.c_str());
+    Element* element = frame->GetDocument()->getElementById(testcase.c_str());
     return frame->NodeImage(*element);
   }
 
   void RemoveElementById(WebLocalFrameImpl* frame, const AtomicString& id) {
-    Element* element = frame->GetFrame()->GetDocument()->GetElementById(id);
+    Element* element = frame->GetFrame()->GetDocument()->getElementById(id);
     DCHECK(element);
     element->remove();
   }
@@ -1962,7 +1962,7 @@ TEST_F(WebFrameTest,
 
   WebLocalFrameImpl* frame = web_view_helper.WebView()->MainFrameImpl();
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("tap_button");
+  Element* element = document->getElementById("tap_button");
 
   ASSERT_NE(nullptr, element);
   EXPECT_EQ(String("oldValue"), element->innerText());
@@ -6472,7 +6472,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceMisspelledRange) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6520,7 +6520,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkers) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6573,7 +6573,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkersUnderWords) {
 
   LocalFrame* frame = web_frame->GetFrame();
   Document* document = frame->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6652,7 +6652,7 @@ TEST_P(ParameterizedWebFrameTest, SlowSpellcheckMarkerPosition) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6693,7 +6693,7 @@ TEST_P(ParameterizedWebFrameTest, CancelSpellingRequestCrash) {
   frame->SetTextCheckClient(0);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6714,7 +6714,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultErasesMarkers) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -6754,7 +6754,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultsSavedInDocument) {
   frame->SetTextCheckClient(&textcheck);
 
   Document* document = frame->GetFrame()->GetDocument();
-  Element* element = document->GetElementById("data");
+  Element* element = document->getElementById("data");
 
   web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
@@ -7750,10 +7750,10 @@ TEST_P(ParameterizedWebFrameTest, fixedPositionInFixedViewport) {
   web_view_helper.Resize(WebSize(100, 100));
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* bottom_fixed = document->GetElementById("bottom-fixed");
-  Element* top_bottom_fixed = document->GetElementById("top-bottom-fixed");
-  Element* right_fixed = document->GetElementById("right-fixed");
-  Element* left_right_fixed = document->GetElementById("left-right-fixed");
+  Element* bottom_fixed = document->getElementById("bottom-fixed");
+  Element* top_bottom_fixed = document->getElementById("top-bottom-fixed");
+  Element* right_fixed = document->getElementById("right-fixed");
+  Element* left_right_fixed = document->getElementById("left-right-fixed");
 
   // The layout viewport will hit the min-scale limit of 0.25, so it'll be
   // 400x800.
@@ -7896,7 +7896,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenLayerSize) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
-  Element* div_fullscreen = document->GetElementById("div1");
+  Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
   EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
@@ -7939,7 +7939,7 @@ TEST_F(WebFrameTest, FullscreenLayerNonScrollable) {
   Document* document =
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
-  Element* div_fullscreen = document->GetElementById("div1");
+  Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
   EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
@@ -8059,7 +8059,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenSubframe) {
           ->GetFrame()
           ->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
-  Element* div_fullscreen = document->GetElementById("div1");
+  Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
@@ -8391,7 +8391,7 @@ TEST_P(ParameterizedWebFrameTest, OverlayFullscreenVideo) {
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(DocumentUserGestureToken::Create(document));
   HTMLVideoElement* video =
-      toHTMLVideoElement(document->GetElementById("video"));
+      toHTMLVideoElement(document->getElementById("video"));
   EXPECT_TRUE(video->UsesOverlayFullscreenVideo());
   EXPECT_FALSE(video->IsFullscreen());
   EXPECT_FALSE(layer_tree_view.has_transparent_background);
@@ -8420,12 +8420,12 @@ TEST_P(ParameterizedWebFrameTest, LayoutBlockPercentHeightDescendants) {
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   LayoutBlock* container =
-      ToLayoutBlock(document->GetElementById("container")->GetLayoutObject());
+      ToLayoutBlock(document->getElementById("container")->GetLayoutObject());
   LayoutBox* percent_height_in_anonymous =
-      ToLayoutBox(document->GetElementById("percent-height-in-anonymous")
+      ToLayoutBox(document->getElementById("percent-height-in-anonymous")
                       ->GetLayoutObject());
   LayoutBox* percent_height_direct_child =
-      ToLayoutBox(document->GetElementById("percent-height-direct-child")
+      ToLayoutBox(document->getElementById("percent-height-direct-child")
                       ->GetLayoutObject());
 
   EXPECT_TRUE(
@@ -9716,7 +9716,7 @@ TEST_P(ParameterizedWebFrameTest, ResizeInvalidatesDeviceMediaQueries) {
                                     ConfigureAndroid);
   LocalFrame* frame =
       ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
-  Element* element = frame->GetDocument()->GetElementById("test");
+  Element* element = frame->GetDocument()->getElementById("test");
   ASSERT_TRUE(element);
 
   client.screen_info_.rect = WebRect(0, 0, 700, 500);
@@ -10972,7 +10972,7 @@ TEST_F(WebFrameTest, HidingScrollbarsOnScrollableAreaDisablesScrollbars) {
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   FrameView* frame_view = web_view->MainFrameImpl()->GetFrameView();
-  Element* scroller = document->GetElementById("scroller");
+  Element* scroller = document->getElementById("scroller");
   ScrollableArea* scroller_area =
       ToLayoutBox(scroller->GetLayoutObject())->GetScrollableArea();
 
@@ -11046,7 +11046,7 @@ TEST_F(WebFrameTest, MouseOverDifferntNodeClearsTooltip) {
   web_view->UpdateAllLifecyclePhases();
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* div1_tag = document->GetElementById("div1");
+  Element* div1_tag = document->getElementById("div1");
 
   HitTestResult hit_test_result = web_view->CoreHitTestResultAt(
       WebPoint(div1_tag->OffsetLeft() + 5, div1_tag->OffsetTop() + 5));
@@ -11071,7 +11071,7 @@ TEST_F(WebFrameTest, MouseOverDifferntNodeClearsTooltip) {
       div1_tag,
       document->GetFrame()->GetChromeClient().LastSetTooltipNodeForTesting());
 
-  Element* div2_tag = document->GetElementById("div2");
+  Element* div2_tag = document->getElementById("div2");
 
   WebMouseEvent mouse_move_event(
       WebInputEvent::kMouseMove,
@@ -11113,7 +11113,7 @@ TEST_F(WebFrameTest, MouseOverLinkAndOverlayScrollbar) {
   web_view->UpdateAllLifecyclePhases();
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* a_tag = document->GetElementById("a");
+  Element* a_tag = document->getElementById("a");
 
   // Ensure hittest only has scrollbar.
   HitTestResult hit_test_result =
@@ -11222,7 +11222,7 @@ TEST_F(WebFrameTest, MouseOverCustomScrollbar) {
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
 
-  Element* scrollbar_div = document->GetElementById("scrollbar");
+  Element* scrollbar_div = document->getElementById("scrollbar");
   EXPECT_TRUE(scrollbar_div);
 
   // Ensure hittest only has DIV
@@ -11279,7 +11279,7 @@ TEST_F(WebFrameTest, MouseOverScrollbarAndIFrame) {
 
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
-  Element* iframe = document->GetElementById("iframe");
+  Element* iframe = document->getElementById("iframe");
   DCHECK(iframe);
 
   // Ensure hittest only has IFRAME.
@@ -11356,8 +11356,8 @@ TEST_F(WebFrameTest, MouseOverScrollbarAndParentElement) {
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
 
-  Element* parent_div = document->GetElementById("parent");
-  Element* child_div = document->GetElementById("child");
+  Element* parent_div = document->getElementById("parent");
+  Element* child_div = document->getElementById("child");
   EXPECT_TRUE(parent_div);
   EXPECT_TRUE(child_div);
 
@@ -11439,7 +11439,7 @@ TEST_F(WebFrameTest, MouseReleaseUpdatesScrollbarHoveredPart) {
   Document* document =
       ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
 
-  Element* scrollbar_div = document->GetElementById("scrollbar");
+  Element* scrollbar_div = document->getElementById("scrollbar");
   EXPECT_TRUE(scrollbar_div);
 
   ScrollableArea* scrollable_area =
@@ -11561,7 +11561,7 @@ TEST_F(WebFrameTest, TestNonCompositedOverlayScrollbarsFade) {
   WebLocalFrameImpl* frame = web_view_helper.WebView()->MainFrameImpl();
   Document* document =
       ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
-  Element* container = document->GetElementById("container");
+  Element* container = document->getElementById("container");
   ScrollableArea* scrollable_area =
       ToLayoutBox(container->GetLayoutObject())->GetScrollableArea();
 
