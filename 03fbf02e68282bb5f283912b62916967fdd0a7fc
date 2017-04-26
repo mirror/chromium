@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "668c036c_f0e20c1c",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-26T03:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a9ad27_2b2dbfcb",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87726db3_034d23aa",
         "filename": "services/preferences/public/cpp/scoped_pref_update.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdfeb056_32967e12",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-26T03:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87726db3_034d23aa",
+      "range": {
+        "startLine": 71,
+        "startChar": 3,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dfcdf852_a1c169a6",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-26T03:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33462772_c5cd1f01",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f14670_a97aa5a5",
         "filename": "services/preferences/public/cpp/scoped_pref_update.h",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-24T09:51:00Z",
       "side": 1,
       "message": "Nit: Pass the callback as const ref.",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 48
+      },
+      "revId": "03fbf02e68282bb5f283912b62916967fdd0a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f77fbe_8b39c989",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-26T03:56:31Z",
+      "side": 1,
+      "message": "Callbacks are movable now so this avoids a copy for the top-level DictionaryValueUpdate.",
+      "parentUuid": "02f14670_a97aa5a5",
       "range": {
         "startLine": 74,
         "startChar": 24,

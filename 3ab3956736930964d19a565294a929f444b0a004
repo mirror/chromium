@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "08b03c96_a6727285",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-04-26T03:56:31Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not super happy about this either. Yes, I\u0027ve had a few conflicts in prefs CLs with the ongoing base::Value refactoring ;)",
+      "parentUuid": "ff63103e_861b956a",
+      "revId": "3ab3956736930964d19a565294a929f444b0a004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb97615_2447ad50",
         "filename": "services/preferences/public/interfaces/preferences.mojom",
         "patchSetId": 3
