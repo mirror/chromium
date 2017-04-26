@@ -16,6 +16,24 @@
       "revId": "8ba3f899f89aa127751dfcd38c3f7724ea6a78b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e497bbb_8859784d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewResourceFrameLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-04-26T23:31:28Z",
+      "side": 1,
+      "message": "Yeah, that is fine",
+      "parentUuid": "d8a743c2_0c2fe9f2",
+      "revId": "8ba3f899f89aa127751dfcd38c3f7724ea6a78b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
