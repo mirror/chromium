@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe73ed9_e1cbf5c6",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-04-26T17:37:06Z",
+      "side": 1,
+      "message": "Actually we have get_foo() as getter. That is not consistent with C++ style guide, but it is what we have at  the moment.",
+      "range": {
+        "startLine": 610,
+        "startChar": 68,
+        "endLine": 610,
+        "endChar": 71
+      },
+      "revId": "686e41303e66eb25fcfb603b384832912fe6ee2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
