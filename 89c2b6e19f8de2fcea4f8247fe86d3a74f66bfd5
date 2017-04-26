@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69fc3c4b_f9285db5",
+        "filename": "third_party/WebKit/Source/platform/wtf/Deque.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-26T06:08:20Z",
+      "side": 1,
+      "message": "Matches std::deque\u003cT\u003e::clear()",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 12
+      },
+      "revId": "89c2b6e19f8de2fcea4f8247fe86d3a74f66bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a1b3e2_0484e0d6",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashCountedSet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-26T06:08:20Z",
+      "side": 1,
+      "message": "Reverted this to Capacity() since STL set classes don\u0027t expose any concept of capacity.",
+      "range": {
+        "startLine": 69,
+        "startChar": 11,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "89c2b6e19f8de2fcea4f8247fe86d3a74f66bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79445de_1020fbce",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-26T06:08:20Z",
+      "side": 1,
+      "message": "This wasn\u0027t originally renamed, but since STL map\u0027s insert doesn\u0027t have a HashTranslator template argument, I\u0027m uppercasing this.",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 18
+      },
+      "revId": "89c2b6e19f8de2fcea4f8247fe86d3a74f66bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11417af0_d08cadbc",
+        "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-26T06:08:20Z",
+      "side": 1,
+      "message": "STL doesn\u0027t have an ordered hash set class, but find() to match the typical signature for searching an associative collection seems to make sense here.",
+      "range": {
+        "startLine": 246,
+        "startChar": 11,
+        "endLine": 246,
+        "endChar": 15
+      },
+      "revId": "89c2b6e19f8de2fcea4f8247fe86d3a74f66bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45b531a_3189333a",
+        "filename": "third_party/WebKit/Source/platform/wtf/ListHashSet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-26T06:08:20Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 176,
+        "startChar": 11,
+        "endLine": 176,
+        "endChar": 15
+      },
+      "revId": "89c2b6e19f8de2fcea4f8247fe86d3a74f66bfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
