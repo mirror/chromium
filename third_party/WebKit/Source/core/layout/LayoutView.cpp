@@ -37,11 +37,13 @@
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
+#include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/ViewPaintInvalidator.h"
 #include "core/paint/ViewPainter.h"
 #include "core/svg/SVGDocumentExtensions.h"
+#include "core/svg/SVGSVGElement.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/geometry/FloatQuad.h"
@@ -290,19 +292,17 @@ void LayoutView::UpdateLayout() {
   // Check here whether the svg root's logical height matches what we would
   // expect based on the LayoutView's now-up-to-date logical height.
   if (!relayout_children && GetDocument().IsSVGDocument()) {
-    for (LayoutObject* child = FirstChild(); child;
-         child = child->NextSibling()) {
-      if (!child->IsSVGRoot())
-        continue;
-      const Length& child_height = child->Style()->LogicalHeight();
-      if (!child_height.IsPercentOrCalc())
-        continue;
-      if (ToLayoutBox(child)->LogicalHeight() !=
-          ValueForLength(child_height,
-                         AvailableLogicalHeightUsing(
-                             child_height, kExcludeMarginBorderPadding))) {
+    if (auto* svg_element = GetDocument().AccessSVGExtensions().rootElement()) {
+      LayoutSVGRoot* svg_root = ToLayoutSVGRoot(svg_element->GetLayoutObject());
+      const Length& svg_root_height = svg_root->Style()->LogicalHeight();
+      if (svg_root_height.IsPercentOrCalc() &&
+          svg_root->LogicalHeight() !=
+              ValueForLength(
+                  svg_root_height,
+                  AvailableLogicalHeightUsing(svg_root_height,
+                                              kExcludeMarginBorderPadding))) {
         relayout_children = true;
-        layout_scope.SetChildNeedsLayout(child);
+        layout_scope.SetChildNeedsLayout(svg_root);
       }
     }
   }
