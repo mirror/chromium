@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673b3bd8_26e28b4f",
+        "filename": "services/preferences/public/cpp/scoped_pref_update.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-04-26T09:38:43Z",
+      "side": 1,
+      "message": "Can you add a comment that the caller should not keep the returned object around for longer than the  ScopedDictionaryPrefUpdate?",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "4c31e5b478238c87d899dd5d3a161dd2e1bd05c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
