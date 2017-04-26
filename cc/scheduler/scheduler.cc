@@ -226,14 +226,14 @@ void Scheduler::SetupNextBeginFrameIfNeeded() {
     StopObservingBeginFrameSource();
   }
 
-  if (missed_begin_frame_args_.IsValid()) {
+  if (pending_begin_frame_task_.IsValid()) {
     DCHECK(observing_begin_frame_source_);
-    DCHECK(missed_begin_frame_task_.IsCancelled());
-    missed_begin_frame_task_.Reset(base::Bind(&Scheduler::BeginImplFrameMissed,
-                                              weak_factory_.GetWeakPtr(),
-                                              missed_begin_frame_args_));
-    missed_begin_frame_args_ = BeginFrameArgs();
-    task_runner_->PostTask(FROM_HERE, missed_begin_frame_task_.callback());
+    DCHECK(pending_begin_frame_task_.IsCancelled());
+    pending_begin_frame_task_.Reset(
+        base::Bind(&Scheduler::HandlePendingBeginFrame,
+                   weak_factory_.GetWeakPtr(), pending_begin_frame_args_));
+    pending_begin_frame_task_ = BeginFrameArgs();
+    task_runner_->PostTask(FROM_HERE, pending_begin_frame_task_.callback());
   }
 }
 
@@ -252,17 +252,11 @@ void Scheduler::StopObservingBeginFrameSource() {
   if (begin_frame_source_)
     begin_frame_source_->RemoveObserver(this);
 
-  missed_begin_frame_task_.Cancel();
+  pending_begin_frame_task_.Cancel();
 
-  if (missed_begin_frame_args_.IsValid()) {
-    // We need to confirm the ignored BeginFrame, since we don't have updates.
-    // To persist the confirmation for future BeginFrameAcks, we let the state
-    // machine know about the BeginFrame.
-    state_machine_.OnBeginFrameDroppedNotObserving(
-        missed_begin_frame_args_.source_id,
-        missed_begin_frame_args_.sequence_number);
+  if (pending_begin_frame_args_.IsValid()) {
     SendBeginFrameAck(missed_begin_frame_args_, kBeginFrameSkipped);
-    missed_begin_frame_args_ = BeginFrameArgs();
+    pending_begin_frame_args_ = BeginFrameArgs();
   }
 
   BeginImplFrameNotExpectedSoon();
@@ -309,7 +303,7 @@ bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   // Cancel any pending missed begin frame task because we're either handling
   // this begin frame immediately or saving it as a missed frame for which we
   // will post a new task.
-  missed_begin_frame_task_.Cancel();
+  pending_begin_frame_task_.Cancel();
 
   // Save args if we're inside ProcessScheduledActions or the middle of a frame.
   // At the end of ProcessScheduledActions and at the end of the current frame,
@@ -318,8 +312,7 @@ bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
       state_machine_.begin_impl_frame_state() ==
       SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_INSIDE_BEGIN_FRAME;
   if (inside_process_scheduled_actions_ || inside_begin_frame) {
-    missed_begin_frame_args_ = args;
-    missed_begin_frame_args_.type = BeginFrameArgs::MISSED;
+    pending_begin_frame_task_ = args;
     return true;
   }
 
@@ -347,11 +340,11 @@ void Scheduler::OnDrawForCompositorFrameSink(bool resourceless_software_draw) {
   state_machine_.SetResourcelessSoftwareDraw(false);
 }
 
-void Scheduler::BeginImplFrameMissed(const BeginFrameArgs& args) {
+void Scheduler::HandlePendingBeginFrame(const BeginFrameArgs& args) {
   // The storage for the args is owned by the task so copy them before canceling
   // the task.
   BeginFrameArgs copy_args = args;
-  missed_begin_frame_task_.Cancel();
+  pending_begin_frame_task_.Cancel();
   BeginImplFrameWithDeadline(copy_args);
 }
 
@@ -464,21 +457,13 @@ void Scheduler::SendBeginFrameAck(const BeginFrameArgs& args,
   if (!begin_frame_source_)
     return;
 
-  uint64_t latest_confirmed_sequence_number =
-      BeginFrameArgs::kInvalidFrameNumber;
-  if (args.source_id == state_machine_.begin_frame_source_id()) {
-    latest_confirmed_sequence_number =
-        state_machine_
-            .last_begin_frame_sequence_number_compositor_frame_was_fresh();
-  }
-
   bool did_submit = false;
   if (result == kBeginFrameFinished) {
     did_submit = state_machine_.did_submit_in_last_frame();
   }
 
   BeginFrameAck ack(args.source_id, args.sequence_number,
-                    latest_confirmed_sequence_number, did_submit);
+                    BeginFrameArgs::kInvalidFrameNumber, did_submit);
   begin_frame_source_->DidFinishFrame(this, ack);
 }
 
@@ -493,7 +478,7 @@ void Scheduler::BeginImplFrame(const BeginFrameArgs& args,
   DCHECK(state_machine_.HasInitializedCompositorFrameSink());
 
   begin_impl_frame_tracker_.Start(args);
-  state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
+  state_machine_.OnBeginImplFrame(args.type == BeginFrameArgs::FLUSH_PIPELINE);
   devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
   compositor_timing_history_->WillBeginImplFrame(
       state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
@@ -718,8 +703,8 @@ void Scheduler::AsValueInto(base::trace_event::TracedValue* state) const {
                     observing_begin_frame_source_);
   state->SetBoolean("begin_impl_frame_deadline_task",
                     !begin_impl_frame_deadline_task_.IsCancelled());
-  state->SetBoolean("missed_begin_frame_task",
-                    !missed_begin_frame_task_.IsCancelled());
+  state->SetBoolean("pending_begin_frame_task",
+                    !pending_begin_frame_task_.IsCancelled());
   state->SetBoolean("skipped_last_frame_missed_exceeded_deadline",
                     skipped_last_frame_missed_exceeded_deadline_);
   state->SetBoolean("skipped_last_frame_to_reduce_latency",
@@ -778,6 +763,9 @@ bool Scheduler::ShouldRecoverMainLatency(
   if (!settings_.enable_latency_recovery)
     return false;
 
+  if (args.type == BeginFrameArgs::FLUSH_PIPELINE)
+    return false;
+
   // The main thread is in a low latency mode and there's no need to recover.
   if (!state_machine_.main_thread_missed_last_deadline())
     return false;
@@ -796,6 +784,9 @@ bool Scheduler::ShouldRecoverImplLatency(
   DCHECK(!settings_.using_synchronous_renderer_compositor);
 
   if (!settings_.enable_latency_recovery)
+    return false;
+
+  if (args.type == BeginFrameArgs::FLUSH_PIPELINE)
     return false;
 
   // Disable impl thread latency recovery when using the unthrottled
@@ -849,10 +840,9 @@ bool Scheduler::IsBeginMainFrameSentOrStarted() const {
 }
 
 BeginFrameAck Scheduler::CurrentBeginFrameAckForActiveTree() const {
-  return BeginFrameAck(
-      begin_main_frame_args_.source_id, begin_main_frame_args_.sequence_number,
-      state_machine_.last_begin_frame_sequence_number_active_tree_was_fresh(),
-      true);
+  return BeginFrameAck(begin_main_frame_args_.source_id,
+                       begin_main_frame_args_.sequence_number,
+                       BeginFrameArgs::kInvalidFrameNumber, true);
 }
 
 }  // namespace cc

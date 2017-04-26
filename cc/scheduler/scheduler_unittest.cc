@@ -1166,7 +1166,7 @@ TEST_F(SchedulerTest, PrepareTilesOncePerFrame) {
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
 }
 
-TEST_F(SchedulerTest, PrepareTilesFunnelResetOnVisibilityChange) {
+TEST_F(SchedulerTest, SchedulerCanPrepareTilesAfterVisibilityChange) {
   std::unique_ptr<SchedulerClientNeedsPrepareTilesInDraw> client =
       base::WrapUnique(new SchedulerClientNeedsPrepareTilesInDraw);
   SetUpScheduler(EXTERNAL_BFS, std::move(client));
@@ -1187,12 +1187,23 @@ TEST_F(SchedulerTest, PrepareTilesFunnelResetOnVisibilityChange) {
   EXPECT_SINGLE_ACTION("AddObserver(this)", client_);
 
   client_->Reset();
-  AdvanceFrame();
-  EXPECT_ACTION("WillBeginImplFrame", client_, 0, 1);
+  EXPECT_SCOPED(AdvanceFrame());
+  EXPECT_SINGLE_ACTION("WillBeginImplFrame", client_);
   EXPECT_TRUE(client_->IsInsideBeginImplFrame());
 
   client_->Reset();
-  task_runner().RunTasksWhile(client_->InsideBeginImplFrame(true));
+  task_runner().RunPendingTasks();  // Run posted deadline.
+  EXPECT_FALSE(client_->IsInsideBeginImplFrame());
+  EXPECT_SINGLE_ACTION("ScheduledActionDrawIfPossible", client_);
+
+  client_->Reset();
+  scheduler_->SetNeedsRedraw();
+  EXPECT_SCOPED(AdvanceFrame());
+  EXPECT_SINGLE_ACTION("WillBeginImplFrame", client_);
+  EXPECT_TRUE(client_->IsInsideBeginImplFrame());
+
+  client_->Reset();
+  task_runner().RunPendingTasks();  // Run posted deadline.
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
   EXPECT_ACTION("ScheduledActionDrawIfPossible", client_, 0, 2);
   EXPECT_ACTION("ScheduledActionPrepareTiles", client_, 1, 2);
