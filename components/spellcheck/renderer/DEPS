@@ -1,6 +1,8 @@
 include_rules = [
   "+content/public/renderer",
   "+ipc",
+  "+mojo/public/cpp/bindings",
+  "+services/service_manager/public/cpp",
   "+third_party/WebKit/public",
   "+third_party/hunspell",
 ]
