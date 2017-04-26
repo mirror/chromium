@@ -381,13 +381,7 @@ void LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation() {
   bool did_prepare_tiles = PrepareTiles();
   if (!did_prepare_tiles) {
     NotifyReadyToActivate();
-
-    // Ensure we get ReadyToDraw signal even when PrepareTiles not run. This
-    // is important for SingleThreadProxy and impl-side painting case. For
-    // STP, we commit to active tree and RequiresHighResToDraw, and set
-    // Scheduler to wait for ReadyToDraw signal to avoid Checkerboard.
-    if (CommitToActiveTree())
-      NotifyReadyToDraw();
+    NotifyReadyToDraw();
   }
 }
 

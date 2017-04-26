@@ -16,6 +16,8 @@ const char* BeginFrameArgs::TypeToString(BeginFrameArgsType type) {
       return "NORMAL";
     case BeginFrameArgs::MISSED:
       return "MISSED";
+    case BeginFrameArgs::PIPELINE_FLUSH:
+      return "PIPELINE_FLUSH";
     case BeginFrameArgs::BEGIN_FRAME_ARGS_TYPE_MAX:
       return "BEGIN_FRAME_ARGS_TYPE_MAX";
   }

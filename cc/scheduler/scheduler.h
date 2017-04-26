@@ -154,8 +154,6 @@ class CC_EXPORT Scheduler : public BeginFrameObserverBase {
     return begin_frame_source_;
   }
 
-  BeginFrameAck CurrentBeginFrameAckForActiveTree() const;
-
  protected:
   // Virtual for testing.
   virtual base::TimeTicks Now() const;
@@ -181,10 +179,10 @@ class CC_EXPORT Scheduler : public BeginFrameObserverBase {
 
   BeginFrameTracker begin_impl_frame_tracker_;
   BeginFrameArgs begin_main_frame_args_;
-  BeginFrameArgs missed_begin_frame_args_;
+  BeginFrameArgs pending_begin_frame_args_;
 
   base::CancelableClosure begin_impl_frame_deadline_task_;
-  base::CancelableClosure missed_begin_frame_task_;
+  base::CancelableClosure pending_begin_frame_task_;
 
   SchedulerStateMachine state_machine_;
   bool inside_process_scheduled_actions_ = false;
@@ -214,7 +212,7 @@ class CC_EXPORT Scheduler : public BeginFrameObserverBase {
       base::TimeTicks now) const;
   void AdvanceCommitStateIfPossible();
   bool IsBeginMainFrameSentOrStarted() const;
-  void BeginImplFrameMissed(const BeginFrameArgs& args);
+  void HandlePendingBeginFrame(const BeginFrameArgs& args);
   void BeginImplFrameWithDeadline(const BeginFrameArgs& args);
   void BeginImplFrameSynchronous(const BeginFrameArgs& args);
   void BeginImplFrame(const BeginFrameArgs& args, base::TimeTicks now);

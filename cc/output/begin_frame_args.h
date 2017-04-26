@@ -44,6 +44,7 @@ struct CC_EXPORT BeginFrameArgs {
     INVALID,
     NORMAL,
     MISSED,
+    FLUSH_PIPELINE,
     // Not a real type, but used by the IPC system. Should always remain the
     // *last* value in this enum.
     BEGIN_FRAME_ARGS_TYPE_MAX,
