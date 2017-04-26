@@ -3430,6 +3430,16 @@ crbug.com/713094 [ Win ] fast/css/fontfaceset-check-platform-fonts.html [ Failur
 # Sheriff failures 2017-04-24
 crbug.com/714862 [ Android ] tables/mozilla/collapsing_borders/bug41262-3.html [ Failure ]
 
+# Tests from adding WPT .any.js test support
+crbug.com/709227 external/wpt/background-fetch/interfaces.worker.html [ Failure ]
+crbug.com/709227 external/wpt/user-timing/invoke_with_timing_attributes.worker.html [ Failure ]
+crbug.com/709227 external/wpt/workers/nested_worker.worker.html [ Timeout ]
+crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_menuitem-element.html?run_type=uri [ Failure ]
+crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_menuitem-element.html?run_type=write [ Failure ]
+crbug.com/709227 external/wpt/html/syntax/parsing/html5lib_menuitem-element.html?run_type=write_single [ Failure ]
+crbug.com/709227 external/wpt/html/webappapis/system-state-and-capabilities/the-navigator-object/NavigatorID.worker.html [ Failure ]
+crbug.com/712264 external/wpt/service-workers/service-worker/fetch-event.https.html [ Failure Pass ]
+
 # Tests to be run only under virtual/experimental-canvas-features/
 crbug.com/682753 fast/canvas-experimental [ Skip ]
 
