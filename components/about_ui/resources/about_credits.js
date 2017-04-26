@@ -23,6 +23,30 @@ function toggle(o) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  var licenseEls = [].slice.call(document.getElementsByClassName('product'));
+
+  licenseEls.sort(function(a, b) {
+    let nameA = a.getElementsByClassName('title')[0].textContent;
+    let nameB = b.getElementsByClassName('title')[0].textContent;
+    if (nameA < nameB) {
+      return -1;
+    }
+
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  let parentDiv = licenseEls[0].parentNode;
+  parentDiv.innerHTML = '';
+  for (let i = 0; i < licenseEls.length; i++) {
+    parentDiv.appendChild(licenseEls[i]);
+  }
+
+  document.body.style.display = '';
+
   if (cr.isChromeOS) {
     var keyboardUtils = document.createElement('script');
     keyboardUtils.src = 'chrome://credits/keyboard_utils.js';
