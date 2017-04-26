@@ -456,8 +456,6 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   CompositorFrame frame_in;
   frame_in.render_pass_list.push_back(std::move(child_pass_in));
   frame_in.render_pass_list.push_back(std::move(pass_in));
-  frame_in.metadata.begin_frame_ack.sequence_number =
-      cc::BeginFrameArgs::kStartingFrameNumber;
 
   IPC::ParamTraits<CompositorFrame>::Write(&msg, frame_in);
 
@@ -545,8 +543,6 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
 
   CompositorFrame frame_in;
   frame_in.render_pass_list.push_back(std::move(pass_in));
-  frame_in.metadata.begin_frame_ack.sequence_number =
-      cc::BeginFrameArgs::kStartingFrameNumber;
 
   IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
   IPC::ParamTraits<CompositorFrame>::Write(&msg, frame_in);
@@ -624,8 +620,6 @@ TEST_F(CCParamTraitsTest, Resources) {
   frame_in.resource_list.push_back(arbitrary_resource1);
   frame_in.resource_list.push_back(arbitrary_resource2);
   frame_in.render_pass_list.push_back(std::move(renderpass_in));
-  frame_in.metadata.begin_frame_ack.sequence_number =
-      cc::BeginFrameArgs::kStartingFrameNumber;
 
   IPC::ParamTraits<CompositorFrame>::Write(&msg, frame_in);
 

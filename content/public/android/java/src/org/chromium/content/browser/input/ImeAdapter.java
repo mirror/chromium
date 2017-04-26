@@ -33,6 +33,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.blink_public.web.WebInputEventModifier;
 import org.chromium.blink_public.web.WebInputEventType;
 import org.chromium.blink_public.web.WebTextInputMode;
+import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.ViewUtils;
 import org.chromium.content.browser.picker.InputDialogContainer;
 import org.chromium.content_public.browser.ImeEventObserver;
@@ -822,8 +823,8 @@ public class ImeAdapter {
 
     /**
      * Notified when a frame has been produced by the renderer and all the associated metadata.
-     * @param scaleFactor device scale factor.
-     * @param contentOffsetYPix Y offset below the browser controls.
+     * @param renderCoordinates coordinate information to convert CSS (document) coordinates to
+     *                          View-local Physical (screen) coordinates
      * @param hasInsertionMarker Whether the insertion marker is visible or not.
      * @param insertionMarkerHorizontal X coordinates (in view-local DIP pixels) of the insertion
      *                                  marker if it exists. Will be ignored otherwise.
@@ -832,15 +833,13 @@ public class ImeAdapter {
      * @param insertionMarkerBottom Y coordinates (in view-local DIP pixels) of the bottom of
      *                              the insertion marker if it exists. Will be ignored otherwise.
      */
-    @CalledByNative
-    private void updateFrameInfo(float scaleFactor, float contentOffsetYPix,
-            boolean hasInsertionMarker, boolean isInsertionMarkerVisible,
-            float insertionMarkerHorizontal, float insertionMarkerTop,
-            float insertionMarkerBottom) {
+    public void onUpdateFrameInfo(RenderCoordinates renderCoordinates, boolean hasInsertionMarker,
+            boolean isInsertionMarkerVisible, float insertionMarkerHorizontal,
+            float insertionMarkerTop, float insertionMarkerBottom) {
         if (mCursorAnchorInfoController == null) return;
-        mCursorAnchorInfoController.onUpdateFrameInfo(scaleFactor, contentOffsetYPix,
-                hasInsertionMarker, isInsertionMarkerVisible, insertionMarkerHorizontal,
-                insertionMarkerTop, insertionMarkerBottom, mContainerView);
+        mCursorAnchorInfoController.onUpdateFrameInfo(renderCoordinates, hasInsertionMarker,
+                isInsertionMarkerVisible, insertionMarkerHorizontal, insertionMarkerTop,
+                insertionMarkerBottom, mContainerView);
     }
 
     @CalledByNative

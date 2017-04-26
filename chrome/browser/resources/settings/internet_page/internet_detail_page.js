@@ -267,24 +267,12 @@ Polymer({
    * @private
    */
   getPropertiesCallback_: function(properties) {
-    if (chrome.runtime.lastError) {
-      var message = chrome.runtime.lastError.message;
-      if (message == 'Error.InvalidNetworkGuid') {
-        console.error('Details page: GUID no longer exists: ' + this.guid);
-      } else {
-        console.error(
-            'Unexpected networkingPrivate.getManagedProperties error: ' +
-            message + ' For: ' + this.guid);
-      }
-      this.close_();
-      return;
-    }
-    if (!properties) {
-      console.error('No properties for: ' + this.guid);
-      this.close_();
-      return;
-    }
     this.networkProperties = properties;
+    if (!properties) {
+      // If |properties| is null, the network is no longer visible, close this.
+      console.error('Network no longer exists: ' + this.guid);
+      this.close_();
+    }
   },
 
   /**

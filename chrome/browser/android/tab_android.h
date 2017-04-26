@@ -117,6 +117,8 @@ class TabAndroid : public CoreTabHelperDelegate,
 
   bool HasPrerenderedUrl(GURL gurl);
 
+  void ShowOfflinePages();
+
   // Overridden from CoreTabHelperDelegate:
   void SwapTabContents(content::WebContents* old_contents,
                        content::WebContents* new_contents,
@@ -209,6 +211,16 @@ class TabAndroid : public CoreTabHelperDelegate,
   jlong GetBookmarkId(JNIEnv* env,
                       const base::android::JavaParamRef<jobject>& obj,
                       jboolean only_editable);
+
+  jboolean HasOfflineCopy(JNIEnv* env,
+                          const base::android::JavaParamRef<jobject>& obj);
+
+  jboolean IsOfflinePage(JNIEnv* env,
+                         const base::android::JavaParamRef<jobject>& obj);
+
+  base::android::ScopedJavaLocalRef<jobject> GetOfflinePage(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
 
   void SetInterceptNavigationDelegate(
       JNIEnv* env,

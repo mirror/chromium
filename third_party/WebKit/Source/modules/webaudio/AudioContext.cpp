@@ -90,7 +90,7 @@ AudioContext* AudioContext::Create(Document& document,
   ++g_hardware_context_count;
 #if DEBUG_AUDIONODE_REFERENCES
   fprintf(stderr, "[%16p]: AudioContext::AudioContext(): %u #%u\n",
-          audio_context, audio_context->context_id_, g_hardware_context_count);
+          audioContext, audioContext->m_contextId, s_hardwareContextCount);
 #endif
 
   DEFINE_STATIC_LOCAL(SparseHistogram, max_channel_count_histogram,
@@ -114,7 +114,7 @@ AudioContext::AudioContext(Document& document,
 AudioContext::~AudioContext() {
 #if DEBUG_AUDIONODE_REFERENCES
   fprintf(stderr, "[%16p]: AudioContext::~AudioContext(): %u\n", this,
-          context_id_);
+          m_contextId);
 #endif
 }
 

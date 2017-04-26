@@ -54,11 +54,11 @@
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
+#include "public/platform/WebScheduler.h"
 #include "public/platform/WebThread.h"
 
 namespace blink {
@@ -466,7 +466,7 @@ void HTMLDocumentParser::DiscardSpeculationsAndResumeFrom(
                       ("Parser.DiscardedTokenCount", 1, 100000, 50));
   discarded_token_count_histogram.Count(discarded_token_count);
 
-  speculations_.clear();
+  speculations_.Clear();
   pending_csp_meta_token_ = nullptr;
   queued_preloads_.clear();
 
@@ -722,7 +722,8 @@ void HTMLDocumentParser::PumpTokenizer() {
     // crbug.com/465478
     if (preloader_) {
       if (!preload_scanner_) {
-        preload_scanner_ = CreatePreloadScanner();
+        preload_scanner_ = CreatePreloadScanner(
+            TokenPreloadScanner::ScannerType::kMainDocument);
         preload_scanner_->AppendToEnd(input_.Current());
       }
       ScanAndPreload(preload_scanner_.get());
@@ -797,8 +798,10 @@ void HTMLDocumentParser::insert(const SegmentedString& source) {
   if (IsPaused()) {
     // Check the document.write() output with a separate preload scanner as
     // the main scanner can't deal with insertions.
-    if (!insertion_preload_scanner_)
-      insertion_preload_scanner_ = CreatePreloadScanner();
+    if (!insertion_preload_scanner_) {
+      insertion_preload_scanner_ =
+          CreatePreloadScanner(TokenPreloadScanner::ScannerType::kInsertion);
+    }
     insertion_preload_scanner_->AppendToEnd(source);
     ScanAndPreload(insertion_preload_scanner_.get());
   }
@@ -899,8 +902,10 @@ void HTMLDocumentParser::Append(const String& input_source) {
     if (GetDocument()->Loader()->GetResponse().AppCacheID() != 0)
       return;
 
-    if (!preload_scanner_)
-      preload_scanner_ = CreatePreloadScanner();
+    if (!preload_scanner_) {
+      preload_scanner_ =
+          CreatePreloadScanner(TokenPreloadScanner::ScannerType::kMainDocument);
+    }
 
     preload_scanner_->AppendToEnd(source);
     ScanAndPreload(preload_scanner_.get());
@@ -1256,11 +1261,12 @@ void HTMLDocumentParser::DocumentElementAvailable() {
   FetchQueuedPreloads();
 }
 
-std::unique_ptr<HTMLPreloadScanner> HTMLDocumentParser::CreatePreloadScanner() {
+std::unique_ptr<HTMLPreloadScanner> HTMLDocumentParser::CreatePreloadScanner(
+    TokenPreloadScanner::ScannerType scanner_type) {
   return HTMLPreloadScanner::Create(
       options_, GetDocument()->Url(),
       CachedDocumentParameters::Create(GetDocument()),
-      MediaValuesCached::MediaValuesCachedData(*GetDocument()));
+      MediaValuesCached::MediaValuesCachedData(*GetDocument()), scanner_type);
 }
 
 void HTMLDocumentParser::ScanAndPreload(HTMLPreloadScanner* scanner) {
@@ -1306,7 +1312,8 @@ void HTMLDocumentParser::EvaluateAndPreloadScriptForDocumentWrite(
   int current_preload_count =
       GetDocument()->Loader()->Fetcher()->CountPreloads();
 
-  std::unique_ptr<HTMLPreloadScanner> scanner = CreatePreloadScanner();
+  std::unique_ptr<HTMLPreloadScanner> scanner =
+      CreatePreloadScanner(TokenPreloadScanner::ScannerType::kInsertion);
   scanner->AppendToEnd(SegmentedString(written_source));
   ScanAndPreload(scanner.get());
 

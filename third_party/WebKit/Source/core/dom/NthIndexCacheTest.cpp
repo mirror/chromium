@@ -44,10 +44,10 @@ TEST_F(NthIndexCacheTest, NthIndex) {
   NthIndexCache nth_index_cache(GetDocument());
 
   EXPECT_EQ(
-      nth_index_cache.NthChildIndex(*GetDocument().getElementById("nth-child")),
+      nth_index_cache.NthChildIndex(*GetDocument().GetElementById("nth-child")),
       12U);
   EXPECT_EQ(nth_index_cache.NthLastChildIndex(
-                *GetDocument().getElementById("nth-last-child")),
+                *GetDocument().GetElementById("nth-last-child")),
             12U);
 }
 

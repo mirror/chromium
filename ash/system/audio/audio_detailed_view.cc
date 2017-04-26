@@ -13,7 +13,10 @@
 #include "chromeos/audio/cras_audio_handler.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/native_theme/native_theme.h"
 #include "ui/views/controls/image_view.h"
+#include "ui/views/controls/label.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/separator.h"
 
@@ -70,10 +73,47 @@ void AudioDetailedView::Update() {
   Layout();
 }
 
-void AudioDetailedView::AddAudioSubHeader(const gfx::VectorIcon& icon,
-                                          int text_id) {
-  TriView* header = AddScrollListSubHeader(icon, text_id);
+void AudioDetailedView::AddInputHeader() {
+  AddScrollListInfoItem(IDS_ASH_STATUS_TRAY_AUDIO_INPUT,
+                        kSystemMenuAudioInputIcon);
+}
+
+void AudioDetailedView::AddOutputHeader() {
+  AddScrollListInfoItem(IDS_ASH_STATUS_TRAY_AUDIO_OUTPUT,
+                        kSystemMenuAudioOutputIcon);
+}
+
+void AudioDetailedView::AddScrollListInfoItem(int text_id,
+                                              const gfx::VectorIcon& icon) {
+  TriView* header = TrayPopupUtils::CreateDefaultRowView();
+  TrayPopupUtils::ConfigureAsStickyHeader(header);
+  views::ImageView* image_view = TrayPopupUtils::CreateMainImageView();
+  image_view->SetImage(gfx::CreateVectorIcon(
+      icon, GetNativeTheme()->GetSystemColor(
+                ui::NativeTheme::kColorId_ProminentButtonColor)));
+  header->AddView(TriView::Container::START, image_view);
+
+  views::Label* label = TrayPopupUtils::CreateDefaultLabel();
+  label->SetText(l10n_util::GetStringUTF16(text_id));
+  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::SUB_HEADER);
+  style.SetupLabel(label);
+  header->AddView(TriView::Container::CENTER, label);
+
   header->SetContainerVisible(TriView::Container::END, false);
+  scroll_content()->AddChildView(header);
+}
+
+HoverHighlightView* AudioDetailedView::AddScrollListItem(
+    const base::string16& text,
+    bool highlight,
+    bool checked) {
+  HoverHighlightView* container = new HoverHighlightView(this);
+
+  container->AddLabelRow(text);
+  TrayPopupUtils::InitializeAsCheckableRow(container, checked);
+
+  scroll_content()->AddChildView(container);
+  return container;
 }
 
 void AudioDetailedView::CreateItems() {
@@ -89,20 +129,21 @@ void AudioDetailedView::UpdateAudioDevices() {
   audio_handler->GetAudioDevices(&devices);
   bool has_dual_internal_mic = audio_handler->HasDualInternalMic();
   bool is_front_or_rear_mic_active = false;
-  for (const auto& device : devices) {
+  for (size_t i = 0; i < devices.size(); ++i) {
     // Don't display keyboard mic or aokr type.
-    if (!device.is_for_simple_usage())
+    if (!devices[i].is_for_simple_usage())
       continue;
-    if (device.is_input) {
+    if (devices[i].is_input) {
       // Do not expose the internal front and rear mic to UI.
-      if (has_dual_internal_mic && audio_handler->IsFrontOrRearMic(device)) {
-        if (device.active)
+      if (has_dual_internal_mic &&
+          audio_handler->IsFrontOrRearMic(devices[i])) {
+        if (devices[i].active)
           is_front_or_rear_mic_active = true;
         continue;
       }
-      input_devices_.push_back(device);
+      input_devices_.push_back(devices[i]);
     } else {
-      output_devices_.push_back(device);
+      output_devices_.push_back(devices[i]);
     }
   }
 
@@ -127,15 +168,14 @@ void AudioDetailedView::UpdateScrollableList() {
 
   // Add audio output devices.
   const bool has_output_devices = output_devices_.size() > 0;
-  if (has_output_devices) {
-    AddAudioSubHeader(kSystemMenuAudioOutputIcon,
-                      IDS_ASH_STATUS_TRAY_AUDIO_OUTPUT);
-  }
+  if (has_output_devices)
+    AddOutputHeader();
 
-  for (const auto& device : output_devices_) {
-    HoverHighlightView* container =
-        AddScrollListCheckableItem(GetAudioDeviceName(device), device.active);
-    device_map_[container] = device;
+  for (size_t i = 0; i < output_devices_.size(); ++i) {
+    HoverHighlightView* container = AddScrollListItem(
+        GetAudioDeviceName(output_devices_[i]), false /* highlight */,
+        output_devices_[i].active); /* checkmark if active */
+    device_map_[container] = output_devices_[i];
   }
 
   if (has_output_devices) {
@@ -145,15 +185,14 @@ void AudioDetailedView::UpdateScrollableList() {
 
   // Add audio input devices.
   const bool has_input_devices = input_devices_.size() > 0;
-  if (has_input_devices) {
-    AddAudioSubHeader(kSystemMenuAudioInputIcon,
-                      IDS_ASH_STATUS_TRAY_AUDIO_INPUT);
-  }
+  if (has_input_devices)
+    AddInputHeader();
 
-  for (const auto& device : input_devices_) {
-    HoverHighlightView* container =
-        AddScrollListCheckableItem(GetAudioDeviceName(device), device.active);
-    device_map_[container] = device;
+  for (size_t i = 0; i < input_devices_.size(); ++i) {
+    HoverHighlightView* container = AddScrollListItem(
+        GetAudioDeviceName(input_devices_[i]), false /* highlight */,
+        input_devices_[i].active); /* checkmark if active */
+    device_map_[container] = input_devices_[i];
   }
 
   scroll_content()->SizeToPreferredSize();

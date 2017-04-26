@@ -16,7 +16,6 @@ namespace service_manager {
 class Identity {
  public:
   Identity();
-  explicit Identity(const std::string& name);
   Identity(const std::string& name,
            const std::string& user_id);
   Identity(const std::string& name,

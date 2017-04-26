@@ -38,7 +38,7 @@ namespace XPath {
 
 Filter::Filter(Expression* expr, HeapVector<Member<Predicate>>& predicates)
     : expr_(expr) {
-  predicates_.swap(predicates);
+  predicates_.Swap(predicates);
   SetIsContextNodeSensitive(expr_->IsContextNodeSensitive());
   SetIsContextPositionSensitive(expr_->IsContextPositionSensitive());
   SetIsContextSizeSensitive(expr_->IsContextSizeSensitive());

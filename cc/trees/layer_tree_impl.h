@@ -132,6 +132,8 @@ class CC_EXPORT LayerTreeImpl {
   void SetPropertyTrees(PropertyTrees* property_trees);
   PropertyTrees* property_trees() { return &property_trees_; }
 
+  void UpdatePropertyTreesForBoundsDelta();
+
   void PushPropertiesTo(LayerTreeImpl* tree_impl);
 
   void MoveChangeTrackingToLayers();
@@ -206,8 +208,7 @@ class CC_EXPORT LayerTreeImpl {
     has_transparent_background_ = transparent;
   }
 
-  void UpdatePropertyTreeScrollingAndAnimationFromMainThread(
-      bool is_impl_side_update);
+  void UpdatePropertyTreeScrollingAndAnimationFromMainThread();
   void SetPageScaleOnActiveTree(float active_page_scale);
   void PushPageScaleFromMainThread(float page_scale_factor,
                                    float min_page_scale_factor,

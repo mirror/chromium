@@ -34,12 +34,10 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
-#include "core/exported/WebDataSourceImpl.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
-#include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/SharedWorkerGlobalScope.h"
@@ -52,7 +50,6 @@
 #include "core/workers/WorkerScriptLoader.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Persistent.h"
 #include "platform/loader/fetch/ResourceResponse.h"
@@ -66,7 +63,6 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebFrame.h"
@@ -75,6 +71,7 @@
 #include "public/web/WebWorkerContentSettingsClientProxy.h"
 #include "web/IndexedDBClientImpl.h"
 #include "web/LocalFileSystemClient.h"
+#include "web/WebDataSourceImpl.h"
 #include "web/WebLocalFrameImpl.h"
 
 namespace blink {
@@ -330,20 +327,6 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
           web_security_origin)));
   ProvideIndexedDBClientToWorker(worker_clients,
                                  IndexedDBClientImpl::Create(*worker_clients));
-
-  if (RuntimeEnabledFeatures::offMainThreadFetchEnabled()) {
-    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
-        client_->CreateWorkerFetchContext(
-            WebLocalFrameImpl::FromFrame(main_frame_->GetFrame())
-                ->DataSource()
-                ->GetServiceWorkerNetworkProvider());
-    DCHECK(web_worker_fetch_context);
-    // TODO(horo): Set more information about the context (ex: DataSaverEnabled)
-    // to |web_worker_fetch_context|.
-    ProvideWorkerFetchContextToWorker(worker_clients,
-                                      std::move(web_worker_fetch_context));
-  }
-
   ContentSecurityPolicy* content_security_policy =
       main_script_loader_->ReleaseContentSecurityPolicy();
   WorkerThreadStartMode start_mode =

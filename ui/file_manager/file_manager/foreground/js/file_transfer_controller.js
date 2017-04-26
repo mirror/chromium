@@ -1261,30 +1261,20 @@ FileTransferController.prototype.simulateCommand_ = function(command, handler) {
  */
 FileTransferController.prototype.onFileSelectionChanged_ = function() {
   this.preloadedThumbnailImagePromise_ = null;
+  this.selectedAsyncData_ = {};
 };
 
 /**
  * @private
  */
 FileTransferController.prototype.onFileSelectionChangedThrottled_ = function() {
-  // Remove file objects that are no longer in the selection.
-  var asyncData = {};
   var entries = this.selectionHandler_.selection.entries;
-  for (var i = 0; i < entries.length; i++) {
-    var entryUrl = entries[i].toURL();
-    if (entryUrl in this.selectedAsyncData_) {
-      asyncData[entryUrl] = this.selectedAsyncData_[entryUrl];
-    }
-  }
-  this.selectedAsyncData_ = asyncData;
-
+  var asyncData = this.selectedAsyncData_;
   var fileEntries = [];
   for (var i = 0; i < entries.length; i++) {
     if (entries[i].isFile)
       fileEntries.push(entries[i]);
-    if (!(entries[i].toURL() in asyncData)) {
-      asyncData[entries[i].toURL()] = {externalFileUrl: '', file: null};
-    }
+    asyncData[entries[i].toURL()] = {externalFileUrl: '', file: null};
   }
   var containsDirectory = this.selectionHandler_.selection.directoryCount > 0;
 
@@ -1295,11 +1285,9 @@ FileTransferController.prototype.onFileSelectionChangedThrottled_ = function() {
   if (!containsDirectory) {
     for (var i = 0; i < fileEntries.length; i++) {
       (function(fileEntry) {
-        if (!(asyncData[fileEntry.toURL()].file)) {
-          fileEntry.file(function(file) {
-            asyncData[fileEntry.toURL()].file = file;
-          });
-        }
+        fileEntry.file(function(file) {
+          asyncData[fileEntry.toURL()].file = file;
+        });
       })(fileEntries[i]);
     }
   }

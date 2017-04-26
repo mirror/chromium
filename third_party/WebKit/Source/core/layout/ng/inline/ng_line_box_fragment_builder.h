@@ -20,7 +20,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final {
   STACK_ALLOCATED();
 
  public:
-  explicit NGLineBoxFragmentBuilder(NGInlineNode*);
+  NGLineBoxFragmentBuilder(NGInlineNode*, const NGLineHeightMetrics&);
 
   NGLineBoxFragmentBuilder& SetDirection(TextDirection);
 
@@ -35,7 +35,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final {
     return children_;
   }
 
-  void SetMetrics(const NGLineHeightMetrics&);
+  void UniteMetrics(const NGLineHeightMetrics&);
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
 
   // Set the break token for the fragment to build.

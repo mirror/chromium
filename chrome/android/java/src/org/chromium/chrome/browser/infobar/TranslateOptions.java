@@ -131,11 +131,17 @@ public class TranslateOptions {
     }
 
     public String sourceLanguageName() {
-        return getRepresentationFromCode(mSourceLanguageCode);
+        if (isValidLanguageCode(mSourceLanguageCode)) {
+            return mCodeToRepresentation.get(mSourceLanguageCode);
+        }
+        return "";
     }
 
     public String targetLanguageName() {
-        return getRepresentationFromCode(mTargetLanguageCode);
+        if (isValidLanguageCode(mTargetLanguageCode)) {
+            return mCodeToRepresentation.get(mTargetLanguageCode);
+        }
+        return "";
     }
 
     public String sourceLanguageCode() {
@@ -224,18 +230,6 @@ public class TranslateOptions {
             return false;
         }
         return toggleState(ALWAYS_LANGUAGE, value);
-    }
-
-    /**
-     * Gets the language's translated representation from a given language code.
-     * @param languageCode ISO code for the language
-     * @return The translated representation of the language, or "" if not found.
-     */
-    public String getRepresentationFromCode(String languageCode) {
-        if (isValidLanguageCode(languageCode)) {
-            return mCodeToRepresentation.get(languageCode);
-        }
-        return "";
     }
 
     private boolean toggleState(int element, boolean newValue) {

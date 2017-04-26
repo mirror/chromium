@@ -42,7 +42,7 @@ class APITypeReferenceMap;
 class APIBinding {
  public:
   using CreateCustomType = base::Callback<v8::Local<v8::Object>(
-      v8::Isolate* isolate,
+      v8::Local<v8::Context> context,
       const std::string& type_name,
       const std::string& property_name,
       const base::ListValue* property_values)>;

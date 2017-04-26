@@ -5,7 +5,6 @@
 #ifndef DOMWindow_h
 #define DOMWindow_h
 
-#include "bindings/core/v8/TraceWrapperMember.h"
 #include "bindings/core/v8/Transferables.h"
 #include "core/CoreExport.h"
 #include "core/events/EventTarget.h"
@@ -51,8 +50,6 @@ class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
 
   // GarbageCollectedFinalized overrides:
   DECLARE_VIRTUAL_TRACE();
-
-  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   virtual bool IsLocalDOMWindow() const = 0;
   virtual bool IsRemoteDOMWindow() const = 0;
@@ -130,7 +127,7 @@ class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
   // of this object.
   const Member<WindowProxyManager> window_proxy_manager_;
   Member<InputDeviceCapabilitiesConstants> input_capabilities_;
-  mutable TraceWrapperMember<Location> location_;
+  mutable Member<Location> location_;
 
   // Set to true when close() has been called. Needed for
   // |window.closed| determinism; having it return 'true'

@@ -439,19 +439,16 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
   // On Android, user gestures are normally required, unless that requirement
   // is disabled with a command-line switch or the equivalent field trial is
   // is set to "Enabled".
-  prefs.user_gesture_required_for_media_playback =
-      !command_line.HasSwitch(
-          switches::kDisableGestureRequirementForMediaPlayback) &&
-      command_line.GetSwitchValueASCII(switches::kAutoplayPolicy) !=
-          switches::autoplay::kNoUserGestureRequiredPolicy;
+  prefs.user_gesture_required_for_media_playback = !command_line.HasSwitch(
+      switches::kDisableGestureRequirementForMediaPlayback);
 
   prefs.progress_bar_completion = GetProgressBarCompletionPolicy();
 
   prefs.use_solid_color_scrollbars = true;
 #else  // defined(OS_ANDROID)
   prefs.cross_origin_media_playback_requires_user_gesture =
-      command_line.GetSwitchValueASCII(switches::kAutoplayPolicy) ==
-      switches::autoplay::kCrossOriginUserGestureRequiredPolicy;
+      base::FeatureList::GetInstance()->IsEnabled(
+          features::kCrossOriginMediaPlaybackRequiresUserGesture);
 #endif  // defined(OS_ANDROID)
 
   const std::string touch_enabled_switch =

@@ -51,18 +51,18 @@ LayoutTextControlSingleLine::LayoutTextControlSingleLine(
 LayoutTextControlSingleLine::~LayoutTextControlSingleLine() {}
 
 inline Element* LayoutTextControlSingleLine::ContainerElement() const {
-  return InputElement()->UserAgentShadowRoot()->getElementById(
+  return InputElement()->UserAgentShadowRoot()->GetElementById(
       ShadowElementNames::TextFieldContainer());
 }
 
 inline Element* LayoutTextControlSingleLine::EditingViewPortElement() const {
-  return InputElement()->UserAgentShadowRoot()->getElementById(
+  return InputElement()->UserAgentShadowRoot()->GetElementById(
       ShadowElementNames::EditingViewPort());
 }
 
 inline HTMLElement* LayoutTextControlSingleLine::InnerSpinButtonElement()
     const {
-  return ToHTMLElement(InputElement()->UserAgentShadowRoot()->getElementById(
+  return ToHTMLElement(InputElement()->UserAgentShadowRoot()->GetElementById(
       ShadowElementNames::SpinButton()));
 }
 

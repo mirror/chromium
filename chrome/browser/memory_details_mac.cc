@@ -62,7 +62,7 @@ void CollectProcessDataForChromeProcess(
       base::ProcessMetrics::CreateProcessMetrics(
           pid, content::BrowserChildProcessHost::GetPortProvider());
   metrics->GetCommittedAndWorkingSetKBytes(&info.committed, &info.working_set);
-  info.phys_footprint = metrics->GetTaskVMInfo().phys_footprint;
+  info.phys_footprint = metrics->GetPhysicalFootprint();
 
   processes->push_back(info);
 }

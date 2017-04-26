@@ -58,6 +58,7 @@ class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
 // https://html.spec.whatwg.org/#the-script-is-ready via PendingScriptClient.
 class CORE_EXPORT PendingScript
     : public GarbageCollectedFinalized<PendingScript> {
+  USING_PRE_FINALIZER(PendingScript, Dispose);
   WTF_MAKE_NONCOPYABLE(PendingScript);
 
  public:
@@ -105,11 +106,13 @@ class CORE_EXPORT PendingScript
   virtual void DisposeInternal() = 0;
 
   PendingScriptClient* Client() { return client_; }
-  bool IsWatchingForLoad() const { return client_; }
+  bool IsWatchingForLoad() const { return watching_for_load_; }
 
   virtual void CheckState() const = 0;
 
  private:
+  bool watching_for_load_;
+
   // |m_element| must points to the corresponding ScriptLoader's
   // ScriptElementBase and thus must be non-null before dispose() is called
   // (except for unit tests).

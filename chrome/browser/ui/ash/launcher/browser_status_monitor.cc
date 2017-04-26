@@ -8,7 +8,6 @@
 #include "ash/wm/window_util.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/launcher/browser_shortcut_launcher_item_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_util.h"
@@ -83,14 +82,11 @@ BrowserStatusMonitor::BrowserStatusMonitor(
     : launcher_controller_(launcher_controller),
       browser_tab_strip_tracker_(this, this, this) {
   DCHECK(launcher_controller_);
-  // TODO(crbug.com/557406): Fix this interaction pattern in Mash.
-  if (!ash_util::IsRunningInMash())
-    ash::Shell::Get()->activation_client()->AddObserver(this);
+  ash::Shell::Get()->activation_client()->AddObserver(this);
 }
 
 BrowserStatusMonitor::~BrowserStatusMonitor() {
-  if (!ash_util::IsRunningInMash())
-    ash::Shell::Get()->activation_client()->RemoveObserver(this);
+  ash::Shell::Get()->activation_client()->RemoveObserver(this);
   browser_tab_strip_tracker_.StopObservingAndSendOnBrowserRemoved();
 }
 

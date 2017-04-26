@@ -132,10 +132,9 @@ bool ChrootToSafeEmptyDir() {
 void CheckCloneNewUserErrno(int error) {
   // EPERM can happen if already in a chroot. EUSERS if too many nested
   // namespaces are used. EINVAL for kernels that don't support the feature.
-  // Valgrind will ENOSYS unshare().  ENOSPC can occur when the system has
-  // reached its maximum configured number of user namespaces.
+  // Valgrind will ENOSYS unshare().
   PCHECK(error == EPERM || error == EUSERS || error == EINVAL ||
-         error == ENOSYS || error == ENOSPC);
+         error == ENOSYS);
 }
 
 // Converts a Capability to the corresponding Linux CAP_XXX value.

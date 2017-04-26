@@ -352,7 +352,7 @@ inline Document* Fullscreen::GetDocument() {
 }
 
 void Fullscreen::ContextDestroyed(ExecutionContext*) {
-  event_queue_.clear();
+  event_queue_.Clear();
 
   if (full_screen_layout_object_)
     full_screen_layout_object_->Destroy();

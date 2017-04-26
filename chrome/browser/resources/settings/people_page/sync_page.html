@@ -249,8 +249,7 @@
         </div>
       </div>
 
-      <a class="settings-box two-line inherit-color no-outline" tabindex="-1"
-          target="_blank" href="$i18n{activityControlsUrl}"
+      <div class="settings-box two-line" actionable
           on-tap="onActivityControlsTap_">
         <div class="start">
           $i18n{personalizeGoogleServicesTitle}
@@ -259,18 +258,17 @@
           </div>
         </div>
         <button class="icon-external" is="paper-icon-button-light"
-            actionable aria-label="$i18n{personalizeGoogleServicesTitle}"
+            aria-label="$i18n{personalizeGoogleServicesTitle}"
             aria-describedby="activityControlsSecondary"></button>
-      </a>
+      </div>
 
-      <a class="settings-box inherit-color no-outline" tabindex="-1"
-          target="_blank" href="$i18n{syncDashboardUrl}">
+      <div class="settings-box" actionable on-tap="onManageSyncedDataTap_">
         <div class="start">
           $i18n{manageSyncedDataTitle}
         </div>
-        <button class="icon-external" is="paper-icon-button-light" actionable
+        <button class="icon-external" is="paper-icon-button-light"
             aria-label="$i18n{manageSyncedDataTitle}"></button>
-      </a>
+      </div>
 
       <div id="encryptionDescription" hidden="[[syncPrefs.passphraseRequired]]"
           class="settings-box two-line single-column">

@@ -17,9 +17,10 @@
 #include <memory>
 
 #include "base/test/test_suite.h"
+#include "courgette/assembly_program.h"
 #include "courgette/base_test_unittest.h"
 #include "courgette/courgette.h"
-#include "courgette/courgette_flow.h"
+#include "courgette/program_detector.h"
 #include "courgette/streams.h"
 
 class DecodeFuzzTest : public BaseTest {
@@ -40,36 +41,32 @@ class DecodeFuzzTest : public BaseTest {
 void DecodeFuzzTest::FuzzExe(const char* file_name) const {
   std::string file1 = FileContents(file_name);
 
-  const uint8_t* original_data = reinterpret_cast<const uint8_t*>(file1.data());
+  const uint8_t* original_buffer =
+      reinterpret_cast<const uint8_t*>(file1.data());
   size_t original_length = file1.length();
-  courgette::CourgetteFlow flow;
 
-  courgette::RegionBuffer original_buffer(
-      courgette::Region(original_data, original_length));
-  flow.ReadAssemblyProgramFromBuffer(flow.ONLY, original_buffer, false);
-  EXPECT_EQ(courgette::C_OK, flow.status());
-  EXPECT_TRUE(nullptr != flow.data(flow.ONLY)->program.get());
+  std::unique_ptr<courgette::AssemblyProgram> program;
+  const courgette::Status parse_status =
+      courgette::ParseDetectedExecutable(original_buffer, original_length,
+                                         &program);
+  EXPECT_EQ(courgette::C_OK, parse_status);
 
-  flow.CreateEncodedProgramFromAssemblyProgram(flow.ONLY);
-  EXPECT_EQ(courgette::C_OK, flow.status());
-  EXPECT_TRUE(nullptr != flow.data(flow.ONLY)->encoded.get());
+  std::unique_ptr<courgette::EncodedProgram> encoded;
+  const courgette::Status encode_status = Encode(*program, &encoded);
+  EXPECT_EQ(courgette::C_OK, encode_status);
 
-  flow.DestroyAssemblyProgram(flow.ONLY);
-  EXPECT_EQ(courgette::C_OK, flow.status());
-  EXPECT_TRUE(nullptr == flow.data(flow.ONLY)->program.get());
+  program.reset();
 
-  flow.WriteSinkStreamSetFromEncodedProgram(flow.ONLY);
-  EXPECT_EQ(courgette::C_OK, flow.status());
+  courgette::SinkStreamSet sinks;
+  const courgette::Status write_status =
+      WriteEncodedProgram(encoded.get(), &sinks);
+  EXPECT_EQ(courgette::C_OK, write_status);
 
-  flow.DestroyEncodedProgram(flow.ONLY);
-  EXPECT_EQ(courgette::C_OK, flow.status());
-  EXPECT_TRUE(nullptr == flow.data(flow.ONLY)->encoded.get());
+  encoded.reset();
 
   courgette::SinkStream sink;
-  flow.WriteSinkStreamFromSinkStreamSet(flow.ONLY, &sink);
-  EXPECT_EQ(courgette::C_OK, flow.status());
-  EXPECT_TRUE(flow.ok());
-  EXPECT_FALSE(flow.failed());
+  bool can_collect = sinks.CopyTo(&sink);
+  EXPECT_TRUE(can_collect);
 
   size_t length = sink.Length();
 
@@ -176,27 +173,34 @@ void DecodeFuzzTest::FuzzBits(const std::string& base_buffer,
   }
 }
 
-bool DecodeFuzzTest::TryAssemble(const std::string& file,
+bool DecodeFuzzTest::TryAssemble(const std::string& buffer,
                                  std::string* output) const {
-  courgette::CourgetteFlow flow;
-  courgette::RegionBuffer file_buffer(courgette::Region(
-      reinterpret_cast<const uint8_t*>(file.data()), file.length()));
-  flow.ReadSourceStreamSetFromBuffer(flow.ONLY, file_buffer);
-  if (flow.failed())
-    return false;
+  std::unique_ptr<courgette::EncodedProgram> encoded;
+  bool result = false;
 
-  flow.ReadEncodedProgramFromSourceStreamSet(flow.ONLY);
-  if (flow.failed())
-    return false;
+  courgette::SourceStreamSet sources;
+  bool can_get_source_streams = sources.Init(buffer.c_str(), buffer.length());
+  if (can_get_source_streams) {
+    const courgette::Status read_status =
+        ReadEncodedProgram(&sources, &encoded);
+    if (read_status == courgette::C_OK) {
+      courgette::SinkStream assembled;
+      const courgette::Status assemble_status =
+          Assemble(encoded.get(), &assembled);
 
-  courgette::SinkStream sink;
-  flow.WriteExecutableFromEncodedProgram(flow.ONLY, &sink);
-  if (flow.failed())
-    return false;
+      if (assemble_status == courgette::C_OK) {
+        const void* assembled_buffer = assembled.Buffer();
+        size_t assembled_length = assembled.Length();
 
-  output->clear();
-  output->assign(reinterpret_cast<const char*>(sink.Buffer()), sink.Length());
-  return true;
+        output->clear();
+        output->assign(reinterpret_cast<const char*>(assembled_buffer),
+                       assembled_length);
+        result = true;
+      }
+    }
+  }
+
+  return result;
 }
 
 TEST_F(DecodeFuzzTest, All) {

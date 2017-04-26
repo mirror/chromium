@@ -101,12 +101,12 @@ RendererSchedulerImpl::RendererSchedulerImpl(
                                           &helper_,
                                           idle_helper_.IdleTaskRunner()),
       render_widget_scheduler_signals_(this),
-      control_task_queue_(helper_.ControlTaskQueue()),
-      compositor_task_queue_(
+      control_task_runner_(helper_.ControlTaskQueue()),
+      compositor_task_runner_(
           helper_.NewTaskQueue(TaskQueue::Spec(TaskQueue::QueueType::COMPOSITOR)
                                    .SetShouldMonitorQuiescence(true))),
-      compositor_task_queue_enabled_voter_(
-          compositor_task_queue_->CreateQueueEnabledVoter()),
+      compositor_task_runner_enabled_voter_(
+          compositor_task_runner_->CreateQueueEnabledVoter()),
       delayed_update_policy_runner_(
           base::Bind(&RendererSchedulerImpl::UpdatePolicy,
                      base::Unretained(this)),
@@ -114,7 +114,7 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       seqlock_queueing_time_estimator_(
           QueueingTimeEstimator(this, base::TimeDelta::FromSeconds(1))),
       main_thread_only_(this,
-                        compositor_task_queue_,
+                        compositor_task_runner_,
                         helper_.scheduler_tqm_delegate().get(),
                         helper_.scheduler_tqm_delegate()->NowTicks()),
       policy_may_need_update_(&any_thread_lock_),
@@ -130,9 +130,9 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       base::Bind(&RendererSchedulerImpl::SuspendTimerQueueWhenBackgrounded,
                  weak_factory_.GetWeakPtr()));
 
-  default_loading_task_queue_ =
+  default_loading_task_runner_ =
       NewLoadingTaskQueue(TaskQueue::QueueType::DEFAULT_LOADING);
-  default_timer_task_queue_ =
+  default_timer_task_runner_ =
       NewTimerTaskQueue(TaskQueue::QueueType::DEFAULT_TIMER);
 
   TRACE_EVENT_OBJECT_CREATED_WITH_ID(
@@ -272,7 +272,7 @@ RendererSchedulerImpl::DefaultTaskRunner() {
 scoped_refptr<base::SingleThreadTaskRunner>
 RendererSchedulerImpl::CompositorTaskRunner() {
   helper_.CheckOnValidThread();
-  return compositor_task_queue_;
+  return compositor_task_runner_;
 }
 
 scoped_refptr<SingleThreadIdleTaskRunner>
@@ -283,13 +283,13 @@ RendererSchedulerImpl::IdleTaskRunner() {
 scoped_refptr<base::SingleThreadTaskRunner>
 RendererSchedulerImpl::LoadingTaskRunner() {
   helper_.CheckOnValidThread();
-  return default_loading_task_queue_;
+  return default_loading_task_runner_;
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
 RendererSchedulerImpl::TimerTaskRunner() {
   helper_.CheckOnValidThread();
-  return default_timer_task_queue_;
+  return default_timer_task_runner_;
 }
 
 scoped_refptr<TaskQueue> RendererSchedulerImpl::DefaultTaskQueue() {
@@ -298,17 +298,17 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::DefaultTaskQueue() {
 
 scoped_refptr<TaskQueue> RendererSchedulerImpl::CompositorTaskQueue() {
   helper_.CheckOnValidThread();
-  return compositor_task_queue_;
+  return compositor_task_runner_;
 }
 
 scoped_refptr<TaskQueue> RendererSchedulerImpl::LoadingTaskQueue() {
   helper_.CheckOnValidThread();
-  return default_loading_task_queue_;
+  return default_loading_task_runner_;
 }
 
 scoped_refptr<TaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
   helper_.CheckOnValidThread();
-  return default_timer_task_queue_;
+  return default_timer_task_runner_;
 }
 
 scoped_refptr<TaskQueue> RendererSchedulerImpl::ControlTaskQueue() {
@@ -491,7 +491,7 @@ void RendererSchedulerImpl::SetAllRenderWidgetsHidden(bool hidden) {
     // hidden.
     base::TimeDelta end_idle_when_hidden_delay =
         base::TimeDelta::FromMilliseconds(kEndIdleWhenHiddenDelayMillis);
-    control_task_queue_->PostDelayedTask(
+    control_task_runner_->PostDelayedTask(
         FROM_HERE, end_renderer_hidden_idle_period_closure_.GetCallback(),
         end_idle_when_hidden_delay);
     GetMainThreadOnly().renderer_hidden = true;
@@ -540,7 +540,7 @@ void RendererSchedulerImpl::OnRendererBackgrounded() {
   base::TimeDelta suspend_timers_when_backgrounded_delay =
       base::TimeDelta::FromMilliseconds(
           kSuspendTimersWhenBackgroundedDelayMillis);
-  control_task_queue_->PostDelayedTask(
+  control_task_runner_->PostDelayedTask(
       FROM_HERE, suspend_timers_when_backgrounded_closure_.GetCallback(),
       suspend_timers_when_backgrounded_delay);
 }
@@ -848,7 +848,7 @@ bool RendererSchedulerImpl::ShouldYieldForHighPriorityWork() {
     case UseCase::MAIN_THREAD_GESTURE:
     case UseCase::MAIN_THREAD_CUSTOM_INPUT_HANDLING:
     case UseCase::SYNCHRONIZED_GESTURE:
-      return compositor_task_queue_->HasPendingImmediateWork() ||
+      return compositor_task_runner_->HasPendingImmediateWork() ||
              GetMainThreadOnly().touchstart_expected_soon;
 
     case UseCase::TOUCHSTART:
@@ -891,7 +891,7 @@ void RendererSchedulerImpl::EnsureUrgentPolicyUpdatePostedOnMainThread(
   any_thread_lock_.AssertAcquired();
   if (!policy_may_need_update_.IsSet()) {
     policy_may_need_update_.SetWhileLocked(true);
-    control_task_queue_->PostTask(from_here, update_policy_closure_);
+    control_task_runner_->PostTask(from_here, update_policy_closure_);
   }
 }
 
@@ -1165,7 +1165,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   }
 
   ApplyTaskQueuePolicy(
-      compositor_task_queue_.get(), compositor_task_queue_enabled_voter_.get(),
+      compositor_task_runner_.get(),
+      compositor_task_runner_enabled_voter_.get(),
       GetMainThreadOnly().current_policy.compositor_queue_policy,
       new_policy.compositor_queue_policy);
 
@@ -1205,7 +1206,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
     }
   }
 
-  DCHECK(compositor_task_queue_->IsQueueEnabled());
+  DCHECK(compositor_task_runner_->IsQueueEnabled());
   GetMainThreadOnly().current_policy = new_policy;
 }
 
@@ -1360,7 +1361,7 @@ void RendererSchedulerImpl::SuspendTimerQueue() {
   GetMainThreadOnly().timer_queue_suspend_count++;
   ForceUpdatePolicy();
 #ifndef NDEBUG
-  DCHECK(!default_timer_task_queue_->IsQueueEnabled());
+  DCHECK(!default_timer_task_runner_->IsQueueEnabled());
   for (const auto& runner : timer_task_runners_) {
     DCHECK(!runner.first->IsQueueEnabled());
   }
@@ -1572,18 +1573,20 @@ void RendererSchedulerImpl::OnIdlePeriodEnded() {
   UpdatePolicyLocked(UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED);
 }
 
-void RendererSchedulerImpl::AddPendingNavigation(NavigatingFrameType type) {
+void RendererSchedulerImpl::AddPendingNavigation(
+    WebScheduler::NavigatingFrameType type) {
   helper_.CheckOnValidThread();
-  if (type == NavigatingFrameType::kMainFrame) {
+  if (type == blink::WebScheduler::NavigatingFrameType::kMainFrame) {
     GetMainThreadOnly().navigation_task_expected_count++;
     UpdatePolicy();
   }
 }
 
-void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
+void RendererSchedulerImpl::RemovePendingNavigation(
+    WebScheduler::NavigatingFrameType type) {
   helper_.CheckOnValidThread();
   DCHECK_GT(GetMainThreadOnly().navigation_task_expected_count, 0);
-  if (type == NavigatingFrameType::kMainFrame &&
+  if (type == blink::WebScheduler::NavigatingFrameType::kMainFrame &&
       GetMainThreadOnly().navigation_task_expected_count > 0) {
     GetMainThreadOnly().navigation_task_expected_count--;
     UpdatePolicy();
@@ -1654,11 +1657,11 @@ void RendererSchedulerImpl::SetTopLevelBlameContext(
   //
   // Per-frame task runners (loading, timers, etc.) are configured with a more
   // specific blame context by WebFrameSchedulerImpl.
-  control_task_queue_->SetBlameContext(blame_context);
+  control_task_runner_->SetBlameContext(blame_context);
   DefaultTaskQueue()->SetBlameContext(blame_context);
-  default_loading_task_queue_->SetBlameContext(blame_context);
-  default_timer_task_queue_->SetBlameContext(blame_context);
-  compositor_task_queue_->SetBlameContext(blame_context);
+  default_loading_task_runner_->SetBlameContext(blame_context);
+  default_timer_task_runner_->SetBlameContext(blame_context);
+  compositor_task_runner_->SetBlameContext(blame_context);
   idle_helper_.IdleTaskRunner()->SetBlameContext(blame_context);
 }
 

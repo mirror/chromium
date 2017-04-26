@@ -224,7 +224,7 @@ const base::Feature kModuleDatabase{"ModuleDatabase",
 // Enables the use of native notification centers instead of using the Message
 // Center for displaying the toasts.
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
-#if defined(OS_MACOSX) || defined(OS_ANDROID)
+#if defined(OS_MACOSX)
 const base::Feature kNativeNotifications{"NativeNotifications",
                                          base::FEATURE_ENABLED_BY_DEFAULT};
 #else
@@ -267,10 +267,13 @@ const base::Feature kPreloadLockScreen{"PreloadLockScreen",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 #endif
 
+// Enables the Print Scaling feature in print preview.
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-// Enables the Print as Image feature in print preview.
 const base::Feature kPrintPdfAsImage{"PrintPdfAsImage",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kPrintScaling{"PrintScaling",
+                                  base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 // Enables or disables push subscriptions keeping Chrome running in the

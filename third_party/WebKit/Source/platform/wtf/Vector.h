@@ -1196,7 +1196,7 @@ class Vector
   void Fill(const T& val) { Fill(val, size()); }
 
   // Swap two vectors quickly.
-  void swap(Vector& other) {
+  void Swap(Vector& other) {
     Base::SwapVectorBuffer(other, OffsetRange(), OffsetRange());
   }
 
@@ -1405,13 +1405,13 @@ Vector<T, inlineCapacity, Allocator>::Vector(
   size_ = 0;
   // It's a little weird to implement a move constructor using swap but this
   // way we don't have to add a move constructor to VectorBuffer.
-  swap(other);
+  Swap(other);
 }
 
 template <typename T, size_t inlineCapacity, typename Allocator>
 Vector<T, inlineCapacity, Allocator>& Vector<T, inlineCapacity, Allocator>::
 operator=(Vector<T, inlineCapacity, Allocator>&& other) {
-  swap(other);
+  Swap(other);
   return *this;
 }
 

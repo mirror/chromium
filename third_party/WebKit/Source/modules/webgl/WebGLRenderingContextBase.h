@@ -127,12 +127,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
  public:
   ~WebGLRenderingContextBase() override;
 
-  HTMLCanvasElement* canvas() const {
-    if (host()->IsOffscreenCanvas())
-      return nullptr;
-    return static_cast<HTMLCanvasElement*>(host());
-  }
-
   virtual String ContextName() const = 0;
   virtual void RegisterContextExtensions() = 0;
 
@@ -624,12 +618,17 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   friend class ScopedFramebufferRestorer;
   friend class ScopedUnpackParametersResetRestore;
 
-  WebGLRenderingContextBase(CanvasRenderingContextHost*,
+  WebGLRenderingContextBase(HTMLCanvasElement*,
+                            std::unique_ptr<WebGraphicsContext3DProvider>,
+                            const CanvasContextCreationAttributes&,
+                            unsigned);
+  WebGLRenderingContextBase(OffscreenCanvas*,
                             std::unique_ptr<WebGraphicsContext3DProvider>,
                             const CanvasContextCreationAttributes&,
                             unsigned);
   PassRefPtr<DrawingBuffer> CreateDrawingBuffer(
-      std::unique_ptr<WebGraphicsContext3DProvider>);
+      std::unique_ptr<WebGraphicsContext3DProvider>,
+      DrawingBuffer::ChromiumImageUsage);
   void SetupFlags();
 
   // CanvasRenderingContext implementation.
@@ -1653,7 +1652,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                         GLuint offset);
 
  private:
-  WebGLRenderingContextBase(CanvasRenderingContextHost*,
+  WebGLRenderingContextBase(HTMLCanvasElement*,
+                            OffscreenCanvas*,
                             RefPtr<WebTaskRunner>,
                             std::unique_ptr<WebGraphicsContext3DProvider>,
                             const CanvasContextCreationAttributes&,
@@ -1685,7 +1685,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   bool IsPaintable() const final { return GetDrawingBuffer(); }
 };
 
-// TODO(fserb): remove this.
 DEFINE_TYPE_CASTS(WebGLRenderingContextBase,
                   CanvasRenderingContext,
                   context,

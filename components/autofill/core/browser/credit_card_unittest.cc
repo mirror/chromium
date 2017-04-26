@@ -406,8 +406,6 @@ TEST(CreditCardTest, IconResourceId) {
             CreditCard::IconResourceId(kMasterCard));
   EXPECT_EQ(IDR_AUTOFILL_CC_MIR,
             CreditCard::IconResourceId(kMirCard));
-  EXPECT_EQ(IDR_AUTOFILL_CC_UNIONPAY,
-            CreditCard::IconResourceId(kUnionPay));
   EXPECT_EQ(IDR_AUTOFILL_CC_VISA,
             CreditCard::IconResourceId(kVisaCard));
 }

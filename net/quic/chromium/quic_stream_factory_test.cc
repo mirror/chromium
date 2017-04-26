@@ -157,8 +157,8 @@ std::vector<PoolingTestParams> GetPoolingTestParams() {
 
 class QuicHttpStreamPeer {
  public:
-  static QuicChromiumClientSession* GetSession(HttpStream* stream) {
-    return static_cast<QuicHttpStream*>(stream)->session_.get();
+  static QuicChromiumClientSession* GetSession(QuicHttpStream* stream) {
+    return stream->session_.get();
   }
 };
 
@@ -278,7 +278,9 @@ class QuicStreamFactoryTestBase {
 
     MockQuicData socket_data;
     socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-    socket_data.AddWrite(ConstructInitialSettingsPacket());
+    socket_data.AddWrite(
+        ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                kDefaultMaxUncompressedHeaderSize, nullptr));
     socket_data.AddSocketDataToFactory(&socket_factory_);
 
     QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -289,7 +291,7 @@ class QuicStreamFactoryTestBase {
                               callback_.callback()));
 
     EXPECT_THAT(callback_.WaitForResult(), IsOk());
-    std::unique_ptr<HttpStream> stream = request.CreateStream();
+    std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
     EXPECT_TRUE(stream.get());
     stream.reset();
 
@@ -390,14 +392,13 @@ class QuicStreamFactoryTestBase {
         std::move(headers), &spdy_headers_frame_len);
   }
 
-  std::unique_ptr<QuicReceivedPacket> ConstructInitialSettingsPacket() {
-    return client_maker_.MakeInitialSettingsPacket(1, nullptr);
-  }
-
-  std::unique_ptr<QuicReceivedPacket> ConstructInitialSettingsPacket(
+  std::unique_ptr<QuicReceivedPacket> ConstructSettingsPacket(
       QuicPacketNumber packet_number,
+      SpdySettingsIds id,
+      size_t value,
       QuicStreamOffset* offset) {
-    return client_maker_.MakeInitialSettingsPacket(packet_number, offset);
+    return client_maker_.MakeSettingsPacket(packet_number, id, value,
+                                            kIncludeVersion, offset);
   }
 
   // Helper method for server migration tests.
@@ -418,7 +419,9 @@ class QuicStreamFactoryTestBase {
     // migration.
     MockQuicData socket_data2;
     socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-    socket_data2.AddWrite(ConstructInitialSettingsPacket());
+    socket_data2.AddWrite(
+        ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                kDefaultMaxUncompressedHeaderSize, nullptr));
     socket_data2.AddWrite(
         client_maker_.MakePingPacket(2, /*include_version=*/true));
     socket_data2.AddWrite(client_maker_.MakeRstPacket(
@@ -437,7 +440,7 @@ class QuicStreamFactoryTestBase {
     // posted by QuicChromiumClientSession::MigrateToSocket().
     base::RunLoop().RunUntilIdle();
 
-    std::unique_ptr<HttpStream> stream = request.CreateStream();
+    std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
     EXPECT_TRUE(stream.get());
 
     // Cause QUIC stream to be created.
@@ -756,7 +759,9 @@ TEST_P(QuicStreamFactoryTest, Create) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -766,7 +771,7 @@ TEST_P(QuicStreamFactoryTest, Create) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -811,7 +816,7 @@ TEST_P(QuicStreamFactoryTest, CreateZeroRtt) {
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 callback_.callback()));
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -837,7 +842,7 @@ TEST_P(QuicStreamFactoryTest, CreateZeroRttPost) {
                                 /*cert_verify_flags=*/0, url_, "POST", net_log_,
                                 callback_.callback()));
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -850,7 +855,9 @@ TEST_P(QuicStreamFactoryTest, DefaultInitialRtt) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -860,7 +867,7 @@ TEST_P(QuicStreamFactoryTest, DefaultInitialRtt) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
@@ -881,7 +888,9 @@ TEST_P(QuicStreamFactoryTest, CachedInitialRtt) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -891,7 +900,7 @@ TEST_P(QuicStreamFactoryTest, CachedInitialRtt) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
@@ -912,7 +921,9 @@ TEST_P(QuicStreamFactoryTest, 2gInitialRtt) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -922,7 +933,7 @@ TEST_P(QuicStreamFactoryTest, 2gInitialRtt) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
@@ -943,7 +954,9 @@ TEST_P(QuicStreamFactoryTest, 3gInitialRtt) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -953,7 +966,7 @@ TEST_P(QuicStreamFactoryTest, 3gInitialRtt) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
@@ -969,7 +982,9 @@ TEST_P(QuicStreamFactoryTest, GoAway) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -979,7 +994,7 @@ TEST_P(QuicStreamFactoryTest, GoAway) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
@@ -999,7 +1014,9 @@ TEST_P(QuicStreamFactoryTest, GoAwayForConnectionMigrationWithPortOnly) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -1009,7 +1026,7 @@ TEST_P(QuicStreamFactoryTest, GoAwayForConnectionMigrationWithPortOnly) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
@@ -1038,7 +1055,9 @@ TEST_P(QuicStreamFactoryTest, Pooling) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   HostPortPair server2(kServer2HostName, kDefaultServerPort);
@@ -1051,7 +1070,7 @@ TEST_P(QuicStreamFactoryTest, Pooling) {
   EXPECT_EQ(OK, request.Request(host_port_pair_, privacy_mode_,
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 callback_.callback()));
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   TestCompletionCallback callback;
@@ -1059,7 +1078,7 @@ TEST_P(QuicStreamFactoryTest, Pooling) {
   EXPECT_EQ(OK, request2.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_EQ(GetActiveSession(host_port_pair_), GetActiveSession(server2));
@@ -1089,7 +1108,9 @@ TEST_P(QuicStreamFactoryTest, PoolingWithServerMigration) {
 
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
   std::unique_ptr<QuicEncryptedPacket> settings_packet(
-      client_maker_.MakeInitialSettingsPacket(1, nullptr));
+      client_maker_.MakeSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                       kDefaultMaxUncompressedHeaderSize, true,
+                                       nullptr));
   MockWrite writes[] = {MockWrite(SYNCHRONOUS, settings_packet->data(),
                                   settings_packet->length(), 1)};
 
@@ -1110,7 +1131,7 @@ TEST_P(QuicStreamFactoryTest, PoolingWithServerMigration) {
                              /*cert_verify_flags=*/0, url2_, "GET", net_log_,
                              callback.callback()));
   EXPECT_EQ(OK, callback.WaitForResult());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
@@ -1126,11 +1147,15 @@ TEST_P(QuicStreamFactoryTest, NoPoolingAfterGoAway) {
 
   MockQuicData socket_data1;
   socket_data1.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data1.AddWrite(ConstructInitialSettingsPacket());
+  socket_data1.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data1.AddSocketDataToFactory(&socket_factory_);
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   HostPortPair server2(kServer2HostName, kDefaultServerPort);
@@ -1143,7 +1168,7 @@ TEST_P(QuicStreamFactoryTest, NoPoolingAfterGoAway) {
   EXPECT_EQ(OK, request.Request(host_port_pair_, privacy_mode_,
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 callback_.callback()));
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   TestCompletionCallback callback;
@@ -1151,7 +1176,7 @@ TEST_P(QuicStreamFactoryTest, NoPoolingAfterGoAway) {
   EXPECT_EQ(OK, request2.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   factory_->OnSessionGoingAway(GetActiveSession(host_port_pair_));
@@ -1163,7 +1188,7 @@ TEST_P(QuicStreamFactoryTest, NoPoolingAfterGoAway) {
   EXPECT_EQ(OK, request3.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback3.callback()));
-  std::unique_ptr<HttpStream> stream3 = request3.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream3 = request3.CreateStream();
   EXPECT_TRUE(stream3.get());
 
   EXPECT_TRUE(HasActiveSession(server2));
@@ -1179,7 +1204,9 @@ TEST_P(QuicStreamFactoryTest, HttpsPooling) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   HostPortPair server1(kDefaultServerHostName, 443);
@@ -1196,7 +1223,7 @@ TEST_P(QuicStreamFactoryTest, HttpsPooling) {
   EXPECT_EQ(OK, request.Request(server1, privacy_mode_,
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 callback_.callback()));
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   TestCompletionCallback callback;
@@ -1204,7 +1231,7 @@ TEST_P(QuicStreamFactoryTest, HttpsPooling) {
   EXPECT_EQ(OK, request2.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback_.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_EQ(GetActiveSession(server1), GetActiveSession(server2));
@@ -1217,7 +1244,9 @@ TEST_P(QuicStreamFactoryTest, HttpsPoolingWithMatchingPins) {
   Initialize();
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   HostPortPair server1(kDefaultServerHostName, 443);
@@ -1240,7 +1269,7 @@ TEST_P(QuicStreamFactoryTest, HttpsPoolingWithMatchingPins) {
   EXPECT_EQ(OK, request.Request(server1, privacy_mode_,
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 callback_.callback()));
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   TestCompletionCallback callback;
@@ -1248,7 +1277,7 @@ TEST_P(QuicStreamFactoryTest, HttpsPoolingWithMatchingPins) {
   EXPECT_EQ(OK, request2.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback_.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_EQ(GetActiveSession(server1), GetActiveSession(server2));
@@ -1262,11 +1291,15 @@ TEST_P(QuicStreamFactoryTest, NoHttpsPoolingWithDifferentPins) {
 
   MockQuicData socket_data1;
   socket_data1.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data1.AddWrite(ConstructInitialSettingsPacket());
+  socket_data1.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data1.AddSocketDataToFactory(&socket_factory_);
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   HostPortPair server1(kDefaultServerHostName, 443);
@@ -1295,7 +1328,7 @@ TEST_P(QuicStreamFactoryTest, NoHttpsPoolingWithDifferentPins) {
   EXPECT_EQ(OK, request.Request(server1, privacy_mode_,
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 callback_.callback()));
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   TestCompletionCallback callback;
@@ -1303,7 +1336,7 @@ TEST_P(QuicStreamFactoryTest, NoHttpsPoolingWithDifferentPins) {
   EXPECT_EQ(OK, request2.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback_.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_NE(GetActiveSession(server1), GetActiveSession(server2));
@@ -1322,11 +1355,15 @@ TEST_P(QuicStreamFactoryTest, Goaway) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -1336,7 +1373,7 @@ TEST_P(QuicStreamFactoryTest, Goaway) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Mark the session as going away.  Ensure that while it is still alive
@@ -1355,7 +1392,7 @@ TEST_P(QuicStreamFactoryTest, Goaway) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -1379,7 +1416,9 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
 
   QuicStreamId stream_id = kClientDataStreamId1;
   MockQuicData socket_data;
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(
       client_maker_.MakeRstPacket(2, true, stream_id, QUIC_STREAM_CANCELLED));
   socket_data.AddRead(
@@ -1388,7 +1427,7 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   HttpRequestInfo request_info;
-  std::vector<std::unique_ptr<HttpStream>> streams;
+  std::vector<std::unique_ptr<QuicHttpStream>> streams;
   // The MockCryptoClientStream sets max_open_streams to be
   // kDefaultMaxStreamsPerConnection / 2.
   for (size_t i = 0; i < kDefaultMaxStreamsPerConnection / 2; i++) {
@@ -1402,7 +1441,7 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
     } else {
       EXPECT_THAT(rv, IsOk());
     }
-    std::unique_ptr<HttpStream> stream = request.CreateStream();
+    std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
     EXPECT_TRUE(stream);
     EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
                                            net_log_, CompletionCallback()));
@@ -1413,7 +1452,7 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
   EXPECT_EQ(OK, request.Request(host_port_pair_, privacy_mode_,
                                 /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                 CompletionCallback()));
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream);
   EXPECT_EQ(ERR_IO_PENDING,
             stream->InitializeStream(&request_info, DEFAULT_PRIORITY, net_log_,
@@ -1478,7 +1517,9 @@ TEST_P(QuicStreamFactoryTest, CancelCreate) {
   Initialize();
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
   {
     QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -1494,7 +1535,7 @@ TEST_P(QuicStreamFactoryTest, CancelCreate) {
   EXPECT_EQ(OK, request2.Request(host_port_pair_, privacy_mode_,
                                  /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                  callback_.callback()));
-  std::unique_ptr<HttpStream> stream = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request2.CreateStream();
 
   EXPECT_TRUE(stream.get());
   stream.reset();
@@ -1511,13 +1552,17 @@ TEST_P(QuicStreamFactoryTest, CloseAllSessions) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(ConstructClientRstPacket(2));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -1527,7 +1572,7 @@ TEST_P(QuicStreamFactoryTest, CloseAllSessions) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   HttpRequestInfo request_info;
   EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
@@ -1590,7 +1635,9 @@ TEST_P(QuicStreamFactoryTest,
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -1611,7 +1658,7 @@ TEST_P(QuicStreamFactoryTest,
   EXPECT_FALSE(HasActiveJob(host_port_pair_, privacy_mode_));
 
   // Create QuicHttpStream.
-  std::unique_ptr<HttpStream> stream = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request2.CreateStream();
   EXPECT_TRUE(stream.get());
   stream.reset();
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
@@ -1652,7 +1699,9 @@ TEST_P(QuicStreamFactoryTest, WriteErrorInCryptoConnectWithSyncHostResolution) {
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -1671,7 +1720,7 @@ TEST_P(QuicStreamFactoryTest, WriteErrorInCryptoConnectWithSyncHostResolution) {
   EXPECT_FALSE(HasActiveJob(host_port_pair_, privacy_mode_));
 
   // Create QuicHttpStream.
-  std::unique_ptr<HttpStream> stream = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request2.CreateStream();
   EXPECT_TRUE(stream.get());
   stream.reset();
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
@@ -1689,13 +1738,17 @@ TEST_P(QuicStreamFactoryTest, OnIPAddressChanged) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(ConstructClientRstPacket(2));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -1705,7 +1758,7 @@ TEST_P(QuicStreamFactoryTest, OnIPAddressChanged) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   HttpRequestInfo request_info;
   EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
@@ -1754,8 +1807,9 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(packet_number++, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      packet_number++, SETTINGS_MAX_HEADER_LIST_SIZE,
+      kDefaultMaxUncompressedHeaderSize, &header_stream_offset));
   socket_data.AddWrite(ConstructGetRequestPacket(packet_number++,
                                                  kClientDataStreamId1, true,
                                                  true, &header_stream_offset));
@@ -1772,7 +1826,7 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -1830,7 +1884,9 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
   // new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -1839,7 +1895,7 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -1884,8 +1940,9 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(packet_number++, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      packet_number++, SETTINGS_MAX_HEADER_LIST_SIZE,
+      kDefaultMaxUncompressedHeaderSize, &header_stream_offset));
   socket_data.AddWrite(ConstructGetRequestPacket(packet_number++,
                                                  kClientDataStreamId1, true,
                                                  true, &header_stream_offset));
@@ -1902,7 +1959,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -1955,7 +2012,9 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
   // new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -1964,7 +2023,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -2002,7 +2061,9 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnectedWithNetworkList(
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   // Create request and QuicHttpStream.
@@ -2012,7 +2073,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnectedWithNetworkList(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2058,7 +2119,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNonMigratableStream) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2070,7 +2133,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNonMigratableStream) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created, but marked as non-migratable.
@@ -2107,7 +2170,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultConnectionMigrationDisabled) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2119,7 +2184,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultConnectionMigrationDisabled) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2159,7 +2224,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNonMigratableStream) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_RST_ACKNOWLEDGEMENT));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2171,7 +2238,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNonMigratableStream) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created, but marked as non-migratable.
@@ -2207,7 +2274,9 @@ TEST_P(QuicStreamFactoryTest,
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_RST_ACKNOWLEDGEMENT));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2219,7 +2288,7 @@ TEST_P(QuicStreamFactoryTest,
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2257,7 +2326,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNoOpenStreams) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   // Create request and QuicHttpStream.
@@ -2267,7 +2338,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNoOpenStreams) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Ensure that session is alive and active.
@@ -2295,7 +2366,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNoOpenStreams) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   // Create request and QuicHttpStream.
@@ -2305,7 +2378,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNoOpenStreams) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Ensure that session is alive and active.
@@ -2334,8 +2407,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(ConstructGetRequestPacket(2, kClientDataStreamId1, true,
                                                  true, &header_stream_offset));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2347,7 +2421,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2414,7 +2488,9 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
   // Create a new request and verify that a new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
   EXPECT_EQ(ERR_IO_PENDING,
@@ -2422,7 +2498,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -2444,12 +2520,16 @@ TEST_P(QuicStreamFactoryTest,
 
   MockQuicData socket_data1;
   socket_data1.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data1.AddWrite(ConstructInitialSettingsPacket());
+  socket_data1.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data1.AddWrite(ASYNC, OK);
   socket_data1.AddSocketDataToFactory(&socket_factory_);
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddWrite(ASYNC, OK);
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
@@ -2469,7 +2549,7 @@ TEST_P(QuicStreamFactoryTest,
   EXPECT_EQ(OK, request1.Request(server1, privacy_mode_,
                                  /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                  callback_.callback()));
-  std::unique_ptr<HttpStream> stream1 = request1.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream1 = request1.CreateStream();
   EXPECT_TRUE(stream1.get());
 
   // Create request and QuicHttpStream to create session2.
@@ -2477,7 +2557,7 @@ TEST_P(QuicStreamFactoryTest,
   EXPECT_EQ(OK, request2.Request(server2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2_, "GET",
                                  net_log_, callback_.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   QuicChromiumClientSession* session1 = GetActiveSession(server1);
@@ -2550,8 +2630,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(ConstructGetRequestPacket(2, kClientDataStreamId1, true,
                                                  true, &header_stream_offset));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2563,7 +2644,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2617,7 +2698,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
   // new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -2626,7 +2709,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -2674,8 +2757,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(ConstructGetRequestPacket(2, kClientDataStreamId1, true,
                                                  true, &header_stream_offset));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2687,7 +2771,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2743,7 +2827,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
   // new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -2752,7 +2838,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -2793,7 +2879,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNoNewNetwork) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2805,7 +2893,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNoNewNetwork) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2845,7 +2933,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNonMigratableStream) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2857,7 +2947,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNonMigratableStream) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created, but marked as non-migratable.
@@ -2897,7 +2987,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyConnectionMigrationDisabled) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -2909,7 +3001,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyConnectionMigrationDisabled) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -2955,8 +3047,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteError(
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(write_error_mode, ERR_ADDRESS_UNREACHABLE);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -2967,7 +3060,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteError(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3044,7 +3137,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNoNewNetwork(
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(write_error_mode, ERR_ADDRESS_UNREACHABLE);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3055,7 +3150,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNoNewNetwork(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3133,7 +3228,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNonMigratableStream(
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(write_error_mode, ERR_ADDRESS_UNREACHABLE);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3144,7 +3241,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNonMigratableStream(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created, but marked as non-migratable.
@@ -3197,7 +3294,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorMigrationDisabled(
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(write_error_mode, ERR_ADDRESS_UNREACHABLE);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3208,7 +3307,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorMigrationDisabled(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3271,7 +3370,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnMultipleWriteErrors(
     if (i < kMaxReadersPerQuicSession) {
       socket_data[i].AddRead(SYNCHRONOUS, ERR_IO_PENDING);
       if (i == 0) {
-        socket_data[i].AddWrite(ConstructInitialSettingsPacket(1, nullptr));
+        socket_data[i].AddWrite(ConstructSettingsPacket(
+            1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+            nullptr));
       }
       socket_data[i].AddWrite(
           (i % 2 == 0) ? first_write_error_mode : second_write_error_mode,
@@ -3287,7 +3388,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnMultipleWriteErrors(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3355,8 +3456,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorWithNotificationQueued(
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(SYNCHRONOUS, ERR_ADDRESS_UNREACHABLE);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3367,7 +3469,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorWithNotificationQueued(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3452,8 +3554,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnNotificationWithWriteErrorQueued(
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(SYNCHRONOUS, ERR_ADDRESS_UNREACHABLE);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3464,7 +3567,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnNotificationWithWriteErrorQueued(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3550,8 +3653,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(SYNCHRONOUS, ERR_FAILED);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3562,7 +3666,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3633,7 +3737,9 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
   // new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -3642,7 +3748,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -3682,8 +3788,9 @@ void QuicStreamFactoryTestBase::
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(SYNCHRONOUS, ERR_FAILED);
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
@@ -3694,7 +3801,7 @@ void QuicStreamFactoryTestBase::
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3773,7 +3880,9 @@ void QuicStreamFactoryTestBase::
   // new session is created.
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request2(factory_.get(), &http_server_properties_);
@@ -3782,7 +3891,7 @@ void QuicStreamFactoryTestBase::
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
@@ -3834,8 +3943,9 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyToBadSocket) {
   MockQuicData socket_data;
   QuicStreamOffset header_stream_offset = 0;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data.AddWrite(ConstructGetRequestPacket(2, kClientDataStreamId1, true,
                                                  true, &header_stream_offset));
   socket_data.AddSocketDataToFactory(&socket_factory_);
@@ -3847,7 +3957,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyToBadSocket) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -3897,8 +4007,9 @@ TEST_P(QuicStreamFactoryTest, ServerMigration) {
   MockQuicData socket_data1;
   QuicStreamOffset header_stream_offset = 0;
   socket_data1.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data1.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
+  socket_data1.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
   socket_data1.AddWrite(ConstructGetRequestPacket(2, kClientDataStreamId1, true,
                                                   true, &header_stream_offset));
   socket_data1.AddSocketDataToFactory(&socket_factory_);
@@ -3910,7 +4021,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigration) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -4039,7 +4150,9 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv4ToIPv6Fails) {
   // Set up only socket data provider.
   MockQuicData socket_data1;
   socket_data1.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data1.AddWrite(ConstructInitialSettingsPacket());
+  socket_data1.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data1.AddWrite(client_maker_.MakeRstPacket(
       2, true, kClientDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data1.AddSocketDataToFactory(&socket_factory_);
@@ -4051,7 +4164,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv4ToIPv6Fails) {
                             /*cert_verify_flags=*/0, url_, "GET", net_log_,
                             callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Cause QUIC stream to be created.
@@ -4090,13 +4203,17 @@ TEST_P(QuicStreamFactoryTest, OnSSLConfigChanged) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(ConstructClientRstPacket(2));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket(1, nullptr));
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -4106,7 +4223,7 @@ TEST_P(QuicStreamFactoryTest, OnSSLConfigChanged) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   HttpRequestInfo request_info;
   EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
@@ -4143,13 +4260,17 @@ TEST_P(QuicStreamFactoryTest, OnCertDBChanged) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddWrite(ConstructClientRstPacket(2));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket(1, nullptr));
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -4159,7 +4280,7 @@ TEST_P(QuicStreamFactoryTest, OnCertDBChanged) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   HttpRequestInfo request_info;
   EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
@@ -4287,7 +4408,7 @@ TEST_P(QuicStreamFactoryTest, EnableNotLoadFromDiskCache) {
   // the CancelWaitForDataReady task hasn't been posted.
   ASSERT_EQ(0u, runner_->GetPostedTasks().size());
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -4304,12 +4425,16 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket(1, nullptr));
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   HostPortPair server2(kServer2HostName, kDefaultServerPort);
@@ -4334,7 +4459,7 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
   EXPECT_EQ(QuicTime::Delta::FromSeconds(kPingTimeoutSecs),
             session->connection()->ping_timeout());
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
   HttpRequestInfo request_info;
   EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
@@ -4365,7 +4490,7 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
   EXPECT_EQ(QuicTime::Delta::FromSeconds(10),
             session2->connection()->ping_timeout());
 
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
   EXPECT_EQ(OK, stream2->InitializeStream(&request_info, DEFAULT_PRIORITY,
                                           net_log_, CompletionCallback()));
@@ -4399,7 +4524,9 @@ TEST_P(QuicStreamFactoryTest, StartCertVerifyJob) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   // Save current state of |race_cert_verification|.
@@ -4437,7 +4564,7 @@ TEST_P(QuicStreamFactoryTest, StartCertVerifyJob) {
 
   EXPECT_EQ(OK, callback_.WaitForResult());
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   // Restore |race_cert_verification|.
@@ -4490,7 +4617,7 @@ TEST_P(QuicStreamFactoryTest, YieldAfterPackets) {
   // yielded the read.
   EXPECT_EQ(1u, observer.executed_count());
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_FALSE(stream.get());  // Session is already closed.
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -4535,7 +4662,7 @@ TEST_P(QuicStreamFactoryTest, YieldAfterDuration) {
   // yielded the read.
   EXPECT_EQ(1u, observer.executed_count());
 
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_FALSE(stream.get());  // Session is already closed.
   EXPECT_TRUE(socket_data.AllReadDataConsumed());
   EXPECT_TRUE(socket_data.AllWriteDataConsumed());
@@ -4548,7 +4675,9 @@ TEST_P(QuicStreamFactoryTest, ServerPushSessionAffinity) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -4558,7 +4687,7 @@ TEST_P(QuicStreamFactoryTest, ServerPushSessionAffinity) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   EXPECT_EQ(0, QuicStreamFactoryPeer::GetNumPushStreamsCreated(factory_.get()));
@@ -4587,14 +4716,18 @@ TEST_P(QuicStreamFactoryTest, ServerPushPrivacyModeMismatch) {
 
   MockQuicData socket_data1;
   socket_data1.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data1.AddWrite(ConstructInitialSettingsPacket());
+  socket_data1.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data1.AddWrite(client_maker_.MakeRstPacket(
       2, true, kServerDataStreamId1, QUIC_STREAM_CANCELLED));
   socket_data1.AddSocketDataToFactory(&socket_factory_);
 
   MockQuicData socket_data2;
   socket_data2.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data2.AddWrite(ConstructInitialSettingsPacket());
+  socket_data2.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data2.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -4604,7 +4737,7 @@ TEST_P(QuicStreamFactoryTest, ServerPushPrivacyModeMismatch) {
                             callback_.callback()));
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
   EXPECT_EQ(0, QuicStreamFactoryPeer::GetNumPushStreamsCreated(factory_.get()));
@@ -4632,7 +4765,7 @@ TEST_P(QuicStreamFactoryTest, ServerPushPrivacyModeMismatch) {
   EXPECT_EQ(index->GetPromised(kDefaultUrl), nullptr);
 
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   EXPECT_TRUE(socket_data1.AllReadDataConsumed());
@@ -4654,7 +4787,9 @@ TEST_P(QuicStreamFactoryTest, PoolByOrigin) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request1(factory_.get(), &http_server_properties_);
@@ -4663,7 +4798,7 @@ TEST_P(QuicStreamFactoryTest, PoolByOrigin) {
                              /*cert_verify_flags=*/0, url_, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream1 = request1.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream1 = request1.CreateStream();
   EXPECT_TRUE(stream1.get());
   EXPECT_TRUE(HasActiveSession(host_port_pair_));
 
@@ -4673,7 +4808,7 @@ TEST_P(QuicStreamFactoryTest, PoolByOrigin) {
   EXPECT_EQ(OK, request2.Request(destination2, privacy_mode_,
                                  /*cert_verify_flags=*/0, url_, "GET", net_log_,
                                  callback2.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   QuicChromiumClientSession* session1 =
@@ -4697,7 +4832,9 @@ TEST_P(QuicStreamFactoryTest, ForceHolBlockingEnabled) {
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
-  socket_data.AddWrite(ConstructInitialSettingsPacket());
+  socket_data.AddWrite(
+      ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                              kDefaultMaxUncompressedHeaderSize, nullptr));
   socket_data.AddSocketDataToFactory(&socket_factory_);
 
   QuicStreamRequest request(factory_.get(), &http_server_properties_);
@@ -4831,7 +4968,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, SharedCertificate) {
 
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
   std::unique_ptr<QuicEncryptedPacket> settings_packet(
-      client_maker_.MakeInitialSettingsPacket(1, nullptr));
+      client_maker_.MakeSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                       kDefaultMaxUncompressedHeaderSize, true,
+                                       nullptr));
   MockWrite writes[] = {MockWrite(SYNCHRONOUS, settings_packet->data(),
                                   settings_packet->length(), 1)};
   std::unique_ptr<SequencedSocketData> sequenced_socket_data(
@@ -4846,7 +4985,7 @@ TEST_P(QuicStreamFactoryWithDestinationTest, SharedCertificate) {
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
 
-  std::unique_ptr<HttpStream> stream1 = request1.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream1 = request1.CreateStream();
   EXPECT_TRUE(stream1.get());
   EXPECT_TRUE(HasActiveSession(origin1_));
 
@@ -4856,7 +4995,7 @@ TEST_P(QuicStreamFactoryWithDestinationTest, SharedCertificate) {
   EXPECT_EQ(OK, request2.Request(destination, privacy_mode_,
                                  /*cert_verify_flags=*/0, url2, "GET", net_log_,
                                  callback2.callback()));
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   QuicChromiumClientSession* session1 =
@@ -4899,7 +5038,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DifferentPrivacyMode) {
 
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
   std::unique_ptr<QuicEncryptedPacket> settings_packet(
-      client_maker_.MakeInitialSettingsPacket(1, nullptr));
+      client_maker_.MakeSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                       kDefaultMaxUncompressedHeaderSize, true,
+                                       nullptr));
   MockWrite writes[] = {MockWrite(SYNCHRONOUS, settings_packet->data(),
                                   settings_packet->length(), 1)};
   std::unique_ptr<SequencedSocketData> sequenced_socket_data(
@@ -4917,7 +5058,7 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DifferentPrivacyMode) {
                              /*cert_verify_flags=*/0, url1, "GET", net_log_,
                              callback_.callback()));
   EXPECT_EQ(OK, callback_.WaitForResult());
-  std::unique_ptr<HttpStream> stream1 = request1.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream1 = request1.CreateStream();
   EXPECT_TRUE(stream1.get());
   EXPECT_TRUE(HasActiveSession(origin1_));
 
@@ -4928,7 +5069,7 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DifferentPrivacyMode) {
                              /*cert_verify_flags=*/0, url2, "GET", net_log_,
                              callback2.callback()));
   EXPECT_EQ(OK, callback2.WaitForResult());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   // |request2| does not pool to the first session, because PrivacyMode does not
@@ -4982,7 +5123,9 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
 
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
   std::unique_ptr<QuicEncryptedPacket> settings_packet(
-      client_maker_.MakeInitialSettingsPacket(1, nullptr));
+      client_maker_.MakeSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                       kDefaultMaxUncompressedHeaderSize, true,
+                                       nullptr));
   MockWrite writes[] = {MockWrite(SYNCHRONOUS, settings_packet->data(),
                                   settings_packet->length(), 1)};
   std::unique_ptr<SequencedSocketData> sequenced_socket_data(
@@ -5000,7 +5143,7 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
                              /*cert_verify_flags=*/0, url1, "GET", net_log_,
                              callback_.callback()));
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream1 = request1.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream1 = request1.CreateStream();
   EXPECT_TRUE(stream1.get());
   EXPECT_TRUE(HasActiveSession(origin1_));
 
@@ -5011,7 +5154,7 @@ TEST_P(QuicStreamFactoryWithDestinationTest, DisjointCertificate) {
                              /*cert_verify_flags=*/0, url2, "GET", net_log_,
                              callback2.callback()));
   EXPECT_THAT(callback2.WaitForResult(), IsOk());
-  std::unique_ptr<HttpStream> stream2 = request2.CreateStream();
+  std::unique_ptr<QuicHttpStream> stream2 = request2.CreateStream();
   EXPECT_TRUE(stream2.get());
 
   // |request2| does not pool to the first session, because the certificate does

@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +17,6 @@ import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.BasicNativePage;
@@ -58,6 +59,8 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     private RecyclerView mRecyclerView;
     private BookmarkItemsAdapter mAdapter;
     private BookmarkActionBar mToolbar;
+    private DrawerLayout mDrawer;
+    private BookmarkDrawerListView mDrawerListView;
     private SelectionDelegate<BookmarkId> mSelectionDelegate;
     private final Stack<BookmarkUIState> mStateStack = new Stack<>();
     private LargeIconBridge mLargeIconBridge;
@@ -103,6 +106,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     private final Runnable mModelLoadedRunnable = new Runnable() {
         @Override
         public void run() {
+            mDrawerListView.onBookmarkDelegateInitialized(BookmarkManager.this);
             mAdapter.onBookmarkDelegateInitialized(BookmarkManager.this);
             mToolbar.onBookmarkDelegateInitialized(BookmarkManager.this);
             if (!TextUtils.isEmpty(mInitialUrl)) {
@@ -133,6 +137,9 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
 
         mBookmarkModel = new BookmarkModel();
         mMainView = (ViewGroup) mActivity.getLayoutInflater().inflate(R.layout.bookmark_main, null);
+        mDrawer = (DrawerLayout) mMainView.findViewById(R.id.bookmark_drawer_layout);
+        mDrawerListView = (BookmarkDrawerListView) mMainView.findViewById(
+                R.id.bookmark_drawer_list);
 
         @SuppressWarnings("unchecked")
         SelectableListLayout<BookmarkId> selectableList =
@@ -148,8 +155,8 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
         mRecyclerView = mSelectableListLayout.initializeRecyclerView(mAdapter);
 
         mToolbar = (BookmarkActionBar) mSelectableListLayout.initializeToolbar(
-                R.layout.bookmark_action_bar, mSelectionDelegate, 0, null, R.id.normal_menu_group,
-                R.id.selection_mode_menu_group, R.color.default_primary_color, false, null);
+                R.layout.bookmark_action_bar, mSelectionDelegate, 0, mDrawer,
+                R.id.normal_menu_group, R.id.selection_mode_menu_group, null, true, null);
         mToolbar.initializeSearchView(
                 this, R.string.bookmark_action_bar_search, R.id.search_menu_id);
 
@@ -207,6 +214,13 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
      * @return True if manager handles this event, false if it decides to ignore.
      */
     public boolean onBackPressed() {
+        if (doesDrawerExist()) {
+            if (mDrawer.isDrawerVisible(GravityCompat.START)) {
+                mDrawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        }
+
         // TODO(twellington): replicate this behavior for other list UIs during unification.
         if (mSelectionDelegate.isSelectionEnabled()) {
             mSelectionDelegate.clearSelection();
@@ -282,6 +296,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
      */
     private void initializeToLoadingState() {
         mToolbar.showLoadingUi();
+        mDrawerListView.showLoadingUi();
         assert mStateStack.isEmpty();
         setState(BookmarkUIState.createLoadingState());
     }
@@ -373,6 +388,23 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     }
 
     @Override
+    public boolean doesDrawerExist() {
+        return mDrawer != null;
+    }
+
+    @Override
+    public void closeDrawer() {
+        if (!doesDrawerExist()) return;
+
+        mDrawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public DrawerLayout getDrawerLayout() {
+        return mDrawer;
+    }
+
+    @Override
     public void openBookmark(BookmarkId bookmark, int launchLocation) {
         mSelectionDelegate.clearSelection();
         if (BookmarkUtils.openBookmark(
@@ -437,12 +469,5 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     @Override
     public void onEndSearch() {
         closeSearchUI();
-    }
-
-    // Testing methods
-
-    @VisibleForTesting
-    public BookmarkActionBar getToolbarForTests() {
-        return mToolbar;
     }
 }

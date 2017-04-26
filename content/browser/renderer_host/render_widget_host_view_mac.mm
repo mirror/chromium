@@ -542,24 +542,24 @@ cc::SurfaceId RenderWidgetHostViewMac::SurfaceIdForTesting() const {
 ui::TextInputType RenderWidgetHostViewMac::GetTextInputType() {
   if (!GetActiveWidget())
     return ui::TEXT_INPUT_TYPE_NONE;
-  return text_input_manager_->GetTextInputState()->type;
+  return GetTextInputManager()->GetTextInputState()->type;
 }
 
 RenderWidgetHostImpl* RenderWidgetHostViewMac::GetActiveWidget() {
-  return text_input_manager_ ? text_input_manager_->GetActiveWidget() : nullptr;
+  return GetTextInputManager() ? GetTextInputManager()->GetActiveWidget()
+                               : nullptr;
 }
 
 const TextInputManager::CompositionRangeInfo*
 RenderWidgetHostViewMac::GetCompositionRangeInfo() {
-  return text_input_manager_ ? text_input_manager_->GetCompositionRangeInfo()
-                             : nullptr;
+  return GetTextInputManager() ? text_input_manager_->GetCompositionRangeInfo()
+                               : nullptr;
 }
 
 const TextInputManager::TextSelection*
 RenderWidgetHostViewMac::GetTextSelection() {
-  return text_input_manager_ ? text_input_manager_->GetTextSelection(
-                                   GetFocusedViewForTextSelection())
-                             : nullptr;
+  return text_input_manager_->GetTextSelection(
+      GetFocusedViewForTextSelection());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2421,32 +2421,41 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
       NSPerformService(@"Look Up in Dictionary", pasteboard->get());
     return;
   }
-  NSPoint flippedBaselinePoint = {
-      baselinePoint.x, [view frame].size.height - baselinePoint.y,
-  };
-  [view showDefinitionForAttributedString:string atPoint:flippedBaselinePoint];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    NSPoint flippedBaselinePoint = {
+        baselinePoint.x, [view frame].size.height - baselinePoint.y,
+    };
+    [view showDefinitionForAttributedString:string
+                                    atPoint:flippedBaselinePoint];
+  });
 }
 
 - (void)showLookUpDictionaryOverlayFromRange:(NSRange)range
                                   targetView:(NSView*)targetView {
-  content::RenderWidgetHostViewBase* focusedView =
-      renderWidgetHostView_->GetFocusedViewForTextSelection();
-  if (!focusedView)
+  RenderWidgetHostImpl* widgetHost = renderWidgetHostView_->render_widget_host_;
+  if (!widgetHost || !widgetHost->delegate())
     return;
+  widgetHost = widgetHost->delegate()->GetFocusedRenderWidgetHost(widgetHost);
 
-  RenderWidgetHostImpl* widgetHost =
-      RenderWidgetHostImpl::From(focusedView->GetRenderWidgetHost());
   if (!widgetHost)
     return;
 
+  // TODO(ekaramad): The position reported by the renderer is with respect to
+  // |widgetHost|'s coordinate space with y-axis inverted to conform to AppKit
+  // coordinate system. The point will need to be transformed into root view's
+  // coordinate system (RenderWidgetHostViewMac in this case). However, since
+  // the callback is invoked on IO thread it will require some thread hopping to
+  // do so. For this reason, for now, we accept this non-ideal way of fixing the
+  // point offset manually from the view bounds. This should be revisited when
+  // fixing issues in TextInputClientMac (https://crbug.com/643233).
+  gfx::Rect root_box = renderWidgetHostView_->GetViewBounds();
+  gfx::Rect view_box = widgetHost->GetView()->GetViewBounds();
+
   TextInputClientMac::GetInstance()->GetStringFromRange(
       widgetHost, range, ^(NSAttributedString* string, NSPoint baselinePoint) {
-        if (auto* rwhv = widgetHost->GetView()) {
-          gfx::Point pointInRootView = rwhv->TransformPointToRootCoordSpace(
-              gfx::Point(baselinePoint.x, baselinePoint.y));
-          baselinePoint.x = pointInRootView.x();
-          baselinePoint.y = pointInRootView.y();
-        }
+        baselinePoint.x += view_box.origin().x() - root_box.origin().x();
+        baselinePoint.y +=
+            root_box.bottom_left().y() - view_box.bottom_left().y();
         [self showLookUpDictionaryOverlayInternal:string
                                     baselinePoint:baselinePoint
                                        targetView:targetView];
@@ -2470,15 +2479,23 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   if (!widgetHost)
     return;
 
+  // TODO(ekaramad): The position reported by the renderer is with respect to
+  // |widgetHost|'s coordinate space with y-axis inverted to conform to AppKit
+  // coordinate system. The point will need to be transformed into root view's
+  // coordinate system (RenderWidgetHostViewMac in this case). However, since
+  // the callback is invoked on IO thread it will require some thread hopping to
+  // do so. For this reason, for now, we accept this non-ideal way of fixing the
+  // point offset manually from the view bounds. This should be revisited when
+  // fixing issues in TextInputClientMac (https://crbug.com/643233).
+  gfx::Rect root_box = renderWidgetHostView_->GetViewBounds();
+  gfx::Rect view_box = widgetHost->GetView()->GetViewBounds();
+
   TextInputClientMac::GetInstance()->GetStringAtPoint(
       widgetHost, transformedPoint,
       ^(NSAttributedString* string, NSPoint baselinePoint) {
-        if (auto* rwhv = widgetHost->GetView()) {
-          gfx::Point pointInRootView = rwhv->TransformPointToRootCoordSpace(
-              gfx::Point(baselinePoint.x, baselinePoint.y));
-          baselinePoint.x = pointInRootView.x();
-          baselinePoint.y = pointInRootView.y();
-        }
+        baselinePoint.x += view_box.origin().x() - root_box.origin().x();
+        baselinePoint.y +=
+            root_box.bottom_left().y() - view_box.bottom_left().y();
         [self showLookUpDictionaryOverlayInternal:string
                                     baselinePoint:baselinePoint
                                        targetView:self];

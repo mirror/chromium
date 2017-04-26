@@ -20,9 +20,9 @@
 #include "core/html/imports/HTMLImportsController.h"
 #include "platform/heap/HeapCompact.h"
 #include "platform/heap/HeapPage.h"
-#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/AutoReset.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebScheduler.h"
 
 namespace blink {
 
@@ -91,8 +91,8 @@ void ScriptWrappableVisitor::PerformCleanup() {
   }
 
   headers_to_unmark_.clear();
-  marking_deque_.clear();
-  verifier_deque_.clear();
+  marking_deque_.Clear();
+  verifier_deque_.Clear();
   should_cleanup_ = false;
 }
 
@@ -146,8 +146,8 @@ void ScriptWrappableVisitor::PerformLazyCleanup(double deadline_seconds) {
 
   // Unmarked all headers.
   CHECK(headers_to_unmark_.IsEmpty());
-  marking_deque_.clear();
-  verifier_deque_.clear();
+  marking_deque_.Clear();
+  verifier_deque_.Clear();
   should_cleanup_ = false;
 }
 
@@ -224,7 +224,6 @@ void ScriptWrappableVisitor::MarkWrappersInAllWorlds(
 }
 
 void ScriptWrappableVisitor::WriteBarrier(
-    v8::Isolate* isolate,
     const void* src_object,
     const TraceWrapperV8Reference<v8::Value>* dst_object) {
   if (!src_object || !dst_object || dst_object->IsEmpty()) {
@@ -236,17 +235,18 @@ void ScriptWrappableVisitor::WriteBarrier(
   if (!HeapObjectHeader::FromPayload(src_object)->IsWrapperHeaderMarked()) {
     return;
   }
-  CurrentVisitor(isolate)->MarkWrapper(
-      &(const_cast<TraceWrapperV8Reference<v8::Value>*>(dst_object)->Get()));
+  CurrentVisitor(ThreadState::Current()->GetIsolate())
+      ->MarkWrapper(&(
+          const_cast<TraceWrapperV8Reference<v8::Value>*>(dst_object)->Get()));
 }
 
 void ScriptWrappableVisitor::WriteBarrier(
-    v8::Isolate* isolate,
     const v8::Persistent<v8::Object>* dst_object) {
   if (!dst_object || dst_object->IsEmpty()) {
     return;
   }
-  CurrentVisitor(isolate)->MarkWrapper(&(dst_object->As<v8::Value>()));
+  CurrentVisitor(ThreadState::Current()->GetIsolate())
+      ->MarkWrapper(&(dst_object->As<v8::Value>()));
 }
 
 void ScriptWrappableVisitor::TraceWrappers(

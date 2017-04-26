@@ -17,8 +17,6 @@ namespace switches {
 
 MEDIA_EXPORT extern const char kAudioBufferSize[];
 
-MEDIA_EXPORT extern const char kAutoplayPolicy[];
-
 MEDIA_EXPORT extern const char kVideoThreads[];
 
 MEDIA_EXPORT extern const char kEnableMediaSuspend[];
@@ -77,14 +75,6 @@ MEDIA_EXPORT extern const char kForceVideoOverlays[];
 MEDIA_EXPORT extern const char kMSEAudioBufferSizeLimit[];
 MEDIA_EXPORT extern const char kMSEVideoBufferSizeLimit[];
 
-namespace autoplay {
-
-MEDIA_EXPORT extern const char kCrossOriginUserGestureRequiredPolicy[];
-MEDIA_EXPORT extern const char kNoUserGestureRequiredPolicy[];
-MEDIA_EXPORT extern const char kUserGestureRequiredPolicy[];
-
-}  // namespace autoplay
-
 }  // namespace switches
 
 namespace media {
@@ -92,7 +82,11 @@ namespace media {
 // All features in alphabetical order. The features should be documented
 // alongside the definition of their values in the .cc file.
 
-MEDIA_EXPORT extern const base::Feature kAutoplayPolicy;
+#if defined(OS_WIN)
+MEDIA_EXPORT extern const base::Feature kD3D11VideoDecoding;
+MEDIA_EXPORT extern const base::Feature kMediaFoundationH264Encoding;
+#endif  // defined(OS_WIN)
+
 MEDIA_EXPORT extern const base::Feature kNewAudioRenderingMixingStrategy;
 MEDIA_EXPORT extern const base::Feature kOverlayFullscreenVideo;
 MEDIA_EXPORT extern const base::Feature kResumeBackgroundVideo;
@@ -109,12 +103,6 @@ MEDIA_EXPORT extern const base::Feature kAndroidMediaPlayerRenderer;
 MEDIA_EXPORT extern const base::Feature kVideoFullscreenOrientationLock;
 MEDIA_EXPORT extern const base::Feature kMediaDrmPersistentLicense;
 #endif  // defined(OS_ANDROID)
-
-#if defined(OS_WIN)
-MEDIA_EXPORT extern const base::Feature kD3D11VideoDecoding;
-MEDIA_EXPORT extern const base::Feature kMediaFoundationH264Encoding;
-#endif  // defined(OS_WIN)
-
 }  // namespace media
 
 #endif  // MEDIA_BASE_MEDIA_SWITCHES_H_

@@ -17,7 +17,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #include "media/base/cdm_context.h"
-#include "media/base/cdm_key_information.h"
 #include "media/base/content_decryption_module.h"
 #include "media/base/decryptor.h"
 #include "media/base/media_export.h"
@@ -39,8 +38,7 @@ class MEDIA_EXPORT AesDecryptor : public ContentDecryptionModule,
   AesDecryptor(const GURL& security_origin,
                const SessionMessageCB& session_message_cb,
                const SessionClosedCB& session_closed_cb,
-               const SessionKeysChangeCB& session_keys_change_cb,
-               const SessionExpirationUpdateCB& session_expiration_update_cb);
+               const SessionKeysChangeCB& session_keys_change_cb);
 
   // ContentDecryptionModule implementation.
   void SetServerCertificate(const std::vector<uint8_t>& certificate,
@@ -137,14 +135,10 @@ class MEDIA_EXPORT AesDecryptor : public ContentDecryptionModule,
   // Deletes all keys associated with |session_id|.
   void DeleteKeysForSession(const std::string& session_id);
 
-  CdmKeysInfo GenerateKeysInfoList(const std::string& session_id,
-                                   CdmKeyInformation::KeyStatus status);
-
   // Callbacks for firing session events.
   SessionMessageCB session_message_cb_;
   SessionClosedCB session_closed_cb_;
   SessionKeysChangeCB session_keys_change_cb_;
-  SessionExpirationUpdateCB session_expiration_update_cb_;
 
   // Since only Decrypt() is called off the renderer thread, we only need to
   // protect |key_map_|, the only member variable that is shared between

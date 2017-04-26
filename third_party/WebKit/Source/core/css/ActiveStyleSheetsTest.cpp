@@ -421,7 +421,7 @@ TEST_F(ActiveStyleSheetsTest, CompareActiveStyleSheets_AddRemoveNonMatchingMQ) {
   EXPECT_EQ(0u, changed_rule_sets.size());
 
   CSSStyleSheet* sheet1 = CreateSheet();
-  RefPtr<MediaQuerySet> mq =
+  MediaQuerySet* mq =
       MediaQueryParser::ParseMediaQuerySet("(min-width: 9000px)");
   sheet1->SetMediaQueries(mq);
   sheet1->MatchesMediaQueries(MediaQueryEvaluator());
@@ -456,13 +456,49 @@ TEST_F(ApplyRulesetsTest, AddUniversalRuleToDocument) {
 
 TEST_F(ApplyRulesetsTest, AddUniversalRuleToShadowTree) {
   GetDocument().body()->setInnerHTML("<div id=host></div>");
-  Element* host = GetDocument().getElementById("host");
+  Element* host = GetDocument().GetElementById("host");
   ASSERT_TRUE(host);
 
   ShadowRoot& shadow_root = AttachShadow(*host);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   CSSStyleSheet* sheet = CreateSheet("body * { color:red }");
+
+  ActiveStyleSheetVector new_style_sheets;
+  new_style_sheets.push_back(
+      std::make_pair(sheet, &sheet->Contents()->GetRuleSet()));
+
+  GetStyleEngine().ApplyRuleSetChanges(shadow_root, ActiveStyleSheetVector(),
+                                       new_style_sheets);
+
+  EXPECT_FALSE(GetDocument().NeedsStyleRecalc());
+  EXPECT_EQ(kSubtreeStyleChange, host->GetStyleChangeType());
+}
+
+TEST_F(ApplyRulesetsTest, AddShadowV0BoundaryCrossingRuleToDocument) {
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  CSSStyleSheet* sheet = CreateSheet(".a /deep/ .b { color:red }");
+
+  ActiveStyleSheetVector new_style_sheets;
+  new_style_sheets.push_back(
+      std::make_pair(sheet, &sheet->Contents()->GetRuleSet()));
+
+  GetStyleEngine().ApplyRuleSetChanges(GetDocument(), ActiveStyleSheetVector(),
+                                       new_style_sheets);
+
+  EXPECT_EQ(kSubtreeStyleChange, GetDocument().GetStyleChangeType());
+}
+
+TEST_F(ApplyRulesetsTest, AddShadowV0BoundaryCrossingRuleToShadowTree) {
+  GetDocument().body()->setInnerHTML("<div id=host></div>");
+  Element* host = GetDocument().GetElementById("host");
+  ASSERT_TRUE(host);
+
+  ShadowRoot& shadow_root = AttachShadow(*host);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  CSSStyleSheet* sheet = CreateSheet(".a /deep/ .b { color:red }");
 
   ActiveStyleSheetVector new_style_sheets;
   new_style_sheets.push_back(
@@ -493,7 +529,7 @@ TEST_F(ApplyRulesetsTest, AddFontFaceRuleToDocument) {
 
 TEST_F(ApplyRulesetsTest, AddFontFaceRuleToShadowTree) {
   GetDocument().body()->setInnerHTML("<div id=host></div>");
-  Element* host = GetDocument().getElementById("host");
+  Element* host = GetDocument().GetElementById("host");
   ASSERT_TRUE(host);
 
   ShadowRoot& shadow_root = AttachShadow(*host);
@@ -517,7 +553,7 @@ TEST_F(ApplyRulesetsTest, AddFontFaceRuleToShadowTree) {
 
 TEST_F(ApplyRulesetsTest, RemoveSheetFromShadowTree) {
   GetDocument().body()->setInnerHTML("<div id=host></div>");
-  Element* host = GetDocument().getElementById("host");
+  Element* host = GetDocument().GetElementById("host");
   ASSERT_TRUE(host);
 
   ShadowRoot& shadow_root = AttachShadow(*host);

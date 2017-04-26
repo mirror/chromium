@@ -88,8 +88,7 @@ const CGFloat kBackgroundFrameYInset = 2.0;
 }
 
 - (NSString*)accessibilityLabel {
-  NSString* label = owner_->GetAccessibilityLabel();
-  return label ? label : owner_->GetToolTip();
+  return owner_->GetToolTip();
 }
 
 @end
@@ -163,10 +162,6 @@ NSRect LocationBarDecoration::GetBackgroundFrame(NSRect frame) {
   return NSInsetRect(frame, 0.0, kBackgroundFrameYInset);
 }
 
-void LocationBarDecoration::UpdateAccessibilityView() {
-  [accessibility_view_.get() setEnabled:AcceptsMousePress()];
-}
-
 void LocationBarDecoration::DrawInFrame(NSRect frame, NSView* control_view) {
   NOTREACHED();
 }
@@ -199,10 +194,6 @@ void LocationBarDecoration::DrawWithBackgroundInFrame(NSRect frame,
 }
 
 NSString* LocationBarDecoration::GetToolTip() {
-  return nil;
-}
-
-NSString* LocationBarDecoration::GetAccessibilityLabel() {
   return nil;
 }
 

@@ -75,7 +75,7 @@ bool SearchInputType::NeedsContainer() const {
 void SearchInputType::CreateShadowSubtree() {
   TextFieldInputType::CreateShadowSubtree();
   Element* container = ContainerElement();
-  Element* view_port = GetElement().UserAgentShadowRoot()->getElementById(
+  Element* view_port = GetElement().UserAgentShadowRoot()->GetElementById(
       ShadowElementNames::EditingViewPort());
   DCHECK(container);
   DCHECK(view_port);
@@ -153,7 +153,7 @@ const AtomicString& SearchInputType::DefaultAutocapitalize() const {
 }
 
 void SearchInputType::UpdateCancelButtonVisibility() {
-  Element* button = GetElement().UserAgentShadowRoot()->getElementById(
+  Element* button = GetElement().UserAgentShadowRoot()->GetElementById(
       ShadowElementNames::SearchClearButton());
   if (!button)
     return;

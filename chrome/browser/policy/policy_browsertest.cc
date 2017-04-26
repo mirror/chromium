@@ -342,15 +342,14 @@ class MakeRequestFail {
   // Sets up the filter on IO thread such that requests to |host| fail.
   explicit MakeRequestFail(const std::string& host) : host_(host) {
     BrowserThread::PostTaskAndReply(BrowserThread::IO, FROM_HERE,
-                                    base::BindOnce(MakeRequestFailOnIO, host_),
+                                    base::Bind(MakeRequestFailOnIO, host_),
                                     base::MessageLoop::QuitWhenIdleClosure());
     content::RunMessageLoop();
   }
   ~MakeRequestFail() {
-    BrowserThread::PostTaskAndReply(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(UndoMakeRequestFailOnIO, host_),
-        base::MessageLoop::QuitWhenIdleClosure());
+    BrowserThread::PostTaskAndReply(BrowserThread::IO, FROM_HERE,
+                                    base::Bind(UndoMakeRequestFailOnIO, host_),
+                                    base::MessageLoop::QuitWhenIdleClosure());
     content::RunMessageLoop();
   }
 
@@ -638,7 +637,7 @@ class PolicyTest : public InProcessBrowserTest {
   void SetUpOnMainThread() override {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(chrome_browser_net::SetUrlRequestMocksEnabled, true));
+        base::Bind(chrome_browser_net::SetUrlRequestMocksEnabled, true));
     if (extension_service()->updater()) {
       extension_service()->updater()->SetExtensionCacheForTesting(
           test_extension_cache_.get());
@@ -652,8 +651,8 @@ class PolicyTest : public InProcessBrowserTest {
     PathService::Get(content::DIR_TEST_DATA, &root_http);
     BrowserThread::PostTaskAndReply(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(URLRequestMockHTTPJob::AddUrlHandlers, root_http,
-                       make_scoped_refptr(BrowserThread::GetBlockingPool())),
+        base::Bind(URLRequestMockHTTPJob::AddUrlHandlers, root_http,
+                   make_scoped_refptr(BrowserThread::GetBlockingPool())),
         base::MessageLoop::current()->QuitWhenIdleClosure());
     content::RunMessageLoop();
   }
@@ -1248,9 +1247,8 @@ bool GetPacHttpsUrlStrippingEnabled() {
   base::RunLoop loop;
   BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&GetPacHttpsUrlStrippingEnabledOnIOThread,
-                     g_browser_process->io_thread(),
-                     base::Unretained(&enabled)),
+      base::Bind(&GetPacHttpsUrlStrippingEnabledOnIOThread,
+                 g_browser_process->io_thread(), base::Unretained(&enabled)),
       loop.QuitClosure());
   loop.Run();
   return enabled;
@@ -2354,7 +2352,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklist) {
     base::RunLoop loop;
     BrowserThread::PostTaskAndReply(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(RedirectHostsToTestData, kURLS, arraysize(kURLS)),
+        base::Bind(RedirectHostsToTestData, kURLS, arraysize(kURLS)),
         loop.QuitClosure());
     loop.Run();
   }
@@ -2392,7 +2390,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklist) {
     base::RunLoop loop;
     BrowserThread::PostTaskAndReply(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(UndoRedirectHostsToTestData, kURLS, arraysize(kURLS)),
+        base::Bind(UndoRedirectHostsToTestData, kURLS, arraysize(kURLS)),
         loop.QuitClosure());
     loop.Run();
   }
@@ -2963,9 +2961,10 @@ class RestoreOnStartupPolicyTest
 
   void SetUpOnMainThread() override {
     BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(RedirectHostsToTestData, kRestoredURLs,
-                       arraysize(kRestoredURLs)));
+        BrowserThread::IO,
+        FROM_HERE,
+        base::Bind(
+            RedirectHostsToTestData, kRestoredURLs, arraysize(kRestoredURLs)));
   }
 
   void ListOfURLs() {
@@ -3273,12 +3272,11 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerBrowserTest,
 
   content::BrowserThread::PostTaskAndReply(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &MediaCaptureDevicesDispatcher::SetTestAudioCaptureDevices,
-          base::Unretained(MediaCaptureDevicesDispatcher::GetInstance()),
-          audio_devices),
-      base::BindOnce(&MediaStreamDevicesControllerBrowserTest::FinishAudioTest,
-                     base::Unretained(this)));
+      base::Bind(&MediaCaptureDevicesDispatcher::SetTestAudioCaptureDevices,
+                 base::Unretained(MediaCaptureDevicesDispatcher::GetInstance()),
+                 audio_devices),
+      base::Bind(&MediaStreamDevicesControllerBrowserTest::FinishAudioTest,
+                 base::Unretained(this)));
 
   base::RunLoop().Run();
 }
@@ -3306,11 +3304,11 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerBrowserTest,
 
     content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
+        base::Bind(
             &MediaCaptureDevicesDispatcher::SetTestAudioCaptureDevices,
             base::Unretained(MediaCaptureDevicesDispatcher::GetInstance()),
             audio_devices),
-        base::BindOnce(
+        base::Bind(
             &MediaStreamDevicesControllerBrowserTest::FinishAudioTest,
             base::Unretained(this)));
 
@@ -3331,12 +3329,11 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerBrowserTest,
 
   content::BrowserThread::PostTaskAndReply(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &MediaCaptureDevicesDispatcher::SetTestVideoCaptureDevices,
-          base::Unretained(MediaCaptureDevicesDispatcher::GetInstance()),
-          video_devices),
-      base::BindOnce(&MediaStreamDevicesControllerBrowserTest::FinishVideoTest,
-                     base::Unretained(this)));
+      base::Bind(&MediaCaptureDevicesDispatcher::SetTestVideoCaptureDevices,
+                 base::Unretained(MediaCaptureDevicesDispatcher::GetInstance()),
+                 video_devices),
+      base::Bind(&MediaStreamDevicesControllerBrowserTest::FinishVideoTest,
+                 base::Unretained(this)));
 
   base::RunLoop().Run();
 }
@@ -3364,11 +3361,10 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerBrowserTest,
 
     content::BrowserThread::PostTaskAndReply(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &MediaCaptureDevicesDispatcher::SetTestVideoCaptureDevices,
+        base::Bind(&MediaCaptureDevicesDispatcher::SetTestVideoCaptureDevices,
             base::Unretained(MediaCaptureDevicesDispatcher::GetInstance()),
             video_devices),
-        base::BindOnce(
+        base::Bind(
             &MediaStreamDevicesControllerBrowserTest::FinishVideoTest,
             base::Unretained(this)));
 
@@ -3447,8 +3443,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest,
   // Require CT for all hosts (in the absence of policy).
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(net::TransportSecurityState::SetShouldRequireCTForTesting,
-                     base::Owned(new bool(true))));
+      base::Bind(net::TransportSecurityState::SetShouldRequireCTForTesting,
+                 base::Owned(new bool(true))));
 
   ui_test_utils::NavigateToURL(browser(), https_server_ok.GetURL("/"));
 
@@ -3900,7 +3896,7 @@ void ComponentUpdaterPolicyTest::UpdateComponent(
 
 void ComponentUpdaterPolicyTest::CallAsync(TestCaseAction action) {
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(action, base::Unretained(this)));
+                          base::Bind(action, base::Unretained(this)));
 }
 
 void ComponentUpdaterPolicyTest::OnDemandComplete(update_client::Error error) {

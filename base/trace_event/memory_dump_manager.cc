@@ -181,8 +181,7 @@ void MemoryDumpManager::SetInstanceForTesting(MemoryDumpManager* instance) {
 }
 
 MemoryDumpManager::MemoryDumpManager()
-    : is_coordinator_(false),
-      memory_tracing_enabled_(0),
+    : memory_tracing_enabled_(0),
       tracing_process_id_(kInvalidTracingProcessId),
       dumper_registrations_ignored_for_testing_(false),
       heap_profiling_enabled_(false) {
@@ -238,14 +237,12 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
 }
 
 void MemoryDumpManager::Initialize(
-    RequestGlobalDumpFunction request_dump_function,
-    bool is_coordinator) {
+    std::unique_ptr<MemoryDumpManagerDelegate> delegate) {
   {
     AutoLock lock(lock_);
-    DCHECK(!request_dump_function.is_null());
-    DCHECK(request_dump_function_.is_null());
-    request_dump_function_ = request_dump_function;
-    is_coordinator_ = is_coordinator;
+    DCHECK(delegate);
+    DCHECK(!delegate_);
+    delegate_ = std::move(delegate);
     EnableHeapProfilingIfNeeded();
   }
 
@@ -459,10 +456,10 @@ void MemoryDumpManager::RequestGlobalDump(
       MemoryDumpLevelOfDetailToString(level_of_detail));
   GlobalMemoryDumpCallback wrapped_callback = Bind(&OnGlobalDumpDone, callback);
 
-  // The embedder will coordinate the IPC broadcast and at some point invoke
+  // The delegate will coordinate the IPC broadcast and at some point invoke
   // CreateProcessDump() to get a dump for the current process.
   MemoryDumpRequestArgs args = {guid, dump_type, level_of_detail};
-  request_dump_function_.Run(args, wrapped_callback);
+  delegate_->RequestGlobalMemoryDump(args, wrapped_callback);
 }
 
 void MemoryDumpManager::GetDumpProvidersForPolling(
@@ -743,15 +740,10 @@ void MemoryDumpManager::FinalizeDumpAndAddToTrace(
     ProcessId pid = kv.first;  // kNullProcessId for the current process.
     ProcessMemoryDump* process_memory_dump = kv.second.get();
 
-    // SUMMARY_ONLY dumps are just return the summarized result in the
-    // ProcessMemoryDumpCallback. These shouldn't be added to the trace to
-    // avoid confusing trace consumers.
-    if (pmd_async_state->req_args.dump_type != MemoryDumpType::SUMMARY_ONLY) {
-      bool added_to_trace = tracing_observer_->AddDumpToTraceIfEnabled(
-          &pmd_async_state->req_args, pid, process_memory_dump);
+    bool added_to_trace = tracing_observer_->AddDumpToTraceIfEnabled(
+        &pmd_async_state->req_args, pid, process_memory_dump);
 
-      dump_successful = dump_successful && added_to_trace;
-    }
+    dump_successful = dump_successful && added_to_trace;
 
     // TODO(hjd): Transitional until we send the full PMD. See crbug.com/704203
     // Don't try to fill the struct in detailed mode since it is hard to avoid
@@ -831,8 +823,7 @@ void MemoryDumpManager::Enable(
 
   AutoLock lock(lock_);
 
-  // At this point we must have the ability to request global dumps.
-  DCHECK(!request_dump_function_.is_null());
+  DCHECK(delegate_);  // At this point we must have a delegate.
   session_state_ = session_state;
 
   DCHECK(!dump_thread_);
@@ -872,7 +863,7 @@ void MemoryDumpManager::Enable(
 
       // When peak detection is enabled, trigger a dump straight away as it
       // gives a good reference point for analyzing the trace.
-      if (is_coordinator_) {
+      if (delegate_->IsCoordinator()) {
         dump_thread_->task_runner()->PostTask(
             FROM_HERE, BindRepeating(&OnPeakDetected, trigger.level_of_detail));
       }
@@ -880,7 +871,7 @@ void MemoryDumpManager::Enable(
   }
 
   // Only coordinator process triggers periodic global memory dumps.
-  if (is_coordinator_ && !periodic_config.triggers.empty()) {
+  if (delegate_->IsCoordinator() && !periodic_config.triggers.empty()) {
     MemoryDumpScheduler::GetInstance()->Start(periodic_config,
                                               dump_thread_->task_runner());
   }

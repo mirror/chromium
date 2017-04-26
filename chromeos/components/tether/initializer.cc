@@ -22,7 +22,6 @@
 #include "chromeos/components/tether/wifi_hotspot_connector.h"
 #include "chromeos/network/managed_network_configuration_handler.h"
 #include "chromeos/network/network_connect.h"
-#include "chromeos/network/network_connection_handler.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/cryptauth/bluetooth_throttler_impl.h"
 #include "components/cryptauth/cryptauth_service.h"
@@ -56,8 +55,7 @@ void Initializer::Init(
     ProfileOAuth2TokenService* token_service,
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
-    NetworkConnect* network_connect,
-    NetworkConnectionHandler* network_connection_handler) {
+    NetworkConnect* network_connect) {
   if (!device::BluetoothAdapterFactory::IsBluetoothSupported()) {
     PA_LOG(WARNING) << "Bluetooth is not supported on this device; cannot "
                     << "initialize tether feature.";
@@ -74,8 +72,7 @@ void Initializer::Init(
   instance_ =
       new Initializer(cryptauth_service, std::move(notification_presenter),
                       pref_service, token_service, network_state_handler,
-                      managed_network_configuration_handler, network_connect,
-                      network_connection_handler);
+                      managed_network_configuration_handler, network_connect);
 }
 
 // static
@@ -100,8 +97,7 @@ Initializer::Initializer(
     ProfileOAuth2TokenService* token_service,
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
-    NetworkConnect* network_connect,
-    NetworkConnectionHandler* network_connection_handler)
+    NetworkConnect* network_connect)
     : cryptauth_service_(cryptauth_service),
       notification_presenter_(std::move(notification_presenter)),
       pref_service_(pref_service),
@@ -110,7 +106,6 @@ Initializer::Initializer(
       managed_network_configuration_handler_(
           managed_network_configuration_handler),
       network_connect_(network_connect),
-      network_connection_handler_(network_connection_handler),
       weak_ptr_factory_(this) {
   if (!token_service_->RefreshTokenIsAvailable(
           cryptauth_service_->GetAccountId())) {
@@ -191,10 +186,9 @@ void Initializer::OnBluetoothAdapterAdvertisingIntervalSet(
   device_id_tether_network_guid_map_ =
       base::MakeUnique<DeviceIdTetherNetworkGuidMap>();
   tether_connector_ = base::MakeUnique<TetherConnector>(
-      network_connection_handler_, network_state_handler_,
-      wifi_hotspot_connector_.get(), active_host_.get(),
-      tether_host_fetcher_.get(), ble_connection_manager_.get(),
-      host_scan_device_prioritizer_.get(),
+      network_connect_, network_state_handler_, wifi_hotspot_connector_.get(),
+      active_host_.get(), tether_host_fetcher_.get(),
+      ble_connection_manager_.get(), host_scan_device_prioritizer_.get(),
       device_id_tether_network_guid_map_.get());
   network_configuration_remover_ =
       base::MakeUnique<NetworkConfigurationRemover>(

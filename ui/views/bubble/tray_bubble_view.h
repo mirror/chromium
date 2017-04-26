@@ -28,8 +28,8 @@ class TrayBubbleContentMask;
 // Ash status area). Mostly this handles custom anchor location and arrow and
 // border rendering. This also has its own delegate for handling mouse events
 // and other implementation specific details.
-class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
-                                    public MouseWatcherListener {
+class VIEWS_EXPORT TrayBubbleView : public views::BubbleDialogDelegateView,
+                                    public views::MouseWatcherListener {
  public:
   // AnchorAlignment determines to which side of the anchor the bubble will
   // align itself.
@@ -93,9 +93,6 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
 
   ~TrayBubbleView() override;
 
-  // Returns whether a tray bubble is active.
-  static bool IsATrayBubbleOpen();
-
   // Sets up animations, and show the bubble. Must occur after CreateBubble()
   // is called.
   void InitializeAndShowBubble();
@@ -133,7 +130,6 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   // Overridden from views::BubbleDialogDelegateView.
   void OnBeforeBubbleWidgetInit(Widget::InitParams* params,
                                 Widget* bubble_widget) const override;
-  void OnWidgetClosing(Widget* widget) override;
 
   // Overridden from views::View.
   gfx::Size GetPreferredSize() const override;

@@ -48,11 +48,9 @@ interface PaymentManager {
       => (PaymentAppManifestError error);
   GetManifest()
       => (PaymentAppManifest payment_app_manifest, PaymentAppManifestError error);
-  DeletePaymentInstrument(string instrument_key)
+  SetPaymentInstrument(string instrumentKey, PaymentInstrument instrument)
       => (PaymentHandlerStatus status);
-  SetPaymentInstrument(string instrument_key, PaymentInstrument instrument)
-      => (PaymentHandlerStatus status);
-  GetPaymentInstrument(string instrument_key)
+  GetPaymentInstrument(string instrumentKey)
       => (PaymentInstrument instrument, PaymentHandlerStatus status);
 };
 

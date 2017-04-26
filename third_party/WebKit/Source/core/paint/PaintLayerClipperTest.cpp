@@ -44,7 +44,7 @@ TEST_P(PaintLayerClipperTest, LayoutSVGRoot) {
       "  <rect width=400 height=500 fill='blue'/>"
       "</svg>");
 
-  Element* target = GetDocument().getElementById("target");
+  Element* target = GetDocument().GetElementById("target");
   PaintLayer* target_paint_layer =
       ToLayoutBoxModelObject(target->GetLayoutObject())->Layer();
   ClipRectsContext context(
@@ -76,7 +76,7 @@ TEST_P(PaintLayerClipperTest, ControlClip) {
       "<!DOCTYPE html>"
       "<input id=target style='position:absolute; width: 200px; height: 300px'"
       "    type=button>");
-  Element* target = GetDocument().getElementById("target");
+  Element* target = GetDocument().GetElementById("target");
   PaintLayer* target_paint_layer =
       ToLayoutBoxModelObject(target->GetLayoutObject())->Layer();
   ClipRectsContext context(GetDocument().GetLayoutView()->Layer(),
@@ -118,7 +118,7 @@ TEST_P(PaintLayerClipperTest, RoundedClip) {
       "    overflow: hidden; border-radius: 1px'>"
       "</div>");
 
-  Element* target = GetDocument().getElementById("target");
+  Element* target = GetDocument().GetElementById("target");
   PaintLayer* target_paint_layer =
       ToLayoutBoxModelObject(target->GetLayoutObject())->Layer();
   ClipRectsContext context(GetDocument().GetLayoutView()->Layer(),
@@ -157,11 +157,11 @@ TEST_P(PaintLayerClipperTest, RoundedClipNested) {
       "  </div>"
       "</div>");
 
-  Element* parent = GetDocument().getElementById("parent");
+  Element* parent = GetDocument().GetElementById("parent");
   PaintLayer* parent_paint_layer =
       ToLayoutBoxModelObject(parent->GetLayoutObject())->Layer();
 
-  Element* child = GetDocument().getElementById("child");
+  Element* child = GetDocument().GetElementById("child");
   PaintLayer* child_paint_layer =
       ToLayoutBoxModelObject(child->GetLayoutObject())->Layer();
 
@@ -192,7 +192,7 @@ TEST_P(PaintLayerClipperTest, ControlClipSelect) {
       "    Test long texttttttttttttttttttttttttttttttt"
       "  </option>"
       "</select>");
-  Element* target = GetDocument().getElementById("target");
+  Element* target = GetDocument().GetElementById("target");
   PaintLayer* target_paint_layer =
       ToLayoutBoxModelObject(target->GetLayoutObject())->Layer();
   ClipRectsContext context(GetDocument().GetLayoutView()->Layer(),
@@ -229,7 +229,7 @@ TEST_P(PaintLayerClipperTest, LayoutSVGRootChild) {
       "  </foreignObject>"
       "</svg>");
 
-  Element* target = GetDocument().getElementById("target");
+  Element* target = GetDocument().GetElementById("target");
   PaintLayer* target_paint_layer =
       ToLayoutBoxModelObject(target->GetLayoutObject())->Layer();
   ClipRectsContext context(GetDocument().GetLayoutView()->Layer(),

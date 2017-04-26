@@ -4,7 +4,7 @@ URL: http://www.webmproject.org/code/
 Version: unknown
 License: BSD
 License File: source/LICENSE.TXT
-Security Critical: yes
+Security Critical: No
 
 Description:
 libwebm is a library to read and write WebM files. It's used by MediaStream

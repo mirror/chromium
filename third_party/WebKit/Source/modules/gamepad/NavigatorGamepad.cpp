@@ -234,7 +234,7 @@ void NavigatorGamepad::DidRemoveAllEventListeners(LocalDOMWindow*) {
 void NavigatorGamepad::DidRemoveGamepadEventListeners() {
   has_event_listener_ = false;
   dispatch_one_event_runner_->Stop();
-  pending_events_.clear();
+  pending_events_.Clear();
 }
 
 void NavigatorGamepad::PageVisibilityChanged() {

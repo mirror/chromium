@@ -9,20 +9,18 @@
 #include <memory>
 
 #include "base/time/time.h"
+#include "chrome/browser/browsing_data/browsing_data_remover_delegate.h"
 #include "content/public/browser/browsing_data_filter_builder.h"
-#include "content/public/browser/browsing_data_remover_delegate.h"
 
 // A BrowsingDataRemoverDelegate that only records RemoveEmbedderData() calls.
-class MockBrowsingDataRemoverDelegate
-    : public content::BrowsingDataRemoverDelegate {
+class MockBrowsingDataRemoverDelegate : public BrowsingDataRemoverDelegate {
  public:
   MockBrowsingDataRemoverDelegate();
   ~MockBrowsingDataRemoverDelegate() override;
 
   // BrowsingDataRemoverDelegate:
-  content::BrowsingDataRemoverDelegate::EmbedderOriginTypeMatcher
-  GetOriginTypeMatcher() const override;
-  bool MayRemoveDownloadHistory() const override;
+  BrowsingDataRemoverDelegate::EmbedderOriginTypeMatcher GetOriginTypeMatcher()
+      const override;
   void RemoveEmbedderData(
       const base::Time& delete_begin,
       const base::Time& delete_end,

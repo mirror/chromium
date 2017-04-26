@@ -214,7 +214,7 @@ void CanvasRenderingContext2DTest::SetUp() {
   document_->documentElement()->setInnerHTML(
       "<body><canvas id='c'></canvas></body>");
   document_->View()->UpdateAllLifecyclePhases();
-  canvas_element_ = toHTMLCanvasElement(document_->getElementById("c"));
+  canvas_element_ = toHTMLCanvasElement(document_->GetElementById("c"));
 
   full_image_data_ = ImageData::Create(IntSize(10, 10));
   partial_image_data_ = ImageData::Create(IntSize(2, 2));
@@ -927,9 +927,9 @@ TEST_F(CanvasRenderingContext2DTest, CanvasDisposedBeforeContext) {
   CreateContext(kNonOpaque);
   Context2d()->fillRect(0, 0, 1, 1);  // results in task observer registration
 
-  Context2d()->DetachHost();
+  Context2d()->DetachCanvas();
 
-  // This is the only method that is callable after DetachHost
+  // This is the only method that is callable after detachCanvas
   // Test passes by not crashing.
   Context2d()->DidProcessTask();
 

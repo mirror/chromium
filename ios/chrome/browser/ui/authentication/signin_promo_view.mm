@@ -61,7 +61,6 @@ const CGFloat kButtonHeight = 36;
     _primaryButton = [[MDCFlatButton alloc] init];
     _primaryButton.translatesAutoresizingMaskIntoConstraints = NO;
     _primaryButton.accessibilityIdentifier = @"signin_promo_primary_button";
-    _primaryButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [_primaryButton addTarget:self
                        action:@selector(onPrimaryButtonAction:)
              forControlEvents:UIControlEventTouchUpInside];

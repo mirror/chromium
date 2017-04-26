@@ -100,7 +100,8 @@ void BackgroundHTMLParser::Init(
     const MediaValuesCached::MediaValuesCachedData& media_values_cached_data) {
   preload_scanner_.reset(new TokenPreloadScanner(
       document_url, std::move(cached_document_parameters),
-      media_values_cached_data));
+      media_values_cached_data,
+      TokenPreloadScanner::ScannerType::kMainDocument));
 }
 
 BackgroundHTMLParser::Configuration::Configuration()
@@ -341,17 +342,17 @@ bool BackgroundHTMLParser::QueueChunkForMainThread() {
     preload_tokenize_delay.Count(delay);
   }
 
-  chunk->preloads.swap(pending_preloads_);
+  chunk->preloads.Swap(pending_preloads_);
   if (viewport_description_.set)
     chunk->viewport = viewport_description_;
-  chunk->xss_infos.swap(pending_xss_infos_);
+  chunk->xss_infos.Swap(pending_xss_infos_);
   chunk->tokenizer_state = tokenizer_->GetState();
   chunk->tree_builder_state = tree_builder_simulator_.GetState();
   chunk->input_checkpoint = input_.CreateCheckpoint(pending_tokens_->size());
   chunk->preload_scanner_checkpoint = preload_scanner_->CreateCheckpoint();
   chunk->tokens = std::move(pending_tokens_);
   chunk->starting_script = starting_script_;
-  chunk->likely_document_write_script_indices.swap(
+  chunk->likely_document_write_script_indices.Swap(
       likely_document_write_script_indices_);
   chunk->pending_csp_meta_token_index = pending_csp_meta_token_index_;
   starting_script_ = false;

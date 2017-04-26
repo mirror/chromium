@@ -232,6 +232,7 @@ cr.define('settings', function() {
     openActivityControlsUrl: function() {
       chrome.metricsPrivate.recordUserAction(
           'Signin_AccountSettings_GoogleActivityControlsClicked');
+      window.open(loadTimeData.getString('activityControlsUrl'));
     }
   };
 

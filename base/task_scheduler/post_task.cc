@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/logging.h"
-#include "base/task_scheduler/scoped_set_task_priority_for_current_thread.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/post_task_and_reply_impl.h"
 
@@ -30,15 +29,6 @@ class PostTaskAndReplyTaskRunner : public internal::PostTaskAndReplyImpl {
   const TaskTraits traits_;
 };
 
-// Returns TaskTraits based on |traits|. If TaskPriority hasn't been set
-// explicitly in |traits|, the returned TaskTraits have the current
-// TaskPriority.
-TaskTraits GetTaskTraitsWithExplicitPriority(const TaskTraits& traits) {
-  return traits.priority_set_explicitly()
-             ? traits
-             : TaskTraits(traits).WithPriority(
-                   internal::GetTaskPriorityForCurrentThread());
-}
 
 }  // namespace
 
@@ -72,8 +62,7 @@ void PostDelayedTaskWithTraits(const tracked_objects::Location& from_here,
   DCHECK(TaskScheduler::GetInstance())
       << "Ref. Prerequisite section of post_task.h";
   TaskScheduler::GetInstance()->PostDelayedTaskWithTraits(
-      from_here, GetTaskTraitsWithExplicitPriority(traits), std::move(task),
-      std::move(delay));
+      from_here, traits, std::move(task), std::move(delay));
 }
 
 void PostTaskWithTraitsAndReply(const tracked_objects::Location& from_here,
@@ -87,8 +76,7 @@ void PostTaskWithTraitsAndReply(const tracked_objects::Location& from_here,
 scoped_refptr<TaskRunner> CreateTaskRunnerWithTraits(const TaskTraits& traits) {
   DCHECK(TaskScheduler::GetInstance())
       << "Ref. Prerequisite section of post_task.h";
-  return TaskScheduler::GetInstance()->CreateTaskRunnerWithTraits(
-      GetTaskTraitsWithExplicitPriority(traits));
+  return TaskScheduler::GetInstance()->CreateTaskRunnerWithTraits(traits);
 }
 
 scoped_refptr<SequencedTaskRunner> CreateSequencedTaskRunnerWithTraits(
@@ -96,7 +84,7 @@ scoped_refptr<SequencedTaskRunner> CreateSequencedTaskRunnerWithTraits(
   DCHECK(TaskScheduler::GetInstance())
       << "Ref. Prerequisite section of post_task.h";
   return TaskScheduler::GetInstance()->CreateSequencedTaskRunnerWithTraits(
-      GetTaskTraitsWithExplicitPriority(traits));
+      traits);
 }
 
 scoped_refptr<SingleThreadTaskRunner> CreateSingleThreadTaskRunnerWithTraits(
@@ -104,7 +92,7 @@ scoped_refptr<SingleThreadTaskRunner> CreateSingleThreadTaskRunnerWithTraits(
   DCHECK(TaskScheduler::GetInstance())
       << "Ref. Prerequisite section of post_task.h";
   return TaskScheduler::GetInstance()->CreateSingleThreadTaskRunnerWithTraits(
-      GetTaskTraitsWithExplicitPriority(traits));
+      traits);
 }
 
 #if defined(OS_WIN)
@@ -112,8 +100,7 @@ scoped_refptr<SingleThreadTaskRunner> CreateCOMSTATaskRunnerWithTraits(
     const TaskTraits& traits) {
   DCHECK(TaskScheduler::GetInstance())
       << "Ref. Prerequisite section of post_task.h";
-  return TaskScheduler::GetInstance()->CreateCOMSTATaskRunnerWithTraits(
-      GetTaskTraitsWithExplicitPriority(traits));
+  return TaskScheduler::GetInstance()->CreateCOMSTATaskRunnerWithTraits(traits);
 }
 #endif  // defined(OS_WIN)
 

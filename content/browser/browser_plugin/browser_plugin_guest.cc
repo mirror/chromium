@@ -147,8 +147,6 @@ int BrowserPluginGuest::GetGuestProxyRoutingID() {
   // create a RenderFrameProxyHost for the reverse path, or implement
   // MimeHandlerViewGuest using OOPIF (https://crbug.com/659750).
   SiteInstance* owner_site_instance = delegate_->GetOwnerSiteInstance();
-  if (!owner_site_instance)
-    return MSG_ROUTING_NONE;
   int proxy_routing_id = GetWebContents()
                              ->GetFrameTree()
                              ->root()
@@ -180,12 +178,8 @@ void BrowserPluginGuest::SizeContents(const gfx::Size& new_size) {
 
 void BrowserPluginGuest::WillDestroy() {
   is_in_destruction_ = true;
-
-  // It is important that the WebContents is notified before detaching.
-  GetWebContents()->BrowserPluginGuestWillDetach();
-
-  attached_ = false;
   owner_web_contents_ = nullptr;
+  attached_ = false;
 }
 
 RenderWidgetHostImpl* BrowserPluginGuest::GetOwnerRenderWidgetHost() const {
@@ -436,6 +430,17 @@ void BrowserPluginGuest::OnRequireSequence(
   GetSurfaceManager()->RequireSequence(id, sequence);
 }
 
+bool BrowserPluginGuest::HandleFindForEmbedder(
+    int request_id,
+    const base::string16& search_text,
+    const blink::WebFindOptions& options) {
+  return delegate_->HandleFindForEmbedder(request_id, search_text, options);
+}
+
+bool BrowserPluginGuest::HandleStopFindingForEmbedder(StopFindAction action) {
+  return delegate_->HandleStopFindingForEmbedder(action);
+}
+
 void BrowserPluginGuest::ResendEventToEmbedder(
     const blink::WebInputEvent& event) {
   if (!attached() || !owner_web_contents_)
@@ -653,9 +658,6 @@ void BrowserPluginGuest::DidFinishNavigation(
 }
 
 void BrowserPluginGuest::RenderViewReady() {
-  if (GuestMode::IsCrossProcessFrameGuest(GetWebContents()))
-    return;
-
   RenderViewHost* rvh = GetWebContents()->GetRenderViewHost();
   // TODO(fsamuel): Investigate whether it's possible to update state earlier
   // here (see http://crbug.com/158151).
@@ -820,9 +822,6 @@ void BrowserPluginGuest::OnWillAttachComplete(
 void BrowserPluginGuest::OnDetach(int browser_plugin_instance_id) {
   if (!attached())
     return;
-
-  // It is important that the WebContents is notified before detaching.
-  GetWebContents()->BrowserPluginGuestWillDetach();
 
   // This tells BrowserPluginGuest to queue up all IPCs to BrowserPlugin until
   // it's attached again.

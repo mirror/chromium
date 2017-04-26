@@ -103,7 +103,7 @@ void HTMLFrameOwnerElement::UpdateSuspendScope::
 
   {
     FrameOrPluginList list;
-    FrameOrPluginsPendingDispose().swap(list);
+    FrameOrPluginsPendingDispose().Swap(list);
     for (const auto& frame_or_plugin : list) {
       frame_or_plugin->Dispose();
     }

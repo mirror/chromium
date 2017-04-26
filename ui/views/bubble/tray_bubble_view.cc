@@ -49,10 +49,6 @@ BubbleBorder::Arrow GetArrowAlignment(
   return BubbleBorder::RIGHT_BOTTOM;
 }
 
-// Only one TrayBubbleView is visible at a time, but there are cases where the
-// lifetimes of two different bubbles can overlap briefly.
-int g_current_tray_bubble_showing_count_ = 0;
-
 }  // namespace
 
 namespace internal {
@@ -229,11 +225,6 @@ TrayBubbleView::~TrayBubbleView() {
     delegate_->BubbleViewDestroyed();
 }
 
-// static
-bool TrayBubbleView::IsATrayBubbleOpen() {
-  return g_current_tray_bubble_showing_count_ > 0;
-}
-
 void TrayBubbleView::InitializeAndShowBubble() {
   layer()->parent()->SetMaskLayer(bubble_content_mask_->layer());
 
@@ -241,8 +232,6 @@ void TrayBubbleView::InitializeAndShowBubble() {
   GetWidget()->GetNativeWindow()->SetEventTargeter(
       std::unique_ptr<ui::EventTargeter>(new BubbleWindowTargeter(this)));
   UpdateBubble();
-
-  ++g_current_tray_bubble_showing_count_;
 }
 
 void TrayBubbleView::UpdateBubble() {
@@ -287,12 +276,6 @@ void TrayBubbleView::OnBeforeBubbleWidgetInit(Widget::InitParams* params,
   // Apply a WM-provided shadow (see ui/wm/core/).
   params->shadow_type = Widget::InitParams::SHADOW_TYPE_DROP;
   params->shadow_elevation = wm::ShadowElevation::LARGE;
-}
-
-void TrayBubbleView::OnWidgetClosing(Widget* widget) {
-  BubbleDialogDelegateView::OnWidgetClosing(widget);
-  --g_current_tray_bubble_showing_count_;
-  DCHECK_GE(g_current_tray_bubble_showing_count_, 0);
 }
 
 NonClientFrameView* TrayBubbleView::CreateNonClientFrameView(Widget* widget) {

@@ -813,27 +813,37 @@ ScriptPromise MediaKeySession::remove(ScriptState* script_state) {
   if (!is_callable_)
     return CreateRejectedPromiseNotCallable(script_state);
 
-  // 3. Let promise be a new promise.
+  // 3. If the result of running the "Is persistent session type?" algorithm
+  //    on this object's session type is false, return a promise rejected
+  //    with a newly created TypeError.
+  if (!IsPersistentSessionType(session_type_)) {
+    return ScriptPromise::Reject(
+        script_state,
+        V8ThrowException::CreateTypeError(
+            script_state->GetIsolate(), "The session type is not persistent."));
+  }
+
+  // 4. Let promise be a new promise.
   SimpleResultPromise* result = new SimpleResultPromise(script_state, this);
   ScriptPromise promise = result->Promise();
 
-  // 4. Run the following steps asynchronously (done in removeTask()).
+  // 5. Run the following steps asynchronously (done in removeTask()).
   pending_actions_.push_back(PendingAction::CreatePendingRemove(result));
   if (!action_timer_.IsActive())
     action_timer_.StartOneShot(0, BLINK_FROM_HERE);
 
-  // 5. Return promise.
+  // 6. Return promise.
   return promise;
 }
 
 void MediaKeySession::RemoveTask(ContentDecryptionModuleResult* result) {
-  // NOTE: Continue step 4 of MediaKeySession::remove().
+  // NOTE: Continue step 5 of MediaKeySession::remove().
   DVLOG(MEDIA_KEY_SESSION_LOG_LEVEL) << __func__ << "(" << this << ")";
 
-  // remove() in Chromium will execute steps 4.1 through 4.5.
+  // remove() in Chromium will execute steps 5.1 through 5.3.
   session_->Remove(result->Result());
 
-  // Last step (4.5.6 Resolve promise) will be done when |result| is resolved.
+  // Last step (5.3.6 Resolve promise) will be done when |result| is resolved.
 }
 
 void MediaKeySession::ActionTimerFired(TimerBase*) {
@@ -1034,7 +1044,7 @@ void MediaKeySession::ContextDestroyed(ExecutionContext*) {
   session_.reset();
   is_closed_ = true;
   action_timer_.Stop();
-  pending_actions_.clear();
+  pending_actions_.Clear();
   async_event_queue_->Close();
 }
 

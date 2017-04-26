@@ -136,7 +136,7 @@ void HTMLDetailsElement::ParseAttribute(
                 WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
                           WrapPersistent(this)));
 
-    Element* content = EnsureUserAgentShadowRoot().getElementById(
+    Element* content = EnsureUserAgentShadowRoot().GetElementById(
         ShadowElementNames::DetailsContent());
     DCHECK(content);
     if (is_open_)

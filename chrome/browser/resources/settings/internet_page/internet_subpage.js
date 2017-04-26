@@ -417,13 +417,11 @@ Polymer({
     this.networkingPrivate.startConnect(state.GUID, function() {
       if (chrome.runtime.lastError) {
         var message = chrome.runtime.lastError.message;
-        if (message == 'connecting' || message == 'connect-canceled' ||
-            message == 'connected' || message == 'Error.InvalidNetworkGuid') {
-          return;
+        if (message != 'connecting') {
+          console.error(
+              'Unexpected networkingPrivate.startConnect error: ' + message +
+              'For: ' + state.GUID);
         }
-        console.error(
-            'Unexpected networkingPrivate.startConnect error: ' + message +
-                ' For: ' + state.GUID);
       }
     });
   },

@@ -14,22 +14,6 @@ static_cast<{{field.type_name}}>({{value}})
 {%- endif %}
 {% endmacro %}
 
-{% macro getter_expression(field) %}
-{% if field.group_member_name -%}
-{{field.group_member_name}}->{{field.name}}
-{%- else -%}
-{{field.name}}
-{%- endif %}
-{% endmacro %}
-
-{% macro setter_expression(field) %}
-{% if field.group_member_name -%}
-{{field.group_member_name}}.Access()->{{field.name}}
-{%- else -%}
-{{field.name}}
-{%- endif %}
-{% endmacro %}
-
 {% macro nonconst_ref(field) %}
 {% if field.is_bit_field -%}
 {{field.type_name}}
@@ -44,45 +28,4 @@ static_cast<{{field.type_name}}>({{value}})
 {%- else -%}
 const {{field.type_name}}&
 {%- endif %}
-{% endmacro %}
-
-{% macro declare_storage(field) %}
-{% if field.is_bit_field %}
-unsigned {{field.name}} : {{field.size}}; // {{field.type_name}}
-{%- else %}
-{{field.type_name}} {{field.name}};
-{%- endif %}
-{% endmacro %}
-
-{# Given a group and a list of fields to compare, this generates a set of
-   equality comparisons on those fields. The generated comparisons take
-   advantage of group sharing. #}
-{% macro fieldwise_compare(group, fields_to_compare) %}
-{% for subgroup in group.subgroups %}
-  {# If every field in this subgroup is to be compared, we can compare the
-     group pointer instead. #}
-  {% if subgroup.all_fields|reject("in", fields_to_compare)|list|length == 0 -%}
-    {{subgroup.member_name}} == o.{{subgroup.member_name}} &&
-  {# Otherwise, we would have to recursively generate comparison operations
-     on fields in the subgroup. #}
-  {% elif subgroup.fields|select("in", fields_to_compare)|list|length > 0 -%}
-    {{fieldwise_compare(subgroup, fields_to_compare)}}
-  {% endif %}
-{% endfor %}
-{% for field in group.fields|select("in", fields_to_compare) -%}
-  {{getter_expression(field)}} == o.{{getter_expression(field)}} &&
-{% endfor %}
-{% endmacro %}
-
-{% macro fieldwise_copy(group, fields_to_copy) %}
-{% for subgroup in group.subgroups %}
-  {% if subgroup.all_fields|reject("in", fields_to_copy)|list|length == 0 -%}
-    {{subgroup.member_name}} = other.{{subgroup.member_name}};
-  {% elif subgroup.fields|select("in", fields_to_copy)|list|length > 0 -%}
-    {{fieldwise_copy(subgroup, fields_to_copy)}}
-  {% endif %}
-{% endfor %}
-{% for field in group.fields|select("in", fields_to_copy) -%}
-  {{setter_expression(field)}} = other.{{getter_expression(field)}};
-{% endfor %}
 {% endmacro %}

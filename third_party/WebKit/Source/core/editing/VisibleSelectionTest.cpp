@@ -104,11 +104,11 @@ TEST_F(VisibleSelectionTest, expandUsingGranularity) {
   SetBodyContent(body_content);
   ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
 
-  Node* one = GetDocument().getElementById("one")->firstChild();
-  Node* two = GetDocument().getElementById("two")->firstChild();
-  Node* three = shadow_root->getElementById("three")->firstChild();
-  Node* four = shadow_root->getElementById("four")->firstChild();
-  Node* five = shadow_root->getElementById("five")->firstChild();
+  Node* one = GetDocument().GetElementById("one")->firstChild();
+  Node* two = GetDocument().GetElementById("two")->firstChild();
+  Node* three = shadow_root->GetElementById("three")->firstChild();
+  Node* four = shadow_root->GetElementById("four")->firstChild();
+  Node* five = shadow_root->GetElementById("five")->firstChild();
 
   VisibleSelection selection;
   VisibleSelectionInFlatTree selection_in_flat_tree;
@@ -519,7 +519,7 @@ TEST_F(VisibleSelectionTest, WordGranularity) {
 TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   SetBodyContent("<div id=host></div><div id=sample>foo</div>");
   SetShadowContent("<content>", "host");
-  Element* sample = GetDocument().getElementById("sample");
+  Element* sample = GetDocument().GetElementById("sample");
 
   // Simulates saving selection in undo stack.
   VisibleSelection selection =
@@ -529,7 +529,7 @@ TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   EXPECT_EQ(Position(sample->firstChild(), 0), selection.Start());
 
   // Simulates modifying DOM tree to invalidate distribution.
-  Element* host = GetDocument().getElementById("host");
+  Element* host = GetDocument().GetElementById("host");
   host->AppendChild(sample);
   GetDocument().UpdateStyleAndLayout();
 

@@ -24,6 +24,8 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
+#include "chrome/browser/browsing_data/browsing_data_remover.h"
+#include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/profiles/profile.h"
@@ -33,7 +35,6 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/browsing_data_remover.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
@@ -1409,11 +1410,11 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, ClearData) {
   EXPECT_THAT(cleared_referral_list, HasSubstr(target_url_.host()));
 
   // Clear cache which should clear all prefs.
-  content::BrowsingDataRemover* remover =
-      content::BrowserContext::GetBrowsingDataRemover(browser()->profile());
+  BrowsingDataRemover* remover =
+      BrowsingDataRemoverFactory::GetForBrowserContext(browser()->profile());
   remover->Remove(base::Time(), base::Time::Max(),
                   ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY,
-                  content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
+                  BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
 
   GetListFromPrefsAsString(prefs::kDnsPrefetchingStartupList,
                            &cleared_startup_list);

@@ -64,8 +64,6 @@ class MojoTestConnector {
       base::CommandLine* command_line,
       base::TestLauncher::LaunchOptions* test_launch_options);
 
-  void StartService(const std::string& service_name);
-
  private:
   class ServiceProcessLauncherDelegateImpl;
 

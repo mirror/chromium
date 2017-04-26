@@ -4,12 +4,12 @@
 
 #include "net/dns/mock_host_resolver.h"
 
+#include <string>
 #include <vector>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/location.h"
-#include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
@@ -247,26 +247,40 @@ void MockHostResolverBase::ResolveNow(size_t id) {
 
 //-----------------------------------------------------------------------------
 
-RuleBasedHostResolverProc::Rule::Rule(
-    ResolverType resolver_type,
-    const std::string& host_pattern,
-    AddressFamily address_family,
-    HostResolverFlags host_resolver_flags,
-    const std::string& replacement,
-    const std::string& canonical_name,
-    int latency_ms)
-    : resolver_type(resolver_type),
-      host_pattern(host_pattern),
-      address_family(address_family),
-      host_resolver_flags(host_resolver_flags),
-      replacement(replacement),
-      canonical_name(canonical_name),
-      latency_ms(latency_ms) {}
+struct RuleBasedHostResolverProc::Rule {
+  enum ResolverType {
+    kResolverTypeFail,
+    kResolverTypeSystem,
+    kResolverTypeIPLiteral,
+  };
 
-RuleBasedHostResolverProc::Rule::Rule(const Rule& other) = default;
+  ResolverType resolver_type;
+  std::string host_pattern;
+  AddressFamily address_family;
+  HostResolverFlags host_resolver_flags;
+  std::string replacement;
+  std::string canonical_name;
+  int latency_ms;  // In milliseconds.
+
+  Rule(ResolverType resolver_type,
+       const std::string& host_pattern,
+       AddressFamily address_family,
+       HostResolverFlags host_resolver_flags,
+       const std::string& replacement,
+       const std::string& canonical_name,
+       int latency_ms)
+      : resolver_type(resolver_type),
+        host_pattern(host_pattern),
+        address_family(address_family),
+        host_resolver_flags(host_resolver_flags),
+        replacement(replacement),
+        canonical_name(canonical_name),
+        latency_ms(latency_ms) {}
+};
 
 RuleBasedHostResolverProc::RuleBasedHostResolverProc(HostResolverProc* previous)
-    : HostResolverProc(previous), modifications_allowed_(true) {}
+    : HostResolverProc(previous) {
+}
 
 void RuleBasedHostResolverProc::AddRule(const std::string& host_pattern,
                                         const std::string& replacement) {
@@ -355,23 +369,8 @@ void RuleBasedHostResolverProc::AddSimulatedFailure(
 }
 
 void RuleBasedHostResolverProc::ClearRules() {
-  CHECK(modifications_allowed_);
   base::AutoLock lock(rule_lock_);
   rules_.clear();
-}
-
-void RuleBasedHostResolverProc::DisableModifications() {
-  CHECK(modifications_allowed_);
-  modifications_allowed_ = false;
-}
-
-RuleBasedHostResolverProc::RuleList RuleBasedHostResolverProc::GetRules() {
-  RuleList rv;
-  {
-    base::AutoLock lock(rule_lock_);
-    rv = rules_;
-  }
-  return rv;
 }
 
 int RuleBasedHostResolverProc::Resolve(const std::string& host,
@@ -434,7 +433,6 @@ RuleBasedHostResolverProc::~RuleBasedHostResolverProc() {
 }
 
 void RuleBasedHostResolverProc::AddRuleInternal(const Rule& rule) {
-  CHECK(modifications_allowed_);
   base::AutoLock lock(rule_lock_);
   rules_.push_back(rule);
 }

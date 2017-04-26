@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chromeos/components/tether/connect_tethering_operation.h"
-#include "chromeos/network/network_connection_handler.h"
+#include "chromeos/network/network_connect.h"
 
 namespace chromeos {
 
@@ -24,15 +24,15 @@ class TetherHostFetcher;
 class WifiHotspotConnector;
 
 // Connects to a tether network. When the user initiates a connection via the
-// UI, TetherConnector receives a callback from NetworkConnectionHandler and
-// initiates a connection by starting a ConnectTetheringOperation. When a
-// response has been received from the tether host, TetherConnector connects to
-// the associated Wi-Fi network.
-class TetherConnector : public NetworkConnectionHandler::TetherDelegate,
+// UI, TetherConnector receives a callback from NetworkConnect and initiates a
+// connection by starting a ConnectTetheringOperation. When a response has been
+// received from the tether host, TetherConnector connects to the associated
+// Wi-Fi network.
+class TetherConnector : public NetworkConnect::TetherDelegate,
                         public ConnectTetheringOperation::Observer {
  public:
   TetherConnector(
-      NetworkConnectionHandler* network_connection_handler,
+      NetworkConnect* network_connect,
       NetworkStateHandler* network_state_handler,
       WifiHotspotConnector* wifi_hotspot_connector,
       ActiveHost* active_host,
@@ -42,11 +42,8 @@ class TetherConnector : public NetworkConnectionHandler::TetherDelegate,
       DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map);
   ~TetherConnector() override;
 
-  // NetworkConnectionHandler::TetherDelegate:
-  void ConnectToNetwork(
-      const std::string& tether_network_guid,
-      const base::Closure& success_callback,
-      const network_handler::StringResultCallback& error_callback) override;
+  // NetworkConnect::TetherDelegate:
+  void ConnectToNetwork(const std::string& guid) override;
 
   // ConnectTetheringOperation::Observer:
   void OnSuccessfulConnectTetheringResponse(
@@ -60,9 +57,9 @@ class TetherConnector : public NetworkConnectionHandler::TetherDelegate,
  private:
   friend class TetherConnectorTest;
 
-  void SetConnectionFailed();
-  void SetConnectionSucceeded(const std::string& device_id,
-                              const std::string& wifi_network_guid);
+  void SetDisconnected();
+  void SetConnected(const std::string& device_id,
+                    const std::string& wifi_network_guid);
 
   void OnTetherHostToConnectFetched(
       const std::string& device_id,
@@ -70,7 +67,7 @@ class TetherConnector : public NetworkConnectionHandler::TetherDelegate,
   void OnWifiConnection(const std::string& device_id,
                         const std::string& wifi_network_guid);
 
-  NetworkConnectionHandler* network_connection_handler_;
+  NetworkConnect* network_connect_;
   NetworkStateHandler* network_state_handler_;
   WifiHotspotConnector* wifi_hotspot_connector_;
   ActiveHost* active_host_;
@@ -80,8 +77,6 @@ class TetherConnector : public NetworkConnectionHandler::TetherDelegate,
   DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map_;
 
   std::string device_id_pending_connection_;
-  base::Closure success_callback_;
-  network_handler::StringResultCallback error_callback_;
   std::unique_ptr<ConnectTetheringOperation> connect_tethering_operation_;
   base::WeakPtrFactory<TetherConnector> weak_ptr_factory_;
 

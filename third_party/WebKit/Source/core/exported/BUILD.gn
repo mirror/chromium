@@ -8,7 +8,5 @@ blink_core_sources("exported") {
     "WebAssociatedURLLoaderImpl.cpp",
     "WebAssociatedURLLoaderImpl.h",
     "WebBlob.cpp",
-    "WebDataSourceImpl.cpp",
-    "WebDataSourceImpl.h",
   ]
 }

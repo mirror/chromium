@@ -6,9 +6,6 @@
 
 #include <stdint.h>
 
-#include <utility>
-#include <vector>
-
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -107,14 +104,13 @@ void BookmarkExpandedStateTracker::UpdatePrefs(const Nodes& nodes) {
   if (!pref_service_)
     return;
 
-  std::vector<base::Value> values;
-  values.reserve(nodes.size());
-  for (const auto* node : nodes) {
-    values.emplace_back(base::Int64ToString(node->id()));
+  base::ListValue values;
+  for (Nodes::const_iterator i = nodes.begin(); i != nodes.end(); ++i) {
+    values.Set(values.GetSize(),
+               new base::Value(base::Int64ToString((*i)->id())));
   }
 
-  pref_service_->Set(prefs::kBookmarkEditorExpandedNodes,
-                     base::Value(std::move(values)));
+  pref_service_->Set(prefs::kBookmarkEditorExpandedNodes, values);
 }
 
 }  // namespace bookmarks

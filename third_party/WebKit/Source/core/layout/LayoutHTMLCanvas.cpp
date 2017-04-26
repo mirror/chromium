@@ -38,7 +38,7 @@ namespace blink {
 using namespace HTMLNames;
 
 LayoutHTMLCanvas::LayoutHTMLCanvas(HTMLCanvasElement* element)
-    : LayoutReplaced(element, LayoutSize(element->Size())) {
+    : LayoutReplaced(element, LayoutSize(element->size())) {
   View()->GetFrameView()->SetIsVisuallyNonEmpty();
 }
 
@@ -52,7 +52,7 @@ void LayoutHTMLCanvas::PaintReplaced(const PaintInfo& paint_info,
 }
 
 void LayoutHTMLCanvas::CanvasSizeChanged() {
-  IntSize canvas_size = toHTMLCanvasElement(GetNode())->Size();
+  IntSize canvas_size = toHTMLCanvasElement(GetNode())->size();
   LayoutSize zoomed_size(canvas_size.Width() * Style()->EffectiveZoom(),
                          canvas_size.Height() * Style()->EffectiveZoom());
 

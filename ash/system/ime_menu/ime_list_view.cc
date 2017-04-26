@@ -112,8 +112,8 @@ class ImeListItemView : public ActionableView {
 
   void OnFocus() override {
     ActionableView::OnFocus();
-    if (ime_list_view_)
-      ime_list_view_->ScrollItemToVisible(this);
+    if (ime_list_view_ && ime_list_view_->scroll_content())
+      ime_list_view_->scroll_content()->ScrollRectToVisible(bounds());
   }
 
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
@@ -221,7 +221,7 @@ void ImeListView::Update(const IMEInfoList& list,
       last_item_selected_with_keyboard_) {
     FocusCurrentImeIfNeeded();
   } else if (current_ime_view_) {
-    ScrollItemToVisible(current_ime_view_);
+    scroll_content()->ScrollRectToVisible(current_ime_view_->bounds());
   }
 }
 
@@ -230,11 +230,6 @@ void ImeListView::ResetImeListView() {
   Reset();
   keyboard_status_row_ = nullptr;
   current_ime_view_ = nullptr;
-}
-
-void ImeListView::ScrollItemToVisible(views::View* item_view) {
-  if (scroll_content())
-    scroll_content()->ScrollRectToVisible(item_view->bounds());
 }
 
 void ImeListView::CloseImeListView() {
@@ -329,7 +324,7 @@ void ImeListView::VisibilityChanged(View* starting_from, bool is_visible) {
     return;
   }
 
-  ScrollItemToVisible(current_ime_view_);
+  scroll_content()->ScrollRectToVisible(current_ime_view_->bounds());
 }
 
 void ImeListView::FocusCurrentImeIfNeeded() {

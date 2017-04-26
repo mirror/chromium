@@ -53,8 +53,6 @@ namespace content {
 class BackgroundSyncController;
 class BlobHandle;
 class BrowserPluginGuestManager;
-class BrowsingDataRemover;
-class BrowsingDataRemoverDelegate;
 class DownloadManager;
 class DownloadManagerDelegate;
 class PermissionManager;
@@ -87,15 +85,10 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // mount points. Currenty, non-nullptr value is returned only on ChromeOS.
   static storage::ExternalMountPoints* GetMountPoints(BrowserContext* context);
 
-  // Returns a BrowsingDataRemover that can schedule data deletion tasks
-  // for this |context|.
-  static BrowsingDataRemover* GetBrowsingDataRemover(BrowserContext* context);
-
-  static StoragePartition* GetStoragePartition(BrowserContext* browser_context,
-                                               SiteInstance* site_instance);
-  static StoragePartition* GetStoragePartitionForSite(
-      BrowserContext* browser_context,
-      const GURL& site);
+  static content::StoragePartition* GetStoragePartition(
+      BrowserContext* browser_context, SiteInstance* site_instance);
+  static content::StoragePartition* GetStoragePartitionForSite(
+      BrowserContext* browser_context, const GURL& site);
   using StoragePartitionCallback = base::Callback<void(StoragePartition*)>;
   static void ForEachStoragePartition(
       BrowserContext* browser_context,
@@ -112,7 +105,7 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
       std::unique_ptr<base::hash_set<base::FilePath>> active_paths,
       const base::Closure& done);
 
-  static StoragePartition* GetDefaultStoragePartition(
+  static content::StoragePartition* GetDefaultStoragePartition(
       BrowserContext* browser_context);
 
   using BlobCallback = base::Callback<void(std::unique_ptr<BlobHandle>)>;
@@ -232,10 +225,6 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // Returns the BackgroundSyncController associated with that context if any,
   // nullptr otherwise.
   virtual BackgroundSyncController* GetBackgroundSyncController() = 0;
-
-  // Returns the BrowsingDataRemoverDelegate for this context. This will be
-  // called once per context. It's valid to return nullptr.
-  virtual BrowsingDataRemoverDelegate* GetBrowsingDataRemoverDelegate();
 
   // Creates the main net::URLRequestContextGetter. It's called only once.
   virtual net::URLRequestContextGetter* CreateRequestContext(

@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import org.chromium.base.JavaHandlerThread;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
@@ -17,13 +16,10 @@ import org.chromium.base.annotations.JNINamespace;
 public final class LauncherThread {
     private static final JavaHandlerThread sThread =
             new JavaHandlerThread("Chrome_ProcessLauncherThread");
-    private static final Handler sThreadHandler;
-    // Can be overritten in tests.
-    private static Handler sHandler;
+    private static final Handler sHandler;
     static {
         sThread.maybeStart();
-        sThreadHandler = new Handler(sThread.getLooper());
-        sHandler = sThreadHandler;
+        sHandler = new Handler(sThread.getLooper());
     }
 
     public static void post(Runnable r) {
@@ -36,16 +32,6 @@ public final class LauncherThread {
 
     public static boolean runningOnLauncherThread() {
         return sHandler.getLooper() == Looper.myLooper();
-    }
-
-    @VisibleForTesting
-    public static void setCurrentThreadAsLauncherThread() {
-        sHandler = new Handler();
-    }
-
-    @VisibleForTesting
-    public static void setLauncherThreadAsLauncherThread() {
-        sHandler = sThreadHandler;
     }
 
     @CalledByNative

@@ -32,7 +32,6 @@
           "content::mojom::StoragePartitionService",
           "content::mojom::URLLoaderFactory",
           "content::mojom::VideoCaptureHost",
-          "content::mojom::WorkerURLLoaderFactoryProvider",
           "device::mojom::GamepadMonitor",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "media::mojom::ImageCapture",
@@ -63,10 +62,7 @@
         "device": [ "device:wake_lock" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
-        "network": [
-          "test",
-          "url_loader"
-        ],
+        "network": [ "url_loader" ],
         "ui": [ "display_output_protection" ],
         "service_manager": [
           "service_manager:client_process",

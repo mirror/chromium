@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.components.bookmarks.BookmarkId;
+import org.chromium.ui.base.DeviceFormFactor;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
     protected BookmarkId mBookmarkId;
     private ListPopupWindow mPopupMenu;
     private boolean mIsAttachedToWindow;
+    private boolean mShouldUseListItemBackground;
 
     /**
      * Constructor for inflating from XML.
@@ -52,10 +54,10 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
         mBookmarkId = bookmarkId;
         BookmarkItem bookmarkItem = mDelegate.getModel().getBookmarkById(bookmarkId);
         clearPopup();
-
-        mMoreIcon.setVisibility(bookmarkItem.isEditable() ? VISIBLE : GONE);
-        setChecked(mDelegate.getSelectionDelegate().isItemSelected(bookmarkId));
-
+        if (isSelectable()) {
+            mMoreIcon.setVisibility(bookmarkItem.isEditable() ? VISIBLE : GONE);
+            setChecked(mDelegate.getSelectionDelegate().isItemSelected(bookmarkId));
+        }
         super.setItem(bookmarkId);
         return bookmarkItem;
     }
@@ -78,8 +80,17 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
     }
 
     private void updateSelectionState() {
-        mMoreIcon.setClickable(!mDelegate.getSelectionDelegate().isSelectionEnabled());
+        if (isSelectable()) mMoreIcon.setClickable(
+                !mDelegate.getSelectionDelegate().isSelectionEnabled());
     }
+
+    /**
+     * @return Whether this row is selectable.
+     */
+    protected boolean isSelectable() {
+        return true;
+    }
+
     /**
      * Show drop-down menu after user click on more-info icon
      * @param view The anchor view for the menu
@@ -167,18 +178,26 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
         mIconImageView = (ImageView) findViewById(R.id.bookmark_image);
         mTitleView = (TextView) findViewById(R.id.title);
 
-        mMoreIcon = (TintedImageButton) findViewById(R.id.more);
-        mMoreIcon.setVisibility(VISIBLE);
-        mMoreIcon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showMenu(view);
-            }
-        });
+        if (isSelectable()) {
+            mMoreIcon = (TintedImageButton) findViewById(R.id.more);
+            mMoreIcon.setVisibility(VISIBLE);
+            mMoreIcon.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showMenu(view);
+                }
+            });
+        }
+
+        // TODO(twellington): remove this after the bookmarks 720dp layout is restyled
+        //                    to match the < 720dp style.
+        mShouldUseListItemBackground = !DeviceFormFactor.isLargeTablet(getContext());
 
         // TODO(twellington): Replace this with a MarginResizer after the bookmarks layout is width
         //                    constrained to 600dp.
-        setLateralMarginsForDefaultDisplay(findViewById(R.id.bookmark_row));
+        if (mShouldUseListItemBackground) {
+            setLateralMarginsForDefaultDisplay(findViewById(R.id.bookmark_row));
+        }
     }
 
     @Override
@@ -198,6 +217,17 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
     }
 
     // SelectableItem overrides.
+    @Override
+    public boolean onLongClick(View view) {
+        if (!isSelectable()) return false;
+        return super.onLongClick(view);
+    }
+
+    @Override
+    public boolean isChecked() {
+        if (!isSelectable()) return false;
+        return super.isChecked();
+    }
 
     @Override
     public void toggle() {
@@ -205,8 +235,14 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
     }
 
     @Override
+    public void setChecked(boolean checked) {
+        // Unselectable rows do not have highlight view.
+        if (isSelectable()) super.setChecked(checked);
+    }
+
+    @Override
     public void onSelectionStateChange(List<BookmarkId> selectedBookmarks) {
-        super.onSelectionStateChange(selectedBookmarks);
+        if (isSelectable()) super.onSelectionStateChange(selectedBookmarks);
         updateSelectionState();
     }
 
@@ -229,4 +265,11 @@ abstract class BookmarkRow extends SelectableItemView<BookmarkId> implements Boo
 
     @Override
     public void onSearchStateSet() {}
+
+    @Override
+    public void setBackgroundResourceForGroupPosition(
+            boolean isFirstInGroup, boolean isLastInGroup) {
+        if (!mShouldUseListItemBackground) return;
+        super.setBackgroundResourceForGroupPosition(isFirstInGroup, isLastInGroup);
+    }
 }

@@ -881,6 +881,8 @@ void RenderThreadImpl::Init(
       base::ThreadPriority::BACKGROUND);
 #endif
 
+  record_purge_suspend_metric_closure_.Reset(base::Bind(
+      &RenderThreadImpl::RecordPurgeAndSuspendMetrics, base::Unretained(this)));
   record_purge_suspend_growth_metric_closure_.Reset(
       base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
                  base::Unretained(this)));
@@ -1159,7 +1161,7 @@ void RenderThreadImpl::InitializeWebKit(
   // same queue to ensure tasks are executed in the expected order.
   child_resource_message_filter()->SetMainThreadTaskRunner(
       resource_task_queue2);
-  resource_dispatcher()->SetThreadTaskRunner(resource_task_queue2);
+  resource_dispatcher()->SetMainThreadTaskRunner(resource_task_queue2);
 
   if (!command_line.HasSwitch(switches::kDisableThreadedCompositing))
     InitializeCompositorThread();
@@ -1636,6 +1638,10 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
   } else {
     renderer_scheduler_->OnRendererForegrounded();
 
+    record_purge_suspend_metric_closure_.Cancel();
+    record_purge_suspend_metric_closure_.Reset(
+        base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMetrics,
+                   base::Unretained(this)));
     record_purge_suspend_growth_metric_closure_.Cancel();
     record_purge_suspend_growth_metric_closure_.Reset(
         base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
@@ -1648,27 +1654,18 @@ void RenderThreadImpl::OnProcessPurgeAndSuspend() {
   if (!RendererIsHidden())
     return;
 
-  if (!base::FeatureList::IsEnabled(features::kPurgeAndSuspend))
-    return;
-
-  base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
+  if (base::FeatureList::IsEnabled(features::kPurgeAndSuspend)) {
+    base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
+  }
+  // Since purging is not a synchronous task (e.g. v8 GC, oilpan GC, ...),
+  // we need to wait until the task is finished. So wait 15 seconds and
+  // update purge+suspend UMA histogram.
+  // TODO(tasak): use MemoryCoordinator's callback to report purge+suspend
+  // UMA when MemoryCoordinator is available.
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_metric_closure_.callback(),
+      base::TimeDelta::FromSeconds(15));
   needs_to_record_first_active_paint_ = true;
-
-  RendererMemoryMetrics memory_metrics;
-  if (!GetRendererMemoryMetrics(&memory_metrics))
-    return;
-
-  purge_and_suspend_memory_metrics_ = memory_metrics;
-  // record how many memory usage increases after purged.
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
-      base::TimeDelta::FromMinutes(5));
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
-      base::TimeDelta::FromMinutes(10));
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
-      base::TimeDelta::FromMinutes(15));
 }
 
 // TODO(tasak): Replace the following GetMallocUsage() with memory-infra
@@ -1763,6 +1760,47 @@ bool RenderThreadImpl::GetRendererMemoryMetrics(
       total_allocated / render_view_count / 1024 / 1024;
 
   return true;
+}
+
+// TODO(tasak): Once it is possible to use memory-infra without tracing,
+// we should collect the metrics using memory-infra.
+// TODO(tasak): We should also report a difference between the memory usages
+// before and after purging by using memory-infra.
+void RenderThreadImpl::RecordPurgeAndSuspendMetrics() {
+  // If this renderer is resumed, we should not update UMA.
+  if (!RendererIsHidden())
+    return;
+
+  // TODO(tasak): Compare memory metrics between purge-enabled renderers and
+  // purge-disabled renderers (A/B testing).
+  RendererMemoryMetrics memory_metrics;
+  if (!GetRendererMemoryMetrics(&memory_metrics))
+    return;
+
+  UMA_HISTOGRAM_MEMORY_KB("PurgeAndSuspend.Memory.PartitionAllocKB",
+                          memory_metrics.partition_alloc_kb);
+  UMA_HISTOGRAM_MEMORY_KB("PurgeAndSuspend.Memory.BlinkGCKB",
+                          memory_metrics.blink_gc_kb);
+  UMA_HISTOGRAM_MEMORY_MB("PurgeAndSuspend.Memory.MallocMB",
+                          memory_metrics.malloc_mb);
+  UMA_HISTOGRAM_MEMORY_KB("PurgeAndSuspend.Memory.DiscardableKB",
+                          memory_metrics.discardable_kb);
+  UMA_HISTOGRAM_MEMORY_MB("PurgeAndSuspend.Memory.V8MainThreadIsolateMB",
+                          memory_metrics.v8_main_thread_isolate_mb);
+  UMA_HISTOGRAM_MEMORY_MB("PurgeAndSuspend.Memory.TotalAllocatedMB",
+                          memory_metrics.total_allocated_mb);
+  purge_and_suspend_memory_metrics_ = memory_metrics;
+
+  // record how many memory usage increases after purged.
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
+      base::TimeDelta::FromMinutes(5));
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
+      base::TimeDelta::FromMinutes(10));
+  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
+      FROM_HERE, record_purge_suspend_growth_metric_closure_.callback(),
+      base::TimeDelta::FromMinutes(15));
 }
 
 #define GET_MEMORY_GROWTH(current, previous, allocator) \

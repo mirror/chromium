@@ -343,6 +343,11 @@ Polymer({
 // </if>
   },
 
+  /** @private */
+  onManageSupervisedUsers_: function() {
+    window.open(loadTimeData.getString('supervisedUsersUrl'));
+  },
+
 // <if expr="not chromeos">
   /**
    * @private

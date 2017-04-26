@@ -18,7 +18,7 @@ ImageBitmapRenderingContext::ImageBitmapRenderingContext(
     HTMLCanvasElement* canvas,
     const CanvasContextCreationAttributes& attrs,
     Document& document)
-    : CanvasRenderingContext(canvas, attrs),
+    : CanvasRenderingContext(canvas, nullptr, attrs),
       image_layer_bridge_(
           new ImageLayerBridge(attrs.alpha() ? kNonOpaque : kOpaque)) {}
 

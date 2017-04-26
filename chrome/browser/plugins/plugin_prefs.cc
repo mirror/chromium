@@ -136,9 +136,9 @@ void PluginPrefs::SetPrefs(PrefService* prefs) {
           continue;  // Oops, don't know what to do with this item.
         }
 
-        bool enabled = true;
-        if (plugin->GetBoolean("enabled", &enabled))
-          plugin->Remove("enabled", nullptr);
+        bool enabled;
+        if (!plugin->GetBoolean("enabled", &enabled))
+          enabled = true;
 
         // Migrate disabled plugins and re-enable them all internally.
         // TODO(http://crbug.com/662006): Remove migration eventually.

@@ -135,7 +135,7 @@ class NetworkListView::SectionHeaderRowView : public views::View,
   void InitializeLayout() {
     TrayPopupUtils::ConfigureAsStickyHeader(this);
     SetLayoutManager(new views::FillLayout);
-    container_ = TrayPopupUtils::CreateSubHeaderRowView(false);
+    container_ = TrayPopupUtils::CreateSubHeaderRowView();
     AddChildView(container_);
 
     views::Label* label = TrayPopupUtils::CreateDefaultLabel();

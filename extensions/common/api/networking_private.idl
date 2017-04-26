@@ -233,12 +233,9 @@ namespace networkingPrivate {
     DOMString? ClientCertType;
     DOMString? Identity;
     DOMString? Inner;
-    // The outer EAP type. Required by ONC, but may not be provided when
-    // translating from Shill.
-    DOMString? Outer;
+    DOMString Outer;
     DOMString? Password;
     boolean? SaveCredentials;
-    DOMString[]? ServerCAPEMs;
     DOMString[]? ServerCARefs;
     boolean? UseProactiveKeyCaching;
     boolean? UseSystemCAs;
@@ -251,12 +248,9 @@ namespace networkingPrivate {
     ManagedDOMString? ClientCertType;
     ManagedDOMString? Identity;
     ManagedDOMString? Inner;
-    // The outer EAP type. Required by ONC, but may not be provided when
-    // translating from Shill.
-    ManagedDOMString? Outer;
+    ManagedDOMString Outer;
     ManagedDOMString? Password;
     ManagedBoolean? SaveCredentials;
-    ManagedDOMStringList? ServerCAPEMs;
     ManagedDOMStringList? ServerCARefs;
     ManagedBoolean? UseProactiveKeyCaching;
     ManagedBoolean? UseSystemCAs;

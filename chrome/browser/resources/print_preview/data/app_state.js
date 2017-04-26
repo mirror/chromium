@@ -215,6 +215,9 @@ cr.define('print_preview', function() {
         this.state_[AppState.Field.RECENT_DESTINATIONS].length =
             AppState.NUM_DESTINATIONS_;
       }
+      if (!loadTimeData.getBoolean('scalingEnabled'))
+        this.state_[AppState.Field.SCALING] = 100;
+
     },
 
     /**

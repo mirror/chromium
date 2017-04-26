@@ -234,7 +234,7 @@ void EntriesCallbacks::DidReadDirectoryEntry(const String& name,
 void EntriesCallbacks::DidReadDirectoryEntries(bool has_more) {
   directory_reader_->SetHasMoreEntries(has_more);
   EntryHeapVector entries;
-  entries.swap(entries_);
+  entries.Swap(entries_);
   // FIXME: delay the callback iff shouldScheduleCallback() is true.
   if (success_callback_)
     success_callback_->handleEvent(entries);

@@ -431,34 +431,33 @@ bool IsValidNFCRecord(const NFCRecord& record) {
   return false;
 }
 
-bool IsValidNFCRecordArray(const HeapVector<NFCRecord>& records) {
+DOMException* IsValidNFCRecordArray(const HeapVector<NFCRecord>& records) {
+  // https://w3c.github.io/web-nfc/#the-push-method
+  // If NFCMessage.data is empty, reject promise with SyntaxError
   if (records.IsEmpty())
-    return false;
+    return DOMException::Create(kSyntaxError);
 
   for (const auto& record : records) {
     if (!IsValidNFCRecord(record))
-      return false;
+      return DOMException::Create(kSyntaxError);
   }
 
-  return true;
+  return nullptr;
 }
 
-bool IsValidNFCPushMessage(const NFCPushMessage& message) {
-  // If NFCPushMessage of invalid type, reject promise with TypeError
+DOMException* IsValidNFCPushMessage(const NFCPushMessage& message) {
   if (!message.isNFCMessage() && !message.isString() &&
       !message.isArrayBuffer())
-    return false;
+    return DOMException::Create(kTypeMismatchError);
 
   if (message.isNFCMessage()) {
-    // https://w3c.github.io/web-nfc/#the-push-method
-    // If NFCMessage.data is empty, reject promise with TypeError
     if (!message.getAsNFCMessage().hasData())
-      return false;
+      return DOMException::Create(kTypeMismatchError);
 
     return IsValidNFCRecordArray(message.getAsNFCMessage().data());
   }
 
-  return true;
+  return nullptr;
 }
 
 bool SetURL(const String& origin,
@@ -615,24 +614,9 @@ ScriptPromise NFC::push(ScriptState* script_state,
   if (!promise.IsEmpty())
     return promise;
 
-  if (!IsValidNFCPushMessage(push_message)) {
-    return ScriptPromise::Reject(
-        script_state, V8ThrowException::CreateTypeError(
-                          script_state->GetIsolate(),
-                          "Invalid NFCPushMessage type was provided."));
-  }
-
-  // https://w3c.github.io/web-nfc/#dom-nfc-push
-  // 9. If timeout value is NaN or negative, reject promise with "TypeError"
-  // and abort these steps.
-  if (options.hasTimeout() &&
-      (std::isnan(options.timeout()) || options.timeout() < 0)) {
-    return ScriptPromise::Reject(
-        script_state,
-        V8ThrowException::CreateTypeError(
-            script_state->GetIsolate(),
-            "Invalid NFCPushOptions.timeout value was provided."));
-  }
+  DOMException* exception = IsValidNFCPushMessage(push_message);
+  if (exception)
+    return ScriptPromise::RejectWithDOMException(script_state, exception);
 
   device::nfc::mojom::blink::NFCMessagePtr message =
       device::nfc::mojom::blink::NFCMessage::From(push_message);

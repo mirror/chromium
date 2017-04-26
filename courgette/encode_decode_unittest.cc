@@ -9,12 +9,9 @@
 #include "courgette/assembly_program.h"
 #include "courgette/base_test_unittest.h"
 #include "courgette/courgette.h"
-#include "courgette/courgette_flow.h"
 #include "courgette/encoded_program.h"
 #include "courgette/program_detector.h"
 #include "courgette/streams.h"
-
-namespace courgette {
 
 class EncodeDecodeTest : public BaseTest {
  public:
@@ -25,63 +22,57 @@ class EncodeDecodeTest : public BaseTest {
 void EncodeDecodeTest::TestAssembleToStreamDisassemble(
     const std::string& file,
     size_t expected_encoded_length) const {
-  const uint8_t* original_data = reinterpret_cast<const uint8_t*>(file.data());
+  const uint8_t* original_buffer =
+      reinterpret_cast<const uint8_t*>(file.data());
   size_t original_length = file.length();
-  CourgetteFlow flow;
 
-  // Convert executable to encoded assembly.
-  RegionBuffer original_buffer(Region(original_data, original_length));
-  flow.ReadAssemblyProgramFromBuffer(flow.ONLY, original_buffer, false);
-  EXPECT_EQ(C_OK, flow.status());
-  EXPECT_TRUE(nullptr != flow.data(flow.ONLY)->program.get());
+  std::unique_ptr<courgette::AssemblyProgram> program;
+  const courgette::Status parse_status = courgette::ParseDetectedExecutable(
+      original_buffer, original_length, &program);
+  EXPECT_EQ(courgette::C_OK, parse_status);
 
-  flow.CreateEncodedProgramFromAssemblyProgram(flow.ONLY);
-  EXPECT_EQ(C_OK, flow.status());
-  EXPECT_TRUE(nullptr != flow.data(flow.ONLY)->encoded.get());
+  std::unique_ptr<courgette::EncodedProgram> encoded;
+  const courgette::Status encode_status = Encode(*program, &encoded);
+  EXPECT_EQ(courgette::C_OK, encode_status);
 
-  flow.DestroyAssemblyProgram(flow.ONLY);
-  EXPECT_EQ(C_OK, flow.status());
-  EXPECT_TRUE(nullptr == flow.data(flow.ONLY)->program.get());
+  program.reset();
 
-  flow.WriteSinkStreamSetFromEncodedProgram(flow.ONLY);
-  EXPECT_EQ(C_OK, flow.status());
+  courgette::SinkStreamSet sinks;
+  const courgette::Status write_status =
+      WriteEncodedProgram(encoded.get(), &sinks);
+  EXPECT_EQ(courgette::C_OK, write_status);
 
-  flow.DestroyEncodedProgram(flow.ONLY);
-  EXPECT_EQ(C_OK, flow.status());
-  EXPECT_TRUE(nullptr == flow.data(flow.ONLY)->encoded.get());
+  encoded.reset();
 
-  SinkStream sink;
-  flow.WriteSinkStreamFromSinkStreamSet(flow.ONLY, &sink);
-  EXPECT_EQ(C_OK, flow.status());
+  courgette::SinkStream sink;
+  bool can_collect = sinks.CopyTo(&sink);
+  EXPECT_TRUE(can_collect);
 
-  const void* encoded_data = sink.Buffer();
-  size_t encoded_length = sink.Length();
-  EXPECT_EQ(expected_encoded_length, encoded_length);
+  const void* buffer = sink.Buffer();
+  size_t length = sink.Length();
 
-  // Convert encoded assembly back to executable.
-  RegionBuffer encoded_buffer(Region(encoded_data, encoded_length));
-  flow.ReadSourceStreamSetFromBuffer(flow.ONLY, encoded_buffer);
-  EXPECT_EQ(C_OK, flow.status());
+  EXPECT_EQ(expected_encoded_length, length);
 
-  flow.ReadEncodedProgramFromSourceStreamSet(flow.ONLY);
-  EXPECT_EQ(C_OK, flow.status());
-  EXPECT_TRUE(nullptr != flow.data(flow.ONLY)->encoded.get());
+  courgette::SourceStreamSet sources;
+  bool can_get_source_streams = sources.Init(buffer, length);
+  EXPECT_TRUE(can_get_source_streams);
 
-  SinkStream executable;
-  flow.WriteExecutableFromEncodedProgram(flow.ONLY, &executable);
-  EXPECT_EQ(C_OK, flow.status());
+  std::unique_ptr<courgette::EncodedProgram> encoded2;
+  const courgette::Status read_status = ReadEncodedProgram(&sources, &encoded2);
+  EXPECT_EQ(courgette::C_OK, read_status);
 
-  flow.DestroyEncodedProgram(flow.ONLY);
-  EXPECT_EQ(C_OK, flow.status());
-  EXPECT_TRUE(nullptr == flow.data(flow.ONLY)->encoded.get());
-  EXPECT_TRUE(flow.ok());
-  EXPECT_FALSE(flow.failed());
+  courgette::SinkStream assembled;
+  const courgette::Status assemble_status =
+      Assemble(encoded2.get(), &assembled);
+  EXPECT_EQ(courgette::C_OK, assemble_status);
 
-  const void* executable_data = executable.Buffer();
-  size_t executable_length = executable.Length();
-  EXPECT_EQ(original_length, executable_length);
+  encoded2.reset();
 
-  EXPECT_EQ(0, memcmp(original_data, executable_data, original_length));
+  const void* assembled_buffer = assembled.Buffer();
+  size_t assembled_length = assembled.Length();
+
+  EXPECT_EQ(original_length, assembled_length);
+  EXPECT_EQ(0, memcmp(original_buffer, assembled_buffer, original_length));
 }
 
 TEST_F(EncodeDecodeTest, PE) {
@@ -108,5 +99,3 @@ TEST_F(EncodeDecodeTest, Elf_Arm) {
   std::string file = FileContents("elf-armv7");
   TestAssembleToStreamDisassemble(file, 8531);
 }
-
-}  // namespace courgette

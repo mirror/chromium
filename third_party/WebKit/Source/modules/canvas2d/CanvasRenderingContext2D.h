@@ -91,10 +91,6 @@ class MODULES_EXPORT CanvasRenderingContext2D final
 
   ~CanvasRenderingContext2D() override;
 
-  HTMLCanvasElement* canvas() const {
-    DCHECK(!host() || !host()->IsOffscreenCanvas());
-    return static_cast<HTMLCanvasElement*>(host());
-  }
   void SetCanvasGetContextResult(RenderingContext&) final;
 
   bool isContextLost() const override;
@@ -270,12 +266,11 @@ class MODULES_EXPORT CanvasRenderingContext2D final
   ListHashSet<String> font_lru_list_;
 };
 
-// TODO(fserb): remove this?
 DEFINE_TYPE_CASTS(CanvasRenderingContext2D,
                   CanvasRenderingContext,
                   context,
-                  context->Is2d() && context->host(),
-                  context.Is2d() && context.host());
+                  context->Is2d() && context->canvas(),
+                  context.Is2d() && context.canvas());
 
 }  // namespace blink
 

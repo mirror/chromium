@@ -5,6 +5,12 @@
 <dom-module id="settings-shared">
   <template>
     <style include="cr-shared-style">
+      /* Included here so we don't have to include "iron-positioning" in every
+       * stylesheet. See crbug.com/498405. */
+      [hidden] {
+        display: none !important;
+      }
+
       :host-context([dir=rtl]) button[is='paper-icon-button-light'] {
         transform: scaleX(-1);  /* Flip on the X axis (aka mirror). */
       }
@@ -69,13 +75,8 @@
         text-decoration: none;
       }
 
-      /* For elements that are simple outlinks but dont look like anchors. */
-      .inherit-color {
-        color: inherit !important;
-      }
-
-      /* There are three main button styles, .primary-button, .secondary-button,
-       * and .tertiary-button. The primary is the action button (e.g. "edit",
+      /* There are three main button styles, .primary-button and
+       * .secondary-button. The primary is the action button (e.g. "edit",
        * "delete") while the secondary is often a "Cancel" button. A tertiary
        * button may be used to get more information or similar, that we expect
        * most users will not need. */

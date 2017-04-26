@@ -45,7 +45,7 @@ Step::Step(Axis axis,
            const NodeTest& node_test,
            HeapVector<Member<Predicate>>& predicates)
     : axis_(axis), node_test_(new NodeTest(node_test)) {
-  predicates_.swap(predicates);
+  predicates_.Swap(predicates);
 }
 
 Step::~Step() {}

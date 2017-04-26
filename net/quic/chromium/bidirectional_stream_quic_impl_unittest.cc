@@ -656,10 +656,13 @@ class BidirectionalStreamQuicImplTest
                                        !kIncludeCongestionFeedback);
   }
 
-  std::unique_ptr<QuicReceivedPacket> ConstructInitialSettingsPacket(
+  std::unique_ptr<QuicReceivedPacket> ConstructSettingsPacket(
       QuicPacketNumber packet_number,
+      SpdySettingsIds id,
+      size_t value,
       QuicStreamOffset* offset) {
-    return client_maker_.MakeInitialSettingsPacket(packet_number, offset);
+    return client_maker_.MakeSettingsPacket(packet_number, id, value,
+                                            kIncludeVersion, offset);
   }
 
   void ExpectLoadTimingValid(const LoadTimingInfo& load_timing_info,
@@ -719,7 +722,9 @@ TEST_P(BidirectionalStreamQuicImplTest, GetRequest) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   AddWrite(ConstructClientAckPacket(3, 3, 1, 1));
 
   Initialize();
@@ -819,7 +824,8 @@ TEST_P(BidirectionalStreamQuicImplTest, LoadTimingTwoRequests) {
   SetRequest("GET", "/", DEFAULT_PRIORITY);
   AddWrite(ConstructRequestHeadersPacketInner(
       2, kClientDataStreamId2, kFin, DEFAULT_PRIORITY, nullptr, &offset));
-  AddWrite(ConstructInitialSettingsPacket(3, &offset));
+  AddWrite(ConstructSettingsPacket(3, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize, &offset));
   AddWrite(ConstructClientAckPacket(4, 3, 1, 1));
   Initialize();
 
@@ -881,7 +887,9 @@ TEST_P(BidirectionalStreamQuicImplTest, CoalesceDataBuffersNotHeadersFrame) {
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
-  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   const char kBody1[] = "here are some data";
   const char kBody2[] = "data keep coming";
   std::vector<std::string> two_writes = {kBody1, kBody2};
@@ -993,7 +1001,9 @@ TEST_P(BidirectionalStreamQuicImplTest,
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
-  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   const char kBody1[] = "here are some data";
   AddWrite(ConstructRequestHeadersAndMultipleDataFramesPacket(
       2, !kFin, DEFAULT_PRIORITY, &header_stream_offset,
@@ -1088,7 +1098,9 @@ TEST_P(BidirectionalStreamQuicImplTest,
   SetRequest("POST", "/", DEFAULT_PRIORITY);
   size_t spdy_request_headers_frame_length;
   QuicStreamOffset header_stream_offset = 0;
-  AddWrite(ConstructInitialSettingsPacket(1, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(1, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   const char kBody1[] = "here are some data";
   const char kBody2[] = "data keep coming";
   std::vector<std::string> two_writes = {kBody1, kBody2};
@@ -1194,7 +1206,9 @@ TEST_P(BidirectionalStreamQuicImplTest, PostRequest) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   AddWrite(ConstructDataPacket(3, kIncludeVersion, kFin, 0, kUploadData,
                                &client_maker_));
   AddWrite(ConstructClientAckPacket(4, 3, 1, 1));
@@ -1353,7 +1367,9 @@ TEST_P(BidirectionalStreamQuicImplTest, InterleaveReadDataAndSendData) {
       1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
 
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   AddWrite(ConstructAckAndDataPacket(3, !kIncludeVersion, 2, 1, 1, !kFin, 0,
                                      kUploadData, &client_maker_));
   AddWrite(ConstructAckAndDataPacket(4, !kIncludeVersion, 3, 3, 3, kFin,
@@ -1441,7 +1457,9 @@ TEST_P(BidirectionalStreamQuicImplTest, ServerSendsRstAfterHeaders) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   Initialize();
 
   BidirectionalStreamRequestInfo request;
@@ -1482,7 +1500,9 @@ TEST_P(BidirectionalStreamQuicImplTest, ServerSendsRstAfterReadData) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   // Why does QUIC ack Rst? Is this expected?
   AddWrite(ConstructClientAckPacket(3, 3, 1, 1));
 
@@ -1543,7 +1563,9 @@ TEST_P(BidirectionalStreamQuicImplTest, SessionClosedBeforeReadData) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   Initialize();
 
   BidirectionalStreamRequestInfo request;
@@ -1603,7 +1625,9 @@ TEST_P(BidirectionalStreamQuicImplTest, DeleteStreamAfterReadData) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   AddWrite(ConstructClientAckAndRstStreamPacket(3, 2, 1, 1));
 
   Initialize();
@@ -1657,7 +1681,9 @@ TEST_P(BidirectionalStreamQuicImplTest, DeleteStreamDuringOnHeadersReceived) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   AddWrite(ConstructClientAckAndRstStreamPacket(3, 2, 1, 1));
 
   Initialize();
@@ -1703,7 +1729,9 @@ TEST_P(BidirectionalStreamQuicImplTest, DeleteStreamDuringOnDataRead) {
   AddWrite(ConstructRequestHeadersPacketInner(
       1, kClientDataStreamId1, !kFin, DEFAULT_PRIORITY,
       &spdy_request_headers_frame_length, &header_stream_offset));
-  AddWrite(ConstructInitialSettingsPacket(2, &header_stream_offset));
+  AddWrite(ConstructSettingsPacket(2, SETTINGS_MAX_HEADER_LIST_SIZE,
+                                   kDefaultMaxUncompressedHeaderSize,
+                                   &header_stream_offset));
   AddWrite(ConstructClientAckPacket(3, 3, 1, 1));
   AddWrite(ConstructClientRstStreamPacket(4));
 

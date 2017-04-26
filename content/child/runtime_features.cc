@@ -15,7 +15,6 @@
 #include "content/common/content_switches_internal.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "media/base/media_switches.h"
 #include "services/device/public/cpp/device_features.h"
 #include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "ui/gl/gl_switches.h"
@@ -50,6 +49,10 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
   WebRuntimeFeatures::EnableMediaControlsOverlayPlayButton(true);
 #else  // defined(OS_ANDROID)
   WebRuntimeFeatures::EnableNavigatorContentUtils(true);
+  if (base::FeatureList::IsEnabled(
+          features::kCrossOriginMediaPlaybackRequiresUserGesture)) {
+    WebRuntimeFeatures::EnableAutoplayMutedVideos(true);
+  }
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID) || defined(USE_AURA)
@@ -339,9 +342,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableServiceWorkerNavigationPreload(
       base::FeatureList::IsEnabled(features::kServiceWorkerNavigationPreload));
 
-  WebRuntimeFeatures::EnableOffMainThreadFetch(
-      base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-
   if (base::FeatureList::IsEnabled(features::kGamepadExtensions))
     WebRuntimeFeatures::EnableGamepadExtensions(true);
 
@@ -382,13 +382,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   if (base::FeatureList::IsEnabled(features::kIdleTimeSpellChecking))
     WebRuntimeFeatures::EnableFeatureFromString("IdleTimeSpellChecking", true);
-
-#if !defined(OS_ANDROID)
-  if (command_line.GetSwitchValueASCII(switches::kAutoplayPolicy) ==
-      switches::autoplay::kCrossOriginUserGestureRequiredPolicy) {
-    WebRuntimeFeatures::EnableAutoplayMutedVideos(true);
-  }
-#endif
 
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.

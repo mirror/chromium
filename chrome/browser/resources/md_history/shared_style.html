@@ -1,9 +1,12 @@
 <link rel="import" href="chrome://history/shared_vars.html">
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 
 <dom-module id="shared-style">
   <template>
-    <style include="cr-hidden-style">
+    <style>
+      [hidden] {
+        display: none !important;
+      }
+
       a {
         color: var(--link-color);
       }

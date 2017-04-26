@@ -37,10 +37,6 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
     }
   };
 
-  OffscreenCanvas* offscreenCanvas() const {
-    DCHECK(!host() || host()->IsOffscreenCanvas());
-    return static_cast<OffscreenCanvas*>(host());
-  }
   ScriptPromise commit(ScriptState*, ExceptionState&);
 
   // CanvasRenderingContext implementation
@@ -115,12 +111,11 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
   RefPtr<StaticBitmapImage> TransferToStaticBitmapImage();
 };
 
-// TODO(fserb): remove this.
 DEFINE_TYPE_CASTS(OffscreenCanvasRenderingContext2D,
                   CanvasRenderingContext,
                   context,
-                  context->Is2d() && context->host(),
-                  context.Is2d() && context.host());
+                  context->Is2d() && context->offscreenCanvas(),
+                  context.Is2d() && context.offscreenCanvas());
 
 }  // namespace blink
 

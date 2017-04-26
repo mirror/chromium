@@ -36,7 +36,7 @@ sys.path.insert(1, os.path.join(_current_dir, *([os.pardir] * 4)))
 import jinja2
 
 
-def apply_template(path_to_template, params, filters=None, tests=None):
+def apply_template(path_to_template, params, filters=None):
     dirname, basename = os.path.split(path_to_template)
     path_to_templates = os.path.join(_current_dir, 'templates')
     jinja_env = jinja2.Environment(
@@ -46,17 +46,15 @@ def apply_template(path_to_template, params, filters=None, tests=None):
         trim_blocks=True)  # so don't need {%- -%} everywhere
     if filters:
         jinja_env.filters.update(filters)
-    if tests:
-        jinja_env.tests.update(tests)
     template = jinja_env.get_template(basename)
     return template.render(params)
 
 
-def use_jinja(template_file_name, filters=None, tests=None):
+def use_jinja(template_file_name, filters=None):
     def real_decorator(generator):
         def generator_internal(*args, **kwargs):
             parameters = generator(*args, **kwargs)
-            return apply_template(template_file_name, parameters, filters=filters, tests=tests)
+            return apply_template(template_file_name, parameters, filters=filters)
         generator_internal.func_name = generator.func_name
         return generator_internal
     return real_decorator

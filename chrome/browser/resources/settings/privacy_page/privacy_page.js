@@ -246,6 +246,12 @@ Polymer({
   },
 
   /** @private */
+  onHelpTap_: function() {
+    window.open(
+        'https://support.google.com/chrome/?p=settings_manage_exceptions');
+  },
+
+  /** @private */
   onSberChange_: function() {
     var enabled = this.$.safeBrowsingExtendedReportingControl.checked;
     this.browserProxy_.setSafeBrowsingExtendedReportingEnabled(enabled);
@@ -318,6 +324,14 @@ Polymer({
         loadTimeData.getString('siteSettings') :
         loadTimeData.getString('contentSettings');
   },
+
+// <if expr="chromeos">
+  /** @private */
+  onAdobeFlashStorageClicked_: function() {
+    window.open('https://www.macromedia.com/support/' +
+        'documentation/en/flashplayer/help/settings_manager07.html');
+  },
+// </if>
 
   /** @private */
   getProtectedContentLabel_: function(value) {

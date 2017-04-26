@@ -17,8 +17,9 @@ namespace {
 std::unique_ptr<base::ListValue> CopyBinaryValueToIntegerList(
     const Value* input) {
   std::unique_ptr<base::ListValue> output(new base::ListValue());
-  for (char c : input->GetBlob()) {
-    output->AppendInteger(c);
+  const char* input_buffer = input->GetBuffer();
+  for (size_t i = 0; i < input->GetSize(); i++) {
+    output->AppendInteger(input_buffer[i]);
   }
   return output;
 }

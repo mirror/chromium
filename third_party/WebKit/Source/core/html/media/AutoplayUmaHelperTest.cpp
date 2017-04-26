@@ -41,7 +41,7 @@ class AutoplayUmaHelperTest : public testing::Test {
   Document& GetDocument() { return page_holder_->GetDocument(); }
 
   HTMLMediaElement& MediaElement() {
-    Element* element = GetDocument().getElementById("video");
+    Element* element = GetDocument().GetElementById("video");
     DCHECK(element);
     return toHTMLVideoElement(*element);
   }

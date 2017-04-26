@@ -58,7 +58,7 @@ void FetchContext::AddAdditionalRequestHeaders(ResourceRequest&,
                                                FetchResourceType) {}
 
 WebCachePolicy FetchContext::ResourceRequestCachePolicy(
-    const ResourceRequest&,
+    ResourceRequest&,
     Resource::Type,
     FetchParameters::DeferOption defer) const {
   return WebCachePolicy::kUseProtocolCachePolicy;

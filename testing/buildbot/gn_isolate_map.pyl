@@ -653,6 +653,7 @@
     "executable": "browser_tests",
     "args": [
       "--run-in-mash",
+      "--service-overrides=../../chrome/app/mash/mash_service_overrides.json",
     ],
   },
   "media_unittests": {
@@ -896,7 +897,7 @@
   "tab_capture_end2end_tests": {
     # TODO(dpranke), TODO(crbug.com/714336): What is the right label to
     # have here (and/or the right way to run this?).
-    "label": "//chrome/test:browser_tests",
+    "label": "//chrome/test:tab_capture_end2end_tests",
     "type": "gpu_browser_test",
     "gtest_filter": "CastStreamingApiTestWithPixelOutput.EndToEnd*:TabCaptureApiPixelTest.EndToEnd*",
   },

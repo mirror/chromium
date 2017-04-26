@@ -102,7 +102,7 @@ public class ChildProcessLauncherTest {
         Assert.assertEquals(0, ChildProcessLauncher.connectedServicesCountForTesting());
 
         // Start and connect to a new service.
-        final BaseChildProcessConnection connection = startConnection();
+        final ChildProcessConnectionImpl connection = startConnection();
         Assert.assertEquals(1, allocatedChromeSandboxedConnectionsCount());
 
         // Verify that the service is not yet set up.
@@ -138,7 +138,7 @@ public class ChildProcessLauncherTest {
         Assert.assertEquals(0, allocatedChromeSandboxedConnectionsCount());
 
         // Start and connect to a new service.
-        final BaseChildProcessConnection connection = startConnection();
+        final ChildProcessConnectionImpl connection = startConnection();
         Assert.assertEquals(1, allocatedChromeSandboxedConnectionsCount());
 
         // Initiate the connection setup.
@@ -193,7 +193,7 @@ public class ChildProcessLauncherTest {
         Assert.assertEquals(0, allocatedChromeSandboxedConnectionsCount());
 
         // Start and connect to a new service.
-        final BaseChildProcessConnection connection = startConnection();
+        final ChildProcessConnectionImpl connection = startConnection();
         Assert.assertEquals(1, allocatedChromeSandboxedConnectionsCount());
 
         // Queue up a new spawn request. There is no way to kill the pending connection, leak it
@@ -269,10 +269,10 @@ public class ChildProcessLauncherTest {
         Assert.assertEquals(0, allocatedChromeSandboxedConnectionsCount());
 
         // Start and connect to a new service of an external APK.
-        BaseChildProcessConnection externalApkConnection =
+        ChildProcessConnectionImpl externalApkConnection =
                 allocateConnection(EXTERNAL_APK_PACKAGE_NAME);
         // Start and connect to a new service for a regular tab.
-        BaseChildProcessConnection tabConnection = allocateConnection(appContext.getPackageName());
+        ChildProcessConnectionImpl tabConnection = allocateConnection(appContext.getPackageName());
 
         // Verify that one connection is allocated for an external APK and a regular tab
         // respectively.
@@ -305,17 +305,17 @@ public class ChildProcessLauncherTest {
                         appContext, EXTERNAL_APK_PACKAGE_NAME));
 
         // Setup a connection for an external APK to reach the maximum allowed connection number.
-        BaseChildProcessConnection externalApkConnection =
+        ChildProcessConnectionImpl externalApkConnection =
                 allocateConnection(EXTERNAL_APK_PACKAGE_NAME);
         Assert.assertNotNull(externalApkConnection);
 
         // Verify that there isn't any connection available for the external APK.
-        BaseChildProcessConnection exceedNumberExternalApkConnection =
+        ChildProcessConnectionImpl exceedNumberExternalApkConnection =
                 allocateConnection(EXTERNAL_APK_PACKAGE_NAME);
         Assert.assertNull(exceedNumberExternalApkConnection);
 
         // Verify that we can still allocate connection for a regular tab.
-        BaseChildProcessConnection tabConnection = allocateConnection(appContext.getPackageName());
+        ChildProcessConnectionImpl tabConnection = allocateConnection(appContext.getPackageName());
         Assert.assertNotNull(tabConnection);
     }
 
@@ -405,7 +405,7 @@ public class ChildProcessLauncherTest {
         final ChildProcessCreationParams creationParams = new ChildProcessCreationParams(
                 context.getPackageName(), false /* isExternalService */,
                 LibraryProcessType.PROCESS_CHILD, true /* bindToCallerCheck */);
-        final BaseChildProcessConnection conn =
+        final ChildProcessConnection conn =
                 ChildProcessLauncherTestHelperService.startInternalForTesting(
                         context, sProcessWaitArguments, new FileDescriptorInfo[0], creationParams);
 
@@ -419,7 +419,7 @@ public class ChildProcessLauncherTest {
 
         Assert.assertEquals(0, conn.getServiceNumber());
 
-        final BaseChildProcessConnection[] sandboxedConnections =
+        final ChildProcessConnection[] sandboxedConnections =
                 getSandboxedConnectionArrayForTesting(context, context.getPackageName());
 
         // Wait for the retry to succeed.
@@ -429,7 +429,7 @@ public class ChildProcessLauncherTest {
                     public boolean isSatisfied() {
                         boolean allChildrenConnected = true;
                         for (int i = 0; i <= 1; ++i) {
-                            BaseChildProcessConnection conn = sandboxedConnections[i];
+                            ChildProcessConnection conn = sandboxedConnections[i];
                             allChildrenConnected &= conn != null && conn.getService() != null;
                         }
                         return allChildrenConnected;
@@ -438,7 +438,7 @@ public class ChildProcessLauncherTest {
 
         // Check that only two connections are created.
         for (int i = 0; i < sandboxedConnections.length; ++i) {
-            BaseChildProcessConnection sandboxedConn = sandboxedConnections[i];
+            ChildProcessConnection sandboxedConn = sandboxedConnections[i];
             if (i <= 1) {
                 Assert.assertNotNull(sandboxedConn);
                 Assert.assertNotNull(sandboxedConn.getService());
@@ -448,7 +448,7 @@ public class ChildProcessLauncherTest {
         }
 
         Assert.assertTrue(conn == sandboxedConnections[0]);
-        final BaseChildProcessConnection retryConn = sandboxedConnections[1];
+        final ChildProcessConnection retryConn = sandboxedConnections[1];
 
         Assert.assertFalse(conn == retryConn);
 
@@ -488,7 +488,7 @@ public class ChildProcessLauncherTest {
             public void run() {
                 Assert.assertEquals(1, allocatedChromeSandboxedConnectionsCount());
 
-                final BaseChildProcessConnection conn =
+                final ChildProcessConnection conn =
                         ChildProcessLauncherTestHelperService.startInternalForTesting(
                                 context, new String[0], new FileDescriptorInfo[0], null);
                 Assert.assertEquals(
@@ -530,11 +530,12 @@ public class ChildProcessLauncherTest {
         });
     }
 
-    private BaseChildProcessConnection startConnection() {
+    private ChildProcessConnectionImpl startConnection() {
         // Allocate a new connection.
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        final BaseChildProcessConnection connection = allocateBoundConnectionForTesting(
-                context, getDefaultChildProcessCreationParams(context.getPackageName()));
+        final ChildProcessConnectionImpl connection =
+                (ChildProcessConnectionImpl) allocateBoundConnectionForTesting(
+                        context, getDefaultChildProcessCreationParams(context.getPackageName()));
 
         // Wait for the service to connect.
         CriteriaHelper.pollInstrumentationThread(
@@ -556,12 +557,12 @@ public class ChildProcessLauncherTest {
                 0 /* childProcessId */, filesToMap, null /* launchCallback */);
     }
 
-    private static BaseChildProcessConnection allocateBoundConnectionForTesting(
+    private static ChildProcessConnection allocateBoundConnectionForTesting(
             final Context context, final ChildProcessCreationParams creationParams) {
         return ChildProcessLauncherTestHelperService.runOnLauncherAndGetResult(
-                new Callable<BaseChildProcessConnection>() {
+                new Callable<ChildProcessConnection>() {
                     @Override
-                    public BaseChildProcessConnection call() {
+                    public ChildProcessConnection call() {
                         return ChildProcessLauncher.allocateBoundConnection(
                                 new ChildSpawnData(context, null /* commandLine */,
                                         0 /* childProcessId */, null /* filesToBeMapped */,
@@ -578,16 +579,16 @@ public class ChildProcessLauncherTest {
      * but doesn't really start the connection to bind a service. It is for testing whether the
      * connection is allocated properly for different application packages.
      */
-    private BaseChildProcessConnection allocateConnection(final String packageName) {
+    private ChildProcessConnectionImpl allocateConnection(final String packageName) {
         return ChildProcessLauncherTestHelperService.runOnLauncherAndGetResult(
-                new Callable<BaseChildProcessConnection>() {
+                new Callable<ChildProcessConnectionImpl>() {
                     @Override
-                    public BaseChildProcessConnection call() {
+                    public ChildProcessConnectionImpl call() {
                         // Allocate a new connection.
                         Context context = InstrumentationRegistry.getTargetContext();
                         ChildProcessCreationParams creationParams =
                                 getDefaultChildProcessCreationParams(packageName);
-                        return ChildProcessLauncher.allocateConnection(
+                        return (ChildProcessConnectionImpl) ChildProcessLauncher.allocateConnection(
                                 new ChildSpawnData(context, null /* commandLine */,
                                         0 /* childProcessId */, null /* filesToBeMapped */,
                                         null /* launchCallback */, null /* childProcessCallback */,
@@ -630,12 +631,12 @@ public class ChildProcessLauncherTest {
                 });
     }
 
-    private static BaseChildProcessConnection[] getSandboxedConnectionArrayForTesting(
+    private static ChildProcessConnection[] getSandboxedConnectionArrayForTesting(
             final Context context, final String packageName) {
         return ChildProcessLauncherTestHelperService.runOnLauncherAndGetResult(
-                new Callable<BaseChildProcessConnection[]>() {
+                new Callable<ChildProcessConnection[]>() {
                     @Override
-                    public BaseChildProcessConnection[] call() {
+                    public ChildProcessConnection[] call() {
                         return ChildConnectionAllocator
                                 .getAllocator(context, packageName, true /*isSandboxed */)
                                 .connectionArrayForTesting();
@@ -669,7 +670,7 @@ public class ChildProcessLauncherTest {
                 LibraryProcessType.PROCESS_CHILD, false /* bindToCallerCheck */);
     }
 
-    private void triggerConnectionSetup(final BaseChildProcessConnection connection) {
+    private void triggerConnectionSetup(final ChildProcessConnectionImpl connection) {
         ChildProcessLauncherTestHelperService.runOnLauncherThreadBlocking(new Runnable() {
             @Override
             public void run() {

@@ -451,5 +451,6 @@ Still reading?
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/SSLClientCertificateRequest.java"/>
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorView.java"/>
     <ignore regexp="chrome/android/java/src/org/chromium/chrome/browser/signin/SigninAndSyncView.java"/>
+    <ignore regexp="content/public/android/java/src/org/chromium/content/browser/ChildProcessConnectionImpl.java"/>
   </issue>
 </lint>

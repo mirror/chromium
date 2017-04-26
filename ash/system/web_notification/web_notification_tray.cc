@@ -10,6 +10,7 @@
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/wm_shelf.h"
+#include "ash/shelf/wm_shelf_util.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/status_area_widget.h"
@@ -273,7 +274,8 @@ WebNotificationTray::WebNotificationTray(WmShelf* shelf,
       status_area_window_(status_area_window),
       system_tray_(system_tray),
       show_message_center_on_unlock_(false),
-      should_update_tray_content_(false) {
+      should_update_tray_content_(false),
+      should_block_shelf_auto_hide_(false) {
   DCHECK(shelf);
   DCHECK(status_area_window_);
   DCHECK(system_tray_);
@@ -321,6 +323,7 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings) {
   if (!ShouldShowMessageCenter())
     return false;
 
+  should_block_shelf_auto_hide_ = true;
   message_center::MessageCenterBubble* message_center_bubble =
       new message_center::MessageCenterBubble(message_center(),
                                               message_center_tray_.get());
@@ -361,6 +364,7 @@ void WebNotificationTray::HideMessageCenter() {
     return;
   SetIsActive(false);
   message_center_bubble_.reset();
+  should_block_shelf_auto_hide_ = false;
   show_message_center_on_unlock_ = false;
   shelf()->UpdateAutoHideState();
 }
@@ -391,6 +395,10 @@ void WebNotificationTray::HidePopups() {
 bool WebNotificationTray::ShouldShowMessageCenter() const {
   // Hidden at login screen, during supervised user creation, etc.
   return Shell::Get()->session_controller()->ShouldShowNotificationTray();
+}
+
+bool WebNotificationTray::ShouldBlockShelfAutoHide() const {
+  return should_block_shelf_auto_hide_;
 }
 
 bool WebNotificationTray::IsMessageCenterBubbleVisible() const {

@@ -13,7 +13,7 @@
 #include "chrome/browser/autofill/personal_data_manager_factory.h"
 #include "chrome/browser/background/background_contents_service_factory.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_factory.h"
+#include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/chrome_browser_main.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
@@ -195,6 +195,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
   BookmarkModelFactory::GetInstance();
   BookmarkUndoServiceFactory::GetInstance();
+  BrowsingDataRemoverFactory::GetInstance();
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   CaptivePortalServiceFactory::GetInstance();
 #endif
@@ -202,14 +203,14 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #if defined(OS_ANDROID)
   chrome::android::DataUseUITabModelFactory::GetInstance();
 #endif
-  ChromeBrowsingDataRemoverDelegateFactory::GetInstance();
-#if !defined(OS_ANDROID)
-  ChromeCryptAuthServiceFactory::GetInstance();
-#endif
+  UINetworkQualityEstimatorServiceFactory::GetInstance();
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   CloudPrintProxyServiceFactory::GetInstance();
 #endif
   CookieSettingsFactory::GetInstance();
+#if !defined(OS_ANDROID)
+  ChromeCryptAuthServiceFactory::GetInstance();
+#endif
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ExtensionWelcomeNotificationFactory::GetInstance();
 #endif
@@ -334,7 +335,6 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #if defined(OS_WIN)
   TriggeredProfileResetterFactory::GetInstance();
 #endif
-  UINetworkQualityEstimatorServiceFactory::GetInstance();
 #if !defined(OS_ANDROID)
   UsbChooserContextFactory::GetInstance();
 #endif

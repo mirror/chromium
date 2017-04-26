@@ -9,7 +9,6 @@
 
 #include "base/files/file_path.h"
 #include "base/json/json_writer.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -72,7 +71,7 @@ void LogBytes(const std::vector<CharType>& data, std::string* out) {
 
 bool ReadValue(const base::Pickle* m,
                base::PickleIterator* iter,
-               std::unique_ptr<base::Value>* value,
+               base::Value** value,
                int recursion);
 
 void GetValueSize(base::PickleSizer* sizer,
@@ -111,7 +110,7 @@ void GetValueSize(base::PickleSizer* sizer,
       break;
     }
     case base::Value::Type::BINARY: {
-      sizer->AddData(static_cast<int>(value->GetBlob().size()));
+      sizer->AddData(static_cast<int>(value->GetSize()));
       break;
     }
     case base::Value::Type::DICTIONARY: {
@@ -179,8 +178,7 @@ void WriteValue(base::Pickle* m, const base::Value* value, int recursion) {
       break;
     }
     case base::Value::Type::BINARY: {
-      m->WriteData(value->GetBlob().data(),
-                   static_cast<int>(value->GetBlob().size()));
+      m->WriteData(value->GetBuffer(), static_cast<int>(value->GetSize()));
       break;
     }
     case base::Value::Type::DICTIONARY: {
@@ -219,11 +217,11 @@ bool ReadDictionaryValue(const base::Pickle* m,
 
   for (int i = 0; i < size; ++i) {
     std::string key;
-    std::unique_ptr<base::Value> subval;
+    base::Value* subval;
     if (!ReadParam(m, iter, &key) ||
         !ReadValue(m, iter, &subval, recursion + 1))
       return false;
-    value->SetWithoutPathExpansion(key, std::move(subval));
+    value->SetWithoutPathExpansion(key, subval);
   }
 
   return true;
@@ -240,10 +238,10 @@ bool ReadListValue(const base::Pickle* m,
     return false;
 
   for (int i = 0; i < size; ++i) {
-    std::unique_ptr<base::Value> subval;
+    base::Value* subval;
     if (!ReadValue(m, iter, &subval, recursion + 1))
       return false;
-    value->Set(i, std::move(subval));
+    value->Set(i, subval);
   }
 
   return true;
@@ -251,7 +249,7 @@ bool ReadListValue(const base::Pickle* m,
 
 bool ReadValue(const base::Pickle* m,
                base::PickleIterator* iter,
-               std::unique_ptr<base::Value>* value,
+               base::Value** value,
                int recursion) {
   if (recursion > kMaxRecursionDepth) {
     LOG(ERROR) << "Max recursion depth hit in ReadValue.";
@@ -264,34 +262,34 @@ bool ReadValue(const base::Pickle* m,
 
   switch (static_cast<base::Value::Type>(type)) {
     case base::Value::Type::NONE:
-      *value = base::MakeUnique<base::Value>();
+      *value = new base::Value();
       break;
     case base::Value::Type::BOOLEAN: {
       bool val;
       if (!ReadParam(m, iter, &val))
         return false;
-      *value = base::MakeUnique<base::Value>(val);
+      *value = new base::Value(val);
       break;
     }
     case base::Value::Type::INTEGER: {
       int val;
       if (!ReadParam(m, iter, &val))
         return false;
-      *value = base::MakeUnique<base::Value>(val);
+      *value = new base::Value(val);
       break;
     }
     case base::Value::Type::DOUBLE: {
       double val;
       if (!ReadParam(m, iter, &val))
         return false;
-      *value = base::MakeUnique<base::Value>(val);
+      *value = new base::Value(val);
       break;
     }
     case base::Value::Type::STRING: {
       std::string val;
       if (!ReadParam(m, iter, &val))
         return false;
-      *value = base::MakeUnique<base::Value>(std::move(val));
+      *value = new base::Value(val);
       break;
     }
     case base::Value::Type::BINARY: {
@@ -299,21 +297,23 @@ bool ReadValue(const base::Pickle* m,
       int length;
       if (!iter->ReadData(&data, &length))
         return false;
-      *value = base::Value::CreateWithCopiedBuffer(data, length);
+      std::unique_ptr<base::Value> val =
+          base::Value::CreateWithCopiedBuffer(data, length);
+      *value = val.release();
       break;
     }
     case base::Value::Type::DICTIONARY: {
-      base::DictionaryValue val;
-      if (!ReadDictionaryValue(m, iter, &val, recursion))
+      std::unique_ptr<base::DictionaryValue> val(new base::DictionaryValue());
+      if (!ReadDictionaryValue(m, iter, val.get(), recursion))
         return false;
-      *value = base::MakeUnique<base::Value>(std::move(val));
+      *value = val.release();
       break;
     }
     case base::Value::Type::LIST: {
-      base::ListValue val;
-      if (!ReadListValue(m, iter, &val, recursion))
+      std::unique_ptr<base::ListValue> val(new base::ListValue());
+      if (!ReadListValue(m, iter, val.get(), recursion))
         return false;
-      *value = base::MakeUnique<base::Value>(std::move(val));
+      *value = val.release();
       break;
     }
     default:

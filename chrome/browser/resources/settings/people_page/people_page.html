@@ -231,14 +231,12 @@
 </if>
 
         <template is="dom-if" if="[[profileManagesSupervisedUsers_]]">
-          <a id="manageSupervisedUsersContainer"
-              class="settings-box inherit-color no-outline" tabindex="-1"
-              target="_blank" href="$i18n{supervisedUsersUrl}">
+          <div id="manageSupervisedUsersContainer" class="settings-box"
+              on-tap="onManageSupervisedUsers_" actionable>
             <div class="start">$i18n{manageSupervisedUsers}</div>
             <button class="icon-external" is="paper-icon-button-light"
-                actionable aria-label="$i18n{manageSupervisedUsers}">
-            </button>
-          </a>
+                aria-label="$i18n{manageSupervisedUsers}"></button>
+          </div>
         </template>
       </neon-animatable>
       <template is="dom-if" route-path="/syncSetup"

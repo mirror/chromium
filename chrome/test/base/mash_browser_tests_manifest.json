@@ -3,7 +3,17 @@
   "display_name": "Mash Browser Tests",
   "interface_provider_specs": {
     "service_manager:connector": {
-      "requires": { "*": [ "app" ] }
+      "provides": {
+        "service_manager:service_factory": [
+          "service_manager::mojom::ServiceFactory"
+        ]
+      },
+      "requires": {
+        "*": [ "app" ],
+        "service_manager": [
+           "service_manager:instance_per_child"
+        ]
+      }
     }
   }
 }

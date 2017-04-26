@@ -23,22 +23,23 @@ class NGInlineNodeForTest : public NGInlineNode {
   using NGInlineNode::NGInlineNode;
 
   String& Text() { return text_content_; }
-  Vector<NGInlineItem>& Items() { return items_; }
+  Vector<NGLayoutInlineItem>& Items() { return items_; }
 
   void Append(const String& text,
               const ComputedStyle* style = nullptr,
               LayoutObject* layout_object = nullptr) {
     unsigned start = text_content_.length();
     text_content_.Append(text);
-    items_.push_back(NGInlineItem(NGInlineItem::kText, start,
-                                  start + text.length(), style, layout_object));
+    items_.push_back(NGLayoutInlineItem(NGLayoutInlineItem::kText, start,
+                                        start + text.length(), style,
+                                        layout_object));
   }
 
   void Append(UChar character) {
     text_content_.Append(character);
     unsigned end = text_content_.length();
-    items_.push_back(
-        NGInlineItem(NGInlineItem::kBidiControl, end - 1, end, nullptr));
+    items_.push_back(NGLayoutInlineItem(NGLayoutInlineItem::kBidiControl,
+                                        end - 1, end, nullptr));
     is_bidi_enabled_ = true;
   }
 
@@ -109,12 +110,12 @@ class NGInlineNodeTest : public RenderingTest {
 };
 
 #define TEST_ITEM_TYPE_OFFSET(item, type, start, end) \
-  EXPECT_EQ(NGInlineItem::type, item.Type());         \
+  EXPECT_EQ(NGLayoutInlineItem::type, item.Type());   \
   EXPECT_EQ(start, item.StartOffset());               \
   EXPECT_EQ(end, item.EndOffset())
 
 #define TEST_ITEM_TYPE_OFFSET_LEVEL(item, type, start, end, level) \
-  EXPECT_EQ(NGInlineItem::type, item.Type());                      \
+  EXPECT_EQ(NGLayoutInlineItem::type, item.Type());                \
   EXPECT_EQ(start, item.StartOffset());                            \
   EXPECT_EQ(end, item.EndOffset());                                \
   EXPECT_EQ(level, item.BidiLevel())
@@ -128,7 +129,7 @@ TEST_F(NGInlineNodeTest, CollectInlinesText) {
   SetupHtml("t", "<div id=t>Hello <span>inline</span> world.</div>");
   NGInlineNodeForTest* node = CreateInlineNode();
   node->CollectInlines(layout_object_, layout_block_flow_);
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   TEST_ITEM_TYPE_OFFSET(items[0], kText, 0u, 6u);
   TEST_ITEM_TYPE_OFFSET(items[1], kOpenTag, 6u, 6u);
   TEST_ITEM_TYPE_OFFSET(items[2], kText, 6u, 12u);
@@ -144,7 +145,7 @@ TEST_F(NGInlineNodeTest, CollectInlinesRtlText) {
   EXPECT_TRUE(node->IsBidiEnabled());
   node->SegmentText();
   EXPECT_TRUE(node->IsBidiEnabled());
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[0], kText, 0u, 2u, 1u);
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[1], kOpenTag, 2u, 2u, 1u);
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[2], kText, 2u, 3u, 1u);
@@ -160,7 +161,7 @@ TEST_F(NGInlineNodeTest, CollectInlinesMixedText) {
   EXPECT_TRUE(node->IsBidiEnabled());
   node->SegmentText();
   EXPECT_TRUE(node->IsBidiEnabled());
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[0], kText, 0u, 7u, 0u);
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[1], kText, 7u, 9u, 1u);
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[2], kOpenTag, 9u, 9u, 1u);
@@ -176,7 +177,7 @@ TEST_F(NGInlineNodeTest, CollectInlinesMixedTextEndWithON) {
   EXPECT_TRUE(node->IsBidiEnabled());
   node->SegmentText();
   EXPECT_TRUE(node->IsBidiEnabled());
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[0], kText, 0u, 7u, 0u);
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[1], kText, 7u, 9u, 1u);
   TEST_ITEM_TYPE_OFFSET_LEVEL(items[2], kOpenTag, 9u, 9u, 1u);
@@ -190,7 +191,7 @@ TEST_F(NGInlineNodeTest, SegmentASCII) {
   NGInlineNodeForTest* node = CreateInlineNode();
   node->Append("Hello");
   node->SegmentText();
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   ASSERT_EQ(1u, items.size());
   TEST_ITEM_OFFSET_DIR(items[0], 0u, 5u, TextDirection::kLtr);
 }
@@ -200,7 +201,7 @@ TEST_F(NGInlineNodeTest, SegmentHebrew) {
   node->Append(u"\u05E2\u05D1\u05E8\u05D9\u05EA");
   node->SegmentText();
   ASSERT_EQ(1u, node->Items().size());
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   ASSERT_EQ(1u, items.size());
   TEST_ITEM_OFFSET_DIR(items[0], 0u, 5u, TextDirection::kRtl);
 }
@@ -210,7 +211,7 @@ TEST_F(NGInlineNodeTest, SegmentSplit1To2) {
   node->Append(u"Hello \u05E2\u05D1\u05E8\u05D9\u05EA");
   node->SegmentText();
   ASSERT_EQ(2u, node->Items().size());
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   ASSERT_EQ(2u, items.size());
   TEST_ITEM_OFFSET_DIR(items[0], 0u, 6u, TextDirection::kLtr);
   TEST_ITEM_OFFSET_DIR(items[1], 6u, 11u, TextDirection::kRtl);
@@ -222,7 +223,7 @@ TEST_F(NGInlineNodeTest, SegmentSplit3To4) {
   node->Append(u"lo \u05E2");
   node->Append(u"\u05D1\u05E8\u05D9\u05EA");
   node->SegmentText();
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   ASSERT_EQ(4u, items.size());
   TEST_ITEM_OFFSET_DIR(items[0], 0u, 3u, TextDirection::kLtr);
   TEST_ITEM_OFFSET_DIR(items[1], 3u, 6u, TextDirection::kLtr);
@@ -237,7 +238,7 @@ TEST_F(NGInlineNodeTest, SegmentBidiOverride) {
   node->Append("ABC");
   node->Append(kPopDirectionalFormattingCharacter);
   node->SegmentText();
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   ASSERT_EQ(4u, items.size());
   TEST_ITEM_OFFSET_DIR(items[0], 0u, 6u, TextDirection::kLtr);
   TEST_ITEM_OFFSET_DIR(items[1], 6u, 7u, TextDirection::kRtl);
@@ -264,7 +265,7 @@ static NGInlineNodeForTest* CreateBidiIsolateNode(NGInlineNodeForTest* node,
 TEST_F(NGInlineNodeTest, SegmentBidiIsolate) {
   NGInlineNodeForTest* node =
       CreateBidiIsolateNode(CreateInlineNode(), style_.Get(), layout_object_);
-  Vector<NGInlineItem>& items = node->Items();
+  Vector<NGLayoutInlineItem>& items = node->Items();
   ASSERT_EQ(9u, items.size());
   TEST_ITEM_OFFSET_DIR(items[0], 0u, 6u, TextDirection::kLtr);
   TEST_ITEM_OFFSET_DIR(items[1], 6u, 7u, TextDirection::kLtr);

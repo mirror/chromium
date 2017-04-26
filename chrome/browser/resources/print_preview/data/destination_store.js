@@ -89,7 +89,8 @@ cr.define('print_preview', function() {
             destination.id);
       }
       return arrayContains(
-          [print_preview.Destination.GooglePromotedId.DOCS],
+          [print_preview.Destination.GooglePromotedId.DOCS,
+           print_preview.Destination.GooglePromotedId.FEDEX],
           destination.id);
     }
   };
@@ -1024,7 +1025,8 @@ cr.define('print_preview', function() {
       // TODO: Move the logic to print_preview.
       return this.destinations_.every(function(dest) {
         return dest.isLocal ||
-            dest.id == print_preview.Destination.GooglePromotedId.DOCS;
+            dest.id == print_preview.Destination.GooglePromotedId.DOCS ||
+            dest.id == print_preview.Destination.GooglePromotedId.FEDEX;
       });
     },
 
@@ -1054,6 +1056,13 @@ cr.define('print_preview', function() {
       // Update and persist selected destination.
       this.selectedDestination_ = destination;
       this.selectedDestination_.isRecent = true;
+      if (destination.id == print_preview.Destination.GooglePromotedId.FEDEX &&
+          !destination.isTosAccepted) {
+        assert(this.cloudPrintInterface_ != null,
+               'Selected FedEx destination, but GCP API is not available');
+        destination.isTosAccepted = true;
+        this.cloudPrintInterface_.updatePrinterTosAcceptance(destination, true);
+      }
       this.appState_.persistSelectedDestination(this.selectedDestination_);
       // Adjust metrics.
       if (destination.cloudID &&

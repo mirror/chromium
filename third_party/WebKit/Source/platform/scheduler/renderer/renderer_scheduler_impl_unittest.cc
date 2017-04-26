@@ -2690,7 +2690,7 @@ TEST_F(RendererSchedulerImplTest,
   SimulateExpensiveTasks(loading_task_runner_);
   ForceTouchStartToBeExpectedSoon();
   scheduler_->AddPendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kChildFrame);
+      blink::WebScheduler::NavigatingFrameType::kChildFrame);
 
   PostTestTasks(&run_order, "L1 D1");
   RunUntilIdle();
@@ -2709,7 +2709,7 @@ TEST_F(RendererSchedulerImplTest,
   SimulateExpensiveTasks(loading_task_runner_);
   ForceTouchStartToBeExpectedSoon();
   scheduler_->AddPendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kMainFrame);
+      blink::WebScheduler::NavigatingFrameType::kMainFrame);
 
   PostTestTasks(&run_order, "L1 D1");
   RunUntilIdle();
@@ -2726,7 +2726,7 @@ TEST_F(RendererSchedulerImplTest,
   // After the nagigation has been cancelled, the expensive loading tasks should
   // get blocked.
   scheduler_->RemovePendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kMainFrame);
+      blink::WebScheduler::NavigatingFrameType::kMainFrame);
   run_order.clear();
 
   PostTestTasks(&run_order, "L1 D1");
@@ -2751,9 +2751,9 @@ TEST_F(RendererSchedulerImplTest,
   SimulateExpensiveTasks(loading_task_runner_);
   ForceTouchStartToBeExpectedSoon();
   scheduler_->AddPendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kMainFrame);
+      blink::WebScheduler::NavigatingFrameType::kMainFrame);
   scheduler_->AddPendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kMainFrame);
+      blink::WebScheduler::NavigatingFrameType::kMainFrame);
 
   PostTestTasks(&run_order, "L1 D1");
   RunUntilIdle();
@@ -2769,7 +2769,7 @@ TEST_F(RendererSchedulerImplTest,
 
   run_order.clear();
   scheduler_->RemovePendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kMainFrame);
+      blink::WebScheduler::NavigatingFrameType::kMainFrame);
   // Navigation task expected ref count non-zero so expensive tasks still not
   // blocked.
   PostTestTasks(&run_order, "L1 D1");
@@ -2786,7 +2786,7 @@ TEST_F(RendererSchedulerImplTest,
 
   run_order.clear();
   scheduler_->RemovePendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType::kMainFrame);
+      blink::WebScheduler::NavigatingFrameType::kMainFrame);
   // Navigation task expected ref count is now zero, the expensive loading tasks
   // should get blocked.
   PostTestTasks(&run_order, "L1 D1");

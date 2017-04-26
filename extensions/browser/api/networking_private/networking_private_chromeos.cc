@@ -860,14 +860,10 @@ void NetworkingPrivateChromeOS::SetManagedActiveProxyValues(
     case UIProxyConfig::MODE_PROXY_PER_SCHEME: {
       base::DictionaryValue* manual =
           EnsureDictionaryValue(::onc::proxy::kManual, proxy_settings);
-      if (config.http_proxy.server.is_valid())
-        SetManualProxy(manual, state, ::onc::proxy::kHttp, config.http_proxy);
-      if (config.https_proxy.server.is_valid())
-        SetManualProxy(manual, state, ::onc::proxy::kHttps, config.https_proxy);
-      if (config.ftp_proxy.server.is_valid())
-        SetManualProxy(manual, state, ::onc::proxy::kFtp, config.ftp_proxy);
-      if (config.socks_proxy.server.is_valid())
-        SetManualProxy(manual, state, ::onc::proxy::kSocks, config.socks_proxy);
+      SetManualProxy(manual, state, ::onc::proxy::kHttp, config.http_proxy);
+      SetManualProxy(manual, state, ::onc::proxy::kHttps, config.https_proxy);
+      SetManualProxy(manual, state, ::onc::proxy::kFtp, config.ftp_proxy);
+      SetManualProxy(manual, state, ::onc::proxy::kSocks, config.socks_proxy);
       break;
     }
     case UIProxyConfig::MODE_PAC_SCRIPT: {

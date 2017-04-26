@@ -65,7 +65,6 @@
 #include "public/platform/WebStorageQuotaType.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/platform/WebWorkerFetchContext.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -145,13 +144,6 @@ class BLINK_EXPORT WebFrameClient {
   virtual WebWorkerContentSettingsClientProxy*
   CreateWorkerContentSettingsClientProxy() {
     return 0;
-  }
-
-  // Returns a new WebWorkerFetchContext for a dedicated worker. Ownership of
-  // the returned object is transferred to the caller. This is used only when
-  // off-main-thread-fetch is enabled.
-  virtual std::unique_ptr<WebWorkerFetchContext> CreateWorkerFetchContext() {
-    return nullptr;
   }
 
   // Create a new WebPopupMenu. In the "createExternalPopupMenu" form, the
@@ -609,12 +601,14 @@ class BLINK_EXPORT WebFrameClient {
                                       int world_id) {}
 
   // WebKit is about to release its reference to a v8 context for a frame.
-  virtual void WillReleaseScriptContext(v8::Local<v8::Context>, int world_id) {}
+  virtual void WillReleaseScriptContext(WebLocalFrame*,
+                                        v8::Local<v8::Context>,
+                                        int world_id) {}
 
   // Geometry notifications ----------------------------------------------
 
   // The main frame scrolled.
-  virtual void DidChangeScrollOffset() {}
+  virtual void DidChangeScrollOffset(WebLocalFrame*) {}
 
   // If the frame is loading an HTML document, this will be called to
   // notify that the <body> will be attached soon.

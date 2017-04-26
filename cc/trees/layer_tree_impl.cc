@@ -262,7 +262,7 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
           scrollbar->SetScrollLayerLength(scroll_size.height());
     }
     scrollbar_needs_animation |=
-        scrollbar->SetVerticalAdjust(clip_layer->ViewportBoundsDelta().y());
+        scrollbar->SetVerticalAdjust(clip_layer->bounds_delta().y());
   }
 
   scrollbar_needs_animation |=
@@ -386,6 +386,21 @@ std::unique_ptr<OwnedLayerImplList> LayerTreeImpl::DetachLayers() {
   return ret;
 }
 
+static void UpdateClipTreeForBoundsDeltaOnLayer(LayerImpl* layer,
+                                                ClipTree* clip_tree) {
+  if (layer && layer->masks_to_bounds()) {
+    ClipNode* clip_node = clip_tree->Node(layer->clip_tree_index());
+    if (clip_node) {
+      DCHECK_EQ(layer->id(), clip_node->owning_layer_id);
+      gfx::SizeF bounds = gfx::SizeF(layer->bounds());
+      if (clip_node->clip.size() != bounds) {
+        clip_node->clip.set_size(bounds);
+        clip_tree->set_needs_update(true);
+      }
+    }
+  }
+}
+
 void LayerTreeImpl::SetPropertyTrees(PropertyTrees* property_trees) {
   std::vector<std::unique_ptr<RenderSurfaceImpl>> old_render_surfaces;
   property_trees_.effect_tree.TakeRenderSurfaces(&old_render_surfaces);
@@ -404,6 +419,30 @@ void LayerTreeImpl::SetPropertyTrees(PropertyTrees* property_trees) {
   // effect tree.
   if (IsActiveTree())
     property_trees_.effect_tree.set_needs_update(true);
+}
+
+void LayerTreeImpl::UpdatePropertyTreesForBoundsDelta() {
+  DCHECK(IsActiveTree());
+  LayerImpl* inner_container = InnerViewportContainerLayer();
+  LayerImpl* outer_container = OuterViewportContainerLayer();
+  LayerImpl* inner_scroll = InnerViewportScrollLayer();
+
+  UpdateClipTreeForBoundsDeltaOnLayer(inner_container,
+                                      &property_trees_.clip_tree);
+  UpdateClipTreeForBoundsDeltaOnLayer(InnerViewportScrollLayer(),
+                                      &property_trees_.clip_tree);
+  UpdateClipTreeForBoundsDeltaOnLayer(outer_container,
+                                      &property_trees_.clip_tree);
+
+  if (inner_container)
+    property_trees_.SetInnerViewportContainerBoundsDelta(
+        inner_container->bounds_delta());
+  if (outer_container)
+    property_trees_.SetOuterViewportContainerBoundsDelta(
+        outer_container->bounds_delta());
+  if (inner_scroll)
+    property_trees_.SetInnerViewportScrollBoundsDelta(
+        inner_scroll->bounds_delta());
 }
 
 void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
@@ -427,6 +466,11 @@ void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
 
   target_tree->property_trees()->scroll_tree.PushScrollUpdatesFromPendingTree(
       &property_trees_, target_tree);
+
+  // This needs to be called early so that we don't clamp with incorrect max
+  // offsets when UpdateViewportContainerSizes is called from e.g.
+  // PushBrowserControls
+  target_tree->UpdatePropertyTreesForBoundsDelta();
 
   if (next_activation_forces_redraw_) {
     target_tree->ForceRedrawNextActivation();
@@ -716,8 +760,7 @@ float LayerTreeImpl::ClampPageScaleFactorToLimits(
   return page_scale_factor;
 }
 
-void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread(
-    bool is_impl_side_update) {
+void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread() {
   // TODO(enne): This should get replaced by pulling out scrolling and
   // animations into their own trees.  Then scrolls and animations would have
   // their own ways of synchronizing across commits.  This occurs to push
@@ -726,19 +769,13 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread(
   // frame to a newly-committed property tree.
   if (layer_list_.empty())
     return;
-
-  // Entries from |element_id_to_*_animations_| should be deleted only after
-  // they have been synchronized with the main thread, which will not be the
-  // case if this is an impl-side invalidation.
-  const bool can_delete_animations = !is_impl_side_update;
   auto element_id_to_opacity = element_id_to_opacity_animations_.begin();
   while (element_id_to_opacity != element_id_to_opacity_animations_.end()) {
     const ElementId id = element_id_to_opacity->first;
     if (EffectNode* node =
             property_trees_.effect_tree.FindNodeFromElementId(id)) {
-      if ((!node->is_currently_animating_opacity ||
-           node->opacity == element_id_to_opacity->second) &&
-          can_delete_animations) {
+      if (!node->is_currently_animating_opacity ||
+          node->opacity == element_id_to_opacity->second) {
         element_id_to_opacity_animations_.erase(element_id_to_opacity++);
         continue;
       }
@@ -753,9 +790,8 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread(
     const ElementId id = element_id_to_filter->first;
     if (EffectNode* node =
             property_trees_.effect_tree.FindNodeFromElementId(id)) {
-      if ((!node->is_currently_animating_filter ||
-           node->filters == element_id_to_filter->second) &&
-          can_delete_animations) {
+      if (!node->is_currently_animating_filter ||
+          node->filters == element_id_to_filter->second) {
         element_id_to_filter_animations_.erase(element_id_to_filter++);
         continue;
       }
@@ -770,9 +806,8 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread(
     const ElementId id = element_id_to_transform->first;
     if (TransformNode* node =
             property_trees_.transform_tree.FindNodeFromElementId(id)) {
-      if ((!node->is_currently_animating ||
-           node->local == element_id_to_transform->second) &&
-          can_delete_animations) {
+      if (!node->is_currently_animating ||
+          node->local == element_id_to_transform->second) {
         element_id_to_transform_animations_.erase(element_id_to_transform++);
         continue;
       }

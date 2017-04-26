@@ -37,11 +37,11 @@ class MetricsRecorder {
       base_samples_ = histogram->SnapshotSamples();
   }
 
-  void CheckLanguage(const char* metric_name,
+  void CheckLanguage(translate::MetricsNameIndex index,
                      int expected_not_provided,
                      int expected_valid,
                      int expected_invalid) {
-    ASSERT_EQ(metric_name, key_);
+    ASSERT_EQ(translate::GetMetricsName(index), key_);
 
     Snapshot();
 
@@ -60,7 +60,7 @@ class MetricsRecorder {
                                  int expected_cld_disagree,
                                  int expected_trust_cld,
                                  int expected_cld_complement_sub_code) {
-    ASSERT_EQ(translate::metrics_internal::kTranslateLanguageVerification,
+    ASSERT_EQ(translate::GetMetricsName(translate::UMA_LANGUAGE_VERIFICATION),
               key_);
 
     Snapshot();
@@ -71,8 +71,9 @@ class MetricsRecorder {
     EXPECT_EQ(
         expected_cld_only,
         GetCountWithoutSnapshot(translate::LANGUAGE_VERIFICATION_CLD_ONLY));
-    EXPECT_EQ(expected_unknown, GetCountWithoutSnapshot(
-                                    translate::LANGUAGE_VERIFICATION_UNKNOWN));
+    EXPECT_EQ(
+        expected_unknown,
+        GetCountWithoutSnapshot(translate::LANGUAGE_VERIFICATION_UNKNOWN));
     EXPECT_EQ(
         expected_cld_agree,
         GetCountWithoutSnapshot(translate::LANGUAGE_VERIFICATION_CLD_AGREE));
@@ -88,7 +89,7 @@ class MetricsRecorder {
   }
 
   void CheckScheme(int expected_http, int expected_https, int expected_others) {
-    ASSERT_EQ(translate::metrics_internal::kTranslatePageScheme, key_);
+    ASSERT_EQ(translate::GetMetricsName(translate::UMA_PAGE_SCHEME), key_);
 
     Snapshot();
 
@@ -160,40 +161,32 @@ class MetricsRecorder {
 
 TEST(TranslateMetricsTest, ReportContentLanguage) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateContentLanguage);
+      translate::GetMetricsName(translate::UMA_CONTENT_LANGUAGE));
 
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateContentLanguage,
-                         0, 0, 0);
+  recorder.CheckLanguage(translate::UMA_CONTENT_LANGUAGE, 0, 0, 0);
   translate::ReportContentLanguage(std::string(), std::string());
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateContentLanguage,
-                         1, 0, 0);
+  recorder.CheckLanguage(translate::UMA_CONTENT_LANGUAGE, 1, 0, 0);
   translate::ReportContentLanguage("ja_JP", "ja-JP");
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateContentLanguage,
-                         1, 0, 1);
+  recorder.CheckLanguage(translate::UMA_CONTENT_LANGUAGE, 1, 0, 1);
   translate::ReportContentLanguage("en", "en");
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateContentLanguage,
-                         1, 1, 1);
+  recorder.CheckLanguage(translate::UMA_CONTENT_LANGUAGE, 1, 1, 1);
 }
 
 TEST(TranslateMetricsTest, ReportHtmlLang) {
-  MetricsRecorder recorder(translate::metrics_internal::kTranslateHtmlLang);
+  MetricsRecorder recorder(translate::GetMetricsName(translate::UMA_HTML_LANG));
 
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateHtmlLang, 0, 0,
-                         0);
+  recorder.CheckLanguage(translate::UMA_HTML_LANG, 0, 0, 0);
   translate::ReportHtmlLang(std::string(), std::string());
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateHtmlLang, 1, 0,
-                         0);
+  recorder.CheckLanguage(translate::UMA_HTML_LANG, 1, 0, 0);
   translate::ReportHtmlLang("ja_JP", "ja-JP");
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateHtmlLang, 1, 0,
-                         1);
+  recorder.CheckLanguage(translate::UMA_HTML_LANG, 1, 0, 1);
   translate::ReportHtmlLang("en", "en");
-  recorder.CheckLanguage(translate::metrics_internal::kTranslateHtmlLang, 1, 1,
-                         1);
+  recorder.CheckLanguage(translate::UMA_HTML_LANG, 1, 1, 1);
 }
 
 TEST(TranslateMetricsTest, ReportLanguageVerification) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateLanguageVerification);
+      translate::GetMetricsName(translate::UMA_LANGUAGE_VERIFICATION));
 
   recorder.CheckLanguageVerification(0, 0, 0, 0, 0, 0, 0);
   translate::ReportLanguageVerification(
@@ -221,7 +214,7 @@ TEST(TranslateMetricsTest, ReportLanguageVerification) {
 
 TEST(TranslateMetricsTest, ReportTimeToBeReady) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateTimeToBeReady);
+      translate::GetMetricsName(translate::UMA_TIME_TO_BE_READY));
   recorder.CheckTotalCount(0);
   translate::ReportTimeToBeReady(3.14);
   recorder.CheckValueInLogs(3.14);
@@ -229,7 +222,8 @@ TEST(TranslateMetricsTest, ReportTimeToBeReady) {
 }
 
 TEST(TranslateMetricsTest, ReportTimeToLoad) {
-  MetricsRecorder recorder(translate::metrics_internal::kTranslateTimeToLoad);
+  MetricsRecorder recorder(
+      translate::GetMetricsName(translate::UMA_TIME_TO_LOAD));
   recorder.CheckTotalCount(0);
   translate::ReportTimeToLoad(573.0);
   recorder.CheckValueInLogs(573.0);
@@ -238,7 +232,7 @@ TEST(TranslateMetricsTest, ReportTimeToLoad) {
 
 TEST(TranslateMetricsTest, ReportTimeToTranslate) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateTimeToTranslate);
+      translate::GetMetricsName(translate::UMA_TIME_TO_TRANSLATE));
   recorder.CheckTotalCount(0);
   translate::ReportTimeToTranslate(4649.0);
   recorder.CheckValueInLogs(4649.0);
@@ -247,7 +241,7 @@ TEST(TranslateMetricsTest, ReportTimeToTranslate) {
 
 TEST(TranslateMetricsTest, ReportUserActionDuration) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateUserActionDuration);
+      translate::GetMetricsName(translate::UMA_USER_ACTION_DURATION));
   recorder.CheckTotalCount(0);
   TimeTicks begin = TimeTicks::Now();
   TimeTicks end = begin + base::TimeDelta::FromSeconds(3776);
@@ -257,7 +251,8 @@ TEST(TranslateMetricsTest, ReportUserActionDuration) {
 }
 
 TEST(TranslateMetricsTest, ReportPageScheme) {
-  MetricsRecorder recorder(translate::metrics_internal::kTranslatePageScheme);
+  MetricsRecorder recorder(
+      translate::GetMetricsName(translate::UMA_PAGE_SCHEME));
   recorder.CheckScheme(0, 0, 0);
   translate::ReportPageScheme("http");
   recorder.CheckScheme(1, 0, 0);
@@ -269,7 +264,7 @@ TEST(TranslateMetricsTest, ReportPageScheme) {
 
 TEST(TranslateMetricsTest, ReportSimilarLanguageMatch) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateSimilarLanguageMatch);
+      translate::GetMetricsName(translate::UMA_SIMILAR_LANGUAGE_MATCH));
   recorder.CheckTotalCount(0);
   EXPECT_EQ(0, recorder.GetCount(kTrue));
   EXPECT_EQ(0, recorder.GetCount(kFalse));
@@ -283,7 +278,7 @@ TEST(TranslateMetricsTest, ReportSimilarLanguageMatch) {
 
 TEST(TranslateMetricsTest, ReportLanguageDetectionTime) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kRenderer4LanguageDetection);
+      translate::GetMetricsName(translate::UMA_LANGUAGE_DETECTION));
   recorder.CheckTotalCount(0);
   TimeTicks begin = TimeTicks::Now();
   TimeTicks end = begin + base::TimeDelta::FromMicroseconds(9009);
@@ -294,7 +289,7 @@ TEST(TranslateMetricsTest, ReportLanguageDetectionTime) {
 
 TEST(TranslateMetricsTest, ReportLanguageDetectionConflict) {
   MetricsRecorder recorder(
-      translate::metrics_internal::kTranslateLanguageDetectionConflict);
+      translate::GetMetricsName(translate::UMA_LANGUAGE_DETECTION_CONFLICT));
   recorder.CheckTotalCount(0);
 
   translate::ReportLanguageDetectionConflict("en", "es");

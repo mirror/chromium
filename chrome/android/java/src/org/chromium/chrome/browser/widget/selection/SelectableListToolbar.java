@@ -82,13 +82,13 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     }
 
     /** No navigation button is displayed. **/
-    public static final int NAVIGATION_BUTTON_NONE = 0;
+    protected static final int NAVIGATION_BUTTON_NONE = 0;
     /** Button to open the DrawerLayout. Only valid if mDrawerLayout is set. **/
-    public static final int NAVIGATION_BUTTON_MENU = 1;
+    protected static final int NAVIGATION_BUTTON_MENU = 1;
     /** Button to navigate back. This calls {@link #onNavigationBack()}. **/
-    public static final int NAVIGATION_BUTTON_BACK = 2;
+    protected static final int NAVIGATION_BUTTON_BACK = 2;
     /** Button to clear the selection. **/
-    public static final int NAVIGATION_BUTTON_SELECTION_BACK = 3;
+    protected static final int NAVIGATION_BUTTON_SELECTION_BACK = 3;
 
     /** An observer list for this toolbar. */
     private final ObserverList<SelectableListToolbarObserver> mObservers = new ObserverList<>();
@@ -593,10 +593,5 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     @VisibleForTesting
     public View getSearchViewForTests() {
         return mSearchView;
-    }
-
-    @VisibleForTesting
-    public int getNavigationButtonForTests() {
-        return mNavigationButton;
     }
 }

@@ -114,9 +114,10 @@ PassRefPtr<ComputedStyle> ComputedStyle::Clone(const ComputedStyle& other) {
 
 ALWAYS_INLINE ComputedStyle::ComputedStyle()
     : ComputedStyleBase(), RefCounted<ComputedStyle>() {
-  box_data_.Init();
-  visual_data_.Init();
-  background_data_.Init();
+  box_.Init();
+  visual_.Init();
+  background_.Init();
+  surround_.Init();
   rare_non_inherited_data_.Init();
   rare_non_inherited_data_.Access()->deprecated_flexible_box_.Init();
   rare_non_inherited_data_.Access()->flexible_box_.Init();
@@ -136,9 +137,10 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle()
 ALWAYS_INLINE ComputedStyle::ComputedStyle(const ComputedStyle& o)
     : ComputedStyleBase(o),
       RefCounted<ComputedStyle>(),
-      box_data_(o.box_data_),
-      visual_data_(o.visual_data_),
-      background_data_(o.background_data_),
+      box_(o.box_),
+      visual_(o.visual_),
+      background_(o.background_),
+      surround_(o.surround_),
       rare_non_inherited_data_(o.rare_non_inherited_data_),
       rare_inherited_data_(o.rare_inherited_data_),
       style_inherited_data_(o.style_inherited_data_),
@@ -331,9 +333,10 @@ void ComputedStyle::InheritFrom(const ComputedStyle& inherit_parent,
 
 void ComputedStyle::CopyNonInheritedFromCached(const ComputedStyle& other) {
   ComputedStyleBase::CopyNonInheritedFromCached(other);
-  box_data_ = other.box_data_;
-  visual_data_ = other.visual_data_;
-  background_data_ = other.background_data_;
+  box_ = other.box_;
+  visual_ = other.visual_;
+  background_ = other.background_;
+  surround_ = other.surround_;
   rare_non_inherited_data_ = other.rare_non_inherited_data_;
 
   // The flags are copied one-by-one because they contain
@@ -479,9 +482,9 @@ bool ComputedStyle::NonInheritedEqual(const ComputedStyle& other) const {
              other.OriginalDisplay() &&  // Not generated in ComputedStyleBase
          VerticalAlign() == other.VerticalAlign() &&  // Not generated in
                                                       // ComputedStyleBase
-         box_data_ == other.box_data_ &&
-         visual_data_ == other.visual_data_ &&
-         background_data_ == other.background_data_ &&
+         box_ == other.box_ &&
+         visual_ == other.visual_ && background_ == other.background_ &&
+         surround_ == other.surround_ &&
          rare_non_inherited_data_ == other.rare_non_inherited_data_ &&
          svg_style_->NonInheritedEqual(*other.svg_style_);
 }
@@ -575,17 +578,17 @@ bool ComputedStyle::ScrollAnchorDisablingPropertyChanged(
   if (GetPosition() != other.GetPosition())
     return true;
 
-  if (box_data_.Get() != other.box_data_.Get()) {
-    if (box_data_->Width() != other.box_data_->Width() ||
-        box_data_->MinWidth() != other.box_data_->MinWidth() ||
-        box_data_->MaxWidth() != other.box_data_->MaxWidth() ||
-        box_data_->Height() != other.box_data_->Height() ||
-        box_data_->MinHeight() != other.box_data_->MinHeight() ||
-        box_data_->MaxHeight() != other.box_data_->MaxHeight())
+  if (box_.Get() != other.box_.Get()) {
+    if (box_->Width() != other.box_->Width() ||
+        box_->MinWidth() != other.box_->MinWidth() ||
+        box_->MaxWidth() != other.box_->MaxWidth() ||
+        box_->Height() != other.box_->Height() ||
+        box_->MinHeight() != other.box_->MinHeight() ||
+        box_->MaxHeight() != other.box_->MaxHeight())
       return true;
   }
 
-  if (surround_data_.Get() != other.surround_data_.Get()) {
+  if (surround_.Get() != other.surround_.Get()) {
     if (!MarginEqual(other) || !OffsetEqual(other) || !PaddingEqual(other))
       return true;
   }
@@ -605,7 +608,7 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
   // - or the layoutObject knows how to exactly invalidate paints caused by the
   //   layout change instead of forced full paint invalidation.
 
-  if (surround_data_.Get() != other.surround_data_.Get()) {
+  if (surround_.Get() != other.surround_.Get()) {
     // If our border widths change, then we need to layout. Other changes to
     // borders only necessitate a paint invalidation.
     if (BorderLeftWidth() != other.BorderLeftWidth() ||
@@ -836,19 +839,19 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
 }
 
 bool ComputedStyle::DiffNeedsFullLayout(const ComputedStyle& other) const {
-  if (box_data_.Get() != other.box_data_.Get()) {
-    if (box_data_->Width() != other.box_data_->Width() ||
-        box_data_->MinWidth() != other.box_data_->MinWidth() ||
-        box_data_->MaxWidth() != other.box_data_->MaxWidth() ||
-        box_data_->Height() != other.box_data_->Height() ||
-        box_data_->MinHeight() != other.box_data_->MinHeight() ||
-        box_data_->MaxHeight() != other.box_data_->MaxHeight())
+  if (box_.Get() != other.box_.Get()) {
+    if (box_->Width() != other.box_->Width() ||
+        box_->MinWidth() != other.box_->MinWidth() ||
+        box_->MaxWidth() != other.box_->MaxWidth() ||
+        box_->Height() != other.box_->Height() ||
+        box_->MinHeight() != other.box_->MinHeight() ||
+        box_->MaxHeight() != other.box_->MaxHeight())
       return true;
 
-    if (box_data_->VerticalAlign() != other.box_data_->VerticalAlign())
+    if (box_->VerticalAlign() != other.box_->VerticalAlign())
       return true;
 
-    if (box_data_->BoxSizing() != other.box_data_->BoxSizing())
+    if (box_->BoxSizing() != other.box_->BoxSizing())
       return true;
   }
 
@@ -902,7 +905,7 @@ bool ComputedStyle::DiffNeedsPaintInvalidationObject(
       PrintColorAdjust() != other.PrintColorAdjust() ||
       InsideLink() != other.InsideLink() ||
       !Border().VisuallyEqual(other.Border()) ||
-      *background_data_ != *other.background_data_)
+      *background_ != *other.background_)
     return true;
 
   if (rare_inherited_data_.Get() != other.rare_inherited_data_.Get()) {
@@ -1008,7 +1011,7 @@ bool ComputedStyle::DiffNeedsVisualRectUpdate(
 void ComputedStyle::UpdatePropertySpecificDifferences(
     const ComputedStyle& other,
     StyleDifference& diff) const {
-  if (box_data_->ZIndex() != other.box_data_->ZIndex() ||
+  if (box_->ZIndex() != other.box_->ZIndex() ||
       IsStackingContext() != other.IsStackingContext())
     diff.SetZIndexChanged();
 
@@ -1057,7 +1060,7 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
         style_inherited_data_->visited_link_color !=
             other.style_inherited_data_->visited_link_color ||
         HasSimpleUnderlineInternal() != other.HasSimpleUnderlineInternal() ||
-        visual_data_->text_decoration != other.visual_data_->text_decoration) {
+        visual_->text_decoration != other.visual_->text_decoration) {
       diff.SetTextDecorationOrColorChanged();
     } else if (rare_non_inherited_data_.Get() !=
                    other.rare_non_inherited_data_.Get() &&
@@ -1099,11 +1102,11 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
     }
   }
 
-  bool has_clip = HasOutOfFlowPosition() && !visual_data_->has_auto_clip;
+  bool has_clip = HasOutOfFlowPosition() && !visual_->has_auto_clip;
   bool other_has_clip =
-      other.HasOutOfFlowPosition() && !other.visual_data_->has_auto_clip;
+      other.HasOutOfFlowPosition() && !other.visual_->has_auto_clip;
   if (has_clip != other_has_clip ||
-      (has_clip && visual_data_->clip != other.visual_data_->clip))
+      (has_clip && visual_->clip != other.visual_->clip))
     diff.SetCSSClipChanged();
 }
 
@@ -2389,31 +2392,31 @@ LayoutRectOutsets ComputedStyle::ImageOutsets(
 void ComputedStyle::SetBorderImageSource(StyleImage* image) {
   if (Border().image_.GetImage() == image)
     return;
-  surround_data_.Access()->border_.image_.SetImage(image);
+  surround_.Access()->border_.image_.SetImage(image);
 }
 
 void ComputedStyle::SetBorderImageSlices(const LengthBox& slices) {
   if (Border().image_.ImageSlices() == slices)
     return;
-  surround_data_.Access()->border_.image_.SetImageSlices(slices);
+  surround_.Access()->border_.image_.SetImageSlices(slices);
 }
 
 void ComputedStyle::SetBorderImageSlicesFill(bool fill) {
   if (Border().image_.Fill() == fill)
     return;
-  surround_data_.Access()->border_.image_.SetFill(fill);
+  surround_.Access()->border_.image_.SetFill(fill);
 }
 
 void ComputedStyle::SetBorderImageWidth(const BorderImageLengthBox& slices) {
   if (Border().image_.BorderSlices() == slices)
     return;
-  surround_data_.Access()->border_.image_.SetBorderSlices(slices);
+  surround_.Access()->border_.image_.SetBorderSlices(slices);
 }
 
 void ComputedStyle::SetBorderImageOutset(const BorderImageLengthBox& outset) {
   if (Border().image_.Outset() == outset)
     return;
-  surround_data_.Access()->border_.image_.SetOutset(outset);
+  surround_.Access()->border_.image_.SetOutset(outset);
 }
 
 bool ComputedStyle::BorderObscuresBackground() const {

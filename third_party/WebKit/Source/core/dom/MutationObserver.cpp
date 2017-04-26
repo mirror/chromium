@@ -206,7 +206,7 @@ void MutationObserver::CleanSlotChangeList(Document& document) {
     if (slot->GetDocument() != document)
       kept.push_back(slot);
   }
-  ActiveSlotChangeList().swap(kept);
+  ActiveSlotChangeList().Swap(kept);
 }
 
 static void ActivateObserver(MutationObserver* observer) {
@@ -295,7 +295,7 @@ void MutationObserver::DeliverMutations() {
   ActiveMutationObservers().clear();
 
   SlotChangeList slots;
-  slots.swap(ActiveSlotChangeList());
+  slots.Swap(ActiveSlotChangeList());
   for (const auto& slot : slots)
     slot->ClearSlotChangeEventEnqueued();
 

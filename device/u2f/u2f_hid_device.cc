@@ -342,8 +342,4 @@ bool U2fHidDevice::IsTestEnabled() {
   return command_line->HasSwitch(switches::kEnableU2fHidTest);
 }
 
-base::WeakPtr<U2fDevice> U2fHidDevice::GetWeakPtr() {
-  return weak_factory_.GetWeakPtr();
-}
-
 }  // namespace device

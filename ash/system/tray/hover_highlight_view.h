@@ -69,10 +69,6 @@ class HoverHighlightView : public ActionableView {
   // Hide or show the right view.
   void SetRightViewVisible(bool visible);
 
-  // Sets text for the sub label. Precondition for this function is that
-  // |text_label_| is non-null.
-  void SetSubText(const base::string16& sub_text);
-
   // Allows view to expand its height. Size of unexapandable view is fixed and
   // equals to kTrayPopupItemHeight.
   void SetExpandable(bool expandable);

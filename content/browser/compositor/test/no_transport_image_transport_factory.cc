@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "cc/output/context_provider.h"
 #include "cc/surfaces/surface_manager.h"
@@ -18,12 +17,11 @@
 namespace content {
 
 NoTransportImageTransportFactory::NoTransportImageTransportFactory()
-    : frame_sink_manager_host_(base::MakeUnique<FrameSinkManagerHost>()),
+    : surface_manager_(new cc::SurfaceManager),
       // The context factory created here is for unit tests, thus passing in
       // true in constructor.
-      context_factory_(base::MakeUnique<ui::InProcessContextFactory>(
-          true,
-          frame_sink_manager_host_->surface_manager())) {}
+      context_factory_(
+          new ui::InProcessContextFactory(true, surface_manager_.get())) {}
 
 NoTransportImageTransportFactory::~NoTransportImageTransportFactory() {
   std::unique_ptr<display_compositor::GLHelper> lost_gl_helper =
@@ -42,7 +40,8 @@ NoTransportImageTransportFactory::GetContextFactoryPrivate() {
 
 FrameSinkManagerHost*
 NoTransportImageTransportFactory::GetFrameSinkManagerHost() {
-  return frame_sink_manager_host_.get();
+  NOTIMPLEMENTED();
+  return nullptr;
 }
 
 display_compositor::GLHelper* NoTransportImageTransportFactory::GetGLHelper() {

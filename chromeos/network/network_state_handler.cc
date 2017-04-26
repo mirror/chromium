@@ -162,8 +162,7 @@ void NetworkStateHandler::SetTechnologyEnabled(
                        << "TECHNOLOGY_ENABLED or TECHNOLOGY_AVAILABLE.";
         network_handler::RunErrorCallback(
             error_callback, kTetherDevicePath,
-            NetworkConnectionHandler::kErrorEnabledOrDisabledWhenNotAvailable,
-            "");
+            NetworkConnectionHandler::kEnabledOrDisabledWhenNotAvailable, "");
         continue;
       }
 

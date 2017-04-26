@@ -1,5 +1,4 @@
 <link rel="import" href="chrome://resources/cr_elements/icons.html">
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/action_link.html">
 <link rel="import" href="chrome://resources/html/action_link_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
@@ -17,10 +16,14 @@
 
 <dom-module id="downloads-item">
   <template>
-    <style include="action-link cr-hidden-style">
+    <style include="action-link">
       :host {
         display: flex;
         flex-direction: column;
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       paper-button {

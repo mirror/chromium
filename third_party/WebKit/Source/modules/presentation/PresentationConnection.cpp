@@ -521,7 +521,7 @@ void PresentationConnection::TearDown() {
     blob_loader_->Cancel();
     blob_loader_.Clear();
   }
-  messages_.clear();
+  messages_.Clear();
 }
 
 }  // namespace blink

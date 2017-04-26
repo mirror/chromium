@@ -1169,7 +1169,7 @@ static_library("browser_tests_runner") {
     ]
 
     deps += [
-      "//chrome/app/mash:embedded_services",
+      "//mash/package",
       "//mash/session/public/interfaces:constants",
       "//services/service_manager/background:lib",
     ]
@@ -1315,6 +1315,8 @@ test("browser_tests") {
       "../browser/browsing_data/browsing_data_indexed_db_helper_browsertest.cc",
       "../browser/browsing_data/browsing_data_local_storage_helper_browsertest.cc",
       "../browser/browsing_data/browsing_data_remover_browsertest.cc",
+      "../browser/browsing_data/browsing_data_remover_test_util.cc",
+      "../browser/browsing_data/browsing_data_remover_test_util.h",
       "../browser/browsing_data/cache_counter_browsertest.cc",
       "../browser/browsing_data/conditional_cache_counting_helper_browsertest.cc",
       "../browser/browsing_data/downloads_counter_browsertest.cc",
@@ -3116,6 +3118,9 @@ test("unit_tests") {
     "../browser/browsing_data/browsing_data_local_storage_helper_unittest.cc",
     "../browser/browsing_data/browsing_data_media_license_helper_unittest.cc",
     "../browser/browsing_data/browsing_data_quota_helper_unittest.cc",
+    "../browser/browsing_data/browsing_data_remover_impl_unittest.cc",
+    "../browser/browsing_data/browsing_data_remover_test_util.cc",
+    "../browser/browsing_data/browsing_data_remover_test_util.h",
     "../browser/browsing_data/browsing_data_service_worker_helper_unittest.cc",
     "../browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
     "../browser/browsing_data/cookies_tree_model_unittest.cc",
@@ -3672,7 +3677,6 @@ test("unit_tests") {
       "../browser/search/instant_unittest_base.cc",
       "../browser/search/instant_unittest_base.h",
       "../browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
-      "../browser/search/one_google_bar/one_google_bar_service_unittest.cc",
       "../browser/search/search_unittest.cc",
       "../browser/sessions/persistent_tab_restore_service_unittest.cc",
       "../browser/signin/mutable_profile_oauth2_token_service_delegate_unittest.cc",
@@ -5154,19 +5158,36 @@ if (is_chromeos && enable_package_mash_services) {
     testonly = true
     data_deps = [
       ":browser_tests",
+      "//chrome/app/mash:mash_service_overrides",
     ]
   }
 
   service_manifest("mash_browser_tests_manifest") {
     name = "mash_browser_tests"
+
     source = "base/mash_browser_tests_manifest.json"
+    packaged_services = [
+      "//ash/autoclick/mus:manifest",
+      "//ash/mus:manifest",
+      "//ash/touch_hud/mus:manifest",
+      "//mash/catalog_viewer:manifest",
+      "//mash/quick_launch:manifest",
+      "//mash/session:manifest",
+      "//mash/task_viewer:manifest",
+      "//services/ui:manifest",
+      "//services/ui/ime/test_ime_driver:manifest",
+    ]
+
+    if (is_linux && !is_android) {
+      packaged_services += [ "//components/font_service:manifest" ]
+    }
   }
 
   catalog("mash_browser_tests_catalog") {
     testonly = true
     embedded_services = [ ":mash_browser_tests_manifest" ]
     standalone_services = [ "//services/tracing:manifest" ]
-    catalog_deps = [ "//chrome/app/mash:catalog" ]
+    catalog_deps = [ "//chrome/app:catalog_for_mash" ]
   }
 
   copy("mash_browser_tests_catalog_copy") {
@@ -5191,19 +5212,22 @@ if (is_chromeos && enable_package_mash_services) {
     testonly = true
     data_deps = [
       ":browser_tests",
+      "//chrome/app/mash:mash_service_overrides",
     ]
   }
 
   service_manifest("mus_browser_tests_manifest") {
     name = "mus_browser_tests"
+
     source = "base/mus_browser_tests_manifest.json"
+    packaged_services = [ "//services/ui:manifest" ]
   }
 
   catalog("mus_browser_tests_catalog") {
     testonly = true
     embedded_services = [ ":mus_browser_tests_manifest" ]
     standalone_services = [ "//services/tracing:manifest" ]
-    catalog_deps = [ "//chrome/app/mash:catalog_mus" ]
+    catalog_deps = [ "//chrome/app:catalog" ]
   }
 
   copy("mus_browser_tests_catalog_copy") {

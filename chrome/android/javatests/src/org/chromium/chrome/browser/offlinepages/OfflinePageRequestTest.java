@@ -169,7 +169,7 @@ public class OfflinePageRequestTest extends ChromeActivityTestCaseBase<ChromeAct
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                isOffline[0] = OfflinePageUtils.isOfflinePage(tab);
+                isOffline[0] = tab.isOfflinePage();
             }
         });
         return isOffline[0];

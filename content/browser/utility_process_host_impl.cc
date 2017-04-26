@@ -319,7 +319,6 @@ bool UtilityProcessHostImpl::StartProcess() {
       switches::kLogNetLog,
       switches::kNoSandbox,
       switches::kProfilerTiming,
-      switches::kProxyServer,
       switches::kTestingFixedHttpPort,
       switches::kTestingFixedHttpsPort,
 #if defined(OS_MACOSX)

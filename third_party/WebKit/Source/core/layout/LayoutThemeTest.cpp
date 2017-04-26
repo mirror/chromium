@@ -52,7 +52,7 @@ inline EBorderStyle OutlineStyle(Element* element) {
 TEST_F(LayoutThemeTest, ChangeFocusRingColor) {
   SetHtmlInnerHTML("<span id=span tabIndex=0>Span</span>");
 
-  Element* span = GetDocument().getElementById(AtomicString("span"));
+  Element* span = GetDocument().GetElementById(AtomicString("span"));
   EXPECT_NE(nullptr, span);
   EXPECT_NE(nullptr, span->GetLayoutObject());
 

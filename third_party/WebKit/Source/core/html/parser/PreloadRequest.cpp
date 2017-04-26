@@ -5,7 +5,6 @@
 #include "core/html/parser/PreloadRequest.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/DocumentWriteIntervention.h"
 #include "core/loader/DocumentLoader.h"
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
@@ -48,9 +47,6 @@ Resource* PreloadRequest::Start(Document* document) {
   resource_request.SetRequestContext(
       ResourceFetcher::DetermineRequestContext(resource_type_, false));
 
-  if (resource_type_ == Resource::kScript)
-    MaybeDisallowFetchForDocWrittenScript(resource_request, defer_, *document);
-
   FetchParameters params(resource_request, initiator_info);
 
   if (resource_type_ == Resource::kImportResource) {
@@ -81,7 +77,13 @@ Resource* PreloadRequest::Start(Document* document) {
     params.SetCharset(charset_.IsEmpty() ? document->characterSet().GetString()
                                          : charset_);
   }
-  params.SetSpeculativePreload(true, discovery_time_);
+  FetchParameters::SpeculativePreloadType speculative_preload_type =
+      FetchParameters::SpeculativePreloadType::kInDocument;
+  if (from_insertion_scanner_) {
+    speculative_preload_type =
+        FetchParameters::SpeculativePreloadType::kInserted;
+  }
+  params.SetSpeculativePreloadType(speculative_preload_type, discovery_time_);
 
   return document->Loader()->StartPreload(resource_type_, params);
 }

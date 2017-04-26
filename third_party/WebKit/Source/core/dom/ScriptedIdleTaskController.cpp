@@ -11,11 +11,11 @@
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
-#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/RefCounted.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebScheduler.h"
 #include "public/platform/WebTraceLocation.h"
 
 namespace blink {
@@ -207,7 +207,7 @@ void ScriptedIdleTaskController::Resume() {
 
   // Run any pending timeouts.
   Vector<CallbackId> pending_timeouts;
-  pending_timeouts_.swap(pending_timeouts);
+  pending_timeouts_.Swap(pending_timeouts);
   for (auto& id : pending_timeouts)
     RunCallback(id, MonotonicallyIncreasingTime(),
                 IdleDeadline::CallbackType::kCalledByTimeout);

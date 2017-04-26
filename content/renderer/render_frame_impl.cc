@@ -16,7 +16,6 @@
 #include "base/debug/asan_invalid_access.h"
 #include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
-#include "base/feature_list.h"
 #include "base/files/file.h"
 #include "base/i18n/char_iterator.h"
 #include "base/logging.h"
@@ -70,7 +69,6 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
-#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
@@ -144,7 +142,6 @@
 #include "content/renderer/renderer_webcolorchooser_impl.h"
 #include "content/renderer/savable_resources.h"
 #include "content/renderer/screen_orientation/screen_orientation_dispatcher.h"
-#include "content/renderer/service_worker/worker_fetch_context_impl.h"
 #include "content/renderer/shared_worker/shared_worker_repository.h"
 #include "content/renderer/shared_worker/websharedworker_proxy.h"
 #include "content/renderer/skia_benchmarking_extension.h"
@@ -182,7 +179,6 @@
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/data_element.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
-#include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
@@ -3030,31 +3026,6 @@ RenderFrameImpl::CreateWorkerContentSettingsClientProxy() {
       this, frame_);
 }
 
-std::unique_ptr<blink::WebWorkerFetchContext>
-RenderFrameImpl::CreateWorkerFetchContext() {
-  DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
-  RenderThreadImpl::current()
-      ->blink_platform_impl()
-      ->GetInterfaceProvider()
-      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
-  std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
-      base::MakeUnique<WorkerFetchContextImpl>(
-          worker_url_loader_factory_provider.PassInterface());
-  blink::WebServiceWorkerNetworkProvider* web_provider =
-      frame_->DataSource()->GetServiceWorkerNetworkProvider();
-  if (web_provider) {
-    ServiceWorkerNetworkProvider* provider =
-        ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
-            web_provider);
-    worker_fetch_context->set_service_worker_provider_id(
-        provider->provider_id());
-    worker_fetch_context->set_is_controlled_by_service_worker(
-        provider->IsControlledByServiceWorker());
-  }
-  return std::move(worker_fetch_context);
-}
-
 WebExternalPopupMenu* RenderFrameImpl::CreateExternalPopupMenu(
     const WebPopupMenuInfo& popup_menu_info,
     WebExternalPopupMenuClient* popup_menu_client) {
@@ -4616,13 +4587,17 @@ void RenderFrameImpl::DidCreateScriptContext(blink::WebLocalFrame* frame,
     observer.DidCreateScriptContext(context, world_id);
 }
 
-void RenderFrameImpl::WillReleaseScriptContext(v8::Local<v8::Context> context,
+void RenderFrameImpl::WillReleaseScriptContext(blink::WebLocalFrame* frame,
+                                               v8::Local<v8::Context> context,
                                                int world_id) {
+  DCHECK_EQ(frame_, frame);
+
   for (auto& observer : observers_)
     observer.WillReleaseScriptContext(context, world_id);
 }
 
-void RenderFrameImpl::DidChangeScrollOffset() {
+void RenderFrameImpl::DidChangeScrollOffset(blink::WebLocalFrame* frame) {
+  DCHECK_EQ(frame_, frame);
   render_view_->StartNavStateSyncTimerIfNecessary(this);
 
   for (auto& observer : observers_)

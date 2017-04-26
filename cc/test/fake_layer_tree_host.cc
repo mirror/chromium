@@ -86,6 +86,7 @@ LayerImpl* FakeLayerTreeHost::CommitAndCreateLayerImplTree() {
                                       : Layer::INVALID_ID);
   }
 
+  active_tree()->UpdatePropertyTreesForBoundsDelta();
   return active_tree()->root_layer_for_testing();
 }
 

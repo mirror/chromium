@@ -18,6 +18,8 @@ Worklet::Worklet(LocalFrame* frame)
 
 void Worklet::ContextDestroyed(ExecutionContext*) {
   DCHECK(IsMainThread());
+  if (IsInitialized())
+    GetWorkletGlobalScopeProxy()->TerminateWorkletGlobalScope();
   frame_ = nullptr;
 }
 

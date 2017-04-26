@@ -260,7 +260,8 @@ class ContentViewCoreImpl : public ContentViewCore,
                        const gfx::SizeF& viewport_size,
                        const float top_controls_height,
                        const float top_controls_shown_ratio,
-                       bool is_mobile_optimized_hint);
+                       bool is_mobile_optimized_hint,
+                       const gfx::SelectionBound& selection_start);
 
   bool HasFocus();
   void RequestDisallowInterceptTouchEvent();

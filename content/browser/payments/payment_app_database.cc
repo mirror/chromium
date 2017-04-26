@@ -107,23 +107,9 @@ void PaymentAppDatabase::ReadAllManifests(
                  weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
-void PaymentAppDatabase::DeletePaymentInstrument(
-    const GURL& scope,
-    const std::string& instrument_key,
-    DeletePaymentInstrumentCallback callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  service_worker_context_->FindReadyRegistrationForPattern(
-      scope,
-      base::Bind(
-          &PaymentAppDatabase::DidFindRegistrationToDeletePaymentInstrument,
-          weak_ptr_factory_.GetWeakPtr(), instrument_key,
-          base::Passed(std::move(callback))));
-}
-
 void PaymentAppDatabase::ReadPaymentInstrument(
     const GURL& scope,
-    const std::string& instrument_key,
+    const std::string& instrumentKey,
     ReadPaymentInstrumentCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
@@ -131,13 +117,13 @@ void PaymentAppDatabase::ReadPaymentInstrument(
       scope,
       base::Bind(
           &PaymentAppDatabase::DidFindRegistrationToReadPaymentInstrument,
-          weak_ptr_factory_.GetWeakPtr(), instrument_key,
+          weak_ptr_factory_.GetWeakPtr(), instrumentKey,
           base::Passed(std::move(callback))));
 }
 
 void PaymentAppDatabase::WritePaymentInstrument(
     const GURL& scope,
-    const std::string& instrument_key,
+    const std::string& instrumentKey,
     PaymentInstrumentPtr instrument,
     WritePaymentInstrumentCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -146,7 +132,7 @@ void PaymentAppDatabase::WritePaymentInstrument(
       scope,
       base::Bind(
           &PaymentAppDatabase::DidFindRegistrationToWritePaymentInstrument,
-          weak_ptr_factory_.GetWeakPtr(), instrument_key,
+          weak_ptr_factory_.GetWeakPtr(), instrumentKey,
           base::Passed(std::move(instrument)),
           base::Passed(std::move(callback))));
 }
@@ -263,54 +249,8 @@ void PaymentAppDatabase::DidReadAllManifests(
   callback.Run(std::move(manifests));
 }
 
-void PaymentAppDatabase::DidFindRegistrationToDeletePaymentInstrument(
-    const std::string& instrument_key,
-    DeletePaymentInstrumentCallback callback,
-    ServiceWorkerStatusCode status,
-    scoped_refptr<ServiceWorkerRegistration> registration) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (status != SERVICE_WORKER_OK) {
-    std::move(callback).Run(PaymentHandlerStatus::NO_ACTIVE_WORKER);
-    return;
-  }
-
-  service_worker_context_->GetRegistrationUserData(
-      registration->id(), {instrument_key},
-      base::Bind(&PaymentAppDatabase::DidFindPaymentInstrument,
-                 weak_ptr_factory_.GetWeakPtr(), registration->id(),
-                 instrument_key, base::Passed(std::move(callback))));
-}
-
-void PaymentAppDatabase::DidFindPaymentInstrument(
-    int64_t registration_id,
-    const std::string& instrument_key,
-    DeletePaymentInstrumentCallback callback,
-    const std::vector<std::string>& data,
-    ServiceWorkerStatusCode status) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (status != SERVICE_WORKER_OK || data.size() != 1) {
-    std::move(callback).Run(PaymentHandlerStatus::NOT_FOUND);
-    return;
-  }
-
-  service_worker_context_->ClearRegistrationUserData(
-      registration_id, {instrument_key},
-      base::Bind(&PaymentAppDatabase::DidDeletePaymentInstrument,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 base::Passed(std::move(callback))));
-}
-
-void PaymentAppDatabase::DidDeletePaymentInstrument(
-    DeletePaymentInstrumentCallback callback,
-    ServiceWorkerStatusCode status) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return std::move(callback).Run(status == SERVICE_WORKER_OK
-                                     ? PaymentHandlerStatus::SUCCESS
-                                     : PaymentHandlerStatus::NOT_FOUND);
-}
-
 void PaymentAppDatabase::DidFindRegistrationToReadPaymentInstrument(
-    const std::string& instrument_key,
+    const std::string& instrumentKey,
     ReadPaymentInstrumentCallback callback,
     ServiceWorkerStatusCode status,
     scoped_refptr<ServiceWorkerRegistration> registration) {
@@ -322,7 +262,7 @@ void PaymentAppDatabase::DidFindRegistrationToReadPaymentInstrument(
   }
 
   service_worker_context_->GetRegistrationUserData(
-      registration->id(), {instrument_key},
+      registration->id(), {instrumentKey},
       base::Bind(&PaymentAppDatabase::DidReadPaymentInstrument,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback))));
@@ -350,7 +290,7 @@ void PaymentAppDatabase::DidReadPaymentInstrument(
 }
 
 void PaymentAppDatabase::DidFindRegistrationToWritePaymentInstrument(
-    const std::string& instrument_key,
+    const std::string& instrumentKey,
     PaymentInstrumentPtr instrument,
     WritePaymentInstrumentCallback callback,
     ServiceWorkerStatusCode status,
@@ -375,7 +315,7 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentInstrument(
 
   service_worker_context_->StoreRegistrationUserData(
       registration->id(), registration->pattern().GetOrigin(),
-      {{instrument_key, serialized}},
+      {{instrumentKey, serialized}},
       base::Bind(&PaymentAppDatabase::DidWritePaymentInstrument,
                  weak_ptr_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback))));

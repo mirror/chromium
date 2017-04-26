@@ -244,6 +244,14 @@ const Value::ListStorage& Value::GetList() const {
   return *list_;
 }
 
+size_t Value::GetSize() const {
+  return GetBlob().size();
+}
+
+const char* Value::GetBuffer() const {
+  return GetBlob().data();
+}
+
 bool Value::GetAsBoolean(bool* out_value) const {
   if (out_value && is_bool()) {
     *out_value = bool_value_;
@@ -302,6 +310,14 @@ bool Value::GetAsString(StringPiece* out_value) const {
     return true;
   }
   return is_string();
+}
+
+bool Value::GetAsBinary(const Value** out_value) const {
+  if (out_value && is_blob()) {
+    *out_value = this;
+    return true;
+  }
+  return is_blob();
 }
 
 bool Value::GetAsList(ListValue** out_value) {
@@ -1065,6 +1081,10 @@ void ListValue::Clear() {
 
 void ListValue::Reserve(size_t n) {
   list_->reserve(n);
+}
+
+bool ListValue::Set(size_t index, Value* in_value) {
+  return Set(index, WrapUnique(in_value));
 }
 
 bool ListValue::Set(size_t index, std::unique_ptr<Value> in_value) {

@@ -2133,7 +2133,7 @@ TEST_F(PictureLayerImplTest, ActivateUninitializedLayer) {
                                                    pending_raster_source);
   pending_layer->SetDrawsContent(true);
   pending_tree->SetRootLayerForTesting(std::move(pending_layer));
-  pending_tree->BuildLayerListAndPropertyTreesForTesting();
+  pending_tree->BuildLayerListForTesting();
 
   FakePictureLayerImpl* raw_pending_layer = static_cast<FakePictureLayerImpl*>(
       host_impl()->pending_tree()->LayerById(layer_id()));

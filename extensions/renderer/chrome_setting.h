@@ -31,7 +31,7 @@ class ChromeSetting final : public gin::Wrappable<ChromeSetting> {
   ~ChromeSetting() override;
 
   // Creates a ChromeSetting object for the given property.
-  static v8::Local<v8::Object> Create(v8::Isolate* isolate,
+  static v8::Local<v8::Object> Create(v8::Local<v8::Context> context,
                                       const std::string& property_name,
                                       const base::ListValue* property_values,
                                       APIRequestHandler* request_handler,

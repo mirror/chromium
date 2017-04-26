@@ -10,7 +10,8 @@
 
 namespace device {
 
-U2fDevice::U2fDevice() : channel_id_(kBroadcastChannel), capabilities_(0) {}
+U2fDevice::U2fDevice()
+    : channel_id_(kBroadcastChannel), capabilities_(0), weak_factory_(this) {}
 
 U2fDevice::~U2fDevice() {}
 
@@ -23,9 +24,9 @@ void U2fDevice::Register(const std::vector<uint8_t>& app_param,
     callback.Run(U2fReturnCode::INVALID_PARAMS, std::vector<uint8_t>());
     return;
   }
-  DeviceTransact(
-      std::move(register_cmd),
-      base::Bind(&U2fDevice::OnRegisterComplete, GetWeakPtr(), callback));
+  DeviceTransact(std::move(register_cmd),
+                 base::Bind(&U2fDevice::OnRegisterComplete,
+                            weak_factory_.GetWeakPtr(), callback));
 }
 
 void U2fDevice::Sign(const std::vector<uint8_t>& app_param,
@@ -38,8 +39,9 @@ void U2fDevice::Sign(const std::vector<uint8_t>& app_param,
     callback.Run(U2fReturnCode::INVALID_PARAMS, std::vector<uint8_t>());
     return;
   }
-  DeviceTransact(std::move(sign_cmd), base::Bind(&U2fDevice::OnSignComplete,
-                                                 GetWeakPtr(), callback));
+  DeviceTransact(std::move(sign_cmd),
+                 base::Bind(&U2fDevice::OnSignComplete,
+                            weak_factory_.GetWeakPtr(), callback));
 }
 
 void U2fDevice::Version(const VersionCallback& callback) {
@@ -48,9 +50,9 @@ void U2fDevice::Version(const VersionCallback& callback) {
     callback.Run(false, ProtocolVersion::UNKNOWN);
     return;
   }
-  DeviceTransact(
-      std::move(version_cmd),
-      base::Bind(&U2fDevice::OnVersionComplete, GetWeakPtr(), callback));
+  DeviceTransact(std::move(version_cmd),
+                 base::Bind(&U2fDevice::OnVersionComplete,
+                            weak_factory_.GetWeakPtr(), callback));
 }
 
 void U2fDevice::OnRegisterComplete(

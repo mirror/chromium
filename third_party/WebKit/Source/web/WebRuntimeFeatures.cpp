@@ -202,10 +202,6 @@ void WebRuntimeFeatures::EnableNetworkInformation(bool enable) {
   RuntimeEnabledFeatures::setNetworkInformationEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableOffMainThreadFetch(bool enable) {
-  RuntimeEnabledFeatures::setOffMainThreadFetchEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableOnDeviceChange(bool enable) {
   RuntimeEnabledFeatures::setOnDeviceChangeEnabled(enable);
 }

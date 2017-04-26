@@ -33,10 +33,8 @@ class MockScheduler final : public WebScheduler {
   }
   void SuspendTimerQueue() override {}
   void ResumeTimerQueue() override {}
-  void AddPendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType) override {}
-  void RemovePendingNavigation(
-      scheduler::RendererScheduler::NavigatingFrameType) override {}
+  void AddPendingNavigation(WebScheduler::NavigatingFrameType) override {}
+  void RemovePendingNavigation(WebScheduler::NavigatingFrameType) override {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockScheduler);

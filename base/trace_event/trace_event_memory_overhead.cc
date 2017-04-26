@@ -84,7 +84,9 @@ void TraceEventMemoryOverhead::AddValue(const Value& value) {
     } break;
 
     case Value::Type::BINARY: {
-      Add("BinaryValue", sizeof(Value) + value.GetBlob().size());
+      const Value* binary_value = nullptr;
+      value.GetAsBinary(&binary_value);
+      Add("BinaryValue", sizeof(Value) + binary_value->GetSize());
     } break;
 
     case Value::Type::DICTIONARY: {

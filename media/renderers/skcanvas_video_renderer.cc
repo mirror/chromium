@@ -127,7 +127,6 @@ sk_sp<SkImage> NewSkImageFromVideoFrameYUVTextures(
       source_textures[i].fTarget = GL_TEXTURE_2D;
     }
   }
-  context_3d.gr_context->resetContext(kTextureBinding_GrGLBackendState);
   GrBackendObject handles[3] = {
       skia::GrGLTextureInfoToGrBackendObject(source_textures[0]),
       skia::GrGLTextureInfoToGrBackendObject(source_textures[1]),
@@ -204,7 +203,6 @@ sk_sp<SkImage> NewSkImageFromVideoFrameNative(VideoFrame* video_frame,
         gl, video_frame,
         SkCanvasVideoRenderer::SingleFrameForVideoElementOrCanvas,
         source_texture, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, true, false);
-    context_3d.gr_context->resetContext(kTextureBinding_GrGLBackendState);
   } else {
     gl->WaitSyncTokenCHROMIUM(mailbox_holder.sync_token.GetConstData());
     source_texture = gl->CreateAndConsumeTextureCHROMIUM(

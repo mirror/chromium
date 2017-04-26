@@ -888,7 +888,8 @@ class _Generator(object):
                                                     dst_var,
                                                     failure_value))
     elif underlying_type.property_type == PropertyType.BINARY:
-      (c.Sblock('if (!%(src_var)s->IsType(base::Value::Type::BINARY)) {')
+      (c.Append('const base::Value* binary_value = NULL;')
+        .Sblock('if (!%(src_var)s->IsType(base::Value::Type::BINARY)) {')
         .Concat(self._GenerateError(
           '"\'%%(key)s\': expected binary, got " + ' +
           self._util_cc_helper.GetValueTypeString('%%(src_var)s', True)))
@@ -897,12 +898,19 @@ class _Generator(object):
         c.Append('return %(failure_value)s;')
       (c.Eblock('}')
         .Sblock('else {')
+        .Append(' binary_value =')
+        .Append('   static_cast<const base::Value*>(%(src_var)s);')
       )
       if is_ptr:
-        c.Append(
-            '%(dst_var)s.reset(new std::vector<char>(%(src_var)s->GetBlob()));')
+        (c.Append('%(dst_var)s.reset(new std::vector<char>(')
+          .Append('    binary_value->GetBuffer(),')
+          .Append('    binary_value->GetBuffer() + binary_value->GetSize()));')
+        )
       else:
-        c.Append('%(dst_var)s = %(src_var)s->GetBlob();')
+        (c.Append('%(dst_var)s.assign(')
+          .Append('    binary_value->GetBuffer(),')
+          .Append('    binary_value->GetBuffer() + binary_value->GetSize());')
+        )
       c.Eblock('}')
     else:
       raise NotImplementedError(type_)

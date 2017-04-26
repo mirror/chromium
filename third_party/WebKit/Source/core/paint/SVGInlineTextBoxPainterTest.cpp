@@ -31,7 +31,7 @@ class SVGInlineTextBoxPainterTest : public PaintControllerPaintTest {
     // the painted text.
     LayoutSVGText* target_svg_text =
         ToLayoutSVGText(GetDocument()
-                            .getElementById(AtomicString(element_name))
+                            .GetElementById(AtomicString(element_name))
                             ->GetLayoutObject());
     LayoutSVGInlineText* target_inline_text =
         target_svg_text->DescendantTextNodes()[0];

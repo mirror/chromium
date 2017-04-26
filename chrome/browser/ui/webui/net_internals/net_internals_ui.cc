@@ -33,6 +33,8 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
+#include "chrome/browser/browsing_data/browsing_data_remover.h"
+#include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/download/download_prefs.h"
@@ -50,7 +52,6 @@
 #include "components/url_formatter/url_fixer.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/storage_partition.h"
@@ -501,11 +502,12 @@ void NetInternalsMessageHandler::OnRendererReady(const base::ListValue* list) {
 
 void NetInternalsMessageHandler::OnClearBrowserCache(
     const base::ListValue* list) {
-  content::BrowsingDataRemover* remover =
-      Profile::GetBrowsingDataRemover(Profile::FromWebUI(web_ui()));
+  BrowsingDataRemover* remover =
+      BrowsingDataRemoverFactory::GetForBrowserContext(
+          Profile::FromWebUI(web_ui()));
   remover->Remove(base::Time(), base::Time::Max(),
-                  content::BrowsingDataRemover::DATA_TYPE_CACHE,
-                  content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
+                  BrowsingDataRemover::DATA_TYPE_CACHE,
+                  BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
   // BrowsingDataRemover deletes itself.
 }
 

@@ -749,10 +749,24 @@ ScriptPromise WebGLRenderingContextBase::commit(
     ExceptionState& exception_state) {
   UseCounter::Feature feature = UseCounter::kOffscreenCanvasCommitWebGL;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
+  if (!offscreenCanvas()) {
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "Commit() was called on a rendering "
+                                      "context that was not created from an "
+                                      "OffscreenCanvas.");
+    return exception_state.Reject(script_state);
+  }
+  // no HTMLCanvas associated, thrown InvalidStateError
+  if (!offscreenCanvas()->HasPlaceholderCanvas()) {
+    exception_state.ThrowDOMException(
+        kInvalidStateError,
+        "Commit() was called on a context whose "
+        "OffscreenCanvas is not associated with a "
+        "canvas element.");
+    return exception_state.Reject(script_state);
+  }
   if (!GetDrawingBuffer()) {
-    bool is_web_gl_software_rendering = false;
-    return host()->Commit(nullptr, is_web_gl_software_rendering, script_state,
-                          exception_state);
+    return offscreenCanvas()->Commit(nullptr, false, script_state);
   }
 
   RefPtr<StaticBitmapImage> image;
@@ -768,10 +782,10 @@ ScriptPromise WebGLRenderingContextBase::commit(
     image = GetDrawingBuffer()->TransferToStaticBitmapImage();
   }
 
-  return host()->Commit(
+  return offscreenCanvas()->Commit(
       std::move(image),
       GetDrawingBuffer()->ContextProvider()->IsSoftwareRendering(),
-      script_state, exception_state);
+      script_state);
 }
 
 PassRefPtr<Image> WebGLRenderingContextBase::GetImage(
@@ -988,25 +1002,43 @@ static const GLenum kSupportedTypesTexImageSourceES3[] = {
 }  // namespace
 
 WebGLRenderingContextBase::WebGLRenderingContextBase(
-    CanvasRenderingContextHost* host,
+    OffscreenCanvas* passed_offscreen_canvas,
     std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
     const CanvasContextCreationAttributes& requested_attributes,
     unsigned version)
     : WebGLRenderingContextBase(
-          host,
+          nullptr,
+          passed_offscreen_canvas,
           TaskRunnerHelper::Get(TaskType::kWebGL,
-                                host->GetTopExecutionContext()),
+                                passed_offscreen_canvas->GetExecutionContext()),
           std::move(context_provider),
           requested_attributes,
           version) {}
 
 WebGLRenderingContextBase::WebGLRenderingContextBase(
-    CanvasRenderingContextHost* host,
+    HTMLCanvasElement* passed_canvas,
+    std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
+    const CanvasContextCreationAttributes& requested_attributes,
+    unsigned version)
+    : WebGLRenderingContextBase(
+          passed_canvas,
+          nullptr,
+          TaskRunnerHelper::Get(TaskType::kWebGL,
+                                &passed_canvas->GetDocument()),
+          std::move(context_provider),
+          requested_attributes,
+          version) {}
+
+WebGLRenderingContextBase::WebGLRenderingContextBase(
+    HTMLCanvasElement* passed_canvas,
+    OffscreenCanvas* passed_offscreen_canvas,
     RefPtr<WebTaskRunner> task_runner,
     std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
     const CanvasContextCreationAttributes& requested_attributes,
     unsigned version)
-    : CanvasRenderingContext(host, requested_attributes),
+    : CanvasRenderingContext(passed_canvas,
+                             passed_offscreen_canvas,
+                             requested_attributes),
       context_group_(this, new WebGLContextGroup()),
       is_hidden_(false),
       context_lost_mode_(kNotLostContext),
@@ -1046,7 +1078,20 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
                                              max_viewport_dims_);
 
   RefPtr<DrawingBuffer> buffer;
-  buffer = CreateDrawingBuffer(std::move(context_provider));
+  // On Mac OS, DrawingBuffer is using an IOSurface as its backing storage, this
+  // allows WebGL-rendered canvases to be composited by the OS rather than
+  // Chrome.
+  // IOSurfaces are only compatible with the GL_TEXTURE_RECTANGLE_ARB binding
+  // target. So to avoid the knowledge of GL_TEXTURE_RECTANGLE_ARB type textures
+  // being introduced into more areas of the code, we use the code path of
+  // non-WebGLImageChromium for OffscreenCanvas.
+  // See detailed discussion in crbug.com/649668.
+  if (passed_offscreen_canvas)
+    buffer = CreateDrawingBuffer(std::move(context_provider),
+                                 DrawingBuffer::kDisallowChromiumImage);
+  else
+    buffer = CreateDrawingBuffer(std::move(context_provider),
+                                 DrawingBuffer::kAllowChromiumImage);
   if (!buffer) {
     context_lost_mode_ = kSyntheticLostContext;
     return;
@@ -1076,7 +1121,8 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
 }
 
 PassRefPtr<DrawingBuffer> WebGLRenderingContextBase::CreateDrawingBuffer(
-    std::unique_ptr<WebGraphicsContext3DProvider> context_provider) {
+    std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
+    DrawingBuffer::ChromiumImageUsage chromium_image_usage) {
   bool premultiplied_alpha = CreationAttributes().premultipliedAlpha();
   bool want_alpha_channel = CreationAttributes().alpha();
   bool want_depth_buffer = CreationAttributes().depth();
@@ -1093,19 +1139,6 @@ PassRefPtr<DrawingBuffer> WebGLRenderingContextBase::CreateDrawingBuffer(
   } else {
     NOTREACHED();
   }
-
-  // On Mac OS, DrawingBuffer is using an IOSurface as its backing storage, this
-  // allows WebGL-rendered canvases to be composited by the OS rather than
-  // Chrome.
-  // IOSurfaces are only compatible with the GL_TEXTURE_RECTANGLE_ARB binding
-  // target. So to avoid the knowledge of GL_TEXTURE_RECTANGLE_ARB type textures
-  // being introduced into more areas of the code, we use the code path of
-  // non-WebGLImageChromium for OffscreenCanvas.
-  // See detailed discussion in crbug.com/649668.
-  DrawingBuffer::ChromiumImageUsage chromium_image_usage =
-      host()->IsOffscreenCanvas() ? DrawingBuffer::kDisallowChromiumImage
-                                  : DrawingBuffer::kAllowChromiumImage;
-
   return DrawingBuffer::Create(
       std::move(context_provider), this, ClampedCanvasSize(),
       premultiplied_alpha, want_alpha_channel, want_depth_buffer,
@@ -4113,7 +4146,7 @@ void WebGLRenderingContextBase::ReadPixelsHelper(GLint x,
     return;
   // Due to WebGL's same-origin restrictions, it is not possible to
   // taint the origin using the WebGL API.
-  DCHECK(host()->OriginClean());
+  DCHECK(canvas() ? canvas()->OriginClean() : offscreenCanvas()->OriginClean());
 
   // Validate input parameters.
   if (!pixels) {
@@ -7450,7 +7483,10 @@ bool WebGLRenderingContextBase::ValidateDrawElements(const char* function_name,
 void WebGLRenderingContextBase::DispatchContextLostEvent(TimerBase*) {
   WebGLContextEvent* event = WebGLContextEvent::Create(
       EventTypeNames::webglcontextlost, false, true, "");
-  host()->HostDispatchEvent(event);
+  if (offscreenCanvas())
+    offscreenCanvas()->DispatchEvent(event);
+  else
+    canvas()->DispatchEvent(event);
   restore_allowed_ = event->defaultPrevented();
   if (restore_allowed_ && !is_hidden_) {
     if (auto_recovery_method_ == kAuto)
@@ -7490,14 +7526,16 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
     drawing_buffer_.Clear();
   }
 
-  auto execution_context = host()->GetTopExecutionContext();
+  auto execution_context = canvas()
+                               ? canvas()->GetDocument().GetExecutionContext()
+                               : offscreenCanvas()->GetExecutionContext();
   Platform::ContextAttributes attributes = ToPlatformContextAttributes(
       CreationAttributes(), Version(),
       SupportOwnOffscreenSurface(execution_context));
   Platform::GraphicsInfo gl_info;
   std::unique_ptr<WebGraphicsContext3DProvider> context_provider;
-  const auto& url = host()->GetExecutionContextUrl();
-
+  const auto& url = canvas() ? canvas()->GetDocument().TopDocument().Url()
+                             : offscreenCanvas()->GetExecutionContext()->Url();
   if (IsMainThread()) {
     context_provider = WTF::WrapUnique(
         Platform::Current()->CreateOffscreenGraphicsContext3DProvider(
@@ -7509,7 +7547,14 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
   RefPtr<DrawingBuffer> buffer;
   if (context_provider && context_provider->BindToCurrentThread()) {
     // Construct a new drawing buffer with the new GL context.
-    buffer = CreateDrawingBuffer(std::move(context_provider));
+    if (canvas()) {
+      buffer = CreateDrawingBuffer(std::move(context_provider),
+                                   DrawingBuffer::kAllowChromiumImage);
+    } else {
+      // Please refer to comment at Line 1040 in this file.
+      buffer = CreateDrawingBuffer(std::move(context_provider),
+                                   DrawingBuffer::kDisallowChromiumImage);
+    }
     // If DrawingBuffer::create() fails to allocate a fbo, |drawingBuffer| is
     // set to null.
   }
@@ -7542,7 +7587,10 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
   MarkContextChanged(kCanvasContextChanged);
   WebGLContextEvent* event = WebGLContextEvent::Create(
       EventTypeNames::webglcontextrestored, false, true, "");
-  host()->HostDispatchEvent(event);
+  if (canvas())
+    canvas()->DispatchEvent(event);
+  else
+    offscreenCanvas()->DispatchEvent(event);
 }
 
 String WebGLRenderingContextBase::EnsureNotNull(const String& text) const {
@@ -7663,8 +7711,14 @@ void WebGLRenderingContextBase::EnableOrDisable(GLenum capability,
 }
 
 IntSize WebGLRenderingContextBase::ClampedCanvasSize() const {
-  int width = host()->Size().Width();
-  int height = host()->Size().Height();
+  int width, height;
+  if (canvas()) {
+    width = canvas()->width();
+    height = canvas()->height();
+  } else {
+    width = offscreenCanvas()->width();
+    height = offscreenCanvas()->height();
+  }
   return IntSize(Clamp(width, 1, max_viewport_dims_[0]),
                  Clamp(height, 1, max_viewport_dims_[1]));
 }
@@ -7822,11 +7876,10 @@ void WebGLRenderingContextBase::RestoreUnpackParameters() {
 
 void WebGLRenderingContextBase::getHTMLOrOffscreenCanvas(
     HTMLCanvasElementOrOffscreenCanvas& result) const {
-  if (canvas()) {
-    result.setHTMLCanvasElement(static_cast<HTMLCanvasElement*>(host()));
-  } else {
-    result.setOffscreenCanvas(static_cast<OffscreenCanvas*>(host()));
-  }
+  if (canvas())
+    result.setHTMLCanvasElement(canvas());
+  else
+    result.setOffscreenCanvas(offscreenCanvas());
 }
 
 }  // namespace blink

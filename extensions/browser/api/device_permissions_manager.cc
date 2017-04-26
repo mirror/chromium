@@ -151,7 +151,7 @@ void UpdateDevicePermissionEntry(BrowserContext* context,
     if (!MatchesDevicePermissionEntry(dict_value, entry)) {
       continue;
     }
-    devices->Set(i, entry->ToValue());
+    devices->Set(i, entry->ToValue().release());
     break;
   }
 }

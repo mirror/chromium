@@ -11,7 +11,8 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
-
+#include "chrome/browser/browsing_data/browsing_data_remover.h"
+#include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/profiles/gaia_info_update_service.h"
 #include "chrome/browser/profiles/gaia_info_update_service_factory.h"
@@ -29,7 +30,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/common/signin_pref_names.h"
-#include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/text_elider.h"
@@ -235,7 +235,7 @@ void RemoveBrowsingDataForProfile(const base::FilePath& profile_path) {
   if (profile->IsGuestSession())
     profile = profile->GetOffTheRecordProfile();
 
-  content::BrowserContext::GetBrowsingDataRemover(profile)->Remove(
+  BrowsingDataRemoverFactory::GetForBrowserContext(profile)->Remove(
       base::Time(), base::Time::Max(),
       ChromeBrowsingDataRemoverDelegate::WIPE_PROFILE,
       ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES);

@@ -95,9 +95,7 @@ class SingleThreadTaskGraphRunner : public cc::SingleThreadTaskGraphRunner {
 };
 
 struct CompositorDependencies {
-  CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {
-    frame_sink_manager_host.ConnectToFrameSinkManager();
-  }
+  CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {}
 
   SingleThreadTaskGraphRunner task_graph_runner;
   FrameSinkManagerHost frame_sink_manager_host;

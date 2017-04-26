@@ -14,7 +14,6 @@
 #include "ash/test/test_session_controller_client.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/test/scoped_command_line.h"
 #include "ui/aura/test/mus/test_window_tree_client_setup.h"
 
 namespace aura {
@@ -118,8 +117,6 @@ class AshTestHelper {
     session_controller_client_ = std::move(session_controller_client);
   }
 
-  void reset_commandline() { command_line_.reset(); }
-
  private:
   // These TestSuites need to manipulate |config_|.
   friend class AshTestSuite;
@@ -170,8 +167,6 @@ class AshTestHelper {
   std::unique_ptr<TestSessionControllerClient> session_controller_client_;
 
   std::unique_ptr<ui::InputDeviceClient> input_device_client_;
-
-  std::unique_ptr<base::test::ScopedCommandLine> command_line_;
 
   DISALLOW_COPY_AND_ASSIGN(AshTestHelper);
 };

@@ -523,7 +523,7 @@ void LayoutListItem::UpdateListMarkerNumbers() {
     return;
 
   Node* list_node = EnclosingList(this);
-  CHECK(list_node);
+  DCHECK(list_node);
 
   bool is_list_reversed = false;
   HTMLOListElement* o_list_element =

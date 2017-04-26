@@ -19,14 +19,14 @@ mojom::ServicePtr PassServiceRequestOnCommandLine(
   std::string token;
   mojom::ServicePtr client;
   client.Bind(mojom::ServicePtrInfo(connection->CreateMessagePipe(&token), 0));
-  command_line->AppendSwitchASCII(switches::kServicePipeToken, token);
+  command_line->AppendSwitchASCII(switches::kPrimordialPipeToken, token);
   return client;
 }
 
 mojom::ServiceRequest GetServiceRequestFromCommandLine() {
   std::string token =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kServicePipeToken);
+          switches::kPrimordialPipeToken);
   mojom::ServiceRequest request;
   if (!token.empty())
     request.Bind(mojo::edk::CreateChildMessagePipe(token));
@@ -35,7 +35,7 @@ mojom::ServiceRequest GetServiceRequestFromCommandLine() {
 
 bool ServiceManagerIsRemote() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kServicePipeToken);
+      switches::kPrimordialPipeToken);
 }
 
 }  // namespace service_manager

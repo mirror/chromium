@@ -24,11 +24,11 @@
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 
-// Forward declare |ProcessLocalDumpManagerImplTest| so that we can make it a
+// Forward declare |MemoryDumpManagerDelegateImplTest| so that we can make it a
 // friend of |MemoryDumpManager| and give it access to |SetInstanceForTesting|.
 namespace memory_instrumentation {
 
-class ProcessLocalDumpManagerImplTest;
+class MemoryDumpManagerDelegateImplTest;
 
 }  // namespace memory_instrumentation
 
@@ -40,6 +40,7 @@ class Thread;
 namespace trace_event {
 
 class MemoryTracingObserver;
+class MemoryDumpManagerDelegate;
 class MemoryDumpProvider;
 class MemoryDumpSessionState;
 
@@ -48,10 +49,6 @@ class MemoryDumpSessionState;
 // RequestDumpPoint(). The extension by Un(RegisterDumpProvider).
 class BASE_EXPORT MemoryDumpManager {
  public:
-  using RequestGlobalDumpFunction =
-      RepeatingCallback<void(const MemoryDumpRequestArgs& args,
-                             const GlobalMemoryDumpCallback& callback)>;
-
   static const char* const kTraceCategory;
   static const char* const kLogPrefix;
 
@@ -67,12 +64,10 @@ class BASE_EXPORT MemoryDumpManager {
   // On the other side, the MemoryDumpManager will not be fully operational
   // (i.e. will NACK any RequestGlobalMemoryDump()) until initialized.
   // Arguments:
-  //  request_dump_function: Function to invoke a global dump. Global dump
-  //      involves embedder-specific behaviors like multiprocess handshaking.
-  //  is_coordinator: True when current process coodinates the periodic dump
-  //      triggering.
-  void Initialize(RequestGlobalDumpFunction request_dump_function,
-                  bool is_coordinator);
+  //  delegate: inversion-of-control interface for embedder-specific behaviors
+  //      (multiprocess handshaking). See the lifetime and thread-safety
+  //      requirements in the |MemoryDumpManagerDelegate| docstring.
+  void Initialize(std::unique_ptr<MemoryDumpManagerDelegate> delegate);
 
   // (Un)Registers a MemoryDumpProvider instance.
   // Args:
@@ -135,14 +130,6 @@ class BASE_EXPORT MemoryDumpManager {
   // Enable.
   void Disable();
 
-  // NOTE: Use RequestGlobalDump() to create memory dumps. Creates a memory dump
-  // for the current process and appends it to the trace. |callback| will be
-  // invoked asynchronously upon completion on the same thread on which
-  // CreateProcessDump() was called. This method should only be used by the
-  // embedder while creating a global memory dump.
-  void CreateProcessDump(const MemoryDumpRequestArgs& args,
-                         const ProcessMemoryDumpCallback& callback);
-
   // Enable heap profiling if kEnableHeapProfiling is specified.
   void EnableHeapProfilingIfNeeded();
 
@@ -185,8 +172,9 @@ class BASE_EXPORT MemoryDumpManager {
  private:
   friend std::default_delete<MemoryDumpManager>;  // For the testing instance.
   friend struct DefaultSingletonTraits<MemoryDumpManager>;
+  friend class MemoryDumpManagerDelegate;
   friend class MemoryDumpManagerTest;
-  friend class memory_instrumentation::ProcessLocalDumpManagerImplTest;
+  friend class memory_instrumentation::MemoryDumpManagerDelegateImplTest;
 
   // Holds the state of a process memory dump that needs to be carried over
   // across task runners in order to fulfil an asynchronous CreateProcessDump()
@@ -257,6 +245,13 @@ class BASE_EXPORT MemoryDumpManager {
   void FinalizeDumpAndAddToTrace(
       std::unique_ptr<ProcessMemoryDumpAsyncState> pmd_async_state);
 
+  // Internal, used only by MemoryDumpManagerDelegate.
+  // Creates a memory dump for the current process and appends it to the trace.
+  // |callback| will be invoked asynchronously upon completion on the same
+  // thread on which CreateProcessDump() was called.
+  void CreateProcessDump(const MemoryDumpRequestArgs& args,
+                         const ProcessMemoryDumpCallback& callback);
+
   // Calls InvokeOnMemoryDump() for the next MDP on the task runner specified by
   // the MDP while registration. On failure to do so, skips and continues to
   // next MDP.
@@ -296,16 +291,11 @@ class BASE_EXPORT MemoryDumpManager {
   std::unordered_set<StringPiece, StringPieceHash>
       strict_thread_check_blacklist_;
 
+  std::unique_ptr<MemoryDumpManagerDelegate> delegate_;
   std::unique_ptr<MemoryTracingObserver> tracing_observer_;
 
-  // Function provided by the embedder to handle global dump requests.
-  RequestGlobalDumpFunction request_dump_function_;
-
-  // True when current process coordinates the periodic dump triggering.
-  bool is_coordinator_;
-
-  // Protects from concurrent accesses to the local state, eg: to guard against
-  // disabling logging while dumping on another thread.
+  // Protects from concurrent accesses to the |dump_providers_*| and |delegate_|
+  // to guard against disabling logging while dumping on another thread.
   Lock lock_;
 
   // Optimization to avoid attempting any memory dump (i.e. to not walk an empty
@@ -327,6 +317,29 @@ class BASE_EXPORT MemoryDumpManager {
   bool heap_profiling_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryDumpManager);
+};
+
+// The delegate is supposed to be long lived (read: a Singleton) and thread
+// safe (i.e. should expect calls from any thread and handle thread hopping).
+class BASE_EXPORT MemoryDumpManagerDelegate {
+ public:
+  MemoryDumpManagerDelegate() {}
+  virtual ~MemoryDumpManagerDelegate() {}
+
+  virtual void RequestGlobalMemoryDump(
+      const MemoryDumpRequestArgs& args,
+      const GlobalMemoryDumpCallback& callback) = 0;
+
+  virtual bool IsCoordinator() const = 0;
+
+ protected:
+  void CreateProcessDump(const MemoryDumpRequestArgs& args,
+                         const ProcessMemoryDumpCallback& callback) {
+    MemoryDumpManager::GetInstance()->CreateProcessDump(args, callback);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MemoryDumpManagerDelegate);
 };
 
 }  // namespace trace_event

@@ -45,8 +45,7 @@ class MockPrerenderingLoader : public PrerenderingLoader {
         mock_loading_(false),
         mock_loaded_(false),
         mock_is_lowbar_met_(false),
-        start_snapshot_called_(false),
-        web_contents_(nullptr) {}
+        start_snapshot_called_(false) {}
   ~MockPrerenderingLoader() override { delete web_contents_; }
 
   bool LoadPage(const GURL& url,

@@ -10,7 +10,7 @@ import("//build/split_static_library.gni")
 import("//chrome/common/features.gni")
 import("//components/os_crypt/features.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
-import("//device/vr/features/features.gni")
+import("//device/vr/features.gni")
 import("//extensions/features/features.gni")
 import("//media/media_options.gni")
 import("//net/features.gni")
@@ -166,7 +166,12 @@ split_static_library("browser") {
     "browsing_data/browsing_data_quota_helper.h",
     "browsing_data/browsing_data_quota_helper_impl.cc",
     "browsing_data/browsing_data_quota_helper_impl.h",
+    "browsing_data/browsing_data_remover.h",
     "browsing_data/browsing_data_remover_delegate.h",
+    "browsing_data/browsing_data_remover_factory.cc",
+    "browsing_data/browsing_data_remover_factory.h",
+    "browsing_data/browsing_data_remover_impl.cc",
+    "browsing_data/browsing_data_remover_impl.h",
     "browsing_data/browsing_data_service_worker_helper.cc",
     "browsing_data/browsing_data_service_worker_helper.h",
     "browsing_data/cache_counter.cc",
@@ -175,8 +180,6 @@ split_static_library("browser") {
     "browsing_data/canonical_cookie_hash.h",
     "browsing_data/chrome_browsing_data_remover_delegate.cc",
     "browsing_data/chrome_browsing_data_remover_delegate.h",
-    "browsing_data/chrome_browsing_data_remover_delegate_factory.cc",
-    "browsing_data/chrome_browsing_data_remover_delegate_factory.h",
     "browsing_data/cookies_tree_model.cc",
     "browsing_data/cookies_tree_model.h",
     "browsing_data/downloads_counter.cc",
@@ -1605,7 +1608,7 @@ split_static_library("browser") {
     "//device/power_save_blocker",
     "//device/usb/mojo",
     "//device/usb/public/interfaces",
-    "//device/vr/features",
+    "//device/vr:features",
     "//extensions/features",
     "//gin:gin_features",
     "//google_apis",
@@ -3497,11 +3500,6 @@ split_static_library("browser") {
       "search/one_google_bar/one_google_bar_fetcher.h",
       "search/one_google_bar/one_google_bar_fetcher_impl.cc",
       "search/one_google_bar/one_google_bar_fetcher_impl.h",
-      "search/one_google_bar/one_google_bar_service.cc",
-      "search/one_google_bar/one_google_bar_service.h",
-      "search/one_google_bar/one_google_bar_service_factory.cc",
-      "search/one_google_bar/one_google_bar_service_factory.h",
-      "search/one_google_bar/one_google_bar_service_observer.h",
       "signin/signin_promo.cc",
       "signin/signin_promo.h",
       "signin/signin_ui_util.cc",

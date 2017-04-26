@@ -283,7 +283,7 @@ public class OfflinePageUtils {
             return;
         }
 
-        OfflinePageItem offlinePage = offlinePageBridge.getOfflinePage(currentTab.getWebContents());
+        OfflinePageItem offlinePage = currentTab.getOfflinePage();
         if (offlinePage != null) {
             // If we're currently on offline page get the saved file directly.
             prepareFileAndShare(shareDirectly, saveLastUsed, mainActivity, title, text,
@@ -564,28 +564,6 @@ public class OfflinePageUtils {
     }
 
     /**
-     * Checks if an offline page is shown for the tab.
-     * @param tab The tab to be reloaded.
-     * @return True if the offline page is opened.
-     */
-    public static boolean isOfflinePage(Tab tab) {
-        OfflinePageBridge offlinePageBridge = getInstance().getOfflinePageBridge(tab.getProfile());
-        if (offlinePageBridge == null) return false;
-        return offlinePageBridge.isOfflinePage(tab.getWebContents());
-    }
-
-    /**
-     * Retrieves the offline page that is shown for the tab.
-     * @param tab The tab to be reloaded.
-     * @return The offline page if tab currently displays it, null otherwise.
-     */
-    public static OfflinePageItem getOfflinePage(Tab tab) {
-        OfflinePageBridge offlinePageBridge = getInstance().getOfflinePageBridge(tab.getProfile());
-        if (offlinePageBridge == null) return null;
-        return offlinePageBridge.getOfflinePage(tab.getWebContents());
-    }
-
-    /**
      * Reloads specified tab, which should allow to open an online version of the page.
      * @param tab The tab to be reloaded.
      */
@@ -720,7 +698,7 @@ public class OfflinePageUtils {
             // We first compute the bitwise tab restore context.
             int tabRestoreContext = 0;
             if (isConnected()) tabRestoreContext |= BIT_ONLINE;
-            OfflinePageItem page = getOfflinePage(tab);
+            OfflinePageItem page = tab.getOfflinePage();
             if (page != null) {
                 tabRestoreContext |= BIT_OFFLINE_PAGE;
                 if (page.getClientId().getNamespace().equals(OfflinePageBridge.LAST_N_NAMESPACE)) {

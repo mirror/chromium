@@ -12,7 +12,6 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test/ash_test_helper.h"
 #include "base/callback_forward.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -223,10 +222,6 @@ void ScreenRotationAnimatorSmoothAnimationTest::QuitWaitForCopyCallback() {
 
 void ScreenRotationAnimatorSmoothAnimationTest::SetUp() {
   AshTestBase::SetUp();
-  // Resets the commandline will clear all the switches, including
-  // "ash-disable-smooth-screen-rotation", so that we can test the smooth screen
-  // rotation animation. The |animator| is recreated and checking this swtich.
-  ash_test_helper()->reset_commandline();
 
   display_ = display::Screen::GetScreen()->GetPrimaryDisplay();
   if (Shell::GetAshConfig() == Config::MASH) {
@@ -235,6 +230,8 @@ void ScreenRotationAnimatorSmoothAnimationTest::SetUp() {
     return;
   }
 
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableSmoothScreenRotation);
   run_loop_ = base::MakeUnique<base::RunLoop>();
   SetScreenRotationAnimator(display_.id(), run_loop_->QuitWhenIdleClosure(),
                             run_loop_->QuitWhenIdleClosure());

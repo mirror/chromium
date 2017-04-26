@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "ash/accessibility_delegate.h"
+#include "ash/shell_observer.h"
 #include "ash/system/accessibility_observer.h"
 #include "ash/system/tray/tray_details_view.h"
 #include "ash/system/tray/tray_image_item.h"
@@ -20,6 +21,10 @@ namespace chromeos {
 class TrayAccessibilityTest;
 }
 
+namespace gfx {
+struct VectorIcon;
+}
+
 namespace views {
 class Button;
 class CustomButton;
@@ -28,6 +33,7 @@ class View;
 }
 
 namespace ash {
+class HoverHighlightView;
 class SystemTrayItem;
 
 namespace tray {
@@ -54,7 +60,8 @@ class AccessibilityPopupView : public views::View {
 };
 
 // Create the detailed view of accessibility tray.
-class AccessibilityDetailedView : public TrayDetailsView {
+class AccessibilityDetailedView : public TrayDetailsView,
+                                  public ShellObserver {
  public:
   explicit AccessibilityDetailedView(SystemTrayItem* owner);
   ~AccessibilityDetailedView() override {}
@@ -74,6 +81,15 @@ class AccessibilityDetailedView : public TrayDetailsView {
 
   // Add the accessibility feature list.
   void AppendAccessibilityList();
+
+  // Helper function to create entries in the detailed accessibility view.
+  HoverHighlightView* AddScrollListItem(const base::string16& text,
+                                        bool checked,
+                                        const gfx::VectorIcon& icon);
+  HoverHighlightView* AddScrollListItemWithoutIcon(const base::string16& text,
+                                                   bool checked);
+
+  void AddSubHeader(const base::string16& header_text);
 
   views::View* spoken_feedback_view_ = nullptr;
   views::View* high_contrast_view_ = nullptr;

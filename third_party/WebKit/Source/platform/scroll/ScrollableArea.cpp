@@ -397,6 +397,7 @@ void ScrollableArea::WillRemoveScrollbar(Scrollbar& scrollbar,
 }
 
 void ScrollableArea::ContentsResized() {
+  ShowOverlayScrollbars();
   if (ScrollAnimatorBase* scroll_animator = ExistingScrollAnimator())
     scroll_animator->ContentsResized();
 }

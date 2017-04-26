@@ -186,43 +186,37 @@ class QuicServerPushHelper : public ServerPushDelegate::ServerPushHelper {
 
 }  // namespace
 
-QuicChromiumClientSession::StreamRequest::StreamRequest(
-    const base::WeakPtr<QuicChromiumClientSession>& session)
-    : session_(session), stream_(nullptr) {}
+QuicChromiumClientSession::StreamRequest::StreamRequest() : stream_(nullptr) {}
 
 QuicChromiumClientSession::StreamRequest::~StreamRequest() {
-  if (stream_)
-    stream_->Reset(QUIC_STREAM_CANCELLED);
-
-  if (session_)
-    session_->CancelRequest(this);
+  CancelRequest();
 }
 
 int QuicChromiumClientSession::StreamRequest::StartRequest(
+    const base::WeakPtr<QuicChromiumClientSession>& session,
+    QuicChromiumClientStream** stream,
     const CompletionCallback& callback) {
-  DCHECK(session_);
-  int rv = session_->TryCreateStream(this);
+  session_ = session;
+  stream_ = stream;
+  int rv = session_->TryCreateStream(this, stream_);
   if (rv == ERR_IO_PENDING) {
     callback_ = callback;
-  } else {
-    session_.reset();
   }
 
   return rv;
 }
 
-QuicChromiumClientStream*
-QuicChromiumClientSession::StreamRequest::ReleaseStream() {
-  DCHECK(stream_);
-  QuicChromiumClientStream* stream = stream_;
-  stream_ = nullptr;
-  return stream;
+void QuicChromiumClientSession::StreamRequest::CancelRequest() {
+  if (session_)
+    session_->CancelRequest(this);
+  session_.reset();
+  callback_.Reset();
 }
 
 void QuicChromiumClientSession::StreamRequest::OnRequestCompleteSuccess(
     QuicChromiumClientStream* stream) {
   session_.reset();
-  stream_ = stream;
+  *stream_ = stream;
   base::ResetAndReturn(&callback_).Run(OK);
 }
 
@@ -462,15 +456,9 @@ void QuicChromiumClientSession::RemoveObserver(Observer* observer) {
   observers_.erase(observer);
 }
 
-std::unique_ptr<QuicChromiumClientSession::StreamRequest>
-QuicChromiumClientSession::CreateStreamRequest() {
-  // base::MakeUnique does not work because the StreamRequest constructor
-  // is private.
-  return std::unique_ptr<StreamRequest>(
-      new StreamRequest(weak_factory_.GetWeakPtr()));
-}
-
-int QuicChromiumClientSession::TryCreateStream(StreamRequest* request) {
+int QuicChromiumClientSession::TryCreateStream(
+    StreamRequest* request,
+    QuicChromiumClientStream** stream) {
   if (goaway_received()) {
     DVLOG(1) << "Going away.";
     return ERR_CONNECTION_CLOSED;
@@ -487,7 +475,7 @@ int QuicChromiumClientSession::TryCreateStream(StreamRequest* request) {
   }
 
   if (GetNumOpenOutgoingStreams() < max_open_outgoing_streams()) {
-    request->stream_ = CreateOutgoingReliableStreamImpl();
+    *stream = CreateOutgoingReliableStreamImpl();
     return OK;
   }
 

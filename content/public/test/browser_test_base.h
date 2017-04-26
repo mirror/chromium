@@ -9,7 +9,6 @@
 #include "base/compiler_specific.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
-#include "content/public/test/test_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -18,6 +17,10 @@ namespace base {
 class CommandLine;
 class FilePath;
 }
+
+namespace net {
+class RuleBasedHostResolverProc;
+}  // namespace net
 
 namespace content {
 
@@ -48,7 +51,7 @@ class BrowserTestBase : public testing::Test {
   // Returns the host resolver being used for the tests. Subclasses might want
   // to configure it inside tests.
   net::RuleBasedHostResolverProc* host_resolver() {
-    return test_host_resolver_->host_resolver();
+    return rule_based_resolver_.get();
   }
 
  protected:
@@ -135,10 +138,6 @@ class BrowserTestBase : public testing::Test {
  private:
   void ProxyRunTestOnMainThreadLoop();
 
-  // When using the network process, update the host resolver rules that were
-  // added in SetUpOnMainThread.
-  void InitializeNetworkProcess();
-
   // Testing server, started on demand.
   std::unique_ptr<net::SpawnedTestServer> spawned_test_server_;
 
@@ -146,7 +145,7 @@ class BrowserTestBase : public testing::Test {
   std::unique_ptr<net::EmbeddedTestServer> embedded_test_server_;
 
   // Host resolver used during tests.
-  std::unique_ptr<TestHostResolver> test_host_resolver_;
+  scoped_refptr<net::RuleBasedHostResolverProc> rule_based_resolver_;
 
   // Expected exit code (default is 0).
   int expected_exit_code_;

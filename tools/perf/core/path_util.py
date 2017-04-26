@@ -28,10 +28,6 @@ def GetPerfBenchmarksDir():
   return os.path.join(GetPerfDir(), 'benchmarks')
 
 
-def GetPerfContribDir():
-  return os.path.join(GetPerfDir(), 'contrib')
-
-
 def AddTelemetryToPath():
   telemetry_path = GetTelemetryDir()
   if telemetry_path not in sys.path:

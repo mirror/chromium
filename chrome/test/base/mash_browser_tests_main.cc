@@ -20,13 +20,13 @@
 #include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
-#include "chrome/app/mash/embedded_services.h"
 #include "chrome/test/base/chrome_test_launcher.h"
 #include "chrome/test/base/chrome_test_suite.h"
 #include "chrome/test/base/mojo_test_connector.h"
 #include "content/public/app/content_main.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_launcher.h"
+#include "mash/package/mash_packaged_service.h"
 #include "mash/session/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service.h"
@@ -44,6 +44,10 @@ const base::FilePath::CharType kMashCatalogFilename[] =
     FILE_PATH_LITERAL("mash_browser_tests_catalog.json");
 const base::FilePath::CharType kMusCatalogFilename[] =
     FILE_PATH_LITERAL("mus_browser_tests_catalog.json");
+
+void ConnectToDefaultApps(service_manager::Connector* connector) {
+  connector->StartService(mash::session::mojom::kServiceName);
+}
 
 class MashTestSuite : public ChromeTestSuite {
  public:
@@ -107,7 +111,9 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
     if (!mojo_test_connector_) {
       mojo_test_connector_ =
           base::MakeUnique<MojoTestConnector>(ReadCatalogManifest(), config_);
-      mojo_test_connector_->Init();
+      context_.reset(new service_manager::ServiceContext(
+          base::MakeUnique<mash::MashPackagedService>(),
+          mojo_test_connector_->Init()));
     }
     std::unique_ptr<content::TestState> test_state =
         mojo_test_connector_->PrepareForTest(command_line, test_launch_options);
@@ -115,13 +121,14 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
     // Start default apps after chrome, as they may try to connect to chrome on
     // startup. Attempt to connect once per test in case a previous test crashed
     // mash_session.
-    mojo_test_connector_->StartService(mash::session::mojom::kServiceName);
+    ConnectToDefaultApps(context_->connector());
     return test_state;
   }
 
   void OnDoneRunningTests() override {
     // We have to shutdown this state here, while an AtExitManager is still
     // valid.
+    context_.reset();
     mojo_test_connector_.reset();
   }
 
@@ -144,6 +151,7 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
 
   std::unique_ptr<MashTestSuite> test_suite_;
   std::unique_ptr<MojoTestConnector> mojo_test_connector_;
+  std::unique_ptr<service_manager::ServiceContext> context_;
 
   DISALLOW_COPY_AND_ASSIGN(MashTestLauncherDelegate);
 };
@@ -155,20 +163,18 @@ std::unique_ptr<content::ServiceManagerConnection>
           delegate->GetMojoTestConnectorForSingleProcess()->Init(),
           base::ThreadTaskRunnerHandle::Get()));
   connection->Start();
-  connection->GetConnector()->StartService(mash::session::mojom::kServiceName);
+  ConnectToDefaultApps(connection->GetConnector());
   return connection;
 }
 
-void StartEmbeddedService(service_manager::mojom::ServiceRequest request) {
-  // The UI service requires this to be TYPE_UI, so we just always use TYPE_UI
-  // for now.
+void StartChildApp(service_manager::mojom::ServiceRequest service_request) {
+  // The UI service requires this to be TYPE_UI. We don't know which service
+  // we're going to run yet, so we just always use TYPE_UI for now.
   base::MessageLoop message_loop(base::MessageLoop::TYPE_UI);
   base::RunLoop run_loop;
   service_manager::ServiceContext context(
-      CreateEmbeddedMashService(
-          base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-              service_manager::switches::kServiceName)),
-      std::move(request));
+      base::MakeUnique<mash::MashPackagedService>(),
+      std::move(service_request));
   context.SetQuitClosure(run_loop.QuitClosure());
   run_loop.Run();
 }
@@ -194,19 +200,20 @@ bool RunMashBrowserTests(int argc, char** argv, int* exit_code) {
 #endif
 
     command_line->AppendSwitch(ui::switches::kUseTestConfig);
-    service_manager::RunStandaloneService(base::Bind(&StartEmbeddedService));
+    service_manager::RunStandaloneService(base::Bind(&StartChildApp));
     *exit_code = 0;
     return true;
   }
 
   int default_jobs = std::max(1, base::SysInfo::NumberOfProcessors() / 2);
   MashTestLauncherDelegate delegate;
-  // --single_process and no service pipe token indicate we were run directly
+  // --single_process and no primoridal pipe token indicate we were run directly
   // from the command line. In this case we have to start up
-  // ServiceManagerConnection as though we were embedded.
+  // ServiceManagerConnection
+  // as though we were embedded.
   content::ServiceManagerConnection::Factory service_manager_connection_factory;
   if (command_line->HasSwitch(content::kSingleProcessTestsFlag) &&
-      !command_line->HasSwitch(service_manager::switches::kServicePipeToken)) {
+      !command_line->HasSwitch(switches::kPrimordialPipeToken)) {
     service_manager_connection_factory =
         base::Bind(&CreateServiceManagerConnection, &delegate);
     content::ServiceManagerConnection::SetFactoryForTest(

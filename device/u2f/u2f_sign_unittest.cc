@@ -37,7 +37,7 @@ class TestSignCallback {
   ~TestSignCallback() {}
 
   void ReceivedCallback(U2fReturnCode status_code,
-                        const std::vector<uint8_t>& response) {
+                        std::vector<uint8_t> response) {
     response_ = std::make_pair(status_code, response);
     closure_.Run();
   }

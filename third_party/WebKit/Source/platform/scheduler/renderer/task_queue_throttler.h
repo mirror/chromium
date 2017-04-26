@@ -15,7 +15,7 @@
 #include "platform/scheduler/base/cancelable_closure_holder.h"
 #include "platform/scheduler/base/time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
-#include "platform/scheduler/renderer/web_view_scheduler.h"
+#include "public/platform/WebViewScheduler.h"
 
 namespace base {
 namespace trace_event {
@@ -128,9 +128,7 @@ class BLINK_PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
   static base::TimeTicks AlignedThrottledRunTime(
       base::TimeTicks unthrottled_runtime);
 
-  const scoped_refptr<TaskQueue>& task_queue() const {
-    return control_task_queue_;
-  }
+  const scoped_refptr<TaskQueue>& task_runner() const { return task_runner_; }
 
   // Returned object is owned by |TaskQueueThrottler|.
   CPUTimeBudgetPool* CreateCPUTimeBudgetPool(const char* name);
@@ -176,7 +174,7 @@ class BLINK_PLATFORM_EXPORT TaskQueueThrottler : public TaskQueue::Observer,
   TaskQueueMap queue_details_;
   base::Callback<void(TaskQueue*, base::TimeTicks)>
       forward_immediate_work_callback_;
-  scoped_refptr<TaskQueue> control_task_queue_;
+  scoped_refptr<TaskQueue> task_runner_;
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED
   base::TickClock* tick_clock_;                // NOT OWNED
   const char* tracing_category_;               // NOT OWNED

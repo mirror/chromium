@@ -11,8 +11,9 @@
 
 namespace blink {
 
-void NGInlineBoxState::ComputeTextMetrics(const ComputedStyle& style,
+void NGInlineBoxState::ComputeTextMetrics(const NGLayoutInlineItem& item,
                                           FontBaseline baseline_type) {
+  const ComputedStyle& style = *item.Style();
   text_metrics = NGLineHeightMetrics(style, baseline_type);
   text_top = -text_metrics.ascent;
   text_metrics.AddLeading(style.ComputedLineHeightAsFixed());
@@ -21,52 +22,28 @@ void NGInlineBoxState::ComputeTextMetrics(const ComputedStyle& style,
   include_used_fonts = style.LineHeight().IsNegative();
 }
 
-void NGInlineBoxState::AccumulateUsedFonts(const NGInlineItem& item,
-                                           unsigned start,
-                                           unsigned end,
-                                           FontBaseline baseline_type) {
-  HashSet<const SimpleFontData*> fallback_fonts;
-  item.GetFallbackFonts(&fallback_fonts, start, end);
-  for (const auto& fallback_font : fallback_fonts) {
-    NGLineHeightMetrics fallback_metrics(fallback_font->GetFontMetrics(),
-                                         baseline_type);
-    fallback_metrics.AddLeading(
-        fallback_font->GetFontMetrics().FixedLineSpacing());
-    metrics.Unite(fallback_metrics);
-  }
-}
-
 NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
-    const ComputedStyle* line_style,
-    FontBaseline baseline_type) {
+    const ComputedStyle* line_style) {
   if (stack_.IsEmpty()) {
     // For the first line, push a box state for the line itself.
     stack_.Resize(1);
     NGInlineBoxState* box = &stack_.back();
     box->fragment_start = 0;
-  } else {
-    // For the following lines, clear states that are not shared across lines.
-    for (auto& box : stack_) {
-      box.fragment_start = 0;
-      box.metrics = NGLineHeightMetrics();
-      DCHECK(box.pending_descendants.IsEmpty());
-    }
+    box->style = line_style;
+    return box;
   }
 
-  // Initialize the box state for the line box.
-  NGInlineBoxState& line_box = LineBoxState();
-  line_box.style = line_style;
-
-  // Use a "strut" (a zero-width inline box with the element's font and
-  // line height properties) as the initial metrics for the line box.
-  // https://drafts.csswg.org/css2/visudet.html#strut
-  line_box.ComputeTextMetrics(*line_style, baseline_type);
-
+  // For the following lines, clear states that are not shared across lines.
+  for (auto& box : stack_) {
+    box.fragment_start = 0;
+    box.metrics = NGLineHeightMetrics();
+    DCHECK(box.pending_descendants.IsEmpty());
+  }
   return &stack_.back();
 }
 
 NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
-    const NGInlineItem& item,
+    const NGLayoutInlineItem& item,
     NGLineBoxFragmentBuilder* line_box,
     NGTextFragmentBuilder* text_builder) {
   stack_.Resize(stack_.size() + 1);
@@ -78,7 +55,7 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
 }
 
 NGInlineBoxState* NGInlineLayoutStateStack::OnCloseTag(
-    const NGInlineItem& item,
+    const NGLayoutInlineItem& item,
     NGLineBoxFragmentBuilder* line_box,
     NGInlineBoxState* box) {
   EndBoxState(box, line_box);
@@ -95,9 +72,7 @@ void NGInlineLayoutStateStack::OnEndPlaceItems(
     NGInlineBoxState* box = &(*it);
     EndBoxState(box, line_box);
   }
-
-  DCHECK(!LineBoxState().metrics.IsEmpty());
-  line_box->SetMetrics(LineBoxState().metrics);
+  line_box->UniteMetrics(stack_.front().metrics);
 }
 
 void NGInlineLayoutStateStack::EndBoxState(NGInlineBoxState* box,

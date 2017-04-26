@@ -53,6 +53,7 @@ cr.define('print_preview', function() {
    *          isEnterprisePrinter: (boolean|undefined),
    *          account: (string|undefined),
    *          lastAccessTime: (number|undefined),
+   *          isTosAccepted: (boolean|undefined),
    *          cloudID: (string|undefined),
    *          provisionalType:
    *              (print_preview.Destination.ProvisionalType|undefined),
@@ -152,6 +153,14 @@ cr.define('print_preview', function() {
                            Date.now();
 
     /**
+     * Whether the user has accepted the terms-of-service for the print
+     * destination. Only applies to the FedEx Office cloud-based printer.
+     * {@code null} if terms-of-service does not apply to the print destination.
+     * @private {?boolean}
+     */
+    this.isTosAccepted_ = !!(opt_params && opt_params.isTosAccepted);
+
+    /**
      * Cloud ID for Privet printers.
      * @private {string}
      */
@@ -203,6 +212,7 @@ cr.define('print_preview', function() {
    */
   Destination.GooglePromotedId = {
     DOCS: '__google__docs',
+    FEDEX: '__google__fedex',
     SAVE_AS_PDF: 'Save as PDF'
   };
 
@@ -272,6 +282,7 @@ cr.define('print_preview', function() {
     THIRD_PARTY: 'images/third_party.png',
     PDF: 'images/pdf.png',
     DOCS: 'images/google_doc.png',
+    FEDEX: 'images/third_party_fedex.png',
     ENTERPRISE: 'images/business.svg'
   };
 
@@ -380,7 +391,8 @@ cr.define('print_preview', function() {
      *     destination.
      */
     get hint() {
-      if (this.id_ == Destination.GooglePromotedId.DOCS) {
+      if (this.id_ == Destination.GooglePromotedId.DOCS ||
+          this.id_ == Destination.GooglePromotedId.FEDEX) {
         return this.account_;
       }
       return this.location || this.extensionName || this.description;
@@ -480,6 +492,9 @@ cr.define('print_preview', function() {
       if (this.id_ == Destination.GooglePromotedId.DOCS) {
         return Destination.IconUrl_.DOCS;
       }
+      if (this.id_ == Destination.GooglePromotedId.FEDEX) {
+        return Destination.IconUrl_.FEDEX;
+      }
       if (this.id_ == Destination.GooglePromotedId.SAVE_AS_PDF) {
         return Destination.IconUrl_.PDF;
       }
@@ -499,6 +514,24 @@ cr.define('print_preview', function() {
         return Destination.IconUrl_.CLOUD;
       }
       return Destination.IconUrl_.CLOUD_SHARED;
+    },
+
+    /**
+     * @return {?boolean} Whether the user has accepted the terms-of-service of
+     *     the print destination or {@code null} if a terms-of-service does not
+     *     apply.
+     */
+    get isTosAccepted() {
+      return this.isTosAccepted_;
+    },
+
+    /**
+     * @param {?boolean} isTosAccepted Whether the user has accepted the
+     *     terms-of-service of the print destination or {@code null} if
+     *     a terms-of-service does not apply.
+     */
+    set isTosAccepted(isTosAccepted) {
+      this.isTosAccepted_ = isTosAccepted;
     },
 
     /**

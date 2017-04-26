@@ -34,8 +34,7 @@ std::unique_ptr<service_manager::Service> CreateDataDecoderService() {
 
 }  // namespace
 
-UtilityServiceFactory::UtilityServiceFactory()
-    : network_registry_(base::MakeUnique<service_manager::BinderRegistry>()) {}
+UtilityServiceFactory::UtilityServiceFactory() {}
 
 UtilityServiceFactory::~UtilityServiceFactory() {}
 
@@ -60,11 +59,8 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableNetworkService)) {
-    GetContentClient()->utility()->RegisterNetworkBinders(
-        network_registry_.get());
     ServiceInfo network_info;
-    network_info.factory = base::Bind(
-        &UtilityServiceFactory::CreateNetworkService, base::Unretained(this));
+    network_info.factory = base::Bind(&NetworkService::CreateNetworkService);
     network_info.task_runner = ChildProcess::current()->io_task_runner();
     services->insert(
         std::make_pair(content::mojom::kNetworkServiceName, network_info));
@@ -80,11 +76,6 @@ void UtilityServiceFactory::OnLoadFailed() {
       static_cast<UtilityThreadImpl*>(UtilityThread::Get());
   utility_thread->Shutdown();
   utility_thread->ReleaseProcessIfNeeded();
-}
-
-std::unique_ptr<service_manager::Service>
-UtilityServiceFactory::CreateNetworkService() {
-  return base::MakeUnique<NetworkService>(std::move(network_registry_));
 }
 
 }  // namespace content

@@ -40,35 +40,41 @@ const int kFakeChildProcessId = 0;
 namespace content {
 
 class IndexedDBDatabaseTest : public ::testing::Test {
- public:
-  void SetUp() override {
-    backing_store_ = new IndexedDBFakeBackingStore();
-    factory_ = new MockIndexedDBFactory();
-    EXPECT_TRUE(backing_store_->HasOneRef());
-    leveldb::Status s;
-    std::tie(db_, s) = IndexedDBDatabase::Create(
-        ASCIIToUTF16("db"), backing_store_.get(), factory_.get(),
-        IndexedDBDatabase::Identifier());
-    ASSERT_TRUE(s.ok());
-    EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
-  }
-
- protected:
-  scoped_refptr<IndexedDBFakeBackingStore> backing_store_;
-  scoped_refptr<MockIndexedDBFactory> factory_;
-  scoped_refptr<IndexedDBDatabase> db_;
-
  private:
   TestBrowserThreadBundle thread_bundle_;
 };
 
 TEST_F(IndexedDBDatabaseTest, BackingStoreRetention) {
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
-  db_ = NULL;
-  EXPECT_TRUE(backing_store_->HasOneRef());  // local
+  scoped_refptr<IndexedDBFakeBackingStore> backing_store =
+      new IndexedDBFakeBackingStore();
+  EXPECT_TRUE(backing_store->HasOneRef());
+
+  scoped_refptr<MockIndexedDBFactory> factory = new MockIndexedDBFactory();
+  scoped_refptr<IndexedDBDatabase> db;
+  leveldb::Status s;
+  std::tie(db, s) =
+      IndexedDBDatabase::Create(ASCIIToUTF16("db"), backing_store.get(),
+                                factory.get(), IndexedDBDatabase::Identifier());
+  ASSERT_TRUE(s.ok());
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
+  db = NULL;
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
 }
 
 TEST_F(IndexedDBDatabaseTest, ConnectionLifecycle) {
+  scoped_refptr<IndexedDBFakeBackingStore> backing_store =
+      new IndexedDBFakeBackingStore();
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
+
+  scoped_refptr<MockIndexedDBFactory> factory = new MockIndexedDBFactory();
+  scoped_refptr<IndexedDBDatabase> db;
+  leveldb::Status s;
+  std::tie(db, s) =
+      IndexedDBDatabase::Create(ASCIIToUTF16("db"), backing_store.get(),
+                                factory.get(), IndexedDBDatabase::Identifier());
+  ASSERT_TRUE(s.ok());
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
+
   scoped_refptr<MockIndexedDBCallbacks> request1(new MockIndexedDBCallbacks());
   scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks1(
       new MockIndexedDBDatabaseCallbacks());
@@ -77,9 +83,9 @@ TEST_F(IndexedDBDatabaseTest, ConnectionLifecycle) {
       base::MakeUnique<IndexedDBPendingConnection>(
           request1, callbacks1, kFakeChildProcessId, transaction_id1,
           IndexedDBDatabaseMetadata::DEFAULT_VERSION));
-  db_->OpenConnection(std::move(connection1));
+  db->OpenConnection(std::move(connection1));
 
-  EXPECT_FALSE(backing_store_->HasOneRef());  // db, connection count > 0
+  EXPECT_FALSE(backing_store->HasOneRef());  // db, connection count > 0
 
   scoped_refptr<MockIndexedDBCallbacks> request2(new MockIndexedDBCallbacks());
   scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks2(
@@ -89,25 +95,38 @@ TEST_F(IndexedDBDatabaseTest, ConnectionLifecycle) {
       base::MakeUnique<IndexedDBPendingConnection>(
           request2, callbacks2, kFakeChildProcessId, transaction_id2,
           IndexedDBDatabaseMetadata::DEFAULT_VERSION));
-  db_->OpenConnection(std::move(connection2));
+  db->OpenConnection(std::move(connection2));
 
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and connection
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and connection
 
   request1->connection()->ForceClose();
   EXPECT_FALSE(request1->connection()->IsConnected());
 
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and connection
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and connection
 
   request2->connection()->ForceClose();
   EXPECT_FALSE(request2->connection()->IsConnected());
 
-  EXPECT_TRUE(backing_store_->HasOneRef());
-  EXPECT_FALSE(db_->backing_store());
+  EXPECT_TRUE(backing_store->HasOneRef());
+  EXPECT_FALSE(db->backing_store());
 
-  db_ = NULL;
+  db = NULL;
 }
 
 TEST_F(IndexedDBDatabaseTest, ForcedClose) {
+  scoped_refptr<IndexedDBFakeBackingStore> backing_store =
+      new IndexedDBFakeBackingStore();
+  EXPECT_TRUE(backing_store->HasOneRef());
+
+  scoped_refptr<MockIndexedDBFactory> factory = new MockIndexedDBFactory();
+  scoped_refptr<IndexedDBDatabase> database;
+  leveldb::Status s;
+  std::tie(database, s) =
+      IndexedDBDatabase::Create(ASCIIToUTF16("db"), backing_store.get(),
+                                factory.get(), IndexedDBDatabase::Identifier());
+  ASSERT_TRUE(s.ok());
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
+
   scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks(
       new MockIndexedDBDatabaseCallbacks());
   scoped_refptr<MockIndexedDBCallbacks> request(new MockIndexedDBCallbacks());
@@ -116,17 +135,17 @@ TEST_F(IndexedDBDatabaseTest, ForcedClose) {
       base::MakeUnique<IndexedDBPendingConnection>(
           request, callbacks, kFakeChildProcessId, upgrade_transaction_id,
           IndexedDBDatabaseMetadata::DEFAULT_VERSION));
-  db_->OpenConnection(std::move(connection));
-  EXPECT_EQ(db_.get(), request->connection()->database());
+  database->OpenConnection(std::move(connection));
+  EXPECT_EQ(database.get(), request->connection()->database());
 
   const int64_t transaction_id = 123;
   const std::vector<int64_t> scope;
-  db_->CreateTransaction(transaction_id, request->connection(), scope,
-                         blink::kWebIDBTransactionModeReadOnly);
+  database->CreateTransaction(transaction_id, request->connection(), scope,
+                              blink::kWebIDBTransactionModeReadOnly);
 
   request->connection()->ForceClose();
 
-  EXPECT_TRUE(backing_store_->HasOneRef());  // local
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
   EXPECT_TRUE(callbacks->abort_called());
 }
 
@@ -159,6 +178,19 @@ class MockCallbacks : public IndexedDBCallbacks {
 };
 
 TEST_F(IndexedDBDatabaseTest, PendingDelete) {
+  scoped_refptr<IndexedDBFakeBackingStore> backing_store =
+      new IndexedDBFakeBackingStore();
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
+
+  scoped_refptr<MockIndexedDBFactory> factory = new MockIndexedDBFactory();
+  scoped_refptr<IndexedDBDatabase> db;
+  leveldb::Status s;
+  std::tie(db, s) =
+      IndexedDBDatabase::Create(ASCIIToUTF16("db"), backing_store.get(),
+                                factory.get(), IndexedDBDatabase::Identifier());
+  ASSERT_TRUE(s.ok());
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
+
   scoped_refptr<MockIndexedDBCallbacks> request1(new MockIndexedDBCallbacks());
   scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks1(
       new MockIndexedDBDatabaseCallbacks());
@@ -167,108 +199,52 @@ TEST_F(IndexedDBDatabaseTest, PendingDelete) {
       base::MakeUnique<IndexedDBPendingConnection>(
           request1, callbacks1, kFakeChildProcessId, transaction_id1,
           IndexedDBDatabaseMetadata::DEFAULT_VERSION));
-  db_->OpenConnection(std::move(connection));
+  db->OpenConnection(std::move(connection));
 
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 0UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
+  EXPECT_EQ(db->ConnectionCount(), 1UL);
+  EXPECT_EQ(db->ActiveOpenDeleteCount(), 0UL);
+  EXPECT_EQ(db->PendingOpenDeleteCount(), 0UL);
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
 
   scoped_refptr<MockCallbacks> request2(new MockCallbacks());
-  db_->DeleteDatabase(request2, false /* force_delete */);
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 1UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
+  db->DeleteDatabase(request2, false /* force_delete */);
+  EXPECT_EQ(db->ConnectionCount(), 1UL);
+  EXPECT_EQ(db->ActiveOpenDeleteCount(), 1UL);
+  EXPECT_EQ(db->PendingOpenDeleteCount(), 0UL);
 
   EXPECT_FALSE(request2->blocked_called());
-  db_->VersionChangeIgnored();
+  db->VersionChangeIgnored();
   EXPECT_TRUE(request2->blocked_called());
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 1UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
+  EXPECT_EQ(db->ConnectionCount(), 1UL);
+  EXPECT_EQ(db->ActiveOpenDeleteCount(), 1UL);
+  EXPECT_EQ(db->PendingOpenDeleteCount(), 0UL);
 
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
 
-  db_->Close(request1->connection(), true /* forced */);
-  EXPECT_EQ(db_->ConnectionCount(), 0UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 0UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
+  db->Close(request1->connection(), true /* forced */);
+  EXPECT_EQ(db->ConnectionCount(), 0UL);
+  EXPECT_EQ(db->ActiveOpenDeleteCount(), 0UL);
+  EXPECT_EQ(db->PendingOpenDeleteCount(), 0UL);
 
-  EXPECT_FALSE(db_->backing_store());
-  EXPECT_TRUE(backing_store_->HasOneRef());  // local
+  EXPECT_FALSE(db->backing_store());
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
   EXPECT_TRUE(request2->success_called());
 }
 
-TEST_F(IndexedDBDatabaseTest, OpenDeleteClear) {
-  const int64_t kDatabaseVersion = 1;
-
-  scoped_refptr<MockIndexedDBCallbacks> request1(
-      new MockIndexedDBCallbacks(true));
-  scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks1(
-      new MockIndexedDBDatabaseCallbacks());
-  const int64_t transaction_id1 = 1;
-  std::unique_ptr<IndexedDBPendingConnection> connection1(
-      base::MakeUnique<IndexedDBPendingConnection>(
-          request1, callbacks1, kFakeChildProcessId, transaction_id1,
-          kDatabaseVersion));
-  db_->OpenConnection(std::move(connection1));
-
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 1UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
-
-  scoped_refptr<MockIndexedDBCallbacks> request2(
-      new MockIndexedDBCallbacks(false));
-  scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks2(
-      new MockIndexedDBDatabaseCallbacks());
-  const int64_t transaction_id2 = 2;
-  std::unique_ptr<IndexedDBPendingConnection> connection2(
-      base::MakeUnique<IndexedDBPendingConnection>(
-          request2, callbacks2, kFakeChildProcessId, transaction_id2,
-          kDatabaseVersion));
-  db_->OpenConnection(std::move(connection2));
-
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 1UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 1UL);
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
-
-  scoped_refptr<MockIndexedDBCallbacks> request3(
-      new MockIndexedDBCallbacks(false));
-  scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks3(
-      new MockIndexedDBDatabaseCallbacks());
-  const int64_t transaction_id3 = 3;
-  std::unique_ptr<IndexedDBPendingConnection> connection3(
-      base::MakeUnique<IndexedDBPendingConnection>(
-          request3, callbacks3, kFakeChildProcessId, transaction_id3,
-          kDatabaseVersion));
-  db_->OpenConnection(std::move(connection3));
-
-  // This causes the active request to call OnUpgradeNeeded on its callbacks.
-  // The Abort() triggered by ForceClose() assumes that the transaction was
-  // started and passed the connection along to the front end.
-  db_->CallUpgradeTransactionStartedForTesting(
-      IndexedDBDatabaseMetadata::DEFAULT_VERSION);
-  EXPECT_TRUE(request1->upgrade_called());
-
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 1UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 2UL);
-  EXPECT_FALSE(backing_store_->HasOneRef());
-
-  db_->ForceClose();
-
-  EXPECT_TRUE(backing_store_->HasOneRef());  // local
-  EXPECT_TRUE(callbacks1->forced_close_called());
-  EXPECT_TRUE(request1->error_called());
-  EXPECT_TRUE(callbacks2->forced_close_called());
-  EXPECT_FALSE(request2->error_called());
-  EXPECT_TRUE(callbacks3->forced_close_called());
-  EXPECT_FALSE(request3->error_called());
-}
-
 TEST_F(IndexedDBDatabaseTest, ForceDelete) {
+  scoped_refptr<IndexedDBFakeBackingStore> backing_store =
+      new IndexedDBFakeBackingStore();
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
+
+  scoped_refptr<MockIndexedDBFactory> factory = new MockIndexedDBFactory();
+  scoped_refptr<IndexedDBDatabase> db;
+  leveldb::Status s;
+  std::tie(db, s) =
+      IndexedDBDatabase::Create(ASCIIToUTF16("db"), backing_store.get(),
+                                factory.get(), IndexedDBDatabase::Identifier());
+  ASSERT_TRUE(s.ok());
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
+
   scoped_refptr<MockIndexedDBCallbacks> request1(new MockIndexedDBCallbacks());
   scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks1(
       new MockIndexedDBDatabaseCallbacks());
@@ -277,22 +253,22 @@ TEST_F(IndexedDBDatabaseTest, ForceDelete) {
       base::MakeUnique<IndexedDBPendingConnection>(
           request1, callbacks1, kFakeChildProcessId, transaction_id1,
           IndexedDBDatabaseMetadata::DEFAULT_VERSION));
-  db_->OpenConnection(std::move(connection));
+  db->OpenConnection(std::move(connection));
 
-  EXPECT_EQ(db_->ConnectionCount(), 1UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 0UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
-  EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
+  EXPECT_EQ(db->ConnectionCount(), 1UL);
+  EXPECT_EQ(db->ActiveOpenDeleteCount(), 0UL);
+  EXPECT_EQ(db->PendingOpenDeleteCount(), 0UL);
+  EXPECT_FALSE(backing_store->HasOneRef());  // local and db
 
   scoped_refptr<MockCallbacks> request2(new MockCallbacks());
-  db_->DeleteDatabase(request2, true /* force_delete */);
-  EXPECT_EQ(db_->ConnectionCount(), 0UL);
-  EXPECT_EQ(db_->ActiveOpenDeleteCount(), 0UL);
-  EXPECT_EQ(db_->PendingOpenDeleteCount(), 0UL);
+  db->DeleteDatabase(request2, true /* force_delete */);
+  EXPECT_EQ(db->ConnectionCount(), 0UL);
+  EXPECT_EQ(db->ActiveOpenDeleteCount(), 0UL);
+  EXPECT_EQ(db->PendingOpenDeleteCount(), 0UL);
   EXPECT_FALSE(request2->blocked_called());
 
-  EXPECT_FALSE(db_->backing_store());
-  EXPECT_TRUE(backing_store_->HasOneRef());  // local
+  EXPECT_FALSE(db->backing_store());
+  EXPECT_TRUE(backing_store->HasOneRef());  // local
   EXPECT_TRUE(request2->success_called());
 }
 

@@ -34,9 +34,11 @@
 namespace blink {
 
 CanvasRenderingContext::CanvasRenderingContext(
-    CanvasRenderingContextHost* host,
+    HTMLCanvasElement* canvas,
+    OffscreenCanvas* offscreen_canvas,
     const CanvasContextCreationAttributes& attrs)
-    : host_(host),
+    : canvas_(canvas),
+      offscreen_canvas_(offscreen_canvas),
       color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
       creation_attributes_(attrs) {
   if (RuntimeEnabledFeatures::experimentalCanvasFeaturesEnabled() &&
@@ -116,19 +118,23 @@ void CanvasRenderingContext::Dispose() {
   // the other in order to break the circular reference.  This is to avoid
   // an error when CanvasRenderingContext::didProcessTask() is invoked
   // after the HTMLCanvasElement is destroyed.
-  if (host()) {
-    host()->DetachContext();
-    host_ = nullptr;
+  if (canvas()) {
+    canvas()->DetachContext();
+    canvas_ = nullptr;
+  }
+  if (offscreenCanvas()) {
+    offscreenCanvas()->DetachContext();
+    offscreen_canvas_ = nullptr;
   }
 }
 
 void CanvasRenderingContext::DidDraw(const SkIRect& dirty_rect) {
-  host()->DidDraw(SkRect::Make(dirty_rect));
+  canvas()->DidDraw(SkRect::Make(dirty_rect));
   NeedsFinalizeFrame();
 }
 
 void CanvasRenderingContext::DidDraw() {
-  host()->DidDraw();
+  canvas()->DidDraw();
   NeedsFinalizeFrame();
 }
 
@@ -144,9 +150,10 @@ void CanvasRenderingContext::DidProcessTask() {
   finalize_frame_scheduled_ = false;
   // The end of a script task that drew content to the canvas is the point
   // at which the current frame may be considered complete.
-  if (host()) {
-    host()->FinalizeFrame();
-  }
+  if (canvas())
+    canvas()->FinalizeFrame();
+  if (offscreenCanvas())
+    offscreenCanvas()->FinalizeFrame();
   FinalizeFrame();
 }
 
@@ -201,7 +208,8 @@ bool CanvasRenderingContext::WouldTaintOrigin(
 }
 
 DEFINE_TRACE(CanvasRenderingContext) {
-  visitor->Trace(host_);
+  visitor->Trace(canvas_);
+  visitor->Trace(offscreen_canvas_);
 }
 
 }  // namespace blink

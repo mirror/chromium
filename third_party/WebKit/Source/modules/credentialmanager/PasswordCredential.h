@@ -9,7 +9,7 @@
 #include "bindings/core/v8/SerializedScriptValue.h"
 #include "bindings/modules/v8/FormDataOrURLSearchParams.h"
 #include "modules/ModulesExport.h"
-#include "modules/credentialmanager/CredentialUserData.h"
+#include "modules/credentialmanager/SiteBoundCredential.h"
 #include "platform/heap/Handle.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/weborigin/KURL.h"
@@ -22,7 +22,7 @@ class WebPasswordCredential;
 
 using CredentialPostBodyType = FormDataOrURLSearchParams;
 
-class MODULES_EXPORT PasswordCredential final : public CredentialUserData {
+class MODULES_EXPORT PasswordCredential final : public SiteBoundCredential {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

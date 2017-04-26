@@ -69,18 +69,20 @@ bool PopulateItem(const base::Value& from,
 }
 
 bool PopulateItem(const base::Value& from, std::vector<char>* out) {
-  if (!from.is_blob())
+  const base::Value* binary = nullptr;
+  if (!from.GetAsBinary(&binary))
     return false;
-  *out = from.GetBlob();
+  out->assign(binary->GetBuffer(), binary->GetBuffer() + binary->GetSize());
   return true;
 }
 
 bool PopulateItem(const base::Value& from,
                   std::vector<char>* out,
                   base::string16* error) {
-  if (!from.is_blob())
+  const base::Value* binary = nullptr;
+  if (!from.GetAsBinary(&binary))
     return ReportError(from, base::Value::Type::BINARY, error);
-  *out = from.GetBlob();
+  out->assign(binary->GetBuffer(), binary->GetBuffer() + binary->GetSize());
   return true;
 }
 

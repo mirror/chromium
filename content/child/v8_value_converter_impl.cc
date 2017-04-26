@@ -342,9 +342,8 @@ v8::Local<v8::Value> V8ValueConverterImpl::ToArrayBuffer(
     const base::Value* value) const {
   DCHECK(creation_context->CreationContext() == isolate->GetCurrentContext());
   v8::Local<v8::ArrayBuffer> buffer =
-      v8::ArrayBuffer::New(isolate, value->GetBlob().size());
-  memcpy(buffer->GetContents().Data(), value->GetBlob().data(),
-         value->GetBlob().size());
+      v8::ArrayBuffer::New(isolate, value->GetSize());
+  memcpy(buffer->GetContents().Data(), value->GetBuffer(), value->GetSize());
   return buffer;
 }
 

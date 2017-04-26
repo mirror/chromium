@@ -10,7 +10,6 @@
 #include <string>
 #include <unordered_map>
 
-#include "content/public/browser/devtools_agent_host_observer.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "headless/lib/browser/headless_window_tree_host.h"
@@ -36,7 +35,6 @@ class WebContentsObserverAdapter;
 class HEADLESS_EXPORT HeadlessWebContentsImpl
     : public HeadlessWebContents,
       public HeadlessDevToolsTarget,
-      public content::DevToolsAgentHostObserver,
       public content::RenderProcessHostObserver,
       public content::WebContentsObserver {
  public:
@@ -67,13 +65,7 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   void DetachClient(HeadlessDevToolsClient* client) override;
   bool IsAttached() override;
 
-  // content::DevToolsAgentHostObserver implementation:
-  void DevToolsAgentHostAttached(
-      content::DevToolsAgentHost* agent_host) override;
-  void DevToolsAgentHostDetached(
-      content::DevToolsAgentHost* agent_host) override;
-
-  // content::RenderProcessHostObserver implementation:
+  // RenderProcessHostObserver implementation:
   void RenderProcessExited(content::RenderProcessHost* host,
                            base::TerminationStatus status,
                            int exit_code) override;

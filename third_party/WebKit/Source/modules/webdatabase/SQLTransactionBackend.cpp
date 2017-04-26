@@ -415,7 +415,7 @@ void SQLTransactionBackend::DoCleanup() {
              ->IsDatabaseThread());
 
   MutexLocker locker(statement_mutex_);
-  statement_queue_.clear();
+  statement_queue_.Clear();
 
   if (sqlite_transaction_) {
     // In the event we got here because of an interruption or error (i.e. if

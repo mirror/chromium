@@ -125,6 +125,12 @@ const char kPrintPdfAsImageDescription[] =
     "If enabled, an option to print PDF files as images will be available "
     "in print preview.";
 
+const char kPrintScalingName[] = "Print Scaling.";
+
+const char kPrintScalingDescription[] =
+    "If enabled, an option to scale documents will be available in print "
+    "preview.";
+
 const char kNaclName[] = "Native Client";
 
 #if defined(OS_ANDROID)
@@ -654,6 +660,17 @@ const char kGestureRequirementForMediaPlaybackDescription[] =
     "User gesture requirement for playing media elements. Disabling this "
     "will allow autoplay to work.";
 
+#if !defined(OS_ANDROID)
+
+const char kCrossOriginMediaPlaybackRequiresUserGestureName[] =
+    "Media playback in cross-origin iframes requires user gesture";
+
+const char kCrossOriginMediaPlaybackRequiresUserGestureDescription[] =
+    "Playing media elements in cross-origin iframes requires user gesture. "
+    "Disabling this will allow autoplay in cross-origin iframes to work.";
+
+#endif  // !defined(OS_ANDROID)
+
 const char kPassiveDocumentEventListenersDescription[] =
     "Forces touchstart, and touchmove event listeners on document level "
     "targets (which haven't requested otherwise) to be treated as passive.";
@@ -737,11 +754,11 @@ const char kAshEnableMirroredScreenDescription[] =
     "Enable the mirrored screen mode. This mode flips the screen image "
     "horizontally.";
 
-const char kAshDisableSmoothScreenRotationName[] =
-    "Disable smooth rotation animations.";
+const char kAshEnableSmoothScreenRotationName[] =
+    "Enable smooth rotation animations.";
 
-const char kAshDisableSmoothScreenRotationDescription[] =
-    "Disable smooth rotation animations.";
+const char kAshEnableSmoothScreenRotationDescription[] =
+    "Enable smooth rotation animations.";
 
 const char kMaterialDesignInkDropAnimationFast[] = "Fast";
 
@@ -3035,18 +3052,5 @@ const char kEnableOmniboxClipboardProviderDescription[] =
     "focus in the omnibox.";
 
 #endif  // defined(OS_ANDROID)
-
-const char kAutoplayPolicyName[] = "Autoplay policy";
-
-const char kAutoplayPolicyDescription[] =
-    "Policy used when deciding if audio or video is allowed to autoplay.";
-
-const char kAutoplayPolicyNoUserGestureRequired[] =
-    "No user gesture is required.";
-
-const char kAutoplayPolicyUserGestureRequired[] = "User gesture is required.";
-
-const char kAutoplayPolicyCrossOriginUserGestureRequired[] =
-    "User gesture is required for cross-origin iframes.";
 
 }  // namespace flag_descriptions

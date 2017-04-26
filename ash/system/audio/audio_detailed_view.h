@@ -15,7 +15,13 @@ namespace gfx {
 struct VectorIcon;
 }
 
+namespace views {
+class View;
+}
+
 namespace ash {
+class HoverHighlightView;
+
 namespace tray {
 
 class AudioDetailedView : public TrayDetailsView {
@@ -27,9 +33,15 @@ class AudioDetailedView : public TrayDetailsView {
   void Update();
 
  private:
-  // Helper function to add non-clickable header rows within the scrollable
+  // Helper functions to add non-clickable header rows within the scrollable
   // list.
-  void AddAudioSubHeader(const gfx::VectorIcon& icon, int text_id);
+  void AddInputHeader();
+  void AddOutputHeader();
+  void AddScrollListInfoItem(int text_id, const gfx::VectorIcon& icon);
+
+  HoverHighlightView* AddScrollListItem(const base::string16& text,
+                                        bool highlight,
+                                        bool checked);
 
   void CreateItems();
 

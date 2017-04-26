@@ -10,47 +10,6 @@ namespace blink {
 
 class PropertyTreeStateTest : public ::testing::Test {};
 
-TEST_F(PropertyTreeStateTest, ClipBelowOutputClipOfEffect) {
-  RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
-      ClipPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      FloatRoundedRect());
-
-  RefPtr<EffectPaintPropertyNode> effect = EffectPaintPropertyNode::Create(
-      EffectPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      ClipPaintPropertyNode::Root(), kColorFilterNone,
-      CompositorFilterOperations(), 1.0, SkBlendMode::kSrcOver);
-
-  PropertyTreeState state(TransformPaintPropertyNode::Root(), clip.Get(),
-                          effect.Get());
-  EXPECT_EQ(PropertyTreeState::kEffect, state.GetInnermostNode());
-
-  PropertyTreeStateIterator iterator(state);
-  EXPECT_EQ(PropertyTreeState::kClip, iterator.Next()->GetInnermostNode());
-  EXPECT_EQ(PropertyTreeState::kNone, iterator.Next()->GetInnermostNode());
-}
-
-TEST_F(PropertyTreeStateTest, ClipBelowOutputClipOfEffectMovingPixels) {
-  RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
-      ClipPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      FloatRoundedRect());
-
-  CompositorFilterOperations operations;
-  operations.AppendBlurFilter(2);
-  RefPtr<EffectPaintPropertyNode> effect = EffectPaintPropertyNode::Create(
-      EffectPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      ClipPaintPropertyNode::Root(), kColorFilterNone, operations, 1.0,
-      SkBlendMode::kSrcOver);
-
-  PropertyTreeState state(TransformPaintPropertyNode::Root(), clip.Get(),
-                          effect.Get());
-  // If the effect moves pixels, the clip must happen first.
-  EXPECT_EQ(PropertyTreeState::kClip, state.GetInnermostNode());
-
-  PropertyTreeStateIterator iterator(state);
-  EXPECT_EQ(PropertyTreeState::kEffect, iterator.Next()->GetInnermostNode());
-  EXPECT_EQ(PropertyTreeState::kNone, iterator.Next()->GetInnermostNode());
-}
-
 TEST_F(PropertyTreeStateTest, TransformOnEffectOnClip) {
   RefPtr<TransformPaintPropertyNode> transform =
       TransformPaintPropertyNode::Create(TransformPaintPropertyNode::Root(),
@@ -120,27 +79,24 @@ TEST_F(PropertyTreeStateTest, ClipOnEffectOnTransform) {
       CompositorFilterOperations(), 1.0, SkBlendMode::kSrcOver);
 
   PropertyTreeState state(transform.Get(), clip.Get(), effect.Get());
-  EXPECT_EQ(PropertyTreeState::kEffect, state.GetInnermostNode());
+  EXPECT_EQ(PropertyTreeState::kClip, state.GetInnermostNode());
 
   PropertyTreeStateIterator iterator(state);
-  EXPECT_EQ(PropertyTreeState::kClip, iterator.Next()->GetInnermostNode());
+  EXPECT_EQ(PropertyTreeState::kEffect, iterator.Next()->GetInnermostNode());
   EXPECT_EQ(PropertyTreeState::kTransform, iterator.Next()->GetInnermostNode());
   EXPECT_EQ(PropertyTreeState::kNone, iterator.Next()->GetInnermostNode());
 }
 
 TEST_F(PropertyTreeStateTest, ClipDescendantOfTransform) {
-  // CSS transform
   RefPtr<TransformPaintPropertyNode> transform =
       TransformPaintPropertyNode::Create(TransformPaintPropertyNode::Root(),
                                          TransformationMatrix(),
                                          FloatPoint3D());
 
-  // Scroll transform
   RefPtr<TransformPaintPropertyNode> transform2 =
       TransformPaintPropertyNode::Create(
           transform.Get(), TransformationMatrix(), FloatPoint3D());
 
-  // CSS clip
   RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
       ClipPaintPropertyNode::Root(), transform2.Get(), FloatRoundedRect());
 
@@ -149,11 +105,10 @@ TEST_F(PropertyTreeStateTest, ClipDescendantOfTransform) {
       ClipPaintPropertyNode::Root(), kColorFilterNone,
       CompositorFilterOperations(), 1.0, SkBlendMode::kSrcOver);
 
-  // Here the clip is inside of its own transform, but the
-  // PropertyTreeState of the content is an ancestor of the clip's transform./
-  // This models situations such as a CSS clip inside a scroller that applies to
-  // an absolute-positioned element which escapes the scroll transforms but not
-  // the clip.
+  // Here the clip is inside of its own transform, but the transform is an
+  // ancestor of the clip's transform. This models situations such as
+  // a clip inside a scroller that applies to an absolute-positioned element
+  // which escapes the scroll transform but not the clip.
   PropertyTreeState state(transform.Get(), clip.Get(), effect.Get());
   EXPECT_EQ(PropertyTreeState::kClip, state.GetInnermostNode());
 
@@ -164,6 +119,11 @@ TEST_F(PropertyTreeStateTest, ClipDescendantOfTransform) {
 }
 
 TEST_F(PropertyTreeStateTest, EffectDescendantOfTransform) {
+  RefPtr<TransformPaintPropertyNode> transform =
+      TransformPaintPropertyNode::Create(TransformPaintPropertyNode::Root(),
+                                         TransformationMatrix(),
+                                         FloatPoint3D());
+
   RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
       ClipPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
       FloatRoundedRect());
@@ -178,7 +138,11 @@ TEST_F(PropertyTreeStateTest, EffectDescendantOfTransform) {
       kColorFilterNone, CompositorFilterOperations(), 1.0,
       SkBlendMode::kSrcOver);
 
-  PropertyTreeState state(transform2.Get(), clip.Get(), effect.Get());
+  // Here the clip is inside of its own transform, but the transform is an
+  // ancestor of the clip's transform. This models situations such as
+  // a clip inside a scroller that applies to an absolute-positioned element
+  // which escapes the scroll transform but not the clip.
+  PropertyTreeState state(transform.Get(), clip.Get(), effect.Get());
   EXPECT_EQ(PropertyTreeState::kEffect, state.GetInnermostNode());
 
   PropertyTreeStateIterator iterator(state);

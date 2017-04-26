@@ -12,7 +12,8 @@
 #include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
-
+#include "chrome/browser/browsing_data/browsing_data_remover.h"
+#include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor_factory.h"
@@ -23,7 +24,6 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
-#include "content/public/browser/browsing_data_remover.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/url_util.h"
 #include "net/dns/mock_host_resolver.h"
@@ -126,10 +126,9 @@ class InitializationObserver : public TestObserver {
   DISALLOW_COPY_AND_ASSIGN(InitializationObserver);
 };
 
-class BrowsingDataRemoverObserver
-    : public content::BrowsingDataRemover::Observer {
+class BrowsingDataRemoverObserver : public BrowsingDataRemover::Observer {
  public:
-  explicit BrowsingDataRemoverObserver(content::BrowsingDataRemover* remover)
+  explicit BrowsingDataRemoverObserver(BrowsingDataRemover* remover)
       : remover_(remover) {
     remover_->AddObserver(this);
   }
@@ -140,7 +139,7 @@ class BrowsingDataRemoverObserver
   void Wait() { run_loop_.Run(); }
 
  private:
-  content::BrowsingDataRemover* remover_;
+  BrowsingDataRemover* remover_;
   base::RunLoop run_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowsingDataRemoverObserver);
@@ -492,13 +491,12 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
   void ClearResources() { resources_.clear(); }
 
   void ClearCache() {
-    content::BrowsingDataRemover* remover =
-        content::BrowserContext::GetBrowsingDataRemover(browser()->profile());
+    BrowsingDataRemover* remover =
+        BrowsingDataRemoverFactory::GetForBrowserContext(browser()->profile());
     BrowsingDataRemoverObserver observer(remover);
     remover->RemoveAndReply(
-        base::Time(), base::Time::Max(),
-        content::BrowsingDataRemover::DATA_TYPE_CACHE,
-        content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB, &observer);
+        base::Time(), base::Time::Max(), BrowsingDataRemover::DATA_TYPE_CACHE,
+        BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB, &observer);
     observer.Wait();
 
     for (auto& kv : resources_)

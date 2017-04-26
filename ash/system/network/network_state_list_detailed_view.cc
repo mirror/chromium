@@ -225,7 +225,7 @@ NetworkStateListDetailedView::NetworkStateListDetailedView(
     SystemTrayItem* owner,
     ListType list_type,
     LoginStatus login)
-    : TrayDetailsView(owner),
+    : NetworkDetailedView(owner),
       list_type_(list_type),
       login_(login),
       info_button_(nullptr),
@@ -251,6 +251,8 @@ void NetworkStateListDetailedView::Update() {
   Layout();
 }
 
+// Overridden from NetworkDetailedView:
+
 void NetworkStateListDetailedView::Init() {
   Reset();
   info_button_ = nullptr;
@@ -267,6 +269,11 @@ void NetworkStateListDetailedView::Init() {
 
   if (list_type_ != LIST_TYPE_VPN)
     CallRequestScan();
+}
+
+NetworkDetailedView::DetailedViewType
+NetworkStateListDetailedView::GetViewType() const {
+  return STATE_LIST_VIEW;
 }
 
 void NetworkStateListDetailedView::HandleButtonPressed(views::Button* sender,

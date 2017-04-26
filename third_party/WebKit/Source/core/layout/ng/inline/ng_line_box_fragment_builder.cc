@@ -13,8 +13,10 @@
 
 namespace blink {
 
-NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(NGInlineNode* node)
-    : direction_(TextDirection::kLtr), node_(node) {}
+NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(
+    NGInlineNode* node,
+    const NGLineHeightMetrics& metrics)
+    : direction_(TextDirection::kLtr), node_(node), metrics_(metrics) {}
 
 NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetDirection(
     TextDirection direction) {
@@ -49,8 +51,9 @@ void NGLineBoxFragmentBuilder::MoveChildrenInBlockDirection(LayoutUnit delta,
     offsets_[index].block_offset += delta;
 }
 
-void NGLineBoxFragmentBuilder::SetMetrics(const NGLineHeightMetrics& metrics) {
-  metrics_ = metrics;
+void NGLineBoxFragmentBuilder::UniteMetrics(
+    const NGLineHeightMetrics& metrics) {
+  metrics_.Unite(metrics);
 }
 
 void NGLineBoxFragmentBuilder::SetBreakToken(

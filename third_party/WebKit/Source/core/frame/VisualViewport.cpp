@@ -637,13 +637,9 @@ RefPtr<WebTaskRunner> VisualViewport::GetTimerTaskRunner() const {
 
 void VisualViewport::UpdateScrollOffset(const ScrollOffset& position,
                                         ScrollType scroll_type) {
-  if (!DidSetScaleOrLocation(scale_, FloatPoint(position)))
-    return;
-  if (IsExplicitScrollType(scroll_type)) {
+  if (DidSetScaleOrLocation(scale_, FloatPoint(position)) &&
+      scroll_type != kAnchoringScroll)
     NotifyRootFrameViewport();
-    if (scroll_type != kCompositorScroll && LayerForScrolling())
-      LayerForScrolling()->PlatformLayer()->ShowScrollbars();
-  }
 }
 
 GraphicsLayer* VisualViewport::LayerForContainer() const {

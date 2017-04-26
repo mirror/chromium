@@ -24,7 +24,7 @@ class HTMLInputElementTest : public testing::Test {
  protected:
   Document& GetDocument() { return page_holder_->GetDocument(); }
   HTMLInputElement& TestElement() {
-    Element* element = GetDocument().getElementById("test");
+    Element* element = GetDocument().GetElementById("test");
     DCHECK(element);
     return toHTMLInputElement(*element);
   }

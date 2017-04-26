@@ -140,7 +140,7 @@ class Deque : public ConditionalDestructor<Deque<T, INLINE_CAPACITY, Allocator>,
   template <typename... Args>
   void emplace_front(Args&&...);
 
-  void clear();
+  void Clear();
 
   template <typename VisitorDispatcher>
   void Trace(VisitorDispatcher);
@@ -412,7 +412,7 @@ inline void Deque<T, inlineCapacity, Allocator>::Swap(Deque& other) {
 }
 
 template <typename T, size_t inlineCapacity, typename Allocator>
-inline void Deque<T, inlineCapacity, Allocator>::clear() {
+inline void Deque<T, inlineCapacity, Allocator>::Clear() {
   DestroyAll();
   start_ = 0;
   end_ = 0;

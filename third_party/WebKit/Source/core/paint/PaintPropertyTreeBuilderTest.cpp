@@ -62,7 +62,7 @@ const ScrollPaintPropertyNode* PaintPropertyTreeBuilderTest::FrameScroll(
 const ObjectPaintProperties*
 PaintPropertyTreeBuilderTest::PaintPropertiesForElement(const char* name) {
   return GetDocument()
-      .getElementById(name)
+      .GetElementById(name)
       ->GetLayoutObject()
       ->PaintProperties();
 }
@@ -125,10 +125,10 @@ INSTANTIATE_TEST_CASE_P(All, PaintPropertyTreeBuilderTest, ::testing::Bool());
 TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
   LoadTestData("fixed-position.html");
 
-  Element* positioned_scroll = GetDocument().getElementById("positionedScroll");
+  Element* positioned_scroll = GetDocument().GetElementById("positionedScroll");
   positioned_scroll->setScrollTop(3);
   Element* transformed_scroll =
-      GetDocument().getElementById("transformedScroll");
+      GetDocument().GetElementById("transformedScroll");
   transformed_scroll->setScrollTop(5);
 
   FrameView* frame_view = GetDocument().View();
@@ -137,7 +137,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
   // target1 is a fixed-position element inside an absolute-position scrolling
   // element.  It should be attached under the viewport to skip scrolling and
   // offset of the parent.
-  Element* target1 = GetDocument().getElementById("target1");
+  Element* target1 = GetDocument().GetElementById("target1");
   const ObjectPaintProperties* target1_properties =
       target1->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(FloatRoundedRect(200, 150, 100, 100),
@@ -162,10 +162,10 @@ TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
 
   // target2 is a fixed-position element inside a transformed scrolling element.
   // It should be attached under the scrolled box of the transformed element.
-  Element* target2 = GetDocument().getElementById("target2");
+  Element* target2 = GetDocument().GetElementById("target2");
   const ObjectPaintProperties* target2_properties =
       target2->GetLayoutObject()->PaintProperties();
-  Element* scroller = GetDocument().getElementById("transformedScroll");
+  Element* scroller = GetDocument().GetElementById("transformedScroll");
   const ObjectPaintProperties* scroller_properties =
       scroller->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(FloatRoundedRect(200, 150, 100, 100),
@@ -192,7 +192,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
 TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
   LoadTestData("position-and-scroll.html");
 
-  Element* scroller = GetDocument().getElementById("scroller");
+  Element* scroller = GetDocument().GetElementById("scroller");
   scroller->scrollTo(0, 100);
   FrameView* frame_view = GetDocument().View();
   frame_view->UpdateAllLifecyclePhases();
@@ -219,7 +219,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
 
   // The relative-positioned element should have accumulated box offset (exclude
   // scrolling), and should be affected by ancestor scroll transforms.
-  Element* rel_pos = GetDocument().getElementById("rel-pos");
+  Element* rel_pos = GetDocument().GetElementById("rel-pos");
   const ObjectPaintProperties* rel_pos_properties =
       rel_pos->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(680, 1120),
@@ -237,7 +237,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
 
   // The absolute-positioned element should not be affected by non-positioned
   // scroller at all.
-  Element* abs_pos = GetDocument().getElementById("abs-pos");
+  Element* abs_pos = GetDocument().GetElementById("abs-pos");
   const ObjectPaintProperties* abs_pos_properties =
       abs_pos->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(123, 456),
@@ -300,7 +300,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Perspective) {
       "<div id='perspective'>"
       "  <div id='inner'></div>"
       "</div>");
-  Element* perspective = GetDocument().getElementById("perspective");
+  Element* perspective = GetDocument().GetElementById("perspective");
   const ObjectPaintProperties* perspective_properties =
       perspective->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(TransformationMatrix().ApplyPerspective(100),
@@ -314,7 +314,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Perspective) {
 
   // Adding perspective doesn't clear paint offset. The paint offset will be
   // passed down to children.
-  Element* inner = GetDocument().getElementById("inner");
+  Element* inner = GetDocument().GetElementById("inner");
   const ObjectPaintProperties* inner_properties =
       inner->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(50, 100),
@@ -352,7 +352,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Transform) {
       "    transform: translate3d(123px, 456px, 789px)'>"
       "</div>");
 
-  Element* transform = GetDocument().getElementById("transform");
+  Element* transform = GetDocument().GetElementById("transform");
   const ObjectPaintProperties* transform_properties =
       transform->GetLayoutObject()->PaintProperties();
 
@@ -400,7 +400,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Preserve3D3DTransformedDescendant) {
       "</div>"
       "</div>");
 
-  Element* preserve = GetDocument().getElementById("preserve");
+  Element* preserve = GetDocument().GetElementById("preserve");
   const ObjectPaintProperties* preserve_properties =
       preserve->GetLayoutObject()->PaintProperties();
 
@@ -418,7 +418,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Perspective3DTransformedDescendant) {
       "</div>"
       "</div>");
 
-  Element* perspective = GetDocument().getElementById("perspective");
+  Element* perspective = GetDocument().GetElementById("perspective");
   const ObjectPaintProperties* perspective_properties =
       perspective->GetLayoutObject()->PaintProperties();
 
@@ -457,7 +457,7 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeTransform) {
       "    will-change: transform'>"
       "</div>");
 
-  Element* transform = GetDocument().getElementById("transform");
+  Element* transform = GetDocument().GetElementById("transform");
   const ObjectPaintProperties* transform_properties =
       transform->GetLayoutObject()->PaintProperties();
 
@@ -498,7 +498,7 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeContents) {
       "    will-change: transform, contents'>"
       "</div>");
 
-  Element* transform = GetDocument().getElementById("transform");
+  Element* transform = GetDocument().GetElementById("transform");
   EXPECT_EQ(nullptr, transform->GetLayoutObject()->PaintProperties());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(50, 100, 400, 300),
                           transform->GetLayoutObject(),
@@ -508,7 +508,7 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeContents) {
 TEST_P(PaintPropertyTreeBuilderTest, RelativePositionInline) {
   LoadTestData("relative-position-inline.html");
 
-  Element* inline_block = GetDocument().getElementById("inline-block");
+  Element* inline_block = GetDocument().GetElementById("inline-block");
   const ObjectPaintProperties* inline_block_properties =
       inline_block->GetLayoutObject()->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(135, 490),
@@ -534,7 +534,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
       "</div>");
 
   LayoutObject* node_without_opacity =
-      GetDocument().getElementById("nodeWithoutOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("nodeWithoutOpacity")->GetLayoutObject();
   const ObjectPaintProperties* node_without_opacity_properties =
       node_without_opacity->PaintProperties();
   EXPECT_EQ(nullptr, node_without_opacity_properties);
@@ -542,7 +542,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
                           GetDocument().View()->GetLayoutView());
 
   LayoutObject* child_with_opacity =
-      GetDocument().getElementById("childWithOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("childWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* child_with_opacity_properties =
       child_with_opacity->PaintProperties();
   EXPECT_EQ(0.5f, child_with_opacity_properties->Effect()->Opacity());
@@ -553,7 +553,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
 
   LayoutObject* grand_child_without_opacity =
       GetDocument()
-          .getElementById("grandChildWithoutOpacity")
+          .GetElementById("grandChildWithoutOpacity")
           ->GetLayoutObject();
   EXPECT_EQ(nullptr, grand_child_without_opacity->PaintProperties());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(8, 8, 20, 30), grand_child_without_opacity,
@@ -561,7 +561,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
 
   LayoutObject* great_grand_child_with_opacity =
       GetDocument()
-          .getElementById("greatGrandChildWithOpacity")
+          .GetElementById("greatGrandChildWithOpacity")
           ->GetLayoutObject();
   const ObjectPaintProperties* great_grand_child_with_opacity_properties =
       great_grand_child_with_opacity->PaintProperties();
@@ -600,7 +600,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodeDoesNotAffectEffectNodes) {
       "</div>");
 
   LayoutObject* node_with_opacity =
-      GetDocument().getElementById("nodeWithOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("nodeWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* node_with_opacity_properties =
       node_with_opacity->PaintProperties();
   EXPECT_EQ(0.6f, node_with_opacity_properties->Effect()->Opacity());
@@ -610,7 +610,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodeDoesNotAffectEffectNodes) {
                           GetDocument().View()->GetLayoutView());
 
   LayoutObject* child_with_transform =
-      GetDocument().getElementById("childWithTransform")->GetLayoutObject();
+      GetDocument().GetElementById("childWithTransform")->GetLayoutObject();
   const ObjectPaintProperties* child_with_transform_properties =
       child_with_transform->PaintProperties();
   EXPECT_EQ(nullptr, child_with_transform_properties->Effect());
@@ -620,7 +620,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodeDoesNotAffectEffectNodes) {
                           GetDocument().View()->GetLayoutView());
 
   LayoutObject* grand_child_with_opacity =
-      GetDocument().getElementById("grandChildWithOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("grandChildWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* grand_child_with_opacity_properties =
       grand_child_with_opacity->PaintProperties();
   EXPECT_EQ(0.4f, grand_child_with_opacity_properties->Effect()->Opacity());
@@ -643,7 +643,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossStackingContext) {
       "</div>");
 
   LayoutObject* node_with_opacity =
-      GetDocument().getElementById("nodeWithOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("nodeWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* node_with_opacity_properties =
       node_with_opacity->PaintProperties();
   EXPECT_EQ(0.6f, node_with_opacity_properties->Effect()->Opacity());
@@ -654,7 +654,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossStackingContext) {
 
   LayoutObject* child_with_stacking_context =
       GetDocument()
-          .getElementById("childWithStackingContext")
+          .GetElementById("childWithStackingContext")
           ->GetLayoutObject();
   const ObjectPaintProperties* child_with_stacking_context_properties =
       child_with_stacking_context->PaintProperties();
@@ -663,7 +663,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossStackingContext) {
                           GetDocument().View()->GetLayoutView());
 
   LayoutObject* grand_child_with_opacity =
-      GetDocument().getElementById("grandChildWithOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("grandChildWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* grand_child_with_opacity_properties =
       grand_child_with_opacity->PaintProperties();
   EXPECT_EQ(0.4f, grand_child_with_opacity_properties->Effect()->Opacity());
@@ -687,20 +687,20 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
       "</svg>");
 
   LayoutObject* group_with_opacity =
-      GetDocument().getElementById("groupWithOpacity")->GetLayoutObject();
+      GetDocument().GetElementById("groupWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* group_with_opacity_properties =
       group_with_opacity->PaintProperties();
   EXPECT_EQ(0.6f, group_with_opacity_properties->Effect()->Opacity());
   EXPECT_NE(nullptr, group_with_opacity_properties->Effect()->Parent());
 
   LayoutObject& rect_without_opacity =
-      *GetDocument().getElementById("rectWithoutOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("rectWithoutOpacity")->GetLayoutObject();
   const ObjectPaintProperties* rect_without_opacity_properties =
       rect_without_opacity.PaintProperties();
   EXPECT_EQ(nullptr, rect_without_opacity_properties);
 
   LayoutObject& rect_with_opacity =
-      *GetDocument().getElementById("rectWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("rectWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* rect_with_opacity_properties =
       rect_with_opacity.PaintProperties();
   EXPECT_EQ(0.4f, rect_with_opacity_properties->Effect()->Opacity());
@@ -710,7 +710,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
   // Ensure that opacity nodes are created for LayoutSVGText which inherits from
   // LayoutSVGBlock instead of LayoutSVGModelObject.
   LayoutObject& text_with_opacity =
-      *GetDocument().getElementById("textWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("textWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* text_with_opacity_properties =
       text_with_opacity.PaintProperties();
   EXPECT_EQ(0.2f, text_with_opacity_properties->Effect()->Opacity());
@@ -720,7 +720,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
   // Ensure that opacity nodes are created for LayoutSVGTSpan which inherits
   // from LayoutSVGInline instead of LayoutSVGModelObject.
   LayoutObject& tspan_with_opacity =
-      *GetDocument().getElementById("tspanWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("tspanWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* tspan_with_opacity_properties =
       tspan_with_opacity.PaintProperties();
   EXPECT_EQ(0.1f, tspan_with_opacity_properties->Effect()->Opacity());
@@ -737,14 +737,14 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossHTMLSVGBoundary) {
       "</div>");
 
   LayoutObject& div_with_opacity =
-      *GetDocument().getElementById("divWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("divWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* div_with_opacity_properties =
       div_with_opacity.PaintProperties();
   EXPECT_EQ(0.2f, div_with_opacity_properties->Effect()->Opacity());
   EXPECT_NE(nullptr, div_with_opacity_properties->Effect()->Parent());
 
   LayoutObject& svg_root_with_opacity =
-      *GetDocument().getElementById("svgRootWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("svgRootWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* svg_root_with_opacity_properties =
       svg_root_with_opacity.PaintProperties();
   EXPECT_EQ(0.3f, svg_root_with_opacity_properties->Effect()->Opacity());
@@ -752,7 +752,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossHTMLSVGBoundary) {
             svg_root_with_opacity_properties->Effect()->Parent());
 
   LayoutObject& rect_with_opacity =
-      *GetDocument().getElementById("rectWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("rectWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* rect_with_opacity_properties =
       rect_with_opacity.PaintProperties();
   EXPECT_EQ(0.4f, rect_with_opacity_properties->Effect()->Opacity());
@@ -771,7 +771,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossSVGHTMLBoundary) {
       "</svg>");
 
   LayoutObject& svg_root_with_opacity =
-      *GetDocument().getElementById("svgRootWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("svgRootWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* svg_root_with_opacity_properties =
       svg_root_with_opacity.PaintProperties();
   EXPECT_EQ(0.3f, svg_root_with_opacity_properties->Effect()->Opacity());
@@ -779,7 +779,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossSVGHTMLBoundary) {
 
   LayoutObject& foreign_object_with_opacity =
       *GetDocument()
-           .getElementById("foreignObjectWithOpacity")
+           .GetElementById("foreignObjectWithOpacity")
            ->GetLayoutObject();
   const ObjectPaintProperties* foreign_object_with_opacity_properties =
       foreign_object_with_opacity.PaintProperties();
@@ -788,7 +788,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossSVGHTMLBoundary) {
             foreign_object_with_opacity_properties->Effect()->Parent());
 
   LayoutObject& span_with_opacity =
-      *GetDocument().getElementById("spanWithOpacity")->GetLayoutObject();
+      *GetDocument().GetElementById("spanWithOpacity")->GetLayoutObject();
   const ObjectPaintProperties* span_with_opacity_properties =
       span_with_opacity.PaintProperties();
   EXPECT_EQ(0.5f, span_with_opacity_properties->Effect()->Opacity());
@@ -820,7 +820,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInSVG) {
 
   LayoutObject& svg_root_with3d_transform =
       *GetDocument()
-           .getElementById("svgRootWith3dTransform")
+           .GetElementById("svgRootWith3dTransform")
            ->GetLayoutObject();
   const ObjectPaintProperties* svg_root_with3d_transform_properties =
       svg_root_with3d_transform.PaintProperties();
@@ -838,7 +838,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInSVG) {
       svg_root_with3d_transform_properties->PaintOffsetTranslation()->Parent());
 
   LayoutObject& rect_with2d_transform =
-      *GetDocument().getElementById("rectWith2dTransform")->GetLayoutObject();
+      *GetDocument().GetElementById("rectWith2dTransform")->GetLayoutObject();
   const ObjectPaintProperties* rect_with2d_transform_properties =
       rect_with2d_transform.PaintProperties();
   TransformationMatrix matrix;
@@ -877,7 +877,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGViewBoxTransform) {
       "</svg>");
 
   LayoutObject& svg_with_view_box =
-      *GetDocument().getElementById("svgWithViewBox")->GetLayoutObject();
+      *GetDocument().GetElementById("svgWithViewBox")->GetLayoutObject();
   const ObjectPaintProperties* svg_with_view_box_properties =
       svg_with_view_box.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(1, 2, 3),
@@ -889,7 +889,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGViewBoxTransform) {
       svg_with_view_box_properties->SvgLocalToBorderBoxTransform()->Parent(),
       svg_with_view_box_properties->Transform());
 
-  LayoutObject& rect = *GetDocument().getElementById("rect")->GetLayoutObject();
+  LayoutObject& rect = *GetDocument().GetElementById("rect")->GetLayoutObject();
   const ObjectPaintProperties* rect_properties = rect.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(100, 100),
             rect_properties->Transform()->Matrix());
@@ -910,7 +910,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootPaintOffsetTransformNode) {
       "</style>"
       "<svg id='svg' />");
 
-  LayoutObject& svg = *GetDocument().getElementById("svg")->GetLayoutObject();
+  LayoutObject& svg = *GetDocument().GetElementById("svg")->GetLayoutObject();
   const ObjectPaintProperties* svg_properties = svg.PaintProperties();
   // Ensure that a paint offset transform is not unnecessarily emitted.
   EXPECT_EQ(nullptr, svg_properties->PaintOffsetTranslation());
@@ -935,7 +935,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootLocalToBorderBoxTransformNode) {
       "  <rect id='rect' transform='translate(17 19)' />"
       "</svg>");
 
-  LayoutObject& svg = *GetDocument().getElementById("svg")->GetLayoutObject();
+  LayoutObject& svg = *GetDocument().GetElementById("svg")->GetLayoutObject();
   const ObjectPaintProperties* svg_properties = svg.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(2, 3),
             svg_properties->PaintOffsetTranslation()->Matrix());
@@ -950,7 +950,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootLocalToBorderBoxTransformNode) {
 
   // Ensure the rect's transform is a child of the local to border box
   // transform.
-  LayoutObject& rect = *GetDocument().getElementById("rect")->GetLayoutObject();
+  LayoutObject& rect = *GetDocument().GetElementById("rect")->GetLayoutObject();
   const ObjectPaintProperties* rect_properties = rect.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(17, 19),
             rect_properties->Transform()->Matrix());
@@ -968,7 +968,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGNestedViewboxTransforms) {
       "  </svg>"
       "</svg>");
 
-  LayoutObject& svg = *GetDocument().getElementById("svg")->GetLayoutObject();
+  LayoutObject& svg = *GetDocument().GetElementById("svg")->GetLayoutObject();
   const ObjectPaintProperties* svg_properties = svg.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(11, 11),
             svg_properties->Transform()->Matrix());
@@ -976,7 +976,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGNestedViewboxTransforms) {
             svg_properties->SvgLocalToBorderBoxTransform()->Matrix());
 
   LayoutObject& nested_svg =
-      *GetDocument().getElementById("nestedSvg")->GetLayoutObject();
+      *GetDocument().GetElementById("nestedSvg")->GetLayoutObject();
   const ObjectPaintProperties* nested_svg_properties =
       nested_svg.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Scale(10),
@@ -985,7 +985,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGNestedViewboxTransforms) {
   EXPECT_EQ(svg_properties->SvgLocalToBorderBoxTransform(),
             nested_svg_properties->Transform()->Parent());
 
-  LayoutObject& rect = *GetDocument().getElementById("rect")->GetLayoutObject();
+  LayoutObject& rect = *GetDocument().GetElementById("rect")->GetLayoutObject();
   const ObjectPaintProperties* rect_properties = rect.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(13, 13),
             rect_properties->Transform()->Matrix());
@@ -1007,14 +1007,14 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSVGHTMLBoundary) {
       "</svg>");
 
   LayoutObject& svg_with_transform =
-      *GetDocument().getElementById("svgWithTransform")->GetLayoutObject();
+      *GetDocument().GetElementById("svgWithTransform")->GetLayoutObject();
   const ObjectPaintProperties* svg_with_transform_properties =
       svg_with_transform.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(1, 2, 3),
             svg_with_transform_properties->Transform()->Matrix());
 
   LayoutObject& div_with_transform =
-      *GetDocument().getElementById("divWithTransform")->GetLayoutObject();
+      *GetDocument().GetElementById("divWithTransform")->GetLayoutObject();
   const ObjectPaintProperties* div_with_transform_properties =
       div_with_transform.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(3, 4, 5),
@@ -1039,13 +1039,13 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "  </g>"
       "</svg>");
 
-  LayoutObject& svg = *GetDocument().getElementById("svg")->GetLayoutObject();
+  LayoutObject& svg = *GetDocument().GetElementById("svg")->GetLayoutObject();
   const ObjectPaintProperties* svg_properties = svg.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(1, 2, 3),
             svg_properties->Transform()->Matrix());
 
   LayoutObject& container =
-      *GetDocument().getElementById("container")->GetLayoutObject();
+      *GetDocument().GetElementById("container")->GetLayoutObject();
   const ObjectPaintProperties* container_properties =
       container.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(20, 30),
@@ -1053,7 +1053,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
   EXPECT_EQ(svg_properties->Transform(),
             container_properties->Transform()->Parent());
 
-  Element* fixed = GetDocument().getElementById("fixed");
+  Element* fixed = GetDocument().GetElementById("fixed");
   // Ensure the fixed position element is rooted at the nearest transform
   // container.
   EXPECT_EQ(container_properties->Transform(),
@@ -1075,7 +1075,7 @@ TEST_P(PaintPropertyTreeBuilderTest, ControlClip) {
       "    style='width:345px; height:123px' value='some text'/>");
 
   LayoutObject& button =
-      *GetDocument().getElementById("button")->GetLayoutObject();
+      *GetDocument().GetElementById("button")->GetLayoutObject();
   const ObjectPaintProperties* button_properties = button.PaintProperties();
   // No scroll translation because the document does not scroll (not enough
   // content).
@@ -1108,7 +1108,7 @@ TEST_P(PaintPropertyTreeBuilderTest, BorderRadiusClip) {
       "</style>"
       "<div id='div'></div>");
 
-  LayoutObject& div = *GetDocument().getElementById("div")->GetLayoutObject();
+  LayoutObject& div = *GetDocument().GetElementById("div")->GetLayoutObject();
   const ObjectPaintProperties* div_properties = div.PaintProperties();
   // No scroll translation because the document does not scroll (not enough
   // content).
@@ -1171,7 +1171,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSubframes) {
   frame_view->UpdateAllLifecyclePhases();
 
   LayoutObject* div_with_transform =
-      GetDocument().getElementById("divWithTransform")->GetLayoutObject();
+      GetDocument().GetElementById("divWithTransform")->GetLayoutObject();
   const ObjectPaintProperties* div_with_transform_properties =
       div_with_transform->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(1, 2, 3),
@@ -1181,7 +1181,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSubframes) {
 
   LayoutObject* inner_div_with_transform =
       ChildDocument()
-          .getElementById("innerDivWithTransform")
+          .GetElementById("innerDivWithTransform")
           ->GetLayoutObject();
   const ObjectPaintProperties* inner_div_with_transform_properties =
       inner_div_with_transform->PaintProperties();
@@ -1250,7 +1250,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInTransformedSubframes) {
   //               Transform transform=translation=7.000000,8.000000,9.000000
 
   LayoutObject* inner_div_with_transform =
-      ChildDocument().getElementById("transform")->GetLayoutObject();
+      ChildDocument().GetElementById("transform")->GetLayoutObject();
   auto* inner_div_transform =
       inner_div_with_transform->PaintProperties()->Transform();
   EXPECT_EQ(TransformationMatrix().Translate3d(7, 8, 9),
@@ -1281,7 +1281,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInTransformedSubframes) {
             div_with_transform_transform->Matrix());
 
   LayoutObject* div_with_transform =
-      GetDocument().getElementById("divWithTransform")->GetLayoutObject();
+      GetDocument().GetElementById("divWithTransform")->GetLayoutObject();
   EXPECT_EQ(div_with_transform_transform,
             div_with_transform->PaintProperties()->Transform());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(1, 2, 800, 248), div_with_transform,
@@ -1302,11 +1302,11 @@ TEST_P(PaintPropertyTreeBuilderTest, TreeContextClipByNonStackingContext) {
   FrameView* frame_view = GetDocument().View();
 
   LayoutObject* scroller =
-      GetDocument().getElementById("scroller")->GetLayoutObject();
+      GetDocument().GetElementById("scroller")->GetLayoutObject();
   const ObjectPaintProperties* scroller_properties =
       scroller->PaintProperties();
   LayoutObject* child =
-      GetDocument().getElementById("child")->GetLayoutObject();
+      GetDocument().GetElementById("child")->GetLayoutObject();
 
   EXPECT_EQ(scroller_properties->OverflowClip(),
             child->LocalBorderBoxProperties()->Clip());
@@ -1346,10 +1346,10 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "  <div id='forceScroll' style='height:10000px;'></div>"
       "</div>");
 
-  auto& scroller = *GetDocument().getElementById("scroller")->GetLayoutObject();
+  auto& scroller = *GetDocument().GetElementById("scroller")->GetLayoutObject();
   const ObjectPaintProperties* scroller_properties = scroller.PaintProperties();
   LayoutObject& child =
-      *GetDocument().getElementById("child")->GetLayoutObject();
+      *GetDocument().GetElementById("child")->GetLayoutObject();
 
   EXPECT_EQ(FrameContentClip(), child.LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(FrameScrollTranslation(),
@@ -1394,7 +1394,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TableCellLayoutLocation) {
       "</table>");
 
   LayoutObject& target =
-      *GetDocument().getElementById("target")->GetLayoutObject();
+      *GetDocument().GetElementById("target")->GetLayoutObject();
   EXPECT_EQ(LayoutPoint(170, 170), target.PaintOffset());
   EXPECT_EQ(FramePreTranslation(),
             target.LocalBorderBoxProperties()->Transform());
@@ -1429,7 +1429,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendant) {
   LayoutRect absolute_clip_rect = local_clip_rect;
   absolute_clip_rect.Move(123, 456);
 
-  LayoutObject& clip = *GetDocument().getElementById("clip")->GetLayoutObject();
+  LayoutObject& clip = *GetDocument().GetElementById("clip")->GetLayoutObject();
   const ObjectPaintProperties* clip_properties = clip.PaintProperties();
   EXPECT_EQ(FrameContentClip(), clip_properties->CssClip()->Parent());
   EXPECT_EQ(FramePreTranslation(),
@@ -1443,7 +1443,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendant) {
                     LayoutUnit::Max());
 
   LayoutObject* fixed =
-      GetDocument().getElementById("fixed")->GetLayoutObject();
+      GetDocument().GetElementById("fixed")->GetLayoutObject();
   EXPECT_EQ(clip_properties->CssClip(),
             fixed->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(FramePreTranslation(),
@@ -1484,7 +1484,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipAbsPositionDescendant) {
   LayoutRect absolute_clip_rect = local_clip_rect;
   absolute_clip_rect.Move(123, 456);
 
-  auto* clip = GetDocument().getElementById("clip")->GetLayoutObject();
+  auto* clip = GetDocument().GetElementById("clip")->GetLayoutObject();
   const ObjectPaintProperties* clip_properties = clip->PaintProperties();
   EXPECT_EQ(FrameContentClip(), clip_properties->CssClip()->Parent());
   // No scroll translation because the document does not scroll (not enough
@@ -1500,7 +1500,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipAbsPositionDescendant) {
                     // doesn't apply css clip on the object itself.
                     LayoutUnit::Max());
 
-  auto* absolute = GetDocument().getElementById("absolute")->GetLayoutObject();
+  auto* absolute = GetDocument().GetElementById("absolute")->GetLayoutObject();
   EXPECT_EQ(clip_properties->CssClip(),
             absolute->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(FramePreTranslation(),
@@ -1549,7 +1549,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
   absolute_clip_rect.Move(123, 456);
 
   LayoutObject& overflow =
-      *GetDocument().getElementById("overflow")->GetLayoutObject();
+      *GetDocument().GetElementById("overflow")->GetLayoutObject();
   const ObjectPaintProperties* overflow_properties = overflow.PaintProperties();
   EXPECT_EQ(FrameContentClip(), overflow_properties->OverflowClip()->Parent());
   // No scroll translation because the document does not scroll (not enough
@@ -1560,7 +1560,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
   CHECK_EXACT_VISUAL_RECT(LayoutRect(0, 0, 50, 50), &overflow,
                           GetDocument().View()->GetLayoutView());
 
-  LayoutObject* clip = GetDocument().getElementById("clip")->GetLayoutObject();
+  LayoutObject* clip = GetDocument().GetElementById("clip")->GetLayoutObject();
   const ObjectPaintProperties* clip_properties = clip->PaintProperties();
   EXPECT_EQ(overflow_properties->OverflowClip(),
             clip_properties->CssClip()->Parent());
@@ -1578,7 +1578,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
                           GetDocument().View()->GetLayoutView());
 
   LayoutObject* fixed =
-      GetDocument().getElementById("fixed")->GetLayoutObject();
+      GetDocument().GetElementById("fixed")->GetLayoutObject();
   EXPECT_EQ(clip_properties->CssClipFixedPosition(),
             fixed->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(FramePreTranslation(),
@@ -1635,14 +1635,14 @@ TEST_P(PaintPropertyTreeBuilderTest, FractionalPaintOffset) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
   LayoutPoint a_paint_offset = LayoutPoint(FloatPoint(0.1, 0.3));
   EXPECT_EQ(a_paint_offset, a->PaintOffset());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(LayoutUnit(0.1), LayoutUnit(0.3),
                                      LayoutUnit(70), LayoutUnit(70)),
                           a, frame_view->GetLayoutView());
 
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   LayoutPoint b_paint_offset =
       a_paint_offset + LayoutPoint(FloatPoint(0.5, 11.1));
   EXPECT_EQ(b_paint_offset, b->PaintOffset());
@@ -1681,7 +1681,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithBasicPixelSnapping) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(0, 0, 0),
             b_properties->Transform()->Matrix());
@@ -1695,7 +1695,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithBasicPixelSnapping) {
                           frame_view->GetLayoutView());
 
   // c's painted should start at subpixelAccumulation + (0.1,0.1) = (0.4,0.4).
-  LayoutObject* c = GetDocument().getElementById("c")->GetLayoutObject();
+  LayoutObject* c = GetDocument().GetElementById("c")->GetLayoutObject();
   LayoutPoint c_paint_offset =
       subpixel_accumulation + LayoutPoint(FloatPoint(0.1, 0.1));
   EXPECT_EQ(c_paint_offset, c->PaintOffset());
@@ -1737,7 +1737,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(0, 0, 0),
             b_properties->Transform()->Matrix());
@@ -1753,7 +1753,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                           b, frame_view->GetLayoutView());
 
   // c's painting should start at subpixelAccumulation + (0.7,0.7) = (0.4,0.4).
-  LayoutObject* c = GetDocument().getElementById("c")->GetLayoutObject();
+  LayoutObject* c = GetDocument().GetElementById("c")->GetLayoutObject();
   LayoutPoint c_paint_offset =
       subpixel_accumulation + LayoutPoint(FloatPoint(0.7, 0.7));
   EXPECT_EQ(c_paint_offset, c->PaintOffset());
@@ -1804,7 +1804,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(5, 7, 0),
             b_properties->Transform()->Matrix());
@@ -1819,7 +1819,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                                      LayoutUnit(40), LayoutUnit(40)),
                           b, frame_view->GetLayoutView());
 
-  LayoutObject* c = GetDocument().getElementById("c")->GetLayoutObject();
+  LayoutObject* c = GetDocument().GetElementById("c")->GetLayoutObject();
   const ObjectPaintProperties* c_properties = c->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(11, 13, 0),
             c_properties->Transform()->Matrix());
@@ -1835,7 +1835,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
 
   // d should be painted starting at subpixelAccumulation + (0.7,0.7) =
   // (0.4,0.4).
-  LayoutObject* d = GetDocument().getElementById("d")->GetLayoutObject();
+  LayoutObject* d = GetDocument().GetElementById("d")->GetLayoutObject();
   LayoutPoint d_paint_offset =
       subpixel_accumulation + LayoutPoint(FloatPoint(0.7, 0.7));
   EXPECT_EQ(d_paint_offset, d->PaintOffset());
@@ -1885,7 +1885,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithPixelSnappingWithFixedPos) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(0, 0),
             b_properties->Transform()->Matrix());
@@ -1901,7 +1901,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithPixelSnappingWithFixedPos) {
                           b, frame_view->GetLayoutView());
 
   LayoutObject* fixed =
-      GetDocument().getElementById("fixed")->GetLayoutObject();
+      GetDocument().GetElementById("fixed")->GetLayoutObject();
   // The residual subpixel adjustment should still be (-0.3,0).
   EXPECT_EQ(subpixel_accumulation, fixed->PaintOffset());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(LayoutUnit(0.7), LayoutUnit(0),
@@ -1909,7 +1909,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithPixelSnappingWithFixedPos) {
                           fixed, frame_view->GetLayoutView());
 
   // d should be painted starting at subpixelAccumulation + (0.7,0) = (0.4,0).
-  LayoutObject* d = GetDocument().getElementById("d")->GetLayoutObject();
+  LayoutObject* d = GetDocument().GetElementById("d")->GetLayoutObject();
   LayoutPoint d_paint_offset =
       subpixel_accumulation + LayoutPoint(FloatPoint(0.7, 0));
   EXPECT_EQ(d_paint_offset, d->PaintOffset());
@@ -1935,7 +1935,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SvgPixelSnappingShouldResetPaintOffset) {
       "</svg>");
 
   LayoutObject& svg_with_transform =
-      *GetDocument().getElementById("svg")->GetLayoutObject();
+      *GetDocument().GetElementById("svg")->GetLayoutObject();
   const ObjectPaintProperties* svg_with_transform_properties =
       svg_with_transform.PaintProperties();
   EXPECT_EQ(TransformationMatrix(),
@@ -1945,7 +1945,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SvgPixelSnappingShouldResetPaintOffset) {
               nullptr);
 
   LayoutObject& rect_with_transform =
-      *GetDocument().getElementById("rect")->GetLayoutObject();
+      *GetDocument().GetElementById("rect")->GetLayoutObject();
   const ObjectPaintProperties* rect_with_transform_properties =
       rect_with_transform.PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(1, 1),
@@ -2008,9 +2008,9 @@ TEST_P(PaintPropertyTreeBuilderTest, Preserve3DCreatesSharedRenderingContext) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
   const ObjectPaintProperties* a_properties = a->PaintProperties();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   ASSERT_TRUE(a_properties->Transform() && b_properties->Transform());
   EXPECT_NE(a_properties->Transform(), b_properties->Transform());
@@ -2045,9 +2045,9 @@ TEST_P(PaintPropertyTreeBuilderTest, FlatTransformStyleEndsRenderingContext) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
   const ObjectPaintProperties* a_properties = a->PaintProperties();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   ASSERT_FALSE(a->StyleRef().Preserves3D());
 
@@ -2077,9 +2077,9 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedRenderingContexts) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
   const ObjectPaintProperties* a_properties = a->PaintProperties();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   ASSERT_FALSE(a->StyleRef().Preserves3D());
   ASSERT_TRUE(a_properties->Transform() && b_properties->Transform());
@@ -2142,8 +2142,8 @@ TEST_P(PaintPropertyTreeBuilderTest, FlatTransformStylePropagatesToChildren) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const auto* a_transform = a->PaintProperties()->Transform();
   ASSERT_TRUE(a_transform);
   const auto* b_transform = b->PaintProperties()->Transform();
@@ -2180,8 +2180,8 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const auto* a_transform = a->PaintProperties()->Transform();
   ASSERT_TRUE(a_transform);
   const auto* b_transform = b->PaintProperties()->Transform();
@@ -2209,8 +2209,8 @@ TEST_P(PaintPropertyTreeBuilderTest, PerspectiveIsNotFlattened) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* a_properties = a->PaintProperties();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   const TransformPaintPropertyNode* a_perspective = a_properties->Perspective();
@@ -2238,8 +2238,8 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  LayoutObject* a = GetDocument().getElementById("a")->GetLayoutObject();
-  LayoutObject* b = GetDocument().getElementById("b")->GetLayoutObject();
+  LayoutObject* a = GetDocument().GetElementById("a")->GetLayoutObject();
+  LayoutObject* b = GetDocument().GetElementById("b")->GetLayoutObject();
   const ObjectPaintProperties* a_properties = a->PaintProperties();
   const ObjectPaintProperties* b_properties = b->PaintProperties();
   const TransformPaintPropertyNode* a_perspective = a_properties->Perspective();
@@ -2267,7 +2267,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
       "</div>");
   FrameView* frame_view = GetDocument().View();
 
-  Element* a = GetDocument().getElementById("a");
+  Element* a = GetDocument().GetElementById("a");
   const ObjectPaintProperties* a_properties =
       a->GetLayoutObject()->PaintProperties();
   const TransformPaintPropertyNode* a_transform_node =
@@ -2275,7 +2275,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
   EXPECT_EQ(TransformationMatrix().Translate(33, 44),
             a_transform_node->Matrix());
 
-  Element* b = GetDocument().getElementById("b");
+  Element* b = GetDocument().GetElementById("b");
   const ObjectPaintProperties* b_properties =
       b->GetLayoutObject()->PaintProperties();
   const TransformPaintPropertyNode* b_transform_node =
@@ -2283,7 +2283,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
   EXPECT_EQ(TransformationMatrix().Translate(55, 66),
             b_transform_node->Matrix());
 
-  Element* c = GetDocument().getElementById("c");
+  Element* c = GetDocument().GetElementById("c");
   const ObjectPaintProperties* c_properties =
       c->GetLayoutObject()->PaintProperties();
   const TransformPaintPropertyNode* c_transform_node =
@@ -2386,10 +2386,10 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowClipContentsTreeState) {
       "</div>");
 
   LayoutBoxModelObject* clipper = ToLayoutBoxModelObject(
-      GetDocument().getElementById("clipper")->GetLayoutObject());
+      GetDocument().GetElementById("clipper")->GetLayoutObject());
   const ObjectPaintProperties* clip_properties = clipper->PaintProperties();
   LayoutObject* child =
-      GetDocument().getElementById("child")->GetLayoutObject();
+      GetDocument().GetElementById("child")->GetLayoutObject();
 
   // No scroll translation because the document does not scroll (not enough
   // content).
@@ -2422,10 +2422,10 @@ TEST_P(PaintPropertyTreeBuilderTest, ContainsPaintContentsTreeState) {
       "</div>");
 
   LayoutBoxModelObject* clipper = ToLayoutBoxModelObject(
-      GetDocument().getElementById("clipper")->GetLayoutObject());
+      GetDocument().GetElementById("clipper")->GetLayoutObject());
   const ObjectPaintProperties* clip_properties = clipper->PaintProperties();
   LayoutObject* child =
-      GetDocument().getElementById("child")->GetLayoutObject();
+      GetDocument().GetElementById("child")->GetLayoutObject();
 
   // No scroll translation because the document does not scroll (not enough
   // content).
@@ -2461,14 +2461,14 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollContentsTreeState) {
       "</div>"
       "<div id='forceScroll' style='height: 4000px;'></div>");
 
-  Element* clipper_element = GetDocument().getElementById("clipper");
+  Element* clipper_element = GetDocument().GetElementById("clipper");
   clipper_element->scrollTo(1, 2);
 
   LayoutBoxModelObject* clipper =
       ToLayoutBoxModelObject(clipper_element->GetLayoutObject());
   const ObjectPaintProperties* clip_properties = clipper->PaintProperties();
   LayoutObject* child =
-      GetDocument().getElementById("child")->GetLayoutObject();
+      GetDocument().GetElementById("child")->GetLayoutObject();
 
   EXPECT_EQ(FrameScrollTranslation(),
             clipper->LocalBorderBoxProperties()->Transform());
@@ -2515,7 +2515,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollWithRoundedRect) {
       "</div>");
 
   LayoutObject& rounded_box =
-      *GetDocument().getElementById("roundedBox")->GetLayoutObject();
+      *GetDocument().GetElementById("roundedBox")->GetLayoutObject();
   const ObjectPaintProperties* rounded_box_properties =
       rounded_box.PaintProperties();
   EXPECT_EQ(
@@ -2546,10 +2546,10 @@ TEST_P(PaintPropertyTreeBuilderTest, CssClipContentsTreeState) {
       "</div>");
 
   LayoutBoxModelObject* clipper = ToLayoutBoxModelObject(
-      GetDocument().getElementById("clipper")->GetLayoutObject());
+      GetDocument().GetElementById("clipper")->GetLayoutObject());
   const ObjectPaintProperties* clip_properties = clipper->PaintProperties();
   LayoutObject* child =
-      GetDocument().getElementById("child")->GetLayoutObject();
+      GetDocument().GetElementById("child")->GetLayoutObject();
 
   // No scroll translation because the document does not scroll (not enough
   // content).
@@ -2588,7 +2588,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
       "</svg>");
 
   LayoutObject& svg_with_view_box =
-      *GetDocument().getElementById("svgWithViewBox")->GetLayoutObject();
+      *GetDocument().GetElementById("svgWithViewBox")->GetLayoutObject();
   EXPECT_EQ(FramePreTranslation(),
             svg_with_view_box.LocalBorderBoxProperties()->Transform());
 
@@ -2616,7 +2616,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
       "  <div class='forceScroll'></div>"
       "</div>");
 
-  Element* overflow_hidden = GetDocument().getElementById("overflowHidden");
+  Element* overflow_hidden = GetDocument().GetElementById("overflowHidden");
   overflow_hidden->setScrollTop(37);
 
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -2669,9 +2669,9 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedScrollProperties) {
       "  <div class='forceScroll'></div>"
       "</div>");
 
-  Element* overflow_a = GetDocument().getElementById("overflowA");
+  Element* overflow_a = GetDocument().GetElementById("overflowA");
   overflow_a->setScrollTop(37);
-  Element* overflow_b = GetDocument().getElementById("overflowB");
+  Element* overflow_b = GetDocument().GetElementById("overflowB");
   overflow_b->setScrollTop(41);
 
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -2751,11 +2751,11 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionedScrollerIsNotNested) {
       "</div>"
       "<div class='forceScroll'></div>");
 
-  Element* overflow = GetDocument().getElementById("overflow");
+  Element* overflow = GetDocument().GetElementById("overflow");
   overflow->setScrollTop(37);
-  Element* abspos_overflow = GetDocument().getElementById("absposOverflow");
+  Element* abspos_overflow = GetDocument().GetElementById("absposOverflow");
   abspos_overflow->setScrollTop(41);
-  Element* fixed_overflow = GetDocument().getElementById("fixedOverflow");
+  Element* fixed_overflow = GetDocument().GetElementById("fixedOverflow");
   fixed_overflow->setScrollTop(43);
 
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -2838,9 +2838,9 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedPositionedScrollProperties) {
       "  <div class='forceScroll'></div>"
       "</div>");
 
-  Element* overflow_a = GetDocument().getElementById("overflowA");
+  Element* overflow_a = GetDocument().GetElementById("overflowA");
   overflow_a->setScrollTop(37);
-  Element* overflow_b = GetDocument().getElementById("overflowB");
+  Element* overflow_b = GetDocument().GetElementById("overflowB");
   overflow_b->setScrollTop(41);
 
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -2923,7 +2923,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MainThreadScrollReasonsWithoutScrolling) {
       "  <div class='backgroundAttachmentFixed'></div>"
       "</div>"
       "<div class='forceScroll'></div>");
-  Element* overflow = GetDocument().getElementById("overflow");
+  Element* overflow = GetDocument().GetElementById("overflow");
   EXPECT_TRUE(FrameScroll()->HasBackgroundAttachmentFixedDescendants());
   // No scroll node is needed.
   EXPECT_EQ(overflow->GetLayoutObject()->PaintProperties()->ScrollTranslation(),
@@ -3085,14 +3085,14 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutTransform) {
       "<div id='willChange'></div>");
 
   auto* transform =
-      GetDocument().getElementById("transform")->GetLayoutObject();
+      GetDocument().GetElementById("transform")->GetLayoutObject();
   EXPECT_EQ(TransformationMatrix().Translate3d(100, 200, 0),
             transform->PaintProperties()->Transform()->Matrix());
   EXPECT_EQ(FloatPoint3D(300, 75, 0),
             transform->PaintProperties()->Transform()->Origin());
 
   auto* will_change =
-      GetDocument().getElementById("willChange")->GetLayoutObject();
+      GetDocument().GetElementById("willChange")->GetLayoutObject();
   EXPECT_EQ(TransformationMatrix().Translate3d(0, 0, 0),
             will_change->PaintProperties()->Transform()->Matrix());
   EXPECT_EQ(FloatPoint3D(0, 0, 0),
@@ -3123,14 +3123,14 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutMotionPath) {
       "<div id='willChange'></div>");
 
   auto* motion_path =
-      GetDocument().getElementById("motionPath")->GetLayoutObject();
+      GetDocument().GetElementById("motionPath")->GetLayoutObject();
   EXPECT_EQ(TransformationMatrix().Translate3d(50, 150, 0),
             motion_path->PaintProperties()->Transform()->Matrix());
   EXPECT_EQ(FloatPoint3D(50, 50, 0),
             motion_path->PaintProperties()->Transform()->Origin());
 
   auto* will_change =
-      GetDocument().getElementById("willChange")->GetLayoutObject();
+      GetDocument().GetElementById("willChange")->GetLayoutObject();
   EXPECT_EQ(TransformationMatrix().Translate3d(0, 0, 0),
             will_change->PaintProperties()->Transform()->Matrix());
   EXPECT_EQ(FloatPoint3D(0, 0, 0),
@@ -3239,7 +3239,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
       "</div>");
 
   LayoutBoxModelObject* clipper = ToLayoutBoxModelObject(
-      GetDocument().getElementById("clipper")->GetLayoutObject());
+      GetDocument().GetElementById("clipper")->GetLayoutObject());
   const ObjectPaintProperties* clip_properties = clipper->PaintProperties();
 
   EXPECT_EQ(LayoutPoint(FloatPoint(31.5, 20)), clipper->PaintOffset());
@@ -3258,7 +3258,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskSimple) {
   const ClipPaintPropertyNode* output_clip = properties->MaskClip();
 
   const auto* target =
-      GetDocument().getElementById("target")->GetLayoutObject();
+      GetDocument().GetElementById("target")->GetLayoutObject();
   EXPECT_EQ(output_clip, target->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(FrameContentClip(), output_clip->Parent());
   EXPECT_EQ(FloatRoundedRect(8, 8, 300, 200), output_clip->ClipRect());
@@ -3292,7 +3292,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
   const ClipPaintPropertyNode* mask_clip = properties->MaskClip();
   const ClipPaintPropertyNode* overflow_clip2 = properties->OverflowClip();
   const auto* target =
-      GetDocument().getElementById("target")->GetLayoutObject();
+      GetDocument().GetElementById("target")->GetLayoutObject();
   const TransformPaintPropertyNode* scroll_translation =
       target->LocalBorderBoxProperties()->Transform();
 
@@ -3319,7 +3319,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
   EXPECT_EQ(mask_clip, properties->Mask()->OutputClip());
 
   const auto* absolute =
-      GetDocument().getElementById("absolute")->GetLayoutObject();
+      GetDocument().GetElementById("absolute")->GetLayoutObject();
   EXPECT_EQ(FramePreTranslation(),
             absolute->LocalBorderBoxProperties()->Transform());
   EXPECT_EQ(mask_clip, absolute->LocalBorderBoxProperties()->Clip());
@@ -3344,7 +3344,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskInline) {
   const ObjectPaintProperties* properties = PaintPropertiesForElement("target");
   const ClipPaintPropertyNode* output_clip = properties->MaskClip();
   const auto* target =
-      GetDocument().getElementById("target")->GetLayoutObject();
+      GetDocument().GetElementById("target")->GetLayoutObject();
 
   EXPECT_EQ(output_clip, target->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(FrameContentClip(), output_clip->Parent());
@@ -3360,7 +3360,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskInline) {
   EXPECT_EQ(output_clip, properties->Mask()->OutputClip());
 
   const auto* overflowing =
-      GetDocument().getElementById("overflowing")->GetLayoutObject();
+      GetDocument().GetElementById("overflowing")->GetLayoutObject();
   EXPECT_EQ(output_clip, overflowing->LocalBorderBoxProperties()->Clip());
   EXPECT_EQ(properties->Effect(),
             overflowing->LocalBorderBoxProperties()->Effect());
@@ -3384,7 +3384,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskClipNodeInvalidation) {
   const ClipPaintPropertyNode* mask_clip = properties->MaskClip();
   EXPECT_EQ(FloatRoundedRect(8, 8, 100, 100), mask_clip->ClipRect());
 
-  Element* mask = GetDocument().getElementById("mask");
+  Element* mask = GetDocument().GetElementById("mask");
   mask->setAttribute(HTMLNames::styleAttr, "height: 200px");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -3469,7 +3469,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootBlending) {
       "</svg>");
 
   LayoutObject& svg_root =
-      *GetDocument().getElementById("svgroot")->GetLayoutObject();
+      *GetDocument().GetElementById("svgroot")->GetLayoutObject();
   const ObjectPaintProperties* svg_root_properties = svg_root.PaintProperties();
   EXPECT_TRUE(svg_root_properties->Effect());
   EXPECT_EQ(EffectPaintPropertyNode::Root(),

@@ -158,7 +158,7 @@ ResourceLoadPriority ResourceFetcher::ComputeLoadPriority(
     const ResourceRequest& resource_request,
     ResourcePriority::VisibilityStatus visibility,
     FetchParameters::DeferOption defer_option,
-    bool is_speculative_preload,
+    FetchParameters::SpeculativePreloadType speculative_preload_type,
     bool is_link_preload) {
   ResourceLoadPriority priority = TypeToPriority(type);
 
@@ -189,7 +189,9 @@ ResourceLoadPriority ResourceFetcher::ComputeLoadPriority(
     // Preload late in document: Medium
     if (FetchParameters::kLazyLoad == defer_option) {
       priority = kResourceLoadPriorityLow;
-    } else if (is_speculative_preload && image_fetched_) {
+    } else if (speculative_preload_type ==
+                   FetchParameters::SpeculativePreloadType::kInDocument &&
+               image_fetched_) {
       // Speculative preload is used as a signal for scripts at the bottom of
       // the document.
       priority = kResourceLoadPriorityMedium;
@@ -515,7 +517,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   resource_request.SetPriority(ComputeLoadPriority(
       factory.GetType(), params.GetResourceRequest(),
       ResourcePriority::kNotVisible, params.Defer(),
-      params.IsSpeculativePreload(), params.IsLinkPreload()));
+      params.GetSpeculativePreloadType(), params.IsLinkPreload()));
   InitializeResourceRequest(resource_request, factory.GetType(),
                             params.Defer());
   network_instrumentation::resourcePrioritySet(identifier,
@@ -667,7 +669,7 @@ Resource* ResourceFetcher::RequestResource(
 void ResourceFetcher::ResourceTimingReportTimerFired(TimerBase* timer) {
   DCHECK_EQ(timer, &resource_timing_report_timer_);
   Vector<RefPtr<ResourceTimingInfo>> timing_reports;
-  timing_reports.swap(scheduled_resource_timing_reports_);
+  timing_reports.Swap(scheduled_resource_timing_reports_);
   for (const auto& timing_info : timing_reports)
     Context().AddResourceTiming(*timing_info);
 }

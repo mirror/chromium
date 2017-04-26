@@ -191,7 +191,7 @@ class PrerenderingTest : public ::testing::Test {
   Element& Console() {
     Document* document =
         web_view_helper_.WebView()->MainFrameImpl()->GetFrame()->GetDocument();
-    Element* console = document->getElementById("console");
+    Element* console = document->GetElementById("console");
     DCHECK(isHTMLUListElement(console));
     return *console;
   }

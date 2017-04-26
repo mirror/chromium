@@ -24,7 +24,6 @@
 #include "chrome/browser/extensions/extension_install_prompt_show_params.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
@@ -189,7 +188,6 @@ ExtensionInstallDialogView::ExtensionInstallDialogView(
       handled_result_(false),
       install_button_enabled_(false) {
   InitView();
-  chrome::RecordDialogCreation(chrome::DialogIdentifier::EXTENSION_INSTALL);
 }
 
 ExtensionInstallDialogView::~ExtensionInstallDialogView() {

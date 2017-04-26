@@ -53,22 +53,9 @@ PaymentInstruments::PaymentInstruments(
     : manager_(manager) {}
 
 ScriptPromise PaymentInstruments::deleteInstrument(
-    ScriptState* script_state,
     const String& instrument_key) {
-  if (!manager_.is_bound()) {
-    return ScriptPromise::RejectWithDOMException(
-        script_state,
-        DOMException::Create(kInvalidStateError, kPaymentManagerUnavailable));
-  }
-
-  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
-  ScriptPromise promise = resolver->Promise();
-
-  manager_->DeletePaymentInstrument(
-      instrument_key, ConvertToBaseCallback(WTF::Bind(
-                          &PaymentInstruments::onDeletePaymentInstrument,
-                          WrapPersistent(this), WrapPersistent(resolver))));
-  return promise;
+  NOTIMPLEMENTED();
+  return ScriptPromise();
 }
 
 ScriptPromise PaymentInstruments::get(ScriptState* script_state,
@@ -142,14 +129,6 @@ ScriptPromise PaymentInstruments::set(ScriptState* script_state,
 }
 
 DEFINE_TRACE(PaymentInstruments) {}
-
-void PaymentInstruments::onDeletePaymentInstrument(
-    ScriptPromiseResolver* resolver,
-    payments::mojom::blink::PaymentHandlerStatus status) {
-  DCHECK(resolver);
-  resolver->Resolve(status ==
-                    payments::mojom::blink::PaymentHandlerStatus::SUCCESS);
-}
 
 void PaymentInstruments::onGetPaymentInstrument(
     ScriptPromiseResolver* resolver,

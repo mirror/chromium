@@ -166,6 +166,11 @@ Polymer({
     this.browserProxy_.setHotwordSearchEnabled(this.hotwordInfo_.enabled);
   },
 
+  /** @private */
+  onManageAudioHistoryTap_: function() {
+    window.open(loadTimeData.getString('manageAudioHistoryUrl'));
+  },
+
   /**
    * @param {Event} event
    * @private

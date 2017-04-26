@@ -59,8 +59,7 @@ void TetherService::StartTether() {
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile_),
       chromeos::NetworkHandler::Get()->network_state_handler(),
       chromeos::NetworkHandler::Get()->managed_network_configuration_handler(),
-      chromeos::NetworkConnect::Get(),
-      chromeos::NetworkHandler::Get()->network_connection_handler());
+      chromeos::NetworkConnect::Get());
 }
 
 bool TetherService::IsAllowed() const {

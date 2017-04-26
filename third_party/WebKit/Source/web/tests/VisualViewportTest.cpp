@@ -1101,7 +1101,7 @@ TEST_P(VisualViewportTest, TestWebViewResizeCausesViewportConstrainedLayout) {
   navigateTo(m_baseURL + "pinch-viewport-fixed-pos.html");
 
   LayoutObject* navbar =
-      frame()->GetDocument()->getElementById("navbar")->GetLayoutObject();
+      frame()->GetDocument()->GetElementById("navbar")->GetLayoutObject();
 
   EXPECT_FALSE(navbar->NeedsLayout());
 
@@ -1113,7 +1113,7 @@ TEST_P(VisualViewportTest, TestWebViewResizeCausesViewportConstrainedLayout) {
 class MockWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
   MOCK_METHOD1(ShowContextMenu, void(const WebContextMenuData&));
-  MOCK_METHOD0(DidChangeScrollOffset, void());
+  MOCK_METHOD1(DidChangeScrollOffset, void(WebLocalFrame*));
 };
 
 MATCHER_P2(ContextMenuAtLocation,
@@ -1167,7 +1167,7 @@ TEST_P(VisualViewportTest, TestContextMenuShownInCorrectLocation) {
   // should still appear at the location of the event, relative to the WebView.
   VisualViewport& visualViewport = frame()->GetPage()->GetVisualViewport();
   webViewImpl()->SetPageScaleFactor(2);
-  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset());
+  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset(_));
   visualViewport.SetLocation(FloatPoint(60, 80));
   EXPECT_CALL(mockWebFrameClient, ShowContextMenu(ContextMenuAtLocation(
                                       mouseDownEvent.PositionInWidget().x,
@@ -1196,17 +1196,17 @@ TEST_P(VisualViewportTest, TestClientNotifiedOfScrollEvents) {
   webViewImpl()->SetPageScaleFactor(2);
   VisualViewport& visualViewport = frame()->GetPage()->GetVisualViewport();
 
-  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset());
+  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset(_));
   visualViewport.SetLocation(FloatPoint(60, 80));
   Mock::VerifyAndClearExpectations(&mockWebFrameClient);
 
   // Scroll vertically.
-  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset());
+  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset(_));
   visualViewport.SetLocation(FloatPoint(60, 90));
   Mock::VerifyAndClearExpectations(&mockWebFrameClient);
 
   // Scroll horizontally.
-  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset());
+  EXPECT_CALL(mockWebFrameClient, DidChangeScrollOffset(_));
   visualViewport.SetLocation(FloatPoint(70, 90));
 
   // Reset the old client so destruction can occur naturally.
@@ -1227,7 +1227,7 @@ TEST_P(VisualViewportTest, ScrollIntoViewFractionalOffset) {
   ScrollableArea* layoutViewportScrollableArea =
       frameView.LayoutViewportScrollableArea();
   VisualViewport& visualViewport = frame()->GetPage()->GetVisualViewport();
-  Element* inputBox = frame()->GetDocument()->getElementById("box");
+  Element* inputBox = frame()->GetDocument()->GetElementById("box");
 
   webViewImpl()->SetPageScaleFactor(2);
 
@@ -1957,7 +1957,7 @@ TEST_P(VisualViewportTest, WindowDimensionsOnLoad) {
   webViewImpl()->Resize(IntSize(800, 600));
   navigateTo(m_baseURL + "window_dimensions.html");
 
-  Element* output = frame()->GetDocument()->getElementById("output");
+  Element* output = frame()->GetDocument()->GetElementById("output");
   DCHECK(output);
   EXPECT_EQ(std::string("1600x1200"),
             std::string(output->innerHTML().Ascii().data()));
@@ -1973,7 +1973,7 @@ TEST_P(VisualViewportTest, WindowDimensionsOnLoadWideContent) {
   webViewImpl()->Resize(IntSize(800, 600));
   navigateTo(m_baseURL + "window_dimensions_wide_div.html");
 
-  Element* output = frame()->GetDocument()->getElementById("output");
+  Element* output = frame()->GetDocument()->GetElementById("output");
   DCHECK(output);
   EXPECT_EQ(std::string("2000x1500"),
             std::string(output->innerHTML().Ascii().data()));
@@ -2044,7 +2044,7 @@ TEST_P(VisualViewportTest, ResizeAnchoringWithRootScroller) {
 
   FrameView& frameView = *webViewImpl()->MainFrameImpl()->GetFrameView();
 
-  Element* scroller = frame()->GetDocument()->getElementById("rootScroller");
+  Element* scroller = frame()->GetDocument()->GetElementById("rootScroller");
   NonThrowableExceptionState nonThrow;
   frame()->GetDocument()->setRootScroller(scroller, nonThrow);
 
@@ -2079,7 +2079,7 @@ TEST_P(VisualViewportTest, RotationAnchoringWithRootScroller) {
 
   FrameView& frameView = *webViewImpl()->MainFrameImpl()->GetFrameView();
 
-  Element* scroller = frame()->GetDocument()->getElementById("rootScroller");
+  Element* scroller = frame()->GetDocument()->GetElementById("rootScroller");
   NonThrowableExceptionState nonThrow;
   frame()->GetDocument()->setRootScroller(scroller, nonThrow);
   webViewImpl()->UpdateAllLifecyclePhases();
