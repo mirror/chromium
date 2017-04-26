@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d48dc639_8e13e65d",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-04-26T08:33:11Z",
+      "side": 1,
+      "message": "Is it still possible for the draw to fail for the flush-pipeline BeginFrame (because of draining pipeline / missing hires / checkerboard)? If so, how would we notice this - Do we still need a flag in the BeginFrameAck for this?",
+      "revId": "54b444f134f2734ae7540c1b41cf5f025c900292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484268e4_80bc740a",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-04-26T08:33:11Z",
+      "side": 1,
+      "message": "For headless, we\u0027ll still need to trigger an immediate deadline once all pipeline stages have been flushed, right? (We\u0027ll still be using an infinite deadline in the BeginFrameArgs to make DisplayScheduler wait until all BeginFrameAcks have been received.)",
+      "revId": "54b444f134f2734ae7540c1b41cf5f025c900292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
