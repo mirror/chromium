@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebea1073_44bea92c",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-04-27T23:33:36Z",
+      "side": 1,
+      "message": "Line 92 and 93 shouldn\u0027t be part of this patch.\ndc_layer support has been added later than 58.",
+      "revId": "b457ed2c08574b5f2c7fbf4edd5ffc74ecbbe3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
