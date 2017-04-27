@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be882ec9_2246246e",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/WTFString.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-04-27T00:49:55Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure what we should do with this overload. I\u0027m leaving it for another CL...\n\nThe issue is this: std::basic_string::find() has a basic_string_view overload, which takes similar arguments... but without a case-sensitive argument. We could resolve this by removing the last argument and forcing callers that want case insensitive matching to use FindIgnoringCase() or the like...",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "100c7d39201bfdaf479cd1757b78e3381f31ce99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
