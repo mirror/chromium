@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2bd8510_dd77daff",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-04-27T19:47:04Z",
+      "side": 1,
+      "message": "istm this test is now verifying that we don\u0027t PrepareTiles for a frame after SetVisible/WillPrepareDidPrepare.\n\nWhat is the point of the loop above now? Could this test be something more like\n\nSetVisible(false)\nSetVisible(true)\nSetNeedsRedraw()\n// see draw and prepare tiles?",
+      "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
