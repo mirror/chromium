@@ -8,6 +8,7 @@
 
 #include "base/auto_reset.h"
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_split.h"
 #include "components/content_settings/core/browser/content_settings_info.h"
@@ -19,6 +20,8 @@
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/pref_names.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "services/preferences/public/cpp/dictionary_value_update.h"
+#include "services/preferences/public/cpp/scoped_pref_update.h"
 #include "url/gurl.h"
 
 namespace {
@@ -153,9 +156,8 @@ void ContentSettingsPref::ClearPref() {
 
   {
     base::AutoReset<bool> auto_reset(&updating_preferences_, true);
-    DictionaryPrefUpdate update(prefs_, pref_name_);
-    base::DictionaryValue* pattern_pairs_settings = update.Get();
-    pattern_pairs_settings->Clear();
+    prefs::ScopedDictionaryPrefUpdate update(prefs_, pref_name_);
+    update->Clear();
   }
 }
 
@@ -188,13 +190,13 @@ bool ContentSettingsPref::TryLockForTesting() const {
 }
 
 void ContentSettingsPref::ReadContentSettingsFromPref() {
-  // |DictionaryPrefUpdate| sends out notifications when destructed. This
+  // |ScopedDictionaryPrefUpdate| sends out notifications when destructed. This
   // construction order ensures |AutoLock| gets destroyed first and |lock_| is
   // not held when the notifications are sent. Also, |auto_reset| must be still
   // valid when the notifications are sent, so that |Observe| skips the
   // notification.
   base::AutoReset<bool> auto_reset(&updating_preferences_, true);
-  DictionaryPrefUpdate update(prefs_, pref_name_);
+  prefs::ScopedDictionaryPrefUpdate update(prefs_, pref_name_);
   base::AutoLock auto_lock(lock_);
 
   const base::DictionaryValue* all_settings_dictionary =
@@ -206,23 +208,21 @@ void ContentSettingsPref::ReadContentSettingsFromPref() {
   if (!all_settings_dictionary)
     return;
 
-  base::DictionaryValue* mutable_settings;
-  std::unique_ptr<base::DictionaryValue> mutable_settings_scope;
+  const base::DictionaryValue* settings;
 
   if (!is_incognito_) {
-    mutable_settings = update.Get();
+    // Convert all Unicode patterns into punycode form, then read.
+    auto mutable_settings = update.Get();
+    CanonicalizeContentSettingsExceptions(mutable_settings.get());
+    settings = mutable_settings->AsConstDictionary();
   } else {
-    // Create copy as we do not want to persist anything in incognito prefs.
-    mutable_settings = all_settings_dictionary->DeepCopy();
-    mutable_settings_scope.reset(mutable_settings);
+    settings = all_settings_dictionary;
   }
-  // Convert all Unicode patterns into punycode form, then read.
-  CanonicalizeContentSettingsExceptions(mutable_settings);
 
   size_t cookies_block_exception_count = 0;
   size_t cookies_allow_exception_count = 0;
   size_t cookies_session_only_exception_count = 0;
-  for (base::DictionaryValue::Iterator i(*mutable_settings); !i.IsAtEnd();
+  for (base::DictionaryValue::Iterator i(*settings); !i.IsAtEnd();
        i.Advance()) {
     const std::string& pattern_str(i.key());
     std::pair<ContentSettingsPattern, ContentSettingsPattern> pattern_pair =
@@ -323,39 +323,41 @@ void ContentSettingsPref::UpdatePref(
     const ResourceIdentifier& resource_identifier,
     const base::Value* value) {
   // Ensure that |lock_| is not held by this thread, since this function will
-  // send out notifications (by |~DictionaryPrefUpdate|).
+  // send out notifications (by |~ScopedDictionaryPrefUpdate|).
   AssertLockNotHeld();
 
   base::AutoReset<bool> auto_reset(&updating_preferences_, true);
   {
-    DictionaryPrefUpdate update(prefs_, pref_name_);
-    base::DictionaryValue* pattern_pairs_settings = update.Get();
+    prefs::ScopedDictionaryPrefUpdate update(prefs_, pref_name_);
+    std::unique_ptr<prefs::DictionaryValueUpdate> pattern_pairs_settings =
+        update.Get();
 
     // Get settings dictionary for the given patterns.
     std::string pattern_str(CreatePatternString(primary_pattern,
                                                 secondary_pattern));
-    base::DictionaryValue* settings_dictionary = NULL;
+    std::unique_ptr<prefs::DictionaryValueUpdate> settings_dictionary;
     bool found = pattern_pairs_settings->GetDictionaryWithoutPathExpansion(
         pattern_str, &settings_dictionary);
 
     if (!found && value) {
-      settings_dictionary = new base::DictionaryValue;
-      pattern_pairs_settings->SetWithoutPathExpansion(
-          pattern_str, settings_dictionary);
+      settings_dictionary =
+          pattern_pairs_settings->SetDictionaryWithoutPathExpansion(
+              pattern_str, base::MakeUnique<base::DictionaryValue>());
     }
 
     if (settings_dictionary) {
       if (SupportsResourceIdentifiers(content_type_) &&
           !resource_identifier.empty()) {
-        base::DictionaryValue* resource_dictionary = NULL;
+        std::unique_ptr<prefs::DictionaryValueUpdate> resource_dictionary;
         found = settings_dictionary->GetDictionary(
             kPerResourceIdentifierPrefName, &resource_dictionary);
         if (!found) {
           if (value == NULL)
             return;  // Nothing to remove. Exit early.
-          resource_dictionary = new base::DictionaryValue;
-          settings_dictionary->Set(
-              kPerResourceIdentifierPrefName, resource_dictionary);
+          resource_dictionary =
+              settings_dictionary->SetDictionaryWithoutPathExpansion(
+                  kPerResourceIdentifierPrefName,
+                  base::MakeUnique<base::DictionaryValue>());
         }
         // Update resource dictionary.
         if (value == NULL) {
@@ -366,16 +368,16 @@ void ContentSettingsPref::UpdatePref(
                 kPerResourceIdentifierPrefName, NULL);
           }
         } else {
-          resource_dictionary->SetWithoutPathExpansion(
-              resource_identifier, value->DeepCopy());
+          resource_dictionary->SetWithoutPathExpansion(resource_identifier,
+                                                       value->CreateDeepCopy());
         }
       } else {
         // Update settings dictionary.
         if (value == NULL) {
           settings_dictionary->RemoveWithoutPathExpansion(kSettingPath, NULL);
         } else {
-          settings_dictionary->SetWithoutPathExpansion(
-              kSettingPath, value->DeepCopy());
+          settings_dictionary->SetWithoutPathExpansion(kSettingPath,
+                                                       value->CreateDeepCopy());
         }
       }
       // Remove the settings dictionary if it is empty.
@@ -389,14 +391,14 @@ void ContentSettingsPref::UpdatePref(
 
 // static
 void ContentSettingsPref::CanonicalizeContentSettingsExceptions(
-    base::DictionaryValue* all_settings_dictionary) {
+    prefs::DictionaryValueUpdate* all_settings_dictionary) {
   DCHECK(all_settings_dictionary);
 
   std::vector<std::string> remove_items;
   base::StringPairs move_items;
-  for (base::DictionaryValue::Iterator i(*all_settings_dictionary);
-       !i.IsAtEnd();
-       i.Advance()) {
+  for (base::DictionaryValue::Iterator i(
+           *all_settings_dictionary->AsConstDictionary());
+       !i.IsAtEnd(); i.Advance()) {
     const std::string& pattern_str(i.key());
     std::pair<ContentSettingsPattern, ContentSettingsPattern> pattern_pair =
          ParsePatternString(pattern_str);
@@ -439,7 +441,7 @@ void ContentSettingsPref::CanonicalizeContentSettingsExceptions(
     all_settings_dictionary->RemoveWithoutPathExpansion(
         move_items[i].first, &pattern_settings_dictionary);
     all_settings_dictionary->SetWithoutPathExpansion(
-        move_items[i].second, pattern_settings_dictionary.release());
+        move_items[i].second, std::move(pattern_settings_dictionary));
   }
 }
 
