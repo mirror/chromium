@@ -16,6 +16,24 @@
       "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f1736f_e4901e0b",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-04-27T20:08:03Z",
+      "side": 1,
+      "message": "We want to test that the scheduler eventually does a PrepareTiles. With the prepare tiles funnel logic, every SetVisible would increment prepare tiles funnel and we wouldn\u0027t PrepareTiles for a long time (prepare tiles funnel \u003d 20 \u003d 2 x 10 SetVisible calls). With the new logic we don\u0027t do a PrepareTiles in the begin frame after the last SetVisible but we\u0027ll do so in the next BeginFrame. This matches the behavior when PrepareTiles is called in commit in between begin frames (we don\u0027t PrepareTiles in the next begin frame).",
+      "parentUuid": "d2bd8510_dd77daff",
+      "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
