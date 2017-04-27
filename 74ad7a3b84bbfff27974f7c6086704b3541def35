@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "248b8eb5_26619bdd",
+        "filename": "components/spellcheck/renderer/spellcheck.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-04-27T04:25:08Z",
+      "side": 1,
+      "message": "Ken, this is the new way to attach my interface to the process host, as discussed over chat.  Does it look correct?",
+      "revId": "74ad7a3b84bbfff27974f7c6086704b3541def35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
