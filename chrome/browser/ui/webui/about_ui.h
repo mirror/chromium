@@ -38,6 +38,8 @@ class AboutUIHTMLSource : public content::URLDataSource {
 
   Profile* profile() { return profile_; }
 
+  static void GetHTMLContent(std::string& response,
+    const base::StringPiece& raw_response, bool isInline);
  private:
   ~AboutUIHTMLSource() override;
 

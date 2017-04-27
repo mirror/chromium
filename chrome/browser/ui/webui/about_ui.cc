@@ -71,6 +71,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/webui/jstemplate_builder.h"
 #include "ui/base/webui/web_ui_util.h"
+#include "ui/resources/grit/webui_resources.h"
 #include "url/gurl.h"
 
 #if !defined(OS_ANDROID)
@@ -694,29 +695,11 @@ void AboutUIHTMLSource::StartDataRequest(
     base::StringPiece raw_response =
         ResourceBundle::GetSharedInstance().GetRawDataResource(idr);
     if (idr == IDR_ABOUT_UI_CREDITS_HTML) {
-      const uint8_t* next_encoded_byte =
-          reinterpret_cast<const uint8_t*>(raw_response.data());
-      size_t input_size_remaining = raw_response.size();
-      BrotliDecoderState* decoder =
-          BrotliDecoderCreateInstance(nullptr /* no custom allocator */,
-                                      nullptr /* no custom deallocator */,
-                                      nullptr /* no custom memory handle */);
-      CHECK(!!decoder);
-      while (!BrotliDecoderIsFinished(decoder)) {
-        size_t output_size_remaining = 0;
-        CHECK(BrotliDecoderDecompressStream(
-                  decoder, &input_size_remaining, &next_encoded_byte,
-                  &output_size_remaining, nullptr,
-                  nullptr) != BROTLI_DECODER_RESULT_ERROR);
-        const uint8_t* output_buffer =
-            BrotliDecoderTakeOutput(decoder, &output_size_remaining);
-        response.insert(response.end(), output_buffer,
-                        output_buffer + output_size_remaining);
-      }
-      BrotliDecoderDestroyInstance(decoder);
+      GetHTMLContent(response, raw_response, false);
     } else {
       response = raw_response.as_string();
     }
+
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   } else if (source_name_ == chrome::kChromeUIDiscardsHost) {
     response = AboutDiscards(path);
@@ -745,6 +728,45 @@ void AboutUIHTMLSource::StartDataRequest(
   }
 
   FinishDataRequest(response, callback);
+}
+
+void AboutUIHTMLSource::GetHTMLContent(std::string& response,
+  const base::StringPiece& raw_response, bool isInline) {
+  const uint8_t* next_encoded_byte =
+      reinterpret_cast<const uint8_t*>(raw_response.data());
+  size_t input_size_remaining = raw_response.size();
+  BrotliDecoderState* decoder =
+      BrotliDecoderCreateInstance(nullptr /* no custom allocator */,
+                                  nullptr /* no custom deallocator */,
+                                  nullptr /* no custom memory handle */);
+  CHECK(!!decoder);
+  while (!BrotliDecoderIsFinished(decoder)) {
+    size_t output_size_remaining = 0;
+    CHECK(BrotliDecoderDecompressStream(
+              decoder, &input_size_remaining, &next_encoded_byte,
+              &output_size_remaining, nullptr,
+              nullptr) != BROTLI_DECODER_RESULT_ERROR);
+    const uint8_t* output_buffer =
+        BrotliDecoderTakeOutput(decoder, &output_size_remaining);
+    response.insert(response.end(), output_buffer,
+                    output_buffer + output_size_remaining);
+  }
+  BrotliDecoderDestroyInstance(decoder);
+  if (isInline) {
+    // Manually attach the cr.js and credits.js to the HTML file.
+    response += "\n<script>";
+    ResourceBundle::GetSharedInstance()
+      .GetRawDataResource(IDR_WEBUI_JS_CR).AppendToString(&response);
+    response += "<script>\n";
+    response += "<script>";
+    ResourceBundle::GetSharedInstance()
+      .GetRawDataResource(IDR_ABOUT_UI_CREDITS_JS).AppendToString(&response);
+    response += "<script>\n";
+  } else {
+    response += "\n<script src=\"chrome://resources/js/cr.js\"></script>\n"
+                "<script src=\"chrome://credits/credits.js\"></script>\n"
+                "</body>\n</html>";
+  }
 }
 
 void AboutUIHTMLSource::FinishDataRequest(
