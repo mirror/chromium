@@ -88,6 +88,24 @@
       "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c9fca2_24584d37",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-04-27T23:16:45Z",
+      "side": 1,
+      "message": "I meant specifically when visible_ \u003d true. That was added because, when browser compositor became invisible, it would be inside a begin frame waiting for ready to draw. We wanted to ensure that it eventually got the ready to draw signal if it became visible again. So we added PrepareTiles when SetVisible(true) was called.",
+      "parentUuid": "c4571d39_bd5b647a",
+      "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
