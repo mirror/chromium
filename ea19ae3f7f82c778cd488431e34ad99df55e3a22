@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08703c69_442c4df2",
+        "filename": "chrome/browser/spellchecker/spellcheck_service_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-04-27T17:06:07Z",
+      "side": 1,
+      "message": "Can this ever be reached while binding_ is already bound? Seems like that would be a problem. If it can, maybe you want a BindingSet instead and have BoundConnectionClosed ensure that the set is empty before running the quit closure?",
+      "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c37b2bc_835a88ed",
+        "filename": "components/spellcheck/common/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-04-27T17:06:07Z",
+      "side": 1,
+      "message": "nit: how about \"interfaces\" instead of \"mojo\"",
+      "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ce09a4_0b3476ff",
+        "filename": "components/spellcheck/renderer/spellcheck.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-04-27T17:06:07Z",
+      "side": 1,
+      "message": "We never SetForProcess outside of the browser process, so this is always null in all render processes, testing or not.\n\nYou want ChildThread::Get()-\u003eGetServiceManagerConnection().",
+      "revId": "ea19ae3f7f82c778cd488431e34ad99df55e3a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
