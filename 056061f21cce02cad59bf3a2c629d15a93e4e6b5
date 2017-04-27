@@ -34,6 +34,24 @@
       "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189309d3_6b0dd479",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-04-27T20:32:15Z",
+      "side": 1,
+      "message": "oic this test is baking in knowledge that LayerTreeHostImpl::SetVisible does prepare tiles. That\u0027s kinda not great but can you add a comment to this effect so it is not lost?",
+      "parentUuid": "c8f1736f_e4901e0b",
+      "revId": "056061f21cce02cad59bf3a2c629d15a93e4e6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
